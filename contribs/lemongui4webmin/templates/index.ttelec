@@ -1,0 +1,21 @@
+[% PROCESS /var/www/lemonconfig/templates/mycomposant.tt -%]
+[%- PROCESS header 
+   style => 'simpage'
+   title => 'ma premiere lemon' 
+-%]
+<h1> Lemonldap configurateur</h1>
+<hr>
+<FORM  action="/guilemon/index.cgi" method=get >
+
+[%- PROCESS radio 
+     autosubmit => '1' 
+     title =>'Style:'
+     nom => 'style'
+     label_0 => 'Old Maps'
+     label_1 => 'Electro'
+     checked => '1'
+-%]     
+
+</FORM>
+<hr>
+[%- PROCESS footer -%] 

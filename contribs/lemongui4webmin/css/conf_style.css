@@ -1,0 +1,368 @@
+<!--
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+
+/* ************************************ */    
+/* mise en forme de différentes balises */
+/* ************************************ */
+
+    TITLE      {
+     		  font: 36px Arial;
+		  font-weight: bold;
+		  color=green;
+		}   
+
+
+    BODY	{
+	          background-color: #EDF0BA ;
+		  background-image: url("/lemongui4webmin/images/map_conf.jpg") ;
+                  background-attachment: fixed ;  
+                  font-size: 0.80em;
+                  margin: 0.7cm 0.7cm 0.7cm 0.7cm;
+	        }
+
+    H1		{
+                 font-family: arial, verdana, sans-serif ;	
+ 	         background-image: url("/lemongui4webmin/images/back2_h1.jpg") ;
+                 backgroud-repeat: repeat-x;		
+                 font: Arial;
+		 font-size: 4em;
+                 font-weight: bold;
+   	         color: #6f4a2e;
+      	         border: 2px double #007;
+ 		 text-align: center;
+		}
+		
+    H2		{
+                 font-family: arial, verdana, sans-serif ;	
+                 font: Arial;
+		 font-size: 3em;
+                 font-weight: bold;
+   	         color: #236;
+ 	         background-image: url("/lemongui4webmin/images/back2_h2.jpg") ;
+                 backgroud-repeat: repeat-x;		
+ 		 text-align: center;
+      	         border: 2px double #336;
+                 }	
+    H3		{
+                 font-family: arial, verdana, sans-serif ;	
+                 font: Arial;
+		 font-size: 2.5em;
+                 font-weight: bold;
+   	         color: #236;
+                 }	
+    H4		{
+                 font-family: arial, verdana, sans-serif ;	
+                 font: Arial;
+		 font-size: 2em;
+                 font-weight: bold;
+   	         color: #236;
+                 }	
+    H5		{
+                 font-family: arial, verdana, sans-serif ;	
+                 font: Arial;
+		 font-size: 1em;
+                 font-weight: bold;
+   	         color: #236;
+                 }	
+
+    I           {
+                 font-family: arial, verdana, sans-serif ;	
+                 font: Arial;
+		 font-size: 0.9em;
+                 font-weight: bold;
+   	         color: #236;
+                 }	 
+
+    B           {
+                 font-family: arial, verdana, sans-serif ;	
+                 font: Arial;
+		 font-size: 1.2em;
+                 font-weight: bold;
+   	         color: #236;
+                 }
+
+.alive       {
+                   color: #0F0 ; 
+                   background-color: #000000 ;
+                   font-style : bold;
+                   letter-spacing : 6px; 
+                   word-spacing : 12px;
+                   text-decoration: blink ;
+                   text-align: center;
+                 }
+
+    .dead        {
+                   color: #f00 ; 
+                   background-color: #000000 ;
+                   font-style : bold;
+                   letter-spacing : 6px; 
+                   word-spacing : 12px;
+                   text-decoration: blink ;
+                   text-align: center;
+                 }
+                                  
+
+   .ConfStyle   {
+		   background-image: url("/lemongui4webmin/images/boat2_conf.jpg") ;
+                   background-attachment: fixed ;
+       	           background-color: #E4EBF5 ;
+                   margin: 0cm 5.0cm 0.7cm 0.7cm;
+	   	   border: 2px solid #070;
+                   font-family: courier, prestige, monospace;
+  		   font-size: 0.9em;
+	    	   line-height: 1.0em;		
+		   color: #450;
+		 }
+.ExpertStyle   {
+		   background-image: url("/lemongui4webmin/images/expert22.jpg") ;
+                   background-attachment: fixed ;
+       	           background-color: #E4EBF5 ;
+                   margin: 0cm 0.1cm 0.3cm 0.1cm;
+	   	   border: 2px double #007;
+                   font-family: courier, prestige, monospace;
+  		   font-size: 1.1em;
+		   color: #040B15;
+		   line-height: 1.0em;
+		 }
+
+   .PetiFont {
+               font-family: courier, prestige, monospace;
+  	       font-size: 0.7em;
+   	     } 
+
+   pre {
+      margin: 0.7cm 0.7cm 0.7cm 0.7cm;
+   }
+
+  LABEL 	 { 
+		   background: transparent;		
+	 	   DISPLAY: inline ; 
+		   FLOAT: left ; 
+		   WIDTH: 150px ; 
+		   font-weight: bold ; 
+                   font-family: Arial, Helvetica, sans-serif ;
+                   text-align: right ;
+ 		   margin-left: 2px ; 
+ 		   margin-right: 35px ; 
+   	           color: #236;
+                 }
+
+  .LABG 	 {
+		   background: transparent;
+	 	   DISPLAY: inline ; 
+		   FLOAT: left ; 
+		   font-weight: bold ; 
+                   font-family: Arial, Helvetica, sans-serif ;
+                   text-align: right ;
+   	           color: #236;
+                 }
+
+
+  .OPTION      { 
+		   background: transparent;
+		   /*background-color: #E7F0CE ; */
+                   font-family: Arial, Helvetica, sans-serif ; 
+                   font-weight: bold;
+		   color: #236;
+                }
+
+/* ******************************************************************** */    
+/* MISE EN FORME DES TABULATIONS */
+/* ******************************************************************** */
+
+div.tabs {
+    background: transparent;
+    border-collapse: collapse;
+    border-bottom-color: #8CACBB;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    padding: 0.5em 0em 0em 2em;
+    white-space: nowrap;
+}
+
+div.tabs a {
+    /* The normal, unselected tabs. They are all links */
+    background: transparent;
+    border-color: #8CACBB;
+    border-width: 1px; 
+    border-style: solid solid none solid;
+    color: #436976;
+    font-weight: normal;
+    height: 1.2em;
+    margin-right: 0.5em;
+    padding: 0em 2em;
+/*    text-transform: lowercase; */
+}
+
+div.tabs a.selected {
+    /* The selected tab. There's only one of this */
+    background: #83903E;
+    border: 1px solid #8CACBB;
+    border-bottom: #DEE7EC 1px solid;
+    color: #F6FCD5;
+    font-weight: normal;
+}
+
+div.tabs a:hover {
+    background: #83903E;
+    border-color: #8CACBB;
+    border-bottom-color: #DEE7EC;
+    color: #F6FCD5;
+}
+
+    A:link     {
+     	          text-decoration: none;
+               }
+
+    A:visited  {
+                  text-decoration: none;
+               }
+
+.posit_TL {
+  		position:absolute ;
+  		left: 10px ;
+  		top:  5px ;
+          }
+
+.posit_TR {
+  		position:absolute ;
+  		right: 10px ;
+  		top:  5px ;
+          }
+
+.posit_C  {
+  		position:absolute ;
+  		left: 50% ;
+          }
+
+.bouton_0 {
+  color: #83903E;
+  background-color: #F6FCD5;
+  font-size: 0.9em;
+  border: 1px solid #660;
+  padding: 2px;
+}
+
+.bouton_0:hover {
+  color: #F6FCD5;
+  background-color: #83903E;
+  font-size: 0.9em;
+  border: 1px solid #660;
+  padding: 2px;
+}
+
+.bouton_0dd {
+  color: #000;
+  background-color: #777;
+  font-size: 0.9em;
+  border: 1px solid #660;
+  padding: 2px;
+}
+
+.bouton_0dd:hover {
+  color: #000;
+  background-color: #777;
+  font-size: 0.9em;
+  border: 1px solid #660;
+  padding: 2px;
+}
+
+
+.tdg	{
+  		width: 		120px;
+		text-align:	right;
+		vertical-align:	middle;
+		background-color: #F6FCD5;
+		border-top: 	1px solid #660;
+		font-family: 	arial, verdana, sans-serif ;	
+                font: 		Arial;
+		font-size: 	0.8em;
+                font-weight: 	bold;
+   	        color: 		#83903e;
+		padding-right:	12px;
+	}
+
+.tdd	{
+  		width: 		160px;
+		text-align:	left;
+		vertical-align:	middle;
+		border-top: 	1px solid #236; 
+		font-family: 	arial, verdana, sans-serif ;	
+                font: 		Arial;
+		font-size: 	0.8em;
+                font-weight: 	bold;
+   	        color: 		#236;
+		padding-left:	12px;
+	}
+
+/* ******************************************************************** */
+/* 				INPUTS  */
+/* ******************************************************************** */
+
+ .INPUTR       { 
+		   background: transparent;
+		   font-family: Arial, Helvetica, sans-serif ; 
+                   font-weight: bold;
+	           font: Arial;
+		   font-size: 0.9em;
+		   color: #236; 
+                   padding-left: 5px;
+                 }
+
+/* ******************************************************************** */    
+/* DIFF classes de mise en forme de zones ayant le "focus" */
+/* ******************************************************************** */
+
+   INPUT:focus   {
+  		    background-color: #555555 ; 
+ 	            color: #FFFFFF ;
+ 		  }
+
+/* ***** */
+
+
+   .SELECT 	{ 
+		  background: transparent ; 
+		  font-family: Arial, Helvetica, sans-serif ; 
+                  font: Arial;
+		  font-size: 1.1em ; 
+		  color: #236 ; 
+		  font-weight: bold;
+		}
+   .SELECTO     { 
+		  background: #444 ; 
+		  font-family: Arial, Helvetica, sans-serif ; 
+                  font: Arial;
+		  font-size: 1.1em ; 
+		  color: #AB5; 
+		  font-weight: bold;
+		}
+      .ListSELECT { 
+		  background: transparent ; 
+		  font-family: Arial, Helvetica, sans-serif ; 
+                  font: Arial;
+		  font-size: 0.9em ; 
+		  color: #236 ; 
+		  font-weight: bold;
+		}
+
+   .ListSELECTO { 
+		  background: transparent ; 
+		  font-family: Arial, Helvetica, sans-serif ; 
+                  font: Arial;
+		  font-size: 0.9em ; 
+		  color: #236 ; 
+		  font-weight: bold;
+		}
+                
+ .ListSELECTA {
+                  background: #222 ;
+                  font-family: Arial, Helvetica, sans-serif ; 
+                  font: Arial;
+                  font-size: 1.1em ;
+                  color: #59F ; 
+                  font-weight: bold;
+                }
+  
+
+

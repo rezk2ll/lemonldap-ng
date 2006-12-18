@@ -1,0 +1,62 @@
+[% PROCESS templates/mycomposant.tt -%]
+
+[%- PROCESS header 
+    title => title 
+    style => style 
+-%]
+
+
+<h1> [% title %] </h1>
+[% WRAPPER vari_tabs %]
+[% FOREACH item IN tab_about %]
+[% PROCESS one_tab
+   link= item.link
+   etatab= item.etatab
+   labTab= item.labTab
+%]
+[% END %]
+[% END %]
+
+<div class="ConfStyle">
+<form method=get>
+<input type=hidden name=mode value="[% mode %]" >
+<input type=hidden name=style value="[% css %]" >
+
+[% FOREACH item IN composall %]
+[% SWITCH item.type %]
+  [% CASE  "labedit" %]
+    [% PROCESS lab_edit
+      labLabel = item.labLabel
+      labHint  = item.labHint
+      id_input = item.id_input
+      defValue = item.defValue
+      hidDefValue = item.defValue
+    %] 
+  [% CASE  "labcheck" %]
+    [% PROCESS lab_check
+      labLabel = item.labLabel
+      labHint  = item.labHint
+      id_input = item.id_input
+      isChecked= item.isChecked
+    %] 
+  [% CASE  "apply" %]
+    <BR>
+    [% PROCESS buton_apply
+      id_input = item.id_input
+      id_value = item.id_value
+    %]
+    <BR><BR>
+[% END %]
+[% END %]
+
+
+</form>
+</div>
+<script>
+document.forms[0].elements[0].focus();
+</script>
+
+[%- PROCESS footer -%] 
+<br><a class="PetiFont">[[% parent %] with [% template.name %] ]  (version 0.01)</a>
+
+

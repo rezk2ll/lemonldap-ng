@@ -1,0 +1,10 @@
+This is the debian package for the Lemonldap-NG-Handler module.
+It was created by Xavier Guimard <x.guimard@free.fr> using dh-make-perl.
+
+This copyright info was automatically extracted from the perl module.
+It may not be accurate, so you better check the module sources
+if don't want to get into legal troubles.
+
+The upstream author is: 
+
+Xavier Guimard, <x.guimard@free.fr>.

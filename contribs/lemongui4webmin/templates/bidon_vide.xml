@@ -1,0 +1,10 @@
+<lemonldapconfig>
+  <cache id="config0" />
+  <session id="unServerDeSess"
+           SessionParams="(
+          'servers' =&gt; [
+                         'localhost:11211'
+                       ]
+        )
+" />
+</lemonldapconfig>

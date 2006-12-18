@@ -1,0 +1,23 @@
+Source: liblemonldap-ng-handler-perl
+Section: perl
+Priority: optional
+Build-Depends: debhelper (>= 5.0.0)
+Build-Depends-Indep: perl (>= 5.8.8-6.1)
+Maintainer: Xavier Guimard <x.guimard@free.fr>
+Standards-Version: 3.7.2
+
+Package: liblemonldap-ng-handler-perl
+Architecture: all
+Depends: ${perl:Depends}, ${misc:Depends}, 
+Description:  The Apache module part of Lemonldap::NG Web-SSO system.
+ Lemonldap::NG is a modular Web-SSO based on Apache::Session modules. It
+ simplifies the build of a protected area with a few changes in the application.
+ .
+ It manages both authentication and authorization and provides headers for
+ accounting. So you can have a full AAA protection for your web space as
+ described below.
+ .
+ The Apache module part works both with Apache 1 and 2 ie mod_perl 1 and 2 but
+ not with mod_perl 1.99.
+ .
+ This description was automagically extracted from the module by dh-make-perl.

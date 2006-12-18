@@ -1,0 +1,196 @@
+[% PROCESS templates/mycomposant.tt -%]
+
+[%- PROCESS header 
+    title => title 
+    style => style 
+-%]
+
+<script>
+
+function ShowRemoveHandler()
+{
+  var cop = document.getElementById( 'idRemoHandler' );
+  cop.type = "Submit";
+  cop.name = "DeleteHandler";
+  return false;
+}
+
+function ShowMess( leMess )
+{
+   if( leMess != 0 ){
+     alert( leMess );  
+   }
+}
+
+</script>
+
+<h1> [% title %] </h1>
+
+[% WRAPPER vari_tabs %]
+[% FOREACH item IN tab_session %]
+[% PROCESS one_tab
+   link= item.link
+   etatab= item.etatab
+   labTab= item.labTab
+%]
+[% END %]
+[% END %]
+
+<form name="laForm" method=get>
+
+[% flagExpert = 0 %]
+[% itemToSel = option_selected %]
+[% labCombo  = label_combo %]
+[% labComboSel = label_comboSess %] 
+[% itemSessionSel = selected_session %]
+
+
+[% WRAPPER tcombo
+idLabel= labCombo
+idSelect="cbDomain"
+%] 
+[% FOREACH item IN combo_domain %]
+   [% tosel = '' %]
+   [% IF item.idValue == itemToSel %] 
+     [% tosel = 'SELECTED' %]
+   [% END %]
+
+[% PROCESS one_option	
+   idValue= item.idValue
+   labOption= item.labOption
+   isSelected= tosel
+%]
+[% END %]
+[% END %]
+
+<div class="ConfStyle">
+
+<input type=hidden name=mode value="[% mode %]" >
+<input type=hidden name=style value="[% css %]" >
+
+[% FOREACH item IN composall %]
+[% SWITCH item.type %]
+
+  [% CASE  "labcheck" %]
+    [% PROCESS lab_check
+      labLabel = item.labLabel
+      labHint  = item.labHint
+      id_input = item.id_input
+      isChecked= item.isChecked
+    %] 
+
+  [% CASE "tListe" %]
+    [% idLab = item.labLabel %]
+    [% idVis = 0 %]
+    [% idSel = item.idSelect %]
+    [% FuncJS = item.FuncJS %]
+
+    <HR>
+    <BR>
+
+    [% WRAPPER tlistIL 
+      idLabel  = idLab
+      idSelect = idSel
+      nbVisible = idVis
+    %]  
+
+    [% FOREACH item IN list_handlers %]
+      [% PROCESS one_itemA	
+        idValue = item.idValue
+      %]
+    [% END %]
+    [% END %]
+    
+
+  [% CASE  "applyIL" %]
+    [% IF flag_ShowEditHandler == 1 %]    
+      [% PROCESS buton_applyIL
+        id_input = item.id_input
+        id_value = item.id_value
+      %] 
+    [% END %]
+    <input id="idRemoHandler" type="hidden" name="hidDeleteHandler" value="[% lab_56 %]"  class="bouton_0" >
+    <BR>
+    <HR>
+
+
+  [% CASE  "labedit" %]
+    [% valdef = item.defValue %]
+
+    [% IF item.id_input == 'idDomain' %] 
+      [% valdef = itemToSel %]
+    [% END %]
+
+    [% PROCESS lab_edit
+      labLabel    = item.labLabel
+      labHint     = item.labHint
+      id_input    = item.id_input
+      defValue    = valdef
+      hidDefValue = item.defValue
+    %]
+    [% IF item.id_input == 'idDomain' %] 
+    <input id="idDelDom" type="submit" name="DeleteDomain" value="[% lab_57 %]" class="bouton_0"
+            style="position: absolute; left: 50%;" >
+    <BR><BR>        
+    [% END %]
+
+  [% CASE  "labedit54" %]
+
+    [% IF item.id_input == 'slavecda' %]
+     [% flagExpert = 1 %] 
+         <HR>
+        <DIV class="ExpertStyle">
+    [% END %]
+
+    [% PROCESS lab_edit54
+      labLabel    = item.labLabel
+      labHint     = item.labHint
+      id_input    = item.id_input
+      defValue    = item.defValue
+      hidDefValue = item.defValue
+    %] 
+
+  [% CASE "combo_sessions" %]
+    [% WRAPPER tcombo150B 
+      idLabel= labComboSel
+      idSelect="cbSessions"
+    %] 
+   [% FOREACH item IN combo_sessions %]
+     [% tosel = '' %]
+     [% IF item.idValue == itemSessionSel %] 
+       [% tosel = 'SELECTED' %]
+     [% END %]
+     [% PROCESS one_option	
+       idValue= item.idValue
+       labOption= item.labOption
+       isSelected= tosel
+     %]
+   [% END %]
+   [% END %]
+
+  [% CASE  "apply" %]
+       <BR><BR> 
+    [% IF flagExpert == 1 %] 
+       </DIV>
+    [% END %]
+    
+    [% PROCESS buton_apply
+      id_input = item.id_input
+      id_value = item.id_value
+    %] 
+    <BR><BR>
+
+[% END %]
+[% END %]
+ 
+</form>
+</div>
+<script>
+document.forms[0].elements[0].focus();
+ShowMess( "[% message %]" );
+</script>
+
+[%- PROCESS footer -%] 
+<br><a class="PetiFont">[[% parent %] with [% template.name %] ]  (version 0.01)</a>
+
+

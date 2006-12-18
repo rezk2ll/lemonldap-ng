@@ -1,0 +1,28 @@
+[% KK  = {  Portal               =  '               portal '
+            BasePub              =  '              basepub '
+            BasePriv             =  '             basepriv '
+            EnableLWPProxy       =  '       enablelwpproxy '
+            Organization         =  '         organization '
+            AppliCode            =  '            applicode '
+            DisableAccessControl =  ' disableaccesscontrol '
+            StopCookie           =  '           stopcookie '
+            ChaseRedirect        =  '        chaseredirect '
+            ProxyExt             =  '             proxyext '
+            ProxyPatterns        =  '        proxypatterns '
+            MultiHoming          =  '          multihoming '
+            LWPTimeout           =  '           lwptimeout '
+            SoftControl          =  '          softcontrol '
+            Header               =  '               header '
+            Allow                =  '                allow '
+            PolicyPlugIn         =  '         policyplugin '
+            RewritePlugIn        =  '        rewriteplugin '
+            HeaderPlugIn         =  '         headerplugin '
+            BackendPlugIn        =  '        backendplugin '
+          } %] [% para = handler %]
+[% IF type == 'byIPAdress' %]<virtualhost [% handler.IPAdress %]>[% ELSE %]<virtualhost *:80>[% END %]
+  ServerName            [% serverName %]
+  perltranshandler      Lemonldap::Handlers::Generic4a2
+
+[% FOREACH key = para.keys  %]  PerlSetVar [% KK.$key %] [% para.$key %]
+[% END %]
+</virtualhost>

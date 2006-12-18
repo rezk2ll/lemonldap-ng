@@ -1,0 +1,336 @@
+[% PROCESS templates/mycomposant.tt -%]
+
+[%- PROCESS header 
+    title => title 
+    style => style 
+-%]
+
+<script>
+
+function ShowRemoveHomed()
+{
+  var cop = document.getElementById( 'bRemoveHomed' );
+  cop.type = "Submit";
+  cop.name = "RemoveHomed";
+}
+
+function ShowAddDispo()
+{
+  var cop = document.getElementById( 'bAddDispo' );
+  cop.type = "Submit";
+  cop.name = "AddDispo"; 
+}
+
+function ShowMess( leMess )
+{
+   if( leMess != 0 ){
+     alert( leMess );  
+   }
+}
+
+</script>
+
+<h1> [% title %] </h1>
+[% WRAPPER vari_tabs %]
+[% FOREACH item IN tab_session %]
+[% PROCESS one_tab
+   link= item.link
+   etatab= item.etatab
+   labTab= item.labTab
+%]
+[% END %]
+[% END %]
+
+
+<form method=get>
+
+<div class="ConfStyle">
+
+[% lab6  = lab_6 %]
+[% lab7  = lab_7 %]
+[% lab42  = lab_42 %]
+[% lab43  = lab_43 %]
+[% flagExpert = 0 %]
+
+[% itemToSel = option_selected %]
+[% flagHOMER = flag_homer %] 
+[% homerChecked = '' %]
+[% IF flagHOMER == 1 %]
+  [% homerChecked = 'CHECKED' %]
+[% END %]
+
+[% WRAPPER tcombo150
+idLabel  = labCombo
+idSelect = "cbHandlers"
+%] 
+[% FOREACH item IN combo_handlers %]
+   [% tosel = '' %]
+   [% IF item.idValue == itemToSel %] 
+     [% tosel = 'SELECTED' %]
+   [% END %]
+
+[% PROCESS one_option	
+   idValue    = item.idValue
+   labOption  = item.labOption
+   isSelected = tosel
+%]
+[% END %]
+[% END %]
+
+
+[% selHOMING  = '' %]
+[% selCOMBO   = '' %]
+[% selGENER   = '' %]
+
+[% IF type_homer == 'MultiHomingType' %]
+  [% selHOMING  = 'SELECTED' %]
+[% ELSIF type_homer == 'GenericType' %]
+  [% selGENER  = 'SELECTED' %]
+[% ELSE %]
+  [% selCOMBO  = 'SELECTED' %]
+[% END %]
+
+<B style="padding-left: 20px;">Type</B>
+<SELECT name=selTypeHandler class="ListSELECT" style="font-size: 1.0em;" onChange='this.form.submit();' >
+  <OPTION value=MultiHomingType class="ListSELECTO" style="font-size: 1.0em;" [% selHOMING %] >Multi homing</OPTION>
+  <OPTION value=CombinedType    class="ListSELECTO" style="font-size: 1.0em;" [% selCOMBO %]  >Combined</OPTION>
+  <OPTION value=GenericType     class="ListSELECTO" style="font-size: 1.0em;" [% selGENER %]  >Generic</OPTION>
+</SELECT>
+
+[% selHostName  = '' %]
+[% selHostIPA   = '' %]
+[% flagBYIP = 0 %]
+[% IF virtual_host == 'byName' %]
+  [% selHostName = 'SELECTED' %]
+[% ELSE %]
+  [% selHostIPA  = 'SELECTED' %]
+  [% flagBYIP = 1 %]
+[% END %]
+
+<B style="padding-left: 20px;">Virtual Host</B>
+<SELECT name=selVirtualHost class="ListSELECT" style="font-size: 1.1em;" onChange='this.form.submit();' >  
+  <OPTION value=byIPAdress class="ListSELECTO" style="font-size: 1.1em;" [% selHostIPA %] >By IP adress</OPTION>
+  <OPTION value=byName     class="ListSELECTO" style="font-size: 1.1em;" [% selHostName %] >By Name</OPTION>
+</SELECT>
+
+[% IF flagAddHandler %]
+  <BR>
+  <input id="idAssistCreate" type="submit" name="AssistCreator" value="[% lab_58 %]"  class="bouton_0"
+   style="position: absolute; left: 22%;"  >
+[% END %]
+
+<BR><BR><HR>
+
+<input type=hidden name=mode value="[% mode %]" >
+<input type=hidden name=style value="[% css %]" >
+<input type=hidden name=idDomain value="[% domaine %]" >
+<input type=hidden name=ExHandler value="[% exHandler %]" > 
+
+
+[% ENABLED_PROXY = 0 %]
+
+[% FOREACH item IN composall %]
+[% SWITCH item.type %]
+
+  [% CASE "logLevList" %]
+     <BR>
+     <LABEL>[% item.labLabel %]</LABEL>
+     <SELECT name='[% item.id_input %]' class="ListSELECT" >
+       [% selElem = item.defValue %]
+       [% IF !selElem %] [% selElem = 'notice' %] [% END %]
+       [% FOREACH elem IN logLevels %]
+         [% select = '' %]
+         [% IF elem == selElem %] [% select = 'SELECTED' %] [% END %]
+         <OPTION value='[% elem %]'  class="ListSELECTA"  [% select %] >[% elem %]</OPTION>
+       [% END %]
+     </SELECT>
+     <i>[% item.labHint %]</i>
+     <BR>
+
+  [% CASE "listAllNone" %]
+     <BR>
+     <LABEL>[% item.labLabel %]</LABEL>
+     <SELECT name=selAllow class="ListSELECT" >  
+       [% selallnone = '' %]
+       [% IF item.defValue == 'ALL' %] [% selallnone = 'SELECTED' %] [% END %]
+       <OPTION value=ALL   class="ListSELECTA"  [% selallnone %] >ALL</OPTION>
+       [% selallnone = '' %]
+       [% IF item.defValue == 'NONE' %] [% selallnone = 'SELECTED' %] [% END %]
+       <OPTION value=NONE  class="ListSELECTA"  [% selallnone %] >NONE</OPTION>
+     </SELECT>
+     <i>[% item.labHint %]</i>
+     <BR>
+
+  [% CASE  "labeditLWP" %]
+    [% IF ENABLED_PROXY %]
+       [% PROCESS lab_edit
+         labLabel    = item.labLabel
+         labHint     = item.labHint
+         id_input    = item.id_input
+         defValue    = item.defValue
+         hidDefValue = item.defValue
+       %]
+    [% END %]
+
+  [% CASE  "labedit" %]
+    [% valdef = item.defValue %]
+
+    [% IF item.id_input == 'idHandler' %] 
+      [% valdef = itemToSel %]
+    [% END %]
+  
+    [% IF item.id_input == 'PlugInPolicy' %] 
+      [% flagExpert = 1 %]
+      <BR>
+      <DIV class="ExpertStyle">
+      <p style='font-size: 1.5em; text-align: center; font-weight: bold;'>C O R E</p>
+    [% END %]
+
+    [% IF item.id_input == 'MotifIn' OR item.id_input == 'MotifOut' %]
+      [% IF selCOMBO == 'SELECTED' %]
+        [% PROCESS lab_edit
+          labLabel    = item.labLabel
+          labHint     = item.labHint
+          id_input    = item.id_input
+          defValue    = valdef
+          hidDefValue = item.defValue
+        %]
+      [% END %]
+    [% ELSE %]
+
+      [% IF  item.id_input == 'IPAdress' %]
+         [% IF flagBYIP %]
+           [% PROCESS lab_edit
+             labLabel    = item.labLabel
+             labHint     = item.labHint
+             id_input    = item.id_input
+             defValue    = valdef
+             hidDefValue = item.defValue
+           %]
+        [% END %]
+      [% ELSE %]
+       [% PROCESS lab_edit
+        labLabel    = item.labLabel
+        labHint     = item.labHint
+        id_input    = item.id_input
+        defValue    = valdef
+        hidDefValue = item.defValue
+        %] 
+      [% END %]
+    [% END %]
+
+    
+    [% IF item.id_input == 'idHandler' AND !flagAddHandler  AND flagHOMER == 1 %]
+      [% INCLUDE DeuxListes %]
+    [% END %]
+
+  [% CASE  "labedit54" %]
+
+    [% PROCESS lab_edit54
+      labLabel    = item.labLabel
+      labHint     = item.labHint
+      id_input    = item.id_input
+      defValue    = item.defValue
+      hidDefValue = item.defValue
+    %] 
+
+  [% CASE  "labcheck" %]
+    [% IF item.id_input == 'Recursive' %]
+      [% IF ENABLED_PROXY %]
+        [% PROCESS lab_check
+          labLabel = item.labLabel
+          labHint  = item.labHint
+          id_input = item.id_input
+          isChecked= item.isChecked
+        %]
+        </DIV>
+      [% END %]
+    [% ELSE %]
+      [% PROCESS lab_check
+        labLabel = item.labLabel
+        labHint  = item.labHint
+        id_input = item.id_input
+        isChecked= item.isChecked
+      %]
+    [% END %]
+
+  [% CASE  "labcheckLWP" %]
+    [% IF item.isChecked == 'CHECKED' %]
+      [% ENABLED_PROXY = 1 %]
+      <DIV class="ExpertStyle"> 
+    [% END %]
+    [% PROCESS lab_checkLWP
+      labLabel = item.labLabel
+      labHint  = item.labHint
+      id_input = item.id_input
+      isChecked= item.isChecked
+    %] 
+
+  [% CASE  "apply" %]
+      <BR><BR> 
+    [% IF flagExpert == 1 %] 
+       </DIV>
+    [% END %]
+
+    [% PROCESS buton_apply
+      id_input = item.id_input
+      id_value = item.id_value
+    %] 
+    <BR><BR>
+
+[% END %]
+[% END %]
+
+</form>
+</div>
+<script>
+document.forms[0].elements[0].focus();
+ShowMess( "[% message %]" );
+</script>
+
+
+[%- PROCESS footer -%] 
+<br><a class="PetiFont">[[% parent %] with [% template.name %] ]  (version 0.01)</a>
+
+
+[% BLOCK DeuxListes %]
+
+<DIV class="ExpertStyle">
+<BR><BR>
+    [% WRAPPER tlistIL
+      idLabel  = lab42
+      idSelect = 'listHomed'
+      FuncJS   = 'ShowRemoveHomed();'
+      nbVisible = 5
+    %]  
+
+    [% FOREACH item IN homed_handlers %]
+      [% PROCESS one_item       
+        idValue = item
+      %]
+    [% END %]
+    [% END %]
+
+<input id="bRemoveHomed" type="hidden" name="RemoveHomedHid" value="[% lab7 %]"  class="bouton_0" >
+
+<BR><BR><HR><BR><BR>
+
+    [% WRAPPER tlistIL 
+      idLabel  = lab43
+      idSelect = 'listDispo'
+      FuncJS   = 'ShowAddDispo();'
+      nbVisible = 5
+    %]  
+
+    [% FOREACH item IN dispo_handlers %]
+      [% PROCESS one_item       
+        idValue = item
+      %]
+    [% END %]
+    [% END %]
+
+<input id="bAddDispo" type="hidden" name="AddDispoHid" value="[% lab6 %]" class="bouton_0" >
+<BR><BR>
+</DIV>
+
+[% END %]

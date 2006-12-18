@@ -1,0 +1,425 @@
+[%# --------header ------------------------------------------------------ %]
+[% BLOCK header %]
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD>
+<LINK rel="stylesheet" type="text/css" href="/lemongui4webmin/css/[% style %].css">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="Description" CONTENT="The initial installation of Debian apache-perl.">
+<TITLE>[% title %]</TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF"  LINK="#0000EF" VLINK="#55188A" ALINK="#FF0000">
+[% PROCESS double_bouton_tl 
+  nom_0 =>'module_config'
+  label_0 =>'module config'
+  link_0 => '/config.cgi?lemongui4webmin'
+  nom_1 =>'webmin'
+  label_1 =>'webmin'
+  link_1 => '/'
+%]
+
+[% haut= { 
+         nom = 'switch_mode'
+         label = label 
+         link = '/lemongui4webmin/'
+         cgi   =cgi  
+         style= css 
+  }
+haut.link ="$haut.link$haut.cgi?mode=$haut.label&style=$haut.style" 
+%]
+[% IF label != '0' %]
+[% PROCESS bouton_tr 
+  nom =>haut.nom
+  label =>haut.label
+  link => haut.link
+%]
+[% END %]
+
+[% IF mode == 'Expert' %]
+  <img src='/lemongui4webmin/images/theExpert.jpg' style="position:absolute ; left: 40%; top: 2px;">
+[% ELSE %]
+  <img src='/lemongui4webmin/images/theNormal.jpg' style="position:absolute ; left: 40%; top: 2px;">
+[% END %]
+
+
+
+[% END %]
+
+[%# --------footer ------------------------------------------------------ %]
+
+[% BLOCK footer %]	     
+</BODY>
+</HTML>
+[% END %]
+
+[%# --------radio 2 ------------------------------------------------------ %]
+[% BLOCK radio_2 %]
+<LABEL>[%- title -%]</LABEL>
+[% IF vertical == 1 %]
+<P>
+[% END %]
+<SPAN class = "OPTION">[% label_0 %]</SPAN>
+<input type="radio" name="[% nom %]" value="[% label_0 %]"
+ [%- IF checked ==  '0' -%]
+   checked 
+ [%- END -%]
+[% IF autosubmit == '1' %] 
+ onChange ="this.form.submit()"
+[% END %]
+
+ class="OPTION">
+[% IF vertical == 1 %]
+<P>
+[% END %]
+<SPAN class = "OPTION">[% label_1 %]</SPAN>
+<input type="radio" name="[% nom %]" value="[% label_1 %]"
+ [%- IF checked ==  '1' -%]
+   checked 
+ [%- END -%]
+[% IF autosubmit == '1' %] 
+ onChange ="this.form.submit()"
+[% END %]
+
+class="OPTION">
+[% IF vertical == 1 %]
+<P>
+[% END %]
+[% END %]
+
+
+[%# --------radio 3 ------------------------------------------------------ %]
+[% BLOCK radio_3 %]
+<LABEL>[%- title -%]</LABEL>
+[% IF vertical == 1 %]
+<BR>
+[% END %]
+<SPAN class = "OPTION">[% label_0 %]</SPAN>
+<input type="radio" name="[% nom %]" value="[% label_0 %]"
+ [%- IF checked ==  '0' -%]
+   checked 
+ [%- END -%]
+[% IF autosubmit == '1' %] 
+ onChange ="this.form.submit()"
+[% END %]
+
+ class="OPTION">
+[% IF vertical == 1 %]
+<BR>
+[% END %]
+<SPAN class = "OPTION">[% label_1 %]</SPAN>
+<input type="radio" name="[% nom %]" value="[% label_1 %]"
+ [%- IF checked ==  '1' -%]
+   checked 
+ [%- END -%]
+[% IF autosubmit == '1' %] 
+ onChange ="this.form.submit()"
+[% END %]
+
+class="OPTION">
+[% IF vertical == 1 %]
+<BR>
+[% END %]
+<SPAN class = "OPTION">[% label_2 %]</SPAN>
+<input type="radio" name="[% nom %]" value="[% label_2 %]"
+ [%- IF checked ==  '2' -%]
+   checked 
+ [%- END -%]
+[% IF autosubmit == '1' %] 
+ onChange ="this.form.submit()"
+[% END %]
+
+class="OPTION">
+[% IF vertical == 1 %]
+<BR>
+[% END %]
+[% END %]
+
+[%# --------Presentation extrait de code  DIV - PRE -------------- %]
+[% BLOCK div_pre %]
+   <div class="ConfStyle"> 
+     <pre>
+[% content %]
+     </pre>
+   </div>
+[% END %]
+
+[%# ------------------ ONGLETS nb variable vari_tabs -------------- %]
+[% BLOCK vari_tabs %]
+<div class="tabs">
+  [% content %]
+</div>
+[% END %]
+
+[% BLOCK one_tab %]
+<a href= "[% link %]" class="[% etatab %]" > 
+   [% labTab %]
+</a>
+[% END %]
+
+
+[%# ------------------ SELECT-OPTION nb variable tcombo -------------- %]
+[% BLOCK tcombo %]
+<BR>
+<LABEL style="width: 180px; ">[% idLabel %]</LABEL>
+<SELECT name=[% idSelect %]  class="SELECT"  onChange ="this.form.submit()">  
+
+  [% content %]
+
+</SELECT>
+<BR>
+<BR>
+[% END %]
+
+[%# ------------------ SELECT-OPTION nb variable tcombo -------------- %]
+[% BLOCK tcombo150 %]
+<BR>
+<LABEL style="width: 150px; ">[% idLabel %]</LABEL>
+<SELECT name=[% idSelect %]  class="SELECT"  onChange ="this.form.submit()">  
+
+  [% content %]
+
+</SELECT>
+[% END %]
+
+[% BLOCK tcombo150B %]
+<BR>
+<LABEL style="width: 150px; ">[% idLabel %]</LABEL>
+<SELECT name=[% idSelect %]  class="SELECT" >  
+
+  [% content %]
+
+</SELECT>
+[% END %]
+
+
+[% BLOCK one_option %]
+<OPTION value="[% idValue %]" class="SELECTO" [% isSelected %]>[% labOption %]</OPTION>
+[% END %]
+
+[%# ------------------ SELECT-OPTION WITH SIZE variable tlist -------------- %]
+[% BLOCK tlist %]
+<BR>
+<LABEL style="width: 200px; font-size: 0.9em; ">[% idLabel %]</LABEL>
+<SELECT name=[% idSelect %]  class="ListSELECT" SIZE=[% nbVisible %] " onChange="[% FuncJS %]">  
+
+  [% content %]
+
+</SELECT>
+<BR>
+<BR>
+[% END %]
+
+[% BLOCK tlistIL %]
+
+<LABEL style="width: 150px; font-size: 0.9em; ">[% idLabel %]</LABEL>
+<SELECT name=[% idSelect %]  class="ListSELECT" SIZE=[% nbVisible %] " onChange="[% FuncJS %]">  
+
+  [% content %]
+
+</SELECT>
+[% END %]
+
+[% BLOCK one_item %]
+<OPTION value=[% idValue %] class="ListSELECTO" >[% idValue %]</OPTION>
+[% END %]
+[% BLOCK one_itemA %]
+<OPTION value=[% idValue %] class="ListSELECTA" >[% idValue %]</OPTION>
+[% END %]
+
+[%# ------------------ TROIS PETITS ONGLETS tabs_3 -------------- %]
+[% BLOCK tabs_3 %]
+<div class="tabs">
+  <a href= "[% link_0 %]" class="[% etatab_0 %]" > 
+   [% labTab_0 %]
+  </a>
+  <a href= "[% link_1 %]" class="[% etatab_1 %]"> 
+    [% labTab_1 %]
+  </a>
+  <a href= "[% link_2 %]" class="[% etatab_2 %]">
+    [% labTab_2 %]
+  </a>
+</div>
+[% END %]
+
+[%# ------------------ QUATRE PETITS ONGLETS tabs_4 -------------- %]
+[% BLOCK tabs_4 %]
+<div class="tabs">
+  <a href= "[% link_0 %]" class="[% etatab_0 %]" > 
+   [% labTab_0 %]
+  </a>
+  <a href= "[% link_1 %]" class="[% etatab_1 %]"> 
+    [% labTab_1 %]
+  </a>
+  <a href= "[% link_2 %]" class="[% etatab_2 %]">
+    [% labTab_2 %]
+  </a>
+  <a href= "[% link_3 %]" class="[% etatab_3 %]">
+    [% labTab_3 %]
+  </a>
+</div>
+[% END %]
+
+[%# ------------------ DOUBLE-BOUTON - TOP LEFT -------------- %]
+[% BLOCK double_bouton_tl %]
+<div class="posit_TL">
+<input type="button" name="[% nom_0 %]" value="[% label_0 %]"
+onClick="self.location.href='[% link_0 %]'" class="bouton_0" >
+<input type="button" name="[% nom_1 %]" value="[% label_1 %]"
+onClick="self.location.href='[% link_1 %]'" class="bouton_0" >
+</div>
+[% END %]
+
+[%# ------------------ SIMPLE-BOUTON - TOP RIGHT-------------- %]
+[% BLOCK bouton_tr %]
+<div class="posit_TR">
+<input type="button" name="[% nom %]" value="[% label %]"
+onClick="self.location.href='[% link %]'" class="bouton_0" >
+</div>
+[% END %]
+
+[%# ------------------ BOUTON "EN LIGNE" -------------- %]
+[% BLOCK bouton_plus %]
+<input type="button" name="[% nom %]" value="[% label %]"
+onClick="self.location.href='[% link %]'" class="bouton_0" >
+[% END %]
+
+[%# ------------------ BOUTON "ADD" -------------- %]
+[% BLOCK bouton_add %]
+<input type="button" name="[% nom %]" value="[% label %]"
+onClick="addServeurPort()" class="bouton_0" >
+[% END %]
+
+
+[%# ------------------ 3 ligne de boutons radios -------------- %]
+[% BLOCK radio_col %]
+<div class="LABG">[% title %]</div><BR>
+<input type="radio" name="[% nom %]" value="[% label_0 %]"
+ [%- IF checked ==  '0' -%]
+   checked 
+ [%- END -%]
+[% IF autosubmit == '1' %] 
+ onChange ="this.form.submit()"
+[% END %]
+<SPAN class = "OPTION">[% label_0 %]</SPAN><BR>
+<input type="radio" name="[% nom %]" value="[% label_1 %]"
+ [%- IF checked ==  '1' -%]
+   checked 
+ [% END %]
+[% IF autosubmit == '1' %] 
+ onChange ="this.form.submit()"
+[% END %]
+<SPAN class = "OPTION">[% label_1 %]</SPAN><BR>
+<input type="radio" name="[% nom %]" value="[% label_2 %]"
+ [%- IF checked ==  '2' -%]
+   checked 
+ [%- END -%]
+[% IF autosubmit == '1' %] 
+ onChange ="this.form.submit()"
+[% END %]
+<SPAN class = "OPTION">[% label_2 %]</SPAN>
+[% END  %]
+
+[%# ------------------ LABEL et INPUT  ------------- %]
+[% BLOCK lab_edit %]
+<br>
+<LABEL>[% labLabel %]</LABEL>
+<INPUT name="[% id_input %]" size="27" maxlength="27" VALUE="[% defValue %]" class="INPUTR" >
+<i>[% labHint %]</i>
+<INPUT type=hidden name=_[% id_input %] VALUE="[% hidDefValue %]" >
+<BR>
+[% END %]
+
+
+
+[%# ------------------ LABEL et INPUT 54 car ------------- %]
+[% BLOCK lab_edit54 %]
+<br>
+<LABEL>[% labLabel %]</LABEL>
+<INPUT name="[% id_input %]" size="40" maxlength="54" VALUE="[% defValue %]" class="INPUTR" >
+<i>[% labHint %]</i>
+<INPUT type=hidden name=_[% id_input %] VALUE="[% hidDefValue %]" >
+<BR>
+[% END %]
+
+[%# -----------------  CHECK BOX ------------------- %]
+[% BLOCK lab_check %]
+<br>
+<LABEL>[% labLabel %]</LABEL>
+<INPUT type="checkbox" name=[% id_input %]  class="OPTION"  [% isChecked %]>
+<i>[% labHint %]</i>
+<BR>
+[% END %]
+
+[% BLOCK lab_checkLWP %]
+<br>
+<LABEL>[% labLabel %]</LABEL>
+<INPUT type="checkbox" name=[% id_input %]  class="OPTION"  [% isChecked %] OnChange='this.form.submit();' >
+<i>[% labHint %]</i>
+<BR>
+[% END %]
+
+
+[%# -----------------  CHECK BOX inline ------------------- %]
+[% BLOCK lab_checkIL %]
+<B style="Display: inline;  Margin-left: 25px;">[% labLabel %]</B>
+<INPUT type="checkbox" name=[% id_input %]  class="OPTION"  [% isChecked %] OnChange="[% funcOnChange %]" >
+<i>[% labHint %]</i>
+[% END %]
+
+
+[%# -----------------  BUTTON SUBMIT  ------------------- %]
+[% BLOCK buton_submit %]
+<br>
+<br>
+<div class="posit_C">
+<INPUT type="Submit" name=[% id_input %] class="bouton_0" >
+</div>
+<br>
+[% END %]
+
+[%# -----------------  BUTTON APPLY  ------------------- %]
+[% BLOCK buton_apply %]
+<div class="posit_C">
+<INPUT type="Submit" name=[% id_input %] class="bouton_0" Value="[% id_value %]">
+</div>
+[% END %]
+
+[% BLOCK buton_applyIL %]
+<div style="DISPLAY: inline; Margin-left: 25px;">
+<INPUT type="Submit" name=[% id_input %] class="bouton_0" Value="[% id_value %]">
+</div>
+[% END %]
+
+[%# ------------------ BOUTON "ADD_REMOVE" -------------- %]
+[% BLOCK bouton_addRemove %]
+<br>
+<br>
+<div class="posit_C">
+<input type="Submit" name=[% nom_a %] value=[% label_a %]
+ onClick="[% funcJS_a %]" class="bouton_0" >
+<input id="[% idBRemo %]" type="hidden" name=[% nom_r %] value=[% label_r %]
+ onClick="[% funcJS_r %]" class="bouton_0" >
+</div>
+<BR>
+[% END %]
+
+[% BLOCK bouton_addRemove2 %]
+<br>
+<br>
+<div class="posit_C">
+<input type="Submit" name="[% nom_a %]" value="[% label_a %]"
+ onClick="[% funcJS_a %]" class="bouton_0" >
+<input id="[% idBRemo %]" type="[% btype %]" name="[% nom_r %]" value="[% label_r %]"
+ onClick="[% funcJS_r %]" class="bouton_0" >
+</div>
+<BR>
+[% END %]
+
+[% BLOCK bouton_addRemoveIL %]
+<div class="posit_C">
+<input type="Submit" name=[% nom_a %] value="[% label_a %]"
+ onClick="[% funcJS_a %]" class="bouton_0" >
+<input id="[% idBRemo %]" type="hidden" name="[% nom_r %]" value="[% label_r %]"
+ onClick="[% funcJS_r %]" class="bouton_0" >
+</div>
+[% END %]

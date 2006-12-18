@@ -1,0 +1,67 @@
+Revision history for Perl extension Lemonldap::NG::Handler.
+
+0.64  Sun Dec 17 14:54:14 2006
+	- config is now shared with Lemonldap::NG::Manager::Conf
+
+0.621 Tue Dec 5 20:12:12 2006
+	- move Handler.pod to Handler.pm to avoid CPAN bug
+	- remove mod_perl dependency
+
+0.62  Fri Nov 3 8:08:37 2006
+	- correction in documentation
+	- add mod_perl in PREREQ_PM (CPAN tester failed)
+
+0.61  Thu Nov 2 16:53:03 2006
+	- little correction in documentaion
+	- wrong version number in Handler/SharedConf/DBI.pm
+
+0.6   Thu Nov 2 15:16:56 2006
+	- Bug correction in Proxy.pm
+	- New documentation
+	- Handler.pm becomes Handler/Simple.pm
+	- Tested with 40.000 users
+
+0.5   Tue Oct 17 15:35:28 2006
+	- Bug correction in Proxy.pm
+	- First running release under Apache2
+
+0.4   Mon Oct 17 15:00:20 2006
+	- Bug corrections in Apache2 support
+
+0.3   Sat Oct 14 14:54:56 2006
+	- Bug correction in both Apache 1 and 2 support
+
+0.2   Mon Oct 9 17:32:20 2006
+	- Introducing Apache2 support
+
+0.11  Fri Oct 6 17:24:00 2006
+	- bugs corrections
+
+0.1   Thu Oct 5 19:00:00 2006
+	- new package: Lemonldap::NG::Handler::SharedConf::DBI including
+	a complete shared system based on a shared DB
+
+0.06  Thu Jul 13 19:21:00 2006
+	- comments and little correction in Handler.pm
+	- bug correction in SharedConf.pm
+
+0.05  Fri Jul 29 17:32:00 2005
+	- bug correction in Vhost.pm
+
+0.04  Fri Jul 29 16:02:00 2005
+	- bug correction in SharedConf.pm
+
+0.03  Wed Jul 27 21:00:00 2005
+	- bug correction in Handler.pm: &conditionSub returned nothing except
+	for default configuration
+	- modification in SharedConf.pm : adding (undocumented)
+	functionnalities to be able to dinamically update configuration
+
+0.02  Sat Jul 2 10:35:00 2005
+	- bug corrections
+	- Vhost.pm modification: add header personalization per virtual host
+
+0.01  Thu Jun 23 17:36:59 2005
+	- original version; created by h2xs 1.23 with options
+		-AXn Lemonldap::NG::Handler
+

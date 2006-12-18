@@ -1,0 +1,22 @@
+[% PROCESS templates/mycomposant.tt -%]
+[%- PROCESS header 
+    title => title 
+    style => style 
+-%]
+<h1> [% title %] </h1>
+[% PROCESS tabs_4 %]
+[% WRAPPER div_pre %]
+<FORM  action="index.cgi" method=get >
+[%- PROCESS radio_col 
+     autosubmit => '1' 
+     title =>'Style:'
+     nom => 'style'
+     label_0 => 'Old Maps'
+     label_1 => 'Electro'
+     label_2 => 'Golf'
+     checked => checked
+-%]
+</FORM>
+[% about %]
+[% END %] 
+[%- PROCESS footer -%] 

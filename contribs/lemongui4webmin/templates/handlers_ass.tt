@@ -1,0 +1,172 @@
+[% PROCESS templates/mycomposant.tt -%]
+
+[%- PROCESS header 
+    title => title 
+    style => style 
+-%]
+
+<script>
+
+function ShowMess( leMess )
+{
+   if( leMess != 0 ){
+     alert( leMess );  
+   }
+}
+
+</script>
+
+<h1> [% title %] </h1>
+[% WRAPPER vari_tabs %]
+[% FOREACH item IN tab_session %]
+[% PROCESS one_tab
+   link= item.link
+   etatab= item.etatab
+   labTab= item.labTab
+%]
+[% END %]
+[% END %]
+
+
+<div class="ConfStyle">
+  [% helpText %]
+</div>
+
+<form method=get>
+
+<div class="ConfStyle">
+
+[% lab6  = lab_6 %]
+[% lab7  = lab_7 %]
+[% lab42  = lab_42 %]
+[% lab43  = lab_43 %]
+[% flagExpert = 0 %]
+
+<BR><BR>
+<B style="padding-left: 20px;">Type</B>
+<SELECT name=selTypeHandler class="ListSELECT" style="font-size: 1.0em;" >  
+
+  <OPTION value=GenericType    class="ListSELECTO" style="font-size: 1.0em;" SELECTED  >Generic</OPTION>
+
+</SELECT>
+
+[% selHostName  = '' %]
+[% selHostIPA   = '' %]
+[% IF virtual_host == 'byName' %]
+  [% selHostName = 'SELECTED' %]
+[% ELSE %]
+  [% selHostIPA  = 'SELECTED' %]
+[% END %]
+
+<B style="padding-left: 20px;">Virtual Host</B>
+<SELECT name=selVirtualHost class="ListSELECT" style="font-size: 1.1em;" >  
+  <OPTION value=byIPAdress class="ListSELECTO" style="font-size: 1.1em;" [% selHostIPA %] >By IP adress</OPTION>
+  <OPTION value=byName     class="ListSELECTO" style="font-size: 1.1em;" [% selHostName %] >By Name</OPTION>
+</SELECT>
+
+
+<BR><BR><HR>
+
+<input type=hidden name=mode value="[% mode %]" >
+<input type=hidden name=style value="[% css %]" >
+<input type=hidden name=idDomain value="[% domaine %]" >
+<input type=hidden name=ExHandler value="[% exHandler %]" > 
+
+
+[% FOREACH item IN composall %]
+[% SWITCH item.type %]
+
+  [% CASE "listAllNone" %]
+     <BR>
+     <LABEL>[% item.labLabel %]</LABEL>
+     <SELECT name=selAllow class="ListSELECT" >  
+       [% selallnone = '' %]
+       [% IF item.defValue == 'ALL' %] [% selallnone = 'SELECTED' %] [% END %]
+       <OPTION value=ALL   class="ListSELECTO"  [% selallnone %] >ALL</OPTION>
+       [% selallnone = '' %]
+       [% IF item.defValue == 'NONE' %] [% selallnone = 'SELECTED' %] [% END %]
+       <OPTION value=NONE  class="ListSELECTO"  [% selallnone %] >NONE</OPTION>
+     </SELECT>
+     <i>[% item.labHint %]</i>
+     <BR>
+
+  [% CASE  "labedit" %]
+      [% PROCESS lab_edit
+        labLabel    = item.labLabel
+        labHint     = item.labHint
+        id_input    = item.id_input
+        defValue    = item.defValue
+        hidDefValue = item.defValue
+      %]
+
+
+  [% CASE  "labedit54" %]
+
+    [% PROCESS lab_edit54
+      labLabel    = item.labLabel
+      labHint     = item.labHint
+      id_input    = item.id_input
+      defValue    = item.defValue
+      hidDefValue = item.defValue
+    %] 
+
+  [% CASE  "labcheck" %]
+    [% PROCESS lab_check
+      labLabel = item.labLabel
+      labHint  = item.labHint
+      id_input = item.id_input
+      isChecked= item.isChecked
+    %] 
+
+[% CASE  "labcheckLWP" %]
+    [% PROCESS lab_check
+      labLabel = item.labLabel
+      labHint  = item.labHint
+      id_input = item.id_input
+      isChecked= item.isChecked
+    %] 
+    
+  [% CASE  "apply" %]
+      <BR><BR> 
+    [% IF flagExpert == 1 %] 
+       </DIV>
+    [% END %]
+
+    [% PROCESS buton_apply
+      id_input = item.id_input
+      id_value = item.id_value
+    %] 
+    <BR><BR>
+
+[% END %]
+[% END %]
+<BR><BR>
+
+<input type="Hidden" name="IDX_WIZARD" value="[% IDX_ASSIST %]" >
+
+<div align="center">
+[% IF IDX_ASSIST > 0 %]
+<input type="Button" name="AssistCreate_Back" value="[% lab_prev %]" class="bouton_0"
+  onClick="self.location.href='javascript:history.back()'">
+[% END %]
+[% IF IDX_ASSIST < 3 %]
+<input type="Submit" name="AssistCreate_Next" value="[% lab_next %]" class="bouton_0">
+[% END %]
+[% IF IDX_ASSIST == 3 %]
+<input type="Submit" name="AssistCreate_Next" value="[% lab_27 %]" class="bouton_0">
+[% END %]
+</div>
+
+<BR><BR>
+</form>
+</div>
+<script>
+document.forms[0].elements[0].focus();
+ShowMess( "[% message %]" );
+</script>
+
+
+[%- PROCESS footer -%] 
+<br><a class="PetiFont">[[% parent %] with [% template.name %] ]  (version 0.01)</a>
+
+
