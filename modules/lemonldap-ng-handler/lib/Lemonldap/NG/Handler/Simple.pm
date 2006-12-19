@@ -4,8 +4,9 @@ use strict;
 
 use MIME::Base64;
 use Exporter 'import';
+use Safe;
 
-our $VERSION = '0.6';
+our $VERSION = '0.7';
 
 our %EXPORT_TAGS = (
     localStorage => [
@@ -17,7 +18,7 @@ our %EXPORT_TAGS = (
     locationRules => [
         qw(
           $locationCondition $defaultCondition $locationCount
-          $locationRegexp $apacheRequest $datas
+          $locationRegexp $apacheRequest $datas $safe
           )
     ],
     import => [
@@ -55,6 +56,7 @@ our (
     $apacheRequest,       $locationCount,     $cookieName,           $portal,
     $datas,               $globalStorage,     $globalStorageOptions, $localStorage,
     $localStorageOptions, $whatToTrace,       $https,                $refLocalStorage,
+    $safe,
 );
 
 ##########################################
@@ -184,11 +186,9 @@ sub lmSetErrHeaderOut {
 sub lmSetHeaderOut {
     my ( $r, $h, $v ) = @_;
     if ( MP() == 2 ) {
-        print STDERR "DEBUG2 $h => $v\n";
         return $r->headers_out->set( $h => $v );
     }
     else {
-        print STDERR "DEBUG1 $h => $v\n";
         return $r->header_out( $h => $v );
     }
 }
@@ -206,6 +206,10 @@ sub lmHeaderOut {
 ##############################
 # Initialization subroutines #
 ##############################
+
+# Security jail
+$safe = new Safe;
+$safe->share('&encode_base64','$datas');
 
 # init() : by default, it calls localInit and globalInit, but with
 #          a shared configuration, init() is overloaded to call only
@@ -302,7 +306,7 @@ sub conditionSub {
       if ( $cond =~ /^deny$/i );
     $cond =~ s/\$(\w+)/\$datas->{$1}/g;
     my $sub;
-    eval '$sub = sub {return (' . $cond . ')}';
+    $sub = $safe->reval("sub {return ( $cond )}");
     return $sub;
 }
 
@@ -357,9 +361,10 @@ sub forgeHeadersInit {
     foreach ( keys %tmp ) {
         $sub .= "lmSetHeaderIn(\$apacheRequest,'$_' => join('',split(/[\\r\\n]+/," . $tmp{$_} . ")));";
     }
-    $sub = "\$forgeHeaders = sub {$sub};";
-    eval "$sub";
-    $class->lmLog( "$class: Unable to forge headers: $@ $sub", 'error' ) if ($@);
+    #$sub = "\$forgeHeaders = sub {$sub};";
+    #eval "$sub";
+    $forgeHeaders = $safe->reval("sub {$sub};");
+    $class->lmLog( "$class: Unable to forge headers: $@: sub {$sub}", 'error' ) if ($@);
 }
 
 ################

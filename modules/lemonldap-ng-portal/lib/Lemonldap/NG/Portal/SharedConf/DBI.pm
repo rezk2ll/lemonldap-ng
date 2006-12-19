@@ -12,7 +12,7 @@ use MIME::Base64;
 *EXPORT_TAGS = *Lemonldap::NG::Portal::SharedConf::EXPORT_TAGS;
 *EXPORT      = *Lemonldap::NG::Portal::SharedConf::EXPORT;
 
-our $VERSION = '0.2';
+our $VERSION = '0.3';
 
 our @ISA = qw(Lemonldap::NG::Portal::SharedConf);
 
@@ -88,7 +88,7 @@ constructor C<new()>:
 =over
 
 =item * B<dbiChain>: the string to use to connect to the database. Ex:
-"dbi:mysql:database:sso_config:host:127.0.0.1",
+"dbi:mysql:database:lmSessions:host:127.0.0.1",
 
 =item * B<dbiUser>: the name of the user to use to connect to the database if
 needed,

@@ -6,9 +6,9 @@ my $h=new Lemonldap::NG::Manager(
 	{
 		configStorage=>{
 			type=>'File',
-			dirName=>"/tmp/",
+			dirName=>"__DIR__/conf/",
 		},
-		dhtmlXTreeImageLocation=> "/img/",
+		dhtmlXTreeImageLocation=> "/imgs/",
 		# jsFile => /path/to/lemonldap-ng-manager.js,
 	}
   ) or die "Impossible de démarrer";

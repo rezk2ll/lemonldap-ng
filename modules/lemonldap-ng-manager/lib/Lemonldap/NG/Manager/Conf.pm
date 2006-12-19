@@ -4,9 +4,8 @@ use strict;
 use Storable qw(thaw freeze);
 use MIME::Base64;
 
-our $VERSION = 0.1;
+our $VERSION = 0.3;
 our @ISA;
-my $mdone = 0;
 
 sub new {
     my $class = shift;
@@ -19,7 +18,7 @@ sub new {
     }
     $args ||= {};
     my $self = bless $args, $class;
-    unless($mdone) {
+    unless($self->{mdone}) {
         unless($self->{type}) {
 	    print STDERR "configStorage: type is not defined\n";
 	    return 0;
@@ -29,7 +28,7 @@ sub new {
         die ($@) if($@);
         push @ISA, $self->{type};
         return 0 unless $self->prereq;
-	$mdone++;
+	$self->{mdone}++;
     }
     return $self;
 }

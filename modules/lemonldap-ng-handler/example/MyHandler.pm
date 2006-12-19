@@ -1,6 +1,6 @@
 package My::Package;
-use Lemonldap::NG::Handler::SharedConf::File;
-@ISA = qw(Lemonldap::NG::Handler::SharedConf::File);
+use Lemonldap::NG::Handler::SharedConf;
+@ISA = qw(Lemonldap::NG::Handler::SharedConf);
 
 __PACKAGE__->init ( {
     localStorage        => "Cache::FileCache",
@@ -11,7 +11,7 @@ __PACKAGE__->init ( {
 
     configStorage       => {
               type                 => 'File',
-              dirName              => '__DIR__',
+              dirName              => '__DIR__/conf',
     },
 
     https               => 0,

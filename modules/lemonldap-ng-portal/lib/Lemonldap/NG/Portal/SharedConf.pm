@@ -8,7 +8,7 @@ use Lemonldap::NG::Manager::Conf;
 *EXPORT_TAGS = *Lemonldap::NG::Portal::Simple::EXPORT_TAGS;
 *EXPORT      = *Lemonldap::NG::Portal::Simple::EXPORT;
 
-our $VERSION = "0.2";
+our $VERSION = "0.3";
 our @ISA     = qw(Lemonldap::NG::Portal::Simple);
 
 sub getConf {
@@ -19,6 +19,7 @@ sub getConf {
     my $tmp = $self->{lmConf}->getConf;
     return 0 unless $tmp;
     $self->{$_} = $tmp->{$_} foreach(keys %$tmp);
+    1;
 }
 
 sub setGroups {

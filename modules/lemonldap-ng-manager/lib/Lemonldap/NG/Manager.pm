@@ -9,7 +9,7 @@ use Lemonldap::NG::Manager::Conf;
 
 our @ISA = qw(Lemonldap::NG::Manager::Base);
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 sub new {
     my($class,$args) = @_;
@@ -295,7 +295,7 @@ sub upload {
     $config->{globalStorage} = $tree->{generalParameters}->{sessionStorage}->{globalStorage}->{value};
     while ( my ( $v, $h ) = each( %{$tree->{generalParameters}->{sessionStorage}->{globalStorageOptions}})) {
         next unless ( ref($h) );
-        $config->{globalStorageOptions}->{$v} = $h->{value};
+        $config->{globalStorageOptions}->{$h->{text}} = $h->{value};
     }
     foreach (qw(ldapBase ldapPort ldapServer managerDn managerPassword)) {
 	$config->{$_} = $tree->{generalParameters}->{ldapParameters}->{$_}->{value};

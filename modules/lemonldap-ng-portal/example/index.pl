@@ -5,7 +5,7 @@ use Lemonldap::NG::Portal::SharedConf;
 my $portal = Lemonldap::NG::Portal::SharedConf->new ( {
 	configStorage => {
 		type    => 'File',
-		dirname => '__DIR__',
+		dirName => '__DIR__/conf/',
 	}
 });
 
