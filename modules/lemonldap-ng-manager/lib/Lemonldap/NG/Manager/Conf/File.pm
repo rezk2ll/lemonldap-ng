@@ -48,7 +48,7 @@ sub load {
     local $/ = "";
     open FILE, $self->{dirName}."/lmConf-$cfgNum";
     while(<FILE>) {
-        my($k,$v) = split /\n\t/;
+        my($k,$v) = split /\n\s+/;
 	chomp $k;
 	$v =~ s/\n*$//;
 	if($fields) {
