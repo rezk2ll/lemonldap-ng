@@ -4,7 +4,7 @@ use strict;
 use Storable qw(thaw freeze);
 use MIME::Base64;
 
-our $VERSION = 0.3;
+our $VERSION = 0.4;
 our @ISA;
 
 sub new {
@@ -74,3 +74,89 @@ sub getConf {
 
 1;
 __END__
+
+=head1 NAME
+
+Lemonldap::NG::Manager::Conf - Perl extension written to manage Lemonldap::NG
+Web-SSO configuration.
+
+=head1 SYNOPSIS
+
+  use Lemonldap::NG::Manager::Conf;
+  my $confAccess = new Lemonldap::NG::Manager::Conf(
+		  {
+		  type=>'File',
+		  dirName=>"/tmp/",
+		  },
+    ) or die "Unable to build Lemonldap::NG::Manager::Conf, see Apache logs";
+  my $config = $confAccess->getConf();
+
+=head1 DESCRIPTION
+
+Lemonldap::NG::Manager provides a simple interface to access to Lemonldap::NG
+Web-SSO configuration. It is used by L<Lemonldap::NG::Handler>,
+L<Lemonldap::NG::Portal> and L<Lemonldap::NG::Manager>
+
+=head2 SUBROUTINES
+
+=over
+
+=item * B<new> (constructor): it takes different arguments depending on the
+choosen type. Examples:
+
+=over
+
+=item * B<File>:
+  $confAccess = new Lemonldap::NG::Manager::Conf(
+		  {
+		  type    => 'File',
+		  dirName => '/var/lib/lemonldap-ng/',
+		  });
+
+=item * B<DBI>:
+  $confAccess = new Lemonldap::NG::Manager::Conf(
+                  {
+		  type
+		  dbiChain    => 'DBI:mysql:database=lemonldap-ng,host=1.2.3.4',
+		  dbiUser     => 'lemonldap'
+		  dbiPassword => 'pass'
+		  dbiTable    => 'lmConfig',
+		  });
+
+=back
+
+=item * B<getConf>: returns a hash reference to the configuration. it takes
+a hash reference as first argument containing 2 optional parameters:
+
+=over
+
+=item * C<cfgNum => $number>: the number of the configuration wanted. If this
+argument is omitted, the last configuration is returned.
+
+=item * C<fields => [array of names]: the desired fields asked. By default,
+getConf returns all (C<select * from lmConfig>).
+
+=back
+
+=item B<saveConf>: stores the Lemonldap::NG configuration passed in argument
+(hash reference). it returns the number of the new configuration.
+
+=back
+
+=head1 SEE ALSO
+
+L<Lemonldap::NG::Handler>, L<Lemonldap::NG::Portal>, L<CGI>
+
+=head1 AUTHOR
+
+Xavier Guimard, E<lt>x.guimard@free.frE<gt>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (C) 2006 by Xavier Guimard
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself, either Perl version 5.8.8 or,
+at your option, any later version of Perl 5 you may have available.
+
+=cut
