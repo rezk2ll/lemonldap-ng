@@ -52,7 +52,7 @@ sub new {
 # Subroutines to make all the work
 sub doall {
     my $self = shift;
-    print $self->header_public($ENV{SCRIPT_FILENAME});
+    print $self->header_public;
     print $self->start_html;
     print $self->main;
     print $self->end_html;
@@ -85,7 +85,7 @@ sub print_lmjs {
 
 sub print_help {
     my $self = shift;
-    print $self->header_public($ENV{SCRIPT_FILENAME});
+    print $self->header_public;
     print "TODO: help";
 }
 
@@ -331,59 +331,6 @@ sub config {
     return $self->{_config};
 }
 
-#1;
-#__END__
-# Autoload methods go after =cut, and are processed by the autosplit program.
-
-=head1 NAME
-
-Lemonldap::NG::Manager - Perl extension for managing Lemonldap::NG Web-SSO
-system.
-
-=head1 SYNOPSIS
-
-  use Lemonldap::NG::Manager;
-  my $h=new Lemonldap::NG::Manager(
-      {
-        configStorage=>{
-            type=>'File',
-            dirName=>"/tmp/",
-        },
-        dhtmlXTreeImageLocation=> "/devel/img/",
-        jsFile => /path/to/lemonldap-ng-manager.js,
-      }
-    ) or die "Unable to start, see Apache logs";
-
-  # Simple
-  $h->doall();
-
-=head1 DESCRIPTION
-
-Lemonldap::NG::Manager provides a web interface to manage Lemonldap::NG Web-SSO
-system.
-
-=head2 EXPORT
-
-None by default.
-
-=head1 SEE ALSO
-
-L<Lemonldap::NG::Handler>, L<Lemonldap::NG::Portal>
-
-=head1 AUTHOR
-
-Xavier Guimard, E<lt>x.guimard@free.frE<gt>
-
-=head1 COPYRIGHT AND LICENSE
-
-Copyright (C) 2006 by Xavier Guimard
-
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself, either Perl version 5.8.8 or,
-at your option, any later version of Perl 5 you may have available.
-
-
-=cut
 
 sub css {
     my $self = shift;
@@ -666,8 +613,8 @@ EOT
 sub start_html {
     my $self = shift;
     my %args = @_;
-    $args{'-style'} = [ $args{'-style'} ] if($args{'-style'} and !ref($args{'-style'}));
-    push @{$args{'-style'}}, "$ENV{SCRIPT_NAME}?lmQuery=css";
+    $args{'-style'} = { -src => [ $args{'-style'} ] } if($args{'-style'} and !ref($args{'-style'}));
+    push @{$args{'-style'}->{'-src'}}, "$ENV{SCRIPT_NAME}?lmQuery=css";
     $args{'-title'} ||= 'Lemonldap::NG Configuration';
     $self->SUPER::start_html(%args);
 }
@@ -730,3 +677,136 @@ sub main {
 EOT
 }
 
+1;
+__END__
+
+=head1 NAME
+
+Lemonldap::NG::Manager - Perl extension for managing Lemonldap::NG Web-SSO
+system.
+
+=head1 SYNOPSIS
+
+  use Lemonldap::NG::Manager;
+  my $h=new Lemonldap::NG::Manager(
+      {
+        configStorage=>{
+            type=>'File',
+            dirName=>"/tmp/",
+        },
+        dhtmlXTreeImageLocation=> "/devel/img/",
+	# uncomment this only if lemonldap-ng-manager.js is not in the same
+	# directory than your script.
+        # jsFile => /path/to/lemonldap-ng-manager.js,
+      }
+    ) or die "Unable to start, see Apache logs";
+  # Simple
+  $h->doall();
+
+You can also peersonalize the HTML code instead of using C<doall()>:
+
+  print $self->header_public;
+  print $self->start_html (  # See CGI(3) for more about start_html
+        -style => "/location/to/my.css",
+	-title => "Example.com SSO configuration",
+        );
+  # optional HTML code for the top of the page
+  print "<img src=...";
+  print $self->main;
+  # optional HTML code for the footer of the page
+  print "<img src=...";
+  
+  print $self->end_html;
+
+=head1 DESCRIPTION
+
+Lemonldap::NG::Manager provides a web interface to manage Lemonldap::NG Web-SSO
+system.
+
+=head2 SUBROUTINES
+
+=over
+
+=item * B<new> (constructor): new instanciates the manager object. It takes the
+following arguments:
+
+=over
+
+=item * B<configStorage> (required): a hash reference to the description of the
+configuration database system. the key 'type' must be set. Example:
+
+  configStorage => {
+      type => "DBI",
+      dbiChain    => "DBI:mysql:database=session;host=1.2.3.4",
+      dbiUser     => "lemonldap-ng",
+      dbiPassword => "pass",
+  }
+
+See L<Lemonldap::Manager::NG::Manager::Conf::File> or
+L<Lemonldap::Manager::NG::Manager::Conf::DBI> to know which keys are required.
+
+=item * B<dhtmlXTreeImageLocation> (required): the location of the directory
+containing dhtmlXTree images (provided in example/imgs). If this parameter
+isn't correct, the tree will not appear and you will have sone error in Apache
+error logs.
+
+=item * B<jsFile> (optional): the path to the file C<lemonldap-ng-manager.js>.
+It is required only if this file is not in the same directory than your script.
+
+=back
+
+=item * B<doall>: subroutine that provide headers and the full html code. Il
+simply calls C<header_public>, C<start_html>, C<main> and C<end_html> in this
+order.
+
+=item * B<header>: print HTTP headers. See L<CGI> for more.
+
+=item * B<header_public>: print HTTP headers and manage the
+C<If-Modified-Since> HTTP header. If it match to the age of the file passed
+in first argument, it returns C<HTTP 304 Not Modified> end exit. Else, it
+calls C<header> with the other arguments. By default, all elements of the
+manager use this mecanism except the configuration itself.
+
+=item * B<start_html>: subroutine that print the HTML headers. you can add
+parameters to it; example;
+
+  print start_html(-title     => 'My SSO configuration',
+		  -author     => 'fred@capricorn.org',
+		  -target     => '_blank',
+		  -meta       => {'keywords'=>'pharaoh secret mummy',
+		  'copyright' => 'copyright 1996 King Tut'},
+		  -style      => {'src'=>'/styles/style1.css'},
+		  -BGCOLOR    => 'blue');
+
+See start_html description in L<CGI> for more. Bee carefull with C<-style>
+argument. You have to call it like the example above or simply like this:
+  -style=> '/styles/style1.css',
+All other forms will not work.
+
+=item * B<main>: il produce the main HTML code needed to build the
+configuration interface.
+
+=item * B<end_html>: close the HTML code by writing C<'E<lt>/bodyE<gt>E<lt>/htmlE<gt>'>
+
+=back
+
+Other subroutines manage the produce of CSS, Javascripts and of course the
+configuration tree (called with AJAX).
+
+=head1 SEE ALSO
+
+L<Lemonldap::NG::Handler>, L<Lemonldap::NG::Portal>, L<CGI>
+
+=head1 AUTHOR
+
+Xavier Guimard, E<lt>x.guimard@free.frE<gt>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (C) 2006 by Xavier Guimard
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself, either Perl version 5.8.8 or,
+at your option, any later version of Perl 5 you may have available.
+
+=cut

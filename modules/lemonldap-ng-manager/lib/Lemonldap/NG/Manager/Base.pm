@@ -18,6 +18,7 @@ sub header {
 sub header_public {
     my $self = shift;
     my $filename = shift;
+    $filename ||= $ENV{SCRIPT_FILENAME});
     my @tmp = stat($filename);
     my $date = $tmp[9];
     my $hd = gmtime($date);
