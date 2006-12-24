@@ -390,6 +390,7 @@ sub config {
 *start_html = *Lemonldap::NG::Manager::_HTML::start_html;
 
 __END__
+
 =head1 NAME
 
 Lemonldap::NG::Manager - Perl extension for managing Lemonldap::NG Web-SSO
