@@ -6,7 +6,7 @@ use MIME::Base64;
 use Exporter 'import';
 use Safe;
 
-our $VERSION = '0.7';
+our $VERSION = '0.71';
 
 our %EXPORT_TAGS = (
     localStorage => [
