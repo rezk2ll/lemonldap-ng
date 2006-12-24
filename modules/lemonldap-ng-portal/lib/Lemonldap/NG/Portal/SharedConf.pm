@@ -8,7 +8,7 @@ use Lemonldap::NG::Manager::Conf;
 *EXPORT_TAGS = *Lemonldap::NG::Portal::Simple::EXPORT_TAGS;
 *EXPORT      = *Lemonldap::NG::Portal::Simple::EXPORT;
 
-our $VERSION = "0.3";
+our $VERSION = "0.31";
 our @ISA     = qw(Lemonldap::NG::Portal::Simple);
 
 sub getConf {
@@ -60,7 +60,7 @@ sub setGroups {
 # MUST BE WRITTEN and contain
 # my $self = shift;
 # $self->SUPER::new(@_);
-# See Lemonldap::NG::Portal::SharedConf::DBI for example
+# See Lemonldap::NG::Portal::SharedConf for example
 #
 # return true or false
 #}
@@ -137,13 +137,16 @@ compatible portals using a central configuration database.
 
 =head1 SYNOPSIS
 
-  use Lemonldap::NG::Portal::SharedConf::DBI;
-  my $portal = new Lemonldap::NG::Portal::SharedConf::DBI(
-	 dbiChain    => "dbi:mysql:...",
-	 dbiUser     => "lemonldap",
-	 dbiPassword => "password",
-	 dbiTable    => "lmConfig",
-    );
+  use Lemonldap::NG::Portal::SharedConf;
+  my $portal = new Lemonldap::NG::Portal::SharedConf( {
+         configStorage => {
+             type        => 'DBI',
+             dbiChain    => "dbi:mysql:...",
+             dbiUser     => "lemonldap",
+             dbiPassword => "password",
+             dbiTable    => "lmConfig",
+         },
+    } );
 
   if($portal->process()) {
     # Write here the menu with CGI methods. This page is displayed ONLY IF
@@ -176,7 +179,7 @@ Lemonldap::NG::Portal::SharedConf is the base module for building Lemonldap::NG
 compatible portals using a central database configuration. You have to use by
 inheritance.
 
-See L<Lemonldap::NG::Portal::SharedConf::DBI> for a complete example.
+See L<Lemonldap::NG::Portal::SharedConf> for a complete example.
 
 =head1 METHODS
 
@@ -204,7 +207,7 @@ Same as L<Lemonldap::NG::Portal::Simple>.
 
 =head1 SEE ALSO
 
-L<Lemonldap::NG::Portal>, L<Lemonldap::NG::Portal::SharedConf::DBI>,
+L<Lemonldap::NG::Portal>, L<Lemonldap::NG::Portal::SharedConf>,
 L<Lemonldap::NG::Handler>, L<Lemonldap::NG::Manager>
 
 =head1 AUTHOR
