@@ -294,13 +294,13 @@ sub start_html {
     $args{'-style'} = { -src => [ $args{'-style'} ] } if($args{'-style'} and !ref($args{'-style'}));
     push @{$args{'-style'}->{'-src'}}, "$ENV{SCRIPT_NAME}?lmQuery=css";
     $args{'-title'} ||= 'Lemonldap::NG Configuration';
-    $self->SUPER::start_html(%args);
+    $self->CGI::start_html(%args);
 }
 
 sub main {
     # Lemonldap::Manager javascripts;
-    print qq#<script type="text/javascript" src="$ENV{SCRIPT_NAME}?lmQuery=libjs"></script>#;
-    print qq#<script type="text/javascript" src="$ENV{SCRIPT_NAME}?lmQuery=lmjs"></script>#;
+    print qq#<script type="text/javascript" src="$ENV{SCRIPT_NAME}?lmQuery=libjs"></script>\n#;
+    print qq#<script type="text/javascript" src="$ENV{SCRIPT_NAME}?lmQuery=lmjs"></script>\n#;
     # HTML code
     print <<EOT;
   <div id='xBody'>
