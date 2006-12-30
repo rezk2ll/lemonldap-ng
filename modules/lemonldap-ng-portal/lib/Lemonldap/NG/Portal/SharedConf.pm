@@ -9,7 +9,7 @@ use Safe;
 *EXPORT_TAGS = *Lemonldap::NG::Portal::Simple::EXPORT_TAGS;
 *EXPORT      = *Lemonldap::NG::Portal::Simple::EXPORT;
 
-our $VERSION = "0.31";
+our $VERSION = "0.4";
 our @ISA     = qw(Lemonldap::NG::Portal::Simple);
 
 # Secure jail
