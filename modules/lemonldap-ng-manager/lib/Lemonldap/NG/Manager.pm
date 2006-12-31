@@ -4,16 +4,20 @@ use strict;
 
 use XML::Simple;
 
-#use AutoLoader qw(AUTOLOAD);
 use Lemonldap::NG::Manager::Base;
 use Lemonldap::NG::Manager::Conf;
 use Lemonldap::NG::Manager::_HTML;
 
 our @ISA = qw(Lemonldap::NG::Manager::Base);
 
-our $VERSION = '0.1';
+our $VERSION = '0.2';
 
 sub new {
+    unless(__PACKAGE__->can('ldapServer')) {
+	require Lemonldap::NG::Manager::_i18n;
+	Lemonldap::NG::Manager::_i18n::import($ENV{HTTP_ACCEPT_LANGUAGE});
+    }
+
     my ( $class, $args ) = @_;
     my $self = $class->SUPER::new();
     unless ($args) {
@@ -113,37 +117,36 @@ sub printXmlConf {
         item => {
             id   => 'root',
             open => 1,
-            text => "configuration $config->{cfgNum}",
+            text => &configuration." $config->{cfgNum}",
             item => {
                 generalParameters => {
-                    text => 'Paramètres généraux',
+                    text => &generalParameters,
                     item => {
                         exportedVars => {
-                            text => "Attributs LDAP à mapper",
+                            text => &exportedVars,
                             item => {},
                         },
                         ldapParameters => {
-                            text => 'Paramètres LDAP',
+                            text => &ldapParameters,
                             item => {},
                         },
                         sessionStorage => {
-                            text => 'Stockage des sessions',
+                            text => &sessionStorage,
                             item => {
                                 globalStorageOptions => {
-                                    text =>
-                                      'Paramètres du module Apache::Session',
+                                    text => &globalStorageOptions,
                                 }
                             },
                         },
                         authParams => {
-                            text => "Paramètres d'authentification",
+                            text => &authParams,
                             item => {},
                         },
                     },
                 },
-                groups       => { text => "Groupes d'utilisateurs", },
+                groups       => { text => &userGroups, },
                 virtualHosts => {
-                    text => "Hôtes virtuels",
+                    text => &virtualHosts,
                     open => 1,
                 },
             },
@@ -158,7 +161,7 @@ sub printXmlConf {
     $authParams->{authentication} = $self->xmlField(
         "value",
         $config->{authentication} || 'ldap',
-        "Type d'authentification"
+        &authenticationType,
     );
     $authParams->{portal} =
       $self->xmlField(
@@ -168,50 +171,51 @@ sub printXmlConf {
     $authParams->{securedCookie} = $self->xmlField(
         "value",
         $config->{securedCookie} || 0,
-        "Cookie sécurisé (SSL)"
+        &securedCookie,
     );
 
     $generalParameters->{domain} =
       $self->xmlField(
         "value",
 	$config->{domain} || 'example.com',
-	'Domaine'
+	&domain,
     );
     $generalParameters->{cookieName} = $self->xmlField(
         "value",
         $config->{cookieName} || 'lemonldap',
-        'Nom du cookie'
+        &cookieName,
     );
 
     $sessionStorage->{globalStorage} = $self->xmlField(
         "value",
         $config->{globalStorage} || 'Apache::Session::File',
-        'Module Apache::Session'
+        &apacheSessionModule,
     );
 
     $ldapParameters->{ldapServer} = $self->xmlField(
         "value",
 	$config->{ldapServer} || 'localhost',
-        'Serveur LDAP' );
+        &ldapServer,
+    );
     $ldapParameters->{ldapPort} = $self->xmlField(
         "value",
         $config->{ldapPort} || 389,
-        'Port du serveur LDAP'
+        &ldapPort,
     );
     $ldapParameters->{ldapBase} = $self->xmlField(
         "value",
         $config->{ldapBase} || ' ',
-        'Base de recherche LDAP'
+        &ldapBase,
     );
     $ldapParameters->{managerDn} = $self->xmlField(
         "value",
         $config->{managerDn} || ' ',
-        'Compte de connexion LDAP'
+        &managerDn,
     );
     $ldapParameters->{managerPassword} = $self->xmlField(
         "value",
         $config->{managerPassword} || ' ',
-        'Mot de passe LDAP'
+        &managerPassword,
     );
 
     if ( $config->{exportedVars} ) {
@@ -244,8 +248,8 @@ sub printXmlConf {
             $virtualHost->{$host} = $self->xmlField( "text", 'i', $host );
             my ( $ih, $ir ) = ( "exportedHeaders_$indice", "locationRules_$indice" );
             $virtualHost->{$host}->{item} = {
-                "$ih" => { text => "Headers", },
-                "$ir" => { text => "Règles", },
+                "$ih" => { text => &httpHeaders, },
+                "$ir" => { text => &locationRules, },
             };
             while ( my ( $reg, $expr ) = each(%$rules) ) {
                 my $type = ( $reg eq 'default' ) ? 'value' : 'both';

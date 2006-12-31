@@ -1,5 +1,11 @@
 Revision history for Perl extension Lemonldap::NG::Manager.
 
+0.2   Sun Dec 31 16:40:04 2006
+	- Localization (fr and en)
+
+0.1
+	- Bug corrections
+
 0.03  Sun Dec 16 12:29:12 2006
 	- Autoload does not work when inherits from CGI.
 	  Temporarly disabled

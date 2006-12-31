@@ -47,6 +47,7 @@ example/lemonldap-ng-manager.js
 example/index.pl
 lib/Lemonldap/NG/Manager.pm
 lib/Lemonldap/NG/Manager/_HTML.pm
+lib/Lemonldap/NG/Manager/_i18n.pm
 lib/Lemonldap/NG/Manager/Base.pm
 lib/Lemonldap/NG/Manager/Conf.pm
 lib/Lemonldap/NG/Manager/Conf/DBI.pm
