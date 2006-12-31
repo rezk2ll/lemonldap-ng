@@ -9,7 +9,7 @@ use Cache::Cache qw($EXPIRES_NEVER);
 
 our @ISA = qw(Lemonldap::NG::Handler::Vhost Lemonldap::NG::Handler::Simple);
 
-our $VERSION    = '0.5';
+our $VERSION    = '0.51';
 our $cfgNum     = 0;
 our $lastReload = 0;
 our $reloadTime;
@@ -46,6 +46,7 @@ sub init($$) {
 sub localInit {
     my($class, $args) = @_;
     $lmConf = Lemonldap::NG::Manager::Conf->new ( $args->{configStorage} );
+    $class->defaultValuesInit($args);
     $class->SUPER::localInit($args);
 }
 
