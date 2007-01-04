@@ -4,7 +4,7 @@ use Lemonldap::NG::Handler::Simple qw(:locationRules :headers);
 use strict;
 use MIME::Base64;
 
-our $VERSION = '0.5';
+our $VERSION = '0.51';
 
 sub locationRulesInit {
     my ( $class, $args ) = @_;
@@ -122,7 +122,7 @@ Create your own package:
 Call your package in <apache-directory>/conf/httpd.conf
 
   PerlRequire MyFile
-  PerlInitHandler My::Package
+  PerlHeaderParserHandler My::Package
 
 =head1 DESCRIPTION
 

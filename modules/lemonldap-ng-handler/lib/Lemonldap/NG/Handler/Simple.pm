@@ -6,7 +6,7 @@ use MIME::Base64;
 use Exporter 'import';
 use Safe;
 
-our $VERSION = '0.72';
+our $VERSION = '0.73';
 
 our %EXPORT_TAGS = (
     localStorage =>
@@ -247,8 +247,9 @@ sub localInit($$) {
     # performances.
     no strict;
     if ( MP() == 2 ) {
-        Apache->push_handlers( PerlChildInitHandler =>
-              sub { return $class->initLocalStorage( $_[1], $_[0] ); } );
+        Apache->push_handlers(
+            PerlChildInitHandler => sub { return $class->initLocalStorage( $_[1], $_[0] ); }
+        );
         Apache->push_handlers(
             PerlCleanupHandler => sub { return $class->cleanLocalStorage(@_); }
         );
@@ -404,6 +405,8 @@ sub forbidden {
 
 # hideCookie : hide Lemonldap cookie to the protected application
 sub hideCookie {
+    my $class = shift;
+    $class->lmLog( "$class: removing cookie", 'debug' );
     my $tmp = lmHeaderIn( $apacheRequest, 'Cookie' );
     $tmp =~ s/$cookieName[^;]*;?//o;
     lmSetHeaderIn( $apacheRequest, 'Cookie' => $tmp );
@@ -428,22 +431,18 @@ sub goToPortal() {
     return REDIRECT;
 }
 
-# MAIN SUBROUTINE called by Apache (using PerlInitHandler option)
+# MAIN SUBROUTINE called by Apache (using PerlHeaderParserHandler option)
 sub run ($$) {
     my $class;
     ( $class, $apacheRequest ) = @_;
 
-    my $uri =
-      $apacheRequest->uri
-      . ( $apacheRequest->args ? "?" . $apacheRequest->args : "" );
+    return DECLINED unless ( $apacheRequest->is_initial_req );
+    my $uri = $apacheRequest->uri . ( $apacheRequest->args ? "?" . $apacheRequest->args : "" );
 
     # AUTHENTICATION
     # I - recover the cookie
     my $id;
-    unless ( ($id) =
-        ( lmHeaderIn( $apacheRequest, 'Cookie' ) =~ /$cookieName=([^; ]+);?/o )
-      )
-    {
+    unless ( ($id) = ( lmHeaderIn( $apacheRequest, 'Cookie' ) =~ /$cookieName=([^; ]+);?/o ) ) {
         $class->lmLog( "$class: No cookie found", 'info' );
         return $class->goToPortal($uri);
     }
@@ -495,7 +494,7 @@ sub run ($$) {
 
     # SECURITY
     # Hide Lemonldap cookie
-    hideCookie;
+    $class->hideCookie;
     OK;
 }
 
@@ -596,10 +595,10 @@ Call your package in <apache-directory>/conf/httpd.conf
 
   PerlRequire MyFile
   # TOTAL PROTECTION
-  PerlInitHandler My::Package
+  PerlHeaderParserHandler My::Package
   # OR SELECTED AREA
   <Location /protected-area>
-    PerlInitHandler My::Package
+    PerlHeaderParserHandler My::Package
   </Location>
 
 =head1 DESCRIPTION

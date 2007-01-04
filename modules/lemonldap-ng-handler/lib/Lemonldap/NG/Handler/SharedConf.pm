@@ -9,7 +9,7 @@ use Cache::Cache qw($EXPIRES_NEVER);
 
 our @ISA = qw(Lemonldap::NG::Handler::Vhost Lemonldap::NG::Handler::Simple);
 
-our $VERSION    = '0.51';
+our $VERSION    = '0.52';
 our $cfgNum     = 0;
 our $lastReload = 0;
 our $reloadTime;
@@ -166,10 +166,10 @@ Call your package in /apache-dir/conf/httpd.conf :
 
   PerlRequire MyFile
   # TOTAL PROTECTION
-  PerlInitHandler My::Package
+  PerlHeaderParserHandler My::Package
   # OR SELECTED AREA
   <Location /protected-area>
-    PerlInitHandler My::Package
+    PerlHeaderParserHandler My::Package
   </Location>
 
 The configuration is loaded only at Apache start. Create an URI to force
@@ -180,7 +180,7 @@ configuration reload, so you don't need to restart Apache at each change :
     Order deny,allow
     Deny from all
     Allow from my.manager.com
-    PerlInitHandler My::Package->refresh
+    PerlHeaderParserHandler My::Package->refresh
   </Location>
 
 =head1 DESCRIPTION
