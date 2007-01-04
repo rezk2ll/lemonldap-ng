@@ -28,11 +28,11 @@ my ( $dbh, $cfgNum ) = ( undef, 0 );
 sub localInit($$) {
     my ( $class, $args ) = @_;
     $args->configStorage = {
-	type        => 'DBI',
-	dbiChain    => $args->{dbiChain},
-	dbiUser     => $args->{dbiUser},
-	dbiPassword => $args->{dbiPassword},
-	dbiTable    => $args->{dbiTable},
+        type        => 'DBI',
+        dbiChain    => $args->{dbiChain},
+        dbiUser     => $args->{dbiUser},
+        dbiPassword => $args->{dbiPassword},
+        dbiTable    => $args->{dbiTable},
     };
     $class->SUPER::localInit($args);
 }

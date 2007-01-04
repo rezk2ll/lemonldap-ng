@@ -1,5 +1,8 @@
 Revision history for Perl extension Lemonldap::NG::Handler.
 
+0.72  Thu Jan 4 9:24:18 2007
+	- Correction in apache-1.3 configuration example file
+
 0.71  Sun Dec 31 13:47:49 2006
 	- Bug corrections in Vhosts: default header does not work
 	                             Safe does not work because lmSetHeaderIn

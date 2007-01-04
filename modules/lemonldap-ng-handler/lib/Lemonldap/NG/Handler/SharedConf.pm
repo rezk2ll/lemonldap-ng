@@ -18,19 +18,20 @@ our $lmConf;
 
 BEGIN {
     if ( MP() == 2 ) {
-	eval {
-	    require threads::shared;
+        eval {
+            require threads::shared;
             Apache2::compat->import();
             threads::shared::share($childLock);
             threads::shared::share($childLock);
             threads::shared::share($childLock);
             threads::shared::share($childLock);
             threads::shared::share($childLock);
-	};
+        };
     }
     *EXPORT_TAGS = *Lemonldap::NG::Handler::Simple::EXPORT_TAGS;
     *EXPORT_OK   = *Lemonldap::NG::Handler::Simple::EXPORT_OK;
-    push( @{ $EXPORT_TAGS{$_} }, qw($reloadTime $lastReload) ) foreach (qw(variables localStorage));
+    push( @{ $EXPORT_TAGS{$_} }, qw($reloadTime $lastReload) )
+      foreach (qw(variables localStorage));
     push @EXPORT_OK, qw($reloadTime $lastReload);
 }
 
@@ -44,8 +45,8 @@ sub init($$) {
 }
 
 sub localInit {
-    my($class, $args) = @_;
-    $lmConf = Lemonldap::NG::Manager::Conf->new ( $args->{configStorage} );
+    my ( $class, $args ) = @_;
+    $lmConf = Lemonldap::NG::Manager::Conf->new( $args->{configStorage} );
     $class->defaultValuesInit($args);
     $class->SUPER::localInit($args);
 }
@@ -79,7 +80,8 @@ sub localConfUpdate($$) {
     my ( $class, $r ) = @_;
     my $args;
     return SERVER_ERROR unless ($refLocalStorage);
-    unless ( $args = $refLocalStorage->get("conf") and $class->confTest($args) ) {
+    unless ( $args = $refLocalStorage->get("conf") and $class->confTest($args) )
+    {
 
         # TODO: LOCK
         #unless ( $class->confTest($args) ) {
@@ -97,7 +99,7 @@ sub globalConfUpdate {
     my $tmp   = $class->getConf;
 
     # getConf can return an Apache constant in case of error
-    return $tmp unless (ref($tmp));
+    return $tmp unless ( ref($tmp) );
     $class->setConf($tmp);
     OK;
 }
@@ -112,9 +114,9 @@ sub setConf {
 
 sub getConf {
     my $class = shift;
-    my $tmp = $lmConf->getConf;
-    unless(ref($tmp)) {
-        $class->lmLog( "$class: Unable to load configuration", 'error');
+    my $tmp   = $lmConf->getConf;
+    unless ( ref($tmp) ) {
+        $class->lmLog( "$class: Unable to load configuration", 'error' );
         return SERVER_ERROR;
     }
     return $tmp;

@@ -16,29 +16,47 @@ sub header {
 }
 
 sub header_public {
-    my $self = shift;
+    my $self     = shift;
     my $filename = shift;
     $filename ||= $ENV{SCRIPT_FILENAME};
-    my @tmp = stat($filename);
+    my @tmp  = stat($filename);
     my $date = $tmp[9];
-    my $hd = gmtime($date);
-    $hd =~s/^(\w+)\s+(\w+)\s+(\d+)\s+([\d:]+)\s+(\d+)$/$1, $3 $2 $5 $4 GMT/;
+    my $hd   = gmtime($date);
+    $hd =~ s/^(\w+)\s+(\w+)\s+(\d+)\s+([\d:]+)\s+(\d+)$/$1, $3 $2 $5 $4 GMT/;
     my $year = $5;
-    my $cm = $2;
-    # TODO 
-    if(my $ref = $ENV{TODO_HTTP_IF_MODIFIED_SINCE}) {
-	my %month = (jan => 0, feb => 1, mar => 2, apr => 3, may => 4, jun => 5, jul => 6, aug => 7, sep => 8, oct => 9, nov => 10, dec => 11);
-	if($ref =~ /^\w+,\s+(\d+)\s+(\w+)\s+(\d+)\s+(\d+):(\d+):(\d+)/) {
-	    my $m = $month{lc($2)};
-	    $year-- if($m > $month{lc($cm)});
-	    $ref = timegm($6,$5,$4,$1,$m,$3);
-	    if($ref == $date) {
-	        print $self->SUPER::header(-status => '304 Not Modified', @_ );
-	        exit;
-	    }
-	}
+    my $cm   = $2;
+
+    # TODO
+    if ( my $ref = $ENV{TODO_HTTP_IF_MODIFIED_SINCE} ) {
+        my %month = (
+            jan => 0,
+            feb => 1,
+            mar => 2,
+            apr => 3,
+            may => 4,
+            jun => 5,
+            jul => 6,
+            aug => 7,
+            sep => 8,
+            oct => 9,
+            nov => 10,
+            dec => 11
+        );
+        if ( $ref =~ /^\w+,\s+(\d+)\s+(\w+)\s+(\d+)\s+(\d+):(\d+):(\d+)/ ) {
+            my $m = $month{ lc($2) };
+            $year-- if ( $m > $month{ lc($cm) } );
+            $ref = timegm( $6, $5, $4, $1, $m, $3 );
+            if ( $ref == $date ) {
+                print $self->SUPER::header( -status => '304 Not Modified', @_ );
+                exit;
+            }
+        }
     }
-    return $self->SUPER::header( '-Last-Modified' => $hd, '-Cache-Control' => 'public', @_ );
+    return $self->SUPER::header(
+        '-Last-Modified' => $hd,
+        '-Cache-Control' => 'public',
+        @_
+    );
 }
 
 1;

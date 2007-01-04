@@ -9,6 +9,7 @@ our $VERSION = '0.05';
 
 1;
 __END__
+
 =pod
 =cut
 sub css {
@@ -291,16 +292,21 @@ EOT
 sub start_html {
     my $self = shift;
     my %args = @_;
-    $args{'-style'} = { -src => [ $args{'-style'} ] } if($args{'-style'} and !ref($args{'-style'}));
-    push @{$args{'-style'}->{'-src'}}, "$ENV{SCRIPT_NAME}?lmQuery=css";
+    $args{'-style'} = { -src => [ $args{'-style'} ] }
+      if ( $args{'-style'} and !ref( $args{'-style'} ) );
+    push @{ $args{'-style'}->{'-src'} }, "$ENV{SCRIPT_NAME}?lmQuery=css";
     $args{'-title'} ||= 'Lemonldap::NG Configuration';
     $self->CGI::start_html(%args);
 }
 
 sub main {
+
     # Lemonldap::Manager javascripts;
-    print qq#<script type="text/javascript" src="$ENV{SCRIPT_NAME}?lmQuery=libjs"></script>\n#;
-    print qq#<script type="text/javascript" src="$ENV{SCRIPT_NAME}?lmQuery=lmjs"></script>\n#;
+    print
+qq#<script type="text/javascript" src="$ENV{SCRIPT_NAME}?lmQuery=libjs"></script>\n#;
+    print
+qq#<script type="text/javascript" src="$ENV{SCRIPT_NAME}?lmQuery=lmjs"></script>\n#;
+
     # HTML code
     print <<EOT;
   <div id='xBody'>
@@ -353,5 +359,4 @@ sub main {
   </div>
 EOT
 }
-
 

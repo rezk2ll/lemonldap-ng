@@ -7,17 +7,14 @@ use XML::Simple;
 use Lemonldap::NG::Manager::Base;
 use Lemonldap::NG::Manager::Conf;
 use Lemonldap::NG::Manager::_HTML;
+require Lemonldap::NG::Manager::_i18n;
+require Lemonldap::NG::Manager::Help;
 
 our @ISA = qw(Lemonldap::NG::Manager::Base);
 
-our $VERSION = '0.2';
+our $VERSION = '0.3';
 
 sub new {
-    unless(__PACKAGE__->can('ldapServer')) {
-	require Lemonldap::NG::Manager::_i18n;
-	Lemonldap::NG::Manager::_i18n::import($ENV{HTTP_ACCEPT_LANGUAGE});
-    }
-
     my ( $class, $args ) = @_;
     my $self = $class->SUPER::new();
     unless ($args) {
@@ -90,12 +87,18 @@ sub print_lmjs {
 sub print_help {
     my $self = shift;
     print $self->header_public;
-    print "TODO: help";
+    Lemonldap::NG::Manager::Help::import( $ENV{HTTP_ACCEPT_LANGUAGE} )
+      unless ( $self->can('help_groups') );
+    my $chap = $self->param('help');
+    eval { no strict "refs"; &{"help_$chap"} };
 }
 
 # Configuration download subroutines
 sub print_conf {
     my $self = shift;
+    unless ( __PACKAGE__->can('ldapServer') ) {
+        Lemonldap::NG::Manager::_i18n::import( $ENV{HTTP_ACCEPT_LANGUAGE} );
+    }
     print $self->header( -type => "text/xml", '-Cache-Control' => 'private' );
     $self->printXmlConf;
     exit;
@@ -117,7 +120,7 @@ sub printXmlConf {
         item => {
             id   => 'root',
             open => 1,
-            text => &configuration." $config->{cfgNum}",
+            text => &configuration . " $config->{cfgNum}",
             item => {
                 generalParameters => {
                     text => &generalParameters,
@@ -133,9 +136,8 @@ sub printXmlConf {
                         sessionStorage => {
                             text => &sessionStorage,
                             item => {
-                                globalStorageOptions => {
-                                    text => &globalStorageOptions,
-                                }
+                                globalStorageOptions =>
+                                  { text => &globalStorageOptions, }
                             },
                         },
                         authParams => {
@@ -153,70 +155,53 @@ sub printXmlConf {
         },
     };
     my $generalParameters = $tree->{item}->{item}->{generalParameters}->{item};
-    my $exportedVars = $tree->{item}->{item}->{generalParameters}->{item}->{exportedVars}->{item};
-    my $ldapParameters = $tree->{item}->{item}->{generalParameters}->{item}->{ldapParameters}->{item};
-    my $sessionStorage = $tree->{item}->{item}->{generalParameters}->{item}->{sessionStorage}->{item};
-    my $globalStorageOptions = $tree->{item}->{item}->{generalParameters}->{item}->{sessionStorage}->{item}->{globalStorageOptions}->{item};
-    my $authParams = $tree->{item}->{item}->{generalParameters}->{item}->{authParams}->{item};
-    $authParams->{authentication} = $self->xmlField(
-        "value",
-        $config->{authentication} || 'ldap',
-        &authenticationType,
-    );
+    my $exportedVars =
+      $tree->{item}->{item}->{generalParameters}->{item}->{exportedVars}
+      ->{item};
+    my $ldapParameters =
+      $tree->{item}->{item}->{generalParameters}->{item}->{ldapParameters}
+      ->{item};
+    my $sessionStorage =
+      $tree->{item}->{item}->{generalParameters}->{item}->{sessionStorage}
+      ->{item};
+    my $globalStorageOptions =
+      $tree->{item}->{item}->{generalParameters}->{item}->{sessionStorage}
+      ->{item}->{globalStorageOptions}->{item};
+    my $authParams =
+      $tree->{item}->{item}->{generalParameters}->{item}->{authParams}->{item};
+    $authParams->{authentication} =
+      $self->xmlField( "value", $config->{authentication} || 'ldap',
+        &authenticationType, );
     $authParams->{portal} =
-      $self->xmlField(
-        "value",
-	$config->{portal} || 'http://portal/',
+      $self->xmlField( "value", $config->{portal} || 'http://portal/',
         "Portail" );
-    $authParams->{securedCookie} = $self->xmlField(
-        "value",
-        $config->{securedCookie} || 0,
-        &securedCookie,
-    );
+    $authParams->{securedCookie} =
+      $self->xmlField( "value", $config->{securedCookie} || 0, &securedCookie,
+      );
 
     $generalParameters->{domain} =
-      $self->xmlField(
-        "value",
-	$config->{domain} || 'example.com',
-	&domain,
-    );
-    $generalParameters->{cookieName} = $self->xmlField(
-        "value",
-        $config->{cookieName} || 'lemonldap',
-        &cookieName,
-    );
+      $self->xmlField( "value", $config->{domain} || 'example.com', &domain, );
+    $generalParameters->{cookieName} =
+      $self->xmlField( "value", $config->{cookieName} || 'lemonldap',
+        &cookieName, );
 
-    $sessionStorage->{globalStorage} = $self->xmlField(
-        "value",
+    $sessionStorage->{globalStorage} =
+      $self->xmlField( "value",
         $config->{globalStorage} || 'Apache::Session::File',
-        &apacheSessionModule,
-    );
+        &apacheSessionModule, );
 
-    $ldapParameters->{ldapServer} = $self->xmlField(
-        "value",
-	$config->{ldapServer} || 'localhost',
-        &ldapServer,
-    );
-    $ldapParameters->{ldapPort} = $self->xmlField(
-        "value",
-        $config->{ldapPort} || 389,
-        &ldapPort,
-    );
-    $ldapParameters->{ldapBase} = $self->xmlField(
-        "value",
-        $config->{ldapBase} || ' ',
-        &ldapBase,
-    );
-    $ldapParameters->{managerDn} = $self->xmlField(
-        "value",
-        $config->{managerDn} || ' ',
-        &managerDn,
-    );
-    $ldapParameters->{managerPassword} = $self->xmlField(
-        "value",
-        $config->{managerPassword} || ' ',
-        &managerPassword,
-    );
+    $ldapParameters->{ldapServer} =
+      $self->xmlField( "value", $config->{ldapServer} || 'localhost',
+        &ldapServer, );
+    $ldapParameters->{ldapPort} =
+      $self->xmlField( "value", $config->{ldapPort} || 389, &ldapPort, );
+    $ldapParameters->{ldapBase} =
+      $self->xmlField( "value", $config->{ldapBase} || ' ', &ldapBase, );
+    $ldapParameters->{managerDn} =
+      $self->xmlField( "value", $config->{managerDn} || ' ', &managerDn, );
+    $ldapParameters->{managerPassword} =
+      $self->xmlField( "value", $config->{managerPassword} || ' ',
+        &managerPassword, );
 
     if ( $config->{exportedVars} ) {
         while ( my ( $n, $att ) = each( %{ $config->{exportedVars} } ) ) {
@@ -230,10 +215,13 @@ sub printXmlConf {
     }
 
     if ( $config->{globalStorageOptions} ) {
-        $tree->{item}->{item}->{generalParameters}->{item}->{sessionStorage}->{item}->{globalStorageOptions}->{item} = {};
+        $tree->{item}->{item}->{generalParameters}->{item}->{sessionStorage}
+          ->{item}->{globalStorageOptions}->{item} = {};
         $globalStorageOptions =
-          $tree->{item}->{item}->{generalParameters}->{item}->{sessionStorage}->{item}->{globalStorageOptions}->{item};
-        while ( my ( $n, $opt ) = each( %{ $config->{globalStorageOptions} } ) ) {
+          $tree->{item}->{item}->{generalParameters}->{item}->{sessionStorage}
+          ->{item}->{globalStorageOptions}->{item};
+        while ( my ( $n, $opt ) = each( %{ $config->{globalStorageOptions} } ) )
+        {
             $globalStorageOptions->{$n} = $self->xmlField( "both", $opt, $n );
         }
     }
@@ -246,7 +234,8 @@ sub printXmlConf {
         my $virtualHost = $tree->{item}->{item}->{virtualHosts}->{item};
         while ( my ( $host, $rules ) = each( %{ $config->{locationRules} } ) ) {
             $virtualHost->{$host} = $self->xmlField( "text", 'i', $host );
-            my ( $ih, $ir ) = ( "exportedHeaders_$indice", "locationRules_$indice" );
+            my ( $ih, $ir ) =
+              ( "exportedHeaders_$indice", "locationRules_$indice" );
             $virtualHost->{$host}->{item} = {
                 "$ih" => { text => &httpHeaders, },
                 "$ir" => { text => &locationRules, },
@@ -275,7 +264,8 @@ sub printXmlConf {
 
     print XMLout(
         $tree,
-        XMLDecl  => "<?xml version='1.0' encoding='iso-8859-1'?>",
+
+        #XMLDecl  => "<?xml version='1.0' encoding='iso-8859-1'?>",
         RootName => 'tree',
         KeyAttr  => { item => 'id', username => 'name' },
         NoIndent => 1
@@ -338,11 +328,13 @@ sub upload {
     }
     $config->{cookieName} = $tree->{generalParameters}->{cookieName}->{value};
     $config->{domain}     = $tree->{generalParameters}->{domain}->{value};
-    $config->{globalStorage} = $tree->{generalParameters}->{sessionStorage}->{globalStorage}->{value};
+    $config->{globalStorage} =
+      $tree->{generalParameters}->{sessionStorage}->{globalStorage}->{value};
     while (
         my ( $v, $h ) = each(
             %{
-                $tree->{generalParameters}->{sessionStorage}->{globalStorageOptions}
+                $tree->{generalParameters}->{sessionStorage}
+                  ->{globalStorageOptions}
               }
         )
       )
@@ -388,6 +380,8 @@ sub config {
     return $self->{_config};
 }
 
+# Those sub are loaded en demand. With &header_public, they are not loaded each
+# time.
 *css        = *Lemonldap::NG::Manager::_HTML::css;
 *javascript = *Lemonldap::NG::Manager::_HTML::javascript;
 *main       = *Lemonldap::NG::Manager::_HTML::main;

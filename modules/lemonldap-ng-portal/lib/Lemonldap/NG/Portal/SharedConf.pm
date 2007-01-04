@@ -18,7 +18,8 @@ our $safe = new Safe;
 sub getConf {
     my $self = shift;
     $self->SUPER::getConf(@_);
-    $self->{lmConf} = Lemonldap::NG::Manager::Conf->new( $self->{configStorage} )
+    $self->{lmConf} =
+      Lemonldap::NG::Manager::Conf->new( $self->{configStorage} )
       unless $self->{lmConf};
     return 0 unless ( ref( $self->{lmConf} ) );
     my $tmp = $self->{lmConf}->getConf;
@@ -68,7 +69,7 @@ sub scanexpr {
     # Perl expressions
     if ( s/^{(.*)}$/$1/ or $_ !~ /^\(.*\)$/ ) {
         s/\$(\w+)/\$self->{sessionInfo}->{$1}/g;
-	$safe->share ( '$self', '$result' );
+        $safe->share( '$self', '$result' );
         $result = $safe->reval($_);
         return $result ? "1" : "0";
     }

@@ -1,6 +1,7 @@
 package Lemonldap::NG::Portal;
 
-print STDERR "See Lemonldap::NG::Portal(3) to know which Lemonldap::NG::Portal::* module to use.";
+print STDERR
+"See Lemonldap::NG::Portal(3) to know which Lemonldap::NG::Portal::* module to use.";
 our $VERSION = "0.51";
 
 1;

@@ -18,56 +18,57 @@ sub new {
     }
     $args ||= {};
     my $self = bless $args, $class;
-    unless($self->{mdone}) {
-        unless($self->{type}) {
-	    print STDERR "configStorage: type is not defined\n";
-	    return 0;
+    unless ( $self->{mdone} ) {
+        unless ( $self->{type} ) {
+            print STDERR "configStorage: type is not defined\n";
+            return 0;
         }
-        $self->{type} = "Lemonldap::NG::Manager::Conf::$self->{type}" unless $self->{type} =~ /^Lemonldap/;
+        $self->{type} = "Lemonldap::NG::Manager::Conf::$self->{type}"
+          unless $self->{type} =~ /^Lemonldap/;
         eval "require $self->{type}";
-        die ($@) if($@);
+        die($@) if ($@);
         push @ISA, $self->{type};
         return 0 unless $self->prereq;
-	$self->{mdone}++;
+        $self->{mdone}++;
     }
     return $self;
 }
 
 sub saveConf {
-    my($self,$conf) = @_;
+    my ( $self, $conf ) = @_;
     my $fields;
-    while(my($k,$v) = each(%$conf)) {
-	if(ref($v)) {
-	    $fields->{$k} = "'" . encode_base64( freeze( $v ) ) . "'";
-	    $fields->{$k} =~ s/[\r\n]//g;
-	}
-	elsif($v =~ /^\d+/) {
-	    $fields->{$k} = "$v";
-	}
-	else {
-	    $fields->{$k} = "'$v'";
-	}
+    while ( my ( $k, $v ) = each(%$conf) ) {
+        if ( ref($v) ) {
+            $fields->{$k} = "'" . encode_base64( freeze($v) ) . "'";
+            $fields->{$k} =~ s/[\r\n]//g;
+        }
+        elsif ( $v =~ /^\d+/ ) {
+            $fields->{$k} = "$v";
+        }
+        else {
+            $fields->{$k} = "'$v'";
+        }
     }
-    $fields->{cfgNum} = $self->lastCfg+1;
+    $fields->{cfgNum} = $self->lastCfg + 1;
     return $self->store($fields);
 }
 
 sub getConf {
-    my($self, $args) = @_;
+    my ( $self, $args ) = @_;
     $args->{cfgNum} ||= $self->lastCfg;
     return undef unless $args->{cfgNum};
-    my $fields = $self->load($args->{cfgNum}, $args->{fields});
+    my $fields = $self->load( $args->{cfgNum}, $args->{fields} );
     my $conf;
-    while(my($k,$v) = each(%$fields)) {
-	my $tmp;
-	eval "\$tmp = thaw(decode_base64($v))";
-	if($@ or not($tmp)) {
-	    $v =~ s/^'(.*)'$/$1/;
-	    $conf->{$k} = $v;
-	}
-	else {
-	    $conf->{$k} = $tmp;
-	}
+    while ( my ( $k, $v ) = each(%$fields) ) {
+        my $tmp;
+        eval "\$tmp = thaw(decode_base64($v))";
+        if ( $@ or not($tmp) ) {
+            $v =~ s/^'(.*)'$/$1/;
+            $conf->{$k} = $v;
+        }
+        else {
+            $conf->{$k} = $tmp;
+        }
     }
     return $conf;
 }

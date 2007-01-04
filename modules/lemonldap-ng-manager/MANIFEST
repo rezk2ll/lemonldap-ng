@@ -52,6 +52,7 @@ lib/Lemonldap/NG/Manager/Base.pm
 lib/Lemonldap/NG/Manager/Conf.pm
 lib/Lemonldap/NG/Manager/Conf/DBI.pm
 lib/Lemonldap/NG/Manager/Conf/File.pm
+lib/Lemonldap/NG/Manager/Help.pm
 Makefile.PL
 MANIFEST
 META.yml			Module meta-data (added by MakeMaker)

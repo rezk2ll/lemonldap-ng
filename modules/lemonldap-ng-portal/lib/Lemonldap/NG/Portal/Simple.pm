@@ -40,7 +40,8 @@ our %EXPORT_TAGS = (
 
 our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
 
-our @EXPORT = qw( PE_OK PE_SESSIONEXPIRED PE_FORMEMPTY PE_WRONGMANAGERACCOUNT PE_USERNOTFOUND PE_BADCREDENTIALS
+our @EXPORT =
+  qw( PE_OK PE_SESSIONEXPIRED PE_FORMEMPTY PE_WRONGMANAGERACCOUNT PE_USERNOTFOUND PE_BADCREDENTIALS
   PE_LDAPCONNECTFAILED PE_LDAPERROR PE_APACHESESSIONERROR PE_FIRSTACCESS PE_BADCERTIFICATE import );
 
 sub new {
@@ -116,7 +117,8 @@ sub error {
 sub process {
     my ($self) = @_;
     $self->{error} = PE_OK;
-    foreach my $sub qw(controlUrlOrigin extractFormInfo formateParams formateFilter
+    foreach my $sub
+      qw(controlUrlOrigin extractFormInfo formateParams formateFilter
       connectLDAP bind search setSessionInfo setGroups authenticate store unbind
       buildCookie log autoRedirect) {
         if ( $self->{$sub} )
@@ -215,7 +217,8 @@ sub bind {
     my $self = shift;
     $self->connectLDAP unless ( $self->{ldap} );
     return PE_WRONGMANAGERACCOUNT
-      unless ( &_bind( $self->{ldap}, $self->{managerDn}, $self->{managerPassword} ) );
+      unless (
+        &_bind( $self->{ldap}, $self->{managerDn}, $self->{managerPassword} ) );
     PE_OK;
 }
 
@@ -245,7 +248,8 @@ sub setSessionInfo {
     }
     elsif ( ref( $self->{exportedVars} ) eq 'HASH' ) {
         foreach ( keys %{ $self->{exportedVars} } ) {
-            $self->{sessionInfo}->{$_} = $self->{entry}->get_value( $self->{exportedVars}->{$_} ) || "";
+            $self->{sessionInfo}->{$_} =
+              $self->{entry}->get_value( $self->{exportedVars}->{$_} ) || "";
         }
     }
     else {
@@ -281,10 +285,13 @@ sub authenticate {
 sub store {
     my ($self) = @_;
     my %h;
-    eval { tie %h, $self->{globalStorage}, undef, $self->{globalStorageOptions}; };
+    eval {
+        tie %h, $self->{globalStorage}, undef, $self->{globalStorageOptions};
+    };
     return PE_APACHESESSIONERROR if ($@);
     $self->{id} = $h{_session_id};
-    $h{$_} = $self->{sessionInfo}->{$_} foreach ( keys %{ $self->{sessionInfo} } );
+    $h{$_} = $self->{sessionInfo}->{$_}
+      foreach ( keys %{ $self->{sessionInfo} } );
     $h{_utime} = time();
     untie %h;
     PE_OK;
