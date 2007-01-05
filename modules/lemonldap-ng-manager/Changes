@@ -1,7 +1,7 @@
 Revision history for Perl extension Lemonldap::NG::Manager.
 
 0.3   Thu Jan 4 9:22:34 2007
-	- Help system skeleton
+	- Help system skeleton and help in french
 
 0.2   Sun Dec 31 16:40:04 2006
 	- Localization (fr and en)

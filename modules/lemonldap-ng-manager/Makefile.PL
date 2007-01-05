@@ -12,5 +12,5 @@ WriteMakefile(
     		}, # e.g., Module::Name => 1.1
     ($] >= 5.005 ?     ## Add these new keywords supported since 5.005
       (ABSTRACT_FROM  => 'lib/Lemonldap/NG/Manager.pm', # retrieve abstract from module
-       AUTHOR         => 'Najette <najette@>') : ()),
+       AUTHOR         => 'Xavier Guimard <x.guimard@free.fr>') : ()),
 );

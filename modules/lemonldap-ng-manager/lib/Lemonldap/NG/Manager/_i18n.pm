@@ -33,7 +33,7 @@ __END__
 sub fr {
     return {
         configuration        => 'Configuration',
-        exportedVars         => 'Attributs LDAP &agrave;; exporter',
+        exportedVars         => 'Attributs LDAP &agrave; exporter',
         generalParameters    => 'Param&egrave;tres g&eacute;n&eacute;raux',
         ldapParameters       => 'Param&egrave;tres LDAP',
         sessionStorage       => 'Stockage des sessions',
