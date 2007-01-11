@@ -9,12 +9,19 @@ use Safe;
 *EXPORT_TAGS = *Lemonldap::NG::Portal::Simple::EXPORT_TAGS;
 *EXPORT      = *Lemonldap::NG::Portal::Simple::EXPORT;
 
-our $VERSION = "0.4";
+our $VERSION = "0.41";
 our @ISA     = qw(Lemonldap::NG::Portal::Simple);
 
 # Secure jail
 our $safe = new Safe;
 
+##################
+# OVERLOADED sub #
+##################
+
+# getConf: all parameters returned by the Lemonldap::NG::Manager::Conf object
+#          are copied in $self
+#          See Lemonldap::NG::Manager::Conf(3) for more
 sub getConf {
     my $self = shift;
     $self->SUPER::getConf(@_);
@@ -28,6 +35,8 @@ sub getConf {
     1;
 }
 
+# Here is implemented the 'groups' mechanism. See Lemnldap::NG::Portal for
+# more.
 sub setGroups {
     my $self = shift;
     die __PACKAGE__ . ": Unable to get configuration"
@@ -61,6 +70,7 @@ sub setGroups {
     PE_OK;
 }
 
+# Internal sub used to replace Perl expressions in 'groups' rules.
 sub scanexpr {
     my $self = shift;
     local $_ = shift;
