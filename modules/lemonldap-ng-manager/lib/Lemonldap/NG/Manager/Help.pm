@@ -2,7 +2,7 @@ package Lemonldap::NG::Manager::Help;
 
 use AutoLoader qw(AUTOLOAD);
 use UNIVERSAL qw(can);
-our $VERSION = '0.2';
+our $VERSION = '0.21';
 
 sub import {
     my ($caller_package) = caller;
@@ -18,7 +18,7 @@ sub import {
         }
     }
     $l ||= "en";
-    foreach $h (qw(virtualHosts groups ldap vars storage)) {
+    foreach $h (qw(virtualHosts groups ldap vars storage macros)) {
         *{"${caller_package}::help_$h"} = \&{"help_${h}_$l"};
     }
 }
@@ -31,6 +31,12 @@ __END__
 sub help_virtualHosts_en {
     print <<EOT;
 <h3>Virtual Hosts</h3>
+EOT
+}
+
+sub help_macros_en {
+    print <<EOT;
+<h3>User Groups</h3>
 EOT
 }
 
@@ -88,6 +94,25 @@ comme suit&nbsp;: <tt>&lt;nom de l'en-t&ecirc;te&gt; =&gt; &lt;expression Perl&g
   Auth-User =&gt; \$uid
   Unite     =&gt; \$departmentUID
 </pre>
+EOT
+}
+
+sub help_macros_fr {
+    print <<EOT;
+<h3>Macros</h3>
+<p> Les macros permettent d'ajouter des variables calculées à partir des
+attributs LDAP (variables exportées). Elles évitent de répéter le même calcul
+plusieurs fois dans la configuration. Exemple&nbsp;:</p>
+<pre>
+    # macros
+    nom_complet => \$givenname . " " . \$surname
+    admin => \$uid eq "foo" or \$uid eq "bar"
+    
+    # test.example.com - En-têtes
+    Nom => \$nom_complet
+    
+    # test.example.com - Règles
+    ^/admin/ => \$admin
 EOT
 }
 

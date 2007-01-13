@@ -12,7 +12,7 @@ require Lemonldap::NG::Manager::Help;
 
 our @ISA = qw(Lemonldap::NG::Manager::Base);
 
-our $VERSION = '0.3';
+our $VERSION = '0.4';
 
 sub new {
     my ( $class, $args ) = @_;
@@ -129,6 +129,9 @@ sub printXmlConf {
                             text => &exportedVars,
                             item => {},
                         },
+			macros => {
+			    text => &macros,
+			},
                         ldapParameters => {
                             text => &ldapParameters,
                             item => {},
@@ -156,17 +159,13 @@ sub printXmlConf {
     };
     my $generalParameters = $tree->{item}->{item}->{generalParameters}->{item};
     my $exportedVars =
-      $tree->{item}->{item}->{generalParameters}->{item}->{exportedVars}
-      ->{item};
+      $tree->{item}->{item}->{generalParameters}->{item}->{exportedVars}->{item};
     my $ldapParameters =
-      $tree->{item}->{item}->{generalParameters}->{item}->{ldapParameters}
-      ->{item};
+      $tree->{item}->{item}->{generalParameters}->{item}->{ldapParameters}->{item};
     my $sessionStorage =
-      $tree->{item}->{item}->{generalParameters}->{item}->{sessionStorage}
-      ->{item};
+      $tree->{item}->{item}->{generalParameters}->{item}->{sessionStorage}->{item};
     my $globalStorageOptions =
-      $tree->{item}->{item}->{generalParameters}->{item}->{sessionStorage}
-      ->{item}->{globalStorageOptions}->{item};
+      $tree->{item}->{item}->{generalParameters}->{item}->{sessionStorage}->{item}->{globalStorageOptions}->{item};
     my $authParams =
       $tree->{item}->{item}->{generalParameters}->{item}->{authParams}->{item};
     $authParams->{authentication} =
@@ -215,11 +214,9 @@ sub printXmlConf {
     }
 
     if ( $config->{globalStorageOptions} ) {
-        $tree->{item}->{item}->{generalParameters}->{item}->{sessionStorage}
-          ->{item}->{globalStorageOptions}->{item} = {};
+        $tree->{item}->{item}->{generalParameters}->{item}->{sessionStorage}->{item}->{globalStorageOptions}->{item} = {};
         $globalStorageOptions =
-          $tree->{item}->{item}->{generalParameters}->{item}->{sessionStorage}
-          ->{item}->{globalStorageOptions}->{item};
+          $tree->{item}->{item}->{generalParameters}->{item}->{sessionStorage}->{item}->{globalStorageOptions}->{item};
         while ( my ( $n, $opt ) = each( %{ $config->{globalStorageOptions} } ) )
         {
             $globalStorageOptions->{$n} = $self->xmlField( "both", $opt, $n );
@@ -260,6 +257,13 @@ sub printXmlConf {
         while ( my ( $group, $expr ) = each( %{ $config->{groups} } ) ) {
             $groups->{$group} = $self->xmlField( 'both', $expr, $group );
         }
+    }
+    if ( $config->{macros} ) {
+	$tree->{item}->{item}->{generalParameters}->{item}->{macros}->{item} = {};
+	my $macros = $tree->{item}->{item}->{generalParameters}->{item}->{macros}->{item};
+	while ( my ( $macro, $expr ) = each( %{ $config->{macros} } ) ) {
+	    $macros->{$macro} = $self->xmlField( 'both', $expr, $macro );
+	}
     }
 
     print XMLout(
@@ -328,19 +332,14 @@ sub upload {
     }
     $config->{cookieName} = $tree->{generalParameters}->{cookieName}->{value};
     $config->{domain}     = $tree->{generalParameters}->{domain}->{value};
-    $config->{globalStorage} =
-      $tree->{generalParameters}->{sessionStorage}->{globalStorage}->{value};
-    while (
-        my ( $v, $h ) = each(
-            %{
-                $tree->{generalParameters}->{sessionStorage}
-                  ->{globalStorageOptions}
-              }
-        )
-      )
-    {
+    $config->{globalStorage} = $tree->{generalParameters}->{sessionStorage}->{globalStorage}->{value};
+    while ( my ( $v, $h ) = each( %{ $tree->{generalParameters}->{sessionStorage}->{globalStorageOptions} })) {
         next unless ( ref($h) );
         $config->{globalStorageOptions}->{ $h->{text} } = $h->{value};
+    }
+    while ( my ( $v, $h ) = each( %{ $tree->{generalParameters}->{macros} })) {
+        next unless ( ref($h) );
+	$config->{macros}->{ $h->{text} } = $h->{value};
     }
     foreach (qw(ldapBase ldapPort ldapServer managerDn managerPassword)) {
         $config->{$_} =

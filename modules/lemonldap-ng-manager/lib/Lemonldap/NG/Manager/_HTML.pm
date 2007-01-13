@@ -5,7 +5,7 @@ package Lemonldap::NG::Manager::_HTML;
 # comes for the first time.
 
 use AutoLoader qw(AUTOLOAD);
-our $VERSION = '0.05';
+our $VERSION = '0.1';
 
 1;
 __END__
@@ -129,6 +129,10 @@ function onNodeSelect(nodeId) {
     }
     help('virtualHosts');
   }
+  else if(nodeIs(nodeId,"macros")){
+    but+=button('Nouvelle macro','newMacro',nodeId);
+    help('macros');
+  }
   else if(nodeIs(nodeId,"groups")){
     but+=button('Nouveau groupe','newGroup',nodeId);
     help('groups');
@@ -212,6 +216,10 @@ function newHeader(id){
 
 function newGroup(id){
   newValue('groups','New-group','both','');
+}
+
+function newMacro(id){
+  newValue('macros','newMacro','both','');
 }
 
 function newVar(id){

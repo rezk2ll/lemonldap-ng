@@ -2,7 +2,7 @@ package Lemonldap::NG::Manager::_i18n;
 
 use AutoLoader qw(AUTOLOAD);
 use UNIVERSAL qw(can);
-our $VERSION = '0.1';
+our $VERSION = '0.11';
 
 sub import {
     my ($caller_package) = caller;
@@ -40,6 +40,7 @@ sub fr {
         globalStorageOptions => 'Param&egrave;tres du module Apache::Session',
         authParams           => "Param&egrave;tres d'authentification",
         userGroups           => "Groupes d'utilisateurs",
+	macros               => "Macros",
         virtualHosts         => "H&ocirc;tes virtuels",
         authenticationType   => "Type d'authentification",
         securedCookie        => 'Cookie s&eacute;curis&eacute; (SSL)',

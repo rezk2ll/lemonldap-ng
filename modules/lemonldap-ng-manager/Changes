@@ -1,5 +1,11 @@
 Revision history for Perl extension Lemonldap::NG::Manager.
 
+0.4   Sat Jan 13 20:23:18 2007
+	- New configuration parameter named 'macros'. It can be used to
+	  declare new attributes (exported vars) calculated with Perl
+	  expressions on variables.
+	  TODO: documentation (but french help is done)
+
 0.3   Thu Jan 4 9:22:34 2007
 	- Help system skeleton and help in french
 

@@ -10,7 +10,7 @@ use warnings;
 use MIME::Base64;
 use CGI;
 
-our $VERSION = '0.42';
+our $VERSION = '0.5';
 
 our @ISA = qw(CGI Exporter);
 
@@ -160,16 +160,17 @@ sub redirect {
     }
 }
 
-###################################
-# MAIN subroutine: call all steps #
-###################################
+###############################################################
+# MAIN subroutine: call all steps until one returns something #
+#                  different than PE_OK                       #
+###############################################################
 sub process {
     my ($self) = @_;
     $self->{error} = PE_OK;
     foreach my $sub
       qw(controlUrlOrigin extractFormInfo formateParams formateFilter
-      connectLDAP bind search setSessionInfo setGroups authenticate store unbind
-      buildCookie log autoRedirect) {
+      connectLDAP bind search setSessionInfo setMacros setGroups authenticate
+      store unbind buildCookie log autoRedirect) {
         if ( $self->{$sub} )
         {
             last if ( $self->{error} = &{ $self->{$sub} }($self) );
@@ -193,6 +194,8 @@ sub controlUrlOrigin {
 # TODO: what to do with existing sessions ?
 #       - delete and create a new session
 #       - re-authentication (actual scheme)
+#       - nothing: user is authenticated and process
+#                  returns true
 sub controlExistingSession {
     PE_OK;
 }
@@ -290,11 +293,16 @@ sub setSessionInfo {
 }
 
 # 9. Unused here, but overloaded in SharedConf.pm
+sub setMacros {
+    PE_OK;
+}
+
+# 10. Unused here, but overloaded in SharedConf.pm
 sub setGroups {
     PE_OK;
 }
 
-# 10. Now, LDAP will not be used by Lemonldap except for LDAP
+# 11. Now, LDAP will not be used by Lemonldap except for LDAP
 #     authentication scheme
 sub unbind {
     my $self = shift;
@@ -303,7 +311,7 @@ sub unbind {
     PE_OK;
 }
 
-# 11. Default authentication: LDAP bind with user credentials
+# 12. Default authentication: LDAP bind with user credentials
 sub authenticate {
     my $self = shift;
     return PE_OK if ( $self->{id} );
@@ -315,7 +323,7 @@ sub authenticate {
     PE_OK;
 }
 
-# 12. Now, the user is authenticated. It's time to store his parameters with
+# 13. Now, the user is authenticated. It's time to store his parameters with
 #     Apache::Session::* module
 sub store {
     my ($self) = @_;
@@ -332,7 +340,7 @@ sub store {
     PE_OK;
 }
 
-# 13. If all is done, we build the Lemonldap::NG cookie
+# 14. If all is done, we build the Lemonldap::NG cookie
 sub buildCookie {
     my $self = shift;
     $self->{cookie} = $self->cookie(
@@ -346,7 +354,7 @@ sub buildCookie {
     PE_OK;
 }
 
-# 14. By default, nothing is logged. Users actions are logged on applications.
+# 15. By default, nothing is logged. Users actions are logged on applications.
 #     It's easy to override this in the contructor :
 #       my $portal = new Lemonldap::NG::Portal ( {
 #                    ...
@@ -360,7 +368,7 @@ sub log {
     PE_OK;
 }
 
-# 15. If the user was redirected to the portal, we will now redirect him
+# 16. If the user was redirected to the portal, we will now redirect him
 #     to the requested URL
 sub autoRedirect {
     my $self = shift;
