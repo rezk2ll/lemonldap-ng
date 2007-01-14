@@ -100,18 +100,18 @@ EOT
 sub help_macros_fr {
     print <<EOT;
 <h3>Macros</h3>
-<p> Les macros permettent d'ajouter des variables calculées à partir des
-attributs LDAP (variables exportées). Elles évitent de répéter le même calcul
+<p> Les macros permettent d'ajouter des variables calcul&eacute;es &agrave; partir des
+attributs LDAP (variables export&eacute;es). Elles &eacute;vitent de r&eacute;p&eacute;ter le m&ecirc;me calcul
 plusieurs fois dans la configuration. Exemple&nbsp;:</p>
 <pre>
     # macros
     nom_complet => \$givenname . " " . \$surname
     admin => \$uid eq "foo" or \$uid eq "bar"
     
-    # test.example.com - En-têtes
+    # test.example.com - En-t&ecirc;tes
     Nom => \$nom_complet
     
-    # test.example.com - Règles
+    # test.example.com - R&egrave;gles
     ^/admin/ => \$admin
 EOT
 }

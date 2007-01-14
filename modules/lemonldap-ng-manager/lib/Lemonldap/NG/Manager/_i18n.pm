@@ -6,7 +6,7 @@ our $VERSION = '0.11';
 
 sub import {
     my ($caller_package) = caller;
-    my $lang = shift;
+    my $lang = pop;
     $lang = lc($lang);
     $lang =~ s/-/_/g;
     foreach ( split( /[,;]/, $lang ) ) {
@@ -54,6 +54,18 @@ sub fr {
         managerPassword      => 'Mot de passe LDAP',
         httpHeaders          => 'En-t&ecirc;tes HTTP',
         locationRules        => 'R&egrave;gles',
+
+	newVirtualHost       => 'Nouvel h&ocric;te virtuel',
+	newMacro             => 'Nouvelle macro',
+	newGroup             => 'Nouveau groupe',
+	newVar               => 'Nouvelle variable',
+	newGSOpt             => 'Nouvelle option',
+	saveConf             => 'Sauvegarder',
+	deleteNode           => 'Supprimer',
+	rules                => 'R&egrave;gles',
+	unableToSave         => 'Votre navigateur ne supporte pas les objets XMLHTTPRequest: sauvegarde impossible.'
+	confSaved            => 'Configuration sauvegardée sous le num&eacute;ro',
+	saveFailure          => '&Eacute;chec de la sauvegarde',
     };
 }
 
@@ -80,5 +92,17 @@ sub en {
         managerPassword      => 'LDAP Password',
         httpHeaders          => 'HTTP Headers',
         locationRules        => 'Rules',
+
+	newVirtualHost       => 'New Virtual Host',
+	newMacro             => 'New Macro',
+	newGroup             => 'New Group',
+	newVar               => 'New Variable',
+	newGSOpt             => 'New Option',
+	saveConf             => 'Save',
+	deleteNode           => 'Delete',
+	rules                => 'Rules',
+	unableToSave         => 'Your browser does not support XMLHTTPRequest objects: fail to save.'
+	confSaved            => 'Configuration saved with number',
+	saveFailure          => 'Save failure',
     };
 }
