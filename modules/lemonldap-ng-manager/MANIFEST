@@ -44,6 +44,7 @@ example/imgs/plus_ar.gif
 example/imgs/tombs.gif
 example/imgs/tombs_mag.gif
 example/lemonldap-ng-manager.js
+example/lmConfig.mysql
 example/index.pl
 lib/Lemonldap/NG/Manager.pm
 lib/Lemonldap/NG/Manager/_HTML.pm

@@ -12,7 +12,7 @@ require Lemonldap::NG::Manager::Help;
 
 our @ISA = qw(Lemonldap::NG::Manager::Base);
 
-our $VERSION = '0.4';
+our $VERSION = '0.41';
 
 sub new {
     my ( $class, $args ) = @_;

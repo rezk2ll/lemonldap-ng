@@ -26,10 +26,12 @@ sub import {
 *en_us = *en;
 
 1;
+
 __END__
 
 =pod
 =cut
+
 sub fr {
     return {
         configuration        => 'Configuration',
@@ -40,7 +42,7 @@ sub fr {
         globalStorageOptions => 'Param&egrave;tres du module Apache::Session',
         authParams           => "Param&egrave;tres d'authentification",
         userGroups           => "Groupes d'utilisateurs",
-	macros               => "Macros",
+        macros               => "Macros",
         virtualHosts         => "H&ocirc;tes virtuels",
         authenticationType   => "Type d'authentification",
         securedCookie        => 'Cookie s&eacute;curis&eacute; (SSL)',
@@ -55,17 +57,17 @@ sub fr {
         httpHeaders          => 'En-t&ecirc;tes HTTP',
         locationRules        => 'R&egrave;gles',
 
-	newVirtualHost       => 'Nouvel h&ocric;te virtuel',
-	newMacro             => 'Nouvelle macro',
-	newGroup             => 'Nouveau groupe',
-	newVar               => 'Nouvelle variable',
-	newGSOpt             => 'Nouvelle option',
-	saveConf             => 'Sauvegarder',
-	deleteNode           => 'Supprimer',
-	rules                => 'R&egrave;gles',
-	unableToSave         => 'Votre navigateur ne supporte pas les objets XMLHTTPRequest: sauvegarde impossible.'
-	confSaved            => 'Configuration sauvegardée sous le num&eacute;ro',
-	saveFailure          => '&Eacute;chec de la sauvegarde',
+        newVirtualHost => 'Nouvel h&ocirc;te virtuel',
+        newMacro       => 'Nouvelle macro',
+        newGroup       => 'Nouveau groupe',
+        newVar         => 'Nouvelle variable',
+        newGSOpt       => 'Nouvelle option',
+        saveConf       => 'Sauvegarder',
+        deleteNode     => 'Supprimer',
+        rules          => 'R&egrave;gles',
+        unableToSave   => 'Votre navigateur ne supporte pas les objets XMLHTTPRequest: sauvegarde impossible.',
+        confSaved      => 'Configuration sauvegardée sous le num&eacute;ro',
+        saveFailure    => '&Eacute;chec de la sauvegarde',
     };
 }
 
@@ -93,16 +95,16 @@ sub en {
         httpHeaders          => 'HTTP Headers',
         locationRules        => 'Rules',
 
-	newVirtualHost       => 'New Virtual Host',
-	newMacro             => 'New Macro',
-	newGroup             => 'New Group',
-	newVar               => 'New Variable',
-	newGSOpt             => 'New Option',
-	saveConf             => 'Save',
-	deleteNode           => 'Delete',
-	rules                => 'Rules',
-	unableToSave         => 'Your browser does not support XMLHTTPRequest objects: fail to save.'
-	confSaved            => 'Configuration saved with number',
-	saveFailure          => 'Save failure',
+        newVirtualHost => 'New Virtual Host',
+        newMacro       => 'New Macro',
+        newGroup       => 'New Group',
+        newVar         => 'New Variable',
+        newGSOpt       => 'New Option',
+        saveConf       => 'Save',
+        deleteNode     => 'Delete',
+        rules          => 'Rules',
+        unableToSave   => 'Your browser does not support XMLHTTPRequest objects: fail to save.',
+        confSaved      => 'Configuration saved with number',
+        saveFailure    => 'Save failure',
     };
 }

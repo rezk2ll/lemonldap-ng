@@ -5,6 +5,7 @@ package Lemonldap::NG::Manager::_HTML;
 # comes for the first time.
 
 use AutoLoader qw(AUTOLOAD);
+require Lemonldap::NG::Manager::_i18n;
 our $VERSION = '0.1';
 
 1;
@@ -68,6 +69,12 @@ EOT
 
 sub javascript {
     my $self = shift;
+    Lemonldap::NG::Manager::_i18n::import( $ENV{HTTP_ACCEPT_LANGUAGE} );
+    my %text;
+    foreach(qw(newVirtualHost newMacro newGroup newVar newGSOpt saveConf
+               deleteNode rules unableToSave confSaved saveFailure)) {
+        $text{$_} = &$_;
+    }
     print <<EOT;
 var s3,s32;
 window.onload=function(){
@@ -122,7 +129,7 @@ function onNodeSelect(nodeId) {
   }
   var but='';
   if(nodeIs(nodeId,"virtualHosts")){
-    but+=button('Nouvel Hôte Virtuel','newVirtualHost',nodeId);
+    but+=button('$text{newVirtualHost}','newVirtualHost',nodeId);
     if(nodeIs(nodeId,"virtualHost")){
       but+=button('Nouvelle règle','newRule',nodeId);
       but+=button('Nouvel en-tête','newHeader',nodeId);
@@ -130,11 +137,11 @@ function onNodeSelect(nodeId) {
     help('virtualHosts');
   }
   else if(nodeIs(nodeId,"macros")){
-    but+=button('Nouvelle macro','newMacro',nodeId);
+    but+=button('$text{newMacro}','newMacro',nodeId);
     help('macros');
   }
   else if(nodeIs(nodeId,"groups")){
-    but+=button('Nouveau groupe','newGroup',nodeId);
+    but+=button('$text{newGroup}','newGroup',nodeId);
     help('groups');
   }
   else if(nodeIs(nodeId,"generalParameters")){
@@ -142,18 +149,18 @@ function onNodeSelect(nodeId) {
       help('ldap');
     }
     else if(nodeIs(nodeId,"exportedVars")){
-      but+=button('Nouvelle variable','newVar',nodeId);
+      but+=button('$text{newVar}','newVar',nodeId);
       help('vars');
     }
     else if(nodeIs(nodeId,'sessionStorage')){
       if(nodeIs(nodeId,"globalStorageOptions")){
-        but+=button('Nouvelle option','newGSOpt',nodeId);
+        but+=button('$text{newGSOpt}','newGSOpt',nodeId);
       }
       help('storage');
     }
   }
-  if(tree.getUserData(nodeId,"modif")=='both') but+=button("Supprimer",'deleteNode',nodeId);
-  but+=button('Sauvegarder','saveConf');
+  if(tree.getUserData(nodeId,"modif")=='both') but+=button('$text{deleteNode}','deleteNode',nodeId);
+  but+=button('$text{saveConf}','saveConf');
   document.getElementById('buttons').innerHTML = but;
 }
 
@@ -189,7 +196,7 @@ function newVirtualHost() {
     insertNewChild(rep+'_exportedHeaders',rep+'_exportedHeaders_1','Auth-User');
     tree.setUserData(rep+'_exportedHeaders_1','modif','both');
     tree.setUserData(rep+'_exportedHeaders_1','value','\$uid');
-    insertNewChild(rep,rep+'_locationRules','Règles');
+    insertNewChild(rep,rep+'_locationRules','$text{rules}');
     insertNewChild(rep+'_locationRules',rep+'_locationRules_default','default');
     tree.setUserData(rep+'_locationRules_default','modif','value');
     tree.setUserData(rep+'_locationRules_default','value','deny');
@@ -241,7 +248,7 @@ if(window.XMLHttpRequest) // Firefox
 else if(window.ActiveXObject) // Internet Explorer 
   xhr_object = new ActiveXObject("Microsoft.XMLHTTP"); 
 else { // XMLHttpRequest non supporté par le navigateur 
-  alert("Votre navigateur ne supporte pas les objets XMLHTTPRequest: sauvegarde impossible."); 
+  alert('$text{unableToSave}');
 } 
 
 function help(s){
@@ -263,13 +270,13 @@ function saveConf(){
       var r=xhr_object.responseText;
       if(r>0) {
         tree.setItemText('root','Configuration '+r);
-        document.getElementById('help').innerHTML='<h3>Configuration sauvegardée sous le numéro : '+r+'</h3>';
+        document.getElementById('help').innerHTML='<h3>$text{confSaved} : '+r+'</h3>';
       }
       else {
-        document.getElementById('help').innerHTML='<h3>Échec de la sauvegarde</h3>';
+        document.getElementById('help').innerHTML='<h3>$text{saveFailure}</h3>';
       }
     }
-    else  document.getElementById('help').innerHTML='<h3>Échec de la sauvegarde</h3>';
+    else  document.getElementById('help').innerHTML='<h3>$text{saveFailure}</h3>';
   }
   xhr_object.send(h);
 }
