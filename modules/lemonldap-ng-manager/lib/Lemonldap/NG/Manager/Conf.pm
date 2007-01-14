@@ -42,10 +42,14 @@ sub saveConf {
             $fields->{$k} = "'" . encode_base64( freeze($v) ) . "'";
             $fields->{$k} =~ s/[\r\n]//g;
         }
-        elsif ( $v =~ /^\d+/ ) {
+        elsif ( $v =~ /^\d+$/ ) {
             $fields->{$k} = "$v";
         }
         else {
+            # mono-line
+            $v =~ s/[\r\n]/ /gm;
+            # trim
+            $v =~ s/^\s*(.*?)\s*$/$1/;
             $fields->{$k} = "'$v'";
         }
     }
@@ -63,7 +67,7 @@ sub getConf {
         my $tmp;
         eval "\$tmp = thaw(decode_base64($v))";
         if ( $@ or not($tmp) ) {
-            $v =~ s/^'(.*)'$/$1/;
+            $v =~ s/^'(.*)'$/$1/m;
             $conf->{$k} = $v;
         }
         else {
@@ -85,10 +89,10 @@ Web-SSO configuration.
 
   use Lemonldap::NG::Manager::Conf;
   my $confAccess = new Lemonldap::NG::Manager::Conf(
-		  {
-		  type=>'File',
-		  dirName=>"/tmp/",
-		  },
+                  {
+                  type=>'File',
+                  dirName=>"/tmp/",
+                  },
     ) or die "Unable to build Lemonldap::NG::Manager::Conf, see Apache logs";
   my $config = $confAccess->getConf();
 
@@ -109,20 +113,20 @@ choosen type. Examples:
 
 =item * B<File>:
   $confAccess = new Lemonldap::NG::Manager::Conf(
-		  {
-		  type    => 'File',
-		  dirName => '/var/lib/lemonldap-ng/',
-		  });
+                  {
+                  type    => 'File',
+                  dirName => '/var/lib/lemonldap-ng/',
+                  });
 
 =item * B<DBI>:
   $confAccess = new Lemonldap::NG::Manager::Conf(
                   {
-		  type
-		  dbiChain    => 'DBI:mysql:database=lemonldap-ng,host=1.2.3.4',
-		  dbiUser     => 'lemonldap'
-		  dbiPassword => 'pass'
-		  dbiTable    => 'lmConfig',
-		  });
+                  type
+                  dbiChain    => 'DBI:mysql:database=lemonldap-ng,host=1.2.3.4',
+                  dbiUser     => 'lemonldap'
+                  dbiPassword => 'pass'
+                  dbiTable    => 'lmConfig',
+                  });
 
 =back
 

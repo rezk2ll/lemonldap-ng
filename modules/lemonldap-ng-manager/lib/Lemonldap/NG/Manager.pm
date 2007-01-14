@@ -129,9 +129,9 @@ sub printXmlConf {
                             text => &exportedVars,
                             item => {},
                         },
-			macros => {
-			    text => &macros,
-			},
+                        macros => {
+                            text => &macros,
+                        },
                         ldapParameters => {
                             text => &ldapParameters,
                             item => {},
@@ -259,11 +259,11 @@ sub printXmlConf {
         }
     }
     if ( $config->{macros} ) {
-	$tree->{item}->{item}->{generalParameters}->{item}->{macros}->{item} = {};
-	my $macros = $tree->{item}->{item}->{generalParameters}->{item}->{macros}->{item};
-	while ( my ( $macro, $expr ) = each( %{ $config->{macros} } ) ) {
-	    $macros->{$macro} = $self->xmlField( 'both', $expr, $macro );
-	}
+        $tree->{item}->{item}->{generalParameters}->{item}->{macros}->{item} = {};
+        my $macros = $tree->{item}->{item}->{generalParameters}->{item}->{macros}->{item};
+        while ( my ( $macro, $expr ) = each( %{ $config->{macros} } ) ) {
+            $macros->{$macro} = $self->xmlField( 'both', $expr, $macro );
+        }
     }
 
     print XMLout(
@@ -339,7 +339,7 @@ sub upload {
     }
     while ( my ( $v, $h ) = each( %{ $tree->{generalParameters}->{macros} })) {
         next unless ( ref($h) );
-	$config->{macros}->{ $h->{text} } = $h->{value};
+        $config->{macros}->{ $h->{text} } = $h->{value};
     }
     foreach (qw(ldapBase ldapPort ldapServer managerDn managerPassword)) {
         $config->{$_} =

@@ -72,7 +72,8 @@ sub javascript {
     Lemonldap::NG::Manager::_i18n::import( $ENV{HTTP_ACCEPT_LANGUAGE} );
     my %text;
     foreach(qw(newVirtualHost newMacro newGroup newVar newGSOpt saveConf
-               deleteNode rules unableToSave confSaved saveFailure)) {
+               deleteNode locationRules unableToSave confSaved saveFailure
+               newRule newHeader)) {
         $text{$_} = &$_;
     }
     print <<EOT;
@@ -131,8 +132,8 @@ function onNodeSelect(nodeId) {
   if(nodeIs(nodeId,"virtualHosts")){
     but+=button('$text{newVirtualHost}','newVirtualHost',nodeId);
     if(nodeIs(nodeId,"virtualHost")){
-      but+=button('Nouvelle règle','newRule',nodeId);
-      but+=button('Nouvel en-tête','newHeader',nodeId);
+      but+=button('$text{newRule}','newRule',nodeId);
+      but+=button('$text{newHeader}','newHeader',nodeId);
     }
     help('virtualHosts');
   }
@@ -188,15 +189,15 @@ function insertNewChild(a,b,c) {
 }
 
 function newVirtualHost() {
-  var rep=prompt("Nouvel hôte virtuel");
+  var rep=prompt("$newVirtualHost");
   if(rep) {
     insertNewChild('virtualHosts',rep,rep)
     tree.setUserData(rep,'modif','text');
-    insertNewChild(rep,rep+'_exportedHeaders','Headers');
+    insertNewChild(rep,rep+'_exportedHeaders','$text{httpHeaders}');
     insertNewChild(rep+'_exportedHeaders',rep+'_exportedHeaders_1','Auth-User');
     tree.setUserData(rep+'_exportedHeaders_1','modif','both');
     tree.setUserData(rep+'_exportedHeaders_1','value','\$uid');
-    insertNewChild(rep,rep+'_locationRules','$text{rules}');
+    insertNewChild(rep,rep+'_locationRules','$text{locationRules}');
     insertNewChild(rep+'_locationRules',rep+'_locationRules_default','default');
     tree.setUserData(rep+'_locationRules_default','modif','value');
     tree.setUserData(rep+'_locationRules_default','value','deny');

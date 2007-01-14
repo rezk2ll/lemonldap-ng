@@ -48,17 +48,17 @@ With Lemonldap::NG::Portal::Simple:
 
   use Lemonldap::NG::Portal::Simple;
   my $portal = new Lemonldap::NG::Portal::Simple(
-	 domain         => 'gendarmerie.defense.gouv.fr',
+         domain         => 'gendarmerie.defense.gouv.fr',
          globalStorage  => 'Apache::Session::MySQL',
-	 globalStorageOptions => {
-	   DataSource   => 'dbi:mysql:database',
-	   UserName     => 'db_user',
-	   Password     => 'db_password',
-	   TableName    => 'sessions',
-	 },
-	 ldapServer     => 'ldap.domaine.com',
-	 securedCookie  => 1,
-	 authentication => 'SSL',
+         globalStorageOptions => {
+           DataSource   => 'dbi:mysql:database',
+           UserName     => 'db_user',
+           Password     => 'db_password',
+           TableName    => 'sessions',
+         },
+         ldapServer     => 'ldap.domaine.com',
+         securedCookie  => 1,
+         authentication => 'SSL',
     );
 
   if($portal->process()) {

@@ -64,8 +64,8 @@ sub new {
 
     if ( $self->{authentication} eq "SSL" ) {
         require Lemonldap::NG::Portal::AuthSSL;
-	# $Lemonldap::NG::Portal::AuthSSL::OVERRIDE does not overload $self
-	# variables: if the administrator has defined a sub, we respect it
+        # $Lemonldap::NG::Portal::AuthSSL::OVERRIDE does not overload $self
+        # variables: if the administrator has defined a sub, we respect it
         %$self = ( %$Lemonldap::NG::Portal::AuthSSL::OVERRIDE, %$self );
     }
     return $self;
@@ -385,12 +385,12 @@ sub autoRedirect {
         #<head>
         #<script language="Javascript">
         #function redirect() {
-        #	document.location.href='$u';
+        #        document.location.href='$u';
         #}
         #</script>
         #</head>
         #<body onload="redirect();">
-        #	<h2>The document has moved <a href="$u">HERE</a></h2>
+        #        <h2>The document has moved <a href="$u">HERE</a></h2>
         #</body>
         #</html>
         #EOF
@@ -411,20 +411,20 @@ Lemonldap::NG::Portal::Simple - Base module for building Lemonldap::NG compatibl
 
   use Lemonldap::NG::Portal::Simple;
   my $portal = new Lemonldap::NG::Portal::Simple(
-	 domain         => 'gendarmerie.defense.gouv.fr',
+         domain         => 'gendarmerie.defense.gouv.fr',
          globalStorage  => 'Apache::Session::MySQL',
-	 globalStorageOptions => {
-	   DataSource   => 'dbi:mysql:database=dbname;host=127.0.0.1',
-	   UserName     => 'db_user',
-	   Password     => 'db_password',
-	   TableName    => 'sessions',
-	   LockDataSource   => 'dbi:mysql:database=dbname;host=127.0.0.1',
-	   LockUserName     => 'db_user',
-	   LockPassword     => 'db_password',
-	 },
-	 ldapServer     => 'ldap.domaine.com',
-	 securedCookie  => 1,
-	 exportedVars  => ["uid","cn","mail","appli"],
+         globalStorageOptions => {
+           DataSource   => 'dbi:mysql:database=dbname;host=127.0.0.1',
+           UserName     => 'db_user',
+           Password     => 'db_password',
+           TableName    => 'sessions',
+           LockDataSource   => 'dbi:mysql:database=dbname;host=127.0.0.1',
+           LockUserName     => 'db_user',
+           LockPassword     => 'db_password',
+         },
+         ldapServer     => 'ldap.domaine.com',
+         securedCookie  => 1,
+         exportedVars  => ["uid","cn","mail","appli"],
     );
 
   if($portal->process()) {

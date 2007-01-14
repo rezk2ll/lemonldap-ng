@@ -20,7 +20,7 @@ system.
   use Lemonldap::NG::Portal::SharedConf;
   my $portal = new Lemonldap::NG::Portal::SharedConf (
         configStorage => {
-	    type          => 'DBI',
+            type          => 'DBI',
             dbiChain      => "dbi:mysql:database=lmSessions;host=1.2.3.4",
             dbiUser       => "lemon",
             dbiPassword   => "pass",

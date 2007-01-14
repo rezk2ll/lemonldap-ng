@@ -1,5 +1,8 @@
 Revision history for Perl extension Lemonldap::NG::Handler.
 
+0.74
+	- unprotect system
+
 0.73  Thu Jan 4 15:34:22 2007
 	- In VirtualHost context, PerlInitHandler is an alias for
 	  PerlPostReadRequestHandler. So by encoding characters (%40 for 'a'),

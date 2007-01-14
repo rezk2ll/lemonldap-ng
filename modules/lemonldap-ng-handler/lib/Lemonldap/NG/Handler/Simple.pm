@@ -6,7 +6,7 @@ use MIME::Base64;
 use Exporter 'import';
 use Safe;
 
-our $VERSION = '0.73';
+our $VERSION = '0.74';
 
 our %EXPORT_TAGS = (
     localStorage =>
@@ -519,7 +519,7 @@ sub cleanLocalStorage {
     return DECLINED;
 }
 
-sub none {
+sub unprotect {
     DONE;
 }
 
@@ -600,6 +600,11 @@ Call your package in <apache-directory>/conf/httpd.conf
   <Location /protected-area>
     PerlHeaderParserHandler My::Package
   </Location>
+  
+  # You can also unprotect an URI
+  <Files "*.gif">
+    PerlHeaderParserHandler My::Package->unprotect
+  </Files>
 
 =head1 DESCRIPTION
 
