@@ -2,6 +2,7 @@ Revision history for Perl extension Lemonldap::NG::Manager.
 
 0.41  Sun Jan 14 14:04:05 2007
 	- I18n in javascripts (close #306564 / forge.objectweb.org)
+	- Increase number of help chapter (General Parameters)
 
 0.4   Sat Jan 13 20:23:18 2007
 	- New configuration parameter named 'macros'. It can be used to

@@ -2,7 +2,7 @@ package Lemonldap::NG::Manager::Help;
 
 use AutoLoader qw(AUTOLOAD);
 use UNIVERSAL qw(can);
-our $VERSION = '0.21';
+our $VERSION = '0.3';
 
 sub import {
     my ($caller_package) = caller;
@@ -18,7 +18,8 @@ sub import {
         }
     }
     $l ||= "en";
-    foreach $h (qw(virtualHosts groups ldap vars storage macros)) {
+    foreach $h (qw(virtualHosts groups ldap vars storage macros authParams
+                   cookieName domain)) {
         *{"${caller_package}::help_$h"} = \&{"help_${h}_$l"};
     }
 }
@@ -31,65 +32,132 @@ __END__
 sub help_virtualHosts_en {
     print <<EOT;
 <h3>Virtual Hosts</h3>
+This help chapter does not exist in english. If you want to help us, you can
+edit lib/Lemonldap/NG/Manager/Help.pm in lemonldap-ng source tree and send us
+your contribution.<br>
+Thanks.
 EOT
 }
 
 sub help_macros_en {
     print <<EOT;
-<h3>User Groups</h3>
+<h3>Macros</h3>
+This help chapter does not exist in english. If you want to help us, you can
+edit lib/Lemonldap/NG/Manager/Help.pm in lemonldap-ng source tree and send us
+your contribution.<br>
+Thanks.
 EOT
 }
 
 sub help_groups_en {
     print <<EOT;
 <h3>User Groups</h3>
+This help chapter does not exist in english. If you want to help us, you can
+edit lib/Lemonldap/NG/Manager/Help.pm in lemonldap-ng source tree and send us
+your contribution.<br>
+Thanks.
 EOT
 }
 
 sub help_ldap_en {
     print <<EOT;
 <h3>LDAP Parameters</h3>
+This help chapter does not exist in english. If you want to help us, you can
+edit lib/Lemonldap/NG/Manager/Help.pm in lemonldap-ng source tree and send us
+your contribution.<br>
+Thanks.
 EOT
 }
 
 sub help_vars_en {
     print <<EOT;
 <h3>Variables (LDAP attributes)</h3>
+This help chapter does not exist in english. If you want to help us, you can
+edit lib/Lemonldap/NG/Manager/Help.pm in lemonldap-ng source tree and send us
+your contribution.<br>
+Thanks.
 EOT
 }
 
 sub help_storage_en {
     print <<EOT;
 <h3>Sessions Storage</h3>
+This help chapter does not exist in english. If you want to help us, you can
+edit lib/Lemonldap/NG/Manager/Help.pm in lemonldap-ng source tree and send us
+your contribution.<br>
+Thanks.
+EOT
+}
+
+sub help_authParams_en {
+    print <<EOT;
+<h3>Authentication Parameters</h3>
+This help chapter does not exist in english. If you want to help us, you can
+edit lib/Lemonldap/NG/Manager/Help.pm in lemonldap-ng source tree and send us
+your contribution.<br>
+Thanks.
+EOT
+}
+
+sub help_cookieName_en {
+    print <<EOT;
+<h3>Cookie Name</h3>
+This help chapter does not exist in english. If you want to help us, you can
+edit lib/Lemonldap/NG/Manager/Help.pm in lemonldap-ng source tree and send us
+your contribution.<br>
+Thanks.
+EOT
+}
+
+sub help_domain_en {
+    print <<EOT;
+<h3>Protected domain</h3>
+This help chapter does not exist in english. If you want to help us, you can
+edit lib/Lemonldap/NG/Manager/Help.pm in lemonldap-ng source tree and send us
+your contribution.<br>
+Thanks.
 EOT
 }
 
 sub help_virtualHosts_fr {
     print <<EOT;
 <h3>H&ocirc;tes virtuels</h3>
+
 <p> La configuration d'un h&ocirc;te virtuel est divis&eacute;e en 2 parties&nbsp;: les
-r&egrave;gles et les en-t&ecirc;tes HTTP export&eacute;s.
+r&egrave;gles et les en-t&ecirc;tes HTTP export&eacute;s.</p>
+
+<p> <u>Note</u> : pour que le m&eacute;canisme d'authentification fonctionne, tous
+les h&ocirc;tes virtuels et le portail doivent se trouver dans le domaine d&eacute;clar&eacute;
+dans les param&egrave;tres g&eacute;n&eacute;raux.</p>
+
 <h4> R&egrave;gles</h4>
+
 <p>Une r&egrave;gle associe une expression r&eacute;guli&egrave;re perl &agrave; une expression bool&eacute;enne.
 Lors de l'acc&egrave;s d'un utilisateur, si l'URL demand&eacute;e correspond &agrave; la r&egrave;gle, le
 droit d'acc&egrave;s est calcul&eacute; par l'expression bool&eacute;enne. Exemple&nbsp;:</p>
+
 <pre>
   # H&ocirc;te virtuel test.example.com - r&egrave;gles
   ^/protected =&gt; \$groups =~ /\\bgroup1\\b/
 </pre>
+
 <p> La r&egrave;gle ci-dessus signifie que pour les URL commen&ccedil;ant par '/protected',
 les utilisateurs doivent appartenir au groupe 'group1'. Vous pouvez &eacute;galement
 utiliser les mots-clefs 'accept' et 'deny'. Attention, 'accept' signifie que
 tous les utilisateurs authentifi&eacute;s peuvent acc&eacute;der.</p>
+
 <p>Si l'URL demand&eacute;e ne correspond &agrave; aucune des expressions r&eacute;guli&egrave;res, le
 droit d'acc&egrave;s est calcul&eacute; &agrave; partir de l'expression bool&eacute;enne d&eacute;finie dans
 la r&egrave;gle par d&eacute;faut (default).</p>
 
 <h4> En-t&ecirc;tes</h4>
+
 <p> Les en-t&ecirc;tes servant &agrave; l'application &agrave; savoir qui est connect&eacute; se d&eacute;clarent
 comme suit&nbsp;: <tt>&lt;nom de l'en-t&ecirc;te&gt; =&gt; &lt;expression Perl&gt;.
 </p>
+
 <p> Exemples :</p>
+
 <pre>
   Auth-User =&gt; \$uid
   Unite     =&gt; \$departmentUID
@@ -216,3 +284,44 @@ indiquer les param&egrave;tres correspondants &agrave; ce module&nbsp;:</p>
 EOT
 }
 
+sub help_authParams_fr {
+    print <<EOT;
+<h3>Param&egrave;tres d'authentification</h3>
+<dl>
+<dt> Type d'authentfication </dt>
+<dd> Le sch&eacute;ma classique d'authentification Lemonldap consiste &agrave; utiliser une
+authentification par LDAP. Vous pouvez changer ceci en ssl par exemple.</dd>
+
+<dt> Portail </dt>
+<dd> Indiquez ici l'URL ou seront renvoy&eacute;s les utilisateurs non authentifi&eacute;s.
+Cette URL doit bien sur correspondre &agrave; un portail utilisant
+Lemonldap::NG::Portal::SharedConf.</dd>
+
+<dt> Cookie s&eacute;curis&eacute; (SSL) </dt>
+<dd> Une fois authentifi&eacute;, l'utilisateur est reconnu par son cookie. Si tous
+les h&ocirc;tes virtuels de votre domaine son prot&eacute;g&eacute;s par SSL, mettez cette option
+&agrave; 1, ainsi le cookie ne sera pr&eacute;sent&eacute; par le navigateur qu'aux sites prot&eacute;g&eacute;s,
+ce qui &eacute;vite un vol de session.
+</dl>
+EOT
+}
+
+sub help_cookieName_fr {
+    print <<EOT;
+<h3>Nom de cookie</h3>
+<p> Indiquez ici le nom du cookie ('lemonldap' par défaut).<br>
+
+ATTENTION, tout changement nécessite le redémarrage de tous les serveurs Apache
+hébergeant des agents de protection Lemonldap::NG::Handler.</p>
+EOT
+}
+
+sub help_domain_fr {
+    print <<EOT;
+<h3>Domaine protégé</h3>
+<p> Indiquez ici le nom du domaine (ou du sous-domaine) contenant vos
+applications à protéger.<br>
+ATTENTION : tous les hôtes virtuels protégés ainsi que le portail
+d'authentification doivent se trouver dans ce domaine.
+EOT
+}

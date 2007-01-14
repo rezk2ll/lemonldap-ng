@@ -18,7 +18,7 @@ sub import {
     }
     $functions ||= &en;
     while ( my ( $f, $v ) = each(%$functions) ) {
-        *{"${caller_package}::$f"} = sub { $v };
+        *{"${caller_package}::txt_$f"} = sub { $v };
     }
 }
 

@@ -6,7 +6,7 @@ package Lemonldap::NG::Manager::_HTML;
 
 use AutoLoader qw(AUTOLOAD);
 require Lemonldap::NG::Manager::_i18n;
-our $VERSION = '0.1';
+our $VERSION = '0.11';
 
 1;
 __END__
@@ -74,7 +74,7 @@ sub javascript {
     foreach(qw(newVirtualHost newMacro newGroup newVar newGSOpt saveConf
                deleteNode locationRules unableToSave confSaved saveFailure
                newRule newHeader)) {
-        $text{$_} = &$_;
+        $text{$_} = &{"txt_$_"};
     }
     print <<EOT;
 var s3,s32;
@@ -158,6 +158,15 @@ function onNodeSelect(nodeId) {
         but+=button('$text{newGSOpt}','newGSOpt',nodeId);
       }
       help('storage');
+    }
+    else if(nodeIs(nodeId,'authParams')){
+      help('authParams');
+    }
+    else if(nodeIs(nodeId,'cookieName')){
+      help('cookieName');
+    }
+    else if(nodeIs(nodeId,'domain')){
+      help('domain');
     }
   }
   if(tree.getUserData(nodeId,"modif")=='both') but+=button('$text{deleteNode}','deleteNode',nodeId);
