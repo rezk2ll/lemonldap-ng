@@ -6,7 +6,7 @@ package Lemonldap::NG::Manager::_HTML;
 
 use AutoLoader qw(AUTOLOAD);
 require Lemonldap::NG::Manager::_i18n;
-our $VERSION = '0.11';
+our $VERSION = '0.12';
 
 1;
 __END__
@@ -294,6 +294,7 @@ function saveConf(){
 function tree2txt(id){
   var s=tree.getSubItems(id);
   var c=s.split(',');
+  id = id.replace(/[0-9]*_/,'');
   var r='<'+id+"><text>"+ec(tree.getItemText(id))+"</text>\\n";
   if((!s) || s=='' || c.length==0){
     r+= '<value>'+ec(tree.getUserData(id,'value'))+"</value>\\n";

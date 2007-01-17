@@ -4,7 +4,7 @@ use strict;
 use Storable qw(thaw freeze);
 use MIME::Base64;
 
-our $VERSION = 0.4;
+our $VERSION = 0.41;
 our @ISA;
 
 sub new {
@@ -65,9 +65,9 @@ sub getConf {
     my $conf;
     while ( my ( $k, $v ) = each(%$fields) ) {
         my $tmp;
-        eval "\$tmp = thaw(decode_base64($v))";
+        $v =~ s/^'(.*)'$/$1/m;
+        eval "\$tmp = thaw(decode_base64('$v'))";
         if ( $@ or not($tmp) ) {
-            $v =~ s/^'(.*)'$/$1/m;
             $conf->{$k} = $v;
         }
         else {

@@ -1,5 +1,10 @@
 Revision history for Perl extension Lemonldap::NG::Manager.
 
+0.42  Wed Jan 17 20:35:43 2007
+	- Correction issued from the first test in real life:
+	  * Close #306573 / forge.objectweb.org
+	  * Close #306574 / forge.objectweb.org
+
 0.41  Sun Jan 14 14:04:05 2007
 	- I18n in javascripts (close #306564 / forge.objectweb.org)
 	- Increase number of help chapter (General Parameters)
