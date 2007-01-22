@@ -2,7 +2,6 @@ package Lemonldap::NG::Handler::SharedConf::DBI;
 
 use strict;
 
-use UNIVERSAL qw(can);
 use Lemonldap::NG::Handler::SharedConf qw(:all);
 use DBI;
 use Storable qw(thaw);
