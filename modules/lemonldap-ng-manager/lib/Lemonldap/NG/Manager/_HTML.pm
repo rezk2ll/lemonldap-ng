@@ -198,7 +198,7 @@ function insertNewChild(a,b,c) {
 }
 
 function newVirtualHost() {
-  var rep=prompt("$newVirtualHost");
+  var rep=prompt("$text{newVirtualHost}");
   if(rep) {
     insertNewChild('virtualHosts',rep,rep)
     tree.setUserData(rep,'modif','text');
@@ -294,7 +294,7 @@ function saveConf(){
 function tree2txt(id){
   var s=tree.getSubItems(id);
   var c=s.split(',');
-  id = id.replace(/[0-9]*_/,'');
+  id = id.replace(/^[0-9]*_/,'');
   var r='<'+id+"><text>"+ec(tree.getItemText(id))+"</text>\\n";
   if((!s) || s=='' || c.length==0){
     r+= '<value>'+ec(tree.getUserData(id,'value'))+"</value>\\n";
