@@ -2,7 +2,7 @@ package Lemonldap::NG::Handler;
 
 print STDERR
 "See Lemonldap::NG::Handler(3) to know which Lemonldap::NG::Handler::* module to use.";
-our $VERSION = "0.73";
+our $VERSION = "0.74";
 
 1;
 
@@ -61,6 +61,13 @@ configuration reload, so you don't need to restart Apache at each change:
     Allow from my.manager.com
     PerlHeaderParserHandler My::Package->refresh
   </Location>
+  
+You can also unprotect an URI
+
+  <Files "*.gif">
+    PerlHeaderParserHandler My::Package->unprotect
+  </Files>
+
 
 =head1 DESCRIPTION
 

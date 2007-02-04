@@ -601,7 +601,8 @@ Call your package in <apache-directory>/conf/httpd.conf
     PerlHeaderParserHandler My::Package
   </Location>
   
-  # You can also unprotect an URI
+You can also unprotect an URI
+
   <Files "*.gif">
     PerlHeaderParserHandler My::Package->unprotect
   </Files>
