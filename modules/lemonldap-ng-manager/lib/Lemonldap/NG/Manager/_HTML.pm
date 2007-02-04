@@ -6,7 +6,7 @@ package Lemonldap::NG::Manager::_HTML;
 
 use AutoLoader qw(AUTOLOAD);
 require Lemonldap::NG::Manager::_i18n;
-our $VERSION = '0.12';
+our $VERSION = '0.13';
 
 1;
 __END__
