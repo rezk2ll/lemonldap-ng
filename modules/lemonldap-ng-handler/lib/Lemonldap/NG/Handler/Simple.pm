@@ -59,7 +59,7 @@ our (
 
 BEGIN {
     if ( exists $ENV{MOD_PERL} ) {
-        if ( $ENV{MOD_PERL_API_VERSION} >= 2 ) {
+        if ( $ENV{MOD_PERL_API_VERSION} and $ENV{MOD_PERL_API_VERSION} >= 2 ) {
             *MP = sub { 2 };
         }
         else {
