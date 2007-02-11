@@ -1,5 +1,8 @@
 Revision history for Perl extension Lemonldap::NG::Portal.
 
+0.61  Sun Feb 11 9:10:12
+	- Existing sessions are now checked
+
 0.5   Tue Dec 19 19:11:15
 	- config is now shared with Lemonldap::NG::Manager::Conf
 	

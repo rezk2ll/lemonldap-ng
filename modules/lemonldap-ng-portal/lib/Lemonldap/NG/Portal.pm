@@ -2,7 +2,7 @@ package Lemonldap::NG::Portal;
 
 print STDERR
 "See Lemonldap::NG::Portal(3) to know which Lemonldap::NG::Portal::* module to use.";
-our $VERSION = "0.6";
+our $VERSION = "0.61";
 
 1;
 
@@ -271,7 +271,7 @@ L<Lemonldap::NG::Portal::Simple>. It's the more used module.
 
 =head1 SEE ALSO
 
-L<Lemonldap::NG::Portal::SharedConf>,
+L<Lemonldap::NG::Portal::SharedConf>, L<Lemonldap::NG::Portal::Simple>
 L<Lemonldap::NG::Handler>, L<Lemonldap::NG::Manager>
 
 =head1 AUTHOR

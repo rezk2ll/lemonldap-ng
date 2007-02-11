@@ -9,12 +9,14 @@ use Net::LDAP;
 use warnings;
 use MIME::Base64;
 use CGI;
+use CGI::Cookie;
 
-our $VERSION = '0.5';
+our $VERSION = '0.61';
 
 our @ISA = qw(CGI Exporter);
 
 # Constants
+sub PE_DONE                { -1 }
 sub PE_OK                  { 0 }
 sub PE_SESSIONEXPIRED      { 1 }
 sub PE_FORMEMPTY           { 2 }
@@ -41,7 +43,6 @@ our %EXPORT_TAGS = (
 
 our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
 
-# TODO: remove this... and test !
 our @EXPORT =
   qw( PE_OK PE_SESSIONEXPIRED PE_FORMEMPTY PE_WRONGMANAGERACCOUNT PE_USERNOTFOUND PE_BADCREDENTIALS
   PE_LDAPCONNECTFAILED PE_LDAPERROR PE_APACHESESSIONERROR PE_FIRSTACCESS PE_BADCERTIFICATE import );
@@ -178,7 +179,8 @@ sub process {
         else {
             last if ( $self->{error} = $self->$sub );
         }
-      } return ( $self->{error} ? 0 : 1 );
+      }
+      return ( ( $self->{error} > 0 ) ? 0 : 1 );
 }
 
 # 1. If the user was redirected here, we have to load 'url' parameter
@@ -197,6 +199,48 @@ sub controlUrlOrigin {
 #       - nothing: user is authenticated and process
 #                  returns true
 sub controlExistingSession {
+	my $self = shift;
+    my %cookies = fetch CGI::Cookie;
+    # Test if Lemonldap::NG cookie is available
+    if ( my $id = $cookies{$self->{cookieName}}) {
+    	my $h;
+    	# Trying to recover session from global session storage
+    	eval {
+            tie $h, $self->{globalStorage}, $id, $self->{globalStorageOptions};
+        };
+        if ( $@ or not tied($h) ) {
+        	# Session not available (expired ?)
+        	print STDERR "Session $id isn't yet available ($ENV{REMOTE_ADDR})";
+            return PE_OK;
+        }
+        # A session has been find => calling &existingSession
+        my $r;
+        if ( $self->{existingSession} ) {
+            $r = &{ $self->{existingSession} }($self, $id, \$h)
+        }
+        else {
+            $r = $self->existingSession($id, \$h);
+        }
+        if ( $r == PE_DONE) {
+            for my $sub qw(log autoRedirect) {
+                if ( $self->{$sub} ) {
+                    last if ( $self->{error} = &{ $self->{$sub} }($self) );
+                }
+                else {
+                    last if ( $self->{error} = $self->$sub );
+                }
+            }
+            return $self->{error} || PE_DONE;
+        }
+        else {
+            return $r;
+        }
+    }
+    PE_OK;
+}
+
+sub existingSession {
+    my ($self, $id, $datas) = @_;
     PE_OK;
 }
 
@@ -518,7 +562,16 @@ used to redirect the user after authentication.
 
 =head3 controlExistingSession
 
-Controls if a previous session is always available.
+Controls if a previous session is always available. If true, it call the sub
+C<existingSession> with two parameters: id and a scalar tied on Apache::Session
+module choosed to store sessions. See bellow
+
+=head3 existingSession
+
+This sub is called only if a previous session exists and is available. By
+defaults, it returns PE_OK so user is re-authenticated. You can overload it:
+for example if existingSession just returns PE_DONE: authenticated users are
+not re-authenticated and C<>process> returns true.
 
 =head3 extractFormInfo
 
