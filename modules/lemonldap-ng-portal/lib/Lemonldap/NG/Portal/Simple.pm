@@ -11,7 +11,7 @@ use MIME::Base64;
 use CGI;
 use CGI::Cookie;
 
-our $VERSION = '0.61';
+our $VERSION = '0.62';
 
 our @ISA = qw(CGI Exporter);
 
@@ -32,11 +32,11 @@ sub PE_BADCERTIFICATE      { 10 }
 # EXPORTER PARAMETERS
 our %EXPORT_TAGS = (
     'all' => [
-        qw( PE_OK PE_SESSIONEXPIRED PE_FORMEMPTY PE_WRONGMANAGERACCOUNT PE_USERNOTFOUND PE_BADCREDENTIALS
+        qw( PE_DONE PE_OK PE_SESSIONEXPIRED PE_FORMEMPTY PE_WRONGMANAGERACCOUNT PE_USERNOTFOUND PE_BADCREDENTIALS
           PE_LDAPCONNECTFAILED PE_LDAPERROR PE_APACHESESSIONERROR PE_FIRSTACCESS PE_BADCERTIFICATE import )
     ],
     'constants' => [
-        qw( PE_OK PE_SESSIONEXPIRED PE_FORMEMPTY PE_WRONGMANAGERACCOUNT PE_USERNOTFOUND PE_BADCREDENTIALS
+        qw( PE_DONE PE_OK PE_SESSIONEXPIRED PE_FORMEMPTY PE_WRONGMANAGERACCOUNT PE_USERNOTFOUND PE_BADCREDENTIALS
           PE_LDAPCONNECTFAILED PE_LDAPERROR PE_APACHESESSIONERROR PE_FIRSTACCESS PE_BADCERTIFICATE )
     ],
 );
@@ -44,7 +44,7 @@ our %EXPORT_TAGS = (
 our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
 
 our @EXPORT =
-  qw( PE_OK PE_SESSIONEXPIRED PE_FORMEMPTY PE_WRONGMANAGERACCOUNT PE_USERNOTFOUND PE_BADCREDENTIALS
+  qw( PE_DONE PE_OK PE_SESSIONEXPIRED PE_FORMEMPTY PE_WRONGMANAGERACCOUNT PE_USERNOTFOUND PE_BADCREDENTIALS
   PE_LDAPCONNECTFAILED PE_LDAPERROR PE_APACHESESSIONERROR PE_FIRSTACCESS PE_BADCERTIFICATE import );
 
 # CONSTRUCTOR
@@ -193,8 +193,8 @@ sub controlUrlOrigin {
 }
 
 # 2. Control existing sessions
-# TODO: what to do with existing sessions ?
-#       - delete and create a new session
+# what to do with existing sessions ?
+#       - delete and create a new session (default)
 #       - re-authentication (actual scheme)
 #       - nothing: user is authenticated and process
 #                  returns true
@@ -700,7 +700,7 @@ Xavier Guimard, E<lt>x.guimard@free.frE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2005, 2006, 2007 by Xavier Guimard E<lt>x.guimard@free.frE<gt>
+Copyright (C) 2005-2007 by Xavier Guimard E<lt>x.guimard@free.frE<gt>
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.8.4 or,

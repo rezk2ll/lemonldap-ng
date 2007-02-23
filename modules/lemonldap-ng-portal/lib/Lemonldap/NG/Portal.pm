@@ -2,7 +2,7 @@ package Lemonldap::NG::Portal;
 
 print STDERR
 "See Lemonldap::NG::Portal(3) to know which Lemonldap::NG::Portal::* module to use.";
-our $VERSION = "0.61";
+our $VERSION = "0.62";
 
 1;
 
@@ -280,7 +280,7 @@ Xavier Guimard, E<lt>x.guimard@free.frE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2005 by Xavier Guimard E<lt>x.guimard@free.frE<gt>
+Copyright (C) 2005-2007 by Xavier Guimard E<lt>x.guimard@free.frE<gt>
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.8.4 or,
