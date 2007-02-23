@@ -14,21 +14,29 @@ our @ISA = qw(Lemonldap::NG::Handler::SharedConf);
 sub run ($$) {
     my $class;
     ( $class, $apacheRequest ) = @_;
-    #my $uri = $apacheRequest->uri . ( $apacheRequest->args ? "?" . $apacheRequest->args : "" );
     my $args = $apacheRequest->args;
-    if ($args =~ /\?($cookieName=\w+)$/o) {
+    if ($args =~ s/\?($cookieName=\w+)$//o) {
         my $str = $1;
         $class->lmLog(
             "Found a CDA id. Redirecting  "
-            . $apacheRequest->connection->remote_ip
-            . " to myself with new cookie",
-            'debug'
+             . $apacheRequest->connection->remote_ip
+             . " to myself with new cookie",
+               'debug'
             );
-        # TODO: https ?
-        $apacheRequest->headers_out->set( 'Location' => "http://".$apacheRequest->hostname );
+        $apacheRequest->args ( $args );
+        $apacheRequest->headers_out->set(
+                      'Location' => "http"
+                       . ($https ? 's' : '')
+                       . "://" . $apacheRequest->get_server_name() . "/"
+                       . $apacheRequest->uri
+                       . ( $apacheRequest->args ? "?" . $apacheRequest->args : "" )
+                      );
         # TODO: cookie secured ?
         $apacheRequest->headers_out->set( 'Set-Cookie' => "$str" );
-        return REDIRECT; 
+        return REDIRECT;
+    }
+    else {
+        return $class->SUPER::run( $apacheRequest );
     }
 }
 

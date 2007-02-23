@@ -28,6 +28,8 @@ our %EXPORT_TAGS = (
           lmSetHeaderOut
           lmSetErrHeaderOut
           $cookieName
+          $cookieSecured
+          $https
           )
     ],
     traces => [ qw( $whatToTrace ) ],
@@ -51,7 +53,7 @@ our (
     $cookieName,          $portal,               $datas,
     $globalStorage,       $globalStorageOptions, $localStorage,
     $localStorageOptions, $whatToTrace,          $https,
-    $refLocalStorage,     $safe,
+    $refLocalStorage,     $safe,                 $cookieSecured,
 );
 
 ##########################################
@@ -323,6 +325,7 @@ sub defaultValuesInit {
 
     # Other values
     $cookieName  = $args->{cookieName}  || 'lemon';
+    $cookieSecured = $args->{cookieSecured}  || 0;
     $whatToTrace = $args->{whatToTrace} || '$uid';
     $whatToTrace =~ s/\$//g;
     $https = $args->{https} unless defined($https);
