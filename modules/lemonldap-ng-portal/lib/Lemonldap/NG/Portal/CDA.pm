@@ -27,7 +27,7 @@ sub existingSession {
 sub autoRedirect {
     my $self = shift;
     my $tmp = $self->{domain};
-    $self->{urldc} .= ";".$self->{cookieName}."=".$self->{id} if($self->{urldc} !~ /$tmp$/oi);
+    $self->{urldc} .= "?".$self->{cookieName}."=".$self->{id} if($self->{urldc} !~ /$tmp$/oi);
     return $self->SUPER::autoredirect(@_);
 }
 
