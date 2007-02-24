@@ -4,7 +4,7 @@ use strict;
 use Lemonldap::NG::Portal::SharedConf qw(:all);
 
 our $VERSION = '0.01';
-our @ISA = ('Lemonldap::NG::Portal::SharedConf');
+our @ISA     = ('Lemonldap::NG::Portal::SharedConf');
 
 *EXPORT_OK   = *Lemonldap::NG::Portal::SharedConf::EXPORT_OK;
 *EXPORT_TAGS = *Lemonldap::NG::Portal::SharedConf::EXPORT_TAGS;
@@ -17,7 +17,7 @@ our @ISA = ('Lemonldap::NG::Portal::SharedConf');
 # 2. Existing sessions are validated so users coming from an other domain
 #    are not re-prompted
 sub existingSession {
-    my ($self, $id, $datas) = @_;
+    my ( $self, $id, $datas ) = @_;
     PE_DONE;
 }
 
@@ -26,8 +26,9 @@ sub existingSession {
 #     ID in URL
 sub autoRedirect {
     my $self = shift;
-    my $tmp = $self->{domain};
-    $self->{urldc} .= "?".$self->{cookieName}."=".$self->{id} if($self->{urldc} !~ /$tmp$/oi);
+    my $tmp  = $self->{domain};
+    $self->{urldc} .= "?" . $self->{cookieName} . "=" . $self->{id}
+      if ( $self->{urldc} !~ /$tmp$/oi );
     return $self->SUPER::autoredirect(@_);
 }
 

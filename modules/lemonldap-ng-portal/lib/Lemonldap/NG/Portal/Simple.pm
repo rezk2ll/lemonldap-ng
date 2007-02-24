@@ -61,7 +61,7 @@ sub new {
     $self->{ldapServer}    ||= 'localhost';
     $self->{ldapPort}      ||= 389;
     $self->{securedCookie} ||= 0;
-    $self->{cookieName}    ||= "lemon";
+    $self->{cookieName}    ||= "lemonldap";
 
     if ( $self->{authentication} eq "SSL" ) {
         require Lemonldap::NG::Portal::AuthSSL;

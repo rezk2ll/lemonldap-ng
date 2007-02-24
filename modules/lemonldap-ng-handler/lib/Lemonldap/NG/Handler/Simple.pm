@@ -176,7 +176,7 @@ sub lmSetErrHeaderOut {
         return $r->err_headers_out->set( $h => $v );
     }
     else {
-        return $r->header_out( $h => $v );
+        return $r->err_header_out( $h => $v );
     }
 }
 
@@ -324,7 +324,7 @@ sub defaultValuesInit {
     my ( $class, $args ) = @_;
 
     # Other values
-    $cookieName  = $args->{cookieName}  || 'lemon';
+    $cookieName  = $args->{cookieName}  || 'lemonldap';
     $cookieSecured = $args->{cookieSecured}  || 0;
     $whatToTrace = $args->{whatToTrace} || '$uid';
     $whatToTrace =~ s/\$//g;

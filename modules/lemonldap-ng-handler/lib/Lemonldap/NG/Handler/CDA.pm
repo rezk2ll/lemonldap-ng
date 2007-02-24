@@ -1,4 +1,4 @@
-package Lemonldap::NG::Handler::SharedConf::DBI;
+package Lemonldap::NG::Handler::CDA;
 
 use strict;
 
@@ -15,28 +15,30 @@ sub run ($$) {
     my $class;
     ( $class, $apacheRequest ) = @_;
     my $args = $apacheRequest->args;
-    if ($args =~ s/\?($cookieName=\w+)$//o) {
+    if ( $args =~ s/\??($cookieName=\w+)$//oi ) {
         my $str = $1;
         $class->lmLog(
             "Found a CDA id. Redirecting  "
-             . $apacheRequest->connection->remote_ip
-             . " to myself with new cookie",
-               'debug'
-            );
-        $apacheRequest->args ( $args );
-        $apacheRequest->headers_out->set(
-                      'Location' => "http"
-                       . ($https ? 's' : '')
-                       . "://" . $apacheRequest->get_server_name() . "/"
-                       . $apacheRequest->uri
-                       . ( $apacheRequest->args ? "?" . $apacheRequest->args : "" )
-                      );
-        # TODO: cookie secured ?
-        $apacheRequest->headers_out->set( 'Set-Cookie' => "$str" );
+              . $apacheRequest->connection->remote_ip
+              . " to myself with new cookie",
+            'debug'
+        );
+        $apacheRequest->args($args);
+        my $host = $apacheRequest->get_server_name();
+        lmSetErrHeaderOut( $apacheRequest,
+                'Location' => "http"
+              . ( $https ? 's' : '' )
+              . "://$host"
+              . $apacheRequest->uri
+              . ( $apacheRequest->args ? "?" . $apacheRequest->args : "" ) );
+        $host =~ s/^[^\.]+\.(.*\..*$)/$1/;
+        lmSetErrHeaderOut( $apacheRequest,
+            'Set-Cookie' => "$str; domain=$host; path=/"
+              . ( $cookieSecured ? "; secure" : "" ) );
         return REDIRECT;
     }
     else {
-        return $class->SUPER::run( $apacheRequest );
+        return $class->SUPER::run($apacheRequest);
     }
 }
 
