@@ -1,4 +1,6 @@
 Revision history for Perl extension Lemonldap::NG::Manager.
+0.44  Sat Feb 24 16:32:34 2007
+	- Adding SOAP support to access to configuration
 
 0.43  Sun Jan 28 19:10:24 2007
 	- Little correction on patch 0.41->0.42
