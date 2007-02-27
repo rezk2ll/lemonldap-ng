@@ -1,475 +1,466 @@
 package Lemonldap::Config::Parameters;
 use strict;
-
-#use warnings;
-#use IPC::Shareable;
 use BerkeleyDB;
 use XML::Simple;
 use Data::Dumper;
 use Storable qw (thaw);
 use LWP::UserAgent();
 
-our $VERSION = '3.0.0';
+our $VERSION = '3.1.0';
 our %IPC_CONFIG;
 
 # Preloaded methods go here.
 sub Minus {
-    ## this function convert all key in caMel case into lowercase
-    ##  it is a recursive function
-    ## it keeps all the old keys
-    my $rh = shift;
-    foreach ( keys %{$rh} ) {
-        my $k = $_;
-        return unless $k;
-        if ( $k ne lc($k) ) {
-            $rh->{ lc($k) } = $rh->{$k};
-        }
-        if ( ref $rh->{$k} ) {
-            Minus( $rh->{$k} );
-        }
-    }
-    return;
+                ## this function convert all key in caMel case into lowercase
+                ##  it is a recursive function
+                ## it keeps all the old keys
+                my $rh =shift;
+foreach (keys %{$rh}) {
+                my $k =$_;
+       return unless $k;
+                if ($k ne lc ($k)) {
+                       $rh->{lc($k)} = $rh->{$k} ;
+      }
+if (ref  $rh->{$k}) {
+Minus ($rh->{$k});
 }
+}
+return ;
+}
+                
+
 
 sub _getFromCache {
 
-    my $self  = shift;
-    my $cache = $self->{cache};
-    my $cog;
-    my $ttl;
+   my $self  = shift;
+   my $cache = $self->{cache};
+   my $cog;
+   my $ttl;
 
-    tie %IPC_CONFIG, 'BerkeleyDB::Btree',
-      -Filename => $cache,
-      -Flags    => DB_CREATE;
-    unless ( keys(%IPC_CONFIG) ) {
+            tie %IPC_CONFIG, 'BerkeleyDB::Btree',
+                         -Filename => $cache ,
+                         -Flags => DB_CREATE ;
+   unless ( keys(%IPC_CONFIG) ) {
 
-        #first I read the xml file
-        $self->_readFile;
-        ## write cache
-        $self->_writeCache;
-        $cog = $self->{config};
-    }
-    else {
+       #first I read the xml file
+              $self->_readFile;
+       ## write cache
+              $self->_writeCache;
+       $cog = $self->{config};
+   }
+   else {
 
-        $ttl = $IPC_CONFIG{TTL};
-        $self->{ttl} = $ttl;
+       $ttl                  = $IPC_CONFIG{TTL};
+       $self->{ttl}          = $ttl;
+#<modif ttl config lastmodified into ismodified>
+#
+#
 
-        #<modif ttl config lastmodified into ismodified>
-        #
-        #
+  if ($ttl=~ /ifmodified/i ) 
+   {
+                $self->{ttl} =0;
+       $ttl=0;
+   }   
+       $self->{available}    = $IPC_CONFIG{AVAILABLE};
+       $self->{file}         = $IPC_CONFIG{FILE};
+       $self->{agent}        = $IPC_CONFIG{SOAPAGENT};
+       $self->{lastmodified} = $IPC_CONFIG{LASTMODIFIED};
+       $self->{method}       = $IPC_CONFIG{METHOD};
+       if ( $self->{method} ) {
+           unless ( $self->{i_am_soap_server} ) {
+               $self->{on_same} = $IPC_CONFIG{ON_SAME};
+           }
 
-        if ( $ttl =~ /ifmodified/i ) {
-            $self->{ttl} = 0;
-            $ttl = 0;
-        }
-        $self->{available}    = $IPC_CONFIG{AVAILABLE};
-        $self->{file}         = $IPC_CONFIG{FILE};
-        $self->{agent}        = $IPC_CONFIG{SOAPAGENT};
-        $self->{lastmodified} = $IPC_CONFIG{LASTMODIFIED};
-        $self->{method}       = $IPC_CONFIG{METHOD};
-        if ( $self->{method} ) {
-            unless ( $self->{i_am_soap_server} ) {
-                $self->{on_same} = $IPC_CONFIG{ON_SAME};
-            }
+           $self->{uri}   = $IPC_CONFIG{SOAPURI};
+           $self->{proxy} = $IPC_CONFIG{SOAPPROXY};
+       }
+       my %tmp    = %IPC_CONFIG;
+       my $tmpvar = $tmp{config};
+      my $it;
+                       $it     = eval $tmpvar if $tmpvar;
+       $self->{config} = $it;
+       my $__modif__ = ( stat $self->{file} )[9];
+       if ( $__modif__ ne $self->{lastmodified} )
+       {    # the modified timestamp is different i'll force the  reload
+           $IPC_CONFIG{AVAILABLE} = 'RELOAD';
+           $self->{lastmodified} = $__modif__;
+       }
 
-            $self->{uri}   = $IPC_CONFIG{SOAPURI};
-            $self->{proxy} = $IPC_CONFIG{SOAPPROXY};
-        }
-        my %tmp    = %IPC_CONFIG;
-        my $tmpvar = $tmp{config};
-        my $it;
-        $it = eval $tmpvar if $tmpvar;
-        $self->{config} = $it;
-        my $__modif__ = ( stat $self->{file} )[9];
-        if ( $__modif__ ne $self->{lastmodified} )
-        {    # the modified timestamp is different i'll force the  reload
-            $IPC_CONFIG{AVAILABLE} = 'RELOAD';
-            $self->{lastmodified} = $__modif__;
-        }
+       if ( $IPC_CONFIG{AVAILABLE} eq 'RELOAD' ) {
+           $self->_readFile;
+           $self->_writeCache;
+           $cog = $self->{config};
+           return ($cog);
+       }
+       if ( $IPC_CONFIG{AVAILABLE} eq 'DESTROY' ) {
+           $self->_readFile;
+           $self->_deleteCache;
+           delete $self->{cache};
+           $cog = $self->{config};
+           return ($cog);
+       }
+       $cog = $self->{config};
 
-        if ( $IPC_CONFIG{AVAILABLE} eq 'RELOAD' ) {
-            $self->_readFile;
-            $self->_writeCache;
-            $cog = $self->{config};
-            return ($cog);
-        }
-        if ( $IPC_CONFIG{AVAILABLE} eq 'DESTROY' ) {
-            $self->_readFile;
-            $self->_deleteCache;
-            delete $self->{cache};
-            $cog = $self->{config};
-            return ($cog);
-        }
-        $cog = $self->{config};
+       # all is good we must compare time and ttl
+       return ($cog) if ( $self->{ttl} == 0 );
+       my $timenow  = time;
+       my $timecalc = $self->{available} + $self->{ttl};
+       if ( $timenow > $timecalc ) {    # the cache is too old
+           $self->_readFile;
+           $self->_writeCache;
 
-        # all is good we must compare time and ttl
-        return ($cog) if ( $self->{ttl} == 0 );
-        my $timenow  = time;
-        my $timecalc = $self->{available} + $self->{ttl};
-        if ( $timenow > $timecalc ) {    # the cache is too old
-            $self->_readFile;
-            $self->_writeCache;
+       }
+       $cog = $self->{config};
+       return ($cog);
 
-        }
-        $cog = $self->{config};
-        return ($cog);
-
-    }
+   }
 }
 
 sub destroy {
-    my $self = shift;
-    $self->_deleteCache;
-    delete $self->{cache};
+   my $self = shift;
+   $self->_deleteCache;
+   delete $self->{cache};
 }
 
 #   function used to manage cache conf from command line
 sub f_delete {
-    my $arg = shift;
-    unlink($arg);
-    return (0);
+   my $arg = shift;
+   unlink ($arg); 
+   return (0);
 }
 
 sub f_reload {
-    my $arg = shift;
+   my $arg = shift;
 
     tie %IPC_CONFIG, 'BerkeleyDB::Btree',
-      -Filename => $arg,
-      -Flags    => DB_CREATE;
+                                      -Filename => $arg ,
+                                      -Flags => DB_CREATE ;
+  
+   $IPC_CONFIG{ttl} = '1';
 
-    $IPC_CONFIG{ttl} = '1';
+   $IPC_CONFIG{AVAILABLE} = 'RELOAD';
 
-    $IPC_CONFIG{AVAILABLE} = 'RELOAD';
-
-    untie %IPC_CONFIG;
-    return (0);
+   untie %IPC_CONFIG ;
+   return (0);
 }
 
 sub f_dump {
-    my $arg = shift;
-    tie %IPC_CONFIG, 'BerkeleyDB::Btree',
-      -Filename => $arg,
-      -Flags    => DB_CREATE;
+   my $arg = shift;
+  tie %IPC_CONFIG, 'BerkeleyDB::Btree',
+                                      -Filename => $arg ,
+                                      -Flags => DB_CREATE ;
 
-    $Data::Dumper::Indent = 1;
-    $Data::Dumper::Terse  = 1;
-    if ( $IPC_CONFIG{'QUEUE'} ) {    #it's ipc segment for handler cache level 2
-        my $tmpvar = $IPC_CONFIG{'QUEUE'};
-        my @tmp;
-        if ($tmpvar) {
-            @tmp = split /#/, $tmpvar;
-        }
-        print "Queue : $#tmp\n";
-        foreach (@tmp) {
-            print "=> $_\n";
-        }
-        print "\n";
+   $Data::Dumper::Indent = 1;
+   $Data::Dumper::Terse = 1;
+if ($IPC_CONFIG{'QUEUE'}) {  #it's ipc segment for handler cache level 2
+my $tmpvar = $IPC_CONFIG{'QUEUE'};
+my @tmp ;
+if ($tmpvar) {
+                @tmp= split /#/,$tmpvar ;
+} 
+print "Queue : $#tmp\n";
+foreach (@tmp) {
+                print "=> $_\n";
+}
+print "\n";
 
-    }
-    my $ligne = Dumper( \%IPC_CONFIG );
-    print "$ligne\n";
+}                 
+   my $ligne = Dumper( \%IPC_CONFIG );
+   print "$ligne\n";
 
-    untie %IPC_CONFIG;
-    return "OK\n";
+untie %IPC_CONFIG;
+   return "OK\n";
 }
 
 sub _retrieve_on_soap {
-    my $self  = shift;
-    my $uri   = shift;
-    my $proxy = shift;
-    my $file  = $self->{file};
-    my $glue  = $self->{cache};
-    require SOAP::Lite;
-    my $s  = SOAP::Lite->uri($uri)->proxy($proxy);
-    my $hl = $s->SOAP::new(
-        file  => $file,
-        cache => $glue,
-    );
+   my $self  = shift;
+   my $uri   = shift;
+   my $proxy = shift;
+   my $file  = $self->{file};
+   my $glue  = $self->{cache};
+   require SOAP::Lite;
+   my $s  = SOAP::Lite->uri($uri)->proxy($proxy);
+   my $hl = $s->SOAP::new(
+       file  => $file,
+       cache => $glue,
+   );
 
-    #my $res=$hl->SOAP::retrieve ;
-    print STDERR
-      "Config::Parameters WARNING : SOAP server :$proxy don't answer\n"
-      unless $hl->{config};
-    return $hl->{config};
+   #my $res=$hl->SOAP::retrieve ;
+  return $hl->{config};
 }
 
 sub _readFile {
-    my $self = shift;
-    my ( $uri,          $proxy, $obj );
-    my ( $lastmodified, $par,   $config );
-    my $file  = $self->{file};
-    my $cache = $self->{cache};
-    $cache = uc $cache if ( $self->{i_am_soap_server} );
-    my $method = $self->{method} || 'NONE';
-    unless ( $self->{i_am_soap_server} ) {
+   my $self = shift;
+   my ( $uri,          $proxy, $obj );
+   my ( $lastmodified, $par,   $config );
+   my $file   = $self->{file};
+   my $cache  = $self->{cache};
+   $cache = uc $cache if ($self->{i_am_soap_server}); 
+   my $method = $self->{method}||'NONE';
+   unless ( $self->{i_am_soap_server} ) {
 
-        if ( $method eq 'SOAP' ) {
-            $uri   = $self->{uri};
-            $proxy = $self->{proxy};
+       if ( $method eq 'SOAP' ) {
+           $uri   = $self->{uri};
+           $proxy = $self->{proxy};
 
 #unless ($self->{i_am_soap_server})   #the server soap objet must not make soap request on itself
-            my $conf_enc = $self->_retrieve_on_soap( $uri, $proxy );
-            my $conf_decode = thaw($conf_enc);
-            $self->{config} = $conf_decode;
-            $self->_writeCache;
+           my $conf_enc = $self->_retrieve_on_soap( $uri, $proxy );
+           my $conf_decode = thaw($conf_enc);
+           $self->{config} = $conf_decode;
+           $self->_writeCache;
 ### now a rewrite or write my file on disk
 ### the soap agent on  server must not write file too
-            return 1 if ( $self->{i_am_soap_server} );
+           return 1 if ( $self->{i_am_soap_server} );
 ### the agent config in soap server must not write file
-            return 1 if ( $self->{on_same} );
+           return 1 if ( $self->{on_same} );
 ## last precaution
-            my $filelock = "$self->{file}.lock";
-            return 1 if ( -e $filelock );
+           my $filelock = "$self->{file}.lock";
+           return 1 if ( -e $filelock );
 
-            my $xml = XMLout($conf_decode);
-            open CONFIG, ">$file" || die "@! $file \n";
-            flock( CONFIG, 2 );    # I lock file
-            print CONFIG $xml;
-            close(CONFIG);         # make the unlock
-            return 1;
+           my $xml = XMLout($conf_decode);
+           open CONFIG, ">$file" || die "@! $file \n";
+           flock( CONFIG, 2 );    # I lock file
+           print CONFIG $xml;
+           close(CONFIG);         # make the unlock
+           return 1;
 
-        }
+       }
     }
 
-    $config = XMLin( $file, ForceArray => 1, );
+   $config = XMLin( $file, ForceArray => 1, );
 
-    # I extract info about the cache ttl
+   # I extract info about the cache ttl
 
-    my $cache_param = $config->{cache};
+   my $cache_param = $config->{cache};
 
-    # there are sereval cache descriptors or one alone
-    #
-    my $__cache__;
-    foreach my $tmp ( keys %{$cache_param} )
+   # there are sereval cache descriptors or one alone
+   #
+   my $__cache__;
+   foreach my $tmp ( keys %{$cache_param} )
 
-    {
-        if ( $cache_param->{$tmp}{'ConfigIpcKey'} eq $cache ) {
-            $__cache__ = $cache_param->{$tmp};
-        }
+   {
+       if ( $cache_param->{$tmp}{'ConfigIpcKey'} eq $cache ) {
+           $__cache__ = $cache_param->{$tmp};
+       }
 
-    }
-    $par = $__cache__->{ConfigTtl};
-    if ( $par =~ /ismodified/i ) {
-        $par          = 0;
-        $lastmodified = 1;
-    }
+   }
+   $par          = $__cache__->{ConfigTtl};
+   if ($par =~ /ismodified/i ) {
+                $par =0;
+       $lastmodified = 1;
+   } 
 
-    $self->{ttl} = $par || '0';
-    $self->{method} = $__cache__->{Method} || 'NONE';
-    if ( $self->{method} eq 'SOAP' ) {
-        $self->{uri}   = $__cache__->{SoapUri};
-        $self->{proxy} = $__cache__->{SoapProxy};
-        $self->{agent} = $__cache__->{SoapAgent};
+   $self->{ttl} = $par || '0';
+   $self->{method} = $__cache__->{Method}||'NONE';
+   if ( $self->{method} eq 'SOAP' ) {
+       $self->{uri}   = $__cache__->{SoapUri};
+       $self->{proxy} = $__cache__->{SoapProxy};
+       $self->{agent} = $__cache__->{SoapAgent};
 
-    }
-    if ( ( $self->{lastmodified} ) and not($lastmodified) ) {
-        $self->{lasmodified} = 0;
-    }
-    else {
-        $self->{lastmodified} = 1 unless $self->{lastmodified};
-    }
-    ## call Minus function for lowering case
-    Minus($config);
-
-    $self->{config} = $config;
-    1;
+   }
+   if ( ( $self->{lastmodified} ) and not($lastmodified) ) {
+       $self->{lasmodified} = 0;
+   }
+   else {
+       $self->{lastmodified} = 1 unless $self->{lastmodified};
+   }
+   ## call Minus function for lowering case
+   Minus($config) ;
+    
+  
+   $self->{config} = $config;
+   1;
 }
 
 sub _deleteCache {
-    my $self  = shift;
-    my $cache = $self->{cache};
-
-    tie %IPC_CONFIG, 'BerkeleyDB::Btree',
-      -Filename => $cache,
-      -Flags    => DB_CREATE;
-    %IPC_CONFIG = '';
-    untie %IPC_CONFIG;
+   my $self  = shift;
+   my $cache = $self->{cache};
+   
+  tie %IPC_CONFIG, 'BerkeleyDB::Btree',
+                              -Filename => $cache ,
+                              -Flags => DB_CREATE ;
+ %IPC_CONFIG ='';
+ untie %IPC_CONFIG;
 }
 
 sub _writeCache {
-    my $self = shift;
+   my $self = shift;
 
-    #    unless ( $self->{i_am_soap_server} ) {
-    #        return 1
-    #          if ( $self->{on_same} )
-    #          ;    ## the agent config in the soap server must not
-    #        ## write in cache , there soap agent does this
-    #        return 1
-    #          if ( $IPC_CONFIG{ON_SAME} )
-    #          ;    ## the soap agent may be already write in IPC
-    #               #with me it's belt and straps of  trousers
-    #        my $filelock = "$self->{file}.lock";
-    #        return 1 if ( -e $filelock );
-    #    }
+#    unless ( $self->{i_am_soap_server} ) {
+#        return 1
+#          if ( $self->{on_same} )
+#          ;    ## the agent config in the soap server must not
+#        ## write in cache , there soap agent does this
+#        return 1
+#          if ( $IPC_CONFIG{ON_SAME} )
+#          ;    ## the soap agent may be already write in IPC
+#               #with me it's belt and straps of  trousers
+#        my $filelock = "$self->{file}.lock";
+#        return 1 if ( -e $filelock );
+#    }
 
-    my $time   = time;
-    my $cache  = $self->{cache};
-    my $config = $self->{config};
-    $Data::Dumper::Purity   = 1;
-    $Data::Dumper::Terse    = 1;
-    $Data::Dumper::Deepcopy = 1;
-    my $configs      = Dumper($config);
-    my $ttl          = $self->{ttl};
-    my $lastmodified = $self->{lastmodified};
-    my $file         = $self->{file};
-    delete $IPC_CONFIG{config};
-
-    #    %IPC_CONFIG = '';
-    untie %IPC_CONFIG;
-    unlink( $self->{cache} );
+   my $time   = time;
+   my $cache  = $self->{cache};
+   my $config = $self->{config};
+   $Data::Dumper::Purity = 1;
+   $Data::Dumper::Terse  = 1;
+   $Data::Dumper::Deepcopy  = 1;
+   my $configs      = Dumper($config);
+   my $ttl          = $self->{ttl};
+   my $lastmodified = $self->{lastmodified};
+   my $file         = $self->{file};
+   delete $IPC_CONFIG{config};
+#    %IPC_CONFIG = '';
+   untie %IPC_CONFIG;
+unlink ($self->{cache});
     tie %IPC_CONFIG, 'BerkeleyDB::Btree',
-      -Filename => $cache,
-      -Flags    => DB_CREATE;
-    $IPC_CONFIG{config}       = $configs;
-    $IPC_CONFIG{TTL}          = $ttl;
-    $IPC_CONFIG{AVAILABLE}    = $time;
-    $IPC_CONFIG{FILE}         = $file;
-    $IPC_CONFIG{SOAPAGENT}    = $self->{agent} if $self->{agent};
-    $IPC_CONFIG{LASTMODIFIED} = $lastmodified if $lastmodified;
-    $IPC_CONFIG{METHOD}       = $self->{method} if $self->{method};
-    $IPC_CONFIG{SOAPURI}      = $self->{uri} if $self->{uri};
-    $IPC_CONFIG{SOAPPROXY}    = $self->{proxy} if $self->{proxy};
-    if ( $self->{method} ) {
+                           -Filename => $cache ,
+                           -Flags => DB_CREATE ;
+   $IPC_CONFIG{config}       = $configs;
+   $IPC_CONFIG{TTL}          = $ttl;
+   $IPC_CONFIG{AVAILABLE}    = $time;
+   $IPC_CONFIG{FILE}         = $file;
+   $IPC_CONFIG{SOAPAGENT}    = $self->{agent} if $self->{agent};
+   $IPC_CONFIG{LASTMODIFIED} = $lastmodified if $lastmodified;
+   $IPC_CONFIG{METHOD}    = $self->{method} if $self->{method};
+   $IPC_CONFIG{SOAPURI}   = $self->{uri} if $self->{uri};
+   $IPC_CONFIG{SOAPPROXY} = $self->{proxy} if $self->{proxy};    
+if ( $self->{method} ) {
 
-        if ( $self->{i_am_soap_server} )
-        {    # the soap server  tell that is it for an eventual
-                # agent config in the same machine
-                # I will create  a empty lock file for
-                # avoid recursive call between
-                # soap server and agent config
+       if ( $self->{i_am_soap_server} )
+       {    # the soap server  tell that is it for an eventual
+               # agent config in the same machine
+               # I will create  a empty lock file for
+               # avoid recursive call between
+               # soap server and agent config
 
-            $file = "$self->{file}.lock";
+           $file = "$self->{file}.lock";
 
-            open LOCK, ">$file";
-            close LOCK;
-            $IPC_CONFIG{ON_SAME} = 1;
+           open LOCK, ">$file";
+           close LOCK;
+           $IPC_CONFIG{ON_SAME} = 1;
 
-            #now i 'll notice at all agents the modification
-            my @soapagent;
-            my $sp;
-            my $tt = $self->{agent};
-            $sp        = eval $tt;
-            @soapagent = @{$sp};
-            my $glue = uc( $self->{cache} );
-            my $ua = LWP::UserAgent->new( timeout => 30 );
+           #now i 'll notice at all agents the modification
+           my @soapagent;
+           my $sp ;
+            my $tt =  $self->{agent};
+            $sp =eval $tt;
+           @soapagent = @{$sp};
+            my $glue =uc ($self->{cache});
+            my $ua = LWP::UserAgent->new (timeout => 30);
             for my $l (@soapagent) {
+                     my $res  =$ua->get ("$l?glue=$glue");
 
-             #             my $req =HTTP::Request->new (GET => "$l?glue=$glue");
-             #             print STDERR $req->as_string;
-                my $res = $ua->get("$l?glue=$glue");
-                if ( $res->is_error ) {
-                    print STDERR
-"WARNING Config::Parameters : error on  $l for SOAP service\n";
-                }
-            }
-        }
+             }
+             }
 
-    }
-    untie %IPC_CONFIG;
+   
+   }
+   untie %IPC_CONFIG;
 
-    return 1;
+   return 1;
 }
 
 sub new {
-    my $class = shift;
-    my %conf  = @_;
+   my $class = shift;
+   my %conf  = @_;
 
-    my $self = bless {
+   my $self = bless {
 
-      },
-      ref($class) || $class;
-    $self->{file}             = $conf{file}   if $conf{file};
-    $self->{cache}            = $conf{cache}  if $conf{cache};
-    $self->{i_am_soap_server} = $conf{server} if $conf{server};
-    $self->{cache} = lc $self->{cache} if ( $self->{i_am_soap_server} );
-    return $self;
+     },
+     ref($class) || $class;
+   $self->{file}             = $conf{file}   if $conf{file};
+   $self->{cache}            = $conf{cache}  if $conf{cache};
+   $self->{i_am_soap_server} = $conf{server} if $conf{server};
+   $self->{cache} = lc $self->{cache} if ($self->{i_am_soap_server});
+   return $self;
 }
 
 sub getDomain {
-    my $self   = shift;
-    my $domain = shift;
-    my $config = $self->getAllConfig;
-    unless ($domain) {
-        my $d = ( keys %{ $config->{domain} } );
-        die "Ambigious domain\n" if ( $d != 1 );
-        ($domain) = ( keys %{ $config->{domain} } );
-    }
+   my $self   = shift;
+   my $domain = shift;
+   my $config = $self->getAllConfig;
+   unless ($domain) {
+       my $d = ( keys %{ $config->{domain} } );
+       die "Ambigious domain\n" if ( $d != 1 );
+       ($domain) = ( keys %{ $config->{domain} } );
+   }
 
-    my $cdomain = $config->{domain}{$domain};
-    return ($cdomain);
+   my $cdomain = $config->{domain}{$domain};
+   return ($cdomain);
 
 }
 
 sub findParagraph {
-    my ( $self, $chapitre, $motif ) = @_;
-    my $config = $self->getAllConfig;
-    my $parag;
-    if ( $chapitre && $motif ) {
-        $parag = $config->{$chapitre}->{$motif};
-    }
-    else {
-        $parag = $config->{$chapitre};
-    }
-    return ($parag);
+   my ( $self, $chapitre, $motif ) = @_;
+   my $config = $self->getAllConfig;
+   my $parag;
+   if ( $chapitre && $motif ) {
+       $parag = $config->{$chapitre}->{$motif};
+   }
+   else {
+       $parag = $config->{$chapitre};
+   }
+   return ($parag);
 }
 
 sub formateLineHash {
-    my ( $self, $line, $motif, $replace ) = @_;
-    my %cf;
-    my $t;
-    if ( $line =~ /^\(/ ) {
-        $t = $line;
-    }
-    else {
-        $t = "($line );";
-    }
+   my ( $self, $line, $motif, $replace ) = @_;
+   my %cf;
+   my $t;
+   if ( $line =~ /^\(/ ) {
+       $t = $line;
+   }
+   else {
+       $t = "($line );";
+   } 
 
-    %cf = eval $t;
-    if ($motif) {
-        for ( values %cf ) {
-            s/$motif/$replace/;
-        }
-    }
-    return ( \%cf );
+   %cf = eval $t;
+   if ($motif) {
+       for ( values %cf ) {
+           s/$motif/$replace/;
+       }
+   }
+   return ( \%cf );
 }
 
 sub formateLineArray {
-    my ( $self, $line, $motif, $replace ) = @_;
-    my @cf;
-    my $t;
-    if ( $line =~ /^\[/ ) { $t = $line; }
-    else {
-        $t = "[$line ];";
-    }
-    @cf = eval $t;
-    if ($motif) {
-        for (@cf) {
-            s/$motif/$replace/;
-        }
-    }
-    return ( \@cf );
+   my ( $self, $line, $motif, $replace ) = @_;
+   my @cf;
+   my $t;
+   if ( $line =~ /^\[/ ) { $t = $line; }
+   else {
+       $t = "[$line ];";
+   }
+   @cf = eval $t;
+   if ($motif) {
+       for (@cf) {
+           s/$motif/$replace/;
+       }
+   }
+   return ( \@cf );
 }
 
 sub getAllConfig {
-    my $self = shift;
-    my $config;
-    my $file = $self->{file};
-    if ( $self->{cache} ) {    #  cache is available
-        $config = $self->_getFromCache;
+   my $self = shift;
+   my $config;
+   my $file = $self->{file};
+   if ( $self->{cache} ) {    #  cache is available
+       $config = $self->_getFromCache;
 
-    }
-    else {                     # cache forbidden
+   }
+   else {                     # cache forbidden
+      
+   $config = XMLin( $file, ForceArray => 1, );
 
-        $config = XMLin( $file, ForceArray => 1, );
+   Minus($config) ;
+   }
+  unless ($config) {  #at the first time  
+   $config = XMLin( $file, ForceArray => 1, );
 
-        Minus($config);
-    }
-    unless ($config) {         #at the first time
-        $config = XMLin( $file, ForceArray => 1, );
-
-        Minus($config);
-    }
-    return $config;
+   Minus($config) ;
+   }
+   return $config;
 }
 1;
 __END__

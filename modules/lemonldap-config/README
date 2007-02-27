@@ -1,6 +1,6 @@
 NAME
-    Lemonldap::Config::Parameters - Backend of   configuration for lemonldap
-    web-SSO system
+    Lemonldap::Config::Parameters - Backend of configuration for lemonldap
+    web SSO system
 
 SYNOPSIS
      #!/usr/bin/perl 
@@ -34,7 +34,7 @@ INSTALLATION
      make install
  
 DESCRIPTION
-    Lemonldap is a WEBSSO framework system under GPL.
+    Lemonldap is a WEB SSO framework system under GPL.
 
     Login page , handlers must retrieve their configs in an unique file eg
     :"applications.xml".
