@@ -20,16 +20,35 @@ sub new {
     }
     bless $self, $class;
     # Arguments verification
-    foreach (qw(configStorage)) {
-        unless ( $self->{$_} ) {
-            die qq/The "$_" parameter is required\n/;
+    if( $self->{type} eq 'sessions' ) {
+        unless( $self->{realSessionStorage} ) {
+            die qq/The "realSessionStorage" parameter is required/;
             return ();
         }
+        eval "use " . $self->{realSessionStorage};
+        die $@ if($@);
     }
-    $self->{config} = Lemonldap::NG::Manager::Conf->new( $self->{configStorage} );
-    die "Configuration not loaded" unless $self->{config};
-    $Lemonldap::NG::Manager::SOAPService::config = $self->{config};
+    else {
+        unless ( $self->{configStorage} ) {
+            die qq/The "configStorage" parameter is required\n/;
+            return ();
+        }
+        $self->{config} = Lemonldap::NG::Manager::Conf->new( $self->{configStorage} );
+        die "Configuration not loaded" unless $self->{config};
+    }
     return $self;
+}
+
+sub init {
+    my $self = shift;
+    if( $self->{type} eq 'sessions' ) {
+        $Lemonldap::NG::Manager::SOAPService::Sessions::authorizatedFunc =
+          $self->{authorizatedFunc} || 'get';
+        $Lemonldap::NG::Manager::SOAPService::Sessions::config = $self;
+    }
+    else {
+        $Lemonldap::NG::Manager::SOAPService::Config::config = $self->{config};
+    }
 }
 
 # Main process
@@ -37,20 +56,22 @@ sub new {
 *process = \&start;
 
 sub start {
-    # Object is not needed actually
-    # my $self;
+    my $self;
     if ( ref( $_[0] ) and isa( $_[0], __PACKAGE__ ) ) {
-        # $self = shift;
+        $self = shift;
     }
     else {
-        # $self = shift->new(@_);
-        shift->new(@_);
+        $self = shift->new(@_);
     }
-    SOAP::Transport::HTTP::CGI->dispatch_to('Lemonldap::NG::Manager::SOAPService')->handle;
+    $self->init();
+    my $service = ($self->{type} eq 'sessions')
+                  ? 'Lemonldap::NG::Manager::SOAPService::Sessions'
+                  : 'Lemonldap::NG::Manager::SOAPService::Config';
+    SOAP::Transport::HTTP::CGI->dispatch_to($service)->handle;
 }
 
 # Description of SOAP service
-package Lemonldap::NG::Manager::SOAPService;
+package Lemonldap::NG::Manager::SOAPService::Config;
 
 our $config;
 
@@ -75,13 +96,64 @@ sub load {
     return $config->load(@_);
 }
 
+package Lemonldap::NG::Manager::SOAPService::Sessions;
+
+our $config;
+our $authorizedFunc = 'get';
+
+sub newsession {
+	return 0 unless( $authorizedFunc =~ /\bnew\b/ );
+	my( $class, $args ) = @_;
+	$args ||= {};
+    my %h;
+    eval {
+        tie %h, $config->{realSessionStorage}, undef, $config->{realSessionStorageOptions};
+    };
+    return 0 if ($@);
+    # my $id = $h{_session_id};
+    $h{$_} = $args->{$_} foreach ( keys %{ $args } );
+    $h{_utime} = time();
+    $args->{$_} = $h{$_} foreach ( keys %h );
+    untie %h;
+    return $args;
+}
+
+sub get {
+	print STDERR "get\n";
+	return 0 unless( $authorizedFunc =~ /\bget\b/ );
+	my( $class, $id ) = @_;
+	my %h;
+    eval {
+        tie %h, $config->{realSessionStorage}, $id, $config->{realSessionStorageOptions};
+    };
+    #print STDERR __PACKAGE__:"$@\n"; 
+    return 0 if ($@);
+    my $args;
+    $args->{$_} = $h{$_} foreach ( keys %h );
+    untie %h;
+    return $args;
+}
+
+sub set {
+	return 0 unless( $authorizedFunc =~ /\bset\b/ );
+    my( $class, $id, $args ) = @_;
+	my %h;
+    eval {
+        tie %h, $config->{realSessionsStorage}, undef, $config->{realSessionsStorageOptions};
+    };
+    return 0 if ($@);
+    $h{$_} = $args->{$_} foreach ( keys %{ $args } );
+    untie %h;
+    return $args;
+}
+
 1;
 __END__
 
 =head1 NAME
 
 Lemonldap::NG::Manager::SOAPServer - Perl extension written to access to
-Lemonldap::NG Web-SSO configuration via SOAP.
+Lemonldap::NG Web-SSO configuration or sessions via SOAP.
 
 =head1 SYNOPSIS
 
@@ -89,16 +161,27 @@ Lemonldap::NG Web-SSO configuration via SOAP.
 
   use Lemonldap::NG::Manager::SOAPServer;
   Lemonldap::NG::Manager::SOAPServer->start(
-                configStorage => {
-                        type=>"File",
-                        dirName=>"/usr/share/doc/lemonldap-ng/examples/conf/"
-                }
+              configStorage => {
+                      type    => "File",
+                      dirName => "/usr/share/doc/lemonldap-ng/examples/conf/"
+              },
+              # 2 types are available :
+              #   * 'config' for configuration access
+              #   * 'sessions' for sessions access
+              type          => 'config', 
+  );
 
 =head2 Client side
 
-See L<Lemonldap::NG::Manager::Conf::SOAP> for documentation on client side.
+See L<Lemonldap::NG::Manager::Conf::SOAP> for documentation on client side
+configuration access.
 
-=head3 Area protection
+See L<Lemonldap::NG::Manager::Apache::Session> for documentation on client side
+sessions access.
+
+=head3 Configuration access
+
+=head4 Area protection
 
   package My::Package;
   use Lemonldap::NG::Handler::SharedConf;
@@ -117,7 +200,7 @@ See L<Lemonldap::NG::Manager::Conf::SOAP> for documentation on client side.
       https               => 0,
   } );
 
-=head3 Authentication portal
+=head4 Authentication portal
 
   use Lemonldap::NG::Portal::SharedConf;
   
@@ -131,7 +214,7 @@ See L<Lemonldap::NG::Manager::Conf::SOAP> for documentation on client side.
   if($portal->process()) {
     ...
 
-=head3 Manager
+=head4 Manager
 
   use Lemonldap::NG::Manager;
   
@@ -146,6 +229,12 @@ See L<Lemonldap::NG::Manager::Conf::SOAP> for documentation on client side.
   ) or die "Unable to start";
   
   $m->doall();
+
+=head3 Sessions access
+
+  Use simply Lemonldap::NG::Manager::Apache::Session in the 'Apache session
+  module'parameter (instead of Apache::Session::MySQL or
+  Apache::Session::File).
 
 =head1 DESCRIPTION
 

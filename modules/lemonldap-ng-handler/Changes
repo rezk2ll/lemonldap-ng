@@ -2,6 +2,7 @@ Revision history for Perl extension Lemonldap::NG::Handler.
 
 0.75  Sat Feb 24 16:36:56
 	- Adding cross-domain-authentication support
+	- local configuration overrides global configuration
 
 0.74  Sun Feb 4 19:27:34 2007
 	- unprotect system documentation

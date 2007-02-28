@@ -21,17 +21,14 @@ sub _connect {
     if ( $self->{proxyOptions} ) {
         push @args, %{ $self->{proxyOptions} };
     }
-    $self->{uri} ||= 'urn:/Lemonldap/NG/Manager/SOAPService';
-    $self->{service} = SOAP::Lite->uri( $self->{uri} )->proxy(@args);
+    $self->{ns} ||= 'urn:/Lemonldap/NG/Manager/SOAPService/Config';
+    return $self->{service} = SOAP::Lite->ns( $self->{ns} )->proxy(@args);
 }
 
 sub _soapCall {
     my $self = shift;
     my $func = shift;
-    $self->_connect;
-    my $conf = $self->{service}->$func(@_)->result;
-    return $conf;
-
+    return $self->_connect->$func(@_)->result;
 }
 
 sub available {

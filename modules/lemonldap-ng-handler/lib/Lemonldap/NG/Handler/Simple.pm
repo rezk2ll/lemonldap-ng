@@ -544,7 +544,10 @@ Create your own package:
 
   our @ISA = qw(Lemonldap::NG::Handler::Simple);
 
-  __PACKAGE__->init ({locationRules => { 'default' => '$ou =~ /brh/'},
+  __PACKAGE__->init ({
+  	     locationRules        => {
+               default          => '$ou =~ /brh/'
+  	     },
          globalStorage        => 'Apache::Session::MySQL',
          globalStorageOptions => {
                DataSource       => 'dbi:mysql:database=dbname;host=127.0.0.1',

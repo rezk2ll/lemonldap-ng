@@ -1,7 +1,8 @@
 Revision history for Perl extension Lemonldap::NG::Portal.
 
-0.62  Sat Feb 24 16:34:45
+0.62  Wed Feb 28 23:22:14
 	- Adding cross-domain-authentication mechanism
+	- local configuration overrides global configuration
 
 0.61  Sun Feb 11 9:10:12
 	- Existing sessions are now checked

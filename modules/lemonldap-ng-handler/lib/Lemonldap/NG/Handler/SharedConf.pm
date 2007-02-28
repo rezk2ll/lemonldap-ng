@@ -15,6 +15,7 @@ our $lastReload = 0;
 our $reloadTime;
 our $childLock = 0;
 our $lmConf;
+our $localConfig;
 
 BEGIN {
     if ( MP() == 2 ) {
@@ -42,6 +43,7 @@ sub init($$) {
     my ( $class, $args ) = @_;
     $reloadTime = $args->{reloadTime} || 600;
     $class->localInit($args);
+    $localConfig = $args;
 }
 
 sub localInit {
@@ -100,6 +102,10 @@ sub globalConfUpdate {
 
     # getConf can return an Apache constant in case of error
     return $tmp unless ( ref($tmp) );
+    # Local arguments have a best precedence
+    foreach ( keys %$tmp ) {
+        $tmp->{$_} = $localConfig->{$_} if ( $localConfig->{$_} )
+    }
     $class->setConf($tmp);
     OK;
 }
