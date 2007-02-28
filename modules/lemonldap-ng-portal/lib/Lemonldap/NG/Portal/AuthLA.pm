@@ -32,18 +32,18 @@ sub extractFormInfo {
 }
 
 sub formateFilter {
-	# If user is authenticated with LA, it's OK
-	return PE_OK;
+    # If user is authenticated with LA, it's OK
+    return PE_OK;
 }
 
 sub connectLDAP {
-	# If user is authenticated with LA, abort LDAP connection
-	return PE_OK;
+    # If user is authenticated with LA, abort LDAP connection
+    return PE_OK;
 }
 
 sub bind {
-	# No need to bind
-	return PE_OK;
+    # No need to bind
+    return PE_OK;
 }
 
 sub search {
@@ -51,13 +51,13 @@ sub search {
 }
 
 sub setSessionInfo {
-	# We have to get user information here
-	# Use disco service with attribute provider ?
+    # We have to get user information here
+    # Use disco service with attribute provider ?
 }
 
 sub unbind {
-	# No need to unbind
-	return PE_OK;
+    # No need to unbind
+    return PE_OK;
 }
 
 1;

@@ -77,6 +77,8 @@ sub getConf {
     return $conf;
 }
 
+# TODO: SOAP authentication documentation
+
 1;
 __END__
 
@@ -98,9 +100,9 @@ Web-SSO configuration.
 
 =head1 DESCRIPTION
 
-Lemonldap::NG::Manager provides a simple interface to access to Lemonldap::NG
-Web-SSO configuration. It is used by L<Lemonldap::NG::Handler>,
-L<Lemonldap::NG::Portal> and L<Lemonldap::NG::Manager>
+Lemonldap::NG::Manager::Conf provides a simple interface to access to
+Lemonldap::NG Web-SSO configuration. It is used by L<Lemonldap::NG::Handler>,
+L<Lemonldap::NG::Portal> and L<Lemonldap::NG::Manager>.
 
 =head2 SUBROUTINES
 
@@ -128,6 +130,17 @@ choosen type. Examples:
                   dbiTable    => 'lmConfig',
                   });
 
+=item * B<SOAP>:
+  $confAccess = new Lemonldap::NG::Manager::Conf(
+                  {
+                  type         => 'SOAP',
+                  proxy        => 'https://manager.example.com/soapmanager.pl',
+                  proxyOptions => {
+                                  timeout => 5,
+                                  },
+                  });
+
+
 =back
 
 =item * B<getConf>: returns a hash reference to the configuration. it takes
@@ -150,7 +163,7 @@ getConf returns all (C<select * from lmConfig>).
 
 =head1 SEE ALSO
 
-L<Lemonldap::NG::Handler>, L<Lemonldap::NG::Portal>, L<CGI>
+L<Lemonldap::NG::Handler>, L<Lemonldap::NG::Portal>
 
 =head1 AUTHOR
 

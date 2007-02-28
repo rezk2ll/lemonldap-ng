@@ -199,18 +199,18 @@ sub controlUrlOrigin {
 #       - nothing: user is authenticated and process
 #                  returns true
 sub controlExistingSession {
-	my $self = shift;
+    my $self = shift;
     my %cookies = fetch CGI::Cookie;
     # Test if Lemonldap::NG cookie is available
     if ( my $id = $cookies{$self->{cookieName}}) {
-    	my $h;
-    	# Trying to recover session from global session storage
-    	eval {
+        my $h;
+        # Trying to recover session from global session storage
+        eval {
             tie $h, $self->{globalStorage}, $id, $self->{globalStorageOptions};
         };
         if ( $@ or not tied($h) ) {
-        	# Session not available (expired ?)
-        	print STDERR "Session $id isn't yet available ($ENV{REMOTE_ADDR})";
+            # Session not available (expired ?)
+            print STDERR "Session $id isn't yet available ($ENV{REMOTE_ADDR})";
             return PE_OK;
         }
         # A session has been find => calling &existingSession
