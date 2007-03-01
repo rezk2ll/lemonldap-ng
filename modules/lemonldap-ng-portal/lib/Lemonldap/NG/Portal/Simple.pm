@@ -63,11 +63,11 @@ sub new {
     $self->{securedCookie} ||= 0;
     $self->{cookieName}    ||= "lemonldap";
 
-    if ( $self->{authentication} eq "SSL" ) {
-        require Lemonldap::NG::Portal::AuthSSL;
+    if ( $self->{authentication} ne "ldap" ) {
+        require "Lemonldap::NG::Portal::Auth".$self->{authentication};
         # $Lemonldap::NG::Portal::AuthSSL::OVERRIDE does not overload $self
         # variables: if the administrator has defined a sub, we respect it
-        %$self = ( %$Lemonldap::NG::Portal::AuthSSL::OVERRIDE, %$self );
+        %$self = ( %${"Lemonldap::NG::Portal::Auth".$self->{authentication}."::OVERRIDE"}, %$self );
     }
     return $self;
 }
