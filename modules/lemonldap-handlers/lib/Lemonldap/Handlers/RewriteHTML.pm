@@ -1,42 +1,36 @@
 package Lemonldap::Handlers::RewriteHTML;
 use strict;
 our ( @ISA, $VERSION, @EXPORTS );
-$VERSION = '2.00';
-our $VERSION_LEMONLDAP = "2.0";
-our $VERSION_INTERNAL  = "2.0";
-
-sub get {
-    my $class  = shift;
-    my %_param = @_;
-    my $html   = $_param{'html'};
-    my $https  = $_param{'https'};
-    my $host   = $_param{'host'};
+$VERSION = '3.1.0';
+our $VERSION_LEMONLDAP = "3.1.0";
+our $VERSION_INTERNAL  = "3.1.0";
+sub get               
+{
+    my $class =shift;
+    my %_param= @_;
+    my $html =$_param{'html'};
+    my $https =$_param{'https'} ;
+    my $host = $_param{'host'};
     my $target = $_param{'target'};
 
-    $html =~ s/http:\/\//http:\/\/$host\//gi;
-
-    # href tag
-    $html =~ s/href="([^\/h])/href="\/$1/ig;
-    $html =~ s/(href="\/)/href="\/$target\//ig;
-
-    # src tag
-    $html =~ s/src="([^\/h])/src="\/$1/ig;
-    $html =~ s/(src="\/)/src="\/$target\//ig;
-
-    # action tag
-    $html =~ s/(action=\/)/action=\/$target\//ig;
-
-    # base tag
-    $html =~ s/(\<base\b(.+?))href[^\s]+/$1/i;
-
-    # feuille de style
-    $html =~ s/url\('/url\('\/$target\//gi;
-    $html =~ s/url\(/url\(\/$target\//gi;
-    $html =~ s/http:/https:/g if $https;
-    return $html;
-}
-1;
-
+$html =~ s/http:\/\//http:\/\/$host\//gi;
+   # href tag
+$html=~ s/href="([^\/h])/href="\/$1/ig;
+$html=~ s/(href="\/)/href="\/$target\//ig;
+# src tag
+$html=~ s/src="([^\/h])/src="\/$1/ig;
+$html=~ s/(src="\/)/src="\/$target\//ig;
+# action tag
+$html=~ s/(action=\/)/action=\/$target\//ig;
+# base tag
+$html =~ s/(\<base\b(.+?))href[^\s]+/$1/i;  
+# feuille de style 
+$html =~ s/url\('/url\('\/$target\//gi;  
+$html =~ s/url\(/url\(\/$target\//gi;  
+$html=~ s/http:/https:/g if $https;
+return $html;   
+       }
+	   1;
 =pod
 
 =for html <center> <H1> Lemonldap::Handlers::RewriteHTML </H1></center> 

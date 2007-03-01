@@ -2,38 +2,37 @@ package Lemonldap::Handlers::Memsession;
 use strict;
 use Apache::Session::Memorycached;
 our ( @ISA, $VERSION, @EXPORTS );
-$VERSION = '2.00';
-our $VERSION_LEMONLDAP = "2.0";
-our $VERSION_INTERNAL  = "2.0";
+$VERSION = '3.1.0';
+our $VERSION_LEMONLDAP = "3.1.0";
+our $VERSION_INTERNAL  = "3.1.0";
+sub get               
+{
+    my $class =shift;
+    my %_param= @_;
+    
+    my $id =$_param{'id'};
+     return 0 unless $id;;
 
-sub get {
-    my $class  = shift;
-    my %_param = @_;
+    my $config =$_param{'config'};
 
-    my $id = $_param{'id'};
-    return 0 unless $id;
+my $SERVERS = $config->{SERVERS};
 
-    my $config = $_param{'config'};
+my %session ;
+   tie %session, 'Apache::Session::Memorycached', $id,$SERVERS;
+ unless ($session{dn}) {  ##  the cookie is present but i can't  retrieve session
+                         ##  three causes : Too many connection are served.              
+                         ##                the server of session was restarted                
+                         ##                It's time out                 
+ 
+     untie %session ;
 
-    my $SERVERS = $config->{SERVERS};
-
-    my %session;
-    tie %session, 'Apache::Session::Memorycached', $id, $SERVERS;
-    unless ( $session{dn} )
-    {    ##  the cookie is present but i can't  retrieve session
-        ##  three causes : Too many connection are served.
-        ##                the server of session was restarted
-        ##                It's time out
-
-        untie %session;
-
-        # I say it's time out
-    }
+# I say it's time out 
+                    }
     my %_session = %session;
-    untie %session;
-    my $self = \%_session;
-    bless $self, $class;
-    return $self;
+  untie %session ;
+     my $self = \%_session;
+    bless $self,$class;
+  return $self;
 }
 1;
 
