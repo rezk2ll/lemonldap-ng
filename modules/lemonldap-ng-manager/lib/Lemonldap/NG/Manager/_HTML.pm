@@ -73,7 +73,7 @@ sub javascript {
     my %text;
     foreach(qw(newVirtualHost newMacro newGroup newVar newGSOpt saveConf
                deleteNode locationRules unableToSave confSaved saveFailure
-               newRule newHeader)) {
+               newRule newHeader httpHeaders)) {
         $text{$_} = &{"txt_$_"};
     }
     print <<EOT;
