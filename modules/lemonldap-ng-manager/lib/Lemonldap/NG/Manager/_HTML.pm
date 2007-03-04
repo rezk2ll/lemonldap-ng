@@ -6,7 +6,9 @@ package Lemonldap::NG::Manager::_HTML;
 
 use AutoLoader qw(AUTOLOAD);
 require Lemonldap::NG::Manager::_i18n;
-our $VERSION = '0.13';
+use Lemonldap::NG::Manager::Conf::Constants;
+
+our $VERSION = '0.22';
 
 1;
 __END__
@@ -73,10 +75,13 @@ sub javascript {
     my %text;
     foreach(qw(newVirtualHost newMacro newGroup newVar newGSOpt saveConf
                deleteNode locationRules unableToSave confSaved saveFailure
-               newRule newHeader httpHeaders)) {
+               newRule newHeader httpHeaders waitingResult unknownError
+               configurationWasChanged configLoaded warningConfNotApplied
+               applyConf )) {
         $text{$_} = &{"txt_$_"};
+        $text{$_} =~s/'/\\'/g;
     }
-    print <<EOT;
+    print qq#
 var s3,s32;
 window.onload=function(){
         var w=X.clientWidth()-12;
@@ -86,11 +91,13 @@ window.onload=function(){
         s3=new xSplitter('idSplitter3',0,0,w,h,true,4,w/4,w/8,true,4,null,s32);
         X.addEventListener(window,'resize',win_onresize,false);
         document.body.style.cursor='wait';
+        document.getElementById('help').innerHTML='<h3>$text{waitingResult}</h3>';
         tree=new dhtmlXTreeObject(document.getElementById('treeBox'),"100%","100%",0);
         tree.setImagePath("$self->{dhtmlXTreeImageLocation}");
         tree.setXMLAutoLoading("$ENV{SCRIPT_NAME}?lmQuery=conf");
         tree.loadXML("$ENV{SCRIPT_NAME}?lmQuery=conf");
         tree.setOnClickHandler(onNodeSelect);
+        document.getElementById('help').innerHTML='<h3>$text{configLoaded}</h3>';
         window.setTimeout("document.body.style.cursor='auto'",1000);
 };
 
@@ -171,6 +178,11 @@ function onNodeSelect(nodeId) {
   }
   if(tree.getUserData(nodeId,"modif")=='both') but+=button('$text{deleteNode}','deleteNode',nodeId);
   but+=button('$text{saveConf}','saveConf');
+  #;
+    if( $self->{applyConfFile} ) {
+        print "but+=button('$text{applyConf}','applyConf');";
+    }
+  print qq#
   document.getElementById('buttons').innerHTML = but;
 }
 
@@ -194,7 +206,7 @@ function button(text,func,nodeId){
 
 function insertNewChild(a,b,c) {
   tree.insertNewChild(a,b,c);
-  tree.setItemColor(b,"#000000","#0000FF");
+  tree.setItemColor(b,"\#000000","\#0000FF");
 }
 
 function newVirtualHost() {
@@ -280,13 +292,18 @@ function saveConf(){
       var r=xhr_object.responseText;
       if(r>0) {
         tree.setItemText('root','Configuration '+r);
-        document.getElementById('help').innerHTML='<h3>$text{confSaved} : '+r+'</h3>';
+        document.getElementById('help').innerHTML='<h3>$text{confSaved} : '+r+'</h3>$text{warningConfNotApplied}';
       }
-      else {
-        document.getElementById('help').innerHTML='<h3>$text{saveFailure}</h3>';
+      else if(r<0) {
+      	var txt='<h3>$text{saveFailure}: ';
+      	if(r==#.CONFIG_WAS_CHANGED.qq#) {
+          txt+='$text{configurationWasChanged}';
+      	}
+      	document.getElementById('help').innerHTML=txt+'</h3>';
       }
+      else document.getElementById('help').innerHTML='<h3>$text{unknownError}</h3>';
     }
-    else  document.getElementById('help').innerHTML='<h3>$text{saveFailure}</h3>';
+    else document.getElementById('help').innerHTML='<h3>$text{waitingResult}</h3>';
   }
   xhr_object.send(h);
 }
@@ -308,11 +325,19 @@ function tree2txt(id){
   return r;
 }
 
+function applyConf(){
+  xhr_object.open('GET', "$ENV{SCRIPT_NAME}?lmQuery=apply",true);
+  xhr_object.onreadystatechange = function() { 
+    if(xhr_object.readyState == 4) document.getElementById('help').innerHTML=xhr_object.responseText; 
+  }
+  xhr_object.send(null);
+}
+
 function ec(s){
   if((!s) || s=='') return s;
   return s.replace(/>/g,'&gt;').replace(/</g,'&lt;');
 }
-EOT
+#;
 }
 
 sub start_html {

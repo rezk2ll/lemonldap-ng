@@ -53,10 +53,12 @@ lib/Lemonldap/NG/Manager/_HTML.pm
 lib/Lemonldap/NG/Manager/_i18n.pm
 lib/Lemonldap/NG/Manager/Base.pm
 lib/Lemonldap/NG/Manager/Conf.pm
+lib/Lemonldap/NG/Manager/Conf/Constants.pm
 lib/Lemonldap/NG/Manager/Conf/DBI.pm
 lib/Lemonldap/NG/Manager/Conf/File.pm
 lib/Lemonldap/NG/Manager/Conf/SOAP.pm
 lib/Lemonldap/NG/Manager/Help.pm
+lib/Lemonldap/NG/Manager/Restricted.pm
 lib/Lemonldap/NG/Manager/SOAPServer.pm
 Makefile.PL
 MANIFEST

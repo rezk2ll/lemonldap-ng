@@ -3,8 +3,9 @@ package Lemonldap::NG::Manager::Conf;
 use strict;
 use Storable qw(thaw freeze);
 use MIME::Base64;
+use Lemonldap::NG::Manager::Conf::Constants;
 
-our $VERSION = 0.41;
+our $VERSION = 0.42;
 our @ISA;
 
 sub new {
@@ -36,6 +37,9 @@ sub new {
 
 sub saveConf {
     my ( $self, $conf ) = @_;
+    # If configuration was modified, return an error
+    return CONFIG_WAS_CHANGED if( $conf->{cfgNum} != $self->lastCfg or $self->isLocked );
+    $self->lock or return DATABASE_LOCKED;
     my $fields;
     while ( my ( $k, $v ) = each(%$conf) ) {
         if ( ref($v) ) {

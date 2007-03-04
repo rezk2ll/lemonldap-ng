@@ -4,8 +4,9 @@ use strict;
 use DBI;
 use Storable qw(freeze thaw);
 use MIME::Base64;
+use Lemonldap::NG::Manager::Conf::Constants;
 
-our $VERSION = 0.1;
+our $VERSION = 0.12;
 
 sub prereq {
     my $self = shift;
@@ -21,9 +22,8 @@ sub prereq {
 
 sub available {
     my $self = shift;
-    $self->_connect;
     my $sth =
-      $self->{dbh}->prepare(
+      $self->dbh->prepare(
         "SELECT cfgNum from " . $self->{dbiTable} . " order by cfgNum" );
     $sth->execute();
     my @conf;
@@ -36,48 +36,81 @@ sub available {
 sub lastCfg {
     my $self = shift;
     my @row =
-      $self->{dbh}
-      ->selectrow_array( "SELECT max(cfgNum) from " . $self->{dbiTable} );
+      $self->dbh->selectrow_array( "SELECT max(cfgNum) from " . $self->{dbiTable} );
     return $row[0];
 }
 
-sub _connect {
+sub dbh {
     my $self = shift;
-    $self->{dbh} = DBI->connect_cached(
+    $self->{dbiTable} ||= "lmconfig";
+    return $self->{dbh} ||= DBI->connect_cached(
         $self->{dbiChain}, $self->{dbiUser},
         $self->{dbiPassword}, { RaiseError => 1 }
     );
-    $self->{dbiTable} ||= "lmconfig";
+}
+
+# TODO: test lock
+
+sub lock {
+    my $self = shift;
+    my $sth = $self->dbh->prepare_cached(q{SELECT GET_LOCK(?, 5)}, {}, 1);
+    $sth->execute('lmconf');
+    my @row = $sth->fetchrow_array;
+    return $row[0] || 0;
+}
+
+sub isLocked {
+    my $self = shift;
+    my $sth = $self->dbh->prepare_cached(q{SELECT IS_FREE_LOCK(?)}, {}, 1);
+    $sth->execute('lmconf');
+    my @row = $sth->fetchrow_array;
+    return $row[0] ? 0 : 1;
+}
+
+sub unlock {
+    my $self = shift;
+    my $sth = $self->dbh->prepare_cached(q{SELECT RELEASE_LOCK(?)}, {}, 1);
+    $sth->execute('lmconf');
+    my @row = $sth->fetchrow_array;
+    return $row[0] || 0;
 }
 
 sub store {
     my ( $self, $fields ) = @_;
-    $self->_connect;
     my $tmp =
-      $self->{dbh}->do( "insert into "
+      $self->dbh->do( "insert into "
           . $self->{dbiTable} . " ("
           . join( ",", keys(%$fields) )
           . ") values ("
           . join( ",", values(%$fields) )
           . ")" );
     unless ($tmp) {
-        print STDERR "Database error: " . $self->{dbh}->errstr . "\n";
-        return 0;
+        $self->logError;
+        return UNKNOWN_ERROR;
+    }
+    unless( $self->unlock ) {
+        $self->logError;
+        return UNKNOWN_ERROR;
     }
     return $fields->{cfgNum};
 }
 
 sub load {
     my ( $self, $cfgNum, $fields ) = @_;
-    $self->_connect;
     $fields = join( /,/, @$fields ) || '*';
     my $row =
-      $self->{dbh}->selectrow_hashref(
+      $self->dbh->selectrow_hashref(
         "SELECT $fields from " . $self->{dbiTable} . " WHERE cfgNum=$cfgNum" );
     unless ($row) {
-        print STDERR "Database error: " . $self->{dbh}->errstr . "\n";
+        $self->logError;
+        return 0;
     }
     return $row;
+}
+
+sub logError {
+    my $self = shift;
+    print STDERR "Database error: " . $self->dbh->errstr . "\n";
 }
 
 1;

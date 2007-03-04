@@ -9,6 +9,7 @@ use Lemonldap::NG::Manager::Conf;
 use Lemonldap::NG::Manager::_HTML;
 require Lemonldap::NG::Manager::_i18n;
 require Lemonldap::NG::Manager::Help;
+use LWP::UserAgent;
 
 our @ISA = qw(Lemonldap::NG::Manager::Base);
 
@@ -32,6 +33,9 @@ sub new {
     unless ( -r $self->{jsFile} ) {
         print STDERR qq#Unable to read $self->{jsFile}. You have to set "jsFile" parameter to /path/to/lemonldap-ng-manager.js\n#;
     }
+    unless ( __PACKAGE__->can('ldapServer') ) {
+        Lemonldap::NG::Manager::_i18n::import( $ENV{HTTP_ACCEPT_LANGUAGE} );
+    }
     if ( $self->param('lmQuery') ) {
         my $tmp = "print_" . $self->param('lmQuery');
         $self->$tmp;
@@ -51,7 +55,9 @@ sub new {
 # Subroutines to make all the work
 sub doall {
     my $self = shift;
-    print $self->header_public;
+    # When using header_public here, Firefox does not load configuration
+    # sometimes. Where is the bug ?
+    print $self->header;
     print $self->start_html;
     print $self->main;
     print $self->end_html;
@@ -77,7 +83,9 @@ sub print_libjs {
 
 sub print_lmjs {
     my $self = shift;
-    print $self->header_public( $ENV{SCRIPT_FILENAME},
+    # TODO: replace this
+    # print $self->header_public( $ENV{SCRIPT_FILENAME},
+    print $self->header(
         -type => 'text/javascript' );
     $self->javascript;
 }
@@ -96,9 +104,6 @@ sub print_help {
 # Configuration download subroutines
 sub print_conf {
     my $self = shift;
-    unless ( __PACKAGE__->can('ldapServer') ) {
-        Lemonldap::NG::Manager::_i18n::import( $ENV{HTTP_ACCEPT_LANGUAGE} );
-    }
     print $self->header( -type => "text/xml", '-Cache-Control' => 'private' );
     $self->printXmlConf;
     exit;
@@ -112,6 +117,17 @@ sub default {
 }
 
 sub printXmlConf {
+    my $self   = shift;
+    print XMLout(
+        $self->buildTree,
+        #XMLDecl  => "<?xml version='1.0' encoding='iso-8859-1'?>",
+        RootName => 'tree',
+        KeyAttr  => { item => 'id', username => 'name' },
+        NoIndent => 1
+    );
+}
+
+sub buildTree {
     my $self   = shift;
     my $config = $self->config->getConf();
     $config = $self->default unless ($config);
@@ -151,8 +167,9 @@ sub printXmlConf {
                 },
                 groups       => { text => &txt_userGroups, },
                 virtualHosts => {
-                    text => &txt_virtualHosts,
-                    open => 1,
+                    text   => &txt_virtualHosts,
+                    open   => 1,
+                    select => 1,
                 },
             },
         },
@@ -265,15 +282,7 @@ sub printXmlConf {
             $macros->{$macro} = $self->xmlField( 'both', $expr, $macro );
         }
     }
-
-    print XMLout(
-        $tree,
-
-        #XMLDecl  => "<?xml version='1.0' encoding='iso-8859-1'?>",
-        RootName => 'tree',
-        KeyAttr  => { item => 'id', username => 'name' },
-        NoIndent => 1
-    );
+    return $tree;
 }
 
 sub xmlField {
@@ -309,10 +318,14 @@ sub upload {
     my ( $self, $tree ) = @_;
     $tree = XMLin($$tree);
     my $config = {};
+    # Load config number
+    ($config->{cfgNum}) = ($tree->{text} =~ /(\d+)$/);
+    # Load groups
     while ( my ( $g, $h ) = each( %{ $tree->{groups} } ) ) {
         next unless ( ref($h) );
         $config->{groups}->{ $h->{text} } = $h->{value};
     }
+    # Load virtualHosts
     while ( my ( $vh, $h ) = each( %{ $tree->{virtualHosts} } ) ) {
         next unless ( ref($h) );
         my $lr;
@@ -330,6 +343,7 @@ sub upload {
             $config->{exportedHeaders}->{$vh}->{ $h->{text} } = $h->{value};
         }
     }
+    # General parameters
     $config->{cookieName} = $tree->{generalParameters}->{cookieName}->{value};
     $config->{domain}     = $tree->{generalParameters}->{domain}->{value};
     $config->{globalStorage} = $tree->{generalParameters}->{sessionStorage}->{globalStorage}->{value};
@@ -359,6 +373,51 @@ sub upload {
         $config->{exportedVars}->{$v} = $h->{value};
     }
     return $self->config->saveConf($config);
+}
+
+# Apply subroutines
+# TODO: Credentials in applyConfFile
+
+sub print_apply {
+    my $self = shift;
+    print $self->header( -type => "text/html" );
+    unless(-r $self->{applyConfFile} ) {
+        print "<h3>".&txt_canNotReadApplyConfFile."</h3>";
+        return;
+    }
+    print '<h3>' . &txt_result . ' : </h3><ul>';
+    open F, $self->{applyConfFile};
+    my $ua = new LWP::UserAgent( requests_redirectable => [] );
+    $ua->timeout(10);
+    while(<F>) {
+        local $| = 1;
+        # pass blank lines and comments
+        next if(/^$/ or /^\s*#/);
+        chomp;
+        s/\r//;
+        # each line must be like:
+        #    host  http(s)://vhost/request/
+        my( $host, $request ) = (/^\s*([^\s]+)\s+([^\s]+)$/);
+        unless( $host and $request ) {
+            print "<li> ".&txt_invalidLine.": $_</li>";
+            next;
+        }
+        my ( $method, $vhost, $uri ) = ( $request =~ /^(https?):\/\/([^\/]+)(.*)$/ );
+        unless($vhost) {
+            $vhost = $host;
+            $uri = $request;
+        }
+        print "<li>$host ... ";
+        my $r = HTTP::Request->new( 'GET', "$method://$host$uri", HTTP::Headers->new( Host => $vhost ) );#, {Host => $vhost} );
+        my $response = $ua->request( $r );
+        if ( $response->code != 200 ) {
+            print join( ' ', &txt_error, ":", $response->code, $response->message, "</li>");
+        }
+        else {
+            print "OK</li>";
+        }
+    }
+    print "</ul><p>" . &txt_changesAppliedLater . "</p>";
 }
 
 # Internal subroutines
@@ -460,6 +519,15 @@ error logs.
 
 =item * B<jsFile> (optional): the path to the file C<lemonldap-ng-manager.js>.
 It is required only if this file is not in the same directory than your script.
+
+=item * B<applyConfFile> (optional): the path to a file containing parameters
+to make configuration reloaded by handlers. See C<reload> function in
+L<Lemonldap::NG::Handler>. The configuration file must contains lines like:
+
+  # Comments if wanted
+  host  http://virtual-host/reload-path
+
+When this parameter is set, an "apply" button is added to the manager menu.
 
 =back
 

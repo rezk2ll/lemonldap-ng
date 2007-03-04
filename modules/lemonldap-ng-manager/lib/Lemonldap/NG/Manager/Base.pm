@@ -26,8 +26,7 @@ sub header_public {
     my $year = $5;
     my $cm   = $2;
 
-    # TODO
-    if ( my $ref = $ENV{TODO_HTTP_IF_MODIFIED_SINCE} ) {
+    if ( my $ref = $ENV{HTTP_IF_MODIFIED_SINCE} ) {
         my %month = (
             jan => 0,
             feb => 1,
@@ -54,7 +53,7 @@ sub header_public {
     }
     return $self->SUPER::header(
         '-Last-Modified' => $hd,
-        '-Cache-Control' => 'public',
+        '-Cache-Control' => 'public; must-revalidate',
         @_
     );
 }

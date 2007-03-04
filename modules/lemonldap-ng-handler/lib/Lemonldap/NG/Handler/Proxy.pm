@@ -95,9 +95,6 @@ sub headers {
     my $response = shift;
     my $tmp      = $response->header('Content-Type');
     $r->content_type($tmp) if ($tmp);
-
-    # Modif demandée par mail
-    #$r->content_type( $response->header('Content-Type') );
     $r->status( $response->code );
     $r->status_line( join ' ', $response->code, $response->message );
 

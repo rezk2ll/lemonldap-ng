@@ -1,8 +1,9 @@
 package Lemonldap::NG::Manager::Conf::File;
 
 use strict;
+use Lemonldap::NG::Manager::Conf::Constants;
 
-our $VERSION = 0.1;
+our $VERSION = 0.12;
 
 sub prereq {
     my $self = shift;
@@ -32,13 +33,32 @@ sub lastCfg {
     return $avail[$#avail];
 }
 
+# TODO: LOCK
+
+sub lock {
+    return 1;
+}
+
+sub isLocked {
+    return 0;
+}
+
+sub unlock {
+    return 1;
+}
+
 sub store {
     my ( $self, $fields ) = @_;
-    open FILE, '>' . $self->{dirName} . "/lmConf-" . $fields->{cfgNum};
+    unless( open FILE, '>' . $self->{dirName} . "/lmConf-" . $fields->{cfgNum} ) {
+        print STDERR "Open file failed: $!";
+        $self->unlock;
+        return UNKNOWN_ERROR;
+    }
     while ( my ( $k, $v ) = each(%$fields) ) {
         print FILE "$k\n\t$v\n\n";
     }
     close FILE;
+    $self->unlock;
     return $fields->{cfgNum};
 }
 
