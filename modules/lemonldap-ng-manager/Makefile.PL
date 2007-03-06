@@ -11,6 +11,9 @@ WriteMakefile(
         'XML::Simple'    => 0,
         'LWP::UserAgent' => 0,
         }, # e.g., Module::Name => 1.1
+    EXE_FILES         => [
+	'scripts/lmConfig_File2MySQL',
+        ],
     ($] >= 5.005 ?     ## Add these new keywords supported since 5.005
       (ABSTRACT_FROM  => 'lib/Lemonldap/NG/Manager.pm', # retrieve abstract from module
        AUTHOR         => 'Xavier Guimard <x.guimard@free.fr>') : ()),

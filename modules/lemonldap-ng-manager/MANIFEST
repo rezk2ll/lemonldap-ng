@@ -64,6 +64,7 @@ Makefile.PL
 MANIFEST
 META.yml			Module meta-data (added by MakeMaker)
 README
+scripts/lmConfig_File2MySQL
 TODO
 t/Lemonldap-NG-Manager.t
 t/Lemonldap-NG-Manager-Conf.t

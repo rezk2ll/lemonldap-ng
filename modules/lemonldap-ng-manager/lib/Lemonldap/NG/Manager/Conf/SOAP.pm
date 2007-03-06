@@ -3,7 +3,7 @@ package Lemonldap::NG::Manager::Conf::SOAP;
 use strict;
 use SOAP::Lite;
 
-our $VERSION = 0.1;
+our $VERSION = 0.11;
 
 sub prereq {
     my $self = shift;
