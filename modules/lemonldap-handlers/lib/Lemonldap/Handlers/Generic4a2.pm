@@ -24,7 +24,7 @@ use Sys::Hostname;
 #use Data::Dumper;
 #### common declaration #######
 our( @ISA, $VERSION, @EXPORTS );
-$VERSION = '3.1.0';
+$VERSION = '3.1.1';
 our $VERSION_LEMONLDAP = "3.1.0";
 our $VERSION_INTERNAL  = "3.1.0";
 
@@ -67,6 +67,14 @@ sub handler {
     if ( $r->uri =~ /^\/LemonErrorPages/ ) {
         return DECLINED;
     }
+    ########################
+    ##  log initialization
+    ########################
+    my $log = $r->log;
+    my $messagelog;
+    my $cache2file;
+    my $APACHE_CODE;
+
     # Url a ne pas traiter meme sans conf 
     # exemple 
     #   PerlSetVar ExcludeRegex
@@ -82,15 +90,6 @@ sub handler {
         return DECLINED;   
           }      
       }
-
-
-    ########################
-    ##  log initialization
-    ########################
-    my $log = $r->log;
-    my $messagelog;
-    my $cache2file;
-    my $APACHE_CODE;
 
     ########################
     ## collect httpd param
