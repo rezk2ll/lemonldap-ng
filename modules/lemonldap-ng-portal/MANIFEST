@@ -16,6 +16,5 @@ README
 t/Lemonldap-NG-Portal-AuthCAS.t
 t/Lemonldap-NG-Portal-AuthSSL.t
 t/Lemonldap-NG-Portal-CDA.t
-t/Lemonldap-NG-Portal-SharedConf-DBI.t
 t/Lemonldap-NG-Portal-SharedConf.t
 t/Lemonldap-NG-Portal-Simple.t

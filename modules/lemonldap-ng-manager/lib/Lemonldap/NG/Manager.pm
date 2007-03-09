@@ -72,8 +72,7 @@ sub print_css {
 
 sub print_libjs {
     my $self = shift;
-    print $self->header( $self->{jsFile},
-        -type => 'application/x-javascript' );
+    print $self->header_public( $self->{jsFile}, -type => 'application/x-javascript' );
     open F, $self->{jsFile};
     while (<F>) {
         print;
@@ -83,8 +82,7 @@ sub print_libjs {
 
 sub print_lmjs {
     my $self = shift;
-    print $self->header(
-        -type => 'text/javascript' );
+    print $self->header_public( $ENV{SCRIPT_FILENAME}, -type => 'text/javascript' );
     $self->javascript;
 }
 

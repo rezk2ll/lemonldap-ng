@@ -14,7 +14,6 @@ META.yml			Module meta-data (added by MakeMaker)
 README
 t/Lemonldap-NG-Handler-CDA.t
 t/Lemonldap-NG-Handler-Proxy.t
-t/Lemonldap-NG-Handler-SharedConf-DBI.t
 t/Lemonldap-NG-Handler-SharedConf.t
 t/Lemonldap-NG-Handler-Simple.t
 t/Lemonldap-NG-Handler-Vhost.t
