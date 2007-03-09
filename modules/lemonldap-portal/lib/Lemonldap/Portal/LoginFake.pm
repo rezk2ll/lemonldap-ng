@@ -7,7 +7,10 @@ use warnings;
 use Lemonldap::Config::Parameters;
 use Lemonldap::Portal::Standard;
 use Apache2::Const qw(FORBIDDEN OK SERVER_ERROR);
-
+use Apache2::Log();
+use APR::Table;
+use Apache2::RequestRec ();
+use Apache2::ServerRec();
 use Data::Dumper;
 use Template;
 use URI::Escape;
@@ -181,7 +184,8 @@ sub handler {
                    # 'controlSyntax' => \&my_none,
                       'controlIP'    =>  \&my_none,
 	              'bind'     =>  \&my_none,
-                      'formateFilter' =>\&my_none,
+                      'controlCache' => \&my_none,
+		       'formateFilter' =>\&my_none,
                       'formateBaseLDAP' =>\&my_none,
                       'contactServer'  =>\&my_none,
                       'search'  =>\&my_entry,
@@ -201,7 +205,8 @@ sub handler {
         my $buf;
 # copy POST data, if any
     if ( $r->method eq 'POST' ) {
-        my $len = $r->header_in('Content-length');
+	my $entete =$r->headers_in();
+        my $len = $entete->{'Content-length'};
         $r->read( $buf, $len );
       my @arams= split '&',$buf;
        for (@arams) {
@@ -254,7 +259,7 @@ sub handler {
 #			    };
 
         $r->content_type('text/html');
-        $r->send_http_header;
+        $r->print;
 
 $r->print($html_ok);
 
@@ -335,7 +340,7 @@ $r->print($html_ok);
 	      	$r->content_type('text/html');
         $r->headers_out->add( 'Set-Cookie' => $LemonldapCookie );
 
-        $r->send_http_header;
+        $r->print;
 $r->print(<<END1);
 <html>
 <head><title>lemonldap websso</title></head>
