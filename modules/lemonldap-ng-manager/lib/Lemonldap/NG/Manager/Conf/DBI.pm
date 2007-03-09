@@ -97,7 +97,7 @@ sub store {
 
 sub load {
     my ( $self, $cfgNum, $fields ) = @_;
-    $fields = join( /,/, @$fields ) || '*';
+    $fields = $fields ? join( /,/, @$fields ) : '*';
     my $row =
       $self->dbh->selectrow_hashref(
         "SELECT $fields from " . $self->{dbiTable} . " WHERE cfgNum=$cfgNum" );

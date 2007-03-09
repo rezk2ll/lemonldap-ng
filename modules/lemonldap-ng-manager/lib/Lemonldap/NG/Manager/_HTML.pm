@@ -8,7 +8,7 @@ use AutoLoader qw(AUTOLOAD);
 require Lemonldap::NG::Manager::_i18n;
 use Lemonldap::NG::Manager::Conf::Constants;
 
-our $VERSION = '0.22';
+our $VERSION = '0.23';
 
 1;
 __END__
@@ -77,35 +77,41 @@ sub javascript {
                deleteNode locationRules unableToSave confSaved saveFailure
                newRule newHeader httpHeaders waitingResult unknownError
                configurationWasChanged configLoaded warningConfNotApplied
-               applyConf )) {
+               applyConf prevConf lastConf nextConf)) {
         $text{$_} = &{"txt_$_"};
         $text{$_} =~s/'/\\'/g;
     }
     print qq#
+function loadConf() {
+  document.body.style.cursor='wait';
+  tree.setXMLAutoLoading("$ENV{SCRIPT_NAME}?lmQuery=conf");
+  tree.loadXML("$ENV{SCRIPT_NAME}?lmQuery=conf");
+  tree.setOnClickHandler(onNodeSelect);
+  tree.selectItem('virtualHosts',true,false);
+  document.getElementById('help').innerHTML='<h3>$text{configLoaded}</h3>';
+  window.setTimeout("document.body.style.cursor='auto'",1000);
+}
+
 var s3,s32;
+
 window.onload=function(){
-        var w=X.clientWidth()-12;
-        var h=X.clientHeight()-12;
-        //var h=window.outerHeight;
-        s32=new xSplitter('idSplitter32',0,0,0,0,false,4,3*h/4,h/8,true,0);
-        s3=new xSplitter('idSplitter3',0,0,w,h,true,4,w/4,w/8,true,4,null,s32);
-        X.addEventListener(window,'resize',win_onresize,false);
-        document.body.style.cursor='wait';
-        document.getElementById('help').innerHTML='<h3>$text{waitingResult}</h3>';
-        tree=new dhtmlXTreeObject(document.getElementById('treeBox'),"100%","100%",0);
-        tree.setImagePath("$self->{dhtmlXTreeImageLocation}");
-        tree.setXMLAutoLoading("$ENV{SCRIPT_NAME}?lmQuery=conf");
-        tree.loadXML("$ENV{SCRIPT_NAME}?lmQuery=conf");
-        tree.setOnClickHandler(onNodeSelect);
-        document.getElementById('help').innerHTML='<h3>$text{configLoaded}</h3>';
-        window.setTimeout("document.body.style.cursor='auto'",1000);
+  var w=X.clientWidth()-12;
+  var h=X.clientHeight()-12;
+  //var h=window.outerHeight;
+  s32=new xSplitter('idSplitter32',0,0,0,0,false,4,3*h/4,h/8,true,0);
+  s3=new xSplitter('idSplitter3',0,0,w,h,true,4,w/4,w/8,true,4,null,s32);
+  X.addEventListener(window,'resize',win_onresize,false);
+  document.getElementById('help').innerHTML='<h3>$text{waitingResult}</h3>';
+  tree=new dhtmlXTreeObject(document.getElementById('treeBox'),"100%","100%",0);
+  tree.setImagePath("$self->{dhtmlXTreeImageLocation}");
+  loadConf();
 };
 
 function win_onresize(){
-        var cw=X.clientWidth();
-        var w=X.clientWidth()-12;
-        var h=X.clientHeight()-12;
-        s3.paint(w,h,w/4,w/5);
+  var cw=X.clientWidth();
+  var w=X.clientWidth()-12;
+  var h=X.clientHeight()-12;
+  s3.paint(w,h,w/4,w/5);
 }
 
 var indice=-1;
@@ -177,10 +183,13 @@ function onNodeSelect(nodeId) {
     }
   }
   if(tree.getUserData(nodeId,"modif")=='both') but+=button('$text{deleteNode}','deleteNode',nodeId);
-  but+=button('$text{saveConf}','saveConf');
+    but+=button('$text{saveConf}','saveConf',nodeId);
+  if(nodeId == 'root') but+=button('$text{prevConf}','prevConf',nodeId)
+                           +button('$text{nextConf}','nextConf',nodeId)
+                           +button('$text{lastConf}','lastConf',nodeId);
   #;
     if( $self->{applyConfFile} ) {
-        print "but+=button('$text{applyConf}','applyConf');";
+        print "but+=button('$text{applyConf}','applyConf',nodeId);";
     }
   print qq#
   document.getElementById('buttons').innerHTML = but;
@@ -235,7 +244,7 @@ function newValue(id,text,type,value){
 
 function newRule(id){
   var lr=tree.getItemIdByIndex(vhostId(id),1);
-  newValue(lr,'New rule','both','deny');
+  newValue(lr,'^/New/rule','both','deny');
 }
 
 function newHeader(id){
@@ -244,19 +253,19 @@ function newHeader(id){
 }
 
 function newGroup(id){
-  newValue('groups','New-group','both','');
+  newValue('groups','NewGroup','both','');
 }
 
 function newMacro(id){
-  newValue('macros','newMacro','both','');
+  newValue('macros','NewMacro','both','');
 }
 
 function newVar(id){
-  newValue('exportedVars','New-var','both','uid');
+  newValue('exportedVars','NewVar','both','uid');
 }
 
 function newGSOpt(id){
-  newValue('globalStorageOptions','New-Opt','both','');
+  newValue('globalStorageOptions','NewOpt','both','');
 }
 
 function deleteNode(id){

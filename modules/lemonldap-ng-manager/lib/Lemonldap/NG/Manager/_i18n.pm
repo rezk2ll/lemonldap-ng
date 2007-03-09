@@ -81,6 +81,9 @@ sub fr {
         error                   => 'Erreur',
         result                  => 'R&eacute;sultat',
         changesAppliedLater     => "Changements seront actif d'ici 10 minutes'",
+        prevConf                => 'Pr&eacute;c&eacute;dente',
+        nextConf                => 'Suivante',
+        lastConf                => 'Derni&egrave;re',
     };
 }
 
@@ -132,5 +135,8 @@ sub en {
         error                   => 'Error',
         result                  => 'Result',
         changesAppliedLater     => 'Changes will be effective within 10 minutes',
+        prevConf                => 'Previous',
+        nextConf                => 'Next',
+        lastConf                => 'Last',
     };
 }

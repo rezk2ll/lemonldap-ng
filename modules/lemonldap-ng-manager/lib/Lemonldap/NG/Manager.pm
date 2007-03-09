@@ -13,7 +13,7 @@ use LWP::UserAgent;
 
 our @ISA = qw(Lemonldap::NG::Manager::Base);
 
-our $VERSION = '0.5';
+our $VERSION = '0.51';
 
 sub new {
     my ( $class, $args ) = @_;
@@ -72,7 +72,7 @@ sub print_css {
 
 sub print_libjs {
     my $self = shift;
-    print $self->header_public( $self->{jsFile},
+    print $self->header( $self->{jsFile},
         -type => 'application/x-javascript' );
     open F, $self->{jsFile};
     while (<F>) {
@@ -370,7 +370,7 @@ sub upload {
         each( %{ $tree->{generalParameters}->{exportedVars} } ) )
     {
         next unless ( ref($h) );
-        $config->{exportedVars}->{$v} = $h->{value};
+        $config->{exportedVars}->{$h->{text}} = $h->{value};
     }
     return $self->config->saveConf($config);
 }

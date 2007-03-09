@@ -34,10 +34,45 @@ __END__
 sub help_virtualHosts_en {
     print <<EOT;
 <h3>Virtual Hosts</h3>
-This help chapter does not exist in english. If you want to help us, you can
-edit lib/Lemonldap/NG/Manager/Help.pm in lemonldap-ng source tree and send us
-your contribution.<br>
-Thanks.
+
+<p> A virtual host configuration is cutted in 2 pieces&nbsp;: the rules and the HTTP
+headers.</p>
+
+<p> <u>Note</u> : If portal and handlers are not in the same domain than declared
+in "General Parameters" menu, <u>you have to use</u> CDA modules. Else, session
+cookie is not seen by handlers.
+
+<h4> Rules </h4>
+
+<p> A rule associates a regular expression with a perl boolean expression.
+When a user tries to access to an URL that match with the regular expression,
+access is granted or not depending on the boolean expression result&nbsp;:</p>
+
+<pre>
+  # Virtual host test.example.com - rules
+  ^/protected =&gt; \$groups =~ /\\bgroup1\\b/
+</pre>
+
+<p> This rule means that all URL starting with '/protected', are reserved to
+users member of 'group1'. You can also use 'accept' and 'deny' keywords.
+'accept' keyword means that all authenticated users are granted.</p>
+
+<p> If URL doesn't match any regular expression, 'default' rule is called to
+grant or not.</p>
+
+<h4> Headers </h4>
+
+<p> Headers are used to inform the remote application on the connected user.
+They are declared as&nbsp;:
+<tt>&lt;Header Name&gt;&nbsp;=&gt;&nbsp;&lt;Perl expression&gt;.
+</p>
+
+<p> Examples :</p>
+
+<pre>
+  Auth-User =&gt; \$uid
+  Unite     =&gt; \$departmentUID
+</pre>
 EOT
 }
 
@@ -130,7 +165,8 @@ r&egrave;gles et les en-t&ecirc;tes HTTP export&eacute;s.</p>
 
 <p> <u>Note</u> : pour que le m&eacute;canisme d'authentification fonctionne, tous
 les h&ocirc;tes virtuels et le portail doivent se trouver dans le domaine d&eacute;clar&eacute;
-dans les param&egrave;tres g&eacute;n&eacute;raux.</p>
+dans les param&egrave;tres g&eacute;n&eacute;raux ou <u>utiliser les modules CDA</u>
+<i>(Cross-Domain-Authentication)</i> qui gère la transmission de l'identifiant.</p>
 
 <h4> R&egrave;gles</h4>
 

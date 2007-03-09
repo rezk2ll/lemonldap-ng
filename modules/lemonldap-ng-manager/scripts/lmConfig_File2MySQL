@@ -6,7 +6,7 @@ use strict;
 
 # Get ARGS
 my %opts;
-getopts( 'cau:p:t:', \%opts );
+getopts( 'ct:', \%opts );
 
 
 usage("configuration file required")
