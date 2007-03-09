@@ -6,6 +6,7 @@ use Apache2::URI();
 use Apache2::Const;
 use Apache2::Connection;
 use Apache2::ServerUtil;
+use APR::Table;
 use MIME::Base64;
 use LWP::UserAgent;
 use Lemonldap::Config::Parameters;
