@@ -83,8 +83,6 @@ sub print_libjs {
 
 sub print_lmjs {
     my $self = shift;
-    # TODO: replace this
-    # print $self->header_public( $ENV{SCRIPT_FILENAME},
     print $self->header(
         -type => 'text/javascript' );
     $self->javascript;

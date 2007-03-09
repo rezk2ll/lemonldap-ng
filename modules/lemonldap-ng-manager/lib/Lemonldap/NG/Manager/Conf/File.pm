@@ -3,7 +3,7 @@ package Lemonldap::NG::Manager::Conf::File;
 use strict;
 use Lemonldap::NG::Manager::Conf::Constants;
 
-our $VERSION = 0.12;
+our $VERSION = 0.2;
 
 sub prereq {
     my $self = shift;
@@ -36,15 +36,28 @@ sub lastCfg {
 # TODO: LOCK
 
 sub lock {
+    my $self = shift;
+    if( $self->isLocked ) {
+        sleep 2;
+        return 0 if( $self->isLocked );
+    }
+    unless( open F, $self->{dirName} . "/lmConf.lock" ) {
+        print STDERR "Unable to lock\n";
+        return 0;
+    }
+    print F $$;
+    close F;
     return 1;
 }
 
 sub isLocked {
-    return 0;
+    my $self = shift;
+	-e $self->{dirName} . "/lmConf.lock";
 }
 
 sub unlock {
-    return 1;
+    my $self = shift;
+    unlink $self->{dirName} . "/lmConf.lock";
 }
 
 sub store {

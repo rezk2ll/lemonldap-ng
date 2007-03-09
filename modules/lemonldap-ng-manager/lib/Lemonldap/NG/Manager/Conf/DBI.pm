@@ -49,8 +49,6 @@ sub dbh {
     );
 }
 
-# TODO: test lock
-
 sub lock {
     my $self = shift;
     my $sth = $self->dbh->prepare_cached(q{SELECT GET_LOCK(?, 5)}, {}, 1);

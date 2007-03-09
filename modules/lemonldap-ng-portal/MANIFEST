@@ -8,7 +8,6 @@ lib/Lemonldap/NG/Portal/AuthLA.pm
 lib/Lemonldap/NG/Portal/AuthSSL.pm
 lib/Lemonldap/NG/Portal/CDA.pm
 lib/Lemonldap/NG/Portal/SharedConf.pm
-lib/Lemonldap/NG/Portal/SharedConf/DBI.pm
 lib/Lemonldap/NG/Portal/Simple.pm
 Makefile.PL
 MANIFEST

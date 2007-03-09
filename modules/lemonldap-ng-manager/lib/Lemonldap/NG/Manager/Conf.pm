@@ -5,7 +5,7 @@ use Storable qw(thaw freeze);
 use MIME::Base64;
 use Lemonldap::NG::Manager::Conf::Constants;
 
-our $VERSION = 0.42;
+our $VERSION = 0.43;
 our @ISA;
 
 sub new {
@@ -81,8 +81,6 @@ sub getConf {
     return $conf;
 }
 
-# TODO: SOAP authentication documentation
-
 1;
 __END__
 
@@ -119,31 +117,35 @@ choosen type. Examples:
 
 =item * B<File>:
   $confAccess = new Lemonldap::NG::Manager::Conf(
-                  {
-                  type    => 'File',
-                  dirName => '/var/lib/lemonldap-ng/',
-                  });
+                {
+                type    => 'File',
+                dirName => '/var/lib/lemonldap-ng/',
+                });
 
 =item * B<DBI>:
   $confAccess = new Lemonldap::NG::Manager::Conf(
-                  {
-                  type
-                  dbiChain    => 'DBI:mysql:database=lemonldap-ng,host=1.2.3.4',
-                  dbiUser     => 'lemonldap'
-                  dbiPassword => 'pass'
-                  dbiTable    => 'lmConfig',
-                  });
+                {
+                type        => 'DBI',
+                dbiChain    => 'DBI:mysql:database=lemonldap-ng,host=1.2.3.4',
+                dbiUser     => 'lemonldap'
+                dbiPassword => 'pass'
+                dbiTable    => 'lmConfig',
+                });
 
 =item * B<SOAP>:
   $confAccess = new Lemonldap::NG::Manager::Conf(
-                  {
-                  type         => 'SOAP',
-                  proxy        => 'https://manager.example.com/soapmanager.pl',
-                  proxyOptions => {
-                                  timeout => 5,
-                                  },
-                  });
+                {
+                type         => 'SOAP',
+                proxy        => 'https://manager.example.com/soapmanager.pl',
+                proxyOptions => {
+                                timeout => 5,
+                                },
+                });
 
+SOAP configuration access is a sort of proxy: the SOAP server that runs
+L<Lemonldap::NG::Manager::SOAPServer> is configured to use the real session
+storage type (DBI or File for example). See L<Lemonldap::NG::Conf::SOAP> for
+more.
 
 =back
 

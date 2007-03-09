@@ -145,6 +145,8 @@ BEGIN {
     }
 }
 
+# TODO: test and documentation of authentication
+
 1;
 __END__
 
