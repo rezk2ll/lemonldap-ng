@@ -97,6 +97,7 @@ sub en {
         globalStorageOptions    => 'Session Storage Parameters',
         authParams              => "Authentication Parameters",
         userGroups              => "User Groups",
+        macros                  => "Macros",
         virtualHosts            => "Virtual Hosts",
         authenticationType      => "Authentifition Type",
         securedCookie           => 'Secured Cookie (SSL)',
