@@ -116,6 +116,7 @@ sub setConf {
     $cfgNum++;
     $args->{_n_conf} = $cfgNum;
     $refLocalStorage->set( "conf", $args, $EXPIRES_NEVER );
+    $class->lmLog( "$class: store configuration " . $args->{cfgNum}, 'debug' );
     $class->globalInit($args);
 }
 
@@ -126,6 +127,7 @@ sub getConf {
         $class->lmLog( "$class: Unable to load configuration", 'error' );
         return SERVER_ERROR;
     }
+    $class->lmLog( "$class: get configuration " . $tmp->{cfgNum}, 'debug' );
     return $tmp;
 }
 
@@ -134,6 +136,7 @@ sub refresh($$) {
     $class->lmLog( "$class: request for configuration reload", 'info' );
     $r->handler("perl-script");
     if ( $class->globalConfUpdate($r) == OK ) {
+        # $r->push_handlers( PerlHandler => sub { $r = shift; $r->send_http_headers; $r->print("OK"); OK } );
         $r->push_handlers( PerlHandler => sub { OK } );
     }
     else {

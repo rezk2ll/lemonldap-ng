@@ -183,7 +183,7 @@ function onNodeSelect(nodeId) {
     }
   }
   if(tree.getUserData(nodeId,"modif")=='both') but+=button('$text{deleteNode}','deleteNode',nodeId);
-    but+=button('$text{saveConf}','saveConf',nodeId);
+  but+=button('$text{saveConf}','saveConf',nodeId);
   if(nodeId == 'root') but+=button('$text{prevConf}','prevConf',nodeId)
                            +button('$text{nextConf}','nextConf',nodeId)
                            +button('$text{lastConf}','lastConf',nodeId);

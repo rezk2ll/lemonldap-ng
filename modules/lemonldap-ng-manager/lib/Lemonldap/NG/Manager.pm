@@ -13,7 +13,7 @@ use LWP::UserAgent;
 
 our @ISA = qw(Lemonldap::NG::Manager::Base);
 
-our $VERSION = '0.51';
+our $VERSION = '0.511';
 
 sub new {
     my ( $class, $args ) = @_;

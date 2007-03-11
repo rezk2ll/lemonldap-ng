@@ -91,7 +91,7 @@ d&eacute;but ou fin de mot).</p>
 
 <p>La variable export&eacute;e \$groups est une cha&icirc;ne de caract&egrave;res compos&eacute;s de tous les
 noms de groupes auquel l'utilisateur connect&eacute; appartient (c'est &agrave; dire les
-noms de groupe pour lesquels l'expression est vraie.</p>
+noms de groupe pour lesquels l'expression est vraie).</p>
 EOT
 }
 

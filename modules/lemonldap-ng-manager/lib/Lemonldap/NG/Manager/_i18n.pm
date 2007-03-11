@@ -80,7 +80,7 @@ sub fr {
         invalidLine             => 'Ligne invalide',
         error                   => 'Erreur',
         result                  => 'R&eacute;sultat',
-        changesAppliedLater     => "Changements seront actif d'ici 10 minutes'",
+        changesAppliedLater     => "Les changements seront effectifs d'ici 10 minutes",
         prevConf                => 'Pr&eacute;c&eacute;dente',
         nextConf                => 'Suivante',
         lastConf                => 'Derni&egrave;re',

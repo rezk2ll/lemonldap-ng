@@ -1,5 +1,9 @@
 Revision history for Perl extension Lemonldap::NG::Manager.
 
+0.511 Sun Mar 11 8:24:32
+	- Bug correction: lock does not work with File.pm
+	  (Closes: #306760 / forge.objectweb.org)
+
 0.51  Fri Mar 9 7:16:42
 	- Bug corrections issued from test in real life.
 	- More help in english
