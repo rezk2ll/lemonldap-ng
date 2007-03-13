@@ -10,7 +10,7 @@ use Test::More tests => 1;
 # not run.
 SKIP: {
     eval { require AuthCAS };
-    skip "AuthCAS is not installed, so CAS authentication will not work", 1 if($@);
+    skip "AuthCAS is not installed, so Lemonldap::NG::Portal::AuthCAS will not be useable", 1 if($@);
     use_ok('Lemonldap::NG::Portal::AuthCAS');
 }
 
