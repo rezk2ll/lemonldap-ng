@@ -1,5 +1,9 @@
 Revision history for Perl extension Lemonldap::NG::Manager.
 
+0.512 Tue Mar 13 7:57:30
+	- New feature in Manager : "Delete VHost" button (Closes: #306761 /
+	  forge.objectweb.org)
+
 0.511 Sun Mar 11 8:24:32
 	- Bug correction: lock does not work with File.pm
 	  (Closes: #306760 / forge.objectweb.org)
