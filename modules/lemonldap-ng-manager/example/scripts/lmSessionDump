@@ -1,0 +1,29 @@
+#!/usr/bin/perl
+
+# Set here the session storage you use
+$sessionStorage = 'Apache::Session::File';
+$sessionStorageOptions = {
+    Directory => '/tmp',
+};
+
+############
+usage() unless($ARGV[0]);
+
+eval "use $sessionStorage";
+die $@ if($@);
+
+tie %h, $sessionStorage, $ARGV[0], $sessionStorageOptions;
+
+print "Attributes and macros :\n";
+my @t = sort keys(%h);
+print "$_ " foreach(@t);
+print "\n";
+foreach my $k ( sort keys(%h) ) {
+    next if($k eq 'groups');
+    print "\t$k\t=> $h{$k}\n";
+}
+
+if( $h{groups} ) {
+    print "Groups :\n";
+    print "\t$_\n" foreach( sort split /\s+/, $h{groups} );
+}

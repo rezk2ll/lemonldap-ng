@@ -77,7 +77,8 @@ sub javascript {
                deleteNode locationRules unableToSave confSaved saveFailure
                newRule newHeader httpHeaders waitingResult unknownError
                configurationWasChanged configLoaded warningConfNotApplied
-               applyConf prevConf lastConf nextConf)) {
+               applyConf prevConf lastConf nextConf deleteVirtualHost
+	       areYouSure)) {
         $text{$_} = &{"txt_$_"};
         $text{$_} =~s/'/\\'/g;
     }
@@ -145,6 +146,7 @@ function onNodeSelect(nodeId) {
   if(nodeIs(nodeId,"virtualHosts")){
     but+=button('$text{newVirtualHost}','newVirtualHost',nodeId);
     if(nodeIs(nodeId,"virtualHost")){
+      but+=button('$text{deleteVirtualHost}','deleteVirtualHost',nodeId);
       but+=button('$text{newRule}','newRule',nodeId);
       but+=button('$text{newHeader}','newHeader',nodeId);
     }
@@ -232,6 +234,11 @@ function newVirtualHost() {
     tree.setUserData(rep+'_locationRules_default','modif','value');
     tree.setUserData(rep+'_locationRules_default','value','deny');
   }
+}
+
+function deleteVirtualHost(id) {
+  var vh=vhostId(id);
+  if(confirm('$text{areYouSure}')) tree.deleteItem(vh);
 }
 
 function newValue(id,text,type,value){

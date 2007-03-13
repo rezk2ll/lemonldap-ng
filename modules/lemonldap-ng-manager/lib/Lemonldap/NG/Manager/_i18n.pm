@@ -57,7 +57,7 @@ sub fr {
         httpHeaders             => 'En-t&ecirc;tes HTTP',
         locationRules           => 'R&egrave;gles',
 
-        # Warning: here, &eacute; wil not be understood by Firefox (msgBox)
+        # Attention: ici, &eacute; ne sera pas interprété par Firefox (msgBox)
         newVirtualHost          => 'Nouvel hote virtuel',
         newMacro                => 'Nouvelle macro',
         newGroup                => 'Nouveau groupe',
@@ -84,6 +84,10 @@ sub fr {
         prevConf                => 'Pr&eacute;c&eacute;dente',
         nextConf                => 'Suivante',
         lastConf                => 'Derni&egrave;re',
+	deleteVirtualHost       => "Supprimer l'h&ocirc;te virtuel",
+
+        # Attention: ici, &Ecirc; ne sera pas interprété par Firefox (msgBox)
+	areYouSure              => 'Etes vous sur ?',
     };
 }
 
@@ -139,5 +143,7 @@ sub en {
         prevConf                => 'Previous',
         nextConf                => 'Next',
         lastConf                => 'Last',
+	deleteVirtualHost       => 'Delete virtual host',
+	areYouSure              => 'Are you sure ?',
     };
 }
