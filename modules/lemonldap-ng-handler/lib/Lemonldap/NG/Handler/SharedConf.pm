@@ -67,6 +67,17 @@ sub run($$) {
     return $class->SUPER::run($r);
 }
 
+sub logout($$) {
+    my ( $class, $r ) = @_;
+    if ( time() - $lastReload > $reloadTime ) {
+        unless ( $class->localConfUpdate($r) == OK ) {
+            $class->lmLog( "$class: No configuration found", 'error' );
+            return SERVER_ERROR;
+        }
+    }
+    return $class->SUPER::logout($r);
+}
+
 sub confTest($$) {
     my ( $class, $args ) = @_;
     if ( $args->{_n_conf} ) {

@@ -418,7 +418,7 @@ sub hideCookie {
 
 # Redirect non-authenticated users to the portal
 sub goToPortal() {
-    my ( $class, $url ) = @_;
+    my ( $class, $url, $arg ) = @_;
     my $urlc_init =
       encode_base64( "http"
           . ( $https ? "s" : "" ) . "://"
@@ -431,7 +431,9 @@ sub goToPortal() {
           . " to portal (url was $url)",
         'debug'
     );
-    $apacheRequest->headers_out->set( 'Location' => "$portal?url=$urlc_init" );
+    $apacheRequest->headers_out->set(
+        'Location' => "$portal?url=$urlc_init" . ( $arg ? "&$arg" : "" )
+    );
     return REDIRECT;
 }
 
@@ -525,6 +527,13 @@ sub cleanLocalStorage {
 
 sub unprotect {
     DONE;
+}
+
+sub logout ($$) {
+    my $class;
+    ($class, $apacheRequest ) = @_;
+    my $uri = $apacheRequest->uri . ( $apacheRequest->args ? "?" . $apacheRequest->args : "" );
+    return $class->goToPortal( $uri, 'logout=1' );
 }
 
 1;

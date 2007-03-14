@@ -140,9 +140,9 @@ sub process {
     my ($self) = @_;
     $self->{error} = PE_OK;
     foreach my $sub
-      qw(controlUrlOrigin extractFormInfo formateParams formateFilter
-      connectLDAP bind search setSessionInfo setMacros setGroups authenticate
-      store unbind buildCookie log autoRedirect) {
+      qw(controlUrlOrigin controlExistingSession extractFormInfo formateParams
+      formateFilter connectLDAP bind search setSessionInfo setMacros setGroups
+      authenticate store unbind buildCookie log autoRedirect) {
         if ( $self->{$sub} )
         {
             last if ( $self->{error} = &{ $self->{$sub} }($self) );
@@ -173,24 +173,32 @@ sub controlExistingSession {
     my $self = shift;
     my %cookies = fetch CGI::Cookie;
     # Test if Lemonldap::NG cookie is available
-    if ( my $id = $cookies{$self->{cookieName}}) {
-        my $h;
+    if ( my $id = $cookies{$self->{cookieName}}->value ) {
+        my %h;
         # Trying to recover session from global session storage
         eval {
-            tie $h, $self->{globalStorage}, $id, $self->{globalStorageOptions};
+            tie %h, $self->{globalStorage}, $id, $self->{globalStorageOptions};
         };
-        if ( $@ or not tied($h) ) {
+        if ( $@ or not tied(%h) ) {
             # Session not available (expired ?)
-            print STDERR "Session $id isn't yet available ($ENV{REMOTE_ADDR})";
+            print STDERR "Session $id isn't yet available ($ENV{REMOTE_ADDR})\n";
             return PE_OK;
         }
+
+	# Logout if required
+        if($self->param('logout')) {
+            tied(%h)->delete;
+            return PE_FIRSTACCESS;
+        }
         # A session has been find => calling &existingSession
-        my $r;
+        my($r, $datas);
+        %$datas = %h;
+        untie(%h);
         if ( $self->{existingSession} ) {
-            $r = &{ $self->{existingSession} }($self, $id, \$h)
+            $r = &{ $self->{existingSession} }($self, $id, $datas)
         }
         else {
-            $r = $self->existingSession($id, \$h);
+            $r = $self->existingSession($id, $datas);
         }
         if ( $r == PE_DONE) {
             for my $sub qw(log autoRedirect) {
