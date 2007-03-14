@@ -35,7 +35,15 @@ our @ISA = qw(Lemonldap::NG::Portal::SharedConf);
 # 3. Retrieve user credentials
 # Test here if the user was authenticated by IdP
 sub extractFormInfo {
-	# IdP redirect
+	my $self = shift;
+	&_lasso_init();
+	my $libertyFilesDir = $self->{libertyFilesDir} ;
+	my $server = &_lasso_create_server($libertyFilesDir);
+	my $login = &_lasso_create_authnrequest($server);
+
+	print STDERR $server->dump();
+	print STDERR $login->dump();
+
 	return PE_OK;
 }
 
@@ -111,6 +119,46 @@ sub authenticate {
 
 # 16. Redirection
 # Not overloaded
+
+#==============================================================================
+# Liberty Alliance methods
+#==============================================================================
+# Lasso intialisation
+sub _lasso_init {
+	lasso::init;
+}
+
+# Create server object
+sub _lasso_create_server {
+
+	# TODO: file names in global configuration
+	
+	my $libertyFilesDir = shift;	
+
+	my $server = lasso::Server->new(
+		"$libertyFilesDir/lemonldapng-metadata.xml",
+		"private-key.pem",
+		undef, undef);
+	
+	$server->addProvider(
+		$lasso::PROVIDER_ROLE_IDP,
+		"$libertyFilesDir/idp-http-authentic.demo.interldap.org-liberty-metadata-metadata.xml",
+		"$libertyFilesDir/idp-http-authentic.demo.interldap.org-liberty-metadata-publickey.pem",
+		undef);
+
+	return $server;
+}
+
+# Create AuthnRequest
+sub _lasso_create_authnrequest {
+
+	my $server = shift;
+
+	my $login = lasso::Login->new($server);
+
+	return $login;
+}
+
 
 1;
 __END__
