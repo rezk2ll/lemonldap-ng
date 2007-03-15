@@ -29,7 +29,7 @@ sub autoRedirect {
     my $tmp  = $self->{domain};
     $self->{urldc} .= "?" . $self->{cookieName} . "=" . $self->{id}
       if ( $self->{urldc} !~ /$tmp$/oi );
-    return $self->SUPER::autoredirect(@_);
+    return $self->SUPER::autoRedirect(@_);
 }
 
 1;
