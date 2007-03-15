@@ -173,7 +173,7 @@ sub controlExistingSession {
     my $self = shift;
     my %cookies = fetch CGI::Cookie;
     # Test if Lemonldap::NG cookie is available
-    if ( my $id = $cookies{$self->{cookieName}}->value ) {
+    if ( $cookies{$self->{cookieName}} and my $id = $cookies{$self->{cookieName}}->value ) {
         my %h;
         # Trying to recover session from global session storage
         eval {
