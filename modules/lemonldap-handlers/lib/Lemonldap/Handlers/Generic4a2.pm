@@ -5,8 +5,7 @@ use strict;
 use Apache2::URI();
 use Apache2::Const;
 use Apache2::Connection;
-use Apache2::ServerUtil;
-use APR::Table;
+use Apache2::ServerUtil ();
 use MIME::Base64;
 use LWP::UserAgent;
 use Lemonldap::Config::Parameters;
@@ -42,6 +41,7 @@ my $ID_COLLECTED;
 my $__STACK;
 my %STACK;
 my $ID_SAVE;
+my $s = Apache2::ServerUtil->server;
 
 ### this anonymous function will be call when child dead , it will delete berkeley db file
 my $cleanup = sub {
@@ -58,7 +58,9 @@ my $cleanup = sub {
 
     my $path = $srv_cfg->{'cachedbpath'} || $path_other;
     unlink "$path/$$.db" if $path;
+
 };
+ 
 Apache2::ServerUtil->server->push_handlers( PerlChildExitHandler => $cleanup );
 
 sub handler {
@@ -241,12 +243,13 @@ $conf->{DOMAIN} = lc($conf->{DOMAIN});
 
     #########################
     #####  for developper ###
-
-    #if ( $uri =~ /_lemonldap_internal/i ) {
-    #    $r->handler("perl-script");
-    #    $r->push_handlers( PerlHandler => \&_lemonldap_internal );
-    #    return OK;
-    #}
+if ( ( $uri =~ /_lemonldap_internal/i ) && ( $con->get('internaldebug') ) )
+{
+ #   if ( $uri =~ /_lemonldap_internal/i ) {
+        $r->handler("perl-script");
+        $r->push_handlers( PerlHandler => \&_lemonldap_internal );
+        return OK;
+    }
 
     if ( ( $CONFIG{$ID_COLLECTED}->{FASTPATTERNS} )
       && ( $CONFIG{$ID_COLLECTED}->{ANONYMOUSFUNC}->($uri) eq 'OK' ) )
@@ -1232,13 +1235,15 @@ MacEachern - O'REILLY
 
 =item Eric German, E<lt>germanlinux@yahoo.frE<gt>
 
+=item Xavier Guimard, E<lt>x.guimard@free.frE<gt>
+
 =item Isabelle Serre, E<lt>isabelle.serre@justice.gouv.frE<gt>
 
 =back
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2004 by Eric German E<amp> Isabelle Serre
+Copyright (C) 2004 by Eric German E<amp> Xavier Guimard E<amp> Isabelle Serre
 
 Lemonldap originaly written by Eric german who decided to publish him in 2003
 under the terms of the GNU General Public License version 2.
