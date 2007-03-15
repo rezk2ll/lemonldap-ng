@@ -595,8 +595,6 @@ MacEachern - O'REILLY
 
 =item Eric German, E<lt>germanlinux@yahoo.frE<gt>
 
-=item Xavier Guimard, E<lt>x.guimard@free.frE<gt>
-
 =item Habib ZITOUNI  E<lt>zitouni.habib@gmail.comE<gt>
 
 =item Hamza AISSAT  E<lt>asthamza@hotmail.frE<gt>
@@ -605,7 +603,7 @@ MacEachern - O'REILLY
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2004 by Eric German E<amp> Xavier Guimard
+Copyright (C) 2004 by Eric German
 
 Lemonldap originaly written by Eric german who decided to publish him in 2003
 under the terms of the GNU General Public License version 2.
