@@ -299,17 +299,17 @@ sub setSessionInfo {
     $self->{sessionInfo}->{dn} = $self->{dn};
     unless ( $self->{exportedVars} ) {
         foreach (qw(uid cn mail)) {
-            $self->{sessionInfo}->{$_} = join( '; ', $self->{entry}->get_value($_) || ("") );
+            $self->{sessionInfo}->{$_} = join( '; ', $self->{entry}->get_value($_) ) || "";
         }
     }
     elsif ( ref( $self->{exportedVars} ) eq 'HASH' ) {
         foreach ( keys %{ $self->{exportedVars} } ) {
-            $self->{sessionInfo}->{$_} = join( '; ', $self->{entry}->get_value( $self->{exportedVars}->{$_} ) || ("") );
+            $self->{sessionInfo}->{$_} = join( '; ', $self->{entry}->get_value( $self->{exportedVars}->{$_} ) ) || "";
         }
     }
     else {
         foreach ( @{ $self->{exportedVars} } ) {
-            $self->{sessionInfo}->{$_} = join( '; ', $self->{entry}->get_value($_) || ("") );
+            $self->{sessionInfo}->{$_} = join( '; ', $self->{entry}->get_value($_) ) || "";
         }
     }
     PE_OK;

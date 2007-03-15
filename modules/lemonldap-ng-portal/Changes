@@ -5,6 +5,8 @@ Revision history for Perl extension Lemonldap::NG::Portal.
 	- bug corrections:
 	  * existingSessions was never called
 	  * Typo in Portal/CDA.pm
+	  * Multi-valued attributes in HTTP headers (Closes: #306792 /
+	    forge.objectweb.org)
 
 0.64  Fri Mar 9 17:49:44
 	- Delete of DBI.pm which is no more in use
