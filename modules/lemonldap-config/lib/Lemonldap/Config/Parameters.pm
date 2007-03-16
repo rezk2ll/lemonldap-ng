@@ -6,7 +6,7 @@ use Data::Dumper;
 use Storable qw (thaw);
 use LWP::UserAgent();
 
-our $VERSION = '3.1.0';
+our $VERSION = '3.1.1';
 our %IPC_CONFIG;
 
 # Preloaded methods go here.
@@ -194,6 +194,8 @@ sub _readFile {
    my ( $uri,          $proxy, $obj );
    my ( $lastmodified, $par,   $config );
    my $file   = $self->{file};
+   $self->{lastmodified} = ( stat $self->{file} )[9];
+    
    my $cache  = $self->{cache};
    $cache = uc $cache if ($self->{i_am_soap_server}); 
    my $method = $self->{method}||'NONE';
@@ -258,12 +260,12 @@ sub _readFile {
        $self->{agent} = $__cache__->{SoapAgent};
 
    }
-   if ( ( $self->{lastmodified} ) and not($lastmodified) ) {
-       $self->{lasmodified} = 0;
-   }
-   else {
+  # if ( ( $self->{lastmodified} ) and not($lastmodified) ) {
+  #     $self->{lasmodified} = 0;
+  # }
+  # else {
        $self->{lastmodified} = 1 unless $self->{lastmodified};
-   }
+  # }
    ## call Minus function for lowering case
    Minus($config) ;
     
@@ -693,11 +695,13 @@ See the examples directory
 
 =item Eric German, E<lt>germanlinux@yahoo.frE<gt>
 
+=item Xavier Guimard, E<lt>x.guimard@free.frE<gt>
+
 =back
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2004 by Eric German
+Copyright (C) 2004 by Eric German E<amp> Xavier Guimard
 
 Lemonldap originaly written by Eric german who decided to publish him in 2003
 under the terms of the GNU General Public License version 2.
