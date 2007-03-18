@@ -6,6 +6,7 @@ use MIME::Base64;
 
 our $VERSION = '0.51';
 
+# TODO: split locationRules into 2 arrays
 sub locationRulesInit {
     my ( $class, $args ) = @_;
     foreach my $vhost ( keys %{ $args->{locationRules} } ) {

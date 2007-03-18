@@ -13,7 +13,7 @@ use LWP::UserAgent;
 
 our @ISA = qw(Lemonldap::NG::Manager::Base);
 
-our $VERSION = '0.511';
+our $VERSION = '0.6';
 
 sub new {
     my ( $class, $args ) = @_;
@@ -242,6 +242,7 @@ sub buildTree {
     if ( $config->{locationRules} ) {
         $tree->{item}->{item}->{virtualHosts}->{item} = {};
         my $virtualHost = $tree->{item}->{item}->{virtualHosts}->{item};
+        # TODO: split locationRules into 2 arrays
         while ( my ( $host, $rules ) = each( %{ $config->{locationRules} } ) ) {
             $virtualHost->{$host} = $self->xmlField( "text", 'i', $host );
             my ( $ih, $ir ) =
@@ -311,6 +312,12 @@ sub print_upload {
 }
 
 sub upload {
+    my $self = shift;
+    my $config = $self->tree2conf(@_);
+    return $self->config->saveConf($config);
+}
+
+sub tree2conf {
     my ( $self, $tree ) = @_;
     $tree = XMLin($$tree);
     my $config = {};
@@ -330,6 +337,7 @@ sub upload {
             $lr = $h->{$_} if ( $_ =~ /locationRules/ );
             $eh = $h->{$_} if ( $_ =~ /exportedHeaders/ );
         }
+        # TODO: split locationRules into 2 arrays
       LR: foreach my $r ( values(%$lr) ) {
             next LR unless ( ref($r) );
             $config->{locationRules}->{$vh}->{ $r->{text} } = $r->{value};
@@ -368,7 +376,7 @@ sub upload {
         next unless ( ref($h) );
         $config->{exportedVars}->{$h->{text}} = $h->{value};
     }
-    return $self->config->saveConf($config);
+    return $config;
 }
 
 # Apply subroutines
@@ -575,7 +583,7 @@ Xavier Guimard, E<lt>x.guimard@free.frE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2006 by Xavier Guimard
+Copyright (C) 2006-2007 by Xavier Guimard
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.8.8 or,

@@ -84,10 +84,10 @@ sub fr {
         prevConf                => 'Pr&eacute;c&eacute;dente',
         nextConf                => 'Suivante',
         lastConf                => 'Derni&egrave;re',
-	deleteVirtualHost       => "Supprimer l'h&ocirc;te virtuel",
+        deleteVirtualHost       => "Supprimer l'h&ocirc;te virtuel",
 
         # Attention: ici, &Ecirc; ne sera pas interprété par Firefox (msgBox)
-	areYouSure              => 'Etes vous sur ?',
+        areYouSure              => 'Etes vous sur ?',
     };
 }
 
@@ -143,7 +143,7 @@ sub en {
         prevConf                => 'Previous',
         nextConf                => 'Next',
         lastConf                => 'Last',
-	deleteVirtualHost       => 'Delete virtual host',
-	areYouSure              => 'Are you sure ?',
+        deleteVirtualHost       => 'Delete virtual host',
+        areYouSure              => 'Are you sure ?',
     };
 }

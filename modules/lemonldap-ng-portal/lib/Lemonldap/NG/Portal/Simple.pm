@@ -12,7 +12,7 @@ use CGI;
 use CGI::Cookie;
 use Lemonldap::NG::Portal::_i18n;
 
-our $VERSION = '0.63';
+our $VERSION = '0.7';
 
 our @ISA = qw(CGI Exporter);
 
@@ -185,9 +185,14 @@ sub controlExistingSession {
             return PE_OK;
         }
 
-	# Logout if required
+        # Logout if required
+        # TODO: logout documentation
         if($self->param('logout')) {
+            # Delete session in global storage
             tied(%h)->delete;
+            # Delete cookie
+            $self->{id} = "";
+            $self->buildCookie();
             return PE_FIRSTACCESS;
         }
         # A session has been find => calling &existingSession

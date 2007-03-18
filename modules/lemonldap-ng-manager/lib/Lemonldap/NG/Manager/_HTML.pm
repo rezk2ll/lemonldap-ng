@@ -8,8 +8,11 @@ use AutoLoader qw(AUTOLOAD);
 require Lemonldap::NG::Manager::_i18n;
 use Lemonldap::NG::Manager::Conf::Constants;
 
-our $VERSION = '0.23';
+our $VERSION = '0.24';
 
+# TODO: Delete buttons in headers and rules if 'read-only'
+
+# TODO: Display errors in saveConf
 1;
 __END__
 
@@ -78,7 +81,7 @@ sub javascript {
                newRule newHeader httpHeaders waitingResult unknownError
                configurationWasChanged configLoaded warningConfNotApplied
                applyConf prevConf lastConf nextConf deleteVirtualHost
-	       areYouSure)) {
+               areYouSure)) {
         $text{$_} = &{"txt_$_"};
         $text{$_} =~s/'/\\'/g;
     }
@@ -134,6 +137,15 @@ function onNodeSelect(nodeId) {
         k=tree.getItemText(nodeId);
         v='<textarea cols=40 rows=2 onChange="tree.setUserData('+"'"+nodeId+"'"+','+"'"+'value'+"'"+',this.value)">'+tree.getUserData(nodeId,'value')+'</textarea>';
         //v='<input size=80 name="value" value="'+tree.getUserData(nodeId,'value')+'" onChange="tree.setUserData('+"'"+nodeId+"'"+','+"'"+'value'+"'"+',this.value)">';
+        break;
+      case 'ro':
+        k=tree.getItemText(nodeId);
+        v='<p>'+tree.getUserData(nodeId,'value')+'</p>';
+        break;
+      case 'none':
+        k=tree.getItemText(nodeId);
+        v='<p>&nbsp;</p>';
+        break;
     }
     document.getElementById('formulaire').style.display='block';
     document.getElementById('name').innerHTML = k;
@@ -143,7 +155,7 @@ function onNodeSelect(nodeId) {
     document.getElementById('formulaire').style.display='none';
   }
   var but='';
-  if(nodeIs(nodeId,"virtualHosts")){
+  if(nodeIs(nodeId,"virtualHosts") && tree.getUserData(nodeId,"modif") != "none" && tree.getUserData(nodeId,"modif") != 'ro' ){
     but+=button('$text{newVirtualHost}','newVirtualHost',nodeId);
     if(nodeIs(nodeId,"virtualHost")){
       but+=button('$text{deleteVirtualHost}','deleteVirtualHost',nodeId);
@@ -311,11 +323,11 @@ function saveConf(){
         document.getElementById('help').innerHTML='<h3>$text{confSaved} : '+r+'</h3>$text{warningConfNotApplied}';
       }
       else if(r<0) {
-      	var txt='<h3>$text{saveFailure}: ';
-      	if(r==#.CONFIG_WAS_CHANGED.qq#) {
+              var txt='<h3>$text{saveFailure}: ';
+              if(r==#.CONFIG_WAS_CHANGED.qq#) {
           txt+='$text{configurationWasChanged}';
-      	}
-      	document.getElementById('help').innerHTML=txt+'</h3>';
+              }
+              document.getElementById('help').innerHTML=txt+'</h3>';
       }
       else document.getElementById('help').innerHTML='<h3>$text{unknownError}</h3>';
     }

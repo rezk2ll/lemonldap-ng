@@ -282,6 +282,7 @@ sub globalInit {
 #       - regexp is used to test URIs
 #       - test contains an expression used to grant the user
 
+# TODO: split locationRules into 2 arrays
 sub locationRulesInit {
     my ( $class, $args ) = @_;
     $locationCount = 0;
@@ -437,6 +438,12 @@ sub goToPortal() {
     return REDIRECT;
 }
 
+# Fetch $id
+sub fetchId() {
+    my $t = lmHeaderIn( $apacheRequest, 'Cookie' );
+    return ($t =~ /$cookieName=([^; ]+);?/o ) ? $1: 0;
+}
+
 # MAIN SUBROUTINE called by Apache (using PerlHeaderParserHandler option)
 sub run ($$) {
     my $class;
@@ -448,7 +455,7 @@ sub run ($$) {
     # AUTHENTICATION
     # I - recover the cookie
     my $id;
-    unless ( ($id) = ( lmHeaderIn( $apacheRequest, 'Cookie' ) =~ /$cookieName=([^; ]+);?/o ) ) {
+    unless ( $id = $class->fetchId ) {
         $class->lmLog( "$class: No cookie found", 'info' );
         return $class->goToPortal($uri);
     }
@@ -532,8 +539,17 @@ sub unprotect {
 sub logout ($$) {
     my $class;
     ($class, $apacheRequest ) = @_;
-    my $uri = $apacheRequest->uri . ( $apacheRequest->args ? "?" . $apacheRequest->args : "" );
-    return $class->goToPortal( $uri, 'logout=1' );
+    if( my $id = $class->fetchId ) {
+        # Delete Apache thread datas
+        if ( $id eq $datas->{_session_id} ) {
+            $datas = {};
+        }
+        # Delete Apache local cache
+        if( $refLocalStorage and $refLocalStorage->get($id) ) {
+            $refLocalStorage->remove($id);
+        }
+    }
+    return $class->goToPortal( '/', 'logout=1' );
 }
 
 1;
@@ -554,9 +570,9 @@ Create your own package:
   our @ISA = qw(Lemonldap::NG::Handler::Simple);
 
   __PACKAGE__->init ({
-  	     locationRules        => {
+         locationRules        => {
                default          => '$ou =~ /brh/'
-  	     },
+         },
          globalStorage        => 'Apache::Session::MySQL',
          globalStorageOptions => {
                DataSource       => 'dbi:mysql:database=dbname;host=127.0.0.1',

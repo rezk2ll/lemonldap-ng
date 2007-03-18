@@ -167,27 +167,27 @@ access to Lemonldap::NG Web-SSO sessions via SOAP.
   our @ISA = qw(Lemonldap::NG::Handler::Simple);
 
   __PACKAGE__->init ({
-  	     globalStorage => 'Lemonldap::NG::Manager::Apache::Session::SOAP',
-  	     globalStorageOptions => {
-  	             proxy => 'http://manager/cgi-bin/soapserver.pl',
-  	             proxyOptions => {
-  	                 timeout => 5,
-  	             },
-  	     },
+         globalStorage => 'Lemonldap::NG::Manager::Apache::Session::SOAP',
+         globalStorageOptions => {
+                 proxy => 'http://manager/cgi-bin/soapserver.pl',
+                 proxyOptions => {
+                     timeout => 5,
+                 },
+         },
          configStorage       => {
-  	         ... # See Lemonldap::NG::Handler
+             ... # See Lemonldap::NG::Handler
 
 =item * With Lemonldap::NG::Portal
 
   use Lemonldap::NG::Portal::SharedConf;
   my $portal = new Lemonldap::NG::Portal::SharedConf (
-  	     globalStorage => 'Lemonldap::NG::Manager::Apache::Session::SOAP',
-  	     globalStorageOptions => {
-  	             proxy => 'http://manager/cgi-bin/soapserver.pl',
-  	             proxyOptions => {
-  	                 timeout => 5,
-  	             },
-  	     },
+         globalStorage => 'Lemonldap::NG::Manager::Apache::Session::SOAP',
+         globalStorageOptions => {
+                 proxy => 'http://manager/cgi-bin/soapserver.pl',
+                 proxyOptions => {
+                     timeout => 5,
+                 },
+         },
         configStorage => {
              ... # See Lemonldap::NG::Portal
 

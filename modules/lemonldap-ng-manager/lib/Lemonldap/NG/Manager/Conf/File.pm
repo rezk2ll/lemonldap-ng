@@ -33,8 +33,6 @@ sub lastCfg {
     return $avail[$#avail];
 }
 
-# TODO: LOCK
-
 sub lock {
     my $self = shift;
     if( $self->isLocked ) {
@@ -52,7 +50,7 @@ sub lock {
 
 sub isLocked {
     my $self = shift;
-	-e $self->{dirName} . "/lmConf.lock";
+    -e $self->{dirName} . "/lmConf.lock";
 }
 
 sub unlock {
