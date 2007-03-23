@@ -5,6 +5,7 @@ use strict;
 use MIME::Base64;
 use Exporter 'import';
 use Safe;
+require POSIX;
 
 our $VERSION = '0.75';
 
@@ -314,6 +315,7 @@ sub conditionSub {
       if ( $cond =~ /^accept$/i );
     return sub { 0 }
       if ( $cond =~ /^deny$/i );
+    $cond =~ s/\$date/&POSIX::strftime("%Y%m%d%H%M%S",localtime())/e;
     $cond =~ s/\$(\w+)/\$datas->{$1}/g;
     my $sub;
     $sub = $safe->reval("sub {return ( $cond )}");

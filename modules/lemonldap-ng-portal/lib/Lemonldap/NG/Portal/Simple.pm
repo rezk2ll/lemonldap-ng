@@ -10,6 +10,7 @@ use warnings;
 use MIME::Base64;
 use CGI;
 use CGI::Cookie;
+require POSIX;
 use Lemonldap::NG::Portal::_i18n;
 
 our $VERSION = '0.7';
@@ -302,6 +303,7 @@ sub search {
 sub setSessionInfo {
     my ($self) = @_;
     $self->{sessionInfo}->{dn} = $self->{dn};
+    $self->{sessionInfo}->{startTime} = &POSIX::strftime("%Y%m%d%H%M%S",localtime());
     unless ( $self->{exportedVars} ) {
         foreach (qw(uid cn mail)) {
             $self->{sessionInfo}->{$_} = join( '; ', $self->{entry}->get_value($_) ) || "";

@@ -1,7 +1,8 @@
 Revision history for Perl extension Lemonldap::NG::Handler.
 
-0.77  Wed Mar 14 7:18:48 2007
+0.77  Wed Mar 22 7:18:48 2007
 	- logout system
+	- $date is now available in rules
 
 0.76  Fri Mar 9 7:14:42 2007
 	- Little bug correction

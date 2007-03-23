@@ -5,7 +5,7 @@ use Storable qw(thaw freeze);
 use MIME::Base64;
 use Lemonldap::NG::Manager::Conf::Constants;
 
-our $VERSION = 0.43;
+our $VERSION = 0.44;
 our @ISA;
 
 sub new {
@@ -28,7 +28,7 @@ sub new {
           unless $self->{type} =~ /^Lemonldap/;
         eval "require $self->{type}";
         die($@) if ($@);
-        push @ISA, $self->{type};
+        unshift @ISA, $self->{type};
         return 0 unless $self->prereq;
         $self->{mdone}++;
     }
@@ -148,6 +148,9 @@ storage type (DBI or File for example). See L<Lemonldap::NG::Conf::SOAP> for
 more.
 
 =back
+
+WARNING: You have to use the same storage type on all Lemonldap::NG parts in
+the same server.
 
 =item * B<getConf>: returns a hash reference to the configuration. it takes
 a hash reference as first argument containing 2 optional parameters:
