@@ -6,7 +6,7 @@ use Storable qw(freeze thaw);
 use MIME::Base64;
 use Lemonldap::NG::Manager::Conf::Constants;
 
-our $VERSION = 0.12;
+our $VERSION = 0.13;
 
 sub prereq {
     my $self = shift;
@@ -95,7 +95,7 @@ sub store {
 
 sub load {
     my ( $self, $cfgNum, $fields ) = @_;
-    $fields = $fields ? join( /,/, @$fields ) : '*';
+    $fields = $fields ? join( ",", @$fields ) : '*';
     my $row =
       $self->dbh->selectrow_hashref(
         "SELECT $fields from " . $self->{dbiTable} . " WHERE cfgNum=$cfgNum" );
