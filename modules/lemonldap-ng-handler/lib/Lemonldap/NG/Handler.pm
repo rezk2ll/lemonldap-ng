@@ -68,6 +68,11 @@ You can also unprotect an URI
     PerlHeaderParserHandler My::Package->unprotect
   </Files>
 
+If your application has a "logout" URL, configure it:
+
+  <Location /logout>
+    PerlHeaderParserHandler My::Package->logout
+  </Location>
 
 =head1 DESCRIPTION
 
@@ -269,6 +274,26 @@ user each 10 minutes.
 
 Lemonldap::NG is very fast, but you can increase performance using a
 L<Cache::Cache> module that does not use disk access.
+
+=head2 Logout system
+
+Lemonldap::NG provides a single logout system: you can use it by adding a link
+to the portal with "logout=1" parameter in the portal (See
+L<Lemonldap::NG::Portal>) and/or by configuring handler to intercept some URL
+(See Sinopsys). The logout system:
+
+=over
+
+=item * delete session in the global session storage,
+
+=item * replace Lemonldap::NG cookie by '',
+
+=item * delete handler caches only if logout action was started from a
+protected application and only in the current Apache server. So in other
+servers, session is still in cache for 10 minutes maximum if the user was
+connected on it in the last 10 minutes.
+
+=back
 
 =head1 USING LEMONLDAP::NG::HANDLER FOR DEVELOPMENT
 

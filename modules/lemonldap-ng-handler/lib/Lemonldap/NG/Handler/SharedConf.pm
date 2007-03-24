@@ -144,16 +144,16 @@ sub getConf {
 
 sub refresh($$) {
     my ( $class, $r ) = @_;
-    $class->lmLog( "$class: request for configuration reload", 'info' );
+    $class->lmLog( "$class: request for configuration reload", 'notice' );
     $r->handler("perl-script");
+    my $perlHandler = (MP() ==2) ? 'PerlResponseHandler' : 'PerlHandler';
     if ( $class->globalConfUpdate($r) == OK ) {
-        # $r->push_handlers( PerlHandler => sub { $r = shift; $r->send_http_headers; $r->print("OK"); OK } );
-        $r->push_handlers( PerlHandler => sub { OK } );
+        $r->push_handlers( $perlHandler => sub { my $r = shift; $r->send_http_header; OK } );
     }
     else {
         $r->push_handlers( PerlHandler => sub { SERVER_ERROR } );
     }
-    return DONE;
+    return OK;
 }
 
 1;
