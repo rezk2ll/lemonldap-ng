@@ -1,8 +1,10 @@
 Revision history for Perl extension Lemonldap::NG::Manager.
 
 0.6   Sat Mar 17 22:13:08 2007
-	- New feature : restricted version of Manager. Only choosen virtual hosts
-	  are displayed.
+	- New feature :
+	  * restricted version of Manager. Only choosen virtual hosts are
+	    displayed
+	  * configuration is checked before saving
 
 0.512 Tue Mar 13 7:57:30 2007
 	- New feature in Manager : "Delete VHost" button (Closes: #306761 /

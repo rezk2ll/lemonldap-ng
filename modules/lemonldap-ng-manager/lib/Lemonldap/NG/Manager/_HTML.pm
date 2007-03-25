@@ -81,7 +81,7 @@ sub javascript {
                newRule newHeader httpHeaders waitingResult unknownError
                configurationWasChanged configLoaded warningConfNotApplied
                applyConf prevConf lastConf nextConf deleteVirtualHost
-               areYouSure)) {
+               areYouSure syntaxError)) {
         $text{$_} = &{"txt_$_"};
         $text{$_} =~s/'/\\'/g;
     }
@@ -198,9 +198,9 @@ function onNodeSelect(nodeId) {
   }
   if(tree.getUserData(nodeId,"modif")=='both') but+=button('$text{deleteNode}','deleteNode',nodeId);
   but+=button('$text{saveConf}','saveConf',nodeId);
-  if(nodeId == 'root') but+=button('$text{prevConf}','prevConf',nodeId)
+  /*if(nodeId == 'root') but+=button('$text{prevConf}','prevConf',nodeId)
                            +button('$text{nextConf}','nextConf',nodeId)
-                           +button('$text{lastConf}','lastConf',nodeId);
+                           +button('$text{lastConf}','lastConf',nodeId);*/
   #;
     if( $self->{applyConfFile} ) {
         print "but+=button('$text{applyConf}','applyConf',nodeId);";
@@ -323,11 +323,14 @@ function saveConf(){
         document.getElementById('help').innerHTML='<h3>$text{confSaved} : '+r+'</h3>$text{warningConfNotApplied}';
       }
       else if(r<0) {
-              var txt='<h3>$text{saveFailure}: ';
-              if(r==#.CONFIG_WAS_CHANGED.qq#) {
+        var txt='<h3>$text{saveFailure}: ';
+        if(r==#.CONFIG_WAS_CHANGED.qq#) {
           txt+='$text{configurationWasChanged}';
-              }
-              document.getElementById('help').innerHTML=txt+'</h3>';
+        }
+        else if(r==#.SYNTAX_ERROR.qq#) {
+          txt+='$text{syntaxError}';
+        }
+        document.getElementById('help').innerHTML=txt+'</h3>';
       }
       else document.getElementById('help').innerHTML='<h3>$text{unknownError}</h3>';
     }
@@ -359,6 +362,12 @@ function applyConf(){
     if(xhr_object.readyState == 4) document.getElementById('help').innerHTML=xhr_object.responseText; 
   }
   xhr_object.send(null);
+}
+
+function prevConf(){
+}
+
+function nextConf(){
 }
 
 function ec(s){

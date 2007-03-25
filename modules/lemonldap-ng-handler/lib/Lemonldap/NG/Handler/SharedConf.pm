@@ -81,7 +81,13 @@ sub logout($$) {
 sub confTest($$) {
     my ( $class, $args ) = @_;
     if ( $args->{_n_conf} ) {
-        return 1 if ( $args->{_n_conf} == $cfgNum or $childLock );
+        return 1 if ( $args->{_n_conf} == $cfgNum );
+        if( $childLock ) {
+            $class->lmLog( "$class: child $$ detects configuration but local "
+                         . 'storage is locked, continues to work with the old one',
+                           'debug' );
+            return 1;
+        }
         $childLock = 1;
         $class->globalInit($args);
         $childLock = 0;

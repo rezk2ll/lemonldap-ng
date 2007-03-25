@@ -9,7 +9,10 @@ use Lemonldap::NG::Manager::Conf;
 use Lemonldap::NG::Manager::_HTML;
 require Lemonldap::NG::Manager::_i18n;
 require Lemonldap::NG::Manager::Help;
+use Lemonldap::NG::Manager::Conf::Constants;
 use LWP::UserAgent;
+use Safe;
+use MIME::Base64;
 
 our @ISA = qw(Lemonldap::NG::Manager::Base);
 
@@ -314,6 +317,7 @@ sub print_upload {
 sub upload {
     my $self = shift;
     my $config = $self->tree2conf(@_);
+    return SYNTAX_ERROR unless( $self->checkConf($config) );
     return $self->config->saveConf($config);
 }
 
@@ -377,6 +381,106 @@ sub tree2conf {
         $config->{exportedVars}->{$h->{text}} = $h->{value};
     }
     return $config;
+}
+
+sub checkConf {
+    my $self = shift;
+    my $config = shift;
+    my $expr = '';
+    # Check cookie name
+    return 0 unless( $config->{cookieName} =~ /^\w+$/ );
+    # Check domain name
+    return 0 unless( $config->{domain} =~ /^[\w\.]+$/ );
+    # Load variables
+    foreach(keys %{ $config->{exportedVars} }) {
+        # Reserved words
+        if( $_ eq 'groups' ) {
+            print STDERR "$_ is not authorized in attribute names. Change it!\n";
+            return 0;
+        }
+        if( $_ !~ /^\w+$/ ) {
+            print STDERR "$_ is not a valid attribute name\n";
+            return 0;
+        }
+        $expr .= "my \$$_ = '1';";
+    }
+    # Load and check macros
+    my $safe = new Safe;
+    $safe->share( '&encode_base64' );
+    while( my($k, $v) = each( %{ $config->{macros} } ) ) {
+        # Reserved words
+        if( $k eq 'groups' ) {
+            print STDERR "$k is not authorized in macro names. Change it!\n";
+            return 0;
+        }
+        if( $k !~ /^\w+$/ ) {
+            print STDERR "$k is not a valid macro name\n";
+            return 0;
+        }
+        $expr .= "my \$$k = $v;";
+    }
+    # Test macro values;
+    $safe->reval( $expr );
+    if( $@ ) {
+        print STDERR "Error in macro syntax: $@\n";
+        return 0;
+    }
+    # Test groups
+    $expr .= 'my $groups;';
+    while( my($k,$v) = each( %{ $config->{groups} } ) ) {
+        if( $k !~ /^[\w-]+$/ ) {
+            print STDERR "$k is not a valid group name\n";
+            return 0;
+        }
+        $safe->reval( $expr . "\$groups = '$k' if($v);");
+        if( $@ ) {
+            print STDERR "Syntax error in group $k: $@\n";
+            return 0;
+        }
+    }
+    # Test rules
+    while( my($vh, $rules) = each( %{ $config->{locationRules} } ) ) {
+        unless( $vh =~ /^[-\w\.]+$/ ) {
+            print STDERR "$vh is not a valid virtual host name\n";
+            return 0;
+        }
+        while( my($reg, $v) = each( %{ $rules } ) ) {
+            unless( $reg eq 'default' ) {
+                $reg =~ s/#/\\#/g;
+                $safe->reval( $expr . "my \$r = qr#$reg#;" );
+                if( $@ ) {
+                    print STDERR "Syntax error in regexp ($vh -> $reg)\n";
+                    return 0;
+                }
+            }
+            unless( $v eq 'deny' or $v eq 'accept' ) {
+                $safe->reval( $expr . "my \$r=1 if($v);");
+                if( $@ ) {
+                    print STDERR "Syntax error in expression ($vh -> $reg)\n";
+                    return 0;
+                }
+            }
+        }
+    }
+    # Test exported headers
+    while( my($vh, $headers) = each( %{ $config->{exportedHeaders} } ) ) {
+        unless( $vh =~ /^[-\w\.]+$/ ) {
+            print STDERR "$vh is not a valid virtual host name\n";
+            return 0;
+        }
+        while( my($header, $v) = each( %{ $headers } ) ) {
+            unless( $header =~ /^[\w][-\w]*$/ ) {
+                print STDERR "$header is not a valid HTTP header name ($vh)\n";
+                return 0;
+            }
+            $safe->reval( $expr . "my \$r = $v;" );
+            if( $@ ) {
+                print STDERR "Syntax error in header expression ($vh -> $header)\n";
+                return 0;
+            }
+        }
+    }
+    1;
 }
 
 # Apply subroutines
