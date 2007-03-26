@@ -3,14 +3,14 @@ package Lemonldap::NG::Portal::AuthSSL;
 use strict;
 use Lemonldap::NG::Portal::Simple;
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 # Authentication is made by Apache with SSL and here before searching the LDAP
 # Directory.
 # So authenticate is overloaded to return only PE_OK.
 
 our $OVERRIDE = {
-    # By default, authentication is valid if SSL_CLIENT_S_DN_Email environement
+    # By default, authentication is valid if SSL_CLIENT_S_DN_Email environment
     # variable is present. Adapt it if you want
     extractFormInfo => sub {
         my $self = shift;
