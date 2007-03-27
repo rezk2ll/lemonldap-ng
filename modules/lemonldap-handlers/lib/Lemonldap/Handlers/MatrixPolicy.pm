@@ -1,7 +1,7 @@
 package Lemonldap::Handlers::MatrixPolicy;
 use strict;
 use warnings;
-our $VERSION = '3.1.0';
+our $VERSION = '3.1.1';
 our $VERSION_LEMONLDAP = "3.1";
 our $VERSION_INTERNAL  = "3.1";
 
@@ -26,11 +26,11 @@ sub get
    if( !defined($major) ){
 	$major = "authz_headers";
    }
-   my $minor = lc($config->{APPLCODE});
-
-   if  ( defined($major) && defined($minor) &&  exists($session->{$major}->{$minor}))  
+#   my $minor = lc($config->{APPLCODE});
+   my $minor = $config->{APPLCODE};
+     if  ( defined($major) && defined($minor) &&  exists($session->{$major}->{$minor}))  
    {
-     $complement = $session->{$major}->{$minor};
+      $complement = $session->{$major}->{$minor};
      #### begin:  here for he compatibility  with older lemonldap
      $complement =~  s/#.*//;
      ###  end  :  here for he compatibility  with older lemonldap
