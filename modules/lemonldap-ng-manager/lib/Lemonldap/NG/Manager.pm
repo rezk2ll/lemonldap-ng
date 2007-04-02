@@ -679,7 +679,8 @@ configuration tree (called with AJAX).
 
 =head1 SEE ALSO
 
-L<Lemonldap::NG::Handler>, L<Lemonldap::NG::Portal>, L<CGI>
+L<Lemonldap::NG::Handler>, L<Lemonldap::NG::Portal>, L<CGI>,
+http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Presentation
 
 =head1 AUTHOR
 

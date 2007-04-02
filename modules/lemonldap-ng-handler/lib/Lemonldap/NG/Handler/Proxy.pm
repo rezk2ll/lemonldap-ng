@@ -173,7 +173,8 @@ None by default.
 
 =head1 SEE ALSO
 
-Lemonldap::NG::Handler(3), LWP::UserAgent
+Lemonldap::NG::Handler(3), LWP::UserAgent,
+http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Presentation
 
 =head1 AUTHOR
 

@@ -97,7 +97,8 @@ See L<Lemonldap::NG::Portal::Simple> for usage and other methods.
 
 =head1 SEE ALSO
 
-L<Lemonldap::NG::Portal>, L<Lemonldap::NG::Portal::Simple>
+L<Lemonldap::NG::Portal>, L<Lemonldap::NG::Portal::Simple>,
+http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Presentation
 
 =head1 AUTHOR
 

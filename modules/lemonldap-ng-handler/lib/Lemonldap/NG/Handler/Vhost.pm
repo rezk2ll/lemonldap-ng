@@ -137,7 +137,8 @@ L<Lemonldap::NG::Handler::Simple>.
 
 =head1 SEE ALSO
 
-L<Lemonldap::NG::Handler(3)>
+L<Lemonldap::NG::Handler(3)>,
+http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Presentation
 
 =head1 AUTHOR
 

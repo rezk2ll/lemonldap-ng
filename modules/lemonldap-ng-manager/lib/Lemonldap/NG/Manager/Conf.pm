@@ -172,7 +172,8 @@ getConf returns all (C<select * from lmConfig>).
 
 =head1 SEE ALSO
 
-L<Lemonldap::NG::Handler>, L<Lemonldap::NG::Portal>
+L<Lemonldap::NG::Handler>, L<Lemonldap::NG::Portal>,
+http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Presentation
 
 =head1 AUTHOR
 

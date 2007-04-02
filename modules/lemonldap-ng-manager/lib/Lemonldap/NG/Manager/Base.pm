@@ -93,7 +93,8 @@ a filename: the last modify date of this file is used for reference.
 
 =head1 SEE ALSO
 
-L<Lemonldap::NG::Manager>, L<CGI>
+L<Lemonldap::NG::Manager>, L<CGI>,
+http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Presentation
 
 =head1 AUTHOR
 

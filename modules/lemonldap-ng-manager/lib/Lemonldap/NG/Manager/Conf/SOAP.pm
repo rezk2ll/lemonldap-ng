@@ -217,7 +217,8 @@ set environment variables.
 =head1 SEE ALSO
 
 L<Lemonldap::NG::Manager>, L<Lemonldap::NG::Manager::Conf::SOAP>,
-L<Lemonldap::NG::Handler>, L<Lemonldap::NG::Portal>
+L<Lemonldap::NG::Handler>, L<Lemonldap::NG::Portal>,
+http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Presentation
 
 =head1 AUTHOR
 

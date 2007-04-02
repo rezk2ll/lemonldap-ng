@@ -65,7 +65,7 @@ sub new {
     $self->{securedCookie} ||= 0;
     $self->{cookieName}    ||= "lemonldap";
 
-    if ( $self->{authentication} ne "ldap" ) {
+    if ( $self->{authentication} and $self->{authentication} ne "ldap" ) {
         require "Lemonldap::NG::Portal::Auth".$self->{authentication};
         # $Lemonldap::NG::Portal::AuthSSL::OVERRIDE does not overload $self
         # variables: if the administrator has defined a sub, we respect it
@@ -678,7 +678,8 @@ find the user distinguished name (dn) was refused by the server
 
 =head1 SEE ALSO
 
-L<Lemonldap::NG::Handler>, L<Lemonldap::NG::Portal::SharedConf>, L<CGI>
+L<Lemonldap::NG::Handler>, L<Lemonldap::NG::Portal::SharedConf>, L<CGI>,
+http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Presentation
 
 =head1 AUTHOR
 

@@ -181,10 +181,10 @@ EOT
 
 sub help_domain_fr {
     print <<EOT;
-<h3>Domaine protégé</h3>
+<h3>Domaine prot&eacute;g&eacute;</h3>
 <p> Indiquez ici le nom du domaine (ou du sous-domaine) contenant vos
-applications à protéger.<br>
-ATTENTION : tous les hôtes virtuels protégés ainsi que le portail
+applications &agrave; prot&eacute;ger.<br>
+ATTENTION : tous les h&ocirc;tes virtuels prot&eacute;g&eacute;s ainsi que le portail
 d'authentification doivent se trouver dans ce domaine.
 EOT
 }
@@ -244,7 +244,7 @@ r&egrave;gles et les en-t&ecirc;tes HTTP export&eacute;s.</p>
 <p> <u>Note</u> : pour que le m&eacute;canisme d'authentification fonctionne, tous
 les h&ocirc;tes virtuels et le portail doivent se trouver dans le domaine d&eacute;clar&eacute;
 dans les param&egrave;tres g&eacute;n&eacute;raux ou <u>utiliser les modules CDA</u>
-<i>(Cross-Domain-Authentication)</i> qui gère la transmission de l'identifiant.</p>
+<i>(Cross-Domain-Authentication)</i> qui g&egrave;re la transmission de l'identifiant.</p>
 
 <h4> R&egrave;gles</h4>
 
@@ -399,9 +399,9 @@ EOT
 sub help_cookieName_fr {
     print <<EOT;
 <h3>Nom de cookie</h3>
-<p> Indiquez ici le nom du cookie ('lemonldap' par défaut).<br>
+<p> Indiquez ici le nom du cookie ('lemonldap' par d&eacute;faut).<br>
 
-ATTENTION, tout changement nécessite le redémarrage de tous les serveurs Apache
-hébergeant des agents de protection Lemonldap::NG::Handler.</p>
+ATTENTION, tout changement n&eacute;cessite le red&eacute;marrage de tous les serveurs Apache
+h&eacute;bergeant des agents de protection Lemonldap::NG::Handler.</p>
 EOT
 }

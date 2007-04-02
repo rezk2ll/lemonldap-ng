@@ -325,7 +325,8 @@ download a mod_perl2 backport.
 =head1 SEE ALSO
 
 L<Lemonldap::NG::Handler::SharedConf>,
-L<Lemonldap::NG::Portal>, L<Lemonldap::NG::Manager>
+L<Lemonldap::NG::Portal>, L<Lemonldap::NG::Manager>,
+http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Presentation
 
 =head1 AUTHOR
 

@@ -138,7 +138,8 @@ updated.
 
 =head1 SEE ALSO
 
-L<Lemonldap::NG::Manager>
+L<Lemonldap::NG::Manager>,
+http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Presentation
 
 =head1 AUTHOR
 

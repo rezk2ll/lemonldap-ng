@@ -731,9 +731,8 @@ This is done to be compatible both with Apache 1 and 2.
 
 =head1 SEE ALSO
 
-=over
-
-L<Lemonldap::NG::Handler>, L<Lemonldap::NG::Portal>
+L<Lemonldap::NG::Handler>, L<Lemonldap::NG::Portal>,
+http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Presentation
 
 =head1 AUTHOR
 
