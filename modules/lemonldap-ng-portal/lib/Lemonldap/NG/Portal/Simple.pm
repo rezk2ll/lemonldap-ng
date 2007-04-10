@@ -441,7 +441,7 @@ Lemonldap::NG::Portal::Simple - Base module for building Lemonldap::NG compatibl
 
   use Lemonldap::NG::Portal::Simple;
   my $portal = new Lemonldap::NG::Portal::Simple(
-         domain         => 'gendarmerie.defense.gouv.fr',
+         domain         => 'example.com',
          globalStorage  => 'Apache::Session::MySQL',
          globalStorageOptions => {
            DataSource   => 'dbi:mysql:database=dbname;host=127.0.0.1',

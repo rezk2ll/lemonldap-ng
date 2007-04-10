@@ -49,7 +49,7 @@ With Lemonldap::NG::Portal::Simple:
 
   use Lemonldap::NG::Portal::Simple;
   my $portal = new Lemonldap::NG::Portal::Simple(
-         domain         => 'gendarmerie.defense.gouv.fr',
+         domain         => 'example.com',
          globalStorage  => 'Apache::Session::MySQL',
          globalStorageOptions => {
            DataSource   => 'dbi:mysql:database',

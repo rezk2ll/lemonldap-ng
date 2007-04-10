@@ -4,7 +4,7 @@ use strict;
 
 use Lemonldap::NG::Handler::SharedConf qw(:all);
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 our @ISA = qw(Lemonldap::NG::Handler::SharedConf);
 
@@ -15,7 +15,7 @@ sub run ($$) {
     my $class;
     ( $class, $apacheRequest ) = @_;
     my $args = $apacheRequest->args;
-    if ( $args =~ s/\??($cookieName=\w+)$//oi ) {
+    if ( $args =~ s/[\?&]?($cookieName=\w+)$//oi ) {
         my $str = $1;
         $class->lmLog(
             "Found a CDA id. Redirecting  "

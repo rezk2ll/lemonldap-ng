@@ -69,6 +69,8 @@ README
 scripts/lmConfig_File2MySQL
 TODO
 t/Lemonldap-NG-Manager.t
+t/Lemonldap-NG-Manager_en.t
+t/Lemonldap-NG-Manager_fr.t
 t/Lemonldap-NG-Manager-Conf.t
 t/Lemonldap-NG-Manager-Conf-DBI.t
 t/Lemonldap-NG-Manager-Conf-File.t
