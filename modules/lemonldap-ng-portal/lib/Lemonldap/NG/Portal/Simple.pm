@@ -13,7 +13,7 @@ use CGI::Cookie;
 require POSIX;
 use Lemonldap::NG::Portal::_i18n;
 
-our $VERSION = '0.7';
+our $VERSION = '0.72';
 
 our @ISA = qw(CGI Exporter);
 
@@ -66,10 +66,16 @@ sub new {
     $self->{cookieName}    ||= "lemonldap";
 
     if ( $self->{authentication} and $self->{authentication} ne "ldap" ) {
-        require "Lemonldap::NG::Portal::Auth".$self->{authentication};
         # $Lemonldap::NG::Portal::AuthSSL::OVERRIDE does not overload $self
         # variables: if the administrator has defined a sub, we respect it
-        %$self = ( %${"Lemonldap::NG::Portal::Auth".$self->{authentication}."::OVERRIDE"}, %$self );
+        my $tmp = 'require Lemonldap::NG::Portal::Auth'
+                . $self->{authentication}
+                . '; $tmp = $Lemonldap::NG::Portal::Auth'
+                . $self->{authentication}
+                . '::OVERRIDE;';
+        eval $tmp;
+        die($@) if($@);
+        %$self = ( %$tmp, %$self );
     }
     return $self;
 }
