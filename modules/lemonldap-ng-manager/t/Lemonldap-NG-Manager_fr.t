@@ -17,8 +17,9 @@ $ENV{SCRIPT_NAME}          = "__SCRIPTNAME__";
 $ENV{SCRIPT_FILENAME}      = $0;
 $ENV{HTTP_ACCEPT_LANGUAGE} = "fr";
 my $h;
-@ARGV = ( "help=groups" );
-ok( $h = new Lemonldap::NG::Manager(
+@ARGV = ("help=groups");
+ok(
+    $h = new Lemonldap::NG::Manager(
     {
 	configStorage => {
 	    type    => 'File',
@@ -27,7 +28,8 @@ ok( $h = new Lemonldap::NG::Manager(
 	dhtmlXTreeImageLocation => "/imgs/",
 	jsFile => 'example/lemonldap-ng-manager.js',
     }
-));
+    )
+);
 ok( $h->main() );
 ok( $h->print_help() );
 ok( $h->buildTree() );

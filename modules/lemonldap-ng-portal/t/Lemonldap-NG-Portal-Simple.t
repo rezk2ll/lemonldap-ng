@@ -6,7 +6,7 @@
 # change 'tests => 1' to 'tests => last_test_to_print';
 
 use Test::More tests => 5;
-BEGIN { use_ok('Lemonldap::NG::Portal::Simple', ':all') };
+BEGIN { use_ok( 'Lemonldap::NG::Portal::Simple', ':all' ) }
 
 #########################
 
@@ -14,10 +14,14 @@ BEGIN { use_ok('Lemonldap::NG::Portal::Simple', ':all') };
 # its man page ( perldoc Test::More ) for help writing this test script.
 
 my $p;
-ok( $p = Lemonldap::NG::Portal::Simple->new( {
+ok(
+    $p = Lemonldap::NG::Portal::Simple->new(
+        {
 		globalStorage => 'Apache::Session::File',
 		domain => 'example.com',
-} ) );
+        }
+    )
+);
 
 ok( $p->process == 0 );
 ok( $p->{error} == PE_FIRSTACCESS );

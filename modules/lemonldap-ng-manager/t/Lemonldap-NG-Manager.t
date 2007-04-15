@@ -16,8 +16,9 @@ BEGIN { use_ok('Lemonldap::NG::Manager') }
 $ENV{SCRIPT_NAME}          = "__SCRIPTNAME__";
 $ENV{SCRIPT_FILENAME}      = $0;
 my $h;
-@ARGV = ( "help=groups" );
-ok( $h = new Lemonldap::NG::Manager(
+@ARGV = ("help=groups");
+ok(
+    $h = new Lemonldap::NG::Manager(
     {
 	configStorage => {
 	    type    => 'File',
@@ -26,7 +27,8 @@ ok( $h = new Lemonldap::NG::Manager(
 	dhtmlXTreeImageLocation => "/imgs/",
 	jsFile => 'example/lemonldap-ng-manager.js',
     }
-));
+    )
+);
 ok( $h->header_public() );
 ok( $h->start_html() );
 ok( $h->main() );
@@ -36,10 +38,10 @@ ok( $h->print_lmjs() );
 ok( $h->print_help() );
 ok( $h->buildTree() );
 my $tmp = &xml;
-ok( ref($h->tree2conf( \$tmp )) );
+ok( ref( $h->tree2conf( \$tmp ) ) );
 
 sub xml {
-return << 'EOF';
+    return << 'EOF';
 <root><text>Configuration 9</text>
 <generalParameters><text>Paramtres gnraux</text>
 <authParams><text>Paramtres d'authentification</text>

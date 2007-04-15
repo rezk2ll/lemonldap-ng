@@ -6,11 +6,15 @@
 # change 'tests => 1' to 'tests => last_test_to_print';
 
 use Test::More tests => 1;
+
 # SOAP::Lite is not required, so Lemonldap::NG::Manager::Conf::SOAP may
 # not run.
 SKIP: {
     eval { require SOAP::Lite };
-    skip "SOAP::Lite is not installed, so SOAP configuration access will not work", 1 if($@);
+    skip
+      "SOAP::Lite is not installed, so SOAP configuration access will not work",
+      1
+      if ($@);
     use_ok('Lemonldap::NG::Manager::Conf::SOAP');
 }
 

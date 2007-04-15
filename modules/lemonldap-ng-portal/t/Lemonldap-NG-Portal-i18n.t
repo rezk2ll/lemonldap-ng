@@ -6,7 +6,7 @@
 # change 'tests => 1' to 'tests => last_test_to_print';
 
 use Test::More tests => 31;
-BEGIN { use_ok('Lemonldap::NG::Portal::Simple', ':all') };
+BEGIN { use_ok( 'Lemonldap::NG::Portal::Simple', ':all' ) }
 
 #########################
 
@@ -15,7 +15,7 @@ BEGIN { use_ok('Lemonldap::NG::Portal::Simple', ':all') };
 
 my $p = bless {}, 'Lemonldap::NG::Portal::Simple';
 
-foreach my $i (1..10) {
+foreach my $i ( 1 .. 10 ) {
     $p->{error} = $i;
     ok( $p->error('fr;en') );
     ok( $p->error('en') );
