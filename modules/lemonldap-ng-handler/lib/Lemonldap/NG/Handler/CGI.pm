@@ -17,7 +17,7 @@ sub new {
     my $self  = $class->SUPER::new();
     $self->{_handler} = bless {}, 'Lemonldap::NG::Handler::_CGI';
     $self->_handler->init( @_ );
-    $self->initLocalStorage();
+    $self->_handler->initLocalStorage();
     die "Unable to get configuration" unless $self->_handler->localConfUpdate() == OK;
     return $self;
 }
