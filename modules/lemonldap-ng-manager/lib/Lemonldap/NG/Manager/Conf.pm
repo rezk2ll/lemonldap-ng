@@ -5,7 +5,7 @@ use Storable qw(thaw freeze);
 use MIME::Base64;
 use Lemonldap::NG::Manager::Conf::Constants;
 
-our $VERSION = 0.44;
+our $VERSION = 0.45;
 our @ISA;
 
 sub new {
@@ -68,14 +68,12 @@ sub getConf {
     my $fields = $self->load( $args->{cfgNum}, $args->{fields} );
     my $conf;
     while ( my ( $k, $v ) = each(%$fields) ) {
-        my $tmp;
         $v =~ s/^'(.*)'$/$1/m;
-        eval "\$tmp = thaw(decode_base64('$v'))";
-        if ( $@ or not($tmp) ) {
-            $conf->{$k} = $v;
+       if( $k =~ /^(?:exportedVars|locationRules|groups|exportedHeaders|macros|globalStorageOptions)$/ ) {
+            $conf->{$k} = thaw(decode_base64($v));
         }
         else {
-            $conf->{$k} = $tmp;
+            $conf->{$k} = $v;
         }
     }
     return $conf;

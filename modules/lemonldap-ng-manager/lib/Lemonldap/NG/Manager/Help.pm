@@ -2,7 +2,7 @@ package Lemonldap::NG::Manager::Help;
 
 use AutoLoader qw(AUTOLOAD);
 use UNIVERSAL qw(can);
-our $VERSION = '0.3';
+our $VERSION = '0.31';
 
 sub import {
     my ($caller_package) = caller;
@@ -56,7 +56,7 @@ evaluated one time in the authentication phase, and the result is stored in the
 <p> The last rule is a Perl regular expression (PCRE) that means 'search the
 word "group1" in the string "groups"'.</p>
 <p> The \$groups string joins all the groups where the user matchs the
-expression. The groups are separated by a space in the \$groups string.
+expression. The groups are separated by a space in the \$groups string.</p>
 EOT
 }
 

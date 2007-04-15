@@ -22,11 +22,9 @@ ok( $h = new Lemonldap::NG::Manager(
     {
 	configStorage => {
 	    type    => 'File',
-	    dirName => "/tmp/",
+	    dirName => ".",
 	},
 	dhtmlXTreeImageLocation => "/imgs/",
-	applyConfFile           => '__DIR__/manager/apply.conf',
-
 	jsFile => 'example/lemonldap-ng-manager.js',
     }
 ));

@@ -8,7 +8,7 @@ use AutoLoader qw(AUTOLOAD);
 require Lemonldap::NG::Manager::_i18n;
 use Lemonldap::NG::Manager::Conf::Constants;
 
-our $VERSION = '0.24';
+our $VERSION = '0.25';
 
 # TODO: Delete buttons in headers and rules if 'read-only'
 
@@ -126,10 +126,10 @@ function onNodeSelect(nodeId) {
     switch(tree.getUserData(nodeId,"modif")) {
       case 'text':
         k='valeur';
-        v='<input value="'+nodeId+'" onChange="tree.setItemText('+"'"+nodeId+"'"+',this.value);tree.changeItemId('+"'"+nodeId+"'"+',this.value);">';
+        v='<input value="'+nodeId+'" onChange="tree.setItemText('+"'"+nodeId+"'"+',this.value.replace(/^([^a-z])/i,\\'z\$1\\'));tree.changeItemId('+"'"+nodeId+"'"+',this.value);">';
         break;
       case 'both':
-        k='<input value="'+tree.getItemText(nodeId)+'" onChange="tree.setItemText('+"'"+nodeId+"'"+',this.value)">';
+        k='<input value="'+tree.getItemText(nodeId)+'" onChange="tree.setItemText('+"'"+nodeId+"'"+',this.value.replace(/^([^a-z])/i,\\'z\$1\\'))">';
         v='<textarea cols=40 rows=2 onChange="tree.setUserData('+"'"+nodeId+"'"+','+"'"+'value'+"'"+',this.value)">'+tree.getUserData(nodeId,'value')+'</textarea>';
         //v='<input size=80 name="value" value="'+tree.getUserData(nodeId,'value')+'" onChange="tree.setUserData('+"'"+nodeId+"'"+','+"'"+'value'+"'"+',this.value)">';
         break;
@@ -341,13 +341,14 @@ function saveConf(){
 
 function tree2txt(id){
   var s=tree.getSubItems(id);
-  var c=s.split(',');
+  var c;
   id = id.replace(/^[0-9]*_/,'');
   var r='<'+id+"><text>"+ec(tree.getItemText(id))+"</text>\\n";
-  if((!s) || s=='' || c.length==0){
+  if((!s) || s==''){
     r+= '<value>'+ec(tree.getUserData(id,'value'))+"</value>\\n";
   }
   else {
+    c=s.split(',');
     for(var i=0;i<c.length;i++){
       r+=tree2txt(c[i]);
     }
