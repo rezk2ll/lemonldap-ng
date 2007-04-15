@@ -1,0 +1,153 @@
+#!/usr/bin/make
+
+VERSION=0.9beta
+HANDLERDIR=lemonldap-ng-handler
+PORTALDIR=lemonldap-ng-portal
+MANAGERDIR=lemonldap-ng-manager
+EXAMPLEDIRBUILD=`pwd`/example/
+EXAMPLEDIR=$(EXAMPLEDIRBUILD)
+EXAMPLELANG=en
+
+all:	handler manager portal
+
+handler:	handler_conf
+	$(MAKE) -C ${HANDLERDIR}
+	touch handler
+
+portal:		portal_conf
+	$(MAKE) -C ${PORTALDIR}
+	touch portal
+
+manager:	manager_conf
+	$(MAKE) -C ${MANAGERDIR}
+	touch manager
+
+configure:	handler_conf portal_conf manager_conf
+
+handler_conf:
+	cd ${HANDLERDIR}; perl Makefile.PL INSTALLDIRS=$(INSTALLDIRS)
+	touch handler_conf
+
+portal_conf:
+	cd ${PORTALDIR}; perl Makefile.PL INSTALLDIRS=$(INSTALLDIRS)
+	touch portal_conf
+
+manager_conf:
+	cd ${MANAGERDIR}; perl Makefile.PL INSTALLDIRS=$(INSTALLDIRS)
+	touch manager_conf
+
+test:		manager_test handler_test portal_test
+
+manager_test:	manager
+	$(MAKE) -C ${MANAGERDIR} test
+
+handler_test:	handler
+	$(MAKE) -C ${HANDLERDIR} test INST_ARCHLIB=../${MANAGERDIR}/blib/lib/
+
+portal_test:	portal
+	$(MAKE) -C ${PORTALDIR} test INST_ARCHLIB=../${MANAGERDIR}/blib/lib/
+
+install:	handler_install portal_install manager_install
+
+handler_install:	handler
+	$(MAKE) -C ${HANDLERDIR} install
+	touch handler_install
+
+portal_install:		portal
+	$(MAKE) -C ${PORTALDIR} install
+	touch portal_install
+
+manager_install:	manager
+	$(MAKE) -C ${MANAGERDIR} install
+	touch manager_install
+
+distclean:	clean
+
+clean:		handler_clean portal_clean manager_clean
+	rm -rf example
+	find . -name '*.gz' -exec rm -vf {} \;
+
+handler_clean:
+	- $(MAKE) -C ${HANDLERDIR} distclean
+	rm -vf handler*
+
+portal_clean:
+	- $(MAKE) -C ${PORTALDIR} distclean
+	rm -vf portal*
+
+manager_clean:
+	- $(MAKE) -C ${MANAGERDIR} distclean
+	rm -vf manager*
+
+example: all
+	mkdir -p example/portal example/manager example/handler example/conf
+	chmod 1777 example/conf
+	cp -a ${HANDLERDIR}/example/* example/handler
+	cp -a ${PORTALDIR}/example/* example/portal
+	cp -a ${MANAGERDIR}/example/* example/manager
+	cp -a _example/* example
+	find ${EXAMPLEDIRBUILD} -type f -exec perl -i -pe 's#__DIR__/?#'${EXAMPLEDIR}'#g' {} \;
+	@echo
+	@echo "Example is ready."
+	@echo
+	@echo "1 - Add this in your Apache configuration file:"
+	@echo "    with Apache-1.3.x"
+	@echo
+	@echo "    include ${EXAMPLEDIR}apache.conf"
+	@echo
+	@echo "    or with Apache-2.x:"
+	@echo
+	@echo "    include ${EXAMPLEDIR}apache2.conf"
+	@echo
+	@echo "2 - Add test.example.com and auth.example.com in yout /etc/hosts :"
+	@echo
+	@echo "    cat example/for_etc_hosts >> /etc/hosts"
+	@echo
+	@echo "3 - edit ${EXAMPLEDIR}/conf/lmConf-1 and set ldapServer and ldapBase."
+	@echo "    or use the manager at http://manager.example.com/ (after apache restart)"
+	@echo
+	@echo "4 - Restart Apache (or Apache2)"
+	@echo
+	@echo "5 - Try to connect to http://test.example.com/"
+
+uninstall:	configure handler_uninstall portal_uninstall manager_uninstall
+
+handler_uninstall:	handler
+	$(MAKE) -C ${HANDLERDIR} uninstall
+	rm -vf handler_uninstall
+
+portal_uninstall:		portal
+	$(MAKE) -C ${PORTALDIR} uninstall
+	rm -vf portal_uninstall
+
+manager_uninstall:	manager
+	$(MAKE) -C ${MANAGERDIR} uninstall
+	rm -vf manager_uninstall
+
+dist:
+	- $(MAKE) clean
+	mkdir -p lemonldap-ng-$(VERSION)
+	- cp -a * lemonldap-ng-$(VERSION)
+	rm -rf lemonldap-ng-$(VERSION)/lemonldap-ng-$(VERSION)
+	tar czf lemonldap-ng-$(VERSION).tar.gz lemonldap-ng-$(VERSION)
+	rm -rf lemonldap-ng-$(VERSION)
+
+cpan:	configure handler_cpan portal_cpan manager_cpan
+
+handler_cpan:	handler_conf
+	$(MAKE) -C ${HANDLERDIR} dist
+	mv ${HANDLERDIR}/Lemonldap*.gz .
+
+portal_cpan:		portal_conf
+	$(MAKE) -C ${PORTALDIR} dist
+	mv ${PORTALDIR}/Lemonldap*.gz .
+
+manager_cpan:	manager_conf
+	$(MAKE) -C ${MANAGERDIR} dist
+	mv ${MANAGERDIR}/Lemonldap*.gz .
+
+static_example:	example
+	mkdir -p example/static
+	cd example/static/;ln -s ../manager/imgs;cd -
+	scripts/make_static_example.pl example/manager/index.pl example/static/index.html $(EXAMPLELANG)
+

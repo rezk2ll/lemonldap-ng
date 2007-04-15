@@ -1,0 +1,48 @@
+ldapServer
+	'localhost'
+
+ldapBase
+	'dc=example,dc=com'
+
+ldapPort
+	389
+
+managerDn
+	''
+
+managerPassword
+	''
+
+portal
+	'http://auth.example.com/'
+
+domain
+	'example.com'
+
+globalStorage
+	'Apache::Session::File'
+
+globalStorageOptions
+	'BAcEMTIzNAQEBAgZAAEAAAAXBC90bXACCQAAAERpcmVjdG9yeQ=='
+
+exportedHeaders
+	'BAcEMTIzNAQEBAgZAAEAAAAEGQABAAAAFwQkdWlkAgkAAABBdXRoLVVzZXICEAAAAHRlc3QuZXhhbXBsZS5jb20='
+
+exportedVars
+	'BAcEMTIzNAQEBAgZAAMAAAAXA3VpZAIDAAAAdWlkFwJjbgICAAAAY24XBG1haWwCBAAAAG1haWw='
+
+authentication
+	'ldap'
+
+locationRules
+	'BAcEMTIzNAQEBAgZAAEAAAAEGQABAAAAFwZhY2NlcHQCBwAAAGRlZmF1bHQCEAAAAHRlc3QuZXhhbXBsZS5jb20='
+
+cfgNum
+	1
+
+cookieName
+	'lemonldap'
+
+securedCookie
+	0
+

@@ -1,0 +1,16 @@
+This package was debianized by Xavier Guimard <x.guimard@free.fr> on
+Sun, 17 Dec 2006 17:46:47 +0100.
+
+Copyright:
+
+Copyright 2004, 2005, 2006 by Xavier Guimard
+
+Licence:
+
+Perl is distributed under your choice of the GNU General Public License
+or the Artistic License.  On Debian GNU/Linux systems, the copyright terms
+for Perl itself are located in `/usr/share/doc/perl/copyright'. On Debian
+GNU/Linux systems, the complete text of the GNU General Public License can
+be found in `/usr/share/common-licenses/GPL' and the Artistic Licence in
+`/usr/share/common-licenses/Artistic'.
+
