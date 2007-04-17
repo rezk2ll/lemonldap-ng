@@ -499,7 +499,7 @@ sub run ($$) {
 
     # ACCOUNTING
     # 1 - Inform Apache
-    $apacheRequest->connection->user( $datas->{$whatToTrace} );
+    $apacheRequest->connection->user( $datas->{$whatToTrace} ) if( $datas->{$whatToTrace} );
 
     # AUTHORIZATION
     return $class->forbidden($uri) unless ( $class->grant($uri) );

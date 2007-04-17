@@ -191,8 +191,9 @@ sub buildTree {
       $self->xmlField( "value", $config->{portal} || 'http://portal/',
         "Portail" );
     $authParams->{securedCookie} =
-      $self->xmlField( "value", $config->{securedCookie} || 0, &txt_securedCookie,
-      );
+      $self->xmlField( "value", $config->{securedCookie} || 0, &txt_securedCookie );
+    $generalParameters->{whatToTrace} =
+      $self->xmlField( "value", $config->{whatToTrace} || '$uid', &txt_whatToTrace );
 
     $generalParameters->{domain} =
       $self->xmlField( "value", $config->{domain} || 'example.com', &txt_domain, );
@@ -353,6 +354,7 @@ sub tree2conf {
     }
     # General parameters
     $config->{cookieName} = $tree->{generalParameters}->{cookieName}->{value};
+    $config->{whatToTrace} = $tree->{generalParameters}->{whatToTrace}->{value};
     $config->{domain}     = $tree->{generalParameters}->{domain}->{value};
     $config->{globalStorage} = $tree->{generalParameters}->{sessionStorage}->{globalStorage}->{value};
     while ( my ( $v, $h ) = each( %{ $tree->{generalParameters}->{sessionStorage}->{globalStorageOptions} })) {

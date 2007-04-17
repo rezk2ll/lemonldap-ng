@@ -151,7 +151,7 @@ sub help_authParams_fr {
     print <<EOT;
 <h3>Param&egrave;tres d'authentification</h3>
 <dl>
-<dt> Type d'authentfication </dt>
+<dt> Type d'authentification </dt>
 <dd> Le sch&eacute;ma classique d'authentification Lemonldap consiste &agrave; utiliser une
 authentification par LDAP. Vous pouvez changer ceci en ssl par exemple.</dd>
 

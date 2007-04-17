@@ -89,6 +89,7 @@ sub fr {
         # Attention: ici, &Ecirc; ne sera pas interprété par Firefox (msgBox)
         areYouSure              => 'Etes vous sur ?',
         syntaxError             => 'Erreur de syntaxe, configuration refus&eacute;e. Consultez les journaux du serveur web.',
+        whatToTrace             => "Donn&eacute;e &agrave; inscrire dans les journaux d'Apache",
     };
 }
 
@@ -147,5 +148,6 @@ sub en {
         deleteVirtualHost       => 'Delete virtual host',
         areYouSure              => 'Are you sure ?',
         syntaxError             => 'Syntax error, configuration refused. See web server logs for more.',
+        whatToTrace             => "Attribute to use in Apache's logs",
     };
 }
