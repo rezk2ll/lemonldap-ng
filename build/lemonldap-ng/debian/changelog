@@ -1,3 +1,16 @@
+lemonldap-ng (0.8.1.2) unstable; urgency=low
+
+  * Little bug fix if whatToTrace parameter is not defined and display it in
+    Manager interface
+
+ -- Xavier Guimard <x.guimard@free.fr>  Sat, 21 Apr 2007 15:05:19 +0200
+
+lemonldap-ng (0.8.1.1) unstable; urgency=low
+
+  * Little bug fix in test
+
+ -- Xavier Guimard <x.guimard@free.fr>  Fri, 20 Apr 2007 08:57:40 +0200
+
 lemonldap-ng (0.8.1) unstable; urgency=low
 
   * New features :

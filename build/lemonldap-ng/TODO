@@ -1,0 +1,12 @@
+Lemonldap::NG TODO
+------------------
+TODO list for Lemonldap::NG development
+
+- Priority: High	Status: Planning	Created: 2007\04\21 13-13-25
+Buttons to manage configurations (delete, next, previous, last,...)
+- Priority: Normal	Status: In progress	Created: 2007\04\21 13-05-54
+Help in english
+- Priority: Low	Status: N/A	Created: 2007\04\21 13-14-55
+Simplified manager interface fo rules:
+ * simplified regexp (* instead of .*,...)
+ * simple combobox to choose groups

@@ -233,7 +233,7 @@ with the C<reloadTime> parameter (default 600s).
 
 =head3 getConf
 
-Call Lemonldap::NG::Manager::Conf qith the configStorage parameter.
+Call Lemonldap::NG::Manager::Conf with the configStorage parameter.
 
 =head1 OPERATION
 
