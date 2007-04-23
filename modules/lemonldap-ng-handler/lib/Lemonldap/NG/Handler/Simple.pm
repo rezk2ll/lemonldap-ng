@@ -332,9 +332,9 @@ sub defaultValuesInit {
     my ( $class, $args ) = @_;
 
     # Other values
-    $cookieName  = $args->{cookieName}  || 'lemonldap';
-    $cookieSecured = $args->{cookieSecured}  || 0;
-    $whatToTrace = $args->{whatToTrace} || '$uid';
+    $cookieName    = $args->{cookieName}    || 'lemonldap';
+    $cookieSecured = $args->{cookieSecured} || 0;
+    $whatToTrace   = $args->{whatToTrace}   || '$uid';
     $whatToTrace =~ s/\$//g;
     $https = $args->{https} unless defined($https);
     $https = 1 unless defined($https);
@@ -429,12 +429,18 @@ sub hideCookie {
 # Redirect non-authenticated users to the portal
 sub goToPortal() {
     my ( $class, $url, $arg ) = @_;
+    my $port = $apacheRequest->get_server_port();
+    $port =
+        (  $https && $port == 443 ) ? ''
+      : ( !$https && $port == 80 )  ? ''
+      :                               ':' . $apacheRequest->get_server_port();
     my $urlc_init =
       encode_base64( "http"
           . ( $https ? "s" : "" ) . "://"
           . $apacheRequest->get_server_name()
+          . $port
           . $url );
-    $urlc_init =~ s/[\n\s]//g;
+    $urlc_init =~ s/[\n\s]//sg;
     $class->lmLog(
         "Redirect "
           . $apacheRequest->connection->remote_ip
