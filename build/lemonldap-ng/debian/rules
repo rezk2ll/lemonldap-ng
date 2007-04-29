@@ -27,7 +27,6 @@ build-stamp: configure-stamp
 
 	# Add here commands to compile the package.
 	$(MAKE) INSTALLDIRS=vendor
-	#docbook-to-man debian/lemonldap-ng.sgml > lemonldap-ng.1
 
 	touch $@
 
@@ -49,8 +48,8 @@ install: build
 
 	# Add here commands to install the package into debian/lemonldap-ng.
 	$(MAKE) test
-	$(MAKE) install DESTDIR=$(CURDIR)/debian/lemonldap-ng PREFIX=/usr
-	$(MAKE) example EXAMPLEDIR=/usr/share/doc/lemonldap-ng/examples/
+	$(MAKE) install DESTDIR=$(CURDIR)/debian/tmp PREFIX=/usr
+	$(MAKE) example EXAMPLEDIR=/usr/share/doc/lemonldap-ng/examples/ EXAMPLECONFDIR=/var/lib/lemonldap-ng/conf
 
 
 # Build architecture-independent files here.
@@ -63,10 +62,10 @@ binary-arch: build install
 	dh_testroot
 	dh_installchangelogs 
 	dh_installdocs
-	dh_installexamples example/*
-#	dh_install
+	dh_installexamples
+	dh_install
 #	dh_installmenu
-#	dh_installdebconf	
+	dh_installdebconf	
 #	dh_installlogrotate
 #	dh_installemacsen
 #	dh_installpam

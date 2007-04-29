@@ -6,6 +6,7 @@ PORTALDIR=lemonldap-ng-portal
 MANAGERDIR=lemonldap-ng-manager
 EXAMPLEDIRBUILD=`pwd`/example/
 EXAMPLEDIR=$(EXAMPLEDIRBUILD)
+EXAMPLECONFDIR=$(EXAMPLEDIR)conf/
 EXAMPLELANG=en
 
 all:	handler manager portal
@@ -82,11 +83,11 @@ manager_clean:
 example: all
 	mkdir -p example/portal example/manager example/handler example/conf
 	chmod 1777 example/conf
-	cp -a ${HANDLERDIR}/example/* example/handler
-	cp -a ${PORTALDIR}/example/* example/portal
-	cp -a ${MANAGERDIR}/example/* example/manager
-	cp -a _example/* example
-	find ${EXAMPLEDIRBUILD} -type f -exec perl -i -pe 's#__DIR__/?#'${EXAMPLEDIR}'#g' {} \;
+	cp -a ${HANDLERDIR}/example/* ${EXAMPLEDIRBUILD}/handler
+	cp -a ${PORTALDIR}/example/* ${EXAMPLEDIRBUILD}/portal
+	cp -a ${MANAGERDIR}/example/* ${EXAMPLEDIRBUILD}/manager
+	cp -a _example/* ${EXAMPLEDIRBUILD}
+	find ${EXAMPLEDIRBUILD} -type f -exec perl -i -pe 's#__DIR__/?#'${EXAMPLEDIR}'#g;s#__CONFDIR__/?#'${EXAMPLECONFDIR}'#g;' {} \;
 	@echo
 	@echo "Example is ready."
 	@echo
@@ -101,7 +102,7 @@ example: all
 	@echo
 	@echo "2 - Add test.example.com and auth.example.com in yout /etc/hosts :"
 	@echo
-	@echo "    cat example/for_etc_hosts >> /etc/hosts"
+	@echo "    cat ${EXAMPLEDIRBUILD}/for_etc_hosts >> /etc/hosts"
 	@echo
 	@echo "3 - edit ${EXAMPLEDIR}/conf/lmConf-1 and set ldapServer and ldapBase."
 	@echo "    or use the manager at http://manager.example.com/ (after apache restart)"
@@ -147,7 +148,7 @@ manager_cpan:	manager_conf
 	mv ${MANAGERDIR}/Lemonldap*.gz .
 
 static_example:	example
-	mkdir -p example/static
-	cd example/static/;ln -s ../manager/imgs;cd -
-	scripts/make_static_example.pl example/manager/index.pl example/static/index.html $(EXAMPLELANG)
+	mkdir -p ${EXAMPLEDIRBUILD}/static
+	cd ${EXAMPLEDIRBUILD}/static/;ln -s ../manager/imgs;cd -
+	scripts/make_static_example.pl ${EXAMPLEDIRBUILD}/manager/index.pl ${EXAMPLEDIRBUILD}/static/index.html $(EXAMPLELANG)
 

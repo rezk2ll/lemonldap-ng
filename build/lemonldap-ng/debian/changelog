@@ -3,8 +3,12 @@ lemonldap-ng (0.8.1.2) unstable; urgency=low
   * Little bug fix if whatToTrace parameter is not defined and display it in
     Manager interface
   * New: port is now checked in portal redirection
+  * Different configurations can now be used on the same server at the same
+    time
+  * New debian structure: lemonldap-ng is splitted in 5 packages and default
+    configuration file has moved to /var/lib/lemonldap-ng/conf/
 
- -- Xavier Guimard <x.guimard@free.fr>  Mon, 23 Apr 2007 21:20:24 +0200
+ -- Xavier Guimard <x.guimard@free.fr>  Sun, 29 Apr 2007 14:00:39 +0200
 
 lemonldap-ng (0.8.1.1) unstable; urgency=low
 

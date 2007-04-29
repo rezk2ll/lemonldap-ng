@@ -2,7 +2,7 @@ package Lemonldap::NG::Manager::Help;
 
 use AutoLoader qw(AUTOLOAD);
 use UNIVERSAL qw(can);
-our $VERSION = '0.31';
+our $VERSION = '0.32';
 
 sub import {
     my ($caller_package) = caller;
@@ -324,25 +324,41 @@ EOT
 sub help_ldap_en {
     print <<EOT;
 <h3>LDAP Parameters</h3>
-This help chapter does not exist in english. If you want to help us, you can
-edit lib/Lemonldap/NG/Manager/Help.pm in lemonldap-ng source tree and send us
-your contribution.<br>
-Thanks.
+<p>LDAP parameters are used to identify users. They must be set even if
+authentication is done by another system (SSL for example).</p>
+<ul>
+  <li>LDAP base : required (except if your server accepts the requests without
+   base). Example&nbsp;:
+  <pre>   dc=example, dc=com </pre></li>
+  <li>LDAP server port : 389 by default&nbsp;;</li>
+  <li>LDAP server : Name (or IP address) of the LDAP server. To use LDAPS, set
+   here&nbsp;:
+    <pre>   ldaps://server/</pre>
+   and don't forget to change port (636 for example)</li>
+  <li>LDAP account : optional, must be set if anonymous connection cannot
+   access to the wanted LDAP attributes. This account is used before LDAP
+   authentication to find user's dn&nbsp;;
+   </li>
+  <li>LDAP password : password corresponding to the account above.
+</ul>
 EOT
 }
 
 sub help_ldap_fr {
     print <<EOT;
 <h3>Param&egrave;tres LDAP</h3>
-<p> Le param&egrave;tres LDAP servent &agrave; identifier les utilisateurs. Ils doivent &ecirc;tre
-renseign&eacute;s m&ecirc;me si l'authentification est r&eacute;alis&eacute;e par un autre moyen (SSL par
-exemple).</p>
+<p> Les param&egrave;tres LDAP servent &agrave; identifier les utilisateurs.
+Ils doivent &ecirc;tre renseign&eacute;s m&ecirc;me si l'authentification est
+r&eacute;alis&eacute;e par un autre moyen (SSL par exemple).</p>
 <ul>
   <li>Base de recherche LDAP : obligatoire (&agrave; moins que votre serveur LDAP
-  accepte les requ&ecirc;tes sans base)&nbsp;; exemple&nbsp;:
+  accepte les requ&ecirc;tes sans base). Exemple&nbsp;:
   <pre>   dc=example, dc=com </pre></li>
   <li>Port du serveur LDAP : 389 par d&eacute;faut&nbsp;;</li>
-  <li>Serveur LDAP : Nom (ou adresse IP) du serveur LDAP&nbsp;;</li>
+  <li>Serveur LDAP : Nom (ou adresse IP) du serveur LDAP. Pour une connexion
+      LDAPS, indiquez ici&nbsp;:
+      <pre>   ldaps://server/</pre>
+      et n'oubliez pas de changer le port (636 en général)</li>
   <li>Compte de connexion LDAP : optionnel, &agrave; renseigner si les attributs LDAP
     utilis&eacute;s ne sont pas accessibles par une session anonyme. Ce compte est
     utilis&eacute; avant l'authentification pour trouver le dn de l'utilisateur&nbsp;;

@@ -6,7 +6,9 @@ TODO list for Lemonldap::NG development
 Buttons to manage configurations (delete, next, previous, last,...)
 - Priority: Normal	Status: In progress	Created: 2007\04\21 13-05-54
 Help in english
-- Priority: Low	Status: N/A	Created: 2007\04\21 13-14-55
+- Priority: Low	Status: Planning	Created: 2007\04\21 13-14-55
 Simplified manager interface fo rules:
  * simplified regexp (* instead of .*,...)
  * simple combobox to choose groups
+- Priority: Low	Status: Planning	Created: 2007\04\23 21-26-18
+TLS in LDAP connection. SSL works, but start_tls cannot yet be called.

@@ -7,11 +7,39 @@ Standards-Version: 3.7.2
 
 Package: lemonldap-ng
 Architecture: all
-Depends: libapache-session-perl, libnet-ldap-perl, libdbi-perl, libwww-perl, libcache-cache-perl, libxml-simple-perl
-Provides: liblemonldap-ng-manager-perl, liblemonldap-ng-portal-perl, liblemonldap-ng-manager-perl
-Conflicts: liblemonldap-ng-manager-perl, liblemonldap-ng-portal-perl, liblemonldap-ng-manager-perl
-Recommends: libsoap-lite-perl, liblasso-perl
+Depends: liblemonldap-ng-handler-perl, liblemonldap-ng-manager-perl, liblemonldap-ng-portal-perl
 Description: Lemonldap::NG Web-SSO system
+ Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
+ or directly on application apache servers.
+
+Package: liblemonldap-ng-handler-perl
+Architecture: all
+Depends: libapache-session-perl, libwww-perl, libcache-cache-perl, liblemonldap-ng-manager-conf-perl
+Description: Lemonldap::NG apache module part
+ Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
+ or directly on application apache servers.
+
+Package: liblemonldap-ng-manager-conf-perl
+Architecture: all
+Depends: libdbi-perl
+Recommends: libsoap-lite-perl
+Description: Lemonldap::NG apache manager part
+ Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
+ or directly on application apache servers.
+
+Package: liblemonldap-ng-manager-perl
+Architecture: all
+Depends: libxml-simple-perl, liblemonldap-ng-manager-conf-perl
+Recommends: libcache-cache-perl, libapache-session-perl, libsoap-lite-perl
+Description: Lemonldap::NG apache manager part
+ Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
+ or directly on application apache servers.
+
+Package: liblemonldap-ng-portal-perl
+Architecture: all
+Depends: libapache-session-perl, libnet-ldap-perl, liblemonldap-ng-manager-conf-perl
+Recommends: liblasso-perl
+Description: Lemonldap::NG apache authentication portal part
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application apache servers.
 

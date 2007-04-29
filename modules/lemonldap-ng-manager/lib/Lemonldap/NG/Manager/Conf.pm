@@ -1,6 +1,7 @@
 package Lemonldap::NG::Manager::Conf;
 
 use strict;
+no strict 'refs';
 use Storable qw(thaw freeze);
 use MIME::Base64;
 use Lemonldap::NG::Manager::Conf::Constants;
@@ -28,7 +29,6 @@ sub new {
           unless $self->{type} =~ /^Lemonldap/;
         eval "require $self->{type}";
         die($@) if ($@);
-        unshift @ISA, $self->{type};
         return 0 unless $self->prereq;
         $self->{mdone}++;
     }
@@ -77,6 +77,38 @@ sub getConf {
         }
     }
     return $conf;
+}
+
+sub prereq {
+    return &{$_[0]->{type}.'::prereq'}(@_);
+}
+
+sub available {
+    return &{$_[0]->{type}.'::available'}(@_);
+}
+
+sub lastCfg {
+    return &{$_[0]->{type}.'::lastCfg'}(@_);
+}
+
+sub lock {
+    return &{$_[0]->{type}.'::lock'}(@_);
+}
+
+sub isLocked {
+    return &{$_[0]->{type}.'::isLocked'}(@_);
+}
+
+sub unlock {
+    return &{$_[0]->{type}.'::unlock'}(@_);
+}
+
+sub store {
+    return &{$_[0]->{type}.'::store'}(@_);
+}
+
+sub load {
+    return &{$_[0]->{type}.'::load'}(@_);
 }
 
 1;

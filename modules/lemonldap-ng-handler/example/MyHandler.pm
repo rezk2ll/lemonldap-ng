@@ -11,7 +11,7 @@ __PACKAGE__->init ( {
 
     configStorage       => {
               type                 => 'File',
-              dirName              => '__DIR__/conf',
+              dirName              => '__CONFDIR__',
     },
 
     https               => 0,

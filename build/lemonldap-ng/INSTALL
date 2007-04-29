@@ -78,7 +78,7 @@ Modify your /etc/hosts file to include:
 Edit /path/to/lemonldap-ng/source/example/conf/lmConfig-1 and specify your LDAP
 settings. If you don't set managerDn and managerPassword, Lemonldap::NG will
 use an anonymous bind to find user dn.
-(Debian users: /usr/share/doc/lemonldap-ng/example/conf/lmConfig-1)
+(Debian users: /var/lib/lemonldap-ng/conf/lmConfig-1)
 WARNINGS:
  * only few parameters can be set by hand in the configuration file. You have
    to use the manager to change configuration, but since the example is yet

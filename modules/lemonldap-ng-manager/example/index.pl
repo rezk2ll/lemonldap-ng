@@ -6,7 +6,7 @@ my $h = new Lemonldap::NG::Manager(
     {
         configStorage => {
             type    => 'File',
-            dirName => "__DIR__/conf/",
+            dirName => "__CONFDIR__",
         },
         dhtmlXTreeImageLocation => "/imgs/",
         applyConfFile           => '__DIR__/manager/apply.conf',
