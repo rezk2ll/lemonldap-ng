@@ -1,0 +1,75 @@
+#!/usr/bin/perl
+
+use Lemonldap::NG::Manager::Conf;
+use Lemonldap::NG::Manager::Conf::Constants;
+use Data::Dumper;
+use strict;
+
+our $refFile = `mktemp`;
+our $editFile = `mktemp`;
+
+chomp $refFile;
+chomp $editFile;
+
+my $conf = Lemonldap::NG::Manager::Conf->new(
+    {
+        type    => 'File',
+        dirName => '__CONFDIR__',
+    }
+);
+
+open F1, ">$refFile" or quit($!);
+open F2, ">$editFile" or quit($!);
+my $tmp = Dumper($conf->getConf);
+print F1 $tmp;
+print F2 $tmp;
+close F1;
+close F2;
+
+system "editor $editFile";
+
+if(`diff $refFile $editFile`) {
+    my $VAR1;
+    my $buf;
+    open F1, $editFile;
+    while(<F1>) {
+        $buf .= $_;
+    }
+    eval $buf;
+    quit($@) if($@);
+    my $res = $conf->saveConf($VAR1);
+    if( $res > 0) {
+        print STDERR "Configuration $res saved\n";
+    }
+    else {
+        print STDERR "Configuration was not saved:\n  ";
+	if( $res == CONFIG_WAS_CHANGED ) {
+	    print STDERR "Configuration has changed\n";
+	}
+	elsif( $res == DATABASE_LOCKED ) {
+	    print STDERR "Configuration database is or can nor be locked\n";
+	}
+	elsif( $res == UPLOAD_DENIED ) {
+	    print STDERR "You're not authorized to save this configuration\n";
+	}
+	elsif( $res == SYNTAX_ERROR ) {
+	    print STDERR "Syntax error in your configuration\n";
+	}
+	elsif( $res == UNKNOWN_ERROR ) {
+	    print STDERR "Unknown error\n";
+	}
+    }
+}
+else {
+    print STDERR "Configuration not changed\n";
+}
+
+unlink $editFile;
+unlink $refFile;
+
+sub quit {
+    unlink $editFile;
+    unlink $refFile;
+    print STDERR "$_[0]\n";
+    exit 1;
+}

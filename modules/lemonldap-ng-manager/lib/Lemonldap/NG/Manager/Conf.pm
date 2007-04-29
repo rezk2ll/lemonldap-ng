@@ -195,7 +195,7 @@ getConf returns all (C<select * from lmConfig>).
 
 =back
 
-=item B<saveConf>: stores the Lemonldap::NG configuration passed in argument
+=item * B<saveConf>: stores the Lemonldap::NG configuration passed in argument
 (hash reference). it returns the number of the new configuration.
 
 =back

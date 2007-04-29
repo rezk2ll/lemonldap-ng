@@ -1,5 +1,15 @@
 Revision history for Perl extension Lemonldap::NG::Manager.
 
+0.64  Sun Apr 29 16:18:31 2007
+	- File permissions fix to 0640 in File.pm
+	- Multiple configuration in the same server is now possible
+	- LDAP help in english
+	- LDAPS documentation
+	- Javascript control (an XML id can not start with a number)
+	- whatToTrace parameter in configuration interface
+	- Fix tree bug when an hash ref is not defined
+	- More tests
+
 0.61  Thu Mar 29 21:45:44 2007
 	- configuration is checked before saving
 

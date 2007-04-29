@@ -60,6 +60,8 @@ sub unlock {
 
 sub store {
     my ( $self, $fields ) = @_;
+    my $mask = umask;
+    umask ( oct ( '0027' ) );
     unless( open FILE, '>' . $self->{dirName} . "/lmConf-" . $fields->{cfgNum} ) {
         print STDERR "Open file failed: $!";
         $self->unlock;
@@ -69,6 +71,7 @@ sub store {
         print FILE "$k\n\t$v\n\n";
     }
     close FILE;
+    umask( $mask );
     $self->unlock;
     return $fields->{cfgNum};
 }
