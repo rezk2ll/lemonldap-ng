@@ -1,7 +1,13 @@
 Template: liblemonldap-ng-conf-perl/newDirInfo
 Type: note
-Description: Lemonldap::NG default configuration directory has moved to /var/lib/lemondap-ng/conf/
-Description-fr: Le répertoire de configuration par défaut est maintenant /var/lib/lemondap-ng/conf/
+Description: Lemonldap::NG changes
+ Lemonldap::NG default configuration directory has moved to
+ /var/lib/lemondap-ng/conf/ and configuration storage is now managed by
+ /etc/lemonldap-ng/storage.conf
+Description-fr: Changements dans lemonldap::NG
+ Le répertoire de configuration par défaut est maintenant
+ /var/lib/lemondap-ng/conf/ et le stockage des configurations est maintenant
+ géré par /etc/lemonldap-ng/storage.conf
 
 Template: liblemonldap-ng-conf-perl/ldapServer
 Type: string
@@ -89,4 +95,3 @@ Description: Lemonldap::NG is ready
 Description-fr: Lemonldap::NG est prêt
  Lemonldap::NG est prêt à fonctionner. Reportez-vous au fichier
  /usr/share/liblemonldap-ng-conf-perl/README.Debian pour voir comment l'activer
-

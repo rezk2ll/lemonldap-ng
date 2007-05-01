@@ -12,7 +12,5 @@ Simplified manager interface fo rules:
  * simple combobox to choose groups
 - Priority: Low	Status: Planning	Created: 2007\04\23 21-26-18
 TLS in LDAP connection. SSL works, but start_tls cannot yet be called.
-- Priority: Normal	Status: Planning	Created: 2007\05\01 08-59-18
-Time"-"out system
-- Priority: Normal	Status: In progress	Created: 2007\05\01 08-59-46
-Debconf : LDAP parameters + session directory
+- Priority: Normal	Status: Planning	Created: 2007\05\01 08-59-46
+Timeout documentation
