@@ -1,1 +1,3 @@
-example/handler/
+debian/tmp/var/lib/lemonldap-ng/handler/autoProtectedCGI.pl
+debian/tmp/var/lib/lemonldap-ng/handler/MyHandler*.pm
+debian/handler-apache*.conf

@@ -1,0 +1,4 @@
+/etc/lemonldap-ng
+/usr/share/lemonldap-ng/bin
+/var/lib/lemonldap-ng/portal
+/var/lib/lemonldap-ng/sessions

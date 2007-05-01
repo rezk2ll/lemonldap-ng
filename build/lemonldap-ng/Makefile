@@ -81,8 +81,8 @@ manager_clean:
 	rm -vf manager*
 
 example: all
-	mkdir -p example/portal example/manager example/handler example/conf
-	chmod 1777 example/conf
+	mkdir -p ${EXAMPLEDIRBUILD}/portal ${EXAMPLEDIRBUILD}/manager ${EXAMPLEDIRBUILD}/handler ${EXAMPLEDIRBUILD}/conf
+	chmod 1777 ${EXAMPLEDIRBUILD}/conf
 	cp -a ${HANDLERDIR}/example/* ${EXAMPLEDIRBUILD}/handler
 	cp -a ${PORTALDIR}/example/* ${EXAMPLEDIRBUILD}/portal
 	cp -a ${MANAGERDIR}/example/* ${EXAMPLEDIRBUILD}/manager

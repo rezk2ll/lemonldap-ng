@@ -44,16 +44,16 @@ example/imgs/plus5.gif
 example/imgs/plus_ar.gif
 example/imgs/tombs.gif
 example/imgs/tombs_mag.gif
+example/index.pl
 example/lemonldap-ng-manager.js
 example/lmConfig.mysql
-example/index.pl
-example/scripts/lmSessionDump
 example/scripts/lmConfigEditor
+example/scripts/lmSessionDump
 example/soapserver.pl
 lib/Lemonldap/NG/Manager.pm
-lib/Lemonldap/NG/Manager/Apache/Session/SOAP.pm
 lib/Lemonldap/NG/Manager/_HTML.pm
 lib/Lemonldap/NG/Manager/_i18n.pm
+lib/Lemonldap/NG/Manager/Apache/Session/SOAP.pm
 lib/Lemonldap/NG/Manager/Base.pm
 lib/Lemonldap/NG/Manager/Conf.pm
 lib/Lemonldap/NG/Manager/Conf/Constants.pm
@@ -68,11 +68,11 @@ MANIFEST
 META.yml			Module meta-data (added by MakeMaker)
 README
 scripts/lmConfig_File2MySQL
-TODO
-t/Lemonldap-NG-Manager.t
-t/Lemonldap-NG-Manager_en.t
-t/Lemonldap-NG-Manager_fr.t
-t/Lemonldap-NG-Manager-Conf.t
 t/Lemonldap-NG-Manager-Conf-DBI.t
 t/Lemonldap-NG-Manager-Conf-File.t
 t/Lemonldap-NG-Manager-Conf-SOAP.t
+t/Lemonldap-NG-Manager-Conf.t
+t/Lemonldap-NG-Manager.t
+t/Lemonldap-NG-Manager_en.t
+t/Lemonldap-NG-Manager_fr.t
+TODO

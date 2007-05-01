@@ -1,5 +1,0 @@
-Template: liblemonldap-ng-manager-conf-perl/newDirInfo
-Type: note
-Description: Lemonldap::NG default configuration directory has moved to /var/lib/lemondap-ng/conf/
-Description-fr: Le répertoire de configuration par défaut est maintenant /var/lib/lemondap-ng/conf/
-

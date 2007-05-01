@@ -1,4 +1,54 @@
 lemonldap-ng for Debian
 -----------------------
 
- -- Xavier Guimard <x.guimard@free.fr>  Sun, 17 Dec 2006 17:46:47 +0100
+Topics:
+ 1 - Configuration storage
+ 2 - Portal installation
+ 3 - Manager installation
+ 4 - Area protection
+
+
+I - LEMONLDAP::NG CONFIGURATION STORAGE
+---------------------------------------
+Package: liblemonldap-ng-conf-perl
+
+Lemonldap::NG configuration is stored by default in /var/lib/lemonldap-ng/conf.
+Modify /etc/lemonldap-ng/storage.conf to change configuration storage.
+
+1.1 - Migrating from 'File' to 'DBI'
+
+To use DBI mechanism to store configuration, you have to create database. An
+example is given for MySQL in the file
+/usr/share/doc/liblemonldap-ng-conf-perl/examples/lmConfig.mysql.
+If you have a running configuration, use this to populate SQL database :
+
+  perl /usr/share/lemonldap-ng/bin/lmConfig_File2MySQL \
+         /var/lib/lemonldap-ng/conf/lmConf-<last-number>
+
+
+II - LEMONLDAP::NG PORTAL INSTALLATION
+--------------------------------------
+Package: liblemonldap-ng-portal-perl
+
+liblemonldap-ng-portal-perl installs files named portal-apache.conf and
+portal-apache2.conf in /etc/lemonldap-ng/. Include it in apache configuration
+and personalize files in /var/lib/lemonldap-ng/portal.
+
+
+III - LEMONLDAP::NG MANAGER INSTALLATION
+----------------------------------------
+Package: liblemonldap-ng-manager-perl
+
+liblemonldap-ng-manager-perl installs files named manager-apache.conf and
+manager-apache2.conf in /etc/lemonldap-ng/. Include it in apache configuration
+and personalize files in /var/lib/lemonldap-ng/manager.
+
+
+IV - LEMONLDAP::NG AREA PROTECTION
+----------------------------------
+Package: liblemonldap-ng-handler-perl
+
+liblemonldap-ng-handler-perl installs a file named MyHandler.pm in
+/var/lib/lemonldap-ng/handler/. See handler-apache.conf or handler-apache2.conf
+in /usr/share/doc/liblemonldap-ng-handler-perl/examples/ to know how to use it.
+

@@ -49,8 +49,12 @@ install: build
 	# Add here commands to install the package into debian/lemonldap-ng.
 	$(MAKE) test
 	$(MAKE) install DESTDIR=$(CURDIR)/debian/tmp PREFIX=/usr
-	$(MAKE) example EXAMPLEDIR=/usr/share/doc/lemonldap-ng/examples/ EXAMPLECONFDIR=/var/lib/lemonldap-ng/conf
-
+	$(MAKE) example EXAMPLEDIRBUILD=debian/tmp/var/lib/lemonldap-ng EXAMPLEDIR=/var/lib/lemonldap-ng/ EXAMPLECONFDIR=/var/lib/lemonldap-ng/conf
+	cp debian/tmp/var/lib/lemonldap-ng/handler/MyHandler.pm debian/tmp/var/lib/lemonldap-ng/handler/MyHandler-Debian.pm
+	mv debian/tmp/var/lib/lemonldap-ng/index.pl debian/tmp/var/lib/lemonldap-ng/test.pl
+	perl -000 -i -pe 's/(new\s*\(\s*){[^}]+}/$$1\$$Lemonldap::NG::Conf::configStorage/; s#^use#\nrequire "/usr/share/lemonldap-ng/configStorage.pm";\nuse#m;' \
+			debian/tmp/var/lib/lemonldap-ng/manager/scripts/lmConfigEditor \
+			debian/tmp/var/lib/lemonldap-ng/handler/MyHandler-Debian.pm
 
 # Build architecture-independent files here.
 binary-indep: build install
@@ -62,7 +66,12 @@ binary-arch: build install
 	dh_testroot
 	dh_installchangelogs 
 	dh_installdocs
+	mkdir debian/tmp/var/lib/lemonldap-ng/protected
+	cp _example/index.pl debian/tmp/var/lib/lemonldap-ng/protected
+	find debian/tmp/var/lib/lemonldap-ng -type f -perm /111 -exec chmod -x {} \;
+	chmod +x debian/tmp/var/lib/lemonldap-ng/manager/scripts/lmConfigEditor
 	dh_installexamples
+	find debian/lemonldap-ng -type f -exec perl -i -pe 's#__DIR__/?#'/var/lib/lemonldap-ng'#g;s#__CONFDIR__/?#'/var/lib/lemonldap-ng/conf'#g;' {} \;
 	dh_install
 #	dh_installmenu
 	dh_installdebconf	
@@ -72,13 +81,12 @@ binary-arch: build install
 #	dh_installmime
 #	dh_python
 #	dh_installinit
-#	dh_installcron
+	dh_installcron
 #	dh_installinfo
 	dh_installman
 	dh_link
 	dh_strip
 	dh_compress
-	gunzip $(CURDIR)/debian/lemonldap-ng/usr/share/doc/lemonldap-ng/examples/manager/lemonldap-ng-manager.js.gz
 	dh_fixperms
 #	dh_perl
 #	dh_makeshlibs

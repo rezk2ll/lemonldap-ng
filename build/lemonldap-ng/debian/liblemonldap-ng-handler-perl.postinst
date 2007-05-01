@@ -1,0 +1,20 @@
+#!/bin/bash
+# Maintainer: #DEBHELPER#
+
+. /usr/share/debconf/confmodule
+
+EXAMPLEHANDLERFILE=/usr/share/doc/liblemonldap-ng-handler-perl/examples/MyHandler.pm
+HANDLERFILE=/var/lib/lemonldap-ng/handler/MyHandler.pm
+SESSIONSDIR=/var/lib/lemonldap-ng/sessions
+
+if [ "$1" == "configure" ]
+then
+    [ -e $HANDLERFILE ] || \
+	perl -000 -pe 's/(configStorage\s*=>\s*){[^}]+}/$1\$Lemonldap::NG::Conf::configStorage/;
+			s#^use#\nrequire "/usr/share/lemonldap-ng/configStorage.pm";\nuse#m;' \
+		$EXAMPLEHANDLERFILE >$HANDLERFILE
+    chmod 770 $SESSIONSDIR;
+    chown www-data.www-data $SESSIONSDIR;
+fi
+
+

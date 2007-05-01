@@ -1,3 +1,4 @@
 debian/tmp/usr/share/perl5/Lemonldap/NG/Portal*
 debian/tmp/usr/share/perl5/auto/Lemonldap/NG/Portal
 debian/tmp/usr/share/man/man3/Lemonldap::NG::Portal*
+debian/portal-apache*.conf /etc/lemonldap-ng

@@ -1,0 +1,3 @@
+/etc/lemonldap-ng
+/usr/share/lemonldap-ng/bin
+/var/lib/lemonldap-ng/manager

@@ -1,1 +1,4 @@
-example/manager
+debian/tmp/var/lib/lemonldap-ng/manager/apply.conf
+debian/tmp/var/lib/lemonldap-ng/manager/index.pl
+debian/tmp/var/lib/lemonldap-ng/manager/lmConfig.mysql
+debian/tmp/var/lib/lemonldap-ng/manager/soapserver.pl

@@ -1,0 +1,7 @@
+debian/tmp/usr/share/perl5/Lemonldap/NG/Manager/Conf*
+debian/tmp/usr/share/man/man3/Lemonldap::NG::Manager::Conf*
+debian/tmp/usr/share/man/man1/lmConfig_File2MySQL.1p
+debian/tmp/usr/bin/lmConfig* /usr/share/lemonldap-ng/bin
+debian/configStorage.pm /usr/share/lemonldap-ng
+debian/storage.conf /etc/lemonldap-ng
+debian/tmp/var/lib/lemonldap-ng/conf /var/lib/lemonldap-ng
