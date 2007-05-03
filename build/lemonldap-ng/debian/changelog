@@ -5,11 +5,12 @@ lemonldap-ng (0.8.1.2) unstable; urgency=low
   * New: port is now checked in portal redirection
   * Different configurations can now be used on the same server at the same
     time
+  * Help in english
   * New debian structure: lemonldap-ng is splitted in 5 packages, default
     configuration file has moved to /var/lib/lemonldap-ng/conf/ and first
     configuration file is managed by debconf
 
- -- Xavier Guimard <x.guimard@free.fr>  Tue, 01 May 2007 16:18:47 +0200
+ -- Xavier Guimard <x.guimard@free.fr>  Thu, 03 May 2007 10:39:51 +0200
 
 lemonldap-ng (0.8.1.1) unstable; urgency=low
 

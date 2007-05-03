@@ -11,6 +11,8 @@ Depends: liblemonldap-ng-handler-perl, liblemonldap-ng-manager-perl, liblemonlda
 Description: Lemonldap::NG Web-SSO system
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application apache servers.
+ .
+ This package is a meta package that install handler, manager and portal.
 
 Package: liblemonldap-ng-handler-perl
 Architecture: all
@@ -18,6 +20,8 @@ Depends: libapache-session-perl, libwww-perl, libcache-cache-perl, liblemonldap-
 Description: Lemonldap::NG apache module part
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application apache servers.
+ .
+ This package installs the Apache module part (handler) used to protect web areas.
 
 Package: liblemonldap-ng-conf-perl
 Architecture: all
@@ -26,6 +30,9 @@ Recommends: libsoap-lite-perl
 Description: Lemonldap::NG apache manager part
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application apache servers.
+ .
+ This package installs the configuration libraries used by other Lemonldap::NG
+ modules.
 
 Package: liblemonldap-ng-manager-perl
 Architecture: all
@@ -34,6 +41,8 @@ Recommends: libcache-cache-perl, libapache-session-perl, libsoap-lite-perl
 Description: Lemonldap::NG apache manager part
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application apache servers.
+ .
+ This package installs the administration interface (manager).
 
 Package: liblemonldap-ng-portal-perl
 Architecture: all
@@ -42,4 +51,5 @@ Recommends: liblasso-perl
 Description: Lemonldap::NG apache authentication portal part
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application apache servers.
-
+ .
+ This package installs the authentication portal.

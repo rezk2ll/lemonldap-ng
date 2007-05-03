@@ -21,8 +21,9 @@ then
 		$EXAMPLECLEANERFILE >$CLEANERFILE
     chmod +x $PORTALFILE
     chmod +x $CLEANERFILE
-    chmod 770 $SESSIONSDIR;
-    chown www-data.www-data $SESSIONSDIR;
+    chmod 770 $SESSIONSDIR
+    chmod 770 $SESSIONSDIR/lock
+    chown -R www-data.www-data $SESSIONSDIR
 fi
 
 

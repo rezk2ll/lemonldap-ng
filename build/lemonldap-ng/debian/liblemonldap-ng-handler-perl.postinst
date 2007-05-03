@@ -13,8 +13,9 @@ then
 	perl -000 -pe 's/(configStorage\s*=>\s*){[^}]+}/$1\$Lemonldap::NG::Conf::configStorage/;
 			s#^use#\nrequire "/usr/share/lemonldap-ng/configStorage.pm";\nuse#m;' \
 		$EXAMPLEHANDLERFILE >$HANDLERFILE
-    chmod 770 $SESSIONSDIR;
-    chown www-data.www-data $SESSIONSDIR;
+    chmod 770 $SESSIONSDIR
+    chmod 770 $SESSIONSDIR/lock
+    chown -R www-data.www-data $SESSIONSDIR
 fi
 
 

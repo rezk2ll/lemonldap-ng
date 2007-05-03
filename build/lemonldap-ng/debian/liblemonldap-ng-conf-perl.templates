@@ -38,7 +38,7 @@ Default: http://auth.example.com/
 Description: Lemonldap::NG portal
  Set here the Lemonldap::NG portal URL.
  You can modify this value later using the Lemonldap::NG manager.
-Description-fr: Port du serveur LDAP
+Description-fr: Portail Lemonldap::NG
  Indiquez ici l'URL du portail Lemonldap::NG.
  Vous pourrez modifier cette valeur ultérieurement dans le gestionnaire
  Lemonldap::NG.

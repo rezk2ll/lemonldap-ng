@@ -2,3 +2,4 @@
 /usr/share/lemonldap-ng/bin
 /var/lib/lemonldap-ng/portal
 /var/lib/lemonldap-ng/sessions
+/var/lib/lemonldap-ng/sessions/lock

@@ -8,7 +8,7 @@ use AutoLoader qw(AUTOLOAD);
 require Lemonldap::NG::Manager::_i18n;
 use Lemonldap::NG::Manager::Conf::Constants;
 
-our $VERSION = '0.25';
+our $VERSION = '0.26';
 
 # TODO: Delete buttons in headers and rules if 'read-only'
 
@@ -171,6 +171,9 @@ function onNodeSelect(nodeId) {
   else if(nodeIs(nodeId,"groups")){
     but+=button('$text{newGroup}','newGroup',nodeId);
     help('groups');
+  }
+  else if(nodeIs(nodeId,"whatToTrace")){
+    help('whatToTrace');
   }
   else if(nodeIs(nodeId,"generalParameters")){
     if(nodeIs(nodeId,"ldapParameters")){

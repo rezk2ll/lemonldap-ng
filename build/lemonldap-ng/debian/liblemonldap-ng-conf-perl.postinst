@@ -15,7 +15,8 @@ then
 
     for i in domain ldapServer ldapPort ldapBase managerDn managerPassword portal; do
         db_get liblemonldap-ng-conf-perl/$i || true
-	perl -000 -i -pe "s#^$i(\\n\\s+)('?)[^\\n]*?('?)\$#$i\${1}\${2}$RET\${3}#m" $FIRSTCONFFILE
+        perl -000 -i -pe "s#^$i(\\n\\s+)('?)[^\\n]*?('?)\$#$i\${1}\${2}$RET\${3}#m" $FIRSTCONFFILE
     done
+    perl -000 -i -pe "s#^(globalStorageOptions\\n\\s+)'[^\\n]*?'\$#\${1}\'BAcEMTIzNAQEBAgDAgAAAAofL3Zhci9saWIvbGVtb25sZGFwLW5nL3Nlc3Npb25zLwkAAABEaXJlY3RvcnkKJC92YXIvbGliL2xlbW9ubGRhcC1uZy9zZXNzaW9ucy9sb2NrLw0AAABMb2NrRGlyZWN0b3J5'#m" $FIRSTCONFFILE
 fi
 exit 0

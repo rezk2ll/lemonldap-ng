@@ -2,7 +2,7 @@ package Lemonldap::NG::Manager::Help;
 
 use AutoLoader qw(AUTOLOAD);
 use UNIVERSAL qw(can);
-our $VERSION = '0.32';
+our $VERSION = '0.33';
 
 sub import {
     my ($caller_package) = caller;
@@ -18,19 +18,104 @@ sub import {
         }
     }
     $l ||= "en";
-    foreach $h (qw(virtualHosts groups ldap vars storage macros authParams
-                   cookieName domain)) {
+    foreach $h (qw(authParams cookieName domain groups ldap macros storage vars
+                   whatToTrace virtualHosts)) {
         *{"${caller_package}::help_$h"} = \&{"help_${h}_$l"};
     }
 }
-
-# TODO: Help in English
 
 1;
 __END__
 
 =pod
 =cut
+sub help_authParams_en {
+    print <<EOT;
+<h3>Authentication Parameters</h3>
+<dl>
+<dt> Authentication type </dt>
+<dd> By default,Lemonldap::NG uses ldap authentication scheme. You can change
+this by 'SSL' for example.</dd>
+
+<dt> Portal </dt>
+<dd> Set here the URL used to authenticate users (portal). The portal has to
+inherits from Lemonldap::NG::Portal::SharedConf.</dd>
+
+<dt> Secured cookie (SSL) </dt>
+<dd> An authenticated user is known by his cookie. If all (virtual) hosts use
+HTTPS, set this value to 1 so the cookie will be protected and will not be
+transmitted unless https is used.</dd>
+</dl>
+EOT
+}
+
+sub help_authParams_fr {
+    print <<EOT;
+<h3>Param&egrave;tres d'authentification</h3>
+<dl>
+<dt> Type d'authentification </dt>
+<dd> Le sch&eacute;ma classique d'authentification Lemonldap;;NG consiste &agrave; utiliser une
+authentification par LDAP. Vous pouvez changer ceci en "SSL" par exemple.</dd>
+
+<dt> Portail </dt>
+<dd> Indiquez ici l'URL ou seront renvoy&eacute;s les utilisateurs non authentifi&eacute;s.
+Cette URL doit bien sur correspondre &agrave; un portail utilisant
+Lemonldap::NG::Portal::SharedConf.</dd>
+
+<dt> Cookie s&eacute;curis&eacute; (SSL) </dt>
+<dd> Une fois authentifi&eacute;, l'utilisateur est reconnu par son cookie. Si tous
+les h&ocirc;tes virtuels de votre domaine son prot&eacute;g&eacute;s par SSL, mettez cette option
+&agrave; 1, ainsi le cookie ne sera pr&eacute;sent&eacute; par le navigateur qu'aux sites prot&eacute;g&eacute;s,
+ce qui &eacute;vite un vol de session.</dd>
+</dl>
+EOT
+}
+
+sub help_cookieName_en {
+    print <<EOT;
+<h3>Cookie Name</h3>
+<p> Set here the name of the cookie ('lemonldap' by default).<br>
+
+WARNING, any change here needs to restart all the Apache servers that use
+a Lemonldap::NG::Handler.</p>
+EOT
+}
+
+sub help_cookieName_fr {
+    print <<EOT;
+<h3>Nom de cookie</h3>
+<p> Indiquez ici le nom du cookie ('lemonldap' par d&eacute;faut).<br>
+
+ATTENTION, tout changement n&eacute;cessite le red&eacute;marrage de tous les serveurs Apache
+h&eacute;bergeant des agents de protection Lemonldap::NG::Handler.</p>
+EOT
+}
+
+sub help_domain_en {
+    print <<EOT;
+<h3>Protected domain</h3>
+<p> Set here the main domain (or sub-domain) protected by Lemonldap::NG. If you
+use "Cross domain authentication", set here the domain of the portal.<br>
+WARNING : all the virtual hosts that are not under the same domain than the
+portal must be protected by handlers that inherits from
+Lemonldap::NG::Handler::CDA and if such handlers exist, you have to use
+Lemonldap::NG::Portal::CDA.
+EOT
+}
+
+sub help_domain_fr {
+    print <<EOT;
+<h3>Domaine prot&eacute;g&eacute;</h3>
+<p> Indiquez ici le nom du domaine (ou du sous-domaine) contenant vos
+applications &agrave; prot&eacute;ger. Si vous utilisez le "Cross domain
+authentication", indiquez ici le domaine du portail<br>
+ATTENTION : tous les h&ocirc;tes virtuels prot&eacute;g&eacute;s ne se trouvant
+pas dans le m&ecirc;me domaine que le portail doivent &ecirc;tre prot&eacute;g&eacute;s par un agent
+h&eacute;ritant de Lemonldap::NG::Handler::CDA et si un seul de ces agents est
+utilis&eacute;, le portail doit &ecirc;tre de type Lemonldap::NG::Portal::CDA.
+EOT
+}
+
 sub help_groups_en {
     print <<EOT;
 <h3>User Groups</h3>
@@ -95,6 +180,154 @@ noms de groupe pour lesquels l'expression est vraie).</p>
 EOT
 }
 
+sub help_ldap_en {
+    print <<EOT;
+<h3>LDAP Parameters</h3>
+<p>LDAP parameters are used to identify users. They must be set even if
+authentication is done by another system (SSL for example).</p>
+<ul>
+  <li>LDAP base : required (except if your server accepts the requests without
+   base). Example&nbsp;:
+  <pre>   dc=example, dc=com </pre></li>
+  <li>LDAP server port : 389 by default&nbsp;;</li>
+  <li>LDAP server : Name (or IP address) of the LDAP server. To use LDAPS, set
+   here&nbsp;:
+    <pre>   ldaps://server/</pre>
+   and don't forget to change port (636 for example)</li>
+  <li>LDAP account : optional, must be set if anonymous connection cannot
+   access to the wanted LDAP attributes. This account is used before LDAP
+   authentication to find user's dn&nbsp;;
+   </li>
+  <li>LDAP password : password corresponding to the account above.
+</ul>
+EOT
+}
+
+sub help_ldap_fr {
+    print <<EOT;
+<h3>Param&egrave;tres LDAP</h3>
+<p> Les param&egrave;tres LDAP servent &agrave; identifier les utilisateurs.
+Ils doivent &ecirc;tre renseign&eacute;s m&ecirc;me si l'authentification est
+r&eacute;alis&eacute;e par un autre moyen (SSL par exemple).</p>
+<ul>
+  <li>Base de recherche LDAP : obligatoire (&agrave; moins que votre serveur LDAP
+  accepte les requ&ecirc;tes sans base). Exemple&nbsp;:
+  <pre>   dc=example, dc=com </pre></li>
+  <li>Port du serveur LDAP : 389 par d&eacute;faut&nbsp;;</li>
+  <li>Serveur LDAP : Nom (ou adresse IP) du serveur LDAP. Pour une connexion
+      LDAPS, indiquez ici&nbsp;:
+      <pre>   ldaps://server/</pre>
+      et n'oubliez pas de changer le port (636 en g&eacute;n&eacute;ral)</li>
+  <li>Compte de connexion LDAP : optionnel, &agrave; renseigner si les attributs LDAP
+    utilis&eacute;s ne sont pas accessibles par une session anonyme. Ce compte est
+    utilis&eacute; avant l'authentification pour trouver le dn de l'utilisateur&nbsp;;
+   </li>
+  <li>Mot de passe LDAP : mot de passe correspondant au compte ci-dessus.
+</ul>
+EOT
+}
+
+sub help_macros_en {
+    print <<EOT;
+<h3>Macros</h3>
+<p> Macros are used to add new variables to user variables attributes). Those
+new variables are calculated from other variables issued from LDAP attributes.
+This mechanism avoid to do more than one time the same operation in the
+authentication phase. Example&nbsp;:</p>
+<pre>
+    # macros
+    long_name => \$givenname . " " . \$surname
+    admin     => \$uid eq "foo" or \$uid eq "bar"
+    
+    # test.example.com - Headers
+    Name      => \$long_name
+    
+    # test.example.com - Rules
+    ^/admin/ => \$admin
+EOT
+}
+
+sub help_macros_fr {
+    print <<EOT;
+<h3>Macros</h3>
+<p> Les macros permettent d'ajouter des variables calcul&eacute;es &agrave;
+partir des attributs LDAP (variables export&eacute;es). Elles &eacute;vitent
+de r&eacute;p&eacute;ter le m&ecirc;me calcul plusieurs fois dans la phase
+d'authentification. Exemple&nbsp;:</p>
+<pre>
+    # macros
+    nom_complet => \$givenname . " " . \$surname
+    admin => \$uid eq "foo" or \$uid eq "bar"
+    
+    # test.example.com - En-t&ecirc;tes
+    Nom => \$nom_complet
+    
+    # test.example.com - R&egrave;gles
+    ^/admin/ => \$admin
+EOT
+}
+
+sub help_storage_en {
+    print <<EOT;
+<h3>Sessions Storage</h3>
+<p> Lemonldap::NG sessions storage works with modules that inherits from
+Apache::Session. You have to set here the choosen module and add the
+corresponding parameters&nbsp;:</p>
+<p>Examples :</p>
+<ul>
+  <li>Module =&gt; Apache::Session::File, <br>options :
+    <ul>
+      <li> Directory =&gt; /var/cache/lemonldap</li>
+    </ul>
+  </li>
+  <li>Module =&gt; Apache::Session::MySQL, <br>options :
+    <ul>
+      <li> DataSource =&gt; DBI:mysql:database=lemon;host=1.2.3.4</li>
+      <li> UserName =&gt; Lemonldap
+      <li> Password =&gt; mypass
+      <li> timeout =&gt; 7200
+    </ul>
+  </li>
+</ul>
+<p>
+<b>Note</b>&nbsp;: if you use <tt><b>purgeCentralCache</b></tt> script provided
+ in the portal sources (to use in crontab), you can set the <b>timeout</b>
+ parameter to manage sessions end (7200 secondes by default).
+</p>
+EOT
+}
+
+sub help_storage_fr {
+    print <<EOT;
+<h3>Stockage des sessions</h3>
+<p> Le stockage des sessions Lemonldap::NG est r&eacute;alis&eacute; au travers des modules
+h&eacute;rit&eacute;s de Apache::Session. Vous devez indiquer ici le module choisi et
+indiquer les param&egrave;tres correspondants &agrave; ce module&nbsp;:</p>
+<p>Exemples :</p>
+<ul>
+  <li>Module =&gt; Apache::Session::File, <br>options :
+    <ul>
+      <li> Directory =&gt; /var/cache/lemonldap</li>
+    </ul>
+  </li>
+  <li>Module =&gt; Apache::Session::MySQL, <br>options :
+    <ul>
+      <li> DataSource =&gt; DBI:mysql:database=lemon;host=1.2.3.4</li>
+      <li> UserName =&gt; Lemonldap
+      <li> Password =&gt; mypass
+      <li> timeout =&gt; 7200
+    </ul>
+  </li>
+</ul>
+<p>
+<b>Note</b>&nbsp;: si vous utilisez le script <tt><b>purgeCentralCache</b></tt>
+ fourni dans les sources du portail (&agrave; mettre en crontab), vous pouvez ajouter
+ le param&egrave;tre <b>timeout</b> pour g&eacute;rer la destruction des sessions (7200
+ secondes par d&eacute;faut).
+</p>
+EOT
+}
+
 sub help_vars_en {
     print <<EOT;
 <h3>Variables (LDAP attributes)</h3>
@@ -134,58 +367,6 @@ pr&eacute;c&eacute;der du signe '\$'. Exemple&nbsp;:
 <pre>
   group1 =&gt; \$uid eq 'user1' or \$uid eq 'user2'
 </pre>
-EOT
-}
-
-sub help_authParams_en {
-    print <<EOT;
-<h3>Authentication Parameters</h3>
-This help chapter does not exist in english. If you want to help us, you can
-edit lib/Lemonldap/NG/Manager/Help.pm in lemonldap-ng source tree and send us
-your contribution.<br>
-Thanks.
-EOT
-}
-
-sub help_authParams_fr {
-    print <<EOT;
-<h3>Param&egrave;tres d'authentification</h3>
-<dl>
-<dt> Type d'authentification </dt>
-<dd> Le sch&eacute;ma classique d'authentification Lemonldap consiste &agrave; utiliser une
-authentification par LDAP. Vous pouvez changer ceci en ssl par exemple.</dd>
-
-<dt> Portail </dt>
-<dd> Indiquez ici l'URL ou seront renvoy&eacute;s les utilisateurs non authentifi&eacute;s.
-Cette URL doit bien sur correspondre &agrave; un portail utilisant
-Lemonldap::NG::Portal::SharedConf.</dd>
-
-<dt> Cookie s&eacute;curis&eacute; (SSL) </dt>
-<dd> Une fois authentifi&eacute;, l'utilisateur est reconnu par son cookie. Si tous
-les h&ocirc;tes virtuels de votre domaine son prot&eacute;g&eacute;s par SSL, mettez cette option
-&agrave; 1, ainsi le cookie ne sera pr&eacute;sent&eacute; par le navigateur qu'aux sites prot&eacute;g&eacute;s,
-ce qui &eacute;vite un vol de session.
-</dl>
-EOT
-}
-
-sub help_domain_en {
-    print <<EOT;
-<h3>Protected domain</h3>
-This help chapter does not exist in english. If you want to help us, you can
-edit lib/Lemonldap/NG/Manager/Help.pm in lemonldap-ng source tree and send us
-your contribution.<br>
-Thanks.
-EOT
-}
-
-sub help_domain_fr {
-    print <<EOT;
-<h3>Domaine prot&eacute;g&eacute;</h3>
-<p> Indiquez ici le nom du domaine (ou du sous-domaine) contenant vos
-applications &agrave; prot&eacute;ger.<br>
-ATTENTION : tous les h&ocirc;tes virtuels prot&eacute;g&eacute;s ainsi que le portail
-d'authentification doivent se trouver dans ce domaine.
 EOT
 }
 
@@ -281,143 +462,20 @@ comme suit&nbsp;: <tt>&lt;nom de l'en-t&ecirc;te&gt; =&gt; &lt;expression Perl&g
 EOT
 }
 
-sub help_macros_en {
+sub help_whatToTrace_en {
     print <<EOT;
-<h3>Macros</h3>
-<p> Macros are used to add new variables to user variables attributes). Those
-new variables are calculated from other variables issued from LDAP attributes.
-This mechanism avoid to do more than one time the same operation in the
-authentication phase. Example&nbsp;:</p>
-<pre>
-    # macros
-    long_name => \$givenname . " " . \$surname
-    admin     => \$uid eq "foo" or \$uid eq "bar"
-    
-    # test.example.com - Headers
-    Name      => \$long_name
-    
-    # test.example.com - Rules
-    ^/admin/ => \$admin
+<h3>What to log in Apache</h3>
+<p> Set here le name of the variable (attribute) or macro that has to be used
+in proected application Apache logs (don't forget "\$"). By default&nbsp;:
+\$uid</p>
 EOT
 }
 
-sub help_macros_fr {
+sub help_whatToTrace_fr {
     print <<EOT;
-<h3>Macros</h3>
-<p> Les macros permettent d'ajouter des variables calcul&eacute;es &agrave;
-partir des attributs LDAP (variables export&eacute;es). Elles &eacute;vitent
-de r&eacute;p&eacute;ter le m&ecirc;me calcul plusieurs fois dans la phase
-d'authentification. Exemple&nbsp;:</p>
-<pre>
-    # macros
-    nom_complet => \$givenname . " " . \$surname
-    admin => \$uid eq "foo" or \$uid eq "bar"
-    
-    # test.example.com - En-t&ecirc;tes
-    Nom => \$nom_complet
-    
-    # test.example.com - R&egrave;gles
-    ^/admin/ => \$admin
-EOT
-}
-
-sub help_ldap_en {
-    print <<EOT;
-<h3>LDAP Parameters</h3>
-<p>LDAP parameters are used to identify users. They must be set even if
-authentication is done by another system (SSL for example).</p>
-<ul>
-  <li>LDAP base : required (except if your server accepts the requests without
-   base). Example&nbsp;:
-  <pre>   dc=example, dc=com </pre></li>
-  <li>LDAP server port : 389 by default&nbsp;;</li>
-  <li>LDAP server : Name (or IP address) of the LDAP server. To use LDAPS, set
-   here&nbsp;:
-    <pre>   ldaps://server/</pre>
-   and don't forget to change port (636 for example)</li>
-  <li>LDAP account : optional, must be set if anonymous connection cannot
-   access to the wanted LDAP attributes. This account is used before LDAP
-   authentication to find user's dn&nbsp;;
-   </li>
-  <li>LDAP password : password corresponding to the account above.
-</ul>
-EOT
-}
-
-sub help_ldap_fr {
-    print <<EOT;
-<h3>Param&egrave;tres LDAP</h3>
-<p> Les param&egrave;tres LDAP servent &agrave; identifier les utilisateurs.
-Ils doivent &ecirc;tre renseign&eacute;s m&ecirc;me si l'authentification est
-r&eacute;alis&eacute;e par un autre moyen (SSL par exemple).</p>
-<ul>
-  <li>Base de recherche LDAP : obligatoire (&agrave; moins que votre serveur LDAP
-  accepte les requ&ecirc;tes sans base). Exemple&nbsp;:
-  <pre>   dc=example, dc=com </pre></li>
-  <li>Port du serveur LDAP : 389 par d&eacute;faut&nbsp;;</li>
-  <li>Serveur LDAP : Nom (ou adresse IP) du serveur LDAP. Pour une connexion
-      LDAPS, indiquez ici&nbsp;:
-      <pre>   ldaps://server/</pre>
-      et n'oubliez pas de changer le port (636 en général)</li>
-  <li>Compte de connexion LDAP : optionnel, &agrave; renseigner si les attributs LDAP
-    utilis&eacute;s ne sont pas accessibles par une session anonyme. Ce compte est
-    utilis&eacute; avant l'authentification pour trouver le dn de l'utilisateur&nbsp;;
-   </li>
-  <li>Mot de passe LDAP : mot de passe correspondant au compte ci-dessus.
-</ul>
-EOT
-}
-
-sub help_storage_en {
-    print <<EOT;
-<h3>Sessions Storage</h3>
-This help chapter does not exist in english. If you want to help us, you can
-edit lib/Lemonldap/NG/Manager/Help.pm in lemonldap-ng source tree and send us
-your contribution.<br>
-Thanks.
-EOT
-}
-
-sub help_storage_fr {
-    print <<EOT;
-<h3>Stockage des sessions</h3>
-<p> Le stockage des sessions Lemonldap::NG est r&eacute;alis&eacute; au travers des modules
-h&eacute;rit&eacute;s de Apache::Session. Vous devez indiquer ici le module choisi et
-indiquer les param&egrave;tres correspondants &agrave; ce module&nbsp;:</p>
-<p>Exemples :</p>
-<ul>
-  <li>Module =&gt; Apache::Session::File, <br>options :
-    <ul>
-      <li> Directory =&gt; /var/cache/lemonldap</li>
-    </ul>
-  </li>
-  <li>Module =&gt; Apache::Session::MySQL, <br>options :
-    <ul>
-      <li> DataSource =&gt; DBI:mysql:database=lemon;host=1.2.3.4</li>
-      <li> UserName =&gt; Lemonldap
-      <li> Password =&gt; mypass
-    </ul>
-  </li>
-</ul>
-EOT
-}
-
-sub help_cookieName_en {
-    print <<EOT;
-<h3>Cookie Name</h3>
-This help chapter does not exist in english. If you want to help us, you can
-edit lib/Lemonldap/NG/Manager/Help.pm in lemonldap-ng source tree and send us
-your contribution.<br>
-Thanks.
-EOT
-}
-
-sub help_cookieName_fr {
-    print <<EOT;
-<h3>Nom de cookie</h3>
-<p> Indiquez ici le nom du cookie ('lemonldap' par d&eacute;faut).<br>
-
-ATTENTION, tout changement n&eacute;cessite le red&eacute;marrage de tous les serveurs Apache
-h&eacute;bergeant des agents de protection Lemonldap::NG::Handler.</p>
+<h3>Donnée à journaliser dans Apache</h3>
+<p> Indiquez ici le nom de la variable (attribut) ou de la macro qui doit être
+utilisée pour alimenter les journaux Apache des applications protégées
+(n'oubliez pas le "\$"). Par défaut&nbsp;: \$uid</p>
 EOT
 }
