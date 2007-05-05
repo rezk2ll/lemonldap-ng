@@ -417,7 +417,7 @@ sub forbidden {
     return FORBIDDEN;
 }
 
-# hideCookie : hide Lemonldap cookie to the protected application
+# hideCookie : hide Lemonldap::NG cookie to the protected application
 sub hideCookie {
     my $class = shift;
     $class->lmLog( "$class: removing cookie", 'debug' );
@@ -521,7 +521,7 @@ sub run ($$) {
     $class->sendHeaders;
 
     # SECURITY
-    # Hide Lemonldap cookie
+    # Hide Lemonldap::NG cookie
     $class->hideCookie;
     OK;
 }
@@ -695,7 +695,7 @@ method itself.
 
 =item B<cookieName> (default: lemon)
 
-Name of the cookie used by the Lemonldap infrastructure.
+Name of the cookie used by the Lemonldap::NG infrastructure.
 
 =item B<portal> (required)
 

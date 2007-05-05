@@ -65,6 +65,10 @@ sub getConf {
     my ( $self, $args ) = @_;
     $args->{cfgNum} ||= $self->lastCfg;
     return undef unless $args->{cfgNum};
+    if ( $args->{cfgNum}<0 ) {
+        my @a = $self->available();
+        $args->{cfgNum} = ( @a + $args->{cfgNum} >0 ) ? ( $a[ $#a + $args->{cfgNum} ] ) : $a[0];
+    }
     my $fields = $self->load( $args->{cfgNum}, $args->{fields} );
     my $conf;
     while ( my ( $k, $v ) = each(%$fields) ) {
@@ -109,6 +113,13 @@ sub store {
 
 sub load {
     return &{$_[0]->{type}.'::load'}(@_);
+}
+
+sub delete {
+    my($self, $c) = @_;
+    my @a = $self->available();
+    return 0 unless ( @a + $c >0 );
+    return &{$self->{type}.'::delete'}( $self, $a[ $#a + $c ] );
 }
 
 1;

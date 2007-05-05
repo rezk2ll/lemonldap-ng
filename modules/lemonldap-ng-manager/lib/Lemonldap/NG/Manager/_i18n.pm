@@ -90,6 +90,10 @@ sub fr {
         areYouSure              => 'Etes vous sur ?',
         syntaxError             => 'Erreur de syntaxe, configuration refus&eacute;e. Consultez les journaux du serveur web.',
         whatToTrace             => "Donn&eacute;e &agrave; inscrire dans les journaux d'Apache",
+        deleteConf              => 'Effacer',
+        confirmDeleteConf       => "Vous allez effacer cette configuration. Confirmez-vous ?",
+        configurationDeleted    => 'Configuration &eacute;ffac&eacute;e',
+        configurationNotDeleted => 'Configuration non &eacute;ffac&eacute;e',
     };
 }
 
@@ -149,5 +153,9 @@ sub en {
         areYouSure              => 'Are you sure ?',
         syntaxError             => 'Syntax error, configuration refused. See web server logs for more.',
         whatToTrace             => "Attribute to use in Apache's logs",
+        deleteConf              => 'Delete',
+        confirmDeleteConf       => "You're going to delete configuration. Do you confirm ?",
+        configurationDeleted    => 'Configuration deleted',
+        configurationNotDeleted => 'Configuration not deleted',
     };
 }

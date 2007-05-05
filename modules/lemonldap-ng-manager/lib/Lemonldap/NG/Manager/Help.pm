@@ -54,7 +54,7 @@ sub help_authParams_fr {
 <h3>Param&egrave;tres d'authentification</h3>
 <dl>
 <dt> Type d'authentification </dt>
-<dd> Le sch&eacute;ma classique d'authentification Lemonldap;;NG consiste &agrave; utiliser une
+<dd> Le sch&eacute;ma classique d'authentification Lemonldap::NG consiste &agrave; utiliser une
 authentification par LDAP. Vous pouvez changer ceci en "SSL" par exemple.</dd>
 
 <dt> Portail </dt>
@@ -277,7 +277,7 @@ corresponding parameters&nbsp;:</p>
 <ul>
   <li>Module =&gt; Apache::Session::File, <br>options :
     <ul>
-      <li> Directory =&gt; /var/cache/lemonldap</li>
+      <li> Directory =&gt; /var/lib/lemonldap-ng/sessions</li>
     </ul>
   </li>
   <li>Module =&gt; Apache::Session::MySQL, <br>options :
@@ -307,7 +307,7 @@ indiquer les param&egrave;tres correspondants &agrave; ce module&nbsp;:</p>
 <ul>
   <li>Module =&gt; Apache::Session::File, <br>options :
     <ul>
-      <li> Directory =&gt; /var/cache/lemonldap</li>
+      <li> Directory =&gt; /var/lib/lemonldap-ng/sessions</li>
     </ul>
   </li>
   <li>Module =&gt; Apache::Session::MySQL, <br>options :

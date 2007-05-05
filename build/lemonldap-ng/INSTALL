@@ -168,8 +168,8 @@ else for a complete install:
 
 See prereq in §1.1.2
 
-2.3 - LEMONLDAP INSTALLATION
-----------------------------
+2.3 - LEMONLDAP::NG INSTALLATION
+--------------------------------
 
 2.3.1 - Database configuration
 
@@ -202,7 +202,7 @@ example with MySQL:
                         dbiPassword => "mypass",
                  } );
 
-Securise Manager access with Apache: Lemonldap does not securise the manager
+Securise Manager access with Apache: Lemonldap::NG does not securise the manager
 itself yet:
 
   SSLEngine On

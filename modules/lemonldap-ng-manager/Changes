@@ -9,6 +9,7 @@ Revision history for Perl extension Lemonldap::NG::Manager.
 	- whatToTrace parameter in configuration interface
 	- Fix tree bug when an hash ref is not defined
 	- More tests
+	- Next and previous conf
 
 0.61  Thu Mar 29 21:45:44 2007
 	- configuration is checked before saving

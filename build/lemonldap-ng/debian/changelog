@@ -9,6 +9,7 @@ lemonldap-ng (0.8.1.2) unstable; urgency=low
   * New debian structure: lemonldap-ng is splitted in 5 packages, default
     configuration file has moved to /var/lib/lemonldap-ng/conf/ and first
     configuration file is managed by debconf
+  * Buttons to manage configurations in manager (next, previous, last, delete)
 
  -- Xavier Guimard <x.guimard@free.fr>  Thu, 03 May 2007 10:39:51 +0200
 

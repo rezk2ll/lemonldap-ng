@@ -40,7 +40,7 @@ foreach(keys %$headers) {
     </tr>\n"
 }
 print '</table>
-<p>Note that lemonldap cookie is hidden. So that application developpers can
+<p>Note that Lemonldap::NG cookie is hidden. So that application developpers can
 not spoof sessions.</p>
 <p>You can access to any information (IP address or LDAP attribute) by customizing
 exported headers with the

@@ -100,7 +100,7 @@ sub error {
     return &Lemonldap::NG::Portal::_i18n::error( $self->{error}, $ENV{HTTP_ACCEPT_LANGUAGE} );
 }
 
-# Private sub used to bind to LDAP server both with Lemonldap account and user
+# Private sub used to bind to LDAP server both with Lemonldap::NG account and user
 # credentials if LDAP authentication is used
 sub _bind {
     my ( $ldap, $dn, $password ) = @_;
@@ -276,7 +276,7 @@ sub connectLDAP {
     PE_OK;
 }
 
-# 6. LDAP bind with Lemonldap account or anonymous unless defined
+# 6. LDAP bind with Lemonldap::NG account or anonymous unless defined
 sub bind {
     my $self = shift;
     $self->connectLDAP unless ( $self->{ldap} );
@@ -338,7 +338,7 @@ sub setGroups {
     PE_OK;
 }
 
-# 11. Now, LDAP will not be used by Lemonldap except for LDAP
+# 11. Now, LDAP will not be used by Lemonldap::NG except for LDAP
 #     authentication scheme
 sub unbind {
     my $self = shift;
@@ -520,7 +520,7 @@ default, anonymous bind is used.
 
 =item * securedCookie: set it to 1 if you want to protect user cookies
 
-=item * cookieName: name of the cookie used by Lemonldap (lemon by default)
+=item * cookieName: name of the cookie used by Lemonldap::NG (lemon by default)
 
 =item * domain: cookie domain. You may have to give it else the SSO will work
 only on your server.
@@ -543,13 +543,13 @@ be set to:
 
 =head2 Methods that can be overloaded
 
-All the functions above can be overloaded to adapt Lemonldap to your
+All the functions above can be overloaded to adapt Lemonldap::NG to your
 environment. They MUST return one of the exported constants (see above)
 and are called in this order by process().
 
 =head3 controlUrlOrigin
 
-If the user was redirected by a Lemonldap NG handler, stores the url that will be
+If the user was redirected by a Lemonldap::NG handler, stores the url that will be
 used to redirect the user after authentication.
 
 =head3 controlExistingSession
@@ -620,7 +620,7 @@ Disconnects from the LDAP server.
 
 =head3 buildCookie
 
-Creates the Lemonldap cookie.
+Creates the Lemonldap::NG cookie.
 
 =head3 log
 
@@ -647,11 +647,11 @@ Non-object method used to bind to the ldap server.
 
 =head3 header
 
-Overloads the CGI::header method to add Lemonldap cookie.
+Overloads the CGI::header method to add Lemonldap::NG cookie.
 
 =head3 redirect
 
-Overloads the CGI::redirect method to add Lemonldap cookie.
+Overloads the CGI::redirect method to add Lemonldap::NG cookie.
 
 =head2 EXPORT
 

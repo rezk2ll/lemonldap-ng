@@ -8,7 +8,7 @@ use AutoLoader qw(AUTOLOAD);
 require Lemonldap::NG::Manager::_i18n;
 use Lemonldap::NG::Manager::Conf::Constants;
 
-our $VERSION = '0.26';
+our $VERSION = '0.27';
 
 # TODO: Delete buttons in headers and rules if 'read-only'
 
@@ -81,15 +81,18 @@ sub javascript {
                newRule newHeader httpHeaders waitingResult unknownError
                configurationWasChanged configLoaded warningConfNotApplied
                applyConf prevConf lastConf nextConf deleteVirtualHost
-               areYouSure syntaxError)) {
+               areYouSure syntaxError deleteConf confirmDeleteConf)) {
         $text{$_} = &{"txt_$_"};
         $text{$_} =~s/'/\\'/g;
     }
     print qq#
-function loadConf() {
+function loadConf(n) {
   document.body.style.cursor='wait';
+  document.getElementById('treeBox').innerHTML='';
+  tree=new dhtmlXTreeObject(document.getElementById('treeBox'),"100%","100%",0);
+  tree.setImagePath("$self->{dhtmlXTreeImageLocation}");
   tree.setXMLAutoLoading("$ENV{SCRIPT_NAME}?lmQuery=conf");
-  tree.loadXML("$ENV{SCRIPT_NAME}?lmQuery=conf");
+  tree.loadXML("$ENV{SCRIPT_NAME}?lmQuery=conf&cfgNum="+n);
   tree.setOnClickHandler(onNodeSelect);
   tree.selectItem('virtualHosts',true,false);
   document.getElementById('help').innerHTML='<h3>$text{configLoaded}</h3>';
@@ -106,9 +109,7 @@ window.onload=function(){
   s3=new xSplitter('idSplitter3',0,0,w,h,true,4,w/4,w/8,true,4,null,s32);
   X.addEventListener(window,'resize',win_onresize,false);
   document.getElementById('help').innerHTML='<h3>$text{waitingResult}</h3>';
-  tree=new dhtmlXTreeObject(document.getElementById('treeBox'),"100%","100%",0);
-  tree.setImagePath("$self->{dhtmlXTreeImageLocation}");
-  loadConf();
+  loadConf(0);
 };
 
 function win_onresize(){
@@ -201,9 +202,10 @@ function onNodeSelect(nodeId) {
   }
   if(tree.getUserData(nodeId,"modif")=='both') but+=button('$text{deleteNode}','deleteNode',nodeId);
   but+=button('$text{saveConf}','saveConf',nodeId);
-  /*if(nodeId == 'root') but+=button('$text{prevConf}','prevConf',nodeId)
+  if(nodeId == 'root') but+=button('$text{prevConf}','prevConf',nodeId)
                            +button('$text{nextConf}','nextConf',nodeId)
-                           +button('$text{lastConf}','lastConf',nodeId);*/
+                           +button('$text{lastConf}','lastConf',nodeId)
+                           +button('$text{deleteConf}','deleteConf',nodeId);
   #;
     if( $self->{applyConfFile} ) {
         print "but+=button('$text{applyConf}','applyConf',nodeId);";
@@ -368,10 +370,35 @@ function applyConf(){
   xhr_object.send(null);
 }
 
+var previous = 0;
 function prevConf(){
+  previous--;
+  loadConf(previous);
 }
 
 function nextConf(){
+  if(previous<0){
+    previous++;
+    loadConf(previous);
+  }
+}
+
+function lastConf(){
+  previous=0;
+  loadConf(0);
+}
+
+function deleteConf(){
+  if(!(confirm('$text{confirmDeleteConf}'))) return 0;
+  previous=0;
+  xhr_object.open('GET', "$ENV{SCRIPT_NAME}?lmQuery=delete&cfgNum="+previous,true);
+  xhr_object.onreadystatechange = function() { 
+    if(xhr_object.readyState == 4){
+      document.getElementById('help').innerHTML=xhr_object.responseText;
+      loadConf(0);
+    } 
+  }
+  xhr_object.send(null);
 }
 
 function ec(s){

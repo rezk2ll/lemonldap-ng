@@ -6,7 +6,7 @@ use Storable qw(freeze thaw);
 use MIME::Base64;
 use Lemonldap::NG::Manager::Conf::Constants;
 
-our $VERSION = 0.13;
+our $VERSION = 0.14;
 
 sub prereq {
     my $self = shift;
@@ -104,6 +104,11 @@ sub load {
         return 0;
     }
     return $row;
+}
+
+sub delete {
+    my ( $self, $cfgNum ) = @_;
+    $self->dbh->do( "DELETE from " . $self->{dbiTable} . " WHERE cfgNum=$cfgNum" );
 }
 
 sub logError {

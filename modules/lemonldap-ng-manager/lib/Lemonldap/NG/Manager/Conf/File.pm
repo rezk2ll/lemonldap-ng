@@ -3,7 +3,7 @@ package Lemonldap::NG::Manager::Conf::File;
 use strict;
 use Lemonldap::NG::Manager::Conf::Constants;
 
-our $VERSION = 0.21;
+our $VERSION = 0.22;
 
 sub prereq {
     my $self = shift;
@@ -94,6 +94,11 @@ sub load {
     }
     close FILE;
     return $f;
+}
+
+sub delete {
+    my ( $self, $cfgNum ) = @_;
+    unlink ( $self->{dirName} . "/lmConf-$cfgNum" );
 }
 
 __END__

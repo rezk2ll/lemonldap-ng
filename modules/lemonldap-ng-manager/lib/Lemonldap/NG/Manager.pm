@@ -100,11 +100,27 @@ sub print_help {
     eval { no strict "refs"; &{"help_$chap"} };
 }
 
+# Delete subroutine
+
+sub print_delete {
+    my $self = shift;
+    print $self->header;
+    Lemonldap::NG::Manager::Help::import( $ENV{HTTP_ACCEPT_LANGUAGE} )
+      unless ( $self->can('help_groups') );
+    if ( $self->config->delete ( $self->param ( 'cfgNum' ) ) ) {
+        print &txt_configurationDeleted;
+    }
+    else {
+        print &txt_configurationNotDeleted;
+    }
+    exit;
+}
+
 # Configuration download subroutines
 sub print_conf {
     my $self = shift;
     print $self->header( -type => "text/xml", '-Cache-Control' => 'private' );
-    $self->printXmlConf;
+    $self->printXmlConf( { cfgNum => $self->param ( 'cfgNum' ), } );
     exit;
 }
 
@@ -118,7 +134,7 @@ sub default {
 sub printXmlConf {
     my $self   = shift;
     print XMLout(
-        $self->buildTree,
+        $self->buildTree( @_ ),
         #XMLDecl  => "<?xml version='1.0' encoding='iso-8859-1'?>",
         RootName => 'tree',
         KeyAttr  => { item => 'id', username => 'name' },
@@ -128,7 +144,7 @@ sub printXmlConf {
 
 sub buildTree {
     my $self   = shift;
-    my $config = $self->config->getConf();
+    my $config = $self->config->getConf( @_ );
     $config = $self->default unless ($config);
     my $tree = {
         id   => '0',
