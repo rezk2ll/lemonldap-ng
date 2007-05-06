@@ -193,7 +193,6 @@ sub controlExistingSession {
         }
 
         # Logout if required
-        # TODO: logout documentation
         if($self->param('logout')) {
             # Delete session in global storage
             tied(%h)->delete;

@@ -5,7 +5,7 @@ use SOAP::Transport::HTTP;
 use Lemonldap::NG::Manager::Conf;
 use UNIVERSAL qw(isa);
 
-our $VERSION = "0.1";
+our $VERSION = "0.2";
 
 # Initialization
 
@@ -42,8 +42,8 @@ sub new {
 sub init {
     my $self = shift;
     if( $self->{type} eq 'sessions' ) {
-        $Lemonldap::NG::Manager::SOAPService::Sessions::authorizatedFunc =
-          $self->{authorizatedFunc} || 'get';
+        $Lemonldap::NG::Manager::SOAPService::Sessions::authorizedFunctions =
+          $self->{AuthorizedFunctions} || 'get';
         $Lemonldap::NG::Manager::SOAPService::Sessions::config = $self;
     }
     else {
@@ -99,17 +99,23 @@ sub load {
 package Lemonldap::NG::Manager::SOAPService::Sessions;
 
 our $config;
-our $authorizedFunc = 'get';
+our $authorizedFunctions = 'get';
 
 sub newsession {
-    return 0 unless( $authorizedFunc =~ /\bnew\b/ );
+    unless( $authorizedFunctions =~ /\bnew\b/ ) {
+        print STDERR "Lemonldap::NG::Manager::SOAPService: 'new' is not authorized. Set 'AuthorizedFunctions' parameter if needed.\n";
+        return 0;
+    }
     my( $class, $args ) = @_;
     $args ||= {};
     my %h;
     eval {
         tie %h, $config->{realSessionStorage}, undef, $config->{realSessionStorageOptions};
     };
-    return 0 if ($@);
+    if ($@) {
+        print STDERR "Lemonldap::NG::Manager::SOAPService: $@\n";
+        return 0;
+    }
     # my $id = $h{_session_id};
     $h{$_} = $args->{$_} foreach ( keys %{ $args } );
     $h{_utime} = time();
@@ -119,8 +125,7 @@ sub newsession {
 }
 
 sub get {
-    print STDERR "get\n";
-    return 0 unless( $authorizedFunc =~ /\bget\b/ );
+    return 0 unless( $authorizedFunctions =~ /\bget\b/ );
     my( $class, $id ) = @_;
     my %h;
     eval {
@@ -135,7 +140,7 @@ sub get {
 }
 
 sub set {
-    return 0 unless( $authorizedFunc =~ /\bset\b/ );
+    return 0 unless( $authorizedFunctions =~ /\bset\b/ );
     my( $class, $id, $args ) = @_;
     my %h;
     eval {
@@ -168,7 +173,10 @@ Lemonldap::NG Web-SSO configuration or sessions via SOAP.
               # 2 types are available :
               #   * 'config' for configuration access
               #   * 'sessions' for sessions access
-              type          => 'config', 
+              type          => 'sessions',
+              # For 'sessions' type, you can choose exported functions (get
+              # only by default):
+              AuthorizedFunctions => 'new get set',
   );
 
 =head2 Client side
@@ -196,6 +204,9 @@ sessions access.
       configStorage       => {
                 type  => 'SOAP',
                 proxy => 'http://manager.example.com/soapserver.pl',
+                # If soapserver is protected by HTTP Basic:
+                User     => 'http-user',
+                Password => 'pass',
       },
       https               => 0,
   } );
@@ -208,6 +219,9 @@ sessions access.
           configStorage => {
                   type    => 'SOAP',
                   proxy   => 'http://localhost/devel/test.pl',
+                  # If soapserver is protected by HTTP Basic:
+                  User     => 'http-user',
+                  Password => 'pass',
           }
   });
   # Next as usual...
@@ -223,6 +237,9 @@ sessions access.
            configStorage=>{
                   type  => 'SOAP',
                   proxy => 'http://localhost/devel/test.pl'
+                  # If soapserver is protected by HTTP Basic:
+                  User     => 'http-user',
+                  Password => 'pass',
            },
             dhtmlXTreeImageLocation=> "/imgs/",
         }
@@ -265,7 +282,11 @@ overload this package.
 Since Lemonldap::NG::Manager::SOAPServer act as a CGI, you can protect
 configuration access by any of the HTTP protection mecanisms.
 See L<Lemonldap::NG::Manager::Conf::SOAP> for the security in the client
-side. 
+side.
+
+In "session" mode, you can control what functions can be used by SOAP. By
+default, only "get" can be used: it means that only handlers can work with it.
+Use "AuthorizedFunctions" parameter to grant other functions.
 
 =head1 SEE ALSO
 

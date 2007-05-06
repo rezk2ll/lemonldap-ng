@@ -1,5 +1,10 @@
 Revision history for Perl extension Lemonldap::NG::Manager.
 
+0.65  Sun May 6 16:15:49 2007
+	- SOAP: HTTP basic authentication and little bug correction in 'sessions'
+	  mode
+	- More tests in conf
+
 0.64  Sun Apr 29 16:18:31 2007
 	- File permissions fix to 0640 in File.pm
 	- Multiple configuration in the same server is now possible

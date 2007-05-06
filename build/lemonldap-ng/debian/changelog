@@ -10,8 +10,10 @@ lemonldap-ng (0.8.1.2) unstable; urgency=low
     configuration file has moved to /var/lib/lemonldap-ng/conf/ and first
     configuration file is managed by debconf
   * Buttons to manage configurations in manager (next, previous, last, delete)
+  * SOAP: HTTP basic authentication and little bug correction in 'sessions'
+    mode
 
- -- Xavier Guimard <x.guimard@free.fr>  Thu, 03 May 2007 10:39:51 +0200
+ -- Xavier Guimard <x.guimard@free.fr>  Sun, 06 May 2007 16:18:40 +0200
 
 lemonldap-ng (0.8.1.1) unstable; urgency=low
 

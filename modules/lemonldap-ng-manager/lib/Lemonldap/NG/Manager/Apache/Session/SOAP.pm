@@ -3,15 +3,20 @@ package Lemonldap::NG::Manager::Apache::Session::SOAP;
 use strict;
 use SOAP::Lite;
 
-our $VERSION = 0.1;
+our $VERSION = 0.2;
 
 # Variables shared with SOAP::Transport::HTTP::Client
-my ( $username, $password );
+our ( $user, $password ) = ( '', '' );
+
+BEGIN {
+    sub SOAP::Transport::HTTP::Client::get_basic_credentials {
+        return $Lemonldap::NG::Manager::Apache::Session::SOAP::user => $Lemonldap::NG::Manager::Apache::Session::SOAP::password;
+    }
+}
 
 # PUBLIC INTERFACE
 
 sub TIEHASH {
-    print STDERR "TIEHASH\n";
     my $class = shift;
 
     my $session_id = shift;
@@ -26,7 +31,7 @@ sub TIEHASH {
     foreach (qw(proxy proxyOptions)) {
         $self->{$_} = $args->{$_};
     }
-    ($username, $password) = ( $args->{username}, $args->{password} );
+    ( $user, $password ) = ( $args->{User}, $args->{Password} );
     bless $self, $class;
 
     if (defined $session_id  && $session_id) {
@@ -41,14 +46,12 @@ sub TIEHASH {
 }
 
 sub FETCH {
-    print STDERR "FETCH\n";
     my $self = shift;
     my $key  = shift;
     return $self->{data}->{$key};
 }
 
 sub STORE {
-    print STDERR "STORE\n";
     my $self  = shift;
     my $key   = shift;
     my $value = shift;
@@ -59,7 +62,6 @@ sub STORE {
 }
 
 sub DELETE {
-    print STDERR "DELETE\n";
     my $self = shift;
     my $key  = shift;
 
@@ -69,7 +71,6 @@ sub DELETE {
 }
 
 sub CLEAR {
-    print STDERR "CLEAR\n";
     my $self = shift;
 
     $self->{modified} = 1;
@@ -78,27 +79,23 @@ sub CLEAR {
 }
 
 sub EXISTS {
-    print STDERR "EXISTS\n";
     my $self = shift;
     my $key  = shift;
     return exists $self->{data}->{$key};
 }
 
 sub FIRSTKEY {
-    print STDERR "FIRESTKEY\n";
     my $self = shift;
     my $reset = keys %{$self->{data}};
     return each %{$self->{data}};
 }
 
 sub NEXTKEY {
-    print STDERR "NEXTKEY\n";
     my $self = shift;
     return each %{$self->{data}};
 }
 
 sub DESTROY {
-    print STDERR "DESTROY\n";
     my $self = shift;
     $self->save;
 }
@@ -139,14 +136,6 @@ sub save {
     return $self->_soapCall( "set", $self->{_session_id}, $self->{data} );
 }
 
-BEGIN {
-    sub SOAP::Transport::HTTP::Client::get_basic_credentials {
-        return $username => $password;
-    }
-}
-
-# TODO: test and documentation of authentication
-
 1;
 __END__
 
@@ -173,6 +162,9 @@ access to Lemonldap::NG Web-SSO sessions via SOAP.
                  proxyOptions => {
                      timeout => 5,
                  },
+                 # If soapserver is protected by HTTP Basic:
+                 User     => 'http-user',
+                 Password => 'pass',
          },
          configStorage       => {
              ... # See Lemonldap::NG::Handler
@@ -187,8 +179,11 @@ access to Lemonldap::NG Web-SSO sessions via SOAP.
                  proxyOptions => {
                      timeout => 5,
                  },
+                 # If soapserver is protected by HTTP Basic:
+                 User     => 'http-user',
+                 Password => 'pass',
          },
-        configStorage => {
+         configStorage => {
              ... # See Lemonldap::NG::Portal
 
 You can also set parameters corresponding to "Apache::Session module" in the
@@ -211,8 +206,9 @@ Apache::Session module (set as Lemonldap::NG::Manager::SOAPServer parameter).
 
 As Lemonldap::NG::Manager::Conf::SOAP use SOAP::Lite, you have to see
 L<SOAP::Transport> to know arguments that can be passed to C<proxyOptions>.
+Lemonldap::NG provides a system for HTTP basic authentication.
 
-Example :
+Examples :
 
 =over
 
@@ -225,13 +221,6 @@ C<>SOAP::Transport::HTTP::Client::get_basic_credentials>:
   
   use base Lemonldap::NG::Handler::SharedConf;
   
-  # AUTHENTICATION
-  BEGIN {
-    sub SOAP::Transport::HTTP::Client::get_basic_credentials {
-      return 'username' => 'password';
-    }
-  }
-  
   __PACKAGE__->init ( {
       localStorage        => "Cache::FileCache",
       localStorageOptions => {
@@ -241,6 +230,8 @@ C<>SOAP::Transport::HTTP::Client::get_basic_credentials>:
       configStorage       => {
                 type  => 'SOAP',
                 proxy => 'http://manager.example.com/soapserver.pl',
+                User     => 'http-user',
+                Password => 'pass',
       },
       https               => 1,
   } );

@@ -1,3 +1,4 @@
+debian/tmp/usr/share/perl5/Lemonldap/NG/Manager/Apache/*
 debian/tmp/usr/share/perl5/Lemonldap/NG/Manager/Conf*
 debian/tmp/usr/share/man/man3/Lemonldap::NG::Manager::Conf*
 debian/tmp/usr/share/man/man1/lmConfig_File2MySQL.1p

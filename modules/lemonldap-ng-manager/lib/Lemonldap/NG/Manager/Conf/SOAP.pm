@@ -3,7 +3,17 @@ package Lemonldap::NG::Manager::Conf::SOAP;
 use strict;
 use SOAP::Lite;
 
-our $VERSION = 0.11;
+our $VERSION = 0.2;
+
+BEGIN {
+    *Lemonldap::NG::Manager::Conf::_soapCall = \&_soapCall;
+    *Lemonldap::NG::Manager::Conf::_connect = \&_connect;
+    sub SOAP::Transport::HTTP::Client::get_basic_credentials {
+       return $Lemonldap::NG::Manager::Conf::SOAP::username => $Lemonldap::NG::Manager::Conf::SOAP::password;
+    }
+}
+
+our ( $username, $password ) = ( '', '' );
 
 sub prereq {
     my $self = shift;
@@ -28,6 +38,8 @@ sub _connect {
 sub _soapCall {
     my $self = shift;
     my $func = shift;
+    $username = $self->{User};
+    $password = $self->{Password};
     return $self->_connect->$func(@_)->result;
 }
 
@@ -92,8 +104,11 @@ Lemonldap::NG Web-SSO configuration via SOAP.
                 'default_expires_in' => 600,
       },
       configStorage       => {
-                type  => 'SOAP',
-                proxy => 'http://manager.example.com/soapserver.pl',
+                type     => 'SOAP',
+                proxy    => 'http://manager.example.com/soapserver.pl',
+                # If soapserver is protected by HTTP Basic:
+                User     => 'http-user',
+                Password => 'pass',
       },
       https               => 0,
   } );
@@ -106,6 +121,9 @@ Lemonldap::NG Web-SSO configuration via SOAP.
           configStorage => {
                   type    => 'SOAP',
                   proxy   => 'http://localhost/devel/test.pl',
+                  # If soapserver is protected by HTTP Basic:
+                  User     => 'http-user',
+                  Password => 'pass',
           }
   });
   # Next as usual... See Lemonldap::NG::Portal(3)
@@ -121,6 +139,9 @@ Lemonldap::NG Web-SSO configuration via SOAP.
            configStorage=>{
                   type  => 'SOAP',
                   proxy => 'http://localhost/devel/test.pl'
+                  # If soapserver is protected by HTTP Basic:
+                  User     => 'http-user',
+                  Password => 'pass',
            },
             dhtmlXTreeImageLocation=> "/imgs/",
         }
@@ -152,26 +173,17 @@ configuration via SOAP.
 
 As Lemonldap::NG::Manager::Conf::SOAP use SOAP::Lite, you have to see
 L<SOAP::Transport> to know arguments that can be passed to C<proxyOptions>.
+Lemonldap::NG provides a system for HTTP basic authentication.
 
-Example :
+Examples :
 
 =over
 
 =item * HTTP Basic authentication
 
-SOAP::transport can use basic authentication by rewriting
-C<>SOAP::Transport::HTTP::Client::get_basic_credentials>:
-
   package My::Package;
   
   use base Lemonldap::NG::Handler::SharedConf;
-  
-  # AUTHENTICATION
-  BEGIN {
-    sub SOAP::Transport::HTTP::Client::get_basic_credentials {
-      return 'username' => 'password';
-    }
-  }
   
   __PACKAGE__->init ( {
       localStorage        => "Cache::FileCache",
@@ -182,6 +194,8 @@ C<>SOAP::Transport::HTTP::Client::get_basic_credentials>:
       configStorage       => {
                 type  => 'SOAP',
                 proxy => 'http://manager.example.com/soapserver.pl',
+                User     => 'http-user',
+                Password => 'pass',
       },
       https               => 1,
   } );

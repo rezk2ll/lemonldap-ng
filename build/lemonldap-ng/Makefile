@@ -94,18 +94,20 @@ example: all
 	@echo "1 - Add this in your Apache configuration file:"
 	@echo "    with Apache-1.3.x"
 	@echo
-	@echo "    include ${EXAMPLEDIR}apache.conf"
+	@echo "      include ${EXAMPLEDIR}apache.conf"
 	@echo
 	@echo "    or with Apache-2.x:"
 	@echo
-	@echo "    include ${EXAMPLEDIR}apache2.conf"
+	@echo "      include ${EXAMPLEDIR}apache2.conf"
 	@echo
-	@echo "2 - Add test.example.com and auth.example.com in yout /etc/hosts :"
+	@echo "2 - Add test.example.com and auth.example.com in your /etc/hosts or"
+	@echo "    modify apache.conf to use NameVirtualHost, different port or"
+	@echo "    address;"
 	@echo
 	@echo "    cat ${EXAMPLEDIRBUILD}/for_etc_hosts >> /etc/hosts"
 	@echo
-	@echo "3 - edit ${EXAMPLEDIR}/conf/lmConf-1 and set ldapServer and ldapBase."
-	@echo "    or use the manager at http://manager.example.com/ (after apache restart)"
+	@echo "3 - Use the manager at http://manager.example.com/ (after apache restart)"
+	@echo "    or edit ${EXAMPLEDIR}/conf/lmConf-1 and set ldapServer and ldapBase."
 	@echo
 	@echo "4 - Restart Apache (or Apache2)"
 	@echo

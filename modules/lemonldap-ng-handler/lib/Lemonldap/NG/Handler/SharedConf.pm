@@ -253,8 +253,6 @@ local store.
 L<Lemonldap::NG::Handler>, L<Lemonldap::NG::Manager>, L<Lemonldap::NG::Portal>,
 http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Presentation
 
-=back
-
 =head1 AUTHOR
 
 Xavier Guimard, E<lt>x.guimard@free.frE<gt>
