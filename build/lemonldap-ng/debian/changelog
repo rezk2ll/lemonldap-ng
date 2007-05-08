@@ -1,4 +1,4 @@
-lemonldap-ng (0.8.1.2) unstable; urgency=low
+lemonldap-ng (0.8.2) unstable; urgency=low
 
   * Little bug fix if whatToTrace parameter is not defined and display it in
     Manager interface
@@ -9,11 +9,12 @@ lemonldap-ng (0.8.1.2) unstable; urgency=low
   * New debian structure: lemonldap-ng is splitted in 5 packages, default
     configuration file has moved to /var/lib/lemonldap-ng/conf/ and first
     configuration file is managed by debconf
-  * Buttons to manage configurations in manager (next, previous, last, delete)
+  * Buttons to manage configurations in manager (next, previous, last,
+    delete). Closes: #306566 / forge.lemonldap.org.
   * SOAP: HTTP basic authentication and little bug correction in 'sessions'
     mode
 
- -- Xavier Guimard <x.guimard@free.fr>  Sun, 06 May 2007 16:18:40 +0200
+ -- Xavier Guimard <x.guimard@free.fr>  Mon, 07 May 2007 19:06:52 +0200
 
 lemonldap-ng (0.8.1.1) unstable; urgency=low
 
