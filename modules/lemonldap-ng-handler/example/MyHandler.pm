@@ -7,9 +7,9 @@ __PACKAGE__->init ( {
     localStorageOptions => {
               'namespace'          => 'MyNamespace',
               'default_expires_in' => 600,
-	      'directory_umask'    => '007',
-	      'cache_root'         => '/tmp',
-	      'cache_depth'        => 5,
+              'directory_umask'    => '007',
+              'cache_root'         => '/tmp',
+              'cache_depth'        => 5,
     },
 
     configStorage       => {

@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Linux/x86 (vers 1 September 2005), see www.w3.org" />
+
+  <title>FAQ LEMONLDAP::NG</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+</head>
+
+<body>
+  <div class="main-content">
+    <h2 class="heading-1"><span id="HINSTALLATIONDEL27EXEMPLE">INSTALLATION DE
+    L'EXEMPLE</span></h2>
+
+    <p class="paragraph"></p>
+
+    <ul>
+      <li>
+        <a href="#HPREREQUIS">PRE REQUIS</a>
+
+        <ul>
+          <li><a href="#HLogiciels">Logiciels</a></li>
+
+          <li><a href="#HModulesPerlrequis">Modules Perl requis</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <a href="#HCOMPILATION">COMPILATION</a>
+
+        <ul>
+          <li><a href="#HInstallationcomplC3A8te">Installation
+          compl&egrave;te</a></li>
+
+          <li><a href="#HInstallationsurDebian">Installation sur
+          Debian</a></li>
+        </ul>
+      </li>
+
+      <li><a href="#HCONFIGURATIONDEL27EXEMPLE">CONFIGURATION DE
+      L'EXEMPLE</a></li>
+    </ul>L'exemple propos&eacute; utilise un site prot&eacute;g&eacute;
+    nomm&eacute; test.example.com. Les utilisateurs non-authentifi&eacute;s
+    sont redirig&eacute;s vers auth.example.com.
+
+    <h3 class="heading-1-1"><span id="HPREREQUIS">PRE REQUIS</span></h3>
+
+    <h4 class="heading-1-1-1"><span id="HLogiciels">Logiciels</span></h4>
+
+    <p class="paragraph"></p>Pour utiliser Lemonldap::NG, vous devez disposer
+    d'un server LDAP et d'un server Apache compil&eacute; avec le module
+    mod-perl (version 1.3 ou 2.x). G&eacute;n&eacute;ralement, la version
+    d'Apache propos&eacute;e par votre distribution Linux est suffisante, mais
+    certaines distributions utilisent une version exp&eacute;rimentale de
+    mod_perl2 avec Apache2 (mod_perl-1.99) qui ne fonctionne pas avec
+    Lemonldap::NG. Avec de telles distributions (Debian-3.1 par exemple), vous
+    devez utiliser Apache-1.3 ou utiliser des backports mod_perl, CGI.pm et
+    CGI/Cookie.pm (les paquets Debian du site www.backports.org fonctionnent
+    tr&egrave;s bien).
+
+    <h4 class="heading-1-1-1"><span id="HModulesPerlrequis">Modules Perl
+    requis</span></h4>
+
+    <p class="paragraph"></p>Apache::Session, Net::LDAP, MIME::Base64, CGI,
+    LWP::UserAgent, Cache::Cache, DBI, XML::Simple, SOAP::Lite (only if you
+    want to use SOAP with the manager).
+
+    <p class="paragraph"></p>Sur Debian, lancez:
+
+    <div class="code">
+      <pre>
+apt-get install libapache-session-perl libnet-ldap-perl libcache-cache-perl libdbi-perl perl-modules libwww-perl libcache-cache-perl libxml-simple-perl
+# et si vous souhaitez utiliser les fonctionnalit&eacute;s SOAP du manager:
+apt-get install libsoap-lite-perl
+</pre>
+    </div>
+
+    <h3 class="heading-1-1"><span id="HCOMPILATION">COMPILATION</span></h3>
+
+    <h4 class="heading-1-1-1"><span id="HInstallationcomplC3A8te">Installation
+    compl&egrave;te</span></h4>
+
+    <p class="paragraph"></p>
+
+    <div class="code">
+      <pre>
+$ tar xzf lemonldap-ng-*.tar.gz
+$ cd lemonldap-ng-*
+$ make &amp;&amp; make test
+$ sudo make install
+$ make example
+</pre>
+    </div>
+
+    <h4 class="heading-1-1-1"><span id="HInstallationsurDebian">Installation
+    sur Debian</span></h4>
+
+    <p class="paragraph"></p>
+
+    <div class="code">
+      <pre>
+$ tar xzf lemonldap-ng-*.tar.gz
+$ cd lemonldap-ng-*
+$ debuild
+$ sudo dpkg -i ../lemonldap-ng*.deb
+</pre>
+    </div>
+
+    <h3 class="heading-1-1"><span id=
+    "HCONFIGURATIONDEL27EXEMPLE">CONFIGURATION DE L'EXEMPLE</span></h3>
+
+    <p class="paragraph"></p>Apr&egrave;s compilation, vous disposez d'un
+    fichier example/apache.conf. Vous avez simplement &agrave; l'inclure dans
+    le fichier de configuration d'Apache:
+
+    <p class="paragraph"></p>
+
+    <div class="code">
+      <pre>
+# Apache-1.3: add <span class="java-keyword">this</span> to httpd.conf
+include /path/to/lemonldap-ng/source/example/apache.conf
+# Apache-2.x:
+include /path/to/lemonldap-ng/source/example/apache2.conf
+# Debian Apache-1.3
+ln -s /usr/share/doc/lemonldap-ng/example/apache.conf /etc/apache/conf.d/test.conf
+# or with Apache-2.x
+ln -s /usr/share/doc/lemonldap-ng/example/apache2.conf /etc/apache2/sites-enabled/test.conf
+</pre>
+    </div>
+
+    <p class="paragraph"></p>Modifiez votre fichier /etc/hosts pour y ajouter:
+
+    <p class="paragraph"></p>
+
+    <div class="code">
+      <pre>
+127.0.0.2       auth.example.com
+127.0.0.3       test.example.com
+127.0.0.4       manager.example.com
+</pre>
+    </div>
+
+    <p class="paragraph"></p>Vous devez ensuite indiquer les param&egrave;tres
+    de connexion LDAP. Vous pouvez au choix :
+
+    <ul class="star">
+      <li>utiliser l'interface d'administration: red&eacute;marrez Apache et
+      connectez vous &agrave; <span class="nobr"><a href=
+      "http://manager.example.com/">http://manager.example.com/</a></span></li>
+
+      <li>&eacute;diter /path/to/lemonldap-ng/source/example/lmConfig-1 et
+      renseigner vos param&egrave;tres LDAP (utilisateurs Debian:
+      /usr/share/doc/lemonldap-ng/example/conf/lmConfig-1).</li>
+    </ul>Si vous ne renseignez pas managerDn et managerPassword, Lemonldap::NG
+    utilisera une connexion anonyme pour trouver le dn de l'utilisateur.
+
+    <p class="paragraph"></p>NOTES:
+
+    <ul class="star">
+      <li>seuls quelques param&egrave;tres peuvent &ecirc;tre
+      &eacute;dit&eacute;s &agrave; la main dans le fichier de configuration.
+      Vous devez utiliser le manager pour la modifier, mais comme l'exemple
+      est d&eacute;j&agrave; configur&eacute;, vous pouvez &eacute;diter ce
+      fichier directement,</li>
+
+      <li>chaque nouvelle configuration est sauvegarder dans un nouveau
+      fichier par le manager (ou un nouvel enregistrement avec l'interface de
+      connexion au bases de donn&eacute;es DBI) ainsi vous pouvez restaurer
+      une ancienne configuration.</li>
+    </ul>Red&eacute;marrez ensuite Apache et utilisez votre navigateur
+    pr&eacute;f&eacute;r&eacute; pour vous connecter &agrave; <span class=
+    "wikiexternallink"><a href=
+    "http://test.example.com/">http://test.example.com/</a></span>. Vous serez
+    redirig&eacute;s vers auth.example.com. Connectez-vous avec un compte
+    valide et la page prot&eacute;g&eacute;e appara&icirc;tra.
+  </div>
+</body>
+</html>

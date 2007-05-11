@@ -332,7 +332,7 @@ sub print_upload {
 }
 
 sub upload {
-    my $self = shift;	
+    my $self = shift;
     my $config = $self->tree2conf(@_);
     return SYNTAX_ERROR unless( $self->checkConf($config) );
     return $self->config->saveConf($config);

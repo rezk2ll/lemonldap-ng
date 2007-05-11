@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Linux/x86 (vers 1 September 2005), see www.w3.org" />
+
+  <title>FAQ LEMONLDAP::NG</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+</head>
+
+<body>
+  <div class="main-content">
+    <h2 class="heading-1"><span id=
+    "HLemonLDAP3A3ANG">LemonLDAP::NG</span></h2>
+
+    <p class="paragraph"></p>Lemonldap::NG est un Web-SSO modulaire
+    bas&eacute; sur les modules Apache::Session. Il simplifie la construction
+    d'une aire prot&eacute;g&eacute;e en minimisant les impacts sur les
+    applications. Il g&egrave;re &agrave; la fois les authentifications et les
+    autorisations et fournit des en-t&ecirc;tes HTTP pour la
+    tra&ccedil;abilit&eacute;. On obtient ainsi une protection AAA complete
+    <i class="italic">(Authentication, Authorization and Accounting)</i> des
+    espaces web.
+
+    <p class="paragraph"></p>Lemonldap::NG est une r&eacute;&eacute;criture
+    compl&egrave;te de Lemonldap. Tous les &eacute;l&eacute;ments
+    n&eacute;cessaires &agrave; son exploitation et son administration sont
+    fournis dans le package. En revanche les composants
+    d&eacute;velopp&eacute;s pour Lemonldap ne sont pas compatibles avec
+    Lemonldap::NG.
+
+    <p class="paragraph"></p>
+
+    <ul>
+      <li>
+        <a href=
+        "#HMC3A9canismesd27authentification2Cd27autorisationetdetraC3A7abilitC3A9">
+        M&eacute;canismes d'authentification, d'autorisation et de
+        tra&ccedil;abilit&eacute;</a>
+
+        <ul>
+          <li><a href="#HAuthentification">Authentification</a></li>
+
+          <li>
+            <a href="#HAutorisation">Autorisation</a>
+
+            <ul>
+              <li><a href="#HPerformances">Performances</a></li>
+            </ul>
+          </li>
+
+          <li>
+            <a href="#HTraC3A7abilitC3A9">Tra&ccedil;abilit&eacute;</a>
+
+            <ul>
+              <li><a href="#HTracerlesaccC3A8sauportail">Tracer les
+              acc&egrave;s au portail</a></li>
+
+              <li><a href="#HTracerlesaccC3A8sauxapplications">Tracer les
+              acc&egrave;s aux applications</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+
+      <li><a href="#HInstallation">Installation</a></li>
+
+      <li><a href="#HSystC3A8medestockagedessessions">Syst&egrave;me de
+      stockage des sessions</a></li>
+
+      <li><a href="#HAuteur">Auteur</a></li>
+
+      <li><a href="#HCopyrightetlicense">Copyright et license</a></li>
+    </ul>
+
+    <h3 class="heading-1-1"><span id=
+    "HMC3A9canismesd27authentification2Cd27autorisationetdetraC3A7abilitC3A9">M&eacute;canismes
+    d'authentification, d'autorisation et de
+    tra&ccedil;abilit&eacute;</span></h3>
+
+    <p class="paragraph"></p>Tous les param&egrave;tres abord&eacute;s dans ce
+    chap&icirc;tre sont accessibles via l'interface d'administration (voir la
+    <span class="wikiexternallink"><a href=
+    "http://lemonldap.objectweb.org/NG/ManagerDemo/fr/">d&eacute;monstration</a></span>).
+
+    <h4 class="heading-1-1-1"><span id=
+    "HAuthentification">Authentification</span></h4>
+
+    <p class="paragraph"></p>Si un utilisateur n'est pas encore
+    authentifi&eacute; et tente de se connecter &agrave; une aire
+    prot&eacute;g&eacute;e par un agent Lemonldap::NG, il est redirig&eacute;
+    vers le portail. Celui-ci authentifie l'utilisateur par d&eacute;faut par
+    une connexion LDAP, mais vous pouvez &eacute;galement utiliser un autre
+    sch&eacute;ma tel les certificats x509 (voir
+    Lemonldap::NG::Portal::AuthSSL(3)).
+
+    <p class="paragraph"></p>Lemonldap::NG utilise les cookies de session
+    g&eacute;n&eacute;r&eacute;s par le module Apache::Session soit aussi
+    s&eacute;curis&eacute; que n'importe quelle syst&egrave;me bas&eacute; sur
+    des cookies al&eacute;atoires de 128 bits. Il est recommand&eacute;
+    d'activer l'option "cookie s&eacute;curis&eacute;" pour &eacute;viter les
+    vols de session.
+
+    <p class="paragraph"></p>Par d&eacute;faut, une session reste 10 minutes
+    dans le magasin local du serveur Apache, donc dans le pire des cas, un
+    utilisateur conserve son autorisation au plus 10 minutes apr&egrave;s
+    avoir perdu ses droits.
+
+    <h4 class="heading-1-1-1"><span id=
+    "HAutorisation">Autorisation</span></h4>
+
+    <p class="paragraph"></p>Les autorisations sont control&eacute;es
+    seulement par les agents prot&eacute;geant les applications. En effet, le
+    portail ne peut conna&icirc;tre &agrave; l'avance les applications sur
+    lesquels l'utilisateur se connectera. En configurant votre Web-SSO, vous
+    devez:
+
+    <ul class="star">
+      <li>choisir les attributs LDAP que vous souhaitez utiliser pour les
+      autorisations et la tra&ccedil;abilit&eacute;,</li>
+
+      <li>cr&eacute;er d'&eacute;ventuelles expressions Perl pour
+      d&eacute;finir des groupes d'utilisateur (en utilisant les attributs
+      LDAP),</li>
+
+      <li>cr&eacute;er des r&egrave;gles d'acc&egrave;s associant des
+      expressions r&eacute;guli&egrave;res triant les URL &agrave; des
+      expressions Perl calculant le droit d'acc&egrave;s correspondant.</li>
+    </ul>Exemple (Voir Lemonldap::NG::Manager::Conf(3) pour comprendre le
+    stockage de la configuration) :
+
+    <ul class="star">
+      <li>Variables export&eacute;es (attributs LDAP):</li>
+    </ul>
+
+    <div class="code">
+      <pre>
+# Nom-choisi     =&gt; attribut LDAP
+cn               =&gt; cn
+departmentUID    =&gt; departmentUID
+login            =&gt; uid
+</pre>
+    </div>
+
+    <ul class="star">
+      <li>Groupes d'utilisateurs :</li>
+    </ul>
+
+    <div class="code">
+      <pre>
+# Nom-choisi  =&gt; d&eacute;finition du groupe
+group1        =&gt; { $departmentUID eq <span class=
+"java-quote">"unit1"</span> or $login = <span class=
+"java-quote">"user1"</span> }
+</pre>
+    </div>
+
+    <ul class="star">
+      <li>Protection d'un site web: chaque VirtualHost (ou h&ocirc;te
+      r&eacute;el) Apache dispose de ses propres r&egrave;gles d'acc&egrave;s:
+
+        <ul class="star">
+          <li>www1.domain.com :</li>
+        </ul>
+      </li>
+    </ul>
+
+    <div class="code">
+      <pre>
+^/<span class="java-keyword">protected</span>/.*$  =&gt; $groups =~ /bgroup1b/
+<span class="java-keyword">default</span>          =&gt; accept
+</pre>
+    </div>
+
+    <ul class="star">
+      <li>www2.domain.com :</li>
+    </ul>
+
+    <div class="code">
+      <pre>
+^/site/.*$       =&gt; $uid eq <span class=
+"java-quote">"admin"</span> or $groups =~ /bgroup2b/
+^/(js|css)       =&gt; accept
+<span class="java-keyword">default</span>          =&gt; deny
+</pre>
+    </div>
+
+    <h5 class="heading-1-1-1-1"><span id=
+    "HPerformances">Performances</span></h5>
+
+    <p class="paragraph"></p>Vous pouvez utiliser des expressions Perl aussi
+    complexe que n&eacute;cessaire et vous pouvez utiliser tous les attibuts
+    LDAP (et cr&eacute;er vos propres attributs additionnels avec le
+    m&eacute;canisme des macros) dans les d&eacute;finitions de groupes, les
+    r&egrave;gles d'acc&egrave;s et les en-t&ecirc;tes HTTP
+    personnalis&eacute;s: vous devez seulement utiliser le nom choisi
+    pr&eacute;c&eacute;d&eacute; d'un "$".
+
+    <p class="paragraph"></p>Vous devez toutefois bien choisir vos
+    expressions:
+
+    <ul class="star">
+      <li>les groupes et les macros ne sont &eacute;valu&eacute;es que lorsque
+      l'utilisateur est renvoy&eacute; vers le portail,</li>
+
+      <li>les r&egrave;gles d'acc&egrave;s et les en-t&ecirc;tes
+      export&eacute;s sont &eacute;valu&eacute;s &agrave; chaque requ&ecirc;te
+      sur un site prot&eacute;g&eacute;.</li>
+    </ul>Il est donc recommand&eacute; d'utiliser le m&eacute;canisme des
+    groupes pour &eacute;viter de calculer de longues expressions &agrave;
+    chaque requ&ecirc;te:
+
+    <div class="code">
+      <pre>
+^/<span class=
+"java-keyword">protected</span>/.*$   =&gt; $groups =~ /bgroup1b/
+</pre>
+    </div>
+
+    <p class="paragraph"></p>Dans la d&eacute;finition des groupes, vous
+    pouvez au choix utiliser des filtres LDAP ou des expressions Perl ou
+    encore mixer les deux. Les expressions Perl sont encadr&eacute;es par {} :
+
+    <div class="code">
+      <pre>
+group1 =&gt; (|(uid=xavier.guimard)(ou=unit1))
+group1 =&gt; &lt;uid eq <span class=
+"java-quote">"xavier.guimard"</span> or $ou eq <span class=
+"java-quote">"unit1"</span>&gt;
+group1 =&gt; (|(uid=xavier.guimard)&lt;ou eq <span class=
+"java-quote">"unit1"</span>&gt;)
+</pre>
+    </div>
+
+    <p class="paragraph"></p>Pour limiter les requ&ecirc;tes LDAP, il est
+    conseill&eacute; d'utiliser les expressions Perl. Ainsi seuls 2
+    sollicitations de l'annuaire sont n&eacute;cessaires.
+
+    <h4 class="heading-1-1-1"><span id=
+    "HTraC3A7abilitC3A9">Tra&ccedil;abilit&eacute;</span></h4>
+
+    <h5 class="heading-1-1-1-1"><span id="HTracerlesaccC3A8sauportail">Tracer
+    les acc&egrave;s au portail</span></h5>
+
+    <p class="paragraph"></p>Lemonldap::NG::Portal n'enregistre pas les
+    &eacute;v&eacute;nements de connexion par d&eacute;faut, mais il est
+    tr&egrave;s facile de surcharger la m&eacute;thode "log".
+
+    <h5 class="heading-1-1-1-1"><span id=
+    "HTracerlesaccC3A8sauxapplications">Tracer les acc&egrave;s aux
+    applications</span></h5>
+
+    <p class="paragraph"></p>Comme un Web-SSO ne peut interpr&eacute;ter le
+    contenu des requ&ecirc;tes HTTP transmise aux applications
+    prot&eacute;g&eacute;es, il ne peut enregistrer au mieux que les URL. Et
+    comme Apache le fait parfaitement, Lemonldap::NG::Handler(3) lui fournit
+    le nom &agrave; enregistrer dans les journaux. Le param&egrave;tre
+    optionnel "whatToTrace" indique la variable &agrave; utiliser ($uid par
+    d&eacute;faut).
+
+    <p class="paragraph"></p>La trace r&eacute;elle doit &ecirc;tre
+    effectu&eacute;e par l'application seule capable d'interpr&eacute;ter le
+    r&eacute;sultat des transactions.
+
+    <p class="paragraph"></p>Lemonldap::NG peut exporter des en-t&ecirc;tes
+    HTTP aussi bien en utilisant Apache en reverse-proxy qu'en
+    prot&eacute;gent directement les applications. Par d&eacute;faut, le champ
+    Auth-User est utilis&eacute; mais vous pouvez choisir les en-t&ecirc;tes
+    que vous transmettez &agrave; chaque application s&eacute;paremment. Les
+    expressions d&eacute;finissant les en-t&ecirc;tes associent :
+
+    <ul class="star">
+      <li>le nom d'en-t&ecirc;te,</li>
+
+      <li>une expression Perl utilisant les donn&eacute;es de l'utilisateur
+      (attributs, macros et groupes).</li>
+    </ul>Exemple:
+
+    <ul class="star">
+      <li>www1.domain.com :</li>
+    </ul>
+
+    <div class="code">
+      <pre>
+Auth-User     =&gt; $uid
+Unit          =&gt; $ou
+</pre>
+    </div>
+
+    <ul class="star">
+      <li>www2.domain.com :</li>
+    </ul>
+
+    <div class="code">
+      <pre>
+Authorization =&gt; <span class=
+"java-quote">"Basic "</span>.encode_base64($employeeNumber.<span class=
+"java-quote">":dummy"</span>)
+Remote-IP     =&gt; $ip
+</pre>
+    </div>
+
+    <h3 class="heading-1-1"><span id="HInstallation">Installation</span></h3>
+
+    <p class="paragraph"></p>Attention :
+
+    <ul class="star">
+      <li>Lemonldap::NG est un projet diff&eacute;rent de Lemonldap et
+      contient tous les &eacute;l&eacute;ments n&eacute;cessaires &agrave; son
+      utilisation et son administration. Ainsi les logiciels tel le module
+      webmin de Lemonldap ne fonctionnent pas avec Lemonldap::NG.</li>
+
+      <li>L'agent de protection Apache ("handler") fonctionne &agrave; la fois
+      avec les versions 1.3 et 2.x d'Apache, c'est &agrave; dire avec les
+      versions 1 et 2 de mod_perl (mais pas avec mod_perl 1.99). Le portail et
+      le l'interface d'administration ("manager") sont de simples CGI et
+      peuvent donc fonctionner sur n'importe quel serveur compatible.</li>
+
+      <li>La configuration de Lemonldap::NG ne doit &ecirc;tre
+      &eacute;dit&eacute;e qu'avec l'interface d'administration &agrave; oins
+      que vous ne sachiez exactement ce que vous faites. Les param&egrave;tres
+      pr&eacute;sent&eacute;s dans ce document sont tous accessibles dans
+      l'arbre de configuration.</li>
+    </ul>Voir <span class="wikilink"><a href=
+    "/xwiki/bin/view/NG/DocInstall">installation manuel</a></span> pour la
+    documentation d'installation.
+
+    <h3 class="heading-1-1"><span id=
+    "HSystC3A8medestockagedessessions">Syst&egrave;me de stockage des
+    sessions</span></h3>
+
+    <p class="paragraph"></p>Lemonldap::NG utilise 3 niveaux de cache pour les
+    donn&eacute;es des utilisateurs authentifi&eacute;s :
+
+    <ul class="star">
+      <li>un module Apache::Session:: <strong class="strong">au choix
+      utilis&eacute; par le portail lemonldap::NG::Portal pour stocker les
+      donn&eacute;es apr&egrave;s authentification,</strong></li>
+
+      <li>un module Cache::Cache au choix utilis&eacute; par l'agent
+      Lemonldap::NG::Handler pour partager les donn&eacute;es entre les
+      threads et les processus d'Apache et bien sur entre les h&ocirc;tes
+      virtuels h&eacute;berg&eacute;s sur le m&ecirc;me serveur,</li>
+
+      <li>les variables internes &agrave; l'agent Lemonldap::NG::Handler : si
+      le m&ecirc;me utilisateur utilise de nouveau le m&ecirc;me thread ou
+      processus, aucune requ&ecirc;te n'est n&eacute;cessaire pour calculer le
+      droit d'acc&egrave;s. Ceci est particuli&egrave;rement
+      int&eacute;ressant avec le syst&egrave;me de connexions persistantes du
+      protocole HTTP/1.1 (Keep-Alive).</li>
+    </ul>Ainsi, le nombre de requ&ecirc;tes au cache principal est
+    limit&eacute; &agrave; 1 par utilisateur actif toutes les 10 minutes.
+
+    <p class="paragraph"></p>Lemonldap::NG est tr&egrave;s rapide, mais vous
+    pouvez encore am&eacute;liorer les performances en utilisnt un module
+    Cache::Cache ne n&eacute;cessitant pas d'acc&egrave;s au disque.
+
+    <h3 class="heading-1-1"><span id="HAuteur">Auteur</span></h3>
+
+    <p class="paragraph"></p>Xavier Guimard, &lt;x.guimard@free.fr&gt;
+
+    <h3 class="heading-1-1"><span id="HCopyrightetlicense">Copyright et
+    license</span></h3>
+
+    <p class="paragraph"></p>Copyright &copy; 2005-2007 par Xavier Guimard
+    &lt;x.guimard@free.fr&gt;
+
+    <p class="paragraph"></p>Ce logiciel est libre, vous pouvez le
+    redistribuer et/ou le modifier sous les m&ecirc;mes termes que Perl
+    lui-m&ecirc;me en version 5.8.4 ou &agrave; votre guise en version Perl 5
+    sup&eacute;rieure.
+  </div>
+</body>
+</html>

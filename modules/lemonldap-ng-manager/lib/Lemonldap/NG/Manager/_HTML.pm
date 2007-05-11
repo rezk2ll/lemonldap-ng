@@ -81,7 +81,8 @@ sub javascript {
                newRule newHeader httpHeaders waitingResult unknownError
                configurationWasChanged configLoaded warningConfNotApplied
                applyConf prevConf lastConf nextConf deleteVirtualHost
-               areYouSure syntaxError deleteConf confirmDeleteConf)) {
+               areYouSure syntaxError deleteConf confirmDeleteConf
+               invalidVirtualHostName)) {
         $text{$_} = &{"txt_$_"};
         $text{$_} =~s/'/\\'/g;
     }
@@ -127,7 +128,7 @@ function onNodeSelect(nodeId) {
     switch(tree.getUserData(nodeId,"modif")) {
       case 'text':
         k='valeur';
-        v='<input value="'+nodeId+'" onChange="tree.setItemText('+"'"+nodeId+"'"+',this.value.replace(/^([^a-z])/i,\\'z\$1\\'));tree.changeItemId('+"'"+nodeId+"'"+',this.value);">';
+        v='<input value="'+nodeId+'" onChange="var tmp=this.value.replace(/^([^a-z])/i,\\'z\$1\\');tmp=tmp.replace(/^([a-zA-Z0-9_\\.\\-]*).*\$/,\\'\$1\\');tree.setItemText('+"'"+nodeId+"'"+',tmp);tree.changeItemId('+"'"+nodeId+"'"+',tmp);this.value=tmp">';
         break;
       case 'both':
         k='<input value="'+tree.getItemText(nodeId)+'" onChange="tree.setItemText('+"'"+nodeId+"'"+',this.value.replace(/^([^a-z])/i,\\'z\$1\\'))">';
@@ -240,6 +241,10 @@ function insertNewChild(a,b,c) {
 function newVirtualHost() {
   var rep=prompt("$text{newVirtualHost}");
   if(rep) {
+    if(!rep.match(/^\\w[\\w\\.\\-]*\\w\$/)){
+      alert('$text{invalidVirtualHostName}');
+      return 0;
+    }
     insertNewChild('virtualHosts',rep,rep)
     tree.setUserData(rep,'modif','text');
     insertNewChild(rep,rep+'_exportedHeaders','$text{httpHeaders}');

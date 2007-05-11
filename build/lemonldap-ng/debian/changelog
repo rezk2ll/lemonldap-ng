@@ -1,3 +1,10 @@
+lemonldap-ng (0.8.2.1) unstable; urgency=low
+
+  * More documentation
+  * Virtual host names control
+
+ -- Xavier Guimard <x.guimard@free.fr>  Fri, 11 May 2007 09:49:20 +0200
+
 lemonldap-ng (0.8.2) unstable; urgency=low
 
   * Little bug fix if whatToTrace parameter is not defined and display it in

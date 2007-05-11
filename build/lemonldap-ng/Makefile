@@ -154,3 +154,6 @@ static_example:	example
 	cd ${EXAMPLEDIRBUILD}/static/;ln -s ../manager/imgs;cd -
 	scripts/make_static_example.pl ${EXAMPLEDIRBUILD}/manager/index.pl ${EXAMPLEDIRBUILD}/static/index.html $(EXAMPLELANG)
 
+documentation:
+	cd doc && ../scripts/doc.pl
+

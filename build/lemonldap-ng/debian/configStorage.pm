@@ -7,14 +7,14 @@ our $configStorage;
 BEGIN {
     open F, '/etc/lemonldap-ng/storage.conf' or die "/etc/lemonldap-ng/storage.conf: $!";
     while(<F>) {
-	next if(/^\s*$/ or /^\s*#/);
-	chomp;
-	/^\s*([\w]+)[\s=:]+(["']?)([\S].*[\S])\2.*$/ or next;
-	$configStorage->{$1} = $3;
-	my $k = $1;
-	if($configStorage->{$k} =~ /^([{\[]).*[}\]]$/) {
-	    eval "\$configStorage->{$k} = $configStorage->{$k}";
-	}
+        next if(/^\s*$/ or /^\s*#/);
+        chomp;
+        /^\s*([\w]+)\s*[=:]\s*(["']?)([\S].*[\S])\2.*$/ or next;
+        $configStorage->{$1} = $3;
+        my $k = $1;
+        if($configStorage->{$k} =~ /^([{\[]).*[}\]]$/) {
+            eval "\$configStorage->{$k} = $configStorage->{$k}";
+        }
     }
     close F;
 }
