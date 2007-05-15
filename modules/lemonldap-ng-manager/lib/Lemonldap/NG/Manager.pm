@@ -16,7 +16,7 @@ use MIME::Base64;
 
 our @ISA = qw(Lemonldap::NG::Manager::Base);
 
-our $VERSION = '0.65';
+our $VERSION = '0.66';
 
 sub new {
     my ( $class, $args ) = @_;
@@ -408,7 +408,7 @@ sub checkConf {
     # Check cookie name
     return 0 unless( $config->{cookieName} =~ /^\w+$/ );
     # Check domain name
-    return 0 unless( $config->{domain} =~ /^[\w\.]+$/ );
+    return 0 unless( $config->{domain} =~ /^\w[\w\.\-]*\w$/ );
     # Load variables
     foreach(keys %{ $config->{exportedVars} }) {
         # Reserved words

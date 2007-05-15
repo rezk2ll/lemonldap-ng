@@ -1,5 +1,8 @@
 Revision history for Perl extension Lemonldap::NG::Manager.
 
+0.66  Tue May 15 19:53:40 2007
+	- Little bug correction: '-' is authorized in domain names
+
 0.65  Sun May 6 16:15:49 2007
 	- SOAP: HTTP basic authentication and little bug correction in 'sessions'
 	  mode

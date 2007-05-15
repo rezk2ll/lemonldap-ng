@@ -18,7 +18,7 @@ our ( $username, $password ) = ( '', '' );
 sub prereq {
     my $self = shift;
     unless ( $self->{proxy} ) {
-        print STDERR 'No SOAP parameters found (proxy and uri)';
+        print STDERR 'No SOAP parameters found (proxy)';
         return 0;
     }
     1;

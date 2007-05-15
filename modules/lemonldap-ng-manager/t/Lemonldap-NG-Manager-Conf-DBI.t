@@ -5,7 +5,7 @@
 
 # change 'tests => 1' to 'tests => last_test_to_print';
 
-use Test::More tests => 2;
+use Test::More tests => 3;
 BEGIN { use_ok('Lemonldap::NG::Manager::Conf') }
 
 #########################
@@ -24,3 +24,5 @@ ok(
 	}
     )
 );
+
+ok( $h->can( 'dbh' ) ); 
