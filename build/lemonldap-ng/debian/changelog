@@ -2,8 +2,10 @@ lemonldap-ng (0.8.2.1) unstable; urgency=low
 
   * More documentation
   * Virtual host names control
+  * Portal can now use more than one LDAP server
+  * Bug in DBI.pm
 
- -- Xavier Guimard <x.guimard@free.fr>  Fri, 11 May 2007 09:49:20 +0200
+ -- Xavier Guimard <x.guimard@free.fr>  Tue, 15 May 2007 06:19:23 +0200
 
 lemonldap-ng (0.8.2) unstable; urgency=low
 

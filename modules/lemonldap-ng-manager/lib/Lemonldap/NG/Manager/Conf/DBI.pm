@@ -8,6 +8,10 @@ use Lemonldap::NG::Manager::Conf::Constants;
 
 our $VERSION = 0.14;
 
+BEGIN {
+    *Lemonldap::NG::Manager::Conf::dbh = \&dbh;
+}
+
 sub prereq {
     my $self = shift;
     unless ( $self->{dbiChain} ) {

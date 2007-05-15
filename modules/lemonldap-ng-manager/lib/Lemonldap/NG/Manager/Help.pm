@@ -2,7 +2,7 @@ package Lemonldap::NG::Manager::Help;
 
 use AutoLoader qw(AUTOLOAD);
 use UNIVERSAL qw(can);
-our $VERSION = '0.33';
+our $VERSION = '0.34';
 
 sub import {
     my ($caller_package) = caller;
@@ -193,7 +193,9 @@ authentication is done by another system (SSL for example).</p>
   <li>LDAP server : Name (or IP address) of the LDAP server. To use LDAPS, set
    here&nbsp;:
     <pre>   ldaps://server/</pre>
-   and don't forget to change port (636 for example)</li>
+   and don't forget to change port (636 for example). You can specify more than
+   one server separated by commas. They will be tried in the specified order.
+  </li>
   <li>LDAP account : optional, must be set if anonymous connection cannot
    access to the wanted LDAP attributes. This account is used before LDAP
    authentication to find user's dn&nbsp;;
@@ -217,7 +219,10 @@ r&eacute;alis&eacute;e par un autre moyen (SSL par exemple).</p>
   <li>Serveur LDAP : Nom (ou adresse IP) du serveur LDAP. Pour une connexion
       LDAPS, indiquez ici&nbsp;:
       <pre>   ldaps://server/</pre>
-      et n'oubliez pas de changer le port (636 en g&eacute;n&eacute;ral)</li>
+      et n'oubliez pas de changer le port (636 en g&eacute;n&eacute;ral). Vous
+    pouvez indiquer plusieurs serveurs ici séparés par des virgules. Ils seront
+    testés dans l'ordre indiqué.
+   </li>
   <li>Compte de connexion LDAP : optionnel, &agrave; renseigner si les attributs LDAP
     utilis&eacute;s ne sont pas accessibles par une session anonyme. Ce compte est
     utilis&eacute; avant l'authentification pour trouver le dn de l'utilisateur&nbsp;;

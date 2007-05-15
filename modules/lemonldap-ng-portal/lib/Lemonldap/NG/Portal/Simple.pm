@@ -13,7 +13,7 @@ use CGI::Cookie;
 require POSIX;
 use Lemonldap::NG::Portal::_i18n;
 
-our $VERSION = '0.72';
+our $VERSION = '0.74';
 
 our @ISA = qw(CGI Exporter);
 
@@ -263,15 +263,15 @@ sub formateFilter {
 # 5. First LDAP connexion used to find user DN with the filter defined before.
 sub connectLDAP {
     my $self = shift;
-    return PE_LDAPCONNECTFAILED
-      unless (
-        $self->{ldap}
-        or $self->{ldap} = Net::LDAP->new(
-            $self->{ldapServer},
+    return PE_OK if ( $self->{ldap} );
+    foreach my $server ( split /[\s,]+/, $self->{ldapServer} ) {
+        last if $self->{ldap} = Net::LDAP->new(
+            $server,
             port    => $self->{ldapPort},
             onerror => undef,
-        )
-      );
+        );
+    }
+    return PE_LDAPCONNECTFAILED unless ( $self->{ldap} );
     PE_OK;
 }
 
@@ -457,7 +457,7 @@ Lemonldap::NG::Portal::Simple - Base module for building Lemonldap::NG compatibl
            LockUserName     => 'db_user',
            LockPassword     => 'db_password',
          },
-         ldapServer     => 'ldap.domaine.com',
+         ldapServer     => 'ldap.domaine.com,ldap-backup.domaine.com',
          securedCookie  => 1,
          exportedVars  => ["uid","cn","mail","appli"],
     );
@@ -504,8 +504,9 @@ Lemonldap::Portal::* libraries.
 
 =over
 
-=item * ldapServer: server used to retrive session informations and to valid
-credentials (localhost by default).
+=item * ldapServer: server(s) used to retrive session informations and to valid
+credentials (localhost by default). More than one server can be set here
+separated by commas. The servers will be tested in the specifies order.
 
 =item * ldapPort: tcp port used by ldap server.
 
