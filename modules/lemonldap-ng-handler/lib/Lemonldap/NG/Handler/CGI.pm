@@ -108,6 +108,7 @@ sub grant {
 
 1;
 __END__
+
 =head1 NAME
 
 Lemonldap::NG::Handler::CGI - Perl extension for using Lemonldap::NG

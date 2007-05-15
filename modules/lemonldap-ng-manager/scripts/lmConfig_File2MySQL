@@ -66,6 +66,7 @@ Options:
 }
 1;
 __END__
+
 =head1 NAME
 
 lmConfig_File2MySQL - Perl utility to convert Lemonldap::NG configuration file

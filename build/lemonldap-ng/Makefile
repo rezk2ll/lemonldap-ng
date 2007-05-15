@@ -1,6 +1,6 @@
 #!/usr/bin/make
 
-VERSION=`head -n1 debian/changelog |sed -e 's/lemonldap-ng (//' -e 's/).*$///'`
+VERSION=`head -n1 debian/changelog |sed -e 's/lemonldap-ng (//' -e 's/).*$$//'`
 HANDLERDIR=lemonldap-ng-handler
 PORTALDIR=lemonldap-ng-portal
 MANAGERDIR=lemonldap-ng-manager
