@@ -201,6 +201,7 @@ sub controlExistingSession {
             $self->buildCookie();
             return PE_FIRSTACCESS;
         }
+        $self->{id} = $id;
         # A session has been find => calling &existingSession
         my($r, $datas);
         %$datas = %h;
