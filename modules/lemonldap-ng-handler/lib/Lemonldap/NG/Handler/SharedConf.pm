@@ -4,12 +4,12 @@ use strict;
 
 use Lemonldap::NG::Handler::Simple qw(:all);
 use Lemonldap::NG::Handler::Vhost;
-use Lemonldap::NG::Manager;
+use Lemonldap::NG::Manager::Conf;
 use Cache::Cache qw($EXPIRES_NEVER);
 
 our @ISA = qw(Lemonldap::NG::Handler::Vhost Lemonldap::NG::Handler::Simple);
 
-our $VERSION    = '0.54';
+our $VERSION    = '0.55';
 our $cfgNum     = 0;
 our $lastReload = 0;
 our $reloadTime;

@@ -21,13 +21,14 @@ if ( $portal->process() ) {
 else {
     print $portal->header;
     print $portal->start_html;
-    print 'Error: ' . $portal->error . '<br>';
-    print '<form method="POST">';
+    print 'Error: ' . $portal->error . '<br />';
+    print '<form method="post" action="'.$ENV{SCRIPTNAME}.'">';
     print '<input type="hidden" name="url" value="'
-      . $portal->param('url') . '">';
-    print 'Login : <input name="user"><br>';
+      . $portal->param('url') . '" />';
+    print 'Login : <input name="user" /><br />';
     print 'Password : <input name="password" type="password" autocomplete="off"><br>';
-    print '<input type=submit value="OK">';
+    print '<input type="submit" value="OK" />';
+    print '</form>';
     print $portal->end_html;
 }
 

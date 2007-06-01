@@ -8,7 +8,7 @@ use AutoLoader qw(AUTOLOAD);
 require Lemonldap::NG::Manager::_i18n;
 use Lemonldap::NG::Manager::Conf::Constants;
 
-our $VERSION = '0.27';
+our $VERSION = '0.28';
 
 # TODO: Delete buttons in headers and rules if 'read-only'
 
@@ -445,12 +445,12 @@ qq#<script type="text/javascript" src="$ENV{SCRIPT_NAME}?lmQuery=lmjs"></script>
             <div style="z-index: 2;" id="haut" class="clsPane">
              <div id="buttons"></div>
              <div id="formulaire" style="display:none;">
-              <form onSubmit="return false">
+              <form onsubmit="return false" action="$ENV{SCRIPT_NAME}">
                <p></p>
-               <table border=1 width="100%" style="empty-cells:show;">
+               <table border="1" width="100%" style="empty-cells:show;">
                 <tr>
-                 <th width=200>Champ</th>
-                 <th width=400>Valeur</th>
+                 <th width="200">Champ</th>
+                 <th width="400">Valeur</th>
                 </tr>
                 <tr>
                  <td>

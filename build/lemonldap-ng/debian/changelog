@@ -3,8 +3,11 @@ lemonldap-ng (0.8.2.2) unstable; urgency=low
   * Debian packages modifications due to Lintian control.
   * New Debian package: lemonldap-ng-doc
   * Little bug correction in Portal/CDA.pm
+  * Bug between Handler dependencies and Debian organization:
+    Lemonldap::NG::Handler::SharedConf must not depend from
+    Lemonldap::NG::Manager but Lemonldap::NG::Manager::Conf
 
- -- Xavier Guimard <x.guimard@free.fr>  Tue, 22 May 2007 10:18:43 +0200
+ -- Xavier Guimard <x.guimard@free.fr>  Tue, 01 June 2007 07:18:43 +0200
 
 lemonldap-ng (0.8.2.1) unstable; urgency=low
 

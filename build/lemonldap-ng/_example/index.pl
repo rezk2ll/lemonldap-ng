@@ -27,7 +27,7 @@ print qq#<h1>Authentication succeed</h1>
 <a href="/logout">logout</a>
 <p>Authenticated user : $ENV{HTTP_AUTH_USER}</p>
 <p>To know who is connected in your applications, you can read HTTP headers :</p>
-<table border=1 style="font-size: small;">\n
+<table border="1" style="font-size: small;">\n
 <tr><th>Header</th><th>Perl CGI</th><th>PHP script</th><th>Value</th></tr>
 #;
 foreach(keys %$headers) {
@@ -45,14 +45,20 @@ not spoof sessions.</p>
 <p>You can access to any information (IP address or LDAP attribute) by customizing
 exported headers with the
 <a href="http://manager.example.com/">Lemonldap::NG Management interface</a></p>
-<hr>';
+<hr />';
 
 print qq#<h2>Environment for Perl CGI :</h2>
 <p>Be carefull, the \$ENV{REMOTE_USER} is set only if your script is in the
 same server than Lemonldap::NG handler (\$whatToTrace parameter). If you use
 it on a reverse-proxy, \$ENV{REMOTE_USER} is not set.</p>
-<table border=0 style="font-size: small;">\n#;
-print "<tr><td>$_</td><td>=&gt; $ENV{$_}</td></tr>\n" foreach(keys %ENV);
+<table border="0" style="font-size: small;">\n#;
+foreach(keys %ENV) {
+    my $tmp = $ENV{$_};
+    $tmp =~ s/&/&amp;/g;
+    $tmp =~ s/>/&gt;/g;
+    $tmp =~ s/</&lt;/g;
+    print "<tr><td>$_</td><td>=&gt; $tmp</td></tr>\n";
+}
 print '</table>';
 print $cgi->end_html;
 
