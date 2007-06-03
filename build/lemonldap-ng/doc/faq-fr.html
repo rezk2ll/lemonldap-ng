@@ -44,10 +44,20 @@
           "#HL27exemplefournifonctionneenHTTP2CmaispasenHTTPS">L'exemple
           fourni fonctionne en HTTP, mais pas en HTTPS.</a></li>
 
+          <li><a href="#HAquoisertleparamC3A8trehttpsduhandler3F">A quoi sert
+          le param&egrave;tre https du handler ?</a></li>
+
+          <li><a href="#HQu27estcequ27uneCGIautoprotC3A9gC3A9e3F">Qu'est ce
+          qu'une CGI auto-prot&eacute;g&eacute;e ?</a></li>
+
           <li><a href=
           "#HCommentfairefonctionnerLemonldap3A3ANGavecunannuaireActiveDirectory3F">
           Comment faire fonctionner Lemonldap::NG avec un annuaire
           Active-Directory ?</a></li>
+
+          <li><a href=
+          "#HCommentutiliserLemonldap3A3ANGenreverseproxy3F">Comment utiliser
+          Lemonldap::NG en reverse-proxy ?</a></li>
         </ul>
       </li>
 
@@ -230,6 +240,54 @@ __PACKAGE__-&gt;init ( {
 </pre>
 
     <h4 class="heading-1-1-1"><span id=
+    "HAquoisertleparamC3A8trehttpsduhandler3F">A quoi sert le param&egrave;tre
+    https du handler ?</span></h4>
+
+    <p class="paragraph"></p>Ce param&egrave;tre n'est utilis&eacute; que dans
+    les redirections vers le portail d'authentification. Il sert juste
+    &agrave; indiquer &agrave; ce dernier qu'apr&egrave;s authentification,
+    l'utilisateur doit &ecirc;tre redirig&eacute; vers l'application en https
+    et non en http.
+
+    <h4 class="heading-1-1-1"><span id=
+    "HQu27estcequ27uneCGIautoprotC3A9gC3A9e3F">Qu'est ce qu'une CGI
+    auto-prot&eacute;g&eacute;e ?</span></h4>
+
+    <p class="paragraph"></p>Lorsqu'on a qu'une seule page Perl &agrave;
+    prot&eacute;ger dans un VirtualHost, plut&ocirc;t que de la
+    prot&eacute;ger en utilisant un agent Lemonldap::NG dans Apache, on peut
+    utiliser une CGI auto-prot&eacute;g&eacute;e:
+
+    <p class="paragraph"></p>
+    <pre>
+  use Lemonldap::NG::Handler::CGI;
+  my $cgi = Lemonldap::NG::Handler::CGI-&gt;new ( {
+      # m&ecirc;mes param&egrave;tres qu'un agent Lemonldap::NG::Handler::SharedConf
+    }
+  );
+  $cgi-&gt;authenticate;
+</pre>
+
+    <p class="paragraph"></p>Dans l'exemple ci-dessus, $cgi est un objet de
+    type CGI(3). La seule diff&eacute;rence est qu'il b&eacute;n&eacute;ficie
+    de quelques fonctions suppl&eacute;mentaires:
+
+    <ul class="star">
+      <li>authenticate : pour appeler le m&eacute;canisme d'authentification
+      Lemonldap::NG,</li>
+
+      <li>autorize : si on veut g&eacute;rer les droits avec le manager,</li>
+
+      <li>user : retourne la table de hash des param&egrave;tres
+      utilisateurs,</li>
+
+      <li>group : permet de valider l'appartenance &agrave; un groupe.</li>
+    </ul>Ce type de CGI est tr&egrave;s utile lorsque les droits ne peuvent
+    &ecirc;tre distingu&eacute;s par URL (requ&ecirc;tes POST par exemple). La
+    page de manuel Lemonldap::NG::Handler::CGI(3) d&eacute;taille son
+    utilisation.
+
+    <h4 class="heading-1-1-1"><span id=
     "HCommentfairefonctionnerLemonldap3A3ANGavecunannuaireActiveDirectory3F">Comment
     faire fonctionner Lemonldap::NG avec un annuaire Active-Directory
     ?</span></h4>
@@ -270,6 +328,38 @@ my $portal = Lemonldap::NG::Portal::SharedConf-&gt;new(
     }
 );
 </pre>
+
+    <h4 class="heading-1-1-1"><span id=
+    "HCommentutiliserLemonldap3A3ANGenreverseproxy3F">Comment utiliser
+    Lemonldap::NG en reverse-proxy ?</span></h4>
+
+    <p class="paragraph"></p>Lemonldap::NG prot&egrave;ge simplement les
+    VirtualHosts d'Apache. Pour fonctionner en reverse-proxy, il suffit donc
+    de configurer Apache en reverse-proxy:
+
+    <p class="paragraph"></p>
+    <pre>
+# httpd.conf
+&lt;VirtualHost *&gt;
+  ServerName monappli
+  PerlRequire MyFile
+  PerlHeaderParserHandler My::Package
+  ProxyPass / <span class="nobr"><a href=
+"http://serveur-reel/">http://serveur-reel/</a></span>
+  ProxyPassReverse / <span class="nobr"><a href=
+"http://serveur-reel/">http://serveur-reel/</a></span>
+  # on peut aussi utiliser mod_rewrite
+  # RewriteEngine On
+  # RewriteRule /(.*)$ <span class="nobr"><a href=
+"http://serveur-reel/$1">http://serveur-reel/$1</a></span> <a class=
+"wikicreatelink" href="/xwiki/bin/edit/NG/P?parent=NG.FAQ"><span class=
+"wikicreatelinktext">P</span><span class="wikicreatelinkqm">?</span></a>
+&lt;/VirtualHost&gt;
+</pre>
+
+    <p class="paragraph"></p>Si toutefois vous pr&eacute;f&eacute;rez utiliser
+    un proxy Perl, Lemonldap::NG en fournit un
+    (Lemonldap::NG::Handler::Proxy(3)).
 
     <h3 class="heading-1-1"><span id=
     "HFonctionnement">Fonctionnement</span></h3>

@@ -167,7 +167,7 @@ choosen type. Examples:
   $confAccess = new Lemonldap::NG::Manager::Conf(
                 {
                 type        => 'DBI',
-                dbiChain    => 'DBI:mysql:database=lemonldap-ng,host=1.2.3.4',
+                dbiChain    => 'DBI:mysql:database=lemonldap-ng;host=1.2.3.4',
                 dbiUser     => 'lemonldap'
                 dbiPassword => 'pass'
                 dbiTable    => 'lmConfig',

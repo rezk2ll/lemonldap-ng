@@ -14,6 +14,7 @@ my $docs = {
 };
 
 while ( my ( $url, $file ) = each %$docs ) {
+    print STDERR "\n# $file\n";
     open DOC, "wget -q -O - $url |";
 
     #open DOC, '/tmp/doc';

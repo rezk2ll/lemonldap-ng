@@ -305,11 +305,10 @@ Remote-IP     =&gt; $ip
     authenticated users :
 
     <ul class="star">
-      <li>an Apache::Session:: <strong class="strong">module used by
-      lemonldap::NG::Portal to store authenticated user
-      parameters,</strong></li>
+      <li>an Apache::Session::* module used by lemonldap::NG::Portal to store
+      authenticated user parameters,</li>
 
-      <li>a Cache::Cache module used by Lemonldap::NG::Handler to share
+      <li>a Cache::Cache* module used by Lemonldap::NG::Handler to share
       authenticated users between Apache's threads or processus and of course
       between virtual hosts on the same machine,</li>
 

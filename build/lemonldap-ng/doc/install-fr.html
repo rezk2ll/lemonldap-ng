@@ -121,13 +121,13 @@ $ sudo dpkg -i ../lemonldap-ng*.deb
 
     <div class="code">
       <pre>
-# Apache-1.3: add <span class="java-keyword">this</span> to httpd.conf
+# Apache-1.3: ajouter ceci dans httpd.conf
 include /path/to/lemonldap-ng/source/example/apache.conf
 # Apache-2.x:
 include /path/to/lemonldap-ng/source/example/apache2.conf
 # Debian Apache-1.3
 ln -s /usr/share/doc/lemonldap-ng/example/apache.conf /etc/apache/conf.d/test.conf
-# or with Apache-2.x
+# ou avec Apache-2.x
 ln -s /usr/share/doc/lemonldap-ng/example/apache2.conf /etc/apache2/sites-enabled/test.conf
 </pre>
     </div>
