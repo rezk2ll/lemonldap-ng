@@ -267,6 +267,7 @@ if ( ( $uri =~ /_lemonldap_internal/i ) && ( $con->get('internaldebug') ) )
           "$CONFIG{$ID_COLLECTED}->{HANDLERID}:  Build-in proxy actived");
         $r->handler("perl-script");
         $r->push_handlers( PerlHandler => \&proxy_handler );
+	$APACHE_CODE= OK ; 
     }
 
     ### before to enter in protected area 
