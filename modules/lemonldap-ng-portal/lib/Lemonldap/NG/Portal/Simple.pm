@@ -367,7 +367,10 @@ sub store {
     eval {
         tie %h, $self->{globalStorage}, undef, $self->{globalStorageOptions};
     };
-    return PE_APACHESESSIONERROR if ($@);
+    if ( $@ ) {
+        print STDERR "$@\n";
+        return PE_APACHESESSIONERROR;
+    }
     $self->{id} = $h{_session_id};
     $h{$_} = $self->{sessionInfo}->{$_}
       foreach ( keys %{ $self->{sessionInfo} } );

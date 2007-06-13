@@ -2,13 +2,42 @@ lemonldap-ng for Debian
 -----------------------
 
 Topics:
- 1 - Configuration storage
+ 1 - Manager installation
  2 - Portal installation
- 3 - Manager installation
- 4 - Area protection
+ 3 - Area protection
+ 4 - Configuration storage
 
 
-I - LEMONLDAP::NG CONFIGURATION STORAGE
+I - LEMONLDAP::NG MANAGER INSTALLATION
+----------------------------------------
+Package: liblemonldap-ng-manager-perl
+
+liblemonldap-ng-manager-perl installs files named manager-apache.conf and
+manager-apache2.conf in /etc/lemonldap-ng/. Include it in apache configuration
+and configure it (virtual host has to be adapt).
+
+
+II - LEMONLDAP::NG PORTAL INSTALLATION
+--------------------------------------
+Package: liblemonldap-ng-portal-perl
+
+liblemonldap-ng-portal-perl installs files named portal-apache.conf and
+portal-apache2.conf in /etc/lemonldap-ng/. Include it in apache configuration
+and configure it (virtual host has to be adapt). You can also customize
+/var/lib/lemonldap-ng/portal/index.pl to adapt it to your site. This file is
+protected against upgrade.
+
+
+III - LEMONLDAP::NG AREA PROTECTION
+----------------------------------
+Package: liblemonldap-ng-handler-perl
+
+liblemonldap-ng-handler-perl installs a file named MyHandler.pm in
+/var/lib/lemonldap-ng/handler/. See handler-apache.conf or handler-apache2.conf
+in /etc/lemonldap-ng/ to know how to use it.
+
+
+IV - LEMONLDAP::NG CONFIGURATION STORAGE
 ---------------------------------------
 Package: liblemonldap-ng-conf-perl
 
@@ -22,33 +51,8 @@ example is given for MySQL in the file
 /usr/share/doc/liblemonldap-ng-conf-perl/examples/lmConfig.mysql.
 If you have a running configuration, use this to populate SQL database :
 
-  perl /usr/share/lemonldap-ng/bin/lmConfig_File2MySQL \
+  perl /usr/share/lemonldap-ng/bin/lmConfig_File2MySQL -c \
          /var/lib/lemonldap-ng/conf/lmConf-<last-number>
 
-
-II - LEMONLDAP::NG PORTAL INSTALLATION
---------------------------------------
-Package: liblemonldap-ng-portal-perl
-
-liblemonldap-ng-portal-perl installs files named portal-apache.conf and
-portal-apache2.conf in /etc/lemonldap-ng/. Include it in apache configuration
-and personalize files in /var/lib/lemonldap-ng/portal.
-
-
-III - LEMONLDAP::NG MANAGER INSTALLATION
-----------------------------------------
-Package: liblemonldap-ng-manager-perl
-
-liblemonldap-ng-manager-perl installs files named manager-apache.conf and
-manager-apache2.conf in /etc/lemonldap-ng/. Include it in apache configuration
-and personalize files in /var/lib/lemonldap-ng/manager.
-
-
-IV - LEMONLDAP::NG AREA PROTECTION
-----------------------------------
-Package: liblemonldap-ng-handler-perl
-
-liblemonldap-ng-handler-perl installs a file named MyHandler.pm in
-/var/lib/lemonldap-ng/handler/. See handler-apache.conf or handler-apache2.conf
-in /usr/share/doc/liblemonldap-ng-handler-perl/examples/ to know how to use it.
+"-c" options adds "create table" instruction.
 

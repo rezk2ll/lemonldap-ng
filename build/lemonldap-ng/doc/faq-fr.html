@@ -306,9 +306,9 @@ __PACKAGE__-&gt;init ( {
     </ol>Pour le deuxi&egrave;me point, la modification est tr&egrave;s simple
     : il faut remplacer <tt>$uid</tt> par <tt>$cn</tt> dans le champ
     "Param&egrave;tres g&eacute;n&eacute;raux -&gt; Donn&eacute;e &agrave;
-    inscrire dans les journaux d'Apache (et v&eacute;rifier que cette variable
-    est d&eacute;clar&eacute;e dand les attributs &agrave; exporter). Le
-    changement de filtre de recherche n&eacute;cessite la surcharge d'une
+    inscrire dans les journaux d'Apache" (et v&eacute;rifier que cette
+    variable est d&eacute;clar&eacute;e dand les attributs &agrave; exporter).
+    Le changement de filtre de recherche n&eacute;cessite la surcharge d'une
     m&eacute;thode dans le portail. Cette modification peut &ecirc;tre
     effectu&eacute;e comme suit:
     <pre>
@@ -351,9 +351,7 @@ my $portal = Lemonldap::NG::Portal::SharedConf-&gt;new(
   # on peut aussi utiliser mod_rewrite
   # RewriteEngine On
   # RewriteRule /(.*)$ <span class="nobr"><a href=
-"http://serveur-reel/$1">http://serveur-reel/$1</a></span> <a class=
-"wikicreatelink" href="/xwiki/bin/edit/NG/P?parent=NG.FAQ"><span class=
-"wikicreatelinktext">P</span><span class="wikicreatelinkqm">?</span></a>
+"http://serveur-reel/$1">http://serveur-reel/$1</a></span> [P]
 &lt;/VirtualHost&gt;
 </pre>
 

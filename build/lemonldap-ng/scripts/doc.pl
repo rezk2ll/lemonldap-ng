@@ -6,6 +6,7 @@ use utf8;
 
 my $docs = {
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/FAQ?language=fr'               => 'faq-fr.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/FAQ?language=en'               => 'faq.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Presentation?language=en'      => 'overview.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Presentation?language=fr'      => 'overview-fr.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocInstallExample?language=en' => 'install.html',

@@ -1,3 +1,10 @@
+lemonldap-ng (0.8.2.3) unstable; urgency=low
+
+  * Change configuration storage format (Storable bug).
+    Closes: #307173/objectweb.org
+
+ -- Xavier Guimard <x.guimard@free.fr>  Wed, 13 Jun 2007 13:49:27 +0200
+
 lemonldap-ng (0.8.2.2) unstable; urgency=low
 
   * Debian packages modifications due to Lintian control.

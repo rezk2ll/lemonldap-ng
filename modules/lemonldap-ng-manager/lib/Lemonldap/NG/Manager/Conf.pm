@@ -2,11 +2,12 @@ package Lemonldap::NG::Manager::Conf;
 
 use strict;
 no strict 'refs';
-use Storable qw(thaw freeze);
-use MIME::Base64;
+use Data::Dumper;
 use Lemonldap::NG::Manager::Conf::Constants;
 
-our $VERSION = 0.45;
+$Data::Dumper::Indent = 0;
+$Data::Dumper::Varname = "data";
+our $VERSION = 0.5;
 our @ISA;
 
 sub new {
@@ -43,8 +44,9 @@ sub saveConf {
     my $fields;
     while ( my ( $k, $v ) = each(%$conf) ) {
         if ( ref($v) ) {
-            $fields->{$k} = "'" . encode_base64( freeze($v) ) . "'";
-            $fields->{$k} =~ s/[\r\n]//g;
+            $fields->{$k} = Dumper($v);
+            $fields->{$k} =~ s/'/&39;/g;
+            $fields->{$k} = "'$fields->{$k}'";
         }
         elsif ( $v =~ /^\d+$/ ) {
             $fields->{$k} = "$v";
@@ -73,8 +75,21 @@ sub getConf {
     my $conf;
     while ( my ( $k, $v ) = each(%$fields) ) {
         $v =~ s/^'(.*)'$/$1/m;
-       if( $k =~ /^(?:exportedVars|locationRules|groups|exportedHeaders|macros|globalStorageOptions)$/ ) {
-            $conf->{$k} = thaw(decode_base64($v));
+        if( $k =~ /^(?:exportedVars|locationRules|groups|exportedHeaders|macros|globalStorageOptions)$/ ) {
+            my $data1;
+            if ( $v !~ /^\$/ ) {
+                print STDERR "Lemonldap::NG : Warning: configuration is in old format, you've to migrate !\n";
+                eval 'require Storable;require MIME::Base64;';
+                $conf->{$k} = Storable::thaw(MIME::Base64::decode_base64($v));
+            }
+            else {
+                my $data;
+                $v =~ s/^\$([_a-zA-Z][_a-zA-Z0-9]*) *=/\$data =/;
+                eval $v;
+                print STDERR "Lemonldap::NG : Error while reading configuration with $k key: $@\n" if($@);
+                $data =~ s/&39;/'/g;
+                $conf->{$k} = $data;
+            }
         }
         else {
             $conf->{$k} = $v;

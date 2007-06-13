@@ -2,11 +2,10 @@ package Lemonldap::NG::Manager::Conf::DBI;
 
 use strict;
 use DBI;
-use Storable qw(freeze thaw);
 use MIME::Base64;
 use Lemonldap::NG::Manager::Conf::Constants;
 
-our $VERSION = 0.14;
+our $VERSION = 0.15;
 
 BEGIN {
     *Lemonldap::NG::Manager::Conf::dbh = \&dbh;
