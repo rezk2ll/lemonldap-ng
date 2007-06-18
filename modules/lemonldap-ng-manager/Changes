@@ -1,5 +1,8 @@
 Revision history for Perl extension Lemonldap::NG::Manager.
 
+0.71  Mon jun 18 22:24:33 2007
+	- Bug in javascript : a 'z' is added in regexp
+
 0.7   Tue jun 12 22:20:54 2007
 	- Changing storage format due to a bug in Storable module
 

@@ -85,9 +85,9 @@ sub getConf {
             else {
                 my $data;
                 $v =~ s/^\$([_a-zA-Z][_a-zA-Z0-9]*) *=/\$data =/;
+                $v =~ s/&39;/'/g;
                 eval $v;
                 print STDERR "Lemonldap::NG : Error while reading configuration with $k key: $@\n" if($@);
-                $data =~ s/&39;/'/g;
                 $conf->{$k} = $data;
             }
         }

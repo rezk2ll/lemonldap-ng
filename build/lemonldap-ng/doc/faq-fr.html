@@ -93,6 +93,66 @@
           changer le mode d'authentification ?</a></li>
         </ul>
       </li>
+
+      <li>
+        <a href="#HMessagesd27erreuretdedC3A9boguage">Messages d'erreur et de
+        d&eacute;boguage</a>
+
+        <ul>
+          <li><a href="#H22IncorrectXML22">"Incorrect XML"</a></li>
+
+          <li><a href=
+          "#H22Byteorderisnotcompatible22ou22Magicnumbercheckingonstorablestringfailed22">
+          "Byte order is not compatible" ou "Magic number checking on storable
+          string failed"</a></li>
+
+          <li><a href=
+          "#H22Configurationisinoldformat2Cyou27vetomigrate2122">"Configuration
+          is in old format, you've to migrate !"</a></li>
+
+          <li><a href="#H22My3A3APackage3Agetconfiguration122">"My::Package:
+          get configuration 1"</a></li>
+
+          <li><a href="#H22My3A3APackage3Astoreconfiguration122">"My::Package:
+          store configuration 1"</a></li>
+
+          <li><a href="#H22My3A3APackage3ANocookiefound22">"My::Package: No
+          cookie found"</a></li>
+
+          <li><a href=
+          "#H22Redirect26lt3Bxxxx26gt3Btoportal28urlwas2F2922">"Redirect
+          &lt;x.x.x.x&gt; to portal (url was /)"</a></li>
+
+          <li><a href="#H22FoundaCDAidRedirecting22">"Found a CDA id.
+          Redirecting"</a></li>
+
+          <li><a href="#H22Usersomeonewasauthorizatedtoaccessto2F22">"User
+          someone was authorizated to access to /"</a></li>
+
+          <li><a href="#H22My3A3APackage3Aremovingcookie22">"My::Package:
+          removing cookie"</a></li>
+
+          <li><a href=
+          "#H22ErrorwhilereadingconfigurationwithglobalStorageOptionskey3A22">"Error
+          while reading configuration with globalStorageOptions key:"</a></li>
+
+          <li><a href=
+          "#H22UserrejectedbecauseVirtualHosttestexamplecomhasnoconfiguration22">
+          "User rejected because VirtualHost test.example.com has no
+          configuration"</a></li>
+
+          <li><a href=
+          "#H22Thecookiexxxxisn27tyetavailable3AObjectdoesnotexistinthedatastoreat2Fusr2Fshare2Fperl52FApache2FSession2FStore2FFilepmline905Cn22">
+          "The cookie xxxx isn't yet available: Object does not exist in the
+          data store at /usr/share/perl5/Apache/Session/Store/File.pm line
+          90.n"</a></li>
+
+          <li><a href=
+          "#H22Thecookiexxxxisn27tyetavailable3A7E7E26lt3BerreurdumoduleApache3A3ASession26gt3B7E7E">
+          "The cookie xxxx isn't yet available: <i class="italic">&lt;erreur
+          du module Apache::Session&gt;</i></a></li>
+        </ul>
+      </li>
     </ul>
 
     <h3 class="heading-1-1"><span id=
@@ -465,6 +525,137 @@ my $portal = Lemonldap::NG::Portal::SharedConf-&gt;new(
       n&eacute;gociation Kerberos est n&eacute;cessaire pour toute la
       session.</li>
     </ul>
+
+    <h3 class="heading-1-1"><span id=
+    "HMessagesd27erreuretdedC3A9boguage">Messages d'erreur et de
+    d&eacute;boguage</span></h3>
+
+    <p class="paragraph"></p>Lemonldap::NG produit des messages de
+    d&eacute;boguage et d'erreur enregistr&eacute;s dans le journal d'Apache
+    (error.log par d&eacute;faut). Vous pouvez modifier le niveau d'affichage
+    en adaptant le param&egrave;tre LogLevel d'Apache.
+
+    <h4 class="heading-1-1-1"><span id="H22IncorrectXML22">"Incorrect
+    XML"</span></h4>
+
+    <p class="paragraph"></p>Ce message appara&icirc;t au chargement du
+    Manager lorsque celui-ci n'arrive pas &agrave; charger la configuration.
+    Dans ce cas, consultez les journaux d'Apache&nbsp;: la v&eacute;ritable
+    erreur y sera enregistr&eacute;e.
+
+    <h4 class="heading-1-1-1"><span id=
+    "H22Byteorderisnotcompatible22ou22Magicnumbercheckingonstorablestringfailed22">
+    "Byte order is not compatible" ou "Magic number checking on storable
+    string failed"</span></h4>
+
+    <p class="paragraph"></p>Ce message appara&icirc;t lorsque la
+    configuration stock&eacute;e est malform&eacute;e ou sur les versions
+    ant&eacute;rieures &agrave; la version 0.8.2.3 lorsqu'on utilise
+    Lemonldap::NG sur des serveurs de type diff&eacute;rents (32 et 64 bits en
+    particulier). Dans ce dernier cas, il suffit d'installer une version au
+    moins &eacute;gale &agrave; la version 0.8.2.3.
+
+    <h4 class="heading-1-1-1"><span id=
+    "H22Configurationisinoldformat2Cyou27vetomigrate2122">"Configuration is in
+    old format, you've to migrate !"</span></h4>
+
+    <p class="paragraph"></p>Ce message d'avertissement appara&icirc;t
+    lorsqu'une configuration g&eacute;n&eacute;r&eacute;e &agrave; partir
+    d'une version ant&eacute;rieure &agrave; la 0.8.2.3 est lue par une
+    version plus r&eacute;cente. Un simple r&eacute;engistrement de la
+    configuration par le manager fait dispara&icirc;tre cet avertissement.
+
+    <h4 class="heading-1-1-1"><span id=
+    "H22My3A3APackage3Agetconfiguration122">"My::Package: get configuration
+    1"</span></h4>
+
+    <p class="paragraph"></p>Ce message de d&eacute;boguage montre qu'un des
+    processus fils d'Apache charge la configuration.
+
+    <h4 class="heading-1-1-1"><span id=
+    "H22My3A3APackage3Astoreconfiguration122">"My::Package: store
+    configuration 1"</span></h4>
+
+    <p class="paragraph"></p>Ce message de d&eacute;boguage montre qu'un des
+    processus fils d'Apache enregistre la derni&egrave;re version de la
+    configuration dans le cache local. Elle sera lue par les autres fils
+    d'Apache dans les 10 minutes qui suivent.
+
+    <h4 class="heading-1-1-1"><span id=
+    "H22My3A3APackage3ANocookiefound22">"My::Package: No cookie
+    found"</span></h4>
+
+    <p class="paragraph"></p>Ce message indique qu'un utilisateur non
+    authentifi&eacute; se pr&eacute;sente sur l'application.
+
+    <h4 class="heading-1-1-1"><span id=
+    "H22Redirect26lt3Bxxxx26gt3Btoportal28urlwas2F2922">"Redirect
+    &lt;x.x.x.x&gt; to portal (url was /)"</span></h4>
+
+    <p class="paragraph"></p>Message de d&eacute;boguage indiquant que le
+    client correspondant &agrave; l'adresse IP est redirig&eacute; vers le
+    portail d'authentification.
+
+    <h4 class="heading-1-1-1"><span id="H22FoundaCDAidRedirecting22">"Found a
+    CDA id. Redirecting"</span></h4>
+
+    <p class="paragraph"></p>Message de d&eacute;boguage indiquant que le
+    client a &eacute;t&eacute; authentifi&eacute; dans un autre domaine
+    (m&eacute;canisme CDA). L'agent g&eacute;n&egrave;re alors le cookie dans
+    le nouveau domaine.
+
+    <h4 class="heading-1-1-1"><span id=
+    "H22Usersomeonewasauthorizatedtoaccessto2F22">"User someone was
+    authorizated to access to /"</span></h4>
+
+    <p class="paragraph"></p>Message de d&eacute;boguage indiquant que le
+    client est autoris&eacute; &agrave; acc&eacute;der &agrave; cette URL.
+
+    <h4 class="heading-1-1-1"><span id=
+    "H22My3A3APackage3Aremovingcookie22">"My::Package: removing
+    cookie"</span></h4>
+
+    <p class="paragraph"></p>Message de d&eacute;boguage indiquant que l'agent
+    retire le cookie apr&egrave;s l'avoir exploit&eacute;&nbsp;: les
+    applications n'ont pas &agrave; conna&icirc;tre ce cookie mais ne se fient
+    qu'aux en-t&ecirc;tes.
+
+    <h4 class="heading-1-1-1"><span id=
+    "H22ErrorwhilereadingconfigurationwithglobalStorageOptionskey3A22">"Error
+    while reading configuration with globalStorageOptions key:"</span></h4>
+
+    <p class="paragraph"></p>Une erreur a &eacute;t&eacute; relev&eacute;e
+    dans la configuration.
+
+    <h4 class="heading-1-1-1"><span id=
+    "H22UserrejectedbecauseVirtualHosttestexamplecomhasnoconfiguration22">"User
+    rejected because VirtualHost test.example.com has no
+    configuration"</span></h4>
+
+    <p class="paragraph"></p>Lorsqu'un VirtualHost est prot&eacute;g&eacute;
+    mais pas configur&eacute;, Lemonldap::NG le bloque. Inscrivez alors ce
+    VirtualHost dans la configuration de Lemonldap::NG.
+
+    <h4 class="heading-1-1-1"><span id=
+    "H22Thecookiexxxxisn27tyetavailable3AObjectdoesnotexistinthedatastoreat2Fusr2Fshare2Fperl52FApache2FSession2FStore2FFilepmline9026231103B22">
+    "The cookie xxxx isn't yet available: Object does not exist in the data
+    store at /usr/share/perl5/Apache/Session/Store/File.pm line
+    90.n"</span></h4>
+
+    <p class="paragraph"></p>Ce message appara&icirc;t lorsqu'un utilisateur
+    pr&eacute;sente un cookie qui n'existe pas ou plus dans la base des
+    sessions. Il est alors pri&eacute; de se r&eacute;-authentifier.
+
+    <h4 class="heading-1-1-1"><span id=
+    "H22Thecookiexxxxisn27tyetavailable3A7E7E26lt3BerreurdumoduleApache3A3ASession26gt3B7E7E">
+    "The cookie xxxx isn't yet available: <i class="italic">&lt;erreur du
+    module Apache::Session&gt;</i></span></h4>
+
+    <p class="paragraph"></p>Ce message appara&icirc;t lorsque l'agent
+    n'arrive pas &agrave; atteindre la base des sessions. La v&eacute;ritable
+    erreur est report&eacute;e.
+
+    <p class="paragraph"></p>
   </div>
 </body>
 </html>

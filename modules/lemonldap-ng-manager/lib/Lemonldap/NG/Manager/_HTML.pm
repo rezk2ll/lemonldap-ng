@@ -8,7 +8,7 @@ use AutoLoader qw(AUTOLOAD);
 require Lemonldap::NG::Manager::_i18n;
 use Lemonldap::NG::Manager::Conf::Constants;
 
-our $VERSION = '0.28';
+our $VERSION = '0.29';
 
 # TODO: Delete buttons in headers and rules if 'read-only'
 
@@ -131,7 +131,7 @@ function onNodeSelect(nodeId) {
         v='<input value="'+nodeId+'" onChange="var tmp=this.value.replace(/^([^a-z])/i,\\'z\$1\\');tmp=tmp.replace(/^([a-zA-Z0-9_\\.\\-]*).*\$/,\\'\$1\\');tree.setItemText('+"'"+nodeId+"'"+',tmp);tree.changeItemId('+"'"+nodeId+"'"+',tmp);this.value=tmp">';
         break;
       case 'both':
-        k='<input value="'+tree.getItemText(nodeId)+'" onChange="tree.setItemText('+"'"+nodeId+"'"+',this.value.replace(/^([^a-z])/i,\\'z\$1\\'))">';
+        k='<input value="'+tree.getItemText(nodeId)+'" onChange="tree.setItemText('+"'"+nodeId+"'"+',this.value)">';
         v='<textarea cols=40 rows=2 onChange="tree.setUserData('+"'"+nodeId+"'"+','+"'"+'value'+"'"+',this.value)">'+tree.getUserData(nodeId,'value')+'</textarea>';
         //v='<input size=80 name="value" value="'+tree.getUserData(nodeId,'value')+'" onChange="tree.setUserData('+"'"+nodeId+"'"+','+"'"+'value'+"'"+',this.value)">';
         break;
