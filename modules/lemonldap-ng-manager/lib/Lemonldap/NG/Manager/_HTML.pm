@@ -8,7 +8,7 @@ use AutoLoader qw(AUTOLOAD);
 require Lemonldap::NG::Manager::_i18n;
 use Lemonldap::NG::Manager::Conf::Constants;
 
-our $VERSION = '0.29';
+our $VERSION = '0.28';
 
 # TODO: Delete buttons in headers and rules if 'read-only'
 
@@ -120,7 +120,7 @@ function win_onresize(){
   s3.paint(w,h,w/4,w/5);
 }
 
-var indice=-1;
+var indice=1;
 
 function onNodeSelect(nodeId) {
   var k,v;
@@ -128,17 +128,15 @@ function onNodeSelect(nodeId) {
     switch(tree.getUserData(nodeId,"modif")) {
       case 'text':
         k='valeur';
-        v='<input value="'+nodeId+'" onChange="var tmp=this.value.replace(/^([^a-z])/i,\\'z\$1\\');tmp=tmp.replace(/^([a-zA-Z0-9_\\.\\-]*).*\$/,\\'\$1\\');tree.setItemText('+"'"+nodeId+"'"+',tmp);tree.changeItemId('+"'"+nodeId+"'"+',tmp);this.value=tmp">';
+        v='<input value="'+tree.getItemText(nodeId)+'" onChange="tree.setItemText('+"'"+nodeId+"'"+',this.value);">';
         break;
       case 'both':
         k='<input value="'+tree.getItemText(nodeId)+'" onChange="tree.setItemText('+"'"+nodeId+"'"+',this.value)">';
-        v='<textarea cols=40 rows=2 onChange="tree.setUserData('+"'"+nodeId+"'"+','+"'"+'value'+"'"+',this.value)">'+tree.getUserData(nodeId,'value')+'</textarea>';
-        //v='<input size=80 name="value" value="'+tree.getUserData(nodeId,'value')+'" onChange="tree.setUserData('+"'"+nodeId+"'"+','+"'"+'value'+"'"+',this.value)">';
+        v='<textarea cols=50 rows=5 onChange="tree.setUserData('+"'"+nodeId+"'"+','+"'"+'value'+"'"+',this.value)">'+tree.getUserData(nodeId,'value')+'</textarea>';
         break;
       case 'value':
         k=tree.getItemText(nodeId);
-        v='<textarea cols=40 rows=2 onChange="tree.setUserData('+"'"+nodeId+"'"+','+"'"+'value'+"'"+',this.value)">'+tree.getUserData(nodeId,'value')+'</textarea>';
-        //v='<input size=80 name="value" value="'+tree.getUserData(nodeId,'value')+'" onChange="tree.setUserData('+"'"+nodeId+"'"+','+"'"+'value'+"'"+',this.value)">';
+        v='<textarea cols=50 rows=5 onChange="tree.setUserData('+"'"+nodeId+"'"+','+"'"+'value'+"'"+',this.value)">'+tree.getUserData(nodeId,'value')+'</textarea>';
         break;
       case 'ro':
         k=tree.getItemText(nodeId);
@@ -233,9 +231,11 @@ function button(text,func,nodeId){
   return '<input type=button value="'+text+'" onclick="'+func+'('+"'"+nodeId+"'"+')"> &nbsp; ';
 }
 
-function insertNewChild(a,b,c) {
-  tree.insertNewChild(a,b,c);
-  tree.setItemColor(b,"\#000000","\#0000FF");
+function insertNewChild(a,c) {
+  indice++;
+  tree.insertNewChild(a,'js_'+indice,c);
+  tree.setItemColor('js_'+indice,"\#000000","\#0000FF");
+  return 'js_'+indice;
 }
 
 function newVirtualHost() {
@@ -245,16 +245,21 @@ function newVirtualHost() {
       alert('$text{invalidVirtualHostName}');
       return 0;
     }
-    insertNewChild('virtualHosts',rep,rep)
-    tree.setUserData(rep,'modif','text');
-    insertNewChild(rep,rep+'_exportedHeaders','$text{httpHeaders}');
-    insertNewChild(rep+'_exportedHeaders',rep+'_exportedHeaders_1','Auth-User');
-    tree.setUserData(rep+'_exportedHeaders_1','modif','both');
-    tree.setUserData(rep+'_exportedHeaders_1','value','\$uid');
-    insertNewChild(rep,rep+'_locationRules','$text{locationRules}');
-    insertNewChild(rep+'_locationRules',rep+'_locationRules_default','default');
-    tree.setUserData(rep+'_locationRules_default','modif','value');
-    tree.setUserData(rep+'_locationRules_default','value','deny');
+    var tmp=insertNewChild('virtualHosts',rep)
+    tree.setUserData(tmp,'modif','text');
+    //var tmp_eh=insertNewChild(tmp,'$text{httpHeaders}');
+    var tmp_eh=tmp+'_exportedHeaders';
+    tree.insertNewChild(tmp,tmp_eh,'$text{httpHeaders}');
+    tree.setItemColor(tmp_eh,"\#000000","\#0000FF");
+    var tmp_eh1=insertNewChild(tmp_eh,'Auth-User');
+    tree.setUserData(tmp_eh1,'modif','both');
+    tree.setUserData(tmp_eh1,'value','\$uid');
+    var tmp_lr=tmp+'_locationRules';
+    tree.insertNewChild(tmp,tmp_lr,'$text{locationRules}');
+    tree.setItemColor(tmp_lr,"\#000000","\#0000FF");
+    var tmp_lr1=insertNewChild(tmp_lr,'default');
+    tree.setUserData(tmp_lr1,'modif','value');
+    tree.setUserData(tmp_lr1,'value','deny');
   }
 }
 
@@ -264,11 +269,10 @@ function deleteVirtualHost(id) {
 }
 
 function newValue(id,text,type,value){
-  indice--;
-  insertNewChild(id,'j_'+indice,text);
-  tree.setUserData('j_'+indice,'modif',type);
-  tree.setUserData('j_'+indice,'value',value);
-  tree.selectItem('j_'+indice,true);
+  var tmp=insertNewChild(id,text);
+  tree.setUserData(tmp,'modif',type);
+  tree.setUserData(tmp,'value',value);
+  tree.selectItem(tmp,true);
 }
 
 function newRule(id){

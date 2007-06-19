@@ -16,7 +16,7 @@ use MIME::Base64;
 
 our @ISA = qw(Lemonldap::NG::Manager::Base);
 
-our $VERSION = '0.71';
+our $VERSION = '0.72';
 
 sub new {
     my ( $class, $args ) = @_;
@@ -146,6 +146,7 @@ sub buildTree {
     my $self   = shift;
     my $config = $self->config->getConf( @_ );
     $config = $self->default unless ($config);
+    my $indice = 1;
     my $tree = {
         id   => '0',
         item => {
@@ -237,7 +238,8 @@ sub buildTree {
 
     if ( $config->{exportedVars} ) {
         while ( my ( $n, $att ) = each( %{ $config->{exportedVars} } ) ) {
-            $exportedVars->{$n} = $self->xmlField( "both", $att, $n );
+            $exportedVars->{"ev_$indice"} = $self->xmlField( "both", $att, $n );
+            $indice++;
         }
     }
     else {
@@ -264,22 +266,24 @@ sub buildTree {
         my $virtualHost = $tree->{item}->{item}->{virtualHosts}->{item};
         # TODO: split locationRules into 2 arrays
         while ( my ( $host, $rules ) = each( %{ $config->{locationRules} } ) ) {
-            $virtualHost->{$host} = $self->xmlField( "text", 'i', $host );
+            my $vh_id = "vh_$indice";
+            $indice++;
+            $virtualHost->{$vh_id} = $self->xmlField( "text", 'i', $host );
             my ( $ih, $ir ) =
               ( "exportedHeaders_$indice", "locationRules_$indice" );
-            $virtualHost->{$host}->{item} = {
+            $virtualHost->{$vh_id}->{item} = {
                 "$ih" => { text => &txt_httpHeaders, },
                 "$ir" => { text => &txt_locationRules, },
             };
             while ( my ( $reg, $expr ) = each(%$rules) ) {
                 my $type = ( $reg eq 'default' ) ? 'value' : 'both';
-                $virtualHost->{$host}->{item}->{$ir}->{item}->{"r_$indice"} =
+                $virtualHost->{$vh_id}->{item}->{$ir}->{item}->{"r_$indice"} =
                   $self->xmlField( $type, $expr, $reg );
                 $indice++;
             }
             my $headers = $config->{exportedHeaders}->{$host};
             while ( my ( $h, $expr ) = each(%$headers) ) {
-                $virtualHost->{$host}->{item}->{$ih}->{item}->{"h_$indice"} =
+                $virtualHost->{$vh_id}->{item}->{$ih}->{item}->{"h_$indice"} =
                   $self->xmlField( "both", $expr, $h );
                 $indice++;
             }
@@ -289,14 +293,16 @@ sub buildTree {
         $tree->{item}->{item}->{groups}->{item} = {};
         my $groups = $tree->{item}->{item}->{groups}->{item};
         while ( my ( $group, $expr ) = each( %{ $config->{groups} } ) ) {
-            $groups->{$group} = $self->xmlField( 'both', $expr, $group );
+            $groups->{"g_$indice"} = $self->xmlField( 'both', $expr, $group );
+            $indice++;
         }
     }
     if ( $config->{macros} and %{ $config->{macros} } ) {
         $tree->{item}->{item}->{generalParameters}->{item}->{macros}->{item} = {};
         my $macros = $tree->{item}->{item}->{generalParameters}->{item}->{macros}->{item};
         while ( my ( $macro, $expr ) = each( %{ $config->{macros} } ) ) {
-            $macros->{$macro} = $self->xmlField( 'both', $expr, $macro );
+            $macros->{"m_$indice"} = $self->xmlField( 'both', $expr, $macro );
+            $indice++;
         }
     }
     return $tree;
@@ -350,7 +356,7 @@ sub tree2conf {
         $config->{groups}->{ $h->{text} } = $h->{value};
     }
     # Load virtualHosts
-    while ( my ( $vh, $h ) = each( %{ $tree->{virtualHosts} } ) ) {
+    while ( my ( $k, $h ) = each( %{ $tree->{virtualHosts} } ) ) {
         next unless ( ref($h) );
         my $lr;
         my $eh;
@@ -358,6 +364,7 @@ sub tree2conf {
             $lr = $h->{$_} if ( $_ =~ /locationRules/ );
             $eh = $h->{$_} if ( $_ =~ /exportedHeaders/ );
         }
+        my $vh = $h->{text};
         # TODO: split locationRules into 2 arrays
       LR: foreach my $r ( values(%$lr) ) {
             next LR unless ( ref($r) );
@@ -431,7 +438,7 @@ sub checkConf {
             print STDERR "$k is not authorized in macro names. Change it!\n";
             return 0;
         }
-        if( $k !~ /^\w+$/ ) {
+        if( $k !~ /^[a-zA-Z]\w*$/ ) {
             print STDERR "$k is not a valid macro name\n";
             return 0;
         }
@@ -458,7 +465,7 @@ sub checkConf {
     }
     # Test rules
     while( my($vh, $rules) = each( %{ $config->{locationRules} } ) ) {
-        unless( $vh =~ /^[-\w\.]+$/ ) {
+        unless( $vh =~ /^\w[-\w\.]*$/ ) {
             print STDERR "$vh is not a valid virtual host name\n";
             return 0;
         }
@@ -482,7 +489,7 @@ sub checkConf {
     }
     # Test exported headers
     while( my($vh, $headers) = each( %{ $config->{exportedHeaders} } ) ) {
-        unless( $vh =~ /^[-\w\.]+$/ ) {
+        unless( $vh =~ /^\w[-\w\.]*$/ ) {
             print STDERR "$vh is not a valid virtual host name\n";
             return 0;
         }

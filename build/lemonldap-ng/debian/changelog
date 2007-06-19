@@ -2,7 +2,7 @@ lemonldap-ng (0.8.2.4) unstable; urgency=low
 
   * Bug in manager javascript.
 
- -- Xavier Guimard <x.guimard@free.fr>  Mon, 18 Jun 2007 22:28:53 +0200
+ -- Xavier Guimard <x.guimard@free.fr>  Tue, 19 Jun 2007 22:25:10 +0200
 
 lemonldap-ng (0.8.2.3) unstable; urgency=low
 

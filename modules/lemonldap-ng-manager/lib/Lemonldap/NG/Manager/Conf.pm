@@ -5,8 +5,6 @@ no strict 'refs';
 use Data::Dumper;
 use Lemonldap::NG::Manager::Conf::Constants;
 
-$Data::Dumper::Indent = 0;
-$Data::Dumper::Varname = "data";
 our $VERSION = 0.5;
 our @ISA;
 
@@ -42,6 +40,8 @@ sub saveConf {
     return CONFIG_WAS_CHANGED if( $conf->{cfgNum} != $self->lastCfg or $self->isLocked );
     $self->lock or return DATABASE_LOCKED;
     my $fields;
+    local $Data::Dumper::Indent = 0;
+    local $Data::Dumper::Varname = "data";
     while ( my ( $k, $v ) = each(%$conf) ) {
         if ( ref($v) ) {
             $fields->{$k} = Dumper($v);
