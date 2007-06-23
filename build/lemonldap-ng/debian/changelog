@@ -1,3 +1,9 @@
+lemonldap-ng (0.8.3) unstable; urgency=low
+
+  * Syntax errors in configuration are now displayed
+
+ -- Xavier Guimard <x.guimard@free.fr>  Sat, 23 Jun 2007 21:57:02 +0200
+
 lemonldap-ng (0.8.2.4) unstable; urgency=low
 
   * Bug in manager javascript.

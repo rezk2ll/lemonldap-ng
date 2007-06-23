@@ -1,5 +1,8 @@
 Revision history for Perl extension Lemonldap::NG::Manager.
 
+0.8   Sat jun 23 21:54:27 2007
+	- New feature: syntax errors are now displayed in the manager interface
+
 0.71  Mon jun 19 22:22:33 2007
 	- Bug in javascript : a 'z' is added in regexp
 

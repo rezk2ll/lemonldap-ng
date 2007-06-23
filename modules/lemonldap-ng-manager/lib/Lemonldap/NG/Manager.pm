@@ -7,6 +7,7 @@ use XML::Simple;
 use Lemonldap::NG::Manager::Base;
 use Lemonldap::NG::Manager::Conf;
 use Lemonldap::NG::Manager::_HTML;
+require Lemonldap::NG::Manager::_Response;
 require Lemonldap::NG::Manager::_i18n;
 require Lemonldap::NG::Manager::Help;
 use Lemonldap::NG::Manager::Conf::Constants;
@@ -16,7 +17,7 @@ use MIME::Base64;
 
 our @ISA = qw(Lemonldap::NG::Manager::Base);
 
-our $VERSION = '0.72';
+our $VERSION = '0.8';
 
 sub new {
     my ( $class, $args ) = @_;
@@ -260,7 +261,6 @@ sub buildTree {
     else {
     }
 
-    my $indice = 1;
     if ( $config->{locationRules} and %{ $config->{locationRules} } ) {
         $tree->{item}->{item}->{virtualHosts}->{item} = {};
         my $virtualHost = $tree->{item}->{item}->{virtualHosts}->{item};
@@ -327,25 +327,36 @@ sub xmlField {
 sub print_upload {
     my $self  = shift;
     my $datas = shift;
-    print $self->header( -type => "text/html" );
-    my $tmp = $self->upload($datas);
-    if ($tmp) {
-        print $tmp;
+    print $self->header( -type => "text/javascript" );
+    my $r = Lemonldap::NG::Manager::_Response->new();
+    my $tmp = $self->upload($datas, $r);
+    if ($tmp==0) {
+        $r->message(&txt_unknownError, &txt_checkLogs);
     }
-    else {
-        print 0;
+    elsif ($tmp>0) {
+        $r->setConfiguration($tmp);
+        $r->message(&txt_confSaved . " $tmp", &txt_warningConfNotApplied);
     }
+    elsif ($tmp == CONFIG_WAS_CHANGED) {
+        $r->message(&txt_saveFailure, &txt_configurationWasChanged);
+    }
+    elsif ($tmp == SYNTAX_ERROR) {
+        $r->message(&txt_saveFailure, &txt_syntaxError);
+    }
+    $r->send;
 }
 
 sub upload {
     my $self = shift;
-    my $config = $self->tree2conf(@_);
-    return SYNTAX_ERROR unless( $self->checkConf($config) );
+    my $tree = shift;
+    my $response = shift;
+    my $config = $self->tree2conf($tree, $response);
+    return SYNTAX_ERROR unless( $self->checkConf($config, $response) );
     return $self->config->saveConf($config);
 }
 
 sub tree2conf {
-    my ( $self, $tree ) = @_;
+    my ( $self, $tree, $response ) = @_;
     $tree = XMLin($$tree);
     my $config = {};
     # Load config number
@@ -411,78 +422,110 @@ sub tree2conf {
 sub checkConf {
     my $self = shift;
     my $config = shift;
+    my $response = shift;
     my $expr = '';
+    my $result = 1;
     # Check cookie name
-    return 0 unless( $config->{cookieName} =~ /^\w+$/ );
+    unless( $config->{cookieName} =~ /^\w+$/ ) {
+        $result = 0;
+        $response->error('"' . $config->{cookieName} . '" is not a valid cookie Name')
+    }
     # Check domain name
-    return 0 unless( $config->{domain} =~ /^\w[\w\.\-]*\w$/ );
+    unless( $config->{domain} =~ /^\w[\w\.\-]*\w$/ ) {
+        $result = 0;
+        $response->error('"' . $config->{domain} . '" is not a valid domain name');
+    }
     # Load variables
     foreach(keys %{ $config->{exportedVars} }) {
         # Reserved words
         if( $_ eq 'groups' ) {
-            print STDERR "$_ is not authorized in attribute names. Change it!\n";
-            return 0;
+            $response->error( "\"$_\" is not authorized in attribute names. Change it!" );
+            $result = 0;
         }
         if( $_ !~ /^\w+$/ ) {
-            print STDERR "$_ is not a valid attribute name\n";
-            return 0;
+            $response->error("\"$_\" is not a valid attribute name");
+            $result = 0;
+        }
+        if( $config->{exportedVars}->{$_} !~ /^\w+$/ ) {
+            $response->error("\"$config->{exportedVars}->{$_}\" is not a valid LDAP attribute");
+            $result = 0;
         }
         $expr .= "my \$$_ = '1';";
     }
     # Load and check macros
     my $safe = new Safe;
     $safe->share( '&encode_base64' );
+    $safe->reval( $expr );
+    if ( $@ ) {
+        $result = 0;
+        $response->error("Unknown errors in exported attributes ($@)");
+    }
     while( my($k, $v) = each( %{ $config->{macros} } ) ) {
         # Reserved words
         if( $k eq 'groups' ) {
-            print STDERR "$k is not authorized in macro names. Change it!\n";
-            return 0;
+            $response->error("\"$k\" is not authorized in macro names. Change it!");
+            $result = 0;
         }
         if( $k !~ /^[a-zA-Z]\w*$/ ) {
-            print STDERR "$k is not a valid macro name\n";
-            return 0;
+            $response->error("$k is not a valid macro name");
+            $result = 0;
+        }
+        if( $v =~ /(?<=[^=<\?])=(?!=)/ ) {
+            $response->warning("Macro $k contains an assignment ('='). Possible confusion with '=='.");
         }
         $expr .= "my \$$k = $v;";
     }
     # Test macro values;
     $safe->reval( $expr );
     if( $@ ) {
-        print STDERR "Error in macro syntax: $@\n";
-        return 0;
+        $response->error("Error in macro syntax: $@");
+        $result = 0;
     }
+    # TODO: check module name
+    # Check whatToTrace
+    unless ( $config->{whatToTrace} =~ /^\$?[a-zA-Z]\w*$/ ) {
+        $response->error("whatToTrace parameter can contain only an exported attribute or a macro");
+        $result = 0;
+    } 
     # Test groups
     $expr .= 'my $groups;';
     while( my($k,$v) = each( %{ $config->{groups} } ) ) {
         if( $k !~ /^[\w-]+$/ ) {
-            print STDERR "$k is not a valid group name\n";
-            return 0;
+            $response->error("\"$k\" is not a valid group name");
+            $result = 0;
+        }
+        if( $v =~ /(?<=[^=<\?])=(?!=)/ ) {
+            $response->warning("Group $k contains an assignment ('='). Possible confusion with '=='.");
         }
         $safe->reval( $expr . "\$groups = '$k' if($v);");
         if( $@ ) {
-            print STDERR "Syntax error in group $k: $@\n";
-            return 0;
+            $response->error("Syntax error in group \"$k\": $@");
+            $result = 0;
         }
     }
     # Test rules
     while( my($vh, $rules) = each( %{ $config->{locationRules} } ) ) {
         unless( $vh =~ /^\w[-\w\.]*$/ ) {
-            print STDERR "$vh is not a valid virtual host name\n";
-            return 0;
+            $response->error("\"$vh\" is not a valid virtual host name");
+            $result = 0;
         }
         while( my($reg, $v) = each( %{ $rules } ) ) {
             unless( $reg eq 'default' ) {
                 $reg =~ s/#/\\#/g;
                 $safe->reval( $expr . "my \$r = qr#$reg#;" );
                 if( $@ ) {
-                    print STDERR "Syntax error in regexp ($vh -> $reg)\n";
-                    return 0;
+                    $response->error("Syntax error in regexp ($vh -> $reg)");
+                    $result = 0;
                 }
             }
             unless( $v eq 'deny' or $v eq 'accept' ) {
+                if( $v =~ /(?<=[^=<\?])=(?!=)/ ) {
+                    $response->warning("Rule $vh -> $reg contains an assignment ('='). Possible confusion with '=='.");
+                }
                 $safe->reval( $expr . "my \$r=1 if($v);");
                 if( $@ ) {
-                    print STDERR "Syntax error in expression ($vh -> $reg)\n";
-                    return 0;
+                    $response->error("Syntax error in expression ($vh -> $reg)");
+                    $result = 0;
                 }
             }
         }
@@ -490,22 +533,25 @@ sub checkConf {
     # Test exported headers
     while( my($vh, $headers) = each( %{ $config->{exportedHeaders} } ) ) {
         unless( $vh =~ /^\w[-\w\.]*$/ ) {
-            print STDERR "$vh is not a valid virtual host name\n";
-            return 0;
+            $response->error("\"$vh\" is not a valid virtual host name");
+            $result = 0;
         }
         while( my($header, $v) = each( %{ $headers } ) ) {
             unless( $header =~ /^[\w][-\w]*$/ ) {
-                print STDERR "$header is not a valid HTTP header name ($vh)\n";
-                return 0;
+                $response->error("\"$header\" is not a valid HTTP header name ($vh)");
+                $result = 0;
+            }
+            if( $v =~ /(?<=[^=<\?])=(?!=)/ ) {
+                $response->warning("Header $vh -> $header contains an assignment ('='). Possible confusion with '=='.");
             }
             $safe->reval( $expr . "my \$r = $v;" );
             if( $@ ) {
-                print STDERR "Syntax error in header expression ($vh -> $header)\n";
-                return 0;
+                $response->error("Syntax error in header expression ($vh -> $header)");
+                $result = 0;
             }
         }
     }
-    1;
+    return $result;
 }
 
 # Apply subroutines

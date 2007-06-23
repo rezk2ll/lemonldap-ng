@@ -94,7 +94,8 @@ sub fr {
         confirmDeleteConf       => "Vous allez effacer cette configuration. Confirmez-vous ?",
         configurationDeleted    => 'Configuration &eacute;ffac&eacute;e',
         configurationNotDeleted => 'Configuration non &eacute;ffac&eacute;e',
-        invalidVirtualHostName  => "Nom de d'hôte virtuel incorrect",       
+        invalidVirtualHostName  => "Nom de d'hôte virtuel incorrect",
+        checkLogs               => "Consultez les journaux d'Apache",
     };
 }
 
@@ -158,6 +159,7 @@ sub en {
         confirmDeleteConf       => "You're going to delete configuration. Do you confirm ?",
         configurationDeleted    => 'Configuration deleted',
         configurationNotDeleted => 'Configuration not deleted',
-        invalidVirtualHostName  => 'Invalid virtual host name',       
+        invalidVirtualHostName  => 'Invalid virtual host name',
+        checkLogs               => 'Check Apache logs',
     };
 }

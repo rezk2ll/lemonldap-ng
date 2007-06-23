@@ -53,6 +53,7 @@ example/soapserver.pl
 lib/Lemonldap/NG/Manager.pm
 lib/Lemonldap/NG/Manager/_HTML.pm
 lib/Lemonldap/NG/Manager/_i18n.pm
+lib/Lemonldap/NG/Manager/_Response.pm
 lib/Lemonldap/NG/Manager/Apache/Session/SOAP.pm
 lib/Lemonldap/NG/Manager/Base.pm
 lib/Lemonldap/NG/Manager/Conf.pm

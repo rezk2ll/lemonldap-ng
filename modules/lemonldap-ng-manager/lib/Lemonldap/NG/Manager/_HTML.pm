@@ -325,28 +325,12 @@ function help(s){
 
 function saveConf(){
   var h=tree2txt('root');
-  //document.getElementById('help').innerHTML="<pre>"+h+"</pre>";
   xhr_object.open("POST", "$ENV{SCRIPT_NAME}?lmQuery=upload",true);
   xhr_object.setRequestHeader("Content-type", "text/xml");
   xhr_object.setRequestHeader("Content-length", h.length);
   xhr_object.onreadystatechange = function() {
     if(xhr_object.readyState == 4){
-      var r=xhr_object.responseText;
-      if(r>0) {
-        tree.setItemText('root','Configuration '+r);
-        document.getElementById('help').innerHTML='<h3>$text{confSaved} : '+r+'</h3>$text{warningConfNotApplied}';
-      }
-      else if(r<0) {
-        var txt='<h3>$text{saveFailure}: ';
-        if(r==#.CONFIG_WAS_CHANGED.qq#) {
-          txt+='$text{configurationWasChanged}';
-        }
-        else if(r==#.SYNTAX_ERROR.qq#) {
-          txt+='$text{syntaxError}';
-        }
-        document.getElementById('help').innerHTML=txt+'</h3>';
-      }
-      else document.getElementById('help').innerHTML='<h3>$text{unknownError}</h3>';
+      window.setTimeout(xhr_object.responseText,0);
     }
     else document.getElementById('help').innerHTML='<h3>$text{waitingResult}</h3>';
   }
