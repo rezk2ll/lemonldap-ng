@@ -2,8 +2,6 @@ Lemonldap::NG TODO
 ------------------
 TODO list for Lemonldap::NG development
 
-- Priority: Normal	Status: In progress	Created: 2007\05\03 11-45-05
-Display errors in saveConf => i18n to do
 - Priority: Normal	Status: Planning	Created: 2007\05\03 12-28-30
 Modify example to use nameVirtualHost instead of 127.0.0.x adresses
 - Priority: Low	Status: In progress	Created: 2007\05\03 10-41-36
