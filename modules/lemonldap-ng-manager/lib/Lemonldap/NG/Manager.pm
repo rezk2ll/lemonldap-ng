@@ -428,26 +428,22 @@ sub checkConf {
     # Check cookie name
     unless( $config->{cookieName} =~ /^\w+$/ ) {
         $result = 0;
-        $response->error('"' . $config->{cookieName} . '" is not a valid cookie Name')
+        $response->error('"' . $config->{cookieName} . '" ' . &txt_isNotAValidCookieName );
     }
     # Check domain name
     unless( $config->{domain} =~ /^\w[\w\.\-]*\w$/ ) {
         $result = 0;
-        $response->error('"' . $config->{domain} . '" is not a valid domain name');
+        $response->error('"' . $config->{domain} . '" ' . &txt_isNotAValidCookieName );
     }
     # Load variables
     foreach(keys %{ $config->{exportedVars} }) {
         # Reserved words
-        if( $_ eq 'groups' ) {
-            $response->error( "\"$_\" is not authorized in attribute names. Change it!" );
-            $result = 0;
-        }
-        if( $_ !~ /^\w+$/ ) {
-            $response->error("\"$_\" is not a valid attribute name");
+        if( $_ eq 'groups' or $_ !~ /^\w+$/ ) {
+            $response->error( "\"$_\" " . &txt_isNotAValidAttributeName );
             $result = 0;
         }
         if( $config->{exportedVars}->{$_} !~ /^\w+$/ ) {
-            $response->error("\"$config->{exportedVars}->{$_}\" is not a valid LDAP attribute");
+            $response->error("\"$config->{exportedVars}->{$_}\" " . &txt_isNotAValidLDAPAttributeName );
             $result = 0;
         }
         $expr .= "my \$$_ = '1';";
@@ -458,55 +454,51 @@ sub checkConf {
     $safe->reval( $expr );
     if ( $@ ) {
         $result = 0;
-        $response->error("Unknown errors in exported attributes ($@)");
+        $response->error( &txt_unknownErrorInVars . " ($@)");
     }
     while( my($k, $v) = each( %{ $config->{macros} } ) ) {
         # Reserved words
-        if( $k eq 'groups' ) {
-            $response->error("\"$k\" is not authorized in macro names. Change it!");
-            $result = 0;
-        }
-        if( $k !~ /^[a-zA-Z]\w*$/ ) {
-            $response->error("$k is not a valid macro name");
+        if( $k eq 'groups' or $k !~ /^[a-zA-Z]\w*$/ ) {
+            $response->error("\"$k\" " . &txt_isNotAValidMacroName );
             $result = 0;
         }
         if( $v =~ /(?<=[^=<\?])=(?!=)/ ) {
-            $response->warning("Macro $k contains an assignment ('='). Possible confusion with '=='.");
+            $response->warning( &txt_macro . " $k " . &txt_containsAnAssignment );
         }
+        # Test macro values;
         $expr .= "my \$$k = $v;";
-    }
-    # Test macro values;
-    $safe->reval( $expr );
-    if( $@ ) {
-        $response->error("Error in macro syntax: $@");
-        $result = 0;
+        $safe->reval( $expr );
+        if( $@ ) {
+            $response->error( &txt_macro . " $k : " . &txt_syntaxError . " : $@");
+            $result = 0;
+        }
     }
     # TODO: check module name
     # Check whatToTrace
     unless ( $config->{whatToTrace} =~ /^\$?[a-zA-Z]\w*$/ ) {
-        $response->error("whatToTrace parameter can contain only an exported attribute or a macro");
+        $response->error( &txt_invalidWhatToTrace );
         $result = 0;
     } 
     # Test groups
     $expr .= 'my $groups;';
     while( my($k,$v) = each( %{ $config->{groups} } ) ) {
         if( $k !~ /^[\w-]+$/ ) {
-            $response->error("\"$k\" is not a valid group name");
+            $response->error("\"$k\" " . &txt_isNotAValidGroupName );
             $result = 0;
         }
         if( $v =~ /(?<=[^=<\?])=(?!=)/ ) {
-            $response->warning("Group $k contains an assignment ('='). Possible confusion with '=='.");
+            $response->warning( &txt_group . " $k " . &txt_containsAnAssignment );
         }
         $safe->reval( $expr . "\$groups = '$k' if($v);");
         if( $@ ) {
-            $response->error("Syntax error in group \"$k\": $@");
+            $response->error( &txt_group . " $k " . &txt_syntaxError );
             $result = 0;
         }
     }
     # Test rules
     while( my($vh, $rules) = each( %{ $config->{locationRules} } ) ) {
         unless( $vh =~ /^\w[-\w\.]*$/ ) {
-            $response->error("\"$vh\" is not a valid virtual host name");
+            $response->error("\"$vh\" " . &txt_isNotAValidVirtualHostName );
             $result = 0;
         }
         while( my($reg, $v) = each( %{ $rules } ) ) {
@@ -514,17 +506,17 @@ sub checkConf {
                 $reg =~ s/#/\\#/g;
                 $safe->reval( $expr . "my \$r = qr#$reg#;" );
                 if( $@ ) {
-                    $response->error("Syntax error in regexp ($vh -> $reg)");
+                    $response->error( &txt_rule . " $vh -> \"$reg\" : " . &txt_syntaxError );
                     $result = 0;
                 }
             }
             unless( $v eq 'deny' or $v eq 'accept' ) {
                 if( $v =~ /(?<=[^=<\?])=(?!=)/ ) {
-                    $response->warning("Rule $vh -> $reg contains an assignment ('='). Possible confusion with '=='.");
+                    $response->warning( &txt_rule . " $vh -> \"$reg\" : " . &txt_containsAnAssignment );
                 }
                 $safe->reval( $expr . "my \$r=1 if($v);");
                 if( $@ ) {
-                    $response->error("Syntax error in expression ($vh -> $reg)");
+                    $response->error( &txt_rule . " $vh -> \"$reg\" : " . &txt_syntaxError );
                     $result = 0;
                 }
             }
@@ -533,20 +525,20 @@ sub checkConf {
     # Test exported headers
     while( my($vh, $headers) = each( %{ $config->{exportedHeaders} } ) ) {
         unless( $vh =~ /^\w[-\w\.]*$/ ) {
-            $response->error("\"$vh\" is not a valid virtual host name");
+            $response->error("\"$vh\" " . &txt_isNotAValidVirtualHostName );
             $result = 0;
         }
         while( my($header, $v) = each( %{ $headers } ) ) {
             unless( $header =~ /^[\w][-\w]*$/ ) {
-                $response->error("\"$header\" is not a valid HTTP header name ($vh)");
+                $response->error("\"$header\" ($vh) " . &txt_isNotAValidHTTPHeaderName );
                 $result = 0;
             }
             if( $v =~ /(?<=[^=<\?])=(?!=)/ ) {
-                $response->warning("Header $vh -> $header contains an assignment ('='). Possible confusion with '=='.");
+                $response->warning(&txt_header . " $vh -> $header " . &txt_containsAnAssignment );
             }
             $safe->reval( $expr . "my \$r = $v;" );
             if( $@ ) {
-                $response->error("Syntax error in header expression ($vh -> $header)");
+                $response->error(&txt_header . " $vh -> $header " . &txt_syntaxError );
                 $result = 0;
             }
         }

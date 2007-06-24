@@ -69,12 +69,13 @@ MANIFEST
 META.yml			Module meta-data (added by MakeMaker)
 README
 scripts/lmConfig_File2MySQL
-t/Lemonldap-NG-Manager-Conf-DBI.t
-t/Lemonldap-NG-Manager-Conf-File.t
-t/Lemonldap-NG-Manager-Conf-SOAP.t
-t/Lemonldap-NG-Manager-Conf.t
-t/Lemonldap-NG-Manager-SOAPServer.t
-t/Lemonldap-NG-Manager.t
-t/Lemonldap-NG-Manager_en.t
-t/Lemonldap-NG-Manager_fr.t
+t/01-Manager-Conf.t
+t/02-Manager-Conf-File.t
+t/03-Manager-Conf-DBI.t
+t/04-Manager-Conf-SOAP.t
+t/10-Manager.t
+t/20-Manager-i18n.t
+t/21-Manager-i18n-en.t
+t/22-Manager-i18n-fr.t
+t/50-Manager-SOAPServer.t
 TODO
