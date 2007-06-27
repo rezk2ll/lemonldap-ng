@@ -30,6 +30,10 @@
     <p class="paragraph"></p>
 
     <ul>
+      <li><a href="#HArchitecture">Architecture</a></li>
+
+      <li><a href="#HKinematics">Kinematics</a></li>
+
       <li>
         <a href=
         "#HAuthentication2CAuthorizationandAccountingmechanisms">Authentication,
@@ -68,6 +72,80 @@
 
       <li><a href="#HCopyrightandlicence">Copyright and licence</a></li>
     </ul>
+
+    <h3 class="heading-1-1"><span id="HArchitecture">Architecture</span></h3>
+
+    <p class="paragraph"></p>Lemonldap::NG est composed by 3 elements and 3
+    databases&nbsp;:
+
+    <p class="paragraph"></p><img src="lemonldap-ng-architecture.png" alt=
+    "lemonldap-ng-architecture.png" />
+
+    <p class="paragraph"></p>Lemonldap::NG components :
+
+    <ul class="star">
+      <li>the Manager used to manage Lemonldap::NG configuration,</li>
+
+      <li>the Portal used to authenticate users,</li>
+
+      <li>Apache modules used to protect applications. They can protect an
+      Apache area which can be a reverse-proxy. In this case, it is
+      recommended to securise the link between the reverse-proxy and the
+      hidden server because access can be done without authentication to this
+      server. A simple .htaccess or an SSL handshake can be used depending on
+      the security level of the host network.</li>
+    </ul>Three databases are required&nbsp;:
+
+    <ul class="star">
+      <li>the configuration database : by default, it's a simple directory,
+      but you can use a network database to share configuration if all the
+      Lemonldap::NG components aren't on the same physical server,</li>
+
+      <li>the LDAP server : in addition to the authentications (that can be
+      done by another mechanism as X509 certificates), it is used to load user
+      attributes and calculate the rights,</li>
+
+      <li>the sessions database : Lemonldap::NG uses Apache::Session modules
+      to manage sessions. By default, it uses Apache::Session::File module and
+      so, this database is a simple directory. Using Apache::Session::MySQL
+      for example, the database can be used on a network so Lemonldap::NG can
+      works on several physical servers.</li>
+    </ul>
+
+    <h3 class="heading-1-1"><span id="HKinematics">Kinematics</span></h3>
+
+    <p class="paragraph"></p><img src="lemonldap-ng-cinematique.png" alt=
+    "lemonldap-ng-cinematique.png" />
+
+    <p class="paragraph"></p>Detail of operations :
+
+    <ul class="star">
+      <li>1 and 2 : non-authenticated users (ie without valid cookie) are
+      redirected to the portal,</li>
+
+      <li>3 : authentication request (login password validated on LDAP server
+      or other mechanism),</li>
+
+      <li>4 : recovery ok user attributes,</li>
+
+      <li>5 : calculation of the additional attributes asked in the
+      configuration (macros and groups) and storage of the user datas in the
+      sessions database,</li>
+
+      <li>6 : cookie generation and redirection to the asked URL,</li>
+
+      <li>7 : interception of the cookie by the agent of protection (Apache
+      module) and recovery of the user datas,</li>
+
+      <li>8 : checking of the access authorization to the asked URL and
+      transmission to the application (real application or reverse-proxy) if
+      granted,</li>
+
+      <li>9 and 10 : other request are treated directly with the use datas
+      stored in the local cache. Access grant is calculated at each
+      request.</li>
+    </ul>When the authenticated user tries to access to another protected
+    server, only phases 7 to 10 are replayed in all transparency for the user.
 
     <h3 class="heading-1-1"><span id=
     "HAuthentication2CAuthorizationandAccountingmechanisms">Authentication,

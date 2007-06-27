@@ -35,6 +35,10 @@
     <p class="paragraph"></p>
 
     <ul>
+      <li><a href="#HArchitecture">Architecture</a></li>
+
+      <li><a href="#HCinC3A9matique">Cin&eacute;matique</a></li>
+
       <li>
         <a href=
         "#HMC3A9canismesd27authentification2Cd27autorisationetdetraC3A7abilitC3A9">
@@ -75,6 +79,94 @@
 
       <li><a href="#HCopyrightetlicense">Copyright et license</a></li>
     </ul>
+
+    <h3 class="heading-1-1"><span id="HArchitecture">Architecture</span></h3>
+
+    <p class="paragraph"></p>Lemonldap::NG est compos&eacute; de 3
+    &eacute;l&eacute;ments s'appuyant sur 3 bases de donn&eacute;es&nbsp;:
+
+    <p class="paragraph"></p><img src="lemonldap-ng-architecture.png" alt=
+    "lemonldap-ng-architecture.png" />
+
+    <p class="paragraph"></p>Composants de Lemonldap::NG :
+
+    <ul class="star">
+      <li>le Manager permet de g&eacute;rer la configuration de
+      Lemonldap::NG,</li>
+
+      <li>le portail est l'&eacute;l&eacute;ment d'authentification des
+      utilisateurs,</li>
+
+      <li>et enfin, des modules Apache prot&egrave;gent les applications. Ces
+      derniers peuvent prot&eacute;ger une aire d'un serveur Apache qui peut
+      &ecirc;tre un reverse-proxy. Dans ce dernier cas, il est
+      recommand&eacute; de s&eacute;curiser le lien entre le reverse-proxy et
+      le serveur masqu&eacute; car l'acc&egrave;s direct &agrave; ce serveur
+      peut se faire sans authentification. Un simple .htaccess ou un
+      &eacute;change de certificats peuvent convenir suivant le niveau de
+      s&eacute;curit&eacute; du r&eacute;seau h&ocirc;te.</li>
+    </ul>Trois bases de donn&eacute;es sont n&eacute;cessaires&nbsp;:
+
+    <ul class="star">
+      <li>la base de configuration : par d&eacute;faut, il s'agit d'un simple
+      r&eacute;pertoire, mais on peut utiliser une base de donn&eacute;e pour
+      permettre le fonctionnement si tous les &eacute;l&eacute;ments ne se
+      trouvent pas sur le m&ecirc;me serveur,</li>
+
+      <li>l'annuaire LDAP : outre les authentifications (qui peuvent
+      &ecirc;tre effectu&eacute;es par un autre moyen type certificat x509),
+      il est utilis&eacute; pour r&eacute;cup&eacute;rer les
+      caract&eacute;ristiques de l'utilisateur et calculer ses droits,</li>
+
+      <li>la base des sessions : Lemonldap::NG utilise les modules
+      Apache::Session pour g&eacute;rer les sessions. Par d&eacute;faut, c'est
+      le module Apache::Session::File qui est utilis&eacute; et donc cette
+      base est un simple r&eacute;pertoire. En utilisant
+      Apache::Session::MySQL par exemple, la base devient accessible au
+      travers du r&eacute;seau permettant le d&eacute;ploiement de la solution
+      sur plusieurs serveurs.</li>
+    </ul>
+
+    <h3 class="heading-1-1"><span id=
+    "HCinC3A9matique">Cin&eacute;matique</span></h3>
+
+    <p class="paragraph"></p><img src="lemonldap-ng-cinematique.png" alt=
+    "lemonldap-ng-cinematique.png" />
+
+    <p class="paragraph"></p>D&eacute;tail du fonctionnement :
+
+    <ul class="star">
+      <li>1 et 2 : l'utilisateur non authentifi&eacute; (c'est &agrave; dire
+      ne pr&eacute;sentant pas un cookie valide) est redirig&eacute; vers le
+      portail d'authentification,</li>
+
+      <li>3 : requ&ecirc;te d'authentification de l'utilisateur (login et
+      mot-de-passe valid&eacute; sur l'annuaire LDAP ou autre
+      m&eacute;canisme),</li>
+
+      <li>4 : r&eacute;cup&eacute;ration des attributs de l'utilisateur,</li>
+
+      <li>5 : calcul des attributs suppl&eacute;mentaires demand&eacute; dans
+      la configuration (macros et groupes) et stockage des donn&eacute;es
+      utilisateur dans la base de donn&eacute;es des sessions,</li>
+
+      <li>6 : g&eacute;n&eacute;ration du cookie et redirection vers l'URL
+      demand&eacute;e initialement,</li>
+
+      <li>7 : interception du cookie par l'agent de protection (module Apache)
+      et r&eacute;cup&eacute;ration des donn&eacute;es utilisateur,</li>
+
+      <li>8 : v&eacute;rification de l'autorisation d'acc&egrave;s &agrave;
+      l'URL demand&eacute;e et transmission &agrave; l'application
+      (application directement install&eacute;e sur le serveur Apache ou
+      reverse-proxy) si l'utilisateur y est autoris&eacute;,</li>
+
+      <li>9 et 10 : les autres requ&ecirc;tes sont trait&eacute;es directement
+      avec les donn&eacute;es utilisateur en cache. Le droit d'acc&egrave;s
+      est calcul&eacute; pour chaque URL,</li>
+    </ul>Lorsque l'utilisateur se pr&eacute;sente sur un autre serveur
+    prot&eacute;g&eacute;, seules les phases 7 &agrave; 10 sont
+    rejou&eacute;es en toute transparence pour l'utilisateur.
 
     <h3 class="heading-1-1"><span id=
     "HMC3A9canismesd27authentification2Cd27autorisationetdetraC3A7abilitC3A9">M&eacute;canismes

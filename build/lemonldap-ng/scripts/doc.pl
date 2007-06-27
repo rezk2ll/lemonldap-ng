@@ -14,6 +14,8 @@ my $docs = {
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocInstall?language=en'        => 'advanced-install.html',
 };
 
+my %imgs;
+
 while ( my ( $url, $file ) = each %$docs ) {
     print STDERR "\n# $file\n";
     open DOC, "wget -q -O - $url |";
@@ -31,6 +33,9 @@ while ( my ( $url, $file ) = each %$docs ) {
         $ind-- unless ($div);
         s/\r//g;
         utf8::decode($_);
+        if(s#(["'])/xwiki/bin/download/NG/Presentation/([\w\.\-]+)\1#$1$2$1#) {
+            $imgs{$2} = 1;
+        }
         $buf .= $_;
     }
     close DOC;
@@ -48,4 +53,8 @@ while ( my ( $url, $file ) = each %$docs ) {
 ';
     print FILE "$buf</body></html>";
     close FILE;
+}
+
+foreach(keys %imgs) {
+    `wget -N http://wiki.lemonldap.objectweb.org/xwiki/bin/download/NG/Presentation/$_`;
 }
