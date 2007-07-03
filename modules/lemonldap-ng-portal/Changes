@@ -1,5 +1,8 @@
 Revision history for Perl extension Lemonldap::NG::Portal.
 
+0.741 Tue Jul 3 7:21:16 2007
+	- Little bug in redirect sub
+
 0.74  Mon May 14 7:04:48 2007
 	- Multiple ldap servers can be used
 	- CDA optimization
