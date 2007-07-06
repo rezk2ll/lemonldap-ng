@@ -1,8 +1,9 @@
-lemonldap-ng (0.8.3) unstable; urgency=low
+lemonldap-ng (0.8.3) unstable; urgency=high
 
   * Syntax errors in configuration are now displayed
+  * Security fix: authentication could be replayed with another uid
 
- -- Xavier Guimard <x.guimard@free.fr>  Sat, 23 Jun 2007 21:57:02 +0200
+ -- Xavier Guimard <x.guimard@free.fr>  Tue, 03 Jul 2007 20:49:43 +0200
 
 lemonldap-ng (0.8.2.4) unstable; urgency=low
 

@@ -13,7 +13,7 @@ use CGI::Cookie;
 require POSIX;
 use Lemonldap::NG::Portal::_i18n;
 
-our $VERSION = '0.741';
+our $VERSION = '0.75';
 
 our @ISA = qw(CGI Exporter);
 
@@ -131,8 +131,8 @@ sub header {
 # CGI.pm overload to add Lemonldap::NG cookie
 sub redirect {
     my $self = shift;
-    if ( $self->{cookie} ) {
-        $self->SUPER::redirect( @_, -cookie => $self->{cookie} );
+    if ( $_[0]->{cookie} ) {
+        $self->SUPER::redirect( @_, -cookie => $_[0]->{cookie} );
     }
     else {
         $self->SUPER::redirect(@_);
@@ -350,7 +350,6 @@ sub unbind {
 # 12. Default authentication: LDAP bind with user credentials
 sub authenticate {
     my $self = shift;
-    return PE_OK if ( $self->{id} );
     $self->unbind();
     my $err;
     return $err unless ( ( $err = $self->connectLDAP ) == PE_OK );

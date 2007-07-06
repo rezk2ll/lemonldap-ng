@@ -1,5 +1,7 @@
 Revision history for Perl extension Lemonldap::NG::Portal.
 
+0.75  Tue Jul 3 20:42:09 2007
+	- Security fix: authentication could be replayed with another uid
 0.741 Tue Jul 3 7:21:16 2007
 	- Little bug in redirect sub
 
