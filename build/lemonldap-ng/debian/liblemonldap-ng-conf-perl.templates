@@ -1,97 +1,62 @@
 Template: liblemonldap-ng-conf-perl/newDirInfo
 Type: note
-Description: Lemonldap::NG changes
+_Description: Lemonldap::NG changes
  Lemonldap::NG default configuration directory has moved to
  /var/lib/lemondap-ng/conf/ and configuration storage is now managed by
  /etc/lemonldap-ng/storage.conf
-Description-fr: Changements dans lemonldap::NG
- Le répertoire de configuration par défaut est maintenant
- /var/lib/lemondap-ng/conf/ et le stockage des configurations est maintenant
- géré par /etc/lemonldap-ng/storage.conf
 
 Template: liblemonldap-ng-conf-perl/ldapServer
 Type: string
 Default: localhost
-Description: LDAP server:
+_Description: LDAP server:
  Set here name or IP address of the LDAP server that has to be used by
  Lemonldap::NG.
  You can modify this value later using the Lemonldap::NG manager.
-Description-fr: Serveur LDAP:
- Indiquez ici le nom ou l'adresse IP du serveur LDAP que Lemonldap::NG utilisera.
- Vous pourrez modifier cette valeur ultérieurement dans le gestionnaire
- Lemonldap::NG.
 
 Template: liblemonldap-ng-conf-perl/domain
 Type: string
 Default: example.com
-Description: Lemonldap::NG DNS domain:
+_Description: Lemonldap::NG DNS domain:
  Set here the main domain protected by Lemonldap::NG.
  You can modify this value later using the Lemonldap::NG manager.
-Description-fr: Domaine DNS de Lemonldap::NG:
- Indiquez ici le domaine principal protégé par lemonldap::NG.
- Vous pourrez modifier cette valeur ultérieurement dans le gestionnaire
- Lemonldap::NG.
 
 Template: liblemonldap-ng-conf-perl/portal
 Type: string
 Default: http://auth.example.com/
-Description: Lemonldap::NG portal:
+_Description: Lemonldap::NG portal:
  Set here the Lemonldap::NG portal URL.
  You can modify this value later using the Lemonldap::NG manager.
-Description-fr: Portail Lemonldap::NG:
- Indiquez ici l'URL du portail Lemonldap::NG.
- Vous pourrez modifier cette valeur ultérieurement dans le gestionnaire
- Lemonldap::NG.
 
 Template: liblemonldap-ng-conf-perl/ldapPort
 Type: string
 Default: 389
-Description: LDAP server port:
+_Description: LDAP server port:
  Set here the port used by the LDAP server.
  You can modify this value later using the Lemonldap::NG manager.
-Description-fr: Port du serveur LDAP:
- Indiquez ici le numéro du port du serveur LDAP.
- Vous pourrez modifier cette valeur ultérieurement dans le gestionnaire
- Lemonldap::NG.
 
 Template: liblemonldap-ng-conf-perl/ldapBase
 Type: string
 Default: dc=example,dc=com
-Description: LDAP search base:
+_Description: LDAP search base:
  Set here the search base to use in LDAP queries.
  You can modify this value later using the Lemonldap::NG manager.
-Description-fr: Base de recherche LDAP:
- Indiquez ici la base de recherche des requêtes LDAP.
- Vous pourrez modifier cette valeur ultérieurement dans le gestionnaire
- Lemonldap::NG.
 
 Template: liblemonldap-ng-conf-perl/managerDn
 Type: string
-Description: LDAP account:
+_Description: LDAP account:
  Set here the account that Lemonldap::NG has to use for its LDAP requests.
  Leaving it blank causes Lemonldap::NG to use anonymous connections.
  You can modify this value later using the Lemonldap::NG manager.
-Description-fr: Compte LDAP:
- Indiquez ici le compte que Lemonldap::NG doit utiliser pour ses requêtes
- LDAP. Laissez le champ vide pour utiliser des connexions anonymes.
- Vous pourrez modifier cette valeur ultérieurement dans le gestionnaire
- Lemonldap::NG.
 
 Template: liblemonldap-ng-conf-perl/managerPassword
 Type: string
-Description: LDAP password:
+_Description: LDAP password:
  Set here the password for the Lemonldap::NG LDAP account.
  You can modify this value later using the Lemonldap::NG manager.
-Description-fr: Mot de passe LDAP:
- Indiquez ici le mot de passe du compte LDAP de Lemonldap::NG.
- Vous pourrez modifier cette valeur ultérieurement dans le gestionnaire
- Lemonldap::NG.
 
 Template: liblemonldap-ng-conf-perl/howto
 Type: note
-Description: Lemonldap::NG is ready
+_Description: Lemonldap::NG is ready
  Lemonldap::NG is ready to work. See
  /usr/share/liblemonldap-ng-conf-perl/README.Debian to see how to activate it.
-Description-fr: Lemonldap::NG est prêt
- Lemonldap::NG est prêt à fonctionner. Reportez-vous au fichier
- /usr/share/liblemonldap-ng-conf-perl/README.Debian pour voir comment l'activer
+

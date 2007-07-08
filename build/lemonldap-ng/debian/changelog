@@ -2,8 +2,9 @@ lemonldap-ng (0.8.3) unstable; urgency=high
 
   * Syntax errors in configuration are now displayed
   * Security fix: authentication could be replayed with another uid
+  * Debian package uses po-debconf
 
- -- Xavier Guimard <x.guimard@free.fr>  Tue, 03 Jul 2007 20:49:43 +0200
+ -- Xavier Guimard <x.guimard@free.fr>  Sun, 08 Jul 2007 15:47:16 +0200
 
 lemonldap-ng (0.8.2.4) unstable; urgency=low
 
