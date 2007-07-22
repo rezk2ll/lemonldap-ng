@@ -17,7 +17,7 @@ use MIME::Base64;
 
 our @ISA = qw(Lemonldap::NG::Manager::Base);
 
-our $VERSION = '0.8';
+our $VERSION = '0.82';
 
 sub new {
     my ( $class, $args ) = @_;
@@ -522,7 +522,7 @@ sub checkConf {
                 }
             }
             # Test boolean expressions
-            unless ( $v eq 'deny' or $v eq 'accept' ) {
+            unless ( $v =~ /^(?:accept$|deny$|logout)/ ) {
                 # "=" may be a fault (but not "==")
                 if ( $v =~ /(?<=[^=<\?])=(?!=)/ ) {
                     $response->warning( &txt_rule . " $vh -> \"$reg\" : " . &txt_containsAnAssignment );

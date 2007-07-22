@@ -53,6 +53,8 @@ install: build
 	$(MAKE) example EXAMPLEDIRBUILD=debian/tmp/var/lib/lemonldap-ng EXAMPLEDIR=/var/lib/lemonldap-ng/ EXAMPLECONFDIR=/var/lib/lemonldap-ng/conf
 	cp debian/tmp/var/lib/lemonldap-ng/handler/MyHandler.pm debian/tmp/var/lib/lemonldap-ng/handler/MyHandler-Debian.pm
 	mv debian/tmp/var/lib/lemonldap-ng/index.pl debian/tmp/var/lib/lemonldap-ng/test.pl
+	mv debian/tmp/var/lib/lemonldap-ng/handler/lmH-apache.conf debian/tmp/var/lib/lemonldap-ng/apache-protected-area.conf
+	mv debian/tmp/var/lib/lemonldap-ng/handler/lmH-apache2.conf debian/tmp/var/lib/lemonldap-ng/apache2-protected-area.conf
 	perl -000 -i -pe 's/(new\s*\(\s*){[^}]+}/$$1\$$Lemonldap::NG::Conf::configStorage/; s#^use#\nrequire "/usr/share/lemonldap-ng/configStorage.pm";\nuse#m;' \
 			debian/tmp/var/lib/lemonldap-ng/manager/scripts/lmConfigEditor \
 			debian/tmp/var/lib/lemonldap-ng/handler/MyHandler-Debian.pm

@@ -1,5 +1,9 @@
 Revision history for Perl extension Lemonldap::NG::Manager.
 
+0.82 Sat jul 21 15:21:32 2007
+	- TLS support in LDAP
+	- Help for new logout system
+
 0.8   Sat jun 23 21:54:27 2007
 	- New feature: syntax errors are now displayed in the manager interface
 

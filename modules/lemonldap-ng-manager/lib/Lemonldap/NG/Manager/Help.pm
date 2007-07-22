@@ -190,11 +190,25 @@ authentication is done by another system (SSL for example).</p>
    base). Example&nbsp;:
   <pre>   dc=example, dc=com </pre></li>
   <li>LDAP server port : 389 by default&nbsp;;</li>
-  <li>LDAP server : Name (or IP address) of the LDAP server. To use LDAPS, set
-   here&nbsp;:
-    <pre>   ldaps://server/</pre>
-   and don't forget to change port (636 for example). You can specify more than
-   one server separated by commas. They will be tried in the specified order.
+  <li>LDAP server : Name(s) (or IP address(es)) of the LDAP server(s).
+   You can specify more than one server separated by commas and/or spaces,
+   they will be tried in the specified order.
+   You can also use encrypted connections&nbsp;:
+   <ul>
+    <li>LDAPS : instead of a server name, use&nbsp;:
+     <pre>   ldaps://server/</pre>
+     and don't forget to change port (636 for example).
+    </li>
+    <li>TLS : instead of a server name, use&nbsp;:
+     <pre>   ldap+tls://server/</pre>
+     you can also set any of the parameters needed by Net::LDAP start_tls
+     function&nbsp;:
+     <pre>   ldap+tls://server/?verify=none&amp;capath=/etc/ssl</pre>
+     See Net::LDAP(3) manual page to know all available parameters.
+     You can also set caPath or caFile parameters in the new() function when
+     building the portal (because they should depend on local file system).
+    </li>
+   </ul>
   </li>
   <li>LDAP account : optional, must be set if anonymous connection cannot
    access to the wanted LDAP attributes. This account is used before LDAP
@@ -216,13 +230,28 @@ r&eacute;alis&eacute;e par un autre moyen (SSL par exemple).</p>
   accepte les requ&ecirc;tes sans base). Exemple&nbsp;:
   <pre>   dc=example, dc=com </pre></li>
   <li>Port du serveur LDAP : 389 par d&eacute;faut&nbsp;;</li>
-  <li>Serveur LDAP : Nom (ou adresse IP) du serveur LDAP. Pour une connexion
-      LDAPS, indiquez ici&nbsp;:
-      <pre>   ldaps://server/</pre>
-      et n'oubliez pas de changer le port (636 en g&eacute;n&eacute;ral). Vous
-    pouvez indiquer plusieurs serveurs ici séparés par des virgules. Ils seront
-    testés dans l'ordre indiqué.
-   </li>
+  <li>Serveur LDAP : Nom(s) (ou adresse(s) IP) du(des) serveur(s) LDAP.
+   Vous pouvez indiquer plusieurs serveurs ici s&eacute;par&eacute;s par des
+   virgules et/ou des espaces. Ils seront test&eacute;s dans l'ordre indiqu&eacute;.
+   Vous pouvez &eacute;galement utiliser des connexions chiffr&eacute;es&nbsp;:
+   <ul>
+    <li>LDAPS : au lieu de noms de serveurs, indiquez ici&nbsp;:
+     <pre>   ldaps://serveur/</pre>
+     et n'oubliez pas de changer le port (636 en g&eacute;n&eacute;ral).
+    </li>
+    <li>TLS : au lieu de noms de serveurs, indiquez ici&nbsp;:
+     <pre>   ldap+tls://serveur/</pre>
+     vous pouvez &eacute;galement y ajouter tous les param&egrave;tres
+     demand&eacute;s par la fonction start_tls de Net::LDAP&nbsp;:
+     <pre>   ldap+tls://serveur/?verify=none&amp;capath=/etc/ssl</pre>
+     Reportez-vous &agrave; la page de manuel de Net::LDAP(3) pour
+     conna&icirc;tre les param&egrave;tres disponibles.
+     Vous pouvez &eacute;galement utiliser les param&egrave;tres caPath ou
+     caFile lors de la construction du portail dans la fonction new() (car
+     ils peuvent d&eacute;pendre du syst&egrave;me de fichier local).
+    </li>
+   </ul>
+  </li>
   <li>Compte de connexion LDAP : optionnel, &agrave; renseigner si les attributs LDAP
     utilis&eacute;s ne sont pas accessibles par une session anonyme. Ce compte est
     utilis&eacute; avant l'authentification pour trouver le dn de l'utilisateur&nbsp;;
@@ -404,6 +433,21 @@ users member of 'group1'. You can also use 'accept' and 'deny' keywords.
 <p> If URL doesn't match any regular expression, 'default' rule is called to
 grant or not.</p>
 
+<h5> Logout </h5>
+
+You can also write Logout rules to intercept application logout url using the
+reserved words&nbsp;:
+<ul>
+ <li>logout_sso URL : the request generates a redirection to the portal to call
+  logout mechanism. The request is not given to the application so its logout
+  function is not called. After logout, the user is redirected to the URL,</li>
+ <li>logout_app URL : the request is transmitted to the application, but the
+  result is not displayed : the user is redirected to the URL,</li>
+ <li>logout_app_sso URL : the request is transmitted to the application and
+  then, the user is redirected to the portal with the logout call and then,
+  he is redirected to the given URL.</li>
+</ul>
+
 <h4> Headers </h4>
 
 <p> Headers are used to inform the remote application on the connected user.
@@ -452,6 +496,24 @@ tous les utilisateurs authentifi&eacute;s peuvent acc&eacute;der.</p>
 droit d'acc&egrave;s est calcul&eacute; &agrave; partir de l'expression bool&eacute;enne d&eacute;finie dans
 la r&egrave;gle par d&eacute;faut (default).</p>
 
+<h5> Logout </h5>
+
+Vous pouvez &eacute;galement &eacute;crire des r&egrave;gles pour intercepter
+les URL de d&eacute;connexions des applications en utilisant les mots-clefs&nbsp;:
+<ul>
+ <li>logout_sso URL : la requ&ecirc;te entraine une redirection vers le portail
+  avec l'appel au syst&egrave;me de d&eacute;loguage. La requ&ecirc;te n'est
+  pas transmise &agrave; l'applicationthe. Apr&egrave;s d&eacute;loguage,
+  l'utilisateur est renvoy&eacute; vers l'URL,</li>
+ <li>logout_app URL : la requ&ecirc;te est transmise &agrave; l'applications
+  mais le r&eacute;sultat n'est pas affich&eacute;&nbsp;: l'utilisateur est
+  redirig&eacute; vers l'URL,</li>
+ <li>logout_app_sso URL : la requ&ecirc;te est transmise &agrave; l'application
+  et ensuite, l'utilisateur est redirig&eacute; vers le portail avec appel au
+  syst&egrave;me de d&eacute;loguage. Il est ensuite redirig&eacute; vers
+  l'URL.</li>
+</ul>
+
 <h4> En-t&ecirc;tes</h4>
 
 <p> Les en-t&ecirc;tes servant &agrave; l'application &agrave; savoir qui est connect&eacute; se d&eacute;clarent
@@ -478,9 +540,9 @@ EOT
 
 sub help_whatToTrace_fr {
     print <<EOT;
-<h3>Donnée à journaliser dans Apache</h3>
-<p> Indiquez ici le nom de la variable (attribut) ou de la macro qui doit être
-utilisée pour alimenter les journaux Apache des applications protégées
-(n'oubliez pas le "\$"). Par défaut&nbsp;: \$uid</p>
+<h3>Donn&eacute;e &agrave; journaliser dans Apache</h3>
+<p> Indiquez ici le nom de la variable (attribut) ou de la macro qui doit &ecirc;tre
+utilis&eacute;e pour alimenter les journaux Apache des applications prot&eacute;g&eacute;es
+(n'oubliez pas le "\$"). Par d&eacute;faut&nbsp;: \$uid</p>
 EOT
 }

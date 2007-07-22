@@ -9,7 +9,7 @@ print $cgi->start_html( 'Page protected by Lemonldap::NG' );
 my($headers, $env)=({},{});
 use Data::Dumper;
 print "<pre>";
-foreach(keys %ENV) {
+foreach(sort keys %ENV) {
     if($_ =~ /^HTTP_/) {
         ($a=$_) =~ s/^HTTP_//i;
         #$a =~ s/_/ /g;
@@ -30,7 +30,7 @@ print qq#<h1>Authentication succeed</h1>
 <table border="1" style="font-size: small;">\n
 <tr><th>Header</th><th>Perl CGI</th><th>PHP script</th><th>Value</th></tr>
 #;
-foreach(keys %$headers) {
+foreach(sort keys %$headers) {
     $style = $_ eq 'Auth-User' ? 'style="background-color: #FFEEEE;font-weight: bold;"' : '';
     print "<tr>
     <td $style>$_</td>
@@ -52,7 +52,7 @@ print qq#<h2>Environment for Perl CGI :</h2>
 same server than Lemonldap::NG handler (\$whatToTrace parameter). If you use
 it on a reverse-proxy, \$ENV{REMOTE_USER} is not set.</p>
 <table border="0" style="font-size: small;">\n#;
-foreach(keys %ENV) {
+foreach(sort keys %ENV) {
     my $tmp = $ENV{$_};
     $tmp =~ s/&/&amp;/g;
     $tmp =~ s/>/&gt;/g;

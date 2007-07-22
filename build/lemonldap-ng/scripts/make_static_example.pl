@@ -29,6 +29,7 @@ sub scan {
     while (<$IN>) {
         s/\r//g;
         if (/lmQuery/) {
+            s/__SCRIPTNAME__\?lmQuery=conf&cfgNum="\+n/conf.xml"/;
             if (s/__SCRIPTNAME__\?lmQuery=([^"']*)js/$1.js/) {
                 scan( $script, "$1.js", "lmQuery=$1js" );
             }
@@ -36,7 +37,7 @@ sub scan {
                 # Nothing to do here
             }
             elsif (s/__SCRIPTNAME__\?lmQuery=conf/conf.xml/) {
-                scan( $script, "conf.xml", "lmQuery=conf" );
+                scan( $script, "conf.xml", "lmQuery=conf&cfgNum=0" );
             }
             elsif (s/__SCRIPTNAME__\?lmQuery=([^"']*)css/style$1.css/) {
                 scan( $script, "style$1.css", "lmQuery=$1css" );
