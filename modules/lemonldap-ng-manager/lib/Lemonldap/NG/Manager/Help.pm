@@ -54,18 +54,20 @@ sub help_authParams_fr {
 <h3>Param&egrave;tres d'authentification</h3>
 <dl>
 <dt> Type d'authentification </dt>
-<dd> Le sch&eacute;ma classique d'authentification Lemonldap::NG consiste &agrave; utiliser une
-authentification par LDAP. Vous pouvez changer ceci en "SSL" par exemple.</dd>
+<dd> Le sch&eacute;ma classique d'authentification Lemonldap::NG consiste
+&agrave; utiliser une authentification par LDAP. Vous pouvez changer ceci en
+"SSL" par exemple.</dd>
 
 <dt> Portail </dt>
-<dd> Indiquez ici l'URL ou seront renvoy&eacute;s les utilisateurs non authentifi&eacute;s.
-Cette URL doit bien sur correspondre &agrave; un portail utilisant
-Lemonldap::NG::Portal::SharedConf.</dd>
+<dd> Indiquez ici l'URL ou seront renvoy&eacute;s les utilisateurs non
+authentifi&eacute;s. Cette URL doit bien sur correspondre &agrave; un portail
+utilisant Lemonldap::NG::Portal::SharedConf.</dd>
 
 <dt> Cookie s&eacute;curis&eacute; (SSL) </dt>
-<dd> Une fois authentifi&eacute;, l'utilisateur est reconnu par son cookie. Si tous
-les h&ocirc;tes virtuels de votre domaine son prot&eacute;g&eacute;s par SSL, mettez cette option
-&agrave; 1, ainsi le cookie ne sera pr&eacute;sent&eacute; par le navigateur qu'aux sites prot&eacute;g&eacute;s,
+<dd> Une fois authentifi&eacute;, l'utilisateur est reconnu par son cookie. Si
+tous les h&ocirc;tes virtuels de votre domaine son prot&eacute;g&eacute;s par
+SSL, mettez cette option &agrave; 1, ainsi le cookie ne sera
+pr&eacute;sent&eacute; par le navigateur qu'aux sites prot&eacute;g&eacute;s,
 ce qui &eacute;vite un vol de session.</dd>
 </dl>
 EOT
@@ -86,8 +88,9 @@ sub help_cookieName_fr {
 <h3>Nom de cookie</h3>
 <p> Indiquez ici le nom du cookie ('lemonldap' par d&eacute;faut).<br>
 
-ATTENTION, tout changement n&eacute;cessite le red&eacute;marrage de tous les serveurs Apache
-h&eacute;bergeant des agents de protection Lemonldap::NG::Handler.</p>
+ATTENTION, tout changement n&eacute;cessite le red&eacute;marrage de tous les
+serveurs Apache h&eacute;bergeant des agents de protection
+Lemonldap::NG::Handler.</p>
 EOT
 }
 
@@ -110,9 +113,10 @@ sub help_domain_fr {
 applications &agrave; prot&eacute;ger. Si vous utilisez le "Cross domain
 authentication", indiquez ici le domaine du portail<br>
 ATTENTION : tous les h&ocirc;tes virtuels prot&eacute;g&eacute;s ne se trouvant
-pas dans le m&ecirc;me domaine que le portail doivent &ecirc;tre prot&eacute;g&eacute;s par un agent
-h&eacute;ritant de Lemonldap::NG::Handler::CDA et si un seul de ces agents est
-utilis&eacute;, le portail doit &ecirc;tre de type Lemonldap::NG::Portal::CDA.
+pas dans le m&ecirc;me domaine que le portail doivent &ecirc;tre
+prot&eacute;g&eacute;s par un agent h&eacute;ritant de
+Lemonldap::NG::Handler::CDA et si un seul de ces agents est utilis&eacute;, le
+portail doit &ecirc;tre de type Lemonldap::NG::Portal::CDA.
 EOT
 }
 
@@ -148,19 +152,22 @@ EOT
 sub help_groups_fr {
     print <<EOT;
 <h3>Groupes d'utilisateurs</h3>
-<p>Les groupes ne sont pas indispensables mais acc&eacute;l&egrave;rent le traitement des
-requ&ecirc;tes. Par exemple, si un h&ocirc;te virtuel est autoris&eacute; nominativement &agrave;
-user, user2 et user3, la r&egrave;gle d'acc&egrave;s s'&eacute;crira&nbsp;:</p>
+<p>Les groupes ne sont pas indispensables mais acc&eacute;l&egrave;rent le
+traitement des requ&ecirc;tes. Par exemple, si un h&ocirc;te virtuel est
+autoris&eacute; nominativement &agrave; user, user2 et user3, la r&egrave;gle
+d'acc&egrave;s s'&eacute;crira&nbsp;:</p>
 <pre>
     # test.example.com - R&egrave;gles
     default =&gt; \$uid eq "user1" or \$uid eq "user2" or \$uid eq "user3"
 </pre>
-<p> Le probl&egrave;me est que cette expression sera calcul&eacute;e &agrave; chaque requ&ecirc;te HTTP.
-D'autre part, si 2 h&ocirc;tes virtuels ont la m&ecirc;me r&egrave;gle d'acc&egrave;s, toute modification
-doit &ecirc;tre r&eacute;percut&eacute;e sur les deux h&ocirc;tes virtuels. Le syst&egrave;me des groupes permet
-de r&eacute;soudre ces deux probl&egrave;mes&nbsp;: lors de la connexion au portail, les
-expressions complexes sont calcul&eacute;es une fois pour toute la session et le
-r&eacute;sultat est stock&eacute; dans la cha&icirc;ne \$groups. L'exemple pr&eacute;c&eacute;dent devient
+<p> Le probl&egrave;me est que cette expression sera calcul&eacute;e &agrave;
+chaque requ&ecirc;te HTTP. D'autre part, si 2 h&ocirc;tes virtuels ont la
+m&ecirc;me r&egrave;gle d'acc&egrave;s, toute modification doit &ecirc;tre
+r&eacute;percut&eacute;e sur les deux h&ocirc;tes virtuels. Le syst&egrave;me
+des groupes permet de r&eacute;soudre ces deux probl&egrave;mes&nbsp;: lors de
+la connexion au portail, les expressions complexes sont calcul&eacute;es une
+fois pour toute la session et le r&eacute;sultat est stock&eacute; dans la
+cha&icirc;ne \$groups. L'exemple pr&eacute;c&eacute;dent devient
 alors&nbsp;:</p>
 <pre>
     # D&eacute;claration d'un groupe
@@ -170,13 +177,14 @@ alors&nbsp;:</p>
     # test.example.com - R&egrave;gles
     default =&gt; \$groups =~ /\\bgroup1\\b/
 </pre>
-<p> Cette derni&egrave;re expression est une expression r&eacute;guli&egrave;re Perl (PCRE) qui
-correspond &agrave; la recherche du mot group1 dans la cha&icirc;ne \$groups (\\b signifie
-d&eacute;but ou fin de mot).</p>
+<p> Cette derni&egrave;re expression est une expression r&eacute;guli&egrave;re
+Perl (PCRE) qui correspond &agrave; la recherche du mot group1 dans la
+cha&icirc;ne \$groups (\\b signifie d&eacute;but ou fin de mot).</p>
 
-<p>La variable export&eacute;e \$groups est une cha&icirc;ne de caract&egrave;res compos&eacute;s de tous les
-noms de groupes auquel l'utilisateur connect&eacute; appartient (c'est &agrave; dire les
-noms de groupe pour lesquels l'expression est vraie).</p>
+<p>La variable export&eacute;e \$groups est une cha&icirc;ne de
+caract&egrave;res compos&eacute;s de tous les noms de groupes auquels
+l'utilisateur connect&eacute; appartient (c'est &agrave; dire les noms de
+groupe pour lesquels l'expression est vraie).</p>
 EOT
 }
 
@@ -226,14 +234,15 @@ sub help_ldap_fr {
 Ils doivent &ecirc;tre renseign&eacute;s m&ecirc;me si l'authentification est
 r&eacute;alis&eacute;e par un autre moyen (SSL par exemple).</p>
 <ul>
-  <li>Base de recherche LDAP : obligatoire (&agrave; moins que votre serveur LDAP
-  accepte les requ&ecirc;tes sans base). Exemple&nbsp;:
+  <li>Base de recherche LDAP : obligatoire (&agrave; moins que votre serveur
+  LDAP accepte les requ&ecirc;tes sans base). Exemple&nbsp;:
   <pre>   dc=example, dc=com </pre></li>
   <li>Port du serveur LDAP : 389 par d&eacute;faut&nbsp;;</li>
   <li>Serveur LDAP : Nom(s) (ou adresse(s) IP) du(des) serveur(s) LDAP.
    Vous pouvez indiquer plusieurs serveurs ici s&eacute;par&eacute;s par des
-   virgules et/ou des espaces. Ils seront test&eacute;s dans l'ordre indiqu&eacute;.
-   Vous pouvez &eacute;galement utiliser des connexions chiffr&eacute;es&nbsp;:
+   virgules et/ou des espaces. Ils seront test&eacute;s dans l'ordre
+   indiqu&eacute;. Vous pouvez &eacute;galement utiliser des connexions
+   chiffr&eacute;es&nbsp;:
    <ul>
     <li>LDAPS : au lieu de noms de serveurs, indiquez ici&nbsp;:
      <pre>   ldaps://serveur/</pre>
@@ -252,9 +261,10 @@ r&eacute;alis&eacute;e par un autre moyen (SSL par exemple).</p>
     </li>
    </ul>
   </li>
-  <li>Compte de connexion LDAP : optionnel, &agrave; renseigner si les attributs LDAP
-    utilis&eacute;s ne sont pas accessibles par une session anonyme. Ce compte est
-    utilis&eacute; avant l'authentification pour trouver le dn de l'utilisateur&nbsp;;
+  <li>Compte de connexion LDAP : optionnel, &agrave; renseigner si les
+   attributs LDAP utilis&eacute;s ne sont pas accessibles par une session
+    anonyme. Ce compte est utilis&eacute; avant l'authentification pour trouver
+    le dn de l'utilisateur&nbsp;;
    </li>
   <li>Mot de passe LDAP : mot de passe correspondant au compte ci-dessus.
 </ul>
@@ -334,9 +344,10 @@ EOT
 sub help_storage_fr {
     print <<EOT;
 <h3>Stockage des sessions</h3>
-<p> Le stockage des sessions Lemonldap::NG est r&eacute;alis&eacute; au travers des modules
-h&eacute;rit&eacute;s de Apache::Session. Vous devez indiquer ici le module choisi et
-indiquer les param&egrave;tres correspondants &agrave; ce module&nbsp;:</p>
+<p> Le stockage des sessions Lemonldap::NG est r&eacute;alis&eacute; au travers
+des modules h&eacute;rit&eacute;s de Apache::Session. Vous devez indiquer ici
+le module choisi et indiquer les param&egrave;tres correspondants &agrave; ce
+module&nbsp;:</p>
 <p>Exemples :</p>
 <ul>
   <li>Module =&gt; Apache::Session::File, <br>options :
@@ -355,9 +366,9 @@ indiquer les param&egrave;tres correspondants &agrave; ce module&nbsp;:</p>
 </ul>
 <p>
 <b>Note</b>&nbsp;: si vous utilisez le script <tt><b>purgeCentralCache</b></tt>
- fourni dans les sources du portail (&agrave; mettre en crontab), vous pouvez ajouter
- le param&egrave;tre <b>timeout</b> pour g&eacute;rer la destruction des sessions (7200
- secondes par d&eacute;faut).
+ fourni dans les sources du portail (&agrave; mettre en crontab), vous pouvez
+ ajouter le param&egrave;tre <b>timeout</b> pour g&eacute;rer la destruction
+ des sessions (7200 secondes par d&eacute;faut).
 </p>
 EOT
 }
@@ -408,8 +419,8 @@ sub help_virtualHosts_en {
     print <<EOT;
 <h3>Virtual Hosts</h3>
 
-<p> A virtual host configuration is cutted in 2 pieces&nbsp;: the rules and the HTTP
-headers.</p>
+<p> A virtual host configuration is cutted in 2 pieces&nbsp;: the rules and the
+HTTP headers.</p>
 
 <p> <u>Note</u> : If portal and handlers are not in the same domain than declared
 in "General Parameters" menu, <u>you have to use</u> CDA modules. Else, session
@@ -441,11 +452,12 @@ reserved words&nbsp;:
  <li>logout_sso URL : the request generates a redirection to the portal to call
   logout mechanism. The request is not given to the application so its logout
   function is not called. After logout, the user is redirected to the URL,</li>
- <li>logout_app URL : the request is transmitted to the application, but the
-  result is not displayed : the user is redirected to the URL,</li>
- <li>logout_app_sso URL : the request is transmitted to the application and
-  then, the user is redirected to the portal with the logout call and then,
-  he is redirected to the given URL.</li>
+ <li>logout_app URL (Apache-2.x only) : the request is transmitted to the
+  application, but the result is not displayed : the user is redirected to the
+  URL,</li>
+ <li>logout_app_sso URL (Apache-2.x only) : the request is transmitted to the
+  application and then, the user is redirected to the portal with the logout
+  call and then, he is redirected to the given URL.</li>
 </ul>
 
 <h4> Headers </h4>
@@ -468,56 +480,63 @@ sub help_virtualHosts_fr {
     print <<EOT;
 <h3>H&ocirc;tes virtuels</h3>
 
-<p> La configuration d'un h&ocirc;te virtuel est divis&eacute;e en 2 parties&nbsp;: les
-r&egrave;gles et les en-t&ecirc;tes HTTP export&eacute;s.</p>
+<p> La configuration d'un h&ocirc;te virtuel est divis&eacute;e en 2
+parties&nbsp;: les r&egrave;gles et les en-t&ecirc;tes HTTP export&eacute;s.</p>
 
-<p> <u>Note</u> : pour que le m&eacute;canisme d'authentification fonctionne, tous
-les h&ocirc;tes virtuels et le portail doivent se trouver dans le domaine d&eacute;clar&eacute;
-dans les param&egrave;tres g&eacute;n&eacute;raux ou <u>utiliser les modules CDA</u>
-<i>(Cross-Domain-Authentication)</i> qui g&egrave;re la transmission de l'identifiant.</p>
+<p> <u>Note</u> : pour que le m&eacute;canisme d'authentification fonctionne,
+tous les h&ocirc;tes virtuels et le portail doivent se trouver dans le domaine
+d&eacute;clar&eacute; dans les param&egrave;tres g&eacute;n&eacute;raux ou
+<u>utiliser les modules CDA</u> <i>(Cross-Domain-Authentication)</i> qui
+g&egrave;re la transmission de l'identifiant.</p>
 
 <h4> R&egrave;gles</h4>
 
-<p>Une r&egrave;gle associe une expression r&eacute;guli&egrave;re perl &agrave; une expression bool&eacute;enne.
-Lors de l'acc&egrave;s d'un utilisateur, si l'URL demand&eacute;e correspond &agrave; la r&egrave;gle, le
-droit d'acc&egrave;s est calcul&eacute; par l'expression bool&eacute;enne. Exemple&nbsp;:</p>
+<p>Une r&egrave;gle associe une expression r&eacute;guli&egrave;re perl
+&agrave; une expression bool&eacute;enne. Lors de l'acc&egrave;s d'un
+utilisateur, si l'URL demand&eacute;e correspond &agrave; la r&egrave;gle, le
+droit d'acc&egrave;s est calcul&eacute; par l'expression bool&eacute;enne.
+Exemple&nbsp;:</p>
 
 <pre>
   # H&ocirc;te virtuel test.example.com - r&egrave;gles
   ^/protected =&gt; \$groups =~ /\\bgroup1\\b/
 </pre>
 
-<p> La r&egrave;gle ci-dessus signifie que pour les URL commen&ccedil;ant par '/protected',
-les utilisateurs doivent appartenir au groupe 'group1'. Vous pouvez &eacute;galement
-utiliser les mots-clefs 'accept' et 'deny'. Attention, 'accept' signifie que
-tous les utilisateurs authentifi&eacute;s peuvent acc&eacute;der.</p>
+<p> La r&egrave;gle ci-dessus signifie que pour les URL commen&ccedil;ant par
+'/protected', les utilisateurs doivent appartenir au groupe 'group1'. Vous
+pouvez &eacute;galement utiliser les mots-clefs 'accept' et 'deny'. Attention,
+'accept' signifie que tous les utilisateurs authentifi&eacute;s peuvent
+acc&eacute;der.</p>
 
-<p>Si l'URL demand&eacute;e ne correspond &agrave; aucune des expressions r&eacute;guli&egrave;res, le
-droit d'acc&egrave;s est calcul&eacute; &agrave; partir de l'expression bool&eacute;enne d&eacute;finie dans
-la r&egrave;gle par d&eacute;faut (default).</p>
+<p>Si l'URL demand&eacute;e ne correspond &agrave; aucune des expressions
+r&eacute;guli&egrave;res, le droit d'acc&egrave;s est calcul&eacute; &agrave;
+partir de l'expression bool&eacute;enne d&eacute;finie dans la r&egrave;gle par
+d&eacute;faut (default).</p>
 
 <h5> Logout </h5>
 
 Vous pouvez &eacute;galement &eacute;crire des r&egrave;gles pour intercepter
-les URL de d&eacute;connexions des applications en utilisant les mots-clefs&nbsp;:
+les URL de d&eacute;connexions des applications en utilisant les
+mots-clefs&nbsp;:
 <ul>
  <li>logout_sso URL : la requ&ecirc;te entraine une redirection vers le portail
   avec l'appel au syst&egrave;me de d&eacute;loguage. La requ&ecirc;te n'est
   pas transmise &agrave; l'applicationthe. Apr&egrave;s d&eacute;loguage,
   l'utilisateur est renvoy&eacute; vers l'URL,</li>
- <li>logout_app URL : la requ&ecirc;te est transmise &agrave; l'applications
-  mais le r&eacute;sultat n'est pas affich&eacute;&nbsp;: l'utilisateur est
-  redirig&eacute; vers l'URL,</li>
- <li>logout_app_sso URL : la requ&ecirc;te est transmise &agrave; l'application
-  et ensuite, l'utilisateur est redirig&eacute; vers le portail avec appel au
-  syst&egrave;me de d&eacute;loguage. Il est ensuite redirig&eacute; vers
-  l'URL.</li>
+ <li>logout_app URL (Apache-2.x seulement) : la requ&ecirc;te est transmise
+  &agrave; l'applications mais le r&eacute;sultat n'est pas
+  affich&eacute;&nbsp;: l'utilisateur est redirig&eacute; vers l'URL,</li>
+ <li>logout_app_sso URL (Apache-2.x seulement) : la requ&ecirc;te est transmise
+  &agrave; l'application et ensuite, l'utilisateur est redirig&eacute; vers le
+  portail avec appel au syst&egrave;me de d&eacute;loguage. Il est ensuite
+  redirig&eacute; vers l'URL.</li>
 </ul>
 
 <h4> En-t&ecirc;tes</h4>
 
-<p> Les en-t&ecirc;tes servant &agrave; l'application &agrave; savoir qui est connect&eacute; se d&eacute;clarent
-comme suit&nbsp;: <tt>&lt;nom de l'en-t&ecirc;te&gt; =&gt; &lt;expression Perl&gt;.
+<p> Les en-t&ecirc;tes servant &agrave; l'application &agrave; savoir qui est
+connect&eacute; se d&eacute;clarent comme suit&nbsp;: <tt>&lt;nom de
+l'en-t&ecirc;te&gt; =&gt; &lt;expression Perl&gt;.
 </p>
 
 <p> Exemples :</p>
@@ -541,8 +560,9 @@ EOT
 sub help_whatToTrace_fr {
     print <<EOT;
 <h3>Donn&eacute;e &agrave; journaliser dans Apache</h3>
-<p> Indiquez ici le nom de la variable (attribut) ou de la macro qui doit &ecirc;tre
-utilis&eacute;e pour alimenter les journaux Apache des applications prot&eacute;g&eacute;es
-(n'oubliez pas le "\$"). Par d&eacute;faut&nbsp;: \$uid</p>
+<p> Indiquez ici le nom de la variable (attribut) ou de la macro qui doit
+&ecirc;tre utilis&eacute;e pour alimenter les journaux Apache des applications
+prot&eacute;g&eacute;es (n'oubliez pas le "\$"). Par d&eacute;faut&nbsp;:
+\$uid</p>
 EOT
 }
