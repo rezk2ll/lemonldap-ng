@@ -74,9 +74,8 @@ sub getConf {
     my $fields = $self->load( $args->{cfgNum}, $args->{fields} );
     my $conf;
     while ( my ( $k, $v ) = each(%$fields) ) {
-        $v =~ s/^'(.*)'$/$1/m;
+        $v =~ s/^'(.*)'$/$1/s;
         if( $k =~ /^(?:exportedVars|locationRules|groups|exportedHeaders|macros|globalStorageOptions)$/ ) {
-            my $data1;
             if ( $v !~ /^\$/ ) {
                 print STDERR "Lemonldap::NG : Warning: configuration is in old format, you've to migrate !\n";
                 eval 'require Storable;require MIME::Base64;';

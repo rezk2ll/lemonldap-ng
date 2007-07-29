@@ -141,7 +141,8 @@ sub printXmlConf {
         #XMLDecl  => "<?xml version='1.0' encoding='iso-8859-1'?>",
         RootName => 'tree',
         KeyAttr  => { item => 'id', username => 'name' },
-        NoIndent => 1
+        NoIndent => 1,
+        NoSort   => 0,
     );
 }
 
@@ -240,14 +241,15 @@ sub buildTree {
         &txt_managerPassword, );
 
     if ( $config->{exportedVars} ) {
-        while ( my ( $n, $att ) = each( %{ $config->{exportedVars} } ) ) {
-            $exportedVars->{"ev_$indice"} = $self->xmlField( "both", $att, $n );
+        foreach my $n ( sort keys %{ $config->{exportedVars} } ) {
+            $exportedVars->{ sprintf( "ev_%010d", $indice) } = $self->xmlField( "both", $config->{exportedVars}->{$n}, $n );
             $indice++;
         }
     }
     else {
-        foreach (qw(mail uid cn)) {
-            $exportedVars->{$_} = $self->xmlField( 'both', $_, $_ );
+        foreach (qw(cn mail uid)) {
+            $exportedVars->{ sprintf( "ev_%010d", $indice) } = $self->xmlField( 'both', $_, $_ );
+            $indice++;
         }
     }
 
@@ -257,9 +259,9 @@ sub buildTree {
         $tree->{item}->{item}->{generalParameters}->{item}->{sessionStorage}->{item}->{globalStorageOptions}->{item} = {};
         $globalStorageOptions =
           $tree->{item}->{item}->{generalParameters}->{item}->{sessionStorage}->{item}->{globalStorageOptions}->{item};
-        while ( my ( $n, $opt ) = each( %{ $config->{globalStorageOptions} } ) )
-        {
-            $globalStorageOptions->{$n} = $self->xmlField( "both", $opt, $n );
+        foreach my $n ( sort keys %{ $config->{globalStorageOptions} } ) {
+            $globalStorageOptions->{ sprintf( "go_%010d", $indice) } = $self->xmlField( "both", $config->{globalStorageOptions}->{n}, $n );
+            $indice++;
         }
     }
     else {
@@ -269,8 +271,9 @@ sub buildTree {
         $tree->{item}->{item}->{virtualHosts}->{item} = {};
         my $virtualHost = $tree->{item}->{item}->{virtualHosts}->{item};
         # TODO: split locationRules into 2 arrays
-        while ( my ( $host, $rules ) = each( %{ $config->{locationRules} } ) ) {
-            my $vh_id = "vh_$indice";
+        foreach my $host ( sort keys %{ $config->{locationRules} } ) {
+            my $rules = $config->{locationRules}->{$host};
+            my $vh_id = sprintf( "vh_%010d", $indice );
             $indice++;
             $virtualHost->{$vh_id} = $self->xmlField( "text", 'i', $host );
             my ( $ih, $ir ) =
@@ -279,16 +282,16 @@ sub buildTree {
                 "$ih" => { text => &txt_httpHeaders, },
                 "$ir" => { text => &txt_locationRules, },
             };
-            while ( my ( $reg, $expr ) = each(%$rules) ) {
+            foreach my $reg ( sort keys %$rules ) {
                 my $type = ( $reg eq 'default' ) ? 'value' : 'both';
-                $virtualHost->{$vh_id}->{item}->{$ir}->{item}->{"r_$indice"} =
-                  $self->xmlField( $type, $expr, $reg );
+                $virtualHost->{$vh_id}->{item}->{$ir}->{item}->{ sprintf( "r_%010d", $indice ) } =
+                  $self->xmlField( $type, $rules->{$reg} , $reg );
                 $indice++;
             }
             my $headers = $config->{exportedHeaders}->{$host};
-            while ( my ( $h, $expr ) = each(%$headers) ) {
-                $virtualHost->{$vh_id}->{item}->{$ih}->{item}->{"h_$indice"} =
-                  $self->xmlField( "both", $expr, $h );
+            foreach my $h ( sort keys %$headers ) {
+                $virtualHost->{$vh_id}->{item}->{$ih}->{item}->{ sprintf( "h_%010d", $indice ) } =
+                  $self->xmlField( "both", $headers->{$h}, $h );
                 $indice++;
             }
         }
@@ -296,16 +299,16 @@ sub buildTree {
     if ( $config->{groups} and %{ $config->{groups} } ) {
         $tree->{item}->{item}->{groups}->{item} = {};
         my $groups = $tree->{item}->{item}->{groups}->{item};
-        while ( my ( $group, $expr ) = each( %{ $config->{groups} } ) ) {
-            $groups->{"g_$indice"} = $self->xmlField( 'both', $expr, $group );
+        foreach my $group ( sort keys  %{ $config->{groups} } ) {
+            $groups->{ sprintf( "g_%010d", $indice) } = $self->xmlField( 'both', $config->{groups}->{$group}, $group );
             $indice++;
         }
     }
     if ( $config->{macros} and %{ $config->{macros} } ) {
         $tree->{item}->{item}->{generalParameters}->{item}->{macros}->{item} = {};
         my $macros = $tree->{item}->{item}->{generalParameters}->{item}->{macros}->{item};
-        while ( my ( $macro, $expr ) = each( %{ $config->{macros} } ) ) {
-            $macros->{"m_$indice"} = $self->xmlField( 'both', $expr, $macro );
+        foreach my $macro ( sort keys %{ $config->{macros} } ) {
+            $macros->{"m_$indice"} = $self->xmlField( 'both', $config->{macros}->{$macro}, $macro );
             $indice++;
         }
     }
@@ -430,6 +433,7 @@ sub checkConf {
     my $response = shift;
     my $expr     = '';
     my $result   = 1;
+    my $assign   = qr/(?<=[^=<!>\?])=(?![=~])/;
     # Check cookie name
     unless ( $config->{cookieName} =~ /^[a-zA-Z]\w*$/ ) {
         $result = 0;
@@ -439,6 +443,10 @@ sub checkConf {
     unless ( $config->{domain} =~ /^(?=^.{1,254}$)(?:(?!\d+\.)[\w\-]{1,63}\.?)+(?:[a-zA-Z]{2,})$/ ) {
         $result = 0;
         $response->error( '"' . $config->{domain} . '" ' . &txt_isNotAValidCookieName );
+    }
+    # Customized variables
+    foreach ( @{ $self->{customVars} } ) {
+        $expr .= "my \$$_ = '1';";
     }
     # Load variables
     foreach ( keys %{ $config->{exportedVars} } ) {
@@ -468,7 +476,7 @@ sub checkConf {
             $result = 0;
         }
         # "=" may be a fault ("==")
-        if ( $v =~ /(?<=[^=<\?])=(?!=)/ ) {
+        if ( $v =~ $assign ) {
             $response->warning( &txt_macro . " $k " . &txt_containsAnAssignment );
         }
         # Test macro values;
@@ -494,7 +502,7 @@ sub checkConf {
             $result = 0;
         }
         # "=" may be a fault (but not "==")
-        if ( $v =~ /(?<=[^=<\?])=(?!=)/ ) {
+        if ( $v =~ $assign ) {
             $response->warning( &txt_group . " $k " . &txt_containsAnAssignment );
         }
         # Test boolean expression
@@ -524,7 +532,7 @@ sub checkConf {
             # Test boolean expressions
             unless ( $v =~ /^(?:accept$|deny$|logout)/ ) {
                 # "=" may be a fault (but not "==")
-                if ( $v =~ /(?<=[^=<\?])=(?!=)/ ) {
+                if ( $v =~ $assign ) {
                     $response->warning( &txt_rule . " $vh -> \"$reg\" : " . &txt_containsAnAssignment );
                 }
 
@@ -550,7 +558,7 @@ sub checkConf {
                 $result = 0;
             }
             # "=" may be a fault ("==")
-            if ( $v =~ /(?<=[^=<\?])=(?!=)/ ) {
+            if ( $v =~ $assign ) {
                 $response->warning( &txt_header . " $vh -> $header " . &txt_containsAnAssignment );
             }
             # Perl expression
