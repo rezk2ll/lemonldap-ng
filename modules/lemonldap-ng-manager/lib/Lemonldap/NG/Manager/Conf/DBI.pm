@@ -5,7 +5,7 @@ use DBI;
 use MIME::Base64;
 use Lemonldap::NG::Manager::Conf::Constants;
 
-our $VERSION = 0.15;
+our $VERSION = 0.16;
 
 BEGIN {
     *Lemonldap::NG::Manager::Conf::dbh = \&dbh;
@@ -46,7 +46,8 @@ sub lastCfg {
 sub dbh {
     my $self = shift;
     $self->{dbiTable} ||= "lmconfig";
-    return $self->{dbh} ||= DBI->connect_cached(
+    return $self->{dbh} if ( $self->{dbh} and $self->{dbh}->ping );
+    return DBI->connect_cached(
         $self->{dbiChain}, $self->{dbiUser},
         $self->{dbiPassword}, { RaiseError => 1 }
     );
