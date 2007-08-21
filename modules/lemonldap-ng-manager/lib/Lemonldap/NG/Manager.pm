@@ -260,7 +260,7 @@ sub buildTree {
         $globalStorageOptions =
           $tree->{item}->{item}->{generalParameters}->{item}->{sessionStorage}->{item}->{globalStorageOptions}->{item};
         foreach my $n ( sort keys %{ $config->{globalStorageOptions} } ) {
-            $globalStorageOptions->{ sprintf( "go_%010d", $indice) } = $self->xmlField( "both", $config->{globalStorageOptions}->{n}, $n );
+            $globalStorageOptions->{ sprintf( "go_%010d", $indice) } = $self->xmlField( "both", $config->{globalStorageOptions}->{$n}, $n );
             $indice++;
         }
     }

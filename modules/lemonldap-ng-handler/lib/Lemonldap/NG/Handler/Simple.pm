@@ -360,7 +360,8 @@ sub defaultValuesInit {
     $cookieSecured = $args->{cookieSecured} || 0;
     $whatToTrace   = $args->{whatToTrace}   || '$uid';
     $whatToTrace =~ s/\$//g;
-    $https = $args->{https} || 1 unless defined($https);
+    $https = $args->{https} unless defined($https);
+    $https = 1 unless defined($https);
     $port = $args->{port} || 0 unless defined($port);
     1;
 }

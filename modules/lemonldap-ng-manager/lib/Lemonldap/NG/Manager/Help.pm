@@ -34,8 +34,17 @@ sub help_authParams_en {
 <h3>Authentication Parameters</h3>
 <dl>
 <dt> Authentication type </dt>
-<dd> By default,Lemonldap::NG uses ldap authentication scheme. You can change
-this by 'SSL' for example.</dd>
+<dd> By default,Lemonldap::NG uses ldap authentication scheme using user
+password. You can change&nbsp;:
+<ul>
+ <li>"SSL" : authentication is done by Apache and the portal checks if SSL
+ variables are set (mail by default),</li>
+ <li>"Apache" : authentication is done by Apache with any mechanism that set
+  <tt>REMOTE_USER</tt> environment variabme. this permits to use any Apache
+  authentication module as Basic, Kerberos, Pam,...</li>
+ <li>"CAS" : authentication is done using CAS library.</li>
+</ul>
+</dd>
 
 <dt> Portal </dt>
 <dd> Set here the URL used to authenticate users (portal). The portal has to
@@ -55,8 +64,19 @@ sub help_authParams_fr {
 <dl>
 <dt> Type d'authentification </dt>
 <dd> Le sch&eacute;ma classique d'authentification Lemonldap::NG consiste
-&agrave; utiliser une authentification par LDAP. Vous pouvez changer ceci en
-"SSL" par exemple.</dd>
+&agrave; utiliser une authentification par v&eacute;rification de mot de passe
+sur un annuaire LDAP. Vous pouvez changer ceci en&nbsp;
+<ul>
+ <li>"SSL" : l'authentification est confi&eacute;e &agrave; Apache et le
+  portail v&eacute;rifie les variables SSL (mail par d&eacute;faut),</li>
+ <li>"Apache" : l'authentication est confi&eacute;e &agrave; Apache par un
+  m&eacute;canisme quelconque renseignant la variable d'environnement
+  <tt>REMOTE_USER</tt>. Ce m&eacute;canise permet d'utiliser tous les modules
+  d'authentification d'Apache tels Basic, Kerberos, Pam,...</li>
+ <li>"CAS" : l'authentification est d&eacute;l&eacute;gu&eacute;e &agrave; la
+  librairie CAS.</li>
+</ul>
+</dd>
 
 <dt> Portail </dt>
 <dd> Indiquez ici l'URL ou seront renvoy&eacute;s les utilisateurs non
@@ -276,6 +296,7 @@ sub help_macros_en {
 <h3>Macros</h3>
 <p> Macros are used to add new variables to user variables attributes). Those
 new variables are calculated from other variables issued from LDAP attributes.
+They can be used anywhere and are seen as LDAP attributes.
 This mechanism avoid to do more than one time the same operation in the
 authentication phase. Example&nbsp;:</p>
 <pre>
@@ -295,9 +316,10 @@ sub help_macros_fr {
     print <<EOT;
 <h3>Macros</h3>
 <p> Les macros permettent d'ajouter des variables calcul&eacute;es &agrave;
-partir des attributs LDAP (variables export&eacute;es). Elles &eacute;vitent
-de r&eacute;p&eacute;ter le m&ecirc;me calcul plusieurs fois dans la phase
-d'authentification. Exemple&nbsp;:</p>
+partir des attributs LDAP (variables export&eacute;es). Elles sont ensuite vues
+comme des attributs LDAP.
+Elles &eacute;vitent de r&eacute;p&eacute;ter le m&ecirc;me calcul plusieurs
+fois dans la phase d'authentification. Exemple&nbsp;:</p>
 <pre>
     # macros
     nom_complet => \$givenname . " " . \$surname
