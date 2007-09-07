@@ -5,8 +5,9 @@ lemonldap-ng (0.8.3) unstable; urgency=high
   * Debian package uses po-debconf
   * TLS is now supported in LDAP connections (thanks to Baptiste Grenier)
   * New logout system: logout urls can be now intercepted in Manager
+  * Documentation
 
- -- Xavier Guimard <x.guimard@free.fr>  Sun, 22 Jul 2007 21:01:35 +0200
+ -- Xavier Guimard <x.guimard@free.fr>  Fri, 07 Sep 2007 07:14:35 +0200
 
 lemonldap-ng (0.8.2.4) unstable; urgency=low
 
