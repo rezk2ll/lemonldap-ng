@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: x.guimard@free.fr\n"
-"POT-Creation-Date: 2007-07-08 14:58+0200\n"
+"POT-Creation-Date: 2007-09-22 13:08+0200\n"
 "PO-Revision-Date: 2007-07-08 15:34+0200\n"
 "Last-Translator: Guimard <x.guimard@free.fr>\n"
 "Language-Team: French <debian-l10n-french@lists.debian.org>\n"
@@ -17,33 +17,15 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n > 1);\n"
 
-#. Type: note
-#. Description
-#: ../liblemonldap-ng-conf-perl.templates:1001
-msgid "Lemonldap::NG changes"
-msgstr "Changements dans lemonldap::NG"
-
-#. Type: note
-#. Description
-#: ../liblemonldap-ng-conf-perl.templates:1001
-msgid ""
-"Lemonldap::NG default configuration directory has moved to /var/lib/lemondap-"
-"ng/conf/ and configuration storage is now managed by /etc/lemonldap-ng/"
-"storage.conf"
-msgstr ""
-"Le répertoire de configuration par défaut est maintenant "
-"/var/lib/lemondap-ng/conf/ et le stockage des configurations est maintenant "
-"géré par /etc/lemonldap-ng/storage.conf"
-
 #. Type: string
 #. Description
-#: ../liblemonldap-ng-conf-perl.templates:2001
+#: ../liblemonldap-ng-conf-perl.templates:1001
 msgid "LDAP server:"
 msgstr "Serveur LDAP:"
 
 #. Type: string
 #. Description
-#: ../liblemonldap-ng-conf-perl.templates:2001
+#: ../liblemonldap-ng-conf-perl.templates:1001
 msgid ""
 "Set here name or IP address of the LDAP server that has to be used by "
 "Lemonldap::NG. You can modify this value later using the Lemonldap::NG "
@@ -55,13 +37,13 @@ msgstr ""
 
 #. Type: string
 #. Description
-#: ../liblemonldap-ng-conf-perl.templates:3001
+#: ../liblemonldap-ng-conf-perl.templates:2001
 msgid "Lemonldap::NG DNS domain:"
 msgstr "Domaine DNS de Lemonldap::NG:"
 
 #. Type: string
 #. Description
-#: ../liblemonldap-ng-conf-perl.templates:3001
+#: ../liblemonldap-ng-conf-perl.templates:2001
 msgid ""
 "Set here the main domain protected by Lemonldap::NG. You can modify this "
 "value later using the Lemonldap::NG manager."
@@ -71,45 +53,45 @@ msgstr ""
 
 #. Type: string
 #. Description
-#: ../liblemonldap-ng-conf-perl.templates:4001
+#: ../liblemonldap-ng-conf-perl.templates:3001
 msgid "Lemonldap::NG portal:"
 msgstr "Portail Lemonldap::NG:"
 
 #. Type: string
 #. Description
-#: ../liblemonldap-ng-conf-perl.templates:4001
+#: ../liblemonldap-ng-conf-perl.templates:3001
 msgid ""
 "Set here the Lemonldap::NG portal URL. You can modify this value later using "
 "the Lemonldap::NG manager."
 msgstr ""
-"Indiquez ici l'URL du portail Lemonldap::NG. Vous pourrez modifier cette valeur "
-"ultérieurement dans le gestionnaire Lemonldap::NG."
+"Indiquez ici l'URL du portail Lemonldap::NG. Vous pourrez modifier cette "
+"valeur ultérieurement dans le gestionnaire Lemonldap::NG."
 
 #. Type: string
 #. Description
-#: ../liblemonldap-ng-conf-perl.templates:5001
+#: ../liblemonldap-ng-conf-perl.templates:4001
 msgid "LDAP server port:"
 msgstr "Port du serveur LDAP:"
 
 #. Type: string
 #. Description
-#: ../liblemonldap-ng-conf-perl.templates:5001
+#: ../liblemonldap-ng-conf-perl.templates:4001
 msgid ""
 "Set here the port used by the LDAP server. You can modify this value later "
 "using the Lemonldap::NG manager."
 msgstr ""
-"Indiquez ici le numéro du port du serveur LDAP. Vous pourrez modifier cette"
-"valeur ultérieurement dans le gestionnaire Lemonldap::NG."
+"Indiquez ici le numéro du port du serveur LDAP. Vous pourrez modifier "
+"cettevaleur ultérieurement dans le gestionnaire Lemonldap::NG."
 
 #. Type: string
 #. Description
-#: ../liblemonldap-ng-conf-perl.templates:6001
+#: ../liblemonldap-ng-conf-perl.templates:5001
 msgid "LDAP search base:"
 msgstr "Base de recherche LDAP:"
 
 #. Type: string
 #. Description
-#: ../liblemonldap-ng-conf-perl.templates:6001
+#: ../liblemonldap-ng-conf-perl.templates:5001
 msgid ""
 "Set here the search base to use in LDAP queries. You can modify this value "
 "later using the Lemonldap::NG manager."
@@ -119,52 +101,36 @@ msgstr ""
 
 #. Type: string
 #. Description
-#: ../liblemonldap-ng-conf-perl.templates:7001
+#: ../liblemonldap-ng-conf-perl.templates:6001
 msgid "LDAP account:"
 msgstr "Compte LDAP:"
 
 #. Type: string
 #. Description
-#: ../liblemonldap-ng-conf-perl.templates:7001
+#: ../liblemonldap-ng-conf-perl.templates:6001
 msgid ""
 "Set here the account that Lemonldap::NG has to use for its LDAP requests. "
 "Leaving it blank causes Lemonldap::NG to use anonymous connections. You can "
 "modify this value later using the Lemonldap::NG manager."
 msgstr ""
-"Indiquez ici le compte que Lemonldap::NG doit utiliser pour ses requêtes LDAP. "
-"Laissez le champ vide pour utiliser des connexions anonymes. Vous pourrez "
-"modifier cette valeur ultérieurement dans le gestionnaire Lemonldap::NG."
+"Indiquez ici le compte que Lemonldap::NG doit utiliser pour ses requêtes "
+"LDAP. Laissez le champ vide pour utiliser des connexions anonymes. Vous "
+"pourrez modifier cette valeur ultérieurement dans le gestionnaire Lemonldap::"
+"NG."
 
 #. Type: string
 #. Description
-#: ../liblemonldap-ng-conf-perl.templates:8001
+#: ../liblemonldap-ng-conf-perl.templates:7001
 msgid "LDAP password:"
 msgstr "Mot de passe LDAP:"
 
 #. Type: string
 #. Description
-#: ../liblemonldap-ng-conf-perl.templates:8001
+#: ../liblemonldap-ng-conf-perl.templates:7001
 msgid ""
 "Set here the password for the Lemonldap::NG LDAP account. You can modify "
 "this value later using the Lemonldap::NG manager."
 msgstr ""
 "Indiquez ici le mot de passe du compte LDAP de Lemonldap::NG. Vous pourrez "
 "modifier cette valeur ultérieurement dans le gestionnaire Lemonldap::NG."
-
-#. Type: note
-#. Description
-#: ../liblemonldap-ng-conf-perl.templates:9001
-msgid "Lemonldap::NG is ready"
-msgstr "Lemonldap::NG est prêt"
-
-#. Type: note
-#. Description
-#: ../liblemonldap-ng-conf-perl.templates:9001
-msgid ""
-"Lemonldap::NG is ready to work. See /usr/share/liblemonldap-ng-conf-perl/"
-"README.Debian to see how to activate it."
-msgstr ""
-"Lemonldap::NG est prêt à fonctionner. Reportez-vous au fichier"
-"/usr/share/liblemonldap-ng-conf-perl/README.Debian pour voir comment "
-"l'activer"
 
