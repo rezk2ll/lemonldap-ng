@@ -55,8 +55,7 @@ Description: Lemonldap::NG apache manager part
 
 Package: liblemonldap-ng-portal-perl
 Architecture: all
-Depends: libapache-session-perl, libnet-ldap-perl, liblemonldap-ng-conf-perl (>=0.8.2.3)
-Recommends: liblasso-perl
+Depends: libapache-session-perl, libnet-ldap-perl, liblemonldap-ng-conf-perl (>=0.8.2.3), liblasso-perl
 Description: Lemonldap::NG apache authentication portal part
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application apache servers.

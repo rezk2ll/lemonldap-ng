@@ -67,7 +67,7 @@ binary-indep: build install
 binary-arch: build install
 	dh_testdir
 	dh_testroot
-	dh_installchangelogs changelogs
+	dh_installchangelogs changelog
 	dh_installdocs
 	mkdir debian/tmp/var/lib/lemonldap-ng/protected
 	cp _example/index.pl debian/tmp/var/lib/lemonldap-ng/protected
