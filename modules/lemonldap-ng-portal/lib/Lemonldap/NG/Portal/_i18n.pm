@@ -22,7 +22,7 @@ sub error {
 
 1;
 __END__
-# Order of the constants
+# Order of the constants:
 # * PE_OK                   0
 # * PE_SESSIONEXPIRED       1
 # * PE_FORMEMPTY            2
@@ -34,6 +34,17 @@ __END__
 # * PE_APACHESESSIONERROR   8
 # * PE_FIRSTACCESS          9
 # * PE_BADCERTIFICATE      10
+# * PE_LA_FAILED           11
+# * PE_LA_ARTFAILED        12
+# * PE_LA_DEFEDFAILED      13
+# * PE_LA_QUERYEMPTY       14
+# * PE_LA_SOAPFAILED       15
+# * PE_LA_SLOFAILED        16
+# * PE_LA_SSOFAILED        17
+# * PE_LA_SSOINITFAILED    18
+# * PE_LA_SESSIONERROR     19
+# * PE_LA_SEPFAILED        20
+
 
 # Not used in errors:
 # * PE_DONE                -1
@@ -71,3 +82,4 @@ sub error_en {
         'Invalid certificate',
     ];
 }
+

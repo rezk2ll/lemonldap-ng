@@ -76,8 +76,8 @@ lib/Lemonldap/NG/Portal/CDA.pm
 lib/Lemonldap/NG/Portal/SharedConf.pm
 lib/Lemonldap/NG/Portal/Simple.pm
 Makefile.PL
-MANIFEST
-META.yml			Module meta-data (added by MakeMaker)
+MANIFEST			This list of files
+META.yml
 README
 t/Lemonldap-NG-Portal-AuthApache.t
 t/Lemonldap-NG-Portal-AuthCAS.t
