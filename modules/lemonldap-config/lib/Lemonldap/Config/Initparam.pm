@@ -2,7 +2,7 @@ package Lemonldap::Config::Initparam;
 use APR::Table;
 use Lemonldap::Config::Parameters;
 use Data::Dumper;
-our $VERSION = '3.1.1';
+our $VERSION = '3.1.2';
 
 ##########################
 ##########################
@@ -80,6 +80,7 @@ sub init_param_httpd {
         'directorytype' => 'DIRECTORYTYPE',
         'excluderegex' => 'EXCLUDEREGEX',
 	'rewritehtml' => 'REWRITEHTML',
+	'urlcdatimeout' => 'URLCDATIMEOUT',
 
 };
 # input
@@ -166,6 +167,7 @@ my $tmpconf;
         'passwordmanager' => 'PASSWORDMANAGER',
         'ldap_branch_people' => 'LDAP_BRANCH_PEOPLE',
 	'rewritehtml' => 'REWRITEHTML',
+        'urlcdatimeout' => 'URLCDATIMEOUT',
 };
   my $__param_loc  = {
 	'enablelwp' => 'ENABLELWP' ,
@@ -196,6 +198,7 @@ my $tmpconf;
         'cert_file' => 'CERT_FILE' ,
         'key_file'  => 'KEY_FILE',
 	'rewritehtml' => 'REWRITEHTML',
+        'urlcdatimeout' => 'URLCDATIMEOUT',
 };
  my $CONF= Lemonldap::Config::Parameters->new (
                         file => $CONFIG{CONFIGFILE} ,
