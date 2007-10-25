@@ -298,7 +298,8 @@ sub process {
 
     # Liberty Process OK -> do Lemonldap::NG process.
     my $err = $self->SUPER::process(@_);
-    $self->_subProcess(qw( log autoRedirect ))
+    return $err unless( $err != PE_OK );
+    $err = $self->_subProcess(qw( log autoRedirect ))
       if ( $self->{urldc} );
     return $err;
 }
@@ -349,7 +350,7 @@ sub store {
     my $self = shift;
 
     my $err = $self->SUPER::store();
-    return $err if ( $err or not $self->{isLibertyProcess} );
+    return $err if ( $err != PE_OK or not $self->{isLibertyProcess} );
 
     return PE_APACHESESSIONERROR
       unless ( defined $self->{laStorageOptions}->{Directory}
@@ -524,19 +525,13 @@ sub libertyArtefactResolution {
             $formLareq = 'SAMLart=' . $self->param('SAMLart');
         }
 
-        if ( my $error =
-            $lassoLogin->initRequest( $formLareq, $lassoHttpMethod ) )
-        {
-            $self->_debug(
-"libertyArtefactResolution : lassoLogin->initRequest(...) : error = $error"
-            );
+        if ( my $error = $lassoLogin->initRequest( $formLareq, $lassoHttpMethod ) ) {
+            $self->_debug( "libertyArtefactResolution : lassoLogin->initRequest(...) : error = $error");
             return PE_LA_ARTFAILED;
         }
 
         if ( my $error = $lassoLogin->buildRequestMsg() ) {
-            $self->_debug(
-"libertyArtefactResolution : lassoLogin->buildRequestMsg(...) : error = $error"
-            );
+            $self->_debug( "libertyArtefactResolution : lassoLogin->buildRequestMsg(...) : error = $error");
             return PE_LA_ARTFAILED;
         }
 
@@ -547,16 +542,12 @@ sub libertyArtefactResolution {
           $self->_soapRequest( $lassoLogin->{msgUrl}, $lassoLogin->{msgBody} );
 
         if ( my $error = $lassoLogin->processResponseMsg($soapResponseMsg) ) {
-            $self->_debug(
-"libertyArtefactResolution : lassoLogin->processResponseMsg(...) : error = $error"
-            );
+            $self->_debug( "libertyArtefactResolution : lassoLogin->processResponseMsg(...) : error = $error");
             return PE_LA_SOAPFAILED;
         }
 
         if ( my $error = $lassoLogin->acceptSso() ) {
-            $self->_debug(
-"libertyArtefactResolution : lassoLogin->acceptSso(...) : error = $error"
-            );
+            $self->_debug( "libertyArtefactResolution : lassoLogin->acceptSso(...) : error = $error");
             return PE_LA_SSOFAILED;
         }
 
@@ -961,11 +952,8 @@ sub libertySingleLogout {
 
         $self->param( 'logout' => '1' );
 
-        if ( my $error =
-            $lassoLogout->processRequestMsg( $ENV{'QUERY_STRING'} ) )
-        {
-            $self->_debug(
-                "lassoLogout->processRequestMsg(...) : error = $error");
+        if ( my $error = $lassoLogout->processRequestMsg( $ENV{'QUERY_STRING'} ) ) {
+            $self->_debug( "lassoLogout->processRequestMsg(...) : error = $error");
             return PE_LA_SLOFAILED;
         }
 
@@ -980,15 +968,13 @@ sub libertySingleLogout {
             if (    $error != $lasso::PROFILE_ERROR_SESSION_NOT_FOUND
                 and $error != $lasso::PROFILE_ERROR_IDENTITY_NOT_FOUND )
             {
-                $self->_debug(
-                    "lassoLogout->validateRequest(...) : error = $error");
+                $self->_debug( "lassoLogout->validateRequest(...) : error = $error");
                 return PE_LA_SLOFAILED;
             }
         }
 
         if ( my $error = $lassoLogout->buildResponseMsg() ) {
-            $self->_debug(
-                "lassoLogout->buildResponseMsg(...) : error = $error");
+            $self->_debug( "lassoLogout->buildResponseMsg(...) : error = $error");
             return PE_LA_SLOFAILED;
         }
 
@@ -1034,40 +1020,28 @@ sub libertySingleLogoutReturn {
 
     $self->_debug("Processing single logout return...");
 
-    my %cookies = fetch CGI::Cookie;
-
     # Test if Lemonldap::NG cookie is available
-    if ( $cookies{ $self->{cookieName} }
-        and my $id = $cookies{ $self->{cookieName} }->value )
-    {
-
+    my %cookies = fetch CGI::Cookie;
+    if ( $cookies{ $self->{cookieName} } and my $id = $cookies{ $self->{cookieName} }->value ) {
         $self->{session_nb} = $cookies{ $self->{cookieName} };
-
         $self->_debug("Cookie: $self->{cookieName} found...");
         $self->_debug("session number: $self->{session_nb}");
-
         my $query = $ENV{'QUERY_STRING'};
-        return PE_LA_QUERYEMPTY
-          unless $query;
+        return PE_LA_QUERYEMPTY unless $query;
 
         $self->_debug("Processing response message...");
-
         return PE_LA_SLOFAILED
           unless ( $self->{lassoLogout}->processResponseMsg($query) );
 
         $self->_debug("lassoLogout->processResponseMsg... OK");
-
         $self->delLibertySession();
-
         $self->_debug("delete liberty session... OK");
-
         my $formRelayState = $self->param('RelayState');
         return PE_LA_SLOFAILED
           unless ( $formRelayState and defined($formRelayState) );
 
         $self->_debug("formRelayState: $formRelayState");
         $self->{urldc} = $formRelayState . '/logout';
-
         return PE_OK;
     }
     return PE_LA_SLOFAILED;
@@ -1307,7 +1281,7 @@ sub _debug {
 ################################################################################
 ################################################################################
 ##                                                                            ##
-##                               Documentation                               ##
+##                               Documentation                                ##
 ##                                                                            ##
 ################################################################################
 ################################################################################
@@ -1319,7 +1293,6 @@ __END__
 
 Lemonldap::NG::Portal::AuthLA - Provide Liberty Alliance Authentication for
 FederID project.
-
 
 =head1 SYNOPSIS
 

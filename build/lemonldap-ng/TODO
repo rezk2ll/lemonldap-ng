@@ -6,7 +6,7 @@ TODO list for Lemonldap::NG development
 Modify example to use nameVirtualHost instead of 127.0.0.x adresses
 - Priority: Low	Status: In progress	Created: 2007\05\03 10-41-36
 Modify install to make a running example as debian install
-- Priority: Low	Status: Planning	Created: 2007\04\23 21-26-18
+- Priority: Low	Status: Done	Created: 2007\04\23 21-26-18	Done: 2007\10\24 10-17-47
 TLS in LDAP connections
 - Priority: Low	Status: N/A	Created: 2007\04\21 13-14-55
 Simplified manager interface fo rules:

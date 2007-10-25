@@ -64,6 +64,16 @@ sub error_fr {
         'Erreur du module Apache::Session choisi',
         'Authentification exigée',
         'Certificat invalide',
+        "Echec de l'initialisation de Lasso:Login ou Lasso:Logout failed",
+        "Echec de la résolution de l'artefact Liberty-Alliance",
+        "Echec de la défédération Liberty-Alliance",
+        "La requête renvoyée par le fournisseur d'identité Liberty-Alliance est vide",
+        "Un des appels SOAP Liberty-Alliance a échoué",
+        "Un des appels de déconnexion Liberty-Alliance a échoué",
+        "Aucun artefact SAML trouvé, ou échec de l'auto-acceptation SSO",
+        "Initialisation, construction ou requête SSO en échec",
+        "Impossible d'enregistrer l'identifiant de connexion Liberty-Alliance",
+        "Un processus terminal Liberty-Alliance a échoué",
     ];
 }
 
@@ -80,6 +90,16 @@ sub error_en {
         'Apache::Session module failed',
         'Authentication required',
         'Invalid certificate',
+        'Initialization of Lasso:Login or Lasso:Logout failed',
+        'Liberty-Alliance artefact resolution failed',
+        'Liberty-Alliance defederation failed',
+        'Liberty-Alliance query returned by IDP in assertion is empty',
+        'One of Liberty-Alliance soap calls failed',
+        'One of Liberty-Alliance single logout failed',
+        'No SAML artefact found, or auto-accepting SSO failed',
+        'Initializing, building or requesting SSO failed',
+        'Unable to store Liberty-Alliance session id',
+        'A Liberty-Alliance Soap End Point process failed',
     ];
 }
 
