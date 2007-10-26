@@ -16,7 +16,9 @@
     <h2 class="heading-1"><span id=
     "HLemonLDAP3A3ANG">LemonLDAP::NG</span></h2>
 
-    <p class="paragraph"></p>Lemonldap::NG est un Web-SSO modulaire
+    <p class="paragraph"></p>Lemonldap::NG est un <span class=
+    "wikilink"><a href=
+    "faq-fr.html#HQu27estcequ27unWebSSO3F">Web-SSO</a></span> modulaire
     bas&eacute; sur les modules Apache::Session. Il simplifie la construction
     d'une aire prot&eacute;g&eacute;e en minimisant les impacts sur les
     applications. Il g&egrave;re &agrave; la fois les authentifications et les
@@ -26,7 +28,10 @@
     espaces web.
 
     <p class="paragraph"></p>Lemonldap::NG est une r&eacute;&eacute;criture
-    compl&egrave;te de Lemonldap. Tous les &eacute;l&eacute;ments
+    compl&egrave;te de Lemonldap <i class="italic">(<span class=
+    "wikilink"><a href=
+    "faq-fr.html#HQu27apporteLemonldap3A3ANGparrapportauxautresSSO3F">voir les
+    diff&eacute;rences</a></span>)</i>. Tous les &eacute;l&eacute;ments
     n&eacute;cessaires &agrave; son exploitation et son administration sont
     fournis dans le package. En revanche les composants
     d&eacute;velopp&eacute;s pour Lemonldap ne sont pas compatibles avec
@@ -97,14 +102,18 @@
       <li>le portail est l'&eacute;l&eacute;ment d'authentification des
       utilisateurs,</li>
 
-      <li>et enfin, des modules Apache prot&egrave;gent les applications. Ces
-      derniers peuvent prot&eacute;ger une aire d'un serveur Apache qui peut
-      &ecirc;tre un reverse-proxy. Dans ce dernier cas, il est
-      recommand&eacute; de s&eacute;curiser le lien entre le reverse-proxy et
-      le serveur masqu&eacute; car l'acc&egrave;s direct &agrave; ce serveur
-      peut se faire sans authentification. Un simple .htaccess ou un
-      &eacute;change de certificats peuvent convenir suivant le niveau de
-      s&eacute;curit&eacute; du r&eacute;seau h&ocirc;te.</li>
+      <li>et enfin, des modules <span class="wikiexternallink"><a href=
+      "http://fr.wikipedia.org/wiki/Apache_HTTP_Server">Apache</a></span>
+      prot&egrave;gent les applications. Ces derniers peuvent prot&eacute;ger
+      une aire d'un serveur Apache qui peut &ecirc;tre un <span class=
+      "wikiexternallink"><a href=
+      "http://fr.wikipedia.org/wiki/Reverse_proxy">reverse-proxy</a></span>.
+      Dans ce dernier cas, il est recommand&eacute; de s&eacute;curiser le
+      lien entre le reverse-proxy et le serveur masqu&eacute; car
+      l'acc&egrave;s direct &agrave; ce serveur peut se faire sans
+      authentification. Un simple .htaccess ou un &eacute;change de
+      certificats peuvent convenir suivant le niveau de s&eacute;curit&eacute;
+      du r&eacute;seau h&ocirc;te.</li>
     </ul>Trois bases de donn&eacute;es sont n&eacute;cessaires&nbsp;:
 
     <ul class="star">
@@ -113,9 +122,10 @@
       permettre le fonctionnement si tous les &eacute;l&eacute;ments ne se
       trouvent pas sur le m&ecirc;me serveur,</li>
 
-      <li>l'annuaire LDAP : outre les authentifications (qui peuvent
-      &ecirc;tre effectu&eacute;es par un autre moyen type certificat x509),
-      il est utilis&eacute; pour r&eacute;cup&eacute;rer les
+      <li>l'<span class="wikiexternallink"><a href=
+      "http://fr.wikipedia.org/wiki/Ldap">annuaire LDAP</a></span> : outre les
+      authentifications (qui peuvent &ecirc;tre effectu&eacute;es par un autre
+      moyen), il est utilis&eacute; pour r&eacute;cup&eacute;rer les
       caract&eacute;ristiques de l'utilisateur et calculer ses droits,</li>
 
       <li>la base des sessions : Lemonldap::NG utilise les modules
@@ -137,8 +147,9 @@
 
     <ul class="star">
       <li>1 et 2 : l'utilisateur non authentifi&eacute; (c'est &agrave; dire
-      ne pr&eacute;sentant pas un cookie valide) est redirig&eacute; vers le
-      portail d'authentification,</li>
+      ne pr&eacute;sentant pas un <span class="wikiexternallink"><a href=
+      "http://fr.wikipedia.org/wiki/Cookie_%28informatique%29">cookie</a></span>
+      valide) est redirig&eacute; vers le portail d'authentification,</li>
 
       <li>3 : requ&ecirc;te d'authentification de l'utilisateur (login et
       mot-de-passe valid&eacute; sur l'annuaire LDAP ou autre
@@ -186,25 +197,29 @@
     prot&eacute;g&eacute;e par un agent Lemonldap::NG, il est redirig&eacute;
     vers le portail. Celui-ci authentifie l'utilisateur par d&eacute;faut par
     une connexion LDAP, mais vous pouvez &eacute;galement utiliser un autre
-    sch&eacute;ma tel les certificats x509 (voir
-    Lemonldap::NG::Portal::AuthSSL(3)).
+    sch&eacute;ma tel les <span class="wikiexternallink"><a href=
+    "http://fr.wikipedia.org/wiki/Certificat_%C3%A9lectronique">certificats
+    x509</a></span> (voir Lemonldap::NG::Portal::AuthSSL(3)).
 
     <p class="paragraph"></p>Lemonldap::NG utilise les cookies de session
     g&eacute;n&eacute;r&eacute;s par le module Apache::Session soit aussi
     s&eacute;curis&eacute; que n'importe quelle syst&egrave;me bas&eacute; sur
     des cookies al&eacute;atoires de 128 bits. Il est recommand&eacute;
     d'activer l'option "cookie s&eacute;curis&eacute;" pour &eacute;viter les
-    vols de session.
+    vols de session: le cookie n'est plus autoris&eacute; &agrave; circuler en
+    dehors de connexions chiffr&eacute;es (<span class=
+    "wikiexternallink"><a href=
+    "http://fr.wikipedia.org/wiki/Https#HTTPS">https</a></span>).
 
     <p class="paragraph"></p>Par d&eacute;faut, une session reste 10 minutes
     dans le magasin local du serveur Apache, donc dans le pire des cas, un
     utilisateur conserve son autorisation au plus 10 minutes apr&egrave;s
-    avoir perdu ses droits.
+    avoir perdu ses droits suite &agrave; un changement de configuration.
 
     <h4 class="heading-1-1-1"><span id=
     "HAutorisation">Autorisation</span></h4>
 
-    <p class="paragraph"></p>Les autorisations sont control&eacute;es
+    <p class="paragraph"></p>Les autorisations sont contr&ocirc;l&eacute;es
     seulement par les agents prot&eacute;geant les applications. En effet, le
     portail ne peut conna&icirc;tre &agrave; l'avance les applications sur
     lesquels l'utilisateur se connectera. En configurant votre Web-SSO, vous
@@ -407,17 +422,19 @@ Remote-IP     =&gt; $ip
 
       <li>L'agent de protection Apache ("handler") fonctionne &agrave; la fois
       avec les versions 1.3 et 2.x d'Apache, c'est &agrave; dire avec les
-      versions 1 et 2 de mod_perl (mais pas avec mod_perl 1.99). Le portail et
-      le l'interface d'administration ("manager") sont de simples CGI et
-      peuvent donc fonctionner sur n'importe quel serveur compatible.</li>
+      versions 1 et 2 de <span class="wikiexternallink"><a href=
+      "http://perl.apache.org/">mod_perl</a></span> (mais pas avec mod_perl
+      1.99). Le portail et le l'interface d'administration ("manager") sont de
+      simples CGI et peuvent donc fonctionner sur n'importe quel serveur
+      compatible.</li>
 
       <li>La configuration de Lemonldap::NG ne doit &ecirc;tre
-      &eacute;dit&eacute;e qu'avec l'interface d'administration &agrave; oins
+      &eacute;dit&eacute;e qu'avec l'interface d'administration &agrave; moins
       que vous ne sachiez exactement ce que vous faites. Les param&egrave;tres
       pr&eacute;sent&eacute;s dans ce document sont tous accessibles dans
       l'arbre de configuration.</li>
     </ul>Voir <span class="wikilink"><a href=
-    "/xwiki/bin/view/NG/DocInstall">installation manuel</a></span> pour la
+    "advanced-install.html">installation manuel</a></span> pour la
     documentation d'installation.
 
     <h3 class="heading-1-1"><span id=

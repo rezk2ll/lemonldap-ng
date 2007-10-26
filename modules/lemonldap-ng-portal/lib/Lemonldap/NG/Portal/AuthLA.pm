@@ -17,8 +17,6 @@ use HTTP::Response;
 use LWP::UserAgent;
 use MIME::Base64;
 use XML::Simple;
-use XML::Parser;
-use XML::XPath;
 use UNIVERSAL qw( isa can VERSION );
 
 *EXPORT_OK   = *Lemonldap::NG::Portal::SharedConf::EXPORT_OK;

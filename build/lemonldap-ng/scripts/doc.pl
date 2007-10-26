@@ -36,6 +36,18 @@ while ( my ( $url, $file ) = each %$docs ) {
         if(s#(["'])/xwiki/bin/download/NG/Presentation/([\w\.\-]+)\1#$1$2$1#) {
             $imgs{$2} = 1;
         }
+        if($file =~ /-fr/) {
+            s#/xwiki/bin/view/NG/FAQ#faq-fr.html#g;
+            s#/xwiki/bin/view/NG/Presentation#overview-fr.html#g;
+            s#/xwiki/bin/view/NG/DocInstallExample#install-fr.html#g;
+            s#/xwiki/bin/view/NG/DocInstall#advanced-install.html#g;
+        }
+        else {
+            s#/xwiki/bin/view/NG/FAQ#faq.html#g;
+            s#/xwiki/bin/view/NG/Presentation#overview.html#g;
+            s#/xwiki/bin/view/NG/DocInstallExample#install.html#g;
+            s#/xwiki/bin/view/NG/DocInstall#advanced-install.html#g;
+        }
         $buf .= $_;
     }
     close DOC;
