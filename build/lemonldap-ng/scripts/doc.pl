@@ -12,6 +12,8 @@ my $docs = {
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocInstallExample?language=en' => 'install.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocInstallExample?language=fr' => 'install-fr.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocInstall?language=en'        => 'advanced-install.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Erreurs?language=en'           => 'errors-fr.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Erreurs?language=fr'           => 'errors.html',
 };
 
 my %imgs;
@@ -41,12 +43,14 @@ while ( my ( $url, $file ) = each %$docs ) {
             s#/xwiki/bin/view/NG/Presentation#overview-fr.html#g;
             s#/xwiki/bin/view/NG/DocInstallExample#install-fr.html#g;
             s#/xwiki/bin/view/NG/DocInstall#advanced-install.html#g;
+            s#/xwiki/bin/view/NG/Erreurs#errors-fr.html#g;
         }
         else {
             s#/xwiki/bin/view/NG/FAQ#faq.html#g;
             s#/xwiki/bin/view/NG/Presentation#overview.html#g;
             s#/xwiki/bin/view/NG/DocInstallExample#install.html#g;
             s#/xwiki/bin/view/NG/DocInstall#advanced-install.html#g;
+            s#/xwiki/bin/view/NG/Erreurs#errors.html#g;
         }
         $buf .= $_;
     }
