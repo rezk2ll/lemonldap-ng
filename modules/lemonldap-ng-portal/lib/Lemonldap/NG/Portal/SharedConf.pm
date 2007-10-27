@@ -150,6 +150,16 @@ sub scanexpr {
     return "($cond$result)";
 }
 
+# With SharedConf, $locationRules contains a hash table with virtual hosts as
+# keys. So we can use it to know all protected virtual hosts.
+sub getProtectedSites {
+    my $self = shift;
+    my @tab  = ();
+    return ( keys %{ $self->{locationRules} } )
+      if ( ref $self->{locationRules} );
+    return ();
+}
+
 1;
 __END__
 

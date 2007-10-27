@@ -43,7 +43,7 @@ if( $portal->process() ) {
 
 	print $portal->header ;
 	print "<a href=\"http://$_\"> $_</a><br/>"
-		foreach ($portal->getProtectedURLs) ;
+		foreach ($portal->getProtectedSites) ;
 
 } else {
 

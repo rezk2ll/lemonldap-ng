@@ -428,25 +428,6 @@ sub getIdpIDs {
 }
 
 #===============================================================================
-# getProtectedURLs
-#===============================================================================
-#
-# Returns all protected URLs
-#
-#===============================================================================
-
-sub getProtectedURLs {
-    my $self = shift;
-    my @tab  = ();
-
-    if ( $self->{locationRules} ) {
-        push @tab, $_ foreach ( keys %{ $self->{locationRules} } );
-    }
-
-    return @tab;
-}
-
-#===============================================================================
 #===============================================================================
 
 ################################################################################
@@ -1329,7 +1310,7 @@ FederID project.
     # Print protected URLs
     print $portal->header ;
     print "<a href=\"http://$_\"> $_</a><br/>"
-      foreach ($portal->getProtectedURLs) ;
+      foreach ($portal->getProtectedSites) ;
 
   } else {
     print $portal->header ;
