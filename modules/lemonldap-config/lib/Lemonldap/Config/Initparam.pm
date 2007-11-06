@@ -168,6 +168,9 @@ my $tmpconf;
         'ldap_branch_people' => 'LDAP_BRANCH_PEOPLE',
 	'rewritehtml' => 'REWRITEHTML',
         'urlcdatimeout' => 'URLCDATIMEOUT',
+	'sourceredirection'=>'SOURCEREDIRECTION',
+	'targetredirection'=>'TARGETREDIRECTION',
+	
 };
   my $__param_loc  = {
 	'enablelwp' => 'ENABLELWP' ,
@@ -199,6 +202,9 @@ my $tmpconf;
         'key_file'  => 'KEY_FILE',
 	'rewritehtml' => 'REWRITEHTML',
         'urlcdatimeout' => 'URLCDATIMEOUT',
+	'sourceredirection'=>'SOURCEREDIRECTION',
+	'targetredirection'=>'TARGETREDIRECTION',
+	
 };
  my $CONF= Lemonldap::Config::Parameters->new (
                         file => $CONFIG{CONFIGFILE} ,
