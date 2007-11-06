@@ -348,7 +348,7 @@ if ( ( $uri =~ /_lemonldap_internal/i ) && ( $con->get('internaldebug') ) )
     {
         if ( time() > $timeout ) {
             $log->warn("SESSION EXPIRED FOR INACTIVITY");
-            if $CONFIG{$ID_COLLECTED}->{URLCDATIMEOUT} {
+            if ($CONFIG{$ID_COLLECTED}->{URLCDATIMEOUT}) {
 	        return &Lemonldap::Handlers::Utilities::goPortal( $r,
               $CONFIG{$ID_COLLECTED}, 'x', $id );
 	    
