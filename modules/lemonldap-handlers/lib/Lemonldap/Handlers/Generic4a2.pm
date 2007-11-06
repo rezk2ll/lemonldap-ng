@@ -883,7 +883,10 @@ END
     ### begin: I correct on the fly some incomming header like mod_proxy does
     if ( $response->header('Location') ) {
         my $h = $response->header('Location');
-
+    ###  In case of multihoming context , sometimes location is  not a well know location ,so I must adjust this handly 
+         if ($CONFIG{$ID_COLLECTED}->{SOURCEREDIRECTION}) {
+         $h=~ s/$CONFIG{$ID_COLLECTED}->{SOURCEREDIRECTION}/$CONFIG{$ID_COLLECTED}->{TARGETREDIRECTION}/;
+          }
 
 #Patch 16/07/2007 pour traitement du port dans le Location des 302
 
@@ -917,9 +920,6 @@ my $trait_loc;
         }
         $response->header( 'Location' => $h );
     
-#DEBUG  ADO
-#
-print STDERR "DEBUG ADO Location : FLAG: $flag PRIV : $CONFIG{$ID_COLLECTED}->{BASEPRIV} PUB: $CONFIG{$ID_COLLECTED}->{BASEPUB} " ;
     
     }
 

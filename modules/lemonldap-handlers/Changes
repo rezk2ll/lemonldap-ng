@@ -26,5 +26,5 @@ Revision history for Perl extension Lemonldap::Handlers::Generic.
        - correct syntax
 3.5.3  Oct 24 2007
        - add management timeout in case of CDA 
-              
+       - add sourceredirection and targetredirection (location header)       
        
