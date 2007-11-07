@@ -4,6 +4,12 @@ lemonldap-ng (0.9) unstable; urgency=low
 
  -- Xavier Guimard <x.guimard@free.fr>  Sun, 14 Oct 2007 12:02:33 +0200
 
+lemonldap-ng (0.8.3.1) unstable; urgency=low
+
+  * New feature: LDAP groups are now available in $groups
+
+ -- Xavier Guimard <x.guimard@free.fr>  Wed, 07 Nov 2007 16:41:07 +0100
+
 lemonldap-ng (0.8.3) unstable; urgency=high
 
   * Syntax errors in configuration are now displayed
