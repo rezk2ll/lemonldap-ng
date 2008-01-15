@@ -116,7 +116,6 @@ sub newsession {
         print STDERR "Lemonldap::NG::Manager::SOAPService: $@\n";
         return 0;
     }
-    # my $id = $h{_session_id};
     $h{$_} = $args->{$_} foreach ( keys %{ $args } );
     $h{_utime} = time();
     $args->{$_} = $h{$_} foreach ( keys %h );
@@ -131,8 +130,10 @@ sub get {
     eval {
         tie %h, $config->{realSessionStorage}, $id, $config->{realSessionStorageOptions};
     };
-    #print STDERR __PACKAGE__:"$@\n"; 
-    return 0 if ($@);
+    if ($@) {
+        print STDERR "Lemonldap::NG::Manager::SOAPService: $@\n";
+        return 0;
+    }
     my $args;
     $args->{$_} = $h{$_} foreach ( keys %h );
     untie %h;
@@ -144,9 +145,12 @@ sub set {
     my( $class, $id, $args ) = @_;
     my %h;
     eval {
-        tie %h, $config->{realSessionsStorage}, undef, $config->{realSessionsStorageOptions};
+        tie %h, $config->{realSessionStorage}, $id, $config->{realSessionStorageOptions};
     };
-    return 0 if ($@);
+    if ($@) {
+        print STDERR "Lemonldap::NG::Manager::SOAPService: $@\n";
+        return 0;
+    }
     $h{$_} = $args->{$_} foreach ( keys %{ $args } );
     untie %h;
     return $args;
@@ -184,7 +188,7 @@ Lemonldap::NG Web-SSO configuration or sessions via SOAP.
 See L<Lemonldap::NG::Manager::Conf::SOAP> for documentation on client side
 configuration access.
 
-See L<Lemonldap::NG::Manager::Apache::Session> for documentation on client side
+See L<Lemonldap::NG::Manager::Apache::Session::SOAP> for documentation on client side
 sessions access.
 
 =head3 Configuration access
@@ -249,7 +253,7 @@ sessions access.
 
 =head3 Sessions access
 
-  Use simply Lemonldap::NG::Manager::Apache::Session in the 'Apache session
+  Use simply Lemonldap::NG::Manager::Apache::Session::SOAP in the 'Apache session
   module'parameter (instead of Apache::Session::MySQL or
   Apache::Session::File).
 

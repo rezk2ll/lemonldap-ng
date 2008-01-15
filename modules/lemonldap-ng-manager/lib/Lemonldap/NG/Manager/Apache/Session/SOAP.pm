@@ -133,7 +133,7 @@ sub newsession {
 sub save {
     my $self = shift;
     return unless ($self->{modified});
-    return $self->_soapCall( "set", $self->{_session_id}, $self->{data} );
+    return $self->_soapCall( "set", $self->{data}->{_session_id}, $self->{data} );
 }
 
 1;
