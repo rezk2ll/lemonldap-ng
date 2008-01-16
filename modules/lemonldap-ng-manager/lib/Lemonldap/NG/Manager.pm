@@ -440,7 +440,7 @@ sub checkConf {
         $response->error( '"' . $config->{cookieName} . '" ' . &txt_isNotAValidCookieName );
     }
     # Check domain name
-    unless ( $config->{domain} =~ /^(?=^.{1,254}$)(?:(?!\d+\.)[\w\-]{1,63}\.?)+(?:[a-zA-Z]{2,})$/ ) {
+    unless ( $config->{domain} =~ /^(?=^.{1,254}$)\.?(?:(?!\d+\.)[\w\-]{1,63}\.?)+(?:[a-zA-Z]{2,})$/ ) {
         $result = 0;
         $response->error( '"' . $config->{domain} . '" ' . &txt_isNotAValidCookieName );
     }
