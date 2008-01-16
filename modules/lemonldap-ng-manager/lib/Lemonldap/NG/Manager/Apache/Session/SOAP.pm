@@ -138,8 +138,7 @@ sub save {
 
 sub delete {
     my $self = shift;
-    my $id   = shift;
-    return $self->_soapCall( "delete", $id );
+    return $self->_soapCall( "delete", $self->{data}->{_session_id} );
 }
 
 1;
