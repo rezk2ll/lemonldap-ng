@@ -156,6 +156,20 @@ sub set {
     return $args;
 }
 
+sub delete {
+    return 0 unless( $authorizedFunctions =~ /\bdelete\b/ );
+    my( $class, $id ) = @_;
+    my %h;
+    eval {
+        tie %h, $config->{realSessionStorage}, $id, $config->{realSessionStorageOptions};
+    };
+    if ($@) {
+        print STDERR "Lemonldap::NG::Manager::SOAPService: $@\n";
+        return 0;
+    }
+    tied(%h)->delete;
+}
+
 1;
 __END__
 
