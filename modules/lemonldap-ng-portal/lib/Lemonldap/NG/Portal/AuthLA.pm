@@ -765,6 +765,25 @@ sub libertyRetrieveExistingSession {
         }
         $self->{id} = $id;
 
+	# Logout if required (local logout)
+	if($self->param('logout')) {
+		# Delete session in global storage
+		tied(%h)->delete;
+		# Delete cookie
+		$self->{id} = "";
+		$self->buildCookie();
+		if( $self->{urldc} ) {
+			if( $self->{autoRedirect} ) {
+				&{ $self->{autoRedirect} }($self);
+			}
+			else {
+				$self->autoRedirect();
+			}
+		}
+		return PE_FIRSTACCESS;
+	}
+	$self->{id} = $id;
+
         # A session has been find => calling &existingSession
         my $r;
         %{ $self->{datas} } = %h;
