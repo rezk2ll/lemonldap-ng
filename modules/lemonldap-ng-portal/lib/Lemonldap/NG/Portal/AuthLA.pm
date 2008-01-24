@@ -275,7 +275,7 @@ sub process {
         # Direct access or simple access -> main
         # WARNING : we permit authentication on service.
     }
-    elsif ( not $self->param('user') and not $self->param('password') ) {
+    elsif ( not $self->param('user') and not $self->param('password') and not $self->param('logout')) {
 
         $self->{error} = $self->_subProcess(
             qw( libertyRetrieveExistingSession
@@ -288,8 +288,6 @@ sub process {
     else {
         $self->{isLibertyProcess} = 0;
     }
-
-    # $self->_debug("ERROR = " . $self->{error} . "\n") ;
 
     return 0
       if ( $self->{error} );
@@ -764,25 +762,6 @@ sub libertyRetrieveExistingSession {
             return PE_OK;
         }
         $self->{id} = $id;
-
-	# Logout if required (local logout)
-	if($self->param('logout')) {
-		# Delete session in global storage
-		tied(%h)->delete;
-		# Delete cookie
-		$self->{id} = "";
-		$self->buildCookie();
-		if( $self->{urldc} ) {
-			if( $self->{autoRedirect} ) {
-				&{ $self->{autoRedirect} }($self);
-			}
-			else {
-				$self->autoRedirect();
-			}
-		}
-		return PE_FIRSTACCESS;
-	}
-	$self->{id} = $id;
 
         # A session has been find => calling &existingSession
         my $r;
