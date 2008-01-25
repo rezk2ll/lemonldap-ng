@@ -27,6 +27,10 @@
         </ul>
         </TMPL_IF>
 
+        <TMPL_IF NAME="LOGOUT_URL">
+        <p><a href="<TMPL_VAR NAME='LOGOUT_URL'>">Logout</a></p>
+        </TMPL_IF>
+
 	</div>
 
 	<div id="footer"><p>Provided by LemonLDAP::NG</p></div>
