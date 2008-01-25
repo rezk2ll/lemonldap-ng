@@ -14,7 +14,9 @@
 	<div id="info-box"><h1>FederID WebSSO</h1><p>LemonLDAP::NG Portal</p></div>
 	<div id="content">
 
+        <TMPL_IF NAME="AUTH_ERROR">
 	<div id="messages"><ul class="message"><li><TMPL_VAR NAME="AUTH_ERROR"></li></ul></div>
+        </TMPL_IF>
 
         <TMPL_IF NAME="AUTH_SITES">
         <h2>Sites :</h2>

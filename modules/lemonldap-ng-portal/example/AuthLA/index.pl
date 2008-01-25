@@ -42,7 +42,7 @@ my $portal = Lemonldap::NG::Portal::AuthLA->new({
 if( $portal->process() ) {
 
         print $portal->header;
-        my $template = HTML::Template->new( filename => "$tpl_dir/menu.tpl");
+        my $template = HTML::Template->new( filename => "$install_dir/tpl/menu.tpl");
 
 	my @sites = ();
 	foreach ($portal->getProtectedSites) {
@@ -53,7 +53,6 @@ if( $portal->process() ) {
 	@sites = sort {$a cmp $b} @sites ;
 	$template->param( AUTH_SITES => \@sites );
 
-	$template->param( AUTH_ERROR => $portal->error." : ".$portal->{user} );
 	print $template->output;
 
 } else {
