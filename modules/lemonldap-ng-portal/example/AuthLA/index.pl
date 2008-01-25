@@ -41,11 +41,20 @@ my $portal = Lemonldap::NG::Portal::AuthLA->new({
 
 if( $portal->process() ) {
 
-	# Print protected URLs
+        print $portal->header;
+        my $template = HTML::Template->new( filename => "$tpl_dir/menu.tpl");
 
-	print $portal->header ;
-	print "<a href=\"http://$_\"> $_</a><br/>"
-		foreach ($portal->getProtectedSites) ;
+	my @sites = ();
+	foreach ($portal->getProtectedSites) {
+		my %row_data ;
+		$row_data{SITE_NAME} = $_ ;
+		push (@sites, \%row_data) ;
+	}
+	@sites = sort {$a cmp $b} @sites ;
+	$template->param( AUTH_SITES => \@sites );
+
+	$template->param( AUTH_ERROR => $portal->error." : ".$portal->{user} );
+	print $template->output;
 
 } else {
 
