@@ -16,7 +16,7 @@
 
 	<div id="messages"><ul class="message"><li><TMPL_VAR NAME="AUTH_ERROR"></li></ul></div>
 
-	<form method="post">
+	<form method="post" id="acegiForm">
 
 	<input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
 
@@ -24,13 +24,13 @@
 	<label class="required">Login</label>
 		<TMPL_IF NAME="AUTH_USER">
 		<input type="hidden" name="user" value="<TMPL_VAR NAME="AUTH_USER">" />
-		<TMPL_VAR NAME="AUTH_USER"><br />
+		<TMPL_VAR NAME="AUTH_USER">
 		<TMPL_ELSE>
-		<input name="user" size="30" /><br />
+		<input name="user" size="30" />
 		</TMPL_IF>
 
 		<label class="required">Password</label>
-		<input name="password" type="password" autocomplete="off" size="30" /></td>
+		<input name="password" type="password" autocomplete="off" size="30" />
 	</fieldset>
 
 	<fieldset><legend>Liberty Alliance authentication</legend>
@@ -42,10 +42,7 @@
 		</select>
 	</fieldset>
 
-	<fieldset><legend>Submit your choice</legend>
-        	<input type="submit" name="submit" value="Submit" />
-                <input type="reset" name="reset" value="Reset" />
-        </fieldset>
+        <input type="submit" name="submit" value="Submit" />
 
 	</form>
 
