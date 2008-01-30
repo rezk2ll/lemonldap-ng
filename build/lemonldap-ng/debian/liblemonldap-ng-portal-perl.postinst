@@ -5,7 +5,6 @@
 
 EXAMPLEPORTALFILE=/usr/share/doc/liblemonldap-ng-portal-perl/examples/index.pl
 PORTALFILE=/var/lib/lemonldap-ng/portal/index.pl
-EXAMPLECLEANERFILE=/usr/share/doc/liblemonldap-ng-portal-perl/examples/scripts/purgeCentralCache
 CLEANERFILE=/usr/share/lemonldap-ng/bin/purgeCentralCache
 SESSIONSDIR=/var/lib/lemonldap-ng/sessions
 
@@ -16,9 +15,9 @@ then
 			s#^use#\nrequire "/usr/share/lemonldap-ng/configStorage.pm";\nuse#m;' \
 		$EXAMPLEPORTALFILE >$PORTALFILE
     [ -e $CLEANERFILE ] || \
-	perl -000 -pe 's/(configStorage\s*=>\s*){[^}]+}/$1\$Lemonldap::NG::Conf::configStorage/;
+	perl -i -000 -pe 's/(configStorage\s*=>\s*){[^}]+}/$1\$Lemonldap::NG::Conf::configStorage/;
 			s#^use#\nrequire "/usr/share/lemonldap-ng/configStorage.pm";\nuse#m;' \
-		$EXAMPLECLEANERFILE >$CLEANERFILE
+		$CLEANERFILE
     chmod +x $PORTALFILE
     chmod +x $CLEANERFILE
     chmod 770 $SESSIONSDIR
