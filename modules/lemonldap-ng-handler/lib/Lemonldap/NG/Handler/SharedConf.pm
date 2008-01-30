@@ -9,7 +9,7 @@ use Cache::Cache qw($EXPIRES_NEVER);
 
 our @ISA = qw(Lemonldap::NG::Handler::Vhost Lemonldap::NG::Handler::Simple);
 
-our $VERSION    = '0.55';
+our $VERSION    = '0.6';
 our $cfgNum     = 0;
 our $lastReload = 0;
 our $reloadTime;
@@ -43,8 +43,22 @@ BEGIN {
 sub init($$) {
     my ( $class, $args ) = @_;
     $reloadTime = $args->{reloadTime} || 600;
+    $localConfig->{$class} = $args;
     $class->localInit($args);
-    $localConfig = $args;
+}
+
+# defaultValuesInit : set default values for non-customized variables
+sub defaultValuesInit {
+    my ( $class, $args ) = @_;
+    # Local configuration overrides global configuration
+    $cookieName    = $localConfig->{$class}->{cookieName} || $args->{cookieName} || 'lemonldap';
+    $cookieSecured = $localConfig->{$class}->{cookieSecured} || $args->{cookieSecured} || 0;
+    $whatToTrace   = $localConfig->{$class}->{whatToTrace} || $args->{whatToTrace}   || '$uid';
+    $whatToTrace =~ s/\$//g;
+    $https = $localConfig->{$class}->{https} unless defined($https);
+    $https = $args->{https} unless defined($https);
+    $https = 1 unless defined($https);
+    1;
 }
 
 sub localInit {
@@ -122,7 +136,7 @@ sub globalConfUpdate {
     return $tmp unless ( ref($tmp) );
     # Local arguments have a best precedence
     foreach ( keys %$tmp ) {
-        $tmp->{$_} = $localConfig->{$_} if ( $localConfig->{$_} )
+        $tmp->{$_} = $localConfig->{$class}->{$_} if ( $localConfig->{$class}->{$_} );
     }
     $class->setConf($tmp);
     OK;

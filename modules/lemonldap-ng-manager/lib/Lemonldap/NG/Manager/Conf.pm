@@ -79,6 +79,7 @@ sub getConf {
             if ( $v !~ /^\$/ ) {
                 print STDERR "Lemonldap::NG : Warning: configuration is in old format, you've to migrate !\n";
                 eval 'require Storable;require MIME::Base64;';
+		die($@) if($@);
                 $conf->{$k} = Storable::thaw(MIME::Base64::decode_base64($v));
             }
             else {
