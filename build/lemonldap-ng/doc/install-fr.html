@@ -66,16 +66,22 @@
     requis</span></h4>
 
     <p class="paragraph"></p>Apache::Session, Net::LDAP, MIME::Base64, CGI,
-    LWP::UserAgent, Cache::Cache, DBI, XML::Simple, SOAP::Lite (only if you
-    want to use SOAP with the manager).
+    LWP::UserAgent, Cache::Cache, DBI, XML::Simple, SOAP::Lite (pour les
+    fonctionnalit&eacute;s SOAP du Manager).
 
     <p class="paragraph"></p>Sur Debian, lancez:
 
     <div class="code">
       <pre>
-apt-get install libapache-session-perl libnet-ldap-perl libcache-cache-perl libdbi-perl perl-modules libwww-perl libcache-cache-perl libxml-simple-perl
-# et si vous souhaitez utiliser les fonctionnalit&eacute;s SOAP du manager:
-apt-get install libsoap-lite-perl
+#apt-get install libapache-session-perl libnet-ldap-perl libcache-cache-perl libdbi-perl perl-modules libwww-perl libcache-cache-perl libxml-simple-perl
+</pre>
+    </div>Et si vous souhaitez utiliser les fonctionnalit&eacute;s SOAP du
+    manager (cf. <span class="wikilink"><a href=
+    "/xwiki/bin/view/NG/DocSOAP">Utilisation des modules SOAP</a></span>) :
+
+    <div class="code">
+      <pre>
+# apt-get install libsoap-lite-perl
 </pre>
     </div>
 

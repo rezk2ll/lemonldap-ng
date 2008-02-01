@@ -334,11 +334,11 @@ group1        =&gt; { $departmentUID eq <span class=
     <div class="code">
       <pre>
 group1 =&gt; (|(uid=xavier.guimard)(ou=unit1))
-group1 =&gt; &lt;uid eq <span class=
+group1 =&gt; {$uid eq <span class=
 "java-quote">"xavier.guimard"</span> or $ou eq <span class=
-"java-quote">"unit1"</span>&gt;
-group1 =&gt; (|(uid=xavier.guimard)&lt;ou eq <span class=
-"java-quote">"unit1"</span>&gt;)
+"java-quote">"unit1"</span>}
+group1 =&gt; (|(uid=xavier.guimard){$ou eq <span class=
+"java-quote">"unit1"</span>})
 </pre>
     </div>
 
