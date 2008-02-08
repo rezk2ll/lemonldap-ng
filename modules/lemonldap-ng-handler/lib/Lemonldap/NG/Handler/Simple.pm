@@ -459,8 +459,8 @@ sub encodeUrl {
     my ( $class, $url ) = @_;
     my $portString = $port || $apacheRequest->get_server_port();
     $portString =
-        (  $https && $port == 443 ) ? ''
-      : ( !$https && $port == 80 )  ? ''
+        (  $https && $portString == 443 ) ? ''
+      : ( !$https && $portString == 80 )  ? ''
       :                               ':' . $portString;
     my $u =
       encode_base64( "http"
@@ -482,9 +482,7 @@ sub goToPortal() {
         'debug'
     );
     my $urlc_init = $class->encodeUrl ( $url );
-    $apacheRequest->headers_out->set(
-        'Location' => "$portal?url=$urlc_init" . ( $arg ? "&$arg" : "" )
-    );
+    lmSetHeaderOut( $apacheRequest, 'Location' => "$portal?url=$urlc_init" . ( $arg ? "&$arg" : "" ) );
     return REDIRECT;
 }
 

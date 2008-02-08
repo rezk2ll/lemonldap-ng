@@ -36,6 +36,10 @@ liblemonldap-ng-handler-perl installs a file named MyHandler.pm in
 /var/lib/lemonldap-ng/handler/. See handler-apache.conf or handler-apache2.conf
 in /etc/lemonldap-ng/ to know how to use it.
 
+You can also copy /usr/share/doc/lemonldap-ng/examples/test.pl into
+/var/lib/lemonldap-ng/index.pl to see how to use Lemonldap::NG with a Perl or
+PHP application.
+
 
 IV - LEMONLDAP::NG CONFIGURATION STORAGE
 ---------------------------------------

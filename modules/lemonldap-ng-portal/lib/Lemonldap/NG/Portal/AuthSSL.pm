@@ -14,7 +14,7 @@ our $OVERRIDE = {
     # variable is present. Adapt it if you want
     extractFormInfo => sub {
         my $self = shift;
-        $self->{user} = $self->https( $self->{SSLVar} || 'SSL_CLIENT_S_DN_Email' );
+        $self->{user} = $self->https( $self->{SSLVar} || $ENV{'SSL_CLIENT_S_DN_Email'} );
         return PE_BADCREDENTIALS unless ( $self->{user} );
         PE_OK;
     },
