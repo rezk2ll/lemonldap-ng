@@ -221,6 +221,9 @@ sub buildTree {
     $generalParameters->{cookieName} =
       $self->xmlField( "value", $config->{cookieName} || 'lemonldap',
         &txt_cookieName, );
+    $generalParameters->{timeout} =
+      $self->xmlField( "value", $config->{timeout} || 7200,
+        &txt_sessionTimeout, );
 
     $sessionStorage->{globalStorage} =
       $self->xmlField( "value",
@@ -395,6 +398,7 @@ sub tree2conf {
     }
     # General parameters
     $config->{cookieName}  = $tree->{generalParameters}->{cookieName}->{value};
+    $config->{timeout}  = $tree->{generalParameters}->{timeout}->{value};
     $config->{whatToTrace} = $tree->{generalParameters}->{whatToTrace}->{value};
     $config->{domain}      = $tree->{generalParameters}->{domain}->{value};
     $config->{globalStorage} = $tree->{generalParameters}->{sessionStorage}->{globalStorage}->{value};
@@ -438,6 +442,11 @@ sub checkConf {
     unless ( $config->{cookieName} =~ /^[a-zA-Z]\w*$/ ) {
         $result = 0;
         $response->error( '"' . $config->{cookieName} . '" ' . &txt_isNotAValidCookieName );
+    }
+    # Check session timeout
+    unless ( $config->{timeout} =~ /^\d+$/ ) {
+        $result = 0;
+        $response->error( '"' . $config->{timeout}  . '" ' . &txt_isNotANumber );
     }
     # Check domain name
     unless ( $config->{domain} =~ /^(?=^.{1,254}$)\.?(?:(?!\d+\.)[\w\-]{1,63}\.?)+(?:[a-zA-Z]{2,})$/ ) {

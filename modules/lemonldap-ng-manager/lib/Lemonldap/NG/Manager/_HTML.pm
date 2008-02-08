@@ -195,6 +195,9 @@ function onNodeSelect(nodeId) {
     else if(nodeIs(nodeId,'cookieName')){
       help('cookieName');
     }
+    else if(nodeIs(nodeId,'timeout')){
+      help('timeout');
+    }
     else if(nodeIs(nodeId,'domain')){
       help('domain');
     }

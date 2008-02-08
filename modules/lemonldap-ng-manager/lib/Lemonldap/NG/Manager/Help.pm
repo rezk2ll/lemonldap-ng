@@ -18,7 +18,7 @@ sub import {
         }
     }
     $l ||= "en";
-    foreach $h (qw(authParams cookieName domain groups ldap macros storage vars
+    foreach $h (qw(authParams cookieName domain groups ldap macros storage timeout vars
                    whatToTrace virtualHosts)) {
         *{"${caller_package}::help_$h"} = \&{"help_${h}_$l"};
     }
@@ -392,6 +392,22 @@ module&nbsp;:</p>
  ajouter le param&egrave;tre <b>timeout</b> pour g&eacute;rer la destruction
  des sessions (7200 secondes par d&eacute;faut).
 </p>
+EOT
+}
+
+sub help_timeout_en {
+    print <<EOT;
+<h3>Sessions timeout</h3>
+<p> Set here the sessions timeout in minutes. It will be used by the
+purgeCentralStorage script given in the source tree.
+EOT
+}
+
+sub help_timeout_fr {
+    print <<EOT;
+<h3>Dur&eacute;e de vie des sessions</h3>
+<p> Indiquez ici la dur&eacute;e de vie des sessions en minutes. Elle est
+utilis&eacute;e par le script purgeCentralStorage fourni dans les sources.
 EOT
 }
 
