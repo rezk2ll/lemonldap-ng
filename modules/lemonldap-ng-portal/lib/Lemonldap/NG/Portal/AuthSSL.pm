@@ -3,7 +3,7 @@ package Lemonldap::NG::Portal::AuthSSL;
 use strict;
 use Lemonldap::NG::Portal::Simple;
 
-our $VERSION = '0.06';
+our $VERSION = '0.1';
 
 # Authentication is made by Apache with SSL and here before searching the LDAP
 # Directory.

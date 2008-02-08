@@ -2,7 +2,7 @@ package Lemonldap::NG::Manager::Help;
 
 use AutoLoader qw(AUTOLOAD);
 use UNIVERSAL qw(can);
-our $VERSION = '0.34';
+our $VERSION = '0.35';
 
 sub import {
     my ($caller_package) = caller;

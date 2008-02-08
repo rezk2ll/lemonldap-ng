@@ -1,5 +1,9 @@
 Revision history for Perl extension Lemonldap::NG::Manager.
 
+0.83 Fri feb 8 17:45:34 2008
+	- bugs in SOAP server
+	- sessions timeout is now included in the manager
+
 0.82 Sat jul 21 15:21:32 2007
 	- TLS support in LDAP
 	- Help for new logout system

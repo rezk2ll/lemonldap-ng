@@ -7,7 +7,7 @@ use Exporter 'import';
 use Safe;
 require POSIX;
 
-our $VERSION = '0.84';
+our $VERSION = '0.85';
 
 our %EXPORT_TAGS = (
     localStorage =>

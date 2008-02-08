@@ -5,7 +5,7 @@ use SOAP::Transport::HTTP;
 use Lemonldap::NG::Manager::Conf;
 use UNIVERSAL qw(isa);
 
-our $VERSION = "0.2";
+our $VERSION = "0.3";
 
 # Initialization
 

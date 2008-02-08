@@ -8,7 +8,7 @@ use AutoLoader qw(AUTOLOAD);
 require Lemonldap::NG::Manager::_i18n;
 use Lemonldap::NG::Manager::Conf::Constants;
 
-our $VERSION = '0.28';
+our $VERSION = '0.29';
 
 # TODO: Delete buttons in headers and rules if 'read-only'
 

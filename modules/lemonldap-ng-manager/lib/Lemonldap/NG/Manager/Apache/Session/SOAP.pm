@@ -3,7 +3,7 @@ package Lemonldap::NG::Manager::Apache::Session::SOAP;
 use strict;
 use SOAP::Lite;
 
-our $VERSION = 0.2;
+our $VERSION = 0.3;
 
 # Variables shared with SOAP::Transport::HTTP::Client
 our ( $user, $password ) = ( '', '' );
