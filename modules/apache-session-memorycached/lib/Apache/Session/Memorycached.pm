@@ -12,7 +12,7 @@ package Apache::Session::Memorycached;
 use strict;
 use vars qw(@ISA $VERSION);
 
-$VERSION = '2.2.0';
+$VERSION = '2.2.1';
 @ISA = qw(Apache::Session);
 
 use Apache::Session;

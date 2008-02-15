@@ -15,7 +15,7 @@ use Data::Dumper;
 use Cache::Memcached;
 use Digest::MD5 qw(md5_hex);
 use vars qw($VERSION);
-$VERSION = '2.1';
+$VERSION = '2.2';
 
 
 sub new {
@@ -135,8 +135,13 @@ my $rytimeout = $session->{args}->{timeout}||'0';
  my $identlocal = $session->{data}->{_session_id}; 
  $rhash = $memdlocal->get($identlocal);
      }
- unless ($rhash)
+ #####
+ ####
+ ####
+ my @tabkey = keys (%{$rhash}) ;
+ if ($#tabkey <1)     
           {
+	  ### not found in local cache , I retrieve session on primary server
 	   #print STDERR "MATERIALIZE : RIEN SUR SERVEUR LOCAL $$ !!!\n";
    	   my $memd= new Cache::Memcached  { 'servers' => $ryserver };
            my $ident = $session->{data}->{_session_id};
@@ -151,9 +156,11 @@ my $rytimeout = $session->{args}->{timeout}||'0';
                   {
 			#print STDERR "MATERIALIZE : REPERCUSSION SUR SERVEUR LOCAL $$ !!!\n";
                      my $memdlocal= new Cache::Memcached  { 'servers' => $ryserverlocal};
-                     my $identlocal = $session->{data}->{_session_id}; 
-                     my $rhashlocal = $session->{data};
-                     $memdlocal->set($identlocal,$rhash,$rytimeout);
+		     my $identlocal = $session->{data}->{_session_id};
+                     #### oups !  ....bug corrected 
+                     # my $rhashlocal = $session->{data};mistake
+                      my $rhashlocal = $rhash;
+                      $memdlocal->set($identlocal,$rhash,$rytimeout);
                      if($!){
 
 			
