@@ -14,6 +14,8 @@ my $docs = {
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocInstall?language=en'        => 'advanced-install.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Erreurs?language=en'           => 'errors-fr.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Erreurs?language=fr'           => 'errors.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocSOAP?language=fr'           => 'soap-fr.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocLA?language=fr'             => 'liberty-alliance-fr.html',
 };
 
 my %imgs;
@@ -27,6 +29,7 @@ while ( my ( $url, $file ) = each %$docs ) {
     my $buf;
     my $ind = 0;
     my $div;
+    my $pre = 0;
     while (<DOC>) {
         $ind++ if (/<div class="main-content">/);
         next unless ($ind);
@@ -35,6 +38,17 @@ while ( my ( $url, $file ) = each %$docs ) {
         $ind-- unless ($div);
         s/\r//g;
         utf8::decode($_);
+        if(/<pre/) {
+            $pre++;
+            s#(?<=<pre)<p class="paragraph"/>#<br/><br/>#g;
+            print STDERR "Trouvé: $`\n$&\n$'\n\n";
+        }
+        elsif($pre) {
+            s#(?<!<\/pre)<p class="paragraph"/>#<br/><br/>#g;
+        }
+        $pre++ if(/<pre/);
+        s#<p class="paragraph"/>#<br/><br/>#g if($pre);
+        $pre-- if(/<\/pre/);
         if(s#(["'])/xwiki/bin/download/NG/Presentation/([\w\.\-]+)\1#$1$2$1#) {
             $imgs{$2} = 1;
         }
@@ -56,7 +70,7 @@ while ( my ( $url, $file ) = each %$docs ) {
     }
     close DOC;
 
-    open FILE, "|tidy -u -c -i -wrap 79 >$file";
+    open FILE, "|tee /tmp/$file|tidy -u -c -i -wrap 79 >$file";
     print FILE '<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "XHTML 1.0 Strict"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">

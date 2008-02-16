@@ -35,6 +35,7 @@ if($opts{c}) {
         exportedVars text,
         managerDn text,
         managerPassword text,
+        timeout int,
         whatToTrace text\n);\n";
 }
 

@@ -17,5 +17,6 @@ CREATE TABLE lmConfig (
 		exportedVars text,
 		managerDn text,
 		managerPassword text,
+        timeout int,
 		whatToTrace text
 		);
