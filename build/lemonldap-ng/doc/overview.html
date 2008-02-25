@@ -235,7 +235,8 @@ group1        =&gt; { $departmentUID eq <span class=
 
     <div class="code">
       <pre>
-^/<span class="java-keyword">protected</span>/.*$  =&gt; $groups =~ /bgroup1b/
+^/<span class=
+"java-keyword">protected</span>/.*$  =&gt; $groups =~ /\bgroup1\b/
 <span class="java-keyword">default</span>          =&gt; accept
 </pre>
     </div>
@@ -247,21 +248,26 @@ group1        =&gt; { $departmentUID eq <span class=
     <div class="code">
       <pre>
 ^/site/.*$       =&gt; $uid eq <span class=
-"java-quote">"admin"</span> or $groups =~ /bgroup2b/
+"java-quote">"admin"</span> or $groups =~ /\bgroup2\b/
 ^/(js|css)       =&gt; accept
 <span class="java-keyword">default</span>          =&gt; deny
 </pre>
     </div>
 
+    <p class="paragraph"></p>Note: \b means start or end of a word in PCRE
+    (Perl Compatible Regular Expressions)
+
     <h5 class="heading-1-1-1-1"><span id=
-    "HPerformance">Performance</span></h5><br />
-    <br />
-    You can use Perl expressions as complicated as you want and you can use
-    all the exported LDAP attributes (and create your own attributes: with
-    'macros' mechanism) in groups evaluations, area protections or custom HTTP
-    headers (you just have to call them with a "$").<br />
-    <br />
-    ou have to be careful when choosing your expressions:
+    "HPerformance">Performance</span></h5>
+
+    <p class="paragraph"></p>You can use Perl expressions as complicated as
+    you want and you can use all the exported LDAP attributes (and create your
+    own attributes: with 'macros' mechanism) in groups evaluations, area
+    protections or custom HTTP headers (you just have to call them with a
+    "$").
+
+    <p class="paragraph"></p>ou have to be careful when choosing your
+    expressions:
 
     <ul class="star">
       <li>groups and macros are evaluated each time a user is redirected to
@@ -275,12 +281,13 @@ group1        =&gt; { $departmentUID eq <span class=
     <div class="code">
       <pre>
 ^/<span class=
-"java-keyword">protected</span>/.*$   =&gt; $groups =~ /bgroup1b/
+"java-keyword">protected</span>/.*$   =&gt; $groups =~ /\bgroup1\b/
 </pre>
-    </div><br />
-    <br />
-    You can also use LDAP filters, or Perl expression or mixed expressions in
-    groups definitions. Perl expressions has to be enclosed with {} :
+    </div>
+
+    <p class="paragraph"></p>You can also use LDAP filters, or Perl expression
+    or mixed expressions in groups definitions. Perl expressions has to be
+    enclosed with {} :
 
     <div class="code">
       <pre>
@@ -291,36 +298,36 @@ group1 =&gt; {$uid eq <span class=
 group1 =&gt; (|(uid=xavier.guimard){$ou eq <span class=
 "java-quote">"unit1"</span>})
 </pre>
-    </div><br />
-    <br />
-    It is also recommanded to use Perl expressions to avoid requiering the
-    LDAP server more than 2 times per authentication.
+    </div>
+
+    <p class="paragraph"></p>It is also recommanded to use Perl expressions to
+    avoid requiering the LDAP server more than 2 times per authentication.
 
     <h4 class="heading-1-1-1"><span id="HAccounting">Accounting</span></h4>
 
     <h5 class="heading-1-1-1-1"><span id="HLoggingportalaccess">Logging portal
-    access</span></h5><br />
-    <br />
-    Lemonldap::NG::Portal doesn't log anything by default, but it's easy to
-    overload log method for normal portal access.
+    access</span></h5>
+
+    <p class="paragraph"></p>Lemonldap::NG::Portal doesn't log anything by
+    default, but it's easy to overload log method for normal portal access.
 
     <h5 class="heading-1-1-1-1"><span id="HLoggingapplicationaccess">Logging
-    application access</span></h5><br />
-    <br />
-    Because a Web-SSO knows nothing about the protected application, it can't
-    do more than logging URL. As Apache does this fine,
-    Lemonldap::NG::Handler(3) gives it the name to used in logs. The
-    whatToTrace parameter indicates which variable Apache has to use ($uid by
-    default).<br />
-    <br />
-    The real accounting has to be done by the application itself which knows
-    the result of SQL transaction for example.<br />
-    <br />
-    Lemonldap::NG can export HTTP headers either using a proxy or protecting
-    directly the application. By default, the Auth-User field is used but you
-    can change it using the exportedHeaders parameters (in the Manager, each
-    virtual host as custom headers branch). This parameters contains an
-    associative array per virtual host :
+    application access</span></h5>
+
+    <p class="paragraph"></p>Because a Web-SSO knows nothing about the
+    protected application, it can't do more than logging URL. As Apache does
+    this fine, Lemonldap::NG::Handler(3) gives it the name to used in logs.
+    The whatToTrace parameter indicates which variable Apache has to use ($uid
+    by default).
+
+    <p class="paragraph"></p>The real accounting has to be done by the
+    application itself which knows the result of SQL transaction for example.
+
+    <p class="paragraph"></p>Lemonldap::NG can export HTTP headers either
+    using a proxy or protecting directly the application. By default, the
+    Auth-User field is used but you can change it using the exportedHeaders
+    parameters (in the Manager, each virtual host as custom headers branch).
+    This parameters contains an associative array per virtual host :
 
     <ul class="star">
       <li>keys are the names of the choosen headers,</li>
@@ -353,10 +360,9 @@ Remote-IP     =&gt; $ip
 </pre>
     </div>
 
-    <h3 class="heading-1-1"><span id=
-    "HInstallation">Installation</span></h3><br />
-    <br />
-    Warnings :
+    <h3 class="heading-1-1"><span id="HInstallation">Installation</span></h3>
+
+    <p class="paragraph"></p>Warnings :
 
     <ul class="star">
       <li>Lemonldap::NG is a different project than Lemonldap and contains all
@@ -375,9 +381,10 @@ Remote-IP     =&gt; $ip
     installation documentation.
 
     <h3 class="heading-1-1"><span id="HSessionstoragesystem">Session storage
-    system</span></h3><br />
-    <br />
-    Lemonldap::NG use 3 levels of cache for authenticated users :
+    system</span></h3>
+
+    <p class="paragraph"></p>Lemonldap::NG use 3 levels of cache for
+    authenticated users :
 
     <ul class="star">
       <li>an Apache::Session::* module used by lemonldap::NG::Portal to store
@@ -392,24 +399,25 @@ Remote-IP     =&gt; $ip
       refuse access. This is very efficient with HTTP/1.1 Keep-Alive
       system.</li>
     </ul>So the number of request to the central storage is limited to 1 per
-    active user each 10 minutes.<br />
-    <br />
-    Lemonldap::NG is very fast, but you can increase performance using a
-    Cache::Cache module that does not use disk access.
+    active user each 10 minutes.
 
-    <h3 class="heading-1-1"><span id="HAuthor">Author</span></h3><br />
-    <br />
-    Xavier Guimard, &lt;x.guimard@free.fr&gt;
+    <p class="paragraph"></p>Lemonldap::NG is very fast, but you can increase
+    performance using a Cache::Cache module that does not use disk access.
+
+    <h3 class="heading-1-1"><span id="HAuthor">Author</span></h3>
+
+    <p class="paragraph"></p>Xavier Guimard, &lt;x.guimard@free.fr&gt;
 
     <h3 class="heading-1-1"><span id="HCopyrightandlicence">Copyright and
-    licence</span></h3><br />
-    <br />
-    Copyright &copy; 2005-2007 by Xavier Guimard
-    &lt;x.guimard@free.fr&gt;<br />
-    <br />
-    This library is free software; you can redistribute it and/or modify it
-    under the same terms as Perl itself, either Perl version 5.8.4 or, at your
-    option, any later version of Perl 5 you may have available.
+    licence</span></h3>
+
+    <p class="paragraph"></p>Copyright &copy; 2005-2007 by Xavier Guimard
+    &lt;x.guimard@free.fr&gt;
+
+    <p class="paragraph"></p>This library is free software; you can
+    redistribute it and/or modify it under the same terms as Perl itself,
+    either Perl version 5.8.4 or, at your option, any later version of Perl 5
+    you may have available.
   </div>
 </body>
 </html>

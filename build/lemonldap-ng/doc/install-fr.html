@@ -88,8 +88,9 @@
     <h3 class="heading-1-1"><span id="HCOMPILATION">COMPILATION</span></h3>
 
     <h4 class="heading-1-1-1"><span id="HInstallationcomplC3A8te">Installation
-    compl&egrave;te</span></h4><br />
-    <br />
+    compl&egrave;te</span></h4>
+
+    <p class="paragraph"></p>
 
     <div class="code">
       <pre>
@@ -102,8 +103,9 @@ $ make example
     </div>
 
     <h4 class="heading-1-1-1"><span id="HInstallationsurDebian">Installation
-    sur Debian</span></h4><br />
-    <br />
+    sur Debian</span></h4>
+
+    <p class="paragraph"></p>
 
     <div class="code">
       <pre>
@@ -112,10 +114,12 @@ $ cd lemonldap-ng-*
 $ debuild
 $ sudo dpkg -i ../lemonldap-ng*.deb
 </pre>
-    </div><br />
-    <br />
-    Vous pouvez &eacute;galement utiliser le repository Debian:<br />
-    <br />
+    </div>
+
+    <p class="paragraph"></p>Vous pouvez &eacute;galement utiliser le
+    repository Debian:
+
+    <p class="paragraph"></p>
 
     <div class="code">
       <pre>
@@ -127,12 +131,13 @@ deb-src <span class="nobr"><a href=
     </div>
 
     <h3 class="heading-1-1"><span id=
-    "HCONFIGURATIONDEL27EXEMPLE">CONFIGURATION DE L'EXEMPLE</span></h3><br />
-    <br />
-    Apr&egrave;s compilation, vous disposez d'un fichier example/apache.conf.
-    Vous avez simplement &agrave; l'inclure dans le fichier de configuration
-    d'Apache:<br />
-    <br />
+    "HCONFIGURATIONDEL27EXEMPLE">CONFIGURATION DE L'EXEMPLE</span></h3>
+
+    <p class="paragraph"></p>Apr&egrave;s compilation, vous disposez d'un
+    fichier example/apache.conf. Vous avez simplement &agrave; l'inclure dans
+    le fichier de configuration d'Apache:
+
+    <p class="paragraph"></p>
 
     <div class="code">
       <pre>
@@ -145,10 +150,11 @@ ln -s /usr/share/doc/lemonldap-ng/example/apache.conf /etc/apache/conf.d/test.co
 # ou avec Apache-2.x
 ln -s /usr/share/doc/lemonldap-ng/example/apache2.conf /etc/apache2/sites-enabled/test.conf
 </pre>
-    </div><br />
-    <br />
-    Modifiez votre fichier /etc/hosts pour y ajouter:<br />
-    <br />
+    </div>
+
+    <p class="paragraph"></p>Modifiez votre fichier /etc/hosts pour y ajouter:
+
+    <p class="paragraph"></p>
 
     <div class="code">
       <pre>
@@ -156,10 +162,10 @@ ln -s /usr/share/doc/lemonldap-ng/example/apache2.conf /etc/apache2/sites-enable
 127.0.0.3       test.example.com
 127.0.0.4       manager.example.com
 </pre>
-    </div><br />
-    <br />
-    Vous devez ensuite indiquer les param&egrave;tres de connexion LDAP. Vous
-    pouvez au choix :
+    </div>
+
+    <p class="paragraph"></p>Vous devez ensuite indiquer les param&egrave;tres
+    de connexion LDAP. Vous pouvez au choix :
 
     <ul class="star">
       <li>utiliser l'interface d'administration: red&eacute;marrez Apache et
@@ -170,9 +176,9 @@ ln -s /usr/share/doc/lemonldap-ng/example/apache2.conf /etc/apache2/sites-enable
       renseigner vos param&egrave;tres LDAP (utilisateurs Debian:
       /usr/share/doc/lemonldap-ng/example/conf/lmConfig-1).</li>
     </ul>Si vous ne renseignez pas managerDn et managerPassword, Lemonldap::NG
-    utilisera une connexion anonyme pour trouver le dn de l'utilisateur.<br />
-    <br />
-    NOTES:
+    utilisera une connexion anonyme pour trouver le dn de l'utilisateur.
+
+    <p class="paragraph"></p>NOTES:
 
     <ul class="star">
       <li>seuls quelques param&egrave;tres peuvent &ecirc;tre

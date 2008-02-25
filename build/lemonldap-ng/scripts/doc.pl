@@ -40,15 +40,15 @@ while ( my ( $url, $file ) = each %$docs ) {
         utf8::decode($_);
         if(/<pre/) {
             $pre++;
-            s#(?<=<pre)<p class="paragraph"/>#<br/><br/>#g;
-            print STDERR "Trouvé: $`\n$&\n$'\n\n";
+            # Little xwiki bug
+            while (s#(?<=<pre>)(.*?)(?:<p[^>]*>\s*</p>|<p[^>]*/>)(.*?)(?=</pre>)#$1<br/><br/>$2#gi) {}
+            while (s#(?<=<pre>)(.*?)(?:<p[^>]*>\s*</p>|<p[^>]*/>)(.*?)(?!</pre>)#$1<br/><br/>$2#gi) {}
         }
-        elsif($pre) {
-            s#(?<!<\/pre)<p class="paragraph"/>#<br/><br/>#g;
-        }
-        $pre++ if(/<pre/);
-        s#<p class="paragraph"/>#<br/><br/>#g if($pre);
         $pre-- if(/<\/pre/);
+        if($pre) {
+            # Little xwiki bug
+            s#(?:<p[^>]*>\s*</p>|<p[^>]*/>)#<br/><br/>#gi;
+        }
         if(s#(["'])/xwiki/bin/download/NG/Presentation/([\w\.\-]+)\1#$1$2$1#) {
             $imgs{$2} = 1;
         }

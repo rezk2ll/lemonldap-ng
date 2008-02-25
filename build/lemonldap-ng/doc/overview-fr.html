@@ -277,7 +277,8 @@ group1        =&gt; { $departmentUID eq <span class=
 
     <div class="code">
       <pre>
-^/<span class="java-keyword">protected</span>/.*$  =&gt; $groups =~ /bgroup1b/
+^/<span class=
+"java-keyword">protected</span>/.*$  =&gt; $groups =~ /\bgroup1\b/
 <span class="java-keyword">default</span>          =&gt; accept
 </pre>
     </div>
@@ -289,24 +290,28 @@ group1        =&gt; { $departmentUID eq <span class=
     <div class="code">
       <pre>
 ^/site/.*$       =&gt; $uid eq <span class=
-"java-quote">"admin"</span> or $groups =~ /bgroup2b/
+"java-quote">"admin"</span> or $groups =~ /\bgroup2\b/
 ^/(js|css)       =&gt; accept
 <span class="java-keyword">default</span>          =&gt; deny
 </pre>
     </div>
 
+    <p class="paragraph"></p>NB: \b signifie "d&eacute;limiteur de mot" dans
+    les expressions r&eacute;guli&egrave;res.
+
     <h5 class="heading-1-1-1-1"><span id=
-    "HPerformances">Performances</span></h5><br />
-    <br />
-    Vous pouvez utiliser des expressions Perl aussi complexe que
-    n&eacute;cessaire et vous pouvez utiliser tous les attibuts LDAP (et
-    cr&eacute;er vos propres attributs additionnels avec le m&eacute;canisme
-    des macros) dans les d&eacute;finitions de groupes, les r&egrave;gles
-    d'acc&egrave;s et les en-t&ecirc;tes HTTP personnalis&eacute;s: vous devez
-    seulement utiliser le nom choisi pr&eacute;c&eacute;d&eacute; d'un
-    "$".<br />
-    <br />
-    Vous devez toutefois bien choisir vos expressions:
+    "HPerformances">Performances</span></h5>
+
+    <p class="paragraph"></p>Vous pouvez utiliser des expressions Perl aussi
+    complexe que n&eacute;cessaire et vous pouvez utiliser tous les attibuts
+    LDAP (et cr&eacute;er vos propres attributs additionnels avec le
+    m&eacute;canisme des macros) dans les d&eacute;finitions de groupes, les
+    r&egrave;gles d'acc&egrave;s et les en-t&ecirc;tes HTTP
+    personnalis&eacute;s: vous devez seulement utiliser le nom choisi
+    pr&eacute;c&eacute;d&eacute; d'un "$".
+
+    <p class="paragraph"></p>Vous devez toutefois bien choisir vos
+    expressions:
 
     <ul class="star">
       <li>les groupes et les macros ne sont &eacute;valu&eacute;es que lorsque
@@ -322,13 +327,13 @@ group1        =&gt; { $departmentUID eq <span class=
     <div class="code">
       <pre>
 ^/<span class=
-"java-keyword">protected</span>/.*$   =&gt; $groups =~ /bgroup1b/
+"java-keyword">protected</span>/.*$   =&gt; $groups =~ /\bgroup1\b/
 </pre>
-    </div><br />
-    <br />
-    Dans la d&eacute;finition des groupes, vous pouvez au choix utiliser des
-    filtres LDAP ou des expressions Perl ou encore mixer les deux. Les
-    expressions Perl sont encadr&eacute;es par {} :
+    </div>
+
+    <p class="paragraph"></p>Dans la d&eacute;finition des groupes, vous
+    pouvez au choix utiliser des filtres LDAP ou des expressions Perl ou
+    encore mixer les deux. Les expressions Perl sont encadr&eacute;es par {} :
 
     <div class="code">
       <pre>
@@ -339,43 +344,44 @@ group1 =&gt; {$uid eq <span class=
 group1 =&gt; (|(uid=xavier.guimard){$ou eq <span class=
 "java-quote">"unit1"</span>})
 </pre>
-    </div><br />
-    <br />
-    Pour limiter les requ&ecirc;tes LDAP, il est conseill&eacute; d'utiliser
-    les expressions Perl. Ainsi seuls 2 sollicitations de l'annuaire sont
-    n&eacute;cessaires.
+    </div>
+
+    <p class="paragraph"></p>Pour limiter les requ&ecirc;tes LDAP, il est
+    conseill&eacute; d'utiliser les expressions Perl. Ainsi seuls 2
+    sollicitations de l'annuaire sont n&eacute;cessaires.
 
     <h4 class="heading-1-1-1"><span id=
     "HTraC3A7abilitC3A9">Tra&ccedil;abilit&eacute;</span></h4>
 
     <h5 class="heading-1-1-1-1"><span id="HTracerlesaccC3A8sauportail">Tracer
-    les acc&egrave;s au portail</span></h5><br />
-    <br />
-    Lemonldap::NG::Portal n'enregistre pas les &eacute;v&eacute;nements de
-    connexion par d&eacute;faut, mais il est tr&egrave;s facile de surcharger
-    la m&eacute;thode "log".
+    les acc&egrave;s au portail</span></h5>
+
+    <p class="paragraph"></p>Lemonldap::NG::Portal n'enregistre pas les
+    &eacute;v&eacute;nements de connexion par d&eacute;faut, mais il est
+    tr&egrave;s facile de surcharger la m&eacute;thode "log".
 
     <h5 class="heading-1-1-1-1"><span id=
     "HTracerlesaccC3A8sauxapplications">Tracer les acc&egrave;s aux
-    applications</span></h5><br />
-    <br />
-    Comme un Web-SSO ne peut interpr&eacute;ter le contenu des requ&ecirc;tes
-    HTTP transmise aux applications prot&eacute;g&eacute;es, il ne peut
-    enregistrer au mieux que les URL. Et comme Apache le fait parfaitement,
-    Lemonldap::NG::Handler(3) lui fournit le nom &agrave; enregistrer dans les
-    journaux. Le param&egrave;tre optionnel "whatToTrace" indique la variable
-    &agrave; utiliser ($uid par d&eacute;faut).<br />
-    <br />
-    La trace r&eacute;elle doit &ecirc;tre effectu&eacute;e par l'application
-    seule capable d'interpr&eacute;ter le r&eacute;sultat des
-    transactions.<br />
-    <br />
-    Lemonldap::NG peut exporter des en-t&ecirc;tes HTTP aussi bien en
-    utilisant Apache en reverse-proxy qu'en prot&eacute;gent directement les
-    applications. Par d&eacute;faut, le champ Auth-User est utilis&eacute;
-    mais vous pouvez choisir les en-t&ecirc;tes que vous transmettez &agrave;
-    chaque application s&eacute;paremment. Les expressions d&eacute;finissant
-    les en-t&ecirc;tes associent :
+    applications</span></h5>
+
+    <p class="paragraph"></p>Comme un Web-SSO ne peut interpr&eacute;ter le
+    contenu des requ&ecirc;tes HTTP transmise aux applications
+    prot&eacute;g&eacute;es, il ne peut enregistrer au mieux que les URL. Et
+    comme Apache le fait parfaitement, Lemonldap::NG::Handler(3) lui fournit
+    le nom &agrave; enregistrer dans les journaux. Le param&egrave;tre
+    optionnel "whatToTrace" indique la variable &agrave; utiliser ($uid par
+    d&eacute;faut).
+
+    <p class="paragraph"></p>La trace r&eacute;elle doit &ecirc;tre
+    effectu&eacute;e par l'application seule capable d'interpr&eacute;ter le
+    r&eacute;sultat des transactions.
+
+    <p class="paragraph"></p>Lemonldap::NG peut exporter des en-t&ecirc;tes
+    HTTP aussi bien en utilisant Apache en reverse-proxy qu'en
+    prot&eacute;gent directement les applications. Par d&eacute;faut, le champ
+    Auth-User est utilis&eacute; mais vous pouvez choisir les en-t&ecirc;tes
+    que vous transmettez &agrave; chaque application s&eacute;paremment. Les
+    expressions d&eacute;finissant les en-t&ecirc;tes associent :
 
     <ul class="star">
       <li>le nom d'en-t&ecirc;te,</li>
@@ -408,10 +414,9 @@ Remote-IP     =&gt; $ip
 </pre>
     </div>
 
-    <h3 class="heading-1-1"><span id=
-    "HInstallation">Installation</span></h3><br />
-    <br />
-    Attention :
+    <h3 class="heading-1-1"><span id="HInstallation">Installation</span></h3>
+
+    <p class="paragraph"></p>Attention :
 
     <ul class="star">
       <li>Lemonldap::NG est un projet diff&eacute;rent de Lemonldap et
@@ -438,10 +443,10 @@ Remote-IP     =&gt; $ip
 
     <h3 class="heading-1-1"><span id=
     "HSystC3A8medestockagedessessions">Syst&egrave;me de stockage des
-    sessions</span></h3><br />
-    <br />
-    Lemonldap::NG utilise 3 niveaux de cache pour les donn&eacute;es des
-    utilisateurs authentifi&eacute;s :
+    sessions</span></h3>
+
+    <p class="paragraph"></p>Lemonldap::NG utilise 3 niveaux de cache pour les
+    donn&eacute;es des utilisateurs authentifi&eacute;s :
 
     <ul class="star">
       <li>un module Apache::Session::* au choix utilis&eacute; par le portail
@@ -460,26 +465,26 @@ Remote-IP     =&gt; $ip
       int&eacute;ressant avec le syst&egrave;me de connexions persistantes du
       protocole HTTP/1.1 (Keep-Alive).</li>
     </ul>Ainsi, le nombre de requ&ecirc;tes au cache principal est
-    limit&eacute; &agrave; 1 par utilisateur actif toutes les 10
-    minutes.<br />
-    <br />
-    Lemonldap::NG est tr&egrave;s rapide, mais vous pouvez encore
-    am&eacute;liorer les performances en utilisnt un module Cache::Cache ne
-    n&eacute;cessitant pas d'acc&egrave;s au disque.
+    limit&eacute; &agrave; 1 par utilisateur actif toutes les 10 minutes.
 
-    <h3 class="heading-1-1"><span id="HAuteur">Auteur</span></h3><br />
-    <br />
-    Xavier Guimard, &lt;x.guimard@free.fr&gt;
+    <p class="paragraph"></p>Lemonldap::NG est tr&egrave;s rapide, mais vous
+    pouvez encore am&eacute;liorer les performances en utilisnt un module
+    Cache::Cache ne n&eacute;cessitant pas d'acc&egrave;s au disque.
+
+    <h3 class="heading-1-1"><span id="HAuteur">Auteur</span></h3>
+
+    <p class="paragraph"></p>Xavier Guimard, &lt;x.guimard@free.fr&gt;
 
     <h3 class="heading-1-1"><span id="HCopyrightetlicense">Copyright et
-    license</span></h3><br />
-    <br />
-    Copyright &copy; 2005-2007 par Xavier Guimard
-    &lt;x.guimard@free.fr&gt;<br />
-    <br />
-    Ce logiciel est libre, vous pouvez le redistribuer et/ou le modifier sous
-    les m&ecirc;mes termes que Perl lui-m&ecirc;me en version 5.8.4 ou
-    &agrave; votre guise en version Perl 5 sup&eacute;rieure.
+    license</span></h3>
+
+    <p class="paragraph"></p>Copyright &copy; 2005-2007 par Xavier Guimard
+    &lt;x.guimard@free.fr&gt;
+
+    <p class="paragraph"></p>Ce logiciel est libre, vous pouvez le
+    redistribuer et/ou le modifier sous les m&ecirc;mes termes que Perl
+    lui-m&ecirc;me en version 5.8.4 ou &agrave; votre guise en version Perl 5
+    sup&eacute;rieure.
   </div>
 </body>
 </html>

@@ -99,10 +99,11 @@
     <h4 class="heading-1-1-1"><span id="HPerlprereq">Perl prereq</span></h4>
 
     <p class="paragraph"></p>Perl modules: Apache::Session, Net::LDAP,
-    MIME::Base64, CGI, LWP::UserAgent, Cache::Cache, DBI, XML::Simple<br />
-    <br />
-    With Debian:<br />
-    <br />
+    MIME::Base64, CGI, LWP::UserAgent, Cache::Cache, DBI, XML::Simple
+
+    <p class="paragraph"></p>With Debian:
+
+    <p class="paragraph"></p>
 
     <div class="code">
       <pre>
@@ -110,42 +111,47 @@ apt-get install libapache-session-perl libnet-ldap-perl libcache-cache-perl &#13
                   libdbi-perl perl-modules libwww-perl libcache-cache-perl &#13;
                   libxml-simple-perl
 </pre>
-    </div><br />
-    <br />
-    Portal:<br />
-    <br />
-    Apache::Session, Net::LDAP, MIME::Base64, CGI, DBI<br />
-    <br />
-    With Debian:<br />
-    <br />
+    </div>
+
+    <p class="paragraph"></p>Portal:
+
+    <p class="paragraph"></p>Apache::Session, Net::LDAP, MIME::Base64, CGI,
+    DBI
+
+    <p class="paragraph"></p>With Debian:
+
+    <p class="paragraph"></p>
 
     <div class="code">
       <pre>
 apt-get install libapache-session-perl libnet-ldap-perl libdbi-perl &#13;
                   perl-modules
 </pre>
-    </div><br />
-    <br />
-    Handler:<br />
-    <br />
-    Apache::Session, LWP::UserAgent, Cache::Cache, DBI<br />
-    <br />
-    With Debian:<br />
-    <br />
+    </div>
+
+    <p class="paragraph"></p>Handler:
+
+    <p class="paragraph"></p>Apache::Session, LWP::UserAgent, Cache::Cache,
+    DBI
+
+    <p class="paragraph"></p>With Debian:
+
+    <p class="paragraph"></p>
 
     <div class="code">
       <pre>
 apt-get install libapache-session-perl libdbi-perl libwww-perl &#13;
                   libcache-cache-perl
 </pre>
-    </div><br />
-    <br />
-    Manager:<br />
-    <br />
-    CGI, XML::Simple, DBI<br />
-    <br />
-    With Debian:<br />
-    <br />
+    </div>
+
+    <p class="paragraph"></p>Manager:
+
+    <p class="paragraph"></p>CGI, XML::Simple, DBI
+
+    <p class="paragraph"></p>With Debian:
+
+    <p class="paragraph"></p>
 
     <div class="code">
       <pre>
@@ -154,10 +160,12 @@ apt-get install perl-modules libxml-simple-perl
     </div>
 
     <h3 class="heading-1-1"><span id="HSOFTWAREINSTALLATION">SOFTWARE
-    INSTALLATION</span></h3><br />
-    <br />
-    If you just want to install a handler or a portal or a manager:<br />
-    <br />
+    INSTALLATION</span></h3>
+
+    <p class="paragraph"></p>If you just want to install a handler or a portal
+    or a manager:
+
+    <p class="paragraph"></p>
 
     <div class="code">
       <pre>
@@ -166,10 +174,11 @@ $ tar xzf lemonldap-ng-*.tar.gz
   $ perl Makefile.PL &amp;&amp; make &amp;&amp; make test
   $ sudo make install
 </pre>
-    </div><br />
-    <br />
-    else for a complete install:<br />
-    <br />
+    </div>
+
+    <p class="paragraph"></p>else for a complete install:
+
+    <p class="paragraph"></p>
 
     <div class="code">
       <pre>
@@ -178,19 +187,20 @@ $ tar xzf lemonldap-ng-*.tar.gz
   $ make &amp;&amp; make test
   $ sudo make install
 </pre>
-    </div><br />
-    <br />
-    See prereq in
+    </div>
+
+    <p class="paragraph"></p>See prereq in
 
     <h3 class="heading-1-1"><span id="HLEMONLDAPINSTALLATION">LEMONLDAP
     INSTALLATION</span></h3>
 
     <h4 class="heading-1-1-1"><span id="HDatabaseconfiguration">Database
     configuration</span></h4>If you use DBI or another system to share
-    Lemonldap::NG configuration, you have to initialize the database.<br />
-    <br />
-    For example, create the database "lemonldapng" :<br />
-    <br />
+    Lemonldap::NG configuration, you have to initialize the database.
+
+    <p class="paragraph"></p>For example, create the database "lemonldapng" :
+
+    <p class="paragraph"></p>
 
     <div class="code">
       <pre>
@@ -200,10 +210,11 @@ $ tar xzf lemonldap-ng-*.tar.gz
 
     <h5 class="heading-1-1-1-1"><span id=
     "HLemonldap3A3ANGConfigurationdatabase">Lemonldap::NG Configuration
-    database</span></h5><br />
-    <br />
-    To store configuration, use this table :<br />
-    <br />
+    database</span></h5>
+
+    <p class="paragraph"></p>To store configuration, use this table :
+
+    <p class="paragraph"></p>
 
     <div class="code">
       <pre>
@@ -233,13 +244,14 @@ CREATE TABLE lmConfig (
     </div>
 
     <h5 class="heading-1-1-1-1"><span id=
-    "HApache3A3ASessiondatabase">Apache::Session database</span></h5><br />
-    <br />
-    The choice of Apache::Session::* module is free. See
-    Apache::Session::Store::* or Apache::Session::* to know how to configure
-    the module. For example, if you want to use Apache::Session::MySQL, you
-    can create the database like this:<br />
-    <br />
+    "HApache3A3ASessiondatabase">Apache::Session database</span></h5>
+
+    <p class="paragraph"></p>The choice of Apache::Session::* module is free.
+    See Apache::Session::Store::* or Apache::Session::* to know how to
+    configure the module. For example, if you want to use
+    Apache::Session::MySQL, you can create the database like this:
+
+    <p class="paragraph"></p>
 
     <div class="code">
       <pre>
@@ -251,12 +263,13 @@ CREATE TABLE sessions (
     </div>
 
     <h4 class="heading-1-1-1"><span id="HManagerconfiguration">Manager
-    configuration</span></h4><br />
-    <br />
-    Copy example/manager.cgi and personalize it if you want (see
-    Lemonldap::NG::Manager). You have to set in particular configStorage. For
-    example with MySQL:<br />
-    <br />
+    configuration</span></h4>
+
+    <p class="paragraph"></p>Copy example/manager.cgi and personalize it if
+    you want (see Lemonldap::NG::Manager). You have to set in particular
+    configStorage. For example with MySQL:
+
+    <p class="paragraph"></p>
 
     <div class="code">
       <pre>
@@ -270,11 +283,12 @@ $my $manager = Lemonldap::NG::Manager-&gt;<span class=
 "java-quote">"mypass"</span>,
                  } );
 </pre>
-    </div><br />
-    <br />
-    Securise Manager access with Apache: Lemonldap does not securise the
-    manager itself yet:<br />
-    <br />
+    </div>
+
+    <p class="paragraph"></p>Securise Manager access with Apache: Lemonldap
+    does not securise the manager itself yet:
+
+    <p class="paragraph"></p>
 
     <div class="code">
       <pre>
@@ -288,10 +302,10 @@ SSLEngine On
     </div>
 
     <h4 class="heading-1-1-1"><span id="HConfigurationedition">Configuration
-    edition</span></h4><br />
-    <br />
-    Connect to the manager with your browser start configure your Web-SSO. You
-    have to set at least some parameters:
+    edition</span></h4>
+
+    <p class="paragraph"></p>Connect to the manager with your browser start
+    configure your Web-SSO. You have to set at least some parameters:
 
     <h5 class="heading-1-1-1-1"><span id="HGeneralparameters">General
     parameters</span></h5>
@@ -316,12 +330,11 @@ SSLEngine On
       Apache::Session::&lt;Choosen module&gt;.</li>
     </ul>
 
-    <h5 class="heading-1-1-1-1"><span id="HUsergroups">User
-    groups</span></h5><br />
-    <br />
-    Use the "New Group" button to add your first group. On the left, set the
-    keyword which will be used later and set on the right the corresponding
-    rule. You can use :
+    <h5 class="heading-1-1-1-1"><span id="HUsergroups">User groups</span></h5>
+
+    <p class="paragraph"></p>Use the "New Group" button to add your first
+    group. On the left, set the keyword which will be used later and set on
+    the right the corresponding rule. You can use :
 
     <ul class="star">
       <li>an LDAP filter (it will be tested with the user uid)</li>
@@ -334,15 +347,15 @@ SSLEngine On
     </ul>
 
     <h5 class="heading-1-1-1-1"><span id="HVirtualhosts">Virtual
-    hosts</span></h5><br />
-    <br />
-    You have to create a virtual host for each Apache host (virtual or real)
-    protected by Lemonldap::NG even if just a sub-directory is protected.
-    Else, user who want to access to the protected area will be rejected with
-    a "500 Internal Server Error" message and the apache logs will explain the
-    problem.<br />
-    <br />
-    Each virtual host has 2 groups of parameters:
+    hosts</span></h5>
+
+    <p class="paragraph"></p>You have to create a virtual host for each Apache
+    host (virtual or real) protected by Lemonldap::NG even if just a
+    sub-directory is protected. Else, user who want to access to the protected
+    area will be rejected with a "500 Internal Server Error" message and the
+    apache logs will explain the problem.
+
+    <p class="paragraph"></p>Each virtual host has 2 groups of parameters:
 
     <ul class="star">
       <li>Headers: the headers added to the apache request. Default: Auth-User

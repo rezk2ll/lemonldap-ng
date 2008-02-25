@@ -216,17 +216,18 @@
 
     <h4 class="heading-1-1-1"><span id=
     "HL27exemplefournifonctionneenHTTP2CmaispasenHTTPS">L'exemple fourni
-    fonctionne en HTTP, mais pas en HTTPS.</span></h4><br />
-    <br />
-    Dans le m&eacute;canisme des redirections vers le portail puis vers le
-    site prot&eacute;g&eacute;, il faut indiquer &agrave; l'agent (handler)
-    s'il est de type HTTPS ou non. Ceci est fait par le param&egrave;tre
-    <tt>https</tt> qui doit &ecirc;tre mis &agrave; 1. Ce param&egrave;tre
-    n'est pas accessible dans la configuration (manager), car il est
-    sp&eacute;cifique aux h&ocirc;tes virtuels. C'est donc lors de l'appel
-    &agrave; la fonction <tt>init</tt> (dans le fichier My::Package) qu'il
-    doit &ecirc;tre renseign&eacute;:<br />
-    <br />
+    fonctionne en HTTP, mais pas en HTTPS.</span></h4>
+
+    <p class="paragraph"></p>Dans le m&eacute;canisme des redirections vers le
+    portail puis vers le site prot&eacute;g&eacute;, il faut indiquer &agrave;
+    l'agent (handler) s'il est de type HTTPS ou non. Ceci est fait par le
+    param&egrave;tre <tt>https</tt> qui doit &ecirc;tre mis &agrave; 1. Ce
+    param&egrave;tre n'est pas accessible dans la configuration (manager), car
+    il est sp&eacute;cifique aux h&ocirc;tes virtuels. C'est donc lors de
+    l'appel &agrave; la fonction <tt>init</tt> (dans le fichier My::Package)
+    qu'il doit &ecirc;tre renseign&eacute;:
+
+    <p class="paragraph"></p>
     <pre>
 __PACKAGE__-&gt;init ( {
     localStorage        =&gt; "Cache::FileCache",
@@ -247,22 +248,24 @@ __PACKAGE__-&gt;init ( {
 
     <h4 class="heading-1-1-1"><span id=
     "HAquoisertleparamC3A8trehttpsduhandler3F">A quoi sert le param&egrave;tre
-    https du handler ?</span></h4><br />
-    <br />
-    Ce param&egrave;tre n'est utilis&eacute; que dans les redirections vers le
-    portail d'authentification. Il sert juste &agrave; indiquer &agrave; ce
-    dernier qu'apr&egrave;s authentification, l'utilisateur doit &ecirc;tre
-    redirig&eacute; vers l'application en https et non en http.
+    https du handler ?</span></h4>
+
+    <p class="paragraph"></p>Ce param&egrave;tre n'est utilis&eacute; que dans
+    les redirections vers le portail d'authentification. Il sert juste
+    &agrave; indiquer &agrave; ce dernier qu'apr&egrave;s authentification,
+    l'utilisateur doit &ecirc;tre redirig&eacute; vers l'application en https
+    et non en http.
 
     <h4 class="heading-1-1-1"><span id=
     "HQu27estcequ27uneCGIautoprotC3A9gC3A9e3F">Qu'est ce qu'une CGI
-    auto-prot&eacute;g&eacute;e ?</span></h4><br />
-    <br />
-    Lorsqu'on a qu'une seule page Perl &agrave; prot&eacute;ger dans un
-    VirtualHost, plut&ocirc;t que de la prot&eacute;ger en utilisant un agent
-    Lemonldap::NG dans Apache, on peut utiliser une CGI
-    auto-prot&eacute;g&eacute;e:<br />
-    <br />
+    auto-prot&eacute;g&eacute;e ?</span></h4>
+
+    <p class="paragraph"></p>Lorsqu'on a qu'une seule page Perl &agrave;
+    prot&eacute;ger dans un VirtualHost, plut&ocirc;t que de la
+    prot&eacute;ger en utilisant un agent Lemonldap::NG dans Apache, on peut
+    utiliser une CGI auto-prot&eacute;g&eacute;e:
+
+    <p class="paragraph"></p>
     <pre>
   use Lemonldap::NG::Handler::CGI;
   my $cgi = Lemonldap::NG::Handler::CGI-&gt;new ( {
@@ -270,11 +273,11 @@ __PACKAGE__-&gt;init ( {
     }
   );
   $cgi-&gt;authenticate;
-</pre><br />
-    <br />
-    Dans l'exemple ci-dessus, $cgi est un objet de type CGI(3). La seule
-    diff&eacute;rence est qu'il b&eacute;n&eacute;ficie de quelques fonctions
-    suppl&eacute;mentaires:
+</pre>
+
+    <p class="paragraph"></p>Dans l'exemple ci-dessus, $cgi est un objet de
+    type CGI(3). La seule diff&eacute;rence est qu'il b&eacute;n&eacute;ficie
+    de quelques fonctions suppl&eacute;mentaires:
 
     <ul class="star">
       <li>authenticate : pour appeler le m&eacute;canisme d'authentification
@@ -294,11 +297,11 @@ __PACKAGE__-&gt;init ( {
     <h4 class="heading-1-1-1"><span id=
     "HCommentfairefonctionnerLemonldap3A3ANGavecunannuaireActiveDirectory3F">Comment
     faire fonctionner Lemonldap::NG avec un annuaire Active-Directory
-    ?</span></h4><br />
-    <br />
-    Active-Directory utilise le champ <tt>cn</tt> comme identifiant unique au
-    lieu de <tt>uid</tt>. Il faut donc modifier la configuration de
-    Lemonldap::NG en deux points&nbsp;:
+    ?</span></h4>
+
+    <p class="paragraph"></p>Active-Directory utilise le champ <tt>cn</tt>
+    comme identifiant unique au lieu de <tt>uid</tt>. Il faut donc modifier la
+    configuration de Lemonldap::NG en deux points&nbsp;:
 
     <ol>
       <li>la recherche de l'utilisateur dans l'annuaire doit &ecirc;tre
@@ -335,12 +338,13 @@ my $portal = Lemonldap::NG::Portal::SharedConf-&gt;new(
 
     <h4 class="heading-1-1-1"><span id=
     "HCommentutiliserLemonldap3A3ANGenreverseproxy3F">Comment utiliser
-    Lemonldap::NG en reverse-proxy ?</span></h4><br />
-    <br />
-    Lemonldap::NG prot&egrave;ge simplement les VirtualHosts d'Apache. Pour
-    fonctionner en reverse-proxy, il suffit donc de configurer Apache en
-    reverse-proxy:<br />
-    <br />
+    Lemonldap::NG en reverse-proxy ?</span></h4>
+
+    <p class="paragraph"></p>Lemonldap::NG prot&egrave;ge simplement les
+    VirtualHosts d'Apache. Pour fonctionner en reverse-proxy, il suffit donc
+    de configurer Apache en reverse-proxy:
+
+    <p class="paragraph"></p>
     <pre>
 # httpd.conf
 &lt;VirtualHost *&gt;
@@ -356,19 +360,20 @@ my $portal = Lemonldap::NG::Portal::SharedConf-&gt;new(
   # RewriteRule /(.*)$ <span class="nobr"><a href=
 "http://serveur-reel/$1">http://serveur-reel/$1</a></span> [P]
 &lt;/VirtualHost&gt;
-</pre><br />
-    <br />
-    Si toutefois vous pr&eacute;f&eacute;rez utiliser un proxy Perl,
-    Lemonldap::NG en fournit un (Lemonldap::NG::Handler::Proxy(3)).
+</pre>
+
+    <p class="paragraph"></p>Si toutefois vous pr&eacute;f&eacute;rez utiliser
+    un proxy Perl, Lemonldap::NG en fournit un
+    (Lemonldap::NG::Handler::Proxy(3)).
 
     <h3 class="heading-1-1"><span id=
     "HFonctionnement">Fonctionnement</span></h3>
 
     <h4 class="heading-1-1-1"><span id=
     "HAquoisertlecachelocaldesagents28handlers293F">A quoi sert le cache local
-    des agents (handlers) ?</span></h4><br />
-    <br />
-    Le cache local des agents a deux fonctions:
+    des agents (handlers) ?</span></h4>
+
+    <p class="paragraph"></p>Le cache local des agents a deux fonctions:
 
     <ul class="star">
       <li>partager la configuration entre processus Apache: on &eacute;vite
@@ -391,53 +396,52 @@ my $portal = Lemonldap::NG::Portal::SharedConf-&gt;new(
     <h4 class="heading-1-1-1"><span id=
     "HPourquoinepeutonpasconfigurerlecachelocaldesagents28handlers29danslaconsoled27administration3F">
     Pourquoi ne peut-on pas configurer le cache local des agents (handlers)
-    dans la console d'administration ?</span></h4><br />
-    <br />
-    Le cache local doit &ecirc;tre choisi ou param&eacute;tr&eacute; en
-    fonction du serveur: si on choisit par exemple le module Cache::FileCache,
-    le r&eacute;pertoire de stockage n'est pas n&eacute;cessairement le
-    m&ecirc;me partout. De plus, une modification du cache ne peut &ecirc;tre
-    appliqu&eacute;e sans red&eacute;marrage du serveur Apache contrairement
-    aux autres param&egrave;tres g&eacute;r&eacute;s par la console
-    d'administration.
+    dans la console d'administration ?</span></h4>
+
+    <p class="paragraph"></p>Le cache local doit &ecirc;tre choisi ou
+    param&eacute;tr&eacute; en fonction du serveur: si on choisit par exemple
+    le module Cache::FileCache, le r&eacute;pertoire de stockage n'est pas
+    n&eacute;cessairement le m&ecirc;me partout. De plus, une modification du
+    cache ne peut &ecirc;tre appliqu&eacute;e sans red&eacute;marrage du
+    serveur Apache contrairement aux autres param&egrave;tres
+    g&eacute;r&eacute;s par la console d'administration.
 
     <h4 class="heading-1-1-1"><span id=
     "HQu27estcequele7E7ECrossDomainAuthentication7E7E28CDA293F">Qu'est ce que
-    le <i class="italic">Cross Domain Authentication</i> (CDA)
-    ?</span></h4><br />
-    <br />
-    Le syst&egrave;me de propagation de la session Lemonldap::NG est
-    bas&eacute; sur des cookies. Or ces cookies sont attach&eacute;s au
-    domaine dont ils sont issus. Lemonldap::NG fournit un dispositif
-    permettant de passer outre ce probl&egrave;me: il suffit d'utiliser le
-    portail Lemonldap::NG::Portal::CDA et les agents
+    le <i class="italic">Cross Domain Authentication</i> (CDA) ?</span></h4>
+
+    <p class="paragraph"></p>Le syst&egrave;me de propagation de la session
+    Lemonldap::NG est bas&eacute; sur des cookies. Or ces cookies sont
+    attach&eacute;s au domaine dont ils sont issus. Lemonldap::NG fournit un
+    dispositif permettant de passer outre ce probl&egrave;me: il suffit
+    d'utiliser le portail Lemonldap::NG::Portal::CDA et les agents
     Lemonldap::NG::Handler::CDA sur les sites prot&eacute;g&eacute;s en dehors
     du domaine du portail.
 
     <h4 class="heading-1-1-1"><span id=
     "HCommentfonctionnele7E7ECrossDomainAuthentication7E7E28CDA293F">Comment
     fonctionne le <i class="italic">Cross Domain Authentication</i> (CDA)
-    ?</span></h4><br />
-    <br />
-    Un portail Lemonldap::NG::Portal::CDA d&eacute;tecte si l'URL
-    demand&eacute;e n'est pas dans le m&ecirc;me domaine. Si c'est le cas, il
-    ajoute un param&egrave;tre &agrave; cette requ&ecirc;te correspondant au
-    cookie de session. Lorsque l'utilisateur est renvoy&eacute; vers cette
-    URL, l'agent Lemonldap::NG::Handler::CDA reconna&icirc;t ce
-    param&egrave;tre et g&eacute;n&egrave;re alors le cookie dans son domaine.
-    Il retire alors le param&egrave;tre ajout&eacute; par le portail et
-    effectue le traitement normal de la requ&ecirc;te.
+    ?</span></h4>
+
+    <p class="paragraph"></p>Un portail Lemonldap::NG::Portal::CDA
+    d&eacute;tecte si l'URL demand&eacute;e n'est pas dans le m&ecirc;me
+    domaine. Si c'est le cas, il ajoute un param&egrave;tre &agrave; cette
+    requ&ecirc;te correspondant au cookie de session. Lorsque l'utilisateur
+    est renvoy&eacute; vers cette URL, l'agent Lemonldap::NG::Handler::CDA
+    reconna&icirc;t ce param&egrave;tre et g&eacute;n&egrave;re alors le
+    cookie dans son domaine. Il retire alors le param&egrave;tre ajout&eacute;
+    par le portail et effectue le traitement normal de la requ&ecirc;te.
 
     <h3 class="heading-1-1"><span id=
     "HAuthentification">Authentification</span></h3>
 
     <h4 class="heading-1-1-1"><span id=
     "HPeutonchangerlemoded27authentification3F">Peut-on changer le mode
-    d'authentification ?</span></h4><br />
-    <br />
-    Lemonldap::NG fournit plusieurs modes d'authentification (&agrave;
-    param&eacute;trer dans le champ "authentification" de l'interface
-    d'administration) :
+    d'authentification ?</span></h4>
+
+    <p class="paragraph"></p>Lemonldap::NG fournit plusieurs modes
+    d'authentification (&agrave; param&eacute;trer dans le champ
+    "authentification" de l'interface d'administration) :
 
     <ul class="star">
       <li><strong class="strong">ldap</strong> : c'est le mode par
@@ -479,15 +483,16 @@ my $portal = Lemonldap::NG::Portal::SharedConf-&gt;new(
 
     <h3 class="heading-1-1"><span id=
     "HMessagesd27erreuretdedC3A9boguage">Messages d'erreur et de
-    d&eacute;boguage</span></h3><br />
-    <br />
-    Lemonldap::NG produit des messages de d&eacute;bogage et d'erreur
-    enregistr&eacute;s dans le journal d'Apache (error.log par d&eacute;faut).
-    Vous pouvez modifier le niveau d'affichage en adaptant le param&egrave;tre
-    LogLevel d'Apache.<br />
-    <br />
-    La page <span class="wikilink"><a href="errors-fr.html">Erreurs</a></span>
-    r&eacute;f&eacute;rence ces messages d'erreur et de d&eacute;bogage.
+    d&eacute;boguage</span></h3>
+
+    <p class="paragraph"></p>Lemonldap::NG produit des messages de
+    d&eacute;bogage et d'erreur enregistr&eacute;s dans le journal d'Apache
+    (error.log par d&eacute;faut). Vous pouvez modifier le niveau d'affichage
+    en adaptant le param&egrave;tre LogLevel d'Apache.
+
+    <p class="paragraph"></p>La page <span class="wikilink"><a href=
+    "errors-fr.html">Erreurs</a></span> r&eacute;f&eacute;rence ces messages
+    d'erreur et de d&eacute;bogage.
   </div>
 </body>
 </html>
