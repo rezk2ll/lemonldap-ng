@@ -7,7 +7,7 @@
   <meta name="generator" content=
   "HTML Tidy for Linux/x86 (vers 6 November 2007), see www.w3.org" />
 
-  <title>FAQ LEMONLDAP::NG</title>
+  <title>Lemonldap::NG documentation: advanced-install.html</title>
   <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
 </head>
 
@@ -107,8 +107,8 @@
 
     <div class="code">
       <pre>
-apt-get install libapache-session-perl libnet-ldap-perl libcache-cache-perl &#13;
-                  libdbi-perl perl-modules libwww-perl libcache-cache-perl &#13;
+apt-get install libapache-session-perl libnet-ldap-perl libcache-cache-perl \
+                  libdbi-perl perl-modules libwww-perl libcache-cache-perl \
                   libxml-simple-perl
 </pre>
     </div>
@@ -124,7 +124,7 @@ apt-get install libapache-session-perl libnet-ldap-perl libcache-cache-perl &#13
 
     <div class="code">
       <pre>
-apt-get install libapache-session-perl libnet-ldap-perl libdbi-perl &#13;
+apt-get install libapache-session-perl libnet-ldap-perl libdbi-perl \
                   perl-modules
 </pre>
     </div>
@@ -140,18 +140,17 @@ apt-get install libapache-session-perl libnet-ldap-perl libdbi-perl &#13;
 
     <div class="code">
       <pre>
-apt-get install libapache-session-perl libdbi-perl libwww-perl &#13;
+apt-get install libapache-session-perl libdbi-perl libwww-perl \
                   libcache-cache-perl
 </pre>
-    </div>
-
-    <p class="paragraph"></p>Manager:
-
-    <p class="paragraph"></p>CGI, XML::Simple, DBI
-
-    <p class="paragraph"></p>With Debian:
-
-    <p class="paragraph"></p>
+    </div><br />
+    <br />
+    Manager:<br />
+    <br />
+    CGI, XML::Simple, DBI<br />
+    <br />
+    With Debian:<br />
+    <br />
 
     <div class="code">
       <pre>
@@ -160,12 +159,10 @@ apt-get install perl-modules libxml-simple-perl
     </div>
 
     <h3 class="heading-1-1"><span id="HSOFTWAREINSTALLATION">SOFTWARE
-    INSTALLATION</span></h3>
-
-    <p class="paragraph"></p>If you just want to install a handler or a portal
-    or a manager:
-
-    <p class="paragraph"></p>
+    INSTALLATION</span></h3><br />
+    <br />
+    If you just want to install a handler or a portal or a manager:<br />
+    <br />
 
     <div class="code">
       <pre>
@@ -196,11 +193,10 @@ $ tar xzf lemonldap-ng-*.tar.gz
 
     <h4 class="heading-1-1-1"><span id="HDatabaseconfiguration">Database
     configuration</span></h4>If you use DBI or another system to share
-    Lemonldap::NG configuration, you have to initialize the database.
-
-    <p class="paragraph"></p>For example, create the database "lemonldapng" :
-
-    <p class="paragraph"></p>
+    Lemonldap::NG configuration, you have to initialize the database.<br />
+    <br />
+    For example, create the database "lemonldapng" :<br />
+    <br />
 
     <div class="code">
       <pre>
@@ -210,11 +206,10 @@ $ tar xzf lemonldap-ng-*.tar.gz
 
     <h5 class="heading-1-1-1-1"><span id=
     "HLemonldap3A3ANGConfigurationdatabase">Lemonldap::NG Configuration
-    database</span></h5>
-
-    <p class="paragraph"></p>To store configuration, use this table :
-
-    <p class="paragraph"></p>
+    database</span></h5><br />
+    <br />
+    To store configuration, use this table :<br />
+    <br />
 
     <div class="code">
       <pre>
@@ -238,7 +233,8 @@ CREATE TABLE lmConfig (
      exportedVars text,
      managerDn text,
      managerPassword text,
-     whatToTrace text
+     whatToTrace text,
+     timeout <span class="java-object">int</span>
      );
 </pre>
     </div>

@@ -12,8 +12,8 @@ my $docs = {
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocInstallExample?language=en' => 'install.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocInstallExample?language=fr' => 'install-fr.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocInstall?language=en'        => 'advanced-install.html',
-    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Erreurs?language=en'           => 'errors-fr.html',
-    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Erreurs?language=fr'           => 'errors.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Erreurs?language=fr'           => 'errors-fr.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Erreurs?language=en'           => 'errors.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocSOAP?language=fr'           => 'soap-fr.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocLA?language=fr'             => 'liberty-alliance-fr.html',
 };
@@ -32,22 +32,29 @@ while ( my ( $url, $file ) = each %$docs ) {
     my $pre = 0;
     while (<DOC>) {
         $ind++ if (/<div class="main-content">/);
+	# Unfined bug...
+	$ind = 0 if(m#<div id="col-b"#);
         next unless ($ind);
-        $div++ if (/<div/);
-        $div-- if (/<\/div/);
+	my @t = ($_ =~ /<div/i);
+	$div += @t;
+	@t = ($_ =~ /<\/div/i);
+	$div -= @t;
         $ind-- unless ($div);
         s/\r//g;
         utf8::decode($_);
+
+        # Little xwiki bug
+	if(/<\/pre/) {
+            $pre = 0;
+            while (s#(?<!<pre>)(.*?)(?:<p[^>]*>\s*</p>|<p[^>]*/>)(.*?)(?=</pre>)#$1<br/><br/>$2#gi) {}
+        }
+        if($pre) {
+            s#(?:<p[^>]*>\s*</p>|<p[^>]*/>)#<br/><br/>#gi;
+        }
         if(/<pre/) {
-            $pre++;
-            # Little xwiki bug
+            $pre = 1;
             while (s#(?<=<pre>)(.*?)(?:<p[^>]*>\s*</p>|<p[^>]*/>)(.*?)(?=</pre>)#$1<br/><br/>$2#gi) {}
             while (s#(?<=<pre>)(.*?)(?:<p[^>]*>\s*</p>|<p[^>]*/>)(.*?)(?!</pre>)#$1<br/><br/>$2#gi) {}
-        }
-        $pre-- if(/<\/pre/);
-        if($pre) {
-            # Little xwiki bug
-            s#(?:<p[^>]*>\s*</p>|<p[^>]*/>)#<br/><br/>#gi;
         }
         if(s#(["'])/xwiki/bin/download/NG/Presentation/([\w\.\-]+)\1#$1$2$1#) {
             $imgs{$2} = 1;
@@ -70,13 +77,13 @@ while ( my ( $url, $file ) = each %$docs ) {
     }
     close DOC;
 
-    open FILE, "|tee /tmp/$file|tidy -u -c -i -wrap 79 >$file";
+    open FILE, "|tidy -u -c -i -wrap 79 >$file";
     print FILE '<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "XHTML 1.0 Strict"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
 <head>
-<title>FAQ LEMONLDAP::NG</title>
+<title>Lemonldap::NG documentation: '.$file.'</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
