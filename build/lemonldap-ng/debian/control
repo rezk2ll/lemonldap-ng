@@ -3,7 +3,7 @@ Section: perl
 Priority: extra
 Maintainer: Xavier Guimard <x.guimard@free.fr>
 Build-Depends: debhelper (>= 4.1.16), libapache-session-perl, libnet-ldap-perl, libdbi-perl, libwww-perl, libcache-cache-perl, libxml-simple-perl, po-debconf
-Standards-Version: 3.7.2
+Standards-Version: 3.7.3
 
 Package: lemonldap-ng
 Architecture: all
@@ -15,6 +15,7 @@ Description: Lemonldap::NG Web-SSO system
  This package is a meta package that install handler, manager and portal.
 
 Package: lemonldap-ng-doc
+Section: doc
 Architecture: all
 Description: Lemonldap::NG Web-SSO system documentation
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies

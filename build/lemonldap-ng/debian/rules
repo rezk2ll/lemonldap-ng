@@ -61,10 +61,6 @@ install: build
 
 # Build architecture-independent files here.
 binary-indep: build install
-# We have nothing to do by default.
-
-# Build architecture-dependent files here.
-binary-arch: build install
 	dh_testdir
 	dh_testroot
 	dh_installchangelogs changelog
@@ -76,6 +72,7 @@ binary-arch: build install
 	dh_installexamples
 	find debian/lemonldap-ng -type f -exec perl -i -pe 's#__DIR__/?#'/var/lib/lemonldap-ng'#g;s#__CONFDIR__/?#'/var/lib/lemonldap-ng/conf'#g;' {} \;
 	dh_install
+	chmod +x debian/liblemonldap-ng-portal-perl/usr/share/lemonldap-ng/bin/purgeCentralCache
 #	dh_installmenu
 	dh_installdebconf	
 #	dh_installlogrotate
@@ -98,6 +95,9 @@ binary-arch: build install
 	dh_gencontrol
 	dh_md5sums
 	dh_builddeb
+
+# Build architecture-dependent files here.
+binary-arch: build install
 
 binary: binary-indep binary-arch
 .PHONY: build clean binary-indep binary-arch binary install configure
