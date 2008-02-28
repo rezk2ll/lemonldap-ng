@@ -2,7 +2,7 @@ lemonldap-ng (0.9) unstable; urgency=low
 
   * Liberty Alliance module issued of the FederID project is now included.
 
- -- Xavier Guimard <x.guimard@free.fr>  Sun, 14 Oct 2007 12:02:33 +0200
+ -- Xavier Guimard <x.guimard@free.fr>  Mon, 25 Feb 2008 15:05:08 +0100
 
 lemonldap-ng (0.8.3.2) unstable; urgency=low
 
