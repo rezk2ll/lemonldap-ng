@@ -2,12 +2,13 @@ Source: lemonldap-ng
 Section: perl
 Priority: extra
 Maintainer: Xavier Guimard <x.guimard@free.fr>
-Build-Depends: debhelper (>= 4.1.16), libapache-session-perl, libnet-ldap-perl, libdbi-perl, libwww-perl, libcache-cache-perl, libxml-simple-perl, po-debconf
+Build-Depends: debhelper (>= 4.1.16), po-debconf
+Build-Depends-Indep:libapache-session-perl, libnet-ldap-perl, libdbi-perl, libwww-perl, libcache-cache-perl, libxml-simple-perl
 Standards-Version: 3.7.3
 
 Package: lemonldap-ng
 Architecture: all
-Depends: liblemonldap-ng-handler-perl, liblemonldap-ng-manager-perl, liblemonldap-ng-portal-perl
+Depends: liblemonldap-ng-handler-perl (= ${binary:Version}), liblemonldap-ng-manager-perl (= ${binary:Version}), liblemonldap-ng-portal-perl (= ${binary:Version})
 Description: Lemonldap::NG Web-SSO system
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application apache servers.

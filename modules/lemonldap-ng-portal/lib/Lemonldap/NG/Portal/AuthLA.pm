@@ -1360,7 +1360,7 @@ http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Presentation
 =head1 AUTHOR
 
 Clement Oudot, E<lt>coudot@linagora.comE<gt>
-Mikaël Ates, E<lt>mikael.ates@univ-st-etienne.frE<gt>
+Mikael Ates, E<lt>mikael.ates@univ-st-etienne.frE<gt>
 Thomas Chemineau, E<lt>tchemineau@linagora.comE<gt>
 
 =head1 BUG REPORT
