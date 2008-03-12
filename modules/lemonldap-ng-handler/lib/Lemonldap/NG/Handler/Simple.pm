@@ -17,7 +17,6 @@ our %EXPORT_TAGS = (
         qw(
           $locationCondition $defaultCondition $locationCount
           $locationRegexp $apacheRequest $datas $safe $portal
-          $logout
           )
     ],
     import  => [ qw( import @EXPORT_OK @EXPORT %EXPORT_TAGS ) ],
@@ -50,7 +49,7 @@ our (
     $globalStorage,       $globalStorageOptions, $localStorage,
     $localStorageOptions, $whatToTrace,          $https,
     $refLocalStorage,     $safe,                 $cookieSecured,
-    $logout,              $port
+    $port
 );
 
 ##########################################
@@ -314,9 +313,9 @@ sub conditionSub {
       if ( $cond =~ /^accept$/i );
     return sub { 0 }
       if ( $cond =~ /^deny$/i );
-    if ( $cond =~ /^logout(?:_sso)?(?:\s+(.*))?$/i ) {
-        my $url = $1 || $class->encodeUrl ( "/" );
-        return sub { $logout = $url; return 0 }
+    if ( $cond =~ /^logout(?:_sso)?(?:\s+(.*))$/i ) {
+        my $url = $1;
+        return sub { $datas->{_logout} = $url; return 0 }
     }
     if( MP() == 2 ) {
         if ( $cond =~ /^logout_app(?:\s+(.*))?$/i ) {
@@ -433,11 +432,8 @@ sub grant {
 # forbidden : used to reject non authorizated requests
 sub forbidden {
     my $class = shift;
-    if( $logout ) {
-        $apacheRequest->headers_out->set(
-                'Location' => "$portal?url=$logout"
-        );
-        return REDIRECT;
+    if( $datas->{_logout} ) {
+        return $class->goToPortal( $datas->{_logout}, 'logout=1' );
     }
     $class->lmLog(
         'The user "' . $datas->{$whatToTrace} . '" was reject when he tried to access to ' . shift,
@@ -457,17 +453,20 @@ sub hideCookie {
 
 sub encodeUrl {
     my ( $class, $url ) = @_;
-    my $portString = $port || $apacheRequest->get_server_port();
-    $portString =
-        (  $https && $portString == 443 ) ? ''
-      : ( !$https && $portString == 80 )  ? ''
-      :                               ':' . $portString;
-    my $u =
-      encode_base64( "http"
-          . ( $https ? "s" : "" ) . "://"
-          . $apacheRequest->get_server_name()
-          . $portString
-          . $url );
+    my $u = $url;
+    if( $url !~ m#^https?://# ) {
+        my $portString = $port || $apacheRequest->get_server_port();
+        $portString =
+            (  $https && $portString == 443 ) ? ''
+          : ( !$https && $portString == 80 )  ? ''
+          :                               ':' . $portString;
+        $u = "http" . ( $https ? "s" : "" ) . "://"
+              . $apacheRequest->get_server_name()
+              . $portString
+              . $url
+	;
+    }
+    $u = encode_base64( $u );
     $u =~ s/[\r\n\s]//sg;
     return $u;
 }
@@ -600,7 +599,6 @@ sub localUnlog {
 
 sub unlog ($$) {
     my $class;
-    $logout = 0;
     ($class, $apacheRequest ) = @_;
     $class->localUnlog;
     return $class->goToPortal( '/', 'logout=1' );
