@@ -9,7 +9,8 @@ BEGIN {
     while(<F>) {
         next if(/^\s*$/ or /^\s*#/);
         chomp;
-        /^\s*([\w]+)\s*[=:]\s*(["']?)([\S].*[\S])\2.*$/ or next;
+	s/\r//g;
+        /^\s*([\w]+)(?:\s*[:=]\s*|\s+)(["']?)([\S].*[\S])\2.*$/ or next;
         $configStorage->{$1} = $3;
         my $k = $1;
         if($configStorage->{$k} =~ /^([{\[]).*[}\]]$/) {
