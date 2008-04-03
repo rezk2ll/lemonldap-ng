@@ -400,9 +400,9 @@ sub authenticate {
     # Check if we use Ppolicy control
     if ( $self->{ldapPpolicyControl} ) {
         # require Perl module
-        eval "require Net::LDAP::Control::PasswordPolicy";
-        die( "Module  not found in \@INC" ) if ($@);
-	use Net::LDAP::Constant qw( LDAP_CONTROL_PASSWORDPOLICY LDAP_PP_ACCOUNT_LOCKED LDAP_PP_PASSWORD_EXPIRED );
+        eval 'require Net::LDAP::Control::PasswordPolicy';
+        die( 'Module Net::LDAP::Control::PasswordPolicy not found in @INC' ) if ($@);
+	eval 'use Net::LDAP::Constant qw( LDAP_CONTROL_PASSWORDPOLICY LDAP_PP_ACCOUNT_LOCKED LDAP_PP_PASSWORD_EXPIRED );';
 
         # Create Control object
         my $pp = Net::LDAP::Control::PasswordPolicy->new;
