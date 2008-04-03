@@ -45,7 +45,7 @@ sub lastCfg {
 
 sub dbh {
     my $self = shift;
-    $self->{dbiTable} ||= "lmconfig";
+    $self->{dbiTable} ||= "lmConfig";
     return $self->{dbh} if ( $self->{dbh} and $self->{dbh}->ping );
     return DBI->connect_cached(
         $self->{dbiChain}, $self->{dbiUser},
