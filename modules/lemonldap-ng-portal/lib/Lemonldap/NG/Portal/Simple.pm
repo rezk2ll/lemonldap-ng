@@ -403,6 +403,7 @@ sub authenticate {
         eval 'require Net::LDAP::Control::PasswordPolicy';
         die( 'Module Net::LDAP::Control::PasswordPolicy not found in @INC' ) if ($@);
 	eval 'use Net::LDAP::Constant qw( LDAP_CONTROL_PASSWORDPOLICY LDAP_PP_ACCOUNT_LOCKED LDAP_PP_PASSWORD_EXPIRED );';
+	no strict 'subs';
 
         # Create Control object
         my $pp = Net::LDAP::Control::PasswordPolicy->new;
