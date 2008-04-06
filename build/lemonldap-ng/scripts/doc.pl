@@ -77,7 +77,7 @@ while ( my ( $url, $file ) = each %$docs ) {
     }
     close DOC;
 
-    open FILE, "|tidy -u -c -i -wrap 79 >$file";
+    open FILE, "|tidy -q -u -c -i -wrap 79 >$file";
     print FILE '<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "XHTML 1.0 Strict"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">

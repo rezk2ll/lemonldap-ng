@@ -172,6 +172,10 @@ ln -s /usr/share/doc/lemonldap-ng/example/apache2.conf /etc/apache2/sites-enable
       You have to use the manager to change configuration, but since the
       example is yet configured, you can edit directly the file,</li>
 
+      <li>if you use the File backend to store configuration, you have to
+      check the rights of the directory to allow apache process (eg www-data
+      user) to read/write on it,</li>
+
       <li>each new configuration is saved by the manager in a new file (or a
       new record with DBI) so you can recover an old configuration by removing
       the new one.</li>
