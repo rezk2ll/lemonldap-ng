@@ -1,3 +1,15 @@
+lemonldap-ng (0.9.1) unstable; urgency=low
+
+  * logout bug : logout_sso target was not running (Closes: #308856)
+  * javascript update : the manager was not running with MSIE7 (Closes:
+    #308775)
+  * Debian corrections issued from lintian (full)
+  * 2 Net::LDAP password policy controls in the portal:
+    - account locked
+    - password expired
+
+ -- Xavier Guimard <x.guimard@free.fr>  Mon, 07 Apr 2008 11:13:06 +0200
+
 lemonldap-ng (0.9) unstable; urgency=low
 
   * Liberty Alliance module issued of the FederID project is now included.

@@ -7,33 +7,13 @@ use Exporter 'import';
 use Safe;
 require POSIX;
 
-our $VERSION = '0.85';
+our $VERSION = '0.86';
 
-our %EXPORT_TAGS = (
-    localStorage => [qw( $localStorage $localStorageOptions $refLocalStorage )],
-    globalStorage => [qw( $globalStorage $globalStorageOptions )],
-    locationRules => [
-        qw(
-          $locationCondition $defaultCondition $locationCount
-          $locationRegexp $apacheRequest $datas $safe $portal
-          )
-    ],
-    import  => [qw( import @EXPORT_OK @EXPORT %EXPORT_TAGS )],
-    headers => [
-        qw(
-          $forgeHeaders lmHeaderIn lmSetHeaderIn lmHeaderOut
-          lmSetHeaderOut lmSetErrHeaderOut $cookieName $cookieSecured
-          $https $port
-          )
-    ],
-    log    => [qw( lmLog )],
-    traces => [qw( $whatToTrace )],
-    apache => [qw( MP OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR )],
-);
+our %EXPORT_TAGS;
 
-our @EXPORT_OK = ();
+our @EXPORT_OK;
 
-our @EXPORT = ();
+our @EXPORT;
 
 # Shared variables
 our (
@@ -51,10 +31,28 @@ our (
 ##########################################
 
 BEGIN {
-    push( @EXPORT_OK, @{ $EXPORT_TAGS{$_} } )
-      foreach (
-        qw( localStorage globalStorage locationRules import headers traces apache )
-      );
+    %EXPORT_TAGS = (
+        localStorage  => [qw( $localStorage $localStorageOptions $refLocalStorage )],
+        globalStorage => [qw( $globalStorage $globalStorageOptions )],
+        locationRules => [
+            qw(
+              $locationCondition $defaultCondition $locationCount
+              $locationRegexp $apacheRequest $datas $safe $portal
+              )
+        ],
+        import  => [qw( import @EXPORT_OK @EXPORT %EXPORT_TAGS )],
+        headers => [
+            qw(
+              $forgeHeaders lmHeaderIn lmSetHeaderIn lmHeaderOut
+              lmSetHeaderOut lmSetErrHeaderOut $cookieName $cookieSecured
+              $https $port
+              )
+        ],
+        log    => [qw( lmLog )],
+        traces => [qw( $whatToTrace )],
+        apache => [qw( MP OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR )],
+    );
+    push( @EXPORT_OK, @{ $EXPORT_TAGS{$_} } ) foreach ( keys %EXPORT_TAGS );
     $EXPORT_TAGS{all} = \@EXPORT_OK;
     if ( exists $ENV{MOD_PERL} ) {
         if ( $ENV{MOD_PERL_API_VERSION} and $ENV{MOD_PERL_API_VERSION} >= 2 ) {
@@ -121,17 +119,13 @@ BEGIN {
     *logout  = ( MP() == 2 ) ? \&logout_mp2  : \&logout_mp1;
 }
 
-sub handler_mp1 ($$) { shift->run(@_) }
+sub handler_mp1 ($$) { shift->run(@_); }
 
-sub handler_mp2 : method {
-    shift->run(@_);
-}
+sub handler_mp2 : method { shift->run(@_); }
 
-sub logout_mp1 ($$) { shift->unlog(@_) }
+sub logout_mp1 ($$) { shift->unlog(@_); }
 
-sub logout_mp2 : method {
-    shift->unlog(@_);
-}
+sub logout_mp2 : method { shift->unlog(@_); }
 
 sub lmLog {
     my ( $class, $mess, $level ) = @_;
@@ -512,8 +506,7 @@ sub run ($$) {
     ( $class, $apacheRequest ) = @_;
 
     return DECLINED unless ( $apacheRequest->is_initial_req );
-    my $uri = $apacheRequest->uri
-      . ( $apacheRequest->args ? "?" . $apacheRequest->args : "" );
+    my $uri = $apacheRequest->uri . ( $apacheRequest->args ? "?" . $apacheRequest->args : "" );
 
     # AUTHENTICATION
     # I - recover the cookie

@@ -1,15 +1,19 @@
 Revision history for Perl extension Lemonldap::NG::Manager.
 
-0.83 Fri feb 8 17:45:34 2008
+0.84  Mon apr 7 14:55:45 2008
+	- Javascript update (Closes: #308775 / forge.objectweb.org)
+
+0.83  Fri feb 8 17:45:34 2008
 	- bugs in SOAP server
 	- sessions timeout is now included in the manager
 
-0.82 Sat jul 21 15:21:32 2007
+0.82  Sat jul 21 15:21:32 2007
 	- TLS support in LDAP
 	- Help for new logout system
 
 0.8   Sat jun 23 21:54:27 2007
-	- New feature: syntax errors are now displayed in the manager interface
+	- New feature: syntax errors are now displayed in the manager
+	  interface
 
 0.72  Tue jun 20 22:00:15 2007
 	- Javascript rewrite
@@ -24,7 +28,8 @@ Revision history for Perl extension Lemonldap::NG::Manager.
 	- Little bug correction: '-' is authorized in domain names
 
 0.65  Sun May 6 16:15:49 2007
-	- SOAP: HTTP basic authentication and little bug correction in 'sessions'
+	- SOAP: HTTP basic authentication and little bug correction in
+	  'sessions'
 	  mode
 	- More tests in conf
 
