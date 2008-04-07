@@ -399,7 +399,7 @@ function deleteConf(){
 
 function ec(s){
   if((!s) || s=='') return s;
-  return s.replace(/&(?!\#)/g,'&amp;').replace(/>/g,'&gt;').replace(/</g,'&lt;');
+  return s.replace(/>/g,'&gt;').replace(/</g,'&lt;');
 }
 #;
 }

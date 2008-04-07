@@ -26,16 +26,12 @@ our %EXPORT_TAGS = (
           $https $port
           )
     ],
+    log    => [qw( lmLog )],
     traces => [qw( $whatToTrace )],
     apache => [qw( MP OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR )],
 );
 
 our @EXPORT_OK = ();
-push( @EXPORT_OK, @{ $EXPORT_TAGS{$_} } )
-  foreach (
-    qw( localStorage globalStorage locationRules import headers traces apache )
-  );
-$EXPORT_TAGS{all} = \@EXPORT_OK;
 
 our @EXPORT = ();
 
@@ -55,6 +51,11 @@ our (
 ##########################################
 
 BEGIN {
+    push( @EXPORT_OK, @{ $EXPORT_TAGS{$_} } )
+      foreach (
+        qw( localStorage globalStorage locationRules import headers traces apache )
+      );
+    $EXPORT_TAGS{all} = \@EXPORT_OK;
     if ( exists $ENV{MOD_PERL} ) {
         if ( $ENV{MOD_PERL_API_VERSION} and $ENV{MOD_PERL_API_VERSION} >= 2 ) {
             *MP = sub { 2 };
