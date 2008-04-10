@@ -32,6 +32,12 @@ sub getConf {
         %args = @_;
     }
     %$self = ( %$self, %args );
+    # For better performance the Portal can use the configuration stored in
+    # the local file system by the handlers. This can be used when
+    # configuration is not local (type DBI or SOAP)
+    if ( $self->{useLocalCachedConf} and $self->{localStorage} ) {
+        $self->{lmConf} = $self->localGetConf();
+    }
     $self->{lmConf} =
       Lemonldap::NG::Manager::Conf->new( $self->{configStorage} )
       unless $self->{lmConf};
@@ -41,6 +47,30 @@ sub getConf {
     # Local configuration prepends global
     $self->{$_} = $args{$_} || $tmp->{$_} foreach ( keys %$tmp );
     1;
+}
+
+sub localGetConf {
+    my $self = shift;
+    $self->{_refLocalStorage} ||= $self->localStorageObject;
+    return $self->{_refLocalStorage}->get('conf');
+}
+
+sub localStorageObject {
+    my $self = shift;
+    eval "use ".$self->{localStorage};
+    if ($@) {
+        print STDERR "Unable to load " . $self->{localStorage} . ": $@\n";
+	return 0;
+    }
+    my $refLocalStorage;
+    eval '$refLocalStorage = new '
+      . $self->{localStorage}
+      . '($self->{localStorageOptions});';
+    if ($@) {
+        print STDERR "Unable to access to local configuration storage : $@\n";
+	return 0;
+    }
+    return $refLocalStorage;
 }
 
 # Here is implemented the 'macro' mechanism.
