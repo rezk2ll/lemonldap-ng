@@ -64,7 +64,8 @@ sub localStorageObject {
     my $self = shift;
     eval "use " . $self->{localStorage};
     if ($@) {
-        print STDERR "Unable to load " . $self->{localStorage} . ": $@\n";
+        print STDERR "Unable to load " . $self->{localStorage}
+	  . ", local configuration cache is disabled: $@\n";
         return 0;
     }
     my $refLocalStorage;

@@ -44,7 +44,7 @@ authentication
 	'ldap'
 
 locationRules
-	'$data1 = {&39;test.example.com&39; => {&39;default&39; => &39;accept&39;}};'
+	'$data1 = {&39;test.example.com&39; => {&39;default&39; => &39;accept&39;,&39;^/logout&39; => &39;logout_sso http://www.google.fr/&39;}};'
 
 cfgNum
 	1
