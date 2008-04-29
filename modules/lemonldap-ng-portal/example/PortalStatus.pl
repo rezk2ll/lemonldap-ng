@@ -50,7 +50,7 @@ BEGIN {
           grep { -f "$args->{Directory}/$_" and /^[A-Za-z0-9@\-]+$/ }
           readdir(DIR);
         closedir DIR;
-        return $#t +1;
+        return $#t + 1;
     }
 
     sub Apache::Session::DB_File::get_sessions_count {
@@ -65,7 +65,7 @@ BEGIN {
             }
         }
         my @t = keys( %{ $class->{dbm} } );
-        return $#t +1;
+        return $#t + 1;
     }
 }
 
@@ -74,21 +74,6 @@ use Lemonldap::NG::Manager::Conf::Constants;
 use strict;
 use DBI;
 
-my $lmconf = Lemonldap::NG::Manager::Conf->new(
-    {
-        type    => 'File',
-        dirName => '__CONFDIR__',
-    }
-);
-
-my $conf = $lmconf->getConf or die "Unable to get configuration ($!)";
-
-my $tmp = $conf->{globalStorage};
-
-eval "use $tmp";
-die $@ if ($@);
-
-my $t   = $tmp->get_sessions_count( $conf->{globalStorageOptions} );
 my $cgi = CGI->new();
 
 print $cgi->header(
@@ -96,9 +81,36 @@ print $cgi->header(
     -type    => 'text/plain',
 );
 
-print qq#LEMONLDAP::NG::Portal STATUS
-Active sessions : $t;
-#;
+print "LEMONLDAP::NG::PORTAL STATUS\n\nConfiguration          : ";
+
+my $lmconf = Lemonldap::NG::Manager::Conf->new(
+    {
+        type    => 'File',
+        dirName => '__CONFDIR__',
+    }
+);
+
+unless ($lmconf) {
+    print "unable to create conf object\n";
+}
+else {
+    my $conf = $lmconf->getConf;
+    unless ($conf) {
+        write "unable to get configuration ($!)\n";
+    }
+    else {
+        print "OK\nApache::Session module : ";
+        my $tmp = $conf->{globalStorage};
+        eval "use $tmp";
+        if ($@) {
+            print "unable to load $tmp ($@)\n";
+        }
+        else {
+            my $t = $tmp->get_sessions_count( $conf->{globalStorageOptions} );
+            print "OK\nActive sessions        : $t\n";
+        }
+    }
+}
 
 1;
 
