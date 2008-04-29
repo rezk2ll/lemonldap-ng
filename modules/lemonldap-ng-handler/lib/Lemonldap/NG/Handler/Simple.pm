@@ -440,6 +440,12 @@ sub forbidden {
     if ( $datas->{_logout} ) {
         return $class->goToPortal( $datas->{_logout}, 'logout=1' );
     }
+    $class->logForbidden(@_);
+    return FORBIDDEN;
+}
+
+sub logForbidden {
+    my $class = shift;
     $class->lmLog(
         'The user "'
           . $datas->{$whatToTrace}
@@ -447,7 +453,6 @@ sub forbidden {
           . shift,
         'notice'
     );
-    return FORBIDDEN;
 }
 
 # hideCookie : hide Lemonldap::NG cookie to the protected application
