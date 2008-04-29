@@ -1,0 +1,104 @@
+#!/usr/bin/perl
+
+use CGI;
+use strict;
+
+# Status page for Lemonldap::NG::Portal
+#
+# This CGI displays some information about Lemonldap::NG sessions
+#
+
+BEGIN {
+
+    sub Apache::Session::get_sessions_count {
+        return 0;
+    }
+
+    sub Apache::Session::MySQL::get_sessions_count {
+        my $class = shift;
+        my $args  = shift;
+        my $dbh =
+          DBI->connect( $args->{DataSource}, $args->{UserName},
+            $args->{Password} )
+          or die("$!$@");
+        my $sth = $dbh->prepare('SELECT count(*) from sessions');
+        $sth->execute;
+        my @res;
+        while ( my @row = $sth->fetchrow_array ) {
+            push @res, @row;
+        }
+        return @res;
+    }
+
+    *Apache::Session::Postgres::get_sessions_count =
+      \&Apache::Session::MySQL::get_sessions_count;
+    *Apache::Session::Oracle::get_sessions_count =
+      \&Apache::Session::MySQL::get_sessions_count;
+    *Apache::Session::Sybase::get_sessions_count =
+      \&Apache::Session::MySQL::get_sessions_count;
+    *Apache::Session::Informix::get_sessions_count =
+      \&Apache::Session::MySQL::get_sessions_count;
+
+    sub Apache::Session::File::get_sessions_count {
+        my $class = shift;
+        my $args  = shift;
+        $args->{Directory} ||= '/tmp';
+        unless ( opendir DIR, $args->{Directory} ) {
+            die "Cannot open directory $args->{Directory}\n";
+        }
+        my @t =
+          grep { -f "$args->{Directory}/$_" and /^[A-Za-z0-9@\-]+$/ }
+          readdir(DIR);
+        closedir DIR;
+        return $#t +1;
+    }
+
+    sub Apache::Session::DB_File::get_sessions_count {
+        my $class = shift;
+        my $args  = shift;
+
+        if ( !tied %{ $class->{dbm} } ) {
+            my $rv = tie %{ $class->{dbm} }, 'DB_File', $args->{FileName};
+
+            if ( !$rv ) {
+                die "Could not open dbm file $args->{FileName}: $!";
+            }
+        }
+        my @t = keys( %{ $class->{dbm} } );
+        return $#t +1;
+    }
+}
+
+use Lemonldap::NG::Manager::Conf;
+use Lemonldap::NG::Manager::Conf::Constants;
+use strict;
+use DBI;
+
+my $lmconf = Lemonldap::NG::Manager::Conf->new(
+    {
+        type    => 'File',
+        dirName => '__CONFDIR__',
+    }
+);
+
+my $conf = $lmconf->getConf or die "Unable to get configuration ($!)";
+
+my $tmp = $conf->{globalStorage};
+
+eval "use $tmp";
+die $@ if ($@);
+
+my $t   = $tmp->get_sessions_count( $conf->{globalStorageOptions} );
+my $cgi = CGI->new();
+
+print $cgi->header(
+    -charset => 'ascii',
+    -type    => 'text/plain',
+);
+
+print qq#LEMONLDAP::NG::Portal STATUS
+Active sessions : $t;
+#;
+
+1;
+
