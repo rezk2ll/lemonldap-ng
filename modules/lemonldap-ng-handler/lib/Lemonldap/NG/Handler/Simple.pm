@@ -32,7 +32,8 @@ our (
 
 BEGIN {
     %EXPORT_TAGS = (
-        localStorage  => [qw( $localStorage $localStorageOptions $refLocalStorage )],
+        localStorage =>
+          [qw( $localStorage $localStorageOptions $refLocalStorage )],
         globalStorage => [qw( $globalStorage $globalStorageOptions )],
         locationRules => [
             qw(
@@ -48,7 +49,7 @@ BEGIN {
               $https $port
               )
         ],
-        log    => [qw( lmLog )],
+        log    => [qw( lmSetApacheUser lmLog )],
         traces => [qw( $whatToTrace )],
         apache => [qw( MP OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR )],
     );
@@ -66,9 +67,17 @@ BEGIN {
         *MP = sub { 0 };
     }
     if ( MP() == 2 ) {
+        require Apache2::Log;
+        require Apache2::RequestUtil;
+        Apache2::RequestUtil->import();
         require Apache2::RequestRec;
         Apache2::RequestRec->import();
-        require Apache2::Log;
+        require Apache2::ServerUtil;
+        Apache2::ServerUtil->import();
+        require Apache2::Connection;
+        Apache2::Connection->import();
+        require APR::Table;
+        APR::Table->import();
         require Apache2::Const;
         Apache2::Const->import( '-compile', qw(:common :log) );
         *FORBIDDEN    = \&Apache2::Const::FORBIDDEN;
@@ -77,8 +86,6 @@ BEGIN {
         *DECLINED     = \&Apache2::Const::DECLINED;
         *DONE         = \&Apache2::Const::DONE;
         *SERVER_ERROR = \&Apache2::Const::SERVER_ERROR;
-        require Apache2::compat;
-        Apache2::compat->import();
         eval {
             require threads::shared;
             threads::shared::share($locationRegexp);
@@ -121,11 +128,15 @@ BEGIN {
 
 sub handler_mp1 ($$) { shift->run(@_); }
 
-sub handler_mp2 : method { shift->run(@_); }
+sub handler_mp2 : method {
+    shift->run(@_);
+}
 
 sub logout_mp1 ($$) { shift->unlog(@_); }
 
-sub logout_mp2 : method { shift->unlog(@_); }
+sub logout_mp2 : method {
+    shift->unlog(@_);
+}
 
 sub lmLog {
     my ( $class, $mess, $level ) = @_;
@@ -137,6 +148,17 @@ sub lmLog {
     }
     else {
         print STDERR "$mess\n";
+    }
+}
+
+sub lmSetApacheUser {
+    my ( $r, $s ) = @_;
+    return unless ($s);
+    if ( MP() == 2 ) {
+        $r->user($s);
+    }
+    else {
+        $r->connection->user($s);
     }
 }
 
@@ -246,10 +268,9 @@ sub localInit($$) {
     # performances.
     no strict;
     if ( MP() == 2 ) {
-        Apache->push_handlers(
-            PerlChildInitHandler => sub { return $class->initLocalStorage( $_[1], $_[0] ); }
-        );
-        Apache->push_handlers(
+        Apache2::ServerUtil->server->push_handlers( PerlChildInitHandler =>
+              sub { return $class->initLocalStorage( $_[1], $_[0] ); } );
+        Apache2::ServerUtil->server->push_handlers(
             PerlCleanupHandler => sub { return $class->cleanLocalStorage(@_); }
         );
     }
@@ -511,7 +532,8 @@ sub run ($$) {
     ( $class, $apacheRequest ) = @_;
 
     return DECLINED unless ( $apacheRequest->is_initial_req );
-    my $uri = $apacheRequest->uri . ( $apacheRequest->args ? "?" . $apacheRequest->args : "" );
+    my $uri = $apacheRequest->uri
+      . ( $apacheRequest->args ? "?" . $apacheRequest->args : "" );
 
     # AUTHENTICATION
     # I - recover the cookie
@@ -551,8 +573,7 @@ sub run ($$) {
 
     # ACCOUNTING
     # 1 - Inform Apache
-    $apacheRequest->connection->user( $datas->{$whatToTrace} )
-      if ( $datas->{$whatToTrace} );
+    lmSetApacheUser( $apacheRequest, $datas->{$whatToTrace} );
 
     # AUTHORIZATION
     return $class->forbidden($uri) unless ( $class->grant($uri) );
@@ -601,10 +622,12 @@ sub unprotect {
 sub localUnlog {
     my $class = shift;
     if ( my $id = $class->fetchId ) {
+
         # Delete Apache thread datas
         if ( $id eq $datas->{_session_id} ) {
             $datas = {};
         }
+
         # Delete Apache local cache
         if ( $refLocalStorage and $refLocalStorage->get($id) ) {
             $refLocalStorage->remove($id);
@@ -624,6 +647,7 @@ sub redirectFilter {
     my $url   = shift;
     my $f     = shift;
     unless ( $f->ctx ) {
+
         # Here, we can use Apache2 functions instead of lmSetHeaderOut because
         # this function is used only with Apache2.
         $f->r->status(REDIRECT);
