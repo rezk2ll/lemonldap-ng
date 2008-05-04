@@ -57,14 +57,14 @@ BEGIN {
     $EXPORT_TAGS{all} = \@EXPORT_OK;
     if ( exists $ENV{MOD_PERL} ) {
         if ( $ENV{MOD_PERL_API_VERSION} and $ENV{MOD_PERL_API_VERSION} >= 2 ) {
-            *MP = sub { 2 };
+            eval 'use constant MP => 2;';
         }
         else {
-            *MP = sub { 1 };
+            eval 'use constant MP => 1;';
         }
     }
     else {
-        *MP = sub { 0 };
+        eval 'use constant MP => 0;';
     }
     if ( MP() == 2 ) {
         require Apache2::Log;
@@ -80,12 +80,14 @@ BEGIN {
         APR::Table->import();
         require Apache2::Const;
         Apache2::Const->import( '-compile', qw(:common :log) );
-        *FORBIDDEN    = \&Apache2::Const::FORBIDDEN;
-        *REDIRECT     = \&Apache2::Const::REDIRECT;
-        *OK           = \&Apache2::Const::OK;
-        *DECLINED     = \&Apache2::Const::DECLINED;
-        *DONE         = \&Apache2::Const::DONE;
-        *SERVER_ERROR = \&Apache2::Const::SERVER_ERROR;
+        eval '
+        use constant FORBIDDEN    => Apache2::Const::FORBIDDEN;
+        use constant REDIRECT     => Apache2::Const::REDIRECT;
+        use constant OK           => Apache2::Const::OK;
+        use constant DECLINED     => Apache2::Const::DECLINED;
+        use constant DONE         => Apache2::Const::DONE;
+        use constant SERVER_ERROR => Apache2::Const::SERVER_ERROR;
+        ';
         eval {
             require threads::shared;
             threads::shared::share($locationRegexp);
@@ -114,12 +116,12 @@ BEGIN {
     }
     else {    # For Test or CGI
         eval '
-            sub OK {0}
-            sub FORBIDDEN {1}
-            sub REDIRECT {2}
-            sub DECLINED {1}
-            sub DONE {4}
-            sub SERVER_ERROR {5}
+        use constant FORBIDDEN    => 1;
+        use constant REDIRECT     => 1;
+        use constant OK           => 1;
+        use constant DECLINED     => 1;
+        use constant DONE         => 1;
+        use constant SERVER_ERROR => 1;
         ';
     }
     *handler = ( MP() == 2 ) ? \&handler_mp2 : \&handler_mp1;
@@ -506,7 +508,7 @@ sub encodeUrl {
 }
 
 # Redirect non-authenticated users to the portal
-sub goToPortal() {
+sub goToPortal {
     my ( $class, $url, $arg ) = @_;
     $class->lmLog(
         "Redirect "
@@ -521,7 +523,7 @@ sub goToPortal() {
 }
 
 # Fetch $id
-sub fetchId() {
+sub fetchId {
     my $t = lmHeaderIn( $apacheRequest, 'Cookie' );
     return ( $t =~ /$cookieName=([^; ]+);?/o ) ? $1 : 0;
 }
