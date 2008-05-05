@@ -10,6 +10,7 @@ my $h = new Lemonldap::NG::Manager(
         },
         dhtmlXTreeImageLocation => "/imgs/",
         applyConfFile           => '__DIR__/manager/apply.conf',
+	cssFile => 'theme/default.css',
 
         # jsFile => /path/to/lemonldap-ng-manager.js,
     }

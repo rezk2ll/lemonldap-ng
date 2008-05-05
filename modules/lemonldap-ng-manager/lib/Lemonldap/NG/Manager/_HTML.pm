@@ -409,12 +409,20 @@ sub start_html {
     my %args = @_;
     $args{'-style'} = { -src => [ $args{'-style'} ] }
       if ( $args{'-style'} and !ref( $args{'-style'} ) );
-    push @{ $args{'-style'}->{'-src'} }, "$ENV{SCRIPT_NAME}?lmQuery=css";
+    unshift @{ $args{'-style'}->{'-src'} }, "$ENV{SCRIPT_NAME}?lmQuery=css";
     $args{'-title'} ||= 'Lemonldap::NG Configuration';
     $self->CGI::start_html(%args);
 }
 
 sub main {
+
+    Lemonldap::NG::Manager::_i18n::import( $ENV{HTTP_ACCEPT_LANGUAGE} );
+    my %text;
+    foreach(qw(field value)) {
+        $text{$_} = &{"txt_$_"};
+        $text{$_} =~s/'/\\'/g;
+    }
+
 
     # Lemonldap::Manager javascripts;
     print
@@ -440,8 +448,8 @@ qq#<script type="text/javascript" src="$ENV{SCRIPT_NAME}?lmQuery=lmjs"></script>
                <p></p>
                <table border="1" width="100%" style="empty-cells:show;">
                 <tr>
-                 <th width="200">Champ</th>
-                 <th width="400">Valeur</th>
+                 <th width="200">$text{field}</th>
+                 <th width="400">$text{value}</th>
                 </tr>
                 <tr>
                  <td>

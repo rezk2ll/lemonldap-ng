@@ -1,0 +1,67 @@
+/* CSS for LemonLDAP::NG Manager */
+
+body {
+  font-family: Arial, Helvetica, Verdana;
+  margin: 0;
+  padding: 0;
+}
+
+#gauche {
+  background: #dfdfdf url(hatch.gif);
+}
+
+#haut {
+  background: #eee;
+}
+
+#bas {
+  background: #ccc url(hatch.gif);
+}
+
+#treeBox {
+  background: url(logo_lemonldap-ng.png) no-repeat center 5px;
+  padding: 50px 0 0 0;
+  font-weight: bold;
+}
+
+#buttons {
+  margin: 20px 40px;
+  padding: 5px;
+  background: #fff;
+  border: 1px #ccc dashed;
+}
+
+#formulaire {
+  margin: 20px 40px;
+}
+
+input, textarea {
+  border: 1px #ccc solid;
+  padding: 3px;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+#formulaire th {
+  background: #ddd url(hatch.gif);
+}
+
+#formulaire td {
+  padding: 5px;
+  text-align: center;
+}
+
+h1, h2, h3, h4, h5, h6, dt {
+  color: #d9b500;
+  font-weight: bold;
+}
+
+pre, code {
+  font: 10pt monospace;
+  border-left: 5px gray solid;
+  padding: 5px;
+  margin: 0 10px;
+  background: #ccc;
+}

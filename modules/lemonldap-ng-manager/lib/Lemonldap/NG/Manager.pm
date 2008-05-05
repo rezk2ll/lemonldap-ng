@@ -37,6 +37,7 @@ sub new {
     unless ( -r $self->{jsFile} ) {
         print STDERR qq#Unable to read $self->{jsFile}. You have to set "jsFile" parameter to /path/to/lemonldap-ng-manager.js\n#;
     }
+    $self->{pageTitle} ||= "LemonLDAP::NG Administration";
     unless ( __PACKAGE__->can('ldapServer') ) {
         Lemonldap::NG::Manager::_i18n::import( $ENV{HTTP_ACCEPT_LANGUAGE} );
     }
@@ -62,7 +63,17 @@ sub doall {
     # When using header_public here, Firefox does not load configuration
     # sometimes. Where is the bug ?
     print $self->header;
-    print $self->start_html;
+    # Test if we have to use specific CSS
+    if ( defined $self->{cssFile} ) {
+        print $self->start_html(
+               -style => $self->{cssFile},
+               -title => $self->{pageTitle},
+           )
+    } else {
+        print $self->start_html(
+               -title => $self->{pageTitle},
+           )
+    }
     print $self->main;
     print $self->end_html;
 }
