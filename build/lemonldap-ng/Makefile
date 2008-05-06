@@ -136,6 +136,9 @@ dist:	clean
 	tar czf lemonldap-ng-$(VERSION).tar.gz lemonldap-ng-$(VERSION)
 	rm -rf lemonldap-ng-$(VERSION)
 
+debian-dist:	dist
+	mv lemonldap-ng-$(VERSION).tar.gz lemonldap-ng_$(VERSION).orig.tar.gz
+
 cpan:	clean configure handler_cpan portal_cpan manager_cpan
 
 handler_cpan:	handler_conf
