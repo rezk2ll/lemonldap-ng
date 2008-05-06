@@ -15,5 +15,6 @@ debian/tmp/usr/share/man/man3/Lemonldap::NG::Manager::Restricted.3pm
 debian/tmp/var/lib/lemonldap-ng/manager/apply.conf /etc/lemonldap-ng
 debian/manager-apache*.conf /etc/lemonldap-ng
 debian/tmp/var/lib/lemonldap-ng/manager/imgs
+debian/tmp/var/lib/lemonldap-ng/manager/theme
 debian/tmp/var/lib/lemonldap-ng/manager/lemonldap-ng-manager.js
 debian/tmp/var/lib/lemonldap-ng/manager/scripts/lmConfigEditor /usr/share/lemonldap-ng/bin

@@ -8,7 +8,7 @@ use AutoLoader qw(AUTOLOAD);
 require Lemonldap::NG::Manager::_i18n;
 use Lemonldap::NG::Manager::Conf::Constants;
 
-our $VERSION = '0.29';
+our $VERSION = '0.30';
 
 # TODO: Delete buttons in headers and rules if 'read-only'
 
@@ -74,7 +74,7 @@ EOT
 
 sub javascript {
     my $self = shift;
-    Lemonldap::NG::Manager::_i18n::import( $ENV{HTTP_ACCEPT_LANGUAGE} );
+    Lemonldap::NG::Manager::_i18n::import( $ENV{HTTP_ACCEPT_LANGUAGE} ) unless(__PACKAGE__->can('txt_newVirtualHost'));
     my %text;
     foreach(qw(newVirtualHost newMacro newGroup newVar newGSOpt saveConf
                deleteNode locationRules unableToSave confSaved saveFailure
@@ -415,8 +415,7 @@ sub start_html {
 }
 
 sub main {
-
-    Lemonldap::NG::Manager::_i18n::import( $ENV{HTTP_ACCEPT_LANGUAGE} );
+    Lemonldap::NG::Manager::_i18n::import( $ENV{HTTP_ACCEPT_LANGUAGE} ) unless(__PACKAGE__->can('txt_field'));
     my %text;
     foreach(qw(field value)) {
         $text{$_} = &{"txt_$_"};

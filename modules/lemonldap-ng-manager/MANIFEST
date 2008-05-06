@@ -50,6 +50,9 @@ example/lmConfig.mysql
 example/scripts/lmConfigEditor
 example/scripts/lmSessionDump
 example/soapserver.pl
+example/theme/logo_lemonldap-ng.png
+example/theme/default.css
+example/theme/hatch.gif
 lib/Lemonldap/NG/Manager.pm
 lib/Lemonldap/NG/Manager/_HTML.pm
 lib/Lemonldap/NG/Manager/_i18n.pm

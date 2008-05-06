@@ -1,3 +1,10 @@
+lemonldap-ng (0.9.2) unstable; urgency=low
+
+  * New css in manager
+  * cleaning Handler code
+
+ -- Xavier Guimard <x.guimard@free.fr>  Tue, 06 May 2008 06:58:04 +0200
+
 lemonldap-ng (0.9.1) unstable; urgency=low
 
   * logout bug : logout_sso target was not running (Closes: #308856)

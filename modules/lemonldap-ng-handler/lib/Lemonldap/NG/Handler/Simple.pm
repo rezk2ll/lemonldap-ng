@@ -7,7 +7,7 @@ use Exporter 'import';
 use Safe;
 require POSIX;
 
-our $VERSION = '0.86';
+our $VERSION = '0.87';
 
 our %EXPORT_TAGS;
 

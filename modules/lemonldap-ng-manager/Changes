@@ -1,5 +1,8 @@
 Revision history for Perl extension Lemonldap::NG::Manager.
 
+0.85  Tue may 6 7:02:34 2008
+	- CSS update
+
 0.84  Mon apr 7 14:55:45 2008
 	- Javascript update (Closes: #308775 / forge.objectweb.org)
 
