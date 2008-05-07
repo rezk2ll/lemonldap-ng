@@ -221,7 +221,7 @@ sub buildTree {
         &txt_authenticationType, );
     $authParams->{portal} =
       $self->xmlField( "value", $config->{portal} || 'http://portal/',
-        "Portail" );
+        &txt_portal );
     $authParams->{securedCookie} =
       $self->xmlField( "value", $config->{securedCookie} || 0, &txt_securedCookie );
     $generalParameters->{whatToTrace} =
