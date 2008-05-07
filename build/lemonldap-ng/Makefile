@@ -155,7 +155,7 @@ manager_cpan:	manager_conf
 
 static_example:	example
 	mkdir -p ${EXAMPLEDIRBUILD}/static
-	cd ${EXAMPLEDIRBUILD}/static/;ln -s ../manager/imgs;cd -
+	cd ${EXAMPLEDIRBUILD}/static/;cp -a ../manager/{imgs,theme} .;cd -
 	scripts/make_static_example.pl ${EXAMPLEDIRBUILD}/manager/index.pl ${EXAMPLEDIRBUILD}/static/index.html $(EXAMPLELANG)
 
 documentation:

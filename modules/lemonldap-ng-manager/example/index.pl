@@ -11,6 +11,9 @@ my $h = new Lemonldap::NG::Manager(
         dhtmlXTreeImageLocation => "/imgs/",
         applyConfFile           => '__DIR__/manager/apply.conf',
         cssFile => 'theme/default.css',
+        textareaW               => 50,
+        textareaH               => 2,
+        inputSize               => 10,
 
         # jsFile => /path/to/lemonldap-ng-manager.js,
     }

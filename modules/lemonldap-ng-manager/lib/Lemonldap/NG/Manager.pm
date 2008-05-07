@@ -38,6 +38,9 @@ sub new {
         print STDERR qq#Unable to read $self->{jsFile}. You have to set "jsFile" parameter to /path/to/lemonldap-ng-manager.js\n#;
     }
     $self->{pageTitle} ||= "LemonLDAP::NG Administration";
+    $self->{textareaW} ||= 50;
+    $self->{textareaH} ||= 5;
+    $self->{inputSize} ||= 30;
     unless ( __PACKAGE__->can('ldapServer') ) {
         Lemonldap::NG::Manager::_i18n::import( $ENV{HTTP_ACCEPT_LANGUAGE} );
     }
