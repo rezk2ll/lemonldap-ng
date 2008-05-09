@@ -269,7 +269,7 @@ sub localInit($$) {
         require IO::Pipe;
         $statusPipe = IO::Pipe->new;
         $statusOut  = IO::Pipe->new;
-        if(my $pid = fork()) {
+        if ( my $pid = fork() ) {
             $statusPipe->writer();
             $statusOut->reader();
             $statusPipe->autoflush(1);
@@ -277,15 +277,18 @@ sub localInit($$) {
         else {
             $statusPipe->reader();
             $statusOut->writer();
-            my $fdin = $statusPipe->fileno;
+            my $fdin  = $statusPipe->fileno;
             my $fdout = $statusOut->fileno;
             open STDIN, "<&$fdin";
+
             #open STDOUT, '>/tmp/log';
             open STDOUT, ">&$fdout";
-            exec 'perl','-MLemonldap::NG::Handler::Status',
-                '-e',
-                '&Lemonldap::NG::Handler::Status::run('.$localStorage.','
-                . Data::Dumper->new([$localStorageOptions])->Terse(1)->Dump.');';
+            exec 'perl', '-MLemonldap::NG::Handler::Status',
+              '-e',
+              '&Lemonldap::NG::Handler::Status::run('
+              . $localStorage . ','
+              . Data::Dumper->new( [$localStorageOptions] )->Terse(1)->Dump
+              . ');';
         }
     }
 
@@ -488,10 +491,12 @@ sub grant {
 sub forbidden {
     my $class = shift;
     if ( $datas->{_logout} ) {
-        print $statusPipe $datas->{$whatToTrace} . " => $_[0] LOGOUT\n" if($statusPipe);
+        print $statusPipe $datas->{$whatToTrace} . " => $_[0] LOGOUT\n"
+          if ($statusPipe);
         return $class->goToPortal( $datas->{_logout}, 'logout=1' );
     }
-    print $statusPipe $datas->{$whatToTrace} . " => $_[0] REJECT\n" if($statusPipe);
+    print $statusPipe $datas->{$whatToTrace} . " => $_[0] REJECT\n"
+      if ($statusPipe);
     $class->logForbidden(@_);
     return FORBIDDEN;
 }
@@ -571,7 +576,9 @@ sub run ($$) {
     my $id;
     unless ( $id = $class->fetchId ) {
         $class->lmLog( "$class: No cookie found", 'info' );
-        print $statusPipe $apacheRequest->connection->remote_ip . " => $uri REDIRECT\n" if($statusPipe);
+        print $statusPipe $apacheRequest->connection->remote_ip
+          . " => $uri REDIRECT\n"
+          if ($statusPipe);
         return $class->goToPortal($uri);
     }
 
@@ -591,7 +598,9 @@ sub run ($$) {
                 # The cookie isn't yet available
                 $class->lmLog( "The cookie $id isn't yet available: $@",
                     'info' );
-                print $statusPipe $apacheRequest->connection->remote_ip . " => $uri REDIRECT\n" if($statusPipe);
+                print $statusPipe $apacheRequest->connection->remote_ip
+                  . " => $uri REDIRECT\n"
+                  if ($statusPipe);
                 return $class->goToPortal($uri);
             }
             $datas->{$_} = $h{$_} foreach ( keys %h );
@@ -610,7 +619,7 @@ sub run ($$) {
 
     # AUTHORIZATION
     return $class->forbidden($uri) unless ( $class->grant($uri) );
-    print $statusPipe $datas->{$whatToTrace} . " => $uri OK\n" if($statusPipe);
+    print $statusPipe $datas->{$whatToTrace} . " => $uri OK\n" if ($statusPipe);
     $class->lmLog(
         "User "
           . $datas->{$whatToTrace}
@@ -691,26 +700,42 @@ sub redirectFilter {
     }
     while ( $f->read( my $buffer, 1024 ) ) {
     }
-    print $statusPipe $datas->{$whatToTrace} . " => filter REDIRECT\n" if($statusPipe);
+    print $statusPipe $datas->{$whatToTrace} . " => filter REDIRECT\n"
+      if ($statusPipe);
     return REDIRECT;
 }
 
 sub status($$) {
     my ( $class, $r ) = @_;
     $class->lmLog( "$class: request for status", 'debug' );
-    return SERVER_ERROR unless( $statusPipe and $statusOut );
+    return SERVER_ERROR unless ( $statusPipe and $statusOut );
     $r->handler("perl-script");
     print $statusPipe "STATUS\n";
     my $buf;
-    while(<$statusOut>) {
-        last if(/^$/);
+    while (<$statusOut>) {
+        last if (/^END$/);
         $buf .= $_;
     }
     if ( MP() == 2 ) {
-        $r->push_handlers( 'PerlResponseHandler' => sub { my $r = shift; $r->content_type('text/plain'); $r->print($buf); OK } );
+        $r->push_handlers(
+            'PerlResponseHandler' => sub {
+                my $r = shift;
+                $r->content_type('text/plain');
+                $r->print($buf);
+                OK;
+            }
+        );
     }
     else {
-        $r->push_handlers( 'PerlHandler' => sub { my $r = shift; $r->content_type('text/plain'); $r->send_http_header; $r->print($buf); OK });
+        $r->push_handlers(
+            'PerlHandler' => sub {
+                my $r = shift;
+                $r->content_type('text/plain');
+                $r->send_http_header;
+                $r->print($buf);
+                OK;
+            }
+        );
     }
     return OK;
 }

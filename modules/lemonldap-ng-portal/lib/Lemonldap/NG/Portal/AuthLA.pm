@@ -196,7 +196,7 @@ sub process {
     #   $self->_debug("parameter : $_ = " . $self->param($_)) ;
     # }
     # while(my($k,$v) = each(%ENV)) {
-    #	$self->_debug("env : $k = $v") ;
+    #        $self->_debug("env : $k = $v") ;
     # }
 
     #--------
@@ -315,7 +315,7 @@ sub process {
 # choisi pour récup les infos du user (sera par défaut en ldap).
 #
 # TODO :
-# 	* Faire de cette fonction un override de setSessionInfo avec par défaut
+#         * Faire de cette fonction un override de setSessionInfo avec par défaut
 #         le comportement de l'ancienne version et si dans la conf recup
 #         attribut par wsf... recup en wsf2.0.
 #
@@ -326,10 +326,10 @@ sub setSessionInfo {
 
     # Si configuration fixée à WSF
     # Alors
-    # 	Traitement de récupération des informations par WSF
+    #         Traitement de récupération des informations par WSF
     # Sinon
-    # 	Traitement de récupération des informations en appelant la fonction
-    # 	SUPER::setSessionInfo.
+    #         Traitement de récupération des informations en appelant la fonction
+    #         SUPER::setSessionInfo.
 
     # $self->{sessionInfo}->{dn} = "cn=tutu,ou=people,dc=example,dc=com" ;
     # $self->{sessionInfo}->{cn} = "tutu" ;
@@ -866,9 +866,9 @@ sub libertySignOn {
 #===============================================================================
 #
 # Two cases :
-# 	* Portal or applications requiere singleLogout -> SP request ;
-# 	* IDP requiere singleLogout -> IDP request with $ENV{'QUERY_STRING'}
-# 	  specified.
+#         * Portal or applications requiere singleLogout -> SP request ;
+#         * IDP requiere singleLogout -> IDP request with $ENV{'QUERY_STRING'}
+#           specified.
 #
 # This function one optional parameter that specifies if the portal is called
 # through a SOAP call.

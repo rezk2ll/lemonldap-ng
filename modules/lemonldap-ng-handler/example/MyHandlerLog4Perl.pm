@@ -18,7 +18,9 @@ __PACKAGE__->init(
             dirName => '__CONFDIR__',
         },
 
-        https => 0,
+        https   => 0,
+        # Uncomment this to activate status module
+        # status => 1,
     }
 );
 
@@ -34,3 +36,4 @@ sub logForbidden {
           . shift,
     );
 }
+1;

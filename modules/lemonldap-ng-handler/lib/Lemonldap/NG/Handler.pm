@@ -34,8 +34,10 @@ Create your own package (example using a central configuration database):
         type                => "DBI",
         dbiChain            => "DBI:mysql:database=lemondb;host=$hostname",
         dbiUser             => "lemonldap",
-        dbiPassword          => "password",
+        dbiPassword         => "password",
     }
+    # Uncomment this to activate status module
+    # status                => 1,
   } );
 
 =head2 Configure Apache
@@ -68,8 +70,18 @@ You can also unprotect an URI
     PerlHeaderParserHandler My::Package->unprotect
   </Files>
 
+To display the status page, add something like this :
+
+  <Location /status>
+    Order deny,allow
+    Allow from 10.1.1.0/24
+    Deny from all
+    PerlHeaderParserHandler My::Package->status
+  </Location>
+
 If your application has a "logout" URL, you can configure it directly in Apache
-configuration file (or in the manager interface) :
+configuration file (or in the manager interface). THIS IS DEPRECATED, use the
+manager :
 
   <Location /logout>
     PerlHeaderParserHandler My::Package->logout
