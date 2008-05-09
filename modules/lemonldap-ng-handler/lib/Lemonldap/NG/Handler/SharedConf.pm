@@ -181,7 +181,6 @@ sub refresh($$) {
     my ( $class, $r ) = @_;
     $class->lmLog( "$class: request for configuration reload", 'notice' );
     $r->handler("perl-script");
-    my $perlHandler;
     if ( MP() == 2 ) {
         if ( $class->globalConfUpdate($r) == OK ) {
             $r->push_handlers( 'PerlResponseHandler' =>
