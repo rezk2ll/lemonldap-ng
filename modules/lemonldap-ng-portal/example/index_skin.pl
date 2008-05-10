@@ -2,7 +2,6 @@
 
 use Lemonldap::NG::Portal::SharedConf;
 use HTML::Template;
-use File::Basename;
 
 # Skin configuration
 my $skin = "default";
