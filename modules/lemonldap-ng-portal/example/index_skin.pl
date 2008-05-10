@@ -6,20 +6,14 @@ use File::Basename;
 
 # Skin configuration
 my $skin = "default";
-my $skin_dir = "/home/clement/test/lemonldap-ng-0.9/example/portal/skins";
+my $skin_dir = "__SKINDIR__";
 
 my $portal = Lemonldap::NG::Portal::SharedConf->new(
     {
         configStorage => {
             type    => 'File',
-            dirName => '/home/clement/test/lemonldap-ng-0.9/example/conf/',
+            dirName => '__CONFDIR__',
         },
-        formateFilter => sub {
-                my $self = shift;
-                $self->{filter} = "(&(mail=" . $self->{user} . ")(objectClass=*))";
-                PE_OK;
-        },
-        ldapPpolicyControl => 1,
     }
 );
 
