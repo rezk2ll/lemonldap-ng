@@ -629,6 +629,8 @@ be set to:
 options with those parameters. This is usefull if you use a shared
 configuration.
 
+=item * ldapPpolicyControl: set it to 1 if you want to use LDAP Password Policy
+
 =back
 
 =head2 Methods that can be overloaded
