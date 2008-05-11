@@ -7,6 +7,36 @@ our $activity = [];
 our $start    = int( time / 60 );
 use constant MN_COUNT => 10;
 
+sub portalTab {
+    return {
+        -2 => 'PORTAL_REDIRECT',
+        -1 => 'PORTAL_ALREADY_AUTHENTICATED',
+        0  => 'PORTAL_OK',
+        1  => 'PORTAL_SESSIONEXPIRED',
+        2  => 'PORTAL_FORMEMPTY',
+        3  => 'PORTAL_WRONGMANAGERACCOUNT',
+        4  => 'PORTAL_USERNOTFOUND',
+        5  => 'PORTAL_BADCREDENTIALS',
+        6  => 'PORTAL_LDAPCONNECTFAILED',
+        7  => 'PORTAL_LDAPERROR',
+        8  => 'PORTAL_APACHESESSIONERROR',
+        9  => 'PORTAL_FIRSTACCESS',
+        10 => 'PORTAL_BADCERTIFICATE',
+        11 => 'PORTAL_LA_FAILED',
+        12 => 'PORTAL_LA_ARTFAILED',
+        13 => 'PORTAL_LA_DEFEDFAILED',
+        14 => 'PORTAL_LA_QUERYEMPTY',
+        15 => 'PORTAL_LA_SOAPFAILED',
+        16 => 'PORTAL_LA_SLOFAILED',
+        17 => 'PORTAL_LA_SSOFAILED',
+        18 => 'PORTAL_LA_SSOINITFAILED',
+        19 => 'PORTAL_LA_SESSIONERROR',
+        20 => 'PORTAL_LA_SEPFAILED',
+        21 => 'PORTAL_PP_ACCOUNT_LOCKED',
+        22 => 'PORTAL_PP_PASSWORD_EXPIRED',
+    };
+}
+
 sub run {
     my ( $localStorage, $localStorageOptions ) = ( shift, shift );
     my $refLocalStorage;
@@ -28,8 +58,11 @@ sub run {
         $lastMn = $mn;
 
         # Activity collect
-        if (/^(\S+)\s+=>\s+(\S+)\s+(OK|REJECT|REDIRECT|LOGOUT)$/) {
+        if (/^(\S+)\s+=>\s+(\S+)\s+(OK|REJECT|REDIRECT|LOGOUT|\-?\d+)$/) {
             my ( $user, $uri, $code ) = ( $1, $2, $3 );
+
+            # Portal error translation
+            $code = portalTab->{$code} if ( $code =~ /^\-?\d+$/ );
 
             # Per user activity
             $status->{user}->{$user}->{$code}++;
@@ -51,7 +84,8 @@ sub run {
             my $args = $1;
             my ( $c, $a, $u );
             while ( my ( $user, $v ) = each( %{ $status->{user} } ) ) {
-                $u++ unless( $user =~ /^\d+\.\d+\.\d+\.\d+$/ );
+                $u++ unless ( $user =~ /^\d+\.\d+\.\d+\.\d+$/ );
+
                 # Total requests
                 foreach ( keys %$v ) {
                     $c->{$_} += $v->{$_};
@@ -67,15 +101,18 @@ sub run {
 
             # DEVEL
             #use Data::Dumper;
-            #print Dumper( $c, $a, $status );
+            #print '<pre>' . Dumper( $c, $a, $status ) . '</pre>';
             my @t =
               $refLocalStorage->get_keys( $localStorageOptions->{namespace} );
             &head;
             print "<h2>Total</h2><pre>\n";
-            print sprintf("%-10s : %d\n", $_, $c->{$_}) foreach(sort keys %$c);
+            print sprintf( "%-30s : %d\n", $_, $c->{$_} )
+              foreach ( sort keys %$c );
             print "\n</pre><h2>Average</h2><pre>\n";
-            print sprintf("%-10s : %s\n", $_, $a->{$_}) foreach(sort keys %$a);
-            print "\n</pre><p>\nTotal users : $u\n</p><p>\nLocal Cache : " . @t . " objects\n</p>";
+            print sprintf( "%-30s : %s\n", $_, $a->{$_} )
+              foreach ( sort keys %$a );
+            print "\n</pre><p>\nTotal users : $u\n</p><p>\nLocal Cache : " . @t
+              . " objects\n</p>";
             &end;
             print "\nEND\n";
         }
@@ -93,7 +130,7 @@ sub head {
 <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
 </head>
 <body>
-<h1>Lemonldap::NG Status informations</h1>
+<h1>Lemonldap::NG Status</h1>
 EOF
 }
 

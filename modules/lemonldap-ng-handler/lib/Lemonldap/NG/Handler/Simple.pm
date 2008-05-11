@@ -50,7 +50,7 @@ BEGIN {
               )
         ],
         log    => [qw( lmSetApacheUser lmLog )],
-        traces => [qw( $whatToTrace )],
+        traces => [qw( $whatToTrace $statusPipe $statusOut )],
         apache => [qw( MP OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR )],
     );
     push( @EXPORT_OK, @{ $EXPORT_TAGS{$_} } ) foreach ( keys %EXPORT_TAGS );
@@ -473,6 +473,15 @@ sub forgeHeadersInit {
     1;
 }
 
+sub updateStatus {
+    my ( $class, $url, $action ) = @_;
+    print $statusPipe ( $datas->{$whatToTrace} ? $datas->{$whatToTrace} : '' )
+      . " => "
+      . $apacheRequest->hostname
+      . "$url $action\n"
+      if ($statusPipe);
+}
+
 ################
 # MAIN PROCESS #
 ################
@@ -491,14 +500,12 @@ sub grant {
 sub forbidden {
     my $class = shift;
     if ( $datas->{_logout} ) {
-        print $statusPipe $datas->{$whatToTrace} . " => $_[0] LOGOUT\n"
-          if ($statusPipe);
+        $class->updateStatus( $_[0], 'LOGOUT' );
         my $u = $datas->{_logout};
         $class->localUnlog;
         return $class->goToPortal( $u, 'logout=1' );
     }
-    print $statusPipe $datas->{$whatToTrace} . " => $_[0] REJECT\n"
-      if ($statusPipe);
+    $class->updateStatus( $_[0], 'REJECT' );
     $class->logForbidden(@_);
     return FORBIDDEN;
 }
@@ -578,9 +585,7 @@ sub run ($$) {
     my $id;
     unless ( $id = $class->fetchId ) {
         $class->lmLog( "$class: No cookie found", 'info' );
-        print $statusPipe $apacheRequest->connection->remote_ip
-          . " => $uri REDIRECT\n"
-          if ($statusPipe);
+        $class->updateStatus( $apacheRequest->uri, 'REDIRECT' );
         return $class->goToPortal($uri);
     }
 
@@ -600,9 +605,7 @@ sub run ($$) {
                 # The cookie isn't yet available
                 $class->lmLog( "The cookie $id isn't yet available: $@",
                     'info' );
-                print $statusPipe $apacheRequest->connection->remote_ip
-                  . " => $uri REDIRECT\n"
-                  if ($statusPipe);
+                $class->updateStatus( $apacheRequest->uri, 'EXPIRED' );
                 return $class->goToPortal($uri);
             }
             $datas->{$_} = $h{$_} foreach ( keys %h );
@@ -621,7 +624,7 @@ sub run ($$) {
 
     # AUTHORIZATION
     return $class->forbidden($uri) unless ( $class->grant($uri) );
-    print $statusPipe $datas->{$whatToTrace} . " => $uri OK\n" if ($statusPipe);
+    $class->updateStatus( $apacheRequest->uri, 'OK' );
     $class->lmLog(
         "User "
           . $datas->{$whatToTrace}
@@ -684,6 +687,7 @@ sub unlog ($$) {
     my $class;
     ( $class, $apacheRequest ) = @_;
     $class->localUnlog;
+    $class->updateStatus( $apacheRequest->uri, 'LOGOUT' );
     return $class->goToPortal( '/', 'logout=1' );
 }
 
@@ -702,8 +706,7 @@ sub redirectFilter {
     }
     while ( $f->read( my $buffer, 1024 ) ) {
     }
-    print $statusPipe $datas->{$whatToTrace} . " => filter REDIRECT\n"
-      if ($statusPipe);
+    $class->updateStatus( 'filter', 'REDIRECT' );
     return REDIRECT;
 }
 
@@ -712,7 +715,7 @@ sub status($$) {
     $class->lmLog( "$class: request for status", 'debug' );
     return SERVER_ERROR unless ( $statusPipe and $statusOut );
     $r->handler("perl-script");
-    print $statusPipe "STATUS". ( $r->args ? " " . $r->args : '' ) . "\n";
+    print $statusPipe "STATUS" . ( $r->args ? " " . $r->args : '' ) . "\n";
     my $buf;
     while (<$statusOut>) {
         last if (/^END$/);

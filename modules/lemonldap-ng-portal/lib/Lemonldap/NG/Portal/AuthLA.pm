@@ -213,6 +213,7 @@ sub process {
         # TODO Security tricks :
         # - Check if URL figures in locationRules
         $self->{error} = PE_DONE;
+        $self->updateStatus;
         return $self->{error};
     }
 
@@ -295,15 +296,21 @@ sub process {
         $self->{isLibertyProcess} = 0;
     }
 
-    return 0
-      if ( $self->{error} );
+    if ( $self->{error} ) {
+        $self->updateStatus;
+        return 0
+    }
 
     # Liberty Process OK -> do Lemonldap::NG process.
-    my $err = $self->SUPER::process(@_);
-    return $err unless( $err != PE_OK );
-    $err = $self->_subProcess(qw( log autoRedirect ))
-      if ( $self->{urldc} );
-    return $err;
+    # TODO Warning, PE_OK==0 and process returns 0 if an error occurs!
+    # my $err = $self->SUPER::process(@_);
+    #return $err unless( $err != PE_OK );
+    # TODO: Why ? log and  autoRedirect are executed with SUPER::process
+    #$err = $self->_subProcess(qw( log autoRedirect ))
+    #  if ( $self->{urldc} );
+    #return $err;
+    # So I think we have just to write this
+    return $self->SUPER::process(@_);
 }
 
 #===============================================================================

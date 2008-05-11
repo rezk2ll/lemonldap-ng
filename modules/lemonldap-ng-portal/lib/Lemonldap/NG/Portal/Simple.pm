@@ -18,6 +18,7 @@ our $VERSION = '0.78';
 our @ISA = qw(CGI Exporter);
 
 # Constants
+sub PE_REDIRECT            { -2 }
 sub PE_DONE                { -1 }
 sub PE_OK                  { 0 }
 sub PE_SESSIONEXPIRED      { 1 }
@@ -34,25 +35,17 @@ sub PE_PP_ACCOUNT_LOCKED   { 21 }
 sub PE_PP_PASSWORD_EXPIRED { 22 }
 
 # EXPORTER PARAMETERS
+our @EXPORT =
+        qw( PE_DONE PE_OK PE_SESSIONEXPIRED PE_FORMEMPTY PE_WRONGMANAGERACCOUNT
+          PE_USERNOTFOUND PE_BADCREDENTIALS PE_LDAPCONNECTFAILED PE_LDAPERROR
+          PE_APACHESESSIONERROR PE_FIRSTACCESS PE_BADCERTIFICATE PE_REDIRECT
+          PE_PP_ACCOUNT_LOCKED PE_PP_PASSWORD_EXPIRED )
+;
 our %EXPORT_TAGS = (
-    'all' => [
-        qw( PE_DONE PE_OK PE_SESSIONEXPIRED PE_FORMEMPTY PE_WRONGMANAGERACCOUNT PE_USERNOTFOUND PE_BADCREDENTIALS
-          PE_LDAPCONNECTFAILED PE_LDAPERROR PE_APACHESESSIONERROR PE_FIRSTACCESS PE_BADCERTIFICATE  PE_PP_ACCOUNT_LOCKED
-	  PE_PP_PASSWORD_EXPIRED import )
-    ],
-    'constants' => [
-        qw( PE_DONE PE_OK PE_SESSIONEXPIRED PE_FORMEMPTY PE_WRONGMANAGERACCOUNT PE_USERNOTFOUND PE_BADCREDENTIALS
-          PE_LDAPCONNECTFAILED PE_LDAPERROR PE_APACHESESSIONERROR PE_FIRSTACCESS PE_BADCERTIFICATE PE_PP_ACCOUNT_LOCKED
-	  PE_PP_PASSWORD_EXPIRED )
-    ],
+    'all' => [ @EXPORT, 'import' ],
 );
 
 our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
-
-our @EXPORT =
-  qw( PE_DONE PE_OK PE_SESSIONEXPIRED PE_FORMEMPTY PE_WRONGMANAGERACCOUNT PE_USERNOTFOUND PE_BADCREDENTIALS
-  PE_LDAPCONNECTFAILED PE_LDAPERROR PE_APACHESESSIONERROR PE_FIRSTACCESS PE_BADCERTIFICATE PE_PP_ACCOUNT_LOCKED
-  PE_PP_PASSWORD_EXPIRED import );
 
 # CONSTRUCTOR
 sub new {
@@ -72,15 +65,17 @@ sub new {
     $self->{ldapPpolicyControl} ||= 0;
 
     if ( $self->{authentication} and $self->{authentication} ne "ldap" ) {
+
         # $Lemonldap::NG::Portal::AuthSSL::OVERRIDE does not overload $self
         # variables: if the administrator has defined a sub, we respect it
-        my $tmp = 'require Lemonldap::NG::Portal::Auth'
-                . $self->{authentication}
-                . '; $tmp = $Lemonldap::NG::Portal::Auth'
-                . $self->{authentication}
-                . '::OVERRIDE;';
+        my $tmp =
+            'require Lemonldap::NG::Portal::Auth'
+          . $self->{authentication}
+          . '; $tmp = $Lemonldap::NG::Portal::Auth'
+          . $self->{authentication}
+          . '::OVERRIDE;';
         eval $tmp;
-        die($@) if($@);
+        die($@) if ($@);
         %$self = ( %$tmp, %$self );
     }
     return $self;
@@ -103,7 +98,8 @@ sub getConf {
 # error calls i18n.pm to dysplay error in the wanted language
 sub error {
     my $self = shift;
-    return &Lemonldap::NG::Portal::_i18n::error( $self->{error}, $ENV{HTTP_ACCEPT_LANGUAGE} );
+    return &Lemonldap::NG::Portal::_i18n::error( $self->{error},
+        $ENV{HTTP_ACCEPT_LANGUAGE} );
 }
 
 # Private sub used to bind to LDAP server both with Lemonldap::NG account and user
@@ -163,6 +159,15 @@ sub _subProcess {
     return $err;
 }
 
+sub updateStatus {
+    my ($self) = @_;
+    print $Lemonldap::NG::Handler::Simple::statusPipe (
+        $self->{user} ? $self->{user} : $ENV{REMOTE_ADDR} )
+      . " => $ENV{SERVER_NAME}$ENV{SCRIPT_NAME} "
+      . $self->{error} . "\n"
+      if ($Lemonldap::NG::Handler::Simple::statusPipe);
+}
+
 ###############################################################
 # MAIN subroutine: call all steps until one returns something #
 #                  different than PE_OK                       #
@@ -172,11 +177,12 @@ sub process {
     my ($self) = @_;
     $self->{error} = PE_OK;
     $self->{error} = $self->_subProcess(
-      qw(controlUrlOrigin controlExistingSession extractFormInfo formateParams
-      formateFilter connectLDAP bind search setSessionInfo setMacros setGroups
-      authenticate store unbind buildCookie log autoRedirect)
-      );
-      return ( ( $self->{error} > 0 ) ? 0 : 1 );
+        qw(controlUrlOrigin controlExistingSession extractFormInfo formateParams
+          formateFilter connectLDAP bind search setSessionInfo setMacros setGroups
+          authenticate store unbind buildCookie log autoRedirect)
+    );
+    $self->updateStatus;
+    return ( ( $self->{error} > 0 ) ? 0 : 1 );
 }
 
 # 1. If the user was redirected here, we have to load 'url' parameter
@@ -195,30 +201,39 @@ sub controlUrlOrigin {
 #       - nothing: user is authenticated and process
 #                  returns true
 sub controlExistingSession {
-    my $self = shift;
+    my $self    = shift;
     my %cookies = fetch CGI::Cookie;
+
     # Test if Lemonldap::NG cookie is available
-    if ( $cookies{$self->{cookieName}} and my $id = $cookies{$self->{cookieName}}->value ) {
+    if ( $cookies{ $self->{cookieName} }
+        and my $id = $cookies{ $self->{cookieName} }->value )
+    {
         my %h;
+
         # Trying to recover session from global session storage
         eval {
             tie %h, $self->{globalStorage}, $id, $self->{globalStorageOptions};
         };
         if ( $@ or not tied(%h) ) {
+
             # Session not available (expired ?)
-            print STDERR "Session $id isn't yet available ($ENV{REMOTE_ADDR})\n";
+            print STDERR
+              "Session $id isn't yet available ($ENV{REMOTE_ADDR})\n";
             return PE_OK;
         }
 
         # Logout if required
-        if($self->param('logout')) {
+        if ( $self->param('logout') ) {
+
             # Delete session in global storage
             tied(%h)->delete;
+
             # Delete cookie
             $self->{id} = "";
             $self->buildCookie();
-            if( $self->{urldc} ) {
-                if( $self->{autoRedirect} ) {
+            if ( $self->{urldc} ) {
+                $self->{error} = PE_REDIRECT;
+                if ( $self->{autoRedirect} ) {
                     &{ $self->{autoRedirect} }($self);
                 }
                 else {
@@ -228,25 +243,19 @@ sub controlExistingSession {
             return PE_FIRSTACCESS;
         }
         $self->{id} = $id;
+
         # A session has been find => calling &existingSession
-        my($r, $datas);
+        my ( $r, $datas );
         %$datas = %h;
         untie(%h);
         if ( $self->{existingSession} ) {
-            $r = &{ $self->{existingSession} }($self, $id, $datas)
+            $r = &{ $self->{existingSession} }( $self, $id, $datas );
         }
         else {
-            $r = $self->existingSession($id, $datas);
+            $r = $self->existingSession( $id, $datas );
         }
-        if ( $r == PE_DONE) {
-            for my $sub qw(log autoRedirect) {
-                if ( $self->{$sub} ) {
-                    last if ( $self->{error} = &{ $self->{$sub} }($self) );
-                }
-                else {
-                    last if ( $self->{error} = $self->$sub );
-                }
-            }
+        if ( $r == PE_DONE ) {
+            $self->{error} = _subProcess(qw(log autoRedirect));
             return $self->{error} || PE_DONE;
         }
         else {
@@ -257,7 +266,7 @@ sub controlExistingSession {
 }
 
 sub existingSession {
-    my ($self, $id, $datas) = @_;
+    my ( $self, $id, $datas ) = @_;
     PE_OK;
 }
 
@@ -302,19 +311,20 @@ sub connectLDAP {
         else {
             $useTls = 0;
         }
-        last if $self->{ldap} = Net::LDAP->new(
+        last
+          if $self->{ldap} = Net::LDAP->new(
             $server,
             port    => $self->{ldapPort},
             onerror => undef,
-        );
+          );
     }
     return PE_LDAPCONNECTFAILED unless ( $self->{ldap} );
     if ($useTls) {
-      my %h = split( /[&=]/, $tlsParam );
-      $h{cafile} = $self->{caFile} if( $self->{caFile} );
-      $h{capath} = $self->{caPath} if( $self->{caPath} );
-      my $mesg = $self->{ldap}->start_tls(%h);
-      $mesg->code && return PE_LDAPCONNECTFAILED;
+        my %h = split( /[&=]/, $tlsParam );
+        $h{cafile} = $self->{caFile} if ( $self->{caFile} );
+        $h{capath} = $self->{caPath} if ( $self->{caPath} );
+        my $mesg = $self->{ldap}->start_tls(%h);
+        $mesg->code && return PE_LDAPCONNECTFAILED;
     }
     PE_OK;
 }
@@ -352,20 +362,25 @@ sub search {
 sub setSessionInfo {
     my ($self) = @_;
     $self->{sessionInfo}->{dn} = $self->{dn};
-    $self->{sessionInfo}->{startTime} = &POSIX::strftime("%Y%m%d%H%M%S",localtime());
+    $self->{sessionInfo}->{startTime} =
+      &POSIX::strftime( "%Y%m%d%H%M%S", localtime() );
     unless ( $self->{exportedVars} ) {
         foreach (qw(uid cn mail)) {
-            $self->{sessionInfo}->{$_} = join( '; ', $self->{entry}->get_value($_) ) || "";
+            $self->{sessionInfo}->{$_} =
+              join( '; ', $self->{entry}->get_value($_) ) || "";
         }
     }
     elsif ( ref( $self->{exportedVars} ) eq 'HASH' ) {
         foreach ( keys %{ $self->{exportedVars} } ) {
-            $self->{sessionInfo}->{$_} = join( '; ', $self->{entry}->get_value( $self->{exportedVars}->{$_} ) ) || "";
+            $self->{sessionInfo}->{$_} = join( '; ',
+                $self->{entry}->get_value( $self->{exportedVars}->{$_} ) )
+              || "";
         }
     }
     else {
         foreach ( @{ $self->{exportedVars} } ) {
-            $self->{sessionInfo}->{$_} = join( '; ', $self->{entry}->get_value($_) ) || "";
+            $self->{sessionInfo}->{$_} =
+              join( '; ', $self->{entry}->get_value($_) ) || "";
         }
     }
     PE_OK;
@@ -399,40 +414,50 @@ sub authenticate {
 
     # Check if we use Ppolicy control
     if ( $self->{ldapPpolicyControl} ) {
+
         # require Perl module
         eval 'require Net::LDAP::Control::PasswordPolicy';
-        die( 'Module Net::LDAP::Control::PasswordPolicy not found in @INC' ) if ($@);
-	eval 'use Net::LDAP::Constant qw( LDAP_CONTROL_PASSWORDPOLICY LDAP_PP_ACCOUNT_LOCKED LDAP_PP_PASSWORD_EXPIRED );';
-	no strict 'subs';
+        die('Module Net::LDAP::Control::PasswordPolicy not found in @INC')
+          if ($@);
+        eval 'use Net::LDAP::Constant qw( LDAP_CONTROL_PASSWORDPOLICY LDAP_PP_ACCOUNT_LOCKED LDAP_PP_PASSWORD_EXPIRED );';
+        no strict 'subs';
 
         # Create Control object
         my $pp = Net::LDAP::Control::PasswordPolicy->new;
 
-	# Bind with user credentials
-	my $mesg = $self->{ldap}->bind( $self->{dn}, password => $self->{password}, control => [ $pp ] );
+        # Bind with user credentials
+        my $mesg = $self->{ldap}->bind(
+            $self->{dn},
+            password => $self->{password},
+            control  => [$pp]
+        );
 
-	# Get bind response
-	return PE_OK if ( $mesg->code == 0 );
-	
+        # Get bind response
+        return PE_OK if ( $mesg->code == 0 );
+
         # Get server control response
-        my ( $resp ) = $mesg->control( LDAP_CONTROL_PASSWORDPOLICY );
+        my ($resp) = $mesg->control(LDAP_CONTROL_PASSWORDPOLICY);
 
-	if ( defined $resp ) {
+        if ( defined $resp ) {
             my $pp_error = $resp->error;
-                if ( $pp_error ) {
-	            return PE_PP_ACCOUNT_LOCKED  if ( $pp_error == LDAP_PP_ACCOUNT_LOCKED   );
-	            return PE_PP_PASSWORD_EXPIRED if ( $pp_error == LDAP_PP_PASSWORD_EXPIRED );
-                }
-                else {
-                    return PE_BADCREDENTIALS;
-                }
-	}
+            if ($pp_error) {
+                return PE_PP_ACCOUNT_LOCKED
+                  if ( $pp_error == LDAP_PP_ACCOUNT_LOCKED );
+                return PE_PP_PASSWORD_EXPIRED
+                  if ( $pp_error == LDAP_PP_PASSWORD_EXPIRED );
+            }
+            else {
+                return PE_BADCREDENTIALS;
+            }
+        }
         else {
             return PE_LDAPERROR;
-        } 
+        }
     }
-    else { return PE_BADCREDENTIALS
-      unless ( &_bind( $self->{ldap}, $self->{dn}, $self->{password} ) ); }
+    else {
+        return PE_BADCREDENTIALS
+          unless ( &_bind( $self->{ldap}, $self->{dn}, $self->{password} ) );
+    }
     PE_OK;
 }
 
@@ -444,7 +469,7 @@ sub store {
     eval {
         tie %h, $self->{globalStorage}, undef, $self->{globalStorageOptions};
     };
-    if ( $@ ) {
+    if ($@) {
         print STDERR "$@\n";
         return PE_APACHESESSIONERROR;
     }
@@ -489,6 +514,7 @@ sub log {
 sub autoRedirect {
     my $self = shift;
     if ( my $u = $self->{urldc} ) {
+        $self->updateStatus;
         print $self->SUPER::redirect(
             -uri    => $u,
             -cookie => $self->{cookie},

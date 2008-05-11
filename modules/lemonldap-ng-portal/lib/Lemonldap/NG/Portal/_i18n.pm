@@ -49,6 +49,7 @@ __END__
 
 # Not used in errors:
 # * PE_DONE                -1
+# * PE_REDIRECT            -2
 
 =pod
 =cut
