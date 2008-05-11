@@ -51,7 +51,7 @@ sub run {
             my $args = $1;
             my ( $c, $a, $u );
             while ( my ( $user, $v ) = each( %{ $status->{user} } ) ) {
-                $u++;
+                $u++ unless( $user =~ /^\d+\.\d+\.\d+\.\d+$/ );
                 # Total requests
                 foreach ( keys %$v ) {
                     $c->{$_} += $v->{$_};
@@ -70,14 +70,38 @@ sub run {
             #print Dumper( $c, $a, $status );
             my @t =
               $refLocalStorage->get_keys( $localStorageOptions->{namespace} );
-            print "TOTAL\n";
+            &head;
+            print "<h2>Total</h2><pre>\n";
             print sprintf("%-10s : %d\n", $_, $c->{$_}) foreach(sort keys %$c);
-            print "\nAVERAGE\n";
+            print "\n</pre><h2>Average</h2><pre>\n";
             print sprintf("%-10s : %s\n", $_, $a->{$_}) foreach(sort keys %$a);
-            print "\nUsers : $u\n\nLocal Cache : " . @t . " objects\n";
-            print "END\n";
+            print "\n</pre><p>\nTotal users : $u\n</p><p>\nLocal Cache : " . @t . " objects\n</p>";
+            &end;
+            print "\nEND\n";
         }
     }
+}
+
+sub head {
+    print <<"EOF";
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+<title>Lemonldap::NG Status</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+</head>
+<body>
+<h1>Lemonldap::NG Status informations</h1>
+EOF
+}
+
+sub end {
+    print <<"EOF";
+</body>
+</html>
+EOF
 }
 1;
 __END__

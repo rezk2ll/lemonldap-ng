@@ -722,7 +722,7 @@ sub status($$) {
         $r->push_handlers(
             'PerlResponseHandler' => sub {
                 my $r = shift;
-                $r->content_type('text/plain');
+                $r->content_type('text/html; charset=UTF-8');
                 $r->print($buf);
                 OK;
             }
@@ -732,7 +732,7 @@ sub status($$) {
         $r->push_handlers(
             'PerlHandler' => sub {
                 my $r = shift;
-                $r->content_type('text/plain');
+                $r->content_type('text/html; charset=UTF-8');
                 $r->send_http_header;
                 $r->print($buf);
                 OK;
