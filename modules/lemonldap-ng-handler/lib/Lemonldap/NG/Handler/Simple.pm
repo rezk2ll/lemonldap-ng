@@ -493,7 +493,9 @@ sub forbidden {
     if ( $datas->{_logout} ) {
         print $statusPipe $datas->{$whatToTrace} . " => $_[0] LOGOUT\n"
           if ($statusPipe);
-        return $class->goToPortal( $datas->{_logout}, 'logout=1' );
+        my $u = $datas->{_logout};
+        $class->localUnlog;
+        return $class->goToPortal( $u, 'logout=1' );
     }
     print $statusPipe $datas->{$whatToTrace} . " => $_[0] REJECT\n"
       if ($statusPipe);
@@ -710,7 +712,7 @@ sub status($$) {
     $class->lmLog( "$class: request for status", 'debug' );
     return SERVER_ERROR unless ( $statusPipe and $statusOut );
     $r->handler("perl-script");
-    print $statusPipe "STATUS\n";
+    print $statusPipe "STATUS". ( $r->args ? " " . $r->args : '' ) . "\n";
     my $buf;
     while (<$statusOut>) {
         last if (/^END$/);

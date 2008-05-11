@@ -2,33 +2,79 @@ package Lemonldap::NG::Handler::Status;
 
 use strict;
 
-our $status = {};
+our $status   = {};
+our $activity = [];
+our $start    = int( time / 60 );
+use constant MN_COUNT => 10;
 
 sub run {
     my ( $localStorage, $localStorageOptions ) = ( shift, shift );
     my $refLocalStorage;
-    eval "use $localStorage; \$refLocalStorage = new $localStorage(\$localStorageOptions);";
+    eval
+"use $localStorage; \$refLocalStorage = new $localStorage(\$localStorageOptions);";
     die($@) if ($@);
     $| = 1;
+    my ( $lastMn, $mn );
     while (<STDIN>) {
+        $mn = int( time / 60 ) - $start;
+
+        # Cleaning activity array
+        if ( $mn > $lastMn ) {
+            for ( my $i = 0 ; $i < $mn - $lastMn ; $i++ ) {
+                unshift @$activity, {};
+                delete $activity->[MN_COUNT];
+            }
+        }
+        $lastMn = $mn;
+
+        # Activity collect
         if (/^(\S+)\s+=>\s+(\S+)\s+(OK|REJECT|REDIRECT|LOGOUT)$/) {
             my ( $user, $uri, $code ) = ( $1, $2, $3 );
+
+            # Per user activity
             $status->{user}->{$user}->{$code}++;
+
+            # Per uri activity
             $uri =~ s/^(.*?)\?.*$/$1/;
             $status->{uri}->{$uri}->{$code}++;
+
+            # Last 5 minutes activity
+            $activity->[0]->{$code}++;
         }
-        elsif (/^STATUS$/) {
-            my $c;
+
+        # Status requests
+
+        # $args conatins parameters passed to url status page (a=1 for example
+        # if request is http://test.example.com/status?a=1). To be used
+        # later...
+        elsif (/^STATUS(?:\s+(\S+))?$/) {
+            my $args = $1;
+            my ( $c, $a, $u );
             while ( my ( $user, $v ) = each( %{ $status->{user} } ) ) {
+                $u++;
+                # Total requests
                 foreach ( keys %$v ) {
                     $c->{$_} += $v->{$_};
                 }
             }
+            foreach my $mn (@$activity) {
+                $a->{$_} += $mn->{$_} foreach ( keys %$mn );
+            }
+            foreach ( keys %$a ) {
+                $a->{$_} = sprintf( "%.2f", $a->{$_} / MN_COUNT );
+                $a->{$_} = int( $a->{$_} ) if ( $a->{$_} > 99 );
+            }
+
             # DEVEL
-            use Data::Dumper;
-            print Dumper($c);
-            my @t = $refLocalStorage->get_keys( $localStorageOptions->{namespace} );
-            print "Local Cache : " . @t . " objects\n";
+            #use Data::Dumper;
+            #print Dumper( $c, $a, $status );
+            my @t =
+              $refLocalStorage->get_keys( $localStorageOptions->{namespace} );
+            print "TOTAL\n";
+            print sprintf("%-10s : %d\n", $_, $c->{$_}) foreach(sort keys %$c);
+            print "\nAVERAGE\n";
+            print sprintf("%-10s : %s\n", $_, $a->{$_}) foreach(sort keys %$a);
+            print "\nUsers : $u\n\nLocal Cache : " . @t . " objects\n";
             print "END\n";
         }
     }
