@@ -275,6 +275,20 @@ connected on it in the last 10 minutes.
 
 =back
 
+=head2 Existing sessions
+
+By default, when a user tries to connect to the portal with a valid cookie,
+the portal proposes a new authentication. This behaviour can be change easily
+by changing C<existingSession> sub :
+
+  use Lemonldap::NG::Portal::SharedConf qw(:all);
+  
+  my $portal = Lemonldap::NG::Portal::SharedConf->new ( {
+                existingSession => sub {PE_DONE},
+                configStorage => ...
+                ...
+  });
+
 =head1 USING LEMONLDAP::NG::PORTAL FOR DEVELOPMENT
 
 Lemonldap::NG::Portal provides different modules:
