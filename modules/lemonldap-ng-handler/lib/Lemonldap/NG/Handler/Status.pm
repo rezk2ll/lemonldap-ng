@@ -2,6 +2,7 @@ package Lemonldap::NG::Handler::Status;
 
 use strict;
 use POSIX;
+use Data::Dumper;
 
 our $status   = {};
 our $activity = [];
@@ -46,8 +47,7 @@ eval {
 sub run {
     my ( $localStorage, $localStorageOptions ) = ( shift, shift );
     my $refLocalStorage;
-    eval
-"use $localStorage; \$refLocalStorage = new $localStorage(\$localStorageOptions);";
+    eval "use $localStorage; \$refLocalStorage = new $localStorage(\$localStorageOptions);";
     die($@) if ($@);
     $| = 1;
     my ( $lastMn, $mn );
@@ -83,12 +83,16 @@ sub run {
 
         # Status requests
 
-        # $args conatins parameters passed to url status page (a=1 for example
+        # $args contains parameters passed to url status page (a=1 for example
         # if request is http://test.example.com/status?a=1). To be used
         # later...
         elsif (/^STATUS(?:\s+(\S+))?$/) {
-            my $args = $1;
-            my ( $c, $a, $u );
+            my $tmp = $1;
+            my $args = {};
+            %$args = split (/[=&]/,$tmp) if($tmp);
+            &head;
+            #print Dumper($args),&end;next;
+            my ( $c, $m, $u );
             while ( my ( $user, $v ) = each( %{ $status->{user} } ) ) {
                 $u++ unless ( $user =~ /^\d+\.\d+\.\d+\.\d+$/ );
 
@@ -98,31 +102,76 @@ sub run {
                 }
             }
             foreach my $mn (@$activity) {
-                $a->{$_} += $mn->{$_} foreach ( keys %$mn );
+                $m->{$_} += $mn->{$_} foreach ( keys %$mn );
             }
-            foreach ( keys %$a ) {
-                $a->{$_} = sprintf( "%.2f", $a->{$_} / MN_COUNT );
-                $a->{$_} = int( $a->{$_} ) if ( $a->{$_} > 99 );
+            foreach ( keys %$m ) {
+                $m->{$_} = sprintf( "%.2f", $m->{$_} / MN_COUNT );
+                $m->{$_} = int( $m->{$_} ) if ( $m->{$_} > 99 );
+            }
+            if ( $args->{'dump'} ) {
+                print "<div id=\"dump\"><pre>\n";
+                print Dumper( $status, $activity );
+                print "</pre></div>\n";
             }
 
-            # DEVEL
-            #use Data::Dumper;
-            #print '<pre>' . Dumper( $c, $a, $status ) . '</pre>';
-            my @t =
-              $refLocalStorage->get_keys( $localStorageOptions->{namespace} );
-            &head;
-            print "<h2>Total</h2><pre>\n";
+            # Total requests
+            print "<h2>Total</h2>\n<div id=\"total\"><pre>\n";
             print sprintf( "%-30s : %d\n", $_, $c->{$_} )
               foreach ( sort keys %$c );
-            print "\n</pre><h2>Average</h2><pre>\n";
-            print sprintf( "%-30s : %s\n", $_, $a->{$_} )
-              foreach ( sort keys %$a );
-            print "\n</pre><p>\nTotal users : $u\n</p><p>\nLocal Cache : " . @t
-              . " objects\n</p>";
+            print "\n</pre></div>\n";
+            # Average
+            print "<h2>Average</h2>\n<div id=\"average\"><pre>\n";
+            print sprintf( "%-30s : %s / mn\n", $_, $m->{$_} )
+              foreach ( sort keys %$m );
+            print "\n</pre></div>\n";
+            # Users connected
+            print "<div id=\"users\"><p>\nTotal users : $u\n</p></div>\n";
+            # Local cache
+            my @t = $refLocalStorage->get_keys( $localStorageOptions->{namespace} );
+            print "<div id=\"cache\"><p>\nLocal Cache : " . @t
+              . " objects\n</p></div>\n";
+            # Top uri
+            if ( $args->{top} ) {
+                my $count = {};
+                $args->{categories} ||= 'REJECT,PORTAL_FIRSTACCESS,LOGOUT,OK';
+                # General
+                print "<h2>Top used URI</h2>\n<div id=\"uri\"><pre>\n";
+                foreach my $uri (keys %{$status->{uri}}) {
+                    $count->{$uri} += $_ foreach (values %{$status->{uri}->{$uri}});
+                }
+                my $i=0;
+                foreach (sort {$count->{$b} <=> $count->{$a}} keys %$count) {
+                    last if($i == $args->{top});
+                    last unless($count->{$_});
+                    $i++;
+                    print sprintf( "%-80s : %4d\n", $_, $count->{$_} );
+                }
+                print "\n</pre></div>\n";
+                # Top by category
+                print "<table border=\"1\" width=\"100%\"><tr><th>Code</th><th>Top</ht></tr>\n";
+                foreach my $cat (split /,/,$args->{categories}) {
+                    print "<tr><td><pre>$cat</pre></td><td nowrap>\n<div id=\"$cat\">\n";
+                    topByCat($cat,$args->{top});
+                    print "</div>\n</td></tr>";
+                }
+                print '</table>';
+            }
             &end;
-            print "\nEND\n";
         }
     }
+}
+
+sub topByCat {
+    my($cat,$max) = @_;
+    my $i=0;
+    print "<pre>\n";
+    foreach (sort {$status->{uri}->{$b}->{$cat} <=> $status->{uri}->{$a}->{$cat}} keys %{$status->{uri}}) {
+        last if($i == $max);
+        last unless($status->{uri}->{$_}->{$cat});
+        $i++;
+        print sprintf( "%-80s : %4d\n", $_, $status->{uri}->{$_}->{$cat} );
+    }
+    print "</pre>\n";
 }
 
 sub head {
@@ -142,8 +191,17 @@ EOF
 
 sub end {
     print <<"EOF";
+<hr/>
+<script type="text/javascript" language="Javascript">
+  //<!--
+  var a = document.location.href;
+  a=a.replace(/\\?.*\$/,'');
+  document.write('<a href="'+a+'?top=10&categories=REJECT,PORTAL_FIRSTACCESS,LOGOUT,OK">Top 10</a>');
+  //-->
+</script>
 </body>
 </html>
+END
 EOF
 }
 1;
