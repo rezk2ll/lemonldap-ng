@@ -5,6 +5,7 @@ use strict;
 use MIME::Base64;
 use Exporter 'import';
 use Safe;
+require Data::Dumper;
 require POSIX;
 
 our $VERSION = '0.87';
@@ -224,6 +225,36 @@ sub lmHeaderOut {
     }
 }
 
+# Status daemon creation
+
+sub statusProcess {
+    require IO::Pipe;
+    $statusPipe = IO::Pipe->new;
+    $statusOut  = IO::Pipe->new;
+    if ( my $pid = fork() ) {
+        $statusPipe->writer();
+        $statusOut->reader();
+        $statusPipe->autoflush(1);
+    }
+    else {
+        $statusPipe->reader();
+        $statusOut->writer();
+        my $fdin  = $statusPipe->fileno;
+        my $fdout = $statusOut->fileno;
+        open STDIN, "<&$fdin";
+        open STDOUT, ">&$fdout";
+        my @tmp = ();
+        push @tmp, "-I$_" foreach (@INC);
+        exec 'perl', '-MLemonldap::NG::Handler::Status',
+          @tmp,
+          '-e',
+          '&Lemonldap::NG::Handler::Status::run('
+          . $localStorage . ','
+          . Data::Dumper->new( [$localStorageOptions] )->Terse(1)->Dump
+          . ');';
+    }
+}
+
 ##############################
 # Initialization subroutines #
 ##############################
@@ -266,33 +297,7 @@ sub localInit($$) {
         }
     }
     if ( $args->{status} ) {
-        require IO::Pipe;
-        $statusPipe = IO::Pipe->new;
-        $statusOut  = IO::Pipe->new;
-        if ( my $pid = fork() ) {
-            $statusPipe->writer();
-            $statusOut->reader();
-            $statusPipe->autoflush(1);
-        }
-        else {
-            $statusPipe->reader();
-            $statusOut->writer();
-            my $fdin  = $statusPipe->fileno;
-            my $fdout = $statusOut->fileno;
-            open STDIN, "<&$fdin";
-
-            #open STDOUT, '>/tmp/log';
-            open STDOUT, ">&$fdout";
-            my @tmp = ();
-            push @tmp, "-I$_" foreach (@INC);
-            exec 'perl', '-MLemonldap::NG::Handler::Status',
-              @tmp,
-              '-e',
-              '&Lemonldap::NG::Handler::Status::run('
-              . $localStorage . ','
-              . Data::Dumper->new( [$localStorageOptions] )->Terse(1)->Dump
-              . ');';
-        }
+        statusProcess();
     }
 
     # We don't initialise local storage in the "init" subroutine because it can
