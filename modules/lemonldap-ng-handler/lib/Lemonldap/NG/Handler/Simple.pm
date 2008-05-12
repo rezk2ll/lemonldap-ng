@@ -283,7 +283,10 @@ sub localInit($$) {
 
             #open STDOUT, '>/tmp/log';
             open STDOUT, ">&$fdout";
+            my @tmp = ();
+            push @tmp, "-I$_" foreach (@INC);
             exec 'perl', '-MLemonldap::NG::Handler::Status',
+              @tmp,
               '-e',
               '&Lemonldap::NG::Handler::Status::run('
               . $localStorage . ','

@@ -1,6 +1,7 @@
 package Lemonldap::NG::Handler::Status;
 
 use strict;
+use POSIX;
 
 our $status   = {};
 our $activity = [];
@@ -36,6 +37,11 @@ sub portalTab {
         22 => 'PORTAL_PP_PASSWORD_EXPIRED',
     };
 }
+
+eval {
+    POSIX::setgid( ( getgrnam( $ENV{APACHE_RUN_GROUP} ) )[2] );
+    POSIX::setuid( ( getpwnam( $ENV{APACHE_RUN_USER} ) )[2] );
+};
 
 sub run {
     my ( $localStorage, $localStorageOptions ) = ( shift, shift );
