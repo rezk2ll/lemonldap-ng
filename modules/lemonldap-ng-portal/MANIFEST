@@ -58,3 +58,4 @@ t/Lemonldap-NG-Portal-CDA.t
 t/Lemonldap-NG-Portal-i18n.t
 t/Lemonldap-NG-Portal-SharedConf.t
 t/Lemonldap-NG-Portal-Simple.t
+t/99-pod.t

@@ -87,9 +87,9 @@ Modify your httpd.conf:
 
 =head1 DESCRIPTION
 
-This library just overload few methods of L<>Lemonldap::NG::Portal::SharedConf>
+This library just overload few methods of L<Lemonldap::NG::Portal::SharedConf>
 to add Cross Domain Authentication. Handlers that are not used in the same
-domain than the portal must inherit from L<>Lemonldap::NG::Handler::CDA>.
+domain than the portal must inherit from L<Lemonldap::NG::Handler::CDA>.
 
 See L<Lemonldap::NG::Portal::SharedConf> for usage and other methods.
 
