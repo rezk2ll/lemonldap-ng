@@ -50,7 +50,7 @@ sub run {
     eval "use $localStorage; \$refLocalStorage = new $localStorage(\$localStorageOptions);";
     die($@) if ($@);
     $| = 1;
-    my ( $lastMn, $mn );
+    my ( $lastMn, $mn, $count );
     while (<STDIN>) {
         $mn = int( time / 60 ) - $start;
 
@@ -76,6 +76,12 @@ sub run {
             # Per uri activity
             $uri =~ s/^(.*?)\?.*$/$1/;
             $status->{uri}->{$uri}->{$code}++;
+            $count->{uri}->{$uri}++;
+
+	    # Per vhost activity
+            my ($vhost) = ( $uri =~ /^([^\/]+)/ );
+	    $status->{vhost}->{$vhost}->{$code}++;
+	    $count->{vhost}->{$vhost}++;
 
             # Last 5 minutes activity
             $activity->[0]->{$code}++;
@@ -91,6 +97,7 @@ sub run {
             my $args = {};
             %$args = split( /[=&]/, $tmp ) if ($tmp);
             &head;
+
             #print Dumper($args),&end;next;
             my ( $c, $m, $u );
             while ( my ( $user, $v ) = each( %{ $status->{user} } ) ) {
@@ -110,45 +117,56 @@ sub run {
             }
             if ( $args->{'dump'} ) {
                 print "<div id=\"dump\"><pre>\n";
-                print Dumper( $status, $activity );
+                print Dumper( $status, $activity, $count );
                 print "</pre></div>\n";
             }
 
             # Total requests
             print "<h2>Total</h2>\n<div id=\"total\"><pre>\n";
-            print sprintf( "%-30s : %d\n", $_, $c->{$_} )
+            print sprintf( "%-30s : \%5d (%.02f / mn)\n", $_, $c->{$_}, $c->{$_}/($mn+1) )
               foreach ( sort keys %$c );
             print "\n</pre></div>\n";
+
             # Average
-            print "<h2>Average</h2>\n<div id=\"average\"><pre>\n";
-            print sprintf( "%-30s : %s / mn\n", $_, $m->{$_} )
+            print "<h2>Average for last ".MN_COUNT." minutes</h2>\n<div id=\"average\"><pre>\n";
+            print sprintf( "%-30s : %5s / mn\n", $_, $m->{$_} )
               foreach ( sort keys %$m );
             print "\n</pre></div>\n";
+
             # Users connected
             print "<div id=\"users\"><p>\nTotal users : $u\n</p></div>\n";
+
             # Local cache
-            my @t = $refLocalStorage->get_keys( $localStorageOptions->{namespace} );
+            my @t =
+              $refLocalStorage->get_keys( $localStorageOptions->{namespace} );
             print "<div id=\"cache\"><p>\nLocal Cache : " . @t
               . " objects\n</p></div>\n";
+
             # Top uri
             if ( $args->{top} ) {
-                my $count = {};
+                print "<hr/>\n";
                 $args->{categories} ||= 'REJECT,PORTAL_FIRSTACCESS,LOGOUT,OK';
+
+	        # Vhost activity
+                print "<h2>Virtual Host activity</h2>\n<div id=\"vhost\"><pre>\n";
+                foreach ( sort { $count->{vhost}->{$b} <=> $count->{vhost}->{$a} } keys %{$count->{vhost}} )
+		{
+		    print sprintf( "%-40s : %4d\n", $_, $count->{vhost}->{$_} );
+		}
+                print "\n</pre></div>\n";
+
                 # General
                 print "<h2>Top used URI</h2>\n<div id=\"uri\"><pre>\n";
-                foreach my $uri ( keys %{ $status->{uri} } ) {
-                    $count->{$uri} += $_
-                      foreach ( values %{ $status->{uri}->{$uri} } );
-                }
                 my $i = 0;
-                foreach ( sort { $count->{$b} <=> $count->{$a} } keys %$count )
+                foreach ( sort { $count->{uri}->{$b} <=> $count->{uri}->{$a} } keys %{$count->{uri}} )
                 {
                     last if ( $i == $args->{top} );
-                    last unless ( $count->{$_} );
+                    last unless ( $count->{uri}->{$_} );
                     $i++;
-                    print sprintf( "%-80s : %4d\n", $_, $count->{$_} );
+                    print sprintf( "%-80s : %4d\n", $_, $count->{uri}->{$_} );
                 }
                 print "\n</pre></div>\n";
+
                 # Top by category
                 print "<table border=\"1\" width=\"100%\"><tr><th>Code</th><th>Top</ht></tr>\n";
                 foreach my $cat ( split /,/, $args->{categories} ) {
