@@ -482,9 +482,8 @@ sub forgeHeadersInit {
 }
 
 sub updateStatus {
-    my ( $class, $url, $action ) = @_;
-    print $statusPipe ( $datas->{$whatToTrace} ? $datas->{$whatToTrace} : '' )
-      . " => "
+    my ( $class, $user, $url, $action ) = @_;
+    print $statusPipe "$user => "
       . $apacheRequest->hostname
       . "$url $action\n"
       if ($statusPipe);
@@ -508,12 +507,12 @@ sub grant {
 sub forbidden {
     my $class = shift;
     if ( $datas->{_logout} ) {
-        $class->updateStatus( $_[0], 'LOGOUT' );
+        $class->updateStatus( $datas->{$whatToTrace}, $_[0], 'LOGOUT' );
         my $u = $datas->{_logout};
         $class->localUnlog;
         return $class->goToPortal( $u, 'logout=1' );
     }
-    $class->updateStatus( $_[0], 'REJECT' );
+    $class->updateStatus( $datas->{$whatToTrace}, $_[0], 'REJECT' );
     $class->logForbidden(@_);
     return FORBIDDEN;
 }
@@ -593,7 +592,7 @@ sub run ($$) {
     my $id;
     unless ( $id = $class->fetchId ) {
         $class->lmLog( "$class: No cookie found", 'info' );
-        $class->updateStatus( $apacheRequest->uri, 'REDIRECT' );
+        $class->updateStatus( $apacheRequest->connection->remote_ip, $apacheRequest->uri, 'REDIRECT' );
         return $class->goToPortal($uri);
     }
 
@@ -613,7 +612,7 @@ sub run ($$) {
                 # The cookie isn't yet available
                 $class->lmLog( "The cookie $id isn't yet available: $@",
                     'info' );
-                $class->updateStatus( $apacheRequest->uri, 'EXPIRED' );
+                $class->updateStatus( $apacheRequest->connection->remote_ip, $apacheRequest->uri, 'EXPIRED' );
                 return $class->goToPortal($uri);
             }
             $datas->{$_} = $h{$_} foreach ( keys %h );
@@ -632,7 +631,7 @@ sub run ($$) {
 
     # AUTHORIZATION
     return $class->forbidden($uri) unless ( $class->grant($uri) );
-    $class->updateStatus( $apacheRequest->uri, 'OK' );
+    $class->updateStatus( $datas->{$whatToTrace}, $apacheRequest->uri, 'OK' );
     $class->lmLog(
         "User "
           . $datas->{$whatToTrace}
@@ -695,7 +694,7 @@ sub unlog ($$) {
     my $class;
     ( $class, $apacheRequest ) = @_;
     $class->localUnlog;
-    $class->updateStatus( $apacheRequest->uri, 'LOGOUT' );
+    $class->updateStatus( $apacheRequest->connection->remote_ip, $apacheRequest->uri, 'LOGOUT' );
     return $class->goToPortal( '/', 'logout=1' );
 }
 
@@ -714,7 +713,7 @@ sub redirectFilter {
     }
     while ( $f->read( my $buffer, 1024 ) ) {
     }
-    $class->updateStatus( 'filter', 'REDIRECT' );
+    $class->updateStatus( ( $datas->{$whatToTrace} ? $datas->{$whatToTrace} : $f->r->connection->remote_ip ), 'filter', 'REDIRECT' );
     return REDIRECT;
 }
 

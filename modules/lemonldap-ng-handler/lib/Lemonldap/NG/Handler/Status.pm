@@ -87,9 +87,9 @@ sub run {
         # if request is http://test.example.com/status?a=1). To be used
         # later...
         elsif (/^STATUS(?:\s+(\S+))?$/) {
-            my $tmp = $1;
+            my $tmp  = $1;
             my $args = {};
-            %$args = split (/[=&]/,$tmp) if($tmp);
+            %$args = split( /[=&]/, $tmp ) if ($tmp);
             &head;
             #print Dumper($args),&end;next;
             my ( $c, $m, $u );
@@ -136,38 +136,55 @@ sub run {
                 $args->{categories} ||= 'REJECT,PORTAL_FIRSTACCESS,LOGOUT,OK';
                 # General
                 print "<h2>Top used URI</h2>\n<div id=\"uri\"><pre>\n";
-                foreach my $uri (keys %{$status->{uri}}) {
-                    $count->{$uri} += $_ foreach (values %{$status->{uri}->{$uri}});
+                foreach my $uri ( keys %{ $status->{uri} } ) {
+                    $count->{$uri} += $_
+                      foreach ( values %{ $status->{uri}->{$uri} } );
                 }
-                my $i=0;
-                foreach (sort {$count->{$b} <=> $count->{$a}} keys %$count) {
-                    last if($i == $args->{top});
-                    last unless($count->{$_});
+                my $i = 0;
+                foreach ( sort { $count->{$b} <=> $count->{$a} } keys %$count )
+                {
+                    last if ( $i == $args->{top} );
+                    last unless ( $count->{$_} );
                     $i++;
                     print sprintf( "%-80s : %4d\n", $_, $count->{$_} );
                 }
                 print "\n</pre></div>\n";
                 # Top by category
                 print "<table border=\"1\" width=\"100%\"><tr><th>Code</th><th>Top</ht></tr>\n";
-                foreach my $cat (split /,/,$args->{categories}) {
+                foreach my $cat ( split /,/, $args->{categories} ) {
                     print "<tr><td><pre>$cat</pre></td><td nowrap>\n<div id=\"$cat\">\n";
-                    topByCat($cat,$args->{top});
+                    topByCat( $cat, $args->{top} );
                     print "</div>\n</td></tr>";
                 }
-                print '</table>';
+                print "</table>\n";
             }
+            print "<div id=\"up\"><p>\nServer up for : "
+              . &timeUp($mn)
+              . "\n</p></div>\n";
             &end;
         }
     }
 }
 
+sub timeUp {
+    my $d  = shift;
+    my $mn = $d % 60;
+    $d = ( $d - $mn ) / 60;
+    my $h = $d % 24;
+    $d = ( $a - $h ) / 24;
+    return "$d\d $h\h $mn\mn";
+}
+
 sub topByCat {
-    my($cat,$max) = @_;
-    my $i=0;
+    my ( $cat, $max ) = @_;
+    my $i = 0;
     print "<pre>\n";
-    foreach (sort {$status->{uri}->{$b}->{$cat} <=> $status->{uri}->{$a}->{$cat}} keys %{$status->{uri}}) {
-        last if($i == $max);
-        last unless($status->{uri}->{$_}->{$cat});
+    foreach (
+        sort { $status->{uri}->{$b}->{$cat} <=> $status->{uri}->{$a}->{$cat} }
+        keys %{ $status->{uri} } )
+    {
+        last if ( $i == $max );
+        last unless ( $status->{uri}->{$_}->{$cat} );
         $i++;
         print sprintf( "%-80s : %4d\n", $_, $status->{uri}->{$_}->{$cat} );
     }
