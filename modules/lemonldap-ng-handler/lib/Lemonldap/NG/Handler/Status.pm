@@ -171,7 +171,7 @@ sub timeUp {
     my $mn = $d % 60;
     $d = ( $d - $mn ) / 60;
     my $h = $d % 24;
-    $d = ( $a - $h ) / 24;
+    $d = ( $d - $h ) / 24;
     return "$d\d $h\h $mn\mn";
 }
 
