@@ -42,16 +42,19 @@ ok( close($statusPipe) );
 
 sub read {
     my $ok = 0;
-    open LOG, '>/tmp/log';
+    #open LOG, '>/tmp/log';
     while (<$statusOut>) {
-        print LOG $_;
-        $ok++ if (/^OK\s+:\s*2$/);
-        $ok++ if (/^REJECT\s+:\s*1$/);
+        #print LOG $_;
+        $ok++ if (/^OK\s+:\s*2\s*\(2\.00\s*\/\s*mn\)$/);
+        $ok++ if (/^REJECT\s+:\s*1\s*\(1\.00\s*\/\s*mn\)$/);
+        $ok++ if (/^OK\s+:\s*0\.20\s*\/\s*mn$/);
+        $ok++ if (/^REJECT\s+:\s*0\.10\s*\/\s*mn$/);
         if (/^END$/) {
             $ok++;
             last;
         }
     }
-    close LOG;
-    return ( $ok == 3 );
+    #print LOG "$ok\n";
+    #close LOG;
+    return ( $ok == 5 );
 }

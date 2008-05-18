@@ -50,7 +50,12 @@ install: build
 	# Add here commands to install the package into debian/lemonldap-ng.
 	$(MAKE) test
 	$(MAKE) install DESTDIR=$(CURDIR)/debian/tmp PREFIX=/usr
-	$(MAKE) example EXAMPLEDIRBUILD=debian/tmp/var/lib/lemonldap-ng EXAMPLEDIR=/var/lib/lemonldap-ng/ EXAMPLECONFDIR=/var/lib/lemonldap-ng/conf
+	$(MAKE) example \
+		EXAMPLEDIRBUILD=debian/tmp/var/lib/lemonldap-ng \
+		EXAMPLEDIR=/var/lib/lemonldap-ng/ \
+		EXAMPLECONFDIR=/var/lib/lemonldap-ng/conf \
+		EXAMPLELASPDIRBUILD=debian/tmp/var/lib/lemonldap-ng/liberty-alliance-sp-portal \
+		EXAMPLELASPDIR=/var/lib/lemonldap-ng/liberty-alliance-sp-portal
 	cp debian/tmp/var/lib/lemonldap-ng/handler/MyHandler.pm debian/tmp/var/lib/lemonldap-ng/handler/MyHandler-Debian.pm
 	mv debian/tmp/var/lib/lemonldap-ng/index.pl debian/tmp/var/lib/lemonldap-ng/test.pl
 	mv debian/tmp/var/lib/lemonldap-ng/handler/lmH-apache.conf debian/tmp/var/lib/lemonldap-ng/apache-protected-area.conf
@@ -69,6 +74,7 @@ binary-indep: build install
 	cp _example/index.pl debian/tmp/var/lib/lemonldap-ng/protected
 	find debian/tmp/var/lib/lemonldap-ng -type f -perm /111 -exec chmod -x {} \;
 	chmod +x debian/tmp/var/lib/lemonldap-ng/manager/scripts/lmConfigEditor
+	find debian/tmp/var/lib/lemonldap-ng -type f -name *.pl -exec chmod +x {} \;
 	dh_installexamples
 	find debian/lemonldap-ng -type f -exec perl -i -pe 's#__DIR__/?#'/var/lib/lemonldap-ng'#g;s#__CONFDIR__/?#'/var/lib/lemonldap-ng/conf'#g;' {} \;
 	dh_install

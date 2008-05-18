@@ -14,7 +14,7 @@ Description: Lemonldap::NG Web-SSO system
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application apache servers.
  .
- This package is a meta package that install handler, manager and portal.
+ This package is a metapackage that install handler, manager and portal.
 
 Package: lemonldap-ng-doc
 Section: doc
