@@ -7,7 +7,7 @@ use Data::Dumper;
 our $status   = {};
 our $activity = [];
 our $start    = int( time / 60 );
-use constant MN_COUNT => 10;
+use constant MN_COUNT => 5;
 
 sub portalTab {
     return {
@@ -52,7 +52,7 @@ sub run {
     $| = 1;
     my ( $lastMn, $mn, $count );
     while (<STDIN>) {
-        $mn = int( time / 60 ) - $start;
+        $mn = int( time / 60 ) - $start + 1;
 
         # Cleaning activity array
         if ( $mn > $lastMn ) {
@@ -68,7 +68,7 @@ sub run {
             my ( $user, $uri, $code ) = ( $1, $2, $3 );
 
             # Portal error translation
-            $code = portalTab->{$code} if ( $code =~ /^\-?\d+$/ );
+            $code = portalTab->{$code} || $code if ( $code =~ /^\-?\d+$/ );
 
             # Per user activity
             $status->{user}->{$user}->{$code}++;
@@ -78,10 +78,10 @@ sub run {
             $status->{uri}->{$uri}->{$code}++;
             $count->{uri}->{$uri}++;
 
-	    # Per vhost activity
+            # Per vhost activity
             my ($vhost) = ( $uri =~ /^([^\/]+)/ );
-	    $status->{vhost}->{$vhost}->{$code}++;
-	    $count->{vhost}->{$vhost}++;
+            $status->{vhost}->{$vhost}->{$code}++;
+            $count->{vhost}->{$vhost}++;
 
             # Last 5 minutes activity
             $activity->[0]->{$code}++;
@@ -123,12 +123,14 @@ sub run {
 
             # Total requests
             print "<h2>Total</h2>\n<div id=\"total\"><pre>\n";
-            print sprintf( "%-30s : \%5d (%.02f / mn)\n", $_, $c->{$_}, $c->{$_}/($mn+1) )
+            print sprintf( "%-30s : \%5d (%.02f / mn)\n",
+                $_, $c->{$_}, $c->{$_} / $mn )
               foreach ( sort keys %$c );
             print "\n</pre></div>\n";
 
             # Average
-            print "<h2>Average for last ".MN_COUNT." minutes</h2>\n<div id=\"average\"><pre>\n";
+            print "<h2>Average for last " . MN_COUNT
+              . " minutes</h2>\n<div id=\"average\"><pre>\n";
             print sprintf( "%-30s : %5s / mn\n", $_, $m->{$_} )
               foreach ( sort keys %$m );
             print "\n</pre></div>\n";
@@ -147,18 +149,22 @@ sub run {
                 print "<hr/>\n";
                 $args->{categories} ||= 'REJECT,PORTAL_FIRSTACCESS,LOGOUT,OK';
 
-	        # Vhost activity
-                print "<h2>Virtual Host activity</h2>\n<div id=\"vhost\"><pre>\n";
-                foreach ( sort { $count->{vhost}->{$b} <=> $count->{vhost}->{$a} } keys %{$count->{vhost}} )
-		{
-		    print sprintf( "%-40s : %4d\n", $_, $count->{vhost}->{$_} );
-		}
+                # Vhost activity
+                print
+                  "<h2>Virtual Host activity</h2>\n<div id=\"vhost\"><pre>\n";
+                foreach (
+                    sort { $count->{vhost}->{$b} <=> $count->{vhost}->{$a} }
+                    keys %{ $count->{vhost} } )
+                {
+                    print sprintf( "%-40s : %4d\n", $_, $count->{vhost}->{$_} );
+                }
                 print "\n</pre></div>\n";
 
                 # General
                 print "<h2>Top used URI</h2>\n<div id=\"uri\"><pre>\n";
                 my $i = 0;
-                foreach ( sort { $count->{uri}->{$b} <=> $count->{uri}->{$a} } keys %{$count->{uri}} )
+                foreach ( sort { $count->{uri}->{$b} <=> $count->{uri}->{$a} }
+                    keys %{ $count->{uri} } )
                 {
                     last if ( $i == $args->{top} );
                     last unless ( $count->{uri}->{$_} );
@@ -199,7 +205,8 @@ sub topByCat {
     print "<pre>\n";
     foreach (
         sort { $status->{uri}->{$b}->{$cat} <=> $status->{uri}->{$a}->{$cat} }
-        keys %{ $status->{uri} } )
+        keys %{ $status->{uri} }
+      )
     {
         last if ( $i == $max );
         last unless ( $status->{uri}->{$_}->{$cat} );
