@@ -1,7 +1,6 @@
 package Lemonldap::NG::Portal::_i18n;
 
 use AutoLoader qw(AUTOLOAD);
-use UNIVERSAL qw(can);
 our $VERSION = '0.1';
 
 sub error {
@@ -51,8 +50,6 @@ __END__
 # * PE_DONE                -1
 # * PE_REDIRECT            -2
 
-=pod
-=cut
 sub error_fr {
     [
         "Utilisateur authentifié",

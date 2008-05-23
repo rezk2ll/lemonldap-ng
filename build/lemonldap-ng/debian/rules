@@ -62,7 +62,8 @@ install: build
 	mv debian/tmp/var/lib/lemonldap-ng/handler/lmH-apache2.conf debian/tmp/var/lib/lemonldap-ng/apache2-protected-area.conf
 	perl -000 -i -pe 's/(new\s*\(\s*){[^}]+}/$$1\$$Lemonldap::NG::Conf::configStorage/; s#^use#\nrequire "/usr/share/lemonldap-ng/configStorage.pm";\nuse#m;' \
 			debian/tmp/var/lib/lemonldap-ng/manager/scripts/lmConfigEditor \
-			debian/tmp/var/lib/lemonldap-ng/handler/MyHandler-Debian.pm
+			debian/tmp/var/lib/lemonldap-ng/handler/MyHandler-Debian.pm \
+			debian/tmp/var/lib/lemonldap-ng/portal/scripts/purgeCentralCache
 
 # Build architecture-independent files here.
 binary-indep: build install
