@@ -317,32 +317,21 @@ sub process {
 # setSessionInfo
 #===============================================================================
 #
-# Après une consommation d'assertion d'auth valide cette fonction est appelée
-# pour initialiser les infos de session dans le cas où c'est le wsf qui est
-# choisi pour récup les infos du user (sera par défaut en ldap).
+# After a valid auth assertion consumption, this function is called to init
+# session info. If ID-WSF is enabled, get attributes from WebServices, else
+# use the standard setSessionInfo (attributes read from LDAP).
 #
-# TODO :
-#         * Faire de cette fonction un override de setSessionInfo avec par défaut
-#         le comportement de l'ancienne version et si dans la conf recup
-#         attribut par wsf... recup en wsf2.0.
+# TODO: implement ID-WSF support
 #
 #===============================================================================
 
 sub setSessionInfo {
     my $self = shift;
 
-    # Si configuration fixée à WSF
-    # Alors
-    #         Traitement de récupération des informations par WSF
-    # Sinon
-    #         Traitement de récupération des informations en appelant la fonction
-    #         SUPER::setSessionInfo.
+    # If ID-WSF enabled, use WebService 
+    # TODO    
 
-    # $self->{sessionInfo}->{dn} = "cn=tutu,ou=people,dc=example,dc=com" ;
-    # $self->{sessionInfo}->{cn} = "tutu" ;
-    # $self->{sessionInfo}->{mail} = "tutu@example;com" ;
-    # $self->{sessionInfo}->{uid} = "ttutu" ;
-
+    # Else use SUPER::setSessionInfo
     return $self->SUPER::setSessionInfo;
 }
 
@@ -618,7 +607,7 @@ sub libertyExtractFormInfo {
 #
 # Terminate federation.
 #
-# TO BE DONE.
+# TODO
 #
 #===============================================================================
 
@@ -654,9 +643,7 @@ sub libertyFederationTermination {
 # libertyFederationTerminationReturn
 #===============================================================================
 #
-# Quand cet appel ce produit t'il?
-#
-# TO BE DONE.
+# TODO 
 #
 #===============================================================================
 
@@ -954,10 +941,9 @@ sub libertySingleLogout {
 # Here, as there is no more liberty session on IDP, we suppress liberty session
 # on Lemon.
 #
-# TODO : Modifier le redirect pour appeler le handler logout configuré dans la
-# directive location (portal ou handler dédié, plus besoin du relaystate).
+# TODO: Modify redirect to call handler logout configured in location directive
+# (dedicated portal or handler, nor more relaystate need)
 #
-# TO BE DONE.
 #
 #===============================================================================
 
@@ -1012,7 +998,7 @@ sub libertySingleLogoutReturn {
 #
 # IDP request defederation by SOAP calls.
 #
-# TO BE DONE.
+# TODO
 #
 #===============================================================================
 
