@@ -10,6 +10,12 @@ EXAMPLECONFDIR=$(EXAMPLEDIR)conf/
 EXAMPLELASPDIR=$(EXAMPLEDIR)liberty-alliance-sp-portal/
 EXAMPLELASPDIRBUILD=$(EXAMPLELASPDIR)
 EXAMPLELANG=en
+EXAMPLEPORTALDIRBUILD=$(EXAMPLEDIRBUILD)portal/
+EXAMPLEHANDLERDIRBUILD=$(EXAMPLEDIRBUILD)handler/
+EXAMPLEMANAGERDIRBUILD=$(EXAMPLEDIRBUILD)manager/
+EXAMPLEPORTALDIR=$(EXAMPLEDIR)portal/
+EXAMPLEHANDLERDIR=$(EXAMPLEDIR)handler/
+EXAMPLEMANAGERDIR=$(EXAMPLEDIR)manager/
 
 all:	handler manager portal
 
@@ -85,15 +91,15 @@ manager_clean:
 example: all
 	mkdir -p ${EXAMPLEDIRBUILD}/portal ${EXAMPLEDIRBUILD}/manager ${EXAMPLEDIRBUILD}/handler ${EXAMPLEDIRBUILD}/conf
 	chmod 1777 ${EXAMPLEDIRBUILD}/conf
-	cp -a ${HANDLERDIR}/example/* ${EXAMPLEDIRBUILD}/handler
-	cp -a ${PORTALDIR}/example/* ${EXAMPLEDIRBUILD}/portal
+	cp -a ${HANDLERDIR}/example/* ${EXAMPLEHANDLERDIRBUILD}
+	cp -a ${PORTALDIR}/example/* ${EXAMPLEPORTALDIRBUILD}
 	#perl -l -e '$$a="${EXAMPLELASPDIRBUILD}";$$a=~s#/$$##;print $$a;'
 	#perl -l -e '$$ARGV[0]=~s#/$$##;print $$ARGV[0];' ${EXAMPLELASPDIRBUILD}
 	mv ${EXAMPLEDIRBUILD}/portal/AuthLA $$(echo ${EXAMPLELASPDIRBUILD}|sed -e 's/\/$$//')
-	cp -a ${MANAGERDIR}/example/* ${EXAMPLEDIRBUILD}/manager
+	cp -a ${MANAGERDIR}/example/* ${EXAMPLEMANAGERDIRBUILD}
 	cp -a _example/* ${EXAMPLEDIRBUILD}
-	find ${EXAMPLELASPDIRBUILD} -type f -exec perl -i -pe 's#__DIR__/?#'${EXAMPLELASPDIR}'#g;s#__CONFDIR__/?#'${EXAMPLECONFDIR}'#g;' {} \;
-	find ${EXAMPLEDIRBUILD} -type f -exec perl -i -pe 's#__DIR__/?#'${EXAMPLEDIR}'#g;s#__CONFDIR__/?#'${EXAMPLECONFDIR}'#g;' {} \;
+	find ${EXAMPLELASPDIRBUILD} -type f -exec perl -i -pe 's#__DIR__/?#'${EXAMPLELASPDIR}'#g;s#__CONFDIR__/?#'${EXAMPLECONFDIR}'#g;s#__SKINDIR__/?#'${EXAMPLEPORTALDIR}'skins/#g;' {} \;
+	find ${EXAMPLEDIRBUILD} -type f -exec perl -i -pe 's#__DIR__/?#'${EXAMPLEDIR}'#g;s#__CONFDIR__/?#'${EXAMPLECONFDIR}'#g;s#__SKINDIR__/?#'${EXAMPLEPORTALDIR}'skins/#g;' {} \;
 	@echo
 	@echo "Example is ready."
 	@echo

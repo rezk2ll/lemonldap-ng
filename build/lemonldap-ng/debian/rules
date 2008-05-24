@@ -51,11 +51,11 @@ install: build
 	$(MAKE) test
 	$(MAKE) install DESTDIR=$(CURDIR)/debian/tmp PREFIX=/usr
 	$(MAKE) example \
-		EXAMPLEDIRBUILD=debian/tmp/var/lib/lemonldap-ng \
+		EXAMPLEDIRBUILD=debian/tmp/var/lib/lemonldap-ng/ \
 		EXAMPLEDIR=/var/lib/lemonldap-ng/ \
-		EXAMPLECONFDIR=/var/lib/lemonldap-ng/conf \
-		EXAMPLELASPDIRBUILD=debian/tmp/var/lib/lemonldap-ng/liberty-alliance-sp-portal \
-		EXAMPLELASPDIR=/var/lib/lemonldap-ng/liberty-alliance-sp-portal
+		EXAMPLECONFDIR=/var/lib/lemonldap-ng/conf/ \
+		EXAMPLELASPDIRBUILD=debian/tmp/var/lib/lemonldap-ng/liberty-alliance-sp-portal/ \
+		EXAMPLELASPDIR=/var/lib/lemonldap-ng/liberty-alliance-sp-portal/
 	cp debian/tmp/var/lib/lemonldap-ng/handler/MyHandler.pm debian/tmp/var/lib/lemonldap-ng/handler/MyHandler-Debian.pm
 	mv debian/tmp/var/lib/lemonldap-ng/index.pl debian/tmp/var/lib/lemonldap-ng/test.pl
 	mv debian/tmp/var/lib/lemonldap-ng/handler/lmH-apache.conf debian/tmp/var/lib/lemonldap-ng/apache-protected-area.conf

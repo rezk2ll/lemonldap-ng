@@ -34,7 +34,7 @@ use UNIVERSAL qw( isa can VERSION );
 *EXPORT_TAGS = *Lemonldap::NG::Portal::SharedConf::EXPORT_TAGS;
 *EXPORT      = *Lemonldap::NG::Portal::SharedConf::EXPORT;
 
-our $VERSION = '0.3';
+our $VERSION = '0.31';
 our @ISA     = qw(Lemonldap::NG::Portal::SharedConf) ;
 
 #===============================================================================

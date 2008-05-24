@@ -13,7 +13,7 @@ use CGI::Cookie;
 require POSIX;
 use Lemonldap::NG::Portal::_i18n;
 
-our $VERSION = '0.78';
+our $VERSION = '0.83';
 
 our @ISA = qw(CGI Exporter);
 

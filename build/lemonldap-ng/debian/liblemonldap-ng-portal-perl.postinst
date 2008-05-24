@@ -5,7 +5,7 @@
 
 LAEXAMPLEPORTALFILE=/usr/share/doc/liblemonldap-ng-portal-perl/examples/liberty-alliance-sp-portal/index.pl
 LAPORTALFILE=/var/lib/lemonldap-ng/liberty-alliance-sp-portal/index.pl
-EXAMPLEPORTALFILE=/usr/share/doc/liblemonldap-ng-portal-perl/examples/index.pl
+EXAMPLEPORTALFILE=/usr/share/doc/liblemonldap-ng-portal-perl/examples/index_skin.pl
 PORTALFILE=/var/lib/lemonldap-ng/portal/index.pl
 CLEANERFILE=/usr/share/lemonldap-ng/bin/purgeCentralCache
 SESSIONSDIR=/var/lib/lemonldap-ng/sessions

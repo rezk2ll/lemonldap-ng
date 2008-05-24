@@ -1,7 +1,7 @@
 package Lemonldap::NG::Portal::_i18n;
 
 use AutoLoader qw(AUTOLOAD);
-our $VERSION = '0.1';
+our $VERSION = '0.11';
 
 sub error {
     my($error,$lang) = @_;
