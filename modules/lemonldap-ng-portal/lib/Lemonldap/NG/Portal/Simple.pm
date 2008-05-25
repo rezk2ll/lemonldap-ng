@@ -36,14 +36,11 @@ sub PE_PP_PASSWORD_EXPIRED { 22 }
 
 # EXPORTER PARAMETERS
 our @EXPORT =
-        qw( PE_DONE PE_OK PE_SESSIONEXPIRED PE_FORMEMPTY PE_WRONGMANAGERACCOUNT
-          PE_USERNOTFOUND PE_BADCREDENTIALS PE_LDAPCONNECTFAILED PE_LDAPERROR
-          PE_APACHESESSIONERROR PE_FIRSTACCESS PE_BADCERTIFICATE PE_REDIRECT
-          PE_PP_ACCOUNT_LOCKED PE_PP_PASSWORD_EXPIRED )
-;
-our %EXPORT_TAGS = (
-    'all' => [ @EXPORT, 'import' ],
-);
+  qw( PE_DONE PE_OK PE_SESSIONEXPIRED PE_FORMEMPTY PE_WRONGMANAGERACCOUNT
+  PE_USERNOTFOUND PE_BADCREDENTIALS PE_LDAPCONNECTFAILED PE_LDAPERROR
+  PE_APACHESESSIONERROR PE_FIRSTACCESS PE_BADCERTIFICATE PE_REDIRECT
+  PE_PP_ACCOUNT_LOCKED PE_PP_PASSWORD_EXPIRED );
+our %EXPORT_TAGS = ( 'all' => [ @EXPORT, 'import' ], );
 
 our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
 
@@ -419,7 +416,8 @@ sub authenticate {
         eval 'require Net::LDAP::Control::PasswordPolicy';
         die('Module Net::LDAP::Control::PasswordPolicy not found in @INC')
           if ($@);
-        eval 'use Net::LDAP::Constant qw( LDAP_CONTROL_PASSWORDPOLICY LDAP_PP_ACCOUNT_LOCKED LDAP_PP_PASSWORD_EXPIRED );';
+        eval
+'use Net::LDAP::Constant qw( LDAP_CONTROL_PASSWORDPOLICY LDAP_PP_ACCOUNT_LOCKED LDAP_PP_PASSWORD_EXPIRED );';
         no strict 'subs';
 
         # Create Control object
@@ -458,6 +456,7 @@ sub authenticate {
         return PE_BADCREDENTIALS
           unless ( &_bind( $self->{ldap}, $self->{dn}, $self->{password} ) );
     }
+    $self->{sessionInfo}->{authenticationLevel} = 2;
     PE_OK;
 }
 

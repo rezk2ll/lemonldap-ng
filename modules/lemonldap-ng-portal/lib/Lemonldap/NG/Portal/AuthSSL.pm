@@ -10,26 +10,68 @@ our $VERSION = '0.1';
 # So authenticate is overloaded to return only PE_OK.
 
 our $OVERRIDE = {
+
     # By default, authentication is valid if SSL_CLIENT_S_DN_Email environment
     # variable is present. Adapt it if you want
     extractFormInfo => sub {
         my $self = shift;
-        $self->{user} = $self->https( $self->{SSLVar} || $ENV{'SSL_CLIENT_S_DN_Email'} );
-        return PE_BADCREDENTIALS unless ( $self->{user} );
-        PE_OK;
+
+        # Defaults values
+        $self->{SSLRequire} = 1 unless ( defined $self->{SSLRequire} );
+        $self->{SSLVar}       ||= 'SSL_CLIENT_S_DN_Email';
+        $self->{SSLLDAPField} ||= 'mail';
+
+        my $user = $self->https ? $ENV{$self->{SSLVar}} : 0;
+        if ($user) {
+            $self->{sessionInfo}->{authenticationLevel} = 5;
+            $self->{user} = $user;
+            return PE_OK;
+        }
+        elsif ( $self->{SSLRequire} ) {
+            return PE_BADCREDENTIALS;
+        }
+        return $self->extractFormInfo(@_);
     },
 
-    # As we know only user mail, we have to use it to find him in the LDAP
-    # directory
+    # As we know only user mail (or SSLVar), we have to use it to find him in
+    # the LDAP directory
     formateFilter => sub {
         my $self = shift;
-        $self->{filter} = "(&(mail=" . $self->{user} . ")(objectClass=person))";
-        PE_OK;
+        if ( $self->{sessionInfo}->{authenticationLevel} and $self->{sessionInfo}->{authenticationLevel} > 4 ) {
+            $self->{filter} = '(&('
+              . $self->{SSLLDAPField} . '='
+              . $self->{user}
+              . ")(objectClass=person))";
+            return PE_OK;
+        }
+        return $self->formateFilter(@_);
     },
 
-    authenticate => sub {
-        PE_OK;
-    },
+    # Apache SSL environment variable are available in exportedVars:
+    setSessionInfo => sub {
+        my $self = shift;
+        my $save = $self->{exportedVars};
+        if ( ref( $self->{exportedVars} ) eq 'HASH' ) {
+            foreach ( keys %{ $self->{exportedVars} } ) {
+                if (/^SSL/) {
+                    $self->{sessionInfo}->{$_} = $ENV{$_};
+                    delete $self->{exportedVars}->{$_};
+                }
+            }
+        }
+        my $r = $self->setSessionInfo(@_);
+        $self->{exportedVars} = $save;
+        return $r;
+      },
+
+      # If authentication has been done with SSL, LDAP bind is disabled
+      authenticate => sub {
+        my $self = shift;
+        if ( $self->{sessionInfo}->{authenticationLevel} and $self->{sessionInfo}->{authenticationLevel} > 4 ) {
+            return PE_OK;
+        }
+        return $self->authenticate(@_);
+      },
 };
 
 1;
@@ -61,8 +103,17 @@ With Lemonldap::NG::Portal::Simple:
          securedCookie  => 1,
          authentication => 'SSL',
          
-         # SSLVar : default SSL_CLIENT_S_DN_Email the mail address
+         # SSLVar: field to search in client certificate
+         #         default: SSL_CLIENT_S_DN_Email the mail address
          SSLVar         => 'SSL_CLIENT_S_DN_CN',
+         
+         # SSLLDAPField: field to use in ldap filter to search SSLVar
+         #               default: mail
+         SSLLDAPField   => 'cn',
+         
+         # SSLRequire: if set to 1, login/password are disabled
+         #             default: 1
+         SSLRequire     => 1,
     );
 
   if($portal->process()) {
@@ -85,8 +136,8 @@ With Lemonldap::NG::Portal::Simple:
 Modify your httpd.conf:
 
   <Location /My/File>
-    SSLVerifyClient require
-    SSLOptions +ExportCertData +CompatEnvVars +StdEnvVars
+    SSLVerifyClient optional # or 'require' if login/password are disabled
+    SSLOptions +StdEnvVars
   </Location>
 
 =head1 DESCRIPTION
@@ -95,6 +146,17 @@ This library just overload few methods of Lemonldap::NG::Portal::Simple to use
 Apache SSLv3 mechanism: we've just to verify that
 C<$ENV{SSL_CLIENT_S_DN_Email}> exists. So remenber to export SSL variables
 to CGI.
+
+The parameter SSLRequire can be used to authenticate users by SSL or ldap bind.
+If SSL is used, authenticationLevel is set to 5. You can use this parameter in
+L<Lemonldap::NG::Handler> rules to force users to use certificates in some
+applications:
+
+  virtualHost1 => {
+    'default' => '$authenticationLevel > 5 and $uid = "jeff"',
+  },
+
+Note that you can use Apache SSL environment variables in "exported variables".
 
 See L<Lemonldap::NG::Portal::Simple> for usage and other methods.
 

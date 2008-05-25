@@ -796,9 +796,9 @@ More complete example
   our @ISA = qw(Lemonldap::NG::Handler::Simple);
 
   __PACKAGE__->init ( { locationRules => {
-             '^/pj/.*$'       => q($qualif="opj"),
-             '^/rh/.*$'       => q($ou=~/brh/),
-             '^/rh_or_opj.*$' => q($qualif="opj or $ou=~/brh/),
+             '^/pj/.*$'       => '$qualif="opj"',
+             '^/rh/.*$'       => '$ou=~/brh/',
+             '^/rh_or_opj.*$' => '$qualif="opj" or $ou=~/brh/',
              default => 'accept', # means that all authenticated users are greanted
            },
            globalStorage        => 'Apache::Session::MySQL',

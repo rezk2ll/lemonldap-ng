@@ -281,8 +281,6 @@ sub buildTree {
             $indice++;
         }
     }
-    else {
-    }
 
     if ( $config->{locationRules} and %{ $config->{locationRules} } ) {
         $tree->{item}->{item}->{virtualHosts}->{item} = {};
