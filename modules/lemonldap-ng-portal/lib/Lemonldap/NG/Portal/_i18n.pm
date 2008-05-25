@@ -45,6 +45,7 @@ __END__
 # * PE_LA_SEPFAILED        20
 # * PE_PP_ACCOUNT_LOCKED   21
 # * PE_PP_PASSWORD_EXPIRED 22
+# * PE_CERTIFICATEREQUIRED 23
 
 # Not used in errors:
 # * PE_DONE                -1
@@ -75,6 +76,7 @@ sub error_fr {
         "Un processus terminal Liberty Alliance a échoué",
         "Votre compte est bloqué",
         "Votre mot de passe a expiré",
+        "Certificat exig&eacute;",
     ];
 }
 
@@ -103,6 +105,7 @@ sub error_en {
         "A Liberty-Alliance Soap End Point process failed",
         "Your account is locked",
         "Your password has expired",
+        "Certificate required",
     ];
 }
 

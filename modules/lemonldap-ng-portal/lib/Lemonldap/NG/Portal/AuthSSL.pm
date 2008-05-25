@@ -28,7 +28,7 @@ our $OVERRIDE = {
             return PE_OK;
         }
         elsif ( $self->{SSLRequire} ) {
-            return PE_BADCREDENTIALS;
+            return PE_CERTIFICATEREQUIRED;
         }
         return $self->extractFormInfo(@_);
     },
