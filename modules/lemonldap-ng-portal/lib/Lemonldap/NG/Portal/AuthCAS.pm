@@ -2,12 +2,12 @@ package Lemonldap::NG::Portal::AuthCAS;
 
 use strict;
 use Lemonldap::NG::Portal::Simple;
+our @ISA = qw(Lemonldap::NG::Portal::Simple);
 use AuthCAS;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
-our $OVERRIDE = {
-    extractFormInfo => sub {
+sub extractFormInfo {
         my $self = shift;
         my $cas = new AuthCAS(casUrl => $self->{CAS_url},
                            CAFile => $self->{CAS_CAFile},
@@ -24,12 +24,11 @@ our $OVERRIDE = {
             exit;
         }
         PE_OK;
-    },
+}
 
-    authenticate => sub {
+sub authenticate {
         PE_OK;
-    },
-};
+}
 
 1;
 __END__

@@ -61,21 +61,14 @@ sub new {
     $self->{securedCookie}      ||= 0;
     $self->{cookieName}         ||= "lemonldap";
     $self->{ldapPpolicyControl} ||= 0;
+    $self->{authentication}     ||= 'LDAP';
+    $self->{authentication} =~ s/^ldap/LDAP/;
 
-    if ( $self->{authentication} and $self->{authentication} ne "ldap" ) {
-
-        # $Lemonldap::NG::Portal::AuthSSL::OVERRIDE does not overload $self
-        # variables: if the administrator has defined a sub, we respect it
-        my $tmp =
-            'require Lemonldap::NG::Portal::Auth'
-          . $self->{authentication}
-          . '; $tmp = $Lemonldap::NG::Portal::Auth'
-          . $self->{authentication}
-          . '::OVERRIDE;';
-        eval $tmp;
-        die($@) if ($@);
-        %$self = ( %$tmp, %$self );
-    }
+    # $Lemonldap::NG::Portal::AuthSSL::OVERRIDE does not overload $self
+    # variables: if the administrator has defined a sub, we respect it
+    eval 'require Lemonldap::NG::Portal::Auth' . $self->{authentication};
+    die($@) if ($@);
+    bless $self, 'Lemonldap::NG::Portal::Auth' . $self->{authentication};
     return $self;
 }
 
@@ -103,6 +96,7 @@ sub error {
 # Private sub used to bind to LDAP server both with Lemonldap::NG account and user
 # credentials if LDAP authentication is used
 sub _bind {
+    my $self = shift;
     my ( $ldap, $dn, $password ) = @_;
     my $mesg;
     if ( $dn and $password ) {    # named bind
@@ -270,15 +264,8 @@ sub existingSession {
 
 # 3. In ldap authentication scheme, we load here user and password from HTML
 #    form
-sub extractFormInfo {
-    my $self = shift;
-    return PE_FIRSTACCESS
-      unless ( $self->param('user') );
-    return PE_FORMEMPTY
-      unless ( length( $self->{'user'} = $self->param('user') ) > 0
-        && length( $self->{'password'} = $self->param('password') ) > 0 );
-    PE_OK;
-}
+
+#    sub extractFormInfo has to be defined in Auth module used
 
 # Unused. You can overload if you have to modify user and password before
 # authentication
@@ -290,7 +277,7 @@ sub formateParams() {
 #    it with Active Directory, overload it to use CN instead of UID.
 sub formateFilter {
     my $self = shift;
-    $self->{filter} = "(&(uid=" . $self->{user} . ")(objectClass=person))";
+    $self->{filter} = "(&(uid=" . $self->{user} . ")(objectClass=inetOrgPerson))";
     PE_OK;
 }
 
@@ -333,7 +320,7 @@ sub bind {
     $self->connectLDAP unless ( $self->{ldap} );
     return PE_WRONGMANAGERACCOUNT
       unless (
-        &_bind( $self->{ldap}, $self->{managerDn}, $self->{managerPassword} ) );
+        $self->_bind( $self->{ldap}, $self->{managerDn}, $self->{managerPassword} ) );
     PE_OK;
 }
 
@@ -404,62 +391,8 @@ sub unbind {
 }
 
 # 12. Default authentication: LDAP bind with user credentials
-sub authenticate {
-    my $self = shift;
-    $self->unbind();
-    my $err;
-    return $err unless ( ( $err = $self->connectLDAP ) == PE_OK );
 
-    # Check if we use Ppolicy control
-    if ( $self->{ldapPpolicyControl} ) {
-
-        # require Perl module
-        eval 'require Net::LDAP::Control::PasswordPolicy';
-        die('Module Net::LDAP::Control::PasswordPolicy not found in @INC')
-          if ($@);
-        eval
-'use Net::LDAP::Constant qw( LDAP_CONTROL_PASSWORDPOLICY LDAP_PP_ACCOUNT_LOCKED LDAP_PP_PASSWORD_EXPIRED );';
-        no strict 'subs';
-
-        # Create Control object
-        my $pp = Net::LDAP::Control::PasswordPolicy->new;
-
-        # Bind with user credentials
-        my $mesg = $self->{ldap}->bind(
-            $self->{dn},
-            password => $self->{password},
-            control  => [$pp]
-        );
-
-        # Get bind response
-        return PE_OK if ( $mesg->code == 0 );
-
-        # Get server control response
-        my ($resp) = $mesg->control(LDAP_CONTROL_PASSWORDPOLICY);
-
-        if ( defined $resp ) {
-            my $pp_error = $resp->error;
-            if ($pp_error) {
-                return PE_PP_ACCOUNT_LOCKED
-                  if ( $pp_error == LDAP_PP_ACCOUNT_LOCKED );
-                return PE_PP_PASSWORD_EXPIRED
-                  if ( $pp_error == LDAP_PP_PASSWORD_EXPIRED );
-            }
-            else {
-                return PE_BADCREDENTIALS;
-            }
-        }
-        else {
-            return PE_LDAPERROR;
-        }
-    }
-    else {
-        return PE_BADCREDENTIALS
-          unless ( &_bind( $self->{ldap}, $self->{dn}, $self->{password} ) );
-    }
-    $self->{sessionInfo}->{authenticationLevel} = 2;
-    PE_OK;
-}
+# sub authenticate  has to be defined in Auth module used
 
 # 13. Now, the user is authenticated. It's time to store his parameters with
 #     Apache::Session::* module
@@ -696,7 +629,7 @@ Does nothing. To be overloaded if needed.
 
 Creates the ldap filter using $self->{user}. By default :
 
-  $self->{filter} = "(&(uid=" . $self->{user} . ")(objectClass=person))";
+  $self->{filter} = "(&(uid=" . $self->{user} . ")(objectClass=inetOrgPerson))";
 
 =head3 connectLDAP
 
@@ -761,7 +694,7 @@ described above
 
 =head3 _bind( $ldap, $dn, $password )
 
-Non-object method used to bind to the ldap server.
+Method used to bind to the ldap server.
 
 =head3 header
 

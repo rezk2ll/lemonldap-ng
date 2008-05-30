@@ -62,6 +62,7 @@ t/99-pod.t
 t/Lemonldap-NG-Portal-AuthApache.t
 t/Lemonldap-NG-Portal-AuthCAS.t
 t/Lemonldap-NG-Portal-AuthLA.t
+t/Lemonldap-NG-Portal-AuthLDAP.t
 t/Lemonldap-NG-Portal-AuthSSL.t
 t/Lemonldap-NG-Portal-CDA.t
 t/Lemonldap-NG-Portal-i18n.t
