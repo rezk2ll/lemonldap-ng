@@ -123,7 +123,7 @@ sub run {
 
             # Total requests
             print "<h2>Total</h2>\n<div id=\"total\"><pre>\n";
-            print sprintf( "%-30s : \%5d (%.02f / mn)\n",
+            print sprintf( "%-30s : \%6d (%.02f / mn)\n",
                 $_, $c->{$_}, $c->{$_} / $mn )
               foreach ( sort keys %$c );
             print "\n</pre></div>\n";
@@ -131,7 +131,7 @@ sub run {
             # Average
             print "<h2>Average for last " . MN_COUNT
               . " minutes</h2>\n<div id=\"average\"><pre>\n";
-            print sprintf( "%-30s : %5s / mn\n", $_, $m->{$_} )
+            print sprintf( "%-30s : %6s / mn\n", $_, $m->{$_} )
               foreach ( sort keys %$m );
             print "\n</pre></div>\n";
 
@@ -156,7 +156,7 @@ sub run {
                     sort { $count->{vhost}->{$b} <=> $count->{vhost}->{$a} }
                     keys %{ $count->{vhost} } )
                 {
-                    print sprintf( "%-40s : %4d\n", $_, $count->{vhost}->{$_} );
+                    print sprintf( "%-40s : %6d\n", $_, $count->{vhost}->{$_} );
                 }
                 print "\n</pre></div>\n";
 
@@ -169,7 +169,7 @@ sub run {
                     last if ( $i == $args->{top} );
                     last unless ( $count->{uri}->{$_} );
                     $i++;
-                    print sprintf( "%-80s : %4d\n", $_, $count->{uri}->{$_} );
+                    print sprintf( "%-80s : %6d\n", $_, $count->{uri}->{$_} );
                 }
                 print "\n</pre></div>\n";
 
@@ -211,7 +211,7 @@ sub topByCat {
         last if ( $i == $max );
         last unless ( $status->{uri}->{$_}->{$cat} );
         $i++;
-        print sprintf( "%-80s : %4d\n", $_, $status->{uri}->{$_}->{$cat} );
+        print sprintf( "%-80s : %6d\n", $_, $status->{uri}->{$_}->{$cat} );
     }
     print "</pre>\n";
 }
