@@ -41,24 +41,26 @@ our @ISA     = qw(Lemonldap::NG::Portal::SharedConf) ;
 # Global Constants
 #===============================================================================
 
-sub PE_LA_FAILED        { 11 }
-sub PE_LA_ARTFAILED     { 12 }
-sub PE_LA_DEFEDFAILED   { 13 }
-sub PE_LA_QUERYEMPTY    { 14 }
-sub PE_LA_SOAPFAILED    { 15 }
-sub PE_LA_SLOFAILED     { 16 }
-sub PE_LA_SSOFAILED     { 17 }
-sub PE_LA_SSOINITFAILED { 18 }
-sub PE_LA_SESSIONERROR  { 19 }
-sub PE_LA_SEPFAILED     { 20 }
+use constant {
+        PE_LA_FAILED        => 11 ,
+        PE_LA_ARTFAILED     => 12 ,
+        PE_LA_DEFEDFAILED   => 13 ,
+        PE_LA_QUERYEMPTY    => 14 ,
+        PE_LA_SOAPFAILED    => 15 ,
+        PE_LA_SLOFAILED     => 16 ,
+        PE_LA_SSOFAILED     => 17 ,
+        PE_LA_SSOINITFAILED => 18 ,
+        PE_LA_SESSIONERROR  => 19 ,
+        PE_LA_SEPFAILED     => 20 ,
 
-sub PC_LA_URLAC  { '/liberty/assertionConsumer.pl' }
-sub PC_LA_URLFT  { '/liberty/federationTermination.pl' }
-sub PC_LA_URLFTR { '/liberty/federationTerminationReturn.pl' }
-sub PC_LA_URLSL  { '/liberty/singleLogout.pl' }
-sub PC_LA_URLSLR { '/liberty/singleLogoutReturn.pl' }
-sub PC_LA_URLSC  { '/liberty/soapCall.pl' }
-sub PC_LA_URLSE  { '/liberty/soapEndpoint.pl' }
+        PC_LA_URLAC  => '/liberty/assertionConsumer.pl' ,
+        PC_LA_URLFT  => '/liberty/federationTermination.pl' ,
+        PC_LA_URLFTR => '/liberty/federationTerminationReturn.pl' ,
+        PC_LA_URLSL  => '/liberty/singleLogout.pl' ,
+        PC_LA_URLSLR => '/liberty/singleLogoutReturn.pl' ,
+        PC_LA_URLSC  => '/liberty/soapCall.pl' ,
+        PC_LA_URLSE  => '/liberty/soapEndpoint.pl' ,
+};
 
 #===============================================================================
 #===============================================================================
@@ -92,9 +94,8 @@ sub PC_LA_URLSE  { '/liberty/soapEndpoint.pl' }
 #
 #===============================================================================
 
-sub new {
-    my $class = shift;
-    my $self  = $class->SUPER::new(@_);
+sub authInit {
+    my $self  = shift;
 
     $self->{isLibertyProcess} = 1;
     $self->{laDebug} = 0 unless ( $self->{laDebug} );
@@ -122,7 +123,6 @@ sub new {
     );
 
     $self->_loadXmlIdpFile();
-    return $self;
 }
 
 #===============================================================================

@@ -18,22 +18,25 @@ our $VERSION = '0.83';
 our @ISA = qw(CGI Exporter);
 
 # Constants
-sub PE_REDIRECT            { -2 }
-sub PE_DONE                { -1 }
-sub PE_OK                  { 0 }
-sub PE_SESSIONEXPIRED      { 1 }
-sub PE_FORMEMPTY           { 2 }
-sub PE_WRONGMANAGERACCOUNT { 3 }
-sub PE_USERNOTFOUND        { 4 }
-sub PE_BADCREDENTIALS      { 5 }
-sub PE_LDAPCONNECTFAILED   { 6 }
-sub PE_LDAPERROR           { 7 }
-sub PE_APACHESESSIONERROR  { 8 }
-sub PE_FIRSTACCESS         { 9 }
-sub PE_BADCERTIFICATE      { 10 }
-sub PE_PP_ACCOUNT_LOCKED   { 21 }
-sub PE_PP_PASSWORD_EXPIRED { 22 }
-sub PE_CERTIFICATEREQUIRED { 23 }
+use constant {
+        PE_REDIRECT            => -2,
+        PE_DONE                => -1,
+        PE_OK                  => 0,
+        PE_SESSIONEXPIRED      => 1,
+        PE_FORMEMPTY           => 2,
+        PE_WRONGMANAGERACCOUNT => 3,
+        PE_USERNOTFOUND        => 4,
+        PE_BADCREDENTIALS      => 5,
+        PE_LDAPCONNECTFAILED   => 6,
+        PE_LDAPERROR           => 7,
+        PE_APACHESESSIONERROR  => 8,
+        PE_FIRSTACCESS         => 9,
+        PE_BADCERTIFICATE      => 10,
+        PE_PP_ACCOUNT_LOCKED   => 21,
+        PE_PP_PASSWORD_EXPIRED => 22,
+        PE_CERTIFICATEREQUIRED => 23,
+        PE_ERROR               => 24,
+};
 
 # EXPORTER PARAMETERS
 our @EXPORT =
@@ -64,13 +67,15 @@ sub new {
     $self->{authentication}     ||= 'LDAP';
     $self->{authentication} =~ s/^ldap/LDAP/;
 
-    # $Lemonldap::NG::Portal::AuthSSL::OVERRIDE does not overload $self
-    # variables: if the administrator has defined a sub, we respect it
     eval 'require Lemonldap::NG::Portal::Auth' . $self->{authentication};
     die($@) if ($@);
     bless $self, 'Lemonldap::NG::Portal::Auth' . $self->{authentication};
+    $self->authInit;
     return $self;
 }
+
+# authInit : optional sub implemented in Auth* module
+sub authInit {}
 
 # getConf basic, copy all parameters in $self. Overloaded in SharedConf.pm
 sub getConf {
@@ -266,6 +271,10 @@ sub existingSession {
 #    form
 
 #    sub extractFormInfo has to be defined in Auth module used
+sub extractFormInfo {
+    print STDERR 'Bad Auth module';
+    PE_ERROR;
+}
 
 # Unused. You can overload if you have to modify user and password before
 # authentication
@@ -393,6 +402,10 @@ sub unbind {
 # 12. Default authentication: LDAP bind with user credentials
 
 # sub authenticate  has to be defined in Auth module used
+sub authenticate {
+    print STDERR 'Bad Auth module';
+    PE_ERROR;
+}
 
 # 13. Now, the user is authenticated. It's time to store his parameters with
 #     Apache::Session::* module

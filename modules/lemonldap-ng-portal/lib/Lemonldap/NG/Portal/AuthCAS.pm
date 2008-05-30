@@ -8,26 +8,30 @@ use AuthCAS;
 our $VERSION = '0.03';
 
 sub extractFormInfo {
-        my $self = shift;
-        my $cas = new AuthCAS(casUrl => $self->{CAS_url},
-                           CAFile => $self->{CAS_CAFile},
-                           );
-        my $login_url = $cas->getServerLoginURL($self->{CAS_loginUrl});
+    my $self = shift;
+    my $cas  = new AuthCAS(
+        casUrl => $self->{CAS_url},
+        CAFile => $self->{CAS_CAFile},
+    );
+    my $login_url = $cas->getServerLoginURL( $self->{CAS_loginUrl} );
 
-        my $ticket = $self->param('ticket');
-        # Unless a ticket has been found, we redirect the user
-        unless( $self->{user} = $cas->validateST($self->{CAS_validationUrl}, $ticket) ) {
-            print $self->SUPER::redirect(
-                -uri    => $login_url,
-                -status => '302 Moved Temporary'
-            );
-            exit;
-        }
-        PE_OK;
+    my $ticket = $self->param('ticket');
+
+    # Unless a ticket has been found, we redirect the user
+    unless ( $self->{user} =
+        $cas->validateST( $self->{CAS_validationUrl}, $ticket ) )
+    {
+        print $self->SUPER::redirect(
+            -uri    => $login_url,
+            -status => '302 Moved Temporary'
+        );
+        exit;
+    }
+    PE_OK;
 }
 
 sub authenticate {
-        PE_OK;
+    PE_OK;
 }
 
 1;

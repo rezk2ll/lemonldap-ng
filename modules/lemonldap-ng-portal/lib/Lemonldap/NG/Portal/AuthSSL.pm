@@ -14,14 +14,17 @@ our $VERSION = '0.1';
 
 # By default, authentication is valid if SSL_CLIENT_S_DN_Email environment
 # variable is present. Adapt it if you want
-sub extractFormInfo {
+sub authInit {
     my $self = shift;
 
     # Defaults values
     $self->{SSLRequire} = 1 unless ( defined $self->{SSLRequire} );
     $self->{SSLVar}       ||= 'SSL_CLIENT_S_DN_Email';
     $self->{SSLLDAPField} ||= 'mail';
+}
 
+sub extractFormInfo {
+    my $self = shift;
     my $user = $self->https ? $ENV{ $self->{SSLVar} } : 0;
     if ($user) {
         $self->{sessionInfo}->{authenticationLevel} = 5;
