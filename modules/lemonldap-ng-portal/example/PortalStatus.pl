@@ -21,13 +21,10 @@ BEGIN {
           DBI->connect( $args->{DataSource}, $args->{UserName},
             $args->{Password} )
           or die("$!$@");
-        my $sth = $dbh->prepare('SELECT count(*) from sessions');
+        my $table = $args->{TableName} || 'sessions';
+        my $sth = $dbh->prepare("SELECT count(*) from $table");
         $sth->execute;
-        my @res;
-        while ( my @row = $sth->fetchrow_array ) {
-            push @res, @row;
-        }
-        return @res;
+        return ($sth->fetchrow_array)[0];
     }
 
     *Apache::Session::Postgres::get_sessions_count =
