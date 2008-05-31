@@ -50,6 +50,7 @@ lib/Lemonldap/NG/Portal/_i18n.pm
 lib/Lemonldap/NG/Portal/AuthApache.pm
 lib/Lemonldap/NG/Portal/AuthCAS.pm
 lib/Lemonldap/NG/Portal/AuthLA.pm
+lib/Lemonldap/NG/Portal/AuthLDAP.pm
 lib/Lemonldap/NG/Portal/AuthSSL.pm
 lib/Lemonldap/NG/Portal/CDA.pm
 lib/Lemonldap/NG/Portal/SharedConf.pm

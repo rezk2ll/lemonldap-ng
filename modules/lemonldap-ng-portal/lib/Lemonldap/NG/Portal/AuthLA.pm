@@ -20,6 +20,7 @@ package Lemonldap::NG::Portal::AuthLA;
 use strict;
 
 use Lemonldap::NG::Portal::SharedConf qw(:all);
+use Lemonldap::NG::Portal::AuthLDAP;
 use lasso;
 use CGI::Cookie;
 use CGI::Session;
@@ -35,7 +36,7 @@ use UNIVERSAL qw( isa can VERSION );
 *EXPORT      = *Lemonldap::NG::Portal::SharedConf::EXPORT;
 
 our $VERSION = '0.31';
-our @ISA     = qw(Lemonldap::NG::Portal::SharedConf) ;
+our @ISA     = qw(Lemonldap::NG::Portal::AuthLDAP Lemonldap::NG::Portal::SharedConf) ;
 
 #===============================================================================
 # Global Constants
