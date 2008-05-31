@@ -67,9 +67,12 @@ sub new {
     $self->{authentication}     ||= 'LDAP';
     $self->{authentication} =~ s/^ldap/LDAP/;
 
-    eval 'require Lemonldap::NG::Portal::Auth' . $self->{authentication};
+    my $tmp = 'Lemonldap::NG::Portal::Auth' . $self->{authentication};
+    eval "require $tmp";
     die($@) if ($@);
-    bless $self, 'Lemonldap::NG::Portal::Auth' . $self->{authentication};
+    bless $self, $tmp;
+    no strict "refs";
+    unshift @{"$tmp\::ISA"}, $class;
     $self->authInit;
     return $self;
 }
