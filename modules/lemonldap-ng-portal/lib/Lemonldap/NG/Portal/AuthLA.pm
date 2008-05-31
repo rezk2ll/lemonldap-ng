@@ -112,8 +112,6 @@ sub authInit {
     die('No localStorage configuration defined')
       unless ( $self->{localStorage} and $self->{localStorageOptions} );
 
-    bless( $self, $class );
-
     # Create LassoServer
 
     $self->{laServer} = lasso::Server->new(
