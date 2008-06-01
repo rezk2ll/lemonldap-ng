@@ -2,26 +2,26 @@ package Lemonldap::NG::Portal::AuthApache;
 
 use strict;
 use Lemonldap::NG::Portal::Simple;
-our @ISA = qw(Lemonldap::NG::Portal::Simple);
 
-our $VERSION = '0.02';
+our $VERSION = '0.01';
 
-# By default, authentication is valid if REMOTE_USER environment
-# variable is present. Change formateFilter if this does not match with
-# UID.
-sub extractFormInfo {
-    my $self = shift;
-    return PE_FORMEMPTY unless ( $self->{user} = $ENV{REMOTE_USER} );
+our $OVERRIDE = {
+    # By default, authentication is valid if REMOTE_USER environment
+    # variable is present. Change formateFilter if this does not match with
+    # UID.
+    extractFormInfo => sub {
+        my $self = shift;
+        return PE_FORMEMPTY unless( $self->{user} = $ENV{REMOTE_USER} );
+        # This is needed for Kerberos authentication
+        $self->{user} =~ s/(.*)@(.*)/$1/g;
+        PE_OK;
+    },
 
-    # This is needed for Kerberos authentication
-    $self->{user} =~ s/(.*)@(.*)/$1/g;
-    PE_OK;
-}
-
-# Authentication is made by Apache.
-sub authenticate {
-    PE_OK;
-}
+    # Authentication is made by Apache.
+    authenticate => sub {
+        PE_OK;
+    },
+};
 
 1;
 __END__

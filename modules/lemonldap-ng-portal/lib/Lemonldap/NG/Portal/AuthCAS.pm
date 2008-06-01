@@ -2,37 +2,34 @@ package Lemonldap::NG::Portal::AuthCAS;
 
 use strict;
 use Lemonldap::NG::Portal::Simple;
-our @ISA = qw(Lemonldap::NG::Portal::Simple);
 use AuthCAS;
 
-our $VERSION = '0.03';
+our $VERSION = '0.02';
 
-sub extractFormInfo {
-    my $self = shift;
-    my $cas  = new AuthCAS(
-        casUrl => $self->{CAS_url},
-        CAFile => $self->{CAS_CAFile},
-    );
-    my $login_url = $cas->getServerLoginURL( $self->{CAS_loginUrl} );
+our $OVERRIDE = {
+    extractFormInfo => sub {
+        my $self = shift;
+        my $cas = new AuthCAS(casUrl => $self->{CAS_url},
+                           CAFile => $self->{CAS_CAFile},
+                           );
+        my $login_url = $cas->getServerLoginURL($self->{CAS_loginUrl});
 
-    my $ticket = $self->param('ticket');
+        my $ticket = $self->param('ticket');
+        # Unless a ticket has been found, we redirect the user
+        unless( $self->{user} = $cas->validateST($self->{CAS_validationUrl}, $ticket) ) {
+            print $self->SUPER::redirect(
+                -uri    => $login_url,
+                -status => '302 Moved Temporary'
+            );
+            exit;
+        }
+        PE_OK;
+    },
 
-    # Unless a ticket has been found, we redirect the user
-    unless ( $self->{user} =
-        $cas->validateST( $self->{CAS_validationUrl}, $ticket ) )
-    {
-        print $self->SUPER::redirect(
-            -uri    => $login_url,
-            -status => '302 Moved Temporary'
-        );
-        exit;
-    }
-    PE_OK;
-}
-
-sub authenticate {
-    PE_OK;
-}
+    authenticate => sub {
+        PE_OK;
+    },
+};
 
 1;
 __END__

@@ -2,9 +2,6 @@ package Lemonldap::NG::Portal::AuthSSL;
 
 use strict;
 use Lemonldap::NG::Portal::Simple;
-use Lemonldap::NG::Portal::AuthLDAP;
-
-our @ISA = qw(Lemonldap::NG::Portal::AuthLDAP Lemonldap::NG::Portal::Simple);
 
 our $VERSION = '0.1';
 
@@ -12,74 +9,70 @@ our $VERSION = '0.1';
 # Directory.
 # So authenticate is overloaded to return only PE_OK.
 
-# By default, authentication is valid if SSL_CLIENT_S_DN_Email environment
-# variable is present. Adapt it if you want
-sub authInit {
-    my $self = shift;
+our $OVERRIDE = {
 
-    # Defaults values
-    $self->{SSLRequire} = 1 unless ( defined $self->{SSLRequire} );
-    $self->{SSLVar}       ||= 'SSL_CLIENT_S_DN_Email';
-    $self->{SSLLDAPField} ||= 'mail';
-}
+    # By default, authentication is valid if SSL_CLIENT_S_DN_Email environment
+    # variable is present. Adapt it if you want
+    extractFormInfo => sub {
+        my $self = shift;
 
-sub extractFormInfo {
-    my $self = shift;
-    my $user = $self->https ? $ENV{ $self->{SSLVar} } : 0;
-    if ($user) {
-        $self->{sessionInfo}->{authenticationLevel} = 5;
-        $self->{user} = $user;
-        return PE_OK;
-    }
-    elsif ( $self->{SSLRequire} ) {
-        return PE_CERTIFICATEREQUIRED;
-    }
-    return $self->SUPER::extractFormInfo(@_);
-}
+        # Defaults values
+        $self->{SSLRequire} = 1 unless ( defined $self->{SSLRequire} );
+        $self->{SSLVar}       ||= 'SSL_CLIENT_S_DN_Email';
+        $self->{SSLLDAPField} ||= 'mail';
 
-# As we know only user mail (or SSLVar), we have to use it to find him in
-# the LDAP directory
-sub formateFilter {
-    my $self = shift;
-    if (    $self->{sessionInfo}->{authenticationLevel}
-        and $self->{sessionInfo}->{authenticationLevel} > 4 )
-    {
-        $self->{filter} = '(&('
-          . $self->{SSLLDAPField} . '='
-          . $self->{user}
-          . ")(objectClass=person))";
-        return PE_OK;
-    }
-    return $self->SUPER::formateFilter(@_);
-}
+        my $user = $self->https ? $ENV{$self->{SSLVar}} : 0;
+        if ($user) {
+            $self->{sessionInfo}->{authenticationLevel} = 5;
+            $self->{user} = $user;
+            return PE_OK;
+        }
+        elsif ( $self->{SSLRequire} ) {
+            return PE_CERTIFICATEREQUIRED;
+        }
+        return $self->extractFormInfo(@_);
+    },
 
-# Apache SSL environment variable are available in exportedVars:
-sub setSessionInfo {
-    my $self = shift;
-    my $save = $self->{exportedVars};
-    if ( ref( $self->{exportedVars} ) eq 'HASH' ) {
-        foreach ( keys %{ $self->{exportedVars} } ) {
-            if (/^SSL/) {
-                $self->{sessionInfo}->{$_} = $ENV{$_};
-                delete $self->{exportedVars}->{$_};
+    # As we know only user mail (or SSLVar), we have to use it to find him in
+    # the LDAP directory
+    formateFilter => sub {
+        my $self = shift;
+        if ( $self->{sessionInfo}->{authenticationLevel} and $self->{sessionInfo}->{authenticationLevel} > 4 ) {
+            $self->{filter} = '(&('
+              . $self->{SSLLDAPField} . '='
+              . $self->{user}
+              . ")(objectClass=person))";
+            return PE_OK;
+        }
+        return $self->formateFilter(@_);
+    },
+
+    # Apache SSL environment variable are available in exportedVars:
+    setSessionInfo => sub {
+        my $self = shift;
+        my $save = $self->{exportedVars};
+        if ( ref( $self->{exportedVars} ) eq 'HASH' ) {
+            foreach ( keys %{ $self->{exportedVars} } ) {
+                if (/^SSL/) {
+                    $self->{sessionInfo}->{$_} = $ENV{$_};
+                    delete $self->{exportedVars}->{$_};
+                }
             }
         }
-    }
-    my $r = $self->SUPER::setSessionInfo(@_);
-    $self->{exportedVars} = $save;
-    return $r;
-}
+        my $r = $self->setSessionInfo(@_);
+        $self->{exportedVars} = $save;
+        return $r;
+      },
 
-# If authentication has been done with SSL, LDAP bind is disabled
-sub authenticate {
-    my $self = shift;
-    if (    $self->{sessionInfo}->{authenticationLevel}
-        and $self->{sessionInfo}->{authenticationLevel} > 4 )
-    {
-        return PE_OK;
-    }
-    return $self->SUPER::authenticate(@_);
-}
+      # If authentication has been done with SSL, LDAP bind is disabled
+      authenticate => sub {
+        my $self = shift;
+        if ( $self->{sessionInfo}->{authenticationLevel} and $self->{sessionInfo}->{authenticationLevel} > 4 ) {
+            return PE_OK;
+        }
+        return $self->authenticate(@_);
+      },
+};
 
 1;
 __END__

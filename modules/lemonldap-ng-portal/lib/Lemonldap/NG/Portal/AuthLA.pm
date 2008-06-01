@@ -20,7 +20,6 @@ package Lemonldap::NG::Portal::AuthLA;
 use strict;
 
 use Lemonldap::NG::Portal::SharedConf qw(:all);
-use Lemonldap::NG::Portal::AuthLDAP;
 use lasso;
 use CGI::Cookie;
 use CGI::Session;
@@ -36,7 +35,7 @@ use UNIVERSAL qw( isa can VERSION );
 *EXPORT      = *Lemonldap::NG::Portal::SharedConf::EXPORT;
 
 our $VERSION = '0.31';
-our @ISA     = qw(Lemonldap::NG::Portal::AuthLDAP Lemonldap::NG::Portal::SharedConf) ;
+our @ISA     = qw(Lemonldap::NG::Portal::SharedConf) ;
 
 #===============================================================================
 # Global Constants
@@ -95,8 +94,9 @@ use constant {
 #
 #===============================================================================
 
-sub authInit {
-    my $self  = shift;
+sub new {
+    my $class = shift;
+    my $self  = $class->SUPER::new(@_);
 
     $self->{isLibertyProcess} = 1;
     $self->{laDebug} = 0 unless ( $self->{laDebug} );
@@ -112,6 +112,8 @@ sub authInit {
     die('No localStorage configuration defined')
       unless ( $self->{localStorage} and $self->{localStorageOptions} );
 
+    bless( $self, $class );
+
     # Create LassoServer
 
     $self->{laServer} = lasso::Server->new(
@@ -122,6 +124,7 @@ sub authInit {
     );
 
     $self->_loadXmlIdpFile();
+    return $self;
 }
 
 #===============================================================================
