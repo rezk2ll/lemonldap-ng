@@ -155,7 +155,7 @@ sub fr {
         isNotAValidDomainName     => "n'est pas un nom de domaine valide",
         isNotAValidGroupName      => "n'est pas un nom de groupe valide",
         isNotAValidHTTPHeaderName => "n'est pas un nom d'en-t&ecirc;te HTTP valide",
-        isNotAValidLDAPAttributeName => "is not a valid LDAP attribute name",
+        isNotAValidLDAPAttributeName => "n'est pas un nom d'attribut LDAP valide",
         isNotAValidMacroName      => "n'est pas un nom de macro valide",
         isNotAValidVirtualHostName => "n'est pas un nom d'h&ocirc;te virtuel valide",
         lastConf                  => "Derni&egrave;re",

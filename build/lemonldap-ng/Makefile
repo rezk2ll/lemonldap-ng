@@ -45,7 +45,7 @@ manager_conf:
 	cd ${MANAGERDIR}; perl Makefile.PL INSTALLDIRS=$(INSTALLDIRS)
 	touch manager_conf
 
-test:		manager_test handler_test portal_test
+test:		manager handler portal manager_test handler_test portal_test
 
 manager_test:	manager
 	$(MAKE) -C ${MANAGERDIR} test
@@ -74,7 +74,7 @@ distclean:	clean
 
 clean:		handler_clean portal_clean manager_clean
 	rm -rf example
-	find . -name '*.gz' -exec rm -vf {} \;
+	rm -vf *gz
 
 handler_clean:
 	- $(MAKE) -C ${HANDLERDIR} distclean

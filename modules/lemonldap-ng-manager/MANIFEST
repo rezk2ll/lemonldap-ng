@@ -78,8 +78,6 @@ t/03-Manager-Conf-DBI.t
 t/04-Manager-Conf-SOAP.t
 t/10-Manager.t
 t/20-Manager-i18n.t
-t/21-Manager-i18n-en.t
-t/22-Manager-i18n-fr.t
 t/50-Manager-SOAPServer.t
 t/99-pod.t
 TODO
