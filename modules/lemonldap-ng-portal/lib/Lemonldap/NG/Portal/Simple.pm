@@ -19,23 +19,23 @@ our @ISA = qw(CGI Exporter);
 
 # Constants
 use constant {
-        PE_REDIRECT            => -2,
-        PE_DONE                => -1,
-        PE_OK                  => 0,
-        PE_SESSIONEXPIRED      => 1,
-        PE_FORMEMPTY           => 2,
-        PE_WRONGMANAGERACCOUNT => 3,
-        PE_USERNOTFOUND        => 4,
-        PE_BADCREDENTIALS      => 5,
-        PE_LDAPCONNECTFAILED   => 6,
-        PE_LDAPERROR           => 7,
-        PE_APACHESESSIONERROR  => 8,
-        PE_FIRSTACCESS         => 9,
-        PE_BADCERTIFICATE      => 10,
-        PE_PP_ACCOUNT_LOCKED   => 21,
-        PE_PP_PASSWORD_EXPIRED => 22,
-        PE_CERTIFICATEREQUIRED => 23,
-        PE_ERROR               => 24,
+    PE_REDIRECT            => -2,
+    PE_DONE                => -1,
+    PE_OK                  => 0,
+    PE_SESSIONEXPIRED      => 1,
+    PE_FORMEMPTY           => 2,
+    PE_WRONGMANAGERACCOUNT => 3,
+    PE_USERNOTFOUND        => 4,
+    PE_BADCREDENTIALS      => 5,
+    PE_LDAPCONNECTFAILED   => 6,
+    PE_LDAPERROR           => 7,
+    PE_APACHESESSIONERROR  => 8,
+    PE_FIRSTACCESS         => 9,
+    PE_BADCERTIFICATE      => 10,
+    PE_PP_ACCOUNT_LOCKED   => 21,
+    PE_PP_PASSWORD_EXPIRED => 22,
+    PE_CERTIFICATEREQUIRED => 23,
+    PE_ERROR               => 24,
 };
 
 # EXPORTER PARAMETERS
@@ -43,7 +43,8 @@ our @EXPORT =
   qw( PE_DONE PE_OK PE_SESSIONEXPIRED PE_FORMEMPTY PE_WRONGMANAGERACCOUNT
   PE_USERNOTFOUND PE_BADCREDENTIALS PE_LDAPCONNECTFAILED PE_LDAPERROR
   PE_APACHESESSIONERROR PE_FIRSTACCESS PE_BADCERTIFICATE PE_REDIRECT
-  PE_PP_ACCOUNT_LOCKED PE_PP_PASSWORD_EXPIRED PE_CERTIFICATEREQUIRED);
+  PE_PP_ACCOUNT_LOCKED PE_PP_PASSWORD_EXPIRED PE_CERTIFICATEREQUIRED
+  PE_ERROR);
 our %EXPORT_TAGS = ( 'all' => [ @EXPORT, 'import' ], );
 
 our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
@@ -64,21 +65,24 @@ sub new {
     $self->{securedCookie}      ||= 0;
     $self->{cookieName}         ||= "lemonldap";
     $self->{ldapPpolicyControl} ||= 0;
+    $self->{authentication}     ||= 'LDAP';
+    $self->{authentication} =~ s/^ldap/LDAP/;
 
-    if ( $self->{authentication} and $self->{authentication} ne "ldap" ) {
+    # Authentication module is required and has to be in @ISA
+    my $tmp = 'Lemonldap::NG::Portal::Auth' .  $self->{authentication};
+    $tmp =~ s/\s.*$//;
+    eval "require $tmp";
+    die($@) if ($@);
+    push @ISA, $tmp;
 
-        # $Lemonldap::NG::Portal::AuthSSL::OVERRIDE does not overload $self
-        # variables: if the administrator has defined a sub, we respect it
-        my $tmp =
-            'require Lemonldap::NG::Portal::Auth'
-          . $self->{authentication}
-          . '; $tmp = $Lemonldap::NG::Portal::Auth'
-          . $self->{authentication}
-          . '::OVERRIDE;';
-        eval $tmp;
-        die($@) if ($@);
-        %$self = ( %$tmp, %$self );
-    }
+    # $self->{authentication} can contains arguments (key1 = scalar_value;
+    # key2 = ...)
+    $tmp = $self->{authentication};
+    $tmp =~ s/^\w+\s*//;
+    my %h = split( /\s*[=;]\s*/, $tmp) if($tmp);
+    %$self = ( %h, %$self );
+
+    $self->authInit();
     return $self;
 }
 
@@ -100,13 +104,13 @@ sub getConf {
 sub error {
     my $self = shift;
     return &Lemonldap::NG::Portal::_i18n::error( $self->{error},
-        $ENV{HTTP_ACCEPT_LANGUAGE} );
+        shift || $ENV{HTTP_ACCEPT_LANGUAGE} );
 }
 
 # Private sub used to bind to LDAP server both with Lemonldap::NG account and user
 # credentials if LDAP authentication is used
 sub _bind {
-    my ( $ldap, $dn, $password ) = @_;
+    my ( $self, $ldap, $dn, $password ) = @_;
     my $mesg;
     if ( $dn and $password ) {    # named bind
         $mesg = $ldap->bind( $dn, password => $password );
@@ -174,13 +178,17 @@ sub updateStatus {
 #                  different than PE_OK                       #
 ###############################################################
 
+# extractFormInfo, setAuthSessionInfo and authenticate must be implemented in
+# auth modules
+
 sub process {
     my ($self) = @_;
     $self->{error} = PE_OK;
     $self->{error} = $self->_subProcess(
         qw(controlUrlOrigin controlExistingSession extractFormInfo formateParams
-          formateFilter connectLDAP bind search setSessionInfo setMacros setGroups
-          authenticate store unbind buildCookie log autoRedirect)
+          formateFilter connectLDAP bind search setAuthSessionInfo
+          setSessionInfo setMacros setGroups authenticate store unbind
+          buildCookie log autoRedirect)
     );
     $self->updateStatus;
     return ( ( $self->{error} > 0 ) ? 0 : 1 );
@@ -256,7 +264,7 @@ sub controlExistingSession {
             $r = $self->existingSession( $id, $datas );
         }
         if ( $r == PE_DONE ) {
-            $self->{error} = _subProcess(qw(log autoRedirect));
+            $self->{error} = $self->_subProcess(qw(log autoRedirect));
             return $self->{error} || PE_DONE;
         }
         else {
@@ -271,18 +279,6 @@ sub existingSession {
     PE_OK;
 }
 
-# 3. In ldap authentication scheme, we load here user and password from HTML
-#    form
-sub extractFormInfo {
-    my $self = shift;
-    return PE_FIRSTACCESS
-      unless ( $self->param('user') );
-    return PE_FORMEMPTY
-      unless ( length( $self->{'user'} = $self->param('user') ) > 0
-        && length( $self->{'password'} = $self->param('password') ) > 0 );
-    PE_OK;
-}
-
 # Unused. You can overload if you have to modify user and password before
 # authentication
 sub formateParams() {
@@ -293,7 +289,8 @@ sub formateParams() {
 #    it with Active Directory, overload it to use CN instead of UID.
 sub formateFilter {
     my $self = shift;
-    $self->{filter} = "(&(uid=" . $self->{user} . ")(objectClass=inetOrgPerson))";
+    $self->{filter} = $self->{authFilter} ||
+      "(&(uid=" . $self->{user} . ")(objectClass=inetOrgPerson))";
     PE_OK;
 }
 
@@ -336,7 +333,10 @@ sub bind {
     $self->connectLDAP unless ( $self->{ldap} );
     return PE_WRONGMANAGERACCOUNT
       unless (
-        &_bind( $self->{ldap}, $self->{managerDn}, $self->{managerPassword} ) );
+        $self->_bind(
+            $self->{ldap}, $self->{managerDn}, $self->{managerPassword}
+        )
+      );
     PE_OK;
 }
 
@@ -357,6 +357,8 @@ sub search {
     PE_OK;
 }
 
+# sub setAuthSessionInfo has to be defined in auth module
+
 # 8. Load all parameters included in exportedVars parameter.
 #    Multi-value parameters are loaded in a single string with
 #    '; ' separator
@@ -373,16 +375,19 @@ sub setSessionInfo {
     }
     elsif ( ref( $self->{exportedVars} ) eq 'HASH' ) {
         foreach ( keys %{ $self->{exportedVars} } ) {
-            $self->{sessionInfo}->{$_} = join( '; ',
-                $self->{entry}->get_value( $self->{exportedVars}->{$_} ) )
-              || "";
+            if ( my $tmp = $ENV{$_} ) {
+                $tmp =~ s/[\r\n]/ /gs;
+                $self->{sessionInfo}->{$_} = $tmp;
+            }
+            else {
+                $self->{sessionInfo}->{$_} = join( '; ',
+                    $self->{entry}->get_value( $self->{exportedVars}->{$_} ) )
+                  || "";
+            }
         }
     }
     else {
-        foreach ( @{ $self->{exportedVars} } ) {
-            $self->{sessionInfo}->{$_} =
-              join( '; ', $self->{entry}->get_value($_) ) || "";
-        }
+        die('Only hash reference are supported now in exportedVars');
     }
     PE_OK;
 }
@@ -403,64 +408,6 @@ sub unbind {
     my $self = shift;
     $self->{ldap}->unbind if $self->{ldap};
     delete $self->{ldap};
-    PE_OK;
-}
-
-# 12. Default authentication: LDAP bind with user credentials
-sub authenticate {
-    my $self = shift;
-    $self->unbind();
-    my $err;
-    return $err unless ( ( $err = $self->connectLDAP ) == PE_OK );
-
-    # Check if we use Ppolicy control
-    if ( $self->{ldapPpolicyControl} ) {
-
-        # require Perl module
-        eval 'require Net::LDAP::Control::PasswordPolicy';
-        die('Module Net::LDAP::Control::PasswordPolicy not found in @INC')
-          if ($@);
-        eval
-'use Net::LDAP::Constant qw( LDAP_CONTROL_PASSWORDPOLICY LDAP_PP_ACCOUNT_LOCKED LDAP_PP_PASSWORD_EXPIRED );';
-        no strict 'subs';
-
-        # Create Control object
-        my $pp = Net::LDAP::Control::PasswordPolicy->new;
-
-        # Bind with user credentials
-        my $mesg = $self->{ldap}->bind(
-            $self->{dn},
-            password => $self->{password},
-            control  => [$pp]
-        );
-
-        # Get bind response
-        return PE_OK if ( $mesg->code == 0 );
-
-        # Get server control response
-        my ($resp) = $mesg->control(LDAP_CONTROL_PASSWORDPOLICY);
-
-        if ( defined $resp ) {
-            my $pp_error = $resp->error;
-            if ($pp_error) {
-                return PE_PP_ACCOUNT_LOCKED
-                  if ( $pp_error == LDAP_PP_ACCOUNT_LOCKED );
-                return PE_PP_PASSWORD_EXPIRED
-                  if ( $pp_error == LDAP_PP_PASSWORD_EXPIRED );
-            }
-            else {
-                return PE_BADCREDENTIALS;
-            }
-        }
-        else {
-            return PE_LDAPERROR;
-        }
-    }
-    else {
-        return PE_BADCREDENTIALS
-          unless ( &_bind( $self->{ldap}, $self->{dn}, $self->{password} ) );
-    }
-    $self->{sessionInfo}->{authenticationLevel} = 2;
     PE_OK;
 }
 
@@ -487,7 +434,7 @@ sub store {
 # 14. If all is done, we build the Lemonldap::NG cookie
 sub buildCookie {
     my $self = shift;
-    $self->{cookie} = $self->cookie(
+    push @{$self->{cookie}}, $self->cookie(
         -name   => $self->{cookieName},
         -value  => $self->{id},
         -domain => $self->{domain},
@@ -575,7 +522,7 @@ Lemonldap::NG::Portal::Simple - Base module for building Lemonldap::NG compatibl
   if($portal->process()) {
     # Write here the menu with CGI methods. This page is displayed ONLY IF
     # the user was not redirected here.
-    print $portal->header; # DON'T FORGET THIS (see L<CGI(3)>)
+    print $portal->header('text/html; charset=utf8'); # DON'T FORGET THIS (see L<CGI(3)>)
     print "...";
 
     # or redirect the user to the menu
@@ -585,7 +532,7 @@ Lemonldap::NG::Portal::Simple - Base module for building Lemonldap::NG compatibl
     # Write here the html form used to authenticate with CGI methods.
     # $portal->error returns the error message if athentification failed
     # Warning: by defaut, input names are "user" and "password"
-    print $portal->header; # DON'T FORGET THIS (see L<CGI(3)>)
+    print $portal->header('text/html; charset=utf8'); # DON'T FORGET THIS (see L<CGI(3)>)
     print "...";
     print '<form method="POST">';
     # In your form, the following value is required for redirection
@@ -764,7 +711,7 @@ described above
 
 =head3 _bind( $ldap, $dn, $password )
 
-Non-object method used to bind to the ldap server.
+Method used to bind to the ldap server.
 
 =head3 header
 

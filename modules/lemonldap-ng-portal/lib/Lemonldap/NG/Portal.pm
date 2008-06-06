@@ -32,7 +32,7 @@ system.
       # Write here the menu with CGI methods. This page is displayed ONLY IF
       # the user was not redirected here by a Lemonldap::NG::Handler,
       # else, the process sub redirect the user to the initial requested URI.
-      print $portal->header; # DON'T FORGET THIS (see L<CGI(3)>)
+      print $portal->header('text/html; charset=utf8'); # DON'T FORGET THIS (see L<CGI(3)>)
       print "...";
   
       # or redirect the user to the menu
@@ -45,7 +45,7 @@ system.
       # Write here the html form used to authenticate with CGI methods.
       # $portal->error returns the error message if authentification failed
       # Warning: by defaut, input names are "user" and "password"
-      print $portal->header; # DON'T FORGET THIS (see L<CGI(3)>)
+      print $portal->header('text/html; charset=utf8'); # DON'T FORGET THIS (see L<CGI(3)>)
       print "<html> ...";
       print '<form method="POST">';
       # In your form, the following value is required for redirection

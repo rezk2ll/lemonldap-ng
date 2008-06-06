@@ -22,7 +22,7 @@ $template->param(AUTH_TITLE => "LemonLDAP::NG Portal");
 $template->param(CSS_FILE => "skins/$skin/default.css");
 
 if ( $portal->process() ) {
-    print $portal->header;
+    print $portal->header('text/html; charset=utf8');
 
     # Get sites
     my @sites = ();
@@ -40,7 +40,7 @@ if ( $portal->process() ) {
 
     print $template->output;
 } else {
-    print $portal->header;
+    print $portal->header('text/html; charset=utf8');
     $template->param(AUTH_ERROR => $portal->error);
     $template->param(AUTH_URL => $portal->param('url'));
     print $template->output;

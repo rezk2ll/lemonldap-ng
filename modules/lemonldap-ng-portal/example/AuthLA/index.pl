@@ -40,7 +40,7 @@ my $portal = Lemonldap::NG::Portal::AuthLA->new({
 
 if( $portal->process() ) {
 
-        print $portal->header;
+        print $portal->header('text/html; charset=utf8');
         my $template = HTML::Template->new( filename => "__DIR__/tpl/menu.tpl");
 
 	my @sites = ();

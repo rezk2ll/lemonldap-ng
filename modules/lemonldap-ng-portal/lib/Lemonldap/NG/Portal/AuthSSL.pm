@@ -2,77 +2,50 @@ package Lemonldap::NG::Portal::AuthSSL;
 
 use strict;
 use Lemonldap::NG::Portal::Simple;
+use Lemonldap::NG::Portal::AuthLDAP;
+
+our @ISA = qw(Lemonldap::NG::Portal::AuthLDAP);
 
 our $VERSION = '0.1';
+
+sub authInit {
+    my $self = shift;
+    $self->{SSLRequire} = 1 unless ( defined $self->{SSLRequire} );
+    $self->{SSLVar}       ||= 'SSL_CLIENT_S_DN_Email';
+    $self->{SSLLDAPField} ||= 'mail';
+}
 
 # Authentication is made by Apache with SSL and here before searching the LDAP
 # Directory.
 # So authenticate is overloaded to return only PE_OK.
 
-our $OVERRIDE = {
+sub extractFormInfo {
+    my $self = shift;
+    my $user = $self->https ? $ENV{ $self->{SSLVar} } : 0;
+    if ($user) {
+        $self->{sessionInfo}->{authenticationLevel} = 5;
+        $self->{user} = $user;
+        $self->{authFilter} =
+          '(&(' . $self->{SSLLDAPField} . "=$user)(objectClass=inetOrgPerson))";
+        return PE_OK;
+    }
+    elsif ( $self->{SSLRequire} ) {
+        return PE_CERTIFICATEREQUIRED;
+    }
+    $self->{authFilter} = '';
+    return $self->SUPER::extractFormInfo(@_);
+}
 
-    # By default, authentication is valid if SSL_CLIENT_S_DN_Email environment
-    # variable is present. Adapt it if you want
-    extractFormInfo => sub {
-        my $self = shift;
-
-        # Defaults values
-        $self->{SSLRequire} = 1 unless ( defined $self->{SSLRequire} );
-        $self->{SSLVar}       ||= 'SSL_CLIENT_S_DN_Email';
-        $self->{SSLLDAPField} ||= 'mail';
-
-        my $user = $self->https ? $ENV{$self->{SSLVar}} : 0;
-        if ($user) {
-            $self->{sessionInfo}->{authenticationLevel} = 5;
-            $self->{user} = $user;
-            return PE_OK;
-        }
-        elsif ( $self->{SSLRequire} ) {
-            return PE_CERTIFICATEREQUIRED;
-        }
-        return $self->extractFormInfo(@_);
-    },
-
-    # As we know only user mail (or SSLVar), we have to use it to find him in
-    # the LDAP directory
-    formateFilter => sub {
-        my $self = shift;
-        if ( $self->{sessionInfo}->{authenticationLevel} and $self->{sessionInfo}->{authenticationLevel} > 4 ) {
-            $self->{filter} = '(&('
-              . $self->{SSLLDAPField} . '='
-              . $self->{user}
-              . ")(objectClass=person))";
-            return PE_OK;
-        }
-        return $self->formateFilter(@_);
-    },
-
-    # Apache SSL environment variable are available in exportedVars:
-    setSessionInfo => sub {
-        my $self = shift;
-        my $save = $self->{exportedVars};
-        if ( ref( $self->{exportedVars} ) eq 'HASH' ) {
-            foreach ( keys %{ $self->{exportedVars} } ) {
-                if (/^SSL/) {
-                    $self->{sessionInfo}->{$_} = $ENV{$_};
-                    delete $self->{exportedVars}->{$_};
-                }
-            }
-        }
-        my $r = $self->setSessionInfo(@_);
-        $self->{exportedVars} = $save;
-        return $r;
-      },
-
-      # If authentication has been done with SSL, LDAP bind is disabled
-      authenticate => sub {
-        my $self = shift;
-        if ( $self->{sessionInfo}->{authenticationLevel} and $self->{sessionInfo}->{authenticationLevel} > 4 ) {
-            return PE_OK;
-        }
-        return $self->authenticate(@_);
-      },
-};
+# If authentication has been done with SSL, LDAP bind is disabled
+sub authenticate {
+    my $self = shift;
+    if (    $self->{sessionInfo}->{authenticationLevel}
+        and $self->{sessionInfo}->{authenticationLevel} > 4 )
+    {
+        return PE_OK;
+    }
+    return $self->SUPER::authenticate(@_);
+}
 
 1;
 __END__
@@ -119,7 +92,7 @@ With Lemonldap::NG::Portal::Simple:
   if($portal->process()) {
     # Write here the menu with CGI methods. This page is displayed ONLY IF
     # the user was not redirected here.
-    print $portal->header; # DON'T FORGET THIS (see CGI(3))
+    print $portal->header('text/html; charset=utf8'); # DON'T FORGET THIS (see CGI(3))
     print "...";
 
     # or redirect the user to the menu
@@ -127,7 +100,7 @@ With Lemonldap::NG::Portal::Simple:
   }
   else {
     # If the user enters here, IT MEANS THAT YOUR SSL PARAMETERS ARE BAD
-    print $portal->header; # DON'T FORGET THIS (see CGI(3))
+    print $portal->header('text/html; charset=utf8'); # DON'T FORGET THIS (see CGI(3))
     print "<html><body><h1>Unable to work</h1>";
     print "This server isn't well configured. Contact your administrator.";
     print "</body></html>";
