@@ -3,7 +3,7 @@ package Lemonldap::NG::Handler::AuthBasic;
 use strict;
 
 use Lemonldap::NG::Handler::SharedConf qw(:all);
-require Lemonldap::NG::Portal::SharedConf;
+use Lemonldap::NG::Portal::SharedConf;
 use Digest::MD5 qw(md5_base64);
 use MIME::Base64;
 
@@ -76,7 +76,6 @@ sub run ($$) {
             }
             $datas->{$_} = $portal->{sessionInfo}->{$_} foreach ( keys %{ $portal->{sessionInfo} } );
             $datas->{_session_id} = $id;
-            print STDERR Dumper($datas);use Data::Dumper;
 
             # Store now the user in the local storage
             if ($refLocalStorage) {
@@ -87,8 +86,7 @@ sub run ($$) {
 
     # ACCOUNTING
     # 1 - Inform Apache
-    $apacheRequest->connection->user( $datas->{$whatToTrace} )
-      if ( $datas->{$whatToTrace} );
+    lmSetApacheUser( $apacheRequest, $datas->{$whatToTrace} );
 
     # AUTHORIZATION
     return $class->forbidden($uri) unless ( $class->grant($uri) );
