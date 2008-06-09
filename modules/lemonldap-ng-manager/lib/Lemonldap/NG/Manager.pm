@@ -65,7 +65,7 @@ sub doall {
     my $self = shift;
     # When using header_public here, Firefox does not load configuration
     # sometimes. Where is the bug ?
-    print $self->header;
+    print $self->header( -type => 'text/html; charset=utf8' );
     # Test if we have to use specific CSS
     if ( defined $self->{cssFile} ) {
         print $self->start_html(
@@ -110,7 +110,7 @@ sub print_lmjs {
 
 sub print_help {
     my $self = shift;
-    print $self->header_public;
+    print $self->header_public( -type => 'text/html; charset=utf8' );
     Lemonldap::NG::Manager::Help::import( $ENV{HTTP_ACCEPT_LANGUAGE} )
       unless ( $self->can('help_groups') );
     my $chap = $self->param('help');
@@ -121,7 +121,7 @@ sub print_help {
 
 sub print_delete {
     my $self = shift;
-    print $self->header;
+    print $self->header( -type => 'text/html; charset=utf8' );
     Lemonldap::NG::Manager::Help::import( $ENV{HTTP_ACCEPT_LANGUAGE} )
       unless ( $self->can('help_groups') );
     if ( $self->config->delete( $self->param('cfgNum') ) ) {
@@ -598,7 +598,7 @@ sub checkConf {
 
 sub print_apply {
     my $self = shift;
-    print $self->header( -type => "text/html" );
+    print $self->header( -type => "text/html; charset=utf8" );
     unless ( -r $self->{applyConfFile} ) {
         print "<h3>" . &txt_canNotReadApplyConfFile . "</h3>";
         return;
