@@ -635,7 +635,8 @@ not re-authenticated and C<>process> returns true.
 
 =head3 extractFormInfo
 
-Converts form input into object variables ($self->{user} and
+Method implemented into Lemonldap::NG::Portal::Auth* modules. By default
+(ldap bind), converts form input into object variables ($self->{user} and
 $self->{password}).
 
 =head3 formateParams
@@ -647,6 +648,9 @@ Does nothing. To be overloaded if needed.
 Creates the ldap filter using $self->{user}. By default :
 
   $self->{filter} = "(&(uid=" . $self->{user} . ")(objectClass=inetOrgPerson))";
+
+If $self->{authFilter} is set, it is used instead of this. This is used by
+Lemonldap::NG::Portal::Auth* modules to overload filter.
 
 =head3 connectLDAP
 
@@ -661,6 +665,10 @@ if exist. Anonymous bind is provided else.
 
 Retrives the LDAP entry corresponding to the user using $self->{filter}.
 
+=head3 setAuthSessionInfo
+
+Same as setSessionInfo but implemented in Lemonldap::NG::Portal::Auth* modules.
+
 =head3 setSessionInfo
 
 Prepares variables to store in central cache (stored temporarily in
@@ -673,7 +681,8 @@ Does nothing by default.
 
 =head3 authenticate
 
-Authenticates the user by rebinding to the LDAP server using the dn retrived
+Method implemented in Lemonldap::NG::Portal::Auth* modules. By default (ldap),
+authenticates the user by rebinding to the LDAP server using the dn retrived
 with search() and the password.
 
 =head3 store
@@ -747,6 +756,14 @@ find the user distinguished name (dn) was refused by the server
 =item * B<PE_FIRSTACCESS>: First access to the portal
 
 =item * B<PE_BADCERTIFICATE>: Wrong certificate
+
+=item * PE_PP_ACCOUNT_LOCKED: account locked
+
+=item * PE_PP_PASSWORD_EXPIRED: password axpired
+
+=item * PE_CERTIFICATEREQUIRED: certificate required
+
+=item * PE_ERROR: unclassified error
 
 =back
 
