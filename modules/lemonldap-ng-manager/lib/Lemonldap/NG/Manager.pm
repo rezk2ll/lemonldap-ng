@@ -110,7 +110,7 @@ sub print_lmjs {
 
 sub print_help {
     my $self = shift;
-    print $self->header_public( -type => 'text/html; charset=utf8' );
+    print $self->header_public( $ENV{SCRIPT_FILENAME}, -type => 'text/html; charset=utf8' );
     Lemonldap::NG::Manager::Help::import( $ENV{HTTP_ACCEPT_LANGUAGE} )
       unless ( $self->can('help_groups') );
     my $chap = $self->param('help');
@@ -691,7 +691,7 @@ system.
 
 You can also peersonalize the HTML code instead of using C<doall()>:
 
-  print $self->header_public;
+  print $self->header_public( $ENV{SCRIPT_FILENAME} );
   print $self->start_html (  # See CGI(3) for more about start_html
         -style => "/location/to/my.css",
         -title => "Example.com SSO configuration",

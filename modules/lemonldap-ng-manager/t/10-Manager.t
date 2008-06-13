@@ -29,7 +29,7 @@ ok(
     }
     )
 );
-ok( $h->header_public() );
+ok( $h->header_public('example/index.pl') );
 ok( $h->start_html() );
 ok( $h->main() );
 ok( $h->end_html() );
