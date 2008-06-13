@@ -102,7 +102,7 @@ sub print_libjs {
 sub print_lmjs {
     my $self = shift;
     print $self->header_public( $ENV{SCRIPT_FILENAME},
-        -type => 'text/javascript' );
+        -type => 'text/javascript; charset=utf8' );
     $self->javascript;
 }
 
@@ -136,7 +136,7 @@ sub print_delete {
 # Configuration download subroutines
 sub print_conf {
     my $self = shift;
-    print $self->header( -type => "text/xml", '-Cache-Control' => 'private' );
+    print $self->header( -type => "text/xml; charset=utf8", '-Cache-Control' => 'private' );
     $self->printXmlConf( { cfgNum => $self->param('cfgNum'), } );
     exit;
 }
@@ -157,6 +157,7 @@ sub printXmlConf {
         KeyAttr  => { item => 'id', username => 'name' },
         NoIndent => 1,
         NoSort   => 0,
+	XMLDecl  => '<?xml version="1.0" encoding="UTF-8"?>',
     );
 }
 
@@ -349,7 +350,7 @@ sub xmlField {
 sub print_upload {
     my $self  = shift;
     my $datas = shift;
-    print $self->header( -type => "text/javascript" );
+    print $self->header( -type => "text/javascript; charset=utf8" );
     my $r = Lemonldap::NG::Manager::_Response->new();
     my $tmp = $self->upload( $datas, $r );
     if ( $tmp == 0 ) {

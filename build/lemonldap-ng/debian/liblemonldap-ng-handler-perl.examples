@@ -1,2 +1,2 @@
 debian/tmp/var/lib/lemonldap-ng/handler/*
-debian/handler-apache*.conf
+debian/tmp/var/lib/lemonldap-ng/apache*-protected-area.conf

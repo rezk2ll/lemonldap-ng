@@ -3,16 +3,12 @@
 
 . /usr/share/debconf/confmodule
 
-EXAMPLEMANAGERFILE=/usr/share/doc/liblemonldap-ng-manager-perl/examples/index.pl
+EXAMPLEMANAGERFILE=/usr/share/doc/liblemonldap-ng-manager-perl/examples/index-Debian.pl
 MANAGERFILE=/var/lib/lemonldap-ng/manager/index.pl
 
 if [ "$1" == "configure" ]
 then
-    [ -e $MANAGERFILE ] || \
-	perl -000 -pe 's/(configStorage\s*=>\s*){[^}]+}/$1\$Lemonldap::NG::Conf::configStorage/;
-			s#^use#\nrequire "/usr/share/lemonldap-ng/configStorage.pm";\nuse#m;
-			s#(applyConfFile\s*=>\s*)(['"'"'"]).*?\2#$1$2/etc/lemonldap-ng/apply.conf$2#' \
-		$EXAMPLEMANAGERFILE >$MANAGERFILE
+    [ -e $MANAGERFILE ] || cp $EXAMPLEMANAGERFILE $MANAGERFILE
     chmod +x $MANAGERFILE
     chgrp www-data /etc/lemonldap-ng/apply.conf
     chmod 640 /etc/lemonldap-ng/apply.conf

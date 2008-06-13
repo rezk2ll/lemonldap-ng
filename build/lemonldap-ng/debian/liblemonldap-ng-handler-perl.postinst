@@ -3,16 +3,13 @@
 
 . /usr/share/debconf/confmodule
 
-EXAMPLEHANDLERFILE=/usr/share/doc/liblemonldap-ng-handler-perl/examples/MyHandler.pm
+EXAMPLEHANDLERFILE=/usr/share/doc/liblemonldap-ng-handler-perl/examples/MyHandler-Debian.pm
 HANDLERFILE=/var/lib/lemonldap-ng/handler/MyHandler.pm
 SESSIONSDIR=/var/lib/lemonldap-ng/sessions
 
 if [ "$1" == "configure" ]
 then
-    [ -e $HANDLERFILE ] || \
-	perl -000 -pe 's/(configStorage\s*=>\s*){[^}]+}/$1\$Lemonldap::NG::Conf::configStorage/;
-			s#^use#\nrequire "/usr/share/lemonldap-ng/configStorage.pm";\nuse#m;' \
-		$EXAMPLEHANDLERFILE >$HANDLERFILE
+    [ -e $HANDLERFILE ] || cp $EXAMPLEHANDLERFILE $HANDLERFILE
     chmod 770 $SESSIONSDIR
     chmod 770 $SESSIONSDIR/lock
     chown -R www-data.www-data $SESSIONSDIR

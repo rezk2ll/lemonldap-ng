@@ -11,6 +11,8 @@
 
 export PERL_MM_USE_DEFAULT=1
 
+LM_ROOT=/var/lib/lemonldap-ng/
+DEB_TMP_LM_ROOT=debian/tmp$(LM_ROOT)
 
 configure: configure-stamp
 configure-stamp:
@@ -51,33 +53,47 @@ install: build
 	$(MAKE) test
 	$(MAKE) install DESTDIR=$(CURDIR)/debian/tmp PREFIX=/usr
 	$(MAKE) example \
-		EXAMPLEDIRBUILD=debian/tmp/var/lib/lemonldap-ng/ \
-		EXAMPLEDIR=/var/lib/lemonldap-ng/ \
-		EXAMPLECONFDIR=/var/lib/lemonldap-ng/conf/ \
-		EXAMPLELASPDIRBUILD=debian/tmp/var/lib/lemonldap-ng/liberty-alliance-sp-portal/ \
-		EXAMPLELASPDIR=/var/lib/lemonldap-ng/liberty-alliance-sp-portal/
-	cp debian/tmp/var/lib/lemonldap-ng/handler/MyHandler.pm debian/tmp/var/lib/lemonldap-ng/handler/MyHandler-Debian.pm
-	mv debian/tmp/var/lib/lemonldap-ng/index.pl debian/tmp/var/lib/lemonldap-ng/test.pl
-	mv debian/tmp/var/lib/lemonldap-ng/handler/lmH-apache.conf debian/tmp/var/lib/lemonldap-ng/apache-protected-area.conf
-	mv debian/tmp/var/lib/lemonldap-ng/handler/lmH-apache2.conf debian/tmp/var/lib/lemonldap-ng/apache2-protected-area.conf
-	perl -000 -i -pe 's/(new\s*\(\s*){[^}]+}/$$1\$$Lemonldap::NG::Conf::configStorage/; s#^use#\nrequire "/usr/share/lemonldap-ng/configStorage.pm";\nuse#m;' \
-			debian/tmp/var/lib/lemonldap-ng/manager/scripts/lmConfigEditor \
-			debian/tmp/var/lib/lemonldap-ng/handler/MyHandler-Debian.pm \
-			debian/tmp/var/lib/lemonldap-ng/portal/scripts/purgeCentralCache
+		EXAMPLEDIRBUILD=$(DEB_TMP_LM_ROOT) \
+		EXAMPLEDIR=$(LM_ROOT) \
+		EXAMPLECONFDIR=$(LM_ROOT)conf/ \
+		EXAMPLELASPDIRBUILD=$(DEB_TMP_LM_ROOT)liberty-alliance-sp-portal/ \
+		EXAMPLELASPDIR=$(LM_ROOT)liberty-alliance-sp-portal/
 
+	# Debian example files
+	cp $(DEB_TMP_LM_ROOT)handler/MyHandler.pm $(DEB_TMP_LM_ROOT)handler/MyHandler-Debian.pm
+	cp $(DEB_TMP_LM_ROOT)portal/index.pl $(DEB_TMP_LM_ROOT)portal/index-Debian.pl
+	cp $(DEB_TMP_LM_ROOT)portal/index_skin.pl $(DEB_TMP_LM_ROOT)portal/index_skin-Debian.pl
+	cp $(DEB_TMP_LM_ROOT)liberty-alliance-sp-portal/index.pl $(DEB_TMP_LM_ROOT)liberty-alliance-sp-portal/index-Debian.pl
+	cp $(DEB_TMP_LM_ROOT)manager/index.pl $(DEB_TMP_LM_ROOT)manager/index-Debian.pl
+	mv $(DEB_TMP_LM_ROOT)index.pl $(DEB_TMP_LM_ROOT)test.pl
+	mv $(DEB_TMP_LM_ROOT)handler/lmH-apache.conf $(DEB_TMP_LM_ROOT)apache-protected-area.conf
+	mv $(DEB_TMP_LM_ROOT)handler/lmH-apache2.conf $(DEB_TMP_LM_ROOT)apache2-protected-area.conf
+	perl -i -pe 's#__DIR__/?#'/var/lib/lemonldap-ng'#g;s#__CONFDIR__/?#'$(LM_ROOT)conf'#g;' \
+		$(DEB_TMP_LM_ROOT)apache*-protected-area.conf
+
+	# System to use /etc/lemonldap-ng/storage.conf instead of setting
+	# manually the configStorage parameter
+	perl -000 -i -pe 's/(Lemonldap::NG::Manager::Conf.*new\s*\(\s*){[^}]+}/$$1\$$Lemonldap::NG::Conf::configStorage/; s#^use#\nrequire "/usr/share/lemonldap-ng/configStorage.pm";\nuse#m;' \
+			$(DEB_TMP_LM_ROOT)manager/scripts/lmConfigEditor \
+			$(DEB_TMP_LM_ROOT)portal/scripts/purgeCentralCache
+
+	perl -000 -i -pe 's/(configStorage\s*=>\s*){[^}]+}/$$1\$$Lemonldap::NG::Conf::configStorage/; s#^use#\nrequire "/usr/share/lemonldap-ng/configStorage.pm";\nuse#m;' \
+			$(DEB_TMP_LM_ROOT)handler/MyHandler-Debian.pm \
+			$(DEB_TMP_LM_ROOT)manager/index-Debian.pl \
+			$(DEB_TMP_LM_ROOT)portal/index-Debian.pl \
+			$(DEB_TMP_LM_ROOT)portal/index_skin-Debian.pl \
+			$(DEB_TMP_LM_ROOT)liberty-alliance-sp-portal/index-Debian.pl
 # Build architecture-independent files here.
 binary-indep: build install
 	dh_testdir
 	dh_testroot
 	dh_installchangelogs changelog
 	dh_installdocs
-	mkdir debian/tmp/var/lib/lemonldap-ng/protected
-	cp _example/index.pl debian/tmp/var/lib/lemonldap-ng/protected
+	mkdir $(DEB_TMP_LM_ROOT)protected
 	find debian/tmp/var/lib/lemonldap-ng -type f -perm /111 -exec chmod -x {} \;
-	chmod +x debian/tmp/var/lib/lemonldap-ng/manager/scripts/lmConfigEditor
+	chmod +x $(DEB_TMP_LM_ROOT)manager/scripts/lmConfigEditor
 	find debian/tmp/var/lib/lemonldap-ng -type f -name *.pl -exec chmod +x {} \;
 	dh_installexamples
-	find debian/lemonldap-ng -type f -exec perl -i -pe 's#__DIR__/?#'/var/lib/lemonldap-ng'#g;s#__CONFDIR__/?#'/var/lib/lemonldap-ng/conf'#g;' {} \;
 	dh_install
 	chmod +x debian/liblemonldap-ng-portal-perl/usr/share/lemonldap-ng/bin/purgeCentralCache
 #	dh_installmenu

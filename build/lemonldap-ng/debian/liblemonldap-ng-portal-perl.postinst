@@ -3,29 +3,17 @@
 
 . /usr/share/debconf/confmodule
 
-LAEXAMPLEPORTALFILE=/usr/share/doc/liblemonldap-ng-portal-perl/examples/liberty-alliance-sp-portal/index.pl
+LAEXAMPLEPORTALFILE=/usr/share/doc/liblemonldap-ng-portal-perl/examples/liberty-alliance-sp-portal/index-Debian.pl
 LAPORTALFILE=/var/lib/lemonldap-ng/liberty-alliance-sp-portal/index.pl
-EXAMPLEPORTALFILE=/usr/share/doc/liblemonldap-ng-portal-perl/examples/index_skin.pl
+EXAMPLEPORTALFILE=/usr/share/doc/liblemonldap-ng-portal-perl/examples/index_skin-Debian.pl
 PORTALFILE=/var/lib/lemonldap-ng/portal/index.pl
-CLEANERFILE=/usr/share/lemonldap-ng/bin/purgeCentralCache
 SESSIONSDIR=/var/lib/lemonldap-ng/sessions
 
 if [ "$1" == "configure" ]
 then
-    [ -e $LAPORTALFILE ] || \
-	perl -000 -pe 's/(configStorage\s*=>\s*){[^}]+}/$1\$Lemonldap::NG::Conf::configStorage/;
-			s#^use#\nrequire "/usr/share/lemonldap-ng/configStorage.pm";\nuse#m;' \
-		$LAEXAMPLEPORTALFILE >$LAPORTALFILE
-    [ -e $PORTALFILE ] || \
-	perl -000 -pe 's/(configStorage\s*=>\s*){[^}]+}/$1\$Lemonldap::NG::Conf::configStorage/;
-			s#^use#\nrequire "/usr/share/lemonldap-ng/configStorage.pm";\nuse#m;' \
-		$EXAMPLEPORTALFILE >$PORTALFILE
-    [ -e $CLEANERFILE ] || \
-	perl -i -000 -pe 's/(configStorage\s*=>\s*){[^}]+}/$1\$Lemonldap::NG::Conf::configStorage/;
-			s#^use#\nrequire "/usr/share/lemonldap-ng/configStorage.pm";\nuse#m;' \
-		$CLEANERFILE
+    [ -e $LAPORTALFILE ] || cp $LAEXAMPLEPORTALFILE $LAPORTALFILE
+    [ -e $PORTALFILE ] || cp $EXAMPLEPORTALFILE $PORTALFILE
     chmod +x $PORTALFILE
-    chmod +x $CLEANERFILE
     chmod +x $LAPORTALFILE
     chmod 770 $SESSIONSDIR
     chmod 770 $SESSIONSDIR/lock
