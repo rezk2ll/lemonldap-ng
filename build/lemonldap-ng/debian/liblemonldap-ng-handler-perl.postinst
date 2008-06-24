@@ -12,7 +12,7 @@ then
     [ -e $HANDLERFILE ] || cp $EXAMPLEHANDLERFILE $HANDLERFILE
     chmod 770 $SESSIONSDIR
     chmod 770 $SESSIONSDIR/lock
-    chown -R www-data.www-data $SESSIONSDIR
+    chown -R www-data:www-data $SESSIONSDIR
 fi
 
 

@@ -4,6 +4,7 @@ lemonldap-ng (0.9.2) unstable; urgency=low
   * cleaning Handler code
   * Status system for Lemonldap::NG::Handler and for the portal
   * Debian Czech translation for debconf (Closes: #483301 / bugs.debian.org)
+  * Debian Swedish translation for debconf (Closes: #487713 / bugs.debian.org)
   * Romanian translation for portal
   * Distinct Liberty-Alliance SP installation
   * Password policy included now
@@ -12,7 +13,7 @@ lemonldap-ng (0.9.2) unstable; urgency=low
   * More tests in "test" target
   * Bug in purgeCentralCache (DBI only): datas where never purged
 
- -- Xavier Guimard <x.guimard@free.fr>  Fri, 06 Jun 2008 06:19:47 +0200
+ -- Xavier Guimard <x.guimard@free.fr>  Tue, 24 Jun 2008 15:07:04 +0200
 
 lemonldap-ng (0.9.1) unstable; urgency=low
 
