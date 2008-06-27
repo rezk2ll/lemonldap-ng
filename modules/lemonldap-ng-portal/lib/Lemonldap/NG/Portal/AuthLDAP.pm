@@ -55,7 +55,7 @@ sub authenticate {
 
         if ( defined $resp ) {
             my $pp_error = $resp->error;
-            if ($pp_error) {
+            if ( defined $pp_error ) {
                 return PE_PP_ACCOUNT_LOCKED
                   if ( $pp_error == LDAP_PP_ACCOUNT_LOCKED );
                 return PE_PP_PASSWORD_EXPIRED
