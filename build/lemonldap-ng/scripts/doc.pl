@@ -17,6 +17,7 @@ my $docs = {
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocSOAP?language=fr'           => 'soap-fr.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocLA?language=fr'             => 'liberty-alliance-fr.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocPpolicy'                    => 'password-policy.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/SpecLDAPSchema'                => 'advanced-access-rules.html',
 };
 
 my %imgs;

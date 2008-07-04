@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Linux/x86 (vers 6 November 2007), see www.w3.org" />
+
+  <title>Lemonldap::NG documentation: advanced-access-rules.html</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+</head>
+
+<body>
+  <div class="main-content">
+    <h2 class="heading-1"><span id="HLDAPSchemaforadvancedaccessrules">LDAP
+    Schema for advanced access rules</span></h2>
+
+    <p class="paragraph"></p>
+
+    <ul>
+      <li><a href="#HTopic">Topic</a></li>
+
+      <li>
+        <a href="#HLDAPSchema">LDAP Schema</a>
+
+        <ul>
+          <li><a href="#HOIDprefix">OID prefix</a></li>
+
+          <li><a href="#HOpenLDAPschema">OpenLDAP schema</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <a href="#HHowtouseitinLemonLDAP3A3ANG">How to use it in
+        LemonLDAP::NG</a>
+
+        <ul>
+          <li><a href="#HSpecifynewattributesinexportedvariables">Specify new
+          attributes in exported variables</a></li>
+
+          <li><a href="#HHabilitationbasedonanapplicationname">Habilitation
+          based on an application name</a></li>
+
+          <li><a href="#HHabilitationbasedonadate">Habilitation based on a
+          date</a></li>
+
+          <li><a href="#HHabilitationbasedonaperiod">Habilitation based on a
+          period</a></li>
+
+          <li><a href="#HSendaroletoaprotectedapplication">Send a role to a
+          protected application</a></li>
+        </ul>
+      </li>
+    </ul>
+
+    <h3 class="heading-1-1"><span id="HTopic">Topic</span></h3>
+
+    <p class="paragraph"></p>LemonLDAP::NG is powerfull WebSSO engine who
+    manage access trough user's attributes stored in an LDAP directory.
+
+    <p class="paragraph"></p>We can use standards attributes like uid, cn or
+    mail to describe access rules to protected web applications.
+
+    <p class="paragraph"></p>But sometimes we need more information! For
+    example:
+
+    <ul class="star">
+      <li>An application name (to allow access by applications and not by
+      group of users)</li>
+
+      <li>A start date and an end date (to open or close the service even the
+      entry already exists)</li>
+
+      <li>A time profile (allowed hours and day of the week)</li>
+
+      <li>One or more roles (to send to the protected applications)</li>
+    </ul>
+
+    <h3 class="heading-1-1"><span id="HLDAPSchema">LDAP Schema</span></h3>
+
+    <h4 class="heading-1-1-1"><span id="HOIDprefix">OID prefix</span></h4>
+
+    <p class="paragraph"></p>We plan to use this prefix:
+    1.3.6.1.4.1.10943.10.2.
+
+    <p class="paragraph"></p>The prefix 1.3.6.1.4.1.10943 is owned by LINAGORA
+    (See <span class="wikiexternallink"><a href=
+    "http://www.iana.org/assignments/enterprise-numbers">http://www.iana.org/assignments/enterprise-numbers</a></span>).
+
+    <h4 class="heading-1-1-1"><span id="HOpenLDAPschema">OpenLDAP
+    schema</span></h4>
+
+    <p class="paragraph"></p>Just add this file to OpenLDAP schemas:
+
+    <p class="paragraph"></p>
+
+    <div class="code">
+      <pre>
+#=======================================
+# Schema <span class="java-keyword">for</span> advanced SSO access rules
+#
+# Designed <span class="java-keyword">for</span> OpenLDAP software
+#   <span class="nobr"><a href=
+"http://www.openldap.org">http://www.openldap.org</a></span>
+#
+# Part of LemonLDAP::NG project
+#   <span class="nobr"><a href=
+"http://lemonldap.ow2.org">http://lemonldap.ow2.org</a></span>
+#
+# Author: Clement OUDOT
+#=======================================<br /><br />#=======================================
+# OID Prefix
+#   Registered in IANA database
+#=======================================
+objectIdentifier SSOOID 1.3.6.1.4.1.10943.10.2<br /><br />#=======================================
+# Attributes
+#=======================================<br /><br /># Application Name
+attributetype ( SSOOID:1:1
+        NAME 'ssoName'
+        DESC 'An application name'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )<br /><br /># Roles
+attributetype ( SSOOID:1:2
+        NAME 'ssoRoles'
+        DESC 'One or more roles'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )<br /><br /># Time profile
+attributetype ( SSOOID:1:3
+        NAME 'ssoTimeProfile'
+        DESC 'A time profile'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )<br /><br /># Start date
+attributetype ( SSOOID:1:4
+        NAME 'ssoStartDate'
+        DESC 'Start date'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )<br /><br /># End date
+attributetype ( SSOOID:1:5
+        NAME 'ssoEndDate'
+        DESC 'End date'
+        EQUALITY caseIgnoreMatch
+        SUBSTR caseIgnoreSubstringsMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )<br /><br />#=======================================
+# ObjectClasses
+#=======================================<br /><br /># SSO user
+objectClass ( SSOOID:2:1
+        NAME 'ssoUser'
+        DESC 'SSO extended informations <span class=
+"java-keyword">for</span> a user'
+        SUP top
+        AUXILIARY
+        MAY ( ssoName $ ssoRoles $ ssoTimeProfile $
+                ssoStartDate $ ssoEndDate ) )
+</pre>
+    </div>
+
+    <h3 class="heading-1-1"><span id="HHowtouseitinLemonLDAP3A3ANG">How to use
+    it in LemonLDAP::NG</span></h3>
+
+    <h4 class="heading-1-1-1"><span id=
+    "HSpecifynewattributesinexportedvariables">Specify new attributes in
+    exported variables</span></h4>
+
+    <p class="paragraph"></p>In LemonLDAP::NG Manager, go to General
+    Parameters &gt; Exported Variables and add new variables:
+
+    <ul class="star">
+      <li>ssoName =&gt; $ssoName</li>
+
+      <li>ssoRoles =&gt; $ssoRoles</li>
+
+      <li>ssoTimeProfile =&gt; $ssoTimeProfile</li>
+
+      <li>ssoStartDate =&gt; $ssoStartDate</li>
+
+      <li>ssoEndDate =&gt; $ssoEndDate</li>
+    </ul>Save and reload Apache and Handler to get the configuration updated.
+
+    <h4 class="heading-1-1-1"><span id=
+    "HHabilitationbasedonanapplicationname">Habilitation based on an
+    application name</span></h4><br />
+    <br />
+    If a user has got the ssoName attribute, with each value being the name of
+    a protected application, you can configure the rules of virtualhosts by
+    checking the application name.<br />
+    <br />
+    Go in LemonLDAP::NG Manager, choose your virtualhost (for example
+    test.acme.com), and set the default rule to accept users if they have
+    "acme" has one of the value of their attribute "ssoName":<br />
+    <br />
+
+    <div class="code">
+      <pre>
+<span class="java-keyword">default</span> =&gt; $ssoName =~ /bacmeb/
+</pre>
+    </div><br />
+    <br />
+    Save and reload.<br />
+    <br />
+    Now you can decide who access this application just by adding or removing
+    a value inside the entry of the users.
+
+    <h4 class="heading-1-1-1"><span id=
+    "HHabilitationbasedonadate">Habilitation based on a date</span></h4>
+
+    <h4 class="heading-1-1-1"><span id=
+    "HHabilitationbasedonaperiod">Habilitation based on a period</span></h4>
+
+    <h4 class="heading-1-1-1"><span id=
+    "HSendaroletoaprotectedapplication">Send a role to a protected
+    application</span></h4>
+  </div>
+</body>
+</html>
