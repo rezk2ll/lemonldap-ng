@@ -48,8 +48,18 @@
           <li><a href="#HHabilitationbasedonaperiod">Habilitation based on a
           period</a></li>
 
-          <li><a href="#HSendaroletoaprotectedapplication">Send a role to a
-          protected application</a></li>
+          <li>
+            <a href="#HSendaroletoaprotectedapplication">Send a role to a
+            protected application</a>
+
+            <ul>
+              <li><a href="#HRolesassimplevaluesofauserattribute">Roles as
+              simple values of a user attribute</a></li>
+
+              <li><a href="#HRolesasentriesinthedirectory">Roles as entries in
+              the directory</a></li>
+            </ul>
+          </li>
         </ul>
       </li>
     </ul>
@@ -196,7 +206,7 @@ objectClass ( SSOOID:2:1
 
     <div class="code">
       <pre>
-<span class="java-keyword">default</span> =&gt; $ssoName =~ /bacmeb/
+<span class="java-keyword">default</span> =&gt; $ssoName =~ /\bacme\b/
 </pre>
     </div><br />
     <br />
@@ -214,6 +224,146 @@ objectClass ( SSOOID:2:1
     <h4 class="heading-1-1-1"><span id=
     "HSendaroletoaprotectedapplication">Send a role to a protected
     application</span></h4>
+
+    <h5 class="heading-1-1-1-1"><span id=
+    "HRolesassimplevaluesofauserattribute">Roles as simple values of a user
+    attribute</span></h5><br />
+    <br />
+    Imagine you've set your directory schema to store roles as values of
+    ssoRoles, an attribute of the user. This is simple because you can send
+    the role to the application by creating a HTTP header (for example
+    Auth-Role) with the concatened values (';' is the concatenation
+    string):<br />
+    <br />
+
+    <div class="code">
+      <pre>
+Auth-Roles =&gt; $ssoRoles
+</pre>
+    </div><br />
+    <br />
+    If the user has these values inside its entry:<br />
+    <br />
+
+    <div class="code">
+      <pre>
+ssoRoles: user
+ssoRoles: admin
+</pre>
+    </div><br />
+    <br />
+    Then you got this value inside the Auth-Roles header:<br />
+    <br />
+
+    <div class="code">
+      <pre>
+user;admin
+</pre>
+    </div>
+
+    <h5 class="heading-1-1-1-1"><span id="HRolesasentriesinthedirectory">Roles
+    as entries in the directory</span></h5><br />
+    <br />
+    Now imagine the following DIT:<br />
+    <br />
+    <img src="DIA_DIT_Roles.png" alt="DIA_DIT_Roles.png" /><br />
+    <br />
+    Roles are entries, below branchs representing applications. Each user has
+    a ssoRoles attributes, which values are the DN of the corresponding roles.
+    With this oragnization, you can set roles to user within specific
+    application.<br />
+    <br />
+    In the schema above, the user has the following values:<br />
+    <br />
+
+    <div class="code">
+      <pre>
+ssoRoles: ou=admin,ou=aaa,ou=roles,dc=acme,dc=com
+ssoRoles: ou=user,ou=bbb,ou=roles,dc=acme,dc=com
+</pre>
+    </div>
+
+    <p class="paragraph"></p>So he is "user" on application "BBB" and "admin"
+    on application "AAA".
+
+    <p class="paragraph"></p>Now we have to send to right role to the right
+    application trough LemonLDAP::NG.
+
+    <p class="paragraph"></p>First step: create a rule to grant access only if
+    the user has a role in the application:
+
+    <ul class="star">
+      <li>For application AAA:</li>
+    </ul>
+
+    <div class="code">
+      <pre>
+<span class="java-keyword">default</span> =&gt; $ssoRoles =~ /ou=aaa,ou=roles/
+</pre>
+    </div>
+
+    <ul class="star">
+      <li>For application BBB:</li>
+    </ul>
+
+    <div class="code">
+      <pre>
+<span class="java-keyword">default</span> =&gt; $ssoRoles =~ /ou=bbb,ou=roles/
+</pre>
+    </div><br />
+    <br />
+    Second step: get the role name for the application. We will use the macros
+    to do that. Create two macros (inside General Parameters &gt; Macros):
+
+    <ul class="star">
+      <li>For application AAA:</li>
+    </ul>
+
+    <div class="code">
+      <pre>
+aaaRole =&gt; ((grep{/ou=aaa/} split(';',$ssoRoles))[0] =~ /ou=(.*),ou=aaa/)[0]
+</pre>
+    </div>
+
+    <ul class="star">
+      <li>For application BBB:</li>
+    </ul>
+
+    <div class="code">
+      <pre>
+bbbRole =&gt; ((grep{/ou=bbb/} split(';',$ssoRoles))[0] =~ /ou=(.*),ou=bbb/)[0]
+</pre>
+    </div><br />
+    <br />
+    These regular expressions read the 'ou' value of the DN of the role of the
+    concerned application. This work if the user has only one role per
+    application.<br />
+    <br />
+    Third step: provide the role to the application. It is done by creating
+    the correct HTTP header:
+
+    <ul class="star">
+      <li>For application AAA:</li>
+    </ul>
+
+    <div class="code">
+      <pre>
+Auth-Roles =&gt; $aaaRoles
+</pre>
+    </div>
+
+    <ul class="star">
+      <li>For application BBB:</li>
+    </ul>
+
+    <div class="code">
+      <pre>
+Auth-Roles =&gt; $bbbRoles
+</pre>
+    </div><br />
+    <br />
+    Now the protected application can read in the header HTTP_AUTH_ROLES the
+    role of the user.
   </div>
 </body>
 </html>

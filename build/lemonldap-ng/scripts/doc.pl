@@ -17,7 +17,7 @@ my $docs = {
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocSOAP?language=fr'           => 'soap-fr.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocLA?language=fr'             => 'liberty-alliance-fr.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocPpolicy'                    => 'password-policy.html',
-    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/SpecLDAPSchema'                => 'advanced-access-rules.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/LDAPSchema'                    => 'advanced-access-rules.html',
 };
 
 my %imgs;
@@ -58,7 +58,11 @@ while ( my ( $url, $file ) = each %$docs ) {
             while (s#(?<=<pre>)(.*?)(?:<p[^>]*>\s*</p>|<p[^>]*/>)(.*?)(?=</pre>)#$1<br/><br/>$2#gi) {}
             while (s#(?<=<pre>)(.*?)(?:<p[^>]*>\s*</p>|<p[^>]*/>)(.*?)(?!</pre>)#$1<br/><br/>$2#gi) {}
         }
-        if(s#(["'])/xwiki/bin/download/NG/Presentation/([\w\.\-]+)\1#$1$2$1#) {
+        if(m#(["'])/xwiki/bin/download/([\/\w\.\-]+)\1#) {
+            $imgs{$2} = 1;
+            s#(["'])/xwiki/bin/download/(?:[\/\w\.\-]+)/([\w\.\-]+)\1#$1$2$1#;
+        }
+        if(s#(["'])/xwiki/bin/download/([\/\w\.\-]+)\1#$1$2$1#) {
             $imgs{$2} = 1;
         }
         if($file =~ /-fr/) {
@@ -95,5 +99,5 @@ while ( my ( $url, $file ) = each %$docs ) {
 }
 
 foreach(keys %imgs) {
-    `wget -N http://wiki.lemonldap.objectweb.org/xwiki/bin/download/NG/Presentation/$_`;
+    `wget -N http://wiki.lemonldap.objectweb.org/xwiki/bin/download/$_`;
 }
