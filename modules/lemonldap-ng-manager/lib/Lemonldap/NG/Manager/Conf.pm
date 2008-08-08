@@ -5,7 +5,7 @@ no strict 'refs';
 use Data::Dumper;
 use Lemonldap::NG::Manager::Conf::Constants;
 
-our $VERSION = 0.5;
+our $VERSION = 0.51;
 our @ISA;
 
 sub new {
@@ -45,7 +45,7 @@ sub saveConf {
     while ( my ( $k, $v ) = each(%$conf) ) {
         if ( ref($v) ) {
             $fields->{$k} = Dumper($v);
-            $fields->{$k} =~ s/'/&39;/g;
+            $fields->{$k} =~ s/'/&#39;/g;
             $fields->{$k} = "'$fields->{$k}'";
         }
         elsif ( $v =~ /^\d+$/ ) {
@@ -85,7 +85,7 @@ sub getConf {
             else {
                 my $data;
                 $v =~ s/^\$([_a-zA-Z][_a-zA-Z0-9]*) *=/\$data =/;
-                $v =~ s/&39;/'/g;
+                $v =~ s/&#?39;/'/g;
                 eval $v;
                 print STDERR "Lemonldap::NG : Error while reading configuration with $k key: $@\n" if($@);
                 $conf->{$k} = $data;
