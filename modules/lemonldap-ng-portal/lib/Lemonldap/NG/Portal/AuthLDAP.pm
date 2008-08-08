@@ -34,7 +34,7 @@ sub authenticate {
         if ($@) {
             print STDERR "Module Net::LDAP::Control::PasswordPolicy not found in @INC\n";
             return PE_LDAPERROR;
-	}
+        }
         no strict 'subs';
 
         # Create Control object
@@ -56,10 +56,17 @@ sub authenticate {
         if ( defined $resp ) {
             my $pp_error = $resp->error;
             if ( defined $pp_error ) {
-                return PE_PP_ACCOUNT_LOCKED
-                  if ( $pp_error == 1 );
-                return PE_PP_PASSWORD_EXPIRED
-                  if ( $pp_error == 0 );
+                return [
+                    PE_PP_PASSWORD_EXPIRED,
+                    PE_PP_ACCOUNT_LOCKED,
+                    PE_PP_CHANGE_AFTER_RESET,
+                    PE_PP_PASSWORD_MOD_NOT_ALLOWED,
+                    PE_PP_MUST_SUPPLY_OLD_PASSWORD,
+                    PE_PP_INSUFFICIENT_PASSWORD_QUALITY,
+                    PE_PP_PASSWORD_TOO_SHORT,
+                    PE_PP_PASSWORD_TOO_YOUNG,
+                    PE_PP_PASSWORD_IN_HISTORY,
+                ]->[$pp_error];
             }
             else {
                 return PE_BADCREDENTIALS;
