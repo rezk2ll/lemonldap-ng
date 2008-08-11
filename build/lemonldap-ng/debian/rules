@@ -83,6 +83,8 @@ install: build
 			$(DEB_TMP_LM_ROOT)portal/index-Debian.pl \
 			$(DEB_TMP_LM_ROOT)portal/index_skin-Debian.pl \
 			$(DEB_TMP_LM_ROOT)liberty-alliance-sp-portal/index-Debian.pl
+	perl -i -pe 's#(applyConfFile\s+=>\s+.*?)/\S*(apply\.conf)#$$1/etc/lemonldap-ng/$$2#' \
+			$(DEB_TMP_LM_ROOT)manager/index-Debian.pl \
 # Build architecture-independent files here.
 binary-indep: build install
 	dh_testdir

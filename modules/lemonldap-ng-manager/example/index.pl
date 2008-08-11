@@ -13,7 +13,7 @@ my $h = new Lemonldap::NG::Manager(
         cssFile => 'theme/default.css',
         textareaW               => 50,
         textareaH               => 2,
-        inputSize               => 10,
+        inputSize               => 30,
 
         # jsFile => /path/to/lemonldap-ng-manager.js,
     }

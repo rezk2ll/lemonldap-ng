@@ -110,7 +110,7 @@ window.onload=function(){
   var w=X.clientWidth()-12;
   var h=X.clientHeight()-12;
   //var h=window.outerHeight;
-  s32=new xSplitter('idSplitter32',0,0,0,0,false,4,3*h/4,h/8,true,0);
+  s32=new xSplitter('idSplitter32',0,0,0,0,false,4,h/2,h/8,true,0);
   s3=new xSplitter('idSplitter3',0,0,w,h,true,4,w/4,w/8,true,4,null,s32);
   X.addEventListener(window,'resize',win_onresize,false);
   document.getElementById('help').innerHTML='<h3>$text{waitingResult}</h3>';
