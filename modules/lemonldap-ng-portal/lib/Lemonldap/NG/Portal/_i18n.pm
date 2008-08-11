@@ -90,6 +90,14 @@ sub error_fr {
         "Votre compte est bloqué",
         "Votre mot de passe a expiré",
         "Certificat exigé",
+        "Erreur",
+        "Le mot de passe a été réinitialisé et doit être changé",
+        "Modification du mot de passe non autorisée",
+        "Ancien mot de passe à fournir pour le changer",
+        "Qualité de mot de passe insuffisante",
+        "Mot de passe trop court",
+        "Mot de passe trop récent",
+        "Mot de passe utilisé trop récemment",
     ];
 }
 
@@ -119,6 +127,14 @@ sub error_en {
         "Your account is locked",
         "Your password has expired",
         "Certificate required",
+        'Error',
+        'Password has been reset and now must be changed',
+        'Password may not be modified',
+        'Old password must also be supplied when setting a new password',
+        'Insufficient password quality',
+        'Password too short',
+        'Password too young',
+        'Password used too recently',
     ];
 }
 
@@ -148,5 +164,13 @@ sub error_ro {
         "Contul dvs. este blocat",
         "Parola dvs. a expirat",
         "Certificat cerut",
+        'Eroare',
+        'Password has been reset and now must be changed',
+        'Password may not be modified',
+        'Old password must also be supplied when setting a new password',
+        'Insufficient password quality',
+        'Password too short',
+        'Password too young',
+        'Password used too recently',
     ];
 }
