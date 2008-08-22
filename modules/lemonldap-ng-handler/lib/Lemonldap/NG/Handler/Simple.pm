@@ -500,7 +500,7 @@ sub grant {
         return &{ $locationCondition->[$i] }($datas)
           if ( $uri =~ $locationRegexp->[$i] );
     }
-    return &$defaultCondition;
+    return &$defaultCondition($datas);
 }
 
 # forbidden : used to reject non authorizated requests

@@ -119,7 +119,7 @@ sub grant {
         );
         return 0;
     }
-    return &{ $defaultCondition->{$vhost} };
+    return &{ $defaultCondition->{$vhost} }($datas);
 }
 
 1;
