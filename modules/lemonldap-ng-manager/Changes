@@ -1,5 +1,9 @@
 Revision history for Perl extension Lemonldap::NG::Manager.
 
+0.86  Mon aug 25 22:02:23 2008
+	- UTF8 in _i18n.pm
+	- change in default values
+
 0.85  Tue may 6 7:02:34 2008
 	- CSS update
 

@@ -1,5 +1,9 @@
 Revision history for Perl extension Lemonldap::NG::Portal.
 
+0.85  Mon aug 25 22:07:54 2008
+	- CSS for the portal
+	- Little bug in CDA
+
 0.83  Sat May 24 17:24:23 2008
 	- Integration in Handler status system
 	- Romanian translation
