@@ -3,7 +3,7 @@ package Lemonldap::NG::Manager::_i18n;
 # Developer warning : this file must be utf8 encoded
 
 use AutoLoader qw(AUTOLOAD);
-our $VERSION = '0.32';
+our $VERSION = '0.33';
 
 sub import {
     my ($caller_package) = caller;

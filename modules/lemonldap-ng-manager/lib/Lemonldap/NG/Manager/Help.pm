@@ -1,7 +1,7 @@
 package Lemonldap::NG::Manager::Help;
 
 use AutoLoader qw(AUTOLOAD);
-our $VERSION = '0.35';
+our $VERSION = '0.36';
 
 sub import {
     my ($caller_package) = caller;
@@ -300,14 +300,37 @@ This mechanism avoid to do more than one time the same operation in the
 authentication phase. Example&nbsp;:</p>
 <pre>
     # macros
-    long_name => \$givenname . " " . \$surname
-    admin     => \$uid eq "foo" or \$uid eq "bar"
+    long_name =&gt; \$givenname . " " . \$surname
+    admin     =&gt; \$uid eq "foo" or \$uid eq "bar"
     
     # test.example.com - Headers
-    Name      => \$long_name
+    Name      =&gt; \$long_name
     
     # test.example.com - Rules
-    ^/admin/ => \$admin
+    ^/admin/ =&gt; \$admin
+</pre>
+
+<h4> Tips </h4>
+
+<h5> Redefining LDAP attributes </h5>
+<p> You can create a macro with the same name than an exported value. If so,
+the attribute is redefined. Example&nbsp;:</p>
+<pre>
+    uid =&gt; $uid . "\\\@domain.com"
+</pre>
+
+<h5> Using regexp </h5>
+
+<p> Suppose you want to extract the string 'admin' or 'user' in an attribute,
+in Perl, you can use <tt>\$mail&nbsp;=~&nbsp;s/^.*(user|admin)/\$1/</tt>. To
+use it in Lemonldap::NG, you have to do the following&nbsp;:</p>
+<pre>
+    mail =&gt; (\$mail =~ /(user|admin)/)[0]
+</pre>
+<p> Explanation : '\$mail =~ /(user|admin)/' returns 0 or 1, but
+'(\$mail =~ /(user|admin)/)' is a "list context" so it returns an array
+containing all elements recognized. So '(\$mail =~ /(user|admin)/)[0]'
+returns the first element.</p>
 EOT
 }
 
@@ -321,14 +344,38 @@ Elles &eacute;vitent de r&eacute;p&eacute;ter le m&ecirc;me calcul plusieurs
 fois dans la phase d'authentification. Exemple&nbsp;:</p>
 <pre>
     # macros
-    nom_complet => \$givenname . " " . \$surname
-    admin => \$uid eq "foo" or \$uid eq "bar"
+    nom_complet =&gt; \$givenname . " " . \$surname
+    admin =&gt; \$uid eq "foo" or \$uid eq "bar"
     
     # test.example.com - En-t&ecirc;tes
-    Nom => \$nom_complet
+    Nom =&gt; \$nom_complet
     
     # test.example.com - R&egrave;gles
-    ^/admin/ => \$admin
+    ^/admin/ =&gt; \$admin
+</pre>
+
+<h4> Astuces </h4>
+
+<h5> Redéfinir les attributs LDAP </h5>
+<p> Une macro peut porter le même nom
+You can create a macro with the same name than an exported value. If so,
+the attribute is redefined. Example&nbsp;:</p>
+<pre>
+    uid =&gt; $uid . "\\\@domain.com"
+</pre>
+
+<h5> Using regexp </h5>
+
+<p> Suppose you want to extract the string 'admin' or 'user' in an attribute,
+in Perl, you can use <tt>\$mail&nbsp;=~&nbsp;s/^.*(user|admin)/\$1/</tt>. To
+use it in Lemonldap::NG, you have to do the following&nbsp;:</p>
+<pre>
+    mail =&gt; (\$mail =~ /(user|admin)/)[0]
+</pre>
+<p> Explanation : '\$mail =~ /(user|admin)/' returns 0 or 1, but
+'(\$mail =~ /(user|admin)/)' is a "list context" so it returns an array
+containing all elements recognized. So '(\$mail =~ /(user|admin)/)[0]'
+returns the first element.</p>
 EOT
 }
 

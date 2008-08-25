@@ -19,7 +19,7 @@ example/imgs/iconJob.gif
 example/imgs/iconReport.gif
 example/imgs/iconTask.gif
 example/imgs/iconTimeRecordsEdit.gif
-example/imgs/iconUnCheckAll.gif
+example/imgs/iconUncheckAll.gif
 example/imgs/item.gif
 example/imgs/item2.gif
 example/imgs/leaf.gif
@@ -50,9 +50,9 @@ example/lmConfig.mysql
 example/scripts/lmConfigEditor
 example/scripts/lmSessionDump
 example/soapserver.pl
-example/theme/logo_lemonldap-ng.png
 example/theme/default.css
 example/theme/hatch.gif
+example/theme/logo_lemonldap-ng.png
 lib/Lemonldap/NG/Manager.pm
 lib/Lemonldap/NG/Manager/_HTML.pm
 lib/Lemonldap/NG/Manager/_i18n.pm
