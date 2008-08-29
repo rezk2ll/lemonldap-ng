@@ -12,15 +12,68 @@ my $docs = {
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocInstallExample?language=en' => 'install.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocInstallExample?language=fr' => 'install-fr.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocInstall?language=en'        => 'advanced-install.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocInstallDebianPackages'      => 'debian-packages-install.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Erreurs?language=fr'           => 'errors-fr.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Erreurs?language=en'           => 'errors.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocSOAP?language=fr'           => 'soap-fr.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocLA?language=fr'             => 'liberty-alliance-fr.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocPpolicy'                    => 'password-policy.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/LDAPSchema'                    => 'advanced-access-rules.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocAppSympa'                   => 'sympa.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocAppTomcatValve'             => 'tomcat-valve.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocAppDokuwiki'                => 'dokuwiki.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocAppPLA'                     => 'phpldapadmin.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Roadmap'        		  => 'roadmap.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/References'                    => 'references.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/Main/Contacts'                    => 'contacts.html',
 };
 
 my %imgs;
+
+sub css() {
+    return <<EOT;
+    <style type="text/css">
+    body{
+      background: #ddd;
+      font-family: sans-serif;
+      font-size: 11pt;
+      padding: 0 50px;
+    }
+    div.main-content{
+      padding: 10px;
+      background: #fff;
+      border: 2px #ccc solid;
+    }
+    a{
+      text-decoration: none;
+    }
+    p.footer{
+      text-align: center;
+      margin: 5px 0 0 0;
+    }
+    .heading-1{
+      text-align: center;
+      color: orange;
+      font-variant: small-caps;
+      font-size: 20pt;
+    }
+    .heading-1-1{
+      color: orange;
+      font-size: 14pt;
+      border-bottom: 2px #ccc solid;
+    }
+    pre{
+      background: #eee;
+      border: 2px #ccc solid;
+      padding: 5px;
+      border-left: 10px #ccc solid;
+    }
+    ul.star li{
+      list-style-type: square;
+    }
+    </style>
+EOT
+}
 
 while ( my ( $url, $file ) = each %$docs ) {
     print STDERR "\n# $file\n";
@@ -71,6 +124,7 @@ while ( my ( $url, $file ) = each %$docs ) {
             s#/xwiki/bin/view/NG/DocInstallExample#install-fr.html#g;
             s#/xwiki/bin/view/NG/DocInstall#advanced-install.html#g;
             s#/xwiki/bin/view/NG/Erreurs#errors-fr.html#g;
+            s#/xwiki/bin/view/NG/DocSOAP#soap-fr.html#g;
         }
         else {
             s#/xwiki/bin/view/NG/FAQ#faq.html#g;
@@ -78,6 +132,7 @@ while ( my ( $url, $file ) = each %$docs ) {
             s#/xwiki/bin/view/NG/DocInstallExample#install.html#g;
             s#/xwiki/bin/view/NG/DocInstall#advanced-install.html#g;
             s#/xwiki/bin/view/NG/Erreurs#errors.html#g;
+            s#/xwiki/bin/view/NG/DocSOAP#soap-fr.html#g;
         }
         $buf .= $_;
     }
@@ -91,13 +146,49 @@ while ( my ( $url, $file ) = each %$docs ) {
 <head>
 <title>Lemonldap::NG documentation: '.$file.'</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+'.&css.'
 </head>
 <body>
 ';
-    print FILE "$buf</body></html>";
+    print FILE "$buf";
+    print FILE '<p class="footer"><a href="index.html">Index</a></p>';
+    print FILE "</body></html>";
     close FILE;
 }
 
 foreach(keys %imgs) {
     `wget -N http://wiki.lemonldap.objectweb.org/xwiki/bin/download/$_`;
 }
+
+# Create index.html
+open INDEX , ">index.html";
+print INDEX <<EOT;
+<!DOCTYPE html PUBLIC "XHTML 1.0 Strict"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<head>
+<title>Lemonldap::NG documentation: index</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+EOT
+print INDEX &css;
+print INDEX <<EOT;
+</head>
+<body>
+  <div class="main-content">
+    <h2 class="heading-1">LemonLDAP::NG documentation</h2>
+    <ul class="star">
+EOT
+while (my ( $url, $file) = each %$docs) {
+    my $name = $file;
+    $name =~ s/\.html//;
+    $name =~ s/-fr/ (FR)/g;
+    $name =~ s/-/ /g;
+    print INDEX '      <li><a href="'.$file.'">'.ucfirst($name).'</a></li>'."\n";
+}
+print INDEX <<EOT;
+    </ul>
+  </div>
+  <p class="footer">Find the latest version of the documentation on <a href="http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Presentation">LemonLDAP::NG Wiki</a> !</p>
+</body>
+</html>
+EOT
