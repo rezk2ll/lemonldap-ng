@@ -23,7 +23,7 @@ my $docs = {
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocAppTomcatValve'             => 'tomcat-valve.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocAppDokuwiki'                => 'dokuwiki.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocAppPLA'                     => 'phpldapadmin.html',
-    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Roadmap'        		  => 'roadmap.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Roadmap'                       => 'roadmap.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/References'                    => 'references.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/Main/Contacts'                    => 'contacts.html',
 };
@@ -74,7 +74,6 @@ sub css() {
     </style>
 EOT
 }
-
 while ( my ( $url, $file ) = each %$docs ) {
     print STDERR "\n# $file\n";
     open DOC, "wget -q -O - $url |";
@@ -87,38 +86,42 @@ while ( my ( $url, $file ) = each %$docs ) {
     my $pre = 0;
     while (<DOC>) {
         $ind++ if (/<div class="main-content">/);
-	# Unfined bug...
-	$ind = 0 if(m#<div id="col-b"#);
+
+        # Unfined bug...
+        $ind = 0 if (m#<div id="col-b"#);
         next unless ($ind);
-	my @t = ($_ =~ /<div/i);
-	$div += @t;
-	@t = ($_ =~ /<\/div/i);
-	$div -= @t;
+        my @t = ( $_ =~ /<div/i );
+        $div += @t;
+        @t = ( $_ =~ /<\/div/i );
+        $div -= @t;
         $ind-- unless ($div);
         s/\r//g;
         utf8::decode($_);
 
         # Little xwiki bug
-	if(/<\/pre/) {
+        if (/<\/pre/) {
             $pre = 0;
-            while (s#(?<!<pre>)(.*?)(?:<p[^>]*>\s*</p>|<p[^>]*/>)(.*?)(?=</pre>)#$1<br/><br/>$2#gi) {}
+            while (s#(?<!<pre>)(.*?)(?:<p[^>]*>\s*</p>|<p[^>]*/>)(.*?)(?=</pre>)#$1<br/><br/>$2#gi) {
+            }
         }
-        if($pre) {
+        if ($pre) {
             s#(?:<p[^>]*>\s*</p>|<p[^>]*/>)#<br/><br/>#gi;
         }
-        if(/<pre/) {
+        if (/<pre/) {
             $pre = 1;
-            while (s#(?<=<pre>)(.*?)(?:<p[^>]*>\s*</p>|<p[^>]*/>)(.*?)(?=</pre>)#$1<br/><br/>$2#gi) {}
-            while (s#(?<=<pre>)(.*?)(?:<p[^>]*>\s*</p>|<p[^>]*/>)(.*?)(?!</pre>)#$1<br/><br/>$2#gi) {}
+            while (s#(?<=<pre>)(.*?)(?:<p[^>]*>\s*</p>|<p[^>]*/>)(.*?)(?=</pre>)#$1<br/><br/>$2#gi) {
+            }
+            while (s#(?<=<pre>)(.*?)(?:<p[^>]*>\s*</p>|<p[^>]*/>)(.*?)(?!</pre>)#$1<br/><br/>$2#gi) {
+            }
         }
-        if(m#(["'])/xwiki/bin/download/([\/\w\.\-]+)\1#) {
+        if (m#(["'])/xwiki/bin/download/([\/\w\.\-]+)\1#) {
             $imgs{$2} = 1;
             s#(["'])/xwiki/bin/download/(?:[\/\w\.\-]+)/([\w\.\-]+)\1#$1$2$1#;
         }
-        if(s#(["'])/xwiki/bin/download/([\/\w\.\-]+)\1#$1$2$1#) {
+        if (s#(["'])/xwiki/bin/download/([\/\w\.\-]+)\1#$1$2$1#) {
             $imgs{$2} = 1;
         }
-        if($file =~ /-fr/) {
+        if ( $file =~ /-fr/ ) {
             s#/xwiki/bin/view/NG/FAQ#faq-fr.html#g;
             s#/xwiki/bin/view/NG/Presentation#overview-fr.html#g;
             s#/xwiki/bin/view/NG/DocInstallExample#install-fr.html#g;
@@ -144,9 +147,9 @@ while ( my ( $url, $file ) = each %$docs ) {
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
 <head>
-<title>Lemonldap::NG documentation: '.$file.'</title>
+<title>Lemonldap::NG documentation: ' . $file . '</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-'.&css.'
+' . &css . '
 </head>
 <body>
 ';
@@ -156,12 +159,12 @@ while ( my ( $url, $file ) = each %$docs ) {
     close FILE;
 }
 
-foreach(keys %imgs) {
+foreach ( keys %imgs ) {
     `wget -N http://wiki.lemonldap.objectweb.org/xwiki/bin/download/$_`;
 }
 
 # Create index.html
-open INDEX , ">index.html";
+open INDEX, ">index.html";
 print INDEX <<EOT;
 <!DOCTYPE html PUBLIC "XHTML 1.0 Strict"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -178,12 +181,21 @@ print INDEX <<EOT;
     <h2 class="heading-1">LemonLDAP::NG documentation</h2>
     <ul class="star">
 EOT
-while (my ( $url, $file) = each %$docs) {
+foreach my $file (
+    sort {
+        my ( $f, $s ) = ( $a, $b );
+        $f =~ s/-(\w{2}\.html)$/.zzz$1/;
+        $s =~ s/-(\w{2}\.html)$/.zzz$1/;
+        return $f cmp $s;
+    } values %$docs
+  )
+{
     my $name = $file;
+    next if ( $name eq 'index.html' );
     $name =~ s/\.html//;
     $name =~ s/-fr/ (FR)/g;
     $name =~ s/-/ /g;
-    print INDEX '      <li><a href="'.$file.'">'.ucfirst($name).'</a></li>'."\n";
+    print INDEX '      <li><a href="' . $file . '">' . ucfirst($name) . '</a></li>' . "\n";
 }
 print INDEX <<EOT;
     </ul>
