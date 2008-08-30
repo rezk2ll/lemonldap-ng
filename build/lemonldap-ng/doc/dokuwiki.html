@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Linux/x86 (vers 6 November 2007), see www.w3.org" />
+
+  <title>Lemonldap::NG documentation: dokuwiki.html</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+  <style type="text/css">
+/*<![CDATA[*/
+    body{
+      background: #ddd;
+      font-family: sans-serif;
+      font-size: 11pt;
+      padding: 0 50px;
+    }
+    div.main-content{
+      padding: 10px;
+      background: #fff;
+      border: 2px #ccc solid;
+    }
+    a{
+      text-decoration: none;
+    }
+    p.footer{
+      text-align: center;
+      margin: 5px 0 0 0;
+    }
+    .heading-1{
+      text-align: center;
+      color: orange;
+      font-variant: small-caps;
+      font-size: 20pt;
+    }
+    .heading-1-1{
+      color: orange;
+      font-size: 14pt;
+      border-bottom: 2px #ccc solid;
+    }
+    pre{
+      background: #eee;
+      border: 2px #ccc solid;
+      padding: 5px;
+      border-left: 10px #ccc solid;
+    }
+    ul.star li{
+      list-style-type: square;
+    }
+  /*]]>*/
+  </style>
+</head>
+
+<body>
+  <div class="main-content">
+    <h2 class="heading-1"><span id="HLemonLDAPSSOwithDokuwiki">LemonLDAP SSO
+    with Dokuwiki</span></h2>
+
+    <p class="paragraph"></p>
+
+    <ul>
+      <li><a href="#HInstallation">Installation</a></li>
+
+      <li><a href="#HConfiguration">Configuration</a></li>
+
+      <li><a href="#HLemonLDAP2Fdokuwiki2FApache2VHostexample">LemonLDAP /
+      dokuwiki / Apache2 VHost example</a></li>
+    </ul>This plugin was provided by Erwan Legall (LINAGORA). See the
+    <span class="wikiexternallink"><a href=
+    "http://wiki.splitbrain.org/wiki:auth:lemonldap">original
+    article</a></span>.
+
+    <h3 class="heading-1-1"><span id="HInstallation">Installation</span></h3>
+
+    <p class="paragraph"></p>Simply unpack the LemonLDAP::NG Dokuwiki plugin
+    (see download section) and copy the lemonldap.class.php and
+    lemonldapuserdatabackend.class.php in your inc/auth/ directory.
+
+    <p class="paragraph"></p>Note: The Dokuwiki must be provided by the http
+    server wheris the lemonLDAP handler.
+
+    <h3 class="heading-1-1"><span id=
+    "HConfiguration">Configuration</span></h3><br />
+    <br />
+    Very simple too, the only thing you have to change is the conf/local.php
+    to add this line:<br />
+    <br />
+
+    <div class="code">
+      <pre>
+$conf[authtype]    = lemonldap;
+</pre>
+    </div><br />
+    <br />
+    That's it!
+
+    <h3 class="heading-1-1"><span id=
+    "HLemonLDAP2Fdokuwiki2FApache2VHostexample">LemonLDAP / dokuwiki / Apache2
+    VHost example</span></h3><br />
+    <br />
+    There is an example of an apache2 vhost which prvide an LemonLDAP
+    authentified dokuwiki:<br />
+    <br />
+    For information, this can be an Apache2 lemon/doku config file:<br />
+    <br />
+
+    <div class="code">
+      <pre>
+PerlRequire /<span class=
+"java-keyword">var</span>/lib/lemonldap-ng/handler/MyHandler.pm<br /><br />&lt;VirtualHost *&gt;
+    ServerName dokuwiki.sso-lemonldap.com
+    PerlOptions +GlobalRequest
+    PerlHeaderParserHandler MyHandler<br /><br />    &lt;Files *.pl&gt;
+        SetHandler perl-script
+        PerlResponseHandler ModPerl::Registry
+        PerlSendHeader  On
+    &lt;/Files&gt;<br /><br />    # DocumentRoot
+    DocumentRoot /<span class=
+"java-keyword">var</span>/www/dokuwiki.sso-lemonldap.com<br /><br />    &lt;Directory /<span class="java-keyword">var</span>/www/dokuwiki.sso-lemonldap.com&gt;
+        Order deny,allow
+        #Deny from all
+        Allow from all
+        Options -Indexes +FollowSymLinks +MultiViews
+    &lt;/Directory&gt;<br /><br />        &lt;IfModule mod_dir.c&gt;
+            DirectoryIndex index.pl index.php index.html
+        &lt;/IfModule&gt;<br /><br />    # Logs
+    LogLevel warn
+    ErrorLog /<span class=
+"java-keyword">var</span>/log/apache2/dokuwikisso-lemonldap.com-error.log
+    CustomLog /<span class=
+"java-keyword">var</span>/log/apache2/dokuwikisso-lemonldap.com-access.log combined<br /><br />&lt;/VirtualHost&gt;
+</pre>
+    </div>
+  </div>
+
+  <p class="footer"><a href="index.html">Index</a></p>
+</body>
+</html>

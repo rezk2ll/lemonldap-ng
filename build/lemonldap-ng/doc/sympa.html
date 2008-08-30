@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Linux/x86 (vers 6 November 2007), see www.w3.org" />
+
+  <title>Lemonldap::NG documentation: sympa.html</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+  <style type="text/css">
+/*<![CDATA[*/
+    body{
+      background: #ddd;
+      font-family: sans-serif;
+      font-size: 11pt;
+      padding: 0 50px;
+    }
+    div.main-content{
+      padding: 10px;
+      background: #fff;
+      border: 2px #ccc solid;
+    }
+    a{
+      text-decoration: none;
+    }
+    p.footer{
+      text-align: center;
+      margin: 5px 0 0 0;
+    }
+    .heading-1{
+      text-align: center;
+      color: orange;
+      font-variant: small-caps;
+      font-size: 20pt;
+    }
+    .heading-1-1{
+      color: orange;
+      font-size: 14pt;
+      border-bottom: 2px #ccc solid;
+    }
+    pre{
+      background: #eee;
+      border: 2px #ccc solid;
+      padding: 5px;
+      border-left: 10px #ccc solid;
+    }
+    ul.star li{
+      list-style-type: square;
+    }
+  /*]]>*/
+  </style>
+</head>
+
+<body>
+  <div class="main-content">
+    <h2 class="heading-1"><span id="HSympa">Sympa</span></h2>
+
+    <p class="paragraph"></p>
+
+    <ul>
+      <li><a href="#HPresentation">Presentation</a></li>
+
+      <li>
+        <a href="#HIntegrationwithLemonLDAP3A3ANG">Integration with
+        LemonLDAP::NG</a>
+
+        <ul>
+          <li><a href="#HPresentation-1">Presentation</a></li>
+
+          <li><a href="#HSympaconfiguration">Sympa configuration</a></li>
+
+          <li><a href="#HApacheconfiguration">Apache configuration</a></li>
+
+          <li><a href="#HLemonLDAP3A3ANGconfiguration">LemonLDAP::NG
+          configuration</a></li>
+        </ul>
+      </li>
+    </ul>
+
+    <h3 class="heading-1-1"><span id="HPresentation">Presentation</span></h3>
+
+    <p class="paragraph"></p>Sympa is a mailing list manager. See <span class=
+    "wikiexternallink"><a href=
+    "http://www.sympa.org">http://www.sympa.org</a></span> for more
+    informations.
+
+    <h3 class="heading-1-1"><span id=
+    "HIntegrationwithLemonLDAP3A3ANG">Integration with
+    LemonLDAP::NG</span></h3>
+
+    <h4 class="heading-1-1-1"><span id=
+    "HPresentation">Presentation</span></h4>
+
+    <p class="paragraph"></p>Sympa provide a magic authentication mecanism,
+    which display a special button on the interface. When the user click on
+    it, if he has already an SSO session, he is directly authenticated.
+
+    <p class="paragraph"></p>This works for CAS, Shibboleth and LemonLDAP::NG.
+
+    <h4 class="heading-1-1-1"><span id="HSympaconfiguration">Sympa
+    configuration</span></h4><br />
+    <br />
+    Edit the file "auth.conf", for example:<br />
+    <br />
+
+    <div class="code">
+      <pre>
+# vi /etc/sympa/auth.conf
+</pre>
+    </div><br />
+    <br />
+    And fill it (replace all "example" elements):
+
+    <div class="code">
+      <pre>
+generic_sso
+        service_name                    LemonLDAP::NG
+        service_id                      lemonldapng
+        http_header_prefix              HTTP
+        email_http_header               HTTP_EMAIL
+        netid_http_header               HTTP_AUTH-USER
+        internal_email_by_netid         1
+        logout_url                      <span class="nobr"><a href=
+"http://sympa.example.com/wws/logout">http://sympa.example.com/wws/logout</a></span><br /><br />ldap
+        host                            localhost:389
+        timeout                         20
+        bind_dn                         cn=admin,dc=example,dc=com
+        bind_password                   secret
+        suffix                          dc=example,dc=com
+        get_dn_by_uid_filter            (uid=[sender])
+        get_dn_by_email_filter          (|(mail=[sender])(n2atraliasmail=[sender]))
+        alternative_email_attribute     n2atrmaildrop
+        email_attribute                 mail
+        scope                           sub
+        authentication_info_url         <span class="nobr"><a href=
+"http://sympa.example.com">http://sympa.example.com</a></span>
+</pre>
+    </div>
+
+    <h4 class="heading-1-1-1"><span id="HApacheconfiguration">Apache
+    configuration</span></h4>
+
+    <p class="paragraph"></p>We recommend to create a virtualhost for
+    Sympa(eg. <span class="nobr"><a href=
+    "http://sympa.example.com">http://sympa.example.com</a></span>). Then
+    configure this virtualhost in your existing Apache configuration:
+
+    <p class="paragraph"></p>
+
+    <div class="code">
+      <pre>
+# The following lines must be set once <span class=
+"java-keyword">for</span> all virtualhosts 
+NameVirtualHost *<br /><br />PerlRequire /opt/lemonldap-ng/handler/Handler.pm
+PerlOptions +GlobalRequest
+&lt;Files ~ <span class="java-quote">".(pl)$"</span>&gt;
+        SetHandler      perl-script
+        PerlHandler     ModPerl::Registry
+        PerlSendHeader  On
+&lt;/Files&gt;<br /><br /># Define here all <span class=
+"java-keyword">protected</span> virtualhosts
+&lt;VirtualHost *&gt;
+    ServerName sympa.example.com<br /><br />    # WebSSO protection
+    &lt;Location /wws/sso_login/lemonldapng&gt;
+    PerlHeaderParserHandler Handler
+    &lt;/Location&gt;<br /><br />    &lt;Location /reload&gt;
+    PerlHeaderParserHandler Handler-&gt;reload
+    &lt;/Location&gt;<br /><br />    RedirectMatch ^/$ /wws
+    Alias /wwsicons /usr/share/sympa/icons
+    ScriptAlias /wws /usr/lib/cgi-bin/sympa/wwsympa.fcgi<br /><br />    LogLevel warn
+    ErrorLog /<span class=
+"java-keyword">var</span>/log/apache2/sympa-error.log
+    CustomLog /<span class=
+"java-keyword">var</span>/log/apache2/sympa-access.log combined
+&lt;/VirtualHost&gt;
+</pre>
+    </div>
+
+    <h4 class="heading-1-1-1"><span id=
+    "HLemonLDAP3A3ANGconfiguration">LemonLDAP::NG configuration</span></h4>
+
+    <p class="paragraph"></p>Go to the manager and create a new virtual host:
+
+    <div class="code">
+      <pre>
+pla.example.com
+</pre>
+    </div><br />
+    <br />
+    Then create the access rule:
+
+    <div class="code">
+      <pre>
+<span class="java-keyword">default</span> =&gt; accept
+</pre>
+    </div><br />
+    <br />
+    And set the correct HTTP headers:
+
+    <div class="code">
+      <pre>
+Auth-User =&gt; $uid
+email =&gt; $email
+</pre>
+    </div>
+  </div>
+
+  <p class="footer"><a href="index.html">Index</a></p>
+</body>
+</html>
