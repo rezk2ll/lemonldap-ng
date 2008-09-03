@@ -17,9 +17,8 @@ my $portal = Lemonldap::NG::Portal::SharedConf->new(
 );
 
 # Template common variables
-my $template = HTML::Template->new(filename => "$skin_dir/$skin/index.tpl");
-$template->param(AUTH_TITLE => "LemonLDAP::NG Portal");
-$template->param(CSS_FILE => "skins/$skin/default.css");
+my $template = HTML::Template->new(filename => "$skin_dir/$skin/login.tpl");
+$template->param(PAGE_TITLE => "LemonLDAP::NG Portal");
 
 if ( $portal->process() ) {
     print $portal->header('text/html; charset=utf8');
@@ -34,7 +33,8 @@ if ( $portal->process() ) {
     @sites = sort {$a cmp $b} @sites ;
     $template->param(AUTH_SITES => \@sites);
     $template->param(AUTH_ERROR => $portal->error);
-
+    $template->param(AUTH_ERROR_TYPE => "negative");
+    $template->param(AUTH_ERROR_TYPE => "positive") if (scalar(grep{/$portal->{error}/} (PE_DONE,PE_OK)));
     # Logout
     $template->param(LOGOUT_URL => "$ENV{SCRIPT_NAME}?logout=1");
 
@@ -42,7 +42,11 @@ if ( $portal->process() ) {
 } else {
     print $portal->header('text/html; charset=utf8');
     $template->param(AUTH_ERROR => $portal->error);
+    $template->param(AUTH_ERROR_TYPE => "negative");
+    $template->param(AUTH_ERROR_TYPE => "warning") if (scalar(grep{/$portal->{error}/} (PE_FIRSTACCESS,PE_SESSIONEXPIRED,PE_FORMEMPTY)));
+    $template->param(AUTH_ERROR_TYPE => "positive") if (scalar(grep{/$portal->{error}/} (PE_DONE,PE_OK)));
     $template->param(AUTH_URL => $portal->param('url'));
+    $template->param(DISPLAY_FORM => 1);
     print $template->output;
 }
 
