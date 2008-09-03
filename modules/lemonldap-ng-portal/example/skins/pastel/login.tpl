@@ -1,32 +1,32 @@
 <TMPL_INCLUDE NAME="header.tpl">
 
-	<div id="messages" class="<TMPL_VAR NAME="AUTH_ERROR_TYPE">"><ul><li><TMPL_VAR NAME="AUTH_ERROR"></li></ul></div>
+	<div class="message <TMPL_VAR NAME="AUTH_ERROR_TYPE">"><ul><li><TMPL_VAR NAME="AUTH_ERROR"></li></ul></div>
 
 	<div class="loginlogo"></div>
 
 	<TMPL_IF NAME="DISPLAY_FORM">
 	<form method="post" class="login">
 
-		<h3>Please enter your credentials</h3>
+		<h3><lang en="Please enter your credentials" fr="Merci de vous autentifier"/></h3>
 		
 	        <input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
 
 		<table>
-		<tr><th>Login</th>
+		<tr><th><lang en="Login" fr="Identifiant"/></th>
 		<td><input name="user" type="text" /></td>
 		</tr>
-		<tr><th>Password</th>
+		<tr><th><lang en="Password" fr="Mot de passe"/></th>
 		<td><input name="password" type="password" autocomplete="off" /></td>
 		</tr>
 		<tr><td colspan="2">
 		<div class="buttons">
 		<button type="reset" class="negative">
 			<img src="skins/pastel/error.png" alt="" />
-			Cancel
+			<lang en="Cancel" fr="Annuler" />
 		</button>
 		<button type="submit" class="positive">
 			<img src="skins/pastel/ok.png" alt="" />
-			Submit
+			<lang en="Connect" fr="Se connecter" />
 		</button>
 		</div></td></tr>
 		</table>
@@ -38,7 +38,7 @@
 		<div class="buttons">
 		<a href="<TMPL_VAR NAME="LOGOUT_URL">" class="negative">
 			<img src="skins/pastel/stop.png" alt="" />
-			Logout
+			<lang en="Logout" fr="Se d&eacute;connecter"/>
 		</a>
 		</div>
 	</TMPL_IF>

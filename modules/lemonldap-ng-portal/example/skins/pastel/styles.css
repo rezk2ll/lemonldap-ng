@@ -42,7 +42,7 @@ text-align:center;
 font-size:10pt;
 }
 
-#messages {
+div.message {
 background-color:#f5f5f5;
 border:1px solid #dedede;
 border-top:1px solid #eee;
@@ -62,7 +62,7 @@ li {
 list-style:none;
 }
 
-#messages li {
+div.message li {
 font-size:11pt;
 font-weight:bold;
 list-style-type:none;
@@ -71,15 +71,15 @@ background-position:0% 60%;
 padding:3px 0 3px 30px;
 }
 
-#messages.negative li{
+.message.negative li{
 background-image:url(warning.png);
 }
 
-#messages.positive li{
+.message.positive li{
 background-image:url(ok.png);
 }
 
-#messages.warning li{
+.message.warning li{
 background-image:url(warning_triangle.png);
 }
 
@@ -150,7 +150,7 @@ width:16px;
 height:16px;
 }
 /* STANDARD */
-button:hover, .buttons a:hover, #messages{
+button:hover, .buttons a:hover, .message{
 background-color:#dff4ff;
 border:1px solid #c2e1ef;
 color:#336699;
@@ -164,7 +164,7 @@ color:#fff;
 button.positive, .buttons a.positive{
 color:#529214;
 }
-.buttons a.positive:hover, button.positive:hover, #messages.positive{
+.buttons a.positive:hover, button.positive:hover, div.positive{
 background-color:#E6EFC2;
 border:1px solid #C6D880;
 color:#529214;
@@ -178,7 +178,7 @@ color:#fff;
 .buttons a.negative, button.negative{
 color:#d12f19;
 }
-.buttons a.negative:hover, button.negative:hover, #messages.negative{
+.buttons a.negative:hover, button.negative:hover, div.negative{
 background:#fbe3e4;
 border:1px solid #fbc2c4;
 color:#d12f19;
@@ -189,7 +189,7 @@ border:1px solid #d12f19;
 color:#fff;
 }
 /* WARNING */
-#messages.warning{
+div.warning{
 background-color:#ffe17a; 
 border:1px solid #ffca10;
 color:#a03400;
