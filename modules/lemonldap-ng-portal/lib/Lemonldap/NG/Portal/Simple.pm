@@ -117,6 +117,24 @@ sub error {
         shift || $ENV{HTTP_ACCEPT_LANGUAGE} );
 }
 
+# Used as an HTML::Template filter to tranlate strings in the wanted language
+sub translate_template {
+   my $self = shift;
+   my $text_ref = shift;
+   my $lang = shift || $ENV{HTTP_ACCEPT_LANGUAGE};
+   # Get the lang code (2 letters)
+   $lang = lc($lang);
+   $lang =~ s/-/_/g;
+   $lang =~ s/^(..).*$/$1/;
+   # Test if a translation is available for the selected language
+   # If not available, return the first translated string
+   if ( $$text_ref =~ m/$lang=\"(.*?)\"/) {
+     $$text_ref =~ s/<lang\s*.*$lang=\"(.*?)\".*\/>/$1/gx;
+   } else {
+     $$text_ref =~ s/<lang\s*(..)=\"(.*?)\".*\/>/$2/gx;
+   }
+}
+
 # Private sub used to bind to LDAP server both with Lemonldap::NG account and user
 # credentials if LDAP authentication is used
 sub _bind {
@@ -728,6 +746,10 @@ Main method.
 
 Returns the error message corresponding to the error returned by the methods
 described above
+
+=head3 translate_template
+
+Define an HTML::Template filter to translate multilingual strings
 
 =head3 _bind( $ldap, $dn, $password )
 

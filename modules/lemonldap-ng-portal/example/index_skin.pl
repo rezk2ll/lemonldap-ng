@@ -16,8 +16,8 @@ my $portal = Lemonldap::NG::Portal::SharedConf->new(
     }
 );
 
-# Template common variables
-my $template = HTML::Template->new(filename => "$skin_dir/$skin/login.tpl");
+# HTML::Template object creation
+my $template = HTML::Template->new(filename => "$skin_dir/$skin/login.tpl", die_on_bad_params => 0, cache => 0, filter => sub{$portal->translate_template(@_)});
 if ( $portal->process() ) {
     print $portal->header('text/html; charset=utf8');
 
