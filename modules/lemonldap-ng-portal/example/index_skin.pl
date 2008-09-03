@@ -18,8 +18,6 @@ my $portal = Lemonldap::NG::Portal::SharedConf->new(
 
 # Template common variables
 my $template = HTML::Template->new(filename => "$skin_dir/$skin/login.tpl");
-$template->param(PAGE_TITLE => "LemonLDAP::NG Portal");
-
 if ( $portal->process() ) {
     print $portal->header('text/html; charset=utf8');
 
