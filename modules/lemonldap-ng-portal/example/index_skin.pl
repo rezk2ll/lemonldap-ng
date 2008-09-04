@@ -4,7 +4,7 @@ use Lemonldap::NG::Portal::SharedConf;
 use HTML::Template;
 
 # Skin configuration
-my $skin = "default";
+my $skin     = "default";
 my $skin_dir = "__SKINDIR__";
 
 my $portal = Lemonldap::NG::Portal::SharedConf->new(
@@ -17,34 +17,49 @@ my $portal = Lemonldap::NG::Portal::SharedConf->new(
 );
 
 # HTML::Template object creation
-my $template = HTML::Template->new(filename => "$skin_dir/$skin/login.tpl", die_on_bad_params => 0, cache => 0, filter => sub{$portal->translate_template(@_)});
+my $template = HTML::Template->new(
+    filename          => "$skin_dir/$skin/login.tpl",
+    die_on_bad_params => 0,
+    cache             => 0,
+    filter            => sub { $portal->translate_template(@_) }
+);
 if ( $portal->process() ) {
     print $portal->header('text/html; charset=utf8');
 
     # Get sites
     my @sites = ();
-    foreach ($portal->getProtectedSites) {
+    foreach ( $portal->getProtectedSites ) {
         my %row_data;
         $row_data{SITE_NAME} = $_;
-        push (@sites, \%row_data);
+        push( @sites, \%row_data );
     }
-    @sites = sort {$a cmp $b} @sites ;
-    $template->param(AUTH_SITES => \@sites);
-    $template->param(AUTH_ERROR => $portal->error);
-    $template->param(AUTH_ERROR_TYPE => "negative");
-    $template->param(AUTH_ERROR_TYPE => "positive") if (scalar(grep{/$portal->{error}/} (PE_DONE,PE_OK)));
+    @sites = sort { $a cmp $b } @sites;
+    $template->param( AUTH_SITES      => \@sites );
+    $template->param( AUTH_ERROR      => $portal->error );
+    $template->param( AUTH_ERROR_TYPE => "negative" );
+    $template->param( AUTH_ERROR_TYPE => "positive" )
+      if ( scalar( grep { /$portal->{error}/ } ( PE_DONE, PE_OK ) ) );
+
     # Logout
-    $template->param(LOGOUT_URL => "$ENV{SCRIPT_NAME}?logout=1");
+    $template->param( LOGOUT_URL => "$ENV{SCRIPT_NAME}?logout=1" );
 
     print $template->output;
-} else {
+}
+else {
     print $portal->header('text/html; charset=utf8');
-    $template->param(AUTH_ERROR => $portal->error);
-    $template->param(AUTH_ERROR_TYPE => "negative");
-    $template->param(AUTH_ERROR_TYPE => "warning") if (scalar(grep{/$portal->{error}/} (PE_FIRSTACCESS,PE_SESSIONEXPIRED,PE_FORMEMPTY)));
-    $template->param(AUTH_ERROR_TYPE => "positive") if (scalar(grep{/$portal->{error}/} (PE_DONE,PE_OK)));
-    $template->param(AUTH_URL => $portal->param('url'));
-    $template->param(DISPLAY_FORM => 1);
+    $template->param( AUTH_ERROR      => $portal->error );
+    $template->param( AUTH_ERROR_TYPE => "negative" );
+    $template->param( AUTH_ERROR_TYPE => "warning" )
+      if (
+        scalar(
+            grep { /$portal->{error}/ }
+              ( PE_FIRSTACCESS, PE_SESSIONEXPIRED, PE_FORMEMPTY )
+        )
+      );
+    $template->param( AUTH_ERROR_TYPE => "positive" )
+      if ( scalar( grep { /$portal->{error}/ } ( PE_DONE, PE_OK ) ) );
+    $template->param( AUTH_URL     => $portal->param('url') );
+    $template->param( DISPLAY_FORM => 1 );
     print $template->output;
 }
 
