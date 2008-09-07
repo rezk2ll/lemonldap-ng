@@ -23,6 +23,7 @@
         <li><a href="http://<TMPL_VAR NAME='SITE_NAME'>"><TMPL_VAR NAME="SITE_NAME"></a></li>
         </TMPL_LOOP>
         </ul>
+	</TMPL_IF>
 
 	<TMPL_IF NAME="DISPLAY_FORM">
 	<!-- Display login form -->
