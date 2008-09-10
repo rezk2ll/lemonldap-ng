@@ -13,7 +13,7 @@ use CGI::Cookie;
 require POSIX;
 use Lemonldap::NG::Portal::_i18n;
 
-our $VERSION = '0.85';
+our $VERSION = '0.86';
 
 our @ISA = qw(CGI Exporter);
 
@@ -549,7 +549,12 @@ Lemonldap::NG::Portal::Simple - Base module for building Lemonldap::NG compatibl
          },
          ldapServer     => 'ldap.domaine.com,ldap-backup.domaine.com',
          securedCookie  => 1,
-         exportedVars  => ["uid","cn","mail","appli"],
+         exportedVars  => {
+           uid   => 'uid',
+           cn    => 'cn',
+           mail  => 'mail',
+           appli => 'appli',
+         }
     );
 
   if($portal->process()) {
