@@ -47,14 +47,18 @@ sub authenticate {
             control  => [$pp]
         );
 
-        # Get bind response
-        return PE_OK if ( $mesg->code == 0 );
-
         # Get server control response
         my ($resp) = $mesg->control("1.3.6.1.4.1.42.2.27.8.5.1");
 
+	# Get expiration warning and graces
+	$self->{ppolicy}->{time_before_expiration} = $resp->time_before_expiration;
+	$self->{ppolicy}->{grace_authentications_remaining} = $resp->grace_authentications_remaining;
+
+        # Get bind response
+        return PE_OK if ( $mesg->code == 0 );
+
         if ( defined $resp ) {
-            my $pp_error = $resp->error;
+            my $pp_error = $resp->pp_error;
             if ( defined $pp_error ) {
                 return [
                     PE_PP_PASSWORD_EXPIRED,

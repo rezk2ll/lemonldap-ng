@@ -7,9 +7,22 @@
         <meta http-equiv="Content-Script-Type" content="text/javascript" />
         <link rel="stylesheet" type="text/css" href="skins/pastel/styles.css" />
         <script type="text/javascript" src="skins/pastel/jquery.js"></script>
+        <script type="text/javascript" src="skins/pastel/jquery-tabs.js"></script>
         <script type="text/javascript">
         $(document).ready(function(){
-        $("div.message").slideToggle('slow');
+          $("div.message").slideToggle('slow');
+  	  $("#menu > ul").tabs();
+          $(".ui-tabs-nav span").click(
+		function(){$("div.appsdesc").hide();}
+	  );
+	  $("#appslist li").hover(
+                function(){
+                        $(this).addClass("over");
+                        var appid = $(this).attr("name");
+                        $("div.appsdesc").hide();
+                        $("div#" + appid).show();},
+                function(){$(this).removeClass("over");}
+          );
         });
         </script>
 </head>

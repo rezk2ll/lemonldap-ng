@@ -117,6 +117,28 @@ sub error {
         shift || $ENV{HTTP_ACCEPT_LANGUAGE} );
 }
 
+# error_type tells if error is positive, warning or negative
+sub error_type {
+    my $self = shift;
+
+    # Positive errors
+    return "positive" if (scalar(grep{/^$self->{error}$/} (
+        -2, #PE_REDIRECT
+        -1, #PE_DONE,
+         0, #PE_OK
+    )));
+
+    # Warning errors
+    return "warning" if (scalar(grep{/^$self->{error}$/} (
+         9, #PE_FIRSTACCESS
+         1, #PE_SESSIONEXPIRED
+         2, #PE_FORMEMPTY
+    )));
+
+    # Negative errors (default)
+    return "negative";
+}
+
 # Used as an HTML::Template filter to tranlate strings in the wanted language
 sub translate_template {
     my $self     = shift;
@@ -131,8 +153,8 @@ sub translate_template {
     # Test if a translation is available for the selected language
     # If not available, return the first translated string
     # <lang en="Please enter your credentials" fr="Merci de vous autentifier"/>
-    if ( $$text_ref =~ m/\s+$lang=\"(.*?)\"/ ) {
-        $$text_ref =~ s/<lang\s+[^>]*\s+$lang=\"(.*?)\".*?\/>/$1/gx;
+    if ( $$text_ref =~ m/$lang=\"(.*?)\"/ ) {
+        $$text_ref =~ s/<lang.*$lang=\"(.*?)\".*?\/>/$1/gx;
     }
     else {
         $$text_ref =~ s/<lang\s+\w+=\"(.*?)\".*?\/>/$1/gx;

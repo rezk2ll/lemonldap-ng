@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE menu SYSTEM "apps-list.dtd">
+
+<menu>
+
+	<category name="Test">
+	<application id="aaa">
+		<name>AAA</name>
+		<uri>http://aaa.example.com</uri>
+		<display>auto</display>
+	</application>
+	<application id="bbb">
+		<name>BBB</name>
+		<uri>http://bbb.example.com</uri>
+		<display>auto</display>
+	</application>
+	<application id="test">
+		<name>LemonLDAP::NG testing page</name>
+		<uri>http://test.example.com</uri>
+		<display>auto</display>
+	</application>
+	</category>
+
+	<category name="Technical">
+		<category name="J2EE">
+		<application id="probe">
+			<name>Probe</name>
+			<uri>http://probe.example.com</uri>
+			<description>Tomcat stats</description>
+			<logo>the-probe-logo.gif</logo>
+			<display>auto</display>
+		</application>
+		</category>
+		<category name="LDAP">
+		<application id="pla">
+			<name>phpLDAPAdmin</name>
+			<uri>http://phpldapadmin.example.com</uri>
+			<description>LDAP directory data administration</description>
+			<logo>pla.png</logo>
+			<display>on</display>
+		</application>
+		</category>
+		<category name="SSO">
+		<application id="llmanager">
+			<name>LemonLDAP::NG Manager</name>
+			<uri>http://manager.example.com</uri>
+			<description>Configure WebSSO access rules</description>
+			<display>on</display>
+		</application>
+		</category>
+	</category>
+
+</menu>
+
