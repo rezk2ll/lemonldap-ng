@@ -6,22 +6,22 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta http-equiv="Content-Script-Type" content="text/javascript" />
         <link rel="stylesheet" type="text/css" href="skins/pastel/styles.css" />
+        <link href="skins/pastel/favicon.ico" rel="icon" type="image/x-icon" />
+        <link href="skins/pastel/favicon.ico" rel="shortcut icon" />
         <script type="text/javascript" src="skins/pastel/jquery.js"></script>
         <script type="text/javascript" src="skins/pastel/jquery-tabs.js"></script>
         <script type="text/javascript">
         $(document).ready(function(){
           $("div.message").slideToggle('slow');
+          $("input[type='password']").attr("autocomplete","off");
   	  $("#menu > ul").tabs();
-          $(".ui-tabs-nav span").click(
-		function(){$("div.appsdesc").hide();}
-	  );
+  	  $("#menu > ul").tabs("select","#<TMPL_VAR NAME="DISPLAY_TAB">");
 	  $("#appslist li").hover(
                 function(){
-                        $(this).addClass("over");
-                        var appid = $(this).attr("name");
+                        var appid = $(this).attr("title");
                         $("div.appsdesc").hide();
                         $("div#" + appid).show();},
-                function(){$(this).removeClass("over");}
+                function(){}
           );
         });
         </script>

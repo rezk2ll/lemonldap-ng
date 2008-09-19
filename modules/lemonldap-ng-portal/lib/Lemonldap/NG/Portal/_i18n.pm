@@ -59,6 +59,10 @@ __END__
 # * PE_PP_PASSWORD_TOO_SHORT             29
 # * PE_PP_PASSWORD_TOO_YOUNG             30
 # * PE_PP_PASSWORD_IN_HISTORY            31
+# * PE_PP_GRACE                          32
+# * PE_PP_EXP_WARNING                    33
+# * PE_PASSWORD_MISMATCH                 34
+# * PE_PASSWORD_OK                       35
 
 # Not used in errors:
 # * PE_DONE                -1
@@ -98,6 +102,10 @@ sub error_fr {
         "Mot de passe trop court",
         "Mot de passe trop récent",
         "Mot de passe utilisé trop récemment",
+        " authentifications restantes, changez votre mot de passe !",
+        " secondes avant expiration de votre mot de passe, pensez &agrave; le changer !",
+        "Les mots de passe ne correspondent pas",
+        "Le mot de passe a &eacute;t&eacute; chang&eacute;",
     ];
 }
 
@@ -135,6 +143,10 @@ sub error_en {
         'Password too short',
         'Password too young',
         'Password used too recently',
+        ' authentications remaining, change your password!',
+        ' seconds before password expiration, change it!',
+        'Passwords mismatch',
+        'Password successfully changed',
     ];
 }
 
@@ -172,5 +184,9 @@ sub error_ro {
         'Password too short',
         'Password too young',
         'Password used too recently',
+        ' authentications remaining, change your password!',
+        ' seconds before password expiration, change it!',
+        'Passwords mismatch',
+        'Password successfully changed',
     ];
 }

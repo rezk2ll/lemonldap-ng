@@ -16,17 +16,20 @@
 		</ul>
 
 		<TMPL_IF NAME="DISPLAY_APPSLIST">
-		<TMPL_VAR NAME="APPSLIST_DIV">
+		<div id="appslist">
+		<TMPL_VAR NAME="APPSLIST_MENU">
+		<TMPL_VAR NAME="APPSLIST_DESC">
+                </div>
 		</TMPL_IF>
 
 		<TMPL_IF NAME="DISPLAY_PASSWORD">
 		<div id="password">
-		<form method="post" class="password">
+		<form action="#" method="post" class="password">
 		<h3><lang en="Change your password" fr="Changez votre mot de passe" /></h3>
 		<table><tr><th><lang en="New password" fr="Nouveau mot de passe" /></th>
-		<td><input name="newpassword" type="password" autocomplete="off" /></td></tr>
+		<td><input name="newpassword" type="password" /></td></tr>
 		<tr><th><lang en="Confirm password" fr="Confirmez le mot de passe" /></th>
-		<td><input name="confirmpassword" type="password" autocomplete="off" /></td></tr>
+		<td><input name="confirmpassword" type="password" /></td></tr>
 		<tr><td colspan="2">
                 <div class="buttons">
                 <button type="reset" class="negative">

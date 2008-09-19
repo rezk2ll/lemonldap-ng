@@ -43,6 +43,10 @@ use constant {
     PE_PP_PASSWORD_TOO_SHORT            => 29,
     PE_PP_PASSWORD_TOO_YOUNG            => 30,
     PE_PP_PASSWORD_IN_HISTORY           => 31,
+    PE_PP_GRACE                         => 32,
+    PE_PP_EXP_WARNING                   => 33,
+    PE_PASSWORD_MISMATCH                => 34,
+    PE_PASSWORD_OK                      => 35,
 };
 
 # EXPORTER PARAMETERS
@@ -54,7 +58,8 @@ our @EXPORT =
   PE_ERROR PE_PP_CHANGE_AFTER_RESET PE_PP_PASSWORD_MOD_NOT_ALLOWED
   PE_PP_MUST_SUPPLY_OLD_PASSWORD PE_PP_INSUFFICIENT_PASSWORD_QUALITY
   PE_PP_PASSWORD_TOO_SHORT PE_PP_PASSWORD_TOO_YOUNG
-  PE_PP_PASSWORD_IN_HISTORY);
+  PE_PP_PASSWORD_IN_HISTORY PE_PP_GRACE PE_PP_EXP_WARNING
+  PE_PASSWORD_MISMATCH PE_PASSWORD_OK );
 our %EXPORT_TAGS = ( 'all' => [ @EXPORT, 'import' ], );
 
 our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
@@ -126,13 +131,16 @@ sub error_type {
         -2, #PE_REDIRECT
         -1, #PE_DONE,
          0, #PE_OK
+         35, #PE_PASSWORD_OK
     )));
 
     # Warning errors
     return "warning" if (scalar(grep{/^$self->{error}$/} (
-         9, #PE_FIRSTACCESS
          1, #PE_SESSIONEXPIRED
          2, #PE_FORMEMPTY
+         9, #PE_FIRSTACCESS
+        32, #PE_PP_GRACE
+        33, #PE_PP_EXP_WARNING
     )));
 
     # Negative errors (default)
@@ -446,6 +454,39 @@ sub setSessionInfo {
     PE_OK;
 }
 
+# getSessionInfo
+# use to read a session stored information
+sub getSessionInfo {
+    my $self = shift;
+    my ($info) = @_;
+    my %cookies = fetch CGI::Cookie;
+
+    # Test if Lemonldap::NG cookie is available
+    if ( $cookies{ $self->{cookieName} }
+        and my $id = $cookies{ $self->{cookieName} }->value )
+    {
+        my %h;
+
+        # Trying to recover session from global session storage
+        eval {
+            tie %h, $self->{globalStorage}, $id, $self->{globalStorageOptions};
+        };
+        if ( $@ or not tied(%h) ) {
+
+            # Session not available (expired ?)
+            print STDERR
+              "Session $id isn't yet available ($ENV{REMOTE_ADDR})\n";
+            return undef;
+        }
+
+       # Return the value of the requested info
+       return $h{$info};
+       
+       untie %h;
+    }
+
+}
+
 # 9. Unused here, but overloaded in SharedConf.pm
 sub setMacros {
     PE_OK;
@@ -735,6 +776,10 @@ Prepares variables to store in central cache (stored temporarily in
 C<$self->{sessionInfo}>). It use C<exportedVars> entry (passed to the new sub)
 if defined to know what to store else it stores uid, cn and mail attributes.
 
+=head3 getSessionInfo
+
+Pick up an information stored in session.
+
 =head3 setGroups
 
 Does nothing by default.
@@ -777,6 +822,10 @@ Main method.
 
 Returns the error message corresponding to the error returned by the methods
 described above
+
+=head3 error_type
+
+Give the type of the error (positive, warning or positive)
 
 =head3 translate_template
 

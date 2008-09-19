@@ -28,43 +28,50 @@ sub new {
     # Default values
     $self->{apps}->{xmlfile} ||= 'apps-list.xml';
     $self->{apps}->{imgpath} ||= 'apps/';
-    $self->{modules}->{appslist}= 0 unless defined $self->{modules}->{appslist};
-    $self->{modules}->{password}= 0 unless defined $self->{modules}->{password};
-    $self->{modules}->{logout}= 1 unless defined $self->{modules}->{logout};
+    $self->{modules}->{appslist} = 0 unless defined $self->{modules}->{appslist};
+    $self->{modules}->{password} = 0 unless defined $self->{modules}->{password};
+    $self->{modules}->{logout} = 1 unless defined $self->{modules}->{logout};
 
-    # Get the error of the portal
-    $self->{error} = $self->{portal}->{error};
+    # Set error to 0 by default
+    $self->{error} = PE_OK;
 
-    # TODO: display ppolicy message get in portal LDAP authentication 
-    # if $self->{portal}->{ppolicy} ...
+    # Print Ppolicy warning messages
+    ($self->{error}, $self->{error_value}) = $self->_ppolicyWarning;
 
-    # Change password if 'newpassword" submitted
-    if (defined $self->{portalobject}->{newpassord}) {
-        $self->{error} = $self->_changePassword;
-    }
+    # Gest POST data
+    my ($newpassword, $confirmpassword, $oldpassword) = (
+        $self->{portalobject}->param('newpassword'),
+        $self->{portalobject}->param('confirmpassword'),
+        $self->{portalobject}->param('oldpassword')
+    );
+
+    # Change password (only if newpassword submitted)
+    $self->{error} = $self->_changePassword($newpassword, $confirmpassword, $oldpassword) if $newpassword;
 
     return $self;
 }
 
 sub error {
     # Copied from Simple.pm
-    # TODO: reuse Simple.pm function
+    # Add a value possibility (stored in $self->{error_value}
     my $self = shift;
-    return &Lemonldap::NG::Portal::_i18n::error( $self->{error},
+    my $error_string;
+    $error_string .= $self->{error_value} if defined $self->{error_value};
+    $error_string .= &Lemonldap::NG::Portal::_i18n::error( $self->{error},
         shift || $ENV{HTTP_ACCEPT_LANGUAGE} );
+    return $error_string;
 }
 
 sub error_type {
     my $self = shift;
     # TODO: use Simple.pm function
-    #return $self->Lemonldap::NG::Portal::Simple::error_type;
-    return "positive";
+    return &Lemonldap::NG::Portal::Simple::error_type( $self );
 }
 
 # displayModule($modulename)
 # Return true if the user can see the module
 # Use for HTML::Template variable
-sub displayModule() {
+sub displayModule {
     my $self = shift;
     my ($modulename) = @_;
 
@@ -78,11 +85,56 @@ sub displayModule() {
     return 0;
 }
 
-# appslistDiv
-# Div containing application menu and description
-sub appslistDiv {
+# displayTab
+# Tells which tab should be selected
+# Design for Jquery tabs
+sub displayTab {
     my $self = shift;
-    my $html;
+    
+    # Display password tab if password change is needed or failed
+    return "password" if (
+        (scalar(grep{/^$self->{error}$/} (
+            25, #PE_PP_CHANGE_AFTER_RESET
+            27, #PE_PP_MUST_SUPPLY_OLD_PASSWORD
+            28, #PE_PP_INSUFFICIENT_PASSWORD_QUALITY
+            29, #PE_PP_PASSWORD_TOO_SHORT
+            30, #PE_PP_PASSWORD_TOO_YOUNG
+            31, #PE_PP_PASSWORD_IN_HISTORY
+            32, #PE_PP_GRACE
+            33, #PE_PP_EXP_WARNING
+            34, #PE_PASSWORD_MISMATCH
+         ))) && $self->displayModule("password")
+    );
+
+    return "appslist" if ( $self->displayModule("appslist") );
+    return "logout";
+}
+
+# appslistMenu
+# HTML code for application list menu
+sub appslistMenu {
+    my $self = shift;
+    my $root = $self->_getXML;
+
+    # Display all categories and applications
+    return $self->_displayCategory($root,$catlevel);
+}
+
+# appslistDescription
+# HTML code for application description
+sub appslistDescription {
+    my $self = shift;
+    my $root = $self->_getXML;
+
+    # Display application description
+    return $self->_displayDescription($root);
+}
+
+
+# _getXML
+# return XML root element object
+sub _getXML {
+    my $self = shift;
 
     # Parse XML file
     my $parser = XML::LibXML->new();
@@ -93,19 +145,12 @@ sub appslistDiv {
     # Filter XML file with user's authorizations
     $self->_filterXML($root);
 
-    # Display all categories and applications
-    $html .= "<div id=\"appslist\">\n";
-    $html .= $self->_displayCategory($root,$catlevel);
-    $html .= "</div>\n";
-    # Display application description
-    $html .= $self->_displayDescription($root);
-
-    return $html;
+    return $root;
 }
 
 # _displayCategory
 # Create HTML code for a category
-sub _displayCategory() {
+sub _displayCategory {
     my $self = shift;
     my ($cat, $catlevel) = @_;
     my $html;
@@ -117,13 +162,15 @@ sub _displayCategory() {
 
     # Init HTML list
     $html .= "<ul class=\"category cat-level-$catlevel\">\n";
-    $html .= "<span>$catname</span>\n";
+    $html .= "<li class=\"catname\"><span>$catname</span>\n";
 
     # Display applications first
     my @appnodes = $cat->findnodes("application");
+    $html .= "<ul>" if scalar @appnodes;
     foreach (@appnodes) {
         $html .= $self->_displayApplication($_);
     }
+    $html .= "</ul>" if scalar @appnodes;
 
     # Display subcategories
     my @catnodes = $cat->findnodes("category");
@@ -133,14 +180,14 @@ sub _displayCategory() {
     }
 
     # Close HTML list
-    $html .= "</ul>\n";
+    $html .= "</li>\n</ul>\n";
 
     return $html;
 }
 
 # _displayApplication
 # Create HTML code for an application
-sub _displayApplication() {
+sub _displayApplication {
     my $self = shift;
     my ($app) = @_;
     my $html;
@@ -151,7 +198,7 @@ sub _displayApplication() {
     my $appuri = $app->getElementsByTagName('uri')->string_value() || "#";
 
     # Display application
-    $html .= "<li name=\"$appid\"><a href=\"$appuri\"><span>$appname</span><a></li>\n";
+    $html .= "<li title=\"$appid\" class=\"appname\"><span><a href=\"$appuri\">$appname</a></span></li>\n";
 
     return $html;
 }
@@ -255,12 +302,93 @@ sub _grant {
 # Change user's password
 sub _changePassword {
     my $self = shift;
+    my ($newpassword, $confirmpassword, $oldpassword) = @_;
+    my $err;
     
-    # TODO: get the submitted password
-    # TODO: use portal LDAP connect function
-    # TODO: LDAP modify, with or without ppolicy
+    # Verify confirmation password matching
+    return PE_PASSWORD_MISMATCH unless ($newpassword eq $confirmpassword);
 
-    return PE_OK;
+    # Connect to LDAP
+    $err = &Lemonldap::NG::Portal::Simple::connectLDAP( $self->{portalobject} );
+    return $err unless ( $err eq PE_OK );
+
+    # Bind with Manager
+    $err = &Lemonldap::NG::Portal::Simple::bind( $self->{portalobject} );
+    return $err unless ( $err eq PE_OK );
+
+    my $ldap = $self->{portalobject}->{ldap};
+    my $dn = &Lemonldap::NG::Portal::Simple::getSessionInfo( $self->{portalobject}, "dn");
+
+    # First case: no ppolicy
+    if ( !$self->{portalobject}->{ldapPpolicyControl} ) {
+
+        my $mesg = $ldap->modify($dn, replace => { userPassword => $newpassword } );
+
+        return PE_WRONGMANAGERACCOUNT if ( $mesg->code == 50 || $mesg->code == 8 );
+        return PE_LDAPERROR unless ( $mesg->code == 0 );
+        return PE_PASSWORD_OK;
+    } else {
+
+        # require Perl module
+        eval 'require Net::LDAP::Control::PasswordPolicy';
+        if ($@) {
+            print STDERR "Module Net::LDAP::Control::PasswordPolicy not found in @INC\n";
+            return PE_LDAPERROR;
+        }
+        no strict 'subs';
+
+        # Create Control object
+        my $pp = Net::LDAP::Control::PasswordPolicy->new;
+
+        my $mesg = $ldap->modify($dn, replace => { userPassword => $newpassword }, control => [ $pp ]);
+
+        # TODO: use setPassword with oldpassword if needed
+
+        # Get server control response
+        my ($resp) = $mesg->control("1.3.6.1.4.1.42.2.27.8.5.1");
+
+        return PE_WRONGMANAGERACCOUNT if ( $mesg->code == 50 || $mesg->code == 8 );
+        return PE_PASSWORD_OK if ( $mesg->code == 0 );
+
+        if ( defined $resp ) {
+            my $pp_error = $resp->pp_error;
+            if ( defined $pp_error ) {
+                return [
+                    PE_PP_PASSWORD_EXPIRED,
+                    PE_PP_ACCOUNT_LOCKED,
+                    PE_PP_CHANGE_AFTER_RESET,
+                    PE_PP_PASSWORD_MOD_NOT_ALLOWED,
+                    PE_PP_MUST_SUPPLY_OLD_PASSWORD,
+                    PE_PP_INSUFFICIENT_PASSWORD_QUALITY,
+                    PE_PP_PASSWORD_TOO_SHORT,
+                    PE_PP_PASSWORD_TOO_YOUNG,
+                    PE_PP_PASSWORD_IN_HISTORY,
+                ]->[$pp_error];
+            }
+        }
+        else {
+            return PE_LDAPERROR;
+        }
+    }
+}
+
+# _ppolicyWarning
+# Return ppolicy warnings get in AuthLDAP.pm
+sub _ppolicyWarning {
+   my $self = shift;
+
+   # Grace
+   if (defined $self->{portalobject}->{ppolicy}->{grace_authentications_remaining} ) {
+       return ( PE_PP_GRACE, $self->{portalobject}->{ppolicy}->{grace_authentications_remaining} );
+   }
+
+   # Expiration warning
+   if (defined $self->{portalobject}->{ppolicy}->{time_before_expiration} ) {
+       return ( PE_PP_EXP_WARNING, $self->{portalobject}->{ppolicy}->{time_before_expiration} );
+   }
+
+   # Return PE_OK 
+   return ( PE_OK, undef);
 }
 
 1;
@@ -290,7 +418,7 @@ Lemonldap::NG::Portal::Menu - Enhanced menu to display to authenticated users
     );
 
     # Print HTML code of authorized applications list
-    print $menu->apsslistDiv;
+    print $menu->appslistMenu;
 
 =head1 DESCRIPTION
 
@@ -317,7 +445,7 @@ http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Presentation
 
 =head1 AUTHOR
 
-Clement OUDOT E<lt>clem.oudot@gmail.comE<gt>
+Clement OUDOT E<lt>clement@oodo.netE<gt> E<lt>coudot@linagora.comE<gt>
 
 =head1 BUG REPORT
 

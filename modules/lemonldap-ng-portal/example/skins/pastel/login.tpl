@@ -5,18 +5,18 @@
 	<div class="loginlogo"></div>
 
 	<TMPL_IF NAME="DISPLAY_FORM">
-	<form method="post" class="login">
+	<form action="#" method="post" class="login">
 
-		<h3><lang en="Please enter your credentials" fr="Merci de vous autentifier"/></h3>
+		<h3><lang en="Please enter your credentials" fr="Merci de vous authentifier"/></h3>
 		
-	        <input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
+	        <p><input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" /></p>
 
 		<table>
 		<tr><th><lang en="Login" fr="Identifiant"/></th>
 		<td><input name="user" type="text" /></td>
 		</tr>
 		<tr><th><lang en="Password" fr="Mot de passe"/></th>
-		<td><input name="password" type="password" autocomplete="off" /></td>
+		<td><input name="password" type="password" /></td>
 		</tr>
 		<tr><td colspan="2">
 		<div class="buttons">

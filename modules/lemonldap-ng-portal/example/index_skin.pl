@@ -3,9 +3,9 @@
 use Lemonldap::NG::Portal::SharedConf;
 use HTML::Template;
 
-# Skin configuration
-my $skin     = "pastel";
-my $skin_dir = "__SKINDIR__";
+# Path configuration
+my $skin        = "pastel";
+my $skin_dir    = "__SKINDIR__";
 my $appsxmlfile = "__SKINDIR__/../apps/apps-list.xml";
 my $appsimgpath = "apps/";
 
@@ -15,8 +15,8 @@ my $portal = Lemonldap::NG::Portal::SharedConf->new(
             type    => 'File',
             dirName => '__CONFDIR__',
         },
-        existingSession => sub {PE_DONE},
-	#ldapPpolicyControl => 1,
+        existingSession => sub {PE_DONE},  # Required to display the menu to a connected user
+	#ldapPpolicyControl => 1,          # Remove comment to use LDAP Password Policy
     }
 );
 
@@ -52,8 +52,12 @@ if ( $portal->process() ) {
     $template->param( DISPLAY_APPSLIST 	=> $menu->displayModule("appslist") );
     $template->param( DISPLAY_PASSWORD	=> $menu->displayModule("password") );
     $template->param( DISPLAY_LOGOUT 	=> $menu->displayModule("logout") );
-    $template->param( LOGOUT_URL 	=> "$ENV{SCRIPT_NAME}?logout=1" );
-    if ($menu->displayModule("appslist")) {$template->param( APPSLIST_DIV => $menu->appslistDiv);}
+    $template->param( DISPLAY_TAB	=> $menu->displayTab );
+    $template->param( LOGOUT_URL	=> "$ENV{SCRIPT_NAME}?logout=1" );
+    if ( $menu->displayModule("appslist") ) {
+        $template->param( APPSLIST_MENU => $menu->appslistMenu );
+        $template->param( APPSLIST_DESC => $menu->appslistDescription );
+    }   
 
     print $portal->header('text/html; charset=utf8');
     print $template->output;
