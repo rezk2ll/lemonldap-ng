@@ -21,6 +21,10 @@ II - LEMONLDAP::NG PORTAL INSTALLATION
 --------------------------------------
 Package: liblemonldap-ng-portal-perl
 
+WARNING : since version 0.9.3, login form template has change. You have to
+change your /var/lib/lemonldap-ng/portal/index.pl file using
+/usr/share/doc/liblemonldap-ng-portal-perl/example/index_skin-Debian.pl
+
 liblemonldap-ng-portal-perl installs files named portal-apache.conf and
 portal-apache2.conf in /etc/lemonldap-ng/. Include it in apache configuration
 and configure it (virtual host has to be adapt). You can also customize

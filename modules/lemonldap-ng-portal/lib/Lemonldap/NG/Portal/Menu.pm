@@ -3,9 +3,9 @@ package Lemonldap::NG::Portal::Menu;
 use strict;
 use warnings;
 use Exporter 'import';
-use Lemonldap::NG::Portal::Simple;
-use Lemonldap::NG::Handler::Simple;
+use Lemonldap::NG::Portal::SharedConf;
 use XML::LibXML;
+use Safe;
 
 our $VERSION = '0.01';
 
@@ -23,7 +23,7 @@ sub new {
     $self->Lemonldap::NG::Portal::Simple::getConf(@_) or die "Unable to get configuration";
     
     # Portal is required
-    die("Portal object required") unless ( $self->{portalobject} );
+    die("Portal object required") unless ( $self->{portalObject} );
 
     # Default values
     $self->{apps}->{xmlfile} ||= 'apps-list.xml';
@@ -40,9 +40,9 @@ sub new {
 
     # Gest POST data
     my ($newpassword, $confirmpassword, $oldpassword) = (
-        $self->{portalobject}->param('newpassword'),
-        $self->{portalobject}->param('confirmpassword'),
-        $self->{portalobject}->param('oldpassword')
+        $self->{portalObject}->param('newpassword'),
+        $self->{portalObject}->param('confirmpassword'),
+        $self->{portalObject}->param('oldpassword')
     );
 
     # Change password (only if newpassword submitted)
@@ -287,17 +287,6 @@ sub _hideEmptyCategory {
     return;
 }
 
-# _grant
-# Check user's authorization
-sub _grant {
-    my $self = shift;
-    my ($uri) = @_;
-
-    # TODO: implement grant function to behave like the Handler one
-
-    return 1;
-}
-
 # _changePassword
 # Change user's password
 sub _changePassword {
@@ -309,18 +298,18 @@ sub _changePassword {
     return PE_PASSWORD_MISMATCH unless ($newpassword eq $confirmpassword);
 
     # Connect to LDAP
-    $err = &Lemonldap::NG::Portal::Simple::connectLDAP( $self->{portalobject} );
+    $err = &Lemonldap::NG::Portal::Simple::connectLDAP( $self->{portalObject} );
     return $err unless ( $err eq PE_OK );
 
     # Bind with Manager
-    $err = &Lemonldap::NG::Portal::Simple::bind( $self->{portalobject} );
+    $err = &Lemonldap::NG::Portal::Simple::bind( $self->{portalObject} );
     return $err unless ( $err eq PE_OK );
 
-    my $ldap = $self->{portalobject}->{ldap};
-    my $dn = &Lemonldap::NG::Portal::Simple::getSessionInfo( $self->{portalobject}, "dn");
+    my $ldap = $self->{portalObject}->{ldap};
+    my $dn = &Lemonldap::NG::Portal::Simple::getSessionInfo( $self->{portalObject}, "dn");
 
     # First case: no ppolicy
-    if ( !$self->{portalobject}->{ldapPpolicyControl} ) {
+    if ( !$self->{portalObject}->{ldapPpolicyControl} ) {
 
         my $mesg = $ldap->modify($dn, replace => { userPassword => $newpassword } );
 
@@ -378,17 +367,84 @@ sub _ppolicyWarning {
    my $self = shift;
 
    # Grace
-   if (defined $self->{portalobject}->{ppolicy}->{grace_authentications_remaining} ) {
-       return ( PE_PP_GRACE, $self->{portalobject}->{ppolicy}->{grace_authentications_remaining} );
+   if (defined $self->{portalObject}->{ppolicy}->{grace_authentications_remaining} ) {
+       return ( PE_PP_GRACE, $self->{portalObject}->{ppolicy}->{grace_authentications_remaining} );
    }
 
    # Expiration warning
-   if (defined $self->{portalobject}->{ppolicy}->{time_before_expiration} ) {
-       return ( PE_PP_EXP_WARNING, $self->{portalobject}->{ppolicy}->{time_before_expiration} );
+   if (defined $self->{portalObject}->{ppolicy}->{time_before_expiration} ) {
+       return ( PE_PP_EXP_WARNING, $self->{portalObject}->{ppolicy}->{time_before_expiration} );
    }
 
    # Return PE_OK 
    return ( PE_OK, undef);
+}
+
+### ACCESS CONTROL DISPLAY SYSTEM
+
+our($defaultCondition,$locationCondition,$locationRegexp,$cfgNum)=(undef,undef,undef,0);
+
+my $safe = new Safe;
+$safe->share( '&encode_base64' );
+
+# _grant
+# Check user's authorization
+sub _grant {
+    my $self = shift;
+    my ($uri) = @_;
+    my $vhost = ( $uri =~ s#^(?:https?://)?([^/]*)/#/# );
+    $self->_compileRules() if ( $cfgNum != $self->{portalObject}->{cfgNum} );
+    return -1 unless ( defined ( $defaultCondition->{$vhost} ) );
+    for ( my $i = 0 ; $i < @{ $locationRegexp->{$vhost} } ; $i++ ) {
+        if ( $uri =~ $locationRegexp->{$vhost}->[$i] ) {
+            return &{ $locationCondition->{$vhost}->[$i] }($self);
+        }
+    }
+    unless ( $defaultCondition->{$vhost} ) {
+        print STDERR "VirtualHost \"$vhost\" has no configuration";
+        return 0;
+    }
+    return &{ $defaultCondition->{$vhost} }($self);
+    return 1;
+}
+
+sub _compileRules {
+    my $self = @_;
+    foreach my $vhost ( keys %{ $self->{portalObject}->{locationRules} } ) {
+        my $i = 0;
+        foreach ( keys %{ $self->{locationRules}->{$vhost} } ) {
+            if ( $_ eq 'default' ) {
+                $defaultCondition->{$vhost} =
+                  $self->conditionSub(
+                    $self->{locationRules}->{$vhost}->{$_} );
+            }
+            else {
+                $locationCondition->{$vhost}->[$i] =
+                  $self->conditionSub( $self->{locationRules}->{$vhost}->{$_} );
+                $locationRegexp->{$vhost}->[$i] = qr/$_/;
+                $i++;
+            }
+        }
+
+        # Default police
+        $defaultCondition->{$vhost} = $self->conditionSub('accept')
+        unless ( $self->{defaultCondition}->{$vhost} );
+    }
+    $cfgNum = $self->{portalObject}->{cfgNum};
+    1;
+}
+
+sub conditionSub {
+    my ( $class, $cond ) = @_;
+    return sub { 1 }
+      if ( $cond =~ /^accept$/i );
+    return sub { 0 }
+      if ( $cond =~ /^(?:deny$|logout)/i );
+    $cond =~ s/\$date/&POSIX::strftime("%Y%m%d%H%M%S",localtime())/e;
+    $cond =~ s/\$(\w+)/\$self->{portalObject}->{sessionInfo}->{$1}/g;
+    my $sub;
+    $sub = $safe->reval("sub {my \$self = shift; return ( $cond )}");
+    return $sub;
 }
 
 1;
@@ -404,7 +460,7 @@ Lemonldap::NG::Portal::Menu - Enhanced menu to display to authenticated users
     use Lemonldap::NG::Portal::Menu;
     my $menu = Lemonldap::NG::Portal::Menu->new(
       {
-        portalobject => $portal,
+        portalObject => $portal,
         apps => {
             xmlfile => "/var/lib/lemonldap-ng/conf/apps-list.xml",
             imgpath => "apps/",
