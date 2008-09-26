@@ -455,10 +455,9 @@ sub setSessionInfo {
 }
 
 # getSessionInfo
-# use to read a session stored information
+# Read session and store it in $self
 sub getSessionInfo {
     my $self = shift;
-    my ($info) = @_;
     my %cookies = fetch CGI::Cookie;
 
     # Test if Lemonldap::NG cookie is available
@@ -479,10 +478,12 @@ sub getSessionInfo {
             return undef;
         }
 
-       # Return the value of the requested info
-       return $h{$info};
+        # Store session values
+        foreach ( keys %h ) {
+            $self->{sessionInfo}->{$_} = $h{$_};
+        }
        
-       untie %h;
+        untie %h;
     }
 
 }

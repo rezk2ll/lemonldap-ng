@@ -6,7 +6,7 @@ use HTML::Template;
 # Path configuration
 my $skin        = "pastel";
 my $skin_dir    = "__SKINDIR__";
-my $appsxmlfile = "__SKINDIR__/../apps/apps-list.xml";
+my $appsxmlfile = "__PORTALDIR__apps/apps-list.xml";
 my $appsimgpath = "apps/";
 
 my $portal = Lemonldap::NG::Portal::SharedConf->new(
@@ -34,7 +34,7 @@ if ( $portal->process() ) {
     use Lemonldap::NG::Portal::Menu;
     my $menu = Lemonldap::NG::Portal::Menu->new(
       {
-        portalobject => $portal,
+        portalObject => $portal,
         apps => {
             xmlfile => "$appsxmlfile",
             imgpath => "$appsimgpath",

@@ -11,6 +11,13 @@ our $VERSION = '0.01';
 
 our @ISA = qw(Exporter);
 
+### ACCESS CONTROL DISPLAY SYSTEM
+
+our($defaultCondition,$locationCondition,$locationRegexp,$cfgNum)=(undef,undef,undef,0);
+
+my $safe = new Safe;
+$safe->share( '&encode_base64' );
+
 my $catlevel = 0;
 
 # CONSTRUCTOR
@@ -24,6 +31,9 @@ sub new {
     
     # Portal is required
     die("Portal object required") unless ( $self->{portalObject} );
+
+    # Fill sessionInfo
+    &Lemonldap::NG::Portal::Simple::getSessionInfo( $self->{portalObject} );
 
     # Default values
     $self->{apps}->{xmlfile} ||= 'apps-list.xml';
@@ -64,7 +74,6 @@ sub error {
 
 sub error_type {
     my $self = shift;
-    # TODO: use Simple.pm function
     return &Lemonldap::NG::Portal::Simple::error_type( $self );
 }
 
@@ -75,13 +84,14 @@ sub displayModule {
     my $self = shift;
     my ($modulename) = @_;
 
-    # TODO: use rules to display modules (like $groups =~ /\badmin\b/)
-    return 1 if (
-        (($modulename eq "appslist") and $self->{modules}->{appslist})
-     or (($modulename eq "password") and $self->{modules}->{password})
-     or (($modulename eq "logout")   and $self->{modules}->{logout}  )
-    );
-    
+    # Manage "0" and "1" rules    
+    return 1 if ( $self->{modules}->{$modulename} eq "1" );
+    return 0 if ( $self->{modules}->{$modulename} eq "0" );
+
+    # Else parse display condition
+    my $cond = $self->{modules}->{$modulename};
+    $cond =~ s/\$(\w+)/$self->{portalObject}->{sessionInfo}->{$1}/g;
+    return $safe->reval("sub {return ( $cond )}");
     return 0;
 }
 
@@ -223,7 +233,7 @@ sub _displayDescription {
 
 	# Display application
         $html .= "<div id=\"$appid\" class=\"appsdesc\">\n";
-        $html .= "<a href=\"$appuri\"><img src=\"$applogo\" alt=\"$appid logo\" /></a>\n" if defined $applogofile;
+        $html .= "<a href=\"$appuri\"><img src=\"$applogo\" alt=\"$appid logo\" /></a>\n" if $applogofile;
         $html .= "<p class=\"appname\">$appname</p>\n" if defined $appname;
         $html .= "<p class=\"appdesc\">$appdesc</p>\n" if defined $appdesc;
         $html .= "</div>\n";
@@ -242,7 +252,7 @@ sub _filterXML {
     foreach (@apps) {
         my $appdisplay = $_->getElementsByTagName('display')->string_value();
         my $appuri = $_->getElementsByTagName('uri')->string_value();
-	
+
 	# Remove node if display is "no"
 	$_->unbindNode if ($appdisplay eq "no");
 
@@ -306,7 +316,7 @@ sub _changePassword {
     return $err unless ( $err eq PE_OK );
 
     my $ldap = $self->{portalObject}->{ldap};
-    my $dn = &Lemonldap::NG::Portal::Simple::getSessionInfo( $self->{portalObject}, "dn");
+    my $dn = $self->{portalObject}->{sessionInfo}->{"dn"};
 
     # First case: no ppolicy
     if ( !$self->{portalObject}->{ldapPpolicyControl} ) {
@@ -380,62 +390,63 @@ sub _ppolicyWarning {
    return ( PE_OK, undef);
 }
 
-### ACCESS CONTROL DISPLAY SYSTEM
-
-our($defaultCondition,$locationCondition,$locationRegexp,$cfgNum)=(undef,undef,undef,0);
-
-my $safe = new Safe;
-$safe->share( '&encode_base64' );
 
 # _grant
 # Check user's authorization
 sub _grant {
     my $self = shift;
     my ($uri) = @_;
-    my $vhost = ( $uri =~ s#^(?:https?://)?([^/]*)/#/# );
+    $uri =~ m#(\w+)://([^/:]+)(:\d+)?(/.*)#;
+    my ($protocol,$vhost,$port,$path) = ($1,$2,$3,$4);
     $self->_compileRules() if ( $cfgNum != $self->{portalObject}->{cfgNum} );
     return -1 unless ( defined ( $defaultCondition->{$vhost} ) );
-    for ( my $i = 0 ; $i < @{ $locationRegexp->{$vhost} } ; $i++ ) {
-        if ( $uri =~ $locationRegexp->{$vhost}->[$i] ) {
-            return &{ $locationCondition->{$vhost}->[$i] }($self);
-        }
+    if (defined $locationRegexp->{$vhost} ) { # Not just a default rule
+	for ( my $i = 0 ; $i < @{ $locationRegexp->{$vhost} } ; $i++ ) {
+		if ( $path =~ $locationRegexp->{$vhost}->[$i] ) {
+		    return &{ $locationCondition->{$vhost}->[$i] }($self);
+		}
+	}
     }
     unless ( $defaultCondition->{$vhost} ) {
-        print STDERR "VirtualHost \"$vhost\" has no configuration";
+        print STDERR "Application $uri did not match any configured virtual host\n";
         return 0;
     }
     return &{ $defaultCondition->{$vhost} }($self);
     return 1;
 }
 
+# _compileRules
+# Parse configured rules
 sub _compileRules {
-    my $self = @_;
+    my $self = shift;
     foreach my $vhost ( keys %{ $self->{portalObject}->{locationRules} } ) {
         my $i = 0;
-        foreach ( keys %{ $self->{locationRules}->{$vhost} } ) {
+        foreach ( keys %{ $self->{portalObject}->{locationRules}->{$vhost} } ) {
             if ( $_ eq 'default' ) {
                 $defaultCondition->{$vhost} =
-                  $self->conditionSub(
-                    $self->{locationRules}->{$vhost}->{$_} );
+                  $self->_conditionSub(
+                    $self->{portalObject}->{locationRules}->{$vhost}->{$_} );
             }
             else {
                 $locationCondition->{$vhost}->[$i] =
-                  $self->conditionSub( $self->{locationRules}->{$vhost}->{$_} );
+                  $self->_conditionSub( $self->{portalObject}->{locationRules}->{$vhost}->{$_} );
                 $locationRegexp->{$vhost}->[$i] = qr/$_/;
                 $i++;
             }
         }
 
-        # Default police
-        $defaultCondition->{$vhost} = $self->conditionSub('accept')
-        unless ( $self->{defaultCondition}->{$vhost} );
+        # Default policy
+        $defaultCondition->{$vhost} ||= $self->_conditionSub('accept');
     }
     $cfgNum = $self->{portalObject}->{cfgNum};
     1;
 }
 
-sub conditionSub {
-    my ( $class, $cond ) = @_;
+# _conditionSub
+# Return subroutine giving authorization condition
+sub _conditionSub {
+    my $self = shift;
+    my ($cond) = @_;
     return sub { 1 }
       if ( $cond =~ /^accept$/i );
     return sub { 0 }

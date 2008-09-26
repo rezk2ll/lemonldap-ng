@@ -98,8 +98,8 @@ example: all
 	mv ${EXAMPLEDIRBUILD}/portal/AuthLA $$(echo ${EXAMPLELASPDIRBUILD}|sed -e 's/\/$$//')
 	cp -a ${MANAGERDIR}/example/* ${EXAMPLEMANAGERDIRBUILD}
 	cp -a _example/* ${EXAMPLEDIRBUILD}
-	find ${EXAMPLELASPDIRBUILD} -type f -exec perl -i -pe 's#__DIR__/?#'${EXAMPLELASPDIR}'#g;s#__CONFDIR__/?#'${EXAMPLECONFDIR}'#g;s#__SKINDIR__/?#'${EXAMPLEPORTALDIR}'skins/#g;' {} \;
-	find ${EXAMPLEDIRBUILD} -type f -exec perl -i -pe 's#__DIR__/?#'${EXAMPLEDIR}'#g;s#__CONFDIR__/?#'${EXAMPLECONFDIR}'#g;s#__SKINDIR__/?#'${EXAMPLEPORTALDIR}'skins/#g;' {} \;
+	find ${EXAMPLELASPDIRBUILD} -type f -exec perl -i -pe 's#__DIR__/?#'${EXAMPLELASPDIR}'#g;s#__CONFDIR__/?#'${EXAMPLECONFDIR}'#g;s#__SKINDIR__/?#'${EXAMPLEPORTALDIR}'skins/#g;s#__PORTALDIR__/?#'${EXAMPLEPORTALDIR}'/#g;' {} \;
+	find ${EXAMPLEDIRBUILD} -type f -exec perl -i -pe 's#__DIR__/?#'${EXAMPLEDIR}'#g;s#__CONFDIR__/?#'${EXAMPLECONFDIR}'#g;s#__SKINDIR__/?#'${EXAMPLEPORTALDIR}'skins/#g;s#__PORTALDIR__/?#'${EXAMPLEPORTALDIR}'/#g;' {} \;
 	@echo
 	@echo "Example is ready."
 	@echo
