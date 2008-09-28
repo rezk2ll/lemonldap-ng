@@ -1,57 +1,138 @@
 #!/usr/bin/perl
 
+#================================================
+# LemonLDAP::NG default test page
+# Display headers and environment
+#================================================
+
+# Init CGI
 use CGI;
+my $cgi = CGI->new;
 
-my $cgi=CGI->new;
+# GET parameters
+my $name = $cgi->param("name") || "LemonLDAP::NG sample protected application";
+my $color = $cgi->param("color") || "#ddd";
 
-print $cgi->header;
-print $cgi->start_html( 'Page protected by Lemonldap::NG' );
-my($headers, $env)=({},{});
-use Data::Dumper;
-print "<pre>";
+# Local parameters
+my $manager_url = "http://manager.example.com";
+my $portal_url = "http://auth.example.com";
+
+# CSS
+my $css = <<EOT;
+body{
+background:$color;
+font-family:sans-serif;
+font-size:11pt;
+padding:0 5%;
+margin:0;
+}
+#content{
+background:#fff;
+padding:10px;
+}
+#menu{
+text-align:center;
+margin-top:30px;
+}
+a{
+text-decoration:none;
+font-weight:bold;
+}
+h1{
+font-size:16pt;
+text-align:center;
+margin:5px 100px;
+border:2px solid $color;
+}
+h2{
+border-bottom:2px solid $color;
+}
+p.note{
+border:1px solid #ccc;
+padding:5px;
+background:#eee;
+}
+table{
+border:1px solid #ccc;
+border-collapse:collapse;
+margin:5px 0;
+width:100%;
+font-size:small;
+}
+tr{
+border:1px dotted #ccc;
+}
+tr:hover{
+background:#eee;
+}
+th{
+background:#eee;
+}
+td, th{
+padding:3px 5px;
+}
+td.emphase{
+background-color:#eee;
+font-weight:bold;
+}
+EOT
+
+# Read headers
+my %headers;
 foreach(sort keys %ENV) {
     if($_ =~ /^HTTP_/) {
         ($a=$_) =~ s/^HTTP_//i;
-        #$a =~ s/_/ /g;
-        #$a = ucfirst(lc($a));
-        #$a =~ s/ /-/g;
         $a = join '-', map {ucfirst(lc)} split '_',$a;
         $headers->{$a} = $_;
     }
-    else {
-        $env->{$_} = $ENV{$_};
-    }
 }
-print "</pre>";
-print qq#<h1>Authentication succeed</h1>
-<a href="/logout">logout</a>
-<p>Authenticated user : $ENV{HTTP_AUTH_USER}</p>
-<p>To know who is connected in your applications, you can read HTTP headers :</p>
-<table border="1" style="font-size: small;">\n
-<tr><th>Header</th><th>Perl CGI</th><th>PHP script</th><th>Value</th></tr>
-#;
+
+# Display page
+print $cgi->header;
+print $cgi->start_html( -title => "$name",
+                        -style => { -code => $css } );
+
+print "<div id=\"content\">\n";
+
+print "<h1>$name</h1>\n";
+
+print "<div id=\"menu\"><a href=\"$ENV{HTTP_REFERER}\">Go back</a> - ";
+print "<a href=\"$portal_url\">Portal</a> - <a href=\"/logout\">Logout</a></div>\n";
+
+print "<h2>Main informations</h2>\n";
+print "<ul>\n";
+print "<li>Authentication status: SUCCESS</li>\n";
+print "<li>Connected user: <ul>\n";
+print "<li><tt>\$ENV{HTTP_AUTH_USER}</tt>: $ENV{HTTP_AUTH_USER}</li>\n";
+print "<li><tt>\$ENV{REMOTE_USER}</tt>: $ENV{REMOTE_USER}</li>\n";
+print "</ul></li>\n";
+print "</ul>\n";
+print "<p class=\"note\">Be carefull, the <tt>\$ENV{REMOTE_USER}</tt> is set only if your script is 
+in the same server than Lemonldap::NG Handler (<tt>\$whatToTrace</tt> parameter). If you use
+it on a reverse-proxy, <tt>\$ENV{REMOTE_USER}</tt> is not set.</p>\n";
+
+print "<h2>HTTP headers</h2>\n";
+print "<p>To know who is connected in your applications, you can read HTTP headers:</p>\n";
+print "<table>\n";
+print "<tr><th>Header</th><th>Perl CGI</th><th>PHP script</th><th>Value</th></tr>\n";
 foreach(sort keys %$headers) {
-    $style = $_ eq 'Auth-User' ? 'style="background-color: #FFEEEE;font-weight: bold;"' : '';
+    $style = $_ eq 'Auth-User' ? 'class="emphase"' : '';
     print "<tr>
     <td $style>$_</td>
-    <td $style>\$ENV{$headers->{$_}}</td>
-    <td $style>\$_SERVER{$headers->{$_}}</td>
-    <td $style> $ENV{$headers->{$_}}</td>
+    <td $style><tt>\$ENV{$headers->{$_}}</tt></td>
+    <td $style><tt>\$_SERVER{$headers->{$_}}</tt></td>
+    <td $style>$ENV{$headers->{$_}}</td>
     </tr>\n"
 }
-print '</table>
-<p>Note that Lemonldap::NG cookie is hidden. So that application developpers can
-not spoof sessions.</p>
-<p>You can access to any information (IP address or LDAP attribute) by customizing
-exported headers with the
-<a href="http://manager.example.com/">Lemonldap::NG Management interface</a></p>
-<hr />';
+print "</table>\n";
+print "<p class=\"note\">Note that Lemonldap::NG cookie is hidden. So that application developpers can
+not spoof sessions.</p>\n";
+print "<p class=\"note\">You can access to any information (IP address or LDAP attribute) by customizing
+exported headers with the <a href=\"$manager_url\">Lemonldap::NG Management interface</a></p>\n";
 
-print qq#<h2>Environment for Perl CGI :</h2>
-<p>Be carefull, the \$ENV{REMOTE_USER} is set only if your script is in the
-same server than Lemonldap::NG handler (\$whatToTrace parameter). If you use
-it on a reverse-proxy, \$ENV{REMOTE_USER} is not set.</p>
-<table border="0" style="font-size: small;">\n#;
+print "<h2>Environment for Perl CGI</h2>\n";
+print "<table>\n";
+print "<tr><th>Environment variable</th><th>Value</th></tr>\n";
 foreach(sort keys %ENV) {
     my $tmp = $ENV{$_};
     $tmp =~ s/&/&amp;/g;
@@ -59,6 +140,7 @@ foreach(sort keys %ENV) {
     $tmp =~ s/</&lt;/g;
     print "<tr><td>$_</td><td>=&gt; $tmp</td></tr>\n";
 }
-print '</table>';
+print "</table>\n";
+print "</div>\n";
 print $cgi->end_html;
 
