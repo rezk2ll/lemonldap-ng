@@ -1,5 +1,4 @@
 Changes
-example/AuthLA/error403.pl
 example/AuthLA/idps.xml
 example/AuthLA/index.pl
 example/AuthLA/liberty/assertionConsumer.pl
@@ -35,13 +34,12 @@ example/AuthLA/tpl/themes/federid/page-bg.png
 example/AuthLA/tpl/themes/federid/sso.css
 example/AuthLA/tpl/themes/federid/wui.css
 example/index.pl
+example/index_simple.pl
 example/index_skin.pl
 example/PortalStatus.pl
 example/scripts/purgeCentralCache
 example/scripts/purgeCentralCache.cron.d
-example/skins/default/default.css
 example/skins/default/hatch.gif
-example/skins/default/index.tpl
 example/skins/default/logo_lemonldap-ng.png
 example/skins/default/msg-std.png
 example/slavePortal.pl

@@ -2,53 +2,47 @@
 <!DOCTYPE menu SYSTEM "apps-list.dtd">
 
 <menu>
-
-	<category name="Test">
-	<application id="aaa">
-		<name>AAA</name>
-		<uri>http://aaa.example.com</uri>
+	<category name="Example">
+	<application id="test1">
+		<name>Application Test 1</name>
+		<uri>http://test1.__DNSDOMAIN__</uri>
+		<description>A simple application displaying authenticated user</description>
+		<logo>wheels.png</logo>
 		<display>auto</display>
 	</application>
-	<application id="bbb">
-		<name>BBB</name>
-		<uri>http://bbb.example.com</uri>
-		<display>auto</display>
-	</application>
-	<application id="test">
-		<name>LemonLDAP::NG testing page</name>
-		<uri>http://test.example.com</uri>
+	<application id="test2">
+		<name>Application Test 2</name>
+		<uri>http://test2.__DNSDOMAIN__</uri>
+		<description>The same simple application displaying authenticated user</description>
+		<logo>wheels.png</logo>
 		<display>auto</display>
 	</application>
 	</category>
 
-	<category name="Technical">
-		<category name="J2EE">
-		<application id="probe">
-			<name>Probe</name>
-			<uri>http://probe.example.com</uri>
-			<description>Tomcat stats</description>
-			<logo>the-probe-logo.gif</logo>
-			<display>auto</display>
-		</application>
-		</category>
-		<category name="LDAP">
-		<application id="pla">
-			<name>phpLDAPAdmin</name>
-			<uri>http://phpldapadmin.example.com</uri>
-			<description>LDAP directory data administration</description>
-			<logo>pla.png</logo>
-			<display>on</display>
-		</application>
-		</category>
-		<category name="SSO">
-		<application id="llmanager">
-			<name>LemonLDAP::NG Manager</name>
-			<uri>http://manager.example.com</uri>
-			<description>Configure WebSSO access rules</description>
-			<display>on</display>
-		</application>
-		</category>
+	<category name="Administration">
+	<application id="manager">
+		<name>WebSSO Manager</name>
+		<uri>http://manager.__DNSDOMAIN__</uri>
+		<description>Configure LemonLDAP::NG WebSSO</description>
+		<logo>tools.png</logo>
+		<display>on</display>
+	</application>
 	</category>
 
+	<category name="Documentation">
+	<application id="localdoc">
+		<name>Local documentation</name>
+		<uri>http://manager.__DNSDOMAIN__/docs/</uri>
+		<description>Documentation supplied with LemonLDAP::NG</description>
+		<logo>docs.png</logo>
+		<display>on</display>
+	</application>
+	<application id="officialwebsite">
+		<name>Offical Website</name>
+		<uri>http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Presentation</uri>
+		<description>Official LemonLDAP::NG Website</description>
+		<logo>web.png</logo>
+		<display>on</display>
+	</application>
+	</category>
 </menu>
-

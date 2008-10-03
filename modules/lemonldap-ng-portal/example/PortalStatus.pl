@@ -39,7 +39,7 @@ BEGIN {
     sub Apache::Session::File::get_sessions_count {
         my $class = shift;
         my $args  = shift;
-        $args->{Directory} ||= '/tmp';
+        $args->{Directory} ||= '__SESSIONDIR__';
         unless ( opendir DIR, $args->{Directory} ) {
             die "Cannot open directory $args->{Directory}\n";
         }

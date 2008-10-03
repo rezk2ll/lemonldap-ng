@@ -5,8 +5,8 @@ use HTML::Template;
 
 # Path configuration
 my $skin        = "pastel";
-my $skin_dir    = "__SKINDIR__";
-my $appsxmlfile = "__PORTALDIR__apps/apps-list.xml";
+my $skin_dir    = "__DIR__/portal/skins";
+my $appsxmlfile = "__DIR__/portal/apps/apps-list.xml";
 my $appsimgpath = "apps/";
 
 my $portal = Lemonldap::NG::Portal::SharedConf->new(

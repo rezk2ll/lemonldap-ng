@@ -3,7 +3,7 @@
 # Set here the session storage you use
 $sessionStorage = 'Apache::Session::File';
 $sessionStorageOptions = {
-    Directory => '/tmp',
+    Directory => '__SESSIONDIR__',
 };
 
 ############

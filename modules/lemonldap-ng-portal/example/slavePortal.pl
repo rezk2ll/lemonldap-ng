@@ -44,7 +44,7 @@ my $portal = Lemonldap::NG::Portal::CDA->new(
         # configStorage ADAPT IT as usual
         configStorage => {
             type    => 'File',
-            dirName => '/usr/share/doc/lemonldap-ng/examples/conf/',
+            dirName => '__CONFDIR__',
         },
 
         # SUBROUTINES OVERLOAD

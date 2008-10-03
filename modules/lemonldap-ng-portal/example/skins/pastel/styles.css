@@ -210,20 +210,25 @@ display:none;
 text-align: center;
 margin:0;
 padding:0 0 3px 0;
-border-bottom:2px solid #c2e1ef;
+border-bottom:1px solid #c2e1ef;
 }
 .ui-tabs-nav li{
 display: inline;
 background-color:#dff4ff;
 border-color:#c2e1ef;
 border-style:solid;
-border-width:1px 1px 2px 1px;
+border-width:1px;
 margin-left:10px;
-padding:4px 10px;
+padding:4px 10px 3px 10px;
 }
 .ui-tabs-nav li a{
 color:#336699;
 font-weight:bold;
+}
+li.ui-tabs-selected{
+padding:4px 10px;
+border-bottom-width:0;
+background-color:#c2e1ef;
 }
 #appslist{
 padding: 10px;
