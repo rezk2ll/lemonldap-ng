@@ -4,7 +4,14 @@ use Lemonldap::NG::Portal::Simple;
 
 our $VERSION = '0.1';
 
+sub ldap {
+    my $self = shift;
+    return $self->{ldap} || Lemonldap::NG::Portal::_LDAP->new({portal=>$self});
+}
+
 sub authInit {
+    my $self = shift;
+    return $self->ldap;
 }
 
 sub extractFormInfo {
@@ -23,9 +30,6 @@ sub setAuthSessionInfo {
 
 sub authenticate {
     my $self = shift;
-    $self->unbind();
-    my $err;
-    return $err unless ( ( $err = $self->connectLDAP ) == PE_OK );
     # Check if we use Ppolicy control
     if ( $self->{ldapPpolicyControl} ) {
 
@@ -41,7 +45,7 @@ sub authenticate {
         my $pp = Net::LDAP::Control::PasswordPolicy->new;
 
         # Bind with user credentials
-        my $mesg = $self->{ldap}->bind(
+        my $mesg = $self->ldap->{ldap}->bind(
             $self->{dn},
             password => $self->{password},
             control  => [$pp]
@@ -83,7 +87,7 @@ sub authenticate {
     else {
         return PE_BADCREDENTIALS
           unless (
-            $self->_bind( $self->{ldap}, $self->{dn}, $self->{password} ) );
+            $self->ldap->_bind( $self->{dn}, $self->{password} ) );
     }
     $self->{sessionInfo}->{authenticationLevel} = 2;
     PE_OK;

@@ -6,6 +6,7 @@ use Lemonldap::NG::Portal::Simple;
 our $VERSION = '0.1';
 
 sub authInit {
+    1;
 }
 
 # By default, authentication is valid if REMOTE_USER environment

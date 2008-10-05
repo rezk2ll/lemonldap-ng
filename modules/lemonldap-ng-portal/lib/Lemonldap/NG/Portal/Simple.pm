@@ -5,7 +5,6 @@ use warnings;
 
 use Exporter 'import';
 
-use Net::LDAP;
 use warnings;
 use MIME::Base64;
 use CGI;
@@ -75,29 +74,29 @@ sub new {
     die( "Module " . $self->{globalStorage} . " not found in \@INC" ) if ($@);
     die("You've to indicate a domain for cookies") unless ( $self->{domain} );
     $self->{domain} =~ s/^([^\.])/.$1/;
-    $self->{ldapServer}         ||= 'localhost';
-    $self->{ldapPort}           ||= 389;
     $self->{securedCookie}      ||= 0;
     $self->{cookieName}         ||= "lemonldap";
-    $self->{ldapPpolicyControl} ||= 0;
     $self->{authentication}     ||= 'LDAP';
+    $self->{userDB}             ||= 'LDAP';
     $self->{authentication} =~ s/^ldap/LDAP/;
 
     # Authentication module is required and has to be in @ISA
-    my $tmp = 'Lemonldap::NG::Portal::Auth' . $self->{authentication};
-    $tmp =~ s/\s.*$//;
-    eval "require $tmp";
-    die($@) if ($@);
-    push @ISA, $tmp;
+    foreach(qw(authentication userDB)) {
+        my $tmp = 'Lemonldap::NG::Portal::' . ($_ eq 'userDB'?'UserDB':'Auth') . $self->{$_};
+        $tmp =~ s/\s.*$//;
+        eval "require $tmp";
+        die($@) if ($@);
+        push @ISA, $tmp;
 
-    # $self->{authentication} can contains arguments (key1 = scalar_value;
-    # key2 = ...)
-    $tmp = $self->{authentication};
-    $tmp =~ s/^\w+\s*//;
-    my %h = split( /\s*[=;]\s*/, $tmp ) if ($tmp);
-    %$self = ( %h, %$self );
-
-    $self->authInit();
+        # $self->{authentication} and $self->{userDB} can contains arguments
+        # (key1 = scalar_value; key2 = ...)
+        $tmp = $self->{$_};
+        $tmp =~ s/^\w+\s*//;
+        my %h = split( /\s*[=;]\s*/, $tmp ) if ($tmp);
+        %$self = ( %h, %$self );
+    }
+    $self->authInit() or die("$class : unable to load initialize authentication module");
+    $self->userDBInit() or die("$class : unable to load initialize user database module");
     return $self;
 }
 
@@ -169,23 +168,6 @@ sub translate_template {
     }
 }
 
-# Private sub used to bind to LDAP server both with Lemonldap::NG account and user
-# credentials if LDAP authentication is used
-sub _bind {
-    my ( $self, $ldap, $dn, $password ) = @_;
-    my $mesg;
-    if ( $dn and $password ) {    # named bind
-        $mesg = $ldap->bind( $dn, password => $password );
-    }
-    else {                        # anonymous bind
-        $mesg = $ldap->bind();
-    }
-    if ( $mesg->code() != 0 ) {
-        return 0;
-    }
-    return 1;
-}
-
 # CGI.pm overload to add Lemonldap::NG cookie
 sub header {
     my $self = shift;
@@ -206,6 +188,40 @@ sub redirect {
     else {
         $self->SUPER::redirect(@_);
     }
+}
+
+# getSessionInfo
+# Read session and store it in $self
+sub getSessionInfo {
+    my $self = shift;
+    my %cookies = fetch CGI::Cookie;
+
+    # Test if Lemonldap::NG cookie is available
+    if ( $cookies{ $self->{cookieName} }
+        and my $id = $cookies{ $self->{cookieName} }->value )
+    {
+        my %h;
+
+        # Trying to recover session from global session storage
+        eval {
+            tie %h, $self->{globalStorage}, $id, $self->{globalStorageOptions};
+        };
+        if ( $@ or not tied(%h) ) {
+
+            # Session not available (expired ?)
+            print STDERR
+              "Session $id isn't yet available ($ENV{REMOTE_ADDR})\n";
+            return undef;
+        }
+
+        # Store session values
+        foreach ( keys %h ) {
+            $self->{sessionInfo}->{$_} = $h{$_};
+        }
+       
+        untie %h;
+    }
+
 }
 
 # Externalise functions execution
@@ -240,17 +256,19 @@ sub updateStatus {
 #                  different than PE_OK                       #
 ###############################################################
 
-# extractFormInfo, setAuthSessionInfo and authenticate must be implemented in
-# auth modules
+# Process call functions issued from :
+#  * itself : controlUrlOrigin, controlExistingSession, setMacros, setGroups,
+#             store, buildCookie, log, autoredirect
+#  * authentication module : extractFormInfo, setAuthSessionInfo, authenticate
+#  * user database module  : getUser, setSessionInfo
 
 sub process {
     my ($self) = @_;
     $self->{error} = PE_OK;
     $self->{error} = $self->_subProcess(
-        qw(controlUrlOrigin controlExistingSession extractFormInfo formateParams
-          formateFilter connectLDAP bind search setAuthSessionInfo
-          setSessionInfo setMacros setGroups authenticate store unbind
-          buildCookie log autoRedirect)
+        qw(controlUrlOrigin controlExistingSession extractFormInfo getUser
+          setAuthSessionInfo setSessionInfo setMacros setGroups authenticate
+          store buildCookie log autoRedirect)
     );
     $self->updateStatus;
     return ( ( $self->{error} > 0 ) ? 0 : 1 );
@@ -343,150 +361,6 @@ sub existingSession {
 
 # Unused. You can overload if you have to modify user and password before
 # authentication
-sub formateParams() {
-    PE_OK;
-}
-
-# 4. By default, the user is searched in the LDAP server with its UID. To use
-#    it with Active Directory, overload it to use CN instead of UID.
-sub formateFilter {
-    my $self = shift;
-    $self->{filter} = $self->{authFilter}
-      || "(&(uid=" . $self->{user} . ")(objectClass=inetOrgPerson))";
-    PE_OK;
-}
-
-# 5. First LDAP connexion used to find user DN with the filter defined before.
-sub connectLDAP {
-    my $self = shift;
-    return PE_OK if ( $self->{ldap} );
-    my $useTls = 0;
-    my $tlsParam;
-    foreach my $server ( split /[\s,]+/, $self->{ldapServer} ) {
-        if ( $server =~ m{^ldap\+tls://([^/]+)/?\??(.*)$} ) {
-            $useTls   = 1;
-            $server   = $1;
-            $tlsParam = $2 || "";
-        }
-        else {
-            $useTls = 0;
-        }
-        last
-          if $self->{ldap} = Net::LDAP->new(
-            $server,
-            port    => $self->{ldapPort},
-            onerror => undef,
-          );
-    }
-    return PE_LDAPCONNECTFAILED unless ( $self->{ldap} );
-    if ($useTls) {
-        my %h = split( /[&=]/, $tlsParam );
-        $h{cafile} = $self->{caFile} if ( $self->{caFile} );
-        $h{capath} = $self->{caPath} if ( $self->{caPath} );
-        my $mesg = $self->{ldap}->start_tls(%h);
-        $mesg->code && return PE_LDAPCONNECTFAILED;
-    }
-    PE_OK;
-}
-
-# 6. LDAP bind with Lemonldap::NG account or anonymous unless defined
-sub bind {
-    my $self = shift;
-    $self->connectLDAP unless ( $self->{ldap} );
-    return PE_WRONGMANAGERACCOUNT
-      unless (
-        $self->_bind(
-            $self->{ldap}, $self->{managerDn}, $self->{managerPassword}
-        )
-      );
-    PE_OK;
-}
-
-# 7. Search the DN
-sub search {
-    my $self = shift;
-    my $mesg = $self->{ldap}->search(
-        base   => $self->{ldapBase},
-        scope  => 'sub',
-        filter => $self->{filter},
-    );
-    if ( $mesg->code() != 0 ) {
-        print STDERR $mesg->error . "\n";
-        return PE_LDAPERROR;
-    }
-    return PE_USERNOTFOUND unless ( $self->{entry} = $mesg->entry(0) );
-    $self->{dn} = $self->{entry}->dn();
-    PE_OK;
-}
-
-# sub setAuthSessionInfo has to be defined in auth module
-
-# 8. Load all parameters included in exportedVars parameter.
-#    Multi-value parameters are loaded in a single string with
-#    '; ' separator
-sub setSessionInfo {
-    my ($self) = @_;
-    $self->{sessionInfo}->{dn} = $self->{dn};
-    $self->{sessionInfo}->{startTime} =
-      &POSIX::strftime( "%Y%m%d%H%M%S", localtime() );
-    unless ( $self->{exportedVars} ) {
-        foreach (qw(uid cn mail)) {
-            $self->{sessionInfo}->{$_} =
-              join( '; ', $self->{entry}->get_value($_) ) || "";
-        }
-    }
-    elsif ( ref( $self->{exportedVars} ) eq 'HASH' ) {
-        foreach ( keys %{ $self->{exportedVars} } ) {
-            if ( my $tmp = $ENV{$_} ) {
-                $tmp =~ s/[\r\n]/ /gs;
-                $self->{sessionInfo}->{$_} = $tmp;
-            }
-            else {
-                $self->{sessionInfo}->{$_} = join( '; ',
-                    $self->{entry}->get_value( $self->{exportedVars}->{$_} ) )
-                  || "";
-            }
-        }
-    }
-    else {
-        die('Only hash reference are supported now in exportedVars');
-    }
-    PE_OK;
-}
-
-# getSessionInfo
-# Read session and store it in $self
-sub getSessionInfo {
-    my $self = shift;
-    my %cookies = fetch CGI::Cookie;
-
-    # Test if Lemonldap::NG cookie is available
-    if ( $cookies{ $self->{cookieName} }
-        and my $id = $cookies{ $self->{cookieName} }->value )
-    {
-        my %h;
-
-        # Trying to recover session from global session storage
-        eval {
-            tie %h, $self->{globalStorage}, $id, $self->{globalStorageOptions};
-        };
-        if ( $@ or not tied(%h) ) {
-
-            # Session not available (expired ?)
-            print STDERR
-              "Session $id isn't yet available ($ENV{REMOTE_ADDR})\n";
-            return undef;
-        }
-
-        # Store session values
-        foreach ( keys %h ) {
-            $self->{sessionInfo}->{$_} = $h{$_};
-        }
-       
-        untie %h;
-    }
-
-}
 
 # 9. Unused here, but overloaded in SharedConf.pm
 sub setMacros {
@@ -495,15 +369,6 @@ sub setMacros {
 
 # 10. Unused here, but overloaded in SharedConf.pm
 sub setGroups {
-    PE_OK;
-}
-
-# 11. Now, LDAP will not be used by Lemonldap::NG except for LDAP
-#     authentication scheme
-sub unbind {
-    my $self = shift;
-    $self->{ldap}->unbind if $self->{ldap};
-    delete $self->{ldap};
     PE_OK;
 }
 
