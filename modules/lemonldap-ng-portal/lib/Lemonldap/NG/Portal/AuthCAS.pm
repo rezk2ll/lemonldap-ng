@@ -7,6 +7,7 @@ use AuthCAS;
 our $VERSION = '0.03';
 
 sub authInit {
+    1;
 }
 
 sub extractFormInfo {
