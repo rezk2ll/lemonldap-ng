@@ -7,12 +7,19 @@ our $VERSION = '0.1';
 
 sub ldap {
     my $self = shift;
-    return $self->{ldap} || Lemonldap::NG::Portal::_LDAP->new({portal=>$self});
+    unless ( ref( $self->{ldap} ) ) {
+        my $mesg = $self->{ldap}->{bind}
+          if ( $self->{ldap} = Lemonldap::NG::Portal::_LDAP->new($self) );
+        if ( $mesg->{code} ) {
+            print STDERR $mesg->error . "\n";
+            return 0;
+        }
+    }
+    return $self->{ldap};
 }
 
 sub userDBInit {
-    my $self = shift;
-    return $self->ldap;
+    PE_OK;
 }
 
 sub getUser {
@@ -32,6 +39,9 @@ sub formateFilter {
 # 7. Search the DN
 sub search {
     my $self = shift;
+    unless ( $self->ldap ) {
+        return PE_LDAPCONNECTFAILED;
+    }
     my $mesg = $self->ldap->search(
         base   => $self->{ldapBase},
         scope  => 'sub',

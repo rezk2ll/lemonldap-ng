@@ -1,17 +1,25 @@
 package Lemonldap::NG::Portal::AuthLDAP;
 
 use Lemonldap::NG::Portal::Simple;
+use Lemonldap::NG::Portal::_LDAP;
 
 our $VERSION = '0.1';
 
 sub ldap {
     my $self = shift;
-    return $self->{ldap} || Lemonldap::NG::Portal::_LDAP->new({portal=>$self});
+    unless ( ref( $self->{ldap} ) ) {
+        my $mesg = $self->{ldap}->{bind}
+          if ( $self->{ldap} = Lemonldap::NG::Portal::_LDAP->new($self) );
+        if ( $mesg->{code} ) {
+            print STDERR $mesg->error . "\n";
+            return 0;
+        }
+    }
+    return $self->{ldap};
 }
 
 sub authInit {
-    my $self = shift;
-    return $self->ldap;
+    PE_OK;
 }
 
 sub extractFormInfo {
@@ -30,13 +38,18 @@ sub setAuthSessionInfo {
 
 sub authenticate {
     my $self = shift;
+    unless ( $self->ldap ) {
+        return PE_LDAPCONNECTFAILED;
+    }
+
     # Check if we use Ppolicy control
     if ( $self->{ldapPpolicyControl} ) {
 
         # require Perl module
         eval 'require Net::LDAP::Control::PasswordPolicy';
         if ($@) {
-            print STDERR "Module Net::LDAP::Control::PasswordPolicy not found in @INC\n";
+            print STDERR
+              "Module Net::LDAP::Control::PasswordPolicy not found in @INC\n";
             return PE_LDAPERROR;
         }
         no strict 'subs';
@@ -45,7 +58,7 @@ sub authenticate {
         my $pp = Net::LDAP::Control::PasswordPolicy->new;
 
         # Bind with user credentials
-        my $mesg = $self->ldap->{ldap}->bind(
+        my $mesg = $self->ldap->bind(
             $self->{dn},
             password => $self->{password},
             control  => [$pp]
@@ -54,9 +67,11 @@ sub authenticate {
         # Get server control response
         my ($resp) = $mesg->control("1.3.6.1.4.1.42.2.27.8.5.1");
 
-	# Get expiration warning and graces
-	$self->{ppolicy}->{time_before_expiration} = $resp->time_before_expiration;
-	$self->{ppolicy}->{grace_authentications_remaining} = $resp->grace_authentications_remaining;
+        # Get expiration warning and graces
+        $self->{ppolicy}->{time_before_expiration} =
+          $resp->time_before_expiration;
+        $self->{ppolicy}->{grace_authentications_remaining} =
+          $resp->grace_authentications_remaining;
 
         # Get bind response
         return PE_OK if ( $mesg->code == 0 );
@@ -87,7 +102,7 @@ sub authenticate {
     else {
         return PE_BADCREDENTIALS
           unless (
-            $self->ldap->_bind( $self->{dn}, $self->{password} ) );
+            $self->ldap->bind( $self->{dn}, password => $self->{password} ) );
     }
     $self->{sessionInfo}->{authenticationLevel} = 2;
     PE_OK;

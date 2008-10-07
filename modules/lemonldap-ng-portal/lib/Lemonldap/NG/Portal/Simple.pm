@@ -74,15 +74,18 @@ sub new {
     die( "Module " . $self->{globalStorage} . " not found in \@INC" ) if ($@);
     die("You've to indicate a domain for cookies") unless ( $self->{domain} );
     $self->{domain} =~ s/^([^\.])/.$1/;
-    $self->{securedCookie}      ||= 0;
-    $self->{cookieName}         ||= "lemonldap";
-    $self->{authentication}     ||= 'LDAP';
-    $self->{userDB}             ||= 'LDAP';
+    $self->{securedCookie}  ||= 0;
+    $self->{cookieName}     ||= "lemonldap";
+    $self->{authentication} ||= 'LDAP';
+    $self->{userDB}         ||= 'LDAP';
     $self->{authentication} =~ s/^ldap/LDAP/;
 
     # Authentication module is required and has to be in @ISA
-    foreach(qw(authentication userDB)) {
-        my $tmp = 'Lemonldap::NG::Portal::' . ($_ eq 'userDB'?'UserDB':'Auth') . $self->{$_};
+    foreach (qw(authentication userDB)) {
+        my $tmp =
+            'Lemonldap::NG::Portal::'
+          . ( $_ eq 'userDB' ? 'UserDB' : 'Auth' )
+          . $self->{$_};
         $tmp =~ s/\s.*$//;
         eval "require $tmp";
         die($@) if ($@);
@@ -95,8 +98,6 @@ sub new {
         my %h = split( /\s*[=;]\s*/, $tmp ) if ($tmp);
         %$self = ( %h, %$self );
     }
-    $self->authInit() or die("$class : unable to load initialize authentication module");
-    $self->userDBInit() or die("$class : unable to load initialize user database module");
     return $self;
 }
 
@@ -126,21 +127,31 @@ sub error_type {
     my $self = shift;
 
     # Positive errors
-    return "positive" if (scalar(grep{/^$self->{error}$/} (
-        -2, #PE_REDIRECT
-        -1, #PE_DONE,
-         0, #PE_OK
-         35, #PE_PASSWORD_OK
-    )));
+    return "positive"
+      if (
+        scalar(
+            grep { /^$self->{error}$/ } (
+                -2,    #PE_REDIRECT
+                -1,    #PE_DONE,
+                0,     #PE_OK
+                35,    #PE_PASSWORD_OK
+            )
+        )
+      );
 
     # Warning errors
-    return "warning" if (scalar(grep{/^$self->{error}$/} (
-         1, #PE_SESSIONEXPIRED
-         2, #PE_FORMEMPTY
-         9, #PE_FIRSTACCESS
-        32, #PE_PP_GRACE
-        33, #PE_PP_EXP_WARNING
-    )));
+    return "warning"
+      if (
+        scalar(
+            grep { /^$self->{error}$/ } (
+                1,     #PE_SESSIONEXPIRED
+                2,     #PE_FORMEMPTY
+                9,     #PE_FIRSTACCESS
+                32,    #PE_PP_GRACE
+                33,    #PE_PP_EXP_WARNING
+            )
+        )
+      );
 
     # Negative errors (default)
     return "negative";
@@ -193,7 +204,7 @@ sub redirect {
 # getSessionInfo
 # Read session and store it in $self
 sub getSessionInfo {
-    my $self = shift;
+    my $self    = shift;
     my %cookies = fetch CGI::Cookie;
 
     # Test if Lemonldap::NG cookie is available
@@ -218,7 +229,7 @@ sub getSessionInfo {
         foreach ( keys %h ) {
             $self->{sessionInfo}->{$_} = $h{$_};
         }
-       
+
         untie %h;
     }
 
@@ -266,9 +277,9 @@ sub process {
     my ($self) = @_;
     $self->{error} = PE_OK;
     $self->{error} = $self->_subProcess(
-        qw(controlUrlOrigin controlExistingSession extractFormInfo getUser
-          setAuthSessionInfo setSessionInfo setMacros setGroups authenticate
-          store buildCookie log autoRedirect)
+        qw(controlUrlOrigin controlExistingSession authInit extractFormInfo
+          userDBInit getUser setAuthSessionInfo setSessionInfo setMacros
+          setGroups authenticate store buildCookie log autoRedirect)
     );
     $self->updateStatus;
     return ( ( $self->{error} > 0 ) ? 0 : 1 );

@@ -13,6 +13,7 @@ sub authInit {
     $self->{SSLRequire} = 1 unless ( defined $self->{SSLRequire} );
     $self->{SSLVar}       ||= 'SSL_CLIENT_S_DN_Email';
     $self->{SSLLDAPField} ||= 'mail';
+    PE_OK;
 }
 
 # Authentication is made by Apache with SSL and here before searching the LDAP

@@ -25,15 +25,17 @@ sub existingSession {
 #     to the requested URL. If it does not come from our domain, we add
 #     ID in URL
 sub autoRedirect {
-    my $self = shift;
-    my $tmp  = $self->{domain};
+    my $self       = shift;
+    my $tmp        = $self->{domain};
     my $cookieName = $self->{cookieName};
 
-    if ( $self->{urldc} and $self->{urldc} !~ m#https?://[^/]*$tmp/#oi
-        and $self->{id} and $self->{urldc} !~ m#[\?&]?$cookieName=\w+&?#oi )
+    if (    $self->{urldc}
+        and $self->{urldc} !~ m#https?://[^/]*$tmp/#oi
+        and $self->{id}
+        and $self->{urldc} !~ m#[\?&]?$cookieName=\w+&?#oi )
     {
-      $self->{urldc} .= ( $self->{urldc} =~ /\?{1}/oi ) ? '&' : '?' ;
-      $self->{urldc} .= $cookieName . "=" . $self->{id} ;
+        $self->{urldc} .= ( $self->{urldc} =~ /\?{1}/oi ) ? '&' : '?';
+        $self->{urldc} .= $cookieName . "=" . $self->{id};
     }
     return $self->SUPER::autoRedirect(@_);
 }

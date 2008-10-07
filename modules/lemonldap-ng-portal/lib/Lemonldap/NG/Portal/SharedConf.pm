@@ -64,8 +64,9 @@ sub localStorageObject {
     my $self = shift;
     eval "use " . $self->{localStorage};
     if ($@) {
-        print STDERR "Unable to load " . $self->{localStorage}
-	  . ", local configuration cache is disabled: $@\n";
+        print STDERR "Unable to load "
+          . $self->{localStorage}
+          . ", local configuration cache is disabled: $@\n";
         return 0;
     }
     my $refLocalStorage;
@@ -126,7 +127,10 @@ sub setGroups {
     if ( $self->{ldapGroupBase} ) {
         my $mesg = $self->{ldap}->search(
             base   => $self->{ldapGroupBase},
-            filter => "(|(member=" . $self->{dn} . ")(uniqueMember=" . $self->{dn} . "))",
+            filter => "(|(member="
+              . $self->{dn}
+              . ")(uniqueMember="
+              . $self->{dn} . "))",
             attrs => ["cn"],
         );
         if ( $mesg->code() == 0 ) {
