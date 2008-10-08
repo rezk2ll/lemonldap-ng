@@ -55,14 +55,8 @@ sub bind {
     my $mesg;
     my ( $dn, %args ) = @_;
     $dn ||= $self->{portal}->{managerDn};
-    $args->{password} ||= $self->{portal}->{managerPassword};
-    $mesg = $self->SUPER::bind( $dn, %args );
-    if ( $mesg->code() != 0 ) {
-        print STDERR $mesg->error . "\n";
-        return 0;
-    }
-    return 1;
+    $args{password} ||= $self->{portal}->{managerPassword};
+    return $self->SUPER::bind( $dn, %args );
 }
 
 1;
-

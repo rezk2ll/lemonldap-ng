@@ -4,6 +4,7 @@ use strict;
 use warnings;
 use Exporter 'import';
 use Lemonldap::NG::Portal::SharedConf;
+use Lemonldap::NG::Portal::_LDAP;
 use XML::LibXML;
 use Safe;
 
@@ -65,6 +66,18 @@ sub new {
       if $newpassword;
 
     return $self;
+}
+
+sub ldap {
+    my $self = shift;
+    unless ( ref( $self->{ldap} ) ) {
+        my $mesg = $self->{ldap}->bind
+          if ( $self->{ldap} = Lemonldap::NG::Portal::_LDAP->new($self) );
+        if ( $mesg->code != 0 ) {
+            return 0;
+        }
+    }
+    return $self->{ldap};
 }
 
 sub error {
@@ -324,12 +337,9 @@ sub _changePassword {
     return PE_PASSWORD_MISMATCH unless ( $newpassword eq $confirmpassword );
 
     # Connect to LDAP
-    $err = &Lemonldap::NG::Portal::Simple::connectLDAP( $self->{portalObject} );
-    return $err unless ( $err eq PE_OK );
-
-    # Bind with Manager
-    $err = &Lemonldap::NG::Portal::Simple::bind( $self->{portalObject} );
-    return $err unless ( $err eq PE_OK );
+    unless ( $self->{portalObject}->ldap ) {
+        return PE_LDAPCONNECTFAILED;
+    }
 
     my $ldap = $self->{portalObject}->{ldap};
     my $dn   = $self->{portalObject}->{sessionInfo}->{"dn"};

@@ -8,10 +8,9 @@ our $VERSION = '0.1';
 sub ldap {
     my $self = shift;
     unless ( ref( $self->{ldap} ) ) {
-        my $mesg = $self->{ldap}->{bind}
+        my $mesg = $self->{ldap}->bind
           if ( $self->{ldap} = Lemonldap::NG::Portal::_LDAP->new($self) );
-        if ( $mesg->{code} ) {
-            print STDERR $mesg->error . "\n";
+        if ( $mesg->code != 0 ) {
             return 0;
         }
     }
