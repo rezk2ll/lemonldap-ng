@@ -1,6 +1,7 @@
 package Lemonldap::NG::Portal::_LDAP;
 
 use Net::LDAP;
+our @ISA = qw(Net::LDAP);
 
 our $VERSION = '0.1';
 
@@ -33,6 +34,7 @@ sub new {
         print STDERR "$@\n";
         return 0;
     }
+    bless $self, $class;
     if ($useTls) {
         my %h = split( /[&=]/, $tlsParam );
         $h{cafile} = $portal->{caFile} if ( $portal->{caFile} );
