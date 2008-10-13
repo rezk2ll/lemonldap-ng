@@ -10,14 +10,14 @@ DNSDOMAIN="example.com"
 # LDAP parameters
 LDAPHOST="localhost"
 LDAPPORT="389"
-LDAPSUFFIX="dc=example,dc=com"
+LDAPSUFFIX="dc=example,dc=net"
 # Other
 VERSION=`head -n1 changelog |sed -e 's/lemonldap-ng (//' -e 's/).*$$//'`
 SRCHANDLERDIR=lemonldap-ng-handler
 SRCPORTALDIR=lemonldap-ng-portal
 SRCMANAGERDIR=lemonldap-ng-manager
 EXAMPLELANG=en # For static Manager only
-DESTFILECONFDIR=$(SCRIPTSDIR)conf/
+DESTFILECONFDIR=$(SYSTEMCONFDIR)conf/
 DESTSESSIONDIR=$(SCRIPTSDIR)sessions/
 DESTLASPDIR=$(SCRIPTSDIR)liberty-alliance-sp-portal
 DESTPORTALDIR=$(SCRIPTSDIR)portal/
@@ -29,29 +29,29 @@ all:	handler manager portal
 
 handler:	handler_conf
 	@$(MAKE) -C ${SRCHANDLERDIR}
-	@touch .handler
+	@touch handler
 
 portal:		portal_conf
 	@$(MAKE) -C ${SRCPORTALDIR}
-	@touch .portal
+	@touch portal
 
 manager:	manager_conf
 	@$(MAKE) -C ${SRCMANAGERDIR}
-	@touch .manager
+	@touch manager
 
 configure:	handler_conf portal_conf manager_conf
 
 handler_conf:
 	@cd ${SRCHANDLERDIR}; perl Makefile.PL
-	@touch .handler_conf
+	@touch handler_conf
 
 portal_conf:
 	@cd ${SRCPORTALDIR}; perl Makefile.PL
-	@touch .portal_conf
+	@touch portal_conf
 
 manager_conf:
 	@cd ${SRCMANAGERDIR}; perl Makefile.PL
-	@touch .manager_conf
+	@touch manager_conf
 
 test:		manager handler portal manager_test handler_test portal_test
 
@@ -68,15 +68,15 @@ install:	handler_install portal_install manager_install
 
 handler_install:	handler
 	@$(MAKE) -C ${SRCHANDLERDIR} install
-	@touch .handler_install
+	@touch handler_install
 
 portal_install:		portal
 	@$(MAKE) -C ${SRCPORTALDIR} install
-	@touch .portal_install
+	@touch portal_install
 
 manager_install:	manager
 	@$(MAKE) -C ${SRCMANAGERDIR} install
-	@touch .manager_install
+	@touch manager_install
 
 distclean:	clean
 
@@ -87,15 +87,15 @@ clean:		handler_clean portal_clean manager_clean
 
 handler_clean:
 	- $(MAKE) -C ${SRCHANDLERDIR} distclean
-	@rm -vf .handler*
+	@rm -vf handler*
 
 portal_clean:
 	- $(MAKE) -C ${SRCPORTALDIR} distclean
-	@rm -vf .portal*
+	@rm -vf portal*
 
 manager_clean:
 	- $(MAKE) -C ${SRCMANAGERDIR} distclean
-	@rm -vf .manager*
+	@rm -vf manager*
 
 example: all
 	@mkdir -p ${DESTFILECONFDIR} ${DESTPORTALDIR} ${DESTHANDLERDIR} ${DESTMANAGERDIR} ${SYSTEMCONFDIR} ${DESTDOCSDIR} ${DESTSESSIONDIR}
@@ -108,8 +108,8 @@ example: all
 	@cp -a _example/var/lib/lemonldap-ng/* ${SCRIPTSDIR}
 	@cp -a doc/* ${DESTDOCSDIR}
 	@find ${DESTLASPDIR} -type f -exec perl -i -pe 's#__DIR__/?#'${DESTLASPDIR}'#g;s#__CONFDIR__/?#'${DESTFILECONFDIR}'#g' {} \;
-	@find ${SCRIPTSDIR} -type f -exec perl -i -pe 's#__DIR__/?#'${SCRIPTSDIR}'#g;s#__CONFDIR__/?#'${DESTFILECONFDIR}'#g;s#__SESSIONDIR__/?#'${DESTSESSIONDIR}'#g;s#__DNSDOMAIN__#'${DNSDOMAIN}'#g;s#__LDAPHOST__#'${LDAPHOST}'#g;s#__LDAPPORT__#'${LDAPPORT}'#g;s#__LDAPSUFFIX__#'${LDAPSUFFIX}'#g;' {} \;
-	@find ${SYSTEMCONFDIR} -type f -exec perl -i -pe 's#__DIR__/?#'${SCRIPTSDIR}'#g;s#__DNSDOMAIN__#'${DNSDOMAIN}'#g;' {} \;
+	@find ${SCRIPTSDIR} -type f -exec perl -i -pe 's#__DIR__/?#'${SCRIPTSDIR}'#g;s#__SYSCONFDIR__/?#'${SYSTEMCONFDIR}'#g;s#__CONFDIR__/?#'${DESTFILECONFDIR}'#g;s#__SESSIONDIR__/?#'${DESTSESSIONDIR}'#g;s#__DNSDOMAIN__#'${DNSDOMAIN}'#g;s#__LDAPHOST__#'${LDAPHOST}'#g;s#__LDAPPORT__#'${LDAPPORT}'#g;s#__LDAPSUFFIX__#'${LDAPSUFFIX}'#g;' {} \;
+	@find ${SYSTEMCONFDIR} -type f -exec perl -i -pe 's#__DIR__/?#'${SCRIPTSDIR}'#g;s#__SESSIONDIR__/?#'${DESTSESSIONDIR}'#g;s#__DNSDOMAIN__#'${DNSDOMAIN}'#g;s#__LDAPHOST__#'${LDAPHOST}'#g;s#__LDAPPORT__#'${LDAPPORT}'#g;s#__LDAPSUFFIX__#'${LDAPSUFFIX}'#g;' {} \;
 	@echo
 	@echo "LemonLDAP::NG example v${VERSION} is installed with these parameters:"
 	@echo "  - System configuration: ${SYSTEMCONFDIR}"
@@ -160,15 +160,15 @@ uninstall:	configure handler_uninstall portal_uninstall manager_uninstall
 
 handler_uninstall:	handler
 	@$(MAKE) -C ${SRCHANDLERDIR} uninstall
-	@rm -vf .handler_uninstall
+	@rm -vf handler_uninstall
 
 portal_uninstall:		portal
 	@$(MAKE) -C ${SRCPORTALDIR} uninstall
-	@rm -vf .portal_uninstall
+	@rm -vf portal_uninstall
 
 manager_uninstall:	manager
 	@$(MAKE) -C ${SRCMANAGERDIR} uninstall
-	@rm -vf .manager_uninstall
+	@rm -vf manager_uninstall
 
 dist:	clean
 	@- $(MAKE) clean
