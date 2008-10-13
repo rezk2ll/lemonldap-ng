@@ -5,6 +5,7 @@
         <title><lang en="Authentication portal" fr="Portail d'authentification"/></title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta http-equiv="Content-Script-Type" content="text/javascript" />
+	<meta http-equiv="cache-control" content="no-cache" />
         <link rel="stylesheet" type="text/css" href="skins/pastel/styles.css" />
         <link href="skins/pastel/favicon.ico" rel="icon" type="image/x-icon" />
         <link href="skins/pastel/favicon.ico" rel="shortcut icon" />

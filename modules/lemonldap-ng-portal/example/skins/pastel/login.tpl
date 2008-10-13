@@ -21,11 +21,11 @@
 		<tr><td colspan="2">
 		<div class="buttons">
 		<button type="reset" class="negative">
-			<img src="skins/pastel/error.png" alt="" />
+			<img src="skins/pastel/cancel.png" alt="" />
 			<lang en="Cancel" fr="Annuler" />
 		</button>
 		<button type="submit" class="positive">
-			<img src="skins/pastel/ok.png" alt="" />
+			<img src="skins/pastel/accept.png" alt="" />
 			<lang en="Connect" fr="Se connecter" />
 		</button>
 		</div></td></tr>
@@ -37,6 +37,7 @@
 	<TMPL_IF NAME="LOGOUT_URL">
 		<div class="buttons">
 		<a href="<TMPL_VAR NAME="LOGOUT_URL">" class="negative">
+			<img src="skins/pastel/cancel.png" alt="" />
 			<lang en="Logout" fr="Se d&eacute;connecter"/>
 		</a>
 		</div>

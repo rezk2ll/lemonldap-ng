@@ -9,9 +9,11 @@
 
 	<div class="buttons">
 		<a href="<TMPL_VAR NAME="PORTAL_URL">" class="positive">
+			<img src="skins/pastel/accept.png" alt="" />
 			<lang en="Go to portal" fr="Aller au portail" />
 		</a>
 		<a href="<TMPL_VAR NAME="LOGOUT_URL">" class="negative">
+			<img src="skins/pastel/cancel.png" alt="" />
 			<lang en="Logout" fr="Se d&eacute;connecter" />
 		</a>
 	</div>
