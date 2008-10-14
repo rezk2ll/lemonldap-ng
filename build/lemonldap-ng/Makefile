@@ -1,10 +1,11 @@
 #!/usr/bin/make
 
-# Example CHROOT
-EXAMPLECHROOT=`pwd`/example/
+# Example and real root installation
+EXAMPLEROOT=`pwd`/example/
+REALROOT=$(EXAMPLEROOT)
 # Subfolders
-SYSTEMCONFDIR=$(EXAMPLECHROOT)etc/lemonldap-ng/
-SCRIPTSDIR=$(EXAMPLECHROOT)var/lib/lemonldap-ng/
+SYSTEMCONFDIR=$(EXAMPLEROOT)etc/lemonldap-ng/
+SCRIPTSDIR=$(EXAMPLEROOT)var/lib/lemonldap-ng/
 # DNS Domain for cookie and virtual hosts
 DNSDOMAIN="example.com"
 # LDAP parameters
@@ -24,6 +25,12 @@ DESTPORTALDIR=$(SCRIPTSDIR)portal/
 DESTHANDLERDIR=$(SCRIPTSDIR)handler/
 DESTMANAGERDIR=$(SCRIPTSDIR)manager/
 DESTDOCSDIR=$(SCRIPTSDIR)docs/
+# Real directories for file content substitution
+REALSYSTEMCONFDIR=$(REALROOT)etc/lemonldap-ng/
+REALSCRIPTSDIR=$(REALROOT)var/lib/lemonldap-ng/
+REALDESTFILECONFDIR=$(REALSYSTEMCONFDIR)conf/
+REALDESTSESSIONDIR=$(REALSCRIPTSDIR)sessions/
+REALDESTLASPDIR=$(REALSCRIPTSDIR)liberty-alliance-sp-portal
 
 all:	handler manager portal
 
@@ -107,9 +114,9 @@ example: all
 	@cp -a _example/etc/lemonldap-ng/* ${SYSTEMCONFDIR}
 	@cp -a _example/var/lib/lemonldap-ng/* ${SCRIPTSDIR}
 	@cp -a doc/* ${DESTDOCSDIR}
-	@find ${DESTLASPDIR} -type f -exec perl -i -pe 's#__DIR__/?#'${DESTLASPDIR}'#g;s#__CONFDIR__/?#'${DESTFILECONFDIR}'#g' {} \;
-	@find ${SCRIPTSDIR} -type f -exec perl -i -pe 's#__DIR__/?#'${SCRIPTSDIR}'#g;s#__SYSCONFDIR__/?#'${SYSTEMCONFDIR}'#g;s#__CONFDIR__/?#'${DESTFILECONFDIR}'#g;s#__SESSIONDIR__/?#'${DESTSESSIONDIR}'#g;s#__DNSDOMAIN__#'${DNSDOMAIN}'#g;s#__LDAPHOST__#'${LDAPHOST}'#g;s#__LDAPPORT__#'${LDAPPORT}'#g;s#__LDAPSUFFIX__#'${LDAPSUFFIX}'#g;' {} \;
-	@find ${SYSTEMCONFDIR} -type f -exec perl -i -pe 's#__DIR__/?#'${SCRIPTSDIR}'#g;s#__SESSIONDIR__/?#'${DESTSESSIONDIR}'#g;s#__DNSDOMAIN__#'${DNSDOMAIN}'#g;s#__LDAPHOST__#'${LDAPHOST}'#g;s#__LDAPPORT__#'${LDAPPORT}'#g;s#__LDAPSUFFIX__#'${LDAPSUFFIX}'#g;' {} \;
+	@find ${DESTLASPDIR} -type f -exec perl -i -pe 's#__DIR__/?#'${REALDESTLASPDIR}'#g;s#__CONFDIR__/?#'${REALDESTFILECONFDIR}'#g' {} \;
+	@find ${SCRIPTSDIR} -type f -exec perl -i -pe 's#__DIR__/?#'${REALSCRIPTSDIR}'#g;s#__SYSCONFDIR__/?#'${REALSYSTEMCONFDIR}'#g;s#__CONFDIR__/?#'${REALDESTFILECONFDIR}'#g;s#__SESSIONDIR__/?#'${REALDESTSESSIONDIR}'#g;s#__DNSDOMAIN__#'${DNSDOMAIN}'#g;s#__LDAPHOST__#'${LDAPHOST}'#g;s#__LDAPPORT__#'${LDAPPORT}'#g;s#__LDAPSUFFIX__#'${LDAPSUFFIX}'#g;' {} \;
+	@find ${SYSTEMCONFDIR} -type f -exec perl -i -pe 's#__DIR__/?#'${REALSCRIPTSDIR}'#g;s#__SESSIONDIR__/?#'${REALDESTSESSIONDIR}'#g;s#__DNSDOMAIN__#'${DNSDOMAIN}'#g;s#__LDAPHOST__#'${LDAPHOST}'#g;s#__LDAPPORT__#'${LDAPPORT}'#g;s#__LDAPSUFFIX__#'${LDAPSUFFIX}'#g;' {} \;
 	@echo
 	@echo "LemonLDAP::NG example v${VERSION} is installed with these parameters:"
 	@echo "  - System configuration: ${SYSTEMCONFDIR}"
@@ -151,7 +158,7 @@ postconf: postconf_hosts postconf_unixrights
 	@echo "Post configuration done"
 
 production_preconf:
-# TODO: modify EXAMPLECHROOT and set it to /
+# TODO: modify EXAMPLEROOT and set it to /
 # TODO: ask parameters value (like DNSDOMAIN, LDAPHOST, etc.)
 
 production_install:	production_preconf example
