@@ -17,6 +17,7 @@ my $portal = Lemonldap::NG::Portal::SharedConf->new(
         },
         existingSession => sub {PE_DONE},  # Required to display the menu to a connected user
 	#ldapPpolicyControl => 1,          # Remove comment to use LDAP Password Policy
+        #storePassword => 1,               # Remove comment to store password in session (use with caution)
     }
 );
 

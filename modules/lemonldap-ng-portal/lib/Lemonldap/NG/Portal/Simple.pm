@@ -235,6 +235,42 @@ sub getSessionInfo {
 
 }
 
+# updateSession
+# Update information stored in session
+# TODO: update all caches
+sub updateSession {
+    my $self = shift;
+    my ( $infos ) = @_;
+    my %cookies = fetch CGI::Cookie;
+
+    # Test if Lemonldap::NG cookie is available
+    if ( $cookies{ $self->{cookieName} }
+        and my $id = $cookies{ $self->{cookieName} }->value )
+    {
+        my %h;
+
+        # Trying to recover session from global session storage
+        eval {
+            tie %h, $self->{globalStorage}, $id, $self->{globalStorageOptions};
+        };
+        if ( $@ or not tied(%h) ) {
+
+            # Session not available (expired ?)
+            print STDERR
+              "Session $id isn't yet available ($ENV{REMOTE_ADDR})\n";
+            return undef;
+        }
+
+        # Store/update session values
+        foreach ( keys %$infos ) {
+            $h{$_} = $infos->{$_};
+        }
+
+        untie %h;
+    }
+
+}
+
 # Externalise functions execution
 sub _subProcess {
     my $self = shift;

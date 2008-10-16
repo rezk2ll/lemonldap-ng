@@ -328,6 +328,7 @@ sub _hideEmptyCategory {
 
 # _changePassword
 # Change user's password
+# TODO: Check used Auth module and change password for LDAP or DBI
 sub _changePassword {
     my $self = shift;
     my ( $newpassword, $confirmpassword, $oldpassword ) = @_;
@@ -353,6 +354,7 @@ sub _changePassword {
         return PE_WRONGMANAGERACCOUNT
           if ( $mesg->code == 50 || $mesg->code == 8 );
         return PE_LDAPERROR unless ( $mesg->code == 0 );
+        $self->_storePassword( $newpassword );
         return PE_PASSWORD_OK;
     }
     else {
@@ -382,7 +384,7 @@ sub _changePassword {
 
         return PE_WRONGMANAGERACCOUNT
           if ( $mesg->code == 50 || $mesg->code == 8 );
-        return PE_PASSWORD_OK if ( $mesg->code == 0 );
+        $self->_storePassword( $newpassword ) && return PE_PASSWORD_OK if ( $mesg->code == 0 );
 
         if ( defined $resp ) {
             my $pp_error = $resp->pp_error;
@@ -404,6 +406,19 @@ sub _changePassword {
             return PE_LDAPERROR;
         }
     }
+}
+
+# _storePassword
+# Store new password in session if storePassword parameter is set
+sub _storePassword {
+    my $self = shift;
+    my ( $password ) = @_;
+    if ( $self->{portalObject}->{storePassword} ) {
+        $self->{portalObject}->{sessionInfo}->{_password} = $password;
+        # Update session
+        &Lemonldap::NG::Portal::Simple::updateSession( $self->{portalObject}, { _password => $password } );
+    }
+    return 1;
 }
 
 # _ppolicyWarning

@@ -32,6 +32,12 @@ sub extractFormInfo {
 }
 
 sub setAuthSessionInfo {
+    my $self = shift;
+    # Store submitted password if set in configuration
+    # WARNING: it can be a security hole
+    if ( $self->{storePassword} ) {
+        $self->{sessionInfo}->{'_password'} = $self->{'password'} ;
+    }
     PE_OK;
 }
 
