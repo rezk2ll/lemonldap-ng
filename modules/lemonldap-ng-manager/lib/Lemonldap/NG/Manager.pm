@@ -17,7 +17,7 @@ use MIME::Base64;
 
 our @ISA = qw(Lemonldap::NG::Manager::Base);
 
-our $VERSION = '0.86';
+our $VERSION = '0.87';
 
 sub new {
     my ( $class, $args ) = @_;

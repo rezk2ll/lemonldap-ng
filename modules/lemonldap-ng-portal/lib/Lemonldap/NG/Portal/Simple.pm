@@ -340,6 +340,8 @@ sub controlExistingSession {
     my $self    = shift;
     my %cookies = fetch CGI::Cookie;
 
+    # Store IP address
+    $self->{sessionInfo}->{ipAddr} = $ENV{REMOTE_ADDR};
     # Test if Lemonldap::NG cookie is available
     if ( $cookies{ $self->{cookieName} }
         and my $id = $cookies{ $self->{cookieName} }->value )
