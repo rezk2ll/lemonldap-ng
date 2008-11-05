@@ -105,9 +105,8 @@ sub authenticate {
         }
     }
     else {
-        return PE_BADCREDENTIALS
-          unless (
-            $self->ldap->bind( $self->{dn}, password => $self->{password} ) );
+        my $mesg = $self->ldap->bind( $self->{dn}, password => $self->{password} );
+        return PE_BADCREDENTIALS if ( $mesg->code != 0 ) ;
     }
     $self->{sessionInfo}->{authenticationLevel} = 2;
     PE_OK;

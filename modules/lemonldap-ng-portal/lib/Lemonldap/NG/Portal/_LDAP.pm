@@ -56,7 +56,12 @@ sub bind {
     my ( $dn, %args ) = @_;
     $dn ||= $self->{portal}->{managerDn};
     $args{password} ||= $self->{portal}->{managerPassword};
-    return $self->SUPER::bind( $dn, %args );
+    if ( $dn && $args{password} ) {
+        $mesg = $self->SUPER::bind( $dn, %args );
+    } else {
+        $mesg = $self->SUPER::bind( );
+    }
+    return $mesg;
 }
 
 1;
