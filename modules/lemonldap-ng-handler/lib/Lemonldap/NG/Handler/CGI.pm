@@ -10,7 +10,7 @@ our @ISA = qw(CGI);
 
 use Lemonldap::NG::Handler::SharedConf qw(:all);
 
-our $VERSION = '0.1';
+our $VERSION = '0.11';
 
 sub new {
     my $class = shift;
@@ -92,6 +92,10 @@ package Lemonldap::NG::Handler::_CGI;
 use Lemonldap::NG::Handler::SharedConf qw(:locationRules);
 
 our @ISA = qw(Lemonldap::NG::Handler::SharedConf);
+
+sub localInit {
+    1;
+}
 
 sub lmLog {
     my ( $self, $mess, $level ) = @_;

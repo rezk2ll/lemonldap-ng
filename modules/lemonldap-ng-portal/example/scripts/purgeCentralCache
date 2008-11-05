@@ -86,7 +86,7 @@ my $tmp = $conf->{globalStorage};
 eval "use $tmp";
 die $@ if ($@);
 
-$conf->{globalStorageOptions}->{timeout} ||= 7200;
+$conf->{timeout} ||= 7200;
 
 my @t = $tmp->get_all_sessions( $conf->{globalStorageOptions} );
 
