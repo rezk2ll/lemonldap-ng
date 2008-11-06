@@ -43,6 +43,9 @@ sub authenticate {
             }
         }
     }
+    # Accounting : set user in apache logs
+    $self->lmSetApacheUser($self->r, $datas->{$whatToTrace});
+
     return 1;
 }
 
