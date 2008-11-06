@@ -1,0 +1,46 @@
+#!/usr/bin/perl
+
+use strict;
+use LWP::UserAgent;
+
+my($host, $url, $type1, $type2) = @ARGV;
+
+die("Usage: $0 host url data-type")unless($host and $url and $type1);
+
+my $ua = LWP::UserAgent->new();
+$ua->timeout(10);
+
+my ( $method, $vhost, $uri ) = ( $url =~ /^(https?):\/\/([^\/]+)(.*)$/ );
+unless ($vhost) {
+    $vhost = $host;
+    $uri   = $url;
+}
+my $r = HTTP::Request->new( 'GET', "$method://$host$uri", HTTP::Headers->new( Host => $vhost ) );
+my $response = $ua->request($r);
+if ( $response->code != 200 ) {
+    print STDERR "$host: ".join( ' ', &txt_error, ":", $response->code, $response->message, "</li>");
+    return 1;
+}
+
+my $tot=0;
+my $res;
+foreach (split(/\n/s, $response->content)) {
+    $tot++ if(/<div id="total">/);
+    $tot=0 if(/<\/div>/);
+    if($tot) {
+        /^(\w+)\s*:\s*(\d+)/ or next;
+        $res->{$1} = $2;
+    }
+    $res->{localCache} = $1 if(/^Local Cache\s*:\s*(\d+)/i);
+    $res->{up} = $1 if(/^Server up for\s*:\s*(\d+d\s+\d+h\s+\d+mn)/);
+}
+
+foreach(keys %$res) {
+    print "$res->{$_}\n" if(/^$type1$/i);
+}
+if($type2) {
+    foreach(keys %$res) {
+        print "$res->{$_}\n" if(/^$type2$/i);
+    }
+}
+print "$res->{up}\n$host";
