@@ -1,9 +1,13 @@
 lemonldap-ng (0.9.3) unstable; urgency=low
 
+  [ Clement Oudot ]
   * New menu and skin (pastel)
-  * Authentication and UserDB separation
 
- -- Clement Oudot <coudot@linagora.com>  Mon, 13 Oct 2008 18:00:00 +0200
+  [ Xavier Guimard ]
+  * Authentication and UserDB separation
+  * New session explorer system
+
+ -- Xavier Guimard <x.guimard@free.fr>  Tue, 11 Nov 2008 16:23:19 +0100
 
 lemonldap-ng (0.9.2.2) unstable; urgency=low
 

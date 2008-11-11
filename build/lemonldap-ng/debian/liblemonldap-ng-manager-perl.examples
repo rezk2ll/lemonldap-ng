@@ -1,1 +1,4 @@
-debian/tmp/var/lib/lemonldap-ng/manager/*
+debian/tmp/var/lib/lemonldap-ng/manager/index*
+debian/tmp/var/lib/lemonldap-ng/manager/mrtg
+debian/tmp/var/lib/lemonldap-ng/manager/sessions.pl
+debian/tmp/var/lib/lemonldap-ng/manager/soapserver.pl

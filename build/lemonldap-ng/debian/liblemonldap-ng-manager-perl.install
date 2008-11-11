@@ -4,6 +4,7 @@ debian/tmp/usr/share/perl5/Lemonldap/NG/Manager/Help.pm
 debian/tmp/usr/share/perl5/Lemonldap/NG/Manager/Base.pm
 debian/tmp/usr/share/perl5/Lemonldap/NG/Manager/_HTML.pm
 debian/tmp/usr/share/perl5/Lemonldap/NG/Manager/_Response.pm
+debian/tmp/usr/share/perl5/Lemonldap/NG/Manager/Sessions.pm
 debian/tmp/usr/share/perl5/Lemonldap/NG/Manager/SOAPServer.pm
 debian/tmp/usr/share/perl5/Lemonldap/NG/Manager/Restricted.pm
 debian/tmp/usr/share/perl5/auto/Lemonldap/NG/Manager
@@ -15,6 +16,7 @@ debian/tmp/usr/share/man/man3/Lemonldap::NG::Manager::Restricted.3pm
 debian/tmp/var/lib/lemonldap-ng/manager/apply.conf /etc/lemonldap-ng
 debian/manager-apache*.conf /etc/lemonldap-ng
 debian/tmp/var/lib/lemonldap-ng/manager/imgs
+debian/tmp/var/lib/lemonldap-ng/manager/images
 debian/tmp/var/lib/lemonldap-ng/manager/theme
 debian/tmp/var/lib/lemonldap-ng/manager/lemonldap-ng-manager.js
 debian/tmp/var/lib/lemonldap-ng/manager/scripts/lmConfigEditor /usr/share/lemonldap-ng/bin

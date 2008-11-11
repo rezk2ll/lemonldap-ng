@@ -49,15 +49,15 @@ manager:	manager_conf
 configure:	handler_conf portal_conf manager_conf
 
 handler_conf:
-	@cd ${SRCHANDLERDIR}; perl Makefile.PL
+	@cd ${SRCHANDLERDIR}; perl Makefile.PL INSTALLDIRS=$(INSTALLDIRS)
 	@touch handler_conf
 
 portal_conf:
-	@cd ${SRCPORTALDIR}; perl Makefile.PL
+	@cd ${SRCPORTALDIR}; perl Makefile.PL INSTALLDIRS=$(INSTALLDIRS)
 	@touch portal_conf
 
 manager_conf:
-	@cd ${SRCMANAGERDIR}; perl Makefile.PL
+	@cd ${SRCMANAGERDIR}; perl Makefile.PL INSTALLDIRS=$(INSTALLDIRS)
 	@touch manager_conf
 
 test:		manager handler portal manager_test handler_test portal_test

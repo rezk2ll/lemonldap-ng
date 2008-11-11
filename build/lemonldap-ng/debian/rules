@@ -13,6 +13,8 @@ export PERL_MM_USE_DEFAULT=1
 
 LM_ROOT=/var/lib/lemonldap-ng/
 DEB_TMP_LM_ROOT=debian/tmp$(LM_ROOT)
+LM_CONF_ROOT=/etc/lemonldap-ng/
+DEB_TMP_LM_CONF_ROOT=debian/tmp$(LM_CONF_ROOT)
 
 configure: configure-stamp
 configure-stamp:
@@ -50,26 +52,25 @@ install: build
 	dh_installdirs
 
 	# Add here commands to install the package into debian/lemonldap-ng.
-	$(MAKE) test
+	#$(MAKE) test
 	$(MAKE) install DESTDIR=$(CURDIR)/debian/tmp PREFIX=/usr
 	$(MAKE) example \
-		EXAMPLEDIRBUILD=$(DEB_TMP_LM_ROOT) \
-		EXAMPLEDIR=$(LM_ROOT) \
-		EXAMPLECONFDIR=$(LM_ROOT)conf/ \
-		EXAMPLELASPDIRBUILD=$(DEB_TMP_LM_ROOT)liberty-alliance-sp-portal/ \
-		EXAMPLELASPDIR=$(LM_ROOT)liberty-alliance-sp-portal/
+		EXAMPLEROOT=debian/tmp/ \
+		DESTDOCSDIR=debian/tmp/docs/ \
+		REALDESTFILECONFDIR=$(LM_ROOT)conf/ \
+		DESTFILECONFDIR=$(LM_ROOT)conf/
 
 	# Debian example files
+	mv $(DEB_TMP_LM_CONF_ROOT)conf $(DEB_TMP_LM_ROOT)
+	cp $(DEB_TMP_LM_ROOT)handler/MyHandler.pm $(DEB_TMP_LM_CONF_ROOT)MyHandler.pm
 	cp $(DEB_TMP_LM_ROOT)handler/MyHandler.pm $(DEB_TMP_LM_ROOT)handler/MyHandler-Debian.pm
 	cp $(DEB_TMP_LM_ROOT)portal/index.pl $(DEB_TMP_LM_ROOT)portal/index-Debian.pl
 	cp $(DEB_TMP_LM_ROOT)portal/index_skin.pl $(DEB_TMP_LM_ROOT)portal/index_skin-Debian.pl
 	cp $(DEB_TMP_LM_ROOT)liberty-alliance-sp-portal/index.pl $(DEB_TMP_LM_ROOT)liberty-alliance-sp-portal/index-Debian.pl
 	cp $(DEB_TMP_LM_ROOT)manager/index.pl $(DEB_TMP_LM_ROOT)manager/index-Debian.pl
-	mv $(DEB_TMP_LM_ROOT)index.pl $(DEB_TMP_LM_ROOT)test.pl
-	mv $(DEB_TMP_LM_ROOT)handler/lmH-apache.conf $(DEB_TMP_LM_ROOT)apache-protected-area.conf
-	mv $(DEB_TMP_LM_ROOT)handler/lmH-apache2.conf $(DEB_TMP_LM_ROOT)apache2-protected-area.conf
-	perl -i -pe 's#__DIR__/?#'/var/lib/lemonldap-ng'#g;s#__CONFDIR__/?#'$(LM_ROOT)conf'#g;' \
-		$(DEB_TMP_LM_ROOT)apache*-protected-area.conf
+	#perl -i -pe 's#__DIR__/?#'/var/lib/lemonldap-ng'#g;s#__CONFDIR__/?#'$(LM_ROOT)conf'#g;' \
+	#	$(DEB_TMP_LM_ROOT)apache*-protected-area.conf
+	cp debian/handler-apache* $(DEB_TMP_LM_CONF_ROOT)
 
 	# System to use /etc/lemonldap-ng/storage.conf instead of setting
 	# manually the configStorage parameter
@@ -78,13 +79,17 @@ install: build
 			$(DEB_TMP_LM_ROOT)portal/scripts/purgeCentralCache
 
 	perl -000 -i -pe 's/(configStorage\s*=>\s*){[^}]+}/$$1\$$Lemonldap::NG::Conf::configStorage/; s#^use#\nrequire "/usr/share/lemonldap-ng/configStorage.pm";\nuse#m;' \
-			$(DEB_TMP_LM_ROOT)handler/MyHandler-Debian.pm \
-			$(DEB_TMP_LM_ROOT)manager/index-Debian.pl \
-			$(DEB_TMP_LM_ROOT)portal/index-Debian.pl \
-			$(DEB_TMP_LM_ROOT)portal/index_skin-Debian.pl \
+			$(DEB_TMP_LM_CONF_ROOT)MyHandler.pm \
+			$(DEB_TMP_LM_ROOT)manager/*.pl \
+			$(DEB_TMP_LM_ROOT)portal/*.pl \
 			$(DEB_TMP_LM_ROOT)liberty-alliance-sp-portal/index-Debian.pl
 	perl -i -pe 's#(applyConfFile\s+=>\s+.*?)/\S*(apply\.conf)#$$1/etc/lemonldap-ng/$$2#' \
-			$(DEB_TMP_LM_ROOT)manager/index-Debian.pl \
+			$(DEB_TMP_LM_ROOT)manager/*.pl \
+			$(DEB_TMP_LM_ROOT)handler/MyHandler-Debian.pm
+	rm -f $(DEB_TMP_LM_ROOT)portal/skins/pastel/jquery.js $(DEB_TMP_LM_ROOT)manager/jquery.js
+	perl -i -pe 's#(["'"'"'])[\w-\./]*jquery.js#$$1/javascript/jquery/jquery.js#' \
+			$(DEB_TMP_LM_ROOT)manager/sessions.pl \
+			$(DEB_TMP_LM_ROOT)portal/skins/pastel/header.tpl
 # Build architecture-independent files here.
 binary-indep: build install
 	dh_testdir
