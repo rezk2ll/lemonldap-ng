@@ -12,14 +12,59 @@ use Lemonldap::NG::Handler::SharedConf qw(:all);
 
 our $VERSION = '0.11';
 
+sub abort {
+    my $self = shift;
+    my $cgi = CGI->new;
+    my ( $t1, $t2 ) = @_;
+    $t2 ||= "See Apache's logs";
+    print $cgi->header('text/html; charset=utf8');
+    print $cgi->start_html(
+        -title    => $t1,
+        -encoding => 'utf8',
+    );
+    print "<h1>$t1</h1>";
+    print "<p>$t2</p>";
+    exit;
+}
+
 sub new {
     my $class = shift;
-    my $self  = $class->SUPER::new();
+    my $self  = $class->SUPER::new() or $class->abort("Unable to build CGI");
     $self->{_handler} = bless {}, 'Lemonldap::NG::Handler::_CGI';
     $self->_handler->init(@_);
     $self->_handler->initLocalStorage();
-    die "Unable to get configuration"
+    $class->abort("Unable to get configuration")
       unless $self->_handler->localConfUpdate() == OK;
+    # Arguments
+    my @args = @_;
+    if(ref($args[0])) {
+        %$self = (%$self,%{$args[0]});
+    }
+    else {
+        %$self = (%$self,@args);
+    }
+    # Protection
+    if ( $self->{protection} ) {
+        $self->authenticate();
+	# ACCOUNTING
+        if ( $self->{protection} =~ /^manager$/i ) {
+            $self->authorize();
+        }
+        elsif ( $self->{protection} =~ /rule\s*:\s*(.*)\s*$/i ) {
+            my $rule = $1;
+            $rule =~ s/\$date/&POSIX::strftime("%Y%m%d%H%M%S",localtime())/e;
+            $rule =~ s/\$(\w+)/\$datas->{$1}/g;
+            my $r;
+            unless ( $safe->reval($rule) ) {
+                $self->abort( 'Forbidden',
+                    "You don't have rights to access this page" );
+            }
+        }
+	elsif ( $self->{protection} !~ /^authenticate$/i ) {
+            $self->abort( 'Bad configuration',
+                "The rule <code>" . $self->{protection} . "</code> is not known" );
+        }
+    }
     return $self;
 }
 
@@ -92,12 +137,19 @@ sub _handler {
 
 package Lemonldap::NG::Handler::_CGI;
 
-use Lemonldap::NG::Handler::SharedConf qw(:locationRules);
+use Lemonldap::NG::Handler::SharedConf qw(:locationRules :localStorage);
 
 our @ISA = qw(Lemonldap::NG::Handler::SharedConf);
 
 sub localInit {
-    1;
+    my($class, $args) = @_;
+    if($localStorage = $args->{localStorage}) {
+        $localStorageOptions = $args->{localStorageOptions};
+        $localStorageOptions->{namespace}          ||= "lemonldap";
+        $localStorageOptions->{default_expires_in} ||= 600;
+    }
+    $lmConf = Lemonldap::NG::Manager::Conf->new( $args->{configStorage} );
+    $class->defaultValuesInit($args);
 }
 
 sub lmLog {
@@ -142,7 +194,7 @@ authentication in Perl CGI without using Lemonldap::NG::Handler
   use Lemonldap::NG::Handler::CGI;
   my $cgi = Lemonldap::NG::Handler::CGI->new ( {
       # Local storage used for sessions and configuration
-      localStorage        => "Cache::DBFile",
+      localStorage        => "Cache::FileCache",
       localStorageOptions => {...},
       # How to get my configuration
       configStorage       => {
@@ -152,13 +204,19 @@ authentication in Perl CGI without using Lemonldap::NG::Handler
           dbiPassword          => "password",
       },
       https               => 0,
+      # Optionnal
+      protection    => 'rule: $uid eq "admin"',
+      # Or to use rules from manager
+      protection    => 'manager',
+      # Or just to authenticate without managing authorization
+      protection    => 'authenticate',
     }
   );
   
-  # Lemonldap::NG cookie validation
+  # Lemonldap::NG cookie validation (done if you set "protection")
   $cgi->authenticate();
   
-  # Optionnal Lemonldap::NG authorization
+  # Optionnal Lemonldap::NG authorization (done if you set "protection")
   $cgi->authorize();
   
   # See CGI(3) for more about writing HTML pages

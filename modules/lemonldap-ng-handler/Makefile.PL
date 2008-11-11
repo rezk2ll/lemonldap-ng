@@ -11,6 +11,7 @@ WriteMakefile(
         'Cache::Cache'           => 0,
         'Lemonldap::NG::Manager' => 0.4,
         'IO::Pipe'               => 0,
+	'CGI'                    => 3.08,
         }, # e.g., Module::Name => 1.1
     ($] >= 5.005 ?     ## Add these new keywords supported since 5.005
       (ABSTRACT_FROM  => 'lib/Lemonldap/NG/Handler.pm', # retrieve abstract from module

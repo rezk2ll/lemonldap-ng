@@ -1,6 +1,8 @@
 #!/bin/bash
 # Maintainer: #DEBHELPER#
 
+set -e
+
 . /usr/share/debconf/confmodule
 
 LAEXAMPLEPORTALFILE=/usr/share/doc/liblemonldap-ng-portal-perl/examples/liberty-alliance-sp-portal/index-Debian.pl

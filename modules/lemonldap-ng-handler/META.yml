@@ -13,6 +13,7 @@ requires:
     IO::Pipe:                      0
     Lemonldap::NG::Manager:        0.4
     LWP::UserAgent:                0
+    CGI:                           3.08
 meta-spec:
     url:     http://module-build.sourceforge.net/META-spec-v1.3.html
     version: 1.3

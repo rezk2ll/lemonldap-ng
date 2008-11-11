@@ -1,6 +1,8 @@
 #!/bin/bash
 # Maintainer: #DEBHELPER#
 
+set -e
+
 . /usr/share/debconf/confmodule
 
 EXAMPLEHANDLERFILE=/usr/share/doc/liblemonldap-ng-handler-perl/examples/MyHandler-Debian.pm

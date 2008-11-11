@@ -1,6 +1,8 @@
 #!/bin/bash
 # Maintainer: #DEBHELPER#
 
+set -e
+
 . /usr/share/debconf/confmodule
 
 FIRSTCONFFILE=/var/lib/lemonldap-ng/conf/lmConf-1

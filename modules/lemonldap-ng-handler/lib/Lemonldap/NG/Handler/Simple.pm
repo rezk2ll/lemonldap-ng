@@ -656,12 +656,10 @@ sub sendHeaders {
 sub initLocalStorage {
     my ( $class, $r ) = @_;
     if ( $localStorage and not $refLocalStorage ) {
-        eval '$refLocalStorage = new '
-          . $localStorage
-          . '($localStorageOptions);';
+        eval "use $localStorage;\$refLocalStorage = new $localStorage(\$localStorageOptions);";
+        $class->lmLog( "Local cache initialization failed: $@", 'error' )
+          unless ( defined $refLocalStorage );
     }
-    $class->lmLog( "Local cache initialization failed: $@", 'error' )
-      unless ( defined $refLocalStorage );
     return DECLINED;
 }
 

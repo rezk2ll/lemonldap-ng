@@ -104,26 +104,13 @@ BEGIN {
 sub new {
     my ( $class, $args ) = @_;
     my $self = $class->SUPER::new($args)
-      or _abort( 'Unable to start ' . __PACKAGE__, 'See Apache logs for more' );
-    foreach (qw(jqueryUri jquerySimpleTreeUri personnalCss imagePath protection)) {
+      or $class->abort( 'Unable to start ' . __PACKAGE__, 'See Apache logs for more' );
+    foreach (qw(jqueryUri personnalCss imagePath)) {
         $self->{$_} = $args->{$_}; # or print STDERR "Warning, $_ is not set, falling to default value\n";
     }
     eval "use $globalStorage";
-    _abort( "Unable to load $globalStorage", $@ ) if ($@);
+    $class->abort( "Unable to load $globalStorage", $@ ) if ($@);
     return $self;
-}
-
-sub _abort {
-    my $cgi = CGI->new;
-    my ( $t1, $t2 ) = @_;
-    print $cgi->header('text/html; charset=utf8');
-    print $cgi->start_html(
-        -title    => $t1,
-        -encoding => 'utf8',
-    );
-    print "<h1>$t1</h1>";
-    print "<p>$t2</p>";
-    exit;
 }
 
 sub process {
@@ -144,28 +131,6 @@ sub process {
         );
         $self->js;
         exit;
-    }
-
-    # Protection
-    $self->authenticate();
-    if ( $self->{protection} ) {
-        if ( $self->{protection} =~ /^manager$/i ) {
-            $self->authorize();
-        }
-        elsif ( $self->{protection} =~ /rule\s*:\s*(.*)\s*$/i ) {
-            my $rule = $1;
-            $rule =~ s/\$date/&POSIX::strftime("%Y%m%d%H%M%S",localtime())/e;
-            $rule =~ s/\$(\w+)/\$datas->{$1}/g;
-            my $r;
-            unless ( $safe->reval($rule) ) {
-                _abort( 'Forbidden',
-                    "You don't have rights to access this page" );
-            }
-        }
-        else {
-            _abort( 'Bad configuration',
-                "The rule <code>$self->{protection}</code> is not known" );
-        }
     }
 
     # Beginning of the job
@@ -1249,7 +1214,9 @@ sessions
         # Optionnal
         protection    => 'rule: $uid eq "admin"',
         # Or to use rules from manager
-        protect       => 'manager',
+        protection    => 'manager',
+	# Or just to authenticate without managing authorization
+	protection    => 'authenticate',
   });
   $cgi->process();
 
@@ -1263,7 +1230,7 @@ understand how arguments passed to the constructor.
 
 =head1 SEE ALSO
 
-L<Lemonldap::NG::Manager>
+L<Lemonldap::NG::Handler::CGI>, L<Lemonldap::NG::Manager>
 
 =head1 AUTHOR
 
