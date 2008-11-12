@@ -58,7 +58,8 @@ install: build
 		EXAMPLEROOT=debian/tmp/ \
 		DESTDOCSDIR=debian/tmp/docs/ \
 		REALDESTFILECONFDIR=$(LM_ROOT)conf/ \
-		DESTFILECONFDIR=$(LM_ROOT)conf/
+		DESTFILECONFDIR=$(LM_ROOT)conf/ \
+		REALROOT=/
 
 	# Debian example files
 	mv $(DEB_TMP_LM_CONF_ROOT)conf $(DEB_TMP_LM_ROOT)

@@ -19,4 +19,5 @@ debian/tmp/var/lib/lemonldap-ng/manager/imgs
 debian/tmp/var/lib/lemonldap-ng/manager/images
 debian/tmp/var/lib/lemonldap-ng/manager/theme
 debian/tmp/var/lib/lemonldap-ng/manager/lemonldap-ng-manager.js
+debian/tmp/var/lib/lemonldap-ng/manager/sessions.pl
 debian/tmp/var/lib/lemonldap-ng/manager/scripts/lmConfigEditor /usr/share/lemonldap-ng/bin

@@ -3,5 +3,6 @@ debian/tmp/usr/share/perl5/auto/Lemonldap/NG/Portal
 debian/tmp/usr/share/man/man3/Lemonldap::NG::Portal*
 debian/portal-apache*.conf /etc/lemonldap-ng
 debian/tmp/var/lib/lemonldap-ng/portal/skins
+debian/tmp/var/lib/lemonldap-ng/portal/apps
 debian/tmp/var/lib/lemonldap-ng/portal/scripts/purgeCentralCache /usr/share/lemonldap-ng/bin
 debian/tmp/var/lib/lemonldap-ng/liberty-alliance-sp-portal/

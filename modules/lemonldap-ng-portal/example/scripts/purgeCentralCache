@@ -97,7 +97,7 @@ for my $id (@t) {
         next;
     }
     else {
-        if ( time - $h{_utime} > $conf->{globalStorageOptions}->{timeout} ) {
+        if ( time - $h{_utime} > $conf->{timeout} ) {
             tied(%h)->delete;
         }
         else {

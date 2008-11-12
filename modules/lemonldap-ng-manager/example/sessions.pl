@@ -14,9 +14,9 @@ our $cgi = Lemonldap::NG::Manager::Sessions->new({
             'cache_depth'        => 5,
         },
         configStorage => $Lemonldap::NG::Conf::configStorage,
-        https         => 1,
+        https         => 0,
         jqueryUri     => 'jquery.js',
-        imagePath     => 'images/',
+        imagePath     => '/images/',
 });
 
 $cgi->process();

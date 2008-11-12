@@ -51,6 +51,11 @@ example/skins/default/login.tpl
 example/skins/default/logo_lemonldap-ng.png
 example/skins/default/msg-std.png
 example/skins/default/styles.css
+example/skins/pastel/accept.png
+example/skins/pastel/application_cascade.png
+example/skins/pastel/bullet_go.png
+example/skins/pastel/cancel.png
+example/skins/pastel/door_out.png
 example/skins/pastel/error.png
 example/skins/pastel/error.tpl
 example/skins/pastel/favicon.ico
@@ -66,6 +71,7 @@ example/skins/pastel/ok.png
 example/skins/pastel/stop.png
 example/skins/pastel/styles.css
 example/skins/pastel/valid-xhtml10-blue.png
+example/skins/pastel/vcard_edit.png
 example/skins/pastel/vcss-blue.gif
 example/skins/pastel/warning.png
 example/skins/pastel/warning_triangle.png
