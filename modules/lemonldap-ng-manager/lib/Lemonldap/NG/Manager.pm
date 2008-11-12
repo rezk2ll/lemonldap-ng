@@ -443,6 +443,14 @@ sub tree2conf {
     return $config;
 }
 
+sub safe {
+    my $self = shift;
+    return $self->{safe} if($self->{safe});
+    $self->{safe} = Safe->new;
+    $self->{safe}->share('&encode_base64');
+    return $self->{safe};
+}
+
 # Configuration check : before saving, we try to find faults in configuration
 sub checkConf {
     my $self     = shift;
@@ -484,9 +492,7 @@ sub checkConf {
         $expr .= "my \$$_ = '1';";
     }
     # Load and check macros
-    my $safe = new Safe;
-    $safe->share('&encode_base64');
-    $safe->reval($expr);
+    $self->safe->reval($expr);
     if ($@) {
         $result = 0;
         $response->error( &txt_unknownErrorInVars . " ($@)" );
@@ -503,7 +509,7 @@ sub checkConf {
         }
         # Test macro values;
         $expr .= "my \$$k = $v;";
-        $safe->reval($expr);
+        $self->safe->reval($expr);
         if ($@) {
             $response->error( &txt_macro . " $k : " . &txt_syntaxError . " : $@");
             $result = 0;
@@ -528,7 +534,7 @@ sub checkConf {
             $response->warning( &txt_group . " $k " . &txt_containsAnAssignment );
         }
         # Test boolean expression
-        $safe->reval( $expr . "\$groups = '$k' if($v);" );
+        $self->safe->reval( $expr . "\$groups = '$k' if($v);" );
         if ($@) {
             $response->error( &txt_group . " $k " . &txt_syntaxError );
             $result = 0;
@@ -545,9 +551,9 @@ sub checkConf {
             # Test regular expressions
             unless ( $reg eq 'default' ) {
                 $reg =~ s/#/\\#/g;
-                $safe->reval( $expr . "my \$r = qr#$reg#;" );
+                $self->safe->reval( $expr . "my \$r = qr#$reg#;" );
                 if ($@) {
-                    $response->error( &txt_rule . " $vh -> \"$reg\" : " . &txt_syntaxError );
+                    $response->error( &txt_rule . " $vh -> \"$reg\" : " . &txt_syntaxError . ": $@" );
                     $result = 0;
                 }
             }
@@ -558,9 +564,9 @@ sub checkConf {
                     $response->warning( &txt_rule . " $vh -> \"$reg\" : " . &txt_containsAnAssignment );
                 }
 
-                $safe->reval( $expr . "my \$r=1 if($v);" );
+                $self->safe->reval( $expr . "my \$r=1 if($v);" );
                 if ($@) {
-                    $response->error( &txt_rule . " $vh -> \"$reg\" : " . &txt_syntaxError );
+                    $response->error( &txt_rule . " $vh -> \"$reg\" : " . &txt_syntaxError . ": $@" );
                     $result = 0;
                 }
             }
@@ -584,7 +590,7 @@ sub checkConf {
                 $response->warning( &txt_header . " $vh -> $header " . &txt_containsAnAssignment );
             }
             # Perl expression
-            $safe->reval( $expr . "my \$r = $v;" );
+            $self->safe->reval( $expr . "my \$r = $v;" );
             if ($@) {
                 $response->error( &txt_header . " $vh -> $header " . &txt_syntaxError );
                 $result = 0;
