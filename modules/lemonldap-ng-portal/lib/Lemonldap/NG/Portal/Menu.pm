@@ -221,6 +221,12 @@ sub _displayCategory {
     return $html;
 }
 
+sub _userParam {
+    my ( $self, $arg ) = @_;
+    $arg =~ s/\$([\w]+)/$self->{portalObject}->{sessionInfo}->{$1}/g;
+    return $arg;
+}
+
 # _displayApplication
 # Create HTML code for an application
 sub _displayApplication {
@@ -231,7 +237,9 @@ sub _displayApplication {
     # Get application items
     my $appid   = $app->getAttribute('id');
     my $appname = $app->getElementsByTagName('name')->string_value() || $appid;
-    my $appuri  = $app->getElementsByTagName('uri')->string_value() || "#";
+    my $appuri =
+      $self->_userParam( $app->getElementsByTagName('uri')->string_value()
+          || "#" );
 
     # Display application
     $html .=
@@ -253,7 +261,9 @@ sub _displayDescription {
         # Get application items
         my $appid   = $_->getAttribute('id');
         my $appname = $_->getElementsByTagName('name')->string_value();
-        my $appuri  = $_->getElementsByTagName('uri')->string_value() || "#";
+        my $appuri =
+          $self->_userParam( $_->getElementsByTagName('uri')->string_value()
+              || "#" );
         my $appdesc = $_->getElementsByTagName('description')->string_value();
         my $applogofile = $_->getElementsByTagName('logo')->string_value();
         my $applogo     = $self->{apps}->{imgpath} . $applogofile;
@@ -280,7 +290,8 @@ sub _filterXML {
     my @apps = $root->getElementsByTagName('application');
     foreach (@apps) {
         my $appdisplay = $_->getElementsByTagName('display')->string_value();
-        my $appuri     = $_->getElementsByTagName('uri')->string_value();
+        my $appuri =
+          $self->_userParam( $_->getElementsByTagName('uri')->string_value() );
 
         # Remove node if display is "no"
         $_->unbindNode if ( $appdisplay eq "no" );
