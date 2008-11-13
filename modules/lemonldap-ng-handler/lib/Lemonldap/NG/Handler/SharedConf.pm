@@ -71,6 +71,7 @@ sub defaultValuesInit {
     $https = $localConfig->{https} unless defined($https);
     $https = $args->{https}        unless defined($https);
     $https = 1                     unless defined($https);
+    $port = $args->{port} || 0     unless defined($port);
     1;
 }
 
