@@ -17,8 +17,13 @@ our @ISA = qw(Exporter);
 our ( $defaultCondition, $locationCondition, $locationRegexp, $cfgNum ) =
   ( undef, undef, undef, 0 );
 
-my $safe = new Safe;
-$safe->share('&encode_base64');
+sub _safe {
+    my $self = shift;
+    return $self->{_safe} if($self->{_safe});
+    $self->{_safe} = new Safe;
+    $self->{_safe}->share('&encode_base64');
+    return $self->{_safe};
+}
 
 my $catlevel = 0;
 
@@ -112,7 +117,7 @@ sub displayModule {
     # Else parse display condition
     my $cond = $self->{modules}->{$modulename};
     $cond =~ s/\$(\w+)/$self->{portalObject}->{sessionInfo}->{$1}/g;
-    return $safe->reval("sub {return ( $cond )}");
+    return $self->_safe->reval("sub {return ( $cond )}");
     return 0;
 }
 
@@ -522,7 +527,7 @@ sub _conditionSub {
     $cond =~ s/\$date/&POSIX::strftime("%Y%m%d%H%M%S",localtime())/e;
     $cond =~ s/\$(\w+)/\$self->{portalObject}->{sessionInfo}->{$1}/g;
     my $sub;
-    $sub = $safe->reval("sub {my \$self = shift; return ( $cond )}");
+    $sub = $self->_safe->reval("sub {my \$self = shift; return ( $cond )}");
     return $sub;
 }
 
