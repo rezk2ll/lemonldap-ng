@@ -46,21 +46,23 @@ sub new {
     # Protection
     if ( $self->{protection} ) {
         $self->authenticate();
-	# ACCOUNTING
+        # ACCOUNTING
         if ( $self->{protection} =~ /^manager$/i ) {
-            $self->authorize();
+            $self->authorize() or $self->abort( 'Forbidden',
+                "You don't have rights to access this page" );
         }
         elsif ( $self->{protection} =~ /rule\s*:\s*(.*)\s*$/i ) {
             my $rule = $1;
             $rule =~ s/\$date/&POSIX::strftime("%Y%m%d%H%M%S",localtime())/e;
             $rule =~ s/\$(\w+)/\$datas->{$1}/g;
+            $rule = 0 if($rule eq 'deny');
             my $r;
-            unless ( $safe->reval($rule) ) {
+            unless ( $rule eq 'accept' or $safe->reval($rule) ) {
                 $self->abort( 'Forbidden',
                     "You don't have rights to access this page" );
             }
         }
-	elsif ( $self->{protection} !~ /^authenticate$/i ) {
+        elsif ( $self->{protection} !~ /^authenticate$/i ) {
             $self->abort( 'Bad configuration',
                 "The rule <code>" . $self->{protection} . "</code> is not known" );
         }
