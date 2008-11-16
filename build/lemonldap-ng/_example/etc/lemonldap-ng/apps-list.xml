@@ -5,14 +5,14 @@
 	<category name="Example">
 	<application id="test1">
 		<name>Application Test 1</name>
-		<uri>http://test1.__DNSDOMAIN__</uri>
+		<uri>http://test1.__DNSDOMAIN__/</uri>
 		<description>A simple application displaying authenticated user</description>
 		<logo>wheels.png</logo>
 		<display>auto</display>
 	</application>
 	<application id="test2">
 		<name>Application Test 2</name>
-		<uri>http://test2.__DNSDOMAIN__</uri>
+		<uri>http://test2.__DNSDOMAIN__/</uri>
 		<description>The same simple application displaying authenticated user</description>
 		<logo>wheels.png</logo>
 		<display>auto</display>
@@ -22,11 +22,18 @@
 	<category name="Administration">
 	<application id="manager">
 		<name>WebSSO Manager</name>
-		<uri>http://manager.__DNSDOMAIN__</uri>
+		<uri>http://manager.__DNSDOMAIN__/</uri>
 		<description>Configure LemonLDAP::NG WebSSO</description>
 		<logo>tools.png</logo>
 		<display>on</display>
 	</application>
+        <application id="sessions">
+                <name>Sessions explorer</name>
+                <uri>http://manager.__DNSDOMAIN__/sessions.pl</uri>
+                <description>Explore WebSSO sessions</description>
+                <logo>tools.png</logo>
+                <display>on</display>
+        </application>
 	</category>
 
 	<category name="Documentation">
