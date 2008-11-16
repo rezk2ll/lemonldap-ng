@@ -13,7 +13,12 @@ our $cgi = Lemonldap::NG::Manager::Sessions->new({
             'cache_root'         => '/tmp',
             'cache_depth'        => 5,
         },
-        configStorage => $Lemonldap::NG::Conf::configStorage,
+	# Use configStorage with Debian
+        #configStorage => $Lemonldap::NG::Conf::configStorage,
+        configStorage => {
+            type    => 'File',
+            dirName => "__CONFDIR__",
+        },
         https         => 0,
         jqueryUri     => 'jquery.js',
         imagePath     => '/images/',
