@@ -24,7 +24,7 @@ sub _safe {
     my @t = split /\s+/, $self->{customFunctions};
     foreach(@t) {
         next if(__PACKAGE__->can($_));
-        my $sub = "$self->{caller}::$_" unless(/::/);
+        my $sub = /::/ ? $_ : "$self->{caller}::$_";
         eval "sub $_ {
             return $sub(\$path,\@_);
         }";
