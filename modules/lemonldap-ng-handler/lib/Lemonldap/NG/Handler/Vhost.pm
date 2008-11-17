@@ -52,7 +52,7 @@ sub forgeHeadersInit {
 
         #$sub = "\$forgeHeaders->{'$vhost'} = sub {$sub};";
         #eval "$sub";
-        $forgeHeaders->{$vhost} = $safe->reval("sub {$sub}");
+        $forgeHeaders->{$vhost} = $class->safe->reval("sub {$sub}");
         $class->lmLog( "$class: Unable to forge headers: $@: sub {$sub}",
             'error' )
           if ($@);

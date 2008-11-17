@@ -55,24 +55,8 @@ sub defaultValuesInit {
     my ( $class, $args ) = @_;
 
     # Local configuration overrides global configuration
-    $cookieName =
-         $localConfig->{cookieName}
-      || $args->{cookieName}
-      || 'lemonldap';
-    $cookieSecured =
-         $localConfig->{cookieSecured}
-      || $args->{cookieSecured}
-      || 0;
-    $whatToTrace =
-         $localConfig->{whatToTrace}
-      || $args->{whatToTrace}
-      || '$uid';
-    $whatToTrace =~ s/\$//g;
-    $https = $localConfig->{https} unless defined($https);
-    $https = $args->{https}        unless defined($https);
-    $https = 1                     unless defined($https);
-    $port = $args->{port} || 0     unless defined($port);
-    1;
+    my %h = (%$args,%$localConfig);
+    return $class->SUPER::defaultValuesInit(\%h);
 }
 
 sub localInit {

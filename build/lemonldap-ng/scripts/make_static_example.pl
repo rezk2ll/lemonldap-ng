@@ -34,6 +34,7 @@ sub scan {
                 scan( $script, "$1.js", "lmQuery=$1js" );
             }
             elsif (s/__SCRIPTNAME__\?lmQuery=upload/#/) {
+
                 # Nothing to do here
             }
             elsif (s/__SCRIPTNAME__\?lmQuery=conf/conf.xml/) {
@@ -43,6 +44,7 @@ sub scan {
                 scan( $script, "style$1.css", "lmQuery=$1css" );
             }
             elsif (s/__SCRIPTNAME__\?lmQuery=help&help="\+s/help_"+s+".html"/) {
+
                 # Nothing to do here
             }
             elsif (s/__SCRIPTNAME__\?lmQuery=([^"'&]*)&?[^"']*/$1/) {
@@ -53,14 +55,14 @@ sub scan {
         elsif (/help\((['"])(\w+)\1/) {
             scan( $script, "help_$2.html", "lmQuery=help&help=$2" );
         }
-	# but+=button('$text{saveConf}','saveConf',nodeId);
-        elsif (s/(but\+=)button\((['"])([^'"]*)\2,'saveConf.*$/$1'<input type=button value="$3" onclick="alert(\\'This is a demo\\');saveConf;"> &nbsp;';/) {
-	    # '<input type=button value="'+text+'" onclick="'+func+'('+"'"+nodeId+"'"+')"> &nbsp; '
+
+        # but+=button('$text{saveConf}','saveConf',nodeId);
+        elsif ( s/(but\+=)button\((['"])([^'"]*)\2,'saveConf.*$/$1'<input type=button value="$3" onclick="alert(\\'This is a demo\\');saveConf;"> &nbsp;';/ ) {
             # Nothing to do here
         }
         s#tree.setImagePath\(["'][^"']*["']\);#tree.setImagePath("imgs/")#;
         print $OUT $_ if ($ind);
-        $ind++        if /^$/;
+        $ind++ if /^$/;
     }
 }
 

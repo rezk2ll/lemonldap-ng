@@ -14,14 +14,21 @@ our @ISA = qw(Exporter);
 
 ### ACCESS CONTROL DISPLAY SYSTEM
 
-our ( $defaultCondition, $locationCondition, $locationRegexp, $cfgNum ) =
+our ( $defaultCondition, $locationCondition, $locationRegexp, $cfgNum, $path ) =
   ( undef, undef, undef, 0 );
 
 sub _safe {
     my $self = shift;
     return $self->{_safe} if($self->{_safe});
     $self->{_safe} = new Safe;
-    $self->{_safe}->share('&encode_base64');
+    my @t = split /\s+/, $self->{customFunctions};
+    foreach(@t) {
+        eval "sub $_ {
+            return $self->{caller}::$_(\$path,\@_);
+        }";
+        print STDERR "$@\n" if($@);
+    }
+    $self->{_safe}->share('&encode_base64', @t);
     return $self->{_safe};
 }
 
@@ -51,6 +58,7 @@ sub new {
     $self->{modules}->{password} = 0
       unless defined $self->{modules}->{password};
     $self->{modules}->{logout} = 1 unless defined $self->{modules}->{logout};
+    $self->{'caller'} = caller;
 
     # Set error to 0 by default
     $self->{error} = PE_OK;
@@ -467,8 +475,10 @@ sub _ppolicyWarning {
 sub _grant {
     my $self = shift;
     my ($uri) = @_;
-    $uri =~ m#(\w+)://([^/:]+)(:\d+)?(/.*)#;
-    my ( $protocol, $vhost, $port, $path ) = ( $1, $2, $3, $4 );
+    $uri =~ m{(\w+)://([^/:]+)(:\d+)?(/.*)?$};
+    my ( $protocol, $vhost, $port );
+    ( $protocol, $vhost, $port, $path ) = ( $1, $2, $3, $4 );
+    $path ||= '/';
     $self->_compileRules() if ( $cfgNum != $self->{portalObject}->{cfgNum} );
     return -1 unless ( defined( $defaultCondition->{$vhost} ) );
     if ( defined $locationRegexp->{$vhost} ) {    # Not just a default rule

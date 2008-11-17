@@ -546,7 +546,11 @@ sub checkConf {
 
     # Load and check macros
     my $safe = new Safe;
-    $safe->share('&encode_base64');
+    my @t = split /\s+/, $self->{customFunctions};
+    foreach(@t) {
+        eval "sub $_ {1}";
+    }
+    $safe->share('&encode_base64', @t);
     $safe->reval($expr);
     if ($@) {
         $result = 0;

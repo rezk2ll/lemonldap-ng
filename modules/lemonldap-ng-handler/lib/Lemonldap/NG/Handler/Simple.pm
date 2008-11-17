@@ -25,6 +25,7 @@ our (
     $localStorageOptions, $whatToTrace,          $https,
     $refLocalStorage,     $safe,                 $cookieSecured,
     $port,                $statusPipe,           $statusOut,
+    $customFunctions,
 );
 
 ##########################################
@@ -40,6 +41,7 @@ BEGIN {
             qw(
               $locationCondition $defaultCondition $locationCount
               $locationRegexp $apacheRequest $datas $safe $portal
+              safe $customFunctions
               )
         ],
         import  => [qw( import @EXPORT_OK @EXPORT %EXPORT_TAGS )],
@@ -260,8 +262,23 @@ sub statusProcess {
 ##############################
 
 # Security jail
-$safe = new Safe;
-$safe->share( '&encode_base64', '$datas', '&lmSetHeaderIn', '$apacheRequest' );
+sub safe {
+    my $class = shift;
+    return $safe if($safe);
+    $safe = new Safe;
+    my @t = split /\s+/, $customFunctions;
+    $safe->share( '&encode_base64', '$datas', '&lmSetHeaderIn', '$apacheRequest', @t );
+    foreach(@t) {
+        $class->lmLog("Custom function : $_",'debug');
+        eval "sub $_ {
+            return $class\::$_(\$apacheRequest->uri
+                . ( \$apacheRequest->args ? '?' . \$apacheRequest->args : '' )
+                , \@_)
+            }";
+        $class->lmLog($@,'error')if($@);
+    }
+    return $safe;
+}
 
 # init() : by default, it calls localInit and globalInit, but with
 #          a shared configuration, init() is overloaded to call only
@@ -412,7 +429,7 @@ sub conditionSub {
     $cond =~ s/\$date/&POSIX::strftime("%Y%m%d%H%M%S",localtime())/e;
     $cond =~ s/\$(\w+)/\$datas->{$1}/g;
     my $sub;
-    $sub = $safe->reval("sub {return ( $cond )}");
+    $sub = $class->safe->reval("sub {return ( $cond )}");
     return $sub;
 }
 
@@ -428,6 +445,7 @@ sub defaultValuesInit {
     $https = $args->{https} unless defined($https);
     $https = 1 unless defined($https);
     $port = $args->{port} || 0 unless defined($port);
+    $customFunctions = $args->{customFunctions};
     1;
 }
 
@@ -475,7 +493,7 @@ sub forgeHeadersInit {
 
     #$sub = "\$forgeHeaders = sub {$sub};";
     #eval "$sub";
-    $forgeHeaders = $safe->reval("sub {$sub};");
+    $forgeHeaders = $class->safe->reval("sub {$sub};");
     $class->lmLog( "$class: Unable to forge headers: $@: sub {$sub}", 'error' )
       if ($@);
     1;

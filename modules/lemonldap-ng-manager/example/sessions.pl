@@ -13,7 +13,7 @@ our $cgi = Lemonldap::NG::Manager::Sessions->new({
             'cache_root'         => '/tmp',
             'cache_depth'        => 5,
         },
-	# Use configStorage with Debian
+        # Use configStorage with Debian
         #configStorage => $Lemonldap::NG::Conf::configStorage,
         configStorage => {
             type    => 'File',
