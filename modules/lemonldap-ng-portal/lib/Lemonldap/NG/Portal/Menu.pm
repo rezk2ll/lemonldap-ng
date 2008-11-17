@@ -23,8 +23,10 @@ sub _safe {
     $self->{_safe} = new Safe;
     my @t = split /\s+/, $self->{customFunctions};
     foreach(@t) {
+        next if(__PACKAGE__->can($_));
+        my $sub = "$self->{caller}::$_" unless(/::/);
         eval "sub $_ {
-            return $self->{caller}::$_(\$path,\@_);
+            return $sub(\$path,\@_);
         }";
         print STDERR "$@\n" if($@);
     }
