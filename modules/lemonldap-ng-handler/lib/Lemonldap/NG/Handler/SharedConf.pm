@@ -4,7 +4,7 @@ use strict;
 
 use Lemonldap::NG::Handler::Simple qw(:all);
 use Lemonldap::NG::Handler::Vhost;
-use Lemonldap::NG::Manager::Conf;
+use Lemonldap::NG::Common::Conf;
 use Cache::Cache qw($EXPIRES_NEVER);
 
 our @ISA = qw(Lemonldap::NG::Handler::Vhost Lemonldap::NG::Handler::Simple);
@@ -61,7 +61,7 @@ sub defaultValuesInit {
 
 sub localInit {
     my ( $class, $args ) = @_;
-    $lmConf = Lemonldap::NG::Manager::Conf->new( $args->{configStorage} );
+    $lmConf = Lemonldap::NG::Common::Conf->new( $args->{configStorage} );
     $class->defaultValuesInit($args);
     $class->SUPER::localInit($args);
 }
@@ -259,7 +259,7 @@ with the C<reloadTime> parameter (default 600s).
 
 =head3 getConf
 
-Call Lemonldap::NG::Manager::Conf with the configStorage parameter.
+Call Lemonldap::NG::Common::Conf with the configStorage parameter.
 
 =head1 OPERATION
 

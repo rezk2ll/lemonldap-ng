@@ -3,7 +3,7 @@ package Lemonldap::NG::Manager::Restricted;
 use strict;
 
 use Lemonldap::NG::Manager;
-use Lemonldap::NG::Manager::Conf::Constants;
+use Lemonldap::NG::Common::Conf::Constants;
 
 our @ISA     = qw(Lemonldap::NG::Manager);
 our $VERSION = "0.1";

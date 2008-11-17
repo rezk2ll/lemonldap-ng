@@ -21,7 +21,7 @@ sub _safe {
     my $self = shift;
     return $self->{_safe} if($self->{_safe});
     $self->{_safe} = new Safe;
-    my @t = split /\s+/, $self->{customFunctions};
+    my @t = $self->{customFunctions} ? split( /\s+/, $self->{customFunctions} ) : ();
     foreach(@t) {
         next if(__PACKAGE__->can($_));
         my $sub = /::/ ? $_ : "$self->{caller}::$_";

@@ -1,4 +1,4 @@
-package Lemonldap::NG::Manager::Conf::Constants;
+package Lemonldap::NG::Common::Conf::Constants;
 
 use strict;
 use Exporter 'import';

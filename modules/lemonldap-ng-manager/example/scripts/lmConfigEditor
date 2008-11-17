@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
-use Lemonldap::NG::Manager::Conf;
-use Lemonldap::NG::Manager::Conf::Constants;
+use Lemonldap::NG::Common::Conf;
+use Lemonldap::NG::Common::Conf::Constants;
 use Data::Dumper;
 use strict;
 
@@ -11,7 +11,7 @@ our $editFile = `mktemp`;
 chomp $refFile;
 chomp $editFile;
 
-my $conf = Lemonldap::NG::Manager::Conf->new(
+my $conf = Lemonldap::NG::Common::Conf->new(
     {
         type    => 'File',
         dirName => '__CONFDIR__',

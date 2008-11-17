@@ -75,7 +75,7 @@ install: build
 
 	# System to use /etc/lemonldap-ng/storage.conf instead of setting
 	# manually the configStorage parameter
-	perl -000 -i -pe 's/(Lemonldap::NG::Manager::Conf.*new\s*\(\s*){[^}]+}/$$1\$$Lemonldap::NG::Conf::configStorage/; s#^use#\nrequire "/usr/share/lemonldap-ng/configStorage.pm";\nuse#m;' \
+	perl -000 -i -pe 's/(Lemonldap::NG::Common::Conf.*new\s*\(\s*){[^}]+}/$$1\$$Lemonldap::NG::Conf::configStorage/; s#^use#\nrequire "/usr/share/lemonldap-ng/configStorage.pm";\nuse#m;' \
 			$(DEB_TMP_LM_ROOT)manager/scripts/lmConfigEditor \
 			$(DEB_TMP_LM_ROOT)portal/scripts/purgeCentralCache
 

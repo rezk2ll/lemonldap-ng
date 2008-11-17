@@ -11,7 +11,6 @@ debian/tmp/usr/share/perl5/auto/Lemonldap/NG/Manager
 debian/tmp/usr/share/man/man3/Lemonldap::NG::Manager::Base.3pm
 debian/tmp/usr/share/man/man3/Lemonldap::NG::Manager.3pm
 debian/tmp/usr/share/man/man3/Lemonldap::NG::Manager::SOAPServer.3pm
-debian/tmp/usr/share/man/man3/Lemonldap::NG::Manager::Apache::Session::SOAP.3pm
 debian/tmp/usr/share/man/man3/Lemonldap::NG::Manager::Restricted.3pm
 debian/tmp/var/lib/lemonldap-ng/manager/apply.conf /etc/lemonldap-ng
 debian/manager-apache*.conf /etc/lemonldap-ng

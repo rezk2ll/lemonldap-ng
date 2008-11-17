@@ -14,6 +14,7 @@ LDAPPORT="389"
 LDAPSUFFIX="dc=example,dc=net"
 # Other
 VERSION=`head -n1 changelog |sed -e 's/lemonldap-ng (//' -e 's/).*$$//'`
+SRCCOMMONDIR=lemonldap-ng-common
 SRCHANDLERDIR=lemonldap-ng-handler
 SRCPORTALDIR=lemonldap-ng-portal
 SRCMANAGERDIR=lemonldap-ng-manager
@@ -32,7 +33,11 @@ REALDESTFILECONFDIR=$(REALSYSTEMCONFDIR)conf/
 REALDESTSESSIONDIR=$(REALSCRIPTSDIR)sessions/
 REALDESTLASPDIR=$(REALSCRIPTSDIR)liberty-alliance-sp-portal
 
-all:	handler manager portal
+all:	common handler manager portal
+
+common:		common_conf
+	@$(MAKE) -C ${SRCCOMMONDIR}
+	@touch common
 
 handler:	handler_conf
 	@$(MAKE) -C ${SRCHANDLERDIR}
@@ -46,7 +51,11 @@ manager:	manager_conf
 	@$(MAKE) -C ${SRCMANAGERDIR}
 	@touch manager
 
-configure:	handler_conf portal_conf manager_conf
+configure:	common_conf handler_conf portal_conf manager_conf
+
+common_conf:
+	@cd ${SRCCOMMONDIR}; perl Makefile.PL INSTALLDIRS=$(INSTALLDIRS)
+	@touch common_conf
 
 handler_conf:
 	@cd ${SRCHANDLERDIR}; perl Makefile.PL INSTALLDIRS=$(INSTALLDIRS)
@@ -60,18 +69,25 @@ manager_conf:
 	@cd ${SRCMANAGERDIR}; perl Makefile.PL INSTALLDIRS=$(INSTALLDIRS)
 	@touch manager_conf
 
-test:		manager handler portal manager_test handler_test portal_test
+test:		common handler portal manager common_test handler_test portal_test manager_test
 
-manager_test:	manager
-	@$(MAKE) -C ${SRCMANAGERDIR} test
+common_test:	common
+	@$(MAKE) -C ${SRCCOMMONDIR} test
 
-handler_test:	handler
-	@$(MAKE) -C ${SRCHANDLERDIR} test INST_ARCHLIB=../${SRCMANAGERDIR}/blib/lib/
+handler_test:	handler common_test
+	@$(MAKE) -C ${SRCHANDLERDIR} test INST_ARCHLIB=../${SRCCOMMONDIR}/blib/lib/
 
-portal_test:	portal
-	@$(MAKE) -C ${SRCPORTALDIR} test INST_ARCHLIB=../${SRCMANAGERDIR}/blib/lib/
+portal_test:	portal handler_test common_test
+	@$(MAKE) -C ${SRCPORTALDIR} test INST_ARCHLIB=../${SRCCOMMONDIR}/blib/lib/
 
-install:	handler_install portal_install manager_install
+manager_test:	manager handler_test common_test
+	@$(MAKE) -C ${SRCMANAGERDIR} test INST_ARCHLIB=../${SRCCOMMONDIR}/blib/lib/
+
+install:	common_install handler_install portal_install manager_install
+
+common_install:		common
+	@$(MAKE) -C ${SRCCOMMONDIR} install
+	@touch common_install
 
 handler_install:	handler
 	@$(MAKE) -C ${SRCHANDLERDIR} install
@@ -87,10 +103,14 @@ manager_install:	manager
 
 distclean:	clean
 
-clean:		handler_clean portal_clean manager_clean
+clean:		common_clean handler_clean portal_clean manager_clean
 	@rm -rf ${SYSTEMCONFDIR}
 	@rm -rf ${SCRIPTSDIR}
 	@rm -vf *gz
+
+common_clean:
+	- $(MAKE) -C ${SRCCOMMONDIR} distclean
+	@rm -vf common*
 
 handler_clean:
 	- $(MAKE) -C ${SRCHANDLERDIR} distclean
@@ -165,6 +185,10 @@ production_install:	production_preconf example
 
 uninstall:	configure handler_uninstall portal_uninstall manager_uninstall
 
+common_uninstall:	common
+	@$(MAKE) -C ${SRCCOMMONDIR} uninstall
+	@rm -vf common_uninstall
+
 handler_uninstall:	handler
 	@$(MAKE) -C ${SRCHANDLERDIR} uninstall
 	@rm -vf handler_uninstall
@@ -180,7 +204,7 @@ manager_uninstall:	manager
 dist:	clean
 	@- $(MAKE) clean
 	@mkdir -p lemonldap-ng-$(VERSION)
-	@- cp -pR lemonldap-ng-manager/ lemonldap-ng-portal/ lemonldap-ng-handler/ * lemonldap-ng-$(VERSION)
+	@- cp -pR lemonldap-ng-common/ lemonldap-ng-manager/ lemonldap-ng-portal/ lemonldap-ng-handler/ * lemonldap-ng-$(VERSION)
 	@- dir=lemonldap-ng-$(VERSION); find $$dir -name .svn -exec rm -rf {} \; 2>/dev/null
 	@rm -rf lemonldap-ng-$(VERSION)/lemonldap-ng-$(VERSION)
 	@tar czf lemonldap-ng-$(VERSION).tar.gz lemonldap-ng-$(VERSION)
@@ -189,7 +213,11 @@ dist:	clean
 debian-dist:	dist
 	@mv lemonldap-ng-$(VERSION).tar.gz lemonldap-ng_$(VERSION).orig.tar.gz
 
-cpan:	clean configure handler_cpan portal_cpan manager_cpan
+cpan:	clean configure common_cpan handler_cpan portal_cpan manager_cpan
+
+common_cpan:	common_conf
+	@$(MAKE) -C ${SRCCOMMONDIR} dist
+	@mv ${SRCCOMMONDIR}/Lemonldap*.gz .
 
 handler_cpan:	handler_conf
 	@$(MAKE) -C ${SRCHANDLERDIR} dist

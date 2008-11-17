@@ -1,9 +1,9 @@
-package Lemonldap::NG::Manager::Conf;
+package Lemonldap::NG::Common::Conf;
 
 use strict;
 no strict 'refs';
 use Data::Dumper;
-use Lemonldap::NG::Manager::Conf::Constants;
+use Lemonldap::NG::Common::Conf::Constants;
 
 our $VERSION = 0.51;
 our @ISA;
@@ -24,7 +24,7 @@ sub new {
             print STDERR "configStorage: type is not defined\n";
             return 0;
         }
-        $self->{type} = "Lemonldap::NG::Manager::Conf::$self->{type}"
+        $self->{type} = "Lemonldap::NG::Common::Conf::$self->{type}"
           unless $self->{type} =~ /^Lemonldap/;
         eval "require $self->{type}";
         die($@) if ($@);
@@ -142,23 +142,23 @@ __END__
 
 =head1 NAME
 
-Lemonldap::NG::Manager::Conf - Perl extension written to manage Lemonldap::NG
+Lemonldap::NG::Common::Conf - Perl extension written to manage Lemonldap::NG
 Web-SSO configuration.
 
 =head1 SYNOPSIS
 
-  use Lemonldap::NG::Manager::Conf;
-  my $confAccess = new Lemonldap::NG::Manager::Conf(
+  use Lemonldap::NG::Common::Conf;
+  my $confAccess = new Lemonldap::NG::Common::Conf(
                   {
                   type=>'File',
                   dirName=>"/tmp/",
                   },
-    ) or die "Unable to build Lemonldap::NG::Manager::Conf, see Apache logs";
+    ) or die "Unable to build Lemonldap::NG::Common::Conf, see Apache logs";
   my $config = $confAccess->getConf();
 
 =head1 DESCRIPTION
 
-Lemonldap::NG::Manager::Conf provides a simple interface to access to
+Lemonldap::NG::Common::Conf provides a simple interface to access to
 Lemonldap::NG Web-SSO configuration. It is used by L<Lemonldap::NG::Handler>,
 L<Lemonldap::NG::Portal> and L<Lemonldap::NG::Manager>.
 
@@ -172,14 +172,14 @@ choosen type. Examples:
 =over
 
 =item * B<File>:
-  $confAccess = new Lemonldap::NG::Manager::Conf(
+  $confAccess = new Lemonldap::NG::Common::Conf(
                 {
                 type    => 'File',
                 dirName => '/var/lib/lemonldap-ng/',
                 });
 
 =item * B<DBI>:
-  $confAccess = new Lemonldap::NG::Manager::Conf(
+  $confAccess = new Lemonldap::NG::Common::Conf(
                 {
                 type        => 'DBI',
                 dbiChain    => 'DBI:mysql:database=lemonldap-ng;host=1.2.3.4',
@@ -189,7 +189,7 @@ choosen type. Examples:
                 });
 
 =item * B<SOAP>:
-  $confAccess = new Lemonldap::NG::Manager::Conf(
+  $confAccess = new Lemonldap::NG::Common::Conf(
                 {
                 type         => 'SOAP',
                 proxy        => 'https://manager.example.com/soapmanager.pl',

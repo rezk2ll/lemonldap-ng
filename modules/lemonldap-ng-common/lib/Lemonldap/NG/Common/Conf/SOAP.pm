@@ -1,4 +1,4 @@
-package Lemonldap::NG::Manager::Conf::SOAP;
+package Lemonldap::NG::Common::Conf::SOAP;
 
 use strict;
 use SOAP::Lite;
@@ -6,10 +6,10 @@ use SOAP::Lite;
 our $VERSION = 0.2;
 
 BEGIN {
-    *Lemonldap::NG::Manager::Conf::_soapCall = \&_soapCall;
-    *Lemonldap::NG::Manager::Conf::_connect = \&_connect;
+    *Lemonldap::NG::Common::Conf::_soapCall = \&_soapCall;
+    *Lemonldap::NG::Common::Conf::_connect = \&_connect;
     sub SOAP::Transport::HTTP::Client::get_basic_credentials {
-       return $Lemonldap::NG::Manager::Conf::SOAP::username => $Lemonldap::NG::Manager::Conf::SOAP::password;
+       return $Lemonldap::NG::Common::Conf::SOAP::username => $Lemonldap::NG::Common::Conf::SOAP::password;
     }
 }
 
@@ -84,7 +84,7 @@ __END__
 
 =head1 NAME
 
-Lemonldap::NG::Manager::Conf::SOAP - Perl extension written to access to
+Lemonldap::NG::Common::Conf::SOAP - Perl extension written to access to
 Lemonldap::NG Web-SSO configuration via SOAP.
 
 =head1 SYNOPSIS
@@ -151,7 +151,7 @@ Lemonldap::NG Web-SSO configuration via SOAP.
 
 =head2 Server side
 
-See L<Lemonldap::NG::Manager::Conf::SOAP> for documentation on client side.
+See L<Lemonldap::NG::Common::Conf::SOAP> for documentation on client side.
 
   use Lemonldap::NG::Manager::SOAPServer;
   Lemonldap::NG::Manager::SOAPServer->start(
@@ -162,16 +162,16 @@ See L<Lemonldap::NG::Manager::Conf::SOAP> for documentation on client side.
 
 =head1 DESCRIPTION
 
-Lemonldap::NG::Manager::Conf provides a simple interface to access to
+Lemonldap::NG::Common::Conf provides a simple interface to access to
 Lemonldap::NG Web-SSO configuration. It is used by L<Lemonldap::NG::Handler>,
 L<Lemonldap::NG::Portal> and L<Lemonldap::NG::Manager>.
 
-Lemonldap::NG::Manager::Conf::SOAP provides the "SOAP" target used to access
+Lemonldap::NG::Common::Conf::SOAP provides the "SOAP" target used to access
 configuration via SOAP.
 
 =head2 SECURITY
 
-As Lemonldap::NG::Manager::Conf::SOAP use SOAP::Lite, you have to see
+As Lemonldap::NG::Common::Conf::SOAP use SOAP::Lite, you have to see
 L<SOAP::Transport> to know arguments that can be passed to C<proxyOptions>.
 Lemonldap::NG provides a system for HTTP basic authentication.
 
@@ -230,7 +230,7 @@ set environment variables.
 
 =head1 SEE ALSO
 
-L<Lemonldap::NG::Manager>, L<Lemonldap::NG::Manager::Conf::SOAP>,
+L<Lemonldap::NG::Manager>, L<Lemonldap::NG::Common::Conf::SOAP>,
 L<Lemonldap::NG::Handler>, L<Lemonldap::NG::Portal>,
 http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Presentation
 

@@ -85,13 +85,7 @@ lib/Lemonldap/NG/Manager.pm
 lib/Lemonldap/NG/Manager/_HTML.pm
 lib/Lemonldap/NG/Manager/_i18n.pm
 lib/Lemonldap/NG/Manager/_Response.pm
-lib/Lemonldap/NG/Manager/Apache/Session/SOAP.pm
 lib/Lemonldap/NG/Manager/Base.pm
-lib/Lemonldap/NG/Manager/Conf.pm
-lib/Lemonldap/NG/Manager/Conf/Constants.pm
-lib/Lemonldap/NG/Manager/Conf/DBI.pm
-lib/Lemonldap/NG/Manager/Conf/File.pm
-lib/Lemonldap/NG/Manager/Conf/SOAP.pm
 lib/Lemonldap/NG/Manager/Help.pm
 lib/Lemonldap/NG/Manager/Restricted.pm
 lib/Lemonldap/NG/Manager/Sessions.pm
@@ -100,11 +94,6 @@ Makefile.PL
 MANIFEST
 META.yml			Module meta-data (added by MakeMaker)
 README
-scripts/lmConfig_File2MySQL
-t/01-Manager-Conf.t
-t/02-Manager-Conf-File.t
-t/03-Manager-Conf-DBI.t
-t/04-Manager-Conf-SOAP.t
 t/10-Manager.t
 t/20-Manager-i18n.t
 t/50-Manager-SOAPServer.t

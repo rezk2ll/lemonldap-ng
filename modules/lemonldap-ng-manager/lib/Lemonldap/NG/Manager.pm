@@ -5,12 +5,12 @@ use strict;
 use XML::Simple;
 
 use Lemonldap::NG::Manager::Base;
-use Lemonldap::NG::Manager::Conf;
+use Lemonldap::NG::Common::Conf;
 use Lemonldap::NG::Manager::_HTML;
 require Lemonldap::NG::Manager::_Response;
 require Lemonldap::NG::Manager::_i18n;
 require Lemonldap::NG::Manager::Help;
-use Lemonldap::NG::Manager::Conf::Constants;
+use Lemonldap::NG::Common::Conf::Constants;
 use LWP::UserAgent;
 use Safe;
 use MIME::Base64;
@@ -756,7 +756,7 @@ sub config {
     my $self = shift;
     return $self->{_config} if $self->{_config};
     $self->{_config} =
-      Lemonldap::NG::Manager::Conf->new( $self->{configStorage} );
+      Lemonldap::NG::Common::Conf->new( $self->{configStorage} );
     unless ( $self->{_config} ) {
         die "Configuration not loaded\n";
     }
@@ -834,8 +834,8 @@ configuration database system. the key 'type' must be set. Example:
       dbiPassword => "pass",
   }
 
-See L<Lemonldap::Manager::NG::Manager::Conf::File> or
-L<Lemonldap::Manager::NG::Manager::Conf::DBI> to know which keys are required.
+See L<Lemonldap::Manager::NG::Common::Conf::File> or
+L<Lemonldap::Manager::NG::Common::Conf::DBI> to know which keys are required.
 
 =item * B<dhtmlXTreeImageLocation> (required): the location of the directory
 containing dhtmlXTree images (provided in example/imgs). If this parameter

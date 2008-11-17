@@ -2,7 +2,7 @@ package Lemonldap::NG::Manager::SOAPServer;
 
 use strict;
 use SOAP::Transport::HTTP;
-use Lemonldap::NG::Manager::Conf;
+use Lemonldap::NG::Common::Conf;
 use UNIVERSAL qw(isa);
 
 our $VERSION = "0.3";
@@ -33,7 +33,7 @@ sub new {
             die qq/The "configStorage" parameter is required\n/;
             return ();
         }
-        $self->{config} = Lemonldap::NG::Manager::Conf->new( $self->{configStorage} );
+        $self->{config} = Lemonldap::NG::Common::Conf->new( $self->{configStorage} );
         die "Configuration not loaded" unless $self->{config};
     }
     return $self;
@@ -199,10 +199,10 @@ Lemonldap::NG Web-SSO configuration or sessions via SOAP.
 
 =head2 Client side
 
-See L<Lemonldap::NG::Manager::Conf::SOAP> for documentation on client side
+See L<Lemonldap::NG::Common::Conf::SOAP> for documentation on client side
 configuration access.
 
-See L<Lemonldap::NG::Manager::Apache::Session::SOAP> for documentation on client side
+See L<Lemonldap::NG::Common::Apache::Session::SOAP> for documentation on client side
 sessions access.
 
 =head3 Configuration access
@@ -267,13 +267,13 @@ sessions access.
 
 =head3 Sessions access
 
-  Use simply Lemonldap::NG::Manager::Apache::Session::SOAP in the 'Apache session
+  Use simply Lemonldap::NG::Common::Apache::Session::SOAP in the 'Apache session
   module'parameter (instead of Apache::Session::MySQL or
   Apache::Session::File).
 
 =head1 DESCRIPTION
 
-Lemonldap::NG::Manager::Conf provides a simple interface to access to
+Lemonldap::NG::Common::Conf provides a simple interface to access to
 Lemonldap::NG Web-SSO configuration. It is used by L<Lemonldap::NG::Handler>,
 L<Lemonldap::NG::Portal> and L<Lemonldap::NG::Manager>.
 
@@ -299,7 +299,7 @@ overload this package.
 
 Since Lemonldap::NG::Manager::SOAPServer act as a CGI, you can protect
 configuration access by any of the HTTP protection mecanisms.
-See L<Lemonldap::NG::Manager::Conf::SOAP> for the security in the client
+See L<Lemonldap::NG::Common::Conf::SOAP> for the security in the client
 side.
 
 In "session" mode, you can control what functions can be used by SOAP. By
@@ -308,7 +308,7 @@ Use "AuthorizedFunctions" parameter to grant other functions.
 
 =head1 SEE ALSO
 
-L<Lemonldap::NG::Manager>, L<Lemonldap::NG::Manager::Conf::SOAP>,
+L<Lemonldap::NG::Manager>, L<Lemonldap::NG::Common::Conf::SOAP>,
 L<Lemonldap::NG::Handler>, L<Lemonldap::NG::Portal>,
 http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Presentation
 

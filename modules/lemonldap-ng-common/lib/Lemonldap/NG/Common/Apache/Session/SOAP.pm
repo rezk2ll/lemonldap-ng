@@ -1,4 +1,4 @@
-package Lemonldap::NG::Manager::Apache::Session::SOAP;
+package Lemonldap::NG::Common::Apache::Session::SOAP;
 
 use strict;
 use SOAP::Lite;
@@ -10,7 +10,7 @@ our ( $user, $password ) = ( '', '' );
 
 BEGIN {
     sub SOAP::Transport::HTTP::Client::get_basic_credentials {
-        return $Lemonldap::NG::Manager::Apache::Session::SOAP::user => $Lemonldap::NG::Manager::Apache::Session::SOAP::password;
+        return $Lemonldap::NG::Common::Apache::Session::SOAP::user => $Lemonldap::NG::Common::Apache::Session::SOAP::password;
     }
 }
 
@@ -146,7 +146,7 @@ __END__
 
 =head1 NAME
 
-Lemonldap::NG::Manager::Apache::Session::SOAP - Perl extension written to
+Lemonldap::NG::Common::Apache::Session::SOAP - Perl extension written to
 access to Lemonldap::NG Web-SSO sessions via SOAP.
 
 =head1 SYNOPSIS
@@ -161,7 +161,7 @@ access to Lemonldap::NG Web-SSO sessions via SOAP.
   our @ISA = qw(Lemonldap::NG::Handler::Simple);
 
   __PACKAGE__->init ({
-         globalStorage => 'Lemonldap::NG::Manager::Apache::Session::SOAP',
+         globalStorage => 'Lemonldap::NG::Common::Apache::Session::SOAP',
          globalStorageOptions => {
                  proxy => 'http://manager/cgi-bin/soapserver.pl',
                  proxyOptions => {
@@ -178,7 +178,7 @@ access to Lemonldap::NG Web-SSO sessions via SOAP.
 
   use Lemonldap::NG::Portal::SharedConf;
   my $portal = new Lemonldap::NG::Portal::SharedConf (
-         globalStorage => 'Lemonldap::NG::Manager::Apache::Session::SOAP',
+         globalStorage => 'Lemonldap::NG::Common::Apache::Session::SOAP',
          globalStorageOptions => {
                  proxy => 'http://manager/cgi-bin/soapserver.pl',
                  proxyOptions => {
@@ -198,18 +198,18 @@ manager.
 
 =head1 DESCRIPTION
 
-Lemonldap::NG::Manager::Conf provides a simple interface to access to
+Lemonldap::NG::Common::Conf provides a simple interface to access to
 Lemonldap::NG Web-SSO configuration. It is used by L<Lemonldap::NG::Handler>,
 L<Lemonldap::NG::Portal> and L<Lemonldap::NG::Manager>.
 
-Lemonldap::NG::Manager::Apache::Session::SOAP used with
+Lemonldap::NG::Common::Apache::Session::SOAP used with
 L<Lemonldap::NG::Manager::SOAPServer> provides the ability to acces to
 Lemonldap::NG sessions via SOAP: They act as a proxy to access to the real
 Apache::Session module (set as Lemonldap::NG::Manager::SOAPServer parameter).
 
 =head2 SECURITY
 
-As Lemonldap::NG::Manager::Conf::SOAP use SOAP::Lite, you have to see
+As Lemonldap::NG::Common::Conf::SOAP use SOAP::Lite, you have to see
 L<SOAP::Transport> to know arguments that can be passed to C<proxyOptions>.
 Lemonldap::NG provides a system for HTTP basic authentication.
 
@@ -272,7 +272,7 @@ set environment variables.
 =head1 SEE ALSO
 
 L<Lemonldap::NG::Manager::SOAPServer>,
-L<Lemonldap::NG::Manager>, L<Lemonldap::NG::Manager::Conf::SOAP>,
+L<Lemonldap::NG::Manager>, L<Lemonldap::NG::Common::Conf::SOAP>,
 L<Lemonldap::NG::Handler>, L<Lemonldap::NG::Portal>,
 http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Presentation
 

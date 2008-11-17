@@ -1,14 +1,14 @@
-package Lemonldap::NG::Manager::Conf::DBI;
+package Lemonldap::NG::Common::Conf::DBI;
 
 use strict;
 use DBI;
 use MIME::Base64;
-use Lemonldap::NG::Manager::Conf::Constants;
+use Lemonldap::NG::Common::Conf::Constants;
 
 our $VERSION = 0.17;
 
 BEGIN {
-    *Lemonldap::NG::Manager::Conf::dbh = \&dbh;
+    *Lemonldap::NG::Common::Conf::dbh = \&dbh;
 }
 
 sub prereq {

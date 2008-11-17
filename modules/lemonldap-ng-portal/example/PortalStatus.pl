@@ -66,8 +66,8 @@ BEGIN {
     }
 }
 
-use Lemonldap::NG::Manager::Conf;
-use Lemonldap::NG::Manager::Conf::Constants;
+use Lemonldap::NG::Common::Conf;
+use Lemonldap::NG::Common::Conf::Constants;
 use strict;
 use DBI;
 
@@ -80,7 +80,7 @@ print $cgi->header(
 
 print "LEMONLDAP::NG::PORTAL STATUS\n\nConfiguration          : ";
 
-my $lmconf = Lemonldap::NG::Manager::Conf->new(
+my $lmconf = Lemonldap::NG::Common::Conf->new(
     {
         type    => 'File',
         dirName => '__CONFDIR__',

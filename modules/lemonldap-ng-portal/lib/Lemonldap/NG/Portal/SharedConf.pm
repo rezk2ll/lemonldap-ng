@@ -2,7 +2,7 @@ package Lemonldap::NG::Portal::SharedConf;
 
 use strict;
 use Lemonldap::NG::Portal::Simple qw(:all);
-use Lemonldap::NG::Manager::Conf;
+use Lemonldap::NG::Common::Conf;
 use Safe;
 
 *EXPORT_OK   = *Lemonldap::NG::Portal::Simple::EXPORT_OK;
@@ -19,9 +19,9 @@ our $safe = new Safe;
 # OVERLOADED SUB #
 ##################
 
-# getConf: all parameters returned by the Lemonldap::NG::Manager::Conf object
+# getConf: all parameters returned by the Lemonldap::NG::Common::Conf object
 #          are copied in $self
-#          See Lemonldap::NG::Manager::Conf(3) for more
+#          See Lemonldap::NG::Common::Conf(3) for more
 sub getConf {
     my $self = shift;
     my %args;
@@ -42,7 +42,7 @@ sub getConf {
     }
     unless ($tmp) {
         $self->{lmConf} =
-          Lemonldap::NG::Manager::Conf->new( $self->{configStorage} )
+          Lemonldap::NG::Common::Conf->new( $self->{configStorage} )
           unless $self->{lmConf};
         return 0 unless ( ref( $self->{lmConf} ) );
         $tmp = $self->{lmConf}->getConf;

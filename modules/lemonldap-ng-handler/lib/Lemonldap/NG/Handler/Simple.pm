@@ -266,7 +266,7 @@ sub safe {
     my $class = shift;
     return $safe if($safe);
     $safe = new Safe;
-    my @t = split /\s+/, $customFunctions;
+    my @t = $customFunctions ? split( /\s+/, $customFunctions ) : ();
     $safe->share( '&encode_base64', '$datas', '&lmSetHeaderIn', '$apacheRequest', @t );
     foreach(@t) {
         $class->lmLog("Custom function : $_",'debug');

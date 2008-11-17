@@ -150,7 +150,7 @@ sub localInit {
         $localStorageOptions->{namespace}          ||= "lemonldap";
         $localStorageOptions->{default_expires_in} ||= 600;
     }
-    $lmConf = Lemonldap::NG::Manager::Conf->new( $args->{configStorage} );
+    $lmConf = Lemonldap::NG::Common::Conf->new( $args->{configStorage} );
     $class->defaultValuesInit($args);
 }
 

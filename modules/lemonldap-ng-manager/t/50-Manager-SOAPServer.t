@@ -7,7 +7,7 @@
 
 use Test::More tests => 3;
 
-# SOAP::Lite is not required, so Lemonldap::NG::Manager::Conf::SOAP may
+# SOAP::Lite is not required, so Lemonldap::NG::Common::Conf::SOAP may
 # not run.
 SKIP: {
     eval { require SOAP::Transport::HTTP };

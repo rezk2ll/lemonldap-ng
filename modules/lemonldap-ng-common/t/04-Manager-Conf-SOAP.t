@@ -7,7 +7,7 @@
 
 use Test::More tests => 4;
 
-# SOAP::Lite is not required, so Lemonldap::NG::Manager::Conf::SOAP may
+# SOAP::Lite is not required, so Lemonldap::NG::Common::Conf::SOAP may
 # not run.
 SKIP: {
     eval { require SOAP::Lite };
@@ -15,10 +15,10 @@ SKIP: {
       "SOAP::Lite is not installed, so SOAP configuration access will not work",
       4
       if ($@);
-    use_ok('Lemonldap::NG::Manager::Conf');
+    use_ok('Lemonldap::NG::Common::Conf');
     my $h;
     ok(
-        $h = new Lemonldap::NG::Manager::Conf(
+        $h = new Lemonldap::NG::Common::Conf(
         {
     	    type     => 'SOAP',
             proxy    => 'http://localhost',
