@@ -270,9 +270,9 @@ sub safe {
     $safe->share( '&encode_base64', '$datas', '&lmSetHeaderIn', '$apacheRequest', @t );
     foreach(@t) {
         $class->lmLog("Custom function : $_",'debug');
-        $_ = "$class\::$_" unless(/::/);
+        my $sub = "$class\::$_" unless(/::/);
         eval "sub $_ {
-            return $_(\$apacheRequest->uri
+            return $sub(\$apacheRequest->uri
                 . ( \$apacheRequest->args ? '?' . \$apacheRequest->args : '' )
                 , \@_)
             }";
