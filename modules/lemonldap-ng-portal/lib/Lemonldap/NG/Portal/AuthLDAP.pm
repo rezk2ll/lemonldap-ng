@@ -10,7 +10,7 @@ sub ldap {
     unless ( ref( $self->{ldap} ) ) {
         my $mesg = $self->{ldap}->bind
           if ( $self->{ldap} = Lemonldap::NG::Portal::_LDAP->new($self) );
-        if ( $mesg->code != 0 ) {
+        if ( !$mesg || $mesg->code != 0 ) {
             return 0;
         }
     }
