@@ -354,7 +354,8 @@ sub process {
     }
 
     # Ajax request to list users starting by a letter
-    elsif ( my $letter = $self->param('letter') ) {
+    elsif ( defined( $self->param('letter') ) ) {
+        my $letter = $self->param('letter');
         my ($byUid);
         print $self->header( -type => 'text/html; charset=utf8' );
         $globalStorage->get_key_from_all_sessions(
