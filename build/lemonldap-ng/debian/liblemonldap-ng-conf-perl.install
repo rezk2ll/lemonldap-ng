@@ -1,7 +1,5 @@
-debian/tmp/usr/share/perl5/Lemonldap/NG/Common/Apache/*
-debian/tmp/usr/share/perl5/Lemonldap/NG/Common/Conf*
-debian/tmp/usr/share/man/man3/Lemonldap::NG::Common::Apache::Session::SOAP.3pm
-debian/tmp/usr/share/man/man3/Lemonldap::NG::Common::Conf*
+debian/tmp/usr/share/perl5/Lemonldap/NG/Common*
+debian/tmp/usr/share/man/man3/Lemonldap::NG::Common*
 debian/tmp/usr/share/man/man1/lmConfig_File2MySQL.1p
 debian/tmp/usr/bin/lmConfig* /usr/share/lemonldap-ng/bin
 debian/configStorage.pm /usr/share/lemonldap-ng

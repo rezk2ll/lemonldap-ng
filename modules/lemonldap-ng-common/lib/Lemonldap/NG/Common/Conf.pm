@@ -11,14 +11,14 @@ our @ISA;
 sub new {
     my $class = shift;
     my $args;
+    $args ||= {};
+    my $self = bless {}, $class;
     if ( ref( $_[0] ) ) {
-        $args = $_[0];
+        %$self = %{$_[0]};
     }
     else {
-        %$args = @_;
+        %$self = @_;
     }
-    $args ||= {};
-    my $self = bless $args, $class;
     unless ( $self->{mdone} ) {
         unless ( $self->{type} ) {
             print STDERR "configStorage: type is not defined\n";
