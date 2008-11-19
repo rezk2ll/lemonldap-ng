@@ -11,8 +11,8 @@ BEGIN {
         chomp;
         s/\r//g;
         /^\s*([\w]+)(?:\s*[:=]\s*|\s+)(["']?)([\S].*[\S])\2.*$/ or next;
-        $configStorage->{$1} = $3;
         my $k = $1;
+        $configStorage->{$k} = $3;
         if($configStorage->{$k} =~ /^([{\[]).*[}\]]$/) {
             eval "\$configStorage->{$k} = $configStorage->{$k}";
         }

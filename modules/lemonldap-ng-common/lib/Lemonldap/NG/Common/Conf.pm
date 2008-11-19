@@ -14,7 +14,7 @@ sub new {
     $args ||= {};
     my $self = bless {}, $class;
     if ( ref( $_[0] ) ) {
-        %$self = %{$_[0]};
+        %$self = %{ $_[0] };
     }
     else {
         %$self = @_;
@@ -31,13 +31,25 @@ sub new {
         return 0 unless $self->prereq;
         $self->{mdone}++;
     }
+    if ( $self->{localStorage} and not defined( $self->{refLocalStorage} ) ) {
+        eval "use $self->{localStorage};";
+        if ($@) {
+            print STDERR "Unable to load $self->{localStorage}: $@" if ($@);
+        }
+        else {
+            $self->{refLocalStorage} =
+              $self->{localStorage}->new( $self->{localStorageOptions} );
+        }
+    }
     return $self;
 }
 
 sub saveConf {
     my ( $self, $conf ) = @_;
+
     # If configuration was modified, return an error
-    return CONFIG_WAS_CHANGED if( $conf->{cfgNum} != $self->lastCfg or $self->isLocked );
+    return CONFIG_WAS_CHANGED
+      if ( $conf->{cfgNum} != $self->lastCfg or $self->isLocked );
     $self->lock or return DATABASE_LOCKED;
     my $fields;
     local $Data::Dumper::Indent = 0;
@@ -52,8 +64,10 @@ sub saveConf {
             $fields->{$k} = "$v";
         }
         else {
+
             # mono-line
             $v =~ s/[\r\n]/ /gm;
+
             # trim
             $v =~ s/^\s*(.*?)\s*$/$1/;
             $fields->{$k} = "'$v'";
@@ -65,29 +79,68 @@ sub saveConf {
 
 sub getConf {
     my ( $self, $args ) = @_;
+    if (    $args->{'local'}
+        and ref( $self->{refLocalStorage} )
+        and my $res = $self->{refLocalStorage}->get('conf') )
+    {
+        return $res;
+    }
+    else {
     $args->{cfgNum} ||= $self->lastCfg;
+        unless ( ref( $self->{refLocalStorage} ) ) {
+            return $self->getDBConf($args);
+        }
+        my $r = $self->confTest;
+        $| = 1;
+        return $r if ($r);
+        return $self->getDBConf($args);
+    }
+}
+
+sub confTest {
+    my ( $self, $numConf ) = @_;
+    my $args = $self->{refLocalStorage}->get('conf');
+    return ( defined($args) and $numConf == $args->{numConf} ) ? $args : 0;
+}
+
+sub setLocalConf {
+    my ( $self, $conf ) = @_;
+    $self->{refLocalStorage}->set( "conf", $conf );
+}
+
+sub getDBConf {
+    my ( $self, $args ) = @_;
     return undef unless $args->{cfgNum};
-    if ( $args->{cfgNum}<0 ) {
+    if ( $args->{cfgNum} < 0 ) {
         my @a = $self->available();
-        $args->{cfgNum} = ( @a + $args->{cfgNum} >0 ) ? ( $a[ $#a + $args->{cfgNum} ] ) : $a[0];
+        $args->{cfgNum} =
+            ( @a + $args->{cfgNum} > 0 )
+          ? ( $a[ $#a + $args->{cfgNum} ] )
+          : $a[0];
     }
     my $fields = $self->load( $args->{cfgNum}, $args->{fields} );
     my $conf;
     while ( my ( $k, $v ) = each(%$fields) ) {
         $v =~ s/^'(.*)'$/$1/s;
-        if( $k =~ /^(?:exportedVars|locationRules|groups|exportedHeaders|macros|globalStorageOptions)$/ ) {
+        if ( $k =~
+/^(?:exportedVars|locationRules|groups|exportedHeaders|macros|globalStorageOptions)$/
+          )
+        {
             if ( $v !~ /^\$/ ) {
-                print STDERR "Lemonldap::NG : Warning: configuration is in old format, you've to migrate !\n";
+                print STDERR
+"Lemonldap::NG : Warning: configuration is in old format, you've to migrate !\n";
                 eval 'require Storable;require MIME::Base64;';
-                die($@) if($@);
-                $conf->{$k} = Storable::thaw(MIME::Base64::decode_base64($v));
+                die($@) if ($@);
+                $conf->{$k} = Storable::thaw( MIME::Base64::decode_base64($v) );
             }
             else {
                 my $data;
                 $v =~ s/^\$([_a-zA-Z][_a-zA-Z0-9]*) *=/\$data =/;
                 $v =~ s/&#?39;/'/g;
                 eval $v;
-                print STDERR "Lemonldap::NG : Error while reading configuration with $k key: $@\n" if($@);
+                print STDERR
+"Lemonldap::NG : Error while reading configuration with $k key: $@\n"
+                  if ($@);
                 $conf->{$k} = $data;
             }
         }
@@ -95,46 +148,47 @@ sub getConf {
             $conf->{$k} = $v;
         }
     }
+    $self->setLocalConf($conf) if ( $self->{refLocalStorage} );
     return $conf;
 }
 
 sub prereq {
-    return &{$_[0]->{type}.'::prereq'}(@_);
+    return &{ $_[0]->{type} . '::prereq' }(@_);
 }
 
 sub available {
-    return &{$_[0]->{type}.'::available'}(@_);
+    return &{ $_[0]->{type} . '::available' }(@_);
 }
 
 sub lastCfg {
-    return &{$_[0]->{type}.'::lastCfg'}(@_);
+    return &{ $_[0]->{type} . '::lastCfg' }(@_);
 }
 
 sub lock {
-    return &{$_[0]->{type}.'::lock'}(@_);
+    return &{ $_[0]->{type} . '::lock' }(@_);
 }
 
 sub isLocked {
-    return &{$_[0]->{type}.'::isLocked'}(@_);
+    return &{ $_[0]->{type} . '::isLocked' }(@_);
 }
 
 sub unlock {
-    return &{$_[0]->{type}.'::unlock'}(@_);
+    return &{ $_[0]->{type} . '::unlock' }(@_);
 }
 
 sub store {
-    return &{$_[0]->{type}.'::store'}(@_);
+    return &{ $_[0]->{type} . '::store' }(@_);
 }
 
 sub load {
-    return &{$_[0]->{type}.'::load'}(@_);
+    return &{ $_[0]->{type} . '::load' }(@_);
 }
 
 sub delete {
-    my($self, $c) = @_;
+    my ( $self, $c ) = @_;
     my @a = $self->available();
-    return 0 unless ( @a + $c >0 );
-    return &{$self->{type}.'::delete'}( $self, $a[ $#a + $c ] );
+    return 0 unless ( @a + $c > 0 );
+    return &{ $self->{type} . '::delete' }( $self, $a[ $#a + $c ] );
 }
 
 1;
@@ -149,10 +203,20 @@ Web-SSO configuration.
 
   use Lemonldap::NG::Common::Conf;
   my $confAccess = new Lemonldap::NG::Common::Conf(
-                  {
+              {
                   type=>'File',
                   dirName=>"/tmp/",
+
+                  # To use local cache, set :
+                  localStorage => "Cache::FileCache",
+                  localStorageOptions = {
+                      'namespace' => 'MyNamespace',
+                      'default_expires_in' => 600,
+                      'directory_umask' => '007',
+                      'cache_root' => '/tmp',
+                      'cache_depth' => 5,
                   },
+              },
     ) or die "Unable to build Lemonldap::NG::Common::Conf, see Apache logs";
   my $config = $confAccess->getConf();
 
