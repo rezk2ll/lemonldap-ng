@@ -10,7 +10,7 @@ BEGIN {
         next if(/^\s*$/ or /^\s*#/);
         chomp;
         s/\r//g;
-        /^\s*([\w]+)(?:\s*[:=]\s*|\s+)(["']?)([\S].*[\S])\2.*$/ or next;
+        /^\s*([\w]+)(?:\s*[:=]\s*|\s+)(["']?)([\S].*[\S])\2\s*$/ or next;
         my $k = $1;
         $configStorage->{$k} = $3;
         if($configStorage->{$k} =~ /^([{\[]).*[}\]]$/) {
