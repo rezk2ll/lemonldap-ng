@@ -267,10 +267,16 @@ sub safe {
     return $safe if($safe);
     $safe = new Safe;
     my @t = $customFunctions ? split( /\s+/, $customFunctions ) : ();
-    $safe->share( '&encode_base64', '$datas', '&lmSetHeaderIn', '$apacheRequest', @t );
     foreach(@t) {
         $class->lmLog("Custom function : $_",'debug');
-        my $sub = /::/ ? $_ : "$class\::$_";
+        my $sub = $_;
+        unless(/::/) {
+            $sub = "$class\::$_";
+        }
+        else {
+            s/^.*:://;
+        }
+        next if($class->can($_));
         eval "sub $_ {
             return $sub(\$apacheRequest->uri
                 . ( \$apacheRequest->args ? '?' . \$apacheRequest->args : '' )
@@ -278,6 +284,7 @@ sub safe {
             }";
         $class->lmLog($@,'error')if($@);
     }
+    $safe->share( '&encode_base64', '$datas', '&lmSetHeaderIn', '$apacheRequest', @t );
     return $safe;
 }
 

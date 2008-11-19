@@ -548,6 +548,7 @@ sub checkConf {
     my $safe = new Safe;
     my @t = split /\s+/, $self->{customFunctions};
     foreach(@t) {
+        s/^.*:://;
         eval "sub $_ {1}";
     }
     $safe->share('&encode_base64', @t);
@@ -748,7 +749,7 @@ sub print_apply {
 # Internal subroutines
 sub _dir {
     my $d = $ENV{SCRIPT_FILENAME};
-    $d =~ s#[^/]*$##;
+    $d =~ s/[^\/]*$//;
     return $d;
 }
 
