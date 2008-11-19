@@ -63,7 +63,6 @@ install: build
 
 	# Debian example files
 	mv $(DEB_TMP_LM_CONF_ROOT)conf $(DEB_TMP_LM_ROOT)
-	cp $(DEB_TMP_LM_ROOT)handler/MyHandler.pm $(DEB_TMP_LM_CONF_ROOT)MyHandler.pm
 	cp $(DEB_TMP_LM_ROOT)handler/MyHandler.pm $(DEB_TMP_LM_ROOT)handler/MyHandler-Debian.pm
 	cp $(DEB_TMP_LM_ROOT)portal/index.pl $(DEB_TMP_LM_ROOT)portal/index-Debian.pl
 	cp $(DEB_TMP_LM_ROOT)portal/index_skin.pl $(DEB_TMP_LM_ROOT)portal/index_skin-Debian.pl
