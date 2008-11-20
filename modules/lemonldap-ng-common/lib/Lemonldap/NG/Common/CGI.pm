@@ -1,4 +1,4 @@
-package Lemonldap::NG::Manager::Base;
+package Lemonldap::NG::Common::CGI;
 
 use strict;
 
@@ -6,7 +6,7 @@ use MIME::Base64;
 use Time::Local;
 use CGI;
 
-our $VERSION = '0.2';
+our $VERSION = '0.3';
 
 our @ISA = qw(CGI);
 
@@ -65,21 +65,21 @@ __END__
 
 =head1 NAME
 
-Lemonldap::NG::Manager::Base - Simple module to extend L<CGI> to manage
+Lemonldap::NG::Common::CGI - Simple module to extend L<CGI> to manage
 HTTP "If-Modified-Since / 304 Not Modified" system.
 
 =head1 SYNOPSIS
 
-  use Lemonldap::NG::Manager::Base;
+  use Lemonldap::NG::Common::CGI;
   
-  my $cgi = Lemonldap::NG::Manager::Base->new();
+  my $cgi = Lemonldap::NG::Common::CGI->new();
   $cgi->header_public($ENV{SCRIPT_FILENAME});
   print "<html><head><title>Static page</title></head>";
   ...
 
 =head1 DESCRIPTION
 
-Lemonldap::NG::Manager::Base just add header_public subroutine to CGI module to
+Lemonldap::NG::Common::CGI just add header_public subroutine to CGI module to
 avoid printing HTML elements that can be cached.
 
 =head1 METHODS

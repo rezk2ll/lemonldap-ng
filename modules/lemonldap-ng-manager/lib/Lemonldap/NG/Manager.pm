@@ -4,7 +4,7 @@ use strict;
 
 use XML::Simple;
 
-use Lemonldap::NG::Manager::Base;
+use Lemonldap::NG::Common::CGI;
 use Lemonldap::NG::Common::Conf;
 use Lemonldap::NG::Manager::_HTML;
 require Lemonldap::NG::Manager::_Response;
@@ -15,7 +15,7 @@ use LWP::UserAgent;
 use Safe;
 use MIME::Base64;
 
-our @ISA = qw(Lemonldap::NG::Manager::Base);
+our @ISA = qw(Lemonldap::NG::Common::CGI);
 
 our $VERSION = '0.87';
 

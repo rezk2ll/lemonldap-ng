@@ -86,21 +86,14 @@ sub getConf {
         return $res;
     }
     else {
-    $args->{cfgNum} ||= $self->lastCfg;
+        $args->{cfgNum} ||= $self->lastCfg;
         unless ( ref( $self->{refLocalStorage} ) ) {
             return $self->getDBConf($args);
         }
-        my $r = $self->confTest;
-        $| = 1;
-        return $r if ($r);
+        my $r = $self->{refLocalStorage}->get('conf');
+        return $r if ($r->{cfgNum} == $args->{cfgNum});
         return $self->getDBConf($args);
     }
-}
-
-sub confTest {
-    my ( $self, $numConf ) = @_;
-    my $args = $self->{refLocalStorage}->get('conf');
-    return ( defined($args) and $numConf == $args->{numConf} ) ? $args : 0;
 }
 
 sub setLocalConf {

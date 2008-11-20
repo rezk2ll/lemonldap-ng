@@ -1,14 +1,5 @@
-debian/tmp/usr/share/perl5/Lemonldap/NG/Manager.pm
-debian/tmp/usr/share/perl5/Lemonldap/NG/Manager/_i18n.pm
-debian/tmp/usr/share/perl5/Lemonldap/NG/Manager/Help.pm
-debian/tmp/usr/share/perl5/Lemonldap/NG/Manager/Base.pm
-debian/tmp/usr/share/perl5/Lemonldap/NG/Manager/_HTML.pm
-debian/tmp/usr/share/perl5/Lemonldap/NG/Manager/_Response.pm
-debian/tmp/usr/share/perl5/Lemonldap/NG/Manager/Sessions.pm
-debian/tmp/usr/share/perl5/Lemonldap/NG/Manager/SOAPServer.pm
-debian/tmp/usr/share/perl5/Lemonldap/NG/Manager/Restricted.pm
+debian/tmp/usr/share/perl5/Lemonldap/NG/Manager*
 debian/tmp/usr/share/perl5/auto/Lemonldap/NG/Manager
-debian/tmp/usr/share/man/man3/Lemonldap::NG::Manager::Base.3pm
 debian/tmp/usr/share/man/man3/Lemonldap::NG::Manager.3pm
 debian/tmp/usr/share/man/man3/Lemonldap::NG::Manager::SOAPServer.3pm
 debian/tmp/usr/share/man/man3/Lemonldap::NG::Manager::Restricted.3pm

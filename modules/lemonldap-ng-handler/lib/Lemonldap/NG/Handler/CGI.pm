@@ -2,7 +2,7 @@ package Lemonldap::NG::Handler::CGI;
 
 use strict;
 
-use CGI;
+use Lemonldap::NG::Common::CGI;
 use CGI::Cookie;
 use MIME::Base64;
 
