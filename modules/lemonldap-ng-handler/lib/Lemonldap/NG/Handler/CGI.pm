@@ -6,7 +6,7 @@ use Lemonldap::NG::Common::CGI;
 use CGI::Cookie;
 use MIME::Base64;
 
-our @ISA = qw(CGI);
+our @ISA = qw(Lemonldap::NG::Common::CGI);
 
 use Lemonldap::NG::Handler::SharedConf qw(:all);
 
