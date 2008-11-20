@@ -63,6 +63,10 @@ our %EXPORT_TAGS = ( 'all' => [ @EXPORT, 'import' ], );
 
 our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
 
+# Secure jail
+our $safe = new Safe;
+our $self;    # Safe cannot share a variable declared with my
+
 # CONSTRUCTOR
 sub new {
     my $class = shift;
@@ -404,25 +408,79 @@ sub controlExistingSession {
 }
 
 sub existingSession {
-    my ( $self, $id, $datas ) = @_;
+    #my ( $self, $id, $datas ) = @_;
     PE_OK;
 }
 
-# Unused. You can overload if you have to modify user and password before
-# authentication
+# 3. authInit() : must be implemented in Auth* module
 
-# 9. Unused here, but overloaded in SharedConf.pm
+# 4. extractFormInfo() : must be implemented in Auth* module:
+#                         * set $self->{user}
+#                         * authenticate user if possible (or do it in 11.)
+
+# 5. userDBInit() : must be implemented in User* module
+
+# 6. getUser() : must be implemented in User* module
+
+# 7. setAuthSessionInfo() : must be implemented in Auth* module:
+#                            * store exported datas in $self->{sessionInfo}
+
+# 8. setSessionInfo() : must be implemented in User* module:
+#                            * store exported datas in $self->{sessionInfo}
+
+# 9. setMacro() : macro mechanism:
+#                  * store macro results in $self->{sessionInfo}
+
 sub setMacros {
+    local $self = shift;
+    die __PACKAGE__ . ": Unable to get configuration"
+      unless ( $self->getConf(@_) );
+    while ( my ( $n, $e ) = each( %{ $self->{macros} } ) ) {
+        $e =~ s/\$(\w+)/\$self->{sessionInfo}->{$1}/g;
+        $safe->share( '$self', '&encode_base64' );
+        $self->{sessionInfo}->{$n} = $safe->reval($e);
+    }
     PE_OK;
 }
 
-# 10. Unused here, but overloaded in SharedConf.pm
+# 10. setGroups() : groups mechanism:
+#                    * store all groups name that the user match in
+#                      $self->{sessionInfo}->{groups}
 sub setGroups {
+    local $self = shift;
+    my $groups;
+    #foreach ( keys %{ $self->{groups} } ) {
+    while ( my ( $group, $expr ) = each %{ $self->{groups} } ) {
+	$expr =~ s/\$(\w+)/\$self->{sessionInfo}->{$1}/g;
+	# TODO : custom Functions
+	$safe->share( '$self', '&encode_base64' );
+	$groups .= "$group " if( $safe->reval($expr) );
+    }
+    if ( $self->{ldapGroupBase} ) {
+        my $mesg = $self->{ldap}->search(
+            base   => $self->{ldapGroupBase},
+            filter => "(|(member="
+              . $self->{dn}
+              . ")(uniqueMember="
+              . $self->{dn} . "))",
+            attrs => ["cn"],
+        );
+        if ( $mesg->code() == 0 ) {
+            foreach my $entry ( $mesg->all_entries ) {
+                my @values = $entry->get_value("cn");
+                $groups .= $values[0] . " ";
+            }
+        }
+    }
+    $self->{sessionInfo}->{groups} = $groups;
     PE_OK;
 }
 
-# 13. Now, the user is authenticated. It's time to store his parameters with
-#     Apache::Session::* module
+# 11. authenticate() : must be implemented in Auth* module:
+#                       * authenticate the user if not done before
+
+# 12. Now, the user is known, authenticated and session variable are evaluated.
+#     It's time to store his parameters with Apache::Session::* module
 sub store {
     my ($self) = @_;
     my %h;
@@ -441,7 +499,7 @@ sub store {
     PE_OK;
 }
 
-# 14. If all is done, we build the Lemonldap::NG cookie
+# 13. If all is done, we build the Lemonldap::NG cookie
 sub buildCookie {
     my $self = shift;
     push @{ $self->{cookie} },
@@ -456,7 +514,7 @@ sub buildCookie {
     PE_OK;
 }
 
-# 15. By default, nothing is logged. Users actions are logged on applications.
+# 14. By default, nothing is logged. Users actions are logged on applications.
 #     It's easy to override this in the contructor :
 #       my $portal = new Lemonldap::NG::Portal ( {
 #                    ...
@@ -470,7 +528,7 @@ sub log {
     PE_OK;
 }
 
-# 16. If the user was redirected to the portal, we will now redirect him
+# 15. If the user was redirected to the portal, we will now redirect him
 #     to the requested URL
 sub autoRedirect {
     my $self = shift;
