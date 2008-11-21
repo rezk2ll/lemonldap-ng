@@ -71,12 +71,12 @@ our $self;    # Safe cannot share a variable declared with my
 sub new {
     my $class = shift;
     my $self  = $class->SUPER::new();
-    $self->getConf(@_) or die "Unable to get configuration";
-    die("You've to indicate a an Apache::Session storage module !")
+    $self->getConf(@_) or $self->abort("Unable to get configuration");
+    $self->abort("You've to indicate a an Apache::Session storage module !")
       unless ( $self->{globalStorage} );
     eval "require " . $self->{globalStorage};
-    die( "Module " . $self->{globalStorage} . " not found in \@INC" ) if ($@);
-    die("You've to indicate a domain for cookies") unless ( $self->{domain} );
+    $self->abort( "Module " . $self->{globalStorage} . " not found in \@INC" ) if ($@);
+    $self->abort("You've to indicate a domain for cookies") unless ( $self->{domain} );
     $self->{domain} =~ s/^([^\.])/.$1/;
     $self->{securedCookie}  ||= 0;
     $self->{cookieName}     ||= "lemonldap";
@@ -92,7 +92,7 @@ sub new {
           . $self->{$_};
         $tmp =~ s/\s.*$//;
         eval "require $tmp";
-        die($@) if ($@);
+        $self->abort($@) if ($@);
         push @ISA, $tmp;
 
         # $self->{authentication} and $self->{userDB} can contains arguments
@@ -433,7 +433,7 @@ sub existingSession {
 
 sub setMacros {
     local $self = shift;
-    die __PACKAGE__ . ": Unable to get configuration"
+    $self->abort( __PACKAGE__ . ": Unable to get configuration" )
       unless ( $self->getConf(@_) );
     while ( my ( $n, $e ) = each( %{ $self->{macros} } ) ) {
         $e =~ s/\$(\w+)/\$self->{sessionInfo}->{$1}/g;

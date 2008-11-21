@@ -85,7 +85,7 @@ sub setSessionInfo {
         }
     }
     else {
-        die('Only hash reference are supported now in exportedVars');
+        $self->abort('Only hash reference are supported now in exportedVars');
     }
     PE_OK;
 }

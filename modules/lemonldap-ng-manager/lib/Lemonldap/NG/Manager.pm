@@ -24,7 +24,7 @@ sub new {
     my $self;
     if ( $args->{protection} ) {
         eval 'use Lemonldap::NG::Handler::CGI;';
-        die($@) if ($@);
+        $class->abort($@) if ($@);
         unshift @ISA, "Lemonldap::NG::Handler::CGI";
         $self = $class->SUPER::new($args);
     }
@@ -759,7 +759,7 @@ sub config {
     $self->{_config} =
       Lemonldap::NG::Common::Conf->new( $self->{configStorage} );
     unless ( $self->{_config} ) {
-        die "Configuration not loaded\n";
+        $self->abort("Configuration not loaded\n");
     }
     return $self->{_config};
 }

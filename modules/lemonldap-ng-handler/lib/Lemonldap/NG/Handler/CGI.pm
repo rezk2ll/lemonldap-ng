@@ -12,21 +12,6 @@ use Lemonldap::NG::Handler::SharedConf qw(:all);
 
 our $VERSION = '0.11';
 
-sub abort {
-    my $self = shift;
-    my $cgi = CGI->new;
-    my ( $t1, $t2 ) = @_;
-    $t2 ||= "See Apache's logs";
-    print $cgi->header('text/html; charset=utf8');
-    print $cgi->start_html(
-        -title    => $t1,
-        -encoding => 'utf8',
-    );
-    print "<h1>$t1</h1>";
-    print "<p>$t2</p>";
-    exit;
-}
-
 sub new {
     my $class = shift;
     my $self  = $class->SUPER::new() or $class->abort("Unable to build CGI");

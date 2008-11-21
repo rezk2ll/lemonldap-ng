@@ -10,7 +10,7 @@ sub new {
     my $portal = shift;
     my $self;
     unless ($portal) {
-        die("$class : portal argument required !");
+        $class->abort("$class : portal argument required !");
     }
     my $useTls = 0;
     my $tlsParam;

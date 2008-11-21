@@ -23,6 +23,7 @@ BEGIN {
         my $class = shift;
         my $args  = shift;
         my $data  = shift;
+	# TODO : replace die by abort
         my $dbh =
           DBI->connect( $args->{DataSource}, $args->{UserName},
             $args->{Password} )
@@ -60,6 +61,7 @@ BEGIN {
         my $args  = shift;
         my $data  = shift;
         $args->{Directory} ||= '/tmp';
+	# TODO : replace die by abort
         unless ( opendir DIR, $args->{Directory} ) {
             die "Cannot open directory $args->{Directory}\n";
         }
@@ -93,6 +95,7 @@ BEGIN {
         if ( !tied %{ $class->{dbm} } ) {
             my $rv = tie %{ $class->{dbm} }, 'DB_File', $args->{FileName};
 
+	    # TODO : replace die by abort
             if ( !$rv ) {
                 die "Could not open dbm file " . $args->{FileName} . ": $!";
             }

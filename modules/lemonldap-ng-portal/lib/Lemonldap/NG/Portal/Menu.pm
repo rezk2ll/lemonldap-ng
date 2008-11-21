@@ -50,10 +50,10 @@ sub new {
 
     # Get configuration
     $self->Lemonldap::NG::Portal::Simple::getConf(@_)
-      or die "Unable to get configuration";
+      or $self->abort("Unable to get configuration");
 
     # Portal is required
-    die("Portal object required") unless ( $self->{portalObject} );
+    $self->abort("Portal object required") unless ( $self->{portalObject} );
 
     # Fill sessionInfo
     &Lemonldap::NG::Portal::Simple::getSessionInfo( $self->{portalObject} );
