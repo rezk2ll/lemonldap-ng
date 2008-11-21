@@ -14,7 +14,7 @@ BEGIN {
 sub prereq {
     my $self = shift;
     unless ( $self->{dbiChain} ) {
-        print STDERR 'No dbiChain found';
+        $Lemonldap::NG::Common::Conf::msg = '"dbiChain" is required in DBI configuration type';
         return 0;
     }
     print STDERR __PACKAGE__ . 'Warning: "dbiUser" parameter is not set'
@@ -117,7 +117,7 @@ sub delete {
 
 sub logError {
     my $self = shift;
-    print STDERR "Database error: " . $self->dbh->errstr . "\n";
+    $Lemonldap::NG::Common::Conf::msg = "Database error: " . $self->dbh->errstr . "\n";
 }
 
 1;

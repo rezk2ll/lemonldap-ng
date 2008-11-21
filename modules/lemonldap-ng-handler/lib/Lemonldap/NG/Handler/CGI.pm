@@ -19,7 +19,7 @@ sub new {
     $self->_handler->init(@_);
     $self->_handler->initLocalStorage();
     $class->abort("Unable to get configuration")
-      unless $self->_handler->localConfUpdate() == OK;
+      unless $self->_handler->testConf() == OK;
     # Arguments
     my @args = @_;
     if(ref($args[0])) {
@@ -128,16 +128,9 @@ use Lemonldap::NG::Handler::SharedConf qw(:locationRules :localStorage);
 
 our @ISA = qw(Lemonldap::NG::Handler::SharedConf);
 
-sub localInit {
-    my($class, $args) = @_;
-    if($localStorage = $args->{localStorage}) {
-        $localStorageOptions = $args->{localStorageOptions};
-        $localStorageOptions->{namespace}          ||= "lemonldap";
-        $localStorageOptions->{default_expires_in} ||= 600;
-    }
-    $lmConf = Lemonldap::NG::Common::Conf->new( $args->{configStorage} );
-    $class->defaultValuesInit($args);
-}
+sub childInit {1}
+
+sub purgeCache {1}
 
 sub lmLog {
     my ( $self, $mess, $level ) = @_;

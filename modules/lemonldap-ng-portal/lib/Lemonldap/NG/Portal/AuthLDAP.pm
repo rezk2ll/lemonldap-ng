@@ -33,10 +33,11 @@ sub extractFormInfo {
 
 sub setAuthSessionInfo {
     my $self = shift;
+
     # Store submitted password if set in configuration
     # WARNING: it can be a security hole
     if ( $self->{storePassword} ) {
-        $self->{sessionInfo}->{'_password'} = $self->{'password'} ;
+        $self->{sessionInfo}->{'_password'} = $self->{'password'};
     }
     PE_OK;
 }
@@ -105,8 +106,9 @@ sub authenticate {
         }
     }
     else {
-        my $mesg = $self->ldap->bind( $self->{dn}, password => $self->{password} );
-        return PE_BADCREDENTIALS if ( $mesg->code != 0 ) ;
+        my $mesg =
+          $self->ldap->bind( $self->{dn}, password => $self->{password} );
+        return PE_BADCREDENTIALS if ( $mesg->code != 0 );
     }
     $self->{sessionInfo}->{authenticationLevel} = 2;
     PE_OK;

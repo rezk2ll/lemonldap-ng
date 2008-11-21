@@ -52,7 +52,7 @@ BEGIN {
               $https $port
               )
         ],
-        log    => [qw( lmSetApacheUser lmLog )],
+        log    => [qw(lmSetApacheUser)],
         traces => [qw( $whatToTrace $statusPipe $statusOut )],
         apache => [qw( MP OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR )],
     );
@@ -305,25 +305,16 @@ sub localInit($$) {
         $localStorageOptions = $args->{localStorageOptions};
         $localStorageOptions->{namespace}          ||= "lemonldap";
         $localStorageOptions->{default_expires_in} ||= 600;
-
-        eval "use $localStorage;";
-        die("Unable to load $localStorage: $@") if ($@);
-
-        # At each Apache (re)start, we've to clear the cache to avoid living
-        # with old datas
-        eval '$refLocalStorage = new '
-          . $localStorage
-          . '($localStorageOptions);';
-        if ( defined $refLocalStorage ) {
-            $refLocalStorage->clear();
-        }
-        else {
-            $class->lmLog( "Unable to clear local cache: $@", 'error' );
-        }
+        $class->purgeCache();
     }
     if ( $args->{status} ) {
         statusProcess();
     }
+    $class->childInit();
+}
+
+sub childInit {
+    my $class = shift;
 
     # We don't initialise local storage in the "init" subroutine because it can
     # be used at the starting of Apache and so with the "root" privileges. Local
@@ -348,6 +339,24 @@ sub localInit($$) {
         );
     }
     1;
+}
+
+sub purgeCache {
+    my $class = shift;
+    eval "use $localStorage;";
+    die("Unable to load $localStorage: $@") if ($@);
+
+    # At each Apache (re)start, we've to clear the cache to avoid living
+    # with old datas
+    eval '$refLocalStorage = new '
+      . $localStorage
+      . '($localStorageOptions);';
+    if ( defined $refLocalStorage ) {
+        $refLocalStorage->clear();
+    }
+    else {
+        $class->lmLog( "Unable to clear local cache: $@", 'error' );
+    }
 }
 
 # Global initialization process :

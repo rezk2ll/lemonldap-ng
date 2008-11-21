@@ -8,11 +8,11 @@ our $VERSION = 0.22;
 sub prereq {
     my $self = shift;
     unless ( $self->{dirName} ) {
-        print STDERR "No directory specified (dirName) !";
+        $Lemonldap::NG::Common::Conf::msg = '"dirName" is required in "File" configuration type !';
         return 0;
     }
     unless ( -d $self->{dirName} ) {
-        print STDERR "Directory \"$self->{dirName}\" does not exist !";
+        $Lemonldap::NG::Common::Conf::msg = "Directory \"$self->{dirName}\" does not exist !";
         return 0;
     }
     1;
@@ -40,7 +40,7 @@ sub lock {
         return 0 if( $self->isLocked );
     }
     unless( open F, ">".$self->{dirName} . "/lmConf.lock" ) {
-        print STDERR "Unable to lock (".$self->{dirName}."/lmConf.lock)\n";
+        $Lemonldap::NG::Common::Conf::msg = "Unable to lock (".$self->{dirName}."/lmConf.lock)\n";
         return 0;
     }
     print F $$;
@@ -63,7 +63,7 @@ sub store {
     my $mask = umask;
     umask ( oct ( '0027' ) );
     unless( open FILE, '>' . $self->{dirName} . "/lmConf-" . $fields->{cfgNum} ) {
-        print STDERR "Open file failed: $!";
+        $Lemonldap::NG::Common::Conf::msg = "Open file failed: $!";
         $self->unlock;
         return UNKNOWN_ERROR;
     }

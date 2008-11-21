@@ -18,7 +18,7 @@ our ( $username, $password ) = ( '', '' );
 sub prereq {
     my $self = shift;
     unless ( $self->{proxy} ) {
-        print STDERR 'No SOAP parameters found (proxy)';
+        $Lemonldap::NG::Common::Conf::msg = '"proxy" parameter is required in "SOAP" configuration type';
         return 0;
     }
     1;

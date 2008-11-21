@@ -7,6 +7,7 @@ use Lemonldap::NG::Common::Conf::Constants;
 
 our $VERSION = 0.51;
 our @ISA;
+our $msg;
 
 sub new {
     my $class = shift;
@@ -21,20 +22,24 @@ sub new {
     }
     unless ( $self->{mdone} ) {
         unless ( $self->{type} ) {
-            print STDERR "configStorage: type is not defined\n";
+            $msg = "configStorage: type is not defined\n";
             return 0;
         }
         $self->{type} = "Lemonldap::NG::Common::Conf::$self->{type}"
           unless $self->{type} =~ /^Lemonldap/;
         eval "require $self->{type}";
-        die($@) if ($@);
+        if ($@) {
+            $msg = "Unknown package $self->{type}";
+            return 0;
+        }
         return 0 unless $self->prereq;
         $self->{mdone}++;
     }
+    $msg = "$self->{type} loaded";
     if ( $self->{localStorage} and not defined( $self->{refLocalStorage} ) ) {
         eval "use $self->{localStorage};";
         if ($@) {
-            print STDERR "Unable to load $self->{localStorage}: $@" if ($@);
+            $msg = "Unable to load $self->{localStorage}: $@";
         }
         else {
             $self->{refLocalStorage} =
@@ -74,6 +79,7 @@ sub saveConf {
         }
     }
     $fields->{cfgNum} = $self->lastCfg + 1;
+    $msg = "Configuration $fields->{cfgNum} stored";
     return $self->store($fields);
 }
 
@@ -83,15 +89,20 @@ sub getConf {
         and ref( $self->{refLocalStorage} )
         and my $res = $self->{refLocalStorage}->get('conf') )
     {
+        $msg = "get configuration from cache without verification";
         return $res;
     }
     else {
         $args->{cfgNum} ||= $self->lastCfg;
         unless ( ref( $self->{refLocalStorage} ) ) {
+            $msg = "get remote configuration (localStorage unavailable)";
             return $self->getDBConf($args);
         }
         my $r = $self->{refLocalStorage}->get('conf');
-        return $r if ($r->{cfgNum} == $args->{cfgNum});
+        if ($r->{cfgNum} == $args->{cfgNum}) {
+            $msg = "configuration unchanged, get configuration from cache";
+            return $r;
+        }
         return $self->getDBConf($args);
     }
 }
@@ -123,7 +134,10 @@ sub getDBConf {
                 print STDERR
 "Lemonldap::NG : Warning: configuration is in old format, you've to migrate !\n";
                 eval 'require Storable;require MIME::Base64;';
-                die($@) if ($@);
+                if ($@) {
+                    $msg = "Error : $@";
+                    return 0;
+                }
                 $conf->{$k} = Storable::thaw( MIME::Base64::decode_base64($v) );
             }
             else {
@@ -141,6 +155,7 @@ sub getDBConf {
             $conf->{$k} = $v;
         }
     }
+    $msg = "Get configuration $conf->{cfgNum}";
     $self->setLocalConf($conf) if ( $self->{refLocalStorage} );
     return $conf;
 }

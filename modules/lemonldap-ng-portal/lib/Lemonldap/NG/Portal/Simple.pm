@@ -7,14 +7,15 @@ use Exporter 'import';
 
 use warnings;
 use MIME::Base64;
-use CGI;
+use Lemonldap::NG::Common::CGI;
 use CGI::Cookie;
 require POSIX;
 use Lemonldap::NG::Portal::_i18n;
+use Safe;
 
 our $VERSION = '0.86';
 
-our @ISA = qw(CGI Exporter);
+our @ISA = qw(Lemonldap::NG::Common::CGI Exporter);
 
 # Constants
 use constant {
@@ -71,12 +72,19 @@ our $self;    # Safe cannot share a variable declared with my
 sub new {
     my $class = shift;
     my $self  = $class->SUPER::new();
-    $self->getConf(@_) or $self->abort("Unable to get configuration");
-    $self->abort("You've to indicate a an Apache::Session storage module !")
+    $self->getConf(@_)
+      or $self->abort( "Configuration error",
+        "Unable to get configuration: $Lemonldap::NG::Common::Conf::msg" );
+    $self->abort( "Configuration error",
+        "You've to indicate a an Apache::Session storage module !" )
       unless ( $self->{globalStorage} );
     eval "require " . $self->{globalStorage};
-    $self->abort( "Module " . $self->{globalStorage} . " not found in \@INC" ) if ($@);
-    $self->abort("You've to indicate a domain for cookies") unless ( $self->{domain} );
+    $self->abort( "Configuration error",
+        "Module " . $self->{globalStorage} . " not found in \@INC" )
+      if ($@);
+    $self->abort( "Configuration error",
+        "You've to indicate a domain for cookies" )
+      unless ( $self->{domain} );
     $self->{domain} =~ s/^([^\.])/.$1/;
     $self->{securedCookie}  ||= 0;
     $self->{cookieName}     ||= "lemonldap";
@@ -92,7 +100,7 @@ sub new {
           . $self->{$_};
         $tmp =~ s/\s.*$//;
         eval "require $tmp";
-        $self->abort($@) if ($@);
+        $self->abort( "Configuration error", $@ ) if ($@);
         push @ISA, $tmp;
 
         # $self->{authentication} and $self->{userDB} can contains arguments
@@ -244,7 +252,7 @@ sub getSessionInfo {
 # TODO: update all caches
 sub updateSession {
     my $self = shift;
-    my ( $infos ) = @_;
+    my ($infos) = @_;
     my %cookies = fetch CGI::Cookie;
 
     # Test if Lemonldap::NG cookie is available
@@ -346,6 +354,7 @@ sub controlExistingSession {
 
     # Store IP address
     $self->{sessionInfo}->{ipAddr} = $ENV{REMOTE_ADDR};
+
     # Test if Lemonldap::NG cookie is available
     if ( $cookies{ $self->{cookieName} }
         and my $id = $cookies{ $self->{cookieName} }->value )
@@ -408,6 +417,7 @@ sub controlExistingSession {
 }
 
 sub existingSession {
+
     #my ( $self, $id, $datas ) = @_;
     PE_OK;
 }
@@ -449,12 +459,14 @@ sub setMacros {
 sub setGroups {
     local $self = shift;
     my $groups;
+
     #foreach ( keys %{ $self->{groups} } ) {
     while ( my ( $group, $expr ) = each %{ $self->{groups} } ) {
 	$expr =~ s/\$(\w+)/\$self->{sessionInfo}->{$1}/g;
+
 	# TODO : custom Functions
 	$safe->share( '$self', '&encode_base64' );
-	$groups .= "$group " if( $safe->reval($expr) );
+        $groups .= "$group " if ( $safe->reval($expr) );
     }
     if ( $self->{ldapGroupBase} ) {
         my $mesg = $self->{ldap}->search(

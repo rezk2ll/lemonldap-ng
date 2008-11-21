@@ -19,24 +19,25 @@ our ( $defaultCondition, $locationCondition, $locationRegexp, $cfgNum, $path ) =
 
 sub _safe {
     my $self = shift;
-    return $self->{_safe} if($self->{_safe});
+    return $self->{_safe} if ( $self->{_safe} );
     $self->{_safe} = new Safe;
-    my @t = $self->{customFunctions} ? split( /\s+/, $self->{customFunctions} ) : ();
-    foreach(@t) {
+    my @t =
+      $self->{customFunctions} ? split( /\s+/, $self->{customFunctions} ) : ();
+    foreach (@t) {
         my $sub = $_;
-        unless(/::/) {
+        unless (/::/) {
             $sub = "$self->{caller}::$_";
         }
         else {
             s/^.*:://;
         }
-        next if(__PACKAGE__->can($_));
+        next if ( __PACKAGE__->can($_) );
         eval "sub $_ {
             return $sub(\$path,\@_);
         }";
-        print STDERR "$@\n" if($@);
+        print STDERR "$@\n" if ($@);
     }
-    $self->{_safe}->share('&encode_base64', @t);
+    $self->{_safe}->share( '&encode_base64', @t );
     return $self->{_safe};
 }
 
@@ -386,7 +387,7 @@ sub _changePassword {
         return PE_WRONGMANAGERACCOUNT
           if ( $mesg->code == 50 || $mesg->code == 8 );
         return PE_LDAPERROR unless ( $mesg->code == 0 );
-        $self->_storePassword( $newpassword );
+        $self->_storePassword($newpassword);
         return PE_PASSWORD_OK;
     }
     else {
@@ -416,7 +417,8 @@ sub _changePassword {
 
         return PE_WRONGMANAGERACCOUNT
           if ( $mesg->code == 50 || $mesg->code == 8 );
-        $self->_storePassword( $newpassword ) && return PE_PASSWORD_OK if ( $mesg->code == 0 );
+        $self->_storePassword($newpassword) && return PE_PASSWORD_OK
+          if ( $mesg->code == 0 );
 
         if ( defined $resp ) {
             my $pp_error = $resp->pp_error;
@@ -444,11 +446,13 @@ sub _changePassword {
 # Store new password in session if storePassword parameter is set
 sub _storePassword {
     my $self = shift;
-    my ( $password ) = @_;
+    my ($password) = @_;
     if ( $self->{portalObject}->{storePassword} ) {
         $self->{portalObject}->{sessionInfo}->{_password} = $password;
+
         # Update session
-        &Lemonldap::NG::Portal::Simple::updateSession( $self->{portalObject}, { _password => $password } );
+        &Lemonldap::NG::Portal::Simple::updateSession( $self->{portalObject},
+            { _password => $password } );
     }
     return 1;
 }
@@ -489,6 +493,7 @@ sub _grant {
     $path ||= '/';
     $self->_compileRules() if ( $cfgNum != $self->{portalObject}->{cfgNum} );
     return -1 unless ( defined( $defaultCondition->{$vhost} ) );
+
     if ( defined $locationRegexp->{$vhost} ) {    # Not just a default rule
         for ( my $i = 0 ; $i < @{ $locationRegexp->{$vhost} } ; $i++ ) {
             if ( $path =~ $locationRegexp->{$vhost}->[$i] ) {
