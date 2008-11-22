@@ -52,7 +52,7 @@ install: build
 	dh_installdirs
 
 	# Add here commands to install the package into debian/lemonldap-ng.
-	#$(MAKE) test
+	$(MAKE) test
 	$(MAKE) install DESTDIR=$(CURDIR)/debian/tmp PREFIX=/usr
 	$(MAKE) example \
 		EXAMPLEROOT=debian/tmp/ \

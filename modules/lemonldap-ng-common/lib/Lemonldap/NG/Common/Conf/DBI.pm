@@ -14,7 +14,8 @@ BEGIN {
 sub prereq {
     my $self = shift;
     unless ( $self->{dbiChain} ) {
-        $Lemonldap::NG::Common::Conf::msg = '"dbiChain" is required in DBI configuration type';
+        $Lemonldap::NG::Common::Conf::msg =
+          '"dbiChain" is required in DBI configuration type';
         return 0;
     }
     print STDERR __PACKAGE__ . 'Warning: "dbiUser" parameter is not set'
@@ -25,8 +26,7 @@ sub prereq {
 
 sub available {
     my $self = shift;
-    my $sth =
-      $self->dbh->prepare(
+    my $sth  = $self->dbh->prepare(
         "SELECT cfgNum from " . $self->{dbiTable} . " order by cfgNum" );
     $sth->execute();
     my @conf;
@@ -38,8 +38,8 @@ sub available {
 
 sub lastCfg {
     my $self = shift;
-    my @row =
-      $self->dbh->selectrow_array( "SELECT max(cfgNum) from " . $self->{dbiTable} );
+    my @row  = $self->dbh->selectrow_array(
+        "SELECT max(cfgNum) from " . $self->{dbiTable} );
     return $row[0];
 }
 
@@ -55,7 +55,7 @@ sub dbh {
 
 sub lock {
     my $self = shift;
-    my $sth = $self->dbh->prepare_cached(q{SELECT GET_LOCK(?, 5)}, {}, 1);
+    my $sth = $self->dbh->prepare_cached( q{SELECT GET_LOCK(?, 5)}, {}, 1 );
     $sth->execute('lmconf');
     my @row = $sth->fetchrow_array;
     return $row[0] || 0;
@@ -63,7 +63,7 @@ sub lock {
 
 sub isLocked {
     my $self = shift;
-    my $sth = $self->dbh->prepare_cached(q{SELECT IS_FREE_LOCK(?)}, {}, 1);
+    my $sth = $self->dbh->prepare_cached( q{SELECT IS_FREE_LOCK(?)}, {}, 1 );
     $sth->execute('lmconf');
     my @row = $sth->fetchrow_array;
     return $row[0] ? 0 : 1;
@@ -71,7 +71,7 @@ sub isLocked {
 
 sub unlock {
     my $self = shift;
-    my $sth = $self->dbh->prepare_cached(q{SELECT RELEASE_LOCK(?)}, {}, 1);
+    my $sth = $self->dbh->prepare_cached( q{SELECT RELEASE_LOCK(?)}, {}, 1 );
     $sth->execute('lmconf');
     my @row = $sth->fetchrow_array;
     return $row[0] || 0;
@@ -90,18 +90,18 @@ sub store {
         $self->logError;
         return UNKNOWN_ERROR;
     }
-    unless( $self->unlock ) {
+    unless ( $self->unlock ) {
         $self->logError;
         return UNKNOWN_ERROR;
     }
+    eval { $self->dbh->do("COMMIT"); };
     return $fields->{cfgNum};
 }
 
 sub load {
     my ( $self, $cfgNum, $fields ) = @_;
     $fields = $fields ? join( ",", @$fields ) : '*';
-    my $row =
-      $self->dbh->selectrow_hashref(
+    my $row = $self->dbh->selectrow_hashref(
         "SELECT $fields from " . $self->{dbiTable} . " WHERE cfgNum=$cfgNum" );
     unless ($row) {
         $self->logError;
@@ -112,12 +112,14 @@ sub load {
 
 sub delete {
     my ( $self, $cfgNum ) = @_;
-    $self->dbh->do( "DELETE from " . $self->{dbiTable} . " WHERE cfgNum=$cfgNum" );
+    $self->dbh->do(
+        "DELETE from " . $self->{dbiTable} . " WHERE cfgNum=$cfgNum" );
 }
 
 sub logError {
     my $self = shift;
-    $Lemonldap::NG::Common::Conf::msg = "Database error: " . $self->dbh->errstr . "\n";
+    $Lemonldap::NG::Common::Conf::msg =
+      "Database error: " . $self->dbh->errstr . "\n";
 }
 
 1;
