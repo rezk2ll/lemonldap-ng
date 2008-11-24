@@ -47,6 +47,7 @@ use constant {
     PE_PP_EXP_WARNING                   => 33,
     PE_PASSWORD_MISMATCH                => 34,
     PE_PASSWORD_OK                      => 35,
+    PE_NOTIFICATION                     => 36,
 };
 
 # EXPORTER PARAMETERS
@@ -59,7 +60,7 @@ our @EXPORT =
   PE_PP_MUST_SUPPLY_OLD_PASSWORD PE_PP_INSUFFICIENT_PASSWORD_QUALITY
   PE_PP_PASSWORD_TOO_SHORT PE_PP_PASSWORD_TOO_YOUNG
   PE_PP_PASSWORD_IN_HISTORY PE_PP_GRACE PE_PP_EXP_WARNING
-  PE_PASSWORD_MISMATCH PE_PASSWORD_OK );
+  PE_PASSWORD_MISMATCH PE_PASSWORD_OK PE_NOTIFICATION );
 our %EXPORT_TAGS = ( 'all' => [ @EXPORT, 'import' ], );
 
 our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
@@ -109,6 +110,9 @@ sub new {
         $tmp =~ s/^\w+\s*//;
         my %h = split( /\s*[=;]\s*/, $tmp ) if ($tmp);
         %$self = ( %h, %$self );
+    }
+    if ( $self->{notification} ) {
+        require Lemonldap::NG::Common::Notification;
     }
     return $self;
 }
@@ -161,6 +165,7 @@ sub error_type {
                 9,     #PE_FIRSTACCESS
                 32,    #PE_PP_GRACE
                 33,    #PE_PP_EXP_WARNING
+                36,    #PE_NOTIFICATION
             )
         )
       );
@@ -251,7 +256,7 @@ sub getSessionInfo {
 # Update information stored in session
 # TODO: update all caches
 sub updateSession {
-    my $self = shift;
+    my $self    = shift;
     my ($infos) = @_;
     my %cookies = fetch CGI::Cookie;
 
@@ -310,6 +315,11 @@ sub updateStatus {
       if ($Lemonldap::NG::Handler::Simple::statusPipe);
 }
 
+sub notification {
+    my ($self) = @_;
+    return $self->{_notification};
+}
+
 ###############################################################
 # MAIN subroutine: call all steps until one returns something #
 #                  different than PE_OK                       #
@@ -325,15 +335,24 @@ sub process {
     my ($self) = @_;
     $self->{error} = PE_OK;
     $self->{error} = $self->_subProcess(
-        qw(controlUrlOrigin controlExistingSession authInit extractFormInfo
-          userDBInit getUser setAuthSessionInfo setSessionInfo setMacros
-          setGroups authenticate store buildCookie log autoRedirect)
+        qw(checkNotifBack controlUrlOrigin controlExistingSession authInit
+          extractFormInfo userDBInit getUser setAuthSessionInfo setSessionInfo
+          setMacros setGroups authenticate store buildCookie log
+          checkNotification autoRedirect)
     );
     $self->updateStatus;
     return ( ( $self->{error} > 0 ) ? 0 : 1 );
 }
 
-# 1. If the user was redirected here, we have to load 'url' parameter
+# 1. Check if a message has been notified
+sub checkNotifBack {
+    my $self = shift;
+
+    # TODO
+    PE_OK;
+}
+
+# 2. If the user was redirected here, we have to load 'url' parameter
 sub controlUrlOrigin {
     my $self = shift;
     if ( $self->param('url') ) {
@@ -342,7 +361,7 @@ sub controlUrlOrigin {
     PE_OK;
 }
 
-# 2. Control existing sessions
+# 3. Control existing sessions
 # what to do with existing sessions ?
 #       - delete and create a new session (default)
 #       - re-authentication (actual scheme)
@@ -422,23 +441,23 @@ sub existingSession {
     PE_OK;
 }
 
-# 3. authInit() : must be implemented in Auth* module
+# 4. authInit() : must be implemented in Auth* module
 
-# 4. extractFormInfo() : must be implemented in Auth* module:
+# 5. extractFormInfo() : must be implemented in Auth* module:
 #                         * set $self->{user}
 #                         * authenticate user if possible (or do it in 11.)
 
-# 5. userDBInit() : must be implemented in User* module
+# 6. userDBInit() : must be implemented in User* module
 
-# 6. getUser() : must be implemented in User* module
+# 7. getUser() : must be implemented in User* module
 
-# 7. setAuthSessionInfo() : must be implemented in Auth* module:
+# 8. setAuthSessionInfo() : must be implemented in Auth* module:
 #                            * store exported datas in $self->{sessionInfo}
 
-# 8. setSessionInfo() : must be implemented in User* module:
+# 9. setSessionInfo() : must be implemented in User* module:
 #                            * store exported datas in $self->{sessionInfo}
 
-# 9. setMacro() : macro mechanism:
+# 10. setMacro() : macro mechanism:
 #                  * store macro results in $self->{sessionInfo}
 
 sub setMacros {
@@ -453,7 +472,7 @@ sub setMacros {
     PE_OK;
 }
 
-# 10. setGroups() : groups mechanism:
+# 11. setGroups() : groups mechanism:
 #                    * store all groups name that the user match in
 #                      $self->{sessionInfo}->{groups}
 sub setGroups {
@@ -462,10 +481,10 @@ sub setGroups {
 
     #foreach ( keys %{ $self->{groups} } ) {
     while ( my ( $group, $expr ) = each %{ $self->{groups} } ) {
-	$expr =~ s/\$(\w+)/\$self->{sessionInfo}->{$1}/g;
+        $expr =~ s/\$(\w+)/\$self->{sessionInfo}->{$1}/g;
 
-	# TODO : custom Functions
-	$safe->share( '$self', '&encode_base64' );
+        # TODO : custom Functions
+        $safe->share( '$self', '&encode_base64' );
         $groups .= "$group " if ( $safe->reval($expr) );
     }
     if ( $self->{ldapGroupBase} ) {
@@ -488,10 +507,10 @@ sub setGroups {
     PE_OK;
 }
 
-# 11. authenticate() : must be implemented in Auth* module:
+# 12. authenticate() : must be implemented in Auth* module:
 #                       * authenticate the user if not done before
 
-# 12. Now, the user is known, authenticated and session variable are evaluated.
+# 13. Now, the user is known, authenticated and session variable are evaluated.
 #     It's time to store his parameters with Apache::Session::* module
 sub store {
     my ($self) = @_;
@@ -511,7 +530,7 @@ sub store {
     PE_OK;
 }
 
-# 13. If all is done, we build the Lemonldap::NG cookie
+# 14. If all is done, we build the Lemonldap::NG cookie
 sub buildCookie {
     my $self = shift;
     push @{ $self->{cookie} },
@@ -526,7 +545,7 @@ sub buildCookie {
     PE_OK;
 }
 
-# 14. By default, nothing is logged. Users actions are logged on applications.
+# 15. By default, nothing is logged. Users actions are logged on applications.
 #     It's easy to override this in the contructor :
 #       my $portal = new Lemonldap::NG::Portal ( {
 #                    ...
@@ -540,7 +559,29 @@ sub log {
     PE_OK;
 }
 
-# 15. If the user was redirected to the portal, we will now redirect him
+# 16. Check if messages has to be notified
+sub checkNotification {
+    my $self = shift;
+    if ( $self->{notification} ) {
+        my $tmp;
+        if ( ref( $self->{notification} ) ) {
+            $tmp = $self->{notification};
+        }
+        else {
+            $tmp = $self->{configStorage};
+            $tmp->{dbiTable} = 'notifications';
+        }
+        if ( $self->{_notification} =
+            Lemonldap::NG::Common::Notification->new($tmp)
+            ->getNotification( $self->{user} ) )
+        {
+            return PE_NOTIFICATION;
+        }
+    }
+    return PE_OK;
+}
+
+# 17. If the user was redirected to the portal, we will now redirect him
 #     to the requested URL
 sub autoRedirect {
     my $self = shift;

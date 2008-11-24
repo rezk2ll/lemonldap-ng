@@ -65,6 +65,7 @@ example/skins/pastel/jquery.js
 example/skins/pastel/lock.png
 example/skins/pastel/login.tpl
 example/skins/pastel/menu.tpl
+example/skins/pastel/notification.tpl
 example/skins/pastel/ok.png
 example/skins/pastel/stop.png
 example/skins/pastel/styles.css
