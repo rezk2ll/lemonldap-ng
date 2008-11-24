@@ -2,8 +2,10 @@ package Lemonldap::NG::Portal::AuthLDAP;
 
 use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::_LDAP;
+use Lemonldap::NG::Portal::_WebForm;
 
 our $VERSION = '0.1';
+our @ISA = qw(Lemonldap::NG::Portal::_WebForm);
 
 sub ldap {
     my $self = shift;
@@ -15,31 +17,6 @@ sub ldap {
         }
     }
     return $self->{ldap};
-}
-
-sub authInit {
-    PE_OK;
-}
-
-sub extractFormInfo {
-    my $self = shift;
-    return PE_FIRSTACCESS
-      unless ( $self->param('user') );
-    return PE_FORMEMPTY
-      unless ( length( $self->{'user'} = $self->param('user') ) > 0
-        && length( $self->{'password'} = $self->param('password') ) > 0 );
-    PE_OK;
-}
-
-sub setAuthSessionInfo {
-    my $self = shift;
-
-    # Store submitted password if set in configuration
-    # WARNING: it can be a security hole
-    if ( $self->{storePassword} ) {
-        $self->{sessionInfo}->{'_password'} = $self->{'password'};
-    }
-    PE_OK;
 }
 
 sub authenticate {
