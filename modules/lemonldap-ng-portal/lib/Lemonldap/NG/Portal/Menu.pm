@@ -197,7 +197,11 @@ sub _getXML {
     # Parse XML file
     my $parser = XML::LibXML->new();
     $parser->validation('1');
-    my $xml  = $parser->parse_file( $self->{apps}->{xmlfile} );
+    my $xml;
+    eval {
+        $xml = $parser->parse_file( $self->{apps}->{xmlfile} );
+    };
+    $self->{portalObject}->abort("Fichier XML incorrect", $@) if($@);
     my $root = $xml->documentElement;
 
     # Filter XML file with user's authorizations

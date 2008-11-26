@@ -69,6 +69,7 @@ __END__
 # * PE_REDIRECT            -2
 
 sub error_fr {
+    use utf8;
     [
         "Utilisateur authentifié",
         "Votre session a expiré, vous devez vous réauthentifier",
@@ -151,6 +152,7 @@ sub error_en {
 }
 
 sub error_ro {
+    use utf8;
     [
         "Utilizator autentificat",
         "Sesiunea dvs. a expirat, trebuie să vă reautentificaţi",

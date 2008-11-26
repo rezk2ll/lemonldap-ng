@@ -17,6 +17,8 @@ our $VERSION = '0.86';
 
 our @ISA = qw(Lemonldap::NG::Common::CGI Exporter);
 
+use utf8;
+binmode(STDOUT, ":utf8");
 # Constants
 use constant {
     PE_REDIRECT                         => -2,
