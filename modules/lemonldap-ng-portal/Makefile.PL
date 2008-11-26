@@ -11,6 +11,7 @@ WriteMakefile(
         'CGI::Session'           => 0,
         'HTML::Template'         => 0,
         'Lemonldap::NG::Manager' => 0.4,
+        'XML::LibXML'            => 0,
         },
     ($] >= 5.005 ?     ## Add these new keywords supported since 5.005
       (ABSTRACT_FROM  => 'lib/Lemonldap/NG/Portal.pm', # retrieve abstract from module

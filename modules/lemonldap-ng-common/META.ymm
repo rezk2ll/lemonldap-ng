@@ -1,0 +1,15 @@
+--- #YAML:1.0
+name:                Lemonldap-NG-Common
+version:             0.1
+abstract:            Common files for Lemonldap::NG infrastructure
+license:             ~
+author:              
+    - guimard <guimard@>
+generated_by:        ExtUtils::MakeMaker version 6.42
+distribution_type:   module
+requires:     
+    DBI:                           0
+    Storable:                      0
+meta-spec:
+    url:     http://module-build.sourceforge.net/META-spec-v1.3.html
+    version: 1.3

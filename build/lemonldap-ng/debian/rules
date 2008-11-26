@@ -83,13 +83,17 @@ install: build
 			$(DEB_TMP_LM_ROOT)manager/*.pl \
 			$(DEB_TMP_LM_ROOT)portal/*.pl \
 			$(DEB_TMP_LM_ROOT)liberty-alliance-sp-portal/index-Debian.pl
+
+    # apply.conf is in /etc/lemonldap-ng/
 	perl -i -pe 's#(applyConfFile\s+=>\s+.*?)/\S*(apply\.conf)#$$1/etc/lemonldap-ng/$$2#' \
 			$(DEB_TMP_LM_ROOT)manager/*.pl \
-			$(DEB_TMP_LM_ROOT)handler/MyHandler-Debian.pm
+
+    # SInce Lenny, jquery.js is provided by libjs-jquery
 	rm -f $(DEB_TMP_LM_ROOT)portal/skins/pastel/jquery.js $(DEB_TMP_LM_ROOT)manager/jquery.js
 	perl -i -pe 's#(["'"'"'])[\w-\./]*jquery.js#$$1/javascript/jquery/jquery.js#' \
 			$(DEB_TMP_LM_ROOT)manager/sessions.pl \
 			$(DEB_TMP_LM_ROOT)portal/skins/pastel/header.tpl
+
 # Build architecture-independent files here.
 binary-indep: build install
 	dh_testdir
@@ -102,6 +106,11 @@ binary-indep: build install
 	find debian/tmp/var/lib/lemonldap-ng -type f -name *.pl -exec chmod +x {} \;
 	dh_installexamples
 	dh_install
+	cd debian/lemonldap-ng/usr/share/doc/lemonldap-ng/examples && \
+		ln -s ../../liblemonldap-ng-handler-perl/examples handler && \
+		ln -s ../../liblemonldap-ng-manager-perl/examples manager && \
+		ln -s ../../liblemonldap-ng-portal-perl/examples portal && \
+		ln -s ../../liblemonldap-ng-conf-perl/examples/ conf
 	chmod +x debian/liblemonldap-ng-portal-perl/usr/share/lemonldap-ng/bin/purgeCentralCache
 #	dh_installmenu
 	dh_installdebconf	

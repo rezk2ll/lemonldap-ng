@@ -9,6 +9,7 @@ lib/Lemonldap/NG/Common/Conf/File.pm
 lib/Lemonldap/NG/Common/Conf/SOAP.pm
 Makefile.PL
 MANIFEST
+META.yml			Module meta-data (added by MakeMaker)
 README
 scripts/lmConfig_File2MySQL
 t/01-Manager-Conf.t
