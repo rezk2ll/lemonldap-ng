@@ -93,6 +93,7 @@ sub new {
     $self->{authentication} ||= 'LDAP';
     $self->{userDB}         ||= 'LDAP';
     $self->{authentication} =~ s/^ldap/LDAP/;
+    $self->{mustRedirect}   = ($ENV{REQUEST_METHOD} eq 'POST' or $self->param('logout'))?1:0;
 
     # Authentication module is required and has to be in @ISA
     foreach (qw(authentication userDB)) {
@@ -359,15 +360,18 @@ sub controlUrlOrigin {
     if ( $self->param('url') ) {
         $self->{urldc} = decode_base64( $self->param('url') );
     }
+    elsif($self->{mustRedirect}) {
+        $self->{urldc} = $self->{portal};
+    }
     PE_OK;
 }
 
 # 3. Control existing sessions
 # what to do with existing sessions ?
-#       - delete and create a new session (default)
+#       - delete and create a new session
 #       - re-authentication (actual scheme)
 #       - nothing: user is authenticated and process
-#                  returns true
+#                  returns true (default)
 sub controlExistingSession {
     my $self    = shift;
     my %cookies = fetch CGI::Cookie;
@@ -439,7 +443,7 @@ sub controlExistingSession {
 sub existingSession {
 
     #my ( $self, $id, $datas ) = @_;
-    PE_OK;
+    PE_DONE;
 }
 
 # 4. authInit() : must be implemented in Auth* module
