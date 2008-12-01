@@ -26,6 +26,7 @@ SKIP: {
 "Problem with Lemonldap::NG::Portal::Simple, Lemonldap::NG::Portal::AuthCAS will not be tested",
       1
       if ($@);
+    $ENV{"REQUEST_METHOD"} = 'GET';
     ok(
         $p = Lemonldap::NG::Portal::Simple->new(
             {
