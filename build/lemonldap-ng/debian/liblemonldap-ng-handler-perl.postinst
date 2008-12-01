@@ -5,10 +5,13 @@ set -e
 
 . /usr/share/debconf/confmodule
 
+EXAMPLEHANDLERFILE=/usr/share/doc/liblemonldap-ng-handler-perl/examples/MyHandleri-Debian.pm
+HANDLERFILE=/var/lib/lemonldap-ng/handler/MyHandler.pm
 SESSIONSDIR=/var/lib/lemonldap-ng/sessions
 
 if [ "$1" == "configure" ]
 then
+    cp $EXAMPLEHANDLERFILE $HANDLERFILE
     chmod 770 $SESSIONSDIR
     chmod 770 $SESSIONSDIR/lock
     chown -R www-data:www-data $SESSIONSDIR

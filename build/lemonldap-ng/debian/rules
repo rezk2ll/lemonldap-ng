@@ -78,10 +78,10 @@ install: build
 			$(DEB_TMP_LM_ROOT)manager/scripts/lmConfigEditor \
 			$(DEB_TMP_LM_ROOT)portal/scripts/purgeCentralCache
 
-	perl -000 -i -pe 's/(configStorage\s*=>\s*){[^}]+}/$$1\$$Lemonldap::NG::Conf::configStorage/; s#^use#\nrequire "/usr/share/lemonldap-ng/configStorage.pm";\nuse#m;' \
-			$(DEB_TMP_LM_CONF_ROOT)MyHandler.pm \
-			$(DEB_TMP_LM_ROOT)manager/*.pl \
-			$(DEB_TMP_LM_ROOT)portal/*.pl \
+	perl -000 -i -pe 's/(configStorage\s*=>\s*){[^}]+}/$$1\$$Lemonldap::NG::Conf::configStorage/s; s#^use#\nrequire "/usr/share/lemonldap-ng/configStorage.pm";\nuse#m;' \
+			$(DEB_TMP_LM_ROOT)handler/MyHandler-Debian.pm \
+			$(DEB_TMP_LM_ROOT)manager/*Debian.pl \
+			$(DEB_TMP_LM_ROOT)portal/*Debian.pl \
 			$(DEB_TMP_LM_ROOT)liberty-alliance-sp-portal/index-Debian.pl
 
     # apply.conf is in /etc/lemonldap-ng/

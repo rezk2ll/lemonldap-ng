@@ -1,3 +1,2 @@
 debian/tmp/usr/share/perl5/Lemonldap/NG/Handler*
 debian/tmp/usr/share/man/man3/Lemonldap::NG::Handler*
-debian/tmp/var/lib/lemonldap-ng/handler/MyHandler.pm
