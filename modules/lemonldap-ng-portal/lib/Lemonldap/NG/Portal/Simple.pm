@@ -404,17 +404,18 @@ sub controlExistingSession {
             tied(%h)->delete;
 
             # Delete cookie
-            $self->{id} = "";
-            $self->buildCookie();
-            if ( $self->{urldc} ) {
+            push @{ $self->{cookie} },
+              $self->cookie(
+                -name   => $self->{cookieName},
+                -value  => 0,
+                -domain => $self->{domain},
+                -path   => "/",
+                -secure => 0,
+                -expires=> '-1d',
+                @_,
+              );
                 $self->{error} = PE_REDIRECT;
-                if ( $self->{autoRedirect} ) {
-                    &{ $self->{autoRedirect} }($self);
-                }
-                else {
-                    $self->autoRedirect();
-                }
-            }
+            $self->_subProcess(qw(log autoRedirect));
             return PE_FIRSTACCESS;
         }
         $self->{id} = $id;
