@@ -3,9 +3,10 @@ package Lemonldap::NG::Portal::AuthLDAP;
 use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::_LDAP;
 use Lemonldap::NG::Portal::_WebForm;
+use Lemonldap::NG::Portal::UserDBLDAP;
 
 our $VERSION = '0.1';
-our @ISA = qw(Lemonldap::NG::Portal::_WebForm);
+use base qw(Lemonldap::NG::Portal::_WebForm);
 
 sub ldap {
     my $self = shift;
@@ -19,10 +20,19 @@ sub ldap {
     return $self->{ldap};
 }
 
+*_formateFilter = *Lemonldap::NG::Portal::UserDBLDAP::formateFilter;
+*_search = *Lemonldap::NG::Portal::UserDBLDAP::search;
+
 sub authenticate {
     my $self = shift;
     unless ( $self->ldap ) {
         return PE_LDAPCONNECTFAILED;
+    }
+
+    # Set the dn unless done before
+    unless($self->{dn}) {
+        my $tmp = $self->_subProcess(qw(_formateFilter _search));
+        return $tmp if($tmp);
     }
 
     # Check if we use Ppolicy control
