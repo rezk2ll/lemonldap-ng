@@ -16,9 +16,11 @@ our @ISA = qw(Lemonldap::NG::Handler::CGI);
 sub new {
     my ( $class, $args ) = @_;
     my $self = $class->SUPER::new($args)
-      or $class->abort( 'Unable to start ' . __PACKAGE__, 'See Apache logs for more' );
+      or $class->abort( 'Unable to start ' . __PACKAGE__,
+        'See Apache logs for more' );
     foreach (qw(jqueryUri personnalCss imagePath)) {
-        $self->{$_} = $args->{$_}; # or print STDERR "Warning, $_ is not set, falling to default value\n";
+        $self->{$_} = $args->{ $_
+          }; # or print STDERR "Warning, $_ is not set, falling to default value\n";
     }
     eval "use $globalStorage";
     $class->abort( "Unable to load $globalStorage", $@ ) if ($@);
@@ -72,7 +74,8 @@ sub process {
             foreach my $ip ( sort keys %{ $byUid->{$uid} } ) {
                 print "<li class=\"open\" id=\"di$ip\"><span>$ip</span><ul>";
                 foreach my $session ( @{ $byUid->{$uid}->{$ip} } ) {
-                    print "<li id=\"di$session->{id}\"><span onclick=\"display('$session->{id}');\">"
+                    print
+"<li id=\"di$session->{id}\"><span onclick=\"display('$session->{id}');\">"
                       . localtime( $session->{_utime} )
                       . "</span></li>";
                 }
@@ -227,10 +230,11 @@ sub process {
                 undef;
             }
         );
-        foreach my $user (sort keys %$byUser) {
+        foreach my $user ( sort keys %$byUser ) {
             print "<li id=\"ip$user\"><span>$user</span><ul>";
             foreach my $session ( @{ $byUser->{$user} } ) {
-                print "<li id=\"ip$session->{id}\"><span onclick=\"display('$session->{id}');\">"
+                print
+"<li id=\"ip$session->{id}\"><span onclick=\"display('$session->{id}');\">"
                   . localtime( $session->{_utime} )
                   . "</span></li>";
             }
@@ -257,7 +261,8 @@ sub process {
         foreach my $ip ( sort keys %$byIp ) {
             print "<li class=\"open\" id=\"uid$ip\"><span>$ip</span><ul>";
             foreach my $session ( @{ $byIp->{$ip} } ) {
-                print "<li id=\"uid$session->{id}\"><span onclick=\"display('$session->{id}');\">"
+                print
+"<li id=\"uid$session->{id}\"><span onclick=\"display('$session->{id}');\">"
                   . localtime( $session->{_utime} )
                   . "</span></li>";
             }
@@ -294,7 +299,7 @@ sub process {
 
     # Display by IP classes
     elsif ( $self->param('ipclasses') ) {
-        my $partial = $self->param('p') ? $self->param('p').'.' : '';
+        my $partial = $self->param('p') ? $self->param('p') . '.' : '';
         my $repartial = quotemeta($partial);
         my ( $byIp, $count );
         $globalStorage->get_key_from_all_sessions(
@@ -309,19 +314,28 @@ sub process {
         );
 
         # Ajax request to list ip subclasses
-        if ( $partial ) {
+        if ($partial) {
             print $self->header( -type => 'text/html; charset=utf8' );
         }
 
         # Display by IP subclass
         else {
             $self->start("Active sessions ($count)");
-            $self->window("Sessions par r&eacute;seaux <i><small>($count)</small></i>");
+            $self->window(
+                "Sessions par r&eacute;seaux <i><small>($count)</small></i>");
         }
-        foreach my $ip ( sort {$a<=>$b} keys %$byIp ) {
-            $self->ajaxNode( "$partial$ip", "$partial$ip <i><small>($byIp->{$ip})</small></i>", ($partial!~/^\d+\.\d+\.\d+/?"ipclasses=1&p=$partial$ip":"uidByIp=$partial$ip"));
+        foreach my $ip ( sort { $a <=> $b } keys %$byIp ) {
+            $self->ajaxNode(
+                "$partial$ip",
+                "$partial$ip <i><small>($byIp->{$ip})</small></i>",
+                (
+                    $partial !~ /^\d+\.\d+\.\d+/
+                    ? "ipclasses=1&p=$partial$ip"
+                    : "uidByIp=$partial$ip"
+                )
+            );
         }
-        $self->end() unless($partial);
+        $self->end() unless ($partial);
     }
 
     # Default display
@@ -427,7 +441,8 @@ sub window {
     my $root = shift;
     print '<table border="0" width="100%"><tr style="text-align:center;">
       <td><a href="' . $ENV{SCRIPT_NAME} . '">Sessions actives</a></td>
-      <td><a href="' . $ENV{SCRIPT_NAME} . '?ipclasses=1">R&eacute;seaux</a></td>
+      <td><a href="'
+      . $ENV{SCRIPT_NAME} . '?ipclasses=1">R&eacute;seaux</a></td>
       <td><a href="'
       . $ENV{SCRIPT_NAME} . '?doubleIp=1">Utilisateurs multi-IP</a></td>
       <td><form action="'
@@ -1103,7 +1118,7 @@ sessions
 
 =head1 SYNOPSIS
 
-#!/usr/bin/perl
+  #!/usr/bin/perl
 
   use strict;
   use Lemonldap::NG::Manager::Sessions;

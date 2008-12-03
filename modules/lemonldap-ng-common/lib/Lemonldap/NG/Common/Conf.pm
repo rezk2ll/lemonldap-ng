@@ -4,6 +4,7 @@ use strict;
 no strict 'refs';
 use Data::Dumper;
 use Lemonldap::NG::Common::Conf::Constants;
+use Regexp::Assemble;
 
 our $VERSION = 0.51;
 our @ISA;
@@ -156,6 +157,12 @@ sub getDBConf {
         }
     }
     $msg = "Get configuration $conf->{cfgNum}";
+    my $re = Regexp::Assemble->new();
+    foreach(keys %{$conf->{locationRules}}) {
+        quotemeta($_);
+        $re->add($_);
+    }
+    $conf->{reVHosts} = $re->as_string;
     $self->setLocalConf($conf) if ( $self->{refLocalStorage} );
     return $conf;
 }

@@ -1,3 +1,10 @@
+## @file
+# Base package for all Lemonldap::NG CGI
+#
+# @copy 2005, 2006, 2007, 2008, Xavier Guimard &lt;x.guimard@free.fr&gt;
+
+## @class
+# Base class for all Lemonldap::NG portal CGI
 package Lemonldap::NG::Common::CGI;
 
 use strict;

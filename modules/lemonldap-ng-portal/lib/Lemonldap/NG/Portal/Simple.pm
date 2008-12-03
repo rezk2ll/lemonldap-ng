@@ -69,7 +69,7 @@ our @EXPORT =
   PE_PP_MUST_SUPPLY_OLD_PASSWORD PE_PP_INSUFFICIENT_PASSWORD_QUALITY
   PE_PP_PASSWORD_TOO_SHORT PE_PP_PASSWORD_TOO_YOUNG
   PE_PP_PASSWORD_IN_HISTORY PE_PP_GRACE PE_PP_EXP_WARNING
-  PE_PASSWORD_MISMATCH PE_PASSWORD_OK PE_NOTIFICATION );
+  PE_PASSWORD_MISMATCH PE_PASSWORD_OK PE_NOTIFICATION PE_BADURL );
 our %EXPORT_TAGS = ( 'all' => [ @EXPORT, 'import' ], );
 
 our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
@@ -186,6 +186,7 @@ sub error_type {
                 32,    #PE_PP_GRACE
                 33,    #PE_PP_EXP_WARNING
                 36,    #PE_NOTIFICATION
+                37,    #PE_BADURL
             )
         )
       );
@@ -385,8 +386,9 @@ sub controlUrlOrigin {
     my $self = shift;
     if ( $self->param('url') ) {
         $self->{urldc} = decode_base64( $self->param('url') );
-        # REJECT '<' in URL or encoded '%'
-        return PE_BADURL if($self->{urldc} =~ /(?:<|\%(?:25|3C))/);
+
+        # REJECT '<' in URL or encoded '%' and non protected hosts
+        return PE_BADURL if($self->{urldc} =~ /(?:<|\%(?:25|3C))/ or $self->{urldc} !~ m#https?://$self->{reVHosts}#);
     }
     elsif($self->{mustRedirect}) {
         $self->{urldc} = $self->{portal};

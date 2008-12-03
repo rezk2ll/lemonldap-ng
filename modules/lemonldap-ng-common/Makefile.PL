@@ -5,8 +5,9 @@ WriteMakefile(
     NAME              => 'Lemonldap::NG::Common',
     VERSION_FROM      => 'lib/Lemonldap/NG/Common.pm', # finds $VERSION
     PREREQ_PM         => {
-        'DBI'            => 0,
-        'Storable'       => 0,
+        'DBI'              => 0,
+        'Storable'         => 0,
+        'Regexp::Assemble' => 0,
         }, # e.g., Module::Name => 1.1
     EXE_FILES         => [
         'scripts/lmConfig_File2MySQL',

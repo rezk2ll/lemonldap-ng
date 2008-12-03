@@ -10,6 +10,7 @@ distribution_type:   module
 requires:     
     DBI:                           0
     Storable:                      0
+    Regexp::Assemble:              0
 meta-spec:
     url:     http://module-build.sourceforge.net/META-spec-v1.3.html
     version: 1.3
