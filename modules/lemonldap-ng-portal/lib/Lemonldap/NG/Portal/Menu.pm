@@ -2,15 +2,12 @@ package Lemonldap::NG::Portal::Menu;
 
 use strict;
 use warnings;
-use Exporter 'import';
 use Lemonldap::NG::Portal::SharedConf;
 use Lemonldap::NG::Portal::_LDAP;
 use XML::LibXML;
 use Safe;
 
 our $VERSION = '0.01';
-
-our @ISA = qw(Exporter);
 
 ### ACCESS CONTROL DISPLAY SYSTEM
 
@@ -201,7 +198,7 @@ sub _getXML {
     eval {
         $xml = $parser->parse_file( $self->{apps}->{xmlfile} );
     };
-    $self->{portalObject}->abort("Fichier XML incorrect", $@) if($@);
+    $self->{portalObject}->abort("Bad XML file", $@) if($@);
     my $root = $xml->documentElement;
 
     # Filter XML file with user's authorizations

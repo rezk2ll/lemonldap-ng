@@ -456,7 +456,7 @@ sub controlExistingSession {
                 -expires=> '-1d',
                 @_,
               );
-                $self->{error} = PE_REDIRECT;
+            $self->{error} = PE_REDIRECT;
             $self->_subProcess(qw(log autoRedirect));
             return PE_FIRSTACCESS;
         }
