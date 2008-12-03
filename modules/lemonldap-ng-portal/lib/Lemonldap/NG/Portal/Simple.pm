@@ -1,3 +1,10 @@
+## @file
+# Base package for Lemonldap::NG portal
+#
+# @copy 2005, 2006, 2007, 2008, Xavier Guimard &lt;x.guimard@free.fr&gt;
+
+## @class
+# Base class for Lemonldap::NG portal
 package Lemonldap::NG::Portal::Simple;
 
 use strict;
@@ -15,7 +22,8 @@ use Safe;
 
 our $VERSION = '0.86';
 
-our @ISA = qw(Lemonldap::NG::Common::CGI Exporter);
+use base qw(Lemonldap::NG::Common::CGI Exporter);
+our @ISA;
 
 # Constants
 use constant {
@@ -48,6 +56,7 @@ use constant {
     PE_PASSWORD_MISMATCH                => 34,
     PE_PASSWORD_OK                      => 35,
     PE_NOTIFICATION                     => 36,
+    PE_BADURL                           => 37,
 };
 
 # EXPORTER PARAMETERS
@@ -69,7 +78,10 @@ our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
 our $safe = new Safe;
 our $self;    # Safe cannot share a variable declared with my
 
-# CONSTRUCTOR
+## @cmethod new($args)
+# Class constructor.
+# @param args hash reference
+# @return Lemonldap::NG::Portal object
 sub new {
     binmode(STDOUT, ":utf8");
     my $class = shift;
@@ -119,7 +131,9 @@ sub new {
     return $self;
 }
 
-# getConf basic, copy all parameters in $self. Overloaded in SharedConf.pm
+## @method protected getConf($args)
+# Copy all parameters in caller object.
+# @param args hash-ref
 sub getConf {
     my ($self) = shift;
     my %args;
@@ -133,13 +147,17 @@ sub getConf {
     1;
 }
 
-# error calls i18n.pm to dysplay error in the wanted language
+## @method protected string error($lang)
+# error calls Portal/_i18n.pm to display error in the wanted language
+# @param lang optional (browser language is used instead)
+# @return error message
 sub error {
     my $self = shift;
     return &Lemonldap::NG::Portal::_i18n::error( $self->{error},
         shift || $ENV{HTTP_ACCEPT_LANGUAGE} );
 }
 
+## @method int error_type()
 # error_type tells if error is positive, warning or negative
 sub error_type {
     my $self = shift;
@@ -176,7 +194,11 @@ sub error_type {
     return "negative";
 }
 
-# Used as an HTML::Template filter to tranlate strings in the wanted language
+## @method translate_template($$text_ref, $lang)
+# translate_template is used as an HTML::Template filter to tranlate strings in
+# the wanted language
+# @param text_ref reference to the string to translate
+# @param lang optionnal language wanted. Falls to browser language instead.
 sub translate_template {
     my $self     = shift;
     my $text_ref = shift;
@@ -346,7 +368,9 @@ sub process {
     return ( ( $self->{error} > 0 ) ? 0 : 1 );
 }
 
-# 1. Check if a message has been notified
+## @method error_code checkNotifBack()
+# 1) Checks if a message has to be notified to the connected user.
+# @return error code
 sub checkNotifBack {
     my $self = shift;
 
@@ -354,11 +378,15 @@ sub checkNotifBack {
     PE_OK;
 }
 
-# 2. If the user was redirected here, we have to load 'url' parameter
+## @method error_code controlUrlOrigin()
+# 2) If the user was redirected here, loads 'url' parameter.
+# @return error_code
 sub controlUrlOrigin {
     my $self = shift;
     if ( $self->param('url') ) {
         $self->{urldc} = decode_base64( $self->param('url') );
+        # REJECT '<' in URL or encoded '%'
+        return PE_BADURL if($self->{urldc} =~ /(?:<|\%(?:25|3C))/);
     }
     elsif($self->{mustRedirect}) {
         $self->{urldc} = $self->{portal};
@@ -366,12 +394,14 @@ sub controlUrlOrigin {
     PE_OK;
 }
 
-# 3. Control existing sessions
+## @method error_code controlExistingSession()
+# 3) Control existing sessions.
+# To overload to control what to do with existing sessions.
 # what to do with existing sessions ?
-#       - delete and create a new session
-#       - re-authentication (actual scheme)
-#       - nothing: user is authenticated and process
-#                  returns true (default)
+#       - nothing: user is authenticated and process returns true (default)
+#       - delete and create a new session (not implemented)
+#       - re-authentication (set existingSession => sub{PE_OK})
+# @return error_code
 sub controlExistingSession {
     my $self    = shift;
     my %cookies = fetch CGI::Cookie;
@@ -463,9 +493,10 @@ sub existingSession {
 # 9. setSessionInfo() : must be implemented in User* module:
 #                            * store exported datas in $self->{sessionInfo}
 
-# 10. setMacro() : macro mechanism:
+## @method error_code setMacro()
+# 10) macro mechanism:
 #                  * store macro results in $self->{sessionInfo}
-
+# @return error_code
 sub setMacros {
     local $self = shift;
     $self->abort( __PACKAGE__ . ": Unable to get configuration" )
@@ -478,7 +509,8 @@ sub setMacros {
     PE_OK;
 }
 
-# 11. setGroups() : groups mechanism:
+## @method error_code setGroups()
+# 11) groups mechanism:
 #                    * store all groups name that the user match in
 #                      $self->{sessionInfo}->{groups}
 sub setGroups {
@@ -516,8 +548,10 @@ sub setGroups {
 # 12. authenticate() : must be implemented in Auth* module:
 #                       * authenticate the user if not done before
 
+## @method error_code store()
 # 13. Now, the user is known, authenticated and session variable are evaluated.
 #     It's time to store his parameters with Apache::Session::* module
+# @return error_code
 sub store {
     my ($self) = @_;
     my %h;
@@ -536,7 +570,9 @@ sub store {
     PE_OK;
 }
 
+## @method error_code buildCookie()
 # 14. If all is done, we build the Lemonldap::NG cookie
+# @return error_code
 sub buildCookie {
     my $self = shift;
     push @{ $self->{cookie} },
@@ -551,6 +587,7 @@ sub buildCookie {
     PE_OK;
 }
 
+## @method error_code log()
 # 15. By default, nothing is logged. Users actions are logged on applications.
 #     It's easy to override this in the contructor :
 #       my $portal = new Lemonldap::NG::Portal ( {
@@ -561,11 +598,14 @@ sub buildCookie {
 #                               },
 #                   ...
 #                 } );
+# @return error_code
 sub log {
     PE_OK;
 }
 
+## @method error_code checkNotification()
 # 16. Check if messages has to be notified
+# @return error_code
 sub checkNotification {
     my $self = shift;
     if ( $self->{notification} ) {
@@ -587,8 +627,10 @@ sub checkNotification {
     return PE_OK;
 }
 
-# 17. If the user was redirected to the portal, we will now redirect him
+## @method error_code autoRedirect()
+# 17) If the user was redirected to the portal, we will now redirect him
 #     to the requested URL
+# @return error_code
 sub autoRedirect {
     my $self = shift;
     if ( my $u = $self->{urldc} ) {

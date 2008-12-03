@@ -63,6 +63,8 @@ __END__
 # * PE_PP_EXP_WARNING                    33
 # * PE_PASSWORD_MISMATCH                 34
 # * PE_PASSWORD_OK                       35
+# * PE_NOTIFICATION                      36
+# * PE_BADURL                            37
 
 # Not used in errors:
 # * PE_DONE                -1
@@ -107,6 +109,8 @@ sub error_fr {
         " secondes avant expiration de votre mot de passe, pensez &agrave; le changer !",
         "Les mots de passe ne correspondent pas",
         "Le mot de passe a &eacute;t&eacute; chang&eacute;",
+        "Vous avez un nouveau message",
+        'Mauvaise URL',
     ];
 }
 
@@ -148,6 +152,8 @@ sub error_en {
         ' seconds before password expiration, change it!',
         'Passwords mismatch',
         'Password successfully changed',
+        'You have a new message',
+        'Bad URL',
     ];
 }
 
@@ -190,5 +196,7 @@ sub error_ro {
         ' seconds before password expiration, change it!',
         'Passwords mismatch',
         'Password successfully changed',
+        'You have a new message',
+        'Bad URL',
     ];
 }

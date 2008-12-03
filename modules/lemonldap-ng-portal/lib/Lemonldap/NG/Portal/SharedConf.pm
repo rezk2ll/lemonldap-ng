@@ -1,3 +1,10 @@
+## @file
+# Main portal for Lemonldap::NG portal
+#
+# @copy 2005, 2006, 2007, 2008, Xavier Guimard &lt;x.guimard@free.fr&gt;
+
+## @class
+# Main portal for Lemonldap::NG portal
 package Lemonldap::NG::Portal::SharedConf;
 
 use strict;
@@ -9,7 +16,7 @@ use Lemonldap::NG::Common::Conf;
 *EXPORT      = *Lemonldap::NG::Portal::Simple::EXPORT;
 
 our $VERSION = "0.42";
-our @ISA     = qw(Lemonldap::NG::Portal::Simple);
+use base qw(Lemonldap::NG::Portal::Simple);
 
 ##################
 # OVERLOADED SUB #
