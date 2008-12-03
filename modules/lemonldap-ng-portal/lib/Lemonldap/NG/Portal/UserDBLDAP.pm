@@ -50,7 +50,7 @@ sub search {
         print STDERR $mesg->error . "\n";
         return PE_LDAPERROR;
     }
-    return PE_USERNOTFOUND unless ( $self->{entry} = $mesg->entry(0) );
+    return PE_BADCREDENTIALS unless ( $self->{entry} = $mesg->entry(0) );
     $self->{dn} = $self->{entry}->dn();
     PE_OK;
 }
