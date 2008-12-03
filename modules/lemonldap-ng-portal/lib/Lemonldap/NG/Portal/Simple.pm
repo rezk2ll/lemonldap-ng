@@ -345,6 +345,13 @@ sub notification {
     return $self->{_notification};
 }
 
+##@method string get_url()
+# check url against XSS attacks
+sub get_url {
+    my ($self) = @_;
+    return if ($self->param('url') =~ /(?:<|\%(?:25|3C))/);
+    return $self->param('url');
+}
 ###############################################################
 # MAIN subroutine: call all steps until one returns something #
 #                  different than PE_OK                       #
@@ -388,7 +395,10 @@ sub controlUrlOrigin {
         $self->{urldc} = decode_base64( $self->param('url') );
 
         # REJECT '<' in URL or encoded '%' and non protected hosts
-        return PE_BADURL if($self->{urldc} =~ /(?:<|\%(?:25|3C))/ or $self->{urldc} !~ m#https?://$self->{reVHosts}#);
+        if($self->{urldc} =~ /(?:<|\%(?:25|3C))/ or $self->{urldc} !~ m#https?://$self->{reVHosts}#) {
+            delete $self->{urldc};
+            return PE_BADURL;		
+	}
     }
     elsif($self->{mustRedirect}) {
         $self->{urldc} = $self->{portal};

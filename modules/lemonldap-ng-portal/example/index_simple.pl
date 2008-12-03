@@ -24,7 +24,7 @@ else {
     print 'Error: ' . $portal->error . '<br />';
     print '<form method="post" action="' . $ENV{SCRIPTNAME} . '">';
     print '<input type="hidden" name="url" value="'
-      . $portal->param('url') . '" />';
+      . $portal->get_url . '" />';
     print 'Login : <input name="user" /><br />';
     print
 'Password : <input name="password" type="password" autocomplete="off"><br>';

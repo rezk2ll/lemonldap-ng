@@ -77,7 +77,7 @@ else {
 
     $template->param( AUTH_ERROR      => $portal->error );
     $template->param( AUTH_ERROR_TYPE => $portal->error_type );
-    $template->param( AUTH_URL        => $portal->param('url') );
+    $template->param( AUTH_URL        => $portal->get_url );
     $template->param( DISPLAY_FORM    => 1 );
 
     print $portal->header('text/html; charset=utf8');
