@@ -15,7 +15,7 @@ use CGI;
 
 our $VERSION = '0.3';
 
-our @ISA = qw(CGI);
+use base qw(CGI);
 
 sub header {
     my $self = shift;

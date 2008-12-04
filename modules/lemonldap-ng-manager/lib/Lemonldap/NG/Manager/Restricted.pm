@@ -5,7 +5,7 @@ use strict;
 use Lemonldap::NG::Manager;
 use Lemonldap::NG::Common::Conf::Constants;
 
-our @ISA     = qw(Lemonldap::NG::Manager);
+use base qw(Lemonldap::NG::Manager);
 our $VERSION = "0.1";
 
 sub new {

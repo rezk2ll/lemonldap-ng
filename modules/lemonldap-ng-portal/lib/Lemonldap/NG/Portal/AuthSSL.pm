@@ -4,7 +4,7 @@ use strict;
 use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::AuthLDAP;
 
-our @ISA = qw(Lemonldap::NG::Portal::AuthLDAP);
+use base qw(Lemonldap::NG::Portal::AuthLDAP);
 
 our $VERSION = '0.1';
 

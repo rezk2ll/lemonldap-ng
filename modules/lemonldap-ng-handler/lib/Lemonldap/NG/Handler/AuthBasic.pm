@@ -7,7 +7,7 @@ use Lemonldap::NG::Portal::SharedConf;
 use Digest::MD5 qw(md5_base64);
 use MIME::Base64;
 
-our @ISA = qw(Lemonldap::NG::Handler::SharedConf);
+use base qw(Lemonldap::NG::Handler::SharedConf);
 
 our $VERSION = '0.01';
 

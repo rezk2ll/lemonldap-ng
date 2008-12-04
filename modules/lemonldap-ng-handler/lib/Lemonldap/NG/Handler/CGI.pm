@@ -6,7 +6,7 @@ use Lemonldap::NG::Common::CGI;
 use CGI::Cookie;
 use MIME::Base64;
 
-our @ISA = qw(Lemonldap::NG::Common::CGI);
+use base qw(Lemonldap::NG::Common::CGI);
 
 use Lemonldap::NG::Handler::SharedConf qw(:all);
 
@@ -126,7 +126,7 @@ package Lemonldap::NG::Handler::_CGI;
 
 use Lemonldap::NG::Handler::SharedConf qw(:locationRules :localStorage);
 
-our @ISA = qw(Lemonldap::NG::Handler::SharedConf);
+use base qw(Lemonldap::NG::Handler::SharedConf);
 
 sub childInit {1}
 

@@ -7,7 +7,6 @@ use Lemonldap::NG::Common::Conf::Constants;
 use Regexp::Assemble;
 
 our $VERSION = 0.51;
-our @ISA;
 our $msg;
 
 sub new {

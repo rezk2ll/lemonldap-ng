@@ -2,21 +2,8 @@ package Lemonldap::NG::Common;
 
 use strict;
 
-require Exporter;
-
-our @ISA = qw(Exporter);
-
-our @EXPORT = qw(
-	
-);
-
-our $VERSION = '0.1';
-
-
-
 1;
 __END__
-# Below is stub documentation for your module. You'd better edit it!
 
 =head1 NAME
 

@@ -6,7 +6,7 @@ use Lemonldap::NG::Common::Apache::Session;
 
 our $VERSION = '0.1';
 
-our @ISA = qw(Lemonldap::NG::Handler::CGI);
+use base qw(Lemonldap::NG::Handler::CGI);
 
 # Cleaner for Lemonldap::NG : removes old sessions from Apache::Session
 #

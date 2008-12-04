@@ -35,7 +35,7 @@ use UNIVERSAL qw( isa can VERSION );
 *EXPORT      = *Lemonldap::NG::Portal::SharedConf::EXPORT;
 
 our $VERSION = '0.31';
-our @ISA     = qw(Lemonldap::NG::Portal::SharedConf);
+use base qw(Lemonldap::NG::Portal::SharedConf);
 
 #===============================================================================
 # Global Constants

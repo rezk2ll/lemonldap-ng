@@ -3,7 +3,7 @@ package Lemonldap::NG::Common::Conf::Constants;
 use strict;
 use Exporter 'import';
 
-our @ISA = qw(Exporter);
+use base qw(Exporter);
 our $VERSION = '0.1';
 
 # CONSTANTS

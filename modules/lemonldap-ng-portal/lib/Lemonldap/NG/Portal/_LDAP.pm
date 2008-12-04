@@ -1,7 +1,7 @@
 package Lemonldap::NG::Portal::_LDAP;
 
 use Net::LDAP;
-our @ISA = qw(Net::LDAP);
+use base qw(Net::LDAP);
 
 our $VERSION = '0.1';
 

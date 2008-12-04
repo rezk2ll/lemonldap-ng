@@ -7,7 +7,7 @@ use Lemonldap::NG::Handler::Vhost;
 use Lemonldap::NG::Common::Conf;
 use Cache::Cache qw($EXPIRES_NEVER);
 
-our @ISA = qw(Lemonldap::NG::Handler::Vhost Lemonldap::NG::Handler::Simple);
+use base qw(Lemonldap::NG::Handler::Vhost Lemonldap::NG::Handler::Simple);
 
 our $VERSION    = '0.62';
 our $cfgNum     = 0;

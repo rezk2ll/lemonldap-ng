@@ -15,7 +15,8 @@ use LWP::UserAgent;
 use Safe;
 use MIME::Base64;
 
-our @ISA = qw(Lemonldap::NG::Common::CGI);
+use base qw(CGI);
+our @ISA;
 
 our $VERSION = '0.87';
 
@@ -23,8 +24,6 @@ sub new {
     my ( $class, $args ) = @_;
     my $self;
     if ( $args->{protection} ) {
-        eval 'use Lemonldap::NG::Handler::CGI;';
-        $class->abort($@) if ($@);
         unshift @ISA, "Lemonldap::NG::Handler::CGI";
         $self = $class->SUPER::new($args);
     }

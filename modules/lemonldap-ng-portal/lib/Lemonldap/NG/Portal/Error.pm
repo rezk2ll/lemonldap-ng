@@ -4,7 +4,7 @@ use strict;
 use Lemonldap::NG::Portal::SharedConf qw(:all);
 
 our $VERSION = '0.01';
-our @ISA     = ('Lemonldap::NG::Portal::SharedConf');
+use base ('Lemonldap::NG::Portal::SharedConf');
 
 *EXPORT_OK   = *Lemonldap::NG::Portal::SharedConf::EXPORT_OK;
 *EXPORT_TAGS = *Lemonldap::NG::Portal::SharedConf::EXPORT_TAGS;
