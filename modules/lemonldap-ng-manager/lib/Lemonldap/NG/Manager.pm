@@ -15,7 +15,7 @@ use LWP::UserAgent;
 use Safe;
 use MIME::Base64;
 
-use base qw(CGI);
+use base qw(Lemonldap::NG::Common::CGI);
 our @ISA;
 
 our $VERSION = '0.87';
