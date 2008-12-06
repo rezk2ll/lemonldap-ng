@@ -83,7 +83,7 @@ our $self;    # Safe cannot share a variable declared with my
 # @param args hash reference
 # @return Lemonldap::NG::Portal object
 sub new {
-    binmode(STDOUT, ":utf8");
+    binmode( STDOUT, ":utf8" );
     my $class = shift;
     my $self  = $class->SUPER::new();
     $self->getConf(@_)
@@ -105,7 +105,8 @@ sub new {
     $self->{authentication} ||= 'LDAP';
     $self->{userDB}         ||= 'LDAP';
     $self->{authentication} =~ s/^ldap/LDAP/;
-    $self->{mustRedirect}   = ($ENV{REQUEST_METHOD} eq 'POST' or $self->param('logout'))?1:0;
+    $self->{mustRedirect} =
+      ( $ENV{REQUEST_METHOD} eq 'POST' or $self->param('logout') ) ? 1 : 0;
 
     # Authentication module is required and has to be in @ISA
     foreach (qw(authentication userDB)) {
@@ -349,7 +350,7 @@ sub notification {
 # check url against XSS attacks
 sub get_url {
     my ($self) = @_;
-    return if ($self->param('url') =~ /(?:<|\%(?:25|3C))/);
+    return if ( $self->param('url') =~ /(?:<|\%(?:25|3C))/ );
     return $self->param('url');
 }
 ###############################################################
@@ -394,13 +395,15 @@ sub controlUrlOrigin {
     if ( $self->param('url') ) {
         $self->{urldc} = decode_base64( $self->param('url') );
 
-        # REJECT '<' in URL or encoded '%' and non protected hosts
-        if($self->{urldc} =~ /(?:<|\%(?:25|3C))/ or $self->{urldc} !~ m#https?://$self->{reVHosts}#) {
+        # REJECT <, " and ' in URL or encoded '%' and non protected hosts
+        if (   $self->{urldc} =~ /(?:<|'|"|\%(?:25|3C))/
+            or $self->{urldc} !~ m#^https?://$self->{reVHosts}# )
+        {
             delete $self->{urldc};
-            return PE_BADURL;		
-	}
+            return PE_BADURL;
+        }
     }
-    elsif($self->{mustRedirect}) {
+    elsif ( $self->{mustRedirect} ) {
         $self->{urldc} = $self->{portal};
     }
     PE_OK;
@@ -448,12 +451,12 @@ sub controlExistingSession {
             # Delete cookie
             push @{ $self->{cookie} },
               $self->cookie(
-                -name   => $self->{cookieName},
-                -value  => 0,
-                -domain => $self->{domain},
-                -path   => "/",
-                -secure => 0,
-                -expires=> '-1d',
+                -name    => $self->{cookieName},
+                -value   => 0,
+                -domain  => $self->{domain},
+                -path    => "/",
+                -secure  => 0,
+                -expires => '-1d',
                 @_,
               );
             $self->{error} = PE_REDIRECT;
