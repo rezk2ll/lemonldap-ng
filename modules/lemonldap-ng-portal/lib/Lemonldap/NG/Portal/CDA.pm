@@ -30,7 +30,7 @@ sub autoRedirect {
     my $cookieName = $self->{cookieName};
 
     if (    $self->{urldc}
-        and $self->{urldc} !~ m#https?://[^/]*$tmp/#oi
+        and $self->{urldc} !~ m#^https?://[^/]*$tmp/#oi
         and $self->{id}
         and $self->{urldc} !~ m#[\?&]?$cookieName=\w+&?#oi )
     {

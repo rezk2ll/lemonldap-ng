@@ -396,7 +396,7 @@ sub controlUrlOrigin {
         $self->{urldc} = decode_base64( $self->param('url') );
 
         # REJECT <, " and ' in URL or encoded '%' and non protected hosts
-        if (   $self->{urldc} =~ /(?:<|'|"|\%(?:25|3C))/
+        if (   $self->{urldc} =~ /(?:<|'|"|`|\%(?:25|3C|22|27|2C))/
             or $self->{urldc} !~ m#^https?://$self->{reVHosts}# )
         {
             delete $self->{urldc};
