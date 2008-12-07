@@ -23,11 +23,14 @@ sub new {
     my $self  = $class->SUPER::new();
 
     # If non form encoded datas are posted, we call SOAP Services
-    if ( $self->param('POSTDATA') ) {
+    if ( $ENV{HTTP_SOAPACTION} ) {
         my @func = ();
-        push @func, "$class::$_"
-          foreach ( split /\s+/, $args->{SOAPFunctions} );
-        Lemonldap::NG::Common::CGI::SOAP->dispatch_to(@func)->handle($self);
+        foreach ( split /\s+/, $args->{SOAPFunctions} ) {
+            $_ = "${class}::$_" unless (/::/);
+            push @func, $_;
+        }
+        Lemonldap::NG::Common::CGI::SOAPServer->dispatch_to(@func)
+          ->handle($self);
         exit;
     }
     return $self;
@@ -82,9 +85,11 @@ sub abort {
     my $cgi  = CGI->new;
     my ( $t1, $t2 ) = @_;
     $t2 ||= "See Apache's logs";
-    print $cgi->header('text/html; charset=utf8');
+    print $cgi->header(
+        -type    => 'text/html; charset=utf8',
+        -status  => '500 Server Error',
+    );
     print $cgi->start_html(
-        #-status   => '500 Server Error',
         -title    => $t1,
         -encoding => 'utf8',
     );
