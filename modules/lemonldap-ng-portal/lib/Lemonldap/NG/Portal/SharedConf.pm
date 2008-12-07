@@ -112,6 +112,8 @@ compatible portals using a central configuration database.
              dbiPassword => "password",
              dbiTable    => "lmConfig",
          },
+         # Activate SOAP service
+         Soap           => 1
     } );
 
   if($portal->process()) {
@@ -137,6 +139,36 @@ compatible portals using a central configuration database.
     print 'Password : <input name="password" type="password" autocomplete="off">';
     print '<input type="submit" value="go" />';
     print '</form>';
+  }
+
+SOAP mode authentication (client) :
+
+  #!/usr/bin/perl -l
+  
+  use SOAP::Lite;
+  use Data::Dumper;
+  
+  my $soap =
+    SOAP::Lite->proxy('http://auth.example.com/')
+    ->uri('urn:/Lemonldap::NG::Portal::SharedConf');
+  my $r = $soap->getCookies( 'user', 'password' );
+  
+  # Catch SOAP errors
+  if ( $r->fault ) {
+      print STDERR "SOAP Error: " . $r->fault->{faultstring};
+  }
+  else {
+      my $res = $r->result();
+  
+      # If authentication failed, display error
+      if ( $res->{error} ) {
+          print STDERR "Error: " . $soap->error( 'fr', $res->{error} )->result();
+      }
+  
+      # print session-ID
+      else {
+          print "Cookie: lemonldap=" . $res->{cookies}->{lemonldap};
+      }
   }
 
 =head1 DESCRIPTION

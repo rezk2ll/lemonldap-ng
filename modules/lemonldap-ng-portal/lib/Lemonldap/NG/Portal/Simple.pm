@@ -132,7 +132,7 @@ sub new {
     }
     if ( $self->{Soap} ) {
         require SOAP::Lite;
-        $self->soapTest("${class}::getCookies");
+        $self->soapTest("${class}::getCookies ${class}::error");
     }
     return $self;
 }
@@ -154,25 +154,27 @@ sub getConf {
 }
 
 ## @method protected string error($lang)
-# error calls Portal/_i18n.pm to display error in the wanted language
+# error calls Portal/_i18n.pm to display error in the wanted language.
 # @param lang optional (browser language is used instead)
 # @return error message
 sub error {
     my $self = shift;
-    return &Lemonldap::NG::Portal::_i18n::error( $self->{error},
-        shift || $ENV{HTTP_ACCEPT_LANGUAGE} );
+    my $lang = shift || $ENV{HTTP_ACCEPT_LANGUAGE};
+    my $code = $self->{error} || shift;
+    return &Lemonldap::NG::Portal::_i18n::error( $code, $lang );
 }
 
 ## @method int error_type()
 # error_type tells if error is positive, warning or negative
 sub error_type {
     my $self = shift;
+    my $code = shift || $self->{error};
 
     # Positive errors
     return "positive"
       if (
         scalar(
-            grep { /^$self->{error}$/ } (
+            grep { /^$code$/ } (
                 -2,    #PE_REDIRECT
                 -1,    #PE_DONE,
                 0,     #PE_OK
@@ -185,7 +187,7 @@ sub error_type {
     return "warning"
       if (
         scalar(
-            grep { /^$self->{error}$/ } (
+            grep { /^$code$/ } (
                 1,     #PE_SESSIONEXPIRED
                 2,     #PE_FORMEMPTY
                 9,     #PE_FIRSTACCESS
@@ -326,7 +328,6 @@ sub _subProcess {
     my $err  = undef;
 
     foreach my $sub (@subs) {
-        print STDERR "$sub\n";
         if ( $self->{$sub} ) {
             last if ( $err = &{ $self->{$sub} }($self) );
         }
@@ -359,39 +360,21 @@ sub get_url {
     return if ( $self->param('url') =~ m#[^A-Za-z0-9\+/=]# );
     return $self->param('url');
 }
-###############################################################
-# MAIN subroutine: call all steps until one returns something #
-#                  different than PE_OK                       #
-###############################################################
 
-# Process call functions issued from :
-#  * itself : controlUrlOrigin, controlExistingSession, setMacros, setGroups,
-#             store, buildCookie, log, autoredirect
-#  * authentication module : extractFormInfo, setAuthSessionInfo, authenticate
-#  * user database module  : getUser, setSessionInfo
+####################
+# SOAP subroutines #
+####################
 
-sub process {
-    my ($self) = @_;
-    $self->{error} = PE_OK;
-    $self->{error} = $self->_subProcess(
-        qw(checkNotifBack controlUrlOrigin controlExistingSession authInit
-          extractFormInfo userDBInit getUser setAuthSessionInfo setSessionInfo
-          setMacros setGroups authenticate store buildCookie log
-          checkNotification autoRedirect)
-    );
-    $self->updateStatus;
-    return ( ( $self->{error} > 0 ) ? 0 : 1 );
-}
-
-##@method string SOAPResponse getCookies($user,$password)
-# Called in SOAP context, returns cookies in an array
+##@method string SOAP::Data getCookies($user,$password)
+# Called in SOAP context, returns cookies in an array.
+# This subroutine works only for portals working with user and password
 #@param user uid
 #@param password password
 #@return session => { error => code , cookies => { cookieName1 => value ,... } }
 sub getCookies {
     my $class = shift;
     $self->{error} = PE_OK;
-    ( $self->{user}, $self->{password} ) = @_;
+    ( $self->{user}, $self->{password} ) = ( shift, shift );
     unless ( $self->{user} && $self->{password} ) {
         $self->{error} = PE_FORMEMPTY;
     }
@@ -412,7 +395,34 @@ sub getCookies {
           );
     }
     my $res = SOAP::Data->name( session => \SOAP::Data->value(@tmp) );
+    $self->updateStatus;
     return $res;
+}
+
+###############################################################
+# MAIN subroutine: call all steps until one returns something #
+#                  different than PE_OK                       #
+###############################################################
+
+##@method boolean process()
+# Main method.
+# process() call functions issued from :
+#  - itself : controlUrlOrigin, controlExistingSession, setMacros, setGroups, store, buildCookie, log, autoredirect
+#  - authentication module : extractFormInfo, setAuthSessionInfo, authenticate
+#  - user database module  : getUser, setSessionInfo
+#@return 1 if user is all is OK, 0 if session isn't created or a notification has to be done
+
+sub process {
+    my ($self) = @_;
+    $self->{error} = PE_OK;
+    $self->{error} = $self->_subProcess(
+        qw(checkNotifBack controlUrlOrigin controlExistingSession authInit
+          extractFormInfo userDBInit getUser setAuthSessionInfo setSessionInfo
+          setMacros setGroups authenticate store buildCookie log
+          checkNotification autoRedirect)
+    );
+    $self->updateStatus;
+    return ( ( $self->{error} > 0 ) ? 0 : 1 );
 }
 
 ## @method error_code checkNotifBack()
@@ -749,9 +759,11 @@ Lemonldap::NG::Portal::Simple - Base module for building Lemonldap::NG compatibl
            cn    => 'cn',
            mail  => 'mail',
            appli => 'appli',
-         }
+         },
+         # Activate SOAP service
+         Soap           => 1
     );
-
+  
   if($portal->process()) {
     # Write here the menu with CGI methods. This page is displayed ONLY IF
     # the user was not redirected here.
@@ -775,6 +787,36 @@ Lemonldap::NG::Portal::Simple - Base module for building Lemonldap::NG compatibl
     print 'Password : <input name="password" type="password" autocomplete="off">';
     print '<input type="submit" value="go" />';
     print '</form>';
+  }
+
+SOAP mode authentication (client) :
+
+  #!/usr/bin/perl -l
+  
+  use SOAP::Lite;
+  use Data::Dumper;
+  
+  my $soap =
+    SOAP::Lite->proxy('http://auth.example.com/')
+    ->uri('urn:/Lemonldap::NG::Portal::SharedConf');
+  my $r = $soap->getCookies( 'user', 'password' );
+  
+  # Catch SOAP errors
+  if ( $r->fault ) {
+      print STDERR "SOAP Error: " . $r->fault->{faultstring};
+  }
+  else {
+      my $res = $r->result();
+  
+      # If authentication failed, display error
+      if ( $res->{error} ) {
+          print STDERR "Error: " . $soap->error( 'fr', $res->{error} )->result();
+      }
+  
+      # print session-ID
+      else {
+          print "Cookie: lemonldap=" . $res->{cookies}->{lemonldap};
+      }
   }
 
 =head1 DESCRIPTION
