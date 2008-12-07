@@ -398,7 +398,7 @@ sub controlUrlOrigin {
         return PE_BADURL if ( $self->param('url') =~ m#[^A-Za-z0-9\+/=]# );
 
         $self->{urldc} = decode_base64( $self->param('url') );
-        $self->{urldc} = s/[\r\n]//sg;
+        $self->{urldc} =~ s/[\r\n]//sg;
 
         # REJECT [\0<'"`] in URL or encoded '%' and non protected hosts
         if (   $self->{urldc} =~ /(?:\0|<|'|"|`|\%(?:00|25|3C|22|27|2C))/
