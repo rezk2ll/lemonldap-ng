@@ -350,7 +350,7 @@ sub notification {
 # check url against XSS attacks
 sub get_url {
     my ($self) = @_;
-    return if ( $self->param('url') =~ /(?:<|\%(?:25|3C))/ );
+    return if ( $self->param('url') =~ m#[^A-Za-z0-9\+/=]# );
     return $self->param('url');
 }
 ###############################################################
@@ -393,10 +393,15 @@ sub checkNotifBack {
 sub controlUrlOrigin {
     my $self = shift;
     if ( $self->param('url') ) {
-        $self->{urldc} = decode_base64( $self->param('url') );
 
-        # REJECT <, " and ' in URL or encoded '%' and non protected hosts
-        if (   $self->{urldc} =~ /(?:<|'|"|`|\%(?:25|3C|22|27|2C))/
+        # REJECT NON BASE64 URL
+        return PE_BADURL if ( $self->param('url') =~ m#[^A-Za-z0-9\+/=]# );
+
+        $self->{urldc} = decode_base64( $self->param('url') );
+        $self->{urldc} = s/[\r\n]//sg;
+
+        # REJECT [\0<'"`] in URL or encoded '%' and non protected hosts
+        if (   $self->{urldc} =~ /(?:\0|<|'|"|`|\%(?:00|25|3C|22|27|2C))/
             or $self->{urldc} !~ m#^https?://$self->{reVHosts}# )
         {
             delete $self->{urldc};

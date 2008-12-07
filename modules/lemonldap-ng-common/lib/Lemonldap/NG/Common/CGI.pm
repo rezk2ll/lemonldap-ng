@@ -17,9 +17,20 @@ our $VERSION = '0.3';
 
 use base qw(CGI);
 
-sub header {
-    my $self = shift;
-    $self->SUPER::header(@_);
+sub new {
+    my $class = shift;
+    my $args  = shift;
+    my $self  = $class->SUPER::new();
+
+    # If non form encoded datas are posted, we call SOAP Services
+    if ( $self->param('POSTDATA') ) {
+        my @func = ();
+        push @func, "$class::$_"
+          foreach ( split /\s+/, $args->{SOAPFunctions} );
+        Lemonldap::NG::Common::CGI::SOAP->dispatch_to(@func)->handle($self);
+        exit;
+    }
+    return $self;
 }
 
 sub header_public {
@@ -68,17 +79,81 @@ sub header_public {
 
 sub abort {
     my $self = shift;
-    my $cgi = CGI->new;
+    my $cgi  = CGI->new;
     my ( $t1, $t2 ) = @_;
     $t2 ||= "See Apache's logs";
     print $cgi->header('text/html; charset=utf8');
     print $cgi->start_html(
+        #-status   => '500 Server Error',
         -title    => $t1,
         -encoding => 'utf8',
     );
     print "<h1>$t1</h1>";
     print "<p>$t2</p>";
     exit;
+}
+
+package Lemonldap::NG::Common::CGI::SOAPServer;
+use SOAP::Transport::HTTP;
+use base 'SOAP::Transport::HTTP::Server';
+
+sub DESTROY { SOAP::Trace::objects('()') }
+
+sub new {
+    my $self = shift;
+    return $self if ref $self;
+
+    my $class = ref($self) || $self;
+    $self = $class->SUPER::new(@_);
+    SOAP::Trace::objects('()');
+
+    return $self;
+}
+
+sub handle {
+    my $self = shift->new;
+    my $cgi  = shift;
+
+    my $content = $cgi->param('POSTDATA');
+    my $length  = length($content);
+
+    if ( !$length ) {
+        $self->response( HTTP::Response->new(411) )    # LENGTH REQUIRED
+    }
+    elsif ( defined $SOAP::Constants::MAX_CONTENT_SIZE
+        && $length > $SOAP::Constants::MAX_CONTENT_SIZE )
+    {
+        $self->response( HTTP::Response->new(413) )   # REQUEST ENTITY TOO LARGE
+    }
+    else {
+        $self->request(
+            HTTP::Request->new(
+                'POST' => $ENV{'SCRIPT_NAME'},
+                HTTP::Headers->new(
+                    map {
+                        (
+                              /^HTTP_(.+)/i
+                            ? ( $1 =~ m/SOAPACTION/ )
+                                  ? ('SOAPAction')
+                                  : ($1)
+                            : $_
+                          ) => $ENV{$_}
+                      } keys %ENV
+                ),
+                $content,
+            )
+        );
+        $self->SUPER::handle;
+    }
+
+    print $cgi->header(
+        -status => $self->response->code . " "
+          . HTTP::Status::status_message( $self->response->code ),
+        -type           => $self->response->header('Content-Type'),
+        -Content_Length => $self->response->header('Content-Length'),
+        -SOAPServer     => 'Lemonldap::NG CGI',
+    );
+    print $self->response->content;
 }
 
 1;
