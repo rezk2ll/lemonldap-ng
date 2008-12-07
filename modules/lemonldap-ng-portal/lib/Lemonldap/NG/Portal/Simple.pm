@@ -85,7 +85,8 @@ our $self;    # Safe cannot share a variable declared with my
 sub new {
     binmode( STDOUT, ":utf8" );
     my $class = shift;
-    my $self  = $class->SUPER::new();
+    return $class if ( ref($class) );
+    our $self = $class->SUPER::new();
     $self->getConf(@_)
       or $self->abort( "Configuration error",
         "Unable to get configuration: $Lemonldap::NG::Common::Conf::msg" );
@@ -128,6 +129,10 @@ sub new {
     }
     if ( $self->{notification} ) {
         require Lemonldap::NG::Common::Notification;
+    }
+    if ( $self->{Soap} ) {
+        require SOAP::Lite;
+        $self->soapTest("${class}::getCookies");
     }
     return $self;
 }
@@ -321,6 +326,7 @@ sub _subProcess {
     my $err  = undef;
 
     foreach my $sub (@subs) {
+        print STDERR "$sub\n";
         if ( $self->{$sub} ) {
             last if ( $err = &{ $self->{$sub} }($self) );
         }
@@ -375,6 +381,38 @@ sub process {
     );
     $self->updateStatus;
     return ( ( $self->{error} > 0 ) ? 0 : 1 );
+}
+
+##@method string SOAPResponse getCookies($user,$password)
+# Called in SOAP context, returns cookies in an array
+#@param user uid
+#@param password password
+#@return session => { error => code , cookies => { cookieName1 => value ,... } }
+sub getCookies {
+    my $class = shift;
+    $self->{error} = PE_OK;
+    ( $self->{user}, $self->{password} ) = @_;
+    unless ( $self->{user} && $self->{password} ) {
+        $self->{error} = PE_FORMEMPTY;
+    }
+    else {
+        $self->{error} = $self->_subProcess(
+            qw(authInit userDBInit getUser setAuthSessionInfo setSessionInfo
+              setMacros setGroups authenticate store buildCookie log)
+        );
+    }
+    my @tmp = ();
+    push @tmp, SOAP::Data->name( error => $self->{error} );
+    unless ( $self->{error} ) {
+        push @tmp,
+          SOAP::Data->name(
+            cookies => \SOAP::Data->value(
+                SOAP::Data->name( $self->{cookieName} => $self->{id} ),
+            )
+          );
+    }
+    my $res = SOAP::Data->name( session => \SOAP::Data->value(@tmp) );
+    return $res;
 }
 
 ## @method error_code checkNotifBack()

@@ -17,16 +17,15 @@ our $VERSION = '0.3';
 
 use base qw(CGI);
 
-sub new {
-    my $class = shift;
-    my $args  = shift;
-    my $self  = $class->SUPER::new();
+sub soapTest {
+    my $self = shift;
+    my $soapFunctions = shift || $self->{SOAPFunctions};
 
     # If non form encoded datas are posted, we call SOAP Services
     if ( $ENV{HTTP_SOAPACTION} ) {
         my @func = ();
-        foreach ( split /\s+/, $args->{SOAPFunctions} ) {
-            $_ = "${class}::$_" unless (/::/);
+        foreach ( ref($soapFunctions) ? @$soapFunctions : split /\s+/, $soapFunctions ) {
+            $_ = ref($self) . "::$_" unless (/::/);
             push @func, $_;
         }
         Lemonldap::NG::Common::CGI::SOAPServer->dispatch_to(@func)
