@@ -160,7 +160,7 @@ sub getConf {
 sub error {
     my $self = shift;
     my $lang = shift || $ENV{HTTP_ACCEPT_LANGUAGE};
-    my $code = $self->{error} || shift;
+    my $code = shift || $self->{error};
     return &Lemonldap::NG::Portal::_i18n::error( $code, $lang );
 }
 
