@@ -17,6 +17,11 @@ my $docs = {
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocMySQLStorage'               => '3.4-Install-of-MySQL-storage.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocInstallExample?language=en' => '3.5-Install-of-example.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocInstallExample?language=fr' => '3.5-Install-of-example-fr.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocConfigOverwiew'             => '4.1-Configuration-overview.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/ConfigParameterList'           => '4.1-Configuration-parameter-list.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/EnhancedMenu'                  => '4.1-Configure-portal-menu.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/TemplatesDesign'               => '4.1-HTML-templates-customization.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/RBAC'                          => '4.1-RBAC-model.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocPpolicy'                    => '4.2-Configure-password-policy.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/LDAPSchema'                    => '4.2-Configure-LDAP-schema.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocSOAP?language=fr'           => '4.3-Configure-SOAP-fr.html',
@@ -151,6 +156,11 @@ while ( my ( $url, $file ) = each %$docs ) {
 	s#/xwiki/bin/view/NG/DocInstallTarball#3.2-Install-from-tarball.html#g;
 	s#/xwiki/bin/view/NG/DocInstallDebianPackages#3.3-Install-from-debian-packages.html#g;
 	s#/xwiki/bin/view/NG/DocMySQLStorage#3.4-Install-of-MySQL-storage.html#g;
+	s#/xwiki/bin/view/NG/DocConfigOverwiew#4.1-Configuration-overview.html#g;
+	s#/xwiki/bin/view/NG/ConfigParameterList#4.1-Configuration-parameter-list.html#g;
+	s#/xwiki/bin/view/NG/EnhancedMenu#4.1-Configure-portal-menu.html#g;
+	s#/xwiki/bin/view/NG/TemplatesDesign#4.1-HTML-templates-customization.html#g;
+	s#/xwiki/bin/view/NG/RBAC#4.1-RBAC-model.html#g;
 	s#/xwiki/bin/view/NG/DocPpolicy#4.2-Configure-password-policy.html#g;
 	s#/xwiki/bin/view/NG/LDAPSchema#4.2-Configure-LDAP-schema.html#g;
 	s#/xwiki/bin/view/NG/DocAppSympa#5-Appli-Sympa.html#g;
@@ -160,7 +170,9 @@ while ( my ( $url, $file ) = each %$docs ) {
 	s#/xwiki/bin/view/Main/Contacts#6-Contacts.html#g;
 	s#/xwiki/bin/view/NG/Roadmap#6-Roadmap.html#g;
 	s#/xwiki/bin/view/NG/References#6-References.html#g;
-
+	# Remove pages not yet created
+	s#<li><a class=\"wikicreatelink\".*##g;
+	
         $buf .= $_;
     }
     close DOC;
