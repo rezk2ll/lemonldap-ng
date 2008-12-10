@@ -5,27 +5,31 @@ use XML::Simple;
 use utf8;
 
 my $docs = {
-    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/FAQ?language=fr'               => 'faq-fr.html',
-    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/FAQ?language=en'               => 'faq.html',
-    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Presentation?language=en'      => 'overview.html',
-    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Presentation?language=fr'      => 'overview-fr.html',
-    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocInstallExample?language=en' => 'install.html',
-    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocInstallExample?language=fr' => 'install-fr.html',
-    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocInstall?language=en'        => 'advanced-install.html',
-    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocInstallDebianPackages'      => 'debian-packages-install.html',
-    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Erreurs?language=fr'           => 'errors-fr.html',
-    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Erreurs?language=en'           => 'errors.html',
-    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocSOAP?language=fr'           => 'soap-fr.html',
-    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocLA?language=fr'             => 'liberty-alliance-fr.html',
-    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocPpolicy'                    => 'password-policy.html',
-    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/LDAPSchema'                    => 'advanced-access-rules.html',
-    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocAppSympa'                   => 'sympa.html',
-    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocAppTomcatValve'             => 'tomcat-valve.html',
-    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocAppDokuwiki'                => 'dokuwiki.html',
-    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocAppPLA'                     => 'phpldapadmin.html',
-    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Roadmap'                       => 'roadmap.html',
-    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/References'                    => 'references.html',
-    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/Main/Contacts'                    => 'contacts.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Presentation?language=en'      => '1-Overview.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Presentation?language=fr'      => '1-Overview-fr.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/FAQ?language=en'               => '2-FAQ.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/FAQ?language=fr'               => '2-FAQ-fr.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Documentation?language=en'     => '3-Table-of-contents.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Documentation?language=fr'     => '3-Table-of-contents-fr.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocPrereq'                     => '3.1-Install-prerequesites.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocInstallTarball'             => '3.2-Install-from-tarball.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocInstallDebianPackages'      => '3.3-Install-from-debian-packages.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocMySQLStorage'               => '3.4-Install-of-MySQL-storage.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocInstallExample?language=en' => '3.5-Install-of-example.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocInstallExample?language=fr' => '3.5-Install-of-example-fr.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocPpolicy'                    => '4.2-Configure-password-policy.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/LDAPSchema'                    => '4.2-Configure-LDAP-schema.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocSOAP?language=fr'           => '4.3-Configure-SOAP-fr.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocLA?language=fr'             => '4.3-Configure-Liberty-Alliance-fr.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocAppSympa'                   => '5-Appli-Sympa.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocAppTomcatValve'             => '5-Appli-Tomcat-Valve.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocAppDokuwiki'                => '5-Appli-Dokuwiki.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocAppPLA'                     => '5-Appli-phpLDAPadmin.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/Main/Contacts'                    => '6-Contacts.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Erreurs?language=en'           => '6-Errors.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Erreurs?language=fr'           => '6-Errors-fr.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Roadmap'                       => '6-Roadmap.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/References'                    => '6-References.html',
 };
 
 my %imgs;
@@ -121,22 +125,42 @@ while ( my ( $url, $file ) = each %$docs ) {
         if (s#(["'])/xwiki/bin/download/([\/\w\.\-]+)\1#$1$2$1#) {
             $imgs{$2} = 1;
         }
-        if ( $file =~ /-fr/ ) {
-            s#/xwiki/bin/view/NG/FAQ#faq-fr.html#g;
-            s#/xwiki/bin/view/NG/Presentation#overview-fr.html#g;
-            s#/xwiki/bin/view/NG/DocInstallExample#install-fr.html#g;
-            s#/xwiki/bin/view/NG/DocInstall#advanced-install.html#g;
-            s#/xwiki/bin/view/NG/Erreurs#errors-fr.html#g;
-            s#/xwiki/bin/view/NG/DocSOAP#soap-fr.html#g;
+	## Resolve internal links
+	# FR translation
+        if ( $file =~ /-fr\.html/ ) {
+            s#/xwiki/bin/view/NG/Presentation#1-Overview-fr.html#g;
+            s#/xwiki/bin/view/NG/FAQ#2-FAQ-fr.html#g;
+            s#/xwiki/bin/view/NG/Documentation#3-Table-of-contents-fr.html#g;
+            s#/xwiki/bin/view/NG/DocInstallExample#3.5-Install-of-example-fr.html#g;
+            s#/xwiki/bin/view/NG/DocSOAP#4.3-Configure-SOAP-fr.html#g;
+            s#/xwiki/bin/view/NG/DocLA#4.3-Configure-Liberty-Alliance-fr.html#g;
+            s#/xwiki/bin/view/NG/Erreurs#6-Errors-fr.html#g;
         }
+	# EN translation
         else {
-            s#/xwiki/bin/view/NG/FAQ#faq.html#g;
-            s#/xwiki/bin/view/NG/Presentation#overview.html#g;
-            s#/xwiki/bin/view/NG/DocInstallExample#install.html#g;
-            s#/xwiki/bin/view/NG/DocInstall#advanced-install.html#g;
-            s#/xwiki/bin/view/NG/Erreurs#errors.html#g;
-            s#/xwiki/bin/view/NG/DocSOAP#soap-fr.html#g;
+            s#/xwiki/bin/view/NG/Presentation#1-Overview.html#g;
+            s#/xwiki/bin/view/NG/FAQ#2-FAQ.html#g;
+            s#/xwiki/bin/view/NG/Documentation#3-Table-of-contents.html#g;
+            s#/xwiki/bin/view/NG/DocInstallExample#3.5-Install-of-example.html#g;
+            s#/xwiki/bin/view/NG/DocSOAP#4.3-Configure-SOAP-fr.html#g;                  # Only FR
+            s#/xwiki/bin/view/NG/DocLA#4.3-Configure-Liberty-Alliance-fr.html#g;        # Only FR
+            s#/xwiki/bin/view/NG/Erreurs#6-Errors.html#g;
         }
+	# Default lang
+	s#/xwiki/bin/view/NG/DocPrereq#3.1-Install-prerequesites.html#g;
+	s#/xwiki/bin/view/NG/DocInstallTarball#3.2-Install-from-tarball.html#g;
+	s#/xwiki/bin/view/NG/DocInstallDebianPackages#3.3-Install-from-debian-packages.html#g;
+	s#/xwiki/bin/view/NG/DocMySQLStorage#3.4-Install-of-MySQL-storage.html#g;
+	s#/xwiki/bin/view/NG/DocPpolicy#4.2-Configure-password-policy.html#g;
+	s#/xwiki/bin/view/NG/LDAPSchema#4.2-Configure-LDAP-schema.html#g;
+	s#/xwiki/bin/view/NG/DocAppSympa#5-Appli-Sympa.html#g;
+	s#/xwiki/bin/view/NG/DocAppTomcatValve#5-Appli-Tomcat-Valve.html#g;
+	s#/xwiki/bin/view/NG/DocAppDokuwiki#5-Appli-Dokuwiki.html#g;
+	s#/xwiki/bin/view/NG/DocAppPLA#5-Appli-phpLDAPadmin.html#g;
+	s#/xwiki/bin/view/Main/Contacts#6-Contacts.html#g;
+	s#/xwiki/bin/view/NG/Roadmap#6-Roadmap.html#g;
+	s#/xwiki/bin/view/NG/References#6-References.html#g;
+
         $buf .= $_;
     }
     close DOC;
@@ -193,7 +217,7 @@ foreach my $file (
     my $name = $file;
     next if ( $name eq 'index.html' );
     $name =~ s/\.html//;
-    $name =~ s/-fr/ (FR)/g;
+    $name =~ s/-fr$/ (FR)/g;
     $name =~ s/-/ /g;
     print INDEX '      <li><a href="' . $file . '">' . ucfirst($name) . '</a></li>' . "\n";
 }
