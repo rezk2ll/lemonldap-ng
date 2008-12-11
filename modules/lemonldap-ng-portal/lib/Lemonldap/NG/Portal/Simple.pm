@@ -75,7 +75,7 @@ our %EXPORT_TAGS = ( 'all' => [ @EXPORT, 'import' ], );
 our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
 
 # Secure jail
-our $safe = new Safe;
+our $safe;
 our $self;    # Safe cannot share a variable declared with my
 
 ## @cmethod new($args)
@@ -86,7 +86,7 @@ sub new {
     binmode( STDOUT, ":utf8" );
     my $class = shift;
     return $class if ( ref($class) );
-    our $self = $class->SUPER::new();
+    $self = $class->SUPER::new();
     $self->getConf(@_)
       or $self->abort( "Configuration error",
         "Unable to get configuration: $Lemonldap::NG::Common::Conf::msg" );
@@ -361,6 +361,33 @@ sub get_url {
     return $self->param('url');
 }
 
+##@method private object safe()
+# Provide the security jail.
+#@return Safe object
+sub safe {
+    my $self = shift;
+    return $safe if ($safe);
+    $safe = new Safe;
+    my @t =
+      $self->{customFunctions} ? split( /\s+/, $self->{customFunctions} ) : ();
+    foreach (@t) {
+        my $sub = $_;
+        unless (/::/) {
+            $sub = ref($self) . "::$_";
+        }
+        else {
+            s/^.*:://;
+        }
+        next if ( $self->can($_) );
+        eval "sub $_ {
+                return $sub( '$self->{portal}', \@_ );
+            }";
+        print STDERR $@ if ($@);
+    }
+    $safe->share( '$self', '&encode_base64', @t );
+    return $safe;
+}
+
 ####################
 # SOAP subroutines #
 ####################
@@ -571,8 +598,7 @@ sub setMacros {
       unless ( $self->getConf(@_) );
     while ( my ( $n, $e ) = each( %{ $self->{macros} } ) ) {
         $e =~ s/\$(\w+)/\$self->{sessionInfo}->{$1}/g;
-        $safe->share( '$self', '&encode_base64' );
-        $self->{sessionInfo}->{$n} = $safe->reval($e);
+        $self->{sessionInfo}->{$n} = $self->safe->reval($e);
     }
     PE_OK;
 }
@@ -590,8 +616,7 @@ sub setGroups {
         $expr =~ s/\$(\w+)/\$self->{sessionInfo}->{$1}/g;
 
         # TODO : custom Functions
-        $safe->share( '$self', '&encode_base64' );
-        $groups .= "$group " if ( $safe->reval($expr) );
+        $groups .= "$group " if ( $self->safe->reval($expr) );
     }
     if ( $self->{ldapGroupBase} ) {
         my $mesg = $self->{ldap}->search(

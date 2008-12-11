@@ -20,6 +20,28 @@ our @ISA;
 
 our $VERSION = '0.87';
 
+# Secure jail
+our $safe;
+
+##@method private object safe()
+# Provide the security jail.
+#@return Safe object
+sub safe {
+    my $self = shift;
+    return $safe if ($safe);
+    $safe = new Safe;
+    my @t =
+      $self->{customFunctions} ? split( /\s+/, $self->{customFunctions} ) : ();
+    foreach (@t) {
+        s/^.*:://;
+        next if ( $self->can($_) );
+        eval "sub $_ {1}";
+        print STDERR $@ if ($@);
+    }
+    $safe->share( '&encode_base64', @t );
+    return $safe;
+}
+
 sub new {
     my ( $class, $args ) = @_;
     my $self;
@@ -544,14 +566,7 @@ sub checkConf {
     }
 
     # Load and check macros
-    my $safe = new Safe;
-    my @t = split /\s+/, $self->{customFunctions};
-    foreach(@t) {
-        s/^.*:://;
-        eval "sub $_ {1}";
-    }
-    $safe->share('&encode_base64', @t);
-    $safe->reval($expr);
+    $self->safe->reval($expr);
     if ($@) {
         $result = 0;
         $response->error( &txt_unknownErrorInVars . " ($@)" );
@@ -572,7 +587,7 @@ sub checkConf {
 
         # Test macro values;
         $expr .= "my \$$k = $v;";
-        $safe->reval($expr);
+        $self->safe->reval($expr);
         if ($@) {
             $response->error(
                 &txt_macro . " $k : " . &txt_syntaxError . " : $@" );
@@ -604,7 +619,7 @@ sub checkConf {
         }
 
         # Test boolean expression
-        $safe->reval( $expr . "\$groups = '$k' if($v);" );
+        $self->safe->reval( $expr . "\$groups = '$k' if($v);" );
         if ($@) {
             $response->error( &txt_group . " $k " . &txt_syntaxError );
             $result = 0;
@@ -627,7 +642,7 @@ sub checkConf {
             # Test regular expressions
             unless ( $reg eq 'default' ) {
                 $reg =~ s/#/\\#/g;
-                $safe->reval( $expr . "my \$r = qr#$reg#;" );
+                $self->safe->reval( $expr . "my \$r = qr#$reg#;" );
                 if ($@) {
                     $response->error(
                         &txt_rule . " $vh -> \"$reg\" : " . &txt_syntaxError );
@@ -645,7 +660,7 @@ sub checkConf {
                           . &txt_containsAnAssignment );
                 }
 
-                $safe->reval( $expr . "my \$r=1 if($v);" );
+                $self->safe->reval( $expr . "my \$r=1 if($v);" );
                 if ($@) {
                     $response->error(
                         &txt_rule . " $vh -> \"$reg\" : " . &txt_syntaxError );
@@ -683,7 +698,7 @@ sub checkConf {
             }
 
             # Perl expression
-            $safe->reval( $expr . "my \$r = $v;" );
+            $self->safe->reval( $expr . "my \$r = $v;" );
             if ($@) {
                 $response->error(
                     &txt_header . " $vh -> $header " . &txt_syntaxError );

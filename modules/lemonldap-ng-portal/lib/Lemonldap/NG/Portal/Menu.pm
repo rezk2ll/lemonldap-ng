@@ -18,6 +18,7 @@ sub _safe {
     my $self = shift;
     return $self->{_safe} if ( $self->{_safe} );
     $self->{_safe} = new Safe;
+    $self->{customFunctions} ||= $self->{portalObject}->{customFunctions};
     my @t =
       $self->{customFunctions} ? split( /\s+/, $self->{customFunctions} ) : ();
     foreach (@t) {
