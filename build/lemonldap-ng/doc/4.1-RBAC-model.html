@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Linux/x86 (vers 6 November 2007), see www.w3.org" />
+
+  <title>Lemonldap::NG documentation: 4.1-RBAC-model.html</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+  <style type="text/css">
+/*<![CDATA[*/
+    body{
+      background: #ddd;
+      font-family: sans-serif;
+      font-size: 11pt;
+      padding: 0 50px;
+    }
+    div.main-content{
+      padding: 10px;
+      background: #fff;
+      border: 2px #ccc solid;
+    }
+    a{
+      text-decoration: none;
+    }
+    p.footer{
+      text-align: center;
+      margin: 5px 0 0 0;
+    }
+    .heading-1{
+      text-align: center;
+      color: orange;
+      font-variant: small-caps;
+      font-size: 20pt;
+    }
+    .heading-1-1{
+      color: orange;
+      font-size: 14pt;
+      border-bottom: 2px #ccc solid;
+    }
+    pre{
+      background: #eee;
+      border: 2px #ccc solid;
+      padding: 5px;
+      border-left: 10px #ccc solid;
+    }
+    ul.star li{
+      list-style-type: square;
+    }
+  /*]]>*/
+  </style>
+</head>
+
+<body>
+  <div class="main-content">
+    <h2 class="heading-1"><span id="HRBACmodel">RBAC model</span></h2>
+
+    <p class="paragraph"></p>
+
+    <ul>
+      <li><a href="#HPresentation">Presentation</a></li>
+
+      <li><a href="#HRolesassimplevaluesofauserattribute">Roles as simple
+      values of a user attribute</a></li>
+
+      <li><a href="#HRolesasentriesinthedirectory">Roles as entries in the
+      directory</a></li>
+    </ul>
+
+    <h3 class="heading-1-1"><span id="HPresentation">Presentation</span></h3>
+
+    <p class="paragraph"></p>RBAC stands for Role Based Access Control. It
+    means that you manage authorizations to access applications by checking
+    the role(s) of the user, and provide this role to the application.
+
+    <p class="paragraph"></p>More informations on <span class="nobr"><a href=
+    "http://en.wikipedia.org/wiki/Role-based_access_control">http://en.wikipedia.org/wiki/Role-based_access_control</a></span>
+
+    <p class="paragraph"></p>LemonLDAP::NG allows to use this model.
+
+    <h3 class="heading-1-1"><span id=
+    "HRolesassimplevaluesofauserattribute">Roles as simple values of a user
+    attribute</span></h3><br />
+    <br />
+    Imagine you've set your directory schema to store roles as values of
+    ssoRoles, an attribute of the user. This is simple because you can send
+    the role to the application by creating a HTTP header (for example
+    Auth-Role) with the concatened values (';' is the concatenation
+    string):<br />
+    <br />
+
+    <div class="code">
+      <pre>
+Auth-Roles =&gt; $ssoRoles
+</pre>
+    </div><br />
+    <br />
+    If the user has these values inside its entry:<br />
+    <br />
+
+    <div class="code">
+      <pre>
+ssoRoles: user
+ssoRoles: admin
+</pre>
+    </div><br />
+    <br />
+    Then you got this value inside the Auth-Roles header:<br />
+    <br />
+
+    <div class="code">
+      <pre>
+user; admin
+</pre>
+    </div>
+
+    <h3 class="heading-1-1"><span id="HRolesasentriesinthedirectory">Roles as
+    entries in the directory</span></h3><br />
+    <br />
+    Now imagine the following DIT:<br />
+    <br />
+    <img src="DIA_DIT_Roles.png" alt="DIA_DIT_Roles.png" /><br />
+    <br />
+    Roles are entries, below branchs representing applications. Each user has
+    a ssoRoles attributes, which values are the DN of the corresponding roles.
+    With this oragnization, you can set roles to user within specific
+    application.<br />
+    <br />
+    In the schema above, the user has the following values:<br />
+    <br />
+
+    <div class="code">
+      <pre>
+ssoRoles: ou=admin,ou=aaa,ou=roles,dc=acme,dc=com
+ssoRoles: ou=user,ou=bbb,ou=roles,dc=acme,dc=com
+</pre>
+    </div>
+
+    <p class="paragraph"></p>So he is "user" on application "BBB" and "admin"
+    on application "AAA".
+
+    <p class="paragraph"></p>Now we have to send to right role to the right
+    application trough LemonLDAP::NG.
+
+    <p class="paragraph"></p>First step: create a rule to grant access only if
+    the user has a role in the application:
+
+    <ul class="star">
+      <li>For application AAA:</li>
+    </ul>
+
+    <div class="code">
+      <pre>
+<span class="java-keyword">default</span> =&gt; $ssoRoles =~ /ou=aaa,ou=roles/
+</pre>
+    </div>
+
+    <ul class="star">
+      <li>For application BBB:</li>
+    </ul>
+
+    <div class="code">
+      <pre>
+<span class="java-keyword">default</span> =&gt; $ssoRoles =~ /ou=bbb,ou=roles/
+</pre>
+    </div><br />
+    <br />
+    Second step: get the role name for the application. We will use the macros
+    to do that. Create two macros (inside General Parameters &gt; Macros):
+
+    <ul class="star">
+      <li>For application AAA:</li>
+    </ul>
+
+    <div class="code">
+      <pre>
+aaaRole =&gt; ((grep{/ou=aaa/} split(';',$ssoRoles))[0] =~ /ou=(.*),ou=aaa/)[0]
+</pre>
+    </div>
+
+    <ul class="star">
+      <li>For application BBB:</li>
+    </ul>
+
+    <div class="code">
+      <pre>
+bbbRole =&gt; ((grep{/ou=bbb/} split(';',$ssoRoles))[0] =~ /ou=(.*),ou=bbb/)[0]
+</pre>
+    </div><br />
+    <br />
+    These regular expressions read the 'ou' value of the DN of the role of the
+    concerned application. This work if the user has only one role per
+    application.<br />
+    <br />
+    Third step: provide the role to the application. It is done by creating
+    the correct HTTP header:
+
+    <ul class="star">
+      <li>For application AAA:</li>
+    </ul>
+
+    <div class="code">
+      <pre>
+Auth-Roles =&gt; $aaaRoles
+</pre>
+    </div>
+
+    <ul class="star">
+      <li>For application BBB:</li>
+    </ul>
+
+    <div class="code">
+      <pre>
+Auth-Roles =&gt; $bbbRoles
+</pre>
+    </div><br />
+    <br />
+    Now the protected application can read in the header HTTP_AUTH_ROLES the
+    role of the user.
+  </div>
+
+  <p class="footer"><a href="index.html">Index</a></p>
+</body>
+</html>

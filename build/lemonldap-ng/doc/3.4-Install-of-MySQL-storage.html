@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Linux/x86 (vers 6 November 2007), see www.w3.org" />
+
+  <title>Lemonldap::NG documentation:
+  3.4-Install-of-MySQL-storage.html</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+  <style type="text/css">
+/*<![CDATA[*/
+    body{
+      background: #ddd;
+      font-family: sans-serif;
+      font-size: 11pt;
+      padding: 0 50px;
+    }
+    div.main-content{
+      padding: 10px;
+      background: #fff;
+      border: 2px #ccc solid;
+    }
+    a{
+      text-decoration: none;
+    }
+    p.footer{
+      text-align: center;
+      margin: 5px 0 0 0;
+    }
+    .heading-1{
+      text-align: center;
+      color: orange;
+      font-variant: small-caps;
+      font-size: 20pt;
+    }
+    .heading-1-1{
+      color: orange;
+      font-size: 14pt;
+      border-bottom: 2px #ccc solid;
+    }
+    pre{
+      background: #eee;
+      border: 2px #ccc solid;
+      padding: 5px;
+      border-left: 10px #ccc solid;
+    }
+    ul.star li{
+      list-style-type: square;
+    }
+  /*]]>*/
+  </style>
+</head>
+
+<body>
+  <div class="main-content">
+    <h2 class="heading-1"><span id=
+    "HUseofMySQLforsessionsand2Forconfigurationstorage">Use of MySQL for
+    sessions and/or configuration storage</span></h2>
+
+    <p class="paragraph"></p>
+
+    <ul>
+      <li>
+        <a href="#HMySQLconfiguration">MySQL configuration</a>
+
+        <ul>
+          <li><a href="#HDatabasecreation">Database creation</a></li>
+
+          <li><a href="#HConfigurationtable">Configuration table</a></li>
+
+          <li><a href="#HSessiontable">Session table</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <a href="#HLemonLDAP3A3ANGconfiguration">LemonLDAP::NG
+        configuration</a>
+
+        <ul>
+          <li><a href="#HSetconfigStorageforLemonLDAP3A3ANGmodules">Set
+          configStorage for LemonLDAP::NG modules</a></li>
+
+          <li><a href="#HSetApache3A3ASessionbackend">Set Apache::Session
+          backend</a></li>
+        </ul>
+      </li>
+    </ul>
+
+    <h3 class="heading-1-1"><span id="HMySQLconfiguration">MySQL
+    configuration</span></h3>
+
+    <p class="paragraph"></p><strong class="strong">Remark</strong>: we advice
+    to create a specific user/password in MySQL for LemonLDAP::NG, with rights
+    on ist database.
+
+    <h4 class="heading-1-1-1"><span id="HDatabasecreation">Database
+    creation</span></h4><br />
+    <br />
+    For example, create the database "lemonldapng" :<br />
+    <br />
+
+    <div class="code">
+      <pre>
+# mysqladmin create lemonldapng
+</pre>
+    </div>
+
+    <h4 class="heading-1-1-1"><span id="HConfigurationtable">Configuration
+    table</span></h4><br />
+    <br />
+    To store configuration, use this table creation instruction:<br />
+    <br />
+
+    <div class="code">
+      <pre>
+CREATE TABLE lmConfig (
+     cfgNum <span class="java-object">int</span> not <span class=
+"java-keyword">null</span> primary key,
+     locationRules text,
+     exportedHeaders text,
+     globalStorage text,
+     globalStorageOptions text,
+     macros text,
+     groups text,
+     portal text,
+     domain text,
+     ldapServer text,
+     ldapPort <span class="java-object">int</span>,
+     ldapBase text,
+     securedCookie <span class="java-object">int</span>,
+     cookieName text,
+     authentication text,
+     exportedVars text,
+     managerDn text,
+     managerPassword text,
+     whatToTrace text,
+     timeout <span class="java-object">int</span>
+     );
+</pre>
+    </div>
+
+    <h4 class="heading-1-1-1"><span id="HSessiontable">Session
+    table</span></h4>
+
+    <p class="paragraph"></p>The choice of Apache::Session::* module is free.
+    See Apache::Session::Store::* or Apache::Session::* to know how to
+    configure the module.
+
+    <p class="paragraph"></p>If you want to use Apache::Session::MySQL, you
+    can create the database like this:
+
+    <p class="paragraph"></p>
+
+    <div class="code">
+      <pre>
+CREATE TABLE sessions (
+    id <span class="java-object">char</span>(32),
+    a_session text
+    );
+</pre>
+    </div>
+
+    <h3 class="heading-1-1"><span id=
+    "HLemonLDAP3A3ANGconfiguration">LemonLDAP::NG configuration</span></h3>
+
+    <h4 class="heading-1-1-1"><span id=
+    "HSetconfigStorageforLemonLDAP3A3ANGmodules">Set configStorage for
+    LemonLDAP::NG modules</span></h4>
+
+    <p class="paragraph"></p>By default, configStorage use the "File" backend,
+    like:
+
+    <div class="code">
+      <pre>
+configStorage =&gt; {
+     type    =&gt; <span class="java-quote">"File"</span>,
+     dirName =&gt; <span class="java-quote">"/etc/lemonldap-ng/conf/"</span>,
+  },
+</pre>
+    </div>
+
+    <p class="paragraph"></p>You have to replace it with MySQL parameters, for
+    example:
+
+    <div class="code">
+      <pre>
+configStorage =&gt; {
+      type        =&gt; <span class="java-quote">"DBI"</span>,
+      dbiChain    =&gt; <span class="java-quote">"dbi:mysql:..."</span>,
+      dbiUser     =&gt; <span class="java-quote">"lemonldap"</span>,
+      dbiPassword =&gt; <span class="java-quote">"password"</span>,
+      dbiTable    =&gt; <span class="java-quote">"lmConfig"</span>,
+  },
+</pre>
+    </div>
+
+    <h4 class="heading-1-1-1"><span id="HSetApache3A3ASessionbackend">Set
+    Apache::Session backend</span></h4>
+
+    <p class="paragraph"></p>Go to the Manager and go in <strong class=
+    "strong">General Parameters &gt; Session Storage</strong>. Then change
+    <strong class="strong">Apache::Session module</strong> to
+    "Apache::Session::MySQL" and in <strong class="strong">Apache::Session
+    parameters</strong> configure the following options:
+
+    <ul class="star">
+      <li>DataSource (for example:
+      DBI:mysql:database=lemonldapng;host=127.0.0.1)</li>
+
+      <li>UserName</li>
+
+      <li>Password</li>
+
+      <li>TableName</li>
+
+      <li>LockDataSource</li>
+
+      <li>LockUserName</li>
+
+      <li>LockPassword</li>
+    </ul>You can also set the session module in perl scripts:
+
+    <div class="code">
+      <pre>
+globalStorage  =&gt; <span class="java-quote">"Apache::Session::MySQL"</span>,
+  globalStorageOptions =&gt; {
+      DataSource       =&gt; <span class=
+"java-quote">"dbi:mysql:database=lemonldapng;host=127.0.0.1"</span>,
+      UserName         =&gt; <span class="java-quote">"db_user"</span>,
+      Password         =&gt; <span class="java-quote">"db_password"</span>,
+      TableName        =&gt; <span class="java-quote">"sessions"</span>,
+      LockDataSource   =&gt; <span class=
+"java-quote">"dbi:mysql:database=lemonldapng;host=127.0.0.1"</span>,
+      LockUserName     =&gt; <span class="java-quote">"db_user"</span>,
+      LockPassword     =&gt; <span class="java-quote">"db_password"</span>,
+  },
+</pre>
+    </div>
+  </div>
+
+  <p class="footer"><a href="index.html">Index</a></p>
+</body>
+</html>

@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Linux/x86 (vers 6 November 2007), see www.w3.org" />
+
+  <title>Lemonldap::NG documentation: 3-Table-of-contents-fr.html</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+  <style type="text/css">
+/*<![CDATA[*/
+    body{
+      background: #ddd;
+      font-family: sans-serif;
+      font-size: 11pt;
+      padding: 0 50px;
+    }
+    div.main-content{
+      padding: 10px;
+      background: #fff;
+      border: 2px #ccc solid;
+    }
+    a{
+      text-decoration: none;
+    }
+    p.footer{
+      text-align: center;
+      margin: 5px 0 0 0;
+    }
+    .heading-1{
+      text-align: center;
+      color: orange;
+      font-variant: small-caps;
+      font-size: 20pt;
+    }
+    .heading-1-1{
+      color: orange;
+      font-size: 14pt;
+      border-bottom: 2px #ccc solid;
+    }
+    pre{
+      background: #eee;
+      border: 2px #ccc solid;
+      padding: 5px;
+      border-left: 10px #ccc solid;
+    }
+    ul.star li{
+      list-style-type: square;
+    }
+  /*]]>*/
+  </style>
+</head>
+
+<body>
+  <div class="main-content">
+    <h2 class="heading-1"><span id=
+    "HDocumentationdeLemonLDAP3A3ANG">Documentation de
+    LemonLDAP::NG</span></h2>
+
+    <p class="paragraph"></p>
+
+    <ul>
+      <li><a href="#HInstallation">Installation</a></li>
+
+      <li>
+        <a href="#HConfiguration">Configuration</a>
+
+        <ul>
+          <li><a href="#HGC3A9nC3A9ral">G&eacute;n&eacute;ral</a></li>
+
+          <li><a href="#HLDAP">LDAP</a></li>
+
+          <li><a href="#HFonctionnalitC3A9sC3A9tendues">Fonctionnalit&eacute;s
+          &eacute;tendues</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <a href="#HProtectiondesapplications">Protection des applications</a>
+
+        <ul>
+          <li><a href="#HApplicationsexistantes">Applications
+          existantes</a></li>
+
+          <li><a href="#HConnecteurs">Connecteurs</a></li>
+
+          <li><a href="#HApplications22maison22">Applications
+          "maison"</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <a href="#HAutres">Autres</a>
+
+        <ul>
+          <li><a href="#HFAQ">FAQ</a></li>
+
+          <li><a href="#HErreurs">Erreurs</a></li>
+
+          <li><a href="#HFormations">Formations</a></li>
+        </ul>
+      </li>
+    </ul><strong class="strong">Documentation applicable pour LemonLDAP::NG
+    &gt;= 0.9</strong>
+
+    <p class="paragraph"></p><strong class="strong">Merci de lire <span class=
+    "wikilink"><a href="2-FAQ-fr.html">FAQ</a></span> en premier</strong>
+
+    <h3 class="heading-1-1"><span id=
+    "HInstallation">Installation</span></h3><img src=
+    "out_of_the_box_nicu_bucu_01.png" alt="out_of_the_box_nicu_bucu_01.png" />
+
+    <ul class="star">
+      <li><span class="wikilink"><a href=
+      "3.1-Install-prerequesites.html">Pr&eacute;requis et
+      d&eacute;pendances</a></span> (en)</li>
+
+      <li><span class="wikilink"><a href=
+      "3.2-Install-from-tarball.html">Installation depuis l'archive</a></span>
+      (en)</li>
+
+      <li><span class="wikilink"><a href=
+      "3.3-Install-from-debian-packages.html">Installation sous Debian/Ubuntu
+      &agrave; partir des paquets</a></span> (en)</li>
+
+      <li><span class="wikilink"><a href=
+      "3.4-Install-of-MySQL-storage.html">Utilisation de MySQL pour le
+      stockage des sessions et/ou de la configuration</a></span> (en)</li>
+
+      <li><span class="wikilink"><a href=
+      "3.5-Install-of-example-fr.html">Installation l'exemple
+      fourni</a></span></li>
+    </ul>
+
+    <h3 class="heading-1-1"><span id=
+    "HConfiguration">Configuration</span></h3><img src=
+    "tools_nicu_buculei_01.png" alt="tools_nicu_buculei_01.png" />
+
+    <h4 class="heading-1-1-1"><span id=
+    "HGC3A9nC3A9ral">G&eacute;n&eacute;ral</span></h4>
+
+    <ul class="star">
+      <li><span class="wikilink"><a href=
+      "4.1-Configuration-overview.html">Vision globale de la
+      configuration</a></span> (en)</li>
+
+      <li><span class="wikilink"><a href=
+      "4.1-Configuration-parameter-list.html">Liste des param&egrave;tres de
+      configuration</a></span> (en)</li>
+
+      <li><span class="wikilink"><a href="4.1-Configure-portal-menu.html">Menu
+      du portail</a></span> (en)</li>
+
+      <li><span class="wikilink"><a href=
+      "4.1-HTML-templates-customization.html">Personnalisation des canevas
+      HTML pour le portail</a></span> (en)</li>
+
+      <li><span class="wikilink"><a href="4.1-RBAC-model.html">Mod&egrave;le
+      RBAC</a></span> (en)</li>
+    </ul>
+
+    <h4 class="heading-1-1-1"><span id="HLDAP">LDAP</span></h4>
+
+    <ul class="star">
+      <li><span class="wikilink"><a href=
+      "4.2-Configure-password-policy.html">Utilisation de la politique des
+      mots de passe</a></span> (en)</li>
+
+      <li><span class="wikilink"><a href=
+      "/xwiki/bin/view/NG/SpecLDAPSchema">Extension du sch&eacute;ma
+      LDAP</a></span> (en)</li>
+    </ul>
+
+    <h4 class="heading-1-1-1"><span id=
+    "HFonctionnalitC3A9sC3A9tendues">Fonctionnalit&eacute;s
+    &eacute;tendues</span></h4>
+
+    <ul class="star">
+      <li><span class="wikilink"><a href=
+      "4.3-Configure-SOAP-fr.html">Utilisation des Web Services (modules
+      SOAP)</a></span> (fr)</li>
+
+      <li><span class="wikilink"><a href=
+      "4.3-Configure-Liberty-Alliance-fr.html">Utilisation de Liberty Alliance
+      pour la f&eacute;d&eacute;ration d'identit&eacute;s (projet
+      FederID)</a></span> (fr)</li>
+    </ul>
+
+    <h3 class="heading-1-1"><span id="HProtectiondesapplications">Protection
+    des applications</span></h3><img src="padlock_aj_ashton_01.png" alt=
+    "padlock_aj_ashton_01.png" />
+
+    <h4 class="heading-1-1-1"><span id="HApplicationsexistantes">Applications
+    existantes</span></h4>
+
+    <p class="paragraph"></p>
+
+    <table class="wiki-table" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <th>Application</th>
+
+        <th>Description</th>
+      </tr>
+
+      <tr class="table-odd">
+        <td><strong class="strong">Dokuwiki</strong><br />
+        <img src="dokuwiki_logo.png" alt="dokuwiki_logo.png" /></td>
+
+        <td>Dokuwiki est un moteur de wiki en PHP<br />
+        <br />
+        <span class="wikilink"><a href=
+        "5-Appli-Dokuwiki.html">Proc&eacute;dure SSO</a></span> (en)<br />
+        <span class="wikiexternallink"><a href="http://www.dokuwiki.org">Site
+        web officiel</a></span></td>
+      </tr>
+
+      <tr class="table-even">
+        <td><strong class="strong">Gestion et de R&eacute;servations de
+        Ressources</strong><br />
+        <img src="NG/Documentation/grr_logo.png" alt="grr_logo.png" /></td>
+
+        <td>GRR permet de g&eacute;rer la r&eacute;servation de
+        ressources<br />
+        <br />
+        <span class="wikilink"><a href=
+        "/xwiki/bin/view/NG/DocAppGRR">Proc&eacute;dure SSO</a></span>
+        (fr)<br />
+        <span class="wikiexternallink"><a href=
+        "http://grr.mutualibre.org/">Site web officiel</a></span></td>
+      </tr>
+
+      <tr class="table-odd">
+        <td><strong class="strong">GLPI</strong><br />
+        <img src="/xwiki/bin/download/NG/Documentation/glpi_logo.png" alt=
+        "glpi_logo.png" /></td>
+
+        <td>GLPI est outil de gestion de parc<br />
+        <br />
+        <span class="wikilink"><a href=
+        "/xwiki/bin/view/NG/DocAppGLPI">Proc&eacute;dure SSO</a></span>
+        (en)<br />
+        <span class="wikiexternallink"><a href="http://glpi-project.org">Site
+        web officiel</a></span></td>
+      </tr>
+
+      <tr class="table-even">
+        <td><strong class="strong">phpLDAPadmin</strong><br />
+        <img src="/xwiki/bin/download/NG/Documentation/phpldapadmin_logo.png"
+        alt="phpldapadmin_logo.png" /></td>
+
+        <td>Interface web de gestion d'annuaire LDAP<br />
+        <br />
+        <span class="wikilink"><a href=
+        "5-Appli-phpLDAPadmin.html">Proc&eacute;dure SSO</a></span> (en)<br />
+        <span class="wikiexternallink"><a href=
+        "http://phpldapadmin.sourceforge.net">Site web
+        officiel</a></span></td>
+      </tr>
+
+      <tr class="table-odd">
+        <td><strong class="strong">Sympa</strong><br />
+        <img src="/xwiki/bin/download/NG/Documentation/sympa_logo.png" alt=
+        "sympa_logo.png" /></td>
+
+        <td>Gestionnaire de listes de diffusion<br />
+        <br />
+        <span class="wikilink"><a href="5-Appli-Sympa.html">Proc&eacute;dure
+        SSO</a></span> (en)<br />
+        <span class="wikiexternallink"><a href="http://www.sympa.org/">Site
+        web officiel</a></span></td>
+      </tr>
+    </table>
+
+    <h4 class="heading-1-1-1"><span id="HConnecteurs">Connecteurs</span></h4>
+
+    <p class="paragraph"></p>
+
+    <table class="wiki-table" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <th>Application</th>
+
+        <th>Description</th>
+      </tr>
+
+      <tr class="table-odd">
+        <td><strong class="strong">Tomcat</strong><br />
+        <img src="tomcat_logo.png" alt="tomcat_logo.png" /></td>
+
+        <td>Tomcat est un conteneur de servlets J2EE. Il utilise des valves
+        pour certaines fonctionnalit&eacute;s, comme l'int&eacute;gration au
+        SSO.<br />
+        <br />
+        <span class="wikilink"><a href=
+        "5-Appli-Tomcat-Valve.html">Proc&eacute;dure SSO</a></span> (en)<br />
+        <span class="wikiexternallink"><a href=
+        "http://tomcat.apache.org/">Site web officiel</a></span></td>
+      </tr>
+    </table>
+
+    <h4 class="heading-1-1-1"><span id="HApplications22maison22">Applications
+    "maison"</span></h4>
+
+    <ul class="star">
+      <li>Comment modifier mon application?</li>
+    </ul>
+
+    <h3 class="heading-1-1"><span id="HAutres">Autres</span></h3><img src=
+    "tux_clemente_01.png" alt="tux_clemente_01.png" />
+
+    <h4 class="heading-1-1-1"><span id="HFAQ">FAQ</span></h4>
+
+    <p class="paragraph"></p>Voir la page <span class="wikilink"><a href=
+    "2-FAQ-fr.html">FAQ</a></span>.
+
+    <h4 class="heading-1-1-1"><span id="HErreurs">Erreurs</span></h4>
+
+    <p class="paragraph"></p>Voir la page <span class="wikilink"><a href=
+    "6-Errors-fr.html">erreurs</a></span>.
+
+    <h4 class="heading-1-1-1"><span id="HFormations">Formations</span></h4>
+
+    <ul class="star">
+      <li><span class="wikiexternallink"><a href=
+      "http://www.linagora.org/article166.html">Le WebSSO LemonLDAP::NG
+      (LINAGORA)</a></span> (fr)</li>
+    </ul>
+  </div>
+
+  <p class="footer"><a href="index.html">Index</a></p>
+</body>
+</html>

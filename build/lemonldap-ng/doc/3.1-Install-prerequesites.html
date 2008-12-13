@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Linux/x86 (vers 6 November 2007), see www.w3.org" />
+
+  <title>Lemonldap::NG documentation: 3.1-Install-prerequesites.html</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+  <style type="text/css">
+/*<![CDATA[*/
+    body{
+      background: #ddd;
+      font-family: sans-serif;
+      font-size: 11pt;
+      padding: 0 50px;
+    }
+    div.main-content{
+      padding: 10px;
+      background: #fff;
+      border: 2px #ccc solid;
+    }
+    a{
+      text-decoration: none;
+    }
+    p.footer{
+      text-align: center;
+      margin: 5px 0 0 0;
+    }
+    .heading-1{
+      text-align: center;
+      color: orange;
+      font-variant: small-caps;
+      font-size: 20pt;
+    }
+    .heading-1-1{
+      color: orange;
+      font-size: 14pt;
+      border-bottom: 2px #ccc solid;
+    }
+    pre{
+      background: #eee;
+      border: 2px #ccc solid;
+      padding: 5px;
+      border-left: 10px #ccc solid;
+    }
+    ul.star li{
+      list-style-type: square;
+    }
+  /*]]>*/
+  </style>
+</head>
+
+<body>
+  <div class="main-content">
+    <h2 class="heading-1"><span id=
+    "HPrerequisitesanddependencies">Prerequisites and dependencies</span></h2>
+
+    <p class="paragraph"></p>
+
+    <ul>
+      <li><a href="#HApache">Apache</a></li>
+
+      <li>
+        <a href="#HPerl">Perl</a>
+
+        <ul>
+          <li><a href="#HNeededforallmodules">Needed for all modules</a></li>
+
+          <li><a href="#HNeededforPortal">Needed for Portal</a></li>
+
+          <li><a href="#HNeededforHandler">Needed for Handler</a></li>
+
+          <li><a href="#HNeededforManager">Needed for Manager</a></li>
+        </ul>
+      </li>
+    </ul>
+
+    <h3 class="heading-1-1"><span id="HApache">Apache</span></h3>
+
+    <p class="paragraph"></p>To use Lemonldap::NG, you have to run a LDAP
+    server and of course an Apache server compiled with mod-perl (version 1.3
+    or 2.x). Generaly, the version of Apache proposed with your Linux
+    distribution match, but some distributions used an experimental version of
+    mod_perl with Apache2 (mod_perl-1.99) which does not work with
+    Lemonldap::NG. With such distributions (like Debian-3.1), you have to use
+    Apache-1.3 or to use a mod_perl backport (www.backports.org package for
+    Debian works fine).
+
+    <p class="paragraph"></p>For Apache2, you can use both mpm-worker and
+    mpm-prefork. Mpm-worker works faster and Lemonldap::NG use the thread
+    system for best performance. If you have to use mpm-prefork (for example
+    if you use PHP), Lemonldap::NG will work anyway.
+
+    <p class="paragraph"></p>You can use Lemonldap::NG in an heterogene world:
+    the authentication portal and the manager can work in any version of
+    Apache 1.3 or more even if mod_perl is not compiled, with
+    ModPerl::Registry or not&hellip; Only the handler (site protector) need
+    mod_perl. The different handlers can run on different servers with
+    different versions of Apache/mod_perl.
+
+    <h3 class="heading-1-1"><span id="HPerl">Perl</span></h3>
+
+    <h4 class="heading-1-1-1"><span id="HNeededforallmodules">Needed for all
+    modules</span></h4>
+
+    <p class="paragraph"></p>Apache::Session, Net::LDAP, MIME::Base64, CGI,
+    LWP::UserAgent, Cache::Cache, DBI, XML::Simple
+
+    <h4 class="heading-1-1-1"><span id="HNeededforPortal">Needed for
+    Portal</span></h4>
+
+    <p class="paragraph"></p>Apache::Session, Net::LDAP, MIME::Base64, CGI,
+    DBI
+
+    <h4 class="heading-1-1-1"><span id="HNeededforHandler">Needed for
+    Handler</span></h4>
+
+    <p class="paragraph"></p>Apache::Session, LWP::UserAgent, Cache::Cache,
+    DBI
+
+    <h4 class="heading-1-1-1"><span id="HNeededforManager">Needed for
+    Manager</span></h4>
+
+    <p class="paragraph"></p>CGI, XML::Simple, DBI
+  </div>
+
+  <p class="footer"><a href="index.html">Index</a></p>
+</body>
+</html>

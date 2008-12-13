@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Linux/x86 (vers 6 November 2007), see www.w3.org" />
+
+  <title>Lemonldap::NG documentation:
+  4.1-HTML-templates-customization.html</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+  <style type="text/css">
+/*<![CDATA[*/
+    body{
+      background: #ddd;
+      font-family: sans-serif;
+      font-size: 11pt;
+      padding: 0 50px;
+    }
+    div.main-content{
+      padding: 10px;
+      background: #fff;
+      border: 2px #ccc solid;
+    }
+    a{
+      text-decoration: none;
+    }
+    p.footer{
+      text-align: center;
+      margin: 5px 0 0 0;
+    }
+    .heading-1{
+      text-align: center;
+      color: orange;
+      font-variant: small-caps;
+      font-size: 20pt;
+    }
+    .heading-1-1{
+      color: orange;
+      font-size: 14pt;
+      border-bottom: 2px #ccc solid;
+    }
+    pre{
+      background: #eee;
+      border: 2px #ccc solid;
+      padding: 5px;
+      border-left: 10px #ccc solid;
+    }
+    ul.star li{
+      list-style-type: square;
+    }
+  /*]]>*/
+  </style>
+</head>
+
+<body>
+  <div class="main-content">
+    <h2 class="heading-1"><span id="HPortalHTMLtemplatesdesign">Portal HTML
+    templates design</span></h2>
+
+    <p class="paragraph"></p>
+
+    <ul>
+      <li><a href=
+      "#HLemonLDAP3A3ANGskinsandHTML3A3ATemplatePerlmodule">LemonLDAP::NG
+      skins and HTML::Template Perl module</a></li>
+
+      <li>
+        <a href="#HTemplatesvariablesprovidedbyportal2Findexpl">Templates
+        variables provided by portal/index.pl</a>
+
+        <ul>
+          <li><a href="#HCommonvariables">Common variables</a></li>
+
+          <li><a href="#Hlogintplspecificvariables">login.tpl specific
+          variables</a></li>
+
+          <li><a href="#Hmenutplspecificvariables">menu.tpl specific
+          variables</a></li>
+        </ul>
+      </li>
+
+      <li><a href="#HTemplatestructure">Template structure</a></li>
+
+      <li>
+        <a href="#HInternationalization28i18n29">Internationalization
+        (i18n)</a>
+
+        <ul>
+          <li><a href="#HExampleofmonolingualtemplate">Example of mono-lingual
+          template</a></li>
+
+          <li><a href="#HExampleofmultilingualtemplate">Example of
+          multi-lingual template</a></li>
+        </ul>
+      </li>
+    </ul><strong class="strong">Documentation applicable for LemonLDAP::NG
+    &gt;= 0.9.3</strong>
+
+    <h3 class="heading-1-1"><span id=
+    "HLemonLDAP3A3ANGskinsandHTML3A3ATemplatePerlmodule">LemonLDAP::NG skins
+    and HTML::Template Perl module</span></h3>
+
+    <p class="paragraph"></p>LemonLDAP::NG templates are designed for
+    <span class="wikiexternallink"><a href=
+    "http://search.cpan.org/~samtregar/HTML-Template-2.9/">HTML::Templates
+    Perl module</a></span>.
+
+    <p class="paragraph"></p>LemonLDAP::NG portal use "skins", located in the
+    skins/ directory of the portal. Each skin is a particular directory, for
+    example skins/default/ for the default skin.
+
+    <p class="paragraph"></p>Here is the list of required template files:
+
+    <ul class="star">
+      <li>login.tpl: template for the login page.</li>
+
+      <li>menu.tpl: template for the menu page.</li>
+
+      <li>error.tpl: tempalte for the error page.</li>
+
+      <li>header.tpl: common header (included in above templates).</li>
+
+      <li>footer.tpl: common footer (included in above templates).</li>
+
+      <li>notification.tpl: template to display notifications.</li>
+    </ul>Each template include a CSS file, named "styles.css".
+
+    <p class="paragraph"></p>To create your own skin, just copy the default
+    skin to another directory (eg.: skins/myskin/) and edit templates and CSS
+    files. Advanced customization can be done by editing the portal/index.pl.
+
+    <h3 class="heading-1-1"><span id=
+    "HTemplatesvariablesprovidedbyportal2Findexpl">Templates variables
+    provided by portal/index.pl</span></h3>
+
+    <p class="paragraph"></p>When you edit/create a template file, you can use
+    some variables provided by the portal script. Of course, you can add
+    variables by editing the portal/index.pl.
+
+    <h4 class="heading-1-1-1"><span id="HCommonvariables">Common
+    variables</span></h4>
+
+    <ul class="star">
+      <li>AUTH_ERROR: error text returned by the portal.</li>
+
+      <li>AUTH_ERROR_TYPE: type of the error:
+
+        <ul class="star">
+          <li>positive: the action was successful;</li>
+
+          <li>negative: a problem occured;</li>
+
+          <li>warning: not a fatal error, need user action.</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h4 class="heading-1-1-1"><span id="Hlogintplspecificvariables">login.tpl
+    specific variables</span></h4>
+
+    <ul class="star">
+      <li>AUTH_URL: URL submitted for redirection.</li>
+
+      <li>DISPLAY_FORM: set to 1 if a form can be displayed.</li>
+    </ul>
+
+    <h4 class="heading-1-1-1"><span id="Hmenutplspecificvariables">menu.tpl
+    specific variables</span></h4>
+
+    <ul class="star">
+      <li>LOGOUT_URL: URL for logout.</li>
+
+      <li>DISPLAY_APPSLIST: boolean to display the appslist tab</li>
+
+      <li>DISPLAY_PASSWORD: boolean to display the password tab</li>
+
+      <li>DISPLAY_LOGOUT: boolean to display the logout tab</li>
+
+      <li>DISPLAY_TAB: name of the pre-selected tab</li>
+
+      <li>APPSLIST_MENU: html code of appslist menu div</li>
+
+      <li>APPSLIST_DESC: html code of appslist description divs</li>
+    </ul>
+
+    <h3 class="heading-1-1"><span id="HTemplatestructure">Template
+    structure</span></h3>
+
+    <p class="paragraph"></p>The default LemonLDAP::NG template follow this
+    structure:
+
+    <ul class="star">
+      <li>html
+
+        <ul class="star">
+          <li>body
+
+            <ul class="star">
+              <li>div id=page
+
+                <ul class="star">
+                  <li>div id=header</li>
+
+                  <li>div class=message</li>
+
+                  <li>(html content)</li>
+
+                  <li>div id=footer</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+    <h3 class="heading-1-1"><span id=
+    "HInternationalization28i18n29">Internationalization (i18n)</span></h3>
+
+    <p class="paragraph"></p>LemonLDAP::NG portal is able to display an HTML
+    template according to the user's browser language.
+
+    <p class="paragraph"></p>In order to work, you have to set inside the
+    template the translations of all displayed text. Error message translation
+    is already done inside LemonLDAP::NG Portal module.
+
+    <h4 class="heading-1-1-1"><span id="HExampleofmonolingualtemplate">Example
+    of mono-lingual template</span></h4>
+
+    <p class="paragraph"></p>
+
+    <div class="code">
+      <pre>
+&lt;p&gt;&lt;label&gt;Login&lt;/label&gt;
+&lt;input name=<span class="java-quote">"user"</span> type=<span class=
+"java-quote">"text"</span> size=<span class="java-quote">"30"</span> /&gt;
+&lt;/p&gt;
+</pre>
+    </div>
+
+    <p class="paragraph"></p>The string "Login" is set in the template and
+    will not be translated.
+
+    <h4 class="heading-1-1-1"><span id=
+    "HExampleofmultilingualtemplate">Example of multi-lingual
+    template</span></h4>
+
+    <p class="paragraph"></p>
+
+    <div class="code">
+      <pre>
+&lt;p&gt;&lt;label&gt;&lt;lang en=<span class=
+"java-quote">"Login"</span> fr=<span class=
+"java-quote">"Identifiant"</span> /&gt;&lt;/label&gt;
+&lt;input name=<span class="java-quote">"user"</span> type=<span class=
+"java-quote">"text"</span> size=<span class="java-quote">"30"</span> /&gt;
+&lt;/p&gt;
+</pre>
+    </div>
+
+    <p class="paragraph"></p>The markup &lt;lang&gt; will be catched by
+    LemonLDAP::NG and only the wanted translation will be displayed. If the
+    user's language has no corresponding translation, the first translation is
+    selected. So you can set your default language by choosing the first
+    translation ("en" in the above example).
+
+    <p class="paragraph"></p><strong class="strong">Warning:</strong> don't
+    forget the quotes and the trailing slash of the markup!
+  </div>
+
+  <p class="footer"><a href="index.html">Index</a></p>
+</body>
+</html>

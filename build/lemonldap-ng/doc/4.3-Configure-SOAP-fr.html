@@ -7,7 +7,7 @@
   <meta name="generator" content=
   "HTML Tidy for Linux/x86 (vers 6 November 2007), see www.w3.org" />
 
-  <title>Lemonldap::NG documentation: soap-fr.html</title>
+  <title>Lemonldap::NG documentation: 4.3-Configure-SOAP-fr.html</title>
   <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
   <style type="text/css">
 /*<![CDATA[*/
@@ -63,6 +63,9 @@
 
     <ul>
       <li><a href="#HPrC3A9requis">Pr&eacute;-requis</a></li>
+
+      <li><a href="#HWebServicepourl27authentification">Web Service pour
+      l'authentification</a></li>
 
       <li>
         <a href="#HWebServicepourl27accC3A8sauxsessions">Web Service pour
@@ -143,33 +146,80 @@
 </pre>
     </div>
 
+    <h3 class="heading-1-1"><span id="HWebServicepourl27authentification">Web
+    Service pour l'authentification</span></h3><br />
+    <br />
+    &Agrave; partie de la version 0.9.3, les fonctionnalit&eacute;s SOAP sont
+    incluse dans le portail. Il suffit de les activer avec l'option
+    <strong class="strong">"<tt>Soap =&gt; 1</tt>"</strong>.<br />
+    <br />
+    Le portail est alors capable de r&eacute;pondre aux sollicitations web
+    classiques et aux requ&ecirc;tes SOAP. Il propose 2 fonctions SOAP:
+
+    <ul class="star">
+      <li>getCookies(user,password) : retourne le ou les cookies
+      g&eacute;n&eacute;r&eacute;s par le portail et un code d'erreur (0 si
+      tout va bien)</li>
+
+      <li>error(language,code) : retourne le texte correspondant &agrave;
+      l'erreur</li>
+    </ul>Exemple de script client :<br />
+    <br />
+
+    <div class="code">
+      <pre>
+#!/usr/bin/perl -l
+use SOAP::Lite;
+use Data::Dumper;<br /><br />my $soap = SOAP::Lite-&gt;proxy('http://auth.example.com/')
+                     -&gt;uri('urn:/Lemonldap/NG/Portal/SharedConf');<br /><br />my $r = $soap-&gt;getCookies( 'user', 'password' );<br /><br /># Catch SOAP errors
+<span class="java-keyword">if</span> ( $r-&gt;fault ) {
+    print STDERR <span class=
+"java-quote">"SOAP Error: "</span> . $r-&gt;fault-&gt;{faultstring};
+}
+<span class="java-keyword">else</span> {
+    my $res = $r-&gt;result();<br /><br />    # If authentication failed, display error
+    <span class="java-keyword">if</span> ( $res-&gt;{error} ) {
+        print STDERR <span class="java-quote">"Error: "</span>
+          . $soap-&gt;error( 'fr', $res-&gt;{error} )-&gt;result();
+    }<br /><br />    # print session-ID
+    <span class="java-keyword">else</span> {
+        print <span class=
+"java-quote">"Cookie: lemonldap="</span> . $res-&gt;{cookies}-&gt;{lemonldap};
+    }
+}
+</pre>
+    </div>
+
     <h3 class="heading-1-1"><span id=
     "HWebServicepourl27accC3A8sauxsessions">Web Service pour l'acc&egrave;s
     aux sessions</span></h3>
 
     <h4 class="heading-1-1-1"><span id=
-    "HPrC3A9sentation">Pr&eacute;sentation</span></h4><br />
-    <br />
-    Ce Web Service permet au portail (Lemonldap::NG::Portal) et au handler
-    (Lemonldap::NG::Handler) d'acc&eacute;der en lecture et en &eacute;criture
-    aux sessions WebSSO. Cela permet par exemple &agrave; un handler d'aller
+    "HPrC3A9sentation">Pr&eacute;sentation</span></h4>
+
+    <p class="paragraph"></p>Ce Web Service permet au portail
+    (Lemonldap::NG::Portal) et au handler (Lemonldap::NG::Handler)
+    d'acc&eacute;der en lecture et en &eacute;criture aux sessions WebSSO.
+    Cela permet par exemple &agrave; un handler d'aller
     r&eacute;cup&eacute;rer les sessions &agrave; distance avec une simple
     requ&ecirc;te SOAP (sur HTTP). Pour des architectures plus complexes, cela
     permet &eacute;galement de disposer de plusieurs portails qui enregistrent
-    les sessions &agrave; distance.<br />
-    <br />
-    <img src=
+    les sessions &agrave; distance.
+
+    <p class="paragraph"></p><img src=
     "/xwiki/bin/download/NG/DocSOAP/DIA-Fonctionnement_LemonLDAP%3A%3ANG_SOAP_Sessions-1.png"
     alt="DIA-Fonctionnement_LemonLDAP::NG_SOAP_Sessions-1.png" />
 
     <h4 class="heading-1-1-1"><span id=
     "HInstallationduscriptserveurSOAP">Installation du script serveur
-    SOAP</span></h4><br />
-    <br />
-    Au niveau du serveur principal, c'est-&agrave;-dire celui qui stocke les
-    sessions, le script suivant doit &ecirc;tre install&eacute;, par exemple
-    dans /var/www/lemonldapng/soap/sessions.pl :<br />
-    <br />
+    SOAP</span></h4>
+
+    <p class="paragraph"></p>Au niveau du serveur principal,
+    c'est-&agrave;-dire celui qui stocke les sessions, le script suivant doit
+    &ecirc;tre install&eacute;, par exemple dans
+    /var/www/lemonldapng/soap/sessions.pl :
+
+    <p class="paragraph"></p>
 
     <div class="code">
       <pre>

@@ -7,7 +7,7 @@
   <meta name="generator" content=
   "HTML Tidy for Linux/x86 (vers 6 November 2007), see www.w3.org" />
 
-  <title>Lemonldap::NG documentation: overview-fr.html</title>
+  <title>Lemonldap::NG documentation: 1-Overview-fr.html</title>
   <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
   <style type="text/css">
 /*<![CDATA[*/
@@ -70,20 +70,20 @@
 
     <p class="paragraph"></p>Lemonldap::NG est un <span class=
     "wikilink"><a href=
-    "faq-fr.html#HQu27estcequ27unWebSSO3F">Web-SSO</a></span> modulaire
+    "2-FAQ-fr.html#HQu27estcequ27unWebSSO3F">Web-SSO</a></span> modulaire
     bas&eacute; sur les modules Apache::Session. Il simplifie la construction
     d'une aire prot&eacute;g&eacute;e en minimisant les impacts sur les
     applications. Il g&egrave;re &agrave; la fois les authentifications et les
     autorisations et fournit des en-t&ecirc;tes HTTP pour la
-    tra&ccedil;abilit&eacute;. On obtient ainsi une protection AAA complete
-    <i class="italic">(Authentication, Authorization and Accounting)</i> des
-    espaces web.
+    tra&ccedil;abilit&eacute;. On obtient ainsi une protection AAA
+    compl&egrave;te <i class="italic">(Authentication, Authorization and
+    Accounting)</i> des espaces web.
 
     <p class="paragraph"></p>Lemonldap::NG est une r&eacute;&eacute;criture
     compl&egrave;te de Lemonldap <i class="italic">(<span class=
     "wikilink"><a href=
-    "faq-fr.html#HQu27apporteLemonldap3A3ANGparrapportauxautresSSO3F">voir les
-    diff&eacute;rences</a></span>)</i>. Tous les &eacute;l&eacute;ments
+    "2-FAQ-fr.html#HQu27apporteLemonldap3A3ANGparrapportauxautresSSO3F">voir
+    les diff&eacute;rences</a></span>)</i>. Tous les &eacute;l&eacute;ments
     n&eacute;cessaires &agrave; son exploitation et son administration sont
     fournis dans le package. En revanche les composants
     d&eacute;velopp&eacute;s pour Lemonldap ne sont pas compatibles avec
@@ -134,7 +134,7 @@
 
       <li><a href="#HAuteur">Auteur</a></li>
 
-      <li><a href="#HCopyrightetlicense">Copyright et license</a></li>
+      <li><a href="#HCopyrightetlicence">Copyright et licence</a></li>
     </ul>
 
     <h3 class="heading-1-1"><span id="HArchitecture">Architecture</span></h3>
@@ -170,7 +170,7 @@
 
     <ul class="star">
       <li>la base de configuration : par d&eacute;faut, il s'agit d'un simple
-      r&eacute;pertoire, mais on peut utiliser une base de donn&eacute;e pour
+      r&eacute;pertoire, mais on peut utiliser une base de donn&eacute;es pour
       permettre le fonctionnement si tous les &eacute;l&eacute;ments ne se
       trouvent pas sur le m&ecirc;me serveur,</li>
 
@@ -237,7 +237,7 @@
     tra&ccedil;abilit&eacute;</span></h3>
 
     <p class="paragraph"></p>Tous les param&egrave;tres abord&eacute;s dans ce
-    chap&icirc;tre sont accessibles via l'interface d'administration (voir la
+    chapitre sont accessibles via l'interface d'administration (voir la
     <span class="wikiexternallink"><a href=
     "http://lemonldap.objectweb.org/NG/ManagerDemo/fr/">d&eacute;monstration</a></span>).
 
@@ -249,13 +249,13 @@
     prot&eacute;g&eacute;e par un agent Lemonldap::NG, il est redirig&eacute;
     vers le portail. Celui-ci authentifie l'utilisateur par d&eacute;faut par
     une connexion LDAP, mais vous pouvez &eacute;galement utiliser un autre
-    sch&eacute;ma tel les <span class="wikiexternallink"><a href=
+    sch&eacute;ma tels les <span class="wikiexternallink"><a href=
     "http://fr.wikipedia.org/wiki/Certificat_%C3%A9lectronique">certificats
     x509</a></span> (voir Lemonldap::NG::Portal::AuthSSL(3)).
 
     <p class="paragraph"></p>Lemonldap::NG utilise les cookies de session
     g&eacute;n&eacute;r&eacute;s par le module Apache::Session soit aussi
-    s&eacute;curis&eacute; que n'importe quelle syst&egrave;me bas&eacute; sur
+    s&eacute;curis&eacute; que n'importe quel syst&egrave;me bas&eacute; sur
     des cookies al&eacute;atoires de 128 bits. Il est recommand&eacute;
     d'activer l'option "cookie s&eacute;curis&eacute;" pour &eacute;viter les
     vols de session: le cookie n'est plus autoris&eacute; &agrave; circuler en
@@ -274,7 +274,7 @@
     <p class="paragraph"></p>Les autorisations sont contr&ocirc;l&eacute;es
     seulement par les agents prot&eacute;geant les applications. En effet, le
     portail ne peut conna&icirc;tre &agrave; l'avance les applications sur
-    lesquels l'utilisateur se connectera. En configurant votre Web-SSO, vous
+    lesquelles l'utilisateur se connectera. En configurant votre Web-SSO, vous
     devez:
 
     <ul class="star">
@@ -355,7 +355,7 @@ group1        =&gt; { $departmentUID eq <span class=
     "HPerformances">Performances</span></h5>
 
     <p class="paragraph"></p>Vous pouvez utiliser des expressions Perl aussi
-    complexe que n&eacute;cessaire et vous pouvez utiliser tous les attibuts
+    complexes que n&eacute;cessaire et vous pouvez utiliser tous les attributs
     LDAP (et cr&eacute;er vos propres attributs additionnels avec le
     m&eacute;canisme des macros) dans les d&eacute;finitions de groupes, les
     r&egrave;gles d'acc&egrave;s et les en-t&ecirc;tes HTTP
@@ -366,7 +366,7 @@ group1        =&gt; { $departmentUID eq <span class=
     expressions:
 
     <ul class="star">
-      <li>les groupes et les macros ne sont &eacute;valu&eacute;es que lorsque
+      <li>les groupes et les macros ne sont &eacute;valu&eacute;s que lorsque
       l'utilisateur est renvoy&eacute; vers le portail,</li>
 
       <li>les r&egrave;gles d'acc&egrave;s et les en-t&ecirc;tes
@@ -399,7 +399,7 @@ group1 =&gt; (|(uid=xavier.guimard){$ou eq <span class=
     </div>
 
     <p class="paragraph"></p>Pour limiter les requ&ecirc;tes LDAP, il est
-    conseill&eacute; d'utiliser les expressions Perl. Ainsi seuls 2
+    conseill&eacute; d'utiliser les expressions Perl. Ainsi seules deux
     sollicitations de l'annuaire sont n&eacute;cessaires.
 
     <h4 class="heading-1-1-1"><span id=
@@ -417,7 +417,7 @@ group1 =&gt; (|(uid=xavier.guimard){$ou eq <span class=
     applications</span></h5>
 
     <p class="paragraph"></p>Comme un Web-SSO ne peut interpr&eacute;ter le
-    contenu des requ&ecirc;tes HTTP transmise aux applications
+    contenu des requ&ecirc;tes HTTP transmises aux applications
     prot&eacute;g&eacute;es, il ne peut enregistrer au mieux que les URL. Et
     comme Apache le fait parfaitement, Lemonldap::NG::Handler(3) lui fournit
     le nom &agrave; enregistrer dans les journaux. Le param&egrave;tre
@@ -430,10 +430,11 @@ group1 =&gt; (|(uid=xavier.guimard){$ou eq <span class=
 
     <p class="paragraph"></p>Lemonldap::NG peut exporter des en-t&ecirc;tes
     HTTP aussi bien en utilisant Apache en reverse-proxy qu'en
-    prot&eacute;gent directement les applications. Par d&eacute;faut, le champ
-    Auth-User est utilis&eacute; mais vous pouvez choisir les en-t&ecirc;tes
-    que vous transmettez &agrave; chaque application s&eacute;paremment. Les
-    expressions d&eacute;finissant les en-t&ecirc;tes associent :
+    prot&eacute;geant directement les applications. Par d&eacute;faut, le
+    champ Auth-User est utilis&eacute; mais vous pouvez choisir les
+    en-t&ecirc;tes que vous transmettez &agrave; chaque application
+    s&eacute;par&eacute;ment. Les expressions d&eacute;finissant les
+    en-t&ecirc;tes associent :
 
     <ul class="star">
       <li>le nom d'en-t&ecirc;te,</li>
@@ -473,11 +474,11 @@ Remote-IP     =&gt; $ip
     <ul class="star">
       <li>Lemonldap::NG est un projet diff&eacute;rent de Lemonldap et
       contient tous les &eacute;l&eacute;ments n&eacute;cessaires &agrave; son
-      utilisation et son administration. Ainsi les logiciels tel le module
+      utilisation et son administration. Ainsi les logiciels tels le module
       webmin de Lemonldap ne fonctionnent pas avec Lemonldap::NG.</li>
 
       <li>L'agent de protection Apache ("handler") fonctionne &agrave; la fois
-      avec les versions 1.3 et 2.x d'Apache, c'est &agrave; dire avec les
+      avec les versions 1.3 et 2.x d'Apache, c'est-&agrave;-dire avec les
       versions 1 et 2 de <span class="wikiexternallink"><a href=
       "http://perl.apache.org/">mod_perl</a></span> (mais pas avec mod_perl
       1.99). Le portail et le l'interface d'administration ("manager") sont de
@@ -489,9 +490,9 @@ Remote-IP     =&gt; $ip
       que vous ne sachiez exactement ce que vous faites. Les param&egrave;tres
       pr&eacute;sent&eacute;s dans ce document sont tous accessibles dans
       l'arbre de configuration.</li>
-    </ul>Voir <span class="wikilink"><a href=
-    "advanced-install.html">installation manuel</a></span> pour la
-    documentation d'installation.
+    </ul>Voir <span class="wikilink"><a href="3-Table-of-contents-fr.html">la
+    page compl&egrave;te de documentation</a></span> pour la proc&eacute;dure
+    d'installation.
 
     <h3 class="heading-1-1"><span id=
     "HSystC3A8medestockagedessessions">Syst&egrave;me de stockage des
@@ -520,15 +521,15 @@ Remote-IP     =&gt; $ip
     limit&eacute; &agrave; 1 par utilisateur actif toutes les 10 minutes.
 
     <p class="paragraph"></p>Lemonldap::NG est tr&egrave;s rapide, mais vous
-    pouvez encore am&eacute;liorer les performances en utilisnt un module
+    pouvez encore am&eacute;liorer les performances en utilisant un module
     Cache::Cache ne n&eacute;cessitant pas d'acc&egrave;s au disque.
 
     <h3 class="heading-1-1"><span id="HAuteur">Auteur</span></h3>
 
     <p class="paragraph"></p>Xavier Guimard, &lt;x.guimard@free.fr&gt;
 
-    <h3 class="heading-1-1"><span id="HCopyrightetlicense">Copyright et
-    license</span></h3>
+    <h3 class="heading-1-1"><span id="HCopyrightetlicence">Copyright et
+    licence</span></h3>
 
     <p class="paragraph"></p>Copyright &copy; 2005-2007 par Xavier Guimard
     &lt;x.guimard@free.fr&gt;

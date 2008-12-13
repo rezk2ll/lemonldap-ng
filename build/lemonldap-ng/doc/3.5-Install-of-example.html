@@ -7,7 +7,7 @@
   <meta name="generator" content=
   "HTML Tidy for Linux/x86 (vers 6 November 2007), see www.w3.org" />
 
-  <title>Lemonldap::NG documentation: install.html</title>
+  <title>Lemonldap::NG documentation: 3.5-Install-of-example.html</title>
   <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
   <style type="text/css">
 /*<![CDATA[*/
@@ -55,121 +55,48 @@
 
 <body>
   <div class="main-content">
-    <h2 class="heading-1"><span id="HEXAMPLEINSTALLATION">EXAMPLE
-    INSTALLATION</span></h2>
+    <h2 class="heading-1"><span id=
+    "HInstallationoftheprovidedexample">Installation of the provided
+    example</span></h2>
 
     <p class="paragraph"></p>
 
     <ul>
-      <li>
-        <a href="#HPREREQ">PREREQ</a>
+      <li><a href="#HFormthetarball">Form the tarball</a></li>
 
-        <ul>
-          <li><a href="#HSoftware">Software</a></li>
+      <li><a href="#HFromDebianpackages">From Debian packages</a></li>
 
-          <li><a href="#HNeededPerlmodules">Needed Perl modules</a></li>
-        </ul>
-      </li>
-
-      <li>
-        <a href="#HBUILDING">BUILDING</a>
-
-        <ul>
-          <li><a href="#HCompleteinstall">Complete install</a></li>
-
-          <li><a href="#HDebianinstall">Debian install</a></li>
-        </ul>
-      </li>
-
-      <li><a href="#HEXAMPLECONFIGURATION">EXAMPLE CONFIGURATION</a></li>
+      <li><a href="#HConfiguration">Configuration</a></li>
     </ul>The proposed example use a protected site named test.example.com. Non
     authenticated users are redirected to auth.example.com.
 
-    <h3 class="heading-1-1"><span id="HPREREQ">PREREQ</span></h3>
+    <h3 class="heading-1-1"><span id="HFormthetarball">Form the
+    tarball</span></h3>
 
-    <h4 class="heading-1-1-1"><span id="HSoftware">Software</span></h4>
-
-    <p class="paragraph"></p>To use Lemonldap::NG, you have to run a LDAP
-    server and of course an Apache server compiled with mod-perl (version 1.3
-    or 2.x). Generaly, the version of Apache proposed with your Linux
-    distribution match, but some distributions used an experimental version of
-    mod_perl with Apache2 (mod_perl-1.99) which does not work with
-    Lemonldap::NG. With such distributions (like Debian-3.1), you have to use
-    Apache-1.3 or to use a mod_perl, CGI.pm and CGI/Cookie.pm backports
-    (www.backports.org package for Debian works fine).
-
-    <h4 class="heading-1-1-1"><span id="HNeededPerlmodules">Needed Perl
-    modules</span></h4>
-
-    <p class="paragraph"></p>Apache::Session, Net::LDAP, MIME::Base64, CGI,
-    LWP::UserAgent, Cache::Cache, DBI, XML::Simple, SOAP::Lite (only if you
-    want to use SOAP with the manager).
-
-    <p class="paragraph"></p>With Debian, use:
+    <p class="paragraph"></p>First follow the <span class="wikilink"><a href=
+    "3.2-Install-from-tarball.html">tarball installation
+    instruction</a></span>. Then run:
 
     <div class="code">
       <pre>
-apt-get install libapache-session-perl libnet-ldap-perl libcache-cache-perl libdbi-perl perl-modules libwww-perl libcache-cache-perl libxml-simple-perl
-# If you want to use SOAP with the manager:
-apt-get install libsoap-lite-perl
-</pre>
-    </div>
-
-    <h3 class="heading-1-1"><span id="HBUILDING">BUILDING</span></h3>
-
-    <h4 class="heading-1-1-1"><span id="HCompleteinstall">Complete
-    install</span></h4>
-
-    <p class="paragraph"></p>
-
-    <div class="code">
-      <pre>
-$ tar xzf lemonldap-ng-*.tar.gz
-$ cd lemonldap-ng-*
-$ make &amp;&amp; make test
-$ sudo make install
 $ make example
 </pre>
     </div>
 
-    <h4 class="heading-1-1-1"><span id="HDebianinstall">Debian
-    install</span></h4>
+    <h3 class="heading-1-1"><span id="HFromDebianpackages">From Debian
+    packages</span></h3><br />
+    <br />
+    First follow the <span class="wikilink"><a href=
+    "3.3-Install-from-debian-packages.html">debian installation
+    procedure</a></span>. The example is provided with the package, nothing
+    left to do.
 
-    <p class="paragraph"></p>
-
-    <div class="code">
-      <pre>
-$ tar xzf lemonldap-ng-*.tar.gz
-$ cd lemonldap-ng-*
-$ debuild
-$ sudo dpkg -i ../lemonldap-ng*.deb
-</pre>
-    </div>
-
-    <p class="paragraph"></p>You can also use the Debian repository :
-
-    <p class="paragraph"></p>
-
-    <div class="code">
-      <pre>
-deb <span class="nobr"><a href=
-"http://lemonldap.objectweb.org/NG/debian">http://lemonldap.objectweb.org/NG/debian</a></span> testing/
-deb-src <span class="nobr"><a href=
-"http://lemonldap.objectweb.org/NG/debian">http://lemonldap.objectweb.org/NG/debian</a></span> testing/
-</pre>
-    </div>
-
-    <p class="paragraph"></p>or use official Debian packages (available in
-    testing and unstable).
-
-    <h3 class="heading-1-1"><span id="HEXAMPLECONFIGURATION">EXAMPLE
-    CONFIGURATION</span></h3>
-
-    <p class="paragraph"></p>After build, you have a new file named
-    example/apache.conf. You just have to include this file in Apache
-    configuration:
-
-    <p class="paragraph"></p>
+    <h3 class="heading-1-1"><span id=
+    "HConfiguration">Configuration</span></h3><br />
+    <br />
+    After build, you have a new file named example/apache.conf. You just have
+    to include this file in Apache configuration:<br />
+    <br />
 
     <div class="code">
       <pre>
@@ -185,8 +112,6 @@ ln -s /usr/share/doc/lemonldap-ng/example/apache2.conf /etc/apache2/sites-enable
     </div>
 
     <p class="paragraph"></p>Modify your /etc/hosts file to include:
-
-    <p class="paragraph"></p>
 
     <div class="code">
       <pre>
@@ -210,7 +135,7 @@ ln -s /usr/share/doc/lemonldap-ng/example/apache2.conf /etc/apache2/sites-enable
     </ul>If you don't set managerDn and managerPassword, Lemonldap::NG will
     use an anonymous bind to find user dn.
 
-    <p class="paragraph"></p>WARNINGS:
+    <p class="paragraph"></p><strong class="strong">Warnings</strong>:
 
     <ul class="star">
       <li>only few parameters can be set by hand in the configuration file.

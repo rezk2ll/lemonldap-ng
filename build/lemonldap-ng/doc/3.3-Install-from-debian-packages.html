@@ -7,7 +7,8 @@
   <meta name="generator" content=
   "HTML Tidy for Linux/x86 (vers 6 November 2007), see www.w3.org" />
 
-  <title>Lemonldap::NG documentation: debian-packages-install.html</title>
+  <title>Lemonldap::NG documentation:
+  3.3-Install-from-debian-packages.html</title>
   <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
   <style type="text/css">
 /*<![CDATA[*/
@@ -64,11 +65,13 @@
     <ul>
       <li><a href="#HGetthepackages">Get the packages</a></li>
 
-      <li><a href="#HInstallpackages28Debiantesting2Funstable29">Install
-      packages (Debian testing/unstable)</a></li>
+      <li><a href="#HBuildyourpackage">Build your package</a></li>
 
-      <li><a href="#HInstallpackages28Other29">Install packages
-      (Other)</a></li>
+      <li><a href="#HInstallpackageswithaptget">Install packages with
+      apt-get</a></li>
+
+      <li><a href="#HInstallpackageswithdpkg">Install packages with
+      dpkg</a></li>
 
       <li><a href="#HFilelocation">File location</a></li>
     </ul>
@@ -107,9 +110,36 @@
 </pre>
     </div>
 
-    <h3 class="heading-1-1"><span id=
-    "HInstallpackages28Debiantesting2Funstable29">Install packages (Debian
-    testing/unstable)</span></h3><br />
+    <p class="paragraph"></p>Older versions are available on our OW2 Debian
+    repository:
+
+    <div class="code">
+      <pre>
+deb <span class="nobr"><a href=
+"http://lemonldap.objectweb.org/NG/debian">http://lemonldap.objectweb.org/NG/debian</a></span> testing/
+deb-src <span class="nobr"><a href=
+"http://lemonldap.objectweb.org/NG/debian">http://lemonldap.objectweb.org/NG/debian</a></span> testing/
+</pre>
+    </div>
+
+    <h3 class="heading-1-1"><span id="HBuildyourpackage">Build your
+    package</span></h3>
+
+    <p class="paragraph"></p>You can also get the LemonLDAP::NG archive
+    (<span class="wikiexternallink"><a href=
+    "http://forge.objectweb.org/project/showfiles.php?group_id=274">see
+    dowload section</a></span>) and make the package yourself:
+
+    <div class="code">
+      <pre>
+$ tar xzf lemonldap-ng-*.tar.gz
+$ cd lemonldap-ng-*
+$ debuild
+</pre>
+    </div>
+
+    <h3 class="heading-1-1"><span id="HInstallpackageswithaptget">Install
+    packages with apt-get</span></h3><br />
     <br />
 
     <div class="code">
@@ -118,14 +148,15 @@
 </pre>
     </div>
 
-    <h3 class="heading-1-1"><span id="HInstallpackages28Other29">Install
-    packages (Other)</span></h3><br />
+    <h3 class="heading-1-1"><span id="HInstallpackageswithdpkg">Install
+    packages with dpkg</span></h3><br />
     <br />
-    Before installing the packages, install dependencies:
+    Before installing the packages, install <span class="wikilink"><a href=
+    "3.1-Install-prerequesites.html">dependencies</a></span> with apt-get:
 
     <div class="code">
       <pre>
-# apt-get install apache2 libapache-session-perl libnet-ldap-perl libcache-cache-perl libdbi-perl perl-modules libwww-perl libcache-cache-perl libxml-simple-perl  libsoap-lite-perl libhtml-template-perl
+# apt-get install apache2 libapache2-mod-perl2 libapache-session-perl libnet-ldap-perl libcache-cache-perl libdbi-perl perl-modules libwww-perl libcache-cache-perl libxml-simple-perl  libsoap-lite-perl libhtml-template-perl
 </pre>
     </div><br />
     <br />
