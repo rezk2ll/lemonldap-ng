@@ -38,7 +38,7 @@ Description: Lemonldap::NG apache module part
 
 Package: liblemonldap-ng-conf-perl
 Architecture: all
-Depends: libdbi-perl, debconf, libregexp-assemble-perl
+Depends: ${misc:Depends}, libdbi-perl, debconf, libregexp-assemble-perl
 Recommends: libsoap-lite-perl
 Description: Lemonldap::NG apache administration interface part
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
