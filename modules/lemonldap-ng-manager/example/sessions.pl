@@ -31,7 +31,7 @@ our $cgi = Lemonldap::NG::Manager::Sessions->new({
         # protection  => 'rule: $uid=admin',
 
         ## * all authenticate users are granted
-        # protection  => 'authenticate
+        # protection  => 'authenticate',
 
         ## * nothing : not protected
 });
