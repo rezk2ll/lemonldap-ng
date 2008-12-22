@@ -40,13 +40,6 @@ use Lemonldap::NG::Portal::CDA;
 
 my $portal = Lemonldap::NG::Portal::CDA->new(
     {
-
-        # configStorage ADAPT IT as usual
-        configStorage => {
-            type    => 'File',
-            dirName => '__CONFDIR__',
-        },
-
         # SUBROUTINES OVERLOAD
         # 2 cases :
         # 1 - If LDAP search is not needed (the master SSO gives all

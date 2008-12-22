@@ -9,12 +9,7 @@ use Lemonldap::NG::Common::Conf::Constants;
 use Lemonldap::NG::Common::Apache::Session;
 use strict;
 
-my $lmconf = Lemonldap::NG::Common::Conf->new(
-    {
-        type    => 'File',
-        dirName => '__CONFDIR__',
-    }
-);
+my $lmconf = Lemonldap::NG::Common::Conf->new();
 
 my $conf = $lmconf->getConf or die "Unable to get configuration ($!)";
 

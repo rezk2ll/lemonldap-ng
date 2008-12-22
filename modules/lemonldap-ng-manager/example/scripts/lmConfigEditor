@@ -11,12 +11,7 @@ our $editFile = `mktemp`;
 chomp $refFile;
 chomp $editFile;
 
-my $conf = Lemonldap::NG::Common::Conf->new(
-    {
-        type    => 'File',
-        dirName => '__CONFDIR__',
-    }
-);
+my $conf = Lemonldap::NG::Common::Conf->new();
 
 open F1, ">$refFile" or quit($!);
 open F2, ">$editFile" or quit($!);

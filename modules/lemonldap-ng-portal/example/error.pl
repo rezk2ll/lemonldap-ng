@@ -3,15 +3,9 @@ use Lemonldap::NG::Portal::Error;
 use HTML::Template;
 
 my $skin        = "pastel";
-my $skin_dir    = "__DIR__/portal/skins/";
+my $skin_dir    = "__SKINDIR__";
 
-my $portal = Lemonldap::NG::Portal::Error->new(
-    {
-        configStorage => {
-            type    => 'File',
-            dirName => '__CONFDIR__',
-        },
-    });
+my $portal = Lemonldap::NG::Portal::Error->new();
 
 my $portal_url = $portal->getPortal;
 my $logout_url = "$portal_url?logout=1";

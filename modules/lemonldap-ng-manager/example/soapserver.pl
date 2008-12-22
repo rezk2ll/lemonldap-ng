@@ -2,11 +2,6 @@
 
 use Lemonldap::NG::Manager::SOAPServer;
 
-Lemonldap::NG::Manager::SOAPServer->start(
-    configStorage => {
-        type    => "File",
-        dirName => "__CONFDIR__"
-    }
-);
+Lemonldap::NG::Manager::SOAPServer->start();
 
 __END__

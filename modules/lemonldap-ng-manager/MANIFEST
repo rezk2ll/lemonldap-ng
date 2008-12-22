@@ -71,11 +71,9 @@ example/imgs/tombs_mag.gif
 example/index.pl
 example/jquery.js
 example/lemonldap-ng-manager.js
-example/lmConfig.mysql
 example/mrtg/lmng-mrtg
 example/mrtg/mrtg.cfg.example
 example/scripts/lmConfigEditor
-example/scripts/lmSessionDump
 example/sessions.pl
 example/soapserver.pl
 example/theme/default.css

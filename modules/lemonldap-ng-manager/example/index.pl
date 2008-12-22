@@ -4,12 +4,8 @@ use Lemonldap::NG::Manager;
 
 my $h = new Lemonldap::NG::Manager(
     {
-        configStorage => {
-            type    => 'File',
-            dirName => "__CONFDIR__",
-        },
         dhtmlXTreeImageLocation => "/imgs/",
-        applyConfFile           => '__DIR__/manager/apply.conf',
+        applyConfFile           => '__APPLYCONFFILE__',
         cssFile => 'theme/default.css',
         textareaW               => 50,
         textareaH               => 2,

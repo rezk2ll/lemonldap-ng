@@ -5,20 +5,15 @@ use HTML::Template;
 
 # Path configuration
 my $skin        = "pastel";
-my $skin_dir    = "__DIR__/portal/skins";
-my $appsxmlfile = "__SYSCONFDIR__/apps-list.xml";
+my $skin_dir    = "__SKINDIR__";
+my $appsxmlfile = "__APPSXMLFILE__";
 my $appsimgpath = "apps/";
 
 my $portal = Lemonldap::NG::Portal::SharedConf->new(
     {
-        configStorage => {
-            type    => 'File',
-            dirName => '__CONFDIR__',
-        },
-        existingSession     => sub { PE_DONE }, # Required to display the menu to a connected user
         #ldapPpolicyControl => 1,               # Remove comment to use LDAP Password Policy
         #storePassword      => 1,               # Remove comment to store password in session (use with caution)
-	#Soap => 1,                             # Remove comment to activate SOAP Function getCookies(user,pwd)
+        #Soap => 1,                             # Remove comment to activate SOAP Function getCookies(user,pwd)
     }
 );
 

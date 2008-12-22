@@ -4,13 +4,9 @@ use Lemonldap::NG::Portal::SharedConf;
 
 my $portal = Lemonldap::NG::Portal::SharedConf->new(
     {
-        configStorage => {
-            type    => 'File',
-            dirName => '__CONFDIR__',
-        },
         #ldapPpolicyControl => 1,               # Remove comment to use LDAP Password Policy
         #storePassword      => 1,               # Remove comment to store password in session (use with caution)
-	#Soap => 1,                             # Remove comment to activate SOAP Function getCookies(user,pwd)
+        #Soap => 1,                             # Remove comment to activate SOAP Function getCookies(user,pwd)
     }
 );
 

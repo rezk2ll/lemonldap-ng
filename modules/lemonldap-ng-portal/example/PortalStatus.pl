@@ -80,12 +80,7 @@ print $cgi->header(
 
 print "LEMONLDAP::NG::PORTAL STATUS\n\nConfiguration          : ";
 
-my $lmconf = Lemonldap::NG::Common::Conf->new(
-    {
-        type    => 'File',
-        dirName => '__CONFDIR__',
-    }
-);
+my $lmconf = Lemonldap::NG::Common::Conf->new();
 
 unless ($lmconf) {
     print "unable to create conf object\n";

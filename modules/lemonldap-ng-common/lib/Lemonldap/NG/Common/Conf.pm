@@ -6,8 +6,12 @@ use Data::Dumper;
 use Lemonldap::NG::Common::Conf::Constants;
 use Regexp::Assemble;
 
+use constant DEFAULTCONFFILE => '/etc/lemonldap-ng/storage.conf';
+
 our $VERSION = 0.51;
 our $msg;
+
+our %_confFiles;
 
 sub new {
     my $class = shift;
@@ -21,15 +25,16 @@ sub new {
         %$self = @_;
     }
     unless ( $self->{mdone} ) {
+        $self->_readConfFile( $self->{confFile} );
         unless ( $self->{type} ) {
-            $msg = "configStorage: type is not defined\n";
+            $msg .= "configStorage: type is not defined\n";
             return 0;
         }
         $self->{type} = "Lemonldap::NG::Common::Conf::$self->{type}"
-          unless $self->{type} =~ /^Lemonldap/;
+          unless $self->{type} =~ /^Lemonldap::/;
         eval "require $self->{type}";
         if ($@) {
-            $msg = "Unknown package $self->{type}";
+            $msg .= "Unknown package $self->{type}";
             return 0;
         }
         return 0 unless $self->prereq;
@@ -39,7 +44,7 @@ sub new {
     if ( $self->{localStorage} and not defined( $self->{refLocalStorage} ) ) {
         eval "use $self->{localStorage};";
         if ($@) {
-            $msg = "Unable to load $self->{localStorage}: $@";
+            $msg .= "Unable to load $self->{localStorage}: $@";
         }
         else {
             $self->{refLocalStorage} =
@@ -47,6 +52,35 @@ sub new {
         }
     }
     return $self;
+}
+
+sub _readConfFile {
+    my $self = shift;
+    my $file = shift || DEFAULTCONFFILE;
+    unless ( $_confFiles{$file} ) {
+        unless ( open F, $file ) {
+            $msg = "/etc/lemonldap-ng/storage.conf: $!";
+            return 0;
+        }
+        while (<F>) {
+            next if ( /^\s*$/ or /^\s*#/ );
+            chomp;
+            s/\r//g;
+            /^\s*([\w]+)(?:\s*[:=]\s*|\s+)(["']?)([\S].*[\S])\2\s*$/ or next;
+            my $k = $1;
+            $_confFiles{$file}->{$k} = $3;
+            if ( $_confFiles{$file}->{$k} =~ /^[{\[].*[}\]]$/ ) {
+                eval "\$_confFiles{'$file'}->{'$k'} = $_confFiles{$file}->{$k}";
+                if ($@) {
+                    $msg = "Error in file $file : $@";
+                    return 0;
+                }
+            }
+        }
+        close F;
+    }
+    %$self = ( %$self, %{ $_confFiles{$file} } );
+    return 1;
 }
 
 sub saveConf {
@@ -99,7 +133,7 @@ sub getConf {
             return $self->getDBConf($args);
         }
         my $r = $self->{refLocalStorage}->get('conf');
-        if ($r->{cfgNum} == $args->{cfgNum}) {
+        if ( $r->{cfgNum} == $args->{cfgNum} ) {
             $msg = "configuration unchanged, get configuration from cache";
             return $r;
         }
@@ -157,7 +191,7 @@ sub getDBConf {
     }
     $msg = "Get configuration $conf->{cfgNum}";
     my $re = Regexp::Assemble->new();
-    foreach(keys %{$conf->{locationRules}}) {
+    foreach ( keys %{ $conf->{locationRules} } ) {
         quotemeta($_);
         $re->add($_);
     }

@@ -1,38 +1,116 @@
 #!/usr/bin/make
 
-# Example and real root installation
+# Prefix for packaging
+DESTDIR=
+
+# Perl options
+#PERLOPTIONS="INSTALLDIRS=vendor"
+PERLOPTIONS=
+
+# Default directories install
+PREFIX=/usr/local/
+LMPREFIX=$(PREFIX)lemonldap-ng/
+RLMPREFIX=$(DESTDIR)$(LMPREFIX)
+# BIN dirs
+BINDIR=$(RLMPREFIX)bin/
+SBINDIR=$(RLMPREFIX)sbin/
+DATADIR=$(LMPREFIX)data/
+RDATADIR=$(DESTDIR)$(DATADIR)
+
+
 EXAMPLEROOT=`pwd`/example/
-REALROOT=$(EXAMPLEROOT)
-# Subfolders
-SYSTEMCONFDIR=$(EXAMPLEROOT)etc/lemonldap-ng/
-SCRIPTSDIR=$(EXAMPLEROOT)var/lib/lemonldap-ng/
+
+# Document roots for Apache VirtualHosts
+DOCUMENTROOT=$(LMPREFIX)htdocs/
+PORTALDIR=$(DOCUMENTROOT)portal/
+RPORTALDIR=$(DESTDIR)$(PORTALDIR)
+PORTALSKINSDIR=$(PORTALDIR)skins/
+RPORTALSKINSDIR=$(DESTDIR)$(PORTALSKINSDIR)
+LASPPORTALDIR=$(DOCUMENTROOT)liberty-alliance-sp-portal/
+RLASPPORTALDIR=$(DESTDIR)$(LASPPORTALDIR)
+MANAGERDIR=$(DOCUMENTROOT)manager/
+RMANAGERDIR=$(DESTDIR)$(MANAGERDIR)
+MANAGERDATADIR=$(MANAGERDIR)imgs/
+RMANAGERDATADIR=$(DESTDIR)$(MANAGERDATADIR)
+SESSIONSEXPLORERDIR=$(MANAGERDIR)
+RSESSIONSEXPLORERDIR=$(DESTDIR)$(SESSIONSEXPLORERDIR)
+SESSIONSEXPLORERDATADIR=$(SESSIONSEXPLORERDIR)images/
+RSESSIONSEXPLORERDATADIR=$(DESTDIR)$(SESSIONSEXPLORERDATADIR)
+DOCDIR=$(DOCUMENTROOT)doc/
+RDOCDIR=$(DESTDIR)$(DOCDIR)
+TESTDIR=$(DOCUMENTROOT)test/
+RTESTDIR=$(DESTDIR)$(TESTDIR)
+EXAMPLESDIR=$(LMPREFIX)examples/
+REXAMPLESDIR=$(DESTDIR)$(EXAMPLESDIR)
+TOOLSDIR=$(LMPREFIX)tools/
+RTOOLSDIR=$(DESTDIR)$(TOOLSDIR)
+
+DOCDIR=$(DOCUMENTROOT)doc/
+RDOCDIR=$(DESTDIR)$(DOCDIR)
+
+# Handler dir
+HANDLERDIR=$(LMPREFIX)handler/
+RHANDLERDIR=$(DESTDIR)$(HANDLERDIR)
+
+# Configuration dir
+CONFDIR=$(LMPREFIX)etc/
+RCONFDIR=$(DESTDIR)$(CONFDIR)
+CRONDIR=$(LMPREFIX)etc/cron.d/
+RCRONDIR=$(DESTDIR)$(CRONDIR)
+STORAGECONFFILE=$(CONFDIR)storage.conf
+
+# Lemonldap-ng configuration storage dir
+FILECONFIGDIR=$(DATADIR)conf/
+RFILECONFIGDIR=$(DESTDIR)$(FILECONFIGDIR)
+
+# Apache::Session::File storage dir
+APACHESESSIONFILEDIR=$(DATADIR)sessions/
+RAPACHESESSIONFILEDIR=$(DESTDIR)$(APACHESESSIONFILEDIR)
+APACHESESSIONFILELOCKDIR=$(APACHESESSIONFILEDIR)lock/
+RAPACHESESSIONFILELOCKDIR=$(DESTDIR)$(APACHESESSIONFILELOCKDIR)
+APACHEUSER=
+APACHEGROUP=
+
 # DNS Domain for cookie and virtual hosts
-DNSDOMAIN="example.com"
+DNSDOMAIN=example.com
+
 # LDAP parameters
-LDAPHOST="localhost"
-LDAPPORT="389"
-LDAPSUFFIX="dc=example,dc=net"
+LDAPHOST=localhost
+LDAPPORT=389
+LDAPSUFFIX=dc=example,dc=net
+
 # Other
 VERSION=`head -n1 changelog |sed -e 's/lemonldap-ng (//' -e 's/).*$$//'`
-SRCCOMMONDIR=lemonldap-ng-common
-SRCHANDLERDIR=lemonldap-ng-handler
-SRCPORTALDIR=lemonldap-ng-portal
-SRCMANAGERDIR=lemonldap-ng-manager
-EXAMPLELANG=en # For static Manager only
-DESTFILECONFDIR=$(SYSTEMCONFDIR)conf/
-DESTSESSIONDIR=$(SCRIPTSDIR)sessions/
-DESTLASPDIR=$(SCRIPTSDIR)liberty-alliance-sp-portal
-DESTPORTALDIR=$(SCRIPTSDIR)portal/
-DESTHANDLERDIR=$(SCRIPTSDIR)handler/
-DESTMANAGERDIR=$(SCRIPTSDIR)manager/
-DESTDOCSDIR=$(SCRIPTSDIR)docs/
-# Real directories for file content substitution
-REALSYSTEMCONFDIR=$(REALROOT)etc/lemonldap-ng/
-REALSCRIPTSDIR=$(REALROOT)var/lib/lemonldap-ng/
-REALDESTFILECONFDIR=$(REALSYSTEMCONFDIR)conf/
-REALDESTSESSIONDIR=$(REALSCRIPTSDIR)sessions/
-REALDESTLASPDIR=$(REALSCRIPTSDIR)liberty-alliance-sp-portal
+SRCCOMMONDIR=lemonldap-ng-common/
+SRCHANDLERDIR=lemonldap-ng-handler/
+SRCPORTALDIR=lemonldap-ng-portal/
+SRCMANAGERDIR=lemonldap-ng-manager/
+EXAMPLELANG=en # For static Manager example only
 
+#
+# Perl libraries configuration
+#
+configure:	common_conf handler_conf portal_conf manager_conf
+
+common_conf:
+	@cd ${SRCCOMMONDIR}; LMNGCONFFILE=$(STORAGECONFFILE) perl Makefile.PL $(PERLOPTIONS)
+	@touch common_conf
+
+handler_conf:
+	@cd ${SRCHANDLERDIR}; perl Makefile.PL $(PERLOPTIONS)
+	@touch handler_conf
+
+portal_conf:
+	@cd ${SRCPORTALDIR}; perl Makefile.PL $(PERLOPTIONS)
+	@touch portal_conf
+
+manager_conf:
+	@cd ${SRCMANAGERDIR}; perl Makefile.PL $(PERLOPTIONS)
+	@touch manager_conf
+
+#
+# Perl libraries make
+#
 all:	common handler manager portal
 
 common:		common_conf
@@ -51,24 +129,6 @@ manager:	manager_conf
 	@$(MAKE) -C ${SRCMANAGERDIR}
 	@touch manager
 
-configure:	common_conf handler_conf portal_conf manager_conf
-
-common_conf:
-	@cd ${SRCCOMMONDIR}; perl Makefile.PL INSTALLDIRS=$(INSTALLDIRS)
-	@touch common_conf
-
-handler_conf:
-	@cd ${SRCHANDLERDIR}; perl Makefile.PL INSTALLDIRS=$(INSTALLDIRS)
-	@touch handler_conf
-
-portal_conf:
-	@cd ${SRCPORTALDIR}; perl Makefile.PL INSTALLDIRS=$(INSTALLDIRS)
-	@touch portal_conf
-
-manager_conf:
-	@cd ${SRCMANAGERDIR}; perl Makefile.PL INSTALLDIRS=$(INSTALLDIRS)
-	@touch manager_conf
-
 test:		common handler portal manager common_test handler_test portal_test manager_test
 
 common_test:	common
@@ -83,60 +143,153 @@ portal_test:	portal handler_test common_test
 manager_test:	manager handler_test common_test
 	@$(MAKE) -C ${SRCMANAGERDIR} test INST_ARCHLIB=../${SRCCOMMONDIR}/blib/lib/
 
-install:	common_install handler_install portal_install manager_install
+#
+# INSTALL
+#
+install:	install_libs install_bin install_site
 
-common_install:		common
+#
+# Perl libraires install
+#
+install_libs:	common_install_libs handler_install_libs portal_install_libs manager_install_libs
+
+common_install_libs:		common
 	@$(MAKE) -C ${SRCCOMMONDIR} install
 	@touch common_install
 
-handler_install:	handler
+handler_install_libs:	handler
 	@$(MAKE) -C ${SRCHANDLERDIR} install
 	@touch handler_install
 
-portal_install:		portal
+portal_install_libs:		portal
 	@$(MAKE) -C ${SRCPORTALDIR} install
 	@touch portal_install
 
-manager_install:	manager
+manager_install_libs:	manager
 	@$(MAKE) -C ${SRCMANAGERDIR} install
 	@touch manager_install
 
-distclean:	clean
+example:
+	@$(MAKE) -f $(MAKEFILE) install_site LMPREFIX=$(EXAMPLEROOT)
 
-clean:		common_clean handler_clean portal_clean manager_clean
-	@rm -rf ${SYSTEMCONFDIR}
-	@rm -rf ${SCRIPTSDIR}
-	@rm -vf *gz
+install_bin:	install_libs install_conf_dir
+	mkdir -p $(BINDIR)
+	cp --preserve=mode ${SRCPORTALDIR}/example/scripts/purgeCentralCache $(BINDIR)
+	cp --preserve=mode ${SRCMANAGERDIR}/example/scripts/lmConfigEditor $(BINDIR)
 
-common_clean:
-	- $(MAKE) -C ${SRCCOMMONDIR} distclean
-	@rm -vf common*
+#
+# SITE INSTALL
+#
+install_site:	install_manager_site install_portal_site install_handler_site install_test_site install_examples_site
+	@install -v -d $(RCONFDIR)
+	# Apache configuration files
+	@cp --remove-destination _example/etc/apache* $(RCONFDIR)
+	@perl -i -pe 's#__HANDLER__#${HANDLERDIR}MyHandler.pm#; \
+		s/__DNSDOMAIN__/$(DNSDOMAIN)/g; \
+		s#__PORTALDIR__#$(PORTALDIR)#g; \
+		s#__MANAGERDIR__#$(MANAGERDIR)#g; \
+		s#__TESTDIR__#$(TESTDIR)#g; \
+		s#__DOCDIR__#$(DOCDIR)#g;' $(RCONFDIR)/apache*
+	# File for /etc/hosts inclusion
+	@cp --remove-destination _example/etc/for_etc_hosts $(RCONFDIR)
+	@perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)for_etc_hosts
 
-handler_clean:
-	- $(MAKE) -C ${SRCHANDLERDIR} distclean
-	@rm -vf handler*
+install_manager_site:	install_conf_dir
+	# Manager install
+	@install -v -d ${RMANAGERDIR} ${RMANAGERDATADIR} \
+		${RSESSIONSEXPLORERDIR} $(RSESSIONSEXPLORERDATADIR) \
+		$(RCONFDIR)
+	@find ${RMANAGERDIR} -type l -name imgs -delete
+	@find ${RMANAGERDIR} -type l -name images -delete
+	@cp -pR --remove-destination ${SRCMANAGERDIR}example/* ${RMANAGERDIR}
+	@rm -rf $$(find ${RMANAGERDIR} -type d -name .svn)
+	@if [ "${RMANAGERDIR}imgs/" != "${RMANAGERDATADIR}" ]; then \
+		mv -f ${RMANAGERDIR}imgs/* ${RMANAGERDATADIR}; \
+		rm -rf ${RMANAGERDIR}imgs; \
+		ln -s $$(echo ${RMANAGERDATADIR} | sed -e 's/\/$$//') ${RMANAGERDIR}imgs; \
+	fi
+	# apply.conf install
+	@mv ${RMANAGERDIR}apply.conf $(RCONFDIR)
+	@perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)apply.conf
+	@perl -i -pe 's#__APPLYCONFFILE__#$(CONFDIR)apply.conf#' ${RMANAGERDIR}index.pl
+	# Sessions explorer install
+	@if [ "${MANAGERDIR}" != "$(SESSIONSEXPLORERDIR)" ]; then mv -f ${RMANAGERDIR}sessions.pl $(RSESSIONSEXPLORERDIR); fi
+	@if [ "${MANAGERDIR}images/" != "${SESSIONSEXPLORERDATADIR}" ]; then \
+		mv -f ${RMANAGERDIR}images/* ${RSESSIONSEXPLORERDATADIR}; \
+		rm -rf ${RMANAGERDIR}images; \
+		ln -s $$(echo ${SESSIONSEXPLORERDATADIR} | sed -e 's/\/$$//') ${RMANAGERDIR}images; \
+	fi
 
-portal_clean:
-	- $(MAKE) -C ${SRCPORTALDIR} distclean
-	@rm -vf portal*
+install_portal_site:	install_conf_dir
+	# Portal install
+	@install -v -d $(RPORTALDIR) $(RPORTALSKINSDIR) \
+		$(RPORTALDIR)skins/ $(RLASPPORTALDIR) \
+		$(RCRONDIR) $(RCONFDIR)
+	@for skin in $$(ls lemonldap-ng-portal/example/skins/); do \
+		[ -h $(RPORTALDIR)skins/$$skin ] && rm -f $(RPORTALDIR)skins/$$skin; \
+		install -v -d $(RPORTALSKINSDIR)$$skin; \
+	done
+	@cp -pR --remove-destination ${SRCPORTALDIR}example/index_skin.pl ${RPORTALDIR}index.pl
+	@cp -pR --remove-destination ${SRCPORTALDIR}example/error.pl ${RPORTALDIR}
+	@perl -i -pe 's#__SKINDIR__#$(PORTALDIR)skins#; \
+		s#__APPSXMLFILE__#$(CONFDIR)apps-list.xml#;' ${RPORTALDIR}index.pl ${RPORTALDIR}error.pl
+	@cp -pR --remove-destination ${SRCPORTALDIR}example/skins/* $(RPORTALSKINSDIR)
+	@if [ "$(PORTALDIR)skins/" != "$(PORTALSKINSDIR)" ]; then \
+		for skin in $$(ls lemonldap-ng-portal/example/skins/); do \
+			rm -rf $(RPORTALDIR)skins/$$skin/; \
+			ln -s $(PORTALSKINSDIR)$$skin $(RPORTALDIR)skins/$$skin; \
+		done; \
+	fi
+	@cp --remove-destination _example/etc/apps-list* $(RCONFDIR)
+	@perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)apps-list.xml
+	# L-A portal install
+	@cp -pR --remove-destination ${SRCPORTALDIR}example/AuthLA/* $(RLASPPORTALDIR)
+	@perl -i -pe 's#__DIR__#$(LASPPORTALDIR)#g' $(RLASPPORTALDIR)index.pl
+	# Cron files
+	@cp --remove-destination lemonldap-ng-portal/example/scripts/purgeCentralCache.cron.d $(RCRONDIR)
+	# Clean SVN files
+	@rm -rf $$(find ${RPORTALDIR} $(RPORTALSKINSDIR) $(RLASPPORTALDIR) -type d -name .svn)
 
-manager_clean:
-	- $(MAKE) -C ${SRCMANAGERDIR} distclean
-	@rm -vf manager*
+install_handler_site:	install_conf_dir
+	@install -v -d ${RHANDLERDIR}
+	@cp --remove-destination ${SRCHANDLERDIR}/example/MyHandler.pm ${RHANDLERDIR}
 
-example: all
-	@mkdir -p ${DESTFILECONFDIR} ${DESTPORTALDIR} ${DESTHANDLERDIR} ${DESTMANAGERDIR} ${SYSTEMCONFDIR} ${DESTDOCSDIR} ${DESTSESSIONDIR}
-	@cp -a ${SRCHANDLERDIR}/example/* ${DESTHANDLERDIR}
-	@cp -a ${SRCPORTALDIR}/example/* ${DESTPORTALDIR}
-	@rm -rf ${DESTLASPDIR}
-	@mv ${DESTPORTALDIR}AuthLA $$(echo ${DESTLASPDIR}  | sed -e 's/\/$$//')
-	@cp -a ${SRCMANAGERDIR}/example/* ${DESTMANAGERDIR}
-	@cp -a _example/etc/lemonldap-ng/* ${SYSTEMCONFDIR}
-	@cp -a _example/var/lib/lemonldap-ng/* ${SCRIPTSDIR}
-	@cp -a doc/* ${DESTDOCSDIR}
-	@find ${DESTLASPDIR} -type f -exec perl -i -pe 's#__DIR__/?#'${REALDESTLASPDIR}'#g;s#__CONFDIR__/?#'${REALDESTFILECONFDIR}'#g' {} \;
-	@find ${SCRIPTSDIR} -type f -exec perl -i -pe 's#__DIR__/?#'${REALSCRIPTSDIR}'#g;s#__SYSCONFDIR__/?#'${REALSYSTEMCONFDIR}'#g;s#__CONFDIR__/?#'${REALDESTFILECONFDIR}'#g;s#__SESSIONDIR__/?#'${REALDESTSESSIONDIR}'#g;s#__DNSDOMAIN__#'${DNSDOMAIN}'#g;s#__LDAPHOST__#'${LDAPHOST}'#g;s#__LDAPPORT__#'${LDAPPORT}'#g;s#__LDAPSUFFIX__#'${LDAPSUFFIX}'#g;' {} \;
-	@find ${SYSTEMCONFDIR} -type f -exec perl -i -pe 's#__DIR__/?#'${REALSCRIPTSDIR}'#g;s#__SESSIONDIR__/?#'${REALDESTSESSIONDIR}'#g;s#__DNSDOMAIN__#'${DNSDOMAIN}'#g;s#__LDAPHOST__#'${LDAPHOST}'#g;s#__LDAPPORT__#'${LDAPPORT}'#g;s#__LDAPSUFFIX__#'${LDAPSUFFIX}'#g;' {} \;
+install_test_site:
+	@install -v -d $(RTESTDIR)
+	@cp -pR --remove-destination _example/test/* $(RTESTDIR)
+	@perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RTESTDIR)index.pl
+
+install_examples_site:
+	@install -v -d $(REXAMPLESDIR)
+	@for i in portal manager portal handler; do \
+		cp -dpR --remove-destination lemonldap-ng-$$i/example $(REXAMPLESDIR)/$$i; \
+	done
+
+install_conf_dir:	install_sessions_dir
+	@install -v -d $(RCONFDIR) $(RFILECONFIGDIR) $(RTOOLSDIR)
+	@cp --remove-destination $(SRCCOMMONDIR)storage.conf $(RCONFDIR)
+	@cp _example/conf/lmConf-1 $(RFILECONFIGDIR)
+	@perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g;\
+		s/__LDAPPORT__/$(LDAPPORT)/g;\
+		s/__LDAPHOST__/$(LDAPHOST)/g;\
+		s/__LDAPSUFFIX__/$(LDAPSUFFIX)/g;\
+		s#__SESSIONDIR__#$(APACHESESSIONFILEDIR)#g;' $(RFILECONFIGDIR)lmConf-1
+	@cp lemonldap-ng-common/tools/lmConfig.mysql lemonldap-ng-common/tools/apache-session-mysql.sql $(RTOOLSDIR)
+
+install_sessions_dir:
+	@install -m 777 -v -d $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR)
+	# Fix Apache::Session directories permissions
+	@if [ "$(APACHEUSER)" != "" ]; then \
+		chown $(APACHEUSER) $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR); \
+		if [ "$(APACHEGROUP)" != "" ]; then \
+			chgrp $(APACHEGROUP) $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR); \
+		fi; \
+		chmod 770 $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR); \
+	else \
+		chmod 777 $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR); \
+	fi
+
+TODO:
 	@echo
 	@echo "LemonLDAP::NG example v${VERSION} is installed with these parameters:"
 	@echo "  - System configuration: ${SYSTEMCONFDIR}"
@@ -176,12 +329,6 @@ postconf_unixrights:
 
 postconf: postconf_hosts postconf_unixrights
 	@echo "Post configuration done"
-
-production_preconf:
-# TODO: modify EXAMPLEROOT and set it to /
-# TODO: ask parameters value (like DNSDOMAIN, LDAPHOST, etc.)
-
-production_install:	production_preconf example
 
 uninstall:	configure handler_uninstall portal_uninstall manager_uninstall
 
@@ -238,4 +385,26 @@ static_example:	example
 
 documentation:
 	@cd doc/ && ../scripts/doc.pl
+
+distclean:	clean
+
+clean:		common_clean handler_clean portal_clean manager_clean
+	@rm -rf $(EXAMPLEROOT)
+	@rm -vf *gz
+
+common_clean:
+	- $(MAKE) -C ${SRCCOMMONDIR} distclean
+	@rm -vf common*
+
+handler_clean:
+	- $(MAKE) -C ${SRCHANDLERDIR} distclean
+	@rm -vf handler*
+
+portal_clean:
+	- $(MAKE) -C ${SRCPORTALDIR} distclean
+	@rm -vf portal*
+
+manager_clean:
+	- $(MAKE) -C ${SRCMANAGERDIR} distclean
+	@rm -vf manager*
 

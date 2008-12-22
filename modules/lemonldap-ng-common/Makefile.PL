@@ -1,6 +1,22 @@
 use ExtUtils::MakeMaker;
 # See lib/ExtUtils/MakeMaker.pm for details of how to influence
 # the contents of the Makefile that is written.
+
+sub MY::top_targets {
+    my $self=shift;
+    my $r = $self->MM::top_targets(@_);
+    if(my $cf = $ENV{LMNGCONFFILE}) {
+        $r =~ s/^(all.*)$/$1 my_target/m;
+        $cf = quotemeta($cf);
+        $r .= <<"EOT";
+
+my_target:
+	perl -i -pe 's/^(use constant DEFAULTCONFFILE =>).*\$\$/\$\$1 "$cf";/' blib/lib/Lemonldap/NG/Common/Conf.pm
+EOT
+    }
+    return $r;
+}
+
 WriteMakefile(
     NAME              => 'Lemonldap::NG::Common',
     VERSION_FROM      => 'lib/Lemonldap/NG/Common.pm', # finds $VERSION
