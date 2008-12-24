@@ -166,7 +166,7 @@ manager_install_libs:	manager
 	@$(MAKE) -C ${SRCMANAGERDIR} install
 
 example:
-	@$(MAKE) -f $(MAKEFILE) install_site LMPREFIX=$(EXAMPLEROOT)
+	$(MAKE) install_site LMPREFIX=$(EXAMPLEROOT)
 
 install_bin:	install_libs install_conf_dir
 	# Binary install
@@ -231,7 +231,7 @@ install_manager_site:	install_conf_dir
 	@find ${RMANAGERDIR} -type l -name imgs -delete
 	@find ${RMANAGERDIR} -type l -name images -delete
 	@cp -pR --remove-destination ${SRCMANAGERDIR}example/* ${RMANAGERDIR}
-	@rm -rf $$(find ${RMANAGERDIR} -type d -name .svn) ${RMANAGERDIR}scripts ${RMANAGERDIR}mrtg
+	@rm -rf $$(find ${RMANAGERDIR} -type d -name .svn) ${RMANAGERDIR}scripts ${RMANAGERDIR}mrtg ${RMANAGERDIR}soapserver.pl
 	@if [ "${RMANAGERDIR}imgs/" != "${RMANAGERDATADIR}" ]; then \
 		mv -f ${RMANAGERDIR}imgs/* ${RMANAGERDATADIR}; \
 		rm -rf ${RMANAGERDIR}imgs; \
@@ -248,6 +248,9 @@ install_manager_site:	install_conf_dir
 		rm -rf ${RMANAGERDIR}images; \
 		ln -s $$(echo ${SESSIONSEXPLORERDATADIR} | sed -e 's/\/$$//') ${RMANAGERDIR}images; \
 	fi
+	@rm -rf $$(find ${RMANAGERDIR} ${RMANAGERDATADIR} \
+		${RSESSIONSEXPLORERDIR} $(RSESSIONSEXPLORERDATADIR) \
+		$(RCONFDIR) -type d -name .svn)
 
 install_portal_site:	install_conf_dir
 	# Portal install
@@ -277,18 +280,21 @@ install_portal_site:	install_conf_dir
 	# Cron files
 	@cp --remove-destination lemonldap-ng-portal/example/scripts/purgeCentralCache.cron.d $(RCRONDIR)
 	# Clean SVN files
-	@rm -rf $$(find ${RPORTALDIR} $(RPORTALSKINSDIR) $(RLASPPORTALDIR) -type d -name .svn)
+	@rm -rf $$(find ${RPORTALDIR} $(RPORTALSKINSDIR) $(RLASPPORTALDIR) $(RCRONDIR) $(RCONFDIR) -type d -name .svn)
 
 install_handler_site:	install_conf_dir
 	# Handler install
 	@install -v -d ${RHANDLERDIR}
 	@cp --remove-destination ${SRCHANDLERDIR}/example/MyHandler.pm ${RHANDLERDIR}
+	@rm -rf $$(find $(RHANDLERDIR) -type d -name .svn)
 
 install_test_site:
 	# Test site install
 	@install -v -d $(RTESTDIR)
 	@cp -pR --remove-destination _example/test/* $(RTESTDIR)
+	@rm -rf $$(find $(RTESTDIR) -type d -name .svn)
 	@perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RTESTDIR)index.pl
+	@rm -rf $$(find $(RTESTDIR) -type d -name .svn)
 
 install_examples_site:
 	# Examples install
@@ -299,13 +305,20 @@ install_examples_site:
 	@rm -rf $(REXAMPLESDIR)portal/skins \
 		$(REXAMPLESDIR)manager/imgs \
 		$(REXAMPLESDIR)manager/images \
+	@rm -rf $$(find $(REXAMPLESDIR) -type d -name .svn)
+	@perl -i -pe 's#__DIR__#$(LASPPORTALDIR)#g' $(REXAMPLESDIR)portal/AuthLA/index.pl
+	@perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(REXAMPLESDIR)manager/apply.conf
+	@perl -i -pe 's#__APPLYCONFFILE__#$(CONFDIR)apply.conf#' $(REXAMPLESDIR)manager/*.pl
+	@perl -i -pe 's#__SKINDIR__#$(PORTALDIR)skins#; \
+		s#__APPSXMLFILE__#$(CONFDIR)apps-list.xml#; \
+		s#__SESSIONDIR__#$(APACHESESSIONFILEDIR)#g;' $(REXAMPLESDIR)portal/*.pl
 
 install_conf_dir:	install_sessions_dir
 	# Configuration files install
 	@install -v -d $(RCONFDIR) $(RFILECONFIGDIR) $(RTOOLSDIR)
 	@cp --remove-destination $(SRCCOMMONDIR)storage.conf $(RCONFDIR)
 	@cp _example/conf/lmConf-1 $(RFILECONFIGDIR)
-	perl -000 -i -pe "s#^(globalStorageOptions\\n\\s+)'[^\\n]*?'\$$#\$${1}\'\\$$data1 = {&39;Directory&39; => &39;$(APACHESESSIONFILEDIR)&39;,&39;LockDirectory&39; => &39;$(APACHESESSIONFILELOCKDIR)&39;};'#m" $(RFILECONFIGDIR)lmConf-1
+	@perl -000 -i -pe "s#^(globalStorageOptions\\n\\s+)'[^\\n]*?'\$$#\$${1}\'\\\$$data1 = {&39;Directory&39; => &39;$(APACHESESSIONFILEDIR)&39;,&39;LockDirectory&39; => &39;$(APACHESESSIONFILELOCKDIR)&39;};'#m" $(RFILECONFIGDIR)lmConf-1
 	@perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g;\
 		s/__LDAPPORT__/$(LDAPPORT)/g;\
 		s/__LDAPHOST__/$(LDAPHOST)/g;\
@@ -321,6 +334,7 @@ install_conf_dir:	install_sessions_dir
 		chmod 777 $(RFILECONFIGDIR); \
 	fi
 	@cp lemonldap-ng-common/tools/lmConfig.mysql lemonldap-ng-common/tools/apache-session-mysql.sql $(RTOOLSDIR)
+	@rm -rf $$(find $(RCONFDIR) $(RFILECONFIGDIR) $(RTOOLSDIR) -type d -name .svn)
 
 install_sessions_dir:
 	@install -m 777 -v -d $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR)

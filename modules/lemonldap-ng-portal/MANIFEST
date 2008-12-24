@@ -60,6 +60,7 @@ example/skins/pastel/favicon.ico
 example/skins/pastel/footer.tpl
 example/skins/pastel/hatch.gif
 example/skins/pastel/header.tpl
+example/skins/pastel/key.png
 example/skins/pastel/jquery-tabs.js
 example/skins/pastel/jquery.js
 example/skins/pastel/lock.png
@@ -69,6 +70,7 @@ example/skins/pastel/notification.tpl
 example/skins/pastel/ok.png
 example/skins/pastel/stop.png
 example/skins/pastel/styles.css
+example/skins/pastel/user_suit.png
 example/skins/pastel/valid-xhtml10-blue.png
 example/skins/pastel/vcard_edit.png
 example/skins/pastel/vcss-blue.gif
