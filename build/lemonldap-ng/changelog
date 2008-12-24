@@ -1,13 +1,19 @@
 lemonldap-ng (0.9.3) unstable; urgency=low
 
   [ Clement Oudot ]
-  * New menu and skin (pastel)
+  * New menu and skin (pastel). Menu calculates rights before displaying URL
 
   [ Xavier Guimard ]
   * Authentication and UserDB separation
   * New session explorer system
+  * Backport of debian storage.conf file to normal installation
+  * Errors are now displayed in the browser for portal and manager
+  * Custom functions for rules, macros, headers and groups
+  * Manager protection
+  * New configuration access with local cache system
+  * AuthBasic handler
 
- -- Xavier Guimard <x.guimard@free.fr>  Tue, 11 Nov 2008 16:23:19 +0100
+ -- Xavier Guimard <x.guimard@free.fr>  Wed, 24 Dec 2008 10:13:58 +0100
 
 lemonldap-ng (0.9.2.2) unstable; urgency=low
 

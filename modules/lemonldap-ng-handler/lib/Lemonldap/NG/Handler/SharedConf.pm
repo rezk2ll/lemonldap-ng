@@ -43,12 +43,6 @@ BEGIN {
 sub init($$) {
     my ( $class, $args ) = @_;
     $reloadTime = $args->{reloadTime} || 600;
-
-    # localStorage can be declared in configStorage or at the root or both
-    foreach (qw(localStorage localStorageOptions)) {
-        $args->{$_} ||= $args->{configStorage}->{$_};
-        $args->{configStorage}->{$_} ||= $args->{$_};
-    }
     $localConfig = $args;
     $class->localInit($args);
 }
@@ -66,6 +60,12 @@ sub localInit {
     my ( $class, $args ) = @_;
     die("$class : unable to build configuration : $Lemonldap::NG::Common::Conf::msg")
         unless($lmConf = Lemonldap::NG::Common::Conf->new( $args->{configStorage} ));
+
+    # localStorage can be declared in configStorage or at the root or both
+    foreach (qw(localStorage localStorageOptions)) {
+        $args->{$_} ||= $args->{configStorage}->{$_} || $lmConf->{$_};
+        $args->{configStorage}->{$_} ||= $args->{$_};
+    }
     $class->defaultValuesInit($args);
     $class->SUPER::localInit($args);
 }
