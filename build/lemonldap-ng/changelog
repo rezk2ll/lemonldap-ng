@@ -12,8 +12,11 @@ lemonldap-ng (0.9.3) unstable; urgency=low
   * Manager protection
   * New configuration access with local cache system
   * AuthBasic handler
+  * MRTG scripts to read LmNG status
+  * UserDB mechanism : LDAP is not required now
+  * Portal SOAP functions
 
- -- Xavier Guimard <x.guimard@free.fr>  Wed, 24 Dec 2008 10:13:58 +0100
+ -- Xavier Guimard <x.guimard@free.fr>  Wed, 24 Dec 2008 10:55:16 +0100
 
 lemonldap-ng (0.9.2.2) unstable; urgency=low
 

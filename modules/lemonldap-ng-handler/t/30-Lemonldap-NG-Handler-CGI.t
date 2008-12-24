@@ -25,11 +25,11 @@ $ENV{QUERY_STRING}    = '';
 ok(
     $p = Lemonldap::NG::Handler::CGI->new(
         {
-	      configStorage       => {
-	          type                => "File",
-		  dirName             => '/tmp/',
-	      },
-              https               => 0,
+            configStorage => {
+                type    => "File",
+                dirName => '/tmp/',
+            },
+            https => 0,
         }
     ),
     'Portal object'

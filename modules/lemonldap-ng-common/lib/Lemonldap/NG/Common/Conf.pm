@@ -192,7 +192,7 @@ sub getDBConf {
     $msg = "Get configuration $conf->{cfgNum}";
     my $re = Regexp::Assemble->new();
     foreach ( keys %{ $conf->{locationRules} } ) {
-        quotemeta($_);
+        $_ = quotemeta($_);
         $re->add($_);
     }
     $conf->{reVHosts} = $re->as_string;

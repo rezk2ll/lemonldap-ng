@@ -19,5 +19,6 @@ t/02-Manager-Conf-File.t
 t/03-Manager-Conf-DBI.t
 t/04-Manager-Conf-SOAP.t
 t/10-Common.t
+t/99-pod.t
 tools/apache-session-mysql.sql
 tools/lmConfig.mysql
