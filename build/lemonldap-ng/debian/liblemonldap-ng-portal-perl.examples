@@ -1,1 +1,1 @@
-debian/tmp/var/lib/lemonldap-ng/portal/*.pl
+debian/tmp/examples/portal/*

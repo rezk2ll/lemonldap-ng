@@ -27,14 +27,14 @@ sub new {
     unless ( $self->{mdone} ) {
         $self->_readConfFile( $self->{confFile} );
         unless ( $self->{type} ) {
-            $msg .= "configStorage: type is not defined\n";
+            $msg .= "Error: configStorage: type is not defined\n";
             return 0;
         }
         $self->{type} = "Lemonldap::NG::Common::Conf::$self->{type}"
           unless $self->{type} =~ /^Lemonldap::/;
         eval "require $self->{type}";
         if ($@) {
-            $msg .= "Unknown package $self->{type}";
+            $msg .= "Error: Unknown package $self->{type}";
             return 0;
         }
         return 0 unless $self->prereq;
@@ -59,7 +59,7 @@ sub _readConfFile {
     my $file = shift || DEFAULTCONFFILE;
     unless ( $_confFiles{$file} ) {
         unless ( open F, $file ) {
-            $msg = "/etc/lemonldap-ng/storage.conf: $!";
+            $msg = "Warning $file: $!. ";
             return 0;
         }
         while (<F>) {
@@ -72,7 +72,7 @@ sub _readConfFile {
             if ( $_confFiles{$file}->{$k} =~ /^[{\[].*[}\]]$/ ) {
                 eval "\$_confFiles{'$file'}->{'$k'} = $_confFiles{$file}->{$k}";
                 if ($@) {
-                    $msg = "Error in file $file : $@";
+                    $msg = "Warning: error in file $file : $@. ";
                     return 0;
                 }
             }

@@ -74,7 +74,7 @@ EOT
 
 sub javascript {
     my $self = shift;
-    Lemonldap::NG::Manager::_i18n::import( $ENV{HTTP_ACCEPT_LANGUAGE} )
+    Lemonldap::NG::Manager::_i18n::import( $self->{language} || $ENV{HTTP_ACCEPT_LANGUAGE} )
       unless ( __PACKAGE__->can('txt_newVirtualHost') );
     my %text;
     foreach (
@@ -420,7 +420,8 @@ sub start_html {
 }
 
 sub main {
-    Lemonldap::NG::Manager::_i18n::import( $ENV{HTTP_ACCEPT_LANGUAGE} )
+    my $self = shift;
+    Lemonldap::NG::Manager::_i18n::import( $self->{language} || $ENV{HTTP_ACCEPT_LANGUAGE} )
       unless ( __PACKAGE__->can('txt_field') );
     my %text;
     foreach (qw(field value)) {

@@ -12,8 +12,8 @@ PREFIX=/usr/local/
 LMPREFIX=$(PREFIX)lemonldap-ng/
 RLMPREFIX=$(DESTDIR)$(LMPREFIX)
 # BIN dirs
-BINDIR=$(RLMPREFIX)bin/
-SBINDIR=$(RLMPREFIX)sbin/
+BINDIR=$(LMPREFIX)bin/
+RBINDIR=$(DESTDIR)$(BINDIR)
 DATADIR=$(LMPREFIX)data/
 RDATADIR=$(DESTDIR)$(DATADIR)
 
@@ -155,32 +155,30 @@ install_libs:	common_install_libs handler_install_libs portal_install_libs manag
 
 common_install_libs:		common
 	@$(MAKE) -C ${SRCCOMMONDIR} install
-	@touch common_install
 
 handler_install_libs:	handler
 	@$(MAKE) -C ${SRCHANDLERDIR} install
-	@touch handler_install
 
 portal_install_libs:		portal
 	@$(MAKE) -C ${SRCPORTALDIR} install
-	@touch portal_install
 
 manager_install_libs:	manager
 	@$(MAKE) -C ${SRCMANAGERDIR} install
-	@touch manager_install
 
 example:
 	@$(MAKE) -f $(MAKEFILE) install_site LMPREFIX=$(EXAMPLEROOT)
 
 install_bin:	install_libs install_conf_dir
-	mkdir -p $(BINDIR)
-	cp --preserve=mode ${SRCPORTALDIR}/example/scripts/purgeCentralCache $(BINDIR)
-	cp --preserve=mode ${SRCMANAGERDIR}/example/scripts/lmConfigEditor $(BINDIR)
+	# Binary install
+	@install -v -d $(RBINDIR)
+	cp --preserve=mode --remove-destination ${SRCPORTALDIR}/example/scripts/purgeCentralCache $(RBINDIR)
+	cp --preserve=mode --remove-destination ${SRCMANAGERDIR}/example/scripts/lmConfigEditor $(RBINDIR)
 
 #
 # SITE INSTALL
 #
 install_site:	install_manager_site install_portal_site install_handler_site install_test_site install_examples_site
+	# Site install
 	@install -v -d $(RCONFDIR)
 	# Apache configuration files
 	@cp --remove-destination _example/etc/apache* $(RCONFDIR)
@@ -193,6 +191,37 @@ install_site:	install_manager_site install_portal_site install_handler_site inst
 	# File for /etc/hosts inclusion
 	@cp --remove-destination _example/etc/for_etc_hosts $(RCONFDIR)
 	@perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)for_etc_hosts
+	#
+	@echo
+	@echo "LemonLDAP::NG example v${VERSION} is installed with these parameters:"
+	@echo "  - System configuration: ${CONFDIR}"
+	@echo "  - DNS domain (for cookies and virtual hosts): ${DNSDOMAIN}"
+	@echo "  - LDAP parameters:"
+	@echo "    - Host: ${LDAPHOST}"
+	@echo "    - Port: ${LDAPPORT}"
+	@echo "    - Suffix: ${LDAPSUFFIX}"
+	@echo
+	@echo "To finish configuration:"
+	@echo
+	@echo "1 - Add this in your Apache configuration file:"
+	@echo "    with Apache-1.3.x"
+	@echo "      include ${CONFDIR}apache.conf"
+	@echo "    or with Apache-2.x:"
+	@echo "      include ${CONFDIR}apache2.conf"
+	@echo
+	@echo "2 - Restart Apache (or Apache2)"
+	@echo
+	@echo "3 - Run 'make postconf' as root to update /etc/hosts" if your DNS service does not known auth.$(DNSDOMAIN) and manager.$(DNSDOMAIN)
+	@echo
+	@echo "4 - Use the manager at http://manager.${DNSDOMAIN}/ (after Apache restart) to modify LemonLDAP::NG configuration."
+	@echo "    Edit ${DESTPORTALDIR}apps/apps-list.xml to modify the menu."
+	@echo
+	@echo "5 - Try to connect to http://test1.${DNSDOMAIN}/ or http://test2.${DNSDOMAIN}/"
+	@if [ "$(APACHEUSER)" == "" ]; then \
+		echo;echo "    Warning, since APACHEUSER was not set, $(APACHESESSIONFILEDIR) and $(CONFDIR) have permissive permissions."; \
+		echo "    Fix them by yourself to restrict their view to apache process only"; \
+	fi
+	@echo
 
 install_manager_site:	install_conf_dir
 	# Manager install
@@ -202,11 +231,11 @@ install_manager_site:	install_conf_dir
 	@find ${RMANAGERDIR} -type l -name imgs -delete
 	@find ${RMANAGERDIR} -type l -name images -delete
 	@cp -pR --remove-destination ${SRCMANAGERDIR}example/* ${RMANAGERDIR}
-	@rm -rf $$(find ${RMANAGERDIR} -type d -name .svn)
+	@rm -rf $$(find ${RMANAGERDIR} -type d -name .svn) ${RMANAGERDIR}scripts ${RMANAGERDIR}mrtg
 	@if [ "${RMANAGERDIR}imgs/" != "${RMANAGERDATADIR}" ]; then \
 		mv -f ${RMANAGERDIR}imgs/* ${RMANAGERDATADIR}; \
 		rm -rf ${RMANAGERDIR}imgs; \
-		ln -s $$(echo ${RMANAGERDATADIR} | sed -e 's/\/$$//') ${RMANAGERDIR}imgs; \
+		ln -s $$(echo ${MANAGERDATADIR} | sed -e 's/\/$$//') ${RMANAGERDIR}imgs; \
 	fi
 	# apply.conf install
 	@mv ${RMANAGERDIR}apply.conf $(RCONFDIR)
@@ -251,38 +280,55 @@ install_portal_site:	install_conf_dir
 	@rm -rf $$(find ${RPORTALDIR} $(RPORTALSKINSDIR) $(RLASPPORTALDIR) -type d -name .svn)
 
 install_handler_site:	install_conf_dir
+	# Handler install
 	@install -v -d ${RHANDLERDIR}
 	@cp --remove-destination ${SRCHANDLERDIR}/example/MyHandler.pm ${RHANDLERDIR}
 
 install_test_site:
+	# Test site install
 	@install -v -d $(RTESTDIR)
 	@cp -pR --remove-destination _example/test/* $(RTESTDIR)
 	@perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RTESTDIR)index.pl
 
 install_examples_site:
+	# Examples install
 	@install -v -d $(REXAMPLESDIR)
-	@for i in portal manager portal handler; do \
+	@for i in manager portal handler; do \
 		cp -dpR --remove-destination lemonldap-ng-$$i/example $(REXAMPLESDIR)/$$i; \
 	done
+	@rm -rf $(REXAMPLESDIR)portal/skins \
+		$(REXAMPLESDIR)manager/imgs \
+		$(REXAMPLESDIR)manager/images \
 
 install_conf_dir:	install_sessions_dir
+	# Configuration files install
 	@install -v -d $(RCONFDIR) $(RFILECONFIGDIR) $(RTOOLSDIR)
 	@cp --remove-destination $(SRCCOMMONDIR)storage.conf $(RCONFDIR)
 	@cp _example/conf/lmConf-1 $(RFILECONFIGDIR)
+	perl -000 -i -pe "s#^(globalStorageOptions\\n\\s+)'[^\\n]*?'\$$#\$${1}\'\\$$data1 = {&39;Directory&39; => &39;$(APACHESESSIONFILEDIR)&39;,&39;LockDirectory&39; => &39;$(APACHESESSIONFILELOCKDIR)&39;};'#m" $(RFILECONFIGDIR)lmConf-1
 	@perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g;\
 		s/__LDAPPORT__/$(LDAPPORT)/g;\
 		s/__LDAPHOST__/$(LDAPHOST)/g;\
 		s/__LDAPSUFFIX__/$(LDAPSUFFIX)/g;\
 		s#__SESSIONDIR__#$(APACHESESSIONFILEDIR)#g;' $(RFILECONFIGDIR)lmConf-1
+	@if [ "$(APACHEUSER)" != "" ]; then \
+		chown $(APACHEUSER) $(RFILECONFIGDIR) || exit 1; \
+		if [ "$(APACHEGROUP)" != "" ]; then \
+			chgrp $(APACHEGROUP) $(RFILECONFIGDIR) || exit 1; \
+		fi; \
+		chmod 770 $(RFILECONFIGDIR); \
+	else \
+		chmod 777 $(RFILECONFIGDIR); \
+	fi
 	@cp lemonldap-ng-common/tools/lmConfig.mysql lemonldap-ng-common/tools/apache-session-mysql.sql $(RTOOLSDIR)
 
 install_sessions_dir:
 	@install -m 777 -v -d $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR)
 	# Fix Apache::Session directories permissions
 	@if [ "$(APACHEUSER)" != "" ]; then \
-		chown $(APACHEUSER) $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR); \
+		chown $(APACHEUSER) $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR) || exit 1; \
 		if [ "$(APACHEGROUP)" != "" ]; then \
-			chgrp $(APACHEGROUP) $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR); \
+			chgrp $(APACHEGROUP) $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR) || exit 1; \
 		fi; \
 		chmod 770 $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR); \
 	else \
@@ -290,44 +336,12 @@ install_sessions_dir:
 	fi
 
 TODO:
-	@echo
-	@echo "LemonLDAP::NG example v${VERSION} is installed with these parameters:"
-	@echo "  - System configuration: ${SYSTEMCONFDIR}"
-	@echo "  - Scripts: ${SCRIPTSDIR}"
-	@echo "  - LemonLDAP::NG Configuration: ${DESTFILECONFDIR}"
-	@echo "  - DNS domain (for cookies and virtual hosts): ${DNSDOMAIN}"
-	@echo "  - LDAP parameters:"
-	@echo "    - Host: ${LDAPHOST}"
-	@echo "    - Port: ${LDAPPORT}"
-	@echo "    - Suffix: ${LDAPSUFFIX}"
-	@echo
-	@echo "To finish configuration:"
-	@echo
-	@echo "1 - Add this in your Apache configuration file:"
-	@echo "    with Apache-1.3.x"
-	@echo "      include ${SYSTEMCONFDIR}apache.conf"
-	@echo "    or with Apache-2.x:"
-	@echo "      include ${SYSTEMCONFDIR}apache2.conf"
-	@echo
-	@echo "2 - Run 'make postconf' as root to update /etc/hosts and set UNIX rights"
-	@echo
-	@echo "3 - Use the manager at http://manager.${DNSDOMAIN}/ (after Apache restart) or edit ${DESTFILECONFDIR}lmConf-1 to modify LemonLDAP::NG configuration."
-	@echo "    Edit ${DESTPORTALDIR}apps/apps-list.xml to modify the menu."
-	@echo
-	@echo "4 - Restart Apache (or Apache2)"
-	@echo
-	@echo "5 - Try to connect to http://test1.${DNSDOMAIN}/ or http://test2.${DNSDOMAIN}/"
 
 postconf_hosts:
 	@cat ${SYSTEMCONFDIR}for_etc_hosts >> /etc/hosts
 	@echo "/etc/hosts was updated"
 
-postconf_unixrights:
-	@chmod 1777 ${DESTFILECONFDIR}
-	@chmod 1777 ${DESTSESSIONDIR}
-	@echo "UNIX files permissions set"
-
-postconf: postconf_hosts postconf_unixrights
+postconf: postconf_hosts
 	@echo "Post configuration done"
 
 uninstall:	configure handler_uninstall portal_uninstall manager_uninstall

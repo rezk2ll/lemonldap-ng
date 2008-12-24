@@ -5,9 +5,9 @@ set -e
 
 . /usr/share/debconf/confmodule
 
-LAEXAMPLEPORTALFILE=/usr/share/doc/liblemonldap-ng-portal-perl/examples/liberty-alliance-sp-portal/index-Debian.pl
+LAEXAMPLEPORTALFILE=/usr/share/doc/liblemonldap-ng-portal-perl/examples/AuthLA/index.pl
 LAPORTALFILE=/var/lib/lemonldap-ng/liberty-alliance-sp-portal/index.pl
-EXAMPLEPORTALFILE=/usr/share/doc/liblemonldap-ng-portal-perl/examples/index_skin-Debian.pl
+EXAMPLEPORTALFILE=/usr/share/doc/liblemonldap-ng-portal-perl/examples/index_skin.pl
 PORTALFILE=/var/lib/lemonldap-ng/portal/index.pl
 SESSIONSDIR=/var/lib/lemonldap-ng/sessions
 

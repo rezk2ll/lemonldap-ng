@@ -57,7 +57,7 @@ sub new {
         return 0;
     }
     %$self = ( %$self, %$args );
-    foreach (qw(configStorage dhtmlXTreeImageLocation)) {
+    foreach (qw(dhtmlXTreeImageLocation)) {
         unless ( $self->{$_} ) {
             print STDERR qq/The "$_" parameter is required\n/;
             return 0;
@@ -73,7 +73,8 @@ qq#Unable to read $self->{jsFile}. You have to set "jsFile" parameter to /path/t
     $self->{textareaH} ||= 5;
     $self->{inputSize} ||= 30;
     unless ( __PACKAGE__->can('ldapServer') ) {
-        Lemonldap::NG::Manager::_i18n::import( $ENV{HTTP_ACCEPT_LANGUAGE} );
+        Lemonldap::NG::Manager::_i18n::import( $self->{language}
+              || $ENV{HTTP_ACCEPT_LANGUAGE} );
     }
     if ( $self->param('lmQuery') ) {
         my $tmp = "print_" . $self->param('lmQuery');
@@ -144,7 +145,8 @@ sub print_help {
     my $self = shift;
     print $self->header_public( $ENV{SCRIPT_FILENAME},
         -type => 'text/html; charset=utf8' );
-    Lemonldap::NG::Manager::Help::import( $ENV{HTTP_ACCEPT_LANGUAGE} )
+    Lemonldap::NG::Manager::Help::import( $self->{language}
+          || $ENV{HTTP_ACCEPT_LANGUAGE} )
       unless ( $self->can('help_groups') );
     my $chap = $self->param('help');
     eval { no strict "refs"; &{"help_$chap"} };
@@ -155,7 +157,8 @@ sub print_help {
 sub print_delete {
     my $self = shift;
     print $self->header( -type => 'text/html; charset=utf8' );
-    Lemonldap::NG::Manager::Help::import( $ENV{HTTP_ACCEPT_LANGUAGE} )
+    Lemonldap::NG::Manager::Help::import( $self->{language}
+          || $ENV{HTTP_ACCEPT_LANGUAGE} )
       unless ( $self->can('help_groups') );
     if ( $self->config->delete( $self->param('cfgNum') ) ) {
         print &txt_configurationDeleted;
@@ -773,7 +776,8 @@ sub config {
     $self->{_config} =
       Lemonldap::NG::Common::Conf->new( $self->{configStorage} );
     unless ( $self->{_config} ) {
-        $self->abort("Configuration not loaded\n");
+        $self->abort( "Configuration not loaded\n",
+            $Lemonldap::NG::Common::Conf::msg );
     }
     return $self->{_config};
 }

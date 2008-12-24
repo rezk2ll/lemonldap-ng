@@ -86,7 +86,6 @@ sub abort {
     $t2 ||= "See Apache's logs";
     print $cgi->header(
         -type    => 'text/html; charset=utf8',
-        -status  => '500 Server Error',
     );
     print $cgi->start_html(
         -title    => $t1,
@@ -94,6 +93,7 @@ sub abort {
     );
     print "<h1>$t1</h1>";
     print "<p>$t2</p>";
+    print STDERR ( ref($self)|| $self ) . " error: $t1, $t2\n";
     exit;
 }
 

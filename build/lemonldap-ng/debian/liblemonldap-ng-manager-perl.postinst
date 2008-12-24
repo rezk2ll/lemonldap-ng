@@ -5,7 +5,7 @@ set -e
 
 . /usr/share/debconf/confmodule
 
-EXAMPLEMANAGERFILE=/usr/share/doc/liblemonldap-ng-manager-perl/examples/index-Debian.pl
+EXAMPLEMANAGERFILE=/usr/share/doc/liblemonldap-ng-manager-perl/examples/index.pl
 MANAGERFILE=/var/lib/lemonldap-ng/manager/index.pl
 EXAMPLESESSIONSFILE=/usr/share/doc/liblemonldap-ng-manager-perl/examples/sessions.pl
 SESSIONSFILE=/var/lib/lemonldap-ng/manager/sessions.pl

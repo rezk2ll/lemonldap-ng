@@ -19,6 +19,6 @@ then
         db_get liblemonldap-ng-conf-perl/$i || true
         perl -000 -i -pe "s#^$i(\\n\\s+)('?)[^\\n]*?('?)\$#$i\${1}\${2}$RET\${3}#m" $FIRSTCONFFILE
     done
-    perl -000 -i -pe "s#^(globalStorageOptions\\n\\s+)'[^\\n]*?'\$#\${1}\'\\\$data1 = {&39;Directory&39; => &39;/var/lib/lemonldap-ng/sessions/&39;,&39;LockDirectory&39; => &39;/var/lib/lemonldap-ng/sessions/lock/&39;};'#m" $FIRSTCONFFILE
+    #perl -000 -i -pe "s#^(globalStorageOptions\\n\\s+)'[^\\n]*?'\$#\${1}\'\\\$data1 = {&39;Directory&39; => &39;/var/lib/lemonldap-ng/sessions/&39;,&39;LockDirectory&39; => &39;/var/lib/lemonldap-ng/sessions/lock/&39;};'#m" $FIRSTCONFFILE
 fi
 exit 0

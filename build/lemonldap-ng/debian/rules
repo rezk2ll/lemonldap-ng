@@ -11,15 +11,16 @@
 
 export PERL_MM_USE_DEFAULT=1
 
-LM_ROOT=/var/lib/lemonldap-ng/
-DEB_TMP_LM_ROOT=debian/tmp$(LM_ROOT)
-LM_CONF_ROOT=/etc/lemonldap-ng/
-DEB_TMP_LM_CONF_ROOT=debian/tmp$(LM_CONF_ROOT)
+LMSHAREDIR=/usr/share/lemonldap-ng/
+LMVARDIR=/var/lib/lemonldap-ng/
 
 configure: configure-stamp
 configure-stamp:
 	dh_testdir
+
 	# Add here commands to configure the package.
+	$(MAKE) configure STORAGECONFFILE=/etc/lemonldap-ng/storage.conf \
+			PERLOPTIONS="INSTALLDIRS=vendor"
 
 	touch configure-stamp
 
@@ -30,7 +31,7 @@ build-stamp: configure-stamp
 	dh_testdir
 
 	# Add here commands to compile the package.
-	$(MAKE) INSTALLDIRS=vendor
+	$(MAKE)
 
 	touch $@
 
@@ -53,46 +54,35 @@ install: build
 
 	# Add here commands to install the package into debian/lemonldap-ng.
 	$(MAKE) test
-	$(MAKE) install DESTDIR=$(CURDIR)/debian/tmp PREFIX=/usr
-	$(MAKE) example \
-		EXAMPLEROOT=debian/tmp/ \
-		DESTDOCSDIR=debian/tmp/docs/ \
-		REALDESTFILECONFDIR=$(LM_ROOT)conf/ \
-		DESTFILECONFDIR=$(LM_ROOT)conf/ \
-		REALROOT=/
+	$(MAKE) install DESTDIR=$(CURDIR)/debian/tmp \
+			PREFIX=/usr/ \
+			BINDIR=$(LMSHAREDIR)bin/ \
+			DOCUMENTROOT=$(LMVARDIR) \
+			EXAMPLESDIR=/examples/ \
+			HANDLERDIR=$(LMVARDIR)handler/ \
+			PORTALSKINSDIR=$(LMSHAREDIR)portal-skins/ \
+			MANAGERDATADIR=$(LMSHAREDIR)manager-imgs/ \
+			SESSIONSEXPLORERDATADIR=$(LMSHAREDIR)sessions-explorer-imgs/ \
+			STORAGECONFFILE=/etc/lemonldap-ng/storage.conf \
+			TOOLSDIR=$(LMSHAREDIR)ressources/ \
+			CONFDIR=/etc/lemonldap-ng/ \
+			CRONDIR=/etc/cron.d/ \
+			DATADIR=$(LMVARDIR) \
+			APACHEUSER=www-data \
+			APACHEGROUP=www-data
 
-	# Debian example files
-	mv $(DEB_TMP_LM_CONF_ROOT)conf $(DEB_TMP_LM_ROOT)
-	cp $(DEB_TMP_LM_ROOT)handler/MyHandler.pm $(DEB_TMP_LM_ROOT)handler/MyHandler-Debian.pm
-	cp $(DEB_TMP_LM_ROOT)portal/index.pl $(DEB_TMP_LM_ROOT)portal/index-Debian.pl
-	cp $(DEB_TMP_LM_ROOT)portal/index_skin.pl $(DEB_TMP_LM_ROOT)portal/index_skin-Debian.pl
-	cp $(DEB_TMP_LM_ROOT)liberty-alliance-sp-portal/index.pl $(DEB_TMP_LM_ROOT)liberty-alliance-sp-portal/index-Debian.pl
-	cp $(DEB_TMP_LM_ROOT)manager/index.pl $(DEB_TMP_LM_ROOT)manager/index-Debian.pl
-	#perl -i -pe 's#__DIR__/?#'/var/lib/lemonldap-ng'#g;s#__CONFDIR__/?#'$(LM_ROOT)conf'#g;' \
-	#	$(DEB_TMP_LM_ROOT)apache*-protected-area.conf
-	cp debian/handler-apache* $(DEB_TMP_LM_CONF_ROOT)
-
-	# System to use /etc/lemonldap-ng/storage.conf instead of setting
-	# manually the configStorage parameter
-	perl -000 -i -pe 's/(Lemonldap::NG::Common::Conf.*new\s*\(\s*){[^}]+}/$$1\$$Lemonldap::NG::Conf::configStorage/; s#^use#\nrequire "/usr/share/lemonldap-ng/configStorage.pm";\nuse#m;' \
-			$(DEB_TMP_LM_ROOT)manager/scripts/lmConfigEditor \
-			$(DEB_TMP_LM_ROOT)portal/scripts/purgeCentralCache
-
-	perl -000 -i -pe 's/(configStorage\s*=>\s*){[^}]+}/$$1\$$Lemonldap::NG::Conf::configStorage/s; s#^use#\nrequire "/usr/share/lemonldap-ng/configStorage.pm";\nuse#m;' \
-			$(DEB_TMP_LM_ROOT)handler/MyHandler-Debian.pm \
-			$(DEB_TMP_LM_ROOT)manager/*Debian.pl \
-			$(DEB_TMP_LM_ROOT)portal/*Debian.pl \
-			$(DEB_TMP_LM_ROOT)liberty-alliance-sp-portal/index-Debian.pl
-
-    # apply.conf is in /etc/lemonldap-ng/
-	perl -i -pe 's#(applyConfFile\s+=>\s+.*?)/\S*(apply\.conf)#$$1/etc/lemonldap-ng/$$2#' \
-			$(DEB_TMP_LM_ROOT)manager/*.pl \
-
-    # SInce Lenny, jquery.js is provided by libjs-jquery
-	rm -f $(DEB_TMP_LM_ROOT)portal/skins/pastel/jquery.js $(DEB_TMP_LM_ROOT)manager/jquery.js
+	# Since Lenny, jquery.js is provided by libjs-jquery
+	rm -f $(CURDIR)/debian/tmp$(LMSHAREDIR)portal-skins/pastel/jquery.js \
+		$(CURDIR)/debian/tmp$(LMVARDIR)manager/jquery.js \
+		debian/tmp/examples/manager/jquery.js
 	perl -i -pe 's#(["'"'"'])[\w-\./]*jquery.js#$$1/javascript/jquery/jquery.js#' \
-			$(DEB_TMP_LM_ROOT)manager/sessions.pl \
-			$(DEB_TMP_LM_ROOT)portal/skins/pastel/header.tpl
+			$(CURDIR)$(LMVARDIR)manager/sessions.pl \
+			$(CURDIR)/debian/tmp$(LMSHAREDIR)portal-skins/pastel/header.tpl
+	# postinst provides initial portal, manager and sessions-explorer
+	rm -f debian/tmp/var/lib/lemonldap-ng/portal/index.pl \
+		debian/tmp/var/lib/lemonldap-ng/liberty-alliance-sp-portal/index.pl \
+		debian/tmp/var/lib/lemonldap-ng/manager/index.pl \
+		debian/tmp/var/lib/lemonldap-ng/manager/sessions.pl
 
 # Build architecture-independent files here.
 binary-indep: build install
@@ -100,18 +90,15 @@ binary-indep: build install
 	dh_testroot
 	dh_installchangelogs changelog
 	dh_installdocs
-	mkdir $(DEB_TMP_LM_ROOT)protected
-	find debian/tmp/var/lib/lemonldap-ng -type f -perm /111 -exec chmod -x {} \;
-	chmod +x $(DEB_TMP_LM_ROOT)manager/scripts/lmConfigEditor
-	find debian/tmp/var/lib/lemonldap-ng -type f -name *.pl -exec chmod +x {} \;
 	dh_installexamples
 	dh_install
-	cd debian/lemonldap-ng/usr/share/doc/lemonldap-ng/examples && \
+	mkdir -p debian/lemonldap-ng/usr/share/doc/lemonldap-ng/examples && \
+		cd debian/lemonldap-ng/usr/share/doc/lemonldap-ng/examples && \
 		ln -s ../../liblemonldap-ng-handler-perl/examples handler && \
 		ln -s ../../liblemonldap-ng-manager-perl/examples manager && \
 		ln -s ../../liblemonldap-ng-portal-perl/examples portal && \
 		ln -s ../../liblemonldap-ng-conf-perl/examples/ conf
-	chmod +x debian/liblemonldap-ng-portal-perl/usr/share/lemonldap-ng/bin/purgeCentralCache
+	chmod +x debian/liblemonldap-ng-portal-perl$(LMSHAREDIR)bin/purgeCentralCache
 #	dh_installmenu
 	dh_installdebconf	
 #	dh_installlogrotate

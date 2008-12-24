@@ -5,7 +5,7 @@ set -e
 
 . /usr/share/debconf/confmodule
 
-EXAMPLEHANDLERFILE=/usr/share/doc/liblemonldap-ng-handler-perl/examples/MyHandler-Debian.pm
+EXAMPLEHANDLERFILE=/usr/share/doc/liblemonldap-ng-handler-perl/examples/MyHandler.pm
 HANDLERFILE=/var/lib/lemonldap-ng/handler/MyHandler.pm
 SESSIONSDIR=/var/lib/lemonldap-ng/sessions
 
