@@ -6,7 +6,7 @@ use Data::Dumper;
 use Lemonldap::NG::Common::Conf::Constants;
 use Regexp::Assemble;
 
-use constant DEFAULTCONFFILE => '/etc/lemonldap-ng/storage.conf';
+use constant DEFAULTCONFFILE => "/etc/lemonldap-ng/storage.conf";
 
 our $VERSION = 0.51;
 our $msg;

@@ -477,7 +477,7 @@ sub controlUrlOrigin {
 
         # REJECT [\0<'"`] in URL or encoded '%' and non protected hosts
         if (   $self->{urldc} =~ /(?:\0|<|'|"|`|\%(?:00|25|3C|22|27|2C))/
-            or $self->{urldc} !~ m#^https?://$self->{reVHosts}# )
+            or $self->{urldc} !~ m#^https?://(?:$self->{reVHosts}|(?:[^/]*)?$self->{domain})(?:/.*)$# )
         {
             delete $self->{urldc};
             return PE_BADURL;
