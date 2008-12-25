@@ -39,7 +39,7 @@
 	<category name="Documentation">
 	<application id="localdoc">
 		<name>Local documentation</name>
-		<uri>http://manager.__DNSDOMAIN__/docs/</uri>
+		<uri>http://manager.__DNSDOMAIN__/doc/</uri>
 		<description>Documentation supplied with LemonLDAP::NG</description>
 		<logo>docs.png</logo>
 		<display>on</display>

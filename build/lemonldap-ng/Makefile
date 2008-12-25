@@ -45,9 +45,6 @@ REXAMPLESDIR=$(DESTDIR)$(EXAMPLESDIR)
 TOOLSDIR=$(LMPREFIX)tools/
 RTOOLSDIR=$(DESTDIR)$(TOOLSDIR)
 
-DOCDIR=$(DOCUMENTROOT)doc/
-RDOCDIR=$(DESTDIR)$(DOCDIR)
-
 # Handler dir
 HANDLERDIR=$(LMPREFIX)handler/
 RHANDLERDIR=$(DESTDIR)$(HANDLERDIR)
@@ -193,7 +190,7 @@ install_site:	install_manager_site install_portal_site install_handler_site inst
 	@perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)for_etc_hosts
 	#
 	@echo
-	@echo "LemonLDAP::NG example v${VERSION} is installed with these parameters:"
+	@echo "LemonLDAP::NG v${VERSION} is installed with these parameters:"
 	@echo "  - System configuration: ${CONFDIR}"
 	@echo "  - DNS domain (for cookies and virtual hosts): ${DNSDOMAIN}"
 	@echo "  - LDAP parameters:"
@@ -214,7 +211,7 @@ install_site:	install_manager_site install_portal_site install_handler_site inst
 	@echo "3 - Run 'make postconf' as root to update /etc/hosts" if your DNS service does not known auth.$(DNSDOMAIN) and manager.$(DNSDOMAIN)
 	@echo
 	@echo "4 - Use the manager at http://manager.${DNSDOMAIN}/ (after Apache restart) to modify LemonLDAP::NG configuration."
-	@echo "    Edit ${DESTPORTALDIR}apps/apps-list.xml to modify the menu."
+	@echo "    Edit ${RCONFDIR}apps/apps-list.xml to modify the menu."
 	@echo
 	@echo "5 - Try to connect to http://test1.${DNSDOMAIN}/ or http://test2.${DNSDOMAIN}/"
 	@if [ "$(APACHEUSER)" == "" ]; then \
@@ -317,6 +314,7 @@ install_conf_dir:	install_sessions_dir
 	# Configuration files install
 	@install -v -d $(RCONFDIR) $(RFILECONFIGDIR) $(RTOOLSDIR)
 	@cp --remove-destination $(SRCCOMMONDIR)storage.conf $(RCONFDIR)
+	@perl -i -pe 's#^dirName = .*#dirName = $(RFILECONFIGDIR)#g' $(RCONFDIR)storage.conf
 	@cp _example/conf/lmConf-1 $(RFILECONFIGDIR)
 	@perl -000 -i -pe "s#^(globalStorageOptions\\n\\s+)'[^\\n]*?'\$$#\$${1}\'\\\$$data1 = {&39;Directory&39; => &39;$(APACHESESSIONFILEDIR)&39;,&39;LockDirectory&39; => &39;$(APACHESESSIONFILELOCKDIR)&39;};'#m" $(RFILECONFIGDIR)lmConf-1
 	@perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g;\
