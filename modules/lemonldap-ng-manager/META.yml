@@ -9,6 +9,8 @@ generated_by:        ExtUtils::MakeMaker version 6.42
 distribution_type:   module
 requires:     
     CGI:                           3.08
+    Lemonldap::NG::Common:         0.9
+    Lemonldap::NG::Handler:        0.9
     LWP::UserAgent:                0
     XML::Simple:                   0
 meta-spec:
