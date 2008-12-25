@@ -4,6 +4,8 @@ use strict;
 use POSIX;
 use Data::Dumper;
 
+our $VERSION  = "0.2";
+
 our $status   = {};
 our $activity = [];
 our $start    = int( time / 60 );

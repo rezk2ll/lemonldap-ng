@@ -3,7 +3,7 @@ package Lemonldap::NG::Portal::_i18n;
 # Developpers warning : this file must stay UTF-8 encoded
 
 use AutoLoader qw(AUTOLOAD);
-our $VERSION = '0.2';
+our $VERSION = '0.3';
 
 sub error {
     my ( $error, $lang ) = @_;

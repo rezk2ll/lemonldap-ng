@@ -3,7 +3,7 @@ package Lemonldap::NG::Portal::CDA;
 use strict;
 use Lemonldap::NG::Portal::SharedConf qw(:all);
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 use base ('Lemonldap::NG::Portal::SharedConf');
 
 *EXPORT_OK   = *Lemonldap::NG::Portal::SharedConf::EXPORT_OK;

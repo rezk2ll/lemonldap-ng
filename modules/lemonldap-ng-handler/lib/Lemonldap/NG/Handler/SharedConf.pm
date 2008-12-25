@@ -9,7 +9,7 @@ use Cache::Cache qw($EXPIRES_NEVER);
 
 use base qw(Lemonldap::NG::Handler::Vhost Lemonldap::NG::Handler::Simple);
 
-our $VERSION    = '0.62';
+our $VERSION    = '0.7';
 our $cfgNum     = 0;
 our $lastReload = 0;
 our $reloadTime;

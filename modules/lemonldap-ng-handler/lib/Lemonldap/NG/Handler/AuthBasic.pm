@@ -9,7 +9,7 @@ use MIME::Base64;
 
 use base qw(Lemonldap::NG::Handler::SharedConf);
 
-our $VERSION = '0.01';
+our $VERSION = '0.1';
 
 # We need just this constant, that's why Portal is 'required' but not 'used'
 *PE_OK = *Lemonldap::NG::Portal::SharedConf::PE_OK;

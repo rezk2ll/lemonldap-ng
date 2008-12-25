@@ -6,7 +6,7 @@ use Lemonldap::NG::Portal::AuthLDAP;
 
 use base qw(Lemonldap::NG::Portal::AuthLDAP);
 
-our $VERSION = '0.1';
+our $VERSION = '0.11';
 
 sub authInit {
     my $self = shift;

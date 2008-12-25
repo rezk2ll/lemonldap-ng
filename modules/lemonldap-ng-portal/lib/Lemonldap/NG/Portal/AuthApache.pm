@@ -3,7 +3,7 @@ package Lemonldap::NG::Portal::AuthApache;
 use strict;
 use Lemonldap::NG::Portal::Simple;
 
-our $VERSION = '0.1';
+our $VERSION = '0.11';
 
 sub authInit {
     PE_OK;

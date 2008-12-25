@@ -5,7 +5,7 @@ use Lemonldap::NG::Portal::_LDAP;
 use Lemonldap::NG::Portal::_WebForm;
 use Lemonldap::NG::Portal::UserDBLDAP;
 
-our $VERSION = '0.1';
+our $VERSION = '0.2';
 use base qw(Lemonldap::NG::Portal::_WebForm);
 
 sub ldap {

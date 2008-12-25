@@ -10,7 +10,7 @@ use base qw(Lemonldap::NG::Common::CGI);
 
 use Lemonldap::NG::Handler::SharedConf qw(:all);
 
-our $VERSION = '0.11';
+our $VERSION = '0.2';
 
 sub new {
     my $class = shift;

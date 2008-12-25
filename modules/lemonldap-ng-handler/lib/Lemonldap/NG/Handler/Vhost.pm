@@ -4,7 +4,7 @@ use Lemonldap::NG::Handler::Simple qw(:locationRules :headers);
 use strict;
 use MIME::Base64;
 
-our $VERSION = '0.53';
+our $VERSION = '0.54';
 
 # TODO: split locationRules into 2 arrays
 sub locationRulesInit {

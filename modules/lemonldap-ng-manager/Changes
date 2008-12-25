@@ -1,7 +1,8 @@
 Revision history for Perl extension Lemonldap::NG::Manager.
 
-0.87  Tue nov 4 17:28:45 2008
+0.87  Tue dec 25 9:01:21 2008
 	- New module Sessions.pm and example
+	- Configuration modules migrates to Lemonldap::NG::Common
 
 0.86  Mon aug 25 22:02:23 2008
 	- UTF8 in _i18n.pm
