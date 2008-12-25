@@ -1,3 +1,0 @@
-debian/tmp/etc/lemonldap-ng/apache-session-mysql.sql
-debian/tmp/etc/lemonldap-ng/lmConfig.mysql
-debian/tmp/var/lib/lemonldap-ng/conf/*
