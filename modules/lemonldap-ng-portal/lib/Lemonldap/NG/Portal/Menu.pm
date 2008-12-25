@@ -2,6 +2,7 @@ package Lemonldap::NG::Portal::Menu;
 
 use strict;
 use warnings;
+require Lemonldap::NG::Common::CGI;
 use Lemonldap::NG::Portal::SharedConf;
 use Lemonldap::NG::Portal::_LDAP;
 use XML::LibXML;
@@ -49,10 +50,11 @@ sub new {
 
     # Get configuration
     $self->Lemonldap::NG::Portal::Simple::getConf(@_)
-      or $self->abort("Unable to get configuration");
+      or Lemonldap::NG::Common::CGI->abort("Unable to read $class->new() parameters");
 
     # Portal is required
-    $self->abort("Portal object required") unless ( $self->{portalObject} );
+    Lemonldap::NG::Common::CGI->abort("Portal object required") unless ( $self->{portalObject} );
+
 
     # Fill sessionInfo
     &Lemonldap::NG::Portal::Simple::getSessionInfo( $self->{portalObject} );
