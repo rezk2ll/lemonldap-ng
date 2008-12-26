@@ -85,6 +85,8 @@ SRCPORTALDIR=lemonldap-ng-portal/
 SRCMANAGERDIR=lemonldap-ng-manager/
 EXAMPLELANG=en # For static Manager example only
 
+all:	configure common handler manager portal
+
 #
 # Perl libraries configuration
 #
@@ -109,8 +111,6 @@ manager_conf:
 #
 # Perl libraries make
 #
-all:	common handler manager portal
-
 common:		common_conf
 	@$(MAKE) -C ${SRCCOMMONDIR}
 	@touch common
