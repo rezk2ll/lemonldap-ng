@@ -5,13 +5,17 @@ use Lemonldap::NG::Portal::Simple;
 
 our $VERSION = '0.11';
 
+## @method authInit()
+# @return error_code
 sub authInit {
     PE_OK;
 }
 
+## @method extractFormInfo()
+# Read username return by Apache authentication system.
 # By default, authentication is valid if REMOTE_USER environment
-# variable is present. Change formateFilter if this does not match with
-# UID.
+# variable is set.
+# @return error_code
 sub extractFormInfo {
     my $self = shift;
     unless ( $self->{user} = $ENV{REMOTE_USER} ) {
@@ -24,7 +28,9 @@ sub extractFormInfo {
     PE_OK;
 }
 
-# Authentication is made by Apache.
+# @method authenticate()
+# Does nothing.
+# @return error_code
 sub authenticate {
     PE_OK;
 }

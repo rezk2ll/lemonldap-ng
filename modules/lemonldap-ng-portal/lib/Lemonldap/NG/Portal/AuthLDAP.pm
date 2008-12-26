@@ -8,6 +8,8 @@ use Lemonldap::NG::Portal::UserDBLDAP;
 our $VERSION = '0.2';
 use base qw(Lemonldap::NG::Portal::_WebForm);
 
+## @function private ldap()
+# @return object Net::LDAP object
 sub ldap {
     my $self = shift;
     unless ( ref( $self->{ldap} ) ) {
@@ -23,6 +25,9 @@ sub ldap {
 *_formateFilter = *Lemonldap::NG::Portal::UserDBLDAP::formateFilter;
 *_search = *Lemonldap::NG::Portal::UserDBLDAP::search;
 
+# @method authenticate()
+# Authenticate user by LDAP mechanism.
+# @return error_code
 sub authenticate {
     my $self = shift;
     unless ( $self->ldap ) {

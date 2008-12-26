@@ -1,9 +1,9 @@
-## @file
+##@file
 # Base package for Lemonldap::NG portal
 #
-# @copy 2005, 2006, 2007, 2008, Xavier Guimard &lt;x.guimard@free.fr&gt;
+#@copy 2005, 2006, 2007, 2008, Xavier Guimard &lt;x.guimard@free.fr&gt;
 
-## @class
+##@class
 # Base class for Lemonldap::NG portal
 package Lemonldap::NG::Portal::Simple;
 
@@ -78,10 +78,10 @@ our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
 our $safe;
 our $self;    # Safe cannot share a variable declared with my
 
-## @cmethod new($args)
+##@cmethod new($args)
 # Class constructor.
-# @param args hash reference
-# @return Lemonldap::NG::Portal object
+#@param args hash reference
+#@return Lemonldap::NG::Portal object
 sub new {
     binmode( STDOUT, ":utf8" );
     my $class = shift;
@@ -137,9 +137,9 @@ sub new {
     return $self;
 }
 
-## @method protected getConf($args)
+##@method protected getConf($args)
 # Copy all parameters in caller object.
-# @param args hash-ref
+#@param args hash-ref
 sub getConf {
     my ($self) = shift;
     my %args;
@@ -153,10 +153,10 @@ sub getConf {
     1;
 }
 
-## @method protected string error($lang)
+##@function protected string error($lang)
 # error calls Portal/_i18n.pm to display error in the wanted language.
-# @param lang optional (browser language is used instead)
-# @return error message
+#@param lang optional (browser language is used instead)
+#@return error message
 sub error {
     my $self = shift;
     my $lang = shift || $ENV{HTTP_ACCEPT_LANGUAGE};
@@ -164,7 +164,7 @@ sub error {
     return &Lemonldap::NG::Portal::_i18n::error( $code, $lang );
 }
 
-## @method int error_type()
+##@function int error_type()
 # error_type tells if error is positive, warning or negative
 sub error_type {
     my $self = shift;
@@ -203,11 +203,11 @@ sub error_type {
     return "negative";
 }
 
-## @method translate_template($$text_ref, $lang)
+##@function translate_template($$text_ref, $lang)
 # translate_template is used as an HTML::Template filter to tranlate strings in
 # the wanted language
-# @param text_ref reference to the string to translate
-# @param lang optionnal language wanted. Falls to browser language instead.
+#@param text_ref reference to the string to translate
+#@param lang optionnal language wanted. Falls to browser language instead.
 sub translate_template {
     my $self     = shift;
     my $text_ref = shift;
@@ -229,7 +229,8 @@ sub translate_template {
     }
 }
 
-# CGI.pm overload to add Lemonldap::NG cookie
+##@function header()
+# Overload CGI::header() to add Lemonldap::NG cookie.
 sub header {
     my $self = shift;
     if ( $self->{cookie} ) {
@@ -240,7 +241,8 @@ sub header {
     }
 }
 
-# CGI.pm overload to add Lemonldap::NG cookie
+##@function redirect()
+# Overload CGI::redirect() to add Lemonldap::NG cookie.
 sub redirect {
     my $self = shift;
     if ( $self->{cookie} ) {
@@ -251,8 +253,10 @@ sub redirect {
     }
 }
 
-# getSessionInfo
-# Read session and store it in $self
+##@method getSessionInfo()
+# Read cookie and set session info.
+# If lemonldap cookie exists, reads it and search session. If the session is
+# available, store it in $self->{sessionInfo}
 sub getSessionInfo {
     my $self    = shift;
     my %cookies = fetch CGI::Cookie;
@@ -285,8 +289,12 @@ sub getSessionInfo {
 
 }
 
-# updateSession
-# Update information stored in session
+##@method updateSession($infos)
+# Update session stored.
+# If lemonldap cookie exists, reads it and search session. If the session is
+# available, update datas with $info.
+#@param $infos hash
+
 # TODO: update all caches
 sub updateSession {
     my $self    = shift;
@@ -321,7 +329,10 @@ sub updateSession {
 
 }
 
-# Externalise functions execution
+##@function protected _subProcess(@subs)
+# Execute methods until an error is returned.
+# If $self->{$sub} exists, launch it, else launch $self->$sub
+#@param @subs array list of subroutines
 sub _subProcess {
     my $self = shift;
     my @subs = @_;
@@ -338,7 +349,10 @@ sub _subProcess {
 
     return $err;
 }
-
+##@function protected updateStatus()
+# Inform status mechanism module.
+# If an handler is launched on the same server with "status=>1", inform the
+# status module with the result (portal error).
 sub updateStatus {
     my ($self) = @_;
     print $Lemonldap::NG::Handler::Simple::statusPipe (
@@ -348,12 +362,14 @@ sub updateStatus {
       if ($Lemonldap::NG::Handler::Simple::statusPipe);
 }
 
+##@function protected notification()
+#@return object Lemonldap::NG::Portal::Notification object
 sub notification {
     my ($self) = @_;
     return $self->{_notification};
 }
 
-##@method string get_url()
+##@function string get_url()
 # check url against XSS attacks
 sub get_url {
     my ($self) = @_;
@@ -361,7 +377,7 @@ sub get_url {
     return $self->param('url');
 }
 
-##@method private object safe()
+##@function private object safe()
 # Provide the security jail.
 #@return Safe object
 sub safe {
@@ -392,7 +408,7 @@ sub safe {
 # SOAP subroutines #
 ####################
 
-##@method string SOAP::Data getCookies($user,$password)
+##@function string SOAP::Data getCookies($user,$password)
 # Called in SOAP context, returns cookies in an array.
 # This subroutine works only for portals working with user and password
 #@param user uid
@@ -431,7 +447,7 @@ sub getCookies {
 #                  different than PE_OK                       #
 ###############################################################
 
-##@method boolean process()
+##@function boolean process()
 # Main method.
 # process() call functions issued from :
 #  - itself : controlUrlOrigin, controlExistingSession, setMacros, setGroups, store, buildCookie, log, autoredirect
@@ -452,9 +468,9 @@ sub process {
     return ( ( $self->{error} > 0 ) ? 0 : 1 );
 }
 
-## @method error_code checkNotifBack()
+##@method error_code checkNotifBack()
 # 1) Checks if a message has to be notified to the connected user.
-# @return error code
+#@return error code
 sub checkNotifBack {
     my $self = shift;
 
@@ -462,9 +478,9 @@ sub checkNotifBack {
     PE_OK;
 }
 
-## @method error_code controlUrlOrigin()
+##@method error_code controlUrlOrigin()
 # 2) If the user was redirected here, loads 'url' parameter.
-# @return error_code
+#@return error_code
 sub controlUrlOrigin {
     my $self = shift;
     if ( $self->param('url') ) {
@@ -492,14 +508,14 @@ sub controlUrlOrigin {
     PE_OK;
 }
 
-## @method error_code controlExistingSession()
+##@method error_code controlExistingSession()
 # 3) Control existing sessions.
 # To overload to control what to do with existing sessions.
 # what to do with existing sessions ?
 #       - nothing: user is authenticated and process returns true (default)
 #       - delete and create a new session (not implemented)
 #       - re-authentication (set existingSession => sub{PE_OK})
-# @return error_code
+#@return error_code
 sub controlExistingSession {
     my $self    = shift;
     my %cookies = fetch CGI::Cookie;
@@ -591,10 +607,10 @@ sub existingSession {
 # 9. setSessionInfo() : must be implemented in User* module:
 #                            * store exported datas in $self->{sessionInfo}
 
-## @method error_code setMacro()
+##@method error_code setMacro()
 # 10) macro mechanism:
 #                  * store macro results in $self->{sessionInfo}
-# @return error_code
+#@return error_code
 sub setMacros {
     local $self = shift;
     $self->abort( __PACKAGE__ . ": Unable to get configuration" )
@@ -606,7 +622,7 @@ sub setMacros {
     PE_OK;
 }
 
-## @method error_code setGroups()
+##@method error_code setGroups()
 # 11) groups mechanism:
 #                    * store all groups name that the user match in
 #                      $self->{sessionInfo}->{groups}
@@ -644,10 +660,10 @@ sub setGroups {
 # 12. authenticate() : must be implemented in Auth* module:
 #                       * authenticate the user if not done before
 
-## @method error_code store()
+##@method error_code store()
 # 13. Now, the user is known, authenticated and session variable are evaluated.
 #     It's time to store his parameters with Apache::Session::* module
-# @return error_code
+#@return error_code
 sub store {
     my ($self) = @_;
     my %h;
@@ -666,9 +682,9 @@ sub store {
     PE_OK;
 }
 
-## @method error_code buildCookie()
+##@method error_code buildCookie()
 # 14. If all is done, we build the Lemonldap::NG cookie
-# @return error_code
+#@return error_code
 sub buildCookie {
     my $self = shift;
     push @{ $self->{cookie} },
@@ -683,7 +699,7 @@ sub buildCookie {
     PE_OK;
 }
 
-## @method error_code log()
+##@method error_code log()
 # 15. By default, nothing is logged. Users actions are logged on applications.
 #     It's easy to override this in the contructor :
 #       my $portal = new Lemonldap::NG::Portal ( {
@@ -694,14 +710,14 @@ sub buildCookie {
 #                               },
 #                   ...
 #                 } );
-# @return error_code
+#@return error_code
 sub log {
     PE_OK;
 }
 
-## @method error_code checkNotification()
+##@method error_code checkNotification()
 # 16. Check if messages has to be notified
-# @return error_code
+#@return error_code
 sub checkNotification {
     my $self = shift;
     if ( $self->{notification} ) {
@@ -723,10 +739,10 @@ sub checkNotification {
     return PE_OK;
 }
 
-## @method error_code autoRedirect()
+##@method error_code autoRedirect()
 # 17) If the user was redirected to the portal, we will now redirect him
 #     to the requested URL
-# @return error_code
+#@return error_code
 sub autoRedirect {
     my $self = shift;
     if ( my $u = $self->{urldc} ) {

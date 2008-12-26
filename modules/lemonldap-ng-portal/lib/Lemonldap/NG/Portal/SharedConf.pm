@@ -22,9 +22,9 @@ use base qw(Lemonldap::NG::Portal::Simple);
 # OVERLOADED SUB #
 ##################
 
-# getConf: all parameters returned by the Lemonldap::NG::Common::Conf object
-#          are copied in $self
-#          See Lemonldap::NG::Common::Conf(3) for more
+## @function getConf($args)
+# Copy all parameters returned by the Lemonldap::NG::Common::Conf object in $self.
+# @param args hash
 sub getConf {
     my $self = shift;
     my %args;
@@ -40,9 +40,6 @@ sub getConf {
     # the local file system by the handlers. This can be used when
     # configuration is not local (type DBI or SOAP)
     my $tmp = 0;
-    if ( $self->{useLocalCachedConf} and $self->{localStorage} ) {
-        $tmp = $self->localGetConf();
-    }
     unless ($tmp) {
         $self->{lmConf} =
           Lemonldap::NG::Common::Conf->new( $self->{configStorage} )
@@ -57,31 +54,8 @@ sub getConf {
     1;
 }
 
-sub localGetConf {
-    my $self = shift;
-    $self->{_refLocalStorage} ||= $self->localStorageObject;
-    return $self->{_refLocalStorage}->get('conf');
-}
-
-sub localStorageObject {
-    my $self = shift;
-    eval "use " . $self->{localStorage};
-    if ($@) {
-        print STDERR "Unable to load "
-          . $self->{localStorage}
-          . ", local configuration cache is disabled: $@\n";
-        return 0;
-    }
-    my $refLocalStorage;
-    eval '$refLocalStorage = new '
-      . $self->{localStorage}
-      . '($self->{localStorageOptions});';
-    if ($@) {
-        print STDERR "Unable to access to local configuration storage : $@\n";
-        return 0;
-    }
-    return $refLocalStorage;
-}
+## @function getProtectedSites()
+# @return list list of protected virtual hosts.
 
 # With SharedConf, $locationRules contains a hash table with virtual hosts as
 # keys. So we can use it to know all protected virtual hosts.

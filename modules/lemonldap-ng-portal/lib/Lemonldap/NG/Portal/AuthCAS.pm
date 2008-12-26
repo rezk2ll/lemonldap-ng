@@ -6,10 +6,16 @@ use AuthCAS;
 
 our $VERSION = '0.04';
 
+## @method authInit()
+# @return error_code
 sub authInit {
     PE_OK;
 }
 
+## @method extractFormInfo()
+# Read username return by CAS authentication system.
+# If user isn't authenticated, redirect it to CAS portal.
+# @return error_code
 sub extractFormInfo {
     my $self = shift;
     my $cas  = new AuthCAS(
@@ -33,6 +39,9 @@ sub extractFormInfo {
     PE_OK;
 }
 
+## @method authenticate()
+# Does nothing.
+# @return error_code
 sub authenticate {
     PE_OK;
 }
