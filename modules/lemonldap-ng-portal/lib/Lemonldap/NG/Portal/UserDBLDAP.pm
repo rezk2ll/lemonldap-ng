@@ -1,3 +1,10 @@
+##@file
+# LDAP user database backend file
+#
+#@copy 2008, Xavier Guimard &lt;x.guimard@free.fr&gt;
+
+##@class
+# LDAP user database backend class
 package Lemonldap::NG::Portal::UserDBLDAP;
 
 use Lemonldap::NG::Portal::Simple;
@@ -5,6 +12,8 @@ use Lemonldap::NG::Portal::_LDAP;
 
 our $VERSION = '0.1';
 
+## @function private ldap()
+# @return object Lemonldap::NG::Portal::_LDAP object
 sub ldap {
     my $self = shift;
     unless ( ref( $self->{ldap} ) ) {
@@ -17,25 +26,34 @@ sub ldap {
     return $self->{ldap};
 }
 
+## @method userDBInit()
+# Does nothing.
+# @return error_code
 sub userDBInit {
     PE_OK;
 }
 
+## @method getUser()
+# 7) Launch formateFilter() and search()
+# @return error_code
 sub getUser {
     my $self = shift;
     return $self->_subProcess(qw(formateFilter search));
 }
 
-# 4. By default, the user is searched in the LDAP server with its UID. To use
-#    it with Active Directory, overload it to use CN instead of UID.
+## @method formateFilter()
+# Set the LDAP filter.
+# By default, the user is searched in the LDAP server with its UID.
+# @return error_code
 sub formateFilter {
     my $self = shift;
-    $self->{filter} = $self->{authFilter}
-      || "(&(uid=" . $self->{user} . ")(objectClass=inetOrgPerson))";
+    $self->{filter} = $self->{authFilter} || $self->{filter} || "(&(uid=" . $self->{user} . ")(objectClass=inetOrgPerson))";
     PE_OK;
 }
 
-# 7. Search the DN
+## @method search()
+# Search the LDAP DN of the user.
+# @return error_code
 sub search {
     my $self = shift;
     unless ( $self->ldap ) {
@@ -55,11 +73,11 @@ sub search {
     PE_OK;
 }
 
-# sub setAuthSessionInfo has to be defined in auth module
-
-# 8. Load all parameters included in exportedVars parameter.
-#    Multi-value parameters are loaded in a single string with
-#    '; ' separator
+## @methor setSessionInfo()
+# 7) Load all parameters included in exportedVars parameter.
+# Multi-value parameters are loaded in a single string with
+# '; ' separator
+# @return error_code
 sub setSessionInfo {
     my ($self) = @_;
     $self->{sessionInfo}->{dn} = $self->{dn};

@@ -1,3 +1,10 @@
+##@file
+# SSL authentication backend file
+#
+#@copy 2008, Xavier Guimard &lt;x.guimard@free.fr&gt;
+
+##@class
+# SSL authentication backend class
 package Lemonldap::NG::Portal::AuthSSL;
 
 use strict;

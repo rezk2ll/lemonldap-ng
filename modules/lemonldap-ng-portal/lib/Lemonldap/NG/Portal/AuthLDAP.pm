@@ -1,3 +1,10 @@
+##@file
+# LDAP authentication backend file
+#
+#@copy 2008, Xavier Guimard &lt;x.guimard@free.fr&gt;
+
+##@class
+# LDAP authentication backend class
 package Lemonldap::NG::Portal::AuthLDAP;
 
 use Lemonldap::NG::Portal::Simple;
@@ -9,7 +16,7 @@ our $VERSION = '0.2';
 use base qw(Lemonldap::NG::Portal::_WebForm);
 
 ## @function private ldap()
-# @return object Net::LDAP object
+# @return object Lemonldap::NG::Portal::_LDAP object
 sub ldap {
     my $self = shift;
     unless ( ref( $self->{ldap} ) ) {

@@ -1,12 +1,25 @@
+##@file
+# Web form authentication backend file
+#
+#@copy 2008, Xavier Guimard &lt;x.guimard@free.fr&gt;
+
+##@class
+# Web form authentication backend class
 package Lemonldap::NG::Portal::_WebForm;
 
 use Lemonldap::NG::Portal::Simple qw(:all);
 use strict;
 
+## @method authInit()
+# Does nothing.
+# @return error_code
 sub authInit {
     PE_OK;
 }
 
+## @method extractFormInfo()
+# Read username and password from POST datas
+# @return error_code
 sub extractFormInfo {
     my $self = shift;
     return PE_FIRSTACCESS
@@ -17,6 +30,9 @@ sub extractFormInfo {
     PE_OK;
 }
 
+## @method setAuthSessionInfo()
+# Set password in session datas if wanted.
+# @return error_code
 sub setAuthSessionInfo {
     my $self = shift;
 

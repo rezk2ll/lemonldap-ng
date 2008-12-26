@@ -1,3 +1,10 @@
+##@file
+# Menu for Lemonldap::NG portal
+#
+#@copy 2005, 2006, 2007, 2008, Xavier Guimard &lt;x.guimard@free.fr&gt;
+
+##@class
+# Menu class for Lemonldap::NG portal
 package Lemonldap::NG::Portal::Menu;
 
 use strict;
@@ -15,6 +22,10 @@ our $VERSION = '0.01';
 our ( $defaultCondition, $locationCondition, $locationRegexp, $cfgNum, $path ) =
   ( undef, undef, undef, 0 );
 
+## @function private _safe()
+# Build and returns security jail.
+# Includes custom functions
+# @return Safe_object
 sub _safe {
     my $self = shift;
     return $self->{_safe} if ( $self->{_safe} );
@@ -42,7 +53,11 @@ sub _safe {
 
 my $catlevel = 0;
 
-# CONSTRUCTOR
+##@cmethod new($args)
+# Class constructor.
+# $args->{portalObject} is required.
+#@param args hash reference
+#@return Lemonldap::NG::Portal::Menu object
 sub new {
     my $class = shift;
     my $self  = {};
@@ -90,6 +105,8 @@ sub new {
     return $self;
 }
 
+## @function private ldap()
+# @return object Lemonldap::NG::Portal::_LDAP object
 sub ldap {
     my $self = shift;
     unless ( ref( $self->{ldap} ) ) {
@@ -102,6 +119,9 @@ sub ldap {
     return $self->{ldap};
 }
 
+## @function error()
+# Return error string
+# @return string
 sub error {
 
     # Copied from Simple.pm
@@ -115,14 +135,13 @@ sub error {
     return $error_string;
 }
 
-sub error_type {
-    my $self = shift;
-    return &Lemonldap::NG::Portal::Simple::error_type($self);
-}
+*error_type = *Lemonldap::NG::Portal::Simple::error_type;
 
-# displayModule($modulename)
-# Return true if the user can see the module
-# Use for HTML::Template variable
+## @function displayModule($modulename)
+# Return true if the user can see the module.
+# Use for HTML::Template variable.
+# @param $modulename string
+# @return boolean
 sub displayModule {
     my $self = shift;
     my ($modulename) = @_;
@@ -138,9 +157,10 @@ sub displayModule {
     return 0;
 }
 
-# displayTab
-# Tells which tab should be selected
-# Design for Jquery tabs
+## @function displayTab()
+# Tells which tab should be selected.
+# Design for Jquery tabs.
+# @return string
 sub displayTab {
     my $self = shift;
 
@@ -169,8 +189,9 @@ sub displayTab {
     return "logout";
 }
 
-# appslistMenu
-# HTML code for application list menu
+## @function appslistMenu()
+# Returns HTML code for application list menu.
+# @return HTML_string
 sub appslistMenu {
     my $self = shift;
     my $root = $self->_getXML;
@@ -179,8 +200,9 @@ sub appslistMenu {
     return $self->_displayCategory( $root, $catlevel );
 }
 
-# appslistDescription
-# HTML code for application description
+## @function appslistDescription()
+# Returns HTML code for application description.
+# @return HTML_string
 sub appslistDescription {
     my $self = shift;
     my $root = $self->_getXML;
@@ -189,8 +211,9 @@ sub appslistDescription {
     return $self->_displayDescription($root);
 }
 
-# _getXML
-# return XML root element object
+## @function private _getXML()
+# Returns XML root element object.
+# @return object Lib::XML->documentElement
 sub _getXML {
     my $self = shift;
 
@@ -210,8 +233,9 @@ sub _getXML {
     return $root;
 }
 
-# _displayCategory
-# Create HTML code for a category
+## @function _displayCategory()
+# Creates and returns HTML code for a category.
+# @return HTML_string
 sub _displayCategory {
     my $self = shift;
     my ( $cat, $catlevel ) = @_;
@@ -247,14 +271,18 @@ sub _displayCategory {
     return $html;
 }
 
+## @function private _userParam($arg)
+# Returns value of $arg variable stored in session.
+# @return string
 sub _userParam {
     my ( $self, $arg ) = @_;
     $arg =~ s/\$([\w]+)/$self->{portalObject}->{sessionInfo}->{$1}/g;
     return $arg;
 }
 
-# _displayApplication
-# Create HTML code for an application
+## @function private _displayApplication()
+# Creates HTML code for an application.
+# @return HTML_string
 sub _displayApplication {
     my $self = shift;
     my ($app) = @_;
@@ -274,8 +302,9 @@ sub _displayApplication {
     return $html;
 }
 
-# _displayDescription
-# Create HTML code for application description
+## @function private _displayDescription()
+# Create HTML code for application description.
+# @return HTML_string
 sub _displayDescription {
     my $self = shift;
     my ($root) = @_;
@@ -307,8 +336,10 @@ sub _displayDescription {
     return $html;
 }
 
-# _filterXML
-# Remove unauthorized nodes
+## @function private _filterXML($root)
+# Remove unauthorized nodes.
+# @param $root XML_string
+# @return XML_string
 sub _filterXML {
     my $self = shift;
     my ($root) = @_;
@@ -336,8 +367,9 @@ sub _filterXML {
     return;
 }
 
-# _hideEmptyCategory
-#
+## @function private _hideEmptyCategory($cat)
+# Hides empty categories for _filterXML().
+# return nothing $cat is modified directly
 sub _hideEmptyCategory {
     my $self = shift;
     my ($cat) = @_;
@@ -363,10 +395,11 @@ sub _hideEmptyCategory {
     return;
 }
 
-# _changePassword
-# Change user's password
-# TODO: Check used Auth module and change password for LDAP or DBI
+## @function private _changePassword($newpassword,$confirmpassword,$oldpassword)
+# Change user's password.
+# @return error_code
 sub _changePassword {
+    # TODO: Check used Auth module and change password for LDAP or DBI
     my $self = shift;
     my ( $newpassword, $confirmpassword, $oldpassword ) = @_;
     my $err;
@@ -446,8 +479,10 @@ sub _changePassword {
     }
 }
 
-# _storePassword
-# Store new password in session if storePassword parameter is set
+## @function private _storePassword($password)
+# Store new password in session if storePassword parameter is set.
+# @param $password string
+# @return boolean
 sub _storePassword {
     my $self = shift;
     my ($password) = @_;
@@ -461,8 +496,9 @@ sub _storePassword {
     return 1;
 }
 
-# _ppolicyWarning
+## @private function _ppolicyWarning()
 # Return ppolicy warnings get in AuthLDAP.pm
+# @return error_code
 sub _ppolicyWarning {
     my $self = shift;
 
@@ -486,8 +522,10 @@ sub _ppolicyWarning {
     return ( PE_OK, undef );
 }
 
-# _grant
-# Check user's authorization
+## @@function private _grant($uri)
+# Check user's authorization for $uri.
+# @param $uri URL_string
+# @return boolean
 sub _grant {
     my $self = shift;
     my ($uri) = @_;
@@ -514,8 +552,9 @@ sub _grant {
     return 1;
 }
 
-# _compileRules
-# Parse configured rules
+## @function private _compileRules()
+# Parse configured rules and compile them
+# @return true
 sub _compileRules {
     my $self = shift;
     foreach my $vhost ( keys %{ $self->{portalObject}->{locationRules} } ) {
@@ -542,8 +581,10 @@ sub _compileRules {
     1;
 }
 
-# _conditionSub
-# Return subroutine giving authorization condition
+## @function private _conditionSub($cond)
+# Return subroutine giving authorization condition.
+# @param $cond string boolean expression
+# @return CODE
 sub _conditionSub {
     my $self = shift;
     my ($cond) = @_;
