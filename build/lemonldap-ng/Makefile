@@ -3,6 +3,7 @@
 # Prefix for packaging
 DESTDIR=
 
+PERL=$$(which perl)
 # Perl options
 #PERLOPTIONS="INSTALLDIRS=vendor"
 PERLOPTIONS=
@@ -132,13 +133,13 @@ common_test:	common
 	@$(MAKE) -C ${SRCCOMMONDIR} test
 
 handler_test:	handler common_test
-	@$(MAKE) -C ${SRCHANDLERDIR} test INST_ARCHLIB=../${SRCCOMMONDIR}/blib/lib/
+	@$(MAKE) -C ${SRCHANDLERDIR} test FULLPERL="$(PERL) -I../${SRCCOMMONDIR}/blib/lib/"
 
 portal_test:	portal handler_test common_test
-	@$(MAKE) -C ${SRCPORTALDIR} test INST_ARCHLIB=../${SRCCOMMONDIR}/blib/lib/
+	@$(MAKE) -C ${SRCPORTALDIR} test FULLPERL="$(PERL) -I../${SRCCOMMONDIR}/blib/lib/ -I../${SRCHANDLERDIR}/blib/lib/"
 
 manager_test:	manager handler_test common_test
-	@$(MAKE) -C ${SRCMANAGERDIR} test INST_ARCHLIB=../${SRCCOMMONDIR}/blib/lib/
+	@$(MAKE) -C ${SRCMANAGERDIR} test FULLPERL="$(PERL) -I../${SRCCOMMONDIR}/blib/lib/ -I../${SRCHANDLERDIR}/blib/lib/"
 
 #
 # INSTALL
