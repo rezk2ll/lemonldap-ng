@@ -373,6 +373,7 @@ sub notification {
 # check url against XSS attacks
 sub get_url {
     my ($self) = @_;
+    return unless $self->param('url');
     return if ( $self->param('url') =~ m#[^A-Za-z0-9\+/=]# );
     return $self->param('url');
 }
