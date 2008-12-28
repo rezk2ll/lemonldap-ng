@@ -1,3 +1,10 @@
+##@file
+# Auth-basic authentication with Lemonldap::NG rights management
+#
+#@copy 2008 Xavier Guimard &lt;x.guimard@free.fr&gt;
+
+##@class
+# Auth-basic authentication with Lemonldap::NG rights management
 package Lemonldap::NG::Handler::AuthBasic;
 
 use strict;
@@ -25,7 +32,10 @@ BEGIN {
     }
 }
 
-# overload of run subroutine
+## @method int run(Apache2::RequestRec $apacheRequest)
+# overload run subroutine to implement Auth-Basic mechanism.
+# @param $apacheRequest current request
+# @return Apache constant
 sub run ($$) {
     my $class;
     ( $class, $apacheRequest ) = @_;

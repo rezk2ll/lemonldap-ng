@@ -22,9 +22,10 @@ use base qw(Lemonldap::NG::Portal::Simple);
 # OVERLOADED SUB #
 ##################
 
-## @function getConf($args)
+## @method boolean getConf(hashRef $args)
 # Copy all parameters returned by the Lemonldap::NG::Common::Conf object in $self.
 # @param args hash
+# @return True
 sub getConf {
     my $self = shift;
     my %args;
@@ -54,7 +55,7 @@ sub getConf {
     1;
 }
 
-## @function getProtectedSites()
+## @method list getProtectedSites()
 # @return list list of protected virtual hosts.
 
 # With SharedConf, $locationRules contains a hash table with virtual hosts as

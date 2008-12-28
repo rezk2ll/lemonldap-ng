@@ -1,3 +1,10 @@
+## @file
+# Main handler.
+#
+# @copy 2005, 2006, 2007, 2008 Xavier Guimard &lt;x.guimard@free.fr&gt;
+
+## @class
+# Main handler.
 package Lemonldap::NG::Handler::SharedConf;
 
 use strict;
@@ -39,7 +46,10 @@ BEGIN {
 
 # INIT PROCESS
 
-# init is overloaded to call only localInit. globalInit is called later
+## @cmethod void init(hashRef $args)
+# Constructor.
+# init is overloaded to call only localInit. globalInit is called later.
+# @param $args hash containing parameters
 sub init($$) {
     my ( $class, $args ) = @_;
     $reloadTime = $args->{reloadTime} || 600;
@@ -47,7 +57,10 @@ sub init($$) {
     $class->localInit($args);
 }
 
-# defaultValuesInit : set default values for non-customized variables
+## @method void defaultValuesInit(hashRef $args)
+# Set default values for non-customized variables
+# @param $args hash containing parameters
+# @return boolean
 sub defaultValuesInit {
     my ( $class, $args ) = @_;
 
@@ -56,6 +69,9 @@ sub defaultValuesInit {
     return $class->SUPER::defaultValuesInit( \%h );
 }
 
+## @method void localInit(hashRef $args)
+# Load parameters and build the Lemonldap::NG::Common::Conf object.
+# @return boolean
 sub localInit {
     my ( $class, $args ) = @_;
     die("$class : unable to build configuration : $Lemonldap::NG::Common::Conf::msg")
@@ -72,8 +88,12 @@ sub localInit {
 
 # MAIN
 
+## @method int run(Apache2::RequestRec $r)
+# Check configuration and launch Lemonldap::NG::Handler::Simple::run().
 # Each $reloadTime, the Apache child verify if its configuration is the same
 # as the configuration stored in the local storage.
+# @param $r Apache2::RequestRec object
+# @return Apache constant
 sub run($$) {
     my ( $class, $r ) = @_;
     if ( time() - $lastReload > $reloadTime ) {
@@ -87,6 +107,13 @@ sub run($$) {
 
 # CONFIGURATION UPDATE
 
+## @method int testConf(boolean $local)
+# Test if configuration has changed and launch setConf() if needed.
+# If the optional boolean $local is true, remote configuration is not tested:
+# only local cached configuration is tested if available. $local is given to
+# Lemonldap::NG::Conf::getConf()
+# @param $local boolean
+# @return Apache constant
 sub testConf {
     my ( $class, $local ) = @_;
     my $conf = $lmConf->getConf( { local => $local } );
@@ -104,6 +131,10 @@ sub testConf {
     OK;
 }
 
+## @method int setConf(hashRef $conf)
+# Launch globalInit().
+# Local parameters have best precedence on configuration parameters.
+# @return Apache constant
 sub setConf {
     my ( $class, $conf ) = @_;
 
@@ -118,12 +149,16 @@ sub setConf {
 
 *reload = *refresh;
 
+## @method int refresh(Apache::RequestRec $r)
+# Launch testConf() with $local=0, so remote configuration is tested.
+# @param $r current request
+# @return Apache constant
 sub refresh($$) {
     my ( $class, $r ) = @_;
     $class->lmLog( "$class: request for configuration reload", 'notice' );
     $r->handler("perl-script");
     if ( $class->testConf(0) == OK ) {
-    if ( MP() == 2 ) {
+        if ( MP() == 2 ) {
             $r->push_handlers( 'PerlResponseHandler' =>
                   sub { my $r = shift; $r->content_type('text/plain'); OK } );
         }

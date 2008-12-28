@@ -12,8 +12,8 @@ use Lemonldap::NG::Portal::_LDAP;
 
 our $VERSION = '0.1';
 
-## @function private ldap()
-# @return object Lemonldap::NG::Portal::_LDAP object
+## @method private Lemonldap::NG::Portal::_LDAP ldap()
+# @return Lemonldap::NG::Portal::_LDAP object
 sub ldap {
     my $self = shift;
     unless ( ref( $self->{ldap} ) ) {
@@ -26,34 +26,34 @@ sub ldap {
     return $self->{ldap};
 }
 
-## @method userDBInit()
+## @method int userDBInit()
 # Does nothing.
-# @return error_code
+# @return Lemonldap::NG::Portal constant
 sub userDBInit {
     PE_OK;
 }
 
-## @method getUser()
+## @method int getUser()
 # 7) Launch formateFilter() and search()
-# @return error_code
+# @return Lemonldap::NG::Portal constant
 sub getUser {
     my $self = shift;
     return $self->_subProcess(qw(formateFilter search));
 }
 
-## @method formateFilter()
+## @method int formateFilter()
 # Set the LDAP filter.
 # By default, the user is searched in the LDAP server with its UID.
-# @return error_code
+# @return Lemonldap::NG::Portal constant
 sub formateFilter {
     my $self = shift;
     $self->{filter} = $self->{authFilter} || $self->{filter} || "(&(uid=" . $self->{user} . ")(objectClass=inetOrgPerson))";
     PE_OK;
 }
 
-## @method search()
+## @method int search()
 # Search the LDAP DN of the user.
-# @return error_code
+# @return Lemonldap::NG::Portal constant
 sub search {
     my $self = shift;
     unless ( $self->ldap ) {
@@ -73,11 +73,11 @@ sub search {
     PE_OK;
 }
 
-## @methor setSessionInfo()
+## @methor int setSessionInfo()
 # 7) Load all parameters included in exportedVars parameter.
 # Multi-value parameters are loaded in a single string with
 # '; ' separator
-# @return error_code
+# @return Lemonldap::NG::Portal constant
 sub setSessionInfo {
     my ($self) = @_;
     $self->{sessionInfo}->{dn} = $self->{dn};

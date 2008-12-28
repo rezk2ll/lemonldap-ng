@@ -1,8 +1,7 @@
 package Lemonldap::NG::Handler;
 
-print STDERR
-"See Lemonldap::NG::Handler(3) to know which Lemonldap::NG::Handler::* module to use.";
 our $VERSION = "0.9";
+our @ISA = ('Lemonldap::NG::Handler::SharedConf');
 
 1;
 

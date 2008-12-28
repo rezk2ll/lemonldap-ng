@@ -1,3 +1,10 @@
+##@file
+# Cross-domain mechanism for handler
+#
+#@copy 2005, 2006, 2007, 2008 Xavier Guimard &lt;x.guimard@free.fr&gt;
+
+##@class
+# Cross-domain mechanism for handler
 package Lemonldap::NG::Handler::CDA;
 
 use strict;
@@ -11,6 +18,10 @@ use base qw(Lemonldap::NG::Handler::SharedConf);
 *EXPORT_TAGS = *Lemonldap::NG::Handler::SharedConf::EXPORT_TAGS;
 *EXPORT_OK   = *Lemonldap::NG::Handler::SharedConf::EXPORT_OK;
 
+## @method int run(Apache2::RequestRec $apacheRequest)
+# overload run subroutine to implement cross-domain mechanism.
+# @param $apacheRequest
+# @return Apache constant
 sub run ($$) {
     my $class;
     ( $class, $apacheRequest ) = @_;

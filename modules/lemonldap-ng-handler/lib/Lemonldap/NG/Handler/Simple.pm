@@ -1,3 +1,10 @@
+## @file
+# Base file for Lemonldap::NG handlers
+#
+# @copy 2005, 2006, 2007, 2008 Xavier Guimard &lt;x.guimard@free.fr&gt;
+
+## @class
+# Base class for Lemonldap::NG handlers
 package Lemonldap::NG::Handler::Simple;
 
 use strict;
@@ -135,18 +142,34 @@ BEGIN {
     *logout  = ( MP() == 2 ) ? \&logout_mp2  : \&logout_mp1;
 }
 
+## @method int handler_mp1()
+# Launch run() when used under mod_perl version 1
+# @return Apache constant
 sub handler_mp1 ($$) { shift->run(@_); }
 
+## @method int handler_mp2()
+# Launch run() when used under mod_perl version 2
+# @return Apache constant
 sub handler_mp2 : method {
     shift->run(@_);
 }
 
+## @method int logout_mp1()
+# Launch unlog() when used under mod_perl version 1
+# @return Apache constant
 sub logout_mp1 ($$) { shift->unlog(@_); }
 
+## @method int logout_mp2()
+# Launch unlog() when used under mod_perl version 2
+# @return Apache constant
 sub logout_mp2 : method {
     shift->unlog(@_);
 }
 
+## @method void lmLog(string $mess, string $level)
+# Wrapper for Apache log system
+# @param $mess message to log
+# @param $level string (debug, info, warning or error)
 sub lmLog {
     my ( $class, $mess, $level ) = @_;
     if ( MP() == 2 ) {
@@ -160,6 +183,10 @@ sub lmLog {
     }
 }
 
+## @fn void lmSetApacheUser(Apache2::RequestRec $r,string $s)
+# Inform Apache for the data to use as user for logs
+# @param $r current request
+# @param $s string to use
 sub lmSetApacheUser {
     my ( $r, $s ) = @_;
     return unless ($s);
@@ -171,12 +198,26 @@ sub lmSetApacheUser {
     }
 }
 
+## @fn string protected regRemoteIp(string $str)
+# Replaces $ip by the client IP address in the string
+# @param $str string
+# @return string
 sub regRemoteIp {
     my ( $class, $str ) = @_;
-    $str =~ s/\$datas->\{ip\}/\$apacheRequest->connection->remote_ip/g;
+    if( MP() == 2 ) {
+        $str =~ s/\$datas->\{ip\}/\$apacheRequest->connection->remote_ip/g;
+    }
+    else {
+        $str =~ s/\$datas->\{ip\}/\$apacheRequest->remote_ip/g;
+    }
     return $str;
 }
 
+## @fn void lmSetHeaderIn(Apache2::RequestRec $r, string $h, string $v)
+# Set an HTTP header in the HTTP request.
+# @param $r Current request
+# @param $h Name of the header
+# @param $v Value of the header
 sub lmSetHeaderIn {
     my ( $r, $h, $v ) = @_;
     if ( MP() == 2 ) {
@@ -187,8 +228,13 @@ sub lmSetHeaderIn {
     }
 }
 
+## @fn string lmtHeaderIn(Apache2::RequestRec $r, string $h)
+# Return an HTTP header value from the HTTP request.
+# @param $r Current request
+# @param $h Name of the header
+# @return Value of the header
 sub lmHeaderIn {
-    my ( $r, $h, $v ) = @_;
+    my ( $r, $h ) = @_;
     if ( MP() == 2 ) {
         return $r->headers_in->{$h};
     }
@@ -197,6 +243,11 @@ sub lmHeaderIn {
     }
 }
 
+## @fn void lmSetErrHeaderOut(Apache2::RequestRec $r, string $h, string $v)
+# Set an HTTP header in the HTTP response in error context
+# @param $r Current request
+# @param $h Name of the header
+# @param $v Value of the header
 sub lmSetErrHeaderOut {
     my ( $r, $h, $v ) = @_;
     if ( MP() == 2 ) {
@@ -207,6 +258,11 @@ sub lmSetErrHeaderOut {
     }
 }
 
+## @fn void lmSetErrHeaderOut(Apache2::RequestRec $r, string $h, string $v)
+# Set an HTTP header in the HTTP response in normal context
+# @param $r Current request
+# @param $h Name of the header
+# @param $v Value of the header
 sub lmSetHeaderOut {
     my ( $r, $h, $v ) = @_;
     if ( MP() == 2 ) {
@@ -217,6 +273,11 @@ sub lmSetHeaderOut {
     }
 }
 
+## @fn string lmtHeaderOut(Apache2::RequestRec $r, string $h)
+# Return an HTTP header value from the HTTP response.
+# @param $r Current request
+# @param $h Name of the header
+# @return Value of the header
 sub lmHeaderOut {
     my ( $r, $h, $v ) = @_;
     if ( MP() == 2 ) {
@@ -229,6 +290,8 @@ sub lmHeaderOut {
 
 # Status daemon creation
 
+## @fn void statusProcess()
+# Launch the status processus.
 sub statusProcess {
     require IO::Pipe;
     $statusPipe = IO::Pipe->new;

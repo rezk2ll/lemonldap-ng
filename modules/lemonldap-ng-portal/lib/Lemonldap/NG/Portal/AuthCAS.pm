@@ -13,16 +13,17 @@ use AuthCAS;
 
 our $VERSION = '0.04';
 
-## @method authInit()
-# @return error_code
+## @method int authInit()
+# Does nothing.
+# @return Lemonldap::NG::Portal constant
 sub authInit {
     PE_OK;
 }
 
-## @method extractFormInfo()
+## @method int extractFormInfo()
 # Read username return by CAS authentication system.
 # If user isn't authenticated, redirect it to CAS portal.
-# @return error_code
+# @return Lemonldap::NG::Portal constant
 sub extractFormInfo {
     my $self = shift;
     my $cas  = new AuthCAS(
@@ -46,9 +47,9 @@ sub extractFormInfo {
     PE_OK;
 }
 
-## @method authenticate()
+## @method int authenticate()
 # Does nothing.
-# @return error_code
+# @return Lemonldap::NG::Portal constant
 sub authenticate {
     PE_OK;
 }

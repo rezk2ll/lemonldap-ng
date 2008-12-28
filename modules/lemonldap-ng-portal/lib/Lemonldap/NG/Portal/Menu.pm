@@ -1,7 +1,7 @@
 ##@file
 # Menu for Lemonldap::NG portal
 #
-#@copy 2005, 2006, 2007, 2008, Xavier Guimard &lt;x.guimard@free.fr&gt;
+#@copy 2008 Clement OUDOT &lt;clement@oodo.net&gt; &lt;coudot@linagora.com&gt;
 
 ##@class
 # Menu class for Lemonldap::NG portal
@@ -22,10 +22,10 @@ our $VERSION = '0.01';
 our ( $defaultCondition, $locationCondition, $locationRegexp, $cfgNum, $path ) =
   ( undef, undef, undef, 0 );
 
-## @function private _safe()
+## @method private Safe _safe()
 # Build and returns security jail.
 # Includes custom functions
-# @return Safe_object
+# @return Safe object
 sub _safe {
     my $self = shift;
     return $self->{_safe} if ( $self->{_safe} );
@@ -53,11 +53,11 @@ sub _safe {
 
 my $catlevel = 0;
 
-##@cmethod new($args)
-# Class constructor.
+##@cmethod Lemonldap::NG::Portal::Menu new(hashRef $args)
+# Constructor.
 # $args->{portalObject} is required.
-#@param args hash reference
-#@return Lemonldap::NG::Portal::Menu object
+#@param $args hash reference
+#@return new object
 sub new {
     my $class = shift;
     my $self  = {};
@@ -105,7 +105,7 @@ sub new {
     return $self;
 }
 
-## @function private ldap()
+## @method private Lemonldap::NG::Portal::_LDAP ldap()
 # @return object Lemonldap::NG::Portal::_LDAP object
 sub ldap {
     my $self = shift;
@@ -119,9 +119,10 @@ sub ldap {
     return $self->{ldap};
 }
 
-## @function error()
+## @method string error(string $language)
 # Return error string
-# @return string
+# @param $language optional language to use. Default: browser accepted languages
+# @return error string
 sub error {
 
     # Copied from Simple.pm
@@ -137,7 +138,7 @@ sub error {
 
 *error_type = *Lemonldap::NG::Portal::Simple::error_type;
 
-## @function displayModule($modulename)
+## @method boolean displayModule($modulename)
 # Return true if the user can see the module.
 # Use for HTML::Template variable.
 # @param $modulename string
@@ -157,10 +158,10 @@ sub displayModule {
     return 0;
 }
 
-## @function displayTab()
+## @method string displayTab()
 # Tells which tab should be selected.
 # Design for Jquery tabs.
-# @return string
+# @return password, appslist or logout
 sub displayTab {
     my $self = shift;
 
@@ -189,9 +190,9 @@ sub displayTab {
     return "logout";
 }
 
-## @function appslistMenu()
+## @method string appslistMenu()
 # Returns HTML code for application list menu.
-# @return HTML_string
+# @return HTML string
 sub appslistMenu {
     my $self = shift;
     my $root = $self->_getXML;
@@ -200,9 +201,9 @@ sub appslistMenu {
     return $self->_displayCategory( $root, $catlevel );
 }
 
-## @function appslistDescription()
+## @method string appslistDescription()
 # Returns HTML code for application description.
-# @return HTML_string
+# @return HTML string
 sub appslistDescription {
     my $self = shift;
     my $root = $self->_getXML;
@@ -211,9 +212,8 @@ sub appslistDescription {
     return $self->_displayDescription($root);
 }
 
-## @function private _getXML()
-# Returns XML root element object.
-# @return object Lib::XML->documentElement
+## @method private XML::LibXML::Document _getXML()
+# @return XML root element object
 sub _getXML {
     my $self = shift;
 
@@ -233,9 +233,9 @@ sub _getXML {
     return $root;
 }
 
-## @function _displayCategory()
+## @method string _displayCategory()
 # Creates and returns HTML code for a category.
-# @return HTML_string
+# @return HTML string
 sub _displayCategory {
     my $self = shift;
     my ( $cat, $catlevel ) = @_;
@@ -271,18 +271,20 @@ sub _displayCategory {
     return $html;
 }
 
-## @function private _userParam($arg)
+## @method private string _userParam(string $arg)
 # Returns value of $arg variable stored in session.
-# @return string
+# @param $arg string to modify
+# @return string modified
 sub _userParam {
     my ( $self, $arg ) = @_;
     $arg =~ s/\$([\w]+)/$self->{portalObject}->{sessionInfo}->{$1}/g;
     return $arg;
 }
 
-## @function private _displayApplication()
+## @method private string _displayApplication(XML::LibXML::Element $app)
 # Creates HTML code for an application.
-# @return HTML_string
+# @param $app XML applications element
+# @return HTML string
 sub _displayApplication {
     my $self = shift;
     my ($app) = @_;
@@ -302,8 +304,9 @@ sub _displayApplication {
     return $html;
 }
 
-## @function private _displayDescription()
+## @method private string _displayDescription(XML::LibXML::Document $root)
 # Create HTML code for application description.
+# @param $root XML root element
 # @return HTML_string
 sub _displayDescription {
     my $self = shift;
@@ -336,9 +339,9 @@ sub _displayDescription {
     return $html;
 }
 
-## @function private _filterXML($root)
+## @method private string _filterXML(XML::LibXML::Document $root)
 # Remove unauthorized nodes.
-# @param $root XML_string
+# @param $root XML root element
 # @return XML_string
 sub _filterXML {
     my $self = shift;
@@ -367,9 +370,10 @@ sub _filterXML {
     return;
 }
 
-## @function private _hideEmptyCategory($cat)
+## @method private void _hideEmptyCategory(XML::LibXML::Element $cat)
 # Hides empty categories for _filterXML().
-# return nothing $cat is modified directly
+# Return nothing $cat is modified directly
+# @param $cat XML element
 sub _hideEmptyCategory {
     my $self = shift;
     my ($cat) = @_;
@@ -395,9 +399,12 @@ sub _hideEmptyCategory {
     return;
 }
 
-## @function private _changePassword($newpassword,$confirmpassword,$oldpassword)
+## @method private int _changePassword(string $newpassword,string $confirmpassword,string $oldpassword)
 # Change user's password.
-# @return error_code
+# @param $newpassword New password
+# @param $confirmpassword New password
+# @param $oldpassword Current password
+# @return Lemonldap::NG::Portal constant
 sub _changePassword {
     # TODO: Check used Auth module and change password for LDAP or DBI
     my $self = shift;
@@ -479,10 +486,10 @@ sub _changePassword {
     }
 }
 
-## @function private _storePassword($password)
+## @method private boolean _storePassword(string $password)
 # Store new password in session if storePassword parameter is set.
-# @param $password string
-# @return boolean
+# @param $password Password used in form
+# @return True
 sub _storePassword {
     my $self = shift;
     my ($password) = @_;
@@ -496,9 +503,9 @@ sub _storePassword {
     return 1;
 }
 
-## @private function _ppolicyWarning()
+## @method private int function _ppolicyWarning()
 # Return ppolicy warnings get in AuthLDAP.pm
-# @return error_code
+# @return Lemonldap::NG::Portal constant
 sub _ppolicyWarning {
     my $self = shift;
 
@@ -522,10 +529,10 @@ sub _ppolicyWarning {
     return ( PE_OK, undef );
 }
 
-## @@function private _grant($uri)
+## @method private boolean _grant(string $uri)
 # Check user's authorization for $uri.
-# @param $uri URL_string
-# @return boolean
+# @param $uri URL string
+# @return True if granted
 sub _grant {
     my $self = shift;
     my ($uri) = @_;
@@ -552,9 +559,9 @@ sub _grant {
     return 1;
 }
 
-## @function private _compileRules()
+## @method private boolean _compileRules()
 # Parse configured rules and compile them
-# @return true
+# @return True
 sub _compileRules {
     my $self = shift;
     foreach my $vhost ( keys %{ $self->{portalObject}->{locationRules} } ) {
@@ -581,10 +588,10 @@ sub _compileRules {
     1;
 }
 
-## @function private _conditionSub($cond)
+## @method private CODE _conditionSub(string $cond)
 # Return subroutine giving authorization condition.
-# @param $cond string boolean expression
-# @return CODE
+# @param $cond boolean expression
+# @return Compiled routine
 sub _conditionSub {
     my $self = shift;
     my ($cond) = @_;
