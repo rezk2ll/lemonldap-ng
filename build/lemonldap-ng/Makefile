@@ -413,6 +413,9 @@ static_example:	example
 documentation:
 	@cd doc/ && ../scripts/doc.pl
 
+doxygen:	clean
+	doxygen Doxyfile
+
 distclean:	clean
 
 clean:		common_clean handler_clean portal_clean manager_clean

@@ -142,31 +142,31 @@ BEGIN {
     *logout  = ( MP() == 2 ) ? \&logout_mp2  : \&logout_mp1;
 }
 
-## @method int handler_mp1()
+## @cmethod int handler_mp1()
 # Launch run() when used under mod_perl version 1
 # @return Apache constant
 sub handler_mp1 ($$) { shift->run(@_); }
 
-## @method int handler_mp2()
+## @cmethod int handler_mp2()
 # Launch run() when used under mod_perl version 2
 # @return Apache constant
 sub handler_mp2 : method {
     shift->run(@_);
 }
 
-## @method int logout_mp1()
+## @cmethod int logout_mp1()
 # Launch unlog() when used under mod_perl version 1
 # @return Apache constant
 sub logout_mp1 ($$) { shift->unlog(@_); }
 
-## @method int logout_mp2()
+## @cmethod int logout_mp2()
 # Launch unlog() when used under mod_perl version 2
 # @return Apache constant
 sub logout_mp2 : method {
     shift->unlog(@_);
 }
 
-## @method void lmLog(string $mess, string $level)
+## @cmethod void lmLog(string $mess, string $level)
 # Wrapper for Apache log system
 # @param $mess message to log
 # @param $level string (debug, info, warning or error)

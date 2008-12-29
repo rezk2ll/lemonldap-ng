@@ -25,12 +25,12 @@ BEGIN {
     *handler = ( MP() == 2 ) ? \&handler_mp2 : \&handler_mp1;
 }
 
-## @method int handler_mp1()
+## @cmethod int handler_mp1()
 # Launch run() when used under mod_perl version 1
 # @return Apache constant
 sub handler_mp1 ($$) { shift->run(@_); }
 
-## @method int handler_mp2()
+## @cmethod int handler_mp2()
 # Launch run() when used under mod_perl version 2
 # @return Apache constant
 sub handler_mp2 : method {
@@ -53,7 +53,7 @@ our $class;
 # disappear.
 $UA->requests_redirectable( [] );
 
-## @method int run(Apache2::RequestRec $r)
+## @cmethod int run(Apache2::RequestRec $r)
 # Main proxy method.
 # Called for Apache response (PerlResponseHandler).
 # @return Apache constant
@@ -115,7 +115,7 @@ sub cb_content {
     $r->print($chunk);
 }
 
-## @method void headers(HTTP::Request $response)
+## @cmethod void headers(HTTP::Request $response)
 # Send headers received from remote server to the client.
 # Replace "Location" header.
 # @param $response current HTTP response
