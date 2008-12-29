@@ -22,7 +22,7 @@ use base qw(Lemonldap::NG::Portal::Simple);
 # OVERLOADED SUB #
 ##################
 
-## @method boolean getConf(hashRef $args)
+## @method boolean getConf(hashRef args)
 # Copy all parameters returned by the Lemonldap::NG::Common::Conf object in $self.
 # @param args hash
 # @return True

@@ -53,7 +53,7 @@ our $class;
 # disappear.
 $UA->requests_redirectable( [] );
 
-## @cmethod int run(Apache2::RequestRec $r)
+## @cmethod int run(Apache2::RequestRec r)
 # Main proxy method.
 # Called for Apache response (PerlResponseHandler).
 # @return Apache constant
@@ -103,7 +103,7 @@ sub run($$) {
     return OK;
 }
 
-## @fn void cb_content(string $chunk)
+## @fn void cb_content(string chunk)
 # Send datas received from remote server to the client.
 # @param $chunk part of datas returned by HTTP server
 sub cb_content {
@@ -115,7 +115,7 @@ sub cb_content {
     $r->print($chunk);
 }
 
-## @cmethod void headers(HTTP::Request $response)
+## @cmethod void headers(HTTP::Request response)
 # Send headers received from remote server to the client.
 # Replace "Location" header.
 # @param $response current HTTP response

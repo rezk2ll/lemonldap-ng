@@ -166,7 +166,7 @@ sub logout_mp2 : method {
     shift->unlog(@_);
 }
 
-## @cmethod void lmLog(string $mess, string $level)
+## @cmethod void lmLog(string mess, string level)
 # Wrapper for Apache log system
 # @param $mess message to log
 # @param $level string (debug, info, warning or error)
@@ -183,7 +183,7 @@ sub lmLog {
     }
 }
 
-## @fn void lmSetApacheUser(Apache2::RequestRec $r,string $s)
+## @fn void lmSetApacheUser(Apache2::RequestRec r,string s)
 # Inform Apache for the data to use as user for logs
 # @param $r current request
 # @param $s string to use
@@ -193,7 +193,7 @@ sub lmSetApacheUser {
     $r->connection->user($s);
 }
 
-## @fn string protected regRemoteIp(string $str)
+## @fn string protected regRemoteIp(string str)
 # Replaces $ip by the client IP address in the string
 # @param $str string
 # @return string
@@ -208,7 +208,7 @@ sub regRemoteIp {
     return $str;
 }
 
-## @fn void lmSetHeaderIn(Apache2::RequestRec $r, string $h, string $v)
+## @fn void lmSetHeaderIn(Apache2::RequestRec r, string h, string v)
 # Set an HTTP header in the HTTP request.
 # @param $r Current request
 # @param $h Name of the header
@@ -223,7 +223,7 @@ sub lmSetHeaderIn {
     }
 }
 
-## @fn string lmtHeaderIn(Apache2::RequestRec $r, string $h)
+## @fn string lmtHeaderIn(Apache2::RequestRec r, string h)
 # Return an HTTP header value from the HTTP request.
 # @param $r Current request
 # @param $h Name of the header
@@ -238,7 +238,7 @@ sub lmHeaderIn {
     }
 }
 
-## @fn void lmSetErrHeaderOut(Apache2::RequestRec $r, string $h, string $v)
+## @fn void lmSetErrHeaderOut(Apache2::RequestRec r, string h, string v)
 # Set an HTTP header in the HTTP response in error context
 # @param $r Current request
 # @param $h Name of the header
@@ -253,7 +253,7 @@ sub lmSetErrHeaderOut {
     }
 }
 
-## @fn void lmSetErrHeaderOut(Apache2::RequestRec $r, string $h, string $v)
+## @fn void lmSetHeaderOut(Apache2::RequestRec r, string h, string v)
 # Set an HTTP header in the HTTP response in normal context
 # @param $r Current request
 # @param $h Name of the header
@@ -268,7 +268,7 @@ sub lmSetHeaderOut {
     }
 }
 
-## @fn string lmtHeaderOut(Apache2::RequestRec $r, string $h)
+## @fn string lmtHeaderOut(Apache2::RequestRec r, string h)
 # Return an HTTP header value from the HTTP response.
 # @param $r Current request
 # @param $h Name of the header

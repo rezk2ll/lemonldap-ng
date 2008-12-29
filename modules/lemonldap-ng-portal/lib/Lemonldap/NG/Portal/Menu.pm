@@ -53,7 +53,7 @@ sub _safe {
 
 my $catlevel = 0;
 
-##@cmethod Lemonldap::NG::Portal::Menu new(hashRef $args)
+##@cmethod Lemonldap::NG::Portal::Menu new(hashRef args)
 # Constructor.
 # $args->{portalObject} is required.
 #@param $args hash reference
@@ -119,7 +119,7 @@ sub ldap {
     return $self->{ldap};
 }
 
-## @method string error(string $language)
+## @method string error(string language)
 # Return error string
 # @param $language optional language to use. Default: browser accepted languages
 # @return error string
@@ -138,7 +138,7 @@ sub error {
 
 *error_type = *Lemonldap::NG::Portal::Simple::error_type;
 
-## @method boolean displayModule($modulename)
+## @method boolean displayModule(modulename)
 # Return true if the user can see the module.
 # Use for HTML::Template variable.
 # @param $modulename string
@@ -271,7 +271,7 @@ sub _displayCategory {
     return $html;
 }
 
-## @method private string _userParam(string $arg)
+## @method private string _userParam(string arg)
 # Returns value of $arg variable stored in session.
 # @param $arg string to modify
 # @return string modified
@@ -281,7 +281,7 @@ sub _userParam {
     return $arg;
 }
 
-## @method private string _displayApplication(XML::LibXML::Element $app)
+## @method private string _displayApplication(XML::LibXML::Element app)
 # Creates HTML code for an application.
 # @param $app XML applications element
 # @return HTML string
@@ -304,7 +304,7 @@ sub _displayApplication {
     return $html;
 }
 
-## @method private string _displayDescription(XML::LibXML::Document $root)
+## @method private string _displayDescription(XML::LibXML::Document root)
 # Create HTML code for application description.
 # @param $root XML root element
 # @return HTML_string
@@ -339,7 +339,7 @@ sub _displayDescription {
     return $html;
 }
 
-## @method private string _filterXML(XML::LibXML::Document $root)
+## @method private string _filterXML(XML::LibXML::Document root)
 # Remove unauthorized nodes.
 # @param $root XML root element
 # @return XML_string
@@ -370,7 +370,7 @@ sub _filterXML {
     return;
 }
 
-## @method private void _hideEmptyCategory(XML::LibXML::Element $cat)
+## @method private void _hideEmptyCategory(XML::LibXML::Element cat)
 # Hides empty categories for _filterXML().
 # Return nothing $cat is modified directly
 # @param $cat XML element
@@ -399,7 +399,7 @@ sub _hideEmptyCategory {
     return;
 }
 
-## @method private int _changePassword(string $newpassword,string $confirmpassword,string $oldpassword)
+## @method private int _changePassword(string newpassword,string confirmpassword,string oldpassword)
 # Change user's password.
 # @param $newpassword New password
 # @param $confirmpassword New password
@@ -486,7 +486,7 @@ sub _changePassword {
     }
 }
 
-## @method private boolean _storePassword(string $password)
+## @method private boolean _storePassword(string password)
 # Store new password in session if storePassword parameter is set.
 # @param $password Password used in form
 # @return True
@@ -529,7 +529,7 @@ sub _ppolicyWarning {
     return ( PE_OK, undef );
 }
 
-## @method private boolean _grant(string $uri)
+## @method private boolean _grant(string uri)
 # Check user's authorization for $uri.
 # @param $uri URL string
 # @return True if granted
@@ -588,7 +588,7 @@ sub _compileRules {
     1;
 }
 
-## @method private CODE _conditionSub(string $cond)
+## @method private CODE _conditionSub(string cond)
 # Return subroutine giving authorization condition.
 # @param $cond boolean expression
 # @return Compiled routine

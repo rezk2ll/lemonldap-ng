@@ -78,7 +78,7 @@ our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
 our $safe;
 our $self;    # Safe cannot share a variable declared with my
 
-##@cmethod Lemonldap::NG::Portal::Simple new(hashRef $args)
+##@cmethod Lemonldap::NG::Portal::Simple new(hashRef args)
 # Class constructor.
 #@param args hash reference
 #@return Lemonldap::NG::Portal::Simple object
@@ -139,7 +139,7 @@ sub new {
     return $self;
 }
 
-##@method protected boolean getConf(hashRef $args)
+##@method protected boolean getConf(hashRef args)
 # Copy all parameters in caller object.
 #@param args hash-ref
 #@return True
@@ -156,7 +156,7 @@ sub getConf {
     1;
 }
 
-##@method string error(string $lang)
+##@method string error(string lang)
 # error calls Portal/_i18n.pm to display error in the wanted language.
 #@param $lang optional (browser language is used instead)
 #@return error message
@@ -167,7 +167,7 @@ sub error {
     return &Lemonldap::NG::Portal::_i18n::error( $code, $lang );
 }
 
-##@method string error_type(int $code)
+##@method string error_type(int code)
 # error_type tells if error is positive, warning or negative
 # @param $code Lemonldap::NG error code
 # @return "positive", "warning" or "negative"
@@ -208,7 +208,7 @@ sub error_type {
     return "negative";
 }
 
-##@method void translate_template(*string $text_ref, string $lang)
+##@method void translate_template(*string text_ref, string lang)
 # translate_template is used as an HTML::Template filter to tranlate strings in
 # the wanted language
 #@param text_ref reference to the string to translate
@@ -295,7 +295,7 @@ sub getSessionInfo {
 
 }
 
-##@method void updateSession(hashRef $infos)
+##@method void updateSession(hashRef infos)
 # Update session stored.
 # If lemonldap cookie exists, reads it and search session. If the session is
 # available, update datas with $info.
@@ -417,7 +417,7 @@ sub safe {
 # SOAP subroutines #
 ####################
 
-##@method SOAP::Data getCookies(string $user,string $password)
+##@method SOAP::Data getCookies(string user,string password)
 # Called in SOAP context, returns cookies in an array.
 # This subroutine works only for portals working with user and password
 #@param user uid
@@ -463,7 +463,6 @@ sub getCookies {
 #  - authentication module : extractFormInfo, setAuthSessionInfo, authenticate
 #  - user database module  : getUser, setSessionInfo
 #@return 1 if user is all is OK, 0 if session isn't created or a notification has to be done
-
 sub process {
     my ($self) = @_;
     $self->{error} = PE_OK;

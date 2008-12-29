@@ -19,7 +19,7 @@ use Lemonldap::NG::Handler::SharedConf qw(:all);
 
 our $VERSION = '0.2';
 
-## @cmethod Lemonldap::NG::Handler::CGI new(hashRef $args)
+## @cmethod Lemonldap::NG::Handler::CGI new(hashRef args)
 # Constructor.
 # @param $args hash passed to Lemonldap::NG::Handler::_CGI object
 # @return new object
@@ -106,7 +106,7 @@ sub authorize {
     return $self->_handler->grant( $ENV{REQUEST_URI} );
 }
 
-## @method int testUri(string $uri)
+## @method int testUri(string uri)
 # Checks if user is authorized to access to $uri.
 # Call Lemonldap::NG::Handler::_CGI::grant() function.
 # @param $uri URI or URL to test
@@ -126,7 +126,7 @@ sub user {
     return $datas;
 }
 
-## @method boolean group(string $group)
+## @method boolean group(string group)
 # @param $group name of the Lemonldap::NG group to test
 # @return boolean : true if user is in this group
 sub group {
@@ -178,7 +178,7 @@ sub childInit {1}
 # @return true
 sub purgeCache {1}
 
-## @method void lmLog(string $message,string $level)
+## @method void lmLog(string message,string level)
 # Replace lmLog by "print STDERR $message".
 # @param $message Message to log
 # @param $level error level (debug, info, warning or error)
@@ -188,7 +188,7 @@ sub lmLog {
     print STDERR "$mess\n" unless ( $level eq 'debug' );
 }
 
-## @method boolean vhostAvailable(string $vhost)
+## @method boolean vhostAvailable(string vhost)
 # Checks if $vhost has been declared in configuration
 # @param $vhost Virtual Host to test
 # @return boolean : true if $vhost is available
@@ -197,7 +197,7 @@ sub vhostAvailable {
     return defined( $defaultCondition->{$vhost} );
 }
 
-## @method boolean grant(string $uri, string $vhost)
+## @method boolean grant(string uri, string vhost)
 # Return true if user is granted to access.
 # @param $uri URI string
 # @param $vhost Optional virtual host (default current virtual host)

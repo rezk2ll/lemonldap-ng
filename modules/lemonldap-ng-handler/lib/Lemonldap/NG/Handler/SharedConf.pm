@@ -46,7 +46,7 @@ BEGIN {
 
 # INIT PROCESS
 
-## @cmethod void init(hashRef $args)
+## @cmethod void init(hashRef args)
 # Constructor.
 # init is overloaded to call only localInit. globalInit is called later.
 # @param $args hash containing parameters
@@ -57,7 +57,7 @@ sub init($$) {
     $class->localInit($args);
 }
 
-## @cmethod void defaultValuesInit(hashRef $args)
+## @cmethod void defaultValuesInit(hashRef args)
 # Set default values for non-customized variables
 # @param $args hash containing parameters
 # @return boolean
@@ -69,7 +69,7 @@ sub defaultValuesInit {
     return $class->SUPER::defaultValuesInit( \%h );
 }
 
-## @cmethod void localInit(hashRef $args)
+## @cmethod void localInit(hashRef args)
 # Load parameters and build the Lemonldap::NG::Common::Conf object.
 # @return boolean
 sub localInit {
@@ -88,7 +88,7 @@ sub localInit {
 
 # MAIN
 
-## @cmethod int run(Apache2::RequestRec $r)
+## @cmethod int run(Apache2::RequestRec r)
 # Check configuration and launch Lemonldap::NG::Handler::Simple::run().
 # Each $reloadTime, the Apache child verify if its configuration is the same
 # as the configuration stored in the local storage.
@@ -107,7 +107,7 @@ sub run($$) {
 
 # CONFIGURATION UPDATE
 
-## @cmethod int testConf(boolean $local)
+## @cmethod int testConf(boolean local)
 # Test if configuration has changed and launch setConf() if needed.
 # If the optional boolean $local is true, remote configuration is not tested:
 # only local cached configuration is tested if available. $local is given to
@@ -131,7 +131,7 @@ sub testConf {
     OK;
 }
 
-## @cmethod int setConf(hashRef $conf)
+## @cmethod int setConf(hashRef conf)
 # Launch globalInit().
 # Local parameters have best precedence on configuration parameters.
 # @return Apache constant
@@ -149,7 +149,7 @@ sub setConf {
 
 *reload = *refresh;
 
-## @cmethod int refresh(Apache::RequestRec $r)
+## @cmethod int refresh(Apache::RequestRec r)
 # Launch testConf() with $local=0, so remote configuration is tested.
 # @param $r current request
 # @return Apache constant
