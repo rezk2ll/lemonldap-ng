@@ -319,7 +319,9 @@ sub statusProcess {
 # Initialization subroutines #
 ##############################
 
-# Security jail
+## @cmethod Safe safe()
+# Build and return the security jail used to compile rules and headers.
+# @return Safe object
 sub safe {
     my $class = shift;
     return $safe if($safe);
@@ -346,17 +348,19 @@ sub safe {
     return $safe;
 }
 
-# init() : by default, it calls localInit and globalInit, but with
-#          a shared configuration, init() is overloaded to call only
-#          localInit; globalInit is called later when the configuration
-#          is loaded.
+## @cmethod void init(hashRef args)
+# Calls localInit() and globalInit().
+# @param $args reference to the initialization hash
 sub init($$) {
     my $class = shift;
     $class->localInit(@_);
     $class->globalInit(@_);
 }
 
-# Local storage initialization
+## @cmethod void localInit(hashRef args)
+# Call purgeCache() to purge the local cache, launch the status process
+# (statusProcess()) in wanted and launch childInit().
+# @param $args reference to the initialization hash
 sub localInit($$) {
     my ( $class, $args ) = @_;
     if ( $localStorage = $args->{localStorage} ) {
@@ -371,6 +375,11 @@ sub localInit($$) {
     $class->childInit();
 }
 
+## @cmethod boolean childInit()
+# Indicates to Apache that it has to launch:
+# - initLocalStorage() for each child process (after uid change)
+# - cleanLocalStorage() after each requests
+# @return True
 sub childInit {
     my $class = shift;
 
@@ -399,6 +408,9 @@ sub childInit {
     1;
 }
 
+## @cmethod void purgeCache()
+# Purge the local cache.
+# Launched at Apache startup.
 sub purgeCache {
     my $class = shift;
     eval "use $localStorage;";
@@ -417,7 +429,14 @@ sub purgeCache {
     }
 }
 
-# Global initialization process :
+## @cmethod void globalInit(hashRef args)
+# Global initialization process. Launch :
+# - locationRulesInit()
+# - defaultValuesInit()
+# - portalInit()
+# - globalStorageInit()
+# - forgeHeadersInit()
+# @param $args reference to the configuration hash
 sub globalInit {
     my $class = shift;
     $class->locationRulesInit(@_);
@@ -427,12 +446,17 @@ sub globalInit {
     $class->forgeHeadersInit(@_);
 }
 
-# locationRulesInit : used to pre-compile rules :
-#   - rules are stored in a hash containing regexp=>test expressions where :
-#       - regexp is used to test URIs
-#       - test contains an expression used to grant the user
-
-# TODO: split locationRules into 2 arrays
+## @cmethod void locationRulesInit(hashRef args)
+# Compile rules.
+# Rules are stored in $args->{locationRules} that contains regexp=>test
+# expressions where :
+# - regexp is used to test URIs
+# - test contains an expression used to grant the user
+#
+# This function creates 2 arrays containing :
+# - the list of the compiled regular expressions
+# - the list of the compiled functions (compiled with conditionSub())
+# @param $args reference to the configuration hash
 sub locationRulesInit {
     my ( $class, $args ) = @_;
     $locationCount = 0;
@@ -457,8 +481,10 @@ sub locationRulesInit {
     1;
 }
 
-# conditionSub returns a pre-compiled subroutine used to grant users (used by
+## @cmethod codeRef conditionSub(string cond)
+# Returns a compiled function used to grant users (used by
 # locationRulesInit().
+# @param $cond The boolean expression to use
 sub conditionSub {
     my ( $class, $cond ) = @_;
     return sub { 1 }
@@ -508,7 +534,9 @@ sub conditionSub {
     return $sub;
 }
 
-# defaultValuesInit : set default values for non-customized variables
+## @cmethod void defaultValuesInit(hashRef args)
+# Set default values for non-customized variables
+# @param $args reference to the configuration hash
 sub defaultValuesInit {
     my ( $class, $args ) = @_;
 
@@ -524,14 +552,17 @@ sub defaultValuesInit {
     1;
 }
 
-# portalInit : verify that portal variable exists
+## @cmethod void portalInit(hashRef args)
+# Verify that portal variable exists. Die unless
+# @param $args reference to the configuration hash
 sub portalInit {
     my ( $class, $args ) = @_;
     $portal = $args->{portal} or die("portal parameter required");
 }
 
-# globalStorageInit : initialize the Apache::Session::* package used to
-# share user's variables
+## @cmethod void globalStorageInit(hashRef args)
+# Initialize the Apache::Session::* module choosed to share user's variables.
+# @param $args reference to the configuration hash
 sub globalStorageInit {
     my ( $class, $args ) = @_;
     $globalStorage = $args->{globalStorage} or die "globalStorage required";
@@ -540,9 +571,10 @@ sub globalStorageInit {
     $globalStorageOptions = $args->{globalStorageOptions};
 }
 
-# forgeHeadersInit : create the &$forgeHeaders subroutine used to insert
-# headers into the HTTP request (which are used for accounting by the
-# application)
+## @cmethod void forgeHeadersInit(hashRef args)
+# Create the &$forgeHeaders subroutine used to insert
+# headers into the HTTP request.
+# @param $args reference to the configuration hash
 sub forgeHeadersInit {
     my ( $class, $args ) = @_;
 
@@ -565,28 +597,31 @@ sub forgeHeadersInit {
           "lmSetHeaderIn(\$apacheRequest,'$_' => join('',split(/[\\r\\n]+/,"
           . $tmp{$_} . ")));";
     }
-
-    #$sub = "\$forgeHeaders = sub {$sub};";
-    #eval "$sub";
     $forgeHeaders = $class->safe->reval("sub {$sub};");
     $class->lmLog( "$class: Unable to forge headers: $@: sub {$sub}", 'error' )
       if ($@);
     1;
 }
 
+## @cmethod void updateStatus(string user,string url,string action)
+# Inform the status process of the result of the request if it is available.
 sub updateStatus {
     my ( $class, $user, $url, $action ) = @_;
-    print $statusPipe "$user => "
-      . $apacheRequest->hostname
-      . "$url $action\n"
-      if ($statusPipe);
+    eval {
+        print $statusPipe "$user => "
+          . $apacheRequest->hostname
+          . "$url $action\n"
+          if ($statusPipe);
+    };
 }
 
-################
-# MAIN PROCESS #
-################
+###################
+# RUNNING METHODS #
+###################
 
-# grant : grant or refuse client
+## @cmethod boolean grant()
+# Grant or refuse client using compiled regexp and functions
+# @return True if the user is granted to access to the current URL
 sub grant {
     my ( $class, $uri ) = @_;
     for ( my $i = 0 ; $i < $locationCount ; $i++ ) {
@@ -596,7 +631,10 @@ sub grant {
     return &$defaultCondition($datas);
 }
 
-# forbidden : used to reject non authorizated requests
+## @cmethod int forbidden()
+# Used to reject non authorizated requests.
+# Inform the status processus and call logForbidden().
+# @return Apache2::Const::FORBIDDEN
 sub forbidden {
     my $class = shift;
     if ( $datas->{_logout} ) {
@@ -610,6 +648,9 @@ sub forbidden {
     return FORBIDDEN;
 }
 
+## @cmethod void logForbidden()
+# Insert a log in Apache errors log system to inform that the user was rejected.
+# This method has to be overloaded to use different logs systems
 sub logForbidden {
     my $class = shift;
     $class->lmLog(
@@ -621,7 +662,8 @@ sub logForbidden {
     );
 }
 
-# hideCookie : hide Lemonldap::NG cookie to the protected application
+## @cmethod void hideCookie()
+# Hide Lemonldap::NG cookie to the protected application.
 sub hideCookie {
     my $class = shift;
     $class->lmLog( "$class: removing cookie", 'debug' );
@@ -630,6 +672,8 @@ sub hideCookie {
     lmSetHeaderIn( $apacheRequest, 'Cookie' => $tmp );
 }
 
+## @cmethod string encodeUrl(string url)
+# Encode URl in the format used by Lemonldap::NG::Portal for redirections.
 sub encodeUrl {
     my ( $class, $url ) = @_;
     my $u = $url;
@@ -650,7 +694,11 @@ sub encodeUrl {
     return $u;
 }
 
-# Redirect non-authenticated users to the portal
+## @cmethod int goToPortal(string url, string arg)
+# Redirect non-authenticated users to the portal by setting "Location:" header.
+# @param $url Url requested
+# @param $arg optionnal GET parameters
+# @return Apache2::Const::REDIRECT
 sub goToPortal {
     my ( $class, $url, $arg ) = @_;
     $class->lmLog(
@@ -665,13 +713,28 @@ sub goToPortal {
     return REDIRECT;
 }
 
-# Fetch $id
+## @cmethod $ fetchId()
+# Get user cookies and search for Lemonldap::NG cookie.
+# @return Value of the cookie if found, 0 else
 sub fetchId {
     my $t = lmHeaderIn( $apacheRequest, 'Cookie' );
     return ( $t =~ /$cookieName=([^; ]+);?/o ) ? $1 : 0;
 }
 
 # MAIN SUBROUTINE called by Apache (using PerlHeaderParserHandler option)
+
+## @cmethod int run(Apache2::RequestRec apacheRequest)
+# Main method used to control access.
+# Calls :
+# - fetchId()
+# - lmSetApacheUser()
+# - grant()
+# - forbidden() if user is rejected
+# - sendHeaders() if user is granted
+# - hideCookie()
+# - updateStatus()
+# @param $apacheRequest Current request
+# @return Apache2::Const value (OK, FORBIDDEN, REDIRECT or SERVER_ERROR)
 sub run ($$) {
     my $class;
     ( $class, $apacheRequest ) = @_;
@@ -742,29 +805,24 @@ sub run ($$) {
     OK;
 }
 
+## @cmethod void sendHeaders()
+# Launch function compiled by forgeHeadersInit()
 sub sendHeaders {
     &$forgeHeaders;
 }
 
-sub initLocalStorage {
-    my ( $class, $r ) = @_;
-    if ( $localStorage and not $refLocalStorage ) {
-        eval "use $localStorage;\$refLocalStorage = new $localStorage(\$localStorageOptions);";
-        $class->lmLog( "Local cache initialization failed: $@", 'error' )
-          unless ( defined $refLocalStorage );
-    }
-    return DECLINED;
-}
-
-sub cleanLocalStorage {
-    $refLocalStorage->purge() if ($refLocalStorage);
-    return DECLINED;
-}
-
+## @cmethod int unprotect()
+# Used to unprotect an area.
+# To use it, set "PerlHeaderParserHandler My::Package->unprotect" Apache
+# configuration file.
+# It replace run() by doing nothing.
+# @return Apache2::Const::OK
 sub unprotect {
     OK;
 }
 
+## @cmethod void localUnlog()
+# Delete current user from local cache entry.
 sub localUnlog {
     my $class = shift;
     if ( my $id = $class->fetchId ) {
@@ -781,6 +839,9 @@ sub localUnlog {
     }
 }
 
+## @cmethod int unlog(Apache::RequestRec apacheRequest)
+# Call localUnlog() then goToPortal() to unlog the current user.
+# @return Apache2::Const value returned by goToPortal()
 sub unlog ($$) {
     my $class;
     ( $class, $apacheRequest ) = @_;
@@ -789,6 +850,12 @@ sub unlog ($$) {
     return $class->goToPortal( '/', 'logout=1' );
 }
 
+## @cmethod int redirectFilter(string url, Apache2::Filter f)
+# Launch the current HTTP request then redirects the user to $url.
+# Used by logout_app and logout_app_sso targets
+# @param $url URL to redirect the user
+# @param $f Current Apache2::Filter object
+# @return Apache2::Const::REDIRECT
 sub redirectFilter {
     my $class = shift;
     my $url   = shift;
@@ -809,6 +876,11 @@ sub redirectFilter {
     return REDIRECT;
 }
 
+## @cmethod int status(Apache2::RequestRec $r)
+# Get the result from the status process and launch a PerlResponseHandler to
+# display it.
+# @param $r Current request
+# @return Apache2::Const::OK
 sub status($$) {
     my ( $class, $r ) = @_;
     $class->lmLog( "$class: request for status", 'debug' );
@@ -842,6 +914,31 @@ sub status($$) {
         );
     }
     return OK;
+}
+
+#################
+# OTHER METHODS #
+#################
+
+## @cmethod int initLocalStorage()
+# Prepare local cache (if not done before by Lemonldap::NG::Common::Conf)
+# @return Apache2::Const::DECLINED
+sub initLocalStorage {
+    my ( $class, $r ) = @_;
+    if ( $localStorage and not $refLocalStorage ) {
+        eval "use $localStorage;\$refLocalStorage = new $localStorage(\$localStorageOptions);";
+        $class->lmLog( "Local cache initialization failed: $@", 'error' )
+          unless ( defined $refLocalStorage );
+    }
+    return DECLINED;
+}
+
+## @cmethod cleanLocalStorage()
+# Clean expired values from the local cache.
+# @return Apache2::Const::DECLINED
+sub cleanLocalStorage {
+    $refLocalStorage->purge() if ($refLocalStorage);
+    return DECLINED;
 }
 
 1;

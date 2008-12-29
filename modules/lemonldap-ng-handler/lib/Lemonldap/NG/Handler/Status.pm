@@ -1,3 +1,10 @@
+## @file
+# Status process mechanism
+#
+# @copy 2008 Xavier Guimard &lt;x.guimard@free.fr&gt;
+
+## @class
+# Status process mechanism
 package Lemonldap::NG::Handler::Status;
 
 use strict;
@@ -11,6 +18,8 @@ our $activity = [];
 our $start    = int( time / 60 );
 use constant MN_COUNT => 5;
 
+## @fn hashRef portalTab()
+# @return Constant hash used to convert error codes into string.
 sub portalTab {
     return {
         -2 => 'PORTAL_REDIRECT',
@@ -46,6 +55,11 @@ eval {
     POSIX::setuid( ( getpwnam( $ENV{APACHE_RUN_USER} ) )[2] );
 };
 
+## @fn void run(string localStorage, hashRef localStorageOptions)
+# Main.
+# Reads requests from STDIN to :
+# - update counts
+# - display results
 sub run {
     my ( $localStorage, $localStorageOptions ) = ( shift, shift );
     my $refLocalStorage;
@@ -199,6 +213,10 @@ sub run {
     }
 }
 
+## @fn string timeUp(int d)
+# Return the time since the status process was launched (last Apache reload).
+# @param $d Number of minutes since start
+# @return Date in format "day hour minute"
 sub timeUp {
     my $d  = shift;
     my $mn = $d % 60;
@@ -208,6 +226,10 @@ sub timeUp {
     return "$d\d $h\h $mn\mn";
 }
 
+## @fn void topByCat(string cat,int max)
+# Display the "top 10" fao a category (OK, REDIRECT,...).
+# @param $cat Category to display
+# @param $max Number of lines to display
 sub topByCat {
     my ( $cat, $max ) = @_;
     my $i = 0;
@@ -225,6 +247,8 @@ sub topByCat {
     print "</pre>\n";
 }
 
+## @fn void head()
+# Display head of HTML status responses.
 sub head {
     print <<"EOF";
 <!DOCTYPE html
