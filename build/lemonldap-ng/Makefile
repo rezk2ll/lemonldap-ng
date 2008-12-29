@@ -175,7 +175,7 @@ install_bin:	install_libs install_conf_dir
 #
 # SITE INSTALL
 #
-install_site:	install_manager_site install_portal_site install_handler_site install_test_site install_examples_site
+install_site:	install_manager_site install_portal_site install_handler_site install_test_site install_examples_site install_doc_site
 	# Site install
 	@install -v -d $(RCONFDIR)
 	# Apache configuration files
@@ -261,6 +261,7 @@ install_portal_site:	install_conf_dir
 	done
 	@cp -pR --remove-destination ${SRCPORTALDIR}example/index_skin.pl ${RPORTALDIR}index.pl
 	@cp -pR --remove-destination ${SRCPORTALDIR}example/error.pl ${RPORTALDIR}
+	@cp -pR --remove-destination ${SRCPORTALDIR}example/apps ${RPORTALDIR}
 	@perl -i -pe 's#__SKINDIR__#$(PORTALDIR)skins#; \
 		s#__APPSXMLFILE__#$(CONFDIR)apps-list.xml#;' ${RPORTALDIR}index.pl ${RPORTALDIR}error.pl
 	@cp -pR --remove-destination ${SRCPORTALDIR}example/skins/* $(RPORTALSKINSDIR)
@@ -310,6 +311,10 @@ install_examples_site:
 	@perl -i -pe 's#__SKINDIR__#$(PORTALDIR)skins#; \
 		s#__APPSXMLFILE__#$(CONFDIR)apps-list.xml#; \
 		s#__SESSIONDIR__#$(APACHESESSIONFILEDIR)#g;' $(REXAMPLESDIR)portal/*.pl
+
+install_doc_site:
+	@install -v -d $(RDOCDIR)
+	@cp -R --remove-destination doc/* $(RDOCDIR)
 
 install_conf_dir:	install_sessions_dir
 	# Configuration files install
