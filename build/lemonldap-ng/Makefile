@@ -315,7 +315,7 @@ install_conf_dir:	install_sessions_dir
 	# Configuration files install
 	@install -v -d $(RCONFDIR) $(RFILECONFIGDIR) $(RTOOLSDIR)
 	@cp --remove-destination $(SRCCOMMONDIR)storage.conf $(RCONFDIR)
-	@perl -i -pe 's#^dirName = .*#dirName = $(RFILECONFIGDIR)#g' $(RCONFDIR)storage.conf
+	@perl -i -pe 's#^dirName = .*#dirName = $(FILECONFIGDIR)#g' $(RCONFDIR)storage.conf
 	@cp _example/conf/lmConf-1 $(RFILECONFIGDIR)
 	@perl -000 -i -pe "s#^(globalStorageOptions\\n\\s+)'[^\\n]*?'\$$#\$${1}\'\\\$$data1 = {&39;Directory&39; => &39;$(APACHESESSIONFILEDIR)&39;,&39;LockDirectory&39; => &39;$(APACHESESSIONFILELOCKDIR)&39;};'#m" $(RFILECONFIGDIR)lmConf-1
 	@perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g;\
