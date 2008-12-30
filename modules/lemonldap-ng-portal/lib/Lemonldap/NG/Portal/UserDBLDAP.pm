@@ -73,7 +73,7 @@ sub search {
     PE_OK;
 }
 
-## @methor int setSessionInfo()
+## @method int setSessionInfo()
 # 7) Load all parameters included in exportedVars parameter.
 # Multi-value parameters are loaded in a single string with
 # '; ' separator

@@ -4,7 +4,15 @@
 # @copy 2005, 2006, 2007, 2008 Xavier Guimard &lt;x.guimard@free.fr&gt;
 
 ## @class
-# Base class for Lemonldap::NG handlers
+# Base class for Lemonldap::NG handlers.
+# All methods in handler are class methods: in ModPerl environment, handlers
+# are always launched without object created.
+#
+# The main method is run() who is called by Apache for each requests (using
+# handler() wrapper).
+#
+# The main initialization subroutine is init() who launch localInit() and
+# globalInit().
 package Lemonldap::NG::Handler::Simple;
 
 use strict;
@@ -142,31 +150,31 @@ BEGIN {
     *logout  = ( MP() == 2 ) ? \&logout_mp2  : \&logout_mp1;
 }
 
-## @cmethod int handler_mp1()
+## @rmethod protected int handler_mp1()
 # Launch run() when used under mod_perl version 1
 # @return Apache constant
 sub handler_mp1 ($$) { shift->run(@_); }
 
-## @cmethod int handler_mp2()
+## @rmethod protected int handler_mp2()
 # Launch run() when used under mod_perl version 2
 # @return Apache constant
 sub handler_mp2 : method {
     shift->run(@_);
 }
 
-## @cmethod int logout_mp1()
+## @rmethod protected int logout_mp1()
 # Launch unlog() when used under mod_perl version 1
 # @return Apache constant
 sub logout_mp1 ($$) { shift->unlog(@_); }
 
-## @cmethod int logout_mp2()
+## @rmethod protected int logout_mp2()
 # Launch unlog() when used under mod_perl version 2
 # @return Apache constant
 sub logout_mp2 : method {
     shift->unlog(@_);
 }
 
-## @cmethod void lmLog(string mess, string level)
+## @rmethod void lmLog(string mess, string level)
 # Wrapper for Apache log system
 # @param $mess message to log
 # @param $level string (debug, info, warning or error)
@@ -183,7 +191,7 @@ sub lmLog {
     }
 }
 
-## @fn void lmSetApacheUser(Apache2::RequestRec r,string s)
+## @rfn protected void lmSetApacheUser(Apache2::RequestRec r,string s)
 # Inform Apache for the data to use as user for logs
 # @param $r current request
 # @param $s string to use
@@ -193,7 +201,7 @@ sub lmSetApacheUser {
     $r->connection->user($s);
 }
 
-## @fn string protected regRemoteIp(string str)
+## @ifn protected string protected regRemoteIp(string str)
 # Replaces $ip by the client IP address in the string
 # @param $str string
 # @return string
@@ -208,7 +216,7 @@ sub regRemoteIp {
     return $str;
 }
 
-## @fn void lmSetHeaderIn(Apache2::RequestRec r, string h, string v)
+## @rfn void lmSetHeaderIn(Apache2::RequestRec r, string h, string v)
 # Set an HTTP header in the HTTP request.
 # @param $r Current request
 # @param $h Name of the header
@@ -223,7 +231,7 @@ sub lmSetHeaderIn {
     }
 }
 
-## @fn string lmtHeaderIn(Apache2::RequestRec r, string h)
+## @rfn string lmtHeaderIn(Apache2::RequestRec r, string h)
 # Return an HTTP header value from the HTTP request.
 # @param $r Current request
 # @param $h Name of the header
@@ -238,7 +246,7 @@ sub lmHeaderIn {
     }
 }
 
-## @fn void lmSetErrHeaderOut(Apache2::RequestRec r, string h, string v)
+## @rfn void lmSetErrHeaderOut(Apache2::RequestRec r, string h, string v)
 # Set an HTTP header in the HTTP response in error context
 # @param $r Current request
 # @param $h Name of the header
@@ -253,7 +261,7 @@ sub lmSetErrHeaderOut {
     }
 }
 
-## @fn void lmSetHeaderOut(Apache2::RequestRec r, string h, string v)
+## @rfn void lmSetHeaderOut(Apache2::RequestRec r, string h, string v)
 # Set an HTTP header in the HTTP response in normal context
 # @param $r Current request
 # @param $h Name of the header
@@ -268,7 +276,7 @@ sub lmSetHeaderOut {
     }
 }
 
-## @fn string lmtHeaderOut(Apache2::RequestRec r, string h)
+## @rfn string lmtHeaderOut(Apache2::RequestRec r, string h)
 # Return an HTTP header value from the HTTP response.
 # @param $r Current request
 # @param $h Name of the header
@@ -285,7 +293,7 @@ sub lmHeaderOut {
 
 # Status daemon creation
 
-## @fn void statusProcess()
+## @ifn protected void statusProcess()
 # Launch the status processus.
 sub statusProcess {
     require IO::Pipe;
@@ -319,7 +327,7 @@ sub statusProcess {
 # Initialization subroutines #
 ##############################
 
-## @cmethod Safe safe()
+## @imethod protected Safe safe()
 # Build and return the security jail used to compile rules and headers.
 # @return Safe object
 sub safe {
@@ -348,7 +356,7 @@ sub safe {
     return $safe;
 }
 
-## @cmethod void init(hashRef args)
+## @imethod void init(hashRef args)
 # Calls localInit() and globalInit().
 # @param $args reference to the initialization hash
 sub init($$) {
@@ -357,7 +365,7 @@ sub init($$) {
     $class->globalInit(@_);
 }
 
-## @cmethod void localInit(hashRef args)
+## @imethod void localInit(hashRef args)
 # Call purgeCache() to purge the local cache, launch the status process
 # (statusProcess()) in wanted and launch childInit().
 # @param $args reference to the initialization hash
@@ -375,7 +383,7 @@ sub localInit($$) {
     $class->childInit();
 }
 
-## @cmethod boolean childInit()
+## @imethod protected boolean childInit()
 # Indicates to Apache that it has to launch:
 # - initLocalStorage() for each child process (after uid change)
 # - cleanLocalStorage() after each requests
@@ -408,7 +416,7 @@ sub childInit {
     1;
 }
 
-## @cmethod void purgeCache()
+## @imethod protected void purgeCache()
 # Purge the local cache.
 # Launched at Apache startup.
 sub purgeCache {
@@ -429,7 +437,7 @@ sub purgeCache {
     }
 }
 
-## @cmethod void globalInit(hashRef args)
+## @imethod void globalInit(hashRef args)
 # Global initialization process. Launch :
 # - locationRulesInit()
 # - defaultValuesInit()
@@ -446,7 +454,7 @@ sub globalInit {
     $class->forgeHeadersInit(@_);
 }
 
-## @cmethod void locationRulesInit(hashRef args)
+## @imethod protected void locationRulesInit(hashRef args)
 # Compile rules.
 # Rules are stored in $args->{locationRules} that contains regexp=>test
 # expressions where :
@@ -481,7 +489,7 @@ sub locationRulesInit {
     1;
 }
 
-## @cmethod codeRef conditionSub(string cond)
+## @imethod protected codeRef conditionSub(string cond)
 # Returns a compiled function used to grant users (used by
 # locationRulesInit().
 # @param $cond The boolean expression to use
@@ -534,7 +542,7 @@ sub conditionSub {
     return $sub;
 }
 
-## @cmethod void defaultValuesInit(hashRef args)
+## @imethod protected void defaultValuesInit(hashRef args)
 # Set default values for non-customized variables
 # @param $args reference to the configuration hash
 sub defaultValuesInit {
@@ -552,7 +560,7 @@ sub defaultValuesInit {
     1;
 }
 
-## @cmethod void portalInit(hashRef args)
+## @imethod protected void portalInit(hashRef args)
 # Verify that portal variable exists. Die unless
 # @param $args reference to the configuration hash
 sub portalInit {
@@ -560,7 +568,7 @@ sub portalInit {
     $portal = $args->{portal} or die("portal parameter required");
 }
 
-## @cmethod void globalStorageInit(hashRef args)
+## @imethod protected void globalStorageInit(hashRef args)
 # Initialize the Apache::Session::* module choosed to share user's variables.
 # @param $args reference to the configuration hash
 sub globalStorageInit {
@@ -571,7 +579,7 @@ sub globalStorageInit {
     $globalStorageOptions = $args->{globalStorageOptions};
 }
 
-## @cmethod void forgeHeadersInit(hashRef args)
+## @imethod protected void forgeHeadersInit(hashRef args)
 # Create the &$forgeHeaders subroutine used to insert
 # headers into the HTTP request.
 # @param $args reference to the configuration hash
@@ -603,7 +611,24 @@ sub forgeHeadersInit {
     1;
 }
 
-## @cmethod void updateStatus(string user,string url,string action)
+## @imethod protected int initLocalStorage()
+# Prepare local cache (if not done before by Lemonldap::NG::Common::Conf)
+# @return Apache2::Const::DECLINED
+sub initLocalStorage {
+    my ( $class, $r ) = @_;
+    if ( $localStorage and not $refLocalStorage ) {
+        eval "use $localStorage;\$refLocalStorage = new $localStorage(\$localStorageOptions);";
+        $class->lmLog( "Local cache initialization failed: $@", 'error' )
+          unless ( defined $refLocalStorage );
+    }
+    return DECLINED;
+}
+
+###################
+# RUNNING METHODS #
+###################
+
+## @rmethod protected void updateStatus(string user,string url,string action)
 # Inform the status process of the result of the request if it is available.
 sub updateStatus {
     my ( $class, $user, $url, $action ) = @_;
@@ -615,11 +640,7 @@ sub updateStatus {
     };
 }
 
-###################
-# RUNNING METHODS #
-###################
-
-## @cmethod boolean grant()
+## @rmethod protected boolean grant()
 # Grant or refuse client using compiled regexp and functions
 # @return True if the user is granted to access to the current URL
 sub grant {
@@ -631,7 +652,7 @@ sub grant {
     return &$defaultCondition($datas);
 }
 
-## @cmethod int forbidden()
+## @rmethod protected int forbidden()
 # Used to reject non authorizated requests.
 # Inform the status processus and call logForbidden().
 # @return Apache2::Const::FORBIDDEN
@@ -648,7 +669,7 @@ sub forbidden {
     return FORBIDDEN;
 }
 
-## @cmethod void logForbidden()
+## @rmethod protected void logForbidden()
 # Insert a log in Apache errors log system to inform that the user was rejected.
 # This method has to be overloaded to use different logs systems
 sub logForbidden {
@@ -662,7 +683,7 @@ sub logForbidden {
     );
 }
 
-## @cmethod void hideCookie()
+## @rmethod protected void hideCookie()
 # Hide Lemonldap::NG cookie to the protected application.
 sub hideCookie {
     my $class = shift;
@@ -672,7 +693,7 @@ sub hideCookie {
     lmSetHeaderIn( $apacheRequest, 'Cookie' => $tmp );
 }
 
-## @cmethod string encodeUrl(string url)
+## @rmethod protected string encodeUrl(string url)
 # Encode URl in the format used by Lemonldap::NG::Portal for redirections.
 sub encodeUrl {
     my ( $class, $url ) = @_;
@@ -694,7 +715,7 @@ sub encodeUrl {
     return $u;
 }
 
-## @cmethod int goToPortal(string url, string arg)
+## @rmethod protected int goToPortal(string url, string arg)
 # Redirect non-authenticated users to the portal by setting "Location:" header.
 # @param $url Url requested
 # @param $arg optionnal GET parameters
@@ -713,7 +734,7 @@ sub goToPortal {
     return REDIRECT;
 }
 
-## @cmethod $ fetchId()
+## @rmethod protected $ fetchId()
 # Get user cookies and search for Lemonldap::NG cookie.
 # @return Value of the cookie if found, 0 else
 sub fetchId {
@@ -723,7 +744,7 @@ sub fetchId {
 
 # MAIN SUBROUTINE called by Apache (using PerlHeaderParserHandler option)
 
-## @cmethod int run(Apache2::RequestRec apacheRequest)
+## @rmethod int run(Apache2::RequestRec apacheRequest)
 # Main method used to control access.
 # Calls :
 # - fetchId()
@@ -805,13 +826,13 @@ sub run ($$) {
     OK;
 }
 
-## @cmethod void sendHeaders()
+## @rmethod protected void sendHeaders()
 # Launch function compiled by forgeHeadersInit()
 sub sendHeaders {
     &$forgeHeaders;
 }
 
-## @cmethod int unprotect()
+## @rmethod int unprotect()
 # Used to unprotect an area.
 # To use it, set "PerlHeaderParserHandler My::Package->unprotect" Apache
 # configuration file.
@@ -821,7 +842,7 @@ sub unprotect {
     OK;
 }
 
-## @cmethod void localUnlog()
+## @rmethod protected void localUnlog()
 # Delete current user from local cache entry.
 sub localUnlog {
     my $class = shift;
@@ -839,7 +860,7 @@ sub localUnlog {
     }
 }
 
-## @cmethod int unlog(Apache::RequestRec apacheRequest)
+## @rmethod protected int unlog(Apache::RequestRec apacheRequest)
 # Call localUnlog() then goToPortal() to unlog the current user.
 # @return Apache2::Const value returned by goToPortal()
 sub unlog ($$) {
@@ -850,7 +871,7 @@ sub unlog ($$) {
     return $class->goToPortal( '/', 'logout=1' );
 }
 
-## @cmethod int redirectFilter(string url, Apache2::Filter f)
+## @rmethod protected int redirectFilter(string url, Apache2::Filter f)
 # Launch the current HTTP request then redirects the user to $url.
 # Used by logout_app and logout_app_sso targets
 # @param $url URL to redirect the user
@@ -876,7 +897,7 @@ sub redirectFilter {
     return REDIRECT;
 }
 
-## @cmethod int status(Apache2::RequestRec $r)
+## @rmethod int status(Apache2::RequestRec $r)
 # Get the result from the status process and launch a PerlResponseHandler to
 # display it.
 # @param $r Current request
@@ -920,20 +941,7 @@ sub status($$) {
 # OTHER METHODS #
 #################
 
-## @cmethod int initLocalStorage()
-# Prepare local cache (if not done before by Lemonldap::NG::Common::Conf)
-# @return Apache2::Const::DECLINED
-sub initLocalStorage {
-    my ( $class, $r ) = @_;
-    if ( $localStorage and not $refLocalStorage ) {
-        eval "use $localStorage;\$refLocalStorage = new $localStorage(\$localStorageOptions);";
-        $class->lmLog( "Local cache initialization failed: $@", 'error' )
-          unless ( defined $refLocalStorage );
-    }
-    return DECLINED;
-}
-
-## @cmethod cleanLocalStorage()
+## @rmethod protected int cleanLocalStorage()
 # Clean expired values from the local cache.
 # @return Apache2::Const::DECLINED
 sub cleanLocalStorage {

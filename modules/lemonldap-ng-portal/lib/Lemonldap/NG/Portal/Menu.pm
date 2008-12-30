@@ -138,7 +138,7 @@ sub error {
 
 *error_type = *Lemonldap::NG::Portal::Simple::error_type;
 
-## @method boolean displayModule(modulename)
+## @method boolean displayModule(string modulename)
 # Return true if the user can see the module.
 # Use for HTML::Template variable.
 # @param $modulename string

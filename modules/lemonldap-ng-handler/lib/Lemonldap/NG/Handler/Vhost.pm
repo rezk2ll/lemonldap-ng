@@ -15,7 +15,7 @@ our $VERSION = '0.54';
 
 ## @cmethod void locationRulesInit(hashRef args)
 # Compile rules.
-# Rules are stored in $args->{locationRules}->{<virtualHost>} that contains
+# Rules are stored in $args->{locationRules}->{&lt;virtualhost&gt;} that contains
 # regexp=>test expressions where :
 # - regexp is used to test URIs
 # - test contains an expression used to grant the user
@@ -51,7 +51,7 @@ sub locationRulesInit {
 }
 
 ## @cmethod void forgeHeadersInit(hashRef args)
-# Create the &$forgeHeaders->{<virtualHost>} subroutines used to insert
+# Create the &$forgeHeaders->{&lt;virtualhost&gt;} subroutines used to insert
 # headers into the HTTP request.
 # @param $args reference to the configuration hash
 sub forgeHeadersInit {

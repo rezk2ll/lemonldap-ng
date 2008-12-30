@@ -113,12 +113,48 @@ print LOG $_;
                     @more,
                     "\@nosubgrouping"
                 ] );
+            } elsif ($command  eq 'imethod') {
+                unless ($args) {
+                    ($args) = $self->analyze_sub( $line-1 );
+                }
+                $args = $self->munge_parameters($args);
+                $self->push($self->protection($args).' Initialization Methods');
+                $self->start("\@fn $args")->more(@more)->end;
+                $self->print($args, ";\n");
+                $self->pop;
+            } elsif ($command  eq 'rmethod') {
+                unless ($args) {
+                    ($args) = $self->analyze_sub( $line-1 );
+                }
+                $args = $self->munge_parameters($args);
+                $self->push($self->protection($args).' Running Methods');
+                $self->start("\@fn $args")->more(@more)->end;
+                $self->print($args, ";\n");
+                $self->pop;
             } elsif ($command  eq 'cmethod') {
                 unless ($args) {
                     ($args) = $self->analyze_sub( $line-1 );
                 }
                 $args = $self->munge_parameters($args);
                 $self->push($self->protection($args).' Class Methods');
+                $self->start("\@fn $args")->more(@more)->end;
+                $self->print($args, ";\n");
+                $self->pop;
+            } elsif ($command  eq 'ifn') {
+                unless ($args) {
+                    ($args) = $self->analyze_sub( $line-1 );
+                }
+                $args = $self->munge_parameters($args);
+                $self->push($self->protection($args).' Initialization Functions');
+                $self->start("\@fn $args")->more(@more)->end;
+                $self->print($args, ";\n");
+                $self->pop;
+            } elsif ($command  eq 'rfn') {
+                unless ($args) {
+                    ($args) = $self->analyze_sub( $line-1 );
+                }
+                $args = $self->munge_parameters($args);
+                $self->push($self->protection($args).' Running Functions');
                 $self->start("\@fn $args")->more(@more)->end;
                 $self->print($args, ";\n");
                 $self->pop;
@@ -168,6 +204,9 @@ print LOG $_;
             my( $proto, $name, @args ) = $self->analyze_sub( $line-1 );
             if( $current_class && @args && ($args[0] eq "\$self") ) {
                 $self->push($self->protection($proto).' Object Methods');
+                $proto =~ s/\$self,*\s*//;
+            } elsif( $current_class && @args && ($args[0] eq "\$self") ) {
+                $self->push($self->protection($proto).' Initialization Methods');
                 $proto =~ s/\$self,*\s*//;
             } elsif( $current_class 
                     && ((@args && ($args[0] eq "\$class")) || ($name eq "new")) ) {

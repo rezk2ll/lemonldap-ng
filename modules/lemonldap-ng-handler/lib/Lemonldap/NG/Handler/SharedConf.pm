@@ -5,6 +5,16 @@
 
 ## @class
 # Main handler.
+# All methods in handler are class methods: in ModPerl environment, handlers
+# are always launched without object created.
+#
+# The main method is run() who is called by Apache for each requests (using
+# handler() wrapper).
+#
+# The initialization process is splitted in two parts :
+# - init() is launched as Apache startup
+# - globalInit() is launched at each first request received by an Apache child
+# and each time a new configuration is detected
 package Lemonldap::NG::Handler::SharedConf;
 
 use strict;
@@ -46,7 +56,7 @@ BEGIN {
 
 # INIT PROCESS
 
-## @cmethod void init(hashRef args)
+## @imethod void init(hashRef args)
 # Constructor.
 # init is overloaded to call only localInit. globalInit is called later.
 # @param $args hash containing parameters
@@ -57,7 +67,7 @@ sub init($$) {
     $class->localInit($args);
 }
 
-## @cmethod void defaultValuesInit(hashRef args)
+## @imethod protected void defaultValuesInit(hashRef args)
 # Set default values for non-customized variables
 # @param $args hash containing parameters
 # @return boolean
@@ -69,7 +79,7 @@ sub defaultValuesInit {
     return $class->SUPER::defaultValuesInit( \%h );
 }
 
-## @cmethod void localInit(hashRef args)
+## @imethod void localInit(hashRef args)
 # Load parameters and build the Lemonldap::NG::Common::Conf object.
 # @return boolean
 sub localInit {
@@ -88,7 +98,7 @@ sub localInit {
 
 # MAIN
 
-## @cmethod int run(Apache2::RequestRec r)
+## @rmethod int run(Apache2::RequestRec r)
 # Check configuration and launch Lemonldap::NG::Handler::Simple::run().
 # Each $reloadTime, the Apache child verify if its configuration is the same
 # as the configuration stored in the local storage.
@@ -107,7 +117,7 @@ sub run($$) {
 
 # CONFIGURATION UPDATE
 
-## @cmethod int testConf(boolean local)
+## @rmethod protected int testConf(boolean local)
 # Test if configuration has changed and launch setConf() if needed.
 # If the optional boolean $local is true, remote configuration is not tested:
 # only local cached configuration is tested if available. $local is given to
@@ -131,7 +141,7 @@ sub testConf {
     OK;
 }
 
-## @cmethod int setConf(hashRef conf)
+## @rmethod protected int setConf(hashRef conf)
 # Launch globalInit().
 # Local parameters have best precedence on configuration parameters.
 # @return Apache constant
@@ -149,10 +159,12 @@ sub setConf {
 
 *reload = *refresh;
 
-## @cmethod int refresh(Apache::RequestRec r)
+## @rmethod int refresh(Apache::RequestRec r)
 # Launch testConf() with $local=0, so remote configuration is tested.
+# Then build a simple HTTP response that just returns "200 OK" or
+# "500 Server Error".
 # @param $r current request
-# @return Apache constant
+# @return Apache constant (OK or SERVER_ERROR)
 sub refresh($$) {
     my ( $class, $r ) = @_;
     $class->lmLog( "$class: request for configuration reload", 'notice' );
