@@ -1,7 +1,5 @@
 ## @file
 # Main handler.
-#
-# @copy 2005, 2006, 2007, 2008 Xavier Guimard &lt;x.guimard@free.fr&gt;
 
 ## @class
 # Main handler.

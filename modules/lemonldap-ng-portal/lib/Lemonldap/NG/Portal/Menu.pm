@@ -1,7 +1,5 @@
 ##@file
 # Menu for Lemonldap::NG portal
-#
-#@copy 2008 Clement OUDOT &lt;clement@oodo.net&gt; &lt;coudot@linagora.com&gt;
 
 ##@class
 # Menu class for Lemonldap::NG portal

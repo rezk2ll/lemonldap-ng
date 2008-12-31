@@ -1,9 +1,17 @@
+## @file
+# SOAP support for Lemonldap::NG::Common::CGI
+
+## @class
+# SOAP support for Lemonldap::NG::Common::CGI
 package Lemonldap::NG::Common::CGI::SOAPServer;
 use SOAP::Transport::HTTP;
-use base 'SOAP::Transport::HTTP::Server';
+use base qw(SOAP::Transport::HTTP::Server);
 
 sub DESTROY { SOAP::Trace::objects('()') }
 
+## @cmethod Lemonldap::NG::Common::CGI::SOAPServer new(@param)
+# @param @param SOAP::Transport::HTTP::Server::new() parameters
+# @return Lemonldap::NG::Common::CGI::SOAPServer object
 sub new {
     my $self = shift;
     return $self if ref $self;
@@ -15,6 +23,8 @@ sub new {
     return $self;
 }
 
+## @method handle(CGI cgi)
+# 
 sub handle {
     my $self = shift->new;
     my $cgi  = shift;

@@ -1,7 +1,5 @@
 ##@file
 # Auth-basic authentication with Lemonldap::NG rights management
-#
-#@copy 2008 Xavier Guimard &lt;x.guimard@free.fr&gt;
 
 ##@class
 # Auth-basic authentication with Lemonldap::NG rights management

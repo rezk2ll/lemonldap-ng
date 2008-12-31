@@ -1,7 +1,5 @@
 ## @file
 # Auto-protected CGI machanism
-#
-# @copy 2008 Xavier Guimard &lt;x.guimard@free.fr&gt;
 
 ## @class
 # Base class for auto-protected CGI

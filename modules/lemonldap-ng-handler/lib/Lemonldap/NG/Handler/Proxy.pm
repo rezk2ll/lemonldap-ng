@@ -1,7 +1,5 @@
 ## @file
 # Perl based proxy used to replace mod_proxy
-#
-# @copy 2005, 2006, 2007, 2008 Xavier Guimard &lt;x.guimard@free.fr&gt;
 
 ## @class
 # Perl based proxy used to replace mod_proxy

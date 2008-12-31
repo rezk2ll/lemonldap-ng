@@ -1,10 +1,8 @@
 ## @file
 # Base package for all Lemonldap::NG CGI
-#
-# @copy 2005, 2006, 2007, 2008, Xavier Guimard &lt;x.guimard@free.fr&gt;
 
 ## @class
-# Base class for all Lemonldap::NG portal CGI
+# Base class for all Lemonldap::NG CGI
 package Lemonldap::NG::Common::CGI;
 
 use strict;
@@ -17,6 +15,10 @@ our $VERSION = '0.31';
 
 use base qw(CGI);
 
+## @method void soapTest(string soapFunctions)
+# Check if request is a SOAP request. If it is, launch
+# Lemonldap::NG::Common::CGI::SOAPServer and exit. Else simply return.
+# @param $soapFunctions list of authorized functions.
 sub soapTest {
     my $self = shift;
     my $soapFunctions = shift || $self->{SOAPFunctions};
@@ -33,9 +35,17 @@ sub soapTest {
           ->handle($self);
         exit;
     }
-    return $self;
 }
 
+## @method string header_public(string filename)
+# Implements the "304 Not Modified" HTTP mechanism.
+# If HTTP request contains an "If-Modified-Since" header and if
+# $filename was not modified since, prints the "304 Not Modified" response and
+# exit. Else, launch CGI::header() with "Cache-Control" and "Last-Modified"
+# headers.
+# @param $filename Optional name of the reference file. Default
+# $ENV{SCRIPT_FILENAME}.
+# @return Common Gateway Interface standard response header
 sub header_public {
     my $self     = shift;
     my $filename = shift;
@@ -80,6 +90,11 @@ sub header_public {
     );
 }
 
+## @method void abort(string title, string text)
+# Display an error message and exit.
+# Used instead of die() in Lemonldap::NG CGIs.
+# @param title Title of the error message
+# @param text Optional text. Default: "See Apache's logs"
 sub abort {
     my $self = shift;
     my $cgi  = CGI->new;

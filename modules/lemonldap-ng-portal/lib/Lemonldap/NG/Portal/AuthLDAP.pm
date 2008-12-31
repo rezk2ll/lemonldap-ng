@@ -1,7 +1,5 @@
 ##@file
 # LDAP authentication backend file
-#
-#@copy 2008, Xavier Guimard &lt;x.guimard@free.fr&gt;
 
 ##@class
 # LDAP authentication backend class

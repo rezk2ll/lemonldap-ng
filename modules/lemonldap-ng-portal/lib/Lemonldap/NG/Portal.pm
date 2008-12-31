@@ -1,7 +1,13 @@
+## @file
+# Alias for Lemonldap::NG::SharedConf
+
+## @class
+# Alias for Lemonldap::NG::SharedConf
 package Lemonldap::NG::Portal;
 
 our $VERSION = "0.86";
-our @ISA = ('Lemonldap::NG::Portal::SharedConf');
+use Lemonldap::NG::Portal::SharedConf;
+use base 'Lemonldap::NG::Portal::SharedConf';
 
 1;
 

@@ -1,7 +1,5 @@
 ## @file
 # Base file for Lemonldap::NG handlers
-#
-# @copy 2005, 2006, 2007, 2008 Xavier Guimard &lt;x.guimard@free.fr&gt;
 
 ## @class
 # Base class for Lemonldap::NG handlers.
