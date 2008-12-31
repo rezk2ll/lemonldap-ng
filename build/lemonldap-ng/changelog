@@ -1,4 +1,13 @@
+lemonldap-ng (0.9.3.1) unstable; urgency=low
+
+  * Bug in Debian build
+
+ -- Xavier Guimard <x.guimard@free.fr>  Wed, 31 Dec 2008 14:16:06 +0100
+
 lemonldap-ng (0.9.3) unstable; urgency=low
+
+  [ Security ]
+  * XSS protection
 
   [ Clement Oudot ]
   * New menu and skin (pastel). Menu calculates rights before displaying URL
@@ -16,7 +25,7 @@ lemonldap-ng (0.9.3) unstable; urgency=low
   * UserDB mechanism : LDAP is not required now
   * Portal SOAP functions
 
- -- Xavier Guimard <x.guimard@free.fr>  Wed, 24 Dec 2008 10:55:16 +0100
+ -- Xavier Guimard <x.guimard@free.fr>  Wed, 31 Dec 2008 11:55:57 +0100
 
 lemonldap-ng (0.9.2.2) unstable; urgency=low
 
