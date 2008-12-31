@@ -9,63 +9,63 @@ PERL=$$(which perl)
 PERLOPTIONS=
 
 # Default directories install
-PREFIX=/usr/local/
-LMPREFIX=$(PREFIX)lemonldap-ng/
-RLMPREFIX=$(DESTDIR)$(LMPREFIX)
+PREFIX=/usr/local
+LMPREFIX=$(PREFIX)/lemonldap-ng
+RLMPREFIX=$(DESTDIR)/$(LMPREFIX)
 # BIN dirs
-BINDIR=$(LMPREFIX)bin/
-RBINDIR=$(DESTDIR)$(BINDIR)
-DATADIR=$(LMPREFIX)data/
-RDATADIR=$(DESTDIR)$(DATADIR)
+BINDIR=$(LMPREFIX)/bin
+RBINDIR=$(DESTDIR)/$(BINDIR)
+DATADIR=$(LMPREFIX)/data
+RDATADIR=$(DESTDIR)/$(DATADIR)
 
 
-EXAMPLEROOT=`pwd`/example/
+EXAMPLEROOT=`pwd`/example
 
 # Document roots for Apache VirtualHosts
-DOCUMENTROOT=$(LMPREFIX)htdocs/
-PORTALDIR=$(DOCUMENTROOT)portal/
-RPORTALDIR=$(DESTDIR)$(PORTALDIR)
-PORTALSKINSDIR=$(PORTALDIR)skins/
-RPORTALSKINSDIR=$(DESTDIR)$(PORTALSKINSDIR)
-LASPPORTALDIR=$(DOCUMENTROOT)liberty-alliance-sp-portal/
-RLASPPORTALDIR=$(DESTDIR)$(LASPPORTALDIR)
-MANAGERDIR=$(DOCUMENTROOT)manager/
-RMANAGERDIR=$(DESTDIR)$(MANAGERDIR)
-MANAGERDATADIR=$(MANAGERDIR)imgs/
-RMANAGERDATADIR=$(DESTDIR)$(MANAGERDATADIR)
+DOCUMENTROOT=$(LMPREFIX)/htdocs
+PORTALDIR=$(DOCUMENTROOT)/portal
+RPORTALDIR=$(DESTDIR)/$(PORTALDIR)
+PORTALSKINSDIR=$(PORTALDIR)/skins
+RPORTALSKINSDIR=$(DESTDIR)/$(PORTALSKINSDIR)
+LASPPORTALDIR=$(DOCUMENTROOT)/liberty-alliance-sp-portal
+RLASPPORTALDIR=$(DESTDIR)/$(LASPPORTALDIR)
+MANAGERDIR=$(DOCUMENTROOT)/manager
+RMANAGERDIR=$(DESTDIR)/$(MANAGERDIR)
+MANAGERDATADIR=$(MANAGERDIR)/imgs
+RMANAGERDATADIR=$(DESTDIR)/$(MANAGERDATADIR)
 SESSIONSEXPLORERDIR=$(MANAGERDIR)
-RSESSIONSEXPLORERDIR=$(DESTDIR)$(SESSIONSEXPLORERDIR)
-SESSIONSEXPLORERDATADIR=$(SESSIONSEXPLORERDIR)images/
-RSESSIONSEXPLORERDATADIR=$(DESTDIR)$(SESSIONSEXPLORERDATADIR)
-DOCDIR=$(DOCUMENTROOT)doc/
-RDOCDIR=$(DESTDIR)$(DOCDIR)
-TESTDIR=$(DOCUMENTROOT)test/
-RTESTDIR=$(DESTDIR)$(TESTDIR)
-EXAMPLESDIR=$(LMPREFIX)examples/
-REXAMPLESDIR=$(DESTDIR)$(EXAMPLESDIR)
-TOOLSDIR=$(LMPREFIX)tools/
-RTOOLSDIR=$(DESTDIR)$(TOOLSDIR)
+RSESSIONSEXPLORERDIR=$(DESTDIR)/$(SESSIONSEXPLORERDIR)
+SESSIONSEXPLORERDATADIR=$(SESSIONSEXPLORERDIR)/images
+RSESSIONSEXPLORERDATADIR=$(DESTDIR)/$(SESSIONSEXPLORERDATADIR)
+DOCDIR=$(DOCUMENTROOT)/doc
+RDOCDIR=$(DESTDIR)/$(DOCDIR)
+TESTDIR=$(DOCUMENTROOT)/test
+RTESTDIR=$(DESTDIR)/$(TESTDIR)
+EXAMPLESDIR=$(LMPREFIX)/examples
+REXAMPLESDIR=$(DESTDIR)/$(EXAMPLESDIR)
+TOOLSDIR=$(LMPREFIX)/tools
+RTOOLSDIR=$(DESTDIR)/$(TOOLSDIR)
 
 # Handler dir
-HANDLERDIR=$(LMPREFIX)handler/
-RHANDLERDIR=$(DESTDIR)$(HANDLERDIR)
+HANDLERDIR=$(LMPREFIX)/handler
+RHANDLERDIR=$(DESTDIR)/$(HANDLERDIR)
 
 # Configuration dir
-CONFDIR=$(LMPREFIX)etc/
-RCONFDIR=$(DESTDIR)$(CONFDIR)
-CRONDIR=$(LMPREFIX)etc/cron.d/
-RCRONDIR=$(DESTDIR)$(CRONDIR)
-STORAGECONFFILE=$(CONFDIR)storage.conf
+CONFDIR=$(LMPREFIX)/etc
+RCONFDIR=$(DESTDIR)/$(CONFDIR)
+CRONDIR=$(LMPREFIX)/etc/cron.d
+RCRONDIR=$(DESTDIR)/$(CRONDIR)
+STORAGECONFFILE=$(CONFDIR)/storage.conf
 
 # Lemonldap-ng configuration storage dir
-FILECONFIGDIR=$(DATADIR)conf/
-RFILECONFIGDIR=$(DESTDIR)$(FILECONFIGDIR)
+FILECONFIGDIR=$(DATADIR)/conf
+RFILECONFIGDIR=$(DESTDIR)/$(FILECONFIGDIR)
 
 # Apache::Session::File storage dir
-APACHESESSIONFILEDIR=$(DATADIR)sessions/
-RAPACHESESSIONFILEDIR=$(DESTDIR)$(APACHESESSIONFILEDIR)
-APACHESESSIONFILELOCKDIR=$(APACHESESSIONFILEDIR)lock/
-RAPACHESESSIONFILELOCKDIR=$(DESTDIR)$(APACHESESSIONFILELOCKDIR)
+APACHESESSIONFILEDIR=$(DATADIR)/sessions
+RAPACHESESSIONFILEDIR=$(DESTDIR)/$(APACHESESSIONFILEDIR)
+APACHESESSIONFILELOCKDIR=$(APACHESESSIONFILEDIR)/lock
+RAPACHESESSIONFILELOCKDIR=$(DESTDIR)/$(APACHESESSIONFILELOCKDIR)
 APACHEUSER=
 APACHEGROUP=
 
@@ -79,13 +79,41 @@ LDAPSUFFIX=dc=example,dc=net
 
 # Other
 VERSION=`head -n1 changelog |sed -e 's/lemonldap-ng (//' -e 's/).*$$//'`
-SRCCOMMONDIR=lemonldap-ng-common/
-SRCHANDLERDIR=lemonldap-ng-handler/
-SRCPORTALDIR=lemonldap-ng-portal/
-SRCMANAGERDIR=lemonldap-ng-manager/
+SRCCOMMONDIR=lemonldap-ng-common
+SRCHANDLERDIR=lemonldap-ng-handler
+SRCPORTALDIR=lemonldap-ng-portal
+SRCMANAGERDIR=lemonldap-ng-manager
 EXAMPLELANG=en # For static Manager example only
 
 all:	configure common handler manager portal
+	@echo
+	@echo "Building succeed. Now run :"
+	@echo " - make test to verify your installation"
+	@echo " - make install to install all"
+	@echo
+	@echo 'Other targets :'
+	@echo " * Partial build :"
+	@echo "   - portal, manager, handler"
+	@echo " * Doxygen documentation"
+	@echo "   - doxygen (to build Doxygen documentation in doc/devel/)"
+	@echo
+	@echo 'Other targets launched by "make install" :'
+	@echo " * Perl libraries install :"
+	@echo "   - install_libs          (all Perl libraries)"
+	@echo "   - install_portal_libs"
+	@echo "   - install_manager_libs"
+	@echo "   - install_handler_libs"
+	@echo " * Binaries install :"
+	@echo "   - install_bin           ($(BINDIR))"
+	@echo " * Web sites install :"
+	@echo "   - install_site          (all sites including install_doc_site)"
+	@echo "   - install_portal_site   ($(PORTALDIR))"
+	@echo "   - install_manager_site  ($(MANAGERDIR))"
+	@echo "   - install_handler_site  ($(HANDLERDIR))"
+	@echo " * Documentation install :"
+	@echo "   - install_doc_site      ($(DOCDIR))"
+	@echo "   - install_examples_site ($(EXAMPLESDIR))"
+	@echo
 
 #
 # Perl libraries configuration
@@ -149,18 +177,18 @@ install:	install_libs install_bin install_site
 #
 # Perl libraires install
 #
-install_libs:	common_install_libs handler_install_libs portal_install_libs manager_install_libs
+install_libs:	common_install_libs install_handler_libs install_portal_libs install_manager_libs
 
 common_install_libs:		common
 	@$(MAKE) -C ${SRCCOMMONDIR} install
 
-handler_install_libs:	handler
+install_handler_libs:	handler
 	@$(MAKE) -C ${SRCHANDLERDIR} install
 
-portal_install_libs:		portal
+install_portal_libs:		portal
 	@$(MAKE) -C ${SRCPORTALDIR} install
 
-manager_install_libs:	manager
+install_manager_libs:	manager
 	@$(MAKE) -C ${SRCMANAGERDIR} install
 
 example:
@@ -169,8 +197,11 @@ example:
 install_bin:	install_libs install_conf_dir
 	# Binary install
 	@install -v -d $(RBINDIR)
-	cp --preserve=mode --remove-destination ${SRCPORTALDIR}/example/scripts/purgeCentralCache $(RBINDIR)
-	cp --preserve=mode --remove-destination ${SRCMANAGERDIR}/example/scripts/lmConfigEditor $(RBINDIR)
+	@cp --preserve=mode --remove-destination \
+		${SRCPORTALDIR}/example/scripts/purgeCentralCache \
+		${SRCCOMMONDIR}/scripts/lmConfig_File2MySQL \
+		${SRCMANAGERDIR}/example/scripts/lmConfigEditor \
+			$(RBINDIR)
 
 #
 # SITE INSTALL
@@ -180,15 +211,15 @@ install_site:	install_manager_site install_portal_site install_handler_site inst
 	@install -v -d $(RCONFDIR)
 	# Apache configuration files
 	@cp --remove-destination _example/etc/apache* $(RCONFDIR)
-	@perl -i -pe 's#__HANDLER__#${HANDLERDIR}MyHandler.pm#; \
+	@perl -i -pe 's#__HANDLER__#${HANDLERDIR}/MyHandler.pm#; \
 		s/__DNSDOMAIN__/$(DNSDOMAIN)/g; \
-		s#__PORTALDIR__#$(PORTALDIR)#g; \
-		s#__MANAGERDIR__#$(MANAGERDIR)#g; \
-		s#__TESTDIR__#$(TESTDIR)#g; \
-		s#__DOCDIR__#$(DOCDIR)#g;' $(RCONFDIR)/apache*
+		s#__PORTALDIR__#$(PORTALDIR)/#g; \
+		s#__MANAGERDIR__#$(MANAGERDIR)/#g; \
+		s#__TESTDIR__#$(TESTDIR)/#g; \
+		s#__DOCDIR__#$(DOCDIR)/#g;' $(RCONFDIR)/apache*
 	# File for /etc/hosts inclusion
 	@cp --remove-destination _example/etc/for_etc_hosts $(RCONFDIR)
-	@perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)for_etc_hosts
+	@perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)/for_etc_hosts
 	#
 	@echo
 	@echo "LemonLDAP::NG v${VERSION} is installed with these parameters:"
@@ -203,16 +234,16 @@ install_site:	install_manager_site install_portal_site install_handler_site inst
 	@echo
 	@echo "1 - Add this in your Apache configuration file:"
 	@echo "    with Apache-1.3.x"
-	@echo "      include ${CONFDIR}apache.conf"
+	@echo "      include ${CONFDIR}/apache.conf"
 	@echo "    or with Apache-2.x:"
-	@echo "      include ${CONFDIR}apache2.conf"
+	@echo "      include ${CONFDIR}/apache2.conf"
 	@echo
 	@echo "2 - Restart Apache (or Apache2)"
 	@echo
 	@echo "3 - Run 'make postconf' as root to update /etc/hosts" if your DNS service does not known auth.$(DNSDOMAIN) and manager.$(DNSDOMAIN)
 	@echo
 	@echo "4 - Use the manager at http://manager.${DNSDOMAIN}/ (after Apache restart) to modify LemonLDAP::NG configuration."
-	@echo "    Edit ${RCONFDIR}apps/apps-list.xml to modify the menu."
+	@echo "    Edit ${RCONFDIR}/apps/apps-list.xml to modify the menu."
 	@echo
 	@echo "5 - Try to connect to http://test1.${DNSDOMAIN}/ or http://test2.${DNSDOMAIN}/"
 	@if [ "$(APACHEUSER)" == "" ]; then \
@@ -228,23 +259,23 @@ install_manager_site:	install_conf_dir
 		$(RCONFDIR)
 	@find ${RMANAGERDIR} -type l -name imgs -delete
 	@find ${RMANAGERDIR} -type l -name images -delete
-	@cp -pR --remove-destination ${SRCMANAGERDIR}example/* ${RMANAGERDIR}
-	@rm -rf $$(find ${RMANAGERDIR} -type d -name .svn) ${RMANAGERDIR}scripts ${RMANAGERDIR}mrtg ${RMANAGERDIR}soapserver.pl
-	@if [ "${RMANAGERDIR}imgs/" != "${RMANAGERDATADIR}" ]; then \
-		mv -f ${RMANAGERDIR}imgs/* ${RMANAGERDATADIR}; \
-		rm -rf ${RMANAGERDIR}imgs; \
-		ln -s $$(echo ${MANAGERDATADIR} | sed -e 's/\/$$//') ${RMANAGERDIR}imgs; \
+	@cp -pR --remove-destination ${SRCMANAGERDIR}/example/* ${RMANAGERDIR}
+	@rm -rf $$(find ${RMANAGERDIR} -type d -name .svn) ${RMANAGERDIR}/scripts ${RMANAGERDIR}/mrtg ${RMANAGERDIR}/soapserver.pl
+	@if [ "${RMANAGERDIR}/imgs/" != "${RMANAGERDATADIR}/" ]; then \
+		mv -f ${RMANAGERDIR}/imgs/* ${RMANAGERDATADIR}/; \
+		rm -rf ${RMANAGERDIR}/imgs; \
+		ln -s $$(echo ${MANAGERDATADIR} | sed -e 's/\/$$//') ${RMANAGERDIR}/imgs; \
 	fi
 	# apply.conf install
-	@mv ${RMANAGERDIR}apply.conf $(RCONFDIR)
-	@perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)apply.conf
-	@perl -i -pe 's#__APPLYCONFFILE__#$(CONFDIR)apply.conf#' ${RMANAGERDIR}index.pl
+	@mv ${RMANAGERDIR}/apply.conf $(RCONFDIR)
+	@perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)/apply.conf
+	@perl -i -pe 's#__APPLYCONFFILE__#$(CONFDIR)/apply.conf#' ${RMANAGERDIR}/index.pl
 	# Sessions explorer install
-	@if [ "${MANAGERDIR}" != "$(SESSIONSEXPLORERDIR)" ]; then mv -f ${RMANAGERDIR}sessions.pl $(RSESSIONSEXPLORERDIR); fi
-	@if [ "${MANAGERDIR}images/" != "${SESSIONSEXPLORERDATADIR}" ]; then \
-		mv -f ${RMANAGERDIR}images/* ${RSESSIONSEXPLORERDATADIR}; \
-		rm -rf ${RMANAGERDIR}images; \
-		ln -s $$(echo ${SESSIONSEXPLORERDATADIR} | sed -e 's/\/$$//') ${RMANAGERDIR}images; \
+	@if [ "${MANAGERDIR}" != "$(SESSIONSEXPLORERDIR)" ]; then mv -f ${RMANAGERDIR}/sessions.pl $(RSESSIONSEXPLORERDIR); fi
+	@if [ "${MANAGERDIR}/images/" != "${SESSIONSEXPLORERDATADIR}/" ]; then \
+		mv -f ${RMANAGERDIR}/images/* ${RSESSIONSEXPLORERDATADIR}; \
+		rm -rf ${RMANAGERDIR}/images; \
+		ln -s $$(echo ${SESSIONSEXPLORERDATADIR} | sed -e 's/\/$$//') ${RMANAGERDIR}/images; \
 	fi
 	@rm -rf $$(find ${RMANAGERDIR} ${RMANAGERDATADIR} \
 		${RSESSIONSEXPLORERDIR} $(RSESSIONSEXPLORERDATADIR) \
@@ -253,29 +284,29 @@ install_manager_site:	install_conf_dir
 install_portal_site:	install_conf_dir
 	# Portal install
 	@install -v -d $(RPORTALDIR) $(RPORTALSKINSDIR) \
-		$(RPORTALDIR)skins/ $(RLASPPORTALDIR) \
+		$(RPORTALDIR)/skins/ $(RLASPPORTALDIR) \
 		$(RCRONDIR) $(RCONFDIR)
 	@for skin in $$(ls lemonldap-ng-portal/example/skins/); do \
-		[ -h $(RPORTALDIR)skins/$$skin ] && rm -f $(RPORTALDIR)skins/$$skin; \
-		install -v -d $(RPORTALSKINSDIR)$$skin; \
+		[ -h $(RPORTALDIR)/skins/$$skin ] && rm -f $(RPORTALDIR)/skins/$$skin; \
+		install -v -d $(RPORTALSKINSDIR)/$$skin; \
 	done
-	@cp -pR --remove-destination ${SRCPORTALDIR}example/index_skin.pl ${RPORTALDIR}index.pl
-	@cp -pR --remove-destination ${SRCPORTALDIR}example/error.pl ${RPORTALDIR}
-	@cp -pR --remove-destination ${SRCPORTALDIR}example/apps ${RPORTALDIR}
-	@perl -i -pe 's#__SKINDIR__#$(PORTALDIR)skins#; \
-		s#__APPSXMLFILE__#$(CONFDIR)apps-list.xml#;' ${RPORTALDIR}index.pl ${RPORTALDIR}error.pl
-	@cp -pR --remove-destination ${SRCPORTALDIR}example/skins/* $(RPORTALSKINSDIR)
-	@if [ "$(PORTALDIR)skins/" != "$(PORTALSKINSDIR)" ]; then \
+	@cp -pR --remove-destination ${SRCPORTALDIR}/example/index_skin.pl ${RPORTALDIR}/index.pl
+	@cp -pR --remove-destination ${SRCPORTALDIR}/example/error.pl ${RPORTALDIR}
+	@cp -pR --remove-destination ${SRCPORTALDIR}/example/apps ${RPORTALDIR}
+	@perl -i -pe 's#__SKINDIR__#$(PORTALDIR)/skins#; \
+		s#__APPSXMLFILE__#$(CONFDIR)/apps-list.xml#;' ${RPORTALDIR}/index.pl ${RPORTALDIR}/error.pl
+	@cp -pR --remove-destination ${SRCPORTALDIR}/example/skins/* $(RPORTALSKINSDIR)
+	@if [ "$(PORTALDIR)/skins/" != "$(PORTALSKINSDIR)/" ]; then \
 		for skin in $$(ls lemonldap-ng-portal/example/skins/); do \
-			rm -rf $(RPORTALDIR)skins/$$skin/; \
-			ln -s $(PORTALSKINSDIR)$$skin $(RPORTALDIR)skins/$$skin; \
+			rm -rf $(RPORTALDIR)/skins/$$skin/; \
+			ln -s $(PORTALSKINSDIR)/$$skin $(RPORTALDIR)/skins/$$skin; \
 		done; \
 	fi
 	@cp --remove-destination _example/etc/apps-list* $(RCONFDIR)
-	@perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)apps-list.xml
+	@perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)/apps-list.xml
 	# L-A portal install
-	@cp -pR --remove-destination ${SRCPORTALDIR}example/AuthLA/* $(RLASPPORTALDIR)
-	@perl -i -pe 's#__DIR__#$(LASPPORTALDIR)#g' $(RLASPPORTALDIR)index.pl
+	@cp -pR --remove-destination ${SRCPORTALDIR}/example/AuthLA/* $(RLASPPORTALDIR)
+	@perl -i -pe 's#__DIR__#$(LASPPORTALDIR)/#g' $(RLASPPORTALDIR)/index.pl
 	# Cron files
 	@cp --remove-destination lemonldap-ng-portal/example/scripts/purgeCentralCache.cron.d $(RCRONDIR)
 	# Clean SVN files
@@ -292,7 +323,7 @@ install_test_site:
 	@install -v -d $(RTESTDIR)
 	@cp -pR --remove-destination _example/test/* $(RTESTDIR)
 	@rm -rf $$(find $(RTESTDIR) -type d -name .svn)
-	@perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RTESTDIR)index.pl
+	@perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RTESTDIR)/index.pl
 	@rm -rf $$(find $(RTESTDIR) -type d -name .svn)
 
 install_examples_site:
@@ -301,16 +332,16 @@ install_examples_site:
 	@for i in manager portal handler; do \
 		cp -dpR --remove-destination lemonldap-ng-$$i/example $(REXAMPLESDIR)/$$i; \
 	done
-	@rm -rf $(REXAMPLESDIR)portal/skins \
-		$(REXAMPLESDIR)manager/imgs \
-		$(REXAMPLESDIR)manager/images \
+	@rm -rf $(REXAMPLESDIR)/portal/skins \
+		$(REXAMPLESDIR)/manager/imgs \
+		$(REXAMPLESDIR)/manager/images \
 	@rm -rf $$(find $(REXAMPLESDIR) -type d -name .svn)
-	@perl -i -pe 's#__DIR__#$(LASPPORTALDIR)#g' $(REXAMPLESDIR)portal/AuthLA/index.pl
-	@perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(REXAMPLESDIR)manager/apply.conf
-	@perl -i -pe 's#__APPLYCONFFILE__#$(CONFDIR)apply.conf#' $(REXAMPLESDIR)manager/*.pl
-	@perl -i -pe 's#__SKINDIR__#$(PORTALDIR)skins#; \
-		s#__APPSXMLFILE__#$(CONFDIR)apps-list.xml#; \
-		s#__SESSIONDIR__#$(APACHESESSIONFILEDIR)#g;' $(REXAMPLESDIR)portal/*.pl
+	@perl -i -pe 's#__DIR__#$(LASPPORTALDIR)#g' $(REXAMPLESDIR)/portal/AuthLA/index.pl
+	@perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(REXAMPLESDIR)/manager/apply.conf
+	@perl -i -pe 's#__APPLYCONFFILE__#$(CONFDIR)/apply.conf#' $(REXAMPLESDIR)/manager/*.pl
+	@perl -i -pe 's#__SKINDIR__#$(PORTALDIR)/skins#; \
+		s#__APPSXMLFILE__#$(CONFDIR)/apps-list.xml#; \
+		s#__SESSIONDIR__#$(APACHESESSIONFILEDIR)/#g;' $(REXAMPLESDIR)/portal/*.pl
 
 install_doc_site:
 	@install -v -d $(RDOCDIR)
@@ -319,15 +350,15 @@ install_doc_site:
 install_conf_dir:	install_sessions_dir
 	# Configuration files install
 	@install -v -d $(RCONFDIR) $(RFILECONFIGDIR) $(RTOOLSDIR)
-	@cp --remove-destination $(SRCCOMMONDIR)storage.conf $(RCONFDIR)
-	@perl -i -pe 's#^dirName = .*#dirName = $(FILECONFIGDIR)#g' $(RCONFDIR)storage.conf
+	@cp --remove-destination $(SRCCOMMONDIR)/storage.conf $(RCONFDIR)
+	@perl -i -pe 's#^dirName = .*#dirName = $(FILECONFIGDIR)#g' $(RCONFDIR)/storage.conf
 	@cp _example/conf/lmConf-1 $(RFILECONFIGDIR)
-	@perl -000 -i -pe "s#^(globalStorageOptions\\n\\s+)'[^\\n]*?'\$$#\$${1}\'\\\$$data1 = {&39;Directory&39; => &39;$(APACHESESSIONFILEDIR)&39;,&39;LockDirectory&39; => &39;$(APACHESESSIONFILELOCKDIR)&39;};'#m" $(RFILECONFIGDIR)lmConf-1
+	@perl -000 -i -pe "s#^(globalStorageOptions\\n\\s+)'[^\\n]*?'\$$#\$${1}\'\\\$$data1 = {&39;Directory&39; => &39;$(APACHESESSIONFILEDIR)&39;,&39;LockDirectory&39; => &39;$(APACHESESSIONFILELOCKDIR)&39;};'#m" $(RFILECONFIGDIR)/lmConf-1
 	@perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g;\
 		s/__LDAPPORT__/$(LDAPPORT)/g;\
 		s/__LDAPHOST__/$(LDAPHOST)/g;\
 		s/__LDAPSUFFIX__/$(LDAPSUFFIX)/g;\
-		s#__SESSIONDIR__#$(APACHESESSIONFILEDIR)#g;' $(RFILECONFIGDIR)lmConf-1
+		s#__SESSIONDIR__#$(APACHESESSIONFILEDIR)#g;' $(RFILECONFIGDIR)/lmConf-1
 	@if [ "$(APACHEUSER)" != "" ]; then \
 		chown $(APACHEUSER) $(RFILECONFIGDIR) || exit 1; \
 		if [ "$(APACHEGROUP)" != "" ]; then \
@@ -353,10 +384,8 @@ install_sessions_dir:
 		chmod 777 $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR); \
 	fi
 
-TODO:
-
 postconf_hosts:
-	@cat ${SYSTEMCONFDIR}for_etc_hosts >> /etc/hosts
+	@cat ${SYSTEMCONFDIR}/for_etc_hosts >> /etc/hosts
 	@echo "/etc/hosts was updated"
 
 postconf: postconf_hosts
@@ -381,7 +410,6 @@ manager_uninstall:	manager
 	@rm -vf manager_uninstall
 
 dist:	clean
-	@- $(MAKE) clean
 	@mkdir -p lemonldap-ng-$(VERSION)
 	@- cp -pR lemonldap-ng-common/ lemonldap-ng-manager/ lemonldap-ng-portal/ lemonldap-ng-handler/ * lemonldap-ng-$(VERSION)
 	@- dir=lemonldap-ng-$(VERSION); find $$dir -name .svn -exec rm -rf {} \; 2>/dev/null
@@ -411,9 +439,9 @@ manager_cpan:	manager_conf
 	@mv ${SRCMANAGERDIR}/Lemonldap*.gz .
 
 static_example:	example
-	@mkdir -p ${SCRIPTSDIR}static/
-	@cd ${SCRIPTSDIR}static/;cp -a ../manager/{imgs,theme} .;cd -
-	@../scripts/make_static_example.pl ${DESTMANAGERDIR}index.pl ${SCRIPTSDIR}static/index.html $(EXAMPLELANG)
+	@mkdir -p ${EXAMPLESDIR}/static
+	@cd ${EXAMPLESDIR}/static/;cp -a ../manager/{imgs,theme} .;cd -
+	@../scripts/make_static_example.pl ${DESTMANAGERDIR}/index.pl ${SCRIPTSDIR}/static/index.html $(EXAMPLELANG)
 
 documentation:
 	@cd doc/ && ../scripts/doc.pl
@@ -424,7 +452,7 @@ doxygen:	clean
 distclean:	clean
 
 clean:		common_clean handler_clean portal_clean manager_clean
-	@rm -rf $(EXAMPLEROOT)
+	@rm -rf $(EXAMPLEROOT) example/ doc/devel
 	@rm -vf *gz
 
 common_clean:

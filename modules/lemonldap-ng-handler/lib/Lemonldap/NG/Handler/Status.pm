@@ -225,7 +225,7 @@ sub timeUp {
 }
 
 ## @rfn private void topByCat(string cat,int max)
-# Display the "top 10" fao a category (OK, REDIRECT,...).
+# Display the "top 10" for a category (OK, REDIRECT,...).
 # @param $cat Category to display
 # @param $max Number of lines to display
 sub topByCat {

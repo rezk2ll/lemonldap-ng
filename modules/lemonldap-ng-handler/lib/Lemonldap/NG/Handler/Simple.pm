@@ -385,7 +385,7 @@ sub localInit($$) {
 
 ## @imethod protected boolean childInit()
 # Indicates to Apache that it has to launch:
-# - initLocalStorage() for each child process (after uid change)
+# - initLocalStorage() for each child process (after fork and uid change)
 # - cleanLocalStorage() after each requests
 # @return True
 sub childInit {
