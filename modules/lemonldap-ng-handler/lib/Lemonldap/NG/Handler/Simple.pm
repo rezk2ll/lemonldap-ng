@@ -198,7 +198,12 @@ sub lmLog {
 sub lmSetApacheUser {
     my ( $r, $s ) = @_;
     return unless ($s);
-    $r->connection->user($s);
+    if ( MP() == 2 ) {
+        $r->user($s);
+    }
+    else {
+        $r->connection->user($s);
+    }
 }
 
 ## @ifn protected string protected regRemoteIp(string str)
