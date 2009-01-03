@@ -1,3 +1,9 @@
+lemonldap-ng (0.9.3.2) unstable; urgency=low
+
+  * Debian install failed (Closes: #510562, Closes: #510563 / bugs.debian.org)
+
+ -- Xavier Guimard <x.guimard@free.fr>  Sat, 03 Jan 2009 09:47:21 +0100
+
 lemonldap-ng (0.9.3.1) unstable; urgency=low
 
   * Bug in Debian build

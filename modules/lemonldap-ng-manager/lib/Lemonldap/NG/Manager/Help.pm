@@ -1,8 +1,16 @@
+## @file
+# Help messages used by the manager.
+
+## @class
+# Import help messages subroutines in Lemonldap::NG::Manager in the wanted language.
 package Lemonldap::NG::Manager::Help;
 
 use AutoLoader qw(AUTOLOAD);
 our $VERSION = '0.36';
 
+## @fn void import(string lang)
+# Import help messages subroutines in Lemonldap::NG::Manager in the wanted language.
+# @param $lang Language string of "Accept-Language" HTTP header value
 sub import {
     my ($caller_package) = caller;
     my $lang = shift;

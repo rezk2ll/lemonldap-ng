@@ -1,3 +1,8 @@
+## @file
+# Session explorer
+
+## @class
+# Session explorer.
 package Lemonldap::NG::Manager::Sessions;
 
 use strict;
@@ -8,11 +13,14 @@ our $VERSION = '0.1';
 
 use base qw(Lemonldap::NG::Handler::CGI);
 
-# Cleaner for Lemonldap::NG : removes old sessions from Apache::Session
-#
-# This module is written to be used by cron to clean old sessions from
-# Apache::Session.
-
+## @cmethod Lemonldap::NG::Manager::Sessions new(hashRef args)
+# Constructor.
+# @param $args Arguments for Lemonldap::NG::Handler::CGI::new(). Must contains
+# 3 keys for Lemonldap::NG::Manager::Sessions:
+# - jqueryUri HTTP path to jquery.js
+# - personnalCss Optional HTTP path to custom CSS file
+# - imagePath HTTP path to the images directory
+# @return New Lemonldap::NG::Manager::Sessions object
 sub new {
     my ( $class, $args ) = @_;
     my $self = $class->SUPER::new($args)
@@ -27,6 +35,8 @@ sub new {
     return $self;
 }
 
+## @rmethod void process()
+# Main method.
 sub process {
     my $self = shift;
 
@@ -362,6 +372,10 @@ sub process {
     }
 }
 
+## @rfn protected string htmlquote(string s)
+# Change <, > and & to HTML encoded values in the string
+# @param $s HTML string
+# @return HTML string
 sub htmlquote {
     my $s = shift;
     $s =~ s/</&lt;/g;
@@ -370,7 +384,8 @@ sub htmlquote {
     return $s;
 }
 
-# HTML headers
+## @rfn protected void start()
+# Display HTTP and HTML headers.
 sub start {
     my $self = shift;
     print $self->header( -type => 'text/html; charset=utf8', );
@@ -428,14 +443,20 @@ sub start {
     );
 }
 
-# Ajax node use by JQuery.simple.tree
+## @rfn protected void ajaxnode(string id, string text, string param)
+# Display tree node with Ajax functions inside for opening the node.
+# @param $id HTML id of the element.
+# @param $text text to display
+# @param $param Parameters for the Ajax query
 sub ajaxNode {
     my ( $self, $id, $text, $param ) = @_;
     print
 "<li id=\"$id\"><span>$text</span>\n<ul class=\"ajax\"><li id=\"sub_$id\">{url:$ENV{SCRIPT_NAME}?$param}</li></ul></li>\n";
 }
 
-# Design of the main window
+## @rfn protected void window(string root)
+# Design the main window
+# @param $root Text to display in the root node of the tree
 sub window {
     my $self = shift;
     my $root = shift;
@@ -457,7 +478,8 @@ sub window {
       . '</span><ul>';
 }
 
-# End of HTML
+## @rfn protected void end()
+# Display the end of HTML page.
 sub end {
     my $self = shift;
     print
@@ -467,6 +489,8 @@ sub end {
 
 1;
 
+## @rfn protected css()
+# Display the main CSS file (called by http://manager.example.com/sessions.pl/css)
 sub css {
     my $self = shift;
     print <<"EOF";
@@ -652,6 +676,8 @@ body
 EOF
 }
 
+## @rfn protected js()
+# Display the main javascript file (called by http://manager.example.com/sessions.pl/js)
 sub js {
     my $self = shift;
     print <<"EOF";

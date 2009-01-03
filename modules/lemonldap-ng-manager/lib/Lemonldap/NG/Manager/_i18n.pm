@@ -1,3 +1,8 @@
+## @file
+# Messages translation for Lemonldap::NG::Manager
+
+## @class
+# Messages translation for Lemonldap::NG::Manager.
 package Lemonldap::NG::Manager::_i18n;
 
 # Developer warning : this file must be utf8 encoded
@@ -5,6 +10,8 @@ package Lemonldap::NG::Manager::_i18n;
 use AutoLoader qw(AUTOLOAD);
 our $VERSION = '0.33';
 
+## @fn void import(string lang)
+# Import messages
 sub import {
     my ($caller_package) = caller;
     my $lang = pop;

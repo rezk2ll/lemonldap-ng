@@ -112,7 +112,7 @@ binary-indep: build install
 	dh_installman
 	dh_link
 	dh_strip
-	dh_compress
+	dh_compress -X.pm -X.pl
 	dh_fixperms
 #	dh_perl
 #	dh_makeshlibs
