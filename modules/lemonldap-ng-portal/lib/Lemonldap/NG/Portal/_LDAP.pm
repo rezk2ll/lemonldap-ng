@@ -69,7 +69,7 @@ sub bind {
     my $self = shift;
     my $mesg;
     my ( $dn, %args ) = @_;
-    unless($dn) [
+    unless($dn) {
         $dn = $self->{portal}->{managerDn};
         $args{password} = $self->{portal}->{managerPassword};
     }
