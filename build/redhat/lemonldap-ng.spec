@@ -33,9 +33,11 @@
 Name:           %{real_name}
 Version:        0.9.3.2
 Release:        el5.ow2
+# Force Epoch to 1 to allow update of old RPMforge packages
+Epoch:		1
 Summary:        LemonLDAP-NG WebSSO
 
-Group:          Applications/System 
+Group:          Applications/System
 License:        Artistic/GPL
 URL:            http://lemonldap.ow2.org 
 Source0:        http://download.forge.objectweb.org/lemonldap/%{name}-%{version}.tar.gz
@@ -213,6 +215,7 @@ rm -rf %{buildroot}
 %files
 %defattr(-,root,root,-)
 %config %{lm_confdir}
+%config %{lm_vardir}/conf
 %doc %{lm_examplesdir}
 %{lm_sharedir}
 %{lm_vardir}
