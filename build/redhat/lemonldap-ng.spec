@@ -2,6 +2,8 @@
 # Specification file for LemonLDAP::NG
 #
 # Install LemonLDAP::NG modules, htdocs and scripts
+# Authority: dries
+# Upstream: Xavier Guimard <x,guimard$free,fr>
 #==============================================================================
 
 #==============================================================================
@@ -11,10 +13,11 @@
 %define perl_vendorarch %(eval "`%{__perl} -V:installvendorarch`"; echo $installvendorarch)
 
 %define real_name lemonldap-ng
+%define real_version 0.9.3.2
 
 %define lm_prefix /usr
-%define lm_examplesdir /usr/share/doc/lemonldap-ng/examples
 %define lm_sharedir /usr/share/lemonldap-ng
+%define lm_examplesdir %{lm_sharedir}/examples
 %define lm_vardir /var/lib/lemonldap-ng
 %define lm_confdir /etc/lemonldap-ng
 %define lm_storagefile %{lm_confdir}/storage.conf
@@ -31,16 +34,15 @@
 # Main package
 #==============================================================================
 Name:           %{real_name}
-Version:        0.9.3.2
-Release:        el5.ow2
-# Force Epoch to 1 to allow update of old RPMforge packages
-Epoch:		1
+Version:        %{real_version}
+Release:        1.el5.ow2
 Summary:        LemonLDAP-NG WebSSO
 
 Group:          Applications/System
 License:        Artistic/GPL
 URL:            http://lemonldap.ow2.org 
 Source0:        http://download.forge.objectweb.org/lemonldap/%{name}-%{version}.tar.gz
+Patch0:         lemonldap-ng-cronjob-0.9.3.2.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 
 Packager:	Clement Oudot
@@ -51,6 +53,11 @@ BuildRequires:  perl
 
 Requires: perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 Requires: perl(Apache::Session), mod_perl
+Requires: perl-Lemonldap-NG-Conf >= 0.91
+Requires: perl-Lemonldap-NG-Handler >= 0.90
+Requires: perl-Lemonldap-NG-Manager >= 0.87
+Requires: perl-Lemonldap-NG-Portal >= 0.86
+Requires: lemonldap-ng-doc >= %{real_version}
 
 %description
 LemonLDAP::NG is a modular Web-SSO based on Apache::Session modules. It simplifies the build of a protected area with a few changes in the application. It manages both authentication and authorization and provides headers for accounting. So you can have a full AAA protection for your web space as described below.
@@ -70,6 +77,7 @@ This package contains html documentation.
 #==============================================================================
 %package -n perl-Lemonldap-NG-Conf
 Summary:        LemonLDAP-NG Common Modules
+Version:        0.91
 Group:          Applications/System
 
 %description -n perl-Lemonldap-NG-Conf
@@ -80,6 +88,7 @@ This package installs the configuration libraries used by other LemonLDAP::NG mo
 #==============================================================================
 %package -n perl-Lemonldap-NG-Handler
 Summary:        LemonLDAP-NG Handler Modules
+Version:        0.90
 Group:          Applications/System
 
 %description -n perl-Lemonldap-NG-Handler
@@ -90,6 +99,7 @@ This package installs the Apache module part (handler) used to protect web areas
 #==============================================================================
 %package -n perl-Lemonldap-NG-Manager
 Summary:        LemonLDAP-NG Manager Modules
+Version:        0.87
 Group:          Applications/System
 
 %description -n perl-Lemonldap-NG-Manager
@@ -100,25 +110,28 @@ This package installs the administration interface (manager).
 #==============================================================================
 %package -n perl-Lemonldap-NG-Portal
 Summary:        LemonLDAP-NG Portal Modules
+Version:        0.86
 Group:          Applications/System
 
 %description -n perl-Lemonldap-NG-Portal
 This package installs the authentication portal.
 
-#=================================================
+#==============================================================================
 # Source preparation
-#=================================================
+#==============================================================================
 %prep
-%setup -q
+%setup -n %{real_name}-%{real_version} -q
+%patch0 -p0
 
 # Remove unwanted provides/requires
+# We remove Lemonldap::NG requires because the requires are set in the header
 cat << \EOF > %{name}-prov
 #!/bin/sh
 %{__perl_provides} $* |\
 sed -e '/perl(My::Package)/d'
 EOF
 
-%define __perl_provides %{_builddir}/%{name}-%{version}/%{name}-prov
+%define __perl_provides %{_builddir}/%{name}-%{real_version}/%{name}-prov
 chmod +x %{__perl_provides}
 
 
@@ -129,22 +142,23 @@ sed -e '/perl(lasso)/d' |\
 sed -e '/perl(SOAP::Lite)/d' |\
 sed -e '/perl(SOAP::Transport::HTTP)/d' |\
 sed -e '/perl(Log::Log4perl)/d' |\
+sed -e '/perl(Lemonldap::NG/d' |\
 sed -e '/perl(AuthCAS)/d'
 EOF
 
-%define __perl_requires %{_builddir}/%{name}-%{version}/%{name}-req
+%define __perl_requires %{_builddir}/%{name}-%{real_version}/%{name}-req
 chmod +x %{__perl_requires}
 
-#=================================================
+#==============================================================================
 # Building
-#=================================================
+#==============================================================================
 %build
 %{__make} %{?_smp_mflags} configure STORAGECONFFILE=%{lm_storagefile} PERLOPTIONS="INSTALLDIRS=vendor"
 %{__make} %{?_smp_mflags}
 
-#=================================================
+#==============================================================================
 # Installation
-#=================================================
+#==============================================================================
 %install
 rm -rf %{buildroot}
 # Tests
@@ -172,9 +186,9 @@ rm -rf %{buildroot}
 	LDAPPORT=%{lm_ldapport} \
 	LDAPSUFFIX=%{lm_ldapsuffix}
 
-#=================================================
+#==============================================================================
 # Post Installation
-#=================================================
+#==============================================================================
 %post
 # Set UNIX rights
 chown -R %{lm_apacheuser}:%{lm_apachegroup} %{lm_vardir}/conf
@@ -194,33 +208,37 @@ ln -s %{lm_confdir}/apache2.conf /etc/httpd/conf.d/z-lemonldap-ng.conf
 
 echo "LemonLDAP::NG installation success - please restart Apache"
 
-#=================================================
+#==============================================================================
 # Pre uninstallation
-#=================================================
+#==============================================================================
 %preun
 # Remove symlink in Apache configuration
 rm -f /etc/httpd/conf.d/z-lemonldap-ng.conf
 
 echo "LemonLDAP::NG uninstallation success - please restart Apache"
 
-#=================================================
+#==============================================================================
 # Cleaning
-#=================================================
+#==============================================================================
 %clean
 rm -rf %{buildroot}
 
-#=================================================
+#==============================================================================
 # Files
-#=================================================
+#==============================================================================
 %files
 %defattr(-,root,root,-)
 %config %{lm_confdir}
 %config %{lm_vardir}/conf
-%doc %{lm_examplesdir}
+%doc changelog COPYING INSTALL README
 %{lm_sharedir}
-%{lm_vardir}
-%exclude %{lm_vardir}/doc
-/etc/cron.d/purgeCentralCache.cron.d
+%{lm_vardir}/handler
+%{lm_vardir}/liberty-alliance-sp-portal
+%{lm_vardir}/manager
+%{lm_vardir}/portal
+%{lm_vardir}/sessions
+%{lm_vardir}/test
+/etc/cron.d/lemonldap-ng
 /usr/lib/perl5/5.8.8/i386-linux-thread-multi/perllocal.pod
 
 %files -n lemonldap-ng-doc
@@ -252,14 +270,16 @@ rm -rf %{buildroot}
 %{perl_vendorlib}/i386-linux-thread-multi/auto/Lemonldap/NG/Portal/
 %{perl_vendorlib}/auto/Lemonldap/NG/Portal/
 
-#=================================================
+#==============================================================================
 # Changelog
-#=================================================
+#==============================================================================
 %changelog
-* Mon Jan 5 2009 Clement Oudot <coudot@linagora.com> - 0.9.3.2-el5.ow2
+* Mon Jan 5 2009 Clement Oudot <coudot@linagora.com> - 0.9.3.2-1.el5.ow2
 - Updated to release 0.9.3.2.
+- Use internal version number for perl modules (compatibility with RPMforge packages)
 - Merge with existing .spec file from RPMforge.
 - Use the same directories as the Debian package.
+- Create a symlink in Apache confguration.
 * Thu Nov 20 2008 Jean-Christophe Toussaint <jean-christophe.toussaint@ac-nancy-metz.fr> - 0.9.2-1DSI
 - Updated to release 0.9.2.
 - Using official tar.gz from forge.
