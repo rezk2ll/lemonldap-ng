@@ -53,14 +53,25 @@ BuildRequires:  perl
 
 Requires: perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 Requires: perl(Apache::Session), mod_perl
-Requires: perl-Lemonldap-NG-Conf >= 0.91
-Requires: perl-Lemonldap-NG-Handler >= 0.90
-Requires: perl-Lemonldap-NG-Manager >= 0.87
-Requires: perl-Lemonldap-NG-Portal >= 0.86
+Requires: lemonldap-ng-conf >= %{real_version}
 Requires: lemonldap-ng-doc >= %{real_version}
+Requires: lemonldap-ng-handler >= %{real_version}
+Requires: lemonldap-ng-manager >= %{real_version}
+Requires: lemonldap-ng-portal >= %{real_version}
+Requires: lemonldap-ng-test >= %{real_version}
 
 %description
 LemonLDAP::NG is a modular Web-SSO based on Apache::Session modules. It simplifies the build of a protected area with a few changes in the application. It manages both authentication and authorization and provides headers for accounting. So you can have a full AAA protection for your web space as described below.
+
+#==============================================================================
+# Conf
+#==============================================================================
+%package -n lemonldap-ng-conf
+Summary:        LemonLDAP-NG configuration
+Group:          Applications/System
+
+%description -n lemonldap-ng-conf
+This package contains the main storage configuration.
 
 #==============================================================================
 # Documentation
@@ -73,18 +84,58 @@ Group:          Applications/System
 This package contains html documentation.
 
 #==============================================================================
-# Conf (Common)
+# Handler
 #==============================================================================
-%package -n perl-Lemonldap-NG-Conf
+%package -n lemonldap-ng-handler
+Summary:        LemonLDAP-NG Handler
+Group:          Applications/System
+
+%description -n lemonldap-ng-handler
+This package deploys the Apache Handler.
+
+#==============================================================================
+# Manager
+#==============================================================================
+%package -n lemonldap-ng-manager
+Summary:        LemonLDAP-NG administration interface
+Group:          Applications/System
+
+%description -n lemonldap-ng-manager
+This package deploys the adminsitration interface and sessions explorer.
+
+#==============================================================================
+# Portal
+#==============================================================================
+%package -n lemonldap-ng-portal
+Summary:        LemonLDAP-NG authentication portal
+Group:          Applications/System
+
+%description -n lemonldap-ng-portal
+This package deploys the authentication portal.
+
+#==============================================================================
+# Test
+#==============================================================================
+%package -n lemonldap-ng-test
+Summary:        LemonLDAP-NG test applications
+Group:          Applications/System
+
+%description -n lemonldap-ng-test
+This package deploys small test applications.
+
+#==============================================================================
+# CPAN modules - Common
+#==============================================================================
+%package -n perl-Lemonldap-NG-Common
 Summary:        LemonLDAP-NG Common Modules
 Version:        0.91
 Group:          Applications/System
 
-%description -n perl-Lemonldap-NG-Conf
+%description -n perl-Lemonldap-NG-Common
 This package installs the configuration libraries used by other LemonLDAP::NG modules.
 
 #==============================================================================
-# Handler
+# CPAN modules - Handler
 #==============================================================================
 %package -n perl-Lemonldap-NG-Handler
 Summary:        LemonLDAP-NG Handler Modules
@@ -95,7 +146,7 @@ Group:          Applications/System
 This package installs the Apache module part (handler) used to protect web areas.
 
 #==============================================================================
-# Manager
+# CPAN modules -  Manager
 #==============================================================================
 %package -n perl-Lemonldap-NG-Manager
 Summary:        LemonLDAP-NG Manager Modules
@@ -106,7 +157,7 @@ Group:          Applications/System
 This package installs the administration interface (manager).
 
 #==============================================================================
-# Portal
+# CPAN modules - Portal
 #==============================================================================
 %package -n perl-Lemonldap-NG-Portal
 Summary:        LemonLDAP-NG Portal Modules
@@ -142,7 +193,6 @@ sed -e '/perl(lasso)/d' |\
 sed -e '/perl(SOAP::Lite)/d' |\
 sed -e '/perl(SOAP::Transport::HTTP)/d' |\
 sed -e '/perl(Log::Log4perl)/d' |\
-sed -e '/perl(Lemonldap::NG/d' |\
 sed -e '/perl(AuthCAS)/d'
 EOF
 
@@ -228,23 +278,42 @@ rm -rf %{buildroot}
 #==============================================================================
 %files
 %defattr(-,root,root,-)
+%ghost /usr/lib/perl5/5.8.8/i386-linux-thread-multi/perllocal.pod
+
+%files -n lemonldap-ng-conf
 %config %{lm_confdir}
 %config %{lm_vardir}/conf
-%doc changelog COPYING INSTALL README
-%{lm_sharedir}
-%{lm_vardir}/handler
-%{lm_vardir}/liberty-alliance-sp-portal
-%{lm_vardir}/manager
-%{lm_vardir}/portal
 %{lm_vardir}/sessions
-%{lm_vardir}/test
-/etc/cron.d/lemonldap-ng
-/usr/lib/perl5/5.8.8/i386-linux-thread-multi/perllocal.pod
+%{lm_sharedir}/ressources
 
 %files -n lemonldap-ng-doc
 %doc %{lm_vardir}/doc
+%doc changelog COPYING INSTALL README
 
-%files -n perl-Lemonldap-NG-Conf
+%files -n lemonldap-ng-handler
+%{lm_vardir}/handler
+%{lm_examplesdir}/handler
+
+%files -n lemonldap-ng-manager
+%{lm_vardir}/manager
+%{lm_sharedir}/bin/lmConfigEditor
+%{lm_sharedir}/bin/lmConfig_File2MySQL
+%{lm_sharedir}/manager-imgs
+%{lm_sharedir}/sessions-explorer-imgs
+%{lm_examplesdir}/manager
+
+%files -n lemonldap-ng-portal
+%{lm_vardir}/liberty-alliance-sp-portal
+%{lm_vardir}/portal
+%{lm_sharedir}/bin/purgeCentralCache
+/etc/cron.d/lemonldap-ng
+%{lm_examplesdir}/portal
+%{lm_sharedir}/portal-skins
+
+%files -n lemonldap-ng-test
+%{lm_vardir}/test
+
+%files -n perl-Lemonldap-NG-Common
 %doc %{_mandir}/man3/Lemonldap::NG::Common*.3pm.gz
 %{perl_vendorlib}/Lemonldap/NG/Common.pm
 %{perl_vendorlib}/Lemonldap/NG/Common/
@@ -274,12 +343,13 @@ rm -rf %{buildroot}
 # Changelog
 #==============================================================================
 %changelog
-* Mon Jan 5 2009 Clement Oudot <coudot@linagora.com> - 0.9.3.2-1.el5.ow2
+* Thu Jan 9 2009 Clement Oudot <coudot@linagora.com> - 0.9.3.2-1.el5.ow2
 - Updated to release 0.9.3.2.
 - Use internal version number for perl modules (compatibility with RPMforge packages)
 - Merge with existing .spec file from RPMforge.
 - Use the same directories as the Debian package.
 - Create a symlink in Apache confguration.
+- Create specific portal/manager/handler/conf packages independant from CPAN packages
 * Thu Nov 20 2008 Jean-Christophe Toussaint <jean-christophe.toussaint@ac-nancy-metz.fr> - 0.9.2-1DSI
 - Updated to release 0.9.2.
 - Using official tar.gz from forge.
