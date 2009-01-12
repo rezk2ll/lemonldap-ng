@@ -236,6 +236,10 @@ rm -rf %{buildroot}
 	LDAPPORT=%{lm_ldapport} \
 	LDAPSUFFIX=%{lm_ldapsuffix}
 
+# Remove some unwanted files
+find $RPM_BUILD_ROOT -name .packlist -exec rm -f {} \;
+find $RPM_BUILD_ROOT -name perllocal.pod -exec rm -f {} \;
+
 #==============================================================================
 # Post Installation
 #==============================================================================
@@ -278,7 +282,6 @@ rm -rf %{buildroot}
 #==============================================================================
 %files
 %defattr(-,root,root,-)
-%ghost /usr/lib/perl5/5.8.8/i386-linux-thread-multi/perllocal.pod
 
 %files -n lemonldap-ng-conf
 %config %{lm_confdir}
@@ -317,26 +320,22 @@ rm -rf %{buildroot}
 %doc %{_mandir}/man3/Lemonldap::NG::Common*.3pm.gz
 %{perl_vendorlib}/Lemonldap/NG/Common.pm
 %{perl_vendorlib}/Lemonldap/NG/Common/
-%{perl_vendorlib}/i386-linux-thread-multi/auto/Lemonldap/NG/Common/
 
 %files -n perl-Lemonldap-NG-Handler
 %doc %{_mandir}/man3/Lemonldap::NG::Handler*.3pm.gz
 %{perl_vendorlib}/Lemonldap/NG/Handler.pm
 %{perl_vendorlib}/Lemonldap/NG/Handler/
-%{perl_vendorlib}/i386-linux-thread-multi/auto/Lemonldap/NG/Handler/
 
 %files -n perl-Lemonldap-NG-Manager
 %doc %{_mandir}/man3/Lemonldap::NG::Manager*.3pm.gz
 %{perl_vendorlib}/Lemonldap/NG/Manager.pm
 %{perl_vendorlib}/Lemonldap/NG/Manager/
-%{perl_vendorlib}/i386-linux-thread-multi/auto/Lemonldap/NG/Manager/
 %{perl_vendorlib}/auto/Lemonldap/NG/Manager/
 
 %files -n perl-Lemonldap-NG-Portal
 %doc %{_mandir}/man3/Lemonldap::NG::Portal*.3pm.gz
 %{perl_vendorlib}/Lemonldap/NG/Portal.pm
 %{perl_vendorlib}/Lemonldap/NG/Portal/
-%{perl_vendorlib}/i386-linux-thread-multi/auto/Lemonldap/NG/Portal/
 %{perl_vendorlib}/auto/Lemonldap/NG/Portal/
 
 #==============================================================================
