@@ -252,20 +252,24 @@ chmod 770 %{lm_vardir}/sessions/lock
 chgrp %{lm_apachegroup} %{lm_confdir}/apply.conf
 chmod 640 %{lm_confdir}/apply.conf
 
-# Create symlink in Apache configuration
-# We use "z-lemonldap-ng" so that Apache read the file after "perl.conf"
-ln -s %{lm_confdir}/apache2.conf /etc/httpd/conf.d/z-lemonldap-ng.conf
+if [ $1 -eq 1 ] ; then
+	# Create symlink in Apache configuration
+	# We use "z-lemonldap-ng" so that Apache read the file after "perl.conf"
+	ln -s %{lm_confdir}/apache2.conf /etc/httpd/conf.d/z-lemonldap-ng.conf
 
-echo "LemonLDAP::NG installation success - please restart Apache"
+	echo "LemonLDAP::NG installation success - please restart Apache"
+fi
 
 #==============================================================================
 # Pre uninstallation
 #==============================================================================
 %preun
-# Remove symlink in Apache configuration
-rm -f /etc/httpd/conf.d/z-lemonldap-ng.conf
+if [ $1 -eq 0 ] ; then
+	# Remove symlink in Apache configuration
+	rm -f /etc/httpd/conf.d/z-lemonldap-ng.conf
 
-echo "LemonLDAP::NG uninstallation success - please restart Apache"
+	echo "LemonLDAP::NG uninstallation success - please restart Apache"
+fi
 
 #==============================================================================
 # Cleaning
