@@ -35,21 +35,19 @@
 #==============================================================================
 Name:           %{real_name}
 Version:        %{real_version}
-Release:        1.el5.ow2
+Release:        2%{?dist}
 Summary:        LemonLDAP-NG WebSSO
-
 Group:          Applications/System
-License:        Artistic/GPL
+License:        GPL+ or Artistic
 URL:            http://lemonldap.ow2.org 
+
 Source0:        http://download.forge.objectweb.org/lemonldap/%{name}-%{version}.tar.gz
+# http://forge.objectweb.org/tracker/index.php?func=detail&aid=312315&group_id=274&atid=350403
 Patch0:         lemonldap-ng-cronjob-0.9.3.2.patch
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 
-Packager:	Clement Oudot
-Vendor:		OW2
-
+BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:      noarch
-BuildRequires:  perl
+BuildRequires:  perl, perl(Regexp::Assemble), perl(Cache::Cache), perl(Apache::Session), perl(Net::LDAP)
 
 Requires: perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 Requires: perl(Apache::Session), mod_perl
@@ -229,8 +227,6 @@ rm -rf %{buildroot}
 	CONFDIR=%{lm_confdir} \
 	CRONDIR=/etc/cron.d \
 	DATADIR=%{lm_vardir} \
-	APACHEUSER=%{lm_apacheuser} \
-	APACHEGROUP=%{lm_apachegroup} \
 	DNSDOMAIN=%{lm_dnsdomain} \
 	LDAPHOST=%{lm_ldaphost} \
 	LDAPPORT=%{lm_ldapport} \
@@ -342,7 +338,11 @@ rm -rf %{buildroot}
 # Changelog
 #==============================================================================
 %changelog
-* Thu Jan 9 2009 Clement Oudot <coudot@linagora.com> - 0.9.3.2-1.el5.ow2
+* Mon Jan 12 2009 Clement Oudot <coudot@linagora.com> - 0.9.3.2-2
+- Include cronjob patch
+- Delete unwanted files (perllocal.pod, .packlist)
+- Follow rpmfusion guidelines
+* Thu Jan 9 2009 Clement Oudot <coudot@linagora.com> - 0.9.3.2-1
 - Updated to release 0.9.3.2.
 - Use internal version number for perl modules (compatibility with RPMforge packages)
 - Merge with existing .spec file from RPMforge.
