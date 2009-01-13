@@ -14,6 +14,7 @@ my $docs = {
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocPrereq'                     => '3.1-Install-prerequesites.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocInstallTarball'             => '3.2-Install-from-tarball.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocInstallDebianPackages'      => '3.3-Install-from-debian-packages.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocInstallRedHatPackages'      => '3.3-Install-from-redhat-packages.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocMySQLStorage'               => '3.4-Install-of-MySQL-storage.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocInstallExample?language=en' => '3.5-Install-of-example.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocInstallExample?language=fr' => '3.5-Install-of-example-fr.html',
@@ -30,6 +31,7 @@ my $docs = {
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocAppTomcatValve'             => '5-Appli-Tomcat-Valve.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocAppDokuwiki'                => '5-Appli-Dokuwiki.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocAppPLA'                     => '5-Appli-phpLDAPadmin.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocAppBasicAuthentication'     => '5-Appli-HTTP-Basic-Authentication.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/Main/Contacts'                    => '6-Contacts.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Erreurs?language=en'           => '6-Errors.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Erreurs?language=fr'           => '6-Errors-fr.html',
@@ -155,6 +157,7 @@ while ( my ( $url, $file ) = each %$docs ) {
 	s#/xwiki/bin/view/NG/DocPrereq#3.1-Install-prerequesites.html#g;
 	s#/xwiki/bin/view/NG/DocInstallTarball#3.2-Install-from-tarball.html#g;
 	s#/xwiki/bin/view/NG/DocInstallDebianPackages#3.3-Install-from-debian-packages.html#g;
+	s#/xwiki/bin/view/NG/DocInstallRedHatPackages#3.3-Install-from-redhat-packages.html#g;
 	s#/xwiki/bin/view/NG/DocMySQLStorage#3.4-Install-of-MySQL-storage.html#g;
 	s#/xwiki/bin/view/NG/DocConfigOverwiew#4.1-Configuration-overview.html#g;
 	s#/xwiki/bin/view/NG/ConfigParameterList#4.1-Configuration-parameter-list.html#g;
@@ -167,6 +170,7 @@ while ( my ( $url, $file ) = each %$docs ) {
 	s#/xwiki/bin/view/NG/DocAppTomcatValve#5-Appli-Tomcat-Valve.html#g;
 	s#/xwiki/bin/view/NG/DocAppDokuwiki#5-Appli-Dokuwiki.html#g;
 	s#/xwiki/bin/view/NG/DocAppPLA#5-Appli-phpLDAPadmin.html#g;
+	s#/xwiki/bin/view/NG/DocAppBasicAuthentication#5-Appli-HTTP-Basic-Authentication.html#g;
 	s#/xwiki/bin/view/Main/Contacts#6-Contacts.html#g;
 	s#/xwiki/bin/view/NG/Roadmap#6-Roadmap.html#g;
 	s#/xwiki/bin/view/NG/References#6-References.html#g;
