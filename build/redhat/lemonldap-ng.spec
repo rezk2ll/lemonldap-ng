@@ -236,6 +236,9 @@ rm -rf %{buildroot}
 find $RPM_BUILD_ROOT -name .packlist -exec rm -f {} \;
 find $RPM_BUILD_ROOT -name perllocal.pod -exec rm -f {} \;
 
+# Set APACHEUSER in cronjob
+sed -i 's/\*\s*\[/* %{lm_apacheuser} [/' %{buildroot}/etc/cron.d/lemonldap-ng
+
 #==============================================================================
 # Post Installation
 #==============================================================================
