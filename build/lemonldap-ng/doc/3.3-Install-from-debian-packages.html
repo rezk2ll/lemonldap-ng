@@ -74,6 +74,9 @@
       dpkg</a></li>
 
       <li><a href="#HFilelocation">File location</a></li>
+
+      <li><a href="#HChangedefaultDNSdomain">Change default DNS
+      domain</a></li>
     </ul>
 
     <h3 class="heading-1-1"><span id="HGetthepackages">Get the
@@ -171,12 +174,31 @@ $ debuild
     <h3 class="heading-1-1"><span id="HFilelocation">File location</span></h3>
 
     <ul class="star">
-      <li>All configuration is in /etc/lemonldap-ng</li>
+      <li>Configuration is in /etc/lemonldap-ng</li>
 
-      <li>All Perl modules are in /usr/share/perl5/Lemonldap/NG/</li>
+      <li>LemonLDAP::NG configuration (edited by the Manager) is in
+      /var/lib/lemonldap-ng/conf/</li>
+
+      <li>All Perl modules are in the VENDOR perl directory</li>
 
       <li>All Perl scripts/pages are in /var/lib/lemonldap-ng/</li>
+
+      <li>All static content (examples, CSS, images, etc.) is in
+      /usr/share/lemonldap-ng/</li>
     </ul>
+
+    <h3 class="heading-1-1"><span id="HChangedefaultDNSdomain">Change default
+    DNS domain</span></h3><br />
+    <br />
+    By default, DNS domain is "example.com". You can change it quick with a
+    sed command. For example, we change it to ow2.org:<br />
+    <br />
+
+    <div class="code">
+      <pre>
+# sed -i 's/example.com/ow2.org/g' /etc/lemonldap-ng/apache2.conf /etc/lemonldap-ng/apps-list.xml /<span class="java-keyword">var</span>/lib/lemonldap-ng/conf/lmConf-1 /etc/lemonldap-ng/apply.conf /<span class="java-keyword">var</span>/lib/lemonldap-ng/test/index.pl
+</pre>
+    </div>
   </div>
 
   <p class="footer"><a href="index.html">Index</a></p>

@@ -65,8 +65,11 @@
       <li><a href="#HActivatethemenuintheportal">Activate the menu in the
       portal</a></li>
 
+      <li><a href="#HSetthevisibilityofeachmodules">Set the visibility of each
+      modules</a></li>
+
       <li>
-        <a href="#HXMLapplicationslist">XML applications list</a>
+        <a href="#HConfigureapplicationslist">Configure applications list</a>
 
         <ul>
           <li><a href="#HDTD">DTD</a></li>
@@ -150,8 +153,42 @@
 </pre>
     </div>
 
-    <h3 class="heading-1-1"><span id="HXMLapplicationslist">XML applications
-    list</span></h3>
+    <h3 class="heading-1-1"><span id="HSetthevisibilityofeachmodules">Set the
+    visibility of each modules</span></h3>
+
+    <p class="paragraph"></p>In the source code of the portal, you have :
+
+    <p class="paragraph"></p>
+
+    <div class="code">
+      <pre>
+modules =&gt; {
+                appslist =&gt; 1,
+                password =&gt; 1,
+                logout   =&gt; 1,
+            },
+</pre>
+    </div>
+
+    <p class="paragraph"></p>"1" means the module is always displayed, and "0"
+    means never. But you can adapt it to the user profile, for example display
+    the password modification form only to user with employeeType equal to
+    "internal" :
+
+    <p class="paragraph"></p>
+
+    <div class="code">
+      <pre>
+modules =&gt; {
+                appslist =&gt; 1,
+                password =&gt; '$employeeType =~ /binternalb/',
+                logout   =&gt; 1,
+            },
+</pre>
+    </div>
+
+    <h3 class="heading-1-1"><span id="HConfigureapplicationslist">Configure
+    applications list</span></h3>
 
     <h4 class="heading-1-1-1"><span id="HDTD">DTD</span></h4>
 
