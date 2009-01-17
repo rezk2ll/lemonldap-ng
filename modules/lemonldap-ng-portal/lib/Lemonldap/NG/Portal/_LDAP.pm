@@ -47,7 +47,7 @@ sub new {
         my %h = split( /[&=]/, $tlsParam );
         $h{cafile} = $portal->{caFile} if ( $portal->{caFile} );
         $h{capath} = $portal->{caPath} if ( $portal->{caPath} );
-        my $mesg = $self->{ldap}->start_tls(%h);
+        my $mesg = $self->start_tls(%h);
         if ( $mesg->code ) {
             print STDERR __PACKAGE__ . " StartTLS failed\n";
             return 0;
