@@ -1,3 +1,11 @@
+lemonldap-ng (0.9.4) unstable; urgency=low
+
+  * ldap+tls uri was not working (Closes: #312418)
+  * Session timeout is in seconds and not in minutes in Manager/Help.pm
+    (Closes: #312339)
+
+ -- Xavier Guimard <x.guimard@free.fr>  Thu, 22 Jan 2009 11:00:10 +0100
+
 lemonldap-ng (0.9.3.2) unstable; urgency=low
 
   * Debian install failed (Closes: #510562, Closes: #510563 / bugs.debian.org)
