@@ -44,6 +44,10 @@ my $portal = Lemonldap::NG::Portal::SharedConf->new(
         #customFunctions    => 'function1 function2',
         #customFunctions    => 'Package::func1 Package::func2',
 
+        # NOTIFICATIONS SERVICE
+        # Use it to be able to notify messages during authentication
+        #notification => 1,
+
         # OTHERS
         # You can also overload any parameter issued from manager
         # configuration. Example:
@@ -100,6 +104,21 @@ if ( $portal->process() ) {
         $template->param( APPSLIST_MENU => $menu->appslistMenu );
         $template->param( APPSLIST_DESC => $menu->appslistDescription );
     }
+
+    print $portal->header('text/html; charset=utf8');
+    print $template->output;
+}
+elsif( my $notif = $portal->notification ) {
+    my $template = HTML::Template->new(
+        filename          => "$skin_dir/$skin/notification.tpl",
+        die_on_bad_params => 0,
+        cache             => 0,
+        filter            => sub { $portal->translate_template(@_) }
+    );
+    $template->param( AUTH_ERROR      => $portal->error );
+    $template->param( AUTH_ERROR_TYPE => $portal->error_type );
+    $template->param( AUTH_URL        => $portal->get_url );
+    $template->param( NOTIFICATION    => $notif );
 
     print $portal->header('text/html; charset=utf8');
     print $template->output;

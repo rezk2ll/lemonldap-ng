@@ -12,6 +12,7 @@ no strict 'refs';
 use Data::Dumper;
 use Lemonldap::NG::Common::Conf::Constants;
 use Regexp::Assemble;
+use Crypt::Rijndael;
 
 use constant DEFAULTCONFFILE => "/etc/lemonldap-ng/storage.conf";
 
@@ -164,16 +165,22 @@ sub getConf {
     }
     else {
         $args->{cfgNum} ||= $self->lastCfg;
+        my $r;
         unless ( ref( $self->{refLocalStorage} ) ) {
             $msg = "get remote configuration (localStorage unavailable)";
-            return $self->getDBConf($args);
+            $r   = $self->getDBConf($args);
         }
-        my $r = $self->{refLocalStorage}->get('conf');
+        else {
+            $r = $self->{refLocalStorage}->get('conf');
         if ( $r->{cfgNum} == $args->{cfgNum} ) {
             $msg = "configuration unchanged, get configuration from cache";
-            return $r;
         }
-        return $self->getDBConf($args);
+            else {
+                $r = $self->getDBConf($args);
+            }
+        }
+        $r->{cipher} = Crypt::Rijndael->new( $r->{key} || 'lemonldap-ng-key', Crypt::Rijndael::MODE_CBC() );
+        return $r;
     }
 }
 

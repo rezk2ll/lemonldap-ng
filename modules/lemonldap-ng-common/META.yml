@@ -14,6 +14,7 @@ requires:
     Regexp::Assemble:              0
     Storable:                      0
     SOAP::Lite:                    0
+    Crypt::Rijndael:               0
 meta-spec:
     url:     http://module-build.sourceforge.net/META-spec-v1.3.html
     version: 1.3

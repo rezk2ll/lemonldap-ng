@@ -128,7 +128,7 @@ sub new {
         %$self = ( %h, %$self );
     }
     if ( $self->{notification} ) {
-        require Lemonldap::NG::Common::Notification;
+        require Lemonldap::NG::Portal::Notification;
     }
     if ( $self->{Soap} ) {
         require SOAP::Lite;
@@ -572,17 +572,19 @@ sub controlExistingSession {
         $self->{id} = $id;
 
         # A session has been find => calling &existingSession
-        my ( $r, $datas );
-        %$datas = %h;
+        my ($r);
+        %{ $self->{sessionInfo} } = %h;
         untie(%h);
         if ( $self->{existingSession} ) {
-            $r = &{ $self->{existingSession} }( $self, $id, $datas );
+            $r =
+              &{ $self->{existingSession} }( $self, $id, $self->{sessionInfo} );
         }
         else {
-            $r = $self->existingSession( $id, $datas );
+            $r = $self->existingSession( $id, $self->{sessionInfo} );
         }
         if ( $r == PE_DONE ) {
-            $self->{error} = $self->_subProcess(qw(log autoRedirect));
+            $self->{error} =
+              $self->_subProcess(qw(log checkNotification autoRedirect));
             return $self->{error} || PE_DONE;
         }
         else {
@@ -732,17 +734,19 @@ sub checkNotification {
     my $self = shift;
     if ( $self->{notification} ) {
         my $tmp;
-        if ( ref( $self->{notification} ) ) {
-            $tmp = $self->{notification};
+        if ( $self->{notificationStorage} ) {
+            $tmp = $self->{notificationStorage};
         }
         else {
-            $tmp = $self->{configStorage};
-            $tmp->{dbiTable} = 'notifications';
+            $tmp = $self->{lmConf};
+            $self->abort( "notificationStorage not defined",
+                "This parameter is required to use notification system" )
+              unless ( ref($tmp) );
+            $tmp->{table} = 'notifications';
         }
-        if ( $self->{_notification} =
-            Lemonldap::NG::Common::Notification->new($tmp)
-            ->getNotification( $self->{user} ) )
-        {
+        my $obj = Lemonldap::NG::Portal::Notification->new($tmp);
+        $self->abort($Lemonldap::NG::Portal::Notification::msg) unless ($obj);
+        if ( $self->{_notification} = $obj->getNotification($self) ) {
             return PE_NOTIFICATION;
         }
     }
