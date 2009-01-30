@@ -11,8 +11,8 @@ use strict;
 no strict 'refs';
 use Data::Dumper;
 use Lemonldap::NG::Common::Conf::Constants;
+use Lemonldap::NG::Common::Crypto;
 use Regexp::Assemble;
-use Crypt::Rijndael;
 
 use constant DEFAULTCONFFILE => "/etc/lemonldap-ng/storage.conf";
 
@@ -179,7 +179,9 @@ sub getConf {
                 $r = $self->getDBConf($args);
             }
         }
-        $r->{cipher} = Crypt::Rijndael->new( $r->{key} || 'lemonldap-ng-key', Crypt::Rijndael::MODE_CBC() );
+        $r->{cipher} =
+          Lemonldap::NG::Common::Crypto->new( $r->{key} || 'lemonldap-ng-key',
+            Crypt::Rijndael::MODE_CBC() );
         return $r;
     }
 }

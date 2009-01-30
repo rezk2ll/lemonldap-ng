@@ -129,6 +129,20 @@ sub new {
     }
     if ( $self->{notification} ) {
         require Lemonldap::NG::Portal::Notification;
+        my $tmp;
+        if ( $self->{notificationStorage} ) {
+            $tmp = $self->{notificationStorage};
+        }
+        else {
+            $tmp = $self->{lmConf};
+            $self->abort( "notificationStorage not defined",
+                "This parameter is required to use notification system" )
+              unless ( ref($tmp) );
+            $tmp->{table} = 'notifications';
+        }
+        $self->{notifObject} = Lemonldap::NG::Portal::Notification->new($tmp);
+        $self->abort($Lemonldap::NG::Portal::Notification::msg)
+          unless ( $self->{notifObject} );
     }
     if ( $self->{Soap} ) {
         require SOAP::Lite;
@@ -344,6 +358,8 @@ sub _subProcess {
     my $err  = undef;
 
     foreach my $sub (@subs) {
+
+        #print STDERR "DEBUG : $sub\n";
         if ( $self->{$sub} ) {
             last if ( $err = &{ $self->{$sub} }($self) );
         }
@@ -465,7 +481,7 @@ sub process {
     my ($self) = @_;
     $self->{error} = PE_OK;
     $self->{error} = $self->_subProcess(
-        qw(checkNotifBack controlUrlOrigin controlExistingSession authInit
+        qw(controlUrlOrigin checkNotifBack controlExistingSession authInit
           extractFormInfo userDBInit getUser setAuthSessionInfo setSessionInfo
           setMacros setGroups authenticate store buildCookie log
           checkNotification autoRedirect)
@@ -474,18 +490,8 @@ sub process {
     return ( ( $self->{error} > 0 ) ? 0 : 1 );
 }
 
-##@method int checkNotifBack()
-# 1) Checks if a message has to be notified to the connected user.
-#@return Lemonldap::NG::Portal error code
-sub checkNotifBack {
-    my $self = shift;
-
-    # TODO
-    PE_OK;
-}
-
 ##@method int controlUrlOrigin()
-# 2) If the user was redirected here, loads 'url' parameter.
+# 1) If the user was redirected here, loads 'url' parameter.
 #@return Lemonldap::NG::Portal constant
 sub controlUrlOrigin {
     my $self = shift;
@@ -515,24 +521,50 @@ m#^https?://(?:$self->{reVHosts}|(?:[^/]*)?$self->{domain})(?:/.*)?$#
     PE_OK;
 }
 
-##@method int controlExistingSession()
+##@method int checkNotifBack()
+# 2) Checks if a message has been notified to the connected user.
+# Call Lemonldap::NG::Portal::Notification::checkNotification()
+#@return Lemonldap::NG::Portal error code
+sub checkNotifBack {
+    my $self = shift;
+    if ( $self->{notification} and grep( /^reference/, $self->param() ) ) {
+        unless ( $self->{notifObject}->checkNotification($self) ) {
+            $self->{_notification} =
+              $self->{notifObject}->getNotification($self);
+            return PE_NOTIFICATION;
+        }
+        else {
+            $self->{error} =
+              $self->_subProcess(qw(log checkNotification autoRedirect));
+            return $self->{error} || PE_DONE;
+        }
+    }
+    PE_OK;
+}
+
+##@method int controlExistingSession(string id)
 # 3) Control existing sessions.
 # To overload to control what to do with existing sessions.
 # what to do with existing sessions ?
 #       - nothing: user is authenticated and process returns true (default)
 #       - delete and create a new session (not implemented)
 #       - re-authentication (set existingSession => sub{PE_OK})
+#@param $id optional value of the session-id else cookies are examinated.
 #@return Lemonldap::NG::Portal constant
 sub controlExistingSession {
-    my $self    = shift;
-    my %cookies = fetch CGI::Cookie;
+    my ( $self, $id ) = @_;
+    my %cookies;
+    %cookies = fetch CGI::Cookie unless ($id);
 
     # Store IP address
     $self->{sessionInfo}->{ipAddr} = $ENV{REMOTE_ADDR};
 
     # Test if Lemonldap::NG cookie is available
-    if ( $cookies{ $self->{cookieName} }
-        and my $id = $cookies{ $self->{cookieName} }->value )
+    if (
+        $id
+        or (    $cookies{ $self->{cookieName} }
+            and $id = $cookies{ $self->{cookieName} }->value )
+      )
     {
         my %h;
 
@@ -729,26 +761,15 @@ sub log {
 
 ##@method int checkNotification()
 # 16) Check if messages has to be notified.
+# Call Lemonldap::NG::Portal::Notification::getNotification().
 #@return Lemonldap::NG::Portal constant
 sub checkNotification {
     my $self = shift;
-    if ( $self->{notification} ) {
-        my $tmp;
-        if ( $self->{notificationStorage} ) {
-            $tmp = $self->{notificationStorage};
-        }
-        else {
-            $tmp = $self->{lmConf};
-            $self->abort( "notificationStorage not defined",
-                "This parameter is required to use notification system" )
-              unless ( ref($tmp) );
-            $tmp->{table} = 'notifications';
-        }
-        my $obj = Lemonldap::NG::Portal::Notification->new($tmp);
-        $self->abort($Lemonldap::NG::Portal::Notification::msg) unless ($obj);
-        if ( $self->{_notification} = $obj->getNotification($self) ) {
-            return PE_NOTIFICATION;
-        }
+    if (    $self->{notification}
+        and $self->{_notification} =
+        $self->{notifObject}->getNotification($self) )
+    {
+        return PE_NOTIFICATION;
     }
     return PE_OK;
 }

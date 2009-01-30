@@ -9,6 +9,7 @@ lib/Lemonldap/NG/Common/Conf/Constants.pm
 lib/Lemonldap/NG/Common/Conf/DBI.pm
 lib/Lemonldap/NG/Common/Conf/File.pm
 lib/Lemonldap/NG/Common/Conf/SOAP.pm
+lib/Lemonldap/NG/Common/Crypto.pm
 Makefile.PL
 MANIFEST
 META.yml			Module meta-data (added by MakeMaker)

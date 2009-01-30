@@ -713,9 +713,7 @@ sub encodeUrl {
           . $portString
           . $url;
     }
-    $u = encode_base64($u);
-    $u =~ s/[\r\n\s]//sg;
-    return $u;
+    return encode_base64( $u, '' );
 }
 
 ## @rmethod protected int goToPortal(string url, string arg)

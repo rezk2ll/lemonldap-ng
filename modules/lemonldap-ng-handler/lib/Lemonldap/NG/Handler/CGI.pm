@@ -136,8 +136,7 @@ sub group {
 # Redirects the user to the portal and exit.
 sub goToPortal {
     my $self = shift;
-    my $tmp  = encode_base64( $self->_uri );
-    $tmp =~ s/[\r\n]//sg;
+    my $tmp  = encode_base64( $self->_uri, '' );
     print CGI::redirect( -uri => "$portal?url=$tmp" );
     exit;
 }
