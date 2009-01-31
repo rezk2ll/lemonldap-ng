@@ -2,7 +2,10 @@
 # SOAP support for Lemonldap::NG::Common::CGI
 
 ## @class
-# SOAP support for Lemonldap::NG::Common::CGI
+# Extend SOAP::Transport::HTTP::Server to be able to use posted datas catched
+# by CGI module.
+# All Lemonldap::NG cgi inherits from CGI so with this library, they can
+# understand both browser and SOAP requests.
 package Lemonldap::NG::Common::CGI::SOAPServer;
 use SOAP::Transport::HTTP;
 use base qw(SOAP::Transport::HTTP::Server);
@@ -23,8 +26,10 @@ sub new {
     return $self;
 }
 
-## @method handle(CGI cgi)
-# 
+## @method void handle(CGI cgi)
+# Build SOAP request using CGI->param('POSTDATA') and call
+# SOAP::Transport::HTTP::Server::handle() then return the result to the client.
+# @param $cgi CGI object
 sub handle {
     my $self = shift->new;
     my $cgi  = shift;

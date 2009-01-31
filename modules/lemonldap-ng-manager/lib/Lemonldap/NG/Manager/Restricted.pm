@@ -1,3 +1,8 @@
+## @file
+# Restricted manager
+
+## @class
+# Restrict Lemonldap::NG::Manager to build custom manager interfaces.
 package Lemonldap::NG::Manager::Restricted;
 
 use strict;
@@ -8,6 +13,10 @@ use Lemonldap::NG::Common::Conf::Constants;
 use base qw(Lemonldap::NG::Manager);
 our $VERSION = "0.1";
 
+## @cmethod Lemonldap::NG::Manager::Restricted new(hashref args)
+# Constructor
+# @param $args parameters for Lemonldap::NG::Manager::new() and for this
+# module
 sub new {
     my ( $class, $args ) = @_;
     my $self = $class->SUPER::new($args);
@@ -18,6 +27,9 @@ sub new {
     return $self;
 }
 
+## @method hashref buildTree()
+# Overload Lemonldap::NG::Manager::buildTree() to hide unwanted parts
+# @return hash reference to a tree for the javascript library
 sub buildTree {
     my $self = shift;
     my $tree = $self->SUPER::buildTree();
@@ -51,9 +63,11 @@ sub buildTree {
     return $tree;
 }
 
+## @method boolean upload()
+# Overload Lemonldap::NG::Manager::upload() to restrict upload datas to the
+# authorized nodes.
 sub upload {
     my $self = shift;
-    print STDERR "1\n";
     return UPLOAD_DENIED unless ( @{ $self->{write} } );
 
     # Convert new config
@@ -79,10 +93,6 @@ sub upload {
             delete $newConfig->{exportedHeaders}->{$vh};
         }
     }
-
-    # return UPLOAD_DENIED
-    #   if ( %{ $newConfig->{exportedHeaders} }
-    #     or %{ $newConfig->{locationRules} } );
 
     # and save config
     return $self->config->saveConf($config);
