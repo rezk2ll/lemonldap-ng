@@ -11,6 +11,9 @@ EXAMPLEPORTALFILE=/usr/share/doc/liblemonldap-ng-portal-perl/examples/index_skin
 PORTALFILE=/var/lib/lemonldap-ng/portal/index.pl
 SESSIONSDIR=/var/lib/lemonldap-ng/sessions
 
+BUILDPORTALWSDL=/usr/share/lemonldap-ng/bin/buildPortalWSDL
+WSDLFILE=/var/lib/lemonldap-ng/portal/portal.wsdl
+
 if [ "$1" == "configure" ]
 then
     [ -e $LAPORTALFILE ] || cp $LAEXAMPLEPORTALFILE $LAPORTALFILE
@@ -20,6 +23,7 @@ then
     chmod 770 $SESSIONSDIR
     chmod 770 $SESSIONSDIR/lock
     chown -R www-data:www-data $SESSIONSDIR
+    $BUILDPORTALWSDL > $WSDLFILE || true
 fi
 
 

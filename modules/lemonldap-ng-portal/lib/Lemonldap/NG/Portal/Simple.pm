@@ -168,6 +168,16 @@ sub getConf {
     1;
 }
 
+=begin WSDL
+
+_IN lang $string Language
+_IN code $int Error code
+_RETURN $string Error string
+
+=end WSDL
+
+=cut
+
 ##@method string error(string lang)
 # error calls Portal/_i18n.pm to display error in the wanted language.
 #@param $lang optional (browser language is used instead)
@@ -431,6 +441,16 @@ sub safe {
 # SOAP subroutines #
 ####################
 
+=begin WSDL
+
+_IN user $string User name
+_IN password $string Password
+_RETURN $getCookieResponse Response
+
+=end WSDL
+
+=cut
+
 ##@method SOAP::Data getCookies(string user,string password)
 # Called in SOAP context, returns cookies in an array.
 # This subroutine works only for portals working with user and password
@@ -452,14 +472,19 @@ sub getCookies {
     }
     my @tmp = ();
     push @tmp, SOAP::Data->name( error => $self->{error} );
+    my @cookies = ();
     unless ( $self->{error} ) {
-        push @tmp,
-          SOAP::Data->name(
-            cookies => \SOAP::Data->value(
-                SOAP::Data->name( $self->{cookieName} => $self->{id} ),
-            )
-          );
+        foreach ( @{ $self->{cookie} } ) {
+            push @cookies, SOAP::Data->name( $_->name, $_->value );
+        }
     }
+    else {
+        my @cookieNames = split /\s+/, $self->{cookieName};
+        foreach (@cookieNames) {
+            push @cookies, SOAP::Data->name( $_, 0 );
+        }
+    }
+    push @tmp, SOAP::Data->name( cookies => \SOAP::Data->value(@cookies) );
     my $res = SOAP::Data->name( session => \SOAP::Data->value(@tmp) );
     $self->updateStatus;
     return $res;

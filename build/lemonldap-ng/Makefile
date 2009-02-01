@@ -199,6 +199,7 @@ install_bin:	install_libs install_conf_dir
 	@install -v -d $(RBINDIR)
 	@cp --preserve=mode --remove-destination \
 		${SRCPORTALDIR}/example/scripts/purgeCentralCache \
+		${SRCPORTALDIR}/example/scripts/buildPortalWSDL \
 		${SRCCOMMONDIR}/scripts/lmConfig_File2MySQL \
 		${SRCMANAGERDIR}/example/scripts/lmConfigEditor \
 			$(RBINDIR)
