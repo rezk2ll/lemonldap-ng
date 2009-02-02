@@ -1,7 +1,7 @@
 ##@file
 # Base package for Lemonldap::NG portal
 
-##@class
+##@class Lemonldap::NG::Portal::Simple
 # Base class for Lemonldap::NG portal
 package Lemonldap::NG::Portal::Simple;
 
@@ -230,7 +230,7 @@ sub error_type {
     return "negative";
 }
 
-##@method void translate_template(*string text_ref, string lang)
+##@method void translate_template(string text_ref, string lang)
 # translate_template is used as an HTML::Template filter to tranlate strings in
 # the wanted language
 #@param text_ref reference to the string to translate
