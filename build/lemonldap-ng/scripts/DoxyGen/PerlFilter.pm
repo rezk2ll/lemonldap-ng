@@ -78,11 +78,9 @@ sub filter {
         || grep( /\$self/, @$file );
 
     push( @$file, "" );  # in order to have a delimiting empty line at EOF
-open LOG, '>/tmp/log' or die;
     for( my $line=0; $line <= $#$file; ) {
         $_ = $file->[$line++];
         last if($endMark and /^__END__$/);
-print LOG $_;
         if (/^##\s*\@(\S+)\s*(.*)/) {
             my($command, $args) = ($1, $2);
             my @more;
@@ -301,7 +299,7 @@ sub analyze_sub {
 sub emit_class {
     my( $self, $class, $line, $doc ) = @_;
 
-    my(@current_isa, @current_include);
+    my(@current_isa, @current_include, @links);
     my $file = $self->file_contents();
     while ($_ = $file->[$line++] ) {
         if (/^\s*(?:use base|\@ISA\s*=|\@${class}::ISA\s*=)\s+(.+);/) {
@@ -311,6 +309,7 @@ sub emit_class {
             my $inc = $1;
             $inc =~ s/::/\//g;
             push @current_include, $inc;
+            push @links, $inc if (/#link$/);
             $file->[$line-1] = "\n";
         } elsif (/^package/) {
             last;
@@ -331,7 +330,12 @@ sub emit_class {
         $self->print(":",
             join(", ", map {"public $_"} @current_isa) );
     }
-    $self->print(" {\npublic:\n");
+    $self->print(" {\n");
+    if (@links) {
+	$self->print("public:\n");
+	$self->print("$_ depends;\n") foreach(@links);
+    }
+    $self->print("public:\n");
 }
 
 
