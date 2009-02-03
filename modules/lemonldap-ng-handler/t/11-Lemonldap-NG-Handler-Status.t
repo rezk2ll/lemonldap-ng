@@ -7,7 +7,7 @@
 
 BEGIN {
     our $home=0;
-    $home++ if($ENV{DEBFULLNAME} eq 'Xavier Guimard');
+    $home++ if($ENV{DEBFULLNAME} and $ENV{DEBFULLNAME} eq 'Xavier Guimard');
 }
 
 use Test::More tests => 1 + 8*$home;

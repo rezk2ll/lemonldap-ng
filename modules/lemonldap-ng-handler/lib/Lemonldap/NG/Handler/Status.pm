@@ -261,6 +261,8 @@ sub head {
 EOF
 }
 
+## @rfn private void end()
+# Display end of HTML status responses.
 sub end {
     print <<"EOF";
 <hr/>

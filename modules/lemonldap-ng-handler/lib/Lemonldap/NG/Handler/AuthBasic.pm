@@ -125,6 +125,9 @@ sub run ($$) {
     # SECURITY
     # Hide Lemonldap::NG cookie
     $class->hideCookie;
+
+    # Hide user password
+    lmSetHeaderIn( $apacheRequest, Authorization => '' );
     OK;
 }
 

@@ -203,6 +203,7 @@ install_bin:	install_libs install_conf_dir
 		${SRCCOMMONDIR}/scripts/lmConfig_File2MySQL \
 		${SRCMANAGERDIR}/example/scripts/lmConfigEditor \
 			$(RBINDIR)
+	chmod +x $(RBINDIR)/*
 
 #
 # SITE INSTALL
