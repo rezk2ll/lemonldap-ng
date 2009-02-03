@@ -14,10 +14,10 @@ use CGI::Cookie;
 use MIME::Base64;
 
 our $VERSION = '0.01';
-our ( $msg, $stylesheet, $parser );
+our ( $msg, $stylesheet, $parser, $self );
 
 BEGIN {
-    my $xslt      = XML::LibXSLT->new();
+    my $xslt = XML::LibXSLT->new();
     $parser = XML::LibXML->new();
     my $style_doc = $parser->parse_string(
         q#<?xml version="1.0" encoding="UTF-8"?>
@@ -60,7 +60,7 @@ BEGIN {
 # @return Lemonldap::NG::Portal::Notification object
 sub new {
     my ( $class, $storage ) = @_;
-    my $self = bless {}, $class;
+    $self = bless {}, $class;
     (%$self) = (%$storage);
     $self->{type} = "Lemonldap::NG::Common::Conf::$self->{type}"
       unless $self->{type} =~ /^Lemonldap::/;
@@ -110,16 +110,16 @@ sub getNotification {
 
     foreach my $notif (@notifs) {
         $i++;
-    eval {
+        eval {
             my $xml = $parser->parse_string($notif);
             my $results = $stylesheet->transform( $xml, start => $i );
-        $form .= $stylesheet->output_string($results);
-    };
-    if ($@) {
+            $form .= $stylesheet->output_string($results);
+        };
+        if ($@) {
             print STDERR
               "Bad XML file: a notification for $uid was not done ($@)\n";
-        return 0;
-    }
+            return 0;
+        }
     }
 
     # Now a notification has to be done. Replace cookies by hidden fields
@@ -184,7 +184,9 @@ sub checkNotification {
             push @{ $checks->{$1} }, $2;
         }
     }
+    $portal->controlExistingSession() unless ( $portal->{sessionInfo} );
     unless ( $portal->{sessionInfo} ) {
+        print STDERR "Invalid session\n";
         return 0;
     }
     my $result = 1;
@@ -243,6 +245,55 @@ sub checkNotification {
     return $result;
 }
 
+## @method int newNotification(string xml)
+# Check XML datas and insert new notifications.
+# @param $xml XML string containing notification
+# @return number of notifications done
+sub newNotification {
+    my ( $class, $xml ) = @_;
+    eval { $xml = $parser->parse_string($xml); };
+    if ($@) {
+        print STDERR "Unable to read XML file : $@\n";
+        return 0;
+    }
+    my @notifs;
+    my ( $version, $encoding ) = ( $xml->version(), $xml->encoding() );
+    foreach
+      my $notif ( $xml->documentElement->getElementsByTagName('notification') )
+    {
+        my @datas = ();
+        foreach (qw(date uid reference)) {
+            my $tmp;
+            unless ( $tmp = $notif->getAttribute($_) ) {
+                print STDERR "Attribute $_ is missing\n";
+                return 0;
+            }
+            push @datas, $tmp;
+        }
+        my $result = XML::LibXML::Document->new( $version, $encoding );
+        my $root = XML::LibXML::Element->new('root');
+        $root->appendChild($notif);
+        $result->setDocumentElement($root);
+        push @notifs, [ @datas, $result->serialize ];
+    }
+    my $tmp = $self->{type};
+    $tmp =~ s/.*:://;
+    $tmp = "newNotif" . $tmp;
+    my $count;
+    foreach (@notifs) {
+        $count++;
+        my ( $r, $err ) = $self->$tmp(@$_);
+        die "$err" unless ($r);
+    }
+    return $count;
+}
+
+## @method protected array getFile(string uid,string ref)
+# In file context, returns notifications corresponding to the user $uid.
+# If $ref is set, returns only notification corresponding to this reference.
+# @param $uid UID
+# @param $ref Notification reference
+# @return Array of XML strings
 sub getFile {
     my ( $self, $uid, $ref ) = @_;
     return () unless ($uid);
@@ -270,7 +321,21 @@ sub getFile {
 
 sub deleteFile {
     my ( $self, $file ) = @_;
-    return unlink( $self->{dirName} . "/$file" );
+    my $new = ($file =~ /(.*?)(?:\.xml)$/)[0] . '.done';
+    return rename( $self->{dirName} . "/$file", $self->{dirName} . "/$new" );
+}
+
+sub newNotifFile {
+    my ( $class, $date, $uid, $ref, $xml ) = @_;
+    $date =~ s/-//g;
+    return ( 0, "Bad date" ) unless ( $date =~ /^\d{8}/ );
+    my $filename =
+        $self->{dirName}
+      . "/${date}_${uid}_"
+      . encode_base64( $ref, '' ) . ".xml";
+    open F, ">$filename" or return ( 0, "Unable to create $filename ($!)" );
+    print F $xml;
+    return close F;
 }
 
 sub prereq {

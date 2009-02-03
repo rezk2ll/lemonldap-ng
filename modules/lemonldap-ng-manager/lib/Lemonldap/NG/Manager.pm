@@ -10,15 +10,16 @@ use strict;
 use XML::Simple;
 
 use Lemonldap::NG::Common::CGI;
-use Lemonldap::NG::Common::Conf;
-use Lemonldap::NG::Manager::_HTML;
-require Lemonldap::NG::Manager::_Response;
-require Lemonldap::NG::Manager::_i18n;
-require Lemonldap::NG::Manager::Help;
-use Lemonldap::NG::Common::Conf::Constants;
+use Lemonldap::NG::Common::Conf; #link protected conf Configuration
+use Lemonldap::NG::Manager::_HTML; #inherits
+require Lemonldap::NG::Manager::_Response; #inherits
+require Lemonldap::NG::Manager::_i18n; #inherits
+require Lemonldap::NG::Manager::Help; #inherits
+use Lemonldap::NG::Common::Conf::Constants; #inherits
 use LWP::UserAgent;
 use Safe;
 use MIME::Base64;
+#inherits Lemonldap::NG::Handler::CGI
 
 use base qw(Lemonldap::NG::Common::CGI);
 our @ISA;
@@ -54,6 +55,7 @@ sub new {
     my ( $class, $args ) = @_;
     my $self;
     if ( $args->{protection} ) {
+        require Lemonldap::NG::Handler::CGI;
         unshift @ISA, "Lemonldap::NG::Handler::CGI";
         $self = $class->SUPER::new($args);
     }

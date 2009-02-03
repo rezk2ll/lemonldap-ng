@@ -6,6 +6,7 @@ package Lemonldap::NG::Handler::Status;
 use strict;
 use POSIX;
 use Data::Dumper;
+#inherits Cache::Cache
 
 our $VERSION  = "0.2";
 

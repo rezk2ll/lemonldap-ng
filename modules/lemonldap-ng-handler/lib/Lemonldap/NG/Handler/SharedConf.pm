@@ -19,7 +19,7 @@ use strict;
 
 use Lemonldap::NG::Handler::Simple qw(:all);
 use Lemonldap::NG::Handler::Vhost;
-use Lemonldap::NG::Common::Conf;
+use Lemonldap::NG::Common::Conf; #link protected lmConf
 use Cache::Cache qw($EXPIRES_NEVER);
 
 use base qw(Lemonldap::NG::Handler::Vhost Lemonldap::NG::Handler::Simple);

@@ -15,8 +15,19 @@ use MIME::Base64;
 use Lemonldap::NG::Common::CGI;
 use CGI::Cookie;
 require POSIX;
-use Lemonldap::NG::Portal::_i18n;
+use Lemonldap::NG::Portal::_i18n; #inherits
 use Safe;
+
+# Special comments for doxygen
+#inherits Lemonldap::NG::Portal::AuthApache
+#inherits Lemonldap::NG::Portal::AuthCAS
+#inherits Lemonldap::NG::Portal::AuthLDAP
+#inherits Lemonldap::NG::Portal::AuthSSL
+#inherits Lemonldap::NG::Portal::Menu
+#inherits Lemonldap::NG::Portal::Notification
+#inherits Lemonldap::NG::Portal::UserDBLDAP
+#inherits Apache::Session
+#inherits Lemonldap::NG::Common::Apache::Session::SOAP
 
 our $VERSION = '0.86';
 
@@ -143,6 +154,12 @@ sub new {
         $self->{notifObject} = Lemonldap::NG::Portal::Notification->new($tmp);
         $self->abort($Lemonldap::NG::Portal::Notification::msg)
           unless ( $self->{notifObject} );
+    }
+    if ( $self->{notification} and $ENV{PATH_INFO} and $ENV{PATH_INFO} =~ "/notification" ) {
+        require SOAP::Lite;
+        $Lemonldap::NG::Portal::Notification::self = $self->{notifObject};
+        $self->soapTest('Lemonldap::NG::Portal::Notification::newNotification');
+        $self->abort('Bad request', 'Only SOAP requests are accepted with "/notification"');
     }
     if ( $self->{Soap} ) {
         require SOAP::Lite;

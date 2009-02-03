@@ -9,9 +9,10 @@ use strict;
 use warnings;
 require Lemonldap::NG::Common::CGI;
 use Lemonldap::NG::Portal::SharedConf;
-use Lemonldap::NG::Portal::_LDAP;
+use Lemonldap::NG::Portal::_LDAP; #link protected ldap Object used to change passwords only
 use XML::LibXML;
 use Safe;
+#inherits Net::LDAP::Control::PasswordPolicy
 
 our $VERSION = '0.01';
 

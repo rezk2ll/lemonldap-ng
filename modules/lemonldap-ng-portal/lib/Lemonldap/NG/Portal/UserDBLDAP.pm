@@ -6,7 +6,7 @@
 package Lemonldap::NG::Portal::UserDBLDAP;
 
 use Lemonldap::NG::Portal::Simple;
-use Lemonldap::NG::Portal::_LDAP;
+use Lemonldap::NG::Portal::_LDAP; #link protected ldap
 
 our $VERSION = '0.1';
 

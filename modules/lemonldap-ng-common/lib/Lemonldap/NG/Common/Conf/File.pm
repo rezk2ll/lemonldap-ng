@@ -1,7 +1,7 @@
 package Lemonldap::NG::Common::Conf::File;
 
 use strict;
-use Lemonldap::NG::Common::Conf::Constants;
+use Lemonldap::NG::Common::Conf::Constants; #inherits
 
 our $VERSION = 0.22;
 

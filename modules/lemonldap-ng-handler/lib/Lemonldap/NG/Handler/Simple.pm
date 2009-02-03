@@ -20,6 +20,9 @@ use Exporter 'import';
 use Safe;
 require Data::Dumper;
 require POSIX;
+#inherits Cache::Cache
+#inherits Apache::Session
+#inherits Lemonldap::NG::Common::Apache::Session::SOAP
 
 our $VERSION = '0.9';
 

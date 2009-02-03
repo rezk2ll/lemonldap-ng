@@ -448,7 +448,13 @@ documentation:
 	@cd doc/ && ../scripts/doc.pl
 
 doxygen:	clean
-	doxygen Doxyfile
+	COLLABORATIVE_GRAPH=1 doxygen Doxyfile
+	mkdir doc/devel/tmp
+	mv doc/devel/html/inherit* doc/devel/tmp/
+	COLLABORATIVE_GRAPH=0 doxygen Doxyfile
+	mv -f doc/devel/tmp/* doc/devel/html/
+	rm -rf doc/devel/tmp
+	perl -i -pe 's/Graphical Class Hierarchy/Class Collaboration Graph/' doc/devel/html/inherits.html doc/devel/html/tree.html
 
 distclean:	clean
 

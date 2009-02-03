@@ -10,6 +10,7 @@ use strict;
 use MIME::Base64;
 use Time::Local;
 use CGI;
+#inherits Lemonldap::NG::Common::CGI::SOAPServer
 
 our $VERSION = '0.31';
 

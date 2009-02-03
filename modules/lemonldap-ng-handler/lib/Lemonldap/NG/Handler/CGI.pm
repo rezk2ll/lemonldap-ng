@@ -14,6 +14,7 @@ use MIME::Base64;
 use base qw(Lemonldap::NG::Common::CGI);
 
 use Lemonldap::NG::Handler::SharedConf qw(:all);
+#inherits Lemonldap::NG::Handler::_CGI
 
 our $VERSION = '0.2';
 

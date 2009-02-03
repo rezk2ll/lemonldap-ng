@@ -10,9 +10,13 @@ package Lemonldap::NG::Common::Conf;
 use strict;
 no strict 'refs';
 use Data::Dumper;
-use Lemonldap::NG::Common::Conf::Constants;
-use Lemonldap::NG::Common::Crypto;
+use Lemonldap::NG::Common::Conf::Constants; #inherits
+use Lemonldap::NG::Common::Crypto; #link protected cipher Object "cypher" in configuration hash
 use Regexp::Assemble;
+
+#inherits Lemonldap::NG::Common::Conf::File
+#inherits Lemonldap::NG::Common::Conf::DBI
+#inherits Lemonldap::NG::Common::Conf::SOAP
 
 use constant DEFAULTCONFFILE => "/etc/lemonldap-ng/storage.conf";
 

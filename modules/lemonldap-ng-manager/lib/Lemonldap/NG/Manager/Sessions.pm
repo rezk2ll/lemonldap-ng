@@ -7,7 +7,8 @@ package Lemonldap::NG::Manager::Sessions;
 
 use strict;
 use Lemonldap::NG::Handler::CGI qw(:globalStorage :locationRules);
-use Lemonldap::NG::Common::Apache::Session;
+use Lemonldap::NG::Common::Apache::Session; #inherits
+#inherits Apache::Session
 
 our $VERSION = '0.1';
 

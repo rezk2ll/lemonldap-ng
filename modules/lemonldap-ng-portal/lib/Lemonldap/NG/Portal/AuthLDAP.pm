@@ -6,9 +6,9 @@
 package Lemonldap::NG::Portal::AuthLDAP;
 
 use Lemonldap::NG::Portal::Simple;
-use Lemonldap::NG::Portal::_LDAP;
+use Lemonldap::NG::Portal::_LDAP; #link protected ldap
 use Lemonldap::NG::Portal::_WebForm;
-use Lemonldap::NG::Portal::UserDBLDAP;
+use Lemonldap::NG::Portal::UserDBLDAP; #inherits
 
 our $VERSION = '0.2';
 use base qw(Lemonldap::NG::Portal::_WebForm);

@@ -8,7 +8,7 @@ package Lemonldap::NG::Manager::Restricted;
 use strict;
 
 use Lemonldap::NG::Manager;
-use Lemonldap::NG::Common::Conf::Constants;
+use Lemonldap::NG::Common::Conf::Constants; #inherits
 
 use base qw(Lemonldap::NG::Manager);
 our $VERSION = "0.1";

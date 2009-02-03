@@ -7,7 +7,7 @@ package Lemonldap::NG::Portal::SharedConf;
 
 use strict;
 use Lemonldap::NG::Portal::Simple qw(:all);
-use Lemonldap::NG::Common::Conf;
+use Lemonldap::NG::Common::Conf; #link protected lmConf Configuration
 
 *EXPORT_OK   = *Lemonldap::NG::Portal::Simple::EXPORT_OK;
 *EXPORT_TAGS = *Lemonldap::NG::Portal::Simple::EXPORT_TAGS;

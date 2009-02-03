@@ -8,7 +8,7 @@ package Lemonldap::NG::Handler::AuthBasic;
 use strict;
 
 use Lemonldap::NG::Handler::SharedConf qw(:all);
-use Lemonldap::NG::Portal::SharedConf;
+use Lemonldap::NG::Portal::SharedConf; #inherits
 use Digest::MD5 qw(md5_base64);
 use MIME::Base64;
 

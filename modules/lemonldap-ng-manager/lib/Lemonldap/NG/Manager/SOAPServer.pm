@@ -2,7 +2,7 @@ package Lemonldap::NG::Manager::SOAPServer;
 
 use strict;
 use SOAP::Transport::HTTP;
-use Lemonldap::NG::Common::Conf;
+use Lemonldap::NG::Common::Conf; #link protected config Configuration hash reference
 use UNIVERSAL qw(isa);
 
 our $VERSION = "0.3";

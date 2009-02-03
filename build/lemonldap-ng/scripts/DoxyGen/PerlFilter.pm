@@ -188,7 +188,7 @@ sub filter {
             redo if defined $_;
         } elsif (/^use\s+([\w:]+)/) {
             my $inc = $1;
-            $inc =~ s/::/\//g;
+            #$inc =~ s/::/\//g;
             $self->print("#include \"$inc.pm\"\n");
         } elsif (/^package\s+([\w:]+)/) {
             if ($current_class) {
@@ -299,20 +299,27 @@ sub analyze_sub {
 sub emit_class {
     my( $self, $class, $line, $doc ) = @_;
 
-    my(@current_isa, @current_include, @links);
+    my(@current_isa, @current_priv_isa, @current_include, %links);
     my $file = $self->file_contents();
     while ($_ = $file->[$line++] ) {
         if (/^\s*(?:use base|\@ISA\s*=|\@${class}::ISA\s*=)\s+(.+);/) {
             push @current_isa, eval $1;
             $file->[$line-1] = "\n";
-        } elsif (/^use\s+([\w:]+)/) {
+        } elsif (/^\s*(?:use|require)\s+([\w:]+)/) {
             my $inc = $1;
+            $links{$1||'public'}{$inc} = $2 . ($3 ? "\n* $3" : '') if (/#\s*link\s+(?:(private|protected|public)\s+)?(\S+)(?:\s+(.*))?\s*$/);
+            push @current_priv_isa, $inc if (/#\s*inherits/);
             $inc =~ s/::/\//g;
+            $inc =~ s#Lemonldap/NG/(\w+)#"lemonldap-ng-".lc($1)."/lib/Lemonldap/NG/$1"#e;
+            print STDERR $inc;
             push @current_include, $inc;
-            push @links, $inc if (/#link$/);
             $file->[$line-1] = "\n";
         } elsif (/^package/) {
             last;
+        } elsif (/#\s*inherits\s+([\w:]+)/) {
+            push @current_priv_isa, $1;
+        } elsif (/#\s*link\s+([\w:]+)\s+(?:(private|protected|public)\s+)?(\S+)(?:\s+(.*))?\s*$/) {
+            $links{$2||'public'}{$1} = $3 . ($4 ? "\n* $4" : '');
         }
     }
 
@@ -326,16 +333,29 @@ sub emit_class {
     }
     $self->print("class $class");
 
-    if (@current_isa) {
-        $self->print(":",
-            join(", ", map {"public $_"} @current_isa) );
+    if (@current_isa or @current_priv_isa) {
+        my @tmp;
+        @tmp = map {"public $_"} @current_isa;
+        if($ENV{COLLABORATIVE_GRAPH}) {
+            foreach my $type(qw(public protected private)) {
+                push @tmp, map {"$type $_"} keys %{$links{$type}};
+            }
+        }
+        push @tmp, map {"private $_"} @current_priv_isa;
+        $self->print(":", join(", ", @tmp));
     }
     $self->print(" {\n");
-    if (@links) {
-	$self->print("public:\n");
-	$self->print("$_ depends;\n") foreach(@links);
+    foreach my $target(qw(private protected public)) {
+    if($links{$target}) {
+        $self->print("$target:\n");
+        foreach(keys %{$links{$target}}) {
+            $self->print("/** \@var $_ $links{$target}{$_}\n");
+            $links{$target}{$_} =~ s/\n.*$//s;
+            $self->print("*/\n$_ $links{$target}{$_};\n");
+        }
     }
-    $self->print("public:\n");
+    }
+    $self->print("public:\n") unless($links{public});
 }
 
 

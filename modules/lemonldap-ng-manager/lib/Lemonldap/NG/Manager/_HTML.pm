@@ -10,8 +10,8 @@ package Lemonldap::NG::Manager::_HTML;
 # comes for the first time.
 
 use AutoLoader qw(AUTOLOAD);
-require Lemonldap::NG::Manager::_i18n;
-use Lemonldap::NG::Common::Conf::Constants;
+require Lemonldap::NG::Manager::_i18n; #inherits
+use Lemonldap::NG::Common::Conf::Constants; #inherits
 
 our $VERSION = '0.31';
 

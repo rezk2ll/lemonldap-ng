@@ -5,7 +5,7 @@
 # This class adds virtual host support for Lemonldap::NG handlers.
 package Lemonldap::NG::Handler::Vhost;
 
-use Lemonldap::NG::Handler::Simple qw(:locationRules :headers);
+use Lemonldap::NG::Handler::Simple qw(:locationRules :headers); #inherits
 use strict;
 use MIME::Base64;
 
