@@ -95,7 +95,7 @@ sub new {
     binmode( STDOUT, ":utf8" );
     my $class = shift;
     return $class if ( ref($class) );
-    $self = $class->SUPER::new();
+    my $self = $class->SUPER::new();
     $self->getConf(@_)
       or $self->abort( "Configuration error",
         "Unable to get configuration: $Lemonldap::NG::Common::Conf::msg" );
@@ -158,7 +158,7 @@ sub new {
     if ( $self->{notification} and $ENV{PATH_INFO} and $ENV{PATH_INFO} =~ "/notification" ) {
         require SOAP::Lite;
         $Lemonldap::NG::Portal::Notification::self = $self->{notifObject};
-        $self->soapTest('Lemonldap::NG::Portal::Notification::newNotification');
+        $self->soapTest('Lemonldap::NG::Portal::Notification::newNotification',$self->{notifObject});
         $self->abort('Bad request', 'Only SOAP requests are accepted with "/notification"');
     }
     if ( $self->{Soap} ) {
@@ -450,7 +450,7 @@ sub safe {
             }";
         print STDERR $@ if ($@);
     }
-    $safe->share( '$self', '&encode_base64', @t );
+    $safe->share( '&encode_base64', @t );
     return $safe;
 }
 
@@ -475,7 +475,7 @@ _RETURN $getCookieResponse Response
 #@param password password
 #@return session => { error => code , cookies => { cookieName1 => value ,... } }
 sub getCookies {
-    my $class = shift;
+    my $self = shift;
     $self->{error} = PE_OK;
     ( $self->{user}, $self->{password} ) = ( shift, shift );
     unless ( $self->{user} && $self->{password} ) {
@@ -549,7 +549,7 @@ sub controlUrlOrigin {
         if (
             $self->{urldc} =~ /(?:\0|<|'|"|`|\%(?:00|25|3C|22|27|2C))/
             or ( $self->{urldc} !~
-m#^https?://(?:$self->{reVHosts}|(?:[^/]*)?$self->{domain})(?:/.*)?$#
+m#^https?://(?:$self->{reVHosts}|(?:[^/]*)?$self->{domain})(?::\d+)?(?:/.*)?$#
                 and not $self->param('logout') )
           )
         {
@@ -698,6 +698,7 @@ sub setMacros {
     local $self = shift;
     $self->abort( __PACKAGE__ . ": Unable to get configuration" )
       unless ( $self->getConf(@_) );
+    $self->safe->share('$self');
     while ( my ( $n, $e ) = each( %{ $self->{macros} } ) ) {
         $e =~ s/\$(\w+)/\$self->{sessionInfo}->{$1}/g;
         $self->{sessionInfo}->{$n} = $self->safe->reval($e);
@@ -713,12 +714,9 @@ sub setMacros {
 sub setGroups {
     local $self = shift;
     my $groups;
-
-    #foreach ( keys %{ $self->{groups} } ) {
+    $self->safe->share('$self');
     while ( my ( $group, $expr ) = each %{ $self->{groups} } ) {
         $expr =~ s/\$(\w+)/\$self->{sessionInfo}->{$1}/g;
-
-        # TODO : custom Functions
         $groups .= "$group " if ( $self->safe->reval($expr) );
     }
     if ( $self->{ldapGroupBase} ) {
@@ -919,7 +917,7 @@ SOAP mode authentication (client) :
   
   my $soap =
     SOAP::Lite->proxy('http://auth.example.com/')
-    ->uri('urn:/Lemonldap::NG::Portal::SharedConf');
+    ->uri('urn:/Lemonldap::NG::Common::::CGI::SOAPService');
   my $r = $soap->getCookies( 'user', 'password' );
   
   # Catch SOAP errors

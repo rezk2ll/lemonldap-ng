@@ -63,7 +63,7 @@ sub handle {
                 $content,
             )
         );
-        $self->SUPER::handle;
+        $self->SUPER::handle();
     }
 
     print $cgi->header(

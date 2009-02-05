@@ -16,23 +16,21 @@ our $VERSION = '0.31';
 
 use base qw(CGI);
 
-## @method void soapTest(string soapFunctions)
+## @method void soapTest(string soapFunctions object obj)
 # Check if request is a SOAP request. If it is, launch
 # Lemonldap::NG::Common::CGI::SOAPServer and exit. Else simply return.
 # @param $soapFunctions list of authorized functions.
+# @param $obj optional object that will receive SOAP requests
 sub soapTest {
-    my $self = shift;
-    my $soapFunctions = shift || $self->{SOAPFunctions};
+    my($self, $soapFunctions, $obj) = @_;
 
     # If non form encoded datas are posted, we call SOAP Services
     if ( $ENV{HTTP_SOAPACTION} ) {
-	require Lemonldap::NG::Common::CGI::SOAPServer;
-        my @func = ();
-        foreach ( ref($soapFunctions) ? @$soapFunctions : split /\s+/, $soapFunctions ) {
-            $_ = ref($self) . "::$_" unless (/::/);
-            push @func, $_;
-        }
-        Lemonldap::NG::Common::CGI::SOAPServer->dispatch_to(@func)
+        require Lemonldap::NG::Common::CGI::SOAPServer; #link protected dispatcher
+        require Lemonldap::NG::Common::CGI::SOAPService; #link protected soapService
+        my @func = ( ref($soapFunctions) ? @$soapFunctions : split /\s+/, $soapFunctions );
+        my $dispatcher = Lemonldap::NG::Common::CGI::SOAPService->new($obj||$self,@func);
+        Lemonldap::NG::Common::CGI::SOAPServer->dispatch_to($dispatcher)
           ->handle($self);
         exit;
     }

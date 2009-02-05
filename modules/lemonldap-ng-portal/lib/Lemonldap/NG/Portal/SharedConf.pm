@@ -123,7 +123,7 @@ SOAP mode authentication (client) :
   
   my $soap =
     SOAP::Lite->proxy('http://auth.example.com/')
-    ->uri('urn:/Lemonldap::NG::Portal::SharedConf');
+    ->uri('urn:/Lemonldap::NG::Common::::CGI::SOAPService');
   my $r = $soap->getCookies( 'user', 'password' );
   
   # Catch SOAP errors

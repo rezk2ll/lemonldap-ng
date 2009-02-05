@@ -11,7 +11,7 @@ Licence:
 Lemonldap::NG is distributed under your choice under the GNU General Public
 License or the Artistic License.
 On Debian GNU/Linux systems, the complete text of the GNU General Public
-License version 2 can be found in `/usr/share/common-licenses/GPL' and the
+License version 2 can be found in `/usr/share/common-licenses/GPL-2' and the
 Artistic Licence in `/usr/share/common-licenses/Artistic'.
 
 File lemonldap-ng-manager/example/lemonldap-ng-manager.js is distributed under

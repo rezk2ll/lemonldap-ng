@@ -25,7 +25,7 @@ print Lemonldap::NG::Common::BuildWSDL->new->buildWSDL(<<EOT);
   <wsdl:part name="lang" type="xsd:string" />
   <wsdl:part name="code" type="xsd:int" />
  </wsdl:message>
-  <wsdl:message name="errorResponse">
+ <wsdl:message name="errorResponse">
   <wsdl:part name="errorReturn" type="xsd:string" />
  </wsdl:message>
  <wsdl:message name="getCookiesRequest">
