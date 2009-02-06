@@ -253,8 +253,7 @@ sub newNotification {
     my ( $class, $xml ) = @_;
     eval { $xml = $parser->parse_string($xml); };
     if ($@) {
-        print STDERR "Unable to read XML file : $@\n";
-        return 0;
+        die "Unable to read XML file : $@\n";
     }
     my @notifs;
     my ( $version, $encoding ) = ( $xml->version(), $xml->encoding() );
@@ -265,8 +264,7 @@ sub newNotification {
         foreach (qw(date uid reference)) {
             my $tmp;
             unless ( $tmp = $notif->getAttribute($_) ) {
-                print STDERR "Attribute $_ is missing\n";
-                return 0;
+                die "Attribute $_ is missing\n";
             }
             push @datas, $tmp;
         }
@@ -274,7 +272,7 @@ sub newNotification {
         my $root = XML::LibXML::Element->new('root');
         $root->appendChild($notif);
         $result->setDocumentElement($root);
-        push @notifs, [ @datas, $result->serialize ];
+        push @notifs, [ @datas, $result ];
     }
     my $tmp = $self->{type};
     $tmp =~ s/.*:://;
@@ -283,7 +281,7 @@ sub newNotification {
     foreach (@notifs) {
         $count++;
         my ( $r, $err ) = $self->$tmp(@$_);
-        die "$err" unless ($r);
+        die "Error in notification $_->[2] for $_->[1] : $err" unless ($r);
     }
     return $count;
 }
@@ -321,7 +319,7 @@ sub getFile {
 
 sub deleteFile {
     my ( $self, $file ) = @_;
-    my $new = ($file =~ /(.*?)(?:\.xml)$/)[0] . '.done';
+    my $new = ( $file =~ /(.*?)(?:\.xml)$/ )[0] . '.done';
     return rename( $self->{dirName} . "/$file", $self->{dirName} . "/$new" );
 }
 
@@ -333,9 +331,14 @@ sub newNotifFile {
         $self->{dirName}
       . "/${date}_${uid}_"
       . encode_base64( $ref, '' ) . ".xml";
-    open F, ">$filename" or return ( 0, "Unable to create $filename ($!)" );
-    print F $xml;
-    return close F;
+    return ( 0, 'This notification still exists' ) if ( -e $filename );
+    my $old = ( $filename =~ /(.*?)(?:\.xml)$/ )[0] . '.done';
+    return ( 0, 'This notification has been done' ) if ( -e $filename );
+    open my $F, ">$filename" or return ( 0, "Unable to create $filename ($!)" );
+    binmode($F);
+    $xml->toFH($F);
+    return ( 0, "Unable to close $filename ($!)" ) unless ( close $F );
+    return 1;
 }
 
 sub prereq {
