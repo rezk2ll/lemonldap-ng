@@ -333,7 +333,7 @@ sub newNotifFile {
       . encode_base64( $ref, '' ) . ".xml";
     return ( 0, 'This notification still exists' ) if ( -e $filename );
     my $old = ( $filename =~ /(.*?)(?:\.xml)$/ )[0] . '.done';
-    return ( 0, 'This notification has been done' ) if ( -e $filename );
+    return ( 0, 'This notification has been done' ) if ( -e $old );
     open my $F, ">$filename" or return ( 0, "Unable to create $filename ($!)" );
     binmode($F);
     $xml->toFH($F);
