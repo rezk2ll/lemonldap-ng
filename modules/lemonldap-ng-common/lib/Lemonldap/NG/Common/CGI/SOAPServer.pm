@@ -10,6 +10,8 @@ package Lemonldap::NG::Common::CGI::SOAPServer;
 use SOAP::Transport::HTTP;
 use base qw(SOAP::Transport::HTTP::Server);
 
+our $VERSION = '0.2';
+
 sub DESTROY { SOAP::Trace::objects('()') }
 
 ## @cmethod Lemonldap::NG::Common::CGI::SOAPServer new(@param)

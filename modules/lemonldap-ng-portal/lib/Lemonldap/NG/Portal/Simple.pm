@@ -15,7 +15,7 @@ use MIME::Base64;
 use Lemonldap::NG::Common::CGI;
 use CGI::Cookie;
 require POSIX;
-use Lemonldap::NG::Portal::_i18n; #inherits
+use Lemonldap::NG::Portal::_i18n;    #inherits
 use Safe;
 
 # Special comments for doxygen
@@ -120,7 +120,7 @@ sub new {
           or $self->param('logout')
     ) ? 1 : 0;
 
-    # Authentication module is required and has to be in @ISA
+    # Authentication and userDB module are required and have to be in @ISA
     foreach (qw(authentication userDB)) {
         my $tmp =
             'Lemonldap::NG::Portal::'
@@ -155,11 +155,15 @@ sub new {
         $self->abort($Lemonldap::NG::Portal::Notification::msg)
           unless ( $self->{notifObject} );
     }
-    if ( $self->{notification} and $ENV{PATH_INFO} and $ENV{PATH_INFO} =~ "/notification" ) {
+    if (    $self->{notification}
+        and $ENV{PATH_INFO}
+        and $ENV{PATH_INFO} =~ "/notification" )
+    {
         require SOAP::Lite;
         $Lemonldap::NG::Portal::Notification::self = $self->{notifObject};
-        $self->soapTest('Lemonldap::NG::Portal::Notification::newNotification',$self->{notifObject});
-        $self->abort('Bad request', 'Only SOAP requests are accepted with "/notification"');
+        $self->soapTest( 'newNotification', $self->{notifObject} );
+        $self->abort( 'Bad request',
+            'Only SOAP requests are accepted with "/notification"' );
     }
     if ( $self->{Soap} ) {
         require SOAP::Lite;
