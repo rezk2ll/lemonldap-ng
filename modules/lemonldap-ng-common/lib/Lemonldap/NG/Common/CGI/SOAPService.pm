@@ -5,6 +5,8 @@
 # SOAP wrapper used to restrict exported functions
 package Lemonldap::NG::Common::CGI::SOAPService;
 
+require SOAP::Lite;
+
 ## @cmethod Lemonldap::NG::Common::CGI::SOAPService new(object obj,string @func)
 # Constructor
 # @param $obj object which will be called for SOAP authorizated methods
@@ -26,10 +28,14 @@ sub AUTOLOAD {
     my $self = shift;
     $AUTOLOAD =~ s/.*:://;
     if(grep {$_ eq $AUTOLOAD} @{$self->{func}}){
-        return $self->{obj}->$AUTOLOAD(@_);
+        my $tmp = $self->{obj}->$AUTOLOAD(@_);
+        unless(ref($tmp) and ref($tmp) eq 'SOAP::Data') {
+            $tmp = SOAP::Data->name( result => $tmp );
+        }
+        return $tmp;
     }
     elsif($AUTOLOAD ne 'DESTROY') {
-        die "$AUTOLOAD is an authorizated function";use Data::Dumper;
+        die "$AUTOLOAD is not an authorizated function";use Data::Dumper;
     }
     1;
 }

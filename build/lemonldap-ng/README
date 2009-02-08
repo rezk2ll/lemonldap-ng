@@ -81,7 +81,7 @@ Example (See Lemonldap::NG::Manager::Conf(3) to see how configuration is stored
  * User groups :
 
    # Custom-Name => group definition
-     group1      => { $departmentUID eq "unit1" or $login = "xavier.guimard" }
+     group1      => { $departmentUID eq "unit1" or $login = "foo.bar" }
 
  * Area protection:
 
@@ -122,9 +122,9 @@ a long expression at each HTTP request:
 You can also use LDAP filters, or Perl expression or mixed expressions in
 groups definitions. Perl expressions has to be enclosed with {}:
 
- * group1 => (|(uid=xavier.guimard)(ou=unit1))
- * group1 => {$uid eq "xavier.guimard" or $ou eq "unit1"}
- * group1 => (|(uid=xavier.guimard){$ou eq "unit1"})
+ * group1 => (|(uid=foo.bar)(ou=unit1))
+ * group1 => {$uid eq "foo.bar" or $ou eq "unit1"}
+ * group1 => (|(uid=foo.bar){$ou eq "unit1"})
 
 It is also recommanded to use Perl expressions to avoid requiering the LDAP
 server more than 2 times per authentication.
