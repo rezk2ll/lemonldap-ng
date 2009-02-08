@@ -3,6 +3,23 @@ lemonldap-ng (0.9.4) unstable; urgency=low
   * ldap+tls uri was not working (Closes: #312418)
   * Session timeout is in seconds and not in minutes in Manager/Help.pm
     (Closes: #312339)
+  * Notification system
+
+ -- Xavier Guimard <x.guimard@free.fr>  Sun, 08 Feb 2009 20:12:17 +0100
+
+lemonldap-ng (0.9.3.4) unstable; urgency=low
+
+  * Security bug fix (macros and groups can be evaluated for an other user in
+    multi-thread environment). Closes: #312627
+  * XSS filter can now accept URL with a port. Closes: #312625
+
+ -- Xavier Guimard <x.guimard@free.fr>  Thu, 05 Feb 2009 16:12:55 +0100
+
+lemonldap-ng (0.9.3.3) unstable; urgency=low
+
+  * ldap+tls uri was not working (Closes: #312418)
+  * Session timeout is in seconds and not in minutes in Manager/Help.pm
+    (Closes: #312339)
 
  -- Xavier Guimard <x.guimard@free.fr>  Thu, 22 Jan 2009 11:00:10 +0100
 
