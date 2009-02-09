@@ -8,6 +8,9 @@
 #-------------------------------------------------------------------------------
 # CHANGELOGS
 #-------------------------------------------------------------------------------
+# 2009-02-09 - Version 0.3.1
+# Author(s) : Thomas CHEMINEAU
+#   - Fixe a bug in libertySignOn function, to retrieve correct $providerID
 # 2008-03-25 - Version 0.3
 # Author(s) : Thomas CHEMINEAU
 #   - Fixe some bugs into logout process from IDP or SP ;
@@ -822,7 +825,7 @@ sub libertySignOn {
     # TODO :
     #   Catching error when retrieving $providerID.
 
-    my $providerID = $self->{LAidps}->{ $self->{idp}->{id} }->{url};
+    my $providerID = $self->{laIdps}->{ $self->{idp}->{id} }->{url};
 
     if (
         my $error = $lassoLogin->initAuthnRequest(
