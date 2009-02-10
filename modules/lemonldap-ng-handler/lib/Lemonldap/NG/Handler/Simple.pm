@@ -24,7 +24,7 @@ require POSIX;
 #inherits Apache::Session
 #inherits Lemonldap::NG::Common::Apache::Session::SOAP
 
-our $VERSION = '0.9';
+our $VERSION = '0.91';
 
 our %EXPORT_TAGS;
 

@@ -8,7 +8,7 @@ package Lemonldap::NG::Portal::_LDAP;
 use Net::LDAP;
 use base qw(Net::LDAP);
 
-our $VERSION = '0.1';
+our $VERSION = '0.11';
 
 ## @cmethod Lemonldap::NG::Portal::_LDAP new(Lemonldap::NG::Portal::Simple portal)
 # Build a Net::LDAP object using parameters issued from $portal

@@ -13,7 +13,7 @@ use CGI;
 
 #inherits Lemonldap::NG::Common::CGI::SOAPServer
 
-our $VERSION = '0.31';
+our $VERSION = '0.4';
 
 use base qw(CGI);
 

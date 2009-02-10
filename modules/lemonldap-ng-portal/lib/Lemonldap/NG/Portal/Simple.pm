@@ -29,7 +29,7 @@ use Safe;
 #inherits Apache::Session
 #inherits Lemonldap::NG::Common::Apache::Session::SOAP
 
-our $VERSION = '0.86';
+our $VERSION = '0.87';
 
 use base qw(Lemonldap::NG::Common::CGI Exporter);
 our @ISA;
