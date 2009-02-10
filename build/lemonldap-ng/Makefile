@@ -248,7 +248,7 @@ install_site:	install_manager_site install_portal_site install_handler_site inst
 	@echo "    Edit ${RCONFDIR}/apps/apps-list.xml to modify the menu."
 	@echo
 	@echo "5 - Try to connect to http://test1.${DNSDOMAIN}/ or http://test2.${DNSDOMAIN}/"
-	@if [ "$(APACHEUSER)" == "" ]; then \
+	@if [ ! "$(APACHEUSER)" ]; then \
 		echo;echo "    Warning, since APACHEUSER was not set, $(APACHESESSIONFILEDIR) and $(CONFDIR) have permissive permissions."; \
 		echo "    Fix them by yourself to restrict their view to apache process only"; \
 	fi
@@ -310,7 +310,9 @@ install_portal_site:	install_conf_dir
 	@cp -pR --remove-destination ${SRCPORTALDIR}/example/AuthLA/* $(RLASPPORTALDIR)
 	@perl -i -pe 's#__DIR__#$(LASPPORTALDIR)/#g' $(RLASPPORTALDIR)/index.pl
 	# Cron files
-	@cp --remove-destination lemonldap-ng-portal/example/scripts/purgeCentralCache.cron.d $(RCRONDIR)
+	@cp --remove-destination lemonldap-ng-portal/example/scripts/purgeCentralCache.cron.d $(RCRONDIR)/lemonldap-ng
+	@if [ ! "$(APACHEUSER)" ]; then APACHEUSER="root"; fi
+	@perl -i -pe 's#__APACHEUSER__#$(APACHEUSER)#g; s#__BINDIR__#$(BINDIR)#g;' $(RCRONDIR)/lemonldap-ng
 	# Clean SVN files
 	@rm -rf $$(find ${RPORTALDIR} $(RPORTALSKINSDIR) $(RLASPPORTALDIR) $(RCRONDIR) $(RCONFDIR) -type d -name .svn)
 
