@@ -10,6 +10,7 @@ use strict;
 use MIME::Base64;
 use Time::Local;
 use CGI;
+
 #inherits Lemonldap::NG::Common::CGI::SOAPServer
 
 our $VERSION = '0.31';
@@ -22,14 +23,20 @@ use base qw(CGI);
 # @param $soapFunctions list of authorized functions.
 # @param $obj optional object that will receive SOAP requests
 sub soapTest {
-    my($self, $soapFunctions, $obj) = @_;
+    my ( $self, $soapFunctions, $obj ) = @_;
 
     # If non form encoded datas are posted, we call SOAP Services
     if ( $ENV{HTTP_SOAPACTION} ) {
-        require Lemonldap::NG::Common::CGI::SOAPServer; #link protected dispatcher
-        require Lemonldap::NG::Common::CGI::SOAPService; #link protected soapService
-        my @func = ( ref($soapFunctions) ? @$soapFunctions : split /\s+/, $soapFunctions );
-        my $dispatcher = Lemonldap::NG::Common::CGI::SOAPService->new($obj||$self,@func);
+        require
+          Lemonldap::NG::Common::CGI::SOAPServer;    #link protected dispatcher
+        require
+          Lemonldap::NG::Common::CGI::SOAPService;   #link protected soapService
+        my @func = (
+            ref($soapFunctions) ? @$soapFunctions : split /\s+/,
+            $soapFunctions
+        );
+        my $dispatcher =
+          Lemonldap::NG::Common::CGI::SOAPService->new( $obj || $self, @func );
         Lemonldap::NG::Common::CGI::SOAPServer->dispatch_to($dispatcher)
           ->handle($self);
         exit;
@@ -99,16 +106,14 @@ sub abort {
     my $cgi  = CGI->new;
     my ( $t1, $t2 ) = @_;
     $t2 ||= "See Apache's logs";
-    print $cgi->header(
-        -type    => 'text/html; charset=utf8',
-    );
+    print $cgi->header( -type => 'text/html; charset=utf8', );
     print $cgi->start_html(
         -title    => $t1,
         -encoding => 'utf8',
     );
     print "<h1>$t1</h1>";
     print "<p>$t2</p>";
-    print STDERR ( ref($self)|| $self ) . " error: $t1, $t2\n";
+    print STDERR ( ref($self) || $self ) . " error: $t1, $t2\n";
     exit;
 }
 

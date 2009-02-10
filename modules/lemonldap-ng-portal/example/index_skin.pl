@@ -75,7 +75,7 @@ if ( $portal->process() ) {
     );
 
     # Menu creation
-    use Lemonldap::NG::Portal::Menu;
+    require Lemonldap::NG::Portal::Menu;
     my $menu = Lemonldap::NG::Portal::Menu->new(
         {
             portalObject => $portal,
@@ -108,7 +108,7 @@ if ( $portal->process() ) {
     print $portal->header('text/html; charset=utf8');
     print $template->output;
 }
-elsif( my $notif = $portal->notification ) {
+elsif ( my $notif = $portal->notification ) {
     my $template = HTML::Template->new(
         filename          => "$skin_dir/$skin/notification.tpl",
         die_on_bad_params => 0,

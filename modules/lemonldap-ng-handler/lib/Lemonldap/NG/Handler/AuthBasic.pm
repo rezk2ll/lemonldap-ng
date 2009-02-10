@@ -8,11 +8,13 @@ package Lemonldap::NG::Handler::AuthBasic;
 use strict;
 
 use Lemonldap::NG::Handler::SharedConf qw(:all);
-use Lemonldap::NG::Portal::SharedConf; #inherits
 use Digest::MD5 qw(md5_base64);
 use MIME::Base64;
+use SOAP::Lite;    # link protected portalRequest
 
 use base qw(Lemonldap::NG::Handler::SharedConf);
+use utf8;
+no utf8;
 
 our $VERSION = '0.1';
 
@@ -38,9 +40,9 @@ sub run ($$) {
     my $class;
     ( $class, $apacheRequest ) = @_;
     if ( time() - $lastReload > $reloadTime ) {
-        unless ( $class->localConfUpdate($apacheRequest) == OK ) {
+        unless ( my $tmp = $class->testConf(1) == OK ) {
             $class->lmLog( "$class: No configuration found", 'error' );
-            return SERVER_ERROR;
+            return $tmp;
         }
     }
     return DECLINED unless ( $apacheRequest->is_initial_req );
@@ -69,34 +71,57 @@ sub run ($$) {
         # 2.2 search in the local cache if exists
         unless ( $refLocalStorage and $datas = $refLocalStorage->get($id) ) {
 
-            # 2.3 Authentication by Lemonldap::NG::Portal
-            my $portal = Lemonldap::NG::Portal::SharedConf->new(
-                {
-                    configStorage    => $Lemonldap::NG::Conf::configStorage,
-                    controlUrlOrigin => sub { PE_OK },
-                    controlExistingSession => sub { PE_OK },
-                    extractFormInfo        => sub {
-                        return PE_FORMEMPTY
-                          unless ( length( $self->{'user'} )
-                            && length( $self->{'password'} ) );
-                        PE_OK;
-                    },
-                    store        => sub { PE_OK },
-                    buildCookie  => sub { PE_OK },
-                    autoRedirect => sub { PE_OK },
-                }
-            );
-            ( $portal->{user}, $portal->{password} ) = split /:/,
-              decode_base64($user);
-            unless ( $portal->process() ) {
-                $class->lmLog( "Fail to authenticate user $user", 'notice' );
-                lmSetErrHeaderOut( $apacheRequest,
-                    'WWW-Authenticate' => 'Basic realm="Lemonldap::NG"' );
-                return AUTH_REQUIRED;
+            # 2.3 Authentication by Lemonldap::NG::Portal using SOAP request
+            my $soap =
+              SOAP::Lite->proxy($portal)
+              ->uri('urn:Lemonldap::NG::Common::CGI::SOAPService');
+            $user = decode_base64($user);
+            ( $user, $pass ) = split /:/, $user;
+            my $r = $soap->getCookies( $user, $pass );
+
+            # Catch SOAP errors
+            if ( $r->fault ) {
+                $class->lmLog(
+                    "SOAP request to the portal failed: "
+                      . $r->fault->{faultstring},
+                    'error'
+                );
+                return SERVER_ERROR;
             }
-            $datas->{$_} = $portal->{sessionInfo}->{$_}
-              foreach ( keys %{ $portal->{sessionInfo} } );
-            $datas->{_session_id} = $id;
+            else {
+                my $res = $r->result();
+
+                # If authentication failed, display error
+                if ( $res->{error} ) {
+                    $class->lmLog(
+                        "Authentication failed for $user "
+                          . $soap->error( 'fr', $res->{error} )->result(),
+                        'notice'
+                    );
+                    return AUTH_REQUIRED;
+                }
+                $id = $res->{cookies}->{$cookieName};
+            }
+
+            # Now, normal work to find session
+            my %h;
+            eval { tie %h, $globalStorage, $id, $globalStorageOptions; };
+            if ($@) {
+
+                # The cookie isn't yet available
+                $class->lmLog( "The cookie $id isn't yet available: $@",
+                    'info' );
+                $class->updateStatus( $apacheRequest->connection->remote_ip,
+                    $apacheRequest->uri, 'EXPIRED' );
+                return $class->goToPortal($uri);
+            }
+            $datas->{$_} = $h{$_} foreach ( keys %h );
+
+            # Store now the user in the local storage
+            if ($refLocalStorage) {
+                $refLocalStorage->set( $id, $datas, "10 minutes" );
+            }
+            untie %h;
 
             # Store now the user in the local storage
             if ($refLocalStorage) {
