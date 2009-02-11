@@ -145,10 +145,11 @@ sub new {
             $tmp = $self->{notificationStorage};
         }
         else {
-            $tmp = $self->{lmConf};
+            (%$tmp) = ( %{ $self->{lmConf} } );
             $self->abort( "notificationStorage not defined",
                 "This parameter is required to use notification system" )
               unless ( ref($tmp) );
+            $tmp->{type} =~ s/.*:://;
             $tmp->{table} = 'notifications';
         }
         $self->{notifObject} = Lemonldap::NG::Portal::Notification->new($tmp);

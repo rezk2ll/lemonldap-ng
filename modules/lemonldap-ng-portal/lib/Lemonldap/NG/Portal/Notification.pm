@@ -11,10 +11,12 @@ use Lemonldap::NG::Portal::SharedConf;
 use XML::LibXML;
 use XML::LibXSLT;
 use CGI::Cookie;
-use MIME::Base64;
+
+#link protected dbi Lemonldap::NG::Portal::Notification::DBI
+#link protected file Lemonldap::NG::Portal::Notification::File
 
 our $VERSION = '0.01';
-our ( $msg, $stylesheet, $parser, $self );
+our ( $msg, $stylesheet, $parser );
 
 BEGIN {
     my $xslt = XML::LibXSLT->new();
@@ -54,39 +56,42 @@ BEGIN {
     $stylesheet = $xslt->parse_stylesheet($style_doc);
 }
 
-## @cmethod Lemonldap::NG::Portal::Notification new(Lemonldap::NG::Common::Conf storage)
+## @cmethod Lemonldap::NG::Portal::Notification new(hashref storage)
 # Constructor.
-# @param storage Lemonldap::NG::Common::Conf object
+# @param $storage same syntax as Lemonldap::NG::Common::Conf object
 # @return Lemonldap::NG::Portal::Notification object
 sub new {
     my ( $class, $storage ) = @_;
-    $self = bless {}, $class;
+    my $self = bless {}, $class;
     (%$self) = (%$storage);
-    $self->{type} = "Lemonldap::NG::Common::Conf::$self->{type}"
-      unless $self->{type} =~ /^Lemonldap::/;
-    if ( $self->{type} eq 'Lemonldap::NG::Common::Conf::DBI' ) {
-        $self->{dbiTable} = $self->{table};
-    }
-    elsif ( $self->{type} eq 'Lemonldap::NG::Common::Conf::File' ) {
-        $self->{dirName} =~ s/\/conf\/?$//;
-        $self->{dirName} .= "/$self->{table}";
-    }
-    else {
-        my $tmp = $self->{type};
-        $tmp =~ s/.*:://;
-        $msg = "Error : $self->{type} is not supported for notifications !";
-        return 0;
-    }
+    my $type = $self->{type};
+    $self->{type} = "Lemonldap::NG::Portal::Notification::$self->{type}"
+      unless ( $self->{type} =~ /::/ );
     eval "require $self->{type}";
     if ($@) {
-        $msg = "Error: Unknown package $self->{type}";
+        $msg = "Error: unknown storage type $type";
         return 0;
     }
-    unless ( $self->prereq ) {
-        $msg = $Lemonldap::NG::Common::Conf::msg;
+    unless ( $self->_prereq ) {
         return 0;
     }
     return $self;
+}
+
+## @method protected void warn(string text)
+# Notification will never die, but just insert warnings in the log file.
+# @param $text Text to log
+sub warn {
+    my ( $self, $text ) = @_;
+    print STDERR "Notification warning : $text\n";
+}
+
+## @method protected void notice(string text)
+# Logs notification events
+# @param $text Text to log
+sub notice {
+    my ( $self, $text ) = @_;
+    print STDERR "Notification event : $text\n";
 }
 
 ## @method string getNotification(Lemonldap::NG::Portal portal)
@@ -97,13 +102,10 @@ sub new {
 sub getNotification {
     my ( $self, $portal ) = @_;
     my ( @notifs, $form );
-    my $tmp = $self->{type};
-    $tmp =~ s/.*:://;
-    $tmp = "get" . $tmp;
     my $uid = $portal->{notificationField} || $portal->{whatToTrace} || 'uid';
     $uid =~ s/\$//g;
     $uid = $portal->{sessionInfo}->{$uid};
-    my $n = $self->$tmp($uid);
+    my $n = $self->_get($uid);
     return 0 unless ($n);
     @notifs = map { $n->{$_} } sort keys %$n;
     my $i = 0;
@@ -116,20 +118,21 @@ sub getNotification {
             $form .= $stylesheet->output_string($results);
         };
         if ($@) {
-            print STDERR
-              "Bad XML file: a notification for $uid was not done ($@)\n";
+            $self->warn(
+                "Bad XML file: a notification for $uid was not done ($@)");
             return 0;
         }
     }
 
     # Now a notification has to be done. Replace cookies by hidden fields
     my $i = 0;
-    while ( $tmp = shift @{ $portal->{cookie} } ) {
+    while ( my $tmp = shift @{ $portal->{cookie} } ) {
         $i++;
         my $t = $portal->{cipher}->encrypt( $tmp->value );
         unless ( defined($t) ) {
-            print STDERR
-"Notification for $uid was not done : $Lemonldap::NG::Common::Crypto::msg\n";
+            $self->warn(
+"Notification for $uid was not done : $Lemonldap::NG::Common::Crypto::msg"
+            );
             return 0;
         }
         $tmp->value($t);
@@ -158,7 +161,7 @@ sub checkNotification {
             my %tmp   = @tmp;
             my $value = $portal->{cipher}->decrypt( $tmp[1] );
             unless ( defined($value) ) {
-                print STDERR "$Lemonldap::NG::Common::Crypto::msg\n";
+                $self->warn("$Lemonldap::NG::Common::Crypto::msg");
                 return 0;
             }
             push @{ $portal->{cookie} },
@@ -186,7 +189,7 @@ sub checkNotification {
     }
     $portal->controlExistingSession() unless ( $portal->{sessionInfo} );
     unless ( $portal->{sessionInfo} ) {
-        print STDERR "Invalid session\n";
+        $self->warn("Invalid session");
         return 0;
     }
     my $result = 1;
@@ -197,21 +200,17 @@ sub checkNotification {
           || 'uid';
         $uid =~ s/\$//g;
         $uid = $portal->{sessionInfo}->{$uid};
-        my $get = $self->{type};
-        $get =~ s/.*:://;
-        my $delete = "delete$get";
-        $get = "get$get";
-        my $files = $self->$get( $uid, $refs->{$ref} );
+        my $files = $self->_get( $uid, $refs->{$ref} );
 
         unless ($files) {
-            print STDERR "Can find notification $refs->{$ref} for $uid\n";
+            $self->warn("Can find notification $refs->{$ref} for $uid");
             next;
         }
         foreach my $file ( keys %$files ) {
             my $xml;
             eval { $xml = $parser->parse_string( $files->{$file} ) };
             if ($@) {
-                print STDERR "Bad XML notification for $uid";
+                $self->warn("Bad XML notification for $uid");
                 next;
             }
             foreach my $notif (
@@ -225,18 +224,19 @@ sub checkNotification {
                     ( $checks->{$ref} and $checkCount == @{ $checks->{$ref} } )
                   )
                 {
-                    if ( $self->$delete($file) ) {
-                        print STDERR
-                          "$uid has accepted notification $refs->{$ref}\n";
+                    if ( $self->_delete($file) ) {
+                        $self->notice(
+                            "$uid has accepted notification $refs->{$ref}");
                     }
                     else {
-                        print STDERR
-"Unable to delete notification $refs->{$ref} for $uid\n";
+                        $self->warn(
+"Unable to delete notification $refs->{$ref} for $uid"
+                        );
                     }
                 }
                 else {
-                    print STDERR
-                      "$uid has not accepted notification $refs->{$ref}\n";
+                    $self->notice(
+                        "$uid has not accepted notification $refs->{$ref}");
                     $result = 0;
                 }
             }
@@ -250,10 +250,11 @@ sub checkNotification {
 # @param $xml XML string containing notification
 # @return number of notifications done
 sub newNotification {
-    my ( $class, $xml ) = @_;
+    my ( $self, $xml ) = @_;
     eval { $xml = $parser->parse_string($xml); };
     if ($@) {
-        die "Unable to read XML file : $@\n";
+        $self->warn("Unable to read XML file : $@");
+        return 0;
     }
     my @notifs;
     my ( $version, $encoding ) = ( $xml->version(), $xml->encoding() );
@@ -264,7 +265,8 @@ sub newNotification {
         foreach (qw(date uid reference)) {
             my $tmp;
             unless ( $tmp = $notif->getAttribute($_) ) {
-                die "Attribute $_ is missing\n";
+                $self->warn("Attribute $_ is missing");
+                return 0;
             }
             push @datas, $tmp;
         }
@@ -275,75 +277,36 @@ sub newNotification {
         push @notifs, [ @datas, $result ];
     }
     my $tmp = $self->{type};
-    $tmp =~ s/.*:://;
-    $tmp = "newNotif" . $tmp;
     my $count;
     foreach (@notifs) {
         $count++;
-        my ( $r, $err ) = $self->$tmp(@$_);
-        die "Error in notification $_->[2] for $_->[1] : $err" unless ($r);
+        my ( $r, $err ) = $self->_newNotif(@$_);
+        die "$err" unless ($r);
     }
     return $count;
 }
 
-## @method protected array getFile(string uid,string ref)
-# In file context, returns notifications corresponding to the user $uid.
-# If $ref is set, returns only notification corresponding to this reference.
-# @param $uid UID
-# @param $ref Notification reference
-# @return Array of XML strings
-sub getFile {
-    my ( $self, $uid, $ref ) = @_;
-    return () unless ($uid);
-    opendir D, $self->{dirName};
-    my @notif;
-    unless ($ref) {
-        @notif = grep /^\d{8}_${uid}_\S*\.xml$/, readdir(D);
-    }
-    else {
-        my $tmp = encode_base64( $ref, '' );
-        @notif = grep /^\d{8}_${uid}_$tmp.xml$/, readdir(D);
-    }
-    close D;
-    my $files;
-    foreach my $file (@notif) {
-        unless ( open F, $self->{dirName} . "/$file" ) {
-            print STDERR "Unable to read notification $self->{dirName}/$_\n";
-            next;
-        }
-        my $ind = 0;
-        $files->{$file} = join( '', <F> );
-    }
-    return $files;
+sub _get {
+    no strict 'refs';
+    my $self = $_[0];
+    die ref($self)
+      unless ( ref($self) eq 'Lemonldap::NG::Portal::Notification' );
+    return &{ $_[0]->{type} . '::get' }(@_);
 }
 
-sub deleteFile {
-    my ( $self, $file ) = @_;
-    my $new = ( $file =~ /(.*?)(?:\.xml)$/ )[0] . '.done';
-    return rename( $self->{dirName} . "/$file", $self->{dirName} . "/$new" );
+sub _delete {
+    no strict 'refs';
+    return &{ $_[0]->{type} . '::delete' }(@_);
 }
 
-sub newNotifFile {
-    my ( $class, $date, $uid, $ref, $xml ) = @_;
-    $date =~ s/-//g;
-    return ( 0, "Bad date" ) unless ( $date =~ /^\d{8}/ );
-    my $filename =
-        $self->{dirName}
-      . "/${date}_${uid}_"
-      . encode_base64( $ref, '' ) . ".xml";
-    return ( 0, 'This notification still exists' ) if ( -e $filename );
-    my $old = ( $filename =~ /(.*?)(?:\.xml)$/ )[0] . '.done';
-    return ( 0, 'This notification has been done' ) if ( -e $old );
-    open my $F, ">$filename" or return ( 0, "Unable to create $filename ($!)" );
-    binmode($F);
-    $xml->toFH($F);
-    return ( 0, "Unable to close $filename ($!)" ) unless ( close $F );
-    return 1;
-}
-
-sub prereq {
+sub _prereq {
     no strict 'refs';
     return &{ $_[0]->{type} . '::prereq' }(@_);
+}
+
+sub _newNotif {
+    no strict 'refs';
+    return &{ $_[0]->{type} . '::newNotif' }(@_);
 }
 
 1;

@@ -162,7 +162,7 @@
       tout va bien)</li>
 
       <li>error(language,code) : retourne le texte correspondant &agrave;
-      l'erreur</li>
+      l'erreur.</li>
     </ul>Exemple de script client :<br />
     <br />
 
@@ -171,7 +171,7 @@
 #!/usr/bin/perl -l
 use SOAP::Lite;
 use Data::Dumper;<br /><br />my $soap = SOAP::Lite-&gt;proxy('http://auth.example.com/')
-                     -&gt;uri('urn:/Lemonldap/NG/Portal/SharedConf');<br /><br />my $r = $soap-&gt;getCookies( 'user', 'password' );<br /><br /># Catch SOAP errors
+                     -&gt;uri('urn:/Lemonldap/NG/Common/CGI/SOAPService');<br /><br />my $r = $soap-&gt;getCookies( 'user', 'password' );<br /><br /># Catch SOAP errors
 <span class="java-keyword">if</span> ( $r-&gt;fault ) {
     print STDERR <span class=
 "java-quote">"SOAP Error: "</span> . $r-&gt;fault-&gt;{faultstring};

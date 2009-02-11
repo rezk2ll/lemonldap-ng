@@ -91,6 +91,8 @@ lib/Lemonldap/NG/Portal/CDA.pm
 lib/Lemonldap/NG/Portal/Error.pm
 lib/Lemonldap/NG/Portal/Menu.pm
 lib/Lemonldap/NG/Portal/Notification.pm
+lib/Lemonldap/NG/Portal/Notification/DBI.pm
+lib/Lemonldap/NG/Portal/Notification/File.pm
 lib/Lemonldap/NG/Portal/SharedConf.pm
 lib/Lemonldap/NG/Portal/Simple.pm
 lib/Lemonldap/NG/Portal/UserDBLDAP.pm
