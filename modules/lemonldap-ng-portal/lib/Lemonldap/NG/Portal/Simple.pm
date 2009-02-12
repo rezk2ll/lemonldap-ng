@@ -825,10 +825,14 @@ sub checkNotification {
 #@return Lemonldap::NG::Portal constant
 sub autoRedirect {
     my $self = shift;
-    if ( my $u = $self->{urldc} ) {
+
+    # Redirection should be made if
+    #  - urldc defined
+    #  - no warnings on ppolicy
+    if ( $self->{urldc} and !$self->{ppolicy}->{time_before_expiration} and !$self->{ppolicy}->{grace_authentications_remaining} ) {
         $self->updateStatus;
         print $self->SUPER::redirect(
-            -uri    => $u,
+            -uri    => $self->{urldc},
             -cookie => $self->{cookie},
             -status => '302 Moved Temporary'
         );
