@@ -19,6 +19,7 @@ use Lemonldap::NG::Common::Conf::Constants; #inherits
 use LWP::UserAgent;
 use Safe;
 use MIME::Base64;
+
 #inherits Lemonldap::NG::Handler::CGI
 
 use base qw(Lemonldap::NG::Common::CGI);
@@ -42,7 +43,7 @@ sub safe {
         s/^.*:://;
         next if ( $self->can($_) );
         eval "sub $_ {1}";
-        print STDERR $@ if ($@);
+        $self->lmLog( $@, 'error' ) if ($@);
     }
     $safe->share( '&encode_base64', @t );
     return $safe;
@@ -63,20 +64,21 @@ sub new {
         $self = $class->SUPER::new();
     }
     unless ($args) {
-        print STDERR "parameters are required, I can't start so\n";
-        return 0;
+        $self->abort( "Unable to start",
+            "parameters are required, I can't start so" );
     }
     %$self = ( %$self, %$args );
     foreach (qw(dhtmlXTreeImageLocation)) {
         unless ( $self->{$_} ) {
-            print STDERR qq/The "$_" parameter is required\n/;
-            return 0;
+            $self->abort( "Unable to start",
+                qq/The "$_" parameter is required/ );
         }
     }
     $self->{jsFile} ||= $self->_dir . "lemonldap-ng-manager.js";
     unless ( -r $self->{jsFile} ) {
-        print STDERR
-qq#Unable to read $self->{jsFile}. You have to set "jsFile" parameter to /path/to/lemonldap-ng-manager.js\n#;
+        $self->abort(
+qq#Unable to read $self->{jsFile}. You have to set "jsFile" parameter to /path/to/lemonldap-ng-manager.js#
+        );
     }
     $self->{pageTitle} ||= "LemonLDAP::NG Administration";
     $self->{textareaW} ||= 50;
@@ -839,8 +841,8 @@ sub config {
     $self->{_config} =
       Lemonldap::NG::Common::Conf->new( $self->{configStorage} );
     unless ( $self->{_config} ) {
-        $self->abort( "Configuration not loaded\n",
-            $Lemonldap::NG::Common::Conf::msg );
+        $self->abort( "Unable to start",
+            "Configuration not loaded\n" . $Lemonldap::NG::Common::Conf::msg );
     }
     return $self->{_config};
 }
