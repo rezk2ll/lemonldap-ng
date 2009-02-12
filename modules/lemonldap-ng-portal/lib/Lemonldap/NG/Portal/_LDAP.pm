@@ -39,7 +39,7 @@ sub new {
           );
     }
     unless ($self) {
-        print STDERR "$@\n";
+        $portal->lmLog( $@, 'error' );
         return 0;
     }
     bless $self, $class;
@@ -49,7 +49,7 @@ sub new {
         $h{capath} = $portal->{caPath} if ( $portal->{caPath} );
         my $mesg = $self->start_tls(%h);
         if ( $mesg->code ) {
-            print STDERR __PACKAGE__ . " StartTLS failed\n";
+            $portal->lmLog( 'StartTLS failed', 'error' );
             return 0;
         }
     }
@@ -69,7 +69,7 @@ sub bind {
     my $self = shift;
     my $mesg;
     my ( $dn, %args ) = @_;
-    unless($dn) {
+    unless ($dn) {
         $dn = $self->{portal}->{managerDn};
         $args{password} = $self->{portal}->{managerPassword};
     }

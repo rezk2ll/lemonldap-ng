@@ -53,7 +53,8 @@ sub get {
     my $files;
     foreach my $file (@notif) {
         unless ( open F, $self->{dirName} . "/$file" ) {
-            print STDERR "Unable to read notification $self->{dirName}/$_\n";
+            $self->lmLog( "Unable to read notification $self->{dirName}/$_",
+                'error' );
             next;
         }
         $files->{$file} = join( '', <F> );

@@ -24,7 +24,8 @@ sub authInit {
 sub extractFormInfo {
     my $self = shift;
     unless ( $self->{user} = $ENV{REMOTE_USER} ) {
-        print STDERR "Apache is not configured to authenticate users !";
+        $self->lmLog( 'Apache is not configured to authenticate users !',
+            'error' );
         return PE_ERROR;
     }
 

@@ -17,6 +17,42 @@ our $VERSION = '0.4';
 
 use base qw(CGI);
 
+BEGIN {
+    if ( exists $ENV{MOD_PERL} ) {
+        if ( $ENV{MOD_PERL_API_VERSION} and $ENV{MOD_PERL_API_VERSION} >= 2 ) {
+            eval 'use constant MP => 2;';
+        }
+        else {
+            eval 'use constant MP => 1;';
+        }
+    }
+    else {
+        eval 'use constant MP => 0;';
+    }
+}
+
+## @method void lmLog(string mess, string level)
+# Log subroutine. Use Apache::Log in ModPerl::Registry context else simply
+# print on STDERR non debug messages.
+# @param $mess Text to log
+# @param $level Level (debug|info|notice|error)
+sub lmLog {
+    my($self,$mess,$level) = @_;
+    $mess = (ref($self)?ref($self):$self).": $mess" if($level eq 'debug');
+    if( $self->r and MP() ) {
+        if(MP()==2) {
+            require Apache2::Log;
+            Apache2::ServerRec->log->$level($mess);
+        }
+        else {
+            Apache->server->log->$level($mess);
+        }
+    }
+    else {
+        print STDERR "$mess\n" unless($level =~ /^(?:debug|info)$/);
+    }
+}
+
 ## @method void soapTest(string soapFunctions object obj)
 # Check if request is a SOAP request. If it is, launch
 # Lemonldap::NG::Common::CGI::SOAPServer and exit. Else simply return.

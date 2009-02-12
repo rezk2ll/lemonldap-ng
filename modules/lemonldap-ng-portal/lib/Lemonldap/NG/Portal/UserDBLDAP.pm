@@ -45,7 +45,10 @@ sub getUser {
 # @return Lemonldap::NG::Portal constant
 sub formateFilter {
     my $self = shift;
-    $self->{filter} = $self->{authFilter} || $self->{filter} || "(&(uid=" . $self->{user} . ")(objectClass=inetOrgPerson))";
+    $self->{filter} =
+         $self->{authFilter}
+      || $self->{filter}
+      || "(&(uid=" . $self->{user} . ")(objectClass=inetOrgPerson))";
     PE_OK;
 }
 
@@ -63,7 +66,7 @@ sub search {
         filter => $self->{filter},
     );
     if ( $mesg->code() != 0 ) {
-        print STDERR $mesg->error . "\n";
+        $self->lmLog( $mesg->error, 'error' );
         return PE_LDAPERROR;
     }
     return PE_BADCREDENTIALS unless ( $self->{entry} = $mesg->entry(0) );

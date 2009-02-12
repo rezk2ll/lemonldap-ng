@@ -64,6 +64,10 @@ sub new {
     my ( $class, $storage ) = @_;
     my $self = bless {}, $class;
     (%$self) = (%$storage);
+    unless ( $self->{p} ) {
+        $msg = "p=>portal is required";
+        return 0;
+    }
     my $type = $self->{type};
     $self->{type} = "Lemonldap::NG::Portal::Notification::$self->{type}"
       unless ( $self->{type} =~ /::/ );
@@ -78,20 +82,13 @@ sub new {
     return $self;
 }
 
-## @method protected void warn(string text)
-# Notification will never die, but just insert warnings in the log file.
-# @param $text Text to log
-sub warn {
-    my ( $self, $text ) = @_;
-    print STDERR "Notification warning : $text\n";
-}
-
-## @method protected void notice(string text)
-# Logs notification events
-# @param $text Text to log
-sub notice {
-    my ( $self, $text ) = @_;
-    print STDERR "Notification event : $text\n";
+## @method protected void lmLog(string mess, string level)
+# Log subroutine. Call Lemonldap::NG::Portal::lmLog().
+# @param $mess Text to log
+# @param $level Level (debug|info|notice|error)
+sub lmLog {
+    my ( $self, $mess, $level ) = @_;
+    $self->{p}->lmLog( "[Notification] $mess", $level );
 }
 
 ## @method string getNotification(Lemonldap::NG::Portal portal)
@@ -118,8 +115,9 @@ sub getNotification {
             $form .= $stylesheet->output_string($results);
         };
         if ($@) {
-            $self->warn(
-                "Bad XML file: a notification for $uid was not done ($@)");
+            $self->lmLog(
+                "Bad XML file: a notification for $uid was not done ($@)",
+                'warn' );
             return 0;
         }
     }
@@ -130,8 +128,9 @@ sub getNotification {
         $i++;
         my $t = $portal->{cipher}->encrypt( $tmp->value );
         unless ( defined($t) ) {
-            $self->warn(
-"Notification for $uid was not done : $Lemonldap::NG::Common::Crypto::msg"
+            $self->lmLog(
+"Notification for $uid was not done : $Lemonldap::NG::Common::Crypto::msg",
+                'warn'
             );
             return 0;
         }
@@ -161,7 +160,7 @@ sub checkNotification {
             my %tmp   = @tmp;
             my $value = $portal->{cipher}->decrypt( $tmp[1] );
             unless ( defined($value) ) {
-                $self->warn("$Lemonldap::NG::Common::Crypto::msg");
+                $self->lmLog( "Unable to decrypt cookie", 'warn' );
                 return 0;
             }
             push @{ $portal->{cookie} },
@@ -189,7 +188,7 @@ sub checkNotification {
     }
     $portal->controlExistingSession() unless ( $portal->{sessionInfo} );
     unless ( $portal->{sessionInfo} ) {
-        $self->warn("Invalid session");
+        $self->lmLog( "Invalid session", 'warn' );
         return 0;
     }
     my $result = 1;
@@ -203,14 +202,15 @@ sub checkNotification {
         my $files = $self->_get( $uid, $refs->{$ref} );
 
         unless ($files) {
-            $self->warn("Can find notification $refs->{$ref} for $uid");
+            $self->lmLog( "Can find notification $refs->{$ref} for $uid",
+                'error' );
             next;
         }
         foreach my $file ( keys %$files ) {
             my $xml;
             eval { $xml = $parser->parse_string( $files->{$file} ) };
             if ($@) {
-                $self->warn("Bad XML notification for $uid");
+                $self->lmLog( "Bad XML notification for $uid", 'error' );
                 next;
             }
             foreach my $notif (
@@ -225,18 +225,21 @@ sub checkNotification {
                   )
                 {
                     if ( $self->_delete($file) ) {
-                        $self->notice(
-                            "$uid has accepted notification $refs->{$ref}");
+                        $self->lmLog(
+                            "$uid has accepted notification $refs->{$ref}",
+                            'notice' );
                     }
                     else {
-                        $self->warn(
-"Unable to delete notification $refs->{$ref} for $uid"
+                        $self->lmLog(
+"Unable to delete notification $refs->{$ref} for $uid",
+                            'error'
                         );
                     }
                 }
                 else {
-                    $self->notice(
-                        "$uid has not accepted notification $refs->{$ref}");
+                    $self->lmLog(
+                        "$uid has not accepted notification $refs->{$ref}",
+                        'notice' );
                     $result = 0;
                 }
             }
@@ -253,7 +256,7 @@ sub newNotification {
     my ( $self, $xml ) = @_;
     eval { $xml = $parser->parse_string($xml); };
     if ($@) {
-        $self->warn("Unable to read XML file : $@");
+        $self->lmLog( "Unable to read XML file : $@", 'error' );
         return 0;
     }
     my @notifs;
@@ -265,7 +268,7 @@ sub newNotification {
         foreach (qw(date uid reference)) {
             my $tmp;
             unless ( $tmp = $notif->getAttribute($_) ) {
-                $self->warn("Attribute $_ is missing");
+                $self->lmLog( "Attribute $_ is missing", 'error' );
                 return 0;
             }
             push @datas, $tmp;

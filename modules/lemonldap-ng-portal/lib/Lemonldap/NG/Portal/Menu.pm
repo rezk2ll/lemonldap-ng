@@ -9,9 +9,11 @@ use strict;
 use warnings;
 require Lemonldap::NG::Common::CGI;
 use Lemonldap::NG::Portal::SharedConf;
-use Lemonldap::NG::Portal::_LDAP; #link protected ldap Object used to change passwords only
+use Lemonldap::NG::Portal::_LDAP
+  ;    #link protected ldap Object used to change passwords only
 use XML::LibXML;
 use Safe;
+
 #inherits Net::LDAP::Control::PasswordPolicy
 
 our $VERSION = '0.02';
@@ -44,7 +46,7 @@ sub _safe {
         eval "sub $_ {
             return $sub(\$path,\@_);
         }";
-        print STDERR "$@\n" if ($@);
+        $self->{portalObject}->lmLog( $@, 'error' ) if ($@);
     }
     $self->{_safe}->share( '&encode_base64', @t );
     return $self->{_safe};
@@ -64,11 +66,12 @@ sub new {
 
     # Get configuration
     $self->Lemonldap::NG::Portal::Simple::getConf(@_)
-      or Lemonldap::NG::Common::CGI->abort("Unable to read $class->new() parameters");
+      or Lemonldap::NG::Common::CGI->abort(
+        "Unable to read $class->new() parameters");
 
     # Portal is required
-    Lemonldap::NG::Common::CGI->abort("Portal object required") unless ( $self->{portalObject} );
-
+    Lemonldap::NG::Common::CGI->abort("Portal object required")
+      unless ( $self->{portalObject} );
 
     # Fill sessionInfo
     &Lemonldap::NG::Portal::Simple::getSessionInfo( $self->{portalObject} );
@@ -220,10 +223,8 @@ sub _getXML {
     my $parser = XML::LibXML->new();
     $parser->validation('1');
     my $xml;
-    eval {
-        $xml = $parser->parse_file( $self->{apps}->{xmlfile} );
-    };
-    $self->{portalObject}->abort("Bad XML file", $@) if($@);
+    eval { $xml = $parser->parse_file( $self->{apps}->{xmlfile} ); };
+    $self->{portalObject}->abort( "Bad XML file", $@ ) if ($@);
     my $root = $xml->documentElement;
 
     # Filter XML file with user's authorizations
@@ -405,6 +406,7 @@ sub _hideEmptyCategory {
 # @param $oldpassword Current password
 # @return Lemonldap::NG::Portal constant
 sub _changePassword {
+
     # TODO: Check used Auth module and change password for LDAP or DBI
     my $self = shift;
     my ( $newpassword, $confirmpassword, $oldpassword ) = @_;
@@ -438,8 +440,9 @@ sub _changePassword {
         # require Perl module
         eval 'require Net::LDAP::Control::PasswordPolicy';
         if ($@) {
-            print STDERR
-              "Module Net::LDAP::Control::PasswordPolicy not found in @INC\n";
+            $self->{portalObject}->lmLog(
+                "Module Net::LDAP::Control::PasswordPolicy not found in @INC",
+                'error' );
             return PE_LDAPERROR;
         }
         no strict 'subs';
@@ -550,8 +553,9 @@ sub _grant {
         }
     }
     unless ( $defaultCondition->{$vhost} ) {
-        print STDERR
-          "Application $uri did not match any configured virtual host\n";
+        $self->{portalObject}
+          ->lmLog( "Application $uri did not match any configured virtual host",
+            'warn' );
         return 0;
     }
     return &{ $defaultCondition->{$vhost} }($self);

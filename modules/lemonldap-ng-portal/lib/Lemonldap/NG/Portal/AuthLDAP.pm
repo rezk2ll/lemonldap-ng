@@ -40,9 +40,9 @@ sub authenticate {
     }
 
     # Set the dn unless done before
-    unless($self->{dn}) {
+    unless ( $self->{dn} ) {
         my $tmp = $self->_subProcess(qw(_formateFilter _search));
-        return $tmp if($tmp);
+        return $tmp if ($tmp);
     }
 
     # Check if we use Ppolicy control

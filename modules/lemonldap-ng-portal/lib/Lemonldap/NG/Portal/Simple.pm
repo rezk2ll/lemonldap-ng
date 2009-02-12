@@ -152,6 +152,7 @@ sub new {
             $tmp->{type} =~ s/.*:://;
             $tmp->{table} = 'notifications';
         }
+        $tmp->{p}            = $self;
         $self->{notifObject} = Lemonldap::NG::Portal::Notification->new($tmp);
         $self->abort($Lemonldap::NG::Portal::Notification::msg)
           unless ( $self->{notifObject} );
@@ -161,7 +162,6 @@ sub new {
         and $ENV{PATH_INFO} =~ "/notification" )
     {
         require SOAP::Lite;
-        $Lemonldap::NG::Portal::Notification::self = $self->{notifObject};
         $self->soapTest( 'newNotification', $self->{notifObject} );
         $self->abort( 'Bad request',
             'Only SOAP requests are accepted with "/notification"' );
@@ -208,7 +208,10 @@ sub error {
     my $self = shift;
     my $lang = shift || $ENV{HTTP_ACCEPT_LANGUAGE};
     my $code = shift || $self->{error};
-    return &Lemonldap::NG::Portal::_i18n::error( $code, $lang );
+    my $tmp  = &Lemonldap::NG::Portal::_i18n::error( $code, $lang );
+    return ( $ENV{HTTP_SOAPACTION}
+        ? SOAP::Data->name( result => $tmp )->type('string')
+        : $tmp );
 }
 
 ##@method string error_type(int code)
@@ -324,8 +327,8 @@ sub getSessionInfo {
         if ( $@ or not tied(%h) ) {
 
             # Session not available (expired ?)
-            print STDERR
-              "Session $id isn't yet available ($ENV{REMOTE_ADDR})\n";
+            $self->lmLog( "Session $id isn't yet available ($ENV{REMOTE_ADDR})",
+                'info' );
             return undef;
         }
 
@@ -364,8 +367,8 @@ sub updateSession {
         if ( $@ or not tied(%h) ) {
 
             # Session not available (expired ?)
-            print STDERR
-              "Session $id isn't yet available ($ENV{REMOTE_ADDR})\n";
+            $self->lmLog( "Session $id isn't yet available ($ENV{REMOTE_ADDR})",
+                'info' );
             return undef;
         }
 
@@ -391,11 +394,12 @@ sub _subProcess {
 
     foreach my $sub (@subs) {
 
-        #print STDERR "DEBUG : $sub\n";
         if ( $self->{$sub} ) {
+            $self->lmLog( "processing to custom sub $sub", 'debug' );
             last if ( $err = &{ $self->{$sub} }($self) );
         }
         else {
+            $self->lmLog( "processing to sub $sub", 'debug' );
             last if ( $err = $self->$sub );
         }
     }
@@ -453,7 +457,7 @@ sub safe {
         eval "sub $_ {
                 return $sub( '$self->{portal}', \@_ );
             }";
-        print STDERR $@ if ($@);
+        $self->lmLog( $@, 'error' ) if ($@);
     }
     $safe->share( '&encode_base64', @t );
     return $safe;
@@ -622,8 +626,8 @@ sub controlExistingSession {
         if ( $@ or not tied(%h) ) {
 
             # Session not available (expired ?)
-            print STDERR
-              "Session $id isn't yet available ($ENV{REMOTE_ADDR})\n";
+            $self->lmLog( "Session $id isn't yet available ($ENV{REMOTE_ADDR})",
+                'info' );
             return PE_OK;
         }
 
@@ -759,7 +763,7 @@ sub store {
         tie %h, $self->{globalStorage}, undef, $self->{globalStorageOptions};
     };
     if ($@) {
-        print STDERR "$@\n";
+        $self->lmLog( $@, 'error' );
         return PE_APACHESESSIONERROR;
     }
     $self->{id} = $h{_session_id};

@@ -18,7 +18,7 @@ sub prereq {
           '"dbiChain" is required in DBI notification type';
         return 0;
     }
-    print STDERR __PACKAGE__ . 'Warning: "dbiUser" parameter is not set'
+    $self->lmLog( 'Warning: "dbiUser" parameter is not set', 'warn' )
       unless ( $self->{dbiUser} );
     1;
 }
@@ -43,7 +43,7 @@ sub get {
     while ( my $h = $self->{sth}->fetchrow_hashref() ) {
         $result->{ "$h->{date}#$h->{uid}#$h->{ref}", $h->{xml} };
     }
-    $self->warn( $self->{sth}->err() ) if ( $self->{sth}->err() );
+    $self->lmLog( $self->{sth}->err(), 'warn' ) if ( $self->{sth}->err() );
     return $result;
 }
 
@@ -54,7 +54,7 @@ sub delete {
     my ( $self, $myref ) = @_;
     my ( $d, $u, $r );
     unless ( ( $d, $u, $r ) = ( $myref =~ /^(\d+)#(.+?)#(.+)$/ ) ) {
-        $self->warn("Bad reference $myref");
+        $self->lmLog( "Bad reference $myref", 'warn' );
         return 0;
     }
     $u =~ s/'/''/g;
@@ -94,12 +94,12 @@ sub _execute {
     my ( $self, $query ) = @_;
     my $dbh = $self->dbh() or return 0;
     unless ( $self->{sth} = $dbh->prepare($query) ) {
-        $self->warn( $dbh->errstr() );
+        $self->lmLog( $dbh->errstr(), 'warn' );
         return 0;
     }
     my $tmp;
     unless ( $tmp = $self->{sth}->execute() ) {
-        $self->warn( $self->{sth}->errstr() );
+        $self->lmLog( $self->{sth}->errstr(), 'warn' );
         return 0;
     }
     return $tmp;
@@ -116,7 +116,7 @@ sub dbh {
         $self->{dbiChain}, $self->{dbiUser},
         $self->{dbiPassword}, { RaiseError => 0 }
     );
-    print STDERR "$DBI::errstr\n" unless ($r);
+    $self->lmLog( $DBI::errstr, 'error' ) unless ($r);
     return $r;
 }
 
