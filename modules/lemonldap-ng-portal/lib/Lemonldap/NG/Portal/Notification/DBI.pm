@@ -34,14 +34,14 @@ sub get {
     return () unless ($uid);
     $uid =~ s/'/''/g;
     $ref =~ s/'/''/g;
-    $self->_execute(
+    _execute( $self,
             "SELECT * FROM $self->{dbiTable} WHERE done IS NULL AND uid='$uid'"
           . ( $ref ? " AND ref='$ref'" : '' )
           . "ORDER BY date" )
       or return ();
     my $result;
     while ( my $h = $self->{sth}->fetchrow_hashref() ) {
-        $result->{ "$h->{date}#$h->{uid}#$h->{ref}", $h->{xml} };
+        $result->{"$h->{date}#$h->{uid}#$h->{ref}"} = $h->{xml};
     }
     $self->lmLog( $self->{sth}->err(), 'warn' ) if ( $self->{sth}->err() );
     return $result;
@@ -53,7 +53,7 @@ sub get {
 sub delete {
     my ( $self, $myref ) = @_;
     my ( $d, $u, $r );
-    unless ( ( $d, $u, $r ) = ( $myref =~ /^(\d+)#(.+?)#(.+)$/ ) ) {
+    unless ( ( $d, $u, $r ) = ( $myref =~ /^([^#]+)#(.+?)#(.+)$/ ) ) {
         $self->lmLog( "Bad reference $myref", 'warn' );
         return 0;
     }
@@ -63,8 +63,8 @@ sub delete {
     my @ts = localtime();
     $ts[5] += 1900;
     $ts[4]++;
-    return $self->_execute(
-"UPDATE $self->{dbiTable} SET done='$ts[5]-$ts[4],$ts[3] $ts[2]:$ts[1]' WHERE done IS NULL AND date='$d' AND uid='$u' AND ref='$r'"
+    return _execute( $self,
+"UPDATE $self->{dbiTable} SET done='$ts[5]-$ts[4]-$ts[3] $ts[2]:$ts[1]' WHERE done IS NULL AND date='$d' AND uid='$u' AND ref='$r'"
     );
 }
 
@@ -82,7 +82,7 @@ sub newNotif {
     $date =~ s/'/''/g;
     $xml = $xml->serialize();
     $xml =~ s/'/''/g;
-    return $self->_execute(
+    return _execute( $self,
 "INSERT INTO $self->{dbiTable} (date,uid,ref,xml) VALUES('$date','$uid','$ref','$xml')"
     );
 }
@@ -92,7 +92,7 @@ sub newNotif {
 # @return number of lines touched or 1 if select succeed
 sub _execute {
     my ( $self, $query ) = @_;
-    my $dbh = $self->dbh() or return 0;
+    my $dbh = _dbh($self) or return 0;
     unless ( $self->{sth} = $dbh->prepare($query) ) {
         $self->lmLog( $dbh->errstr(), 'warn' );
         return 0;
@@ -105,10 +105,10 @@ sub _execute {
     return $tmp;
 }
 
-## @method object private dbh()
+## @method object private _dbh()
 # Return the DBI object (build it if needed).
 # @return database handle object
-sub dbh {
+sub _dbh {
     my $self = shift;
     $self->{dbiTable} ||= "notifications";
     return $self->{dbh} if ( $self->{dbh} and $self->{dbh}->ping );
