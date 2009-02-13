@@ -27,6 +27,7 @@ my $docs = {
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/LDAPSchema'                    => '4.2-Configure-LDAP-schema.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocSOAP?language=fr'           => '4.3-Configure-SOAP-fr.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocLA?language=fr'             => '4.3-Configure-Liberty-Alliance-fr.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Notifications'                 => '4.4-Configure-and-use-notification-system.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocAppSympa'                   => '5-Appli-Sympa.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocAppTomcatValve'             => '5-Appli-Tomcat-Valve.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/DocAppDokuwiki'                => '5-Appli-Dokuwiki.html',
