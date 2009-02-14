@@ -6,29 +6,32 @@
 package Lemonldap::NG::Portal::AuthLDAP;
 
 use Lemonldap::NG::Portal::Simple;
-use Lemonldap::NG::Portal::_LDAP; #link protected ldap
+use Lemonldap::NG::Portal::_LDAP;    #link protected ldap
 use Lemonldap::NG::Portal::_WebForm;
-use Lemonldap::NG::Portal::UserDBLDAP; #inherits
+use Lemonldap::NG::Portal::UserDBLDAP;    #inherits
 
 our $VERSION = '0.2';
 use base qw(Lemonldap::NG::Portal::_WebForm);
 
-## @fn private Lemonldap::NG::Portal::_LDAP ldap()
+## @method private Lemonldap::NG::Portal::_LDAP ldap()
 # @return Lemonldap::NG::Portal::_LDAP object
 sub ldap {
     my $self = shift;
-    unless ( ref( $self->{ldap} ) ) {
-        my $mesg = $self->{ldap}->bind
-          if ( $self->{ldap} = Lemonldap::NG::Portal::_LDAP->new($self) );
-        if ( !$mesg || $mesg->code != 0 ) {
-            return 0;
-        }
+    return $self->{ldap} if ( ref( $self->{ldap} ) );
+    if ( $self->{ldap} = Lemonldap::NG::Portal::_LDAP->new($self)
+        and my $mesg = $self->{ldap}->bind )
+    {
+        return $self->{ldap} if ( $mesg->code == 0 );
+        $self->lmLog( "LDAP error : " . $mesg->error, 'error' );
     }
-    return $self->{ldap};
+    else {
+        $self->lmLog( "LDAP error : $@", 'error' );
+    }
+    return 0;
 }
 
 *_formateFilter = *Lemonldap::NG::Portal::UserDBLDAP::formateFilter;
-*_search = *Lemonldap::NG::Portal::UserDBLDAP::search;
+*_search        = *Lemonldap::NG::Portal::UserDBLDAP::search;
 
 ## @method int authenticate()
 # Authenticate user by LDAP mechanism.
@@ -51,14 +54,15 @@ sub authenticate {
         # require Perl module
         eval 'require Net::LDAP::Control::PasswordPolicy';
         if ($@) {
-            print STDERR
-              "Module Net::LDAP::Control::PasswordPolicy not found in @INC\n";
+            $self->lmLog(
+                "Module Net::LDAP::Control::PasswordPolicy not found in @INC",
+                'error' );
             return PE_LDAPERROR;
         }
         no strict 'subs';
 
         # Create Control object
-        my $pp = Net::LDAP::Control::PasswordPolicy->new;
+        my $pp = Net::LDAP::Control::PasswordPolicy->new();
 
         # Bind with user credentials
         my $mesg = $self->ldap->bind(

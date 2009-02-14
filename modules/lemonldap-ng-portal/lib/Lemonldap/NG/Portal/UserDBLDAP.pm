@@ -6,7 +6,7 @@
 package Lemonldap::NG::Portal::UserDBLDAP;
 
 use Lemonldap::NG::Portal::Simple;
-use Lemonldap::NG::Portal::_LDAP; #link protected ldap
+use Lemonldap::NG::Portal::_LDAP;    #link protected ldap
 
 our $VERSION = '0.1';
 
@@ -14,14 +14,17 @@ our $VERSION = '0.1';
 # @return Lemonldap::NG::Portal::_LDAP object
 sub ldap {
     my $self = shift;
-    unless ( ref( $self->{ldap} ) ) {
-        my $mesg = $self->{ldap}->bind
-          if ( $self->{ldap} = Lemonldap::NG::Portal::_LDAP->new($self) );
-        if ( $mesg->code != 0 ) {
-            return 0;
-        }
+    return $self->{ldap} if ( ref( $self->{ldap} ) );
+    if ( $self->{ldap} = Lemonldap::NG::Portal::_LDAP->new($self)
+        and my $mesg = $self->{ldap}->bind )
+    {
+        return $self->{ldap} if ( $mesg->code == 0 );
+        $self->lmLog( "LDAP error : " . $mesg->error, 'error' );
     }
-    return $self->{ldap};
+    else {
+        $self->lmLog( "LDAP error : $@", 'error' );
+    }
+    return 0;
 }
 
 ## @method int userDBInit()
