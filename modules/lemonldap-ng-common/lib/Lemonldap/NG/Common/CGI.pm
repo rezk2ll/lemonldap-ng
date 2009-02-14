@@ -37,10 +37,11 @@ BEGIN {
 # @param $mess Text to log
 # @param $level Level (debug|info|notice|error)
 sub lmLog {
-    my($self,$mess,$level) = @_;
-    $mess = (ref($self)?ref($self):$self).": $mess" if($level eq 'debug');
-    if( $self->r and MP() ) {
-        if(MP()==2) {
+    my ( $self, $mess, $level ) = @_;
+    $mess = ( ref($self) ? ref($self) : $self ) . ": $mess"
+      if ( $level eq 'debug' );
+    if ( $self->r and MP() ) {
+        if ( MP() == 2 ) {
             require Apache2::Log;
             Apache2::ServerRec->log->$level($mess);
         }
@@ -49,7 +50,24 @@ sub lmLog {
         }
     }
     else {
-        print STDERR "$mess\n" unless($level =~ /^(?:debug|info)$/);
+        print STDERR "$mess\n" unless ( $level =~ /^(?:debug|info)$/ );
+    }
+}
+
+## @method void setApacheUser(string user)
+# Set user for Apache logs in ModPerl::Registry context. Does nothing else.
+# @param $user data to set as user in Apache logs
+sub setApacheUser {
+    my ( $self, $user ) = @_;
+    if ( $self->r and MP() ) {
+        $self->lmLog( "Inform Apache about the user connected", 'debug' );
+        if ( MP() == 2 ) {
+            require Apache2::Connection;
+            $self->r->user($user);
+        }
+        else {
+            $self->r->connection->user($user);
+        }
     }
 }
 

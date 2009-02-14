@@ -99,6 +99,7 @@ sub new {
     $self->getConf(@_)
       or $self->abort( "Configuration error",
         "Unable to get configuration: $Lemonldap::NG::Common::Conf::msg" );
+    $self->setDefaultValues();
     $self->abort( "Configuration error",
         "You've to indicate a an Apache::Session storage module !" )
       unless ( $self->{globalStorage} );
@@ -190,6 +191,14 @@ sub getConf {
     1;
 }
 
+##@method protected void setDefaultValues()
+# Set default values.
+sub setDefaultValues {
+    my $self = shift;
+    $self->{whatToTrace} ||= 'uid';
+    $self->{whatToTrace} =~ s/^\$//;
+}
+
 =begin WSDL
 
 _IN lang $string Language
@@ -209,9 +218,11 @@ sub error {
     my $lang = shift || $ENV{HTTP_ACCEPT_LANGUAGE};
     my $code = shift || $self->{error};
     my $tmp  = &Lemonldap::NG::Portal::_i18n::error( $code, $lang );
-    return ( $ENV{HTTP_SOAPACTION}
+    return (
+        $ENV{HTTP_SOAPACTION}
         ? SOAP::Data->name( result => $tmp )->type('string')
-        : $tmp );
+        : $tmp
+    );
 }
 
 ##@method string error_type(int code)
@@ -306,40 +317,29 @@ sub redirect {
     }
 }
 
-##@method void getSessionInfo()
-# Read cookie and set session info.
-# If lemonldap cookie exists, reads it and search session. If the session is
-# available, store it in $self->{sessionInfo}
-sub getSessionInfo {
-    my $self    = shift;
-    my %cookies = fetch CGI::Cookie;
-
-    # Test if Lemonldap::NG cookie is available
-    if ( $cookies{ $self->{cookieName} }
-        and my $id = $cookies{ $self->{cookieName} }->value )
-    {
+## @method protected hashref getRemoteSession(string id)
+# Try to recover the session corresponding to id and return session datas.
+# If $id is set to undef, return a new session.
+# @param $id session reference
+sub getRemoteSession {
+    my ( $self, $id ) = @_;
         my %h;
 
         # Trying to recover session from global session storage
-        eval {
-            tie %h, $self->{globalStorage}, $id, $self->{globalStorageOptions};
-        };
+    eval { tie %h, $self->{globalStorage}, $id, $self->{globalStorageOptions}; };
         if ( $@ or not tied(%h) ) {
 
             # Session not available (expired ?)
-            $self->lmLog( "Session $id isn't yet available ($ENV{REMOTE_ADDR})",
-                'info' );
-            return undef;
+        if($id) {
+            $self->lmLog( "Session $id isn't yet available ($ENV{REMOTE_ADDR})", 'info' );
         }
-
-        # Store session values
-        foreach ( keys %h ) {
-            $self->{sessionInfo}->{$_} = $h{$_};
+        else {
+            $self->lmLog( "Unable to create new session: $@", 'error' );
         }
-
-        untie %h;
+        return 0;
     }
-
+    $self->setApacheUser( $h{ $self->{whatToTrace} } ) if ($id);
+    return \%h;
 }
 
 ##@method void updateSession(hashRef infos)
@@ -358,26 +358,14 @@ sub updateSession {
     if ( $cookies{ $self->{cookieName} }
         and my $id = $cookies{ $self->{cookieName} }->value )
     {
-        my %h;
-
-        # Trying to recover session from global session storage
-        eval {
-            tie %h, $self->{globalStorage}, $id, $self->{globalStorageOptions};
-        };
-        if ( $@ or not tied(%h) ) {
-
-            # Session not available (expired ?)
-            $self->lmLog( "Session $id isn't yet available ($ENV{REMOTE_ADDR})",
-                'info' );
-            return undef;
-        }
+        my $h = $self->getRemoteSession($id) or return undef;
 
         # Store/update session values
         foreach ( keys %$infos ) {
-            $h{$_} = $infos->{$_};
+            $h->{$_} = $infos->{$_};
         }
 
-        untie %h;
+        untie %$h;
     }
 
 }
@@ -617,25 +605,13 @@ sub controlExistingSession {
             and $id = $cookies{ $self->{cookieName} }->value )
       )
     {
-        my %h;
-
-        # Trying to recover session from global session storage
-        eval {
-            tie %h, $self->{globalStorage}, $id, $self->{globalStorageOptions};
-        };
-        if ( $@ or not tied(%h) ) {
-
-            # Session not available (expired ?)
-            $self->lmLog( "Session $id isn't yet available ($ENV{REMOTE_ADDR})",
-                'info' );
-            return PE_OK;
-        }
+        my $h = $self->getRemoteSession($id) or return PE_OK;
 
         # Logout if required
         if ( $self->param('logout') ) {
 
             # Delete session in global storage
-            tied(%h)->delete;
+            tied(%$h)->delete;
 
             # Delete cookie
             push @{ $self->{cookie} },
@@ -656,8 +632,8 @@ sub controlExistingSession {
 
         # A session has been find => calling &existingSession
         my ($r);
-        %{ $self->{sessionInfo} } = %h;
-        untie(%h);
+        %{ $self->{sessionInfo} } = %$h;
+        untie(%$h);
         if ( $self->{existingSession} ) {
             $r =
               &{ $self->{existingSession} }( $self, $id, $self->{sessionInfo} );
@@ -758,19 +734,16 @@ sub setGroups {
 #@return Lemonldap::NG::Portal constant
 sub store {
     my ($self) = @_;
-    my %h;
-    eval {
-        tie %h, $self->{globalStorage}, undef, $self->{globalStorageOptions};
-    };
-    if ($@) {
-        $self->lmLog( $@, 'error' );
-        return PE_APACHESESSIONERROR;
-    }
-    $self->{id} = $h{_session_id};
-    $h{$_} = $self->{sessionInfo}->{$_}
+
+    # Now, user is authenticated => inform Apache
+    $self->setApacheUser( $self->{sessionInfo}->{ $self->{whatToTrace} } );
+
+    my $h = $self->getRemoteSession(undef) or return PE_APACHESESSIONERROR;
+    $self->{id} = $h->{_session_id};
+    $h->{$_} = $self->{sessionInfo}->{$_}
       foreach ( keys %{ $self->{sessionInfo} } );
-    $h{_utime} = time();
-    untie %h;
+    $h->{_utime} = time();
+    untie %$h;
     PE_OK;
 }
 

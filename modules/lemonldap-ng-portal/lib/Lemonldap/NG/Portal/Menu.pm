@@ -73,8 +73,8 @@ sub new {
     Lemonldap::NG::Common::CGI->abort("Portal object required")
       unless ( $self->{portalObject} );
 
-    # Fill sessionInfo
-    &Lemonldap::NG::Portal::Simple::getSessionInfo( $self->{portalObject} );
+    # Fill sessionInfo (yet done in portal...)
+    #&Lemonldap::NG::Portal::Simple::getSessionInfo( $self->{portalObject} );
 
     # Default values
     $self->{apps}->{xmlfile} ||= 'apps-list.xml';
@@ -499,8 +499,7 @@ sub _storePassword {
         $self->{portalObject}->{sessionInfo}->{_password} = $password;
 
         # Update session
-        &Lemonldap::NG::Portal::Simple::updateSession( $self->{portalObject},
-            { _password => $password } );
+        $self->{portalObject}->updateSession( { _password => $password } );
     }
     return 1;
 }
