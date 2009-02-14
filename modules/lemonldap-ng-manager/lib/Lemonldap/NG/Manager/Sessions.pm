@@ -42,16 +42,16 @@ sub process {
     my $self = shift;
 
     if ( $ENV{PATH_INFO} eq "/css" ) {
-        print $self->header(
-            '-Cache-Control' => 'public',
+        print $self->header_public(
+            $ENV{SCRIPT_FILENAME},
             -type            => 'text/css',
         );
         $self->css;
         exit;
     }
     elsif ( $ENV{PATH_INFO} eq "/js" ) {
-        print $self->header(
-            '-Cache-Control' => 'public',
+        print $self->header_public(
+            $ENV{SCRIPT_FILENAME},
             -type            => 'text/javascript',
         );
         $self->js;
