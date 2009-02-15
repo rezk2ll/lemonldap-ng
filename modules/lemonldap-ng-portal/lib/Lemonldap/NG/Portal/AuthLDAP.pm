@@ -82,7 +82,7 @@ sub authenticate {
                 ]->[$pp_error];
             }
             else {
-                $self->userError("Bad password for $self->{user}");
+                $self->_sub('userError',"Bad password for $self->{user}");
                 return PE_BADCREDENTIALS;
             }
         }
@@ -94,12 +94,12 @@ sub authenticate {
         my $mesg =
           $self->ldap->bind( $self->{dn}, password => $self->{password} );
         if ( $mesg->code != 0 ) {
-            $self->userError("Bad password for $self->{user}");
+            $self->_sub('userError',"Bad password for $self->{user}");
             return PE_BADCREDENTIALS;
         }
     }
     $self->{sessionInfo}->{authenticationLevel} = 2;
-    $self->userNotice( "Good authentication for "
+    $self->_sub('userNotice', "Good authentication for "
           . $self->{sessionInfo}->{ $self->{whatToTrace} } );
     PE_OK;
 }

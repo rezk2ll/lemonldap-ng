@@ -176,8 +176,6 @@ sub abort {
 sub startSyslog {
     my $self = shift;
     return if ( $self->{_syslog} );
-    print STDERR "DEBUG : $self->{syslog}\n" . Dumper($self);
-    use Data::Dumper;
     eval "use Sys::Syslog; openlog('lemonldap-ng','ndelay','$self->{syslog}');";
     $self->abort( "Unable to use syslog", $@ ) if ($@);
     $self->{_syslog} = 1;
@@ -214,6 +212,22 @@ sub userError {
     my ( $self, $mess ) = @_;
     $mess = "Lemonldap::NG portal: $mess";
     $self->userLog( $mess, 'warn' );
+}
+
+## @method protected scalar _sub(string sub, array p)
+# Launch $self->{$sub} if defined, else launch $self->$sub.
+# @param $sub name of the sub to launch
+# @param @p parameters for the sub
+sub _sub {
+    my ( $self, $sub, @p ) = @_;
+    if ( $self->{$sub} ) {
+        $self->lmLog( "processing to custom sub $sub", 'debug' );
+        return &{ $self->{$sub} }( $self, @p );
+    }
+    else {
+        $self->lmLog( "processing to sub $sub", 'debug' );
+        return $self->$sub(@p);
+    }
 }
 
 1;

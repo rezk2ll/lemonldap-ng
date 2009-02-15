@@ -56,7 +56,7 @@ sub search {
         return PE_LDAPERROR;
     }
     unless ( $self->{entry} = $mesg->entry(0) ) {
-        $self->userError("$self->{user} was not found in LDAP directory");
+        $self->_sub('userError',"self->{user} was not found in LDAP directory");
         return PE_BADCREDENTIALS;
     }
     $self->{dn} = $self->{entry}->dn();

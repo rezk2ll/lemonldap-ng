@@ -382,17 +382,8 @@ sub _subProcess {
     my $err  = undef;
 
     foreach my $sub (@subs) {
-
-        if ( $self->{$sub} ) {
-            $self->lmLog( "processing to custom sub $sub", 'debug' );
-            last if ( $err = &{ $self->{$sub} }($self) );
+        last if($err = $self->_sub($sub));
         }
-        else {
-            $self->lmLog( "processing to sub $sub", 'debug' );
-            last if ( $err = $self->$sub );
-        }
-    }
-
     return $err;
 }
 ##@method protected void updateStatus()
@@ -627,7 +618,7 @@ sub controlExistingSession {
                 @_,
               );
             $self->{error} = PE_REDIRECT;
-            $self->userNotice($self->{sessionInfo}->{$self->{whatToTrace}}." has been disconnected");
+            $self->_sub('userNotice', $self->{sessionInfo}->{$self->{whatToTrace}}." has been disconnected");
             $self->_subProcess(qw(log autoRedirect));
             return PE_FIRSTACCESS;
         }

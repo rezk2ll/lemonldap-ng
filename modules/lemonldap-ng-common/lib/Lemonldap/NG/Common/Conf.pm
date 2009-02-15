@@ -127,6 +127,7 @@ sub saveConf {
     local $Data::Dumper::Indent = 0;
     local $Data::Dumper::Varname = "data";
     while ( my ( $k, $v ) = each(%$conf) ) {
+        next if ( $k =~ /^(?:reVHosts|cipher)$/ );
         if ( ref($v) ) {
             $fields->{$k} = Dumper($v);
             $fields->{$k} =~ s/'/&#39;/g;
@@ -183,9 +184,21 @@ sub getConf {
                 $r = $self->getDBConf($args);
             }
         }
-        $r->{cipher} =
-          Lemonldap::NG::Common::Crypto->new( $r->{key} || 'lemonldap-ng-key',
-            Crypt::Rijndael::MODE_CBC() );
+        if ( $args->{clean} ) {
+            delete $r->{reVHosts};
+        }
+        else {
+            eval {
+                $r->{cipher} = Lemonldap::NG::Common::Crypto->new(
+                    $r->{key} || 'lemonldap-ng-key',
+                    Crypt::Rijndael::MODE_CBC()
+                );
+            };
+            if ($@) {
+                $msg = "Bad key : $@";
+                return 0;
+            }
+        }
         return $r;
     }
 }

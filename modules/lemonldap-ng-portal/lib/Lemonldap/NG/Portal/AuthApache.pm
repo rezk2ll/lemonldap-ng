@@ -38,7 +38,7 @@ sub extractFormInfo {
 # Does nothing.
 # @return Lemonldap::NG::Portal constant
 sub authenticate {
-    $self->userNotice( "Good authentication for "
+    $self->_sub('userNotice', "Good authentication for "
           . $self->{sessionInfo}->{ $self->{whatToTrace} } );
     PE_OK;
 }

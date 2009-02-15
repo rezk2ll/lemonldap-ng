@@ -20,6 +20,11 @@ my $portal = Lemonldap::NG::Portal::SharedConf->new(
         #      directory => '/usr/local/lemonlda-ng/conf/'
         #},
 
+        # LOG
+        # By default, all is logged in Apache file. To log user actions by
+        # syslog, just set syslog facility here:
+        #syslog => 'auth',
+
         # SOAP FUNCTIONS
         # Remove comment to activate SOAP Functions getCookies(user,pwd) and
         # error(language, code)
@@ -36,6 +41,10 @@ my $portal = Lemonldap::NG::Portal::SharedConf->new(
         # If you want to create customFunctions in rules, declare them here:
         #customFunctions    => 'function1 function2',
         #customFunctions    => 'Package::func1 Package::func2',
+
+        # NOTIFICATIONS SERVICE
+        # Use it to be able to notify messages during authentication
+        #notification => 1,
 
         # OTHERS
         # You can also overload any parameter issued from manager

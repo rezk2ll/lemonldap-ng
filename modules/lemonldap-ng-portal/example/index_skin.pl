@@ -27,6 +27,11 @@ my $portal = Lemonldap::NG::Portal::SharedConf->new(
         #      directory => '/usr/local/lemonlda-ng/conf/'
         #},
 
+        # LOG
+        # By default, all is logged in Apache file. To log user actions by
+        # syslog, just set syslog facility here:
+        #syslog => 'auth',
+
         # SOAP FUNCTIONS
         # Remove comment to activate SOAP Functions getCookies(user,pwd) and
         # error(language, code)
