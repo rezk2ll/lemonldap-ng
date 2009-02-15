@@ -61,8 +61,6 @@ sub authenticate {
     if (    $self->{sessionInfo}->{authenticationLevel}
         and $self->{sessionInfo}->{authenticationLevel} > 4 )
     {
-        $self->_sub('userNotice', "Good authentication for "
-              . $self->{sessionInfo}->{ $self->{whatToTrace} } );
         return PE_OK;
     }
     return $self->SUPER::authenticate(@_);

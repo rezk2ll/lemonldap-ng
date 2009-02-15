@@ -473,7 +473,7 @@ sub getCookies {
     else {
         $self->{error} = $self->_subProcess(
             qw(authInit userDBInit getUser setAuthSessionInfo setSessionInfo
-              setMacros setGroups authenticate store buildCookie log)
+              setMacros setGroups authenticate store buildCookie)
         );
     }
     my @tmp = ();
@@ -514,8 +514,8 @@ sub process {
     $self->{error} = $self->_subProcess(
         qw(controlUrlOrigin checkNotifBack controlExistingSession authInit
           extractFormInfo userDBInit getUser setAuthSessionInfo setSessionInfo
-          setMacros setGroups authenticate store buildCookie log
-          checkNotification autoRedirect)
+          setMacros setGroups authenticate store buildCookie checkNotification
+          autoRedirect)
     );
     $self->updateStatus;
     return ( ( $self->{error} > 0 ) ? 0 : 1 );
@@ -566,7 +566,7 @@ sub checkNotifBack {
         }
         else {
             $self->{error} =
-              $self->_subProcess(qw(log checkNotification autoRedirect));
+              $self->_subProcess(qw(checkNotification autoRedirect));
             return $self->{error} || PE_DONE;
         }
     }
@@ -619,7 +619,7 @@ sub controlExistingSession {
               );
             $self->{error} = PE_REDIRECT;
             $self->_sub('userNotice', $self->{sessionInfo}->{$self->{whatToTrace}}." has been disconnected");
-            $self->_subProcess(qw(log autoRedirect));
+            $self->_subProcess(qw(autoRedirect));
             return PE_FIRSTACCESS;
         }
         untie(%$h);
@@ -636,7 +636,7 @@ sub controlExistingSession {
         }
         if ( $r == PE_DONE ) {
             $self->{error} =
-              $self->_subProcess(qw(log checkNotification autoRedirect));
+              $self->_subProcess(qw(checkNotification autoRedirect));
             return $self->{error} || PE_DONE;
         }
         else {
@@ -717,6 +717,14 @@ sub setGroups {
 
 # 12. authenticate() : must be implemented in Auth* module:
 #                       * authenticate the user if not done before
+sub authenticate {
+    my $self = shift;
+    my $tmp;
+    return $tmp if($tmp = $self->SUPER::authenticate());
+    $self->_sub('userNotice', "Good authentication for "
+          . $self->{sessionInfo}->{ $self->{whatToTrace} } );
+    PE_OK;
+}
 
 ##@method int store()
 # 13) Store user's datas in sessions database.
@@ -755,18 +763,8 @@ sub buildCookie {
     PE_OK;
 }
 
-##@method int log()
-# 15) Log portal access.
-# By default, nothing is logged. Users access are logged by Apache.
-# Note that authentications and logout are logged by userLog() and userError()
-# logs user errors.
-#@return Lemonldap::NG::Portal constant
-sub log {
-    PE_OK;
-}
-
 ##@method int checkNotification()
-# 16) Check if messages has to be notified.
+# 15) Check if messages has to be notified.
 # Call Lemonldap::NG::Portal::Notification::getNotification().
 #@return Lemonldap::NG::Portal constant
 sub checkNotification {
@@ -781,7 +779,7 @@ sub checkNotification {
 }
 
 ##@method int autoRedirect()
-# 17) If the user was redirected to the portal, we will now redirect him
+# 16) If the user was redirected to the portal, we will now redirect him
 #     to the requested URL.
 #@return Lemonldap::NG::Portal constant
 sub autoRedirect {

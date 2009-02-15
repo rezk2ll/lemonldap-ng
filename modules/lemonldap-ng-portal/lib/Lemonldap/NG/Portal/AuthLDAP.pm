@@ -99,8 +99,6 @@ sub authenticate {
         }
     }
     $self->{sessionInfo}->{authenticationLevel} = 2;
-    $self->_sub('userNotice', "Good authentication for "
-          . $self->{sessionInfo}->{ $self->{whatToTrace} } );
     PE_OK;
 }
 
