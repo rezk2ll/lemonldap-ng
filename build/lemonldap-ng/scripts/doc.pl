@@ -38,6 +38,7 @@ my $docs = {
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Erreurs?language=fr'           => '6-Errors-fr.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Roadmap'                       => '6-Roadmap.html',
     'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/References'                    => '6-References.html',
+    'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Accounting'                    => '6.1-Accounting.html',
 };
 
 my %imgs;
