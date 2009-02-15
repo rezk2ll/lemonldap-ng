@@ -675,17 +675,33 @@ sub forbidden {
     return FORBIDDEN;
 }
 
-## @rmethod protected void logForbidden()
+## @rmethod protected void logForbidden(string uri)
 # Insert a log in Apache errors log system to inform that the user was rejected.
 # This method has to be overloaded to use different logs systems
+# @param $uri uri asked
 sub logForbidden {
     my $class = shift;
     $class->lmLog(
-        'The user "'
+        'User "'
           . $datas->{$whatToTrace}
           . '" was reject when he tried to access to '
           . shift,
         'notice'
+    );
+}
+
+## @rmethod protected void logGranted(string uri)
+# Insert a log in Apache errors log system to inform that the user was
+# authorizated. This method has to be overloaded to use different logs systems
+# @param $uri uri asked
+sub logGranted {
+    my $class = shift;
+    $class->lmLog(
+        'User "'
+          . $datas->{$whatToTrace}
+          . '" was granted to access to '
+          . shift,
+        'debug'
     );
 }
 
@@ -793,7 +809,8 @@ sub run ($$) {
                 # The cookie isn't yet available
                 $class->lmLog( "The cookie $id isn't yet available: $@",
                     'info' );
-                $class->updateStatus( $apacheRequest->connection->remote_ip, $apacheRequest->uri, 'EXPIRED' );
+                $class->updateStatus( $apacheRequest->connection->remote_ip,
+                    $apacheRequest->uri, 'EXPIRED' );
                 return $class->goToPortal($uri);
             }
             $datas->{$_} = $h{$_} foreach ( keys %h );
@@ -813,12 +830,7 @@ sub run ($$) {
     # AUTHORIZATION
     return $class->forbidden($uri) unless ( $class->grant($uri) );
     $class->updateStatus( $datas->{$whatToTrace}, $apacheRequest->uri, 'OK' );
-    $class->lmLog(
-        "User "
-          . $datas->{$whatToTrace}
-          . " was authorizated to access to $uri",
-        'debug'
-    );
+    $class->logGranted($uri);
 
     # ACCOUNTING
     # 2 - Inform remote application

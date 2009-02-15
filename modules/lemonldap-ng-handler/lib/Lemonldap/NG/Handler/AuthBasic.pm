@@ -119,14 +119,9 @@ sub run ($$) {
 
             # Store now the user in the local storage
             if ($refLocalStorage) {
-                $refLocalStorage->set( $id, $datas, "10 minutes" );
-            }
-            untie %h;
-
-            # Store now the user in the local storage
-            if ($refLocalStorage) {
                 $refLocalStorage->set( $id, $datas, "20 minutes" );
             }
+            untie %h;
         }
     }
 
@@ -136,12 +131,8 @@ sub run ($$) {
 
     # AUTHORIZATION
     return $class->forbidden($uri) unless ( $class->grant($uri) );
-    $class->lmLog(
-        "User "
-          . $datas->{$whatToTrace}
-          . " was authorizated to access to $uri",
-        'debug'
-    );
+    $class->updateStatus( $datas->{$whatToTrace}, $apacheRequest->uri, 'OK' );
+    $class->logGranted($uri);
 
     # ACCOUNTING
     # 2 - Inform remote application
