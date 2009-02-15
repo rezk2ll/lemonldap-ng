@@ -171,6 +171,51 @@ sub abort {
     exit;
 }
 
+##@method private void startSyslog()
+# Open syslog connection.
+sub startSyslog {
+    my $self = shift;
+    return if ( $self->{_syslog} );
+    print STDERR "DEBUG : $self->{syslog}\n" . Dumper($self);
+    use Data::Dumper;
+    eval "use Sys::Syslog; openlog('lemonldap-ng','ndelay','$self->{syslog}');";
+    $self->abort( "Unable to use syslog", $@ ) if ($@);
+    $self->{_syslog} = 1;
+}
+
+##@method protected void userLog(string mess, string level)
+# 15bis) Log user access and logout.
+# @param $mess string to log
+# @param $level level of log message
+sub userLog {
+    my ( $self, $mess, $level ) = @_;
+    if ( $self->{syslog} ) {
+        $self->startSyslog();
+        syslog( 'notice', $mess );
+    }
+    else {
+        $self->lmLog( $mess, $level );
+    }
+}
+
+##@method void userNotice(string mess)
+# 15bis) Log user errors like "bad password".
+# @param $mess string to log
+sub userNotice {
+    my ( $self, $mess ) = @_;
+    $mess = "Lemonldap::NG portal: $mess";
+    $self->userLog( $mess, 'notice' );
+}
+
+##@method void userError(string mess)
+# 15bis) Log user errors like "bad password".
+# @param $mess string to log
+sub userError {
+    my ( $self, $mess ) = @_;
+    $mess = "Lemonldap::NG portal: $mess";
+    $self->userLog( $mess, 'warn' );
+}
+
 1;
 
 __END__

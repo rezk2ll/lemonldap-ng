@@ -45,6 +45,7 @@ sub extractFormInfo {
         return PE_OK;
     }
     elsif ( $self->{SSLRequire} ) {
+        $self->userError("No certificate found for $ENV{REMOTE_ADDR}");
         return PE_CERTIFICATEREQUIRED;
     }
     $self->{authFilter} = '';
@@ -60,6 +61,8 @@ sub authenticate {
     if (    $self->{sessionInfo}->{authenticationLevel}
         and $self->{sessionInfo}->{authenticationLevel} > 4 )
     {
+        $self->userNotice( "Good authentication for "
+              . $self->{sessionInfo}->{ $self->{whatToTrace} } );
         return PE_OK;
     }
     return $self->SUPER::authenticate(@_);

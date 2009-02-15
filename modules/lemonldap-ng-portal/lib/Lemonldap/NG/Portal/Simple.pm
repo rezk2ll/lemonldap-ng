@@ -330,8 +330,9 @@ sub getRemoteSession {
         if ( $@ or not tied(%h) ) {
 
             # Session not available (expired ?)
-        if($id) {
-            $self->lmLog( "Session $id isn't yet available ($ENV{REMOTE_ADDR})", 'info' );
+        if ($id) {
+            $self->lmLog( "Session $id isn't yet available ($ENV{REMOTE_ADDR})",
+                'info' );
         }
         else {
             $self->lmLog( "Unable to create new session: $@", 'error' );
@@ -606,6 +607,7 @@ sub controlExistingSession {
       )
     {
         my $h = $self->getRemoteSession($id) or return PE_OK;
+        %{ $self->{sessionInfo} } = %$h;
 
         # Logout if required
         if ( $self->param('logout') ) {
@@ -625,15 +627,15 @@ sub controlExistingSession {
                 @_,
               );
             $self->{error} = PE_REDIRECT;
+            $self->userNotice($self->{sessionInfo}->{$self->{whatToTrace}}." has been disconnected");
             $self->_subProcess(qw(log autoRedirect));
             return PE_FIRSTACCESS;
         }
+        untie(%$h);
         $self->{id} = $id;
 
         # A session has been find => calling &existingSession
         my ($r);
-        %{ $self->{sessionInfo} } = %$h;
-        untie(%$h);
         if ( $self->{existingSession} ) {
             $r =
               &{ $self->{existingSession} }( $self, $id, $self->{sessionInfo} );
@@ -681,8 +683,6 @@ sub existingSession {
 #@return Lemonldap::NG::Portal constant
 sub setMacros {
     local $self = shift;
-    $self->abort( __PACKAGE__ . ": Unable to get configuration" )
-      unless ( $self->getConf(@_) );
     $self->safe->share('$self');
     while ( my ( $n, $e ) = each( %{ $self->{macros} } ) ) {
         $e =~ s/\$(\w+)/\$self->{sessionInfo}->{$1}/g;
@@ -765,17 +765,10 @@ sub buildCookie {
 }
 
 ##@method int log()
-# 15) Log authentication action.
-# By default, nothing is logged. Users actions are logged on applications.
-# It's easy to override this in the contructor :
-# my $portal = new Lemonldap::NG::Portal ( {
-#                    ...
-#                    log => sub {use Sys::Syslog; syslog;
-#                                openlog("Portal $$", 'ndelay', 'auth');
-#                                syslog('notice', 'User '.$self->{user}.' is authenticated');
-#                               },
-#                   ...
-#                 } );
+# 15) Log portal access.
+# By default, nothing is logged. Users access are logged by Apache.
+# Note that authentications and logout are logged by userLog() and userError()
+# logs user errors.
 #@return Lemonldap::NG::Portal constant
 sub log {
     PE_OK;
@@ -806,7 +799,10 @@ sub autoRedirect {
     # Redirection should be made if
     #  - urldc defined
     #  - no warnings on ppolicy
-    if ( $self->{urldc} and !$self->{ppolicy}->{time_before_expiration} and !$self->{ppolicy}->{grace_authentications_remaining} ) {
+    if (    $self->{urldc}
+        and !$self->{ppolicy}->{time_before_expiration}
+        and !$self->{ppolicy}->{grace_authentications_remaining} )
+    {
         $self->updateStatus;
         print $self->SUPER::redirect(
             -uri    => $self->{urldc},

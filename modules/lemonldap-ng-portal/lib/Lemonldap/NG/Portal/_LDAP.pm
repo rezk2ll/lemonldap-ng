@@ -5,8 +5,12 @@
 # LDAP common functions
 package Lemonldap::NG::Portal::_LDAP;
 
-use Net::LDAP;
-use base qw(Net::LDAP);
+require Net::LDAP;
+use Exporter;
+use base qw(Exporter Net::LDAP);
+use strict;
+
+our @EXPORT = qw(ldap);
 
 our $VERSION = '0.11';
 
@@ -80,6 +84,23 @@ sub bind {
         $mesg = $self->SUPER::bind();
     }
     return $mesg;
+}
+
+## @method protected Lemonldap::NG::Portal::_LDAP ldap()
+# @return Lemonldap::NG::Portal::_LDAP object
+sub ldap {
+    my $self = shift;
+    return $self->{ldap} if ( ref( $self->{ldap} ) );
+    if ( $self->{ldap} = Lemonldap::NG::Portal::_LDAP->new($self)
+        and my $mesg = $self->{ldap}->bind )
+    {
+        return $self->{ldap} if ( $mesg->code == 0 );
+        $self->lmLog( "LDAP error : " . $mesg->error, 'error' );
+    }
+    else {
+        $self->lmLog( "LDAP error : $@", 'error' );
+    }
+    return 0;
 }
 
 1;

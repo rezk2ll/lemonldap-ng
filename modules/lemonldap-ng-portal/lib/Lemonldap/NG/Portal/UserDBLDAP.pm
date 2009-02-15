@@ -6,26 +6,9 @@
 package Lemonldap::NG::Portal::UserDBLDAP;
 
 use Lemonldap::NG::Portal::Simple;
-use Lemonldap::NG::Portal::_LDAP;    #link protected ldap
+use Lemonldap::NG::Portal::_LDAP 'ldap';    #link protected ldap
 
 our $VERSION = '0.1';
-
-## @method private Lemonldap::NG::Portal::_LDAP ldap()
-# @return Lemonldap::NG::Portal::_LDAP object
-sub ldap {
-    my $self = shift;
-    return $self->{ldap} if ( ref( $self->{ldap} ) );
-    if ( $self->{ldap} = Lemonldap::NG::Portal::_LDAP->new($self)
-        and my $mesg = $self->{ldap}->bind )
-    {
-        return $self->{ldap} if ( $mesg->code == 0 );
-        $self->lmLog( "LDAP error : " . $mesg->error, 'error' );
-    }
-    else {
-        $self->lmLog( "LDAP error : $@", 'error' );
-    }
-    return 0;
-}
 
 ## @method int userDBInit()
 # Does nothing.
@@ -72,7 +55,10 @@ sub search {
         $self->lmLog( $mesg->error, 'error' );
         return PE_LDAPERROR;
     }
-    return PE_BADCREDENTIALS unless ( $self->{entry} = $mesg->entry(0) );
+    unless ( $self->{entry} = $mesg->entry(0) ) {
+        $self->userError("$self->{user} was not found in LDAP directory");
+        return PE_BADCREDENTIALS;
+    }
     $self->{dn} = $self->{entry}->dn();
     PE_OK;
 }

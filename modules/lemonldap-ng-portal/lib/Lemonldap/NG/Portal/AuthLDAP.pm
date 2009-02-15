@@ -6,29 +6,12 @@
 package Lemonldap::NG::Portal::AuthLDAP;
 
 use Lemonldap::NG::Portal::Simple;
-use Lemonldap::NG::Portal::_LDAP;    #link protected ldap
+use Lemonldap::NG::Portal::_LDAP 'ldap';    #link protected ldap
 use Lemonldap::NG::Portal::_WebForm;
 use Lemonldap::NG::Portal::UserDBLDAP;    #inherits
 
 our $VERSION = '0.2';
 use base qw(Lemonldap::NG::Portal::_WebForm);
-
-## @method private Lemonldap::NG::Portal::_LDAP ldap()
-# @return Lemonldap::NG::Portal::_LDAP object
-sub ldap {
-    my $self = shift;
-    return $self->{ldap} if ( ref( $self->{ldap} ) );
-    if ( $self->{ldap} = Lemonldap::NG::Portal::_LDAP->new($self)
-        and my $mesg = $self->{ldap}->bind )
-    {
-        return $self->{ldap} if ( $mesg->code == 0 );
-        $self->lmLog( "LDAP error : " . $mesg->error, 'error' );
-    }
-    else {
-        $self->lmLog( "LDAP error : $@", 'error' );
-    }
-    return 0;
-}
 
 *_formateFilter = *Lemonldap::NG::Portal::UserDBLDAP::formateFilter;
 *_search        = *Lemonldap::NG::Portal::UserDBLDAP::search;
@@ -99,6 +82,7 @@ sub authenticate {
                 ]->[$pp_error];
             }
             else {
+                $self->userError("Bad password for $self->{user}");
                 return PE_BADCREDENTIALS;
             }
         }
@@ -109,9 +93,14 @@ sub authenticate {
     else {
         my $mesg =
           $self->ldap->bind( $self->{dn}, password => $self->{password} );
-        return PE_BADCREDENTIALS if ( $mesg->code != 0 );
+        if ( $mesg->code != 0 ) {
+            $self->userError("Bad password for $self->{user}");
+            return PE_BADCREDENTIALS;
+        }
     }
     $self->{sessionInfo}->{authenticationLevel} = 2;
+    $self->userNotice( "Good authentication for "
+          . $self->{sessionInfo}->{ $self->{whatToTrace} } );
     PE_OK;
 }
 

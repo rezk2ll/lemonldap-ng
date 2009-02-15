@@ -9,8 +9,7 @@ use strict;
 use warnings;
 require Lemonldap::NG::Common::CGI;
 use Lemonldap::NG::Portal::SharedConf;
-use Lemonldap::NG::Portal::_LDAP
-  ;    #link protected ldap Object used to change passwords only
+use Lemonldap::NG::Portal::_LDAP 'ldap';    #link protected ldap Object used to change passwords only
 use XML::LibXML;
 use Safe;
 
@@ -105,20 +104,6 @@ sub new {
       if $newpassword;
 
     return $self;
-}
-
-## @method private Lemonldap::NG::Portal::_LDAP ldap()
-# @return object Lemonldap::NG::Portal::_LDAP object
-sub ldap {
-    my $self = shift;
-    unless ( ref( $self->{ldap} ) ) {
-        my $mesg = $self->{ldap}->bind
-          if ( $self->{ldap} = Lemonldap::NG::Portal::_LDAP->new($self) );
-        if ( $mesg->code != 0 ) {
-            return 0;
-        }
-    }
-    return $self->{ldap};
 }
 
 ## @method string error(string language)
