@@ -76,7 +76,7 @@ install: build
 		$(CURDIR)/debian/tmp$(LMVARDIR)manager/jquery.js \
 		debian/tmp/examples/manager/jquery.js
 	perl -i -pe 's#(["'"'"'])[\w-\./]*jquery.js#$$1/javascript/jquery/jquery.js#' \
-			$(CURDIR)/debian/tmp/examples/$(LMVARDIR)manager/*.pl \
+			$(CURDIR)/debian/tmp/examples/manager/*.pl \
 			$(CURDIR)/debian/tmp$(LMSHAREDIR)portal-skins/pastel/header.tpl
 	# postinst provides initial portal, manager and sessions-explorer
 	rm -f debian/tmp/var/lib/lemonldap-ng/portal/index.pl \

@@ -19,7 +19,7 @@ use strict;
 
 use Lemonldap::NG::Handler::Simple qw(:all);
 use Lemonldap::NG::Handler::Vhost;
-use Lemonldap::NG::Common::Conf; #link protected lmConf
+use Lemonldap::NG::Common::Conf;    #link protected lmConf
 use Cache::Cache qw($EXPIRES_NEVER);
 
 use base qw(Lemonldap::NG::Handler::Vhost Lemonldap::NG::Handler::Simple);
@@ -82,8 +82,11 @@ sub defaultValuesInit {
 # @return boolean
 sub localInit {
     my ( $class, $args ) = @_;
-    die("$class : unable to build configuration : $Lemonldap::NG::Common::Conf::msg")
-        unless($lmConf = Lemonldap::NG::Common::Conf->new( $args->{configStorage} ));
+    die(
+"$class : unable to build configuration : $Lemonldap::NG::Common::Conf::msg"
+      )
+      unless ( $lmConf =
+        Lemonldap::NG::Common::Conf->new( $args->{configStorage} ) );
 
     # localStorage can be declared in configStorage or at the root or both
     foreach (qw(localStorage localStorageOptions)) {
@@ -126,13 +129,17 @@ sub testConf {
     my ( $class, $local ) = @_;
     my $conf = $lmConf->getConf( { local => $local } );
     unless ( ref($conf) ) {
-        $class->lmLog( "$class: Unable to load configuration : $Lemonldap::NG::Common::Conf::msg", 'error' );
+        $class->lmLog(
+"$class: Unable to load configuration : $Lemonldap::NG::Common::Conf::msg",
+            'error'
+        );
         return $cfgNum ? OK : SERVER_ERROR;
     }
-    if ( $cfgNum != $conf->{cfgNum} ) {
-        $class->lmLog( "$class: get configuration ($Lemonldap::NG::Common::Conf::msg)",
+    if ( !$cfgNum or $cfgNum != $conf->{cfgNum} ) {
+        $class->lmLog(
+            "$class: get configuration ($Lemonldap::NG::Common::Conf::msg)",
             'debug' );
-    $lastReload = time();
+        $lastReload = time();
         return $class->setConf($conf);
     }
     $class->lmLog( "$class: configuration is up to date", 'debug' );

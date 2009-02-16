@@ -241,7 +241,7 @@ sub printXmlConf {
 sub buildTree {
     my $self   = shift;
     my $config = $self->config->getConf(@_);
-    $config = $self->default unless ($config);
+    $config = $self->default unless ( $config and $config->{cfgNum} );
     my $indice = 1;
     my $tree   = {
         id   => '0',
