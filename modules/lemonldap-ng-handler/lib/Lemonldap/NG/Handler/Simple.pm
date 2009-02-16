@@ -20,6 +20,7 @@ use Exporter 'import';
 use Safe;
 require Data::Dumper;
 require POSIX;
+
 #inherits Cache::Cache
 #inherits Apache::Session
 #inherits Lemonldap::NG::Common::Apache::Session::SOAP
@@ -213,7 +214,7 @@ sub lmSetApacheUser {
 # @return string
 sub regRemoteIp {
     my ( $class, $str ) = @_;
-    if( MP() == 2 ) {
+    if ( MP() == 2 ) {
         $str =~ s/\$datas->\{ip\}/\$apacheRequest->connection->remote_ip/g;
     }
     else {
@@ -324,8 +325,7 @@ sub statusProcess {
           '-e',
           '&Lemonldap::NG::Handler::Status::run('
           . $localStorage . ','
-          . Data::Dumper->new( [$localStorageOptions] )->Terse(1)->Dump
-          . ');';
+          . Data::Dumper->new( [$localStorageOptions] )->Terse(1)->Dump . ');';
     }
 }
 
@@ -338,27 +338,28 @@ sub statusProcess {
 # @return Safe object
 sub safe {
     my $class = shift;
-    return $safe if($safe);
+    return $safe if ($safe);
     $safe = new Safe;
     my @t = $customFunctions ? split( /\s+/, $customFunctions ) : ();
-    foreach(@t) {
-        $class->lmLog("Custom function : $_",'debug');
+    foreach (@t) {
+        $class->lmLog( "Custom function : $_", 'debug' );
         my $sub = $_;
-        unless(/::/) {
+        unless (/::/) {
             $sub = "$class\::$_";
         }
         else {
             s/^.*:://;
         }
-        next if($class->can($_));
+        next if ( $class->can($_) );
         eval "sub $_ {
             return $sub(\$apacheRequest->uri
                 . ( \$apacheRequest->args ? '?' . \$apacheRequest->args : '' )
                 , \@_)
             }";
-        $class->lmLog($@,'error')if($@);
+        $class->lmLog( $@, 'error' ) if ($@);
     }
-    $safe->share( '&encode_base64', '$datas', '&lmSetHeaderIn', '$apacheRequest', @t );
+    $safe->share( '&encode_base64', '$datas', '&lmSetHeaderIn',
+        '$apacheRequest', @t );
     return $safe;
 }
 
@@ -432,9 +433,7 @@ sub purgeCache {
 
     # At each Apache (re)start, we've to clear the cache to avoid living
     # with old datas
-    eval '$refLocalStorage = new '
-      . $localStorage
-      . '($localStorageOptions);';
+    eval '$refLocalStorage = new ' . $localStorage . '($localStorageOptions);';
     if ( defined $refLocalStorage ) {
         $refLocalStorage->clear();
     }
@@ -555,9 +554,9 @@ sub defaultValuesInit {
     my ( $class, $args ) = @_;
 
     # Other values
-    $cookieName    = $args->{cookieName}    || 'lemonldap';
-    $cookieSecured = $args->{cookieSecured} || 0;
-    $whatToTrace   = $args->{whatToTrace}   || '$uid';
+    $cookieName    = $args->{cookieName}    || $cookieName    || 'lemonldap';
+    $cookieSecured = $args->{cookieSecured} || $cookieSecured || 0;
+    $whatToTrace   = $args->{whatToTrace}   || $whatToTrace   || 'uid';
     $whatToTrace =~ s/\$//g;
     $https = $args->{https} unless defined($https);
     $https = 1 unless defined($https);
@@ -623,7 +622,8 @@ sub forgeHeadersInit {
 sub initLocalStorage {
     my ( $class, $r ) = @_;
     if ( $localStorage and not $refLocalStorage ) {
-        eval "use $localStorage;\$refLocalStorage = new $localStorage(\$localStorageOptions);";
+        eval
+"use $localStorage;\$refLocalStorage = new $localStorage(\$localStorageOptions);";
         $class->lmLog( "Local cache initialization failed: $@", 'error' )
           unless ( defined $refLocalStorage );
     }
@@ -781,7 +781,8 @@ sub run ($$) {
     ( $class, $apacheRequest ) = @_;
 
     return DECLINED unless ( $apacheRequest->is_initial_req );
-    my $uri = $apacheRequest->uri
+    my $uri =
+      $apacheRequest->uri
       . ( $apacheRequest->args ? "?" . $apacheRequest->args : "" );
 
     # AUTHENTICATION
@@ -789,7 +790,8 @@ sub run ($$) {
     my $id;
     unless ( $id = $class->fetchId ) {
         $class->lmLog( "$class: No cookie found", 'info' );
-        $class->updateStatus( $apacheRequest->connection->remote_ip, $apacheRequest->uri, 'REDIRECT' );
+        $class->updateStatus( $apacheRequest->connection->remote_ip,
+            $apacheRequest->uri, 'REDIRECT' );
         return $class->goToPortal($uri);
     }
 
@@ -883,7 +885,8 @@ sub unlog ($$) {
     my $class;
     ( $class, $apacheRequest ) = @_;
     $class->localUnlog;
-    $class->updateStatus( $apacheRequest->connection->remote_ip, $apacheRequest->uri, 'LOGOUT' );
+    $class->updateStatus( $apacheRequest->connection->remote_ip,
+        $apacheRequest->uri, 'LOGOUT' );
     return $class->goToPortal( '/', 'logout=1' );
 }
 
@@ -909,7 +912,15 @@ sub redirectFilter {
     }
     while ( $f->read( my $buffer, 1024 ) ) {
     }
-    $class->updateStatus( ( $datas->{$whatToTrace} ? $datas->{$whatToTrace} : $f->r->connection->remote_ip ), 'filter', 'REDIRECT' );
+    $class->updateStatus(
+        (
+              $datas->{$whatToTrace}
+            ? $datas->{$whatToTrace}
+            : $f->r->connection->remote_ip
+        ),
+        'filter',
+        'REDIRECT'
+    );
     return REDIRECT;
 }
 

@@ -16,6 +16,8 @@ use base qw(Lemonldap::NG::Common::CGI);
 use Lemonldap::NG::Handler::SharedConf qw(:all);
 #inherits Lemonldap::NG::Handler::_CGI
 
+our $_handler;
+
 our $VERSION = '0.21';
 
 ## @cmethod Lemonldap::NG::Handler::CGI new(hashRef args)
@@ -25,11 +27,13 @@ our $VERSION = '0.21';
 sub new {
     my $class = shift;
     my $self  = $class->SUPER::new() or $class->abort("Unable to build CGI");
-    $self->{_handler} = bless {}, 'Lemonldap::NG::Handler::_CGI';
-    $self->_handler->init(@_);
-    $self->_handler->initLocalStorage();
+    unless($_handler) {
+        $_handler = bless {}, 'Lemonldap::NG::Handler::_CGI';
+        $_handler->init(@_);
+        $_handler->initLocalStorage();
+    }
     $class->abort("Unable to get configuration")
-      unless $self->_handler->testConf() == OK;
+      unless $_handler->testConf() == OK;
     # Arguments
     my @args = @_;
     if(ref($args[0])) {
@@ -102,7 +106,7 @@ sub authenticate {
 # @return boolean : true if user is granted
 sub authorize {
     my $self = shift;
-    return $self->_handler->grant( $ENV{REQUEST_URI} );
+    return $_handler->grant( $ENV{REQUEST_URI} );
 }
 
 ## @method int testUri(string uri)
@@ -115,8 +119,8 @@ sub testUri {
     my $self = shift;
     my $uri  = shift;
     my $host = ( $uri =~ s#^(?:https?://)?([^/]*)/#/# ) ? $1 : $ENV{SERVER_NAME};
-    return -1 unless ( $self->_handler->vhostAvailable($host) );
-    return $self->_handler->grant( $uri, $host );
+    return -1 unless ( $_handler->vhostAvailable($host) );
+    return $_handler->grant( $uri, $host );
 }
 
 ## @method hashRef user()
@@ -152,17 +156,11 @@ sub _uri {
       . $ENV{REQUEST_URI};
 }
 
-## @method Lemonldap::NG::Handler::_CGI private _handler()
-# Returns the Lemonldap::NG::Handler::_CGI object
-sub _handler {
-    return shift->{_handler};
-}
-
 ## @class
 # Private class used by Lemonldap::NG::Handler::CGI for his internal handler.
 package Lemonldap::NG::Handler::_CGI;
 
-use Lemonldap::NG::Handler::SharedConf qw(:locationRules :localStorage);
+use Lemonldap::NG::Handler::SharedConf qw(:locationRules :localStorage :traces);
 
 use base qw(Lemonldap::NG::Handler::SharedConf);
 

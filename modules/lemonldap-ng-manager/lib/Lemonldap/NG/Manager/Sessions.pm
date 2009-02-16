@@ -8,7 +8,11 @@ package Lemonldap::NG::Manager::Sessions;
 use strict;
 use Lemonldap::NG::Handler::CGI qw(:globalStorage :locationRules);
 use Lemonldap::NG::Common::Apache::Session; #inherits
+
 #inherits Apache::Session
+
+our $whatToTrace;
+*whatToTrace = \$Lemonldap::NG::Handler::_CGI::whatToTrace;
 
 our $VERSION = '0.1';
 
@@ -42,18 +46,14 @@ sub process {
     my $self = shift;
 
     if ( $ENV{PATH_INFO} eq "/css" ) {
-        print $self->header_public(
-            $ENV{SCRIPT_FILENAME},
-            -type            => 'text/css',
+        print $self->header_public( $ENV{SCRIPT_FILENAME}, -type => 'text/css',
         );
         $self->css;
         exit;
     }
     elsif ( $ENV{PATH_INFO} eq "/js" ) {
-        print $self->header_public(
-            $ENV{SCRIPT_FILENAME},
-            -type            => 'text/javascript',
-        );
+        print $self->header_public( $ENV{SCRIPT_FILENAME},
+            -type => 'text/javascript', );
         $self->js;
         exit;
     }
@@ -68,7 +68,8 @@ sub process {
             sub {
                 my $entry = shift;
                 my $id    = shift;
-                push @{ $byUid->{ $entry->{uid} }->{ $entry->{ipAddr} } },
+                push
+                  @{ $byUid->{ $entry->{$whatToTrace} }->{ $entry->{ipAddr} } },
                   { id => $id, _utime => $entry->{_utime} };
                 undef;
             }
@@ -108,7 +109,8 @@ sub process {
                 my $entry = shift;
                 my $id    = shift;
                 if ( $entry->{ipAddr} =~ /^$reip$/ ) {
-                    push @{ $byUid->{ $entry->{ipAddr} }->{ $entry->{uid} } },
+                    push @{ $byUid->{ $entry->{ipAddr} }
+                          ->{ $entry->{$whatToTrace} } },
                       { id => $id, _utime => $entry->{_utime} };
                 }
                 undef;
@@ -147,8 +149,8 @@ sub process {
             sub {
                 my $entry = shift;
                 my $id    = shift;
-                if ( $entry->{uid} =~ /^$reuser$/ ) {
-                    push @{ $byUid->{ $entry->{uid} } },
+                if ( $entry->{$whatToTrace} =~ /^$reuser$/ ) {
+                    push @{ $byUid->{ $entry->{$whatToTrace} } },
                       { id => $id, _utime => $entry->{_utime} };
                 }
                 undef;
@@ -235,7 +237,7 @@ sub process {
                 my $entry = shift;
                 my $id    = shift;
                 if ( $entry->{ipAddr} eq $ip ) {
-                    push @{ $byUser->{ $entry->{uid} } },
+                    push @{ $byUser->{ $entry->{$whatToTrace} } },
                       { id => $id, _utime => $entry->{_utime} };
                 }
                 undef;
@@ -262,7 +264,7 @@ sub process {
             sub {
                 my $entry = shift;
                 my $id    = shift;
-                if ( $entry->{uid} eq $uid ) {
+                if ( $entry->{$whatToTrace} eq $uid ) {
                     push @{ $byIp->{ $entry->{ipAddr} } },
                       { id => $id, _utime => $entry->{_utime} };
                 }
@@ -290,8 +292,8 @@ sub process {
             $globalStorageOptions,
             sub {
                 my $entry = shift;
-                $entry->{uid} =~ /^$letter/ or return undef;
-                $byUid->{ $entry->{uid} }++;
+                $entry->{$whatToTrace} =~ /^$letter/ or return undef;
+                $byUid->{ $entry->{$whatToTrace} }++;
             },
         );
         foreach my $uid ( sort keys %$byUid ) {
@@ -356,7 +358,7 @@ sub process {
             $globalStorageOptions,
             sub {
                 my $entry = shift;
-                $entry->{uid} =~ /^(\w)/ or return undef;
+                $entry->{$whatToTrace} =~ /^(\w)/ or return undef;
                 $byUid->{$1}++;
                 $count++;
                 undef;
@@ -1135,6 +1137,7 @@ sub js {
 }
 EOF
 }
+1;
 __END__
 # Below is stub documentation for your module. You'd better edit it!
 
