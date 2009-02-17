@@ -17,7 +17,7 @@ sub userDBInit {
     PE_OK;
 }
 
-## @method int getUser()
+## @apmethod int getUser()
 # 7) Launch formateFilter() and search()
 # @return Lemonldap::NG::Portal constant
 sub getUser {
@@ -25,7 +25,7 @@ sub getUser {
     return $self->_subProcess(qw(formateFilter search));
 }
 
-## @method int formateFilter()
+## @apmethod protected int formateFilter()
 # Set the LDAP filter.
 # By default, the user is searched in the LDAP server with its UID.
 # @return Lemonldap::NG::Portal constant
@@ -38,7 +38,7 @@ sub formateFilter {
     PE_OK;
 }
 
-## @method int search()
+## @apmethod protected int search()
 # Search the LDAP DN of the user.
 # @return Lemonldap::NG::Portal constant
 sub search {
@@ -63,7 +63,7 @@ sub search {
     PE_OK;
 }
 
-## @method int setSessionInfo()
+## @apmethod int setSessionInfo()
 # 7) Load all parameters included in exportedVars parameter.
 # Multi-value parameters are loaded in a single string with
 # '; ' separator

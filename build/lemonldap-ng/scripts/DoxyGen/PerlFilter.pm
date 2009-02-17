@@ -120,6 +120,15 @@ sub filter {
                 $self->start("\@fn $args")->more(@more)->end;
                 $self->print($args, ";\n");
                 $self->pop;
+            } elsif ($command  eq 'apmethod') {
+                unless ($args) {
+                    ($args) = $self->analyze_sub( $line-1 );
+                }
+                $args = $self->munge_parameters($args);
+                $self->push($self->protection($args).' Authentication Process Methods');
+                $self->start("\@fn $args")->more(@more)->end;
+                $self->print($args, ";\n");
+                $self->pop;
             } elsif ($command  eq 'rmethod') {
                 unless ($args) {
                     ($args) = $self->analyze_sub( $line-1 );

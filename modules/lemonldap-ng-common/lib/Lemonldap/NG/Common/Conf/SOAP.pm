@@ -5,6 +5,9 @@ use SOAP::Lite;
 
 our $VERSION = 0.2;
 
+#parameter proxy Url of SOAP service
+#parameter proxyOptions SOAP::Lite parameters
+
 BEGIN {
     *Lemonldap::NG::Common::Conf::_soapCall = \&_soapCall;
     *Lemonldap::NG::Common::Conf::_connect = \&_connect;

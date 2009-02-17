@@ -8,14 +8,14 @@ package Lemonldap::NG::Portal::_WebForm;
 use Lemonldap::NG::Portal::Simple qw(:all);
 use strict;
 
-## @method int authInit()
+## @apmethod int authInit()
 # Does nothing.
 # @return Lemonldap::NG::Portal constant
 sub authInit {
     PE_OK;
 }
 
-## @method int extractFormInfo()
+## @apmethod int extractFormInfo()
 # Read username and password from POST datas
 # @return Lemonldap::NG::Portal constant
 sub extractFormInfo {
@@ -28,7 +28,7 @@ sub extractFormInfo {
     PE_OK;
 }
 
-## @method int setAuthSessionInfo()
+## @apmethod int setAuthSessionInfo()
 # Set password in session datas if wanted.
 # @return Lemonldap::NG::Portal constant
 sub setAuthSessionInfo {

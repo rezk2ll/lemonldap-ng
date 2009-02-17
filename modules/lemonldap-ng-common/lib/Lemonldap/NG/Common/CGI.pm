@@ -13,6 +13,8 @@ use CGI;
 
 #inherits Lemonldap::NG::Common::CGI::SOAPServer
 
+#parameter syslog Indicates syslog facility for logging user actions
+
 our $VERSION = '0.4';
 
 use base qw(CGI);
@@ -81,10 +83,8 @@ sub soapTest {
 
     # If non form encoded datas are posted, we call SOAP Services
     if ( $ENV{HTTP_SOAPACTION} ) {
-        require
-          Lemonldap::NG::Common::CGI::SOAPServer;    #link protected dispatcher
-        require
-          Lemonldap::NG::Common::CGI::SOAPService;   #link protected soapService
+        require Lemonldap::NG::Common::CGI::SOAPServer;    #link protected dispatcher
+        require Lemonldap::NG::Common::CGI::SOAPService;   #link protected soapService
         my @func = (
             ref($soapFunctions) ? @$soapFunctions : split /\s+/,
             $soapFunctions

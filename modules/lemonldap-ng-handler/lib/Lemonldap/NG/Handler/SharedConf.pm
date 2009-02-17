@@ -23,6 +23,7 @@ use Lemonldap::NG::Common::Conf;    #link protected lmConf
 use Cache::Cache qw($EXPIRES_NEVER);
 
 use base qw(Lemonldap::NG::Handler::Vhost Lemonldap::NG::Handler::Simple);
+#parameter reloadTime Time in second between 2 configuration check (600)
 
 our $VERSION    = '0.7';
 our $cfgNum     = 0;

@@ -30,7 +30,7 @@ our %_confFiles;
 # Succeed if it has found a way to access to Lemonldap::NG configuration with
 # $arg (or default file). It can be :
 # - Nothing: default configuration file is tested, 
-# - { File => "/path/to/storage.conf" },
+# - { confFile => "/path/to/storage.conf" },
 # - { Type => "File", dirName => "/path/to/conf/dir/" },
 # - { Type => "DBI", dbiChain => "DBI:mysql:database=lemonldap-ng;host=1.2.3.4",
 # dbiUser => "user", dbiPassword => "password" },

@@ -16,7 +16,7 @@ use base qw(Lemonldap::NG::Portal::_WebForm);
 *_formateFilter = *Lemonldap::NG::Portal::UserDBLDAP::formateFilter;
 *_search        = *Lemonldap::NG::Portal::UserDBLDAP::search;
 
-## @method int authenticate()
+## @apmethod int authenticate()
 # Authenticate user by LDAP mechanism.
 # @return Lemonldap::NG::Portal constant
 sub authenticate {

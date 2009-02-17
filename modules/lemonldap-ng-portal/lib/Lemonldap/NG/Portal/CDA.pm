@@ -19,14 +19,14 @@ use base ('Lemonldap::NG::Portal::SharedConf');
 # OVERLOADED SUB #
 ##################
 
-## @method int existingSession()
+## @apmethod int existingSession()
 # Existing sessions must not be reauthenticated in CDA usage
 # @return Lemonldap::NG::Portal error code
 sub existingSession {
     PE_DONE;
 }
 
-## @method int autoRedirect()
+## @apmethod int autoRedirect()
 # Same as Lemonldap::NG::Portal::SharedConf::autoRedirect(), but add ID in URL
 # if the user was redirected to the portal from another domain.
 # @return Lemonldap::NG::Portal error code

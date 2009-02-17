@@ -10,6 +10,11 @@ use SOAP::Lite;
 
 our $VERSION = 0.3;
 
+#parameter proxy Url of SOAP service
+#parameter proxyOptions SOAP::Lite options
+#parameter User Username
+#parameter Password Password
+
 # Variables shared with SOAP::Transport::HTTP::Client
 our ( $user, $password ) = ( '', '' );
 

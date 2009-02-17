@@ -10,13 +10,20 @@ use Lemonldap::NG::Portal::Simple;
 
 our $VERSION = '0.11';
 
-## @method int authInit()
+## @apmethod int authInit()
 # @return Lemonldap::NG::Portal constant
 sub authInit {
     PE_OK;
 }
 
-## @method int extractFormInfo()
+## @apmethod int setAuthSessionInfo()
+# Does nothing here.
+# @return Lemonldap::NG::Portal constant
+sub setAuthSessionInfo {
+    PE_OK;
+}
+
+## @apmethod int extractFormInfo()
 # Read username return by Apache authentication system.
 # By default, authentication is valid if REMOTE_USER environment
 # variable is set.
@@ -34,7 +41,7 @@ sub extractFormInfo {
     PE_OK;
 }
 
-# @method int authenticate()
+# @apmethod int authenticate()
 # Does nothing.
 # @return Lemonldap::NG::Portal constant
 sub authenticate {

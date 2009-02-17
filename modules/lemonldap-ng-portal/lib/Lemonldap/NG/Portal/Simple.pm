@@ -348,9 +348,9 @@ sub getRemoteSession {
 # If lemonldap cookie exists, reads it and search session. If the session is
 # available, update datas with $info.
 #@param $infos hash
-
-# TODO: update all caches
 sub updateSession {
+
+    # TODO: update all caches
     my $self    = shift;
     my ($infos) = @_;
     my %cookies = fetch CGI::Cookie;
@@ -399,14 +399,14 @@ sub updateStatus {
       if ($Lemonldap::NG::Handler::Simple::statusPipe);
 }
 
-##@method protected Lemonldap::NG::Portal::Notification notification()
-#@return Lemonldap::NG::Portal::Notification object
+##@method protected string notification()
+#@return Notification stored by checkNotification()
 sub notification {
     my ($self) = @_;
     return $self->{_notification};
 }
 
-##@method string get_url()
+##@method protected string get_url()
 # check url against XSS attacks
 # @return url parameter if good, nothing else.
 sub get_url {
@@ -521,7 +521,7 @@ sub process {
     return ( ( $self->{error} > 0 ) ? 0 : 1 );
 }
 
-##@method int controlUrlOrigin()
+##@apmethod int controlUrlOrigin()
 # 1) If the user was redirected here, loads 'url' parameter.
 #@return Lemonldap::NG::Portal constant
 sub controlUrlOrigin {
@@ -552,7 +552,7 @@ m#^https?://(?:$self->{reVHosts}|(?:[^/]*)?$self->{domain})(?::\d+)?(?:/.*)?$#
     PE_OK;
 }
 
-##@method int checkNotifBack()
+##@apmethod int checkNotifBack()
 # 2) Checks if a message has been notified to the connected user.
 # Call Lemonldap::NG::Portal::Notification::checkNotification()
 #@return Lemonldap::NG::Portal error code
@@ -573,7 +573,7 @@ sub checkNotifBack {
     PE_OK;
 }
 
-##@method int controlExistingSession(string id)
+##@apmethod int controlExistingSession(string id)
 # 3) Control existing sessions.
 # To overload to control what to do with existing sessions.
 # what to do with existing sessions ?
@@ -646,6 +646,13 @@ sub controlExistingSession {
     PE_OK;
 }
 
+## @method int existingSession()
+# Launched by controlExistingSession() to know what to do with existing
+# sessions.
+# Can return :
+# - PE_DONE : session is unchanged and process() return true
+# - PE_OK : process() return false to display the form
+#@return Lemonldap::NG::Portal constant
 sub existingSession {
 
     #my ( $self, $id, $datas ) = @_;
@@ -668,7 +675,7 @@ sub existingSession {
 # 9. setSessionInfo() : must be implemented in User* module:
 #                            * store exported datas in $self->{sessionInfo}
 
-##@method int setMacro()
+##@apmethod int setMacro()
 # 10) macro mechanism.
 #                  * store macro results in $self->{sessionInfo}
 #@return Lemonldap::NG::Portal constant
@@ -682,7 +689,7 @@ sub setMacros {
     PE_OK;
 }
 
-##@method int setGroups()
+##@apmethod int setGroups()
 # 11) groups mechanism.
 #                    * store all groups name that the user match in
 #                      $self->{sessionInfo}->{groups}
@@ -715,8 +722,9 @@ sub setGroups {
     PE_OK;
 }
 
-# 12. authenticate() : must be implemented in Auth* module:
-#                       * authenticate the user if not done before
+##@apmethod int authenticate()
+# 12. authenticate() : must be implemented in Auth* module.
+#@return Lemonldap::NG::Portal constant
 sub authenticate {
     my $self = shift;
     my $tmp;
@@ -726,7 +734,7 @@ sub authenticate {
     PE_OK;
 }
 
-##@method int store()
+##@apmethod int store()
 # 13) Store user's datas in sessions database.
 #     Now, the user is known, authenticated and session variable are evaluated.
 #     It's time to store his parameters with Apache::Session::* module
@@ -746,7 +754,7 @@ sub store {
     PE_OK;
 }
 
-##@method int buildCookie()
+##@apmethod int buildCookie()
 # 14) Build the Lemonldap::NG cookie.
 #@return Lemonldap::NG::Portal constant
 sub buildCookie {
@@ -763,7 +771,7 @@ sub buildCookie {
     PE_OK;
 }
 
-##@method int checkNotification()
+##@apmethod int checkNotification()
 # 15) Check if messages has to be notified.
 # Call Lemonldap::NG::Portal::Notification::getNotification().
 #@return Lemonldap::NG::Portal constant
@@ -778,7 +786,7 @@ sub checkNotification {
     return PE_OK;
 }
 
-##@method int autoRedirect()
+##@apmethod int autoRedirect()
 # 16) If the user was redirected to the portal, we will now redirect him
 #     to the requested URL.
 #@return Lemonldap::NG::Portal constant

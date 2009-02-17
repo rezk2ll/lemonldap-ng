@@ -13,7 +13,7 @@ use base qw(Lemonldap::NG::Portal::AuthLDAP);
 
 our $VERSION = '0.11';
 
-## @method int authInit()
+## @apmethod int authInit()
 # Check if SSL environment variables are set.
 # @return Lemonldap::NG::Portal constant
 sub authInit {
@@ -28,7 +28,7 @@ sub authInit {
 # Directory.
 # So authenticate is overloaded to return only PE_OK.
 
-## @method int extractFormInfo()
+## @apmethod int extractFormInfo()
 # Read username in SSL environment variables.
 # If $ENV{$self->{SSLVar}} is not set and SSLRequire is not set to 1, call
 # Lemonldap::NG::Portal::AuthLDAP::extractFormInfo()
@@ -52,7 +52,7 @@ sub extractFormInfo {
     return $self->SUPER::extractFormInfo(@_);
 }
 
-## @method int authenticate()
+## @apmethod int authenticate()
 # Call Lemonldap::NG::Portal::AuthLDAP::authenticate() if user was not
 # authenticated by SSL.
 # @return Lemonldap::NG::Portal constant

@@ -12,8 +12,8 @@ use XML::LibXML;
 use XML::LibXSLT;
 use CGI::Cookie;
 
-#link protected dbi Lemonldap::NG::Portal::Notification::DBI
-#link protected file Lemonldap::NG::Portal::Notification::File
+#inherits Lemonldap::NG::Portal::Notification::DBI
+#inherits Lemonldap::NG::Portal::Notification::File
 
 our $VERSION = '0.01';
 our ( $msg, $stylesheet, $parser );

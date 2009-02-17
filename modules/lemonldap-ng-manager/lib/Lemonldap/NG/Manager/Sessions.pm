@@ -7,7 +7,7 @@ package Lemonldap::NG::Manager::Sessions;
 
 use strict;
 use Lemonldap::NG::Handler::CGI qw(:globalStorage :locationRules);
-use Lemonldap::NG::Common::Apache::Session; #inherits
+use Lemonldap::NG::Common::Apache::Session;    #inherits
 
 #inherits Apache::Session
 
@@ -32,8 +32,8 @@ sub new {
       or $class->abort( 'Unable to start ' . __PACKAGE__,
         'See Apache logs for more' );
     foreach (qw(jqueryUri personnalCss imagePath)) {
-        $self->{$_} = $args->{ $_
-          }; # or print STDERR "Warning, $_ is not set, falling to default value\n";
+        $self->{$_}
+          or $self->lmLog( "$_ is not set, falling to default value", 'debug' );
     }
     eval "use $globalStorage";
     $class->abort( "Unable to load $globalStorage", $@ ) if ($@);
