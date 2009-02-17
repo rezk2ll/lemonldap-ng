@@ -323,13 +323,13 @@ sub redirect {
 # @param $id session reference
 sub getRemoteSession {
     my ( $self, $id ) = @_;
-        my %h;
+    my %h;
 
-        # Trying to recover session from global session storage
+    # Trying to recover session from global session storage
     eval { tie %h, $self->{globalStorage}, $id, $self->{globalStorageOptions}; };
-        if ( $@ or not tied(%h) ) {
+    if ( $@ or not tied(%h) ) {
 
-            # Session not available (expired ?)
+        # Session not available (expired ?)
         if ($id) {
             $self->lmLog( "Session $id isn't yet available ($ENV{REMOTE_ADDR})",
                 'info' );
@@ -382,8 +382,8 @@ sub _subProcess {
     my $err  = undef;
 
     foreach my $sub (@subs) {
-        last if($err = $self->_sub($sub));
-        }
+        last if ( $err = $self->_sub($sub) );
+    }
     return $err;
 }
 ##@method protected void updateStatus()
@@ -618,7 +618,9 @@ sub controlExistingSession {
                 @_,
               );
             $self->{error} = PE_REDIRECT;
-            $self->_sub('userNotice', $self->{sessionInfo}->{$self->{whatToTrace}}." has been disconnected");
+            $self->_sub( 'userNotice',
+                $self->{sessionInfo}->{ $self->{whatToTrace} }
+                  . " has been disconnected" );
             $self->_subProcess(qw(autoRedirect));
             return PE_FIRSTACCESS;
         }
@@ -728,8 +730,9 @@ sub setGroups {
 sub authenticate {
     my $self = shift;
     my $tmp;
-    return $tmp if($tmp = $self->SUPER::authenticate());
-    $self->_sub('userNotice', "Good authentication for "
+    return $tmp if ( $tmp = $self->SUPER::authenticate() );
+    $self->_sub( 'userNotice',
+        "Good authentication for "
           . $self->{sessionInfo}->{ $self->{whatToTrace} } );
     PE_OK;
 }
@@ -800,6 +803,18 @@ sub autoRedirect {
         and !$self->{ppolicy}->{time_before_expiration}
         and !$self->{ppolicy}->{grace_authentications_remaining} )
     {
+
+	# Cross-domain mechanism
+        if (    $self->{CDA}
+            and $self->{id}
+            and $self->{urldc} !~ m#^https?://[^/]*$self->{domain}/#oi )
+        {
+            $self->lmLog( 'CDA request', 'debug' );
+            $self->{urldc} .=
+              ( $self->{urldc} =~ /\?/oi )
+              ? '&'
+              : '?' . $self->{cookieName} . "=" . $self->{id};
+        }
         $self->updateStatus;
         print $self->SUPER::redirect(
             -uri    => $self->{urldc},

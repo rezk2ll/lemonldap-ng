@@ -8,7 +8,7 @@ package Lemonldap::NG::Portal::CDA;
 use strict;
 use Lemonldap::NG::Portal::SharedConf qw(:all);
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 use base ('Lemonldap::NG::Portal::SharedConf');
 
 *EXPORT_OK   = *Lemonldap::NG::Portal::SharedConf::EXPORT_OK;
@@ -19,31 +19,13 @@ use base ('Lemonldap::NG::Portal::SharedConf');
 # OVERLOADED SUB #
 ##################
 
-## @apmethod int existingSession()
-# Existing sessions must not be reauthenticated in CDA usage
-# @return Lemonldap::NG::Portal error code
-sub existingSession {
-    PE_DONE;
-}
-
-## @apmethod int autoRedirect()
-# Same as Lemonldap::NG::Portal::SharedConf::autoRedirect(), but add ID in URL
-# if the user was redirected to the portal from another domain.
-# @return Lemonldap::NG::Portal error code
-sub autoRedirect {
-    my $self       = shift;
-    my $tmp        = $self->{domain};
-    my $cookieName = $self->{cookieName};
-
-    if (    $self->{urldc}
-        and $self->{urldc} !~ m#^https?://[^/]*$tmp/#oi
-        and $self->{id}
-        and $self->{urldc} !~ m#[\?&]?$cookieName=\w+&?#oi )
-    {
-        $self->{urldc} .= ( $self->{urldc} =~ /\?{1}/oi ) ? '&' : '?';
-        $self->{urldc} .= $cookieName . "=" . $self->{id};
-    }
-    return $self->SUPER::autoRedirect(@_);
+## @cmethod Lemonldap::NG::Portal::CDA new()
+# @return Lemonldap::NG::Portal::CDA object
+sub new {
+    my $class = shift;
+    my $self = $class->SUPER::new(@_);
+    $self->{CDA} = 1;
+    return $self;
 }
 
 1;
