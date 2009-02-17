@@ -10,7 +10,7 @@ require SOAP::Lite;
 ## @cmethod Lemonldap::NG::Common::CGI::SOAPService new(object obj,string @func)
 # Constructor
 # @param $obj object which will be called for SOAP authorizated methods
-# @param @fung authorizated methods
+# @param @func authorizated methods
 # @return Lemonldap::NG::Common::CGI::SOAPService object
 sub new {
     my($class, $obj, @func) = @_;

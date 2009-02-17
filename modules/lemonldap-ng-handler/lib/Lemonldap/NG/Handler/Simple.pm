@@ -23,7 +23,7 @@ require POSIX;
 
 #inherits Cache::Cache
 #inherits Apache::Session
-#inherits Lemonldap::NG::Common::Apache::Session::SOAP
+#link Lemonldap::NG::Common::Apache::Session::SOAP protected globalStorage
 
 our $VERSION = '0.91';
 

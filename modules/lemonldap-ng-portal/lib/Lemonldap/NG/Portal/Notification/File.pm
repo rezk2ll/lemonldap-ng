@@ -64,11 +64,11 @@ sub get {
 
 ## @method boolean delete(string myref)
 # Mark a notification as done.
-# @param $file identifier returned by get
+# @param $myref identifier returned by get
 sub delete {
-    my ( $self, $file ) = @_;
-    my $new = ( $file =~ /(.*?)(?:\.xml)$/ )[0] . '.done';
-    return rename( $self->{dirName} . "/$file", $self->{dirName} . "/$new" );
+    my ( $self, $myref ) = @_;
+    my $new = ( $myref =~ /(.*?)(?:\.xml)$/ )[0] . '.done';
+    return rename( $self->{dirName} . "/$myref", $self->{dirName} . "/$new" );
 }
 
 ## @method boolean newNotif(string date, string uid, string ref, string xml)

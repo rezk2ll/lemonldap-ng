@@ -11,8 +11,6 @@ use MIME::Base64;
 use Time::Local;
 use CGI;
 
-#inherits Lemonldap::NG::Common::CGI::SOAPServer
-
 #parameter syslog Indicates syslog facility for logging user actions
 
 our $VERSION = '0.4';
@@ -73,7 +71,7 @@ sub setApacheUser {
     }
 }
 
-## @method void soapTest(string soapFunctions object obj)
+## @method void soapTest(string soapFunctions, object obj)
 # Check if request is a SOAP request. If it is, launch
 # Lemonldap::NG::Common::CGI::SOAPServer and exit. Else simply return.
 # @param $soapFunctions list of authorized functions.

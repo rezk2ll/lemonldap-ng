@@ -24,10 +24,10 @@ use Safe;
 #inherits Lemonldap::NG::Portal::AuthLDAP
 #inherits Lemonldap::NG::Portal::AuthSSL
 #inherits Lemonldap::NG::Portal::Menu
-#inherits Lemonldap::NG::Portal::Notification
+#link Lemonldap::NG::Portal::Notification protected notification
 #inherits Lemonldap::NG::Portal::UserDBLDAP
 #inherits Apache::Session
-#inherits Lemonldap::NG::Common::Apache::Session::SOAP
+#link Lemonldap::NG::Common::Apache::Session::SOAP protected globalStorage
 
 our $VERSION = '0.87';
 
