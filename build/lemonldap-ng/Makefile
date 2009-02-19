@@ -425,6 +425,12 @@ debian-dist:	dist
 	@mv lemonldap-ng-$(VERSION).tar.gz lemonldap-ng_$(VERSION).orig.tar.gz
 
 cpan:	clean configure common_cpan handler_cpan portal_cpan manager_cpan
+	for i in Common Portal Handler Manager; do \
+		tar xzf Lemonldap-NG-$$i-*.tar.gz \
+			$$(tar tzf Lemonldap-NG-$$i-*.tar.gz |grep META.yml); \
+		mv Lemonldap-NG-$$i-*/META.yml lemonldap-ng-$$(perl -e "print lc('$$i')")/; \
+		rmdir Lemonldap-NG-$$i*/; \
+		done
 
 common_cpan:	common_conf
 	@$(MAKE) -C ${SRCCOMMONDIR} dist

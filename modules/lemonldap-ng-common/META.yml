@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:                Lemonldap-NG-Common
-version:             0.9
+version:             0.92
 abstract:            Common files for Lemonldap::NG infrastructure
 license:             ~
 author:              
@@ -10,11 +10,11 @@ distribution_type:   module
 requires:     
     Cache::Cache:                  0
     CGI:                           3.08
+    Crypt::Rijndael:               0
     DBI:                           0
     Regexp::Assemble:              0
-    Storable:                      0
     SOAP::Lite:                    0
-    Crypt::Rijndael:               0
+    Storable:                      0
 meta-spec:
     url:     http://module-build.sourceforge.net/META-spec-v1.3.html
     version: 1.3
