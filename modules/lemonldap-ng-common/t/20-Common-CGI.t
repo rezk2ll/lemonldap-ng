@@ -6,7 +6,7 @@
 # change 'tests => 1' to 'tests => last_test_to_print';
 package My::Portal;
 
-use Test::More tests => 2;
+use Test::More tests => 7;
 BEGIN { use_ok('Lemonldap::NG::Common::CGI') }
 
 our @ISA = ('Lemonldap::NG::Common::CGI');
