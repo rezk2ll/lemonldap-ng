@@ -7,7 +7,7 @@
 
 package My::Portal;
 use strict;
-use Test::More tests => 11;
+use Test::More tests => 15;
 BEGIN { use_ok( 'Lemonldap::NG::Portal::Simple', ':all' ) }
 
 #use Lemonldap::NG::Portal::Simple;
@@ -15,37 +15,50 @@ BEGIN { use_ok( 'Lemonldap::NG::Portal::Simple', ':all' ) }
 our @ISA = 'Lemonldap::NG::Portal::Simple';
 my ( $url, $result, $logout );
 $logout = 0;
-my %h = (
+my @h = (
 
-    # Bad character
-    'XX%00' => PE_BADURL,
-
-    # No url required
-    '' => PE_OK,
+    '' => PE_OK, 'Empty',
 
     # http://test.example.com/
-    'aHR0cDovL3Rlc3QuZXhhbXBsZS5jb20v' => PE_OK,
+    'aHR0cDovL3Rlc3QuZXhhbXBsZS5jb20v' => PE_OK, 'Protected virtual host',
 
     # http://test.example.com
-    'aHR0cDovL3Rlc3QuZXhhbXBsZS5jb20v' => PE_OK,
-
-    # http://test.example.com:8000
-    'aHR0cDovL3Rlc3QuZXhhbXBsZS5jb206ODAwMA==' => PE_OK,
-
-    # http://test.example.com:8000/test
-    'aHR0cDovL3Rlc3QuZXhhbXBsZS5jb206ODAwMC90ZXN0' => PE_OK,
-
-    # http://test.example.com:8000V
-    'aHR0cDovL3Rlc3QuZXhhbXBsZS5jb206ODAwMFY=' => PE_BADURL,
+    'aHR0cDovL3Rlc3QuZXhhbXBsZS5jb20v' => PE_OK, 'Missing / in URL',
 
     # http://t.example.com/test
     'aHR0cDovL3QuZXhhbXBsZS5jb20vdGVzdA==' => PE_OK,
+    'Undeclared virtual host in protected domain',
+
+    # http://test.example.com:8000/test
+    'aHR0cDovL3Rlc3QuZXhhbXBsZS5jb206ODAwMC90ZXN0' => PE_OK, 'Non default port',
+
+    # http://test.example.com:8000
+    'aHR0cDovL3Rlc3QuZXhhbXBsZS5jb206ODAwMA==' => PE_OK,
+    'Non default port with missing /',
+
+    'http://test.com/' => PE_BADURL, 'Non base64 encoded characters',
+
+    # http://test.example.com:8000V
+    'aHR0cDovL3Rlc3QuZXhhbXBsZS5jb206ODAwMFY=' => PE_BADURL,
+    'Non number in port',
 
     # http://t.ex.com/test
     'aHR0cDovL3QuZXguY29tL3Rlc3Q=' => PE_BADURL,
+    'Undeclared virtual host in an other domain',
 
     # http://test.example.com/%00
-    'aHR0cDovL3Rlc3QuZXhhbXBsZS5jb20vJTAw' => PE_BADURL,
+    'aHR0cDovL3Rlc3QuZXhhbXBsZS5jb20vJTAw' => PE_BADURL, 'Base64 encoded \0',
+
+    # http://test.example.com/test\0
+    'aHR0cDovL3Rlc3QuZXhhbXBsZS5jb20vdGVzdAA=' => PE_BADURL,
+    'Base64 and url encoded \0',
+
+    'XX%00' => PE_BADURL, 'Non base64 encoded \0 ',
+
+    # http://test.example.com/test?<script>alert()</script>
+    'aHR0cDovL3Rlc3QuZXhhbXBsZS5jb20vdGVzdD88c2NyaXB0PmFsZXJ0KCk8L3NjcmlwdD4='
+      => PE_BADURL,
+    'base64 encoded HTML tags',
 );
 
 sub param {
@@ -82,9 +95,11 @@ ok(
 
 $p->{reVHosts} = '(?:test\.example\.com)';
 
-while ( ( $url, $result ) = each %h ) {
+while ( defined( $url = shift(@h) ) ) {
+    $result = shift @h;
+    my $text = shift @h;
 
-    ok( $p->controlUrlOrigin() == $result, "URL control $url" );
+    ok( $p->controlUrlOrigin() == $result, $text );
 
     #print ($p->controlUrlOrigin() == $result ? "OK" : "NOK");
     #print " $url\n";
