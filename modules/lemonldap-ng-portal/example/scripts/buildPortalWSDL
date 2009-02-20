@@ -35,10 +35,10 @@ print Lemonldap::NG::Common::BuildWSDL->new->buildWSDL(<<EOT);
  <wsdl:message name="getCookiesResponse">
   <wsdl:part name="getCookiesReturn" type="tns1:GetCookieResponse" />
  </wsdl:message>
- <wsdl:message name="notificationRequest">
+ <wsdl:message name="newNotificationRequest">
   <wsdl:part name="notification" type="xsd:string" />
  </wsdl:message>
-  <wsdl:message name="notificationResponse">
+  <wsdl:message name="newNotificationResponse">
   <wsdl:part name="result" type="xsd:string" />
  </wsdl:message>
  <wsdl:portType name="authenticationHandler">
