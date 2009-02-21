@@ -74,7 +74,7 @@ sub xml {
 </exportedVars>
 <ldapParameters><text>Paramtres LDAP</text>
 <ldapBase><text>Base de recherche LDAP</text>
-<value>dc=gendarmerie,dc=defense,dc=gouv,dc=fr</value>
+<value>dc=example,dc=com</value>
 </ldapBase>
 <ldapPort><text>Port du serveur LDAP</text>
 <value>389</value>
