@@ -6,6 +6,7 @@
 # change 'tests => 1' to 'tests => last_test_to_print';
 
 use Test::More tests => 11;
+use IO::String;
 BEGIN { use_ok('Lemonldap::NG::Manager') }
 
 #########################
@@ -13,32 +14,44 @@ BEGIN { use_ok('Lemonldap::NG::Manager') }
 # Insert your test code below, the Test::More module is use()ed here so read
 # its man page ( perldoc Test::More ) for help writing this test script.
 
-$ENV{SCRIPT_NAME}          = "__SCRIPTNAME__";
-$ENV{SCRIPT_FILENAME}      = $0;
+$ENV{SCRIPT_NAME}     = "__SCRIPTNAME__";
+$ENV{SCRIPT_FILENAME} = $0;
 my $h;
+our $buf;
+
+tie *STDOUT, 'IO::String', $buf;
+
 @ARGV = ("help=groups");
 ok(
     $h = new Lemonldap::NG::Manager(
-    {
-	configStorage => {
-	    type    => 'File',
-	    dirName => ".",
-	},
-	dhtmlXTreeImageLocation => "/imgs/",
-	jsFile => 'example/lemonldap-ng-manager.js',
-    }
-    )
+        {
+            configStorage => {
+                type    => 'File',
+                dirName => ".",
+            },
+            dhtmlXTreeImageLocation => "/imgs/",
+            jsFile                  => 'example/lemonldap-ng-manager.js',
+        }
+    ),
+    'New object'
 );
-ok( $h->header_public('example/index.pl') );
-ok( $h->start_html() );
-ok( $h->main() );
-ok( $h->end_html() );
-ok( $h->print_css() );
-ok( $h->print_lmjs() );
-ok( $h->print_help() );
-ok( $h->buildTree() );
+ok( $h->header_public('example/index.pl') =~ /Cache-control:\s+public/s,
+    'header_public' );
+ok( $h->start_html() =~ /<html/s, 'start_html' );
+ok( ( $h->main() and $buf =~ m#<script type="text/javascript"# ), 'main' );
+ok( $h->end_html() =~ m#</html>#, 'end_html' );
+ok( ( $h->print_css() and $buf =~ /Cache-control:\s+public/s ), 'css' );
+ok(
+    (
+              $h->print_lmjs()
+          and $buf =~ /Cache-control:\s+public.*Cache-control:\s+public/s
+    ),
+    'javascript'
+);
+ok( $h->print_help(), 'help' );
+ok( ref( $h->buildTree() ) eq 'HASH', 'buildTree' );
 my $tmp = &xml;
-ok( ref( $h->tree2conf( \$tmp ) ) );
+ok( ref( $h->tree2conf( \$tmp ) ), 'tree2conf' );
 
 sub xml {
     return << 'EOF';

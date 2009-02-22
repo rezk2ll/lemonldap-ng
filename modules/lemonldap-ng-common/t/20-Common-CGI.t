@@ -39,7 +39,7 @@ $ENV{QUERY_STRING}    = '';
 ok( $buf = $cgi->header_public('t/20-Common-CGI.t'), 'header_public' );
 ok( $buf =~ /Cache-control: public; must-revalidate; max-age=\d+\r?\n/s,
     'Cache-Control' );
-ok( $buf =~ /Last-modified: /, 'Last-Modified' );
+ok( $buf =~ /Last-modified: /s, 'Last-Modified' );
 
 # Test _sub mechanism
 ok( $cgi->_sub('subtest') eq 'OK1', '_sub mechanism 1' );
