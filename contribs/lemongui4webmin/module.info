@@ -1,5 +1,0 @@
-category=servers
-desc=lemonldap websso
-longdesc=Configure the powerful lemonldap websso . Supports all options in most of the standard modules.
-os_support=redhat-linux mandrake-linux debian-linux
-name=lemonldap

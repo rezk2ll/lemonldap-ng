@@ -1,5 +1,0 @@
-<LABEL>[% label %]</LABEL>
-<SPAN class = "OPTION">OUI</SPAN>
-<input type="radio" name=[% nom %] value="1" class="OPTION">
-<SPAN class = "OPTION">NON</SPAN>
-<input type="radio" name=[% nom %] value="0" class="OPTION">

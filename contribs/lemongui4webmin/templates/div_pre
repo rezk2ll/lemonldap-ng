@@ -1,5 +1,0 @@
-<div class="ConfStyle"> 
-<pre>
-[% CONTENT %]
-</pre>
-</div>

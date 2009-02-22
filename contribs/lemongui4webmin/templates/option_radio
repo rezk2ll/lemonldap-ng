@@ -1,4 +1,0 @@
-<SPAN class = "OPTION">[% label_0 %]</SPAN>
-<input type="radio" name=[% nom %] value="0" class="OPTION">
-<SPAN class = "OPTION">[% label_1 %]</SPAN>
-<input type="radio" name=[% nom %] value="1" class="OPTION">

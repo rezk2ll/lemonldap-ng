@@ -1,3 +1,0 @@
-XML_file=/opt/apache/conf/application_new.xml
-httpd_conf=/opt/apache/conf/lemon.conf
-XML_DTD=/opt/apache/conf/lemonldap.dtd
