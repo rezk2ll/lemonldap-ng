@@ -317,11 +317,11 @@ sub redirect {
     }
 }
 
-## @method protected hashref getRemoteSession(string id)
+## @method protected hashref getApacheSession(string id)
 # Try to recover the session corresponding to id and return session datas.
 # If $id is set to undef, return a new session.
 # @param $id session reference
-sub getRemoteSession {
+sub getApacheSession {
     my ( $self, $id ) = @_;
     my %h;
 
@@ -340,6 +340,7 @@ sub getRemoteSession {
         return 0;
     }
     $self->setApacheUser( $h{ $self->{whatToTrace} } ) if ($id);
+    $self->{id} = $h{_session_id};
     return \%h;
 }
 
@@ -359,7 +360,7 @@ sub updateSession {
     if ( $cookies{ $self->{cookieName} }
         and my $id = $cookies{ $self->{cookieName} }->value )
     {
-        my $h = $self->getRemoteSession($id) or return undef;
+        my $h = $self->getApacheSession($id) or return undef;
 
         # Store/update session values
         foreach ( keys %$infos ) {
@@ -546,9 +547,6 @@ m#^https?://(?:$self->{reVHosts}|(?:[^/]*)?$self->{domain})(?::\d+)?(?:/.*)?$#
             return PE_BADURL;
         }
     }
-    elsif ( $self->{mustRedirect} ) {
-        $self->{urldc} = $self->{portal};
-    }
     PE_OK;
 }
 
@@ -587,8 +585,10 @@ sub controlExistingSession {
     my %cookies;
     %cookies = fetch CGI::Cookie unless ($id);
 
-    # Store IP address
+    # Store IP address and start time
     $self->{sessionInfo}->{ipAddr} = $ENV{REMOTE_ADDR};
+    $self->{sessionInfo}->{startTime} =
+      &POSIX::strftime( "%Y%m%d%H%M%S", localtime() );
 
     # Test if Lemonldap::NG cookie is available
     if (
@@ -597,7 +597,7 @@ sub controlExistingSession {
             and $id = $cookies{ $self->{cookieName} }->value )
       )
     {
-        my $h = $self->getRemoteSession($id) or return PE_OK;
+        my $h = $self->getApacheSession($id) or return PE_OK;
         %{ $self->{sessionInfo} } = %$h;
 
         # Logout if required
@@ -628,14 +628,7 @@ sub controlExistingSession {
         $self->{id} = $id;
 
         # A session has been find => calling &existingSession
-        my ($r);
-        if ( $self->{existingSession} ) {
-            $r =
-              &{ $self->{existingSession} }( $self, $id, $self->{sessionInfo} );
-        }
-        else {
-            $r = $self->existingSession( $id, $self->{sessionInfo} );
-        }
+        my $r = $self->_sub( 'existingSession', $id, $self->{sessionInfo} );
         if ( $r == PE_DONE ) {
             $self->{error} =
               $self->_subProcess(qw(checkNotification autoRedirect));
@@ -748,8 +741,7 @@ sub store {
     # Now, user is authenticated => inform Apache
     $self->setApacheUser( $self->{sessionInfo}->{ $self->{whatToTrace} } );
 
-    my $h = $self->getRemoteSession(undef) or return PE_APACHESESSIONERROR;
-    $self->{id} = $h->{_session_id};
+    my $h = $self->getApacheSession(undef) or return PE_APACHESESSIONERROR;
     $h->{$_} = $self->{sessionInfo}->{$_}
       foreach ( keys %{ $self->{sessionInfo} } );
     $h->{_utime} = time();
@@ -796,6 +788,9 @@ sub checkNotification {
 sub autoRedirect {
     my $self = shift;
 
+    # default redirection URL
+    $self->{urldc} ||= $self->{portal} if ( $self->{mustRedirect} );
+
     # Redirection should be made if
     #  - urldc defined
     #  - no warnings on ppolicy
@@ -804,16 +799,16 @@ sub autoRedirect {
         and !$self->{ppolicy}->{grace_authentications_remaining} )
     {
 
-	# Cross-domain mechanism
+        # Cross-domain mechanism
         if (    $self->{CDA}
             and $self->{id}
             and $self->{urldc} !~ m#^https?://[^/]*$self->{domain}/#oi )
         {
             $self->lmLog( 'CDA request', 'debug' );
             $self->{urldc} .=
-              ( $self->{urldc} =~ /\?/oi )
-              ? '&'
-              : '?' . $self->{cookieName} . "=" . $self->{id};
+                ( $self->{urldc} =~ /\?/ ? '&' : '?' )
+              . $self->{cookieName} . "="
+              . $self->{id};
         }
         $self->updateStatus;
         print $self->SUPER::redirect(

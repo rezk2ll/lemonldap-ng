@@ -41,7 +41,7 @@ sub TIEHASH {
         data     => { _session_id => $session_id },
         modified => 0,
     };
-    foreach (qw(proxy proxyOptions)) {
+    foreach (qw(proxy proxyOptions ns)) {
         $self->{$_} = $args->{$_};
     }
     ( $user, $password ) = ( $args->{User}, $args->{Password} );
@@ -133,6 +133,11 @@ sub _connect {
 sub _soapCall {
     my $self = shift;
     my $func = shift;
+    my $r = $self->_connect->$func(@_);
+    if ( $r->fault ) {
+        print STDERR "SOAP Error: " . $r->fault->{faultstring};
+        return ();
+    }
     return $self->_connect->$func(@_)->result;
 }
 

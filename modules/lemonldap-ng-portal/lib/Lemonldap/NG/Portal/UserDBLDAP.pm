@@ -71,8 +71,6 @@ sub search {
 sub setSessionInfo {
     my ($self) = @_;
     $self->{sessionInfo}->{dn} = $self->{dn};
-    $self->{sessionInfo}->{startTime} =
-      &POSIX::strftime( "%Y%m%d%H%M%S", localtime() );
     unless ( $self->{exportedVars} ) {
         foreach (qw(uid cn mail)) {
             $self->{sessionInfo}->{$_} =
