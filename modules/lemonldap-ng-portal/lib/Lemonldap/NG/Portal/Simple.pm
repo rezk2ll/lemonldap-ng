@@ -160,16 +160,17 @@ sub new {
     }
     if (    $self->{notification}
         and $ENV{PATH_INFO}
-        and $ENV{PATH_INFO} =~ "/notification" )
+        and $ENV{PATH_INFO} =~ m#^/notification# )
     {
         require SOAP::Lite;
         $self->soapTest( 'newNotification', $self->{notifObject} );
         $self->abort( 'Bad request',
             'Only SOAP requests are accepted with "/notification"' );
     }
-    if ( $self->{Soap} ) {
-        require SOAP::Lite;
-        $self->soapTest("${class}::getCookies ${class}::error");
+    if ( $self->{Soap} or $self->{soap} ) {
+        require Lemonldap::NG::Portal::_SOAP;
+        push @ISA, 'Lemonldap::NG::Portal::_SOAP';
+        $self->startSoapServices();
     }
     return $self;
 }
@@ -322,7 +323,7 @@ sub redirect {
 # If $id is set to undef, return a new session.
 # @param $id session reference
 sub getApacheSession {
-    my ( $self, $id ) = @_;
+    my ( $self, $id, $noInfo ) = @_;
     my %h;
 
     # Trying to recover session from global session storage
@@ -339,7 +340,8 @@ sub getApacheSession {
         }
         return 0;
     }
-    $self->setApacheUser( $h{ $self->{whatToTrace} } ) if ($id);
+    $self->setApacheUser( $h{ $self->{whatToTrace} } )
+      if ( $id and not $noInfo );
     $self->{id} = $h{_session_id};
     return \%h;
 }
@@ -444,59 +446,6 @@ sub safe {
     return $safe;
 }
 
-####################
-# SOAP subroutines #
-####################
-
-=begin WSDL
-
-_IN user $string User name
-_IN password $string Password
-_RETURN $getCookieResponse Response
-
-=end WSDL
-
-=cut
-
-##@method SOAP::Data getCookies(string user,string password)
-# Called in SOAP context, returns cookies in an array.
-# This subroutine works only for portals working with user and password
-#@param user uid
-#@param password password
-#@return session => { error => code , cookies => { cookieName1 => value ,... } }
-sub getCookies {
-    my $self = shift;
-    $self->{error} = PE_OK;
-    ( $self->{user}, $self->{password} ) = ( shift, shift );
-    unless ( $self->{user} && $self->{password} ) {
-        $self->{error} = PE_FORMEMPTY;
-    }
-    else {
-        $self->{error} = $self->_subProcess(
-            qw(authInit userDBInit getUser setAuthSessionInfo setSessionInfo
-              setMacros setGroups authenticate store buildCookie)
-        );
-    }
-    my @tmp = ();
-    push @tmp, SOAP::Data->name( error => $self->{error} );
-    my @cookies = ();
-    unless ( $self->{error} ) {
-        foreach ( @{ $self->{cookie} } ) {
-            push @cookies, SOAP::Data->name( $_->name, $_->value );
-        }
-    }
-    else {
-        my @cookieNames = split /\s+/, $self->{cookieName};
-        foreach (@cookieNames) {
-            push @cookies, SOAP::Data->name( $_, 0 );
-        }
-    }
-    push @tmp, SOAP::Data->name( cookies => \SOAP::Data->value(@cookies) );
-    my $res = SOAP::Data->name( session => \SOAP::Data->value(@tmp) );
-    $self->updateStatus;
-    return $res;
-}
-
 ###############################################################
 # MAIN subroutine: call all steps until one returns something #
 #                  different than PE_OK                       #
@@ -585,11 +534,6 @@ sub controlExistingSession {
     my %cookies;
     %cookies = fetch CGI::Cookie unless ($id);
 
-    # Store IP address and start time
-    $self->{sessionInfo}->{ipAddr} = $ENV{REMOTE_ADDR};
-    $self->{sessionInfo}->{startTime} =
-      &POSIX::strftime( "%Y%m%d%H%M%S", localtime() );
-
     # Test if Lemonldap::NG cookie is available
     if (
         $id
@@ -667,8 +611,19 @@ sub existingSession {
 # 8. setAuthSessionInfo() : must be implemented in Auth* module:
 #                            * store exported datas in $self->{sessionInfo}
 
-# 9. setSessionInfo() : must be implemented in User* module:
-#                            * store exported datas in $self->{sessionInfo}
+##@apmethod int setSessionInfo()
+# 9) Call setSessionInfo() in User* module and set ipAddr and startTime
+#@return Lemonldap::NG::Portal constant
+sub setSessionInfo {
+    my $self = shift;
+
+    # Store IP address and start time
+    $self->{sessionInfo}->{ipAddr} = $ENV{REMOTE_ADDR};
+    $self->{sessionInfo}->{startTime} =
+        &POSIX::strftime( "%Y%m%d%H%M%S", localtime() );
+    return $self->SUPER::setSessionInfo();
+}
+
 
 ##@apmethod int setMacro()
 # 10) macro mechanism.
@@ -718,7 +673,7 @@ sub setGroups {
 }
 
 ##@apmethod int authenticate()
-# 12. authenticate() : must be implemented in Auth* module.
+# 12. Call authenticate() in Auth* module and call userNotice().
 #@return Lemonldap::NG::Portal constant
 sub authenticate {
     my $self = shift;

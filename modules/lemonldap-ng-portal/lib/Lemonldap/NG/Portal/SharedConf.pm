@@ -34,19 +34,8 @@ sub getConf {
         %args = @_;
     }
     %$self = ( %$self, %args );
-
-    # For better performance the Portal can use the configuration stored in
-    # the local file system by the handlers. This can be used when
-    # configuration is not local (type DBI or SOAP)
-    my $tmp = 0;
-    unless ($tmp) {
-        $self->{lmConf} =
-          Lemonldap::NG::Common::Conf->new( $self->{configStorage} )
-          unless $self->{lmConf};
-        return 0 unless ( ref( $self->{lmConf} ) );
-        $tmp = $self->{lmConf}->getConf;
+    my $tmp = $self->_getLmConf;
         return 0 unless $tmp;
-    }
 
     # Local configuration prepends global
     $self->{$_} = $args{$_} || $tmp->{$_} foreach ( keys %$tmp );
@@ -64,6 +53,14 @@ sub getProtectedSites {
     return ( keys %{ $self->{locationRules} } )
       if ( ref $self->{locationRules} );
     return ();
+}
+
+sub _getLmConf {
+    my $self = shift;
+    $self->{lmConf} = Lemonldap::NG::Common::Conf->new( $self->{configStorage} )
+      unless $self->{lmConf};
+    return 0 unless ( ref( $self->{lmConf} ) );
+    return $self->{lmConf}->getConf;
 }
 
 1;

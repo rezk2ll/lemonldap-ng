@@ -180,7 +180,7 @@ sub startSyslog {
 }
 
 ##@method protected void userLog(string mess, string level)
-# 15bis) Log user access and logout.
+# Log user actions on Apache logs or syslog.
 # @param $mess string to log
 # @param $level level of log message
 sub userLog {
@@ -194,21 +194,30 @@ sub userLog {
     }
 }
 
+##@method void userInfo(string mess)
+# Log user errors like "bad password".
+# @param $mess string to log
+sub userInfo {
+    my ( $self, $mess ) = @_;
+    $mess = "Lemonldap::NG portal: $mess ($ENV{REMOTE_ADDR})";
+    $self->userLog( $mess, 'info' );
+}
+
 ##@method void userNotice(string mess)
-# 15bis) Log user errors like "bad password".
+# Log user actions like access and logout.
 # @param $mess string to log
 sub userNotice {
     my ( $self, $mess ) = @_;
-    $mess = "Lemonldap::NG portal: $mess";
+    $mess = "Lemonldap::NG portal: $mess ($ENV{REMOTE_ADDR})";
     $self->userLog( $mess, 'notice' );
 }
 
 ##@method void userError(string mess)
-# 15bis) Log user errors like "bad password".
+# Log user errors like "bad password".
 # @param $mess string to log
 sub userError {
     my ( $self, $mess ) = @_;
-    $mess = "Lemonldap::NG portal: $mess";
+    $mess = "Lemonldap::NG portal: $mess ($ENV{REMOTE_ADDR})";
     $self->userLog( $mess, 'warn' );
 }
 

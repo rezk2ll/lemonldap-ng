@@ -15,10 +15,17 @@ my $portal = Lemonldap::NG::Portal::SharedConf->new(
         # ACCESS TO CONFIGURATION
 
         # By default, Lemonldap::NG uses the default storage.conf file to know
-        # where to find is configuration
+        # where to find its configuration
         # (generaly /etc/lemonldap-ng/storage.conf)
         # You can specify by yourself this file :
         #configStorage => { File => '/path/to/my/file' },
+        # or set explicitely parameters :
+        #configStorage => {
+        #  Type => 'File',
+        #  dirName => '/path/to/config/dir/'
+        #},
+        # Note that YOU HAVE TO SET configStorage here if you've declared this
+        # portal as SOAP configuration server in the manager
 
         # You can also specify directly the configuration
         # (see Lemonldap::NG::Handler::SharedConf(3))
@@ -36,6 +43,9 @@ my $portal = Lemonldap::NG::Portal::SharedConf->new(
         # Remove comment to activate SOAP Functions getCookies(user,pwd) and
         # error(language, code)
         #Soap => 1,
+        # Note that getAttibutes() will be activated but on a different URI
+        # (http://auth.example.com/index.pl/sessions
+        #exportedAttr => 'uid mail',
 
         # PASSWORD POLICY
         # Remove comment to use LDAP Password Policy
@@ -52,19 +62,21 @@ my $portal = Lemonldap::NG::Portal::SharedConf->new(
         # NOTIFICATIONS SERVICE
         # Use it to be able to notify messages during authentication
         #notification => 1,
+        # Note that the SOAP function newNotification will be activated on
+        # http://auth.example.com/index.pl/notification
+        # If you want to hide this, just protect "/index.pl/notification" in
+        # your Apache configuration file
 
         # OTHERS
         # You can also overload any parameter issued from manager
         # configuration. Example:
-        #globalStorage => 'Lemonldap::NG::Common::Apache::Session::SOAP',
+        #globalStorage => 'Apache::Session::File',
         #globalStorageOptions => {
-        #    proxy => 'http://manager.example.com/soapserver.pl',
-        #    proxyOptions => {
-        #        timeout => 5,
-        #    },
-        #    # If soapserver is protected by HTTP Basic:
-        #    User     => 'http-user',
-        #    Password => 'pass',
+        #  'Directory' => '/var/lib/lemonldap-ng/sessions/'
+        #  'LockDirectory' => '/var/lib/lemonldap-ng/sessions/lock/'
+        #}
+        # Note that YOU HAVE TO SET globalStorage here if you've declared this
+        # portal as SOAP session server in the manager
         #},
     }
 );
@@ -113,7 +125,7 @@ if ( $portal->process() ) {
     print $portal->header('text/html; charset=utf8');
     print $template->output;
 }
-elsif ( my $notif = $portal->notification ) {
+elsif( my $notif = $portal->notification ) {
     my $template = HTML::Template->new(
         filename          => "$skin_dir/$skin/notification.tpl",
         die_on_bad_params => 0,
@@ -122,7 +134,6 @@ elsif ( my $notif = $portal->notification ) {
     );
     $template->param( AUTH_ERROR      => $portal->error );
     $template->param( AUTH_ERROR_TYPE => $portal->error_type );
-    $template->param( AUTH_URL        => $portal->get_url );
     $template->param( NOTIFICATION    => $notif );
 
     print $portal->header('text/html; charset=utf8');

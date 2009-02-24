@@ -17,11 +17,16 @@ sub buildWSDL {
     $portal .= "index.pl" if ( $portal =~ /\/$/ );
     $xml =~ s/__PORTAL__/$portal/gs;
     $xml =~ s/__DOMAIN__/$self->{conf}->{domain}/gs;
+
+    # Cookies
     my @cookies = split /\s+/, $self->{conf}->{cookieName};
     s#(.*)#<element name="$1" type="xsd:string"></element># foreach (@cookies);
-
-#s#(.*)#<element name="$1" nillable="true" type="xsd:string"></element># foreach(@cookies);
     $xml =~ s/__XMLCOOKIELIST__/join("\n",@cookies)/ges;
+
+    # Attributes
+    my @attr = (keys %{$self->{conf}->{exportedVars}},keys %{$self->{conf}->{macros}});
+    s#(.*)#<element name="$1" type="xsd:string" nillable="true"></element># foreach (@attr);
+    $xml =~ s/__ATTRLIST__/join("\n",@attr)/ges;
     return $xml;
 }
 
