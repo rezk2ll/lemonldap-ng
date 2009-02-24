@@ -7,6 +7,7 @@
 
 use Test::More tests => 11;
 use IO::String;
+use strict;
 BEGIN { use_ok('Lemonldap::NG::Manager') }
 
 #########################
@@ -20,6 +21,16 @@ my $h;
 our $buf;
 
 tie *STDOUT, 'IO::String', $buf;
+our $lastpos = 0;
+
+sub diff {
+    my $str = $buf;
+    $str =~ s/^.{$lastpos}//s if($lastpos);
+    $str =~ s/\r//gs;
+    $lastpos = length $buf;
+    print STDERR "DEBUG $str\n";
+    return $str;
+}
 
 @ARGV = ("help=groups");
 ok(
@@ -38,13 +49,13 @@ ok(
 ok( $h->header_public('example/index.pl') =~ /Cache-control:\s+public/s,
     'header_public' );
 ok( $h->start_html() =~ /<html/s, 'start_html' );
-ok( ( $h->main() and $buf =~ m#<script type="text/javascript"# ), 'main' );
+ok( ( $h->main() and diff() =~ m#<script type="text/javascript"# ), 'main' );
 ok( $h->end_html() =~ m#</html>#, 'end_html' );
-ok( ( $h->print_css() and $buf =~ /Cache-control:\s+public/s ), 'css' );
+ok( ( $h->print_css() and diff() =~ m#Content-Type:\s+text/css#s ), 'css' );
 ok(
     (
               $h->print_lmjs()
-          and $buf =~ /Cache-control:\s+public.*Cache-control:\s+public/s
+          and diff() =~ m#Content-Type:\s+text/javascript#s
     ),
     'javascript'
 );

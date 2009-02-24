@@ -11,6 +11,7 @@ WriteMakefile(
         'CGI'                    => 3.08,
         'CGI::Session'           => 0,
         'HTML::Template'         => 0,
+        'IO::String'             => 0,
         'Lemonldap::NG::Common'  => 0.9,
         'Lemonldap::NG::Handler' => 0.9,
         'XML::LibXML'            => 0,

@@ -111,6 +111,7 @@ t/20-Lemonldap-NG-Portal-AuthApache.t
 t/21-Lemonldap-NG-Portal-AuthSSL.t
 t/22-Lemonldap-NG-Portal-AuthCAS.t
 t/23-Lemonldap-NG-Portal-AuthLA.t
+t/24-Lemonldap-NG-Portal-AuthRemote.t
 t/40-Lemonldap-NG-Portal-CDA.t
 t/50-Lemonldap-NG-Portal-Menu.t
 t/99-pod.t
