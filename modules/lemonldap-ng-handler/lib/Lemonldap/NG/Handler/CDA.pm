@@ -16,7 +16,7 @@ use base qw(Lemonldap::NG::Handler::SharedConf);
 *EXPORT_TAGS = *Lemonldap::NG::Handler::SharedConf::EXPORT_TAGS;
 *EXPORT_OK   = *Lemonldap::NG::Handler::SharedConf::EXPORT_OK;
 
-## @cmethod int run(Apache2::RequestRec apacheRequest)
+## @rmethod int run(Apache2::RequestRec apacheRequest)
 # overload run subroutine to implement cross-domain mechanism.
 # @param $apacheRequest
 # @return Apache constant

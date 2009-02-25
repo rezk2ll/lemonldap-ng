@@ -25,7 +25,7 @@ our $lastpos = 0;
 
 sub diff {
     my $str = $buf;
-    $str =~ s/^.{$lastpos}//s if($lastpos);
+    $str =~ s/^.{$lastpos}//s if ($lastpos);
     $str =~ s/\r//gs;
     $lastpos = length $buf;
     return $str;
@@ -33,7 +33,7 @@ sub diff {
 
 sub abort {
     shift;
-    local $,=' ';
+    local $, = ' ';
     print STDERR @_;
 }
 
@@ -53,19 +53,18 @@ $ENV{QUERY_STRING}    = '';
 ok(
     $p = My::Portal->new(
         {
-            globalStorage  => 'Apache::Session::File',
-            domain         => 'example.com',
-            authentication => 'Remote',
-            portal         => 'http://abc',
-            remotePortal   => 'http://zz/',
-            remoteGlobalStorage => 'Apache::Session::File',
-            remoteGlobalStorageOptions => {
-                dirName => '.',
-            },
+            globalStorage              => 'Apache::Session::File',
+            domain                     => 'example.com',
+            authentication             => 'Remote',
+            portal                     => 'http://abc',
+            remotePortal               => 'http://zz/',
+            remoteGlobalStorage        => 'Apache::Session::File',
+            remoteGlobalStorageOptions => { dirName => '.', },
         }
     ),
     'Portal object'
 );
 
-ok(($p->process()==0 and $p->{error} == PE_BADCREDENTIALS), 'call goToPortal');
+ok( ( $p->process() == 0 and $p->{error} == PE_BADCREDENTIALS ),
+    'call goToPortal' );
 

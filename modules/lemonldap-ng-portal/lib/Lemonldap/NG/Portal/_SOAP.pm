@@ -12,10 +12,12 @@ require SOAP::Lite;
 ## @method void startSoapServices()
 # Check the URI requested (PATH_INFO environment variable) and launch the
 # corresponding SOAP methods using soapTest().
+# If "soapOnly" is set, reject otehr request. Else, simply return.
 sub startSoapServices {
     my $self = shift;
     if (
-        my $tmp = {
+        $ENV{PATH_INFO}
+        and my $tmp = {
             '/sessions'      => 'getAttributes',
             '/adminSessions' => 'setAttributes newSession',
             '/config'        => 'getConfig'
@@ -142,14 +144,12 @@ sub _buildSoapHash {
     my @tmp = ();
     @keys = keys %$h unless (@keys);
     foreach (@keys) {
-        if ( ref( $h->{$_} ) eq 'HASH' ) {
-            die;
-            push @tmp, SOAP::Data->name( $_ => _buildSoapHash( $h->{$_} ) );
-        }
-        elsif ( ref( $h->{$_} ) eq 'ARRAY' ) {
-            die;
+        if ( ref( $h->{$_} ) eq 'ARRAY' ) {
             push @tmp,
               SOAP::Data->name( $_, \SOAP::Data->value( @{ $h->{$_} } ) );
+        }
+        elsif ( ref( $h->{$_} ) ) {
+            push @tmp, SOAP::Data->name( $_ => _buildSoapHash( $h->{$_} ) );
         }
         else {
             push @tmp, SOAP::Data->name( $_, $h->{$_} )->type('string')

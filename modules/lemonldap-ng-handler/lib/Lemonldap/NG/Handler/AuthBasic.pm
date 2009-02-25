@@ -32,7 +32,7 @@ BEGIN {
     }
 }
 
-## @cmethod int run(Apache2::RequestRec apacheRequest)
+## @rmethod int run(Apache2::RequestRec apacheRequest)
 # overload run subroutine to implement Auth-Basic mechanism.
 # @param $apacheRequest current request
 # @return Apache constant

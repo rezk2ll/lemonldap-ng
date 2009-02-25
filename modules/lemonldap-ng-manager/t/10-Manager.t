@@ -25,10 +25,9 @@ our $lastpos = 0;
 
 sub diff {
     my $str = $buf;
-    $str =~ s/^.{$lastpos}//s if($lastpos);
+    $str =~ s/^.{$lastpos}//s if ($lastpos);
     $str =~ s/\r//gs;
     $lastpos = length $buf;
-    print STDERR "DEBUG $str\n";
     return $str;
 }
 
@@ -52,13 +51,8 @@ ok( $h->start_html() =~ /<html/s, 'start_html' );
 ok( ( $h->main() and diff() =~ m#<script type="text/javascript"# ), 'main' );
 ok( $h->end_html() =~ m#</html>#, 'end_html' );
 ok( ( $h->print_css() and diff() =~ m#Content-Type:\s+text/css#s ), 'css' );
-ok(
-    (
-              $h->print_lmjs()
-          and diff() =~ m#Content-Type:\s+text/javascript#s
-    ),
-    'javascript'
-);
+ok( ( $h->print_lmjs() and diff() =~ m#Content-Type:\s+text/javascript#s ),
+    'javascript' );
 ok( $h->print_help(), 'help' );
 ok( ref( $h->buildTree() ) eq 'HASH', 'buildTree' );
 my $tmp = &xml;

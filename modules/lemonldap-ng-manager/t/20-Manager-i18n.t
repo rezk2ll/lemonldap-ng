@@ -16,9 +16,9 @@ use Test::More tests => ( keys(%lang) + 4 );
 use_ok('Lemonldap::NG::Manager');
 
 my $win = 0;
-$win ++ unless( -e '/dev/null' );
+$win++ unless ( -e '/dev/null' );
 
-if($win) {
+if ($win) {
     open STDOUT, '>test_stdout.txt';
 }
 else {
@@ -53,7 +53,7 @@ ok( $h->main(),       "HTML code" );
 ok( $h->print_help(), "Help page" );
 ok( $h->buildTree(),  "XML tree" );
 
-unlink('test_stdout.txt') if($win);
+unlink('test_stdout.txt') if ($win);
 
 sub compare {
     my ( $l1, $l2 ) = @_;

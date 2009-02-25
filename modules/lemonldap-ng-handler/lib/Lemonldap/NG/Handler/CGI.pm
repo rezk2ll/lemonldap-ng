@@ -146,7 +146,7 @@ sub goToPortal {
     exit;
 }
 
-## @fn string private _uri()
+## @fn private string _uri()
 # Builds current URL including "http://" and server name.
 # @return URL_string
 sub _uri {

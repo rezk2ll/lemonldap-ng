@@ -12,6 +12,8 @@ use base qw(SOAP::Transport::HTTP::Server);
 
 our $VERSION = '0.2';
 
+## @method protected void DESTROY()
+# Call SOAP::Trace::objects().
 sub DESTROY { SOAP::Trace::objects('()') }
 
 ## @cmethod Lemonldap::NG::Common::CGI::SOAPServer new(@param)

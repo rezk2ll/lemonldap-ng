@@ -27,6 +27,7 @@ WriteMakefile(
         'Storable'         => 0,
         'Regexp::Assemble' => 0,
         'Cache::Cache'     => 0,
+        'IO::String'       => 0,
         'SOAP::Lite'       => 0,
         'Crypt::Rijndael'  => 0,
     },                                               # e.g., Module::Name => 1.1

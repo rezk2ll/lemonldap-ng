@@ -41,7 +41,7 @@ sub extractFormInfo {
     PE_OK;
 }
 
-# @apmethod int authenticate()
+## @apmethod int authenticate()
 # Does nothing.
 # @return Lemonldap::NG::Portal constant
 sub authenticate {

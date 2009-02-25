@@ -233,7 +233,7 @@ sub printXmlConf {
     );
 }
 
-# @method protected hashRef buildTree(array p)
+## @method protected hashRef buildTree(array p)
 # Transform Lemonldap::NG configuration into a tree that javascript library can
 # understand.
 # @param @p parameters given to Lemonldap::NG::Common::Conf::getConf()

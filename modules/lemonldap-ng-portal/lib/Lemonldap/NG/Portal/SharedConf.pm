@@ -43,10 +43,9 @@ sub getConf {
 }
 
 ## @method list getProtectedSites()
-# @return list list of protected virtual hosts.
-
 # With SharedConf, $locationRules contains a hash table with virtual hosts as
 # keys. So we can use it to know all protected virtual hosts.
+# @return list list of protected virtual hosts.
 sub getProtectedSites {
     my $self = shift;
     my @tab  = ();
@@ -55,6 +54,9 @@ sub getProtectedSites {
     return ();
 }
 
+## @method private hashref _getLmConf()
+# Call and return Lemonldap::NG::Common::Conf::getConf() value.
+# @return Lemonldap::NG shared configuration
 sub _getLmConf {
     my $self = shift;
     $self->{lmConf} = Lemonldap::NG::Common::Conf->new( $self->{configStorage} )

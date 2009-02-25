@@ -11,27 +11,31 @@ use Test::More tests => 3;
 # not run.
 SKIP: {
     eval { require SOAP::Transport::HTTP };
-    skip "SOAP::Transport::HTTP is not installed, so Lemonldap::NG::Manager::SOAPServer will not be useable",
+    skip
+"SOAP::Transport::HTTP is not installed, so Lemonldap::NG::Manager::SOAPServer will not be useable",
       3
       if ($@);
     use_ok('Lemonldap::NG::Manager::SOAPServer');
     my $s;
-    ok ( $s = Lemonldap::NG::Manager::SOAPServer->new (
-            type => 'config',
+    ok(
+        $s = Lemonldap::NG::Manager::SOAPServer->new(
+            type          => 'config',
             configStorage => {
                 type    => 'File',
                 dirName => '.',
             }
-      )
+        )
     );
     eval { require Apache::Session::File };
-    skip "Apache::Session::File is not installed. Lemonldap::NG::Manager::SOAPServer will not be tested in 'sessions' mode",
+    skip
+"Apache::Session::File is not installed. Lemonldap::NG::Manager::SOAPServer will not be tested in 'sessions' mode",
       1
       if ($@);
-    ok ( $s = Lemonldap::NG::Manager::SOAPServer->new (
-            type => 'sessions',
+    ok(
+        $s = Lemonldap::NG::Manager::SOAPServer->new(
+            type               => 'sessions',
             realSessionStorage => 'Apache::Session::File',
-      )
+        )
     );
 }
 

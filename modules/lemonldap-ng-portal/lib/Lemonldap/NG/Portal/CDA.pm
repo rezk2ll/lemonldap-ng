@@ -1,8 +1,3 @@
-##@file
-# Cross domain extension for Lemonldap::NG portals.
-
-##@class
-# Cross domain extension for Lemonldap::NG portals.
 package Lemonldap::NG::Portal::CDA;
 
 use strict;
@@ -19,8 +14,6 @@ use base ('Lemonldap::NG::Portal::SharedConf');
 # OVERLOADED SUB #
 ##################
 
-## @cmethod Lemonldap::NG::Portal::CDA new()
-# @return Lemonldap::NG::Portal::CDA object
 sub new {
     my $class = shift;
     my $self = $class->SUPER::new(@_);

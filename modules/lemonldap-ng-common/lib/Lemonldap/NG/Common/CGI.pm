@@ -91,7 +91,7 @@ sub soapTest {
           Lemonldap::NG::Common::CGI::SOAPService->new( $obj || $self, @func );
         Lemonldap::NG::Common::CGI::SOAPServer->dispatch_to($dispatcher)
           ->handle($self);
-        exit;
+        $self->quit();
     }
 }
 
@@ -179,7 +179,7 @@ sub startSyslog {
     $self->{_syslog} = 1;
 }
 
-##@method protected void userLog(string mess, string level)
+##@method void userLog(string mess, string level)
 # Log user actions on Apache logs or syslog.
 # @param $mess string to log
 # @param $level level of log message
@@ -195,7 +195,7 @@ sub userLog {
 }
 
 ##@method void userInfo(string mess)
-# Log user errors like "bad password".
+# Log non important user actions. Alias for userLog() with facility "info".
 # @param $mess string to log
 sub userInfo {
     my ( $self, $mess ) = @_;
@@ -204,7 +204,8 @@ sub userInfo {
 }
 
 ##@method void userNotice(string mess)
-# Log user actions like access and logout.
+# Log user actions like access and logout. Alias for userLog() with facility
+# "warn".
 # @param $mess string to log
 sub userNotice {
     my ( $self, $mess ) = @_;
@@ -213,7 +214,8 @@ sub userNotice {
 }
 
 ##@method void userError(string mess)
-# Log user errors like "bad password".
+# Log user errors like "bad password". Alias for userLog() with facility
+# "error".
 # @param $mess string to log
 sub userError {
     my ( $self, $mess ) = @_;
@@ -235,6 +237,12 @@ sub _sub {
         $self->lmLog( "processing to sub $sub", 'debug' );
         return $self->$sub(@p);
     }
+}
+
+## @method private void quit()
+# Simply exit.
+sub quit {
+    exit;
 }
 
 1;

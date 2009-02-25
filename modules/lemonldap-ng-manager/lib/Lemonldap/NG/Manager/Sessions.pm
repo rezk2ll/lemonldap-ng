@@ -40,7 +40,7 @@ sub new {
     return $self;
 }
 
-## @rmethod void process()
+## @method void process()
 # Main method.
 sub process {
     my $self = shift;
@@ -375,7 +375,7 @@ sub process {
     }
 }
 
-## @rfn protected string htmlquote(string s)
+## @fn protected string htmlquote(string s)
 # Change <, > and & to HTML encoded values in the string
 # @param $s HTML string
 # @return HTML string
@@ -387,7 +387,7 @@ sub htmlquote {
     return $s;
 }
 
-## @rfn protected void start()
+## @fn protected void start()
 # Display HTTP and HTML headers.
 sub start {
     my $self = shift;
@@ -446,7 +446,7 @@ sub start {
     );
 }
 
-## @rfn protected void ajaxnode(string id, string text, string param)
+## @fn protected void ajaxnode(string id, string text, string param)
 # Display tree node with Ajax functions inside for opening the node.
 # @param $id HTML id of the element.
 # @param $text text to display
@@ -457,7 +457,7 @@ sub ajaxNode {
 "<li id=\"$id\"><span>$text</span>\n<ul class=\"ajax\"><li id=\"sub_$id\">{url:$ENV{SCRIPT_NAME}?$param}</li></ul></li>\n";
 }
 
-## @rfn protected void window(string root)
+## @fn protected void window(string root)
 # Design the main window
 # @param $root Text to display in the root node of the tree
 sub window {
@@ -481,7 +481,7 @@ sub window {
       . '</span><ul>';
 }
 
-## @rfn protected void end()
+## @fn protected void end()
 # Display the end of HTML page.
 sub end {
     my $self = shift;
@@ -492,7 +492,7 @@ sub end {
 
 1;
 
-## @rfn protected css()
+## @fn protected css()
 # Display the main CSS file (called by http://manager.example.com/sessions.pl/css)
 sub css {
     my $self = shift;
@@ -679,7 +679,7 @@ body
 EOF
 }
 
-## @rfn protected js()
+## @fn protected js()
 # Display the main javascript file (called by http://manager.example.com/sessions.pl/js)
 sub js {
     my $self = shift;

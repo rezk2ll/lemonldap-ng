@@ -19,13 +19,16 @@ use Lemonldap::NG::Portal::_i18n;    #inherits
 use Safe;
 
 # Special comments for doxygen
+#inherits Lemonldap::NG::Portal::_SOAP
 #inherits Lemonldap::NG::Portal::AuthApache
 #inherits Lemonldap::NG::Portal::AuthCAS
 #inherits Lemonldap::NG::Portal::AuthLDAP
+#inherits Lemonldap::NG::Portal::AuthRemote
 #inherits Lemonldap::NG::Portal::AuthSSL
 #inherits Lemonldap::NG::Portal::Menu
 #link Lemonldap::NG::Portal::Notification protected notification
 #inherits Lemonldap::NG::Portal::UserDBLDAP
+#inherits Lemonldap::NG::Portal::UserDBRemote
 #inherits Apache::Session
 #link Lemonldap::NG::Common::Apache::Session::SOAP protected globalStorage
 
