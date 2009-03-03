@@ -42,3 +42,36 @@ sub AUTOLOAD {
 
 1;
 
+__END__
+
+=head1 NAME
+
+Lemonldap::NG::Common::CGI::SOAPService - Wrapper for all SOAP functions of
+Lemonldap::NG CGIs.
+
+=head1 SYNOPSIS
+
+See L<Lemonldap::NG::Common::CGI>
+
+=head1 DESCRIPTION
+
+Private class used by L<Lemonldap::NG::Common::CGI> to control SOAP functions
+access.
+
+=head1 SEE ALSO
+
+L<http://lemonldap.objectweb.org/>, L<Lemonldap::NG::Common::CGI>
+
+=head1 AUTHOR
+
+Xavier Guimard, E<lt>x.guimard@free.frE<gt>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (C) 2009 by Xavier Guimard
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself, either Perl version 5.10.0 or,
+at your option, any later version of Perl 5 you may have available.
+
+=cut

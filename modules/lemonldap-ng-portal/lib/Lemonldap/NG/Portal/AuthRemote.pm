@@ -42,3 +42,58 @@ sub authenticate {
 
 1;
 
+__END__
+
+=head1 NAME
+
+Lemonldap::NG::Portal::AuthRemote - Authentication module for Lemonldap::NG
+that delegates authentication to a remote Lemonldap::NG portal.
+
+=head1 SYNOPSIS
+
+  use Lemonldap::NG::Portal::Simple;
+  my $portal = new Lemonldap::NG::Portal::Simple(
+         
+         # AUTHENTICATION PART
+         authentication      => 'Remote', 
+         remotePortal        => 'https://auth.remote.com/',
+         # Example with SOAP access to remote session DB
+         remoteGlobalStorage => 'Lemonldap::NG::Common::Apache::Session::SOAP',
+         remoteGlobalStorageOptions => {
+             proxy    => 'https://auth.remote.com/index.pl/sessions',
+             ns => 'urn://auth.remote.com/Lemonldap/NG/Common/CGI/SOAPService',
+             user     => 'myuser',
+             password => 'mypass',
+         }
+         # Optional parameters if remote parameters are not the same.
+         # Example with default values:
+         remoteCookieName => 'lemonldap',
+         remoteUserField  => 'uid',
+         
+         # USER DATABASE PART (not required if remote users exists in your DB)
+         userDB              => 'Remote',
+    );
+
+=head1 DESCRIPTION
+
+Authentication module for Lemonldap::NG portal that delegates authentication to
+a remote portal.
+
+=head1 SEE ALSO
+
+L<http://lemonldap.objectweb.org/>
+L<http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/AuthRemote>
+
+=head1 AUTHOR
+
+Xavier Guimard, E<lt>x.guimard@free.frE<gt>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (C) 2009 by Xavier Guimard
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself, either Perl version 5.10.0 or,
+at your option, any later version of Perl 5 you may have available.
+
+=cut
