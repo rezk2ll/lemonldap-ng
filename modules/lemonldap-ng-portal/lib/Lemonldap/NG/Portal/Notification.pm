@@ -123,7 +123,7 @@ sub getNotification {
     }
 
     # Now a notification has to be done. Replace cookies by hidden fields
-    my $i = 0;
+    $i = 0;
     while ( my $tmp = shift @{ $portal->{cookie} } ) {
         $i++;
         my $t = $portal->{cipher}->encrypt( $tmp->value );
@@ -289,6 +289,41 @@ sub newNotification {
     return $count;
 }
 
+## @method hashref getAll()
+# Return all messages not notified. Wrapper for storage module getAll()
+# @return hashref where keys are internal reference and values are hashref with
+# keys date, uid and ref.
+sub getAll {
+    no strict 'refs';
+    return &{ $_[0]->{type} . '::getAll' }(@_);
+}
+
+## @method hashref getDone()
+# Returns a list of notification that have been done. Wrapper for storage module
+# getDone().
+# @return hashref where keys are internal reference and values are hashref with
+# keys notified, uid and ref.
+sub getDone {
+    no strict 'refs';
+    return &{ $_[0]->{type} . '::getDone' }(@_);
+}
+
+## @method boolean purge(string myref)
+# Purge notification (really delete record). Wrapper for storage module purge()
+# @param $myref identifier returned by get or getAll
+# @return true if something was deleted
+sub purge {
+    no strict 'refs';
+    return &{ $_[0]->{type} . '::purge' }(@_);
+}
+
+## @method private hashref _get(string uid,string ref)
+# Returns notifications corresponding to the user $uid. Wrapper for storage
+# module get().
+# If $ref is set, returns only notification corresponding to this reference.
+# @param $uid UID
+# @param $ref Notification reference
+# @return hashref where keys are internal reference and values are XML strings
 sub _get {
     no strict 'refs';
     my $self = $_[0];
@@ -297,16 +332,30 @@ sub _get {
     return &{ $_[0]->{type} . '::get' }(@_);
 }
 
+## @method private boolean _delete(string myref)
+# Mark a notification as done. Wrapper for storage module delete()
+# @param $myref identifier returned by get() or getAll()
 sub _delete {
     no strict 'refs';
     return &{ $_[0]->{type} . '::delete' }(@_);
 }
 
+## @method private boolean _prereq()
+# Check if storage module parameters are set. Wrapper for storage module
+# prereq()
+# @return true if all is OK
 sub _prereq {
     no strict 'refs';
     return &{ $_[0]->{type} . '::prereq' }(@_);
 }
 
+## @method private boolean _newNotif(string date, string uid, string ref, string xml)
+# Insert a new notification. Wrapper for storage module newNotif()
+# @param date Date
+# @param uid UID
+# @param ref Reference of the notification
+# @param xml XML notification
+# @return true if succeed
 sub _newNotif {
     no strict 'refs';
     return &{ $_[0]->{type} . '::newNotif' }(@_);

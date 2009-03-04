@@ -32,7 +32,7 @@ sub prereq {
 }
 
 ## @method hashref get(string uid,string ref)
-# In file context, returns notifications corresponding to the user $uid.
+# Returns notifications corresponding to the user $uid.
 # If $ref is set, returns only notification corresponding to this reference.
 # @param $uid UID
 # @param $ref Notification reference
@@ -62,13 +62,39 @@ sub get {
     return $files;
 }
 
+## @method hashref getAll()
+# Return all messages not notified.
+# @return hashref where keys are internal reference and values are hashref with
+# keys date, uid and ref.
+sub getAll {
+    my $self = shift;
+    opendir D, $self->{dirName};
+    my @notif;
+    @notif = grep /^\S*\.xml$/, readdir(D);
+    my %h = map {
+        /^(\d{8})_([^\s_]+)_([^\s_]+)\.xml$/
+          ? ( $_ => { date => $1, uid => $2, ref => $3 } )
+          : ()
+    } @notif;
+    return \%h;
+}
+
 ## @method boolean delete(string myref)
 # Mark a notification as done.
-# @param $myref identifier returned by get
+# @param $myref identifier returned by get() or getAll()
 sub delete {
     my ( $self, $myref ) = @_;
     my $new = ( $myref =~ /(.*?)(?:\.xml)$/ )[0] . '.done';
     return rename( $self->{dirName} . "/$myref", $self->{dirName} . "/$new" );
+}
+
+## @method boolean purge(string myref)
+# Purge notification (really delete record)
+# @param $myref identifier returned by get() or getAll()
+# @return true if something was deleted
+sub purge {
+    my ( $self, $myref ) = @_;
+    return unlink( $self->{dirName} . "/$myref" );
 }
 
 ## @method boolean newNotif(string date, string uid, string ref, string xml)
@@ -94,6 +120,29 @@ sub newNotif {
     $xml->toFH($F);
     return ( 0, "Unable to close $filename ($!)" ) unless ( close $F );
     return 1;
+}
+
+## @method hashref getDone()
+# Returns a list of notification that have been done
+# @return hashref where keys are internal reference and values are hashref with
+# keys notified, uid and ref.
+sub getDone {
+    my ($self) = @_;
+    opendir D, $self->{dirName};
+    my @notif;
+    @notif = grep /^\d{8}_\S*\.done$/, readdir(D);
+    my $res;
+    foreach my $file (@notif) {
+        my ( $u, $r ) = ( $file =~ /^\d+_([^_]+)_([^_]+)\.done$/ );
+        die unless ( -f "$self->{dirName}/$file" );
+        my $time = ( stat("$self->{dirName}/$file") )[10];
+        $res->{$file} = {
+            'uid'      => $u,
+            'ref'      => decode_base64($r),
+            'notified' => $time,
+        };
+    }
+    return $res;
 }
 
 1;

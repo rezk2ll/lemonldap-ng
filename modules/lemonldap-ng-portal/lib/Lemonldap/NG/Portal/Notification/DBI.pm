@@ -6,6 +6,8 @@
 package Lemonldap::NG::Portal::Notification::DBI;
 
 use strict;
+use Time::Local;
+use DBI;
 
 ## @method boolean prereq()
 # Check if DBI parameters are set.
@@ -24,7 +26,7 @@ sub prereq {
 }
 
 ## @method hashref get(string uid,string ref)
-# In file context, returns notifications corresponding to the user $uid.
+# Returns notifications corresponding to the user $uid.
 # If $ref is set, returns only notification corresponding to this reference.
 # @param $uid UID
 # @param $ref Notification reference
@@ -47,9 +49,26 @@ sub get {
     return $result;
 }
 
+## @method hashref getAll()
+# Return all messages not notified.
+# @return hashref where keys are internal reference and values are hashref with
+# keys date, uid and ref.
+sub getAll {
+    my $self = shift;
+    _execute( $self,
+        "SELECT * FROM $self->{dbiTable} WHERE done IS NULL ORDER BY date" );
+    my $result;
+    while ( my $h = $self->{sth}->fetchrow_hashref() ) {
+        $result->{"$h->{date}#$h->{uid}#$h->{ref}"} =
+          { date => $h->{date}, uid => $h->{uid}, ref => $h->{ref}, };
+    }
+    $self->lmLog( $self->{sth}->err(), 'warn' ) if ( $self->{sth}->err() );
+    return $result;
+}
+
 ## @method boolean delete(string myref)
 # Mark a notification as done.
-# @param $myref identifier returned by get
+# @param $myref identifier returned by get() or getAll()
 sub delete {
     my ( $self, $myref ) = @_;
     my ( $d, $u, $r );
@@ -64,8 +83,28 @@ sub delete {
     $ts[5] += 1900;
     $ts[4]++;
     return _execute( $self,
-"UPDATE $self->{dbiTable} SET done='$ts[5]-$ts[4]-$ts[3] $ts[2]:$ts[1]' WHERE done IS NULL AND date='$d' AND uid='$u' AND ref='$r'"
-    );
+            "UPDATE $self->{dbiTable} "
+          . "SET done='$ts[5]-$ts[4]-$ts[3] $ts[2]:$ts[1]' "
+          . "WHERE done IS NULL AND date='$d' AND uid='$u' AND ref='$r'" );
+}
+
+## @method boolean purge(string myref)
+# Purge notification (really delete record)
+# @param $myref identifier returned by get or getAll
+# @return true if something was deleted
+sub purge {
+    my ( $self, $myref ) = @_;
+    my ( $d, $u, $r );
+    unless ( ( $d, $u, $r ) = ( $myref =~ /^([^#]+)#(.+?)#(.+)$/ ) ) {
+        $self->lmLog( "Bad reference $myref", 'warn' );
+        return 0;
+    }
+    $u =~ s/'/''/g;
+    $r =~ s/'/''/g;
+    $d =~ s/'/''/g;
+    return _execute( $self,
+            "DELETE FROM $self->{dbiTable} "
+          . "WHERE done IS NOT NULL AND date='$d' AND uid='$u' AND ref='$r'" );
 }
 
 ## @method boolean newNotif(string date, string uid, string ref, string xml)
@@ -83,8 +122,28 @@ sub newNotif {
     $xml = $xml->serialize();
     $xml =~ s/'/''/g;
     return _execute( $self,
-"INSERT INTO $self->{dbiTable} (date,uid,ref,xml) VALUES('$date','$uid','$ref','$xml')"
+            "INSERT INTO $self->{dbiTable} (date,uid,ref,xml) "
+          . "VALUES('$date','$uid','$ref','$xml')" );
+}
+
+## @method hashref getDone()
+# Returns a list of notification that have been done
+# @return hashref where keys are internal reference and values are hashref with
+# keys notified, uid and ref.
+sub getDone {
+    my ($self) = @_;
+    _execute( $self,
+        "SELECT * FROM $self->{dbiTable} WHERE done IS NOT NULL ORDER BY done"
     );
+    my $result;
+    while ( my $h = $self->{sth}->fetchrow_hashref() ) {
+        my @t = split( /\D+/, $h->{date} );
+        my $done = timelocal( $t[6], $t[5], $t[4], $t[3], $t[2], $t[1], $t[0] );
+        $result->{"$h->{date}#$h->{uid}#$h->{ref}"} =
+          { notified => $done, uid => $h->{uid}, ref => $h->{ref}, };
+    }
+    $self->lmLog( $self->{sth}->err(), 'warn' ) if ( $self->{sth}->err() );
+    return $result;
 }
 
 ## @method private object _execute(string query)
