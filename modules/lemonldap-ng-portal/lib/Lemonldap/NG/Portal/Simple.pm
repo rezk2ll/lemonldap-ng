@@ -69,6 +69,7 @@ use constant {
     PE_PASSWORD_OK                      => 35,
     PE_NOTIFICATION                     => 36,
     PE_BADURL                           => 37,
+    PE_NOSCHEME                         => 38,
 };
 
 # EXPORTER PARAMETERS
@@ -81,7 +82,8 @@ our @EXPORT =
   PE_PP_MUST_SUPPLY_OLD_PASSWORD PE_PP_INSUFFICIENT_PASSWORD_QUALITY
   PE_PP_PASSWORD_TOO_SHORT PE_PP_PASSWORD_TOO_YOUNG
   PE_PP_PASSWORD_IN_HISTORY PE_PP_GRACE PE_PP_EXP_WARNING
-  PE_PASSWORD_MISMATCH PE_PASSWORD_OK PE_NOTIFICATION PE_BADURL );
+  PE_PASSWORD_MISMATCH PE_PASSWORD_OK PE_NOTIFICATION PE_BADURL
+  PE_NOSCHEME);
 our %EXPORT_TAGS = ( 'all' => [ @EXPORT, 'import' ], );
 
 our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
@@ -137,10 +139,12 @@ sub new {
 
         # $self->{authentication} and $self->{userDB} can contains arguments
         # (key1 = scalar_value; key2 = ...)
-        $tmp = $self->{$_};
-        $tmp =~ s/^\w+\s*//;
-        my %h = split( /\s*[=;]\s*/, $tmp ) if ($tmp);
-        %$self = ( %h, %$self );
+        unless ( $self->{$_} =~ /^Multi/ ) {
+            $tmp = $self->{$_};
+            $tmp =~ s/^\w+\s*//;
+            my %h = split( /\s*[=;]\s*/, $tmp ) if ($tmp);
+            %$self = ( %h, %$self );
+        }
     }
     if ( $self->{notification} ) {
         require Lemonldap::NG::Portal::Notification;
@@ -445,7 +449,7 @@ sub safe {
             }";
         $self->lmLog( $@, 'error' ) if ($@);
     }
-    $safe->share( '&encode_base64', @t );
+    $safe->share( '&encode_base64', '%ENV', @t );
     return $safe;
 }
 
@@ -623,10 +627,9 @@ sub setSessionInfo {
     # Store IP address and start time
     $self->{sessionInfo}->{ipAddr} = $ENV{REMOTE_ADDR};
     $self->{sessionInfo}->{startTime} =
-        &POSIX::strftime( "%Y%m%d%H%M%S", localtime() );
+      &POSIX::strftime( "%Y%m%d%H%M%S", localtime() );
     return $self->SUPER::setSessionInfo();
 }
-
 
 ##@apmethod int setMacro()
 # 10) macro mechanism.

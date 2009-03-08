@@ -74,6 +74,7 @@ __END__
 # * PE_PASSWORD_OK                       35
 # * PE_NOTIFICATION                      36
 # * PE_BADURL                            37
+# * PE_NOSCHEME                          38
 
 # Not used in errors:
 # * PE_DONE                -1
@@ -123,6 +124,7 @@ sub error_fr {
         "Le mot de passe a &eacute;t&eacute; chang&eacute;",
         "Vous avez un nouveau message",
         'Mauvaise URL',
+        'Aucun sch&eacute;ma disponible',
     ];
 }
 
@@ -169,6 +171,7 @@ sub error_en {
         'Password successfully changed',
         'You have a new message',
         'Bad URL',
+        'No scheme available',
     ];
 }
 
@@ -216,5 +219,6 @@ sub error_ro {
         'Parola a fost schimbată',
         'Ai un mesaj nou',
         'Rea URL',
+        'No scheme available',
     ];
 }
