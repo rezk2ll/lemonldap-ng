@@ -78,15 +78,18 @@ sub try {
 # return true if an other module is available
 sub next {
     my ( $self, $type ) = @_;
-    if($self->{stack}->[$type]->[0]->{n} eq $self->{stack}->[1-$type]->[0]->{n} and $self->{stack}->[1-$type]->[1]) {
-	shift @{ $self->{stack}->[1-$type] };
+    if ( $self->{stack}->[$type]->[0]->{n} eq
+            $self->{stack}->[ 1 - $type ]->[0]->{n}
+        and $self->{stack}->[ 1 - $type ]->[1] )
+    {
+        shift @{ $self->{stack}->[ 1 - $type ] };
     }
     shift @{ $self->{stack}->[$type] };
     return 0 unless ( @{ $self->{stack}->[$type] } );
     %{ $self->{p} } = (
         %{ $self->{p} },
-        %{ $self->{p}->{multi}->{$self->{stack}->[$type]->[0]->{n}} }
-    ) if ( $self->{p}->{multi}->{$self->{stack}->[$type]->[0]->{n}} );
+        %{ $self->{p}->{multi}->{ $self->{stack}->[$type]->[0]->{n} } }
+    ) if ( $self->{p}->{multi}->{ $self->{stack}->[$type]->[0]->{n} } );
     return 1;
 }
 

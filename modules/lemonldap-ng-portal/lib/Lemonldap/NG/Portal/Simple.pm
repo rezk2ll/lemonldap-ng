@@ -449,7 +449,8 @@ sub safe {
             }";
         $self->lmLog( $@, 'error' ) if ($@);
     }
-    $safe->share( '&encode_base64', '%ENV', @t );
+    $safe->share_from( 'main', ['%ENV'] );
+    $safe->share( '&encode_base64', @t );
     return $safe;
 }
 

@@ -26,6 +26,7 @@ sub new {
     }
     my $useTls = 0;
     my $tlsParam;
+    my @servers = ();
     foreach my $server ( split /[\s,]+/, $portal->{ldapServer} ) {
         if ( $server =~ m{^ldap\+tls://([^/]+)/?\??(.*)$} ) {
             $useTls   = 1;
@@ -35,13 +36,13 @@ sub new {
         else {
             $useTls = 0;
         }
-        last
-          if $self = Net::LDAP->new(
-            $server,
-            port    => $portal->{ldapPort},
-            onerror => undef,
-          );
+        push @servers, $server;
     }
+    $self = Net::LDAP->new(
+        \@servers,
+            onerror => undef,
+        ( $portal->{ldapPort} ? ( port => $portal->{ldapPort} ) : () ),
+          );
     unless ($self) {
         $portal->lmLog( $@, 'error' );
         return 0;
