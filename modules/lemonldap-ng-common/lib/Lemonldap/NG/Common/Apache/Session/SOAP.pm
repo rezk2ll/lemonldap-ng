@@ -19,8 +19,10 @@ our $VERSION = 0.3;
 our ( $user, $password ) = ( '', '' );
 
 BEGIN {
+
     sub SOAP::Transport::HTTP::Client::get_basic_credentials {
-        return $Lemonldap::NG::Common::Apache::Session::SOAP::user => $Lemonldap::NG::Common::Apache::Session::SOAP::password;
+        return $Lemonldap::NG::Common::Apache::Session::SOAP::user =>
+          $Lemonldap::NG::Common::Apache::Session::SOAP::password;
     }
 }
 
@@ -47,13 +49,13 @@ sub TIEHASH {
     ( $user, $password ) = ( $args->{User}, $args->{Password} );
     bless $self, $class;
 
-    if (defined $session_id  && $session_id) {
+    if ( defined $session_id && $session_id ) {
         die "unexistant session $session_id"
-          unless( $self->get( $session_id ) );
+          unless ( $self->get($session_id) );
     }
     else {
         die "unable to create session"
-          unless( $self->newsession());
+          unless ( $self->newsession() );
     }
     return $self;
 }
@@ -98,14 +100,14 @@ sub EXISTS {
 }
 
 sub FIRSTKEY {
-    my $self = shift;
-    my $reset = keys %{$self->{data}};
-    return each %{$self->{data}};
+    my $self  = shift;
+    my $reset = keys %{ $self->{data} };
+    return each %{ $self->{data} };
 }
 
 sub NEXTKEY {
     my $self = shift;
-    return each %{$self->{data}};
+    return each %{ $self->{data} };
 }
 
 sub DESTROY {
@@ -133,7 +135,7 @@ sub _connect {
 sub _soapCall {
     my $self = shift;
     my $func = shift;
-    my $r = $self->_connect->$func(@_);
+    my $r    = $self->_connect->$func(@_);
     if ( $r->fault ) {
         print STDERR "SOAP Error: " . $r->fault->{faultstring};
         return ();
@@ -155,15 +157,16 @@ sub get {
 # @return User datas (just the session ID)
 sub newsession {
     my $self = shift;
-    return $self->{data} = $self->_soapCall( "newsession" );
+    return $self->{data} = $self->_soapCall("newsession");
 }
 
 ## @method boolean save()
 # Save user datas if modified.
 sub save {
     my $self = shift;
-    return unless ($self->{modified});
-    return $self->_soapCall( "set", $self->{data}->{_session_id}, $self->{data} );
+    return unless ( $self->{modified} );
+    return $self->_soapCall( "set", $self->{data}->{_session_id},
+        $self->{data} );
 }
 
 ## @method boolean delete()
@@ -171,6 +174,25 @@ sub save {
 sub delete {
     my $self = shift;
     return $self->_soapCall( "delete", $self->{data}->{_session_id} );
+}
+
+## @method get_key_from_all_sessions()
+# Not documented.
+sub get_key_from_all_sessions() {
+    my $class = shift;
+    my $args  = shift;
+    my $data  = shift;
+    if ( ref($data) eq 'CODE' ) {
+        my $r = $class->_soapCall( "get_key_from_all_sessions", $args );
+        my $res;
+        foreach my $k ( keys %$r ) {
+            my $tmp = &$data( $r->{$k}, $k );
+            $res->{$k} = $tmp if ( defined($tmp) );
+        }
+    }
+    else {
+        return $class->_soapCall( "get_key_from_all_sessions", $args, $data );
+    }
 }
 
 1;
