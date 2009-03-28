@@ -42,7 +42,7 @@ our (
     $localStorageOptions, $whatToTrace,          $https,
     $refLocalStorage,     $safe,                 $cookieSecured,
     $port,                $statusPipe,           $statusOut,
-    $customFunctions,
+    $customFunctions,     $transform,
 );
 
 ##########################################
@@ -72,6 +72,7 @@ BEGIN {
         log    => [qw(lmSetApacheUser)],
         traces => [qw( $whatToTrace $statusPipe $statusOut )],
         apache => [qw( MP OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR )],
+        post   => [qw($transform)],
     );
     push( @EXPORT_OK, @{ $EXPORT_TAGS{$_} } ) foreach ( keys %EXPORT_TAGS );
     $EXPORT_TAGS{all} = \@EXPORT_OK;
@@ -457,6 +458,7 @@ sub globalInit {
     $class->portalInit(@_);
     $class->globalStorageInit(@_);
     $class->forgeHeadersInit(@_);
+    $class->postUrlInit(@_);
 }
 
 ## @imethod protected void locationRulesInit(hashRef args)
@@ -630,6 +632,77 @@ sub initLocalStorage {
     return DECLINED;
 }
 
+## @imethod protected void postUrlInit()
+# Prepare methods to post form attributes
+sub postUrlInit {
+    my ( $class, $args ) = @_;
+    return unless ( $args->{post} );
+    eval 'use Apache2::Filter';
+    $transform = {};
+    while ( my ( $url, $d ) = each( %{ $args->{post} } ) ) {
+        $d->{postUrl} ||= $url;
+        $transform->{ $d->{postUrl} } =
+          sub { $class->buildPostForm( $d->{postUrl}, 1000 ) }
+          if ( $url ne $d->{postUrl} );
+
+        my $expr = $d->{expr};
+        $expr =~ s/\$(\w+)/\$datas->{$1}/g;
+        my %h = split /(?:\s*=>\s*|\s*,\s*)/, $expr;
+        my @tmp;
+        foreach ( keys %h ) {
+            $h{$_} = "'.$h{$_}.'" unless ( $h{$_} =~ /^\w+$/ );
+            push @tmp, "$_=$h{$_}";
+        }
+        my $string = "'" . join( '&', @tmp ) . "'";
+        $string =~ s/\.''$//;
+        my $sub = $class->safe->reval(
+            "sub{
+            my \$f = shift;
+            my \$l;
+            unless(\$f->ctx){
+            \$f->ctx(1);
+            my \$s = $string;
+            \$l = \$f->r->headers_in->{'Content-Length'};
+            \$f->r->headers_in->set( 'Content-Length' => length(\$s) );
+            \$f->r->headers_in->set( 'Content-Type' => 'application/x-www-form-urlencoded' );
+            \$f->print(\$s);
+            while ( \$f->read( my \$b, \$l ) ) {}
+            \$f->seen_eos(1);
+            }
+            return OK;
+        }"
+        );
+        $class->lmLog( "Compiling POST request for $url", 'debug' );
+        $transform->{$url} = sub {
+            return $class->buildPostForm( $url,
+                length( $class->safe->reval($string) ) )
+              if ( $apacheRequest->method ne 'POST' );
+            $apacheRequest->add_input_filter($sub);
+            OK;
+          }
+    }
+}
+
+sub buildPostForm {
+    my $class = shift;
+    my $url   = shift;
+    my $count = shift || 3;
+    print STDERR "DEBUG: $count\n";
+    $apacheRequest->handler("perl-script");
+    $apacheRequest->set_handlers(
+        'PerlResponseHandler' => sub {
+            my $r = shift;
+            $r->content_type('text/html; charset=UTF-8');
+            $r->print(
+qq{<html><body onload="document.getElementById('f').submit()"><form id="f" method="post" action="$url"><input type=submit name="a" value="}
+                  . sprintf( "%0" . $count . "d", 1 )
+                  . qq{"/></form></body></html>} );
+            OK;
+        }
+    );
+    OK;
+}
+
 ###################
 # RUNNING METHODS #
 ###################
@@ -781,8 +854,7 @@ sub run ($$) {
     ( $class, $apacheRequest ) = @_;
 
     return DECLINED unless ( $apacheRequest->is_initial_req );
-    my $uri =
-      $apacheRequest->uri
+    my $uri = $apacheRequest->uri
       . ( $apacheRequest->args ? "?" . $apacheRequest->args : "" );
 
     # AUTHENTICATION
@@ -841,6 +913,10 @@ sub run ($$) {
     # SECURITY
     # Hide Lemonldap::NG cookie
     $class->hideCookie;
+
+    if ( defined( $transform->{$uri} ) ) {
+        return &{ $transform->{$uri} };
+    }
     OK;
 }
 
