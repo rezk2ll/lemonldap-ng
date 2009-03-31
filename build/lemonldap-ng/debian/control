@@ -4,7 +4,7 @@ Priority: extra
 Maintainer: Xavier Guimard <x.guimard@free.fr>
 DM-Upload-Allowed: yes
 Build-Depends: debhelper (>= 4.1.16), po-debconf
-Build-Depends-Indep:libapache-session-perl, libnet-ldap-perl, libdbi-perl, libwww-perl, libcache-cache-perl, libxml-simple-perl, libcgi-session-perl, libcrypt-rijndael-perl, libxml-libxslt-perl, libio-string-perl, libregexp-assemble-perl
+Build-Depends-Indep:libapache-session-perl, libnet-ldap-perl, libdbi-perl, libwww-perl, libcache-cache-perl, libxml-simple-perl, libcgi-session-perl, libcrypt-rijndael-perl, libxml-libxslt-perl, libio-string-perl, libregexp-assemble-perl, liburi-perl
 Standards-Version: 3.8.0
 
 Package: lemonldap-ng
@@ -29,7 +29,7 @@ Description: Lemonldap::NG Web-SSO system documentation
 
 Package: liblemonldap-ng-handler-perl
 Architecture: all
-Depends: ${misc:Depends}, libapache-session-perl, libwww-perl, libcache-cache-perl, liblemonldap-ng-conf-perl (= ${binary:Version}), libapache2-mod-perl2 | libapache-mod-perl
+Depends: ${misc:Depends}, libapache-session-perl, libwww-perl, libcache-cache-perl, liblemonldap-ng-conf-perl (= ${binary:Version}), libapache2-mod-perl2 | libapache-mod-perl, liburi-perl
 Suggests: liblemonldap-ng-portal-perl
 Description: Lemonldap::NG Apache module part
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies

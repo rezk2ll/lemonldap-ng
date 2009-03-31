@@ -13,6 +13,7 @@ WriteMakefile(
         'Lemonldap::NG::Common' => 0.9,
         'IO::Pipe'              => 0,
         'CGI'                   => 3.08,
+        'URI'                   => 0,
     },    # e.g., Module::Name => 1.1
     (
         $] >= 5.005

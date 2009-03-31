@@ -637,31 +637,31 @@ sub initLocalStorage {
 sub postUrlInit {
     my ( $class, $args ) = @_;
     return unless ( $args->{post} );
-    eval 'use Apache2::Filter';
+    eval 'use Apache2::Filter;use URI';
     $transform = {};
     while ( my ( $url, $d ) = each( %{ $args->{post} } ) ) {
         $d->{postUrl} ||= $url;
         $transform->{ $d->{postUrl} } =
-          sub { $class->buildPostForm( $d->{postUrl}, 1000 ) }
+          sub { $class->buildPostForm( $d->{postUrl} ) }
           if ( $url ne $d->{postUrl} );
 
         my $expr = $d->{expr};
         $expr =~ s/\$(\w+)/\$datas->{$1}/g;
         my %h = split /(?:\s*=>\s*|\s*,\s*)/, $expr;
-        my @tmp;
+        my $tmp;
         foreach ( keys %h ) {
-            $h{$_} = "'.$h{$_}.'" unless ( $h{$_} =~ /^\w+$/ );
-            push @tmp, "$_=$h{$_}";
+            $h{$_} = "'$h{$_}'" if ( $h{$_} =~ /^\w+$/ );
+            $tmp .= "'$_'=>$h{$_},";
         }
-        my $string = "'" . join( '&', @tmp ) . "'";
-        $string =~ s/\.''$//;
         my $sub = $class->safe->reval(
             "sub{
             my \$f = shift;
             my \$l;
             unless(\$f->ctx){
             \$f->ctx(1);
-            my \$s = $string;
+            my \$u=URI->new('http:');
+            \$u->query_form({$tmp});
+            my \$s=\$u->query();
             \$l = \$f->r->headers_in->{'Content-Length'};
             \$f->r->headers_in->set( 'Content-Length' => length(\$s) );
             \$f->r->headers_in->set( 'Content-Type' => 'application/x-www-form-urlencoded' );
@@ -674,8 +674,7 @@ sub postUrlInit {
         );
         $class->lmLog( "Compiling POST request for $url", 'debug' );
         $transform->{$url} = sub {
-            return $class->buildPostForm( $url,
-                length( $class->safe->reval($string) ) )
+            return $class->buildPostForm($url)
               if ( $apacheRequest->method ne 'POST' );
             $apacheRequest->add_input_filter($sub);
             OK;
@@ -686,17 +685,16 @@ sub postUrlInit {
 sub buildPostForm {
     my $class = shift;
     my $url   = shift;
-    my $count = shift || 3;
-    print STDERR "DEBUG: $count\n";
+    my $count = shift || 1000;
     $apacheRequest->handler("perl-script");
     $apacheRequest->set_handlers(
         'PerlResponseHandler' => sub {
             my $r = shift;
             $r->content_type('text/html; charset=UTF-8');
             $r->print(
-qq{<html><body onload="document.getElementById('f').submit()"><form id="f" method="post" action="$url"><input type=submit name="a" value="}
+qq{<html><body onload="document.getElementById('f').submit()"><form id="f" method="post" action="$url"><input type=hidden name="a" value="}
                   . sprintf( "%0" . $count . "d", 1 )
-                  . qq{"/></form></body></html>} );
+                  . qq{"/><input type="submit" value="Ok"/></form></body></html>} );
             OK;
         }
     );
