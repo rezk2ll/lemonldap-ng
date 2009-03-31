@@ -4,6 +4,8 @@ lemonldap-ng (0.9.4) unstable; urgency=low
   * Session timeout is in seconds and not in minutes in Manager/Help.pm
     (Closes: #312339)
   * Notification system
+  * Missing dependency in Debian package (Closes: #521959 / bugs.debian.org)
+  * Double session mechanism (1 secured and the other not)
 
  -- Xavier Guimard <x.guimard@free.fr>  Sun, 08 Feb 2009 20:12:17 +0100
 

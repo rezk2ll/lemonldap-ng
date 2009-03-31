@@ -60,7 +60,9 @@ inherits from Lemonldap::NG::Portal::SharedConf.</dd>
 <dt> Secured cookie (SSL) </dt>
 <dd> An authenticated user is known by his cookie. If all (virtual) hosts use
 HTTPS, set this value to 1 so the cookie will be protected and will not be
-transmitted unless https is used.</dd>
+transmitted unless https is used. You can also set it to generate 2 cookies,
+1 secure and the other not. Handlers detects if they are in https mode or not
+and will choose the good cookie.</dd>
 </dl>
 EOT
 }
@@ -95,7 +97,11 @@ utilisant Lemonldap::NG::Portal::SharedConf.</dd>
 tous les h&ocirc;tes virtuels de votre domaine son prot&eacute;g&eacute;s par
 SSL, mettez cette option &agrave; 1, ainsi le cookie ne sera
 pr&eacute;sent&eacute; par le navigateur qu'aux sites prot&eacute;g&eacute;s,
-ce qui &eacute;vite un vol de session.</dd>
+ce qui &eacute;vite un vol de session. Vous pouvez également mettre cette
+valeur &agrave; 2 pour g&eacute;n&eacute;rer 2 cookies, l'un
+s&eacute;curis&eacute; et l'autre non. Les agents (handlers) d&eacute;tectent
+automatiquement s'il sont en mode https ou non et choisissent le bon cookie.
+</dd>
 </dl>
 EOT
 }

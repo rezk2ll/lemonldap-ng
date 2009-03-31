@@ -40,9 +40,9 @@ our (
     $cookieName,          $portal,               $datas,
     $globalStorage,       $globalStorageOptions, $localStorage,
     $localStorageOptions, $whatToTrace,          $https,
-    $refLocalStorage,     $safe,                 $cookieSecured,
-    $port,                $statusPipe,           $statusOut,
-    $customFunctions,     $transform,
+    $refLocalStorage,     $safe,                 $port,
+    $statusPipe,          $statusOut,            $customFunctions,
+    $transform,
 );
 
 ##########################################
@@ -65,8 +65,7 @@ BEGIN {
         headers => [
             qw(
               $forgeHeaders lmHeaderIn lmSetHeaderIn lmHeaderOut
-              lmSetHeaderOut lmSetErrHeaderOut $cookieName $cookieSecured
-              $https $port
+              lmSetHeaderOut lmSetErrHeaderOut $cookieName $https $port
               )
         ],
         log    => [qw(lmSetApacheUser)],
@@ -557,11 +556,11 @@ sub defaultValuesInit {
 
     # Other values
     $cookieName    = $args->{cookieName}    || $cookieName    || 'lemonldap';
-    $cookieSecured = $args->{cookieSecured} || $cookieSecured || 0;
     $whatToTrace   = $args->{whatToTrace}   || $whatToTrace   || 'uid';
     $whatToTrace =~ s/\$//g;
     $https = $args->{https} unless defined($https);
     $https = 1 unless defined($https);
+    $cookieName .= 'http' if($args->{securedCookie} == 2 and $https == 0);
     $port = $args->{port} || 0 unless defined($port);
     $customFunctions = $args->{customFunctions};
     1;

@@ -68,6 +68,7 @@ sub process {
             sub {
                 my $entry = shift;
                 my $id    = shift;
+                next if($entry->{_httpSessionType});
                 push
                   @{ $byUid->{ $entry->{$whatToTrace} }->{ $entry->{ipAddr} } },
                   { id => $id, _utime => $entry->{_utime} };
@@ -108,6 +109,7 @@ sub process {
             sub {
                 my $entry = shift;
                 my $id    = shift;
+                next if($entry->{_httpSessionType});
                 if ( $entry->{ipAddr} =~ /^$reip$/ ) {
                     push @{ $byUid->{ $entry->{ipAddr} }
                           ->{ $entry->{$whatToTrace} } },
@@ -149,6 +151,7 @@ sub process {
             sub {
                 my $entry = shift;
                 my $id    = shift;
+                next if($entry->{_httpSessionType});
                 if ( $entry->{$whatToTrace} =~ /^$reuser$/ ) {
                     push @{ $byUid->{ $entry->{$whatToTrace} } },
                       { id => $id, _utime => $entry->{_utime} };
@@ -185,9 +188,16 @@ sub process {
         }
         else {
             my $uid = $h{uid};
+            if($h{_httpSession}) {
+                my %h2;
+                eval { tie %h2, $globalStorage, $h{_httpSession}, $globalStorageOptions; tied(%h2)->delete(); };
+                if ($@) {
+                    print "<strong>Error : $@</strong><br/>";
+                }
+            }
             eval { tied(%h)->delete(); };
             if ($@) {
-                print "<strong>Error : $@</strong>\n";
+                print "<strong>Error : $@</strong><br/>";
             }
             else {
                 print "<strong>Session effac&eacute;e ($uid)</strong>";
@@ -236,6 +246,7 @@ sub process {
             sub {
                 my $entry = shift;
                 my $id    = shift;
+                next if($entry->{_httpSessionType});
                 if ( $entry->{ipAddr} eq $ip ) {
                     push @{ $byUser->{ $entry->{$whatToTrace} } },
                       { id => $id, _utime => $entry->{_utime} };
@@ -264,6 +275,7 @@ sub process {
             sub {
                 my $entry = shift;
                 my $id    = shift;
+                next if($entry->{_httpSessionType});
                 if ( $entry->{$whatToTrace} eq $uid ) {
                     push @{ $byIp->{ $entry->{ipAddr} } },
                       { id => $id, _utime => $entry->{_utime} };
@@ -292,6 +304,7 @@ sub process {
             $globalStorageOptions,
             sub {
                 my $entry = shift;
+                next if($entry->{_httpSessionType});
                 $entry->{$whatToTrace} =~ /^$letter/ or return undef;
                 $byUid->{ $entry->{$whatToTrace} }++;
             },
@@ -319,6 +332,7 @@ sub process {
             $globalStorageOptions,
             sub {
                 my $entry = shift;
+                next if($entry->{_httpSessionType});
                 $entry->{ipAddr} =~ /^$repartial(\d+)/ or return undef;
                 $byIp->{$1}++;
                 $count++;
@@ -358,6 +372,7 @@ sub process {
             $globalStorageOptions,
             sub {
                 my $entry = shift;
+                next if($entry->{_httpSessionType});
                 $entry->{$whatToTrace} =~ /^(\w)/ or return undef;
                 $byUid->{$1}++;
                 $count++;

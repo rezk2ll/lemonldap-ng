@@ -703,10 +703,18 @@ sub store {
     # Now, user is authenticated => inform Apache
     $self->setApacheUser( $self->{sessionInfo}->{ $self->{whatToTrace} } );
 
+    $self->{sessionInfo}->{_utime} = time();
+    if ( $self->{securedCookie} == 2 ) {
+        my $h2 = $self->getApacheSession(undef);
+        $h2->{$_} = $self->{sessionInfo}->{$_}
+          foreach ( keys %{ $self->{sessionInfo} } );
+        $self->{sessionInfo}->{_httpSession} = $h2->{_session_id};
+        $h2->{_httpSessionType} = 1;
+        untie %$h2;
+    }
     my $h = $self->getApacheSession(undef) or return PE_APACHESESSIONERROR;
     $h->{$_} = $self->{sessionInfo}->{$_}
       foreach ( keys %{ $self->{sessionInfo} } );
-    $h->{_utime} = time();
     untie %$h;
     PE_OK;
 }
@@ -725,6 +733,17 @@ sub buildCookie {
         -secure => $self->{securedCookie},
         @_,
       );
+    if ( $self->{securedCookie} == 2 ) {
+        push @{ $self->{cookie} },
+          $self->cookie(
+            -name   => $self->{cookieName}."http",
+            -value  => $self->{sessionInfo}->{_httpSession},
+            -domain => $self->{domain},
+            -path   => "/",
+            -secure => 0,
+            @_,
+          );
+    }
     PE_OK;
 }
 
