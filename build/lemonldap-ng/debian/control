@@ -4,7 +4,7 @@ Priority: extra
 Maintainer: Xavier Guimard <x.guimard@free.fr>
 DM-Upload-Allowed: yes
 Build-Depends: debhelper (>= 4.1.16), po-debconf
-Build-Depends-Indep:libapache-session-perl, libnet-ldap-perl, libdbi-perl, libwww-perl, libcache-cache-perl, libxml-simple-perl, libcgi-session-perl, libcrypt-rijndael-perl, libxml-libxslt-perl, libio-string-perl
+Build-Depends-Indep:libapache-session-perl, libnet-ldap-perl, libdbi-perl, libwww-perl, libcache-cache-perl, libxml-simple-perl, libcgi-session-perl, libcrypt-rijndael-perl, libxml-libxslt-perl, libio-string-perl, libregexp-assemble-perl
 Standards-Version: 3.8.0
 
 Package: lemonldap-ng
