@@ -43,7 +43,7 @@ sub run ($$) {
         $host =~ s/^[^\.]+\.(.*\..*$)/$1/;
         lmSetErrHeaderOut( $apacheRequest,
             'Set-Cookie' => "$str; domain=$host; path=/"
-              . ( $cookieSecured ? "; secure" : "" ) );
+              . ( $https ? "; secure" : "" ) );
         return REDIRECT;
     }
     else {
