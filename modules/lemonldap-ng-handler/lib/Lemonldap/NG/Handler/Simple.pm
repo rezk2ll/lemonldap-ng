@@ -539,6 +539,7 @@ sub conditionSub {
         }
     }
     $cond =~ s/\$date/&POSIX::strftime("%Y%m%d%H%M%S",localtime())/e;
+    $cond =~ s/\$vhost/"'".\$apacheRequest->hostname."'"/g;
     $cond =~ s/\$(\w+)/\$datas->{$1}/g;
     my $sub;
     $sub = $class->safe->reval("sub {return ( $cond )}");
@@ -557,6 +558,7 @@ sub defaultValuesInit {
     $whatToTrace =~ s/\$//g;
     $https = $args->{https} unless defined($https);
     $https = 1 unless defined($https);
+    $args->{securedCookie} = 1 unless defined($args->{securedCookie});
     $cookieName .= 'http' if($args->{securedCookie} == 2 and $https == 0);
     $port = $args->{port} || 0 unless defined($port);
     $customFunctions = $args->{customFunctions};
@@ -572,11 +574,12 @@ sub portalInit {
     if ( $args->{portal} =~ /[\$\(&\|"']/ ) {
         my $portal = $class->conditionSub( $args->{portal} );
         eval "sub portal {return &\$portal}";
-        die("Unable to read portal parameter ($@)") if ($@);
     }
     else {
         eval "sub portal {return '$args->{portal}'}";
     }
+    die("Unable to read portal parameter ($@)") if ($@);
+    1;
 }
 
 ## @imethod protected void globalStorageInit(hashRef args)
