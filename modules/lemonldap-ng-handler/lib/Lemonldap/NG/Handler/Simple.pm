@@ -35,14 +35,13 @@ our @EXPORT;
 
 # Shared variables
 our (
-    $locationRegexp,      $locationCondition,    $defaultCondition,
-    $forgeHeaders,        $apacheRequest,        $locationCount,
-    $cookieName,          $portal,               $datas,
-    $globalStorage,       $globalStorageOptions, $localStorage,
-    $localStorageOptions, $whatToTrace,          $https,
-    $refLocalStorage,     $safe,                 $port,
-    $statusPipe,          $statusOut,            $customFunctions,
-    $transform,
+    $locationRegexp,       $locationCondition, $defaultCondition,
+    $forgeHeaders,         $apacheRequest,     $locationCount,
+    $cookieName,           $datas,             $globalStorage,
+    $globalStorageOptions, $localStorage,      $localStorageOptions,
+    $whatToTrace,          $https,             $refLocalStorage,
+    $safe,                 $port,              $statusPipe,
+    $statusOut,            $customFunctions,   $transform,
 );
 
 ##########################################
@@ -57,8 +56,7 @@ BEGIN {
         locationRules => [
             qw(
               $locationCondition $defaultCondition $locationCount
-              $locationRegexp $apacheRequest $datas $safe $portal
-              safe $customFunctions
+              $locationRegexp $apacheRequest $datas $safe safe $customFunctions
               )
         ],
         import  => [qw( import @EXPORT_OK @EXPORT %EXPORT_TAGS )],
@@ -118,7 +116,6 @@ BEGIN {
             threads::shared::share($forgeHeaders);
             threads::shared::share($locationCount);
             threads::shared::share($cookieName);
-            threads::shared::share($portal);
             threads::shared::share($globalStorage);
             threads::shared::share($globalStorageOptions);
             threads::shared::share($localStorage);
@@ -316,7 +313,7 @@ sub statusProcess {
         $statusOut->writer();
         my $fdin  = $statusPipe->fileno;
         my $fdout = $statusOut->fileno;
-        open STDIN, "<&$fdin";
+        open STDIN,  "<&$fdin";
         open STDOUT, ">&$fdout";
         my @tmp = ();
         push @tmp, "-I$_" foreach (@INC);
@@ -530,7 +527,7 @@ sub conditionSub {
                 $apacheRequest->add_output_filter(
                     sub {
                         return $class->redirectFilter(
-                            "$portal?url="
+                            $class->portal() . "?url="
                               . $class->encodeUrl($u)
                               . "&logout=1",
                             @_
@@ -571,7 +568,15 @@ sub defaultValuesInit {
 # @param $args reference to the configuration hash
 sub portalInit {
     my ( $class, $args ) = @_;
-    $portal = $args->{portal} or die("portal parameter required");
+    die("portal parameter required") unless ( $args->{portal} );
+    if ( $args->{portal} =~ /[\$\(&\|"']/ ) {
+        my $portal = $class->conditionSub( $args->{portal} );
+        eval "sub portal {return &\$portal}";
+        die("Unable to read portal parameter ($@)") if ($@);
+    }
+    else {
+        eval "sub portal {return '$args->{portal}'}";
+    }
 }
 
 ## @imethod protected void globalStorageInit(hashRef args)
@@ -709,7 +714,7 @@ qq{<html><body onload="document.getElementById('f').submit()"><form id="f" metho
 sub updateStatus {
     my ( $class, $user, $url, $action ) = @_;
     eval {
-        print $statusPipe "$user => "
+            print $statusPipe "$user => "
           . $apacheRequest->hostname
           . "$url $action\n"
           if ($statusPipe);
@@ -820,7 +825,9 @@ sub goToPortal {
     );
     my $urlc_init = $class->encodeUrl($url);
     lmSetHeaderOut( $apacheRequest,
-        'Location' => "$portal?url=$urlc_init" . ( $arg ? "&$arg" : "" ) );
+            'Location' => $class->portal()
+          . "?url=$urlc_init"
+          . ( $arg ? "&$arg" : "" ) );
     return REDIRECT;
 }
 

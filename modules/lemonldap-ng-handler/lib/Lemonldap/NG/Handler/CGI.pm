@@ -141,8 +141,9 @@ sub group {
 # Redirects the user to the portal and exit.
 sub goToPortal {
     my $self = shift;
-    my $tmp  = encode_base64( $self->_uri, '' );
-    print CGI::redirect( -uri => "$portal?url=$tmp" );
+    my $tmp = encode_base64( $self->_uri, '' );
+    print CGI::redirect(
+        -uri => Lemonldap::NG::Handler::_CGI->portal() . "?url=$tmp" );
     exit;
 }
 

@@ -73,7 +73,7 @@ sub run ($$) {
 
             # 2.3 Authentication by Lemonldap::NG::Portal using SOAP request
             my $soap =
-              SOAP::Lite->proxy($portal)
+              SOAP::Lite->proxy( $class->portal() )
               ->uri('urn:Lemonldap::NG::Common::CGI::SOAPService');
             $user = decode_base64($user);
             ( $user, $pass ) = split /:/, $user;
