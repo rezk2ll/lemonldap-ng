@@ -19,7 +19,8 @@ sub startSoapServices {
         $ENV{PATH_INFO}
         and my $tmp = {
             '/sessions'      => 'getAttributes',
-            '/adminSessions' => 'setAttributes newSession',
+            '/adminSessions' => 'getAttributes setAttributes '
+              . 'newSession deleteSession get_key_from_all_sessions',
             '/config'        => 'getConfig'
         }->{ $ENV{PATH_INFO} }
       )
@@ -118,10 +119,29 @@ sub getAttributes {
         push @tmp,
           SOAP::Data->name( attributes =>
               _buildSoapHash( $h, split /\s+/, $self->{exportedAttr} ) );
-        untie(%$h);
+        untie %$h;
     }
     my $res = SOAP::Data->name( session => \SOAP::Data->value(@tmp) );
     return $res;
+}
+
+## @method SOAP::Data setAttributes(string id,hashref args)
+# Update datas in the session referenced by $id
+# @param $id Id of the session
+# @param $args datas to store
+# @return true if succeed
+sub setAttributes {
+    my ( $self, $id, $args ) = @_;
+    die 'id is required' unless ($id);
+    my $h = $self->getApacheSession($id);
+    unless ($h) {
+        $self->lmLog( "Session $id does not exists ($@)", 'warn' );
+        return 0;
+    }
+    $self->lmLog( "SOAP request to update session $id", 'debug' );
+    $h->{$_} = $args->{$_} foreach ( keys %{$args} );
+    untie %$h;
+    return 1;
 }
 
 ##@method SOAP::Data getConfig()
@@ -157,6 +177,51 @@ sub _buildSoapHash {
         }
     }
     return \SOAP::Data->value(@tmp);
+}
+
+## @method SOAP::Data newSession(hashref args)
+# Store a new session.
+# @return Session datas
+sub newSession {
+    my ( $self, $args ) = @_;
+    my $h = $self->getApacheSession();
+    if ($@) {
+        $self->lmLog( "Unable to create session", 'error' );
+        return 0;
+    }
+    $h->{$_} = $args->{$_} foreach ( keys %{$args} );
+    $h->{_utime} = time();
+    $args->{$_} = $h->{$_} foreach ( keys %$h );
+    untie %$h;
+    $self->lmLog( "SOAP request to store $args->{_session_id} ($args->{uid})",
+        'debug' );
+    return SOAP::Data->name( attributes => _buildSoapHash($args) );
+}
+
+## @method SOAP::Data deleteSession()
+# Deletes an existing session
+sub deleteSession {
+    my ( $self, $id ) = @_;
+    die('id parameter is required') unless ($id);
+    my $h = $self->getApacheSession($id);
+    return 0 if ($@);
+    $self->lmLog( "SOAP request to delete session $id", 'debug' );
+    return $self->_deleteSession($h);
+}
+
+##@method SOAP::Data getConfig()
+sub get_key_from_all_sessions {
+    my $self = shift;
+    shift;
+    require Lemonldap::NG::Common::Apache::Session;
+
+    #die $self->{globalStorage};
+    my $tmp = $self->{globalStorage};
+    no strict 'refs';
+    return $self->{globalStorage}
+      ->get_key_from_all_sessions( $self->{globalStorageOptions}, @_ );
+    return &{"$tmp\::get_key_from_all_sessions"}( $self->{globalStorage},
+        $self->{globalStorageOptions}, @_ );
 }
 
 1;

@@ -55,7 +55,7 @@ sub TIEHASH {
     }
     else {
         die "unable to create session"
-          unless ( $self->newsession() );
+          unless ( $self->newSession() );
     }
     return $self;
 }
@@ -124,7 +124,7 @@ sub _connect {
     if ( $self->{proxyOptions} ) {
         push @args, %{ $self->{proxyOptions} };
     }
-    $self->{ns} ||= 'urn:/Lemonldap/NG/Manager/SOAPService/Sessions';
+    $self->{ns} ||= 'urn:Lemonldap/NG/Common/CGI/SOAPService';
     return $self->{service} = SOAP::Lite->ns( $self->{ns} )->proxy(@args);
 }
 
@@ -140,7 +140,7 @@ sub _soapCall {
         print STDERR "SOAP Error: " . $r->fault->{faultstring};
         return ();
     }
-    return $self->_connect->$func(@_)->result;
+    return $r->result;
 }
 
 ## @method hashRef get(string id)
@@ -149,15 +149,17 @@ sub _soapCall {
 sub get {
     my $self = shift;
     my $id   = shift;
-    return $self->{data} = $self->_soapCall( "get", $id );
+    my $r    = $self->_soapCall( "getAttributes", $id );
+    return 0 unless ( $r or $r->{error} );
+    return $self->{data} = $r->{attributes};
 }
 
-## @method hashRef newsession()
+## @method hashRef newSession()
 # Build a new Apache::Session session.
 # @return User datas (just the session ID)
-sub newsession {
+sub newSession {
     my $self = shift;
-    return $self->{data} = $self->_soapCall("newsession");
+    return $self->{data} = $self->_soapCall("newSession");
 }
 
 ## @method boolean save()
@@ -165,7 +167,7 @@ sub newsession {
 sub save {
     my $self = shift;
     return unless ( $self->{modified} );
-    return $self->_soapCall( "set", $self->{data}->{_session_id},
+    return $self->_soapCall( "setAttributes", $self->{data}->{_session_id},
         $self->{data} );
 }
 
@@ -173,7 +175,7 @@ sub save {
 # Deletes the current session.
 sub delete {
     my $self = shift;
-    return $self->_soapCall( "delete", $self->{data}->{_session_id} );
+    return $self->_soapCall( "deleteSession", $self->{data}->{_session_id} );
 }
 
 ## @method get_key_from_all_sessions()
@@ -182,16 +184,24 @@ sub get_key_from_all_sessions() {
     my $class = shift;
     my $args  = shift;
     my $data  = shift;
+    my $self  = bless {}, $class;
+    foreach (qw(proxy proxyOptions ns)) {
+        $self->{$_} = $args->{$_};
+    }
+    die('proxy is required') unless ( $self->{proxy} );
+    ( $user, $password ) = ( $args->{User}, $args->{Password} );
     if ( ref($data) eq 'CODE' ) {
-        my $r = $class->_soapCall( "get_key_from_all_sessions", $args );
+        my $r = $self->_soapCall( "get_key_from_all_sessions", $args );
         my $res;
+        if ($r) {
         foreach my $k ( keys %$r ) {
             my $tmp = &$data( $r->{$k}, $k );
             $res->{$k} = $tmp if ( defined($tmp) );
         }
     }
+    }
     else {
-        return $class->_soapCall( "get_key_from_all_sessions", $args, $data );
+        return $self->_soapCall( "get_key_from_all_sessions", $args, $data );
     }
 }
 

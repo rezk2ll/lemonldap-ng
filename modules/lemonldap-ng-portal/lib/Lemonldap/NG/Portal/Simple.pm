@@ -454,6 +454,43 @@ sub safe {
     return $safe;
 }
 
+##@method private boolean _deleteSession(Apache::Session* h)
+# Delete an existing session
+# @param $h tied Apache::Session object
+sub _deleteSession {
+    my ( $self, $h ) = @_;
+    if ( my $id2 = $h->{_httpSession} ) {
+        my $h2 = $self->getApacheSession($id2);
+        tied(%$h2)->delete();
+
+        # Delete cookie
+        push @{ $self->{cookie} },
+          $self->cookie(
+            -name    => $self->{cookieName} . 'http',
+            -value   => 0,
+            -domain  => $self->{domain},
+            -path    => "/",
+            -secure  => 0,
+            -expires => '-1d',
+            @_,
+          );
+    }
+    my $r = tied(%$h)->delete();
+
+    # Delete cookie
+    push @{ $self->{cookie} },
+      $self->cookie(
+        -name    => $self->{cookieName},
+        -value   => 0,
+        -domain  => $self->{domain},
+        -path    => "/",
+        -secure  => 0,
+        -expires => '-1d',
+        @_,
+      );
+    return $r;
+}
+
 ###############################################################
 # MAIN subroutine: call all steps until one returns something #
 #                  different than PE_OK                       #
@@ -556,19 +593,7 @@ sub controlExistingSession {
         if ( $self->param('logout') ) {
 
             # Delete session in global storage
-            tied(%$h)->delete;
-
-            # Delete cookie
-            push @{ $self->{cookie} },
-              $self->cookie(
-                -name    => $self->{cookieName},
-                -value   => 0,
-                -domain  => $self->{domain},
-                -path    => "/",
-                -secure  => 0,
-                -expires => '-1d',
-                @_,
-              );
+            $self->_deleteSession($h);
             $self->{error} = PE_REDIRECT;
             $self->_sub( 'userNotice',
                 $self->{sessionInfo}->{ $self->{whatToTrace} }
@@ -576,7 +601,7 @@ sub controlExistingSession {
             $self->_subProcess(qw(autoRedirect));
             return PE_FIRSTACCESS;
         }
-        untie(%$h);
+        untie %$h;
         $self->{id} = $id;
 
         # A session has been find => calling &existingSession
@@ -736,7 +761,7 @@ sub buildCookie {
     if ( $self->{securedCookie} == 2 ) {
         push @{ $self->{cookie} },
           $self->cookie(
-            -name   => $self->{cookieName}."http",
+            -name   => $self->{cookieName} . "http",
             -value  => $self->{sessionInfo}->{_httpSession},
             -domain => $self->{domain},
             -path   => "/",

@@ -1,6 +1,10 @@
 package Lemonldap::NG::Manager::SOAPServer;
 
 use strict;
+
+die 'This module is now obsolete. You have to use the portal as "proxy".
+See http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocSOAP';
+__END__
 use SOAP::Transport::HTTP;
 use Lemonldap::NG::Common::Conf; #link protected config Configuration hash reference
 use UNIVERSAL qw(isa);
