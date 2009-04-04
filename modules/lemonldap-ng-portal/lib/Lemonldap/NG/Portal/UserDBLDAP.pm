@@ -33,8 +33,10 @@ sub formateFilter {
     my $self = shift;
     $self->{filter} =
          $self->{authFilter}
-      || $self->{filter}
-      || "(&(uid=" . $self->{user} . ")(objectClass=inetOrgPerson))";
+      || $self->{filter};
+    $self->{filter} =~ s/\$(user|_?password)/$self->{$1}/g;
+    $self->{filter} =~ s/\$(\w+)/$self->{sessionInfo}->{$1}/g;
+    $self->{filter} ||= "(&(uid=" . $self->{user} . ")(objectClass=inetOrgPerson))";
     PE_OK;
 }
 

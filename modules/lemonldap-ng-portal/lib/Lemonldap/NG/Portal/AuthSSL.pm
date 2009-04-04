@@ -40,7 +40,7 @@ sub extractFormInfo {
     if ($user) {
         $self->{sessionInfo}->{authenticationLevel} = 5;
         $self->{user} = $user;
-        $self->{authFilter} =
+        $self->{authFilter} ||=
           '(&(' . $self->{SSLLDAPField} . "=$user)(objectClass=inetOrgPerson))";
         return PE_OK;
     }

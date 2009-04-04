@@ -35,7 +35,7 @@ sub AUTOLOAD {
         return $tmp;
     }
     elsif($AUTOLOAD ne 'DESTROY') {
-        die "$AUTOLOAD is not an authorizated function";use Data::Dumper;
+        die "$AUTOLOAD is not an authorizated function";
     }
     1;
 }

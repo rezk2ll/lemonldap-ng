@@ -15,9 +15,11 @@ require SOAP::Lite;
 # If "soapOnly" is set, reject otehr request. Else, simply return.
 sub startSoapServices {
     my $self = shift;
+    $self->{CustomSOAPServices} ||= {};
     if (
         $ENV{PATH_INFO}
         and my $tmp = {
+            %{$self->{CustomSOAPServices}},
             '/sessions'      => 'getAttributes',
             '/adminSessions' => 'getAttributes setAttributes '
               . 'newSession deleteSession get_key_from_all_sessions',
