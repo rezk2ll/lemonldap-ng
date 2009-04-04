@@ -14,7 +14,7 @@
         <script type="text/javascript">
         $(document).ready(function(){
           $("input[name=user]").focus();
-          $("div.message").slideToggle('slow');
+          $("div.message").fadeIn('slow');
           $("input[type='password']").attr("autocomplete","off");
   	  $("#menu > ul").tabs();
   	  $("#menu > ul").tabs("select","#<TMPL_VAR NAME="DISPLAY_TAB">");

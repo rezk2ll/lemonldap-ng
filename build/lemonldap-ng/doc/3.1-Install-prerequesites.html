@@ -67,13 +67,22 @@
         <a href="#HPerl">Perl</a>
 
         <ul>
-          <li><a href="#HNeededforallmodules">Needed for all modules</a></li>
+          <li><a href="#HMandatory">Mandatory</a></li>
 
-          <li><a href="#HNeededforPortal">Needed for Portal</a></li>
+          <li><a href="#HExtras">Extras</a></li>
+        </ul>
+      </li>
 
-          <li><a href="#HNeededforHandler">Needed for Handler</a></li>
+      <li><a href="#HOther">Other</a></li>
 
-          <li><a href="#HNeededforManager">Needed for Manager</a></li>
+      <li>
+        <a href="#HInstalldependenciesonyoursystem">Install dependencies on
+        your system</a>
+
+        <ul>
+          <li><a href="#HAPTGET">APT-GET</a></li>
+
+          <li><a href="#HYUM">YUM</a></li>
         </ul>
       </li>
     </ul>
@@ -103,28 +112,60 @@
 
     <h3 class="heading-1-1"><span id="HPerl">Perl</span></h3>
 
-    <h4 class="heading-1-1-1"><span id="HNeededforallmodules">Needed for all
-    modules</span></h4>
+    <h4 class="heading-1-1-1"><span id="HMandatory">Mandatory</span></h4>
 
-    <p class="paragraph"></p>Apache::Session, Net::LDAP, MIME::Base64, CGI,
-    LWP::UserAgent, Cache::Cache, DBI, XML::Simple
+    <ul class="star">
+      <li>Apache::Session</li>
 
-    <h4 class="heading-1-1-1"><span id="HNeededforPortal">Needed for
-    Portal</span></h4>
+      <li>Net::LDAP</li>
 
-    <p class="paragraph"></p>Apache::Session, Net::LDAP, MIME::Base64, CGI,
-    DBI, CGI::Session
+      <li>MIME::Base64</li>
 
-    <h4 class="heading-1-1-1"><span id="HNeededforHandler">Needed for
-    Handler</span></h4>
+      <li>CGILWP::UserAgent</li>
 
-    <p class="paragraph"></p>Apache::Session, LWP::UserAgent, Cache::Cache,
-    DBI
+      <li>Cache::Cache</li>
 
-    <h4 class="heading-1-1-1"><span id="HNeededforManager">Needed for
-    Manager</span></h4>
+      <li>DBI</li>
 
-    <p class="paragraph"></p>CGI, XML::Simple, DBI
+      <li>XML::Simple</li>
+
+      <li>CGI::Session</li>
+
+      <li>Regexp::Assemble</li>
+
+      <li>XML::LibXML</li>
+    </ul>
+
+    <h4 class="heading-1-1-1"><span id="HExtras">Extras</span></h4>
+
+    <ul class="star">
+      <li>Lasso</li>
+
+      <li>CAS</li>
+    </ul>
+
+    <h3 class="heading-1-1"><span id="HOther">Other</span></h3>
+
+    <ul class="star">
+      <li>Jquery is included in tarball and RPMs, but is a dependency on
+      Debian</li>
+    </ul>
+
+    <h3 class="heading-1-1"><span id=
+    "HInstalldependenciesonyoursystem">Install dependencies on your
+    system</span></h3>
+
+    <h4 class="heading-1-1-1"><span id="HAPTGET">APT-GET</span></h4><br />
+    <br />
+
+    <div class="code">
+      <pre>
+# apt-get install apache2 libapache2-mod-perl2 libapache-session-perl libnet-ldap-perl libcache-cache-perl libdbi-perl perl-modules libwww-perl libcache-cache-perl libxml-simple-perl  libsoap-lite-perl libhtml-template-perl libregexp-assemble-perl libjs-jquery libxml-libxml-perl
+</pre>
+    </div>
+
+    <h4 class="heading-1-1-1"><span id="HYUM">YUM</span></h4><br />
+    <br />
   </div>
 
   <p class="footer"><a href="index.html">Index</a></p>
