@@ -16,6 +16,7 @@ use Lemonldap::NG::Common::CGI;
 use CGI::Cookie;
 require POSIX;
 use Lemonldap::NG::Portal::_i18n;    #inherits
+use Lemonldap::NG::Common::Safelib;    #link protected safe Safe object
 use Safe;
 
 # Special comments for doxygen
@@ -450,6 +451,8 @@ sub safe {
         $self->lmLog( $@, 'error' ) if ($@);
     }
     $safe->share_from( 'main', ['%ENV'] );
+    $safe->share_from( 'Lemonldap::NG::Common::Safelib',
+        $Lemonldap::NG::Common::Safelib::functions );
     $safe->share( '&encode_base64', @t );
     return $safe;
 }
@@ -1038,7 +1041,7 @@ Creates the ldap filter using $self->{user}. By default :
 
   $self->{filter} = "(&(uid=" . $self->{user} . ")(objectClass=inetOrgPerson))";
 
-If $self->{authFilter} is set, it is used instead of this. This is used by
+If $self->{AuthLDAPFilter} is set, it is used instead of this. This is used by
 Lemonldap::NG::Portal::Auth* modules to overload filter.
 
 =head3 connectLDAP

@@ -40,7 +40,7 @@ sub extractFormInfo {
     if ($user) {
         $self->{sessionInfo}->{authenticationLevel} = 5;
         $self->{user} = $user;
-        $self->{authFilter} ||=
+        $self->{AuthLDAPFilter} ||=
           '(&(' . $self->{SSLLDAPField} . "=$user)(objectClass=inetOrgPerson))";
         return PE_OK;
     }
@@ -48,7 +48,7 @@ sub extractFormInfo {
         $self->_sub('userError',"No certificate found for $ENV{REMOTE_ADDR}");
         return PE_CERTIFICATEREQUIRED;
     }
-    $self->{authFilter} = '';
+    $self->{AuthLDAPFilter} = '';
     return $self->SUPER::extractFormInfo(@_);
 }
 

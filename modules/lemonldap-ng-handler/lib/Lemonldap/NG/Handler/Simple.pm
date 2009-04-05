@@ -18,6 +18,7 @@ use strict;
 use MIME::Base64;
 use Exporter 'import';
 use Safe;
+use Lemonldap::NG::Common::Safelib;    #link protected safe Safe object
 require Data::Dumper;
 require POSIX;
 
@@ -355,6 +356,9 @@ sub safe {
             }";
         $class->lmLog( $@, 'error' ) if ($@);
     }
+    $safe->share_from( 'main', ['%ENV'] );
+    $safe->share_from( 'Lemonldap::NG::Common::Safelib',
+        $Lemonldap::NG::Common::Safelib::functions );
     $safe->share( '&encode_base64', '$datas', '&lmSetHeaderIn',
         '$apacheRequest', @t );
     return $safe;
@@ -558,8 +562,8 @@ sub defaultValuesInit {
     $whatToTrace =~ s/\$//g;
     $https = $args->{https} unless defined($https);
     $https = 1 unless defined($https);
-    $args->{securedCookie} = 1 unless defined($args->{securedCookie});
-    $cookieName .= 'http' if($args->{securedCookie} == 2 and $https == 0);
+    $args->{securedCookie} = 1 unless defined( $args->{securedCookie} );
+    $cookieName .= 'http' if ( $args->{securedCookie} == 2 and $https == 0 );
     $port = $args->{port} || 0 unless defined($port);
     $customFunctions = $args->{customFunctions};
     1;
@@ -701,7 +705,8 @@ sub buildPostForm {
             $r->print(
 qq{<html><body onload="document.getElementById('f').submit()"><form id="f" method="post" action="$url"><input type=hidden name="a" value="}
                   . sprintf( "%0" . $count . "d", 1 )
-                  . qq{"/><input type="submit" value="Ok"/></form></body></html>} );
+                  . qq{"/><input type="submit" value="Ok"/></form></body></html>}
+            );
             OK;
         }
     );

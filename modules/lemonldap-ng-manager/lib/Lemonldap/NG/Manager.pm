@@ -16,6 +16,7 @@ require Lemonldap::NG::Manager::_Response; #inherits
 require Lemonldap::NG::Manager::_i18n; #inherits
 require Lemonldap::NG::Manager::Help; #inherits
 use Lemonldap::NG::Common::Conf::Constants; #inherits
+use Lemonldap::NG::Common::Safelib;           #link protected safe Safe object
 use LWP::UserAgent;
 use Safe;
 use MIME::Base64;
@@ -45,6 +46,9 @@ sub safe {
         eval "sub $_ {1}";
         $self->lmLog( $@, 'error' ) if ($@);
     }
+    $safe->share_from( 'main', ['%ENV'] );
+    $safe->share_from( 'Lemonldap::NG::Common::Safelib',
+        $Lemonldap::NG::Common::Safelib::functions );
     $safe->share( '&encode_base64', @t );
     return $safe;
 }
