@@ -163,7 +163,7 @@ sub load {
     my $entry = $search->shift_entry();
     my @confValues = $entry->get_value('description');
     foreach (@confValues) {
-        my ( $k, $v ) = ( $_ =~ /\{(.*)\}(.*)/);
+        my ( $k, $v ) = ( $_ =~ /\{(.*?)\}(.*)/);
         if ($fields) {
             $f->{$k} = $v if ( grep { $_ eq $k } @$fields );
         }

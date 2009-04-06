@@ -17,6 +17,7 @@ use Regexp::Assemble;
 #inherits Lemonldap::NG::Common::Conf::File
 #inherits Lemonldap::NG::Common::Conf::DBI
 #inherits Lemonldap::NG::Common::Conf::SOAP
+#inherits Lemonldap::NG::Common::Conf::LDAP
 
 use constant DEFAULTCONFFILE => "/etc/lemonldap-ng/storage.conf";
 
@@ -35,6 +36,8 @@ our %_confFiles;
 # - { Type => "DBI", dbiChain => "DBI:mysql:database=lemonldap-ng;host=1.2.3.4",
 # dbiUser => "user", dbiPassword => "password" },
 # - { Type => "SOAP", proxy => "https://manager.example.com/soapmanager.pl" },
+# - { Type => "LDAP", ldapServer => "ldap://localhost", ldapConfBranch => "ou=conf,ou=applications,dc=example,dc=com",
+#  ldapBindDN => "cn=manager,dc=example,dc=com", ldapBindPassword => "secret"},
 #
 # $self->{type} contains the type of configuration access system and the
 # corresponding package is loaded.
@@ -414,6 +417,16 @@ SOAP configuration access is a sort of proxy: the SOAP server that runs
 L<Lemonldap::NG::Manager::SOAPServer> is configured to use the real session
 storage type (DBI or File for example). See L<Lemonldap::NG::Conf::SOAP> for
 more.
+
+=item * B<LDAP>:
+  $confAccess = new Lemonldap::NG::Common::Conf(
+                {
+                type             => 'LDAP',
+                ldapServer       => 'ldap://localhost',
+                ldapConfBranch   => 'ou=conf,ou=applications,dc=example,dc=com',
+                ldapBindDN       => 'cn=manager,dc=example,dc=com",
+                ldapBindPassword => 'secret'
+                });
 
 =back
 
