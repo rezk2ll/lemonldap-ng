@@ -8,13 +8,32 @@ package Lemonldap::NG::Portal::AuthLDAP;
 use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::_LDAP 'ldap';    #link protected ldap
 use Lemonldap::NG::Portal::_WebForm;
-use Lemonldap::NG::Portal::UserDBLDAP;    #inherits
+use Lemonldap::NG::Portal::UserDBLDAP;      #inherits
 
 our $VERSION = '0.2';
 use base qw(Lemonldap::NG::Portal::_WebForm);
 
 *_formateFilter = *Lemonldap::NG::Portal::UserDBLDAP::formateFilter;
 *_search        = *Lemonldap::NG::Portal::UserDBLDAP::search;
+
+our $ppLoaded = 0;
+
+## @method private boolean loadPP ()
+# Load Net::LDAP::Control::PasswordPolicy
+# @return true if succeed.
+sub loadPP {
+    return 1 if ($ppLoaded);
+
+    # require Perl module
+    eval 'require Net::LDAP::Control::PasswordPolicy';
+    if ($@) {
+        $self->lmLog(
+            "Module Net::LDAP::Control::PasswordPolicy not found in @INC",
+            'error' );
+        return 0;
+    }
+    $ppLoaded = 1;
+}
 
 ## @apmethod int authenticate()
 # Authenticate user by LDAP mechanism.
@@ -32,17 +51,10 @@ sub authenticate {
     }
 
     # Check if we use Ppolicy control
-    if ( $self->{ldapPpolicyControl} ) {
-
-        # require Perl module
-        eval 'require Net::LDAP::Control::PasswordPolicy';
-        if ($@) {
-            $self->lmLog(
-                "Module Net::LDAP::Control::PasswordPolicy not found in @INC",
-                'error' );
-            return PE_LDAPERROR;
-        }
-        no strict 'subs';
+    if ( $self->{ldapPpolicyControl}
+        and ( $self->loadPP() or return PP_LDAPERROR ) )
+    {
+        no strict 'subs';    # TODO: why that ?
 
         # Create Control object
         my $pp = Net::LDAP::Control::PasswordPolicy->new();
@@ -56,6 +68,8 @@ sub authenticate {
 
         # Get server control response
         my ($resp) = $mesg->control("1.3.6.1.4.1.42.2.27.8.5.1");
+        return ( $mesg->code == 0 ? PE_OK : PE_LDAPERROR )
+          unless ( defined $resp );
 
         # Get expiration warning and graces
         $self->{ppolicy}->{time_before_expiration} =
@@ -66,35 +80,34 @@ sub authenticate {
         # Get bind response
         return PE_OK if ( $mesg->code == 0 );
 
-        if ( defined $resp ) {
-            my $pp_error = $resp->pp_error;
-            if ( defined $pp_error ) {
-                return [
-                    PE_PP_PASSWORD_EXPIRED,
-                    PE_PP_ACCOUNT_LOCKED,
-                    PE_PP_CHANGE_AFTER_RESET,
-                    PE_PP_PASSWORD_MOD_NOT_ALLOWED,
-                    PE_PP_MUST_SUPPLY_OLD_PASSWORD,
-                    PE_PP_INSUFFICIENT_PASSWORD_QUALITY,
-                    PE_PP_PASSWORD_TOO_SHORT,
-                    PE_PP_PASSWORD_TOO_YOUNG,
-                    PE_PP_PASSWORD_IN_HISTORY,
-                ]->[$pp_error];
-            }
-            else {
-                $self->_sub('userError',"Bad password for $self->{user}");
-                return PE_BADCREDENTIALS;
-            }
+        my $pp_error = $resp->pp_error;
+        if ( defined $pp_error ) {
+            #return [
+            #    PE_PP_PASSWORD_EXPIRED,
+            #    PE_PP_ACCOUNT_LOCKED,
+            #    PE_PP_CHANGE_AFTER_RESET,
+            #    PE_PP_PASSWORD_MOD_NOT_ALLOWED,
+            #    PE_PP_MUST_SUPPLY_OLD_PASSWORD,
+            #    PE_PP_INSUFFICIENT_PASSWORD_QUALITY,
+            #    PE_PP_PASSWORD_TOO_SHORT,
+            #    PE_PP_PASSWORD_TOO_YOUNG,
+            #    PE_PP_PASSWORD_IN_HISTORY,
+            #]->[$pp_error];
+            return $pp_error + PE_PP_PASSWORD_EXPIRED;
+        }
+        elsif ( $mesg->code == 0 ) {
+            return PE_OK;
         }
         else {
-            return PE_LDAPERROR;
+            $self->_sub( 'userError', "Bad password for $self->{user}" );
+            return PE_BADCREDENTIALS;
         }
     }
     else {
         my $mesg =
           $self->ldap->bind( $self->{dn}, password => $self->{password} );
         if ( $mesg->code != 0 ) {
-            $self->_sub('userError',"Bad password for $self->{user}");
+            $self->_sub( 'userError', "Bad password for $self->{user}" );
             return PE_BADCREDENTIALS;
         }
     }
