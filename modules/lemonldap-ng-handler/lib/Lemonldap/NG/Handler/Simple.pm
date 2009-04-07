@@ -543,10 +543,9 @@ sub conditionSub {
         }
     }
     $cond =~ s/\$date/&POSIX::strftime("%Y%m%d%H%M%S",localtime())/e;
-    $cond =~ s/\$vhost/"'".\$apacheRequest->hostname."'"/g;
     $cond =~ s/\$(\w+)/\$datas->{$1}/g;
-    my $sub;
-    $sub = $class->safe->reval("sub {return ( $cond )}");
+    $cond =~ s/\$datas->{vhost}/\$apacheRequest->hostname/g;
+    my $sub = $class->safe->reval("sub {return ( $cond )}");
     return $sub;
 }
 
