@@ -506,13 +506,13 @@ sub conditionSub {
       if ( $cond =~ /^accept$/i );
     return sub { 0 }
       if ( $cond =~ /^deny$/i );
-    if ( $cond =~ /^logout(?:_sso)?(?:\s+(.*))$/i ) {
-        my $url = $1;
+    if ( $cond =~ /^logout(?:_sso)?(?:\s+(.*))?$/i ) {
+        my $url = $1 || $class->portal();
         return sub { $datas->{_logout} = $url; return 0 }
     }
     if ( MP() == 2 ) {
         if ( $cond =~ /^logout_app(?:\s+(.*))?$/i ) {
-            my $u = $1;
+            my $u = $1 || $class->portal();
             eval 'use Apache2::Filter' unless ( $INC{"Apache2/Filter.pm"} );
             return sub {
                 $apacheRequest->add_output_filter(
@@ -525,7 +525,7 @@ sub conditionSub {
         }
         elsif ( $cond =~ /^logout_app_sso(?:\s+(.*))?$/i ) {
             eval 'use Apache2::Filter' unless ( $INC{"Apache2/Filter.pm"} );
-            my $u = $1;
+            my $u = $1 || $class->portal();
             return sub {
                 $class->localUnlog;
                 $apacheRequest->add_output_filter(
