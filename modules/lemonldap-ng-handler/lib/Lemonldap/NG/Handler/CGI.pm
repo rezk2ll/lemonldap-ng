@@ -96,6 +96,7 @@ sub authenticate {
     }
     # Accounting : set user in apache logs
     $self->setApacheUser($datas->{$whatToTrace});
+    $ENV{REMOTE_USER} = $datas->{$whatToTrace};
 
     return 1;
 }

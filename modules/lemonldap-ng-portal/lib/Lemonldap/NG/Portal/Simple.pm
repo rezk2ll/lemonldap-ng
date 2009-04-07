@@ -15,7 +15,7 @@ use MIME::Base64;
 use Lemonldap::NG::Common::CGI;
 use CGI::Cookie;
 require POSIX;
-use Lemonldap::NG::Portal::_i18n;    #inherits
+use Lemonldap::NG::Portal::_i18n;      #inherits
 use Lemonldap::NG::Common::Safelib;    #link protected safe Safe object
 use Safe;
 
@@ -146,6 +146,11 @@ sub new {
             my %h = split( /\s*[=;]\s*/, $tmp ) if ($tmp);
             %$self = ( %h, %$self );
         }
+    }
+    if ( $self->{SAMLIssuer} ) {
+        require Lemonldap::NG::Portal::SAMLIssuer;
+        push @ISA, 'Lemonldap::NG::Portal::SAMLIssuer';
+        $self->SAMLIssuerInit();
     }
     if ( $self->{notification} ) {
         require Lemonldap::NG::Portal::Notification;
@@ -402,7 +407,7 @@ sub _subProcess {
 # If an handler is launched on the same server with "status=>1", inform the
 # status module with the result (portal error).
 sub updateStatus {
-    my ($self) = @_;
+    my $self = shift;
     print $Lemonldap::NG::Handler::Simple::statusPipe (
         $self->{user} ? $self->{user} : $ENV{REMOTE_ADDR} )
       . " => $ENV{SERVER_NAME}$ENV{SCRIPT_NAME} "
@@ -413,7 +418,7 @@ sub updateStatus {
 ##@method protected string notification()
 #@return Notification stored by checkNotification()
 sub notification {
-    my ($self) = @_;
+    my $self = shift;
     return $self->{_notification};
 }
 
@@ -421,10 +426,8 @@ sub notification {
 # check url against XSS attacks
 # @return url parameter if good, nothing else.
 sub get_url {
-    my ($self) = @_;
-    return unless $self->param('url');
-    return if ( $self->param('url') =~ m#[^A-Za-z0-9\+/=]# );
-    return $self->param('url');
+    my $self = shift;
+    return $self->{url};
 }
 
 ##@method private Safe safe()
@@ -510,10 +513,10 @@ sub process {
     my ($self) = @_;
     $self->{error} = PE_OK;
     $self->{error} = $self->_subProcess(
-        qw(controlUrlOrigin checkNotifBack controlExistingSession authInit
-          extractFormInfo userDBInit getUser setAuthSessionInfo setSessionInfo
-          setMacros setGroups authenticate store buildCookie checkNotification
-          autoRedirect)
+        qw(controlUrlOrigin checkNotifBack controlExistingSession
+          SAMLForUnAuthUser authInit extractFormInfo userDBInit getUser
+          setAuthSessionInfo setSessionInfo setMacros setGroups authenticate
+          store buildCookie checkNotification SAMLForAuthUser autoRedirect)
     );
     $self->updateStatus;
     return ( ( $self->{error} > 0 ) ? 0 : 1 );
@@ -524,12 +527,14 @@ sub process {
 #@return Lemonldap::NG::Portal constant
 sub controlUrlOrigin {
     my $self = shift;
+    $self->{url} ||= '';
+    my $url = $self->param('url');
     if ( $self->param('url') ) {
 
         # REJECT NON BASE64 URL
-        return PE_BADURL if ( $self->param('url') =~ m#[^A-Za-z0-9\+/=]# );
+        return PE_BADURL if ( $url =~ m#[^A-Za-z0-9\+/=]# );
 
-        $self->{urldc} = decode_base64( $self->param('url') );
+        $self->{urldc} = decode_base64($url);
         $self->{urldc} =~ s/[\r\n]//sg;
 
         # REJECT [\0<'"`] in URL or encoded '%' and non protected hosts
@@ -543,6 +548,7 @@ m#^https?://(?:$self->{reVHosts}|(?:[^/]*)?$self->{domain})(?::\d+)?(?:/.*)?$#
             delete $self->{urldc};
             return PE_BADURL;
         }
+        $self->{url} = $url;
     }
     PE_OK;
 }
@@ -560,11 +566,20 @@ sub checkNotifBack {
             return PE_NOTIFICATION;
         }
         else {
-            $self->{error} =
-              $self->_subProcess(qw(checkNotification autoRedirect));
+            $self->{error} = $self->_subProcess(
+                qw(checkNotification SAMLForAuthUser autoRedirect));
             return $self->{error} || PE_DONE;
         }
     }
+    PE_OK;
+}
+
+##@apmethod int SAMLForUnAuthUser()
+# Load Lemonldap::NG::Portal::SAMLIssuer::SAMLForUnAuthUser() if
+# $self->{SAMLIssuer} is set.
+#@return Lemonldap::NG::Portal constant
+sub SAMLForUnAuthUser {
+    return $self->SUPER::SAMLForUnAuthUser(@_) if ( $self->{SAMLIssuer} );
     PE_OK;
 }
 
@@ -601,6 +616,7 @@ sub controlExistingSession {
             $self->_sub( 'userNotice',
                 $self->{sessionInfo}->{ $self->{whatToTrace} }
                   . " has been disconnected" );
+            eval { $self->_sub('authLogout') };
             $self->_subProcess(qw(autoRedirect));
             return PE_FIRSTACCESS;
         }
@@ -788,6 +804,15 @@ sub checkNotification {
         return PE_NOTIFICATION;
     }
     return PE_OK;
+}
+
+##@apmethod int SAMLForAuthUser()
+# Load Lemonldap::NG::Portal::SAMLIssuer::SAMLForAuthUser() if
+# $self->{SAMLIssuer} is set.
+#@return Lemonldap::NG::Portal constant
+sub SAMLForAuthUser {
+    return $self->SUPER::SAMLForAuthUser(@_) if ( $self->{SAMLIssuer} );
+    PE_OK;
 }
 
 ##@apmethod int autoRedirect()
