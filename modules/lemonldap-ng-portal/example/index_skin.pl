@@ -9,6 +9,13 @@ my $skin_dir    = "__SKINDIR__";
 my $appsxmlfile = "__APPSXMLFILE__";
 my $appsimgpath = "apps/";
 
+# Password management
+use constant USER_CAN_CHANGE_PASSWORD => 1;
+use constant REQUIRE_OLDPASSWORD      => 1;
+
+# Logout displayed
+use constant DISPLAY_LOGOUT => 1;
+
 my $portal = Lemonldap::NG::Portal::SharedConf->new(
     {
 
@@ -42,9 +49,10 @@ my $portal = Lemonldap::NG::Portal::SharedConf->new(
         # SOAP FUNCTIONS
         # Remove comment to activate SOAP Functions getCookies(user,pwd) and
         # error(language, code)
-        #Soap => 1,
+        Soap => 1,
         # Note that getAttibutes() will be activated but on a different URI
-        # (http://auth.example.com/index.pl/sessions
+        # (http://auth.example.com/index.pl/sessions)
+        # You can also restrict attributes and macros exported by getAttributes
         #exportedAttr => 'uid mail',
 
         # PASSWORD POLICY
@@ -92,7 +100,7 @@ if ( $portal->process() ) {
     );
 
     # Menu creation
-    require Lemonldap::NG::Portal::Menu;
+    use Lemonldap::NG::Portal::Menu;
     my $menu = Lemonldap::NG::Portal::Menu->new(
         {
             portalObject => $portal,
@@ -102,21 +110,22 @@ if ( $portal->process() ) {
             },
             modules => {
                 appslist => 1,
-                password => 1,
-                logout   => 1,
+                password => USER_CAN_CHANGE_PASSWORD,
+                logout   => DISPLAY_LOGOUT,
             },
             # CUSTOM FUNCTION : if you want to create customFunctions in rules, declare them here
             #customFunctions    => 'function1 function2',
         }
     );
 
-    $template->param( AUTH_ERROR       => $menu->error );
-    $template->param( AUTH_ERROR_TYPE  => $menu->error_type );
-    $template->param( DISPLAY_APPSLIST => $menu->displayModule("appslist") );
-    $template->param( DISPLAY_PASSWORD => $menu->displayModule("password") );
-    $template->param( DISPLAY_LOGOUT   => $menu->displayModule("logout") );
-    $template->param( DISPLAY_TAB      => $menu->displayTab );
-    $template->param( LOGOUT_URL       => "$ENV{SCRIPT_NAME}?logout=1" );
+    $template->param( AUTH_ERROR          => $menu->error );
+    $template->param( AUTH_ERROR_TYPE     => $menu->error_type );
+    $template->param( DISPLAY_APPSLIST    => $menu->displayModule("appslist") );
+    $template->param( DISPLAY_PASSWORD    => $menu->displayModule("password") );
+    $template->param( DISPLAY_LOGOUT      => $menu->displayModule("logout") );
+    $template->param( DISPLAY_TAB         => $menu->displayTab );
+    $template->param( LOGOUT_URL          => "$ENV{SCRIPT_NAME}?logout=1" );
+    $template->param( REQUIRE_OLDPASSWORD => REQUIRE_OLDPASSWORD );
     if ( $menu->displayModule("appslist") ) {
         $template->param( APPSLIST_MENU => $menu->appslistMenu );
         $template->param( APPSLIST_DESC => $menu->appslistDescription );
@@ -125,7 +134,7 @@ if ( $portal->process() ) {
     print $portal->header('text/html; charset=utf8');
     print $template->output;
 }
-elsif( my $notif = $portal->notification ) {
+elsif ( my $notif = $portal->notification ) {
     my $template = HTML::Template->new(
         filename          => "$skin_dir/$skin/notification.tpl",
         die_on_bad_params => 0,
@@ -135,7 +144,6 @@ elsif( my $notif = $portal->notification ) {
     $template->param( AUTH_ERROR      => $portal->error );
     $template->param( AUTH_ERROR_TYPE => $portal->error_type );
     $template->param( NOTIFICATION    => $notif );
-
     print $portal->header('text/html; charset=utf8');
     print $template->output;
 }
@@ -152,7 +160,15 @@ else {
     $template->param( AUTH_ERROR      => $portal->error );
     $template->param( AUTH_ERROR_TYPE => $portal->error_type );
     $template->param( AUTH_URL        => $portal->get_url );
-    $template->param( DISPLAY_FORM    => 1 );
+    if ( USER_CAN_CHANGE_PASSWORD
+        and $portal->error == PE_PP_CHANGE_AFTER_RESET )
+    {
+        $template->param( REQUIRE_OLDPASSWORD => 1 );
+        $template->param( DISPLAY_PASSWORD    => 1 );
+    }
+    else {
+        $template->param( DISPLAY_FORM => 1 );
+    }
 
     print $portal->header('text/html; charset=utf8');
     print $template->output;

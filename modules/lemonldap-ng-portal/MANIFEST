@@ -69,6 +69,7 @@ example/skins/pastel/login.tpl
 example/skins/pastel/menu.tpl
 example/skins/pastel/notification.tpl
 example/skins/pastel/ok.png
+example/skins/pastel/password.tpl
 example/skins/pastel/stop.png
 example/skins/pastel/styles.css
 example/skins/pastel/user_suit.png

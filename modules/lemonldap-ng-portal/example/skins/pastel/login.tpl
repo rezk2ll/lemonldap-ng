@@ -34,6 +34,8 @@
 	</form>
 	</TMPL_IF>
 
+	<TMPL_INCLUDE NAME="password.tpl">
+
 	<TMPL_IF NAME="LOGOUT_URL">
 		<div class="buttons">
 		<a href="<TMPL_VAR NAME="LOGOUT_URL">" class="negative">

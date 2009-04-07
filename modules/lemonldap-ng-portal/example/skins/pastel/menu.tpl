@@ -22,29 +22,7 @@
                 </div>
 		</TMPL_IF>
 
-		<TMPL_IF NAME="DISPLAY_PASSWORD">
-		<div id="password">
-		<form action="#" method="post" class="password">
-		<h3><lang en="Change your password" fr="Changez votre mot de passe" /></h3>
-		<table><tr><th><lang en="New password" fr="Nouveau mot de passe" /></th>
-		<td><input name="newpassword" type="password" /></td></tr>
-		<tr><th><lang en="Confirm password" fr="Confirmez le mot de passe" /></th>
-		<td><input name="confirmpassword" type="password" /></td></tr>
-		<tr><td colspan="2">
-                <div class="buttons">
-                <button type="reset" class="negative">
-                        <img src="skins/pastel/cancel.png" alt="" />
-                        <lang en="Cancel" fr="Annuler" />
-                </button>
-                <button type="submit" class="positive">
-                        <img src="skins/pastel/accept.png" alt="" />
-                        <lang en="Submit" fr="Soumettre" />
-                </button>
-		</div></td></tr>
-		</table>
-		</form>
-		</div>
-		</TMPL_IF>
+		<TMPL_INCLUDE NAME="password.tpl">
 		
 		<TMPL_IF NAME="DISPLAY_LOGOUT">
 		<div id="logout">
