@@ -16,6 +16,9 @@ require SOAP::Lite;
 sub startSoapServices {
     my $self = shift;
     $self->{CustomSOAPServices} ||= {};
+
+    # TODO: insert here the SAML SOAP functions
+    $self->{CustomSOAPServices}->{'/SAMLAuthority'} = '' if($self->{SAMLIssuer});
     if (
         $ENV{PATH_INFO}
         and my $tmp = {

@@ -44,6 +44,12 @@ sub authenticate {
 sub authLogout {
 }
 
+## @apmethod array SAMLIssuerLinks()
+# TODO
+# @return 2 arrays: HTTP links and SAML issuer names
+sub SAMLIssuerLinks {
+}
+
 1;
 __END__
 

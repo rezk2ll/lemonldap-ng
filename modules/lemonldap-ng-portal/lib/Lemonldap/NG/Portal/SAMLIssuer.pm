@@ -19,23 +19,31 @@ sub SAMLIssuerInit {
     return PE_OK;
 }
 
-## @method int SAMLForUnAuthUser()
+## @apmethod int SAMLForUnAuthUser()
 # TODO
 # Check if there is an SAML authentication request.
 # Called only for unauthenticated users, it store SAML request in
 # $self->{url}
 # @return Lemonldap::NG::Portal error code
 sub SAMLForUnAuthUser {
+    my $self = shift;
     PE_OK;
 }
 
-## @method int SAMLForAuthUser()
+## @apmethod int SAMLForAuthUser()
 # TODO
 # Check if there is an SAML authentication request for an authenticated user
 # and build assertions
 # @return Lemonldap::NG::Portal error code
 sub SAMLForAuthUser {
+    my $self = shift;
     PE_OK;
+}
+
+## @method void SAMLLogout()
+# TODO
+sub SAMLLogout {
+    my $self = shift;
 }
 
 1;

@@ -423,7 +423,7 @@ sub notification {
 }
 
 ##@method protected string get_url()
-# check url against XSS attacks
+# Return url parameter
 # @return url parameter if good, nothing else.
 sub get_url {
     my $self = shift;
@@ -528,8 +528,7 @@ sub process {
 sub controlUrlOrigin {
     my $self = shift;
     $self->{url} ||= '';
-    my $url = $self->param('url');
-    if ( $self->param('url') ) {
+    if ( my $url = $self->param('url') ) {
 
         # REJECT NON BASE64 URL
         return PE_BADURL if ( $url =~ m#[^A-Za-z0-9\+/=]# );
@@ -613,6 +612,7 @@ sub controlExistingSession {
             # Delete session in global storage
             $self->_deleteSession($h);
             $self->{error} = PE_REDIRECT;
+            $self->SAMLLogout() if($self->{SAMLIssuer});
             $self->_sub( 'userNotice',
                 $self->{sessionInfo}->{ $self->{whatToTrace} }
                   . " has been disconnected" );
