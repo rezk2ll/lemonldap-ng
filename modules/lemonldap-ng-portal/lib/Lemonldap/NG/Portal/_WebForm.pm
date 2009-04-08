@@ -34,6 +34,9 @@ sub extractFormInfo {
 sub setAuthSessionInfo {
     my $self = shift;
 
+    # Level 2 for web form based authentication
+    $self->{sessionInfo}->{authenticationLevel} = 2;
+
     # Store submitted password if set in configuration
     # WARNING: it can be a security hole
     if ( $self->{storePassword} ) {

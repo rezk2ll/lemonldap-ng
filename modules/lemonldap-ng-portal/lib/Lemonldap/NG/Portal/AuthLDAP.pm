@@ -16,23 +16,15 @@ use base qw(Lemonldap::NG::Portal::_WebForm);
 *_formateFilter = *Lemonldap::NG::Portal::UserDBLDAP::formateFilter;
 *_search        = *Lemonldap::NG::Portal::UserDBLDAP::search;
 
-our $ppLoaded = 0;
-
-## @method private boolean loadPP ()
-# Load Net::LDAP::Control::PasswordPolicy
-# @return true if succeed.
-sub loadPP {
-    return 1 if ($ppLoaded);
-
-    # require Perl module
-    eval 'require Net::LDAP::Control::PasswordPolicy';
-    if ($@) {
-        $self->lmLog(
-            "Module Net::LDAP::Control::PasswordPolicy not found in @INC",
-            'error' );
-        return 0;
+## @apmethod int authInit()
+# Load Net::LDAP::Control::PasswordPolicy if needed
+# @return Lemonldap::NG::Portal constant
+sub authInit {
+    my $self = shift;
+    if ( $self->{portal}->{ldapPpolicyControl} and not $self->Lemonldap::NG::Portal::_LDAP::loadPP) {
+        return PE_LDAPERROR;
     }
-    $ppLoaded = 1;
+    PE_OK;
 }
 
 ## @apmethod int authenticate()
@@ -49,69 +41,7 @@ sub authenticate {
         my $tmp = $self->_subProcess(qw(_formateFilter _search));
         return $tmp if ($tmp);
     }
-
-    # Check if we use Ppolicy control
-    if ( $self->{ldapPpolicyControl}
-        and ( $self->loadPP() or return PP_LDAPERROR ) )
-    {
-        no strict 'subs';    # TODO: why that ?
-
-        # Create Control object
-        my $pp = Net::LDAP::Control::PasswordPolicy->new();
-
-        # Bind with user credentials
-        my $mesg = $self->ldap->bind(
-            $self->{dn},
-            password => $self->{password},
-            control  => [$pp]
-        );
-
-        # Get server control response
-        my ($resp) = $mesg->control("1.3.6.1.4.1.42.2.27.8.5.1");
-        return ( $mesg->code == 0 ? PE_OK : PE_LDAPERROR )
-          unless ( defined $resp );
-
-        # Get expiration warning and graces
-        $self->{ppolicy}->{time_before_expiration} =
-          $resp->time_before_expiration;
-        $self->{ppolicy}->{grace_authentications_remaining} =
-          $resp->grace_authentications_remaining;
-
-        # Get bind response
-        return PE_OK if ( $mesg->code == 0 );
-
-        my $pp_error = $resp->pp_error;
-        if ( defined $pp_error ) {
-            #return [
-            #    PE_PP_PASSWORD_EXPIRED,
-            #    PE_PP_ACCOUNT_LOCKED,
-            #    PE_PP_CHANGE_AFTER_RESET,
-            #    PE_PP_PASSWORD_MOD_NOT_ALLOWED,
-            #    PE_PP_MUST_SUPPLY_OLD_PASSWORD,
-            #    PE_PP_INSUFFICIENT_PASSWORD_QUALITY,
-            #    PE_PP_PASSWORD_TOO_SHORT,
-            #    PE_PP_PASSWORD_TOO_YOUNG,
-            #    PE_PP_PASSWORD_IN_HISTORY,
-            #]->[$pp_error];
-            return $pp_error + PE_PP_PASSWORD_EXPIRED;
-        }
-        elsif ( $mesg->code == 0 ) {
-            return PE_OK;
-        }
-        else {
-            $self->_sub( 'userError', "Bad password for $self->{user}" );
-            return PE_BADCREDENTIALS;
-        }
-    }
-    else {
-        my $mesg =
-          $self->ldap->bind( $self->{dn}, password => $self->{password} );
-        if ( $mesg->code != 0 ) {
-            $self->_sub( 'userError', "Bad password for $self->{user}" );
-            return PE_BADCREDENTIALS;
-        }
-    }
-    $self->{sessionInfo}->{authenticationLevel} = 2;
+    return $self->ldap->userBind( $self->{dn}, password => $self->{password} );
     PE_OK;
 }
 
