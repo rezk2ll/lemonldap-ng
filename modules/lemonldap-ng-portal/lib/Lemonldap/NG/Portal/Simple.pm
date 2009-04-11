@@ -102,6 +102,7 @@ sub new {
     my $class = shift;
     return $class if ( ref($class) );
     my $self = $class->SUPER::new();
+    $self->{_url} = '';
     $self->getConf(@_)
       or $self->abort( "Configuration error",
         "Unable to get configuration: $Lemonldap::NG::Common::Conf::msg" );
@@ -427,7 +428,7 @@ sub notification {
 # @return url parameter if good, nothing else.
 sub get_url {
     my $self = shift;
-    return $self->{url};
+    return $self->{_url};
 }
 
 ##@method private Safe safe()
@@ -527,7 +528,7 @@ sub process {
 #@return Lemonldap::NG::Portal constant
 sub controlUrlOrigin {
     my $self = shift;
-    $self->{url} ||= '';
+    $self->{_url} ||= '';
     if ( my $url = $self->param('url') ) {
 
         # REJECT NON BASE64 URL
@@ -547,7 +548,7 @@ m#^https?://(?:$self->{reVHosts}|(?:[^/]*)?$self->{domain})(?::\d+)?(?:/.*)?$#
             delete $self->{urldc};
             return PE_BADURL;
         }
-        $self->{url} = $url;
+        $self->{_url} = $url;
     }
     PE_OK;
 }

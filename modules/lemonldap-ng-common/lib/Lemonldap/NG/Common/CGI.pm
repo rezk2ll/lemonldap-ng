@@ -31,6 +31,37 @@ BEGIN {
     }
 }
 
+## @cmethod Lemonldap::NG::Common::CGI new(@p)
+# Constructor: launch CGI::new() then secure parameters since CGI store them at
+# the root of the object.
+# @param p arguments for CGI::new()
+# @return new Lemonldap::NG::Common::CGI object
+sub new {
+    my $class = shift;
+    my $self = CGI->new(@_);
+    $self->{_prm}={};
+    my @tmp=$self->param();
+    foreach(@tmp) {
+        $self->{_prm}->{$_} = $self->param($_);
+        $self->CGI::delete($_);
+    }
+    bless $self, $class;
+    return $self;
+}
+
+## @method scalar param(string s)
+# Return the wanted parameter issued of GET or POST request. If $s is not set,
+# return the list of parameters names
+# @param $s name of the parameter
+# @return datas passed by GET or POST method
+sub param {
+    my($self,$p) = @_;
+    unless(defined $p){
+        return keys %{$self->{_prm}};
+    }
+    return $self->{_prm}->{$p};
+}
+
 ## @method void lmLog(string mess, string level)
 # Log subroutine. Use Apache::Log in ModPerl::Registry context else simply
 # print on STDERR non debug messages.
@@ -155,7 +186,7 @@ sub header_public {
 # @param text Optional text. Default: "See Apache's logs"
 sub abort {
     my $self = shift;
-    my $cgi  = CGI->new;
+    my $cgi  = CGI->new();
     my ( $t1, $t2 ) = @_;
     $t2 ||= "See Apache's logs";
     print $cgi->header( -type => 'text/html; charset=utf8', );
