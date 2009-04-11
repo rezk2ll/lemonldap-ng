@@ -409,16 +409,10 @@ sub childInit {
     if ( MP() == 2 ) {
         Apache2::ServerUtil->server->push_handlers( PerlChildInitHandler =>
               sub { return $class->initLocalStorage( $_[1], $_[0] ); } );
-        Apache2::ServerUtil->server->push_handlers(
-            PerlCleanupHandler => sub { return $class->cleanLocalStorage(@_); }
-        );
     }
     elsif ( MP() == 1 ) {
         Apache->push_handlers(
             PerlChildInitHandler => sub { return $class->initLocalStorage(@_); }
-        );
-        Apache->push_handlers(
-            PerlCleanupHandler => sub { return $class->cleanLocalStorage(@_); }
         );
     }
     1;
@@ -863,7 +857,6 @@ sub fetchId {
 sub run ($$) {
     my $class;
     ( $class, $apacheRequest ) = @_;
-
     return DECLINED unless ( $apacheRequest->is_initial_req );
     my $uri = $apacheRequest->uri
       . ( $apacheRequest->args ? "?" . $apacheRequest->args : "" );
@@ -924,6 +917,11 @@ sub run ($$) {
     # SECURITY
     # Hide Lemonldap::NG cookie
     $class->hideCookie;
+
+    # Cleanup
+    $apacheRequest->push_handlers(
+        PerlCleanupHandler => sub { return $class->cleanLocalStorage(@_); }
+    );
 
     if ( defined( $transform->{$uri} ) ) {
         return &{ $transform->{$uri} };

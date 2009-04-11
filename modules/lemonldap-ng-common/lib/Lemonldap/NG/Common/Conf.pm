@@ -238,10 +238,11 @@ sub getDBConf {
 /^(?:exportedVars|locationRules|groups|exportedHeaders|macros|globalStorageOptions)$/
           )
         {
-            if ( $v !~ /^\$/ ) {
+            $conf->{$k} = {};
+            if ( defined($v) and $v !~ /^\$/ ) {
                 print STDERR
 "Lemonldap::NG : Warning: configuration is in old format, you've to migrate !\n";
-                eval 'require Storable;require MIME::Base64;';
+                eval { require Storable; require MIME::Base64; };
                 if ($@) {
                     $msg = "Error : $@";
                     return 0;

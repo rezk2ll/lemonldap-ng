@@ -21,7 +21,7 @@ use base qw(Lemonldap::NG::Portal::_WebForm);
 # @return Lemonldap::NG::Portal constant
 sub authInit {
     my $self = shift;
-    if ( $self->{portal}->{ldapPpolicyControl} and not $self->Lemonldap::NG::Portal::_LDAP::loadPP) {
+    if ( $self->{ldapPpolicyControl} and not $self->ldap->loadPP()) {
         return PE_LDAPERROR;
     }
     PE_OK;

@@ -98,7 +98,7 @@ sub loadPP {
     return 1 if ($ppLoaded);
 
     # require Perl module
-    eval 'require Net::LDAP::Control::PasswordPolicy';
+    eval {require Net::LDAP::Control::PasswordPolicy};
     if ($@) {
         $self->lmLog(
             "Module Net::LDAP::Control::PasswordPolicy not found in @INC",

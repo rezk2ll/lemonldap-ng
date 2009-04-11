@@ -487,3 +487,10 @@ manager_clean:
 	- $(MAKE) -C ${SRCMANAGERDIR} distclean
 	@rm -vf manager*
 
+debian-packages: debian-dist
+	mv lemonldap-ng_$(VERSION).orig.tar.gz /tmp/
+	version=$(VERSION) && \
+	cd /tmp/ && \
+	tar xzf lemonldap-ng_$$version.orig.tar.gz && \
+	cd lemonldap-ng-$$version && \
+	debuild
