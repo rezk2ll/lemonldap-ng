@@ -13,6 +13,16 @@ my $h = new Lemonldap::NG::Manager(
         inputSize               => 30,
 
         # OPTIONAL PARAMETERS
+
+        ## PROTECTION, choose one of :
+        # * protection by manager
+        # protection  => 'manager',
+        # * specify yourself the rule to apply (same as in the manager)
+        # protection  => 'rule: $uid=admin',
+        # * all authenticate users are granted
+        # protection  => 'authenticate',
+        # * nothing : not protected
+
         #jsFile => /path/to/lemonldap-ng-manager.js,
 
         # ACCESS TO CONFIGURATION

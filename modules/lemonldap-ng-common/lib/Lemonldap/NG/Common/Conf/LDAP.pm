@@ -55,6 +55,7 @@ sub lastCfg {
 
 sub ldap {
     my $self = shift;
+    return $self->{ldap} if($self->{ldap});
 
     # Parse servers configuration
     my $useTls = 0;

@@ -11,17 +11,13 @@ our $cgi = Lemonldap::NG::Manager::Sessions->new({
         imagePath     => '/images/',
 
         ## PROTECTION, choose one of :
-
-        ## * protection by manager
+        # * protection by manager
         # protection  => 'manager',
-
-        ## * specify yourself the rule to apply (same as in the manager)
+        # * specify yourself the rule to apply (same as in the manager)
         # protection  => 'rule: $uid=admin',
-
-        ## * all authenticate users are granted
+        # * all authenticate users are granted
         # protection  => 'authenticate',
-
-        ## * nothing : not protected
+        # * nothing : not protected
 
         # REDIRECTIONS
         # You have to set this to explain to the handler if runs under SSL
