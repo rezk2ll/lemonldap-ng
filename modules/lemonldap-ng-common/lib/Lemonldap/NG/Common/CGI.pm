@@ -43,7 +43,7 @@ sub new {
     my @tmp=$self->param();
     foreach(@tmp) {
         $self->{_prm}->{$_} = $self->param($_);
-        $self->CGI::delete($_);
+        $self->delete($_);
     }
     bless $self, $class;
     return $self;

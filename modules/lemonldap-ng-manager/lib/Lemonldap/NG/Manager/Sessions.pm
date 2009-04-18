@@ -402,7 +402,7 @@ sub htmlquote {
     return $s;
 }
 
-## @fn protected void start()
+## @method protected void start()
 # Display HTTP and HTML headers.
 sub start {
     my $self = shift;
@@ -461,7 +461,7 @@ sub start {
     );
 }
 
-## @fn protected void ajaxnode(string id, string text, string param)
+## @method protected void ajaxnode(string id, string text, string param)
 # Display tree node with Ajax functions inside for opening the node.
 # @param $id HTML id of the element.
 # @param $text text to display
@@ -472,7 +472,7 @@ sub ajaxNode {
 "<li id=\"$id\"><span>$text</span>\n<ul class=\"ajax\"><li id=\"sub_$id\">{url:$ENV{SCRIPT_NAME}?$param}</li></ul></li>\n";
 }
 
-## @fn protected void window(string root)
+## @method protected void window(string root)
 # Design the main window
 # @param $root Text to display in the root node of the tree
 sub window {
@@ -496,7 +496,7 @@ sub window {
       . '</span><ul>';
 }
 
-## @fn protected void end()
+## @method protected void end()
 # Display the end of HTML page.
 sub end {
     my $self = shift;
@@ -507,7 +507,7 @@ sub end {
 
 1;
 
-## @fn protected css()
+## @method protected css()
 # Display the main CSS file (called by http://manager.example.com/sessions.pl/css)
 sub css {
     my $self = shift;
@@ -694,7 +694,7 @@ body
 EOF
 }
 
-## @fn protected js()
+## @method protected js()
 # Display the main javascript file (called by http://manager.example.com/sessions.pl/js)
 sub js {
     my $self = shift;

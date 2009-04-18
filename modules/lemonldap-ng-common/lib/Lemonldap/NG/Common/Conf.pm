@@ -230,7 +230,7 @@ sub getDBConf {
           ? ( $a[ $#a + $args->{cfgNum} ] )
           : $a[0];
     }
-    my $fields = $self->load( $args->{cfgNum}, $args->{fields} );
+    my $fields = $self->load( $args->{cfgNum} );
     my $conf;
     while ( my ( $k, $v ) = each(%$fields) ) {
         $v =~ s/^'(.*)'$/$1/s;
@@ -271,7 +271,7 @@ sub getDBConf {
         $re->add($_);
     }
     $conf->{reVHosts} = $re->as_string;
-    $self->setLocalConf($conf) if ( $self->{refLocalStorage} );
+    $self->setLocalConf($conf) if ( $self->{refLocalStorage} and not($args->{noCache}) );
     return $conf;
 }
 

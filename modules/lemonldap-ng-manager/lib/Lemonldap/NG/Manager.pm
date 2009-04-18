@@ -204,7 +204,7 @@ sub print_conf {
         -type            => "text/xml; charset=utf8",
         '-Cache-Control' => 'private'
     );
-    $self->printXmlConf( { cfgNum => $self->param('cfgNum'), } );
+    $self->printXmlConf( { cfgNum => $self->param('cfgNum'), noCache => 1 } );
     exit;
 }
 

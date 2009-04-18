@@ -15,6 +15,7 @@ WriteMakefile(
         'Lemonldap::NG::Common'  => 0.9,
         'Lemonldap::NG::Handler' => 0.9,
         'XML::LibXML'            => 0,
+        'XML::LibXSLT'           => 0,
     },
     (
         $] >= 5.005
