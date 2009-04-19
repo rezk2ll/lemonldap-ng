@@ -1,0 +1,86 @@
+$(document).ready(function(){
+var simpleTreeCollection
+simpleTreeCollection = $(".simpleTree").simpleTree({
+    autoclose: false,
+    drag: false,
+    afterClick:function(node){
+        var span=$('span:first',node);
+        $('#help').load(scriptname+'?help='+span.attr('help'));
+    },
+    afterDblClick:function(node){
+    //alert("text-"+$("span:first",node).text());
+    },
+    afterMove:function(destination, source, pos){
+    //alert("destination-"+$("span:first",destination).text()+" source-"+$("span:first",source).text()+" pos-"+pos);
+    },
+    afterAjax:function() {
+    //alert("Loaded");
+    },
+    animate:true
+    //,docToFolderConvert:true
+    });
+  var w=X.clientWidth()-12;
+  var h=X.clientHeight()-12;
+  //var h=window.outerHeight;
+  s32=new xSplitter('idSplitter32',0,0,0,0,false,4,h/2,h/8,true,0);
+  s3=new xSplitter('idSplitter3',0,0,w,h,true,4,w/4,w/8,true,4,null,s32);
+  //X.addEventListener(window,'resize',win_onresize,false);
+}
+);
+function win_onresize(){
+  var cw=X.clientWidth();
+  var w=X.clientWidth()-12;
+  var h=X.clientHeight()-12;
+  s3.paint(w,h,w/4,w/5);
+}
+function lmtext(id){
+  return $('#text_'+id).html();
+}
+function lmdata(id){
+  //alert( $('#text_'+id).attr('value'));
+  return $('#text_'+id).attr('value');
+}
+function setlmtext(id,v){
+  $('#text_'+id).html(v);
+}
+function setlmdata(id,v){
+  $('#text_'+id).attr('value',v);
+}
+function display(div,title) {
+  var divs=$('#content').children();
+  divs.toggleClass('hidden',true);
+  divs.removeClass('content');
+  $('#content_'+div).removeClass('hidden');
+  $('#content_'+div).addClass('content');
+  $('#content_title').html(title);
+}
+function none(id) {
+  display('default','Lemonldap::NG Manager');
+}
+function btext(id) {
+  $('#btextKey').attr('value',lmtext(id));
+  $('#btextKey').change(function(){setlmtext(id,this.value)});
+  $('#btextValue').attr('value',lmdata(id));
+  $('#btextValue').change(function(){setlmdata(id,this.value)});
+  display('btext','Clef');
+}
+function int(id) {
+  $('#int').attr('value',lmdata(id));
+  $('#int').change(function(){setlmdata(id,this.value)});
+  display('int',lmtext(id));
+}
+function text(id) {
+  $('#text').attr('value',lmdata(id));
+  $('#text').change(function(){setlmdata(id,this.value)});
+  display('text',lmtext(id));
+}
+function securedCookieValues(id){
+  var v;
+  v=lmdata(id);
+  $('#securedCookie'+v).attr('checked',1);
+  display('securedCookie',lmtext(id));
+}
+function rules(id){
+  //display('btext',$('#'+id).parent().parent);
+}
+
