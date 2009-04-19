@@ -27,6 +27,7 @@ simpleTreeCollection = $(".simpleTree").simpleTree({
   //X.addEventListener(window,'resize',win_onresize,false);
 }
 );
+var currentId;
 function win_onresize(){
   var cw=X.clientWidth();
   var w=X.clientWidth()-12;
@@ -34,14 +35,22 @@ function win_onresize(){
   s3.paint(w,h,w/4,w/5);
 }
 function lmtext(id){
-  return $('#text_'+id).html();
+  return $('#text_'+id).attr('name');
 }
 function lmdata(id){
-  //alert( $('#text_'+id).attr('value'));
   return $('#text_'+id).attr('value');
 }
+function lmparent(id){
+  return $('#'+id).parent().parent().attr('id');
+}
 function setlmtext(id,v){
-  $('#text_'+id).html(v);
+  if(v.length==0){
+    alert("Null value");
+  }
+  else {
+  $('#text_'+id).attr('name',v);
+  $('#text_'+id).text(v);
+  }
 }
 function setlmdata(id,v){
   $('#text_'+id).attr('value',v);
@@ -58,29 +67,32 @@ function none(id) {
   display('default','Lemonldap::NG Manager');
 }
 function btext(id) {
+  currentId=id;
   $('#btextKey').attr('value',lmtext(id));
-  $('#btextKey').change(function(){setlmtext(id,this.value)});
   $('#btextValue').attr('value',lmdata(id));
-  $('#btextValue').change(function(){setlmdata(id,this.value)});
   display('btext','Clef');
 }
 function int(id) {
+  currentId=id;
   $('#int').attr('value',lmdata(id));
-  $('#int').change(function(){setlmdata(id,this.value)});
   display('int',lmtext(id));
 }
 function text(id) {
+  currentId=id;
   $('#text').attr('value',lmdata(id));
-  $('#text').change(function(){setlmdata(id,this.value)});
   display('text',lmtext(id));
 }
 function securedCookieValues(id){
-  var v;
-  v=lmdata(id);
-  $('#securedCookie'+v).attr('checked',1);
+  currentId=id;
+  $('#securedCookie'+lmdata(id)).attr('checked',1);
   display('securedCookie',lmtext(id));
 }
 function rules(id){
+  currentId=id;
   //display('btext',$('#'+id).parent().parent);
+  $('#rulKey').attr('value',lmtext(id));
+  $('#rulValue').attr('value',lmdata(id));
+  alert(lmparent(id));
+  display('rules',lmtext(lmparent(id)));
 }
 

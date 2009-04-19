@@ -54,6 +54,13 @@ use base qw(Lemonldap::NG::Handler::CGI);
 
 our $VERSION = '0.1';
 
+BEGIN {
+    *struct = \&Lemonldap::NG::Manager::_Struct::struct;
+    *cstruct = \&Lemonldap::NG::Manager::_Struct::cstruct;
+    *defaultConf = \&Lemonldap::NG::Manager::_Struct::defaultConf;
+    *process = *doall;
+}
+
 sub new {
     my ( $class, $args ) = @_;
     my $self = $class->SUPER::new($args)
@@ -62,6 +69,7 @@ sub new {
     $self->{imagePath} ||= 'images/';
     return $self;
 }
+
 
 sub doall {
     my $self = shift;
@@ -87,17 +95,9 @@ sub doall {
         eval { no strict "refs"; &{"help_$chap"} };
         exit;
     }
-
-    #elsif ( $ENV{PATH_INFO} eq "/manager.js" ) {
-    #    #print $self->header_public( $ENV{SCRIPT_FILENAME},
-    #    #    -type => 'text/javascript', );
-    #    print $self->header('text/javascript');
-    #    $self->mnjs;
-    #    exit;
-    #}
     $self->{cfgNum} =
          $self->param('cfgNum')
-      || Lemonldap::NG::Common::Conf->new()->lastCfg()
+      || $self->confObj->lastCfg()
       || 'UNAVAILABLE';
     if ( my $p = $self->param('node') ) {
         $self->node($p);
@@ -108,16 +108,6 @@ sub doall {
         $self->node();
         $self->end();
     }
-}
-
-sub conf {
-    my ($self) = @_;
-    return $self->{_conf} if ( $self->{_conf} );
-    my $args = { cfgNum => $self->{cfgNum} };
-    $args->{noCache} = 1 if ( $self->param('cfgNum') );
-    $self->{_conf} = Lemonldap::NG::Common::Conf->new()->getConf($args);
-    $self->abort('Unable to get configuration') unless ( $self->{_conf} );
-    return $self->{_conf};
 }
 
 use Data::Dumper;
@@ -217,7 +207,7 @@ sub confNode {
             }
             else {
                 $js ||= 'btext';
-                my $id = "li_" . encode_base64( "$target/$_", '' );
+                my $id = "li_$target/$_";
                 $id =~ s/=*$//;
                 print $self->li($id)
                   . $self->span( $id, "$_", $h->{$_}, $js, $help ) . "</li>";
@@ -246,7 +236,7 @@ sub confNode {
                     $self->confNode( '', "btext:$target/$_", $help, $js );
                 }
                 else {
-                    my $id = "li_" . encode_base64( "$target/$_", '' );
+                    my $id = "li_$target/$_";
                     $id =~ s/=*$//;
                     print $self->li($id)
                       . $self->span( $id, $_, $h->{$_}, $js, $help ) . "</li>";
@@ -255,8 +245,7 @@ sub confNode {
             print '</ul></li>';
         }
         else {
-            my $id = "li_" . encode_base64( $target, '' );
-            $id =~ s/=*$//;
+            my $id = "li_$target";
             print $self->li($id)
               . $self->span( $id, $text, $h, $js, $help ) . "</li>";
         }
@@ -309,6 +298,176 @@ sub corresp {
     }
     return $h, $help, $js;
 }
+
+sub conf {
+    my $self = shift;
+    return $self->{_conf} if ( $self->{_conf} );
+    my $args = { cfgNum => $self->{cfgNum} };
+    $args->{noCache} = 1 if ( $self->param('cfgNum') );
+    $self->{_conf} = $self->confObj->getConf($args);
+    $self->abort( 'Unable to get configuration',
+        $Lemonldap::NG::Common::Conf::msg )
+      unless ( $self->{_conf} );
+    return $self->{_conf};
+}
+
+sub confObj {
+    my $self = shift;
+    return $self->{_confObj} if ( $self->{_confObj} );
+    $self->{_confObj} =
+      Lemonldap::NG::Common::Conf->new( $self->{configStorage} );
+    $self->abort(
+        'Unable to access to configuration',
+        $Lemonldap::NG::Common::Conf::msg
+    ) unless ( $self->{_confObj} );
+    $self->lmLog( $Lemonldap::NG::Common::Conf::msg, 'debug' )
+      if ($Lemonldap::NG::Common::Conf::msg);
+    return $self->{_confObj};
+}
+
+## @method protected void ajaxnode(string id, string text, string param)
+# Display tree node with Ajax functions inside for opening the node.
+# @param $id HTML id of the element.
+# @param $text text to display
+# @param $param Parameters for the Ajax query
+sub ajaxNode {
+    my ( $self, $id, $text, $param, $help, $js, $data ) = @_;
+    $param .= "&amp;cfgNum=$self->{cfgNum}";
+    print $self->li($id)
+      . $self->span( $id, $text, $data, $js, $help )
+      . "<ul class=\"ajax\">"
+      . $self->li("sub_$id")
+      . ".{url:$ENV{SCRIPT_NAME}?$param}</li></ul></li>\n";
+}
+
+sub span {
+    my ( $self, $id, $text, $data, $js, $help ) = @_;
+    my $tmp = $text;
+    $data = '' unless ( defined $data );
+    $js ||= "none";
+    $id = "li_".encode_base64($id,'');
+    $id =~ s/(=*)$/length($1)/e;
+    $data =~ s/"/&#39;/g;
+    $tmp =~ s/"/&#39;/g;
+    $text = $self->escapeHTML($text);
+    return
+"<span name=\"$tmp\" id=\"text_$id\" onclick=\"$js('$id')\" help=\"$help\" value=\"$data\">$text</span>
+";
+}
+
+sub li {
+    my ( $self, $id, $class ) = @_;
+    $id = "li_".encode_base64($id,'');
+    $id =~ s/(=*)$/length($1)/e;
+    return "<li id=\"$id\"" . ( $class ? " class=\"$class\">" : ">" );
+}
+
+## @method protected void start()
+# Display HTTP and HTML headers.
+sub start {
+    my $self = shift;
+    print $self->header( -type => 'text/html; charset=utf8', );
+    print $self->start_html(
+        -title => shift || 'Sessions Lemonldap::NG',
+        -encoding => 'utf8',
+        -script   => [
+            {
+                -language => 'JavaScript1.2',
+                -src      => $self->{Xlib} || 'xlib.js',
+            },
+            {
+                -language => 'JavaScript1.2',
+                -src      => $self->{jqueryUri} || 'jquery.js',
+            },
+            {
+                -language => 'JavaScript1.2',
+                -src      => "$self->{imagePath}/tree.js",
+            },
+            {
+                -language => 'JavaScript1.2',
+                -code     => "var scriptname='$ENV{SCRIPT_NAME}';"
+                  . "var imagepath='$self->{imagePath}';",
+            },
+            {
+                -language => 'JavaScript1.2',
+                -src      => "$self->{imagePath}/manager.js",
+            },
+        ],
+        -style => {
+            -src => [
+                "$self->{imagePath}/manager.css",
+                ( $self->{personnalCss} ? $self->{personnalCss} : () )
+            ],
+        },
+    );
+}
+
+sub window {
+    my $self = shift;
+    my $root = shift;
+    print '<div class="clsTemporaryContainer">
+ <div style="visibility: visible;" id="idSplitter3" class="clsSplitter">
+  <div style="z-index: 2;" id="gauche" class="clsPane">
+   <center><img src="'
+      . $self->{imagePath} . '/logo_lemonldap-ng.png"><br/>&nbsp;</center>
+   <ul class="simpleTree"><li class="root" id="root"><span>' . $root
+      . '</span><ul>';
+}
+
+## @method protected void end()
+# Display the end of HTML page.
+sub end {
+    my $self = shift;
+    print q{</ul></li></ul></div><!-- end Pane -->
+<div style="overflow: hidden; z-index: 2;" id="droit" class="clsPane">
+ <div style="visibility: visible;" id="idSplitter32" class="clsSplitter">
+  <div style="z-index: 2;" id="haut" class="clsPane" style="overflow:auto;height:500px;">
+   <form action="#" onsubmit="false">
+   <h2 id="content_title">Lemonldap::NG Manager</h2>
+   <div id="buttons"></div>
+   <div id="content">
+    <div id="content_default" class="content">
+    Default
+    </div>
+    <div id="content_text" class="hidden">
+    <input type="text" id="text" onchange="setlmdata(currentId,this.value)"/>
+    </div>
+    <div id="content_securedCookie" class="hidden">
+    <input id="securedCookie0" type="radio" name="securedCookie" value="0" onclick="setlmdata('li_bGlfL3NlY3VyZWRDb29raWU1','0')" /> Cookie non sécurisé <br>
+    <input id="securedCookie1" type="radio" name="securedCookie" value="1" onclick="setlmdata('li_bGlfL3NlY3VyZWRDb29raWU1','1')" /> Cookie sécurisé <br>
+    <input id="securedCookie2" type="radio" name="securedCookie" value="2" onclick="setlmdata('li_bGlfL3NlY3VyZWRDb29raWU1','2')" /> 2 cookies <br>
+    </div>
+    <div id="content_int" class="hidden">
+    <input type="int" id="int" onchange="setlmdata(currentId,this.value)"/>
+    </div>
+    <div id="content_btext" class="hidden">
+    <input type="text" id="btextKey" onchange="setlmtext(currentId,this.value)"/> <input type="text" id="btextValue" onchange="setlmdata(currentId,this.value)"/>
+    </div>
+    <div id="content_rules" class="hidden">
+    <textarea id="rulKey" cols="30" rows="2" onchange="setlmtext(currentId,this.value)"></textarea>&nbsp;<textarea id="rulValue" cols="50" rows="2" onchange="setlmdata(currentId,this.value)"></textarea>
+    </div>
+   </div></form>
+  </div><!-- end Pane -->
+  <div style="z-index: 2;" id="bas" class="clsPane">
+   <div id="help">
+   </div>
+  </div><!-- end Pane -->
+  <div style="z-index: 1; cursor: n-resize;" id="barre2" class="clsDragBar">
+   &nbsp;
+  </div>
+ </div><!-- end Splitter -->
+</div><!-- end Pane -->
+<div style="z-index: 1; cursor: n-resize;" id="barre2" class="clsDragBar">
+</div>
+</div><!-- end Splitter -->
+</div><!-- end TemporaryContainer -->
+</div>};
+    print $self->end_html();
+}
+
+1;
+
+package Lemonldap::NG::Manager::_Struct;
 
 sub cstruct {
     shift;
@@ -382,240 +541,6 @@ sub struct {
 
 sub defaultConf {
     return { userDB => 'LDAP', };
-}
-
-sub window {
-    my $self = shift;
-    my $root = shift;
-    print
-#'<table border="0" width="100%"><tr><td width="300px" valign="top"><div style="overflow:auto;height:500px;">
-'<!--<div id="xBody">-->
-  <div class="clsTemporaryContainer">
-      <div style="visibility: visible;" id="idSplitter3" class="clsSplitter">
-        <div style="z-index: 2;" id="gauche" class="clsPane">
-    <center><img src="'.$self->{imagePath}.'/logo_lemonldap-ng.png"><br/>&nbsp;</center>
-    <ul class="simpleTree"><li class="root" id="root"><span>' . $root
-      . '</span><ul>';
-}
-
-## @method protected void start()
-# Display HTTP and HTML headers.
-sub start {
-    my $self = shift;
-    print $self->header( -type => 'text/html; charset=utf8', );
-    print $self->start_html(
-        -title => shift || 'Sessions Lemonldap::NG',
-        -encoding => 'utf8',
-        -script   => [
-            {
-                -language => 'JavaScript1.2',
-                -src      => $self->{Xlib} || 'xlib.js',
-            },
-            {
-                -language => 'JavaScript1.2',
-                -src      => $self->{jqueryUri} || 'jquery.js',
-            },
-            {
-                -language => 'JavaScript1.2',
-                -src      => "$self->{imagePath}/tree.js",
-            },
-            {
-                -language => 'JavaScript1.2',
-                -code     => "var scriptname='$ENV{SCRIPT_NAME}';"
-                ."var imagepath='$self->{imagePath}';",
-            },
-            {
-                -language => 'JavaScript1.2',
-                -src      => "$self->{imagePath}/manager.js",
-            },
-        ],
-        -style => {
-            -src => [
-                "$self->{imagePath}/manager.css",
-                ( $self->{personnalCss} ? $self->{personnalCss} : () )
-            ],
-        },
-    );
-}
-
-## @method protected void ajaxnode(string id, string text, string param)
-# Display tree node with Ajax functions inside for opening the node.
-# @param $id HTML id of the element.
-# @param $text text to display
-# @param $param Parameters for the Ajax query
-sub ajaxNode {
-    my ( $self, $id, $text, $param, $help, $js, $data ) = @_;
-    $param .= "&amp;cfgNum=$self->{cfgNum}";
-    print $self->li($id)
-      . $self->span( $id, $text, $data, $js, $help )
-      . "<ul class=\"ajax\">"
-      . $self->li("sub_$id")
-      . ".{url:$ENV{SCRIPT_NAME}?$param}</li></ul></li>\n";
-}
-
-sub span {
-    my ( $self, $id, $text, $data, $js, $help ) = @_;
-    $data = '' unless ( defined $data );
-    $js ||= "none";
-    $id   =~ s#/#_#g;
-    $data =~ s/"/&#39;/g;
-    return
-"<span id=\"text_$id\" onclick=\"$js('$id')\" help=\"$help\" value=\"$data\">$text</span>
-";
-}
-
-sub li {
-    my ( $self, $id, $class ) = @_;
-    $id =~ s#/#_#g;
-    return "<li id=\"$id\"" . ( $class ? " class=\"$class\">" : ">" );
-}
-
-## @method protected void end()
-# Display the end of HTML page.
-sub end {
-    my $self = shift;
-    print
-q{</ul></li></ul></div><!-- end Pane -->
-<!--</td><td valign="top">-->
-
-<div style="overflow: hidden; z-index: 2;" id="droit" class="clsPane">
- <div style="visibility: visible;" id="idSplitter32" class="clsSplitter">
-  <div style="z-index: 2;" id="haut" class="clsPane" style="overflow:auto;height:500px;">
-   <form action="#" onsubmit="false">
-   <h2 id="content_title">Lemonldap::NG Manager</h2>
-   <div id="buttons"></div>
-   <div id="content">
-    <div id="content_default" class="content">
-    Default
-    </div>
-    <div id="content_text" class="hidden">
-    <input type="text" id="text"/>
-    </div>
-    <div id="content_securedCookie" class="hidden">
-    <input id="securedCookie0" type="radio" name="securedCookie" value="0" onclick="setlmdata('li__securedCookie','0')" /> Cookie non sécurisé <br>
-    <input id="securedCookie1" type="radio" name="securedCookie" value="1" onclick="setlmdata('li__securedCookie','1')" /> Cookie sécurisé <br>
-    <input id="securedCookie2" type="radio" name="securedCookie" value="2" onclick="setlmdata('li__securedCookie','2')" /> 2 cookies <br>
-    </div>
-    <div id="content_int" class="hidden">
-    <input type="int" id="int"/>
-    </div>
-    <div id="content_btext" class="hidden">
-    <input type="text" id="btextKey"/> <input type="text" id="btextValue"/>
-    </div>
-    <div id="content_rules" class="hidden">
-    rules
-    </div>
-   </div></form>
-  </div><!-- end Pane -->
-  <div style="z-index: 2;" id="bas" class="clsPane">
-   <div id="help">
-   </div>
-  </div><!-- end Pane -->
-  <div style="z-index: 1; cursor: n-resize;" id="barre2" class="clsDragBar">
-   &nbsp;
-  </div>
- </div><!-- end Splitter -->
-</div><!-- end Pane -->
-<div style="z-index: 1; cursor: n-resize;" id="barre2" class="clsDragBar">
-</div>
-</div><!-- end Splitter -->
-</div><!-- end TemporaryContainer -->
-<!--</td></tr></table>-->
-</div>};
-    print $self->end_html();
-}
-
-1;
-
-sub mnjs {
-    my $self = shift;
-    print <<'EOF';
-$(document).ready(function(){
-var simpleTreeCollection
-simpleTreeCollection = $(".simpleTree").simpleTree({
-    autoclose: false,
-    drag: false,
-    afterClick:function(node){
-        var span=$('span:first',node);
-        $('#help').load(scriptname+'?help='+span.attr('help'));
-    },
-    afterDblClick:function(node){
-    //alert("text-"+$("span:first",node).text());
-    },
-    afterMove:function(destination, source, pos){
-    //alert("destination-"+$("span:first",destination).text()+" source-"+$("span:first",source).text()+" pos-"+pos);
-    },
-    afterAjax:function() {
-    //alert("Loaded");
-    },
-    animate:true
-    //,docToFolderConvert:true
-    });
-  var w=X.clientWidth()-12;
-  var h=X.clientHeight()-12;
-  //var h=window.outerHeight;
-  s32=new xSplitter('idSplitter32',0,0,0,0,false,4,h/2,h/8,true,0);
-  s3=new xSplitter('idSplitter3',0,0,w,h,true,4,w/4,w/8,true,4,null,s32);
-  X.addEventListener(window,'resize',win_onresize,false);
-}
-);
-function win_onresize(){
-  var cw=X.clientWidth();
-  var w=X.clientWidth()-12;
-  var h=X.clientHeight()-12;
-  s3.paint(w,h,w/4,w/5);
-}
-function lmtext(id){
-  return $('#text_'+id).html();
-}
-function lmdata(id){
-  //alert( $('#text_'+id).attr('value'));
-  return $('#text_'+id).attr('value');
-}
-function setlmtext(id,v){
-  $('#text_'+id).html(v);
-}
-function setlmdata(id,v){
-  $('#text_'+id).attr('value',v);
-}
-function display(div,title) {
-  var divs=$('#content').children();
-  divs.toggleClass('hidden',true);
-  divs.removeClass('content');
-  $('#content_'+div).removeClass('hidden');
-  $('#content_'+div).addClass('content');
-  $('#content_title').html(title);
-}
-function none(id) {
-  display('default','Lemonldap::NG Manager');
-}
-function btext(id) {
-  $('#btextKey').attr('value',lmtext(id));
-  $('#btextKey').change(function(){setlmtext(id,this.value)});
-  $('#btextValue').attr('value',lmdata(id));
-  $('#btextValue').change(function(){setlmdata(id,this.value)});
-  display('btext','Clef');
-}
-function int(id) {
-  $('#int').attr('value',lmdata(id));
-  $('#int').change(function(){setlmdata(id,this.value)});
-  display('int',lmtext(id));
-}
-function text(id) {
-  $('#text').attr('value',lmdata(id));
-  $('#text').change(function(){setlmdata(id,this.value)});
-  display('text',lmtext(id));
-}
-function securedCookieValues(id){
-  var v;
-  v=lmdata(id);
-  $('#securedCookie'+v).attr('checked',1);
-  display('securedCookie',lmtext(id));
-}
-function rules(id){
-  //display('btext',$('#'+id).parent().parent);
-}
-EOF
 }
 
 1;
