@@ -76,7 +76,7 @@ sub run ($$) {
               SOAP::Lite->proxy( $class->portal() )
               ->uri('urn:Lemonldap::NG::Common::CGI::SOAPService');
             $user = decode_base64($user);
-            ( $user, $pass ) = split /:/, $user;
+            ( $user, $pass ) = ( $user =~ /^(.*?):(.*)$/ );
             my $r = $soap->getCookies( $user, $pass );
 
             # Catch SOAP errors
