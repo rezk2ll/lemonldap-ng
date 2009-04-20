@@ -46,6 +46,8 @@ use MIME::Base64;
 use Lemonldap::NG::Handler::CGI qw(:globalStorage :locationRules);
 use Lemonldap::NG::Common::Conf::Constants;    #inherits
 use Lemonldap::NG::Common::Safelib;            #link protected safe Safe object
+use XML::LibXML;
+use XML::LibXSLT;
 
 BEGIN {
     require Lemonldap::NG::Manager::Help;      #inherits
@@ -53,12 +55,37 @@ BEGIN {
 use base qw(Lemonldap::NG::Handler::CGI);
 
 our $VERSION = '0.1';
+our ( $stylesheet, $parser );
 
 BEGIN {
     *struct = \&Lemonldap::NG::Manager::_Struct::struct;
     *cstruct = \&Lemonldap::NG::Manager::_Struct::cstruct;
     *defaultConf = \&Lemonldap::NG::Manager::_Struct::defaultConf;
     *process = *doall;
+    my $xslt = XML::LibXSLT->new();
+    $parser = XML::LibXML->new();
+    my $style_doc = $parser->parse_string(
+        q#<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+ <xsl:output method="html"
+             encoding="UTF-8"/>
+ <xsl:template match="/">
+  <xsl:apply-templates/>
+ </xsl:template>
+ <xsl:template match="li">
+  <xsl:if test="starts-with(.,'.')">
+  <monli><xsl:copy select="."/></monli>
+  </xsl:if>
+  <xsl:apply-templates/>
+ </xsl:template>
+ <xsl:template match="span">
+  <name><xsl:value-of select="@name"/></name>
+ </xsl:template>
+</xsl:stylesheet>
+#
+    );
+    $stylesheet = $xslt->parse_stylesheet($style_doc);
 }
 
 sub new {
@@ -95,9 +122,23 @@ sub doall {
         eval { no strict "refs"; &{"help_$chap"} };
         exit;
     }
-    elsif($self->param('data')) {
+    elsif(my $data = $self->param('data')) {
+        $data =~ s/<img.*?>//g;
+        $data =~ s/<li class="line".*?<\/li>//g;
+        $data = '<!DOCTYPE html
+            PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<root>
+'.$data.'
+</root>';
+
         open LOG, ">/tmp/log";
-        print LOG $self->param('data');
+        print LOG $data;
+        close LOG;
+        my $xml = $parser->parse_string($data);
+        my $results = $stylesheet->transform( $xml );
+        open LOG, ">/tmp/log2";
+        print LOG $stylesheet->output_string($results);
         close LOG;
     }
     $self->{cfgNum} =
@@ -136,7 +177,7 @@ sub node {
                 # subnode is an ajax subnode
                 if ( $flag eq 'n' ) {
                     $self->ajaxNode(
-                        "li_$node/$target",
+                        "$node/$target",
                         "$target",
                         "node=$node/$target",
                         $tmp->{$target}->{_help} || $help,
@@ -146,10 +187,9 @@ sub node {
 
                 # subnode is a node
                 elsif ( ref( $tmp->{$target} ) ) {
-                    print STDERR "DEBUG: $target, H:$tmp->{$target}->{_help}\n";
-                    print $self->li( "li_$node/$target", "closed" )
+                    print $self->li( "$node/$target", "closed" )
                       . $self->span(
-                        "li_$node/$target", $target, '',
+                        "$node/$target", $target, '',
                         $tmp->{$target}->{_js},
                         $tmp->{$target}->{_help} || $help
                       ) . "<ul>";
@@ -195,11 +235,11 @@ sub confNode {
         return unless ($h);
         foreach ( sort keys %$h ) {
             if ( ref($h) ) {
-                $self->ajaxNode( "li_$target/$_", $_,
+                $self->ajaxNode( "$target/$_", $_,
                     "node=$node/$_\&amp;key=$_", $help, $js );
             }
             else {
-                $self->confNode( '', "btext:li_$target/$_", $help, $js );
+                $self->confNode( '', "btext:$target/$_", $help, $js );
             }
         }
     }
@@ -212,7 +252,7 @@ sub confNode {
             }
             else {
                 $js ||= 'btext';
-                my $id = "li_$target/$_";
+                my $id = "$target/$_";
                 $id =~ s/=*$//;
                 print $self->li($id)
                   . $self->span( $id, "$_", $h->{$_}, $js, $help ) . "</li>";
@@ -234,15 +274,14 @@ sub confNode {
             return;
         }
         if ( ref($h) ) {
-            print $self->li( "li_$target", "closed" )
+            print $self->li( "$target", "closed" )
               . $self->span( "$target", $text, '', $js, $help ) . "<ul>";
             foreach ( sort keys %$h ) {
                 if ( ref( $h->{$_} ) ) {
                     $self->confNode( '', "btext:$target/$_", $help, $js );
                 }
                 else {
-                    my $id = "li_$target/$_";
-                    $id =~ s/=*$//;
+                    my $id = "$target/$_";
                     print $self->li($id)
                       . $self->span( $id, $_, $h->{$_}, $js, $help ) . "</li>";
                 }
@@ -250,7 +289,7 @@ sub confNode {
             print '</ul></li>';
         }
         else {
-            my $id = "li_$target";
+            my $id = "$target";
             print $self->li($id)
               . $self->span( $id, $text, $h, $js, $help ) . "</li>";
         }
@@ -431,7 +470,7 @@ sub end {
    <form action="#" onsubmit="false">
    <h2 id="content_title">Lemonldap::NG Manager</h2>
    <div id="buttons"></div>
-    <button onclick="$.post('/test.pl',{data: $('#root').html()},function(data){return 1},'html');" >OK</button>
+    <button onclick="$.post('/test.pl',{data: $('#root').html()},function(data){return 1},'html');" >Sauvegarder</button>
    <div id="content">
     <div id="content_default" class="content">
     Default
