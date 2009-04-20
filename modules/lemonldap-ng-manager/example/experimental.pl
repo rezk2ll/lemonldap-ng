@@ -95,6 +95,11 @@ sub doall {
         eval { no strict "refs"; &{"help_$chap"} };
         exit;
     }
+    elsif($self->param('data')) {
+        open LOG, ">/tmp/log";
+        print LOG $self->param('data');
+        close LOG;
+    }
     $self->{cfgNum} =
          $self->param('cfgNum')
       || $self->confObj->lastCfg()
@@ -373,7 +378,7 @@ sub start {
         -script   => [
             {
                 -language => 'JavaScript1.2',
-                -src      => $self->{Xlib} || 'xlib.js',
+                -src      => "$self->{imagePath}/xlib.js",
             },
             {
                 -language => 'JavaScript1.2',
@@ -408,8 +413,8 @@ sub window {
     print '<div class="clsTemporaryContainer">
  <div style="visibility: visible;" id="idSplitter3" class="clsSplitter">
   <div style="z-index: 2;" id="gauche" class="clsPane">
-   <center><img src="'
-      . $self->{imagePath} . '/logo_lemonldap-ng.png"><br/>&nbsp;</center>
+   <center><img alt="Lemonldap::NG" src="'
+      . $self->{imagePath} . '/logo_lemonldap-ng.png"/><br/>&nbsp;</center>
    <ul class="simpleTree"><li class="root" id="root"><span>' . $root
       . '</span><ul>';
 }
@@ -418,13 +423,15 @@ sub window {
 # Display the end of HTML page.
 sub end {
     my $self = shift;
-    print q{</ul></li></ul></div><!-- end Pane -->
+    print << 'EOF';
+</ul></li></ul></div><!-- end Pane -->
 <div style="overflow: hidden; z-index: 2;" id="droit" class="clsPane">
  <div style="visibility: visible;" id="idSplitter32" class="clsSplitter">
-  <div style="z-index: 2;" id="haut" class="clsPane" style="overflow:auto;height:500px;">
+  <div style="z-index: 2;overflow:auto;height:500px;" id="haut" class="clsPane">
    <form action="#" onsubmit="false">
    <h2 id="content_title">Lemonldap::NG Manager</h2>
    <div id="buttons"></div>
+    <button onclick="$.post('/test.pl',{data: $('#root').html()},function(data){return 1},'html');" >OK</button>
    <div id="content">
     <div id="content_default" class="content">
     Default
@@ -433,12 +440,12 @@ sub end {
     <input type="text" id="text" onchange="setlmdata(currentId,this.value)"/>
     </div>
     <div id="content_securedCookie" class="hidden">
-    <input id="securedCookie0" type="radio" name="securedCookie" value="0" onclick="setlmdata('li_bGlfL3NlY3VyZWRDb29raWU1','0')" /> Cookie non sécurisé <br>
-    <input id="securedCookie1" type="radio" name="securedCookie" value="1" onclick="setlmdata('li_bGlfL3NlY3VyZWRDb29raWU1','1')" /> Cookie sécurisé <br>
-    <input id="securedCookie2" type="radio" name="securedCookie" value="2" onclick="setlmdata('li_bGlfL3NlY3VyZWRDb29raWU1','2')" /> 2 cookies <br>
+    <input id="securedCookie0" type="radio" name="securedCookie" value="0" onclick="setlmdata('li_bGlfL3NlY3VyZWRDb29raWU1','0')" /> Cookie non sécurisé <br/>
+    <input id="securedCookie1" type="radio" name="securedCookie" value="1" onclick="setlmdata('li_bGlfL3NlY3VyZWRDb29raWU1','1')" /> Cookie sécurisé <br/>
+    <input id="securedCookie2" type="radio" name="securedCookie" value="2" onclick="setlmdata('li_bGlfL3NlY3VyZWRDb29raWU1','2')" /> 2 cookies <br/>
     </div>
     <div id="content_int" class="hidden">
-    <input type="int" id="int" onchange="setlmdata(currentId,this.value)"/>
+    <input type="text" id="int" onchange="setlmdata(currentId,this.value)"/>
     </div>
     <div id="content_btext" class="hidden">
     <input type="text" id="btextKey" onchange="setlmtext(currentId,this.value)"/> <input type="text" id="btextValue" onchange="setlmdata(currentId,this.value)"/>
@@ -457,11 +464,11 @@ sub end {
   </div>
  </div><!-- end Splitter -->
 </div><!-- end Pane -->
-<div style="z-index: 1; cursor: n-resize;" id="barre2" class="clsDragBar">
+<div style="z-index: 1; cursor: n-resize;" id="barre3" class="clsDragBar">
 </div>
 </div><!-- end Splitter -->
 </div><!-- end TemporaryContainer -->
-</div>};
+EOF
     print $self->end_html();
 }
 
