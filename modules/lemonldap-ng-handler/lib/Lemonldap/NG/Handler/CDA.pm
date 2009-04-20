@@ -34,10 +34,11 @@ sub run ($$) {
         );
         $apacheRequest->args($args);
         my $host = $apacheRequest->get_server_name();
+        my $portString = $port || $apacheRequest->get_server_port();
         lmSetErrHeaderOut( $apacheRequest,
                 'Location' => "http"
               . ( $https ? 's' : '' )
-              . "://$host"
+              . "://$host:$portString"
               . $apacheRequest->uri
               . ( $apacheRequest->args ? "?" . $apacheRequest->args : "" ) );
         $host =~ s/^[^\.]+\.(.*\..*$)/$1/;
@@ -106,7 +107,7 @@ configuration reload, so you don't need to restart Apache at each change :
 
 This library inherit from L<Lemonldap::NG::Handler::SharedConf> and add the
 capability to control users that are authenticated with a
-L<Lemonldap::NG::portal::CDA> CGI in another domain.
+L<Lemonldap::NG::Portal::CDA> CGI in another domain.
 
 =head2 EXPORT
 
