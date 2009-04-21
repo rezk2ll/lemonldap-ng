@@ -11,11 +11,12 @@ require Lemonldap::NG::Common::CGI;
 use Lemonldap::NG::Portal::SharedConf;
 use Lemonldap::NG::Portal::_LDAP 'ldap';    #link protected ldap Object used to change passwords only
 use XML::LibXML;
+use Lemonldap::NG::Common::Safelib;    #link protected safe Safe object
 use Safe;
 
 #inherits Net::LDAP::Control::PasswordPolicy
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 ### ACCESS CONTROL DISPLAY SYSTEM
 
@@ -47,6 +48,9 @@ sub _safe {
         }";
         $self->{portalObject}->lmLog( $@, 'error' ) if ($@);
     }
+    $self->{_safe}->share_from( 'main', ['%ENV'] );
+    $self->{_safe}->share_from( 'Lemonldap::NG::Common::Safelib',
+        $Lemonldap::NG::Common::Safelib::functions );
     $self->{_safe}->share( '&encode_base64', @t );
     return $self->{_safe};
 }
