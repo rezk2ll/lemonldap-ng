@@ -66,7 +66,7 @@ sub checkLogonHours {
     return substr($base2_logon_hours, $hourpos, 1);
 }
 
-## @function boolean checkLogonHours(string start, string end, boolean default_access)
+## @function boolean checkDate(string start, string end, boolean default_access)
 # Function to check a date
 # @param $start string Start date (GMT)
 # @param $end string End date (GMT)
