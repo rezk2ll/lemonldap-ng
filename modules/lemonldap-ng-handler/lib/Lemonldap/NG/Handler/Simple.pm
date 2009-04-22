@@ -447,9 +447,9 @@ sub purgeCache {
 # @param $args reference to the configuration hash
 sub globalInit {
     my $class = shift;
+    $class->portalInit(@_);
     $class->locationRulesInit(@_);
     $class->defaultValuesInit(@_);
-    $class->portalInit(@_);
     $class->globalStorageInit(@_);
     $class->forgeHeadersInit(@_);
     $class->postUrlInit(@_);
