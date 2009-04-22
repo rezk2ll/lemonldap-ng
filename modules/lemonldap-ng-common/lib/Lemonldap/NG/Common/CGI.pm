@@ -38,10 +38,10 @@ BEGIN {
 # @return new Lemonldap::NG::Common::CGI object
 sub new {
     my $class = shift;
-    my $self = CGI->new(@_);
-    $self->{_prm}={};
-    my @tmp=$self->param();
-    foreach(@tmp) {
+    my $self  = CGI->new(@_);
+    $self->{_prm} = {};
+    my @tmp = $self->param();
+    foreach (@tmp) {
         $self->{_prm}->{$_} = $self->param($_);
         $self->delete($_);
     }
@@ -55,9 +55,9 @@ sub new {
 # @param $s name of the parameter
 # @return datas passed by GET or POST method
 sub param {
-    my($self,$p) = @_;
-    unless(defined $p){
-        return keys %{$self->{_prm}};
+    my ( $self, $p ) = @_;
+    unless ( defined $p ) {
+        return keys %{ $self->{_prm} };
     }
     return $self->{_prm}->{$p};
 }
@@ -72,6 +72,9 @@ sub lmLog {
     $mess = ( ref($self) ? ref($self) : $self ) . ": $mess"
       if ( $level eq 'debug' );
     if ( $self->r and MP() ) {
+        $self->abort( "Level is required",
+            'the parameter "level" is required when lmLog() is used' )
+          unless ($level);
         if ( MP() == 2 ) {
             require Apache2::Log;
             Apache2::ServerRec->log->$level($mess);

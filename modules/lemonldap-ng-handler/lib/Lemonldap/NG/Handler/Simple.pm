@@ -180,6 +180,7 @@ sub logout_mp2 : method {
 # @param $level string (debug, info, warning or error)
 sub lmLog {
     my ( $class, $mess, $level ) = @_;
+    die "Level is required" unless($level);
     if ( MP() == 2 ) {
         Apache2::ServerRec->log->$level($mess);
     }
@@ -360,7 +361,7 @@ sub safe {
     $safe->share_from( 'Lemonldap::NG::Common::Safelib',
         $Lemonldap::NG::Common::Safelib::functions );
     $safe->share( '&encode_base64', '$datas', '&lmSetHeaderIn',
-        '$apacheRequest', @t );
+        '$apacheRequest', '&portal', @t );
     return $safe;
 }
 
@@ -501,12 +502,12 @@ sub conditionSub {
     return sub { 0 }
       if ( $cond =~ /^deny$/i );
     if ( $cond =~ /^logout(?:_sso)?(?:\s+(.*))?$/i ) {
-        my $url = $1 || $class->portal();
+        my $url = $1 || 'portal()';
         return sub { $datas->{_logout} = $url; return 0 }
     }
     if ( MP() == 2 ) {
         if ( $cond =~ /^logout_app(?:\s+(.*))?$/i ) {
-            my $u = $1 || $class->portal();
+            my $u = $1 || 'portal()';
             eval 'use Apache2::Filter' unless ( $INC{"Apache2/Filter.pm"} );
             return sub {
                 $apacheRequest->add_output_filter(
@@ -519,7 +520,7 @@ sub conditionSub {
         }
         elsif ( $cond =~ /^logout_app_sso(?:\s+(.*))?$/i ) {
             eval 'use Apache2::Filter' unless ( $INC{"Apache2/Filter.pm"} );
-            my $u = $1 || $class->portal();
+            my $u = $1 || 'portal()';
             return sub {
                 $class->localUnlog;
                 $apacheRequest->add_output_filter(
