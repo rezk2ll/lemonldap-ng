@@ -28,3 +28,4 @@ t/30-Common-Safelib
 t/99-pod.t
 tools/apache-session-mysql.sql
 tools/lmConfig.mysql
+tools/sso.schema
