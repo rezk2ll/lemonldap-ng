@@ -58,29 +58,56 @@ our $VERSION = '0.1';
 our ( $stylesheet, $parser );
 
 BEGIN {
-    *struct = \&Lemonldap::NG::Manager::_Struct::struct;
-    *cstruct = \&Lemonldap::NG::Manager::_Struct::cstruct;
+    *struct      = \&Lemonldap::NG::Manager::_Struct::struct;
+    *cstruct     = \&Lemonldap::NG::Manager::_Struct::cstruct;
     *defaultConf = \&Lemonldap::NG::Manager::_Struct::defaultConf;
-    *process = *doall;
-    my $xslt = XML::LibXSLT->new();
+    *process     = *doall;
+}
+
+sub parser {
+    my $self = shift;
+    return $parser if ($parser);
     $parser = XML::LibXML->new();
-    my $style_doc = $parser->parse_string(
+}
+
+sub stylesheet {
+    my $self = shift;
+
+    #return $stylesheet if($stylesheet);
+    my $xslt      = XML::LibXSLT->new();
+    my $style_doc = $self->parser->parse_string(
         q#<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
- <xsl:output method="html"
+ <xsl:output method="xml"
              encoding="UTF-8"/>
  <xsl:template match="/">
+  <root>
   <xsl:apply-templates/>
+  </root>
  </xsl:template>
  <xsl:template match="li">
-  <xsl:if test="starts-with(.,'.')">
-  <monli><xsl:copy select="."/></monli>
-  </xsl:if>
-  <xsl:apply-templates/>
+  <xsl:choose>
+   <xsl:when test="starts-with(.,'.')">
+    <ignore><xsl:value-of select="."/></ignore>
+   </xsl:when>
+   <xsl:otherwise>
+    <xsl:apply-templates/>
+   </xsl:otherwise>
+  </xsl:choose>
  </xsl:template>
  <xsl:template match="span">
-  <name><xsl:value-of select="@name"/></name>
+  <element>
+   <xsl:attribute name="name"><xsl:value-of select="@name"/></xsl:attribute>
+   <xsl:attribute name="id"><xsl:value-of select="@id"/></xsl:attribute>
+   <xsl:attribute name="value"><xsl:value-of select="@value"/></xsl:attribute>
+  </element>
+  <!--xsl:copy-of select="."/>
+  <element>
+   <name><xsl:value-of select="@name"/></name>
+   <id><xsl:value-of select="@id"/></id>
+   <value><xsl:value-of select="@id"/></value>
+  </element-->
  </xsl:template>
 </xsl:stylesheet>
 #
@@ -96,7 +123,6 @@ sub new {
     $self->{imagePath} ||= 'images/';
     return $self;
 }
-
 
 sub doall {
     my $self = shift;
@@ -122,24 +148,32 @@ sub doall {
         eval { no strict "refs"; &{"help_$chap"} };
         exit;
     }
-    elsif(my $data = $self->param('data')) {
+    elsif ( my $data = $self->param('data') ) {
         $data =~ s/<img.*?>//g;
         $data =~ s/<li class="line".*?<\/li>//g;
-        $data = '<!DOCTYPE html
-            PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        $data = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
                  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<root>
-'.$data.'
-</root>';
+<root>' . $data . '</root>';
 
-        open LOG, ">/tmp/log";
-        print LOG $data;
-        close LOG;
-        my $xml = $parser->parse_string($data);
-        my $results = $stylesheet->transform( $xml );
+        my $xml    = $self->parser->parse_string($data);
+        my $result = $self->stylesheet->transform($xml)->documentElement();
         open LOG, ">/tmp/log2";
-        print LOG $stylesheet->output_string($results);
+        foreach ( @{ $result->getChildrenByTagName('element') } ) {
+            my ( $id, $name, $value ) = (
+                $_->getAttribute('id'),
+                $_->getAttribute('name'),
+                $_->getAttribute('value')
+            );
+            $id =~ s/^text_li_(\w+)(\d)$/decode_base64($1.'='x $2)/e;
+            $id =~ s/^\///;
+            my $tmp;
+            #$tmp = $self->corresp($id);
+            print LOG "$id ; $name \"$value\"\n";
+        }
         close LOG;
+        $self->start();
+        $self->end();
+        exit;
     }
     $self->{cfgNum} =
          $self->param('cfgNum')
@@ -150,7 +184,7 @@ sub doall {
     }
     else {
         $self->start();
-        $self->window("Configuration $self->{cfgNum}");
+        $self->window( "Configuration $self->{cfgNum}", $self->{cfgNum} );
         $self->node();
         $self->end();
     }
@@ -235,8 +269,8 @@ sub confNode {
         return unless ($h);
         foreach ( sort keys %$h ) {
             if ( ref($h) ) {
-                $self->ajaxNode( "$target/$_", $_,
-                    "node=$node/$_\&amp;key=$_", $help, $js );
+                $self->ajaxNode( "$target/$_", $_, "node=$node/$_\&amp;key=$_",
+                    $help, $js );
             }
             else {
                 $self->confNode( '', "btext:$target/$_", $help, $js );
@@ -267,7 +301,7 @@ sub confNode {
         $text =~ s/^.*\///;
         my $h = keyToH( $target, $self->conf );
 
-        #$h = keyToH( $target, $self->defaultConf ) unless ( defined $h );
+        $h = keyToH( $target, $self->defaultConf ) unless ( defined $h );
         unless ( defined $h ) {
             $self->lmLog( "$target does not exists in configuration hash",
                 "warn" );
@@ -326,8 +360,8 @@ sub corresp {
 
         # The wanted key does not exists
         elsif ( ref($h) ) {
-            $self->lmLog( "Key $key does not exists", "warn" );
-            exit;
+            $self->lmLog("Key $key does not exist in configuration hash",'error');
+            return undef;
         }
 
         # If the key does not exist in manager tree, it must be defined in
@@ -389,10 +423,10 @@ sub span {
     my $tmp = $text;
     $data = '' unless ( defined $data );
     $js ||= "none";
-    $id = "li_".encode_base64($id,'');
-    $id =~ s/(=*)$/length($1)/e;
+    $id = "li_" . encode_base64( $id, '' );
+    $id   =~ s/(=*)$/length($1)/e;
     $data =~ s/"/&#39;/g;
-    $tmp =~ s/"/&#39;/g;
+    $tmp  =~ s/"/&#39;/g;
     $text = $self->escapeHTML($text);
     return
 "<span name=\"$tmp\" id=\"text_$id\" onclick=\"$js('$id')\" help=\"$help\" value=\"$data\">$text</span>
@@ -401,7 +435,7 @@ sub span {
 
 sub li {
     my ( $self, $id, $class ) = @_;
-    $id = "li_".encode_base64($id,'');
+    $id = "li_" . encode_base64( $id, '' );
     $id =~ s/(=*)$/length($1)/e;
     return "<li id=\"$id\"" . ( $class ? " class=\"$class\">" : ">" );
 }
@@ -447,15 +481,15 @@ sub start {
 }
 
 sub window {
-    my $self = shift;
-    my $root = shift;
+    my ( $self, $root, $data ) = @_;
     print '<div class="clsTemporaryContainer">
  <div style="visibility: visible;" id="idSplitter3" class="clsSplitter">
   <div style="z-index: 2;" id="gauche" class="clsPane">
    <center><img alt="Lemonldap::NG" src="'
-      . $self->{imagePath} . '/logo_lemonldap-ng.png"/><br/>&nbsp;</center>
-   <ul class="simpleTree"><li class="root" id="root"><span>' . $root
-      . '</span><ul>';
+      . $self->{imagePath}
+      . '/logo_lemonldap-ng.png"/><br/>&nbsp;</center><ul class="simpleTree">'
+      . $self->li( 'root', 'root' )
+      . $self->span( 'root', $root, $data, '', 'default' ) . '<ul>';
 }
 
 ## @method protected void end()
@@ -470,7 +504,7 @@ sub end {
    <form action="#" onsubmit="false">
    <h2 id="content_title">Lemonldap::NG Manager</h2>
    <div id="buttons"></div>
-    <button onclick="$.post('/test.pl',{data: $('#root').html()},function(data){return 1},'html');" >Sauvegarder</button>
+    <button onclick="$.post('/test.pl',{data: $('#li_cm9vdA2').html()},function(data){return 1},'html');" >Sauvegarder</button>
    <div id="content">
     <div id="content_default" class="content">
     Default
