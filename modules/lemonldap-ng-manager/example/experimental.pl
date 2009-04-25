@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-#use Lemonldap::NG::Manager::Experimental;
+#use Lemonldap::NG::Manager;
 
 my $h = new Lemonldap::NG::Manager::Experimental(
     {
@@ -46,73 +46,19 @@ use MIME::Base64;
 use Lemonldap::NG::Handler::CGI qw(:globalStorage :locationRules);
 use Lemonldap::NG::Common::Conf::Constants;    #inherits
 use Lemonldap::NG::Common::Safelib;            #link protected safe Safe object
-use XML::LibXML;
-use XML::LibXSLT;
-
-BEGIN {
-    require Lemonldap::NG::Manager::Help;      #inherits
-}
-use base qw(Lemonldap::NG::Handler::CGI);
+#require Lemonldap::NG::Manager::_Struct; #inherits
+require Lemonldap::NG::Manager::Help;      #inherits
 
 our $VERSION = '0.1';
 our ( $stylesheet, $parser );
+our @ISA;
 
 BEGIN {
-    *struct      = \&Lemonldap::NG::Manager::_Struct::struct;
-    *cstruct     = \&Lemonldap::NG::Manager::_Struct::cstruct;
-    *defaultConf = \&Lemonldap::NG::Manager::_Struct::defaultConf;
+#    *struct      = \&Lemonldap::NG::Manager::_Struct::struct;
+#    *cstruct     = \&Lemonldap::NG::Manager::_Struct::cstruct;
+#    *defaultConf = \&Lemonldap::NG::Manager::_Struct::defaultConf;
     *process     = *doall;
-}
-
-sub parser {
-    my $self = shift;
-    return $parser if ($parser);
-    $parser = XML::LibXML->new();
-}
-
-sub stylesheet {
-    my $self = shift;
-
-    #return $stylesheet if($stylesheet);
-    my $xslt      = XML::LibXSLT->new();
-    my $style_doc = $self->parser->parse_string(
-        q#<?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="1.0"
-                xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
- <xsl:output method="xml"
-             encoding="UTF-8"/>
- <xsl:template match="/">
-  <root>
-  <xsl:apply-templates/>
-  </root>
- </xsl:template>
- <xsl:template match="li">
-  <xsl:choose>
-   <xsl:when test="starts-with(.,'.')">
-    <ignore><xsl:value-of select="."/></ignore>
-   </xsl:when>
-   <xsl:otherwise>
-    <xsl:apply-templates/>
-   </xsl:otherwise>
-  </xsl:choose>
- </xsl:template>
- <xsl:template match="span">
-  <element>
-   <xsl:attribute name="name"><xsl:value-of select="@name"/></xsl:attribute>
-   <xsl:attribute name="id"><xsl:value-of select="@id"/></xsl:attribute>
-   <xsl:attribute name="value"><xsl:value-of select="@value"/></xsl:attribute>
-  </element>
-  <!--xsl:copy-of select="."/>
-  <element>
-   <name><xsl:value-of select="@name"/></name>
-   <id><xsl:value-of select="@id"/></id>
-   <value><xsl:value-of select="@id"/></value>
-  </element-->
- </xsl:template>
-</xsl:stylesheet>
-#
-    );
-    $stylesheet = $xslt->parse_stylesheet($style_doc);
+    @ISA=qw(Lemonldap::NG::Handler::CGI Lemonldap::NG::Manager::_Struct Lemonldap::NG::Manager::Uploader);
 }
 
 sub new {
@@ -130,13 +76,13 @@ sub doall {
         print $self->header_public( $ENV{SCRIPT_FILENAME}, -type => 'text/css',
         );
         $self->css;
-        exit;
+        $self->quit();
     }
     elsif ( $ENV{PATH_INFO} eq "/js" ) {
         print $self->header_public( $ENV{SCRIPT_FILENAME},
             -type => 'text/javascript', );
         $self->js;
-        exit;
+        $self->quit();
     }
     elsif ( $self->param('help') ) {
         print $self->header_public( $ENV{SCRIPT_FILENAME},
@@ -146,34 +92,12 @@ sub doall {
           unless ( $self->can('help_groups') );
         my $chap = $self->param('help');
         eval { no strict "refs"; &{"help_$chap"} };
-        exit;
+        $self->quit();
     }
-    elsif ( my $data = $self->param('data') ) {
-        $data =~ s/<img.*?>//g;
-        $data =~ s/<li class="line".*?<\/li>//g;
-        $data = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-                 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<root>' . $data . '</root>';
-
-        my $xml    = $self->parser->parse_string($data);
-        my $result = $self->stylesheet->transform($xml)->documentElement();
-        open LOG, ">/tmp/log2";
-        foreach ( @{ $result->getChildrenByTagName('element') } ) {
-            my ( $id, $name, $value ) = (
-                $_->getAttribute('id'),
-                $_->getAttribute('name'),
-                $_->getAttribute('value')
-            );
-            $id =~ s/^text_li_(\w+)(\d)$/decode_base64($1.'='x $2)/e;
-            $id =~ s/^\///;
-            my $tmp;
-            #$tmp = $self->corresp($id);
-            print LOG "$id ; $name \"$value\"\n";
-        }
-        close LOG;
-        $self->start();
-        $self->end();
-        exit;
+    elsif ( my $rdata = $self->rparam('data') ) {
+        #require Lemonldap::NG::Manager::Uploader; #inherits
+        $self->confUpload($rdata);
+        $self->quit();
     }
     $self->{cfgNum} =
          $self->param('cfgNum')
@@ -446,7 +370,7 @@ sub start {
     my $self = shift;
     print $self->header( -type => 'text/html; charset=utf8', );
     print $self->start_html(
-        -title => shift || 'Sessions Lemonldap::NG',
+        -title => shift || 'Lemonldap::NG Manager',
         -encoding => 'utf8',
         -script   => [
             {
@@ -485,9 +409,9 @@ sub window {
     print '<div class="clsTemporaryContainer">
  <div style="visibility: visible;" id="idSplitter3" class="clsSplitter">
   <div style="z-index: 2;" id="gauche" class="clsPane">
-   <center><img alt="Lemonldap::NG" src="'
+   <img style="padding:4px;padding-left:12px;" alt="Lemonldap::NG" src="'
       . $self->{imagePath}
-      . '/logo_lemonldap-ng.png"/><br/>&nbsp;</center><ul class="simpleTree">'
+      . '/logo_lemonldap-ng.png"/><br/>&nbsp;<ul class="simpleTree">'
       . $self->li( 'root', 'root' )
       . $self->span( 'root', $root, $data, '', 'default' ) . '<ul>';
 }
@@ -532,12 +456,12 @@ sub end {
    <div id="help">
    </div>
   </div><!-- end Pane -->
-  <div style="z-index: 1; cursor: n-resize;" id="barre2" class="clsDragBar">
+  <div style="z-index: 1; cursor: n-resize;" id="barre2" class="clsDragBar clsDragBar-hframe">
    &nbsp;
   </div>
  </div><!-- end Splitter -->
 </div><!-- end Pane -->
-<div style="z-index: 1; cursor: n-resize;" id="barre3" class="clsDragBar">
+<div style="z-index: 1; cursor: n-resize;" id="barre3" class="clsDragBar clsDragBar-vframe">
 </div>
 </div><!-- end Splitter -->
 </div><!-- end TemporaryContainer -->
@@ -548,6 +472,9 @@ EOF
 1;
 
 package Lemonldap::NG::Manager::_Struct;
+
+use strict;
+our $VERSION='0.1';
 
 sub cstruct {
     shift;
@@ -621,6 +548,100 @@ sub struct {
 
 sub defaultConf {
     return { userDB => 'LDAP', };
+}
+
+1;
+package Lemonldap::NG::Manager::Uploader;
+
+use strict;
+use XML::LibXML;
+use XML::LibXSLT;
+use MIME::Base64;
+
+our $VERSION='0.1';
+
+sub confUpload {
+    my($self,$rdata)=@_;
+        $$rdata =~ s/<img.*?>//g;
+        $$rdata =~ s/<li class="line".*?<\/li>//g;
+        my $xml    = $self->parser->parse_string('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<root>' . $$rdata . '</root>');
+
+        my $result = $self->stylesheet->transform($xml)->documentElement();
+        open LOG, ">/tmp/log2";
+        print LOG $self->stylesheet->transform($xml)->toString();
+        foreach ( @{ $result->getChildrenByTagName('ignore') } ) {
+            my $node = $_->getAttribute('value');
+            $node =~ s/^.*node=(.*?)(?:&.*)?\}$/$1/;
+            print LOG "Ignore $node\n";
+        }
+        foreach ( @{ $result->getChildrenByTagName('element') } ) {
+            my ( $id, $name, $value ) = (
+                $_->getAttribute('id'),
+                $_->getAttribute('name'),
+                $_->getAttribute('value')
+            );
+            $id =~ s/^text_li_(\w+)(\d)$/decode_base64($1.'='x $2)/e;
+            $id =~ s/^\///;
+            my $tmp;
+            #$tmp = $self->corresp($id);
+            print LOG "$id ; $name \"$value\"\n";
+        }
+        close LOG;
+        $self->start();
+        $self->end();
+}
+
+sub parser {
+    my $self = shift;
+    return $parser if ($parser);
+    $parser = XML::LibXML->new();
+}
+
+sub stylesheet {
+    my $self = shift;
+
+    #return $stylesheet if($stylesheet);
+    my $xslt      = XML::LibXSLT->new();
+    my $style_doc = $self->parser->parse_string(
+        q#<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+ <xsl:output method="xml"
+             encoding="UTF-8"/>
+ <xsl:template match="/">
+  <root>
+  <xsl:apply-templates/>
+  </root>
+ </xsl:template>
+ <xsl:template match="li">
+  <xsl:choose>
+   <xsl:when test="starts-with(.,'.')">
+    <ignore><xsl:attribute name="value"><xsl:value-of select="."/></xsl:attribute></ignore>
+   </xsl:when>
+   <xsl:otherwise>
+    <xsl:apply-templates/>
+   </xsl:otherwise>
+  </xsl:choose>
+ </xsl:template>
+ <xsl:template match="span">
+  <element>
+   <xsl:attribute name="name"><xsl:value-of select="@name"/></xsl:attribute>
+   <xsl:attribute name="id"><xsl:value-of select="@id"/></xsl:attribute>
+   <xsl:attribute name="value"><xsl:value-of select="@value"/></xsl:attribute>
+  </element>
+  <!--xsl:copy-of select="."/>
+  <element>
+   <name><xsl:value-of select="@name"/></name>
+   <id><xsl:value-of select="@id"/></id>
+   <value><xsl:value-of select="@id"/></value>
+  </element-->
+ </xsl:template>
+</xsl:stylesheet>
+#
+    );
+    $stylesheet = $xslt->parse_stylesheet($style_doc);
 }
 
 1;

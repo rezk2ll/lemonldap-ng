@@ -19,19 +19,18 @@ simpleTreeCollection = $(".simpleTree").simpleTree({
     animate:true
     //,docToFolderConvert:true
     });
-  var w=X.clientWidth()-12;
-  var h=X.clientHeight()-12;
+  var w=xClientWidth()-12;
+  var h=xClientHeight()-12;
   //var h=window.outerHeight;
-  s32=new xSplitter('idSplitter32',0,0,0,0,false,4,h/2,h/8,true,0);
-  s3=new xSplitter('idSplitter3',0,0,w,h,true,4,w/4,w/8,true,4,null,s32);
-  //X.addEventListener(window,'resize',win_onresize,false);
+  s32=new xSplitter('idSplitter32',0,0,0,0,false,6,h/2,h/8,h/8,true,0);
+  s3=new xSplitter('idSplitter3',0,0,w,h,true,6,w/4,w/8,w/8,true,4,null,s32);
+  xAddEventListener(window,'resize',win_onresize,false);
 }
 );
 var currentId;
 function win_onresize(){
-  var cw=X.clientWidth();
-  var w=X.clientWidth()-12;
-  var h=X.clientHeight()-12;
+  var w=xClientWidth()-12;
+  var h=xClientHeight()-12;
   s3.paint(w,h,w/4,w/5);
 }
 function lmtext(id){
@@ -92,7 +91,6 @@ function rules(id){
   //display('btext',$('#'+id).parent().parent);
   $('#rulKey').attr('value',lmtext(id));
   $('#rulValue').attr('value',lmdata(id));
-  alert(lmparent(id));
   display('rules',lmtext(lmparent(id)));
 }
 
