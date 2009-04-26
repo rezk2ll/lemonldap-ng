@@ -574,7 +574,7 @@ sub testStruct {
             msgFail => 'securedCookie must be 0, 1 or 2',
         },
         domain => {
-            test    => qr/^\w+(?:\.[a-zA-Z]\w*)*(?:\.[a-zA-Z]+)$/,
+            test    => qr/^\.?\w+(?:\.[a-zA-Z]\w*)*(?:\.[a-zA-Z]+)$/,
             msgFail => 'Bad domain',
         },
         timeout => {
@@ -707,16 +707,6 @@ sub confUpload {
     }
     my $newConf = { cfgNum => $self->{cfgNum} };
 
-    # Loading unchanged parameters (ajax nodes not open)
-    foreach ( @{ $result->getChildrenByTagName('ignore') } ) {
-        my $node = $_->getAttribute('value');
-        $node =~ s/^.*node=(.*?)(?:&.*)?\}$/$1/;
-        foreach my $k ( $self->findAllConfKeys( $self->corresp($node) ) ) {
-            $self->setKeyToH( $newConf, $k, $self->keyToH( $k, $self->conf ) );
-        }
-        print LOG "Ignore $node\n";
-    }
-
     # Loading returned parameters
     my ( %errors, %warnings );
     foreach ( @{ $result->getChildrenByTagName('element') } ) {
@@ -768,11 +758,28 @@ sub confUpload {
                   . ( $m || $test->{keyMsgWarn} );
             }
         }
-
-        #$tmp = $self->corresp($id);
+        $self->setKeyToH( $newConf, $confKey, ($test->{keyTest} ? ($name => $value):$value));
         print STDERR "$id ; $name \"$value\"\n";
     }
-    print STDERR Dumper( \%errors, \%warnings );
+
+    # Loading unchanged parameters (ajax nodes not open)
+    foreach ( @{ $result->getChildrenByTagName('ignore') } ) {
+        my $node = $_->getAttribute('value');
+        $node =~ s/^.*node=(.*?)(?:&.*)?\}$/$1/;
+        foreach my $k ( $self->findAllConfKeys( $self->corresp($node) ) ) {
+            my $v = $self->keyToH( $k, $self->conf );
+            $v = $self->keyToH($k,$self->defaultConf) unless(defined $v);
+            if(defined $v) {
+            $self->setKeyToH( $newConf, $k, $v );
+            }
+            else {
+                $self->lmLog("No default value found for $k",'warn');
+            }
+        }
+        print LOG "Ignore $node\n";
+    }
+
+    print STDERR Dumper($newConf, \%errors, \%warnings);
     close LOG;
     $self->start();
     $self->end();
@@ -817,9 +824,11 @@ sub findAllConfKeys {
 }
 
 sub setKeyToH {
-    my ( $self, $h, $key, $value ) = @_;
+    my $value = pop;
+    my ( $self, $h, $key, $k2 ) = @_;
     my $tmp = $h;
     $key =~ s/^\///;
+    confess('No key') unless($key);use Carp;
     while (1) {
         if ( $key =~ /\// ) {
             my $k = $`;
@@ -827,7 +836,13 @@ sub setKeyToH {
             $tmp = $tmp->{$k} ||= {};
         }
         else {
-            $tmp->{$key} = $value;
+            if($k2) {
+                $tmp->{$key} = {} unless(ref($tmp->{$key}));
+                $tmp->{$key}->{$k2} = $value;
+            }
+            else {
+                $tmp->{$key} = $value;
+            }
             last;
         }
     }
