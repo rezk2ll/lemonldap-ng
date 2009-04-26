@@ -46,19 +46,18 @@ use MIME::Base64;
 use Lemonldap::NG::Handler::CGI qw(:globalStorage :locationRules);
 use Lemonldap::NG::Common::Conf::Constants;    #inherits
 use Lemonldap::NG::Common::Safelib;            #link protected safe Safe object
+
 #require Lemonldap::NG::Manager::_Struct; #inherits
-require Lemonldap::NG::Manager::Help;      #inherits
 
 our $VERSION = '0.1';
 our ( $stylesheet, $parser );
 our @ISA;
 
 BEGIN {
-#    *struct      = \&Lemonldap::NG::Manager::_Struct::struct;
-#    *cstruct     = \&Lemonldap::NG::Manager::_Struct::cstruct;
-#    *defaultConf = \&Lemonldap::NG::Manager::_Struct::defaultConf;
-    *process     = *doall;
-    @ISA=qw(Lemonldap::NG::Handler::CGI Lemonldap::NG::Manager::_Struct Lemonldap::NG::Manager::Uploader);
+    require Lemonldap::NG::Manager::Help;      #inherits
+    *process = *doall;
+    @ISA =
+      qw(Lemonldap::NG::Handler::CGI Lemonldap::NG::Manager::_Struct Lemonldap::NG::Manager::Uploader);
 }
 
 sub new {
@@ -95,6 +94,7 @@ sub doall {
         $self->quit();
     }
     elsif ( my $rdata = $self->rparam('data') ) {
+
         #require Lemonldap::NG::Manager::Uploader; #inherits
         $self->confUpload($rdata);
         $self->quit();
@@ -180,16 +180,17 @@ sub confNode {
     my ( $self, $node, $target, $help, $js ) = @_;
     $self->lmLog( "Processing to configuration node: $target", 'debug' );
     $target =~ s/^\///;
-    my ( $t1, $t2 ) = ( '', '' );
     if ( $target =~ /^(.+?):(?!\/)(.+?):(?!\/)(.+?)$/ ) {
         ( $target, $help, $js ) = ( $1, $2, $3 );
     }
-    ( $target, $t1, $t2 ) = split /:(?!\/)/, $target
-      if ( $target =~ /:(?!\/)/ );
-    $help ||= $t1;
-    $js   ||= $t2;
+
+    #my ( $t1, $t2 ) = ( '', '' );
+    #( $target, $t1, $t2 ) = split /:(?!\/)/, $target
+    #  if ( $target =~ /:(?!\/)/ );
+    #$help ||= $t1;
+    #$js   ||= $t2;
     if ( $target =~ s/^nhash:// ) {
-        my $h = keyToH( $target, $self->conf );
+        my $h = $self->keyToH( $target, $self->conf );
         return unless ($h);
         foreach ( sort keys %$h ) {
             if ( ref($h) ) {
@@ -197,12 +198,12 @@ sub confNode {
                     $help, $js );
             }
             else {
-                $self->confNode( '', "btext:$target/$_", $help, $js );
+                $self->confNode( "$target/$_", "btext:$target/$_", $help, $js );
             }
         }
     }
     elsif ( $target =~ s/^hash:// ) {
-        my $h = keyToH( $target, $self->conf );
+        my $h = $self->keyToH( $target, $self->conf );
         return unless ($h);
         foreach ( sort keys %$h ) {
             if ( ref( $h->{$_} ) ) {
@@ -223,12 +224,11 @@ sub confNode {
         $js ||= $type;
         my $text = $target;
         $text =~ s/^.*\///;
-        my $h = keyToH( $target, $self->conf );
+        my $h = $self->keyToH( $target, $self->conf );
 
-        $h = keyToH( $target, $self->defaultConf ) unless ( defined $h );
+        $h = $self->keyToH( $target, $self->defaultConf ) unless ( defined $h );
         unless ( defined $h ) {
-            $self->lmLog( "$target does not exists in configuration hash",
-                "warn" );
+            $self->lmLog( "$target does not exists in menu hash", "warn" );
             return;
         }
         if ( ref($h) ) {
@@ -255,19 +255,19 @@ sub confNode {
 }
 
 sub keyToH {
-    my ( $key, $h ) = @_;
+    my ( $self, $key, $h ) = @_;
     $key =~ s/^\///;
     foreach ( split /\//, $key ) {
-        return undef unless ( defined( $h->{$_} ) );
+        return () unless ( defined( $h->{$_} ) );
         $h = $h->{$_};
     }
     return $h;
 }
 
 sub corresp {
-    my $self = shift;
-    my $key  = shift;
-    my $h    = $self->struct();
+    my ( $self, $key, $last ) = @_;
+    $key =~ s/^\///;
+    my $h = $self->struct();
     return $h unless ($key);
     if ( my $k2 = $self->param('key') ) {
         $h = $self->cstruct( $h, $k2 );
@@ -284,8 +284,15 @@ sub corresp {
 
         # The wanted key does not exists
         elsif ( ref($h) ) {
-            $self->lmLog("Key $key does not exist in configuration hash",'error');
-            return undef;
+            unless ($last) {
+                $self->param( 'key', $_ );
+                return $self->corresp( $key, 1 );
+            }
+            else {
+                $self->lmLog( "Key $key does not exist in configuration hash",
+                    'error' );
+                return ();
+            }
         }
 
         # If the key does not exist in manager tree, it must be defined in
@@ -375,7 +382,9 @@ sub start {
         -script   => [
             {
                 -language => 'JavaScript1.2',
-                -src      => "$self->{imagePath}/xlib.js",
+
+                #-src      => "lemonldap-ng-manager.js",
+                -src => "$self->{imagePath}/xlib.js",
             },
             {
                 -language => 'JavaScript1.2',
@@ -474,7 +483,7 @@ EOF
 package Lemonldap::NG::Manager::_Struct;
 
 use strict;
-our $VERSION='0.1';
+our $VERSION = '0.1';
 
 sub cstruct {
     shift;
@@ -546,51 +555,282 @@ sub struct {
     };
 }
 
+sub testStruct {
+    my $assignTest = qr/(?<=[^=<!>\?])=(?![=~])/;
+    my $assignMsg  = 'containsAnAssignment';
+    my $perlExpr   = sub {
+        my $e = shift;
+        eval "use strict;$e";
+        return 1 if ( $@ =~ /Global symbol "\$.*requires explicit package/ );
+        return ( $@ ? ( 0, $@ ) : 1 );
+    };
+    return {
+        cookieName => {
+            test    => qr/^[a-zA-Z]\w*$/,
+            msgFail => 'Bad cookie name',
+        },
+        securedCookie => {
+            test    => qr/^(?:0|1|2)$/,
+            msgFail => 'securedCookie must be 0, 1 or 2',
+        },
+        domain => {
+            test    => qr/^\w+(?:\.[a-zA-Z]\w*)*(?:\.[a-zA-Z]+)$/,
+            msgFail => 'Bad domain',
+        },
+        timeout => {
+            test    => qr/^\d*$/,
+            msgFail => 'Bad number'
+        },
+        globalStorage => {
+            test    => qr/^[\w:]+$/,
+            msgFail => 'Bad module name',
+        },
+        globalStorageOptions => {
+            keyTest    => qr/^\w+$/,
+            keyMsgFail => 'Bad parameter',
+        },
+        ldapBase => {
+            test    => qr/^(?:\w+=.*|)$/,
+            msgFail => 'Bad LDAP base',
+        },
+        ldapPort => {
+            test    => qr/^\d*$/,
+            msgFail => 'Bad port number'
+        },
+        ldapServer => {
+            test => sub {
+                my $l = shift;
+                my @s = split( /[\s,]+/, $l );
+                foreach my $s (@s) {
+                    $s =~
+/^(?:ldap(?:s|\+tls|i):\/\/)?\w[\w\-\.]+\w(?::\d{0,5})?\/?$/
+                      or return ( 0, "Bad ldap uri \"$s\"" );
+                }
+                return 1;
+            },
+        },
+        managerDn => {
+            test    => qr/^(?:\w+=.*,\w+=.*)?$/,
+            msgFail => 'Bad LDAP dn',
+        },
+        managerPassword => {},
+        groups          => {
+            keyTest    => qr/^\w[\w-]*$/,
+            keyMsgFail => 'Bad group name',
+            test       => $perlExpr,
+            warnTest   => sub {
+                my $e = shift;
+                return ( 0, $assignMsg ) if ( $e =~ $assignTest );
+                1;
+            },
+        },
+        locationRules => {
+            keyTest => qr/^[a-zA-Z](?:[\w\-\.]*\w)?$/,
+            msgFail => 'Bad virtual host name',
+            '*'     => {
+                keyTest => sub {
+                    my $r = shift;
+                    my $q;
+                    eval { $q = qr/$r/ };
+                    return ( $@ ? ( 0, $@ ) : 1 );
+                },
+                test => sub {
+                    my $e = shift;
+                    return 1 if ( $e eq 'accept' or $e eq 'deny' );
+                    if ( $e =~ s/^logout(?:_(?:app|sso|app_sso))?\s*// ) {
+                        return (
+                            $e =~ /^(?:https?:\/\/\S+)?$/
+                            ? 1
+                            : ( 0, "bad url \"$e\"" )
+                        );
+                    }
+                    return &$perlExpr($e);
+                },
+                warnTest => sub {
+                    my $e = shift;
+                    return ( 0, $assignMsg )
+                      if (  $e =~ $assignTest
+                        and $e !~ /^(?:accept|deny|logout)/ );
+                    1;
+                },
+            },
+        },
+        exportedHeaders => {
+            keyTest => qr/^[a-zA-Z](?:[\w\-\.]*\w)?$/,
+            msgFail => 'Bad virtual host name',
+            '*'     => {
+                keyTest    => qr/^\w([\w\-]*\w)?$/,
+                keyMsgFail => 'Bad header name',
+                test       => $perlExpr,
+                warnTest   => sub {
+                    my $e = shift;
+                    return ( 0, $assignMsg ) if ( $e =~ $assignTest );
+                    1;
+                },
+            },
+        },
+    };
+}
+
 sub defaultConf {
     return { userDB => 'LDAP', };
 }
 
 1;
+
 package Lemonldap::NG::Manager::Uploader;
 
 use strict;
 use XML::LibXML;
 use XML::LibXSLT;
 use MIME::Base64;
+use Data::Dumper;
 
-our $VERSION='0.1';
+our $VERSION = '0.1';
 
 sub confUpload {
-    my($self,$rdata)=@_;
-        $$rdata =~ s/<img.*?>//g;
-        $$rdata =~ s/<li class="line".*?<\/li>//g;
-        my $xml    = $self->parser->parse_string('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-                 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<root>' . $$rdata . '</root>');
+    my ( $self, $rdata ) = @_;
+    $$rdata =~ s/<img.*?>//g;
+    $$rdata =~ s/<li class="line".*?<\/li>//g;
 
-        my $result = $self->stylesheet->transform($xml)->documentElement();
-        open LOG, ">/tmp/log2";
-        print LOG $self->stylesheet->transform($xml)->toString();
-        foreach ( @{ $result->getChildrenByTagName('ignore') } ) {
-            my $node = $_->getAttribute('value');
-            $node =~ s/^.*node=(.*?)(?:&.*)?\}$/$1/;
-            print LOG "Ignore $node\n";
+    # Apply XSLT stylesheet to returned datas
+    my $result =
+      $self->stylesheet->transform(
+        $self->parser->parse_string( '<root>' . $$rdata . '</root>' ) )
+      ->documentElement();
+
+    # Get configuration number
+    unless ( $self->{cfgNum} =
+        $result->getChildrenByTagName('conf')->[0]->getAttribute('value') )
+    {
+        die "No configuration number found";
+    }
+    my $newConf = { cfgNum => $self->{cfgNum} };
+
+    # Loading unchanged parameters (ajax nodes not open)
+    foreach ( @{ $result->getChildrenByTagName('ignore') } ) {
+        my $node = $_->getAttribute('value');
+        $node =~ s/^.*node=(.*?)(?:&.*)?\}$/$1/;
+        foreach my $k ( $self->findAllConfKeys( $self->corresp($node) ) ) {
+            $self->setKeyToH( $newConf, $k, $self->keyToH( $k, $self->conf ) );
         }
-        foreach ( @{ $result->getChildrenByTagName('element') } ) {
-            my ( $id, $name, $value ) = (
-                $_->getAttribute('id'),
-                $_->getAttribute('name'),
-                $_->getAttribute('value')
-            );
-            $id =~ s/^text_li_(\w+)(\d)$/decode_base64($1.'='x $2)/e;
-            $id =~ s/^\///;
-            my $tmp;
-            #$tmp = $self->corresp($id);
-            print LOG "$id ; $name \"$value\"\n";
+        print LOG "Ignore $node\n";
+    }
+
+    # Loading returned parameters
+    my ( %errors, %warnings );
+    foreach ( @{ $result->getChildrenByTagName('element') } ) {
+        my ( $id, $name, $value ) = (
+            $_->getAttribute('id'),
+            $_->getAttribute('name'),
+            $_->getAttribute('value')
+        );
+        $id =~ s/^text_li_(\w+)(\d)$/decode_base64($1.'='x $2)/e;
+        $id =~ s/^\///;
+        next if ( $id =~ /^(generalParameters|virtualHosts)/ );
+        my ( $confKey, $test ) = $self->getConfTests($id);
+        my ( $res, $m );
+        if ( !defined($test) ) {
+            $errors{$name} =
+              "Key $name: Lemonldap::NG::Manager error, see Apache's logs";
+            $self->lmLog(
+                "Unknown configuration key $id (name: $name, value: $value)",
+                'error' );
+            next;
         }
-        close LOG;
-        $self->start();
-        $self->end();
+        if ( $test->{keyTest} ) {
+            ( $res, $m ) = $self->applyTest( $test->{keyTest}, $name );
+            unless ($res) {
+                $errors{$name} =
+                  "Value \"$name\" rejected: " . ( $m || $test->{keyMsgFail} );
+                next;
+            }
+        }
+        if ( $test->{test} ) {
+            ( $res, $m ) = $self->applyTest( $test->{test}, $value );
+            unless ($res) {
+                $errors{$name} = "Value of key \"$name\" rejected: "
+                  . ( $m || $test->{msgFail} );
+                next;
+            }
+        }
+        if ( $test->{warnKeyTest} ) {
+            ( $res, $m ) = $self->applyTest( $test->{warnKeyTest}, $name );
+            unless ($res) {
+                $warnings{$name} = "Warning for value \"$name\": "
+                  . ( $m || $test->{keyMsgWarn} );
+            }
+        }
+        if ( $test->{warnTest} ) {
+            ( $res, $m ) = $self->applyTest( $test->{warnTest}, $value );
+            unless ($res) {
+                $warnings{$name} = "Warning for the value of key \"$name\": "
+                  . ( $m || $test->{keyMsgWarn} );
+            }
+        }
+
+        #$tmp = $self->corresp($id);
+        print STDERR "$id ; $name \"$value\"\n";
+    }
+    print STDERR Dumper( \%errors, \%warnings );
+    close LOG;
+    $self->start();
+    $self->end();
+}
+
+sub applyTest {
+    my ( $self, $test, $value ) = @_;
+    my ( $res, $msg );
+    if ( ref($test) eq 'CODE' ) {
+        ( $res, $msg ) = &$test($value);
+    }
+    else {
+        $res = ( $value =~ $test ? 1 : 0 );
+    }
+    return ( $res, $msg );
+}
+
+sub getConfTests {
+    my ( $self, $id ) = @_;
+    my ( $confKey, $tmp ) = ( $id =~ /^(.*?)(?:\/(.*))?$/ );
+    my $h = $self->testStruct()->{$confKey};
+    if ( $h and $h->{'*'} and my ( $k, $v ) = ( $tmp =~ /^(.*?)\/(.*)$/ ) ) {
+        return ( "$confKey/$k", $h->{'*'} );
+    }
+    return ( $confKey, $h );
+}
+
+sub findAllConfKeys {
+    my ( $self, $h ) = @_;
+    my @res = ();
+    foreach my $n ( @{ $h->{_nodes} } ) {
+        $n =~ s/^.*?:(.*?)(?:\:.*)?$/$1/;
+        if ( ref( $h->{$n} ) ) {
+            push @res, $self->findAllConfKeys( $h->{$n} );
+        }
+        else {
+            my $m = $h->{$n} || $n;
+            push @res, ( $m =~ /^(?:.*?:)?(.*?)(?:\:.*)?$/ ? $1 : () );
+        }
+    }
+    return @res;
+}
+
+sub setKeyToH {
+    my ( $self, $h, $key, $value ) = @_;
+    my $tmp = $h;
+    $key =~ s/^\///;
+    while (1) {
+        if ( $key =~ /\// ) {
+            my $k = $`;
+            $key = $';
+            $tmp = $tmp->{$k} ||= {};
+        }
+        else {
+            $tmp->{$key} = $value;
+            last;
+        }
+    }
 }
 
 sub parser {
@@ -626,17 +866,18 @@ sub stylesheet {
   </xsl:choose>
  </xsl:template>
  <xsl:template match="span">
-  <element>
-   <xsl:attribute name="name"><xsl:value-of select="@name"/></xsl:attribute>
-   <xsl:attribute name="id"><xsl:value-of select="@id"/></xsl:attribute>
-   <xsl:attribute name="value"><xsl:value-of select="@value"/></xsl:attribute>
-  </element>
-  <!--xsl:copy-of select="."/>
-  <element>
-   <name><xsl:value-of select="@name"/></name>
-   <id><xsl:value-of select="@id"/></id>
-   <value><xsl:value-of select="@id"/></value>
-  </element-->
+  <xsl:choose>
+   <xsl:when test="@id='text_li_cm9vdA2'">
+    <conf><xsl:attribute name="value"><xsl:value-of select="@value"/></xsl:attribute></conf>
+   </xsl:when>
+   <xsl:otherwise>
+    <element>
+     <xsl:attribute name="name"><xsl:value-of select="@name"/></xsl:attribute>
+     <xsl:attribute name="id"><xsl:value-of select="@id"/></xsl:attribute>
+     <xsl:attribute name="value"><xsl:value-of select="@value"/></xsl:attribute>
+    </element>
+   </xsl:otherwise>
+  </xsl:choose>
  </xsl:template>
 </xsl:stylesheet>
 #

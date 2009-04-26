@@ -49,17 +49,28 @@ sub new {
     return $self;
 }
 
-## @method scalar param(string s)
+## @method scalar param(string s, scalar newValue)
 # Return the wanted parameter issued of GET or POST request. If $s is not set,
 # return the list of parameters names
 # @param $s name of the parameter
+# @param $newValue if set, the parameter will be set to his value
 # @return datas passed by GET or POST method
 sub param {
-    my ( $self, $p ) = @_;
+    my ( $self, $p, $v ) = @_;
+    $self->{_prm}->{$p} = $v if ($v);
     unless ( defined $p ) {
         return keys %{ $self->{_prm} };
     }
     return $self->{_prm}->{$p};
+}
+
+## @method scalar rparam(string s)
+# Return a reference to a parameter
+# @param $s name of the parameter
+# @return ref to parameter data
+sub rparam {
+    my ( $self, $p ) = @_;
+    return $self->{_prm}->{$p} ? \$self->{_prm}->{$p} : undef;
 }
 
 ## @method void lmLog(string mess, string level)
