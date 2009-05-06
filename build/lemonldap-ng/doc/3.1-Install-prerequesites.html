@@ -134,6 +134,12 @@
       <li>Regexp::Assemble</li>
 
       <li>XML::LibXML</li>
+
+      <li>Crypt::Rijndael</li>
+
+      <li>IO::String</li>
+
+      <li>XML::LibXSLT</li>
     </ul>
 
     <h4 class="heading-1-1-1"><span id="HExtras">Extras</span></h4>
@@ -160,12 +166,25 @@
 
     <div class="code">
       <pre>
-# apt-get install apache2 libapache2-mod-perl2 libapache-session-perl libnet-ldap-perl libcache-cache-perl libdbi-perl perl-modules libwww-perl libcache-cache-perl libxml-simple-perl  libsoap-lite-perl libhtml-template-perl libregexp-assemble-perl libjs-jquery libxml-libxml-perl
+# apt-get install apache2 libapache2-mod-perl2 libapache-session-perl libnet-ldap-perl libcache-cache-perl libdbi-perl perl-modules libwww-perl libcache-cache-perl libxml-simple-perl  libsoap-lite-perl libhtml-template-perl libregexp-assemble-perl libjs-jquery libxml-libxml-perl libcrypt-rijndael-perl libio-string-perl libxml-libxslt-perl
 </pre>
     </div>
 
     <h4 class="heading-1-1-1"><span id="HYUM">YUM</span></h4><br />
     <br />
+    Some Perl dependencies are hosted in <span class=
+    "wikiexternallink"><a href="https://rpmrepo.org/">RPMForge</a></span>
+    repository, you can activate this repository: <span class=
+    "wikiexternallink"><a href=
+    "https://rpmrepo.org/RPMforge/Using">https://rpmrepo.org/RPMforge/Using</a></span><br />
+
+    <br />
+
+    <div class="code">
+      <pre>
+# yum install httpd mod_perl perl-Apache-Session perl-LDAP perl-XML-SAX perl-XML-NamespaceSupport perl-HTML-Template perl-Regexp-Assemble perl-Error perl-IPC-ShareLite perl-Cache-Cache perl-FreezeThaw perl-XML-Simple perl-version perl-CGI-Session perl-DBD-Pg perl-XML-LibXML-Common perl-BSD-Resource perl-XML-LibXML perl-Crypt-Rijndael perl-IO-<span class="java-object">String</span> perl-XML-LibXSLT
+</pre>
+    </div>
   </div>
 
   <p class="footer"><a href="index.html">Index</a></p>
