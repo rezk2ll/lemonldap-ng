@@ -127,7 +127,7 @@ sub run ($$) {
 
     # ACCOUNTING
     # 1 - Inform Apache
-    lmSetApacheUser( $apacheRequest, $datas->{$whatToTrace} );
+    $class->lmSetApacheUser( $apacheRequest, $datas->{$whatToTrace} );
 
     # AUTHORIZATION
     return $class->forbidden($uri) unless ( $class->grant($uri) );

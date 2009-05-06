@@ -67,7 +67,6 @@ BEGIN {
               lmSetHeaderOut lmSetErrHeaderOut $cookieName $https $port
               )
         ],
-        log    => [qw(lmSetApacheUser)],
         traces => [qw( $whatToTrace $statusPipe $statusOut )],
         apache => [qw( MP OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR )],
         post   => [qw($transform)],
@@ -192,12 +191,12 @@ sub lmLog {
     }
 }
 
-## @rfn protected void lmSetApacheUser(Apache2::RequestRec r,string s)
+## @rmethod protected void lmSetApacheUser(Apache2::RequestRec r,string s)
 # Inform Apache for the data to use as user for logs
 # @param $r current request
 # @param $s string to use
 sub lmSetApacheUser {
-    my ( $r, $s ) = @_;
+    my ( $class, $r, $s ) = @_;
     return unless ($s);
     if ( MP() == 2 ) {
         $r->user($s);
@@ -237,7 +236,7 @@ sub lmSetHeaderIn {
     }
 }
 
-## @rfn string lmtHeaderIn(Apache2::RequestRec r, string h)
+## @rfn string lmHeaderIn(Apache2::RequestRec r, string h)
 # Return an HTTP header value from the HTTP request.
 # @param $r Current request
 # @param $h Name of the header
@@ -282,7 +281,7 @@ sub lmSetHeaderOut {
     }
 }
 
-## @rfn string lmtHeaderOut(Apache2::RequestRec r, string h)
+## @rfn string lmHeaderOut(Apache2::RequestRec r, string h)
 # Return an HTTP header value from the HTTP response.
 # @param $r Current request
 # @param $h Name of the header
@@ -551,8 +550,8 @@ sub defaultValuesInit {
     my ( $class, $args ) = @_;
 
     # Other values
-    $cookieName    = $args->{cookieName}    || $cookieName    || 'lemonldap';
-    $whatToTrace   = $args->{whatToTrace}   || $whatToTrace   || 'uid';
+    $cookieName  = $args->{cookieName}  || $cookieName  || 'lemonldap';
+    $whatToTrace = $args->{whatToTrace} || $whatToTrace || 'uid';
     $whatToTrace =~ s/\$//g;
     $https = $args->{https} unless defined($https);
     $https = 1 unless defined($https);
@@ -740,7 +739,7 @@ sub grant {
 # Inform the status processus and call logForbidden().
 # @return Apache2::Const::FORBIDDEN
 sub forbidden {
-    my $class = shift;
+    my ( $class, $uri ) = @_;
     if ( $datas->{_logout} ) {
         $class->updateStatus( $datas->{$whatToTrace}, $_[0], 'LOGOUT' );
         my $u = $datas->{_logout};
@@ -748,21 +747,24 @@ sub forbidden {
         return $class->goToPortal( $u, 'logout=1' );
     }
     $class->updateStatus( $datas->{$whatToTrace}, $_[0], 'REJECT' );
-    $class->logForbidden(@_);
+    $apacheRequest->push_handlers(
+        PerlLogHandler => sub { $class->logForbidden( $uri, $datas ); DECLINED }
+    );
     return FORBIDDEN;
 }
 
-## @rmethod protected void logForbidden(string uri)
+## @rmethod protected void logForbidden(string uri,hashref datas)
 # Insert a log in Apache errors log system to inform that the user was rejected.
 # This method has to be overloaded to use different logs systems
 # @param $uri uri asked
+# @param $datas hash re to user's datas
 sub logForbidden {
-    my $class = shift;
+    my ( $class, $uri, $datas ) = @_;
     $class->lmLog(
         'User "'
           . $datas->{$whatToTrace}
           . '" was reject when he tried to access to '
-          . shift,
+          . $uri,
         'notice'
     );
 }
@@ -772,12 +774,12 @@ sub logForbidden {
 # authorizated. This method has to be overloaded to use different logs systems
 # @param $uri uri asked
 sub logGranted {
-    my $class = shift;
+    my ( $class, $uri, $datas ) = @_;
     $class->lmLog(
         'User "'
           . $datas->{$whatToTrace}
           . '" was granted to access to '
-          . shift,
+          . $uri,
         'debug'
     );
 }
@@ -904,12 +906,11 @@ sub run ($$) {
 
     # ACCOUNTING
     # 1 - Inform Apache
-    lmSetApacheUser( $apacheRequest, $datas->{$whatToTrace} );
+    $class->lmSetApacheUser( $apacheRequest, $datas->{$whatToTrace} );
 
     # AUTHORIZATION
     return $class->forbidden($uri) unless ( $class->grant($uri) );
     $class->updateStatus( $datas->{$whatToTrace}, $apacheRequest->uri, 'OK' );
-    $class->logGranted($uri);
 
     # ACCOUNTING
     # 2 - Inform remote application
@@ -919,9 +920,12 @@ sub run ($$) {
     # Hide Lemonldap::NG cookie
     $class->hideCookie;
 
-    # Cleanup
+    # Cleanup and log
     $apacheRequest->push_handlers(
-        PerlCleanupHandler => sub { return $class->cleanLocalStorage(@_); }
+        PerlLogHandler => sub { $class->logGranted( $uri, $datas ); DECLINED },
+    );
+    $apacheRequest->push_handlers(
+        PerlCleanupHandler => sub { $class->cleanLocalStorage(@_); DECLINED },
     );
 
     if ( defined( $transform->{$uri} ) ) {

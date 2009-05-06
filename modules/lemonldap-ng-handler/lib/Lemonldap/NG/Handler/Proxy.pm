@@ -7,7 +7,7 @@ package Lemonldap::NG::Handler::Proxy;
 
 use strict;
 
-use Lemonldap::NG::Handler::Simple qw(:apache :headers :log);
+use Lemonldap::NG::Handler::Simple qw(:apache :headers);
 use LWP::UserAgent;
 
 our $VERSION = '0.4';

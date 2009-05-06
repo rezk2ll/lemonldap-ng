@@ -105,25 +105,17 @@ sub ldap {
 }
 
 sub lock {
-    my $self = shift;
-    print STDERR "lock\n";
-
-    # TODO
+    # No lock for LDAP
     return 1;
 }
 
 sub isLocked {
-    my $self = shift;
-    print STDERR "isLocked\n";
-
-    # TODO
+    # No lock for LDAP
     return 0;
 }
 
 sub unlock {
-    my $self = shift;
-
-    # TODO
+    # No lock for LDAP
     return 1;
 }
 
@@ -178,7 +170,6 @@ sub load {
             $f->{$k} = $v;
         }
     }
-
     return $f;
 }
 

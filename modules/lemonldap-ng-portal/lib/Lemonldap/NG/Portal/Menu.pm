@@ -127,7 +127,7 @@ sub error {
     return $error_string;
 }
 
-*error_type = *Lemonldap::NG::Portal::Simple::error_type;
+*error_type = \&Lemonldap::NG::Portal::Simple::error_type;
 
 ## @method boolean displayModule(string modulename)
 # Return true if the user can see the module.
