@@ -133,9 +133,9 @@ sub node {
                 $help ||= $_h;
 
                 # subnode is an ajax subnode
-                if ( $flag eq 'n' ) {
+                if ( $flag =~ /^(c?)n$/ ) {
                     $self->ajaxNode(
-                        "$node/$target",
+                        ( $1 ? $target : "$node/$target" ),
                         "$target",
                         "node=$node/$target",
                         $tmp->{$target}->{_help} || $help,
@@ -507,7 +507,7 @@ sub struct {
         _help             => 'default',
         generalParameters => {
             _nodes => [
-                qw(n:authParams cookieParams n:exportedVars n:macros sessionParams ldapParams)
+                qw(n:authParams cookieParams cn:exportedVars cn:macros sessionParams ldapParams)
             ],
             _help      => 'default',
             authParams => {
@@ -565,6 +565,22 @@ sub testStruct {
         return ( $@ ? ( 0, $@ ) : 1 );
     };
     return {
+        authentication => {
+            test    => qr/^[a-zA-Z][\w\:]*$/,
+            msgFail => 'Bad module name',
+        },
+        userDB => {
+            test    => qr/^[a-zA-Z][\w\:]*$/,
+            msgFail => 'Bad module name',
+        },
+        whatToTrace => {
+            test    => qr/^\$?[a-zA-Z]\w*$/,
+            msgFail => 'Bad value',
+        },
+        portal => {
+            test    => qr/^https?:\/\/\S+$/,
+            msgFail => 'Bad portal value',
+        },
         cookieName => {
             test    => qr/^[a-zA-Z]\w*$/,
             msgFail => 'Bad cookie name',
@@ -617,6 +633,22 @@ sub testStruct {
         groups          => {
             keyTest    => qr/^\w[\w-]*$/,
             keyMsgFail => 'Bad group name',
+            test       => $perlExpr,
+            warnTest   => sub {
+                my $e = shift;
+                return ( 0, $assignMsg ) if ( $e =~ $assignTest );
+                1;
+            },
+        },
+        exportedVars => {
+            keyTest    => qr/^[a-zA-Z]\w*$/,
+            keyMsgFail => 'Bad variable name',
+            test       => qr/^[a-zA-Z]\w*$/,
+            msgFail    => 'Bad attribute name',
+        },
+        macros => {
+            keyTest    => qr/^[a-zA-Z]\w*$/,
+            keyMsgFail => 'Bad macro name',
             test       => $perlExpr,
             warnTest   => sub {
                 my $e = shift;
@@ -728,38 +760,45 @@ sub confUpload {
                 'error' );
             next;
         }
-        if ( $test->{keyTest} ) {
-            ( $res, $m ) = $self->applyTest( $test->{keyTest}, $name );
-            unless ($res) {
-                $errors{$name} =
-                  "Value \"$name\" rejected: " . ( $m || $test->{keyMsgFail} );
-                next;
+
+        # Tests (no test for hash root nodes)
+        unless ( $test->{keyTest} and ( $id !~ /\// or $test->{'*'} ) ) {
+            if ( $test->{keyTest} ) {
+                ( $res, $m ) = $self->applyTest( $test->{keyTest}, $name );
+                unless ($res) {
+                    $errors{$name} = "Value \"$name\" rejected: "
+                      . ( $m || $test->{keyMsgFail} );
+                    next;
+                }
+            }
+            if ( $test->{test} ) {
+                ( $res, $m ) = $self->applyTest( $test->{test}, $value );
+                unless ($res) {
+                    $errors{$name} = "Value of key \"$name\" rejected: "
+                      . ( $m || $test->{msgFail} );
+                    next;
+                }
+            }
+            if ( $test->{warnKeyTest} ) {
+                ( $res, $m ) = $self->applyTest( $test->{warnKeyTest}, $name );
+                unless ($res) {
+                    $warnings{$name} = "Warning for value \"$name\": "
+                      . ( $m || $test->{keyMsgWarn} );
+                }
+            }
+            if ( $test->{warnTest} ) {
+                ( $res, $m ) = $self->applyTest( $test->{warnTest}, $value );
+                unless ($res) {
+                    $warnings{$name} =
+                      "Warning for the value of key \"$name\": "
+                      . ( $m || $test->{keyMsgWarn} );
+                }
             }
         }
-        if ( $test->{test} ) {
-            ( $res, $m ) = $self->applyTest( $test->{test}, $value );
-            unless ($res) {
-                $errors{$name} = "Value of key \"$name\" rejected: "
-                  . ( $m || $test->{msgFail} );
-                next;
-            }
-        }
-        if ( $test->{warnKeyTest} ) {
-            ( $res, $m ) = $self->applyTest( $test->{warnKeyTest}, $name );
-            unless ($res) {
-                $warnings{$name} = "Warning for value \"$name\": "
-                  . ( $m || $test->{keyMsgWarn} );
-            }
-        }
-        if ( $test->{warnTest} ) {
-            ( $res, $m ) = $self->applyTest( $test->{warnTest}, $value );
-            unless ($res) {
-                $warnings{$name} = "Warning for the value of key \"$name\": "
-                  . ( $m || $test->{keyMsgWarn} );
-            }
-        }
-        $self->setKeyToH( $newConf, $confKey, ($test->{keyTest} ? ($name => $value):$value));
-        print STDERR "$id ; $name \"$value\"\n";
+        $self->setKeyToH( $newConf, $confKey,
+            $test->{keyTest}
+            ? ( ( $id !~ /\// or $test->{'*'} ) ? {} : ( $name => $value ) )
+            : $value );
     }
 
     # Loading unchanged parameters (ajax nodes not open)
@@ -768,18 +807,18 @@ sub confUpload {
         $node =~ s/^.*node=(.*?)(?:&.*)?\}$/$1/;
         foreach my $k ( $self->findAllConfKeys( $self->corresp($node) ) ) {
             my $v = $self->keyToH( $k, $self->conf );
-            $v = $self->keyToH($k,$self->defaultConf) unless(defined $v);
-            if(defined $v) {
-            $self->setKeyToH( $newConf, $k, $v );
+            $v = $self->keyToH( $k, $self->defaultConf ) unless ( defined $v );
+            if ( defined $v ) {
+                $self->setKeyToH( $newConf, $k, $v );
             }
             else {
-                $self->lmLog("No default value found for $k",'warn');
+                $self->lmLog( "No default value found for $k", 'warn' );
             }
         }
         print LOG "Ignore $node\n";
     }
 
-    print STDERR Dumper($newConf, \%errors, \%warnings);
+    print STDERR Dumper( $newConf, \%errors, \%warnings );
     close LOG;
     $self->start();
     $self->end();
@@ -828,7 +867,6 @@ sub setKeyToH {
     my ( $self, $h, $key, $k2 ) = @_;
     my $tmp = $h;
     $key =~ s/^\///;
-    confess('No key') unless($key);use Carp;
     while (1) {
         if ( $key =~ /\// ) {
             my $k = $`;
@@ -836,8 +874,8 @@ sub setKeyToH {
             $tmp = $tmp->{$k} ||= {};
         }
         else {
-            if($k2) {
-                $tmp->{$key} = {} unless(ref($tmp->{$key}));
+            if ($k2) {
+                $tmp->{$key} = {} unless ( ref( $tmp->{$key} ) );
                 $tmp->{$key}->{$k2} = $value;
             }
             else {
