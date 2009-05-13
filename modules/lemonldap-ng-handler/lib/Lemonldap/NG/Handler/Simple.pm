@@ -790,7 +790,7 @@ sub hideCookie {
     my $class = shift;
     $class->lmLog( "$class: removing cookie", 'debug' );
     my $tmp = lmHeaderIn( $apacheRequest, 'Cookie' );
-    $tmp =~ s/$cookieName[^;]*;?//o;
+    $tmp =~ s/$cookieName[^,;]*[,;]?//o;
     lmSetHeaderIn( $apacheRequest, 'Cookie' => $tmp );
 }
 
@@ -840,7 +840,7 @@ sub goToPortal {
 # @return Value of the cookie if found, 0 else
 sub fetchId {
     my $t = lmHeaderIn( $apacheRequest, 'Cookie' );
-    return ( $t =~ /$cookieName=([^; ]+);?/o ) ? $1 : 0;
+    return ( $t =~ /$cookieName=([^,; ]+)/o ) ? $1 : 0;
 }
 
 # MAIN SUBROUTINE called by Apache (using PerlHeaderParserHandler option)
