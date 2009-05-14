@@ -3,11 +3,12 @@
 use Lemonldap::NG::Portal::SharedConf;
 use HTML::Template;
 
-# Path configuration
+# Menu configuration
 my $skin        = "pastel";
 my $skin_dir    = "__SKINDIR__";
 my $appsxmlfile = "__APPSXMLFILE__";
 my $appsimgpath = "apps/";
+my $user_attr   = "uid";
 
 # Password management
 use constant USER_CAN_CHANGE_PASSWORD => 1;
@@ -38,7 +39,7 @@ my $portal = Lemonldap::NG::Portal::SharedConf->new(
         # (see Lemonldap::NG::Handler::SharedConf(3))
         #configStorage => {
         #      type => 'File',
-        #      directory => '/usr/local/lemonlda-ng/conf/'
+        #      directory => '/usr/local/lemonldap-ng/conf/'
         #},
 
         # LOG
@@ -62,6 +63,10 @@ my $portal = Lemonldap::NG::Portal::SharedConf->new(
         # Remove comment to store password in session (use with caution)
         #storePassword      => 1,
 
+	# LDAP GROUPS
+	# Set the base DN of your groups branch
+	#ldapGroupBase => 'ou=groups,dc=example,dc=com',
+	 
         # CUSTOM FUNCTION
         # If you want to create customFunctions in rules, declare them here:
         #customFunctions    => 'function1 function2',
@@ -118,6 +123,7 @@ if ( $portal->process() ) {
         }
     );
 
+    $template->param( AUTH_USER           => $portal->{sessionInfo}->{$user_attr} );
     $template->param( AUTH_ERROR          => $menu->error );
     $template->param( AUTH_ERROR_TYPE     => $menu->error_type );
     $template->param( DISPLAY_APPSLIST    => $menu->displayModule("appslist") );
@@ -161,7 +167,7 @@ else {
     $template->param( AUTH_ERROR_TYPE => $portal->error_type );
     $template->param( AUTH_URL        => $portal->get_url );
     if ( USER_CAN_CHANGE_PASSWORD
-        and $portal->error == PE_PP_CHANGE_AFTER_RESET )
+        and $portal->{error} == PE_PP_CHANGE_AFTER_RESET )
     {
         $template->param( REQUIRE_OLDPASSWORD => 1 );
         $template->param( DISPLAY_PASSWORD    => 1 );
