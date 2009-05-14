@@ -24,7 +24,10 @@ sub extractFormInfo {
       unless ( $self->param('user') );
     return PE_FORMEMPTY
       unless ( length( $self->{'user'} = $self->param('user') ) > 0
-        && length( $self->{'password'} = $self->param('password') ) > 0 );
+        && ( ( length( $self->{'password'} = $self->param('password') ) > 0 )
+        || ( length( $self->{'newpassword'} = $self->param('newpassword') ) > 0 ) ) );
+    $self->{'oldpassword'} = $self->param('oldpassword');
+    $self->{'confirmpassword'} = $self->param('confirmpassword');
     PE_OK;
 }
 
@@ -40,7 +43,7 @@ sub setAuthSessionInfo {
     # Store submitted password if set in configuration
     # WARNING: it can be a security hole
     if ( $self->{storePassword} ) {
-        $self->{sessionInfo}->{'_password'} = $self->{'password'};
+        $self->{sessionInfo}->{'_password'} = $self->{'newpassword'} || $self->{'password'};
     }
     PE_OK;
 }
