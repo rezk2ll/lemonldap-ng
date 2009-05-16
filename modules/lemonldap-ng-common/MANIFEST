@@ -10,6 +10,7 @@ lib/Lemonldap/NG/Common/Conf.pm
 lib/Lemonldap/NG/Common/Conf/Constants.pm
 lib/Lemonldap/NG/Common/Conf/DBI.pm
 lib/Lemonldap/NG/Common/Conf/File.pm
+lib/Lemonldap/NG/Common/Conf/LDAP.pm
 lib/Lemonldap/NG/Common/Conf/SOAP.pm
 lib/Lemonldap/NG/Common/Crypto.pm
 lib/Lemonldap/NG/Common/Safelib.pm
@@ -17,6 +18,7 @@ Makefile.PL
 MANIFEST
 META.yml			Module meta-data (added by MakeMaker)
 README
+scripts/lmConfig_File2LDIF
 scripts/lmConfig_File2MySQL
 storage.conf
 t/01-Common-Conf.t
