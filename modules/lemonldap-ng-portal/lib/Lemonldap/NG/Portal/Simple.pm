@@ -72,6 +72,7 @@ use constant {
     PE_NOTIFICATION                     => 36,
     PE_BADURL                           => 37,
     PE_NOSCHEME                         => 38,
+    PE_BADOLDPASSWORD                   => 39,
 };
 
 # EXPORTER PARAMETERS
@@ -85,7 +86,7 @@ our @EXPORT =
   PE_PP_PASSWORD_TOO_SHORT PE_PP_PASSWORD_TOO_YOUNG
   PE_PP_PASSWORD_IN_HISTORY PE_PP_GRACE PE_PP_EXP_WARNING
   PE_PASSWORD_MISMATCH PE_PASSWORD_OK PE_NOTIFICATION PE_BADURL
-  PE_NOSCHEME);
+  PE_NOSCHEME PE_BADOLDPASSWORD);
 our %EXPORT_TAGS = ( 'all' => [ @EXPORT, 'import' ], );
 
 our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );

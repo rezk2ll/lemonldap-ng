@@ -10,12 +10,11 @@ my $appsxmlfile = "__APPSXMLFILE__";
 my $appsimgpath = "apps/";
 my $user_attr   = "uid";
 
-# Password management
+# Menu configuration
 use constant USER_CAN_CHANGE_PASSWORD => 1;
-use constant REQUIRE_OLDPASSWORD      => 1;
-
-# Logout displayed
-use constant DISPLAY_LOGOUT => 1;
+use constant REQUIRE_OLDPASSWORD      => 0;
+use constant DISPLAY_LOGOUT           => 1;
+use constant AUTOCOMPLETE             => "on";
 
 my $portal = Lemonldap::NG::Portal::SharedConf->new(
     {
@@ -63,6 +62,10 @@ my $portal = Lemonldap::NG::Portal::SharedConf->new(
         # Remove comment to store password in session (use with caution)
         #storePassword      => 1,
 
+        # Remove comment to use LDAP modify password extension
+        # (beware of compatibility with LDAP Password Policy)
+        #ldapSetPassword    => 1,
+	
 	# LDAP GROUPS
 	# Set the base DN of your groups branch
 	#ldapGroupBase => 'ou=groups,dc=example,dc=com',
@@ -124,6 +127,8 @@ if ( $portal->process() ) {
     );
 
     $template->param( AUTH_USER           => $portal->{sessionInfo}->{$user_attr} );
+    $template->param( AUTOCOMPLETE        => AUTOCOMPLETE );
+    $template->param( SKIN                => $skin );
     $template->param( AUTH_ERROR          => $menu->error );
     $template->param( AUTH_ERROR_TYPE     => $menu->error_type );
     $template->param( DISPLAY_APPSLIST    => $menu->displayModule("appslist") );
@@ -137,20 +142,25 @@ if ( $portal->process() ) {
         $template->param( APPSLIST_DESC => $menu->appslistDescription );
     }
 
-    print $portal->header('text/html; charset=utf8');
+    print $portal->header('text/html; charset=utf-8');
     print $template->output;
 }
 elsif ( my $notif = $portal->notification ) {
+
+    # HTML::Template object creation	
     my $template = HTML::Template->new(
         filename          => "$skin_dir/$skin/notification.tpl",
         die_on_bad_params => 0,
         cache             => 0,
         filter            => sub { $portal->translate_template(@_) }
     );
+    
     $template->param( AUTH_ERROR      => $portal->error );
     $template->param( AUTH_ERROR_TYPE => $portal->error_type );
     $template->param( NOTIFICATION    => $notif );
-    print $portal->header('text/html; charset=utf8');
+    $template->param( SKIN            => $skin );
+
+    print $portal->header('text/html; charset=utf-8');
     print $template->output;
 }
 else {
@@ -166,17 +176,31 @@ else {
     $template->param( AUTH_ERROR      => $portal->error );
     $template->param( AUTH_ERROR_TYPE => $portal->error_type );
     $template->param( AUTH_URL        => $portal->get_url );
+    $template->param( LOGIN           => $portal->{user} );
+    $template->param( AUTOCOMPLETE    => AUTOCOMPLETE );
+    $template->param( SKIN            => $skin );
+    
     if ( USER_CAN_CHANGE_PASSWORD
-        and $portal->{error} == PE_PP_CHANGE_AFTER_RESET )
+        and (
+             $portal->{error} == PE_PP_CHANGE_AFTER_RESET
+          or $portal->{error} == PE_PP_MUST_SUPPLY_OLD_PASSWORD
+          or $portal->{error} == PE_PP_INSUFFICIENT_PASSWORD_QUALITY
+          or $portal->{error} == PE_PP_PASSWORD_TOO_SHORT
+          or $portal->{error} == PE_PP_PASSWORD_TOO_YOUNG
+          or $portal->{error} == PE_PP_PASSWORD_IN_HISTORY
+          or $portal->{error} == PE_PASSWORD_MISMATCH
+          or $portal->{error} == PE_BADOLDPASSWORD
+        ) )
     {
         $template->param( REQUIRE_OLDPASSWORD => 1 );
+        $template->param( LOGIN               => $portal->{user} );
         $template->param( DISPLAY_PASSWORD    => 1 );
     }
     else {
         $template->param( DISPLAY_FORM => 1 );
     }
 
-    print $portal->header('text/html; charset=utf8');
+    print $portal->header('text/html; charset=utf-8');
     print $template->output;
 }
 

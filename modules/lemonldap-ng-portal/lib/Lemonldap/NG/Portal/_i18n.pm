@@ -75,6 +75,7 @@ __END__
 # * PE_NOTIFICATION                      36
 # * PE_BADURL                            37
 # * PE_NOSCHEME                          38
+# * PE_BASOLDPASSWORD                    39
 
 # Not used in errors:
 # * PE_DONE                -1
@@ -125,6 +126,7 @@ sub error_fr {
         "Vous avez un nouveau message",
         'Mauvaise URL',
         'Aucun sch&eacute;ma disponible',
+        'Ancien mot de passe invalide',
     ];
 }
 
@@ -172,6 +174,7 @@ sub error_en {
         'You have a new message',
         'Bad URL',
         'No scheme available',
+        'Bad old password',
     ];
 }
 
@@ -220,5 +223,6 @@ sub error_ro {
         'Ai un mesaj nou',
         'Rea URL',
         'No scheme available',
+        'Bad old password',
     ];
 }

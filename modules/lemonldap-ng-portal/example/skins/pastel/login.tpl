@@ -13,7 +13,7 @@
 
 		<table>
 		<tr><th><lang en="Login" fr="Identifiant"/></th>
-		<td><input name="user" type="text" /></td>
+		<td><input name="user" type="text" value="<TMPL_VAR NAME="LOGIN">"/></td>
 		</tr>
 		<tr><th><lang en="Password" fr="Mot de passe"/></th>
 		<td><input name="password" type="password" /></td>
@@ -21,11 +21,11 @@
 		<tr><td colspan="2">
 		<div class="buttons">
 		<button type="reset" class="negative">
-			<img src="skins/pastel/cancel.png" alt="" />
+			<img src="skins/common/cancel.png" alt="" />
 			<lang en="Cancel" fr="Annuler" />
 		</button>
 		<button type="submit" class="positive">
-			<img src="skins/pastel/accept.png" alt="" />
+			<img src="skins/common/accept.png" alt="" />
 			<lang en="Connect" fr="Se connecter" />
 		</button>
 		</div></td></tr>
@@ -39,7 +39,7 @@
 	<TMPL_IF NAME="LOGOUT_URL">
 		<div class="buttons">
 		<a href="<TMPL_VAR NAME="LOGOUT_URL">" class="negative">
-			<img src="skins/pastel/cancel.png" alt="" />
+			<img src="skins/common/cancel.png" alt="" />
 			<lang en="Logout" fr="Se d&eacute;connecter"/>
 		</a>
 		</div>

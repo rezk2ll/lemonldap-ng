@@ -193,7 +193,16 @@ sub userModifyPassword {
                                        newpassword => $newpassword )
                 : $self->set_password( user => $dn,
                                        newpassword => $newpassword );
+            # Catch the "Unwilling to perform" error
+            return PE_BADOLDPASSWORD if ( $mesg->code == 53 );
         } else {
+            if ( $oldpassword ) {
+                # Check old password with a bind
+                $mesg = $self->bind ($dn, password => $oldpassword);
+                return PE_BADOLDPASSWORD if ( $mesg->code != 0 );
+                # Rebind as Manager
+                $self->bind();
+            }
             # Use standard modification
             $mesg = $self->modify( $dn,
                                    replace => { userPassword => $newpassword } );
@@ -222,7 +231,16 @@ sub userModifyPassword {
                 : $self->set_password( user => $dn,
                                        newpassword => $newpassword,
                                        control => [$pp] );
+            # Catch the "Unwilling to perform" error
+            return PE_BADOLDPASSWORD if ( $mesg->code == 53 );
         } else { 
+            if ( $oldpassword ) {
+                # Check old password with a bind
+                $mesg = $self->bind($dn, password => $oldpassword);
+                return PE_BADOLDPASSWORD if ( $mesg->code != 0 );
+                # Rebind as Manager
+                $self->bind();
+            }
             # Use standard modification
             $mesg = $self->modify( $dn,
                                    replace => { userPassword => $newpassword }, 

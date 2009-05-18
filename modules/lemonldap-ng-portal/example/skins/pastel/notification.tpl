@@ -13,7 +13,7 @@
 		<TMPL_VAR NAME="NOTIFICATION">
 		<div class="buttons">
 			<button type="submit" class="positive">
-				<img src="skins/pastel/accept.png" alt="" />
+				<img src="skins/common/accept.png" alt="" />
 				<lang en="Accept" fr="Accepter" />
 			</button>
 		</div>
