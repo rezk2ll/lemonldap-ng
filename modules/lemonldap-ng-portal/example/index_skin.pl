@@ -176,7 +176,7 @@ else {
     $template->param( AUTH_ERROR      => $portal->error );
     $template->param( AUTH_ERROR_TYPE => $portal->error_type );
     $template->param( AUTH_URL        => $portal->get_url );
-    $template->param( LOGIN           => $portal->{user} );
+    $template->param( LOGIN           => $portal->get_user );
     $template->param( AUTOCOMPLETE    => AUTOCOMPLETE );
     $template->param( SKIN            => $skin );
     
@@ -193,7 +193,6 @@ else {
         ) )
     {
         $template->param( REQUIRE_OLDPASSWORD => 1 );
-        $template->param( LOGIN               => $portal->{user} );
         $template->param( DISPLAY_PASSWORD    => 1 );
     }
     else {

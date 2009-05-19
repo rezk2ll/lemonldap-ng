@@ -434,6 +434,17 @@ sub get_url {
     return $self->{_url};
 }
 
+##@method protected string get_user()
+# Return user parameter
+# @return user parameter if good, nothing else.
+sub get_user {
+    my $self = shift;
+    return "" unless $self->{user};
+    return $self->{user} unless ( $self->{user} =~ m/(?:\0|<|'|"|`|\%(?:00|25|3C|22|27|2C))/ );
+    $self->lmLog("XSS attack detected (param: user | value: ".$self->{user}.")", "warn");
+    return "";
+}
+
 ##@method private Safe safe()
 # Provide the security jail.
 #@return Safe object
@@ -537,7 +548,10 @@ sub controlUrlOrigin {
     if ( my $url = $self->param('url') ) {
 
         # REJECT NON BASE64 URL
-        return PE_BADURL if ( $url =~ m#[^A-Za-z0-9\+/=]# );
+        if ( $url =~ m#[^A-Za-z0-9\+/=]# ) {
+            $self->lmLog("XSS attack detected (param: url | value: $url)", "warn");
+            return PE_BADURL;
+        }
 
         $self->{urldc} = decode_base64($url);
         $self->{urldc} =~ s/[\r\n]//sg;
@@ -550,6 +564,7 @@ m#^https?://(?:$self->{reVHosts}|(?:[^/]*)?$self->{domain})(?::\d+)?(?:/.*)?$#
                 and not $self->param('logout') )
           )
         {
+            $self->lmLog("XSS attack detected (param: urldc | value: ".$self->{urldc}.")", "warn");
             delete $self->{urldc};
             return PE_BADURL;
         }
