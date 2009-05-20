@@ -58,6 +58,9 @@ sub process {
         exit;
     }
 
+    # Check if we use X-FORWARDED-FOR header for IP
+    my $ipField = $self->{useXForwardedForIP} ? "xForwardedForAddr" : "ipAddr";
+
     # Beginning of the job
 
     # User connected from more than 1 IP
@@ -70,7 +73,7 @@ sub process {
                 my $id    = shift;
                 next if($entry->{_httpSessionType});
                 push
-                  @{ $byUid->{ $entry->{$whatToTrace} }->{ $entry->{ipAddr} } },
+                  @{ $byUid->{ $entry->{$whatToTrace} }->{ $entry->{$ipField} } },
                   { id => $id, _utime => $entry->{_utime} };
                 undef;
             }
@@ -110,8 +113,8 @@ sub process {
                 my $entry = shift;
                 my $id    = shift;
                 next if($entry->{_httpSessionType});
-                if ( $entry->{ipAddr} =~ /^$reip$/ ) {
-                    push @{ $byUid->{ $entry->{ipAddr} }
+                if ( $entry->{$ipField} =~ /^$reip$/ ) {
+                    push @{ $byUid->{ $entry->{$ipField} }
                           ->{ $entry->{$whatToTrace} } },
                       { id => $id, _utime => $entry->{_utime} };
                 }
@@ -247,7 +250,7 @@ sub process {
                 my $entry = shift;
                 my $id    = shift;
                 next if($entry->{_httpSessionType});
-                if ( $entry->{ipAddr} eq $ip ) {
+                if ( $entry->{$ipField} eq $ip ) {
                     push @{ $byUser->{ $entry->{$whatToTrace} } },
                       { id => $id, _utime => $entry->{_utime} };
                 }
@@ -277,7 +280,7 @@ sub process {
                 my $id    = shift;
                 next if($entry->{_httpSessionType});
                 if ( $entry->{$whatToTrace} eq $uid ) {
-                    push @{ $byIp->{ $entry->{ipAddr} } },
+                    push @{ $byIp->{ $entry->{$ipField} } },
                       { id => $id, _utime => $entry->{_utime} };
                 }
                 undef;
@@ -333,7 +336,7 @@ sub process {
             sub {
                 my $entry = shift;
                 next if($entry->{_httpSessionType});
-                $entry->{ipAddr} =~ /^$repartial(\d+)/ or return undef;
+                $entry->{$ipField} =~ /^$repartial(\d+)/ or return undef;
                 $byIp->{$1}++;
                 $count++;
                 undef;
@@ -1183,6 +1186,8 @@ sessions
         https         => 1,
         jqueryUri     => '/js/jquery/jquery.js',
         imagePath     => '/js/jquery.simple.tree/',
+        # Force the use of X-FORWARDED-FOR for IP
+        useXForwardedForIP => 1,
         # Optionnal
         protection    => 'rule: $uid eq "admin"',
         # Or to use rules from manager

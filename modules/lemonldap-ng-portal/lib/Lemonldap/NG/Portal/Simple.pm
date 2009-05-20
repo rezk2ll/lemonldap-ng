@@ -696,8 +696,12 @@ sub setSessionInfo {
 
     # Store IP address and start time
     $self->{sessionInfo}->{ipAddr} = $ENV{REMOTE_ADDR};
+    $self->{sessionInfo}->{xForwardedForAddr} = $ENV{HTTP_X_FORWARDED_FOR} || $ENV{REMOTE_ADDR};
     $self->{sessionInfo}->{startTime} =
       &POSIX::strftime( "%Y%m%d%H%M%S", localtime() );
+    $self->lmLog("Store ipAddr: ".$self->{sessionInfo}->{ipAddr}." in session",'debug');
+    $self->lmLog("Store xForwardedForAddr: ".$self->{sessionInfo}->{xForwardedForAddr}." in session",'debug');
+    $self->lmLog("Store startTime: ".$self->{sessionInfo}->{startTime}." in session",'debug');
     return $self->SUPER::setSessionInfo();
 }
 

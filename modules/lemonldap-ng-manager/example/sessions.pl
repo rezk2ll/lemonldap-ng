@@ -10,7 +10,7 @@ our $cgi = Lemonldap::NG::Manager::Sessions->new({
         jqueryUri     => 'jquery.js',
         imagePath     => '/images/',
 
-        ## PROTECTION, choose one of :
+        # PROTECTION, choose one of :
         # * protection by manager
         # protection  => 'manager',
         # * specify yourself the rule to apply (same as in the manager)
@@ -26,8 +26,12 @@ our $cgi = Lemonldap::NG::Manager::Sessions->new({
 
         # You can also fix the port (for redirections after authentications)
         #port => 80,
-        # ACCESS TO CONFIGURATION
 
+        # IP
+        # You can configure sessions explorer to use X-FORWARDED-FOR rather than REMOTRE_ADDR for IP
+        #useXForwardedForIP => 1,
+
+        # ACCESS TO CONFIGURATION
         # By default, Lemonldap::NG uses the default storage.conf file to know
         # where to find is configuration
         # (generaly /etc/lemonldap-ng/storage.conf)
