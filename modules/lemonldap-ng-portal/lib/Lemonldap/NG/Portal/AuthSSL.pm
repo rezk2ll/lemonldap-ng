@@ -52,6 +52,17 @@ sub extractFormInfo {
     return $self->SUPER::extractFormInfo(@_);
 }
 
+## @apmethod int setAuthSessionInfo()
+# Store user.
+# @return Lemonldap::NG::Portal constant
+sub setAuthSessionInfo {
+
+    # Store user certificate login for basic rules
+    $self->{sessionInfo}->{'_user'} = $self->{'user'};
+
+    PE_OK;
+}
+
 ## @apmethod int authenticate()
 # Call Lemonldap::NG::Portal::AuthLDAP::authenticate() if user was not
 # authenticated by SSL.

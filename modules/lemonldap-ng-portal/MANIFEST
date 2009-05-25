@@ -102,6 +102,7 @@ lib/Lemonldap/NG/Portal/SharedConf.pm
 lib/Lemonldap/NG/Portal/Simple.pm
 lib/Lemonldap/NG/Portal/UserDBLDAP.pm
 lib/Lemonldap/NG/Portal/UserDBMulti.pm
+lib/Lemonldap/NG/Portal/UserDBNull.pm
 lib/Lemonldap/NG/Portal/UserDBRemote.pm
 lib/Lemonldap/NG/Portal/UserDBSAML.pm
 Makefile.PL

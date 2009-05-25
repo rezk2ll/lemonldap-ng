@@ -49,6 +49,10 @@ sub extractFormInfo {
 # Does nothing here.
 # @return Lemonldap::NG::Portal constant
 sub setAuthSessionInfo {
+
+    # Store user submitted login for basic rules
+    $self->{sessionInfo}->{'_user'} = $self->{'user'};
+
     PE_OK;
 }
 
