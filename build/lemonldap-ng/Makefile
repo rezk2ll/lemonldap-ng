@@ -201,6 +201,7 @@ install_bin:	install_libs install_conf_dir
 		${SRCPORTALDIR}/example/scripts/purgeCentralCache \
 		${SRCPORTALDIR}/example/scripts/buildPortalWSDL \
 		${SRCCOMMONDIR}/scripts/lmConfig_File2MySQL \
+		${SRCCOMMONDIR}/scripts/lmConfig_File2LDIF \
 		${SRCMANAGERDIR}/example/scripts/lmConfigEditor \
 			$(RBINDIR)
 	chmod +x $(RBINDIR)/*
@@ -373,6 +374,7 @@ install_conf_dir:	install_sessions_dir
 		chmod 777 $(RFILECONFIGDIR); \
 	fi
 	@cp lemonldap-ng-common/tools/lmConfig.mysql lemonldap-ng-common/tools/apache-session-mysql.sql $(RTOOLSDIR)
+	@cp lemonldap-ng-common/tools/sso.schema $(RTOOLSDIR)
 	@rm -rf $$(find $(RCONFDIR) $(RFILECONFIGDIR) $(RTOOLSDIR) -type d -name .svn)
 
 install_sessions_dir:
