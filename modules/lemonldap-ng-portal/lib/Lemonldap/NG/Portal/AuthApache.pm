@@ -20,6 +20,7 @@ sub authInit {
 # Store user.
 # @return Lemonldap::NG::Portal constant
 sub setAuthSessionInfo {
+    my $self = shift;
 
     # Store user submitted login for basic rules
     $self->{sessionInfo}->{'_user'} = $self->{'user'};

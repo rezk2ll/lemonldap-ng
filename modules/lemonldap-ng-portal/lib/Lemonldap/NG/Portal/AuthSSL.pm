@@ -56,6 +56,7 @@ sub extractFormInfo {
 # Store user.
 # @return Lemonldap::NG::Portal constant
 sub setAuthSessionInfo {
+    my $self = shift;
 
     # Store user certificate login for basic rules
     $self->{sessionInfo}->{'_user'} = $self->{'user'};

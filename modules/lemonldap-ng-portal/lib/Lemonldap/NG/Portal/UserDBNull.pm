@@ -6,6 +6,7 @@
 package Lemonldap::NG::Portal::UserDBNull;
 
 use strict;
+use Lemonldap::NG::Portal::Simple;
 
 ## @apmethod int userDBInit()
 # Do nothing

@@ -67,8 +67,8 @@ ok( $p->{error} == PE_FORMEMPTY, 'Error code: missing password' );
 # No ldap
 $p->{extractFormInfo} = sub {
     my $self = shift;
-    $self->{user}     = 'user';
-    $self->{password} = '';
+    $self->{user}        = 'user';
+    $self->{password}    = '';
     PE_OK;
 };
 

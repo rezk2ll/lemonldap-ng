@@ -30,7 +30,7 @@ sub extractFormInfo {
 # Delete stored password if local policy does not accept stored passwords.
 # @return Lemonldap::NG::Portal constant
 sub setAuthSessionInfo {
-
+    my $self = shift;
 
     # Store user login for basic rules
     $self->{sessionInfo}->{'_user'} = $self->{'user'};
