@@ -34,6 +34,28 @@
 	</form>
 	</TMPL_IF>
 
+        <TMPL_IF NAME="DISPLAY_RESETPASSWORD">
+
+        <form action="#" method="post" class="login">
+
+        <h3><lang en="Forgot your password?" fr="Mot de passe oubli&eacute; ?"/></h3>
+
+                <table>
+                <tr><th><lang en="Mail" fr="Adresse mail"/></th>
+                <td><input name="mail" type="text"/></td>
+                </tr>
+                <tr><td colspan="2">
+                <div class="buttons">
+                <button type="submit" class="positive">
+                        <img src="skins/cqappli/accept.png" alt="" />
+                        <lang en="Send me a new password" fr="Envoyez-moi un nouveau mot de passe" />
+                </button>
+                </div></td></tr>
+                </table>
+
+        </form>
+        </TMPL_IF>
+
 	<TMPL_INCLUDE NAME="password.tpl">
 
 	<TMPL_IF NAME="LOGOUT_URL">

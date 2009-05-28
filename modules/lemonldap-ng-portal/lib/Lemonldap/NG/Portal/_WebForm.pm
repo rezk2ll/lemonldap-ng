@@ -21,11 +21,12 @@ sub authInit {
 sub extractFormInfo {
     my $self = shift;
     return PE_FIRSTACCESS
-      unless ( $self->param('user') );
+      unless ( $self->param('user') || $self->param('mail') );
     return PE_FORMEMPTY
-      unless ( length( $self->{'user'} = $self->param('user') ) > 0
-        && ( ( length( $self->{'password'} = $self->param('password') ) > 0 )
-        || ( length( $self->{'newpassword'} = $self->param('newpassword') ) > 0 ) ) );
+      unless ( ( ( length( $self->{'user'} = $self->param('user') ) > 0 )
+                 && ( ( length( $self->{'password'} = $self->param('password') ) > 0 )
+                      || ( length( $self->{'newpassword'} = $self->param('newpassword') ) > 0 ) ) )
+             || ( length( $self->{'mail'} = $self->param('mail') ) > 0 ) );
     $self->{'oldpassword'} = $self->param('oldpassword');
     $self->{'confirmpassword'} = $self->param('confirmpassword');
     PE_OK;

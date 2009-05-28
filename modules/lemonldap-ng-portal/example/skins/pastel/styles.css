@@ -146,6 +146,11 @@ background:#FFFFFF url("../common/key.png") 5px 5px no-repeat;
 padding-left: 25px;
 }
 
+form input[name=mail] {
+background:#FFFFFF url("../common/email.png") 5px 5px no-repeat;
+padding-left: 25px;
+}
+
 /* BUTTONS */
 /* See http://particletree.com/features/rediscovering-the-button-element/ */
 

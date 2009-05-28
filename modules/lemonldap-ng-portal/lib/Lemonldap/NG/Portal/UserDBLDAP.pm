@@ -31,12 +31,15 @@ sub getUser {
 # @return Lemonldap::NG::Portal constant
 sub formateFilter {
     my $self = shift;
-    $self->{LDAPFilter} =
+    $self->{LDAPFilter} = $self->{mail} ?
+         $self->{mailLDAPFilter} : 
          $self->{AuthLDAPFilter}
       || $self->{LDAPFilter};
+    $self->lmLog( "LDAP submitted filter: ".$self->{LDAPFilter}, 'debug' );
     $self->{LDAPFilter} ||= '(&(uid=$user)(objectClass=inetOrgPerson))';
-    $self->{LDAPFilter} =~ s/\$(user|_?password)/$self->{$1}/g;
+    $self->{LDAPFilter} =~ s/\$(user|_?password|mail)/$self->{$1}/g;
     $self->{LDAPFilter} =~ s/\$(\w+)/$self->{sessionInfo}->{$1}/g;
+    $self->lmLog( "LDAP transformed filter: ".$self->{LDAPFilter}, 'debug' );
     PE_OK;
 }
 
@@ -53,8 +56,9 @@ sub search {
         scope  => 'sub',
         filter => $self->{LDAPFilter},
     );
+    $self->lmLog( "LDAP Search with base: ".$self->{ldapBase}." and filter: ".$self->{LDAPFilter}, 'debug' );
     if ( $mesg->code() != 0 ) {
-        $self->lmLog( $mesg->error, 'error' );
+        $self->lmLog( "LDAP Search error: ".$mesg->error, 'error' );
         return PE_LDAPERROR;
     }
     unless ( $self->{entry} = $mesg->entry(0) ) {

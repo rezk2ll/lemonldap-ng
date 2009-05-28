@@ -119,6 +119,7 @@ sub new {
     $self->abort( "Configuration error",
         "You've to indicate a domain for cookies" )
       unless ( $self->{domain} );
+    my $domain = $self->{domain};
     $self->{domain} =~ s/^([^\.])/.$1/;
     $self->{securedCookie}  ||= 0;
     $self->{cookieName}     ||= "lemonldap";
@@ -130,6 +131,11 @@ sub new {
         ( $ENV{REQUEST_METHOD} eq 'POST' and not $self->param('newpassword') )
           or $self->param('logout')
     ) ? 1 : 0;
+    $self->{SMTPServer}           ||= 'localhost';
+    $self->{mailLDAPFilter}       ||= '(&(mail=$mail)(objectClass=inetOrgPerson))';
+    $self->{randomPasswordRegexp} ||= '[A-Z]{3}[a-z]{5}.\d{2}';
+    $self->{mailFrom}             ||= "noreply@".$domain;
+    $self->{mailSubject}          ||= "Change password request";
 
     # Authentication and userDB module are required and have to be in @ISA
     foreach (qw(authentication userDB passwordDB)) {
@@ -523,7 +529,7 @@ sub _deleteSession {
 #  - itself : controlUrlOrigin, controlExistingSession, setMacros, setGroups, store, buildCookie, log, autoredirect
 #  - authentication module    : extractFormInfo, setAuthSessionInfo, authenticate
 #  - user database module     : getUser, setSessionInfo
-#  - password database module : modifyPassword
+#  - password database module : modifyPassword, resetPasswordByMail
 #@return 1 if user is all is OK, 0 if session isn't created or a notification has to be done
 sub process {
     my ($self) = @_;
@@ -531,9 +537,9 @@ sub process {
     $self->{error} = $self->_subProcess(
         qw(controlUrlOrigin checkNotifBack controlExistingSession
           SAMLForUnAuthUser authInit extractFormInfo userDBInit getUser
-          setAuthSessionInfo passwordDBInit modifyPassword setSessionInfo 
-          setMacros setGroups authenticate store buildCookie checkNotification
-          SAMLForAuthUser autoRedirect)
+          setAuthSessionInfo passwordDBInit modifyPassword resetPasswordByMail
+          setSessionInfo setMacros setGroups authenticate store buildCookie
+          checkNotification SAMLForAuthUser autoRedirect)
     );
     $self->updateStatus;
     return ( ( $self->{error} > 0 ) ? 0 : 1 );
@@ -687,6 +693,8 @@ sub existingSession {
 #  . passwordDBInit() : must be implemented in PasswordDB* module
 
 #  . modifyPassword() : must be implemented in PasswordDB* module
+
+#  . resetPasswordByMail() : must be implemented in PasswordDB* module
 
 ##@apmethod int setSessionInfo()
 # 9) Call setSessionInfo() in User* module and set ipAddr and startTime

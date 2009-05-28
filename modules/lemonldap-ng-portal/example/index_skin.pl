@@ -15,6 +15,7 @@ use constant USER_CAN_CHANGE_PASSWORD => 1;
 use constant REQUIRE_OLDPASSWORD      => 0;
 use constant DISPLAY_LOGOUT           => 1;
 use constant AUTOCOMPLETE             => "on";
+use constant DISPLAY_RESETPASSWORD    => "1";
 
 my $portal = Lemonldap::NG::Portal::SharedConf->new(
     {
@@ -65,6 +66,22 @@ my $portal = Lemonldap::NG::Portal::SharedConf->new(
         # Remove comment to use LDAP modify password extension
         # (beware of compatibility with LDAP Password Policy)
         #ldapSetPassword    => 1,
+	
+        # RESET PASSWORD BY MAIL
+        # SMTP server (default to localhost), set to '' to use default mail service
+        #SMTPServer => "localhost",
+
+        # Mail From address
+        #mailFrom => "noreply@test.com",
+
+        # Mail subject
+        #mailSubject => "Password reset",
+
+        # LDAP filter to use
+        #mailLDAPFilter => '(&(mail=$mail)(objectClass=inetOrgPerson))',
+
+        # Random regexp
+        #randomPasswordRegexp => '[A-Z]{3}[a-z]{5}.\d{2}',
 	
 	# LDAP GROUPS
 	# Set the base DN of your groups branch
@@ -196,7 +213,8 @@ else {
         $template->param( DISPLAY_PASSWORD    => 1 );
     }
     else {
-        $template->param( DISPLAY_FORM => 1 );
+        $template->param( DISPLAY_FORM          => 1 );
+        $template->param( DISPLAY_RESETPASSWORD => 1 );
     }
 
     print $portal->header('text/html; charset=utf-8');
