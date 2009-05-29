@@ -16,6 +16,9 @@ WriteMakefile(
         'Lemonldap::NG::Handler' => 0.9,
         'XML::LibXML'            => 0,
         'XML::LibXSLT'           => 0,
+        'MIME::Lite'             => 0,
+        'Email::Date::Format'    => 0,
+        'String::Random'         => 0,
     },
     (
         $] >= 5.005
