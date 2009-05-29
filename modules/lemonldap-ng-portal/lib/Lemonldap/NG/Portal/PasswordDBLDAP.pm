@@ -83,16 +83,15 @@ sub resetPasswordByMail {
     }
 
     # Generate a complex password
-    my $password_regexp = $self->{randomPasswordRegexp} || "[A-Z]{3}[a-z]{5}.\d{2}";
     my $random = new String::Random;
-    my $password = $random->randregex($password_regexp);
+    my $password = $random->randregex( $self->{randomPasswordRegexp}  );
 
     $self->lmLog("Generated password: ".$password,'debug');
 
     # Call the modify password method
     my $pe_error = $self->ldap->userModifyPassword( $self->{dn}, $password, $password );
 
-    return $pe_error unless $pe_error = PE_PASSWORD_OK;
+    return $pe_error unless ($pe_error == PE_PASSWORD_OK);
 
     # If Password Policy, set the PwdReset flag
     if ( $self->{ldapPpolicyControl} ) {
