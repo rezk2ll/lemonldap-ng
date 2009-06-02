@@ -50,6 +50,7 @@ example/skins/common/application_cascade.png
 example/skins/common/bullet_go.png
 example/skins/common/cancel.png
 example/skins/common/door_out.png
+example/skins/common/email.png
 example/skins/common/error.png
 example/skins/common/favicon.ico
 example/skins/common/jquery-tabs.js
@@ -120,6 +121,7 @@ t/22-Lemonldap-NG-Portal-AuthCAS.t
 t/23-Lemonldap-NG-Portal-AuthLA.t
 t/24-Lemonldap-NG-Portal-AuthRemote.t
 t/25-Lemonldap-NG-Portal-Multi.t
+t/30-Lemonldap-NG-Portal-UserDBNull.t
 t/40-Lemonldap-NG-Portal-CDA.t
 t/50-Lemonldap-NG-Portal-Menu.t
 t/60-Lemonldap-NG-Portal-SAMLIssuer.t
