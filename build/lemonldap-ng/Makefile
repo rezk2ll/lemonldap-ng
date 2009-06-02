@@ -75,7 +75,7 @@ DNSDOMAIN=example.com
 # LDAP parameters
 LDAPHOST=localhost
 LDAPPORT=389
-LDAPSUFFIX=dc=example,dc=net
+LDAPSUFFIX=dc=example,dc=com
 
 # Other
 VERSION=`head -n1 changelog |sed -e 's/lemonldap-ng (//' -e 's/).*$$//'`
@@ -84,6 +84,7 @@ SRCHANDLERDIR=lemonldap-ng-handler
 SRCPORTALDIR=lemonldap-ng-portal
 SRCMANAGERDIR=lemonldap-ng-manager
 EXAMPLELANG=en # For static Manager example only
+ERASECONFIG=1 # Set to 0 if you do not want to replace your configuration
 
 all:	configure common handler manager portal
 	@echo
@@ -212,18 +213,18 @@ install_bin:	install_libs install_conf_dir
 install_site:	install_manager_site install_portal_site install_handler_site install_test_site install_examples_site install_doc_site
 	# Site install
 	@install -v -d $(RCONFDIR)
-	# Apache configuration files
-	@cp --remove-destination _example/etc/apache* $(RCONFDIR)
-	@perl -i -pe 's#__HANDLER__#${HANDLERDIR}/MyHandler.pm#; \
-		s/__DNSDOMAIN__/$(DNSDOMAIN)/g; \
-		s#__PORTALDIR__#$(PORTALDIR)/#g; \
-		s#__MANAGERDIR__#$(MANAGERDIR)/#g; \
-		s#__TESTDIR__#$(TESTDIR)/#g; \
-		s#__DOCDIR__#$(DOCDIR)/#g;' $(RCONFDIR)/apache*
-	# File for /etc/hosts inclusion
-	@cp --remove-destination _example/etc/for_etc_hosts $(RCONFDIR)
-	@perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)/for_etc_hosts
-	#
+	# Check if erase is wanted
+	@if [ "$(ERASECONFIG)" -eq "1" ]; then \
+		cp --remove-destination  _example/etc/apache* $(RCONFDIR); \
+		perl -i -pe 's#__HANDLER__#${HANDLERDIR}/MyHandler.pm#; \
+			s/__DNSDOMAIN__/$(DNSDOMAIN)/g; \
+			s#__PORTALDIR__#$(PORTALDIR)/#g; \
+			s#__MANAGERDIR__#$(MANAGERDIR)/#g; \
+			s#__TESTDIR__#$(TESTDIR)/#g; \
+			s#__DOCDIR__#$(DOCDIR)/#g;' $(RCONFDIR)/apache*; \
+		cp --remove-destination _example/etc/for_etc_hosts $(RCONFDIR); \
+		perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)/for_etc_hosts; \
+	fi
 	@echo
 	@echo "LemonLDAP::NG v${VERSION} is installed with these parameters:"
 	@echo "  - System configuration: ${CONFDIR}"
@@ -269,10 +270,12 @@ install_manager_site:	install_conf_dir
 		rm -rf ${RMANAGERDIR}/imgs; \
 		ln -s $$(echo ${MANAGERDATADIR} | sed -e 's/\/$$//') ${RMANAGERDIR}/imgs; \
 	fi
-	# apply.conf install
-	@mv ${RMANAGERDIR}/apply.conf $(RCONFDIR)
-	@perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)/apply.conf
-	@perl -i -pe 's#__APPLYCONFFILE__#$(CONFDIR)/apply.conf#' ${RMANAGERDIR}/index.pl
+	# apply.conf install if erase configuration is wanted
+	@if [ "$(ERASECONFIG)" -eq "1" ]; then \
+		mv -f ${RMANAGERDIR}/apply.conf "$(RCONFDIR)"; \
+		perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)/apply.conf; \
+		perl -i -pe 's#__APPLYCONFFILE__#$(CONFDIR)/apply.conf#' ${RMANAGERDIR}/index.pl; \
+	fi
 	# Sessions explorer install
 	@if [ "${MANAGERDIR}" != "$(SESSIONSEXPLORERDIR)" ]; then mv -f ${RMANAGERDIR}/sessions.pl $(RSESSIONSEXPLORERDIR); fi
 	@if [ "${MANAGERDIR}/images/" != "${SESSIONSEXPLORERDATADIR}/" ]; then \
@@ -305,8 +308,11 @@ install_portal_site:	install_conf_dir
 			ln -s $(PORTALSKINSDIR)/$$skin $(RPORTALDIR)/skins/$$skin; \
 		done; \
 	fi
-	@cp --remove-destination _example/etc/apps-list* $(RCONFDIR)
-	@perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)/apps-list.xml
+	# Applications list install if erase configuration is needed
+	@if [ "$(ERASECONFIG)" -eq "1" ]; then \
+		cp --remove-destination _example/etc/apps-list* $(RCONFDIR); \
+		perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)/apps-list.xml; \
+	fi
 	# L-A portal install
 	@cp -pR --remove-destination ${SRCPORTALDIR}/example/AuthLA/* $(RLASPPORTALDIR)
 	@perl -i -pe 's#__DIR__#$(LASPPORTALDIR)/#g' $(RLASPPORTALDIR)/index.pl
@@ -355,8 +361,10 @@ install_doc_site:
 install_conf_dir:	install_sessions_dir
 	# Configuration files install
 	@install -v -d $(RCONFDIR) $(RFILECONFIGDIR) $(RTOOLSDIR)
-	@cp --remove-destination $(SRCCOMMONDIR)/storage.conf $(RCONFDIR)
-	@perl -i -pe 's#^dirName = .*#dirName = $(FILECONFIGDIR)#g' $(RCONFDIR)/storage.conf
+	@if [ "$(ERASECONFIG)" -eq "1" ]; then \
+		cp --remove-destination $(SRCCOMMONDIR)/storage.conf $(RCONFDIR); \
+		perl -i -pe 's#^dirName = .*#dirName = $(FILECONFIGDIR)#g' $(RCONFDIR)/storage.conf; \
+	fi
 	@cp _example/conf/lmConf-1 $(RFILECONFIGDIR)
 	@perl -000 -i -pe "s#^(globalStorageOptions\\n\\s+)'[^\\n]*?'\$$#\$${1}\'\\\$$data1 = {&39;Directory&39; => &39;$(APACHESESSIONFILEDIR)&39;,&39;LockDirectory&39; => &39;$(APACHESESSIONFILELOCKDIR)&39;};'#m" $(RFILECONFIGDIR)/lmConf-1
 	@perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g;\
