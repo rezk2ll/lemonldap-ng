@@ -8,7 +8,7 @@ my $skin        = "pastel";
 my $skin_dir    = "__SKINDIR__";
 my $appsxmlfile = "__APPSXMLFILE__";
 my $appsimgpath = "apps/";
-my $user_attr   = "uid";
+my $user_attr   = "_user";
 
 # Menu configuration
 use constant USER_CAN_CHANGE_PASSWORD => 1;
