@@ -44,6 +44,8 @@ sub modifyPassword {
         return $tmp if ($tmp);
     }
 
+    $self->lmLog("Modify password request for ".$self->{dn},'debug');
+
     # Call the modify password method
     return $self->ldap->userModifyPassword( $self->{dn}, $self->{newpassword}, $self->{confirmpassword}, $self->{oldpassword} );
     PE_OK;
