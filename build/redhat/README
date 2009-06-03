@@ -3,7 +3,6 @@ How to build LemonLDAP::NG for RedHat/CentOS
 - Install rpm-build package
 - Install all perl dependencies
 - Put lemonldap-ng.spec in /usr/src/redhat/SPECS
-- Put lemonldap-ng-cronjob-0.9.3.2.patch in /usr/src/redhat/SOURCES
 - Put LemonLDAP::NG tarball in /usr/src/redhat/SOURCES
 - Go to /usr/src/redhat
 - Do rpmbuild -ba SPECS/lemonldap-ng.spec
