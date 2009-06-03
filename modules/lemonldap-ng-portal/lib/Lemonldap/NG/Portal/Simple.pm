@@ -34,7 +34,7 @@ use Safe;
 #inherits Apache::Session
 #link Lemonldap::NG::Common::Apache::Session::SOAP protected globalStorage
 
-our $VERSION = '0.87';
+our $VERSION = '0.88';
 
 use base qw(Lemonldap::NG::Common::CGI Exporter);
 our @ISA;
@@ -136,6 +136,7 @@ sub new {
     $self->{randomPasswordRegexp} ||= '[A-Z]{3}[a-z]{5}.\d{2}';
     $self->{mailFrom}             ||= "noreply@".$domain;
     $self->{mailSubject}          ||= "Change password request";
+    $self->{mailBody}             ||= 'Your new password is $password';
 
     # Authentication and userDB module are required and have to be in @ISA
     foreach (qw(authentication userDB passwordDB)) {
@@ -537,8 +538,8 @@ sub process {
     $self->{error} = $self->_subProcess(
         qw(controlUrlOrigin checkNotifBack controlExistingSession
           SAMLForUnAuthUser authInit extractFormInfo userDBInit getUser
-          setAuthSessionInfo passwordDBInit modifyPassword resetPasswordByMail
-          setSessionInfo setMacros setGroups authenticate store buildCookie
+          setAuthSessionInfo passwordDBInit modifyPassword setSessionInfo 
+          resetPasswordByMail setMacros setGroups authenticate store buildCookie
           checkNotification SAMLForAuthUser autoRedirect)
     );
     $self->updateStatus;
@@ -694,8 +695,6 @@ sub existingSession {
 
 #  . modifyPassword() : must be implemented in PasswordDB* module
 
-#  . resetPasswordByMail() : must be implemented in PasswordDB* module
-
 ##@apmethod int setSessionInfo()
 # 9) Call setSessionInfo() in User* module and set ipAddr and startTime
 #@return Lemonldap::NG::Portal constant
@@ -715,6 +714,8 @@ sub setSessionInfo {
     $self->lmLog("Store startTime: ".$self->{sessionInfo}->{startTime}." in session",'debug');
     return $self->SUPER::setSessionInfo();
 }
+
+#  . resetPasswordByMail() : must be implemented in PasswordDB* module
 
 ##@apmethod int setMacro()
 # 10) macro mechanism.

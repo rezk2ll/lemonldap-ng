@@ -9,7 +9,7 @@ use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::_LDAP 'ldap';    #link protected ldap
 use Lemonldap::NG::Portal::UserDBLDAP;      #inherits
 
-our $VERSION = '0.1';
+our $VERSION = '0.2';
 
 *_formateFilter = *Lemonldap::NG::Portal::UserDBLDAP::formateFilter;
 *_search        = *Lemonldap::NG::Portal::UserDBLDAP::search;
@@ -108,13 +108,19 @@ sub resetPasswordByMail {
     }
 
     # Send new password by mail
+    $self->{mailBody} =~ s/\$password/$password/g;
+    $self->{mailBody} =~ s/\$(\w+)/$self->{sessionInfo}->{$1}/g;
+    $self->lmLog("SMTP From ".$self->{mailFrom},'debug');
+    $self->lmLog("SMTP To ".$self->{mail},'debug');
+    $self->lmLog("SMTP Subject ".$self->{mailSubject},'debug');
+    $self->lmLog("SMTP Body ".$self->{mailBody},'debug');
     eval {
         my $message = MIME::Lite->new(
             From => $self->{mailFrom},
             To => $self->{mail},
             Subject => $self->{mailSubject},
             Type => "TEXT",
-            Data => "Your new password: $password\n",
+            Data => $self->{mailBody},
         );
         $self->{SMTPServer} ? $message->send("smtp",$self->{SMTPServer}) : $message->send();
     };
@@ -123,7 +129,6 @@ sub resetPasswordByMail {
         return PE_ERROR;
     }  
 
-    $self->lmLog("New password sent to ".$self->{mail},'debug');
 
     PE_PASSWORD_OK;
 }

@@ -77,6 +77,9 @@ my $portal = Lemonldap::NG::Portal::SharedConf->new(
         # Mail subject
         #mailSubject => "Password reset",
 
+        # Mail body (can use $password for generated password, and other session infos, like $cn)
+        #mailBody => 'Hello $cn,\n\nYour new password is $password',
+
         # LDAP filter to use
         #mailLDAPFilter => '(&(mail=$mail)(objectClass=inetOrgPerson))',
 
