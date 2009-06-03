@@ -23,7 +23,7 @@ domain
 	'__DNSDOMAIN__'
 
 timeout
-	7200
+	72000
 
 groups
 	'$data1 = {};'
