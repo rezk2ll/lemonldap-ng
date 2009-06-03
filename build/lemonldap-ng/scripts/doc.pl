@@ -5,41 +5,72 @@ use XML::Simple;
 use utf8;
 
 my $docs = {
+    # Overview
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/Presentation?language=en'      => '1-Overview.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/Presentation?language=fr'      => '1-Overview-fr.html',
+    # FAQ
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/FAQ?language=en'               => '2-FAQ.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/FAQ?language=fr'               => '2-FAQ-fr.html',
+    #TOC
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/Documentation?language=en'     => '3-Table-of-contents.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/Documentation?language=fr'     => '3-Table-of-contents-fr.html',
+    # Install
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocPrereq'                     => '3.1-Install-prerequesites.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocInstallTarball'             => '3.2-Install-from-tarball.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocInstallDebianPackages'      => '3.3-Install-from-debian-packages.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocInstallRedHatPackages'      => '3.3-Install-from-redhat-packages.html',
-    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocMySQLStorage'               => '3.4-Install-of-MySQL-storage.html',
-    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocInstallExample?language=en' => '3.5-Install-of-example.html',
-    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocInstallExample?language=fr' => '3.5-Install-of-example-fr.html',
+    # Configuration overview
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocConfigOverwiew'             => '4.1-Configuration-overview.html',
-    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/ConfigParameterList'           => '4.1-Configuration-parameter-list.html',
-    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/EnhancedMenu'                  => '4.1-Configure-portal-menu.html',
-    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/TemplatesDesign'               => '4.1-HTML-templates-customization.html',
+    
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/RBAC'                          => '4.1-RBAC-model.html',
-    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocPpolicy'                    => '4.2-Configure-password-policy.html',
-    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/LDAPSchema'                    => '4.2-Configure-LDAP-schema.html',
-    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocSOAP?language=fr'           => '4.3-Configure-SOAP-fr.html',
-    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocLA?language=fr'             => '4.3-Configure-Liberty-Alliance-fr.html',
-    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/Notifications'                 => '4.4-Configure-and-use-notification-system.html',
-    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/AuthRemote'                    => '4.5-Chain-portals.html',
-    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocAppSympa'                   => '5-Appli-Sympa.html',
-    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocAppTomcatValve'             => '5-Appli-Tomcat-Valve.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/ConfigParameterList'           => '4.1-Configuration-parameter-list.html',
+    # Portal
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/EnhancedMenu'                  => '4.2-Configure-portal-menu.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/TemplatesDesign'               => '4.2-HTML-templates-customization.html',
+    # Configuration backends
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocFileStorage'                => '4.3-File-configuration-backend.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocMySQLStorage'               => '4.3-MySQL-configuration-backend.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocLDAPStorage'                => '4.3-LDAP-configuration-backend.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocSOAPStorage'                => '4.3-SOAP-configuration-backend.html',
+    # Session backends
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocFileSessionStorage'         => '4.4-File-session-backend.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocMySQLSessionStorage'        => '4.4-MySQL-session-backend.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocLDAPSessionStorage'         => '4.4-LDAP-session-backend.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocSOAPSessionStorage'         => '4.4-SOAP-session-backend.html',
+    # Authentication backends
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/AuthLDAP'                      => '4.5-LDAP-authentication-backend.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/SSL'                           => '4.5-SSL-authentication-backend.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/Kerberos'                      => '4.5-Apache-and-Kerberos-authentication-backend.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/AuthRemote'                    => '4.5-Remote-authentication-backend.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocLA?language=fr'             => '4.5-Liberty-Alliance-authentication-backend-fr.html',
+    # User backends
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/UserDBLDAP'                    => '4.6-LDAP-user-backend.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/UserDBNull'                    => '4.6-Null-user-backend.html',
+    # Password backends
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/PasswordDBLDAP'                => '4.7-LDAP-password-backend.html',
+    # LDAP specificities
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocPpolicy'                    => '4.8-Configure-password-policy.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/LDAPSchema'                    => '4.8-Configure-LDAP-schema.html',
+    # Advanced
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/CDA'                           => '4.9-Cross-domain-authentication.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/Notifications'                 => '4.9-Notification-system.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/SeveralIndependantPortals'     => '4.9-Several-independant-portals.html',
+    # Applications
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocAppDokuwiki'                => '5-Appli-Dokuwiki.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocAppGRR'                     => '5-Appli-GRR.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocAppGLPI'                    => '5-Appli-GLPI.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocAppPLA'                     => '5-Appli-phpLDAPadmin.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocAppSympa'                   => '5-Appli-Sympa.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocAppBugzilla'                => '5-Appli-Bugzilla.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocAppTomcatValve'             => '5-Appli-Tomcat-Valve.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocAppBasicAuthentication'     => '5-Appli-HTTP-Basic-Authentication.html',
+    # Other
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/Main/Contacts'                    => '6-Contacts.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/Erreurs?language=en'           => '6-Errors.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/Erreurs?language=fr'           => '6-Errors-fr.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/Roadmap'                       => '6-Roadmap.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/References'                    => '6-References.html',
-    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/Accounting'                    => '6.1-Accounting.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/Accounting'                    => '6-Accounting.html',
 };
 
 my %imgs;
@@ -141,9 +172,7 @@ while ( my ( $url, $file ) = each %$docs ) {
             s#/xwiki/bin/view/NG/Presentation#1-Overview-fr.html#g;
             s#/xwiki/bin/view/NG/FAQ#2-FAQ-fr.html#g;
             s#/xwiki/bin/view/NG/Documentation#3-Table-of-contents-fr.html#g;
-            s#/xwiki/bin/view/NG/DocInstallExample#3.5-Install-of-example-fr.html#g;
-            s#/xwiki/bin/view/NG/DocSOAP#4.3-Configure-SOAP-fr.html#g;
-            s#/xwiki/bin/view/NG/DocLA#4.3-Configure-Liberty-Alliance-fr.html#g;
+            s#/xwiki/bin/view/NG/DocLA#4.5-Configure-Liberty-Alliance-fr.html#g;
             s#/xwiki/bin/view/NG/Erreurs#6-Errors-fr.html#g;
         }
 	# EN translation
@@ -151,9 +180,7 @@ while ( my ( $url, $file ) = each %$docs ) {
             s#/xwiki/bin/view/NG/Presentation#1-Overview.html#g;
             s#/xwiki/bin/view/NG/FAQ#2-FAQ.html#g;
             s#/xwiki/bin/view/NG/Documentation#3-Table-of-contents.html#g;
-            s#/xwiki/bin/view/NG/DocInstallExample#3.5-Install-of-example.html#g;
-            s#/xwiki/bin/view/NG/DocSOAP#4.3-Configure-SOAP-fr.html#g;                  # Only FR
-            s#/xwiki/bin/view/NG/DocLA#4.3-Configure-Liberty-Alliance-fr.html#g;        # Only FR
+            s#/xwiki/bin/view/NG/DocLA#4.5-Configure-Liberty-Alliance-fr.html#g;        # Only FR
             s#/xwiki/bin/view/NG/Erreurs#6-Errors.html#g;
         }
 	# Default lang
@@ -161,22 +188,43 @@ while ( my ( $url, $file ) = each %$docs ) {
 	s#/xwiki/bin/view/NG/DocInstallTarball#3.2-Install-from-tarball.html#g;
 	s#/xwiki/bin/view/NG/DocInstallDebianPackages#3.3-Install-from-debian-packages.html#g;
 	s#/xwiki/bin/view/NG/DocInstallRedHatPackages#3.3-Install-from-redhat-packages.html#g;
-	s#/xwiki/bin/view/NG/DocMySQLStorage#3.4-Install-of-MySQL-storage.html#g;
 	s#/xwiki/bin/view/NG/DocConfigOverwiew#4.1-Configuration-overview.html#g;
-	s#/xwiki/bin/view/NG/ConfigParameterList#4.1-Configuration-parameter-list.html#g;
-	s#/xwiki/bin/view/NG/EnhancedMenu#4.1-Configure-portal-menu.html#g;
-	s#/xwiki/bin/view/NG/TemplatesDesign#4.1-HTML-templates-customization.html#g;
 	s#/xwiki/bin/view/NG/RBAC#4.1-RBAC-model.html#g;
-	s#/xwiki/bin/view/NG/DocPpolicy#4.2-Configure-password-policy.html#g;
-	s#/xwiki/bin/view/NG/LDAPSchema#4.2-Configure-LDAP-schema.html#g;
-	s#/xwiki/bin/view/NG/DocAppSympa#5-Appli-Sympa.html#g;
-	s#/xwiki/bin/view/NG/DocAppTomcatValve#5-Appli-Tomcat-Valve.html#g;
+	s#/xwiki/bin/view/NG/ConfigParameterList#4.1-Configuration-parameter-list.html#g;
+	s#/xwiki/bin/view/NG/EnhancedMenu#4.2-Configure-portal-menu.html#g;
+	s#/xwiki/bin/view/NG/TemplatesDesign#4.2-HTML-templates-customization.html#g;
+	s#/xwiki/bin/view/NG/DocFileStorage#4.3-File-configuration-backend.html#g;
+	s#/xwiki/bin/view/NG/DocMySQLStorage#4.3-MySQL-configuration-backend.html#g;
+	s#/xwiki/bin/view/NG/DocLDAPStorage#4.3-LDAP-configuration-backend.html#g;
+	s#/xwiki/bin/view/NG/DocSOAPStorage#4.3-SOAP-configuration-backend.html#g;
+	s#/xwiki/bin/view/NG/DocFileSessionStorage#4.4-File-session-backend.html#g;
+	s#/xwiki/bin/view/NG/DocMySQLSessionStorage#4.4-MySQL-session-backend.html#g;
+	s#/xwiki/bin/view/NG/DocLDAPSessionStorage#4.4-LDAP-session-backend.html#g;
+	s#/xwiki/bin/view/NG/DocSOAPSessionStorage#4.4-SOAP-session-backend.html#g;
+	s#/xwiki/bin/view/NG/AuthLDAP#4.5-LDAP-authentication-backend.html#g;
+	s#/xwiki/bin/view/NG/SSL#4.5-SSL-authentication-backend.html#g;
+	s#/xwiki/bin/view/NG/Kerberos#4.5-Apache-and-Kerberos-authentication-backend.html#g;
+	s#/xwiki/bin/view/NG/AuthRemote#4.5-Remote-authentication-backend.html#g;
+	s#/xwiki/bin/view/NG/UserDBLDAP#4.6-LDAP-user-backend.html#g;
+	s#/xwiki/bin/view/NG/UserDBNull#4.6-Null-user-backend.html#g;
+	s#/xwiki/bin/view/NG/PasswordDBLDAP#4.7-LDAP-password-backend.html#g;
+	s#/xwiki/bin/view/NG/DocPpolicy#4.8-Configure-password-policy.html#g;
+	s#/xwiki/bin/view/NG/LDAPSchema#4.8-Configure-LDAP-schema.html#g;
+	s#/xwiki/bin/view/NG/CDA#4.9-Cross-domain-authentication.html#g;
+	s#/xwiki/bin/view/NG/Notifications#4.9-Notification-system.html#g;
+	s#/xwiki/bin/view/NG/SeveralIndependantPortals#4.9-Several-independant-portals.html#g;
 	s#/xwiki/bin/view/NG/DocAppDokuwiki#5-Appli-Dokuwiki.html#g;
+	s#/xwiki/bin/view/NG/DocAppGRR#5-Appli-GRR.html#g;
+	s#/xwiki/bin/view/NG/DocAppGLPI#5-Appli-GLPI.html#g;
 	s#/xwiki/bin/view/NG/DocAppPLA#5-Appli-phpLDAPadmin.html#g;
+	s#/xwiki/bin/view/NG/DocAppSympa#5-Appli-Sympa.html#g;
+	s#/xwiki/bin/view/NG/DocAppBugzilla#5-Appli-Bugzilla.html#g;
+	s#/xwiki/bin/view/NG/DocAppTomcatValve#5-Appli-Tomcat-Valve.html#g;
 	s#/xwiki/bin/view/NG/DocAppBasicAuthentication#5-Appli-HTTP-Basic-Authentication.html#g;
 	s#/xwiki/bin/view/Main/Contacts#6-Contacts.html#g;
 	s#/xwiki/bin/view/NG/Roadmap#6-Roadmap.html#g;
 	s#/xwiki/bin/view/NG/References#6-References.html#g;
+	s#/xwiki/bin/view/NG/Accounting#6-Accounting.html#g;
 	# Remove pages not yet created
 	s#<li><a class=\"wikicreatelink\".*##g;
 	
@@ -244,7 +292,7 @@ foreach my $file (
 print INDEX <<EOT;
     </ul>
   </div>
-  <p class="footer">Find the latest version of the documentation on <a href="http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/Presentation">LemonLDAP::NG Wiki</a> !</p>
+  <p class="footer">Find the latest version of the documentation on <a href="http://wiki.lemonldap.ow2.org">LemonLDAP::NG Wiki</a> !</p>
 </body>
 </html>
 EOT
