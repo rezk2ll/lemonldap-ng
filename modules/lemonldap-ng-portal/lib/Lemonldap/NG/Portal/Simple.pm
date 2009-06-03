@@ -704,7 +704,10 @@ sub setSessionInfo {
 
     # Store IP address and start time
     $self->{sessionInfo}->{ipAddr} = $ENV{REMOTE_ADDR};
-    $self->{sessionInfo}->{xForwardedForAddr} = $ENV{HTTP_X_FORWARDED_FOR} || $ENV{REMOTE_ADDR};
+    # Extract client IP from X-FORWARDED-FOR header
+    my $xheader = $ENV{HTTP_X_FORWARDED_FOR};
+    $xheader =~ s/(.*?)(\,)+.*/$1/;
+    $self->{sessionInfo}->{xForwardedForAddr} = $xheader || $ENV{REMOTE_ADDR};
     $self->{sessionInfo}->{startTime} =
       &POSIX::strftime( "%Y%m%d%H%M%S", localtime() );
     $self->lmLog("Store ipAddr: ".$self->{sessionInfo}->{ipAddr}." in session",'debug');
