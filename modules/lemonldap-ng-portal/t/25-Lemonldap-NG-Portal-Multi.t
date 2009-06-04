@@ -241,6 +241,10 @@ sub setSessionInfo {
     Lemonldap::NG::Portal::Simple::PE_OK;
 }
 
+sub setGroups {
+    Lemonldap::NG::Portal::Simple::PE_OK;
+}
+
 package Lemonldap::NG::Portal::UserDB2;
 
 sub userDBInit {
@@ -253,6 +257,10 @@ sub getUser {
 
 sub setSessionInfo {
     $testU = 1;
+    Lemonldap::NG::Portal::Simple::PE_OK;
+}
+
+sub setGroups {
     Lemonldap::NG::Portal::Simple::PE_OK;
 }
 
@@ -271,6 +279,10 @@ sub setSessionInfo {
     Lemonldap::NG::Portal::Simple::PE_OK;
 }
 
+sub setGroups {
+    Lemonldap::NG::Portal::Simple::PE_OK;
+}
+
 package Lemonldap::NG::Portal::UserDB4;
 
 sub userDBInit {
@@ -282,6 +294,10 @@ sub getUser {
 }
 
 sub setSessionInfo {
+    Lemonldap::NG::Portal::Simple::PE_OK;
+}
+
+sub setGroups {
     Lemonldap::NG::Portal::Simple::PE_OK;
 }
 

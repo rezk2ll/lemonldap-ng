@@ -705,7 +705,7 @@ sub setSessionInfo {
     $self->{sessionInfo}->{ipAddr} = $ENV{REMOTE_ADDR};
     # Extract client IP from X-FORWARDED-FOR header
     my $xheader = $ENV{HTTP_X_FORWARDED_FOR};
-    $xheader =~ s/(.*?)(\,)+.*/$1/;
+    $xheader =~ s/(.*?)(\,)+.*/$1/ if $xheader;
     $self->{sessionInfo}->{xForwardedForAddr} = $xheader || $ENV{REMOTE_ADDR};
     $self->{sessionInfo}->{startTime} =
       &POSIX::strftime( "%Y%m%d%H%M%S", localtime() );
