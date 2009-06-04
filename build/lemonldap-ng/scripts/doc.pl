@@ -41,11 +41,16 @@ my $docs = {
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/AuthLDAP'                      => '4.5-LDAP-authentication-backend.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/SSL'                           => '4.5-SSL-authentication-backend.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/Kerberos'                      => '4.5-Apache-and-Kerberos-authentication-backend.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/CAS'                           => '4.5-CAS-authentication-backend.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/AuthRemote'                    => '4.5-Remote-authentication-backend.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/AuthMulti'                     => '4.5-Multiple-authentication-backend.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/AuthSAML'                      => '4.5-SAML-authentication-backend.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocLA?language=fr'             => '4.5-Liberty-Alliance-authentication-backend-fr.html',
     # User backends
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/UserDBLDAP'                    => '4.6-LDAP-user-backend.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/UserDBNull'                    => '4.6-Null-user-backend.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/UserDBMulti'                   => '4.6-Multiple-user-backend.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/userDBSAML'                      => '4.6-SAML-user-backend.html',
     # Password backends
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/PasswordDBLDAP'                => '4.7-LDAP-password-backend.html',
     # LDAP specificities
@@ -55,6 +60,7 @@ my $docs = {
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/CDA'                           => '4.9-Cross-domain-authentication.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/Notifications'                 => '4.9-Notification-system.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/SeveralIndependantPortals'     => '4.9-Several-independant-portals.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/ResetPassword'                 => '4.9-Reset-password-by-mail.html',
     # Applications
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocAppDokuwiki'                => '5-Appli-Dokuwiki.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocAppGRR'                     => '5-Appli-GRR.html',
@@ -64,6 +70,7 @@ my $docs = {
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocAppBugzilla'                => '5-Appli-Bugzilla.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocAppTomcatValve'             => '5-Appli-Tomcat-Valve.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocAppBasicAuthentication'     => '5-Appli-HTTP-Basic-Authentication.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocAppSelfMade'                => '5-Appli-self-made.html',
     # Other
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/Main/Contacts'                    => '6-Contacts.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/Erreurs?language=en'           => '6-Errors.html',
@@ -204,15 +211,21 @@ while ( my ( $url, $file ) = each %$docs ) {
 	s#/xwiki/bin/view/NG/AuthLDAP#4.5-LDAP-authentication-backend.html#g;
 	s#/xwiki/bin/view/NG/SSL#4.5-SSL-authentication-backend.html#g;
 	s#/xwiki/bin/view/NG/Kerberos#4.5-Apache-and-Kerberos-authentication-backend.html#g;
+	s#/xwiki/bin/view/NG/CAS#4.5-CAS-authentication-backend.html#g;
 	s#/xwiki/bin/view/NG/AuthRemote#4.5-Remote-authentication-backend.html#g;
+	s#/xwiki/bin/view/NG/AuthMulti#4.5-Multiple-authentication-backend.html#g;
+	s#/xwiki/bin/view/NG/AuthSAML#4.5-SAML-authentication-backend.html#g;
 	s#/xwiki/bin/view/NG/UserDBLDAP#4.6-LDAP-user-backend.html#g;
 	s#/xwiki/bin/view/NG/UserDBNull#4.6-Null-user-backend.html#g;
+	s#/xwiki/bin/view/NG/UserDBMulti#4.6-Multiple-user-backend.html#g;
+	s#/xwiki/bin/view/NG/UserDBSAML#4.6-SAML-user-backend.html#g;
 	s#/xwiki/bin/view/NG/PasswordDBLDAP#4.7-LDAP-password-backend.html#g;
 	s#/xwiki/bin/view/NG/DocPpolicy#4.8-Configure-password-policy.html#g;
 	s#/xwiki/bin/view/NG/LDAPSchema#4.8-Configure-LDAP-schema.html#g;
 	s#/xwiki/bin/view/NG/CDA#4.9-Cross-domain-authentication.html#g;
 	s#/xwiki/bin/view/NG/Notifications#4.9-Notification-system.html#g;
 	s#/xwiki/bin/view/NG/SeveralIndependantPortals#4.9-Several-independant-portals.html#g;
+	s#/xwiki/bin/view/NG/ResetPassword#4.9-Reset-password-by-mail.html#g;
 	s#/xwiki/bin/view/NG/DocAppDokuwiki#5-Appli-Dokuwiki.html#g;
 	s#/xwiki/bin/view/NG/DocAppGRR#5-Appli-GRR.html#g;
 	s#/xwiki/bin/view/NG/DocAppGLPI#5-Appli-GLPI.html#g;
@@ -221,6 +234,7 @@ while ( my ( $url, $file ) = each %$docs ) {
 	s#/xwiki/bin/view/NG/DocAppBugzilla#5-Appli-Bugzilla.html#g;
 	s#/xwiki/bin/view/NG/DocAppTomcatValve#5-Appli-Tomcat-Valve.html#g;
 	s#/xwiki/bin/view/NG/DocAppBasicAuthentication#5-Appli-HTTP-Basic-Authentication.html#g;
+	s#/xwiki/bin/view/NG/DocAppselfMade#5-Appli-self-made.html#g;
 	s#/xwiki/bin/view/Main/Contacts#6-Contacts.html#g;
 	s#/xwiki/bin/view/NG/Roadmap#6-Roadmap.html#g;
 	s#/xwiki/bin/view/NG/References#6-References.html#g;
