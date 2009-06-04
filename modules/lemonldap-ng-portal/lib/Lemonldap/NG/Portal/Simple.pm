@@ -527,9 +527,9 @@ sub _deleteSession {
 ##@method boolean process()
 # Main method.
 # process() call functions issued from :
-#  - itself : controlUrlOrigin, controlExistingSession, setMacros, setGroups, store, buildCookie, log, autoredirect
+#  - itself : controlUrlOrigin, controlExistingSession, setMacros, setLocalGroups, store, buildCookie, log, autoredirect
 #  - authentication module    : extractFormInfo, setAuthSessionInfo, authenticate
-#  - user database module     : getUser, setSessionInfo
+#  - user database module     : getUser, setSessionInfo, setGroups
 #  - password database module : modifyPassword, resetPasswordByMail
 #@return 1 if user is all is OK, 0 if session isn't created or a notification has to be done
 sub process {
@@ -539,8 +539,8 @@ sub process {
         qw(controlUrlOrigin checkNotifBack controlExistingSession
           SAMLForUnAuthUser authInit extractFormInfo userDBInit getUser
           setAuthSessionInfo passwordDBInit modifyPassword setSessionInfo 
-          resetPasswordByMail setMacros setGroups authenticate store buildCookie
-          checkNotification SAMLForAuthUser autoRedirect)
+          resetPasswordByMail setMacros setLocalGroups setGroups authenticate
+          store buildCookie checkNotification SAMLForAuthUser autoRedirect)
     );
     $self->updateStatus;
     return ( ( $self->{error} > 0 ) ? 0 : 1 );
@@ -731,38 +731,24 @@ sub setMacros {
     PE_OK;
 }
 
-##@apmethod int setGroups()
+##@apmethod int setLocalGroups()
 # 11) groups mechanism.
 #                    * store all groups name that the user match in
 #                      $self->{sessionInfo}->{groups}
 #@return Lemonldap::NG::Portal constant
-sub setGroups {
+sub setLocalGroups {
     local $self = shift;
     my $groups;
     $self->safe->share('$self');
     while ( my ( $group, $expr ) = each %{ $self->{groups} } ) {
         $expr =~ s/\$(\w+)/\$self->{sessionInfo}->{$1}/g;
-        $groups .= "$group " if ( $self->safe->reval($expr) );
-    }
-    if ( $self->{ldapGroupBase} ) {
-        my $mesg = $self->{ldap}->search(
-            base   => $self->{ldapGroupBase},
-            filter => "(|(member="
-              . $self->{dn}
-              . ")(uniqueMember="
-              . $self->{dn} . "))",
-            attrs => ["cn"],
-        );
-        if ( $mesg->code() == 0 ) {
-            foreach my $entry ( $mesg->all_entries ) {
-                my @values = $entry->get_value("cn");
-                $groups .= $values[0] . " ";
-            }
-        }
+        $groups .= "$group; " if ( $self->safe->reval($expr) );
     }
     $self->{sessionInfo}->{groups} = $groups;
     PE_OK;
 }
+
+#  . setGroups() : must be implemented in UserDB* module
 
 ##@apmethod int authenticate()
 # 12. Call authenticate() in Auth* module and call userNotice().

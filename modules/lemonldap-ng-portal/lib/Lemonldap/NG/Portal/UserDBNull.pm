@@ -29,5 +29,11 @@ sub setSessionInfo {
     PE_OK;
 }
 
+## @apmethod int setGroups()
+# Do nothing
+# @return Lemonldap::NG::Portal constant
+sub setGroups {
+    PE_OK;
+}
 1;
 

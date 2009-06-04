@@ -20,12 +20,19 @@ use base qw(Lemonldap::NG::Portal::_Remote);
 # @return Lemonldap::NG::Portal constant
 *getUser = *Lemonldap::NG::Portal::_Remote::checkRemoteId;
 
-## @apmethod int 
+## @apmethod int setSessionInfos
 # @return Lemonldap::NG::Portal constant
 sub setSessionInfo {
     my $self = shift;
     delete $self->{rSessionInfo}->{_session_id};
     $self->{sessionInfo} = $self->{rSessionInfo};
+    PE_OK;
+}
+
+## @apmethod int setGroups
+# @return Lemonldap::NG::Portal constant
+sub setGroups {
+    my $self = shift;
     PE_OK;
 }
 

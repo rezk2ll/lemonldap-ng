@@ -17,6 +17,10 @@ sub setSessionInfo {
     return $self->_multi->try('setSessionInfo',1);
 }
 
+sub setGroups {
+    my $self = shift;
+    return $self->_multi->try('setGroups',1);
+}
 
 1;
 

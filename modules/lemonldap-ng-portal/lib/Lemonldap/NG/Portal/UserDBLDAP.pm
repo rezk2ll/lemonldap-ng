@@ -103,5 +103,32 @@ sub setSessionInfo {
     PE_OK;
 }
 
+## @apmethod int setGroups()
+# Load all groups in $groups.
+# @return Lemonldap::NG::Portal constant
+sub setGroups {
+    my ($self) = @_;
+    my $groups =  $self->{sessionInfo}->{groups};
+
+    if ( $self->{ldapGroupBase} ) {
+        my $mesg = $self->ldap->search(
+            base   => $self->{ldapGroupBase},
+            filter => "(|(member="
+              . $self->{dn}
+              . ")(uniqueMember="
+              . $self->{dn} . "))",
+            attrs => ["cn"],
+        );
+        if ( $mesg->code() == 0 ) {
+            foreach my $entry ( $mesg->all_entries ) {
+                my @values = $entry->get_value("cn");
+                $groups .= $values[0] . "; ";
+            }
+        }
+    }
+    $self->{sessionInfo}->{groups} = $groups;
+    PE_OK;
+}
+
 1;
 

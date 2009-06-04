@@ -102,7 +102,7 @@ sub replay {
     my @subs = ();
     foreach (
         qw(authInit extractFormInfo setAuthSessionInfo userDBInit getUser
-        setSessionInfo)
+        setSessionInfo setGroups)
       )
     {
         push @subs, $_;
