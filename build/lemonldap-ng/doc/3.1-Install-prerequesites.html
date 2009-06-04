@@ -69,6 +69,8 @@
         <ul>
           <li><a href="#HMandatory">Mandatory</a></li>
 
+          <li><a href="#HResetPasswordbyMail">Reset Password by Mail</a></li>
+
           <li><a href="#HExtras">Extras</a></li>
         </ul>
       </li>
@@ -85,6 +87,10 @@
           <li><a href="#HYUM">YUM</a></li>
         </ul>
       </li>
+
+      <li><a href=
+      "#HLinkbetweenLemonLDAP3A3ANGversionsandCPANmodulesversions">Link
+      between LemonLDAP::NG versions and CPAN modules versions</a></li>
     </ul>
 
     <h3 class="heading-1-1"><span id="HApache">Apache</span></h3>
@@ -142,12 +148,25 @@
       <li>XML::LibXSLT</li>
     </ul>
 
+    <h4 class="heading-1-1-1"><span id="HResetPasswordbyMail">Reset Password
+    by Mail</span></h4>
+
+    <ul class="star">
+      <li>String::Random</li>
+
+      <li>MIME::Lite</li>
+
+      <li>Email::Date::Format</li>
+    </ul>
+
     <h4 class="heading-1-1-1"><span id="HExtras">Extras</span></h4>
 
     <ul class="star">
       <li>Lasso</li>
 
       <li>CAS</li>
+
+      <li>Test::POD</li>
     </ul>
 
     <h3 class="heading-1-1"><span id="HOther">Other</span></h3>
@@ -161,12 +180,14 @@
     "HInstalldependenciesonyoursystem">Install dependencies on your
     system</span></h3>
 
-    <h4 class="heading-1-1-1"><span id="HAPTGET">APT-GET</span></h4><br />
-    <br />
+    <h4 class="heading-1-1-1"><span id="HAPTGET">APT-GET</span></h4>
+
+    <p class="paragraph"></p>
 
     <div class="code">
       <pre>
 # apt-get install apache2 libapache2-mod-perl2 libapache-session-perl libnet-ldap-perl libcache-cache-perl libdbi-perl perl-modules libwww-perl libcache-cache-perl libxml-simple-perl  libsoap-lite-perl libhtml-template-perl libregexp-assemble-perl libjs-jquery libxml-libxml-perl libcrypt-rijndael-perl libio-string-perl libxml-libxslt-perl
+# apt-get install libstring-random-perl libemail-date-format-perl libmime-lite-perl
 </pre>
     </div>
 
@@ -185,6 +206,54 @@
 # yum install httpd mod_perl perl-Apache-Session perl-LDAP perl-XML-SAX perl-XML-NamespaceSupport perl-HTML-Template perl-Regexp-Assemble perl-Error perl-IPC-ShareLite perl-Cache-Cache perl-FreezeThaw perl-XML-Simple perl-version perl-CGI-Session perl-DBD-Pg perl-XML-LibXML-Common perl-BSD-Resource perl-XML-LibXML perl-Crypt-Rijndael perl-IO-<span class="java-object">String</span> perl-XML-LibXSLT
 </pre>
     </div>
+
+    <h3 class="heading-1-1"><span id=
+    "HLinkbetweenLemonLDAP3A3ANGversionsandCPANmodulesversions">Link between
+    LemonLDAP::NG versions and CPAN modules versions</span></h3><br />
+    <br />
+    All lemonLDAP::NG Perl modules are published on <span class=
+    "wikiexternallink"><a href=
+    "http://search.cpan.org/~guimard/">CPAN</a></span>. Here is the
+    correspondance between LemonLDAP::NG version and CPAN versions:<br />
+    <br />
+
+    <table class="wiki-table" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <th>LemonLDAP::NG</th>
+
+        <th>Common</th>
+
+        <th>Handler</th>
+
+        <th>Manager</th>
+
+        <th>Portal</th>
+      </tr>
+
+      <tr class="table-odd">
+        <td>0.9.3</td>
+
+        <td>0.91</td>
+
+        <td>0.90</td>
+
+        <td>0.87</td>
+
+        <td>0.86</td>
+      </tr>
+
+      <tr class="table-even">
+        <td>0.9.4</td>
+
+        <td>0.92</td>
+
+        <td>0.91</td>
+
+        <td>0.88</td>
+
+        <td>0.87</td>
+      </tr>
+    </table>
   </div>
 
   <p class="footer"><a href="index.html">Index</a></p>

@@ -66,61 +66,70 @@
       <li><a href="#HUsergroups">User groups</a></li>
 
       <li><a href="#HVirtualhosts">Virtual hosts</a></li>
+
+      <li><a href="#HTogofurther">To go further</a></li>
     </ul>Connect to the manager with your browser (for example <span class=
     "nobr"><a href=
     "http://manager.example.com">http://manager.example.com</a></span>) to
     start configure your WebSSO.
 
-    <p class="paragraph"></p>You have to set at least some parameters:
+    <p class="paragraph"></p>You can now configure a default installation,
+    with an LDAP directory.
 
     <h3 class="heading-1-1"><span id="HGeneralparameters">General
     parameters</span></h3>
 
     <ul class="star">
-      <li>Authentication parameters -&gt; portal URL to access to the
-      authentication portal.</li>
+      <li>Authentication parameters:
 
-      <li>Domain: the cookie domain. All protected VirtualHosts have to be
-      under it.</li>
+        <ul class="star">
+          <li>portal: URL to access to the authentication portal.</li>
 
-      <li>LDAP parameters -&gt; LDAP Server.</li>
+          <li>domain: the cookie domain. All protected VirtualHosts have to be
+          under it (or you have to use <span class="wikilink"><a href=
+          "/xwiki/bin/view/NG/CDA">Cross Domain
+          Authentication</a></span>).</li>
+        </ul>
+      </li>
 
-      <li>LDAP parameters -&gt; LDAP Accout and password: required only if
-      anonymous binds are not accepted.</li>
+      <li>LDAP parameters:
 
-      <li>Session Storage -&gt; Apache::Session module: how to store user
-      sessions. You can use all module that inherit from Apache::Session like
-      Apache::Session::MySQL.</li>
+        <ul class="star">
+          <li>ldapServer: LDAP Server.</li>
 
-      <li>Session Storage -&gt; Apache::Session Module parameters: see
-      Apache::Session::&lt;Choosen module&gt;.</li>
+          <li>managerDn and managerPassword: required only if anonymous binds
+          are not accepted.</li>
+        </ul>
+      </li>
     </ul>
 
     <h3 class="heading-1-1"><span id="HUsergroups">User groups</span></h3>
 
     <p class="paragraph"></p>Use the "New Group" button to add your first
     group. On the left, set the keyword which will be used later and set on
-    the right the corresponding rule. You can use :
+    the right the corresponding rule. You can use a Perl condition enclosed
+    with {}. All variables declared in "General parameters -&gt; exported
+    attributes" can be used with a "$".
 
-    <ul class="star">
-      <li>an LDAP filter (it will be tested with the user uid)</li>
-    </ul>or
+    <p class="paragraph"></p>For example:
 
-    <ul class="star">
-      <li>a Perl condition enclosed with {}. All variables declared in
-      "General parameters -&gt; LDAP attributes" can be used with a "$". For
-      example: MyGroup / { $uid eq "foo" or $uid eq "bar" }</li>
-    </ul>
+    <div class="code">
+      <pre>
+MyGroup =&gt; { $uid eq <span class=
+"java-quote">"foo"</span> or $uid eq <span class="java-quote">"bar"</span> }
+</pre>
+    </div>
 
-    <h3 class="heading-1-1"><span id="HVirtualhosts">Virtual hosts</span></h3>
-
-    <p class="paragraph"></p>You have to create a virtual host for each Apache
-    host (virtual or real) protected by Lemonldap::NG even if just a
-    sub-directory is protected. Else, user who want to access to the protected
-    area will be rejected with a "500 Internal Server Error" message and the
-    apache logs will explain the problem.
-
-    <p class="paragraph"></p>Each virtual host has 2 groups of parameters:
+    <h3 class="heading-1-1"><span id="HVirtualhosts">Virtual
+    hosts</span></h3><br />
+    <br />
+    You have to create a virtual host for each Apache host (virtual or real)
+    protected by LemonLDAP::NG even if just a sub-directory is protected.
+    Else, user who want to access to the protected area will be rejected with
+    a "500 Internal Server Error" message and the apache logs will explain the
+    problem.<br />
+    <br />
+    Each virtual host has 2 groups of parameters:
 
     <ul class="star">
       <li>Headers: the headers added to the apache request. Default: Auth-User
@@ -132,11 +141,22 @@
           <li>default: the default rule</li>
 
           <li>personalized rules: association of a Perl regular expression and
-          a condition. For example: ^/restricted.*$ / $groups =~
-          /bMyGroupb/</li>
+          a condition.</li>
         </ul>
       </li>
-    </ul>
+    </ul>For example:
+
+    <div class="code">
+      <pre>
+^/restricted.*$  =&gt;  $groups =~ /\bMyGroup\b/
+</pre>
+    </div>
+
+    <h3 class="heading-1-1"><span id="HTogofurther">To go
+    further</span></h3><br />
+    <br />
+    See the <span class="wikilink"><a href=
+    "4.1-Configuration-parameter-list.html">full parameters list</a></span>.
   </div>
 
   <p class="footer"><a href="index.html">Index</a></p>

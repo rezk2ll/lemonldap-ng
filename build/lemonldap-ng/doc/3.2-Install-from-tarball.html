@@ -132,20 +132,8 @@ $ tar zxvf lemonldap-ng-*.tar.gz
     First check and install the <span class="wikilink"><a href=
     "3.1-Install-prerequesites.html">prerequisites</a></span>.<br />
     <br />
-    If you just want to install a handler or a portal or a manager:<br />
+    For full install:<br />
     <br />
-
-    <div class="code">
-      <pre>
-$ cd lemonldap-ng-*/Lemonldap-NG-(Portal|Handler|Manager|Common)
-$ perl Makefile.PL &amp;&amp; make &amp;&amp; make test
-$ sudo make install
-</pre>
-    </div>
-
-    <p class="paragraph"></p>Else for full modules install:
-
-    <p class="paragraph"></p>
 
     <div class="code">
       <pre>
@@ -154,6 +142,87 @@ $ make &amp;&amp; make test
 $ sudo make install
 </pre>
     </div>
+
+    <p class="paragraph"></p>You can choose other Makefile targets:
+
+    <ul class="star">
+      <li>Perl libraries install :
+
+        <ul class="star">
+          <li>install_libs (all Perl libraries)</li>
+
+          <li>install_portal_libs</li>
+
+          <li>install_manager_libs</li>
+
+          <li>install_handler_libs</li>
+        </ul>
+      </li>
+
+      <li>Binaries install :
+
+        <ul class="star">
+          <li>install_bin (/usr/local/lemonldap-ng/bin)</li>
+        </ul>
+      </li>
+
+      <li>Web sites install :
+
+        <ul class="star">
+          <li>install_site (all sites including install_doc_site)</li>
+
+          <li>install_portal_site (/usr/local/lemonldap-ng/htdocs/portal)</li>
+
+          <li>install_manager_site
+          (/usr/local/lemonldap-ng/htdocs/manager)</li>
+
+          <li>install_handler_site (/usr/local/lemonldap-ng/handler)</li>
+        </ul>
+      </li>
+
+      <li>Documentation install :
+
+        <ul class="star">
+          <li>install_doc_site (/usr/local/lemonldap-ng/htdocs/doc)</li>
+
+          <li>install_examples_site (/usr/local/lemonldap-ng/examples)</li>
+        </ul>
+      </li>
+    </ul>You can also pass parameters to the make install command, with this
+    syntax:
+
+    <div class="code">
+      <pre>
+$ sudo make install PARAM=VALUE PARAM=VALUE ...
+</pre>
+    </div><br />
+    <br />
+    Available parameters are:
+
+    <ul class="star">
+      <li>ERASECONFIG: set to 0 if you want to keep your configuration files
+      (default: 1)</li>
+
+      <li>DESTDIR: only for packaging, install the product in a jailroot
+      (default: "")</li>
+
+      <li>PREFIX: installation directory (default: /usr/local)</li>
+
+      <li>CRONDIR: Cronfile directory (default:
+      $PREFIX/etc/lemonldap-ng/cron.d)</li>
+
+      <li>APACHEUSER: user running Apache</li>
+
+      <li>APACHEGROUP: group running Apache</li>
+
+      <li>DNSDOMAIN: Main DNS domain (default: example.com)</li>
+
+      <li>LDAPHOST: LDAP server (default: localhost)</li>
+
+      <li>LDAPPORT: LDAP port (default: 389)</li>
+
+      <li>LDAPSUFFIX: LDAP suffix (default: dc=example,dc=com)</li>
+    </ul>
   </div>
 
   <p class="footer"><a href="index.html">Index</a></p>

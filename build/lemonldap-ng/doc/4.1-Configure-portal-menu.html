@@ -128,21 +128,25 @@
             },
             modules =&gt; {
                 appslist =&gt; 1,
-                password =&gt; 1,
-                logout   =&gt; 1,
+                password =&gt; USER_CAN_CHANGE_PASSWORD,
+                logout   =&gt; DISPLAY_LOGOUT,
             },
             # CUSTOM FUNCTION : <span class=
 "java-keyword">if</span> you want to create customFunctions in rules, declare them here
             #customFunctions    =&gt; 'function1 function2',
         }
-    );<br /><br />    $template-&gt;param( AUTH_ERROR       =&gt; $menu-&gt;error );
-    $template-&gt;param( AUTH_ERROR_TYPE  =&gt; $menu-&gt;error_type );
-    $template-&gt;param( DISPLAY_APPSLIST =&gt; $menu-&gt;displayModule(<span class="java-quote">"appslist"</span>) );
-    $template-&gt;param( DISPLAY_PASSWORD =&gt; $menu-&gt;displayModule(<span class="java-quote">"password"</span>) );
-    $template-&gt;param( DISPLAY_LOGOUT   =&gt; $menu-&gt;displayModule(<span class="java-quote">"logout"</span>) );
-    $template-&gt;param( DISPLAY_TAB      =&gt; $menu-&gt;displayTab );
-    $template-&gt;param( LOGOUT_URL       =&gt; <span class=
+    );<br /><br />    $template-&gt;param( AUTH_USER           =&gt; $portal-&gt;{sessionInfo}-&gt;{$user_attr} );
+    $template-&gt;param( AUTOCOMPLETE        =&gt; AUTOCOMPLETE );
+    $template-&gt;param( SKIN                =&gt; $skin )
+    $template-&gt;param( AUTH_ERROR          =&gt; $menu-&gt;error );
+    $template-&gt;param( AUTH_ERROR_TYPE     =&gt; $menu-&gt;error_type );
+    $template-&gt;param( DISPLAY_APPSLIST    =&gt; $menu-&gt;displayModule(<span class="java-quote">"appslist"</span>) );
+    $template-&gt;param( DISPLAY_PASSWORD    =&gt; $menu-&gt;displayModule(<span class="java-quote">"password"</span>) );
+    $template-&gt;param( DISPLAY_LOGOUT      =&gt; $menu-&gt;displayModule(<span class="java-quote">"logout"</span>) );
+    $template-&gt;param( DISPLAY_TAB         =&gt; $menu-&gt;displayTab );
+    $template-&gt;param( LOGOUT_URL          =&gt; <span class=
 "java-quote">"$ENV{SCRIPT_NAME}?logout=1"</span> );
+    $template-&gt;param( REQUIRE_OLDPASSWORD =&gt; REQUIRE_OLDPASSWORD );
     <span class=
 "java-keyword">if</span> ( $menu-&gt;displayModule(<span class="java-quote">"appslist"</span>) ) {
         $template-&gt;param( APPSLIST_MENU =&gt; $menu-&gt;appslistMenu );
@@ -164,8 +168,8 @@
       <pre>
 modules =&gt; {
                 appslist =&gt; 1,
-                password =&gt; 1,
-                logout   =&gt; 1,
+                password =&gt; USER_CAN_CHANGE_PASSWORD,
+                logout   =&gt; DISPLAY_LOGOUT,
             },
 </pre>
     </div>
@@ -182,7 +186,7 @@ modules =&gt; {
 modules =&gt; {
                 appslist =&gt; 1,
                 password =&gt; '$employeeType =~ /binternalb/',
-                logout   =&gt; 1,
+                logout   =&gt; DISPLAY_LOGOUT,
             },
 </pre>
     </div>

@@ -56,9 +56,8 @@
 
 <body>
   <div class="main-content">
-    <h2 class="heading-1"><span id=
-    "HUseofMySQLforsessionsand2Forconfigurationstorage">Use of MySQL for
-    sessions and/or configuration storage</span></h2>
+    <h2 class="heading-1"><span id="HUseofMySQLforconfigurationstorage">Use of
+    MySQL for configuration storage</span></h2>
 
     <p class="paragraph"></p>
 
@@ -70,8 +69,6 @@
           <li><a href="#HDatabasecreation">Database creation</a></li>
 
           <li><a href="#HConfigurationtable">Configuration table</a></li>
-
-          <li><a href="#HSessiontable">Session table</a></li>
         </ul>
       </li>
 
@@ -80,11 +77,11 @@
         configuration</a>
 
         <ul>
-          <li><a href="#HSetconfigStorageforLemonLDAP3A3ANGmodules">Set
-          configStorage for LemonLDAP::NG modules</a></li>
+          <li><a href="#HDefaultconfiguration">Default configuration</a></li>
 
-          <li><a href="#HSetApache3A3ASessionbackend">Set Apache::Session
-          backend</a></li>
+          <li><a href=
+          "#HOverrideconfigStorageforLemonLDAP3A3ANGmodules">Override
+          configStorage for LemonLDAP::NG modules</a></li>
         </ul>
       </li>
     </ul>
@@ -99,12 +96,12 @@
     <h4 class="heading-1-1-1"><span id="HDatabasecreation">Database
     creation</span></h4><br />
     <br />
-    For example, create the database "lemonldapng" :<br />
+    For example, create the database "lemonldap-ng" :<br />
     <br />
 
     <div class="code">
       <pre>
-# mysqladmin create lemonldapng
+# mysqladmin create lemonldap-ng
 </pre>
     </div>
 
@@ -142,48 +139,34 @@ CREATE TABLE lmConfig (
 </pre>
     </div>
 
-    <h4 class="heading-1-1-1"><span id="HSessiontable">Session
-    table</span></h4>
+    <h3 class="heading-1-1"><span id=
+    "HLemonLDAP3A3ANGconfiguration">LemonLDAP::NG configuration</span></h3>
 
-    <p class="paragraph"></p>The choice of Apache::Session::* module is free.
-    See Apache::Session::Store::* or Apache::Session::* to know how to
-    configure the module.
+    <h4 class="heading-1-1-1"><span id="HDefaultconfiguration">Default
+    configuration</span></h4>
 
-    <p class="paragraph"></p>If you want to use Apache::Session::MySQL, you
-    can create the database like this:
+    <p class="paragraph"></p>You can set this directly in <strong class=
+    "strong">storage.conf</strong>:
 
     <p class="paragraph"></p>
 
     <div class="code">
       <pre>
-CREATE TABLE sessions (
-    id <span class="java-object">char</span>(32),
-    a_session text
-    );
+type        = DBI
+dbiChain    = DBI:mysql:database=lemonldap-ng;host=1.2.3.4
+dbiUser     = lemonldap
+dbiPassword = password
+dbiTable    = lmConfig
 </pre>
     </div>
-
-    <h3 class="heading-1-1"><span id=
-    "HLemonLDAP3A3ANGconfiguration">LemonLDAP::NG configuration</span></h3>
 
     <h4 class="heading-1-1-1"><span id=
-    "HSetconfigStorageforLemonLDAP3A3ANGmodules">Set configStorage for
-    LemonLDAP::NG modules</span></h4>
+    "HOverrideconfigStorageforLemonLDAP3A3ANGmodules">Override configStorage
+    for LemonLDAP::NG modules</span></h4>
 
-    <p class="paragraph"></p>By default, configStorage use the "File" backend,
-    like:
-
-    <div class="code">
-      <pre>
-configStorage =&gt; {
-     type    =&gt; <span class="java-quote">"File"</span>,
-     dirName =&gt; <span class="java-quote">"/etc/lemonldap-ng/conf/"</span>,
-  },
-</pre>
-    </div>
-
-    <p class="paragraph"></p>You have to replace it with MySQL parameters, for
-    example:
+    <p class="paragraph"></p>Edit for example <strong class=
+    "strong">portal/index.pl</strong> or <strong class=
+    "strong">handler/MyHandler.pm</strong>:
 
     <div class="code">
       <pre>
@@ -197,48 +180,7 @@ configStorage =&gt; {
 </pre>
     </div>
 
-    <h4 class="heading-1-1-1"><span id="HSetApache3A3ASessionbackend">Set
-    Apache::Session backend</span></h4>
-
-    <p class="paragraph"></p>Go to the Manager and go in <strong class=
-    "strong">General Parameters &gt; Session Storage</strong>. Then change
-    <strong class="strong">Apache::Session module</strong> to
-    "Apache::Session::MySQL" and in <strong class="strong">Apache::Session
-    parameters</strong> configure the following options:
-
-    <ul class="star">
-      <li>DataSource (for example:
-      DBI:mysql:database=lemonldapng;host=127.0.0.1)</li>
-
-      <li>UserName</li>
-
-      <li>Password</li>
-
-      <li>TableName</li>
-
-      <li>LockDataSource</li>
-
-      <li>LockUserName</li>
-
-      <li>LockPassword</li>
-    </ul>You can also set the session module in perl scripts:
-
-    <div class="code">
-      <pre>
-globalStorage  =&gt; <span class="java-quote">"Apache::Session::MySQL"</span>,
-  globalStorageOptions =&gt; {
-      DataSource       =&gt; <span class=
-"java-quote">"dbi:mysql:database=lemonldapng;host=127.0.0.1"</span>,
-      UserName         =&gt; <span class="java-quote">"db_user"</span>,
-      Password         =&gt; <span class="java-quote">"db_password"</span>,
-      TableName        =&gt; <span class="java-quote">"sessions"</span>,
-      LockDataSource   =&gt; <span class=
-"java-quote">"dbi:mysql:database=lemonldapng;host=127.0.0.1"</span>,
-      LockUserName     =&gt; <span class="java-quote">"db_user"</span>,
-      LockPassword     =&gt; <span class="java-quote">"db_password"</span>,
-  },
-</pre>
-    </div>
+    <p class="paragraph"></p>
   </div>
 
   <p class="footer"><a href="index.html">Index</a></p>

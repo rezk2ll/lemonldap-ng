@@ -66,6 +66,8 @@
       "#HLemonLDAP3A3ANGskinsandHTML3A3ATemplatePerlmodule">LemonLDAP::NG
       skins and HTML::Template Perl module</a></li>
 
+      <li><a href="#HTemplatesconfiguration">Templates configuration</a></li>
+
       <li>
         <a href="#HTemplatesvariablesprovidedbyportal2Findexpl">Templates
         variables provided by portal/index.pl</a>
@@ -78,6 +80,9 @@
 
           <li><a href="#Hmenutplspecificvariables">menu.tpl specific
           variables</a></li>
+
+          <li><a href="#Hnotificationtplspecificvariables">notification.tpl
+          specific variables</a></li>
         </ul>
       </li>
 
@@ -109,7 +114,7 @@
 
     <p class="paragraph"></p>LemonLDAP::NG portal use "skins", located in the
     skins/ directory of the portal. Each skin is a particular directory, for
-    example skins/default/ for the default skin.
+    example skins/pastel/ for the provided skin.
 
     <p class="paragraph"></p>Here is the list of required template files:
 
@@ -118,18 +123,58 @@
 
       <li>menu.tpl: template for the menu page.</li>
 
-      <li>error.tpl: tempalte for the error page.</li>
+      <li>error.tpl: template for the error page.</li>
 
       <li>header.tpl: common header (included in above templates).</li>
 
       <li>footer.tpl: common footer (included in above templates).</li>
 
       <li>notification.tpl: template to display notifications.</li>
+
+      <li>password.tpl: template for the password modification tab.</li>
     </ul>Each template include a CSS file, named "styles.css".
+
+    <p class="paragraph"></p>Icons and javascripts are in skins/common/.
 
     <p class="paragraph"></p>To create your own skin, just copy the default
     skin to another directory (eg.: skins/myskin/) and edit templates and CSS
     files. Advanced customization can be done by editing the portal/index.pl.
+
+    <h3 class="heading-1-1"><span id="HTemplatesconfiguration">Templates
+    configuration</span></h3>
+
+    <p class="paragraph"></p>In portal/index.pl, you can find some
+    configuration variables:
+
+    <ul class="star">
+      <li>XWiki.MySkin: name of the skin (ex: "pastel")</li>
+
+      <li>$skin_dir: full system path to skins</li>
+
+      <li>$appsxmlfile: application XML file (<span class="wikilink"><a href=
+      "4.1-Configure-portal-menu.html">learn more</a></span>)</li>
+
+      <li>$appsimgpath: web path to application logos</li>
+
+      <li>$user_attr: session attribute to display as connected user (ex:
+      "uid")</li>
+
+      <li>USER_CAN_CHANGE_PASSWORD: constant to enable the password
+      modification tab</li>
+
+      <li>REQUIRE_OLDPASSWORD: constant to display the "old password"
+      field</li>
+
+      <li>DISPLAY_LOGOUT: constant to display the logout tab</li>
+
+      <li>AUTOCOMPLETE: constant to set the autocomplete tag in forms (default
+      to "on").</li>
+
+      <li>DISPLAY_RESETPASSWORD: constant to display the "reset password"
+      form.</li>
+    </ul>And in Menu constructor, you can use condition for tab display
+    (<span class="wikilink"><a href="4.1-Configure-portal-menu.html">learn
+    more</a></span>)
 
     <h3 class="heading-1-1"><span id=
     "HTemplatesvariablesprovidedbyportal2Findexpl">Templates variables
@@ -155,26 +200,38 @@
           <li>warning: not a fatal error, need user action.</li>
         </ul>
       </li>
+
+      <li>REQUIRE_OLDPASSWORD: boolean to display "old password" field</li>
+
+      <li>DISPLAY_PASSWORD: boolean to display the password tab</li>
+
+      <li>AUTOCOMPLETE: "on" or "off" to enable/disable autocomplete in
+      forms</li>
+
+      <li>SKIN: name of the skin</li>
     </ul>
 
     <h4 class="heading-1-1-1"><span id="Hlogintplspecificvariables">login.tpl
     specific variables</span></h4>
 
     <ul class="star">
-      <li>AUTH_URL: URL submitted for redirection.</li>
+      <li>AUTH_URL: URL submitted for redirection</li>
 
-      <li>DISPLAY_FORM: set to 1 if a form can be displayed.</li>
+      <li>DISPLAY_FORM: set to 1 if a form can be displayed</li>
+
+      <li>LOGIN: submitted login</li>
+
+      <li>DISPLAY_RESETPASSWORD: boolean to display the "reset password"
+      form</li>
     </ul>
 
     <h4 class="heading-1-1-1"><span id="Hmenutplspecificvariables">menu.tpl
     specific variables</span></h4>
 
     <ul class="star">
-      <li>LOGOUT_URL: URL for logout.</li>
+      <li>LOGOUT_URL: URL for logout</li>
 
       <li>DISPLAY_APPSLIST: boolean to display the appslist tab</li>
-
-      <li>DISPLAY_PASSWORD: boolean to display the password tab</li>
 
       <li>DISPLAY_LOGOUT: boolean to display the logout tab</li>
 
@@ -183,6 +240,16 @@
       <li>APPSLIST_MENU: html code of appslist menu div</li>
 
       <li>APPSLIST_DESC: html code of appslist description divs</li>
+
+      <li>AUTH_USER: identity of connected user</li>
+    </ul>
+
+    <h4 class="heading-1-1-1"><span id=
+    "Hnotificationtplspecificvariables">notification.tpl specific
+    variables</span></h4>
+
+    <ul class="star">
+      <li>NOTIFICATION: content of notifications (HTML code)</li>
     </ul>
 
     <h3 class="heading-1-1"><span id="HTemplatestructure">Template
@@ -202,8 +269,6 @@
 
                 <ul class="star">
                   <li>div id=header</li>
-
-                  <li>div class=message</li>
 
                   <li>(html content)</li>
 

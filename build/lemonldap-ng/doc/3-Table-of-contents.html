@@ -69,9 +69,24 @@
         <ul>
           <li><a href="#HGeneral">General</a></li>
 
-          <li><a href="#HLDAP">LDAP</a></li>
+          <li><a href="#HPortal">Portal</a></li>
 
-          <li><a href="#HExtendedfeatures">Extended features</a></li>
+          <li><a href="#HConfigurationbackends">Configuration
+          backends</a></li>
+
+          <li><a href="#HSessionbackends">Session backends</a></li>
+
+          <li><a href="#HAuthenticationbackends">Authentication
+          backends</a></li>
+
+          <li><a href="#HUserdatabasebackends">User database backends</a></li>
+
+          <li><a href="#HPassworddatabasebackends">Password database
+          backends</a></li>
+
+          <li><a href="#HLDAPspecificities">LDAP specificities</a></li>
+
+          <li><a href="#HAdvancedfeatures">Advanced features</a></li>
         </ul>
       </li>
 
@@ -129,18 +144,6 @@
       <li><span class="wikilink"><a href=
       "3.3-Install-from-redhat-packages.html">Installation on RHEL/CentOS with
       packages</a></span> (en)</li>
-
-      <li><span class="wikilink"><a href=
-      "3.4-Install-of-MySQL-storage.html">Use of MySQL for sessions and/or
-      configuration storage</a></span> (en)</li>
-
-      <li><span class="wikilink"><a href=
-      "/xwiki/bin/view/NG/DocLDAPStorage">Use of LDAP for configuration
-      storage</a></span> (en)</li>
-
-      <li><span class="wikilink"><a href=
-      "3.5-Install-of-example.html">Provided example
-      installation</a></span></li>
     </ul>
 
     <h3 class="heading-1-1"><span id=
@@ -154,22 +157,120 @@
       "4.1-Configuration-overview.html">Configuration overview</a></span>
       (en)</li>
 
+      <li><span class="wikilink"><a href="4.1-RBAC-model.html">RBAC
+      model</a></span> (en)</li>
+
       <li><span class="wikilink"><a href=
       "4.1-Configuration-parameter-list.html">Configuration parameters
       list</a></span> (en)</li>
+    </ul>
 
+    <h4 class="heading-1-1-1"><span id="HPortal">Portal</span></h4>
+
+    <ul class="star">
       <li><span class="wikilink"><a href=
       "4.1-Configure-portal-menu.html">Portal menu</a></span> (en)</li>
 
       <li><span class="wikilink"><a href=
       "4.1-HTML-templates-customization.html">HTML templates
       customization</a></span> (en)</li>
-
-      <li><span class="wikilink"><a href="4.1-RBAC-model.html">RBAC
-      model</a></span> (en)</li>
     </ul>
 
-    <h4 class="heading-1-1-1"><span id="HLDAP">LDAP</span></h4>
+    <h4 class="heading-1-1-1"><span id="HConfigurationbackends">Configuration
+    backends</span></h4>
+
+    <ul class="star">
+      <li><span class="wikilink"><a href=
+      "/xwiki/bin/view/NG/DocFileStorage">File</a></span> (en)</li>
+
+      <li><span class="wikilink"><a href=
+      "3.4-Install-of-MySQL-storage.html">MySQL</a></span> (en)</li>
+
+      <li><span class="wikilink"><a href=
+      "/xwiki/bin/view/NG/DocLDAPStorage">LDAP</a></span> (en)</li>
+
+      <li><span class="wikilink"><a href=
+      "4.3-Configure-SOAP-fr.htmlStorage">SOAP</a></span> (en)</li>
+    </ul>
+
+    <h4 class="heading-1-1-1"><span id="HSessionbackends">Session
+    backends</span></h4>
+
+    <ul class="star">
+      <li><span class="wikilink"><a href=
+      "/xwiki/bin/view/NG/DocFileSessionStorage">File</a></span> (en)</li>
+
+      <li><span class="wikilink"><a href=
+      "/xwiki/bin/view/NG/DocMySQLSessionStorage">MySQL</a></span> (en)</li>
+
+      <li><span class="wikilink"><a href=
+      "/xwiki/bin/view/NG/DocLDAPSessionStorage">LDAP</a></span> (en)</li>
+
+      <li><span class="wikilink"><a href=
+      "4.3-Configure-SOAP-fr.htmlSessionStorage">SOAP</a></span> (en)</li>
+    </ul>
+
+    <h4 class="heading-1-1-1"><span id=
+    "HAuthenticationbackends">Authentication backends</span></h4>
+
+    <ul class="star">
+      <li><span class="wikilink"><a href="/xwiki/bin/view/NG/AuthLDAP">LDAP,
+      Active Directory</a></span> (en)</li>
+
+      <li><span class="wikilink"><a href=
+      "/xwiki/bin/view/NG/SSL">SSL</a></span> (en)</li>
+
+      <li><span class="wikilink"><a href="/xwiki/bin/view/NG/Kerberos">Apache,
+      Kerberos</a></span> (en)</li>
+
+      <li><span class="wikilink"><a href=
+      "/xwiki/bin/view/NG/CAS">CAS</a></span> (en)</li>
+
+      <li><span class="wikilink"><a href=
+      "/xwiki/bin/view/NG/AuthRemote">Remote</a></span> (en)</li>
+
+      <li><span class="wikilink"><a href=
+      "/xwiki/bin/view/NG/AuthMulti">Multiple</a></span> (en)</li>
+
+      <li><span class="wikilink"><a href=
+      "/xwiki/bin/view/NG/AuthSAML">SAML</a></span> (en)</li>
+
+      <li><span class="wikilink"><a href=
+      "4.3-Configure-Liberty-Alliance-fr.html">Liberty Alliance (FederID
+      project)</a></span> (fr)</li>
+    </ul>
+
+    <h4 class="heading-1-1-1"><span id="HUserdatabasebackends">User database
+    backends</span></h4>
+
+    <ul class="star">
+      <li><span class="wikilink"><a href="/xwiki/bin/view/NG/UserDBLDAP">LDAP,
+      Active Directory</a></span> (en)</li>
+
+      <li><span class="wikilink"><a href=
+      "/xwiki/bin/view/NG/UserDBNull">Null</a></span> (en)</li>
+
+      <li><span class="wikilink"><a href=
+      "/xwiki/bin/view/NG/AuthRemote">Remote</a></span> (en)</li>
+
+      <li><span class="wikilink"><a href=
+      "/xwiki/bin/view/NG/UserDBMulti">Multiple</a></span> (en)</li>
+
+      <li><span class="wikilink"><a href=
+      "/xwiki/bin/view/NG/UserDBSAML">SAML</a></span> (en)</li>
+    </ul>
+
+    <h4 class="heading-1-1-1"><span id="HPassworddatabasebackends">Password
+    database backends</span></h4>
+
+    <ul class="star">
+      <li><span class="wikilink"><a href=
+      "/xwiki/bin/view/NG/PasswordDBLDAP">LDAP, Active Directory</a></span>
+      (en)</li>
+    </ul>
+
+    <h4 class="heading-1-1-1"><span id="HLDAPspecificities">LDAP
+    specificities</span></h4>
 
     <ul class="star">
       <li><span class="wikilink"><a href=
@@ -180,26 +281,23 @@
       schema extension</a></span> (en)</li>
     </ul>
 
-    <h4 class="heading-1-1-1"><span id="HExtendedfeatures">Extended
+    <h4 class="heading-1-1-1"><span id="HAdvancedfeatures">Advanced
     features</span></h4>
 
     <ul class="star">
-      <li><span class="wikilink"><a href="4.3-Configure-SOAP-fr.html">Web
-      Services (SOAP)</a></span> (fr)</li>
-
-      <li><span class="wikilink"><a href=
-      "4.3-Configure-Liberty-Alliance-fr.html">Liberty Alliance (FederID
-      project)</a></span> (fr)</li>
-
-      <li><span class="wikilink"><a href="/xwiki/bin/view/NG/SSL">SSL
-      authentication</a></span> (en)</li>
-
-      <li><span class="wikilink"><a href=
-      "/xwiki/bin/view/NG/Kerberos">Kerberos authentication</a></span>
-      (en)</li>
+      <li><span class="wikilink"><a href="/xwiki/bin/view/NG/CDA">Cross-Domain
+      Authentication</a></span> (en)</li>
 
       <li><span class="wikilink"><a href=
       "/xwiki/bin/view/NG/Notifications">Notifications system</a></span>
+      (en)</li>
+
+      <li><span class="wikilink"><a href=
+      "/xwiki/bin/view/NG/SeveralIndependantPortals">Management of several
+      independant portals</a></span> (en)</li>
+
+      <li><span class="wikilink"><a href=
+      "/xwiki/bin/view/NG/ResetPassword">Reset password by mail</a></span>
       (en)</li>
     </ul>
 
@@ -283,6 +381,19 @@
         <span class="wikiexternallink"><a href=
         "http://www.sympa.org/">Official website</a></span></td>
       </tr>
+
+      <tr class="table-even">
+        <td><strong class="strong">Bugzilla</strong><br />
+        <img src="/xwiki/bin/download/NG/Documentation/bugzilla_logo.png" alt=
+        "bugzilla_logo.png" /></td>
+
+        <td>Bugtracker<br />
+        <br />
+        <span class="wikilink"><a href="/xwiki/bin/view/NG/DocAppBugzilla">SSO
+        procedure</a></span> (en)<br />
+        <span class="wikiexternallink"><a href=
+        "http://www.bugzilla.org/">Official website</a></span></td>
+      </tr>
     </table>
 
     <h4 class="heading-1-1-1"><span id="HConnectors">Connectors</span></h4>
@@ -326,7 +437,9 @@
     <h4 class="heading-1-1-1"><span id="HSelfmade">Self-made</span></h4>
 
     <ul class="star">
-      <li>How to modify my application?</li>
+      <li><span class="wikilink"><a href=
+      "/xwiki/bin/view/NG/DocAppSelfMade">How to modify my
+      application?</a></span></li>
     </ul>
 
     <h3 class="heading-1-1"><span id="HOthers">Others</span></h3><img src=
@@ -343,26 +456,32 @@
     <h4 class="heading-1-1-1"><span id="HDevelopersdocumentation">Developers
     documentation</span></h4>
 
-    <p class="paragraph"></p>See <span class="wikiexternallink"><a href=
-    "http://lemonldap.objectweb.org/NG/devel-doc/">Doxygen
-    documentation</a></span>
+    <ul class="star">
+      <li>See <span class="wikiexternallink"><a href=
+      "http://lemonldap.objectweb.org/NG/devel-doc/">Doxygen
+      documentation</a></span></li>
+    </ul>
 
     <h4 class="heading-1-1-1"><span id="HFAQ">FAQ</span></h4>
 
-    <p class="paragraph"></p>See <span class="wikilink"><a href=
-    "2-FAQ.html">FAQ</a></span> page.
+    <ul class="star">
+      <li>See <span class="wikilink"><a href="2-FAQ.html">FAQ</a></span>
+      page.</li>
+    </ul>
 
     <h4 class="heading-1-1-1"><span id="HErrors">Errors</span></h4>
 
-    <p class="paragraph"></p>See <span class="wikilink"><a href=
-    "6-Errors.html">errors</a></span> page.
+    <ul class="star">
+      <li>See <span class="wikilink"><a href="6-Errors.html">errors</a></span>
+      page.</li>
+    </ul>
 
     <h4 class="heading-1-1-1"><span id="HTraining">Training</span></h4>
 
     <ul class="star">
       <li><span class="wikiexternallink"><a href=
-      "http://www.linagora.org/article166.html">The WebSSO LemonLDAP::NG
-      (LINAGORA)</a></span> (fr)</li>
+      "http://linagora.org/contrib/annuaires/formations/websso_lemonldap_ng">The
+      WebSSO LemonLDAP::NG (LINAGORA)</a></span> (fr)</li>
     </ul>
   </div>
 
