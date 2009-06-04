@@ -89,6 +89,16 @@ my $portal = Lemonldap::NG::Portal::SharedConf->new(
 	# LDAP GROUPS
 	# Set the base DN of your groups branch
 	#ldapGroupBase => 'ou=groups,dc=example,dc=com',
+	# Objectclass used by groups
+        #ldapGroupObjectClass => 'groupOfUniqueNames',
+        # Attribute used by groups to store member
+        #ldapGroupAttributeName => 'uniqueMember',
+        # Attribute used by user to link to groups
+        #ldapGroupAttributeNameUser => 'dn',
+        # Attribute used to identify a group. The group will be displayed as
+        # cn|mail|status, where cn, mail and status will be replaced by their
+        # values.
+        #ldapGroupAttributeNameSearch => ['cn'],
 	 
         # CUSTOM FUNCTION
         # If you want to create customFunctions in rules, declare them here:

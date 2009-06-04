@@ -8,7 +8,7 @@ package Lemonldap::NG::Portal::UserDBLDAP;
 use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::_LDAP 'ldap';    #link protected ldap
 
-our $VERSION = '0.1';
+our $VERSION = '0.2';
 
 ## @method int userDBInit()
 # Does nothing.
@@ -108,24 +108,54 @@ sub setSessionInfo {
 # @return Lemonldap::NG::Portal constant
 sub setGroups {
     my ($self) = @_;
-    my $groups =  $self->{sessionInfo}->{groups};
+    my $groups = $self->{sessionInfo}->{groups};
+    $self->safe->share('$self');
 
-    if ( $self->{ldapGroupBase} ) {
-        my $mesg = $self->ldap->search(
-            base   => $self->{ldapGroupBase},
-            filter => "(|(member="
-              . $self->{dn}
-              . ")(uniqueMember="
-              . $self->{dn} . "))",
-            attrs => ["cn"],
-        );
-        if ( $mesg->code() == 0 ) {
-            foreach my $entry ( $mesg->all_entries ) {
-                my @values = $entry->get_value("cn");
-                $groups .= $values[0] . "; ";
+    while ( my ( $group, $expr ) = each %{ $self->{groups} } )
+    {
+        $expr =~ s/\$(\w+)/\$self->{sessionInfo}->{$1}/g;
+        $groups .= "$group " if ( $self->safe->reval($expr) );
+    }
+
+    $self->{ldapGroupObjectClass}           ||= "groupOfNames";
+    $self->{ldapGroupAttributeName}         ||= "member";
+    $self->{ldapGroupAttributeNameUser}     ||= "dn";
+    $self->{ldapGroupAttributeNameSearch}   ||= ["cn"];
+
+    if ( $self->{ldapGroupBase} && $self->{sessionInfo}->{$self->{ldapGroupAttributeNameUser}} )
+    {
+        my $searchFilter = "(&(objectClass=" . $self->{ldapGroupObjectClass} . ")(|";
+        foreach ( split( /[,;]/, $self->{sessionInfo}->{$self->{ldapGroupAttributeNameUser}} ) )
+        {
+            $searchFilter .= "(" . $self->{ldapGroupAttributeName} . "=" . $_ . ")";
+        }
+        $searchFilter .= "))";
+        my $mesg = $self->{ldap}->search(
+                base => $self->{ldapGroupBase},
+                filter => $searchFilter,
+                attrs => $self->{ldapGroupAttributeNameSearch},
+            );
+        if ( $mesg->code() == 0 )
+        {
+            foreach my $entry ( $mesg->all_entries )
+            {
+                my $nbAttrs = @{$self->{ldapGroupAttributeNameSearch}};
+                for (my $i = 0; $i < $nbAttrs; $i++)
+                {
+                    my @data = $entry->get_value($self->{ldapGroupAttributeNameSearch}[$i]);
+                    if (@data)
+                    {
+                        $groups .= $data[0];
+                        $groups .= "|"
+                            if ($i+1 < $nbAttrs && $entry->get_value($self->{ldapGroupAttributeNameSearch}[$i+1]));
+                    }
+                }
+                $groups .= "; ";
             }
+            $groups =~ s/; $//g;
         }
     }
+
     $self->{sessionInfo}->{groups} = $groups;
     PE_OK;
 }
