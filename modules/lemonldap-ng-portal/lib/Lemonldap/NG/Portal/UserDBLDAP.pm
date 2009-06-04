@@ -109,13 +109,6 @@ sub setSessionInfo {
 sub setGroups {
     my ($self) = @_;
     my $groups = $self->{sessionInfo}->{groups};
-    $self->safe->share('$self');
-
-    while ( my ( $group, $expr ) = each %{ $self->{groups} } )
-    {
-        $expr =~ s/\$(\w+)/\$self->{sessionInfo}->{$1}/g;
-        $groups .= "$group " if ( $self->safe->reval($expr) );
-    }
 
     $self->{ldapGroupObjectClass}           ||= "groupOfNames";
     $self->{ldapGroupAttributeName}         ||= "member";
