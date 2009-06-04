@@ -19,6 +19,7 @@ WriteMakefile(
         'MIME::Lite'             => 0,
         'Email::Date::Format'    => 0,
         'String::Random'         => 0,
+        'HTML::Template'         => 0,
     },
     (
         $] >= 5.005
