@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Linux/x86 (vers 7 December 2008), see www.w3.org" />
+
+  <title>Lemonldap::NG documentation:
+  4.9-Several-independant-portals.html</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+  <style type="text/css">
+/*<![CDATA[*/
+    body{
+      background: #ddd;
+      font-family: sans-serif;
+      font-size: 11pt;
+      padding: 0 50px;
+    }
+    div.main-content{
+      padding: 10px;
+      background: #fff;
+      border: 2px #ccc solid;
+    }
+    a{
+      text-decoration: none;
+    }
+    p.footer{
+      text-align: center;
+      margin: 5px 0 0 0;
+    }
+    .heading-1{
+      text-align: center;
+      color: orange;
+      font-variant: small-caps;
+      font-size: 20pt;
+    }
+    .heading-1-1{
+      color: orange;
+      font-size: 14pt;
+      border-bottom: 2px #ccc solid;
+    }
+    pre{
+      background: #eee;
+      border: 2px #ccc solid;
+      padding: 5px;
+      border-left: 10px #ccc solid;
+    }
+    ul.star li{
+      list-style-type: square;
+    }
+  /*]]>*/
+  </style>
+</head>
+
+<body>
+  <div class="main-content">
+    <h2 class="heading-1"><span id=
+    "HManagementofseveralindependantportals">Management of several independant
+    portals</span></h2>
+
+    <p class="paragraph"></p>
+
+    <ul>
+      <li><a href="#HPresentation">Presentation</a></li>
+
+      <li><a href="#HConditionnalportalinHandler">Conditionnal portal in
+      Handler</a></li>
+
+      <li><a href="#HConditionnalportalanddomaininPortal">Conditionnal portal
+      and domain in Portal</a></li>
+
+      <li><a href="#HApacheconfiguration">Apache configuration</a></li>
+
+      <li><a href="#HPortalcustomization">Portal customization</a></li>
+    </ul>
+
+    <h3 class="heading-1-1"><span id="HPresentation">Presentation</span></h3>
+
+    <p class="paragraph"></p>The problem here is to host several portals with
+    no link between them. This is the case if you propose hosting services for
+    several customers.
+
+    <p class="paragraph"></p>For example, we will configure LemonLDAP::NG to
+    manage acme1.com and acme2.com. Each domain will have its own portal and
+    its own protected applications.
+
+    <p class="paragraph"></p>Of course, we can do that easily with 2
+    differents Apache instance (on two different servers, or on different
+    ports on the same server), but to manage it in one Apache instance, it
+    requires some customization. Indeed, LemonLDAP::NG is build to redirect
+    all unauthenticated request to one unique portal.
+
+    <p class="paragraph"></p>So we will now configure the WebSSO with two
+    domains (acme1.com and acme2.com), with their own portals (auth.acme1.com
+    and auth.acme2.com), and their own applications (test.acme1.com and
+    test.acme2.com).
+
+    <h3 class="heading-1-1"><span id=
+    "HConditionnalportalinHandler">Conditionnal portal in Handler</span></h3>
+
+    <p class="paragraph"></p>Just override the portal value in Handler package
+    init method. Edit handler/MyHandler.pm:
+
+    <p class="paragraph"></p>
+
+    <div class="code">
+      <pre>
+<b class="bold">PACKAGE</b>-&gt;init(
+    {
+        # Dynamic portal
+        portal =&gt; '($vhost =~ /acme2.com/) ? <span class=
+"java-quote">"http://auth.acme2.com"</span> : <span class=
+"java-quote">"http://auth.acme1.com"</span>',
+    });
+</pre>
+    </div>
+
+    <p class="paragraph"></p><strong class="strong">Note</strong>: $vhost will
+    be replaced by $apacheRequest-&gt;hostname for each HTTP request.
+
+    <h3 class="heading-1-1"><span id=
+    "HConditionnalportalanddomaininPortal">Conditionnal portal and domain in
+    Portal</span></h3>
+
+    <p class="paragraph"></p>AS for the Handler, just use perl code to set
+    portal and domain values. Edit portal/index.pl:
+
+    <p class="paragraph"></p>
+
+    <div class="code">
+      <pre>
+my $portal = Lemonldap::NG::Portal::SharedConf-&gt;<span class=
+"java-keyword">new</span>(
+    {
+        # Manage different portals and domains
+        portal =&gt; <span class=
+"java-quote">"http://"</span>.$ENV{HTTP_HOST}.<span class=
+"java-quote">"/"</span>,
+        domain =&gt; ($ENV{HTTP_HOST} =~ /^.*?.(.*)$/)[0],
+    });
+</pre>
+    </div>
+
+    <p class="paragraph"></p>You have to edit portal/error.pl too:
+
+    <div class="code">
+      <pre>
+my $portal_url  = <span class=
+"java-quote">"http://"</span>.$ENV{HTTP_HOST}.<span class=
+"java-quote">"/"</span>;
+</pre>
+    </div><br />
+    <br />
+    <strong class="strong">Note</strong>: we just use here the value of
+    environment variable HTTP_HOST.
+
+    <h3 class="heading-1-1"><span id="HApacheconfiguration">Apache
+    configuration</span></h3><br />
+    <br />
+    You will have to configure 2 wirtual hosts for the portals, and set a
+    specific ErrorDocument for protected applications. Do this in
+    etc/apache2.conf:<br />
+    <br />
+
+    <div class="code">
+      <pre>
+# Portals
+&lt;VirtualHost *&gt;
+        ServerName auth.acme1.com<br /><br />        DocumentRoot /usr/local/lemonldap-ng/htdocs/portal/
+        DirectoryIndex index.pl<br /><br />        &lt;Location /status&gt;
+                PerlHeaderParserHandler My::Package-&gt;status
+        &lt;/Location&gt;<br /><br />        &lt;Directory /usr/local/lemonldap-ng/htdocs/portal/&gt;
+                Options +ExecCGI
+                Order deny,allow
+                Allow from all
+        &lt;/Directory&gt;<br /><br />        LogLevel warn
+        ErrorLog /<span class=
+"java-keyword">var</span>/log/httpd/acme1-error.log
+        CustomLog /<span class=
+"java-keyword">var</span>/log/httpd/acme1-access.log combined
+&lt;/VirtualHost&gt;<br /><br />&lt;VirtualHost *&gt;
+        ServerName auth.acme2.com<br /><br />        DocumentRoot /usr/local/lemonldap-ng/htdocs/portal/
+        DirectoryIndex index.pl<br /><br />        &lt;Location /status&gt;
+                PerlHeaderParserHandler My::Package-&gt;status
+        &lt;/Location&gt;<br /><br />        &lt;Directory /usr/local/lemonldap-ng/htdocs/portal/&gt;
+                Options +ExecCGI
+                Order deny,allow
+                Allow from all
+        &lt;/Directory&gt;<br /><br />        LogLevel warn
+        ErrorLog /<span class=
+"java-keyword">var</span>/log/httpd/acme2-error.log
+        CustomLog /<span class=
+"java-keyword">var</span>/log/httpd/acme2-access.log combined
+&lt;/VirtualHost&gt;<br /><br /># Applications
+&lt;VirtualHost *&gt;
+        ServerName test.acme1.com<br /><br />        ErrorDocument 403 <span class="nobr"><a href="http://auth.acme1.com/error.pl">http://auth.acme1.com/error.pl</a></span><br /><br />        DocumentRoot /usr/local/lemonldap-ng/htdocs/test/
+        DirectoryIndex index.pl<br /><br />        PerlHeaderParserHandler My::Package<br /><br />        &lt;Location /refresh&gt;
+                PerlHeaderParserHandler My::Package-&gt;refresh
+        &lt;/Location&gt;<br /><br />        &lt;Directory /usr/local/lemonldap-ng/htdocs/test/&gt;
+                Options +ExecCGI
+                Order deny,allow
+                Allow from all
+        &lt;/Directory&gt;<br /><br />        LogLevel warn
+        ErrorLog /<span class=
+"java-keyword">var</span>/log/httpd/test-acme1-error.log
+        CustomLog /<span class=
+"java-keyword">var</span>/log/httpd/test-acme1-access.log combined
+&lt;/VirtualHost&gt;<br /><br />&lt;VirtualHost *&gt;
+        ServerName test.acme2.com<br /><br />        ErrorDocument 403 <span class="nobr"><a href="http://auth.acme2.com/error.pl">http://auth.acme2.com/error.pl</a></span><br /><br />        DocumentRoot /usr/local/lemonldap-ng/htdocs/test/
+        DirectoryIndex index.pl<br /><br />        PerlHeaderParserHandler My::Package<br /><br />        &lt;Location /refresh&gt;
+                PerlHeaderParserHandler My::Package-&gt;refresh
+        &lt;/Location&gt;<br /><br />        &lt;Directory /usr/local/lemonldap-ng/htdocs/test/&gt;
+                Options +ExecCGI
+                Order deny,allow
+                Allow from all
+        &lt;/Directory&gt;<br /><br />        LogLevel warn
+        ErrorLog /<span class=
+"java-keyword">var</span>/log/httpd/test-acme2-error.log
+        CustomLog /<span class=
+"java-keyword">var</span>/log/httpd/test-acme2-access.log combined
+&lt;/VirtualHost&gt;
+</pre>
+    </div>
+
+    <h3 class="heading-1-1"><span id="HPortalcustomization">Portal
+    customization</span></h3>
+
+    <p class="paragraph"></p>LemonLDAP::NG is configured to manage the 2
+    domains, but not to display different skins and application menu. This is
+    the last step.
+
+    <p class="paragraph"></p>First create 2 skins in portal/skins/ directory:
+
+    <ul class="star">
+      <li>acme1/</li>
+
+      <li>acme2/</li>
+    </ul>Please refer to <span class="wikilink"><a href=
+    "4.2-HTML-templates-customization.html">this page</a></span> for more
+    information.
+
+    <p class="paragraph"></p>Then create 2 XML application list in etc/:
+
+    <ul class="star">
+      <li>acme1.xml:</li>
+    </ul>
+
+    <div class="code">
+      <pre>
+&lt;?xml version=<span class="java-quote">"1.0"</span> encoding=<span class=
+"java-quote">"utf-8"</span> standalone=<span class=
+"java-quote">"no"</span>?&gt;
+&lt;!DOCTYPE menu SYSTEM <span class="java-quote">"apps-list.dtd"</span>&gt;
+&lt;menu&gt;
+    &lt;category name=<span class="java-quote">"Business"</span>&gt;
+        &lt;application id=<span class="java-quote">"test"</span>&gt;
+                &lt;name&gt;TEST&lt;/name&gt;
+                &lt;uri&gt;<span class="nobr"><a href=
+"http://test.acme1.com&amp;#60;/uri&amp;#62;">http://test.acme1.com&lt;/uri&gt;</a></span>
+                &lt;description&gt;TET description&lt;/description&gt;
+                &lt;logo&gt;test-logo.png&lt;/logo&gt;
+                &lt;display&gt;auto&lt;/display&gt;
+        &lt;/application&gt;
+    &lt;/category&gt;
+&lt;/menu&gt;
+</pre>
+    </div>
+
+    <ul class="star">
+      <li>acme2.xml:</li>
+    </ul>
+
+    <div class="code">
+      <pre>
+&lt;?xml version=<span class="java-quote">"1.0"</span> encoding=<span class=
+"java-quote">"utf-8"</span> standalone=<span class=
+"java-quote">"no"</span>?&gt;
+&lt;!DOCTYPE menu SYSTEM <span class="java-quote">"apps-list.dtd"</span>&gt;
+&lt;menu&gt;
+    &lt;category name=<span class="java-quote">"Business"</span>&gt;
+        &lt;application id=<span class="java-quote">"test"</span>&gt;
+                &lt;name&gt;TEST&lt;/name&gt;
+                &lt;uri&gt;<span class="nobr"><a href=
+"http://test.acme2.com&amp;#60;/uri&amp;#62;">http://test.acme2.com&lt;/uri&gt;</a></span>
+                &lt;description&gt;TET description&lt;/description&gt;
+                &lt;logo&gt;test-logo.png&lt;/logo&gt;
+                &lt;display&gt;auto&lt;/display&gt;
+        &lt;/application&gt;
+    &lt;/category&gt;
+&lt;/menu&gt;
+</pre>
+    </div>
+
+    <p class="paragraph"></p>Please refer to <span class="wikilink"><a href=
+    "4.2-Configure-portal-menu.html">this page</a></span> for more
+    information.
+
+    <p class="paragraph"></p>Now hack a bit the portal script to select skin
+    and menu depending on the called host, in portal/index.pl:
+
+    <p class="paragraph"></p>
+
+    <div class="code">
+      <pre>
+my $skin        = <span class="java-quote">"pastel"</span>;
+my $skin_dir    = <span class=
+"java-quote">"/usr/local/lemonldap-ng/htdocs/portal/skins"</span>;
+my $appsxmlfile = <span class=
+"java-quote">"/usr/local/lemonldap-ng/etc/apps-list.xml"</span>;
+my $appsimgpath = <span class=
+"java-quote">"apps/"</span>;<br /><br /><span class=
+"java-keyword">if</span> ( $ENV{HTTP_HOST} =~ /acme1.com/) {
+        $skin = <span class="java-quote">"acme1"</span>;
+        $appsxmlfile = <span class=
+"java-quote">"/usr/local/lemonldap-ng/etc/acme1.xml"</span>;
+}
+<span class="java-keyword">if</span> ( $ENV{HTTP_HOST} =~ /acme2.com/) {
+        $skin = <span class="java-quote">"acme2"</span>;
+        $appsxmlfile = <span class=
+"java-quote">"/usr/local/lemonldap-ng/etc/acme2.xml"</span>;
+}
+</pre>
+    </div>
+
+    <p class="paragraph"></p>Do the same (just for skin) for portal/error.pl:
+
+    <p class="paragraph"></p>
+
+    <div class="code">
+      <pre>
+my $skin        = <span class="java-quote">"pastel"</span>;
+my $skin_dir    = <span class=
+"java-quote">"/usr/local/lemonldap-ng/htdocs/portal/skins"</span>;<br /><br /><span class="java-keyword">if</span> ( $ENV{HTTP_HOST} =~ /acme1.com/) {
+        $skin = <span class="java-quote">"acme1"</span>;
+}
+<span class="java-keyword">if</span> ( $ENV{HTTP_HOST} =~ /acme2.com/) {
+        $skin = <span class="java-quote">"acme2"</span>;
+}
+</pre>
+    </div>
+
+    <p class="paragraph"></p>It is finished! Just restart Apache and test your
+    installation.
+  </div>
+
+  <p class="footer"><a href="index.html">Index</a></p>
+</body>
+</html>

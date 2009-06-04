@@ -1,0 +1,581 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Linux/x86 (vers 7 December 2008), see www.w3.org" />
+
+  <title>Lemonldap::NG documentation:
+  4.5-Liberty-Alliance-authentication-backend-fr.html</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+  <style type="text/css">
+/*<![CDATA[*/
+    body{
+      background: #ddd;
+      font-family: sans-serif;
+      font-size: 11pt;
+      padding: 0 50px;
+    }
+    div.main-content{
+      padding: 10px;
+      background: #fff;
+      border: 2px #ccc solid;
+    }
+    a{
+      text-decoration: none;
+    }
+    p.footer{
+      text-align: center;
+      margin: 5px 0 0 0;
+    }
+    .heading-1{
+      text-align: center;
+      color: orange;
+      font-variant: small-caps;
+      font-size: 20pt;
+    }
+    .heading-1-1{
+      color: orange;
+      font-size: 14pt;
+      border-bottom: 2px #ccc solid;
+    }
+    pre{
+      background: #eee;
+      border: 2px #ccc solid;
+      padding: 5px;
+      border-left: 10px #ccc solid;
+    }
+    ul.star li{
+      list-style-type: square;
+    }
+  /*]]>*/
+  </style>
+</head>
+
+<body>
+  <div class="main-content">
+    <h2 class="heading-1"><span id="HUtilisationdeLibertyAlliance">Utilisation
+    de Liberty Alliance</span></h2>
+
+    <p class="paragraph"></p>
+
+    <ul>
+      <li>
+        <a href="#HPrC3A9requis">Pr&eacute;-requis</a>
+
+        <ul>
+          <li><a href="#HVersiondeLemonLDAP3A3ANG">Version de
+          LemonLDAP::NG</a></li>
+
+          <li><a href="#HLasso">Lasso</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <a href="#HPrC3A9sentation">Pr&eacute;sentation</a>
+
+        <ul>
+          <li><a href="#HLibertyAlliance">Liberty Alliance</a></li>
+
+          <li><a href="#HLeprojetFederID">Le projet FederID</a></li>
+
+          <li><a href=
+          "#HFonctionnementdeLemonLDAP3A3ANGavecLibertyAlliance">Fonctionnement
+          de LemonLDAP::NG avec Liberty Alliance</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <a href="#HInstallationetparamC3A9trage">Installation et
+        param&eacute;trage</a>
+
+        <ul>
+          <li><a href="#HConsidC3A9rations">Consid&eacute;rations</a></li>
+
+          <li><a href="#HFournisseurd27identitC3A9">Fournisseur
+          d'identit&eacute;</a></li>
+
+          <li><a href="#HComposantsLemonLDAP3A3ANG">Composants
+          LemonLDAP::NG</a></li>
+
+          <li>
+            <a href="#HPortailLibertyAlliance">Portail Liberty Alliance</a>
+
+            <ul>
+              <li><a href=
+              "#HInstallationdesfichiersspC3A9cifiques">Installation des
+              fichiers sp&eacute;cifiques</a></li>
+
+              <li><a href="#HCrC3A9ationdesmetadataduSP">Cr&eacute;ation des
+              metadata du SP</a></li>
+
+              <li><a href=
+              "#HEnregistrementdeLemonLDAP3A3ANGsurlefournisseurd27identitC3A9s">
+              Enregistrement de LemonLDAP::NG sur le fournisseur
+              d'identit&eacute;s</a></li>
+
+              <li><a href=
+              "#HEnregistrementdufournisseurd27identitC3A9ssurLemonLDAP3A3ANG">
+              Enregistrement du fournisseur d'identit&eacute;s sur
+              LemonLDAP::NG</a></li>
+
+              <li><a href="#HParamC3A9trageduportail">Param&eacute;trage du
+              portail</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+
+      <li><a href="#HDC3A9monstration">D&eacute;monstration</a></li>
+    </ul>
+
+    <h3 class="heading-1-1"><span id=
+    "HPrC3A9requis">Pr&eacute;-requis</span></h3>
+
+    <h4 class="heading-1-1-1"><span id="HVersiondeLemonLDAP3A3ANG">Version de
+    LemonLDAP::NG</span></h4>
+
+    <p class="paragraph"></p>Le support Liberty Alliance est inclus &agrave;
+    LemonLDAP::NG depuis la version 0.9.
+
+    <h4 class="heading-1-1-1"><span id="HLasso">Lasso</span></h4><br />
+    <br />
+    Pour fonctionner, il faut que le binding Perl de la biblioth&egrave;que
+    lasso soit install&eacute; sur le serveur.<br />
+    <br />
+    Le t&eacute;l&eacute;chargement peut se faire sur la page du projet
+    (<span class="nobr"><a href=
+    "http://lasso.entrouvert.org/download/">http://lasso.entrouvert.org/download/</a></span>).<br />
+
+    <br />
+    Sous Debian, si les d&eacute;p&ocirc;ts sont activ&eacute;s,
+    l'installation se fait par la commande suivante :<br />
+    <br />
+
+    <div class="code">
+      <pre>
+# apt-get install liblasso-perl
+</pre>
+    </div>
+
+    <h3 class="heading-1-1"><span id=
+    "HPrC3A9sentation">Pr&eacute;sentation</span></h3>
+
+    <h4 class="heading-1-1-1"><span id="HLibertyAlliance">Liberty
+    Alliance</span></h4><br />
+    <br />
+    <img src="liberty_alliance_logo_jpeg.jpg" alt=
+    "liberty_alliance_logo_jpeg.jpg" /><br />
+    <br />
+    Cette norme permet de f&eacute;d&eacute;rer des identit&eacute;s issues de
+    r&eacute;f&eacute;rentiels diff&eacute;rents (par exemple un annuaire, une
+    base de donn&eacute;es, etc.). Ces donn&eacute;es ne sont pas
+    synchronis&eacute;es mais l'utilisateur qui acc&egrave;de &agrave; des
+    services utilisant ces identit&eacute;s (un site d'achat en ligne par
+    exemple) pourra f&eacute;d&eacute;rer son identit&eacute; principale avec
+    l'identit&eacute; utilis&eacute;e par ce service. Ainsi il pourra
+    acc&eacute;der de mani&egrave;re transparente &agrave; plusieurs
+    applications utilisant plusieurs identit&eacute;s, sans avoir &agrave; se
+    r&eacute;authentifier.<br />
+    <br />
+    Voir aussi :
+
+    <ul class="star">
+      <li><span class="nobr"><a href=
+      "http://fr.wikipedia.org/wiki/Liberty_Alliance">http://fr.wikipedia.org/wiki/Liberty_Alliance</a></span></li>
+
+      <li><span class="nobr"><a href=
+      "http://www.projectliberty.org/">http://www.projectliberty.org/</a></span></li>
+
+      <li><span class="nobr"><a href=
+      "http://www.entrouvert.com/fr/identite-numerique/liberty-alliance">http://www.entrouvert.com/fr/identite-numerique/liberty-alliance</a></span></li>
+    </ul>
+
+    <h4 class="heading-1-1-1"><span id="HLeprojetFederID">Le projet
+    FederID</span></h4><br />
+    <br />
+    <img src="bouton_federid.png" alt="bouton_federid.png" /><br />
+    <br />
+    Le projet <span class="wikiexternallink"><a href=
+    "http://www.federid.org">FederID</a></span> vise &agrave; offrir une
+    v&eacute;ritable solution de f&eacute;d&eacute;ration et de gestion des
+    identit&eacute;s enti&egrave;rement bas&eacute;e sur des logiciels libres.
+    Les briques utilis&eacute;es sont :
+
+    <ul class="star">
+      <li><span class="wikiexternallink"><a href=
+      "http://www.entrouvert.com/fr/identite-numerique/lasso">lasso</a></span>
+      : biblioth&egrave;que C g&eacute;rant les &eacute;changes Liberty
+      Alliance et SAML 2.0.</li>
+
+      <li><span class="wikiexternallink"><a href=
+      "http://www.entrouvert.com/fr/identite-numerique/authentic">Authentic</a></span>
+      : fournisseur d'identit&eacute;.</li>
+
+      <li><span class="wikiexternallink"><a href=
+      "http://www.interldap.org">InterLDAP</a></span> : gestion de contenu
+      LDAP (WUI) et partage d'attributs sur un cercle Liberty Alliance
+      (LAAP).</li>
+
+      <li><span class="wikiexternallink"><a href=
+      "http://wiki.lemonldap.objectweb.org1-Overview-fr.html">LemonLDAP::NG</a></span>
+      : WebSSO et gestion centralis&eacute;e des autorisations.</li>
+    </ul>
+
+    <h4 class="heading-1-1-1"><span id=
+    "HFonctionnementdeLemonLDAP3A3ANGavecLibertyAlliance">Fonctionnement de
+    LemonLDAP::NG avec Liberty Alliance</span></h4><br />
+    <br />
+    LemonLDAP::NG est utilis&eacute; comme fournisseur de service (Service
+    Provider). Il va alors faire appel &agrave; un fournisseur
+    d'identit&eacute; pour d&eacute;l&eacute;guer l'authentification de
+    l'utilisateur. L'identit&eacute; locale est associ&eacute;e
+    automatiquement &agrave; l'identit&eacute; principale par un attribut
+    fournit par le fournisseur d'identit&eacute; dans son assertion : la
+    f&eacute;d&eacute;ration des comptes est donc automatique !<br />
+    <br />
+    L'avantage est qu'une fois l'utilisateur authentifi&eacute; sur le
+    fournisseur d'identit&eacute;s, il est entr&eacute; dans le cercle de
+    confiance et peut donc acc&eacute;der &agrave; tous les services, dont le
+    portail LemonLDAP::NG. Ainsi les applications prot&eacute;g&eacute;es par
+    LemonLDAP::NG deviennent aussi en quelque sorte des fournisseurs de
+    services dans le cercle Liberty Alliance, sans besoin
+    d'impl&eacute;mentation des protocoles Liberty Alliance !<br />
+    <br />
+    <img src=
+    "/xwiki/bin/download/NG/DocLA/DIA-ANR-1883-Fonctionnement_LemonLDAP%3A%3ANG_LA-1.png"
+    alt="DIA-ANR-1883-Fonctionnement_LemonLDAP::NG_LA-1.png" />
+
+    <ol>
+      <li>L'utilisateur se connecte &agrave; une ressource
+      prot&eacute;g&eacute;e</li>
+
+      <li>La requ&ecirc;te est intercept&eacute;e par l'agent (handler)
+      LemonLDAP::NG. L'utilisateur n'a pas encore de session SSO ouverte, il
+      est redirig&eacute; sur le portail WebSSO.</li>
+
+      <li>Le portail LemonLDAP est configur&eacute; avec le module
+      d'authentification Liberty Alliance, il re&ccedil;oit la requ&ecirc;te
+      de l'utilisateur. Celui-ci peut choisir de s'identifier localement ou
+      d'utiliser Liberty Alliance : si plusieurs fournisseurs
+      d'identit&eacute;s sont r&eacute;f&eacute;renc&eacute;s, une liste
+      permet &agrave; l'utilisateur de s&eacute;lectionner le sien. Si un seul
+      fournisseur est pr&eacute;sent, il est automatiquement
+      s&eacute;lectionn&eacute;.</li>
+
+      <li>L'utilisateur est redirig&eacute; vers le fournisseur
+      d'identit&eacute;s s&eacute;lectionn&eacute;.</li>
+
+      <li>Le fournisseur re&ccedil;oit la requ&ecirc;te et pr&eacute;sente un
+      formulaire.</li>
+
+      <li>L'utilisateur renseigne son identifiant et son mot de passe et
+      soumet le formulaire.</li>
+
+      <li>L'authentification est effectu&eacute;e sur l'annuaire.</li>
+
+      <li>Quand l'authentification est valid&eacute;e, le NameIdentifier est
+      transmis &agrave; l'utilisateur dans une requ&ecirc;te de redirection
+      vers l'adresse Assertion Consumer du portail SSO.</li>
+
+      <li>L'assertion est re&ccedil;ue par le portail avec le
+      NameIdentifier.</li>
+
+      <li>Un filtre est appliqu&eacute; sur l'annuaire pour retrouver les
+      informations de l'utilisateur (DN et habilitations) &agrave; partir du
+      NameIdentifier, qui a &eacute;t&eacute; inject&eacute; au
+      pr&eacute;alable dans l'annuaire.</li>
+
+      <li>Ces informations sont stock&eacute;es en session (MySQL, ...).</li>
+
+      <li>L'utilisateur est redirig&eacute; vers l'adresse initiale de la
+      ressource prot&eacute;g&eacute;e.</li>
+
+      <li>L'agent d&eacute;tecte le cookie contenant l'identifiant de
+      session.</li>
+
+      <li>L'habilitation d'acc&egrave;s est v&eacute;rifi&eacute;e dans la
+      session.</li>
+
+      <li>Les requ&ecirc;tes parviennent &agrave; la ressource
+      prot&eacute;g&eacute;e.</li>
+    </ol>
+
+    <h3 class="heading-1-1"><span id=
+    "HInstallationetparamC3A9trage">Installation et
+    param&eacute;trage</span></h3>
+
+    <h4 class="heading-1-1-1"><span id=
+    "HConsidC3A9rations">Consid&eacute;rations</span></h4><br />
+    <br />
+    Tous les composants sont accessibles par leur nom DNS, consid&eacute;rons
+    donc les noms suivants :
+
+    <ul class="star">
+      <li>Fournisseur d'identit&eacute; : <span class="nobr"><a href=
+      "http://authentic.mydomain.com">http://authentic.mydomain.com</a></span></li>
+
+      <li>Application prot&eacute;g&eacute;e : <span class="nobr"><a href=
+      "http://appli.mydomain.com">http://appli.mydomain.com</a></span></li>
+
+      <li>Portail Websso : <span class="nobr"><a href=
+      "http://websso.mydomain.com">http://websso.mydomain.com</a></span></li>
+    </ul>
+
+    <h4 class="heading-1-1-1"><span id=
+    "HFournisseurd27identitC3A9">Fournisseur
+    d'identit&eacute;</span></h4><br />
+    <br />
+    Pour que l'architecture fonctionne, il faut disposer d'un serveur
+    d'identit&eacute; Liberty Alliance. Si aucun n'est d&eacute;j&agrave;
+    install&eacute;, il faut alors le faire, avec par exemple le produit
+    <span class="wikiexternallink"><a href=
+    "http://authentic.labs.libre-entreprise.org/">Authentic</a></span>.<br />
+    <br />
+    Toute la documentation d'installation se trouve ici : <span class=
+    "nobr"><a href=
+    "http://authentic.labs.libre-entreprise.org/doc/fr/authentic-admin.html">http://authentic.labs.libre-entreprise.org/doc/fr/authentic-admin.html</a></span>
+
+    <h4 class="heading-1-1-1"><span id="HComposantsLemonLDAP3A3ANG">Composants
+    LemonLDAP::NG</span></h4><br />
+    <br />
+    Tous les composants de LemonLDAP::NG doivent &ecirc;tre install&eacute;s
+    normalement, et une configuration correcte doit &ecirc;tre activ&eacute;e.
+
+    <h4 class="heading-1-1-1"><span id="HPortailLibertyAlliance">Portail
+    Liberty Alliance</span></h4><br />
+    <br />
+    Le seul composant &agrave; adapter est le portail, les autres (handler et
+    manager) fonctionnent sans configuration suppl&eacute;mentaire.
+
+    <h5 class="heading-1-1-1-1"><span id=
+    "HInstallationdesfichiersspC3A9cifiques">Installation des fichiers
+    sp&eacute;cifiques</span></h5><br />
+    <br />
+    Les &eacute;l&eacute;ments n&eacute;cessaires au fonctionnement du portail
+    se trouvent dans le r&eacute;pertoire example/AuthLA des sources du module
+    lemonldap-ng-portal :<br />
+    <br />
+
+    <div class="code">
+      <pre>
+# cd lemonldap-ng-X.X.X.X/lemonldap-ng-portal/example/AuthLA
+# ls -la
+</pre>
+    </div><br />
+    <br />
+    Copier ces fichiers dans le r&eacute;pertoire du portail (par exemple
+    /var/www/lemonldap-ng/web/portal) :<br />
+    <br />
+
+    <div class="code">
+      <pre>
+# cp -r * /<span class="java-keyword">var</span>/www/lemonldap-ng/web/portal
+</pre>
+    </div><br />
+    <br />
+    Les fichiers sont les suivants :
+
+    <ul class="star">
+      <li>idps.xml : liste des fournisseurs d'identit&eacute;s</li>
+
+      <li>index.pl : impl&eacute;mentation du portail</li>
+
+      <li>error403.pl : page d'erreur utilisant les fichiers
+      mod&egrave;les</li>
+
+      <li>liberty/ : points d'acc&egrave;s SOAP (liens symboliques vers
+      index.pl)</li>
+
+      <li>ressources/ : metadata Liberty Alliance</li>
+
+      <li>ressources/db/ : scripts SQL de cr&eacute;ation des tables de
+      gestion des identit&eacute;s Liberty Alliance</li>
+
+      <li>tpl/ : fichiers mod&egrave;les (HTML Template)</li>
+
+      <li>tpl/themes : th&egrave;mes CSS</li>
+    </ul>
+
+    <h5 class="heading-1-1-1-1"><span id=
+    "HCrC3A9ationdesmetadataduSP">Cr&eacute;ation des metadata du
+    SP</span></h5><br />
+    <br />
+    Des cl&eacute;s doivent &ecirc;tre g&eacute;n&eacute;r&eacute;es par
+    OpenSSL :<br />
+    <br />
+
+    <div class="code">
+      <pre>
+# openssl genrsa -out lemonsp-key-<span class=
+"java-keyword">private</span>.pem 2048
+# openssl rsa -in lemonsp-key-<span class=
+"java-keyword">private</span>.pem -pubout -out lemonsp-key-<span class=
+"java-keyword">public</span>.pem
+# mv *.pem /<span class=
+"java-keyword">var</span>/www/lemonldap-ng/web/portal/ressources/
+</pre>
+    </div><br />
+    <br />
+    Remplacer &eacute;galement l'adresse DNS indiqu&eacute;e dans le fichier
+    ressources/lemonsp-metadata.xml :<br />
+    <br />
+
+    <div class="code">
+      <pre>
+# sed -i 's/auth.example.com/websso.mydomain.com/' ressources/lemonsp-metadata.xml
+</pre>
+    </div>
+
+    <h5 class="heading-1-1-1-1"><span id=
+    "HEnregistrementdeLemonLDAP3A3ANGsurlefournisseurd27identitC3A9s">Enregistrement
+    de LemonLDAP::NG sur le fournisseur d'identit&eacute;s</span></h5><br />
+    <br />
+    Les fichiers modifi&eacute;s ci-dessus doivent &ecirc;tre
+    int&eacute;gr&eacute;s au fournisseur d'identit&eacute;, comme
+    indiqu&eacute; dans la documentation d'administration d'Authentic :
+    <span class="nobr"><a href=
+    "http://authentic.labs.libre-entreprise.org/doc/fr/authentic-admin.html#head-c79163b64fdd684bf07a048f3a26d9736a4d5207">
+    http://authentic.labs.libre-entreprise.org/doc/fr/authentic-admin.html#head-c79163b64fdd684bf07a048f3a26d9736a4d5207</a></span>
+
+    <h5 class="heading-1-1-1-1"><span id=
+    "HEnregistrementdufournisseurd27identitC3A9ssurLemonLDAP3A3ANG">Enregistrement
+    du fournisseur d'identit&eacute;s sur LemonLDAP::NG</span></h5><br />
+    <br />
+    Les fournisseurs d'identit&eacute;s sont d&eacute;finis dans le fichier
+    idps.xml :<br />
+    <br />
+
+    <div class="code">
+      <pre>
+<span class="xml-tag">&lt;laIdpList&gt;</span>
+        <span class="xml-tag">&lt;idp name=<span class=
+"xml-quote">"Identity Provider 1 : Authentic"</span>&gt;</span>
+                <span class="xml-tag">&lt;url&gt;</span><span class=
+"nobr"><a href=
+"http://authentic.mydomain.com">http://authentic.mydomain.com</a></span><span class="xml-tag">&lt;/url&gt;</span>
+                <span class=
+"xml-tag">&lt;metadata&gt;</span>/path/to/idp1-metadata.xml<span class=
+"xml-tag">&lt;/metadata&gt;</span>
+                <span class=
+"xml-tag">&lt;pubkey&gt;</span>/path/to/idp1-key-public.pem<span class=
+"xml-tag">&lt;/pubkey&gt;</span>
+                <span class=
+"xml-tag">&lt;certificate&gt;</span>/path/to/idp1-key-public.pem<span class=
+"xml-tag">&lt;/certificate&gt;</span>
+        <span class="xml-tag">&lt;/idp&gt;</span>
+<span class="xml-tag">&lt;/laIdpList&gt;</span>
+</pre>
+    </div>
+
+    <p class="paragraph"></p>Le param&egrave;tres sont les suivants :
+
+    <ul class="star">
+      <li>name : nom de l'IdP, qui sera affich&eacute; &agrave;
+      l'utilisateur</li>
+
+      <li>metadata : fichier de metadata de l'IdP</li>
+
+      <li>pubkey : cl&eacute; publique de l'IdP</li>
+
+      <li>certificate : certificat de l'IdP</li>
+    </ul>
+
+    <h5 class="heading-1-1-1-1"><span id=
+    "HParamC3A9trageduportail">Param&eacute;trage du portail</span></h5>
+
+    <p class="paragraph"></p>Toute la configuration sp&eacute;cifique &agrave;
+    Liberty Alliance est situ&eacute;e dans le code Perl du portail :
+
+    <p class="paragraph"></p>
+
+    <div class="code">
+      <pre>
+# Local parameter to set the installation directory
+my $install_dir = <span class="java-quote">"/<span class=
+"java-keyword">var</span>/lib/lemonldap-ng/web/portal"</span>;
+my $var_dir = <span class="java-quote">"/<span class=
+"java-keyword">var</span>/lib/lemonldap-ng/"</span>;<br /><br />my $portal = Lemonldap::NG::Portal::AuthLA-&gt;<span class="java-keyword">new</span>({
+        configStorage =&gt; {
+                type    =&gt; <span class="java-quote">"File"</span> ,
+                dirName =&gt; <span class=
+"java-quote">"$var_dir/config"</span> ,
+        } ,<br /><br />        # Liberty Parameters
+        laSp =&gt; {
+                certificate     =&gt; <span class=
+"java-quote">"$install_dir/ressources/lemonsp-key-<span class=
+"java-keyword">public</span>.pem"</span> ,
+                metadata        =&gt; <span class=
+"java-quote">"$install_dir/ressources/lemonsp-metadata.xml"</span> ,
+                privkey         =&gt; <span class=
+"java-quote">"$install_dir/ressources/lemonsp-key-<span class=
+"java-keyword">private</span>.pem"</span> ,
+                secretkey       =&gt; <span class=
+"java-quote">"$install_dir/ressources/lemonsp-key-<span class=
+"java-keyword">private</span>.pem"</span> ,
+        } ,
+        laIdpsFile =&gt; <span class=
+"java-quote">"$install_dir/idps.xml"</span> ,
+        laStorage =&gt; <span class="java-quote">"File"</span>,
+        laStorageOptions =&gt; {
+                Directory       =&gt; <span class=
+"java-quote">"$var_dir/<span class=
+"java-keyword">var</span>/assertion"</span> ,
+                LockDirectory   =&gt; <span class=
+"java-quote">"$var_dir/<span class="java-keyword">var</span>/lock"</span> ,
+        } ,
+        laDebug =&gt; 1 ,
+        laLdapLoginAttribute =&gt; <span class=
+"java-quote">"uid"</span> ,<br /><br />        # Parameters that permit to access lemonldap::NG::Handler local cache
+        localStorage            =&gt; 'Cache::FileCache' ,
+        localStorageOptions     =&gt; {} ,
+});
+</pre>
+    </div>
+
+    <p class="paragraph"></p>Certains param&egrave;tres sont ceux d'un portail
+    standard LemonLDAP::NG :
+
+    <ul class="star">
+      <li>configStorage : stockage de la configuration
+      g&eacute;n&eacute;rale</li>
+
+      <li>localStorage : stockage du cache local</li>
+
+      <li>localStorageOptions : options de stockage du cache local</li>
+    </ul>La configuration sp&eacute;cifique est effectu&eacute;e dans les
+    param&egrave;tres suivants :
+
+    <ul class="star">
+      <li>$install_dir : r&eacute;pertoire d'installation du portail</li>
+
+      <li>$var_dir : r&eacute;pertoire de stockage des donn&eacute;es</li>
+
+      <li>laSP : metadata et et cl&eacute;s du SP</li>
+
+      <li>laIdpsFile : fichier XML de d&eacute;finition des IdPs</li>
+
+      <li>laStorage : stockage des donn&eacute;es Liberty Alliance</li>
+
+      <li>laStorageOptions : options de stockage des donn&eacute;es Liberty
+      Alliance</li>
+
+      <li>laDebug : activation des traces des fonctions Liberty Alliance</li>
+
+      <li>laLdapLoginAttribute : attribut LDAP contenant le NameIdentifier
+      renvoy&eacute; par l'IdP</li>
+    </ul>
+
+    <h3 class="heading-1-1"><span id=
+    "HDC3A9monstration">D&eacute;monstration</span></h3>
+
+    <p class="paragraph"></p>Une d&eacute;monstration en ligne est disponible
+    depuis le site du projet FederID : <span class="wikiexternallink"><a href=
+    "http://federid.objectweb.org/xwiki/bin/view/Main/Demonstration">http://federid.objectweb.org/xwiki/bin/view/Main/Demonstration</a></span>
+  </div>
+
+  <p class="footer"><a href="index.html">Index</a></p>
+</body>
+</html>

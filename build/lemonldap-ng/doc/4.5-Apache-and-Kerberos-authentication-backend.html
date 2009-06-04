@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Linux/x86 (vers 7 December 2008), see www.w3.org" />
+
+  <title>Lemonldap::NG documentation:
+  4.5-Apache-and-Kerberos-authentication-backend.html</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+  <style type="text/css">
+/*<![CDATA[*/
+    body{
+      background: #ddd;
+      font-family: sans-serif;
+      font-size: 11pt;
+      padding: 0 50px;
+    }
+    div.main-content{
+      padding: 10px;
+      background: #fff;
+      border: 2px #ccc solid;
+    }
+    a{
+      text-decoration: none;
+    }
+    p.footer{
+      text-align: center;
+      margin: 5px 0 0 0;
+    }
+    .heading-1{
+      text-align: center;
+      color: orange;
+      font-variant: small-caps;
+      font-size: 20pt;
+    }
+    .heading-1-1{
+      color: orange;
+      font-size: 14pt;
+      border-bottom: 2px #ccc solid;
+    }
+    pre{
+      background: #eee;
+      border: 2px #ccc solid;
+      padding: 5px;
+      border-left: 10px #ccc solid;
+    }
+    ul.star li{
+      list-style-type: square;
+    }
+  /*]]>*/
+  </style>
+</head>
+
+<body>
+  <div class="main-content">
+    <h2 class="heading-1"><span id="HKerberosauthentication">Kerberos
+    authentication</span></h2>
+
+    <p class="paragraph"></p>
+
+    <ul>
+      <li><a href="#HIntroduction">Introduction</a></li>
+
+      <li><a href="#HApacheKerberosmodule">Apache Kerberos module</a></li>
+
+      <li><a href="#HKerberosclientforLinux">Kerberos client for
+      Linux</a></li>
+
+      <li><a href="#HConnectionbetweenLinuxandActiveDirectory">Connection
+      between Linux and Active Directory</a></li>
+
+      <li><a href="#HConfigurationofLemonLDAP3A3ANGPortal">Configuration of
+      LemonLDAP::NG Portal</a></li>
+
+      <li><a href="#HConfigurationofApachevirtualhost">Configuration of Apache
+      virtual host</a></li>
+
+      <li><a href="#HTimetotest">Time to test</a></li>
+    </ul>
+
+    <h3 class="heading-1-1"><span id="HIntroduction">Introduction</span></h3>
+
+    <p class="paragraph"></p>LemonLDAP::NG can use Kerberos to authenticate
+    users. It has been tested with Active Directory as Kerberos server, but it
+    should work with others.
+
+    <p class="paragraph"></p>In this mode, the authentication is done by
+    Apache, which sets the environment variable "Remote User". This variable
+    is catched by LemonLDAP::NG when configured with "Apache" authentication
+    module.
+
+    <p class="paragraph"></p>The following documentation explains how set
+    Kerberos Authentication with LemonLDAP::NG on Apache2/Linux and Active
+    Directory as Kerberos server.
+
+    <p class="paragraph"></p>We will use:
+
+    <ul class="star">
+      <li><strong class="strong">EXAMPLE.COM</strong>: Kerberos realm</li>
+
+      <li><strong class="strong">HTTP</strong>: Service name</li>
+
+      <li><strong class="strong">auth.example.com</strong>: DNS of the
+      portal</li>
+
+      <li><strong class="strong">ad.example.com</strong>: DNS of Active
+      Directory</li>
+
+      <li><strong class=
+      "strong">cn=ssokerberos,cn=users,dc=example,dc=com</strong>: DN of AD
+      technical account</li>
+
+      <li><strong class="strong">complicatedpassword</strong>: Password of AD
+      technical account</li>
+    </ul>
+
+    <h3 class="heading-1-1"><span id="HApacheKerberosmodule">Apache Kerberos
+    module</span></h3><br />
+    <br />
+    The module can be found here <span class="wikiexternallink"><a href=
+    "http://modauthkerb.sourceforge.net/">http://modauthkerb.sourceforge.net/</a></span>.<br />
+
+    <br />
+    On CentOS/RHEL :<br />
+    <br />
+
+    <div class="code">
+      <pre>
+# yum install mod_auth_kerb
+</pre>
+    </div><br />
+    <br />
+    The module must be loaded by Apache (LoadModule directive).
+
+    <h3 class="heading-1-1"><span id="HKerberosclientforLinux">Kerberos client
+    for Linux</span></h3><br />
+    <br />
+    Edit /etc/krb5.conf:
+
+    <div class="code">
+      <pre>
+[libdefaults]
+ default_realm = EXAMPLE.COM<br /><br />[realms]
+ EXAMPLE.COM = {
+  kdc = ad.example.com
+  admin_server = ad.example.com
+ }<br /><br />[domain_realm]
+ .example.com = EXAMPLE.COM
+ example.com = EXAMPLE.COM
+</pre>
+    </div>
+
+    <h3 class="heading-1-1"><span id=
+    "HConnectionbetweenLinuxandActiveDirectory">Connection between Linux and
+    Active Directory</span></h3>
+
+    <p class="paragraph"></p>You have to run this command on Active Directory:
+
+    <div class="code">
+      <pre>
+c:&gt; ktpass -princ HTTP/auth.example.com@EXAMPLE.COM -mapuser EXAMPLE.COM\ssokerberos -crypto DES-CBC-MD5 -ptype KRB5_NT_PRINCIPAL -mapOp set +DesOnly -pass complicatedpassword -out c:\auth.keytab
+</pre>
+    </div><br />
+    <br />
+    The file auth.keytab should then be copied (with a secure media) to the
+    Linux server (for example in /etc/lemonldap-ng).<br />
+    <br />
+    Then on Linux server:
+
+    <div class="code">
+      <pre>
+$ kinit HTTP/auth.example.com
+$ kvno HTTP/auth.example.com@EXAMPLE.COM
+$ klist -e
+$ kinit -k -t /etc/lemonldap-ng/auth.keytab HTTP/auth.example.com
+</pre>
+    </div>
+
+    <h3 class="heading-1-1"><span id=
+    "HConfigurationofLemonLDAP3A3ANGPortal">Configuration of LemonLDAP::NG
+    Portal</span></h3>
+
+    <p class="paragraph"></p>You just have to edit
+    /var/lib/lemonldap-ng/portal/index.pl:
+
+    <div class="code">
+      <pre>
+# Call Apache authentication module
+authentication =&gt; 'Apache',
+</pre>
+    </div>
+
+    <h3 class="heading-1-1"><span id=
+    "HConfigurationofApachevirtualhost">Configuration of Apache virtual
+    host</span></h3>
+
+    <p class="paragraph"></p>Modify the portal virtual host:
+
+    <div class="code">
+      <pre>
+&lt;VirtualHost *&gt;
+    ServerName auth.example.com<br /><br />    DocumentRoot /<span class=
+"java-keyword">var</span>/lib/lemonldap-ng/portal/
+    &lt;Directory /<span class=
+"java-keyword">var</span>/lib/lemonldap-ng/portal/&gt;
+        Order allow,deny
+        Allow from all
+        Options +ExecCGI
+        &lt;IfModule auth_kerb_module&gt;
+          AuthType Kerberos
+          KrbMethodNegotiate On
+          KrbMethodK5Passwd Off
+          KrbAuthRealms EXAMPLE.COM
+          Krb5KeyTab /etc/lemonldap-ng/auth.keytab
+          KrbVerifyKDC Off
+          KrbServiceName HTTP
+          require valid-user
+        &lt;/IfModule&gt;
+    &lt;/Directory&gt;
+&lt;/VirtualHost&gt;
+</pre>
+    </div>
+
+    <h3 class="heading-1-1"><span id="HTimetotest">Time to test</span></h3>
+
+    <p class="paragraph"></p>Configure <span class="wikiexternallink"><a href=
+    "http://technet.microsoft.com/en-us/library/cc779070.aspx">IE</a></span>
+    or <span class="wikiexternallink"><a href=
+    "http://grolmsnet.de/kerbtut/firefox.html">Firefox</a></span> to trust
+    "http://auth.example.com", and then it should work!
+
+    <p class="paragraph"></p>
+  </div>
+
+  <p class="footer"><a href="index.html">Index</a></p>
+</body>
+</html>

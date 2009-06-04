@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Linux/x86 (vers 7 December 2008), see www.w3.org" />
+
+  <title>Lemonldap::NG documentation:
+  4.3-File-configuration-backend.html</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+  <style type="text/css">
+/*<![CDATA[*/
+    body{
+      background: #ddd;
+      font-family: sans-serif;
+      font-size: 11pt;
+      padding: 0 50px;
+    }
+    div.main-content{
+      padding: 10px;
+      background: #fff;
+      border: 2px #ccc solid;
+    }
+    a{
+      text-decoration: none;
+    }
+    p.footer{
+      text-align: center;
+      margin: 5px 0 0 0;
+    }
+    .heading-1{
+      text-align: center;
+      color: orange;
+      font-variant: small-caps;
+      font-size: 20pt;
+    }
+    .heading-1-1{
+      color: orange;
+      font-size: 14pt;
+      border-bottom: 2px #ccc solid;
+    }
+    pre{
+      background: #eee;
+      border: 2px #ccc solid;
+      padding: 5px;
+      border-left: 10px #ccc solid;
+    }
+    ul.star li{
+      list-style-type: square;
+    }
+  /*]]>*/
+  </style>
+</head>
+
+<body>
+  <div class="main-content">
+    <h2 class="heading-1"><span id="HFileconfigurationbackend">File
+    configuration backend</span></h2>
+
+    <p class="paragraph"></p>
+
+    <ul>
+      <li><a href="#HSystemconfiguration">System configuration</a></li>
+
+      <li><a href="#HLemonLDAP3A3ANGconfiguration">LemonLDAP::NG
+      configuration</a></li>
+    </ul>
+
+    <h3 class="heading-1-1"><span id="HSystemconfiguration">System
+    configuration</span></h3>
+
+    <p class="paragraph"></p>File configuration backend is the default backend
+    of LemonLDAP::NG. It just need on directory where each files is a
+    configuration version.
+
+    <p class="paragraph"></p>This directory must be writeable by the apache
+    system user (www-data for Debian, apache for RHEL).
+
+    <h3 class="heading-1-1"><span id=
+    "HLemonLDAP3A3ANGconfiguration">LemonLDAP::NG configuration</span></h3>
+
+    <p class="paragraph"></p>You can set this directly in <strong class=
+    "strong">storage.conf</strong>:
+
+    <p class="paragraph"></p>
+
+    <div class="code">
+      <pre>
+type = File
+dirName = /<span class="java-keyword">var</span>/lib/lemonldap-ng/conf
+</pre>
+    </div>
+  </div>
+
+  <p class="footer"><a href="index.html">Index</a></p>
+</body>
+</html>
