@@ -58,6 +58,10 @@
     <h2 class="heading-1"><span id="HSOAPSessionbackend">SOAP Session
     backend</span></h2>
 
+    <p class="paragraph"></p>This documentation is available only for version
+    0.9.4 and later. For earlier versions, see the documentation in the source
+    tree.
+
     <p class="paragraph"></p>
 
     <ul>
@@ -140,9 +144,16 @@ Lemonldap::NG::Common::Apache::Session::SOAP
 </pre>
     </div><br />
     <br />
-    No other parameters needed. It will automatically send SOAP request to
-    portal URL, for example <span class="nobr"><a href=
-    "http://auth.example.com/index.pl/sessions">http://auth.example.com/index.pl/sessions</a></span>
+    Set also this Session Storage option:
+
+    <div class="code">
+      <pre>
+proxy =&gt; 'http://auth.example.com/index.pl/sessions'
+</pre>
+    </div><br />
+    <br />
+    No other parameters needed. It will send SOAP request to configured proxy
+    URL.
   </div>
 
   <p class="footer"><a href="index.html">Index</a></p>

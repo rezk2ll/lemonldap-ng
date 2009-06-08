@@ -101,35 +101,57 @@ userDB =&gt; LDAP,
 
     <h3 class="heading-1-1"><span id="HGroups">Groups</span></h3><br />
     <br />
-    You can set the search base of your groups branch. LemonLDAP::NG will find
-    all groups containing the authenticated user as a member. The filter used
-    is:
-
-    <div class="code">
-      <pre>
-(|(member=<span class=
-"java-quote">" . $self-&gt;{dn} . "</span>)(uniqueMember=<span class=
-"java-quote">" . $self-&gt;{dn} . "</span>))
-</pre>
-    </div><br />
+    LemonLDAP::NG can browse the directory and find the groups containing the
+    authenticated user as a member.<br />
     <br />
-    Just set the ldapGroupBase parameter:
+    Parameters are:
+
+    <ul class="star">
+      <li>ldapGroupBase: DN of groups branch (can be the suffix)</li>
+
+      <li>ldapGroupObjectClass: objectClass of the groups</li>
+
+      <li>ldapGroupAttributeName: name of the attribute in the groups storing
+      the link to the user</li>
+
+      <li>ldapGroupAttributeNameUser: name of the attribute in users entries
+      used in the link</li>
+
+      <li>ldapGroupAttributeNameSearch: name(s) of the attribute storing the
+      name of the group (this should be a list reference)</li>
+    </ul>You can edit portal/index.pl to modify the values, for example:
 
     <div class="code">
       <pre>
 ldapGroupBase =&gt; 'ou=groups,dc=example,dc=com',
+ldapGroupObjectClass =&gt; 'groupOfUniqueNames',
+ldapGroupAttributeName =&gt; 'uniqueMember',
+ldapGroupAttributeNameUser =&gt; 'dn',
+ldapGroupAttributeNameSearch =&gt; '[<span class="java-quote">"cn"</span>]',
 </pre>
     </div>
 
     <h3 class="heading-1-1"><span id="HActiveDirectory">Active
-    Directory</span></h3><br />
-    <br />
-    As for LDAP authentication, just modify LDAPfitler:<br />
-    <br />
+    Directory</span></h3>
+
+    <p class="paragraph"></p>As for LDAP authentication, just modify
+    LDAPfitler:
 
     <div class="code">
       <pre>
-LDAPFilter =&gt; '(&amp;(sAMAccountName=$user)(ojectClass=person))',
+LDAPFilter =&gt; '(&amp;(sAMAccountName=$user)(objectClass=user))',
+</pre>
+    </div><br />
+    <br />
+    And for groups:
+
+    <div class="code">
+      <pre>
+ldapGroupBase =&gt; 'ou=groups,dc=example,dc=com',
+ldapGroupObjectClass =&gt; 'group',
+ldapGroupAttributeName =&gt; 'member',
+ldapGroupAttributeNameUser =&gt; 'dn',
+ldapGroupAttributeNameSearch =&gt; '[<span class="java-quote">"cn"</span>]',
 </pre>
     </div>
 
