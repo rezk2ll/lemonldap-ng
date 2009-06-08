@@ -5,6 +5,8 @@ use Lemonldap::NG::Handler::SharedConf qw(:all);
 our @ISA = qw(Lemonldap::NG::Handler::SharedConf);
 use Digest::MD5;
 
+our $VERSION = '0.1';
+
 open S, '/etc/lemonldap-ng/sympa.secret' or die "Unable to open /etc/lemonldap-ng/sympa.secret";
 our $sympaSecret = join('',<S>);
 close S;

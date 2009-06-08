@@ -11,7 +11,7 @@ use Lemonldap::NG::Manager;
 use Lemonldap::NG::Common::Conf::Constants; #inherits
 
 use base qw(Lemonldap::NG::Manager);
-our $VERSION = "0.1";
+our $VERSION = '0.11';
 
 ## @cmethod Lemonldap::NG::Manager::Restricted new(hashref args)
 # Constructor

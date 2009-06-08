@@ -9,6 +9,8 @@ use strict;
 use Lemonldap::NG::Portal::Simple;
 require SOAP::Lite;
 
+our $VERSION = '0.1';
+
 ## @method void startSoapServices()
 # Check the URI requested (PATH_INFO environment variable) and launch the
 # corresponding SOAP methods using soapTest().

@@ -10,7 +10,7 @@ use Lemonldap::NG::Portal::_LDAP 'ldap';    #link protected ldap
 use Lemonldap::NG::Portal::_WebForm;
 use Lemonldap::NG::Portal::UserDBLDAP;      #inherits
 
-our $VERSION = '0.2';
+our $VERSION = '0.3';
 use base qw(Lemonldap::NG::Portal::_WebForm);
 
 *_formateFilter = *Lemonldap::NG::Portal::UserDBLDAP::formateFilter;

@@ -14,7 +14,7 @@ use Lemonldap::NG::Common::Apache::Session;    #inherits
 our $whatToTrace;
 *whatToTrace = \$Lemonldap::NG::Handler::_CGI::whatToTrace;
 
-our $VERSION = '0.1';
+our $VERSION = '0.11';
 
 use base qw(Lemonldap::NG::Handler::CGI);
 

@@ -21,7 +21,7 @@ use Regexp::Assemble;
 
 use constant DEFAULTCONFFILE => "/etc/lemonldap-ng/storage.conf";
 
-our $VERSION = 0.51;
+our $VERSION = 0.6;
 our $msg;
 
 our %_confFiles;

@@ -2,6 +2,8 @@ package Lemonldap::NG::Common::BuildWSDL;
 
 use Lemonldap::NG::Common::Conf;
 
+our $VERSION = '0.1';
+
 sub new {
     my ( $class, $configStorage ) = @_;
     my $self = bless {}, $class;

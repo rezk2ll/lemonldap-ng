@@ -8,7 +8,7 @@ use POSIX;
 use Data::Dumper;
 #inherits Cache::Cache
 
-our $VERSION  = "0.2";
+our $VERSION  = "0.21";
 
 our $status   = {};
 our $activity = [];

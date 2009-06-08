@@ -2,6 +2,8 @@ package Lemonldap::NG::Manager::SOAPServer;
 
 use strict;
 
+our $VERSION = '0.2';
+
 die 'This module is now obsolete. You have to use the portal as "proxy".
 See http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocSOAP';
 __END__

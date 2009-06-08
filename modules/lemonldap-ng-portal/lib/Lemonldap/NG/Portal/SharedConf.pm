@@ -13,7 +13,7 @@ use Lemonldap::NG::Common::Conf; #link protected lmConf Configuration
 *EXPORT_TAGS = *Lemonldap::NG::Portal::Simple::EXPORT_TAGS;
 *EXPORT      = *Lemonldap::NG::Portal::Simple::EXPORT;
 
-our $VERSION = "0.5";
+our $VERSION = '0.6';
 use base qw(Lemonldap::NG::Portal::Simple);
 
 ##################

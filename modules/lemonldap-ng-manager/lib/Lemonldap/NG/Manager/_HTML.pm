@@ -13,7 +13,7 @@ use AutoLoader qw(AUTOLOAD);
 require Lemonldap::NG::Manager::_i18n; #inherits
 use Lemonldap::NG::Common::Conf::Constants; #inherits
 
-our $VERSION = '0.31';
+our $VERSION = '0.32';
 
 # TODO: Delete buttons in headers and rules if 'read-only'
 

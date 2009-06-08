@@ -9,6 +9,8 @@ use strict;
 use Lemonldap::NG::Portal::Simple;
 use MIME::Base64;
 
+our $VERSION = '0.1';
+
 ## @apmethod int init()
 # Checks if remote portal parameters are set.
 # @return Lemonldap::NG::Portal constant

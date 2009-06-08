@@ -9,7 +9,7 @@ use Lemonldap::NG::Handler::Simple qw(:locationRules :headers); #inherits
 use strict;
 use MIME::Base64;
 
-our $VERSION = '0.54';
+our $VERSION = '0.55';
 
 ## @cmethod void locationRulesInit(hashRef args)
 # Compile rules.

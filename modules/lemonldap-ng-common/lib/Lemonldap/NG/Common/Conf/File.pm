@@ -3,7 +3,7 @@ package Lemonldap::NG::Common::Conf::File;
 use strict;
 use Lemonldap::NG::Common::Conf::Constants; #inherits
 
-our $VERSION = 0.22;
+our $VERSION = 0.23;
 
 sub prereq {
     my $self = shift;

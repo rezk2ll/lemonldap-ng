@@ -7,6 +7,8 @@ package Lemonldap::NG::Common::CGI::SOAPService;
 
 require SOAP::Lite;
 
+our $VERSION = '0.2';
+
 ## @cmethod Lemonldap::NG::Common::CGI::SOAPService new(object obj,string @func)
 # Constructor
 # @param $obj object which will be called for SOAP authorizated methods

@@ -8,6 +8,8 @@ package Lemonldap::NG::Portal::AuthSAML;
 use strict;
 use Lemonldap::NG::Portal::Simple;
 
+our $VERSION = '0.1';
+
 ## @apmethod int authInit()
 # TODO
 # Check SAML Consumer configuration.

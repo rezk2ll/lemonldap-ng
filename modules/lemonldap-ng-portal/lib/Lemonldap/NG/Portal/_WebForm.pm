@@ -8,6 +8,8 @@ package Lemonldap::NG::Portal::_WebForm;
 use Lemonldap::NG::Portal::Simple qw(:all);
 use strict;
 
+our $VERSION = '0.2';
+
 ## @apmethod int authInit()
 # Does nothing.
 # @return Lemonldap::NG::Portal constant

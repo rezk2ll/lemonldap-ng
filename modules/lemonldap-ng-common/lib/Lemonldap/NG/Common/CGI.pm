@@ -13,7 +13,7 @@ use CGI;
 
 #parameter syslog Indicates syslog facility for logging user actions
 
-our $VERSION = '0.4';
+our $VERSION = '0.5';
 
 use base qw(CGI);
 

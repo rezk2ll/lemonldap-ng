@@ -2,6 +2,8 @@ package Lemonldap::NG::Portal::UserDBMulti;
 
 use Lemonldap::NG::Portal::_Multi;
 
+our $VERSION = '0.1';
+
 sub userDBInit {
     my $self = shift;
     return $self->_multi->try('userDBInit',1);

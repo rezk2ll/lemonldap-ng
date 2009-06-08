@@ -10,6 +10,9 @@ use strict;
 use Crypt::Rijndael;
 use MIME::Base64;
 use base qw(Crypt::Rijndael);
+
+our $VERSION = '0.1';
+
 our $msg;
 
 ## @cmethod Lemonldap::NG::Common::Crypto new(array param)

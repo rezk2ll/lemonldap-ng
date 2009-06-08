@@ -26,7 +26,7 @@ use MIME::Base64;
 use base qw(Lemonldap::NG::Common::CGI);
 our @ISA;
 
-our $VERSION = '0.88';
+our $VERSION = '0.89';
 
 # Secure jail
 our $safe;

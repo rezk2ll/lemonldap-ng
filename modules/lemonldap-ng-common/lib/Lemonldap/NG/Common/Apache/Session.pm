@@ -10,6 +10,8 @@ package Lemonldap::NG::Common::Apache::Session;
 use strict;
 use Storable qw(thaw);
 
+our $VERSION = 0.2;
+
 BEGIN {
 
     sub Apache::Session::get_key_from_all_sessions {

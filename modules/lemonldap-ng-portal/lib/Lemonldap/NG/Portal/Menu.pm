@@ -20,7 +20,7 @@ use Lemonldap::NG::Portal::PasswordDBLDAP; #inherits
 *_modifyPassword = *Lemonldap::NG::Portal::PasswordDBLDAP::modifyPassword;
 *_passwordDBInit = *Lemonldap::NG::Portal::PasswordDBLDAP::passwordDBInit;
 
-our $VERSION = '0.04';
+our $VERSION = '0.1';
 
 ### ACCESS CONTROL DISPLAY SYSTEM
 

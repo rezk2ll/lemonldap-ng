@@ -10,6 +10,8 @@ use Lemonldap::NG::Portal::_Remote;
 use Lemonldap::NG::Portal::Simple;
 use base qw(Lemonldap::NG::Portal::_Remote);
 
+our $VERSION = '0.1';
+
 ## @apmethod int userDBInit()
 # Call Lemonldap::NG::Portal::_Remote::init();
 # @return Lemonldap::NG::Portal constant

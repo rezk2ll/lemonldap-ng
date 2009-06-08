@@ -37,7 +37,7 @@ use UNIVERSAL qw( isa can VERSION );
 *EXPORT_TAGS = *Lemonldap::NG::Portal::SharedConf::EXPORT_TAGS;
 *EXPORT      = *Lemonldap::NG::Portal::SharedConf::EXPORT;
 
-our $VERSION = '0.32';
+our $VERSION = '0.33';
 use base qw(Lemonldap::NG::Portal::SharedConf);
 
 #===============================================================================

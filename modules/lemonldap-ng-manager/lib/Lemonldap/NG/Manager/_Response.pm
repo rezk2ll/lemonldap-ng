@@ -5,7 +5,7 @@
 # Prepare Lemonldap::NG::Manager response for new configurations
 package Lemonldap::NG::Manager::_Response;
 
-our $VERSION = '0.1';
+our $VERSION = '0.11';
 
 ## @cmethod Lemonldap::NG::Manager::_Response new()
 # Constructor
