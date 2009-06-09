@@ -27,7 +27,7 @@ sub locationRulesInit {
     my ( $class, $args ) = @_;
     foreach my $vhost ( keys %{ $args->{locationRules} } ) {
         $locationCount->{$vhost} = 0;
-        foreach ( keys %{ $args->{locationRules}->{$vhost} } ) {
+        foreach ( sort keys %{ $args->{locationRules}->{$vhost} } ) {
             if ( $_ eq 'default' ) {
                 $defaultCondition->{$vhost} =
                   $class->conditionSub(

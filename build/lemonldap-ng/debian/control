@@ -42,12 +42,11 @@ Package: liblemonldap-ng-conf-perl
 Architecture: all
 Depends: ${misc:Depends}, libdbi-perl, debconf, libcache-cache-perl, libregexp-assemble-perl, libcrypt-rijndael-perl
 Recommends: libsoap-lite-perl
-Description: Lemonldap::NG administration interface part
+Description: Lemonldap::NG common files
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application Apache servers.
  .
- This package installs the configuration libraries used by other Lemonldap::NG
- modules.
+ This package installs common files used by other Lemonldap::NG modules.
 
 Package: liblemonldap-ng-manager-perl
 Architecture: all
