@@ -13,43 +13,14 @@ our $VERSION = '0.2';
 
 use base qw(Lemonldap::NG::Handler::SharedConf);
 
-*EXPORT_TAGS = *Lemonldap::NG::Handler::SharedConf::EXPORT_TAGS;
-*EXPORT_OK   = *Lemonldap::NG::Handler::SharedConf::EXPORT_OK;
-
 ## @rmethod int run(Apache2::RequestRec apacheRequest)
 # overload run subroutine to implement cross-domain mechanism.
 # @param $apacheRequest
 # @return Apache constant
 sub run ($$) {
     my $class;
-    ( $class, $apacheRequest ) = @_;
-    my $args = $apacheRequest->args;
-    if ( $args =~ s/[\?&]?($cookieName=\w+)$//oi ) {
-        my $str = $1;
-        $class->lmLog(
-            "Found a CDA id. Redirecting  "
-              . $apacheRequest->connection->remote_ip
-              . " to myself with new cookie",
-            'debug'
-        );
-        $apacheRequest->args($args);
-        my $host = $apacheRequest->get_server_name();
-        my $portString = $port || $apacheRequest->get_server_port();
-        lmSetErrHeaderOut( $apacheRequest,
-                'Location' => "http"
-              . ( $https ? 's' : '' )
-              . "://$host:$portString"
-              . $apacheRequest->uri
-              . ( $apacheRequest->args ? "?" . $apacheRequest->args : "" ) );
-        $host =~ s/^[^\.]+\.(.*\..*$)/$1/;
-        lmSetErrHeaderOut( $apacheRequest,
-            'Set-Cookie' => "$str; domain=$host; path=/"
-              . ( $https ? "; secure" : "" ) );
-        return REDIRECT;
-    }
-    else {
-        return $class->SUPER::run($apacheRequest);
-    }
+    $cda = 1;
+    return $class->SUPER::run($apacheRequest);
 }
 
 1;
@@ -65,9 +36,10 @@ mechanisms with Cross-Domain-Authentication.
 New usage:
 
   package My::Package;
-  use Lemonldap::NG::Handler::CDA;
-  @ISA = qw(Lemonldap::NG::Handler::CDA);
+  use Lemonldap::NG::Handler;
+  @ISA = qw(Lemonldap::NG::Handler);
   __PACKAGE__->init ( {
+    cda                 => 1,
     localStorage        => "Cache::FileCache",
     localStorageOptions => {
         'namespace' => 'MyNamespace',

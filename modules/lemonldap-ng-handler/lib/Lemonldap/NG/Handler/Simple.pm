@@ -43,6 +43,7 @@ our (
     $whatToTrace,          $https,             $refLocalStorage,
     $safe,                 $port,              $statusPipe,
     $statusOut,            $customFunctions,   $transform,
+    $cda,
 );
 
 ##########################################
@@ -70,6 +71,7 @@ BEGIN {
         traces => [qw( $whatToTrace $statusPipe $statusOut )],
         apache => [qw( MP OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR )],
         post   => [qw($transform)],
+        cda    => ['$cda'],
     );
     push( @EXPORT_OK, @{ $EXPORT_TAGS{$_} } ) foreach ( keys %EXPORT_TAGS );
     $EXPORT_TAGS{all} = \@EXPORT_OK;
@@ -559,6 +561,7 @@ sub defaultValuesInit {
     $cookieName .= 'http' if ( $args->{securedCookie} == 2 and $https == 0 );
     $port = $args->{port} || 0 unless defined($port);
     $customFunctions = $args->{customFunctions};
+    $cda = $args->{cda} || 0;
     1;
 }
 
@@ -861,8 +864,28 @@ sub run ($$) {
     my $class;
     ( $class, $apacheRequest ) = @_;
     return DECLINED unless ( $apacheRequest->is_initial_req );
-    my $uri = $apacheRequest->uri
-      . ( $apacheRequest->args ? "?" . $apacheRequest->args : "" );
+    my $args = $apacheRequest->args;
+
+    # Cross domain authentication
+    if ( $cda and $args =~ s/[\?&]?($cookieName=\w+)$//oi ) {
+        my $str = $1;
+        $class->lmLog( 'CDA request', 'debug' );
+        $apacheRequest->args($args);
+        my $host = $apacheRequest->get_server_name();
+        my $portString = $port || $apacheRequest->get_server_port();
+        lmSetErrHeaderOut( $apacheRequest,
+                'Location' => "http"
+              . ( $https ? 's' : '' )
+              . "://$host:$portString"
+              . $apacheRequest->uri
+              . ( $apacheRequest->args ? "?" . $apacheRequest->args : "" ) );
+        $host =~ s/^[^\.]+\.(.*\..*$)/$1/;
+        lmSetErrHeaderOut( $apacheRequest,
+            'Set-Cookie' => "$str; domain=$host; path=/"
+              . ( $https ? "; secure" : "" ) );
+        return REDIRECT;
+    }
+    my $uri = $apacheRequest->uri . ( $args ? "?$args" : "" );
 
     # AUTHENTICATION
     # I - recover the cookie

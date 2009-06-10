@@ -32,6 +32,11 @@ __PACKAGE__->init(
         # You can also fix the port (for redirections after authentications)
         #port => 80,
 
+        # CROSS-DOMAIN
+        # If your handler is not on the same domain than the portal, uncomment
+        # this (and don't forget to set "cda => 1" in the portal
+        #cda => 1,
+
         # CUSTOM FUNCTION
         # If you want to create customFunctions in rules, declare them here:
         #customFunctions    => 'function1 function2',
