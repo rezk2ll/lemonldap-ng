@@ -181,7 +181,7 @@ sub logout_mp2 : method {
 # @param $level string (debug, info, warning or error)
 sub lmLog {
     my ( $class, $mess, $level ) = @_;
-    die "Level is required" unless($level);
+    die "Level is required" unless ($level);
     if ( MP() == 2 ) {
         Apache2::ServerRec->log->$level($mess);
     }
@@ -559,9 +559,9 @@ sub defaultValuesInit {
     $https = 1 unless defined($https);
     $args->{securedCookie} = 1 unless defined( $args->{securedCookie} );
     $cookieName .= 'http' if ( $args->{securedCookie} == 2 and $https == 0 );
-    $port = $args->{port} || 0 unless defined($port);
+    $port            = $args->{port} || 0 unless defined($port);
     $customFunctions = $args->{customFunctions};
-    $cda = $args->{cda} || 0;
+    $cda             = $args->{cda} || 0 unless defined($cda);
     1;
 }
 
