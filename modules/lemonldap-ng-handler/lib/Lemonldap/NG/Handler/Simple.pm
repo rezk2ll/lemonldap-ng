@@ -473,7 +473,7 @@ sub locationRulesInit {
     $locationCount = 0;
 
     # Pre compilation : both regexp and conditions
-    foreach ( keys sort %{ $args->{locationRules} } ) {
+    foreach ( sort keys %{ $args->{locationRules} } ) {
         if ( $_ eq 'default' ) {
             $defaultCondition =
               $class->conditionSub( $args->{locationRules}->{$_} );

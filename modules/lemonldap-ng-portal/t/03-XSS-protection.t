@@ -7,7 +7,7 @@
 
 package My::Portal;
 use strict;
-use Test::More tests => 15;
+use Test::More tests => 16;
 BEGIN { use_ok( 'Lemonldap::NG::Portal::Simple', ':all' ) }
 
 #use Lemonldap::NG::Portal::Simple;
@@ -25,16 +25,20 @@ my @h = (
     # http://test.example.com
     'aHR0cDovL3Rlc3QuZXhhbXBsZS5jb20v' => PE_OK, 'Missing / in URL',
 
-    # http://t.example.com/test
-    'aHR0cDovL3QuZXhhbXBsZS5jb20vdGVzdA==' => PE_OK,
-    'Undeclared virtual host in protected domain',
-
     # http://test.example.com:8000/test
     'aHR0cDovL3Rlc3QuZXhhbXBsZS5jb206ODAwMC90ZXN0' => PE_OK, 'Non default port',
 
     # http://test.example.com:8000
     'aHR0cDovL3Rlc3QuZXhhbXBsZS5jb206ODAwMA==' => PE_OK,
     'Non default port with missing /',
+
+    # http://t.example2.com/test
+    'aHR0cDovL3QuZXhhbXBsZTIuY29tL3Rlc3Q=' => PE_OK,
+    'Undeclared virtual host in trusted domain',
+
+    # http://t.example.com/test
+    'aHR0cDovL3QuZXhhbXBsZS5jb20vdGVzdA==' => PE_BADURL,
+    'Undeclared virtual host in (untrusted) protected domain',
 
     'http://test.com/' => PE_BADURL, 'Non base64 encoded characters',
 
@@ -88,6 +92,7 @@ ok(
             domain         => 'example.com',
             authentication => 'LDAP test=1',
             domain         => 'example.com',
+            trustedDomains => 'example2.com',
         }
     ),
     'Portal object'
@@ -104,3 +109,4 @@ while ( defined( $url = shift(@h) ) ) {
     #print ($p->controlUrlOrigin() == $result ? "OK" : "NOK");
     #print " $url\n";
 }
+

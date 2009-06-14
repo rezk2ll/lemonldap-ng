@@ -38,6 +38,8 @@ ok(
             globalStorage  => 'Apache::Session::File',
             domain         => 'example.com',
             authentication => 'LDAP test=1',
+	    user           => '',
+	    password       => '',
         }
     ),
     'Portal object'

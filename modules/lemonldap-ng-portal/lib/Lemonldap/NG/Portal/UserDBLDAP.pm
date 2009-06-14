@@ -31,15 +31,17 @@ sub getUser {
 # @return Lemonldap::NG::Portal constant
 sub formateFilter {
     my $self = shift;
-    $self->{LDAPFilter} = $self->{mail} ?
-         $self->{mailLDAPFilter} : 
-         $self->{AuthLDAPFilter}
+    $self->{LDAPFilter} =
+        $self->{mail}
+      ? $self->{mailLDAPFilter}
+      : $self->{AuthLDAPFilter}
       || $self->{LDAPFilter};
-    $self->lmLog( "LDAP submitted filter: ".$self->{LDAPFilter}, 'debug' );
+    $self->lmLog( "LDAP submitted filter: " . $self->{LDAPFilter}, 'debug' )
+      if ( $self->{LDAPFilter} );
     $self->{LDAPFilter} ||= '(&(uid=$user)(objectClass=inetOrgPerson))';
     $self->{LDAPFilter} =~ s/\$(user|_?password|mail)/$self->{$1}/g;
     $self->{LDAPFilter} =~ s/\$(\w+)/$self->{sessionInfo}->{$1}/g;
-    $self->lmLog( "LDAP transformed filter: ".$self->{LDAPFilter}, 'debug' );
+    $self->lmLog( "LDAP transformed filter: " . $self->{LDAPFilter}, 'debug' );
     PE_OK;
 }
 
@@ -56,14 +58,20 @@ sub search {
         scope  => 'sub',
         filter => $self->{LDAPFilter},
     );
-    $self->lmLog( "LDAP Search with base: ".$self->{ldapBase}." and filter: ".$self->{LDAPFilter}, 'debug' );
+    $self->lmLog(
+        "LDAP Search with base: "
+          . $self->{ldapBase}
+          . " and filter: "
+          . $self->{LDAPFilter},
+        'debug'
+    );
     if ( $mesg->code() != 0 ) {
-        $self->lmLog( "LDAP Search error: ".$mesg->error, 'error' );
+        $self->lmLog( "LDAP Search error: " . $mesg->error, 'error' );
         return PE_LDAPERROR;
     }
     unless ( $self->{entry} = $mesg->entry(0) ) {
         $user = $self->{mail} || $self->{user};
-        $self->_sub('userError',"$user was not found in LDAP directory");
+        $self->_sub( 'userError', "$user was not found in LDAP directory" );
         return PE_BADCREDENTIALS;
     }
     $self->{dn} = $self->{entry}->dn();
@@ -110,37 +118,48 @@ sub setGroups {
     my ($self) = @_;
     my $groups = $self->{sessionInfo}->{groups};
 
-    $self->{ldapGroupObjectClass}           ||= "groupOfNames";
-    $self->{ldapGroupAttributeName}         ||= "member";
-    $self->{ldapGroupAttributeNameUser}     ||= "dn";
-    $self->{ldapGroupAttributeNameSearch}   ||= ["cn"];
+    $self->{ldapGroupObjectClass}         ||= "groupOfNames";
+    $self->{ldapGroupAttributeName}       ||= "member";
+    $self->{ldapGroupAttributeNameUser}   ||= "dn";
+    $self->{ldapGroupAttributeNameSearch} ||= ["cn"];
 
-    if ( $self->{ldapGroupBase} && $self->{sessionInfo}->{$self->{ldapGroupAttributeNameUser}} )
+    if (   $self->{ldapGroupBase}
+        && $self->{sessionInfo}->{ $self->{ldapGroupAttributeNameUser} } )
     {
-        my $searchFilter = "(&(objectClass=" . $self->{ldapGroupObjectClass} . ")(|";
-        foreach ( split( /[,;]/, $self->{sessionInfo}->{$self->{ldapGroupAttributeNameUser}} ) )
+        my $searchFilter =
+          "(&(objectClass=" . $self->{ldapGroupObjectClass} . ")(|";
+        foreach (
+            split(
+                /[,;]/,
+                $self->{sessionInfo}->{ $self->{ldapGroupAttributeNameUser} }
+            )
+          )
         {
-            $searchFilter .= "(" . $self->{ldapGroupAttributeName} . "=" . $_ . ")";
+            $searchFilter .=
+              "(" . $self->{ldapGroupAttributeName} . "=" . $_ . ")";
         }
         $searchFilter .= "))";
         my $mesg = $self->{ldap}->search(
-                base => $self->{ldapGroupBase},
-                filter => $searchFilter,
-                attrs => $self->{ldapGroupAttributeNameSearch},
-            );
-        if ( $mesg->code() == 0 )
-        {
-            foreach my $entry ( $mesg->all_entries )
-            {
-                my $nbAttrs = @{$self->{ldapGroupAttributeNameSearch}};
-                for (my $i = 0; $i < $nbAttrs; $i++)
-                {
-                    my @data = $entry->get_value($self->{ldapGroupAttributeNameSearch}[$i]);
-                    if (@data)
-                    {
+            base   => $self->{ldapGroupBase},
+            filter => $searchFilter,
+            attrs  => $self->{ldapGroupAttributeNameSearch},
+        );
+        if ( $mesg->code() == 0 ) {
+            foreach my $entry ( $mesg->all_entries ) {
+                my $nbAttrs = @{ $self->{ldapGroupAttributeNameSearch} };
+                for ( my $i = 0 ; $i < $nbAttrs ; $i++ ) {
+                    my @data =
+                      $entry->get_value(
+                        $self->{ldapGroupAttributeNameSearch}[$i] );
+                    if (@data) {
                         $groups .= $data[0];
                         $groups .= "|"
-                            if ($i+1 < $nbAttrs && $entry->get_value($self->{ldapGroupAttributeNameSearch}[$i+1]));
+                          if (
+                            $i + 1 < $nbAttrs
+                            && $entry->get_value(
+                                $self->{ldapGroupAttributeNameSearch}[ $i + 1 ]
+                            )
+                          );
                     }
                 }
                 $groups .= "; ";

@@ -131,18 +131,20 @@ sub new {
         ( $ENV{REQUEST_METHOD} eq 'POST' and not $self->param('newpassword') )
           or $self->param('logout')
     ) ? 1 : 0;
-    $self->{SMTPServer}           ||= 'localhost';
-    $self->{mailLDAPFilter}       ||= '(&(mail=$mail)(objectClass=inetOrgPerson))';
+    $self->{SMTPServer}     ||= 'localhost';
+    $self->{mailLDAPFilter} ||= '(&(mail=$mail)(objectClass=inetOrgPerson))';
     $self->{randomPasswordRegexp} ||= '[A-Z]{3}[a-z]{5}.\d{2}';
-    $self->{mailFrom}             ||= "noreply@".$domain;
+    $self->{mailFrom}             ||= "noreply@" . $domain;
     $self->{mailSubject}          ||= "Change password request";
     $self->{mailBody}             ||= 'Your new password is $password';
 
     # Authentication and userDB module are required and have to be in @ISA
     foreach (qw(authentication userDB passwordDB)) {
         my $tmp =
-            'Lemonldap::NG::Portal::'
-          . ( $_ eq 'userDB' ? 'UserDB' : (  $_ eq 'passwordDB' ? 'PasswordDB' : 'Auth' ) )
+          'Lemonldap::NG::Portal::'
+          . ( $_ eq 'userDB'
+            ? 'UserDB'
+            : ( $_ eq 'passwordDB' ? 'PasswordDB' : 'Auth' ) )
           . $self->{$_};
         $tmp =~ s/\s.*$//;
         eval "require $tmp";
@@ -195,6 +197,13 @@ sub new {
         require Lemonldap::NG::Portal::_SOAP;
         push @ISA, 'Lemonldap::NG::Portal::_SOAP';
         $self->startSoapServices();
+    }
+    unless ( defined( $self->{trustedDomains} ) ) {
+        $self->{trustedDomains} = $self->{domain};
+    }
+    if ( $self->{trustedDomains} ) {
+        $self->{trustedDomains} = '|(?:[^/]*)?' . join '|',
+          map { s/\./\\\./g; $_ } split /\s+/, $self->{trustedDomains};
     }
     return $self;
 }
@@ -447,8 +456,11 @@ sub get_url {
 sub get_user {
     my $self = shift;
     return "" unless $self->{user};
-    return $self->{user} unless ( $self->{user} =~ m/(?:\0|<|'|"|`|\%(?:00|25|3C|22|27|2C))/ );
-    $self->lmLog("XSS attack detected (param: user | value: ".$self->{user}.")", "warn");
+    return $self->{user}
+      unless ( $self->{user} =~ m/(?:\0|<|'|"|`|\%(?:00|25|3C|22|27|2C))/ );
+    $self->lmLog(
+        "XSS attack detected (param: user | value: " . $self->{user} . ")",
+        "warn" );
     return "";
 }
 
@@ -538,7 +550,7 @@ sub process {
     $self->{error} = $self->_subProcess(
         qw(controlUrlOrigin checkNotifBack controlExistingSession
           SAMLForUnAuthUser authInit extractFormInfo userDBInit getUser
-          setAuthSessionInfo passwordDBInit modifyPassword setSessionInfo 
+          setAuthSessionInfo passwordDBInit modifyPassword setSessionInfo
           resetPasswordByMail setMacros setLocalGroups setGroups authenticate
           store buildCookie checkNotification SAMLForAuthUser autoRedirect)
     );
@@ -556,7 +568,8 @@ sub controlUrlOrigin {
 
         # REJECT NON BASE64 URL
         if ( $url =~ m#[^A-Za-z0-9\+/=]# ) {
-            $self->lmLog("XSS attack detected (param: url | value: $url)", "warn");
+            $self->lmLog( "XSS attack detected (param: url | value: $url)",
+                "warn" );
             return PE_BADURL;
         }
 
@@ -567,11 +580,15 @@ sub controlUrlOrigin {
         if (
             $self->{urldc} =~ /(?:\0|<|'|"|`|\%(?:00|25|3C|22|27|2C))/
             or ( $self->{urldc} !~
-m#^https?://(?:$self->{reVHosts}|(?:[^/]*)?$self->{domain})(?::\d+)?(?:/.*)?$#
+m#^https?://(?:$self->{reVHosts}$self->{trustedDomains})(?::\d+)?(?:/.*)?$#o
                 and not $self->param('logout') )
           )
         {
-            $self->lmLog("XSS attack detected (param: urldc | value: ".$self->{urldc}.")", "warn");
+            $self->lmLog(
+                "XSS attack detected (param: urldc | value: "
+                  . $self->{urldc} . ")",
+                "warn"
+            );
             delete $self->{urldc};
             return PE_BADURL;
         }
@@ -640,7 +657,7 @@ sub controlExistingSession {
             # Delete session in global storage
             $self->_deleteSession($h);
             $self->{error} = PE_REDIRECT;
-            $self->SAMLLogout() if($self->{SAMLIssuer});
+            $self->SAMLLogout() if ( $self->{SAMLIssuer} );
             $self->_sub( 'userNotice',
                 $self->{sessionInfo}->{ $self->{whatToTrace} }
                   . " has been disconnected" );
@@ -703,15 +720,26 @@ sub setSessionInfo {
 
     # Store IP address and start time
     $self->{sessionInfo}->{ipAddr} = $ENV{REMOTE_ADDR};
+
     # Extract client IP from X-FORWARDED-FOR header
     my $xheader = $ENV{HTTP_X_FORWARDED_FOR};
     $xheader =~ s/(.*?)(\,)+.*/$1/ if $xheader;
     $self->{sessionInfo}->{xForwardedForAddr} = $xheader || $ENV{REMOTE_ADDR};
     $self->{sessionInfo}->{startTime} =
       &POSIX::strftime( "%Y%m%d%H%M%S", localtime() );
-    $self->lmLog("Store ipAddr: ".$self->{sessionInfo}->{ipAddr}." in session",'debug');
-    $self->lmLog("Store xForwardedForAddr: ".$self->{sessionInfo}->{xForwardedForAddr}." in session",'debug');
-    $self->lmLog("Store startTime: ".$self->{sessionInfo}->{startTime}." in session",'debug');
+    $self->lmLog(
+        "Store ipAddr: " . $self->{sessionInfo}->{ipAddr} . " in session",
+        'debug' );
+    $self->lmLog(
+        "Store xForwardedForAddr: "
+          . $self->{sessionInfo}->{xForwardedForAddr}
+          . " in session",
+        'debug'
+    );
+    $self->lmLog(
+        "Store startTime: " . $self->{sessionInfo}->{startTime} . " in session",
+        'debug'
+    );
     return $self->SUPER::setSessionInfo();
 }
 
