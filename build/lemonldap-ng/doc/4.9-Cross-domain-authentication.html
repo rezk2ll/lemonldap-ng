@@ -83,8 +83,7 @@
     <h3 class="heading-1-1"><span id="HConfigureHandler">Configure
     Handler</span></h3>
 
-    <p class="paragraph"></p>The Handler must use the CDA module. You have
-    just to replace Handler::SharedConf by Handler::CDA in
+    <p class="paragraph"></p>Just add "cda =&gt; 1" in constructor, in
     handler/MyHandler.pm:
 
     <p class="paragraph"></p>
@@ -92,8 +91,14 @@
     <div class="code">
       <pre>
 <span class="java-keyword">package</span> My::Package;
-use Lemonldap::NG::Handler::CDA;
-@ISA = qw(Lemonldap::NG::Handler::CDA);
+use Lemonldap::NG::Handler::SharedConf;
+@ISA = qw(Lemonldap::NG::Handler::SharedConf);<br /><br /><b class=
+"bold">PACKAGE</b>-&gt;init(
+    {
+        cda =&gt; 1,
+    }
+);
+1;
 </pre>
     </div>
 
