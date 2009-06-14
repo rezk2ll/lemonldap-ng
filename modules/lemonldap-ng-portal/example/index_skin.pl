@@ -21,7 +21,6 @@ my $portal = Lemonldap::NG::Portal::SharedConf->new(
     {
 
         # ACCESS TO CONFIGURATION
-
         # By default, Lemonldap::NG uses the default storage.conf file to know
         # where to find its configuration
         # (generaly /etc/lemonldap-ng/storage.conf)
@@ -66,9 +65,10 @@ my $portal = Lemonldap::NG::Portal::SharedConf->new(
         # Remove comment to use LDAP modify password extension
         # (beware of compatibility with LDAP Password Policy)
         #ldapSetPassword    => 1,
-	
+
         # RESET PASSWORD BY MAIL
-        # SMTP server (default to localhost), set to '' to use default mail service
+        # SMTP server (default to localhost), set to '' to use default mail
+        # service
         #SMTPServer => "localhost",
 
         # Mail From address
@@ -77,7 +77,8 @@ my $portal = Lemonldap::NG::Portal::SharedConf->new(
         # Mail subject
         #mailSubject => "Password reset",
 
-        # Mail body (can use $password for generated password, and other session infos, like $cn)
+        # Mail body (can use $password for generated password, and other session infos,
+        # like $cn)
         #mailBody => 'Hello $cn,\n\nYour new password is $password',
 
         # LDAP filter to use
@@ -85,11 +86,11 @@ my $portal = Lemonldap::NG::Portal::SharedConf->new(
 
         # Random regexp
         #randomPasswordRegexp => '[A-Z]{3}[a-z]{5}.\d{2}',
-	
-	# LDAP GROUPS
-	# Set the base DN of your groups branch
-	#ldapGroupBase => 'ou=groups,dc=example,dc=com',
-	# Objectclass used by groups
+
+        # LDAP GROUPS
+        # Set the base DN of your groups branch
+        #ldapGroupBase => 'ou=groups,dc=example,dc=com',
+        # Objectclass used by groups
         #ldapGroupObjectClass => 'groupOfUniqueNames',
         # Attribute used by groups to store member
         #ldapGroupAttributeName => 'uniqueMember',
@@ -99,7 +100,7 @@ my $portal = Lemonldap::NG::Portal::SharedConf->new(
         # cn|mail|status, where cn, mail and status will be replaced by their
         # values.
         #ldapGroupAttributeNameSearch => ['cn'],
-	 
+
         # CUSTOM FUNCTION
         # If you want to create customFunctions in rules, declare them here:
         #customFunctions    => 'function1 function2',
@@ -112,6 +113,23 @@ my $portal = Lemonldap::NG::Portal::SharedConf->new(
         # http://auth.example.com/index.pl/notification
         # If you want to hide this, just protect "/index.pl/notification" in
         # your Apache configuration file
+
+        # CROSS-DOMAIN
+        # If you have some handlers that are not registered on the main domain,
+        # uncomment this
+        #cda => 1,
+
+        # XSS protection bypass
+        # By default, the portal refuse redirections that comes from sites not
+        # registered in the configuration (manager) except for those coming
+        # from trusted domains. By default, trustedDomains contains the domain
+        # declared in the manager. You can set trustedDomains to empty value so
+        # that, undeclared sites will be rejected. You can also set here a list
+        # of trusted domains or hosts separated by spaces. This is usefull if
+        # your website use Lemonldap::NG without handler with SOAP functions.
+        # Exemples :
+        #trustedDomains => 'my.trusted.host example2.com',
+        #trustedDomains => '',
 
         # OTHERS
         # You can also overload any parameter issued from manager
@@ -151,8 +169,6 @@ if ( $portal->process() ) {
                 password => USER_CAN_CHANGE_PASSWORD,
                 logout   => DISPLAY_LOGOUT,
             },
-            # CUSTOM FUNCTION : if you want to create customFunctions in rules, declare them here
-            #customFunctions    => 'function1 function2',
         }
     );
 
@@ -177,14 +193,14 @@ if ( $portal->process() ) {
 }
 elsif ( my $notif = $portal->notification ) {
 
-    # HTML::Template object creation	
+    # HTML::Template object creation
     my $template = HTML::Template->new(
         filename          => "$skin_dir/$skin/notification.tpl",
         die_on_bad_params => 0,
         cache             => 0,
         filter            => sub { $portal->translate_template(@_) }
     );
-    
+
     $template->param( AUTH_ERROR      => $portal->error );
     $template->param( AUTH_ERROR_TYPE => $portal->error_type );
     $template->param( NOTIFICATION    => $notif );
@@ -209,18 +225,18 @@ else {
     $template->param( LOGIN           => $portal->get_user );
     $template->param( AUTOCOMPLETE    => AUTOCOMPLETE );
     $template->param( SKIN            => $skin );
-    
-    if ( USER_CAN_CHANGE_PASSWORD
-        and (
-             $portal->{error} == PE_PP_CHANGE_AFTER_RESET
-          or $portal->{error} == PE_PP_MUST_SUPPLY_OLD_PASSWORD
-          or $portal->{error} == PE_PP_INSUFFICIENT_PASSWORD_QUALITY
-          or $portal->{error} == PE_PP_PASSWORD_TOO_SHORT
-          or $portal->{error} == PE_PP_PASSWORD_TOO_YOUNG
-          or $portal->{error} == PE_PP_PASSWORD_IN_HISTORY
-          or $portal->{error} == PE_PASSWORD_MISMATCH
-          or $portal->{error} == PE_BADOLDPASSWORD
-        ) )
+
+    if (
+        USER_CAN_CHANGE_PASSWORD
+        and (  $portal->{error} == PE_PP_CHANGE_AFTER_RESET
+            or $portal->{error} == PE_PP_MUST_SUPPLY_OLD_PASSWORD
+            or $portal->{error} == PE_PP_INSUFFICIENT_PASSWORD_QUALITY
+            or $portal->{error} == PE_PP_PASSWORD_TOO_SHORT
+            or $portal->{error} == PE_PP_PASSWORD_TOO_YOUNG
+            or $portal->{error} == PE_PP_PASSWORD_IN_HISTORY
+            or $portal->{error} == PE_PASSWORD_MISMATCH
+            or $portal->{error} == PE_BADOLDPASSWORD )
+      )
     {
         $template->param( REQUIRE_OLDPASSWORD => 1 );
         $template->param( DISPLAY_PASSWORD    => 1 );
