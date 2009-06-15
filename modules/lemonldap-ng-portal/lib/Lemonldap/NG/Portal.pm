@@ -480,11 +480,6 @@ Liberty-Alliance mechanisms to authenticate users
 to read portal configuration from a central database. It inherits from
 L<Lemonldap::NG::Portal::Simple>. It's the more used module.
 
-=item * L<Lemonldap::NG::Portal::CDA>: this module inherits from
-L<Lemonldap::NG::Portal::SharedConf> and provides the capability to use
-handlers in different domains that the portal itself. See
-L<Lemonldap::NG::Portal::CDA> for more.
-
 =back
 
 =head1 SEE ALSO

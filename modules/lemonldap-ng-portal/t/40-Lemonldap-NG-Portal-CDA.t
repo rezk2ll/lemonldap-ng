@@ -34,5 +34,5 @@ ok(
     'Portal object'
 );
 
-ok( $p->{CDA}, 'CDA is set' );
+ok( $p->{cda}, 'CDA is set' );
 

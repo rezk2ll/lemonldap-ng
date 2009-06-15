@@ -889,7 +889,7 @@ sub autoRedirect {
     {
 
         # Cross-domain mechanism
-        if (    $self->{CDA}
+        if (    $self->{cda}
             and $self->{id}
             and $self->{urldc} !~ m#^https?://[^/]*$self->{domain}/#oi )
         {
