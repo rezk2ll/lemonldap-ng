@@ -44,6 +44,7 @@ sub available {
         my ($cfgNum) = ( $cn =~ /lmConf-(\d*)/ );
         push @conf, $cfgNum;
     }
+    $self->ldap->unbind() && delete $self->{ldap};
     return sort { $a <=> $b } @conf;
 }
 
@@ -141,7 +142,7 @@ sub store {
     );
 
     $self->logError($add) if ( $add->code );
-
+    $self->ldap->unbind() && delete $self->{ldap};
     $self->unlock;
     return $fields->{cfgNum};
 }
@@ -170,6 +171,7 @@ sub load {
             $f->{$k} = $v;
         }
     }
+    $self->ldap->unbind() && delete $self->{ldap};
     return $f;
 }
 
@@ -178,6 +180,7 @@ sub delete {
 
     my $confDN = "cn=lmConf-" . $cfgNum . "," . $self->{ldapConfBase};
     my $delete = $self->ldap->delete($confDN);
+    $self->ldap->unbind() && delete $self->{ldap};
     $self->logError($delete) if ( $delete->code );
 }
 
