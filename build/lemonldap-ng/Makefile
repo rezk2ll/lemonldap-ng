@@ -318,8 +318,12 @@ install_portal_site:	install_conf_dir
 	@perl -i -pe 's#__DIR__#$(LASPPORTALDIR)/#g' $(RLASPPORTALDIR)/index.pl
 	# Cron files
 	@cp --remove-destination lemonldap-ng-portal/example/scripts/purgeCentralCache.cron.d $(RCRONDIR)/lemonldap-ng
-	@if [ ! "$(APACHEUSER)" ]; then APACHEUSER="root"; fi
-	@perl -i -pe 's#__APACHEUSER__#$(APACHEUSER)#g; s#__BINDIR__#$(BINDIR)#g;' $(RCRONDIR)/lemonldap-ng
+	@if [ ! "$(APACHEUSER)" ]; then \
+		perl -i -pe 's#__APACHEUSER__#root#g;' $(RCRONDIR)/lemonldap-ng; \
+	else \
+		perl -i -pe 's#__APACHEUSER__#$(APACHEUSER)#g;' $(RCRONDIR)/lemonldap-ng; \
+	fi
+	@perl -i -pe 's#__BINDIR__#$(BINDIR)#g;' $(RCRONDIR)/lemonldap-ng
 	# Clean SVN files
 	@rm -rf $$(find ${RPORTALDIR} $(RPORTALSKINSDIR) $(RLASPPORTALDIR) $(RCRONDIR) $(RCONFDIR) -type d -name .svn)
 
