@@ -216,15 +216,15 @@ install_site:	install_manager_site install_portal_site install_handler_site inst
 	# Check if erase is wanted
 	@if [ "$(ERASECONFIG)" -eq "1" ]; then \
 		cp --remove-destination  _example/etc/apache* $(RCONFDIR); \
-		perl -i -pe 's#__HANDLER__#${HANDLERDIR}/MyHandler.pm#; \
+		cp --remove-destination _example/etc/for_etc_hosts $(RCONFDIR); \
+	fi
+	@perl -i -pe 's#__HANDLER__#${HANDLERDIR}/MyHandler.pm#; \
 			s/__DNSDOMAIN__/$(DNSDOMAIN)/g; \
 			s#__PORTALDIR__#$(PORTALDIR)/#g; \
 			s#__MANAGERDIR__#$(MANAGERDIR)/#g; \
 			s#__TESTDIR__#$(TESTDIR)/#g; \
-			s#__DOCDIR__#$(DOCDIR)/#g;' $(RCONFDIR)/apache*; \
-		cp --remove-destination _example/etc/for_etc_hosts $(RCONFDIR); \
-		perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)/for_etc_hosts; \
-	fi
+			s#__DOCDIR__#$(DOCDIR)/#g;' $(RCONFDIR)/apache*
+	@perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)/for_etc_hosts
 	@echo
 	@echo "LemonLDAP::NG v${VERSION} is installed with these parameters:"
 	@echo "  - System configuration: ${CONFDIR}"
@@ -273,9 +273,9 @@ install_manager_site:	install_conf_dir
 	# apply.conf install if erase configuration is wanted
 	@if [ "$(ERASECONFIG)" -eq "1" ]; then \
 		mv -f ${RMANAGERDIR}/apply.conf "$(RCONFDIR)"; \
-		perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)/apply.conf; \
-		perl -i -pe 's#__APPLYCONFFILE__#$(CONFDIR)/apply.conf#' ${RMANAGERDIR}/index.pl; \
 	fi
+	@perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)/apply.conf
+	@perl -i -pe 's#__APPLYCONFFILE__#$(CONFDIR)/apply.conf#' ${RMANAGERDIR}/index.pl
 	# Sessions explorer install
 	@if [ "${MANAGERDIR}" != "$(SESSIONSEXPLORERDIR)" ]; then mv -f ${RMANAGERDIR}/sessions.pl $(RSESSIONSEXPLORERDIR); fi
 	@if [ "${MANAGERDIR}/images/" != "${SESSIONSEXPLORERDATADIR}/" ]; then \
@@ -311,8 +311,8 @@ install_portal_site:	install_conf_dir
 	# Applications list install if erase configuration is needed
 	@if [ "$(ERASECONFIG)" -eq "1" ]; then \
 		cp --remove-destination _example/etc/apps-list* $(RCONFDIR); \
-		perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)/apps-list.xml; \
 	fi
+	@perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)/apps-list.xml
 	# L-A portal install
 	@cp -pR --remove-destination ${SRCPORTALDIR}/example/AuthLA/* $(RLASPPORTALDIR)
 	@perl -i -pe 's#__DIR__#$(LASPPORTALDIR)/#g' $(RLASPPORTALDIR)/index.pl
