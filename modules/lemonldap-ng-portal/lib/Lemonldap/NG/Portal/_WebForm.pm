@@ -28,23 +28,18 @@ sub extractFormInfo {
       unless (
         (
             (
-                $self->{'user'}
-                and length( $self->{'user'} = $self->param('user') ) > 0
+                length( $self->{'user'} = $self->param('user') ) > 0
             )
             && (
                 (
                     length( $self->{'password'} = $self->param('password') ) > 0
                 )
                 || (
-                    $self->{'newpassword'}
-                    and length(
-                        $self->{'newpassword'} = $self->param('newpassword')
-                    ) > 0
+                    length($self->{'newpassword'} = $self->param('newpassword') ) > 0
                 )
             )
         )
-        || ( $self->{'mail'}
-            and length( $self->{'mail'} = $self->param('mail') ) > 0 )
+        || ( length( $self->{'mail'} = $self->param('mail') ) > 0 )
       );
     $self->{'oldpassword'}     = $self->param('oldpassword');
     $self->{'confirmpassword'} = $self->param('confirmpassword');
