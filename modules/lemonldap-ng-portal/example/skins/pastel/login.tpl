@@ -10,6 +10,7 @@
 		<h3><lang en="Please enter your credentials" fr="Merci de vous authentifier"/></h3>
 		
 	        <p><input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" /></p>
+	        <p><input type="hidden" name="timezone" /></p>
 
 		<table>
 		<tr><th><lang en="Login" fr="Identifiant"/></th>

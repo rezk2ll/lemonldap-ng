@@ -51,8 +51,6 @@ sub checkLogonHours {
     my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = gmtime(time);
 
     # Get the hour position
-    # First day in logonHours is sunday but is monday in gmtime
-    $wday == "6" ? $wday = 0 : $wday++;
     my $hourpos = $wday*24 + $hour;
     
     # Use time_correction

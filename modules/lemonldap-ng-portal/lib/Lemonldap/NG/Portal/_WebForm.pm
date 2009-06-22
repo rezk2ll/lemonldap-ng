@@ -48,6 +48,7 @@ sub extractFormInfo {
       );
     $self->{'oldpassword'}     = $self->param('oldpassword');
     $self->{'confirmpassword'} = $self->param('confirmpassword');
+    $self->{'timezone'} = $self->param('timezone');
     PE_OK;
 }
 
@@ -69,6 +70,10 @@ sub setAuthSessionInfo {
         $self->{sessionInfo}->{'_password'} = $self->{'newpassword'}
           || $self->{'password'};
     }
+
+    # Store user timezone
+    $self->{sessionInfo}->{'_timezone'} = $self->{'timezone'};
+    
     PE_OK;
 }
 

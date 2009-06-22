@@ -14,6 +14,7 @@
         <script type="text/javascript">
         $(document).ready(function(){
           $("div.message").fadeIn('slow');
+          $("input[name=timezone]").val( -(new Date().getTimezoneOffset()/60) );
           $("#menu > ul").tabs({ fx: { opacity: 'toggle' } });
           $("#menu > ul").tabs("select","#<TMPL_VAR NAME="DISPLAY_TAB">");
           $("input[type!=hidden]:first").focus();
