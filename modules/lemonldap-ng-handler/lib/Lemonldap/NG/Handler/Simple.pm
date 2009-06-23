@@ -503,8 +503,10 @@ sub conditionSub {
     return sub { 0 }
       if ( $cond =~ /^deny$/i );
     if ( $cond =~ /^logout(?:_sso)?(?:\s+(.*))?$/i ) {
-        my $url = $1 || 'portal()';
-        return sub { $datas->{_logout} = $url; return 0 }
+        my $url = $1;
+        return $url
+          ? sub { $datas->{_logout} = $url;     return 0 }
+          : sub { $datas->{_logout} = portal(); return 0 };
     }
     if ( MP() == 2 ) {
         if ( $cond =~ /^logout_app(?:\s+(.*))?$/i ) {

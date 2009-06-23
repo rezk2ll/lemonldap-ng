@@ -67,8 +67,8 @@ sub new {
         }
         return 0 unless $self->prereq;
         $self->{mdone}++;
+        $msg = "$self->{type} loaded";
     }
-    $msg = "$self->{type} loaded";
     if ( $self->{localStorage} and not defined( $self->{refLocalStorage} ) ) {
         eval "use $self->{localStorage};";
         if ($@) {
@@ -173,6 +173,10 @@ sub getConf {
     }
     else {
         $args->{cfgNum} ||= $self->lastCfg;
+        unless ( $args->{cfgNum} ) {
+            $msg = "No configuration available";
+            return 0;
+        }
         my $r;
         unless ( ref( $self->{refLocalStorage} ) ) {
             $msg = "get remote configuration (localStorage unavailable)";
@@ -271,7 +275,8 @@ sub getDBConf {
         $re->add($_);
     }
     $conf->{reVHosts} = $re->as_string;
-    $self->setLocalConf($conf) if ( $self->{refLocalStorage} and not($args->{noCache}) );
+    $self->setLocalConf($conf)
+      if ( $self->{refLocalStorage} and not( $args->{noCache} ) );
     return $conf;
 }
 

@@ -111,7 +111,7 @@ sub run($$) {
     if ( time() - $lastReload > $reloadTime ) {
         unless ( my $tmp = $class->testConf(1) == OK ) {
             $class->lmLog( "$class: No configuration found", 'error' );
-            return $tmp;
+            return SERVER_ERROR;
         }
     }
     return $class->SUPER::run($r);

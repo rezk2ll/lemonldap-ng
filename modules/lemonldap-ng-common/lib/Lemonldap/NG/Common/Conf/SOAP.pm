@@ -11,8 +11,10 @@ our $VERSION = 0.21;
 BEGIN {
     *Lemonldap::NG::Common::Conf::_soapCall = \&_soapCall;
     *Lemonldap::NG::Common::Conf::_connect = \&_connect;
+
     sub SOAP::Transport::HTTP::Client::get_basic_credentials {
-       return $Lemonldap::NG::Common::Conf::SOAP::username => $Lemonldap::NG::Common::Conf::SOAP::password;
+        return $Lemonldap::NG::Common::Conf::SOAP::username =>
+          $Lemonldap::NG::Common::Conf::SOAP::password;
     }
 }
 
@@ -21,7 +23,8 @@ our ( $username, $password ) = ( '', '' );
 sub prereq {
     my $self = shift;
     unless ( $self->{proxy} ) {
-        $Lemonldap::NG::Common::Conf::msg = '"proxy" parameter is required in "SOAP" configuration type';
+        $Lemonldap::NG::Common::Conf::msg =
+          '"proxy" parameter is required in "SOAP" configuration type';
         return 0;
     }
     1;
@@ -34,7 +37,7 @@ sub _connect {
     if ( $self->{proxyOptions} ) {
         push @args, %{ $self->{proxyOptions} };
     }
-    $self->{ns} ||= 'urn:/Lemonldap/NG/Manager/SOAPService/Config';
+    $self->{ns} ||= 'urn:/Lemonldap/NG/Common/CGI/SOAPService';
     return $self->{service} = SOAP::Lite->ns( $self->{ns} )->proxy(@args);
 }
 
@@ -43,7 +46,12 @@ sub _soapCall {
     my $func = shift;
     $username = $self->{User};
     $password = $self->{Password};
-    return $self->_connect->$func(@_)->result;
+    my $r = $self->_connect->$func(@_);
+    if ( $r->fault() ) {
+        print STDERR "SOAP error : " . $r->fault()->{faultstring};
+        return ();
+    }
+    return $r->result;
 }
 
 sub available {

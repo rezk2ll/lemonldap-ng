@@ -28,7 +28,7 @@ sub startSoapServices {
             '/sessions'      => 'getAttributes',
             '/adminSessions' => 'getAttributes setAttributes '
               . 'newSession deleteSession get_key_from_all_sessions',
-            '/config'        => 'getConfig'
+            '/config'        => 'getConfig lastCfg'
         }->{ $ENV{PATH_INFO} }
       )
     {
@@ -161,6 +161,15 @@ sub getConfig {
     my $self = shift;
     my $conf = $self->_getLmConf() or die("No configuration available");
     return $conf;
+}
+
+##@method int lastCfg()
+# SOAP method that return the last configuration number.
+# Call Lemonldap::NG::Common::Conf::lastCfg().
+# @return Last configuration number
+sub lastCfg {
+    my $self = shift;
+    return $self->{lmConf}->lastCfg();
 }
 
 ##@fn private SOAP::Data _buildSoapHash()
