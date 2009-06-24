@@ -240,7 +240,8 @@ sub getDBConf {
         $v =~ s/^'(.*)'$/$1/s;
         if ( $k =~
 /^(?:exportedVars|locationRules|groups|exportedHeaders|macros|globalStorageOptions)$/
-          )
+            and $v ||= {}
+            and not ref($v) )
         {
             $conf->{$k} = {};
             if ( defined($v) and $v !~ /^\$/ ) {

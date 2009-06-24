@@ -87,7 +87,7 @@ sub store {
 
 sub load {
     my $self = shift;
-    return $self->_soapCall( 'load', @_ );
+    return $self->_soapCall( 'getConfig', @_ );
 }
 
 1;
