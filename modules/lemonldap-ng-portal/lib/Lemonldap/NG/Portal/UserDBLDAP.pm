@@ -130,7 +130,7 @@ sub setGroups {
           "(&(objectClass=" . $self->{ldapGroupObjectClass} . ")(|";
         foreach (
             split(
-                /[,;]/,
+                /[;]/,
                 $self->{sessionInfo}->{ $self->{ldapGroupAttributeNameUser} }
             )
           )
