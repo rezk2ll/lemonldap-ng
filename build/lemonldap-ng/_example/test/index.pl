@@ -88,7 +88,7 @@ foreach(sort keys %ENV) {
 }
 
 # Display page
-print $cgi->header;
+print $cgi->header(-charset => 'utf-8');
 print $cgi->start_html( -title => "$name",
                         -style => { -code => $css } );
 
