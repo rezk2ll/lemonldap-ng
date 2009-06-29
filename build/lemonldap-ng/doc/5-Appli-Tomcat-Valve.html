@@ -86,9 +86,9 @@
       <li>tomcat &gt;= 5.5</li>
     </ul>Configure your tomcat home in build.properties files.<br />
     <br />
-    Note: be crareful for windosw user, path must contains "/".<br />
+    Note: be careful for Windows user, path must contains "/".<br />
     <br />
-    Exemple:
+    Example:
 
     <div class="code">
       <pre>
@@ -129,11 +129,11 @@ ant
     Configure attributes:
 
     <ul class="star">
-      <li>userKey: key in the http header send by lemonLDAP in order to store
+      <li>userKey: key in the http header send by LemonLDAP in order to store
       user login.</li>
 
-      <li>roleKey: key in the http header send by lemonLDAP in order to store
-      roles. If lemonLDAP send some roles split by some commas, use
+      <li>roleKey: key in the http header send by LemonLDAP in order to store
+      roles. If LemonLDAP send some roles split by some commas, use
       roleSeparator.</li>
 
       <li>roleSeparator (optional): see above.</li>
@@ -142,12 +142,17 @@ ant
       are allowed (use "," separator for multiple IP). Just set the
       LemonLDAP::NG handler IP on this attribute in order to add more
       security. If this attribute is missed all hosts are allowed.</li>
+
+      <li>passThrough (optional): Allow anonymous access or not. When it takes
+      "false", HTTP headers have to be send by LemonLDAP to make
+      authentication. So, if the user is not recognized or HTTP headers not
+      present, a 403 error is send.</li>
     </ul>
 
     <h3 class="heading-1-1"><span id="HQuicktestanddebuggingtips">Quick test
     and debugging tips</span></h3><br />
     <br />
-    Download for exemple probe application (great administration tool for
+    Download for example probe application (great administration tool for
     tomcat): <span class="wikiexternallink"><a href=
     "http://www.lambdaprobe.org">http://www.lambdaprobe.org</a></span>.<br />
     <br />
@@ -156,9 +161,9 @@ ant
     Send via LemonLDAP::NG user with role = probeuser or other user with role
     = manager.<br />
     <br />
-    Probe doesn't ask authentification, you're logged...<br />
+    Probe doesn't ask authentication, you're logged...<br />
     <br />
-    For debugging, this valve can print some helpfull information in debug
+    For debugging, this valve can print some helpful information in debug
     level. Configure logging in tomcat (see <span class=
     "wikiexternallink"><a href=
     "http://tomcat.apache.org/tomcat-5.5-doc/logging.html">http://tomcat.apache.org/tomcat-5.5-doc/logging.html</a></span>)
