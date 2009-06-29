@@ -31,13 +31,13 @@ my $h = new Lemonldap::NG::Manager(
         # where to find is configuration
         # (generaly /etc/lemonldap-ng/storage.conf)
         # You can specify by yourself this file :
-        #configStorage => { type => 'File', dirName => '/path/to/my/file' },
+        #configStorage => { confFile => '/path/to/my/file' },
 
         # You can also specify directly the configuration
         # (see Lemonldap::NG::Handler::SharedConf(3))
         #configStorage => {
         #      type => 'File',
-        #      directory => '/usr/local/lemonlda-ng/conf/'
+        #      directory => '/usr/local/lemonldap-ng/conf/'
         #},
 
         # CUSTOM FUNCTION
