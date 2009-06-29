@@ -1,6 +1,6 @@
 Revision history for Perl extension Lemonldap::NG::Manager.
 
-0.89  Mon jun 29 11:58:54 2009
+0.9   Mon jun 29 11:58:54 2009
 	- Doxygen documentation
 	- Sessions.pm now use $whatToTrace parameter instead of $uid
 	- SOAP server is now obsolete (replaced by portal)

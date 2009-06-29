@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:                Lemonldap-NG-Manager
-version:             0.89
+version:             0.9
 abstract:            Perl extension for managing Lemonldap::NG Web-SSO
 license:             ~
 author:              
