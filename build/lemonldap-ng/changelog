@@ -31,6 +31,7 @@ lemonldap-ng (0.9.4) unstable; urgency=low
   * Other :
     - Pre-compilation in Apache's configuration files
     - Cross-domain now included in core
+    - handler AuthBasic now uses SOAP
 
  -- Xavier Guimard <x.guimard@free.fr>  Mon, 29 Jun 2009 10:28:09 +0200
 
