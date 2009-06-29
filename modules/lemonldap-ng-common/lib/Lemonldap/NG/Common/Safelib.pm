@@ -127,7 +127,7 @@ L<Lemonldap::NG::Manager>, L<Lemonldap::NG::Portal>, L<Lemonldap::NG::Handler>
 
 =head1 AUTHOR
 
-Xavier Guimard, E<lt>guimard@E<gt>
+Xavier Guimard, E<lt>x.guimard@free.frE<gt>
 Clement Oudot
 
 =head1 COPYRIGHT AND LICENSE

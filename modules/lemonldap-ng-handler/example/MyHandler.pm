@@ -47,7 +47,7 @@ __PACKAGE__->init(
         # configuration. Example:
         #globalStorage => 'Lemonldap::NG::Common::Apache::Session::SOAP',
         #globalStorageOptions => {
-        #    proxy => 'http://manager.example.com/soapserver.pl',
+        #    proxy => 'http://auth.example.com/index.pl/sessions',
         #    proxyOptions => {
         #        timeout => 5,
         #    },

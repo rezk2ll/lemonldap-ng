@@ -35,7 +35,7 @@ our %_confFiles;
 # - { Type => "File", dirName => "/path/to/conf/dir/" },
 # - { Type => "DBI", dbiChain => "DBI:mysql:database=lemonldap-ng;host=1.2.3.4",
 # dbiUser => "user", dbiPassword => "password" },
-# - { Type => "SOAP", proxy => "https://manager.example.com/soapmanager.pl" },
+# - { Type => "SOAP", proxy => "https://auth.example.com/index.pl/config" },
 # - { Type => "LDAP", ldapServer => "ldap://localhost", ldapConfBranch => "ou=conf,ou=applications,dc=example,dc=com",
 #  ldapBindDN => "cn=manager,dc=example,dc=com", ldapBindPassword => "secret"},
 #
@@ -414,16 +414,15 @@ choosen type. Examples:
   $confAccess = new Lemonldap::NG::Common::Conf(
                 {
                 type         => 'SOAP',
-                proxy        => 'https://manager.example.com/soapmanager.pl',
+                proxy        => 'http://auth.example.com/index.pl/config',
                 proxyOptions => {
                                 timeout => 5,
                                 },
                 });
 
-SOAP configuration access is a sort of proxy: the SOAP server that runs
-L<Lemonldap::NG::Manager::SOAPServer> is configured to use the real session
-storage type (DBI or File for example). See L<Lemonldap::NG::Conf::SOAP> for
-more.
+SOAP configuration access is a sort of proxy: the portal is configured to use
+the real session storage type (DBI or File for example). See HTML documentation
+for more.
 
 =item * B<LDAP>:
   $confAccess = new Lemonldap::NG::Common::Conf(

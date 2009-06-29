@@ -82,7 +82,6 @@ example/mrtg/lmng-mrtg
 example/mrtg/mrtg.cfg.example
 example/scripts/lmConfigEditor
 example/sessions.pl
-example/soapserver.pl
 example/theme/default.css
 example/theme/hatch.gif
 example/theme/logo_lemonldap-ng.png

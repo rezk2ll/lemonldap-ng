@@ -116,7 +116,7 @@ Lemonldap::NG Web-SSO configuration via SOAP.
       },
       configStorage       => {
                 type     => 'SOAP',
-                proxy    => 'http://manager.example.com/soapserver.pl',
+                proxy    => 'http://auth.example.com/index.pl/config',
                 # If soapserver is protected by HTTP Basic:
                 User     => 'http-user',
                 Password => 'pass',
@@ -131,7 +131,7 @@ Lemonldap::NG Web-SSO configuration via SOAP.
   my $portal = Lemonldap::NG::Portal::SharedConf->new ( {
           configStorage => {
                   type    => 'SOAP',
-                  proxy   => 'http://localhost/devel/test.pl',
+                  proxy    => 'http://auth.example.com/index.pl/config',
                   # If soapserver is protected by HTTP Basic:
                   User     => 'http-user',
                   Password => 'pass',
@@ -149,7 +149,7 @@ Lemonldap::NG Web-SSO configuration via SOAP.
        {
            configStorage=>{
                   type  => 'SOAP',
-                  proxy => 'http://localhost/devel/test.pl'
+                  proxy    => 'http://auth.example.com/index.pl/config',
                   # If soapserver is protected by HTTP Basic:
                   User     => 'http-user',
                   Password => 'pass',
@@ -162,14 +162,8 @@ Lemonldap::NG Web-SSO configuration via SOAP.
 
 =head2 Server side
 
-See L<Lemonldap::NG::Common::Conf::SOAP> for documentation on client side.
-
-  use Lemonldap::NG::Manager::SOAPServer;
-  Lemonldap::NG::Manager::SOAPServer->start(
-                configStorage => {
-                        type=>"File",
-                        dirName=>"/usr/share/doc/lemonldap-ng/examples/conf/"
-                }
+You just have to set "Soap => 1" in your portal. See HTML documentation for
+more.
 
 =head1 DESCRIPTION
 
@@ -204,7 +198,7 @@ Examples :
       },
       configStorage       => {
                 type  => 'SOAP',
-                proxy => 'http://manager.example.com/soapserver.pl',
+                proxy => 'http://auth.example.com/index.pl/config',
                 User     => 'http-user',
                 Password => 'pass',
       },
@@ -232,7 +226,7 @@ set environment variables.
       },
       configStorage       => {
                 type  => 'SOAP',
-                proxy => 'http://manager.example.com/soapserver.pl',
+                proxy => 'http://auth.example.com/index.pl/config',
       },
       https               => 1,
   } );
@@ -241,7 +235,7 @@ set environment variables.
 
 =head1 SEE ALSO
 
-L<Lemonldap::NG::Manager>, L<Lemonldap::NG::Common::Conf::SOAP>,
+L<Lemonldap::NG::Common::Conf::SOAP>,
 L<Lemonldap::NG::Handler>, L<Lemonldap::NG::Portal>,
 http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Presentation
 

@@ -6,7 +6,7 @@ our $VERSION = '0.2';
 
 die 'This module is now obsolete. You have to use the portal as "proxy".
 See http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocSOAP';
-__END__
+
 use SOAP::Transport::HTTP;
 use Lemonldap::NG::Common::Conf; #link protected config Configuration hash reference
 use UNIVERSAL qw(isa);
@@ -181,142 +181,18 @@ __END__
 
 =head1 NAME
 
-Lemonldap::NG::Manager::SOAPServer - Perl extension written to access to
-Lemonldap::NG Web-SSO configuration or sessions via SOAP.
+Lemonldap::NG::Manager::SOAPServer - Obsolete : now SOAP services are included
+in the Lemonldap::NG portal.
 
 =head1 SYNOPSIS
 
-=head2 Server side
-
-  use Lemonldap::NG::Manager::SOAPServer;
-  Lemonldap::NG::Manager::SOAPServer->start(
-              configStorage => {
-                      type    => "File",
-                      dirName => "/usr/share/doc/lemonldap-ng/examples/conf/"
-              },
-              # 2 types are available :
-              #   * 'config' for configuration access
-              #   * 'sessions' for sessions access
-              type          => 'sessions',
-              # For 'sessions' type, you can choose exported functions (get
-              # only by default):
-              AuthorizedFunctions => 'new get set',
-  );
-
-=head2 Client side
-
-See L<Lemonldap::NG::Common::Conf::SOAP> for documentation on client side
-configuration access.
-
-See L<Lemonldap::NG::Common::Apache::Session::SOAP> for documentation on client side
-sessions access.
-
-=head3 Configuration access
-
-=head4 Area protection
-
-  package My::Package;
-  use Lemonldap::NG::Handler::SharedConf;
-  @ISA = qw(Lemonldap::NG::Handler::SharedConf);
-  
-  __PACKAGE__->init ( {
-      localStorage        => "Cache::FileCache",
-      localStorageOptions => {
-                'namespace'          => 'MyNamespace',
-                'default_expires_in' => 600,
-      },
-      configStorage       => {
-                type  => 'SOAP',
-                proxy => 'http://manager.example.com/soapserver.pl',
-                # If soapserver is protected by HTTP Basic:
-                User     => 'http-user',
-                Password => 'pass',
-      },
-      https               => 0,
-  } );
-
-=head4 Authentication portal
-
-  use Lemonldap::NG::Portal::SharedConf;
-  
-  my $portal = Lemonldap::NG::Portal::SharedConf->new ( {
-          configStorage => {
-                  type    => 'SOAP',
-                  proxy   => 'http://localhost/devel/test.pl',
-                  # If soapserver is protected by HTTP Basic:
-                  User     => 'http-user',
-                  Password => 'pass',
-          }
-  });
-  # Next as usual...
-  if($portal->process()) {
-    ...
-
-=head4 Manager
-
-  use Lemonldap::NG::Manager;
-  
-  my $m=new Lemonldap::NG::Manager(
-       {
-           configStorage=>{
-                  type  => 'SOAP',
-                  proxy => 'http://localhost/devel/test.pl'
-                  # If soapserver is protected by HTTP Basic:
-                  User     => 'http-user',
-                  Password => 'pass',
-           },
-            dhtmlXTreeImageLocation=> "/imgs/",
-        }
-  ) or die "Unable to start";
-  
-  $m->doall();
-
-=head3 Sessions access
-
-  Use simply Lemonldap::NG::Common::Apache::Session::SOAP in the 'Apache session
-  module'parameter (instead of Apache::Session::MySQL or
-  Apache::Session::File).
-
 =head1 DESCRIPTION
 
-Lemonldap::NG::Common::Conf provides a simple interface to access to
-Lemonldap::NG Web-SSO configuration. It is used by L<Lemonldap::NG::Handler>,
-L<Lemonldap::NG::Portal> and L<Lemonldap::NG::Manager>.
-
-Lemonldap::NG::Manager::SOAPServer provides a SOAP proxy system that can be
-used to access
-
-=head2 SUBROUTINES
-
-=over
-
-=item * B<start>: main subroutine. It starts SOAP CGI system. You have to set
-C<configStorage> to the real configuration storage system. See L<Synopsys> for
-examples. 
-
-=item * B<process>: alias for start.
-
-=item * B<new> (constructor): (called by C<start>). See code if you want to
-overload this package.
-
-=back
-
-=head2 SECURITY
-
-Since Lemonldap::NG::Manager::SOAPServer act as a CGI, you can protect
-configuration access by any of the HTTP protection mecanisms.
-See L<Lemonldap::NG::Common::Conf::SOAP> for the security in the client
-side.
-
-In "session" mode, you can control what functions can be used by SOAP. By
-default, only "get" can be used: it means that only handlers can work with it.
-Use "AuthorizedFunctions" parameter to grant other functions.
+This module is obsolete. Now, use the portal.
 
 =head1 SEE ALSO
 
-L<Lemonldap::NG::Manager>, L<Lemonldap::NG::Common::Conf::SOAP>,
-L<Lemonldap::NG::Handler>, L<Lemonldap::NG::Portal>,
-http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Presentation
+L<Lemonldap::NG::Portal>,
 
 =head1 AUTHOR
 

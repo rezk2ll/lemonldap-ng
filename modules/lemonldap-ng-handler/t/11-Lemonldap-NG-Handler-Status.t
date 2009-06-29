@@ -26,7 +26,7 @@ ok(
     $h->localInit(
         {
             localStorage        => 'Cache::FileCache',
-            localStorageOptions => { 'namespace' => 'MyNamespace', },
+            localStorageOptions => { 'namespace' => 'MyNamespaceTest', },
             status              => 1
         }
     ),

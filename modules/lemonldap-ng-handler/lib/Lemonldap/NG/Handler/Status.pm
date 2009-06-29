@@ -341,7 +341,7 @@ L<http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Presentation>
 
 =head1 AUTHOR
 
-Xavier Guimard, E<lt>guimard@E<gt>
+Xavier Guimard, E<lt>x.guimard@free.frE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 

@@ -227,7 +227,7 @@ access to Lemonldap::NG Web-SSO sessions via SOAP.
   __PACKAGE__->init ({
          globalStorage => 'Lemonldap::NG::Common::Apache::Session::SOAP',
          globalStorageOptions => {
-                 proxy => 'http://manager/cgi-bin/soapserver.pl',
+                 proxy => 'http://auth.example.com/index.pl/sessions',
                  proxyOptions => {
                      timeout => 5,
                  },
@@ -244,7 +244,7 @@ access to Lemonldap::NG Web-SSO sessions via SOAP.
   my $portal = new Lemonldap::NG::Portal::SharedConf (
          globalStorage => 'Lemonldap::NG::Common::Apache::Session::SOAP',
          globalStorageOptions => {
-                 proxy => 'http://manager/cgi-bin/soapserver.pl',
+                 proxy => 'http://auth.example.com/index.pl/sessions',
                  proxyOptions => {
                      timeout => 5,
                  },
@@ -267,9 +267,9 @@ Lemonldap::NG Web-SSO configuration. It is used by L<Lemonldap::NG::Handler>,
 L<Lemonldap::NG::Portal> and L<Lemonldap::NG::Manager>.
 
 Lemonldap::NG::Common::Apache::Session::SOAP used with
-L<Lemonldap::NG::Manager::SOAPServer> provides the ability to acces to
-Lemonldap::NG sessions via SOAP: They act as a proxy to access to the real
-Apache::Session module (set as Lemonldap::NG::Manager::SOAPServer parameter).
+L<Lemonldap::NG::Portal> provides the ability to acces to
+Lemonldap::NG sessions via SOAP: the portal act as a proxy to access to the
+real Apache::Session module (see HTML documentation for more)
 
 =head2 SECURITY
 
@@ -298,7 +298,7 @@ C<>SOAP::Transport::HTTP::Client::get_basic_credentials>:
       },
       configStorage       => {
                 type  => 'SOAP',
-                proxy => 'http://manager.example.com/soapserver.pl',
+                proxy => 'http://auth.example.com/index.pl/sessions',
                 User     => 'http-user',
                 Password => 'pass',
       },
@@ -326,7 +326,7 @@ set environment variables.
       },
       configStorage       => {
                 type  => 'SOAP',
-                proxy => 'http://manager.example.com/soapserver.pl',
+                proxy => 'http://auth.example.com/index.pl/sessions',
       },
       https               => 1,
   } );
@@ -335,7 +335,6 @@ set environment variables.
 
 =head1 SEE ALSO
 
-L<Lemonldap::NG::Manager::SOAPServer>,
 L<Lemonldap::NG::Manager>, L<Lemonldap::NG::Common::Conf::SOAP>,
 L<Lemonldap::NG::Handler>, L<Lemonldap::NG::Portal>,
 http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Presentation
@@ -356,7 +355,7 @@ L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2007 by Xavier Guimard
+Copyright (C) 2007, 2008, 2009 by Xavier Guimard
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.8.8 or,

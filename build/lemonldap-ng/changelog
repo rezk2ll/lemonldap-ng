@@ -1,13 +1,38 @@
 lemonldap-ng (0.9.4) unstable; urgency=low
 
-  * ldap+tls uri was not working (Closes: #312418)
-  * Session timeout is in seconds and not in minutes in Manager/Help.pm
-    (Closes: #312339)
-  * Notification system
-  * Missing dependency in Debian package (Closes: #521959 / bugs.debian.org)
-  * Double session mechanism (1 secured and the other not)
+  * Bugs :
+    - ldap+tls uri was not working (Closes: #312418)
+    - Session timeout is in seconds and not in minutes in Manager/Help.pm
+      (Closes: #312339)
+    - Missing dependency in Debian package (Closes: #521959 / bugs.debian.org)
+  * Logs :
+    - CGI's log subroutine : now if a CGI runs under ModPerl::Registry, it
+      stores it's log using Apache2::Log
+    - handler logs written in PerlLogHandler
+  * SOAP :
+    - New SOAP architecture : the portal serves now all webservices and the
+      security is based on Apache system (different locations)
+    - WSDL generation
+  * New features :
+    - LDAP backend for configuration and sessions storage
+    - portal can be a Perl expression in handlers
+    - POST requests generation in handler (used to post login/password in non
+      compatible applications)
+    - Sympa auto login handler
+    - New auth and userDB modules for the portal : Multi, Remote, Null (for
+      UserDB only)
+    - New module system for passwords
+    - Notification system
+    - Double session mechanism (1 secured and the other not)
+    - New fonctions for rules (stored in
+      lemonldap-ng-common/lib/Lemonldap/NG/Common/Safelib.pm) :
+       * checkLogonHours
+       * checkDate
+  * Other :
+    - Pre-compilation in Apache's configuration files
+    - Cross-domain now included in core
 
- -- Xavier Guimard <x.guimard@free.fr>  Sun, 08 Feb 2009 20:12:17 +0100
+ -- Xavier Guimard <x.guimard@free.fr>  Mon, 29 Jun 2009 10:28:09 +0200
 
 lemonldap-ng (0.9.3.4) unstable; urgency=low
 
