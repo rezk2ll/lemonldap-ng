@@ -100,15 +100,22 @@ sub new {
     ( $self->{error}, $self->{error_value} ) = $self->_ppolicyWarning;
 
     # Store POST data in $self->{portalObject}
-    $self->{portalObject}->{'newpassword'} = $self->{portalObject}->param('newpassword');
-    $self->{portalObject}->{'confirmpassword'} = $self->{portalObject}->param('confirmpassword');
-    $self->{portalObject}->{'oldpassword'} = $self->{portalObject}->param('oldpassword');
-    $self->{portalObject}->{'dn'} = $self->{portalObject}->{sessionInfo}->{'dn'};
-    $self->{portalObject}->{'user'} = $self->{portalObject}->{sessionInfo}->{'_user'};
+    $self->{portalObject}->{'newpassword'} =
+      $self->{portalObject}->param('newpassword');
+    $self->{portalObject}->{'confirmpassword'} =
+      $self->{portalObject}->param('confirmpassword');
+    $self->{portalObject}->{'oldpassword'} =
+      $self->{portalObject}->param('oldpassword');
+    $self->{portalObject}->{'dn'} =
+      $self->{portalObject}->{sessionInfo}->{'dn'};
+    $self->{portalObject}->{'user'} =
+      $self->{portalObject}->{sessionInfo}->{'_user'};
 
     # Change password (only if newpassword submitted)
-    $self->{error} = &_passwordDBInit( $self->{portalObject} ) if $self->{portalObject}->{'newpassword'};
-    $self->{error} = &_modifyPassword( $self->{portalObject} ) if $self->{portalObject}->{'newpassword'};
+    $self->{error} = &_passwordDBInit( $self->{portalObject} )
+      if $self->{portalObject}->{'newpassword'};
+    $self->{error} = &_modifyPassword( $self->{portalObject} )
+      if $self->{portalObject}->{'newpassword'};
 
     return $self;
 }
@@ -244,11 +251,13 @@ sub _displayCategory {
 
     # Display applications first
     my @appnodes = $cat->findnodes("application");
-    $html .= "<ul>" if scalar @appnodes;
-    foreach (@appnodes) {
-        $html .= $self->_displayApplication($_);
+    if (@appnodes) {
+        $html .= "<ul>";
+        foreach (@appnodes) {
+            $html .= $self->_displayApplication($_);
+        }
+        $html .= "</ul>";
     }
-    $html .= "</ul>" if scalar @appnodes;
 
     # Display subcategories
     my @catnodes = $cat->findnodes("category");
@@ -283,7 +292,7 @@ sub _displayApplication {
     my $html;
 
     # Get application items
-    my $appid   = $app->getAttribute('id');
+    my $appid = $app->getAttribute('id');
     my $appname = $app->getElementsByTagName('name')->string_value() || $appid;
     my $appuri =
       $self->_userParam( $app->getElementsByTagName('uri')->string_value()
@@ -291,8 +300,16 @@ sub _displayApplication {
 
     # Display application
     $html .=
-"<li title=\"$appid\" class=\"appname\"><span><a href=\"$appuri\">$appname</a></span></li>\n";
-
+"<li title=\"$appid\" class=\"appname\"><span><a href=\"$appuri\">$appname</a></span>\n";
+    my @appnodes = $app->findnodes("application");
+    if (@appnodes) {
+        $html .= "<ul>";
+        foreach (@appnodes) {
+            $html .= $self->_displayApplication($_);
+        }
+        $html .= "</ul>";
+    }
+    $html .= "</li>";
     return $html;
 }
 

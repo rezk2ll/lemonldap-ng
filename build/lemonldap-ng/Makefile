@@ -431,6 +431,7 @@ dist:	clean
 	@mkdir -p lemonldap-ng-$(VERSION)
 	@- cp -pR lemonldap-ng-common/ lemonldap-ng-manager/ lemonldap-ng-portal/ lemonldap-ng-handler/ * lemonldap-ng-$(VERSION)
 	@- dir=lemonldap-ng-$(VERSION); find $$dir -name .svn -exec rm -rf {} \; 2>/dev/null
+	@- find $$dir -name '*.bak' -delete
 	@rm -rf lemonldap-ng-$(VERSION)/lemonldap-ng-$(VERSION)
 	@tar czf lemonldap-ng-$(VERSION).tar.gz lemonldap-ng-$(VERSION)
 	@rm -rf lemonldap-ng-$(VERSION)

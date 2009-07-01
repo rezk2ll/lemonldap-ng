@@ -3,7 +3,7 @@
 <!ELEMENT category (application*, category*) >
 <!ATTLIST category name CDATA #REQUIRED >
 
-<!ELEMENT application (name, uri?, description?, logo?, screenshot?, display?) >
+<!ELEMENT application (name, uri?, description?, logo?, screenshot?, display?, application*) >
 <!ATTLIST application id ID #REQUIRED >
 
 <!ELEMENT name ( #PCDATA ) >
