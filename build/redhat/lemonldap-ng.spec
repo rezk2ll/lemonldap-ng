@@ -14,10 +14,10 @@
 
 %define real_name lemonldap-ng
 %define real_version 0.9.4
-%define cpan_common_version  0.92
+%define cpan_common_version  0.94
 %define cpan_handler_version 0.91
-%define cpan_manager_version 0.88
-%define cpan_portal_version  0.87
+%define cpan_manager_version 0.90
+%define cpan_portal_version  0.88
 
 %define lm_prefix /usr
 %define lm_sharedir /usr/share/lemonldap-ng
@@ -49,7 +49,7 @@ Source0:        http://download.forge.objectweb.org/lemonldap/%{name}-%{version}
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:      noarch
-BuildRequires:  perl, perl(Regexp::Assemble), perl(Cache::Cache), perl(Apache::Session), perl(Net::LDAP)
+BuildRequires:  perl, perl(Regexp::Assemble), perl(Cache::Cache), perl(Apache::Session), perl(Net::LDAP), perl(SOAP::Lite), perl(IO::String), perl(Crypt::Rijndael), perl(XML::LibXML), perl(XML::Simple)
 
 Requires: perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 Requires: perl(Apache::Session), mod_perl
