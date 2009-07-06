@@ -17,7 +17,7 @@
 %define cpan_common_version  0.94
 %define cpan_handler_version 0.91
 %define cpan_manager_version 0.90
-%define cpan_portal_version  0.88
+%define cpan_portal_version  0.89
 
 %define lm_prefix /usr
 %define lm_sharedir /usr/share/lemonldap-ng
@@ -26,8 +26,18 @@
 %define lm_confdir /etc/lemonldap-ng
 %define lm_storagefile %{lm_confdir}/storage.conf
 
+# Apache configuration directory
+%define apache_confdir /etc/httpd/conf.d
+%define apache_confdir /etc/apache2/conf.d
+
+# Apache User and Group
+%if 0%{?rhl}%{?rhel}%{?fedora}
 %define lm_apacheuser apache
 %define lm_apachegroup apache
+%else
+%define lm_apacheuser wwwrun                                     
+%define lm_apachegroup www 
+%endif
 
 %define lm_dnsdomain example.com
 %define lm_ldaphost localhost
@@ -49,7 +59,13 @@ Source0:        http://download.forge.objectweb.org/lemonldap/%{name}-%{version}
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildArch:      noarch
+
+%if 0%{?rhl}%{?rhel}%{?fedora}
 BuildRequires:  perl, perl(Regexp::Assemble), perl(Cache::Cache), perl(Apache::Session), perl(Net::LDAP), perl(SOAP::Lite), perl(IO::String), perl(Crypt::Rijndael), perl(XML::LibXML), perl(XML::Simple)
+%else
+# SuSE Linux needs rpm packages for perl scripts                                                                                           
+BuildRequires:  perl, perl-Regexp-Assemble, perl-Cache-Cache, perl-Apache-Session, perl-Apache-AuthNetLDAP, perl-XML-Simple, perl-XML-LibXML, perl-Crypt-Rijndael, perl-IO-String
+%endif
 
 Requires: perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 Requires: perl(Apache::Session), mod_perl
@@ -63,6 +79,10 @@ Requires: perl(Lemonldap::NG::Common) >= %{cpan_common_version}
 Requires: perl(Lemonldap::NG::Handler) >= %{cpan_handler_version}
 Requires: perl(Lemonldap::NG::Manager) >= %{cpan_manager_version}
 Requires: perl(Lemonldap::NG::Portal) >= %{cpan_portal_version}
+%if 0%{?rhl}%{?rhel}%{?fedora}
+%else
+Requires: cron
+%endif
 
 %description
 LemonLDAP::NG is a modular Web-SSO based on Apache::Session modules. It simplifies the build of a protected area with a few changes in the application. It manages both authentication and authorization and provides headers for accounting. So you can have a full AAA protection for your web space as described below.
@@ -211,7 +231,10 @@ chmod +x %{__perl_requires}
 # Installation
 #==============================================================================
 %install
+%if 0%{?rhl}%{?rhel}%{?fedora}
 rm -rf %{buildroot}
+%endif
+
 # Tests
 %{__make} %{?_smp_mflags} test
 # Install 
@@ -238,32 +261,33 @@ rm -rf %{buildroot}
 # Remove some unwanted files
 find $RPM_BUILD_ROOT -name .packlist -exec rm -f {} \;
 find $RPM_BUILD_ROOT -name perllocal.pod -exec rm -f {} \;
+find $RPM_BUILD_ROOT -name *.bak -exec rm -f {} \;                                                                               
 
 # Set APACHEUSER in cronjob
 sed -i 's/\*\s*\[/* %{lm_apacheuser} [/' %{buildroot}/etc/cron.d/lemonldap-ng
+
+# Set UNIX rights
+chmod 750 %{buildroot}%{lm_vardir}/conf
+chmod 640 %{buildroot}%{lm_vardir}/conf/*
+chmod 640 %{buildroot}%{lm_storagefile}
+chmod 770 %{buildroot}%{lm_vardir}/sessions
+chmod 770 %{buildroot}%{lm_vardir}/sessions/lock
+chmod 640 %{buildroot}%{lm_confdir}/apply.conf
 
 #==============================================================================
 # Post Installation
 #==============================================================================
 %post -n lemonldap-ng-conf
-# Set UNIX rights
+# Set file ownership
 chown -R %{lm_apacheuser}:%{lm_apachegroup} %{lm_vardir}/conf
-chmod 750 %{lm_vardir}/conf
-chmod 640 %{lm_vardir}/conf/*
 chgrp %{lm_apachegroup} %{lm_storagefile}
-chmod 640 %{lm_storagefile}
 chown -R %{lm_apacheuser}:%{lm_apachegroup} %{lm_vardir}/sessions
-chmod 770 %{lm_vardir}/sessions
-chmod 770 %{lm_vardir}/sessions/lock
 chgrp %{lm_apachegroup} %{lm_confdir}/apply.conf
-chmod 640 %{lm_confdir}/apply.conf
 
 if [ $1 -eq 1 ] ; then
 	# Create symlink in Apache configuration
 	# We use "z-lemonldap-ng" so that Apache read the file after "perl.conf"
-	ln -s %{lm_confdir}/apache2.conf /etc/httpd/conf.d/z-lemonldap-ng.conf
-
-	echo "LemonLDAP::NG installation success - please restart Apache"
+	ln -s %{lm_confdir}/apache2.conf %{apache_confdir}/z-lemonldap-ng.conf
 fi
 
 #==============================================================================
@@ -272,9 +296,7 @@ fi
 %preun -n lemonldap-ng-conf
 if [ $1 -eq 0 ] ; then
 	# Remove symlink in Apache configuration
-	rm -f /etc/httpd/conf.d/z-lemonldap-ng.conf
-
-	echo "LemonLDAP::NG uninstallation success - please restart Apache"
+	rm -f %{apache_confdir}/z-lemonldap-ng.conf
 fi
 
 #==============================================================================
@@ -290,20 +312,34 @@ rm -rf %{buildroot}
 %defattr(-,root,root,-)
 
 %files -n lemonldap-ng-conf
+%defattr(-,root,root,-)
+%dir %{lm_vardir}
+%dir %{lm_sharedir}
+%dir %{lm_sharedir}/bin
+%dir %{lm_examplesdir}
+%dir %{perl_vendorlib}/Lemonldap
+%dir %{perl_vendorlib}/Lemonldap/NG
+%dir %{perl_vendorlib}/Lemonldap/NG/Manager
+%dir %{perl_vendorlib}/auto/Lemonldap
+%dir %{perl_vendorlib}/auto/Lemonldap/NG
+%dir %{lm_confdir}
 %config %{lm_confdir}
 %config %{lm_vardir}/conf
 %{lm_vardir}/sessions
 %{lm_sharedir}/ressources
 
 %files -n lemonldap-ng-doc
+%defattr(-,root,root,-)
 %doc %{lm_vardir}/doc
 %doc changelog COPYING INSTALL README
 
 %files -n lemonldap-ng-handler
+%defattr(-,root,root,-)
 %{lm_vardir}/handler
 %{lm_examplesdir}/handler
 
 %files -n lemonldap-ng-manager
+%defattr(-,root,root,-)
 %{lm_vardir}/manager
 %{lm_sharedir}/bin/lmConfigEditor
 %{lm_sharedir}/bin/lmConfig_File2MySQL
@@ -313,34 +349,40 @@ rm -rf %{buildroot}
 %{lm_examplesdir}/manager
 
 %files -n lemonldap-ng-portal
+%defattr(-,root,root,-)
 %{lm_vardir}/liberty-alliance-sp-portal
 %{lm_vardir}/portal
 %{lm_sharedir}/bin/purgeCentralCache
 %{lm_sharedir}/bin/buildPortalWSDL
-/etc/cron.d/lemonldap-ng
+%config /etc/cron.d/lemonldap-ng
 %{lm_examplesdir}/portal
 %{lm_sharedir}/portal-skins
 
 %files -n lemonldap-ng-test
+%defattr(-,root,root,-)
 %{lm_vardir}/test
 
 %files -n perl-Lemonldap-NG-Common
+%defattr(-,root,root,-)
 %doc %{_mandir}/man3/Lemonldap::NG::Common*.3pm.gz
 %{perl_vendorlib}/Lemonldap/NG/Common.pm
 %{perl_vendorlib}/Lemonldap/NG/Common/
 
 %files -n perl-Lemonldap-NG-Handler
+%defattr(-,root,root,-)
 %doc %{_mandir}/man3/Lemonldap::NG::Handler*.3pm.gz
 %{perl_vendorlib}/Lemonldap/NG/Handler.pm
 %{perl_vendorlib}/Lemonldap/NG/Handler/
 
 %files -n perl-Lemonldap-NG-Manager
+%defattr(-,root,root,-)
 %doc %{_mandir}/man3/Lemonldap::NG::Manager*.3pm.gz
 %{perl_vendorlib}/Lemonldap/NG/Manager.pm
 %{perl_vendorlib}/Lemonldap/NG/Manager/
 %{perl_vendorlib}/auto/Lemonldap/NG/Manager/
 
 %files -n perl-Lemonldap-NG-Portal
+%defattr(-,root,root,-)
 %doc %{_mandir}/man3/Lemonldap::NG::Portal*.3pm.gz
 %{perl_vendorlib}/Lemonldap/NG/Portal.pm
 %{perl_vendorlib}/Lemonldap/NG/Portal/
@@ -350,10 +392,11 @@ rm -rf %{buildroot}
 # Changelog
 #==============================================================================
 %changelog
-* Wed Jun 3 2009 Clement Oudot <coudot@linagora.com> - 0.9.4-1
+* Mon Jul 6 2009 Clement Oudot <coudot@linagora.com> - 0.9.4-1
 - Upgrade to release 0.9.4
 - Remove cronjob patch (included in 0.9.4)
 - Split scriplets into subpackages
+- Use conditions to build for other RPM distributions like OpenSuSE (thanks to clauded1)
 * Mon Jan 12 2009 Clement Oudot <coudot@linagora.com> - 0.9.3.2-2
 - Include cronjob patch
 - Delete unwanted files (perllocal.pod, .packlist)

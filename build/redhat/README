@@ -1,8 +1,19 @@
-How to build LemonLDAP::NG for RedHat/CentOS
+How to build RPM LemonLDAP::NG 
+
+%_topdir: where you build RPMs (by default, /usr/src/redhat)
 
 - Install rpm-build package
-- Install all perl dependencies
-- Put lemonldap-ng.spec in /usr/src/redhat/SPECS
-- Put LemonLDAP::NG tarball in /usr/src/redhat/SOURCES
-- Go to /usr/src/redhat
+- Install all build dependencies (see BuildRequires in lemonldap-ng.spec)
+- Put lemonldap-ng.spec in %_topdir/SPECS
+- Put LemonLDAP::NG tarball in %_topdir/SOURCES
+- Edit ~/.rpmmacros and set your build parameters (example for RHEL5):
+-----
+%_topdir /home/user/build
+%dist .el5
+%rhel 5
+-----
+- Go to %_topdir
 - Do rpmbuild -ba SPECS/lemonldap-ng.spec
+
+This RPM can be build for several distribution like RedHat, CentOS, Fedora, OpenSuSE...
+
