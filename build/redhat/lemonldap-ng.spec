@@ -27,8 +27,11 @@
 %define lm_storagefile %{lm_confdir}/storage.conf
 
 # Apache configuration directory
+%if 0%{?rhl}%{?rhel}%{?fedora}
 %define apache_confdir /etc/httpd/conf.d
+%else
 %define apache_confdir /etc/apache2/conf.d
+%endif
 
 # Apache User and Group
 %if 0%{?rhl}%{?rhel}%{?fedora}
@@ -67,21 +70,31 @@ BuildRequires:  perl, perl(Regexp::Assemble), perl(Cache::Cache), perl(Apache::S
 BuildRequires:  perl, perl-Regexp-Assemble, perl-Cache-Cache, perl-Apache-Session, perl-Apache-AuthNetLDAP, perl-XML-Simple, perl-XML-LibXML, perl-Crypt-Rijndael, perl-IO-String
 %endif
 
+%if 0%{?rhl}%{?rhel}%{?fedora}
 Requires: perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 Requires: perl(Apache::Session), mod_perl
+%else
+Requires: cron, apache2, apache2-mod_perl
+Requires: perl >= %(eval "`%{__perl} -V:version`"; echo $version)
+Requires: perl-Regexp-Assemble, perl-Cache-Cache, perl-Apache-Session, perl-Apache-AuthNetLDAP, perl-XML-Simple, perl-XML-LibXML, perl-Crypt-Rijndael, perl-IO-String
+Requires: perl-ldap, perl-MIME-Base64, perl-CGI, perl-CGI-Session, perl-DBI, perl-HTML-Template, perl-SOAP-Lite, perl-IPC-ShareLite, perl-Convert-ASN1, perl-Error
+%endif
 Requires: lemonldap-ng-conf >= %{real_version}
 Requires: lemonldap-ng-doc >= %{real_version}
 Requires: lemonldap-ng-handler >= %{real_version}
 Requires: lemonldap-ng-manager >= %{real_version}
 Requires: lemonldap-ng-portal >= %{real_version}
 Requires: lemonldap-ng-test >= %{real_version}
+%if 0%{?rhl}%{?rhel}%{?fedora}
 Requires: perl(Lemonldap::NG::Common) >= %{cpan_common_version}
 Requires: perl(Lemonldap::NG::Handler) >= %{cpan_handler_version}
 Requires: perl(Lemonldap::NG::Manager) >= %{cpan_manager_version}
 Requires: perl(Lemonldap::NG::Portal) >= %{cpan_portal_version}
-%if 0%{?rhl}%{?rhel}%{?fedora}
 %else
-Requires: cron
+Requires: perl-Lemonldap-NG-Common >= %{cpan_common_version}
+Requires: perl-Lemonldap-NG-Handler >= %{cpan_handler_version}
+Requires: perl-Lemonldap-NG-Manager >= %{cpan_manager_version}
+Requires: perl-Lemonldap-NG-Portal >= %{cpan_common_version}
 %endif
 
 %description
@@ -264,7 +277,7 @@ find $RPM_BUILD_ROOT -name perllocal.pod -exec rm -f {} \;
 find $RPM_BUILD_ROOT -name *.bak -exec rm -f {} \;                                                                               
 
 # Set APACHEUSER in cronjob
-sed -i 's/\*\s*\[/* %{lm_apacheuser} [/' %{buildroot}/etc/cron.d/lemonldap-ng
+sed -i 's/root/%{lm_apacheuser}/' %{buildroot}/etc/cron.d/lemonldap-ng
 
 # Set UNIX rights
 chmod 750 %{buildroot}%{lm_vardir}/conf
@@ -310,6 +323,7 @@ rm -rf %{buildroot}
 #==============================================================================
 %files
 %defattr(-,root,root,-)
+%doc changelog COPYING INSTALL README
 
 %files -n lemonldap-ng-conf
 %defattr(-,root,root,-)
@@ -331,7 +345,6 @@ rm -rf %{buildroot}
 %files -n lemonldap-ng-doc
 %defattr(-,root,root,-)
 %doc %{lm_vardir}/doc
-%doc changelog COPYING INSTALL README
 
 %files -n lemonldap-ng-handler
 %defattr(-,root,root,-)
