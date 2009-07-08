@@ -19,9 +19,9 @@ my $docs = {
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocInstallTarball'             => '3.2-Install-from-tarball.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocInstallDebianPackages'      => '3.3-Install-from-debian-packages.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocInstallRedHatPackages'      => '3.3-Install-from-redhat-packages.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocInstallSuSEPackages'        => '3.3-Install-from-suse-packages.html',
     # Configuration overview
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocConfigOverwiew'             => '4.1-Configuration-overview.html',
-    
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/RBAC'                          => '4.1-RBAC-model.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/ConfigParameterList'           => '4.1-Configuration-parameter-list.html',
     # Portal
@@ -195,6 +195,7 @@ while ( my ( $url, $file ) = each %$docs ) {
 	s#/xwiki/bin/view/NG/DocInstallTarball#3.2-Install-from-tarball.html#g;
 	s#/xwiki/bin/view/NG/DocInstallDebianPackages#3.3-Install-from-debian-packages.html#g;
 	s#/xwiki/bin/view/NG/DocInstallRedHatPackages#3.3-Install-from-redhat-packages.html#g;
+	s#/xwiki/bin/view/NG/DocInstallSuSEPackages#3.3-Install-from-suse-packages.html#g;
 	s#/xwiki/bin/view/NG/DocConfigOverwiew#4.1-Configuration-overview.html#g;
 	s#/xwiki/bin/view/NG/RBAC#4.1-RBAC-model.html#g;
 	s#/xwiki/bin/view/NG/ConfigParameterList#4.1-Configuration-parameter-list.html#g;

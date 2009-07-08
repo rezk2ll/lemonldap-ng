@@ -68,6 +68,8 @@
 
       <li><a href="#HBuildyourpackages">Build your packages</a></li>
 
+      <li><a href="#HPackageGPGsignature">Package GPG signature</a></li>
+
       <li><a href="#HInstallpackageswithyum">Install packages with
       yum</a></li>
 
@@ -130,23 +132,51 @@
     with version 0.9.3.
 
     <h3 class="heading-1-1"><span id="HBuildyourpackages">Build your
-    packages</span></h3><br />
-    <br />
-    Download the source RPM, and install it:<br />
-    <br />
+    packages</span></h3>
+
+    <ul class="star">
+      <li>Install rpm-build package</li>
+
+      <li>Install all build dependencies (see BuildRequires in
+      lemonldap-ng.spec)</li>
+
+      <li>Put lemonldap-ng.spec in %_topdir/SPECS</li>
+
+      <li>Put LemonLDAP::NG tarball in %_topdir/SOURCES</li>
+
+      <li>Edit ~/.rpmmacros and set your build parameters (example for
+      RHEL5):</li>
+    </ul>
 
     <div class="code">
       <pre>
-# rpm -Uvh lemonldap-ng-VERSION-RELEASE.DIST.src.rpm
+%_topdir /home/user/build
+%dist .el5
+%rhel 5
 </pre>
-    </div><br />
+    </div>
+
+    <ul class="star">
+      <li>Go to %_topdir</li>
+
+      <li>Do rpmbuild -ba SPECS/lemonldap-ng.spec</li>
+    </ul>
+
+    <h3 class="heading-1-1"><span id="HPackageGPGsignature">Package GPG
+    signature</span></h3><br />
     <br />
-    Rebuild:<br />
+    The GPG key can be downloaded here: <span class=
+    "wikiexternallink"><a href="http://wiki.lemonldap.ow2.org/xwiki/bin/download/NG/DocInstallRedHatPackages/RPM-GPG-KEY-OW2">
+    http://wiki.lemonldap.ow2.org/xwiki/bin/download/NG/DocInstallRedHatPackages/RPM-GPG-KEY-OW2</a></span><br />
+
+    <br />
+    Install it to trust RPMs:<br />
     <br />
 
     <div class="code">
       <pre>
-# rpmbuild -ba /usr/src/redhat/SPECS/lemonldap-ng.spec
+# rpm --<span class="java-keyword">import</span> <span class="nobr"><a href=
+"http://wiki.lemonldap.ow2.org/xwiki/bin/download/NG/DocInstallRedHatPackages/RPM&amp;#45;GPG&amp;#45;KEY&amp;#45;OW2">http://wiki.lemonldap.ow2.org/xwiki/bin/download/NG/DocInstallRedHatPackages/RPM-GPG-KEY-OW2</a></span>
 </pre>
     </div>
 
@@ -159,6 +189,14 @@
     <div class="code">
       <pre>
 # yum install lemonldap-ng
+</pre>
+    </div><br />
+    <br />
+    You can also use yum on local RPMs file, to manage dependencies:
+
+    <div class="code">
+      <pre>
+# yum install lemonldap-ng-* perl-Lemonldap-NG-*
 </pre>
     </div>
 
