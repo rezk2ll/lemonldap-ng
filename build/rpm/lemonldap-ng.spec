@@ -94,7 +94,7 @@ Requires: perl(Lemonldap::NG::Portal) >= %{cpan_portal_version}
 Requires: perl-Lemonldap-NG-Common >= %{cpan_common_version}
 Requires: perl-Lemonldap-NG-Handler >= %{cpan_handler_version}
 Requires: perl-Lemonldap-NG-Manager >= %{cpan_manager_version}
-Requires: perl-Lemonldap-NG-Portal >= %{cpan_common_version}
+Requires: perl-Lemonldap-NG-Portal >= %{cpan_portal_version}
 %endif
 
 %description
