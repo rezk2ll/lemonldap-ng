@@ -129,9 +129,9 @@ my $portal = Lemonldap::NG::Portal::SharedConf->new(
         # configuration. Example:
         #globalStorage => 'Apache::Session::File',
         #globalStorageOptions => {
-        #  'Directory' => '/var/lib/lemonldap-ng/sessions/'
-        #  'LockDirectory' => '/var/lib/lemonldap-ng/sessions/lock/'
-        #}
+        #  'Directory' => '/var/lib/lemonldap-ng/sessions/',
+        #  'LockDirectory' => '/var/lib/lemonldap-ng/sessions/lock/',
+        #},
         # Note that YOU HAVE TO SET globalStorage here if you've declared this
         # portal as SOAP session server in the manager
         #},
