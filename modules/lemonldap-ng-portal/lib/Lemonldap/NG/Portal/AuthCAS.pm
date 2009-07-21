@@ -36,7 +36,7 @@ sub extractFormInfo {
     unless ( $self->{user} =
         $cas->validateST( $self->{CAS_validationUrl}, $ticket ) )
     {
-        print $self->SUPER::redirect(
+        print $self->redirect(
             -uri    => $login_url,
             -status => '302 Moved Temporary'
         );
