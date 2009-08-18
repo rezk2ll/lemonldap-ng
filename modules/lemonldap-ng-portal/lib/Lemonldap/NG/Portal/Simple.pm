@@ -903,7 +903,7 @@ sub autoRedirect {
         print $self->SUPER::redirect(
             -uri    => $self->{urldc},
             -cookie => $self->{cookie},
-            -status => '302 Moved Temporary'
+            -status => '303 See Other'
         );
 
         # Remove this lines if your browsers does not support redirections

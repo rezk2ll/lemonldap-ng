@@ -38,7 +38,7 @@ sub extractFormInfo {
     {
         print $self->redirect(
             -uri    => $login_url,
-            -status => '302 Moved Temporary'
+            -status => '303 See Other'
         );
         exit;
     }

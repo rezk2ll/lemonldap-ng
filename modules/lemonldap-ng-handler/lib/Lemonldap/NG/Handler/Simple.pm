@@ -1020,7 +1020,7 @@ sub redirectFilter {
         # Here, we can use Apache2 functions instead of lmSetHeaderOut because
         # this function is used only with Apache2.
         $f->r->status(REDIRECT);
-        $f->r->status_line("302 Temporary Moved");
+        $f->r->status_line("303 See Other");
         $f->r->headers_out->unset('Location');
         $f->r->err_headers_out->set( 'Location' => $url );
         $f->ctx(1);
