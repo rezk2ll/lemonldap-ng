@@ -56,7 +56,7 @@ sub new {
             $rule =~ s/\$(\w+)/\$datas->{$1}/g;
             $rule = 0 if($rule eq 'deny');
             my $r;
-            unless ( $rule eq 'accept' or $safe->reval($rule) ) {
+            unless ( $rule eq 'accept' or $_handler->safe->reval($rule) ) {
                 $self->abort( 'Forbidden',
                     "You don't have rights to access this page" );
             }
@@ -162,6 +162,7 @@ sub _uri {
 # Private class used by Lemonldap::NG::Handler::CGI for his internal handler.
 package Lemonldap::NG::Handler::_CGI;
 
+use strict;
 use Lemonldap::NG::Handler::SharedConf qw(:locationRules :localStorage :traces);
 
 use base qw(Lemonldap::NG::Handler::SharedConf);
@@ -202,6 +203,11 @@ sub vhostAvailable {
 sub grant {
     my ( $self, $uri, $vhost ) = @_;
     $vhost ||= $ENV{SERVER_NAME};
+    $apacheRequest = Lemonldap::NG::Apache::Request->new({
+        uri => $uri,
+        hostname => $vhost,
+        args => '',
+    });
     for ( my $i = 0 ; $i < $locationCount->{$vhost} ; $i++ ) {
         if ( $uri =~ $locationRegexp->{$vhost}->[$i] ) {
             return &{ $locationCondition->{$vhost}->[$i] }($datas);
@@ -215,6 +221,26 @@ sub grant {
         return 0;
     }
     return &{ $defaultCondition->{$vhost} }($datas);
+}
+
+package Lemonldap::NG::Apache::Request;
+
+sub new {
+    my $class = shift;
+    my $self = shift;
+    return bless $self, $class;
+}
+
+sub hostname {
+    return $_[0]->{hostname};
+}
+
+sub uri {
+    return $_[0]->{uri};
+}
+
+sub args {
+    return $_[0]->{args};
 }
 
 1;

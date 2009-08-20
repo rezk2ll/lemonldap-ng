@@ -171,7 +171,7 @@ sub displayTab {
       if (
         (
             scalar(
-                grep { /^$self->{error}$/ } (
+                grep { $_ == $self->{error} } (
                     25,    #PE_PP_CHANGE_AFTER_RESET
                     27,    #PE_PP_MUST_SUPPLY_OLD_PASSWORD
                     28,    #PE_PP_INSUFFICIENT_PASSWORD_QUALITY
