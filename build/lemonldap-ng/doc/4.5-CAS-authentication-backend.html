@@ -77,23 +77,43 @@
     "http://sourcesup.cru.fr/projects/perlcas/">AuthCAS Perl
     module</a></span>.
 
+    <p class="paragraph"></p>To work, your CAS server need to use HTTPS (CAS
+    cookies are only sent over SSL connections)
+
     <h3 class="heading-1-1"><span id=
     "HConfiguration">Configuration</span></h3>
 
-    <p class="paragraph"></p>Edit portal/index.pl:
+    <p class="paragraph"></p>Edit portal/index.pl and add those parameters in
+    constructor:
 
     <div class="code">
       <pre>
-my $portal = <span class=
-"java-keyword">new</span> Lemonldap::NG::Portal::Simple(
-         authentication    =&gt; 'CAS',
-         CAS_url           =&gt; 'https://cas.myserver',
-         CAS_CAFile        =&gt; '/etc/httpd/conf/ssl.crt/ca-bundle.crt',
-         CAS_loginUrl      =&gt; 'http://myserver/app.cgi',
-         CAS_validationUrl =&gt; 'http://myserver/app.cgi',
-    );
+authentication    =&gt; 'CAS',
+CAS_url           =&gt; 'https://cas.example.com',
+#CAS_CAFile        =&gt; '/etc/httpd/conf/ssl.crt/ca-bundle.crt',
+CAS_loginUrl      =&gt; 'http://auth.example.com',
+CAS_validationUrl =&gt; 'http://auth.example.com',
 </pre>
     </div>
+
+    <p class="paragraph"></p>Parameters explanations:
+
+    <ul class="star">
+      <li>CAS_url: this is the login URL on your CAS server. This has to use
+      HTTPS.</li>
+
+      <li>CAS_CAFile: only use to verify CAS server certificate, not
+      mandatory.</li>
+
+      <li>CAS_loginUrl: where CAS redirect the user after CAS authentication,
+      this is the portal.</li>
+
+      <li>CAS_validationUrl: where the service ticket (ST) is checked, this is
+      the portal.</li>
+    </ul>Of course the CAS user must exists in your UserDB backend. You can
+    rely just on CAS authentication by using the <span class=
+    "wikilink"><a href="4.6-Null-user-backend.html">Null UserDB
+    backend</a></span>
 
     <h3 class="heading-1-1"><span id="HSeealso">See also</span></h3>
 

@@ -150,12 +150,59 @@ MyGroup =&gt; { $uid eq <span class=
       <pre>
 ^/restricted.*$  =&gt;  $groups =~ /\bMyGroup\b/
 </pre>
+    </div><br />
+    <br />
+    The VirtualHost in LemonLDAP::NG must match a VirtualHost in Apache
+    configuration, like:
+
+    <div class="code">
+      <pre>
+# Application Test
+&lt;VirtualHost *:80&gt;
+    ServerName test1.example.com
+    ServerAlias test2.example.com<br /><br />    # SSO protection
+    PerlHeaderParserHandler My::Package<br /><br />    # DocumentRoot
+    DocumentRoot /usr/local/lemonldap-ng/htdocs/test/
+    &lt;Directory /usr/local/lemonldap-ng/htdocs/test/&gt;
+        Order deny,allow
+        Allow from all
+        Options +ExecCGI
+    &lt;/Directory&gt;<br /><br />    # Configuration reload mechanism (only 1 per physical server is
+    # needed): choose your URL to avoid restarting Apache when
+    # configuration change
+    &lt;Location /reload&gt;
+        Order deny,allow
+        Deny from all
+        Allow from 127.0.0.0/8
+        PerlHeaderParserHandler My::Package-&gt;refresh
+    &lt;/Location&gt;<br /><br />    # Uncomment <span class=
+"java-keyword">this</span> to activate status module
+    #&lt;Location /status&gt;
+    #    Order deny,allow
+    #    Deny from all
+    #    Allow from 127.0.0.0/8
+    #    PerlHeaderParserHandler My::Package-&gt;status
+    #&lt;/Location&gt;<br /><br />&lt;/VirtualHost&gt;
+</pre>
     </div>
 
-    <h3 class="heading-1-1"><span id="HTogofurther">To go
-    further</span></h3><br />
-    <br />
-    See the <span class="wikilink"><a href=
+    <p class="paragraph"></p><strong class="strong">Remarks</strong>:
+
+    <ul class="star">
+      <li>You can use DocumentRoot to protect a local application, or use
+      mod_proxy to use LemonLDAP::NG as a reverse proxy</li>
+
+      <li>You have to declare only one "reload" target on a physical server,
+      because only one Handler can be instancied on a physical server</li>
+
+      <li>Of course you must already have a virtualhost for the portal and
+      another for the manager; These hosts are only in Apache, and not in
+      LemonLDAP::NG configuration.</li>
+    </ul>
+
+    <h3 class="heading-1-1"><span id="HTogofurther">To go further</span></h3>
+
+    <p class="paragraph"></p>See the <span class="wikilink"><a href=
     "4.1-Configuration-parameter-list.html">full parameters list</a></span>.
   </div>
 
