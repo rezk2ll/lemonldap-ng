@@ -2,8 +2,9 @@ lemonldap-ng (0.9.5) unstable; urgency=low
 
   * Bugs :
     - bad XML filter when embedding <application> in <application> tags
+    - testUri() not usable in Lemonldap::NG::Handler::CGI 
 
- -- Xavier Guimard <x.guimard@free.fr>  Wed, 12 Aug 2009 11:07:18 +0200
+ -- Xavier Guimard <x.guimard@free.fr>  Thu, 20 Aug 2009 16:20:26 +0200
 
 lemonldap-ng (0.9.4) unstable; urgency=low
 
