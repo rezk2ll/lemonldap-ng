@@ -15,7 +15,10 @@ my $conf = Lemonldap::NG::Common::Conf->new();
 
 open F1, ">$refFile" or quit($!);
 open F2, ">$editFile" or quit($!);
-my $tmp = Dumper($conf->getConf);
+my $tmp = $conf->getConf();
+delete $tmp->{reVHosts};
+delete $tmp->{cipher};
+$tmp = Dumper($tmp);
 print F1 $tmp;
 print F2 $tmp;
 close F1;

@@ -880,7 +880,7 @@ sub run ($$) {
               . ( $https ? 's' : '' )
               . "://$host:$portString"
               . $apacheRequest->uri
-              . ( $apacheRequest->args ? "?" . $apacheRequest->args : "" ) );
+              . ( $args ? "?" . $args : "" ) );
         $host =~ s/^[^\.]+\.(.*\..*$)/$1/;
         lmSetErrHeaderOut( $apacheRequest,
             'Set-Cookie' => "$str; domain=$host; path=/"
