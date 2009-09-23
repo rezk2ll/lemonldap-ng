@@ -502,7 +502,8 @@ sub _deleteSession {
     my ( $self, $h ) = @_;
     if ( my $id2 = $h->{_httpSession} ) {
         my $h2 = $self->getApacheSession($id2);
-        tied(%$h2)->delete();
+        eval {tied(%$h2)->delete()};
+        $self->lmLog( $@, 'error' ) if ($@);
 
         # Delete cookie
         push @{ $self->{cookie} },
@@ -516,7 +517,9 @@ sub _deleteSession {
             @_,
           );
     }
-    my $r = tied(%$h)->delete();
+    my $r;
+    eval {$r = tied(%$h)->delete()};
+    $self->lmLog( $@, 'error' ) if ($@);
 
     # Delete cookie
     push @{ $self->{cookie} },

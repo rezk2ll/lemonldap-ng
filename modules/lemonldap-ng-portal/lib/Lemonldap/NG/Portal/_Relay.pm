@@ -81,8 +81,10 @@ sub setSessionInfo {
             "Unable to get attributes for $self->{user} " );
         return PE_ERROR;
     }
+    foreach ( keys %{ $res->{attributes} } ) {
     $self->{sessionInfo}->{$_} ||= $res->{attributes}->{$_}
-      foreach ( keys %{ $res->{attributes} } );
+            unless(/^_/);
+    }
     $self->{_setSessionInfoDone}++;
     PE_OK;
 }

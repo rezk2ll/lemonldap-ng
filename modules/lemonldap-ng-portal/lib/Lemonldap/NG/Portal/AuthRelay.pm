@@ -40,17 +40,27 @@ that delegates authentication to a remote Lemonldap::NG portal.
 
 =head1 SYNOPSIS
 
-  use Lemonldap::NG::Portal::Simple;
-  my $portal = new Lemonldap::NG::Portal::Simple(
+  use Lemonldap::NG::Portal::SharedConf;
+  my $portal = new Lemonldap::NG::Portal::SharedConf(
          
-         # AUTHENTICATION PART
+         # REQUIRED PARAMETERS
          authentication      => 'Relay', 
+         userDB          => 'Relay',
+         soapAuthService => 'https://remote.lemonldap-ng.com/',
+  
+         # OTHER PARAMETERS
+         # remoteCookieName (default: same name)
+         remoteCookieName => 'lemonldap',
+         # soapSessionService (default ${soapAuthService}index.pl/sessions)
+         soapSessionService =>
+            'https://remote.lemonldap-ng.com/index.pl/sessions',
     );
 
 =head1 DESCRIPTION
 
 Authentication module for Lemonldap::NG portal that forward credentials to a
-remote portal using SOAP.
+remote Lemonldap::NGportal using SOAP request. Note that the remote portal must
+accept SOAP requests ("Soap=>1").
 
 =head1 SEE ALSO
 
