@@ -338,8 +338,10 @@ sub statusProcess {
 # @return Safe object
 sub safe {
     my $class = shift;
-    return $safe if ($safe);
-    $safe = new Safe;
+    no strict 'refs';
+    return ${"$class\::safe"} if (${"$class\::safe"});
+    $class->lmLog( "Compiling safe jail for $class", 'debug' );
+    my $safe = new Safe;
     my @t = $customFunctions ? split( /\s+/, $customFunctions ) : ();
     foreach (@t) {
         $class->lmLog( "Custom function : $_", 'debug' );
@@ -363,7 +365,7 @@ sub safe {
         $Lemonldap::NG::Common::Safelib::functions );
     $safe->share( '&encode_base64', '$datas', '&lmSetHeaderIn',
         '$apacheRequest', '&portal', @t );
-    return $safe;
+    return ${"$class\::safe"} = $safe;
 }
 
 ## @imethod void init(hashRef args)
