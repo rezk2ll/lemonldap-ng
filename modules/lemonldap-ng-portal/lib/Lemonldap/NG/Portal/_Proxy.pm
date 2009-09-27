@@ -1,9 +1,9 @@
 ## @file
-# Relay authentication and userDB base.
+# Proxy authentication and userDB base.
 
 ## @class
-# Relay authentication and userDB base class.
-package Lemonldap::NG::Portal::_Relay;
+# Proxy authentication and userDB base class.
+package Lemonldap::NG::Portal::_Proxy;
 
 use strict;
 use Lemonldap::NG::Portal::Simple;
@@ -12,12 +12,12 @@ use SOAP::Lite;
 
 our $VERSION = '0.1';
 
-## @apmethod int relayInit()
+## @apmethod int proxyInit()
 # Checks if remote portal parameters are set.
 # @return Lemonldap::NG::Portal constant
-sub relayInit {
+sub proxyInit {
     my $self = shift;
-    return PE_OK if ( $self->{_relayInitDone} );
+    return PE_OK if ( $self->{_proxyInitDone} );
     my @missing = ();
     foreach (qw(soapAuthService)) {
         push @missing, $_ unless ( defined( $self->{$_} ) );
@@ -29,15 +29,15 @@ sub relayInit {
     $self->abort( "Missing parameters",
         "Required parameters: " . join( ', ', @missing ) )
       if (@missing);
-    $self->{_relayInitDone}++;
+    $self->{_proxyInitDone}++;
     PE_OK;
 }
 
-## @apmethod int relayQuery()
+## @apmethod int proxyQuery()
 # Queries the remote portal to authenticate users using given credentials
-sub relayQuery {
+sub proxyQuery {
     my $self = shift;
-    return PE_OK if ( $self->{_relayQueryDone} );
+    return PE_OK if ( $self->{_proxyQueryDone} );
     my $soap =
       SOAP::Lite->proxy( $self->{soapAuthService} )
       ->uri('urn:Lemonldap::NG::Common::CGI::SOAPService');
@@ -57,7 +57,7 @@ sub relayQuery {
     }
     $self->{remoteId} = $res->{cookies}->{ $self->{remoteCookieName} }
       or $self->abort("No cookie named $self->{remoteCookieName}");
-    $self->{_relayQueryDone}++;
+    $self->{_proxyQueryDone}++;
     PE_OK;
 }
 
