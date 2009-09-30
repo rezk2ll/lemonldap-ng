@@ -33,7 +33,7 @@ sub new {
             $cond = 1 unless ( defined $cond );
             $mod = "Lemonldap::NG::Portal::" . [ 'Auth', 'UserDB' ]->[$i] . $mod
               unless ( $mod =~ /::/ );
-            eval { require $mod };
+            eval "require $mod";
             $portal->abort( 'Bad configuration', "Unable to load $mod ($@)" )
               if ($@);
             push @{ $self->{stack}->[$i] },
