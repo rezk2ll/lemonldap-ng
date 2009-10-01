@@ -58,7 +58,7 @@ BEGIN {
         locationRules => [
             qw(
               $locationCondition $defaultCondition $locationCount
-              $locationRegexp $apacheRequest $datas $safe safe $customFunctions
+              $locationRegexp $apacheRequest $datas safe $customFunctions
               )
         ],
         import  => [qw( import @EXPORT_OK @EXPORT %EXPORT_TAGS )],

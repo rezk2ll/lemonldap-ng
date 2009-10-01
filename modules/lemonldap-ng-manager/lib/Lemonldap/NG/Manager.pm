@@ -16,7 +16,7 @@ require Lemonldap::NG::Manager::_Response; #inherits
 require Lemonldap::NG::Manager::_i18n; #inherits
 require Lemonldap::NG::Manager::Help; #inherits
 use Lemonldap::NG::Common::Conf::Constants; #inherits
-use Lemonldap::NG::Common::Safelib;           #link protected safe Safe object
+use Lemonldap::NG::Common::Safelib;           #link protected msafe Safe object
 use LWP::UserAgent;
 use Safe;
 use MIME::Base64;
@@ -29,15 +29,15 @@ our @ISA;
 our $VERSION = '0.90';
 
 # Secure jail
-our $safe;
+our $msafe;
 
-##@method private object safe()
+##@method private object msafe()
 # Provide the security jail.
 #@return Safe object
-sub safe {
+sub msafe {
     my $self = shift;
-    return $safe if ($safe);
-    $safe = new Safe;
+    return $msafe if ($msafe);
+    $msafe = new Safe;
     my @t =
       $self->{customFunctions} ? split( /\s+/, $self->{customFunctions} ) : ();
     foreach (@t) {
@@ -46,11 +46,11 @@ sub safe {
         eval "sub $_ {1}";
         $self->lmLog( $@, 'error' ) if ($@);
     }
-    $safe->share_from( 'main', ['%ENV'] );
-    $safe->share_from( 'Lemonldap::NG::Common::Safelib',
+    $msafe->share_from( 'main', ['%ENV'] );
+    $msafe->share_from( 'Lemonldap::NG::Common::Safelib',
         $Lemonldap::NG::Common::Safelib::functions );
-    $safe->share( '&encode_base64', @t );
-    return $safe;
+    $msafe->share( '&encode_base64', @t );
+    return $msafe;
 }
 
 ## @cmethod Lemonldap::NG::Manager new(hashref args)
@@ -631,7 +631,7 @@ sub checkConf {
     }
 
     # Load and check macros
-    $self->safe->reval($expr);
+    $self->msafe->reval($expr);
     if ($@) {
         $result = 0;
         $response->error( &txt_unknownErrorInVars . " ($@)" );
@@ -652,7 +652,7 @@ sub checkConf {
 
         # Test macro values;
         $expr .= "my \$$k = $v;";
-        $self->safe->reval($expr);
+        $self->msafe->reval($expr);
         if ($@) {
             $response->error(
                 &txt_macro . " $k : " . &txt_syntaxError . " : $@" );
@@ -684,7 +684,7 @@ sub checkConf {
         }
 
         # Test boolean expression
-        $self->safe->reval( $expr . "\$groups = '$k' if($v);" );
+        $self->msafe->reval( $expr . "\$groups = '$k' if($v);" );
         if ($@) {
             $response->error( &txt_group . " $k " . &txt_syntaxError );
             $result = 0;
@@ -707,7 +707,7 @@ sub checkConf {
             # Test regular expressions
             unless ( $reg eq 'default' ) {
                 $reg =~ s/#/\\#/g;
-                $self->safe->reval( $expr . "my \$r = qr#$reg#;" );
+                $self->msafe->reval( $expr . "my \$r = qr#$reg#;" );
                 if ($@) {
                     $response->error(
                         &txt_rule . " $vh -> \"$reg\" : " . &txt_syntaxError );
@@ -725,7 +725,7 @@ sub checkConf {
                           . &txt_containsAnAssignment );
                 }
 
-                $self->safe->reval( $expr . "my \$r=1 if($v);" );
+                $self->msafe->reval( $expr . "my \$r=1 if($v);" );
                 if ($@) {
                     $response->error(
                         &txt_rule . " $vh -> \"$reg\" : " . &txt_syntaxError );
@@ -763,7 +763,7 @@ sub checkConf {
             }
 
             # Perl expression
-            $self->safe->reval( $expr . "my \$r = $v;" );
+            $self->msafe->reval( $expr . "my \$r = $v;" );
             if ($@) {
                 $response->error(
                     &txt_header . " $vh -> $header " . &txt_syntaxError );
