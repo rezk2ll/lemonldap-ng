@@ -236,7 +236,7 @@ else {
     }
     else {
         $template->param( DISPLAY_FORM          => 1 );
-        $template->param( DISPLAY_RESETPASSWORD => 1 );
+        $template->param( DISPLAY_RESETPASSWORD => $DISPLAY_RESETPASSWORD );
     }
 
     print $portal->header('text/html; charset=utf-8');
