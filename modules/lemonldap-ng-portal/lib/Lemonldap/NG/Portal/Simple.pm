@@ -201,7 +201,10 @@ sub new {
     unless ( defined( $self->{trustedDomains} ) ) {
         $self->{trustedDomains} = $self->{domain};
     }
-    if ( $self->{trustedDomains} ) {
+    if ( $self->{trustedDomains} eq '*' ) {
+        $self->{trustedDomains} = '|\w[\w\-\.]*\w';
+    }
+    elsif ( $self->{trustedDomains} ) {
         $self->{trustedDomains} = '|(?:[^/]*)?' . join '|',
           map { s/\./\\\./g; $_ } split /\s+/, $self->{trustedDomains};
     }
