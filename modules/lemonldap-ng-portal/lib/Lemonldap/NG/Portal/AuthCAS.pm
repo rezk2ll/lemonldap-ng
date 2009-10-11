@@ -9,7 +9,7 @@ use strict;
 use Lemonldap::NG::Portal::Simple;
 use AuthCAS;
 
-our $VERSION = '0.1';
+our $VERSION = '0.11';
 
 ## @apmethod int authInit()
 # Does nothing.

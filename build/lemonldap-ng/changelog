@@ -1,10 +1,20 @@
 lemonldap-ng (0.9.5) unstable; urgency=low
 
-  * Bugs :
-    - bad XML filter when embedding <application> in <application> tags
-    - testUri() not usable in Lemonldap::NG::Handler::CGI 
+  * TODO
 
- -- Xavier Guimard <x.guimard@free.fr>  Thu, 20 Aug 2009 16:20:26 +0200
+ -- Xavier Guimard <x.guimard@free.fr>  Sun, 11 Oct 2009 09:08:46 +0200
+
+lemonldap-ng (0.9.4.1) unstable; urgency=low
+
+  * Safe jail update
+  * Many little bugs in Handler/CGI.pm
+  * Apache::Session::LDAP was not usable with session explorer
+  * syslog facility was not taken in account in Common/CGI.pm
+  * require failed in _Multi.pm
+  * doc update
+  * ru debconf translation (Closes: #550552 / bugs.debian.org)
+
+ -- Xavier Guimard <x.guimard@free.fr>  Sun, 11 Oct 2009 09:36:35 +0200
 
 lemonldap-ng (0.9.4) unstable; urgency=low
 

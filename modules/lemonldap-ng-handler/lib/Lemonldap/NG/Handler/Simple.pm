@@ -26,7 +26,7 @@ require POSIX;
 #inherits Apache::Session
 #link Lemonldap::NG::Common::Apache::Session::SOAP protected globalStorage
 
-our $VERSION = '0.91';
+our $VERSION = '0.92';
 
 our %EXPORT_TAGS;
 

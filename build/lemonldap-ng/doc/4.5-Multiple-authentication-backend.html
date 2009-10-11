@@ -66,14 +66,25 @@
 
       <li><a href="#HConfiguration">Configuration</a></li>
 
+      <li>
+        <a href="#HKnownproblems">Known problems</a>
+
+        <ul>
+          <li><a href="#HAuthApacheauthentication">AuthApache
+          authentication</a></li>
+
+          <li><a href="#HSSLauthentication">SSL authentication</a></li>
+        </ul>
+      </li>
+
       <li><a href="#HSeealso">See also</a></li>
     </ul>
 
     <h3 class="heading-1-1"><span id="HPresentation">Presentation</span></h3>
 
     <p class="paragraph"></p>This backend allows to chain authentication
-    method, for example to failback to LDAP authentication if Kerberos
-    authentication failed.
+    method, for example to failback to LDAP authentication if Remote
+    authentication failed&hellip;
 
     <h3 class="heading-1-1"><span id=
     "HConfiguration">Configuration</span></h3>
@@ -98,6 +109,23 @@ authentication =&gt; 'Multi CAS;LDAP',
 authentication =&gt; 'Multi Remote $ENV{REMOTE_ADDR}=~/^192/;LDAP $ENV{REMOTE_ADDR}!~/^192/'
 </pre>
     </div>
+
+    <h3 class="heading-1-1"><span id="HKnownproblems">Known
+    problems</span></h3>
+
+    <h4 class="heading-1-1-1"><span id="HAuthApacheauthentication">AuthApache
+    authentication</span></h4><br />
+    <br />
+    When using this module, Lemonldap::NG portal will be called only if Apache
+    does not return "401 Authentication required", but this is not the Apache
+    behaviour: if the auth module fails, Apache returns 401. We're studying a
+    future solutuion for this&hellip;
+
+    <h4 class="heading-1-1-1"><span id="HSSLauthentication">SSL
+    authentication</span></h4><br />
+    <br />
+    To chain SSL, you have to set "SSLRequire optional" in Apache
+    configuration, else users will be authenticated by SSL only.
 
     <h3 class="heading-1-1"><span id="HSeealso">See also</span></h3>
 

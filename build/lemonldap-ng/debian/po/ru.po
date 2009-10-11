@@ -1,0 +1,135 @@
+# translation of lemonldap-ng_0.9.4-1_ru.po to Russian
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Yuri Kozlov <yuray@komyakino.ru>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: lemonldap-ng 0.9.4-1\n"
+"Report-Msgid-Bugs-To: x.guimard@free.fr\n"
+"POT-Creation-Date: 2007-09-22 13:08+0200\n"
+"PO-Revision-Date: 2009-10-01 09:27+0400\n"
+"Last-Translator: Yuri Kozlov <yuray@komyakino.ru>\n"
+"Language-Team: Russian <debian-l10n-russian@lists.debian.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#. Type: string
+#. Description
+#: ../liblemonldap-ng-conf-perl.templates:1001
+msgid "LDAP server:"
+msgstr "Сервер LDAP:"
+
+#. Type: string
+#. Description
+#: ../liblemonldap-ng-conf-perl.templates:1001
+msgid ""
+"Set here name or IP address of the LDAP server that has to be used by "
+"Lemonldap::NG. You can modify this value later using the Lemonldap::NG "
+"manager."
+msgstr ""
+"Введите имя или IP-адрес сервера LDAP, который будет "
+"использовать Lemonldap::NG. Позже вы можете изменить это значение "
+"через менеджер Lemonldap::NG."
+
+#. Type: string
+#. Description
+#: ../liblemonldap-ng-conf-perl.templates:2001
+msgid "Lemonldap::NG DNS domain:"
+msgstr "DNS домен Lemonldap::NG:"
+
+#. Type: string
+#. Description
+#: ../liblemonldap-ng-conf-perl.templates:2001
+msgid ""
+"Set here the main domain protected by Lemonldap::NG. You can modify this "
+"value later using the Lemonldap::NG manager."
+msgstr ""
+"Введите главный домен, защищаемый Lemonldap::NG. Позже вы можете изменить "
+"это значение через менеджер Lemonldap::NG."
+
+#. Type: string
+#. Description
+#: ../liblemonldap-ng-conf-perl.templates:3001
+msgid "Lemonldap::NG portal:"
+msgstr "Портал Lemonldap::NG:"
+
+#. Type: string
+#. Description
+#: ../liblemonldap-ng-conf-perl.templates:3001
+msgid ""
+"Set here the Lemonldap::NG portal URL. You can modify this value later using "
+"the Lemonldap::NG manager."
+msgstr ""
+"Введите URL портала Lemonldap::NG. Позже вы можете изменить "
+"это значение через менеджер Lemonldap::NG."
+
+#. Type: string
+#. Description
+#: ../liblemonldap-ng-conf-perl.templates:4001
+msgid "LDAP server port:"
+msgstr "Порт сервера LDAP:"
+
+#. Type: string
+#. Description
+#: ../liblemonldap-ng-conf-perl.templates:4001
+msgid ""
+"Set here the port used by the LDAP server. You can modify this value later "
+"using the Lemonldap::NG manager."
+msgstr ""
+"Введите используемый порт сервера LDAP. Позже вы можете изменить "
+"это значение через менеджер Lemonldap::NG."
+
+#. Type: string
+#. Description
+#: ../liblemonldap-ng-conf-perl.templates:5001
+msgid "LDAP search base:"
+msgstr "База поиска LDAP:"
+
+#. Type: string
+#. Description
+#: ../liblemonldap-ng-conf-perl.templates:5001
+msgid ""
+"Set here the search base to use in LDAP queries. You can modify this value "
+"later using the Lemonldap::NG manager."
+msgstr ""
+"Введите поисковую базу, используемую в запросах LDAP. Позже вы можете изменить "
+"это значение через менеджер Lemonldap::NG."
+
+#. Type: string
+#. Description
+#: ../liblemonldap-ng-conf-perl.templates:6001
+msgid "LDAP account:"
+msgstr "Учётная запись в LDAP:"
+
+#. Type: string
+#. Description
+#: ../liblemonldap-ng-conf-perl.templates:6001
+msgid ""
+"Set here the account that Lemonldap::NG has to use for its LDAP requests. "
+"Leaving it blank causes Lemonldap::NG to use anonymous connections. You can "
+"modify this value later using the Lemonldap::NG manager."
+msgstr ""
+"Введите имя учётной записи, которое Lemonldap::NG будет использовать в "
+"запросах LDAP. Оставьте поле пустым, если Lemonldap::NG должен подключаться "
+"анонимно. Позже вы можете изменить это значение через менеджер Lemonldap::NG."
+
+#. Type: string
+#. Description
+#: ../liblemonldap-ng-conf-perl.templates:7001
+msgid "LDAP password:"
+msgstr "Пароль к LDAP:"
+
+#. Type: string
+#. Description
+#: ../liblemonldap-ng-conf-perl.templates:7001
+msgid ""
+"Set here the password for the Lemonldap::NG LDAP account. You can modify "
+"this value later using the Lemonldap::NG manager."
+msgstr ""
+"Введите пароль к учётной записи Lemonldap::NG в LDAP. "
+"Позже вы можете изменить это значение через менеджер Lemonldap::NG."
+

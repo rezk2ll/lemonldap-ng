@@ -11,7 +11,7 @@ use Crypt::Rijndael;
 use MIME::Base64;
 use base qw(Crypt::Rijndael);
 
-our $VERSION = '0.1';
+our $VERSION = '0.2';
 
 our $msg;
 

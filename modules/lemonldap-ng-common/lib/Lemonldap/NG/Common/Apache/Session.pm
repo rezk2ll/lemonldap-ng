@@ -10,7 +10,7 @@ package Lemonldap::NG::Common::Apache::Session;
 use strict;
 use Storable qw(thaw);
 
-our $VERSION = 0.2;
+our $VERSION = 0.21;
 
 BEGIN {
 
