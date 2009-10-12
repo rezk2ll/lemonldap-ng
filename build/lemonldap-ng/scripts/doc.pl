@@ -44,6 +44,7 @@ my $docs = {
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/CAS'                           => '4.5-CAS-authentication-backend.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/AuthRemote'                    => '4.5-Remote-authentication-backend.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/AuthMulti'                     => '4.5-Multiple-authentication-backend.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/AuthProxy'                     => '4.5-Proxy-authentication-module.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/AuthSAML'                      => '4.5-SAML-authentication-backend.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocLA?language=fr'             => '4.5-Liberty-Alliance-authentication-backend-fr.html',
     # User backends

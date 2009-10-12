@@ -38,6 +38,10 @@ __END__
 Lemonldap::NG::Portal::AuthProxy - Authentication module for Lemonldap::NG
 that delegates authentication to a remote Lemonldap::NG portal.
 
+The difference with Remote authentication module is that the client will never
+be redirect to the main Lemonldap::NG portal. This configuration is usable if
+you want to expose your internal SSO to another network (DMZ).
+
 =head1 SYNOPSIS
 
   use Lemonldap::NG::Portal::SharedConf;
@@ -46,14 +50,14 @@ that delegates authentication to a remote Lemonldap::NG portal.
          # REQUIRED PARAMETERS
          authentication      => 'Proxy', 
          userDB          => 'Proxy',
-         soapAuthService => 'https://remote.lemonldap-ng.com/',
+         soapAuthService => 'https://auth.internal.network/',
   
          # OTHER PARAMETERS
          # remoteCookieName (default: same name)
          remoteCookieName => 'lemonldap',
          # soapSessionService (default ${soapAuthService}index.pl/sessions)
          soapSessionService =>
-            'https://remote.lemonldap-ng.com/index.pl/sessions',
+            'https://auth2.internal.network/index.pl/sessions',
     );
 
 =head1 DESCRIPTION
