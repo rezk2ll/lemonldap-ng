@@ -20,10 +20,6 @@ use base qw(Lemonldap::NG::Portal::_WebForm);
 # Load Net::LDAP::Control::PasswordPolicy if needed
 # @return Lemonldap::NG::Portal constant
 sub authInit {
-    my $self = shift;
-    if ( $self->{ldapPpolicyControl} and not $self->ldap->loadPP()) {
-        return PE_LDAPERROR;
-    }
     PE_OK;
 }
 

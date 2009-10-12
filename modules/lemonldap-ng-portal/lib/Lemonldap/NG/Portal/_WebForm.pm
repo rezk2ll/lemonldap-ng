@@ -27,15 +27,15 @@ sub extractFormInfo {
     return PE_FORMEMPTY
       unless (
         (
-            (
-                length( $self->{'user'} = $self->param('user') ) > 0
-            )
+            ( length( $self->{'user'} = $self->param('user') ) > 0 )
             && (
                 (
                     length( $self->{'password'} = $self->param('password') ) > 0
                 )
                 || (
-                    length($self->{'newpassword'} = $self->param('newpassword') ) > 0
+                    length(
+                        $self->{'newpassword'} = $self->param('newpassword')
+                    ) > 0
                 )
             )
         )
@@ -43,7 +43,7 @@ sub extractFormInfo {
       );
     $self->{'oldpassword'}     = $self->param('oldpassword');
     $self->{'confirmpassword'} = $self->param('confirmpassword');
-    $self->{'timezone'} = $self->param('timezone');
+    $self->{'timezone'}        = $self->param('timezone');
     PE_OK;
 }
 
@@ -68,7 +68,7 @@ sub setAuthSessionInfo {
 
     # Store user timezone
     $self->{sessionInfo}->{'_timezone'} = $self->{'timezone'};
-    
+
     PE_OK;
 }
 

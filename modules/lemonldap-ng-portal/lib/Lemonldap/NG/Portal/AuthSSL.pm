@@ -45,7 +45,8 @@ sub extractFormInfo {
         return PE_OK;
     }
     elsif ( $self->{SSLRequire} ) {
-        $self->_sub('userError',"No certificate found for $ENV{REMOTE_ADDR}");
+        $self->_sub( 'userError',
+            "No certificate found for $ENV{REMOTE_ADDR}" );
         return PE_CERTIFICATEREQUIRED;
     }
     $self->{AuthLDAPFilter} = '';

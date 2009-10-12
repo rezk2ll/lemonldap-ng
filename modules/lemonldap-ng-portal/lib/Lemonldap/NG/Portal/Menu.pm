@@ -11,9 +11,9 @@ require Lemonldap::NG::Common::CGI;
 use Lemonldap::NG::Portal::SharedConf;
 use Lemonldap::NG::Portal::_LDAP 'ldap';    #link protected ldap Object used to change passwords only
 use XML::LibXML;
-use Lemonldap::NG::Common::Safelib;    #link protected safe Safe object
+use Lemonldap::NG::Common::Safelib;           #link protected safe Safe object
 use Safe;
-use Lemonldap::NG::Portal::PasswordDBLDAP; #inherits
+use Lemonldap::NG::Portal::PasswordDBLDAP;    #inherits
 
 #inherits Net::LDAP::Control::PasswordPolicy
 
@@ -217,7 +217,7 @@ sub appslistDescription {
 # @return XML root element object
 sub _getXML {
     my $self = shift;
-    return $self->{_xml} if($self->{_xml});
+    return $self->{_xml} if ( $self->{_xml} );
 
     # Parse XML file
     my $parser = XML::LibXML->new();
@@ -300,9 +300,10 @@ sub _displayApplication {
           || "" );
 
     # Display application
-    $html .= "<li title=\"$appid\" class=\"appname\"><span>"
-     . ($appuri ? "<a href=\"$appuri\">$appname</a>" : "<a>$appname</a>")
-     . "</span>\n";
+    $html .=
+        "<li title=\"$appid\" class=\"appname\"><span>"
+      . ( $appuri ? "<a href=\"$appuri\">$appname</a>" : "<a>$appname</a>" )
+      . "</span>\n";
     my @appnodes = $app->findnodes("application");
     if (@appnodes) {
         $html .= "<ul>";
@@ -355,9 +356,9 @@ sub _displayDescription {
 # @param $root XML root element
 # @return XML_string
 sub _filterXML {
-    my $self = shift;
+    my $self   = shift;
     my ($root) = @_;
-    my @cat = $root->getElementsByTagName('category');
+    my @cat    = $root->getElementsByTagName('category');
     foreach my $cat (@cat) {
         $self->_filterApp($cat);
     }
@@ -369,11 +370,11 @@ sub _filterXML {
 }
 
 sub _filterApp {
-    my($self,$node)=@_;
+    my ( $self, $node ) = @_;
     my @apps = $node->getChildrenByTagName('application');
-    my $tag = 0;
-    foreach(@apps) {
-        my $stag = $self->_filterApp($_);
+    my $tag  = 0;
+    foreach (@apps) {
+        my $stag       = $self->_filterApp($_);
         my $appdisplay = $_->getChildrenByTagName('display')->string_value();
         my $appuri =
           $self->_userParam( $_->getChildrenByTagName('uri')->string_value() );
@@ -389,8 +390,8 @@ sub _filterApp {
 
         # Check grant function if display is "auto" (this is the default)
         unless ( $self->_grant($appuri) ) {
-            if($stag) {
-                eval {$_->getChildrenByTagName('uri')->unbindNode() };
+            if ($stag) {
+                eval { $_->getChildrenByTagName('uri')->unbindNode() };
                 $tag++;
             }
             else {

@@ -41,9 +41,9 @@ sub new {
     }
     $self = Net::LDAP->new(
         \@servers,
-            onerror => undef,
+        onerror => undef,
         ( $portal->{ldapPort} ? ( port => $portal->{ldapPort} ) : () ),
-          );
+    );
     unless ($self) {
         $portal->lmLog( $@, 'error' );
         return 0;
@@ -98,7 +98,7 @@ sub loadPP {
     return 1 if ($ppLoaded);
 
     # require Perl module
-    eval {require Net::LDAP::Control::PasswordPolicy};
+    eval { require Net::LDAP::Control::PasswordPolicy };
     if ($@) {
         $self->{portal}->lmLog(
             "Module Net::LDAP::Control::PasswordPolicy not found in @INC",
@@ -121,10 +121,7 @@ sub userBind {
         my $pp = Net::LDAP::Control::PasswordPolicy->new();
 
         # Bind with user credentials
-        my $mesg = $self->bind(
-            @_,
-            control  => [$pp]
-        );
+        my $mesg = $self->bind( @_, control => [$pp] );
 
         # Get server control response
         my ($resp) = $mesg->control("1.3.6.1.4.1.42.2.27.8.5.1");
@@ -137,7 +134,8 @@ sub userBind {
 
         my $pp_error = $resp->pp_error;
         if ( defined $pp_error ) {
-            $self->{portal}->_sub( 'userError', "Password policy error $pp_error for $self->{portal}->{user}" );
+            $self->{portal}->_sub( 'userError',
+                "Password policy error $pp_error for $self->{portal}->{user}" );
             return [
                 PE_PP_PASSWORD_EXPIRED,
                 PE_PP_ACCOUNT_LOCKED,
@@ -148,20 +146,21 @@ sub userBind {
                 PE_PP_PASSWORD_TOO_SHORT,
                 PE_PP_PASSWORD_TOO_YOUNG,
                 PE_PP_PASSWORD_IN_HISTORY,
-            ]->[$pp_error];
+              ]->[$pp_error]
+              or PE_ERROR;
         }
         elsif ( $mesg->code == 0 ) {
             return PE_OK;
         }
     }
     else {
-        my $mesg =
-          $self->bind( @_ );
+        my $mesg = $self->bind(@_);
         if ( $mesg->code == 0 ) {
             return PE_OK;
         }
     }
-    $self->{portal}->_sub( 'userError', "Bad password for $self->{portal}->{user}" );
+    $self->{portal}
+      ->_sub( 'userError', "Bad password for $self->{portal}->{user}" );
     return PE_BADCREDENTIALS;
 }
 
@@ -183,68 +182,94 @@ sub userModifyPassword {
 
     # First case: no ppolicy
     if ( !$self->{portal}->{ldapPpolicyControl} ) {
-       
-        if ( $self->{portal}->{ldapSetPassword} ) { 
+
+        if ( $self->{portal}->{ldapSetPassword} ) {
+
             # Use SetPassword extended operation
             use Net::LDAP::Extension::SetPassword;
-            $mesg = ( $oldpassword )
-                ? $self->set_password( user => $dn,
-                                       oldpasswd => $oldpassword,
-                                       newpassword => $newpassword )
-                : $self->set_password( user => $dn,
-                                       newpassword => $newpassword );
+            $mesg =
+              ($oldpassword)
+              ? $self->set_password(
+                user        => $dn,
+                oldpasswd   => $oldpassword,
+                newpassword => $newpassword
+              )
+              : $self->set_password(
+                user        => $dn,
+                newpassword => $newpassword
+              );
+
             # Catch the "Unwilling to perform" error
             return PE_BADOLDPASSWORD if ( $mesg->code == 53 );
-        } else {
-            if ( $oldpassword ) {
+        }
+        else {
+            if ($oldpassword) {
+
                 # Check old password with a bind
-                $mesg = $self->bind ($dn, password => $oldpassword);
+                $mesg = $self->bind( $dn, password => $oldpassword );
                 return PE_BADOLDPASSWORD if ( $mesg->code != 0 );
+
                 # Rebind as Manager
                 $self->bind();
             }
+
             # Use standard modification
-            $mesg = $self->modify( $dn,
-                                   replace => { userPassword => $newpassword } );
+            $mesg =
+              $self->modify( $dn, replace => { userPassword => $newpassword } );
         }
 
         return PE_WRONGMANAGERACCOUNT
           if ( $mesg->code == 50 || $mesg->code == 8 );
         return PE_LDAPERROR unless ( $mesg->code == 0 );
-        $self->{portal}->_sub( 'userNotice', "Password changed $self->{portal}->{user}" );
+        $self->{portal}
+          ->_sub( 'userNotice', "Password changed $self->{portal}->{user}" );
         return PE_PASSWORD_OK;
     }
     else {
+
         # Create Control object
         my $pp = Net::LDAP::Control::PasswordPolicy->new;
 
-        if ( $self->{portal}->{ldapSetPassword} ) { 
+        if ( $self->{portal}->{ldapSetPassword} ) {
+
             # Use SetPassword extended operation
             # Warning: need a patch on Perl-LDAP
             # See http://groups.google.com/group/perl.ldap/browse_thread/thread/5703a41ccb17b221/377a68f872cc2bb4?lnk=gst&q=setpassword#377a68f872cc2bb4
             use Net::LDAP::Extension::SetPassword;
-            $mesg = ( $oldpassword )
-                ? $self->set_password( user => $dn,
-                                       oldpasswd => $oldpassword,
-                                       newpassword => $newpassword,
-                                       control => [$pp] )
-                : $self->set_password( user => $dn,
-                                       newpassword => $newpassword,
-                                       control => [$pp] );
+            $mesg =
+              ($oldpassword)
+              ? $self->set_password(
+                user        => $dn,
+                oldpasswd   => $oldpassword,
+                newpassword => $newpassword,
+                control     => [$pp]
+              )
+              : $self->set_password(
+                user        => $dn,
+                newpassword => $newpassword,
+                control     => [$pp]
+              );
+
             # Catch the "Unwilling to perform" error
             return PE_BADOLDPASSWORD if ( $mesg->code == 53 );
-        } else { 
-            if ( $oldpassword ) {
+        }
+        else {
+            if ($oldpassword) {
+
                 # Check old password with a bind
-                $mesg = $self->bind($dn, password => $oldpassword);
+                $mesg = $self->bind( $dn, password => $oldpassword );
                 return PE_BADOLDPASSWORD if ( $mesg->code != 0 );
+
                 # Rebind as Manager
                 $self->bind();
             }
+
             # Use standard modification
-            $mesg = $self->modify( $dn,
-                                   replace => { userPassword => $newpassword }, 
-                                   control => [$pp] );
+            $mesg = $self->modify(
+                $dn,
+                replace => { userPassword => $newpassword },
+                control => [$pp]
+            );
         }
 
         # Get server control response
@@ -253,14 +278,17 @@ sub userModifyPassword {
         return PE_WRONGMANAGERACCOUNT
           if ( $mesg->code == 50 || $mesg->code == 8 );
         if ( $mesg->code == 0 ) {
-            $self->{portal}->_sub( 'userNotice', "Password changed $self->{portal}->{user}" );
+            $self->{portal}->_sub( 'userNotice',
+                "Password changed $self->{portal}->{user}" );
             return PE_PASSWORD_OK;
         }
 
         if ( defined $resp ) {
             my $pp_error = $resp->pp_error;
             if ( defined $pp_error ) {
-            $self->{portal}->_sub( 'userError', "Password policy error $pp_error for $self->{portal}->{user}" );
+                $self->{portal}->_sub( 'userError',
+            "Password policy error $pp_error for $self->{portal}->{user}"
+                );
                 return [
                     PE_PP_PASSWORD_EXPIRED,
                     PE_PP_ACCOUNT_LOCKED,
@@ -288,8 +316,17 @@ sub ldap {
     if ( $self->{ldap} = Lemonldap::NG::Portal::_LDAP->new($self)
         and my $mesg = $self->{ldap}->bind )
     {
-        return $self->{ldap} if ( $mesg->code == 0 );
-        $self->lmLog( "LDAP error: " . $mesg->error, 'error' );
+        if ( $mesg->code != 0 ) {
+            $self->lmLog( "LDAP error: " . $mesg->error, 'error' );
+        }
+        else {
+            if ( $self->{ldapPpolicyControl} and not $self->{ldap}->loadPP() ) {
+                $self->lmLog("LDAP password policy error");
+            }
+            else {
+                return $self->{ldap};
+            }
+        }
     }
     else {
         $self->lmLog( "LDAP error: $@", 'error' );

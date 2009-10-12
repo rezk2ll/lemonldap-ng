@@ -20,15 +20,16 @@ sub startSoapServices {
     $self->{CustomSOAPServices} ||= {};
 
     # TODO: insert here the SAML SOAP functions
-    $self->{CustomSOAPServices}->{'/SAMLAuthority'} = '' if($self->{SAMLIssuer});
+    $self->{CustomSOAPServices}->{'/SAMLAuthority'} = ''
+      if ( $self->{SAMLIssuer} );
     if (
         $ENV{PATH_INFO}
         and my $tmp = {
-            %{$self->{CustomSOAPServices}},
+            %{ $self->{CustomSOAPServices} },
             '/sessions'      => 'getAttributes',
             '/adminSessions' => 'getAttributes setAttributes '
               . 'newSession deleteSession get_key_from_all_sessions',
-            '/config'        => 'getConfig lastCfg'
+            '/config' => 'getConfig lastCfg'
         }->{ $ENV{PATH_INFO} }
       )
     {
