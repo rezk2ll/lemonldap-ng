@@ -8,7 +8,7 @@ Build-Depends-Indep:libapache-session-perl, libnet-ldap-perl, libdbi-perl, libww
 Standards-Version: 3.8.3
 
 Package: lemonldap-ng
-Section: web
+Section: perl
 Architecture: all
 Depends: ${misc:Depends}, liblemonldap-ng-handler-perl (= ${binary:Version}), liblemonldap-ng-manager-perl (= ${binary:Version}), liblemonldap-ng-portal-perl (= ${binary:Version})
 Description: Lemonldap::NG Web-SSO system

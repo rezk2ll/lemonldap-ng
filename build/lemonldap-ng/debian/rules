@@ -96,8 +96,7 @@ binary-indep: build install
 		cd debian/lemonldap-ng/usr/share/doc/lemonldap-ng/examples && \
 		ln -s ../../liblemonldap-ng-handler-perl/examples handler && \
 		ln -s ../../liblemonldap-ng-manager-perl/examples manager && \
-		ln -s ../../liblemonldap-ng-portal-perl/examples portal && \
-		ln -s ../../liblemonldap-ng-conf-perl/examples/ conf
+		ln -s ../../liblemonldap-ng-portal-perl/examples portal
 	chmod +x debian/liblemonldap-ng-portal-perl$(LMSHAREDIR)bin/purgeCentralCache
 #	dh_installmenu
 	dh_installdebconf	
