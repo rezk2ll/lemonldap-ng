@@ -71,9 +71,9 @@ sub process {
             sub {
                 my $entry = shift;
                 my $id    = shift;
-                next if($entry->{_httpSessionType});
-                push
-                  @{ $byUid->{ $entry->{$whatToTrace} }->{ $entry->{$ipField} } },
+                next if ( $entry->{_httpSessionType} );
+                push @{ $byUid->{ $entry->{$whatToTrace} }
+                      ->{ $entry->{$ipField} } },
                   { id => $id, _utime => $entry->{_utime} };
                 undef;
             }
@@ -89,7 +89,9 @@ sub process {
             print "<li id=\"di$uid\" class=\"closed\"><span>$uid</span><ul>";
             foreach my $ip ( sort keys %{ $byUid->{$uid} } ) {
                 print "<li class=\"open\" id=\"di$ip\"><span>$ip</span><ul>";
-                foreach my $session ( @{ $byUid->{$uid}->{$ip} } ) {
+                foreach my $session ( sort { $a->{_utime} <=> $b->{_utime} }
+                    @{ $byUid->{$uid}->{$ip} } )
+                {
                     print
 "<li id=\"di$session->{id}\"><span onclick=\"display('$session->{id}');\">"
                       . localtime( $session->{_utime} )
@@ -112,7 +114,7 @@ sub process {
             sub {
                 my $entry = shift;
                 my $id    = shift;
-                next if($entry->{_httpSessionType});
+                next if ( $entry->{_httpSessionType} );
                 if ( $entry->{$ipField} =~ /^$reip$/ ) {
                     push @{ $byUid->{ $entry->{$ipField} }
                           ->{ $entry->{$whatToTrace} } },
@@ -154,7 +156,7 @@ sub process {
             sub {
                 my $entry = shift;
                 my $id    = shift;
-                next if($entry->{_httpSessionType});
+                next if ( $entry->{_httpSessionType} );
                 if ( $entry->{$whatToTrace} =~ /^$reuser$/ ) {
                     push @{ $byUid->{ $entry->{$whatToTrace} } },
                       { id => $id, _utime => $entry->{_utime} };
@@ -191,9 +193,13 @@ sub process {
         }
         else {
             my $uid = $h{uid};
-            if($h{_httpSession}) {
+            if ( $h{_httpSession} ) {
                 my %h2;
-                eval { tie %h2, $globalStorage, $h{_httpSession}, $globalStorageOptions; tied(%h2)->delete(); };
+                eval {
+                    tie %h2, $globalStorage, $h{_httpSession},
+                      $globalStorageOptions;
+                    tied(%h2)->delete();
+                };
                 if ($@) {
                     print "<strong>Error : $@</strong><br/>";
                 }
@@ -222,7 +228,7 @@ sub process {
 "<input type=\"button\" onclick=\"del('$id');\" value=\"Effacer la session\" /><p><b>Session d&eacute;marr&eacute;e le</b> "
               . localtime( $h{_utime} )
               . '</p><p><b>Membre des groupes SSO :</b><ul>';
-            print "<li>$_</li>" foreach ( split /\s+/, $h{groups} );
+            print "<li>$_</li>" foreach ( sort split /\s+/, $h{groups} );
             print '</ul></p>';
             print
 '<p><b>Attributs et macros :</b></p><table border="0" witdh="100%">';
@@ -249,7 +255,7 @@ sub process {
             sub {
                 my $entry = shift;
                 my $id    = shift;
-                next if($entry->{_httpSessionType});
+                next if ( $entry->{_httpSessionType} );
                 if ( $entry->{$ipField} eq $ip ) {
                     push @{ $byUser->{ $entry->{$whatToTrace} } },
                       { id => $id, _utime => $entry->{_utime} };
@@ -259,7 +265,9 @@ sub process {
         );
         foreach my $user ( sort keys %$byUser ) {
             print "<li id=\"ip$user\"><span>$user</span><ul>";
-            foreach my $session ( @{ $byUser->{$user} } ) {
+            foreach my $session ( sort { $a->{_utime} <=> $b->{_utime} }
+                @{ $byUser->{$user} } )
+            {
                 print
 "<li id=\"ip$session->{id}\"><span onclick=\"display('$session->{id}');\">"
                   . localtime( $session->{_utime} )
@@ -278,7 +286,7 @@ sub process {
             sub {
                 my $entry = shift;
                 my $id    = shift;
-                next if($entry->{_httpSessionType});
+                next if ( $entry->{_httpSessionType} );
                 if ( $entry->{$whatToTrace} eq $uid ) {
                     push @{ $byIp->{ $entry->{$ipField} } },
                       { id => $id, _utime => $entry->{_utime} };
@@ -288,7 +296,9 @@ sub process {
         );
         foreach my $ip ( sort keys %$byIp ) {
             print "<li class=\"open\" id=\"uid$ip\"><span>$ip</span><ul>";
-            foreach my $session ( @{ $byIp->{$ip} } ) {
+            foreach my $session ( sort { $a->{_utime} <=> $b->{_utime} }
+                @{ $byIp->{$ip} } )
+            {
                 print
 "<li id=\"uid$session->{id}\"><span onclick=\"display('$session->{id}');\">"
                   . localtime( $session->{_utime} )
@@ -307,7 +317,7 @@ sub process {
             $globalStorageOptions,
             sub {
                 my $entry = shift;
-                next if($entry->{_httpSessionType});
+                next if ( $entry->{_httpSessionType} );
                 $entry->{$whatToTrace} =~ /^$letter/ or return undef;
                 $byUid->{ $entry->{$whatToTrace} }++;
             },
@@ -335,7 +345,7 @@ sub process {
             $globalStorageOptions,
             sub {
                 my $entry = shift;
-                next if($entry->{_httpSessionType});
+                next if ( $entry->{_httpSessionType} );
                 $entry->{$ipField} =~ /^$repartial(\d+)/ or return undef;
                 $byIp->{$1}++;
                 $count++;
@@ -375,7 +385,7 @@ sub process {
             $globalStorageOptions,
             sub {
                 my $entry = shift;
-                next if($entry->{_httpSessionType});
+                next if ( $entry->{_httpSessionType} );
                 $entry->{$whatToTrace} =~ /^(\w)/ or return undef;
                 $byUid->{$1}++;
                 $count++;
