@@ -3,7 +3,7 @@ name:               Lemonldap-NG-Portal
 version:            0.90
 abstract:           The authentication portal part of Lemonldap::NG Web-SSO
 author:
-    - Xavier Guimard <x.guimard@free.fr>
+    - Xavier Guimard <x.guimard@free.fr>, Clément Oudot <clement@oodo.net>, Thomas Chemineau <thomas.chemineau@gmail.com>, Mikael Ates <mikael.ates@univ-st-etienne.fr>
 license:            gpl
 distribution_type:  module
 configure_requires:

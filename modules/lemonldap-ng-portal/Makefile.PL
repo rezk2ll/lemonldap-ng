@@ -33,6 +33,9 @@ WriteMakefile(
             ABSTRACT_FROM =>
               'lib/Lemonldap/NG/Portal.pm',    # retrieve abstract from module
             AUTHOR => 'Xavier Guimard <x.guimard@free.fr>'
+              . ', Clément Oudot <clement@oodo.net>'
+              . ', Thomas Chemineau <thomas.chemineau@gmail.com>'
+              . ', Mikael Ates <mikael.ates@univ-st-etienne.fr>'
           )
         : ()
     ),

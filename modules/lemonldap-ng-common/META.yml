@@ -3,7 +3,7 @@ name:               Lemonldap-NG-Common
 version:            0.95
 abstract:           Common files for Lemonldap::NG infrastructure
 author:
-    - guimard <guimard@>
+    - Xavier Guimard <x.guimard@free.fr>, Clément Oudot <clement@oodo.net>
 license:            perl
 distribution_type:  module
 configure_requires:
