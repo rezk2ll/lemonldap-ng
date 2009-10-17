@@ -5,9 +5,10 @@ use ExtUtils::MakeMaker;
 WriteMakefile(
     NAME         => 'Lemonldap::NG::Manager',
     VERSION_FROM => 'lib/Lemonldap/NG/Manager.pm',    # finds $VERSION
+    LICENSE      => 'perl',
+    BUILD_REQUIRES => { 'IO::String' => 0, },
     PREREQ_PM    => {
         'CGI'                    => 3.08,
-        'IO::String'             => 0,
         'Lemonldap::NG::Common'  => 0.93,
         'Lemonldap::NG::Handler' => 0.91,
         'LWP::UserAgent'         => 0,

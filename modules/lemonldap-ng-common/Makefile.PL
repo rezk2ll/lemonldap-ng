@@ -21,13 +21,14 @@ EOT
 WriteMakefile(
     NAME         => 'Lemonldap::NG::Common',
     VERSION_FROM => 'lib/Lemonldap/NG/Common.pm',    # finds $VERSION
+    LICENSE      => 'perl',
+    BUILD_REQUIRES => { 'IO::String' => 0, },
     PREREQ_PM    => {
         'CGI'              => 3.08,
         'DBI'              => 0,
         'Storable'         => 0,
         'Regexp::Assemble' => 0,
         'Cache::Cache'     => 0,
-        'IO::String'       => 0,
         'SOAP::Lite'       => 0,
         'Crypt::Rijndael'  => 0,
         'HTTP::Headers'    => 0,

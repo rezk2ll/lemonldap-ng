@@ -5,19 +5,24 @@ use ExtUtils::MakeMaker;
 WriteMakefile(
     NAME         => 'Lemonldap::NG::Portal',
     VERSION_FROM => 'lib/Lemonldap/NG/Portal.pm',
-    PREREQ_PM    => {
+    LICENSE      => 'gpl',
+    META_MERGE   => {
+        'recommends' => {
+            'MIME::Lite'          => 0,
+            'Email::Date::Format' => 0,
+        },
+    },
+    BUILD_REQUIRES => { 'IO::String' => 0, },
+    PREREQ_PM      => {
         'Apache::Session'        => 0,
         'Net::LDAP'              => 0,
         'CGI'                    => 3.08,
         'CGI::Session'           => 0,
         'HTML::Template'         => 0,
-        'IO::String'             => 0,
         'Lemonldap::NG::Common'  => 0.93,
         'Lemonldap::NG::Handler' => 0.91,
         'XML::LibXML'            => 0,
         'XML::LibXSLT'           => 0,
-        'MIME::Lite'             => 0,
-        'Email::Date::Format'    => 0,
         'String::Random'         => 0,
         'HTML::Template'         => 0,
     },
