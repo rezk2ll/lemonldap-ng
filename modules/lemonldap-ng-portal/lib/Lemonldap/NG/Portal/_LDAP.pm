@@ -146,8 +146,7 @@ sub userBind {
                 PE_PP_PASSWORD_TOO_SHORT,
                 PE_PP_PASSWORD_TOO_YOUNG,
                 PE_PP_PASSWORD_IN_HISTORY,
-              ]->[$pp_error]
-              or PE_ERROR;
+              ]->[$pp_error];
         }
         elsif ( $mesg->code == 0 ) {
             return PE_OK;
