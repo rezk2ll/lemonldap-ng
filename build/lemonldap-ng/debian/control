@@ -29,7 +29,7 @@ Description: Lemonldap::NG Web-SSO system documentation
 
 Package: liblemonldap-ng-handler-perl
 Architecture: all
-Depends: ${misc:Depends}, libapache-session-perl, libwww-perl, libcache-cache-perl, liblemonldap-ng-conf-perl (= ${binary:Version}), libapache2-mod-perl2 | libapache-mod-perl, liburi-perl
+Depends: ${misc:Depends}, libapache-session-perl, libwww-perl, libcache-cache-perl, liblemonldap-ng-conf-perl (= ${binary:Version}), libapache2-mod-perl2, liburi-perl
 Suggests: liblemonldap-ng-portal-perl
 Description: Lemonldap::NG Apache module part
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies

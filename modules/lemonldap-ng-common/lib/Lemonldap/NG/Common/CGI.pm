@@ -220,7 +220,8 @@ sub startSyslog {
     my $self = shift;
     return if ( $self->{_syslog} );
     eval {
-        use Sys::Syslog;
+        require Sys::Syslog;
+        Sys::Syslog->import(':standard');
         openlog( 'lemonldap-ng', 'ndelay', $self->{syslog} );
     };
     $self->abort( "Unable to use syslog", $@ ) if ($@);
