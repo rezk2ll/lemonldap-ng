@@ -3,7 +3,8 @@ package Lemonldap::NG::Common::Conf::DBI;
 use strict;
 use DBI;
 use MIME::Base64;
-use Lemonldap::NG::Common::Conf::Constants;
+use Lemonldap::NG::Common::Conf::Constants; #inherits
+use Lemonldap::NG::Common::Conf::Serializer;
 
 our $VERSION = 0.17;
 
@@ -79,6 +80,7 @@ sub unlock {
 
 sub store {
     my ( $self, $fields ) = @_;
+    my $fields = $self->serialize($fields);
     my $tmp =
       $self->dbh->do( "insert into "
           . $self->{dbiTable} . " ("
@@ -107,7 +109,7 @@ sub load {
         $self->logError;
         return 0;
     }
-    return $row;
+    return $self->unserialize($row);
 }
 
 sub delete {

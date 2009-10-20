@@ -9,7 +9,6 @@ package Lemonldap::NG::Common::Conf;
 
 use strict;
 no strict 'refs';
-use Data::Dumper;
 use Lemonldap::NG::Common::Conf::Constants; #inherits
 use Lemonldap::NG::Common::Crypto; #link protected cipher Object "cypher" in configuration hash
 use Regexp::Assemble;
@@ -55,8 +54,11 @@ sub new {
     unless ( $self->{mdone} ) {
         $self->_readConfFile( $self->{confFile} ) unless ( $self->{type} );
         unless ( $self->{type} ) {
-            $msg .= "Error: configStorage: type is not defined\n";
+            $msg .= 'Error: configStorage: type is not defined';
             return 0;
+        }
+        unless ( $self->{type} =~ /^[\w:]+$/ ) {
+            $msg .= "Error: configStorage: type is not well formed";
         }
         $self->{type} = "Lemonldap::NG::Common::Conf::$self->{type}"
           unless $self->{type} =~ /^Lemonldap::/;
@@ -126,32 +128,9 @@ sub saveConf {
     return CONFIG_WAS_CHANGED
       if ( $conf->{cfgNum} != $self->lastCfg or $self->isLocked );
     $self->lock or return DATABASE_LOCKED;
-    my $fields;
-    local $Data::Dumper::Indent = 0;
-    local $Data::Dumper::Varname = "data";
-    while ( my ( $k, $v ) = each(%$conf) ) {
-        next if ( $k =~ /^(?:reVHosts|cipher)$/ );
-        if ( ref($v) ) {
-            $fields->{$k} = Dumper($v);
-            $fields->{$k} =~ s/'/&#39;/g;
-            $fields->{$k} = "'$fields->{$k}'";
-        }
-        elsif ( $v =~ /^\d+$/ ) {
-            $fields->{$k} = "$v";
-        }
-        else {
-
-            # mono-line
-            $v =~ s/[\r\n]/ /gm;
-
-            # trim
-            $v =~ s/^\s*(.*?)\s*$/$1/;
-            $fields->{$k} = "'$v'";
-        }
-    }
-    $fields->{cfgNum} = $self->lastCfg + 1;
-    $msg = "Configuration $fields->{cfgNum} stored";
-    return $self->store($fields);
+    $conf->{cfgNum}++;
+    $msg = "Configuration $conf->{cfgNum} stored";
+    return $self->store($conf);
 }
 
 ## @method hashRef getConf(hashRef args)
@@ -234,41 +213,7 @@ sub getDBConf {
           ? ( $a[ $#a + $args->{cfgNum} ] )
           : $a[0];
     }
-    my $fields = $self->load( $args->{cfgNum} );
-    my $conf;
-    while ( my ( $k, $v ) = each(%$fields) ) {
-        $v =~ s/^'(.*)'$/$1/s;
-        if ( $k =~
-/^(?:exportedVars|locationRules|groups|exportedHeaders|macros|globalStorageOptions)$/
-            and $v ||= {}
-            and not ref($v) )
-        {
-            $conf->{$k} = {};
-            if ( defined($v) and $v !~ /^\$/ ) {
-                print STDERR
-"Lemonldap::NG : Warning: configuration is in old format, you've to migrate !\n";
-                eval { require Storable; require MIME::Base64; };
-                if ($@) {
-                    $msg = "Error : $@";
-                    return 0;
-                }
-                $conf->{$k} = Storable::thaw( MIME::Base64::decode_base64($v) );
-            }
-            else {
-                my $data;
-                $v =~ s/^\$([_a-zA-Z][_a-zA-Z0-9]*) *=/\$data =/;
-                $v =~ s/&#?39;/'/g;
-                eval $v;
-                print STDERR
-"Lemonldap::NG : Error while reading configuration with $k key: $@\n"
-                  if ($@);
-                $conf->{$k} = $data;
-            }
-        }
-        else {
-            $conf->{$k} = $v;
-        }
-    }
+    my $conf = $self->load( $args->{cfgNum} );
     $msg = "Get configuration $conf->{cfgNum}";
     my $re = Regexp::Assemble->new();
     foreach ( keys %{ $conf->{locationRules} } ) {

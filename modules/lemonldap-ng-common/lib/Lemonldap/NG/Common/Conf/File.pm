@@ -2,6 +2,7 @@ package Lemonldap::NG::Common::Conf::File;
 
 use strict;
 use Lemonldap::NG::Common::Conf::Constants; #inherits
+use Lemonldap::NG::Common::Conf::Serializer;
 
 our $VERSION = 0.23;
 
@@ -63,6 +64,7 @@ sub unlock {
 
 sub store {
     my ( $self, $fields ) = @_;
+    my $fields = $self->serialize($fields);
     my $mask = umask;
     umask( oct('0027') );
     unless ( open FILE,
@@ -98,7 +100,7 @@ sub load {
         }
     }
     close FILE;
-    return $f;
+    return $self->unserialize($f);
 }
 
 sub delete {
