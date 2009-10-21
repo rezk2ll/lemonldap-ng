@@ -115,7 +115,7 @@ sub process {
                 my $entry = shift;
                 my $id    = shift;
                 next if ( $entry->{_httpSessionType} );
-                if ( $entry->{$ipField} =~ /^$reip$/ ) {
+                if ( $entry->{$ipField} eq $reip ) {
                     push @{ $byUid->{ $entry->{$ipField} }
                           ->{ $entry->{$whatToTrace} } },
                       { id => $id, _utime => $entry->{_utime} };

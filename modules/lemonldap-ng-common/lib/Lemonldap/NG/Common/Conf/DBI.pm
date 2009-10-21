@@ -2,7 +2,6 @@ package Lemonldap::NG::Common::Conf::DBI;
 
 use strict;
 use DBI;
-use MIME::Base64;
 use Lemonldap::NG::Common::Conf::Constants; #inherits
 use Lemonldap::NG::Common::Conf::Serializer;
 

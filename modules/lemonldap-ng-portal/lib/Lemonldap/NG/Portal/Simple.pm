@@ -17,6 +17,7 @@ use CGI::Cookie;
 require POSIX;
 use Lemonldap::NG::Portal::_i18n;      #inherits
 use Lemonldap::NG::Common::Safelib;    #link protected safe Safe object
+use Lemonldap::NG::Common::Apache::Session;    #link protected session Apache::Session object
 use Safe;
 
 # Special comments for doxygen
@@ -559,7 +560,8 @@ sub process {
           SAMLForUnAuthUser authInit extractFormInfo userDBInit getUser
           setAuthSessionInfo passwordDBInit modifyPassword setSessionInfo
           resetPasswordByMail setMacros setLocalGroups setGroups authenticate
-          store buildCookie checkNotification SAMLForAuthUser autoRedirect)
+          removeOther store buildCookie checkNotification SAMLForAuthUser
+          autoRedirect)
     );
     $self->updateStatus;
     return ( ( $self->{error} > 0 ) ? 0 : 1 );
@@ -795,6 +797,21 @@ sub authenticate {
     $self->_sub( 'userNotice',
         "Good authentication for "
           . $self->{sessionInfo}->{ $self->{whatToTrace} } );
+    PE_OK;
+}
+
+sub removeOther {
+    my $self = shift;
+    if($self->{singleSession} or $self->{singleIP}) {
+        my $sessions = $self->{globalStorage}->searchOn($self->{globalStorageOptions},$self->{whatToTrace},$self->{sessionInfo}->{$self->{whatToTrace}});
+        foreach my $id ( keys %$sessions ) {
+            my $h = $self->getApacheSession($id);
+            unless($self->{singleIP} and $self->{sessionInfo}->{ipAddr} eq $h->{ipAddr}) {
+                tied(%$h)->delete();
+                $self->lmLog("Deleting session $id",'debug');
+            }
+        }
+    }
     PE_OK;
 }
 
