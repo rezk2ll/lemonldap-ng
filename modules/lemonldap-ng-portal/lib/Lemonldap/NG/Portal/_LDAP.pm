@@ -5,7 +5,7 @@
 # LDAP common functions
 package Lemonldap::NG::Portal::_LDAP;
 
-require Net::LDAP; #inherits
+use Net::LDAP; #inherits
 use Exporter;
 use base qw(Exporter Net::LDAP);
 use Lemonldap::NG::Portal::Simple;

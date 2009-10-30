@@ -42,12 +42,7 @@ $h->doall();
 package Lemonldap::NG::Manager::Experimental;
 
 use strict;
-use MIME::Base64;
 use Lemonldap::NG::Handler::CGI qw(:globalStorage :locationRules);
-use Lemonldap::NG::Common::Conf::Constants;    #inherits
-use Lemonldap::NG::Common::Safelib;            #link protected safe Safe object
-
-#require Lemonldap::NG::Manager::_Struct; #inherits
 
 our $VERSION = '0.1';
 our ( $stylesheet, $parser );
@@ -56,8 +51,7 @@ our @ISA;
 BEGIN {
     require Lemonldap::NG::Manager::Help;      #inherits
     *process = *doall;
-    @ISA =
-      qw(Lemonldap::NG::Handler::CGI Lemonldap::NG::Manager::_Struct Lemonldap::NG::Manager::Uploader);
+    @ISA = qw(Lemonldap::NG::Handler::CGI Lemonldap::NG::Manager::Downloader Lemonldap::NG::Manager::Uploader Lemonldap::NG::Manager::_Struct);
 }
 
 sub new {
@@ -99,11 +93,18 @@ sub doall {
         $self->confUpload($rdata);
         $self->quit();
     }
+    elsif ( my $id = $self->param('newNode') ) {
+        print $self->header( -type => 'text/html; charset=utf8', );
+        print '<li class="doc-last"><span>test</span></li>';
+        exit;
+    }
+    #require Lemonldap::NG::Manager::Downloader; #inherits
     $self->{cfgNum} =
          $self->param('cfgNum')
       || $self->confObj->lastCfg()
       || 'UNAVAILABLE';
     if ( my $p = $self->param('node') ) {
+        print $self->header( -type => 'text/html; charset=utf8', );
         $self->node($p);
     }
     else {
@@ -114,7 +115,124 @@ sub doall {
     }
 }
 
+## @method protected void start()
+# Display HTTP and HTML headers.
+sub start {
+    my $self = shift;
+    print $self->header( -type => 'text/html; charset=utf8', );
+    print $self->start_html(
+        -title => shift || 'Lemonldap::NG Manager',
+        -encoding => 'utf8',
+        -script   => [
+            {
+                -language => 'JavaScript1.2',
+
+                #-src      => "lemonldap-ng-manager.js",
+                -src => "$self->{imagePath}/xlib.js",
+            },
+            {
+                -language => 'JavaScript1.2',
+                -src      => $self->{jqueryUri} || 'jquery.js',
+            },
+            {
+                -language => 'JavaScript1.2',
+                -src      => "$self->{imagePath}/tree.js",
+            },
+            {
+                -language => 'JavaScript1.2',
+                -code     => "var scriptname='$ENV{SCRIPT_NAME}';"
+                  . "var imagepath='$self->{imagePath}';",
+            },
+            {
+                -language => 'JavaScript1.2',
+                -src      => "$self->{imagePath}/manager.js",
+            },
+        ],
+        -style => {
+            -src => [
+                "$self->{imagePath}/manager.css",
+                ( $self->{personnalCss} ? $self->{personnalCss} : () )
+            ],
+        },
+    );
+}
+
+sub window {
+    my ( $self, $root, $data ) = @_;
+    print '<div class="clsTemporaryContainer">
+ <div style="visibility: visible;" id="idSplitter3" class="clsSplitter">
+  <div style="z-index: 2;" id="gauche" class="clsPane">
+   <img style="padding:4px;padding-left:12px;" alt="Lemonldap::NG" src="'
+      . $self->{imagePath}
+      . '/logo_lemonldap-ng.png"/><br/>&nbsp;<ul class="simpleTree">'
+      . $self->li( 'root', 'root' )
+      . $self->span( 'root', $root, $data, '', 'default' ) . '<ul>';
+}
+
+## @method protected void end()
+# Display the end of HTML page.
+sub end {
+    my $self = shift;
+    print << "EOF";
+</ul></li></ul></div><!-- end Pane -->
+<div style="overflow: hidden; z-index: 2;" id="droit" class="clsPane">
+ <div style="visibility: visible;" id="idSplitter32" class="clsSplitter">
+  <div style="z-index: 2;overflow:auto;height:500px;" id="haut" class="clsPane">
+   <form action="#" onsubmit="false">
+   <h2 id="content_title">Lemonldap::NG Manager</h2>
+   <div id="buttons">
+    <button onclick="\$.post(scriptname,{data: \$('#li_cm9vdA2').html()},function(data){return 1},'html');" >Sauvegarder</button>
+   </div>
+   <div id="content">
+    <div id="content_default" class="content">
+    Default
+    </div>
+    <div id="content_text" class="hidden">
+    <input type="text" id="text" onchange="setlmdata(currentId,this.value)"/>
+    </div>
+    <div id="content_securedCookie" class="hidden">
+    <input id="securedCookie0" type="radio" name="securedCookie" value="0" onclick="setlmdata('li_bGlfL3NlY3VyZWRDb29raWU1','0')" /> Cookie non sécurisé <br/>
+    <input id="securedCookie1" type="radio" name="securedCookie" value="1" onclick="setlmdata('li_bGlfL3NlY3VyZWRDb29raWU1','1')" /> Cookie sécurisé <br/>
+    <input id="securedCookie2" type="radio" name="securedCookie" value="2" onclick="setlmdata('li_bGlfL3NlY3VyZWRDb29raWU1','2')" /> 2 cookies <br/>
+    </div>
+    <div id="content_int" class="hidden">
+    <input type="text" id="int" onchange="setlmdata(currentId,this.value)"/>
+    </div>
+    <div id="content_btext" class="hidden">
+    <button onclick="newKey();return 0;">NewKey</button>
+    <input type="text" id="btextKey" onchange="setlmtext(currentId,this.value)"/> <input type="text" id="btextValue" onchange="setlmdata(currentId,this.value)"/>
+    </div>
+    <div id="content_rules" class="hidden">
+    <textarea id="rulKey" cols="30" rows="2" onchange="setlmtext(currentId,this.value)"></textarea>&nbsp;<textarea id="rulValue" cols="50" rows="2" onchange="setlmdata(currentId,this.value)"></textarea>
+    </div>
+   </div></form>
+  </div><!-- end Pane -->
+  <div style="z-index: 2;" id="bas" class="clsPane">
+   <div id="help">
+   </div>
+  </div><!-- end Pane -->
+  <div style="z-index: 1; cursor: n-resize;" id="barre2" class="clsDragBar clsDragBar-hframe">
+   &nbsp;
+  </div>
+ </div><!-- end Splitter -->
+</div><!-- end Pane -->
+<div style="z-index: 1; cursor: n-resize;" id="barre3" class="clsDragBar clsDragBar-vframe">
+</div>
+</div><!-- end Splitter -->
+</div><!-- end TemporaryContainer -->
+EOF
+    print $self->end_html();
+}
+
+package Lemonldap::NG::Manager::Downloader;
+
+use Lemonldap::NG::Common::Conf::Constants;    #inherits
+use Lemonldap::NG::Common::Safelib;            #link protected safe Safe object
+use MIME::Base64;
+# TODO
 use Data::Dumper;
+
+#require Lemonldap::NG::Manager::_Struct; #inherits
 
 sub node {
     my ( $self, $node ) = @_;
@@ -371,113 +489,6 @@ sub li {
     return "<li id=\"$id\"" . ( $class ? " class=\"$class\">" : ">" );
 }
 
-## @method protected void start()
-# Display HTTP and HTML headers.
-sub start {
-    my $self = shift;
-    print $self->header( -type => 'text/html; charset=utf8', );
-    print $self->start_html(
-        -title => shift || 'Lemonldap::NG Manager',
-        -encoding => 'utf8',
-        -script   => [
-            {
-                -language => 'JavaScript1.2',
-
-                #-src      => "lemonldap-ng-manager.js",
-                -src => "$self->{imagePath}/xlib.js",
-            },
-            {
-                -language => 'JavaScript1.2',
-                -src      => $self->{jqueryUri} || 'jquery.js',
-            },
-            {
-                -language => 'JavaScript1.2',
-                -src      => "$self->{imagePath}/tree.js",
-            },
-            {
-                -language => 'JavaScript1.2',
-                -code     => "var scriptname='$ENV{SCRIPT_NAME}';"
-                  . "var imagepath='$self->{imagePath}';",
-            },
-            {
-                -language => 'JavaScript1.2',
-                -src      => "$self->{imagePath}/manager.js",
-            },
-        ],
-        -style => {
-            -src => [
-                "$self->{imagePath}/manager.css",
-                ( $self->{personnalCss} ? $self->{personnalCss} : () )
-            ],
-        },
-    );
-}
-
-sub window {
-    my ( $self, $root, $data ) = @_;
-    print '<div class="clsTemporaryContainer">
- <div style="visibility: visible;" id="idSplitter3" class="clsSplitter">
-  <div style="z-index: 2;" id="gauche" class="clsPane">
-   <img style="padding:4px;padding-left:12px;" alt="Lemonldap::NG" src="'
-      . $self->{imagePath}
-      . '/logo_lemonldap-ng.png"/><br/>&nbsp;<ul class="simpleTree">'
-      . $self->li( 'root', 'root' )
-      . $self->span( 'root', $root, $data, '', 'default' ) . '<ul>';
-}
-
-## @method protected void end()
-# Display the end of HTML page.
-sub end {
-    my $self = shift;
-    print << 'EOF';
-</ul></li></ul></div><!-- end Pane -->
-<div style="overflow: hidden; z-index: 2;" id="droit" class="clsPane">
- <div style="visibility: visible;" id="idSplitter32" class="clsSplitter">
-  <div style="z-index: 2;overflow:auto;height:500px;" id="haut" class="clsPane">
-   <form action="#" onsubmit="false">
-   <h2 id="content_title">Lemonldap::NG Manager</h2>
-   <div id="buttons"></div>
-    <button onclick="$.post('/test.pl',{data: $('#li_cm9vdA2').html()},function(data){return 1},'html');" >Sauvegarder</button>
-   <div id="content">
-    <div id="content_default" class="content">
-    Default
-    </div>
-    <div id="content_text" class="hidden">
-    <input type="text" id="text" onchange="setlmdata(currentId,this.value)"/>
-    </div>
-    <div id="content_securedCookie" class="hidden">
-    <input id="securedCookie0" type="radio" name="securedCookie" value="0" onclick="setlmdata('li_bGlfL3NlY3VyZWRDb29raWU1','0')" /> Cookie non sécurisé <br/>
-    <input id="securedCookie1" type="radio" name="securedCookie" value="1" onclick="setlmdata('li_bGlfL3NlY3VyZWRDb29raWU1','1')" /> Cookie sécurisé <br/>
-    <input id="securedCookie2" type="radio" name="securedCookie" value="2" onclick="setlmdata('li_bGlfL3NlY3VyZWRDb29raWU1','2')" /> 2 cookies <br/>
-    </div>
-    <div id="content_int" class="hidden">
-    <input type="text" id="int" onchange="setlmdata(currentId,this.value)"/>
-    </div>
-    <div id="content_btext" class="hidden">
-    <input type="text" id="btextKey" onchange="setlmtext(currentId,this.value)"/> <input type="text" id="btextValue" onchange="setlmdata(currentId,this.value)"/>
-    </div>
-    <div id="content_rules" class="hidden">
-    <textarea id="rulKey" cols="30" rows="2" onchange="setlmtext(currentId,this.value)"></textarea>&nbsp;<textarea id="rulValue" cols="50" rows="2" onchange="setlmdata(currentId,this.value)"></textarea>
-    </div>
-   </div></form>
-  </div><!-- end Pane -->
-  <div style="z-index: 2;" id="bas" class="clsPane">
-   <div id="help">
-   </div>
-  </div><!-- end Pane -->
-  <div style="z-index: 1; cursor: n-resize;" id="barre2" class="clsDragBar clsDragBar-hframe">
-   &nbsp;
-  </div>
- </div><!-- end Splitter -->
-</div><!-- end Pane -->
-<div style="z-index: 1; cursor: n-resize;" id="barre3" class="clsDragBar clsDragBar-vframe">
-</div>
-</div><!-- end Splitter -->
-</div><!-- end TemporaryContainer -->
-EOF
-    print $self->end_html();
-}
-
 1;
 
 package Lemonldap::NG::Manager::_Struct;
@@ -705,7 +716,28 @@ sub testStruct {
 }
 
 sub defaultConf {
-    return { userDB => 'LDAP', };
+    return {
+        userDB => 'LDAP',
+        ldapServer => 'localhost',
+    };
+}
+
+sub newNode {
+    virtualHost => {
+        '*' => {
+            exportedHeaders => {'Auth-User' => '$uid'},
+            locationRules => {'default' => 'deny'},
+        }
+    },
+    groups => {
+        'NewGroup' => '0',
+    },
+    macro => {
+        'NewMacro' => '',
+    },
+    globalStorageOptions => {
+        'NewOption' => '',
+    },
 }
 
 1;
@@ -716,6 +748,7 @@ use strict;
 use XML::LibXML;
 use XML::LibXSLT;
 use MIME::Base64;
+# TODO
 use Data::Dumper;
 
 our $VERSION = '0.1';

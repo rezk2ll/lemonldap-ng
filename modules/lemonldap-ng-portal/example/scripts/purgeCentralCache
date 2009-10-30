@@ -40,5 +40,12 @@ for my $id (@t) {
     tied(%h)->delete;
 }
 
+if ( $tmp =~ /^Apache::Session::(?:Browseable::)?File$/i ) {
+    require Apache::Session::Lock::File;
+    my $l = new Apache::Session::Lock::File;
+    $l->clean( $conf->{globalStorageOptions}->{LockDirectory},
+        $conf->{timeout} );
+}
+
 1;
 

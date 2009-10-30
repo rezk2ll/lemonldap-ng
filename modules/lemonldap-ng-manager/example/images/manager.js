@@ -1,5 +1,5 @@
+var simpleTreeCollection;
 $(document).ready(function(){
-var simpleTreeCollection
 simpleTreeCollection = $(".simpleTree").simpleTree({
     autoclose: false,
     drag: false,
@@ -88,9 +88,20 @@ function securedCookieValues(id){
 }
 function rules(id){
   currentId=id;
-  //display('btext',$('#'+id).parent().parent);
+  var t=lmtext(id);
+  if(t=='default'){$('#rulKey').attr('readonly','readonly')}
+  else{$('#rulKey').attr('readonly','')}
   $('#rulKey').attr('value',lmtext(id));
   $('#rulValue').attr('value',lmdata(id));
   display('rules',lmtext(lmparent(id)));
 }
-
+function newKey(){
+  //alert(currentId);
+  $.get(scriptname,{'newNode':currentId},function(data,t){
+    var obj = $('#'+currentId).parent().parent();
+    $('#'+currentId).after(data);
+    $('li.line,li.line-last',obj).remove();
+    simpleTreeCollection[0].setTreeNodes($('#'+currentId).parent().parent(),false);
+    });
+  return false;
+}
