@@ -1,3 +1,2 @@
 version=3
-
-http://download.forge.objectweb.org/lemonldap/lemonldap-ng-([\d\.]+)\.tar\.gz
+http://download.forge.objectweb.org/lemonldap/ lemonldap-ng-(\d[\d\.]+)\.(?:tar(?:\.gz|\.bz2)?|tgz|zip)$

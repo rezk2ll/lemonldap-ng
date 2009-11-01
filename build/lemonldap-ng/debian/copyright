@@ -1,19 +1,26 @@
-This package was debianized by Xavier Guimard <x.guimard@free.fr> on
-Sun, 17 Dec 2006 17:46:47 +0100.
+Format-Specification:
+    http://wiki.debian.org/Proposals/CopyrightFormat?action=recall&rev=196
+Upstream-Maintainer: Xavier Guimard <x.guimard@free.fr>
+Upstream-Source: http://forge.objectweb.org/project/showfiles.php?group_id=274
+Upstream-Name: lemonldap-ng
 
-It was downloaded from: http://forge.objectweb.org/project/showfiles.php?group_id=274
+Files: *
+Copyright: 2004, 2005, 2006, 2007, 2008, 2009, Xavier Guimard <x.guimard@free.fr>
+License: Artistic | GPL-2
 
-Copyright:
+Files: *.js
+Licence: GPL-2
 
-Copyright 2004, 2005, 2006, 2007 by Xavier Guimard
+License: Artistic
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the Artistic License, which comes with Perl.
+    On Debian GNU/Linux systems, the complete text of the Artistic License
+    can be found in `/usr/share/common-licenses/Artistic'
 
-Licence:
-Lemonldap::NG is distributed under your choice under the GNU General Public
-License or the Artistic License.
-On Debian GNU/Linux systems, the complete text of the GNU General Public
-License version 2 can be found in `/usr/share/common-licenses/GPL-2' and the
-Artistic Licence in `/usr/share/common-licenses/Artistic'.
-
-File lemonldap-ng-manager/example/lemonldap-ng-manager.js is distributed under
-GNU General Public License version 2.
-
+License: GPL-1+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 1, or (at your option)
+    any later version.
+    On Debian GNU/Linux systems, the complete text of the GNU General
+    Public License can be found in `/usr/share/common-licenses/GPL'

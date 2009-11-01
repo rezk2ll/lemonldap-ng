@@ -64,7 +64,7 @@ sub unlock {
 
 sub store {
     my ( $self, $fields ) = @_;
-    my $fields = $self->serialize($fields);
+    $fields = $self->serialize($fields);
     my $mask = umask;
     umask( oct('0027') );
     unless ( open FILE,

@@ -79,7 +79,7 @@ sub unlock {
 
 sub store {
     my ( $self, $fields ) = @_;
-    my $fields = $self->serialize($fields);
+    $fields = $self->serialize($fields);
     my $tmp =
       $self->dbh->do( "insert into "
           . $self->{dbiTable} . " ("
