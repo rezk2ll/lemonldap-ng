@@ -9,7 +9,7 @@ use strict;
 use Lemonldap::NG::Portal::Simple;
 use AuthCAS;
 
-our $VERSION = '0.11';
+our $VERSION = '0.12';
 
 ## @apmethod int authInit()
 # Does nothing.
@@ -28,13 +28,23 @@ sub extractFormInfo {
         casUrl => $self->{CAS_url},
         CAFile => $self->{CAS_CAFile},
     );
-    my $login_url = $cas->getServerLoginURL( $self->{CAS_loginUrl} );
+
+    my $casLoginUrl = $self->{CAS_loginUrl};
+    my $casValidationUrl = $self->{CAS_validationUrl};
+    if ($self->{_url})
+    {
+      my $url_param = 'url=' . $self->{_url};
+      $casLoginUrl .= ( $casLoginUrl =~ /\?/ ? '&' : '?' ) . $url_param;
+      $casValidationUrl .= ( $casValidationUrl =~ /\?/ ? '&' : '?' ) . $url_param;
+    }
+
+    my $login_url = $cas->getServerLoginURL( $casLoginUrl );
 
     my $ticket = $self->param('ticket');
 
     # Unless a ticket has been found, we redirect the user
     unless ( $self->{user} =
-        $cas->validateST( $self->{CAS_validationUrl}, $ticket ) )
+        $cas->validateST( $casValidationUrl, $ticket ) )
     {
         print $self->redirect(
             -uri    => $login_url,
