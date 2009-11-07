@@ -483,6 +483,7 @@ doxygen:	clean
 distclean:	clean
 
 clean:		common_clean handler_clean portal_clean manager_clean
+	@rm -f $$(find */ -name '*bak' -delete)
 	@rm -rf $(EXAMPLEROOT) example/ doc/devel
 	@rm -vf *gz
 
