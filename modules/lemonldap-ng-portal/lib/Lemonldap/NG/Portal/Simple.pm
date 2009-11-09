@@ -17,7 +17,7 @@ use CGI::Cookie;
 require POSIX;
 use Lemonldap::NG::Portal::_i18n;      #inherits
 use Lemonldap::NG::Common::Safelib;    #link protected safe Safe object
-use Lemonldap::NG::Common::Apache::Session;    #link protected session Apache::Session object
+use Lemonldap::NG::Common::Apache::Session ;    #link protected session Apache::Session object
 use Safe;
 
 # Special comments for doxygen
@@ -206,8 +206,10 @@ sub new {
         $self->{trustedDomains} = '|\w[\w\-\.]*\w';
     }
     elsif ( $self->{trustedDomains} ) {
-        $self->{trustedDomains} = '|(?:[^/]*)?' . join '|',
-          map { s/\./\\\./g; $_ } split /\s+/, $self->{trustedDomains};
+        $self->{trustedDomains} = '|(?:[^/]*)?(?:'
+          . join( '|',
+            ( map { s/\./\\\./g; $_ } split /\s+/, $self->{trustedDomains} ) )
+          . ')';
     }
     return $self;
 }
@@ -802,13 +804,18 @@ sub authenticate {
 
 sub removeOther {
     my $self = shift;
-    if($self->{singleSession} or $self->{singleIP}) {
-        my $sessions = $self->{globalStorage}->searchOn($self->{globalStorageOptions},$self->{whatToTrace},$self->{sessionInfo}->{$self->{whatToTrace}});
+    if ( $self->{singleSession} or $self->{singleIP} ) {
+        my $sessions =
+          $self->{globalStorage}->searchOn( $self->{globalStorageOptions},
+            $self->{whatToTrace},
+            $self->{sessionInfo}->{ $self->{whatToTrace} } );
         foreach my $id ( keys %$sessions ) {
             my $h = $self->getApacheSession($id);
-            unless($self->{singleIP} and $self->{sessionInfo}->{ipAddr} eq $h->{ipAddr}) {
+            unless ($self->{singleIP}
+                and $self->{sessionInfo}->{ipAddr} eq $h->{ipAddr} )
+            {
                 tied(%$h)->delete();
-                $self->lmLog("Deleting session $id",'debug');
+                $self->lmLog( "Deleting session $id", 'debug' );
             }
         }
     }
