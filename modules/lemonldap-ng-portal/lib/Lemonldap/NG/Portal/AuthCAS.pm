@@ -7,14 +7,24 @@ package Lemonldap::NG::Portal::AuthCAS;
 
 use strict;
 use Lemonldap::NG::Portal::Simple;
-use AuthCAS;
 
-our $VERSION = '0.12';
+our $VERSION = '0.13';
 
 ## @apmethod int authInit()
-# Does nothing.
+# Try to load AuthCAS perl module
 # @return Lemonldap::NG::Portal constant
 sub authInit {
+    my $self = shift;
+
+    # require Perl module
+    eval { require AuthCAS };
+    if ($@) {
+        $self->lmLog(
+            "Module AuthCAS not found in @INC",
+            'error' );
+        return PE_ERROR;
+    }
+
     PE_OK;
 }
 
