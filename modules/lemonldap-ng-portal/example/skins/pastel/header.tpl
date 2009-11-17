@@ -9,17 +9,17 @@
         <link rel="stylesheet" type="text/css" href="skins/<TMPL_VAR NAME="SKIN">/styles.css" />
         <link href="skins/common/favicon.ico" rel="icon" type="image/x-icon" />
         <link href="skins/common/favicon.ico" rel="shortcut icon" />
-        <script type="text/javascript" src="skins/common/jquery.js"></script>
-        <script type="text/javascript" src="skins/common/jquery-tabs.js"></script>
+        <script type="text/javascript" src="skins/common/jquery-1.3.2.min.js"></script>
+        <script type="text/javascript" src="skins/common/jquery-ui-1.7.2.custom.min.js"></script>
         <script type="text/javascript">
         $(document).ready(function(){
           $("div.message").fadeIn('slow');
           $("input[name=timezone]").val( -(new Date().getTimezoneOffset()/60) );
-          $("#menu > ul").tabs({ fx: { opacity: 'toggle' } });
-          $("#menu > ul").tabs("select","#<TMPL_VAR NAME="DISPLAY_TAB">");
+          $("#menu").tabs({ fx: { opacity: 'toggle' } });
+          $("#menu").tabs("select","#<TMPL_VAR NAME="DISPLAY_TAB">");
           $("input[type!=hidden]:first").focus();
           $("input[type='password']").attr("autocomplete","<TMPL_VAR NAME="AUTOCOMPLETE">");
-          $("#appslist li").hover(
+          $("#appslist li[class!=catname]").hover(
                 function(){
                         var appid = $(this).attr("title");
                         $("div.appsdesc").hide();
