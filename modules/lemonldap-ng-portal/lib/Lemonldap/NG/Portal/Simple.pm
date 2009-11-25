@@ -237,7 +237,15 @@ sub setDefaultValues {
     my $self = shift;
     $self->{whatToTrace} ||= 'uid';
     $self->{whatToTrace} =~ s/^\$//;
-    $self->{httpOnly} = 1 unless ( defined( $self->{httpOnly} ) );
+    $self->{httpOnly} = 1 unless ( defined ( $self->{httpOnly} ) );
+    $self->{portalSkin} ||= 'pastel';
+    $self->{portalDisplayLogout} = 1 unless ( defined ( $self->{portalDisplayLogout} ) );
+    $self->{portalDisplayResetPassword} = 1 unless ( defined ( $self->{portalDisplayResetPassword} ) );
+    $self->{portalDisplayChangePassword} = 1 unless ( defined ( $self->{portalDisplayChangePassword} ) );
+    $self->{portalDisplayAppslist} = 1 unless ( defined ( $self->{portalDisplayAppslist} ) );
+    $self->{portalAutocomplete} ||= "off";
+    $self->{portalRequireOldPassword} = 1 unless ( defined ( $self->{portalRequireOldPassword} ) );
+    $self->{portalUserAttr} ||= "_user";
 }
 
 =begin WSDL

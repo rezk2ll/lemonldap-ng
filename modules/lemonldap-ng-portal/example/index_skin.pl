@@ -4,18 +4,9 @@ use Lemonldap::NG::Portal::SharedConf;
 use HTML::Template;
 
 # Menu configuration
-my $skin        = "pastel";
-my $skin_dir    = "__SKINDIR__";
+my $skin_dir    = "__SKINDIR__";                                                                                                       
 my $appsxmlfile = "__APPSXMLFILE__";
 my $appsimgpath = "apps/";
-my $user_attr   = "_user";
-
-# Menu configuration
-use constant USER_CAN_CHANGE_PASSWORD => 1;
-use constant REQUIRE_OLDPASSWORD      => 0;
-use constant DISPLAY_LOGOUT           => 1;
-use constant AUTOCOMPLETE             => "on";
-use constant DISPLAY_RESETPASSWORD    => "1";
 
 my $portal = Lemonldap::NG::Portal::SharedConf->new(
     {
@@ -33,6 +24,21 @@ my $portal = Lemonldap::NG::Portal::SharedConf->new(
         #},
         # Note that YOU HAVE TO SET configStorage here if you've declared this
         # portal as SOAP configuration server in the manager
+
+	# PORTAL CUSTOMIZATION
+	# Skin
+	#portalSkin => 'pastel',
+	# Modules displayed
+	#portalDisplayLogout => 1,
+	#portalDisplayResetPassword => 1,
+	#portalDisplayChangePassword => 1,
+	#portalDisplayAppslist => 1,
+	# Allow password autocompletion (passwords stored in user web browsers)
+	#portalAutocomplete => "on",
+	# Require the old password when changing password
+	#portalRequireOldPassword => 1,
+	# Attribute displayed as connected user
+	#portalUserAttr => "mail",
 
         # LOG
         # By default, all is logged in Apache file. To log user actions by
@@ -138,6 +144,9 @@ my $portal = Lemonldap::NG::Portal::SharedConf->new(
     }
 );
 
+# Get skin value
+my $skin = $portal->{portalSkin};
+
 if ( $portal->process() ) {
 
     # HTML::Template object creation
@@ -158,15 +167,15 @@ if ( $portal->process() ) {
                 imgpath => "$appsimgpath",
             },
             modules => {
-                appslist => 1,
-                password => USER_CAN_CHANGE_PASSWORD,
-                logout   => DISPLAY_LOGOUT,
+                appslist => $portal->{portalDisplayAppslist},
+                password => $portal->{portalDisplayChangePassword},
+                logout   => $portal->{portalDisplayLogout},
             },
         }
     );
 
-    $template->param( AUTH_USER           => $portal->{sessionInfo}->{$user_attr} );
-    $template->param( AUTOCOMPLETE        => AUTOCOMPLETE );
+    $template->param( AUTH_USER           => $portal->{sessionInfo}->{ $portal->{portalUserAttr} } );
+    $template->param( AUTOCOMPLETE        => $portal->{portalAutocomplete} );
     $template->param( SKIN                => $skin );
     $template->param( AUTH_ERROR          => $menu->error );
     $template->param( AUTH_ERROR_TYPE     => $menu->error_type );
@@ -175,7 +184,7 @@ if ( $portal->process() ) {
     $template->param( DISPLAY_LOGOUT      => $menu->displayModule("logout") );
     $template->param( DISPLAY_TAB         => $menu->displayTab );
     $template->param( LOGOUT_URL          => "$ENV{SCRIPT_NAME}?logout=1" );
-    $template->param( REQUIRE_OLDPASSWORD => REQUIRE_OLDPASSWORD );
+    $template->param( REQUIRE_OLDPASSWORD => $portal->{portalRequireOldPassword} );
     if ( $menu->displayModule("appslist") ) {
         $template->param( APPSLIST_MENU => $menu->appslistMenu );
         $template->param( APPSLIST_DESC => $menu->appslistDescription );
@@ -216,11 +225,11 @@ else {
     $template->param( AUTH_ERROR_TYPE => $portal->error_type );
     $template->param( AUTH_URL        => $portal->get_url );
     $template->param( LOGIN           => $portal->get_user );
-    $template->param( AUTOCOMPLETE    => AUTOCOMPLETE );
+    $template->param( AUTOCOMPLETE    => $portal->{portalAutocomplete} );
     $template->param( SKIN            => $skin );
 
     if (
-        USER_CAN_CHANGE_PASSWORD
+        $portal->{portalDisplayChangePassword}
         and (  $portal->{error} == PE_PP_CHANGE_AFTER_RESET
             or $portal->{error} == PE_PP_MUST_SUPPLY_OLD_PASSWORD
             or $portal->{error} == PE_PP_INSUFFICIENT_PASSWORD_QUALITY
@@ -236,7 +245,7 @@ else {
     }
     else {
         $template->param( DISPLAY_FORM          => 1 );
-        $template->param( DISPLAY_RESETPASSWORD => $DISPLAY_RESETPASSWORD );
+        $template->param( DISPLAY_RESETPASSWORD => $portal->{portalDisplayResetPassword} );
     }
 
     print $portal->header('text/html; charset=utf-8');

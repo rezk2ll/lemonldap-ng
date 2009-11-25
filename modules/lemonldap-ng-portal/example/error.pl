@@ -2,12 +2,16 @@
 use Lemonldap::NG::Portal::Error;
 use HTML::Template;
 
-my $skin        = "pastel";
-my $skin_dir    = "__SKINDIR__";
+my $skin_dir    = "/usr/local/lemonldap-ng/htdocs/portal/skins";
 
-my $portal = Lemonldap::NG::Portal::Error->new();
+my $portal = Lemonldap::NG::Portal::SharedConf->new(
+	# PORTAL CUSTOMIZATION
+	# Skin
+	#portalSkin => 'pastel',
+);
 
-my $portal_url = $portal->getPortal;
+my $skin       = $portal->{portalSkin};
+my $portal_url = $portal->{portal};
 my $logout_url = "$portal_url?logout=1";
 
 my $template = HTML::Template->new(
