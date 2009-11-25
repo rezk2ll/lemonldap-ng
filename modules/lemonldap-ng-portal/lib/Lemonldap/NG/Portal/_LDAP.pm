@@ -5,7 +5,7 @@
 # LDAP common functions
 package Lemonldap::NG::Portal::_LDAP;
 
-use Net::LDAP; #inherits
+use Net::LDAP;    #inherits
 use Exporter;
 use base qw(Exporter Net::LDAP);
 use Lemonldap::NG::Portal::Simple;
@@ -129,8 +129,12 @@ sub userBind {
           unless ( defined $resp );
 
         # Get expiration warning and graces
-        # 
-        $self->{portal}->{mustRedirect} = 0 if($self->{portal}->{ppolicy}->{time_before_expiration} = $resp->time_before_expiration or $self->{portal}->{ppolicy}->{grace_authentications_remaining} = $resp->grace_authentications_remaining);
+        #
+        $self->{portal}->{mustRedirect} = 0
+          if ( $self->{portal}->{ppolicy}->{time_before_expiration} =
+               $resp->time_before_expiration
+            or $self->{portal}->{ppolicy}->{grace_authentications_remaining} =
+            $resp->grace_authentications_remaining );
 
         my $pp_error = $resp->pp_error;
         if ( defined $pp_error ) {
@@ -146,7 +150,7 @@ sub userBind {
                 PE_PP_PASSWORD_TOO_SHORT,
                 PE_PP_PASSWORD_TOO_YOUNG,
                 PE_PP_PASSWORD_IN_HISTORY,
-              ]->[$pp_error];
+            ]->[$pp_error];
         }
         elsif ( $mesg->code == 0 ) {
             return PE_OK;
@@ -231,9 +235,9 @@ sub userModifyPassword {
 
         if ( $self->{portal}->{ldapSetPassword} ) {
 
-            # Use SetPassword extended operation
-            # Warning: need a patch on Perl-LDAP
-            # See http://groups.google.com/group/perl.ldap/browse_thread/thread/5703a41ccb17b221/377a68f872cc2bb4?lnk=gst&q=setpassword#377a68f872cc2bb4
+# Use SetPassword extended operation
+# Warning: need a patch on Perl-LDAP
+# See http://groups.google.com/group/perl.ldap/browse_thread/thread/5703a41ccb17b221/377a68f872cc2bb4?lnk=gst&q=setpassword#377a68f872cc2bb4
             use Net::LDAP::Extension::SetPassword;
             $mesg =
               ($oldpassword)
@@ -286,7 +290,7 @@ sub userModifyPassword {
             my $pp_error = $resp->pp_error;
             if ( defined $pp_error ) {
                 $self->{portal}->_sub( 'userError',
-            "Password policy error $pp_error for $self->{portal}->{user}"
+"Password policy error $pp_error for $self->{portal}->{user}"
                 );
                 return [
                     PE_PP_PASSWORD_EXPIRED,
@@ -320,7 +324,7 @@ sub ldap {
         }
         else {
             if ( $self->{ldapPpolicyControl} and not $self->{ldap}->loadPP() ) {
-                $self->lmLog("LDAP password policy error");
+                $self->lmLog( "LDAP password policy error", 'error' );
             }
             else {
                 return $self->{ldap};

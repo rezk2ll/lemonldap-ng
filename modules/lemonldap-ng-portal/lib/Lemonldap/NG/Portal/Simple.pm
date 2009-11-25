@@ -824,6 +824,28 @@ sub removeOther {
             {
                 tied(%$h)->delete();
                 $self->lmLog( "Deleting session $id", 'debug' );
+		eval {
+		    $self->{lmConf}->{refLocalStorage}->remove($id);
+		    #$Lemonldap::NG::Handler::Simple::refLocalStorage->remove($id);
+		};
+            }
+        }
+    }
+    if ( $self->{singleUserByIP} ) {
+        my $sessions =
+          $self->{globalStorage}->searchOn( $self->{globalStorageOptions},
+            $self->{ipAddr},
+            $ENV{REMOTE_ADDR} );
+        foreach my $id ( keys %$sessions ) {
+            my $h = $self->getApacheSession($id);
+            unless ( $self->{sessionInfo}->{ $self->{whatToTrace} } eq $h->{ $self->{whatToTrace} } )
+            {
+                tied(%$h)->delete();
+                $self->lmLog( "Deleting session $id", 'debug' );
+		eval {
+		    $self->{lmConf}->{refLocalStorage}->remove($id);
+		    #$Lemonldap::NG::Handler::Simple::refLocalStorage->remove($id);
+		};
             }
         }
     }

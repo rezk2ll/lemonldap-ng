@@ -43,7 +43,7 @@ our (
     $whatToTrace,          $https,             $refLocalStorage,
     $safe,                 $port,              $statusPipe,
     $statusOut,            $customFunctions,   $transform,
-    $cda,
+    $cda,                  $safe,
 );
 
 ##########################################
@@ -338,10 +338,12 @@ sub statusProcess {
 # @return Safe object
 sub safe {
     my $class = shift;
-    no strict 'refs';
-    return ${"$class\::safe"} if (${"$class\::safe"});
+    #no strict 'refs';
+    #return ${"$class\::safe"} if (${"$class\::safe"});
+    return $safe if($safe);
     $class->lmLog( "Compiling safe jail for $class", 'debug' );
-    my $safe = new Safe;
+    #my $safe = new Safe;
+    $safe = new Safe;
     my @t = $customFunctions ? split( /\s+/, $customFunctions ) : ();
     foreach (@t) {
         $class->lmLog( "Custom function : $_", 'debug' );
@@ -365,7 +367,8 @@ sub safe {
         $Lemonldap::NG::Common::Safelib::functions );
     $safe->share( '&encode_base64', '$datas', '&lmSetHeaderIn',
         '$apacheRequest', '&portal', @t );
-    return ${"$class\::safe"} = $safe;
+    #return ${"$class\::safe"} = $safe;
+    return $safe;
 }
 
 ## @imethod void init(hashRef args)
