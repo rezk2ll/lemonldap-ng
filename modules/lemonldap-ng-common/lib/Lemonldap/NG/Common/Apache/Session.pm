@@ -17,18 +17,21 @@ BEGIN {
     sub Apache::Session::searchOn {
         my ( $class, $args, $selectField, $value, @fields ) = @_;
         my %res = ();
-        $class->get_key_from_all_sessions($args,sub{
-            my $entry = shift;
-            my $id    = shift;
-            return undef unless($entry->{selectField}eq $value);
-            if (@fields) {
-                $res{ $id }->{$_} = $entry->{$_} foreach (@fields);
+        $class->get_key_from_all_sessions(
+            $args,
+            sub {
+                my $entry = shift;
+                my $id    = shift;
+                return undef unless ( $entry->{$selectField} eq $value );
+                if (@fields) {
+                    $res{$id}->{$_} = $entry->{$_} foreach (@fields);
+                }
+                else {
+                    $res{$id} = $entry;
+                }
+                undef;
             }
-            else {
-                $res{ $id } = $entry;
-            }
-            undef;
-        });
+        );
         return \%res;
     }
 
