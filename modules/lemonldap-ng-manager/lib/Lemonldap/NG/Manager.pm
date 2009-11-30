@@ -26,7 +26,7 @@ use MIME::Base64;
 use base qw(Lemonldap::NG::Common::CGI);
 our @ISA;
 
-our $VERSION = '0.91';
+our $VERSION = '0.92';
 
 # Secure jail
 our $msafe;
@@ -58,20 +58,24 @@ sub msafe {
 # @param $args hash reference containing parameters
 sub new {
     my ( $class, $args ) = @_;
-    my $self;
+    my $self = $class->SUPER::new();
+
+    # TODO load global configuration parameters ?
+    
+    # Try to load local configuration parameters to get 'protection'
+    my $localconf = $self->config->getLocalConf("manager");
+    $args->{protection} ||= $localconf->{protection};
+
     if ( $args->{protection} ) {
         require Lemonldap::NG::Handler::CGI;
         unshift @ISA, "Lemonldap::NG::Handler::CGI";
         $self = $class->SUPER::new($args);
     }
-    else {
-        $self = $class->SUPER::new();
-    }
-    unless ($args) {
-        $self->abort( "Unable to start",
-            "parameters are required, I can't start so" );
-    }
+
+    # Now push all local configuration parameters
     %$self = ( %$self, %$args );
+    $self->{$_} = $args->{$_} || $localconf->{$_} foreach ( keys %$localconf );
+
     foreach (qw(dhtmlXTreeImageLocation)) {
         unless ( $self->{$_} ) {
             $self->abort( "Unable to start",

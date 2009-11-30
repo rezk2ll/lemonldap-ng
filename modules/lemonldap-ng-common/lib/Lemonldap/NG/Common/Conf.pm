@@ -12,15 +12,19 @@ no strict 'refs';
 use Lemonldap::NG::Common::Conf::Constants; #inherits
 use Lemonldap::NG::Common::Crypto; #link protected cipher Object "cypher" in configuration hash
 use Regexp::Assemble;
+use File::Basename;
+use Config::IniFiles;
 
 #inherits Lemonldap::NG::Common::Conf::File
 #inherits Lemonldap::NG::Common::Conf::DBI
 #inherits Lemonldap::NG::Common::Conf::SOAP
 #inherits Lemonldap::NG::Common::Conf::LDAP
 
-use constant DEFAULTCONFFILE => "/etc/lemonldap-ng/storage.conf";
+use constant DEFAULTCONFFILE => "/usr/local/lemonldap-ng/etc/storage.conf";
+use constant LOCALCONFFILENAME => "localconf.ini"; 
+use constant DEFAULTINISECTION => "all";
 
-our $VERSION = 0.6;
+our $VERSION = 0.70;
 our $msg;
 
 our %_confFiles;
@@ -187,6 +191,59 @@ sub getConf {
         }
         return $r;
     }
+}
+
+## @method hashRef getLocalConf(string section, string file)
+# Get configuration from local file
+#
+# @param $section Optional section name (default DEFAULTINISECTION)
+# @param $file Optional file name (default dirname DEFAULTCONFFILE . LOCALCONFFILENAME)
+# @return Lemonldap::NG configuration
+sub getLocalConf {
+    my ( $self, $section, $file ) = @_;
+    my $r;
+
+    $section ||= DEFAULTINISECTION;
+
+    unless ( $file ) {
+        # Get storage.conf path
+	my( $filename, $directories ) = fileparse DEFAULTCONFFILE;
+	$file = $directories . LOCALCONFFILENAME;
+    }
+
+    # If local configuration file does not exists, exit silently.
+    unless ( -r $file ) {
+	return $r;
+    }
+
+    # Parse ini file
+    my $cfg = Config::IniFiles->new(
+        -file => $file,
+	-allowempty => 1,
+    );
+
+    unless (defined $cfg) {
+        $msg = "Local config error: ".@Config::IniFiles::errors;
+        return 0;
+    }
+
+    # First load all default section parameters
+    foreach ($cfg->Parameters( DEFAULTINISECTION )) {
+        $r->{$_} = $cfg->val( DEFAULTINISECTION, $_ );
+    }
+
+    # Stop if the requested section is the default section
+    return $r if ( $section eq DEFAULTINISECTION );
+
+    # Check if requested section exists
+    return 0 unless $cfg->SectionExists( $section );
+
+    # Load section parameters
+    foreach ($cfg->Parameters( $section )) {
+        $r->{$_} = $cfg->val( $section, $_ );
+    }
+
+    return $r;
 }
 
 ## @method void setLocalConf(hashRef conf)

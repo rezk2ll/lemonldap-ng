@@ -25,7 +25,7 @@ use Cache::Cache qw($EXPIRES_NEVER);
 use base qw(Lemonldap::NG::Handler::Vhost Lemonldap::NG::Handler::Simple);
 #parameter reloadTime Time in second between 2 configuration check (600)
 
-our $VERSION    = '0.71';
+our $VERSION    = '0.72';
 our $cfgNum     = 0;
 our $lastReload = 0;
 our $reloadTime;
@@ -61,8 +61,8 @@ BEGIN {
 # @param $args hash containing parameters
 sub init($$) {
     my ( $class, $args ) = @_;
+    # TODO reloadTime in defaultValuesInit ?
     $reloadTime = $args->{reloadTime} || 600;
-    $localConfig = $args;
     $class->localInit($args);
 }
 
@@ -89,11 +89,19 @@ sub localInit {
       unless ( $lmConf =
         Lemonldap::NG::Common::Conf->new( $args->{configStorage} ) );
 
+    # Get local configuration parameters
+    my $localconf = $lmConf->getLocalConf("handler");
+    $args->{$_} ||= $localconf->{$_} foreach ( keys %$localconf );
+
+    # Store in localConfig global variable
+    $localConfig = $args;
+
     # localStorage can be declared in configStorage or at the root or both
     foreach (qw(localStorage localStorageOptions)) {
         $args->{$_} ||= $args->{configStorage}->{$_} || $lmConf->{$_};
         $args->{configStorage}->{$_} ||= $args->{$_};
     }
+
     $class->defaultValuesInit($args);
     $class->SUPER::localInit($args);
 }

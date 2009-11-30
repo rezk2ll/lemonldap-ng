@@ -368,6 +368,7 @@ install_conf_dir:	install_sessions_dir
 	@if [ "$(ERASECONFIG)" -eq "1" ]; then \
 		cp --remove-destination $(SRCCOMMONDIR)/storage.conf $(RCONFDIR); \
 		perl -i -pe 's#^dirName = .*#dirName = $(FILECONFIGDIR)#g' $(RCONFDIR)/storage.conf; \
+		cp --remove-destination $(SRCCOMMONDIR)/localconf.ini $(RCONFDIR); \
 	fi
 	@cp _example/conf/lmConf-1 $(RFILECONFIGDIR)
 	@perl -000 -i -pe "s#^(globalStorageOptions\\n\\s+)'[^\\n]*?'\$$#\$${1}\'\\\$$data1 = {&39;Directory&39; => &39;$(APACHESESSIONFILEDIR)&39;,&39;LockDirectory&39; => &39;$(APACHESESSIONFILELOCKDIR)&39;};'#m" $(RFILECONFIGDIR)/lmConf-1

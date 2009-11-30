@@ -13,7 +13,7 @@ use Lemonldap::NG::Common::Conf; #link protected lmConf Configuration
 *EXPORT_TAGS = *Lemonldap::NG::Portal::Simple::EXPORT_TAGS;
 *EXPORT      = *Lemonldap::NG::Portal::Simple::EXPORT;
 
-our $VERSION = '0.6';
+our $VERSION = '0.70';
 use base qw(Lemonldap::NG::Portal::Simple);
 
 ##################
@@ -33,12 +33,22 @@ sub getConf {
     else {
         %args = @_;
     }
-    %$self = ( %$self, %args );
-    my $tmp = $self->_getLmConf;
-        return 0 unless $tmp;
 
-    # Local configuration prepends global
-    $self->{$_} = $args{$_} || $tmp->{$_} foreach ( keys %$tmp );
+    %$self = ( %$self, %args );
+
+    # Get global configuration
+    my $globalconf = $self->_getLmConf;
+        return 0 unless $globalconf;
+
+    # Get local configuration
+    my $localconf = $self->_getLocalLmConf;
+
+    # Configuration load order:
+    # 1/ Global configuration
+    # 2/ Local file configuration
+    # 3/ Script embedded configuration
+    $self->{$_} = $args{$_} || $globalconf->{$_} foreach ( keys %$globalconf );
+    $self->{$_} = $args{$_} || $localconf->{$_} foreach ( keys %$localconf );
     1;
 }
 
@@ -63,6 +73,21 @@ sub _getLmConf {
       unless $self->{lmConf};
     return 0 unless ( ref( $self->{lmConf} ) );
     return $self->{lmConf}->getConf;
+}
+
+## @method private hashref _getLocalLmConf()
+# Call and return Lemonldap::NG::Common::getLocalConf() value
+# @return Lemonldap::NG local configuration
+sub _getLocalLmConf {
+    my $self = shift;
+
+    # Get Configuration object
+    unless ( defined $self->{lmConf} ) {
+        return 0 unless $self->_getLmConf();
+    }
+
+    # Get local configuration parameters for portal
+    return $self->{lmConf}->getLocalConf("portal");
 }
 
 1;
