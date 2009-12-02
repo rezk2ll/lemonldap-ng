@@ -53,7 +53,9 @@ sub new {
         %$self = %{ $_[0] };
     }
     else {
-        %$self = @_;
+        if (defined @_ and ($#_>0) ) {
+            %$self = @_;
+        }
     }
     unless ( $self->{mdone} ) {
         $self->_readConfFile( $self->{confFile} ) unless ( $self->{type} );
