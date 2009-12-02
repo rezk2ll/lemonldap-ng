@@ -55,7 +55,8 @@ CONFDIR=$(LMPREFIX)/etc
 RCONFDIR=$(DESTDIR)/$(CONFDIR)
 CRONDIR=$(LMPREFIX)/etc/cron.d
 RCRONDIR=$(DESTDIR)/$(CRONDIR)
-STORAGECONFFILE=$(CONFDIR)/storage.conf
+CONFFILENAME=lemonldap-ng.ini
+STORAGECONFFILE=$(CONFDIR)/$(CONFFILENAME)
 
 # Lemonldap-ng configuration storage dir
 FILECONFIGDIR=$(DATADIR)/conf
@@ -366,9 +367,8 @@ install_conf_dir:	install_sessions_dir
 	# Configuration files install
 	@install -v -d $(RCONFDIR) $(RFILECONFIGDIR) $(RTOOLSDIR)
 	@if [ "$(ERASECONFIG)" -eq "1" ]; then \
-		cp --remove-destination $(SRCCOMMONDIR)/storage.conf $(RCONFDIR); \
-		perl -i -pe 's#^dirName = .*#dirName = $(FILECONFIGDIR)#g' $(RCONFDIR)/storage.conf; \
-		cp --remove-destination $(SRCCOMMONDIR)/localconf.ini $(RCONFDIR); \
+		cp --remove-destination $(SRCCOMMONDIR)/$(CONFFILENAME) $(RCONFDIR); \
+		perl -i -pe 's#^dirName\s*=\s*.*#dirName = $(FILECONFIGDIR)#g' $(RCONFDIR)/$(CONFFILENAME); \
 	fi
 	@cp _example/conf/lmConf-1 $(RFILECONFIGDIR)
 	@perl -000 -i -pe "s#^(globalStorageOptions\\n\\s+)'[^\\n]*?'\$$#\$${1}\'\\\$$data1 = {&39;Directory&39; => &39;$(APACHESESSIONFILEDIR)&39;,&39;LockDirectory&39; => &39;$(APACHESESSIONFILELOCKDIR)&39;};'#m" $(RFILECONFIGDIR)/lmConf-1

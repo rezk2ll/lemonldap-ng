@@ -8,6 +8,7 @@ package Lemonldap::NG::Portal::SharedConf;
 use strict;
 use Lemonldap::NG::Portal::Simple qw(:all);
 use Lemonldap::NG::Common::Conf; #link protected lmConf Configuration
+use Lemonldap::NG::Common::Conf::Constants; #inherits
 
 *EXPORT_OK   = *Lemonldap::NG::Portal::Simple::EXPORT_OK;
 *EXPORT_TAGS = *Lemonldap::NG::Portal::Simple::EXPORT_TAGS;
@@ -87,7 +88,7 @@ sub _getLocalLmConf {
     }
 
     # Get local configuration parameters for portal
-    return $self->{lmConf}->getLocalConf("portal");
+    return $self->{lmConf}->getLocalConf( PORTALSECTION );
 }
 
 1;

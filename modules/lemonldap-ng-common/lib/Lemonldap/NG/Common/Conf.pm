@@ -12,7 +12,6 @@ no strict 'refs';
 use Lemonldap::NG::Common::Conf::Constants; #inherits
 use Lemonldap::NG::Common::Crypto; #link protected cipher Object "cypher" in configuration hash
 use Regexp::Assemble;
-use File::Basename;
 use Config::IniFiles;
 
 #inherits Lemonldap::NG::Common::Conf::File
@@ -20,14 +19,8 @@ use Config::IniFiles;
 #inherits Lemonldap::NG::Common::Conf::SOAP
 #inherits Lemonldap::NG::Common::Conf::LDAP
 
-use constant DEFAULTCONFFILE => "/usr/local/lemonldap-ng/etc/storage.conf";
-use constant LOCALCONFFILENAME => "localconf.ini"; 
-use constant DEFAULTINISECTION => "all";
-
 our $VERSION = 0.70;
 our $msg;
-
-our %_confFiles;
 
 ## @cmethod Lemonldap::NG::Common::Conf new(hashRef arg)
 # Constructor.
@@ -53,12 +46,18 @@ sub new {
         %$self = %{ $_[0] };
     }
     else {
-        if (defined @_ and ($#_>0) ) {
+        if ( defined @_ && $#_%2 == 1 ) {
             %$self = @_;
         }
     }
     unless ( $self->{mdone} ) {
-        $self->_readConfFile( $self->{confFile} ) unless ( $self->{type} );
+        unless ( $self->{type} ) {
+            # Use local conf to get configStorage and localStorage
+	    my $localconf = $self->getLocalConf( CONFSECTION, $self->{confFile}, 0 );
+	    if ( defined $localconf ) {
+                %$self = ( %$self, %$localconf );
+            }
+        }
         unless ( $self->{type} ) {
             $msg .= 'Error: configStorage: type is not defined';
             return 0;
@@ -88,39 +87,6 @@ sub new {
         }
     }
     return $self;
-}
-
-## @method private boolean _readConfFile(string file)
-# Read $file to know how to access to Lemonldap::NG configuration.
-# @param $file Optional file name (default: /etc/lemonldap-ng/storage.conf)
-# @return True if the file was successfuly read
-sub _readConfFile {
-    my $self = shift;
-    my $file = shift || DEFAULTCONFFILE;
-    unless ( $_confFiles{$file} ) {
-        unless ( open F, $file ) {
-            $msg = "Warning $file: $!. ";
-            return 0;
-        }
-        while (<F>) {
-            next if ( /^\s*$/ or /^\s*#/ );
-            chomp;
-            s/\r//g;
-            /^\s*([\w]+)(?:\s*[:=]\s*|\s+)(["']?)([\S].*[\S])\2\s*$/ or next;
-            my $k = $1;
-            $_confFiles{$file}->{$k} = $3;
-            if ( $_confFiles{$file}->{$k} =~ /^[{\[].*[}\]]$/ ) {
-                eval "\$_confFiles{'$file'}->{'$k'} = $_confFiles{$file}->{$k}";
-                if ($@) {
-                    $msg = "Warning: error in file $file : $@. ";
-                    return 0;
-                }
-            }
-        }
-        close F;
-    }
-    %$self = ( %$self, %{ $_confFiles{$file} } );
-    return 1;
 }
 
 ## @method int saveConf(hashRef conf)
@@ -195,26 +161,29 @@ sub getConf {
     }
 }
 
-## @method hashRef getLocalConf(string section, string file)
+## @method hashRef getLocalConf(string section, string file, int loaddefault)
 # Get configuration from local file
 #
-# @param $section Optional section name (default DEFAULTINISECTION)
-# @param $file Optional file name (default dirname DEFAULTCONFFILE . LOCALCONFFILENAME)
+# @param $section Optional section name (default DEFAULTSECTION)
+# @param $file Optional file name (default DEFAULTCONFFILE)
+# @param $loaddefault Optional load default section parameters (default 1)
 # @return Lemonldap::NG configuration
 sub getLocalConf {
-    my ( $self, $section, $file ) = @_;
+    my ( $self, $section, $file, $loaddefault ) = @_;
     my $r;
 
-    $section ||= DEFAULTINISECTION;
+    $section   ||= DEFAULTSECTION;
+    $file      ||= DEFAULTCONFFILE;
+    $loaddefault = 1 unless ( defined $loaddefault );
 
-    unless ( $file ) {
-        # Get storage.conf path
-	my( $filename, $directories ) = fileparse DEFAULTCONFFILE;
-	$file = $directories . LOCALCONFFILENAME;
-    }
-
-    # If local configuration file does not exists, exit silently.
+    # If default configuration cannot be read
+    # - Error if configuration section is requested
+    # - Silent exit for other section requests
     unless ( -r $file ) {
+        if ( $section eq CONFSECTION) {
+            $msg = "Cannot read $file to get configuration access parameters";
+            return 0;
+        }
 	return $r;
     }
 
@@ -224,18 +193,39 @@ sub getLocalConf {
 	-allowempty => 1,
     );
 
-    unless (defined $cfg) {
+    unless ( defined $cfg ) {
         $msg = "Local config error: ".@Config::IniFiles::errors;
         return 0;
     }
 
+    # Check if default section exists
+    unless ( $cfg->SectionExists( DEFAULTSECTION ) ) {
+        $msg = "Default section (".DEFAULTSECTION.") is missing";
+        return 0;
+    }
+
+    # Check if configuration section exists
+    if ( $section eq CONFSECTION and !$cfg->SectionExists( CONFSECTION ) ) {
+        $msg = "Configuration section (".CONFSECTION.") is missing";
+        return 0;
+    }
+
     # First load all default section parameters
-    foreach ($cfg->Parameters( DEFAULTINISECTION )) {
-        $r->{$_} = $cfg->val( DEFAULTINISECTION, $_ );
+    if ( $loaddefault ) {
+        foreach ($cfg->Parameters( DEFAULTSECTION )) {
+            $r->{$_} = $cfg->val( DEFAULTSECTION, $_ );
+            if ( $r->{$_} =~ /^[{\[].*[}\]]$/ ) {
+                eval "\$r->{$_} = $r->{$_}";
+                if ($@) {
+                    $msg = "Warning: error in file $file: $@. ";
+                    return 0;
+                }
+            }
+        }
     }
 
     # Stop if the requested section is the default section
-    return $r if ( $section eq DEFAULTINISECTION );
+    return $r if ( $section eq DEFAULTSECTION );
 
     # Check if requested section exists
     return 0 unless $cfg->SectionExists( $section );
@@ -243,6 +233,13 @@ sub getLocalConf {
     # Load section parameters
     foreach ($cfg->Parameters( $section )) {
         $r->{$_} = $cfg->val( $section, $_ );
+        if ( $r->{$_} =~ /^[{\[].*[}\]]$/ ) {
+            eval "\$r->{$_} = $r->{$_}";
+            if ($@) {
+                $msg = "Warning: error in file $file: $@. ";
+                return 0;
+            }
+        }
     }
 
     return $r;

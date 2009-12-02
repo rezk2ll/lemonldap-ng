@@ -59,11 +59,12 @@ sub msafe {
 sub new {
     my ( $class, $args ) = @_;
     my $self = $class->SUPER::new();
+    %$self = ( %$self, %$args );
 
     # TODO load global configuration parameters ?
-    
+
     # Try to load local configuration parameters to get 'protection'
-    my $localconf = $self->config->getLocalConf("manager");
+    my $localconf = $self->config->getLocalConf( MANAGERSECTION );
     $args->{protection} ||= $localconf->{protection};
 
     if ( $args->{protection} ) {
@@ -73,7 +74,6 @@ sub new {
     }
 
     # Now push all local configuration parameters
-    %$self = ( %$self, %$args );
     $self->{$_} = $args->{$_} || $localconf->{$_} foreach ( keys %$localconf );
 
     foreach (qw(dhtmlXTreeImageLocation)) {

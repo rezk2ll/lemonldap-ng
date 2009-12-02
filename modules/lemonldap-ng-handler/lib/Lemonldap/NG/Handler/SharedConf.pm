@@ -20,6 +20,7 @@ use strict;
 use Lemonldap::NG::Handler::Simple qw(:all);
 use Lemonldap::NG::Handler::Vhost;
 use Lemonldap::NG::Common::Conf;    #link protected lmConf
+use Lemonldap::NG::Common::Conf::Constants; #inherits
 use Cache::Cache qw($EXPIRES_NEVER);
 
 use base qw(Lemonldap::NG::Handler::Vhost Lemonldap::NG::Handler::Simple);
@@ -90,7 +91,7 @@ sub localInit {
         Lemonldap::NG::Common::Conf->new( $args->{configStorage} ) );
 
     # Get local configuration parameters
-    my $localconf = $lmConf->getLocalConf("handler");
+    my $localconf = $lmConf->getLocalConf( HANDLERSECTION );
     $args->{$_} ||= $localconf->{$_} foreach ( keys %$localconf );
 
     # Store in localConfig global variable

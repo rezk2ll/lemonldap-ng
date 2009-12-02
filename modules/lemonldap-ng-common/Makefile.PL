@@ -12,7 +12,7 @@ sub MY::top_targets {
         $r .= <<"EOT";
 
 my_target:
-	perl -i -pe 's/^(use constant DEFAULTCONFFILE =>).*\$\$/\$\$1 "$cf";/' blib/lib/Lemonldap/NG/Common/Conf.pm
+	perl -i -pe 's/^(use constant DEFAULTCONFFILE\\s*=>).*\$\$/\$\$1 "$cf";/' blib/lib/Lemonldap/NG/Common/Conf/Constants.pm
 EOT
     }
     return $r;
@@ -32,6 +32,7 @@ WriteMakefile(
         'SOAP::Lite'       => 0,
         'Crypt::Rijndael'  => 0,
         'HTTP::Headers'    => 0,
+        'Config::IniFiles' => 0,
     },                                               # e.g., Module::Name => 1.1
     #EXE_FILES => [ 'scripts/lmConfig_File2MySQL', ],
     (
