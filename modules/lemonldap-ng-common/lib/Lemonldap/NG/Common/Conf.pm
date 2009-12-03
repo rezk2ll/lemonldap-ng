@@ -191,7 +191,6 @@ sub getLocalConf {
     }
 
     # Parse ini file
-    print STDERR Dumper(\%INC);use Data::Dumper;
     my $cfg = Config::IniFiles->new(
         -file       => $file,
         -allowempty => 1,
