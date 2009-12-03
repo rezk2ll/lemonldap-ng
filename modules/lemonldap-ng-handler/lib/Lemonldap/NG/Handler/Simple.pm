@@ -393,7 +393,12 @@ sub localInit($$) {
         $class->purgeCache();
     }
     if ( $args->{status} ) {
-        statusProcess();
+        if ( defined $localStorage ) {
+            statusProcess();
+        } else {
+            # localStorage is mandatory for status module
+            $class->lmLog("Status module can not be loaded without localStorage parameter", 'warn');
+        }
     }
     $class->childInit();
 }
@@ -1052,7 +1057,10 @@ sub redirectFilter {
 sub status($$) {
     my ( $class, $r ) = @_;
     $class->lmLog( "$class: request for status", 'debug' );
-    return SERVER_ERROR unless ( $statusPipe and $statusOut );
+    unless ( $statusPipe and $statusOut ) {
+        $class->lmLog( "$class: status page can not be displayed" , 'error' );
+        return SERVER_ERROR;
+    }
     $r->handler("perl-script");
     print $statusPipe "STATUS" . ( $r->args ? " " . $r->args : '' ) . "\n";
     my $buf;

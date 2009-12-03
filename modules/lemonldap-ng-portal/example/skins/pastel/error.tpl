@@ -3,7 +3,14 @@
 	<div class="loginlogo"></div>
 
         <div id="error">
-        <h3><lang en="You have no access authorization for this application" fr="Vous n'avez pas les droits d'acc&egrave;s &agrave; cette application" /></h3>
+
+	<TMPL_IF ERROR403>
+        	<h3><lang en="You have no access authorization for this application" fr="Vous n'avez pas les droits d'acc&egrave;s &agrave; cette application" /></h3>
+	</TMPL_IF>
+
+	<TMPL_IF ERROR500>
+        	<h3><lang en="Error occurs on the server" fr="Une erreur est survenue sur le serveur" /></h3>
+	</TMPL_IF>
 
 	<div class="buttons">
 		<a href="<TMPL_VAR NAME="PORTAL_URL">" class="positive">
