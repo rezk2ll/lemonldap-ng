@@ -49,6 +49,8 @@ ok(
 ok( $p->{test}, 'Authentication arguments' );
 
 # Process test: first access
+$ENV{REQUEST_URI}  = '/?user=&password=';
+$ENV{QUERY_STRING} = 'user=&password=';
 ok( $p->process == 0,              'No user' );
 ok( $p->{error} == PE_FIRSTACCESS, 'Error code: first access' );
 

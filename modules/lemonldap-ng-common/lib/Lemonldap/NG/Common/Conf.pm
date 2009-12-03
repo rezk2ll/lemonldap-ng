@@ -9,8 +9,9 @@ package Lemonldap::NG::Common::Conf;
 
 use strict;
 no strict 'refs';
-use Lemonldap::NG::Common::Conf::Constants; #inherits
-use Lemonldap::NG::Common::Crypto; #link protected cipher Object "cypher" in configuration hash
+use Lemonldap::NG::Common::Conf::Constants;    #inherits
+use Lemonldap::NG::Common::Crypto
+  ;    #link protected cipher Object "cypher" in configuration hash
 use Regexp::Assemble;
 use Config::IniFiles;
 
@@ -26,7 +27,7 @@ our $msg;
 # Constructor.
 # Succeed if it has found a way to access to Lemonldap::NG configuration with
 # $arg (or default file). It can be :
-# - Nothing: default configuration file is tested, 
+# - Nothing: default configuration file is tested,
 # - { confFile => "/path/to/storage.conf" },
 # - { Type => "File", dirName => "/path/to/conf/dir/" },
 # - { Type => "DBI", dbiChain => "DBI:mysql:database=lemonldap-ng;host=1.2.3.4",
@@ -46,15 +47,17 @@ sub new {
         %$self = %{ $_[0] };
     }
     else {
-        if ( defined @_ && $#_%2 == 1 ) {
+        if ( defined @_ && $#_ % 2 == 1 ) {
             %$self = @_;
         }
     }
     unless ( $self->{mdone} ) {
         unless ( $self->{type} ) {
+
             # Use local conf to get configStorage and localStorage
-	    my $localconf = $self->getLocalConf( CONFSECTION, $self->{confFile}, 0 );
-	    if ( defined $localconf ) {
+            my $localconf =
+              $self->getLocalConf( CONFSECTION, $self->{confFile}, 0 );
+            if ( defined $localconf ) {
                 %$self = ( %$self, %$localconf );
             }
         }
@@ -135,9 +138,9 @@ sub getConf {
         }
         else {
             $r = $self->{refLocalStorage}->get('conf');
-        if ( $r->{cfgNum} == $args->{cfgNum} ) {
-            $msg = "configuration unchanged, get configuration from cache";
-        }
+            if ( $r->{cfgNum} == $args->{cfgNum} ) {
+                $msg = "configuration unchanged, get configuration from cache";
+            }
             else {
                 $r = $self->getDBConf($args);
             }
@@ -172,47 +175,48 @@ sub getLocalConf {
     my ( $self, $section, $file, $loaddefault ) = @_;
     my $r;
 
-    $section   ||= DEFAULTSECTION;
-    $file      ||= DEFAULTCONFFILE;
+    $section ||= DEFAULTSECTION;
+    $file    ||= DEFAULTCONFFILE;
     $loaddefault = 1 unless ( defined $loaddefault );
 
     # If default configuration cannot be read
     # - Error if configuration section is requested
     # - Silent exit for other section requests
     unless ( -r $file ) {
-        if ( $section eq CONFSECTION) {
+        if ( $section eq CONFSECTION ) {
             $msg = "Cannot read $file to get configuration access parameters";
             return 0;
         }
-	return $r;
+        return $r;
     }
 
     # Parse ini file
+    print STDERR Dumper(\%INC);use Data::Dumper;
     my $cfg = Config::IniFiles->new(
-        -file => $file,
-	-allowempty => 1,
+        -file       => $file,
+        -allowempty => 1,
     );
 
     unless ( defined $cfg ) {
-        $msg = "Local config error: ".@Config::IniFiles::errors;
+        $msg = "Local config error: " . @Config::IniFiles::errors;
         return 0;
     }
 
     # Check if default section exists
-    unless ( $cfg->SectionExists( DEFAULTSECTION ) ) {
-        $msg = "Default section (".DEFAULTSECTION.") is missing";
+    unless ( $cfg->SectionExists(DEFAULTSECTION) ) {
+        $msg = "Default section (" . DEFAULTSECTION . ") is missing";
         return 0;
     }
 
     # Check if configuration section exists
-    if ( $section eq CONFSECTION and !$cfg->SectionExists( CONFSECTION ) ) {
-        $msg = "Configuration section (".CONFSECTION.") is missing";
+    if ( $section eq CONFSECTION and !$cfg->SectionExists(CONFSECTION) ) {
+        $msg = "Configuration section (" . CONFSECTION . ") is missing";
         return 0;
     }
 
     # First load all default section parameters
-    if ( $loaddefault ) {
-        foreach ($cfg->Parameters( DEFAULTSECTION )) {
+    if ($loaddefault) {
+        foreach ( $cfg->Parameters(DEFAULTSECTION) ) {
             $r->{$_} = $cfg->val( DEFAULTSECTION, $_ );
             if ( $r->{$_} =~ /^[{\[].*[}\]]$/ ) {
                 eval "\$r->{$_} = $r->{$_}";
@@ -228,10 +232,10 @@ sub getLocalConf {
     return $r if ( $section eq DEFAULTSECTION );
 
     # Check if requested section exists
-    return 0 unless $cfg->SectionExists( $section );
+    return 0 unless $cfg->SectionExists($section);
 
     # Load section parameters
-    foreach ($cfg->Parameters( $section )) {
+    foreach ( $cfg->Parameters($section) ) {
         $r->{$_} = $cfg->val( $section, $_ );
         if ( $r->{$_} =~ /^[{\[].*[}\]]$/ ) {
             eval "\$r->{$_} = $r->{$_}";

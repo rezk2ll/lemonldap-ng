@@ -13,7 +13,7 @@ BEGIN { use_ok('Lemonldap::NG::Common::CGI') }
 
 use base ('Lemonldap::NG::Common::CGI');
 
-sub subtest {
+sub mySubtest {
     return 'OK1';
 }
 
@@ -75,9 +75,9 @@ ok( $buf =~ /Cache-control: public; must-revalidate; max-age=\d+\r?\n/s,
 ok( $buf =~ /Last-modified: /s, 'Last-Modified' );
 
 # Test _sub mechanism
-ok( $cgi->_sub('subtest') eq 'OK1', '_sub mechanism 1' );
-$cgi->{subtest} = sub { return 'OK2' };
-ok( $cgi->_sub('subtest') eq 'OK2', '_sub mechanism 2' );
+ok( $cgi->_sub('mySubtest') eq 'OK1', '_sub mechanism 1' );
+$cgi->{mySubtest} = sub { return 'OK2' };
+ok( $cgi->_sub('mySubtest') eq 'OK2', '_sub mechanism 2' );
 
 # SOAP
 SKIP: {

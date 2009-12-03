@@ -43,7 +43,7 @@ our (
     $whatToTrace,          $https,             $refLocalStorage,
     $safe,                 $port,              $statusPipe,
     $statusOut,            $customFunctions,   $transform,
-    $cda,                  $safe,
+    $cda,
 );
 
 ##########################################
@@ -341,7 +341,7 @@ sub safe {
     #no strict 'refs';
     #return ${"$class\::safe"} if (${"$class\::safe"});
     return $safe if($safe);
-    $class->lmLog( "Compiling safe jail for $class", 'debug' );
+    #$class->lmLog( "Compiling safe jail for $class", 'debug' );
     #my $safe = new Safe;
     $safe = new Safe;
     my @t = $customFunctions ? split( /\s+/, $customFunctions ) : ();

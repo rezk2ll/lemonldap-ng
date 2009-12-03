@@ -501,6 +501,7 @@ debian-packages: debian-dist
 	mv lemonldap-ng_$(VERSION).orig.tar.gz /tmp/
 	version=$(VERSION) && \
 	cd /tmp/ && \
+	rm -rf lemonldap-ng-$$version && \
 	tar xzf lemonldap-ng_$$version.orig.tar.gz && \
 	cd lemonldap-ng-$$version && \
 	debuild

@@ -19,7 +19,7 @@ configure-stamp:
 	dh_testdir
 
 	# Add here commands to configure the package.
-	$(MAKE) configure STORAGECONFFILE=/etc/lemonldap-ng/storage.conf \
+	$(MAKE) configure STORAGECONFFILE=/etc/lemonldap-ng/lemonldap-ng.ini \
 			PERLOPTIONS="INSTALLDIRS=vendor"
 
 	touch configure-stamp
@@ -63,7 +63,7 @@ install: build
 			PORTALSKINSDIR=$(LMSHAREDIR)portal-skins/ \
 			MANAGERDATADIR=$(LMSHAREDIR)manager-imgs/ \
 			SESSIONSEXPLORERDATADIR=$(LMSHAREDIR)sessions-explorer-imgs/ \
-			STORAGECONFFILE=/etc/lemonldap-ng/storage.conf \
+			STORAGECONFFILE=/etc/lemonldap-ng/lemonldap-ng.ini \
 			TOOLSDIR=$(LMSHAREDIR)ressources/ \
 			CONFDIR=/etc/lemonldap-ng/ \
 			CRONDIR=/etc/cron.d/ \

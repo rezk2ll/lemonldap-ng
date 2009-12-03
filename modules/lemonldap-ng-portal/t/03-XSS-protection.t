@@ -8,7 +8,10 @@
 package My::Portal;
 use strict;
 use Test::More tests => 16;
-BEGIN { use_ok( 'Lemonldap::NG::Portal::Simple', ':all' ) }
+BEGIN {
+    use_ok( 'Lemonldap::NG::Portal::Simple', ':all' );
+    sub Lemonldap::NG::Portal::Simple::lmLog {}
+}
 
 #use Lemonldap::NG::Portal::Simple;
 

@@ -1,4 +1,4 @@
-debian/tmp/etc/lemonldap-ng/storage.conf
+debian/tmp/etc/lemonldap-ng/lemonldap-ng.ini
 debian/tmp/etc/lemonldap-ng/for_etc_hosts
 debian/tmp/usr/share/perl5/Lemonldap/NG/Common*
 debian/tmp/usr/share/man/man3/Lemonldap::NG::Common*

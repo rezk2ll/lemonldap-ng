@@ -27,19 +27,11 @@ sub extractFormInfo {
     return PE_FORMEMPTY
       unless (
         (
-            ( length( $self->{'user'} = $self->param('user') ) > 0 )
-            && (
-                (
-                    length( $self->{'password'} = $self->param('password') ) > 0
-                )
-                || (
-                    length(
-                        $self->{'newpassword'} = $self->param('newpassword')
-                    ) > 0
-                )
-            )
+            ( $self->{'user'} = $self->param('user') )
+            && (   ( $self->{'password'} = $self->param('password') )
+                || ( $self->{'newpassword'} = $self->param('newpassword') ) )
         )
-        || ( length( $self->{'mail'} = $self->param('mail') ) > 0 )
+        || ( $self->{'mail'} = $self->param('mail') )
       );
     $self->{'oldpassword'}     = $self->param('oldpassword');
     $self->{'confirmpassword'} = $self->param('confirmpassword');
