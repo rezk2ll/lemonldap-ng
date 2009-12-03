@@ -892,6 +892,7 @@ sub buildCookie {
         -path     => "/",
         -secure   => $self->{securedCookie},
         -httponly => $self->{httpOnly},
+        -expires  => $self->{cookieExpiration},
         @_,
       );
     if ( $self->{securedCookie} == 2 ) {
@@ -903,6 +904,7 @@ sub buildCookie {
             -path     => "/",
             -secure   => 0,
             -httponly => $self->{httpOnly},
+            -expires  => $self->{cookieExpiration},
             @_,
           );
     }
