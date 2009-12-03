@@ -27,6 +27,7 @@ t/01-Common-Conf.t
 t/02-Common-Conf-File.t
 t/03-Common-Conf-DBI.t
 t/04-Common-Conf-SOAP.t
+t/05-Common-Conf-LDAP.t
 t/20-Common-CGI.t
 t/30-Common-Safelib.t
 t/99-pod.t
