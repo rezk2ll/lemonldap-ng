@@ -120,24 +120,11 @@ sub new {
     $self->abort( "Configuration error",
         "You've to indicate a domain for cookies" )
       unless ( $self->{domain} );
-    my $domain = $self->{domain};
     $self->{domain} =~ s/^([^\.])/.$1/;
-    $self->{securedCookie}  ||= 0;
-    $self->{cookieName}     ||= "lemonldap";
-    $self->{authentication} ||= 'LDAP';
-    $self->{userDB}         ||= 'LDAP';
-    $self->{passwordDB}     ||= 'LDAP';
-    $self->{authentication} =~ s/^ldap/LDAP/;
     $self->{mustRedirect} = (
         ( $ENV{REQUEST_METHOD} eq 'POST' and not $self->param('newpassword') )
           or $self->param('logout')
     ) ? 1 : 0;
-    $self->{SMTPServer}     ||= 'localhost';
-    $self->{mailLDAPFilter} ||= '(&(mail=$mail)(objectClass=inetOrgPerson))';
-    $self->{randomPasswordRegexp} ||= '[A-Z]{3}[a-z]{5}.\d{2}';
-    $self->{mailFrom}             ||= "noreply@" . $domain;
-    $self->{mailSubject}          ||= "Change password request";
-    $self->{mailBody}             ||= 'Your new password is $password';
 
     # Authentication and userDB module are required and have to be in @ISA
     foreach (qw(authentication userDB passwordDB)) {
@@ -235,17 +222,29 @@ sub getConf {
 # Set default values.
 sub setDefaultValues {
     my $self = shift;
-    $self->{whatToTrace} ||= 'uid';
-    $self->{whatToTrace} =~ s/^\$//;
-    $self->{httpOnly} = 1 unless ( defined ( $self->{httpOnly} ) );
-    $self->{portalSkin} ||= 'pastel';
-    $self->{portalDisplayLogout} = 1 unless ( defined ( $self->{portalDisplayLogout} ) );
-    $self->{portalDisplayResetPassword} = 1 unless ( defined ( $self->{portalDisplayResetPassword} ) );
+    $self->{whatToTrace}               ||= 'uid';
+    $self->{whatToTrace}                 =~ s/^\$//;
+    $self->{httpOnly}                    = 1 unless ( defined ( $self->{httpOnly} ) );
+    $self->{portalSkin}                ||= 'pastel';
+    $self->{portalDisplayLogout}         = 1 unless ( defined ( $self->{portalDisplayLogout} ) );
+    $self->{portalDisplayResetPassword}  = 1 unless ( defined ( $self->{portalDisplayResetPassword} ) );
     $self->{portalDisplayChangePassword} = 1 unless ( defined ( $self->{portalDisplayChangePassword} ) );
-    $self->{portalDisplayAppslist} = 1 unless ( defined ( $self->{portalDisplayAppslist} ) );
-    $self->{portalAutocomplete} ||= "off";
-    $self->{portalRequireOldPassword} = 1 unless ( defined ( $self->{portalRequireOldPassword} ) );
-    $self->{portalUserAttr} ||= "_user";
+    $self->{portalDisplayAppslist}       = 1 unless ( defined ( $self->{portalDisplayAppslist} ) );
+    $self->{portalAutocomplete}        ||= "off";
+    $self->{portalRequireOldPassword}    = 1 unless ( defined ( $self->{portalRequireOldPassword} ) );
+    $self->{portalUserAttr}            ||= "_user";
+    $self->{securedCookie}             ||= 0;
+    $self->{cookieName}                ||= "lemonldap";
+    $self->{authentication}            ||= 'LDAP';
+    $self->{userDB}                    ||= 'LDAP';
+    $self->{passwordDB}                ||= 'LDAP';
+    $self->{authentication}              =~ s/^ldap/LDAP/;
+    $self->{SMTPServer}                ||= 'localhost';
+    $self->{mailLDAPFilter}            ||= '(&(mail=$mail)(objectClass=inetOrgPerson))';
+    $self->{randomPasswordRegexp}      ||= '[A-Z]{3}[a-z]{5}.\d{2}';
+    $self->{mailFrom}                  ||= "noreply@" . $self->{domain};
+    $self->{mailSubject}               ||= "Change password request";
+    $self->{mailBody}                  ||= 'Your new password is $password';
 }
 
 =begin WSDL
