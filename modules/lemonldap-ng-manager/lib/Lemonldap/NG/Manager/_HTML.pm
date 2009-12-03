@@ -223,9 +223,7 @@ function onNodeSelect(nodeId) {
                            +button('$text{lastConf}','lastConf',nodeId)
                            +button('$text{deleteConf}','deleteConf',nodeId);
   #;
-    if ( $self->{applyConfFile} ) {
-        print "but+=button('$text{applyConf}','applyConf',nodeId);";
-    }
+  print "but+=button('$text{applyConf}','applyConf',nodeId);";
   print qq#
   document.getElementById('buttons').innerHTML = but;
 }

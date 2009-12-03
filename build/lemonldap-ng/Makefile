@@ -271,12 +271,7 @@ install_manager_site:	install_conf_dir
 		rm -rf ${RMANAGERDIR}/imgs; \
 		ln -s $$(echo ${MANAGERDATADIR} | sed -e 's/\/$$//') ${RMANAGERDIR}/imgs; \
 	fi
-	# apply.conf install if erase configuration is wanted
-	@if [ "$(ERASECONFIG)" -eq "1" ]; then \
-		mv -f ${RMANAGERDIR}/apply.conf "$(RCONFDIR)"; \
-	fi
-	@perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)/apply.conf
-	@perl -i -pe 's#__APPLYCONFFILE__#$(CONFDIR)/apply.conf#' ${RMANAGERDIR}/index.pl
+	@perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)/$(CONFFILENAME)
 	# Sessions explorer install
 	@if [ "${MANAGERDIR}" != "$(SESSIONSEXPLORERDIR)" ]; then mv -f ${RMANAGERDIR}/sessions.pl $(RSESSIONSEXPLORERDIR); fi
 	@if [ "${MANAGERDIR}/images/" != "${SESSIONSEXPLORERDATADIR}/" ]; then \
@@ -353,8 +348,6 @@ install_examples_site:
 		$(REXAMPLESDIR)/manager/images \
 	@rm -rf $$(find $(REXAMPLESDIR) -type d -name .svn)
 	@perl -i -pe 's#__DIR__#$(LASPPORTALDIR)#g' $(REXAMPLESDIR)/portal/AuthLA/index.pl
-	@perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(REXAMPLESDIR)/manager/apply.conf
-	@perl -i -pe 's#__APPLYCONFFILE__#$(CONFDIR)/apply.conf#' $(REXAMPLESDIR)/manager/*.pl
 	@perl -i -pe 's#__SKINDIR__#$(PORTALDIR)/skins#; \
 		s#__APPSXMLFILE__#$(CONFDIR)/apps-list.xml#; \
 		s#__SESSIONDIR__#$(APACHESESSIONFILEDIR)/#g;' $(REXAMPLESDIR)/portal/*.pl

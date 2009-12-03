@@ -6,7 +6,6 @@ my $h = new Lemonldap::NG::Manager(
     {
         # REQUIRED PARAMETERS
         dhtmlXTreeImageLocation => "/imgs/",
-        applyConfFile           => '__APPLYCONFFILE__',
         cssFile => 'theme/default.css',
         textareaW               => 50,
         textareaH               => 2,

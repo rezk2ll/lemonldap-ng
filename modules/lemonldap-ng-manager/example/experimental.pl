@@ -6,7 +6,6 @@ my $h = new Lemonldap::NG::Manager::Experimental(
     {
         jqueryUri     => '/javascript/jquery/jquery.js',
         imagePath     => '/images/',
-        applyConfFile => '/etc/lemonldap-ng//apply.conf',
         cssFile       => 'theme/default.css',
         textareaW     => 50,
         textareaH     => 2,

@@ -779,47 +779,57 @@ sub checkConf {
 }
 
 # Apply subroutines
-# TODO: Credentials in applyConfFile
+# TODO: Credentials in APPLYSECTION
 
 ## @method void print_apply()
-# Call all Lemonldap::NG handlers declared in $self->{applyConfFile} file to
+# Call all Lemonldap::NG handlers declared in local ini file to
 # ask them to reload Lemonldap::NG configuration.
 sub print_apply {
     my $self = shift;
+
+    # Read APPLYSECTION from local ini file
+    my $applyconf = $self->config->getLocalConf( APPLYSECTION, "", 0 ); 
+
+    # Test if section was read
     print $self->header( -type => "text/html; charset=utf8" );
-    unless ( -r $self->{applyConfFile} ) {
+    unless ( ref $applyconf ) {
         print "<h3>" . &txt_canNotReadApplyConfFile . "</h3>";
         return;
     }
+
+    # Call all reload routines on configured handlers
     print '<h3>' . &txt_result . ' : </h3><ul>';
-    open F, $self->{applyConfFile};
+
+    # Initiate User Agent
     my $ua = new LWP::UserAgent( requests_redirectable => [] );
     $ua->timeout(10);
-    while (<F>) {
-        local $| = 1;
 
-        # pass blank lines and comments
-        next if ( /^$/ or /^\s*#/ );
-        chomp;
-        s/\r//;
+    # Loop on defined handlers in APPLYSECTION
+    foreach my $host ( keys %$applyconf ) {
 
-        # each line must be like:
-        #    host  http(s)://vhost/request/
-        my ( $host, $request ) = (/^\s*([^\s]+)\s+([^\s]+)$/);
-        unless ( $host and $request ) {
-            print "<li> " . &txt_invalidLine . ": $_</li>";
-            next;
-        }
+        # Request must be like method://vhost/uri/
+        my $request = $applyconf->{$host};
+
         my ( $method, $vhost, $uri ) =
           ( $request =~ /^(https?):\/\/([^\/]+)(.*)$/ );
+
+        # If no vhost value, set
+        # - method to http
+        # - vhost to host
+        # - uri to request 
         unless ($vhost) {
-            $vhost = $host;
-            $uri   = $request;
+            $method = "http";
+            $vhost  = $host;
+            $uri    = $request;
         }
-        print "<li>$host ... ";
+
+        # GET HTTP request on handlers
+	print "<li>$host ... ";
         my $r =
           HTTP::Request->new( 'GET', "$method://$host$uri",
             HTTP::Headers->new( Host => $vhost ) );
+
+        # Display responses
         my $response = $ua->request($r);
         if ( $response->code != 200 ) {
             print join( ' ',
@@ -936,15 +946,6 @@ error logs.
 
 =item * B<jsFile> (optional): the path to the file C<lemonldap-ng-manager.js>.
 It is required only if this file is not in the same directory than your script.
-
-=item * B<applyConfFile> (optional): the path to a file containing parameters
-to make configuration reloaded by handlers. See C<reload> function in
-L<Lemonldap::NG::Handler>. The configuration file must contains lines like:
-
-  # Comments if wanted
-  host  http://virtual-host/reload-path
-
-When this parameter is set, an "apply" button is added to the manager menu.
 
 =back
 

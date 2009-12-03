@@ -19,6 +19,7 @@ use constant CONFSECTION        => "configuration";
 use constant PORTALSECTION      => "portal";
 use constant HANDLERSECTION     => "handler";
 use constant MANAGERSECTION     => "manager";
+use constant APPLYSECTION       => "apply";
 
 our %EXPORT_TAGS = ( 'all' => [ qw(
     CONFIG_WAS_CHANGED
@@ -32,6 +33,7 @@ our %EXPORT_TAGS = ( 'all' => [ qw(
     PORTALSECTION
     HANDLERSECTION
     MANAGERSECTION
+    APPLYSECTION
 ) ] );
 
 our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
