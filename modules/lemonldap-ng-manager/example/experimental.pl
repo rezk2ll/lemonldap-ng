@@ -16,17 +16,17 @@ my $h = new Lemonldap::NG::Manager::Experimental(
 
         # ACCESS TO CONFIGURATION
 
-        # By default, Lemonldap::NG uses the default storage.conf file to know
+        # By default, Lemonldap::NG uses the default lemonldap-ng.ini file to know
         # where to find is configuration
-        # (generaly /etc/lemonldap-ng/storage.conf)
+        # (generaly /etc/lemonldap-ng/lemonldap-ng.ini)
         # You can specify by yourself this file :
-        #configStorage => { Type => 'File', dirName => '/path/to/my/file' },
+        #configStorage => { confFile => '/path/to/my/file' },
 
         # You can also specify directly the configuration
         # (see Lemonldap::NG::Handler::SharedConf(3))
         #configStorage => {
         #      type => 'File',
-        #      directory => '/usr/local/lemonlda-ng/conf/'
+        #      dirName => '/usr/local/lemonlda-ng/conf/'
         #},
 
         # CUSTOM FUNCTION
