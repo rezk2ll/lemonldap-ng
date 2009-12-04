@@ -102,6 +102,7 @@ lib/Lemonldap/NG/Portal/PasswordDBLDAP.pm
 lib/Lemonldap/NG/Portal/SAMLIssuer.pm
 lib/Lemonldap/NG/Portal/SharedConf.pm
 lib/Lemonldap/NG/Portal/Simple.pm
+lib/Lemonldap/NG/Portal/UserDBEnv.pm
 lib/Lemonldap/NG/Portal/UserDBLDAP.pm
 lib/Lemonldap/NG/Portal/UserDBMulti.pm
 lib/Lemonldap/NG/Portal/UserDBNull.pm
