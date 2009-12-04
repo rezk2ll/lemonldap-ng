@@ -193,7 +193,6 @@ sub getLocalConf {
     # Parse ini file
     my $cfg = Config::IniFiles->new(
         -file       => $file,
-        -allowempty => 1,
     );
 
     unless ( defined $cfg ) {

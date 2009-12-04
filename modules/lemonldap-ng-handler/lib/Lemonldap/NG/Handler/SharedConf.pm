@@ -92,7 +92,9 @@ sub localInit {
 
     # Get local configuration parameters
     my $localconf = $lmConf->getLocalConf( HANDLERSECTION );
-    $args->{$_} ||= $localconf->{$_} foreach ( keys %$localconf );
+    if ( $localconf ) {
+        $args->{$_} ||= $localconf->{$_} foreach ( keys %$localconf );
+    }
 
     # Store in localConfig global variable
     $localConfig = $args;

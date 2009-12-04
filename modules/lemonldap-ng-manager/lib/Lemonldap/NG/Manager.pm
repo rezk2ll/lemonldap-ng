@@ -65,7 +65,9 @@ sub new {
 
     # Try to load local configuration parameters to get 'protection'
     my $localconf = $self->config->getLocalConf( MANAGERSECTION );
-    $args->{protection} ||= $localconf->{protection};
+    if ( $localconf ) {
+        $args->{protection} ||= $localconf->{protection};
+    }
 
     if ( $args->{protection} ) {
         require Lemonldap::NG::Handler::CGI;
@@ -74,7 +76,9 @@ sub new {
     }
 
     # Now push all local configuration parameters
-    $self->{$_} = $args->{$_} || $localconf->{$_} foreach ( keys %$localconf );
+    if ( $localconf ) {
+        $self->{$_} = $args->{$_} || $localconf->{$_} foreach ( keys %$localconf );
+    }
 
     foreach (qw(dhtmlXTreeImageLocation)) {
         unless ( $self->{$_} ) {

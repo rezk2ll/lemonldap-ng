@@ -49,7 +49,9 @@ sub getConf {
     # 2/ Local file configuration
     # 3/ Script embedded configuration
     $self->{$_} = $args{$_} || $globalconf->{$_} foreach ( keys %$globalconf );
-    $self->{$_} = $args{$_} || $localconf->{$_} foreach ( keys %$localconf );
+    if ( $localconf ) {
+        $self->{$_} = $args{$_} || $localconf->{$_} foreach ( keys %$localconf );
+    }
     1;
 }
 
