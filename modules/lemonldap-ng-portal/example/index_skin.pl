@@ -221,13 +221,16 @@ else {
         filter            => sub { $portal->translate_template(@_) }
     );
 
-    $template->param( AUTH_ERROR      => $portal->error );
-    $template->param( AUTH_ERROR_TYPE => $portal->error_type );
-    $template->param( AUTH_URL        => $portal->get_url );
-    $template->param( LOGIN           => $portal->get_user );
-    $template->param( AUTOCOMPLETE    => $portal->{portalAutocomplete} );
-    $template->param( SKIN            => $skin );
+    $template->param( AUTH_ERROR            => $portal->error );
+    $template->param( AUTH_ERROR_TYPE       => $portal->error_type );
+    $template->param( AUTH_URL              => $portal->get_url );
+    $template->param( LOGIN                 => $portal->get_user );
+    $template->param( AUTOCOMPLETE          => $portal->{portalAutocomplete} );
+    $template->param( SKIN                  => $skin );
+    $template->param( DISPLAY_RESETPASSWORD => $portal->{portalDisplayResetPassword} );
+    $template->param( DISPLAY_FORM          => 1 );
 
+    # Adapt template if password policy error
     if (
         $portal->{portalDisplayChangePassword}
         and (  $portal->{error} == PE_PP_CHANGE_AFTER_RESET
@@ -240,12 +243,21 @@ else {
             or $portal->{error} == PE_BADOLDPASSWORD )
       )
     {
-        $template->param( REQUIRE_OLDPASSWORD => 1 );
-        $template->param( DISPLAY_PASSWORD    => 1 );
+        $template->param( REQUIRE_OLDPASSWORD   => 1 );
+        $template->param( DISPLAY_PASSWORD      => 1 );
+        $template->param( DISPLAY_RESETPASSWORD => 0 );
+        $template->param( DISPLAY_FORM          => 0 );
     }
-    else {
-        $template->param( DISPLAY_FORM          => 1 );
-        $template->param( DISPLAY_RESETPASSWORD => $portal->{portalDisplayResetPassword} );
+
+    # Adapt template if external authentication error
+    if (
+        $portal->{error} == PE_BADCERTIFICATE
+        or $portal->{error} == PE_CERTIFICATEREQUIRED
+        or $portal->{error} == PE_ERROR
+      )
+    {
+        $template->param( DISPLAY_RESETPASSWORD => 0 );
+        $template->param( DISPLAY_FORM          => 0 );
     }
 
     print $portal->header('text/html; charset=utf-8');
