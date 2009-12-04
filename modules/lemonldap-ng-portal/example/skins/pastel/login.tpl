@@ -14,18 +14,18 @@
 
 		<table>
 		<tr><th><lang en="Login" fr="Identifiant"/></th>
-		<td><input name="user" type="text" value="<TMPL_VAR NAME="LOGIN">"/></td>
+		<td><input name="user" type="text" value="<TMPL_VAR NAME="LOGIN">" tabindex="1" /></td>
 		</tr>
 		<tr><th><lang en="Password" fr="Mot de passe"/></th>
-		<td><input name="password" type="password" /></td>
+		<td><input name="password" type="password" tabindex="2" /></td>
 		</tr>
 		<tr><td colspan="2">
 		<div class="buttons">
-		<button type="reset" class="negative">
+		<button type="reset" class="negative" tabindex="4">
 			<img src="skins/common/cancel.png" alt="" />
 			<lang en="Cancel" fr="Annuler" />
 		</button>
-		<button type="submit" class="positive">
+		<button type="submit" class="positive" tabindex="3">
 			<img src="skins/common/accept.png" alt="" />
 			<lang en="Connect" fr="Se connecter" />
 		</button>
