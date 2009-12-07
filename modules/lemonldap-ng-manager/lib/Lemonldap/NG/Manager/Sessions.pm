@@ -8,6 +8,8 @@ package Lemonldap::NG::Manager::Sessions;
 use strict;
 use Lemonldap::NG::Handler::CGI qw(:globalStorage :locationRules);
 use Lemonldap::NG::Common::Apache::Session;    #inherits
+use Lemonldap::NG::Common::Conf; #link protected conf Configuration
+use Lemonldap::NG::Common::Conf::Constants; #inherits
 
 #inherits Apache::Session
 
@@ -31,6 +33,20 @@ sub new {
     my $self = $class->SUPER::new($args)
       or $class->abort( 'Unable to start ' . __PACKAGE__,
         'See Apache logs for more' );
+
+    # Try to get configuration values from local configuration
+    my $config = Lemonldap::NG::Common::Conf->new( $self->{configStorage} );
+    unless ( $config ) {
+        $self->abort( "Unable to start",
+        "Configuration not loaded\n" . $Lemonldap::NG::Common::Conf::msg );
+    }
+    my $localconf = $config->getLocalConf( MANAGERSECTION );
+
+    if ( $localconf ) {
+        $self->{$_} = $args->{$_} || $localconf->{$_} foreach ( keys %$localconf );
+    }
+
+    # Check some paramaters
     foreach (qw(jqueryUri personnalCss imagePath)) {
         $self->{$_}
           or $self->lmLog( "$_ is not set, falling to default value", 'debug' );
