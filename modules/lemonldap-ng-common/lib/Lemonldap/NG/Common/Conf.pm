@@ -9,9 +9,8 @@ package Lemonldap::NG::Common::Conf;
 
 use strict;
 no strict 'refs';
-use Lemonldap::NG::Common::Conf::Constants;    #inherits
-use Lemonldap::NG::Common::Crypto
-  ;    #link protected cipher Object "cypher" in configuration hash
+use Lemonldap::NG::Common::Conf::Constants; #inherits
+use Lemonldap::NG::Common::Crypto; #link protected cipher Object "cypher" in configuration hash
 use Regexp::Assemble;
 use Config::IniFiles;
 
