@@ -44,13 +44,13 @@ use strict;
 use Lemonldap::NG::Handler::CGI qw(:globalStorage :locationRules);
 
 our $VERSION = '0.1';
-our ( $stylesheet, $parser );
 our @ISA;
 
 BEGIN {
-    require Lemonldap::NG::Manager::Help;      #inherits
+    require Lemonldap::NG::Manager::Help;    #inherits
     *process = *doall;
-    @ISA = qw(Lemonldap::NG::Handler::CGI Lemonldap::NG::Manager::Downloader Lemonldap::NG::Manager::Uploader Lemonldap::NG::Manager::_Struct);
+    @ISA =
+      qw(Lemonldap::NG::Handler::CGI Lemonldap::NG::Manager::Downloader Lemonldap::NG::Manager::Uploader Lemonldap::NG::Manager::_Struct);
 }
 
 sub new {
@@ -165,7 +165,7 @@ sub window {
       . $self->{imagePath}
       . '/logo_lemonldap-ng.png"/><br/>&nbsp;<ul class="simpleTree">'
       . $self->li( 'root', 'root' )
-      . $self->span( 'root', $root, $data, '', 'default' ) . '<ul>';
+      . $self->span( 'root', $root, $data, '', 'none' ) . '<ul>';
 }
 
 ## @method protected void end()
@@ -177,32 +177,41 @@ sub end {
 <div style="overflow: hidden; z-index: 2;" id="droit" class="clsPane">
  <div style="visibility: visible;" id="idSplitter32" class="clsSplitter">
   <div style="z-index: 2;overflow:auto;height:500px;" id="haut" class="clsPane">
-   <form action="#" onsubmit="false">
    <h2 id="content_title">Lemonldap::NG Manager</h2>
    <div id="buttons">
     <button onclick="\$.post(scriptname,{data: \$('#li_cm9vdA2').html()},function(data){return 1},'html');" >Sauvegarder</button>
+    <button id="newkbr" style="display:none;" onclick="newKeyR();return false;">NewKey</button>
+    <button id="newrbr" style="display:none;" onclick="newRuleR();return false;">NewRule</button>
+    <button id="newkb" style="display:none;" onclick="newKey();return false;">NewKey</button>
+    <button id="newrb" style="display:none;" onclick="newRule();return false;">NewRule</button>
+    <button id="delkb" style="display:none;" onclick="delKey();return false;">delKey</button>
    </div>
+   <form action="#" onsubmit="return false">
    <div id="content">
     <div id="content_default" class="content">
     Default
     </div>
     <div id="content_text" class="hidden">
     <input type="text" id="text" onchange="setlmdata(currentId,this.value)"/>
+    <button onclick="return false">Valider</button>
     </div>
     <div id="content_securedCookie" class="hidden">
     <input id="securedCookie0" type="radio" name="securedCookie" value="0" onclick="setlmdata('li_bGlfL3NlY3VyZWRDb29raWU1','0')" /> Cookie non sécurisé <br/>
     <input id="securedCookie1" type="radio" name="securedCookie" value="1" onclick="setlmdata('li_bGlfL3NlY3VyZWRDb29raWU1','1')" /> Cookie sécurisé <br/>
     <input id="securedCookie2" type="radio" name="securedCookie" value="2" onclick="setlmdata('li_bGlfL3NlY3VyZWRDb29raWU1','2')" /> 2 cookies <br/>
+    <button onclick="return false">Valider</button>
     </div>
     <div id="content_int" class="hidden">
     <input type="text" id="int" onchange="setlmdata(currentId,this.value)"/>
+    <button onclick="return false">Valider</button>
     </div>
     <div id="content_btext" class="hidden">
-    <button onclick="newKey();return 0;">NewKey</button>
     <input type="text" id="btextKey" onchange="setlmtext(currentId,this.value)"/> <input type="text" id="btextValue" onchange="setlmdata(currentId,this.value)"/>
+    <button onclick="return false">Valider</button>
     </div>
     <div id="content_rules" class="hidden">
     <textarea id="rulKey" cols="30" rows="2" onchange="setlmtext(currentId,this.value)"></textarea>&nbsp;<textarea id="rulValue" cols="50" rows="2" onchange="setlmdata(currentId,this.value)"></textarea>
+    <button onclick="return false">Valider</button>
     </div>
    </div></form>
   </div><!-- end Pane -->
@@ -228,6 +237,7 @@ package Lemonldap::NG::Manager::Downloader;
 use Lemonldap::NG::Common::Conf::Constants;    #inherits
 use Lemonldap::NG::Common::Safelib;            #link protected safe Safe object
 use MIME::Base64;
+
 # TODO
 use Data::Dumper;
 
@@ -460,10 +470,12 @@ sub ajaxNode {
     my ( $self, $id, $text, $param, $help, $js, $data ) = @_;
     $param .= "&amp;cfgNum=$self->{cfgNum}";
     print $self->li($id)
-      . $self->span( $id, $text, $data, $js, $help )
+      . $self->span( $id, $text, $data, undef, $help )
       . "<ul class=\"ajax\">"
       . $self->li("sub_$id")
-      . ".{url:$ENV{SCRIPT_NAME}?$param}</li></ul></li>\n";
+      . ".{url:$ENV{SCRIPT_NAME}?$param"
+      . ( $js ? ",js:$js" : '' )
+      . "}</li></ul></li>\n";
 }
 
 sub span {
@@ -503,8 +515,12 @@ sub cstruct {
         virtualHosts => {
             $k => {
                 _nodes => [qw(rules:rules:rules headers)],
-                rules  => { _nodes => ["hash:/locationRules/$k:rules:rules"], },
-                headers => { _nodes => ["hash:/exportedHeaders/$k"], },
+                rules  => {
+                    _nodes => ["hash:/locationRules/$k:rules:rules"],
+                    _js    => 'rulesRoot'
+                },
+                headers =>
+                  { _nodes => ["hash:/exportedHeaders/$k"], _js => 'hashRoot' },
             }
         }
     );
@@ -535,16 +551,22 @@ sub struct {
                 securedCookie =>
                   'int:/securedCookie:securedCookie:securedCookieValues',
             },
-            exportedVars  => { _nodes => ['hash:/exportedVars:vars:btext'], },
-            macros        => { _nodes => ['hash:/macros:macros:btext'], },
+            exportedVars => {
+                _nodes => ['hash:/exportedVars:vars:btext'],
+                _js    => 'hashRoot'
+            },
+            macros =>
+              { _nodes => ['hash:/macros:macros:btext'], _js => 'hashRoot' },
             sessionParams => {
                 _nodes         => [qw(sessionStorage timeout)],
                 _help          => 'storage',
                 sessionStorage => {
                     _nodes        => [qw(globalStorage globalStorageOptions)],
                     globalStorage => 'text:/globalStorage',
-                    globalStorageOptions =>
-                      { _nodes => ['hash:/globalStorageOptions'], },
+                    globalStorageOptions => {
+                        _nodes => ['hash:/globalStorageOptions'],
+                        _js    => 'hashRoot'
+                    },
                 },
                 timeout => 'text:/timeout:timeout:text',
             },
@@ -559,7 +581,7 @@ sub struct {
                 managerPassword => 'text:/managerPassword',
             },
         },
-        groups => { _nodes => ['hash:/groups:groups:none'], },
+        groups => { _nodes => ['hash:/groups:groups:none'], _js => 'hashRoot' },
         virtualHosts =>
           { _nodes => ['nhash:/locationRules:virtualHosts:none'], },
     };
@@ -716,7 +738,7 @@ sub testStruct {
 
 sub defaultConf {
     return {
-        userDB => 'LDAP',
+        userDB     => 'LDAP',
         ldapServer => 'localhost',
     };
 }
@@ -724,8 +746,8 @@ sub defaultConf {
 sub newNode {
     virtualHost => {
         '*' => {
-            exportedHeaders => {'Auth-User' => '$uid'},
-            locationRules => {'default' => 'deny'},
+            exportedHeaders => { 'Auth-User' => '$uid' },
+            locationRules   => { 'default'   => 'deny' },
         }
     },
     groups => {
@@ -749,8 +771,11 @@ use XML::LibXSLT;
 use MIME::Base64;
 # TODO
 use Data::Dumper;
+#use Lemonldap::NG::Manager::Downloader;
+#use Lemonldap::NG::Manager::_Struct;
 
 our $VERSION = '0.1';
+our ( $stylesheet, $parser );
 
 sub confUpload {
     my ( $self, $rdata ) = @_;
@@ -779,11 +804,16 @@ sub confUpload {
             $_->getAttribute('name'),
             $_->getAttribute('value')
         );
-        $id =~ s/^text_li_(\w+)(\d)$/decode_base64($1.'='x $2)/e;
+        my $NK = 0;
+        $id =~
+          s/^text_(NewID_)?li_(\w+)(\d)(?:_\d+)?$/decode_base64($2.'='x $3)/e;
+        $NK = 1 if ($1);
         $id =~ s/^\///;
+        $id =~ s/(?:\/[^\/]*)?$/\/$name/ if ($NK);
         next if ( $id =~ /^(generalParameters|virtualHosts)/ );
         my ( $confKey, $test ) = $self->getConfTests($id);
         my ( $res, $m );
+
         if ( !defined($test) ) {
             $errors{$name} =
               "Key $name: Lemonldap::NG::Manager error, see Apache's logs";
@@ -792,6 +822,8 @@ sub confUpload {
                 'error' );
             next;
         }
+
+        if ( $test->{'*'} and $id =~ /\// ) { $test = $test->{'*'} }
 
         # Tests (no test for hash root nodes)
         unless ( $test->{keyTest} and ( $id !~ /\// or $test->{'*'} ) ) {
@@ -927,10 +959,16 @@ sub parser {
 sub stylesheet {
     my $self = shift;
 
-    #return $stylesheet if($stylesheet);
-    my $xslt      = XML::LibXSLT->new();
-    my $style_doc = $self->parser->parse_string(
-        q#<?xml version="1.0" encoding="UTF-8"?>
+    return $stylesheet if ($stylesheet);
+    my $xslt = XML::LibXSLT->new();
+    my $style_doc = $self->parser->parse_string( join( '', <DATA> ) );
+    close DATA;
+    $stylesheet = $xslt->parse_stylesheet($style_doc);
+}
+
+1;
+__DATA__
+<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
  <xsl:output method="xml"
@@ -965,9 +1003,3 @@ sub stylesheet {
   </xsl:choose>
  </xsl:template>
 </xsl:stylesheet>
-#
-    );
-    $stylesheet = $xslt->parse_stylesheet($style_doc);
-}
-
-1;

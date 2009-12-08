@@ -61,15 +61,23 @@ function display(div,title) {
   $('#content_'+div).removeClass('hidden');
   $('#content_'+div).addClass('content');
   $('#content_title').html(title);
+  $('#newkb,#newrb,#delkb,#newkbr,#newrbr').css('display','none');
 }
 function none(id) {
   display('default','Lemonldap::NG Manager');
+}
+function hashRoot(){
+  currentId=simpleTreeCollection[0].getSelected().attr('id');
+  alert(currentId);
+  display('default','Lemonldap::NG Manager');
+  $('#newkbr').css('display','block');
 }
 function btext(id) {
   currentId=id;
   $('#btextKey').attr('value',lmtext(id));
   $('#btextValue').attr('value',lmdata(id));
   display('btext','Clef');
+  $('#newkb,#delkb').css('display','block');
 }
 function int(id) {
   currentId=id;
@@ -89,19 +97,53 @@ function securedCookieValues(id){
 function rules(id){
   currentId=id;
   var t=lmtext(id);
-  if(t=='default'){$('#rulKey').attr('readonly','readonly')}
-  else{$('#rulKey').attr('readonly','')}
   $('#rulKey').attr('value',lmtext(id));
   $('#rulValue').attr('value',lmdata(id));
   display('rules',lmtext(lmparent(id)));
+  if(t=='default'){$('#rulKey').attr('readonly','readonly')}
+  else{
+    $('#rulKey').attr('readonly','');
+    $('#delkb').css('display','block')
+  }
+  $('#newrb').css('display','block');
+}
+function rulesRoot(id){
+  display('default','Lemonldap::NG Manager');
+  $('#newrbr').css('display','block');
+}
+var count=0;
+var text4newKey='Key';
+var value4newKey='Value';
+function newId(c){
+  count++;
+  c=c.replace(/^NewID_(.*)_\d+$/,'$1');
+  return 'NewID_'+c+'_'+count;
+}
+function newKeyR(){
+  var newIdValue=newId(currentId);
+  simpleTreeCollection[0].addNode(newIdValue,text4newKey,function(d,s){
+    $('>span',s).attr('onClick','btext("'+newIdValue+'")').attr('name',text4newKey).attr('value',value4newKey).attr('id','text_'+newIdValue);
+    btext(newIdValue);
+  });
+  return false;
 }
 function newKey(){
-  //alert(currentId);
-  $.get(scriptname,{'newNode':currentId},function(data,t){
-    var obj = $('#'+currentId).parent().parent();
-    $('#'+currentId).after(data);
-    $('li.line,li.line-last',obj).remove();
-    simpleTreeCollection[0].setTreeNodes($('#'+currentId).parent().parent(),false);
+  var newIdValue=newId(currentId);
+  simpleTreeCollection[0].newNodeAfter(newIdValue,text4newKey,function(d,s){
+    $('>span',s).attr('onClick','btext("'+newIdValue+'")').attr('name',text4newKey).attr('value',value4newKey).attr('id','text_'+newIdValue);
+    btext(newIdValue);
+  });
+  return false;
+}
+function newRule(){
+  var newIdValue=newId(currentId);
+  simpleTreeCollection[0].newNodeAfter(newIdValue,text4newKey,function(d,s){
+    $('>span',s).attr('onClick','rules("'+newIdValue+'")').attr('name',text4newKey).attr('value',value4newKey).attr('id','text_'+newIdValue);
+    rules(newIdValue);
     });
   return false;
+}
+function delKey(){
+  $('#'+currentId).prev().remove();
+  $('#'+currentId).remove();
 }

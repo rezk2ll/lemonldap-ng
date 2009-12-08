@@ -7,6 +7,8 @@
 * Copyright (c) 2008, Peter Panov <panov\@elcat.kg>, IKEEN Group http://www.ikeen.com
 * All rights reserved.
 *
+* Modified by Xavier Guimard <x.guimard@free.fr> for Lemonldap::NG
+*
 * Redistribution and use in source and binary forms, with or without
 * modification, are permitted provided that the following conditions are met:
 *     * Redistributions of source code must retain the above copyright
@@ -109,6 +111,11 @@ $.fn.simpleTree = function(opt){
 				if(url && url.indexOf('url:'))
 				{
 					url=$.trim(url.replace(/.*\{url:(.*)\}/i ,'$1'));
+                    var js='';
+                    if(url.indexOf(',js:')){
+                      js=$.trim(url.replace(/.*,js:(.*)/i ,'$1'));
+                      url=$.trim(url.replace(/,js:.*/i ,''));
+                    }
 					$.ajax({
 						type: "GET",
 						url: url,
@@ -118,6 +125,7 @@ $.fn.simpleTree = function(opt){
 							node.removeAttr('class');
 							node.html(responce);
 							$.extend(node,{url:url});
+                            if($('li',node).length==0)TREE.convertToFolder(node.parent());
 							TREE.setTreeNodes(node, true);
 							if(typeof TREE.option.afterAjax == 'function')
 							{
@@ -127,6 +135,7 @@ $.fn.simpleTree = function(opt){
 							{
 								callback(node);
 							}
+                            if(js.length)$('>span',node.parent()).click(function(){eval(js+'()')});
 						}
 					});
 				}
@@ -430,6 +439,21 @@ $.fn.simpleTree = function(opt){
 				callback(dragNode_destination, dragNode_source);
 			}
 		};
+        TREE.newNodeAfter = function(id, text, callback)
+        {
+            var temp_node = $('<li><ul><li id="'+id+'"><span>'+text+'</span></li></u></li>');
+            TREE.setTreeNodes(temp_node,true);
+            destination = TREE.getSelected().parent().parent();
+            dragNode_source = $('.doc-last',temp_node);
+            TREE.moveNodeToFolder(destination);
+            temp_node.remove();
+			if(typeof(callback) == 'function')
+			{
+				callback(dragNode_destination, dragNode_source);
+			}
+            //existing.after(temp_node);
+            //temp_node.remove();
+        };
 		TREE.delNode = function(callback)
 		{
 			dragNode_source = TREE.getSelected();
