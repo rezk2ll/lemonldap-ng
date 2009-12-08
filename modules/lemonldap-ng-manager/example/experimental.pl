@@ -50,7 +50,13 @@ BEGIN {
     require Lemonldap::NG::Manager::Help;    #inherits
     *process = *doall;
     @ISA =
-      qw(Lemonldap::NG::Handler::CGI Lemonldap::NG::Manager::Downloader Lemonldap::NG::Manager::Uploader Lemonldap::NG::Manager::_Struct);
+      qw(
+        Lemonldap::NG::Handler::CGI
+        Lemonldap::NG::Manager::Downloader
+        Lemonldap::NG::Manager::Uploader
+        Lemonldap::NG::Manager::_Struct
+        Lemonldap::NG::Manager::_i18n
+      );
 }
 
 sub new {
@@ -232,6 +238,8 @@ EOF
     print $self->end_html();
 }
 
+1;
+
 package Lemonldap::NG::Manager::Downloader;
 
 use Lemonldap::NG::Common::Conf::Constants;    #inherits
@@ -242,6 +250,7 @@ use MIME::Base64;
 use Data::Dumper;
 
 #require Lemonldap::NG::Manager::_Struct; #inherits
+#require Lemonldap::NG::Manager::_i18n;         #inherits
 
 sub node {
     my ( $self, $node ) = @_;
@@ -341,7 +350,7 @@ sub confNode {
                 my $id = "$target/$_";
                 $id =~ s/=*$//;
                 print $self->li($id)
-                  . $self->span( $id, "$_", $h->{$_}, $js, $help ) . "</li>";
+                  . $self->span( $id, "$_", $h->{$_}, $js, $help, 1 ) . "</li>";
             }
         }
     }
@@ -467,10 +476,10 @@ sub confObj {
 # @param $text text to display
 # @param $param Parameters for the Ajax query
 sub ajaxNode {
-    my ( $self, $id, $text, $param, $help, $js, $data ) = @_;
+    my ( $self, $id, $text, $param, $help, $js, $data, $noT ) = @_;
     $param .= "&amp;cfgNum=$self->{cfgNum}";
     print $self->li($id)
-      . $self->span( $id, $text, $data, undef, $help )
+      . $self->span( $id, $text, $data, undef, $help, $noT )
       . "<ul class=\"ajax\">"
       . $self->li("sub_$id")
       . ".{url:$ENV{SCRIPT_NAME}?$param"
@@ -479,7 +488,7 @@ sub ajaxNode {
 }
 
 sub span {
-    my ( $self, $id, $text, $data, $js, $help ) = @_;
+    my ( $self, $id, $text, $data, $js, $help, $noT ) = @_;
     my $tmp = $text;
     $data = '' unless ( defined $data );
     $js ||= "none";
@@ -487,6 +496,7 @@ sub span {
     $id   =~ s/(=*)$/length($1)/e;
     $data =~ s/"/&#39;/g;
     $tmp  =~ s/"/&#39;/g;
+    $text = join ' ', map { $self->translate($_) } split /\s+/, $text unless($noT);
     $text = $self->escapeHTML($text);
     return
 "<span name=\"$tmp\" id=\"text_$id\" onclick=\"$js('$id')\" help=\"$help\" value=\"$data\">$text</span>
@@ -763,14 +773,118 @@ sub newNode {
 
 1;
 
+package Lemonldap::NG::Manager::_i18n;
+
+# Developer warning : this file must be utf8 encoded
+
+use strict;
+use AutoLoader qw(AUTOLOAD);
+our $VERSION = '0.5';
+
+## @fn void import(string lang)
+# Import messages
+sub translate {
+    my ( $self, $text, $lang ) = @_;
+    return $text unless ( $text =~ /[a-z]/ );
+    $lang ||= $ENV{HTTP_ACCEPT_LANGUAGE};
+    $lang = lc($lang);
+    $lang =~ s/-/_/g;
+    foreach ( split( /[,;]/, $lang ), 'en' ) {
+        next if /=/;
+        if ( __PACKAGE__->can($_) ) {
+            no strict 'refs';
+            my $r = &$_()->{$text};
+            if ($r) {
+                return $r;
+            }
+            else {
+                print STDERR __PACKAGE__ . ": $text not translated in $_\n";
+                return $text;
+            }
+        }
+    }
+}
+
+*fr_fr = *fr;
+*en_us = *en;
+
+1;
+
+sub en {
+    return {
+        authentication               => 'Authentication module',
+        authParams                   => 'Authentication parameters',
+        Configuration                => 'Configuration',
+        cookieName                   => 'Cookie Name',
+        cookieParams                 => 'Cookies Parameters',
+        domain                       => 'Domain',
+        exportedVars                 => 'Exported Variables',
+        generalParameters            => 'General Parameters',
+        globalStorage                => 'Apache::Session module',
+        globalStorageOptions         => 'Apache::Session module parameters',
+        groups                       => 'Groups',
+        headers                      => 'HTTP Headers',
+        ldapBase                     => 'LDAP Search Base',
+        ldapParams                   => 'LDAP parameters',
+        ldapPort                     => 'LDAP Server Port',
+        ldapServer                   => 'LDAP Server',
+        macros                       => 'Macros',
+        managerDn                    => 'LDAP Account',
+        managerPassword              => 'LDAP Password',
+        portal                       => 'Portal',
+        rules                        => 'Rules',
+        securedCookie                => 'Secured Cookie (SSL)',
+        sessionParams                => 'Sessions Parameters',
+        sessionStorage               => 'Sessions Storage',
+        timeout                      => 'Sessions timeout',
+        userDB                       => 'Users database type',
+        virtualHosts                 => 'Virtual Hosts',
+        whatToTrace                  => "Attribute to use in Apache's logs",
+    };
+}
+
+sub fr {
+    return {
+        authentication               => "Module d'authentification",
+        authParams                   => "Paramètres d'authentification",
+        Configuration                => 'Configuration',
+        cookieName                   => 'Nom du cookie',
+        cookieParams                 => 'Paramètres des cookies',
+        domain                       => 'Domaine',
+        exportedVars                 => 'Attributs LDAP à exporter',
+        generalParameters            => 'Paramètres généraux',
+        globalStorage                => 'Module Apache::Session',
+        globalStorageOptions         => 'Paramètres du module Apache::Session',
+        groups                       => 'Groupes',
+        headers                      => 'En-têtes HTTP',
+        ldapBase                     => 'Base de recherche LDAP',
+        ldapParams                   => 'Paramètres LDAP',
+        ldapPort                     => 'Port du serveur LDAP',
+        ldapServer                   => 'Serveur LDAP',
+        macros                       => 'Macros',
+        managerDn                    => 'Compte de connexion LDAP',
+        managerPassword              => 'Mot de passe LDAP',
+        portal                       => 'Portail',
+        rules                        => 'Règles',
+        securedCookie                => 'Cookie sécurisé (SSL)',
+        sessionParams                => 'Paramètres des Sessions Parameters',
+        sessionStorage               => 'Stockage des sessions',
+        timeout                      => 'Durée de vie des sessions',
+        userDB                       => "Type de base de données d'utilisateurs",
+        virtualHosts                 => 'Hôtes virtuels',
+        whatToTrace                  => "Donnée à inscrire dans les journaux d'Apache",
+    };
+}
 package Lemonldap::NG::Manager::Uploader;
 
 use strict;
 use XML::LibXML;
 use XML::LibXSLT;
 use MIME::Base64;
+
 # TODO
 use Data::Dumper;
+#use Lemonldap::NG::Common::Safelib;            #link protected safe Safe object
 #use Lemonldap::NG::Manager::Downloader;
 #use Lemonldap::NG::Manager::_Struct;
 
