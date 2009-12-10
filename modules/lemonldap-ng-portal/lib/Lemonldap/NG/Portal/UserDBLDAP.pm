@@ -5,6 +5,7 @@
 # LDAP user database backend class
 package Lemonldap::NG::Portal::UserDBLDAP;
 
+use strict;
 use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::_LDAP 'ldap';    #link protected ldap
 
@@ -57,20 +58,25 @@ sub search {
         base   => $self->{ldapBase},
         scope  => 'sub',
         filter => $self->{LDAPFilter},
+        (
+            ref( $self->{exportedVars} )
+            ? ( attrs => values( %{ $self->{exportedVars} } ) )
+            : ()
+        ),
     );
     $self->lmLog(
-        "LDAP Search with base: "
+        'LDAP Search with base: '
           . $self->{ldapBase}
-          . " and filter: "
+          . ' and filter: '
           . $self->{LDAPFilter},
         'debug'
     );
     if ( $mesg->code() != 0 ) {
-        $self->lmLog( "LDAP Search error: " . $mesg->error, 'error' );
+        $self->lmLog( 'LDAP Search error: ' . $mesg->error, 'error' );
         return PE_LDAPERROR;
     }
     unless ( $self->{entry} = $mesg->entry(0) ) {
-        $user = $self->{mail} || $self->{user};
+        my $user = $self->{mail} || $self->{user};
         $self->_sub( 'userError', "$user was not found in LDAP directory" );
         return PE_BADCREDENTIALS;
     }
