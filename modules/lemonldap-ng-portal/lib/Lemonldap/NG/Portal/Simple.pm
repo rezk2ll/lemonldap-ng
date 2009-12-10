@@ -236,8 +236,6 @@ sub setDefaultValues {
     $self->{securedCookie}             ||= 0;
     $self->{cookieName}                ||= "lemonldap";
     $self->{authentication}            ||= 'LDAP';
-    $self->{userDB}                    ||= 'LDAP';
-    $self->{passwordDB}                ||= 'LDAP';
     $self->{authentication}              =~ s/^ldap/LDAP/;
     $self->{SMTPServer}                ||= 'localhost';
     $self->{mailLDAPFilter}            ||= '(&(mail=$mail)(objectClass=inetOrgPerson))';
@@ -245,6 +243,16 @@ sub setDefaultValues {
     $self->{mailFrom}                  ||= "noreply@" . $self->{domain};
     $self->{mailSubject}               ||= "Change password request";
     $self->{mailBody}                  ||= 'Your new password is $password';
+
+    # Set default userDB and passwordDB to DBI if authentication is DBI
+    if ( $self->{authentication} =~ /DBI/i ) {
+        $self->{userDB} ||= "DBI";
+	$self->{passwordDB} ||= "DBI";
+    } else {
+        # Default to LDAP
+        $self->{userDB} ||= "LDAP";
+	$self->{passwordDB} ||= "LDAP";
+    }
 }
 
 =begin WSDL

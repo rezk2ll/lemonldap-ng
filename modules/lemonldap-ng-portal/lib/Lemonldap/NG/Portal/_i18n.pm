@@ -75,7 +75,7 @@ __END__
 # * PE_NOTIFICATION                      36
 # * PE_BADURL                            37
 # * PE_NOSCHEME                          38
-# * PE_BASOLDPASSWORD                    39
+# * PE_BADOLDPASSWORD                    39
 
 # Not used in errors:
 # * PE_DONE                -1

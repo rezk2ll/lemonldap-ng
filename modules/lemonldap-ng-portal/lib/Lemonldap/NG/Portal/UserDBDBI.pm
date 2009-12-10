@@ -1,0 +1,74 @@
+## @file
+# DBI userDB mechanism
+
+## @class
+# DBI userDB mechanism class
+package Lemonldap::NG::Portal::UserDBDBI;
+
+use strict;
+use Lemonldap::NG::Portal::Simple;
+
+our $VERSION = '0.1';
+
+## @apmethod int userDBInit()
+# Set default values
+# @return Lemonldap::NG::Portal constant
+sub userDBInit {
+    my $self = shift;
+
+    # DBI access to user is the same as authentication by default
+    $self->{dbiUserChain}    ||= $self->{dbiAuthChain};
+    $self->{dbiUserUser}     ||= $self->{dbiAuthUser};
+    $self->{dbiUserPassword} ||= $self->{dbiAuthPassword};
+    $self->{dbiUserTable}    ||= $self->{dbiAuthTable};
+    $self->{userPivot}       ||= $self->{dbiAuthLoginCol};
+
+    PE_OK;
+}
+
+## @apmethod int getUser()
+# Do nothing
+# @return Lemonldap::NG::Portal constant
+sub getUser {
+    PE_OK;
+}
+
+## @apmethod int setSessionInfo()
+# Get columns for each exportedVars
+# @return Lemonldap::NG::Portal constant
+sub setSessionInfo {
+    my $self = shift;
+
+    # Return if no data to collect
+    return PE_OK unless ( $self->{exportedVars} and ref( $self->{exportedVars} ) eq 'HASH' );
+
+    # Connect
+    my $dbh = $self->dbh( $self->{dbiUserChain}, $self->{dbiUserUser}, $self->{dbiUserPassword} );
+    return PE_ERROR unless $dbh;
+
+    my $table = $self->{dbiUserTable};
+    my $pivot = $self->{userPivot};
+
+    my $sth = $dbh->prepare("SELECT * FROM $table WHERE $pivot='".$self->{user}."'");
+
+    $sth->execute();
+
+    my $result = $sth->fetchrow_hashref();
+
+    foreach ( keys %{ $self->{exportedVars} } ) {
+        if ( exists $result->{ $self->{exportedVars}->{$_} } ) {
+            $self->{sessionInfo}->{$_} = $result->{ $self->{exportedVars}->{$_} };
+        }
+    }
+
+    PE_OK;
+}
+
+## @apmethod int setGroups()
+# Do nothing
+# @return Lemonldap::NG::Portal constant
+sub setGroups {
+    PE_OK;
+}
+1;
+

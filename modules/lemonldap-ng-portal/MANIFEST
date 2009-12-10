@@ -77,6 +77,7 @@ example/skins/pastel/styles.css
 example/slavePortal.pl
 lib/Lemonldap/NG/Portal.pm
 lib/Lemonldap/NG/Portal/_i18n.pm
+lib/Lemonldap/NG/Portal/_DBI.pm
 lib/Lemonldap/NG/Portal/_LDAP.pm
 lib/Lemonldap/NG/Portal/_Multi.pm
 lib/Lemonldap/NG/Portal/_Proxy.pm
@@ -85,6 +86,7 @@ lib/Lemonldap/NG/Portal/_SAML.pm
 lib/Lemonldap/NG/Portal/_SOAP.pm
 lib/Lemonldap/NG/Portal/_WebForm.pm
 lib/Lemonldap/NG/Portal/AuthApache.pm
+lib/Lemonldap/NG/Portal/AuthDBI.pm
 lib/Lemonldap/NG/Portal/AuthCAS.pm
 lib/Lemonldap/NG/Portal/AuthLA.pm
 lib/Lemonldap/NG/Portal/AuthLDAP.pm
@@ -98,10 +100,12 @@ lib/Lemonldap/NG/Portal/Menu.pm
 lib/Lemonldap/NG/Portal/Notification.pm
 lib/Lemonldap/NG/Portal/Notification/DBI.pm
 lib/Lemonldap/NG/Portal/Notification/File.pm
+lib/Lemonldap/NG/Portal/PasswordDBDBI.pm
 lib/Lemonldap/NG/Portal/PasswordDBLDAP.pm
 lib/Lemonldap/NG/Portal/SAMLIssuer.pm
 lib/Lemonldap/NG/Portal/SharedConf.pm
 lib/Lemonldap/NG/Portal/Simple.pm
+lib/Lemonldap/NG/Portal/UserDBDBI.pm
 lib/Lemonldap/NG/Portal/UserDBEnv.pm
 lib/Lemonldap/NG/Portal/UserDBLDAP.pm
 lib/Lemonldap/NG/Portal/UserDBMulti.pm

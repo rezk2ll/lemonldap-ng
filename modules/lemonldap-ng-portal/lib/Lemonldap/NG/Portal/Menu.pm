@@ -9,18 +9,13 @@ use strict;
 use warnings;
 require Lemonldap::NG::Common::CGI;
 use Lemonldap::NG::Portal::SharedConf;
-use Lemonldap::NG::Portal::_LDAP 'ldap';    #link protected ldap Object used to change passwords only
 use XML::LibXML;
 use Lemonldap::NG::Common::Safelib;           #link protected safe Safe object
 use Safe;
-use Lemonldap::NG::Portal::PasswordDBLDAP;    #inherits
 
 #inherits Net::LDAP::Control::PasswordPolicy
 
-*_modifyPassword = *Lemonldap::NG::Portal::PasswordDBLDAP::modifyPassword;
-*_passwordDBInit = *Lemonldap::NG::Portal::PasswordDBLDAP::passwordDBInit;
-
-our $VERSION = '0.2';
+our $VERSION = '0.3';
 
 ### ACCESS CONTROL DISPLAY SYSTEM
 
@@ -111,6 +106,21 @@ sub new {
     $self->{portalObject}->{'user'} =
       $self->{portalObject}->{sessionInfo}->{'_user'};
 
+    # Password modification functions (TODO merge Menu.pm in Simple.pm to inherits those functions)
+    if ( exists $self->{portalObject}->{passwordDB} and $self->{portalObject}->{passwordDB} =~ /DBI/i ) {
+        use Lemonldap::NG::Portal::PasswordDBDBI;    #inherits
+        use Lemonldap::NG::Portal::_DBI;    #link protected ldap Object used to change passwords only
+        *_modifyPassword = *Lemonldap::NG::Portal::PasswordDBDBI::modifyPassword;
+        *_passwordDBInit = *Lemonldap::NG::Portal::PasswordDBDBI::passwordDBInit;
+    } else {
+        # Default to LDAP
+        use Lemonldap::NG::Portal::PasswordDBLDAP;    #inherits
+        use Lemonldap::NG::Portal::_LDAP 'ldap';    #link protected ldap Object used to change passwords only
+        *_modifyPassword = *Lemonldap::NG::Portal::PasswordDBLDAP::modifyPassword;
+        *_passwordDBInit = *Lemonldap::NG::Portal::PasswordDBLDAP::passwordDBInit;
+    }
+
+
     # Change password (only if newpassword submitted)
     $self->{error} = &_passwordDBInit( $self->{portalObject} )
       if $self->{portalObject}->{'newpassword'};
@@ -181,6 +191,7 @@ sub displayTab {
                     32,    #PE_PP_GRACE
                     33,    #PE_PP_EXP_WARNING
                     34,    #PE_PASSWORD_MISMATCH
+                    39,    #PE_BADOLDPASSWORD
                 )
             )
         )
