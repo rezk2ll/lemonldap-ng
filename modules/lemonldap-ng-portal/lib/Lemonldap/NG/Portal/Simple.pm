@@ -23,14 +23,18 @@ use Safe;
 # Special comments for doxygen
 #inherits Lemonldap::NG::Portal::_SOAP
 #inherits Lemonldap::NG::Portal::AuthApache
+#inherits Lemonldap::NG::Portal::AuthDBI
 #inherits Lemonldap::NG::Portal::AuthCAS
 #inherits Lemonldap::NG::Portal::AuthLDAP
 #inherits Lemonldap::NG::Portal::AuthRemote
 #inherits Lemonldap::NG::Portal::AuthSSL
 #inherits Lemonldap::NG::Portal::Menu
 #link Lemonldap::NG::Portal::Notification protected notification
+#inherits Lemonldap::NG::Portal::UserDBDBI
+#inherits Lemonldap::NG::Portal::UserDBEnv
 #inherits Lemonldap::NG::Portal::UserDBLDAP
 #inherits Lemonldap::NG::Portal::UserDBRemote
+#inherits Lemonldap::NG::Portal::PasswordDBDBI
 #inherits Lemonldap::NG::Portal::PasswordDBLDAP
 #inherits Apache::Session
 #link Lemonldap::NG::Common::Apache::Session::SOAP protected globalStorage
@@ -101,15 +105,24 @@ our $self;    # Safe cannot share a variable declared with my
 #@param args hash reference
 #@return Lemonldap::NG::Portal::Simple object
 sub new {
+
     binmode( STDOUT, ":utf8" );
     my $class = shift;
     return $class if ( ref($class) );
     my $self = $class->SUPER::new();
+
+    # Reinit _url
     $self->{_url} = '';
+
+    # Get global configuration
     $self->getConf(@_)
       or $self->abort( "Configuration error",
         "Unable to get configuration: $Lemonldap::NG::Common::Conf::msg" );
+
+    # Default values
     $self->setDefaultValues();
+
+    # Test mandatory elements
     $self->abort( "Configuration error",
         "You've to indicate a an Apache::Session storage module !" )
       unless ( $self->{globalStorage} );
@@ -121,38 +134,48 @@ sub new {
         "You've to indicate a domain for cookies" )
       unless ( $self->{domain} );
     $self->{domain} =~ s/^([^\.])/.$1/;
+
+    # Rules to allow redirection
     $self->{mustRedirect} = (
         ( $ENV{REQUEST_METHOD} eq 'POST' and not $self->param('newpassword') )
           or $self->param('logout')
     ) ? 1 : 0;
 
-    # Authentication and userDB module are required and have to be in @ISA
-    foreach (qw(authentication userDB passwordDB)) {
-        my $tmp = 'Lemonldap::NG::Portal::'
-          . (
-            $_ eq 'userDB'
-            ? 'UserDB'
-            : ( $_ eq 'passwordDB' ? 'PasswordDB' : 'Auth' )
-          ) . $self->{$_};
-        $tmp =~ s/\s.*$//;
-        eval "require $tmp";
+    # Push authentication/userDB/passwordDb/issuerDB modules in @ISA
+    foreach (qw(authentication userDB passwordDB issuerDB)) {
+        my $module_name = 'Lemonldap::NG::Portal::';
+	my $db_type = $_;
+        my $db_name = $self->{$db_type};
+
+        # Adapt module type to real module name
+        $db_type =~ s/authentication/Auth/;
+        $db_type =~ s/userDB/UserDB/;
+        $db_type =~ s/passwordDB/PasswordDB/;
+        $db_type =~ s/issuerDB/IssuerDB/;
+
+        # Full module name
+        $module_name .= $db_type . $db_name;
+
+        # Remove white spaces
+        $module_name =~ s/\s.*$//;
+
+        # Try to load module
+        eval "require $module_name";
         $self->abort( "Configuration error", $@ ) if ($@);
-        push @ISA, $tmp;
+
+        # Push module in @ISA
+        push @ISA, $module_name;
 
         # $self->{authentication} and $self->{userDB} can contains arguments
         # (key1 = scalar_value; key2 = ...)
-        unless ( $self->{$_} =~ /^Multi/ ) {
-            $tmp = $self->{$_};
-            $tmp =~ s/^\w+\s*//;
-            my %h = split( /\s*[=;]\s*/, $tmp ) if ($tmp);
+        unless ( $db_name =~ /^Multi/ ) {
+            $db_name =~ s/^\w+\s*//;
+            my %h = split( /\s*[=;]\s*/, $db_name ) if ($db_name);
             %$self = ( %h, %$self );
         }
     }
-    if ( $self->{SAMLIssuer} ) {
-        require Lemonldap::NG::Portal::SAMLIssuer;
-        push @ISA, 'Lemonldap::NG::Portal::SAMLIssuer';
-        $self->SAMLIssuerInit();
-    }
+
+    # Notifications
     if ( $self->{notification} ) {
         require Lemonldap::NG::Portal::Notification;
         my $tmp;
@@ -172,6 +195,7 @@ sub new {
         $self->abort($Lemonldap::NG::Portal::Notification::msg)
           unless ( $self->{notifObject} );
     }
+
     if (    $self->{notification}
         and $ENV{PATH_INFO}
         and $ENV{PATH_INFO} =~ m#^/notification# )
@@ -181,11 +205,15 @@ sub new {
         $self->abort( 'Bad request',
             'Only SOAP requests are accepted with "/notification"' );
     }
+
+    # SOAP
     if ( $self->{Soap} or $self->{soap} ) {
         require Lemonldap::NG::Portal::_SOAP;
         push @ISA, 'Lemonldap::NG::Portal::_SOAP';
         $self->startSoapServices();
     }
+
+    # Trusted domains
     unless ( defined( $self->{trustedDomains} ) ) {
         $self->{trustedDomains} = $self->{domain};
     }
@@ -198,6 +226,7 @@ sub new {
             ( map { s/\./\\\./g; $_ } split /\s+/, $self->{trustedDomains} ) )
           . ')';
     }
+
     return $self;
 }
 
@@ -243,6 +272,7 @@ sub setDefaultValues {
     $self->{mailFrom}                  ||= "noreply@" . $self->{domain};
     $self->{mailSubject}               ||= "Change password request";
     $self->{mailBody}                  ||= 'Your new password is $password';
+    $self->{issuerDB}                  ||= 'Null';
 
     # Set default userDB and passwordDB to DBI if authentication is DBI
     if ( $self->{authentication} =~ /DBI/i ) {
@@ -562,30 +592,57 @@ sub _deleteSession {
 ###############################################################
 
 ##@method boolean process()
-# Main method.
-# process() call functions issued from :
-#  - itself : controlUrlOrigin, controlExistingSession, setMacros, setLocalGroups, store, buildCookie, log, autoredirect
-#  - authentication module    : extractFormInfo, setAuthSessionInfo, authenticate
-#  - user database module     : getUser, setSessionInfo, setGroups
-#  - password database module : modifyPassword, resetPasswordByMail
-#@return 1 if user is all is OK, 0 if session isn't created or a notification has to be done
+# Main method calling functions issued from:
+#  - itself:
+#    - controlUrlOrigin
+#    - checkNotifBack
+#    - controlExistingSession
+#    - setMacros
+#    - setLocalGroups
+#    - removeOther
+#    - store
+#    - buildCookie
+#    - checkNotification
+#    - autoRedirect
+#    - updateStatus
+#  - authentication module:
+#    - authInit
+#    - extractFormInfo
+#    - setAuthSessionInfo
+#    - authenticate
+#  - userDB module:
+#    - userDBInit
+#    - getUser
+#    - setSessionInfo
+#    - setGroups
+#  - passwordDB module:
+#    - passwordDBInit
+#    - modifyPassword
+#    - resetPasswordByMail
+#  - issuerDB module:
+#    - issuerDBInit
+#    - issuerForUnAuthUser
+#    - issuerForAuthUser
+#    - issuerLogout
+#
+#@return 1 if all is OK, 0 if session isn't created or a notification has to be done
 sub process {
     my ($self) = @_;
     $self->{error} = PE_OK;
     $self->{error} = $self->_subProcess(
-        qw(controlUrlOrigin checkNotifBack controlExistingSession
-          SAMLForUnAuthUser authInit extractFormInfo userDBInit getUser
+        qw(controlUrlOrigin checkNotifBack controlExistingSession issuerDBInit
+          issuerForUnAuthUser authInit extractFormInfo userDBInit getUser
           setAuthSessionInfo passwordDBInit modifyPassword setSessionInfo
           resetPasswordByMail setMacros setLocalGroups setGroups authenticate
-          removeOther store buildCookie checkNotification SAMLForAuthUser
-          autoRedirect)
+          removeOther store buildCookie checkNotification issuerForAuthUser
+          issuerLogout autoRedirect)
     );
     $self->updateStatus;
     return ( ( $self->{error} > 0 ) ? 0 : 1 );
 }
 
 ##@apmethod int controlUrlOrigin()
-# 1) If the user was redirected here, loads 'url' parameter.
+# If the user was redirected here, loads 'url' parameter.
 #@return Lemonldap::NG::Portal constant
 sub controlUrlOrigin {
     my $self = shift;
@@ -624,7 +681,7 @@ m#^https?://(?:$self->{reVHosts}$self->{trustedDomains})(?::\d+)?(?:/.*)?$#o
 }
 
 ##@apmethod int checkNotifBack()
-# 2) Checks if a message has been notified to the connected user.
+# Checks if a message has been notified to the connected user.
 # Call Lemonldap::NG::Portal::Notification::checkNotification()
 #@return Lemonldap::NG::Portal error code
 sub checkNotifBack {
@@ -637,24 +694,15 @@ sub checkNotifBack {
         }
         else {
             $self->{error} = $self->_subProcess(
-                qw(checkNotification SAMLForAuthUser autoRedirect));
+                qw(checkNotification issuerForAuthUser issuerLogout autoRedirect));
             return $self->{error} || PE_DONE;
         }
     }
     PE_OK;
 }
 
-##@apmethod int SAMLForUnAuthUser()
-# Load Lemonldap::NG::Portal::SAMLIssuer::SAMLForUnAuthUser() if
-# $self->{SAMLIssuer} is set.
-#@return Lemonldap::NG::Portal constant
-sub SAMLForUnAuthUser {
-    return $self->SUPER::SAMLForUnAuthUser(@_) if ( $self->{SAMLIssuer} );
-    PE_OK;
-}
-
 ##@apmethod int controlExistingSession(string id)
-# 3) Control existing sessions.
+# Control existing sessions.
 # To overload to control what to do with existing sessions.
 # what to do with existing sessions ?
 #       - nothing: user is authenticated and process returns true (default)
@@ -683,7 +731,7 @@ sub controlExistingSession {
             # Delete session in global storage
             $self->_deleteSession($h);
             $self->{error} = PE_REDIRECT;
-            $self->SAMLLogout() if ( $self->{SAMLIssuer} );
+            $self->issuerLogout();
             $self->_sub( 'userNotice',
                 $self->{sessionInfo}->{ $self->{whatToTrace} }
                   . " has been disconnected" );
@@ -711,35 +759,38 @@ sub controlExistingSession {
 ## @method int existingSession()
 # Launched by controlExistingSession() to know what to do with existing
 # sessions.
-# Can return :
-# - PE_DONE : session is unchanged and process() return true
-# - PE_OK : process() return false to display the form
+# Can return:
+# - PE_DONE: session is unchanged and process() return true
+# - PE_OK: process() return false to display the form
 #@return Lemonldap::NG::Portal constant
 sub existingSession {
 
-    #my ( $self, $id, $datas ) = @_;
     PE_DONE;
 }
 
-# 4. authInit() : must be implemented in Auth* module
+# issuerDBInit(): must be implemented in IssuerDB* module
 
-# 5. extractFormInfo() : must be implemented in Auth* module:
-#                         * set $self->{user}
-#                         * authenticate user if possible (or do it in 11.)
+# issuerForUnAuthUser(): must be implemented in IssuerDB* module
 
-# 6. userDBInit() : must be implemented in User* module
+# authInit(): must be implemented in Auth* module
 
-# 7. getUser() : must be implemented in User* module
+# extractFormInfo(): must be implemented in Auth* module
+# * set $self->{user}
+# * authenticate user if possible (or do it in authenticate())
 
-# 8. setAuthSessionInfo() : must be implemented in Auth* module:
-#                            * store exported datas in $self->{sessionInfo}
+# userDBInit(): must be implemented in UserDB* module
 
-#  . passwordDBInit() : must be implemented in PasswordDB* module
+# getUser(): must be implemented in UserDB* module
 
-#  . modifyPassword() : must be implemented in PasswordDB* module
+# setAuthSessionInfo(): must be implemented in Auth* module:
+# * store exported datas in $self->{sessionInfo}
+
+# passwordDBInit(): must be implemented in PasswordDB* module
+
+# modifyPassword(): must be implemented in PasswordDB* module
 
 ##@apmethod int setSessionInfo()
-# 9) Call setSessionInfo() in User* module and set ipAddr and startTime
+# Call setSessionInfo() in User* module and set ipAddr and startTime
 #@return Lemonldap::NG::Portal constant
 sub setSessionInfo {
     my $self = shift;
@@ -769,11 +820,11 @@ sub setSessionInfo {
     return $self->SUPER::setSessionInfo();
 }
 
-#  . resetPasswordByMail() : must be implemented in PasswordDB* module
+# resetPasswordByMail(): must be implemented in PasswordDB* module
 
 ##@apmethod int setMacro()
-# 10) macro mechanism.
-#                  * store macro results in $self->{sessionInfo}
+# Macro mechanism.
+# * store macro results in $self->{sessionInfo}
 #@return Lemonldap::NG::Portal constant
 sub setMacros {
     local $self = shift;
@@ -786,9 +837,8 @@ sub setMacros {
 }
 
 ##@apmethod int setLocalGroups()
-# 11) groups mechanism.
-#                    * store all groups name that the user match in
-#                      $self->{sessionInfo}->{groups}
+# Groups mechanism.
+# * store all groups name that the user match in $self->{sessionInfo}->{groups}
 #@return Lemonldap::NG::Portal constant
 sub setLocalGroups {
     local $self = shift;
@@ -802,10 +852,10 @@ sub setLocalGroups {
     PE_OK;
 }
 
-#  . setGroups() : must be implemented in UserDB* module
+# setGroups(): must be implemented in UserDB* module
 
 ##@apmethod int authenticate()
-# 12. Call authenticate() in Auth* module and call userNotice().
+# Call authenticate() in Auth* module and call userNotice().
 #@return Lemonldap::NG::Portal constant
 sub authenticate {
     my $self = shift;
@@ -817,6 +867,9 @@ sub authenticate {
     PE_OK;
 }
 
+##@apmethod int removeOther()
+# check singleSession or singleIP parameters, and remove other sessions if needed
+#@return Lemonldap::NG::Portal constant
 sub removeOther {
     my $self = shift;
     if ( $self->{singleSession} or $self->{singleIP} ) {
@@ -860,9 +913,9 @@ sub removeOther {
 }
 
 ##@apmethod int store()
-# 13) Store user's datas in sessions database.
-#     Now, the user is known, authenticated and session variable are evaluated.
-#     It's time to store his parameters with Apache::Session::* module
+# Store user's datas in sessions database.
+# Now, the user is known, authenticated and session variable are evaluated.
+# It's time to store his parameters with Apache::Session::* module
 #@return Lemonldap::NG::Portal constant
 sub store {
     my ($self) = @_;
@@ -887,7 +940,7 @@ sub store {
 }
 
 ##@apmethod int buildCookie()
-# 14) Build the Lemonldap::NG cookie.
+# Build the Lemonldap::NG cookie.
 #@return Lemonldap::NG::Portal constant
 sub buildCookie {
     my $self = shift;
@@ -919,7 +972,7 @@ sub buildCookie {
 }
 
 ##@apmethod int checkNotification()
-# 15) Check if messages has to be notified.
+# Check if messages has to be notified.
 # Call Lemonldap::NG::Portal::Notification::getNotification().
 #@return Lemonldap::NG::Portal constant
 sub checkNotification {
@@ -933,18 +986,13 @@ sub checkNotification {
     return PE_OK;
 }
 
-##@apmethod int SAMLForAuthUser()
-# Load Lemonldap::NG::Portal::SAMLIssuer::SAMLForAuthUser() if
-# $self->{SAMLIssuer} is set.
-#@return Lemonldap::NG::Portal constant
-sub SAMLForAuthUser {
-    return $self->SUPER::SAMLForAuthUser(@_) if ( $self->{SAMLIssuer} );
-    PE_OK;
-}
+# issuerForAuthUser(): must be implemented in IssuerDB* module
+
+# issuerLogout(): must be implemented in IssuerDB* module
 
 ##@apmethod int autoRedirect()
-# 16) If the user was redirected to the portal, we will now redirect him
-#     to the requested URL.
+# If the user was redirected to the portal, we will now redirect him
+# to the requested URL.
 #@return Lemonldap::NG::Portal constant
 sub autoRedirect {
     my $self = shift;

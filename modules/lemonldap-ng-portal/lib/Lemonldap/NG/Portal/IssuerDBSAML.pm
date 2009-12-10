@@ -1,61 +1,65 @@
 ## @file
-# SAML Issuer skeleton
+# SAML Issuer file
 
 ## @class
-# SAML Issuer skeleton
-package Lemonldap::NG::Portal::SAMLIssuer;
+# SAML Issuer class
+package Lemonldap::NG::Portal::IssuerDBSAML;
 
 use strict;
 use Lemonldap::NG::Portal::Simple;
 
 our $VERSION = '0.01';
 
-## @method void SAMLIssuerInit()
+## @method void issuerDBInit()
 # TODO
-# Load and check SAML Issuer configuration
-sub SAMLIssuerInit {
+# Load and check SAML configuration
+# @return Lemonldap::NG::Portal error code
+sub issuerDBInit {
     my $self = shift;
     $self->abort('This feature is not released');
     return PE_OK;
 }
 
-## @apmethod int SAMLForUnAuthUser()
+## @apmethod int issuerForUnAuthUser()
 # TODO
 # Check if there is an SAML authentication request.
 # Called only for unauthenticated users, it store SAML request in
 # $self->{url}
 # @return Lemonldap::NG::Portal error code
-sub SAMLForUnAuthUser {
+sub issuerForUnAuthUser {
     my $self = shift;
     PE_OK;
 }
 
-## @apmethod int SAMLForAuthUser()
+## @apmethod int issuerForAuthUser()
 # TODO
 # Check if there is an SAML authentication request for an authenticated user
 # and build assertions
 # @return Lemonldap::NG::Portal error code
-sub SAMLForAuthUser {
+sub issuerForAuthUser {
     my $self = shift;
     PE_OK;
 }
 
-## @method void SAMLLogout()
+## @apmethod int issuerLogout()
 # TODO
-sub SAMLLogout {
+# @return Lemonldap::NG::Portal error code
+sub issuerLogout {
     my $self = shift;
+    PE_OK;
 }
 
 1;
+
 __END__
 
 =head1 NAME
 
-Lemonldap::NG::Portal::SAMLIssuer - TODO
+Lemonldap::NG::Portal::IssuerDBSAML
 
 =head1 SYNOPSIS
 
-  use Lemonldap::NG::Portal::SAMLIssuer;
+  use Lemonldap::NG::Portal::IssuerDBSAML;
   #TODO
 
 =head1 DESCRIPTION
