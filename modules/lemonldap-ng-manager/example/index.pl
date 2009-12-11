@@ -40,6 +40,7 @@ my $template = HTML::Template->new(
     cache             => 0,
     filter            => sub { $manager->translate_template(@_) },
 );
+$template->param(SCRIPT_NAME => $ENV{SCRIPT_NAME});
 $template->param(MENU => $manager->menu());
 $template->param(DIR => "$skin_dir/$skin");
 print $manager->header('text/html; charset=utf-8');

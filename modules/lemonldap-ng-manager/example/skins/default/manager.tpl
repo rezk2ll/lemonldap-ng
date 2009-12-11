@@ -9,9 +9,9 @@
 <script src="<TMPL_VAR NAME="DIR">/jquery.js" type="text/JavaScript"></script>
 <script src="<TMPL_VAR NAME="DIR">/tree.js" type="text/JavaScript"></script>
 <script type="text/JavaScript">//<![CDATA[
-var scriptname='/experimental.cgi';var imagepath='<TMPL_VAR NAME="DIR">/';
+var scriptname='<TMPL_VAR NAME="SCRIPT_NAME">';var imagepath='<TMPL_VAR NAME="DIR">/';
 //]]></script>
-<script src="/images//manager.js" type="text/JavaScript"></script>
+<script src="<TMPL_VAR NAME="DIR">/manager.js" type="text/JavaScript"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
 </head>
 <body>
@@ -26,7 +26,7 @@ var scriptname='/experimental.cgi';var imagepath='<TMPL_VAR NAME="DIR">/';
   <div style="z-index: 2;overflow:auto;height:500px;" id="haut" class="clsPane">
    <h2 id="content_title">Lemonldap::NG Manager</h2>
    <div id="buttons">
-    <button id="bsave" onclick="$.post(scriptname,{data: $('#li_cm9vdA2').html()},function(data){return 1},'html');" >
+    <button id="bsave" onclick="uploadConf()" >
      <lang en="Save" fr="Sauver" />
     </button>
     <button id="bapply" onclick="$.post(scriptname,{apply:1},function(data){return 1},'html');" >

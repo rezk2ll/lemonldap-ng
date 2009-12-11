@@ -147,3 +147,12 @@ function delKey(){
   $('#'+currentId).prev().remove();
   $('#'+currentId).remove();
 }
+function uploadConf(){
+  $.post(scriptname,{data: $('#li_cm9vdA2').html()},function(data){
+      var tmp=lmtext('li_cm9vdA2');
+      tmp=tmp.replace(/\d+/,data.result.cfgNum);
+      setlmtext('li_cm9vdA2',tmp);
+      setlmdata('li_cm9vdA2',data.result.cfgNum);
+    }
+    ,'json');
+}

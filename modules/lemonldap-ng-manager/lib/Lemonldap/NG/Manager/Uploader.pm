@@ -129,6 +129,7 @@ sub confUpload {
 
     #print STDERR Dumper( $newConf, \%errors, \%warnings );
     close LOG;
+    $res->{result}->{cfgNum} = $self->confObj->saveConf($newConf);
     my $buf = '{';
     my $i=0;
     while ( my ( $type, $h ) = each %$res ) {
@@ -139,7 +140,7 @@ sub confUpload {
         $i++;
     }
     $buf .= '}';
-    print $self->header( -type => 'text/javascript', -Content_Length => length($buf) ).$buf;
+    print $self->header( -type => 'application/json', -Content_Length => length($buf) ).$buf;
     $self->quit();
 }
 
