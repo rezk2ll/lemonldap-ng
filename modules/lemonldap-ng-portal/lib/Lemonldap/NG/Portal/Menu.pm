@@ -10,7 +10,7 @@ use warnings;
 require Lemonldap::NG::Common::CGI;
 use Lemonldap::NG::Portal::SharedConf;
 use XML::LibXML;
-use Lemonldap::NG::Common::Safelib;           #link protected safe Safe object
+use Lemonldap::NG::Common::Safelib;    #link protected safe Safe object
 use Safe;
 
 #inherits Net::LDAP::Control::PasswordPolicy
@@ -106,20 +106,27 @@ sub new {
     $self->{portalObject}->{'user'} =
       $self->{portalObject}->{sessionInfo}->{'_user'};
 
-    # Password modification functions (TODO merge Menu.pm in Simple.pm to inherits those functions)
-    if ( exists $self->{portalObject}->{passwordDB} and $self->{portalObject}->{passwordDB} =~ /DBI/i ) {
+# Password modification functions (TODO merge Menu.pm in Simple.pm to inherits those functions)
+    if ( exists $self->{portalObject}->{passwordDB}
+        and $self->{portalObject}->{passwordDB} =~ /DBI/i )
+    {
         use Lemonldap::NG::Portal::PasswordDBDBI;    #inherits
         use Lemonldap::NG::Portal::_DBI;    #link protected ldap Object used to change passwords only
-        *_modifyPassword = *Lemonldap::NG::Portal::PasswordDBDBI::modifyPassword;
-        *_passwordDBInit = *Lemonldap::NG::Portal::PasswordDBDBI::passwordDBInit;
-    } else {
+        *_modifyPassword =
+          *Lemonldap::NG::Portal::PasswordDBDBI::modifyPassword;
+        *_passwordDBInit =
+          *Lemonldap::NG::Portal::PasswordDBDBI::passwordDBInit;
+    }
+    else {
+
         # Default to LDAP
         use Lemonldap::NG::Portal::PasswordDBLDAP;    #inherits
         use Lemonldap::NG::Portal::_LDAP 'ldap';    #link protected ldap Object used to change passwords only
-        *_modifyPassword = *Lemonldap::NG::Portal::PasswordDBLDAP::modifyPassword;
-        *_passwordDBInit = *Lemonldap::NG::Portal::PasswordDBLDAP::passwordDBInit;
+        *_modifyPassword =
+          *Lemonldap::NG::Portal::PasswordDBLDAP::modifyPassword;
+        *_passwordDBInit =
+          *Lemonldap::NG::Portal::PasswordDBLDAP::passwordDBInit;
     }
-
 
     # Change password (only if newpassword submitted)
     $self->{error} = &_passwordDBInit( $self->{portalObject} )

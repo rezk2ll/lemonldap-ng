@@ -17,7 +17,7 @@ use CGI::Cookie;
 require POSIX;
 use Lemonldap::NG::Portal::_i18n;      #inherits
 use Lemonldap::NG::Common::Safelib;    #link protected safe Safe object
-use Lemonldap::NG::Common::Apache::Session ;    #link protected session Apache::Session object
+use Lemonldap::NG::Common::Apache::Session;    #link protected session Apache::Session object
 use Safe;
 
 # Special comments for doxygen
@@ -144,8 +144,8 @@ sub new {
     # Push authentication/userDB/passwordDb/issuerDB modules in @ISA
     foreach (qw(authentication userDB passwordDB issuerDB)) {
         my $module_name = 'Lemonldap::NG::Portal::';
-	my $db_type = $_;
-        my $db_name = $self->{$db_type};
+        my $db_type     = $_;
+        my $db_name     = $self->{$db_type};
 
         # Adapt module type to real module name
         $db_type =~ s/authentication/Auth/;
@@ -251,37 +251,44 @@ sub getConf {
 # Set default values.
 sub setDefaultValues {
     my $self = shift;
-    $self->{whatToTrace}               ||= 'uid';
-    $self->{whatToTrace}                 =~ s/^\$//;
-    $self->{httpOnly}                    = 1 unless ( defined ( $self->{httpOnly} ) );
-    $self->{portalSkin}                ||= 'pastel';
-    $self->{portalDisplayLogout}         = 1 unless ( defined ( $self->{portalDisplayLogout} ) );
-    $self->{portalDisplayResetPassword}  = 1 unless ( defined ( $self->{portalDisplayResetPassword} ) );
-    $self->{portalDisplayChangePassword} = 1 unless ( defined ( $self->{portalDisplayChangePassword} ) );
-    $self->{portalDisplayAppslist}       = 1 unless ( defined ( $self->{portalDisplayAppslist} ) );
-    $self->{portalAutocomplete}        ||= "off";
-    $self->{portalRequireOldPassword}    = 1 unless ( defined ( $self->{portalRequireOldPassword} ) );
-    $self->{portalUserAttr}            ||= "_user";
-    $self->{securedCookie}             ||= 0;
-    $self->{cookieName}                ||= "lemonldap";
-    $self->{authentication}            ||= 'LDAP';
-    $self->{authentication}              =~ s/^ldap/LDAP/;
-    $self->{SMTPServer}                ||= 'localhost';
-    $self->{mailLDAPFilter}            ||= '(&(mail=$mail)(objectClass=inetOrgPerson))';
-    $self->{randomPasswordRegexp}      ||= '[A-Z]{3}[a-z]{5}.\d{2}';
-    $self->{mailFrom}                  ||= "noreply@" . $self->{domain};
-    $self->{mailSubject}               ||= "Change password request";
-    $self->{mailBody}                  ||= 'Your new password is $password';
-    $self->{issuerDB}                  ||= 'Null';
+    $self->{whatToTrace} ||= 'uid';
+    $self->{whatToTrace} =~ s/^\$//;
+    $self->{httpOnly} = 1 unless ( defined( $self->{httpOnly} ) );
+    $self->{portalSkin} ||= 'pastel';
+    $self->{portalDisplayLogout} = 1
+      unless ( defined( $self->{portalDisplayLogout} ) );
+    $self->{portalDisplayResetPassword} = 1
+      unless ( defined( $self->{portalDisplayResetPassword} ) );
+    $self->{portalDisplayChangePassword} = 1
+      unless ( defined( $self->{portalDisplayChangePassword} ) );
+    $self->{portalDisplayAppslist} = 1
+      unless ( defined( $self->{portalDisplayAppslist} ) );
+    $self->{portalAutocomplete} ||= "off";
+    $self->{portalRequireOldPassword} = 1
+      unless ( defined( $self->{portalRequireOldPassword} ) );
+    $self->{portalUserAttr} ||= "_user";
+    $self->{securedCookie}  ||= 0;
+    $self->{cookieName}     ||= "lemonldap";
+    $self->{authentication} ||= 'LDAP';
+    $self->{authentication} =~ s/^ldap/LDAP/;
+    $self->{SMTPServer}     ||= 'localhost';
+    $self->{mailLDAPFilter} ||= '(&(mail=$mail)(objectClass=inetOrgPerson))';
+    $self->{randomPasswordRegexp} ||= '[A-Z]{3}[a-z]{5}.\d{2}';
+    $self->{mailFrom}             ||= "noreply@" . $self->{domain};
+    $self->{mailSubject}          ||= "Change password request";
+    $self->{mailBody}             ||= 'Your new password is $password';
+    $self->{issuerDB}             ||= 'Null';
 
     # Set default userDB and passwordDB to DBI if authentication is DBI
     if ( $self->{authentication} =~ /DBI/i ) {
-        $self->{userDB} ||= "DBI";
-	$self->{passwordDB} ||= "DBI";
-    } else {
+        $self->{userDB}     ||= "DBI";
+        $self->{passwordDB} ||= "DBI";
+    }
+    else {
+
         # Default to LDAP
-        $self->{userDB} ||= "LDAP";
-	$self->{passwordDB} ||= "LDAP";
+        $self->{userDB}     ||= "LDAP";
+        $self->{passwordDB} ||= "LDAP";
     }
 }
 
@@ -667,7 +674,8 @@ sub checkNotifBack {
         }
         else {
             $self->{error} = $self->_subProcess(
-                qw(checkNotification issuerForAuthUser issuerLogout autoRedirect));
+                qw(checkNotification issuerForAuthUser issuerLogout autoRedirect)
+            );
             return $self->{error} || PE_DONE;
         }
     }
@@ -857,28 +865,30 @@ sub removeOther {
             {
                 tied(%$h)->delete();
                 $self->lmLog( "Deleting session $id", 'debug' );
-		eval {
-		    $self->{lmConf}->{refLocalStorage}->remove($id);
-		    #$Lemonldap::NG::Handler::Simple::refLocalStorage->remove($id);
-		};
+                eval {
+                    $self->{lmConf}->{refLocalStorage}->remove($id);
+
+                 #$Lemonldap::NG::Handler::Simple::refLocalStorage->remove($id);
+                };
             }
         }
     }
     if ( $self->{singleUserByIP} ) {
         my $sessions =
           $self->{globalStorage}->searchOn( $self->{globalStorageOptions},
-            $self->{ipAddr},
-            $ENV{REMOTE_ADDR} );
+            $self->{ipAddr}, $ENV{REMOTE_ADDR} );
         foreach my $id ( keys %$sessions ) {
             my $h = $self->getApacheSession($id);
-            unless ( $self->{sessionInfo}->{ $self->{whatToTrace} } eq $h->{ $self->{whatToTrace} } )
+            unless ( $self->{sessionInfo}->{ $self->{whatToTrace} } eq
+                $h->{ $self->{whatToTrace} } )
             {
                 tied(%$h)->delete();
                 $self->lmLog( "Deleting session $id", 'debug' );
-		eval {
-		    $self->{lmConf}->{refLocalStorage}->remove($id);
-		    #$Lemonldap::NG::Handler::Simple::refLocalStorage->remove($id);
-		};
+                eval {
+                    $self->{lmConf}->{refLocalStorage}->remove($id);
+
+                 #$Lemonldap::NG::Handler::Simple::refLocalStorage->remove($id);
+                };
             }
         }
     }

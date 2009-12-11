@@ -40,16 +40,21 @@ sub setSessionInfo {
     my $self = shift;
 
     # Return if no data to collect
-    return PE_OK unless ( $self->{exportedVars} and ref( $self->{exportedVars} ) eq 'HASH' );
+    return PE_OK
+      unless ( $self->{exportedVars}
+        and ref( $self->{exportedVars} ) eq 'HASH' );
 
     # Connect
-    my $dbh = $self->dbh( $self->{dbiUserChain}, $self->{dbiUserUser}, $self->{dbiUserPassword} );
+    my $dbh =
+      $self->dbh( $self->{dbiUserChain}, $self->{dbiUserUser},
+        $self->{dbiUserPassword} );
     return PE_ERROR unless $dbh;
 
     my $table = $self->{dbiUserTable};
     my $pivot = $self->{userPivot};
 
-    my $sth = $dbh->prepare("SELECT * FROM $table WHERE $pivot='".$self->{user}."'");
+    my $sth = $dbh->prepare(
+        "SELECT * FROM $table WHERE $pivot='" . $self->{user} . "'" );
 
     $sth->execute();
 
@@ -57,7 +62,8 @@ sub setSessionInfo {
 
     foreach ( keys %{ $self->{exportedVars} } ) {
         if ( exists $result->{ $self->{exportedVars}->{$_} } ) {
-            $self->{sessionInfo}->{$_} = $result->{ $self->{exportedVars}->{$_} };
+            $self->{sessionInfo}->{$_} =
+              $result->{ $self->{exportedVars}->{$_} };
         }
     }
 

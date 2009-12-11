@@ -6,7 +6,7 @@
 package Lemonldap::NG::Portal::PasswordDBDBI;
 
 use Lemonldap::NG::Portal::Simple;
-use Lemonldap::NG::Portal::AuthDBI;      #inherits
+use Lemonldap::NG::Portal::AuthDBI;    #inherits
 use base qw(Lemonldap::NG::Portal::_DBI);
 
 our $VERSION = '0.1';
@@ -22,39 +22,55 @@ sub modifyPassword {
     return PE_OK unless ( $self->{newpassword} );
 
     # Verify confirmation password matching
-    return PE_PASSWORD_MISMATCH unless ( $self->{newpassword} eq $self->{confirmpassword} );
+    return PE_PASSWORD_MISMATCH
+      unless ( $self->{newpassword} eq $self->{confirmpassword} );
 
     # Connect
-    my $dbh = $self->dbh( $self->{dbiAuthChain}, $self->{dbiAuthUser}, $self->{dbiAuthPassword} );
+    my $dbh =
+      $self->dbh( $self->{dbiAuthChain}, $self->{dbiAuthUser},
+        $self->{dbiAuthPassword} );
     return PE_ERROR unless $dbh;
 
-    my $table = $self->{dbiAuthTable};
-    my $loginCol = $self->{dbiAuthLoginCol};
+    my $table       = $self->{dbiAuthTable};
+    my $loginCol    = $self->{dbiAuthLoginCol};
     my $passwordCol = $self->{dbiAuthPasswordCol};
-    my $user = $self->{sessionInfo}->{_user};
+    my $user        = $self->{sessionInfo}->{_user};
     my $password;
-   
+
     # Check old passord
     if ( $self->{oldpassword} ) {
 
         # Manage password hash (TODO in _DBI.pm)
         if ( $self->{dbiAuthPasswordHash} =~ /^(md5|sha|sha1)$/i ) {
-            $self->lmLog( "Using ".uc($self->{dbiAuthPasswordHash})." to hash password", 'debug' );
-            $password = uc($self->{dbiAuthPasswordHash})."('".$self->{oldpassword}."')";
-        } else {
-            $self->lmLog( "No valid password hash, using clear text for password", 'debug' );
-            $password = "'".$self->{oldpassword}."'";
+            $self->lmLog(
+                "Using "
+                  . uc( $self->{dbiAuthPasswordHash} )
+                  . " to hash password",
+                'debug'
+            );
+            $password =
+              uc( $self->{dbiAuthPasswordHash} ) . "('"
+              . $self->{oldpassword} . "')";
+        }
+        else {
+            $self->lmLog(
+                "No valid password hash, using clear text for password",
+                'debug' );
+            $password = "'" . $self->{oldpassword} . "'";
         }
 
-        my $sth = $dbh->prepare("SELECT $loginCol FROM $table WHERE $loginCol='$user' AND $passwordCol=$password");
+        my $sth = $dbh->prepare(
+"SELECT $loginCol FROM $table WHERE $loginCol='$user' AND $passwordCol=$password"
+        );
 
         $sth->execute();
 
         my @rows = $sth->fetchrow_array();
 
-        if ($#rows eq 0) {
+        if ( $#rows eq 0 ) {
             $self->lmLog( "One row returned by SQL query", 'debug' );
-        } else {
+        }
+        else {
             $self->lmLog( "Bad password for $user", 'error' );
             return PE_BADOLDPASSWORD;
         }
@@ -63,15 +79,23 @@ sub modifyPassword {
     # Modify password
     # Manage password hash (TODO in _DBI.pm)
     if ( $self->{dbiAuthPasswordHash} =~ /^(md5|sha|sha1)$/i ) {
-        $self->lmLog( "Using ".uc($self->{dbiAuthPasswordHash})." to hash password", 'debug' );
-        $password = uc($self->{dbiAuthPasswordHash})."('".$self->{newpassword}."')";
-    } else {
-        $self->lmLog( "No valid password hash, using clear text for password", 'debug' );
-        $password = "'".$self->{newpassword}."'";
+        $self->lmLog(
+            "Using " . uc( $self->{dbiAuthPasswordHash} ) . " to hash password",
+            'debug'
+        );
+        $password =
+          uc( $self->{dbiAuthPasswordHash} ) . "('"
+          . $self->{newpassword} . "')";
+    }
+    else {
+        $self->lmLog( "No valid password hash, using clear text for password",
+            'debug' );
+        $password = "'" . $self->{newpassword} . "'";
     }
 
     eval {
-        my $sth = $dbh->prepare("UPDATE $table SET $passwordCol=$password WHERE $loginCol='$user'");
+        my $sth = $dbh->prepare(
+            "UPDATE $table SET $passwordCol=$password WHERE $loginCol='$user'");
         $sth->execute();
     };
     if ($@) {

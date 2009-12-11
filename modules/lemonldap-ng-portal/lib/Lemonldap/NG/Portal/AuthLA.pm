@@ -241,16 +241,15 @@ sub process {
     }
     elsif ( $urldir eq $self->PC_LA_URLFT ) {
 
-        $self->{error} = $self->_subProcess(
-            qw( libertyFederationTermination autoRedirect ));
+        $self->{error} =
+          $self->_subProcess(qw( libertyFederationTermination autoRedirect ));
 
         # federationTerminationReturn
     }
     elsif ( $urldir eq $self->PC_LA_URLFTR ) {
 
         $self->{error} = $self->_subProcess(
-            qw( libertyFederationTerminationReturn autoRedirect )
-        );
+            qw( libertyFederationTerminationReturn autoRedirect ) );
 
         # singleLogout : called when IDP request Logout.
     }
@@ -268,8 +267,7 @@ sub process {
     }
     elsif ( $urldir eq $self->PC_LA_URLSLR ) {
 
-        $self->{error} =
-          $self->_subProcess(qw( libertySingleLogoutReturn ));
+        $self->{error} = $self->_subProcess(qw( libertySingleLogoutReturn ));
 
         # soapCall
     }

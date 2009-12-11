@@ -15,15 +15,16 @@ our $VERSION = '0.1';
 #@return Lemonldap::NG::Portal constant
 sub authInit {
     my $self = shift;
-    unless ( $self->{dbiAuthChain}
+    unless ($self->{dbiAuthChain}
         and $self->{dbiAuthTable}
         and $self->{dbiAuthUser}
         and $self->{dbiAuthPassword}
         and $self->{dbiAuthLoginCol}
-        and $self->{dbiAuthPasswordCol}
-    ) {
-        $self->lmLog("Missing configuration parameters for DBI authentication", 'error');
-	return PE_ERROR;
+        and $self->{dbiAuthPasswordCol} )
+    {
+        $self->lmLog( "Missing configuration parameters for DBI authentication",
+            'error' );
+        return PE_ERROR;
     }
 
     PE_OK;
@@ -36,35 +37,46 @@ sub authenticate {
     my $self = shift;
 
     # Connect
-    my $dbh = $self->dbh( $self->{dbiAuthChain}, $self->{dbiAuthUser}, $self->{dbiAuthPassword} );
+    my $dbh =
+      $self->dbh( $self->{dbiAuthChain}, $self->{dbiAuthUser},
+        $self->{dbiAuthPassword} );
     return PE_ERROR unless $dbh;
 
     # Check credentials
-    my $table = $self->{dbiAuthTable};
-    my $loginCol = $self->{dbiAuthLoginCol};
+    my $table       = $self->{dbiAuthTable};
+    my $loginCol    = $self->{dbiAuthLoginCol};
     my $passwordCol = $self->{dbiAuthPasswordCol};
-    my $user = $self->{user};
+    my $user        = $self->{user};
     my $password;
 
     # Manage password hash
     if ( $self->{dbiAuthPasswordHash} =~ /^(md5|sha|sha1)$/i ) {
-        $self->lmLog( "Using ".uc($self->{dbiAuthPasswordHash})." to hash password", 'debug' );
-        $password = uc($self->{dbiAuthPasswordHash})."('".$self->{password}."')";
-    } else {
-        $self->lmLog( "No valid password hash, using clear text for password", 'debug' );
-        $password = "'".$self->{password}."'";
+        $self->lmLog(
+            "Using " . uc( $self->{dbiAuthPasswordHash} ) . " to hash password",
+            'debug'
+        );
+        $password =
+          uc( $self->{dbiAuthPasswordHash} ) . "('" . $self->{password} . "')";
+    }
+    else {
+        $self->lmLog( "No valid password hash, using clear text for password",
+            'debug' );
+        $password = "'" . $self->{password} . "'";
     }
 
-    my $sth = $dbh->prepare("SELECT $loginCol FROM $table WHERE $loginCol='$user' AND $passwordCol=$password");
+    my $sth = $dbh->prepare(
+"SELECT $loginCol FROM $table WHERE $loginCol='$user' AND $passwordCol=$password"
+    );
 
     $sth->execute();
 
     my @rows = $sth->fetchrow_array();
 
-    if ($#rows eq 0) {
+    if ( $#rows eq 0 ) {
         $self->lmLog( "One row returned by SQL query", 'debug' );
         return PE_OK;
-    } else {
+    }
+    else {
         $self->lmLog( "Bad password for $user", 'error' );
         return PE_BADCREDENTIALS;
     }

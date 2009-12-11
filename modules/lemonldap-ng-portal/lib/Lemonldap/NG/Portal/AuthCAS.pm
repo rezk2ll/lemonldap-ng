@@ -19,9 +19,7 @@ sub authInit {
     # require Perl module
     eval { require AuthCAS };
     if ($@) {
-        $self->lmLog(
-            "Module AuthCAS not found in @INC",
-            'error' );
+        $self->lmLog( "Module AuthCAS not found in @INC", 'error' );
         return PE_ERROR;
     }
 

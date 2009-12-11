@@ -16,7 +16,7 @@ use base ('Lemonldap::NG::Portal::SharedConf');
 
 sub new {
     my $class = shift;
-    my $self = $class->SUPER::new(@_);
+    my $self  = $class->SUPER::new(@_);
     $self->{cda} = 1;
     return $self;
 }

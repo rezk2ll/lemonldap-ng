@@ -37,7 +37,8 @@ sub setAuthSessionInfo {
     # Store user login for basic rules
     $self->{sessionInfo}->{'_user'} = $self->{'user'};
 
-    # Store password (deleted in checkRemoteId() if local policy does not accept stored passwords)
+    # Store password (deleted in checkRemoteId() if local policy does not accept
+    #stored passwords)
     $self->{sessionInfo}->{'_password'} = $self->{'password'};
 
     PE_OK;

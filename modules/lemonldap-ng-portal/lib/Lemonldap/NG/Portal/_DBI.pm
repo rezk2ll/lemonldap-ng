@@ -20,23 +20,21 @@ our $VERSION = '0.1';
 # @param dbiPassword
 # @return dbh object
 sub dbh {
-    my $self = shift;
-    my $dbiChain = shift;
-    my $dbiUser = shift;
+    my $self        = shift;
+    my $dbiChain    = shift;
+    my $dbiUser     = shift;
     my $dbiPassword = shift;
     my $dbh;
 
     # Open connection to database
     eval {
-        $dbh = DBI->connect_cached(
-            $dbiChain,
-            $dbiUser,
-            $dbiPassword,
+        $dbh =
+          DBI->connect_cached( $dbiChain, $dbiUser, $dbiPassword,
             { RaiseError => 1, },
-        );
+          );
     };
     if ($@) {
-        $self->lmLog("DBI connection error: $@", 'error');
+        $self->lmLog( "DBI connection error: $@", 'error' );
         return 0;
     }
 

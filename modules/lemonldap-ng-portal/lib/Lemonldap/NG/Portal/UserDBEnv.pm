@@ -32,7 +32,7 @@ sub setSessionInfo {
 
     # Check access to %ENV
     unless ( defined %ENV ) {
-        $self->lmLog("No environment variables available", 'error');
+        $self->lmLog( "No environment variables available", 'error' );
         return PE_ERROR;
     }
 
@@ -40,7 +40,8 @@ sub setSessionInfo {
     if ( ref( $self->{exportedVars} ) eq 'HASH' ) {
         foreach ( keys %{ $self->{exportedVars} } ) {
             if ( exists $ENV{ $self->{exportedVars}->{$_} } ) {
-                $self->{sessionInfo}->{$_} = $ENV{ $self->{exportedVars}->{$_} };
+                $self->{sessionInfo}->{$_} =
+                  $ENV{ $self->{exportedVars}->{$_} };
             }
         }
     }

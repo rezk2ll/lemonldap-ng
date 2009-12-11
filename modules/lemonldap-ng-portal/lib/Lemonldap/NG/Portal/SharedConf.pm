@@ -7,7 +7,7 @@ package Lemonldap::NG::Portal::SharedConf;
 
 use strict;
 use Lemonldap::NG::Portal::Simple qw(:all);
-use Lemonldap::NG::Common::Conf; #link protected lmConf Configuration
+use Lemonldap::NG::Common::Conf;            #link protected lmConf Configuration
 use Lemonldap::NG::Common::Conf::Constants; #inherits
 
 *EXPORT_OK   = *Lemonldap::NG::Portal::Simple::EXPORT_OK;
@@ -39,7 +39,7 @@ sub getConf {
 
     # Get global configuration
     my $globalconf = $self->_getLmConf;
-        return 0 unless $globalconf;
+    return 0 unless $globalconf;
 
     # Get local configuration
     my $localconf = $self->_getLocalLmConf;
@@ -49,8 +49,9 @@ sub getConf {
     # 2/ Local file configuration
     # 3/ Script embedded configuration
     $self->{$_} = $args{$_} || $globalconf->{$_} foreach ( keys %$globalconf );
-    if ( $localconf ) {
-        $self->{$_} = $args{$_} || $localconf->{$_} foreach ( keys %$localconf );
+    if ($localconf) {
+        $self->{$_} = $args{$_} || $localconf->{$_}
+          foreach ( keys %$localconf );
     }
     1;
 }
@@ -90,7 +91,7 @@ sub _getLocalLmConf {
     }
 
     # Get local configuration parameters for portal
-    return $self->{lmConf}->getLocalConf( PORTALSECTION );
+    return $self->{lmConf}->getLocalConf(PORTALSECTION);
 }
 
 1;

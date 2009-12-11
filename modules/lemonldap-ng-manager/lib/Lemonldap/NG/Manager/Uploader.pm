@@ -69,33 +69,27 @@ sub confUpload {
             if ( $test->{keyTest} ) {
                 ( $res, $m ) = $self->applyTest( $test->{keyTest}, $name );
                 unless ($res) {
-                    $res->{errors}->{$name} = "Value \"$name\" rejected: "
-                      . ( $m || $test->{keyMsgFail} );
+                    $res->{errors}->{$name} = $m || $test->{keyMsgFail};
                     next;
                 }
             }
             if ( $test->{test} ) {
                 ( $res, $m ) = $self->applyTest( $test->{test}, $value );
                 unless ($res) {
-                    $res->{errors}->{$name} =
-                      "Value of key \"$name\" rejected: "
-                      . ( $m || $test->{msgFail} );
+                    $res->{errors}->{$name} = $m || $test->{msgFail};
                     next;
                 }
             }
             if ( $test->{warnKeyTest} ) {
                 ( $res, $m ) = $self->applyTest( $test->{warnKeyTest}, $name );
                 unless ($res) {
-                    $res->{warnings}->{$name} = "Warning for value \"$name\": "
-                      . ( $m || $test->{keyMsgWarn} );
+                    $res->{warnings}->{$name} = $m || $test->{keyMsgWarn};
                 }
             }
             if ( $test->{warnTest} ) {
                 ( $res, $m ) = $self->applyTest( $test->{warnTest}, $value );
                 unless ($res) {
-                    $res->{warnings}->{$name} =
-                      "Warning for the value of key \"$name\": "
-                      . ( $m || $test->{keyMsgWarn} );
+                    $res->{warnings}->{$name} = $m || $test->{keyMsgWarn};
                 }
             }
         }
@@ -134,8 +128,8 @@ sub confUpload {
     my $i=0;
     while ( my ( $type, $h ) = each %$res ) {
         $buf .= ',' if($i);
-        $buf .= "$type:{";
-        $buf .= join( ',', map { "$_:$h->{$_}" } keys %$h );
+        $buf .= "'$type':{";
+        $buf .= join( ',', map { "'$_':'$h->{$_}'" } keys %$h );
         $buf .= '}';
         $i++;
     }

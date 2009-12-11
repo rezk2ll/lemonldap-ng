@@ -82,8 +82,8 @@ sub setSessionInfo {
         return PE_ERROR;
     }
     foreach ( keys %{ $res->{attributes} } ) {
-    $self->{sessionInfo}->{$_} ||= $res->{attributes}->{$_}
-            unless(/^_/);
+        $self->{sessionInfo}->{$_} ||= $res->{attributes}->{$_}
+          unless (/^_/);
     }
     $self->{_setSessionInfoDone}++;
     PE_OK;
