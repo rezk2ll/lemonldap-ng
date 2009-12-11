@@ -31,8 +31,8 @@ LASPPORTALDIR=$(DOCUMENTROOT)/liberty-alliance-sp-portal
 RLASPPORTALDIR=$(DESTDIR)/$(LASPPORTALDIR)
 MANAGERDIR=$(DOCUMENTROOT)/manager
 RMANAGERDIR=$(DESTDIR)/$(MANAGERDIR)
-MANAGERDATADIR=$(MANAGERDIR)/imgs
-RMANAGERDATADIR=$(DESTDIR)/$(MANAGERDATADIR)
+MANAGERSKINSDIR=$(MANAGERDIR)/skins
+RMANAGERSKINSDIR=$(DESTDIR)/$(MANAGERSKINSDIR)
 SESSIONSEXPLORERDIR=$(MANAGERDIR)
 RSESSIONSEXPLORERDIR=$(DESTDIR)/$(SESSIONSEXPLORERDIR)
 SESSIONSEXPLORERDATADIR=$(SESSIONSEXPLORERDIR)/images
@@ -259,27 +259,33 @@ install_site:	install_manager_site install_portal_site install_handler_site inst
 
 install_manager_site:	install_conf_dir
 	# Manager install
-	@install -v -d ${RMANAGERDIR} ${RMANAGERDATADIR} \
+	@install -v -d ${RMANAGERDIR} ${RMANAGERSKINSDIR} \
 		${RSESSIONSEXPLORERDIR} $(RSESSIONSEXPLORERDATADIR) \
-		$(RCONFDIR)
-	@find ${RMANAGERDIR} -type l -name imgs -delete
-	@find ${RMANAGERDIR} -type l -name images -delete
-	@cp -pR --remove-destination ${SRCMANAGERDIR}/example/* ${RMANAGERDIR}
-	@rm -rf $$(find ${RMANAGERDIR} -type d -name .svn) ${RMANAGERDIR}/scripts ${RMANAGERDIR}/mrtg ${RMANAGERDIR}/soapserver.pl
-	@if [ "${RMANAGERDIR}/imgs/" != "${RMANAGERDATADIR}/" ]; then \
-		mv -f ${RMANAGERDIR}/imgs/* ${RMANAGERDATADIR}/; \
-		rm -rf ${RMANAGERDIR}/imgs; \
-		ln -s $$(echo ${MANAGERDATADIR} | sed -e 's/\/$$//') ${RMANAGERDIR}/imgs; \
+		$(RCONFDIR) ${RMANAGERDIR}/skins/
+	@for skin in $$(ls lemonldap-ng-manager/example/skins/); do \
+		[ -h $(RMANAGERDIR)/skins/$$skin ] && rm -f $(RMANAGERDIR)/skins/$$skin; \
+		install -v -d $(RMANAGERSKINSDIR)/$$skin; \
+	done
+	@find ${RSESSIONSEXPLORERDIR} -type l -name images -delete
+	@cp -pR --remove-destination ${SRCMANAGERDIR}/example/index.pl ${RMANAGERDIR}
+	@perl -i -pe 's#__SKINDIR__#$(MANAGERDIR)/skins#; \
+		s#__APPSXMLFILE__#$(CONFDIR)/apps-list.xml#;' ${RMANAGERDIR}/index.pl
+	@cp -pR --remove-destination ${SRCMANAGERDIR}/example/skins/* $(RMANAGERSKINSDIR)
+	@if [ "$(MANAGERDIR)/skins/" != "$(MANAGERSKINSDIR)/" ]; then \
+		for skin in $$(ls lemonldap-ng-manager/example/skins/); do \
+			rm -rf $(RMANAGERDIR)/skins/$$skin/; \
+			ln -s $(MANAGERSKINSDIR)/$$skin $(RMANAGERDIR)/skins/$$skin; \
+		done; \
 	fi
 	@perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)/$(CONFFILENAME)
 	# Sessions explorer install
-	@if [ "${MANAGERDIR}" != "$(SESSIONSEXPLORERDIR)" ]; then mv -f ${RMANAGERDIR}/sessions.pl $(RSESSIONSEXPLORERDIR); fi
-	@if [ "${MANAGERDIR}/images/" != "${SESSIONSEXPLORERDATADIR}/" ]; then \
-		mv -f ${RMANAGERDIR}/images/* ${RSESSIONSEXPLORERDATADIR}; \
+	@cp -pR --remove-destination ${SRCMANAGERDIR}/example/{sessions.pl,images} $(RSESSIONSEXPLORERDIR)
+	@if [ "${SESSIONSEXPLORERDIR}/images/" != "${SESSIONSEXPLORERDATADIR}/" ]; then \
+		mv -f ${RSESSIONSEXPLORERDIR}/images/* ${RSESSIONSEXPLORERDATADIR}; \
 		rm -rf ${RMANAGERDIR}/images; \
 		ln -s $$(echo ${SESSIONSEXPLORERDATADIR} | sed -e 's/\/$$//') ${RMANAGERDIR}/images; \
 	fi
-	@rm -rf $$(find ${RMANAGERDIR} ${RMANAGERDATADIR} \
+	@rm -rf $$(find ${RMANAGERDIR} ${RMANAGERSKINSDIR} \
 		${RSESSIONSEXPLORERDIR} $(RSESSIONSEXPLORERDATADIR) \
 		$(RCONFDIR) -type d -name .svn)
 
@@ -344,7 +350,7 @@ install_examples_site:
 		cp -dpR --remove-destination lemonldap-ng-$$i/example $(REXAMPLESDIR)/$$i; \
 	done
 	@rm -rf $(REXAMPLESDIR)/portal/skins \
-		$(REXAMPLESDIR)/manager/imgs \
+		$(REXAMPLESDIR)/manager/skins \
 		$(REXAMPLESDIR)/manager/images \
 	@rm -rf $$(find $(REXAMPLESDIR) -type d -name .svn)
 	@perl -i -pe 's#__DIR__#$(LASPPORTALDIR)#g' $(REXAMPLESDIR)/portal/AuthLA/index.pl
@@ -459,7 +465,7 @@ manager_cpan:	manager_conf
 
 static_example:	example
 	@mkdir -p ${EXAMPLESDIR}/static
-	@cd ${EXAMPLESDIR}/static/;cp -a ../manager/{imgs,theme} .;cd -
+	@cd ${EXAMPLESDIR}/static/;cp -a ../manager/{skins} .;cd -
 	@../scripts/make_static_example.pl ${DESTMANAGERDIR}/index.pl ${SCRIPTSDIR}/static/index.html $(EXAMPLELANG)
 
 documentation:

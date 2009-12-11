@@ -61,7 +61,7 @@ install: build
 			EXAMPLESDIR=/examples/ \
 			HANDLERDIR=$(LMVARDIR)handler/ \
 			PORTALSKINSDIR=$(LMSHAREDIR)portal-skins/ \
-			MANAGERDATADIR=$(LMSHAREDIR)manager-imgs/ \
+			MANAGERSKINSDIR=$(LMSHAREDIR)manager-skins/ \
 			SESSIONSEXPLORERDATADIR=$(LMSHAREDIR)sessions-explorer-imgs/ \
 			STORAGECONFFILE=/etc/lemonldap-ng/lemonldap-ng.ini \
 			TOOLSDIR=$(LMSHAREDIR)ressources/ \
@@ -72,9 +72,7 @@ install: build
 			APACHEGROUP=www-data
 
 	# Since Lenny, jquery.js is provided by libjs-jquery
-	rm -f $(CURDIR)/debian/tmp$(LMSHAREDIR)portal-skins/*/jquery.js \
-		$(CURDIR)/debian/tmp$(LMVARDIR)manager/jquery.js \
-		debian/tmp/examples/manager/jquery.js
+	rm -f $(CURDIR)/debian/tmp$(LMSHAREDIR)*-skins/*/jquery.js
 	perl -i -pe 's#(["'"'"'])[\w-\./]*jquery.js#$$1/javascript/jquery/jquery.js#' \
 			$(CURDIR)/debian/tmp/examples/manager/*.pl \
 			$(CURDIR)/debian/tmp$(LMSHAREDIR)portal-skins/pastel/header.tpl

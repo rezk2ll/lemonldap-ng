@@ -352,33 +352,6 @@ sub error_type {
     return "negative";
 }
 
-##@method void translate_template(string text_ref, string lang)
-# translate_template is used as an HTML::Template filter to tranlate strings in
-# the wanted language
-#@param text_ref reference to the string to translate
-#@param lang optionnal language wanted. Falls to browser language instead.
-#@return
-sub translate_template {
-    my $self     = shift;
-    my $text_ref = shift;
-    my $lang     = shift || $ENV{HTTP_ACCEPT_LANGUAGE};
-
-    # Get the lang code (2 letters)
-    $lang = lc($lang);
-    $lang =~ s/-/_/g;
-    $lang =~ s/^(..).*$/$1/;
-
-    # Test if a translation is available for the selected language
-    # If not available, return the first translated string
-    # <lang en="Please enter your credentials" fr="Merci de vous autentifier"/>
-    if ( $$text_ref =~ m/$lang=\"(.*?)\"/ ) {
-        $$text_ref =~ s/<lang.*$lang=\"(.*?)\".*?\/>/$1/gx;
-    }
-    else {
-        $$text_ref =~ s/<lang\s+\w+=\"(.*?)\".*?\/>/$1/gx;
-    }
-}
-
 ##@method void header()
 # Overload CGI::header() to add Lemonldap::NG cookie.
 sub header {
@@ -1317,10 +1290,6 @@ described above
 =head3 error_type
 
 Give the type of the error (positive, warning or positive)
-
-=head3 translate_template
-
-Define an HTML::Template filter to translate multilingual strings
 
 =head3 _bind( $ldap, $dn, $password )
 

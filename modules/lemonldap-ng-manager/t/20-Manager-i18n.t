@@ -9,21 +9,12 @@ BEGIN {
         en => 'English',
         fr => 'French',
     );
+    require Test::More;
+    Test::More->import(tests => ( scalar keys(%lang) ));
 }
 
-use Test::More tests => ( keys(%lang) + 4 );
 
-use_ok('Lemonldap::NG::Manager');
-
-my $win = 0;
-$win++ unless ( -e '/dev/null' );
-
-if ($win) {
-    open STDOUT, '>test_stdout.txt';
-}
-else {
-    open STDOUT, '>/dev/null';
-}
+use_ok('Lemonldap::NG::Manager::_i18n');
 
 foreach ( keys %lang ) {
     ok( &compare( "en", $_ ),
@@ -36,24 +27,6 @@ $ENV{SCRIPT_FILENAME}      = $0;
 $ENV{HTTP_ACCEPT_LANGUAGE} = 'en';
 my $h;
 @ARGV = ("help=groups");
-ok(
-    $h = new Lemonldap::NG::Manager(
-        {
-            configStorage => {
-                type    => 'File',
-                dirName => ".",
-            },
-            dhtmlXTreeImageLocation => "/imgs/",
-            jsFile                  => 'example/lemonldap-ng-manager.js',
-        }
-    ),
-    'New manager object'
-);
-ok( $h->main(),       "HTML code" );
-ok( $h->print_help(), "Help page" );
-ok( $h->buildTree(),  "XML tree" );
-
-unlink('test_stdout.txt') if ($win);
 
 sub compare {
     my ( $l1, $l2 ) = @_;

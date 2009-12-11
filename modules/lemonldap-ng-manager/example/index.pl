@@ -1,42 +1,30 @@
 #!/usr/bin/perl
 
+use strict;
 use Lemonldap::NG::Manager;
+use HTML::Template;
+our $skin_dir='skins';
+our $main_dir='/var/lib/lemonldap-ng/manager';
+our $skin='default';
 
-my $h = new Lemonldap::NG::Manager(
+my $manager = new Lemonldap::NG::Manager(
     {
         # REQUIRED PARAMETERS
-        dhtmlXTreeImageLocation => "/imgs/",
-        cssFile => 'theme/default.css',
-        textareaW               => 50,
-        textareaH               => 2,
-        inputSize               => 30,
-
-        # OPTIONAL PARAMETERS
-
-        ## PROTECTION, choose one of :
-        # * protection by manager
-        # protection  => 'manager',
-        # * specify yourself the rule to apply (same as in the manager)
-        # protection  => 'rule: $uid=admin',
-        # * all authenticate users are granted
-        # protection  => 'authenticate',
-        # * nothing : not protected
-
-        #jsFile => /path/to/lemonldap-ng-manager.js,
+        applyConfFile           => '/etc/lemonldap-ng//apply.conf',
 
         # ACCESS TO CONFIGURATION
 
-        # By default, Lemonldap::NG uses the default lemonldap-ng.ini file to know
+        # By default, Lemonldap::NG uses the default storage.conf file to know
         # where to find is configuration
-        # (generaly /etc/lemonldap-ng/lemonldap-ng.ini)
+        # (generaly /etc/lemonldap-ng/storage.conf)
         # You can specify by yourself this file :
-        #configStorage => { confFile => '/path/to/my/file' },
+        #configStorage => { type => 'File', dirName => '/path/to/my/file' },
 
         # You can also specify directly the configuration
         # (see Lemonldap::NG::Handler::SharedConf(3))
         #configStorage => {
         #      type => 'File',
-        #      dirName => '/usr/local/lemonldap-ng/data/conf/'
+        #      directory => '/usr/local/lemonlda-ng/conf/'
         #},
 
         # CUSTOM FUNCTION
@@ -44,6 +32,16 @@ my $h = new Lemonldap::NG::Manager(
         #customFunctions    => 'function1 function2',
         #customFunctions    => 'Package::func1 Package::func2',
     }
-) or die "Unable to start";
+) or Lemonldap::NG::Common::CGI->abort('Unable to start manager');
 
-$h->doall();
+my $template = HTML::Template->new(
+    filename          => "$main_dir/$skin_dir/$skin/manager.tpl",
+    die_on_bad_params => 0,
+    cache             => 0,
+    filter            => sub { $manager->translate_template(@_) },
+);
+$template->param(MENU => $manager->menu());
+$template->param(DIR => "$skin_dir/$skin");
+print $manager->header('text/html; charset=utf-8');
+print $template->output;
+

@@ -13,6 +13,7 @@ build_requires:
 requires:
     Cache::Cache:      0
     CGI:               3.08
+    Config::IniFiles:  0
     Crypt::Rijndael:   0
     DBI:               0
     HTTP::Headers:     0
@@ -20,7 +21,6 @@ requires:
     Regexp::Assemble:  0
     SOAP::Lite:        0
     Storable:          0
-    Config::IniFiles:  0
 no_index:
     directory:
         - t
