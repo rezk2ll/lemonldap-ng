@@ -55,7 +55,7 @@ __END__
 
 =head1 NAME
 
-Lemonldap::NG::Portal::IssuerDBSAML
+Lemonldap::NG::Portal::IssuerDBSAML - SAML IssuerDB for Lemonldap::NG
 
 =head1 SYNOPSIS
 
@@ -64,7 +64,7 @@ Lemonldap::NG::Portal::IssuerDBSAML
 
 =head1 DESCRIPTION
 
-TODO
+SAML IssuerDB for Lemonldap::NG
 
 =head1 SEE ALSO
 
@@ -72,15 +72,14 @@ L<Lemonldap::NG::Portal>
 
 =head1 AUTHOR
 
-Xavier Guimard, E<lt>x.guimard@free.frE<gt>
+Clément Oudot, E<lt>coudot@linagora.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2009 by Xavier Guimard
+Copyright (C) 2009 by Clément Oudot
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.10.0 or,
 at your option, any later version of Perl 5 you may have available.
-
 
 =cut

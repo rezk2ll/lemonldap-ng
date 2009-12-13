@@ -5,16 +5,12 @@ set -e
 
 . /usr/share/debconf/confmodule
 
-EXAMPLEMANAGERFILE=/usr/share/doc/liblemonldap-ng-manager-perl/examples/index.pl
 MANAGERFILE=/var/lib/lemonldap-ng/manager/index.pl
-EXAMPLESESSIONSFILE=/usr/share/doc/liblemonldap-ng-manager-perl/examples/sessions.pl
 SESSIONSFILE=/var/lib/lemonldap-ng/manager/sessions.pl
 
 if [ "$1" == "configure" ]
 then
-    [ -e $SESSIONSFILE ] || cp $EXAMPLESESSIONSFILE $SESSIONSFILE
     chmod +x $SESSIONSFILE
-    [ -e $MANAGERFILE ] || cp $EXAMPLEMANAGERFILE $MANAGERFILE
     chmod +x $MANAGERFILE
     chgrp www-data /etc/lemonldap-ng/apply.conf
     chmod 640 /etc/lemonldap-ng/apply.conf

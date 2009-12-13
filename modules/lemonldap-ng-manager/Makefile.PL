@@ -9,10 +9,12 @@ WriteMakefile(
     BUILD_REQUIRES => { 'IO::String' => 0, },
     PREREQ_PM    => {
         'CGI'                    => 3.08,
+        'HTML::Template'         => 0,
         'Lemonldap::NG::Common'  => 0.93,
         'Lemonldap::NG::Handler' => 0.91,
         'LWP::UserAgent'         => 0,
-        'XML::Simple'            => 0,
+        'XML::LibXML'            => 0,
+        'XML::LibXSLT'           => 0,
     },    # e.g., Module::Name => 1.1
     (
         $] >= 5.005

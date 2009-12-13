@@ -44,11 +44,7 @@ __END__
 
 =head1 NAME
 
-Lemonldap::NG::Portal::IssuerDBNull
-
-=head1 SYNOPSIS
-
-  use Lemonldap::NG::Portal::IssuerDBNull;
+Lemonldap::NG::Portal::IssuerDBNull - Fake IssuerDB for Lemonldap::NG
 
 =head1 DESCRIPTION
 
@@ -60,7 +56,7 @@ L<Lemonldap::NG::Portal>
 
 =head1 AUTHOR
 
-Clement Oudot
+Clément Oudot, E<lt>coudot@linagora.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 

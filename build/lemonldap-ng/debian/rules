@@ -73,14 +73,13 @@ install: build
 
 	# Since Lenny, jquery.js is provided by libjs-jquery
 	rm -f $(CURDIR)/debian/tmp$(LMSHAREDIR)*-skins/*/jquery.js
-	perl -i -pe 's#(["'"'"'])[\w-\./]*jquery.js#$$1/javascript/jquery/jquery.js#' \
+	perl -i -pe 's#(["'"'"']).*?jquery.js#$$1/javascript/jquery/jquery.js#' \
 			$(CURDIR)/debian/tmp/examples/manager/*.pl \
-			$(CURDIR)/debian/tmp$(LMSHAREDIR)portal-skins/pastel/header.tpl
+			$(CURDIR)/debian/tmp$(LMSHAREDIR)manager-skins/default/*.tpl \
+			$(CURDIR)/debian/tmp$(LMSHAREDIR)portal-skins/pastel/*.tpl
 	# postinst provides initial portal, manager and sessions-explorer
 	rm -f debian/tmp/var/lib/lemonldap-ng/portal/index.pl \
-		debian/tmp/var/lib/lemonldap-ng/liberty-alliance-sp-portal/index.pl \
-		debian/tmp/var/lib/lemonldap-ng/manager/index.pl \
-		debian/tmp/var/lib/lemonldap-ng/manager/sessions.pl
+		debian/tmp/var/lib/lemonldap-ng/liberty-alliance-sp-portal/index.pl
 
 # Build architecture-independent files here.
 binary-indep: build install
