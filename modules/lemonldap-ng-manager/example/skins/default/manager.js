@@ -1,11 +1,22 @@
+/**
+* Lemonldap::NG Manager jQuery scripts
+*/
+
 var simpleTreeCollection;
+
 $(document).ready(function(){
-simpleTreeCollection = $(".simpleTree").simpleTree({
+
+  /* Drag Help (require jQuery UI)*/
+  $("#help").draggable({ handle: 'h1' });
+  $("#help").resizable();
+
+  /* Simple Tree */
+  simpleTreeCollection = $(".simpleTree").simpleTree({
     autoclose: false,
     drag: false,
     afterClick:function(node){
         var span=$('span:first',node);
-        $('#help').load(scriptname+'?help='+span.attr('help'));
+        $('#help_content').load(scriptname+'?help='+span.attr('help'));
     },
     afterDblClick:function(node){
     //alert("text-"+$("span:first",node).text());
@@ -19,20 +30,9 @@ simpleTreeCollection = $(".simpleTree").simpleTree({
     animate:true
     //,docToFolderConvert:true
     });
-  var w=xClientWidth()-12;
-  var h=xClientHeight()-12;
-  //var h=window.outerHeight;
-  s32=new xSplitter('idSplitter32',0,0,0,0,false,6,h/2,h/8,h/8,true,0);
-  s3=new xSplitter('idSplitter3',0,0,w,h,true,6,w/4,w/8,w/8,true,4,null,s32);
-  xAddEventListener(window,'resize',win_onresize,false);
-}
-);
+});
+
 var currentId;
-function win_onresize(){
-  var w=xClientWidth()-12;
-  var h=xClientHeight()-12;
-  s3.paint(w,h,w/4,w/5);
-}
 function lmtext(id){
   return $('#text_'+id).attr('name');
 }
