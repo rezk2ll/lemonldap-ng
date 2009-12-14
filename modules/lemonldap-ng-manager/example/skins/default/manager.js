@@ -68,7 +68,6 @@ function none(id) {
 }
 function hashRoot(){
   currentId=simpleTreeCollection[0].getSelected().attr('id');
-  alert(currentId);
   display('default','Lemonldap::NG Manager');
   $('#newkbr').css('display','block');
 }

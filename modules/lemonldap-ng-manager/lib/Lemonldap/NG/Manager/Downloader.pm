@@ -50,7 +50,8 @@ sub node {
 
                 # subnode points to a configuration node
                 elsif ( $flag =~ /^n?hash$/ ) {
-                    $res .= $self->confNode( $node, "$flag:$target", $help, $_j );
+                    $res .=
+                      $self->confNode( $node, "$flag:$target", $help, $_j );
                 }
 
                 else {
@@ -85,11 +86,13 @@ sub confNode {
         return unless ($h);
         foreach ( sort keys %$h ) {
             if ( ref($h) ) {
-                $res .= $self->ajaxNode( "$target/$_", $_, "node=$node/$_\&amp;key=$_",
-                    $help, $js, undef, 1 );
+                $res .= $self->ajaxNode( "$target/$_", $_,
+                    "node=$node/$_\&amp;key=$_", $help, $js, undef, 1 );
             }
             else {
-                $res .= $self->confNode( "$target/$_", "btext:$target/$_", $help, $js );
+                $res .=
+                  $self->confNode( "$target/$_", "btext:$target/$_", $help,
+                    $js );
             }
         }
     }
@@ -109,7 +112,8 @@ sub confNode {
 
                 # Here, "notranslate" is set to true : hash values must not be
                 # translated
-                $res .= $self->li($id)
+                $res .=
+                    $self->li($id)
                   . $self->span( $id, "$_", $h->{$_}, $js, $help, 1 ) . "</li>";
             }
         }
@@ -124,19 +128,27 @@ sub confNode {
 
         $h = $self->keyToH( $target, $self->defaultConf ) unless ( defined $h );
         unless ( defined $h ) {
-            $self->lmLog( "$target does not exists in menu hash", "warn" );
-            return;
+            $self->lmLog( "$target does not exists in menu hash", "debug" );
+            $h = {
+                text  => '',
+                hash  => {},
+                'int' => 0,
+            }->{$type};
+            $self->lmLog( "Type $type unknown", 'warn' ) unless ( defined $h );
         }
         if ( ref($h) ) {
-            $res .= $self->li( "$target", "closed" )
+            $res .=
+                $self->li( "$target", "closed" )
               . $self->span( "$target", $text, '', $js, $help ) . "<ul>";
             foreach ( sort keys %$h ) {
                 if ( ref( $h->{$_} ) ) {
-                    $res .= $self->confNode( '', "btext:$target/$_", $help, $js );
+                    $res .=
+                      $self->confNode( '', "btext:$target/$_", $help, $js );
                 }
                 else {
                     my $id = "$target/$_";
-                    $res .= $self->li($id)
+                    $res .=
+                        $self->li($id)
                       . $self->span( $id, $_, $h->{$_}, $js, $help ) . "</li>";
                 }
             }
@@ -144,7 +156,8 @@ sub confNode {
         }
         else {
             my $id = "$target";
-            $res .= $self->li($id)
+            $res .=
+                $self->li($id)
               . $self->span( $id, $text, $h, $js, $help ) . "</li>";
         }
     }
@@ -239,7 +252,8 @@ sub confObj {
 sub ajaxNode {
     my ( $self, $id, $text, $param, $help, $js, $data, $noT ) = @_;
     $param .= "&amp;cfgNum=$self->{cfgNum}";
-    return $self->li($id)
+    return
+        $self->li($id)
       . $self->span( $id, $text, $data, undef, $help, $noT )
       . "<ul class=\"ajax\">"
       . $self->li("sub_$id")
@@ -259,7 +273,8 @@ sub span {
     $id   =~ s/(=*)$/length($1)/e;
     $data =~ s/"/&#39;/g;
     $tmp  =~ s/"/&#39;/g;
-    $text = join ' ', map { $self->translate($_) } split /\s+/, $text unless($noT);
+    $text = join ' ', map { $self->translate($_) } split /\s+/, $text
+      unless ($noT);
     $text = $self->escapeHTML($text);
     return
 "<span name=\"$tmp\" id=\"text_$id\" onclick=\"$js('$id')\" help=\"$help\" value=\"$data\">$text</span>

@@ -29,23 +29,33 @@ sub struct {
         _help             => 'default',
         generalParameters => {
             _nodes => [
-                qw(n:authParams cookieParams cn:exportedVars cn:macros sessionParams ldapParams)
+                qw(n:authParams cookieParams cn:exportedVars cn:macros sessionParams ldapParams n:advancedParams)
             ],
             _help      => 'default',
             authParams => {
-                _nodes => [qw(portal authentication userDB whatToTrace)],
+                _nodes => [
+                    qw(portal authentication userDB syslog whatToTrace singleSession singleIP singleUserByIP)
+                ],
                 _help  => 'authParams',
                 authentication => 'text:/authentication',
                 portal         => 'text:/portal',
                 userDB         => 'text:/userDB',
+                syslog         => 'int:/syslog',
+                useXForwardedForIP => 'int:/useXForwardedForIP',
                 whatToTrace    => 'text:/whatToTrace:whatToTrace:text',
+                singleSession      => 'int:/singleSession',
+                singleIP           => 'int:/singleIP',
+                singleUserByIP     => 'int:/singleUserByIP',
             },
             cookieParams => {
-                _nodes     => [qw(cookieName domain securedCookie)],
+                _nodes =>
+                  [qw(cookieName domain securedCookie cookieExpiration)],
+                _help => 'cookies',
                 cookieName => 'text:/cookieName:cookieName:text',
                 domain     => 'text:/domain:domain:text',
                 securedCookie =>
                   'int:/securedCookie:securedCookie:securedCookieValues',
+                cookieExpiration => 'text:/cookieExpiration',
             },
             exportedVars => {
                 _nodes => ['hash:/exportedVars:vars:btext'],
@@ -76,8 +86,44 @@ sub struct {
                 managerDn       => 'text:/managerDn',
                 managerPassword => 'text:/managerPassword',
             },
+            advancedParams => {
+                _nodes => [
+                    qw(Soap exportedAttr storePassword trustedDomains status https protection notifications passwordManagement)
+                ],
+                Soap => 'int:/Soap',
+                https         => 'int:/https',
+                exportedAttr => 'text:/exportedAttr',
+                storePassword => 'int:/storePassword',
+                notifications => {
+                    _nodes => [
+                        qw(notification notificationStorage notificationStorageOptions)
+                    ],
+                    _help => 'notifications',
+                    notification               => 'int:/notification',
+                    notificationStorage => 'text:/notificationStorage',
+                    notificationStorageOptions => {
+                        _nodes => ['hash:/notificationStorageOptions'],
+                        _js    => 'hashRoot'
+                    },
+                },
+                passwordManagement => {
+                    _nodes => [
+                        qw(passwordDB SMTPServer mailFrom mailSubject randomPasswordRegexp mailBody)
+                    ],
+                    passwordDB           => 'text:/passwordDB',
+                    SMTPServer           => 'text:/SMTPServer',
+                    mailFrom             => 'text:/mailFrom',
+                    mailSubject          => 'text:/mailSubject',
+                    randomPasswordRegexp => 'text:/randomPasswordRegexp',
+                    mailBody             => 'text:/mailBody',
+                },
+                trustedDomains => 'text:/trustedDomains',
+                status         => 'int:/status',
+                protection     => 'int:/protection',
+            }
         },
-        groups => { _nodes => ['hash:/groups:groups:btext'], _js => 'hashRoot' },
+        groups =>
+          { _nodes => ['hash:/groups:groups:btext'], _js => 'hashRoot' },
         virtualHosts =>
           { _nodes => ['nhash:/locationRules:virtualHosts:none'], },
     };
@@ -92,6 +138,7 @@ sub testStruct {
         return 1 if ( $@ =~ /Global symbol "\$.*requires explicit package/ );
         return ( $@ ? ( 0, $@ ) : 1 );
     };
+    my $boolean = { test => qr/^(?:0|1)?$/, msgFail => 'Value must be 0 or 1' };
     return {
         authentication => {
             test    => qr/^[a-zA-Z][\w\:]*$/,
@@ -109,6 +156,7 @@ sub testStruct {
             test    => qr/^https?:\/\/\S+$/,
             msgFail => 'Bad portal value',
         },
+        cda => $boolean,
         cookieName => {
             test    => qr/^[a-zA-Z]\w*$/,
             msgFail => 'Bad cookie name',
@@ -158,6 +206,14 @@ sub testStruct {
             msgFail => 'Bad LDAP dn',
         },
         managerPassword => {},
+        notificationStorage => {
+            test    => qr/^[\w:]+$/,
+            msgFail => 'Bad module name',
+        },
+        notificationStorageOptions => {
+            keyTest    => qr/^\w+$/,
+            keyMsgFail => 'Bad parameter',
+        },
         groups          => {
             keyTest    => qr/^\w[\w-]*$/,
             keyMsgFail => 'Bad group name',
@@ -229,13 +285,34 @@ sub testStruct {
                 },
             },
         },
+        syslog => $boolean,
+        Soap => $boolean,
+        storePassword => $boolean,
+        notification => $boolean,
+        status        => $boolean,
+        https         => $boolean,
+        protection    => {
+            keyTest => qr/^(?:none|authentificate|manager|)$/,
+            msgFail => 'must be one of none authentificate manager',
+        },
+        useXForwardedForIP => $boolean,
+        singleSession      => $boolean,
+        singleIP           => $boolean,
+        singleUserByIP     => $boolean,
     };
 }
 
 sub defaultConf {
     return {
+        authentication => 'LDAP',
         userDB     => 'LDAP',
         ldapServer => 'localhost',
+        globalStorage => 'Apache::Session::File',
+        globalStorageOptions => {
+            'Directory' => '/var/lib/lemonldap-ng/sessions/',
+            'LockDirectory' => '/var/lib/lemonldap-ng/sessions/lock/'
+        },
+        timeout => 7200,
     };
 }
 
