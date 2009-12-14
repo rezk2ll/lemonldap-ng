@@ -12,7 +12,7 @@ then
     chown -R www-data:www-data /var/lib/lemonldap-ng/conf
     chmod 750 /var/lib/lemonldap-ng/conf
     chmod 640 /var/lib/lemonldap-ng/conf/*
-    chgrp www-data /etc/lemonldap-ng/lemonldap-ng.ini
+    chown www-data:staff /etc/lemonldap-ng/lemonldap-ng.ini
     chmod 640 /etc/lemonldap-ng/lemonldap-ng.ini
 
     for i in domain ldapServer ldapPort ldapBase managerDn managerPassword portal; do
