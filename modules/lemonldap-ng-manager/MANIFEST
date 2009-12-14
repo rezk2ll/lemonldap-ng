@@ -17,7 +17,6 @@ example/images/line_bg_over.gif
 example/images/line_bg_over_last.gif
 example/images/logo_lemonldap-ng.png
 example/images/manager.css
-example/images/manager.js
 example/images/minus.gif
 example/images/page_add.png
 example/images/page_delete.png
@@ -54,6 +53,7 @@ example/skins/default/line_bg_over.gif
 example/skins/default/line_bg_over_last.gif
 example/skins/default/logo_lemonldap-ng.png
 example/skins/default/manager.css
+example/skins/default/manager.js
 example/skins/default/manager.tpl
 example/skins/default/minus.gif
 example/skins/default/page_add.png

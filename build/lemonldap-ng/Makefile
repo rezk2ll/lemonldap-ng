@@ -268,8 +268,7 @@ install_manager_site:	install_conf_dir
 	done
 	@find ${RSESSIONSEXPLORERDIR} -type l -name images -delete
 	@cp -pR --remove-destination ${SRCMANAGERDIR}/example/index.pl ${RMANAGERDIR}
-	@perl -i -pe 's#__SKINDIR__#$(MANAGERDIR)/skins#; \
-		s#__APPSXMLFILE__#$(CONFDIR)/apps-list.xml#;' ${RMANAGERDIR}/index.pl
+	@perl -i -pe 's#__MANAGERDIR__#$(MANAGERDIR)#' ${RMANAGERDIR}/index.pl
 	@cp -pR --remove-destination ${SRCMANAGERDIR}/example/skins/* $(RMANAGERSKINSDIR)
 	@if [ "$(MANAGERDIR)/skins/" != "$(MANAGERSKINSDIR)/" ]; then \
 		for skin in $$(ls lemonldap-ng-manager/example/skins/); do \
@@ -279,7 +278,8 @@ install_manager_site:	install_conf_dir
 	fi
 	@perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)/$(CONFFILENAME)
 	# Sessions explorer install
-	@cp -pR --remove-destination ${SRCMANAGERDIR}/example/{sessions.pl,images} $(RSESSIONSEXPLORERDIR)
+	@cp -pR --remove-destination ${SRCMANAGERDIR}/example/sessions.pl $(RSESSIONSEXPLORERDIR)
+	@cp -pR --remove-destination ${SRCMANAGERDIR}/example/images $(RSESSIONSEXPLORERDIR)
 	@if [ "${SESSIONSEXPLORERDIR}/images/" != "${SESSIONSEXPLORERDATADIR}/" ]; then \
 		mv -f ${RSESSIONSEXPLORERDIR}/images/* ${RSESSIONSEXPLORERDATADIR}; \
 		rm -rf ${RMANAGERDIR}/images; \

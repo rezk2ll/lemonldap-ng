@@ -4,13 +4,13 @@ use strict;
 use Lemonldap::NG::Manager;
 use HTML::Template;
 our $skin_dir='skins';
-our $main_dir='/var/lib/lemonldap-ng/manager';
+our $main_dir='__MANAGERDIR__';
 our $skin='default';
 
 my $manager = new Lemonldap::NG::Manager(
     {
         # REQUIRED PARAMETERS
-        applyConfFile           => '/etc/lemonldap-ng//apply.conf',
+        applyConfFile           => '/etc/lemonldap-ng/apply.conf',
 
         # ACCESS TO CONFIGURATION
 
