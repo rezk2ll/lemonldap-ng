@@ -34,7 +34,7 @@ WriteMakefile(
         'HTTP::Headers'    => 0,
         'Config::IniFiles' => 0,
     },                                               # e.g., Module::Name => 1.1
-    #EXE_FILES => [ 'scripts/lmConfig_File2MySQL', ],
+    #EXE_FILES => [ 'scripts/convertConfig', ],
     (
         $] >= 5.005
         ?    ## Add these new keywords supported since 5.005

@@ -54,13 +54,5 @@ Modify /etc/lemonldap-ng/storage.conf to change configuration storage.
 
 1.1 - Migrating from 'File' to 'DBI'
 
-To use DBI mechanism to store configuration, you have to create database. An
-example is given for MySQL in the file
-/usr/share/doc/liblemonldap-ng-conf-perl/examples/lmConfig.mysql.
-If you have a running configuration, use this to populate SQL database :
-
-  perl /usr/share/lemonldap-ng/bin/lmConfig_File2MySQL -c \
-         /var/lib/lemonldap-ng/conf/lmConf-<last-number>
-
-"-c" options adds "create table" instruction.
+Use the script /usr/share/lemonldap-ng/bin/convertConfig
 

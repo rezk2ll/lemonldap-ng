@@ -12,6 +12,7 @@ lib/Lemonldap/NG/Common/Conf/CDBI.pm
 lib/Lemonldap/NG/Common/Conf/DBI.pm
 lib/Lemonldap/NG/Common/Conf/File.pm
 lib/Lemonldap/NG/Common/Conf/LDAP.pm
+lib/Lemonldap/NG/Common/Conf/RDBI.pm
 lib/Lemonldap/NG/Common/Conf/SOAP.pm
 lib/Lemonldap/NG/Common/Conf/Serializer.pm
 lib/Lemonldap/NG/Common/Crypto.pm
@@ -20,8 +21,7 @@ Makefile.PL
 MANIFEST
 META.yml			Module meta-data (added by MakeMaker)
 README
-scripts/lmConfig_File2LDIF
-scripts/lmConfig_File2MySQL
+scripts/convertConfig
 lemonldap-ng.ini
 t/01-Common-Conf.t
 t/02-Common-Conf-File.t

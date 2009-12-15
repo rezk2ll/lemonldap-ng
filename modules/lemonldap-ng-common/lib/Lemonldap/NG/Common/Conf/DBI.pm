@@ -91,11 +91,10 @@ sub store {
         $self->logError;
         return UNKNOWN_ERROR;
     }
+    eval { $self->dbh->do("COMMIT"); };
     unless ( $self->unlock ) {
         $self->logError;
-        return UNKNOWN_ERROR;
     }
-    eval { $self->dbh->do("COMMIT"); };
     return $fields->{cfgNum};
 }
 

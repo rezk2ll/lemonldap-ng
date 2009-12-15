@@ -3,5 +3,5 @@ debian/tmp/etc/lemonldap-ng/for_etc_hosts
 debian/tmp/usr/share/perl5/Lemonldap/NG/Common*
 debian/tmp/usr/share/man/man3/Lemonldap::NG::Common*
 debian/tmp/usr/share/lemonldap-ng/ressources
-debian/tmp/usr/share/lemonldap-ng/bin/lmConfig_File2MySQL
+debian/tmp/usr/share/lemonldap-ng/bin/convertConfig
 debian/tmp/var/lib/lemonldap-ng/conf/

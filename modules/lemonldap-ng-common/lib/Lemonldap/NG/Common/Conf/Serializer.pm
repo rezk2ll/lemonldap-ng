@@ -17,7 +17,7 @@ sub serialize {
         if ( ref($v) ) {
             $fields->{$k} = Dumper($v);
             $fields->{$k} =~ s/'/&#39;/g;
-            $fields->{$k} = "'$fields->{$k}'";
+            $fields->{$k} = "'$fields->{$k}'" unless ( $self->{noQuotes} );
         }
         elsif ( $v =~ /^\d+$/ ) {
             $fields->{$k} = "$v";
@@ -29,7 +29,9 @@ sub serialize {
 
             # trim
             $v =~ s/^\s*(.*?)\s*$/$1/;
-            $fields->{$k} = "'$v'";
+            $v =~ s/'/&#39;/g;
+            $v = "'$v'" unless ( $self->{noQuotes} );
+            $fields->{$k} = $v;
         }
     }
     return $fields;
@@ -68,6 +70,7 @@ sub unserialize {
             }
         }
         else {
+            $v =~ s/&#?39;/'/g;
             $conf->{$k} = $v;
         }
     }

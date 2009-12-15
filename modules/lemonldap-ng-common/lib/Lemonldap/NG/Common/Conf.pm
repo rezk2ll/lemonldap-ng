@@ -10,7 +10,8 @@ package Lemonldap::NG::Common::Conf;
 use strict;
 no strict 'refs';
 use Lemonldap::NG::Common::Conf::Constants; #inherits
-use Lemonldap::NG::Common::Crypto; #link protected cipher Object "cypher" in configuration hash
+use Lemonldap::NG::Common::Crypto
+  ;    #link protected cipher Object "cypher" in configuration hash
 use Regexp::Assemble;
 use Config::IniFiles;
 
@@ -100,9 +101,10 @@ sub saveConf {
 
     # If configuration was modified, return an error
     return CONFIG_WAS_CHANGED
-      if ( $conf->{cfgNum} != $self->lastCfg or $self->isLocked );
+      if ( not( $self->{force} )
+        and ( $conf->{cfgNum} != $self->lastCfg or $self->isLocked ) );
     $self->lock or return DATABASE_LOCKED;
-    $conf->{cfgNum}++;
+    $conf->{cfgNum}++ unless ( $self->{cfgNumFixed} );
     $msg = "Configuration $conf->{cfgNum} stored";
     return $self->store($conf);
 }
@@ -190,9 +192,7 @@ sub getLocalConf {
     }
 
     # Parse ini file
-    my $cfg = Config::IniFiles->new(
-        -file       => $file,
-    );
+    my $cfg = Config::IniFiles->new( -file => $file, );
 
     unless ( defined $cfg ) {
         $msg = "Local config error: " . @Config::IniFiles::errors;
@@ -349,6 +349,10 @@ sub delete {
     my @a = $self->available();
     return 0 unless ( @a + $c > 0 );
     return &{ $self->{type} . '::delete' }( $self, $a[ $#a + $c ] );
+}
+
+sub logError {
+    return &{ $_[0]->{type} . '::logError' }(@_);
 }
 
 1;
