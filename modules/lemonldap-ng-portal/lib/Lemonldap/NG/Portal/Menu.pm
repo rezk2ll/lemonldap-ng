@@ -319,7 +319,7 @@ sub _displayApplication {
 
     # Display application
     $html .=
-        "<li title=\"$appid\" class=\"appname\"><span>"
+        "<li title=\"$appid\" class=\"appname $appid\"><span>"
       . ( $appuri ? "<a href=\"$appuri\">$appname</a>" : "<a>$appname</a>" )
       . "</span>\n";
     my @appnodes = $app->findnodes("application");
