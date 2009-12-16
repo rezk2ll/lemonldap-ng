@@ -4,4 +4,5 @@ debian/tmp/usr/share/perl5/Lemonldap/NG/Common*
 debian/tmp/usr/share/man/man3/Lemonldap::NG::Common*
 debian/tmp/usr/share/lemonldap-ng/ressources
 debian/tmp/usr/share/lemonldap-ng/bin/convertConfig
+debian/tmp/usr/share/lemonldap-ng/bin/lmMigrateConfFiles2ini
 debian/tmp/var/lib/lemonldap-ng/conf/

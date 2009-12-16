@@ -125,7 +125,7 @@ sub struct {
         groups =>
           { _nodes => ['hash:/groups:groups:btext'], _js => 'hashRoot' },
         virtualHosts =>
-          { _nodes => ['nhash:/locationRules:virtualHosts:none'], },
+          { _nodes => ['nhash:/locationRules:virtualHosts:none'], _upload => ['/exportedHeaders'] },
     };
 }
 

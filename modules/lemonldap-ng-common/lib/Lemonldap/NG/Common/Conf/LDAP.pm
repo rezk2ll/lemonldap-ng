@@ -14,7 +14,6 @@ our $VERSION = 0.02;
 
 BEGIN {
     *Lemonldap::NG::Common::Conf::ldap     = \&ldap;
-    *Lemonldap::NG::Common::Conf::logError = \&logError;
 }
 
 sub prereq {

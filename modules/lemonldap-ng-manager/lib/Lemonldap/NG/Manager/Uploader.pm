@@ -168,6 +168,7 @@ sub findAllConfKeys {
             push @res, ( $m =~ /^(?:.*?:)?(.*?)(?:\:.*)?$/ ? $1 : () );
         }
     }
+    push @res, @{$h->{_upload}} if($h->{_upload});
     return @res;
 }
 

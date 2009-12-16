@@ -203,6 +203,7 @@ install_bin:	install_libs install_conf_dir
 		${SRCPORTALDIR}/example/scripts/purgeCentralCache \
 		${SRCPORTALDIR}/example/scripts/buildPortalWSDL \
 		${SRCCOMMONDIR}/scripts/convertConfig \
+		${SRCCOMMONDIR}/scripts/lmMigrateConfFiles2ini \
 		${SRCMANAGERDIR}/example/scripts/lmConfigEditor \
 			$(RBINDIR)
 	chmod +x $(RBINDIR)/*
