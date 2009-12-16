@@ -93,9 +93,9 @@ var scriptname='<TMPL_VAR NAME="SCRIPT_NAME">';var imagepath='<TMPL_VAR NAME="DI
 
     <!-- Specific to securedCookie (TODO push in _Struct.pm) -->
     <div id="content_securedCookie" class="hidden">
-    <input id="securedCookie0" type="radio" name="securedCookie" value="0" onclick="setlmdata('li_bGlfL3NlY3VyZWRDb29raWU1','0')" /> <lang en="Non secured cookie" fr="Cookie non sécurisé"/><br/>
-    <input id="securedCookie1" type="radio" name="securedCookie" value="1" onclick="setlmdata('li_bGlfL3NlY3VyZWRDb29raWU1','1')" /> <lang en="Secured cookie (HTTPS)" fr="Cookie sécurisé (HTTPS)"/><br/>
-    <input id="securedCookie2" type="radio" name="securedCookie" value="2" onclick="setlmdata('li_bGlfL3NlY3VyZWRDb29raWU1','2')" /> Double cookie (HTTP and HTTPS)<br/>
+    <input id="securedCookie0" type="radio" name="securedCookie" value="0" onclick="setlmdata('li_L3NlY3VyZWRDb29raWU1','0')" /> <lang en="Non secured cookie" fr="Cookie non sécurisé"/><br/>
+    <input id="securedCookie1" type="radio" name="securedCookie" value="1" onclick="setlmdata('li_L3NlY3VyZWRDb29raWU1','1')" /> <lang en="Secured cookie (HTTPS)" fr="Cookie sécurisé (HTTPS)"/><br/>
+    <input id="securedCookie2" type="radio" name="securedCookie" value="2" onclick="setlmdata('li_L3NlY3VyZWRDb29raWU1','2')" /> Double cookie (HTTP and HTTPS)<br/>
     </div>
 
     <div id="content_int" class="hidden">
