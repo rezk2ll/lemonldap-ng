@@ -45,10 +45,10 @@ sub confUpload {
         $id =~
           s/^text_(NewID_)?li_(\w+)(\d)(?:_\d+)?$/decode_base64($2.'='x $3)/e;
         $NK = 1 if ($1);
+        $id =~ s/\r//g;
         $id =~ s/^\///;
-        print STDERR "################ $id\n" if ($NK);
         $id =~ s/(?:\/[^\/]*)?$/\/$name/ if ($NK);
-        print STDERR "################ $id\n" if ($NK);
+        print STDERR "$id\n"if($NK);
         next if ( $id =~ /^(generalParameters|virtualHosts)/ );
         my ( $confKey, $test ) = $self->getConfTests($id);
         my ( $res, $m );
@@ -93,11 +93,6 @@ sub confUpload {
                 }
             }
         }
-        print STDERR
-          "$confKey, $test->{keyTest}, $id, $test->{'*'}, $name => $value\n"
-          if ($NK);
-        print STDERR ( ( $id !~ /\// or $test->{'*'} ) ? "a\n" : "b\n" )
-          if ($NK);
         $self->setKeyToH( $newConf, $confKey,
             $test->{keyTest}
             ? ( ( $id !~ /\// or $test->{'*'} ) ? {} : ( $name => $value ) )
@@ -108,7 +103,7 @@ sub confUpload {
     foreach ( @{ $result->getChildrenByTagName('ignore') } ) {
         my $node = $_->getAttribute('value');
         $node =~ s/^.*node=(.*?)(?:&.*)?\}$/$1/;
-        foreach my $k ( $self->findAllConfKeys( $self->corresp($node) ) ) {
+        foreach my $k ( $self->findAllConfKeys( $self->corresp($node,1) ) ) {
             my $v = $self->keyToH( $k, $self->conf );
             $v = $self->keyToH( $k, $self->defaultConf ) unless ( defined $v );
             if ( defined $v ) {
@@ -123,7 +118,7 @@ sub confUpload {
 
     #print STDERR Dumper( $newConf, \%errors, \%warnings );
     close LOG;
-    $res->{result}->{cfgNum} = $self->confObj->saveConf($newConf);
+    $res->{result}->{cfgNum} = $self->confObj->saveConf($newConf) unless($res->{errors});
     my $buf = '{';
     my $i=0;
     while ( my ( $type, $h ) = each %$res ) {
