@@ -1,0 +1,46 @@
+#!/usr/bin/perl
+
+use strict;
+use Getopt::Long;
+use Config::IniFiles;
+
+our %opts;
+
+use Lemonldap::NG::Common::Conf::Constants;
+
+$opts{dir} ||= '/etc/lemonldap-ng';
+
+my $old = {storage => $opts{storage} || "$opts{dir}/storage.conf",
+           apply   => $opts{apply}   || "$opts{dir}/apply.conf",
+	   };
+my $new         = $opts{ini}     || "$opts{dir}/lemonldap-ng.ini";
+
+my $datas;
+
+-r $old->{storage} or quit(2,"$old->{storage} is not readeable");
+open F, $old->{storage};
+while(<F>){
+    next if(/^\s*(?:#.*)?$/);
+    my($k,$v)=(/^(\w+)\s*=\s*(.*)$/) or quit(3,"bad line in $old->{storage}:$_");
+    $datas->{configuration}->{$k}=$v;
+}
+close F;
+if(-e $old->{apply}){
+    open F,$old->{apply};
+    while(<F>){
+    next if(/^\s*(?:#.*)?$/);
+    my($k,$v)=(/^([\w\.\-]+)\s+(.*)$/) or quit(3,"bad line in $old->{apply}:$_");
+    $datas->{apply}->{$k}=$v;
+    }
+    close F;
+}
+
+if(-e $new){
+    -w $new or quit(4,"$new is not writeable");
+    my $conf = Config::IniFiles->new(-file=>$new);
+}
+
+sub quit {
+    print STDERR "$_[1]\n";
+    exit $_[0];
+}
