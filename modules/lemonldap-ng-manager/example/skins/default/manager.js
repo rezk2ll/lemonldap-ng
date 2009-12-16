@@ -6,9 +6,9 @@ var simpleTreeCollection;
 
 $(document).ready(function(){
 
-  /* Drag Help (require jQuery UI)*/
+  /* Drag and resize divs (require jQuery UI)*/
   $("#help").draggable({ handle: 'h1' });
-  $("#help").resizable();
+  $("#help").resizable({ handles: 'all'});
 
   /* Simple Tree */
   simpleTreeCollection = $(".simpleTree").simpleTree({
@@ -69,14 +69,14 @@ function none(id) {
 function hashRoot(){
   currentId=simpleTreeCollection[0].getSelected().attr('id');
   display('default','Lemonldap::NG Manager');
-  $('#newkbr').css('display','block');
+  $('#newkbr').css('display','');
 }
 function btext(id) {
   currentId=id;
   $('#btextKey').attr('value',lmtext(id));
   $('#btextValue').attr('value',lmdata(id));
   display('btext','Clef');
-  $('#newkb,#delkb').css('display','block');
+  $('#newkb,#delkb').css('display','');
 }
 function int(id) {
   currentId=id;
@@ -102,13 +102,13 @@ function rules(id){
   if(t=='default'){$('#rulKey').attr('readonly','readonly')}
   else{
     $('#rulKey').attr('readonly','');
-    $('#delkb').css('display','block')
+    $('#delkb').css('display','')
   }
-  $('#newrb').css('display','block');
+  $('#newrb').css('display','');
 }
 function rulesRoot(id){
   display('default','Lemonldap::NG Manager');
-  $('#newrbr').css('display','block');
+  $('#newrbr').css('display','');
 }
 var count=0;
 var text4newKey='Key';

@@ -27,54 +27,102 @@ body
 	display:none;
 }
 
+a, a:link, a:visited
+{
+	text-decoration:none;
+}
+
+/* Buttons and inputs*/
+button, input
+{
+	font-weight:bold;
+	border:1px solid #bbb;
+	padding:5px 10px;
+	margin:5px;
+}
+
 /* Divs */
+#header a, #header a:link, #header a:visited
+{
+	color:#fff;
+}
+
+#header img, #header p
+{
+	float:left;
+}
+
+#header p
+{
+	margin:5px 20px;
+	padding:5px;
+	border-style:dotted;
+	border-color:#bbb;
+	border-width:3px 0;
+}
+
 #page
 {
 	background:#eee;
 	-moz-border-radius:10px;
 	-webkit-border-radius:10px;
+	clear:both;
+	margin-top:50px;
 }
 
 #menu
 {
 	float:left;
 	padding:10px;
-	width:30%;
-}
-
-#menu img.logo
-{
-	margin:0 0 10px 0;
+	width:300px;
+	border-right:2px solid #bbb;
 }
 
 #data
 {
-	margin:0 0 0 30%;
+	margin:0 0 0 320px;
 	padding:10px;
+	border-left:2px solid #bbb;
+}
+
+#buttons, #edition
+{
+	text-align:center;
+	margin:10px 50px;
+	padding:0 0 5px 0;
+	border:solid #bbb 1px;
 }
 
 #help
 {
-	border:3px solid #bbb;
-	padding:0;
-	width:80%;
+	width:600px;
+	padding:5px 10px;
 	background:#eee;
+	margin:10px auto;
+	border:3px solid #bbb;
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
 }
 
-#help h1
+#help h1, #buttons h1, #edition h1
 {
 	text-align:center;
 	font-size:12pt;
-	padding:2px;
-	margin:0;
+	padding:5px 10px;
+	margin:5px 10px;
 	background:#ddd;
-	cursor:move;
 }
 
 #help_content
 {
 	padding:5px;
 	overflow:auto;
+}
+
+/* jQuery UI */
+.ui-draggable h1
+{
+	cursor:move;
 }
 
 /* jQuery Simple Tree */

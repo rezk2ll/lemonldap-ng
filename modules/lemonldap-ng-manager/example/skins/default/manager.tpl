@@ -5,6 +5,7 @@
 <head>
 <title>Lemonldap::NG Manager</title>
 <link rel="stylesheet" type="text/css" href="<TMPL_VAR NAME="DIR">/manager.css" />
+<link rel="stylesheet" type="text/css" href="<TMPL_VAR NAME="DIR">/jquery-ui-1.7.2.custom.css" />
 <script src="<TMPL_VAR NAME="DIR">/jquery-1.3.2.min.js" type="text/JavaScript"></script>
 <script src="<TMPL_VAR NAME="DIR">/jquery-ui-1.7.2.custom.min.js" type="text/JavaScript"></script>
 <script src="<TMPL_VAR NAME="DIR">/tree.js" type="text/JavaScript"></script>
@@ -16,21 +17,30 @@ var scriptname='<TMPL_VAR NAME="SCRIPT_NAME">';var imagepath='<TMPL_VAR NAME="DI
 </head>
 <body>
 
+<!-- Header -->
+<div id="header">
+   <img alt="Lemonldap::NG" src="<TMPL_VAR NAME="DIR">/logo_lemonldap-ng.png" class="logo" />
+   <p><a href="index.pl"><lang en="Configuration management" fr="Gestion de la configuration"/></a></p>
+   <p><a href="sessions.pl"><lang en="Sessions explorer" fr="Explorateur de sessions"/></a></p>
+</div>
+
 <!-- Main -->
 <div id="page">
 
 <!-- Menu (tree) -->
 <div id="menu">
-   <img alt="Lemonldap::NG" src="<TMPL_VAR NAME="DIR">/logo_lemonldap-ng.png" class="logo" />
    <TMPL_VAR NAME="MENU">
 </div>
 
 <!-- Data -->
 <div id="data">
-   <h1>Lemonldap::NG Manager</h1>
 
    <!-- All buttons -->
    <div id="buttons">
+
+    <h1>
+     <lang en="Available actions" fr="Actions disponibles" />
+    </h1>
 
     <button id="bsave" onclick="uploadConf()" >
      <lang en="Save" fr="Sauver" />
@@ -62,58 +72,60 @@ var scriptname='<TMPL_VAR NAME="SCRIPT_NAME">';var imagepath='<TMPL_VAR NAME="DI
 
    </div>
 
-   <form action="#" onsubmit="return false">
+   <form id="edition" action="#" onsubmit="return false">
+
+    <h1>
+     <lang en="Values to edit" fr="Valeurs à éditer" />
+    </h1>
+
    <!-- Form content -->
    <div id="content">
 
     <!-- Default text -->
     <div id="content_default" class="content">
-    <lang en="Click on the configuration tree to edit parameters" fr="Cliquer sur l'arbre de configuration pour éditer les paramètres" />
+     <lang en="No value" fr="Pas de valeur" />
     </div>
 
     <!-- Contextual text -->
     <div id="content_text" class="hidden">
-    <input type="text" id="text" onchange="setlmdata(currentId,this.value)"/>
+     <input type="text" id="text" onchange="setlmdata(currentId,this.value)"/>
     </div>
 
-    <!-- Specific to securedCookie (TODO push in _Struct.pm -->
+    <!-- Specific to securedCookie (TODO push in _Struct.pm) -->
     <div id="content_securedCookie" class="hidden">
     <input id="securedCookie0" type="radio" name="securedCookie" value="0" onclick="setlmdata('li_bGlfL3NlY3VyZWRDb29raWU1','0')" /> <lang en="Non secured cookie" fr="Cookie non sécurisé"/><br/>
     <input id="securedCookie1" type="radio" name="securedCookie" value="1" onclick="setlmdata('li_bGlfL3NlY3VyZWRDb29raWU1','1')" /> <lang en="Secured cookie (HTTPS)" fr="Cookie sécurisé (HTTPS)"/><br/>
     <input id="securedCookie2" type="radio" name="securedCookie" value="2" onclick="setlmdata('li_bGlfL3NlY3VyZWRDb29raWU1','2')" /> Double cookie (HTTP and HTTPS)<br/>
-    <button onclick="return false"><lang en="Submit" fr="Valider"/></button>
     </div>
 
     <div id="content_int" class="hidden">
     <input type="text" id="int" onchange="setlmdata(currentId,this.value)"/>
-    <button onclick="return false"><lang en="Submit" fr="Valider"/></button>
     </div>
 
     <div id="content_btext" class="hidden">
     <input type="text" id="btextKey" onchange="setlmtext(currentId,this.value)"/> <input type="text" id="btextValue" onchange="setlmdata(currentId,this.value)"/>
-    <button onclick="return false"><lang en="Submit" fr="Valider"/></button>
     </div>
 
     <div id="content_rules" class="hidden">
     <textarea id="rulKey" cols="30" rows="2" onchange="setlmtext(currentId,this.value)"></textarea>&nbsp;<textarea id="rulValue" cols="50" rows="2" onchange="setlmdata(currentId,this.value)"></textarea>
-    <button onclick="return false"><lang en="Submit" fr="Valider"/></button>
     </div>
 
    </div>
-  </form>
-  
+  </form>  
+
+</div>
+
+  <hr style="width:0px;clear:both" />
+
+</div>
+
 <div id="help">
   <h1><lang en="Help" fr="Aide"/></h1>
 
   <div id="help_content">
   <!-- AJAX content -->
+     <lang en="Click on the configuration tree to edit parameters" fr="Cliquer sur l'arbre de configuration pour éditer les paramètres" />
   </div>
-
-</div>
-
-</div>
-
-<hr style="color:transparent;clear:both;" />
 
 </div>
 
