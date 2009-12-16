@@ -603,7 +603,6 @@ sub _deleteSession {
 #    - issuerDBInit
 #    - issuerForUnAuthUser
 #    - issuerForAuthUser
-#    - issuerLogout
 #
 #@return 1 if all is OK, 0 if session isn't created or a notification has to be done
 sub process {
@@ -615,7 +614,7 @@ sub process {
           setAuthSessionInfo passwordDBInit modifyPassword setSessionInfo
           resetPasswordByMail setMacros setLocalGroups setGroups authenticate
           removeOther store buildCookie checkNotification issuerForAuthUser
-          issuerLogout autoRedirect)
+          autoRedirect)
     );
     $self->updateStatus;
     return ( ( $self->{error} > 0 ) ? 0 : 1 );
@@ -674,7 +673,7 @@ sub checkNotifBack {
         }
         else {
             $self->{error} = $self->_subProcess(
-                qw(checkNotification issuerForAuthUser issuerLogout autoRedirect)
+                qw(checkNotification issuerDBInit issuerForAuthUser autoRedirect)
             );
             return $self->{error} || PE_DONE;
         }
@@ -712,11 +711,15 @@ sub controlExistingSession {
             # Delete session in global storage
             $self->_deleteSession($h);
             $self->{error} = PE_REDIRECT;
+            # Call issuerDB logout
             $self->issuerLogout();
+            # Log
             $self->_sub( 'userNotice',
                 $self->{sessionInfo}->{ $self->{whatToTrace} }
                   . " has been disconnected" );
+            # Call authentication logout
             eval { $self->_sub('authLogout') };
+            # Redirect user
             $self->_subProcess(qw(autoRedirect));
             return PE_FIRSTACCESS;
         }
@@ -727,7 +730,7 @@ sub controlExistingSession {
         my $r = $self->_sub( 'existingSession', $id, $self->{sessionInfo} );
         if ( $r == PE_DONE ) {
             $self->{error} =
-              $self->_subProcess(qw(checkNotification autoRedirect));
+              $self->_subProcess(qw(checkNotification issuerDBInit issuerForAuthUser autoRedirect));
             return $self->{error} || PE_DONE;
         }
         else {
@@ -970,8 +973,6 @@ sub checkNotification {
 }
 
 # issuerForAuthUser(): must be implemented in IssuerDB* module
-
-# issuerLogout(): must be implemented in IssuerDB* module
 
 ##@apmethod int autoRedirect()
 # If the user was redirected to the portal, we will now redirect him
