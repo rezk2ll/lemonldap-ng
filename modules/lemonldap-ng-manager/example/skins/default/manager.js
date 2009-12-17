@@ -7,8 +7,8 @@ var simpleTreeCollection;
 $(document).ready(function(){
 
   /* Drag and resize divs (require jQuery UI)*/
-  $("#help").draggable({ handle: 'h1' });
-  $("#help").resizable({ handles: 'all'});
+  $("#help").draggable({ handle: 'h1', opacity: '0.70' });
+  $("#help").resizable({ handles: 'all', alsoResize: '#help_content', ghost: 'true'});
 
   /* Simple Tree */
   simpleTreeCollection = $(".simpleTree").simpleTree({

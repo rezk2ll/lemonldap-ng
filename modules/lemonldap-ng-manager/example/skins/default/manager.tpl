@@ -18,17 +18,17 @@ var scriptname='<TMPL_VAR NAME="SCRIPT_NAME">';var imagepath='<TMPL_VAR NAME="DI
 <body>
 
 <!-- Header -->
-<div id="header">
+<div id="header" class="ui-widget">
    <img alt="Lemonldap::NG" src="<TMPL_VAR NAME="DIR">/logo_lemonldap-ng.png" class="logo" />
-   <p><a href="index.pl"><lang en="Configuration management" fr="Gestion de la configuration"/></a></p>
-   <p><a href="sessions.pl"><lang en="Sessions explorer" fr="Explorateur de sessions"/></a></p>
+   <p class="ui-state-default ui-corner-all ui-state-active"><a href="index.pl"><lang en="Configuration management" fr="Gestion de la configuration"/></a></p>
+   <p class="ui-state-default ui-corner-all"><a href="sessions.pl"><lang en="Sessions explorer" fr="Explorateur de sessions"/></a></p>
 </div>
 
 <!-- Main -->
-<div id="page">
+<div id="page" class="ui-corner-all ui-helper-clearfix ui-widget-content">
 
 <!-- Menu (tree) -->
-<div id="menu">
+<div id="menu" class="ui-widget">
    <TMPL_VAR NAME="MENU">
 </div>
 
@@ -36,45 +36,48 @@ var scriptname='<TMPL_VAR NAME="SCRIPT_NAME">';var imagepath='<TMPL_VAR NAME="DI
 <div id="data">
 
    <!-- All buttons -->
-   <div id="buttons">
+   <div id="buttons" class="ui-widget ui-corner-all">
 
-    <h1>
+    <h1 class="ui-widget-header ui-corner-all">
      <lang en="Available actions" fr="Actions disponibles" />
     </h1>
 
-    <button id="bsave" onclick="uploadConf()" >
+    <button id="bsave" onclick="uploadConf()" class="ui-state-default ui-corner-all" >
      <lang en="Save" fr="Sauver" />
     </button>
 
-    <button id="bapply" onclick="$.post(scriptname,{apply:1},function(data){return 1},'html');" >
+    <button id="bapply" onclick="$.post(scriptname,{apply:1},function(data){return 1},'html');" class="ui-state-default ui-corner-all">
      <lang en="Apply" fr="Appliquer" />
     </button>
 
-    <button id="newkbr" style="display:none;" onclick="newKeyR();return false;">
+    <button id="newkbr" style="display:none;" onclick="newKeyR();return false;" class="ui-state-default ui-corner-all">
      <lang en="New key" fr="Nouvelle clef" />
     </button>
 
-    <button id="newrbr" style="display:none;" onclick="newRuleR();return false;">
+    <button id="newrbr" style="display:none;" onclick="newRuleR();return false;" class="ui-state-default ui-corner-all">
      <lang en="New rule" fr="Nouvelle règle" />
     </button>
 
-    <button id="newkb" style="display:none;" onclick="newKey();return false;">
+    <button id="newkb" style="display:none;" onclick="newKey();return false;" class="ui-state-default ui-corner-all">
      <lang en="New key" fr="Nouvelle clef" />
     </button>
 
-    <button id="newrb" style="display:none;" onclick="newRule();return false;">
+    <button id="newrb" style="display:none;" onclick="newRule();return false;" class="ui-state-default ui-corner-all">
      <lang en="New rule" fr="Nouvelle règle" />
     </button>
 
-    <button id="delkb" style="display:none;" onclick="delKey();return false;">
+    <button id="delkb" style="display:none;" onclick="delKey();return false;" class="ui-state-default ui-corner-all">
      <lang en="Delete key" fr="Effacer la clef" />
     </button>
 
    </div>
 
-   <form id="edition" action="#" onsubmit="return false">
+  
+   <div id="edition" class="ui-widget ui-corner-all">
+ 
+   <form action="#" onsubmit="return false">
 
-    <h1>
+    <h1 class="ui-widget-header ui-corner-all">
      <lang en="Values to edit" fr="Valeurs à éditer" />
     </h1>
 
@@ -111,18 +114,17 @@ var scriptname='<TMPL_VAR NAME="SCRIPT_NAME">';var imagepath='<TMPL_VAR NAME="DI
     </div>
 
    </div>
-  </form>  
+  </form>
+  </div>
 
 </div>
 
-  <hr style="width:0px;clear:both" />
-
 </div>
 
-<div id="help">
-  <h1><lang en="Help" fr="Aide"/></h1>
+<div id="help" class="ui-widget ui-corner-all">
+  <h1 class="ui-widget-header ui-corner-all"><lang en="Help" fr="Aide"/></h1>
 
-  <div id="help_content">
+  <div id="help_content" class="ui-widget-content">
   <!-- AJAX content -->
      <lang en="Click on the configuration tree to edit parameters" fr="Cliquer sur l'arbre de configuration pour éditer les paramètres" />
   </div>
