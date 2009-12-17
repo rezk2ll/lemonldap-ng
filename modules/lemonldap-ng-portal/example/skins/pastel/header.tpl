@@ -27,6 +27,7 @@
                 function(){}
           );
           <TMPL_IF NAME="LOGIN">$("input[type=password]:first").focus();</TMPL_IF>
+          <TMPL_IF NAME="NEWWINDOW">$('a[href^="http://"]').attr("target", "_blank");</TMPL_IF>
         });
         </script>
 </head>

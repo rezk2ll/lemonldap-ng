@@ -266,6 +266,8 @@ sub setDefaultValues {
     $self->{portalAutocomplete} ||= "off";
     $self->{portalRequireOldPassword} = 1
       unless ( defined( $self->{portalRequireOldPassword} ) );
+    $self->{portalOpenLinkInNewWindow} = 0
+      unless ( defined( $self->{portalOpenLinkInNewWindow} ) );
     $self->{portalUserAttr} ||= "_user";
     $self->{securedCookie}  ||= 0;
     $self->{cookieName}     ||= "lemonldap";

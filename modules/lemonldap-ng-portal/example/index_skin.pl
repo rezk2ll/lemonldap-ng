@@ -185,6 +185,7 @@ if ( $portal->process() ) {
     $template->param( DISPLAY_TAB         => $menu->displayTab );
     $template->param( LOGOUT_URL          => "$ENV{SCRIPT_NAME}?logout=1" );
     $template->param( REQUIRE_OLDPASSWORD => $portal->{portalRequireOldPassword} );
+    $template->param( NEWWINDOW           => $portal->{portalOpenLinkInNewWindow} );
     if ( $menu->displayModule("appslist") ) {
         $template->param( APPSLIST_MENU => $menu->appslistMenu );
         $template->param( APPSLIST_DESC => $menu->appslistDescription );
@@ -226,6 +227,7 @@ else {
     $template->param( AUTH_URL              => $portal->get_url );
     $template->param( LOGIN                 => $portal->get_user );
     $template->param( AUTOCOMPLETE          => $portal->{portalAutocomplete} );
+    $template->param( NEWWINDOW             => $portal->{portalOpenLinkInNewWindow} );
     $template->param( SKIN                  => $skin );
     $template->param( DISPLAY_RESETPASSWORD => $portal->{portalDisplayResetPassword} );
     $template->param( DISPLAY_FORM          => 1 );
