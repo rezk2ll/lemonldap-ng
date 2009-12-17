@@ -1,5 +1,4 @@
 #!/usr/bin/perl
-use Lemonldap::NG::Portal::Error;
 use HTML::Template;
 
 my $skin_dir    = "/usr/local/lemonldap-ng/htdocs/portal/skins";
