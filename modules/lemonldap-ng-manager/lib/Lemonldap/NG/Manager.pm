@@ -1,8 +1,13 @@
+## @file
+# Lemonldap::NG manager main file
+
+## @class
+# Lemonldap::NG manager main class
 package Lemonldap::NG::Manager;
 
 use strict;
-use Lemonldap::NG::Handler::CGI qw(:globalStorage :locationRules);
-use Lemonldap::NG::Manager::Help;    #inherits
+use Lemonldap::NG::Handler::CGI qw(:globalStorage :locationRules);    #inherits
+use Lemonldap::NG::Manager::Help;                                     #inherits
 
 our $VERSION = '0.93';
 our @ISA     = qw(
@@ -17,6 +22,10 @@ BEGIN {
     *process = *doall;
 }
 
+## @cmethod Lemonldap::NG::Manager new(hashRef args)
+# Class constructor.
+#@param args hash reference
+#@return Lemonldap::NG::Manager object
 sub new {
     my ( $class, $args ) = @_;
     my $self = $class->SUPER::new($args)
@@ -63,9 +72,12 @@ sub new {
     return $self;
 }
 
+## @method string menu()
+# Build the tree menu.
+# @return HTML string
 sub menu {
     my $self = shift;
-    require Lemonldap::NG::Manager::Downloader;    #inherits
+    require Lemonldap::NG::Manager::Downloader;
     return
         '<ul class="simpleTree">' 
       . $self->li( 'root', 'root' )

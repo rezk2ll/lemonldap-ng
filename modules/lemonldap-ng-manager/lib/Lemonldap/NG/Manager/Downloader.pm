@@ -1,3 +1,8 @@
+##@file
+# Configuration tree file
+
+##@class Lemonldap::NG::Manager::Downloader
+# Configuration tree builder
 package Lemonldap::NG::Manager::Downloader;
 
 use MIME::Base64;
@@ -5,9 +10,14 @@ use MIME::Base64;
 # TODO
 use Data::Dumper;
 
-require Lemonldap::NG::Manager::_Struct;       #inherits
-require Lemonldap::NG::Manager::_i18n;         #inherits
+require Lemonldap::NG::Manager::_Struct;    #inherits
+require Lemonldap::NG::Manager::_i18n;      #inherits
 
+## @method string node(string node)
+# Build the part of the tree that does not depends of the the configuration.
+# Call corresp(), ajaxNode(), confNode() or itself with li() and span().
+#@param $node Node to display
+#@return HTML string
 sub node {
     my ( $self, $node ) = @_;
     my $res;
@@ -71,6 +81,15 @@ sub node {
     return $res;
 }
 
+## @method string confNode(string node, string target, string help, string js)
+# Build the part of the tree that does not depends of the the configuration.
+# Call ajaxNode(), itself, keyToH(), li(), span().
+# @param node Unique identifier for the node
+# @param target String that represents the type and the position of the
+# parameter in the configuration
+# @param help Help chapter to display when selected
+# @param js Javascript function to launch when selected
+# @return HTML string
 sub confNode {
     my ( $self, $node, $target, $help, $js ) = @_;
     my $res;
@@ -164,6 +183,11 @@ sub confNode {
     return $res;
 }
 
+## @method hashref keyToH(string key, hashref h)
+# Return the part of $h corresponding to $key.
+# Example, if $h={a=>{b=>{c=>1}}} and $key='/a/b' then keyToH() will
+# return {c=>1}
+# @return hashref
 sub keyToH {
     my ( $self, $key, $h ) = @_;
     $key =~ s/^\///;
@@ -174,6 +198,19 @@ sub keyToH {
     return $h;
 }
 
+## @method array corresp(string key,boolean last)
+# Search a the key $key in the hashref Lemonldap::NG::Manager::struct().
+# If $key is not set, uses Lemonldap::NG::Manager::struct().
+# If the URL parameter key is set, uses Lemonldap::NG::Manager::cstruct()
+# with this parameter.
+# This function call itself 1 time if the key is not found using cstruct()
+# using the flag $last.
+# @return An array containing :
+# - the (sub)structure of the menu
+# - the help chapter (using inheritance of the up key)
+# - the optional javascript function to use when node is selected
+# @param key string
+# @param last optional boolean
 sub corresp {
     my ( $self, $key, $last ) = @_;
     $key =~ s/^\///;
@@ -218,6 +255,10 @@ sub corresp {
     return $h, $help, $js;
 }
 
+## @method protected hashref conf()
+# If configuration is not in memory, calls
+# Lemonldap::NG::Common::Conf::getConf() and returns it.
+# @return Lemonldap::NG configuration
 sub conf {
     my $self = shift;
     return $self->{_conf} if ( $self->{_conf} );
@@ -230,6 +271,10 @@ sub conf {
     return $self->{_conf};
 }
 
+## @method protected Lemonldap::NG::Common::Conf confObj()
+# At the first call, creates a new Lemonldap::NG::Common::Conf object and
+# return it. This object is cached for later calls.
+# @return Lemonldap::NG::Common::Conf object
 sub confObj {
     my $self = shift;
     return $self->{_confObj} if ( $self->{_confObj} );
@@ -244,11 +289,17 @@ sub confObj {
     return $self->{_confObj};
 }
 
-## @method protected void ajaxnode(string id, string text, string param)
-# Display tree node with Ajax functions inside for opening the node.
-# @param $id HTML id of the element.
+## @method protected string ajaxnode(string id,string text,string param,string help,string js,string data,boolean noT)
+# Returns a tree node with Ajax functions inside for opening the node later.
+# Call li() and span().
+# @param $id HTML id of the element
 # @param $text text to display
 # @param $param Parameters for the Ajax query
+# @param $help Help chapter to display
+# @param $js Javascript function to call when selected
+# @param $data Value of the parameter
+# @param $noT Optional flag to block translation
+# @return HTML string
 sub ajaxNode {
     my ( $self, $id, $text, $param, $help, $js, $data, $noT ) = @_;
     $param .= "&amp;cfgNum=$self->{cfgNum}";
@@ -262,6 +313,16 @@ sub ajaxNode {
       . "}</li></ul></li>\n";
 }
 
+## @method protected string span(string id,string text,string param,string help,string js,string data,boolean noT)
+# Return the span part of the node
+# @param $id HTML id of the element
+# @param $text text to display
+# @param $param Parameters for the Ajax query
+# @param $help Help chapter to display
+# @param $js Javascript function to call when selected
+# @param $data Value of the parameter
+# @param $noT Optional flag to block translation
+# @return HTML string
 sub span {
     my ( $self, $id, $text, $data, $js, $help, $noT ) = @_;
     use Carp qw(cluck);
@@ -281,6 +342,11 @@ sub span {
 ";
 }
 
+## @method protected string li(string id,string class)
+# Returns the LI part of the node.
+# @param $id HTML id of the element
+# @param $class CSS class
+# @return HTML string
 sub li {
     my ( $self, $id, $class ) = @_;
     $id = "li_" . encode_base64( $id, '' );

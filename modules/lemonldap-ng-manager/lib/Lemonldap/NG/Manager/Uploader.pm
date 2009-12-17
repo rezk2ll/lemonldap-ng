@@ -1,3 +1,8 @@
+## @file
+# Test uploaded parameters and store new configuration
+
+## @class
+# Test uploaded parameters and store new configuration
 package Lemonldap::NG::Manager::Uploader;
 
 use strict;
@@ -7,13 +12,17 @@ use MIME::Base64;
 
 # TODO
 use Data::Dumper;
-use Lemonldap::NG::Common::Safelib;    #link protected safe Safe object
-use Lemonldap::NG::Manager::Downloader;
-use Lemonldap::NG::Manager::_Struct;
+use Lemonldap::NG::Common::Safelib;        #link protected safe Safe object
+use Lemonldap::NG::Manager::Downloader;    #inherits
+use Lemonldap::NG::Manager::_Struct;       #inherits
 
 our $VERSION = '0.1';
 our ( $stylesheet, $parser );
 
+## @method void confUpload(ref rdata)
+# Parse rdata to find parameters using XSLT, test them and tries to store the
+# new configuration
+# @param $rdata pointer to posted datas
 sub confUpload {
     my ( $self, $rdata ) = @_;
     $$rdata =~ s/<img.*?>//g;
@@ -48,7 +57,7 @@ sub confUpload {
         $id =~ s/\r//g;
         $id =~ s/^\///;
         $id =~ s/(?:\/[^\/]*)?$/\/$name/ if ($NK);
-        print STDERR "$id\n"if($NK);
+        print STDERR "$id\n" if ($NK);
         next if ( $id =~ /^(generalParameters|virtualHosts)/ );
         my ( $confKey, $test ) = $self->getConfTests($id);
         my ( $res, $m );
@@ -103,7 +112,7 @@ sub confUpload {
     foreach ( @{ $result->getChildrenByTagName('ignore') } ) {
         my $node = $_->getAttribute('value');
         $node =~ s/^.*node=(.*?)(?:&.*)?\}$/$1/;
-        foreach my $k ( $self->findAllConfKeys( $self->corresp($node,1) ) ) {
+        foreach my $k ( $self->findAllConfKeys( $self->corresp( $node, 1 ) ) ) {
             my $v = $self->keyToH( $k, $self->conf );
             $v = $self->keyToH( $k, $self->defaultConf ) unless ( defined $v );
             if ( defined $v ) {
@@ -113,26 +122,36 @@ sub confUpload {
                 $self->lmLog( "No default value found for $k", 'warn' );
             }
         }
-        print LOG "Ignore $node\n";
     }
 
-    #print STDERR Dumper( $newConf, \%errors, \%warnings );
-    close LOG;
-    $res->{result}->{cfgNum} = $self->confObj->saveConf($newConf) unless($res->{errors});
+    #print STDERR Dumper( $newConf, $res );
+    $res->{result}->{cfgNum} = $self->confObj->saveConf($newConf)
+      unless ( $res->{errors} );
     my $buf = '{';
-    my $i=0;
+    my $i   = 0;
     while ( my ( $type, $h ) = each %$res ) {
-        $buf .= ',' if($i);
+        $buf .= ',' if ($i);
         $buf .= "'$type':{";
         $buf .= join( ',', map { "'$_':'$h->{$_}'" } keys %$h );
         $buf .= '}';
         $i++;
     }
     $buf .= '}';
-    print $self->header( -type => 'application/json', -Content_Length => length($buf) ).$buf;
+    print $self->header(
+        -type           => 'application/json',
+        -Content_Length => length($buf)
+    ) . $buf;
     $self->quit();
 }
 
+## @method protected array applyTest(void* test,string value)
+# Apply the test to the value and return the result and an optional message
+# returned by the test if the sub ref.
+# @param $test Ref to a regexp or a sub
+# @param $value Value to test
+# @return Array containing:
+# - the test result
+# - an optional message
 sub applyTest {
     my ( $self, $test, $value ) = @_;
     my ( $res, $msg );
@@ -145,6 +164,8 @@ sub applyTest {
     return ( $res, $msg );
 }
 
+## @method protected array getConfTests(string id)
+# Call Lemonldap::NG::Manager::_Struct::testStruct().
 sub getConfTests {
     my ( $self, $id ) = @_;
     my ( $confKey, $tmp ) = ( $id =~ /^(.*?)(?:\/(.*))?$/ );
@@ -155,6 +176,11 @@ sub getConfTests {
     return ( $confKey, $h );
 }
 
+## @method protected array findAllConfKeys(hashref h)
+# Parse a tree structure to find all nodes corresponding to a configuration
+# value.
+# @param $h Tree structure
+# @return Array of configuration parameter names
 sub findAllConfKeys {
     my ( $self, $h ) = @_;
     my @res = ();
@@ -168,10 +194,17 @@ sub findAllConfKeys {
             push @res, ( $m =~ /^(?:.*?:)?(.*?)(?:\:.*)?$/ ? $1 : () );
         }
     }
-    push @res, @{$h->{_upload}} if($h->{_upload});
+    push @res, @{ $h->{_upload} } if ( $h->{_upload} );
     return @res;
 }
 
+## @method protected void setKeyToH(hashref h,string key,string k2,string value)
+# Insert key=>$value in $h at the position declared with $key. If $k2 is set,
+# insert key=>{$k2=>$value}. Note that $key is splited with "/". The last part
+# is used as key.
+# @param $h New Lemonldap::NG configuration
+# @param $key String "/path/key"
+# @param $k2 Optional subkey
 sub setKeyToH {
     my $value = pop;
     my ( $self, $h, $key, $k2 ) = @_;
@@ -196,12 +229,18 @@ sub setKeyToH {
     }
 }
 
+## @method private XML::LibXML parser()
+# @return XML::LibXML object (cached in global $parser variable)
 sub parser {
     my $self = shift;
     return $parser if ($parser);
     $parser = XML::LibXML->new();
 }
 
+## @method private XML::LibXSLT stylesheet()
+# Returns XML::LibXSLT parser (cached in global $stylesheet variable). Use
+# datas stored at the end of this file to initialize the object.
+# @return XML::LibXSLT object
 sub stylesheet {
     my $self = shift;
 

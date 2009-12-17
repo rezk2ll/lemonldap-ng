@@ -1,8 +1,19 @@
+## @file
+# Manager tree structure and tests
+
+## @class
+# Manager tree structure and tests
 package Lemonldap::NG::Manager::_Struct;
 
 use strict;
 our $VERSION = '0.1';
 
+## @method protected hashref cstruct(hashref h,string k)
+# Merge $h with the structure produced with $k and return it.
+# Used to manage virtual hosts.
+#@param $h Result of struct()
+#@param $k Name of the virtual host
+#@return Tree structure
 sub cstruct {
     shift;
     my ( $h, $k ) = @_;
@@ -23,6 +34,11 @@ sub cstruct {
     return $h;
 }
 
+## @method protected hashref struct(hashref h,string k)
+# Returns the tree structure
+#@param $h Result of struct()
+#@param $k Name of the virtual host
+#@return Tree structure
 sub struct {
     return {
         _nodes            => [qw(n:generalParameters n:groups n:virtualHosts)],
@@ -129,6 +145,9 @@ sub struct {
     };
 }
 
+## @method protected hashref testStruct()
+# Returns the tests to do with the datas uploaded.
+# @return hashref
 sub testStruct {
     my $assignTest = qr/(?<=[^=<!>\?])=(?![=~])/;
     my $assignMsg  = 'containsAnAssignment';
@@ -302,6 +321,8 @@ sub testStruct {
     };
 }
 
+## @method protected hashref defaultConf()
+#@return Hashref of default values
 sub defaultConf {
     return {
         authentication => 'LDAP',
@@ -314,19 +335,6 @@ sub defaultConf {
         },
         timeout => 7200,
     };
-}
-
-sub newNode {
-    virtualHost => {
-        '*' => {
-            exportedHeaders => { 'Auth-User' => '$uid' },
-            locationRules   => { 'default'   => 'deny' },
-        }
-      },
-      groups               => { 'NewGroup'  => '0', },
-      macro                => { 'NewMacro'  => '', },
-      globalStorageOptions => { 'NewOption' => '', },
-      ;
 }
 
 1;
