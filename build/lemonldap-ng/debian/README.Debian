@@ -50,7 +50,7 @@ IV - LEMONLDAP::NG CONFIGURATION STORAGE
 Package: liblemonldap-ng-conf-perl
 
 Lemonldap::NG configuration is stored by default in /var/lib/lemonldap-ng/conf.
-Modify /etc/lemonldap-ng/storage.conf to change configuration storage.
+Modify /etc/lemonldap-ng/lemonldap-ng.ini to change configuration storage.
 
 1.1 - Migrating from 'File' to 'DBI'
 

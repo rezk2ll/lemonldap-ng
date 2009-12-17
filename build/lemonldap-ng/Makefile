@@ -80,6 +80,10 @@ LDAPSUFFIX=dc=example,dc=com
 
 # Other
 VERSION=`head -n1 changelog |sed -e 's/lemonldap-ng (//' -e 's/).*$$//'`
+PORTALSKINS=`ls lemonldap-ng-portal/example/skins/`
+MANAGERSKINS=`ls lemonldap-ng-manager/example/skins/`
+DIFF=diff -aburN -x '*.bak' -x .svn
+	
 SRCCOMMONDIR=lemonldap-ng-common
 SRCHANDLERDIR=lemonldap-ng-handler
 SRCPORTALDIR=lemonldap-ng-portal
@@ -511,3 +515,27 @@ debian-packages: debian-dist
 	tar xzf lemonldap-ng_$$version.orig.tar.gz && \
 	cd lemonldap-ng-$$version && \
 	debuild
+
+diff:
+	@# Portal
+	@$(DIFF) lemonldap-ng-portal/lib/Lemonldap/NG/Portal /usr/share/perl5/Lemonldap/NG/Portal ||true
+	@$(DIFF) lemonldap-ng-portal/example/scripts/purgeCentralCache /usr/share/lemonldap-ng/bin/purgeCentralCache ||true
+	@$(DIFF) lemonldap-ng-portal/example/scripts/buildPortalWSDL /usr/share/lemonldap-ng/bin/buildPortalWSDL ||true
+	@for i in $(PORTALSKINS); do \
+		$(DIFF) -x 'jquery*' lemonldap-ng-portal/example/skins/$$i /usr/share/lemonldap-ng/portal-skins/$$i; \
+	done ||true
+	@# Handler
+	@$(DIFF) lemonldap-ng-handler/lib/Lemonldap/NG/Handler /usr/share/perl5/Lemonldap/NG/Handler ||true
+	@# Common
+	@$(DIFF) lemonldap-ng-common/lib/Lemonldap/NG/Common /usr/share/perl5/Lemonldap/NG/Common ||true
+	@$(DIFF) lemonldap-ng-common/lib/Lemonldap/NG/Common.pm /usr/share/perl5/Lemonldap/NG/Common.pm ||true
+	@$(DIFF) lemonldap-ng-common/scripts/lmMigrateConfFiles2ini /usr/share/lemonldap-ng/bin/lmMigrateConfFiles2ini ||true
+	@$(DIFF) lemonldap-ng-common/scripts/convertConfig /usr/share/lemonldap-ng/bin/convertConfig ||true
+	@# Manager
+	@$(DIFF) lemonldap-ng-manager/lib/Lemonldap/NG/Manager /usr/share/perl5/Lemonldap/NG/Manager ||true
+	@$(DIFF) lemonldap-ng-manager/lib/Lemonldap/NG/Manager.pm /usr/share/perl5/Lemonldap/NG/Manager.pm ||true
+	@$(DIFF) lemonldap-ng-manager/example/images /usr/share/lemonldap-ng/sessions-explorer-imgs ||true
+	for i in $(MANAGERSKINS); do \
+		$(DIFF) -x 'jquery*' lemonldap-ng-manager/example/skins/$$i /usr/share/lemonldap-ng/manager-skins/$$i; \
+	done ||true
+
