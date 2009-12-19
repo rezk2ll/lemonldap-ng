@@ -125,15 +125,26 @@ sub confUpload {
     }
 
     #print STDERR Dumper( $newConf, $errors );
-    #print STDERR Dumper($errors);
-    $errors->{result}->{cfgNum} = $self->confObj->saveConf($newConf)
-      unless ( $errors->{errors} );
+    print STDERR Dumper($errors);
+    if ( $errors->{errors} ) {
+        $errors->{result}->{cfgNum} = 0;
+    }
+    else {
+        $errors->{result}->{cfgNum} = $self->confObj->saveConf($newConf);
+    }
     my $buf = '{';
     my $i   = 0;
     while ( my ( $type, $h ) = each %$errors ) {
         $buf .= ',' if ($i);
         $buf .= "'$type':{";
-        $buf .= join( ',', map { "'$_':'$h->{$_}'" } keys %$h );
+        $buf .= join(
+            ',',
+            map {
+                $h->{$_} =~ s/'/\\'/;
+                $h->{$_} =~ s/\n/ /g;
+                "'$_':'$h->{$_}'"
+              } keys %$h
+        );
         $buf .= '}';
         $i++;
     }

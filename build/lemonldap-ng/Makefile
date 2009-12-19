@@ -82,7 +82,7 @@ LDAPSUFFIX=dc=example,dc=com
 VERSION=`head -n1 changelog |sed -e 's/lemonldap-ng (//' -e 's/).*$$//'`
 PORTALSKINS=`ls lemonldap-ng-portal/example/skins/`
 MANAGERSKINS=`ls lemonldap-ng-manager/example/skins/`
-DIFF=diff -aburN -x '*.bak' -x .svn
+DIFF=diff -aburN -x '*.bak' -x .svn -x '*.swp'
 	
 SRCCOMMONDIR=lemonldap-ng-common
 SRCHANDLERDIR=lemonldap-ng-handler
