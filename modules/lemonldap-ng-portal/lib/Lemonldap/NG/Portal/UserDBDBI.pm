@@ -30,6 +30,33 @@ sub userDBInit {
 # Do nothing
 # @return Lemonldap::NG::Portal constant
 sub getUser {
+    my $self = shift;
+
+    # Connect
+    my $dbh =
+      $self->dbh( $self->{dbiUserChain}, $self->{dbiUserUser},
+        $self->{dbiUserPassword} );
+    return PE_ERROR unless $dbh;
+
+    my $table = $self->{dbiUserTable};
+    my $pivot = $self->{userPivot};
+    my $user  = $self->{user};
+    $user =~ s/'/''/g;
+
+    eval {
+        my $sth = $dbh->prepare("SELECT * FROM $table WHERE $pivot='$user'");
+        $sth->execute();
+
+        unless ( $self->{entry} = $sth->fetchrow_hashref() ) {
+            $self->lmLog( "User $user not found", 'notice' );
+            return PE_BADCREDENTIALS;
+        }
+    };
+    if ($@) {
+        $self->lmLog( "DBI error: $@", 'error' );
+        return PE_ERROR;
+    }
+
     PE_OK;
 }
 
@@ -44,27 +71,9 @@ sub setSessionInfo {
       unless ( $self->{exportedVars}
         and ref( $self->{exportedVars} ) eq 'HASH' );
 
-    # Connect
-    my $dbh =
-      $self->dbh( $self->{dbiUserChain}, $self->{dbiUserUser},
-        $self->{dbiUserPassword} );
-    return PE_ERROR unless $dbh;
-
-    my $table = $self->{dbiUserTable};
-    my $pivot = $self->{userPivot};
-
-    my $sth = $dbh->prepare(
-        "SELECT * FROM $table WHERE $pivot='" . $self->{user} . "'" );
-
-    $sth->execute();
-
-    my $result = $sth->fetchrow_hashref();
-
-    foreach ( keys %{ $self->{exportedVars} } ) {
-        if ( exists $result->{ $self->{exportedVars}->{$_} } ) {
-            $self->{sessionInfo}->{$_} =
-              $result->{ $self->{exportedVars}->{$_} };
-        }
+    while ( my ( $var, $attr ) = each %{ $self->{exportedVars} } ) {
+        $self->{sessionInfo}->{$var} = $self->{entry}->{$attr}
+          if ( defined $self->{entry}->{$attr} );
     }
 
     PE_OK;

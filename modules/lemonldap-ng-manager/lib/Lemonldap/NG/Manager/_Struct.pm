@@ -52,13 +52,13 @@ sub struct {
                 _nodes => [
                     qw(portal authentication userDB syslog whatToTrace singleSession singleIP singleUserByIP)
                 ],
-                _help  => 'authParams',
-                authentication => 'text:/authentication',
-                portal         => 'text:/portal',
-                userDB         => 'text:/userDB',
-                syslog         => 'int:/syslog',
+                _help              => 'authParams',
+                authentication     => 'text:/authentication',
+                portal             => 'text:/portal',
+                userDB             => 'text:/userDB',
+                syslog             => 'int:/syslog',
                 useXForwardedForIP => 'int:/useXForwardedForIP',
-                whatToTrace    => 'text:/whatToTrace:whatToTrace:text',
+                whatToTrace        => 'text:/whatToTrace:whatToTrace:text',
                 singleSession      => 'int:/singleSession',
                 singleIP           => 'int:/singleIP',
                 singleUserByIP     => 'int:/singleUserByIP',
@@ -66,7 +66,7 @@ sub struct {
             cookieParams => {
                 _nodes =>
                   [qw(cookieName domain securedCookie cookieExpiration)],
-                _help => 'cookies',
+                _help      => 'cookies',
                 cookieName => 'text:/cookieName:cookieName:text',
                 domain     => 'text:/domain:domain:text',
                 securedCookie =>
@@ -104,19 +104,19 @@ sub struct {
             },
             advancedParams => {
                 _nodes => [
-                    qw(Soap exportedAttr storePassword trustedDomains status https protection notifications passwordManagement)
+                    qw(Soap exportedAttr storePassword trustedDomains status https notifications passwordManagement userControl)
                 ],
-                Soap => 'int:/Soap',
+                Soap          => 'int:/Soap',
                 https         => 'int:/https',
-                exportedAttr => 'text:/exportedAttr',
+                exportedAttr  => 'text:/exportedAttr',
                 storePassword => 'int:/storePassword',
                 notifications => {
                     _nodes => [
                         qw(notification notificationStorage notificationStorageOptions)
                     ],
-                    _help => 'notifications',
+                    _help                      => 'notifications',
                     notification               => 'int:/notification',
-                    notificationStorage => 'text:/notificationStorage',
+                    notificationStorage        => 'text:/notificationStorage',
                     notificationStorageOptions => {
                         _nodes => ['hash:/notificationStorageOptions'],
                         _js    => 'hashRoot'
@@ -135,13 +135,19 @@ sub struct {
                 },
                 trustedDomains => 'text:/trustedDomains',
                 status         => 'int:/status',
-                protection     => 'int:/protection',
+                userControl    => 'text:/userControl:userControl:text',
             }
         },
-        groups =>
-          { _nodes => ['hash:/groups:groups:btext'], _js => 'hashRoot',  _help => 'default', },
-        virtualHosts =>
-          { _nodes => ['nhash:/locationRules:virtualHosts:none'], _upload => ['/exportedHeaders'],  _help => 'default', },
+        groups => {
+            _nodes => ['hash:/groups:groups:btext'],
+            _js    => 'hashRoot',
+            _help  => 'default',
+        },
+        virtualHosts => {
+            _nodes  => ['nhash:/locationRules:virtualHosts:none'],
+            _upload => ['/exportedHeaders'],
+            _help   => 'default',
+        },
     };
 }
 
@@ -158,8 +164,25 @@ sub testStruct {
         return ( $@ ? ( 0, $@ ) : 1 );
     };
     my $boolean = { test => qr/^(?:0|1)?$/, msgFail => 'Value must be 0 or 1' };
+    my $pcre = sub {
+        my $r = shift;
+        my $q;
+        eval { $q = qr/$r/ };
+        return ( $@ ? ( 0, $@ ) : 1 );
+    };
+    my $testNotDefined = { test => sub { 1 }, msgFail => 'Ok' };
     return {
-        authentication => {
+        mailFrom             => $testNotDefined,
+        trustedDomains       => $testNotDefined,
+        exportedAttr         => $testNotDefined,
+        mailSubject          => $testNotDefined,
+        randomPasswordRegexp => $testNotDefined,
+        passwordDB           => $testNotDefined,
+        mailBody             => $testNotDefined,
+        SMTPServer           => $testNotDefined,
+        cookieExpiration     => $testNotDefined,
+        notificationStorage  => $testNotDefined,
+        authentication       => {
             test    => qr/^[a-zA-Z][\w\:]*$/,
             msgFail => 'Bad module name',
         },
@@ -175,7 +198,7 @@ sub testStruct {
             test    => qr/^https?:\/\/\S+$/,
             msgFail => 'Bad portal value',
         },
-        cda => $boolean,
+        cda        => $boolean,
         cookieName => {
             test    => qr/^[a-zA-Z]\w*$/,
             msgFail => 'Bad cookie name',
@@ -224,7 +247,7 @@ sub testStruct {
             test    => qr/^(?:\w+=.*,\w+=.*)?$/,
             msgFail => 'Bad LDAP dn',
         },
-        managerPassword => {},
+        managerPassword     => {},
         notificationStorage => {
             test    => qr/^[\w:]+$/,
             msgFail => 'Bad module name',
@@ -233,7 +256,7 @@ sub testStruct {
             keyTest    => qr/^\w+$/,
             keyMsgFail => 'Bad parameter',
         },
-        groups          => {
+        groups => {
             keyTest    => qr/^\w[\w-]*$/,
             keyMsgFail => 'Bad group name',
             test       => $perlExpr,
@@ -263,13 +286,8 @@ sub testStruct {
             keyTest => qr/^[a-zA-Z](?:[\w\-\.]*\w)?$/,
             msgFail => 'Bad virtual host name',
             '*'     => {
-                keyTest => sub {
-                    my $r = shift;
-                    my $q;
-                    eval { $q = qr/$r/ };
-                    return ( $@ ? ( 0, $@ ) : 1 );
-                },
-                test => sub {
+                keyTest => $pcre,
+                test    => sub {
                     my $e = shift;
                     return 1 if ( $e eq 'accept' or $e eq 'deny' );
                     if ( $e =~ s/^logout(?:_(?:app|sso|app_sso))?\s*// ) {
@@ -291,9 +309,9 @@ sub testStruct {
             },
         },
         exportedHeaders => {
-            keyTest => qr/^[a-zA-Z](?:[\w\-\.]*\w)?$/,
-            msgFail => 'Bad virtual host name',
-            '*'     => {
+            keyTest    => qr/^[a-zA-Z](?:[\w\-\.]*\w)?$/,
+            keyMsgFail => 'Bad virtual host name',
+            '*'        => {
                 keyTest    => qr/^\w([\w\-]*\w)?$/,
                 keyMsgFail => 'Bad header name',
                 test       => $perlExpr,
@@ -304,10 +322,10 @@ sub testStruct {
                 },
             },
         },
-        syslog => $boolean,
-        Soap => $boolean,
+        syslog        => $boolean,
+        Soap          => $boolean,
         storePassword => $boolean,
-        notification => $boolean,
+        notification  => $boolean,
         status        => $boolean,
         https         => $boolean,
         protection    => {
@@ -318,6 +336,10 @@ sub testStruct {
         singleSession      => $boolean,
         singleIP           => $boolean,
         singleUserByIP     => $boolean,
+        userControl        => {
+            test    => $pcre,
+            msgFail => 'Bad regular expression',
+        },
     };
 }
 
@@ -325,15 +347,17 @@ sub testStruct {
 #@return Hashref of default values
 sub defaultConf {
     return {
-        authentication => 'LDAP',
-        userDB     => 'LDAP',
-        ldapServer => 'localhost',
-        globalStorage => 'Apache::Session::File',
+        authentication       => 'LDAP',
+        userDB               => 'LDAP',
+        ldapServer           => 'localhost',
+        globalStorage        => 'Apache::Session::File',
         globalStorageOptions => {
-            'Directory' => '/var/lib/lemonldap-ng/sessions/',
+            'Directory'     => '/var/lib/lemonldap-ng/sessions/',
             'LockDirectory' => '/var/lib/lemonldap-ng/sessions/lock/'
         },
-        timeout => 7200,
+        timeout             => 7200,
+        userControl         => '^[\w\.\-@]+$',
+        notificationStorage => 'File',
     };
 }
 

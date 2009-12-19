@@ -43,7 +43,7 @@ sub confUpload {
     my $newConf = { cfgNum => $self->{cfgNum} };
 
     # Loading returned parameters
-    my $res;
+    my $errors = {};
     foreach ( @{ $result->getChildrenByTagName('element') } ) {
         my ( $id, $name, $value ) = (
             $_->getAttribute('id'),
@@ -63,7 +63,7 @@ sub confUpload {
         my ( $res, $m );
 
         if ( !defined($test) ) {
-            $res->{errors}->{$name} =
+            $errors->{errors}->{$name} =
               "Key $name: Lemonldap::NG::Manager error, see Apache's logs";
             $self->lmLog(
                 "Unknown configuration key $id (name: $name, value: $value)",
@@ -78,27 +78,27 @@ sub confUpload {
             if ( $test->{keyTest} ) {
                 ( $res, $m ) = $self->applyTest( $test->{keyTest}, $name );
                 unless ($res) {
-                    $res->{errors}->{$name} = $m || $test->{keyMsgFail};
+                    $errors->{errors}->{$name} = $m || $test->{keyMsgFail};
                     next;
                 }
             }
             if ( $test->{test} ) {
                 ( $res, $m ) = $self->applyTest( $test->{test}, $value );
                 unless ($res) {
-                    $res->{errors}->{$name} = $m || $test->{msgFail};
+                    $errors->{errors}->{$name} = $m || $test->{msgFail};
                     next;
                 }
             }
             if ( $test->{warnKeyTest} ) {
                 ( $res, $m ) = $self->applyTest( $test->{warnKeyTest}, $name );
                 unless ($res) {
-                    $res->{warnings}->{$name} = $m || $test->{keyMsgWarn};
+                    $errors->{warnings}->{$name} = $m || $test->{keyMsgWarn};
                 }
             }
             if ( $test->{warnTest} ) {
                 ( $res, $m ) = $self->applyTest( $test->{warnTest}, $value );
                 unless ($res) {
-                    $res->{warnings}->{$name} = $m || $test->{keyMsgWarn};
+                    $errors->{warnings}->{$name} = $m || $test->{keyMsgWarn};
                 }
             }
         }
@@ -124,12 +124,13 @@ sub confUpload {
         }
     }
 
-    #print STDERR Dumper( $newConf, $res );
-    $res->{result}->{cfgNum} = $self->confObj->saveConf($newConf)
-      unless ( $res->{errors} );
+    #print STDERR Dumper( $newConf, $errors );
+    #print STDERR Dumper($errors);
+    $errors->{result}->{cfgNum} = $self->confObj->saveConf($newConf)
+      unless ( $errors->{errors} );
     my $buf = '{';
     my $i   = 0;
-    while ( my ( $type, $h ) = each %$res ) {
+    while ( my ( $type, $h ) = each %$errors ) {
         $buf .= ',' if ($i);
         $buf .= "'$type':{";
         $buf .= join( ',', map { "'$_':'$h->{$_}'" } keys %$h );

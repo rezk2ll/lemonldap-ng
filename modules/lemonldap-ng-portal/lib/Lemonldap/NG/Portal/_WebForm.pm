@@ -27,15 +27,17 @@ sub extractFormInfo {
     return PE_FORMEMPTY
       unless (
         (
-            ( $self->{'user'} = $self->param('user') )
-            && (   ( $self->{'password'} = $self->param('password') )
-                || ( $self->{'newpassword'} = $self->param('newpassword') ) )
+            ( $self->{user} = $self->param('user') )
+            && (   ( $self->{password} = $self->param('password') )
+                || ( $self->{newpassword} = $self->param('newpassword') ) )
         )
-        || ( $self->{'mail'} = $self->param('mail') )
+        || ( $self->{mail} = $self->param('mail') )
       );
-    $self->{'oldpassword'}     = $self->param('oldpassword');
-    $self->{'confirmpassword'} = $self->param('confirmpassword');
-    $self->{'timezone'}        = $self->param('timezone');
+    $self->{oldpassword}     = $self->param('oldpassword');
+    $self->{confirmpassword} = $self->param('confirmpassword');
+    $self->{timezone}        = $self->param('timezone');
+    $self->{userControl} ||= '^[\w\.\-@]+$';
+    return PE_MALFORMEDUSER unless ( $self->{user} =~ /$self->{userControl}/o );
     PE_OK;
 }
 

@@ -127,6 +127,7 @@ sub error_fr {
         'Mauvaise URL',
         'Aucun sch&eacute;ma disponible',
         'Ancien mot de passe invalide',
+        "Nom d'utilisateur incorrect",
     ];
 }
 
@@ -175,6 +176,7 @@ sub error_en {
         'Bad URL',
         'No scheme available',
         'Bad old password',
+        'Bad username',
     ];
 }
 
@@ -224,5 +226,6 @@ sub error_ro {
         'Rea URL',
         'No scheme available',
         'Bad old password',
+        'Bad username',
     ];
 }

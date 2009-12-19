@@ -75,7 +75,7 @@ install: build
 	find $(CURDIR)/debian/tmp -type f -regex '.*/jquery-[0-9].*\.js' -delete
 	find $(CURDIR)/debian/tmp -type f -name jquery.js -delete
 	rm -f $(CURDIR)/debian/tmp$(LMSHAREDIR)*-skins/*/jquery.js
-	perl -i -pe 's#(["'"'"'])\S*?jquery(-\d[\.\w\-]*?)?.js#$$1/javascript/jquery/jquery.js#' \
+	perl -i -pe 's#src=(["'"'"']).*?jquery(-\d[\.\w\-]*?)?.js#src=$$1/javascript/jquery/jquery.js#i' \
 			$(CURDIR)/debian/tmp/examples/manager/*.pl \
 			$(CURDIR)/debian/tmp$(LMSHAREDIR)manager-skins/default/*.tpl \
 			$(CURDIR)/debian/tmp$(LMSHAREDIR)portal-skins/pastel/*.tpl

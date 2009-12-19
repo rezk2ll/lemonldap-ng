@@ -72,6 +72,7 @@ sub en {
         sessionStorage               => 'Sessions Storage',
         timeout                      => 'Sessions timeout',
         userDB                       => 'Users database type',
+        userControl                  => 'Username control',
         virtualHosts                 => 'Virtual Hosts',
         whatToTrace                  => "Attribute to use in Apache's logs",
     };
@@ -105,6 +106,7 @@ sub fr {
         sessionStorage               => 'Stockage des sessions',
         timeout                      => 'Durée de vie des sessions',
         userDB                       => "Type de base de données d'utilisateurs",
+        userControl                  => "Contrôle du nom d'utilisateur",
         virtualHosts                 => 'Hôtes virtuels',
         whatToTrace                  => "Donnée à inscrire dans les journaux d'Apache",
     };

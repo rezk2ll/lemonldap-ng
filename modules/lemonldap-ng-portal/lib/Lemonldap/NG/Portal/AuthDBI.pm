@@ -47,7 +47,9 @@ sub authenticate {
     my $loginCol    = $self->{dbiAuthLoginCol};
     my $passwordCol = $self->{dbiAuthPasswordCol};
     my $user        = $self->{user};
-    my $password;
+    my $password    = $self->{password};
+    $user     =~ s/'/''/g;
+    $password =~ s/'/''/g;
 
     # Manage password hash
     if ( $self->{dbiAuthPasswordHash} =~ /^(md5|sha|sha1)$/i ) {
@@ -55,24 +57,30 @@ sub authenticate {
             "Using " . uc( $self->{dbiAuthPasswordHash} ) . " to hash password",
             'debug'
         );
-        $password =
-          uc( $self->{dbiAuthPasswordHash} ) . "('" . $self->{password} . "')";
+        $password = uc( $self->{dbiAuthPasswordHash} ) . "('$password')";
     }
     else {
         $self->lmLog( "No valid password hash, using clear text for password",
             'debug' );
-        $password = "'" . $self->{password} . "'";
+        $password = "'$password'";
     }
 
-    my $sth = $dbh->prepare(
+    my @rows = ();
+    eval {
+        my $sth = $dbh->prepare(
 "SELECT $loginCol FROM $table WHERE $loginCol='$user' AND $passwordCol=$password"
-    );
+        );
 
-    $sth->execute();
+        $sth->execute();
 
-    my @rows = $sth->fetchrow_array();
+        @rows = $sth->fetchrow_array();
+    };
+    if ($@) {
+        $self->lmLog( "DBI error: $@", 'error' );
+        return PE_ERROR;
+    }
 
-    if ( $#rows eq 0 ) {
+    if ( @rows == 1 ) {
         $self->lmLog( "One row returned by SQL query", 'debug' );
         return PE_OK;
     }
