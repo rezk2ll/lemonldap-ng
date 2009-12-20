@@ -82,7 +82,7 @@ LDAPSUFFIX=dc=example,dc=com
 VERSION=`head -n1 changelog |sed -e 's/lemonldap-ng (//' -e 's/).*$$//'`
 PORTALSKINS=`ls lemonldap-ng-portal/example/skins/`
 MANAGERSKINS=`ls lemonldap-ng-manager/example/skins/`
-DIFF=diff -aburN -x '*.bak' -x .svn -x '*.swp'
+DIFF=diff -aburN -x '*.bak' -x .svn -x '*.swp' --ignore-matching-lines='.*jquery.*' --ignore-matching-lines='.*lemonldap-ng\.ini.*'
 	
 SRCCOMMONDIR=lemonldap-ng-common
 SRCHANDLERDIR=lemonldap-ng-handler
@@ -535,7 +535,7 @@ diff:
 	@$(DIFF) lemonldap-ng-manager/lib/Lemonldap/NG/Manager /usr/share/perl5/Lemonldap/NG/Manager ||true
 	@$(DIFF) lemonldap-ng-manager/lib/Lemonldap/NG/Manager.pm /usr/share/perl5/Lemonldap/NG/Manager.pm ||true
 	@$(DIFF) lemonldap-ng-manager/example/images /usr/share/lemonldap-ng/sessions-explorer-imgs ||true
-	for i in $(MANAGERSKINS); do \
+	@for i in $(MANAGERSKINS); do \
 		$(DIFF) -x 'jquery*' lemonldap-ng-manager/example/skins/$$i /usr/share/lemonldap-ng/manager-skins/$$i; \
 	done ||true
 
