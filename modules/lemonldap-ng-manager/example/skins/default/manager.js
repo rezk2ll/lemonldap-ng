@@ -151,10 +151,13 @@ function uploadConf(){
 		data:{data: $('#li_cm9vdA2').html()},
 		dataType:'json',
 		success:function(data){
+			var c='<h3>'+data.result.msg+'</h3><dl>';
 			if(data.result.cfgNum<=0){
-				$.each(data.errors,function(key,state){
-					alert(key+': '+state);
-				});
+				if(typeof(data.errors)!='undefined'){
+					for(m in data.errors){
+						c+='<dt>'+m+'</dt><dd>'+data.errors[m]+'</dd>';
+					}
+				}
 			}
 			else{
 				var tmp=lmtext('li_cm9vdA2');
@@ -162,9 +165,16 @@ function uploadConf(){
 				setlmtext('li_cm9vdA2',tmp);
 				setlmdata('li_cm9vdA2',data.result.cfgNum);
 			}
+			if(typeof(data.warnings)!='undefined'){
+				for(m in data.warnings){
+					c+='<dt>'+m+'</dt><dd>'+data.warnings[m]+'</dd>';
+				}
+			}
+			c+='</dl>';
+			$('#help_content').html(c);
 		},
 		error:function(xhr, ajaxOptions, thrownError){
-			alert('Request failed. Error code: '+xhr.status+', '+thrownError);
+			$('#help_content').html('<h3>Request failed</h3> Error code: '+xhr.status+', '+thrownError);
 		}
 	});
 }

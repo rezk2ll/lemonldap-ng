@@ -14,7 +14,9 @@ use MIME::Base64;
 use Data::Dumper;
 use Lemonldap::NG::Common::Safelib;        #link protected safe Safe object
 use Lemonldap::NG::Manager::Downloader;    #inherits
-use Lemonldap::NG::Manager::_Struct;       #inherits
+use Lemonldap::NG::Manager::_Struct;       #link protected struct _Struct object
+use Lemonldap::NG::Manager::_i18n;
+use Lemonldap::NG::Common::Conf::Constants;    #inherits
 
 our $VERSION = '0.1';
 our ( $stylesheet, $parser );
@@ -128,9 +130,23 @@ sub confUpload {
     print STDERR Dumper($errors);
     if ( $errors->{errors} ) {
         $errors->{result}->{cfgNum} = 0;
+        $errors->{result}->{msg}    = $self->translate('syntaxError');
     }
     else {
         $errors->{result}->{cfgNum} = $self->confObj->saveConf($newConf);
+        $errors->{result}->{msg}    = (
+              $errors->{result}->{cfgNum} > 0
+            ? $self->translate('confSaved')
+            : $self->translate(
+                {
+                    CONFIG_WAS_CHANGED => 'confWasChanged',
+                    UNKNOWN_ERROR      => 'unknownError',
+                    DATABASE_LOCKED    => 'databaseLocked',
+                    UPLOAD_DENIED      => 'uploadDenied',
+                    SYNTAX_ERROR       => 'syntaxError',
+                }->{ $errors->{result}->{cfgNum} }
+            )
+        );
     }
     my $buf = '{';
     my $i   = 0;
