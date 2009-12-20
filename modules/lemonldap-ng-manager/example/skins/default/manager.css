@@ -94,6 +94,9 @@ input
 	background:#eee;
 	margin:10px auto;
 	border:1px solid #bbb;
+	position:absolute;
+	left:393px;
+	top:230px;
 }
 
 #help h1, #buttons h1, #edition h1

@@ -5,9 +5,16 @@
 var simpleTreeCollection;
 
 $(document).ready(function(){
-	/* Drag and resize divs (require jQuery UI)*/
+	/* Help div (require jQuery UI) */
+	// Allow drag
 	$("#help").draggable({ handle: 'h1', opacity: '0.70' });
+	// Allow resize
 	$("#help").resizable({ handles: 'all', alsoResize: '#help_content', ghost: 'true'});
+	// Display/hide content with double click on title bar
+	$("#help h1").dblclick(function(){
+		$("#help_content").slideToggle('slow');
+	});
+
 	/* Simple Tree */
 	simpleTreeCollection = $(".simpleTree").simpleTree({
 		autoclose: false,
