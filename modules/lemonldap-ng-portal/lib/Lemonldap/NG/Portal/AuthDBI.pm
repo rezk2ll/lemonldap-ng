@@ -7,6 +7,7 @@ package Lemonldap::NG::Portal::AuthDBI;
 
 use Lemonldap::NG::Portal::Simple;
 use base qw(Lemonldap::NG::Portal::_WebForm Lemonldap::NG::Portal::_DBI);
+use strict;
 
 our $VERSION = '0.1';
 
@@ -43,49 +44,20 @@ sub authenticate {
     return PE_ERROR unless $dbh;
 
     # Check credentials
-    my $table       = $self->{dbiAuthTable};
-    my $loginCol    = $self->{dbiAuthLoginCol};
-    my $passwordCol = $self->{dbiAuthPasswordCol};
     my $user        = $self->{user};
     my $password    = $self->{password};
+    # Prevent SQL injection
     $user     =~ s/'/''/g;
     $password =~ s/'/''/g;
 
-    # Manage password hash
-    if ( $self->{dbiAuthPasswordHash} =~ /^(md5|sha|sha1)$/i ) {
-        $self->lmLog(
-            "Using " . uc( $self->{dbiAuthPasswordHash} ) . " to hash password",
-            'debug'
-        );
-        $password = uc( $self->{dbiAuthPasswordHash} ) . "('$password')";
-    }
-    else {
-        $self->lmLog( "No valid password hash, using clear text for password",
-            'debug' );
-        $password = "'$password'";
-    }
+    # Password hash
+    $password = $self->hash_password( $password, $self->{dbiAuthPasswordHash} );
 
-    my @rows = ();
-    eval {
-        my $sth = $dbh->prepare(
-"SELECT $loginCol FROM $table WHERE $loginCol='$user' AND $passwordCol=$password"
-        );
-
-        $sth->execute();
-
-        @rows = $sth->fetchrow_array();
-    };
-    if ($@) {
-        $self->lmLog( "DBI error: $@", 'error' );
-        return PE_ERROR;
-    }
-
-    if ( @rows == 1 ) {
-        $self->lmLog( "One row returned by SQL query", 'debug' );
+    my $result = $self->check_password( $user, $password );
+    if ( $result ) {
         return PE_OK;
     }
     else {
-        $self->lmLog( "Bad password for $user", 'error' );
         return PE_BADCREDENTIALS;
     }
 }

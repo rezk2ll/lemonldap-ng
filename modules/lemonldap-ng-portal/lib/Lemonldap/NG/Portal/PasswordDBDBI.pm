@@ -8,12 +8,14 @@ package Lemonldap::NG::Portal::PasswordDBDBI;
 use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::AuthDBI;    #inherits
 use base qw(Lemonldap::NG::Portal::_DBI);
+use strict;
 
 our $VERSION = '0.1';
 
 *passwordDBInit = *Lemonldap::NG::Portal::AuthDBI::authInit;
 
 ## @apmethod int modifyPassword()
+# Modify the password
 # @return Lemonldap::NG::Portal constant
 sub modifyPassword {
     my $self = shift;
@@ -31,75 +33,27 @@ sub modifyPassword {
         $self->{dbiAuthPassword} );
     return PE_ERROR unless $dbh;
 
-    my $table       = $self->{dbiAuthTable};
-    my $loginCol    = $self->{dbiAuthLoginCol};
-    my $passwordCol = $self->{dbiAuthPasswordCol};
-    my $user        = $self->{sessionInfo}->{_user};
-    my $password;
+    my $user     = $self->{sessionInfo}->{_user};
 
     # Check old passord
     if ( $self->{oldpassword} ) {
 
-        # Manage password hash (TODO in _DBI.pm)
-        if ( $self->{dbiAuthPasswordHash} =~ /^(md5|sha|sha1)$/i ) {
-            $self->lmLog(
-                "Using "
-                  . uc( $self->{dbiAuthPasswordHash} )
-                  . " to hash password",
-                'debug'
-            );
-            $password =
-              uc( $self->{dbiAuthPasswordHash} ) . "('"
-              . $self->{oldpassword} . "')";
-        }
-        else {
-            $self->lmLog(
-                "No valid password hash, using clear text for password",
-                'debug' );
-            $password = "'" . $self->{oldpassword} . "'";
-        }
+        # Password hash
+        my $password = $self->hash_password( $self->{oldpassword}, $self->{dbiAuthPasswordHash} );
 
-        my $sth = $dbh->prepare(
-"SELECT $loginCol FROM $table WHERE $loginCol='$user' AND $passwordCol=$password"
-        );
+        my $result = $self->check_password( $user, $password );
 
-        $sth->execute();
-
-        my @rows = $sth->fetchrow_array();
-
-        if ( $#rows eq 0 ) {
-            $self->lmLog( "One row returned by SQL query", 'debug' );
-        }
-        else {
-            $self->lmLog( "Bad password for $user", 'error' );
+        unless ( $result ) {
             return PE_BADOLDPASSWORD;
         }
     }
 
     # Modify password
-    # Manage password hash (TODO in _DBI.pm)
-    if ( $self->{dbiAuthPasswordHash} =~ /^(md5|sha|sha1)$/i ) {
-        $self->lmLog(
-            "Using " . uc( $self->{dbiAuthPasswordHash} ) . " to hash password",
-            'debug'
-        );
-        $password =
-          uc( $self->{dbiAuthPasswordHash} ) . "('"
-          . $self->{newpassword} . "')";
-    }
-    else {
-        $self->lmLog( "No valid password hash, using clear text for password",
-            'debug' );
-        $password = "'" . $self->{newpassword} . "'";
-    }
+    my $password = $self->hash_password( $self->{newpassword}, $self->{dbiAuthPasswordHash} );
 
-    eval {
-        my $sth = $dbh->prepare(
-            "UPDATE $table SET $passwordCol=$password WHERE $loginCol='$user'");
-        $sth->execute();
-    };
-    if ($@) {
-        $self->lmLog( "DBI password modification error: $@", 'error' );
+    my $result = $self->modify_password( $user, $password );
+
+    unless ( $result ) {
         return PE_ERROR;
     }
 

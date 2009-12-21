@@ -15,9 +15,10 @@ our @EXPORT = qw(dbh);
 our $VERSION = '0.1';
 
 ## @method protected Lemonldap::NG::Portal::_DBI dbh()
-# @param dbiChain
-# @param dbiUser
-# @param dbiPassword
+# Create connection to database
+# @param dbiChain DBI connection chain
+# @param dbiUser DBI connection user
+# @param dbiPassword DBI connection password
 # @return dbh object
 sub dbh {
     my $self        = shift;
@@ -38,7 +39,98 @@ sub dbh {
         return 0;
     }
 
+    $self->{_dbh} = $dbh;
     return $dbh;
+}
+
+## @method protected Lemonldap::NG::Portal::_DBI hash_password()
+# Return hashed password for SQL SELECT WHERE clause
+# @param password clear password
+# @param hash hash mechanism
+# @return hashed password
+sub hash_password {
+    my $self = shift;
+    my $password = shift;
+    my $hash = shift;
+
+    if ( $hash =~ /^(md5|sha|sha1)$/i ) {
+        $self->lmLog(
+            "Using " . uc( $hash ) . " to hash password",
+            'debug'
+        );
+        return uc( $hash ) . "('$password')";
+    }
+    else {
+        $self->lmLog( "No valid password hash, using clear text for password",
+            'debug' );
+        return "'$password'";
+    }
+
+}
+
+## @method protected Lemonldap::NG::Portal::_DBI check_password()
+# Verify user and password with SQL SELECT
+# @param user user
+# @param password password
+# @return boolean result
+sub check_password {
+    my $self = shift;
+    my $user = shift;
+    my $password = shift;
+    
+    my $table       = $self->{dbiAuthTable};
+    my $loginCol    = $self->{dbiAuthLoginCol};
+    my $passwordCol = $self->{dbiAuthPasswordCol};
+
+    my @rows = ();
+    eval {
+        my $sth = $self->{_dbh}->prepare(
+        "SELECT $loginCol FROM $table WHERE $loginCol='$user' AND $passwordCol=$password"
+        );
+        $sth->execute();
+        @rows = $sth->fetchrow_array();
+    };
+    if ($@) {
+        $self->lmLog( "DBI error: $@", 'error' );
+        return 0;
+    }
+
+    if ( @rows == 1 ) {
+        $self->lmLog( "One row returned by SQL query", 'debug' );
+        return 1;
+    }
+    else {
+        $self->lmLog( "Bad password for $user", 'error' );
+        return 0;
+    }
+
+}
+
+## @method protected Lemonldap::NG::Portal::_DBI modify_password()
+# Modify password with SQL UPDATE
+# @param user user
+# @param password password
+# @return boolean result
+sub modify_password {
+    my $self = shift;
+    my $user = shift;
+    my $password = shift;
+    
+    my $table       = $self->{dbiAuthTable};
+    my $loginCol    = $self->{dbiAuthLoginCol};
+    my $passwordCol = $self->{dbiAuthPasswordCol};
+
+    eval {
+        my $sth = $self->{_dbh}->prepare(
+            "UPDATE $table SET $passwordCol=$password WHERE $loginCol='$user'");
+        $sth->execute();
+    };
+    if ($@) {
+        $self->lmLog( "DBI password modification error: $@", 'error' );
+        return 0;
+    }
+
+    return 1;
 }
 
 1;

@@ -5,19 +5,27 @@
 # LDAP password backend class
 package Lemonldap::NG::Portal::PasswordDBLDAP;
 
+use strict;
 use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::_LDAP 'ldap';    #link protected ldap
 use Lemonldap::NG::Portal::UserDBLDAP;      #inherits
+#use Lemonldap::NG::Portal::_SMTP;          #inherits
 
-our $VERSION = '0.2';
+our $VERSION = '0.3';
 
 *_formateFilter = *Lemonldap::NG::Portal::UserDBLDAP::formateFilter;
 *_search        = *Lemonldap::NG::Portal::UserDBLDAP::search;
 
 ## @apmethod int passwordDBInit()
-# Load Net::LDAP::Control::PasswordPolicy if needed
+# Load SMTP functions
 # @return Lemonldap::NG::Portal constant
 sub passwordDBInit {
+    my $self = shift;
+    eval { use base qw(Lemonldap::NG::Portal::_SMTP) };
+    if ($@) {
+        $self->lmLog( "Unable to load SMTP functions ($@)", 'error' );
+        return PE_ERROR;
+    }
     PE_OK;
 }
 
@@ -71,21 +79,8 @@ sub resetPasswordByMail {
 
     $self->lmLog( "Reset password request for " . $self->{dn}, 'debug' );
 
-    # Check the required modules before changing password
-    eval { require String::Random };
-    if ($@) {
-        $self->lmLog( "Module String::Random not found in @INC", 'error' );
-        return PE_ERROR;
-    }
-    eval { require MIME::Lite };
-    if ($@) {
-        $self->lmLog( "Module MIME::Lite not found in @INC", 'error' );
-        return PE_ERROR;
-    }
-
     # Generate a complex password
-    my $random   = new String::Random;
-    my $password = $random->randregex( $self->{randomPasswordRegexp} );
+    my $password = $self->gen_password( $self->{randomPasswordRegexp} );
 
     $self->lmLog( "Generated password: " . $password, 'debug' );
 
@@ -111,29 +106,11 @@ sub resetPasswordByMail {
     }
 
     # Send new password by mail
-    $self->{mailBody} =~ s/\$password/$password/g;
-    $self->{mailBody} =~ s/\$(\w+)/$self->{sessionInfo}->{$1}/g;
-    $self->lmLog( "SMTP From " . $self->{mailFrom},       'debug' );
-    $self->lmLog( "SMTP To " . $self->{mail},             'debug' );
-    $self->lmLog( "SMTP Subject " . $self->{mailSubject}, 'debug' );
-    $self->lmLog( "SMTP Body " . $self->{mailBody},       'debug' );
-    eval {
-        my $message = MIME::Lite->new(
-            From    => $self->{mailFrom},
-            To      => $self->{mail},
-            Subject => $self->{mailSubject},
-            Type    => "TEXT",
-            Data    => $self->{mailBody},
-        );
-        $self->{SMTPServer}
-          ? $message->send( "smtp", $self->{SMTPServer} )
-          : $message->send();
-    };
-    if ($@) {
-        $self->lmLog( "Send message failed: $@", 'error' );
-        return PE_ERROR;
-    }
+    my $result = $self->send_password( $password, $self->{mail} );
+
+    return PE_ERROR unless $result;
 
     PE_PASSWORD_OK;
 }
+
 1;
