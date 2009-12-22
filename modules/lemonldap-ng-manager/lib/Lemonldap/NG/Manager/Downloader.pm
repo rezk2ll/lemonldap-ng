@@ -203,8 +203,8 @@ sub keyToH {
 # If $key is not set, uses Lemonldap::NG::Manager::struct().
 # If the URL parameter key is set, uses Lemonldap::NG::Manager::cstruct()
 # with this parameter.
-# This function call itself 1 time if the key is not found using cstruct()
-# using the flag $last.
+# This function call itself 1 time if the key is not found using cstruct().
+# The flag $last is used to avoid loop.
 # @return An array containing :
 # - the (sub)structure of the menu
 # - the help chapter (using inheritance of the up key)

@@ -54,11 +54,8 @@ sub hash_password {
     my $hash = shift;
 
     if ( $hash =~ /^(md5|sha|sha1)$/i ) {
-        $self->lmLog(
-            "Using " . uc( $hash ) . " to hash password",
-            'debug'
-        );
-        return uc( $hash ) . "('$password')";
+        $self->lmLog( "Using " . uc($hash) . " to hash password", 'debug' );
+        return uc($hash) . "('$password')";
     }
     else {
         $self->lmLog( "No valid password hash, using clear text for password",
@@ -75,17 +72,24 @@ sub hash_password {
 # @return boolean result
 sub check_password {
     my $self = shift;
-    my $user = shift;
-    my $password = shift;
-    
+    my $dbh         = shift;
+    my $user        = $self->{user};
+    my $password    = $self->{password};
     my $table       = $self->{dbiAuthTable};
     my $loginCol    = $self->{dbiAuthLoginCol};
     my $passwordCol = $self->{dbiAuthPasswordCol};
 
+    # Prevent SQL injection
+    $user     =~ s/'/''/g;
+    $password =~ s/'/''/g;
+
+    # Password hash
+    $password = $self->hash_password( $password, $self->{dbiAuthPasswordHash} );
+
     my @rows = ();
     eval {
-        my $sth = $self->{_dbh}->prepare(
-        "SELECT $loginCol FROM $table WHERE $loginCol='$user' AND $passwordCol=$password"
+        my $sth = $dbh->prepare(
+"SELECT $loginCol FROM $table WHERE $loginCol='$user' AND $passwordCol=$password"
         );
         $sth->execute();
         @rows = $sth->fetchrow_array();
@@ -121,7 +125,8 @@ sub modify_password {
     my $passwordCol = $self->{dbiAuthPasswordCol};
 
     eval {
-        my $sth = $self->{_dbh}->prepare(
+        my $sth =
+          $self->{_dbh}->prepare(
             "UPDATE $table SET $passwordCol=$password WHERE $loginCol='$user'");
         $sth->execute();
     };

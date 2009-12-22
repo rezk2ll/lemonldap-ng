@@ -44,17 +44,8 @@ sub authenticate {
     return PE_ERROR unless $dbh;
 
     # Check credentials
-    my $user        = $self->{user};
-    my $password    = $self->{password};
-    # Prevent SQL injection
-    $user     =~ s/'/''/g;
-    $password =~ s/'/''/g;
-
-    # Password hash
-    $password = $self->hash_password( $password, $self->{dbiAuthPasswordHash} );
-
-    my $result = $self->check_password( $user, $password );
-    if ( $result ) {
+    my $result = $self->check_password($dbh);
+    if ($result) {
         return PE_OK;
     }
     else {
