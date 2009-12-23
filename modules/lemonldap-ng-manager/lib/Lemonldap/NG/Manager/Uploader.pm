@@ -59,7 +59,6 @@ sub confUpload {
         $id =~ s/\r//g;
         $id =~ s/^\///;
         $id =~ s/(?:\/[^\/]*)?$/\/$name/ if ($NK);
-        print STDERR "$id\n" if ($NK);
         next if ( $id =~ /^(generalParameters|virtualHosts)/ );
         my ( $confKey, $test ) = $self->getConfTests($id);
         my ( $res, $m );
@@ -121,13 +120,12 @@ sub confUpload {
                 $self->setKeyToH( $newConf, $k, $v );
             }
             else {
-                $self->lmLog( "No default value found for $k", 'warn' );
+                $self->lmLog( "No default value found for $k", 'info' );
             }
         }
     }
 
     #print STDERR Dumper( $newConf, $errors );
-    print STDERR Dumper($errors);
     if ( $errors->{errors} ) {
         $errors->{result}->{cfgNum} = 0;
         $errors->{result}->{msg}    = $self->translate('syntaxError');
@@ -212,6 +210,11 @@ sub getConfTests {
 sub findAllConfKeys {
     my ( $self, $h ) = @_;
     my @res = ();
+
+    # expand _nodes
+    if ( ref( $h->{_nodes} ) eq 'CODE' ) {
+        $h->{_nodes} = $h->{_nodes}->($self);
+    }
     foreach my $n ( @{ $h->{_nodes} } ) {
         $n =~ s/^.*?:(.*?)(?:\:.*)?$/$1/;
         if ( ref( $h->{$n} ) ) {

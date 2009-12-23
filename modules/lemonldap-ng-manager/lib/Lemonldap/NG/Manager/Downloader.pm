@@ -29,6 +29,11 @@ sub node {
         # Menu node
         if ( ref($tmp) ) {
 
+            # expand _nodes
+            if ( ref( $tmp->{_nodes} ) eq 'CODE' ) {
+                $tmp->{_nodes} = $tmp->{_nodes}->($self);
+            }
+
             # Scan subnodes
             foreach ( @{ $tmp->{_nodes} } ) {
                 my $flag = ( $_ =~ s/^(\w+):// ? $1 : '' );
@@ -44,10 +49,16 @@ sub node {
                         $tmp->{$target}->{_help} || $help,
                         $tmp->{$target}->{_js}
                     );
+                    next;
+                }
+
+                # Substitute sub by its value
+                if ( ref( $tmp->{$target} ) eq 'sub' ) {
+                    $tmp->{$target} = &{ $tmp->{$target} }($self);
                 }
 
                 # subnode is a node
-                elsif ( ref( $tmp->{$target} ) ) {
+                if ( ref( $tmp->{$target} ) ) {
                     $res .= $self->li( "$node/$target", "closed" )
                       . $self->span(
                         "$node/$target", $target, '',
@@ -137,6 +148,14 @@ sub confNode {
             }
         }
     }
+
+    # subnode is a conditaional node
+    elsif ( $target =~ s/^sub:// ) {
+        foreach my $s ( $self->_sub($target) ) {
+            $res .= $self->confNode( $node, $s, $help );
+        }
+    }
+
     else {
         $target =~ s/^(\w+)://;
         my $type = $1 || 'text';
@@ -268,6 +287,9 @@ sub conf {
     $self->abort( 'Unable to get configuration',
         $Lemonldap::NG::Common::Conf::msg )
       unless ( $self->{_conf} );
+    if(my $c = $self->param('conf')){
+        $self->{_conf}->{$_} = $self->param($_) foreach(split /\s+/,$c);
+    }
     return $self->{_conf};
 }
 

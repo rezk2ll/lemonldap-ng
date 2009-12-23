@@ -76,6 +76,11 @@ function hashRoot(){
 	display('default','Lemonldap::NG Manager');
 	$('#newkbr').css('display','');
 }
+function authParams(id) {
+	currentId=id;
+	$('#authText').attr('value',lmdata(id));
+	display('authParams',lmtext(id));
+}
 function btext(id) {
 	currentId=id;
 	$('#btextKey').attr('value',lmtext(id));
@@ -114,6 +119,23 @@ function rules(id){
 function rulesRoot(id){
 	display('default','Lemonldap::NG Manager');
 	$('#newrbr').css('display','');
+}
+function reloadAuthParams() {
+	setlmdata(currentId,$('#authText').attr('value'));
+	$.ajax({
+		type:"POST",
+		url:scriptname,
+		data:{node:'generalParameters/authParams',conf:'authentication userDB',cfgNum:lmdata('li_cm9vdA2'),authentication:lmdata('li_L3VzZXJEQg2'),userDB:lmdata('li_L3VzZXJEQg2')},
+		dataType:'html',
+		success:function(data){
+			var node=$('#li_Z2VuZXJhbFBhcmFtZXRlcnMvYXV0aFBhcmFtcw2 >ul');
+			node.html(data);
+			simpleTreeCollection[0].setTreeNodes(node, true);
+		},
+		error:function(xhr, ajaxOptions, thrownError){
+			$('#help_content').html('<h3>Request failed</h3> Error code: '+xhr.status+', '+thrownError);
+		}
+	});
 }
 var count=0;
 var text4newKey='Key';

@@ -113,6 +113,10 @@ var scriptname='<TMPL_VAR NAME="SCRIPT_NAME">';var imagepath='<TMPL_VAR NAME="DI
     <textarea id="rulKey" cols="30" rows="2" onchange="setlmtext(currentId,this.value)"></textarea>&nbsp;<textarea id="rulValue" cols="50" rows="2" onchange="setlmdata(currentId,this.value)"></textarea>
     </div>
 
+    <div id="content_authParams" class="hidden">
+    <input type="text" id="authText" onchange="reloadAuthParams()"/>
+    </div>
+
    </div>
   </form>
   </div>

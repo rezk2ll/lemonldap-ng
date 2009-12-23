@@ -40,29 +40,77 @@ sub cstruct {
 #@param $k Name of the virtual host
 #@return Tree structure
 sub struct {
+    my $self = shift;
     return {
         _nodes            => [qw(n:generalParameters n:groups n:virtualHosts)],
         _help             => 'default',
+
+	######################
+	# GENERAL PARAMETERS #
+	######################
         generalParameters => {
             _nodes => [
-                qw(n:authParams cookieParams cn:exportedVars cn:macros sessionParams ldapParams n:advancedParams)
+                qw(portal n:authParams logParams cookieParams cn:exportedVars cn:macros sessionParams n:advancedParams)
             ],
             _help      => 'default',
+            portal     => 'text:/portal',
+	    
+	    # AUTHENTICATION AND USERDB PARAMETERS
             authParams => {
-                _nodes => [
-                    qw(portal authentication userDB syslog whatToTrace singleSession singleIP singleUserByIP)
-                ],
-                _help              => 'authParams',
-                authentication     => 'text:/authentication',
-                portal             => 'text:/portal',
-                userDB             => 'text:/userDB',
-                syslog             => 'int:/syslog',
+
+		# Displayed nodes depend on authentication/userDB modules choosed
+                _nodes => sub {
+                    my $self = shift;
+                    my $auth =
+                         $self->param('authentication')
+                      || $self->conf->{authentication}
+                      || $self->defaultConf()->{authentication};
+                    my $udb =
+                         $self->param('userDB')
+                      || $self->conf->{userDB}
+                      || $self->defaultConf()->{userDB};
+                    $auth = lc($auth);
+                    $udb  = lc($udb);
+                    my %res = qw(authentication 1 userDB 1 syslog 1);
+                    foreach my $mod ( ( $auth, ( $auth ne $udb ? $udb : () ) ) )
+                    {
+                        my $tmp = {
+                            ldap => ['ldapParams'],
+                            ssl  => [qw(ldapParams SSLRequired)],
+                        }->{$mod};
+                        if ($tmp) {
+                            $res{$_}++ foreach (@$tmp);
+                        }
+                    }
+                    my @u = keys %res;
+                    return \@u;
+                },
+                _help          => 'authParams',
+                authentication => 'text:/authentication:authParams:authParams',
+                userDB         => 'text:/userDB:authParams:authParams',
+                syslog         => 'text:/syslog',
+                ldapParams     => {
+                    _nodes => [
+                        qw(ldapServer ldapPort ldapBase managerDn managerPassword)
+                    ],
+                    _help           => 'ldap',
+                    ldapServer      => 'text:/ldapServer',
+                    ldapPort        => 'int:/ldapPort',
+                    ldapBase        => 'text:/ldapBase',
+                    managerDn       => 'text:/managerDn',
+                    managerPassword => 'text:/managerPassword',
+                },
+                SSLRequired => 'int:/SSLRequired',
+            },
+
+	    # LOGS PARAMETERS
+            logParams => {
+                _nodes             => [qw(useXForwardedForIP whatToTrace)],
                 useXForwardedForIP => 'int:/useXForwardedForIP',
                 whatToTrace        => 'text:/whatToTrace:whatToTrace:text',
-                singleSession      => 'int:/singleSession',
-                singleIP           => 'int:/singleIP',
-                singleUserByIP     => 'int:/singleUserByIP',
             },
+
+	    # COOKIE PARAMETERS
             cookieParams => {
                 _nodes =>
                   [qw(cookieName domain securedCookie cookieExpiration)],
@@ -73,14 +121,22 @@ sub struct {
                   'int:/securedCookie:securedCookie:securedCookieValues',
                 cookieExpiration => 'text:/cookieExpiration',
             },
+
+	    # EXPORTED ATTRIBUTES
             exportedVars => {
                 _nodes => ['hash:/exportedVars:vars:btext'],
                 _js    => 'hashRoot'
             },
+
+	    # MACROS
             macros =>
               { _nodes => ['hash:/macros:macros:btext'], _js => 'hashRoot' },
+
+	    # SESSIONS PARAMETERS
             sessionParams => {
-                _nodes         => [qw(sessionStorage timeout)],
+                _nodes => [
+                    qw(sessionStorage singleSession singleIP singleUserByIP timeout storePassword)
+                ],
                 _help          => 'storage',
                 sessionStorage => {
                     _nodes        => [qw(globalStorage globalStorageOptions)],
@@ -90,26 +146,21 @@ sub struct {
                         _js    => 'hashRoot'
                     },
                 },
-                timeout => 'text:/timeout:timeout:text',
+                singleSession  => 'int:/singleSession',
+                singleIP       => 'int:/singleIP',
+                singleUserByIP => 'int:/singleUserByIP',
+                storePassword => 'int:/storePassword',
+                timeout        => 'text:/timeout:timeout:text',
             },
-            ldapParams => {
-                _nodes =>
-                  [qw(ldapServer ldapPort ldapBase managerDn managerPassword)],
-                _help           => 'ldap',
-                ldapServer      => 'text:/ldapServer',
-                ldapPort        => 'int:/ldapPort',
-                ldapBase        => 'text:/ldapBase',
-                managerDn       => 'text:/managerDn',
-                managerPassword => 'text:/managerPassword',
-            },
+
+	    # OTHER PARAMETERS
             advancedParams => {
                 _nodes => [
-                    qw(Soap exportedAttr storePassword trustedDomains status https notifications passwordManagement userControl)
+                    qw(Soap exportedAttr trustedDomains https notifications passwordManagement userControl)
                 ],
                 Soap          => 'int:/Soap',
                 https         => 'int:/https',
                 exportedAttr  => 'text:/exportedAttr',
-                storePassword => 'int:/storePassword',
                 notifications => {
                     _nodes => [
                         qw(notification notificationStorage notificationStorageOptions)
@@ -134,15 +185,22 @@ sub struct {
                     mailBody             => 'text:/mailBody',
                 },
                 trustedDomains => 'text:/trustedDomains',
-                status         => 'int:/status',
                 userControl    => 'text:/userControl:userControl:text',
             }
         },
+
+	##########
+	# GROUPS #
+	##########
         groups => {
             _nodes => ['hash:/groups:groups:btext'],
             _js    => 'hashRoot',
             _help  => 'default',
         },
+
+	#################
+	# VIRTUAL HOSTS #
+	#################
         virtualHosts => {
             _nodes  => ['nhash:/locationRules:virtualHosts:none'],
             _upload => ['/exportedHeaders'],
@@ -171,6 +229,7 @@ sub testStruct {
         return ( $@ ? ( 0, $@ ) : 1 );
     };
     my $testNotDefined = { test => sub { 1 }, msgFail => 'Ok' };
+
     return {
         mailFrom             => $testNotDefined,
         trustedDomains       => $testNotDefined,
@@ -186,34 +245,34 @@ sub testStruct {
             test    => qr/^[a-zA-Z][\w\:]*$/,
             msgFail => 'Bad module name',
         },
-        userDB => {
-            test    => qr/^[a-zA-Z][\w\:]*$/,
-            msgFail => 'Bad module name',
-        },
-        whatToTrace => {
-            test    => qr/^\$?[a-zA-Z]\w*$/,
-            msgFail => 'Bad value',
-        },
-        portal => {
-            test    => qr/^https?:\/\/\S+$/,
-            msgFail => 'Bad portal value',
-        },
         cda        => $boolean,
         cookieName => {
             test    => qr/^[a-zA-Z]\w*$/,
             msgFail => 'Bad cookie name',
         },
-        securedCookie => {
-            test    => qr/^(?:0|1|2)$/,
-            msgFail => 'securedCookie must be 0, 1 or 2',
-        },
         domain => {
             test    => qr/^\.?\w+(?:\.[a-zA-Z]\w*)*(?:\.[a-zA-Z]+)$/,
             msgFail => 'Bad domain',
         },
-        timeout => {
-            test    => qr/^\d*$/,
-            msgFail => 'Bad number'
+        exportedHeaders => {
+            keyTest    => qr/^[a-zA-Z](?:[\w\-\.]*\w)?$/,
+            keyMsgFail => 'Bad virtual host name',
+            '*'        => {
+                keyTest    => qr/^\w([\w\-]*\w)?$/,
+                keyMsgFail => 'Bad header name',
+                test       => $perlExpr,
+                warnTest   => sub {
+                    my $e = shift;
+                    return ( 0, $assignMsg ) if ( $e =~ $assignTest );
+                    1;
+                },
+            },
+        },
+        exportedVars => {
+            keyTest    => qr/^[a-zA-Z]\w*$/,
+            keyMsgFail => 'Bad variable name',
+            test       => qr/^[a-zA-Z]\w*$/,
+            msgFail    => 'Bad attribute name',
         },
         globalStorage => {
             test    => qr/^[\w:]+$/,
@@ -223,6 +282,17 @@ sub testStruct {
             keyTest    => qr/^\w+$/,
             keyMsgFail => 'Bad parameter',
         },
+        groups => {
+            keyTest    => qr/^\w[\w-]*$/,
+            keyMsgFail => 'Bad group name',
+            test       => $perlExpr,
+            warnTest   => sub {
+                my $e = shift;
+                return ( 0, $assignMsg ) if ( $e =~ $assignTest );
+                1;
+            },
+        },
+        https    => $boolean,
         ldapBase => {
             test    => qr/^(?:\w+=.*|)$/,
             msgFail => 'Bad LDAP base',
@@ -241,45 +311,6 @@ sub testStruct {
                       or return ( 0, "Bad ldap uri \"$s\"" );
                 }
                 return 1;
-            },
-        },
-        managerDn => {
-            test    => qr/^(?:\w+=.*,\w+=.*)?$/,
-            msgFail => 'Bad LDAP dn',
-        },
-        managerPassword     => {},
-        notificationStorage => {
-            test    => qr/^[\w:]+$/,
-            msgFail => 'Bad module name',
-        },
-        notificationStorageOptions => {
-            keyTest    => qr/^\w+$/,
-            keyMsgFail => 'Bad parameter',
-        },
-        groups => {
-            keyTest    => qr/^\w[\w-]*$/,
-            keyMsgFail => 'Bad group name',
-            test       => $perlExpr,
-            warnTest   => sub {
-                my $e = shift;
-                return ( 0, $assignMsg ) if ( $e =~ $assignTest );
-                1;
-            },
-        },
-        exportedVars => {
-            keyTest    => qr/^[a-zA-Z]\w*$/,
-            keyMsgFail => 'Bad variable name',
-            test       => qr/^[a-zA-Z]\w*$/,
-            msgFail    => 'Bad attribute name',
-        },
-        macros => {
-            keyTest    => qr/^[a-zA-Z]\w*$/,
-            keyMsgFail => 'Bad macro name',
-            test       => $perlExpr,
-            warnTest   => sub {
-                my $e = shift;
-                return ( 0, $assignMsg ) if ( $e =~ $assignTest );
-                1;
             },
         },
         locationRules => {
@@ -308,12 +339,9 @@ sub testStruct {
                 },
             },
         },
-        exportedHeaders => {
-            keyTest    => qr/^[a-zA-Z](?:[\w\-\.]*\w)?$/,
-            keyMsgFail => 'Bad virtual host name',
-            '*'        => {
-                keyTest    => qr/^\w([\w\-]*\w)?$/,
-                keyMsgFail => 'Bad header name',
+        macros => {
+            keyTest    => qr/^[a-zA-Z]\w*$/,
+            keyMsgFail => 'Bad macro name',
                 test       => $perlExpr,
                 warnTest   => sub {
                     my $e = shift;
@@ -321,24 +349,62 @@ sub testStruct {
                     1;
                 },
             },
+        managerDn => {
+            test    => qr/^(?:\w+=.*,\w+=.*)?$/,
+            msgFail => 'Bad LDAP dn',
         },
-        syslog        => $boolean,
-        Soap          => $boolean,
-        storePassword => $boolean,
+        managerPassword => {
+            test    => qr/^\S+$/,
+            msgFail => 'Bad LDAP password',
+        },
         notification  => $boolean,
-        status        => $boolean,
-        https         => $boolean,
+        notificationStorage => {
+            test    => qr/^[\w:]+$/,
+            msgFail => 'Bad module name',
+        },
+        notificationStorageOptions => {
+            keyTest    => qr/^\w+$/,
+            keyMsgFail => 'Bad parameter',
+        },
+        portal => {
+            test    => qr/^https?:\/\/\S+$/,
+            msgFail => 'Bad portal value',
+        },
         protection    => {
             keyTest => qr/^(?:none|authentificate|manager|)$/,
             msgFail => 'must be one of none authentificate manager',
         },
-        useXForwardedForIP => $boolean,
+        securedCookie => {
+            test    => qr/^(?:0|1|2)$/,
+            msgFail => 'securedCookie must be 0, 1 or 2',
+        },
         singleSession      => $boolean,
         singleIP           => $boolean,
         singleUserByIP     => $boolean,
+        Soap           => $boolean,
+        SSLRequired    => $boolean,
+        storePassword  => $boolean,
+        syslog         => {
+            test => qw/^(?:auth|authpriv|daemon|local\d|user)?$/,
+            msgFail =>
+              'Only auth|authpriv|daemon|local0-7|user is allowed here',
+        },
+        timeout => {
+            test    => qr/^\d*$/,
+            msgFail => 'Bad number'
+        },
         userControl        => {
             test    => $pcre,
             msgFail => 'Bad regular expression',
+        },
+        userDB => {
+            test    => qr/^[a-zA-Z][\w\:]*$/,
+            msgFail => 'Bad module name',
+        },
+        useXForwardedForIP => $boolean,
+        whatToTrace        => {
+            test    => qr/^\$?[a-zA-Z]\w*$/,
+            msgFail => 'Bad value',
         },
     };
 }
@@ -348,16 +414,40 @@ sub testStruct {
 sub defaultConf {
     return {
         authentication       => 'LDAP',
-        userDB               => 'LDAP',
-        ldapServer           => 'localhost',
+        cda                  => '0',
+        cookieName           => 'lemonldap',
+        domain               => 'example.com',
+        exportedVars         => { cn => 'cn', mail => 'mail', uid => 'uid', },
         globalStorage        => 'Apache::Session::File',
         globalStorageOptions => {
             'Directory'     => '/var/lib/lemonldap-ng/sessions/',
             'LockDirectory' => '/var/lib/lemonldap-ng/sessions/lock/'
         },
-        timeout             => 7200,
-        userControl         => '^[\w\.\-@]+$',
+        https               => '0',
+        ldapBase            => 'dc=example,dc=com',
+        ldapPort            => '389',
+        ldapServer          => 'localhost',
+        managerDn           => '',
+        managerPassword     => '',
+        notification        => '0',
         notificationStorage => 'File',
+        notificationStorageOptions =>
+          { dirName => '/var/lib/lemonldap-ng/notifications', },
+        portal             => 'http://auth.example.com/',
+        protection         => 'none',
+        securedCookie      => '0',
+        singleSession      => '0',
+        singleIP           => '0',
+        singleUserByIP     => '0',
+        Soap               => '1',
+        SSLRequired        => '0',
+        storePassword      => '0',
+        syslog             => '',
+        timeout            => '7200',
+        userControl        => '^[\w\.\-@]+$',
+        userDB             => 'LDAP',
+        useXForwardedForIP => '0',
+        whatToTrace        => '$uid',
     };
 }
 

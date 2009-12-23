@@ -31,19 +31,7 @@ sub new {
     my $self = $class->SUPER::new($args)
       or $class->abort( 'Unable to start ' . __PACKAGE__,
         'See Apache logs for more' );
-    if ( $ENV{PATH_INFO} eq "/css" ) {
-        print $self->header_public( $ENV{SCRIPT_FILENAME}, -type => 'text/css',
-        );
-        $self->css;
-        $self->quit();
-    }
-    elsif ( $ENV{PATH_INFO} eq "/js" ) {
-        print $self->header_public( $ENV{SCRIPT_FILENAME},
-            -type => 'text/javascript', );
-        $self->js;
-        $self->quit();
-    }
-    elsif ( $self->param('help') ) {
+    if ( $self->param('help') ) {
         print $self->header_public( $ENV{SCRIPT_FILENAME},
             -type => 'text/html; charset=utf8' );
         Lemonldap::NG::Manager::Help::import( $self->{language}
