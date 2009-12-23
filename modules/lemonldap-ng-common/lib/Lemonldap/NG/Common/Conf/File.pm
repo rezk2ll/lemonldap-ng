@@ -74,8 +74,8 @@ sub store {
         $self->unlock;
         return UNKNOWN_ERROR;
     }
-    while ( my ( $k, $v ) = each(%$fields) ) {
-        print FILE "$k\n\t$v\n\n";
+    foreach my $k (sort keys %$fields) {
+    	print FILE "$k\n\t$fields->{$k}\n\n";
     }
     close FILE;
     umask($mask);

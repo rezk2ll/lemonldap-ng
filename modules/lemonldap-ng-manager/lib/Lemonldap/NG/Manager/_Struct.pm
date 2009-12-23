@@ -62,12 +62,10 @@ sub struct {
                 _nodes => sub {
                     my $self = shift;
                     my $auth =
-                         $self->param('authentication')
-                      || $self->conf->{authentication}
+                         $self->conf->{authentication}
                       || $self->defaultConf()->{authentication};
                     my $udb =
-                         $self->param('userDB')
-                      || $self->conf->{userDB}
+                         $self->conf->{userDB}
                       || $self->defaultConf()->{userDB};
                     $auth = lc($auth);
                     $udb  = lc($udb);
@@ -354,7 +352,7 @@ sub testStruct {
             msgFail => 'Bad LDAP dn',
         },
         managerPassword => {
-            test    => qr/^\S+$/,
+            test    => qr/^\S*$/,
             msgFail => 'Bad LDAP password',
         },
         notification  => $boolean,
