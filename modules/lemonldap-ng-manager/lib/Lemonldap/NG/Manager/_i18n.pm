@@ -43,7 +43,7 @@ sub translate {
 
 1;
 
-#__END__
+__END__
 
 sub en {
     return {
