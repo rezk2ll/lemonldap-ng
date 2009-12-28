@@ -43,7 +43,7 @@ our (
     $whatToTrace,          $https,             $refLocalStorage,
     $safe,                 $port,              $statusPipe,
     $statusOut,            $customFunctions,   $transform,
-    $cda,
+    $cda,                  $childInitDone,
 );
 
 ##########################################
@@ -338,9 +338,11 @@ sub statusProcess {
 # @return Safe object
 sub safe {
     my $class = shift;
+
     #no strict 'refs';
     #return ${"$class\::safe"} if (${"$class\::safe"});
-    return $safe if($safe);
+    return $safe if ($safe);
+
     #$class->lmLog( "Compiling safe jail for $class", 'debug' );
     #my $safe = new Safe;
     $safe = new Safe;
@@ -367,6 +369,7 @@ sub safe {
         $Lemonldap::NG::Common::Safelib::functions );
     $safe->share( '&encode_base64', '$datas', '&lmSetHeaderIn',
         '$apacheRequest', '&portal', @t );
+
     #return ${"$class\::safe"} = $safe;
     return $safe;
 }
@@ -395,12 +398,17 @@ sub localInit($$) {
     if ( $args->{status} ) {
         if ( defined $localStorage ) {
             statusProcess();
-        } else {
+        }
+        else {
+
             # localStorage is mandatory for status module
-            $class->lmLog("Status module can not be loaded without localStorage parameter", 'warn');
+            $class->lmLog(
+"Status module can not be loaded without localStorage parameter",
+                'warn'
+            );
         }
     }
-    $class->childInit();
+    $class->childInit($args);
 }
 
 ## @imethod protected boolean childInit()
@@ -409,7 +417,8 @@ sub localInit($$) {
 # - cleanLocalStorage() after each requests
 # @return True
 sub childInit {
-    my $class = shift;
+    my ( $class, $args ) = @_;
+    return 1 if ($childInitDone);
 
     # We don't initialise local storage in the "init" subroutine because it can
     # be used at the starting of Apache and so with the "root" privileges. Local
@@ -419,14 +428,22 @@ sub childInit {
     # performances.
     no strict;
     if ( MP() == 2 ) {
-        Apache2::ServerUtil->server->push_handlers( PerlChildInitHandler =>
+        $s = Apache2::ServerUtil->server;
+        $s->push_handlers( PerlChildInitHandler =>
               sub { return $class->initLocalStorage( $_[1], $_[0] ); } );
+        $s->push_handlers(
+            PerlPostConfigHandler => sub {
+                my ( $c, $l, $t, $s ) = @_;
+                $s->add_version_component('Lemonldap::NG::Handler');
+            }
+        ) unless ( $args->{hideSignature} );
     }
     elsif ( MP() == 1 ) {
         Apache->push_handlers(
             PerlChildInitHandler => sub { return $class->initLocalStorage(@_); }
         );
     }
+    $childInitDone++;
     1;
 }
 
@@ -1058,7 +1075,7 @@ sub status($$) {
     my ( $class, $r ) = @_;
     $class->lmLog( "$class: request for status", 'debug' );
     unless ( $statusPipe and $statusOut ) {
-        $class->lmLog( "$class: status page can not be displayed" , 'error' );
+        $class->lmLog( "$class: status page can not be displayed", 'error' );
         return SERVER_ERROR;
     }
     $r->handler("perl-script");
