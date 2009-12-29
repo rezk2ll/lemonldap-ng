@@ -113,7 +113,7 @@ sub confUpload {
     foreach ( @{ $result->getChildrenByTagName('ignore') } ) {
         my $node = $_->getAttribute('value');
         $node =~ s/^.*node=(.*?)(?:&.*)?\}$/$1/;
-        foreach my $k ( $self->findAllConfKeys( $self->corresp( $node, 1 ) ) ) {
+        foreach my $k ( $self->findAllConfKeys( $self->corresp( $node ) ) ) {
             my $v = $self->keyToH( $k, $self->conf );
             $v = $self->keyToH( $k, $self->defaultConf ) unless ( defined $v );
             if ( defined $v ) {

@@ -43,7 +43,7 @@ sub unserialize {
     while ( my ( $k, $v ) = each(%$fields) ) {
         $v =~ s/^'(.*)'$/$1/s;
         if ( $k =~
-/^(?:exportedVars|locationRules|groups|exportedHeaders|macros|globalStorageOptions)$/
+/^(?:exportedVars|locationRules|groups|exportedHeaders|macros|globalStorageOptions|notificationStorageOptions)$/
             and $v ||= {}
             and not ref($v) )
         {

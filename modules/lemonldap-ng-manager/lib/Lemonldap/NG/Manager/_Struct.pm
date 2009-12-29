@@ -26,8 +26,10 @@ sub cstruct {
                     _nodes => ["hash:/locationRules/$k:rules:rules"],
                     _js    => 'rulesRoot'
                 },
-                headers =>
-                  { _nodes => ["hash:/exportedHeaders/$k"], _js => 'hashRoot' },
+                headers => {
+                    _nodes => ["hash:/exportedHeaders/$k"],
+                    _js    => 'hashRoot'
+                },
             }
         }
     );
@@ -61,11 +63,9 @@ sub struct {
 		# Displayed nodes depend on authentication/userDB modules choosed
                 _nodes => sub {
                     my $self = shift;
-                    my $auth =
-                         $self->conf->{authentication}
+                    my $auth = $self->conf->{authentication}
                       || $self->defaultConf()->{authentication};
-                    my $udb =
-                         $self->conf->{userDB}
+                    my $udb = $self->conf->{userDB}
                       || $self->defaultConf()->{userDB};
                     $auth = lc($auth);
                     $udb  = lc($udb);
@@ -415,6 +415,7 @@ sub defaultConf {
         cda                  => '0',
         cookieName           => 'lemonldap',
         domain               => 'example.com',
+        exportedHeaders => { 'test.example.com' => { 'Auth-User' => '$uid' }, },
         exportedVars         => { cn => 'cn', mail => 'mail', uid => 'uid', },
         globalStorage        => 'Apache::Session::File',
         globalStorageOptions => {
@@ -425,6 +426,7 @@ sub defaultConf {
         ldapBase            => 'dc=example,dc=com',
         ldapPort            => '389',
         ldapServer          => 'localhost',
+        locationRules   => { 'test.example.com' => { default => 'accept' }, },
         managerDn           => '',
         managerPassword     => '',
         notification        => '0',
@@ -446,6 +448,13 @@ sub defaultConf {
         userDB             => 'LDAP',
         useXForwardedForIP => '0',
         whatToTrace        => '$uid',
+    };
+}
+
+sub subDefaultConf {
+    return {
+        locationRules   => { default     => 'deny' },
+        exportedHeaders => { 'Auth-User' => '$uid' },
     };
 }
 

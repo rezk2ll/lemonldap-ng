@@ -432,11 +432,15 @@ $.fn.simpleTree = function(opt){
 
 		TREE.addNode = function(id, text, callback)
 		{
+			TREE.newNodeIn(TREE.getSelected(),id,text,callback);
+		};
+		TREE.newNodeIn = function(node, id, text, callback)
+		{
 			var temp_node = $('<li><ul><li id="'+id+'"><span>'+text+'</span></li></ul></li>');
-			TREE.setTreeNodes(temp_node);
-			dragNode_destination = TREE.getSelected();
+			TREE.setTreeNodes(temp_node,true);
+			destination = node;
 			dragNode_source = $('.doc-last',temp_node);
-			TREE.moveNodeToFolder(dragNode_destination);
+			TREE.moveNodeToFolder(destination);
 			temp_node.remove();
 			if(typeof(callback) == 'function')
 			{
@@ -445,18 +449,20 @@ $.fn.simpleTree = function(opt){
 		};
 		TREE.newNodeAfter = function(id, text, callback)
 		{
-			var temp_node = $('<li><ul><li id="'+id+'"><span>'+text+'</span></li></u></li>');
+			TREE.newNodeIn(TREE.getSelected().parent().parent(),id,text,callback);
+		};
+		TREE.newAjaxNodeIn = function(node,id,text,url,callback)
+		{
+			var temp_node = $('<li><ul><li id="'+id+'"><span>'+text+'</span><ul class="ajax"><li id="new">.{url:'+url+'}</li></ul></li></ul></li>');
 			TREE.setTreeNodes(temp_node,true);
-			destination = TREE.getSelected().parent().parent();
-			dragNode_source = $('.doc-last',temp_node);
+			destination = node;
+			dragNode_source = $('.folder-close-last',temp_node);
 			TREE.moveNodeToFolder(destination);
 			temp_node.remove();
 			if(typeof(callback) == 'function')
 			{
 				callback(dragNode_destination, dragNode_source);
 			}
-			//existing.after(temp_node);
-			//temp_node.remove();
 		};
 		TREE.delNode = function(callback)
 		{

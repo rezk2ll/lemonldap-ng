@@ -117,8 +117,9 @@ function rules(id){
 	$('#newrb').css('display','');
 }
 function rulesRoot(id){
+	currentId=id;
 	display('default','Lemonldap::NG Manager');
-	$('#newrbr').css('display','');
+	$('#newrbr').css('display','block');
 }
 function reloadAuthParams() {
 	setlmdata(currentId,$('#authText').attr('value'));
@@ -161,6 +162,14 @@ function newKey(){
 	});
 	return false;
 }
+function newRuleR(){
+	var newIdValue=newId(currentId);
+	simpleTreeCollection[0].addNode(newIdValue,text4newKey,function(d,s){
+		$('>span',s).attr('onClick','rules("'+newIdValue+'")').attr('name',text4newKey).attr('value',value4newKey).attr('id','text_'+newIdValue);
+		rules(newIdValue);
+	});
+	return false;
+}
 function newRule(){
 	var newIdValue=newId(currentId);
 	simpleTreeCollection[0].newNodeAfter(newIdValue,text4newKey,function(d,s){
@@ -172,6 +181,12 @@ function newRule(){
 function delKey(){
 	$('#'+currentId).prev().remove();
 	$('#'+currentId).remove();
+}
+function newVh(name){
+	var vhId='li_'+myB64('/locationRules/'+name);
+	simpleTreeCollection[0].newAjaxNodeIn($('#li_L3ZpcnR1YWxIb3N0cw2'),vhId,name,scriptname+'?type=new&node=virtualHosts/'+name,function(d,s){
+		$('>span',s).attr('name',name).attr('help','default').attr('id','text_'+vhId);
+	});
 }
 function uploadConf(){
 	$.ajax({
@@ -206,4 +221,36 @@ function uploadConf(){
 			$('#help_content').html('<h3>Request failed</h3> Error code: '+xhr.status+', '+thrownError);
 		}
 	});
+}
+/* Warning, it's not a real base64 */
+function myB64(s) {
+        var keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+        var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
+        var i=0;
+        var res="";
+	var s2="";
+        while (i < s.length) {
+                chr1 = s.charCodeAt(i++);
+                chr2 = s.charCodeAt(i++);
+                chr3 = s.charCodeAt(i++);
+                enc1 = chr1 >> 2;
+                enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+                enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+                enc4 = chr3 & 63;
+		res+=keyStr.charAt(enc1)+keyStr.charAt(enc2);
+                if (isNaN(chr2)) {
+			res+='2';
+			break;
+		}
+		res+=keyStr.charAt(enc3);
+		if (isNaN(chr3)) {
+			res+='1';
+			break;
+		}
+		res+=keyStr.charAt(enc4);
+		if(i==s.length) {
+			res+='0';
+		}
+        }
+	return res;
 }

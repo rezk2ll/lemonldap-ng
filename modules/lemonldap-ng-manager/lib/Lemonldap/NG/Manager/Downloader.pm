@@ -130,7 +130,16 @@ sub confNode {
     # Hash datas
     elsif ( $target =~ s/^hash:// ) {
         my $h = $self->keyToH( $target, $self->conf );
-        return unless ($h);
+        unless ($h) {
+            my $tmp;
+            unless ( ($tmp) = ( $target =~ /^\/?(.*)\// )
+                and $h = $self->subDefaultConf()->{$tmp} )
+            {
+                $self->lmLog( "$target hash is not defined in configuration",
+                    'error' );
+                return;
+            }
+        }
         foreach ( sort keys %$h ) {
             if ( ref( $h->{$_} ) ) {
                 $res .= $self->confNode( "$target/$_", $help, $js );
@@ -287,8 +296,8 @@ sub conf {
     $self->abort( 'Unable to get configuration',
         $Lemonldap::NG::Common::Conf::msg )
       unless ( $self->{_conf} );
-    if(my $c = $self->param('conf')){
-        $self->{_conf}->{$_} = $self->param($_) foreach(split /\s+/,$c);
+    if ( my $c = $self->param('conf') ) {
+        $self->{_conf}->{$_} = $self->param($_) foreach ( split /\s+/, $c );
     }
     return $self->{_conf};
 }

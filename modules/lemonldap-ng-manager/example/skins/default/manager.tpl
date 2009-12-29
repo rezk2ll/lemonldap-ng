@@ -50,6 +50,10 @@ var scriptname='<TMPL_VAR NAME="SCRIPT_NAME">';var imagepath='<TMPL_VAR NAME="DI
      <lang en="Apply" fr="Appliquer" />
     </button>
 
+    <button id="bnewvh" onclick="newVh('test25.example.com');return false;" class="ui-state-default ui-corner-all">
+     <lang en="New virtual host" fr="Nouvel hôte virtuel" />
+    </button>
+
     <button id="newkbr" style="display:none;" onclick="newKeyR();return false;" class="ui-state-default ui-corner-all">
      <lang en="New key" fr="Nouvelle clef" />
     </button>
