@@ -47,7 +47,10 @@ sub node {
                         "$target",
                         "node=$node/$target",
                         $tmp->{$target}->{_help} || $help,
-                        $tmp->{$target}->{_js}
+                        $tmp->{$target}->{_js},
+                        '',
+                        0,
+                        $tmp->{$target}->{_call}
                     );
                     next;
                 }
@@ -64,9 +67,10 @@ sub node {
                         "$node/$target", $target, '',
                         $tmp->{$target}->{_js},
                         $tmp->{$target}->{_help} || $help
-                      ) . "<ul>";
-                    $res .= $self->node("$node/$target");
-                    $res .= "</ul></li>";
+                      )
+                      . "<ul>"
+                      . $self->node("$node/$target")
+                      . "</ul></li>";
                 }
 
                 # subnode points to a configuration node
@@ -332,7 +336,7 @@ sub confObj {
 # @param $noT Optional flag to block translation
 # @return HTML string
 sub ajaxNode {
-    my ( $self, $id, $text, $param, $help, $js, $data, $noT ) = @_;
+    my ( $self, $id, $text, $param, $help, $js, $data, $noT, $call ) = @_;
     $param .= "&amp;cfgNum=$self->{cfgNum}";
     return
         $self->li($id)
@@ -341,6 +345,7 @@ sub ajaxNode {
       . $self->li("sub_$id")
       . ".{url:$ENV{SCRIPT_NAME}?$param"
       . ( $js ? ",js:$js" : '' )
+      . ( $call ? ",call:$call" : '' )
       . "}</li></ul></li>\n";
 }
 

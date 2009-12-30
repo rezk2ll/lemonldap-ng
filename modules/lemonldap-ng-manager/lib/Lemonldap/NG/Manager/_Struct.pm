@@ -98,13 +98,13 @@ sub struct {
                     managerDn       => 'text:/managerDn',
                     managerPassword => 'text:/managerPassword',
                 },
-                SSLRequired => 'int:/SSLRequired',
+                SSLRequired => 'bool:/SSLRequired',
             },
 
 	    # LOGS PARAMETERS
             logParams => {
                 _nodes             => [qw(useXForwardedForIP whatToTrace)],
-                useXForwardedForIP => 'int:/useXForwardedForIP',
+                useXForwardedForIP => 'bool:/useXForwardedForIP',
                 whatToTrace        => 'text:/whatToTrace:whatToTrace:text',
             },
 
@@ -144,10 +144,10 @@ sub struct {
                         _js    => 'hashRoot'
                     },
                 },
-                singleSession  => 'int:/singleSession',
-                singleIP       => 'int:/singleIP',
-                singleUserByIP => 'int:/singleUserByIP',
-                storePassword => 'int:/storePassword',
+                singleSession  => 'bool:/singleSession',
+                singleIP       => 'bool:/singleIP',
+                singleUserByIP => 'bool:/singleUserByIP',
+                storePassword  => 'bool:/storePassword',
                 timeout        => 'text:/timeout:timeout:text',
             },
 
@@ -156,15 +156,15 @@ sub struct {
                 _nodes => [
                     qw(Soap exportedAttr trustedDomains https notifications passwordManagement userControl)
                 ],
-                Soap          => 'int:/Soap',
-                https         => 'int:/https',
+                Soap          => 'bool:/Soap',
+                https         => 'bool:/https',
                 exportedAttr  => 'text:/exportedAttr',
                 notifications => {
                     _nodes => [
                         qw(notification notificationStorage notificationStorageOptions)
                     ],
                     _help                      => 'notifications',
-                    notification               => 'int:/notification',
+                    notification               => 'bool:/notification',
                     notificationStorage        => 'text:/notificationStorage',
                     notificationStorageOptions => {
                         _nodes => ['hash:/notificationStorageOptions'],
@@ -203,6 +203,7 @@ sub struct {
             _nodes  => ['nhash:/locationRules:virtualHosts:none'],
             _upload => ['/exportedHeaders'],
             _help   => 'default',
+            _call   => '$(\'#bnewvh\').show();',
         },
     };
 }

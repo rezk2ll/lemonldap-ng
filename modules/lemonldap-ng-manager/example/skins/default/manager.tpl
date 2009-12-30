@@ -50,7 +50,7 @@ var scriptname='<TMPL_VAR NAME="SCRIPT_NAME">';var imagepath='<TMPL_VAR NAME="DI
      <lang en="Apply" fr="Appliquer" />
     </button>
 
-    <button id="bnewvh" onclick="newVh('test25.example.com');return false;" class="ui-state-default ui-corner-all">
+    <button id="bnewvh" style="display:none;" onclick="newVh('test25.example.com');return false;" class="ui-state-default ui-corner-all">
      <lang en="New virtual host" fr="Nouvel hôte virtuel" />
     </button>
 
@@ -107,6 +107,11 @@ var scriptname='<TMPL_VAR NAME="SCRIPT_NAME">';var imagepath='<TMPL_VAR NAME="DI
 
     <div id="content_int" class="hidden">
     <input type="text" id="int" onchange="setlmdata(currentId,this.value)"/>
+    </div>
+
+    <div id="content_bool" class="hidden">
+    <input id="On" type="radio" name="boolean" value="1" onclick="setlmdata(currentId,1)"/> <lang en="On" fr="Activé"/>
+    <input id="Off" type="radio" name="boolean" value="0" onclick="setlmdata(currentId,0)"/> <lang en="Off" fr="Désactivé"/>
     </div>
 
     <div id="content_btext" class="hidden">

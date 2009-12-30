@@ -219,6 +219,11 @@ input
 	background: url(expandable-last.gif) 0 -2px no-repeat;
 }
 
+.simpleTree .folder-hidden,.folder-hidden-last
+{
+	display:none;
+}
+
 .simpleTree .doc
 {
 	margin-left:-16px;

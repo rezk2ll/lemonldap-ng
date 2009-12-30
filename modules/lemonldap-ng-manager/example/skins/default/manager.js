@@ -88,6 +88,11 @@ function btext(id) {
 	display('btext','Clef');
 	$('#newkb,#delkb').css('display','');
 }
+function bool(id) {
+	currentId=id;
+	if(lmdata(id)==1){$('#On').attr('checked',true)}else{$('#Off').attr('checked',true)}
+	display('bool',lmtext(id));
+}
 function int(id) {
 	currentId=id;
 	$('#int').attr('value',lmdata(id));

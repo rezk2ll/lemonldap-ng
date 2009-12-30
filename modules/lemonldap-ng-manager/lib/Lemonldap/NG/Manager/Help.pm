@@ -25,8 +25,11 @@ sub import {
         }
     }
     $l ||= "en";
-    foreach $h (qw(authParams cookieName domain groups ldap macros storage timeout vars
-                   whatToTrace virtualHosts)) {
+    foreach $h (
+        qw(authParams cookieName domain groups ldap macros storage timeout vars
+        whatToTrace virtualHosts)
+      )
+    {
         *{"${caller_package}::help_$h"} = \&{"help_${h}_$l"};
     }
 }

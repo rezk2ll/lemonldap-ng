@@ -36,14 +36,15 @@ sub new {
 
     # Try to get configuration values from local configuration
     my $config = Lemonldap::NG::Common::Conf->new( $self->{configStorage} );
-    unless ( $config ) {
+    unless ($config) {
         $self->abort( "Unable to start",
         "Configuration not loaded\n" . $Lemonldap::NG::Common::Conf::msg );
     }
-    my $localconf = $config->getLocalConf( MANAGERSECTION );
+    my $localconf = $config->getLocalConf(MANAGERSECTION);
 
-    if ( $localconf ) {
-        $self->{$_} = $args->{$_} || $localconf->{$_} foreach ( keys %$localconf );
+    if ($localconf) {
+        $self->{$_} = $args->{$_} || $localconf->{$_}
+          foreach ( keys %$localconf );
     }
 
     # Check some paramaters

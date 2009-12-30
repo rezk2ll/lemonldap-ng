@@ -112,9 +112,13 @@ $.fn.simpleTree = function(opt){
 				{
 					url=$.trim(url.replace(/.*\{url:(.*)\}/i ,'$1'));
 					var js='';
+					var call='';
 					if(url.indexOf(',js:')){
-						js=$.trim(url.replace(/.*,js:(.*)/i ,'$1'));
-						url=$.trim(url.replace(/,js:.*/i ,''));
+						call=url.match(/.*,call:(.*)/i);
+						if(call==null){call='';}else{call=call[1].replace(/,call.*$/,'');}
+						js=url.match(/.*,js:(.*)/i);
+						if(js==null){js='';}else{js=js[1].replace(/,call.*$/,'');}
+						url=$.trim(url.replace(/,(?:js|call):.*/i ,''));
 					}
 					$.ajax({
 						type: "GET",
@@ -135,7 +139,8 @@ $.fn.simpleTree = function(opt){
 							{
 								callback(node);
 							}
-							if(js.length)$('>span',node.parent()).click(function(){eval(js+'()')});
+							if(js.length){if(!js.match(/\(/))js+='()';$('>span',node.parent()).click(function(){eval(js)});}
+							if(call.length){if(!call.match(/\(/))call+='()';eval(call);}
 						},
 						error: function(xhr, ajaxOptions, thrownError){
 							TREE.closeNearby(node);
@@ -212,7 +217,9 @@ $.fn.simpleTree = function(opt){
 				var childNode = $('>ul',this);
 				if(childNode.size()>0){
 					var setClassName = 'folder-';
-					if(className && className.indexOf('open')>=0){
+					if(className && className.indexOf('hidden')>=0){
+						setClassName=setClassName+'hidden';
+					}else if(className && className.indexOf('open')>=0){
 						setClassName=setClassName+'open';
 						open=true;
 					}else{
