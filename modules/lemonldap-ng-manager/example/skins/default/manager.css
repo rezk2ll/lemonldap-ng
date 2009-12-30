@@ -151,6 +151,7 @@ input
 
 .simpleTree .root
 {
+	cursor:default;
 	margin-left:-16px;
 	background: url(root.gif) no-repeat 16px 0;
 }

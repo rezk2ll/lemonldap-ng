@@ -125,6 +125,11 @@ sub confUpload {
         }
     }
 
+    # Author attributes
+    $newConf->{cfgAuthor}   = $ENV{AUTH_USER} || 'anonymous';
+    $newConf->{cfgAuthorIP} = $ENV{REMOTE_ADDR};
+    $newConf->{cfgDate}     = time();
+
     #print STDERR Dumper( $newConf, $errors );
     if ( $errors->{errors} ) {
         $errors->{result}->{cfgNum} = 0;
@@ -147,6 +152,11 @@ sub confUpload {
                 }->{ $errors->{result}->{cfgNum} }
             )
         );
+        $errors->{cfgDatas} = {
+            cfgAuthor   => $newConf->{cfgAuthor},
+            cfgAuthorIP => $newConf->{cfgAuthorIP},
+            cfgDate     => $newConf->{cfgDate}
+        };
         if (   $errors->{result}->{cfgNum} == CONFIG_WAS_CHANGED
             or $errors->{result}->{cfgNum} == DATABASE_LOCKED )
         {

@@ -287,6 +287,24 @@ sub corresp {
     return $h, $help, $js;
 }
 
+## @method protected void sendCfgParams(hashref h)
+# Send Author, IP, and date from a Lemonldap::NG::Conf
+sub sendCfgParams {
+    my ( $self, $h ) = @_;
+    my @buf;
+    foreach (qw(cfgAuthor cfgAuthorIP cfgDate)) {
+        my $tmp = $h->{$_} || 'anonymous';
+        $tmp =~ s/'/\\'/g;
+        push @buf, "$_:'$tmp'";
+    }
+    $_ = '{' . join( ',', @buf ) . '}';
+    print $self->header(
+        -type           => 'application/json',
+        -Content_Length => length($_)
+    ) . $_;
+    $self->quit();
+}
+
 ## @method protected hashref conf()
 # If configuration is not in memory, calls
 # Lemonldap::NG::Common::Conf::getConf() and returns it.
