@@ -98,6 +98,16 @@ var scriptname='<TMPL_VAR NAME="SCRIPT_NAME">';var imagepath='<TMPL_VAR NAME="DI
      <lang en="No value" fr="Pas de valeur" />
     </div>
 
+    <!-- Configuration datas -->
+    <div id="cfgDatas" class="hidden">
+     <ul>
+      <li><lang en="Configuration number" fr="Numéro de configuration"/>&nbsp;:<span id="cfgNum"><TMPL_VAR NAME="CFGNUM"></span></li>
+      <li><lang en="Author" fr="Auteur">&nbsp;:<span id="cfgAuthor"></span></li>
+      <li><lang en="IP Address" fr="Adresse IP">&nbsp;:<span id="cfgAuthorIP"></span></li>
+      <li><lang en="Date" fr="Date">&nbsp;:<span id="cfgDate"></span></li>
+     </ul>
+    </div>
+
     <!-- Contextual text -->
     <div id="content_text" class="hidden">
      <input type="text" id="text" onchange="setlmdata(currentId,this.value)"/>

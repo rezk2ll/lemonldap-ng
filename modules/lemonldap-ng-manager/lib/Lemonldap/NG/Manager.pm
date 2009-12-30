@@ -57,6 +57,20 @@ sub new {
         print $self->node($p);
         $self->quit();
     }
+    if ( $self->param('cfgAttr') ) {
+        my @buf;
+        foreach(qw(cfgAuthor cfgAuthorIP cfgDate)){
+            my $tmp = $self->conf()->{$_} || 'anonymous';
+            $tmp =~ s/'/\\'/g;
+            push @buf, "$_:'$tmp'";
+        }
+        $_ = '{'.join(',',@buf).'}';
+        print $self->header(
+            -type           => 'application/json',
+            -Content_Length => length($_)
+        ) . $_;
+
+    }
     return $self;
 }
 
@@ -70,7 +84,7 @@ sub menu {
         '<ul class="simpleTree">' 
       . $self->li( 'root', 'root' )
       . $self->span( 'root', "Configuration $self->{cfgNum}",
-        $self->{cfgNum}, 'none' )
+        $self->{cfgNum}, 'cfgDatas' )
       . '<ul>'
       . $self->node()
       . '</ul></li></ul>';

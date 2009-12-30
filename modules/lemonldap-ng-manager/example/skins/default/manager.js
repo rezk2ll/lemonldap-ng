@@ -113,6 +113,9 @@ function vhost(id){
 	display('none',lmtext(id));
 	$('#bdelvh').show();
 }
+function cfgDatas(id){
+	display('cfgDatas');
+}
 function delvh(id){
 	if(confirm("Are you sure ?")){alert(id);$('#'+id).remove();}
 }
@@ -222,6 +225,8 @@ function uploadConf(f){
 				tmp=tmp.replace(/\d+/,data.result.cfgNum);
 				setlmtext('li_cm9vdA2',tmp);
 				setlmdata('li_cm9vdA2',data.result.cfgNum);
+				$('#cfgNum').text(data.result.cfgNum);
+				setCfgAttributes(data.result.attributes);
 			}
 			if(typeof(data.warnings)!='undefined'){
 				for(m in data.warnings){
@@ -235,6 +240,23 @@ function uploadConf(f){
 			$('#help_content').html('<h3>Request failed</h3> Error code: '+xhr.status+', '+thrownError);
 		}
 	});
+}
+var cfgAttrDone;
+function getCfgAttributes() {
+	$.ajax({
+		type:"POST",
+		url:scriptname,
+		data:{cfgNum:lmdata('li_cm9vdA2'),attr:1},
+		dataType:'json',
+		success:function(data){
+			setCfgAttributes(data);
+		},
+		error:function(xhr, ajaxOptions, thrownError){
+			setCfgAttributes({cfgAuthor:'unknown',cfgAuthorIP:'unknown',cfgDate:'unknown'});
+		}
+	});
+}
+function setCfgAttributes(data){
 }
 /* Warning, it's not a real base64 */
 function myB64(s) {

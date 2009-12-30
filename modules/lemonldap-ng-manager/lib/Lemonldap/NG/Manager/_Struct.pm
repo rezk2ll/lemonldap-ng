@@ -69,7 +69,7 @@ sub struct {
                       || $self->defaultConf()->{userDB};
                     $auth = lc($auth);
                     $udb  = lc($udb);
-                    my %res = qw(authentication 1 userDB 1 syslog 1);
+                    my %res = qw(authentication 1 userDB 1);
                     foreach my $mod ( ( $auth, ( $auth ne $udb ? $udb : () ) ) )
                     {
                         my $tmp = {
@@ -86,7 +86,6 @@ sub struct {
                 _help          => 'authParams',
                 authentication => 'text:/authentication:authParams:authParams',
                 userDB         => 'text:/userDB:authParams:authParams',
-                syslog         => 'text:/syslog',
                 ldapParams     => {
                     _nodes => [
                         qw(ldapServer ldapPort ldapBase managerDn managerPassword)
@@ -103,7 +102,8 @@ sub struct {
 
 	    # LOGS PARAMETERS
             logParams => {
-                _nodes             => [qw(useXForwardedForIP whatToTrace)],
+                _nodes => [qw(syslog useXForwardedForIP whatToTrace)],
+                syslog => 'text:/syslog',
                 useXForwardedForIP => 'bool:/useXForwardedForIP',
                 whatToTrace        => 'text:/whatToTrace:whatToTrace:text',
             },
