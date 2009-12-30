@@ -66,15 +66,15 @@ function display(div,title) {
 	$('#content_'+div).removeClass('hidden');
 	$('#content_'+div).addClass('content');
 	$('#content_title').html(title);
-	$('#newkb,#newrb,#delkb,#newkbr,#newrbr').css('display','none');
+	$('#newkb,#newrb,#delkb,#newkbr,#newrbr,#bdelvh').hide();
 }
 function none(id) {
-	display('default','Lemonldap::NG Manager');
+	display('default','');
 }
 function hashRoot(){
 	currentId=simpleTreeCollection[0].getSelected().attr('id');
-	display('default','Lemonldap::NG Manager');
-	$('#newkbr').css('display','');
+	display('default','');
+	$('#newkbr').show();
 }
 function authParams(id) {
 	currentId=id;
@@ -85,8 +85,8 @@ function btext(id) {
 	currentId=id;
 	$('#btextKey').attr('value',lmtext(id));
 	$('#btextValue').attr('value',lmdata(id));
-	display('btext','Clef');
-	$('#newkb,#delkb').css('display','');
+	display('btext',lmtext(id));
+	$('#newkb,#delkb').show();
 }
 function bool(id) {
 	currentId=id;
@@ -108,6 +108,14 @@ function securedCookieValues(id){
 	$('#securedCookie'+lmdata(id)).attr('checked',1);
 	display('securedCookie',lmtext(id));
 }
+function vhost(id){
+	currentId=id;
+	display('none',lmtext(id));
+	$('#bdelvh').show();
+}
+function delvh(id){
+	if(confirm("Are you sure ?")){alert(id);$('#'+id).remove();}
+}
 function rules(id){
 	currentId=id;
 	var t=lmtext(id);
@@ -117,14 +125,14 @@ function rules(id){
 	if(t=='default'){$('#rulKey').attr('readonly','readonly')}
 	else{
 		$('#rulKey').attr('readonly','');
-		$('#delkb').css('display','')
+		$('#delkb').show();
 	}
-	$('#newrb').css('display','');
+	$('#newrb').show();
 }
 function rulesRoot(id){
 	currentId=id;
-	display('default','Lemonldap::NG Manager');
-	$('#newrbr').css('display','block');
+	display('default','');
+	$('#newrbr').show();
 }
 function reloadAuthParams() {
 	setlmdata(currentId,$('#authText').attr('value'));
@@ -193,11 +201,12 @@ function newVh(name){
 		$('>span',s).attr('name',name).attr('help','default').attr('id','text_'+vhId);
 	});
 }
-function uploadConf(){
+function uploadConf(f){
+	if(!(f==1))f=0;
 	$.ajax({
 		type:"POST",
 		url:scriptname,
-		data:{data: $('#li_cm9vdA2').html()},
+		data:{data: $('#li_cm9vdA2').html(),force: f},
 		dataType:'json',
 		success:function(data){
 			var c='<h3>'+data.result.msg+'</h3><dl>';
@@ -219,7 +228,7 @@ function uploadConf(){
 					c+='<dt>'+m+'</dt><dd>'+data.warnings[m]+'</dd>';
 				}
 			}
-			c+='</dl>';
+			c+='</dl>'+data.result.other;
 			$('#help_content').html(c);
 		},
 		error:function(xhr, ajaxOptions, thrownError){

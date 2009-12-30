@@ -340,13 +340,13 @@ sub ajaxNode {
     $param .= "&amp;cfgNum=$self->{cfgNum}";
     return
         $self->li($id)
-      . $self->span( $id, $text, $data, undef, $help, $noT )
+      . $self->span( $id, $text, $data, $js, $help, $noT )
       . "<ul class=\"ajax\">"
       . $self->li("sub_$id")
       . ".{url:$ENV{SCRIPT_NAME}?$param"
-      . ( $js ? ",js:$js" : '' )
-      . ( $call ? ",call:$call" : '' )
-      . "}</li></ul></li>\n";
+
+      #  . ( $js   ? ",js:$js"     : '' )
+      . ( $call ? ",call:$call" : '' ) . "}</li></ul></li>\n";
 }
 
 ## @method protected string span(string id,string text,string param,string help,string js,string data,boolean noT)
@@ -368,13 +368,14 @@ sub span {
     $js ||= "none";
     $id = "li_" . encode_base64( $id, '' );
     $id   =~ s/(=*)$/length($1)/e;
+    $js .= "('$id')" unless ( $js =~ /\(/ );
     $data =~ s/"/&#39;/g;
     $tmp  =~ s/"/&#39;/g;
     $text = join ' ', map { $self->translate($_) } split /\s+/, $text
       unless ($noT);
     $text = $self->escapeHTML($text);
     return
-"<span name=\"$tmp\" id=\"text_$id\" onclick=\"$js('$id')\" help=\"$help\" value=\"$data\">$text</span>
+"<span name=\"$tmp\" id=\"text_$id\" onclick=\"$js\" help=\"$help\" value=\"$data\">$text</span>
 ";
 }
 

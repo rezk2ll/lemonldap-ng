@@ -131,20 +131,28 @@ sub confUpload {
         $errors->{result}->{msg}    = $self->translate('syntaxError');
     }
     else {
+        $self->confObj->{force} = 1 if ( $self->param('force') );
         $errors->{result}->{cfgNum} = $self->confObj->saveConf($newConf);
+        $errors->{result}->{other}  = '';
         $errors->{result}->{msg}    = (
               $errors->{result}->{cfgNum} > 0
             ? $self->translate('confSaved')
             : $self->translate(
                 {
-                    CONFIG_WAS_CHANGED => 'confWasChanged',
-                    UNKNOWN_ERROR      => 'unknownError',
-                    DATABASE_LOCKED    => 'databaseLocked',
-                    UPLOAD_DENIED      => 'uploadDenied',
-                    SYNTAX_ERROR       => 'syntaxError',
+                    CONFIG_WAS_CHANGED, 'confWasChanged',
+                    UNKNOWN_ERROR,      'unknownError',
+                    DATABASE_LOCKED,    'databaseLocked',
+                    UPLOAD_DENIED,      'uploadDenied',
+                    SYNTAX_ERROR,       'syntaxError',
                 }->{ $errors->{result}->{cfgNum} }
             )
         );
+        if (   $errors->{result}->{cfgNum} == CONFIG_WAS_CHANGED
+            or $errors->{result}->{cfgNum} == DATABASE_LOCKED )
+        {
+            $errors->{result}->{other} = '<a href="javascript:uploadConf(1)">'
+              . $self->translate('clickHereToForce') . '</a>';
+        }
     }
     my $buf = '{';
     my $i   = 0;

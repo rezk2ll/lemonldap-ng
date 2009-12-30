@@ -99,12 +99,14 @@ sub new {
 sub saveConf {
     my ( $self, $conf ) = @_;
 
+    my $last = $self->lastCfg;
+
     # If configuration was modified, return an error
-    return CONFIG_WAS_CHANGED
-      if ( not( $self->{force} )
-        and ( $conf->{cfgNum} != $self->lastCfg or $self->isLocked ) );
-    $self->lock or return DATABASE_LOCKED;
-    $conf->{cfgNum}++ unless ( $self->{cfgNumFixed} );
+    if ( not $self->{force} ) {
+        return CONFIG_WAS_CHANGED if ( $conf->{cfgNum} != $last );
+        return DATABASE_LOCKED if ( $self->isLocked or not $self->lock );
+    }
+    $conf->{cfgNum} = $last + 1 unless ( $self->{cfgNumFixed} );
     $msg = "Configuration $conf->{cfgNum} stored";
     return $self->store($conf);
 }

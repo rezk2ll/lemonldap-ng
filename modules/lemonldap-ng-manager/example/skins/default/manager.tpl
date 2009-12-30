@@ -54,6 +54,10 @@ var scriptname='<TMPL_VAR NAME="SCRIPT_NAME">';var imagepath='<TMPL_VAR NAME="DI
      <lang en="New virtual host" fr="Nouvel hôte virtuel" />
     </button>
 
+    <button id="bdelvh" style="display:none;" onclick="delvh(currentId);" class="ui-state-default ui-corner-all">
+     <lang en="Delete virtual host" fr="Supprimer l'hôte virtuel" />
+    </button>
+
     <button id="newkbr" style="display:none;" onclick="newKeyR();return false;" class="ui-state-default ui-corner-all">
      <lang en="New key" fr="Nouvelle clef" />
     </button>
@@ -78,6 +82,7 @@ var scriptname='<TMPL_VAR NAME="SCRIPT_NAME">';var imagepath='<TMPL_VAR NAME="DI
 
   
    <div id="edition" class="ui-widget ui-corner-all">
+   <span id="content_title">&nbsp;</span>
  
    <form action="#" onsubmit="return false">
 

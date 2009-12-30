@@ -200,7 +200,7 @@ sub struct {
 	# VIRTUAL HOSTS #
 	#################
         virtualHosts => {
-            _nodes  => ['nhash:/locationRules:virtualHosts:none'],
+            _nodes  => ['nhash:/locationRules:virtualHosts:vhost'],
             _upload => ['/exportedHeaders'],
             _help   => 'default',
             _call   => '$(\'#bnewvh\').show();',
