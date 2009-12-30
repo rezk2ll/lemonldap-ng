@@ -23,6 +23,14 @@ sub gen_password {
     return $random->randregex( $regexp );
 }
 
+## @method int test_mail()
+# @return boolean result
+sub test_mail {
+    my $self = shift;
+
+    # TODO check that a mail can be sent
+}
+
 ## @method int send_password()
 # Send password by mail
 # @param password password

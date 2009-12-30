@@ -42,21 +42,21 @@ sub getUser {
     my $pivot = $self->{userPivot};
     my $user  = $self->{user};
     $user =~ s/'/''/g;
+    my $sth;
 
     eval {
-        my $sth = $dbh->prepare("SELECT * FROM $table WHERE $pivot='$user'");
+        $sth = $dbh->prepare("SELECT * FROM $table WHERE $pivot='$user'");
         $sth->execute();
-
-        unless ( $self->{entry} = $sth->fetchrow_hashref() ) {
-            $self->lmLog( "User $user not found", 'notice' );
-            return PE_BADCREDENTIALS;
-        }
     };
     if ($@) {
         $self->lmLog( "DBI error: $@", 'error' );
         return PE_ERROR;
     }
 
+    unless ( $self->{entry} = $sth->fetchrow_hashref() ) {
+        $self->lmLog( "User $user not found", 'notice' );
+        return PE_BADCREDENTIALS;
+    }
     PE_OK;
 }
 

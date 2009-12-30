@@ -114,20 +114,22 @@ sub check_password {
 # Modify password with SQL UPDATE
 # @param user user
 # @param password password
+# @param userCol optional user column
+# @param passwordCol optional password column
 # @return boolean result
 sub modify_password {
     my $self = shift;
     my $user = shift;
     my $password = shift;
+    my $userCol = shift || $self->{dbiAuthLoginCol};
+    my $passwordCol = shift || $self->{dbiAuthPasswordCol};
     
-    my $table       = $self->{dbiAuthTable};
-    my $loginCol    = $self->{dbiAuthLoginCol};
-    my $passwordCol = $self->{dbiAuthPasswordCol};
+    my $table = $self->{dbiAuthTable};
 
     eval {
         my $sth =
           $self->{_dbh}->prepare(
-            "UPDATE $table SET $passwordCol=$password WHERE $loginCol='$user'");
+            "UPDATE $table SET $passwordCol=$password WHERE $userCol='$user'");
         $sth->execute();
     };
     if ($@) {
