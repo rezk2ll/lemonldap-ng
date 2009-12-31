@@ -28,7 +28,6 @@ example/images/spinner.gif
 example/images/tree.js
 example/images/tree_line.gif
 example/images/vframe.png
-example/images/xlib.js
 example/index.pl
 example/mrtg/lmng-mrtg
 example/mrtg/mrtg.cfg.example
@@ -45,6 +44,20 @@ example/skins/default/folder_add.png
 example/skins/default/folder_delete.png
 example/skins/default/folder_edit.png
 example/skins/default/hframe.png
+example/skins/default/images/ui-bg_diagonals-thick_18_b81900_40x40.png
+example/skins/default/images/ui-bg_diagonals-thick_20_666666_40x40.png
+example/skins/default/images/ui-bg_flat_10_000000_40x100.png
+example/skins/default/images/ui-bg_glass_100_f6f6f6_1x400.png
+example/skins/default/images/ui-bg_glass_100_fdf5ce_1x400.png
+example/skins/default/images/ui-bg_glass_65_ffffff_1x400.png
+example/skins/default/images/ui-bg_gloss-wave_35_f6a828_500x100.png
+example/skins/default/images/ui-bg_highlight-soft_100_eeeeee_1x100.png
+example/skins/default/images/ui-bg_highlight-soft_75_ffe45c_1x100.png
+example/skins/default/images/ui-icons_222222_256x240.png
+example/skins/default/images/ui-icons_228ef1_256x240.png
+example/skins/default/images/ui-icons_ef8c08_256x240.png
+example/skins/default/images/ui-icons_ffd27a_256x240.png
+example/skins/default/images/ui-icons_ffffff_256x240.png
 example/skins/default/jquery-1.3.2.min.js
 example/skins/default/jquery-ui-1.7.2.custom.css
 example/skins/default/jquery-ui-1.7.2.custom.min.js
@@ -68,7 +81,6 @@ example/skins/default/spinner.gif
 example/skins/default/tree.js
 example/skins/default/tree_line.gif
 example/skins/default/vframe.png
-example/skins/default/xlib.js
 lib/Lemonldap/NG/Manager.pm
 lib/Lemonldap/NG/Manager/_i18n.pm
 lib/Lemonldap/NG/Manager/_Struct.pm

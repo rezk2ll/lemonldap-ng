@@ -14,8 +14,8 @@ lib/Lemonldap/NG/Handler/Status.pm
 lib/Lemonldap/NG/Handler/SympaAutoLogin.pm
 lib/Lemonldap/NG/Handler/Vhost.pm
 Makefile.PL
-MANIFEST
-META.yml			Module meta-data (added by MakeMaker)
+MANIFEST			This list of files
+META.yml
 README
 t/01-Lemonldap-NG-Handler-Simple.t
 t/05-Lemonldap-NG-Handler-Vhost.t

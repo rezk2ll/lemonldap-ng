@@ -4,8 +4,21 @@ lemonldap-ng (0.9.5) unstable; urgency=low
   * Little Debian changes (see 0.9.4.1-2 Debian changelog)
   * Update to jQuery 1.3.2 (Closes: #314394)
   * AuthCAS: URL redirection and module load test
+  * Change multiple configuration files into lemonldap-ng.ini
+  * New manager
+  * New conf storage modules : CDBI and RDBI
+  * DBI conf storage module is deprecated
+  * convertConfig and lmMigrateConfFiles2ini tools
+  * childInit() is called only 1 time
+  * Update JQuery to 1.3 and JQueri-UI 1.7.2
+  * New authentication and userDB modules :
+    - DBI
+    - Proxy
+    - Env (UserDB only)
+  * Portal index.pl use lemonldap-ng.ini to get parameters
+  * CSS and Javascript minification capability
 
- -- Xavier Guimard <x.guimard@free.fr>  Mon, 12 Oct 2009 16:21:09 +0200
+ -- Xavier Guimard <x.guimard@free.fr>  Thu, 31 Dec 2009 14:09:13 +0100
 
 lemonldap-ng (0.9.4.1) unstable; urgency=low
 

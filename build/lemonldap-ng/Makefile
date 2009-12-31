@@ -476,6 +476,7 @@ documentation:
 	@cd doc/ && ../scripts/doc.pl
 
 doxygen:	clean
+	perl -i -pe 's/^(PROJECT_NUMBER\s*=\s*)\d.*$$/$${1}'$(VERSION)'/' Doxyfile
 	COLLABORATIVE_GRAPH=1 doxygen Doxyfile
 	mkdir doc/devel/tmp
 	mv doc/devel/html/inherit* doc/devel/tmp/

@@ -76,8 +76,8 @@ example/skins/pastel/password.tpl
 example/skins/pastel/styles.css
 example/slavePortal.pl
 lib/Lemonldap/NG/Portal.pm
-lib/Lemonldap/NG/Portal/_i18n.pm
 lib/Lemonldap/NG/Portal/_DBI.pm
+lib/Lemonldap/NG/Portal/_i18n.pm
 lib/Lemonldap/NG/Portal/_LDAP.pm
 lib/Lemonldap/NG/Portal/_Multi.pm
 lib/Lemonldap/NG/Portal/_Proxy.pm
@@ -87,8 +87,8 @@ lib/Lemonldap/NG/Portal/_SMTP.pm
 lib/Lemonldap/NG/Portal/_SOAP.pm
 lib/Lemonldap/NG/Portal/_WebForm.pm
 lib/Lemonldap/NG/Portal/AuthApache.pm
-lib/Lemonldap/NG/Portal/AuthDBI.pm
 lib/Lemonldap/NG/Portal/AuthCAS.pm
+lib/Lemonldap/NG/Portal/AuthDBI.pm
 lib/Lemonldap/NG/Portal/AuthLA.pm
 lib/Lemonldap/NG/Portal/AuthLDAP.pm
 lib/Lemonldap/NG/Portal/AuthMulti.pm
@@ -132,6 +132,7 @@ t/24-Lemonldap-NG-Portal-AuthRemote.t
 t/25-Lemonldap-NG-Portal-Multi.t
 t/26-Lemonldap-NG-Portal-AuthProxy.t
 t/30-Lemonldap-NG-Portal-UserDBNull.t
+t/31-Lemonldap-NG-Portal-UserDBEnv.t
 t/40-Lemonldap-NG-Portal-CDA.t
 t/50-Lemonldap-NG-Portal-Menu.t
 t/60-Lemonldap-NG-Portal-IssuerDBSAML.t
