@@ -262,6 +262,10 @@ function getCfgAttributes() {
 }
 function setCfgAttributes(data){
 	var t = new Array('cfgAuthor','cfgAuthorIP','cfgDate');
+	if(data.cfgDate.match(/^\d+$/)){
+		var d=new Date(data.cfgDate*1000);
+		data.cfgDate=d.toLocaleString();
+	}
 	for(i in t){
 		$('#'+t[i]).text(data[t[i]]);
 	}
