@@ -30,22 +30,25 @@ sub confUpload {
     $$rdata =~ s/<img.*?>//g;
     $$rdata =~ s/<li class="line".*?<\/li>//g;
 
-    # Apply XSLT stylesheet to returned datas
+    # 1. ANALYSE DATAS
+
+    # 1.1 Apply XSLT stylesheet to returned datas
     my $result =
       $self->stylesheet->transform(
         $self->parser->parse_string( '<root>' . $$rdata . '</root>' ) )
       ->documentElement();
 
-    # Get configuration number
+    # 1.2 Get configuration number
     unless ( $self->{cfgNum} =
         $result->getChildrenByTagName('conf')->[0]->getAttribute('value') )
     {
         die "No configuration number found";
     }
     my $newConf = { cfgNum => $self->{cfgNum} };
-
-    # Loading returned parameters
     my $errors = {};
+
+    # 1.3 Load and test returned parameters
+    #     => begin loop
     foreach ( @{ $result->getChildrenByTagName('element') } ) {
         my ( $id, $name, $value ) = (
             $_->getAttribute('id'),
@@ -74,8 +77,13 @@ sub confUpload {
 
         if ( $test->{'*'} and $id =~ /\// ) { $test = $test->{'*'} }
 
-        # Tests (no test for hash root nodes)
+        # 1.3.1 Tests:
+
+        #     No tests for some keys
         unless ( $test->{keyTest} and ( $id !~ /\// or $test->{'*'} ) ) {
+
+            # 1.3.1.1 Tests that return an error
+            #         (parameter will not be stored in $newConf)
             if ( $test->{keyTest} ) {
                 ( $res, $m ) = $self->applyTest( $test->{keyTest}, $name );
                 unless ($res) {
@@ -90,6 +98,8 @@ sub confUpload {
                     next;
                 }
             }
+
+            # 1.3.1.2 Tests that return a warning
             if ( $test->{warnKeyTest} ) {
                 ( $res, $m ) = $self->applyTest( $test->{warnKeyTest}, $name );
                 unless ($res) {
@@ -103,13 +113,15 @@ sub confUpload {
                 }
             }
         }
+
+        # 1.3.2 Store accepted parameter in $newConf
         $self->setKeyToH( $newConf, $confKey,
             $test->{keyTest}
             ? ( ( $id !~ /\// or $test->{'*'} ) ? {} : ( $name => $value ) )
             : $value );
-    }
+    }    # END LOOP
 
-    # Loading unchanged parameters (ajax nodes not open)
+    # 1.4 Loading unchanged parameters (ajax nodes not open)
     foreach ( @{ $result->getChildrenByTagName('ignore') } ) {
         my $node = $_->getAttribute('value');
         $node =~ s/^.*node=(.*?)(?:&.*)?\}$/$1/;
@@ -125,38 +137,73 @@ sub confUpload {
         }
     }
 
-    # Author attributes
-    $newConf->{cfgAuthor}   = $ENV{AUTH_USER} || 'anonymous';
+    # 1.5 Author attributes for accounting
+    $newConf->{cfgAuthor}   = $ENV{REMOTE_USER} || 'anonymous';
     $newConf->{cfgAuthorIP} = $ENV{REMOTE_ADDR};
     $newConf->{cfgDate}     = time();
 
-    #print STDERR Dumper( $newConf, $errors );
+    # 2. SAVE CONFIGURATION
+
+    $errors->{result}->{other} = '';
+
+    # 2.1 Don't store configuration if a syntax error was detected
     if ( $errors->{errors} ) {
         $errors->{result}->{cfgNum} = 0;
         $errors->{result}->{msg}    = $self->translate('syntaxError');
+        $self->_sub( 'userInfo',
+            "Configuration rejected for $newConf->{cfgAuthor}: syntax error" );
     }
+
+    # 2.2 Try to save configuration
     else {
+
+        # if "force" is set, Lemonldap::NG::Common::Conf accept it even if
+        # conf database is locked or conf number isn't current number (used to
+        # restore an old configuration)
         $self->confObj->{force} = 1 if ( $self->param('force') );
+
+        # Call saveConf()
         $errors->{result}->{cfgNum} = $self->confObj->saveConf($newConf);
-        $errors->{result}->{other}  = '';
-        $errors->{result}->{msg}    = (
-              $errors->{result}->{cfgNum} > 0
-            ? $self->translate('confSaved')
-            : $self->translate(
-                {
-                    CONFIG_WAS_CHANGED, 'confWasChanged',
-                    UNKNOWN_ERROR,      'unknownError',
-                    DATABASE_LOCKED,    'databaseLocked',
-                    UPLOAD_DENIED,      'uploadDenied',
-                    SYNTAX_ERROR,       'syntaxError',
-                }->{ $errors->{result}->{cfgNum} }
-            )
-        );
+
+        # 2.2.1 Prepare response
+        my $msg;
+
+        # case "success"
+        if ( $errors->{result}->{cfgNum} > 0 ) {
+
+            # Store accounting datas to the response
         $errors->{cfgDatas} = {
             cfgAuthor   => $newConf->{cfgAuthor},
             cfgAuthorIP => $newConf->{cfgAuthorIP},
             cfgDate     => $newConf->{cfgDate}
         };
+            $msg = 'confSaved';
+
+            # Log success using Lemonldap::NG::Common::CGI::userNotice():
+            #  * in system logs if "syslog" is set
+            #  * in apache errors file otherwise
+            $self->_sub( 'userNotice',
+"Conf $errors->{result}->{cfgNum} saved by $newConf->{cfgAuthor}"
+            );
+        }
+
+        # other cases
+        else {
+            $msg = {
+                CONFIG_WAS_CHANGED, 'confWasChanged',
+                UNKNOWN_ERROR,      'unknownError',
+                DATABASE_LOCKED,    'databaseLocked',
+                UPLOAD_DENIED,      'uploadDenied',
+                SYNTAX_ERROR,       'syntaxError',
+            }->{ $errors->{result}->{cfgNum} };
+
+            # Log failure using Lemonldap::NG::Common::CGI::userError()
+            $self->_sub( 'userError',
+                "Configuration rejected for $newConf->{cfgAuthor}: $msg" );
+        }
+
+        # Translate msg returned
+        $errors->{result}->{msg} = $self->translate($msg);
         if (   $errors->{result}->{cfgNum} == CONFIG_WAS_CHANGED
             or $errors->{result}->{cfgNum} == DATABASE_LOCKED )
         {
@@ -164,6 +211,8 @@ sub confUpload {
               . $self->translate('clickHereToForce') . '</a>';
         }
     }
+
+    # 3. PREPARE JSON RESPONSE
     my $buf = '{';
     my $i   = 0;
     while ( my ( $type, $h ) = each %$errors ) {
@@ -181,6 +230,8 @@ sub confUpload {
         $i++;
     }
     $buf .= '}';
+
+    # 4. SEND JSON RESPONSE
     print $self->header(
         -type           => 'application/json',
         -Content_Length => length($buf)

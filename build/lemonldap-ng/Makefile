@@ -514,7 +514,7 @@ debian-packages: debian-dist
 	rm -rf lemonldap-ng-$$version && \
 	tar xzf lemonldap-ng_$$version.orig.tar.gz && \
 	cd lemonldap-ng-$$version && \
-	debuild
+	export LOCALBUILD=1; debuild
 
 diff:
 	@# Portal

@@ -95,7 +95,7 @@ sub lmLog {
         }
     }
     else {
-        print STDERR "$mess\n" unless ( $level =~ /^(?:debug|info)$/ );
+        print STDERR "$mess\n" unless ( $level =~ /^(?:debug)$/ );
     }
 }
 
@@ -114,6 +114,7 @@ sub setApacheUser {
             $self->r->connection->user($user);
         }
     }
+    $ENV{REMOTE_USER} = $user;
 }
 
 ## @method void soapTest(string soapFunctions, object obj)
@@ -248,7 +249,7 @@ sub userLog {
 # @param $mess string to log
 sub userInfo {
     my ( $self, $mess ) = @_;
-    $mess = "Lemonldap::NG portal: $mess ($ENV{REMOTE_ADDR})";
+    $mess = "Lemonldap::NG : $mess ($ENV{REMOTE_ADDR})";
     $self->userLog( $mess, 'info' );
 }
 
@@ -258,7 +259,7 @@ sub userInfo {
 # @param $mess string to log
 sub userNotice {
     my ( $self, $mess ) = @_;
-    $mess = "Lemonldap::NG portal: $mess ($ENV{REMOTE_ADDR})";
+    $mess = "Lemonldap::NG : $mess ($ENV{REMOTE_ADDR})";
     $self->userLog( $mess, 'notice' );
 }
 
@@ -268,7 +269,7 @@ sub userNotice {
 # @param $mess string to log
 sub userError {
     my ( $self, $mess ) = @_;
-    $mess = "Lemonldap::NG portal: $mess ($ENV{REMOTE_ADDR})";
+    $mess = "Lemonldap::NG : $mess ($ENV{REMOTE_ADDR})";
     $self->userLog( $mess, 'warn' );
 }
 

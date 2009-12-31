@@ -69,6 +69,7 @@ function display(div,title) {
 	$('#newkb,#newrb,#delkb,#newkbr,#newrbr,#bdelvh').hide();
 }
 function none(id) {
+	currentId=id;
 	display('default','');
 }
 function hashRoot(){
