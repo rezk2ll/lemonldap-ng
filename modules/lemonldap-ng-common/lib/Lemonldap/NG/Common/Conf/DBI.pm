@@ -2,7 +2,7 @@ package Lemonldap::NG::Common::Conf::DBI;
 
 use strict;
 use DBI;
-use Lemonldap::NG::Common::Conf::Constants; #inherits
+use Lemonldap::NG::Common::Conf::Constants;    #inherits
 use Lemonldap::NG::Common::Conf::Serializer;
 
 our $VERSION = 0.17;
@@ -79,6 +79,7 @@ sub unlock {
 
 sub store {
     my ( $self, $fields ) = @_;
+    return DEPRECATED unless ( $self->{forceUpload} );
     $fields = $self->serialize($fields);
     my $tmp =
       $self->dbh->do( "insert into "

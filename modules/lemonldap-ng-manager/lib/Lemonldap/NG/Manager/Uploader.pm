@@ -172,11 +172,11 @@ sub confUpload {
         if ( $errors->{result}->{cfgNum} > 0 ) {
 
             # Store accounting datas to the response
-        $errors->{cfgDatas} = {
-            cfgAuthor   => $newConf->{cfgAuthor},
-            cfgAuthorIP => $newConf->{cfgAuthorIP},
-            cfgDate     => $newConf->{cfgDate}
-        };
+            $errors->{cfgDatas} = {
+                cfgAuthor   => $newConf->{cfgAuthor},
+                cfgAuthorIP => $newConf->{cfgAuthorIP},
+                cfgDate     => $newConf->{cfgDate}
+            };
             $msg = 'confSaved';
 
             # Log success using Lemonldap::NG::Common::CGI::userNotice():
@@ -195,6 +195,7 @@ sub confUpload {
                 DATABASE_LOCKED,    'databaseLocked',
                 UPLOAD_DENIED,      'uploadDenied',
                 SYNTAX_ERROR,       'syntaxError',
+                DEPRECATED,         'confModuledeprecated',
             }->{ $errors->{result}->{cfgNum} };
 
             # Log failure using Lemonldap::NG::Common::CGI::userError()
@@ -209,6 +210,9 @@ sub confUpload {
         {
             $errors->{result}->{other} = '<a href="javascript:uploadConf(1)">'
               . $self->translate('clickHereToForce') . '</a>';
+        }
+        elsif ( $errors->{result}->{cfgNum} == DEPRECATED ) {
+            $errors->{result}->{other} = 'Module : ' . $self->confObj->{type};
         }
     }
 
