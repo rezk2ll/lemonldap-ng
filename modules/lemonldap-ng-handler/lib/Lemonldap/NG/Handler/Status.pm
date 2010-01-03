@@ -283,6 +283,8 @@ __END__
 
 =head1 NAME
 
+=encoding utf8
+
 Lemonldap::NG::Handler::Status - Perl extension to add a mod_status like system for L<Lemonldap::NG::Handler>
 
 =head1 SYNOPSIS

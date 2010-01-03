@@ -328,6 +328,8 @@ __END__
 
 =head1 NAME
 
+=encoding utf8
+
 Lemonldap::NG::Common::CGI - Simple module to extend L<CGI> to manage
 HTTP "If-Modified-Since / 304 Not Modified" system.
 

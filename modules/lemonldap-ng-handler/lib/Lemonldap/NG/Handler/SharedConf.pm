@@ -219,6 +219,8 @@ __END__
 
 =head1 NAME
 
+=encoding utf8
+
 Lemonldap::NG::Handler::SharedConf - Perl extension to use dynamic
 configuration provide by Lemonldap::NG::Manager.
 

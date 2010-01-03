@@ -152,6 +152,8 @@ __END__
 
 =head1 NAME
 
+=encoding utf8
+
 Lemonldap::NG::Handler::Proxy - Perl extension to add a reverse-proxy to a
 Lemonldap::NG handler.
 
@@ -176,7 +178,7 @@ apache/conf/httpd.conf:
 
 =head1 DESCRIPTION
 
-This library adds a reverse-proxy functionnality to Apache. It is useful to
+This library adds a reverse-proxy functionality to Apache. It is useful to
 manage redirections if the remote host use it without the good domain.
 
 =head2 PARAMETERS

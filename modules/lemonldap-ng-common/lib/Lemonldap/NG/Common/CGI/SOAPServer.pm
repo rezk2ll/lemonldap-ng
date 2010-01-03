@@ -85,6 +85,8 @@ __END__
 
 =head1 NAME
 
+=encoding utf8
+
 Lemonldap::NG::Common::CGI::SOAPServer - Extends L<SOAP::Lite> to be compatible
 with L<CGI>.
 

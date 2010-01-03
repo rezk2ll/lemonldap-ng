@@ -44,6 +44,8 @@ __END__
 
 =head1 NAME
 
+=encoding utf8
+
 Lemonldap::NG::Portal::IssuerDBNull - Fake IssuerDB for Lemonldap::NG
 
 =head1 DESCRIPTION

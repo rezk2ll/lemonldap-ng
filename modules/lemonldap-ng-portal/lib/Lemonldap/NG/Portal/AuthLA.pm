@@ -1370,6 +1370,8 @@ __END__
 
 =head1 NAME
 
+=encoding utf8
+
 Lemonldap::NG::Portal::AuthLA - Provide Liberty Alliance Authentication for
 FederID project.
 

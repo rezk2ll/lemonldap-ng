@@ -210,6 +210,8 @@ __END__
 
 =head1 NAME
 
+=encoding utf8
+
 Lemonldap::NG::Common::Apache::Session::SOAP - Perl extension written to
 access to Lemonldap::NG Web-SSO sessions via SOAP.
 

@@ -84,6 +84,8 @@ __END__
 
 =head1 NAME
 
+=encoding utf8
+
 Lemonldap::NG::Manager - Perl extension for managing Lemonldap::NG Web-SSO
 system.
 

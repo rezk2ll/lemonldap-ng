@@ -58,6 +58,8 @@ __END__
 
 =head1 NAME
 
+=encoding utf8
+
 Lemonldap::NG::Portal::Apache - Perl extension for building Lemonldap::NG
 compatible portals with Apache authentication.
 

@@ -99,6 +99,8 @@ __END__
 
 =head1 NAME
 
+=encoding utf8
+
 Lemonldap::NG::Portal::SharedConf - Module for building Lemonldap::NG
 compatible portals using a central configuration database.
 

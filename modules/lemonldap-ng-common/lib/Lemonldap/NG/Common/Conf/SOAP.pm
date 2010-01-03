@@ -95,6 +95,8 @@ __END__
 
 =head1 NAME
 
+=encoding utf8
+
 Lemonldap::NG::Common::Conf::SOAP - Perl extension written to access to
 Lemonldap::NG Web-SSO configuration via SOAP.
 

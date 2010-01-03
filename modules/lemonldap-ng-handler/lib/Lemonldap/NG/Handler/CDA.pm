@@ -28,6 +28,8 @@ __END__
 
 =head1 NAME
 
+=encoding utf8
+
 Lemonldap::NG::Handler::CDA - Module to use Lemonldap::NG::Handler
 mechanisms with Cross-Domain-Authentication.
 

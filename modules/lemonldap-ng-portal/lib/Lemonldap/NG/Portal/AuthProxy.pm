@@ -35,6 +35,8 @@ __END__
 
 =head1 NAME
 
+=encoding utf8
+
 Lemonldap::NG::Portal::AuthProxy - Authentication module for Lemonldap::NG
 that delegates authentication to a remote Lemonldap::NG portal.
 

@@ -127,19 +127,19 @@ all:	configure common handler manager portal
 configure:	common_conf handler_conf portal_conf manager_conf
 
 common_conf:
-	@cd ${SRCCOMMONDIR}; LMNGCONFFILE=$(STORAGECONFFILE) perl Makefile.PL $(PERLOPTIONS)
+	@cd ${SRCCOMMONDIR}; LMNGCONFFILE=$(STORAGECONFFILE) $(PERL) Makefile.PL $(PERLOPTIONS)
 	@touch common_conf
 
 handler_conf:
-	@cd ${SRCHANDLERDIR}; perl Makefile.PL $(PERLOPTIONS)
+	@cd ${SRCHANDLERDIR}; $(PERL) Makefile.PL $(PERLOPTIONS)
 	@touch handler_conf
 
 portal_conf:
-	@cd ${SRCPORTALDIR}; perl Makefile.PL $(PERLOPTIONS)
+	@cd ${SRCPORTALDIR}; $(PERL) Makefile.PL $(PERLOPTIONS)
 	@touch portal_conf
 
 manager_conf:
-	@cd ${SRCMANAGERDIR}; perl Makefile.PL $(PERLOPTIONS)
+	@cd ${SRCMANAGERDIR}; $(PERL) Makefile.PL $(PERLOPTIONS)
 	@touch manager_conf
 
 #
@@ -223,13 +223,13 @@ install_site:	install_manager_site install_portal_site install_handler_site inst
 		cp --remove-destination  _example/etc/apache* $(RCONFDIR); \
 		cp --remove-destination _example/etc/for_etc_hosts $(RCONFDIR); \
 	fi
-	@perl -i -pe 's#__HANDLER__#${HANDLERDIR}/MyHandler.pm#; \
+	@$(PERL) -i -pe 's#__HANDLER__#${HANDLERDIR}/MyHandler.pm#; \
 			s/__DNSDOMAIN__/$(DNSDOMAIN)/g; \
 			s#__PORTALDIR__#$(PORTALDIR)/#g; \
 			s#__MANAGERDIR__#$(MANAGERDIR)/#g; \
 			s#__TESTDIR__#$(TESTDIR)/#g; \
 			s#__DOCDIR__#$(DOCDIR)/#g;' $(RCONFDIR)/apache*
-	@perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)/for_etc_hosts
+	@$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)/for_etc_hosts
 	@echo
 	@echo "LemonLDAP::NG v${VERSION} is installed with these parameters:"
 	@echo "  - System configuration: ${CONFDIR}"
@@ -272,7 +272,7 @@ install_manager_site:	install_conf_dir
 	done
 	@find ${RSESSIONSEXPLORERDIR} -type l -name images -delete
 	@cp -pR --remove-destination ${SRCMANAGERDIR}/example/index.pl ${RMANAGERDIR}
-	@perl -i -pe 's#__MANAGERDIR__#$(MANAGERDIR)#' ${RMANAGERDIR}/index.pl
+	@$(PERL) -i -pe 's#__MANAGERDIR__#$(MANAGERDIR)#' ${RMANAGERDIR}/index.pl
 	@cp -pR --remove-destination ${SRCMANAGERDIR}/example/skins/* $(RMANAGERSKINSDIR)
 	@if [ "$(MANAGERDIR)/skins/" != "$(MANAGERSKINSDIR)/" ]; then \
 		for skin in $$(ls lemonldap-ng-manager/example/skins/); do \
@@ -280,7 +280,7 @@ install_manager_site:	install_conf_dir
 			ln -s $(MANAGERSKINSDIR)/$$skin $(RMANAGERDIR)/skins/$$skin; \
 		done; \
 	fi
-	@perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)/$(CONFFILENAME)
+	@$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)/$(CONFFILENAME)
 	# Sessions explorer install
 	@cp -pR --remove-destination ${SRCMANAGERDIR}/example/sessions.pl $(RSESSIONSEXPLORERDIR)
 	@cp -pR --remove-destination ${SRCMANAGERDIR}/example/images $(RSESSIONSEXPLORERDIR)
@@ -305,7 +305,7 @@ install_portal_site:	install_conf_dir
 	@cp -pR --remove-destination ${SRCPORTALDIR}/example/index_skin.pl ${RPORTALDIR}/index.pl
 	@cp -pR --remove-destination ${SRCPORTALDIR}/example/error.pl ${RPORTALDIR}
 	@cp -pR --remove-destination ${SRCPORTALDIR}/example/apps ${RPORTALDIR}
-	@perl -i -pe 's#__SKINDIR__#$(PORTALDIR)/skins#; \
+	@$(PERL) -i -pe 's#__SKINDIR__#$(PORTALDIR)/skins#; \
 		s#__APPSXMLFILE__#$(CONFDIR)/apps-list.xml#;' ${RPORTALDIR}/index.pl ${RPORTALDIR}/error.pl
 	@cp -pR --remove-destination ${SRCPORTALDIR}/example/skins/* $(RPORTALSKINSDIR)
 	@if [ "$(PORTALDIR)/skins/" != "$(PORTALSKINSDIR)/" ]; then \
@@ -318,18 +318,18 @@ install_portal_site:	install_conf_dir
 	@if [ "$(ERASECONFIG)" -eq "1" ]; then \
 		cp --remove-destination _example/etc/apps-list* $(RCONFDIR); \
 	fi
-	@perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)/apps-list.xml
+	@$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)/apps-list.xml
 	# L-A portal install
 	@cp -pR --remove-destination ${SRCPORTALDIR}/example/AuthLA/* $(RLASPPORTALDIR)
-	@perl -i -pe 's#__DIR__#$(LASPPORTALDIR)/#g' $(RLASPPORTALDIR)/index.pl
+	@$(PERL) -i -pe 's#__DIR__#$(LASPPORTALDIR)/#g' $(RLASPPORTALDIR)/index.pl
 	# Cron files
 	@cp --remove-destination lemonldap-ng-portal/example/scripts/purgeCentralCache.cron.d $(RCRONDIR)/lemonldap-ng
 	@if [ ! "$(APACHEUSER)" ]; then \
-		perl -i -pe 's#__APACHEUSER__#root#g;' $(RCRONDIR)/lemonldap-ng; \
+		$(PERL) -i -pe 's#__APACHEUSER__#root#g;' $(RCRONDIR)/lemonldap-ng; \
 	else \
-		perl -i -pe 's#__APACHEUSER__#$(APACHEUSER)#g;' $(RCRONDIR)/lemonldap-ng; \
+		$(PERL) -i -pe 's#__APACHEUSER__#$(APACHEUSER)#g;' $(RCRONDIR)/lemonldap-ng; \
 	fi
-	@perl -i -pe 's#__BINDIR__#$(BINDIR)#g;' $(RCRONDIR)/lemonldap-ng
+	@$(PERL) -i -pe 's#__BINDIR__#$(BINDIR)#g;' $(RCRONDIR)/lemonldap-ng
 	# Clean SVN files
 	@rm -rf $$(find ${RPORTALDIR} $(RPORTALSKINSDIR) $(RLASPPORTALDIR) $(RCRONDIR) $(RCONFDIR) -type d -name .svn)
 
@@ -344,7 +344,7 @@ install_test_site:
 	@install -v -d $(RTESTDIR)
 	@cp -pR --remove-destination _example/test/* $(RTESTDIR)
 	@rm -rf $$(find $(RTESTDIR) -type d -name .svn)
-	@perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RTESTDIR)/index.pl
+	@$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RTESTDIR)/index.pl
 	@rm -rf $$(find $(RTESTDIR) -type d -name .svn)
 
 install_examples_site:
@@ -357,8 +357,8 @@ install_examples_site:
 		$(REXAMPLESDIR)/manager/skins \
 		$(REXAMPLESDIR)/manager/images \
 	@rm -rf $$(find $(REXAMPLESDIR) -type d -name .svn)
-	@perl -i -pe 's#__DIR__#$(LASPPORTALDIR)#g' $(REXAMPLESDIR)/portal/AuthLA/index.pl
-	@perl -i -pe 's#__SKINDIR__#$(PORTALDIR)/skins#; \
+	@$(PERL) -i -pe 's#__DIR__#$(LASPPORTALDIR)#g' $(REXAMPLESDIR)/portal/AuthLA/index.pl
+	@$(PERL) -i -pe 's#__SKINDIR__#$(PORTALDIR)/skins#; \
 		s#__APPSXMLFILE__#$(CONFDIR)/apps-list.xml#; \
 		s#__SESSIONDIR__#$(APACHESESSIONFILEDIR)/#g;' $(REXAMPLESDIR)/portal/*.pl
 
@@ -371,11 +371,11 @@ install_conf_dir:	install_sessions_dir
 	@install -v -d $(RCONFDIR) $(RFILECONFIGDIR) $(RTOOLSDIR)
 	@if [ "$(ERASECONFIG)" -eq "1" ]; then \
 		cp --remove-destination $(SRCCOMMONDIR)/$(CONFFILENAME) $(RCONFDIR); \
-		perl -i -pe 's#^dirName\s*=\s*.*#dirName = $(FILECONFIGDIR)#g' $(RCONFDIR)/$(CONFFILENAME); \
+		$(PERL) -i -pe 's#^dirName\s*=\s*.*#dirName = $(FILECONFIGDIR)#g' $(RCONFDIR)/$(CONFFILENAME); \
 	fi
 	@cp _example/conf/lmConf-1 $(RFILECONFIGDIR)
-	@perl -000 -i -pe "s#^(globalStorageOptions\\n\\s+)'[^\\n]*?'\$$#\$${1}\'\\\$$data1 = {&39;Directory&39; => &39;$(APACHESESSIONFILEDIR)&39;,&39;LockDirectory&39; => &39;$(APACHESESSIONFILELOCKDIR)&39;};'#m" $(RFILECONFIGDIR)/lmConf-1
-	@perl -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g;\
+	@$(PERL) -000 -i -pe "s#^(globalStorageOptions\\n\\s+)'[^\\n]*?'\$$#\$${1}\'\\\$$data1 = {&39;Directory&39; => &39;$(APACHESESSIONFILEDIR)&39;,&39;LockDirectory&39; => &39;$(APACHESESSIONFILELOCKDIR)&39;};'#m" $(RFILECONFIGDIR)/lmConf-1
+	@$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g;\
 		s/__LDAPPORT__/$(LDAPPORT)/g;\
 		s/__LDAPHOST__/$(LDAPHOST)/g;\
 		s/__LDAPSUFFIX__/$(LDAPSUFFIX)/g;\
@@ -447,7 +447,7 @@ cpan:	clean configure common_cpan handler_cpan portal_cpan manager_cpan
 	for i in Common Portal Handler Manager; do \
 		tar xzf Lemonldap-NG-$$i-*.tar.gz \
 			$$(tar tzf Lemonldap-NG-$$i-*.tar.gz |grep META.yml); \
-		mv Lemonldap-NG-$$i-*/META.yml lemonldap-ng-$$(perl -e "print lc('$$i')")/; \
+		mv Lemonldap-NG-$$i-*/META.yml lemonldap-ng-$$($(PERL) -e "print lc('$$i')")/; \
 		rmdir Lemonldap-NG-$$i*/; \
 		done
 
@@ -467,23 +467,28 @@ manager_cpan:	manager_conf
 	@$(MAKE) -C ${SRCMANAGERDIR} dist
 	@mv ${SRCMANAGERDIR}/Lemonldap*.gz .
 
-static_example:	example
-	@mkdir -p ${EXAMPLESDIR}/static
-	@cd ${EXAMPLESDIR}/static/;cp -a ../manager/{skins} .;cd -
+sub_static_example: install_site
+	echo $(LMPREFIX)
+	echo $(EXAMPLEROOT)
+	@mkdir -p ${EXAMPLEROOT}/static
+	@cd ${EXAMPLEROOT}/static/;cp -a ../manager/{skins} .;cd -
 	@../scripts/make_static_example.pl ${DESTMANAGERDIR}/index.pl ${SCRIPTSDIR}/static/index.html $(EXAMPLELANG)
+
+static_example:
+	$(MAKE) sub_static_example LMPREFIX=$(EXAMPLEROOT)
 
 documentation:
 	@cd doc/ && ../scripts/doc.pl
 
 doxygen:	clean
-	perl -i -pe 's/^(PROJECT_NUMBER\s*=\s*)\d.*$$/$${1}'$(VERSION)'/' Doxyfile
+	$(PERL) -i -pe 's/^(PROJECT_NUMBER\s*=\s*)\d.*$$/$${1}'$(VERSION)'/' Doxyfile
 	COLLABORATIVE_GRAPH=1 doxygen Doxyfile
 	mkdir doc/devel/tmp
 	mv doc/devel/html/inherit* doc/devel/tmp/
 	COLLABORATIVE_GRAPH=0 doxygen Doxyfile
 	mv -f doc/devel/tmp/* doc/devel/html/
 	rm -rf doc/devel/tmp
-	perl -i -pe 's/Graphical Class Hierarchy/Class Collaboration Graph/' doc/devel/html/inherits.html doc/devel/html/tree.html
+	$(PERL) -i -pe 's/Graphical Class Hierarchy/Class Collaboration Graph/' doc/devel/html/inherits.html doc/devel/html/tree.html
 
 distclean:	clean
 

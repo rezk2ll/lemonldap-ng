@@ -153,6 +153,8 @@ __END__
 
 =head1 NAME
 
+=encoding utf8
+
 Lemonldap::NG::Handler::AuthBasic - Perl extension to be able to authenticate
 users by basic web system but to use Lemonldap::NG to control authorizations.
 

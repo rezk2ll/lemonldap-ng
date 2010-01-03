@@ -1039,6 +1039,8 @@ __END__
 
 =head1 NAME
 
+=encoding utf8
+
 Lemonldap::NG::Portal::Simple - Base module for building Lemonldap::NG compatible portals
 
 =head1 SYNOPSIS
@@ -1181,7 +1183,7 @@ be set to:
 =back
 
 =item * caPath, caFile: if you use ldap+tls you can overwrite cafile or capath
-options with those parameters. This is usefull if you use a shared
+options with those parameters. This is useful if you use a shared
 configuration.
 
 =item * ldapPpolicyControl: set it to 1 if you want to use LDAP Password Policy

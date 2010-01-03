@@ -362,6 +362,8 @@ __END__
 
 =head1 NAME
 
+=encoding utf8
+
 Lemonldap::NG::Common::Conf - Perl extension written to manage Lemonldap::NG
 Web-SSO configuration.
 
@@ -397,7 +399,7 @@ L<Lemonldap::NG::Portal> and L<Lemonldap::NG::Manager>.
 =over
 
 =item * B<new> (constructor): it takes different arguments depending on the
-choosen type. Examples:
+chosen type. Examples:
 
 =over
 

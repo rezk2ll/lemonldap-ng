@@ -55,6 +55,8 @@ __END__
 
 =head1 NAME
 
+=encoding utf8
+
 Lemonldap::NG::Portal::IssuerDBSAML - SAML IssuerDB for Lemonldap::NG
 
 =head1 SYNOPSIS

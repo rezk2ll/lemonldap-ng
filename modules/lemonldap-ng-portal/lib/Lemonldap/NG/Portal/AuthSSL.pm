@@ -84,6 +84,8 @@ __END__
 
 =head1 NAME
 
+=encoding utf8
+
 Lemonldap::NG::Portal::AuthSSL - Perl extension for building Lemonldap::NG
 compatible portals with SSL authentication.
 

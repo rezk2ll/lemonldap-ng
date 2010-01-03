@@ -9,6 +9,8 @@ __END__
 
 =head1 NAME
 
+=encoding utf8
+
 Lemonldap::NG::Common - Common files for Lemonldap::NG infrastructure
 
 =head1 DESCRIPTION

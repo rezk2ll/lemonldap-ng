@@ -14,6 +14,8 @@ __END__
 
 =head1 NAME
 
+=encoding utf8
+
 Lemonldap::NG::Portal::_SAML - TODO
 
 =head1 SYNOPSIS

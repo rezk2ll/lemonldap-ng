@@ -26,6 +26,8 @@ __END__
 
 =head1 NAME
 
+=encoding utf8
+
 Lemonldap::NG::Portal::CDA - Perl extension for building Lemonldap::NG
 compatible portals with Cross Domain Authentication.
 

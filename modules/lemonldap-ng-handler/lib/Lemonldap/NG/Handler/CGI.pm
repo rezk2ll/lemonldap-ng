@@ -261,6 +261,8 @@ __END__
 
 =head1 NAME
 
+=encoding utf8
+
 Lemonldap::NG::Handler::CGI - Perl extension for using Lemonldap::NG
 authentication in Perl CGI without using Lemonldap::NG::Handler
 
@@ -279,7 +281,7 @@ authentication in Perl CGI without using Lemonldap::NG::Handler
           dbiPassword          => "password",
       },
       https               => 0,
-      # Optionnal
+      # Optional
       protection    => 'rule: $uid eq "admin"',
       # Or to use rules from manager
       protection    => 'manager',
@@ -291,7 +293,7 @@ authentication in Perl CGI without using Lemonldap::NG::Handler
   # Lemonldap::NG cookie validation (done if you set "protection")
   $cgi->authenticate();
   
-  # Optionnal Lemonldap::NG authorization (done if you set "protection")
+  # Optional Lemonldap::NG authorization (done if you set "protection")
   $cgi->authorize();
   
   # See CGI(3) for more about writing HTML pages

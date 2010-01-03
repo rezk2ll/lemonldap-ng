@@ -367,6 +367,8 @@ __END__
 
 =head1 NAME
 
+=encoding utf8
+
 Lemonldap::NG::Portal::Notification - Provides notification messages system.
 
 =head1 SYNOPSIS

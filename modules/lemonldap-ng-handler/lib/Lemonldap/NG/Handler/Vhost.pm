@@ -121,6 +121,8 @@ __END__
 
 =head1 NAME
 
+=encoding utf8
+
 Lemonldap::NG::Handler::Vhost - Perl extension for building a Lemonldap::NG
 compatible handler able to manage Apache virtual hosts.
 

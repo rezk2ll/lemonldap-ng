@@ -1126,6 +1126,8 @@ __END__
 
 =head1 NAME
 
+=encoding utf8
+
 Lemonldap::NG::Handler::Simple - Perl base extension for building Lemonldap::NG
 compatible handler.
 
@@ -1242,7 +1244,7 @@ store user's datas. See L<Lemonldap::NG::Portal(3)> for more explanations.
 
 =item B<localStorage> E<amp> B<localStorageOptions>
 
-Name and parameters of the optional but recommanded Cache::* module used to
+Name and parameters of the optional but recommended Cache::* module used to
 share user's datas between Apache processes. There is no need to set expires
 options since L<Lemonldap::NG::Handler::Simple> call the Cache::*::purge
 method itself.

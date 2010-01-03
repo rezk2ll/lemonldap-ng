@@ -562,6 +562,8 @@ __END__
 
 =head1 NAME
 
+=encoding utf8
+
 Lemonldap::NG::Portal::Menu - Enhanced menu to display to authenticated users
 
 =head1 SYNOPSIS

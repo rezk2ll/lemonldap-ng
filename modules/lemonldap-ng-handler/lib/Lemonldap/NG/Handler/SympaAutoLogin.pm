@@ -39,6 +39,8 @@ __END__
 
 =head1 NAME
 
+=encoding utf8
+
 Lemonldap::NG::Handler::SympaAutoLogin - Perl extension to generate Sympa cookie
 for users authenticated by Lemonldap::NG
 

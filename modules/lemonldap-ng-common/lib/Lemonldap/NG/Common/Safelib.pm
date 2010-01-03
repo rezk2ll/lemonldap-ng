@@ -109,6 +109,8 @@ __END__
 
 =head1 NAME
 
+=encoding utf8
+
 Lemonldap::NG::Common::Safelib - Contains functions that are automatically
 imported in Lemonldap::NG Safe objects to be used in expressions like rules,
 macros,...

@@ -48,6 +48,8 @@ __END__
 
 =head1 NAME
 
+=encoding utf8
+
 Lemonldap::NG::Common::CGI::SOAPService - Wrapper for all SOAP functions of
 Lemonldap::NG CGIs.
 
