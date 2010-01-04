@@ -90,6 +90,7 @@ sub confUpload {
                     $errors->{errors}->{$name} = $m || $test->{keyMsgFail};
                     next;
                 }
+                $errors->{warnings}->{$name} = $m if($m);
             }
             if ( $test->{test} ) {
                 ( $res, $m ) = $self->applyTest( $test->{test}, $value );
@@ -97,6 +98,7 @@ sub confUpload {
                     $errors->{errors}->{$name} = $m || $test->{msgFail};
                     next;
                 }
+                $errors->{warnings}->{$name} = $m if($m);
             }
 
             # 1.3.1.2 Tests that return a warning

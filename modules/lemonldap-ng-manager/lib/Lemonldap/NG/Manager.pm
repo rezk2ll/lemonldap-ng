@@ -72,8 +72,13 @@ sub menu {
     return
         '<ul class="simpleTree">' 
       . $self->li( 'root', 'root' )
-      . $self->span( 'root', "Configuration $self->{cfgNum}",
-        $self->{cfgNum}, 'cfgDatas', 'default' )
+      . $self->span(
+        id   => 'root',
+        text => "Configuration $self->{cfgNum}",
+        data => $self->{cfgNum},
+        js   => 'cfgDatas',
+        help => 'default'
+      )
       . '<ul>'
       . $self->node()
       . '</ul></li></ul>';

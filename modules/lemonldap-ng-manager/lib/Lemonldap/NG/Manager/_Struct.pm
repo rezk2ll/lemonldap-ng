@@ -212,13 +212,16 @@ sub struct {
 # Returns the tests to do with the datas uploaded.
 # @return hashref
 sub testStruct {
+    my $safe = Safe->new();
     my $assignTest = qr/(?<=[^=<!>\?])=(?![=~])/;
     my $assignMsg  = 'containsAnAssignment';
     my $perlExpr   = sub {
         my $e = shift;
-        eval "use strict;$e";
+        $safe->reval($e,1);
+        return 1 unless($@);
         return 1 if ( $@ =~ /Global symbol "\$.*requires explicit package/ );
-        return ( $@ ? ( 0, $@ ) : 1 );
+        return (1, "Function \"<b>$1</b>\" must be declared in customFunctions") if ( $@ =~ /Bareword "(.*?)" not allowed while "strict subs"/ );
+        return ( 0, $@ );
     };
     my $boolean = { test => qr/^(?:0|1)?$/, msgFail => 'Value must be 0 or 1' };
     my $pcre = sub {

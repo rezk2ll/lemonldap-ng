@@ -5,6 +5,7 @@
 # Configuration tree builder
 package Lemonldap::NG::Manager::Downloader;
 
+use strict;
 use MIME::Base64;
 
 # TODO
@@ -43,14 +44,14 @@ sub node {
                 # subnode is an ajax subnode
                 if ( $flag =~ /^(c?)n$/ ) {
                     $res .= $self->ajaxNode(
-                        ( $1 ? $target : "$node/$target" ),
-                        "$target",
-                        "node=$node/$target",
-                        $tmp->{$target}->{_help} || $help,
-                        $tmp->{$target}->{_js},
-                        '',
-                        0,
-                        $tmp->{$target}->{_call}
+                        id => ( $1 ? $target : "$node/$target" ),
+                        text  => "$target",
+                        param => "node=$node/$target",
+                        help  => $tmp->{$target}->{_help} || $help,
+                        js    => $tmp->{$target}->{_js},
+                        data  => '',
+                        noT   => 0,
+                        call  => $tmp->{$target}->{_call}
                     );
                     next;
                 }
@@ -64,9 +65,11 @@ sub node {
                 if ( ref( $tmp->{$target} ) ) {
                     $res .= $self->li( "$node/$target", "closed" )
                       . $self->span(
-                        "$node/$target", $target, '',
-                        $tmp->{$target}->{_js},
-                        $tmp->{$target}->{_help} || $help
+                        id   => "$node/$target",
+                        text => $target,
+                        data => '',
+                        js   => $tmp->{$target}->{_js},
+                        help => $tmp->{$target}->{_help} || $help
                       )
                       . "<ul>"
                       . $self->node("$node/$target")
@@ -120,8 +123,14 @@ sub confNode {
         return unless ($h);
         foreach ( sort keys %$h ) {
             if ( ref($h) ) {
-                $res .= $self->ajaxNode( "$target/$_", $_,
-                    "node=$node/$_\&amp;key=$_", $help, $js, undef, 1 );
+                $res .= $self->ajaxNode(
+                    id    => "$target/$_",
+                    text  => $_,
+                    param => "node=$node/$_\&amp;key=$_",
+                    help  => $help,
+                    js    => $js,
+                    noT   => 1
+                );
             }
             else {
                 $res .=
@@ -155,9 +164,15 @@ sub confNode {
 
                 # Here, "notranslate" is set to true : hash values must not be
                 # translated
-                $res .=
-                    $self->li($id)
-                  . $self->span( $id, "$_", $h->{$_}, $js, $help, 1 ) . "</li>";
+                $res .= $self->li($id)
+                  . $self->span(
+                    id   => $id,
+                    text => "$_",
+                    data => $h->{$_},
+                    js   => $js,
+                    help => $help,
+                    noT  => 1
+                  ) . "</li>";
             }
         }
     }
@@ -188,9 +203,14 @@ sub confNode {
             $self->lmLog( "Type $type unknown", 'warn' ) unless ( defined $h );
         }
         if ( ref($h) ) {
-            $res .=
-                $self->li( "$target", "closed" )
-              . $self->span( "$target", $text, '', $js, $help ) . "<ul>";
+            $res .= $self->li( "$target", "closed" )
+              . $self->span(
+                id   => "$target",
+                text => $text,
+                data => '',
+                js   => $js,
+                help => $help
+              ) . "<ul>";
             foreach ( sort keys %$h ) {
                 if ( ref( $h->{$_} ) ) {
                     $res .=
@@ -198,18 +218,28 @@ sub confNode {
                 }
                 else {
                     my $id = "$target/$_";
-                    $res .=
-                        $self->li($id)
-                      . $self->span( $id, $_, $h->{$_}, $js, $help ) . "</li>";
+                    $res .= $self->li($id)
+                      . $self->span(
+                        id   => $id,
+                        text => $_,
+                        data => $h->{$_},
+                        js   => $js,
+                        help => $help
+                      ) . "</li>";
                 }
             }
             $res .= '</ul></li>';
         }
         else {
             my $id = "$target";
-            $res .=
-                $self->li($id)
-              . $self->span( $id, $text, $h, $js, $help ) . "</li>";
+            $res .= $self->li($id)
+              . $self->span(
+                id   => $id,
+                text => $text,
+                data => $h,
+                js   => $js,
+                help => $help
+              ) . "</li>";
         }
     }
     return $res;
@@ -354,17 +384,18 @@ sub confObj {
 # @param $noT Optional flag to block translation
 # @return HTML string
 sub ajaxNode {
-    my ( $self, $id, $text, $param, $help, $js, $data, $noT, $call ) = @_;
-    $param .= "&amp;cfgNum=$self->{cfgNum}";
-    return
-        $self->li($id)
-      . $self->span( $id, $text, $data, $js, $help, $noT )
-      . "<ul class=\"ajax\">"
-      . $self->li("sub_$id")
-      . ".{url:$ENV{SCRIPT_NAME}?$param"
+    my ( $self, %args ) = @_;
+    $args{param} .= "&amp;cfgNum=$self->{cfgNum}";
+    return $self->li( $args{id} ) . $self->span(%args)
 
-      #  . ( $js   ? ",js:$js"     : '' )
-      . ( $call ? ",call:$call" : '' ) . "}</li></ul></li>\n";
+      # . $self->span( $id, $text, $data, $js, $help, $noT )
+      . "<ul class=\"ajax\">"
+      . $self->li("sub_$args{id}")
+      . ".{url:$ENV{SCRIPT_NAME}?$args{param}"
+
+      . ( $args{deferedJs} ? ",js:$args{deferedJs}" : '' )
+      . ( $args{call}      ? ",call:$args{call}"    : '' )
+      . "}</li></ul></li>\n";
 }
 
 ## @method protected string span(string id,string text,string param,string help,string js,string data,boolean noT)
@@ -378,22 +409,23 @@ sub ajaxNode {
 # @param $noT Optional flag to block translation
 # @return HTML string
 sub span {
-    my ( $self, $id, $text, $data, $js, $help, $noT ) = @_;
-    use Carp qw(cluck);
-    cluck('dd') if ( $js eq 'default' );
-    my $tmp = $text;
-    $data = '' unless ( defined $data );
-    $js ||= "none";
-    $id = "li_" . encode_base64( $id, '' );
-    $id   =~ s/(=*)$/length($1)/e;
-    $js .= "('$id')" unless ( $js =~ /\(/ );
-    $data =~ s/"/&#39;/g;
+    my ( $self, %args ) = @_;
+
+    #my ( $self, $id, $text, $data, $js, $help, $noT ) = @_;
+    my $tmp = $args{text};
+    $args{data} = '' unless ( defined $args{data} );
+    $args{js} ||= "none";
+    $args{id} = "li_" . encode_base64( $args{id}, '' );
+    $args{id} =~ s/(=*)$/length($1)/e;
+    $args{js} .= "('$args{id}')" unless ( $args{js} =~ /\(/ );
+    $args{data} =~ s/"/&#39;/g;
     $tmp  =~ s/"/&#39;/g;
-    $text = join ' ', map { $self->translate($_) } split /\s+/, $text
-      unless ($noT);
-    $text = $self->escapeHTML($text);
+    $args{text} = join ' ', map { $self->translate($_) } split /\s+/,
+      $args{text}
+      unless ( $args{noT} );
+    $args{text} = $self->escapeHTML( $args{text} );
     return
-"<span name=\"$tmp\" id=\"text_$id\" onclick=\"$js\" help=\"$help\" value=\"$data\">$text</span>
+"<span name=\"$tmp\" id=\"text_$args{id}\" onclick=\"$args{js}\" help=\"$args{help}\" value=\"$args{data}\">$args{text}</span>
 ";
 }
 
