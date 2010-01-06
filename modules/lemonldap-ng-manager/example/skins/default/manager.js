@@ -5,14 +5,15 @@
 var simpleTreeCollection;
 
 $(document).ready(function(){
-	/* Help div (require jQuery UI) */
-	// Allow drag
-	$("#help").draggable({ handle: 'h1', opacity: '0.70' });
-	// Allow resize
-	$("#help").resizable({ handles: 'all', alsoResize: '#help_content', ghost: 'true'});
-	// Display/hide content with double click on title bar
-	$("#help h1").dblclick(function(){
-		$("#help_content").slideToggle('slow');
+	/* Display/hide divs */
+	$("#buttons h1").click(function(){
+		$("#buttons_content").slideToggle('fast');
+	});
+	$("#edition h1").click(function(){
+		$("#content").slideToggle('fast');
+	});
+	$("#help h1").click(function(){
+		$("#help_content").slideToggle('fast');
 	});
 
 	/* Simple Tree */

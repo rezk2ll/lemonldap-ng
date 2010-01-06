@@ -19,31 +19,36 @@ var scriptname='<TMPL_VAR NAME="SCRIPT_NAME">';var imagepath='<TMPL_VAR NAME="DI
 </head>
 <body>
 
+<!-- Container -->
+<div id="container" class="ui-widget ui-helper-clearfix">
+
 <!-- Header -->
-<div id="header" class="ui-widget">
+<div id="header">
    <img alt="Lemonldap::NG" src="<TMPL_VAR NAME="DIR">/logo_lemonldap-ng.png" class="logo" width="200" height="38" />
    <p class="ui-state-default ui-corner-all ui-state-active"><a href="index.pl"><lang en="Configuration management" fr="Gestion de la configuration"/></a></p>
    <p class="ui-state-default ui-corner-all"><a href="sessions.pl"><lang en="Sessions explorer" fr="Explorateur de sessions"/></a></p>
+<!-- Header -->
 </div>
 
-<!-- Main -->
+<!-- Page -->
 <div id="page" class="ui-corner-all ui-helper-clearfix ui-widget-content">
 
 <!-- Menu (tree) -->
-<div id="menu" class="ui-widget">
+<div id="menu">
    <TMPL_VAR NAME="MENU">
 </div>
 
 <!-- Data -->
 <div id="data">
 
-   <!-- All buttons -->
-   <div id="buttons" class="ui-widget ui-corner-all">
+   <!-- Buttons -->
+   <div id="buttons" class="ui-corner-all">
 
     <h1 class="ui-widget-header ui-corner-all">
      <lang en="Available actions" fr="Actions disponibles" />
     </h1>
 
+    <div id="buttons_content" class="ui-corner-all ui-widget-content">
     <button id="bsave" onclick="uploadConf()" class="ui-state-default ui-corner-all" >
      <lang en="Save" fr="Sauver" />
     </button>
@@ -79,21 +84,25 @@ var scriptname='<TMPL_VAR NAME="SCRIPT_NAME">';var imagepath='<TMPL_VAR NAME="DI
     <button id="delkb" style="display:none;" onclick="delKey();return false;" class="ui-state-default ui-corner-all">
      <lang en="Delete key" fr="Effacer la clef" />
     </button>
+    </div>
 
+   <!-- Buttons -->
    </div>
 
   
-   <div id="edition" class="ui-widget ui-corner-all">
-   <span id="content_title">&nbsp;</span>
- 
+   <!-- Edition -->
+   <div id="edition" class="ui-corner-all">
+
    <form action="#" onsubmit="return false">
 
     <h1 class="ui-widget-header ui-corner-all">
-     <lang en="Values to edit" fr="Valeurs à éditer" />
+     <lang en="Edit key " fr="Édition de la clé " />
+     <span id="content_title">&nbsp;</span>
     </h1>
 
-   <!-- Form content -->
-   <div id="content">
+
+   <!-- Edition content -->
+   <div id="content" class="ui-corner-all ui-widget-content">
 
     <!-- Default text -->
     <div id="content_default" class="content">
@@ -144,21 +153,31 @@ var scriptname='<TMPL_VAR NAME="SCRIPT_NAME">';var imagepath='<TMPL_VAR NAME="DI
     </div>
 
    </div>
-  </form>
-  </div>
 
-</div>
+   </form>
 
-</div>
+   <!-- Edition -->
+   </div>
 
-<div id="help" class="ui-widget ui-corner-all">
+<!-- Help -->
+<div id="help" class="ui-corner-all">
   <h1 class="ui-widget-header ui-corner-all"><lang en="Help" fr="Aide"/></h1>
 
-  <div id="help_content" class="ui-widget-content">
+  <div id="help_content" class="ui-widget-content ui-corner-all">
   <!-- AJAX content -->
      <lang en="Click on the configuration tree to edit parameters" fr="Cliquer sur l'arbre de configuration pour éditer les paramètres" />
   </div>
 
+<!-- Help -->
+</div>
+
+<!-- Data -->
+</div>
+
+<!-- Page -->
+</div>
+
+<!-- Container -->
 </div>
 
 </body>
