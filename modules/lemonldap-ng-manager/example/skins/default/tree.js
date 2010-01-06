@@ -8,6 +8,10 @@
 * All rights reserved.
 *
 * Modified by Xavier Guimard <x.guimard@free.fr> for Lemonldap::NG
+* Modified by Clement Oudot <clem.oudot@gmail.com> for Lemonldap::NG:
+*     * Add useClickToToggle option
+*     * Add afterCloseNearby trigger
+*     * Add and remove 'active' class instead of erasing all class values
 *
 * Redistribution and use in source and binary forms, with or without
 * modification, are permitted provided that the following conditions are met:
@@ -56,7 +60,9 @@ $.fn.simpleTree = function(opt){
 			afterDblClick:	false,
 			// added by Erik Dohmen (2BinBusiness.nl) to make context menu cliks available
 			afterContextMenu:	false,
-			docToFolderConvert:false
+			docToFolderConvert:	false,
+			useClickToToggle:	false,
+			afterCloseNearby:	false
 		};
 		TREE.option = $.extend(TREE.option,opt);
 		$.extend(this, {getSelected: function(){
@@ -74,7 +80,11 @@ $.fn.simpleTree = function(opt){
 				}else{
 					childUl.hide();
 				}
-			});
+				if(typeof TREE.option.afterCloseNearby == 'function')
+				{
+				TREE.option.afterCloseNearby($(this).parent());
+				}
+				});
 		};
 		TREE.nodeToggle = function(obj)
 		{
@@ -157,10 +167,15 @@ $.fn.simpleTree = function(opt){
 			.bind('selectstart', function() {
 				return false;
 			}).click(function(){
-				$('.active',TREE).attr('class','text');
-				if(this.className=='text')
+				// Remove all active classes and add the text class
+				$('.active',TREE).toggleClass('active').addClass('text');
+				if(this.className.match('text'))
 				{
-					this.className='active';
+					this.className=this.className.replace('text','active');
+				}
+				if(TREE.option.useClickToToggle)
+				{
+					TREE.nodeToggle($(this).parent().get(0));
 				}
 				if(typeof TREE.option.afterClick == 'function')
 				{
@@ -169,7 +184,10 @@ $.fn.simpleTree = function(opt){
 				return false;
 			}).dblclick(function(){
 				mousePressed = false;
-				TREE.nodeToggle($(this).parent().get(0));
+				if(!TREE.option.useClickToToggle)
+				{
+					TREE.nodeToggle($(this).parent().get(0));
+				}
 				if(typeof TREE.option.afterDblClick == 'function')
 				{
 					TREE.option.afterDblClick($(this).parent());
@@ -178,10 +196,10 @@ $.fn.simpleTree = function(opt){
 				// added by Erik Dohmen (2BinBusiness.nl) to make context menu actions
 				// available
 			}).bind("contextmenu",function(){
-				$('.active',TREE).attr('class','text');
-				if(this.className=='text')
+				$('.active',TREE).toggleClass('active').addClass('text');
+				if(this.className.match('text'))
 				{
-					this.className='active';
+					this.className=this.className.replace('text','active');
 				}
 				if(typeof TREE.option.afterContextMenu == 'function')
 				{
@@ -426,8 +444,8 @@ $.fn.simpleTree = function(opt){
 			// added by Erik Dohmen (2BinBusiness.nl) select node
 			if($('span:first',dragNode_source).attr('class')=='text')
 			{
-				$('.active',TREE).attr('class','text');
-				$('span:first',dragNode_source).attr('class','active');
+				$('.active',TREE).toggleClass('active').addClass('text');
+				$('span:first',dragNode_source).toggleClass('text').addClass('active');
 			}
 
 			if(typeof(TREE.option.afterMove) == 'function')

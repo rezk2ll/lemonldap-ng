@@ -18,26 +18,52 @@ $(document).ready(function(){
 
 	/* Simple Tree */
 	simpleTreeCollection = $(".simpleTree").simpleTree({
-		autoclose: false,
-		drag: false,
+		autoclose:true,
+		useClickToToggle:true,
+		drag:false,
 		afterClick:function(node){
 			var span=$('span:first',node);
 			$('#help_content').load(scriptname+'?help='+span.attr('help'));
+			simpleTreeDefaultJqueryClasses();
+			simpleTreeToggleJqueryClasses();
+		},
+		afterCloseNearby:function(node){
+			simpleTreeDefaultJqueryClasses();
+			simpleTreeToggleJqueryClasses();
 		},
 		afterDblClick:function(node){
-		//alert("text-"+$("span:first",node).text());
+			simpleTreeDefaultJqueryClasses();
+			simpleTreeToggleJqueryClasses();
 		},
 		afterMove:function(destination, source, pos){
-		//alert("destination-"+$("span:first",destination).text()+" source-"+$("span:first",source).text()+" pos-"+pos);
 		},
 		afterAjax:function() {
-		//alert("Loaded");
+			simpleTreeDefaultJqueryClasses();
+			simpleTreeToggleJqueryClasses();
 		},
-		animate:true
-		//,docToFolderConvert:true
+		animate:true,
+		docToFolderConvert:false
 	});
+	simpleTreeDefaultJqueryClasses();
+
 });
 
+/* Add jQuery UI CSS classes to simpleTree */
+function simpleTreeDefaultJqueryClasses(){
+	$(".simpleTree .root > span").addClass("ui-widget-header ui-corner-all");
+	$(".simpleTree .folder-close > span").addClass("ui-state-default ui-corner-all");
+	$(".simpleTree .folder-close-last > span").addClass("ui-state-default ui-corner-all");
+	$(".simpleTree .doc > span").addClass("ui-state-default ui-priority-secondary ui-corner-all");
+	$(".simpleTree .doc-last > span").addClass("ui-state-default ui-priority-secondary ui-corner-all");
+}
+function simpleTreeToggleJqueryClasses(){
+	$(".simpleTree .folder-open > span").addClass("ui-state-focus");
+	$(".simpleTree .folder-open-last > span").addClass("ui-state-focus");
+	$(".simpleTree .folder-close > span").removeClass("ui-state-focus");
+	$(".simpleTree .folder-close-last > span").removeClass("ui-state-focus");
+	$(".simpleTree span.active").addClass("ui-state-active");
+	$(".simpleTree span.text").removeClass("ui-state-active");
+}
 var currentId;
 function lmtext(id){
 	return $('#text_'+id).attr('name');
