@@ -43,6 +43,7 @@ my $template = HTML::Template->new(
 $template->param(SCRIPT_NAME => $ENV{SCRIPT_NAME});
 $template->param(MENU => $manager->menu());
 $template->param(DIR => "$skin_dir/$skin");
+$template->param(CFGNUM => $manager->{cfgNum});
 print $manager->header('text/html; charset=utf-8');
 print $template->output;
 
