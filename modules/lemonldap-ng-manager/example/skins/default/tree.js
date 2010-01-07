@@ -11,6 +11,7 @@
 * Modified by Clement Oudot <clem.oudot@gmail.com> for Lemonldap::NG:
 *     * Add useClickToToggle option
 *     * Add afterCloseNearby trigger
+*     * Add afterNewNode trigger
 *     * Add and remove 'active' class instead of erasing all class values
 *
 * Redistribution and use in source and binary forms, with or without
@@ -62,7 +63,8 @@ $.fn.simpleTree = function(opt){
 			afterContextMenu:	false,
 			docToFolderConvert:	false,
 			useClickToToggle:	false,
-			afterCloseNearby:	false
+			afterCloseNearby:	false,
+			afterNewNode:		false
 		};
 		TREE.option = $.extend(TREE.option,opt);
 		$.extend(this, {getSelected: function(){
@@ -467,6 +469,10 @@ $.fn.simpleTree = function(opt){
 			dragNode_source = $('.doc-last',temp_node);
 			TREE.moveNodeToFolder(destination);
 			temp_node.remove();
+			if(typeof TREE.option.afterNewNode == 'function')
+			{
+				TREE.option.afterNewNode(node);
+			}
 			if(typeof(callback) == 'function')
 			{
 				callback(dragNode_destination, dragNode_source);
@@ -484,6 +490,10 @@ $.fn.simpleTree = function(opt){
 			dragNode_source = $('.folder-close-last',temp_node);
 			TREE.moveNodeToFolder(destination);
 			temp_node.remove();
+			if(typeof TREE.option.afterNewNode == 'function')
+			{
+				TREE.option.afterNewNode(node);
+			}
 			if(typeof(callback) == 'function')
 			{
 				callback(dragNode_destination, dragNode_source);

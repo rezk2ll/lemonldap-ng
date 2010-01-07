@@ -31,6 +31,10 @@ $(document).ready(function(){
 			simpleTreeDefaultJqueryClasses();
 			simpleTreeToggleJqueryClasses();
 		},
+		afterNewNode:function(node){
+			simpleTreeDefaultJqueryClasses();
+			simpleTreeToggleJqueryClasses();
+		},
 		afterDblClick:function(node){
 			simpleTreeDefaultJqueryClasses();
 			simpleTreeToggleJqueryClasses();
@@ -187,6 +191,7 @@ var count=0;
 var text4newKey='Key';
 var value4newKey='Value';
 function newId(c){
+	if(!c){return false;}
 	count++;
 	c=c.replace(/^NewID_(.*)_\d+$/,'$1');
 	return 'NewID_'+c+'_'+count;
