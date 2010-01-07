@@ -9,7 +9,7 @@ use strict;
 use Lemonldap::NG::Portal::Simple;
 require SOAP::Lite;
 
-our $VERSION = '0.1';
+our $VERSION = '0.2';
 
 ## @method void startSoapServices()
 # Check the URI requested (PATH_INFO environment variable) and launch the
@@ -26,8 +26,8 @@ sub startSoapServices {
         $ENV{PATH_INFO}
         and my $tmp = {
             %{ $self->{CustomSOAPServices} },
-            '/sessions'      => 'getAttributes',
-            '/adminSessions' => 'getAttributes setAttributes '
+            '/sessions'      => 'getAttributes isAuthorizedURI',
+            '/adminSessions' => 'getAttributes setAttributes isAuthorizedURI '
               . 'newSession deleteSession get_key_from_all_sessions',
             '/config' => 'getConfig lastCfg'
         }->{ $ENV{PATH_INFO} }
@@ -239,6 +239,94 @@ sub get_key_from_all_sessions {
       ->get_key_from_all_sessions( $self->{globalStorageOptions}, @_ );
     return &{"$tmp\::get_key_from_all_sessions"}( $self->{globalStorage},
         $self->{globalStorageOptions}, @_ );
+}
+
+## @method boolean isAuthorizedURI (int id, string uri)
+# Check user's authorization for uri.
+# @param $id Id of the session
+# @param $uri URL string
+# @return True if granted
+sub isAuthorizedURI
+{
+    my $self = shift;
+    my ($id, $uri) = @_;
+    die 'id is required' unless ($id);
+    die 'uri is required' unless ($uri);
+
+    # Get user session.
+    my $h = $self->getApacheSession( $id, 1 );
+    unless ($h) {
+        $self->lmLog( "Session $id does not exists ($@)", 'warn' );
+        return 0;
+    }
+
+    # Initialize values relative to URI.
+    $uri =~ m{(\w+)://([^/:]+)(:\d+)?(/.*)?$} or return -1;
+
+    my ( $protocol, $vhost, $port, $path ) = ( $1, $2, $3, $4 );
+    $path ||= '/';
+
+    # Location rules variables.
+    my ( $defaultCondition, $locationCondition, $locationRegexp );
+
+    # Compile location rules.
+    foreach my $vhost ( keys %{ $self->{locationRules} } ) {
+        my $i = 0;
+        foreach my $vpath ( keys %{ $self->{locationRules}->{$vhost} } ) {
+            if ( $vpath eq 'default' ) {
+                $defaultCondition->{$vhost} =
+                  $self->_conditionSub($id, $self->{locationRules}->{$vhost}->{$vpath});
+            }
+            else {
+                $locationCondition->{$vhost}->[$i] =
+                  $self->_conditionSub($id, $self->{locationRules}->{$vhost}->{$vpath});
+                $locationRegexp->{$vhost}->[$i] = qr/$vpath/;
+                $i++;
+            }
+        }
+        $defaultCondition->{$vhost} ||= $self->_conditionSub($id, 'accept');
+    }
+
+    # Test rules.
+    unless (defined($defaultCondition->{$vhost})) {
+        $self->lmLog( "No default condition builded", 'warn' );
+        return 0;
+    }
+    if ( defined $locationRegexp->{$vhost} ) {
+        for ( my $i = 0 ; $i < @{ $locationRegexp->{$vhost} } ; $i++ ) {
+            if ( $path =~ $locationRegexp->{$vhost}->[$i] ) {
+                return &{ $locationCondition->{$vhost}->[$i] }($self);
+            }
+        }
+    }
+    return 0 unless ( $defaultCondition->{$vhost} );
+    return &{ $defaultCondition->{$vhost} }($self);
+    return 1;
+}
+
+#######################
+# Private subroutines #
+#######################
+
+## @method private CODE _conditionSub(string cond)
+# Return subroutine giving authorization condition.
+# @param $cond boolean expression
+# @return Compiled routine
+sub _conditionSub
+{
+    my $self = shift;
+    my $id = shift;
+    my ($cond) = @_;
+    my $h = $self->getApacheSession( $id, 1 );
+    return sub { 1 }
+      if ( $cond =~ /^accept$/i );
+    return sub { 0 }
+      if ( !$h or $cond =~ /^(?:deny$|logout)/i );
+    $cond =~ s/\$date/&POSIX::strftime("%Y%m%d%H%M%S",localtime())/e;
+    $cond =~ s/\$(\w+)/$h->{$1}/g;
+    my $sub;
+    $sub = $self->safe->reval("sub {my \$self = shift; return ( $cond )}");
+    return $sub;
 }
 
 1;
