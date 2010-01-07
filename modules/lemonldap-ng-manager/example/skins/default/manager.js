@@ -142,7 +142,8 @@ function securedCookieValues(id){
 }
 function vhost(id){
 	currentId=id;
-	display('none',lmtext(id));
+	$('#vhost').attr('value',lmtext(id));
+	display('vhost',lmtext(id));
 	$('#bdelvh').show();
 }
 function cfgDatas(id){
@@ -237,6 +238,7 @@ function newVh(name){
 	var vhId='li_'+myB64('/locationRules/'+name);
 	simpleTreeCollection[0].newAjaxNodeIn($('#li_L3ZpcnR1YWxIb3N0cw2'),vhId,name,scriptname+'?type=new&node=virtualHosts/'+name,function(d,s){
 		$('>span',s).attr('name',name).attr('help','default').attr('id','text_'+vhId).attr('onclick','vhost(\''+vhId+'\')');
+	vhost(vhId);
 	});
 }
 var cfgAttrDone=0;

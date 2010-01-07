@@ -119,7 +119,7 @@ var scriptname='<TMPL_VAR NAME="SCRIPT_NAME">';var imagepath='<TMPL_VAR NAME="DI
      </ul>
     </div>
 
-    <!-- Contextual text -->
+    <!-- Simple text -->
     <div id="content_text" class="hidden">
      <input type="text" id="text" onchange="setlmdata(currentId,this.value)"/>
     </div>
@@ -131,10 +131,12 @@ var scriptname='<TMPL_VAR NAME="SCRIPT_NAME">';var imagepath='<TMPL_VAR NAME="DI
     <input id="securedCookie2" type="radio" name="securedCookie" value="2" onclick="setlmdata('li_L3NlY3VyZWRDb29raWU1','2')" /> Double cookie (HTTP and HTTPS)<br/>
     </div>
 
+    <!-- Integer -->
     <div id="content_int" class="hidden">
     <input type="text" id="int" onchange="setlmdata(currentId,this.value)"/>
     </div>
 
+    <!-- Boolean -->
     <div id="content_bool" class="hidden">
     <input id="On" type="radio" name="boolean" value="1" onclick="setlmdata(currentId,1)"/> <lang en="On" fr="Activé"/>
     <input id="Off" type="radio" name="boolean" value="0" onclick="setlmdata(currentId,0)"/> <lang en="Off" fr="Désactivé"/>
@@ -144,14 +146,20 @@ var scriptname='<TMPL_VAR NAME="SCRIPT_NAME">';var imagepath='<TMPL_VAR NAME="DI
     <input type="text" id="btextKey" onchange="setlmtext(currentId,this.value)"/> <input type="text" id="btextValue" onchange="setlmdata(currentId,this.value)"/>
     </div>
 
+    <!-- Rule -->
     <div id="content_rules" class="hidden">
     <textarea id="rulKey" cols="30" rows="2" onchange="setlmtext(currentId,this.value)"></textarea>&nbsp;<textarea id="rulValue" cols="50" rows="2" onchange="setlmdata(currentId,this.value)"></textarea>
     </div>
 
+    <!-- authParams -->
     <div id="content_authParams" class="hidden">
     <input type="text" id="authText" onchange="reloadAuthParams()"/>
     </div>
 
+    <!-- Vhost -->
+    <div id="content_vhost" class="hidden">
+     <input type="text" id="vhost" onchange="setlmtext(currentId,this.value)"/>
+    </div>
    </div>
 
    </form>
