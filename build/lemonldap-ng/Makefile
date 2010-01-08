@@ -4,6 +4,10 @@
 DESTDIR=
 
 PERL=$$(which perl)
+SU=su -c
+COMPRESS=tar czf
+UNCOMPRESS=tar xzf
+COMPRESSSUFFIX=tar.gz
 # Perl options
 #PERLOPTIONS="INSTALLDIRS=vendor"
 PERLOPTIONS=
@@ -198,9 +202,9 @@ install_manager_libs:	manager
 	@$(MAKE) -C ${SRCMANAGERDIR} install
 
 example:
-	$(MAKE) install_site LMPREFIX=$(EXAMPLEROOT)
+	$(MAKE) install_site install_bin LMPREFIX=$(EXAMPLEROOT)
 
-install_bin:	install_libs install_conf_dir
+install_bin:	install_conf_dir
 	# Binary install
 	@install -v -d $(RBINDIR)
 	@cp --preserve=mode --remove-destination \
@@ -437,16 +441,19 @@ dist:	clean
 	@- dir=lemonldap-ng-$(VERSION); find $$dir -name .svn -exec rm -rf {} \; 2>/dev/null
 	@- find $$dir -name '*.bak' -delete
 	@rm -rf lemonldap-ng-$(VERSION)/lemonldap-ng-$(VERSION)
-	@tar czf lemonldap-ng-$(VERSION).tar.gz lemonldap-ng-$(VERSION)
+	@$(COMPRESS) lemonldap-ng-$(VERSION).$(COMPRESSSUFFIX) lemonldap-ng-$(VERSION)
 	@rm -rf lemonldap-ng-$(VERSION)
 
 debian-dist:	dist
-	@mv lemonldap-ng-$(VERSION).tar.gz lemonldap-ng_$(VERSION).orig.tar.gz
+	@mv lemonldap-ng-$(VERSION).$(COMPRESSSUFFIX) lemonldap-ng_$(VERSION).orig.$(COMPRESSSUFFIX)
+
+zip-dist:
+	$(MAKE) dist "COMPRESS=zip -r" COMPRESSSUFFIX=zip
 
 cpan:	clean configure common_cpan handler_cpan portal_cpan manager_cpan
-	for i in Common Portal Handler Manager; do \
-		tar xzf Lemonldap-NG-$$i-*.tar.gz \
-			$$(tar tzf Lemonldap-NG-$$i-*.tar.gz |grep META.yml); \
+	@for i in Common Portal Handler Manager; do \
+		$(UNCOMPRESS) Lemonldap-NG-$$i-*.$(COMPRESSSUFFIX) \
+			$$($(COMPRESS) tzf Lemonldap-NG-$$i-*.$(COMPRESSSUFFIX) |grep META.yml); \
 		mv Lemonldap-NG-$$i-*/META.yml lemonldap-ng-$$($(PERL) -e "print lc('$$i')")/; \
 		rmdir Lemonldap-NG-$$i*/; \
 		done
@@ -468,14 +475,12 @@ manager_cpan:	manager_conf
 	@mv ${SRCMANAGERDIR}/Lemonldap*.gz .
 
 sub_static_example: install_site
-	echo $(LMPREFIX)
-	echo $(EXAMPLEROOT)
-	@mkdir -p ${EXAMPLEROOT}/static
-	@cd ${EXAMPLEROOT}/static/;cp -a ../manager/{skins} .;cd -
-	@../scripts/make_static_example.pl ${DESTMANAGERDIR}/index.pl ${SCRIPTSDIR}/static/index.html $(EXAMPLELANG)
+	mkdir -p ${EXAMPLEROOT}/static
+	cd ${EXAMPLEROOT}/static/;cp -a ../manager/{skins} .;cd -
+	../scripts/make_static_example.pl ${DESTMANAGERDIR}/index.pl ${SCRIPTSDIR}/static/index.html $(EXAMPLELANG)
 
 static_example:
-	$(MAKE) sub_static_example LMPREFIX=$(EXAMPLEROOT)
+	@$(MAKE) sub_static_example LMPREFIX=$(EXAMPLEROOT)
 
 documentation:
 	@cd doc/ && ../scripts/doc.pl
@@ -495,38 +500,44 @@ distclean:	clean
 clean:		common_clean handler_clean portal_clean manager_clean
 	@rm -f $$(find */ -name '*bak' -delete)
 	@rm -rf $(EXAMPLEROOT) example/ doc/devel
-	@rm -vf *gz
+	@rm -vf *gz *zip
+	@echo "Cleaned"
 
 common_clean:
-	- $(MAKE) -C ${SRCCOMMONDIR} distclean
+	@if test -e ${SRCCOMMONDIR}/Makefile;then $(MAKE) -C ${SRCCOMMONDIR} distclean;fi
 	@rm -vf common*
 
 handler_clean:
-	- $(MAKE) -C ${SRCHANDLERDIR} distclean
+	@if test -e ${SRCHANDLERDIR}/Makefile;then $(MAKE) -C ${SRCHANDLERDIR} distclean;fi
 	@rm -vf handler*
 
 portal_clean:
-	- $(MAKE) -C ${SRCPORTALDIR} distclean
+	@if test -e ${SRCPORTALDIR}/Makefile;then $(MAKE) -C ${SRCPORTALDIR} distclean;fi
 	@rm -vf portal*
 
 manager_clean:
-	- $(MAKE) -C ${SRCMANAGERDIR} distclean
+	@if test -e ${SRCMANAGERDIR}/Makefile;then $(MAKE) -C ${SRCMANAGERDIR} distclean;fi
 	@rm -vf manager*
 
 debian-packages: debian-dist
-	mv lemonldap-ng_$(VERSION).orig.tar.gz /tmp/
+	mv lemonldap-ng_$(VERSION).orig.$(COMPRESSSUFFIX) /tmp/
 	version=$(VERSION) && \
 	cd /tmp/ && \
 	rm -rf lemonldap-ng-$$version && \
-	tar xzf lemonldap-ng_$$version.orig.tar.gz && \
+	$(UNCOMPRESS) lemonldap-ng_$$version.orig.$(COMPRESSSUFFIX) && \
 	cd lemonldap-ng-$$version && \
 	export LOCALBUILD=1; debuild -us -uc
 
 debian-install: debian-packages
 	cd /tmp/lemonldap-ng-$(VERSION) && \
-	su -c debi
+	$(SU) debi
 
-diff:
+ubuntu-install:
+	$(MAKE) debian-install SU=sudo
+
+diff: debian-diff
+
+debian-diff:
 	@# Portal
 	@$(DIFF) lemonldap-ng-portal/lib/Lemonldap/NG/Portal /usr/share/perl5/Lemonldap/NG/Portal ||true
 	@$(DIFF) lemonldap-ng-portal/example/scripts/purgeCentralCache /usr/share/lemonldap-ng/bin/purgeCentralCache ||true
