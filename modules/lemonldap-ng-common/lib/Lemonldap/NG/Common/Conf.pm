@@ -194,7 +194,7 @@ sub getLocalConf {
     }
 
     # Parse ini file
-    my $cfg = Config::IniFiles->new( -file => $file, );
+    my $cfg = Config::IniFiles->new( -file => $file, -allowcontinue => 1 );
 
     unless ( defined $cfg ) {
         $msg = "Local config error: " . @Config::IniFiles::errors;
