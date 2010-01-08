@@ -214,10 +214,17 @@ sub displayTab {
 # @return HTML string
 sub appslistMenu {
     my $self = shift;
-    my $root = $self->_getXML;
 
-    # Display all categories and applications
-    return $self->_displayCategory( $root, $catlevel );
+    # OLD method - read XML file
+    if ( -e $self->{apps}->{xmlfile} ) {
+        my $root = $self->_getXML;
+        return $self->_displayCategory( $root, $catlevel );
+    }
+
+    # NEW method - use configuration
+    my $applicationList = $self->{portalObject}->{applicationList};
+    my $filteredList = $self->_filter( $applicationList );
+    return  $self->_displayConfCategory( "", $applicationList, $catlevel );
 }
 
 ## @method string appslistDescription()
@@ -225,10 +232,16 @@ sub appslistMenu {
 # @return HTML string
 sub appslistDescription {
     my $self = shift;
-    my $root = $self->_getXML;
 
-    # Display application description
-    return $self->_displayDescription($root);
+    # OLD method - read XML file
+    if ( -e $self->{apps}->{xmlfile} ) {
+        my $root = $self->_getXML;
+        return $self->_displayDescription($root);
+    }
+
+    # NEW method - use configuration
+    my $applicationList = $self->{portalObject}->{applicationList};
+    return $self->_displayConfDescription( "", $applicationList );
 }
 
 ## @method private XML::LibXML::Document _getXML()
@@ -291,6 +304,59 @@ sub _displayCategory {
     return $html;
 }
 
+## @method string _displayConfCategory()
+# Creates and returns HTML code for a category.
+# @param catname Category name
+# @param cathash Hash of category elements
+# @param catlevel Category level
+# @return HTML string
+sub _displayConfCategory {
+    my $self = shift;
+    my ( $catname, $cathash, $catlevel ) = @_;
+    my $html;
+    my $key;
+
+    # Init HTML list
+    $html .= "<ul class=\"category cat-level-$catlevel\">\n";
+    $html .= "<li class=\"catname\">\n";
+    $html .= "<span>$catname</span>\n" if $catname;
+
+    # Increase category level
+    $catlevel++;
+
+    # Extract applications from hash
+    my $apphash;
+    foreach $key (keys %$cathash) {
+	next if $key =~ /(type|options)/;
+        if ($cathash->{$key}->{type} eq "application") {
+            $apphash->{$key} = $cathash->{$key};
+        }
+    }
+
+    # display applications first
+    if ( scalar keys %$apphash > 0) {
+        $html .= "<ul>";
+        foreach $key (keys %$apphash) { 
+            $html .= $self->_displayConfApplication($key, $apphash->{$key});
+        }
+        $html .= "</ul>";
+    }
+
+    # Display subcategories
+    foreach $key (keys %$cathash) {
+	next if $key =~ /(type|options)/;
+        if ($cathash->{$key}->{type} eq "category") {
+            $html .= $self->_displayConfCategory( $key, $cathash->{$key}, $catlevel);
+        }
+    }
+
+    # Close HTML list
+    $html .= "</li>\n";
+    $html .= "</ul>\n";
+
+    return $html;
+}
+
 ## @method private string _userParam(string arg)
 # Returns value of $arg variable stored in session.
 # @param $arg string to modify
@@ -334,6 +400,50 @@ sub _displayApplication {
     return $html;
 }
 
+## @method private string _displayConfApplication()
+# Creates HTML code for an application.
+# @param $appid Application ID
+# @param $apphash Hash of application elements
+# @return HTML string
+sub _displayConfApplication {
+    my $self = shift;
+    my ($appid, $apphash) = @_;
+    my $html;
+    my $key;
+
+    # Get application items
+    my $appname = $apphash->{options}->{name} || $appid;
+    my $appuri =  $apphash->{options}->{uri}  || "";
+
+    # Display application
+    $html .=
+        "<li title=\"$appid\" class=\"appname $appid\"><span>"
+      . ( $appuri ? "<a href=\"$appuri\">$appname</a>" : "<a>$appname</a>" )
+      . "</span>\n";
+
+    # Detect sub applications
+    my $subapphash;
+    foreach $key (keys %$apphash) {
+	next if $key =~ /(type|options)/;
+        if ($apphash->{$key}->{type} eq "application") {
+            $subapphash->{$key} = $apphash->{$key};
+        }
+    }
+
+    # Display sub applications
+    if ( scalar keys %$subapphash > 0) {
+        $html .= "<ul>";
+        foreach $key (keys %$subapphash) { 
+            $html .= $self->_displayConfApplication($key, $subapphash->{$key});
+        }
+        $html .= "</ul>";
+    }
+
+    $html .= "</li>";
+    return $html;
+}
+
+
 ## @method private string _displayDescription(XML::LibXML::Document root)
 # Create HTML code for application description.
 # @param $root XML root element
@@ -369,6 +479,43 @@ sub _displayDescription {
     return $html;
 }
 
+## @method private string _displayConfDescription()
+# Create HTML code for application description.
+# @param $appid Application ID
+# @param $apphash Hash
+# @return HTML_string
+sub _displayConfDescription {
+    my $self = shift;
+    my ($appid, $apphash) = @_;
+    my $html;
+    my $key;
+
+    if ( defined $apphash->{type} and $apphash->{type} eq "application" ) {
+        # Get application items
+        my $appname = $apphash->{options}->{name} || $appid;
+        my $appuri  = $apphash->{options}->{uri}  || "";
+        my $appdesc = $apphash->{options}->{description};
+        my $applogofile = $apphash->{options}->{logo};
+        my $applogo     = $self->{apps}->{imgpath} . $applogofile if $applogofile;
+
+        # Display application description
+        $html .= "<div id=\"$appid\" class=\"appsdesc\">\n";
+        $html .=
+"<a href=\"$appuri\"><img src=\"$applogo\" alt=\"$appid logo\" /></a>\n"
+          if $applogofile;
+        $html .= "<p class=\"appname\">$appname</p>\n" if defined $appname;
+        $html .= "<p class=\"appdesc\">$appdesc</p>\n" if defined $appdesc;
+        $html .= "</div>\n";
+    }
+
+    # Sublevels
+    foreach $key (keys %$apphash) {
+	next if $key =~ /(type|options)/;
+        $html .= $self->_displayConfDescription( $key, $apphash->{$key});
+    }
+
+    return $html;
+}
 ## @method private string _filterXML(XML::LibXML::Document root)
 # Remove unauthorized nodes.
 # @param $root XML root element
@@ -386,6 +533,54 @@ sub _filterXML {
 
     return;
 }
+
+sub _filter {
+    my $self = shift;
+    my ($apphash) = @_;
+    my $filteredHash;
+    my $key;
+
+    foreach $key (keys %$apphash) {
+	next if $key =~ /(type|options)/;
+        $filteredHash->{$key} = $apphash->{$key};
+	$self->_filterHash( $key, $filteredHash->{$key} );
+    }
+
+    # Hide empty categories
+    # TODO
+    return $filteredHash;
+}
+
+sub _filterHash {
+    my $self = shift;
+    my ($appid, $apphash) = @_;
+    my $key;
+
+    foreach $key ( keys %$apphash ) {
+	next if $key =~ /(type|options)/;
+        if ( $apphash->{$key}->{type} eq "category" ) {
+            # Filter the category
+            $self->_filterHash($key, $apphash->{$key});
+        }
+	if ( $apphash->{$key}->{type} eq "application" ) {
+            # Check rights
+	    my $appdisplay = $apphash->{$key}->{options}->{display} || "auto";
+	    my $appuri = $apphash->{$key}->{options}->{uri};
+
+            # Remove if display is "no"
+            delete $apphash->{$key} and next if ( $appdisplay eq "no" );
+
+            # Keep node if display is "yes"
+            next if ( $appdisplay eq "yes" );
+
+            # Check grant function if display is "auto" (this is the default)
+            delete $apphash->{$key} unless ( $self->_grant($appuri) );
+	    next;
+        }
+    }
+
+}
+
 
 sub _filterApp {
     my ( $self, $node ) = @_;
