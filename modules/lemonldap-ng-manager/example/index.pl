@@ -5,12 +5,15 @@ use Lemonldap::NG::Manager;
 use HTML::Template;
 our $skin_dir='skins';
 our $main_dir='__MANAGERDIR__';
-our $skin='default';
 
 my $manager = new Lemonldap::NG::Manager(
     {
         # REQUIRED PARAMETERS
         applyConfFile           => '/etc/lemonldap-ng/apply.conf',
+        managerSkin		=> 'default',
+	managerCss		=> 'manager.css',
+	managerTreeAutoClose	=> 'false',
+	managerTreeJqueryCss	=> 'false',
 
         # ACCESS TO CONFIGURATION
 
@@ -34,6 +37,8 @@ my $manager = new Lemonldap::NG::Manager(
     }
 ) or Lemonldap::NG::Common::CGI->abort('Unable to start manager');
 
+our $skin = $manager->{managerSkin};
+
 my $template = HTML::Template->new(
     filename          => "$main_dir/$skin_dir/$skin/manager.tpl",
     die_on_bad_params => 0,
@@ -44,6 +49,9 @@ $template->param(SCRIPT_NAME => $ENV{SCRIPT_NAME});
 $template->param(MENU => $manager->menu());
 $template->param(DIR => "$skin_dir/$skin");
 $template->param(CFGNUM => $manager->{cfgNum});
+$template->param(TREE_AUTOCLOSE => $manager->{managerTreeAutoClose});
+$template->param(TREE_JQUERYCSS => $manager->{managerTreeJqueryCss});
+$template->param(CSS => $manager->{managerCss});
 print $manager->header('text/html; charset=utf-8');
 print $template->output;
 

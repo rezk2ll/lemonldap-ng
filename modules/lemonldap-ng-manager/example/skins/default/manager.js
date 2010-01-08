@@ -3,6 +3,8 @@
 */
 
 var simpleTreeCollection;
+if (treeautoclose.match('true')){ treeautoclose = true; } else { treeautoclose = false; }
+if (treejquerycss.match('true')){ treejquerycss = true; } else { treejquerycss = false; }
 
 $(document).ready(function(){
 	/* Display/hide divs */
@@ -18,7 +20,7 @@ $(document).ready(function(){
 
 	/* Simple Tree */
 	simpleTreeCollection = $(".simpleTree").simpleTree({
-		autoclose:true,
+		autoclose:treeautoclose,
 		useClickToToggle:true,
 		drag:false,
 		afterClick:function(node){
@@ -48,25 +50,28 @@ $(document).ready(function(){
 		animate:true,
 		docToFolderConvert:false
 	});
-	simpleTreeDefaultJqueryClasses();
-
+	if(treejquerycss){simpleTreeDefaultJqueryClasses();}
 });
 
 /* Add jQuery UI CSS classes to simpleTree */
 function simpleTreeDefaultJqueryClasses(){
-	$(".simpleTree .root > span").addClass("ui-widget-header ui-corner-all");
-	$(".simpleTree .folder-close > span").addClass("ui-state-default ui-corner-all");
-	$(".simpleTree .folder-close-last > span").addClass("ui-state-default ui-corner-all");
-	$(".simpleTree .doc > span").addClass("ui-state-default ui-priority-secondary ui-corner-all");
-	$(".simpleTree .doc-last > span").addClass("ui-state-default ui-priority-secondary ui-corner-all");
+	if (treejquerycss) {
+		$(".simpleTree .root > span").addClass("ui-widget-header ui-corner-all");
+		$(".simpleTree .folder-close > span").addClass("ui-state-default ui-corner-all");
+		$(".simpleTree .folder-close-last > span").addClass("ui-state-default ui-corner-all");
+		$(".simpleTree .doc > span").addClass("ui-state-default ui-priority-secondary ui-corner-all");
+		$(".simpleTree .doc-last > span").addClass("ui-state-default ui-priority-secondary ui-corner-all");
+	}
 }
 function simpleTreeToggleJqueryClasses(){
-	$(".simpleTree .folder-open > span").addClass("ui-state-focus");
-	$(".simpleTree .folder-open-last > span").addClass("ui-state-focus");
-	$(".simpleTree .folder-close > span").removeClass("ui-state-focus");
-	$(".simpleTree .folder-close-last > span").removeClass("ui-state-focus");
-	$(".simpleTree span.active").addClass("ui-state-active");
-	$(".simpleTree span.text").removeClass("ui-state-active");
+	if (treejquerycss) {
+		$(".simpleTree .folder-open > span").addClass("ui-state-focus");
+		$(".simpleTree .folder-open-last > span").addClass("ui-state-focus");
+		$(".simpleTree .folder-close > span").removeClass("ui-state-focus");
+		$(".simpleTree .folder-close-last > span").removeClass("ui-state-focus");
+		$(".simpleTree span.active").addClass("ui-state-active");
+		$(".simpleTree span.text").removeClass("ui-state-active");
+	}
 }
 var currentId;
 function lmtext(id){

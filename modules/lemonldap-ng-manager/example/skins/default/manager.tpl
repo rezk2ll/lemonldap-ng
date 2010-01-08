@@ -6,13 +6,16 @@
 <title>Lemonldap::NG Manager</title>
 <link href="<TMPL_VAR NAME="DIR">/lemonldap-ng.ico" rel="icon" type="image/x-icon" />
 <link href="<TMPL_VAR NAME="DIR">/lemonldap-ng.ico" rel="shortcut icon" />
-<link rel="stylesheet" type="text/css" href="<TMPL_VAR NAME="DIR">/manager.css" />
+<link rel="stylesheet" type="text/css" href="<TMPL_VAR NAME="DIR">/<TMPL_VAR NAME="CSS">" />
 <link rel="stylesheet" type="text/css" href="<TMPL_VAR NAME="DIR">/jquery-ui-1.7.2.custom.css" />
 <script src="<TMPL_VAR NAME="DIR">/jquery-1.3.2.min.js" type="text/JavaScript"></script>
 <script src="<TMPL_VAR NAME="DIR">/jquery-ui-1.7.2.custom.min.js" type="text/JavaScript"></script>
 <script src="<TMPL_VAR NAME="DIR">/tree.js" type="text/JavaScript"></script>
 <script type="text/JavaScript">//<![CDATA[
-var scriptname='<TMPL_VAR NAME="SCRIPT_NAME">';var imagepath='<TMPL_VAR NAME="DIR">/';
+	var scriptname='<TMPL_VAR NAME="SCRIPT_NAME">';
+	var imagepath='<TMPL_VAR NAME="DIR">/';
+	var treeautoclose='<TMPL_VAR NAME="TREE_AUTOCLOSE">';
+	var treejquerycss='<TMPL_VAR NAME="TREE_JQUERYCSS">';
 //]]></script>
 <script src="<TMPL_VAR NAME="DIR">/manager.js" type="text/JavaScript"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
