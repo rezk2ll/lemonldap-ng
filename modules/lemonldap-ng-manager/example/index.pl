@@ -8,12 +8,11 @@ our $main_dir='__MANAGERDIR__';
 
 my $manager = new Lemonldap::NG::Manager(
     {
-        # REQUIRED PARAMETERS
-        applyConfFile           => '/etc/lemonldap-ng/apply.conf',
-        managerSkin		=> 'default',
-	managerCss		=> 'manager.css',
-	managerTreeAutoClose	=> 'false',
-	managerTreeJqueryCss	=> 'false',
+        # MANAGER CUSTOMIZATION
+        #managerSkin		=> 'default',
+        #managerCss		=> 'manager.css',
+        #managerTreeAutoClose	=> 'false',
+        #managerTreeJqueryCss	=> 'false',
 
         # ACCESS TO CONFIGURATION
 

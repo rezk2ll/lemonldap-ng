@@ -8,6 +8,8 @@ package Lemonldap::NG::Manager;
 use strict;
 use Lemonldap::NG::Handler::CGI qw(:globalStorage :locationRules);    #inherits
 use Lemonldap::NG::Manager::Help;                                     #inherits
+use Lemonldap::NG::Common::Conf;                                      #link protected conf Configuration
+use Lemonldap::NG::Common::Conf::Constants;                           #inherits
 
 our $VERSION = '0.93';
 our @ISA     = qw(
@@ -31,6 +33,20 @@ sub new {
     my $self = $class->SUPER::new($args)
       or $class->abort( 'Unable to start ' . __PACKAGE__,
         'See Apache logs for more' );
+
+    # Try to load local configuration parameters
+    my $conf = Lemonldap::NG::Common::Conf->new( $self->{configStorage} );
+    my $localconf = $conf->getLocalConf( MANAGERSECTION );
+    if ( $localconf ) {
+        $self->{$_} = $args->{$_} || $localconf->{$_} foreach ( keys %$localconf );
+    }
+
+    # Default values
+    $self->{managerSkin} = "default" unless defined $self->{managerSkin};
+    $self->{managerCss} = "manager.css" unless defined $self->{managerCss};
+    $self->{managerTreeAutoClose} = "false" unless defined $self->{managerTreeAutoClose};
+    $self->{managerTreeJqueryCss} = "false" unless defined $self->{managerTreeJqueryCss};
+
     if ( $self->param('help') ) {
         print $self->header_public( $ENV{SCRIPT_FILENAME},
             -type => 'text/html; charset=utf8' );
@@ -96,7 +112,7 @@ system.
 
 =head1 SYNOPSIS
 
-See example/Index.pl
+See example/index.pl
 
 =head1 DESCRIPTION
 
