@@ -5,8 +5,8 @@ use HTML::Template;
 use strict;
 
 # Menu configuration
-my $skin_dir    = "/var/lib/lemonldap-ng//portal/skins";
-my $appsxmlfile = "/etc/lemonldap-ng//apps-list.xml";
+my $skin_dir    = "__SKINDIR__";
+my $appsxmlfile = "__APPSXMLFILE__";
 my $appsimgpath = "apps/";
 
 my $portal = Lemonldap::NG::Portal::SharedConf->new(
