@@ -43,7 +43,7 @@ sub new {
 
     # Default values
     $self->{managerSkin} = "default" unless defined $self->{managerSkin};
-    $self->{managerCss} = "manager.css" unless defined $self->{managerCss};
+    $self->{managerCss} = "default.css" unless defined $self->{managerCss};
     $self->{managerTreeAutoClose} = "false" unless defined $self->{managerTreeAutoClose};
     $self->{managerTreeJqueryCss} = "false" unless defined $self->{managerTreeJqueryCss};
 
