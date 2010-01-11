@@ -41,6 +41,9 @@ $(document).ready(function(){
 			simpleTreeDefaultJqueryClasses();
 			simpleTreeToggleJqueryClasses();
 		},
+		afterSetTrigger:function(node){
+			simpleTreeTriggerJqueryClasses();
+		},
 		afterMove:function(destination, source, pos){
 		},
 		afterAjax:function() {
@@ -59,8 +62,9 @@ function simpleTreeDefaultJqueryClasses(){
 		$(".simpleTree .root > span").addClass("ui-widget-header ui-corner-all");
 		$(".simpleTree .folder-close > span").addClass("ui-state-default ui-corner-all");
 		$(".simpleTree .folder-close-last > span").addClass("ui-state-default ui-corner-all");
-		$(".simpleTree .doc > span").addClass("ui-state-default ui-priority-secondary ui-corner-all");
-		$(".simpleTree .doc-last > span").addClass("ui-state-default ui-priority-secondary ui-corner-all");
+		$(".simpleTree .doc > span").addClass("ui-state-default ui-corner-all");
+		$(".simpleTree .doc-last > span").addClass("ui-state-default ui-corner-all");
+		simpleTreeTriggerJqueryClasses();
 	}
 }
 function simpleTreeToggleJqueryClasses(){
@@ -71,6 +75,27 @@ function simpleTreeToggleJqueryClasses(){
 		$(".simpleTree .folder-close-last > span").removeClass("ui-state-focus");
 		$(".simpleTree span.active").addClass("ui-state-active");
 		$(".simpleTree span.text").removeClass("ui-state-active");
+	}
+}
+function simpleTreeTriggerJqueryClasses(){
+	if (treejquerycss) {
+		$(".simpleTree .folder-open > img.trigger").addClass("ui-icon");
+		$(".simpleTree .folder-open-last > img.trigger").addClass("ui-icon");
+		$(".simpleTree .folder-close > img.trigger").addClass("ui-icon");
+		$(".simpleTree .folder-close-last > img.trigger").addClass("ui-icon");
+
+		$(".simpleTree .folder-open > img.trigger")
+			.removeClass("ui-icon-triangle-1-e")
+			.addClass("ui-icon-triangle-1-s");
+		$(".simpleTree .folder-open-last > img.trigger")
+			.removeClass("ui-icon-triangle-1-e")
+			.addClass("ui-icon-triangle-1-s");
+		$(".simpleTree .folder-close > img.trigger")
+			.removeClass("ui-icon-triangle-1-s")
+			.addClass("ui-icon-triangle-1-e");
+		$(".simpleTree .folder-close-last > img.trigger")
+			.removeClass("ui-icon-triangle-1-s")
+			.addClass("ui-icon-triangle-1-e");
 	}
 }
 var currentId;

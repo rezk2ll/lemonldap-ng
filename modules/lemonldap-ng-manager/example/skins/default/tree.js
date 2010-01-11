@@ -13,6 +13,7 @@
 *     * Add afterCloseNearby trigger
 *     * Add afterNewNode trigger
 *     * Add and remove 'active' class instead of erasing all class values
+*     * Add afterSetTrigger trigger
 *
 * Redistribution and use in source and binary forms, with or without
 * modification, are permitted provided that the following conditions are met:
@@ -64,7 +65,8 @@ $.fn.simpleTree = function(opt){
 			docToFolderConvert:	false,
 			useClickToToggle:	false,
 			afterCloseNearby:	false,
-			afterNewNode:		false
+			afterNewNode:		false,
+			afterSetTrigger:	false
 		};
 		TREE.option = $.extend(TREE.option,opt);
 		$.extend(this, {getSelected: function(){
@@ -267,6 +269,10 @@ $.fn.simpleTree = function(opt){
 			if(!$.browser.msie)
 			{
 				trigger.css('float','left');
+			}
+			if(typeof TREE.option.afterSetTrigger == 'function')
+			{
+				TREE.option.afterSetTrigger(node);
 			}
 		};
 		TREE.dragStart = function(event){
