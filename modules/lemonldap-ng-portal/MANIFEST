@@ -68,6 +68,7 @@ example/skins/pastel/error.tpl
 example/skins/pastel/footer.tpl
 example/skins/pastel/hatch.gif
 example/skins/pastel/header.tpl
+example/skins/pastel/info.tpl
 example/skins/pastel/lock.png
 example/skins/pastel/login.tpl
 example/skins/pastel/menu.tpl

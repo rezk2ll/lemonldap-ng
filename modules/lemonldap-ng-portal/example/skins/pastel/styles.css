@@ -361,3 +361,10 @@ width:150px;
 #logout {
 margin-bottom:20px;
 }
+/* info */
+table.info, .info td, .info tr, .info th{
+text-align: center;
+border-collapse:collapse;
+border:1px solid #c2e1ef;
+padding: 5px
+}

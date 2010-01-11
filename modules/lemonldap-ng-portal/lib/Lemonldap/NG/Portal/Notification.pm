@@ -99,14 +99,21 @@ sub lmLog {
 sub getNotification {
     my ( $self, $portal ) = @_;
     my ( @notifs, $form );
+
+    # Get user datas,
     my $uid = $portal->{notificationField} || $portal->{whatToTrace} || 'uid';
     $uid =~ s/\$//g;
     $uid = $portal->{sessionInfo}->{$uid};
-    my $n = $self->_get($uid);
-    return 0 unless ($n);
-    @notifs = map { $n->{$_} } sort keys %$n;
-    my $i = 0;
 
+    # Check if some notifications have to be done
+    my $n = $self->_get($uid);
+
+    # Return 0 if no notifications were found
+    return 0 unless ($n);
+
+    # Prepare HTML code
+    @notifs = map { $n->{$_} } sort keys %$n;
+    my $i = 0; # Notification count
     foreach my $notif (@notifs) {
         $i++;
         eval {

@@ -545,6 +545,8 @@ debian-diff:
 	@for i in $(PORTALSKINS); do \
 		$(DIFF) -x 'jquery*' lemonldap-ng-portal/example/skins/$$i /usr/share/lemonldap-ng/portal-skins/$$i; \
 	done ||true
+	@$(DIFF) -I '$$skin_dir' -I '$$appsxmlfile' lemonldap-ng-portal/example/index_skin.pl /var/lib/lemonldap-ng/portal/index.pl ||true
+	@$(DIFF) lemonldap-ng-portal/example/error.pl /var/lib/lemonldap-ng/portal/error.pl ||true
 	@# Handler
 	@$(DIFF) lemonldap-ng-handler/lib/Lemonldap/NG/Handler /usr/share/perl5/Lemonldap/NG/Handler ||true
 	@# Common
@@ -566,7 +568,7 @@ default-diff:
 	@$(DIFF) lemonldap-ng-portal/example/scripts/purgeCentralCache $(LMPREFIX)/bin/purgeCentralCache ||true
 	@$(DIFF) lemonldap-ng-portal/example/scripts/buildPortalWSDL $(LMPREFIX)/bin/buildPortalWSDL ||true
 	@$(DIFF) lemonldap-ng-portal/example/skins $(LMPREFIX)/htdocs/portal/skins ||true
-	@$(DIFF) -I '$skin_dir' -I '$appsxmlfile' lemonldap-ng-portal/example/index.pl $(LMPREFIX)/htdocs/portal/index.pl ||true
+	@$(DIFF) -I '$$skin_dir' -I '$$appsxmlfile' lemonldap-ng-portal/example/index.pl $(LMPREFIX)/htdocs/portal/index.pl ||true
 	@$(DIFF) lemonldap-ng-portal/example/error.pl $(LMPREFIX)/htdocs/portal/error.pl ||true
 	@# Handler
 	@$(DIFF) lemonldap-ng-handler/lib/Lemonldap/NG/Handler /usr/local/share/perl/5.10.0/Lemonldap/NG/Handler ||true

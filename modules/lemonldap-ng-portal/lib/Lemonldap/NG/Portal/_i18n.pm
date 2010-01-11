@@ -32,6 +32,28 @@ sub error {
     return &error_en->[$error];
 }
 
+## @fn string msg(int msg,string lang)
+# @param $msg Number of msg to resolve
+# @param $lang Language or Accepted-Language HTTP header string
+# @return Error string for the $code in the $lang language
+sub msg {
+    my ( $msg, $lang ) = @_;
+    $lang = lc($lang);
+    $lang =~ s/-/_/g;
+    $msg = 0 if ( $msg < 0 );
+    foreach ( split( /[,;]/, $lang ) ) {
+        next if /=/;
+        if ( __PACKAGE__->can("msg_$_") ) {
+            return &{"msg_$_"}->[$msg];
+        }
+        s/^(..).*$/$1/;
+        if ( __PACKAGE__->can("msg_$_") ) {
+            return &{"msg_$_"}->[$msg];
+        }
+    }
+    return &msg_en->[$msg];
+}
+
 1;
 __END__
 
@@ -234,3 +256,22 @@ sub error_ro {
         'Session opening not allowed',
     ];
 }
+
+sub msg_en {
+    use utf8;
+    [
+        'The following sessions have been deleted',
+        'Date',
+        'IP address',
+    ];
+}
+
+sub msg_fr {
+    use utf8;
+    [
+        'Les sessions suivantes ont été effacées',
+        'Date',
+        'Adresse IP',
+    ];
+}
+

@@ -17,7 +17,8 @@ use CGI::Cookie;
 require POSIX;
 use Lemonldap::NG::Portal::_i18n;      #inherits
 use Lemonldap::NG::Common::Safelib;    #link protected safe Safe object
-use Lemonldap::NG::Common::Apache::Session;    #link protected session Apache::Session object
+use Lemonldap::NG::Common::Apache::Session
+  ;    #link protected session Apache::Session object
 use Safe;
 
 # Special comments for doxygen
@@ -46,6 +47,11 @@ our @ISA;
 
 # Constants
 use constant {
+
+    # Developers warning, do not use PE_INFO, it's reserved to autoRedirect.
+    # If you want to send an information, use $self->info('text').
+    PE_INFO                             => -4,
+    PE_CONFIRM                          => -3,
     PE_REDIRECT                         => -2,
     PE_DONE                             => -1,
     PE_OK                               => 0,
@@ -83,17 +89,17 @@ use constant {
 };
 
 # EXPORTER PARAMETERS
-our @EXPORT =
-  qw( PE_DONE PE_OK PE_SESSIONEXPIRED PE_FORMEMPTY PE_WRONGMANAGERACCOUNT
-  PE_USERNOTFOUND PE_BADCREDENTIALS PE_LDAPCONNECTFAILED PE_LDAPERROR
-  PE_APACHESESSIONERROR PE_FIRSTACCESS PE_BADCERTIFICATE PE_REDIRECT
-  PE_PP_ACCOUNT_LOCKED PE_PP_PASSWORD_EXPIRED PE_CERTIFICATEREQUIRED
-  PE_ERROR PE_PP_CHANGE_AFTER_RESET PE_PP_PASSWORD_MOD_NOT_ALLOWED
-  PE_PP_MUST_SUPPLY_OLD_PASSWORD PE_PP_INSUFFICIENT_PASSWORD_QUALITY
-  PE_PP_PASSWORD_TOO_SHORT PE_PP_PASSWORD_TOO_YOUNG
-  PE_PP_PASSWORD_IN_HISTORY PE_PP_GRACE PE_PP_EXP_WARNING
-  PE_PASSWORD_MISMATCH PE_PASSWORD_OK PE_NOTIFICATION PE_BADURL
-  PE_NOSCHEME PE_BADOLDPASSWORD PE_MALFORMEDUSER);
+our @EXPORT = qw( PE_INFO PE_CONFIRM PE_REDIRECT PE_DONE PE_OK PE_SESSIONEXPIRED
+  PE_FORMEMPTY PE_WRONGMANAGERACCOUNT PE_USERNOTFOUND PE_BADCREDENTIALS
+  PE_LDAPCONNECTFAILED PE_LDAPERROR PE_APACHESESSIONERROR PE_FIRSTACCESS
+  PE_BADCERTIFICATE PE_PP_ACCOUNT_LOCKED PE_PP_PASSWORD_EXPIRED
+  PE_CERTIFICATEREQUIRED PE_ERROR PE_PP_CHANGE_AFTER_RESET
+  PE_PP_PASSWORD_MOD_NOT_ALLOWED PE_PP_MUST_SUPPLY_OLD_PASSWORD
+  PE_PP_INSUFFICIENT_PASSWORD_QUALITY PE_PP_PASSWORD_TOO_SHORT
+  PE_PP_PASSWORD_TOO_YOUNG PE_PP_PASSWORD_IN_HISTORY PE_PP_GRACE
+  PE_PP_EXP_WARNING PE_PASSWORD_MISMATCH PE_PASSWORD_OK PE_NOTIFICATION
+  PE_BADURL PE_NOSCHEME PE_BADOLDPASSWORD PE_MALFORMEDUSER
+);
 our %EXPORT_TAGS = ( 'all' => [ @EXPORT, 'import' ], );
 
 our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
@@ -198,20 +204,13 @@ sub new {
           unless ( $self->{notifObject} );
     }
 
-    if (    $self->{notification}
-        and $ENV{PATH_INFO}
-        and $ENV{PATH_INFO} =~ m#^/notification# )
-    {
-        require SOAP::Lite;
-        $self->soapTest( 'newNotification', $self->{notifObject} );
-        $self->abort( 'Bad request',
-            'Only SOAP requests are accepted with "/notification"' );
-    }
-
     # SOAP
     if ( $self->{Soap} or $self->{soap} ) {
         require Lemonldap::NG::Portal::_SOAP;
         push @ISA, 'Lemonldap::NG::Portal::_SOAP';
+        if ( $self->{notification} ) {
+            $self->{CustomSOAPServices}->{'/notification'} = 'newNotification';
+        }
         $self->startSoapServices();
     }
 
@@ -570,6 +569,16 @@ sub _deleteSession {
     return $r;
 }
 
+##@method protected string info(string t)
+# Get or set info to display to the user.
+# @param $t optional text to store
+# @return HTML text to display
+sub info {
+    my ( $self, $t ) = @_;
+    $self->{_info} .= $t if (defined $t);
+    return $self->{_info};
+}
+
 ###############################################################
 # MAIN subroutine: call all steps until one returns something #
 #                  different than PE_OK                       #
@@ -716,14 +725,18 @@ sub controlExistingSession {
             # Delete session in global storage
             $self->_deleteSession($h);
             $self->{error} = PE_REDIRECT;
+
             # Call issuerDB logout
             $self->issuerLogout();
+
             # Log
             $self->_sub( 'userNotice',
                 $self->{sessionInfo}->{ $self->{whatToTrace} }
                   . " has been disconnected" );
+
             # Call authentication logout
             eval { $self->_sub('authLogout') };
+
             # Redirect user
             $self->_subProcess(qw(autoRedirect));
             return PE_FIRSTACCESS;
@@ -734,8 +747,9 @@ sub controlExistingSession {
         # A session has been find => calling &existingSession
         my $r = $self->_sub( 'existingSession', $id, $self->{sessionInfo} );
         if ( $r == PE_DONE ) {
-            $self->{error} =
-              $self->_subProcess(qw(checkNotification issuerDBInit issuerForAuthUser autoRedirect));
+            $self->{error} = $self->_subProcess(
+                qw(checkNotification issuerDBInit issuerForAuthUser autoRedirect)
+            );
             return $self->{error} || PE_DONE;
         }
         else {
@@ -753,7 +767,6 @@ sub controlExistingSession {
 # - PE_OK: process() return false to display the form
 #@return Lemonldap::NG::Portal constant
 sub existingSession {
-
     PE_DONE;
 }
 
@@ -784,28 +797,32 @@ sub existingSession {
 sub setSessionInfo {
     my $self = shift;
 
-    # Store IP address and start time
+    # Store IP address
     $self->{sessionInfo}->{ipAddr} = $ENV{REMOTE_ADDR};
-
-    # Extract client IP from X-FORWARDED-FOR header
-    my $xheader = $ENV{HTTP_X_FORWARDED_FOR};
-    $xheader =~ s/(.*?)(\,)+.*/$1/ if $xheader;
-    $self->{sessionInfo}->{xForwardedForAddr} = $xheader || $ENV{REMOTE_ADDR};
-    $self->{sessionInfo}->{startTime} =
-      &POSIX::strftime( "%Y%m%d%H%M%S", localtime() );
     $self->lmLog(
         "Store ipAddr: " . $self->{sessionInfo}->{ipAddr} . " in session",
         'debug' );
+
+    # Extract and store client IP from X-FORWARDED-FOR header
+    my $xheader = $ENV{HTTP_X_FORWARDED_FOR};
+    $xheader =~ s/(.*?)(\,)+.*/$1/ if $xheader;
+    $self->{sessionInfo}->{xForwardedForAddr} = $xheader || $ENV{REMOTE_ADDR};
     $self->lmLog(
         "Store xForwardedForAddr: "
           . $self->{sessionInfo}->{xForwardedForAddr}
           . " in session",
         'debug'
     );
+
+    # Store time
+    $self->{sessionInfo}->{_utime} = time();
+    $self->{sessionInfo}->{startTime} =
+      &POSIX::strftime( "%Y%m%d%H%M%S", localtime() );
     $self->lmLog(
         "Store startTime: " . $self->{sessionInfo}->{startTime} . " in session",
         'debug'
     );
+
     return $self->SUPER::setSessionInfo();
 }
 
@@ -861,6 +878,7 @@ sub authenticate {
 #@return Lemonldap::NG::Portal constant
 sub removeOther {
     my $self = shift;
+    $self->{deleted} = [];
     if ( $self->{singleSession} or $self->{singleIP} ) {
         my $sessions =
           $self->{globalStorage}->searchOn( $self->{globalStorageOptions},
@@ -871,13 +889,11 @@ sub removeOther {
             unless ($self->{singleIP}
                 and $self->{sessionInfo}->{ipAddr} eq $h->{ipAddr} )
             {
+                push @{ $self->{deleted} },
+                  { time => $h->{_utime}, ip=> $h->{ipAddr} };
                 tied(%$h)->delete();
                 $self->lmLog( "Deleting session $id", 'debug' );
-                eval {
-                    $self->{lmConf}->{refLocalStorage}->remove($id);
-
-                 #$Lemonldap::NG::Handler::Simple::refLocalStorage->remove($id);
-                };
+                eval { $self->{lmConf}->{refLocalStorage}->remove($id); };
             }
         }
     }
@@ -890,15 +906,23 @@ sub removeOther {
             unless ( $self->{sessionInfo}->{ $self->{whatToTrace} } eq
                 $h->{ $self->{whatToTrace} } )
             {
+                push @{ $self->{deleted} },
+                  { time => $h->{_utime}, ip=> $h->{ipAddr} };
                 tied(%$h)->delete();
                 $self->lmLog( "Deleting session $id", 'debug' );
-                eval {
-                    $self->{lmConf}->{refLocalStorage}->remove($id);
-
-                 #$Lemonldap::NG::Handler::Simple::refLocalStorage->remove($id);
-                };
+                eval { $self->{lmConf}->{refLocalStorage}->remove($id); };
+            }
             }
         }
+    if($self->{notifyDeleted} and $self->{deleted}){
+        my $tmp  = '<p>'.&Lemonldap::NG::Portal::_i18n::msg( 0, $ENV{HTTP_ACCEPT_LANGUAGE} ).'&nbsp;:</p><table class="info"><tbody><tr>';
+        $tmp .= '<th>'.&Lemonldap::NG::Portal::_i18n::msg($_,$ENV{HTTP_ACCEPT_LANGUAGE} ).'</th>' foreach( 1..2 );
+        $tmp .= '</tr>';
+        foreach(@{$self->{deleted}}){
+            $tmp .= '<tr><td>'."<script>var _date=new Date($_->{time}*1000);document.write(_date.toLocaleString());</script>"."</td><td>$_->{ip}</td></tr>";
+        }
+        $tmp .= '</tbody></table>';
+        $self->info($tmp);
     }
     PE_OK;
 }
@@ -936,8 +960,6 @@ sub store {
 
     # Now, user is authenticated => inform Apache
     $self->setApacheUser( $self->{sessionInfo}->{ $self->{whatToTrace} } );
-
-    $self->{sessionInfo}->{_utime} = time();
     if ( $self->{securedCookie} == 2 ) {
         my $h2 = $self->getApacheSession(undef);
         $h2->{$_} = $self->{sessionInfo}->{$_}
@@ -992,7 +1014,7 @@ sub buildCookie {
 sub checkNotification {
     my $self = shift;
     if (    $self->{notification}
-        and $self->{_notification} =
+        and $self->{_notification} ||=
         $self->{notifObject}->getNotification($self) )
     {
         return PE_NOTIFICATION;
@@ -1010,7 +1032,10 @@ sub autoRedirect {
     my $self = shift;
 
     # default redirection URL
-    $self->{urldc} ||= $self->{portal} if ( $self->{mustRedirect} );
+    $self->{urldc} ||= $self->{portal} if ( $self->{mustRedirect} or $self->info() );
+
+    # Display info before redirecting
+    return PE_INFO if ( $self->info() );
 
     # Redirection should be made if
     #  - urldc defined
@@ -1053,7 +1078,7 @@ sub autoRedirect {
         #</body>
         #</html>
         #EOF
-        exit;
+        $self->quit();
     }
     PE_OK;
 }

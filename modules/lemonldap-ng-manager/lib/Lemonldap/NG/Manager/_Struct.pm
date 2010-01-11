@@ -44,23 +44,23 @@ sub cstruct {
 sub struct {
     my $self = shift;
     return {
-        _nodes            => [qw(n:generalParameters n:groups n:virtualHosts)],
-        _help             => 'default',
+        _nodes => [qw(n:generalParameters n:groups n:virtualHosts)],
+        _help  => 'default',
 
-	######################
-	# GENERAL PARAMETERS #
-	######################
+        ######################
+        # GENERAL PARAMETERS #
+        ######################
         generalParameters => {
             _nodes => [
                 qw(portal n:authParams logParams cookieParams cn:exportedVars cn:macros sessionParams n:advancedParams)
             ],
-            _help      => 'default',
-            portal     => 'text:/portal',
-	    
-	    # AUTHENTICATION AND USERDB PARAMETERS
+            _help  => 'default',
+            portal => 'text:/portal',
+
+            # AUTHENTICATION AND USERDB PARAMETERS
             authParams => {
 
-		# Displayed nodes depend on authentication/userDB modules choosed
+               # Displayed nodes depend on authentication/userDB modules choosed
                 _nodes => sub {
                     my $self = shift;
                     my $auth = $self->conf->{authentication}
@@ -100,7 +100,7 @@ sub struct {
                 SSLRequired => 'bool:/SSLRequired',
             },
 
-	    # LOGS PARAMETERS
+            # LOGS PARAMETERS
             logParams => {
                 _nodes => [qw(syslog useXForwardedForIP whatToTrace)],
                 syslog => 'text:/syslog',
@@ -108,7 +108,7 @@ sub struct {
                 whatToTrace        => 'text:/whatToTrace:whatToTrace:text',
             },
 
-	    # COOKIE PARAMETERS
+            # COOKIE PARAMETERS
             cookieParams => {
                 _nodes =>
                   [qw(cookieName domain securedCookie cookieExpiration)],
@@ -120,20 +120,20 @@ sub struct {
                 cookieExpiration => 'text:/cookieExpiration',
             },
 
-	    # EXPORTED ATTRIBUTES
+            # EXPORTED ATTRIBUTES
             exportedVars => {
                 _nodes => ['hash:/exportedVars:vars:btext'],
                 _js    => 'hashRoot'
             },
 
-	    # MACROS
+            # MACROS
             macros =>
               { _nodes => ['hash:/macros:macros:btext'], _js => 'hashRoot' },
 
-	    # SESSIONS PARAMETERS
+            # SESSIONS PARAMETERS
             sessionParams => {
                 _nodes => [
-                    qw(sessionStorage singleSession singleIP singleUserByIP timeout storePassword)
+                    qw(sessionStorage singleSession singleIP singleUserByIP notifyDeleted timeout storePassword)
                 ],
                 _help          => 'storage',
                 sessionStorage => {
@@ -147,11 +147,12 @@ sub struct {
                 singleSession  => 'bool:/singleSession',
                 singleIP       => 'bool:/singleIP',
                 singleUserByIP => 'bool:/singleUserByIP',
+                notifyDeleted  => 'bool:/notifyDeleted',
                 storePassword  => 'bool:/storePassword',
                 timeout        => 'text:/timeout:timeout:text',
             },
 
-	    # OTHER PARAMETERS
+            # OTHER PARAMETERS
             advancedParams => {
                 _nodes => [
                     qw(Soap exportedAttr trustedDomains https notifications passwordManagement userControl)
@@ -187,18 +188,18 @@ sub struct {
             }
         },
 
-	##########
-	# GROUPS #
-	##########
+        ##########
+        # GROUPS #
+        ##########
         groups => {
             _nodes => ['hash:/groups:groups:btext'],
             _js    => 'hashRoot',
             _help  => 'default',
         },
 
-	#################
-	# VIRTUAL HOSTS #
-	#################
+        #################
+        # VIRTUAL HOSTS #
+        #################
         virtualHosts => {
             _nodes  => ['nhash:/locationRules:virtualHosts:vhost'],
             _upload => ['/exportedHeaders'],
@@ -212,15 +213,17 @@ sub struct {
 # Returns the tests to do with the datas uploaded.
 # @return hashref
 sub testStruct {
-    my $safe = Safe->new();
+    my $safe       = Safe->new();
     my $assignTest = qr/(?<=[^=<!>\?])=(?![=~])/;
     my $assignMsg  = 'containsAnAssignment';
     my $perlExpr   = sub {
         my $e = shift;
-        $safe->reval($e,1);
-        return 1 unless($@);
+        $safe->reval( $e, 1 );
+        return 1 unless ($@);
         return 1 if ( $@ =~ /Global symbol "\$.*requires explicit package/ );
-        return (1, "Function \"<b>$1</b>\" must be declared in customFunctions") if ( $@ =~ /Bareword "(.*?)" not allowed while "strict subs"/ );
+        return ( 1,
+            "Function \"<b>$1</b>\" must be declared in customFunctions" )
+          if ( $@ =~ /Bareword "(.*?)" not allowed while "strict subs"/ );
         return ( 0, $@ );
     };
     my $boolean = { test => qr/^(?:0|1)?$/, msgFail => 'Value must be 0 or 1' };
@@ -344,13 +347,13 @@ sub testStruct {
         macros => {
             keyTest    => qr/^[a-zA-Z]\w*$/,
             keyMsgFail => 'Bad macro name',
-                test       => $perlExpr,
-                warnTest   => sub {
-                    my $e = shift;
-                    return ( 0, $assignMsg ) if ( $e =~ $assignTest );
-                    1;
-                },
+            test       => $perlExpr,
+            warnTest   => sub {
+                my $e = shift;
+                return ( 0, $assignMsg ) if ( $e =~ $assignTest );
+                1;
             },
+        },
         managerDn => {
             test    => qr/^(?:\w+=.*,\w+=.*)?$/,
             msgFail => 'Bad LDAP dn',
@@ -359,7 +362,7 @@ sub testStruct {
             test    => qr/^\S*$/,
             msgFail => 'Bad LDAP password',
         },
-        notification  => $boolean,
+        notification        => $boolean,
         notificationStorage => {
             test    => qr/^[\w:]+$/,
             msgFail => 'Bad module name',
@@ -368,11 +371,12 @@ sub testStruct {
             keyTest    => qr/^\w+$/,
             keyMsgFail => 'Bad parameter',
         },
-        portal => {
+        notifyDeleted => $boolean,
+        portal        => {
             test    => qr/^https?:\/\/\S+$/,
             msgFail => 'Bad portal value',
         },
-        protection    => {
+        protection => {
             keyTest => qr/^(?:none|authentificate|manager|)$/,
             msgFail => 'must be one of none authentificate manager',
         },
@@ -380,9 +384,9 @@ sub testStruct {
             test    => qr/^(?:0|1|2)$/,
             msgFail => 'securedCookie must be 0, 1 or 2',
         },
-        singleSession      => $boolean,
-        singleIP           => $boolean,
-        singleUserByIP     => $boolean,
+        singleSession  => $boolean,
+        singleIP       => $boolean,
+        singleUserByIP => $boolean,
         Soap           => $boolean,
         SSLRequired    => $boolean,
         storePassword  => $boolean,
@@ -395,7 +399,7 @@ sub testStruct {
             test    => qr/^\d*$/,
             msgFail => 'Bad number'
         },
-        userControl        => {
+        userControl => {
             test    => $pcre,
             msgFail => 'Bad regular expression',
         },
@@ -415,28 +419,29 @@ sub testStruct {
 #@return Hashref of default values
 sub defaultConf {
     return {
-        authentication       => 'LDAP',
-        cda                  => '0',
-        cookieName           => 'lemonldap',
-        domain               => 'example.com',
+        authentication  => 'LDAP',
+        cda             => '0',
+        cookieName      => 'lemonldap',
+        domain          => 'example.com',
         exportedHeaders => { 'test.example.com' => { 'Auth-User' => '$uid' }, },
-        exportedVars         => { cn => 'cn', mail => 'mail', uid => 'uid', },
-        globalStorage        => 'Apache::Session::File',
+        exportedVars    => { cn => 'cn', mail => 'mail', uid => 'uid', },
+        globalStorage   => 'Apache::Session::File',
         globalStorageOptions => {
             'Directory'     => '/var/lib/lemonldap-ng/sessions/',
             'LockDirectory' => '/var/lib/lemonldap-ng/sessions/lock/'
         },
-        https               => '0',
-        ldapBase            => 'dc=example,dc=com',
-        ldapPort            => '389',
-        ldapServer          => 'localhost',
+        https           => '0',
+        ldapBase        => 'dc=example,dc=com',
+        ldapPort        => '389',
+        ldapServer      => 'localhost',
         locationRules   => { 'test.example.com' => { default => 'accept' }, },
-        managerDn           => '',
-        managerPassword     => '',
-        notification        => '0',
+        managerDn       => '',
+        managerPassword => '',
+        notification    => '0',
         notificationStorage => 'File',
         notificationStorageOptions =>
           { dirName => '/var/lib/lemonldap-ng/notifications', },
+        notifyDeleted      => '1',
         portal             => 'http://auth.example.com/',
         protection         => 'none',
         securedCookie      => '0',

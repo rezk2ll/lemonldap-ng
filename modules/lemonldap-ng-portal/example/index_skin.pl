@@ -2,18 +2,19 @@
 
 use Lemonldap::NG::Portal::SharedConf;
 use HTML::Template;
+use strict;
 
 # Menu configuration
-my $skin_dir    = "__SKINDIR__";                                                                                                       
-my $appsxmlfile = "__APPSXMLFILE__";
+my $skin_dir    = "/var/lib/lemonldap-ng//portal/skins";
+my $appsxmlfile = "/etc/lemonldap-ng//apps-list.xml";
 my $appsimgpath = "apps/";
 
 my $portal = Lemonldap::NG::Portal::SharedConf->new(
     {
 
         # ACCESS TO CONFIGURATION
-        # By default, Lemonldap::NG uses the default lemonldap-ng.ini file to know
-        # where to find its configuration
+        # By default, Lemonldap::NG uses the default lemonldap-ng.ini file to
+        # know where to find its configuration
         # (generaly /etc/lemonldap-ng/lemonldap-ng.ini)
         # You can specify by yourself this file :
         #configStorage => { confFile => '/path/to/my/file' },
@@ -25,20 +26,21 @@ my $portal = Lemonldap::NG::Portal::SharedConf->new(
         # Note that YOU HAVE TO SET configStorage here if you've declared this
         # portal as SOAP configuration server in the manager
 
-	# PORTAL CUSTOMIZATION
-	# Skin
-	#portalSkin => 'pastel',
-	# Modules displayed
-	#portalDisplayLogout => 1,
-	#portalDisplayResetPassword => 1,
-	#portalDisplayChangePassword => 1,
-	#portalDisplayAppslist => 1,
-	# Allow password autocompletion (passwords stored in user web browsers)
-	#portalAutocomplete => "on",
-	# Require the old password when changing password
-	#portalRequireOldPassword => 1,
-	# Attribute displayed as connected user
-	#portalUserAttr => "mail",
+        # PORTAL CUSTOMIZATION
+        # * Skin
+        # portalSkin => 'pastel',
+        # * Modules displayed
+        # portalDisplayLogout => 1,
+        # portalDisplayResetPassword => 1,
+        # portalDisplayChangePassword => 1,
+        # portalDisplayAppslist => 1,
+        # * Allow password autocompletion
+        #   (passwords stored in user web browsers)
+        # portalAutocomplete => "on",
+        # * Require the old password when changing password
+        # portalRequireOldPassword => 1,
+        # * Attribute displayed as connected user
+        # portalUserAttr => "mail",
 
         # LOG
         # By default, all is logged in Apache file. To log user actions by
@@ -49,6 +51,7 @@ my $portal = Lemonldap::NG::Portal::SharedConf->new(
         # Remove comment to activate SOAP Functions getCookies(user,pwd) and
         # error(language, code)
         Soap => 1,
+
         # Note that getAttibutes() will be activated but on a different URI
         # (http://auth.example.com/index.pl/sessions)
         # You can also restrict attributes and macros exported by getAttributes
@@ -76,8 +79,8 @@ my $portal = Lemonldap::NG::Portal::SharedConf->new(
         # Mail subject
         #mailSubject => "Password reset",
 
-        # Mail body (can use $password for generated password, and other session infos,
-        # like $cn)
+        # Mail body (can use $password for generated password, and other session
+        # infos, like $cn)
         #mailBody => 'Hello $cn,\n\nYour new password is $password',
 
         # LDAP filter to use
@@ -148,6 +151,23 @@ my $portal = Lemonldap::NG::Portal::SharedConf->new(
 my $skin = $portal->{portalSkin};
 
 if ( $portal->process() ) {
+    if ( my $info = $portal->info() ) {
+        my $template = HTML::Template->new(
+            filename          => "$skin_dir/$skin/info.tpl",
+            die_on_bad_params => 0,
+            cache             => 0,
+            filter            => sub { $portal->translate_template(@_) }
+        );
+
+        $template->param( AUTH_ERROR_TYPE => $portal->error_type );
+        $template->param( MSG             => $info );
+        $template->param( SKIN            => $skin );
+        $template->param( URL        => $portal->{urldc} );
+
+        print $portal->header('text/html; charset=utf-8');
+        print $template->output;
+    }
+    else {
 
     # HTML::Template object creation
     my $template = HTML::Template->new(
@@ -174,18 +194,22 @@ if ( $portal->process() ) {
         }
     );
 
-    $template->param( AUTH_USER           => $portal->{sessionInfo}->{ $portal->{portalUserAttr} } );
+        $template->param( AUTH_USER =>
+              $portal->{sessionInfo}->{ $portal->{portalUserAttr} } );
     $template->param( AUTOCOMPLETE        => $portal->{portalAutocomplete} );
     $template->param( SKIN                => $skin );
     $template->param( AUTH_ERROR          => $menu->error );
     $template->param( AUTH_ERROR_TYPE     => $menu->error_type );
-    $template->param( DISPLAY_APPSLIST    => $menu->displayModule("appslist") );
-    $template->param( DISPLAY_PASSWORD    => $menu->displayModule("password") );
+        $template->param(
+            DISPLAY_APPSLIST => $menu->displayModule("appslist") );
+        $template->param(
+            DISPLAY_PASSWORD => $menu->displayModule("password") );
     $template->param( DISPLAY_LOGOUT      => $menu->displayModule("logout") );
     $template->param( DISPLAY_TAB         => $menu->displayTab );
     $template->param( LOGOUT_URL          => "$ENV{SCRIPT_NAME}?logout=1" );
-    $template->param( REQUIRE_OLDPASSWORD => $portal->{portalRequireOldPassword} );
-    $template->param( NEWWINDOW           => $portal->{portalOpenLinkInNewWindow} );
+        $template->param(
+            REQUIRE_OLDPASSWORD => $portal->{portalRequireOldPassword} );
+
     if ( $menu->displayModule("appslist") ) {
         $template->param( APPSLIST_MENU => $menu->appslistMenu );
         $template->param( APPSLIST_DESC => $menu->appslistDescription );
@@ -193,6 +217,7 @@ if ( $portal->process() ) {
 
     print $portal->header('text/html; charset=utf-8');
     print $template->output;
+    }
 }
 elsif ( my $notif = $portal->notification ) {
 
@@ -204,7 +229,6 @@ elsif ( my $notif = $portal->notification ) {
         filter            => sub { $portal->translate_template(@_) }
     );
 
-    $template->param( AUTH_ERROR      => $portal->error );
     $template->param( AUTH_ERROR_TYPE => $portal->error_type );
     $template->param( NOTIFICATION    => $notif );
     $template->param( SKIN            => $skin );
@@ -227,9 +251,9 @@ else {
     $template->param( AUTH_URL              => $portal->get_url );
     $template->param( LOGIN                 => $portal->get_user );
     $template->param( AUTOCOMPLETE          => $portal->{portalAutocomplete} );
-    $template->param( NEWWINDOW             => $portal->{portalOpenLinkInNewWindow} );
     $template->param( SKIN                  => $skin );
-    $template->param( DISPLAY_RESETPASSWORD => $portal->{portalDisplayResetPassword} );
+    $template->param(
+        DISPLAY_RESETPASSWORD => $portal->{portalDisplayResetPassword} );
     $template->param( DISPLAY_FORM          => 1 );
 
     # Adapt template if password policy error
@@ -252,11 +276,9 @@ else {
     }
 
     # Adapt template if external authentication error
-    if (
-        $portal->{error} == PE_BADCERTIFICATE
+    if (   $portal->{error} == PE_BADCERTIFICATE
         or $portal->{error} == PE_CERTIFICATEREQUIRED
-        or $portal->{error} == PE_ERROR
-      )
+        or $portal->{error} == PE_ERROR )
     {
         $template->param( DISPLAY_RESETPASSWORD => 0 );
         $template->param( DISPLAY_FORM          => 0 );
