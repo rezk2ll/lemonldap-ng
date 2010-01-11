@@ -76,6 +76,8 @@ __END__
 # * PE_BADURL                            37
 # * PE_NOSCHEME                          38
 # * PE_BADOLDPASSWORD                    39
+# * PE_MALFORMEDUSER                     40
+# * PE_SESSIONNOTGRANTED                 41
 
 # Not used in errors:
 # * PE_DONE                -1
@@ -128,6 +130,7 @@ sub error_fr {
         'Aucun sch&eacute;ma disponible',
         'Ancien mot de passe invalide',
         "Nom d'utilisateur incorrect",
+        "Ouverture de session non autorisée",
     ];
 }
 
@@ -177,6 +180,7 @@ sub error_en {
         'No scheme available',
         'Bad old password',
         'Bad username',
+        'Session opening not allowed',
     ];
 }
 
@@ -227,5 +231,6 @@ sub error_ro {
         'No scheme available',
         'Bad old password',
         'Bad username',
+        'Session opening not allowed',
     ];
 }

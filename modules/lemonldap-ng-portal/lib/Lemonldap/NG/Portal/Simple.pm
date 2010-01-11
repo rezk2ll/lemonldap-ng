@@ -79,6 +79,7 @@ use constant {
     PE_NOSCHEME                         => 38,
     PE_BADOLDPASSWORD                   => 39,
     PE_MALFORMEDUSER                    => 40,
+    PE_SESSIONNOTGRANTED                => 41,
 };
 
 # EXPORTER PARAMETERS
@@ -583,6 +584,7 @@ sub _deleteSession {
 #    - setMacros
 #    - setLocalGroups
 #    - removeOther
+#    - grantSession
 #    - store
 #    - buildCookie
 #    - checkNotification
@@ -616,7 +618,7 @@ sub process {
           issuerForUnAuthUser authInit extractFormInfo userDBInit getUser
           setAuthSessionInfo passwordDBInit modifyPassword setSessionInfo
           resetPasswordByMail setMacros setLocalGroups setGroups authenticate
-          removeOther store buildCookie checkNotification issuerForAuthUser
+          removeOther grantSession store buildCookie checkNotification issuerForAuthUser
           autoRedirect)
     );
     $self->updateStatus;
@@ -900,6 +902,29 @@ sub removeOther {
     }
     PE_OK;
 }
+##@apmethod int grantSession()
+# Check grantSessionRule to allow session creation.
+#@return Lemonldap::NG::Portal constant
+sub grantSession {
+    my ($self) = @_;
+
+    # Return PE_OK if no grantSessionRule
+    return PE_OK unless defined $self->{grantSessionRule};
+
+    # Eval grantSessionRule
+    my $grantSessionRule = $self->{grantSessionRule};
+    $grantSessionRule =~ s/\$(\w+)/\$self->{sessionInfo}->{$1}/g;
+
+    unless ( $self->safe->reval($grantSessionRule) ) {
+        $self->lmLog( "User ".$self->{user}." was not granted to open session", 'error');
+        return PE_SESSIONNOTGRANTED;
+    }
+
+    $self->lmLog( "Session granted for ".$self->{user}, 'notice' );
+
+    PE_OK;
+}
+
 
 ##@apmethod int store()
 # Store user's datas in sessions database.
@@ -1188,6 +1213,9 @@ configuration.
 
 =item * ldapPpolicyControl: set it to 1 if you want to use LDAP Password Policy
 
+=item * grantSessionRule: rule applied to grant session opening for a user. Can
+use all exported attributes, macros, groups and custom functions.
+
 =back
 
 =head2 Methods that can be overloaded
@@ -1269,6 +1297,10 @@ Does nothing by default.
 Method implemented in Lemonldap::NG::Portal::Auth* modules. By default (ldap),
 authenticates the user by rebinding to the LDAP server using the dn retrived
 with search() and the password.
+
+=head3 grantSession
+
+Use grantSessionRule parameter to allow session opening.
 
 =head3 store
 
