@@ -7,9 +7,9 @@
 	<div class="loginlogo"></div>
 
 	<form id="form" action="<TMPL_VAR NAME="URL">" method="get" class="login">
-		<h3><lang en="Information" fr="Information"/>&nbsp;:</h3>
 		<TMPL_VAR NAME="MSG">
 		<p id="timer"><lang en="You'll be redirected in 10 seconds" fr="Vous allez &ecirc;tre redirig&eacute;(e) automatiquement dans dans 10 secondes"/></p>
+		<table><tbody><tr><th>
 		<div class="buttons">
 			<button type="submit" class="positive">
 				<img src="skins/common/accept.png" alt="" />
@@ -20,8 +20,7 @@
 				<lang en="Wait" fr="Attendre" />
 			</button>
 		</div>
-		</td></tr>
-		</table>
+		</th></tr></tbody></table>
 	</form>
 	<script>
 	var i=10;

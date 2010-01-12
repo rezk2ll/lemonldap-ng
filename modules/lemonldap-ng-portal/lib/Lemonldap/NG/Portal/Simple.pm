@@ -959,9 +959,9 @@ sub removeOther {
             &Lemonldap::NG::Portal::_i18n::msg( 4, $ENV{HTTP_ACCEPT_LANGUAGE} ),
             @{ $self->{otherSessions} }
         )
-          . "<b><a href=\"$self->{portal}?removeOther=1\" onclick=\"_go=0\">"
+          . "<p class=\"removeOther\"><a href=\"$self->{portal}?removeOther=1\" onclick=\"_go=0\">"
           . &Lemonldap::NG::Portal::_i18n::msg( 5, $ENV{HTTP_ACCEPT_LANGUAGE} )
-          . "</a></b>"
+          . "</a></p>"
     ) if ( $self->{notifyOther} and @{ $self->{otherSessions} } );
     PE_OK;
 }
@@ -973,8 +973,9 @@ sub removeOther {
 # @return HTML string
 sub _mkDateIpArray {
     my ( $self, $title, @datas ) = @_;
-    my $tmp =
-"<table class=\"info\"><tbody><tr><th colspan=\"3\" class=\"infoTitle\">$title</th></tr><tr>";
+    my $tmp = "<h3>$title</h3>";
+    $tmp .= 
+"<table class=\"info\"><tbody><tr>";
     $tmp .= '<th>'
       . &Lemonldap::NG::Portal::_i18n::msg( $_, $ENV{HTTP_ACCEPT_LANGUAGE} )
       . '</th>'

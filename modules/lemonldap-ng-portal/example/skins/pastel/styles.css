@@ -358,13 +358,25 @@ float:none;
 margin:0;
 width:150px;
 }
+
 #logout {
 margin-bottom:20px;
 }
-/* info */
+
+/* Info */
+
 table.info, .info td, .info tr, .info th{
-text-align: center;
+text-align:center;
 border-collapse:collapse;
-border:1px solid #c2e1ef;
-padding: 5px
+border:1px solid #C2E1EF;
+padding:5px 10px;
 }
+
+.info th{
+background-color:#C2E1EF;
+}
+
+p.removeOther{
+font-weight:bold;
+}
+
