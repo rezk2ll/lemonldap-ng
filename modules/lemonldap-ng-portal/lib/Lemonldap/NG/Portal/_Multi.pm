@@ -57,7 +57,7 @@ sub try {
     my $ci;
     if ( $ci = $self->{p}->safe->reval( $self->{stack}->[$type]->[0]->{c} ) ) {
         $res = $self->{p}->$s();
-        return $res if ( $res <= 0 );
+        return $res if ( $res <= 0 or $res == PE_CONFIRM );
     }
     unless ( $self->next($type) ) {
         return ( $ci ? $res : $self->{res} );
