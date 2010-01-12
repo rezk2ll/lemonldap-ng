@@ -25,13 +25,13 @@
 	</form>
 	<script>
 	var i=10;
-	var go=1;
+	var _go=1;
 	function stop() {
-		go=0;
+		_go=0;
 		$('#timer').html("...");
 	}
 	function go() {
-		if(go)$("#form").submit();
+		if(_go)$("#form").submit();
 	}
 	function timer() {
 		var h=$('#timer').html();

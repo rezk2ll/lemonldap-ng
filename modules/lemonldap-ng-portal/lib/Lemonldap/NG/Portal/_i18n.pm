@@ -260,18 +260,22 @@ sub error_ro {
 sub msg_en {
     use utf8;
     [
-        'The following sessions have been deleted',
+        'User',
         'Date',
         'IP address',
+        'The following sessions have been deleted',
+        'Other sessions',
     ];
 }
 
 sub msg_fr {
     use utf8;
     [
-        'Les sessions suivantes ont été effacées',
+        'Utilisateur',
         'Date',
         'Adresse IP',
+        'Les sessions suivantes ont été effacées',
+        'Autres sessions',
     ];
 }
 

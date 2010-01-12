@@ -133,7 +133,7 @@ sub struct {
             # SESSIONS PARAMETERS
             sessionParams => {
                 _nodes => [
-                    qw(sessionStorage singleSession singleIP singleUserByIP notifyDeleted timeout storePassword)
+                    qw(sessionStorage singleSession singleIP singleUserByIP notifyDeleted notifyOther timeout storePassword)
                 ],
                 _help          => 'storage',
                 sessionStorage => {
@@ -148,6 +148,7 @@ sub struct {
                 singleIP       => 'bool:/singleIP',
                 singleUserByIP => 'bool:/singleUserByIP',
                 notifyDeleted  => 'bool:/notifyDeleted',
+                notifyOther    => 'bool:/notifyOther',
                 storePassword  => 'bool:/storePassword',
                 timeout        => 'text:/timeout:timeout:text',
             },
@@ -372,6 +373,7 @@ sub testStruct {
             keyMsgFail => 'Bad parameter',
         },
         notifyDeleted => $boolean,
+        notifyOther   => $boolean,
         portal        => {
             test    => qr/^https?:\/\/\S+$/,
             msgFail => 'Bad portal value',
@@ -442,6 +444,7 @@ sub defaultConf {
         notificationStorageOptions =>
           { dirName => '/var/lib/lemonldap-ng/notifications', },
         notifyDeleted      => '1',
+        notifyOther        => '1',
         portal             => 'http://auth.example.com/',
         protection         => 'none',
         securedCookie      => '0',

@@ -50,8 +50,7 @@ use constant {
 
     # Developers warning, do not use PE_INFO, it's reserved to autoRedirect.
     # If you want to send an information, use $self->info('text').
-    PE_INFO                             => -4,
-    PE_CONFIRM                          => -3,
+    PE_INFO                             => -3,
     PE_REDIRECT                         => -2,
     PE_DONE                             => -1,
     PE_OK                               => 0,
@@ -333,12 +332,7 @@ sub error_type {
     return "positive"
       if (
         scalar(
-            grep { /^$code$/ } (
-                -2,    #PE_REDIRECT
-                -1,    #PE_DONE,
-                0,     #PE_OK
-                35,    #PE_PASSWORD_OK
-            )
+            grep { /^$code$/ } ( PE_REDIRECT, PE_DONE, PE_OK, PE_PASSWORD_OK, )
         )
       );
 
@@ -347,13 +341,10 @@ sub error_type {
       if (
         scalar(
             grep { /^$code$/ } (
-                1,     #PE_SESSIONEXPIRED
-                2,     #PE_FORMEMPTY
-                9,     #PE_FIRSTACCESS
-                32,    #PE_PP_GRACE
-                33,    #PE_PP_EXP_WARNING
-                36,    #PE_NOTIFICATION
-                37,    #PE_BADURL
+                PE_INFO,         PE_SESSIONEXPIRED,
+                PE_FORMEMPTY,    PE_FIRSTACCESS,
+                PE_PP_GRACE,     PE_PP_EXP_WARNING,
+                PE_NOTIFICATION, PE_BADURL,
             )
         )
       );
@@ -530,16 +521,24 @@ sub safe {
 }
 
 ##@method private boolean _deleteSession(Apache::Session* h)
-# Delete an existing session
+# Delete an existing session. If "securedCookie" is set to 2, the http session
+# will also be removed.
 # @param $h tied Apache::Session object
+# @return True if session has been deleted
 sub _deleteSession {
     my ( $self, $h ) = @_;
+
+    # Try to find a linked http session (securedCookie=>2)
     if ( my $id2 = $h->{_httpSession} ) {
-        my $h2 = $self->getApacheSession($id2);
+        if ( my $h2 = $self->getApacheSession($id2) ) {
+
+            # Try to purge local cache
+            # (if an handler is running on the same server)
+            eval { $self->{lmConf}->{refLocalStorage}->remove($id2); };
         eval { tied(%$h2)->delete() };
         $self->lmLog( $@, 'error' ) if ($@);
 
-        # Delete cookie
+            # Create an obsolete cookie to remove it
         push @{ $self->{cookie} },
           $self->cookie(
             -name    => $self->{cookieName} . 'http',
@@ -551,11 +550,16 @@ sub _deleteSession {
             @_,
           );
     }
+    }
     my $r;
+
+    # Try to purge local cache
+    # (if an handler is running on the same server)
+    eval { $self->{lmConf}->{refLocalStorage}->remove( $h->{_session_id} ); };
     eval { $r = tied(%$h)->delete() };
     $self->lmLog( $@, 'error' ) if ($@);
 
-    # Delete cookie
+    # Create an obsolete cookie to remove it
     push @{ $self->{cookie} },
       $self->cookie(
         -name    => $self->{cookieName},
@@ -566,6 +570,19 @@ sub _deleteSession {
         -expires => '-1d',
         @_,
       );
+
+    # Call issuerDB logout
+    $self->_sub('issuerLogout');
+
+    # Call authentication logout
+    eval { $self->_sub('authLogout') };
+
+    # Log
+    $self->_sub( 'userNotice',
+        $self->{sessionInfo}->{ $self->{whatToTrace} }
+          . " has been disconnected" );
+
+    # Return the result of tied(%$h)->delete()
     return $r;
 }
 
@@ -575,7 +592,7 @@ sub _deleteSession {
 # @return HTML text to display
 sub info {
     my ( $self, $t ) = @_;
-    $self->{_info} .= $t if (defined $t);
+    $self->{_info} .= $t if ( defined $t );
     return $self->{_info};
 }
 
@@ -726,17 +743,6 @@ sub controlExistingSession {
             $self->_deleteSession($h);
             $self->{error} = PE_REDIRECT;
 
-            # Call issuerDB logout
-            $self->issuerLogout();
-
-            # Log
-            $self->_sub( 'userNotice',
-                $self->{sessionInfo}->{ $self->{whatToTrace} }
-                  . " has been disconnected" );
-
-            # Call authentication logout
-            eval { $self->_sub('authLogout') };
-
             # Redirect user
             $self->_subProcess(qw(autoRedirect));
             return PE_FIRSTACCESS;
@@ -879,21 +885,35 @@ sub authenticate {
 sub removeOther {
     my $self = shift;
     $self->{deleted} = [];
-    if ( $self->{singleSession} or $self->{singleIP} ) {
+    $self->{otherSessions} = [];
+    if ( $self->{singleSession} or $self->{singleIP} or $self->{notifyOther} ) {
         my $sessions =
           $self->{globalStorage}->searchOn( $self->{globalStorageOptions},
             $self->{whatToTrace},
             $self->{sessionInfo}->{ $self->{whatToTrace} } );
         foreach my $id ( keys %$sessions ) {
             my $h = $self->getApacheSession($id);
-            unless ($self->{singleIP}
-                and $self->{sessionInfo}->{ipAddr} eq $h->{ipAddr} )
+            if (
+                $self->{singleSession}
+                or (    $self->{singleIP}
+                    and $self->{sessionInfo}->{ipAddr} ne $h->{ipAddr} )
+              )
             {
                 push @{ $self->{deleted} },
-                  { time => $h->{_utime}, ip=> $h->{ipAddr} };
-                tied(%$h)->delete();
-                $self->lmLog( "Deleting session $id", 'debug' );
-                eval { $self->{lmConf}->{refLocalStorage}->remove($id); };
+                  {
+                    time => $h->{_utime},
+                    ip   => $h->{ipAddr},
+                    user => $h->{ $self->{whatToTrace} },
+                  };
+                $self->_deleteSession($h);
+            }
+            else {
+                push @{ $self->{otherSessions} },
+                  {
+                    time => $h->{_utime},
+                    ip   => $h->{ipAddr},
+                    user => $h->{ $self->{whatToTrace} },
+                  };
             }
         }
     }
@@ -907,25 +927,54 @@ sub removeOther {
                 $h->{ $self->{whatToTrace} } )
             {
                 push @{ $self->{deleted} },
-                  { time => $h->{_utime}, ip=> $h->{ipAddr} };
-                tied(%$h)->delete();
-                $self->lmLog( "Deleting session $id", 'debug' );
-                eval { $self->{lmConf}->{refLocalStorage}->remove($id); };
+                  {
+                    time => $h->{_utime},
+                    ip   => $h->{ipAddr},
+                    user => $h->{ $self->{whatToTrace} },
+                  };
+                $self->_deleteSession($h);
             }
             }
         }
-    if($self->{notifyDeleted} and $self->{deleted}){
-        my $tmp  = '<p>'.&Lemonldap::NG::Portal::_i18n::msg( 0, $ENV{HTTP_ACCEPT_LANGUAGE} ).'&nbsp;:</p><table class="info"><tbody><tr>';
-        $tmp .= '<th>'.&Lemonldap::NG::Portal::_i18n::msg($_,$ENV{HTTP_ACCEPT_LANGUAGE} ).'</th>' foreach( 1..2 );
-        $tmp .= '</tr>';
-        foreach(@{$self->{deleted}}){
-            $tmp .= '<tr><td>'."<script>var _date=new Date($_->{time}*1000);document.write(_date.toLocaleString());</script>"."</td><td>$_->{ip}</td></tr>";
-        }
-        $tmp .= '</tbody></table>';
-        $self->info($tmp);
-    }
+    $self->info(
+        $self->_mkDateIpArray(
+            &Lemonldap::NG::Portal::_i18n::msg( 3, $ENV{HTTP_ACCEPT_LANGUAGE} ),
+            @{ $self->{deleted} }
+        )
+    ) if ( $self->{notifyDeleted} and @{ $self->{deleted} } );
+    $self->info(
+        $self->_mkDateIpArray(
+            &Lemonldap::NG::Portal::_i18n::msg( 4, $ENV{HTTP_ACCEPT_LANGUAGE} ),
+            @{ $self->{otherSessions} }
+        )
+    ) if ( $self->{notifyOther} and @{ $self->{otherSessions} } );
     PE_OK;
 }
+
+##@method private string _mkDateIpArray(string title,array datas)
+# Build the HTML array to display sessions deleted or found by removeOther()
+# @param $title Title of the array
+# @param @datas Array of hash ref containing sessions datas
+# @return HTML string
+sub _mkDateIpArray {
+    my ( $self, $title, @datas ) = @_;
+    my $tmp =
+      "<table class=\"info\"><tbody><tr><th colspan=\"3\">$title</th></tr><tr>";
+    $tmp .= '<th>'
+      . &Lemonldap::NG::Portal::_i18n::msg( $_, $ENV{HTTP_ACCEPT_LANGUAGE} )
+      . '</th>'
+      foreach ( 0 .. 2 );
+        $tmp .= '</tr>';
+    foreach (@datas) {
+        $tmp .=
+            "<tr><td>$_->{user}</td><td>"
+          . "<script>var _date=new Date($_->{time}*1000);document.write(_date.toLocaleString());</script>"
+          . "</td><td>$_->{ip}</td></tr>";
+        }
+        $tmp .= '</tbody></table>';
+    return $tmp;
+}
+
 ##@apmethod int grantSession()
 # Check grantSessionRule to allow session creation.
 #@return Lemonldap::NG::Portal constant
@@ -940,15 +989,16 @@ sub grantSession {
     $grantSessionRule =~ s/\$(\w+)/\$self->{sessionInfo}->{$1}/g;
 
     unless ( $self->safe->reval($grantSessionRule) ) {
-        $self->lmLog( "User ".$self->{user}." was not granted to open session", 'error');
+        $self->lmLog(
+            "User " . $self->{user} . " was not granted to open session",
+            'error' );
         return PE_SESSIONNOTGRANTED;
     }
 
-    $self->lmLog( "Session granted for ".$self->{user}, 'notice' );
+    $self->lmLog( "Session granted for " . $self->{user}, 'notice' );
 
     PE_OK;
 }
-
 
 ##@apmethod int store()
 # Store user's datas in sessions database.
@@ -1032,7 +1082,8 @@ sub autoRedirect {
     my $self = shift;
 
     # default redirection URL
-    $self->{urldc} ||= $self->{portal} if ( $self->{mustRedirect} or $self->info() );
+    $self->{urldc} ||= $self->{portal}
+      if ( $self->{mustRedirect} or $self->info() );
 
     # Display info before redirecting
     return PE_INFO if ( $self->info() );
