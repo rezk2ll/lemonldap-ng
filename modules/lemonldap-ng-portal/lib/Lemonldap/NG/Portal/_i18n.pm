@@ -153,6 +153,7 @@ sub error_fr {
         'Ancien mot de passe invalide',
         "Nom d'utilisateur incorrect",
         "Ouverture de session non autorisée",
+        "Confirmation demandée",
     ];
 }
 
@@ -203,6 +204,7 @@ sub error_en {
         'Bad old password',
         'Bad username',
         'Session opening not allowed',
+        'Confirmation required',
     ];
 }
 
@@ -250,10 +252,11 @@ sub error_ro {
         'Parola a fost schimbată',
         'Ai un mesaj nou',
         'Rea URL',
-        'No scheme available',
-        'Bad old password',
-        'Bad username',
-        'Session opening not allowed',
+        'Nici o posibilitate disponibilă',
+        'Parola rău vechi',
+        'Nume de utilizator gresit',
+        'Conectare neautorizată',
+        'Confirmare necesare',
     ];
 }
 
