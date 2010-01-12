@@ -9,9 +9,9 @@
 	<form id="form" action="<TMPL_VAR NAME="URL">" method="post" class="login">
 		<p><input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" /></p>
 		<input type="hidden" id="confirm" name="confirm" value="1" />
-		<h3><lang en="Confirmation" fr="Confirmation"/>&nbsp;:</h3>
 		<TMPL_VAR NAME="MSG">
-		<p id="timer"><lang en="Automaticaly accept in 5 seconds" fr="Acceptation automatique dans dans 5 secondes"/></p>
+		<p id="timer"><lang en="Automaticaly accept in 5 seconds" fr="Acceptation automatique dans 5 secondes"/></p>
+		<table><tbody><tr><th>
 		<div class="buttons">
 			<button type="submit" class="positive">
 				<img src="skins/common/accept.png" alt="" />
@@ -22,8 +22,7 @@
 				<lang en="Refuse" fr="Refuser" />
 			</button>
 		</div>
-		</td></tr>
-		</table>
+		</th></tr></tbody></table>
 	</form>
 	<script>
 	var i=5;
