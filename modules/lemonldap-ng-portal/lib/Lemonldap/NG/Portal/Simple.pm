@@ -85,6 +85,7 @@ use constant {
     PE_BADOLDPASSWORD                   => 39,
     PE_MALFORMEDUSER                    => 40,
     PE_SESSIONNOTGRANTED                => 41,
+    PE_CONFIRM                          => 42,
 };
 
 # EXPORTER PARAMETERS
@@ -98,6 +99,7 @@ our @EXPORT = qw( PE_INFO PE_CONFIRM PE_REDIRECT PE_DONE PE_OK PE_SESSIONEXPIRED
   PE_PP_PASSWORD_TOO_YOUNG PE_PP_PASSWORD_IN_HISTORY PE_PP_GRACE
   PE_PP_EXP_WARNING PE_PASSWORD_MISMATCH PE_PASSWORD_OK PE_NOTIFICATION
   PE_BADURL PE_NOSCHEME PE_BADOLDPASSWORD PE_MALFORMEDUSER PE_SESSIONNOTGRANTED
+  PE_CONFIRM
 );
 our %EXPORT_TAGS = ( 'all' => [ @EXPORT, 'import' ], );
 
@@ -345,6 +347,7 @@ sub error_type {
                 PE_FORMEMPTY,    PE_FIRSTACCESS,
                 PE_PP_GRACE,     PE_PP_EXP_WARNING,
                 PE_NOTIFICATION, PE_BADURL,
+                PE_CONFIRM,
             )
         )
       );

@@ -150,7 +150,10 @@ my $portal = Lemonldap::NG::Portal::SharedConf->new(
 # Get skin value
 my $skin = $portal->{portalSkin};
 
+# 1. Case well authenticated
 if ( $portal->process() ) {
+
+    # Case there is a message to display
     if ( my $info = $portal->info() ) {
         my $template = HTML::Template->new(
             filename          => "$skin_dir/$skin/info.tpl",
@@ -231,6 +234,26 @@ elsif ( my $notif = $portal->notification ) {
 
     $template->param( AUTH_ERROR_TYPE => $portal->error_type );
     $template->param( NOTIFICATION    => $notif );
+    $template->param( SKIN            => $skin );
+
+    print $portal->header('text/html; charset=utf-8');
+    print $template->output;
+}
+elsif ( $portal->{error} == PE_CONFIRM ) {
+    my $msg = $portal->info();
+
+    # HTML::Template object creation
+    my $template = HTML::Template->new(
+        filename          => "$skin_dir/$skin/confirm.tpl",
+        die_on_bad_params => 0,
+        cache             => 0,
+        filter            => sub { $portal->translate_template(@_) }
+    );
+
+    $template->param( AUTH_ERROR      => $portal->error );
+    $template->param( AUTH_ERROR_TYPE => $portal->error_type );
+    $template->param( AUTH_URL        => $portal->get_url );
+    $template->param( MSG             => $msg );
     $template->param( SKIN            => $skin );
 
     print $portal->header('text/html; charset=utf-8');

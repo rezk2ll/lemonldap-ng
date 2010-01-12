@@ -64,6 +64,7 @@ example/skins/common/vcard_edit.png
 example/skins/common/vcss-blue.gif
 example/skins/common/warning.png
 example/skins/common/warning_triangle.png
+example/skins/pastel/confirm.tpl
 example/skins/pastel/error.tpl
 example/skins/pastel/footer.tpl
 example/skins/pastel/hatch.gif
