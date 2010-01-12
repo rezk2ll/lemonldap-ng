@@ -265,6 +265,7 @@ sub msg_en {
         'IP address',
         'The following sessions have been deleted',
         'Other sessions',
+        'Remove other sessions',
     ];
 }
 
@@ -276,6 +277,7 @@ sub msg_fr {
         'Adresse IP',
         'Les sessions suivantes ont été effacées',
         'Autres sessions',
+        'Supprimer les autres sessions',
     ];
 }
 

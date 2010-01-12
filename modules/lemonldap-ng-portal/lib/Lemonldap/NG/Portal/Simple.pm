@@ -526,7 +526,7 @@ sub safe {
 # @param $h tied Apache::Session object
 # @return True if session has been deleted
 sub _deleteSession {
-    my ( $self, $h ) = @_;
+    my ( $self, $h, $preserveCookie ) = @_;
 
     # Try to find a linked http session (securedCookie=>2)
     if ( my $id2 = $h->{_httpSession} ) {
@@ -569,7 +569,7 @@ sub _deleteSession {
         -secure  => 0,
         -expires => '-1d',
         @_,
-      );
+      ) unless ($preserveCookie);
 
     # Call issuerDB logout
     $self->_sub('issuerLogout');
@@ -747,6 +747,13 @@ sub controlExistingSession {
             $self->_subProcess(qw(autoRedirect));
             return PE_FIRSTACCESS;
         }
+
+        # If the user wants to purge other sessions
+        elsif ( $self->param('removeOther') ) {
+            $self->{notifyDeleted} = 1;
+            $self->{singleSession} = 1;
+            $self->_sub( 'removeOther', $id );
+        }
         untie %$h;
         $self->{id} = $id;
 
@@ -883,7 +890,7 @@ sub authenticate {
 # check singleSession or singleIP parameters, and remove other sessions if needed
 #@return Lemonldap::NG::Portal constant
 sub removeOther {
-    my $self = shift;
+    my ( $self, $current ) = @_;
     $self->{deleted} = [];
     $self->{otherSessions} = [];
     if ( $self->{singleSession} or $self->{singleIP} or $self->{notifyOther} ) {
@@ -892,7 +899,8 @@ sub removeOther {
             $self->{whatToTrace},
             $self->{sessionInfo}->{ $self->{whatToTrace} } );
         foreach my $id ( keys %$sessions ) {
-            my $h = $self->getApacheSession($id);
+            next if ( $current and ( $current eq $id ) );
+            my $h = $self->getApacheSession($id) or next;
             if (
                 $self->{singleSession}
                 or (    $self->{singleIP}
@@ -905,7 +913,7 @@ sub removeOther {
                     ip   => $h->{ipAddr},
                     user => $h->{ $self->{whatToTrace} },
                   };
-                $self->_deleteSession($h);
+                $self->_deleteSession( $h, 1 );
             }
             else {
                 push @{ $self->{otherSessions} },
@@ -922,7 +930,8 @@ sub removeOther {
           $self->{globalStorage}->searchOn( $self->{globalStorageOptions},
             $self->{ipAddr}, $ENV{REMOTE_ADDR} );
         foreach my $id ( keys %$sessions ) {
-            my $h = $self->getApacheSession($id);
+            next if ( $current and $current eq $id );
+            my $h = $self->getApacheSession($id) or next;
             unless ( $self->{sessionInfo}->{ $self->{whatToTrace} } eq
                 $h->{ $self->{whatToTrace} } )
             {
@@ -932,7 +941,7 @@ sub removeOther {
                     ip   => $h->{ipAddr},
                     user => $h->{ $self->{whatToTrace} },
                   };
-                $self->_deleteSession($h);
+                $self->_deleteSession( $h, 1 );
             }
             }
         }
@@ -947,6 +956,9 @@ sub removeOther {
             &Lemonldap::NG::Portal::_i18n::msg( 4, $ENV{HTTP_ACCEPT_LANGUAGE} ),
             @{ $self->{otherSessions} }
         )
+          . "<b><a href=\"$self->{portal}?removeOther=1\" onclick=\"_go=0\">"
+          . &Lemonldap::NG::Portal::_i18n::msg( 5, $ENV{HTTP_ACCEPT_LANGUAGE} )
+          . "</a></b>"
     ) if ( $self->{notifyOther} and @{ $self->{otherSessions} } );
     PE_OK;
 }
@@ -959,7 +971,7 @@ sub removeOther {
 sub _mkDateIpArray {
     my ( $self, $title, @datas ) = @_;
     my $tmp =
-      "<table class=\"info\"><tbody><tr><th colspan=\"3\">$title</th></tr><tr>";
+"<table class=\"info\"><tbody><tr><th colspan=\"3\" class=\"infoTitle\">$title</th></tr><tr>";
     $tmp .= '<th>'
       . &Lemonldap::NG::Portal::_i18n::msg( $_, $ENV{HTTP_ACCEPT_LANGUAGE} )
       . '</th>'
