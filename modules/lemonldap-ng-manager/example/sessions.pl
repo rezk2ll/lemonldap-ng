@@ -7,7 +7,7 @@ use Lemonldap::NG::Manager::Sessions;
 our $cgi = Lemonldap::NG::Manager::Sessions->new({
 
         # REQUIRED PARAMETERS
-        jqueryUri     => 'jquery.js',
+        jqueryUri     => 'skins/default/jquery-1.3.2.min.js',
         imagePath     => '/images/',
 
         # PROTECTION, choose one of :
