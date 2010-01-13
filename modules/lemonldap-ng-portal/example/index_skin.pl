@@ -152,10 +152,15 @@ my $skin = $portal->{portalSkin};
 
 my ( $skinfile, %templateParams );
 
-# 1. Case well authenticated
+####################
+# QUERY PROCESSING #
+####################
+
+# I - GOOD AUTHENTICATION
+
 if ( $portal->process() ) {
 
-    # Case : there is a message to display
+    # 1.1 Case : there is a message to display
     if ( my $info = $portal->info() ) {
         $skinfile       = 'info.tpl';
         %templateParams = (
@@ -166,7 +171,7 @@ if ( $portal->process() ) {
         );
     }
 
-    # Case : display menu
+    # 1.2 Case : display menu
     else {
         $skinfile = 'menu.tpl';
 
@@ -209,6 +214,11 @@ if ( $portal->process() ) {
         );
     }
 }
+
+# II - USER NOT AUTHENTICATED
+
+# 2.1 A notification has to be done (session is created but hidden and unusable
+#     until the user has accept the message)
 elsif ( my $notif = $portal->notification ) {
     $skinfile       = 'notification.tpl';
     %templateParams = (
@@ -217,6 +227,9 @@ elsif ( my $notif = $portal->notification ) {
         SKIN            => $skin,
     );
 }
+
+# 2.2 An authentication (or userDB) module needs to ask a question
+#     before processing to the request
 elsif ( $portal->{error} == PE_CONFIRM ) {
     $skinfile       = 'confirm.tpl';
     %templateParams = (
@@ -227,6 +240,8 @@ elsif ( $portal->{error} == PE_CONFIRM ) {
         SKIN            => $skin,
     );
 }
+
+# 2.3 Authentication has been refused OR this is the first access
 else {
     $skinfile       = 'login.tpl';
     %templateParams = (
@@ -275,6 +290,7 @@ else {
     );
 }
 
+# HTML template creation
 my $template = HTML::Template->new(
     filename          => "$skin_dir/$skin/$skinfile",
     die_on_bad_params => 0,
@@ -282,10 +298,12 @@ my $template = HTML::Template->new(
     filter            => sub { $portal->translate_template(@_) }
 );
 
+# Give parameters to the template
 while ( my ( $k, $v ) = each %templateParams ) {
     $template->param( $k, $v );
 }
 
+# Display it
 print $portal->header('text/html; charset=utf-8');
 print $template->output;
 
