@@ -150,35 +150,25 @@ my $portal = Lemonldap::NG::Portal::SharedConf->new(
 # Get skin value
 my $skin = $portal->{portalSkin};
 
+my ( $skinfile, %templateParams );
+
 # 1. Case well authenticated
 if ( $portal->process() ) {
 
-    # Case there is a message to display
+    # Case : there is a message to display
     if ( my $info = $portal->info() ) {
-        my $template = HTML::Template->new(
-            filename          => "$skin_dir/$skin/info.tpl",
-            die_on_bad_params => 0,
-            cache             => 0,
-            filter            => sub { $portal->translate_template(@_) }
+        $skinfile       = 'info.tpl';
+        %templateParams = (
+            AUTH_ERROR_TYPE => $portal->error_type,
+            MSG             => $info,
+            SKIN            => $skin,
+            URL             => $portal->{urldc},
         );
-
-        $template->param( AUTH_ERROR_TYPE => $portal->error_type );
-        $template->param( MSG             => $info );
-        $template->param( SKIN            => $skin );
-        $template->param( URL        => $portal->{urldc} );
-
-        print $portal->header('text/html; charset=utf-8');
-        print $template->output;
     }
-    else {
 
-    # HTML::Template object creation
-    my $template = HTML::Template->new(
-        filename          => "$skin_dir/$skin/menu.tpl",
-        die_on_bad_params => 0,
-        cache             => 0,
-        filter            => sub { $portal->translate_template(@_) }
-    );
+    # Case : display menu
+    else {
+        $skinfile = 'menu.tpl';
 
     # Menu creation
     use Lemonldap::NG::Portal::Menu;
@@ -196,93 +186,63 @@ if ( $portal->process() ) {
             },
         }
     );
-
-        $template->param( AUTH_USER =>
-              $portal->{sessionInfo}->{ $portal->{portalUserAttr} } );
-    $template->param( AUTOCOMPLETE        => $portal->{portalAutocomplete} );
-    $template->param( SKIN                => $skin );
-    $template->param( AUTH_ERROR          => $menu->error );
-    $template->param( AUTH_ERROR_TYPE     => $menu->error_type );
-        $template->param(
-            DISPLAY_APPSLIST => $menu->displayModule("appslist") );
-        $template->param(
-            DISPLAY_PASSWORD => $menu->displayModule("password") );
-    $template->param( DISPLAY_LOGOUT      => $menu->displayModule("logout") );
-    $template->param( DISPLAY_TAB         => $menu->displayTab );
-    $template->param( LOGOUT_URL          => "$ENV{SCRIPT_NAME}?logout=1" );
-        $template->param(
-            REQUIRE_OLDPASSWORD => $portal->{portalRequireOldPassword} );
-
-    if ( $menu->displayModule("appslist") ) {
-        $template->param( APPSLIST_MENU => $menu->appslistMenu );
-        $template->param( APPSLIST_DESC => $menu->appslistDescription );
-    }
-
-    print $portal->header('text/html; charset=utf-8');
-    print $template->output;
+        %templateParams = (
+            AUTH_USER => $portal->{sessionInfo}->{ $portal->{portalUserAttr} },
+            AUTOCOMPLETE        => $portal->{portalAutocomplete},
+            SKIN                => $skin,
+            AUTH_ERROR          => $menu->error,
+            AUTH_ERROR_TYPE     => $menu->error_type,
+            DISPLAY_APPSLIST    => $menu->displayModule("appslist"),
+            DISPLAY_PASSWORD    => $menu->displayModule("password"),
+            DISPLAY_LOGOUT      => $menu->displayModule("logout"),
+            DISPLAY_TAB         => $menu->displayTab,
+            LOGOUT_URL          => "$ENV{SCRIPT_NAME}?logout=1",
+            REQUIRE_OLDPASSWORD => $portal->{portalRequireOldPassword},
+            (
+                $menu->displayModule("appslist")
+                ? (
+                    APPSLIST_MENU => $menu->appslistMenu,
+                    APPSLIST_DESC => $menu->appslistDescription
+                  )
+                : ()
+            )
+        );
     }
 }
 elsif ( my $notif = $portal->notification ) {
-
-    # HTML::Template object creation
-    my $template = HTML::Template->new(
-        filename          => "$skin_dir/$skin/notification.tpl",
-        die_on_bad_params => 0,
-        cache             => 0,
-        filter            => sub { $portal->translate_template(@_) }
+    $skinfile       = 'notification.tpl';
+    %templateParams = (
+        AUTH_ERROR_TYPE => $portal->error_type,
+        NOTIFICATION    => $notif,
+        SKIN            => $skin,
     );
-
-    $template->param( AUTH_ERROR_TYPE => $portal->error_type );
-    $template->param( NOTIFICATION    => $notif );
-    $template->param( SKIN            => $skin );
-
-    print $portal->header('text/html; charset=utf-8');
-    print $template->output;
 }
 elsif ( $portal->{error} == PE_CONFIRM ) {
-    my $msg = $portal->info();
-
-    # HTML::Template object creation
-    my $template = HTML::Template->new(
-        filename          => "$skin_dir/$skin/confirm.tpl",
-        die_on_bad_params => 0,
-        cache             => 0,
-        filter            => sub { $portal->translate_template(@_) }
+    $skinfile       = 'confirm.tpl';
+    %templateParams = (
+        AUTH_ERROR      => $portal->error,
+        AUTH_ERROR_TYPE => $portal->error_type,
+        AUTH_URL        => $portal->get_url,
+        MSG             => $portal->info(),
+        SKIN            => $skin,
     );
-
-    $template->param( AUTH_ERROR      => $portal->error );
-    $template->param( AUTH_ERROR_TYPE => $portal->error_type );
-    $template->param( AUTH_URL        => $portal->get_url );
-    $template->param( MSG             => $msg );
-    $template->param( SKIN            => $skin );
-
-    print $portal->header('text/html; charset=utf-8');
-    print $template->output;
 }
 else {
-
-    # HTML::Template object creation
-    my $template = HTML::Template->new(
-        filename          => "$skin_dir/$skin/login.tpl",
-        die_on_bad_params => 0,
-        cache             => 0,
-        filter            => sub { $portal->translate_template(@_) }
-    );
-
-    $template->param( AUTH_ERROR            => $portal->error );
-    $template->param( AUTH_ERROR_TYPE       => $portal->error_type );
-    $template->param( AUTH_URL              => $portal->get_url );
-    $template->param( LOGIN                 => $portal->get_user );
-    $template->param( AUTOCOMPLETE          => $portal->{portalAutocomplete} );
-    $template->param( SKIN                  => $skin );
-    $template->param(
-        DISPLAY_RESETPASSWORD => $portal->{portalDisplayResetPassword} );
-    $template->param( DISPLAY_FORM          => 1 );
+    $skinfile       = 'login.tpl';
+    %templateParams = (
+        AUTH_ERROR            => $portal->error,
+        AUTH_ERROR_TYPE       => $portal->error_type,
+        AUTH_URL              => $portal->get_url,
+        LOGIN                 => $portal->get_user,
+        AUTOCOMPLETE          => $portal->{portalAutocomplete},
+        SKIN                  => $skin,
+        DISPLAY_RESETPASSWORD => $portal->{portalDisplayResetPassword},
+        DISPLAY_FORM          => 1,
 
     # Adapt template if password policy error
-    if (
+        (
         $portal->{portalDisplayChangePassword}
-        and (  $portal->{error} == PE_PP_CHANGE_AFTER_RESET
+              and ($portal->{error} == PE_PP_CHANGE_AFTER_RESET
             or $portal->{error} == PE_PP_MUST_SUPPLY_OLD_PASSWORD
             or $portal->{error} == PE_PP_INSUFFICIENT_PASSWORD_QUALITY
             or $portal->{error} == PE_PP_PASSWORD_TOO_SHORT
@@ -290,24 +250,42 @@ else {
             or $portal->{error} == PE_PP_PASSWORD_IN_HISTORY
             or $portal->{error} == PE_PASSWORD_MISMATCH
             or $portal->{error} == PE_BADOLDPASSWORD )
+            ?
+
+              (
+                REQUIRE_OLDPASSWORD   => 1,
+                DISPLAY_PASSWORD      => 1,
+                DISPLAY_RESETPASSWORD => 0,
+                DISPLAY_FORM          => 0
       )
-    {
-        $template->param( REQUIRE_OLDPASSWORD   => 1 );
-        $template->param( DISPLAY_PASSWORD      => 1 );
-        $template->param( DISPLAY_RESETPASSWORD => 0 );
-        $template->param( DISPLAY_FORM          => 0 );
-    }
+            : ()
+        ),
 
     # Adapt template if external authentication error
-    if (   $portal->{error} == PE_BADCERTIFICATE
+        (
+            $portal->{error} == PE_BADCERTIFICATE
         or $portal->{error} == PE_CERTIFICATEREQUIRED
-        or $portal->{error} == PE_ERROR )
-    {
-        $template->param( DISPLAY_RESETPASSWORD => 0 );
-        $template->param( DISPLAY_FORM          => 0 );
-    }
-
-    print $portal->header('text/html; charset=utf-8');
-    print $template->output;
+              or $portal->{error} == PE_ERROR
+            ? (
+                DISPLAY_RESETPASSWORD => 0,
+                DISPLAY_FORM          => 0,
+              )
+            : ()
+        )
+    );
 }
+
+my $template = HTML::Template->new(
+    filename          => "$skin_dir/$skin/$skinfile",
+    die_on_bad_params => 0,
+    cache             => 0,
+    filter            => sub { $portal->translate_template(@_) }
+);
+
+while ( my ( $k, $v ) = each %templateParams ) {
+    $template->param( $k, $v );
+}
+
+print $portal->header('text/html; charset=utf-8');
+print $template->output;
 
