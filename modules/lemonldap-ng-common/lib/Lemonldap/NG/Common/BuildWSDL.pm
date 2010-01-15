@@ -26,9 +26,14 @@ sub buildWSDL {
     $xml =~ s/__XMLCOOKIELIST__/join("\n",@cookies)/ges;
 
     # Attributes
-    my @attr = (keys %{$self->{conf}->{exportedVars}},keys %{$self->{conf}->{macros}});
-    s#(.*)#<element name="$1" type="xsd:string" nillable="true"></element># foreach (@attr);
-    $xml =~ s/__ATTRLIST__/join("\n",@attr)/ges;
+    my @attr = (
+        keys %{ $self->{conf}->{exportedVars} },
+        keys %{ $self->{conf}->{macros} }
+    );
+    s#(.*)#<element name="$1" type="xsd:string" nillable="true"></element>#
+      foreach (@attr);
+    $xml =~
+s/__ATTRLIST__/join("\n",@attr,qw(_timezone ipAddr _password authenticationLevel _session_id xForwardedForAddr startTime _user _utime dn)/ges;
     return $xml;
 }
 
