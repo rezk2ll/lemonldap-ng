@@ -21,6 +21,7 @@ use Safe;
 use Lemonldap::NG::Common::Safelib;    #link protected safe Safe object
 require Data::Dumper;
 require POSIX;
+use CGI::Util 'expires';
 
 #inherits Cache::Cache
 #inherits Apache::Session
@@ -43,7 +44,8 @@ our (
     $whatToTrace,          $https,             $refLocalStorage,
     $safe,                 $port,              $statusPipe,
     $statusOut,            $customFunctions,   $transform,
-    $cda,                  $childInitDone,
+    $cda,                  $childInitDone,     $httpOnly,
+    $cookieExpiration,
 );
 
 ##########################################
@@ -72,6 +74,7 @@ BEGIN {
         apache => [qw( MP OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR )],
         post   => [qw($transform)],
         cda    => ['$cda'],
+        cookie => [qw($cookieName $https $httpOnly $cookieExpiration)],
     );
     push( @EXPORT_OK, @{ $EXPORT_TAGS{$_} } ) foreach ( keys %EXPORT_TAGS );
     $EXPORT_TAGS{all} = \@EXPORT_OK;
@@ -588,9 +591,11 @@ sub defaultValuesInit {
     $https = 1 unless defined($https);
     $args->{securedCookie} = 1 unless defined( $args->{securedCookie} );
     $cookieName .= 'http' if ( $args->{securedCookie} == 2 and $https == 0 );
-    $port            = $args->{port} || 0 unless defined($port);
-    $customFunctions = $args->{customFunctions};
-    $cda             = $args->{cda} || 0 unless defined($cda);
+    $port             = $args->{port} || 0 unless defined($port);
+    $customFunctions  = $args->{customFunctions};
+    $cda              = $args->{cda} || 0 unless defined($cda);
+    $httpOnly         = $args->{httpOnly} || 1 unless defined($httpOnly);
+    $cookieExpiration = $args->{cookieExpiration} || $cookieExpiration;
     1;
 }
 
@@ -909,9 +914,17 @@ sub run ($$) {
               . $apacheRequest->uri
               . ( $args ? "?" . $args : "" ) );
         $host =~ s/^[^\.]+\.(.*\..*$)/$1/;
-        lmSetErrHeaderOut( $apacheRequest,
+        lmSetErrHeaderOut(
+            $apacheRequest,
             'Set-Cookie' => "$str; domain=$host; path=/"
-              . ( $https ? "; secure" : "" ) );
+              . ( $https    ? "; secure"   : "" )
+              . ( $httpOnly ? "; HttpOnly" : "" )
+              . (
+                $cookieExpiration
+                ? "; expires=" . expires( $cookieExpiration, 'cookie' )
+                : ""
+              )
+        );
         return REDIRECT;
     }
     my $uri = $apacheRequest->uri . ( $args ? "?$args" : "" );
