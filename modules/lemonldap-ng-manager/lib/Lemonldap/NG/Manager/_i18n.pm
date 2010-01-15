@@ -107,6 +107,7 @@ sub en {
         userDB                     => 'Users database type',
         userControl                => 'Username control',
         useXForwardedForIP         => "Use X-Forwarded-For header address",
+        variables                  => "Variables",
         virtualHosts               => 'Virtual Hosts',
         whatToTrace                => "Attribute to use in Apache's logs",
     };
@@ -128,7 +129,7 @@ sub fr {
         databaseLocked             => 'Base de donnée verrouillée par un autre processus',
         domain                     => 'Domaine',
         exportedAttr               => 'Attribut exportés par le portail (SOAP)',
-        exportedVars               => 'Attributs LDAP à exporter',
+        exportedVars               => 'Attributs à exporter',
         generalParameters          => 'Paramètres généraux',
         globalStorage              => 'Module Apache::Session',
         globalStorageOptions       => 'Paramètres du module Apache::Session',
@@ -177,6 +178,7 @@ sub fr {
         userControl                => "Contrôle du nom d'utilisateur",
         useXForwardedForIP =>
           "Utiliser l'adresse IP de l'en-tête X-Forwarded-For",
+        variables                  => "Variables",
         virtualHosts               => 'Hôtes virtuels',
         whatToTrace                => "Donnée à inscrire dans les journaux d'Apache",
     };

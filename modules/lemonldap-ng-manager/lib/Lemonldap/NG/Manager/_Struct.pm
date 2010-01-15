@@ -44,7 +44,7 @@ sub cstruct {
 sub struct {
     my $self = shift;
     return {
-        _nodes => [qw(n:generalParameters n:groups n:virtualHosts)],
+        _nodes => [qw(n:generalParameters n:variables n:virtualHosts)],
         _help  => 'default',
 
         ######################
@@ -52,7 +52,7 @@ sub struct {
         ######################
         generalParameters => {
             _nodes => [
-                qw(portal n:authParams logParams cookieParams cn:exportedVars cn:macros sessionParams n:advancedParams)
+                qw(portal n:authParams logParams cookieParams sessionParams n:advancedParams)
             ],
             _help  => 'default',
             portal => 'text:/portal',
@@ -120,16 +120,6 @@ sub struct {
                 cookieExpiration => 'text:/cookieExpiration',
             },
 
-            # EXPORTED ATTRIBUTES
-            exportedVars => {
-                _nodes => ['hash:/exportedVars:vars:btext'],
-                _js    => 'hashRoot'
-            },
-
-            # MACROS
-            macros =>
-              { _nodes => ['hash:/macros:macros:btext'], _js => 'hashRoot' },
-
             # SESSIONS PARAMETERS
             sessionParams => {
                 _nodes => [
@@ -189,13 +179,34 @@ sub struct {
             }
         },
 
-        ##########
-        # GROUPS #
-        ##########
+        #############
+        # VARIABLES #
+        #############
+
+        variables => {
+                _nodes => [
+                    qw(cn:exportedVars cn:macros n:groups)
+                ],
+                _help  => 'default',
+
+                # EXPORTED ATTRIBUTES
+                exportedVars => {
+                    _nodes => ['hash:/exportedVars:vars:btext'],
+                    _js    => 'hashRoot'
+                },
+
+                # MACROS
+                macros => {
+                    _nodes => ['hash:/macros:macros:btext'],
+                    _js => 'hashRoot'
+                },
+
+                # GROUPS
         groups => {
             _nodes => ['hash:/groups:groups:btext'],
             _js    => 'hashRoot',
             _help  => 'default',
+        },
         },
 
         #################
