@@ -175,28 +175,28 @@ if ( $portal->process() ) {
     else {
         $skinfile = 'menu.tpl';
 
-    # Menu creation
-    use Lemonldap::NG::Portal::Menu;
-    my $menu = Lemonldap::NG::Portal::Menu->new(
-        {
-            portalObject => $portal,
-            apps         => {
-                xmlfile => "$appsxmlfile",
-                imgpath => "$appsimgpath",
-            },
-            modules => {
-                appslist => $portal->{portalDisplayAppslist},
-                password => $portal->{portalDisplayChangePassword},
-                logout   => $portal->{portalDisplayLogout},
-            },
-        }
-    );
+        # Menu creation
+        use Lemonldap::NG::Portal::Menu;
+        my $menu = Lemonldap::NG::Portal::Menu->new(
+            {
+                portalObject => $portal,
+                apps         => {
+                    xmlfile => "$appsxmlfile",
+                    imgpath => "$appsimgpath",
+                },
+                modules => {
+                    appslist => $portal->{portalDisplayAppslist},
+                    password => $portal->{portalDisplayChangePassword},
+                    logout   => $portal->{portalDisplayLogout},
+                },
+            }
+        );
         %templateParams = (
             AUTH_USER => $portal->{sessionInfo}->{ $portal->{portalUserAttr} },
             AUTOCOMPLETE        => $portal->{portalAutocomplete},
             SKIN                => $skin,
-            AUTH_ERROR          => $menu->error,
-            AUTH_ERROR_TYPE     => $menu->error_type,
+            AUTH_ERROR          => $portal->error,
+            AUTH_ERROR_TYPE     => $portal->error_type,
             DISPLAY_APPSLIST    => $menu->displayModule("appslist"),
             DISPLAY_PASSWORD    => $menu->displayModule("password"),
             DISPLAY_LOGOUT      => $menu->displayModule("logout"),
@@ -254,17 +254,17 @@ else {
         DISPLAY_RESETPASSWORD => $portal->{portalDisplayResetPassword},
         DISPLAY_FORM          => 1,
 
-    # Adapt template if password policy error
+        # Adapt template if password policy error
         (
-        $portal->{portalDisplayChangePassword}
+            $portal->{portalDisplayChangePassword}
               and ($portal->{error} == PE_PP_CHANGE_AFTER_RESET
-            or $portal->{error} == PE_PP_MUST_SUPPLY_OLD_PASSWORD
-            or $portal->{error} == PE_PP_INSUFFICIENT_PASSWORD_QUALITY
-            or $portal->{error} == PE_PP_PASSWORD_TOO_SHORT
-            or $portal->{error} == PE_PP_PASSWORD_TOO_YOUNG
-            or $portal->{error} == PE_PP_PASSWORD_IN_HISTORY
-            or $portal->{error} == PE_PASSWORD_MISMATCH
-            or $portal->{error} == PE_BADOLDPASSWORD )
+                or $portal->{error} == PE_PP_MUST_SUPPLY_OLD_PASSWORD
+                or $portal->{error} == PE_PP_INSUFFICIENT_PASSWORD_QUALITY
+                or $portal->{error} == PE_PP_PASSWORD_TOO_SHORT
+                or $portal->{error} == PE_PP_PASSWORD_TOO_YOUNG
+                or $portal->{error} == PE_PP_PASSWORD_IN_HISTORY
+                or $portal->{error} == PE_PASSWORD_MISMATCH
+                or $portal->{error} == PE_BADOLDPASSWORD )
             ?
 
               (
@@ -272,14 +272,14 @@ else {
                 DISPLAY_PASSWORD      => 1,
                 DISPLAY_RESETPASSWORD => 0,
                 DISPLAY_FORM          => 0
-      )
+              )
             : ()
         ),
 
-    # Adapt template if external authentication error
+        # Adapt template if external authentication error
         (
             $portal->{error} == PE_BADCERTIFICATE
-        or $portal->{error} == PE_CERTIFICATEREQUIRED
+              or $portal->{error} == PE_CERTIFICATEREQUIRED
               or $portal->{error} == PE_ERROR
             ? (
                 DISPLAY_RESETPASSWORD => 0,

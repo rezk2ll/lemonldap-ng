@@ -260,6 +260,16 @@ sub error_ro {
     ];
 }
 
+# Order of the constants:
+# * PM_USER			0
+# * PM_DATE			1
+# * PM_IP			2
+# * PM_SESSIONS_DELETED		3
+# * PM_OTHER_SESSIONS		4
+# * PM_REMOVE_OTHER_SESSIONS	5
+# * PM_PP_GRACE			6
+# * PM_PP_EXP_WARNING		7
+
 sub msg_en {
     use utf8;
     [
@@ -269,6 +279,8 @@ sub msg_en {
         'The following sessions have been deleted',
         'Other sessions',
         'Remove other sessions',
+        'authentications remaining, change your password!',
+        'seconds before password expiration, change it!',
     ];
 }
 
@@ -281,6 +293,8 @@ sub msg_fr {
         'Les sessions suivantes ont été effacées',
         'Autres sessions',
         'Supprimer les autres sessions',
+        'authentifications restantes, changez votre mot de passe !',
+'secondes avant expiration de votre mot de passe, pensez à le changer !',
     ];
 }
 

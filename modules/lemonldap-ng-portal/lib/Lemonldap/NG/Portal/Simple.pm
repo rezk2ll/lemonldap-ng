@@ -48,6 +48,7 @@ our @ISA;
 # Constants
 use constant {
 
+    # Portal errors
     # Developers warning, do not use PE_INFO, it's reserved to autoRedirect.
     # If you want to send an information, use $self->info('text').
     PE_INFO                             => -3,
@@ -86,6 +87,16 @@ use constant {
     PE_MALFORMEDUSER                    => 40,
     PE_SESSIONNOTGRANTED                => 41,
     PE_CONFIRM                          => 42,
+
+    # Portal messages
+    PM_USER                  => 0,
+    PM_DATE                  => 1,
+    PM_IP                    => 2,
+    PM_SESSIONS_DELETED      => 3,
+    PM_OTHER_SESSIONS        => 4,
+    PM_REMOVE_OTHER_SESSIONS => 5,
+    PM_PP_GRACE              => 6,
+    PM_PP_EXP_WARNING        => 7,
 };
 
 # EXPORTER PARAMETERS
@@ -99,7 +110,8 @@ our @EXPORT = qw( PE_INFO PE_REDIRECT PE_DONE PE_OK PE_SESSIONEXPIRED
   PE_PP_PASSWORD_TOO_YOUNG PE_PP_PASSWORD_IN_HISTORY PE_PP_GRACE
   PE_PP_EXP_WARNING PE_PASSWORD_MISMATCH PE_PASSWORD_OK PE_NOTIFICATION
   PE_BADURL PE_NOSCHEME PE_BADOLDPASSWORD PE_MALFORMEDUSER PE_SESSIONNOTGRANTED
-  PE_CONFIRM
+  PE_CONFIRM PM_USER PM_DATE PM_IP PM_SESSIONS_DELETED PM_OTHER_SESSIONS
+  PM_REMOVE_OTHER_SESSIONS PM_PP_GRACE PM_PP_EXP_WARNING
 );
 our %EXPORT_TAGS = ( 'all' => [ @EXPORT, 'import' ], );
 
@@ -538,21 +550,21 @@ sub _deleteSession {
             # Try to purge local cache
             # (if an handler is running on the same server)
             eval { $self->{lmConf}->{refLocalStorage}->remove($id2); };
-        eval { tied(%$h2)->delete() };
-        $self->lmLog( $@, 'error' ) if ($@);
+            eval { tied(%$h2)->delete() };
+            $self->lmLog( $@, 'error' ) if ($@);
 
             # Create an obsolete cookie to remove it
-        push @{ $self->{cookie} },
-          $self->cookie(
-            -name    => $self->{cookieName} . 'http',
-            -value   => 0,
-            -domain  => $self->{domain},
-            -path    => "/",
-            -secure  => 0,
-            -expires => '-1d',
-            @_,
-          );
-    }
+            push @{ $self->{cookie} },
+              $self->cookie(
+                -name    => $self->{cookieName} . 'http',
+                -value   => 0,
+                -domain  => $self->{domain},
+                -path    => "/",
+                -secure  => 0,
+                -expires => '-1d',
+                @_,
+              );
+        }
     }
     my $r;
 
@@ -894,7 +906,7 @@ sub authenticate {
 #@return Lemonldap::NG::Portal constant
 sub removeOther {
     my ( $self, $current ) = @_;
-    $self->{deleted} = [];
+    $self->{deleted}       = [];
     $self->{otherSessions} = [];
     if ( $self->{singleSession} or $self->{singleIP} or $self->{notifyOther} ) {
         my $sessions =
@@ -946,21 +958,26 @@ sub removeOther {
                   };
                 $self->_deleteSession( $h, 1 );
             }
-            }
         }
+    }
     $self->info(
         $self->_mkDateIpArray(
-            &Lemonldap::NG::Portal::_i18n::msg( 3, $ENV{HTTP_ACCEPT_LANGUAGE} ),
+            &Lemonldap::NG::Portal::_i18n::msg( PM_SESSIONS_DELETED,
+                $ENV{HTTP_ACCEPT_LANGUAGE}
+            ),
             @{ $self->{deleted} }
         )
     ) if ( $self->{notifyDeleted} and @{ $self->{deleted} } );
     $self->info(
         $self->_mkDateIpArray(
-            &Lemonldap::NG::Portal::_i18n::msg( 4, $ENV{HTTP_ACCEPT_LANGUAGE} ),
+            &Lemonldap::NG::Portal::_i18n::msg( PM_OTHER_SESSIONS,
+                $ENV{HTTP_ACCEPT_LANGUAGE}
+            ),
             @{ $self->{otherSessions} }
-        )
+          )
           . "<p class=\"removeOther\"><a href=\"$self->{portal}?removeOther=1\" onclick=\"_go=0\">"
-          . &Lemonldap::NG::Portal::_i18n::msg( 5, $ENV{HTTP_ACCEPT_LANGUAGE} )
+          . &Lemonldap::NG::Portal::_i18n::msg( PM_REMOVE_OTHER_SESSIONS,
+            $ENV{HTTP_ACCEPT_LANGUAGE} )
           . "</a></p>"
     ) if ( $self->{notifyOther} and @{ $self->{otherSessions} } );
     PE_OK;
@@ -974,20 +991,19 @@ sub removeOther {
 sub _mkDateIpArray {
     my ( $self, $title, @datas ) = @_;
     my $tmp = "<h3>$title</h3>";
-    $tmp .= 
-"<table class=\"info\"><tbody><tr>";
+    $tmp .= "<table class=\"info\"><tbody><tr>";
     $tmp .= '<th>'
       . &Lemonldap::NG::Portal::_i18n::msg( $_, $ENV{HTTP_ACCEPT_LANGUAGE} )
       . '</th>'
-      foreach ( 0 .. 2 );
-        $tmp .= '</tr>';
+      foreach ( PM_USER, PM_DATE, PM_IP );
+    $tmp .= '</tr>';
     foreach (@datas) {
         $tmp .=
             "<tr><td>$_->{user}</td><td>"
           . "<script>var _date=new Date($_->{time}*1000);document.write(_date.toLocaleString());</script>"
           . "</td><td>$_->{ip}</td></tr>";
-        }
-        $tmp .= '</tbody></table>';
+    }
+    $tmp .= '</tbody></table>';
     return $tmp;
 }
 
@@ -1106,11 +1122,7 @@ sub autoRedirect {
 
     # Redirection should be made if
     #  - urldc defined
-    #  - no warnings on ppolicy
-    if (    $self->{urldc}
-        and !$self->{ppolicy}->{time_before_expiration}
-        and !$self->{ppolicy}->{grace_authentications_remaining} )
-    {
+    if ( $self->{urldc} ) {
 
         # Cross-domain mechanism
         if (    $self->{cda}

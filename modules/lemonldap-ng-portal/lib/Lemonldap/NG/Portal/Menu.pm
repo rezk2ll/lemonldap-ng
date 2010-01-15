@@ -88,12 +88,6 @@ sub new {
     $self->{modules}->{logout} = 1 unless defined $self->{modules}->{logout};
     $self->{'caller'} = caller;
 
-    # Set error to 0 by default
-    $self->{error} = PE_OK;
-
-    # Print Ppolicy warning messages
-    ( $self->{error}, $self->{error_value} ) = $self->_ppolicyWarning;
-
     # Store POST data in $self->{portalObject}
     $self->{portalObject}->{'newpassword'} =
       $self->{portalObject}->param('newpassword');
@@ -111,7 +105,8 @@ sub new {
         and $self->{portalObject}->{passwordDB} =~ /DBI/i )
     {
         use Lemonldap::NG::Portal::PasswordDBDBI;    #inherits
-        use Lemonldap::NG::Portal::_DBI;    #link protected ldap Object used to change passwords only
+        use Lemonldap::NG::Portal::_DBI
+          ;    #link protected ldap Object used to change passwords only
         *_modifyPassword =
           *Lemonldap::NG::Portal::PasswordDBDBI::modifyPassword;
         *_passwordDBInit =
@@ -121,7 +116,8 @@ sub new {
 
         # Default to LDAP
         use Lemonldap::NG::Portal::PasswordDBLDAP;    #inherits
-        use Lemonldap::NG::Portal::_LDAP 'ldap';    #link protected ldap Object used to change passwords only
+        use Lemonldap::NG::Portal::_LDAP
+          'ldap';    #link protected ldap Object used to change passwords only
         *_modifyPassword =
           *Lemonldap::NG::Portal::PasswordDBLDAP::modifyPassword;
         *_passwordDBInit =
@@ -129,32 +125,13 @@ sub new {
     }
 
     # Change password (only if newpassword submitted)
-    $self->{error} = &_passwordDBInit( $self->{portalObject} )
+    $self->{portalObject}->{error} = &_passwordDBInit( $self->{portalObject} )
       if $self->{portalObject}->{'newpassword'};
-    $self->{error} = &_modifyPassword( $self->{portalObject} )
+    $self->{portalObject}->{error} = &_modifyPassword( $self->{portalObject} )
       if $self->{portalObject}->{'newpassword'};
 
     return $self;
 }
-
-## @method string error(string language)
-# Return error string
-# @param $language optional language to use. Default: browser accepted languages
-# @return error string
-sub error {
-
-    # Copied from Simple.pm
-    # Add a value possibility (stored in $self->{error_value}
-    my $self = shift;
-    my $error_string;
-    $error_string .= $self->{error_value} if defined $self->{error_value};
-    $error_string .=
-      &Lemonldap::NG::Portal::_i18n::error( $self->{error},
-        shift || $ENV{HTTP_ACCEPT_LANGUAGE} );
-    return $error_string;
-}
-
-*error_type = \&Lemonldap::NG::Portal::Simple::error_type;
 
 ## @method boolean displayModule(string modulename)
 # Return true if the user can see the module.
@@ -188,7 +165,7 @@ sub displayTab {
       if (
         (
             scalar(
-                grep { $_ == $self->{error} } (
+                grep { $_ == $self->{portalObject}->{error} } (
                     25,    #PE_PP_CHANGE_AFTER_RESET
                     27,    #PE_PP_MUST_SUPPLY_OLD_PASSWORD
                     28,    #PE_PP_INSUFFICIENT_PASSWORD_QUALITY
@@ -223,8 +200,8 @@ sub appslistMenu {
 
     # NEW method - use configuration
     my $applicationList = $self->{portalObject}->{applicationList};
-    my $filteredList = $self->_filter( $applicationList );
-    return  $self->_displayConfCategory( "", $applicationList, $catlevel );
+    my $filteredList    = $self->_filter($applicationList);
+    return $self->_displayConfCategory( "", $applicationList, $catlevel );
 }
 
 ## @method string appslistDescription()
@@ -326,27 +303,28 @@ sub _displayConfCategory {
 
     # Extract applications from hash
     my $apphash;
-    foreach $key (keys %$cathash) {
-	next if $key =~ /(type|options)/;
-        if ($cathash->{$key}->{type} eq "application") {
+    foreach $key ( keys %$cathash ) {
+        next if $key =~ /(type|options)/;
+        if ( $cathash->{$key}->{type} eq "application" ) {
             $apphash->{$key} = $cathash->{$key};
         }
     }
 
     # display applications first
-    if ( scalar keys %$apphash > 0) {
+    if ( scalar keys %$apphash > 0 ) {
         $html .= "<ul>";
-        foreach $key (keys %$apphash) { 
-            $html .= $self->_displayConfApplication($key, $apphash->{$key});
+        foreach $key ( keys %$apphash ) {
+            $html .= $self->_displayConfApplication( $key, $apphash->{$key} );
         }
         $html .= "</ul>";
     }
 
     # Display subcategories
-    foreach $key (keys %$cathash) {
-	next if $key =~ /(type|options)/;
-        if ($cathash->{$key}->{type} eq "category") {
-            $html .= $self->_displayConfCategory( $key, $cathash->{$key}, $catlevel);
+    foreach $key ( keys %$cathash ) {
+        next if $key =~ /(type|options)/;
+        if ( $cathash->{$key}->{type} eq "category" ) {
+            $html .=
+              $self->_displayConfCategory( $key, $cathash->{$key}, $catlevel );
         }
     }
 
@@ -407,13 +385,13 @@ sub _displayApplication {
 # @return HTML string
 sub _displayConfApplication {
     my $self = shift;
-    my ($appid, $apphash) = @_;
+    my ( $appid, $apphash ) = @_;
     my $html;
     my $key;
 
     # Get application items
     my $appname = $apphash->{options}->{name} || $appid;
-    my $appuri =  $apphash->{options}->{uri}  || "";
+    my $appuri  = $apphash->{options}->{uri}  || "";
 
     # Display application
     $html .=
@@ -423,18 +401,19 @@ sub _displayConfApplication {
 
     # Detect sub applications
     my $subapphash;
-    foreach $key (keys %$apphash) {
-	next if $key =~ /(type|options)/;
-        if ($apphash->{$key}->{type} eq "application") {
+    foreach $key ( keys %$apphash ) {
+        next if $key =~ /(type|options)/;
+        if ( $apphash->{$key}->{type} eq "application" ) {
             $subapphash->{$key} = $apphash->{$key};
         }
     }
 
     # Display sub applications
-    if ( scalar keys %$subapphash > 0) {
+    if ( scalar keys %$subapphash > 0 ) {
         $html .= "<ul>";
-        foreach $key (keys %$subapphash) { 
-            $html .= $self->_displayConfApplication($key, $subapphash->{$key});
+        foreach $key ( keys %$subapphash ) {
+            $html .=
+              $self->_displayConfApplication( $key, $subapphash->{$key} );
         }
         $html .= "</ul>";
     }
@@ -442,7 +421,6 @@ sub _displayConfApplication {
     $html .= "</li>";
     return $html;
 }
-
 
 ## @method private string _displayDescription(XML::LibXML::Document root)
 # Create HTML code for application description.
@@ -486,17 +464,18 @@ sub _displayDescription {
 # @return HTML_string
 sub _displayConfDescription {
     my $self = shift;
-    my ($appid, $apphash) = @_;
+    my ( $appid, $apphash ) = @_;
     my $html;
     my $key;
 
     if ( defined $apphash->{type} and $apphash->{type} eq "application" ) {
+
         # Get application items
         my $appname = $apphash->{options}->{name} || $appid;
         my $appuri  = $apphash->{options}->{uri}  || "";
         my $appdesc = $apphash->{options}->{description};
         my $applogofile = $apphash->{options}->{logo};
-        my $applogo     = $self->{apps}->{imgpath} . $applogofile if $applogofile;
+        my $applogo = $self->{apps}->{imgpath} . $applogofile if $applogofile;
 
         # Display application description
         $html .= "<div id=\"$appid\" class=\"appsdesc\">\n";
@@ -509,9 +488,9 @@ sub _displayConfDescription {
     }
 
     # Sublevels
-    foreach $key (keys %$apphash) {
-	next if $key =~ /(type|options)/;
-        $html .= $self->_displayConfDescription( $key, $apphash->{$key});
+    foreach $key ( keys %$apphash ) {
+        next if $key =~ /(type|options)/;
+        $html .= $self->_displayConfDescription( $key, $apphash->{$key} );
     }
 
     return $html;
@@ -540,10 +519,10 @@ sub _filter {
     my $filteredHash;
     my $key;
 
-    foreach $key (keys %$apphash) {
-	next if $key =~ /(type|options)/;
+    foreach $key ( keys %$apphash ) {
+        next if $key =~ /(type|options)/;
         $filteredHash->{$key} = $apphash->{$key};
-	$self->_filterHash( $key, $filteredHash->{$key} );
+        $self->_filterHash( $key, $filteredHash->{$key} );
     }
 
     # Hide empty categories
@@ -553,19 +532,21 @@ sub _filter {
 
 sub _filterHash {
     my $self = shift;
-    my ($appid, $apphash) = @_;
+    my ( $appid, $apphash ) = @_;
     my $key;
 
     foreach $key ( keys %$apphash ) {
-	next if $key =~ /(type|options)/;
+        next if $key =~ /(type|options)/;
         if ( $apphash->{$key}->{type} eq "category" ) {
+
             # Filter the category
-            $self->_filterHash($key, $apphash->{$key});
+            $self->_filterHash( $key, $apphash->{$key} );
         }
-	if ( $apphash->{$key}->{type} eq "application" ) {
+        if ( $apphash->{$key}->{type} eq "application" ) {
+
             # Check rights
-	    my $appdisplay = $apphash->{$key}->{options}->{display} || "auto";
-	    my $appuri = $apphash->{$key}->{options}->{uri};
+            my $appdisplay = $apphash->{$key}->{options}->{display} || "auto";
+            my $appuri = $apphash->{$key}->{options}->{uri};
 
             # Remove if display is "no"
             delete $apphash->{$key} and next if ( $appdisplay eq "no" );
@@ -575,12 +556,11 @@ sub _filterHash {
 
             # Check grant function if display is "auto" (this is the default)
             delete $apphash->{$key} unless ( $self->_grant($appuri) );
-	    next;
+            next;
         }
     }
 
 }
-
 
 sub _filterApp {
     my ( $self, $node ) = @_;
@@ -645,32 +625,6 @@ sub _hideEmptyCategory {
     }
 
     return;
-}
-
-## @method private int function _ppolicyWarning()
-# Return ppolicy warnings get in AuthLDAP.pm
-# @return Lemonldap::NG::Portal constant
-sub _ppolicyWarning {
-    my $self = shift;
-
-    # Grace
-    if (
-        defined $self->{portalObject}->{ppolicy}
-        ->{grace_authentications_remaining} )
-    {
-        return ( PE_PP_GRACE,
-            $self->{portalObject}->{ppolicy}
-              ->{grace_authentications_remaining} );
-    }
-
-    # Expiration warning
-    if ( defined $self->{portalObject}->{ppolicy}->{time_before_expiration} ) {
-        return ( PE_PP_EXP_WARNING,
-            $self->{portalObject}->{ppolicy}->{time_before_expiration} );
-    }
-
-    # Return PE_OK
-    return ( PE_OK, undef );
 }
 
 ## @method private boolean _grant(string uri)

@@ -129,12 +129,24 @@ sub userBind {
           unless ( defined $resp );
 
         # Get expiration warning and graces
-        #
-        $self->{portal}->{mustRedirect} = 0
-          if ( $self->{portal}->{ppolicy}->{time_before_expiration} =
-               $resp->time_before_expiration
-            or $self->{portal}->{ppolicy}->{grace_authentications_remaining} =
-            $resp->grace_authentications_remaining );
+        if ( $resp->grace_authentications_remaining ) {
+            $self->{portal}->info(
+                    "<h3>" 
+                  . $resp->grace_authentications_remaining . " "
+                  . &Lemonldap::NG::Portal::_i18n::msg( PM_PP_GRACE,
+                    $ENV{HTTP_ACCEPT_LANGUAGE} )
+                  . "</h3>"
+            );
+        }
+        if ( $resp->time_before_expiration ) {
+            $self->{portal}->info(
+                    "<h3>" 
+                  . $resp->time_before_expiration . " "
+                  . &Lemonldap::NG::Portal::_i18n::msg( PM_PP_EXP_WARNING,
+                    $ENV{HTTP_ACCEPT_LANGUAGE} )
+                  . "</h3>"
+            );
+        }
 
         my $pp_error = $resp->pp_error;
         if ( defined $pp_error ) {
