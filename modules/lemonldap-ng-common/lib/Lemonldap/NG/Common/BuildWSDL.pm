@@ -28,12 +28,12 @@ sub buildWSDL {
     # Attributes
     my @attr = (
         keys %{ $self->{conf}->{exportedVars} },
-        keys %{ $self->{conf}->{macros} }
+        keys %{ $self->{conf}->{macros} },
+        qw(_timezone ipAddr _password authenticationLevel _session_id xForwardedForAddr startTime _user _utime dn)
     );
     s#(.*)#<element name="$1" type="xsd:string" nillable="true"></element>#
       foreach (@attr);
-    $xml =~
-s/__ATTRLIST__/join("\n",@attr,qw(_timezone ipAddr _password authenticationLevel _session_id xForwardedForAddr startTime _user _utime dn)/ges;
+    $xml =~ s/__ATTRLIST__/join("\n",@attr)/ges;
     return $xml;
 }
 
