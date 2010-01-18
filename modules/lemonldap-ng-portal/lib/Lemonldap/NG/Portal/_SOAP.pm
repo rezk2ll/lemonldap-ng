@@ -241,6 +241,16 @@ sub get_key_from_all_sessions {
         $self->{globalStorageOptions}, @_ );
 }
 
+=begin WSDL
+
+_IN id $string Cookie value
+_IN uri $string URI to test
+_RETURN $isAuthorizedURIResponse Response
+
+=end WSDL
+
+=cut
+
 ## @method boolean isAuthorizedURI (int id, string uri)
 # Check user's authorization for uri.
 # @param $id Id of the session
