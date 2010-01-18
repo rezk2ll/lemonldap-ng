@@ -96,9 +96,8 @@ $.fn.simpleTree = function(opt){
 		TREE.nodeToggle = function(obj)
 		{
 			var childUl = $('>ul',obj);
-			if(childUl.is(':visible')){
+			if(obj.className.match('open')){
 				obj.className = obj.className.replace('open','close');
-
 				if(TREE.option.animate)
 				{
 					childUl.animate({height:"toggle"},TREE.option.speed);
@@ -144,12 +143,12 @@ $.fn.simpleTree = function(opt){
 						cache:false,
 						success: function(response){
 							node.removeAttr('class');
-							// Correct folder display bug if Ajax response is empty
 							if(response.length>0){
 								node.html(response);
 							$.extend(node,{url:url});
 							TREE.setTreeNodes(node, true);
 							} else {
+								$("li.line",node).remove();
 								$("li.doc-last",node).remove();
 							}
 							if(typeof TREE.option.afterAjax == 'function')

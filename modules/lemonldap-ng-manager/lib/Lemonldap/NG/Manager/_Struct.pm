@@ -184,9 +184,7 @@ sub struct {
         #############
 
         variables => {
-                _nodes => [
-                    qw(cn:exportedVars cn:macros n:groups)
-                ],
+            _nodes => [qw(cn:exportedVars cn:macros n:groups)],
                 _help  => 'default',
 
                 # EXPORTED ATTRIBUTES
@@ -421,6 +419,7 @@ sub testStruct {
             msgFail => 'Bad module name',
         },
         useXForwardedForIP => $boolean,
+        variables          => $testNotDefined,
         whatToTrace        => {
             test    => qr/^\$?[a-zA-Z]\w*$/,
             msgFail => 'Bad value',
