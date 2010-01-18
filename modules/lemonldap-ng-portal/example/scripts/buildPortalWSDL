@@ -131,11 +131,24 @@ print Lemonldap::NG::Common::BuildWSDL->new->buildWSDL(<<EOT);
     <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/CGI/SOAPService" use="encoded" />
    </wsdl:output>
   </wsdl:operation>
+  <wdsl:operation name="isAuthorizedURI">
+   <wsdlsoap:operation soapAction="" />
+   <wsdl:input name="isAuthorizedURIRequest">
+    <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/CGI/SOAPService" use="encoded" />
+   </wsdl:input>
+   <wsdl:output name="isAuthorizedURIResponse">
+    <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/CGI/SOAPService" use="encoded" />
+   </wsdl:output>
+  </wdsl:operation>
  </wsdl:binding>
  <wsdl:portType name="sessionsHandler">
   <wsdl:operation name="getAttributes" parameterOrder="id">
    <wsdl:input message="impl:getAttributesRequest" name="getAttributesRequest" />
    <wsdl:output message="impl:getAttributesResponse" name="getAttributesResponse" />
+  </wsdl:operation>
+  <wsdl:operation name="isAuthorizedURI" parameterOrder="id uri">
+   <wsdl:input message="impl:isAuthorizedURIRequest" name="isAuthorizedURIRequest" />
+   <wsdl:output message="impl:isAuthorizedURIResponse" name="isAuthorizedURIResponse" />
   </wsdl:operation>
  </wsdl:portType>
  <wsdl:message name="getAttributesRequest">
@@ -143,6 +156,13 @@ print Lemonldap::NG::Common::BuildWSDL->new->buildWSDL(<<EOT);
  </wsdl:message>
   <wsdl:message name="getAttributesResponse">
   <wsdl:part name="session" type="tns1:GetAttributesResponse" />
+ </wsdl:message>
+ <wsdl:message name="isAuthorizedURIRequest">
+  <wsdl:part name="id" type="xsd:string" />
+  <wsdl:part name="uri" type="xsd:string" />
+ </wsdl:message>
+ <wsdl:message name="isAuthorizedURIResponse">
+  <wsdl:part name="result" type="xsd:boolean" />
  </wsdl:message>
 </wsdl:definitions>
 EOT
