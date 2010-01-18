@@ -7,13 +7,16 @@
 * Copyright (c) 2008, Peter Panov <panov\@elcat.kg>, IKEEN Group http://www.ikeen.com
 * All rights reserved.
 *
-* Modified by Xavier Guimard <x.guimard@free.fr> for Lemonldap::NG
+* Modified by Xavier Guimard <x.guimard@free.fr> for Lemonldap::NG:
+*     * Manage Ajax errors
 * Modified by Clement Oudot <clem.oudot@gmail.com> for Lemonldap::NG:
 *     * Add useClickToToggle option
 *     * Add afterCloseNearby trigger
 *     * Add afterNewNode trigger
 *     * Add and remove 'active' class instead of erasing all class values
 *     * Add afterSetTrigger trigger
+*     * Correct a bug if ajax call return no data
+*     * Automatically open the node if a subnode is added
 *
 * Redistribution and use in source and binary forms, with or without
 * modification, are permitted provided that the following conditions are met:
@@ -139,12 +142,16 @@ $.fn.simpleTree = function(opt){
 						url: url,
 						contentType:'html',
 						cache:false,
-						success: function(responce){
+						success: function(response){
 							node.removeAttr('class');
-							node.html(responce);
+							// Correct folder display bug if Ajax response is empty
+							if(response.length>0){
+								node.html(response);
 							$.extend(node,{url:url});
-							if($('li',node).length==0)TREE.convertToFolder(node.parent());
 							TREE.setTreeNodes(node, true);
+							} else {
+								$("li.doc-last",node).remove();
+							}
 							if(typeof TREE.option.afterAjax == 'function')
 							{
 								TREE.option.afterAjax(node);
@@ -418,6 +425,8 @@ $.fn.simpleTree = function(opt){
 		};
 		TREE.moveNodeToFolder = function(node)
 		{
+			// Open node if it's closed
+			if(node[0].className.match('close')){TREE.nodeToggle(node[0]);}
 			if(!TREE.option.docToFolderConvert && node[0].className.indexOf('doc')!=-1)
 			{
 				return true;
