@@ -2,7 +2,10 @@
 * Lemonldap::NG Manager jQuery scripts
 */
 
+/* Init simpleTreeCollection */
 var simpleTreeCollection;
+
+/* Convert boolean strings into javascript booleans */
 if (treeautoclose.match('true')){ treeautoclose = true; } else { treeautoclose = false; }
 if (treejquerycss.match('true')){ treejquerycss = true; } else { treejquerycss = false; }
 
@@ -54,18 +57,45 @@ $(document).ready(function(){
 		docToFolderConvert:false
 	});
 	if(treejquerycss){simpleTreeDefaultJqueryClasses();}
-});
 
+	/* Menu CSS switch */
+	if($.cookie("managermenu")) {
+		simpleTreeSetMenuStyle($.cookie("managermenu"));
+	}
+	$("#css-switch a").click(function(){
+		var style=$(this).attr("alt");
+		$.cookie("managermenu",style, {expires: 365, path: '/'});
+		simpleTreeSetMenuStyle(style);
+		return false;
+	});
+});
+function simpleTreeSetMenuStyle(style){
+	if(style=="tree"){
+		$("link[title=menu]").attr("href",imagepath+"tree.css");
+		treejquerycss=false;
+		simpleTreeCollection[0].option.autoclose=false;
+	}else{
+		$("link[title=menu]").attr("href",imagepath+"accordion.css");
+		treejquerycss=true;
+		simpleTreeCollection[0].option.autoclose=true;
+	}
+	simpleTreeDefaultJqueryClasses();
+	simpleTreeToggleJqueryClasses();
+}
 /* Add jQuery UI CSS classes to simpleTree */
 function simpleTreeDefaultJqueryClasses(){
 	if (treejquerycss) {
 		$(".simpleTree .root > span").addClass("ui-widget-header ui-corner-all");
+		$(".simpleTree .folder-open > span").addClass("ui-state-default ui-corner-all");
+		$(".simpleTree .folder-open-last > span").addClass("ui-state-default ui-corner-all");
 		$(".simpleTree .folder-close > span").addClass("ui-state-default ui-corner-all");
 		$(".simpleTree .folder-close-last > span").addClass("ui-state-default ui-corner-all");
 		$(".simpleTree .doc > span").addClass("ui-state-default ui-corner-all");
 		$(".simpleTree .doc-last > span").addClass("ui-state-default ui-corner-all");
-		simpleTreeTriggerJqueryClasses();
+	} else {
+		$(".simpleTree span").removeClass("ui-widget-header ui-corner-all ui-state-default");
 	}
+	simpleTreeTriggerJqueryClasses();
 }
 function simpleTreeToggleJqueryClasses(){
 	if (treejquerycss) {
@@ -75,6 +105,8 @@ function simpleTreeToggleJqueryClasses(){
 		$(".simpleTree .folder-close-last > span").removeClass("ui-state-focus");
 		$(".simpleTree span.active").addClass("ui-state-active");
 		$(".simpleTree span.text").removeClass("ui-state-active");
+	} else {
+		$(".simpleTree span").removeClass("ui-state-focus ui-state-active");
 	}
 }
 function simpleTreeTriggerJqueryClasses(){
@@ -96,6 +128,8 @@ function simpleTreeTriggerJqueryClasses(){
 		$(".simpleTree .folder-close-last > img.trigger")
 			.removeClass("ui-icon-triangle-1-s")
 			.addClass("ui-icon-triangle-1-e");
+	} else {
+		$(".simpleTree img.trigger").removeClass("ui-icon ui-icon-triangle-1-e ui-icon-triangle-1-s");
 	}
 }
 var currentId;

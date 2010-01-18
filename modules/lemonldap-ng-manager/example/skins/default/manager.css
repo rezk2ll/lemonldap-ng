@@ -124,3 +124,18 @@ input
 	max-height:200px;
 }
 
+#css-switch {
+	padding:5px 10px;
+	margin-bottom:10px;
+	border:solid #bbb 1px;
+}
+#css-switch a {
+	padding-left:20px;
+	margin-left:10px;
+}
+#css-switch a[alt=tree] {
+	background:url("application_side_tree.png") no-repeat;
+}
+#css-switch a[alt=accordion] {
+	background:url("application_side_list.png") no-repeat;
+}
