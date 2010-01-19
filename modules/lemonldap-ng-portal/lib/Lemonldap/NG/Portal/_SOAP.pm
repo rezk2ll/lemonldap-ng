@@ -29,7 +29,7 @@ sub startSoapServices {
             '/sessions'      => 'getAttributes isAuthorizedURI',
             '/adminSessions' => 'getAttributes setAttributes isAuthorizedURI '
               . 'newSession deleteSession get_key_from_all_sessions',
-            '/config' => 'getConfig lastCfg'
+            '/config' => 'getConfig lastCfg getXmlMenu'
         }->{ $ENV{PATH_INFO} }
       )
     {
@@ -74,7 +74,8 @@ sub getCookies {
     else {
         $self->{error} = $self->_subProcess(
             qw(authInit userDBInit getUser setAuthSessionInfo setSessionInfo
-              setMacros setGroups authenticate store buildCookie)
+              setMacros setLocalGroups setGroups authenticate removeOther grantSession
+              store buildCookie)
         );
     }
     my @tmp = ();
@@ -173,29 +174,6 @@ sub lastCfg {
     return $self->{lmConf}->lastCfg();
 }
 
-##@fn private SOAP::Data _buildSoapHash()
-# Serialize a hashref into SOAP::Data. Types are fixed to "string".
-# @return SOAP::Data serialized datas
-sub _buildSoapHash {
-    my ( $h, @keys ) = @_;
-    my @tmp = ();
-    @keys = keys %$h unless (@keys);
-    foreach (@keys) {
-        if ( ref( $h->{$_} ) eq 'ARRAY' ) {
-            push @tmp,
-              SOAP::Data->name( $_, \SOAP::Data->value( @{ $h->{$_} } ) );
-        }
-        elsif ( ref( $h->{$_} ) ) {
-            push @tmp, SOAP::Data->name( $_ => _buildSoapHash( $h->{$_} ) );
-        }
-        else {
-            push @tmp, SOAP::Data->name( $_, $h->{$_} )->type('string')
-              if ( defined( $h->{$_} ) );
-        }
-    }
-    return \SOAP::Data->value(@tmp);
-}
-
 ## @method SOAP::Data newSession(hashref args)
 # Store a new session.
 # @return Session datas
@@ -226,7 +204,8 @@ sub deleteSession {
     return $self->_deleteSession($h);
 }
 
-##@method SOAP::Data getConfig()
+##@method SOAP::Data get_key_from_all_sessions
+# Returns key from all sessions
 sub get_key_from_all_sessions {
     my $self = shift;
     shift;
@@ -256,10 +235,9 @@ _RETURN $isAuthorizedURIResponse Response
 # @param $id Id of the session
 # @param $uri URL string
 # @return True if granted
-sub isAuthorizedURI
-{
+sub isAuthorizedURI {
     my $self = shift;
-    my ($id, $uri) = @_;
+    my ( $id, $uri ) = @_;
     die 'id is required' unless ($id);
     die 'uri is required' unless ($uri);
 
@@ -285,20 +263,22 @@ sub isAuthorizedURI
         foreach my $vpath ( keys %{ $self->{locationRules}->{$vhost} } ) {
             if ( $vpath eq 'default' ) {
                 $defaultCondition->{$vhost} =
-                  $self->_conditionSub($id, $self->{locationRules}->{$vhost}->{$vpath});
+                  $self->_conditionSub( $id,
+                    $self->{locationRules}->{$vhost}->{$vpath} );
             }
             else {
                 $locationCondition->{$vhost}->[$i] =
-                  $self->_conditionSub($id, $self->{locationRules}->{$vhost}->{$vpath});
+                  $self->_conditionSub( $id,
+                    $self->{locationRules}->{$vhost}->{$vpath} );
                 $locationRegexp->{$vhost}->[$i] = qr/$vpath/;
                 $i++;
             }
         }
-        $defaultCondition->{$vhost} ||= $self->_conditionSub($id, 'accept');
+        $defaultCondition->{$vhost} ||= $self->_conditionSub( $id, 'accept' );
     }
 
     # Test rules.
-    unless (defined($defaultCondition->{$vhost})) {
+    unless ( defined( $defaultCondition->{$vhost} ) ) {
         $self->lmLog( "No default condition builded", 'warn' );
         return 0;
     }
@@ -314,16 +294,65 @@ sub isAuthorizedURI
     return 1;
 }
 
+=begin WSDL
+
+_IN file $string Menu XML file complete path
+_RETURN $getXmlMenuResponse Response
+
+=end WSDL
+
+=cut
+
+##@method SOAP::Data getXmlMenu(string file)
+#@param file
+#@return SOAP::Data
+sub getXmlMenu {
+    my $self = shift;
+    my ($file) = @_;
+    die 'file is required' unless ($file);
+    die 'file cannot be read' unless ( -r $file );
+
+    # Load XML::Simple
+    use XML::Simple;
+
+    # Get XML content
+    my $xml = new XML::Simple( ForceArray => '1' );
+
+    return _buildSoapHash( $xml->XMLin($file) );
+}
+
 #######################
 # Private subroutines #
 #######################
+
+##@fn private SOAP::Data _buildSoapHash()
+# Serialize a hashref into SOAP::Data. Types are fixed to "string".
+# @return SOAP::Data serialized datas
+sub _buildSoapHash {
+    my ( $h, @keys ) = @_;
+    my @tmp = ();
+    @keys = keys %$h unless (@keys);
+    foreach (@keys) {
+        if ( ref( $h->{$_} ) eq 'ARRAY' ) {
+            push @tmp,
+              SOAP::Data->name( $_, \SOAP::Data->value( @{ $h->{$_} } ) );
+        }
+        elsif ( ref( $h->{$_} ) ) {
+            push @tmp, SOAP::Data->name( $_ => _buildSoapHash( $h->{$_} ) );
+        }
+        else {
+            push @tmp, SOAP::Data->name( $_, $h->{$_} )->type('string')
+              if ( defined( $h->{$_} ) );
+        }
+    }
+    return \SOAP::Data->value(@tmp);
+}
 
 ## @method private CODE _conditionSub(string cond)
 # Return subroutine giving authorization condition.
 # @param $cond boolean expression
 # @return Compiled routine
-sub _conditionSub
-{
+sub _conditionSub {
     my $self = shift;
     my $id = shift;
     my ($cond) = @_;

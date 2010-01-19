@@ -164,6 +164,37 @@ print Lemonldap::NG::Common::BuildWSDL->new->buildWSDL(<<EOT);
  <wsdl:message name="isAuthorizedURIResponse">
   <wsdl:part name="result" type="xsd:boolean" />
  </wsdl:message>
+
+ <wsdl:service name="configHandlerService">
+  <wsdl:port binding="impl:configSoapBinding" name="config">
+   <wsdlsoap:address location="__PORTAL__/config" />
+  </wsdl:port>
+ </wsdl:service>
+ <wsdl:binding name="configSoapBinding" type="impl:configHandler">
+  <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
+  <wsdl:operation name="getXmlMenu">
+   <wsdlsoap:operation soapAction="" />
+   <wsdl:input name="getXmlMenuRequest">
+    <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/CGI/SOAPService" use="encoded" />
+   </wsdl:input>
+   <wsdl:output name="getXmlMenuResponse">
+    <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/CGI/SOAPService" use="encoded" />
+   </wsdl:output>
+  </wsdl:operation>
+ </wsdl:binding>
+ <wsdl:portType name="configHandler">
+  <wsdl:operation name="getgetXmlMenu" parameterOrder="file">
+   <wsdl:input message="impl:getXmlMenuRequest" name="getXmlMenuRequest" />
+   <wsdl:output message="impl:getXmlMenuResponse" name="getXmlMenuResponse" />
+  </wsdl:operation>
+ </wsdl:portType>
+ <wsdl:message name="getXmlMenuRequest">
+  <wsdl:part name="file" type="xsd:string" />
+ </wsdl:message>
+  <wsdl:message name="getXmlMenuResponse">
+  <wsdl:part name="result" type="xsd:string" />
+ </wsdl:message>
+
 </wsdl:definitions>
 EOT
 
