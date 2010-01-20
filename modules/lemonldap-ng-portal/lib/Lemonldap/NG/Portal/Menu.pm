@@ -9,7 +9,6 @@ use strict;
 use warnings;
 require Lemonldap::NG::Common::CGI;
 use Lemonldap::NG::Portal::SharedConf;
-use XML::LibXML;
 use Lemonldap::NG::Common::Safelib;    #link protected safe Safe object
 use Safe;
 
@@ -192,13 +191,16 @@ sub displayTab {
 sub appslistMenu {
     my $self = shift;
 
-    # OLD method - read XML file
-    if ( -e $self->{apps}->{xmlfile} ) {
-        my $root = $self->_getXML;
-        return $self->_displayCategory( $root, $catlevel );
+    # We no more use XML file for menu configuration
+    unless ( defined $self->{portalObject}->{applicationList} ) {
+        $self->{portalObject}->lmLog(
+"XML menu configuration is deprecated. Please use lmMigrateConfFiles2ini to migrate your menu configuration",
+            'error'
+        );
+        return "&nbsp;";
     }
 
-    # NEW method - use configuration
+    # Use configuration to get menu parameters
     my $applicationList = $self->{portalObject}->{applicationList};
     my $filteredList    = $self->_filter($applicationList);
     return $self->_displayConfCategory( "", $applicationList, $catlevel );
@@ -210,75 +212,18 @@ sub appslistMenu {
 sub appslistDescription {
     my $self = shift;
 
-    # OLD method - read XML file
-    if ( -e $self->{apps}->{xmlfile} ) {
-        my $root = $self->_getXML;
-        return $self->_displayDescription($root);
+    # We no more use XML file for menu configuration
+    unless ( defined $self->{portalObject}->{applicationList} ) {
+        $self->{portalObject}->lmLog(
+"XML menu configuration is deprecated. Please use lmMigrateConfFiles2ini to migrate your menu configuration",
+            'error'
+        );
+        return "&nbsp;";
     }
 
-    # NEW method - use configuration
+    # Use configuration to get menu parameters
     my $applicationList = $self->{portalObject}->{applicationList};
     return $self->_displayConfDescription( "", $applicationList );
-}
-
-## @method private XML::LibXML::Document _getXML()
-# @return XML root element object
-sub _getXML {
-    my $self = shift;
-    return $self->{_xml} if ( $self->{_xml} );
-
-    # Parse XML file
-    my $parser = XML::LibXML->new();
-    $parser->validation('1');
-    my $xml;
-    eval { $xml = $parser->parse_file( $self->{apps}->{xmlfile} ); };
-    $self->{portalObject}->abort( "Bad XML file", $@ ) if ($@);
-    my $root = $xml->documentElement;
-
-    # Filter XML file with user's authorizations
-    $self->_filterXML($root);
-
-    return $self->{_xml} = $root;
-}
-
-## @method string _displayCategory()
-# Creates and returns HTML code for a category.
-# @return HTML string
-sub _displayCategory {
-    my $self = shift;
-    my ( $cat, $catlevel ) = @_;
-    my $html;
-    my $catname;
-
-    # Category name
-    if ( $catlevel > 0 ) { $catname = $cat->getAttribute('name') || " "; }
-    else                 { $catname = "Menu"; }
-
-    # Init HTML list
-    $html .= "<ul class=\"category cat-level-$catlevel\">\n";
-    $html .= "<li class=\"catname\"><span>$catname</span>\n";
-
-    # Display applications first
-    my @appnodes = $cat->findnodes("application");
-    if (@appnodes) {
-        $html .= "<ul>";
-        foreach (@appnodes) {
-            $html .= $self->_displayApplication($_);
-        }
-        $html .= "</ul>";
-    }
-
-    # Display subcategories
-    my @catnodes = $cat->findnodes("category");
-    $catlevel++;
-    foreach (@catnodes) {
-        $html .= $self->_displayCategory( $_, $catlevel );
-    }
-
-    # Close HTML list
-    $html .= "</li>\n</ul>\n";
-
-    return $html;
 }
 
 ## @method string _displayConfCategory()
@@ -345,39 +290,6 @@ sub _userParam {
     return $arg;
 }
 
-## @method private string _displayApplication(XML::LibXML::Element app)
-# Creates HTML code for an application.
-# @param $app XML applications element
-# @return HTML string
-sub _displayApplication {
-    my $self = shift;
-    my ($app) = @_;
-    my $html;
-
-    # Get application items
-    my $appid = $app->getAttribute('id');
-    my $appname = $app->getChildrenByTagName('name')->string_value() || $appid;
-    my $appuri =
-      $self->_userParam( $app->getChildrenByTagName('uri')->string_value()
-          || "" );
-
-    # Display application
-    $html .=
-        "<li title=\"$appid\" class=\"appname $appid\"><span>"
-      . ( $appuri ? "<a href=\"$appuri\">$appname</a>" : "<a>$appname</a>" )
-      . "</span>\n";
-    my @appnodes = $app->findnodes("application");
-    if (@appnodes) {
-        $html .= "<ul>";
-        foreach (@appnodes) {
-            $html .= $self->_displayApplication($_);
-        }
-        $html .= "</ul>";
-    }
-    $html .= "</li>";
-    return $html;
-}
-
 ## @method private string _displayConfApplication()
 # Creates HTML code for an application.
 # @param $appid Application ID
@@ -422,46 +334,11 @@ sub _displayConfApplication {
     return $html;
 }
 
-## @method private string _displayDescription(XML::LibXML::Document root)
-# Create HTML code for application description.
-# @param $root XML root element
-# @return HTML_string
-sub _displayDescription {
-    my $self = shift;
-    my ($root) = @_;
-    my $html;
-
-    my @apps = $root->getElementsByTagName('application');
-    foreach (@apps) {
-
-        # Get application items
-        my $appid   = $_->getAttribute('id');
-        my $appname = $_->getChildrenByTagName('name')->string_value();
-        my $appuri =
-          $self->_userParam( $_->getChildrenByTagName('uri')->string_value()
-              || "#" );
-        my $appdesc = $_->getChildrenByTagName('description')->string_value();
-        my $applogofile = $_->getChildrenByTagName('logo')->string_value();
-        my $applogo     = $self->{apps}->{imgpath} . $applogofile;
-
-        # Display application
-        $html .= "<div id=\"$appid\" class=\"appsdesc\">\n";
-        $html .=
-"<a href=\"$appuri\"><img src=\"$applogo\" alt=\"$appid logo\" /></a>\n"
-          if $applogofile;
-        $html .= "<p class=\"appname\">$appname</p>\n" if defined $appname;
-        $html .= "<p class=\"appdesc\">$appdesc</p>\n" if defined $appdesc;
-        $html .= "</div>\n";
-    }
-
-    return $html;
-}
-
 ## @method private string _displayConfDescription()
 # Create HTML code for application description.
 # @param $appid Application ID
 # @param $apphash Hash
-# @return HTML_string
+# @return HTML string
 sub _displayConfDescription {
     my $self = shift;
     my ( $appid, $apphash ) = @_;
@@ -495,54 +372,59 @@ sub _displayConfDescription {
 
     return $html;
 }
-## @method private string _filterXML(XML::LibXML::Document root)
-# Remove unauthorized nodes.
-# @param $root XML root element
-# @return XML_string
-sub _filterXML {
-    my $self   = shift;
-    my ($root) = @_;
-    my @cat    = $root->getElementsByTagName('category');
-    foreach my $cat (@cat) {
-        $self->_filterApp($cat);
-    }
 
-    # Hide empty categories
-    $self->_hideEmptyCategory($root);
-
-    return;
-}
-
+## @method private string _filter()
+# Duplicate hash reference
+# Remove unauthorized menu elements
+# Hide empty categories
+# @param $apphash Menu elements
+# @return filtered hash
 sub _filter {
     my $self = shift;
     my ($apphash) = @_;
     my $filteredHash;
     my $key;
 
+    # Copy hash reference into a new hash
     foreach $key ( keys %$apphash ) {
-        next if $key =~ /(type|options)/;
         $filteredHash->{$key} = $apphash->{$key};
-        $self->_filterHash( $key, $filteredHash->{$key} );
     }
 
+    # Filter hash
+    $self->_filterHash($filteredHash);
+
     # Hide empty categories
-    # TODO
+    $self->_isCategoryEmpty($filteredHash);
+
     return $filteredHash;
 }
 
+## @method private string _filterHash()
+# Remove unauthorized menu elements
+# @param $apphash Menu elements
+# @return filtered hash
 sub _filterHash {
     my $self = shift;
-    my ( $appid, $apphash ) = @_;
+    my ($apphash) = @_;
     my $key;
+    my $appkey;
 
     foreach $key ( keys %$apphash ) {
         next if $key =~ /(type|options)/;
         if ( $apphash->{$key}->{type} eq "category" ) {
 
             # Filter the category
-            $self->_filterHash( $key, $apphash->{$key} );
+            $self->_filterHash( $apphash->{$key} );
         }
         if ( $apphash->{$key}->{type} eq "application" ) {
+
+            # Find sub applications and filter them
+            foreach $appkey ( keys %{ $apphash->{$key} } ) {
+                next if $appkey =~ /(type|options)/;
+
+                # We have sub elements, so we filter them
+                $self->_filterHash( $apphash->{$key} );
+            }
 
             # Check rights
             my $appdisplay = $apphash->{$key}->{options}->{display} || "auto";
@@ -562,69 +444,50 @@ sub _filterHash {
 
 }
 
-sub _filterApp {
-    my ( $self, $node ) = @_;
-    my @apps = $node->getChildrenByTagName('application');
-    my $tag  = 0;
-    foreach (@apps) {
-        my $stag       = $self->_filterApp($_);
-        my $appdisplay = $_->getChildrenByTagName('display')->string_value();
-        my $appuri =
-          $self->_userParam( $_->getChildrenByTagName('uri')->string_value() );
-
-        # Remove node if display is "no"
-        $_->unbindNode if ( $appdisplay eq "no" );
-
-        # Keep node if display is "yes"
-        if ( $appdisplay eq "yes" ) {
-            $tag++;
-            next;
-        }
-
-        # Check grant function if display is "auto" (this is the default)
-        unless ( $self->_grant($appuri) ) {
-            if ($stag) {
-                eval { $_->getChildrenByTagName('uri')->unbindNode() };
-                $tag++;
-            }
-            else {
-                $_->unbindNode;
-            }
-        }
-        else {
-            $tag++;
-        }
-    }
-    return $tag;
-}
-
-## @method private void _hideEmptyCategory(XML::LibXML::Element cat)
-# Hides empty categories for _filterXML().
-# Return nothing $cat is modified directly
-# @param $cat XML element
-sub _hideEmptyCategory {
+## @method private void _isCategoryEmpty()
+# Check if a category is empty
+# @param $apphash Menu elements
+# @return boolean
+sub _isCategoryEmpty {
     my $self = shift;
-    my ($cat) = @_;
+    my ($apphash) = @_;
+    my $key;
 
-    # Check subnodes
-    my @catnodes = $cat->findnodes("category");
-    my @appnodes = $cat->findnodes("application");
-
-    # Check each subcategory
-    foreach (@catnodes) {
-        $self->_hideEmptyCategory($_);
+    # Test sub categories
+    foreach $key ( keys %$apphash ) {
+        next if $key =~ /(type|options)/;
+        if ( $apphash->{$key}->{type} eq "category" ) {
+            delete $apphash->{$key}
+              if $self->_isCategoryEmpty( $apphash->{$key} );
+        }
     }
 
-    # Update node list
-    @catnodes = $cat->findnodes("category");
+    # Test this category
+    if ( $apphash->{type} eq "category" ) {
 
-    # Remove the node if it contains no category or no application
-    unless ( scalar(@catnodes) || scalar(@appnodes) ) {
-        $cat->unbindNode;
-        return;
+        # Temporary store 'options'
+        my $tmp_options = $apphash->{options};
+
+        delete $apphash->{type};
+        delete $apphash->{options};
+
+        if ( scalar( keys %$apphash ) ) {
+
+            # There are sub categories or sub applications
+            # Restore type and options
+            $apphash->{type}    = "category";
+            $apphash->{options} = $tmp_options;
+
+            # Return false
+            return 0;
     }
+        else {
 
-    return;
+            # Return true
+            return 1;
+        }
+    }
+    return 0;
 }
 
 ## @method private boolean _grant(string uri)
