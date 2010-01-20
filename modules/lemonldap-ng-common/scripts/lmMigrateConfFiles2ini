@@ -8,9 +8,27 @@ use Lemonldap::NG::Common::Conf::Constants;
 
 # Get command line options
 my %opts;
-my $result =
-  GetOptions( \%opts, 'storage|s=s', 'apply|a=s', 'dir|d=s', 'ini|i=s',
-    'preserve|p', 'menuxml|m=s', 'verbose|v' );
+my $result = GetOptions(
+    \%opts,    'storage|s=s', 'apply|a=s',   'dir|d=s',
+    'ini|i=s', 'preserve|p',  'menuxml|m=s', 'verbose|v',
+    'help|h'
+);
+
+# Help
+if ( $opts{help} ) {
+    print
+      "$0 script imports old config file into the new lemonldap-ng.ini file\n";
+    print "Options:\n";
+    print
+"\t--dir,-d: path to main configuration directory (default: /etc/lemonldap-ng)\n";
+    print "\t--storage,-s: path to storage.conf (if not stored in conf dir)\n";
+    print "\t--apply,-a: path to apply.conf (if not stored in conf dir)\n";
+    print "\t--menuxml,-m: path to apps-list.xml (if not stored in conf dir)\n";
+    print "\t--ini,-i: path to lemonldap-ng.ini (if not stored in conf dir)\n";
+    print "\t--preserve,-p: do not erase old files after import\n";
+    print "\t--help,-h: show this message\n";
+    exit 0;
+}
 
 # Set default values
 $opts{dir} ||= '/etc/lemonldap-ng';
