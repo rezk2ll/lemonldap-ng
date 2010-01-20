@@ -3,43 +3,87 @@
 use strict;
 use Getopt::Long;
 use Config::IniFiles;
-
-my %opts;
-my $result = GetOptions( \%opts, 'storage|s=s', 'apply|a=s', 'dir|d=s', 'ini|i=s',
-    'preserve|p' );
-
+use XML::LibXML;
 use Lemonldap::NG::Common::Conf::Constants;
 
+# Get command line options
+my %opts;
+my $result =
+  GetOptions( \%opts, 'storage|s=s', 'apply|a=s', 'dir|d=s', 'ini|i=s',
+    'preserve|p', 'menuxml|m=s', 'verbose|v' );
+
+# Set default values
 $opts{dir} ||= '/etc/lemonldap-ng';
-
 my $old = {
-    storage => $opts{storage} || "$opts{dir}/storage.conf",
-           apply   => $opts{apply}   || "$opts{dir}/apply.conf",
+    storage => $opts{storage} || $opts{dir} . "/storage.conf",
+    apply   => $opts{apply}   || $opts{dir} . "/apply.conf",
+    menuxml => $opts{menuxml} || $opts{dir} . "/apps-list.xml",
 };
-my $new         = $opts{ini}     || "$opts{dir}/lemonldap-ng.ini";
-
+my $new = $opts{ini} || $opts{dir} . "/lemonldap-ng.ini";
 my $datas;
 
--r $old->{storage} or quit( 2, "$old->{storage} is not readeable" );
+if ( $opts{verbose} ) {
+    print "Using values:\n";
+    print "\tdir: " . $opts{dir} . "\n";
+    print "\tstorage: " . $opts{storage} . "\n";
+    print "\tapply: " . $opts{apply} . "\n";
+    print "\tstorage: " . $opts{menuxml} . "\n";
+    print "\tini: " . $opts{ini} . "\n";
+    print "\tpreserve: " . $opts{preserve} . "\n\n";
+}
+
+# Convert storage.conf
+-r $old->{storage} or quit( 2, $old->{storage} . " is not readeable" );
+print "Parsing " . $old->{storage} . "\n" if $opts{verbose};
 open F, $old->{storage};
 while (<F>) {
     next if (/^\s*(?:#.*)?$/);
     my ( $k, $v ) = (/^(\w+)\s*=\s*(.*)$/)
-      or quit( 3, "bad line in $old->{storage}:$_" );
-    $datas->{configuration}->{$k} = $v;
+      or quit( 3, "bad line in " . $old->{storage} . ":$_" );
+    $datas->{ +CONFSECTION }->{$k} = $v;
+    print "\t$k: $v\n" if $opts{verbose};
 }
 close F;
+print "\n" if $opts{verbose};
+
+# Convert apply.conf
 if ( -e $old->{apply} ) {
+    print "Parsing " . $old->{apply} . "\n" if $opts{verbose};
     open F, $old->{apply};
     while (<F>) {
         next if (/^\s*(?:#.*)?$/);
         my ( $k, $v ) = (/^([\w\.\-]+)\s+(.*)$/)
-          or quit( 3, "bad line in $old->{apply}:$_" );
-        $datas->{apply}->{$k} = $v;
+          or quit( 3, "bad line in " . $old->{apply} . ":$_" );
+        $datas->{ +APPLYSECTION }->{$k} = $v;
+        print "\t$k: $v\n" if $opts{verbose};
     }
     close F;
+    print "\n" if $opts{verbose};
 }
 
+# Convert apps-list.xml
+if ( -e $old->{menuxml} ) {
+
+    print "Parsing " . $old->{menuxml} . "\n" if $opts{verbose};
+
+    # Open XML file
+    my $parser = XML::LibXML->new();
+    my $xml;
+    eval { $xml = $parser->parse_file( $old->{menuxml} ); };
+    quit( 6, "Bad XML file: $@" ) if ($@);
+
+    # Get root element
+    my $root = $xml->documentElement;
+
+    my $value = "{ ";
+    $value .= _parseCategory($root);
+    $value .= " }";
+
+    $datas->{ +PORTALSECTION }->{applicationList} = $value;
+    print "\tapplicationList: $value\n\n" if $opts{verbose};
+}
+
+# Open ini configuration file
 my $conf;
 if ( -e $new ) {
     -w $new or quit( 4, "$new is not writeable" );
@@ -51,18 +95,21 @@ if ( -e $new ) {
 else {
     $conf = Config::IniFiles->new();
 }
+
+# Write sections
 my @sections = $conf->Sections();
-foreach (qw(configuration apply)) {
-        next unless ( ref $datas->{$_} );
-        $conf->AddSection($_) unless ( $conf->SectionExists($_) );
-        while ( my ( $k, $v ) = each %{ $datas->{$_} } ) {
-            if ( $conf->exists( $_, $k ) ) {
-                $conf->setval( $_, $k, $v );
-            }
-            else {
-                $conf->newval( $_, $k, $v );
-            }
+foreach ( ( CONFSECTION, APPLYSECTION, PORTALSECTION ) ) {
+    print "Write data for section $_\n" if $opts{verbose};
+    next unless ( ref $datas->{$_} );
+    $conf->AddSection($_) unless ( $conf->SectionExists($_) );
+    while ( my ( $k, $v ) = each %{ $datas->{$_} } ) {
+        if ( $conf->exists( $_, $k ) ) {
+            $conf->setval( $_, $k, $v );
         }
+        else {
+            $conf->newval( $_, $k, $v );
+        }
+    }
 }
 if ( -e $new ) {
     $conf->RewriteConfig();
@@ -73,11 +120,70 @@ else {
         "Unable to create $new:\n\t"
           . join( "\n\t", @Config::IniFiles::errors ) );
     unless ( $opts{preserve} ) {
-        unlink $old->{storage}, $old->{apply};
+        unlink $old->{storage}, $old->{apply}, $old->{menuxml};
     }
 }
 
+# Local subroutines
 sub quit {
     print STDERR "$_[1]\n";
     exit $_[0];
+}
+
+sub _parseCategory {
+    my $category = shift;
+    my $value;
+
+    my $catname = $category->getAttribute('name') || "Menu";
+
+    $value .= "'$catname' => { type => 'category', ";
+
+    # Applications
+    my @appnodes = $category->findnodes("application");
+    foreach (@appnodes) {
+        $value .= _parseApplication($_);
+    }
+
+    # Sub categories
+    my @catnodes = $category->findnodes("category");
+    foreach (@catnodes) {
+        $value .= _parseCategory($_);
+    }
+
+    $value .= " },";
+
+    return $value;
+}
+
+sub _parseApplication {
+    my $application = $_;
+    my $value;
+
+    # Get application items
+    my $appid   = $application->getAttribute('id');
+    my $appname = $application->getChildrenByTagName('name')->string_value();
+    my $appuri  = $application->getChildrenByTagName('uri')->string_value();
+    my $appdesc =
+      $application->getChildrenByTagName('description')->string_value();
+    my $applogo = $application->getChildrenByTagName('logo')->string_value();
+    my $appdisplay =
+      $application->getChildrenByTagName('display')->string_value();
+
+    # Print application items
+    $value .= "'$appid' => { type => 'application', options => { ";
+    $value .= "name => '$appname', " if $appname;
+    $value .= "uri => '$appuri', " if $appuri;
+    $value .= "description => '$appdesc', " if $appdesc;
+    $value .= "logo => '$applogo', " if $applogo;
+    $value .= "display => '$appdisplay', " if $appdisplay;
+    $value .= " },";
+
+    # Sub applications
+    my @appnodes = $application->findnodes("application");
+    foreach (@appnodes) {
+        $value .= _parseApplication($_);
+    }
+
+    $value .= " },";
+    return $value;
 }
