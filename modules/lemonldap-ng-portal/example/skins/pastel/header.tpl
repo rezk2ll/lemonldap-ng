@@ -11,25 +11,13 @@
         <link href="skins/common/favicon.ico" rel="shortcut icon" />
         <script type="text/javascript" src="skins/common/jquery-1.3.2.min.js"></script>
         <script type="text/javascript" src="skins/common/jquery-ui-1.7.2.custom.min.js"></script>
-        <script type="text/javascript">
-        $(document).ready(function(){
-          $("div.message").fadeIn('slow');
-          $("input[name=timezone]").val( -(new Date().getTimezoneOffset()/60) );
-          $("#menu").tabs({ fx: { opacity: 'toggle' } });
-          $("#menu").tabs("select","#<TMPL_VAR NAME="DISPLAY_TAB">");
-          $("input[type!=hidden]:first").focus();
-          $("input[type='password']").attr("autocomplete","<TMPL_VAR NAME="AUTOCOMPLETE">");
-          $("#appslist li[class!=catname]").hover(
-                function(){
-                        var appid = $(this).attr("title");
-                        $("div.appsdesc").hide();
-                        $("div#" + appid).show();},
-                function(){}
-          );
-          <TMPL_IF NAME="LOGIN">$("input[type=password]:first").focus();</TMPL_IF>
-          <TMPL_IF NAME="NEWWINDOW">$('#appslist a[href^="http://"]').attr("target", "_blank");</TMPL_IF>
-        });
-        </script>
+        <script type="text/javascript">//<![CDATA[
+            var displaytab='<TMPL_VAR NAME="DISPLAY_TAB">';
+            var autocomplete='<TMPL_VAR NAME="AUTOCOMPLETE">/';
+            var login='<TMPL_VAR NAME="LOGIN">';
+            var newwindow='<TMPL_VAR NAME="NEWWINDOW">';
+        //]]></script>
+        <script type="text/javascript" src="skins/common/portal.js"></script>
 </head>
 <body>
         <div id="page">
