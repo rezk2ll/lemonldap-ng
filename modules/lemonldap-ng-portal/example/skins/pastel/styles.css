@@ -380,3 +380,8 @@ p.removeOther{
 font-weight:bold;
 }
 
+div.link {
+	text-align:center;
+	font-weight:bold;
+	margin:40px 200px;
+}

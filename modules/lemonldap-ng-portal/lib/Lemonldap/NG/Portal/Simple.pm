@@ -40,7 +40,7 @@ use Safe;
 #inherits Apache::Session
 #link Lemonldap::NG::Common::Apache::Session::SOAP protected globalStorage
 
-our $VERSION = '0.90';
+our $VERSION = '0.91';
 
 use base qw(Lemonldap::NG::Common::CGI Exporter);
 our @ISA;
@@ -87,6 +87,10 @@ use constant {
     PE_MALFORMEDUSER                    => 40,
     PE_SESSIONNOTGRANTED                => 41,
     PE_CONFIRM                          => 42,
+    PE_MAILFORMEMPTY                    => 43,
+    PE_BADMAILTOKEN                     => 44,
+    PE_MAILERROR                        => 45,
+    PE_MAILOK                           => 46,
 
     # Portal messages
     PM_USER                  => 0,
@@ -110,7 +114,8 @@ our @EXPORT = qw( PE_INFO PE_REDIRECT PE_DONE PE_OK PE_SESSIONEXPIRED
   PE_PP_PASSWORD_TOO_YOUNG PE_PP_PASSWORD_IN_HISTORY PE_PP_GRACE
   PE_PP_EXP_WARNING PE_PASSWORD_MISMATCH PE_PASSWORD_OK PE_NOTIFICATION
   PE_BADURL PE_NOSCHEME PE_BADOLDPASSWORD PE_MALFORMEDUSER PE_SESSIONNOTGRANTED
-  PE_CONFIRM PM_USER PM_DATE PM_IP PM_SESSIONS_DELETED PM_OTHER_SESSIONS
+  PE_CONFIRM PE_MAILFORMEMPTY PE_BADMAILTOKEN PE_MAILERROR PE_MAILOK
+  PM_USER PM_DATE PM_IP PM_SESSIONS_DELETED PM_OTHER_SESSIONS
   PM_REMOVE_OTHER_SESSIONS PM_PP_GRACE PM_PP_EXP_WARNING
 );
 our %EXPORT_TAGS = ( 'all' => [ @EXPORT, 'import' ], );
@@ -291,8 +296,10 @@ sub setDefaultValues {
     $self->{mailLDAPFilter} ||= '(&(mail=$mail)(objectClass=inetOrgPerson))';
     $self->{randomPasswordRegexp} ||= '[A-Z]{3}[a-z]{5}.\d{2}';
     $self->{mailFrom}             ||= "noreply@" . $self->{domain};
-    $self->{mailSubject}          ||= "Change password request";
-    $self->{mailBody}             ||= 'Your new password is $password';
+    $self->{mailSubject}    ||= "[LemonLDAP::NG] Reset password confirmation";
+    $self->{mailBody}       ||= 'Click here to reset your password: $url';
+    $self->{mailSessionKey} ||= 'mail';
+    $self->{mailUrl}        ||= $self->{portal} . "/mail.pl";
     $self->{issuerDB}             ||= 'Null';
 
     # Set default userDB and passwordDB to DBI if authentication is DBI
@@ -346,7 +353,8 @@ sub error_type {
     return "positive"
       if (
         scalar(
-            grep { /^$code$/ } ( PE_REDIRECT, PE_DONE, PE_OK, PE_PASSWORD_OK, )
+            grep { /^$code$/ }
+              ( PE_REDIRECT, PE_DONE, PE_OK, PE_PASSWORD_OK, PE_MAILOK, )
         )
       );
 
@@ -359,7 +367,7 @@ sub error_type {
                 PE_FORMEMPTY,    PE_FIRSTACCESS,
                 PE_PP_GRACE,     PE_PP_EXP_WARNING,
                 PE_NOTIFICATION, PE_BADURL,
-                PE_CONFIRM,
+                PE_CONFIRM,      PE_MAILFORMEMPTY,
             )
         )
       );
@@ -644,7 +652,6 @@ sub info {
 #  - passwordDB module:
 #    - passwordDBInit
 #    - modifyPassword
-#    - resetPasswordByMail
 #  - issuerDB module:
 #    - issuerDBInit
 #    - issuerForUnAuthUser
@@ -658,8 +665,8 @@ sub process {
         qw(controlUrlOrigin checkNotifBack controlExistingSession issuerDBInit
           issuerForUnAuthUser authInit extractFormInfo userDBInit getUser
           setAuthSessionInfo passwordDBInit modifyPassword setSessionInfo
-          resetPasswordByMail setMacros setLocalGroups setGroups authenticate
-          removeOther grantSession store buildCookie checkNotification issuerForAuthUser
+          setMacros setLocalGroups setGroups authenticate removeOther
+          grantSession store buildCookie checkNotification issuerForAuthUser
           autoRedirect)
     );
     $self->updateStatus;

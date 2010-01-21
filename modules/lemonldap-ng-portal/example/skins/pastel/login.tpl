@@ -30,28 +30,15 @@
 			<lang en="Connect" fr="Se connecter" />
 		</button>
 		</div></td></tr>
-		</table>
-
-	</form>
-	</TMPL_IF>
-
         <TMPL_IF NAME="DISPLAY_RESETPASSWORD">
-
-        <form action="#" method="post" class="login">
-
-        <h3><lang en="Forgot your password?" fr="Mot de passe oubli&eacute; ?"/></h3>
-
-                <table>
-                <tr><th><lang en="Mail" fr="Adresse mail"/></th>
-                <td><input name="mail" type="text"/></td>
-                </tr>
                 <tr><td colspan="2">
                 <div class="buttons">
-                <button type="submit" class="positive">
-                        <img src="skins/common/accept.png" alt="" />
-                        <lang en="Send me a new password" fr="Envoyez-moi un nouveau mot de passe" />
-                </button>
+                <a href="<TMPL_VAR NAME="MAIL_URL">" class="positive">
+                        <img src="skins/common/email.png" alt="" />
+                        <lang en="Reset my password" fr="R&eacute;initialiser mon mot de passe"/>
+                </a>
                 </div></td></tr>
+        	</TMPL_IF>
                 </table>
 
         </form>
@@ -60,12 +47,14 @@
 	<TMPL_INCLUDE NAME="password.tpl">
 
 	<TMPL_IF NAME="LOGOUT_URL">
+	<div id="logout">
 		<div class="buttons">
 		<a href="<TMPL_VAR NAME="LOGOUT_URL">" class="negative">
 			<img src="skins/common/cancel.png" alt="" />
 			<lang en="Logout" fr="Se d&eacute;connecter"/>
 		</a>
 		</div>
+	</div>
 	</TMPL_IF>
 
 <TMPL_INCLUDE NAME="footer.tpl">

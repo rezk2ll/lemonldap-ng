@@ -9,7 +9,7 @@ use strict;
 use String::Random;
 use MIME::Lite;
 
-our $VERSION = '0.1';
+our $VERSION = '0.2';
 
 ## @method string gen_password()
 # Generate a complex password based on a regular expression
@@ -20,29 +20,17 @@ sub gen_password {
     my $regexp = shift;
 
     my $random = new String::Random;
-    return $random->randregex( $regexp );
+    return $random->randregex($regexp);
 }
 
-## @method int test_mail()
-# @return boolean result
-sub test_mail {
-    my $self = shift;
-
-    # TODO check that a mail can be sent
-}
-
-## @method int send_password()
-# Send password by mail
-# @param password password
+## @method int send_mail()
+# Send mail
 # @param mail mail
 # @return boolean result
-sub send_password {
+sub send_mail {
     my $self = shift;
-    my $password = shift;
     my $mail = shift;
 
-    $self->{mailBody} =~ s/\$password/$password/g;
-    $self->{mailBody} =~ s/\$(\w+)/$self->{sessionInfo}->{$1}/g;
     $self->lmLog( "SMTP From " . $self->{mailFrom},       'debug' );
     $self->lmLog( "SMTP To " . $mail,                     'debug' );
     $self->lmLog( "SMTP Subject " . $self->{mailSubject}, 'debug' );

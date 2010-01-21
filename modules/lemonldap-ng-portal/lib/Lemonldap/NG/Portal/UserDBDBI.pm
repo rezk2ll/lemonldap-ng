@@ -8,7 +8,7 @@ package Lemonldap::NG::Portal::UserDBDBI;
 use strict;
 use Lemonldap::NG::Portal::Simple;
 
-our $VERSION = '0.1';
+our $VERSION = '0.2';
 
 ## @apmethod int userDBInit()
 # Set default values
@@ -41,6 +41,13 @@ sub getUser {
     my $table = $self->{dbiUserTable};
     my $pivot = $self->{userPivot};
     my $user  = $self->{user};
+
+    # If in mailProcess, adapt search criteriums
+    if ( $self->{mail} ) {
+        $pivot = $self->{dbiPasswordMailCol};
+        $user  = $self->{mail};
+    }
+
     $user =~ s/'/''/g;
     my $sth;
 

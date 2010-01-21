@@ -9,6 +9,7 @@ use strict;
 use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::AuthDBI;    #inherits
 use base qw(Lemonldap::NG::Portal::_DBI );
+
 #use Lemonldap::NG::Portal::_SMTP;     #inherits
 
 our $VERSION = '0.1';
@@ -23,8 +24,7 @@ sub passwordDBInit {
         $self->lmLog( "Unable to load SMTP functions ($@)", 'error' );
         return PE_ERROR;
     }
-    unless ( $self->{dbiPasswordMailCol} )
-    {
+    unless ( $self->{dbiPasswordMailCol} ) {
         $self->lmLog( "Missing configuration parameters for DBI password reset",
             'error' );
         return PE_ERROR;
@@ -57,21 +57,25 @@ sub modifyPassword {
     if ( $self->{oldpassword} ) {
 
         # Password hash
-        my $password = $self->hash_password( $self->{oldpassword}, $self->{dbiAuthPasswordHash} );
+        my $password =
+          $self->hash_password( $self->{oldpassword},
+            $self->{dbiAuthPasswordHash} );
 
         my $result = $self->check_password( $user, $password );
 
-        unless ( $result ) {
+        unless ($result) {
             return PE_BADOLDPASSWORD;
         }
     }
 
     # Modify password
-    my $password = $self->hash_password( $self->{newpassword}, $self->{dbiAuthPasswordHash} );
+    my $password =
+      $self->hash_password( $self->{newpassword},
+        $self->{dbiAuthPasswordHash} );
 
     my $result = $self->modify_password( $user, $password );
 
-    unless ( $result ) {
+    unless ($result) {
         return PE_ERROR;
     }
 
@@ -79,40 +83,14 @@ sub modifyPassword {
     PE_PASSWORD_OK;
 }
 
-## @apmethod int resetPasswordByMail()
-# Reset the password and send a mail.
+## @apmethod int resetPassword()
+# Reset the password
 # @return Lemonldap::NG::Portal constant
-sub resetPasswordByMail {
+sub resetPassword {
     my $self = shift;
 
-    # Exit method if no mail
-    return PE_OK unless ( $self->{mail} );
-
-    # Find mail in database
-    my $dbh =
-      $self->dbh( $self->{dbiAuthChain}, $self->{dbiAuthUser},
-        $self->{dbiAuthPassword} );
-    return PE_ERROR unless $dbh;
-
-    my $table = $self->{dbiAuthTable};
-    my $mail = $self->{mail};
-    my $mailCol = $self->{dbiPasswordMailCol};
-    $mail =~ s/'/''/g;
-    my $sth;
-
-    eval {
-        $sth = $dbh->prepare("SELECT * FROM $table WHERE $mailCol='$mail'");
-        $sth->execute();
-    };
-    if ($@) {
-        $self->lmLog( "DBI error: $@", 'error' );
-        return PE_ERROR;
-    }
-
-    unless ( $sth->fetchrow_hashref() ) {
-        $self->lmLog( "Mail $mail not found", 'notice' );
-	return PE_BADCREDENTIALS;
-    }
+    # Exit method if no mail and mail_token
+    return PE_OK unless ( $self->{mail} && $self->{mail_token} );
 
     $self->lmLog( "Reset password request for " . $self->{mail}, 'debug' );
     
@@ -122,15 +100,16 @@ sub resetPasswordByMail {
     $self->lmLog( "Generated password: " . $password, 'debug' );
 
     # Modify password
-    my $hpassword = $self->hash_password( $password, $self->{dbiAuthPasswordHash} );
-    my $result = $self->modify_password( $self->{mail}, $hpassword, $self->{dbiPasswordMailCol} );
+    my $hpassword =
+      $self->hash_password( $password, $self->{dbiAuthPasswordHash} );
+    my $result =
+      $self->modify_password( $self->{mail}, $hpassword,
+        $self->{dbiPasswordMailCol} );
 
     return PE_ERROR unless $result;
 
-    # Send new password by mail
-    $result = $self->send_password( $password, $self->{mail} );
-
-    return PE_ERROR unless $result;
+    # Store password to display it to the user
+    $self->{reset_password} = $password;
 
     PE_PASSWORD_OK;
 }

@@ -253,6 +253,7 @@ else {
         SKIN                  => $skin,
         DISPLAY_RESETPASSWORD => $portal->{portalDisplayResetPassword},
         DISPLAY_FORM          => 1,
+        MAIL_URL              => $portal->{mailUrl},
 
         # Adapt template if password policy error
         (

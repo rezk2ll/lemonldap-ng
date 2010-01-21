@@ -8,7 +8,7 @@ package Lemonldap::NG::Portal::_i18n;
 # Developpers warning : this file must stay UTF-8 encoded
 
 use AutoLoader qw(AUTOLOAD);
-our $VERSION = '0.4';
+our $VERSION = '0.5';
 
 ## @fn string error(int error,string lang)
 # @param $error Number of error to resolve
@@ -100,6 +100,11 @@ __END__
 # * PE_BADOLDPASSWORD                    39
 # * PE_MALFORMEDUSER                     40
 # * PE_SESSIONNOTGRANTED                 41
+# * PE_CONFIRM                           42
+# * PE_MAILFORMEMPTY                     43
+# * PE_BADMAILTOKEN                      44
+# * PE_MAILERROR                         45
+# * PE_MAILOK                            46
 
 # Not used in errors:
 # * PE_DONE                -1
@@ -154,6 +159,10 @@ sub error_fr {
         "Nom d'utilisateur incorrect",
         "Ouverture de session non autorisée",
         "Confirmation demandée",
+        "Veuillez saisir votre adresse mail",
+        "La clé de confirmation est invalide ou trop ancienne",
+        "L'envoi du mail de confirmation a échoué",
+        "Un mail de confirmation vient d'être envoyé",
     ];
 }
 
@@ -205,6 +214,10 @@ sub error_en {
         'Bad username',
         'Session opening not allowed',
         'Confirmation required',
+        'Please provide your mail address',
+        'Confirmation key is invalid or too old',
+        'An error occurs when sending mail',
+        'Confirmation mail has been sent',
     ];
 }
 
@@ -257,6 +270,10 @@ sub error_ro {
         'Nume de utilizator gresit',
         'Conectare neautorizată',
         'Confirmare necesare',
+        'Vă rugăm să introduceţi adresa dvs. de e-mail',
+        'Cheie de confirmare este invalid sau prea veche',
+        'Trimiterea mail de confirmare nu a reuşit',
+        'Un e-mail de confirmare a fost trimis',
     ];
 }
 

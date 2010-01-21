@@ -8,7 +8,7 @@ package Lemonldap::NG::Portal::_WebForm;
 use Lemonldap::NG::Portal::Simple qw(:all);
 use strict;
 
-our $VERSION = '0.2';
+our $VERSION = '0.3';
 
 ## @apmethod int authInit()
 # Does nothing.
@@ -23,15 +23,12 @@ sub authInit {
 sub extractFormInfo {
     my $self = shift;
     return PE_FIRSTACCESS
-      unless ( $self->param('user') || $self->param('mail') );
+      unless ( $self->param('user') );
     return PE_FORMEMPTY
       unless (
-        (
             ( $self->{user} = $self->param('user') )
             && (   ( $self->{password} = $self->param('password') )
                 || ( $self->{newpassword} = $self->param('newpassword') ) )
-        )
-        || ( $self->{mail} = $self->param('mail') )
       );
     $self->{oldpassword}     = $self->param('oldpassword');
     $self->{confirmpassword} = $self->param('confirmpassword');

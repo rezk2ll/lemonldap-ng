@@ -9,6 +9,7 @@ use strict;
 use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::_LDAP 'ldap';    #link protected ldap
 use Lemonldap::NG::Portal::UserDBLDAP;      #inherits
+
 #use Lemonldap::NG::Portal::_SMTP;          #inherits
 
 our $VERSION = '0.3';
@@ -58,14 +59,14 @@ sub modifyPassword {
     PE_OK;
 }
 
-## @apmethod int resetPasswordByMail()
-# Reset the password and send a mail.
+## @apmethod int resetPassword()
+# Reset the password
 # @return Lemonldap::NG::Portal constant
-sub resetPasswordByMail {
+sub resetPassword {
     my $self = shift;
 
-    # Exit method if no mail
-    return PE_OK unless ( $self->{mail} );
+    # Exit method if no mail and mail_token
+    return PE_OK unless ( $self->{mail} && $self->{mail_token} );
 
     unless ( $self->ldap ) {
         return PE_LDAPCONNECTFAILED;
@@ -105,10 +106,8 @@ sub resetPasswordByMail {
         $self->lmLog( "pwdReset set to TRUE", 'debug' );
     }
 
-    # Send new password by mail
-    my $result = $self->send_password( $password, $self->{mail} );
-
-    return PE_ERROR unless $result;
+    # Store password to display it to the user
+    $self->{reset_password} = $password;
 
     PE_PASSWORD_OK;
 }
