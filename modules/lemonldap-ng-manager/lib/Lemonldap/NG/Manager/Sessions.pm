@@ -251,6 +251,9 @@ sub process {
 '<p><b>Attributs et macros :</b></p><table border="0" witdh="100%">';
             foreach my $attr ( sort keys %h ) {
                 next if ( $attr =~ /^(?:_utime|groups)$/ );
+
+                # Hide password value
+                if ( $attr =~ /^_password$/ ) { $h{$attr} = "******"; }
                 print '<tr valign="top"><th style="text-align:left;">'
                   . htmlquote($attr)
                   . '</th><td>:</td><td>'
