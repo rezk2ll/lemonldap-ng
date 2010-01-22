@@ -9,6 +9,11 @@
  * - newwindow
  */
 
+/* Set autocomplete real value */
+if(autocomplete.match('1')){autocomplete='on';}
+if(autocomplete.match('0')){autocomplete='off';}
+
+/* jQuery */
 $(document).ready(function(){
 	$("div.message").fadeIn('slow');
 	$("input[name=timezone]").val( -(new Date().getTimezoneOffset()/60) );

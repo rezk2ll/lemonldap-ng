@@ -13,7 +13,7 @@
         <script type="text/javascript" src="skins/common/jquery-ui-1.7.2.custom.min.js"></script>
         <script type="text/javascript">//<![CDATA[
             var displaytab='<TMPL_VAR NAME="DISPLAY_TAB">';
-            var autocomplete='<TMPL_VAR NAME="AUTOCOMPLETE">/';
+            var autocomplete='<TMPL_VAR NAME="AUTOCOMPLETE">';
             var login='<TMPL_VAR NAME="LOGIN">';
             var newwindow='<TMPL_VAR NAME="NEWWINDOW">';
         //]]></script>

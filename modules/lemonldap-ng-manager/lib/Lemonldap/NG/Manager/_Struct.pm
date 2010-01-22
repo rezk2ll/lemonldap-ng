@@ -38,8 +38,6 @@ sub cstruct {
 
 ## @method protected hashref struct(hashref h,string k)
 # Returns the tree structure
-#@param $h Result of struct()
-#@param $k Name of the virtual host
 #@return Tree structure
 sub struct {
     my $self = shift;
@@ -52,10 +50,30 @@ sub struct {
         ######################
         generalParameters => {
             _nodes => [
-                qw(portal n:authParams logParams cookieParams sessionParams n:advancedParams)
+                qw(portalParams n:authParams logParams cookieParams sessionParams n:advancedParams)
             ],
             _help  => 'default',
+
+            # PORTAL PARAMETERS
+            portalParams => {
+                _nodes => [
+                    qw(portal portalSkin portalDisplayLogout portalDisplayResetPassword portalDisplayChangePassword portalDisplayAppslist portalAutocomplete portalRequireOldPassword portalUserAttr portalOpenLinkInNewWindow)
+                ],
+                _help => 'portalParams',
+
             portal => 'text:/portal',
+                portalSkin          => 'text:/portalSkin',
+                portalDisplayLogout => 'text:/portalDisplayLogout',
+                portalDisplayResetPassword =>
+                  'text:/portalDisplayResetPassword',
+                portalDisplayChangePassword =>
+                  'text:/portalDisplayChangePassword',
+                portalDisplayAppslist     => 'text:/portalDisplayAppslist',
+                portalAutocomplete        => 'bool:/portalAutocomplete',
+                portalRequireOldPassword  => 'bool:/portalRequireOldPassword',
+                portalUserAttr            => 'text:/portalUserAttr',
+                portalOpenLinkInNewWindow => 'bool:/portalOpenLinkInNewWindow',
+            },
 
             # AUTHENTICATION AND USERDB PARAMETERS
             authParams => {
@@ -123,7 +141,7 @@ sub struct {
             # SESSIONS PARAMETERS
             sessionParams => {
                 _nodes => [
-                    qw(sessionStorage singleSession singleIP singleUserByIP notifyDeleted notifyOther timeout storePassword)
+                    qw(sessionStorage grantSessionRule singleSession singleIP singleUserByIP notifyDeleted notifyOther timeout storePassword)
                 ],
                 _help          => 'storage',
                 sessionStorage => {
@@ -141,6 +159,7 @@ sub struct {
                 notifyOther    => 'bool:/notifyOther',
                 storePassword  => 'bool:/storePassword',
                 timeout        => 'text:/timeout:timeout:text',
+                grantSessionRule => 'text:/grantSessionRule',
             },
 
             # OTHER PARAMETERS
@@ -297,6 +316,14 @@ sub testStruct {
             keyTest    => qr/^\w+$/,
             keyMsgFail => 'Bad parameter',
         },
+        grantSessionRule => {
+            test     => $perlExpr,
+            warnTest => sub {
+                my $e = shift;
+                return ( 0, $assignMsg ) if ( $e =~ $assignTest );
+                1;
+            },
+        },
         groups => {
             keyTest    => qr/^\w[\w-]*$/,
             keyMsgFail => 'Bad group name',
@@ -386,6 +413,21 @@ sub testStruct {
         portal        => {
             test    => qr/^https?:\/\/\S+$/,
             msgFail => 'Bad portal value',
+        },
+        portalDisplayAppslist       => { test => $perlExpr, },
+        portalDisplayChangePassword => { test => $perlExpr, },
+        portalDisplayLogout         => { test => $perlExpr, },
+        portalDisplayResetPassword  => $boolean,
+        portalOpenLinkInNewWindow   => $boolean,
+        portalParams                => $testNotDefined,
+        portalRequireOldPassword    => $boolean,
+        portalSkin                  => {
+            test    => qr/\w+$/,
+            msgFail => 'Bad skin name',
+        },
+        portalUserAttr => {
+            test    => qr/\w+$/,
+            msgFail => 'Bad skin name',
         },
         protection => {
             keyTest => qr/^(?:none|authentificate|manager|)$/,
