@@ -6,6 +6,7 @@ package Lemonldap::NG::Common::Conf::SAML::Metadata;
 use strict;
 use warnings;
 use XML::LibXML;
+use Data::Dumper;
 use Safe;
 
 our $VERSION = '0.1';
@@ -29,11 +30,22 @@ sub new
     return $self;
 }
 
+## @method public boolean initiliazeFromConf(string s)
+# Initialize this object from configuration string.
+# @param $s Configuration string.
+# @return boolean
+sub initializeFromConf
+{
+    my $self = shift;
+    my (@data) = @_;
+    return 0;
+}
+
 ## @method public boolean initializeFromFile(string file)
 # Initialize this object from XML file.
 # @param $file Filename
 # @return boolean
-sub initiliazeFromFile
+sub initializeFromFile
 {
     my $self = shift;
     my $file = shift;
@@ -42,12 +54,50 @@ sub initiliazeFromFile
     {
       return 0;
     }
-    my $data = $self->_parseXML($xml);
+    return $self->initializeFromXML($xml);
+}
+
+## @method public boolean initializeFromXML(string string)
+# Initialize this object from configuration XML string.
+# @param $string Configuration XML string.
+# @return boolean
+sub initializeFromXML
+{
+    my $self = shift;
+    my ($string) = @_;
+    my $data;
+    my $parser = XML::LibXML->new();
+    $parser->validation('0');
+    $string =~ s/[\n\r\s]+/ /g;
+    $string =~ s/> </></g;
+    eval
+    {
+      my $xml = $parser->parse_string($string);
+      $data = $self->_parseXML($xml->documentElement);
+    };
+    return 0 if ($@);
+    if ($data)
+    {
     while (my ($k,$v) = each(%{$data}))
     {
       $self->{$k} = $v;
     }
     return 1;
+    }
+    return 0;
+}
+
+## @method public string toXML
+
+## @method public string toConf ()
+# Return this object in configuration string format.
+# @return string
+sub toConf
+{
+    my $self = shift;
+    my $dumper = Data::Dumper->new([$self]);
+    $dumper->Indent(0);
+    return $dumper->Dump();
 }
 
 ## @method public static boolean load(Array files)
@@ -61,7 +111,7 @@ sub load
     foreach (@files)
     {
       my $metadata = new Lemonldap::NG::Common::Conf::SAML::Metadata();
-      if ($metadata->initiliazeFromFile($_))
+      if ($metadata->initializeFromFile($_))
       {
         push @metadatas, $metadata;
       }
@@ -70,23 +120,19 @@ sub load
 }
 
 ## @method private hashref _loadFile(string file)
-# Load XML file as a hash reference returned by LibXML.
+# Load XML file as a XML string.
 # @param $file Filename
-# @return Hashref
+# @return string
 sub _loadFile
 {
     my $self = shift;
     my $file = shift;
-    my $parser = XML::LibXML->new();
-    $parser->validation('0'); # should be 1
-    my $xml;
-    eval
-    {
-      $xml = $parser->parse_file( $file );
-    };
-    return 0 if ($@);
-    my $root = $xml->documentElement;
-    return $root;
+    local $/=undef;
+    open FILE, $file
+      or die "Couldn't open file: $!";
+    my $string = <FILE>;
+    close FILE;
+    return $string;
 }
 
 ## @method private hashref _parseXML(hashref node)
