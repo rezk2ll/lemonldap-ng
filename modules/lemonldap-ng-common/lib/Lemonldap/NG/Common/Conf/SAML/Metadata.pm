@@ -37,7 +37,12 @@ sub new
 sub initializeFromConf
 {
     my $self = shift;
-    my (@data) = @_;
+    my ($string) = @_;
+    my $data = eval $string;
+    while ( my ( $k, $v ) = each(%$data) )
+    {
+      $self->{$k} = $v;
+    }
     return 0;
 }
 
@@ -88,6 +93,16 @@ sub initializeFromXML
 }
 
 ## @method public string toXML
+# Return this object in XML format.
+# @return string
+sub toXML
+{
+    my $self = shift;
+    my $writer = XML::LibXML->new();
+    $writer->validation('0');
+    my $doc = $writer->createDocument($self);
+    return '';
+}
 
 ## @method public string toConf ()
 # Return this object in configuration string format.
@@ -95,9 +110,11 @@ sub initializeFromXML
 sub toConf
 {
     my $self = shift;
-    my $dumper = Data::Dumper->new([$self]);
-    $dumper->Indent(0);
-    return $dumper->Dump();
+    local $Data::Dumper::Indent = 0;
+    my $data = Dumper($self);
+    $data =~ s/\A\$VAR\d+\s*=\s*//;
+    #$data =~ s/'/&#39;/g;
+    return $data;
 }
 
 ## @method public static boolean load(Array files)
