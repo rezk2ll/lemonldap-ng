@@ -38,6 +38,7 @@ sub initializeFromConf
 {
     my $self = shift;
     my ($string) = @_;
+    $string =~ s/&#39;/'/g;
     my $data = eval $string;
     while ( my ( $k, $v ) = each(%$data) )
     {
@@ -113,7 +114,7 @@ sub toConf
     local $Data::Dumper::Indent = 0;
     my $data = Dumper($self);
     $data =~ s/\A\$VAR\d+\s*=\s*//;
-    #$data =~ s/'/&#39;/g;
+    $data =~ s/'/&#39;/g;
     return $data;
 }
 
