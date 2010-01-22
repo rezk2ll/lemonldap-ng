@@ -270,6 +270,8 @@ sub getConf {
 # Set default values.
 sub setDefaultValues {
     my $self = shift;
+    $self->{portal} ||=
+      "http" . ( $ENV{HTTPS} ? 's' : '' ) . '://' . $self->server_name();
     $self->{whatToTrace} ||= 'uid';
     $self->{whatToTrace} =~ s/^\$//;
     $self->{httpOnly} = 1 unless ( defined( $self->{httpOnly} ) );
@@ -296,8 +298,9 @@ sub setDefaultValues {
     $self->{mailLDAPFilter} ||= '(&(mail=$mail)(objectClass=inetOrgPerson))';
     $self->{randomPasswordRegexp} ||= '[A-Z]{3}[a-z]{5}.\d{2}';
     $self->{mailFrom}             ||= "noreply@" . $self->{domain};
-    $self->{mailSubject}    ||= "[LemonLDAP::NG] Reset password confirmation";
-    $self->{mailBody}       ||= 'Click here to reset your password: $url';
+    $self->{mailSubject}          ||= "[LemonLDAP::NG] Your new password";
+    $self->{mailConfirmSubject} ||=
+      "[LemonLDAP::NG] Password reset confirmation";
     $self->{mailSessionKey} ||= 'mail';
     $self->{mailUrl}        ||= $self->{portal} . "/mail.pl";
     $self->{issuerDB}             ||= 'Null';

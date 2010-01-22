@@ -161,8 +161,8 @@ sub error_fr {
         "Confirmation demandée",
         "Veuillez saisir votre adresse mail",
         "La clé de confirmation est invalide ou trop ancienne",
-        "L'envoi du mail de confirmation a échoué",
-        "Un mail de confirmation vient d'être envoyé",
+        "L'envoi du mail a échoué",
+        "Un mail vous a été envoyé",
     ];
 }
 
@@ -217,7 +217,7 @@ sub error_en {
         'Please provide your mail address',
         'Confirmation key is invalid or too old',
         'An error occurs when sending mail',
-        'Confirmation mail has been sent',
+        'A mail has been sent',
     ];
 }
 
@@ -272,8 +272,8 @@ sub error_ro {
         'Confirmare necesare',
         'Vă rugăm să introduceţi adresa dvs. de e-mail',
         'Cheie de confirmare este invalid sau prea veche',
-        'Trimiterea mail de confirmare nu a reuşit',
-        'Un e-mail de confirmare a fost trimis',
+        'Trimiterea mail nu a reuşit',
+        'Un e-mail a fost trimis',
     ];
 }
 

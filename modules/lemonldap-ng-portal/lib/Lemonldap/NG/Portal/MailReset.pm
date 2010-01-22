@@ -12,6 +12,7 @@ our $VERSION = '0.1';
 
 use Lemonldap::NG::Portal::Simple qw(:all);
 use base qw(Lemonldap::NG::Portal::SharedConf Exporter);
+use HTML::Template;
 
 *EXPORT_OK   = *Lemonldap::NG::Portal::Simple::EXPORT_OK;
 *EXPORT_TAGS = *Lemonldap::NG::Portal::Simple::EXPORT_TAGS;
@@ -24,6 +25,7 @@ use base qw(Lemonldap::NG::Portal::SharedConf Exporter);
 #   - extractMailInfo
 #   - storeMailSession
 #   - sendConfirmationMail
+#   - sendPasswordMail
 # - portal core module:
 #   - setMacros
 #   - setLocalGroups
@@ -44,7 +46,7 @@ sub process {
     $self->{error} = $self->_subProcess(
         qw(smtpInit userDBInit passwordDBInit extractMailInfo
           getUser setSessionInfo setMacros setLocalGroups setGroups
-          storeMailSession sendConfirmationMail resetPassword)
+          storeMailSession sendConfirmationMail resetPassword sendPasswordMail)
     );
     return (
         (
@@ -139,16 +141,71 @@ sub sendConfirmationMail {
     # Build confirmation url
     my $url = $self->{mailUrl} . "?mail_token=" . $self->{id};
 
-    # Replace variables in mail body
-    $self->{mailBody} =~ s/\$url/$url/g;
-    $self->{mailBody} =~ s/\$(\w+)/$self->{sessionInfo}->{$1}/g;
+    # Build mail content
+    my $subject = $self->{mailConfirmSubject};
+    my $body;
+    my $html;
+    if ( $self->{mailConfirmBody} ) {
+
+        # We use a specific text message, no html
+        $body = $self->{mailConfirmBody};
+    }
+    else {
+
+        # Use HTML template
+        my $template = HTML::Template->new(
+            filename => $ENV{DOCUMENT_ROOT} . "skins/common/mail_confirm.tpl",
+            filter   => sub { $self->translate_template(@_) }
+        );
+        $body = $template->output();
+        $html = 1;
+    }
+
+    # Replace variables in body
+    $body =~ s/\$url/$url/g;
+    $body =~ s/\$(\w+)/$self->{sessionInfo}->{$1}/g;
 
     # Send mail
-    return PE_MAILERROR unless $self->send_mail( $self->{mail} );
+    return PE_MAILERROR
+      unless $self->send_mail( $self->{mail}, $subject, $body, $html );
 
     PE_MAILOK;
 }
 
+sub sendPasswordMail {
+    my ($self) = @_;
+
+    # Build mail content
+    my $subject = $self->{mailSubject};
+    my $body;
+    my $html;
+    if ( $self->{mailBody} ) {
+
+        # We use a specific text message, no html
+        $body = $self->{mailBody};
+    }
+    else {
+
+        # Use HTML template
+        my $template = HTML::Template->new(
+            filename => $ENV{DOCUMENT_ROOT} . "skins/common/mail_password.tpl",
+            filter   => sub { $self->translate_template(@_) }
+        );
+        $body = $template->output();
+        $html = 1;
+    }
+
+    # Replace variables in body
+    my $password = $self->{reset_password};
+    $body =~ s/\$password/$password/g;
+    $body =~ s/\$(\w+)/$self->{sessionInfo}->{$1}/g;
+
+    # Send mail
+    return PE_MAILERROR
+      unless $self->send_mail( $self->{mail}, $subject, $body, $html );
+
+    PE_MAILOK;
+}
 1;
 
 __END__

@@ -1,8 +1,6 @@
 #!/usr/bin/perl
 use HTML::Template;
 
-my $skin_dir = "__SKINDIR__";
-
 my $portal = Lemonldap::NG::Portal::SharedConf->new(
 
 	# PORTAL CUSTOMIZATION
@@ -11,6 +9,7 @@ my $portal = Lemonldap::NG::Portal::SharedConf->new(
 );
 
 my $skin       = $portal->{portalSkin};
+my $skin_dir   = $ENV{DOCUMENT_ROOT} . "skins";
 my $portal_url = $portal->{portal};
 my $logout_url = "$portal_url?logout=1";
 

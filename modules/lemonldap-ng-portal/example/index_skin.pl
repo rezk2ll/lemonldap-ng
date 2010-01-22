@@ -4,11 +4,6 @@ use Lemonldap::NG::Portal::SharedConf;
 use HTML::Template;
 use strict;
 
-# Menu configuration
-my $skin_dir    = "__SKINDIR__";
-my $appsxmlfile = "__APPSXMLFILE__";
-my $appsimgpath = "apps/";
-
 my $portal = Lemonldap::NG::Portal::SharedConf->new(
     {
 
@@ -149,7 +144,7 @@ my $portal = Lemonldap::NG::Portal::SharedConf->new(
 
 # Get skin value
 my $skin = $portal->{portalSkin};
-
+my $skin_dir = $ENV{DOCUMENT_ROOT} . "skins";
 my ( $skinfile, %templateParams );
 
 ####################
@@ -180,10 +175,6 @@ if ( $portal->process() ) {
         my $menu = Lemonldap::NG::Portal::Menu->new(
             {
                 portalObject => $portal,
-                apps         => {
-                    xmlfile => "$appsxmlfile",
-                    imgpath => "$appsimgpath",
-                },
                 modules => {
                     appslist => $portal->{portalDisplayAppslist},
                     password => $portal->{portalDisplayChangePassword},

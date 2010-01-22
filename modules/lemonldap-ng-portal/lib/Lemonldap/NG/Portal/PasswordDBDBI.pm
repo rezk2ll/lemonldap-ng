@@ -108,10 +108,10 @@ sub resetPassword {
 
     return PE_ERROR unless $result;
 
-    # Store password to display it to the user
+    # Store password to forward it to the user
     $self->{reset_password} = $password;
 
-    PE_PASSWORD_OK;
+    PE_OK;
 }
 
 1;

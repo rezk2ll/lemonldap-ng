@@ -78,7 +78,6 @@ sub new {
     #&Lemonldap::NG::Portal::Simple::getSessionInfo( $self->{portalObject} );
 
     # Default values
-    $self->{apps}->{xmlfile} ||= 'apps-list.xml';
     $self->{apps}->{imgpath} ||= 'apps/';
     $self->{modules}->{appslist} = 0
       unless defined $self->{modules}->{appslist};
@@ -463,7 +462,7 @@ sub _isCategoryEmpty {
     }
 
     # Test this category
-    if ( $apphash->{type} eq "category" ) {
+    if ( $apphash->{type} and $apphash->{type} eq "category" ) {
 
         # Temporary store 'options'
         my $tmp_options = $apphash->{options};

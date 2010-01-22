@@ -25,24 +25,32 @@ sub gen_password {
 
 ## @method int send_mail()
 # Send mail
-# @param mail mail
+# @param mail recipient address
+# @param subject mail subject
+# @param body mail body
+# @param html optional set content type to HTML
 # @return boolean result
 sub send_mail {
     my $self = shift;
     my $mail = shift;
+    my $subject = shift;
+    my $body = shift;
+    my $html = shift;
 
     $self->lmLog( "SMTP From " . $self->{mailFrom},       'debug' );
     $self->lmLog( "SMTP To " . $mail,                     'debug' );
-    $self->lmLog( "SMTP Subject " . $self->{mailSubject}, 'debug' );
-    $self->lmLog( "SMTP Body " . $self->{mailBody},       'debug' );
+    $self->lmLog( "SMTP Subject " . $subject, 'debug' );
+    $self->lmLog( "SMTP Body " . $body,       'debug' );
+    $self->lmLog( "SMTP HTML flag " . ($html?"on":"off"),       'debug' );
     eval {
         my $message = MIME::Lite->new(
             From    => $self->{mailFrom},
             To      => $mail,
-            Subject => $self->{mailSubject},
+            Subject => $subject,
             Type    => "TEXT",
-            Data    => $self->{mailBody},
+            Data    => $body,
         );
+	$message->attr("content-type" => "text/html; charset=utf-8") if $html;
         $self->{SMTPServer}
           ? $message->send( "smtp", $self->{SMTPServer} )
           : $message->send();

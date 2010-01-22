@@ -20,7 +20,7 @@ margin:20px;
 }
 
 a img,:link img,:visited img {
-border:none
+border:none;
 }
 
 a, a:link, a:visited {

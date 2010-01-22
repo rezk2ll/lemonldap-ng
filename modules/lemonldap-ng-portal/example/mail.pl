@@ -4,12 +4,11 @@ use Lemonldap::NG::Portal::MailReset;
 use HTML::Template;
 use strict;
 
-my $skin_dir = "__SKINDIR__";
-
 # Load portal module
 my $portal = Lemonldap::NG::Portal::MailReset->new();
 
 my $skin       = $portal->{portalSkin};
+my $skin_dir   = $ENV{DOCUMENT_ROOT} . "skins";
 my $portal_url = $portal->{portal};
 
 # Process
@@ -32,10 +31,6 @@ $template->param( AUTH_ERROR_TYPE => $portal->error_type );
 $template->param( DISPLAY_FORM => 1 )
   if ( $portal->{error} == PE_MAILFORMEMPTY
     or ( $portal->{error} == PE_BADCREDENTIALS and !$portal->{mail_token} ) );
-
-# Display password if change is OK
-$template->param( NEW_PASSWORD => $portal->{reset_password} )
-  if ( $portal->{error} == PE_PASSWORD_OK );
 
 print $portal->header('text/html; charset=utf8');
 print $template->output;

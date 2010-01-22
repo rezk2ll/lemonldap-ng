@@ -27,11 +27,6 @@
         </TMPL_IF>
 
         <div class="link">
-
-	        <TMPL_IF NAME="NEW_PASSWORD">
-		<h3><lang en="Your new password is" fr="Votre nouveau mot de passe est"/> <TMPL_VAR NAME="NEW_PASSWORD"></h3>	
-		</TMPL_IF>
-
                 <a href="<TMPL_VAR NAME="PORTAL_URL">">
                         <lang en="Go back to portal" fr="Retourner au portail" />
                 </a>
