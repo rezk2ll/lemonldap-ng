@@ -33,10 +33,10 @@
         <TMPL_IF NAME="DISPLAY_RESETPASSWORD">
                 <tr><td colspan="2">
                 <div class="buttons">
-                <a href="<TMPL_VAR NAME="MAIL_URL">" class="positive">
+		<button class="positive" tabindex="5" onclick="$(location).attr('href','<TMPL_VAR NAME="MAIL_URL">');return false">
                         <img src="skins/common/email.png" alt="" />
                         <lang en="Reset my password" fr="R&eacute;initialiser mon mot de passe"/>
-                </a>
+		</button>
                 </div></td></tr>
         	</TMPL_IF>
                 </table>
