@@ -80,6 +80,12 @@ sub modifyPassword {
     }
 
     $self->lmLog( "Password changed for $user", 'debug' );
+
+    # Update password in session if needed
+    my $infos;
+    $infos->{_password} = $self->{newpassword};
+    $self->updateSession($infos) if ( $self->{storePassword} );
+
     PE_PASSWORD_OK;
 }
 

@@ -52,11 +52,18 @@ sub modifyPassword {
     $self->lmLog( "Modify password request for " . $self->{dn}, 'debug' );
 
     # Call the modify password method
-    return $self->ldap->userModifyPassword(
+    my $code = $self->ldap->userModifyPassword(
         $self->{dn},              $self->{newpassword},
         $self->{confirmpassword}, $self->{oldpassword}
     );
-    PE_OK;
+
+    # Update password in session if needed
+    my $infos;
+    $infos->{_password} = $self->{newpassword};
+    $self->updateSession($infos)
+      if ( $self->{storePassword} and $code == PE_PASSWORD_OK );
+
+    return $code;
 }
 
 ## @apmethod int resetPassword()
