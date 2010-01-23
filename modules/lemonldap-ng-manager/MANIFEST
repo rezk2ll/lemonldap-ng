@@ -33,6 +33,9 @@ example/mrtg/lmng-mrtg
 example/mrtg/mrtg.cfg.example
 example/scripts/lmConfigEditor
 example/sessions.pl
+example/skins/default/accordion.css
+example/skins/default/application_side_list.png
+example/skins/default/application_side_tree.png
 example/skins/default/arrow_refresh.png
 example/skins/default/collapsable-last.gif
 example/skins/default/collapsable.gif
@@ -61,6 +64,7 @@ example/skins/default/images/ui-icons_ffffff_256x240.png
 example/skins/default/jquery-1.3.2.min.js
 example/skins/default/jquery-ui-1.7.2.custom.css
 example/skins/default/jquery-ui-1.7.2.custom.min.js
+example/skins/default/jquery.cookie.js
 example/skins/default/leaf-last.gif
 example/skins/default/leaf.gif
 example/skins/default/lemonldap-ng.ico
@@ -79,6 +83,7 @@ example/skins/default/plus.gif
 example/skins/default/root.gif
 example/skins/default/spacer.gif
 example/skins/default/spinner.gif
+example/skins/default/tree.css
 example/skins/default/tree.js
 example/skins/default/tree_line.gif
 example/skins/default/vframe.png

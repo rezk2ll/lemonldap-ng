@@ -128,6 +128,7 @@ all:	configure common handler manager portal
 #
 # Perl libraries configuration
 #
+
 configure:	common_conf handler_conf portal_conf manager_conf
 
 common_conf:
@@ -448,6 +449,14 @@ debian-dist:	dist
 
 zip-dist:
 	$(MAKE) dist "COMPRESS=zip -r" COMPRESSSUFFIX=zip
+
+manifest:   configure
+	@for i in ${SRCCOMMONDIR} ${SRCHANDLERDIR} ${SRCPORTALDIR} ${SRCMANAGERDIR}; do \
+		cd $$i; \
+		make manifest; \
+		rm -vf MANIFEST.*; \
+		cd -; \
+	done
 
 cpan:	clean configure common_cpan handler_cpan portal_cpan manager_cpan
 	@for i in Common Portal Handler Manager; do \
