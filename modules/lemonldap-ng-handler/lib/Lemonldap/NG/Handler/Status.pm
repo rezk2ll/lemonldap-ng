@@ -6,6 +6,7 @@ package Lemonldap::NG::Handler::Status;
 use strict;
 use POSIX;
 use Data::Dumper;
+
 #inherits Cache::Cache
 
 our $VERSION  = "0.21";
@@ -14,6 +15,8 @@ our $status   = {};
 our $activity = [];
 our $start    = int( time / 60 );
 use constant MN_COUNT => 5;
+
+our $page_title = 'Lemonldap::NG statistics';
 
 ## @fn private hashRef portalTab()
 # @return Constant hash used to convert error codes into string.
@@ -112,7 +115,6 @@ sub run {
             %$args = split( /[=&]/, $tmp ) if ($tmp);
             &head;
 
-            #print Dumper($args),&end;next;
             my ( $c, $m, $u );
             while ( my ( $user, $v ) = each( %{ $status->{user} } ) ) {
                 $u++ unless ( $user =~ /^\d+\.\d+\.\d+\.\d+$/ );
@@ -130,11 +132,15 @@ sub run {
                 $m->{$_} = sprintf( "%.2f", $m->{$_} / MN_COUNT );
                 $m->{$_} = int( $m->{$_} ) if ( $m->{$_} > 99 );
             }
+
+            # Raw values (Dump)
             if ( $args->{'dump'} ) {
                 print "<div id=\"dump\"><pre>\n";
                 print Dumper( $status, $activity, $count );
                 print "</pre></div>\n";
+                &end;
             }
+            else {
 
             # Total requests
             print "<h2>Total</h2>\n<div id=\"total\"><pre>\n";
@@ -155,24 +161,32 @@ sub run {
 
             # Local cache
             my @t =
-              $refLocalStorage->get_keys( $localStorageOptions->{namespace} );
+                  $refLocalStorage->get_keys(
+                    $localStorageOptions->{namespace} );
             print "<div id=\"cache\"><p>\nLocal Cache : " . @t
               . " objects\n</p></div>\n";
+
+                # Uptime
+                print "<div id=\"up\"><p>\nServer up for : "
+                  . &timeUp($mn)
+                  . "\n</p></div>\n";
 
             # Top uri
             if ( $args->{top} ) {
                 print "<hr/>\n";
-                $args->{categories} ||= 'REJECT,PORTAL_FIRSTACCESS,LOGOUT,OK';
+                    $args->{categories} ||=
+                      'REJECT,PORTAL_FIRSTACCESS,LOGOUT,OK';
 
                 # Vhost activity
                 print
-                  "<h2>Virtual Host activity</h2>\n<div id=\"vhost\"><pre>\n";
+"<h2>Virtual Host activity</h2>\n<div id=\"vhost\"><pre>\n";
                 foreach (
                     sort { $count->{vhost}->{$b} <=> $count->{vhost}->{$a} }
                     keys %{ $count->{vhost} }
                   )
                 {
-                    print sprintf( "%-40s : %6d\n", $_, $count->{vhost}->{$_} );
+                        print
+                          sprintf( "%-40s : %6d\n", $_, $count->{vhost}->{$_} );
                 }
                 print "\n</pre></div>\n";
 
@@ -187,26 +201,26 @@ sub run {
                     last if ( $i == $args->{top} );
                     last unless ( $count->{uri}->{$_} );
                     $i++;
-                    print sprintf( "%-80s : %6d\n", $_, $count->{uri}->{$_} );
+                        print
+                          sprintf( "%-80s : %6d\n", $_, $count->{uri}->{$_} );
                 }
                 print "\n</pre></div>\n";
 
                 # Top by category
                 print
-"<table border=\"1\" width=\"100%\"><tr><th>Code</th><th>Top</ht></tr>\n";
+"<table class=\"topByCat\"><tr><th style=\"width:20%\">Code</th><th>Top</th></tr>\n";
                 foreach my $cat ( split /,/, $args->{categories} ) {
                     print
-"<tr><td><pre>$cat</pre></td><td nowrap>\n<div id=\"$cat\">\n";
+                          "<tr><td>$cat</td><td nowrap>\n<div id=\"$cat\">\n";
                     topByCat( $cat, $args->{top} );
                     print "</div>\n</td></tr>";
                 }
                 print "</table>\n";
             }
-            print "<div id=\"up\"><p>\nServer up for : "
-              . &timeUp($mn)
-              . "\n</p></div>\n";
+
             &end;
         }
+    }
     }
 }
 
@@ -253,11 +267,76 @@ sub head {
          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
 <head>
-<title>Lemonldap::NG Status</title>
+<title>$page_title</title>
+<style type="text/css">
+<!--
+body{
+	background: #000;
+	color:#fff;
+	padding:10px 50px;
+	font-family:sans-serif;
+}
+h1 {
+	margin:5px 20px;
+}
+h2 {
+	margin:30px 0 0 0;
+	padding:0 10px;
+	border-left:20px solid orange;
+	line-height:20px;
+}
+hr {
+	height:1px;
+	background-color:orange;
+	margin:10px 0;
+	border:0;
+}
+a {
+	color:orange;
+	text-decoration:none;
+	font-weight:bold;
+}
+#footer {
+	text-align:center;
+}
+#footer a {
+	margin-left:10px;
+	padding:5px;
+	border-bottom:1px solid #fff;
+}
+#footer a:hover {
+	border-color:orange;
+}
+table.topByCat {
+	table-layout:fixed;
+	border-collapse:collapse;
+	border:1px solid #fff;
+	width:100%;
+}
+table.topByCat td, table.topByCat th {
+	padding:5px;
+	border:1px solid #fff;
+}
+table.topByCat th {
+	color:orange;
+	text-align:center;
+}
+-->
+</style>
 <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
 </head>
 <body>
-<h1>Lemonldap::NG Status</h1>
+<table>
+<tr>
+<td style="width:30px;height:30px;background:orange;">&nbsp;</td>
+<td>&nbsp;</td>
+<td rowspan=2><h1>$page_title</h1></td>
+</tr>
+</tr>
+<td>&nbsp;</td>
+<td style="width:30px;height:30px;background:orange;">&nbsp;</td>
+</tr>
+</table>
 EOF
 }
 
@@ -266,18 +345,23 @@ EOF
 sub end {
     print <<"EOF";
 <hr/>
+<div id="footer">
 <script type="text/javascript" language="Javascript">
   //<!--
   var a = document.location.href;
   a=a.replace(/\\?.*\$/,'');
+  document.write('<a href="'+a+'">Standard view</a>');
   document.write('<a href="'+a+'?top=10&categories=REJECT,PORTAL_FIRSTACCESS,LOGOUT,OK">Top 10</a>');
+  document.write('<a href="'+a+'?dump=1">Raw results</a>');
   //-->
 </script>
+</div>
 </body>
 </html>
 END
 EOF
 }
+
 1;
 __END__
 
@@ -310,7 +394,7 @@ Create your own package (example using a central configuration database):
         dbiUser             => "lemonldap",
         dbiPassword          => "password",
     }
-    # ... See Lemonldap::N::Handler
+    # ... See Lemonldap::NG::Handler
   } );
 
 =head2 Configure Apache
