@@ -454,6 +454,9 @@ sub updateSession {
             $h->{$_} = $infos->{$_};
         }
 
+        # Store updateTime
+        $h->{updateTime} = &POSIX::strftime( "%Y%m%d%H%M%S", localtime() );
+
         untie %$h;
     }
 
@@ -743,7 +746,7 @@ sub checkNotifBack {
 # what to do with existing sessions ?
 #       - nothing: user is authenticated and process returns true (default)
 #       - delete and create a new session (not implemented)
-#       - re-authentication (set existingSession => sub{PE_OK})
+#       - re-authentication (set portalForceAuthn to 1)
 #@param $id optional value of the session-id else cookies are examinated.
 #@return Lemonldap::NG::Portal constant
 sub controlExistingSession {
@@ -805,6 +808,41 @@ sub controlExistingSession {
 # - PE_OK: process() return false to display the form
 #@return Lemonldap::NG::Portal constant
 sub existingSession {
+    my $self = shift;
+
+    # Check portalForceAuthn parameter
+    if ( $self->{portalForceAuthn} ) {
+        my $referer = $self->referer();
+        my $id      = $self->{id};
+
+    # If coming from the portal, follow the normal process to update the session
+        if ( $referer ? ( $referer =~ m#$self->{portal}#i ) : 0 ) {
+            $self->lmLog( "Portal referer detected for session $id", 'debug' );
+
+            # Set the user connected to retrieve updated information
+            $self->{user} = $self->{sessionInfo}->{user};
+
+            # Set flag to update session timestamp
+            $self->{updateSession} = 1;
+
+            # Process
+            $self->{error} = $self->_subProcess(
+                qw(issuerDBInit
+                  issuerForUnAuthUser authInit userDBInit getUser
+                  setAuthSessionInfo setSessionInfo
+                  setMacros setLocalGroups setGroups authenticate
+                  store buildCookie checkNotification issuerForAuthUser
+                  )
+            );
+            return $self->{error} || PE_DONE;
+        }
+        else {
+            $self->lmLog( "Force reauthentication for session $id", 'debug' );
+            return PE_OK;
+        }
+    }
+
+    # Else return PE_DONE
     PE_DONE;
 }
 
@@ -852,15 +890,27 @@ sub setSessionInfo {
         'debug'
     );
 
-    # Store time
+    if ( $self->{updateSession} ) {
+        $self->{sessionInfo}->{updateTime} =
+          &POSIX::strftime( "%Y%m%d%H%M%S", localtime() );
+        $self->lmLog(
+            "Store updateTime: "
+              . $self->{sessionInfo}->{updateTime}
+              . " in session",
+            'debug'
+        );
+    }
+    else {
     $self->{sessionInfo}->{_utime} = time();
     $self->{sessionInfo}->{startTime} =
       &POSIX::strftime( "%Y%m%d%H%M%S", localtime() );
     $self->lmLog(
-        "Store startTime: " . $self->{sessionInfo}->{startTime} . " in session",
+            "Store startTime: "
+              . $self->{sessionInfo}->{startTime}
+              . " in session",
         'debug'
     );
-
+    }
     return $self->SUPER::setSessionInfo();
 }
 
@@ -1052,6 +1102,8 @@ sub store {
 
     # Now, user is authenticated => inform Apache
     $self->setApacheUser( $self->{sessionInfo}->{ $self->{whatToTrace} } );
+
+    # Create second session for unsecure cookie
     if ( $self->{securedCookie} == 2 ) {
         my $h2 = $self->getApacheSession(undef);
         $h2->{$_} = $self->{sessionInfo}->{$_}
@@ -1060,10 +1112,14 @@ sub store {
         $h2->{_httpSessionType} = 1;
         untie %$h2;
     }
-    my $h = $self->getApacheSession(undef) or return PE_APACHESESSIONERROR;
+
+    # Main session
+    my $h = $self->getApacheSession( $self->{id} )
+      or return PE_APACHESESSIONERROR;
     $h->{$_} = $self->{sessionInfo}->{$_}
       foreach ( keys %{ $self->{sessionInfo} } );
     untie %$h;
+
     PE_OK;
 }
 
