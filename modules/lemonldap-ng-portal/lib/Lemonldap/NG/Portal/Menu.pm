@@ -99,9 +99,8 @@ sub new {
       $self->{portalObject}->{sessionInfo}->{'_user'};
 
 # Password modification functions (TODO merge Menu.pm in Simple.pm to inherits those functions)
-    if ( exists $self->{portalObject}->{passwordDB}
-        and $self->{portalObject}->{passwordDB} =~ /DBI/i )
-    {
+    if ( exists $self->{portalObject}->{passwordDB} ) {
+        if ( $self->{portalObject}->{passwordDB} =~ /DBI/i ) {
         use Lemonldap::NG::Portal::PasswordDBDBI;    #inherits
         use Lemonldap::NG::Portal::_DBI
           ;    #link protected ldap Object used to change passwords only
@@ -109,6 +108,14 @@ sub new {
           *Lemonldap::NG::Portal::PasswordDBDBI::modifyPassword;
         *_passwordDBInit =
           *Lemonldap::NG::Portal::PasswordDBDBI::passwordDBInit;
+    }
+        if ( $self->{portalObject}->{passwordDB} =~ /Null/i ) {
+            use Lemonldap::NG::Portal::PasswordDBNull;    #inherits
+            *_modifyPassword =
+              *Lemonldap::NG::Portal::PasswordDBNull::modifyPassword;
+            *_passwordDBInit =
+              *Lemonldap::NG::Portal::PasswordDBNull::passwordDBInit;
+        }
     }
     else {
 
@@ -351,7 +358,8 @@ sub _displayConfDescription {
         my $appuri  = $apphash->{options}->{uri}  || "";
         my $appdesc = $apphash->{options}->{description};
         my $applogofile = $apphash->{options}->{logo};
-        my $applogo = $self->{apps}->{imgpath} . $applogofile if $applogofile;
+        my $applogo     = $self->{apps}->{imgpath} . $applogofile
+          if $applogofile;
 
         # Display application description
         $html .= "<div id=\"$appid\" class=\"appsdesc\">\n";
@@ -426,7 +434,8 @@ sub _filterHash {
             }
 
             # Check rights
-            my $appdisplay = $apphash->{$key}->{options}->{display} || "auto";
+            my $appdisplay = $apphash->{$key}->{options}->{display}
+              || "auto";
             my $appuri = $apphash->{$key}->{options}->{uri};
 
             # Remove if display is "no"
@@ -500,7 +509,8 @@ sub _grant {
     my ( $protocol, $vhost, $port );
     ( $protocol, $vhost, $port, $path ) = ( $1, $2, $3, $4 );
     $path ||= '/';
-    $self->_compileRules() if ( $cfgNum != $self->{portalObject}->{cfgNum} );
+    $self->_compileRules()
+      if ( $cfgNum != $self->{portalObject}->{cfgNum} );
     return -1 unless ( defined( $defaultCondition->{$vhost} ) );
 
     if ( defined $locationRegexp->{$vhost} ) {    # Not just a default rule
