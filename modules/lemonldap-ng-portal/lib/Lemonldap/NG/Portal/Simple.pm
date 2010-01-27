@@ -815,9 +815,12 @@ sub existingSession {
         my $referer = $self->referer();
         my $id      = $self->{id};
 
-    # If coming from the portal, follow the normal process to update the session
+     # If coming from the portal follow the normal process to update the session
         if ( $referer ? ( $referer =~ m#$self->{portal}#i ) : 0 ) {
             $self->lmLog( "Portal referer detected for session $id", 'debug' );
+
+            # Allow password modification from menu
+            return PE_DONE if $self->param('newpassword');
 
             # Set the user connected to retrieve updated information
             $self->{user} = $self->{sessionInfo}->{user};
@@ -827,12 +830,10 @@ sub existingSession {
 
             # Process
             $self->{error} = $self->_subProcess(
-                qw(issuerDBInit
-                  issuerForUnAuthUser authInit userDBInit getUser
-                  setAuthSessionInfo setSessionInfo
+                qw(issuerDBInit issuerForUnAuthUser authInit
+                  userDBInit getUser setAuthSessionInfo setSessionInfo
                   setMacros setLocalGroups setGroups authenticate
-                  store buildCookie checkNotification issuerForAuthUser
-                  )
+                  store checkNotification issuerForAuthUser)
             );
             return $self->{error} || PE_DONE;
         }
