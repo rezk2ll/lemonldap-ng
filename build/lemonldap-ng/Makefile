@@ -277,7 +277,6 @@ install_manager_site:	install_conf_dir
 	done
 	@find ${RSESSIONSEXPLORERDIR} -type l -name images -delete
 	@cp -pR --remove-destination ${SRCMANAGERDIR}/example/index.pl ${RMANAGERDIR}
-	@$(PERL) -i -pe 's#__MANAGERDIR__#$(MANAGERDIR)#' ${RMANAGERDIR}/index.pl
 	@cp -pR --remove-destination ${SRCMANAGERDIR}/example/skins/* $(RMANAGERSKINSDIR)
 	@if [ "$(MANAGERDIR)/skins/" != "$(MANAGERSKINSDIR)/" ]; then \
 		for skin in $$(ls lemonldap-ng-manager/example/skins/); do \
@@ -567,6 +566,8 @@ debian-diff:
 	@$(DIFF) lemonldap-ng-manager/lib/Lemonldap/NG/Manager /usr/share/perl5/Lemonldap/NG/Manager ||true
 	@$(DIFF) lemonldap-ng-manager/lib/Lemonldap/NG/Manager.pm /usr/share/perl5/Lemonldap/NG/Manager.pm ||true
 	@$(DIFF) lemonldap-ng-manager/example/images /usr/share/lemonldap-ng/sessions-explorer-imgs ||true
+	@$(DIFF) lemonldap-ng-manager/example/index.pl /var/lib/lemonldap-ng/manager/index.pl ||true
+	@$(DIFF) lemonldap-ng-manager/example/sessions.pl /var/lib/lemonldap-ng/manager/sessions.pl ||true
 	@for i in $(MANAGERSKINS); do \
 		$(DIFF) -x 'jquery*' lemonldap-ng-manager/example/skins/$$i /usr/share/lemonldap-ng/manager-skins/$$i; \
 	done ||true
@@ -593,6 +594,6 @@ default-diff:
 	@$(DIFF) lemonldap-ng-manager/lib/Lemonldap/NG/Manager.pm /usr/local/share/perl/5.10.0/Lemonldap/NG/Manager.pm ||true
 	@$(DIFF) lemonldap-ng-manager/example/images $(LMPREFIX)/htdocs/manager/images ||true
 	@$(DIFF) lemonldap-ng-manager/example/skins $(LMPREFIX)/htdocs/manager/skins ||true
-	@$(DIFF) -I '$main_dir' lemonldap-ng-manager/example/index.pl $(LMPREFIX)/htdocs/manager/index.pl ||true
+	@$(DIFF) lemonldap-ng-manager/example/index.pl $(LMPREFIX)/htdocs/manager/index.pl ||true
 	@$(DIFF) lemonldap-ng-manager/example/sessions.pl $(LMPREFIX)/htdocs/manager/sessions.pl ||true
 

@@ -3,8 +3,6 @@
 use strict;
 use Lemonldap::NG::Manager;
 use HTML::Template;
-our $skin_dir='skins';
-our $main_dir='__MANAGERDIR__';
 
 my $manager = new Lemonldap::NG::Manager(
     {
@@ -37,6 +35,8 @@ my $manager = new Lemonldap::NG::Manager(
 ) or Lemonldap::NG::Common::CGI->abort('Unable to start manager');
 
 our $skin = $manager->{managerSkin};
+our $skin_dir ='skins';
+our $main_dir = $ENV{DOCUMENT_ROOT};
 
 my $template = HTML::Template->new(
     filename          => "$main_dir/$skin_dir/$skin/manager.tpl",
