@@ -857,22 +857,98 @@ sub existingSession {
 # * set $self->{user}
 # * authenticate user if possible (or do it in authenticate())
 
-# userDBInit(): must be implemented in UserDB* module
+## @apmethod int issuerDBInit()
+# Set _issuerDB
+# call issuerDBInit in issuerDB* module
+# @return Lemonldap::NG::Portal constant
+sub issuerDBInit {
+    my $self = shift;
+    my $issuerDB;
+
+    # Get the current authentication module
+    if ( $self->{_multi} ) {
+
+        # TODO - get the current module
+        $issuerDB = "Multi";
+    }
+    else {
+        $issuerDB = $self->{issuerDB};
+    }
+
+    $self->{sessionInfo}->{_issuerDB} = $issuerDB;
+
+    return $self->SUPER::issuerDBInit();
+}
 
 # getUser(): must be implemented in UserDB* module
 
-# setAuthSessionInfo(): must be implemented in Auth* module:
-# * store exported datas in $self->{sessionInfo}
+## @apmethod int setAuthSessionInfo()
+# Set _auth
+# call setAuthSessionInfo in Auth* module
+#@return Lemonldap::NG::Portal constant
+sub setAuthSessionInfo {
+    my $self = shift;
+    my $auth;
 
-# passwordDBInit(): must be implemented in PasswordDB* module
+    # Get the current authentication module
+    if ( $self->{_multi} ) {
+
+        # TODO - get the current module
+        $auth = "Multi";
+    }
+    else {
+        $auth = $self->{authentication};
+    }
+
+    $self->{sessionInfo}->{_auth} = $auth;
+
+    return $self->SUPER::setAuthSessionInfo();
+}
+
+## @apmethod int passwordDBInit()
+# Set _passwordDB
+# call passwordDBInit in passwordDB* module
+# @return Lemonldap::NG::Portal constant
+sub passwordDBInit {
+    my $self = shift;
+    my $passwordDB;
+
+    # Get the current authentication module
+    if ( $self->{_multi} ) {
+
+        # TODO - get the current module
+        $passwordDB = "Multi";
+    }
+    else {
+        $passwordDB = $self->{passwordDB};
+    }
+
+    $self->{sessionInfo}->{_passwordDB} = $passwordDB;
+
+    return $self->SUPER::passwordDBInit();
+}
 
 # modifyPassword(): must be implemented in PasswordDB* module
 
 ##@apmethod int setSessionInfo()
-# Call setSessionInfo() in User* module and set ipAddr and startTime
+# Set ipAddr, xForwardedForAddr, startTime, updateTime, _utime and _userDB
+# Call setSessionInfo() in UserDB* module
 #@return Lemonldap::NG::Portal constant
 sub setSessionInfo {
     my $self = shift;
+    my $userDB;
+
+    # Get the current userDB module
+    if ( $self->{_multi} ) {
+
+        # TODO - get the current module
+        $userDB = "Multi";
+    }
+    else {
+        $userDB = $self->{userDB};
+    }
+
+    $self->{sessionInfo}->{_userDB} = $userDB;
 
     # Store IP address
     $self->{sessionInfo}->{ipAddr} = $ENV{REMOTE_ADDR};
