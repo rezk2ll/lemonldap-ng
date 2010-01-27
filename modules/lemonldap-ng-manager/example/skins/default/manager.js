@@ -21,6 +21,9 @@ $(document).ready(function(){
 		$("#help_content").slideToggle('fast');
 	});
 
+	/* Load default help */
+	$('#help_content').load(scriptname+'?help=default');
+
 	/* Simple Tree */
 	simpleTreeCollection = $(".simpleTree").simpleTree({
 		autoclose:treeautoclose,
@@ -211,6 +214,8 @@ function vhost(id){
 	$('#bdelvh').show();
 }
 function cfgDatas(id){
+	var span=$('#'+id+' span');
+	$('#help_content').load(scriptname+'?help='+span.attr('help'));
 	display('cfgDatas','');
 	getCfgAttributes();
 }

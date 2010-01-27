@@ -27,7 +27,7 @@ sub import {
     $l ||= "en";
     foreach $h (
         qw(authParams cookieName domain groups ldap macros storage timeout vars
-        whatToTrace virtualHosts portalForceAuthn)
+        whatToTrace virtualHosts portalForceAuthn default)
       )
     {
         *{"${caller_package}::help_$h"} = \&{"help_${h}_$l"};
@@ -688,5 +688,39 @@ sub help_portalForceAuthn_fr {
 <p>L'activation de cette option forcera l'utilisateur à s'authentifier de nouveau et sa session sera alors mise à jour.</p>
 <p class="info">L'identifiant et la date de création de la session ne sont pas modifiés. La date de mise à jour est indiquée dans le champ <tt>updateDate</tt>. Les autres inforations son mises à jour.</p>
 <p class="default">Valeur par défaut : 0</p>
+EOT
+}
+
+## default
+# en
+sub help_default_en {
+    print <<EOT;
+<h3>Welcome on configuration manager</h3>
+<p>Parameters are listed in the configuration tree under different categories:
+<ul>
+<li>General parameters</li>
+<li>Variables</li>
+<li>Virtual hosts</li>
+</ul>
+</p>
+<p>Select a category to display parameters and sub categories.</p>
+<p>Click on <tt>Save</tt> button to register modifications.</p>
+<p class="info">This interface concerns the global configuration. All parameters can be overriden in the local configuration file named <tt>lemonldap-ng.ini</tt>.</p>
+EOT
+}
+
+# fr
+sub help_default_fr {
+	print <<EOT;
+<h3>Bienvenue sur le gestionnaire de configuration</h3>
+<p>Les paramètres sont listés dans l'arbre de configuration sous différentes catégories :
+<ul>
+<li>Paramètres généraux</li>
+<li>Variables</li>
+<li>Hôtes virtuels</li>
+</ul>
+<p>Chosir une catégorie pour afficher les paramètres et sous catégories.</p>
+<p>Cliquer sur le bouton <tt>Sauvegarder</tt> pour enregistrer les modifications.</p>
+<p class="info">Cette interface concerne la configuration globale. Tous les paramètres peuvent être surchargés dans le fichier local de configuration nommé <tt>lemonldap-ng.ini</tt>.</p>
 EOT
 }
