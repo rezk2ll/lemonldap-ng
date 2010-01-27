@@ -70,7 +70,7 @@
      <lang en="Apply" fr="Appliquer" />
     </button>
 
-    <button id="bnewvh" style="display:none;" onclick="newVh('test25.example.com');return false;" class="ui-state-default ui-corner-all">
+    <button id="bnewvh" style="display:none;" onclick="newVh();return false;" class="ui-state-default ui-corner-all">
      <lang en="New virtual host" fr="Nouvel hôte virtuel" />
     </button>
 
