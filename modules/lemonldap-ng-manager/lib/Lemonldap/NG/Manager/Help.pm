@@ -27,7 +27,7 @@ sub import {
     $l ||= "en";
     foreach $h (
         qw(authParams cookieName domain groups ldap macros storage timeout vars
-        whatToTrace virtualHosts)
+        whatToTrace virtualHosts portalForceAuthn)
       )
     {
         *{"${caller_package}::help_$h"} = \&{"help_${h}_$l"};
@@ -665,5 +665,28 @@ sub help_whatToTrace_fr {
 &ecirc;tre utilis&eacute;e pour alimenter les journaux Apache des applications
 prot&eacute;g&eacute;es (n'oubliez pas le "\$"). Par d&eacute;faut&nbsp;:
 \$uid</p>
+EOT
+}
+
+## portalForceAuthn
+# en
+sub help_portalForceAuthn_en {
+    print <<EOT;
+<h3>Force authentication on portal</h3>
+<p>By default, once user is authenticated on portal, when he comes back to it, the authentication is kept and the menu is displayed.</p>
+<p>Enabling this option will force the user to reauthenticate, and its session will be updated.</p>
+<p class="info">ID and start date of the session are not modified. The update date is added in field <tt>updateDate</tt>.Other informations are updated.</p>
+<p class="default">Default value: 0</p>
+EOT
+}
+
+#fr
+sub help_portalForceAuthn_fr {
+    print <<EOT;
+<h3>Forcer l'authentification sur le portail</h3>
+<p>Par défaut, lorsqu'un utilisateur est authentifié sur le portail, lorsqu'il y revient son authentification est conservée et le menu est affiché.</p>
+<p>L'activation de cette option forcera l'utilisateur à s'authentifier de nouveau et sa session sera alors mise à jour.</p>
+<p class="info">L'identifiant et la date de création de la session ne sont pas modifiés. La date de mise à jour est indiquée dans le champ <tt>updateDate</tt>. Les autres inforations son mises à jour.</p>
+<p class="default">Valeur par défaut : 0</p>
 EOT
 }

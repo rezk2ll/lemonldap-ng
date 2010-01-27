@@ -95,6 +95,7 @@ sub en {
         portalDisplayChangePassword => 'Display password change',
         portalDisplayLogout         => 'Display logout',
         portalDisplayResetPassword  => 'Display reset password',
+        portalForceAuthn            => 'Force authentication',
         portalOpenLinkInNewWindow   => 'New window',
         portalParams                => 'Portal',
         portalRequireOldPassword    => 'Require old password',
@@ -177,6 +178,7 @@ sub fr {
         portalDisplayLogout         => 'Affichage déconnexion',
         portalDisplayResetPassword =>
           'Affichage réinitialisation de mot de passe',
+        portalForceAuthn          => 'Authentication forcée',
         portalOpenLinkInNewWindow => 'Nouvelle fenêtre',
         portalParams              => 'Portail',
         portalRequireOldPassword  => 'Ancien mot de passe requis',

@@ -165,7 +165,7 @@ sub struct {
             # OTHER PARAMETERS
             advancedParams => {
                 _nodes => [
-                    qw(Soap exportedAttr trustedDomains https notifications passwordManagement userControl)
+                    qw(Soap exportedAttr trustedDomains https notifications passwordManagement userControl portalForceAuthn)
                 ],
                 Soap          => 'bool:/Soap',
                 https         => 'bool:/https',
@@ -195,6 +195,8 @@ sub struct {
                 },
                 trustedDomains => 'text:/trustedDomains',
                 userControl    => 'text:/userControl:userControl:text',
+                portalForceAuthn =>
+                  'bool:/portalForceAuthn:portalForceAuthn:bool',
             }
         },
 
@@ -209,13 +211,13 @@ sub struct {
                 # EXPORTED ATTRIBUTES
                 exportedVars => {
                     _nodes => ['hash:/exportedVars:vars:btext'],
-                    _js    => 'hashRoot'
+                _js    => 'hashRoot',
                 },
 
                 # MACROS
                 macros => {
                     _nodes => ['hash:/macros:macros:btext'],
-                    _js => 'hashRoot'
+                _js    => 'hashRoot',
                 },
 
                 # GROUPS
@@ -414,10 +416,12 @@ sub testStruct {
             test    => qr/^https?:\/\/\S+$/,
             msgFail => 'Bad portal value',
         },
+        portalAutocomplete          => $boolean,
         portalDisplayAppslist       => { test => $perlExpr, },
         portalDisplayChangePassword => { test => $perlExpr, },
         portalDisplayLogout         => { test => $perlExpr, },
         portalDisplayResetPassword  => $boolean,
+        portalForceAuthn            => $boolean,
         portalOpenLinkInNewWindow   => $boolean,
         portalParams                => $testNotDefined,
         portalRequireOldPassword    => $boolean,
@@ -427,7 +431,7 @@ sub testStruct {
         },
         portalUserAttr => {
             test    => qr/\w+$/,
-            msgFail => 'Bad skin name',
+            msgFail => 'Unvalid session field',
         },
         protection => {
             keyTest => qr/^(?:none|authentificate|manager|)$/,
@@ -498,6 +502,8 @@ sub defaultConf {
         notifyDeleted      => '1',
         notifyOther        => '1',
         portal             => 'http://auth.example.com/',
+	portalSkin         => 'pastel',
+	portalUserAttr     => '_user',
         protection         => 'none',
         securedCookie      => '0',
         singleSession      => '0',
