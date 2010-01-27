@@ -259,8 +259,6 @@ function reloadAuthParams() {
 	});
 }
 var count=0;
-var text4newKey='Key';
-var value4newKey='Value';
 function newId(c){
 	if(!c){return false;}
 	count++;
@@ -304,6 +302,9 @@ function delKey(){
 	$('#'+currentId).remove();
 }
 function newVh(name){
+	// Prompt for virtual host name
+	var name = prompt(text4newVhost,'test25.example.com');
+	if(!name){return false;}
 	var vhId='li_'+myB64('/locationRules/'+name);
 	simpleTreeCollection[0].newAjaxNodeIn($('#li_L3ZpcnR1YWxIb3N0cw2'),vhId,name,scriptname+'?type=new&node=virtualHosts/'+name,function(d,s){
 		$('>span',s).attr('name',name).attr('help','default').attr('id','text_'+vhId).attr('onclick','vhost(\''+vhId+'\')');
