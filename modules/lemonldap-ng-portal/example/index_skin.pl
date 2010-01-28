@@ -21,113 +21,6 @@ my $portal = Lemonldap::NG::Portal::SharedConf->new(
         # Note that YOU HAVE TO SET configStorage here if you've declared this
         # portal as SOAP configuration server in the manager
 
-        # PORTAL CUSTOMIZATION
-        # * Skin
-        # portalSkin => 'pastel',
-        # * Modules displayed
-        # portalDisplayLogout => 1,
-        # portalDisplayResetPassword => 1,
-        # portalDisplayChangePassword => 1,
-        # portalDisplayAppslist => 1,
-        # * Allow password autocompletion
-        #   (passwords stored in user web browsers)
-        # portalAutocomplete => "on",
-        # * Require the old password when changing password
-        # portalRequireOldPassword => 1,
-        # * Attribute displayed as connected user
-        # portalUserAttr => "mail",
-
-        # LOG
-        # By default, all is logged in Apache file. To log user actions by
-        # syslog, just set syslog facility here:
-        #syslog => 'auth',
-
-        # SOAP FUNCTIONS
-        # Remove comment to activate SOAP Functions getCookies(user,pwd) and
-        # error(language, code)
-        Soap => 1,
-
-        # Note that getAttibutes() will be activated but on a different URI
-        # (http://auth.example.com/index.pl/sessions)
-        # You can also restrict attributes and macros exported by getAttributes
-        #exportedAttr => 'uid mail',
-
-        # PASSWORD POLICY
-        # Remove comment to use LDAP Password Policy
-        #ldapPpolicyControl => 1,
-
-        # Remove comment to store password in session (use with caution)
-        #storePassword      => 1,
-
-        # Remove comment to use LDAP modify password extension
-        # (beware of compatibility with LDAP Password Policy)
-        #ldapSetPassword    => 1,
-
-        # RESET PASSWORD BY MAIL
-        # SMTP server (default to localhost), set to '' to use default mail
-        # service
-        #SMTPServer => "localhost",
-
-        # Mail From address
-        #mailFrom => "noreply@test.com",
-
-        # Mail subject
-        #mailSubject => "Password reset",
-
-        # Mail body (can use $password for generated password, and other session
-        # infos, like $cn)
-        #mailBody => 'Hello $cn,\n\nYour new password is $password',
-
-        # LDAP filter to use
-        #mailLDAPFilter => '(&(mail=$mail)(objectClass=inetOrgPerson))',
-
-        # Random regexp
-        #randomPasswordRegexp => '[A-Z]{3}[a-z]{5}.\d{2}',
-
-        # LDAP GROUPS
-        # Set the base DN of your groups branch
-        #ldapGroupBase => 'ou=groups,dc=example,dc=com',
-        # Objectclass used by groups
-        #ldapGroupObjectClass => 'groupOfUniqueNames',
-        # Attribute used by groups to store member
-        #ldapGroupAttributeName => 'uniqueMember',
-        # Attribute used by user to link to groups
-        #ldapGroupAttributeNameUser => 'dn',
-        # Attribute used to identify a group. The group will be displayed as
-        # cn|mail|status, where cn, mail and status will be replaced by their
-        # values.
-        #ldapGroupAttributeNameSearch => ['cn'],
-
-        # CUSTOM FUNCTION
-        # If you want to create customFunctions in rules, declare them here:
-        #customFunctions    => 'function1 function2',
-        #customFunctions    => 'Package::func1 Package::func2',
-
-        # NOTIFICATIONS SERVICE
-        # Use it to be able to notify messages during authentication
-        #notification => 1,
-        # Note that the SOAP function newNotification will be activated on
-        # http://auth.example.com/index.pl/notification
-        # If you want to hide this, just protect "/index.pl/notification" in
-        # your Apache configuration file
-
-        # CROSS-DOMAIN
-        # If you have some handlers that are not registered on the main domain,
-        # uncomment this
-        #cda => 1,
-
-        # XSS protection bypass
-        # By default, the portal refuse redirections that comes from sites not
-        # registered in the configuration (manager) except for those coming
-        # from trusted domains. By default, trustedDomains contains the domain
-        # declared in the manager. You can set trustedDomains to empty value so
-        # that, undeclared sites will be rejected. You can also set here a list
-        # of trusted domains or hosts separated by spaces. This is usefull if
-        # your website use Lemonldap::NG without handler with SOAP functions.
-        # Exemples :
-        #trustedDomains => 'my.trusted.host example2.com',
-        #trustedDomains => '',
-
         # OTHERS
         # You can also overload any parameter issued from manager
         # configuration. Example:
@@ -138,7 +31,6 @@ my $portal = Lemonldap::NG::Portal::SharedConf->new(
         #},
         # Note that YOU HAVE TO SET globalStorage here if you've declared this
         # portal as SOAP session server in the manager
-        #},
     }
 );
 

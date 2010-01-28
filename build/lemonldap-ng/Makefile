@@ -257,7 +257,6 @@ install_site:	install_manager_site install_portal_site install_handler_site inst
 	@echo "3 - Run 'make postconf' as root to update /etc/hosts" if your DNS service does not known auth.$(DNSDOMAIN) and manager.$(DNSDOMAIN)
 	@echo
 	@echo "4 - Use the manager at http://manager.${DNSDOMAIN}/ (after Apache restart) to modify LemonLDAP::NG configuration."
-	@echo "    Edit ${RCONFDIR}/apps/apps-list.xml to modify the menu."
 	@echo
 	@echo "5 - Try to connect to http://test1.${DNSDOMAIN}/ or http://test2.${DNSDOMAIN}/"
 	@if [ ! "$(APACHEUSER)" ]; then \
@@ -317,11 +316,6 @@ install_portal_site:	install_conf_dir
 			ln -s $(PORTALSKINSDIR)/$$skin $(RPORTALDIR)/skins/$$skin; \
 		done; \
 	fi
-	# Applications list install if erase configuration is needed
-	@if [ "$(ERASECONFIG)" -eq "1" ]; then \
-		cp --remove-destination _example/etc/apps-list* $(RCONFDIR); \
-	fi
-	@$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)/apps-list.xml
 	# L-A portal install
 	@cp -pR --remove-destination ${SRCPORTALDIR}/example/AuthLA/* $(RLASPPORTALDIR)
 	@$(PERL) -i -pe 's#__DIR__#$(LASPPORTALDIR)/#g' $(RLASPPORTALDIR)/index.pl
@@ -361,9 +355,7 @@ install_examples_site:
 		$(REXAMPLESDIR)/manager/images \
 	@rm -rf $$(find $(REXAMPLESDIR) -type d -name .svn)
 	@$(PERL) -i -pe 's#__DIR__#$(LASPPORTALDIR)#g' $(REXAMPLESDIR)/portal/AuthLA/index.pl
-	@$(PERL) -i -pe 's#__SKINDIR__#$(PORTALDIR)/skins#; \
-		s#__APPSXMLFILE__#$(CONFDIR)/apps-list.xml#; \
-		s#__SESSIONDIR__#$(APACHESESSIONFILEDIR)/#g;' $(REXAMPLESDIR)/portal/*.pl
+	@$(PERL) -i -pe 's#__SESSIONDIR__#$(APACHESESSIONFILEDIR)/#g;' $(REXAMPLESDIR)/portal/*.pl
 
 install_doc_site:
 	@install -v -d $(RDOCDIR)
