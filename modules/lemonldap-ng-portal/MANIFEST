@@ -101,6 +101,7 @@ lib/Lemonldap/NG/Portal/AuthDBI.pm
 lib/Lemonldap/NG/Portal/AuthLA.pm
 lib/Lemonldap/NG/Portal/AuthLDAP.pm
 lib/Lemonldap/NG/Portal/AuthMulti.pm
+lib/Lemonldap/NG/Portal/AuthNull.pm
 lib/Lemonldap/NG/Portal/AuthProxy.pm
 lib/Lemonldap/NG/Portal/AuthRemote.pm
 lib/Lemonldap/NG/Portal/AuthSAML.pm
@@ -115,6 +116,7 @@ lib/Lemonldap/NG/Portal/Notification/DBI.pm
 lib/Lemonldap/NG/Portal/Notification/File.pm
 lib/Lemonldap/NG/Portal/PasswordDBDBI.pm
 lib/Lemonldap/NG/Portal/PasswordDBLDAP.pm
+lib/Lemonldap/NG/Portal/PasswordDBNull.pm
 lib/Lemonldap/NG/Portal/SharedConf.pm
 lib/Lemonldap/NG/Portal/Simple.pm
 lib/Lemonldap/NG/Portal/UserDBDBI.pm
