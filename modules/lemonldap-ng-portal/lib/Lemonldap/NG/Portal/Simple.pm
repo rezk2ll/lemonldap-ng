@@ -186,11 +186,8 @@ sub new {
         $module_name =~ s/\s.*$//;
 
         # Try to load module
-        eval "require $module_name";
-        $self->abort( "Configuration error", $@ ) if ($@);
-
-        # Push module in @ISA
-        push @ISA, $module_name;
+        $self->abort( "Configuration error", "Unable to load $module_name" )
+          unless $self->loadModule($module_name);
 
         # $self->{authentication} and $self->{userDB} can contains arguments
         # (key1 = scalar_value; key2 = ...)
@@ -247,6 +244,28 @@ sub new {
     }
 
     return $self;
+}
+
+##@method boolean loadModule(string module)
+# Load a module into portal namespace
+# @param module module name
+# @return boolean
+sub loadModule {
+    my $self   = shift;
+    my $module = shift;
+
+    return 1 unless $module;
+
+    # Load module test
+    eval "require $module";
+    if ($@) {
+        $self->lmLog( "$module load error: $@", 'error' );
+        return 0;
+    }
+
+    # Push module in @ISA
+    push @ISA, $module;
+    return 1;
 }
 
 ##@method protected boolean getConf(hashRef args)
@@ -309,6 +328,12 @@ sub setDefaultValues {
     if ( $self->{authentication} =~ /DBI/i ) {
         $self->{userDB}     ||= "DBI";
         $self->{passwordDB} ||= "DBI";
+    }
+
+    # Set default userDB and passwordDB to Null if authentication is Null
+    if ( $self->{authentication} =~ /Null/i ) {
+        $self->{userDB}     ||= "Null";
+        $self->{passwordDB} ||= "Null";
     }
     else {
 
@@ -477,6 +502,7 @@ sub _subProcess {
     }
     return $err;
 }
+
 ##@method protected void updateStatus()
 # Inform status mechanism module.
 # If an handler is launched on the same server with "status=>1", inform the
@@ -847,16 +873,6 @@ sub existingSession {
     PE_DONE;
 }
 
-# issuerDBInit(): must be implemented in IssuerDB* module
-
-# issuerForUnAuthUser(): must be implemented in IssuerDB* module
-
-# authInit(): must be implemented in Auth* module
-
-# extractFormInfo(): must be implemented in Auth* module
-# * set $self->{user}
-# * authenticate user if possible (or do it in authenticate())
-
 ## @apmethod int issuerDBInit()
 # Set _issuerDB
 # call issuerDBInit in issuerDB* module
@@ -865,20 +881,21 @@ sub issuerDBInit {
     my $self = shift;
     my $issuerDB;
 
-    # Get the current authentication module
-    if ( $self->{_multi} ) {
-
-        # TODO - get the current module
-        $issuerDB = "Multi";
-    }
-    else {
+    # Get the current issuer module
         $issuerDB = $self->{issuerDB};
-    }
 
     $self->{sessionInfo}->{_issuerDB} = $issuerDB;
 
     return $self->SUPER::issuerDBInit();
 }
+
+# issuerForUnAuthUser(): must be implemented in IssuerDB* module
+
+# authInit(): must be implemented in Auth* module
+
+# extractFormInfo(): must be implemented in Auth* module
+# * set $self->{user}
+# * authenticate user if possible (or do it in authenticate())
 
 # getUser(): must be implemented in UserDB* module
 
@@ -891,10 +908,8 @@ sub setAuthSessionInfo {
     my $auth;
 
     # Get the current authentication module
-    if ( $self->{_multi} ) {
-
-        # TODO - get the current module
-        $auth = "Multi";
+    if ( defined $self->{_multi}->{stack}->[0] ) {
+        $auth = $self->{_multi}->{stack}->[0]->[0]->{n};
     }
     else {
         $auth = $self->{authentication};
@@ -913,15 +928,8 @@ sub passwordDBInit {
     my $self = shift;
     my $passwordDB;
 
-    # Get the current authentication module
-    if ( $self->{_multi} ) {
-
-        # TODO - get the current module
-        $passwordDB = "Multi";
-    }
-    else {
+    # Get the current password module
         $passwordDB = $self->{passwordDB};
-    }
 
     $self->{sessionInfo}->{_passwordDB} = $passwordDB;
 
@@ -938,11 +946,9 @@ sub setSessionInfo {
     my $self = shift;
     my $userDB;
 
-    # Get the current userDB module
-    if ( $self->{_multi} ) {
-
-        # TODO - get the current module
-        $userDB = "Multi";
+    # Get the current user module
+    if ( defined $self->{_multi}->{stack}->[1] ) {
+        $userDB = $self->{_multi}->{stack}->[1]->[0]->{n};
     }
     else {
         $userDB = $self->{userDB};

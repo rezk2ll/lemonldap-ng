@@ -33,9 +33,9 @@ sub new {
             $cond = 1 unless ( defined $cond );
             $mod = "Lemonldap::NG::Portal::" . [ 'Auth', 'UserDB' ]->[$i] . $mod
               unless ( $mod =~ /::/ );
-            eval "require $mod";
-            $portal->abort( 'Bad configuration', "Unable to load $mod ($@)" )
-              if ($@);
+
+            $portal->abort( 'Bad configuration', "Unable to load $mod" )
+              unless $self->{p}->loadModule($mod);
             push @{ $self->{stack}->[$i] },
               { m => $mod, c => $cond, n => $name };
         }
@@ -55,9 +55,21 @@ sub try {
     my $s   = $self->{stack}->[$type]->[0]->{m} . "::$sub";
     my $old = $self->{stack}->[$type]->[0]->{n};
     my $ci;
+
     if ( $ci = $self->{p}->safe->reval( $self->{stack}->[$type]->[0]->{c} ) ) {
+
+        # Log used module
+        $self->{p}->lmLog( "Multi (type $type): trying module $old", 'debug' );
+
+        # Run subroutine
         $res = $self->{p}->$s();
-        return $res if ( $res <= 0 or $res == PE_CONFIRM );
+
+        # Stop if no error, or if confirmation needed, or if form not filled
+        return $res
+          if ( $res <= 0
+            or $res == PE_CONFIRM
+            or $res == PE_FIRSTACCESS
+            or $res == PE_FORMEMPTY );
     }
     unless ( $self->next($type) ) {
         return ( $ci ? $res : $self->{res} );
