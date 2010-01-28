@@ -10,10 +10,11 @@ our $VERSION = '0.5';
 
 ## @fn void import(string lang)
 # Import help messages subroutines in Lemonldap::NG::Manager in the wanted language.
-# @param $lang Language string of "Accept-Language" HTTP header value
+# @param $lang language, or $ENV{HTTP_ACCEPT_LANGUAGE} by default
+# @return nothing
 sub import {
     my ($caller_package) = caller;
-    my $lang = shift;
+    my $lang = shift || $ENV{HTTP_ACCEPT_LANGUAGE};
     $lang = lc($lang);
     foreach ( split( /[,;]/, $lang ) ) {
         next if /=/;
@@ -24,7 +25,7 @@ sub import {
             last;
         }
     }
-    $l ||= "en";
+    $l ||= en;
     foreach $h (
         qw(authParams cookieName domain groups ldap macros storage timeout vars
         whatToTrace virtualHosts portalForceAuthn default)
@@ -686,7 +687,7 @@ sub help_portalForceAuthn_fr {
 <h3>Forcer l'authentification sur le portail</h3>
 <p>Par défaut, lorsqu'un utilisateur est authentifié sur le portail, lorsqu'il y revient son authentification est conservée et le menu est affiché.</p>
 <p>L'activation de cette option forcera l'utilisateur à s'authentifier de nouveau et sa session sera alors mise à jour.</p>
-<p class="info">L'identifiant et la date de création de la session ne sont pas modifiés. La date de mise à jour est indiquée dans le champ <tt>updateDate</tt>. Les autres inforations son mises à jour.</p>
+<p class="info">L'identifiant et la date de création de la session ne sont pas modifiés. La date de mise à jour est indiquée dans le champ <tt>updateDate</tt>. Les autres informations son mises à jour.</p>
 <p class="default">Valeur par défaut : 0</p>
 EOT
 }

@@ -20,10 +20,6 @@ our @ISA     = qw(
   Lemonldap::NG::Manager::_i18n
 );
 
-BEGIN {
-    *process = *doall;
-}
-
 ## @cmethod Lemonldap::NG::Manager new(hashRef args)
 # Class constructor.
 #@param args hash reference
@@ -36,33 +32,39 @@ sub new {
 
     # Try to load local configuration parameters
     my $conf = Lemonldap::NG::Common::Conf->new( $self->{configStorage} );
-    my $localconf = $conf->getLocalConf( MANAGERSECTION );
-    if ( $localconf ) {
-        $self->{$_} = $args->{$_} || $localconf->{$_} foreach ( keys %$localconf );
+    my $localconf = $conf->getLocalConf(MANAGERSECTION);
+    if ($localconf) {
+        $self->{$_} = $args->{$_} || $localconf->{$_}
+          foreach ( keys %$localconf );
     }
 
     # Default values
     $self->{managerSkin} = "default" unless defined $self->{managerSkin};
     $self->{managerCss} = "accordion.css" unless defined $self->{managerCss};
-    $self->{managerTreeAutoClose} = "true" unless defined $self->{managerTreeAutoClose};
-    $self->{managerTreeJqueryCss} = "true" unless defined $self->{managerTreeJqueryCss};
+    $self->{managerTreeAutoClose} = "true"
+      unless defined $self->{managerTreeAutoClose};
+    $self->{managerTreeJqueryCss} = "true"
+      unless defined $self->{managerTreeJqueryCss};
 
+    # Display help if ?help=
     if ( $self->param('help') ) {
         print $self->header_public( $ENV{SCRIPT_FILENAME},
             -type => 'text/html; charset=utf8' );
-        Lemonldap::NG::Manager::Help::import( $self->{language}
-              || $ENV{HTTP_ACCEPT_LANGUAGE} )
-          unless ( $self->can('help_groups') );
+        &Lemonldap::NG::Manager::Help::import( $self->{language} );
         my $chap = $self->param('help');
         eval { no strict "refs"; &{"help_$chap"} };
         $self->quit();
     }
+
+    # Save conf if ?data=
     elsif ( my $rdata = $self->rparam('data') ) {
 
         require Lemonldap::NG::Manager::Uploader;    #inherits
         $self->confUpload($rdata);
         $self->quit();
     }
+
+    # Else load conf
     require Lemonldap::NG::Manager::Downloader;      #inherits
     $self->{cfgNum} =
          $self->param('cfgNum')
