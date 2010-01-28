@@ -111,11 +111,70 @@ sub toXML
 sub toConf
 {
     my $self = shift;
+    my $fields;
     local $Data::Dumper::Indent = 0;
+    local $Data::Dumper::Varname = "data";
     my $data = Dumper($self);
-    $data =~ s/\A\$VAR\d+\s*=\s*//;
+    $data =~ s/^\s*(.*?)\s*$/$1/;
     $data =~ s/'/&#39;/g;
     return $data;
+}
+
+## @method public hashref toStruct ()
+# Return this object to be display into the Manager.
+# @return hashref
+sub toStruct
+{
+  my $self = shift;
+  my $struct = ();
+  foreach (keys %$self)
+  {
+    $struct->{$_} = $self->{$_};
+  }
+  return $self->_toStruct('', $struct);
+}
+
+## @method private hashref _toStruct (Hashref node)
+# Return a preformated structure to be stored into Manager structure.
+# @param $path The path of the node.
+# @param $node The current node into the hashref tree.
+# @return Hashref A structure to be inserted into Manager structure.
+sub _toStruct
+{
+    my $self = shift;
+    my $path = shift;
+    my ($node) = @_;
+    if (ref $node)
+    {
+      my $struct = {
+          _nodes => [],
+          _help => 'default'
+        };
+      my @nodes = ();
+      foreach (keys %$node)
+      {
+        if ($_ =~ /^xmlns/)
+        {
+          next;
+        }
+        my $key = $path . ' ' . $_;
+        $key =~ s/^ +//g;
+        my $data = $self->_toStruct($key, $node->{$_});
+        if ($data)
+        {
+          $struct->{$key} = $data;
+          push @nodes, 'n:' . $key;
+        }
+        else
+        {
+          $struct->{$key} = 'text:/' . $_;
+          push @nodes, $key;
+        }
+      }
+      $struct->{_nodes} = \@nodes;
+      return $struct;
+    }
+    return 0;
 }
 
 ## @method public static boolean load(Array files)

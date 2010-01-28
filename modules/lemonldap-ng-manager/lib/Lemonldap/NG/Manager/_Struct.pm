@@ -6,6 +6,8 @@
 package Lemonldap::NG::Manager::_Struct;
 
 use strict;
+use Lemonldap::NG::Common::Conf::SAML::Metadata;
+
 our $VERSION = '0.1';
 
 ## @method protected hashref cstruct(hashref h,string k)
@@ -42,7 +44,7 @@ sub cstruct {
 sub struct {
     my $self = shift;
     return {
-        _nodes => [qw(n:generalParameters n:variables n:virtualHosts)],
+        _nodes => [qw(n:generalParameters n:variables n:virtualHosts n:samlServiceMetadata)],
         _help  => 'default',
 
         ######################
@@ -237,6 +239,12 @@ sub struct {
             _help   => 'default',
             _call   => '$(\'#bnewvh\').show();',
         },
+
+        #################
+        # SAML METADATA #
+        #################
+
+        samlServiceMetadata => $self->conf->{samlServiceMetaData}->toStruct(),
     };
 }
 
