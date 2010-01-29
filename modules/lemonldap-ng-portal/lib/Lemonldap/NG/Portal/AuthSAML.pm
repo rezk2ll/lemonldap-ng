@@ -7,6 +7,7 @@ package Lemonldap::NG::Portal::AuthSAML;
 
 use strict;
 use Lemonldap::NG::Portal::Simple;
+use Lemonldap::NG::Portal::_SAML;    #inherits
 
 our $VERSION = '0.1';
 
@@ -16,8 +17,15 @@ our $VERSION = '0.1';
 # @return Lemonldap::NG::Portal error code
 sub authInit {
     my $self = shift;
-    $self->lmLog( 'This module is not yet usable', 'error' );
-    PE_ERROR;
+
+    # Load Lasso
+    return PE_ERROR unless $self->loadLasso();
+
+    # Load service metadata
+
+    # Load entities metadata
+
+    PE_OK;
 }
 
 ## @apmethod int extractFormInfo()
