@@ -44,7 +44,7 @@ sub cstruct {
 sub struct {
     my $self = shift;
     return {
-        _nodes => [qw(n:generalParameters n:variables n:virtualHosts n:samlServiceMetadata)],
+        _nodes => [qw(n:generalParameters n:variables n:virtualHosts n:samlServiceMetaData)],
         _help  => 'default',
 
         ######################
@@ -244,7 +244,7 @@ sub struct {
         # SAML METADATA #
         #################
 
-        samlServiceMetadata => Lemonldap::NG::Common::Conf::SAML::Metadata::createSimpleStruct(),
+        samlServiceMetaData => Lemonldap::NG::Common::Conf::SAML::Metadata::createSimpleStruct(),
     };
 }
 
