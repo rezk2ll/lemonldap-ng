@@ -244,8 +244,7 @@ sub struct {
         # SAML METADATA #
         #################
 
-        samlServiceMetadata => defined $self->conf->{samlServiceMetaData} ?
-            $self->conf->{samlServiceMetaData}->toStruct() : (),
+        samlServiceMetadata => Lemonldap::NG::Common::Conf::SAML::Metadata::createSimpleStruct(),
     };
 }
 

@@ -30,6 +30,178 @@ sub new
     return $self;
 }
 
+## @method public static hashref createSimpleStruct ()
+# Create a simple struct that allow user to turn SAML
+# feature on.
+# @return hashref Simple struct to be included in Manager
+#                 configuration structure
+sub createSimpleStruct
+{
+    return {
+        _nodes =>  [qw(samlEntityID n:samlOrganization n:samlSPSSODescriptor n:samlIDPSSODescriptor)],
+        _help  => 'default',
+
+        ############################
+        # Global SAML Informations #
+        ############################
+
+        samlEntityID => 'text:/samlEntityID',
+        samlOrganization => {
+            _nodes => [qw(samlOrganizationDisplayName samlOrganizationName samlOrganizationURL)],
+            _help  => 'default',
+            samlOrganizationDisplayName => 'text:/samlOrganizationDisplayName',
+            samlOrganizationURL => 'text:/samlOrganizationURL',
+            samlOrganizationName => 'text:/samlOrganizationName',
+          },
+
+        #########################
+        # SAML Service Provider #
+        #########################
+
+        'samlSPSSODescriptor' => {
+            _nodes => [qw(samlSPSSODescriptorAuthnRequestsSigned
+                          samlSPSSODescriptorProtocolSupportEnumeration
+                          n:samlSPSSODescriptorKeyDescriptor
+                          n:samlSPSSODescriptorSingleLogoutService
+                          n:samlSPSSODescriptorAssertionConsumerService)],
+            _help  => 'default',
+
+            samlSPSSODescriptorAuthnRequestsSigned => 'text:/samlSPSSODescriptorAuthnRequestsSigned',
+            samlSPSSODescriptorProtocolSupportEnumeration => 'text:/samlSPSSODescriptorProtocolSupportEnumeration',
+
+            samlSPSSODescriptorKeyDescriptor => {
+                _nodes => [qw(samlSPSSODescriptorKeyDescriptorSigning
+                              samlSPSSODescriptorKeyDescriptorEncryption)],
+                _help  => 'default',
+                samlSPSSODescriptorKeyDescriptorSigning => 'text:/samlSPSSODescriptorKeyDescriptorSigning',
+                samlSPSSODescriptorKeyDescriptorEncryption => 'text:/samlSPSSODescriptorKeyDescriptorEncryption',
+              },
+
+            samlSPSSODescriptorSingleLogoutService => {
+                _nodes => [qw(samlSPSSODescriptorSingleLogoutServiceHTTPLocation
+                              samlSPSSODescriptorSingleLogoutServiceHTTPReponseLocation
+                              samlSPSSODescriptorSingleLogoutServiceSOAPLocation
+                              samlSPSSODescriptorSingleLogoutServiceSOAPResponseLocation)],
+                _help  => 'default',
+                samlSPSSODescriptorSingleLogoutServiceHTTPLocation => 'text:/samlSPSSODescriptorSingleLogoutServiceHTTPLocation',
+                samlSPSSODescriptorSingleLogoutServiceHTTPReponseLocation => 'text:/samlSPSSODescriptorSingleLogoutServiceHTTPReponseLocation',
+                samlSPSSODescriptorSingleLogoutServiceSOAPLocation => 'text:/samlSPSSODescriptorSingleLogoutServiceSOAPLocation',
+                samlSPSSODescriptorSingleLogoutServiceSOAPResponseLocation => 'text:/samlSPSSODescriptorSingleLogoutServiceSOAPResponseLocation',
+              },
+
+            samlSPSSODescriptorAssertionConsumerService => {
+                _nodes => [qw(n:samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact
+                              n:samlSPSSODescriptorAssertionConsumerServiceHTTPPost
+                              n:samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect)],
+                _help  => 'default',
+
+                samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact => {
+                    _nodes => [qw(samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactIndex
+                                  samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactDefault
+                                  samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactLocation)],
+                    _help  => 'default',
+                    samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactIndex => 'int:/samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactIndex',
+                    samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactDefault => 'bool:/samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactDefault',
+                    samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactLocation => 'text:/samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactLocation',
+                  },
+
+                samlSPSSODescriptorAssertionConsumerServiceHTTPPost => {
+                    _nodes => [qw(samlSPSSODescriptorAssertionConsumerServiceHTTPPostIndex
+                                  samlSPSSODescriptorAssertionConsumerServiceHTTPPostDefault
+                                  samlSPSSODescriptorAssertionConsumerServiceHTTPPostLocation)],
+                    _help  => 'default',
+                    samlSPSSODescriptorAssertionConsumerServiceHTTPPostIndex => 'int:/samlSPSSODescriptorAssertionConsumerServiceHTTPPostIndex',
+                    samlSPSSODescriptorAssertionConsumerServiceHTTPPostDefault => 'bool:/samlSPSSODescriptorAssertionConsumerServiceHTTPPostDefault',
+                    samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactLocation => 'text:/samlSPSSODescriptorAssertionConsumerServiceHTTPPostLocation',
+                  },
+
+                samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect => {
+                    _nodes => [qw(samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectIndex
+                                  samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectDefault
+                                  samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectLocation)],
+                    _help  => 'default',
+                    samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectIndex => 'int:/samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectIndex',
+                    samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectDefault => 'bool:/samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectDefault',
+                    samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectLocation => 'text:/samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectLocation',
+                  },
+              },
+          },
+
+        ##########################
+        # SAML Identity Provider #
+        ##########################
+
+        samlIDPSSODescriptor => {
+            _nodes => [qw(samlIDPSSODescriptorWantAuthnRequestsSigned
+                          samlIDPSSODescriptorProtocolSupportEnumeration
+                          n:samlIDPSSODescriptorKeyDescriptor
+                          n:samlIDPSSODescriptorSingleSignOnService
+                          n:samlIDPSSODescriptorSingleLogoutService
+                          n:samlIDPSSODescriptorArtifactResolutionService
+                          n:samlIDPSSODescriptorManageNameIDService)],
+            _help  => 'default',
+
+            samlIDPSSODescriptorWantAuthnRequestsSigned => 'text:/samlIDPSSODescriptorWantAuthnRequestsSigned',
+            samlIDPSSODescriptorProtocolSupportEnumeration => 'text:/samlIDPSSODescriptorProtocolSupportEnumeration',
+
+            samlIDPSSODescriptorKeyDescriptor => {
+                _nodes => [qw(samlIDPSSODescriptorKeyDescriptorSigning
+                              samlIDPSSODescriptorKeyDescriptorEncryption)],
+                _help  => 'default',
+                samlIDPSSODescriptorKeyDescriptorSigning => 'text:/samlIDPSSODescriptorKeyDescriptorSigning',
+                samlIDPSSODescriptorKeyDescriptorEncryption => 'text:/samlIDPSSODescriptorKeyDescriptorEncryption',
+              },
+
+            samlIDPSSODescriptorSingleSignOnService => {
+                _nodes => [qw(samlIDPSSODescriptorSingleSignOnServiceHTTPLocation
+                              samlIDPSSODescriptorSingleSignOnServiceSOAPLocation)],
+                _help  => 'default',
+                samlIDPSSODescriptorSingleSignOnServiceHTTPLocation => 'text:/samlIDPSSODescriptorSingleSignOnServiceHTTPLocation',
+                samlIDPSSODescriptorSingleSignOnServiceSOAPLocation => 'text:/samlIDPSSODescriptorSingleSignOnServiceSOAPLocation',
+              },
+
+            samlIDPSSODescriptorSingleLogoutService => {
+                _nodes => [qw(samlIDPSSODescriptorSingleLogoutServiceHTTPLocation
+                              samlIDPSSODescriptorSingleLogoutServiceHTTPResponseLocation
+                              samlIDPSSODescriptorSingleLogoutServiceSOAPLocation
+                              samlIDPSSODescriptorSingleLogoutServiceSOAPResponseLocation)],
+                _help  => 'default',
+                samlIDPSSODescriptorSingleLogoutServiceHTTPLocation => 'text:/samlIDPSSODescriptorSingleLogoutServiceHTTPLocation',
+                samlIDPSSODescriptorSingleLogoutServiceHTTPResponseLocation => 'text:/samlIDPSSODescriptorSingleLogoutServiceHTTPResponseLocation',
+                samlIDPSSODescriptorSingleLogoutServiceSOAPLocation => 'text:/samlIDPSSODescriptorSingleLogoutServiceSOAPLocation',
+                samlIDPSSODescriptorSingleLogoutServiceSOAPResponseLocation => 'text:/samlIDPSSODescriptorSingleLogoutServiceSOAPResponseLocation',
+              },
+
+            samlIDPSSODescriptorArtifactResolutionService => {
+                _nodes => [qw(n:samlIDPSSODescriptorArtifactResolutionServiceArtifact)],
+                _help  => 'default',
+
+                samlIDPSSODescriptorArtifactResolutionServiceArtifact => {
+                    _nodes => [qw(samlIDPSSODescriptorArtifactResolutionServiceArtifactIndex
+                                  samlIDPSSODescriptorArtifactResolutionServiceArtifactDefault
+                                  samlIDPSSODescriptorArtifactResolutionServiceArtifactLocation)],
+                    _help  => 'default',
+                    samlIDPSSODescriptorArtifactResolutionServiceArtifactIndex => 'int:/samlIDPSSODescriptorArtifactResolutionServiceArtifactIndex',
+                    samlIDPSSODescriptorArtifactResolutionServiceArtifactDefault => 'bool:/samlIDPSSODescriptorArtifactResolutionServiceArtifactDefault',
+                    samlIDPSSODescriptorArtifactResolutionServiceArtifactLocation => 'text:/samlIDPSSODescriptorArtifactResolutionServiceArtifactLocation',
+                  },
+              },
+
+            samlIDPSSODescriptorManageNameIDService => {
+                _nodes => [qw(samlIDPSSODescriptorManageNameIDServiceHTTPLocation
+                              samlIDPSSODescriptorManageNameIDServiceHTTPResponseLocation
+                              samlIDPSSODescriptorManageNameIDServiceSOAPLocation
+                              samlIDPSSODescriptorManageNameIDServiceSOAPResponseLocation)],
+                _help  => 'default',
+                samlIDPSSODescriptorManageNameIDServiceHTTPLocation => 'text:/samlIDPSSODescriptorManageNameIDServiceHTTPLocation',
+                samlIDPSSODescriptorManageNameIDServiceHTTPResponseLocation => 'text:/samlIDPSSODescriptorManageNameIDServiceHTTPResponseLocation',
+                samlIDPSSODescriptorManageNameIDServiceSOAPLocation => 'text:/samlIDPSSODescriptorManageNameIDServiceSOAPLocation',
+                samlIDPSSODescriptorManageNameIDServiceSOAPResponseLocation => 'text:/samlIDPSSODescriptorManageNameIDServiceSOAPResponseLocation',
+              },
+          },
+      };
+}
+
 ## @method public boolean initiliazeFromConf(string s)
 # Initialize this object from configuration string.
 # @param $s Configuration string.
