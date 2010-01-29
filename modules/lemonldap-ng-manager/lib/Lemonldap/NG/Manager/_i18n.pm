@@ -319,6 +319,7 @@ sub fr {
         samlIDPSSODescriptorManageNameIDServiceHTTPLocation => 'URL HTTP',
         samlIDPSSODescriptorManageNameIDServiceHTTPResponseLocation => 'URL HTTP de retour',
         samlIDPSSODescriptorManageNameIDServiceSOAPLocation => 'URL SOAP',
+        samlIDPSSODescriptorManageNameIDServiceSOAPResponseLocation => 'URL SOAP de retour',
     };
 }
 

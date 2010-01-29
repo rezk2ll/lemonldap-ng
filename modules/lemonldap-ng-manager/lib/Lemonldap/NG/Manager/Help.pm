@@ -25,7 +25,7 @@ sub import {
             last;
         }
     }
-    $l ||= en;
+    $l ||= "en";
     foreach $h (
         qw(authParams cookieName domain groups ldap macros storage timeout vars
         whatToTrace virtualHosts portalForceAuthn default)
