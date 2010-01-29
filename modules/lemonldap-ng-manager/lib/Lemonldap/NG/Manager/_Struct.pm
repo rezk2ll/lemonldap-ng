@@ -244,7 +244,8 @@ sub struct {
         # SAML METADATA #
         #################
 
-        samlServiceMetadata => $self->conf->{samlServiceMetaData}->toStruct(),
+        samlServiceMetadata => defined $self->conf->{samlServiceMetaData} ?
+            $self->conf->{samlServiceMetaData}->toStruct() : (),
     };
 }
 
