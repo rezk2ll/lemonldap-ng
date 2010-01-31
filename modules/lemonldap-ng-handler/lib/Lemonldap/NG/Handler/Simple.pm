@@ -183,7 +183,7 @@ sub logout_mp2 : method {
 # @param $mess message to log
 # @param $level string (debug, info, warning or error)
 sub lmLog {
-    my ( $class, $mess, $level ) = @_;
+    my ( $class, $mess, $level ) = splice @_;
     die "Level is required" unless ($level);
     if ( MP() == 2 ) {
         Apache2::ServerRec->log->$level($mess);
@@ -201,7 +201,7 @@ sub lmLog {
 # @param $r current request
 # @param $s string to use
 sub lmSetApacheUser {
-    my ( $class, $r, $s ) = @_;
+    my ( $class, $r, $s ) = splice @_;
     return unless ($s);
     if ( MP() == 2 ) {
         $r->user($s);
@@ -216,7 +216,7 @@ sub lmSetApacheUser {
 # @param $str string
 # @return string
 sub regRemoteIp {
-    my ( $class, $str ) = @_;
+    my ( $class, $str ) = splice @_;
     if ( MP() == 2 ) {
         $str =~ s/\$datas->\{ip\}/\$apacheRequest->connection->remote_ip/g;
     }
@@ -232,7 +232,7 @@ sub regRemoteIp {
 # @param $h Name of the header
 # @param $v Value of the header
 sub lmSetHeaderIn {
-    my ( $r, $h, $v ) = @_;
+    my ( $r, $h, $v ) = splice @_;
     if ( MP() == 2 ) {
         return $r->headers_in->set( $h => $v );
     }
@@ -247,7 +247,7 @@ sub lmSetHeaderIn {
 # @param $h Name of the header
 # @return Value of the header
 sub lmHeaderIn {
-    my ( $r, $h ) = @_;
+    my ( $r, $h ) = splice @_;
     if ( MP() == 2 ) {
         return $r->headers_in->{$h};
     }
@@ -262,7 +262,7 @@ sub lmHeaderIn {
 # @param $h Name of the header
 # @param $v Value of the header
 sub lmSetErrHeaderOut {
-    my ( $r, $h, $v ) = @_;
+    my ( $r, $h, $v ) = splice @_;
     if ( MP() == 2 ) {
         return $r->err_headers_out->set( $h => $v );
     }
@@ -277,7 +277,7 @@ sub lmSetErrHeaderOut {
 # @param $h Name of the header
 # @param $v Value of the header
 sub lmSetHeaderOut {
-    my ( $r, $h, $v ) = @_;
+    my ( $r, $h, $v ) = splice @_;
     if ( MP() == 2 ) {
         return $r->headers_out->set( $h => $v );
     }
@@ -292,7 +292,7 @@ sub lmSetHeaderOut {
 # @param $h Name of the header
 # @return Value of the header
 sub lmHeaderOut {
-    my ( $r, $h, $v ) = @_;
+    my ( $r, $h, $v ) = splice @_;
     if ( MP() == 2 ) {
         return $r->headers_out->{$h};
     }
@@ -391,7 +391,7 @@ sub init($$) {
 # (statusProcess()) in wanted and launch childInit().
 # @param $args reference to the initialization hash
 sub localInit($$) {
-    my ( $class, $args ) = @_;
+    my ( $class, $args ) = splice @_;
     if ( $localStorage = $args->{localStorage} ) {
         $localStorageOptions = $args->{localStorageOptions};
         $localStorageOptions->{namespace}          ||= "lemonldap";
@@ -420,7 +420,7 @@ sub localInit($$) {
 # - cleanLocalStorage() after each requests
 # @return True
 sub childInit {
-    my ( $class, $args ) = @_;
+    my ( $class, $args ) = splice @_;
     return 1 if ($childInitDone);
 
     # We don't initialise local storage in the "init" subroutine because it can
@@ -436,7 +436,7 @@ sub childInit {
               sub { return $class->initLocalStorage( $_[1], $_[0] ); } );
         $s->push_handlers(
             PerlPostConfigHandler => sub {
-                my ( $c, $l, $t, $s ) = @_;
+                my ( $c, $l, $t, $s ) = splice @_;
                 $s->add_version_component('Lemonldap::NG::Handler');
             }
         ) unless ( $args->{hideSignature} );
@@ -499,7 +499,7 @@ sub globalInit {
 # - the list of the compiled functions (compiled with conditionSub())
 # @param $args reference to the configuration hash
 sub locationRulesInit {
-    my ( $class, $args ) = @_;
+    my ( $class, $args ) = splice @_;
     $locationCount = 0;
 
     # Pre compilation : both regexp and conditions
@@ -527,7 +527,7 @@ sub locationRulesInit {
 # locationRulesInit().
 # @param $cond The boolean expression to use
 sub conditionSub {
-    my ( $class, $cond ) = @_;
+    my ( $class, $cond ) = splice @_;
     return sub { 1 }
       if ( $cond =~ /^accept$/i );
     return sub { 0 }
@@ -581,7 +581,7 @@ sub conditionSub {
 # Set default values for non-customized variables
 # @param $args reference to the configuration hash
 sub defaultValuesInit {
-    my ( $class, $args ) = @_;
+    my ( $class, $args ) = splice @_;
 
     # Other values
     $cookieName  = $args->{cookieName}  || $cookieName  || 'lemonldap';
@@ -603,7 +603,7 @@ sub defaultValuesInit {
 # Verify that portal variable exists. Die unless
 # @param $args reference to the configuration hash
 sub portalInit {
-    my ( $class, $args ) = @_;
+    my ( $class, $args ) = splice @_;
     die("portal parameter required") unless ( $args->{portal} );
     if ( $args->{portal} =~ /[\$\(&\|"']/ ) {
         my $portal = $class->conditionSub( $args->{portal} );
@@ -620,7 +620,7 @@ sub portalInit {
 # Initialize the Apache::Session::* module choosed to share user's variables.
 # @param $args reference to the configuration hash
 sub globalStorageInit {
-    my ( $class, $args ) = @_;
+    my ( $class, $args ) = splice @_;
     $globalStorage = $args->{globalStorage} or die "globalStorage required";
     eval "use $globalStorage;";
     die($@) if ($@);
@@ -632,7 +632,7 @@ sub globalStorageInit {
 # headers into the HTTP request.
 # @param $args reference to the configuration hash
 sub forgeHeadersInit {
-    my ( $class, $args ) = @_;
+    my ( $class, $args ) = splice @_;
 
     # Creation of the subroutine who will generate headers
     my %tmp;
@@ -663,7 +663,7 @@ sub forgeHeadersInit {
 # Prepare local cache (if not done before by Lemonldap::NG::Common::Conf)
 # @return Apache2::Const::DECLINED
 sub initLocalStorage {
-    my ( $class, $r ) = @_;
+    my ( $class, $r ) = splice @_;
     if ( $localStorage and not $refLocalStorage ) {
         eval
 "use $localStorage;\$refLocalStorage = new $localStorage(\$localStorageOptions);";
@@ -676,7 +676,7 @@ sub initLocalStorage {
 ## @imethod protected void postUrlInit()
 # Prepare methods to post form attributes
 sub postUrlInit {
-    my ( $class, $args ) = @_;
+    my ( $class, $args ) = splice @_;
     return unless ( $args->{post} );
     eval 'use Apache2::Filter;use URI';
     $transform = {};
@@ -750,7 +750,7 @@ qq{<html><body onload="document.getElementById('f').submit()"><form id="f" metho
 ## @rmethod protected void updateStatus(string user,string url,string action)
 # Inform the status process of the result of the request if it is available.
 sub updateStatus {
-    my ( $class, $user, $url, $action ) = @_;
+    my ( $class, $user, $url, $action ) = splice @_;
     eval {
             print $statusPipe "$user => "
           . $apacheRequest->hostname
@@ -763,7 +763,7 @@ sub updateStatus {
 # Grant or refuse client using compiled regexp and functions
 # @return True if the user is granted to access to the current URL
 sub grant {
-    my ( $class, $uri ) = @_;
+    my ( $class, $uri ) = splice @_;
     for ( my $i = 0 ; $i < $locationCount ; $i++ ) {
         return &{ $locationCondition->[$i] }($datas)
           if ( $uri =~ $locationRegexp->[$i] );
@@ -776,7 +776,7 @@ sub grant {
 # Inform the status processus and call logForbidden().
 # @return Apache2::Const::FORBIDDEN
 sub forbidden {
-    my ( $class, $uri ) = @_;
+    my ( $class, $uri ) = splice @_;
     if ( $datas->{_logout} ) {
         $class->updateStatus( $datas->{$whatToTrace}, $_[0], 'LOGOUT' );
         my $u = $datas->{_logout};
@@ -796,7 +796,7 @@ sub forbidden {
 # @param $uri uri asked
 # @param $datas hash re to user's datas
 sub logForbidden {
-    my ( $class, $uri, $datas ) = @_;
+    my ( $class, $uri, $datas ) = splice @_;
     $class->lmLog(
         'User "'
           . $datas->{$whatToTrace}
@@ -811,7 +811,7 @@ sub logForbidden {
 # authorizated. This method has to be overloaded to use different logs systems
 # @param $uri uri asked
 sub logGranted {
-    my ( $class, $uri, $datas ) = @_;
+    my ( $class, $uri, $datas ) = splice @_;
     $class->lmLog(
         'User "'
           . $datas->{$whatToTrace}
@@ -834,7 +834,7 @@ sub hideCookie {
 ## @rmethod protected string encodeUrl(string url)
 # Encode URl in the format used by Lemonldap::NG::Portal for redirections.
 sub encodeUrl {
-    my ( $class, $url ) = @_;
+    my ( $class, $url ) = splice @_;
     my $u = $url;
     if ( $url !~ m#^https?://# ) {
         my $portString = $port || $apacheRequest->get_server_port();
@@ -857,7 +857,7 @@ sub encodeUrl {
 # @param $arg optionnal GET parameters
 # @return Apache2::Const::REDIRECT
 sub goToPortal {
-    my ( $class, $url, $arg ) = @_;
+    my ( $class, $url, $arg ) = splice @_;
     $class->lmLog(
         "Redirect "
           . $apacheRequest->connection->remote_ip
@@ -896,7 +896,7 @@ sub fetchId {
 # @return Apache2::Const value (OK, FORBIDDEN, REDIRECT or SERVER_ERROR)
 sub run ($$) {
     my $class;
-    ( $class, $apacheRequest ) = @_;
+    ( $class, $apacheRequest ) = splice @_;
     return DECLINED unless ( $apacheRequest->is_initial_req );
     my $args = $apacheRequest->args;
 
@@ -1038,7 +1038,7 @@ sub localUnlog {
 # @return Apache2::Const value returned by goToPortal()
 sub unlog ($$) {
     my $class;
-    ( $class, $apacheRequest ) = @_;
+    ( $class, $apacheRequest ) = splice @_;
     $class->localUnlog;
     $class->updateStatus( $apacheRequest->connection->remote_ip,
         $apacheRequest->uri, 'LOGOUT' );
@@ -1085,7 +1085,7 @@ sub redirectFilter {
 # @param $r Current request
 # @return Apache2::Const::OK
 sub status($$) {
-    my ( $class, $r ) = @_;
+    my ( $class, $r ) = splice @_;
     $class->lmLog( "$class: request for status", 'debug' );
     unless ( $statusPipe and $statusOut ) {
         $class->lmLog( "$class: status page can not be displayed", 'error' );

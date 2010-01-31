@@ -24,7 +24,7 @@ our $VERSION = '0.55';
 # virtual host
 # @param $args reference to the configuration hash
 sub locationRulesInit {
-    my ( $class, $args ) = @_;
+    my ( $class, $args ) = splice @_;
     foreach my $vhost ( keys %{ $args->{locationRules} } ) {
         $locationCount->{$vhost} = 0;
         foreach ( sort keys %{ $args->{locationRules}->{$vhost} } ) {
@@ -53,7 +53,7 @@ sub locationRulesInit {
 # headers into the HTTP request.
 # @param $args reference to the configuration hash
 sub forgeHeadersInit {
-    my ( $class, $args ) = @_;
+    my ( $class, $args ) = splice @_;
 
     # Creation of the subroutine who will generate headers
     foreach my $vhost ( keys %{ $args->{exportedHeaders} } ) {
@@ -98,7 +98,7 @@ sub sendHeaders {
 # Grant or refuse client using compiled regexp and functions
 # @return True if the user is granted to access to the current URL
 sub grant {
-    my ( $class, $uri ) = @_;
+    my ( $class, $uri ) = splice @_;
     my $vhost = $apacheRequest->hostname;
     for ( my $i = 0 ; $i < $locationCount->{$vhost} ; $i++ ) {
         if ( $uri =~ $locationRegexp->{$vhost}->[$i] ) {

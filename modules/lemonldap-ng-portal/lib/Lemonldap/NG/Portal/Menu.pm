@@ -142,8 +142,7 @@ sub new {
 # @param $modulename string
 # @return boolean
 sub displayModule {
-    my $self = shift;
-    my ($modulename) = @_;
+    my ( $self, $modulename ) = splice @_;
 
     # Manage "0" and "1" rules
     return 1 if ( $self->{modules}->{$modulename} eq "1" );
@@ -237,8 +236,7 @@ sub appslistDescription {
 # @param catlevel Category level
 # @return HTML string
 sub _displayConfCategory {
-    my $self = shift;
-    my ( $catname, $cathash, $catlevel ) = @_;
+    my ( $self, $catname, $cathash, $catlevel ) = splice @_;
     my $html;
     my $key;
 
@@ -289,7 +287,7 @@ sub _displayConfCategory {
 # @param $arg string to modify
 # @return string modified
 sub _userParam {
-    my ( $self, $arg ) = @_;
+    my ( $self, $arg ) = splice @_;
     $arg =~ s/\$([\w]+)/$self->{portalObject}->{sessionInfo}->{$1}/g;
     return $arg;
 }
@@ -385,8 +383,7 @@ sub _displayConfDescription {
 # @param $apphash Menu elements
 # @return filtered hash
 sub _filter {
-    my $self = shift;
-    my ($apphash) = @_;
+    my ( $self, $apphash ) = splice @_;
     my $filteredHash;
     my $key;
 
@@ -501,8 +498,7 @@ sub _isCategoryEmpty {
 # @param $uri URL string
 # @return True if granted
 sub _grant {
-    my $self = shift;
-    my ($uri) = @_;
+    my ( $self, $uri ) = splice @_;
     $uri =~ m{(\w+)://([^/:]+)(:\d+)?(/.*)?$} or return 0;
     my ( $protocol, $vhost, $port );
     ( $protocol, $vhost, $port, $path ) = ( $1, $2, $3, $4 );
@@ -562,8 +558,7 @@ sub _compileRules {
 # @param $cond boolean expression
 # @return Compiled routine
 sub _conditionSub {
-    my $self = shift;
-    my ($cond) = @_;
+    my ( $self, $cond ) = splice @_;
     return sub { 1 }
       if ( $cond =~ /^accept$/i );
     return sub { 0 }

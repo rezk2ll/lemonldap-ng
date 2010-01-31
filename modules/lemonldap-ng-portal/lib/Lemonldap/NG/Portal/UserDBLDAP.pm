@@ -90,7 +90,7 @@ sub search {
 # '; ' separator
 # @return Lemonldap::NG::Portal constant
 sub setSessionInfo {
-    my ($self) = @_;
+    my $self = shift;
     $self->{sessionInfo}->{dn} = $self->{dn};
     unless ( $self->{exportedVars} ) {
         foreach (qw(uid cn mail)) {
@@ -121,7 +121,7 @@ sub setSessionInfo {
 # Load all groups in $groups.
 # @return Lemonldap::NG::Portal constant
 sub setGroups {
-    my ($self) = @_;
+    my $self = shift;
     my $groups = $self->{sessionInfo}->{groups};
 
     $self->{ldapGroupObjectClass}         ||= "groupOfNames";

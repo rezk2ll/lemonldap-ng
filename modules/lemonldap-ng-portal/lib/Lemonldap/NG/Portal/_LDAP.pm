@@ -74,7 +74,7 @@ sub new {
 sub bind {
     my $self = shift;
     my $mesg;
-    my ( $dn, %args ) = @_;
+    my ( $dn, %args ) = splice @_;
     unless ($dn) {
         $dn = $self->{portal}->{managerDn};
         $args{password} = $self->{portal}->{managerPassword};
@@ -186,9 +186,7 @@ sub userBind {
 # @param $oldpassword Current password
 # @return Lemonldap::NG::Portal constant
 sub userModifyPassword {
-
-    my $self = shift;
-    my ( $dn, $newpassword, $confirmpassword, $oldpassword ) = @_;
+    my ( $self, $dn, $newpassword, $confirmpassword, $oldpassword ) = splice @_;
     my $err;
     my $mesg;
 

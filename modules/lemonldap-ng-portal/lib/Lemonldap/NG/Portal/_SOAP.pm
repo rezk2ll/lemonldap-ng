@@ -112,7 +112,7 @@ _RETURN $getAttributesResponse Response
 # @param $id Cookie value
 # @return SOAP::Data sequence
 sub getAttributes {
-    my ( $self, $id ) = @_;
+    my ( $self, $id ) = splice @_;
     die 'id is required' unless ($id);
     my $h = $self->getApacheSession( $id, 1 );
     my @tmp = ();
@@ -140,7 +140,7 @@ sub getAttributes {
 # @param $args datas to store
 # @return true if succeed
 sub setAttributes {
-    my ( $self, $id, $args ) = @_;
+    my ( $self, $id, $args ) = splice @_;
     die 'id is required' unless ($id);
     my $h = $self->getApacheSession($id);
     unless ($h) {
@@ -178,7 +178,7 @@ sub lastCfg {
 # Store a new session.
 # @return Session datas
 sub newSession {
-    my ( $self, $args ) = @_;
+    my ( $self, $args ) = splice @_;
     my $h = $self->getApacheSession();
     if ($@) {
         $self->lmLog( "Unable to create session", 'error' );
@@ -196,7 +196,7 @@ sub newSession {
 ## @method SOAP::Data deleteSession()
 # Deletes an existing session
 sub deleteSession {
-    my ( $self, $id ) = @_;
+    my ( $self, $id ) = splice @_;
     die('id parameter is required') unless ($id);
     my $h = $self->getApacheSession($id);
     return 0 if ($@);
@@ -353,9 +353,7 @@ sub _buildSoapHash {
 # @param $cond boolean expression
 # @return Compiled routine
 sub _conditionSub {
-    my $self = shift;
-    my $id = shift;
-    my ($cond) = @_;
+    my ( $self, $id, $cond ) = splice @_;
     my $h = $self->getApacheSession( $id, 1 );
     return sub { 1 }
       if ( $cond =~ /^accept$/i );

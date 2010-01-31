@@ -1,4 +1,3 @@
-debian/tmp/etc/lemonldap-ng/apps-list*
 debian/tmp/usr/share/lemonldap-ng/bin/purgeCentralCache
 debian/tmp/usr/share/lemonldap-ng/portal-skins
 debian/tmp/usr/share/man/man3/Lemonldap::NG::Portal*

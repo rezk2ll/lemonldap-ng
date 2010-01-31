@@ -56,7 +56,7 @@ $UA->requests_redirectable( [] );
 # Called for Apache response (PerlResponseHandler).
 # @return Apache constant
 sub run($$) {
-    ( $class, $r ) = @_;
+    ( $class, $r ) = splice @_;
     my $url = $r->uri;
     $url .= "?" . $r->args if ( $r->args );
 

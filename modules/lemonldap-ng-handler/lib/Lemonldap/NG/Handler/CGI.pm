@@ -35,7 +35,7 @@ sub new {
       unless Lemonldap::NG::Handler::_CGI->testConf() == OK;
 
     # Arguments
-    my @args = @_;
+    my @args = splice @_;
     if ( ref( $args[0] ) ) {
         %$self = ( %$self, %{ $args[0] } );
     }
@@ -143,7 +143,7 @@ sub user {
 # @param $group name of the Lemonldap::NG group to test
 # @return boolean : true if user is in this group
 sub group {
-    my ( $self, $group ) = @_;
+    my ( $self, $group ) = splice @_;
     return ( $datas->{groups} =~ /\b$group\b/ );
 }
 
@@ -203,7 +203,7 @@ sub lmLog {
 # @param $vhost Virtual Host to test
 # @return boolean : true if $vhost is available
 sub vhostAvailable {
-    my ( $self, $vhost ) = @_;
+    my ( $self, $vhost ) = splice @_;
     return defined( $defaultCondition->{$vhost} );
 }
 
@@ -212,7 +212,7 @@ sub vhostAvailable {
 # @param $uri URI string
 # @param $vhost Optional virtual host (default current virtual host)
 sub grant {
-    my ( $self, $uri, $vhost ) = @_;
+    my ( $self, $uri, $vhost ) = splice @_;
     $vhost ||= $ENV{SERVER_NAME};
     $apacheRequest = Lemonldap::NG::Apache::Request->new(
         {

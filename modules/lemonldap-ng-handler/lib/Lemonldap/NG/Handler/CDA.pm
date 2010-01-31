@@ -19,6 +19,7 @@ use base qw(Lemonldap::NG::Handler::SharedConf);
 # @return Apache constant
 sub run ($$) {
     my $class;
+    ( $class, $apacheRequest ) = splice @_;
     $cda = 1;
     return $class->SUPER::run($apacheRequest);
 }

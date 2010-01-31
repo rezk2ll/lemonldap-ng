@@ -61,7 +61,7 @@ BEGIN {
 # init is overloaded to call only localInit. globalInit is called later.
 # @param $args hash containing parameters
 sub init($$) {
-    my ( $class, $args ) = @_;
+    my ( $class, $args ) = splice @_;
     # TODO reloadTime in defaultValuesInit ?
     $reloadTime = $args->{reloadTime} || 600;
     $class->localInit($args);
@@ -72,7 +72,7 @@ sub init($$) {
 # @param $args hash containing parameters
 # @return boolean
 sub defaultValuesInit {
-    my ( $class, $args ) = @_;
+    my ( $class, $args ) = splice @_;
 
     # Local configuration overrides global configuration
     my %h = ( %$args, %$localConfig );
@@ -83,7 +83,7 @@ sub defaultValuesInit {
 # Load parameters and build the Lemonldap::NG::Common::Conf object.
 # @return boolean
 sub localInit {
-    my ( $class, $args ) = @_;
+    my ( $class, $args ) = splice @_;
     die(
 "$class : unable to build configuration : $Lemonldap::NG::Common::Conf::msg"
       )
@@ -118,7 +118,7 @@ sub localInit {
 # @param $r Apache2::RequestRec object
 # @return Apache constant
 sub run($$) {
-    my ( $class, $r ) = @_;
+    my ( $class, $r ) = splice @_;
     if ( time() - $lastReload > $reloadTime ) {
         unless ( my $tmp = $class->testConf(1) == OK ) {
             $class->lmLog( "$class: No configuration found", 'error' );
@@ -138,7 +138,7 @@ sub run($$) {
 # @param $local boolean
 # @return Apache constant
 sub testConf {
-    my ( $class, $local ) = @_;
+    my ( $class, $local ) = splice @_;
     my $conf = $lmConf->getConf( { local => $local } );
     unless ( ref($conf) ) {
         $class->lmLog(
@@ -163,7 +163,7 @@ sub testConf {
 # Local parameters have best precedence on configuration parameters.
 # @return Apache constant
 sub setConf {
-    my ( $class, $conf ) = @_;
+    my ( $class, $conf ) = splice @_;
 
     # Local configuration overrides global configuration
     $cfgNum = $conf->{cfgNum};
@@ -183,7 +183,7 @@ sub setConf {
 # @param $r current request
 # @return Apache constant (OK or SERVER_ERROR)
 sub refresh($$) {
-    my ( $class, $r ) = @_;
+    my ( $class, $r ) = splice @_;
     $class->lmLog( "$class: request for configuration reload", 'notice' );
     $r->handler("perl-script");
     if ( $class->testConf(0) == OK ) {

@@ -15,7 +15,7 @@ our $VERSION = '0.5';
 # @param $lang Language or Accepted-Language HTTP header string
 # @return Error string for the $code in the $lang language
 sub error {
-    my ( $error, $lang ) = @_;
+    my ( $error, $lang ) = splice @_;
     $lang = lc($lang);
     $lang =~ s/-/_/g;
     $error = 0 if ( $error < 0 );
@@ -37,7 +37,7 @@ sub error {
 # @param $lang Language or Accepted-Language HTTP header string
 # @return Error string for the $code in the $lang language
 sub msg {
-    my ( $msg, $lang ) = @_;
+    my ( $msg, $lang ) = splice @_;
     $lang = lc($lang);
     $lang =~ s/-/_/g;
     $msg = 0 if ( $msg < 0 );

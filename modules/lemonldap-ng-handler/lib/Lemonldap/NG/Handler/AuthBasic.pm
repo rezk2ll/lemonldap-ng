@@ -38,7 +38,7 @@ BEGIN {
 # @return Apache constant
 sub run ($$) {
     my $class;
-    ( $class, $apacheRequest ) = @_;
+    ( $class, $apacheRequest ) = splice @_;
     if ( time() - $lastReload > $reloadTime ) {
         unless ( my $tmp = $class->testConf(1) == OK ) {
             $class->lmLog( "$class: No configuration found", 'error' );
