@@ -8,15 +8,13 @@ package Lemonldap::NG::Portal::AuthSAML;
 use strict;
 use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::_SAML;    #inherits
+use Lemonldap::NG::Common::Conf::SAML::Metadata;
 
 our $VERSION = '0.1';
 
-our $metadata_dir             = "/tmp";
-our $service_metadata_file    = $metadata_dir . "/metadata.xml";
-our $service_private_key_file = $metadata_dir . "/private-key.pem";
-
 ## @apmethod int authInit()
 # Load Lasso and metadata
+# TODO - cache Lasso::Server
 # @return Lemonldap::NG::Portal error code
 sub authInit {
     my $self = shift;
@@ -27,15 +25,27 @@ sub authInit {
     # Activate SOAP
     $self->{Soap} = 1;
 
-    # Load service metadata
-    unless ( -r $service_metadata_file || -r $service_private_key_file ) {
+    # Check presence of service metadata in configuration
+    return PE_ERROR unless $self->{samlServiceMetaData};
 
-        # TODO - serialize XML from configuration data
-        # TODO - use a test to rebuild XML if file is too old
+    # Get metadata from configuration
+    my $service_metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new();
+    unless (
+        $service_metadata->initializeFromConfHash(
+            $self->{samlServiceMetaData}
+        )
+      )
+    {
+        $self->lmLog( "Fail to read Service Metadata from configuration",
+            'error' );
+        return PE_ERROR;
     }
 
-    my $server =
-      $self->createServer( $service_metadata_file, $service_private_key_file );
+    # Create Lasso server with service metadata
+    # Provate key has to be inside service metadata
+    my $xml = $service_metadata->toXML();
+
+    my $server = $self->createServer($xml);
 
     return PE_ERROR unless $server;
 

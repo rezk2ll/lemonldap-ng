@@ -18,6 +18,9 @@ our $VERSION = '0.01';
 sub loadLasso {
     my $self = shift;
 
+    # Do not load Lasso twice
+    return 1 if $self->{_lasso};
+
     # Load Lasso.pm
     eval { use Lasso; };
     if ($@) {
@@ -26,21 +29,21 @@ sub loadLasso {
         return 0;
     }
 
-    # Check version
+    # Check Lasso version >= 2.2.91
     my $lasso_check_version_mode = Lasso::Constants::CHECK_VERSION_NUMERIC;
-
-# TODO - wait for perl binding correction
-# See http://perso.entrouvert.org/~bdauvergne/git/cgit.cgi?url=lasso-perso/commit/&h=release-2.2.91&id=2da646f9629f3e148fce619ff7de322dbb34cd8d
-    my $check_version = 1;
-
-#    my $check_version = Lasso::check_version( 2, 2, 91, $lasso_check_version_mode );
+    my $check_version =
+      Lasso::check_version( 2, 2, 91, $lasso_check_version_mode );
 
     unless ($check_version) {
-        $self->lmLog( 'Lasso version too old', 'error' );
+        $self->lmLog( 'Lasso version >= 2.2.91 required', 'error' );
         return 0;
     }
 
     $self->lmLog( "Module Lasso loaded", 'debug' );
+
+    # Remember we have loaded Lasso
+    $self->{_lasso} = 1;
+
     return 1;
 }
 
@@ -69,24 +72,24 @@ sub checkLassoError {
 
 ## @method Lasso::Server createServer(string metadata, string private key, string private key password, string certificate)
 # Load service metadata and create Lasso::Server object
-# @param string metadata file
-# @param string private key
-# @param string private key password
-# @param string certificate
+# @param string metadata
+# @param string optional private key
+# @param string optional private key password
+# @param string optional certificate
 # @return Lasso::Server object
 sub createServer {
     my $self                 = shift;
     my $metadata             = shift;
-    my $private_key          = shift;
-    my $private_key_password = shift;
-    my $certificate          = shift;
+    my $private_key          = shift || '';
+    my $private_key_password = shift || '';
+    my $certificate          = shift || '';
 
-    my $server =
-      new Lasso::Server( $metadata, $private_key, $private_key_password,
-        $certificate );
+    my $server = Lasso::Server::new_from_buffers( $metadata, $private_key,
+        $private_key_password, $certificate );
 
     unless ($server) {
         $self->lmLog( 'Unable to create Lasso server', 'error' );
+        return;
     }
 
     $self->lmLog( 'Lasso server dump ' . Lasso::Server::dump($server),

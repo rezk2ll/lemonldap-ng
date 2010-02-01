@@ -5,29 +5,40 @@ package Lemonldap::NG::Common::Conf::SAML::Metadata;
 
 use strict;
 use warnings;
-use XML::LibXML;
+use XML::Simple;
 use Data::Dumper;
 use Safe;
 
 our $VERSION = '0.1';
+our $DEBUG   = 0;
 
 ## @cmethod Lemonldap::NG::Common::Conf::SAML::Metadata new(hashRef args)
 # Class constructor.
 #@param args hash reference
 #@return Lemonldap::NG::Common::Conf::SAML::Metadata object
-sub new
-{
+sub new {
     my $class = shift;
-    my $self = bless {}, $class ;
-    if ( ref( $_[0] ) )
-    {
+    my $self = bless {}, $class;
+    if ( ref( $_[0] ) ) {
         %$self = %{ $_[0] };
     }
-    elsif ( defined @_ && $#_ % 2 == 1 )
-    {
+    elsif ( defined @_ && $#_ % 2 == 1 ) {
         %$self = @_;
     }
     return $self;
+}
+
+## @method void setDebug(boolean debug)
+# Set debug flag
+# @param boolean debug value
+# @return nothing
+sub setDebug {
+    my $self = shift;
+    my $debug = shift || 1;
+
+    $DEBUG = $debug;
+
+    return;
 }
 
 ## @method public static hashref createSimpleStruct ()
@@ -35,10 +46,11 @@ sub new
 # feature on.
 # @return hashref Simple struct to be included in Manager
 #                 configuration structure
-sub createSimpleStruct
-{
+sub createSimpleStruct {
     return {
-        _nodes =>  [qw(samlEntityID n:samlOrganization n:samlSPSSODescriptor n:samlIDPSSODescriptor)],
+        _nodes => [
+            qw(samlEntityID n:samlOrganization n:samlSPSSODescriptor n:samlIDPSSODescriptor)
+        ],
         _help  => 'default',
 
         ############################
@@ -47,7 +59,9 @@ sub createSimpleStruct
 
         samlEntityID => 'text:/samlEntityID',
         samlOrganization => {
-            _nodes => [qw(samlOrganizationDisplayName samlOrganizationName samlOrganizationURL)],
+            _nodes => [
+                qw(samlOrganizationDisplayName samlOrganizationName samlOrganizationURL)
+            ],
             _help  => 'default',
             samlOrganizationDisplayName => 'text:/samlOrganizationDisplayName',
             samlOrganizationURL => 'text:/samlOrganizationURL',
@@ -59,70 +73,101 @@ sub createSimpleStruct
         #########################
 
         'samlSPSSODescriptor' => {
-            _nodes => [qw(samlSPSSODescriptorAuthnRequestsSigned
+            _nodes => [
+                qw(samlSPSSODescriptorAuthnRequestsSigned
                           samlSPSSODescriptorProtocolSupportEnumeration
                           n:samlSPSSODescriptorKeyDescriptor
                           n:samlSPSSODescriptorSingleLogoutService
-                          n:samlSPSSODescriptorAssertionConsumerService)],
+                  n:samlSPSSODescriptorAssertionConsumerService)
+            ],
             _help  => 'default',
 
-            samlSPSSODescriptorAuthnRequestsSigned => 'text:/samlSPSSODescriptorAuthnRequestsSigned',
-            samlSPSSODescriptorProtocolSupportEnumeration => 'text:/samlSPSSODescriptorProtocolSupportEnumeration',
+            samlSPSSODescriptorAuthnRequestsSigned =>
+              'text:/samlSPSSODescriptorAuthnRequestsSigned',
+            samlSPSSODescriptorProtocolSupportEnumeration =>
+              'text:/samlSPSSODescriptorProtocolSupportEnumeration',
 
             samlSPSSODescriptorKeyDescriptor => {
-                _nodes => [qw(samlSPSSODescriptorKeyDescriptorSigning
-                              samlSPSSODescriptorKeyDescriptorEncryption)],
-                _help  => 'default',
-                samlSPSSODescriptorKeyDescriptorSigning => 'text:/samlSPSSODescriptorKeyDescriptorSigning',
-                samlSPSSODescriptorKeyDescriptorEncryption => 'text:/samlSPSSODescriptorKeyDescriptorEncryption',
+                _nodes => [
+                    qw(samlSPSSODescriptorKeyDescriptorSigning
+                      samlSPSSODescriptorKeyDescriptorEncryption)
+                ],
+                _help => 'default',
+                samlSPSSODescriptorKeyDescriptorSigning =>
+                  'text:/samlSPSSODescriptorKeyDescriptorSigning',
+                samlSPSSODescriptorKeyDescriptorEncryption =>
+                  'text:/samlSPSSODescriptorKeyDescriptorEncryption',
               },
 
             samlSPSSODescriptorSingleLogoutService => {
-                _nodes => [qw(samlSPSSODescriptorSingleLogoutServiceHTTPLocation
+                _nodes => [
+                    qw(samlSPSSODescriptorSingleLogoutServiceHTTPLocation
                               samlSPSSODescriptorSingleLogoutServiceHTTPReponseLocation
                               samlSPSSODescriptorSingleLogoutServiceSOAPLocation
-                              samlSPSSODescriptorSingleLogoutServiceSOAPResponseLocation)],
+                      samlSPSSODescriptorSingleLogoutServiceSOAPResponseLocation)
+                ],
                 _help  => 'default',
-                samlSPSSODescriptorSingleLogoutServiceHTTPLocation => 'text:/samlSPSSODescriptorSingleLogoutServiceHTTPLocation',
-                samlSPSSODescriptorSingleLogoutServiceHTTPReponseLocation => 'text:/samlSPSSODescriptorSingleLogoutServiceHTTPReponseLocation',
-                samlSPSSODescriptorSingleLogoutServiceSOAPLocation => 'text:/samlSPSSODescriptorSingleLogoutServiceSOAPLocation',
-                samlSPSSODescriptorSingleLogoutServiceSOAPResponseLocation => 'text:/samlSPSSODescriptorSingleLogoutServiceSOAPResponseLocation',
+                samlSPSSODescriptorSingleLogoutServiceHTTPLocation =>
+                  'text:/samlSPSSODescriptorSingleLogoutServiceHTTPLocation',
+                samlSPSSODescriptorSingleLogoutServiceHTTPReponseLocation =>
+'text:/samlSPSSODescriptorSingleLogoutServiceHTTPReponseLocation',
+                samlSPSSODescriptorSingleLogoutServiceSOAPLocation =>
+                  'text:/samlSPSSODescriptorSingleLogoutServiceSOAPLocation',
+                samlSPSSODescriptorSingleLogoutServiceSOAPResponseLocation =>
+'text:/samlSPSSODescriptorSingleLogoutServiceSOAPResponseLocation',
               },
 
             samlSPSSODescriptorAssertionConsumerService => {
-                _nodes => [qw(n:samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact
+                _nodes => [
+                    qw(n:samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact
                               n:samlSPSSODescriptorAssertionConsumerServiceHTTPPost
-                              n:samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect)],
+                      n:samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect)
+                ],
                 _help  => 'default',
 
                 samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact => {
-                    _nodes => [qw(samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactIndex
+                    _nodes => [
+                        qw(samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactIndex
                                   samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactDefault
-                                  samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactLocation)],
+                          samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactLocation)
+                    ],
                     _help  => 'default',
-                    samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactIndex => 'int:/samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactIndex',
-                    samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactDefault => 'bool:/samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactDefault',
-                    samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactLocation => 'text:/samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactLocation',
+                    samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactIndex =>
+'int:/samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactIndex',
+                    samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactDefault =>
+'bool:/samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactDefault',
+                    samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactLocation =>
+'text:/samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactLocation',
                   },
 
                 samlSPSSODescriptorAssertionConsumerServiceHTTPPost => {
-                    _nodes => [qw(samlSPSSODescriptorAssertionConsumerServiceHTTPPostIndex
+                    _nodes => [
+                        qw(samlSPSSODescriptorAssertionConsumerServiceHTTPPostIndex
                                   samlSPSSODescriptorAssertionConsumerServiceHTTPPostDefault
-                                  samlSPSSODescriptorAssertionConsumerServiceHTTPPostLocation)],
+                          samlSPSSODescriptorAssertionConsumerServiceHTTPPostLocation)
+                    ],
                     _help  => 'default',
-                    samlSPSSODescriptorAssertionConsumerServiceHTTPPostIndex => 'int:/samlSPSSODescriptorAssertionConsumerServiceHTTPPostIndex',
-                    samlSPSSODescriptorAssertionConsumerServiceHTTPPostDefault => 'bool:/samlSPSSODescriptorAssertionConsumerServiceHTTPPostDefault',
-                    samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactLocation => 'text:/samlSPSSODescriptorAssertionConsumerServiceHTTPPostLocation',
+                    samlSPSSODescriptorAssertionConsumerServiceHTTPPostIndex =>
+'int:/samlSPSSODescriptorAssertionConsumerServiceHTTPPostIndex',
+                    samlSPSSODescriptorAssertionConsumerServiceHTTPPostDefault =>
+'bool:/samlSPSSODescriptorAssertionConsumerServiceHTTPPostDefault',
+                    samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactLocation =>
+'text:/samlSPSSODescriptorAssertionConsumerServiceHTTPPostLocation',
                   },
 
                 samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect => {
-                    _nodes => [qw(samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectIndex
+                    _nodes => [
+                        qw(samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectIndex
                                   samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectDefault
-                                  samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectLocation)],
+                          samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectLocation)
+                    ],
                     _help  => 'default',
-                    samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectIndex => 'int:/samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectIndex',
-                    samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectDefault => 'bool:/samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectDefault',
-                    samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectLocation => 'text:/samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectLocation',
+                    samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectIndex =>
+'int:/samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectIndex',
+                    samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectDefault =>
+'bool:/samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectDefault',
+                    samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectLocation =>
+'text:/samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectLocation',
                   },
               },
           },
@@ -132,71 +177,101 @@ sub createSimpleStruct
         ##########################
 
         samlIDPSSODescriptor => {
-            _nodes => [qw(samlIDPSSODescriptorWantAuthnRequestsSigned
+            _nodes => [
+                qw(samlIDPSSODescriptorWantAuthnRequestsSigned
                           samlIDPSSODescriptorProtocolSupportEnumeration
                           n:samlIDPSSODescriptorKeyDescriptor
                           n:samlIDPSSODescriptorSingleSignOnService
                           n:samlIDPSSODescriptorSingleLogoutService
                           n:samlIDPSSODescriptorArtifactResolutionService
-                          n:samlIDPSSODescriptorManageNameIDService)],
+                  n:samlIDPSSODescriptorManageNameIDService)
+            ],
             _help  => 'default',
 
-            samlIDPSSODescriptorWantAuthnRequestsSigned => 'text:/samlIDPSSODescriptorWantAuthnRequestsSigned',
-            samlIDPSSODescriptorProtocolSupportEnumeration => 'text:/samlIDPSSODescriptorProtocolSupportEnumeration',
+            samlIDPSSODescriptorWantAuthnRequestsSigned =>
+              'text:/samlIDPSSODescriptorWantAuthnRequestsSigned',
+            samlIDPSSODescriptorProtocolSupportEnumeration =>
+              'text:/samlIDPSSODescriptorProtocolSupportEnumeration',
 
             samlIDPSSODescriptorKeyDescriptor => {
-                _nodes => [qw(samlIDPSSODescriptorKeyDescriptorSigning
-                              samlIDPSSODescriptorKeyDescriptorEncryption)],
-                _help  => 'default',
-                samlIDPSSODescriptorKeyDescriptorSigning => 'text:/samlIDPSSODescriptorKeyDescriptorSigning',
-                samlIDPSSODescriptorKeyDescriptorEncryption => 'text:/samlIDPSSODescriptorKeyDescriptorEncryption',
+                _nodes => [
+                    qw(samlIDPSSODescriptorKeyDescriptorSigning
+                      samlIDPSSODescriptorKeyDescriptorEncryption)
+                ],
+                _help => 'default',
+                samlIDPSSODescriptorKeyDescriptorSigning =>
+                  'text:/samlIDPSSODescriptorKeyDescriptorSigning',
+                samlIDPSSODescriptorKeyDescriptorEncryption =>
+                  'text:/samlIDPSSODescriptorKeyDescriptorEncryption',
               },
 
             samlIDPSSODescriptorSingleSignOnService => {
-                _nodes => [qw(samlIDPSSODescriptorSingleSignOnServiceHTTPLocation
-                              samlIDPSSODescriptorSingleSignOnServiceSOAPLocation)],
-                _help  => 'default',
-                samlIDPSSODescriptorSingleSignOnServiceHTTPLocation => 'text:/samlIDPSSODescriptorSingleSignOnServiceHTTPLocation',
-                samlIDPSSODescriptorSingleSignOnServiceSOAPLocation => 'text:/samlIDPSSODescriptorSingleSignOnServiceSOAPLocation',
+                _nodes => [
+                    qw(samlIDPSSODescriptorSingleSignOnServiceHTTPLocation
+                      samlIDPSSODescriptorSingleSignOnServiceSOAPLocation)
+                ],
+                _help => 'default',
+                samlIDPSSODescriptorSingleSignOnServiceHTTPLocation =>
+                  'text:/samlIDPSSODescriptorSingleSignOnServiceHTTPLocation',
+                samlIDPSSODescriptorSingleSignOnServiceSOAPLocation =>
+                  'text:/samlIDPSSODescriptorSingleSignOnServiceSOAPLocation',
               },
 
             samlIDPSSODescriptorSingleLogoutService => {
-                _nodes => [qw(samlIDPSSODescriptorSingleLogoutServiceHTTPLocation
+                _nodes => [
+                    qw(samlIDPSSODescriptorSingleLogoutServiceHTTPLocation
                               samlIDPSSODescriptorSingleLogoutServiceHTTPResponseLocation
                               samlIDPSSODescriptorSingleLogoutServiceSOAPLocation
-                              samlIDPSSODescriptorSingleLogoutServiceSOAPResponseLocation)],
+                      samlIDPSSODescriptorSingleLogoutServiceSOAPResponseLocation)
+                ],
                 _help  => 'default',
-                samlIDPSSODescriptorSingleLogoutServiceHTTPLocation => 'text:/samlIDPSSODescriptorSingleLogoutServiceHTTPLocation',
-                samlIDPSSODescriptorSingleLogoutServiceHTTPResponseLocation => 'text:/samlIDPSSODescriptorSingleLogoutServiceHTTPResponseLocation',
-                samlIDPSSODescriptorSingleLogoutServiceSOAPLocation => 'text:/samlIDPSSODescriptorSingleLogoutServiceSOAPLocation',
-                samlIDPSSODescriptorSingleLogoutServiceSOAPResponseLocation => 'text:/samlIDPSSODescriptorSingleLogoutServiceSOAPResponseLocation',
+                samlIDPSSODescriptorSingleLogoutServiceHTTPLocation =>
+                  'text:/samlIDPSSODescriptorSingleLogoutServiceHTTPLocation',
+                samlIDPSSODescriptorSingleLogoutServiceHTTPResponseLocation =>
+'text:/samlIDPSSODescriptorSingleLogoutServiceHTTPResponseLocation',
+                samlIDPSSODescriptorSingleLogoutServiceSOAPLocation =>
+                  'text:/samlIDPSSODescriptorSingleLogoutServiceSOAPLocation',
+                samlIDPSSODescriptorSingleLogoutServiceSOAPResponseLocation =>
+'text:/samlIDPSSODescriptorSingleLogoutServiceSOAPResponseLocation',
               },
 
             samlIDPSSODescriptorArtifactResolutionService => {
-                _nodes => [qw(n:samlIDPSSODescriptorArtifactResolutionServiceArtifact)],
+                _nodes =>
+                  [qw(n:samlIDPSSODescriptorArtifactResolutionServiceArtifact)],
                 _help  => 'default',
 
                 samlIDPSSODescriptorArtifactResolutionServiceArtifact => {
-                    _nodes => [qw(samlIDPSSODescriptorArtifactResolutionServiceArtifactIndex
+                    _nodes => [
+                        qw(samlIDPSSODescriptorArtifactResolutionServiceArtifactIndex
                                   samlIDPSSODescriptorArtifactResolutionServiceArtifactDefault
-                                  samlIDPSSODescriptorArtifactResolutionServiceArtifactLocation)],
+                          samlIDPSSODescriptorArtifactResolutionServiceArtifactLocation)
+                    ],
                     _help  => 'default',
-                    samlIDPSSODescriptorArtifactResolutionServiceArtifactIndex => 'int:/samlIDPSSODescriptorArtifactResolutionServiceArtifactIndex',
-                    samlIDPSSODescriptorArtifactResolutionServiceArtifactDefault => 'bool:/samlIDPSSODescriptorArtifactResolutionServiceArtifactDefault',
-                    samlIDPSSODescriptorArtifactResolutionServiceArtifactLocation => 'text:/samlIDPSSODescriptorArtifactResolutionServiceArtifactLocation',
+                    samlIDPSSODescriptorArtifactResolutionServiceArtifactIndex =>
+'int:/samlIDPSSODescriptorArtifactResolutionServiceArtifactIndex',
+                    samlIDPSSODescriptorArtifactResolutionServiceArtifactDefault =>
+'bool:/samlIDPSSODescriptorArtifactResolutionServiceArtifactDefault',
+                    samlIDPSSODescriptorArtifactResolutionServiceArtifactLocation =>
+'text:/samlIDPSSODescriptorArtifactResolutionServiceArtifactLocation',
                   },
               },
 
             samlIDPSSODescriptorManageNameIDService => {
-                _nodes => [qw(samlIDPSSODescriptorManageNameIDServiceHTTPLocation
+                _nodes => [
+                    qw(samlIDPSSODescriptorManageNameIDServiceHTTPLocation
                               samlIDPSSODescriptorManageNameIDServiceHTTPResponseLocation
                               samlIDPSSODescriptorManageNameIDServiceSOAPLocation
-                              samlIDPSSODescriptorManageNameIDServiceSOAPResponseLocation)],
+                      samlIDPSSODescriptorManageNameIDServiceSOAPResponseLocation)
+                ],
                 _help  => 'default',
-                samlIDPSSODescriptorManageNameIDServiceHTTPLocation => 'text:/samlIDPSSODescriptorManageNameIDServiceHTTPLocation',
-                samlIDPSSODescriptorManageNameIDServiceHTTPResponseLocation => 'text:/samlIDPSSODescriptorManageNameIDServiceHTTPResponseLocation',
-                samlIDPSSODescriptorManageNameIDServiceSOAPLocation => 'text:/samlIDPSSODescriptorManageNameIDServiceSOAPLocation',
-                samlIDPSSODescriptorManageNameIDServiceSOAPResponseLocation => 'text:/samlIDPSSODescriptorManageNameIDServiceSOAPResponseLocation',
+                samlIDPSSODescriptorManageNameIDServiceHTTPLocation =>
+                  'text:/samlIDPSSODescriptorManageNameIDServiceHTTPLocation',
+                samlIDPSSODescriptorManageNameIDServiceHTTPResponseLocation =>
+'text:/samlIDPSSODescriptorManageNameIDServiceHTTPResponseLocation',
+                samlIDPSSODescriptorManageNameIDServiceSOAPLocation =>
+                  'text:/samlIDPSSODescriptorManageNameIDServiceSOAPLocation',
+                samlIDPSSODescriptorManageNameIDServiceSOAPResponseLocation =>
+'text:/samlIDPSSODescriptorManageNameIDServiceSOAPResponseLocation',
               },
           },
       };
@@ -206,30 +281,42 @@ sub createSimpleStruct
 # Initialize this object from configuration string.
 # @param $s Configuration string.
 # @return boolean
-sub initializeFromConf
-{
+sub initializeFromConf {
     my $self = shift;
-    my ($string) = @_;
+    my $string = shift;
+
     $string =~ s/&#39;/'/g;
     my $data = eval $string;
-    while ( my ( $k, $v ) = each(%$data) )
-    {
+
+    return $self->initializeFromConfHash($data);
+}
+
+## @method public boolean initiliazeFromConfHash(hash h)
+# Initialize this object from configuration hash element.
+# @param $h Configuration hash element.
+# @return boolean
+sub initializeFromConfHash {
+    my $self = shift;
+    my $hash = shift;
+
+    return 0 unless $hash;
+
+    while ( my ( $k, $v ) = each(%$hash) ) {
       $self->{$k} = $v;
     }
-    return 0;
+
+    return 1;
 }
 
 ## @method public boolean initializeFromFile(string file)
 # Initialize this object from XML file.
 # @param $file Filename
 # @return boolean
-sub initializeFromFile
-{
+sub initializeFromFile {
     my $self = shift;
     my $file = shift;
     my $xml = $self->_loadFile($file);
-    if (!$xml)
-    {
+    if ( !$xml ) {
       return 0;
     }
     return $self->initializeFromXML($xml);
@@ -239,49 +326,47 @@ sub initializeFromFile
 # Initialize this object from configuration XML string.
 # @param $string Configuration XML string.
 # @return boolean
-sub initializeFromXML
-{
+sub initializeFromXML {
     my $self = shift;
-    my ($string) = @_;
-    my $data;
-    my $parser = XML::LibXML->new();
-    $parser->validation('0');
+    my $string = shift;
+
+    # Remove spaces
     $string =~ s/[\n\r\s]+/ /g;
     $string =~ s/> </></g;
-    eval
-    {
-      my $xml = $parser->parse_string($string);
-      $data = $self->_parseXML($xml->documentElement);
-    };
-    return 0 if ($@);
-    if ($data)
-    {
-    while (my ($k,$v) = each(%{$data}))
-    {
+
+    # New XML::Simple object
+    my $xs = XML::Simple->new( ForceContent => 1 );
+    my $data = $xs->XMLin($string);
+
+    # Store data in Metadata object
+    if ($data) {
+        while ( my ( $k, $v ) = each( %{$data} ) ) {
       $self->{$k} = $v;
     }
     return 1;
     }
     return 0;
+
 }
 
 ## @method public string toXML
 # Return this object in XML format.
 # @return string
-sub toXML
-{
+sub toXML {
     my $self = shift;
-    my $writer = XML::LibXML->new();
-    $writer->validation('0');
-    my $doc = $writer->createDocument($self);
-    return '';
+
+    # Use XML::Simple to Dump Perl Hash in XML format
+    my $xs = XML::Simple->new( RootName => "md:EntityDescriptor" );
+
+    my $xml = $xs->XMLout($self);
+
+    return $xml;
 }
 
 ## @method public string toConf ()
 # Return this object in configuration string format.
 # @return string
-sub toConf
-{
+sub toConf {
     my $self = shift;
     my $fields;
     local $Data::Dumper::Indent = 0;
@@ -295,15 +380,13 @@ sub toConf
 ## @method public hashref toStruct ()
 # Return this object to be display into the Manager.
 # @return hashref
-sub toStruct
-{
+sub toStruct {
   my $self = shift;
   my $struct = ();
-  foreach (keys %$self)
-  {
+    foreach ( keys %$self ) {
     $struct->{$_} = $self->{$_};
   }
-  return $self->_toStruct('', $struct);
+    return $self->_toStruct( '', $struct );
 }
 
 ## @method private hashref _toStruct (Hashref node)
@@ -311,34 +394,44 @@ sub toStruct
 # @param $path The path of the node.
 # @param $node The current node into the hashref tree.
 # @return Hashref A structure to be inserted into Manager structure.
-sub _toStruct
-{
+sub _toStruct {
     my $self = shift;
     my $path = shift;
-    my ($node) = @_;
-    if (ref $node)
-    {
+    my $node = shift;
+    if ( ref $node ) {
       my $struct = {
           _nodes => [],
           _help => 'default'
         };
       my @nodes = ();
-      foreach (keys %$node)
-      {
-        if ($_ =~ /^xmlns/)
-        {
+        my $tmpnode;
+        if ( ref $node eq 'ARRAY' ) {
+
+            # More than one value for the same key
+            # Build a hash with indices
+            my $i = 0;
+            foreach (@$node) {
+                $tmpnode->{$i} = $node->[$i];
+            }
+        }
+        else {
+            $tmpnode = $node;
+        }
+        foreach ( keys %$tmpnode ) {
+
+            if ( $_ =~ /^xmlns/ ) {
           next;
         }
         my $key = $path . ' ' . $_;
         $key =~ s/^ +//g;
-        my $data = $self->_toStruct($key, $node->{$_});
-        if ($data)
-        {
+            my $data;
+
+            $data = $self->_toStruct( $key, $tmpnode->{$_} );
+            if ($data) {
           $struct->{$key} = $data;
           push @nodes, 'n:' . $key;
         }
-        else
-        {
+            else {
           $struct->{$key} = 'text:/' . $_;
           push @nodes, $key;
         }
@@ -353,15 +446,12 @@ sub _toStruct
 # Return an array of Metadata object.
 # @param $files Array of filenames
 # @return Array of Metadata objects
-sub load
-{
-    my @files = @_;
+sub load {
+    my @files     = splice @_;
     my @metadatas = ();
-    foreach (@files)
-    {
+    foreach (@files) {
       my $metadata = new Lemonldap::NG::Common::Conf::SAML::Metadata();
-      if ($metadata->initializeFromFile($_))
-      {
+        if ( $metadata->initializeFromFile($_) ) {
         push @metadatas, $metadata;
       }
     }
@@ -372,54 +462,15 @@ sub load
 # Load XML file as a XML string.
 # @param $file Filename
 # @return string
-sub _loadFile
-{
+sub _loadFile {
     my $self = shift;
     my $file = shift;
-    local $/=undef;
+    local $/ = undef;
     open FILE, $file
       or die "Couldn't open file: $!";
     my $string = <FILE>;
     close FILE;
     return $string;
-}
-
-## @method private hashref _parseXML(hashref node)
-# Parse XML content and store data into a simple hashref.
-# @param $node XML content returned by LibXML
-# @return Hashref
-sub _parseXML
-{
-    my $self = shift;
-    my ($node) = @_;
-    my $data = ();
-    if ($node->getName() =~ /#text/)
-    {
-      return;
-    }
-    foreach my $attr ($node->getAttributes())
-    {
-      my $name = $attr->getName();
-      my $value = $attr->getValue();
-      $data->{$name} = $value;
-    }
-    my $i = 0;
-    my @childs = $node->getChildNodes();
-    foreach my $child (@childs)
-    {
-      my $child_data = $self->_parseXML($child);
-      if ($child_data)
-      {
-        if (!$data->{$child->getName()})
-        {
-          $data->{$child->getName()} = ();
-          $i = 0;
-        }
-        $data->{$child->getName()}->{$i} = $child_data;
-        $i++;
-      }
-    }
-    return $data;
 }
 
 1;
