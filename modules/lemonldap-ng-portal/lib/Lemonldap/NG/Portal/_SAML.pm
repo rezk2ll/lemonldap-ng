@@ -8,7 +8,7 @@ package Lemonldap::NG::Portal::_SAML;
 use strict;
 use base qw(Exporter);
 
-our @EXPORT = qw(loadLasso checkLassoError createServer);
+our @EXPORT = qw(loadLasso checkLassoError createServer addIDP addProvider);
 
 our $VERSION = '0.01';
 
@@ -88,7 +88,7 @@ sub checkLassoError {
     return 1;
 }
 
-## @method Lasso::Server createServer(string metadata, string private key, string private key password, string certificate)
+## @method Lasso::Server createServer(string metadata, string private_key, string private_key_password, string certificate)
 # Load service metadata and create Lasso::Server object
 # @param string metadata
 # @param string optional private key
@@ -107,13 +107,59 @@ sub createServer {
 
     unless ($server) {
         $self->lmLog( 'Unable to create Lasso server', 'error' );
-        return;
     }
 
-    $self->lmLog( 'Lasso server dump ' . Lasso::Server::dump($server),
-        'debug' );
-
     return $server;
+}
+
+## @method boolean addIDP(Lasso::Server server, string metadata, string public_key, string ca_cert_chain)
+# Add IDP to an existing Lasso::Server
+# @param Lasso::Server Lasso::Server object
+# @param string metadata IDP metadata
+# @param string optional public key
+# @param string optional ca cert chain
+# @return boolean result
+sub addIDP {
+    my $self          = shift;
+    my $server        = shift;
+    my $metadata      = shift;
+    my $public_key    = shift || '';
+    my $ca_cert_chain = shift || '';
+
+    return 0 unless ( $server->isa("Lasso::Server") and defined $metadata );
+
+    return $self->addProvider( $server, Lasso::Constants::PROVIDER_ROLE_IDP,
+        $metadata, $public_key, $ca_cert_chain );
+}
+
+## @method boolean addProvider(Lasso::Server server, int role, string metadata, string public_key, string ca_cert_chain)
+# Add provider to an existing Lasso::Server
+# @param Lasso::Server Lasso::Server object
+# @param int role (IDP, SP or Both)
+# @param string metadata IDP metadata
+# @param string optional public key
+# @param string optional ca cert chain
+# @return boolean result
+sub addProvider {
+    my $self          = shift;
+    my $server        = shift;
+    my $role          = shift;
+    my $metadata      = shift;
+    my $public_key    = shift || '';
+    my $ca_cert_chain = shift || '';
+
+    return 0
+      unless ( $server->isa("Lasso::Server")
+        and defined $role
+        and defined $metadata );
+
+    eval {
+        Lasso::Server::add_provider_from_buffers( $server, $role, $metadata,
+            $public_key, $ca_cert_chain );
+    };
+
+    return $self->checkLassoError($@);
+
 }
 
 1;
@@ -148,6 +194,14 @@ Log Lasso error code and message if this is actually a Lasso::Error with code > 
 =head2 createServer
 
 Load service metadata and create Lasso::Server object
+
+=head2 addIDP
+
+Add IDP to an existing Lasso::Server
+
+=head2 addProvider
+
+Add provider to an existing Lasso::Server
 
 =head1 SEE ALSO
 

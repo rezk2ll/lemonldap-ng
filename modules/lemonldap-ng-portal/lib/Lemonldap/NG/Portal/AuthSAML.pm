@@ -29,6 +29,7 @@ sub authInit {
     return PE_ERROR unless $self->{samlServiceMetaData};
 
     # Get metadata from configuration
+    $self->lmLog( "Get Metadata for this service", 'debug' );
     my $service_metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new();
     unless (
         $service_metadata->initializeFromConfHash(
@@ -43,13 +44,48 @@ sub authInit {
 
     # Create Lasso server with service metadata
     # Provate key has to be inside service metadata
-    my $xml = $service_metadata->toXML();
-
-    my $server = $self->createServer($xml);
+    my $server = $self->createServer( $service_metadata->toXML() );
 
     return PE_ERROR unless $server;
 
-    # Load entities metadata
+    $self->lmLog( "Service created", 'debug' );
+
+    # Check presence of at least one identity provider in configuration
+    unless ( $self->{samlIDPMetaData} and keys %{ $self->{samlIDPMetaData} } ) {
+        $self->lmLog( "No IDP found in configuration", 'error' );
+        return PE_ERROR;
+    }
+
+    # Load identity provider metadata
+    # IDP are listed in $self->{samlIDPMetaData}
+    # Each key is the IDP name and value is the metadata
+    foreach ( keys %{ $self->{samlIDPMetaData} } ) {
+
+        $self->lmLog( "Get Metadata for IDP $_", 'debug' );
+
+        # Get metadata from configuration
+        my $idp_metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new();
+        unless (
+            $idp_metadata->initializeFromConfHash(
+                $self->{samlIDPMetaData}->{$_}
+            )
+          )
+        {
+            $self->lmLog( "Fail to read IDP $_ Metadata from configuration",
+                'error' );
+            return PE_ERROR;
+        }
+
+        # Add this IDP to Lasso::Server
+        my $result = $self->addIDP( $server, $idp_metadata->toXML() );
+
+        unless ($result) {
+            $self->lmLog( "Fail to use IDP $_ Metadata", 'error' );
+            return PE_ERROR;
+        }
+
+        $self->lmLog( "IDP $_ added", 'debug' );
+    }
 
     PE_OK;
 }
