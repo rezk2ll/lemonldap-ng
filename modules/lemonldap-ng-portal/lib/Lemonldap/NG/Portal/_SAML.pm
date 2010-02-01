@@ -21,6 +21,24 @@ sub loadLasso {
     # Do not load Lasso twice
     return 1 if $self->{_lasso};
 
+    # Catch GLib Lasso messages (require Glib)
+    eval { use Glib; };
+    unless ($@) {
+        Glib::Log->set_handler(
+            "Lasso",
+            [qw/ error critical warning message info debug /],
+            sub {
+                $self->lmLog( $_[0] . " error " . $_[1] . ": " . $_[2],
+                    'debug' );
+            }
+        );
+    }
+    else {
+        $self->lmLog(
+            "Glib Lasso messages will not be catched (require Glib module)",
+            'info' );
+    }
+
     # Load Lasso.pm
     eval { use Lasso; };
     if ($@) {
