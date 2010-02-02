@@ -358,6 +358,10 @@ sub toXML {
     # Use XML::Simple to Dump Perl Hash in XML format
     my $xs = XML::Simple->new( RootName => "md:EntityDescriptor" );
 
+    # Force xmlns:md key
+    $self->{"xmlns:md"} = "urn:oasis:names:tc:SAML:2.0:metadata" unless defined $self->{"xmlns:md"};
+
+    # Serialize XML
     my $xml = $xs->XMLout($self);
 
     return $xml;
