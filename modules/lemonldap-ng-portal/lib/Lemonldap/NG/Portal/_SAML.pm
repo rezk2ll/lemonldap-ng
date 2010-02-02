@@ -123,8 +123,8 @@ sub addIDP {
     my $self          = shift;
     my $server        = shift;
     my $metadata      = shift;
-    my $public_key    = shift || '';
-    my $ca_cert_chain = shift || '';
+    my $public_key    = shift;
+    my $ca_cert_chain = shift;
 
     return 0 unless ( $server->isa("Lasso::Server") and defined $metadata );
 
@@ -145,8 +145,8 @@ sub addProvider {
     my $server        = shift;
     my $role          = shift;
     my $metadata      = shift;
-    my $public_key    = shift || '';
-    my $ca_cert_chain = shift || '';
+    my $public_key    = shift;
+    my $ca_cert_chain = shift;
 
     return 0
       unless ( $server->isa("Lasso::Server")
