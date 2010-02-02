@@ -154,7 +154,7 @@ sub addProvider {
         and defined $metadata );
 
     eval {
-        Lasso::Server::add_provider_from_buffers( $server, $role, $metadata,
+        Lasso::Server::add_provider_from_buffer( $server, $role, $metadata,
             $public_key, $ca_cert_chain );
     };
 
