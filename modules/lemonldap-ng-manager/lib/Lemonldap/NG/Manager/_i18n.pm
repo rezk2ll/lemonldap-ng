@@ -125,6 +125,8 @@ sub en {
         virtualHosts               => 'Virtual Hosts',
         whatToTrace                 => "REMOTE_USER environment variable",
 
+        saml                        => 'SAML',
+        samlServicePrivateKey       => 'Private Key',
         samlServiceMetaData => 'SAML 2 Service',
         samlEntityID => 'Entity Identifier',
         samlOrganization => 'Organization',
@@ -132,31 +134,41 @@ sub en {
         samlOrganizationName => 'Name',
         samlOrganizationURL => 'URL',
         samlSPSSODescriptor => 'Service Provider',
-        samlSPSSODescriptorAuthnRequestsSigned => 'Signed Authentication Request',
+        samlSPSSODescriptorAuthnRequestsSigned =>
+          'Signed Authentication Request',
         samlSPSSODescriptorProtocolSupportEnumeration => 'Protocol',
         samlSPSSODescriptorKeyDescriptor => 'Keys',
         samlSPSSODescriptorKeyDescriptorSigning => 'Signing Key',
         samlSPSSODescriptorKeyDescriptorEncryption => 'Encryption Key',
         samlSPSSODescriptorSingleLogoutService => 'Single Logout',
         samlSPSSODescriptorSingleLogoutServiceHTTPLocation => 'HTTP URL',
-        samlSPSSODescriptorSingleLogoutServiceHTTPReponseLocation => 'HTTP Response URL',
+        samlSPSSODescriptorSingleLogoutServiceHTTPReponseLocation =>
+          'HTTP Response URL',
         samlSPSSODescriptorSingleLogoutServiceSOAPLocation => 'SOAP URL',
-        samlSPSSODescriptorSingleLogoutServiceSOAPResponseLocation => 'SOAP Response URL',
+        samlSPSSODescriptorSingleLogoutServiceSOAPResponseLocation =>
+          'SOAP Response URL',
         samlSPSSODescriptorAssertionConsumerService => 'Assertion Consumer',
         samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact => 'Artifact',
         samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactIndex => 'Index',
-        samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactDefault => 'Default Assertion',
-        samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactLocation => 'URL',
+        samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactDefault =>
+          'Default Assertion',
+        samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactLocation =>
+          'URL',
         samlSPSSODescriptorAssertionConsumerServiceHTTPPost => 'POST',
         samlSPSSODescriptorAssertionConsumerServiceHTTPPostIndex => 'Index',
-        samlSPSSODescriptorAssertionConsumerServiceHTTPPostDefault => 'Default Assertion',
+        samlSPSSODescriptorAssertionConsumerServiceHTTPPostDefault =>
+          'Default Assertion',
         samlSPSSODescriptorAssertionConsumerServiceHTTPPostLocation => 'URL',
-        samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect => 'HTTP Redirect',
+        samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect =>
+          'HTTP Redirect',
         samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectIndex => 'Index',
-        samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectDefault => 'Default Assertion',
-        samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectLocation => 'URL',
+        samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectDefault =>
+          'Default Assertion',
+        samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectLocation =>
+          'URL',
         samlIDPSSODescriptor => 'Identity Provider',
-        samlIDPSSODescriptorWantAuthnRequestsSigned => 'Signed Authentication Request',
+        samlIDPSSODescriptorWantAuthnRequestsSigned =>
+          'Signed Authentication Request',
         samlIDPSSODescriptorProtocolSupportEnumeration => 'Protocol',
         samlIDPSSODescriptorKeyDescriptor => 'Keys',
         samlIDPSSODescriptorKeyDescriptorSigning => 'Signing Key',
@@ -166,19 +178,24 @@ sub en {
         samlIDPSSODescriptorSingleSignOnServiceSOAPLocation => 'SOAP URL',
         samlIDPSSODescriptorSingleLogoutService => 'Single Logout',
         samlIDPSSODescriptorSingleLogoutServiceHTTPLocation => 'HTTP URL',
-        samlIDPSSODescriptorSingleLogoutServiceHTTPResponseLocation => 'HTTP Response URL',
+        samlIDPSSODescriptorSingleLogoutServiceHTTPResponseLocation =>
+          'HTTP Response URL',
         samlIDPSSODescriptorSingleLogoutServiceSOAPLocation => 'SOAP URL',
-        samlIDPSSODescriptorSingleLogoutServiceSOAPResponseLocation => 'SOAP Response URL',
+        samlIDPSSODescriptorSingleLogoutServiceSOAPResponseLocation =>
+          'SOAP Response URL',
         samlIDPSSODescriptorArtifactResolutionService => 'Artifact Resolution',
         samlIDPSSODescriptorArtifactResolutionServiceArtifact => 'SOAP',
         samlIDPSSODescriptorArtifactResolutionServiceArtifactIndex => 'Index',
-        samlIDPSSODescriptorArtifactResolutionServiceArtifactDefault => 'Default Artifact',
+        samlIDPSSODescriptorArtifactResolutionServiceArtifactDefault =>
+          'Default Artifact',
         samlIDPSSODescriptorArtifactResolutionServiceArtifactLocation => 'URL',
         samlIDPSSODescriptorManageNameIDService => 'Name ID Manager',
         samlIDPSSODescriptorManageNameIDServiceHTTPLocation => 'HTTP URL',
-        samlIDPSSODescriptorManageNameIDServiceHTTPResponseLocation => 'HTTP Response URL',
+        samlIDPSSODescriptorManageNameIDServiceHTTPResponseLocation =>
+          'HTTP Response URL',
         samlIDPSSODescriptorManageNameIDServiceSOAPLocation => 'SOAP URL',
-        samlIDPSSODescriptorManageNameIDServiceSOAPResponseLocation => 'SOAP Response URL',
+        samlIDPSSODescriptorManageNameIDServiceSOAPResponseLocation =>
+          'SOAP Response URL',
     };
 }
 
@@ -266,6 +283,8 @@ sub fr {
         virtualHosts               => 'Hôtes virtuels',
         whatToTrace  => "Variable d'environnement REMOTE_USER",
 
+        saml                        => 'SAML',
+        samlServicePrivateKey       => 'Clé privée',
         samlServiceMetaData => 'Service SAML 2',
         samlEntityID => 'Identifiant d\'entité',
         samlOrganization => 'Organisation',
@@ -273,31 +292,41 @@ sub fr {
         samlOrganizationName => 'Nom',
         samlOrganizationURL => 'URL',
         samlSPSSODescriptor => 'Fournisseur de service',
-        samlSPSSODescriptorAuthnRequestsSigned => 'Requête d\'authentification signé',
+        samlSPSSODescriptorAuthnRequestsSigned =>
+          'Requête d\'authentification signé',
         samlSPSSODescriptorProtocolSupportEnumeration => 'Protocole',
         samlSPSSODescriptorKeyDescriptor => 'Clefs',
         samlSPSSODescriptorKeyDescriptorSigning => 'Clef de signature',
         samlSPSSODescriptorKeyDescriptorEncryption => 'Clef de chiffrement',
         samlSPSSODescriptorSingleLogoutService => 'Single Logout',
         samlSPSSODescriptorSingleLogoutServiceHTTPLocation => 'URL HTTP',
-        samlSPSSODescriptorSingleLogoutServiceHTTPReponseLocation => 'URL HTTP de retour',
+        samlSPSSODescriptorSingleLogoutServiceHTTPReponseLocation =>
+          'URL HTTP de retour',
         samlSPSSODescriptorSingleLogoutServiceSOAPLocation => 'URL SOAP',
-        samlSPSSODescriptorSingleLogoutServiceSOAPResponseLocation => 'URL SOAP de retour',
+        samlSPSSODescriptorSingleLogoutServiceSOAPResponseLocation =>
+          'URL SOAP de retour',
         samlSPSSODescriptorAssertionConsumerService => 'Assertions',
         samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact => 'Artifact',
         samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactIndex => 'Index',
-        samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactDefault => 'Assertion par défaut',
-        samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactLocation => 'URL',
+        samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactDefault =>
+          'Assertion par défaut',
+        samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactLocation =>
+          'URL',
         samlSPSSODescriptorAssertionConsumerServiceHTTPPost => 'POST',
         samlSPSSODescriptorAssertionConsumerServiceHTTPPostIndex => 'Index',
-        samlSPSSODescriptorAssertionConsumerServiceHTTPPostDefault => 'Assertion par défaut',
+        samlSPSSODescriptorAssertionConsumerServiceHTTPPostDefault =>
+          'Assertion par défaut',
         samlSPSSODescriptorAssertionConsumerServiceHTTPPostLocation => 'URL',
-        samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect => 'Redirection HTTP',
+        samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect =>
+          'Redirection HTTP',
         samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectIndex => 'Index',
-        samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectDefault => 'Assertion par défaut',
-        samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectLocation => 'URL',
+        samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectDefault =>
+          'Assertion par défaut',
+        samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectLocation =>
+          'URL',
         samlIDPSSODescriptor => 'Fournisseur d\'identité',
-        samlIDPSSODescriptorWantAuthnRequestsSigned => 'Requête d\'authentification signé',
+        samlIDPSSODescriptorWantAuthnRequestsSigned =>
+          'Requête d\'authentification signé',
         samlIDPSSODescriptorProtocolSupportEnumeration => 'Protocole',
         samlIDPSSODescriptorKeyDescriptor => 'Clefs',
         samlIDPSSODescriptorKeyDescriptorSigning => 'Clef de signature',
@@ -307,19 +336,24 @@ sub fr {
         samlIDPSSODescriptorSingleSignOnServiceSOAPLocation => 'URL SOAP',
         samlIDPSSODescriptorSingleLogoutService => 'Single Logout',
         samlIDPSSODescriptorSingleLogoutServiceHTTPLocation => 'URL HTTP',
-        samlIDPSSODescriptorSingleLogoutServiceHTTPResponseLocation => 'URL HTTP de retour',
+        samlIDPSSODescriptorSingleLogoutServiceHTTPResponseLocation =>
+          'URL HTTP de retour',
         samlIDPSSODescriptorSingleLogoutServiceSOAPLocation => 'URL SOAP',
-        samlIDPSSODescriptorSingleLogoutServiceSOAPResponseLocation => 'URL SOAP de retour',
+        samlIDPSSODescriptorSingleLogoutServiceSOAPResponseLocation =>
+          'URL SOAP de retour',
         samlIDPSSODescriptorArtifactResolutionService => 'Artifact',
         samlIDPSSODescriptorArtifactResolutionServiceArtifact => 'SOAP',
         samlIDPSSODescriptorArtifactResolutionServiceArtifactIndex => 'Index',
-        samlIDPSSODescriptorArtifactResolutionServiceArtifactDefault => 'Artifact par défaut',
+        samlIDPSSODescriptorArtifactResolutionServiceArtifactDefault =>
+          'Artifact par défaut',
         samlIDPSSODescriptorArtifactResolutionServiceArtifactLocation => 'URL',
         samlIDPSSODescriptorManageNameIDService => 'NameID manager',
         samlIDPSSODescriptorManageNameIDServiceHTTPLocation => 'URL HTTP',
-        samlIDPSSODescriptorManageNameIDServiceHTTPResponseLocation => 'URL HTTP de retour',
+        samlIDPSSODescriptorManageNameIDServiceHTTPResponseLocation =>
+          'URL HTTP de retour',
         samlIDPSSODescriptorManageNameIDServiceSOAPLocation => 'URL SOAP',
-        samlIDPSSODescriptorManageNameIDServiceSOAPResponseLocation => 'URL SOAP de retour',
+        samlIDPSSODescriptorManageNameIDServiceSOAPResponseLocation =>
+          'URL SOAP de retour',
     };
 }
 

@@ -137,6 +137,11 @@
      <input type="text" id="text" onchange="setlmdata(currentId,this.value)"/>
     </div>
 
+    <!-- Simple textarea -->
+    <div id="content_textarea" class="hidden">
+     <textarea id="textarea" cols="80" rows="10" onchange="setlmdata(currentId,this.value)"></textarea>
+    </div>
+
     <!-- Specific to securedCookie (TODO push in _Struct.pm) -->
     <div id="content_securedCookie" class="hidden">
     <input id="securedCookie0" type="radio" name="securedCookie" value="0" onclick="setlmdata('li_L3NlY3VyZWRDb29raWU1','0')" /> <lang en="Non secured cookie" fr="Cookie non sécurisé"/><br/>

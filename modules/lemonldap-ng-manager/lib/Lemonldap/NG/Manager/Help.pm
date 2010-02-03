@@ -28,7 +28,7 @@ sub import {
     $l ||= "en";
     foreach $h (
         qw(authParams cookieName domain groups ldap macros storage timeout vars
-        whatToTrace virtualHosts portalForceAuthn default)
+        whatToTrace virtualHosts portalForceAuthn default saml samlServicePrivateKey)
       )
     {
         *{"${caller_package}::help_$h"} = \&{"help_${h}_$l"};
@@ -725,3 +725,76 @@ sub help_default_fr {
 <p class="info">Cette interface concerne la configuration globale. Tous les paramètres peuvent être surchargés dans le fichier local de configuration nommé <tt>lemonldap-ng.ini</tt>.</p>
 EOT
 }
+
+## saml
+# en
+sub help_saml_en {
+    print <<EOT;
+<h3>SAML</h3>
+<p>LemonLDAP::NG is SAML compliant, and can be used as:
+<ul>
+<li>SAML Service Provider:
+<ul>
+<li>authentication => SAML</li>
+<li>userDB => SAML</li>
+</ul>
+</li>
+<li>SAML Identity Provider:
+<ul>
+<li>issuerDB => SAML</li>
+</ul>
+</li>
+</ul>
+<p class="info">SAML features requires <a href="http://lasso.entrouvert.org" alt="Lasso">Lasso</a> module.</p>
+EOT
+}
+
+# fr
+sub help_saml_fr {
+    print <<EOT;
+<h3>SAML</h3>
+<p>LemonLDAP::NG est compatible SAML, et peut être utilisé en tant que :
+<ul>
+<li>Fournisseur de service SAML :
+<ul>
+<li>authentication => SAML</li>
+<li>userDB => SAML</li>
+</ul>
+</li>
+<li>Fournisseur d'identité SAML :
+<ul>
+<li>issuerDB => SAML</li>
+</ul>
+</li>
+</ul>
+<p class="info">L'activation du SAML nécessite le module <a href="http://lasso.entrouvert.org" alt="Lasso">Lasso</a>.</p>
+EOT
+}
+
+## samlServicePrivateKey
+# en
+sub help_samlServicePrivateKey_en {
+    print <<EOT;
+<h3>SAML service private key</h3>
+<p>Paste here the service private key.</p>
+<p>Example:</p>
+<pre>
+MIIBOgIBAAJBANZ2b5wb43eJRYnln2bfo+neq6ZQYksmFtn3juDB/UklfwVN0XPE8NBHXFQjfXPeVse6Ztjl+C443jRCkSawVZMCAwEAAQJBALO56WrADG5+waIApwdFYE575wmnz9f+gaQEzN4adDM5CgKplp5a5HUxinkLSMuYHNW7E8sh27A6wsF8zeiZ9mECIQD1kno1Y9st1NtGsrK9yXL55oTbXD7cdx1m4c2i+5E+WQIhAN+Rx065mJuh2nsZ7FESLorDzpdrI0SvuNAUI5+7uG3LAiBRvR28Y65yxOTv1U81aLZCg/443a12yJcaxZIi68VekQIgUTljUcS4HwLkn4jBhIq4gg21humTvKai3GYUszm+PZUCIDnRX1EobS0/HFKASpX7GG4VTi9Rbd5jWbM5ZfSlCjLJ
+</pre>
+<p class="info">The corresponding public key must be set inside SAML service metadata.</p>
+EOT
+}
+
+# fr
+sub help_samlServicePrivateKey_fr {
+    print <<EOT;
+<h3>Clé privée du service SAML</h3>
+<p>Coller ici la clé privé du service.</p>
+<p>Exemple :</p>
+<pre>
+MIIBOgIBAAJBANZ2b5wb43eJRYnln2bfo+neq6ZQYksmFtn3juDB/UklfwVN0XPE8NBHXFQjfXPeVse6Ztjl+C443jRCkSawVZMCAwEAAQJBALO56WrADG5+waIApwdFYE575wmnz9f+gaQEzN4adDM5CgKplp5a5HUxinkLSMuYHNW7E8sh27A6wsF8zeiZ9mECIQD1kno1Y9st1NtGsrK9yXL55oTbXD7cdx1m4c2i+5E+WQIhAN+Rx065mJuh2nsZ7FESLorDzpdrI0SvuNAUI5+7uG3LAiBRvR28Y65yxOTv1U81aLZCg/443a12yJcaxZIi68VekQIgUTljUcS4HwLkn4jBhIq4gg21humTvKai3GYUszm+PZUCIDnRX1EobS0/HFKASpX7GG4VTi9Rbd5jWbM5ZfSlCjLJ
+</pre>
+<p class="info">La clé publique correspondante doit être définie dans les metadonnées du service.</p>
+EOT
+}
+

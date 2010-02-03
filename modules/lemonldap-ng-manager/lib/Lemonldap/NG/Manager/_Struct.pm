@@ -44,7 +44,7 @@ sub cstruct {
 sub struct {
     my $self = shift;
     return {
-        _nodes => [qw(n:generalParameters n:variables n:virtualHosts n:samlServiceMetaData)],
+        _nodes => [qw(n:generalParameters n:variables n:virtualHosts n:saml)],
         _help  => 'default',
 
         ######################
@@ -240,11 +240,18 @@ sub struct {
             _call   => '$(\'#bnewvh\').show();',
         },
 
-        #################
-        # SAML METADATA #
-        #################
+        ########
+        # SAML #
+        ########
+        saml => {
+            _nodes => [qw(n:samlServiceMetaData samlServicePrivateKey)],
+            _help  => 'saml',
 
-        samlServiceMetaData => Lemonldap::NG::Common::Conf::SAML::Metadata::createSimpleStruct(),
+            samlServiceMetaData =>
+              Lemonldap::NG::Common::Conf::SAML::Metadata::createSimpleStruct(),
+            samlServicePrivateKey =>
+              'textarea:/samlServicePrivateKey:samlServicePrivateKey:textarea',
+        },
     };
 }
 
@@ -445,6 +452,9 @@ sub testStruct {
             keyTest => qr/^(?:none|authentificate|manager|)$/,
             msgFail => 'must be one of none authentificate manager',
         },
+        saml                  => $testNotDefined,
+        samlServiceMetaData   => $testNotDefined,
+        samlServicePrivateKey => $testNotDefined,
         securedCookie => {
             test    => qr/^(?:0|1|2)$/,
             msgFail => 'securedCookie must be 0, 1 or 2',

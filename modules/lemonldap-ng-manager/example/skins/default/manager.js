@@ -202,6 +202,11 @@ function text(id) {
 	$('#text').attr('value',lmdata(id));
 	display('text',lmtext(id));
 }
+function textarea(id) {
+	currentId=id;
+	$('#textarea').attr('value',lmdata(id));
+	display('textarea',lmtext(id));
+}
 function securedCookieValues(id){
 	currentId=id;
 	$('#securedCookie'+lmdata(id)).attr('checked',1);
