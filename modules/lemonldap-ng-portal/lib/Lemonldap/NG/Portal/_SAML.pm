@@ -75,9 +75,14 @@ sub checkLassoError {
     my $error = shift;
     my $level = shift || 'debug';
 
-    # Return if $error is not a Lasso::Error object
-    return 1 unless ( ref($error) and $error->isa("Lasso::Error") );
+    # If $error is not a Lasso::Error object, display error string
+    unless ( ref($error) and $error->isa("Lasso::Error") ) {
+        return 1 unless $error;
+        $self->lmLog( "Lasso error: $error", $level );
+        return 0;
+    }
 
+    # Else check error code and error message
     if ( $error->{code} ) {
         $self->lmLog(
             "Lasso error code " . $error->{code} . ": " . $error->{message},
@@ -91,23 +96,24 @@ sub checkLassoError {
 ## @method Lasso::Server createServer(string metadata, string private_key, string private_key_password, string certificate)
 # Load service metadata and create Lasso::Server object
 # @param string metadata
-# @param string optional private key
+# @param string private key
 # @param string optional private key password
 # @param string optional certificate
 # @return Lasso::Server object
 sub createServer {
     my $self                 = shift;
     my $metadata             = shift;
-    my $private_key          = shift || '';
-    my $private_key_password = shift || '';
-    my $certificate          = shift || '';
+    my $private_key          = shift;
+    my $private_key_password = shift;
+    my $certificate          = shift;
+    my $server;
 
-    my $server = Lasso::Server::new_from_buffers( $metadata, $private_key,
+    eval {
+        $server = Lasso::Server::new_from_buffers( $metadata, $private_key,
         $private_key_password, $certificate );
+    };
 
-    unless ($server) {
-        $self->lmLog( 'Unable to create Lasso server', 'error' );
-    }
+    $self->checkLassoError($@);
 
     return $server;
 }

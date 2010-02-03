@@ -25,8 +25,13 @@ sub authInit {
     # Activate SOAP
     $self->{Soap} = 1;
 
-    # Check presence of service metadata in configuration
-    return PE_ERROR unless $self->{samlServiceMetaData};
+    # Check presence of service metadata and private key in configuration
+    unless ( $self->{samlServiceMetaData} and $self->{samlServicePrivateKey} ) {
+        $self->lmLog(
+            "SAML service metadata or private key not found in configuration",
+            'error' );
+        return PE_ERROR;
+    }
 
     # Get metadata from configuration
     $self->lmLog( "Get Metadata for this service", 'debug' );
@@ -43,10 +48,15 @@ sub authInit {
     }
 
     # Create Lasso server with service metadata
-    # Provate key has to be inside service metadata
-    my $server = $self->createServer( $service_metadata->toXML() );
+    my $server = $self->createServer(
+        $service_metadata->toXML(),
+        $self->{samlServicePrivateKey},
+    );
 
-    return PE_ERROR unless $server;
+    unless ($server) {
+        $self->lmLog( 'Unable to create Lasso server', 'error' );
+        return PE_ERROR;
+    }
 
     $self->lmLog( "Service created", 'debug' );
 
