@@ -37,6 +37,7 @@ example/skins/default/accordion.css
 example/skins/default/application_side_list.png
 example/skins/default/application_side_tree.png
 example/skins/default/arrow_refresh.png
+example/skins/default/bullet_orange.png
 example/skins/default/collapsable-last.gif
 example/skins/default/collapsable.gif
 example/skins/default/cross.png
@@ -46,6 +47,7 @@ example/skins/default/expandable.gif
 example/skins/default/folder_add.png
 example/skins/default/folder_delete.png
 example/skins/default/folder_edit.png
+example/skins/default/help.png
 example/skins/default/hframe.png
 example/skins/default/images/ui-bg_diagonals-thick_18_b81900_40x40.png
 example/skins/default/images/ui-bg_diagonals-thick_20_666666_40x40.png
@@ -61,6 +63,7 @@ example/skins/default/images/ui-icons_228ef1_256x240.png
 example/skins/default/images/ui-icons_ef8c08_256x240.png
 example/skins/default/images/ui-icons_ffd27a_256x240.png
 example/skins/default/images/ui-icons_ffffff_256x240.png
+example/skins/default/information.png
 example/skins/default/jquery-1.3.2.min.js
 example/skins/default/jquery-ui-1.7.2.custom.css
 example/skins/default/jquery-ui-1.7.2.custom.min.js

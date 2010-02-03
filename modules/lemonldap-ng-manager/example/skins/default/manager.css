@@ -124,18 +124,75 @@ input
 	max-height:200px;
 }
 
-#css-switch {
+#css-switch
+{
 	padding:5px 10px;
 	margin-bottom:10px;
 	border:solid #bbb 1px;
 }
-#css-switch a {
+#css-switch a
+{
 	padding-left:20px;
 	margin-left:10px;
 }
-#css-switch a[alt=tree] {
+
+#css-switch a[alt=tree]
+{
 	background:url("application_side_tree.png") no-repeat;
 }
-#css-switch a[alt=accordion] {
+
+#css-switch a[alt=accordion]
+{
 	background:url("application_side_list.png") no-repeat;
+}
+
+/* Help messages */
+#help h3
+{
+	text-align:center;
+	letter-spacing:2px;
+	border-bottom:1px solid #aaa;
+	padding:5px;
+	margin:5px 50px;
+}
+
+#help ul
+{
+	list-style-position:inside;
+	list-style-image:url("bullet_orange.png");
+}
+
+#help pre
+{
+	word-wrap:break-word;
+	white-space:pre-wrap;
+	font-family:monospace;
+	background:#ccc;
+	border-color:#aaa;
+	border-width:1px 1px 1px 5px;
+	border-style:solid;
+	padding:5px;
+}
+
+#help .info, #help .default
+{
+	padding:5px 5px 5px 30px;
+	border:1px solid #aaa;
+}
+
+#help .info
+{
+	background:#ddd url("information.png") no-repeat 5px;
+}
+
+#help .default
+{
+	background:#ddd url("help.png") no-repeat 5px;
+}
+
+#help tt
+{
+	padding:3px;
+	background:#ddd;
+	font-weight:bold;
 }
