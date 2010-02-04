@@ -286,6 +286,9 @@ sub error_ro {
 # * PM_REMOVE_OTHER_SESSIONS	5
 # * PM_PP_GRACE			6
 # * PM_PP_EXP_WARNING		7
+# * PM_SAML_IDPSELECT           8
+# * PM_SAML_IDPCHOOSEN          9
+# * PM_REMEMBERCHOICE          10
 
 sub msg_en {
     use utf8;
@@ -298,6 +301,9 @@ sub msg_en {
         'Remove other sessions',
         'authentications remaining, change your password!',
         'seconds before password expiration, change it!',
+        'Select your Identity Provider',
+        'Redirection to your Identity Provider',
+        'Remember my choice',
     ];
 }
 
@@ -312,6 +318,9 @@ sub msg_fr {
         'Supprimer les autres sessions',
         'authentifications restantes, changez votre mot de passe !',
 'secondes avant expiration de votre mot de passe, pensez à le changer !',
+        'Choisissez votre fournisseur d\'identité',
+        'Redirection vers votre fournisseur d\'identité',
+        'Se souvenir de mon choix',
     ];
 }
 

@@ -101,6 +101,9 @@ use constant {
     PM_REMOVE_OTHER_SESSIONS => 5,
     PM_PP_GRACE              => 6,
     PM_PP_EXP_WARNING        => 7,
+    PM_SAML_IDPSELECT        => 8,
+    PM_SAML_IDPCHOOSEN       => 9,
+    PM_REMEMBERCHOICE         => 10,
 };
 
 # EXPORTER PARAMETERS
@@ -117,6 +120,7 @@ our @EXPORT = qw( PE_INFO PE_REDIRECT PE_DONE PE_OK PE_SESSIONEXPIRED
   PE_CONFIRM PE_MAILFORMEMPTY PE_BADMAILTOKEN PE_MAILERROR PE_MAILOK
   PM_USER PM_DATE PM_IP PM_SESSIONS_DELETED PM_OTHER_SESSIONS
   PM_REMOVE_OTHER_SESSIONS PM_PP_GRACE PM_PP_EXP_WARNING
+  PM_SAML_IDPSELECT PM_SAML_IDPCHOOSEN PM_REMEMBERCHOICE
 );
 our %EXPORT_TAGS = ( 'all' => [ @EXPORT, 'import' ], );
 
@@ -341,6 +345,9 @@ sub setDefaultValues {
         $self->{userDB}     ||= "LDAP";
         $self->{passwordDB} ||= "LDAP";
     }
+
+    # SAML
+    $self->{samlIdPResolveCookie} ||= "lemonldapidp";
 }
 
 =begin WSDL
@@ -639,6 +646,20 @@ sub _deleteSession {
 
     # Return the result of tied(%$h)->delete()
     return $r;
+}
+
+##@method private void _dump( variable )
+# Dump variable in debug mode
+# @param $variable
+# @return void
+sub _dump {
+	my $self = shift;
+	my $variable = shift;
+
+	use Data::Dumper;
+    $self->lmLog( "Dump: " . Dumper($variable), 'debug' );
+
+	return;
 }
 
 ##@method protected string info(string t)
