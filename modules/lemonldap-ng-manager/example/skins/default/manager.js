@@ -187,7 +187,6 @@ function setlmsamlassertion(id){
 				d[0]='1';
 		}
 			$('#'+currentId).attr('value',d.join(';'));
-			alert('#'+currentId+'\n'+d.join(';'));
 			if(currentId=='test_'+id)
 			{
 				def='1';
