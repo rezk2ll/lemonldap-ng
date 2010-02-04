@@ -8,7 +8,11 @@ package Lemonldap::NG::Portal::_SAML;
 use strict;
 use base qw(Exporter);
 
-our @EXPORT = qw(loadLasso checkLassoError createServer addIDP addProvider);
+our @EXPORT = qw(
+  loadLasso checkLassoError createServer addIDP addProvider
+  createAuthnRequest createLogin getHttpMethod initAuthnRequest
+  buildAuthnRequestMsg
+);
 
 our $VERSION = '0.01';
 
@@ -167,6 +171,107 @@ sub addProvider {
     return $self->checkLassoError($@);
 
 }
+## @method Lasso::Login createAuthnRequest(Lasso::Server server, string idp)
+# Create authentication request for selected IDP
+# @param Lasso::Server server
+# @param string entityID
+# @return Lasso::Login object
+sub createAuthnRequest {
+    my $self   = shift;
+    my $server = shift;
+    my $idp    = shift;
+
+    # Create Lasso Login
+    my $login = $self->createLogin($server);
+
+    unless ($login) {
+        $self->lmLog( 'Unable to create Lasso login', 'error' );
+        return;
+    }
+
+    # Get HTTP method for selected IDP
+    my $method = $self->getHttpMethod( $server, $idp );
+
+    $self->lmLog( "Use HTTP method $method", 'debug' );
+
+    # Init authentication request
+    unless ( $self->initAuthnRequest( $login, $idp, $method ) ) {
+        $self->lmLog( "Could not initiate authentication request on $idp",
+            'error' );
+        return;
+    }
+
+    # Build authentication request
+    unless ( $self->buildAuthnRequestMsg($login) ) {
+        $self->lmLog( "Could not build authentication request on $idp",
+            'error' );
+        return;
+    }
+
+    return $login;
+}
+
+## @method Lasso::Login createLogin(Lasso::Server server)
+# Create Lasso::Login object
+# @param Lasso::Server server
+# @return Lasso::Login object
+sub createLogin {
+    my $self   = shift;
+    my $server = shift;
+    my $login;
+
+    eval { $login = Lasso::Login->new($server); };
+
+    $self->checkLassoError($@);
+
+    return $login;
+}
+
+## @method int getHttpMethod(Lasso::Server server, string idp)
+# Find a compatible HTTP method
+# @param Lasso::Server server
+# @param string entityID
+# @return int HTTP method
+sub getHttpMethod {
+    my $self   = shift;
+    my $server = shift;
+    my $idp    = shift;
+
+    # TODO
+
+    # By default, use HTTP REDIRECT
+    return Lasso::Constants::HTTP_METHOD_REDIRECT;
+}
+
+## @method boolean initAuthnRequest(Lasso::Login login, string idp, int method)
+# Init authentication request
+# @param Lasso::Login login
+# @param string entityID
+# @param int HTTP method
+# @return boolean result
+sub initAuthnRequest {
+    my $self   = shift;
+    my $login  = shift;
+    my $idp    = shift;
+    my $method = shift;
+
+    eval { Lasso::Login::init_authn_request( $login, $idp, $method ); };
+
+    return $self->checkLassoError($@);
+}
+
+## @method boolean buildAuthnRequestMsg(Lasso::Login login)
+# Build authentication request message
+# @param Lasso::Login login
+# @return boolean result
+sub buildAuthnRequestMsg {
+    my $self  = shift;
+    my $login = shift;
+
+    eval { Lasso::Login::build_authn_request_msg($login); };
+
+    return $self->checkLassoError($@);
+}
 
 1;
 
@@ -208,6 +313,26 @@ Add IDP to an existing Lasso::Server
 =head2 addProvider
 
 Add provider to an existing Lasso::Server
+
+=head2 createAuthnRequest
+
+Create authentication request for selected IDP
+
+=head2 createLogin
+
+Create Lasso::Login object
+
+=head2 getHttpMethod
+
+Find a compatible HTTP method
+
+=head2 initAuthnRequest
+
+Init authentication request
+
+=head2 buildAuthnRequestMsg
+
+Build authentication request message
 
 =head1 SEE ALSO
 

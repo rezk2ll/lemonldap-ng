@@ -107,6 +107,9 @@ sub authInit {
             $self->lmLog( "IDP $_ added", 'debug' );
         }
 
+    # Store Lasso::Server object
+    $self->{_lassoServer} = $server;
+
     PE_OK;
 }
 
@@ -115,6 +118,7 @@ sub authInit {
 # @return Lemonldap::NG::Portal error code
 sub extractFormInfo {
     my $self = shift;
+    my $server = $self->{_lassoServer};
     my $idp;
 
     # 1. Get authentication statement
@@ -135,6 +139,8 @@ sub extractFormInfo {
     # If no IDP resolve cookie, find another way to get it
     # Case 1: IDP was choosen from portal IDP list
     $idp ||= $self->param("idp");
+
+    # TODO - other case (IP resolution, etc.)
 
     # Get confirmation flag
     my $confirm_flag = $self->param("confirm");
@@ -221,7 +227,14 @@ sub extractFormInfo {
     }
     
     # 3. Build authentication request
-    #TODO
+    my $login = $self->createAuthnRequest( $server, $idp );
+
+    unless ($login) {
+        $self->lmLog( "Could not create authentication request on $idp",
+            'error' );
+        return PE_ERROR;
+    }
+    $self->lmLog( "Authentication request created", 'debug' );
 
     PE_OK;
 }
