@@ -488,6 +488,32 @@ sub testStruct {
             test    => qr/^\$?[a-zA-Z]\w*$/,
             msgFail => 'Bad value',
         },
+        ########
+        # SAML #
+        ########
+        samlServicePrivateKey => $testNotDefined,
+        samlEntityID => $testNotDefined,
+        samlOrganizationDisplayName => $testNotDefined,
+        samlOrganizationName => $testNotDefined,
+        samlOrganizationURL => $testNotDefined,
+        samlSPSSODescriptorAuthnRequestsSigned => $boolean,
+        samlSPSSODescriptorProtocolSupportEnumeration => $testNotDefined,
+        samlSPSSODescriptorKeyDescriptorSigning => $testNotDefined,
+        samlSPSSODescriptorSingleLogoutServiceHTTP => $testNotDefined,
+        samlSPSSODescriptorSingleLogoutServiceSOAP => $testNotDefined,
+        samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact => $testNotDefined,
+        samlSPSSODescriptorAssertionConsumerServiceHTTPPost => $testNotDefined,
+        samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect => $testNotDefined,
+        samlIDPSSODescriptorWantAuthnRequestsSigned => $boolean,
+        samlIDPSSODescriptorProtocolSupportEnumeration => $testNotDefined,
+        samlIDPSSODescriptorKeyDescriptorSigning => $testNotDefined,
+        samlIDPSSODescriptorSingleSignOnServiceHTTP => $testNotDefined,
+        samlIDPSSODescriptorSingleSignOnServiceSOAP => $testNotDefined,
+        samlIDPSSODescriptorSingleLogoutServiceHTTP => $testNotDefined,
+        samlIDPSSODescriptorSingleLogoutServiceSOAP => $testNotDefined,
+        samlIDPSSODescriptorArtifactResolutionServiceArtifact => $testNotDefined,
+        samlIDPSSODescriptorManageNameIDServiceHTTP => $testNotDefined,
+        samlIDPSSODescriptorManageNameIDServiceSOAP => $testNotDefined,
     };
 }
 
@@ -536,6 +562,34 @@ sub defaultConf {
         userDB             => 'LDAP',
         useXForwardedForIP => '0',
         whatToTrace        => '$uid',
+        ########
+        # SAML #
+        ########
+        samlServicePrivateKey => '',
+        samlEntityID => '',
+        samlOrganizationDisplayName => 'Example',
+        samlOrganizationName => 'Example',
+        samlOrganizationURL => 'http://www.example.com',
+        samlSPSSODescriptorAuthnRequestsSigned => '0',
+        samlSPSSODescriptorProtocolSupportEnumeration =>
+          'urn:oasis:names:tc:SAML:2.0:protocol',
+        samlSPSSODescriptorKeyDescriptorSigning => '',
+        samlSPSSODescriptorSingleLogoutServiceHTTP => '',
+        samlSPSSODescriptorSingleLogoutServiceSOAP => '',
+        samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact => '',
+        samlSPSSODescriptorAssertionConsumerServiceHTTPPost => '',
+        samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect => '',
+        samlIDPSSODescriptorWantAuthnRequestsSigned => '0',
+        samlIDPSSODescriptorProtocolSupportEnumeration =>
+          'urn:oasis:names:tc:SAML:2.0:protocol',
+        samlIDPSSODescriptorKeyDescriptorSigning => '',
+        samlIDPSSODescriptorSingleSignOnServiceHTTP => '',
+        samlIDPSSODescriptorSingleSignOnServiceSOAP => '',
+        samlIDPSSODescriptorSingleLogoutServiceHTTP => '',
+        samlIDPSSODescriptorSingleLogoutServiceSOAP => '',
+        samlIDPSSODescriptorArtifactResolutionServiceArtifact => '',
+        samlIDPSSODescriptorManageNameIDServiceHTTP => '',
+        samlIDPSSODescriptorManageNameIDServiceSOAP => '',
     };
 }
 
