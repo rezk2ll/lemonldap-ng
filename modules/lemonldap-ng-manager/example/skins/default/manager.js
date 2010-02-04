@@ -157,31 +157,52 @@ function setlmtext(id,v){
 function setlmdata(id,v){
 	$('#text_'+id).attr('value',v);
 }
-function setlmsaml(id,div,v){
-	var max=0;
-	if(div=='samlAssertion'){
-		max=1;
+function setlmsamlassertion(id){
+	var ind=$('#samlAssertionIndex').attr('value');
+	var bin=$('#samlAssertionBinding').attr('value');
+	var loc=$('#samlAssertionLocation').attr('value');
+	var def='0';
+	if($('#samlAssertionDefaultOn').attr('checked')==true){
+		def='1';
 	}
-	var s='';
-	var t=$('#content_'+div).find('input').get();
+	// Update default value in other assertions.
+	var parentId=lmparent(id);
+	var t=$('#'+parentId).find('span').get();
 	for(i in t){
-		if(i > max){
-			s=s+';';
+		if(def=='1'){
+			var currentId=$(t[i]).attr('id');
+			if((currentId!='text_'+id)&&(currentId!='text_'+parentId)){
+				var d=$(t[i]).attr('value').split(';');
+				d[0]='0';
+				$('#'+currentId).attr('value',d.join(';'));
+			}
+		// If off, force on the first one.
+		}else if(i<t.length-1){
+			var currentId=$(t[t.length-1-i]).attr('id');
+			var d=$(t[t.length-1-i]).attr('value').split(';');
+			if(t.length-1-i>1)
+			{
+				d[0]='0';
+			}else{
+				d[0]='1';
 		}
-		var k=$(t[i]).attr('id');
-		if(k=='samlAssertionDefaultOn'){
-			if($(t[i]).attr('checked')==true){
-				s=s+'1';
+			$('#'+currentId).attr('value',d.join(';'));
+			alert('#'+currentId+'\n'+d.join(';'));
+			if(currentId=='test_'+id)
+			{
+				def='1';
 			}
-		}else if(k=='samlAssertionDefaultOff'){
-			if($(t[i]).attr('checked')==true){
-				s=s+'0';
-			}
-		}else{
-			s=s+$(t[i]).attr('value');
 		}
 	}
-	setlmdata(id,s);
+	var v=def+';'+ind+';'+bin+';'+loc;
+        setlmdata(id,v);
+}
+function setlmsamlservice(id){
+	var bin=$('#samlServiceBinding').attr('value');
+	var loc=$('#samlServiceLocation').attr('value');
+	var rep=$('#samlServiceResponseLocation').attr('value');
+        var v=bin+';'+loc+';'+rep;
+        setlmdata(id,v);
 }
 function display(div,title) {
 	var divs=$('#content').children();
