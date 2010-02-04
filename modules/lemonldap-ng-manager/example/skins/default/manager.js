@@ -207,6 +207,20 @@ function textarea(id) {
 	$('#textarea').attr('value',lmdata(id));
 	display('textarea',lmtext(id));
 }
+function samlAssertion(id) {
+	currentId=id;
+	$('#samlAssertionDefault').attr('value',lmdata(id));
+	$('#samlAssertionIndex').attr('value',lmdata(id));
+	$('#samlAssertionLocation').attr('value',lmdata(id));
+	display('samlAssertion',lmtext(lmparent(id)));
+}
+function samlService(id) {
+	currentId=id;
+	$('#samlServiceBinding').attr('value',lmdata(id));
+	$('#samlServiceLocation').attr('value',lmdata(id));
+	$('#samlServiceResponseLocation').attr('value',lmdata(id));
+	display('samlService',lmtext(lmparent(id)));
+}
 function securedCookieValues(id){
 	currentId=id;
 	$('#securedCookie'+lmdata(id)).attr('checked',1);

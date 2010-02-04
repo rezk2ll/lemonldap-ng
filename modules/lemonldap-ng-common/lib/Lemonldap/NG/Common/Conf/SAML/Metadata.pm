@@ -14,8 +14,8 @@ our $DEBUG   = 0;
 
 ## @cmethod Lemonldap::NG::Common::Conf::SAML::Metadata new(hashRef args)
 # Class constructor.
-#@param args hash reference
-#@return Lemonldap::NG::Common::Conf::SAML::Metadata object
+# @param args hash reference
+# @return Lemonldap::NG::Common::Conf::SAML::Metadata object
 sub new {
     my $class = shift;
     my $self = bless {}, $class;
@@ -76,99 +76,45 @@ sub createSimpleStruct {
             _nodes => [
                 qw(samlSPSSODescriptorAuthnRequestsSigned
                           samlSPSSODescriptorProtocolSupportEnumeration
-                          n:samlSPSSODescriptorKeyDescriptor
+                   samlSPSSODescriptorKeyDescriptorSigning
                           n:samlSPSSODescriptorSingleLogoutService
                   n:samlSPSSODescriptorAssertionConsumerService)
             ],
             _help  => 'default',
 
             samlSPSSODescriptorAuthnRequestsSigned =>
-              'text:/samlSPSSODescriptorAuthnRequestsSigned',
+              'bool:/samlSPSSODescriptorAuthnRequestsSigned',
             samlSPSSODescriptorProtocolSupportEnumeration =>
               'text:/samlSPSSODescriptorProtocolSupportEnumeration',
-
-            samlSPSSODescriptorKeyDescriptor => {
-                _nodes => [
-                    qw(samlSPSSODescriptorKeyDescriptorSigning
-                      samlSPSSODescriptorKeyDescriptorEncryption)
-                ],
-                _help => 'default',
                 samlSPSSODescriptorKeyDescriptorSigning =>
-                  'text:/samlSPSSODescriptorKeyDescriptorSigning',
-                samlSPSSODescriptorKeyDescriptorEncryption =>
-                  'text:/samlSPSSODescriptorKeyDescriptorEncryption',
-              },
+              'textarea:/samlSPSSODescriptorKeyDescriptorSigning',
 
             samlSPSSODescriptorSingleLogoutService => {
                 _nodes => [
-                    qw(samlSPSSODescriptorSingleLogoutServiceHTTPLocation
-                              samlSPSSODescriptorSingleLogoutServiceHTTPReponseLocation
-                              samlSPSSODescriptorSingleLogoutServiceSOAPLocation
-                      samlSPSSODescriptorSingleLogoutServiceSOAPResponseLocation)
+                    qw(samlSPSSODescriptorSingleLogoutServiceHTTP
+                       samlSPSSODescriptorSingleLogoutServiceSOAP)
                 ],
                 _help  => 'default',
-                samlSPSSODescriptorSingleLogoutServiceHTTPLocation =>
-                  'text:/samlSPSSODescriptorSingleLogoutServiceHTTPLocation',
-                samlSPSSODescriptorSingleLogoutServiceHTTPReponseLocation =>
-'text:/samlSPSSODescriptorSingleLogoutServiceHTTPReponseLocation',
-                samlSPSSODescriptorSingleLogoutServiceSOAPLocation =>
-                  'text:/samlSPSSODescriptorSingleLogoutServiceSOAPLocation',
-                samlSPSSODescriptorSingleLogoutServiceSOAPResponseLocation =>
-'text:/samlSPSSODescriptorSingleLogoutServiceSOAPResponseLocation',
+                samlSPSSODescriptorSingleLogoutServiceHTTP =>
+                  'samlService:/samlSPSSODescriptorSingleLogoutServiceHTTP',
+                samlSPSSODescriptorSingleLogoutServiceSOAP =>
+                  'samlService:/samlSPSSODescriptorSingleLogoutServiceSOAP',
               },
 
             samlSPSSODescriptorAssertionConsumerService => {
                 _nodes => [
-                    qw(n:samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact
-                              n:samlSPSSODescriptorAssertionConsumerServiceHTTPPost
-                      n:samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect)
-                ],
-                _help  => 'default',
-
-                samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact => {
-                    _nodes => [
-                        qw(samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactIndex
-                                  samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactDefault
-                          samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactLocation)
+                    qw(samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact
+                       samlSPSSODescriptorAssertionConsumerServiceHTTPPost
+                       samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect)
                     ],
                     _help  => 'default',
-                    samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactIndex =>
-'int:/samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactIndex',
-                    samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactDefault =>
-'bool:/samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactDefault',
-                    samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactLocation =>
-'text:/samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactLocation',
-                  },
 
-                samlSPSSODescriptorAssertionConsumerServiceHTTPPost => {
-                    _nodes => [
-                        qw(samlSPSSODescriptorAssertionConsumerServiceHTTPPostIndex
-                                  samlSPSSODescriptorAssertionConsumerServiceHTTPPostDefault
-                          samlSPSSODescriptorAssertionConsumerServiceHTTPPostLocation)
-                    ],
-                    _help  => 'default',
-                    samlSPSSODescriptorAssertionConsumerServiceHTTPPostIndex =>
-'int:/samlSPSSODescriptorAssertionConsumerServiceHTTPPostIndex',
-                    samlSPSSODescriptorAssertionConsumerServiceHTTPPostDefault =>
-'bool:/samlSPSSODescriptorAssertionConsumerServiceHTTPPostDefault',
-                    samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactLocation =>
-'text:/samlSPSSODescriptorAssertionConsumerServiceHTTPPostLocation',
-                  },
-
-                samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect => {
-                    _nodes => [
-                        qw(samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectIndex
-                                  samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectDefault
-                          samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectLocation)
-                    ],
-                    _help  => 'default',
-                    samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectIndex =>
-'int:/samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectIndex',
-                    samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectDefault =>
-'bool:/samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectDefault',
-                    samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectLocation =>
-'text:/samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectLocation',
-                  },
+                samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact =>
+                  'samlAssertion:/samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact',
+                samlSPSSODescriptorAssertionConsumerServiceHTTPPost =>
+                  'samlAssertion:/samlSPSSODescriptorAssertionConsumerServiceHTTPPost',
+                samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect =>
+                  'samlAssertion:/samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect',
               },
           },
 
@@ -180,7 +126,7 @@ sub createSimpleStruct {
             _nodes => [
                 qw(samlIDPSSODescriptorWantAuthnRequestsSigned
                           samlIDPSSODescriptorProtocolSupportEnumeration
-                          n:samlIDPSSODescriptorKeyDescriptor
+                   samlIDPSSODescriptorKeyDescriptorSigning
                           n:samlIDPSSODescriptorSingleSignOnService
                           n:samlIDPSSODescriptorSingleLogoutService
                           n:samlIDPSSODescriptorArtifactResolutionService
@@ -189,89 +135,55 @@ sub createSimpleStruct {
             _help  => 'default',
 
             samlIDPSSODescriptorWantAuthnRequestsSigned =>
-              'text:/samlIDPSSODescriptorWantAuthnRequestsSigned',
+              'bool:/samlIDPSSODescriptorWantAuthnRequestsSigned',
             samlIDPSSODescriptorProtocolSupportEnumeration =>
               'text:/samlIDPSSODescriptorProtocolSupportEnumeration',
-
-            samlIDPSSODescriptorKeyDescriptor => {
-                _nodes => [
-                    qw(samlIDPSSODescriptorKeyDescriptorSigning
-                      samlIDPSSODescriptorKeyDescriptorEncryption)
-                ],
-                _help => 'default',
                 samlIDPSSODescriptorKeyDescriptorSigning =>
-                  'text:/samlIDPSSODescriptorKeyDescriptorSigning',
-                samlIDPSSODescriptorKeyDescriptorEncryption =>
-                  'text:/samlIDPSSODescriptorKeyDescriptorEncryption',
-              },
+              'textarea:/samlIDPSSODescriptorKeyDescriptorSigning',
 
             samlIDPSSODescriptorSingleSignOnService => {
                 _nodes => [
-                    qw(samlIDPSSODescriptorSingleSignOnServiceHTTPLocation
-                      samlIDPSSODescriptorSingleSignOnServiceSOAPLocation)
+                    qw(samlIDPSSODescriptorSingleSignOnServiceHTTP
+                       samlIDPSSODescriptorSingleSignOnServiceSOAP)
                 ],
                 _help => 'default',
-                samlIDPSSODescriptorSingleSignOnServiceHTTPLocation =>
-                  'text:/samlIDPSSODescriptorSingleSignOnServiceHTTPLocation',
-                samlIDPSSODescriptorSingleSignOnServiceSOAPLocation =>
-                  'text:/samlIDPSSODescriptorSingleSignOnServiceSOAPLocation',
+                samlIDPSSODescriptorSingleSignOnServiceHTTP =>
+                  'samlService:/samlIDPSSODescriptorSingleSignOnServiceHTTP',
+                samlIDPSSODescriptorSingleSignOnServiceSOAP =>
+                  'samlService:/samlIDPSSODescriptorSingleSignOnServiceSOAP',
               },
 
             samlIDPSSODescriptorSingleLogoutService => {
                 _nodes => [
-                    qw(samlIDPSSODescriptorSingleLogoutServiceHTTPLocation
-                              samlIDPSSODescriptorSingleLogoutServiceHTTPResponseLocation
-                              samlIDPSSODescriptorSingleLogoutServiceSOAPLocation
-                      samlIDPSSODescriptorSingleLogoutServiceSOAPResponseLocation)
+                    qw(samlIDPSSODescriptorSingleLogoutServiceHTTP
+                       samlIDPSSODescriptorSingleLogoutServiceSOAP)
                 ],
                 _help  => 'default',
-                samlIDPSSODescriptorSingleLogoutServiceHTTPLocation =>
-                  'text:/samlIDPSSODescriptorSingleLogoutServiceHTTPLocation',
-                samlIDPSSODescriptorSingleLogoutServiceHTTPResponseLocation =>
-'text:/samlIDPSSODescriptorSingleLogoutServiceHTTPResponseLocation',
-                samlIDPSSODescriptorSingleLogoutServiceSOAPLocation =>
-                  'text:/samlIDPSSODescriptorSingleLogoutServiceSOAPLocation',
-                samlIDPSSODescriptorSingleLogoutServiceSOAPResponseLocation =>
-'text:/samlIDPSSODescriptorSingleLogoutServiceSOAPResponseLocation',
+                samlIDPSSODescriptorSingleLogoutServiceHTTP =>
+                  'samlService:/samlIDPSSODescriptorSingleLogoutServiceHTTP',
+                samlIDPSSODescriptorSingleLogoutServiceSOAP =>
+                  'samlService:/samlIDPSSODescriptorSingleLogoutServiceSOAP',
               },
 
             samlIDPSSODescriptorArtifactResolutionService => {
                 _nodes =>
-                  [qw(n:samlIDPSSODescriptorArtifactResolutionServiceArtifact)],
+                  [qw(samlIDPSSODescriptorArtifactResolutionServiceArtifact)],
                 _help  => 'default',
 
-                samlIDPSSODescriptorArtifactResolutionServiceArtifact => {
-                    _nodes => [
-                        qw(samlIDPSSODescriptorArtifactResolutionServiceArtifactIndex
-                                  samlIDPSSODescriptorArtifactResolutionServiceArtifactDefault
-                          samlIDPSSODescriptorArtifactResolutionServiceArtifactLocation)
-                    ],
-                    _help  => 'default',
-                    samlIDPSSODescriptorArtifactResolutionServiceArtifactIndex =>
-'int:/samlIDPSSODescriptorArtifactResolutionServiceArtifactIndex',
-                    samlIDPSSODescriptorArtifactResolutionServiceArtifactDefault =>
-'bool:/samlIDPSSODescriptorArtifactResolutionServiceArtifactDefault',
-                    samlIDPSSODescriptorArtifactResolutionServiceArtifactLocation =>
-'text:/samlIDPSSODescriptorArtifactResolutionServiceArtifactLocation',
-                  },
+                samlIDPSSODescriptorArtifactResolutionServiceArtifact =>
+                  'samlAssertion:/samlIDPSSODescriptorArtifactResolutionServiceArtifact',
               },
 
             samlIDPSSODescriptorManageNameIDService => {
                 _nodes => [
-                    qw(samlIDPSSODescriptorManageNameIDServiceHTTPLocation
-                              samlIDPSSODescriptorManageNameIDServiceHTTPResponseLocation
-                              samlIDPSSODescriptorManageNameIDServiceSOAPLocation
-                      samlIDPSSODescriptorManageNameIDServiceSOAPResponseLocation)
+                    qw(samlIDPSSODescriptorManageNameIDServiceHTTP
+                       samlIDPSSODescriptorManageNameIDServiceSOAP)
                 ],
                 _help  => 'default',
-                samlIDPSSODescriptorManageNameIDServiceHTTPLocation =>
-                  'text:/samlIDPSSODescriptorManageNameIDServiceHTTPLocation',
-                samlIDPSSODescriptorManageNameIDServiceHTTPResponseLocation =>
-'text:/samlIDPSSODescriptorManageNameIDServiceHTTPResponseLocation',
-                samlIDPSSODescriptorManageNameIDServiceSOAPLocation =>
-                  'text:/samlIDPSSODescriptorManageNameIDServiceSOAPLocation',
-                samlIDPSSODescriptorManageNameIDServiceSOAPResponseLocation =>
-'text:/samlIDPSSODescriptorManageNameIDServiceSOAPResponseLocation',
+                samlIDPSSODescriptorManageNameIDServiceHTTP =>
+                  'samlService:/samlIDPSSODescriptorManageNameIDServiceHTTP',
+                samlIDPSSODescriptorManageNameIDServiceSOAP =>
+                  'samlService:/samlIDPSSODescriptorManageNameIDServiceSOAP',
               },
           },
       };
