@@ -137,9 +137,7 @@ sub en {
         samlSPSSODescriptorAuthnRequestsSigned =>
           'Signed Authentication Request',
         samlSPSSODescriptorProtocolSupportEnumeration => 'Protocol',
-        samlSPSSODescriptorKeyDescriptor => 'Keys',
         samlSPSSODescriptorKeyDescriptorSigning => 'Signing Key',
-        samlSPSSODescriptorKeyDescriptorEncryption => 'Encryption Key',
         samlSPSSODescriptorSingleLogoutService => 'Single Logout',
         samlSPSSODescriptorSingleLogoutServiceHTTP => 'HTTP Service',
         samlSPSSODescriptorSingleLogoutServiceSOAP => 'SOAP Service',
@@ -263,9 +261,7 @@ sub fr {
         samlSPSSODescriptorAuthnRequestsSigned =>
           'Requête d\'authentification signé',
         samlSPSSODescriptorProtocolSupportEnumeration => 'Protocole',
-        samlSPSSODescriptorKeyDescriptor => 'Clefs',
         samlSPSSODescriptorKeyDescriptorSigning => 'Clef de signature',
-        samlSPSSODescriptorKeyDescriptorEncryption => 'Clef de chiffrement',
         samlSPSSODescriptorSingleLogoutService => 'Single Logout',
         samlSPSSODescriptorSingleLogoutServiceHTTP => 'Service HTTP',
         samlSPSSODescriptorSingleLogoutServiceSOAP => 'Service SOAP',

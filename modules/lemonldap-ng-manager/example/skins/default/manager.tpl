@@ -184,15 +184,15 @@
      <table>
       <tr>
        <td><lang en="Binding" fr="Binding"/></td>
-       <td><input type="text" size="50" id="samlServiceBinding" onchange="setlmtext(currentId,this.value)"/></td>
+       <td><input type="text" size="50" id="samlServiceBinding" onchange="setlmsaml(currentId,'samlService',this.value)"/></td>
       </tr>
       <tr>
        <td><lang en="Location" fr="URL"/></td>
-       <td><input type="text" size="50" id="samlServiceLocation" onchange="setlmtext(currentId,this.value)"/></td>
+       <td><input type="text" size="50" id="samlServiceLocation" onchange="setlmsaml(currentId,'samlService',this.value)"/></td>
       </tr>
       <tr>
        <td><lang en="Response Location" fr="URL de retour"/></td>
-       <td><input type="text" size="50" id="samlServiceResponseLocation" onchange="setlmtext(currentId,$this.value)"/></td>
+       <td><input type="text" size="50" id="samlServiceResponseLocation" onchange="setlmsaml(currentId,'samlService',this.value)"/></td>
       </tr>
      </table>
     </div>
@@ -202,17 +202,21 @@
      <table>
       <tr>
        <td><lang en="Default" fr="Par défaut"/></td>
-       <td><input id="samlAssertionDefaultOn" type="radio" name="boolean" value="1" onclick="setlmdata(currentId,1)"/> <lang en="On" fr="Activé"/>
-           <input id="samlAssertionDefaultOff" type="radio" name="boolean" value="0" onclick="setlmdata(currentId,0)"/> <lang en="Off" fr="Désactivé"/>
+       <td><input id="samlAssertionDefaultOn" type="radio" name="boolean" value="1" onclick="setlmsaml(currentId,'samlAssertion',1)"/> <lang en="On" fr="Activé"/>
+           <input id="samlAssertionDefaultOff" type="radio" name="boolean" value="0" onclick="setlmsaml(currentId,'samlAssertion',0)"/> <lang en="Off" fr="Désactivé"/>
        </td>
       </tr>
       <tr>
        <td><lang en="Index" fr="Index"/></td>
-       <td><input type="text" size="50" id="samlAssertionIndex" onchange="setlmtext(currentId,this.value)"/></td>
+       <td><input type="text" size="50" id="samlAssertionIndex" onchange="setlmsaml(currentId,'samlAssertion',this.value)"/></td>
+      </tr>
+      <tr>
+       <td><lang en="Binding" fr="Binding"/></td>
+       <td><input type="text" size="50" id="samlAssertionBinding" onchange="setlmsaml(currentId,'samlAssertion',this.value)"/></td>
       </tr>
       <tr>
        <td><lang en="Location" fr="URL"/></td>
-       <td><input type="text" size="50" id="samlAssertionLocation" onchange="setlmtext(currentId,$this.value)"/></td>
+       <td><input type="text" size="50" id="samlAssertionLocation" onchange="setlmsaml(currentId,'samlAssertion',this.value)"/></td>
       </tr>
      </table>
     </div>

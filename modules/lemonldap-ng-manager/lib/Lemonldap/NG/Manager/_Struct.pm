@@ -574,22 +574,49 @@ sub defaultConf {
         samlSPSSODescriptorProtocolSupportEnumeration =>
           'urn:oasis:names:tc:SAML:2.0:protocol',
         samlSPSSODescriptorKeyDescriptorSigning => '',
-        samlSPSSODescriptorSingleLogoutServiceHTTP => '',
-        samlSPSSODescriptorSingleLogoutServiceSOAP => '',
-        samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact => '',
-        samlSPSSODescriptorAssertionConsumerServiceHTTPPost => '',
-        samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect => '',
+        samlSPSSODescriptorSingleLogoutServiceHTTP =>
+          'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;'
+          .'http://auth.example.com/saml/proxySingleLogout;'
+          .'http://auth.example.com/saml/proxySingleLogoutReturn',
+        samlSPSSODescriptorSingleLogoutServiceSOAP =>
+          'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;'
+          .'http://auth.example.com/saml/proxySingleLogoutSOAP;',
+        samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact =>
+          '1;0;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact;'
+          .'http://auth.example.com/saml/proxySingleSignOnArtifact',
+        samlSPSSODescriptorAssertionConsumerServiceHTTPPost =>
+          '0;1;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;'
+          .'http://auth.example.com/saml/proxySingleSignOnPost',
+        samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect =>
+          '0;2;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;'
+          .'http://auth.example.com/saml/proxySingleSignOnRedirect',
         samlIDPSSODescriptorWantAuthnRequestsSigned => '0',
         samlIDPSSODescriptorProtocolSupportEnumeration =>
           'urn:oasis:names:tc:SAML:2.0:protocol',
         samlIDPSSODescriptorKeyDescriptorSigning => '',
-        samlIDPSSODescriptorSingleSignOnServiceHTTP => '',
-        samlIDPSSODescriptorSingleSignOnServiceSOAP => '',
-        samlIDPSSODescriptorSingleLogoutServiceHTTP => '',
-        samlIDPSSODescriptorSingleLogoutServiceSOAP => '',
-        samlIDPSSODescriptorArtifactResolutionServiceArtifact => '',
-        samlIDPSSODescriptorManageNameIDServiceHTTP => '',
-        samlIDPSSODescriptorManageNameIDServiceSOAP => '',
+        samlIDPSSODescriptorSingleSignOnServiceHTTP =>
+          'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;'
+          .'http://auth.example.com/saml/singleSignOn;',
+        samlIDPSSODescriptorSingleSignOnServiceSOAP =>
+          'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-SOAP;'
+          .'http://auth.example.com/saml/singleSignOnSOAP;',
+        samlIDPSSODescriptorSingleLogoutServiceHTTP =>
+          'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;'
+          .'http://auth.example.com/saml/singleLogout;'
+          .'http://auth.example.com/saml/singleLogoutReturn',
+        samlIDPSSODescriptorSingleLogoutServiceSOAP =>
+          'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;'
+          .'http://auth.example.com/saml/singleLogoutSOAP;',
+        samlIDPSSODescriptorArtifactResolutionServiceArtifact =>
+          '1;0;urn:oasis:names:tc:SAML:2.0:bindings:SOAP;'
+          .'http://auth.example.com/saml/artifact',
+        samlIDPSSODescriptorManageNameIDServiceHTTP =>
+          'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;'
+          .'http://auth.example.com/saml/manageNameId;'
+          .'http://auth.example.com/saml/manageNameIdReturn',
+        samlIDPSSODescriptorManageNameIDServiceSOAP =>
+          'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;'
+          .'http://auth.example.com/saml/manageNameIdSOAP;',
     };
 }
 

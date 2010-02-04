@@ -157,6 +157,32 @@ function setlmtext(id,v){
 function setlmdata(id,v){
 	$('#text_'+id).attr('value',v);
 }
+function setlmsaml(id,div,v){
+	var max=0;
+	if(div=='samlAssertion'){
+		max=1;
+	}
+	var s='';
+	var t=$('#content_'+div).find('input').get();
+	for(i in t){
+		if(i > max){
+			s=s+';';
+		}
+		var k=$(t[i]).attr('id');
+		if(k=='samlAssertionDefaultOn'){
+			if($(t[i]).attr('checked')==true){
+				s=s+'1';
+			}
+		}else if(k=='samlAssertionDefaultOff'){
+			if($(t[i]).attr('checked')==true){
+				s=s+'0';
+			}
+		}else{
+			s=s+$(t[i]).attr('value');
+		}
+	}
+	setlmdata(id,s);
+}
 function display(div,title) {
 	var divs=$('#content').children();
 	divs.toggleClass('hidden',true);
@@ -209,17 +235,24 @@ function textarea(id) {
 }
 function samlAssertion(id) {
 	currentId=id;
-	$('#samlAssertionDefault').attr('value',lmdata(id));
-	$('#samlAssertionIndex').attr('value',lmdata(id));
-	$('#samlAssertionLocation').attr('value',lmdata(id));
-	display('samlAssertion',lmtext(lmparent(id)));
+	var t=lmdata(id).split(';');
+	if(t[0]==1){
+		$('#samlAssertionDefaultOn').attr('checked',true);
+	}else{
+		$('#samlAssertionDefaultOff').attr('checked',true);
+	}
+	$('#samlAssertionIndex').attr('value',t[1]);
+	$('#samlAssertionBinding').attr('value',t[2]);
+	$('#samlAssertionLocation').attr('value',t[3]);
+	display('samlAssertion',lmtext(id));
 }
 function samlService(id) {
 	currentId=id;
-	$('#samlServiceBinding').attr('value',lmdata(id));
-	$('#samlServiceLocation').attr('value',lmdata(id));
-	$('#samlServiceResponseLocation').attr('value',lmdata(id));
-	display('samlService',lmtext(lmparent(id)));
+	var t=lmdata(id).split(';');
+	$('#samlServiceBinding').attr('value',t[0]);
+	$('#samlServiceLocation').attr('value',t[1]);
+	$('#samlServiceResponseLocation').attr('value',t[2]);
+	display('samlService',lmtext(id));
 }
 function securedCookieValues(id){
 	currentId=id;
