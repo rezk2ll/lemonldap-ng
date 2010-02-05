@@ -41,154 +41,6 @@ sub setDebug {
     return;
 }
 
-## @method public static hashref createSimpleStruct ()
-# Create a simple struct that allow user to turn SAML
-# feature on.
-# @return hashref Simple struct to be included in Manager
-#                 configuration structure
-sub createSimpleStruct {
-    return {
-        _nodes => [
-            qw(samlEntityID n:samlOrganization n:samlSPSSODescriptor n:samlIDPSSODescriptor)
-        ],
-        _help  => 'default',
-
-        ############################
-        # Global SAML Informations #
-        ############################
-
-        samlEntityID => 'text:/samlEntityID',
-        samlOrganization => {
-            _nodes => [
-                qw(samlOrganizationDisplayName samlOrganizationName samlOrganizationURL)
-            ],
-            _help  => 'default',
-            samlOrganizationDisplayName => 'text:/samlOrganizationDisplayName',
-            samlOrganizationURL => 'text:/samlOrganizationURL',
-            samlOrganizationName => 'text:/samlOrganizationName',
-          },
-
-        #########################
-        # SAML Service Provider #
-        #########################
-
-        'samlSPSSODescriptor' => {
-            _nodes => [
-                qw(samlSPSSODescriptorAuthnRequestsSigned
-                          samlSPSSODescriptorProtocolSupportEnumeration
-                   samlSPSSODescriptorKeyDescriptorSigning
-                          n:samlSPSSODescriptorSingleLogoutService
-                  n:samlSPSSODescriptorAssertionConsumerService)
-            ],
-            _help  => 'default',
-
-            samlSPSSODescriptorAuthnRequestsSigned =>
-              'bool:/samlSPSSODescriptorAuthnRequestsSigned',
-            samlSPSSODescriptorProtocolSupportEnumeration =>
-              'text:/samlSPSSODescriptorProtocolSupportEnumeration',
-                samlSPSSODescriptorKeyDescriptorSigning =>
-              'textarea:/samlSPSSODescriptorKeyDescriptorSigning',
-
-            samlSPSSODescriptorSingleLogoutService => {
-                _nodes => [
-                    qw(samlSPSSODescriptorSingleLogoutServiceHTTP
-                       samlSPSSODescriptorSingleLogoutServiceSOAP)
-                ],
-                _help  => 'default',
-                samlSPSSODescriptorSingleLogoutServiceHTTP =>
-                  'samlService:/samlSPSSODescriptorSingleLogoutServiceHTTP',
-                samlSPSSODescriptorSingleLogoutServiceSOAP =>
-                  'samlService:/samlSPSSODescriptorSingleLogoutServiceSOAP',
-              },
-
-            samlSPSSODescriptorAssertionConsumerService => {
-                _nodes => [
-                    qw(samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact
-                       samlSPSSODescriptorAssertionConsumerServiceHTTPPost
-                       samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect)
-                    ],
-                    _help  => 'default',
-
-                samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact =>
-                  'samlAssertion:/samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact',
-                samlSPSSODescriptorAssertionConsumerServiceHTTPPost =>
-                  'samlAssertion:/samlSPSSODescriptorAssertionConsumerServiceHTTPPost',
-                samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect =>
-                  'samlAssertion:/samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect',
-              },
-          },
-
-        ##########################
-        # SAML Identity Provider #
-        ##########################
-
-        samlIDPSSODescriptor => {
-            _nodes => [
-                qw(samlIDPSSODescriptorWantAuthnRequestsSigned
-                          samlIDPSSODescriptorProtocolSupportEnumeration
-                   samlIDPSSODescriptorKeyDescriptorSigning
-                          n:samlIDPSSODescriptorSingleSignOnService
-                          n:samlIDPSSODescriptorSingleLogoutService
-                          n:samlIDPSSODescriptorArtifactResolutionService
-                  n:samlIDPSSODescriptorManageNameIDService)
-            ],
-            _help  => 'default',
-
-            samlIDPSSODescriptorWantAuthnRequestsSigned =>
-              'bool:/samlIDPSSODescriptorWantAuthnRequestsSigned',
-            samlIDPSSODescriptorProtocolSupportEnumeration =>
-              'text:/samlIDPSSODescriptorProtocolSupportEnumeration',
-                samlIDPSSODescriptorKeyDescriptorSigning =>
-              'textarea:/samlIDPSSODescriptorKeyDescriptorSigning',
-
-            samlIDPSSODescriptorSingleSignOnService => {
-                _nodes => [
-                    qw(samlIDPSSODescriptorSingleSignOnServiceHTTP
-                       samlIDPSSODescriptorSingleSignOnServiceSOAP)
-                ],
-                _help => 'default',
-                samlIDPSSODescriptorSingleSignOnServiceHTTP =>
-                  'samlService:/samlIDPSSODescriptorSingleSignOnServiceHTTP',
-                samlIDPSSODescriptorSingleSignOnServiceSOAP =>
-                  'samlService:/samlIDPSSODescriptorSingleSignOnServiceSOAP',
-              },
-
-            samlIDPSSODescriptorSingleLogoutService => {
-                _nodes => [
-                    qw(samlIDPSSODescriptorSingleLogoutServiceHTTP
-                       samlIDPSSODescriptorSingleLogoutServiceSOAP)
-                ],
-                _help  => 'default',
-                samlIDPSSODescriptorSingleLogoutServiceHTTP =>
-                  'samlService:/samlIDPSSODescriptorSingleLogoutServiceHTTP',
-                samlIDPSSODescriptorSingleLogoutServiceSOAP =>
-                  'samlService:/samlIDPSSODescriptorSingleLogoutServiceSOAP',
-              },
-
-            samlIDPSSODescriptorArtifactResolutionService => {
-                _nodes =>
-                  [qw(samlIDPSSODescriptorArtifactResolutionServiceArtifact)],
-                _help  => 'default',
-
-                samlIDPSSODescriptorArtifactResolutionServiceArtifact =>
-                  'samlAssertion:/samlIDPSSODescriptorArtifactResolutionServiceArtifact',
-              },
-
-            samlIDPSSODescriptorManageNameIDService => {
-                _nodes => [
-                    qw(samlIDPSSODescriptorManageNameIDServiceHTTP
-                       samlIDPSSODescriptorManageNameIDServiceSOAP)
-                ],
-                _help  => 'default',
-                samlIDPSSODescriptorManageNameIDServiceHTTP =>
-                  'samlService:/samlIDPSSODescriptorManageNameIDServiceHTTP',
-                samlIDPSSODescriptorManageNameIDServiceSOAP =>
-                  'samlService:/samlIDPSSODescriptorManageNameIDServiceSOAP',
-              },
-          },
-      };
-}
-
 ## @method public boolean initiliazeFromConf(string s)
 # Initialize this object from configuration string.
 # @param $s Configuration string.
@@ -295,6 +147,7 @@ sub toConf {
 
 ## @method public hashref toStruct ()
 # Return this object to be display into the Manager.
+# NOT USED FOR THE MOMENT.
 # @return hashref
 sub toStruct {
   my $self = shift;
@@ -307,6 +160,7 @@ sub toStruct {
 
 ## @method private hashref _toStruct (Hashref node)
 # Return a preformated structure to be stored into Manager structure.
+# NOT USED FOR THE MOMENT.
 # @param $path The path of the node.
 # @param $node The current node into the hashref tree.
 # @return Hashref A structure to be inserted into Manager structure.

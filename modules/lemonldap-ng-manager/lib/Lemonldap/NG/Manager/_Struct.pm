@@ -247,8 +247,142 @@ sub struct {
             _nodes => [qw(n:samlServiceMetaData samlServicePrivateKey)],
             _help  => 'saml',
 
-            samlServiceMetaData =>
-              Lemonldap::NG::Common::Conf::SAML::Metadata::createSimpleStruct(),
+            samlServiceMetaData => {
+                _nodes => [
+                    qw(samlEntityID
+                       n:samlOrganization
+                       n:samlSPSSODescriptor
+                       n:samlIDPSSODescriptor)
+                  ],
+                _help  => 'default',
+
+                # GLOBAL INFORMATIONS
+                samlEntityID => 'text:/samlEntityID',
+                samlOrganization => {
+                    _nodes => [
+                        qw(samlOrganizationDisplayName
+                           samlOrganizationName
+                           samlOrganizationURL)
+                      ],
+                    _help  => 'default',
+                    samlOrganizationDisplayName =>
+                        'text:/samlOrganizationDisplayName',
+                    samlOrganizationURL => 'text:/samlOrganizationURL',
+                    samlOrganizationName => 'text:/samlOrganizationName',
+                  },
+
+                # SERVICE PROVIDER
+                'samlSPSSODescriptor' => {
+                    _nodes => [
+                        qw(samlSPSSODescriptorAuthnRequestsSigned
+                           samlSPSSODescriptorProtocolSupportEnumeration
+                           samlSPSSODescriptorKeyDescriptorSigning
+                           n:samlSPSSODescriptorSingleLogoutService
+                           n:samlSPSSODescriptorAssertionConsumerService)
+                      ],
+                    _help  => 'default',
+
+                    samlSPSSODescriptorAuthnRequestsSigned =>
+                      'bool:/samlSPSSODescriptorAuthnRequestsSigned',
+                    samlSPSSODescriptorProtocolSupportEnumeration =>
+                      'text:/samlSPSSODescriptorProtocolSupportEnumeration',
+                    samlSPSSODescriptorKeyDescriptorSigning =>
+                      'textarea:/samlSPSSODescriptorKeyDescriptorSigning',
+
+                    samlSPSSODescriptorSingleLogoutService => {
+                        _nodes => [
+                            qw(samlSPSSODescriptorSingleLogoutServiceHTTP
+                               samlSPSSODescriptorSingleLogoutServiceSOAP)
+                          ],
+                        _help  => 'default',
+                        samlSPSSODescriptorSingleLogoutServiceHTTP =>
+                            'samlService:/samlSPSSODescriptorSingleLogoutServiceHTTP',
+                        samlSPSSODescriptorSingleLogoutServiceSOAP =>
+                            'samlService:/samlSPSSODescriptorSingleLogoutServiceSOAP',
+                      },
+
+                    samlSPSSODescriptorAssertionConsumerService => {
+                        _nodes => [
+                            qw(samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact
+                               samlSPSSODescriptorAssertionConsumerServiceHTTPPost
+                               samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect)
+                          ],
+                        _help  => 'default',
+                        samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact =>
+                            'samlAssertion:/samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact',
+                        samlSPSSODescriptorAssertionConsumerServiceHTTPPost =>
+                            'samlAssertion:/samlSPSSODescriptorAssertionConsumerServiceHTTPPost',
+                        samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect =>
+                            'samlAssertion:/samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect',
+                      },
+                  },
+
+                # IDENTITY PROVIDER
+                samlIDPSSODescriptor => {
+                    _nodes => [
+                        qw(samlIDPSSODescriptorWantAuthnRequestsSigned
+                           samlIDPSSODescriptorProtocolSupportEnumeration
+                           samlIDPSSODescriptorKeyDescriptorSigning
+                           n:samlIDPSSODescriptorSingleSignOnService
+                           n:samlIDPSSODescriptorSingleLogoutService
+                           n:samlIDPSSODescriptorArtifactResolutionService
+                           n:samlIDPSSODescriptorManageNameIDService)
+                      ],
+                    _help  => 'default',
+
+                    samlIDPSSODescriptorWantAuthnRequestsSigned =>
+                        'bool:/samlIDPSSODescriptorWantAuthnRequestsSigned',
+                    samlIDPSSODescriptorProtocolSupportEnumeration =>
+                        'text:/samlIDPSSODescriptorProtocolSupportEnumeration',
+                    samlIDPSSODescriptorKeyDescriptorSigning =>
+                        'textarea:/samlIDPSSODescriptorKeyDescriptorSigning',
+
+                    samlIDPSSODescriptorSingleSignOnService => {
+                        _nodes => [
+                            qw(samlIDPSSODescriptorSingleSignOnServiceHTTP
+                               samlIDPSSODescriptorSingleSignOnServiceSOAP)
+                          ],
+                        _help => 'default',
+                        samlIDPSSODescriptorSingleSignOnServiceHTTP =>
+                            'samlService:/samlIDPSSODescriptorSingleSignOnServiceHTTP',
+                        samlIDPSSODescriptorSingleSignOnServiceSOAP =>
+                            'samlService:/samlIDPSSODescriptorSingleSignOnServiceSOAP',
+                      },
+
+                    samlIDPSSODescriptorSingleLogoutService => {
+                        _nodes => [
+                            qw(samlIDPSSODescriptorSingleLogoutServiceHTTP
+                               samlIDPSSODescriptorSingleLogoutServiceSOAP)
+                          ],
+                        _help  => 'default',
+                        samlIDPSSODescriptorSingleLogoutServiceHTTP =>
+                            'samlService:/samlIDPSSODescriptorSingleLogoutServiceHTTP',
+                        samlIDPSSODescriptorSingleLogoutServiceSOAP =>
+                            'samlService:/samlIDPSSODescriptorSingleLogoutServiceSOAP',
+                      },
+
+                    samlIDPSSODescriptorArtifactResolutionService => {
+                        _nodes => [
+                            qw(samlIDPSSODescriptorArtifactResolutionServiceArtifact)
+                          ],
+                        _help  => 'default',
+                        samlIDPSSODescriptorArtifactResolutionServiceArtifact =>
+                            'samlAssertion:/samlIDPSSODescriptorArtifactResolutionServiceArtifact',
+                      },
+
+                    samlIDPSSODescriptorManageNameIDService => {
+                        _nodes => [
+                            qw(samlIDPSSODescriptorManageNameIDServiceHTTP
+                               samlIDPSSODescriptorManageNameIDServiceSOAP)
+                          ],
+                        _help  => 'default',
+                        samlIDPSSODescriptorManageNameIDServiceHTTP =>
+                            'samlService:/samlIDPSSODescriptorManageNameIDServiceHTTP',
+                        samlIDPSSODescriptorManageNameIDServiceSOAP =>
+                            'samlService:/samlIDPSSODescriptorManageNameIDServiceSOAP',
+                      },
+                  },
+              },
             samlServicePrivateKey =>
               'textarea:/samlServicePrivateKey:samlServicePrivateKey:textarea',
         },
