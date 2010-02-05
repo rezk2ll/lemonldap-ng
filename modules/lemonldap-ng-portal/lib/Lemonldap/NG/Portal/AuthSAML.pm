@@ -24,33 +24,21 @@ sub authInit {
     # Activate SOAP
     $self->{Soap} = 1;
 
-        # Check presence of service metadata and private key in configuration
-        unless ($self->{samlServiceMetaData}
-            and $self->{samlServicePrivateKey} )
-        {
-            $self->lmLog(
-            "SAML service metadata or private key not found in configuration",
-            'error' );
+    # Check presence of private key in configuration
+    unless ( $self->{samlServicePrivateKey} ) {
+        $self->lmLog( "SAML private key not found in configuration", 'error' );
             return PE_ERROR;
         }
 
         # Get metadata from configuration
         $self->lmLog( "Get Metadata for this service", 'debug' );
     my $service_metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new();
-        unless (
-            $service_metadata->initializeFromConfHash(
-                $self->{samlServiceMetaData}
-            )
-          )
-        {
-            $self->lmLog( "Fail to read Service Metadata from configuration",
-                'error' );
-            return PE_ERROR;
-        }
 
         # Create Lasso server with service metadata
         my $server = $self->createServer(
-            $service_metadata->toXML(),
+        $service_metadata->serviceToXML(
+            $ENV{DOCUMENT_ROOT} . "/skins/common/saml2-metadata.tpl", $self
+        ),
             $self->{samlServicePrivateKey},
         );
 

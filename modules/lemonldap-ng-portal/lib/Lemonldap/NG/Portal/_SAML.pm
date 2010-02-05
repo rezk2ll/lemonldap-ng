@@ -117,7 +117,7 @@ sub createServer {
         $private_key_password, $certificate );
     };
 
-    $self->checkLassoError($@);
+    return unless $self->checkLassoError($@);
 
     return $server;
 }

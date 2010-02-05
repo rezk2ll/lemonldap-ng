@@ -732,7 +732,7 @@ sub defaultConf {
           'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;'
           .'http://auth.example.com/saml/singleSignOn;',
         samlIDPSSODescriptorSingleSignOnServiceSOAP =>
-          'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-SOAP;'
+          'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;'
           .'http://auth.example.com/saml/singleSignOnSOAP;',
         samlIDPSSODescriptorSingleLogoutServiceHTTP =>
           'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;'
