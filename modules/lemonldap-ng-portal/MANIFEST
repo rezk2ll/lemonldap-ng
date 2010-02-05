@@ -42,6 +42,7 @@ example/index.pl
 example/index_simple.pl
 example/index_skin.pl
 example/mail.pl
+example/metadata.pl
 example/PortalStatus.pl
 example/scripts/buildPortalWSDL
 example/scripts/purgeCentralCache
@@ -63,6 +64,7 @@ example/skins/common/mail_header.tpl
 example/skins/common/mail_password.tpl
 example/skins/common/ok.png
 example/skins/common/portal.js
+example/skins/common/saml2-metadata.tpl
 example/skins/common/stop.png
 example/skins/common/user_suit.png
 example/skins/common/valid-xhtml10-blue.png

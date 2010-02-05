@@ -5,8 +5,9 @@ package Lemonldap::NG::Common::Conf::SAML::Metadata;
 
 use strict;
 use warnings;
-use XML::Simple;
 use Data::Dumper;
+use HTML::Template;
+use XML::Simple;
 use Safe;
 
 our $VERSION = '0.1';
@@ -111,6 +112,79 @@ sub initializeFromXML {
     }
     return 0;
 
+}
+
+## @method public string serviceToXML
+# Return all SAML parameters in well formated XML format, corresponding to
+# SAML 2 description.
+# @return string
+sub serviceToXML {
+    my $self = shift;
+    my $file = shift;
+    my ($conf) = @_;
+    my $template = HTML::Template->new(
+        filename          => "$file",
+        die_on_bad_params => 0,
+        cache             => 0,
+      );
+    # Automatic parameters
+    my @param_auto = qw(
+        samlServicePrivateKey
+        samlEntityID
+        samlOrganizationName
+        samlOrganizationDisplayName
+        samlOrganizationURL
+        samlSPSSODescriptorAuthnRequestsSigned
+        samlSPSSODescriptorProtocolSupportEnumeration
+        samlSPSSODescriptorKeyDescriptorSigning
+        samlIDPSSODescriptorWantAuthnRequestsSigned
+        samlIDPSSODescriptorProtocolSupportEnumeration
+        samlIDPSSODescriptorKeyDescriptorSigning
+      );
+    foreach (@param_auto)
+    {
+      $template->param($_, $conf->{$_});
+    }
+    # Rebuilded parameters for SAML services
+    # A samlService value is formated like the following:
+    # "binding;location;responseLocation"
+    # The last value, responseLocation, is optional.
+    my @param_service = qw(
+        samlSPSSODescriptorSingleLogoutServiceHTTP
+        samlSPSSODescriptorSingleLogoutServiceSOAP
+        samlIDPSSODescriptorSingleSignOnServiceHTTP
+        samlIDPSSODescriptorSingleSignOnServiceSOAP
+        samlIDPSSODescriptorSingleLogoutServiceHTTP
+        samlIDPSSODescriptorSingleLogoutServiceSOAP
+        samlIDPSSODescriptorManageNameIDServiceHTTP
+        samlIDPSSODescriptorManageNameIDServiceSOAP
+      );
+    foreach (@param_service)
+    {
+      my @_tab = split(/;/, $conf->{$_});
+      $template->param($_.'Binding', $_tab[0]);
+      $template->param($_.'Location', $_tab[1]);
+      $template->param($_.'ResponseLocation', $_tab[2]);
+    }
+    # Rebuilded parameters for SAML assertions
+    # A samlAssertion value is formated like the following:
+    # "default;index;binding;location"
+    my @param_assertion = qw(
+        samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact
+        samlSPSSODescriptorAssertionConsumerServiceHTTPPost
+        samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect
+        samlIDPSSODescriptorArtifactResolutionServiceArtifact
+      );
+    foreach (@param_assertion)
+    {
+      my @_tab = split(/;/, $conf->{$_});
+      $template->param($_.'Default', $_tab[0] ? 'true' : 'false');
+      $template->param($_.'Index', $_tab[1]);
+      $template->param($_.'Binding', $_tab[2]);
+      $template->param($_.'Location', $_tab[3]);
+    }
+    # Return the XML metadata.
+    return $template->output;
 }
 
 ## @method public string toXML
