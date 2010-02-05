@@ -312,6 +312,10 @@ sub setDefaultValues {
       unless ( defined( $self->{portalRequireOldPassword} ) );
     $self->{portalOpenLinkInNewWindow} = 0
       unless ( defined( $self->{portalOpenLinkInNewWindow} ) );
+    $self->{portalForceAuthn} = 0
+      unless ( defined( $self->{portalForceAuthn} ) );
+    $self->{portalForceAuthnInterval} = 5
+      unless ( defined( $self->{portalForceAuthnInterval} ) );
     $self->{portalUserAttr} ||= "_user";
     $self->{securedCookie}  ||= 0;
     $self->{cookieName}     ||= "lemonldap";
@@ -862,25 +866,32 @@ sub existingSession {
         my $referer = $self->referer();
         my $id      = $self->{id};
 
+        # Do not force authentication when password is modified
+        return PE_DONE if $self->param('newpassword');
+
+       # Do not force authentication if last successful authentication is recent
+        my $last_authn_utime = $self->{sessionInfo}->{_lastAuthnUTime} || 0;
+        if ( time() - $last_authn_utime < $self->{portalForceAuthnInterval} ) {
+            $self->lmLog(
+"Authentication is recent, so do not force authentication for session $id",
+                'debug'
+            );
+            return PE_DONE;
+        }
+
      # If coming from the portal follow the normal process to update the session
         if ( $referer ? ( $referer =~ m#$self->{portal}#i ) : 0 ) {
             $self->lmLog( "Portal referer detected for session $id", 'debug' );
-
-            # Allow password modification from menu
-            return PE_DONE if $self->param('newpassword');
-
-            # Set the user connected to retrieve updated information
-            $self->{user} = $self->{sessionInfo}->{user};
 
             # Set flag to update session timestamp
             $self->{updateSession} = 1;
 
             # Process
             $self->{error} = $self->_subProcess(
-                qw(issuerDBInit issuerForUnAuthUser authInit
+                qw(issuerDBInit issuerForUnAuthUser authInit extractFormInfo
                   userDBInit getUser setAuthSessionInfo setSessionInfo
                   setMacros setLocalGroups setGroups authenticate
-                  store checkNotification issuerForAuthUser)
+                  store)
             );
             return $self->{error} || PE_DONE;
         }
@@ -1059,9 +1070,22 @@ sub authenticate {
     my $self = shift;
     my $tmp;
     return $tmp if ( $tmp = $self->SUPER::authenticate() );
+
+    # Log good authentication
     $self->_sub( 'userNotice',
         "Good authentication for "
           . $self->{sessionInfo}->{ $self->{whatToTrace} } );
+
+    # Set _lastAuthnUTime
+    $self->{sessionInfo}->{_lastAuthnUTime} = time();
+
+    $self->lmLog(
+        "Store _lastAuthnUTime: "
+          . $self->{sessionInfo}->{_lastAuthnUTime}
+          . " in session",
+        'debug'
+    );
+
     PE_OK;
 }
 
