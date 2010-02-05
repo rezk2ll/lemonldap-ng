@@ -124,55 +124,32 @@ sub setGroups {
     my $self = shift;
     my $groups = $self->{sessionInfo}->{groups};
 
-    $self->{ldapGroupObjectClass}         ||= "groupOfNames";
-    $self->{ldapGroupAttributeName}       ||= "member";
-    $self->{ldapGroupAttributeNameUser}   ||= "dn";
-    $self->{ldapGroupAttributeNameSearch} ||= ["cn"];
+    if ( $self->{ldapGroupBase} ) {
 
-    if (   $self->{ldapGroupBase}
-        && $self->{sessionInfo}->{ $self->{ldapGroupAttributeNameUser} } )
-    {
-        my $searchFilter =
-          "(&(objectClass=" . $self->{ldapGroupObjectClass} . ")(|";
-        foreach (
-            split(
-                /[;]/,
-                $self->{sessionInfo}->{ $self->{ldapGroupAttributeNameUser} }
-            )
+        # Push group attribute value for recursive search
+        push(
+            @{ $self->{ldapGroupAttributeNameSearch} },
+            $self->{ldapGroupAttributeNameGroup}
           )
-        {
-            $searchFilter .=
-              "(" . $self->{ldapGroupAttributeName} . "=" . $_ . ")";
-        }
-        $searchFilter .= "))";
-        my $mesg = $self->{ldap}->search(
-            base   => $self->{ldapGroupBase},
-            filter => $searchFilter,
-            attrs  => $self->{ldapGroupAttributeNameSearch},
+          if (  $self->{ldapGroupRecursive}
+            and $self->{ldapGroupAttributeNameGroup} ne "dn" );
+
+        # Get value for group search
+        my $group_value = $self->{ldap}->getLdapValue( $self->{entry}, $self->{ldapGroupAttributeNameUser} );
+
+        $self->lmLog(
+            "Searching LDAP groups in "
+              . $self->{ldapGroupBase}
+              . " for $group_value",
+            'debug'
         );
-        if ( $mesg->code() == 0 ) {
-            foreach my $entry ( $mesg->all_entries ) {
-                my $nbAttrs = @{ $self->{ldapGroupAttributeNameSearch} };
-                for ( my $i = 0 ; $i < $nbAttrs ; $i++ ) {
-                    my @data =
-                      $entry->get_value(
-                        $self->{ldapGroupAttributeNameSearch}[$i] );
-                    if (@data) {
-                        $groups .= $data[0];
-                        $groups .= "|"
-                          if (
-                            $i + 1 < $nbAttrs
-                            && $entry->get_value(
-                                $self->{ldapGroupAttributeNameSearch}[ $i + 1 ]
-                            )
+
+        # Call searchGroups
+        $groups .= $self->{ldap}->searchGroups(
+            $self->{ldapGroupBase}, $self->{ldapGroupAttributeName},
+            $group_value,           $self->{ldapGroupAttributeNameSearch}
                           );
                     }
-                }
-                $groups .= "; ";
-            }
-            $groups =~ s/; $//g;
-        }
-    }
 
     $self->{sessionInfo}->{groups} = $groups;
     PE_OK;

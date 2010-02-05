@@ -350,6 +350,14 @@ sub setDefaultValues {
         $self->{passwordDB} ||= "LDAP";
     }
 
+    # LDAP
+    $self->{ldapGroupObjectClass}         ||= "groupOfNames";
+    $self->{ldapGroupAttributeName}       ||= "member";
+    $self->{ldapGroupAttributeNameUser}   ||= "dn";
+    $self->{ldapGroupAttributeNameGroup}  ||= "dn";
+    $self->{ldapGroupAttributeNameSearch} ||= ["cn"];
+    $self->{ldapGroupRecursive}           ||= 0;
+
     # SAML
     $self->{samlIdPResolveCookie} ||= "lemonldapidp";
 }

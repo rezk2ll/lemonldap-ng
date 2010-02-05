@@ -347,4 +347,113 @@ sub ldap {
     return 0;
 }
 
+## @method string searchGroups(string base, string key, string value, string attributes)
+# Get groups from LDAP directory
+# @param string base LDAP search base
+# @param string key Attribute name in group containing searched value
+# @param string value Searched value
+# @param string attributes to get from found groups (array ref)
+# @return string groups separated with ;
+sub searchGroups {
+    my $self       = shift;
+    my $base       = shift;
+    my $key        = shift;
+    my $value      = shift;
+    my $attributes = shift;
+
+    my $portal = $self->{portal};
+    my $groups;
+
+    # Creating search filter
+    my $searchFilter =
+      "(&(objectClass=" . $portal->{ldapGroupObjectClass} . ")(|";
+    foreach ( split( /[;]/, $value ) ) {
+        $searchFilter .= "(" . $key . "=" . $_ . ")";
+    }
+    $searchFilter .= "))";
+
+    $portal->lmLog( "Group search filter: $searchFilter", 'debug' );
+
+    # Search
+    my $mesg = $self->search(
+        base   => $base,
+        filter => $searchFilter,
+        attrs  => $attributes,
+    );
+
+    # Browse results
+    if ( $mesg->code() == 0 ) {
+
+        foreach my $entry ( $mesg->all_entries ) {
+
+            $portal->lmLog( "Matching group " . $entry->dn() . " found",
+                'debug' );
+
+            # If recursive search is activated, do it here
+            if ( $portal->{ldapGroupRecursive} ) {
+
+                # Get searched value
+                my $group_value = $self->getLdapValue( $entry,  $portal->{ldapGroupAttributeNameGroup} );
+
+		# Launch group search
+                if ($group_value) {
+
+                    $portal->lmLog( "Recursive search for $group_value",
+                        'debug' );
+
+                    my $recursive_groups =
+                      $self->searchGroups( $base, $key, $group_value,
+                        $attributes );
+
+                    $groups .= $recursive_groups . "; " if ($recursive_groups);
+                }
+            }
+
+            # Now parse attributes
+            foreach (@$attributes) {
+
+                # Next if group attribute value
+                next if ( $_ eq $portal->{ldapGroupAttributeValueGroup} );
+
+                my $data = $entry->get_value($_);
+
+                if ($data) {
+                    $portal->lmLog( "Store $data in groups", 'debug' );
+                    $groups .= $data . "|";
+                }
+            }
+            $groups =~ s/\|$//g;
+            $groups .= "; ";
+        }
+
+        $groups =~ s/; $//g;
+    }
+
+    return $groups;
+}
+
+## @method string getLdapValue(Net::LDAP::Entry entry, string attribute)
+# Get the dn, or the attribute value with ; separator for multi-valuated attributes
+# @param Net::LDAP::Entry LDAP entry
+# @param string attribute name
+# @return string value
+sub getLdapValue {
+	my $self = shift;
+	my $entry = shift;
+	my $attribute = shift;
+
+	return $entry->dn() if ( $attribute eq "dn" );
+
+	my $value;
+
+	foreach ( $entry->get_value( $attribute ) ) {
+		$value .= $_;
+		$value .= ";";
+	}
+
+        $value =~ s/;$//g;
+
+	return $value;
+}
+
 1;
