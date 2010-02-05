@@ -7,9 +7,10 @@ package Lemonldap::NG::Portal::_SAML;
 
 use strict;
 use base qw(Exporter);
+use XML::Simple;
 
 our @EXPORT = qw(
-  loadLasso checkLassoError createServer addIDP addProvider
+  loadLasso checkLassoError createServer addIDP addProvider getOrganizationName
   createAuthnRequest createLogin getHttpMethod initAuthnRequest
   buildAuthnRequestMsg
 );
@@ -171,6 +172,33 @@ sub addProvider {
     return $self->checkLassoError($@);
 
 }
+
+## @method string getOrganizationName(Lasso::Server server, string idp)
+# Return name of organization picked up from metadata
+#@param server Lasso::Server object
+#@param string entityID
+#@return string organization name
+sub getOrganizationName {
+    my $self   = shift;
+    my $server = shift;
+    my $idp    = shift;
+    my $provider;
+    my $node;
+
+    # Get provider from server
+    eval { $provider = Lasso::Server::get_provider( $server, $idp ); };
+    return unless $self->checkLassoError($@);
+
+    # Get organization node
+    eval { $node = Lasso::Provider::get_organization($provider); };
+    return unless $self->checkLassoError($@);
+
+    # Extract organization name
+    my $xs   = XML::Simple->new();
+    my $data = $xs->XMLin($node);
+    return $data->{OrganizationName}->{content};
+}
+
 ## @method Lasso::Login createAuthnRequest(Lasso::Server server, string idp)
 # Create authentication request for selected IDP
 # @param Lasso::Server server
@@ -313,6 +341,10 @@ Add IDP to an existing Lasso::Server
 =head2 addProvider
 
 Add provider to an existing Lasso::Server
+
+=head2 getOrganizationName
+
+Return name of organization picked up from metadata
 
 =head2 createAuthnRequest
 

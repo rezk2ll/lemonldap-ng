@@ -100,7 +100,7 @@ sub initializeFromXML {
     $string =~ s/> </></g;
 
     # New XML::Simple object
-    my $xs = XML::Simple->new( ForceContent => 1 );
+    my $xs = XML::Simple->new( ForceContent => 1, ForceArray => 1 );
     my $data = $xs->XMLin($string);
 
     # Store data in Metadata object

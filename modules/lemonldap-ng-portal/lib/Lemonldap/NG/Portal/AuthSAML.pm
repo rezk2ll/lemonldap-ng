@@ -88,7 +88,8 @@ sub authInit {
 
         # Store IDP entityID and Organization Name
         my $entityID = $idp_metadata->{entityID};
-        my $name = $idp_metadata->{Organization}->{OrganizationName} || $_;
+        my $name = $self->getOrganizationName( $server, $entityID )
+          || ucfirst($_);
         $self->{_idpList}->{$_}->{entityID} = $entityID;
         $self->{_idpList}->{$_}->{name}     = $name;
 
@@ -144,20 +145,31 @@ sub extractFormInfo {
             $ENV{HTTP_ACCEPT_LANGUAGE} );
         $html .= "</h3>\n";
 
+        $html .= "<table>\n";
         foreach ( keys %{ $self->{_idpList} } ) {
+            $html .= "<tr><td>";
             $html .=
                 "<input type=\"radio\" name=\"idp\" value=\""
               . $self->{_idpList}->{$_}->{entityID}
               . "\" />\n";
+            $html .= "</td><td>";
             $html .= $self->{_idpList}->{$_}->{name};
-            $html .= "<br />";
+            $html .= "</td></tr>";
         }
 
-        $html .= "<input type=\"checkbox\" name=\"cookie_type\" value=\"1\">";
+        $html .=
+"<tr><td><input type=\"checkbox\" name=\"cookie_type\" value=\"1\"></td>";
+        $html .= "<td>";
         $html .=
           &Lemonldap::NG::Portal::_i18n::msg( PM_REMEMBERCHOICE,
             $ENV{HTTP_ACCEPT_LANGUAGE} );
-        $html .= "<br />\n";
+        $html .= "</td></tr>\n";
+
+        $html .= "</table>\n";
+
+        # Script to autoselect first choice
+        $html .=
+"<script>\$('[type=radio]:first').attr('checked','checked');</script>\n";
 
         $self->info($html);
 
@@ -186,7 +198,7 @@ sub extractFormInfo {
             $ENV{HTTP_ACCEPT_LANGUAGE} );
         $html .= "</h3>\n";
 
-        $html .= "<p>$idp</p>\n";
+        $html .= "<h4>$idp</h4>\n";
 
         $html .= "<input type=\"hidden\" name=\"idp\" value=\"$idp\" />\n";
 
