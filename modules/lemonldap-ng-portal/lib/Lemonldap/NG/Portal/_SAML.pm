@@ -27,7 +27,7 @@ BEGIN {
         eval "use constant GLIB => 0";
     }
     else {
-        eval "use constant GLIB => 0";
+        eval "use constant GLIB => 1";
     }
 
     # Load Lasso.pm
@@ -112,6 +112,8 @@ sub checkLassoError {
     return 1;
 }
 
+our $_samlCache;
+
 ## @method Lasso::Server createServer(string metadata, string private_key, string private_key_password, string certificate)
 # Load service metadata and create Lasso::Server object
 # @param string metadata
@@ -121,14 +123,18 @@ sub checkLassoError {
 # @return Lasso::Server object
 sub createServer {
     my ( $self, $metadata, $private_key, $private_key_password, $certificate) = splice @_;
-    my $server;
+    my $server = $_samlCache->{$metadata};
+    return $server if($server);
 
     eval {
         $server = Lasso::Server::new_from_buffers( $metadata, $private_key,
             $private_key_password, $certificate );
     };
 
-    return unless $self->checkLassoError($@);
+    if($@) {
+        $self->checkLassoError($@);
+        return;
+    }
 
     return $server;
 }
@@ -187,11 +193,17 @@ sub getOrganizationName {
 
     # Get provider from server
     eval { $provider = Lasso::Server::get_provider( $server, $idp ); };
-    return unless $self->checkLassoError($@);
+    if($@) {
+        $self->checkLassoError($@);
+        return;
+    }
 
     # Get organization node
     eval { $node = Lasso::Provider::get_organization($provider); };
-    return unless $self->checkLassoError($@);
+    if($@) {
+        $self->checkLassoError($@);
+        return;
+    }
 
     # Extract organization name
     my $xs   = XML::Simple->new();
