@@ -12,10 +12,11 @@ use XML::Simple;
 our @EXPORT = qw(
   loadLasso checkLassoError createServer addIDP addProvider getOrganizationName
   createAuthnRequest createLogin getHttpMethod initAuthnRequest
-  buildAuthnRequestMsg
+  buildAuthnRequestMsg processAuthnResponseMsg
 );
 
 our $VERSION = '0.01';
+our $_samlCache;
 
 BEGIN {
 
@@ -39,6 +40,8 @@ BEGIN {
     else {
         no strict 'subs';
         eval 'use constant LASSO => 1';
+
+        # Check Lasso version >= 2.2.91
         my $lasso_check_version_mode = Lasso::Constants::CHECK_VERSION_NUMERIC;
         my $check_version =
           Lasso::check_version( 2, 2, 91, $lasso_check_version_mode );
@@ -50,7 +53,6 @@ BEGIN {
         }
     }
 
-    # Check Lasso version >= 2.2.91
 }
 
 ## @method boolean loadLasso()
@@ -58,9 +60,6 @@ BEGIN {
 # @return boolean result
 sub loadLasso {
     my $self = shift;
-
-    # Do not load Lasso twice
-    return 1 if $self->{_lasso};
 
     # Catch GLib Lasso messages (require Glib)
     if (GLIB) {
@@ -73,6 +72,7 @@ sub loadLasso {
             }
         );
     }
+
     unless (LASSO) {
         $self->lmLog( "Module Lasso not loaded (see bellow)", 'error' );
         return 0;
@@ -82,6 +82,7 @@ sub loadLasso {
         $self->lmLog( 'Lasso version >= 2.2.91 required', 'error' );
         return 0;
     }
+
     return 1;
 }
 
@@ -112,8 +113,6 @@ sub checkLassoError {
     return 1;
 }
 
-our $_samlCache;
-
 ## @method Lasso::Server createServer(string metadata, string private_key, string private_key_password, string certificate)
 # Load service metadata and create Lasso::Server object
 # @param string metadata
@@ -122,16 +121,17 @@ our $_samlCache;
 # @param string optional certificate
 # @return Lasso::Server object
 sub createServer {
-    my ( $self, $metadata, $private_key, $private_key_password, $certificate) = splice @_;
+    my ( $self, $metadata, $private_key, $private_key_password, $certificate ) =
+      splice @_;
     my $server = $_samlCache->{$metadata};
-    return $server if($server);
+    return $server if ($server);
 
     eval {
         $server = Lasso::Server::new_from_buffers( $metadata, $private_key,
             $private_key_password, $certificate );
     };
 
-    if($@) {
+    if ($@) {
         $self->checkLassoError($@);
         return;
     }
@@ -193,14 +193,14 @@ sub getOrganizationName {
 
     # Get provider from server
     eval { $provider = Lasso::Server::get_provider( $server, $idp ); };
-    if($@) {
+    if ($@) {
         $self->checkLassoError($@);
         return;
     }
 
     # Get organization node
     eval { $node = Lasso::Provider::get_organization($provider); };
-    if($@) {
+    if ($@) {
         $self->checkLassoError($@);
         return;
     }
@@ -305,6 +305,19 @@ sub buildAuthnRequestMsg {
     return $self->checkLassoError($@);
 }
 
+## @method boolean processAuthnResponseMsg(Lasso::Login login, string response)
+# Process authentication response message
+# @param login Lasso::Login object
+# @param response SAML response
+# @return result
+sub processAuthnResponseMsg {
+    my ( $self, $login, $response ) = splice @_;
+
+    eval { Lasso::Login::process_authn_response_msg( $login, $response ); };
+
+    return $self->checkLassoError($@);
+}
+
 1;
 
 __END__
@@ -369,6 +382,10 @@ Init authentication request
 =head2 buildAuthnRequestMsg
 
 Build authentication request message
+
+=head2 processAuthnResponseMsg
+
+Process authentication response message
 
 =head1 SEE ALSO
 

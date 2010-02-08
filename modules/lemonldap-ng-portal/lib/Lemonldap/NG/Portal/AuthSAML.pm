@@ -22,7 +22,7 @@ sub authInit {
     return PE_ERROR unless $self->loadLasso();
 
     # Activate SOAP
-    $self->abort( 'To use SAML, you must set "Soap => 1"', 'error' )
+    $self->abort( 'To use SAML, you must activate SOAP (Soap => 1)', 'error' )
       unless ( $self->{Soap} );
 
     # Check presence of private key in configuration
@@ -109,12 +109,70 @@ sub authInit {
 sub extractFormInfo {
     my $self   = shift;
     my $server = $self->{_lassoServer};
+    my $login;
     my $idp;
 
-    # 1. Get authentication statement
-    # if ( authnStatement ) ...
-    # TODO - check authstatement
-    # else
+    # 1. Get URL parameters to know if we are receving an assertion
+    my $url              = $self->url();
+    my $saml_acs_art_url = (
+        split(
+            /;/,
+            $self->{samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact}
+        )
+    )[3];
+    my $saml_acs_post_url = (
+        split(
+            /;/, $self->{samlSPSSODescriptorAssertionConsumerServiceHTTPPost}
+        )
+    )[3];
+    my $saml_acs_get_url = (
+        split(
+            /;/,
+            $self->{samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect}
+        )
+    )[3];
+
+    if ( $url =~ /^($saml_acs_art_url|$saml_acs_post_url|$saml_acs_get_url)$/i )
+    {
+
+        $self->lmLog( "URL $url detected as an assertion consumer URL",
+            'debug' );
+
+        # 1.1 HTTP REDIRECT
+        if ( $url =~ /^$saml_acs_get_url$/i ) {
+
+            # Response in SAMLresponse
+            my $response = $self->param("SAMLResponse");
+            $self->lmLog( "HTTP-REDIRECT: SAML Response $response", 'debug' );
+
+            # Create Login object
+            $login = $self->createLogin($server);
+
+            # Process authentication response
+            my $result = $self->processAuthnResponseMsg( $login, $response );
+
+            unless ($result) {
+                $self->lmLog(
+                    "HTTP-REDIRECT: Fail to process authentication response",
+                    'error' );
+                return PE_ERROR;
+            }
+
+            $self->lmLog( "HTTP-REDIRECT: authentication response is valid",
+                'debug' );
+
+            $self->abort("Work in progress");
+
+        }
+
+        # 1.2 POST
+        # TODO
+
+        # 1.3 ARTEFACT (SOAP)
+        # TODO
+
+        return PE_OK;
+    }
 
     # 2. IDP resolution
 
@@ -214,16 +272,26 @@ sub extractFormInfo {
     }
 
     # 3. Build authentication request
-    my $login = $self->createAuthnRequest( $server, $idp );
+    $login = $self->createAuthnRequest( $server, $idp );
 
     unless ($login) {
         $self->lmLog( "Could not create authentication request on $idp",
             'error' );
         return PE_ERROR;
     }
+
     $self->lmLog( "Authentication request created", 'debug' );
 
-    PE_OK;
+    # Redirect user to IDP SSO URL
+    # Replace urldc value by SSO URL value and call sub autoRedirect
+    # TODO Manage other transport (POST, SOAP, ...)
+    my $sso_url = $login->msg_url;
+    $self->lmLog( "Redirect user to $sso_url", 'debug' );
+
+    $self->{urldc} = $sso_url;
+    $self->{error} = $self->_subProcess(qw(autoRedirect));
+
+    return $self->{error};
 }
 
 ## @apmethod int setAuthSessionInfo()
@@ -243,12 +311,6 @@ sub authenticate {
 ## @apmethod void authLogout()
 # TODO
 sub authLogout {
-}
-
-## @apmethod array SAMLIssuerLinks()
-# TODO
-# @return 2 arrays: HTTP links and SAML issuer names
-sub SAMLIssuerLinks {
 }
 
 1;
@@ -283,6 +345,5 @@ Copyright (C) 2009 by Xavier Guimard
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.10.0 or,
 at your option, any later version of Perl 5 you may have available.
-
 
 =cut
