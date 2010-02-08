@@ -22,11 +22,11 @@
 		<tr><td colspan="2">
 		<div class="buttons">
 		<button type="reset" class="negative" tabindex="4">
-			<img src="skins/common/cancel.png" alt="" />
+			<img src="/skins/common/cancel.png" alt="" />
 			<lang en="Cancel" fr="Annuler" />
 		</button>
 		<button type="submit" class="positive" tabindex="3">
-			<img src="skins/common/accept.png" alt="" />
+			<img src="/skins/common/accept.png" alt="" />
 			<lang en="Connect" fr="Se connecter" />
 		</button>
 		</div></td></tr>
@@ -34,7 +34,7 @@
                 <tr><td colspan="2">
                 <div class="buttons">
 		<button class="positive" tabindex="5" onclick="$(location).attr('href','<TMPL_VAR NAME="MAIL_URL">');return false">
-                        <img src="skins/common/email.png" alt="" />
+                        <img src="/skins/common/email.png" alt="" />
                         <lang en="Reset my password" fr="R&eacute;initialiser mon mot de passe"/>
 		</button>
                 </div></td></tr>
@@ -50,7 +50,7 @@
 	<div id="logout">
 		<div class="buttons">
 		<a href="<TMPL_VAR NAME="LOGOUT_URL">" class="negative">
-			<img src="skins/common/cancel.png" alt="" />
+			<img src="/skins/common/cancel.png" alt="" />
 			<lang en="Logout" fr="Se d&eacute;connecter"/>
 		</a>
 		</div>

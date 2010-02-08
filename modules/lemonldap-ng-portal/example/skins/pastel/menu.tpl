@@ -34,7 +34,7 @@
 		<h3><lang en="Are you sure ?" fr="&Ecirc;tes vous s&ucirc;r ?" /></h3>
 		<div class="buttons">
 			<a href="<TMPL_VAR NAME="LOGOUT_URL">" class="positive">
-			<span><img src="skins/common/accept.png" alt="ok"/> <lang en="I'm sure" fr="Je suis s&ucirc;r" /></span>
+			<span><img src="/skins/common/accept.png" alt="ok"/> <lang en="I'm sure" fr="Je suis s&ucirc;r" /></span>
 			</a>
 		</div>
 		</div>

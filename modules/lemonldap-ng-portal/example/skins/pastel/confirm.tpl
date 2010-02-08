@@ -14,11 +14,11 @@
 		<table><tbody><tr><th>
 		<div class="buttons">
 			<button type="submit" class="positive">
-				<img src="skins/common/accept.png" alt="" />
+				<img src="/skins/common/accept.png" alt="" />
 				<lang en="Accept" fr="Accepter" />
 			</button>
 			<button type="submit" class="negative" onclick="$('#confirm').attr('value','-1');">
-				<img src="skins/common/cancel.png" alt="" />
+				<img src="/skins/common/cancel.png" alt="" />
 				<lang en="Refuse" fr="Refuser" />
 			</button>
 		</div>
