@@ -275,7 +275,7 @@ sub getHttpMethod {
     # TODO
 
     # By default, use HTTP REDIRECT
-    no strict;
+    no strict 'subs';
     return Lasso::Constants::HTTP_METHOD_REDIRECT;
 }
 
