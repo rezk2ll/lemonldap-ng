@@ -10,6 +10,7 @@ use MIME::Base64;
 
 # TODO
 use Data::Dumper;
+use URI::Escape;
 
 require Lemonldap::NG::Manager::_Struct;    #inherits
 require Lemonldap::NG::Manager::_i18n;      #inherits
@@ -411,19 +412,28 @@ sub ajaxNode {
 sub span {
     my ( $self, %args ) = @_;
 
-    #my ( $self, $id, $text, $data, $js, $help, $noT ) = @_;
-    my $tmp = $args{text};
+    # Data
     $args{data} = '' unless ( defined $args{data} );
-    $args{js} ||= "none";
+    $args{data} =~ s/"/&#39;/g;
+    $args{data} = uri_escape( $args{data} );
+
+    # ID
     $args{id} = "li_" . encode_base64( $args{id}, '' );
     $args{id} =~ s/(=*)$/length($1)/e;
+
+    # Javascript
+    $args{js} ||= "none";
     $args{js} .= "('$args{id}')" unless ( $args{js} =~ /\(/ );
-    $args{data} =~ s/"/&#39;/g;
+
+    # Text
+    my $tmp = $args{text};
     $tmp  =~ s/"/&#39;/g;
     $args{text} = join ' ', map { $self->translate($_) } split /\s+/,
       $args{text}
       unless ( $args{noT} );
     $args{text} = $self->escapeHTML( $args{text} );
+
+    # Return HTML code
     return
 "<span name=\"$tmp\" id=\"text_$args{id}\" onclick=\"$args{js}\" help=\"$args{help}\" value=\"$args{data}\">$args{text}</span>
 ";

@@ -24,13 +24,20 @@ sub serialize {
         }
         else {
 
-            # mono-line
-            $v =~ s/[\r\n]/ /gm;
-
-            # trim
+            # trim white spaces
             $v =~ s/^\s*(.*?)\s*$/$1/;
+
+            # Convert carriage returns (\r) and line feeds (\n)
+            $v =~ s/\r/%0D/g;
+            $v =~ s/\n/%0A/g;
+
+            # Convert simple quotes
             $v =~ s/'/&#39;/g;
+
+            # Surround with simple quotes
             $v = "'$v'" unless ( $self->{noQuotes} );
+
+            # Store value in field
             $fields->{$k} = $v;
         }
     }
@@ -41,9 +48,13 @@ sub unserialize {
     my ( $self, $fields ) = @_;
     my $conf;
     while ( my ( $k, $v ) = each(%$fields) ) {
+
+        # Remove surrounding quotes
         $v =~ s/^'(.*)'$/$1/s;
+
+        # Manage hashes
         if ( $k =~
-/^(?:exportedVars|locationRules|groups|exportedHeaders|macros|globalStorageOptions|notificationStorageOptions|samlServiceMetaData|samlIDPMetaData|samlSPMetaData)$/
+/^(?:exportedVars|locationRules|groups|exportedHeaders|macros|globalStorageOptions|notificationStorageOptions|samlIDPMetaData|samlSPMetaData)$/
             and $v ||= {}
             and not ref($v) )
         {
@@ -71,6 +82,8 @@ sub unserialize {
         }
         else {
             $v =~ s/&#?39;/'/g;
+            $v =~ s/%0D/\r/g;
+            $v =~ s/%0A/\n/g;
             $conf->{$k} = $v;
         }
     }

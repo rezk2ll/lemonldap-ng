@@ -140,7 +140,7 @@ function lmtext(id){
 	return $('#text_'+id).attr('name');
 }
 function lmdata(id){
-	return $('#text_'+id).attr('value');
+	return unescape( $('#text_'+id).attr('value') );
 }
 function lmparent(id){
 	return $('#'+id).parent().parent().attr('id');
@@ -155,7 +155,7 @@ function setlmtext(id,v){
 	}
 }
 function setlmdata(id,v){
-	$('#text_'+id).attr('value',v);
+	$('#text_'+id).attr('value',escape(v));
 }
 function setlmsamlassertion(id){
 	var ind=$('#samlAssertionIndex').attr('value');

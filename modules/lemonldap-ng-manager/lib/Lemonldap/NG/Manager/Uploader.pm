@@ -12,6 +12,7 @@ use MIME::Base64;
 
 # TODO
 use Data::Dumper;
+use URI::Escape;
 use Lemonldap::NG::Common::Safelib;        #link protected safe Safe object
 use Lemonldap::NG::Manager::Downloader;    #inherits
 use Lemonldap::NG::Manager::_Struct;       #link protected struct _Struct object
@@ -55,6 +56,10 @@ sub confUpload {
             $_->getAttribute('name'),
             $_->getAttribute('value')
         );
+
+        # Unescape value
+        $value = uri_unescape($value);
+
         my $NK = 0;
         $id =~
           s/^text_(NewID_)?li_(\w+)(\d)(?:_\d+)?$/decode_base64($2.'='x $3)/e;
@@ -90,7 +95,7 @@ sub confUpload {
                     $errors->{errors}->{$name} = $m || $test->{keyMsgFail};
                     next;
                 }
-                $errors->{warnings}->{$name} = $m if($m);
+                $errors->{warnings}->{$name} = $m if ($m);
             }
             if ( $test->{test} ) {
                 ( $res, $m ) = $self->applyTest( $test->{test}, $value );
@@ -98,7 +103,7 @@ sub confUpload {
                     $errors->{errors}->{$name} = $m || $test->{msgFail};
                     next;
                 }
-                $errors->{warnings}->{$name} = $m if($m);
+                $errors->{warnings}->{$name} = $m if ($m);
             }
 
             # 1.3.1.2 Tests that return a warning
