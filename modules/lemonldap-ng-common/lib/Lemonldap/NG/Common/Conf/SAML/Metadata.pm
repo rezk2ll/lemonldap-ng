@@ -47,7 +47,7 @@ sub setDebug {
 # @param $s Configuration string.
 # @return boolean
 sub initializeFromConf {
-    my $self = shift;
+    my $self   = shift;
     my $string = shift;
 
     $string =~ s/&#39;/'/g;
@@ -67,7 +67,7 @@ sub initializeFromConfHash {
     return 0 unless $hash;
 
     while ( my ( $k, $v ) = each(%$hash) ) {
-      $self->{$k} = $v;
+        $self->{$k} = $v;
     }
 
     return 1;
@@ -80,9 +80,9 @@ sub initializeFromConfHash {
 sub initializeFromFile {
     my $self = shift;
     my $file = shift;
-    my $xml = $self->_loadFile($file);
+    my $xml  = $self->_loadFile($file);
     if ( !$xml ) {
-      return 0;
+        return 0;
     }
     return $self->initializeFromXML($xml);
 }
@@ -92,7 +92,7 @@ sub initializeFromFile {
 # @param $string Configuration XML string.
 # @return boolean
 sub initializeFromXML {
-    my $self = shift;
+    my $self   = shift;
     my $string = shift;
 
     # Remove spaces
@@ -106,9 +106,9 @@ sub initializeFromXML {
     # Store data in Metadata object
     if ($data) {
         while ( my ( $k, $v ) = each( %{$data} ) ) {
-      $self->{$k} = $v;
-    }
-    return 1;
+            $self->{$k} = $v;
+        }
+        return 1;
     }
     return 0;
 
@@ -119,70 +119,72 @@ sub initializeFromXML {
 # SAML 2 description.
 # @return string
 sub serviceToXML {
-    my $self = shift;
-    my $file = shift;
-    my ($conf) = @_;
+    my $self     = shift;
+    my $file     = shift;
+    my ($conf)   = @_;
     my $template = HTML::Template->new(
         filename          => "$file",
         die_on_bad_params => 0,
         cache             => 0,
-      );
+    );
+
     # Automatic parameters
     my @param_auto = qw(
-        samlServicePrivateKey
-        samlEntityID
-        samlOrganizationName
-        samlOrganizationDisplayName
-        samlOrganizationURL
-        samlSPSSODescriptorAuthnRequestsSigned
-        samlSPSSODescriptorProtocolSupportEnumeration
-        samlSPSSODescriptorKeyDescriptorSigning
-        samlIDPSSODescriptorWantAuthnRequestsSigned
-        samlIDPSSODescriptorProtocolSupportEnumeration
-        samlIDPSSODescriptorKeyDescriptorSigning
-      );
-    foreach (@param_auto)
-    {
-      $template->param($_, $conf->{$_});
+      samlEntityID
+      samlOrganizationName
+      samlOrganizationDisplayName
+      samlOrganizationURL
+      samlSPSSODescriptorAuthnRequestsSigned
+      samlSPSSODescriptorProtocolSupportEnumeration
+      samlSPSSODescriptorKeyDescriptorSigning
+      samlIDPSSODescriptorWantAuthnRequestsSigned
+      samlIDPSSODescriptorProtocolSupportEnumeration
+      samlIDPSSODescriptorKeyDescriptorSigning
+    );
+
+    foreach (@param_auto) {
+        $template->param( $_, $conf->{$_} );
     }
+
     # Rebuilded parameters for SAML services
     # A samlService value is formated like the following:
     # "binding;location;responseLocation"
     # The last value, responseLocation, is optional.
     my @param_service = qw(
-        samlSPSSODescriptorSingleLogoutServiceHTTP
-        samlSPSSODescriptorSingleLogoutServiceSOAP
-        samlIDPSSODescriptorSingleSignOnServiceHTTP
-        samlIDPSSODescriptorSingleSignOnServiceSOAP
-        samlIDPSSODescriptorSingleLogoutServiceHTTP
-        samlIDPSSODescriptorSingleLogoutServiceSOAP
-        samlIDPSSODescriptorManageNameIDServiceHTTP
-        samlIDPSSODescriptorManageNameIDServiceSOAP
-      );
-    foreach (@param_service)
-    {
-      my @_tab = split(/;/, $conf->{$_});
-      $template->param($_.'Binding', $_tab[0]);
-      $template->param($_.'Location', $_tab[1]);
-      $template->param($_.'ResponseLocation', $_tab[2]);
+      samlSPSSODescriptorSingleLogoutServiceHTTP
+      samlSPSSODescriptorSingleLogoutServiceSOAP
+      samlIDPSSODescriptorSingleSignOnServiceHTTP
+      samlIDPSSODescriptorSingleSignOnServiceSOAP
+      samlIDPSSODescriptorSingleLogoutServiceHTTP
+      samlIDPSSODescriptorSingleLogoutServiceSOAP
+      samlIDPSSODescriptorManageNameIDServiceHTTP
+      samlIDPSSODescriptorManageNameIDServiceSOAP
+    );
+
+    foreach (@param_service) {
+        my @_tab = split( /;/, $conf->{$_} );
+        $template->param( $_ . 'Binding',          $_tab[0] );
+        $template->param( $_ . 'Location',         $_tab[1] );
+        $template->param( $_ . 'ResponseLocation', $_tab[2] );
     }
+
     # Rebuilded parameters for SAML assertions
     # A samlAssertion value is formated like the following:
     # "default;index;binding;location"
     my @param_assertion = qw(
-        samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact
-        samlSPSSODescriptorAssertionConsumerServiceHTTPPost
-        samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect
-        samlIDPSSODescriptorArtifactResolutionServiceArtifact
-      );
-    foreach (@param_assertion)
-    {
-      my @_tab = split(/;/, $conf->{$_});
-      $template->param($_.'Default', $_tab[0] ? 'true' : 'false');
-      $template->param($_.'Index', $_tab[1]);
-      $template->param($_.'Binding', $_tab[2]);
-      $template->param($_.'Location', $_tab[3]);
+      samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact
+      samlSPSSODescriptorAssertionConsumerServiceHTTPPost
+      samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect
+      samlIDPSSODescriptorArtifactResolutionServiceArtifact
+    );
+    foreach (@param_assertion) {
+        my @_tab = split( /;/, $conf->{$_} );
+        $template->param( $_ . 'Default', $_tab[0] ? 'true' : 'false' );
+        $template->param( $_ . 'Index',   $_tab[1] );
+        $template->param( $_ . 'Binding', $_tab[2] );
+        $template->param( $_ . 'Location', $_tab[3] );
     }
+
     # Return the XML metadata.
     return $template->output;
 }
@@ -197,7 +199,8 @@ sub toXML {
     my $xs = XML::Simple->new( RootName => "md:EntityDescriptor" );
 
     # Force xmlns:md key
-    $self->{"xmlns:md"} = "urn:oasis:names:tc:SAML:2.0:metadata" unless defined $self->{"xmlns:md"};
+    $self->{"xmlns:md"} = "urn:oasis:names:tc:SAML:2.0:metadata"
+      unless defined $self->{"xmlns:md"};
 
     # Serialize XML
     my $xml = $xs->XMLout($self);
@@ -211,7 +214,7 @@ sub toXML {
 sub toConf {
     my $self = shift;
     my $fields;
-    local $Data::Dumper::Indent = 0;
+    local $Data::Dumper::Indent  = 0;
     local $Data::Dumper::Varname = "data";
     my $data = Dumper($self);
     $data =~ s/^\s*(.*?)\s*$/$1/;
@@ -224,11 +227,11 @@ sub toConf {
 # NOT USED FOR THE MOMENT.
 # @return hashref
 sub toStruct {
-  my $self = shift;
-  my $struct = ();
+    my $self   = shift;
+    my $struct = ();
     foreach ( keys %$self ) {
-    $struct->{$_} = $self->{$_};
-  }
+        $struct->{$_} = $self->{$_};
+    }
     return $self->_toStruct( '', $struct );
 }
 
@@ -243,11 +246,11 @@ sub _toStruct {
     my $path = shift;
     my $node = shift;
     if ( ref $node ) {
-      my $struct = {
-          _nodes => [],
-          _help => 'default'
+        my $struct = {
+            _nodes => [],
+            _help  => 'default'
         };
-      my @nodes = ();
+        my @nodes = ();
         my $tmpnode;
         if ( ref $node eq 'ARRAY' ) {
 
@@ -264,24 +267,24 @@ sub _toStruct {
         foreach ( keys %$tmpnode ) {
 
             if ( $_ =~ /^xmlns/ ) {
-          next;
-        }
-        my $key = $path . ' ' . $_;
-        $key =~ s/^ +//g;
+                next;
+            }
+            my $key = $path . ' ' . $_;
+            $key =~ s/^ +//g;
             my $data;
 
             $data = $self->_toStruct( $key, $tmpnode->{$_} );
             if ($data) {
-          $struct->{$key} = $data;
-          push @nodes, 'n:' . $key;
-        }
+                $struct->{$key} = $data;
+                push @nodes, 'n:' . $key;
+            }
             else {
-          $struct->{$key} = 'text:/' . $_;
-          push @nodes, $key;
+                $struct->{$key} = 'text:/' . $_;
+                push @nodes, $key;
+            }
         }
-      }
-      $struct->{_nodes} = \@nodes;
-      return $struct;
+        $struct->{_nodes} = \@nodes;
+        return $struct;
     }
     return 0;
 }
@@ -294,10 +297,10 @@ sub load {
     my @files     = splice @_;
     my @metadatas = ();
     foreach (@files) {
-      my $metadata = new Lemonldap::NG::Common::Conf::SAML::Metadata();
+        my $metadata = new Lemonldap::NG::Common::Conf::SAML::Metadata();
         if ( $metadata->initializeFromFile($_) ) {
-        push @metadatas, $metadata;
-      }
+            push @metadatas, $metadata;
+        }
     }
     return @metadatas;
 }

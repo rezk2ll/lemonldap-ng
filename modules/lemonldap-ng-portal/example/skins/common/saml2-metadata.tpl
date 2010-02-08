@@ -2,7 +2,7 @@
 <EntityDescriptor xmlns="urn:oasis:names:tc:SAML:2.0:metadata"
     xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion"
     xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
-    entityID="<TMPL_VAR NAME="samlIdentityID">">
+    entityID="<TMPL_VAR NAME="samlEntityID">">
 
   <IDPSSODescriptor
       WantAuthnRequestsSigned="<TMPL_VAR NAME="samlIDPSSODescriptorWantAuthnRequestsSigned">"
@@ -17,7 +17,7 @@
     <KeyDescriptor use="encryption">
       <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
         <ds:KeyValue>
-          <TMPL_VAR NAME="samlServicePrivateKey">
+          <TMPL_VAR NAME="samlIDPSSODescriptorKeyDescriptorSigning">
         </ds:KeyValue>
       </ds:KeyInfo>
     </KeyDescriptor>
@@ -65,7 +65,7 @@
     <KeyDescriptor use="encryption">
       <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
         <ds:KeyValue>
-          <TMPL_VAR NAME="samlServicePrivateKey">
+          <TMPL_VAR NAME="samlSPSSODescriptorKeyDescriptorSigning">
         </ds:KeyValue>
       </ds:KeyInfo>
     </KeyDescriptor>
