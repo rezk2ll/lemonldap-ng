@@ -17,6 +17,42 @@ our @EXPORT = qw(
 
 our $VERSION = '0.01';
 
+BEGIN {
+
+    # Load Glib if available
+    eval 'use Glib;';
+    if ($@) {
+        print STDERR
+          "Glib Lasso messages will not be catched (require Glib module)\n";
+        eval "use constant GLIB => 0";
+    }
+    else {
+        eval "use constant GLIB => 0";
+    }
+
+    # Load Lasso.pm
+    eval 'use Lasso;';
+    if ($@) {
+        print STDERR "Lasso.pm not loaded :$@";
+        eval 'use constant LASSO => 0;use constant BADLASSO => 0;';
+    }
+    else {
+        no strict 'subs';
+        eval 'use constant LASSO => 1';
+        my $lasso_check_version_mode = Lasso::Constants::CHECK_VERSION_NUMERIC;
+        my $check_version =
+          Lasso::check_version( 2, 2, 91, $lasso_check_version_mode );
+        unless ($check_version) {
+            eval 'use constant BADLASSO => 1';
+        }
+        else {
+            eval 'use constant BADLASSO => 0';
+        }
+    }
+
+    # Check Lasso version >= 2.2.91
+}
+
 ## @method boolean loadLasso()
 # Load Lasso module
 # @return boolean result
@@ -27,8 +63,7 @@ sub loadLasso {
     return 1 if $self->{_lasso};
 
     # Catch GLib Lasso messages (require Glib)
-    eval { use Glib; };
-    unless ($@) {
+    if (GLIB) {
         Glib::Log->set_handler(
             "Lasso",
             [qw/ error critical warning message info debug /],
@@ -38,35 +73,15 @@ sub loadLasso {
             }
         );
     }
-    else {
-        $self->lmLog(
-            "Glib Lasso messages will not be catched (require Glib module)",
-            'info' );
-    }
-
-    # Load Lasso.pm
-    eval { use Lasso; };
-    if ($@) {
-        $self->lmLog( "Module Lasso not found in @INC", 'error' );
-        $self->lmLog( "$@",                             'debug' );
+    unless (LASSO) {
+        $self->lmLog( "Module Lasso not loaded (see bellow)", 'error' );
         return 0;
     }
 
-    # Check Lasso version >= 2.2.91
-    my $lasso_check_version_mode = Lasso::Constants::CHECK_VERSION_NUMERIC;
-    my $check_version =
-      Lasso::check_version( 2, 2, 91, $lasso_check_version_mode );
-
-    unless ($check_version) {
+    if (BADLASSO) {
         $self->lmLog( 'Lasso version >= 2.2.91 required', 'error' );
         return 0;
     }
-
-    $self->lmLog( "Module Lasso loaded", 'debug' );
-
-    # Remember we have loaded Lasso
-    $self->{_lasso} = 1;
-
     return 1;
 }
 
@@ -76,9 +91,8 @@ sub loadLasso {
 # @param string optional log level (debug by default)
 # @return 1 if no error
 sub checkLassoError {
-    my $self  = shift;
-    my $error = shift;
-    my $level = shift || 'debug';
+    my ( $self, $error, $level ) = splice @_;
+    my $level ||= 'debug';
 
     # If $error is not a Lasso::Error object, display error string
     unless ( ref($error) and $error->isa("Lasso::Error") ) {
@@ -106,16 +120,12 @@ sub checkLassoError {
 # @param string optional certificate
 # @return Lasso::Server object
 sub createServer {
-    my $self                 = shift;
-    my $metadata             = shift;
-    my $private_key          = shift;
-    my $private_key_password = shift;
-    my $certificate          = shift;
+    my ( $self, $metadata, $private_key, $private_key_password, $certificate) = splice @_;
     my $server;
 
     eval {
         $server = Lasso::Server::new_from_buffers( $metadata, $private_key,
-        $private_key_password, $certificate );
+            $private_key_password, $certificate );
     };
 
     return unless $self->checkLassoError($@);
@@ -131,14 +141,11 @@ sub createServer {
 # @param string optional ca cert chain
 # @return boolean result
 sub addIDP {
-    my $self          = shift;
-    my $server        = shift;
-    my $metadata      = shift;
-    my $public_key    = shift;
-    my $ca_cert_chain = shift;
+    my ( $self, $server, $metadata, $public_key, $ca_cert_chain ) = splice @_;
 
     return 0 unless ( $server->isa("Lasso::Server") and defined $metadata );
 
+    no strict 'subs';
     return $self->addProvider( $server, Lasso::Constants::PROVIDER_ROLE_IDP,
         $metadata, $public_key, $ca_cert_chain );
 }
@@ -152,12 +159,8 @@ sub addIDP {
 # @param string optional ca cert chain
 # @return boolean result
 sub addProvider {
-    my $self          = shift;
-    my $server        = shift;
-    my $role          = shift;
-    my $metadata      = shift;
-    my $public_key    = shift;
-    my $ca_cert_chain = shift;
+    my ( $self, $server, $role, $metadata, $public_key, $ca_cert_chain ) =
+      splice @_;
 
     return 0
       unless ( $server->isa("Lasso::Server")
@@ -179,11 +182,8 @@ sub addProvider {
 #@param string entityID
 #@return string organization name
 sub getOrganizationName {
-    my $self   = shift;
-    my $server = shift;
-    my $idp    = shift;
-    my $provider;
-    my $node;
+    my ( $self, $server, $idp ) = splice @_;
+    my ( $provider, $node );
 
     # Get provider from server
     eval { $provider = Lasso::Server::get_provider( $server, $idp ); };
@@ -205,9 +205,7 @@ sub getOrganizationName {
 # @param string entityID
 # @return Lasso::Login object
 sub createAuthnRequest {
-    my $self   = shift;
-    my $server = shift;
-    my $idp    = shift;
+    my ( $self, $server, $idp ) = splice @_;
 
     # Create Lasso Login
     my $login = $self->createLogin($server);
@@ -244,8 +242,7 @@ sub createAuthnRequest {
 # @param Lasso::Server server
 # @return Lasso::Login object
 sub createLogin {
-    my $self   = shift;
-    my $server = shift;
+    my ( $self, $server ) = splice @_;
     my $login;
 
     eval { $login = Lasso::Login->new($server); };
@@ -261,13 +258,12 @@ sub createLogin {
 # @param string entityID
 # @return int HTTP method
 sub getHttpMethod {
-    my $self   = shift;
-    my $server = shift;
-    my $idp    = shift;
+    my ( $self, $server, $idp ) = splice @_;
 
     # TODO
 
     # By default, use HTTP REDIRECT
+    no strict;
     return Lasso::Constants::HTTP_METHOD_REDIRECT;
 }
 
@@ -278,10 +274,7 @@ sub getHttpMethod {
 # @param int HTTP method
 # @return boolean result
 sub initAuthnRequest {
-    my $self   = shift;
-    my $login  = shift;
-    my $idp    = shift;
-    my $method = shift;
+    my ( $self, $login, $idp, $method ) = splice @_;
 
     eval { Lasso::Login::init_authn_request( $login, $idp, $method ); };
 
@@ -293,8 +286,7 @@ sub initAuthnRequest {
 # @param Lasso::Login login
 # @return boolean result
 sub buildAuthnRequestMsg {
-    my $self  = shift;
-    my $login = shift;
+    my ( $self, $login ) = splice @_;
 
     eval { Lasso::Login::build_authn_request_msg($login); };
 

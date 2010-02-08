@@ -22,69 +22,70 @@ sub authInit {
     return PE_ERROR unless $self->loadLasso();
 
     # Activate SOAP
-    $self->{Soap} = 1;
+    $self->abort( 'To use SAML, you must set "Soap => 1"', 'error' )
+      unless ( $self->{Soap} );
 
     # Check presence of private key in configuration
     unless ( $self->{samlServicePrivateKey} ) {
         $self->lmLog( "SAML private key not found in configuration", 'error' );
-            return PE_ERROR;
-        }
+        return PE_ERROR;
+    }
 
-        # Get metadata from configuration
-        $self->lmLog( "Get Metadata for this service", 'debug' );
+    # Get metadata from configuration
+    $self->lmLog( "Get Metadata for this service", 'debug' );
     my $service_metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new();
 
-        # Create Lasso server with service metadata
-        my $server = $self->createServer(
+    # Create Lasso server with service metadata
+    my $server = $self->createServer(
         $service_metadata->serviceToXML(
             $ENV{DOCUMENT_ROOT} . "/skins/common/saml2-metadata.tpl", $self
         ),
-            $self->{samlServicePrivateKey},
-        );
+        $self->{samlServicePrivateKey},
+    );
 
-        unless ($server) {
-            $self->lmLog( 'Unable to create Lasso server', 'error' );
-            return PE_ERROR;
-        }
+    unless ($server) {
+        $self->lmLog( 'Unable to create Lasso server', 'error' );
+        return PE_ERROR;
+    }
 
-        $self->lmLog( "Service created", 'debug' );
+    $self->lmLog( "Service created", 'debug' );
 
-        # Check presence of at least one identity provider in configuration
-        unless ( $self->{samlIDPMetaData}
-            and keys %{ $self->{samlIDPMetaData} } )
-        {
-            $self->lmLog( "No IDP found in configuration", 'error' );
-            return PE_ERROR;
-        }
+    # Check presence of at least one identity provider in configuration
+    unless ( $self->{samlIDPMetaData}
+        and keys %{ $self->{samlIDPMetaData} } )
+    {
+        $self->lmLog( "No IDP found in configuration", 'error' );
+        return PE_ERROR;
+    }
 
-        # Load identity provider metadata
-        # IDP are listed in $self->{samlIDPMetaData}
-        # Each key is the IDP name and value is the metadata
-	# Build IDP list for later use in extractFormInfo
-        foreach ( keys %{ $self->{samlIDPMetaData} } ) {
+    # Load identity provider metadata
+    # IDP are listed in $self->{samlIDPMetaData}
+    # Each key is the IDP name and value is the metadata
+    # Build IDP list for later use in extractFormInfo
+    foreach ( keys %{ $self->{samlIDPMetaData} } ) {
 
-            $self->lmLog( "Get Metadata for IDP $_", 'debug' );
+        $self->lmLog( "Get Metadata for IDP $_", 'debug' );
 
-            # Get metadata from configuration
+        # Get metadata from configuration
         my $idp_metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new();
-            unless (
-                $idp_metadata->initializeFromConfHash(
-                    $self->{samlIDPMetaData}->{$_}
-                )
-              )
-            {
-                $self->lmLog( "Fail to read IDP $_ Metadata from configuration",
-                    'error' );
-                return PE_ERROR;
-            }
+        unless (
+            $idp_metadata->initializeFromConfHash(
+                $self->{samlIDPMetaData}->{$_}
+            )
+          )
+        {
+            $self->lmLog( "Fail to read IDP $_ Metadata from configuration",
+                'error' );
+            return PE_ERROR;
+        }
 
-            # Add this IDP to Lasso::Server
-            my $result = $self->addIDP( $server, $idp_metadata->toXML() );
+        # Add this IDP to Lasso::Server
+        my $result = $self->addIDP( $server, $idp_metadata->toXML() );
 
-            unless ($result) {
-                $self->lmLog( "Fail to use IDP $_ Metadata", 'error' );
-                return PE_ERROR;
-            }
+        unless ($result) {
+            $self->lmLog( "Fail to use IDP $_ Metadata", 'error' );
+            return PE_ERROR;
+        }
 
         # Store IDP entityID and Organization Name
         my $entityID = $idp_metadata->{entityID};
@@ -93,8 +94,8 @@ sub authInit {
         $self->{_idpList}->{$_}->{entityID} = $entityID;
         $self->{_idpList}->{$_}->{name}     = $name;
 
-            $self->lmLog( "IDP $_ added", 'debug' );
-        }
+        $self->lmLog( "IDP $_ added", 'debug' );
+    }
 
     # Store Lasso::Server object
     $self->{_lassoServer} = $server;
@@ -106,7 +107,7 @@ sub authInit {
 # Check authentication statement or create authentication request
 # @return Lemonldap::NG::Portal error code
 sub extractFormInfo {
-    my $self = shift;
+    my $self   = shift;
     my $server = $self->{_lassoServer};
     my $idp;
 
@@ -114,16 +115,16 @@ sub extractFormInfo {
     # if ( authnStatement ) ...
     # TODO - check authstatement
     # else
-    
+
     # 2. IDP resolution
-    
+
     # Get IDP resolution cookie
-    my %cookies = fetch CGI::Cookie;
+    my %cookies    = fetch CGI::Cookie;
     my $idp_cookie = $cookies{ $self->{samlIdPResolveCookie} };
     if ($idp_cookie) {
-	   $idp = $idp_cookie->value;
+        $idp = $idp_cookie->value;
         $self->lmLog( "IDP $idp found in IDP resolution cookie", 'debug' );
-   }
+    }
 
     # If no IDP resolve cookie, find another way to get it
     # Case 1: IDP was choosen from portal IDP list
@@ -139,37 +140,28 @@ sub extractFormInfo {
         $self->lmLog( "No IDP found, redirecting user to IDP list", 'debug' );
 
         # IDP list
-        my $html = "<h3>";
-        $html .=
-          &Lemonldap::NG::Portal::_i18n::msg( PM_SAML_IDPSELECT,
-            $ENV{HTTP_ACCEPT_LANGUAGE} );
-        $html .= "</h3>\n";
+        my $html = "<h3>"
+          . &Lemonldap::NG::Portal::_i18n::msg( PM_SAML_IDPSELECT,
+            $ENV{HTTP_ACCEPT_LANGUAGE} )
+          . "</h3>\n<table>\n";
 
-        $html .= "<table>\n";
         foreach ( keys %{ $self->{_idpList} } ) {
-            $html .= "<tr><td>";
             $html .=
-                "<input type=\"radio\" name=\"idp\" value=\""
+                '<tr><td><input type="radio" name="idp" value="'
               . $self->{_idpList}->{$_}->{entityID}
-              . "\" />\n";
-            $html .= "</td><td>";
-            $html .= $self->{_idpList}->{$_}->{name};
-            $html .= "</td></tr>";
+              . '" /></td><td>'
+              . $self->{_idpList}->{$_}->{name}
+              . '</td></tr>';
         }
 
         $html .=
-"<tr><td><input type=\"checkbox\" name=\"cookie_type\" value=\"1\"></td>";
-        $html .= "<td>";
-        $html .=
-          &Lemonldap::NG::Portal::_i18n::msg( PM_REMEMBERCHOICE,
-            $ENV{HTTP_ACCEPT_LANGUAGE} );
-        $html .= "</td></tr>\n";
+'<tr><td><input type="checkbox" name="cookie_type" value="1"></td><td>'
+          . &Lemonldap::NG::Portal::_i18n::msg( PM_REMEMBERCHOICE,
+            $ENV{HTTP_ACCEPT_LANGUAGE} )
+          . "</td></tr></table>\n"
 
-        $html .= "</table>\n";
-
-        # Script to autoselect first choice
-        $html .=
-"<script>\$('[type=radio]:first').attr('checked','checked');</script>\n";
+          # Script to autoselect first choice
+          . '<script>$("[type=radio]:first").attr("checked","checked");</script>';
 
         $self->info($html);
 
@@ -184,48 +176,43 @@ sub extractFormInfo {
             -expires => '-1d',
           );
 
-	    return PE_CONFIRM;
+        return PE_CONFIRM;
     }
-    
+
     # If IDP is found but not confirmed, let the user confirm it
     if ( $confirm_flag != 1 ) {
         $self->lmLog( "IDP $idp selected, need user confirmation", 'debug' );
 
         # Choosen IDP
-        my $html = "<h3>";
-        $html .=
-          &Lemonldap::NG::Portal::_i18n::msg( PM_SAML_IDPCHOOSEN,
-            $ENV{HTTP_ACCEPT_LANGUAGE} );
-        $html .= "</h3>\n";
-
-        $html .= "<h4>$idp</h4>\n";
-
-        $html .= "<input type=\"hidden\" name=\"idp\" value=\"$idp\" />\n";
+        my $html = '<h3>'
+          . &Lemonldap::NG::Portal::_i18n::msg( PM_SAML_IDPCHOOSEN,
+            $ENV{HTTP_ACCEPT_LANGUAGE} )
+          . "</h3>\n<h4>$idp</h4>\n<input type=\"hidden\" name=\"idp\" value=\"$idp\" />\n";
 
         $self->info($html);
 
-	    return PE_CONFIRM;
+        return PE_CONFIRM;
     }
 
     # Here confirmation is OK (confirm_flag == 1), store choosen IDP in cookie
     unless ( $idp_cookie and ( $idp eq $idp_cookie->value ) ) {
         $self->lmLog( "Build cookie to remember $idp as IDP choice", 'debug' );
 
-	    # User can choose temporary (0) or persistent cookie (1)
-	    my $cookie_type = $self->param("cookie_type") || "0";
+        # User can choose temporary (0) or persistent cookie (1)
+        my $cookie_type = $self->param("cookie_type") || "0";
 
-	    push @{ $self->{cookie} },
-	    $self->cookie(
-		    -name     => $self->{samlIdPResolveCookie},
-		    -value    => $idp,
-		    -domain   => $self->{domain},
-		    -path     => "/",
-		    -secure   => $self->{securedCookie},
-		    -httponly => $self->{httpOnly},
-		    -expires  => $cookie_type ? "+365d" : "",
-	    );		 
+        push @{ $self->{cookie} },
+          $self->cookie(
+            -name     => $self->{samlIdPResolveCookie},
+            -value    => $idp,
+            -domain   => $self->{domain},
+            -path     => "/",
+            -secure   => $self->{securedCookie},
+            -httponly => $self->{httpOnly},
+            -expires  => $cookie_type ? "+365d" : "",
+          );
     }
-    
+
     # 3. Build authentication request
     my $login = $self->createAuthnRequest( $server, $idp );
 
