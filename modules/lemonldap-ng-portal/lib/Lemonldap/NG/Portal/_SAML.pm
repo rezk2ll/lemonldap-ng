@@ -193,6 +193,7 @@ sub getOrganizationName {
 
     # Get provider from server
     eval { $provider = Lasso::Server::get_provider( $server, $idp ); };
+
     if ($@) {
         $self->checkLassoError($@);
         return;
@@ -200,6 +201,7 @@ sub getOrganizationName {
 
     # Get organization node
     eval { $node = Lasso::Provider::get_organization($provider); };
+
     if ($@) {
         $self->checkLassoError($@);
         return;
@@ -259,7 +261,10 @@ sub createLogin {
 
     eval { $login = Lasso::Login->new($server); };
 
+    if ($@) {
     $self->checkLassoError($@);
+        return;
+    }
 
     return $login;
 }

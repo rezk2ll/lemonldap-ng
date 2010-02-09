@@ -278,7 +278,8 @@ sub struct {
                            samlSPSSODescriptorProtocolSupportEnumeration
                            samlSPSSODescriptorKeyDescriptorSigning
                            n:samlSPSSODescriptorSingleLogoutService
-                           n:samlSPSSODescriptorAssertionConsumerService)
+                          n:samlSPSSODescriptorAssertionConsumerService
+                          n:samlSPSSODescriptorNameIDFormat)
                       ],
                     _help  => 'default',
 
@@ -296,9 +297,9 @@ sub struct {
                           ],
                         _help  => 'default',
                         samlSPSSODescriptorSingleLogoutServiceHTTP =>
-                            'samlService:/samlSPSSODescriptorSingleLogoutServiceHTTP',
+'samlService:/samlSPSSODescriptorSingleLogoutServiceHTTP',
                         samlSPSSODescriptorSingleLogoutServiceSOAP =>
-                            'samlService:/samlSPSSODescriptorSingleLogoutServiceSOAP',
+'samlService:/samlSPSSODescriptorSingleLogoutServiceSOAP',
                       },
 
                     samlSPSSODescriptorAssertionConsumerService => {
@@ -309,11 +310,26 @@ sub struct {
                           ],
                         _help  => 'default',
                         samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact =>
-                            'samlAssertion:/samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact',
+'samlAssertion:/samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact',
                         samlSPSSODescriptorAssertionConsumerServiceHTTPPost =>
-                            'samlAssertion:/samlSPSSODescriptorAssertionConsumerServiceHTTPPost',
+'samlAssertion:/samlSPSSODescriptorAssertionConsumerServiceHTTPPost',
                         samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect =>
-                            'samlAssertion:/samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect',
+'samlAssertion:/samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect',
+                    },
+
+                    samlSPSSODescriptorNameIDFormat => {
+                        _nodes => [
+                            qw(samlSPSSODescriptorNameIDFormatX509SubjectName
+                              samlSPSSODescriptorNameIDFormatPersistent
+                              samlSPSSODescriptorNameIDFormatTransient)
+                        ],
+                        _help => 'default',
+                        samlSPSSODescriptorNameIDFormatX509SubjectName =>
+'bool:/samlSPSSODescriptorNameIDFormatX509SubjectName:samlNameIDFormatX509SubjectName:bool',
+                        samlSPSSODescriptorNameIDFormatPersistent =>
+'bool:/samlSPSSODescriptorNameIDFormatPersistent:samlNameIDFormatPersistent:bool',
+                        samlSPSSODescriptorNameIDFormatTransient =>
+'bool:/samlSPSSODescriptorNameIDFormatTransient:samlNameIDFormatTransient:bool',
                       },
                   },
 
@@ -326,6 +342,7 @@ sub struct {
                            n:samlIDPSSODescriptorSingleSignOnService
                            n:samlIDPSSODescriptorSingleLogoutService
                            n:samlIDPSSODescriptorArtifactResolutionService
+                          n:samlIDPSSODescriptorNameIDFormat
                            n:samlIDPSSODescriptorManageNameIDService)
                       ],
                     _help  => 'default',
@@ -344,9 +361,9 @@ sub struct {
                           ],
                         _help => 'default',
                         samlIDPSSODescriptorSingleSignOnServiceHTTP =>
-                            'samlService:/samlIDPSSODescriptorSingleSignOnServiceHTTP',
+'samlService:/samlIDPSSODescriptorSingleSignOnServiceHTTP',
                         samlIDPSSODescriptorSingleSignOnServiceSOAP =>
-                            'samlService:/samlIDPSSODescriptorSingleSignOnServiceSOAP',
+'samlService:/samlIDPSSODescriptorSingleSignOnServiceSOAP',
                       },
 
                     samlIDPSSODescriptorSingleLogoutService => {
@@ -356,9 +373,9 @@ sub struct {
                           ],
                         _help  => 'default',
                         samlIDPSSODescriptorSingleLogoutServiceHTTP =>
-                            'samlService:/samlIDPSSODescriptorSingleLogoutServiceHTTP',
+'samlService:/samlIDPSSODescriptorSingleLogoutServiceHTTP',
                         samlIDPSSODescriptorSingleLogoutServiceSOAP =>
-                            'samlService:/samlIDPSSODescriptorSingleLogoutServiceSOAP',
+'samlService:/samlIDPSSODescriptorSingleLogoutServiceSOAP',
                       },
 
                     samlIDPSSODescriptorArtifactResolutionService => {
@@ -367,7 +384,22 @@ sub struct {
                           ],
                         _help  => 'default',
                         samlIDPSSODescriptorArtifactResolutionServiceArtifact =>
-                            'samlAssertion:/samlIDPSSODescriptorArtifactResolutionServiceArtifact',
+'samlAssertion:/samlIDPSSODescriptorArtifactResolutionServiceArtifact',
+                    },
+
+                    samlIDPSSODescriptorNameIDFormat => {
+                        _nodes => [
+                            qw(samlIDPSSODescriptorNameIDFormatX509SubjectName
+                              samlIDPSSODescriptorNameIDFormatPersistent
+                              samlIDPSSODescriptorNameIDFormatTransient)
+                        ],
+                        _help => 'default',
+                        samlIDPSSODescriptorNameIDFormatX509SubjectName =>
+'bool:/samlIDPSSODescriptorNameIDFormatX509SubjectName:samlNameIDFormatX509SubjectName:bool',
+                        samlIDPSSODescriptorNameIDFormatPersistent =>
+'bool:/samlIDPSSODescriptorNameIDFormatPersistent:samlNameIDFormatPersistent:bool',
+                        samlIDPSSODescriptorNameIDFormatTransient =>
+'bool:/samlIDPSSODescriptorNameIDFormatTransient:samlNameIDFormatTransient:bool',
                       },
 
                     samlIDPSSODescriptorManageNameIDService => {
@@ -377,9 +409,9 @@ sub struct {
                           ],
                         _help  => 'default',
                         samlIDPSSODescriptorManageNameIDServiceHTTP =>
-                            'samlService:/samlIDPSSODescriptorManageNameIDServiceHTTP',
+'samlService:/samlIDPSSODescriptorManageNameIDServiceHTTP',
                         samlIDPSSODescriptorManageNameIDServiceSOAP =>
-                            'samlService:/samlIDPSSODescriptorManageNameIDServiceSOAP',
+'samlService:/samlIDPSSODescriptorManageNameIDServiceSOAP',
                       },
                   },
               },
@@ -635,9 +667,14 @@ sub testStruct {
         samlSPSSODescriptorKeyDescriptorSigning => $testNotDefined,
         samlSPSSODescriptorSingleLogoutServiceHTTP => $testNotDefined,
         samlSPSSODescriptorSingleLogoutServiceSOAP => $testNotDefined,
-        samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact => $testNotDefined,
+        samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact =>
+          $testNotDefined,
         samlSPSSODescriptorAssertionConsumerServiceHTTPPost => $testNotDefined,
-        samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect => $testNotDefined,
+        samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect =>
+          $testNotDefined,
+        samlSPSSODescriptorNameIDFormatX509SubjectName => $boolean,
+        samlSPSSODescriptorNameIDFormatPersistent      => $boolean,
+        samlSPSSODescriptorNameIDFormatTransient       => $boolean,
         samlIDPSSODescriptorWantAuthnRequestsSigned => $boolean,
         samlIDPSSODescriptorProtocolSupportEnumeration => $testNotDefined,
         samlIDPSSODescriptorKeyDescriptorSigning => $testNotDefined,
@@ -645,7 +682,11 @@ sub testStruct {
         samlIDPSSODescriptorSingleSignOnServiceSOAP => $testNotDefined,
         samlIDPSSODescriptorSingleLogoutServiceHTTP => $testNotDefined,
         samlIDPSSODescriptorSingleLogoutServiceSOAP => $testNotDefined,
-        samlIDPSSODescriptorArtifactResolutionServiceArtifact => $testNotDefined,
+        samlIDPSSODescriptorArtifactResolutionServiceArtifact =>
+          $testNotDefined,
+        samlIDPSSODescriptorNameIDFormatX509SubjectName => $boolean,
+        samlIDPSSODescriptorNameIDFormatPersistent      => $boolean,
+        samlSPSSODescriptorNameIDFormatTransient        => $boolean,
         samlIDPSSODescriptorManageNameIDServiceHTTP => $testNotDefined,
         samlIDPSSODescriptorManageNameIDServiceSOAP => $testNotDefined,
     };
@@ -700,7 +741,7 @@ sub defaultConf {
         # SAML #
         ########
         samlServicePrivateKey => '',
-        samlEntityID => '',
+        samlEntityID                => 'http://auth.example.com/saml/metadata',
         samlOrganizationDisplayName => 'Example',
         samlOrganizationName => 'Example',
         samlOrganizationURL => 'http://www.example.com',
@@ -710,47 +751,53 @@ sub defaultConf {
         samlSPSSODescriptorKeyDescriptorSigning => '',
         samlSPSSODescriptorSingleLogoutServiceHTTP =>
           'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;'
-          .'http://auth.example.com/saml/proxySingleLogout;'
-          .'http://auth.example.com/saml/proxySingleLogoutReturn',
+          . 'http://auth.example.com/saml/proxySingleLogout;'
+          . 'http://auth.example.com/saml/proxySingleLogoutReturn',
         samlSPSSODescriptorSingleLogoutServiceSOAP =>
           'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;'
-          .'http://auth.example.com/saml/proxySingleLogoutSOAP;',
+          . 'http://auth.example.com/saml/proxySingleLogoutSOAP;',
         samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact =>
           '1;0;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact;'
-          .'http://auth.example.com/saml/proxySingleSignOnArtifact',
+          . 'http://auth.example.com/saml/proxySingleSignOnArtifact',
         samlSPSSODescriptorAssertionConsumerServiceHTTPPost =>
           '0;1;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;'
-          .'http://auth.example.com/saml/proxySingleSignOnPost',
+          . 'http://auth.example.com/saml/proxySingleSignOnPost',
         samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect =>
           '0;2;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;'
-          .'http://auth.example.com/saml/proxySingleSignOnRedirect',
+          . 'http://auth.example.com/saml/proxySingleSignOnRedirect',
+        samlSPSSODescriptorNameIDFormatX509SubjectName => '0',
+        samlSPSSODescriptorNameIDFormatPersistent      => '1',
+        samlSPSSODescriptorNameIDFormatTransient       => '0',
         samlIDPSSODescriptorWantAuthnRequestsSigned => '0',
         samlIDPSSODescriptorProtocolSupportEnumeration =>
           'urn:oasis:names:tc:SAML:2.0:protocol',
         samlIDPSSODescriptorKeyDescriptorSigning => '',
         samlIDPSSODescriptorSingleSignOnServiceHTTP =>
           'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;'
-          .'http://auth.example.com/saml/singleSignOn;',
+          . 'http://auth.example.com/saml/singleSignOn;',
         samlIDPSSODescriptorSingleSignOnServiceSOAP =>
           'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;'
-          .'http://auth.example.com/saml/singleSignOnSOAP;',
+          . 'http://auth.example.com/saml/singleSignOnSOAP;',
         samlIDPSSODescriptorSingleLogoutServiceHTTP =>
           'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;'
-          .'http://auth.example.com/saml/singleLogout;'
-          .'http://auth.example.com/saml/singleLogoutReturn',
+          . 'http://auth.example.com/saml/singleLogout;'
+          . 'http://auth.example.com/saml/singleLogoutReturn',
         samlIDPSSODescriptorSingleLogoutServiceSOAP =>
           'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;'
-          .'http://auth.example.com/saml/singleLogoutSOAP;',
+          . 'http://auth.example.com/saml/singleLogoutSOAP;',
         samlIDPSSODescriptorArtifactResolutionServiceArtifact =>
           '1;0;urn:oasis:names:tc:SAML:2.0:bindings:SOAP;'
-          .'http://auth.example.com/saml/artifact',
+          . 'http://auth.example.com/saml/artifact',
         samlIDPSSODescriptorManageNameIDServiceHTTP =>
           'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;'
-          .'http://auth.example.com/saml/manageNameId;'
-          .'http://auth.example.com/saml/manageNameIdReturn',
+          . 'http://auth.example.com/saml/manageNameId;'
+          . 'http://auth.example.com/saml/manageNameIdReturn',
         samlIDPSSODescriptorManageNameIDServiceSOAP =>
           'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;'
-          .'http://auth.example.com/saml/manageNameIdSOAP;',
+          . 'http://auth.example.com/saml/manageNameIdSOAP;',
+        samlIDPSSODescriptorNameIDFormatX509SubjectName => '0',
+        samlIDPSSODescriptorNameIDFormatPersistent      => '1',
+        samlIDPSSODescriptorNameIDFormatTransient       => '0',
     };
 }
 

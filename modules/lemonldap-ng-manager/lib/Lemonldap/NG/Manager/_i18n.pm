@@ -142,10 +142,15 @@ sub en {
         samlSPSSODescriptorSingleLogoutServiceHTTP => 'HTTP Service',
         samlSPSSODescriptorSingleLogoutServiceSOAP => 'SOAP Service',
         samlSPSSODescriptorAssertionConsumerService => 'Assertion Consumer',
-        samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact => 'HTTP Artifact',
+        samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact =>
+          'HTTP Artifact',
         samlSPSSODescriptorAssertionConsumerServiceHTTPPost => 'HTTP POST',
         samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect =>
           'HTTP Redirect',
+        samlSPSSODescriptorNameIDFormat => 'NameID Format',
+        samlSPSSODescriptorNameIDFormatX509SubjectName => 'x509',
+        samlSPSSODescriptorNameIDFormatPersistent      => 'Persistent',
+        samlSPSSODescriptorNameIDFormatTransient       => 'Transient',
         samlIDPSSODescriptor => 'Identity Provider',
         samlIDPSSODescriptorWantAuthnRequestsSigned =>
           'Signed Authentication Request',
@@ -158,7 +163,12 @@ sub en {
         samlIDPSSODescriptorSingleLogoutServiceHTTP => 'HTTP Service',
         samlIDPSSODescriptorSingleLogoutServiceSOAP => 'SOAP Service',
         samlIDPSSODescriptorArtifactResolutionService => 'Artifact Resolution',
-        samlIDPSSODescriptorArtifactResolutionServiceArtifact => 'Artifact Service',
+        samlIDPSSODescriptorArtifactResolutionServiceArtifact =>
+          'Artifact Service',
+        samlIDPSSODescriptorNameIDFormat            => 'NameID Format',
+        samlIDPSSODescriptorNameIDFormatX509SubjectName => 'x509',
+        samlIDPSSODescriptorNameIDFormatPersistent      => 'Persistent',
+        samlIDPSSODescriptorNameIDFormatTransient       => 'Transient',
         samlIDPSSODescriptorManageNameIDService => 'NameID Manager',
         samlIDPSSODescriptorManageNameIDServiceHTTP => 'HTTP Service',
         samlIDPSSODescriptorManageNameIDServiceSOAP => 'SOAP Service',
@@ -266,9 +276,15 @@ sub fr {
         samlSPSSODescriptorSingleLogoutServiceHTTP => 'Service HTTP',
         samlSPSSODescriptorSingleLogoutServiceSOAP => 'Service SOAP',
         samlSPSSODescriptorAssertionConsumerService => 'Assertions',
-        samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact => 'HTTP Artifact',
+        samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact =>
+          'HTTP Artifact',
         samlSPSSODescriptorAssertionConsumerServiceHTTPPost => 'POST HTTP',
-        samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect => 'Redirection HTTP',
+        samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect =>
+          'Redirection HTTP',
+        samlSPSSODescriptorNameIDFormat => 'Format NameID',
+        samlSPSSODescriptorNameIDFormatX509SubjectName => 'x509',
+        samlSPSSODescriptorNameIDFormatPersistent      => 'Persistant',
+        samlSPSSODescriptorNameIDFormatTransient       => 'Temporaire',
         samlIDPSSODescriptor => 'Fournisseur d\'identité',
         samlIDPSSODescriptorWantAuthnRequestsSigned =>
           'Requête d\'authentification signé',
@@ -280,8 +296,14 @@ sub fr {
         samlIDPSSODescriptorSingleLogoutService => 'Single Logout',
         samlIDPSSODescriptorSingleLogoutServiceHTTP => 'Service HTTP',
         samlIDPSSODescriptorSingleLogoutServiceSOAP => 'Service SOAP',
-        samlIDPSSODescriptorArtifactResolutionService => 'Résolution d\'Artifact',
-        samlIDPSSODescriptorArtifactResolutionServiceArtifact => 'Service Artifact',
+        samlIDPSSODescriptorArtifactResolutionService =>
+          'Résolution d\'Artifact',
+        samlIDPSSODescriptorArtifactResolutionServiceArtifact =>
+          'Service Artifact',
+        samlIDPSSODescriptorNameIDFormat            => 'Format NameID',
+        samlIDPSSODescriptorNameIDFormatX509SubjectName => 'x509',
+        samlIDPSSODescriptorNameIDFormatPersistent      => 'Persistant',
+        samlIDPSSODescriptorNameIDFormatTransient       => 'Temporaire',
         samlIDPSSODescriptorManageNameIDService => 'Gestionnaire de NameID',
         samlIDPSSODescriptorManageNameIDServiceHTTP => 'Service HTTP',
         samlIDPSSODescriptorManageNameIDServiceSOAP => 'Service SOAP',

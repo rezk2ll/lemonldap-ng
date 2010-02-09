@@ -42,14 +42,29 @@
       Binding="<TMPL_VAR NAME="samlIDPSSODescriptorManageNameIDServiceHTTPBinding">"
       Location="<TMPL_VAR NAME="samlIDPSSODescriptorManageNameIDServiceHTTPLocation">"
       <TMPL_IF NAME="samlIDPSSODescriptorManageNameIDServiceHTTPResponseLocation">
-      ResponseLocation="<TMPL_VAR NAME="samlIDPSSODescriptorManageNameIDServiceHTTPResponseLocation">" />
-      </TMPL_IF>
+      ResponseLocation="<TMPL_VAR NAME="samlIDPSSODescriptorManageNameIDServiceHTTPResponseLocation">"
+      </TMPL_IF>/>
     <SingleSignOnService
       Binding="<TMPL_VAR NAME="samlIDPSSODescriptorSingleSignOnServiceSOAPBinding">"
       Location="<TMPL_VAR NAME="samlIDPSSODescriptorSingleSignOnServiceSOAPLocation">" />
     <SingleSignOnService
       Binding="<TMPL_VAR NAME="samlIDPSSODescriptorSingleSignOnServiceHTTPBinding">"
       Location="<TMPL_VAR NAME="samlIDPSSODescriptorSingleSignOnServiceHTTPLocation">" />
+<TMPL_IF NAME="samlIDPSSODescriptorNameIDFormatX509SubjectName">
+    <NameIDFormat>
+        urn:oasis:names:tc:SAML:1.1:nameid-format:X509SubjectName
+    </NameIDFormat>
+</TMPL_IF>
+<TMPL_IF NAME="samlIDPSSODescriptorNameIDFormatPersistent">
+    <NameIDFormat>
+        urn:oasis:names:tc:SAML:2.0:nameid-format:persistent
+    </NameIDFormat>
+</TMPL_IF>
+<TMPL_IF NAME="samlIDPSSODescriptorNameIDFormatTransient">
+    <NameIDFormat>
+        urn:oasis:names:tc:SAML:2.0:nameid-format:transient
+    </NameIDFormat>
+</TMPL_IF>
   </IDPSSODescriptor>
 
   <SPSSODescriptor
@@ -76,8 +91,8 @@
       Binding="<TMPL_VAR NAME="samlSPSSODescriptorSingleLogoutServiceHTTPBinding">"
       Location="<TMPL_VAR NAME="samlSPSSODescriptorSingleLogoutServiceHTTPLocation">"
       <TMPL_IF NAME="samlSPSSODescriptorSingleLogoutServiceHTTPResponseLocation">
-      ResponseLocation="<TMPL_VAR NAME="samlSPSSODescriptorSingleLogoutServiceHTTPResponseLocation">" />
-      </TMPL_IF>
+      ResponseLocation="<TMPL_VAR NAME="samlSPSSODescriptorSingleLogoutServiceHTTPResponseLocation">"
+      </TMPL_IF>/>
     <AssertionConsumerService
       isDefault="<TMPL_VAR NAME="samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactDefault">"
       index="<TMPL_VAR NAME="samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactIndex">"
@@ -93,6 +108,21 @@
       index="<TMPL_VAR NAME="samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectIndex">"
       Binding="<TMPL_VAR NAME="samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectBinding">"
       Location="<TMPL_VAR NAME="samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectLocation">" />
+<TMPL_IF NAME="samlSPSSODescriptorNameIDFormatX509SubjectName">
+    <NameIDFormat>
+        urn:oasis:names:tc:SAML:1.1:nameid-format:X509SubjectName
+    </NameIDFormat>
+</TMPL_IF>
+<TMPL_IF NAME="samlSPSSODescriptorNameIDFormatPersistent">
+    <NameIDFormat>
+        urn:oasis:names:tc:SAML:2.0:nameid-format:persistent
+    </NameIDFormat>
+</TMPL_IF>
+<TMPL_IF NAME="samlSPSSODescriptorNameIDFormatTransient">
+    <NameIDFormat>
+        urn:oasis:names:tc:SAML:2.0:nameid-format:transient
+    </NameIDFormat>
+</TMPL_IF>
   </SPSSODescriptor>
 
   <Organization>

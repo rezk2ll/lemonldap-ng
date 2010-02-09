@@ -137,9 +137,15 @@ sub serviceToXML {
       samlSPSSODescriptorAuthnRequestsSigned
       samlSPSSODescriptorProtocolSupportEnumeration
       samlSPSSODescriptorKeyDescriptorSigning
+      samlSPSSODescriptorNameIDFormatX509SubjectName
+      samlSPSSODescriptorNameIDFormatPersistent
+      samlSPSSODescriptorNameIDFormatTransient
       samlIDPSSODescriptorWantAuthnRequestsSigned
       samlIDPSSODescriptorProtocolSupportEnumeration
       samlIDPSSODescriptorKeyDescriptorSigning
+      samlIDPSSODescriptorNameIDFormatX509SubjectName
+      samlIDPSSODescriptorNameIDFormatPersistent
+      samlIDPSSODescriptorNameIDFormatTransient
     );
 
     foreach (@param_auto) {

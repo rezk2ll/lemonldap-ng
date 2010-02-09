@@ -138,6 +138,9 @@ sub extractFormInfo {
         $self->lmLog( "URL $url detected as an assertion consumer URL",
             'debug' );
 
+        # Create Login object
+        $login = $self->createLogin($server);
+
         # 1.1 HTTP REDIRECT
         if ( $url =~ /^$saml_acs_get_url$/i ) {
 
@@ -148,9 +151,6 @@ sub extractFormInfo {
             $response =~ s/;/&/g;
 
             $self->lmLog( "HTTP-REDIRECT: SAML Response $response", 'debug' );
-
-            # Create Login object
-            $login = $self->createLogin($server);
 
             # Process authentication response
             my $result = $self->processAuthnResponseMsg( $login, $response );
@@ -165,11 +165,6 @@ sub extractFormInfo {
             # TODO validate response
             $self->lmLog( "HTTP-REDIRECT: authentication response is valid",
                 'debug' );
-
-            # Get NameID
-            my $nameid = $self->getNameIdentifier($login);
-
-            $self->abort("Work in progress");
         }
 
         # 1.2 POST
@@ -177,6 +172,17 @@ sub extractFormInfo {
 
         # 1.3 ARTEFACT (SOAP)
         # TODO
+
+        # Get NameID
+        my $nameid = $login->nameIdentifier;
+
+        # Set user
+        my $user = $nameid->content;
+
+        $self->lmLog( "Find NameID: $user", 'debug' );
+        $self->{user} = $user;
+
+        $self->abort("Work in progress");
 
         return PE_OK;
     }
