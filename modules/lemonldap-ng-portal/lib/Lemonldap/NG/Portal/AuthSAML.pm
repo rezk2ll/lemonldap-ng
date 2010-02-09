@@ -141,8 +141,12 @@ sub extractFormInfo {
         # 1.1 HTTP REDIRECT
         if ( $url =~ /^$saml_acs_get_url$/i ) {
 
-            # Response in SAMLresponse
-            my $response = $self->param("SAMLResponse");
+            # Response in query string
+            my $response = $self->query_string();
+
+            # TODO use CGI(-oldstyle_urls) in Common/CGI.pm to avoid this
+            $response =~ s/;/&/g;
+
             $self->lmLog( "HTTP-REDIRECT: SAML Response $response", 'debug' );
 
             # Create Login object
@@ -158,11 +162,14 @@ sub extractFormInfo {
                 return PE_ERROR;
             }
 
+            # TODO validate response
             $self->lmLog( "HTTP-REDIRECT: authentication response is valid",
                 'debug' );
 
-            $self->abort("Work in progress");
+            # Get NameID
+            my $nameid = $self->getNameIdentifier($login);
 
+            $self->abort("Work in progress");
         }
 
         # 1.2 POST
@@ -272,6 +279,7 @@ sub extractFormInfo {
     }
 
     # 3. Build authentication request
+    # TODO store urldc in RelayState
     $login = $self->createAuthnRequest( $server, $idp );
 
     unless ($login) {
@@ -295,22 +303,36 @@ sub extractFormInfo {
 }
 
 ## @apmethod int setAuthSessionInfo()
-# TODO
+# Extract attributes sent in authentication statement
 # @return Lemonldap::NG::Portal error code
 sub setAuthSessionInfo {
+    my $self = shift;
+
+    # TODO
+
     PE_OK;
 }
 
 ## @apmethod int authenticate()
-# Does nothing here
+# Accept SSO from IDP
 # @return PE_OK
 sub authenticate {
+    my $self = shift;
+
+    #TODO Lasso::Login::accept_sso( $login )
+
     PE_OK;
 }
 
 ## @apmethod void authLogout()
-# TODO
+# Logout SP
+# @return nothing
 sub authLogout {
+    my $self = shift;
+
+    # TODO
+
+    return;
 }
 
 1;

@@ -12,7 +12,7 @@ use XML::Simple;
 our @EXPORT = qw(
   loadLasso checkLassoError createServer addIDP addProvider getOrganizationName
   createAuthnRequest createLogin getHttpMethod initAuthnRequest
-  buildAuthnRequestMsg processAuthnResponseMsg
+  buildAuthnRequestMsg processAuthnResponseMsg getNameIdentifier
 );
 
 our $VERSION = '0.01';
@@ -318,6 +318,24 @@ sub processAuthnResponseMsg {
     return $self->checkLassoError($@);
 }
 
+## @method Lasso::Saml2NameID getNameIdentifer(Lasso::Profile profile)
+# Get NameID from Lasso Profile
+# @param profile Lasso::Profile object
+# @return result or NULL if error
+sub getNameIdentifier {
+    my ( $self, $profile ) = splice @_;
+    my $nameid;
+
+    eval { $nameid = Lasso::Profile::get_nameIdentifier($profile); };
+
+    if ($@) {
+        $self->checkLassoError($@);
+        return;
+    }
+
+    return $nameid;
+}
+
 1;
 
 __END__
@@ -386,6 +404,10 @@ Build authentication request message
 =head2 processAuthnResponseMsg
 
 Process authentication response message
+
+=head2 getNameIdentifier
+
+Get NameID from Lasso Profile
 
 =head1 SEE ALSO
 
