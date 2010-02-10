@@ -147,9 +147,6 @@ sub extractFormInfo {
             # Response in query string
             my $response = $self->query_string();
 
-            # TODO use CGI(-oldstyle_urls) in Common/CGI.pm to avoid this
-            $response =~ s/;/&/g;
-
             $self->lmLog( "HTTP-REDIRECT: SAML Response $response", 'debug' );
 
             # Process authentication response
