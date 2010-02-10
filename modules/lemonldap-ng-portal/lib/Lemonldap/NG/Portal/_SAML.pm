@@ -241,6 +241,11 @@ sub createAuthnRequest {
         return;
     }
 
+    # Customize request
+    my $request = $login->request();
+    $request->NameIDPolicy()->Format( Lasso::Constants::SAML2_NAME_IDENTIFIER_FORMAT_EMAIL );
+    $request->NameIDPolicy()->AllowCreate( 1 );
+
     # Build authentication request
     unless ( $self->buildAuthnRequestMsg($login) ) {
         $self->lmLog( "Could not build authentication request on $idp",
