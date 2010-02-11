@@ -11,7 +11,7 @@ my %opts;
 my $result = GetOptions(
     \%opts,    'storage|s=s', 'apply|a=s',   'dir|d=s',
     'ini|i=s', 'preserve|p',  'menuxml|m=s', 'verbose|v',
-    'help|h'
+    'help|h',  'die',
 );
 
 # Help
@@ -51,18 +51,25 @@ if ( $opts{verbose} ) {
 }
 
 # Convert storage.conf
--r $old->{storage} or quit( 2, $old->{storage} . " is not readeable" );
-print "Parsing " . $old->{storage} . "\n" if $opts{verbose};
-open F, $old->{storage};
-while (<F>) {
+if ( -r $old->{storage} ) {
+    print "Parsing " . $old->{storage} . "\n" if $opts{verbose};
+    open F, $old->{storage};
+    while (<F>) {
     next if (/^\s*(?:#.*)?$/);
     my ( $k, $v ) = (/^(\w+)\s*=\s*(.*)$/)
       or quit( 3, "bad line in " . $old->{storage} . ":$_" );
     $datas->{ +CONFSECTION }->{$k} = $v;
     print "\t$k: $v\n" if $opts{verbose};
+    }
+    close F;
+    print "\n" if $opts{verbose};
 }
-close F;
-print "\n" if $opts{verbose};
+elsif ( $opts{die} ) {
+    quit( 2, $old->{storage} . " is not readeable" );
+}
+else {
+    print STDERR $old->{storage} . " is not readeable\n";
+}
 
 # Convert apply.conf
 if ( -e $old->{apply} ) {

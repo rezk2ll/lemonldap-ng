@@ -196,11 +196,10 @@ sub appslistMenu {
 
     # We no more use XML file for menu configuration
     unless ( defined $self->{portalObject}->{applicationList} ) {
-        $self->{portalObject}->lmLog(
-"XML menu configuration is deprecated. Please use lmMigrateConfFiles2ini to migrate your menu configuration",
-            'error'
+        $self->{portalObject}->abort(
+            "XML menu configuration is deprecated",
+"Please use lmMigrateConfFiles2ini to migrate your menu configuration"
         );
-        return "&nbsp;";
     }
 
     # Use configuration to get menu parameters
