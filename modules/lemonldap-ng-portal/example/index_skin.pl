@@ -36,7 +36,7 @@ my $portal = Lemonldap::NG::Portal::SharedConf->new(
 
 # Get skin value
 my $skin = $portal->{portalSkin};
-my $skin_dir = $ENV{DOCUMENT_ROOT} . "skins";
+my $skin_dir = $ENV{DOCUMENT_ROOT} . "/skins";
 my ( $skinfile, %templateParams );
 
 ####################
