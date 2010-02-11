@@ -159,7 +159,6 @@ sub extractFormInfo {
                 return PE_ERROR;
             }
 
-            # TODO validate response
             $self->lmLog( "HTTP-REDIRECT: authentication response is valid",
                 'debug' );
         }
@@ -170,16 +169,28 @@ sub extractFormInfo {
         # 1.3 ARTEFACT (SOAP)
         # TODO
 
+        # TODO replay protection
+
+        # TODO check conditions
+
+        # TODO get urldc in RelayState
+
         # Get NameID
         my $nameid = $login->nameIdentifier;
 
         # Set user
         my $user = $nameid->content;
 
+        unless ($user) {
+            $self->lmLog( "No NameID value found", 'error' );
+            return PE_USERNOTFOUND;
+        }
+
         $self->lmLog( "Find NameID: $user", 'debug' );
         $self->{user} = $user;
 
-        $self->abort("Work in progress");
+        # Store Lasso::Login object
+        $self->{_lassoLogin} = $login;
 
         return PE_OK;
     }
@@ -282,7 +293,6 @@ sub extractFormInfo {
     }
 
     # 3. Build authentication request
-    # TODO store urldc in RelayState
     $login = $self->createAuthnRequest( $server, $idp );
 
     unless ($login) {
@@ -310,8 +320,16 @@ sub extractFormInfo {
 # @return Lemonldap::NG::Portal error code
 sub setAuthSessionInfo {
     my $self = shift;
+    my $server = $self->{_lassoServer};
+    my $login  = $self->{_lassoLogin};
 
-    # TODO
+    # TODO Read attributes from authn response
+
+    # Store other informations in session
+    $self->{sessionInfo}->{_user} = $self->{user};
+    $self->{sessionInfo}->{_idp}  = $login->remote_providerID;
+
+    # TODO adapt _utime with SessionNotOnOrAfter
 
     PE_OK;
 }
@@ -321,8 +339,20 @@ sub setAuthSessionInfo {
 # @return PE_OK
 sub authenticate {
     my $self = shift;
+    my $server = $self->{_lassoServer};
+    my $login  = $self->{_lassoLogin};
 
-    #TODO Lasso::Login::accept_sso( $login )
+    # Accept SSO
+    unless ( $self->acceptSSO($login) ) {
+        $self->lmLog( "Error while accepting SSO from IDP", 'error' );
+        return PE_ERROR;
+    }
+
+    # Dump Lasso objects in session
+    $self->{sessionInfo}->{_lassoLoginDump} = $login->dump();
+
+    # Set authenticationLevel
+    $self->{sessionInfo}->{authenticationLevel} = 5;
 
     PE_OK;
 }

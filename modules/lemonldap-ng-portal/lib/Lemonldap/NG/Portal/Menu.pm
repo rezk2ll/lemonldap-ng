@@ -78,7 +78,7 @@ sub new {
     #&Lemonldap::NG::Portal::Simple::getSessionInfo( $self->{portalObject} );
 
     # Default values
-    $self->{apps}->{imgpath} ||= 'apps/';
+    $self->{apps}->{imgpath} ||= '/apps/';
     $self->{modules}->{appslist} = 0
       unless defined $self->{modules}->{appslist};
     $self->{modules}->{password} = 0

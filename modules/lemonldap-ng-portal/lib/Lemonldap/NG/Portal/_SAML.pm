@@ -13,6 +13,7 @@ our @EXPORT = qw(
   loadLasso checkLassoError createServer addIDP addProvider getOrganizationName
   createAuthnRequest createLogin getHttpMethod initAuthnRequest
   buildAuthnRequestMsg processAuthnResponseMsg getNameIdentifier
+  createIdentity createSession acceptSSO
 );
 
 our $VERSION = '0.01';
@@ -241,10 +242,18 @@ sub createAuthnRequest {
         return;
     }
 
+    # Set urldc in RelayState
+    my $relaystate = $self->{urldc};
+    if ($relaystate) {
+        $login->msg_relayState($relaystate);
+        $self->lmLog( "Set $relaystate in RelayState", 'debug' );
+    }
+
     # Customize request
     my $request = $login->request();
-    $request->NameIDPolicy()->Format( Lasso::Constants::SAML2_NAME_IDENTIFIER_FORMAT_EMAIL );
-    $request->NameIDPolicy()->AllowCreate( 1 );
+    $request->NameIDPolicy()
+      ->Format(Lasso::Constants::SAML2_NAME_IDENTIFIER_FORMAT_EMAIL);
+    $request->NameIDPolicy()->AllowCreate(1);
 
     # Build authentication request
     unless ( $self->buildAuthnRequestMsg($login) ) {
@@ -346,6 +355,64 @@ sub getNameIdentifier {
     return $nameid;
 }
 
+## @method Lasso::Identity createIdentity(string dump)
+# Create Lasso::Identity object
+# @param dump optional Identity dump
+# @return Lasso::Identity object
+sub createIdentity {
+    my ( $self, $dump ) = splice @_;
+    my $identity;
+
+    if ($dump) {
+        eval { $identity = Lasso::Identity::new_from_dump($dump); };
+    }
+    else {
+        eval { $identity = Lasso::Identity->new(); };
+    }
+
+    if ($@) {
+        $self->checkLassoError($@);
+        return;
+    }
+
+    return $identity;
+}
+
+## @method Lasso::Session createSession(string dump)
+# Create Lasso::Session object
+# @param dump optional Session dump
+# @return Lasso::Session object
+sub createSession {
+    my ( $self, $dump ) = splice @_;
+    my $session;
+
+    if ($dump) {
+        eval { $session = Lasso::Session::new_from_dump($dump); };
+    }
+    else {
+        eval { $session = Lasso::Session->new(); };
+    }
+
+    if ($@) {
+        $self->checkLassoError($@);
+        return;
+    }
+
+    return $session;
+}
+
+## @method boolean acceptSSO(Lasso::Login login)
+# Accept SSO from IDP
+# @param login Lasso::Login object
+# @return result
+sub acceptSSO {
+    my ( $self, $login ) = splice @_;
+
+    eval { Lasso::Login::accept_sso($login); };
+
+    return $self->checkLassoError($@);
+}
+
 1;
 
 __END__
@@ -418,6 +485,18 @@ Process authentication response message
 =head2 getNameIdentifier
 
 Get NameID from Lasso Profile
+
+=head2 createIdentity
+
+Create Lasso::Identity object
+
+=head2 createSession
+
+Create Lasso::Session object
+
+=head2 acceptSSO
+
+Accept SSO from IDP
 
 =head1 SEE ALSO
 
