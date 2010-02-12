@@ -8,12 +8,13 @@ package Lemonldap::NG::Portal::_SAML;
 use strict;
 use base qw(Exporter);
 use XML::Simple;
+use MIME::Base64;
 
 our @EXPORT = qw(
   loadLasso checkLassoError createServer addIDP addProvider getOrganizationName
   createAuthnRequest createLogin getHttpMethod initAuthnRequest
   buildAuthnRequestMsg processAuthnResponseMsg getNameIdentifier
-  createIdentity createSession acceptSSO
+  createIdentity createSession acceptSSO extractRelayState
 );
 
 our $VERSION = '0.01';
@@ -208,6 +209,9 @@ sub getOrganizationName {
         return;
     }
 
+    # Return if node is empty
+    return unless $node;
+
     # Extract organization name
     my $xs   = XML::Simple->new();
     my $data = $xs->XMLin($node);
@@ -242,12 +246,15 @@ sub createAuthnRequest {
         return;
     }
 
-    # Set urldc in RelayState
-    my $relaystate = $self->{urldc};
-    if ($relaystate) {
-        $login->msg_relayState($relaystate);
-        $self->lmLog( "Set $relaystate in RelayState", 'debug' );
+    # Set RelayState as key1;value1;key2;value2;... encoded in base 64
+    my $relaystate;
+    foreach (qw /_idp urldc/) {
+        $relaystate .= $_ . ";" . $self->{$_} . ";" if $self->{$_};
     }
+    $relaystate =~ s/;$//;
+    $relaystate = encode_base64( $relaystate, '' );
+    $login->msg_relayState($relaystate);
+    $self->lmLog( "Set $relaystate in RelayState", 'debug' );
 
     # Customize request
     my $request = $login->request();
@@ -276,7 +283,7 @@ sub createLogin {
     eval { $login = Lasso::Login->new($server); };
 
     if ($@) {
-    $self->checkLassoError($@);
+        $self->checkLassoError($@);
         return;
     }
 
@@ -413,6 +420,33 @@ sub acceptSSO {
     return $self->checkLassoError($@);
 }
 
+## @method boolean extractRelayState(Lasso::Login login)
+# Extract RelayState information into $self
+## @param login Lasso::Login object
+## @return result
+sub extractRelayState {
+    my ( $self, $login ) = splice @_;
+
+    # Get relayState in assertion
+    my $relaystate = $login->msg_relayState;
+
+    return 0 unless $relaystate;
+
+    # Decode base64
+    $relaystate = decode_base64($relaystate);
+
+    # Recover values
+    my @values = split( /;/, $relaystate );
+
+    # Push values in $self
+    my $i;
+    for ( $i = 0, $i < $#values, $i++ ) {
+        $self->{ $values[$i] } = $values[ $i++ ];
+    }
+
+    return 1;
+}
+
 1;
 
 __END__
@@ -498,6 +532,10 @@ Create Lasso::Session object
 
 Accept SSO from IDP
 
+=head2 extractRelayState
+
+Extract RelayState information into $self
+
 =head1 SEE ALSO
 
 L<Lemonldap::NG::Portal::AuthSAML>, L<Lemonldap::NG::Portal::UserDBSAML>
@@ -514,6 +552,5 @@ Copyright (C) 2009 by Xavier Guimard, Clement Oudot
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.10.0 or,
 at your option, any later version of Perl 5 you may have available.
-
 
 =cut

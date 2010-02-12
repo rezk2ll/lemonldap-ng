@@ -60,7 +60,7 @@ sub authInit {
 
     # Load identity provider metadata
     # IDP are listed in $self->{samlIDPMetaData}
-    # Each key is the IDP name and value is the metadata
+    # Each key is the IDP name and value is the metadata key
     # Build IDP list for later use in extractFormInfo
     foreach ( keys %{ $self->{samlIDPMetaData} } ) {
 
@@ -70,7 +70,7 @@ sub authInit {
         my $idp_metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new();
         unless (
             $idp_metadata->initializeFromConfHash(
-                $self->{samlIDPMetaData}->{$_}
+                $self->{samlIDPMetaData}->{$_}->{metadata}
             )
           )
         {
@@ -173,7 +173,24 @@ sub extractFormInfo {
 
         # TODO check conditions
 
-        # TODO get urldc in RelayState
+        #  Extract RelayState information
+        if ( $self->extractRelayState($login) ) {
+            $self->lmLog( "RelayState found in authentication assertion",
+                'debug' );
+        }
+
+        # Check IDP
+        my $idp = $self->{_idp};
+        unless ($idp) {
+            $self->lmLog( "IDP was not found in RelayState", 'error' );
+            return PE_ERROR;
+        }
+
+        $self->lmLog( "IDP $idp found in RelayState", 'debug' );
+
+        # Force redirection to portal if no urldc found
+        # (avoid displaying the whole SAML URL in user browser URL field)
+        $self->{mustRedirect} = 1 unless ( $self->{urldc} );
 
         # Get NameID
         my $nameid = $login->nameIdentifier;
@@ -226,8 +243,8 @@ sub extractFormInfo {
 
         foreach ( keys %{ $self->{_idpList} } ) {
             $html .=
-                '<tr><td><input type="radio" name="idp" value="'
-              . $self->{_idpList}->{$_}->{entityID}
+                '<tr><td><input type="radio" name="idp" value="' 
+              . $_
               . '" /></td><td>'
               . $self->{_idpList}->{$_}->{name}
               . '</td></tr>';
@@ -266,7 +283,11 @@ sub extractFormInfo {
         my $html = '<h3>'
           . &Lemonldap::NG::Portal::_i18n::msg( PM_SAML_IDPCHOOSEN,
             $ENV{HTTP_ACCEPT_LANGUAGE} )
-          . "</h3>\n<h4>$idp</h4>\n<input type=\"hidden\" name=\"idp\" value=\"$idp\" />\n";
+          . "</h3>\n"
+          . "<h4>$idp</h4>\n" . "<h5>("
+          . $self->{_idpList}->{$idp}->{entityID}
+          . ")</h5>\n"
+          . "<input type=\"hidden\" name=\"idp\" value=\"$idp\" />\n";
 
         $self->info($html);
 
@@ -293,10 +314,12 @@ sub extractFormInfo {
     }
 
     # 3. Build authentication request
-    $login = $self->createAuthnRequest( $server, $idp );
+    $self->{_idp} = $idp;
+    my $IDPentityID = $self->{_idpList}->{$idp}->{entityID};
+    $login = $self->createAuthnRequest( $server, $IDPentityID );
 
     unless ($login) {
-        $self->lmLog( "Could not create authentication request on $idp",
+        $self->lmLog( "Could not create authentication request on $IDPentityID",
             'error' );
         return PE_ERROR;
     }
@@ -319,7 +342,7 @@ sub extractFormInfo {
 # Extract attributes sent in authentication statement
 # @return Lemonldap::NG::Portal error code
 sub setAuthSessionInfo {
-    my $self = shift;
+    my $self   = shift;
     my $server = $self->{_lassoServer};
     my $login  = $self->{_lassoLogin};
 
@@ -327,7 +350,7 @@ sub setAuthSessionInfo {
 
     # Store other informations in session
     $self->{sessionInfo}->{_user} = $self->{user};
-    $self->{sessionInfo}->{_idp}  = $login->remote_providerID;
+    $self->{sessionInfo}->{_idp}  = $self->{_idp};
 
     # TODO adapt _utime with SessionNotOnOrAfter
 
@@ -338,7 +361,7 @@ sub setAuthSessionInfo {
 # Accept SSO from IDP
 # @return PE_OK
 sub authenticate {
-    my $self = shift;
+    my $self   = shift;
     my $server = $self->{_lassoServer};
     my $login  = $self->{_lassoLogin};
 
