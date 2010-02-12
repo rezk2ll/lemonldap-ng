@@ -308,6 +308,7 @@ install_portal_site:	install_conf_dir
 	@cp -pR --remove-destination ${SRCPORTALDIR}/example/index_skin.pl ${RPORTALDIR}/index.pl
 	@cp -pR --remove-destination ${SRCPORTALDIR}/example/error.pl ${RPORTALDIR}
 	@cp -pR --remove-destination ${SRCPORTALDIR}/example/mail.pl ${RPORTALDIR}
+	@cp -pR --remove-destination ${SRCPORTALDIR}/example/metadata.pl ${RPORTALDIR}
 	@cp -pR --remove-destination ${SRCPORTALDIR}/example/apps ${RPORTALDIR}
 	@cp -pR --remove-destination ${SRCPORTALDIR}/example/skins/* $(RPORTALSKINSDIR)
 	@if [ "$(PORTALDIR)/skins/" != "$(PORTALSKINSDIR)/" ]; then \
@@ -547,6 +548,7 @@ debian-diff:
 	@$(DIFF) lemonldap-ng-portal/example/index_skin.pl /var/lib/lemonldap-ng/portal/index.pl ||true
 	@$(DIFF) lemonldap-ng-portal/example/error.pl /var/lib/lemonldap-ng/portal/error.pl ||true
 	@$(DIFF) lemonldap-ng-portal/example/mail.pl /var/lib/lemonldap-ng/portal/mail.pl ||true
+	@$(DIFF) lemonldap-ng-portal/example/metadata.pl /var/lib/lemonldap-ng/portal/metadata.pl ||true
 	@# Handler
 	@$(DIFF) lemonldap-ng-handler/lib/Lemonldap/NG/Handler /usr/share/perl5/Lemonldap/NG/Handler ||true
 	@# Common
@@ -573,6 +575,7 @@ default-diff:
 	@$(DIFF) lemonldap-ng-portal/example/index_skin.pl $(LMPREFIX)/htdocs/portal/index.pl ||true
 	@$(DIFF) lemonldap-ng-portal/example/error.pl $(LMPREFIX)/htdocs/portal/error.pl ||true
 	@$(DIFF) lemonldap-ng-portal/example/mail.pl $(LMPREFIX)/htdocs/portal/mail.pl ||true
+	@$(DIFF) lemonldap-ng-portal/example/metadata.pl $(LMPREFIX)/htdocs/portal/metadata.pl ||true
 	@# Handler
 	@$(DIFF) lemonldap-ng-handler/lib/Lemonldap/NG/Handler /usr/local/share/perl/5.10.0/Lemonldap/NG/Handler ||true
 	@$(DIFF) lemonldap-ng-handler/example/MyHandler.pm $(LMPREFIX)/handler/MyHandler.pm ||true
