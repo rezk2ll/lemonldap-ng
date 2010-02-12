@@ -179,14 +179,30 @@ sub extractFormInfo {
                 'debug' );
         }
 
-        # Check IDP
+        # Check IDP from RelayState
         my $idp = $self->{_idp};
-        unless ($idp) {
-            $self->lmLog( "IDP was not found in RelayState", 'error' );
-            return PE_ERROR;
+        if ($idp) {
+            $self->lmLog( "IDP $idp found in RelayState", 'debug' );
         }
+        else {
 
-        $self->lmLog( "IDP $idp found in RelayState", 'debug' );
+            # Try to recover IDP from IDP cookie
+            my %cookies    = fetch CGI::Cookie;
+            my $idp_cookie = $cookies{ $self->{samlIdPResolveCookie} };
+            if ($idp_cookie) {
+                $idp = $idp_cookie->value;
+                $self->{_idp} = $idp;
+                $self->lmLog( "IDP $idp found in IDP resolution cookie",
+                    'debug' );
+            }
+            else {
+                $self->lmLog(
+"IDP was not found in RelayState or in IDP resolution cookie",
+                    'error'
+                );
+                return PE_ERROR;
+            }
+        }
 
         # Force redirection to portal if no urldc found
         # (avoid displaying the whole SAML URL in user browser URL field)
@@ -345,12 +361,44 @@ sub setAuthSessionInfo {
     my $self   = shift;
     my $server = $self->{_lassoServer};
     my $login  = $self->{_lassoLogin};
+    my $idp    = $self->{_idp};
 
-    # TODO Read attributes from authn response
+    # Get SAML assertion
+    my $assertion = $self->getAssertion($login);
+
+    unless ($assertion) {
+        $self->lmLog( "No assertion found", 'error' );
+        return PE_ERROR;
+    }
+
+    # Try to get attributes if attribute statement is present in assertion
+    my $attr_statement = $assertion->AttributeStatement();
+    if ($attr_statement) {
+
+        # Get attributes
+        my @attributes = $attr_statement->Attribute();
+
+        # Wanted attributes are defined in IDP configuration
+        foreach ( keys %{ $self->{samlIDPMetaData}->{$idp}->{exportedAttr} } ) {
+
+            # Extract fields from exportedAttr value
+            my ( $mandatory, $name, $format, $friendly_name ) =
+              split( /;/,
+                $self->{samlIDPMetaData}->{$idp}->{exportedAttr}->{$_} );
+
+            # Try to get value
+            my $value =
+              $self->getAttributeValue( $name, $format, $friendly_name,
+                \@attributes );
+
+            # Store value in sessionInfo
+            $self->{sessionInfo}->{$_} = $value if defined $value;
+        }
+    }
 
     # Store other informations in session
     $self->{sessionInfo}->{_user} = $self->{user};
-    $self->{sessionInfo}->{_idp}  = $self->{_idp};
+    $self->{sessionInfo}->{_idp}  = $idp;
 
     # TODO adapt _utime with SessionNotOnOrAfter
 

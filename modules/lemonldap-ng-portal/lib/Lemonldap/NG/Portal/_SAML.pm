@@ -15,6 +15,7 @@ our @EXPORT = qw(
   createAuthnRequest createLogin getHttpMethod initAuthnRequest
   buildAuthnRequestMsg processAuthnResponseMsg getNameIdentifier
   createIdentity createSession acceptSSO extractRelayState
+  getAssertion getAttributeValue
 );
 
 our $VERSION = '0.01';
@@ -95,7 +96,7 @@ sub loadLasso {
 # @return 1 if no error
 sub checkLassoError {
     my ( $self, $error, $level ) = splice @_;
-    my $level ||= 'debug';
+    $level ||= 'debug';
 
     # If $error is not a Lasso::Error object, display error string
     unless ( ref($error) and $error->isa("Lasso::Error") ) {
@@ -447,6 +448,63 @@ sub extractRelayState {
     return 1;
 }
 
+## @method Lasso::Node getAssertion(Lasso::Login login)
+# Get assertion in Lasso::Login object
+# @param login Lasso::Login object
+# @return assertion Lasso::Node object
+sub getAssertion {
+    my ( $self, $login ) = splice @_;
+    my $assertion;
+
+    eval { $assertion = Lasso::Login::get_assertion($login); };
+
+    if ($@) {
+        $self->checkLassoError($@);
+        return;
+    }
+
+    return $assertion;
+}
+
+## @method string getAttributeValue(string name, string format, string friendly_name, array_ref attributes)
+# Get SAML attribute value corresponding to name, format and friendly_name
+# Multivaluated values are separated by ';'
+# @param name SAML attribute name
+# @param format optional SAML attribute format
+# @param friendly_name optional SAML attribute friendly name
+# @return attribute value
+sub getAttributeValue {
+    my ( $self, $name, $format, $friendly_name, $attributes ) = splice @_;
+    my $value;
+
+    # Loop on attributes
+    foreach (@$attributes) {
+        my $attr_name   = $_->Name();
+        my $attr_format = $_->NameFormat();
+        my $attr_fname  = $_->FriendlyName();
+
+        # Skip if name does not correspond to attribute name
+        next if ( $name ne $attr_name );
+
+        # Verify format and friendly name if given
+        next if ( $format        and $format        ne $attr_format );
+        next if ( $friendly_name and $friendly_name ne $attr_fname );
+
+        # Attribute is found, return its content
+        my @attr_values = $_->AttributeValue();
+
+        foreach (@attr_values) {
+            my $xs      = XML::Simple->new();
+            my $data    = $xs->XMLin( $_->dump() );
+            my $content = $data->{content};
+            $value .= $content . ";" if $content;
+        }
+        $value =~ s/;$//;
+    }
+
+    return $value;
+}
+
 1;
 
 __END__
@@ -535,6 +593,15 @@ Accept SSO from IDP
 =head2 extractRelayState
 
 Extract RelayState information into $self
+
+=head2 getAssertion
+
+Get assertion in Lasso::Login object
+
+=head2 getAttributeValue
+
+Get SAML attribute value corresponding to name, format and friendly_name
+Multivaluated values are separated by ';'
 
 =head1 SEE ALSO
 
