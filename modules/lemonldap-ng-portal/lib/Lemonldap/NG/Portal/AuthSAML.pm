@@ -170,8 +170,15 @@ sub extractFormInfo {
         # 1.3 ARTEFACT (SOAP)
         # TODO
 
-       # Replay protection if assertion is a response to a created authn request
-        my $assertion_responded = $login->response()->InResponseTo;
+        # Get SAML response
+        my $saml_response = $login->response();
+        unless ($saml_response) {
+            $self->lmLog( "No SAML response found", 'error' );
+            return PE_ERROR;
+        }
+
+        # Replay protection if this is a response to a created authn request
+        my $assertion_responded = $saml_response->InResponseTo;
         if ($assertion_responded) {
             my $assertion_sessions =
               $self->{globalStorage}->searchOn( $self->{globalStorageOptions},
@@ -229,7 +236,35 @@ sub extractFormInfo {
             );
         }
 
-        # TODO check conditions
+        # Get SAML assertion
+        my $assertion = $self->getAssertion($login);
+
+        unless ($assertion) {
+            $self->lmLog( "No assertion found", 'error' );
+            return PE_ERROR;
+        }
+
+        # Check conditions - time validity
+        unless ( $self->validateConditions($assertion) ) {
+            $self->lmLog( "Time conditions not validated", 'error' );
+            return PE_ERROR;
+        }
+
+        # Check conditions - audience
+        unless (
+            $self->validateConditions( $assertion, $self->{samlEntityID} ) )
+        {
+            $self->lmLog( "Audience conditions not validated", 'error' );
+            return PE_ERROR;
+        }
+
+        $self->lmLog( "Conditions validated", 'debug' );
+
+        # Check OneTimeUse flag
+        # TODO
+
+        # Check ProxyRestriction flag
+        # TODO
 
         #  Extract RelayState information
         if ( $self->extractRelayState($login) ) {

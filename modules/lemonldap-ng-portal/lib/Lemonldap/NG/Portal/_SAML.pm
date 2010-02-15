@@ -15,7 +15,7 @@ our @EXPORT = qw(
   createAuthnRequest createLogin getHttpMethod initAuthnRequest
   buildAuthnRequestMsg processAuthnResponseMsg getNameIdentifier
   createIdentity createSession acceptSSO extractRelayState
-  getAssertion getAttributeValue
+  getAssertion getAttributeValue validateConditions
 );
 
 our $VERSION = '0.01';
@@ -505,6 +505,34 @@ sub getAttributeValue {
     return $value;
 }
 
+## @method boolean validateConditions(Lasso::Saml2::Assertion assertion, string entityID)
+# Validate conditions
+# @param assertion SAML2 assertion
+# @param entityID relaying party entity ID
+# @return result
+sub validateConditions {
+    my ( $self, $assertion, $entityID ) = splice @_;
+    $entityID ||= 'none';
+    my $status;
+
+    eval {
+        $status =
+          Lasso::Saml2Assertion::validate_conditions( $assertion, $entityID );
+    };
+
+    if ($@) {
+        $self->checkLassoError($@);
+        return 0;
+    }
+
+    unless ( $status eq Lasso::Constants::SAML2_ASSERTION_VALID ) {
+        $self->lmLog( "Conditions validations result: $status", 'error' );
+        return 0;
+    }
+
+    return 1;
+}
+
 1;
 
 __END__
@@ -602,6 +630,10 @@ Get assertion in Lasso::Login object
 
 Get SAML attribute value corresponding to name, format and friendly_name
 Multivaluated values are separated by ';'
+
+=head2 validateConditions
+
+Validate conditions
 
 =head1 SEE ALSO
 
