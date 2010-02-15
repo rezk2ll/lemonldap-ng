@@ -111,6 +111,7 @@ sub extractFormInfo {
     my $server = $self->{_lassoServer};
     my $login;
     my $idp;
+    my %h;
 
     # 1. Get URL parameters to know if we are receving an assertion
     my $url              = $self->url();
@@ -169,7 +170,64 @@ sub extractFormInfo {
         # 1.3 ARTEFACT (SOAP)
         # TODO
 
-        # TODO replay protection
+       # Replay protection if assertion is a response to a created authn request
+        my $assertion_responded = $login->response()->InResponseTo;
+        if ($assertion_responded) {
+            my $assertion_sessions =
+              $self->{globalStorage}->searchOn( $self->{globalStorageOptions},
+                "ID", $assertion_responded, );
+
+            if ( my @assertion_keys = keys %$assertion_sessions ) {
+
+                # A session was found
+                foreach (@assertion_keys) {
+
+                    # Delete it
+                    eval {
+                        tie %h, $self->{globalStorage}, undef,
+                          $self->{globalStorageOptions};
+                    };
+                    if ($@) {
+                        $self->lmLog(
+"Unable to recover assertion session $_ (assertion ID $assertion_responded)",
+                            'error'
+                        );
+                        return PE_ERROR;
+                    }
+                    eval { tied(%h)->delete(); };
+                    if ($@) {
+                        $self->lmLog(
+"Unable to delete assertion session $_ (assertion ID $assertion_responded)",
+                            'error'
+                        );
+                        return PE_ERROR;
+                    }
+                    $self->lmLog(
+"Assertion session $_ (assertion ID $assertion_responded) was deleted",
+                        'debug'
+                    );
+                }
+            }
+            else {
+
+                # Assertion was already consumed or is expired
+                # Force authentication replay
+                $self->lmLog(
+"Assertion $assertion_responded already used or expired, replay authentication",
+                    'error'
+                );
+                delete $self->{urldc};
+                $self->{mustRedirect} = 1;
+                $self->{error}        = $self->_subProcess(qw(autoRedirect));
+                return $self->{error};
+            }
+        }
+        else {
+            $self->lmLog(
+"Assertion is not a response to a created authentication request, do not control replay",
+                'debug'
+            );
+        }
 
         # TODO check conditions
 
@@ -341,6 +399,26 @@ sub extractFormInfo {
     }
 
     $self->lmLog( "Authentication request created", 'debug' );
+
+    # Keep assertion ID in memory to prevent replay
+    my $assertion_id = $login->request()->ID;
+    eval {
+        tie %h, $self->{globalStorage}, undef, $self->{globalStorageOptions};
+    };
+    if ( $@ or !$assertion_id ) {
+        $self->lmLog( "Unable to store assertion ID", 'error' );
+        return PE_ERROR;
+    }
+    $h{type}   = 'assertion';     # Session type
+    $h{_utime} = time();          # Creation time
+    $h{ID}     = $assertion_id;
+    my $assertion_session_id = $h{_session_id};
+    untie %h;
+
+    $self->lmLog(
+"Keep assertion ID $assertion_id in assertion session $assertion_session_id",
+        'debug'
+    );
 
     # Redirect user to IDP SSO URL
     # Replace urldc value by SSO URL value and call sub autoRedirect
