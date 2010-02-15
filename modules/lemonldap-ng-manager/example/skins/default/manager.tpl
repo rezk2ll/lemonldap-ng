@@ -184,7 +184,7 @@
      <table>
       <tr>
        <td><lang en="Binding" fr="Binding"/></td>
-       <td><input type="text" size="50" id="samlServiceBinding" onchange="setlmsamlservice(currentId)" disabled/></td>
+       <td><input type="text" size="50" id="samlServiceBinding" onchange="setlmsamlservice(currentId)" disabled="disabled"/></td>
       </tr>
       <tr>
        <td><lang en="Location" fr="URL"/></td>
@@ -212,7 +212,7 @@
       </tr>
       <tr>
        <td><lang en="Binding" fr="Binding"/></td>
-       <td><input type="text" size="50" id="samlAssertionBinding" onchange="setlmsamlassertion(currentId)" disabled/></td>
+       <td><input type="text" size="50" id="samlAssertionBinding" onchange="setlmsamlassertion(currentId)" disabled="disabled"/></td>
       </tr>
       <tr>
        <td><lang en="Location" fr="URL"/></td>
