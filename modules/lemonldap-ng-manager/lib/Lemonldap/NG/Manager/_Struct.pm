@@ -208,26 +208,26 @@ sub struct {
 
         variables => {
             _nodes => [qw(cn:exportedVars cn:macros n:groups)],
-                _help  => 'default',
-
-                # EXPORTED ATTRIBUTES
-                exportedVars => {
-                    _nodes => ['hash:/exportedVars:vars:btext'],
-                _js    => 'hashRoot',
-                },
-
-                # MACROS
-                macros => {
-                    _nodes => ['hash:/macros:macros:btext'],
-                _js    => 'hashRoot',
-                },
-
-                # GROUPS
-        groups => {
-            _nodes => ['hash:/groups:groups:btext'],
-            _js    => 'hashRoot',
             _help  => 'default',
-        },
+
+            # EXPORTED ATTRIBUTES
+            exportedVars => {
+                _nodes => ['hash:/exportedVars:vars:btext'],
+                _js    => 'hashRoot',
+            },
+
+            # MACROS
+            macros => {
+                _nodes => ['hash:/macros:macros:btext'],
+                _js    => 'hashRoot',
+            },
+
+            # GROUPS
+            groups => {
+                _nodes => ['hash:/groups:groups:btext'],
+                _js    => 'hashRoot',
+                _help  => 'default',
+            },
         },
 
         #################
@@ -278,8 +278,8 @@ sub struct {
                            samlSPSSODescriptorProtocolSupportEnumeration
                            samlSPSSODescriptorKeyDescriptorSigning
                            n:samlSPSSODescriptorSingleLogoutService
-                          n:samlSPSSODescriptorAssertionConsumerService
-                          n:samlSPSSODescriptorNameIDFormat)
+                           n:samlSPSSODescriptorAssertionConsumerService
+                           n:samlSPSSODescriptorNameIDFormat)
                       ],
                     _help  => 'default',
 
@@ -320,8 +320,8 @@ sub struct {
                     samlSPSSODescriptorNameIDFormat => {
                         _nodes => [
                             qw(samlSPSSODescriptorNameIDFormatX509SubjectName
-                              samlSPSSODescriptorNameIDFormatPersistent
-                              samlSPSSODescriptorNameIDFormatTransient)
+                               samlSPSSODescriptorNameIDFormatPersistent
+                               samlSPSSODescriptorNameIDFormatTransient)
                         ],
                         _help => 'default',
                         samlSPSSODescriptorNameIDFormatX509SubjectName =>
@@ -342,7 +342,7 @@ sub struct {
                            n:samlIDPSSODescriptorSingleSignOnService
                            n:samlIDPSSODescriptorSingleLogoutService
                            n:samlIDPSSODescriptorArtifactResolutionService
-                          n:samlIDPSSODescriptorNameIDFormat
+                           n:samlIDPSSODescriptorNameIDFormat
                            n:samlIDPSSODescriptorManageNameIDService)
                       ],
                     _help  => 'default',
@@ -390,8 +390,8 @@ sub struct {
                     samlIDPSSODescriptorNameIDFormat => {
                         _nodes => [
                             qw(samlIDPSSODescriptorNameIDFormatX509SubjectName
-                              samlIDPSSODescriptorNameIDFormatPersistent
-                              samlIDPSSODescriptorNameIDFormatTransient)
+                               samlIDPSSODescriptorNameIDFormatPersistent
+                               samlIDPSSODescriptorNameIDFormatTransient)
                         ],
                         _help => 'default',
                         samlIDPSSODescriptorNameIDFormatX509SubjectName =>
