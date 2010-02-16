@@ -280,7 +280,13 @@ sub corresp {
     my $h = $self->struct();
     return $h unless ($key);
     if ( my $k2 = $self->param('key') ) {
-        $h = $self->cstruct( $h, $k2 );
+        # SAML identity providers
+        if ($key =~ /^saml\/samlIDPMetaData/i) {
+            $h = Lemonldap::NG::Common::Conf::SAML::Metadata::buildIDPStruct($h, $key);
+        # Virtual hosts
+        } else {
+            $h = $self->cstruct( $h, $k2 );
+        }
     }
     my @tmp1 = split /\//, $key;
     my $help;
