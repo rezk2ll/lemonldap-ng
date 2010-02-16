@@ -20,6 +20,7 @@
 	var text4newKey='<lang en="Key" fr="Clé" />';
 	var value4newKey='<lang en="Value" fr="Valeur" />';
 	var text4newVhost='<lang en="Virtual host name" fr="Nom de l\'hôte virtuel" />';
+	var text4newSamlIDP='<lang en="Identity provider name" fr="Nom du fournisseur d\'identités" />';
 //]]></script>
 <script src="<TMPL_VAR NAME="DIR">/manager.js" type="text/JavaScript"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
@@ -96,6 +97,14 @@
 
     <button id="delkb" style="display:none;" onclick="delKey();return false;" class="ui-state-default ui-corner-all">
      <lang en="Delete key" fr="Effacer la clef" />
+    </button>
+
+    <button id="newsamlidpb" style="display:none;" onclick="newSamlIDP();return false;" class="ui-state-default ui-corner-all">
+     <lang en="New identity provider" fr="Nouveau fournisseur d'identités" />
+    </button>
+
+    <button id="delsamlidpb" style="display:none;" onclick="delSamlIDP(currentId);" class="ui-state-default ui-corner-all">
+     <lang en="Delete identity provider" fr="Supprimer le fournisseur d'identités" />
     </button>
     </div>
 

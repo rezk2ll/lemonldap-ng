@@ -244,8 +244,14 @@ sub struct {
         # SAML #
         ########
         saml => {
-            _nodes => [qw(n:samlServiceMetaData samlServicePrivateKey)],
+            _nodes => [qw(samlServicePrivateKey n:samlServiceMetaData n:samlIDPMetaData)],
             _help  => 'saml',
+
+            samlIDPMetaData => {
+                _nodes  => ['nhash:/samlIDPMetaData:samlIDPMetaData:samlIDP'],
+                _help   => 'default',
+                _call   => '$(\'#newsamlidpb\').show();',
+            },
 
             samlServiceMetaData => {
                 _nodes => [

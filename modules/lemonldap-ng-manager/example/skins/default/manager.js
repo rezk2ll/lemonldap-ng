@@ -266,6 +266,16 @@ function samlAssertion(id) {
 	$('#samlAssertionLocation').attr('value',t[3]);
 	display('samlAssertion',lmtext(id));
 }
+function samlIDP(id){
+        currentId=id;
+        if($('#li_'+myB64('saml/samlIDPMetaData')).find('span').size()==1){
+                $('#delsamlidpb').hide();
+        }else{
+                $('#delsamlidpb').show();
+        }
+        $('#samlIDPMetaData').attr('value',lmtext(id));
+        display('samlIDPMetaData',lmtext(id));
+}
 function samlService(id) {
 	currentId=id;
 	var t=lmdata(id).split(';');
@@ -381,6 +391,22 @@ function newVh(name){
 	simpleTreeCollection[0].newAjaxNodeIn($('#li_L3ZpcnR1YWxIb3N0cw2'),vhId,name,scriptname+'?type=new&node=virtualHosts/'+name,function(d,s){
 		$('>span',s).attr('name',name).attr('help','default').attr('id','text_'+vhId).attr('onclick','vhost(\''+vhId+'\')');
 	vhost(vhId);
+	});
+}
+function delSamlIDP(id){
+	var idpname = $('#text_'+id).attr('name');
+	if(confirm('Delete '+idpname+' ?')){
+		$('#'+id).remove();
+		samlIDP(id);
+	}
+}
+function newSamlIDP(){
+	var value = prompt(text4newSamlIDP,'authentic');
+	if(!value){return false;}
+	var idpId='li_'+myB64('/saml/samlIDPMetaData/'+value);
+	simpleTreeCollection[0].newAjaxNodeIn($('#li_c2FtbC9zYW1sSURQTWV0YURhdGE1'),idpId,value,scriptname+'?type=new&node=saml/samlIDPMetaData/'+value,function(d,s){
+		$('>span',s).attr('name',value).attr('help','default').attr('id','text_'+idpId).attr('onclick','samlIDP(\''+idpId+'\')');
+		samlIDP(idpId);
 	});
 }
 var cfgAttrDone=0;

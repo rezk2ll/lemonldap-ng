@@ -127,6 +127,7 @@ sub en {
 
         saml                        => 'SAML',
         samlServicePrivateKey       => 'Private Key',
+        samlIDPMetaData             => 'Identity providers',
         samlServiceMetaData => 'SAML 2 Service',
         samlEntityID => 'Entity Identifier',
         samlOrganization => 'Organization',
@@ -261,6 +262,7 @@ sub fr {
 
         saml                        => 'SAML',
         samlServicePrivateKey       => 'Clé privée',
+        samlIDPMetaData             => 'Fournisseurs d\'identités',
         samlServiceMetaData => 'Service SAML 2',
         samlEntityID => 'Identifiant d\'entité',
         samlOrganization => 'Organisation',
