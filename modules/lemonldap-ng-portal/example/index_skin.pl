@@ -86,15 +86,15 @@ if ( $portal->process() ) {
             DISPLAY_TAB         => $menu->displayTab,
             LOGOUT_URL          => "$ENV{SCRIPT_NAME}?logout=1",
             REQUIRE_OLDPASSWORD => $portal->{portalRequireOldPassword},
-            (
-                $menu->displayModule("appslist")
-                ? (
+        );
+
+        if ( $menu->displayModule("appslist") ) {
+            %templateParams = (
+                %templateParams,
                     APPSLIST_MENU => $menu->appslistMenu,
                     APPSLIST_DESC => $menu->appslistDescription
-                  )
-                : ()
-            )
         );
+    }
     }
 }
 
@@ -137,11 +137,12 @@ else {
         DISPLAY_RESETPASSWORD => $portal->{portalDisplayResetPassword},
         DISPLAY_FORM          => 1,
         MAIL_URL              => $portal->{mailUrl},
+    );
 
         # Adapt template if password policy error
-        (
+    if (
             $portal->{portalDisplayChangePassword}
-              and ($portal->{error} == PE_PP_CHANGE_AFTER_RESET
+        and (  $portal->{error} == PE_PP_CHANGE_AFTER_RESET
                 or $portal->{error} == PE_PP_MUST_SUPPLY_OLD_PASSWORD
                 or $portal->{error} == PE_PP_INSUFFICIENT_PASSWORD_QUALITY
                 or $portal->{error} == PE_PP_PASSWORD_TOO_SHORT
@@ -149,29 +150,28 @@ else {
                 or $portal->{error} == PE_PP_PASSWORD_IN_HISTORY
                 or $portal->{error} == PE_PASSWORD_MISMATCH
                 or $portal->{error} == PE_BADOLDPASSWORD )
-            ?
-
-              (
+      )
+    {
+        %templateParams = (
+            %templateParams,
                 REQUIRE_OLDPASSWORD   => 1,
                 DISPLAY_PASSWORD      => 1,
                 DISPLAY_RESETPASSWORD => 0,
                 DISPLAY_FORM          => 0
-              )
-            : ()
-        ),
+        );
+    }
 
         # Adapt template if external authentication error
-        (
-            $portal->{error} == PE_BADCERTIFICATE
+    if (   $portal->{error} == PE_BADCERTIFICATE
               or $portal->{error} == PE_CERTIFICATEREQUIRED
-              or $portal->{error} == PE_ERROR
-            ? (
+        or $portal->{error} == PE_ERROR )
+    {
+        %templateParams = (
+            %templateParams,
                 DISPLAY_RESETPASSWORD => 0,
                 DISPLAY_FORM          => 0,
-              )
-            : ()
-        )
     );
+    }
 }
 
 # HTML template creation
