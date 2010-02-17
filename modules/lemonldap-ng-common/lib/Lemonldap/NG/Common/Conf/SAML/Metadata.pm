@@ -53,17 +53,21 @@ sub buildIDPStruct {
       my @_tmp = split(/\//, $k);
       if (scalar @_tmp ge 3)
       {
+        my $k2 = $_tmp[2];
         %{$h->{saml}->{samlIDPMetaData}} = (
             %{$h->{saml}->{samlIDPMetaData}},
-            $_tmp[2] => {
+            $k2 => {
                 _nodes => [
                     qw(samlIDPMetaDataXML
                        samlIDPMetaDataExportedAttributes)
                   ],
                 samlIDPMetaDataXML =>
-                    'textarea:/samlIDPMetaDataXML:samlIDPMetaDataXML:textarea',
+                    'samlmetadata:/samlIDPMetaData/' . $k2
+                    . '/samlIDPMetaDataXML:samlIDPMetaDataXML:textarea',
                 samlIDPMetaDataExportedAttributes =>
-                    'text:/samlIDPMetaDataExportedAttributes',
+                    'text:/samlIDPMetaData/' . $k2
+                    . '/samlIDPMetaDataExportedAttributes'
+                    . ':samlIDPMetaDataExportedAttributes:text',
               }
           );
         @{$h->{saml}->{samlIDPMetaData}->{_nodes}} = (

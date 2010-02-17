@@ -185,6 +185,24 @@ sub confNode {
         }
     }
 
+    # saml metadata
+    elsif ( $target =~ s/^samlmetadata:// ) {
+        my $h = $self->keyToH($target, $self->conf);
+        my $metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new();
+        $metadata->initializeFromConfHash($h);
+        my $text = $target;
+        $text =~ s/^.*\///;
+        my $id = "$target";
+        $res .= $self->li($id)
+          . $self->span(
+            id   => $id,
+            text => $text,
+            data => $metadata->toXML(),
+            js   => $js,
+            help => $help
+          ) . "</li>";
+    }
+
     else {
         $target =~ s/^(\w+)://;
         my $type = $1 || 'text';
