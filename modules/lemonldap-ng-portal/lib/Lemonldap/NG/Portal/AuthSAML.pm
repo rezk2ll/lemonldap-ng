@@ -188,15 +188,16 @@ sub extractFormInfo {
 
                 # A session was found
                 foreach (@assertion_keys) {
+                    my $assertion_session = $_;
 
                     # Delete it
                     eval {
-                        tie %h, $self->{globalStorage}, undef,
+                        tie %h, $self->{globalStorage}, $_,
                           $self->{globalStorageOptions};
                     };
                     if ($@) {
                         $self->lmLog(
-"Unable to recover assertion session $_ (assertion ID $assertion_responded)",
+"Unable to recover assertion session $assertion_session (assertion ID $assertion_responded)",
                             'error'
                         );
                         return PE_ERROR;
@@ -204,13 +205,13 @@ sub extractFormInfo {
                     eval { tied(%h)->delete(); };
                     if ($@) {
                         $self->lmLog(
-"Unable to delete assertion session $_ (assertion ID $assertion_responded)",
+"Unable to delete assertion session $assertion_session (assertion ID $assertion_responded)",
                             'error'
                         );
                         return PE_ERROR;
                     }
                     $self->lmLog(
-"Assertion session $_ (assertion ID $assertion_responded) was deleted",
+"Assertion session $assertion_session (assertion ID $assertion_responded) was deleted",
                         'debug'
                     );
                 }
