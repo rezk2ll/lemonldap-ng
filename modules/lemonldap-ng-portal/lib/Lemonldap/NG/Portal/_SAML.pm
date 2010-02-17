@@ -16,6 +16,7 @@ our @EXPORT = qw(
   buildAuthnRequestMsg processAuthnResponseMsg getNameIdentifier
   createIdentity createSession acceptSSO extractRelayState
   getAssertion getAttributeValue validateConditions
+  createLogoutRequest createLogout initLogoutRequest buildLogoutRequestMsg
 );
 
 our $VERSION = '0.01';
@@ -532,6 +533,83 @@ sub validateConditions {
     return 1;
 }
 
+## @method Lasso::Logout createLogoutRequest(Lasso::Server server, string entityID)
+# Create logout request for selected entity
+# @param server Lasso::Server object
+# @param entityID entity ID
+# @return Lasso::Login object
+sub createLogoutRequest {
+    my ( $self, $server, $entityID ) = splice @_;
+
+    # Create Lasso Logout
+    my $logout = $self->createLogout($server);
+
+    # Get HTTP method for selected entity
+    my $method = $self->getHttpMethod( $server, $entityID );
+
+    $self->lmLog( "Use HTTP method $method", 'debug' );
+
+    # Init logout request
+    unless ( $self->initLogoutRequest( $logout, $entityID, $method ) ) {
+        $self->lmLog( "Could not initiate logout request on $entityID",
+            'error' );
+        return;
+    }
+
+    # Build logout request
+    unless ( $self->buildLogoutRequestMsg($logout) ) {
+        $self->lmLog( "Could not build logout request on $entityID", 'error' );
+        return;
+    }
+
+    return $logout;
+
+}
+
+## @method Lasso::Logout createLogout(Lasso::Server server)
+# Create Lasso::Logout object
+# @param server Lasso::Server object
+# @return Lasso::Logout object
+sub createLogout {
+    my ( $self, $server ) = splice @_;
+    my $logout;
+
+    eval { $logout = Lasso::Logout->new($server); };
+
+    if ($@) {
+        $self->checkLassoError($@);
+        return;
+    }
+
+    return $logout;
+}
+
+## @method boolean initLogoutRequest(Lasso::Logout logout, string entityID, int method)
+# Init logout request
+# @param logout Lasso::Logout object
+# @param entityID
+# @param HTTP method
+# @return result
+sub initLogoutRequest {
+    my ( $self, $logout, $entityID, $method ) = splice @_;
+
+    eval { Lasso::Logout::init_request( $logout, $entityID, $method ); };
+
+    return $self->checkLassoError($@);
+}
+
+## @method boolean buildLogoutRequestMsg(Lasso::Logout logout)
+# Build logout request message
+# @param logout Lasso::Logout object
+# @return result
+sub buildLogoutRequestMsg {
+    my ( $self, $logout ) = splice @_;
+
+    eval { Lasso::Logout::build_request_msg($logout); };
+
+    return $self->checkLassoError($@);
+}
+
 1;
 
 __END__
@@ -633,6 +711,22 @@ Multivaluated values are separated by ';'
 =head2 validateConditions
 
 Validate conditions
+
+=head2 createLogoutRequest
+
+Create logout request for selected entity
+
+=head2 createLogout
+
+Create Lasso::Logout object
+
+=head2 initLogoutRequest
+
+Init logout request
+
+=head2 buildLogoutRequestMsg
+
+Build logout request message
 
 =head1 SEE ALSO
 

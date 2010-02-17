@@ -542,8 +542,57 @@ sub authenticate {
 # @return nothing
 sub authLogout {
     my $self = shift;
+    my %h;
 
-    # TODO
+    # Get Lasso Server
+    unless ( $self->{_lassoServer} ) {
+        $self->_sub('authInit');
+    }
+
+    my $server = $self->{_lassoServer};
+
+    # Build Logout Request if Logout is initiated by SP
+    # TODO - test logout initiater
+
+    my $idp         = $self->{_idp};
+    my $IDPentityID = $self->{_idpList}->{$idp}->{entityID};
+    my $logout      = $self->createLogoutRequest( $server, $IDPentityID );
+    unless ($logout) {
+        $self->lmLog( "Could not create logout request on $IDPentityID",
+            'error' );
+        return PE_ERROR;
+    }
+
+    $self->lmLog( "Logout request created", 'debug' );
+
+    # Keep request ID in memory to prevent replay
+    my $logout_request_id = $logout->request()->ID;
+    eval {
+        tie %h, $self->{globalStorage}, undef, $self->{globalStorageOptions};
+    };
+    if ( $@ or !$logout_request_id ) {
+        $self->lmLog( "Unable to store Logout request ID", 'error' );
+        return PE_ERROR;
+    }
+    $h{type}   = 'assertion';          # Session type
+    $h{_utime} = time();               # Creation time
+    $h{ID}     = $logout_request_id;
+    my $logout_request_session_id = $h{_session_id};
+    untie %h;
+
+    $self->lmLog(
+"Keep Logout request ID $logout_request_id in assertion session $logout_request_session_id",
+        'debug'
+    );
+
+    # Redirect user to IDP SLO URL
+    # Replace urldc value by SLO URL value and call sub autoRedirect
+    # TODO Manage other transport (POST, SOAP, ...)
+    my $slo_url = $logout->msg_url;
+    $self->lmLog( "Redirect user to $slo_url", 'debug' );
+
+    $self->{urldc} = $slo_url;
+    $self->{error} = $self->_subProcess(qw(autoRedirect));
 
     return;
 }
