@@ -200,6 +200,8 @@ sub confNode {
                 text  => '',
                 hash  => {},
                 'int' => 0,
+                textarea => '',
+                bool => 0,
             }->{$type};
             $self->lmLog( "Type $type unknown", 'warn' ) unless ( defined $h );
         }
