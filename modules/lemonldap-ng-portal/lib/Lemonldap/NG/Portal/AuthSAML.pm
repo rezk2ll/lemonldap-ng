@@ -244,17 +244,12 @@ sub extractFormInfo {
             return PE_ERROR;
         }
 
-        # Check conditions - time validity
-        unless ( $self->validateConditions($assertion) ) {
-            $self->lmLog( "Time conditions not validated", 'error' );
-            return PE_ERROR;
-        }
-
-        # Check conditions - audience
+        # Check conditions - time and audience
         unless (
             $self->validateConditions( $assertion, $self->{samlEntityID} ) )
         {
-            $self->lmLog( "Audience conditions not validated", 'error' );
+            $self->lmLog( "Time or Audience conditions not validated",
+                'error' );
             return PE_ERROR;
         }
 

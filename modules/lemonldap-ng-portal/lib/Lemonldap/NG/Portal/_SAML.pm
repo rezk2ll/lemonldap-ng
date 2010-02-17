@@ -512,7 +512,6 @@ sub getAttributeValue {
 # @return result
 sub validateConditions {
     my ( $self, $assertion, $entityID ) = splice @_;
-    $entityID ||= 'none';
     my $status;
 
     eval {
