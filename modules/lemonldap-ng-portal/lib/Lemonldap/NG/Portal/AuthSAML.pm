@@ -60,7 +60,7 @@ sub authInit {
 
     # Load identity provider metadata
     # IDP are listed in $self->{samlIDPMetaData}
-    # Each key is the IDP name and value is the metadata key
+    # Each key is the IDP name
     # Build IDP list for later use in extractFormInfo
     foreach ( keys %{ $self->{samlIDPMetaData} } ) {
 
@@ -70,7 +70,7 @@ sub authInit {
         my $idp_metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new();
         unless (
             $idp_metadata->initializeFromConfHash(
-                $self->{samlIDPMetaData}->{$_}->{metadata}
+                $self->{samlIDPMetaData}->{$_}->{samlIDPMetaDataXML}
             )
           )
         {
@@ -488,12 +488,12 @@ sub setAuthSessionInfo {
         my @attributes = $attr_statement->Attribute();
 
         # Wanted attributes are defined in IDP configuration
-        foreach ( keys %{ $self->{samlIDPMetaData}->{$idp}->{exportedAttr} } ) {
+        foreach ( keys %{ $self->{samlIDPMetaData}->{$idp}->{samlIDPMetaDataExportedAttr} } ) {
 
             # Extract fields from exportedAttr value
             my ( $mandatory, $name, $format, $friendly_name ) =
               split( /;/,
-                $self->{samlIDPMetaData}->{$idp}->{exportedAttr}->{$_} );
+                $self->{samlIDPMetaData}->{$idp}->{samlIDPMetaDataExportedAttr}->{$_} );
 
             # Try to get value
             my $value =
