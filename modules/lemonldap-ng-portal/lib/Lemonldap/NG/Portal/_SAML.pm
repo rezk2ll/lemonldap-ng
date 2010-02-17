@@ -17,6 +17,7 @@ our @EXPORT = qw(
   createIdentity createSession acceptSSO extractRelayState
   getAssertion getAttributeValue validateConditions
   createLogoutRequest createLogout initLogoutRequest buildLogoutRequestMsg
+  setSessionFromDump
 );
 
 our $VERSION = '0.01';
@@ -274,15 +275,21 @@ sub createAuthnRequest {
     return $login;
 }
 
-## @method Lasso::Login createLogin(Lasso::Server server)
+## @method Lasso::Login createLogin(Lasso::Server server, string dump)
 # Create Lasso::Login object
-# @param Lasso::Server server
+# @param server Lasso::Server object
+# @param dump optional XML dump
 # @return Lasso::Login object
 sub createLogin {
-    my ( $self, $server ) = splice @_;
+    my ( $self, $server, $dump ) = splice @_;
     my $login;
 
-    eval { $login = Lasso::Login->new($server); };
+    if ($dump) {
+        eval { $login = Lasso::Login::new_from_dump( $server, $dump ); };
+    }
+    else {
+        eval { $login = Lasso::Login->new($server); };
+    }
 
     if ($@) {
         $self->checkLassoError($@);
@@ -533,32 +540,36 @@ sub validateConditions {
     return 1;
 }
 
-## @method Lasso::Logout createLogoutRequest(Lasso::Server server, string entityID)
+## @method Lasso::Logout createLogoutRequest(Lasso::Server server, string session_dump)
 # Create logout request for selected entity
 # @param server Lasso::Server object
-# @param entityID entity ID
+# @param session_dump Lasso::Session dump
 # @return Lasso::Login object
 sub createLogoutRequest {
-    my ( $self, $server, $entityID ) = splice @_;
+    my ( $self, $server, $session_dump ) = splice @_;
+    my $session;
 
     # Create Lasso Logout
     my $logout = $self->createLogout($server);
 
-    # Get HTTP method for selected entity
-    my $method = $self->getHttpMethod( $server, $entityID );
-
+    # TODO Choose HTTP method
+    my $method = Lasso::Constants::HTTP_METHOD_REDIRECT;
     $self->lmLog( "Use HTTP method $method", 'debug' );
 
+    unless ( $self->setSessionFromDump( $logout, $session_dump ) ) {
+        $self->lmLog( "Could fill Lasso::Logout with session dump", 'error' );
+        return;
+    }
+
     # Init logout request
-    unless ( $self->initLogoutRequest( $logout, $entityID, $method ) ) {
-        $self->lmLog( "Could not initiate logout request on $entityID",
-            'error' );
+    unless ( $self->initLogoutRequest( $logout, "", $method ) ) {
+        $self->lmLog( "Could not initiate logout request", 'error' );
         return;
     }
 
     # Build logout request
     unless ( $self->buildLogoutRequestMsg($logout) ) {
-        $self->lmLog( "Could not build logout request on $entityID", 'error' );
+        $self->lmLog( "Could not build logout request", 'error' );
         return;
     }
 
@@ -606,6 +617,19 @@ sub buildLogoutRequestMsg {
     my ( $self, $logout ) = splice @_;
 
     eval { Lasso::Logout::build_request_msg($logout); };
+
+    return $self->checkLassoError($@);
+}
+
+## @method boolean setSessionFromDump(Lasso::Profile profile)
+# Set session from dump in Lasso::Profile object
+# @param profile Lasso::Profile object
+# @param dump Lasso::Session XML dump
+# @return result
+sub setSessionFromDump {
+    my ( $self, $profile, $dump ) = splice @_;
+
+    eval { Lasso::Profile::set_session_from_dump( $profile, $dump ); };
 
     return $self->checkLassoError($@);
 }
@@ -727,6 +751,10 @@ Init logout request
 =head2 buildLogoutRequestMsg
 
 Build logout request message
+
+=head2 setSessionFromDump
+
+Set session from dump in Lasso::Profile object
 
 =head1 SEE ALSO
 

@@ -650,6 +650,9 @@ sub _deleteSession {
 
     # Call authentication logout
     eval { $self->_sub('authLogout') };
+    if ($@) {
+        $self->lmLog( "Error when calling authLogout: $@", 'debug' );
+    }
 
     # Log
     $self->_sub( 'userNotice',

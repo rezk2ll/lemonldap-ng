@@ -311,7 +311,7 @@ sub extractFormInfo {
         $self->lmLog( "Find NameID: $user", 'debug' );
         $self->{user} = $user;
 
-        # Store Lasso::Login object
+        # Store Lasso objects
         $self->{_lassoLogin} = $login;
 
         return PE_OK;
@@ -488,12 +488,17 @@ sub setAuthSessionInfo {
         my @attributes = $attr_statement->Attribute();
 
         # Wanted attributes are defined in IDP configuration
-        foreach ( keys %{ $self->{samlIDPMetaData}->{$idp}->{samlIDPMetaDataExportedAttr} } ) {
+        foreach (
+            keys
+            %{ $self->{samlIDPMetaData}->{$idp}->{samlIDPMetaDataExportedAttr} }
+          )
+        {
 
             # Extract fields from exportedAttr value
             my ( $mandatory, $name, $format, $friendly_name ) =
               split( /;/,
-                $self->{samlIDPMetaData}->{$idp}->{samlIDPMetaDataExportedAttr}->{$_} );
+                $self->{samlIDPMetaData}->{$idp}->{samlIDPMetaDataExportedAttr}
+                  ->{$_} );
 
             # Try to get value
             my $value =
@@ -528,8 +533,13 @@ sub authenticate {
         return PE_ERROR;
     }
 
+    # Get created Lasso::Session and Lasso::Identity
+    my $session  = $login->get_session;
+    my $identity = $login->get_identity;
+
     # Dump Lasso objects in session
-    $self->{sessionInfo}->{_lassoLoginDump} = $login->dump();
+    $self->{sessionInfo}->{_lassoSessionDump}  = $session->dump()  if $session;
+    $self->{sessionInfo}->{_lassoIdentityDump} = $identity->dump() if $identity;
 
     # Set authenticationLevel
     $self->{sessionInfo}->{authenticationLevel} = 5;
@@ -551,15 +561,20 @@ sub authLogout {
 
     my $server = $self->{_lassoServer};
 
-    # Build Logout Request if Logout is initiated by SP
-    # TODO - test logout initiater
+    # Recover Lasso::Session dump
+    my $session_dump = $self->{sessionInfo}->{_lassoSessionDump};
 
-    my $idp         = $self->{_idp};
-    my $IDPentityID = $self->{_idpList}->{$idp}->{entityID};
-    my $logout      = $self->createLogoutRequest( $server, $IDPentityID );
+    unless ($session_dump) {
+        $self->lmLog( "Could not get session dump from session", 'error' );
+        return PE_ERROR;
+    }
+
+    # Build Logout Request if Logout is initiated by SP
+    # TODO - test logout issuer
+
+    my $logout = $self->createLogoutRequest( $server, $session_dump );
     unless ($logout) {
-        $self->lmLog( "Could not create logout request on $IDPentityID",
-            'error' );
+        $self->lmLog( "Could not create logout request", 'error' );
         return PE_ERROR;
     }
 
