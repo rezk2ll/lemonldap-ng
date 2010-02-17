@@ -48,34 +48,31 @@ sub setDebug {
 # @param string key The key into the manager struct
 sub buildIDPStruct {
     my ( $h, $k ) = @_;
-    if ($k =~ /saml\/samlIDPMetaData/i && ref($h))
-    {
-      my @_tmp = split(/\//, $k);
-      if (scalar @_tmp ge 3)
-      {
-        my $k2 = $_tmp[2];
-        %{$h->{saml}->{samlIDPMetaData}} = (
-            %{$h->{saml}->{samlIDPMetaData}},
-            $k2 => {
+    return $h
+      unless (ref($h));
+    my @keys = split(/\//, $k);
+    return $h
+      unless (scalar @keys ge 2);
+    %{$h->{samlIDPMetaData}} = (
+        %{$h->{samlIDPMetaData}},
+          $keys[1] => {
                 _nodes => [
                     qw(samlIDPMetaDataXML
                        samlIDPMetaDataExportedAttributes)
                   ],
                 samlIDPMetaDataXML =>
-                    'samlmetadata:/samlIDPMetaData/' . $k2
+                'samlmetadata:/samlIDPMetaData/' . $keys[1]
                     . '/samlIDPMetaDataXML:samlIDPMetaDataXML:textarea',
                 samlIDPMetaDataExportedAttributes =>
-                    'text:/samlIDPMetaData/' . $k2
+                'text:/samlIDPMetaData/' . $keys[1]
                     . '/samlIDPMetaDataExportedAttributes'
                     . ':samlIDPMetaDataExportedAttributes:text',
               }
           );
-        @{$h->{saml}->{samlIDPMetaData}->{_nodes}} = (
-            @{$h->{saml}->{samlIDPMetaData}->{_nodes}},
-            'n:' . $_tmp[2]
+    @{$h->{samlIDPMetaData}->{_nodes}} = (
+        @{$h->{samlIDPMetaData}->{_nodes}},
+        'n:' . $keys[1]
           );
-      }
-    }
     return $h;
 }
 

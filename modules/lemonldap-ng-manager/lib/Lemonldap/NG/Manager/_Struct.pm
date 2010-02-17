@@ -44,7 +44,7 @@ sub cstruct {
 sub struct {
     my $self = shift;
     return {
-        _nodes => [qw(n:generalParameters n:variables n:virtualHosts n:saml)],
+        _nodes => [qw(n:generalParameters n:variables n:virtualHosts n:samlServiceMetaData n:samlIDPMetaData)],
         _help  => 'default',
 
         ######################
@@ -243,10 +243,6 @@ sub struct {
         ########
         # SAML #
         ########
-        saml => {
-            _nodes => [qw(samlServicePrivateKey n:samlServiceMetaData n:samlIDPMetaData)],
-            _help  => 'saml',
-
             samlIDPMetaData => {
                 _nodes  => ['nhash:/samlIDPMetaData:samlIDPMetaData:samlIDP'],
                 _help   => 'default',
@@ -256,6 +252,7 @@ sub struct {
             samlServiceMetaData => {
                 _nodes => [
                     qw(samlEntityID
+                   samlServicePrivateKey
                        n:samlOrganization
                        n:samlSPSSODescriptor
                        n:samlIDPSSODescriptor)
@@ -264,6 +261,8 @@ sub struct {
 
                 # GLOBAL INFORMATIONS
                 samlEntityID => 'text:/samlEntityID',
+            samlServicePrivateKey =>
+              'textarea:/samlServicePrivateKey:samlServicePrivateKey:textarea',
                 samlOrganization => {
                     _nodes => [
                         qw(samlOrganizationDisplayName
@@ -421,9 +420,6 @@ sub struct {
                       },
                   },
               },
-            samlServicePrivateKey =>
-              'textarea:/samlServicePrivateKey:samlServicePrivateKey:textarea',
-        },
     };
 }
 
@@ -663,6 +659,9 @@ sub testStruct {
         ########
         # SAML #
         ########
+        samlIDPMetaData => $testNotDefined,
+        samlIDPMetaDataXML => $testNotDefined,
+        samlIDPMetaDataExportedAttributes => $testNotDefined,
         samlServicePrivateKey => $testNotDefined,
         samlEntityID => $testNotDefined,
         samlOrganizationDisplayName => $testNotDefined,
@@ -746,6 +745,9 @@ sub defaultConf {
         ########
         # SAML #
         ########
+        samlIDPMetaData => '',
+        samlIDPMetaDataXML => '',
+        samlIDPMetaDataExportedAttributes => '',
         samlServicePrivateKey => '',
         samlEntityID                => 'http://auth.example.com/saml/metadata',
         samlOrganizationDisplayName => 'Example',

@@ -193,11 +193,12 @@ sub confNode {
         my $text = $target;
         $text =~ s/^.*\///;
         my $id = "$target";
+        my $data = $metadata->toXML();
         $res .= $self->li($id)
           . $self->span(
             id   => $id,
             text => $text,
-            data => $metadata->toXML(),
+            data => $data,
             js   => $js,
             help => $help
           ) . "</li>";
@@ -301,7 +302,7 @@ sub corresp {
     return $h unless ($key);
     if ( my $k2 = $self->param('key') ) {
         # SAML identity providers
-        if ($key =~ /^saml\/samlIDPMetaData/i) {
+        if ($key =~ /^samlIDPMetaData/i) {
             $h = Lemonldap::NG::Common::Conf::SAML::Metadata::buildIDPStruct($h, $key);
         # Virtual hosts
         } else {
