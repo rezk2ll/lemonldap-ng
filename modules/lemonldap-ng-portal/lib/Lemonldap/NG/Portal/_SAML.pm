@@ -17,7 +17,7 @@ our @EXPORT = qw(
   createIdentity createSession acceptSSO extractRelayState
   getAssertion getAttributeValue validateConditions
   createLogoutRequest createLogout initLogoutRequest buildLogoutRequestMsg
-  setSessionFromDump
+  setSessionFromDump getMetaDataURL
 );
 
 our $VERSION = '0.01';
@@ -562,7 +562,7 @@ sub createLogoutRequest {
     }
 
     # Init logout request
-    unless ( $self->initLogoutRequest( $logout, "", $method ) ) {
+    unless ( $self->initLogoutRequest( $logout, undef, $method ) ) {
         $self->lmLog( "Could not initiate logout request", 'error' );
         return;
     }
@@ -632,6 +632,18 @@ sub setSessionFromDump {
     eval { Lasso::Profile::set_session_from_dump( $profile, $dump ); };
 
     return $self->checkLassoError($@);
+}
+
+## @method string getMetaDataURL(string key)
+# Get URL stored in a service metadata configuration key
+# @param key Metadata configuration key
+# @return url
+sub getMetaDataURL {
+    my ( $self, $key ) = splice @_;
+
+    return unless defined $self->{$key};
+
+    return ( split( /;/, $self->{$key} ) )[3];
 }
 
 1;
@@ -755,6 +767,10 @@ Build logout request message
 =head2 setSessionFromDump
 
 Set session from dump in Lasso::Profile object
+
+=head2 getMetaDataURL
+
+Get URL stored in a service metadata configuration key
 
 =head1 SEE ALSO
 

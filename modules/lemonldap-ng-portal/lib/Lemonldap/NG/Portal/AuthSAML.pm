@@ -113,25 +113,14 @@ sub extractFormInfo {
     my $idp;
     my %h;
 
-    # 1. Get URL parameters to know if we are receving an assertion
+    # 1. Get URL parameters to know if we are receving SAML request or response
     my $url              = $self->url();
-    my $saml_acs_art_url = (
-        split(
-            /;/,
-            $self->{samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact}
-        )
-    )[3];
-    my $saml_acs_post_url = (
-        split(
-            /;/, $self->{samlSPSSODescriptorAssertionConsumerServiceHTTPPost}
-        )
-    )[3];
-    my $saml_acs_get_url = (
-        split(
-            /;/,
-            $self->{samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect}
-        )
-    )[3];
+    my $saml_acs_art_url = $self->getMetaDataURL(
+        "samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact");
+    my $saml_acs_post_url = $self->getMetaDataURL(
+        "samlSPSSODescriptorAssertionConsumerServiceHTTPPost");
+    my $saml_acs_get_url = $self->getMetaDataURL(
+        "samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect");
 
     if ( $url =~ /^($saml_acs_art_url|$saml_acs_post_url|$saml_acs_get_url)$/i )
     {
@@ -600,19 +589,18 @@ sub authLogout {
         'debug'
     );
 
-    # Redirect user to IDP SLO URL
-    # Replace urldc value by SLO URL value and call sub autoRedirect
+    # Replace urldc value by SLO URL value
     # TODO Manage other transport (POST, SOAP, ...)
     my $slo_url = $logout->msg_url;
     $self->lmLog( "Redirect user to $slo_url", 'debug' );
 
     $self->{urldc} = $slo_url;
-    $self->{error} = $self->_subProcess(qw(autoRedirect));
 
     return;
 }
 
 1;
+
 __END__
 
 =head1 NAME
