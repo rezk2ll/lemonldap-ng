@@ -18,6 +18,7 @@ our @EXPORT = qw(
   getAssertion getAttributeValue validateConditions
   createLogoutRequest createLogout initLogoutRequest buildLogoutRequestMsg
   setSessionFromDump getMetaDataURL processLogoutResponseMsg processLogoutRequestMsg
+  validateLogoutRequest
 );
 
 our $VERSION = '0.01';
@@ -674,6 +675,18 @@ sub processLogoutRequestMsg {
     return $self->checkLassoError($@);
 }
 
+## @method boolean validateLogoutRequest(Lasso::Logout logout)
+# Validate logout request
+# @param logout Lasso::Logout object
+# @return result
+sub validateLogoutRequest {
+    my ( $self, $logout ) = splice @_;
+
+    eval { Lasso::Logout::validate_request($logout); };
+
+    return $self->checkLassoError($@);
+}
+
 1;
 
 __END__
@@ -807,6 +820,10 @@ Process logout response message
 =head2 processLogoutRequestMsg
 
 Process logout request message
+
+=head2 validateLogoutRequest
+
+Validate logout request
 
 =head1 SEE ALSO
 

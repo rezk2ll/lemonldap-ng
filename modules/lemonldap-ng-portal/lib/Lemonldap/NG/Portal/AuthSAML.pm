@@ -468,6 +468,8 @@ sub extractFormInfo {
                     $session_dump = $sessionInfo->{_lassoSessionDump}
                       if $sessionInfo->{_lassoSessionDump};
 
+               # TODO test SessionIndex to be sure to select the correct session
+
                     # Delete Session
                     $self->lmLog(
                         "Delete session $local_session for user $user",
@@ -480,6 +482,12 @@ sub extractFormInfo {
 
                 # Set session from dump
                 $self->setSessionFromDump( $logout, $session_dump );
+
+                # Validate request
+                unless ( $self->validateLogoutRequest($logout) ) {
+                    $self->lmLog( "SLO request is not valid", 'error' );
+                    $logout_error = 1;
+                }
             }
             else {
 
@@ -487,13 +495,12 @@ sub extractFormInfo {
                 $self->lmLog( "No local session found for user $user",
                     'debug' );
 
-                # TODO
+                $logout_error = 1;
 
             }
 
-            #
-
             # Logout response
+            # TODO
 
         }
         else {
