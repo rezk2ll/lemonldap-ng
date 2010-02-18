@@ -46,6 +46,16 @@
 
 	<TMPL_INCLUDE NAME="password.tpl">
 
+	<TMPL_IF NAME="PORTAL_URL">
+	<div id="logout">
+        <div class="buttons">
+                <a href="<TMPL_VAR NAME="PORTAL_URL">" class="positive">
+                        <img src="/skins/common/accept.png" alt="" />
+                        <lang en="Go to portal" fr="Aller au portail" />
+                </a>
+	</div>
+	</TMPL_IF>
+
 	<TMPL_IF NAME="LOGOUT_URL">
 	<div id="logout">
 		<div class="buttons">

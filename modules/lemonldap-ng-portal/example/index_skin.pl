@@ -162,14 +162,17 @@ else {
     }
 
         # Adapt template if external authentication error
+    # or logout is OK
     if (   $portal->{error} == PE_BADCERTIFICATE
               or $portal->{error} == PE_CERTIFICATEREQUIRED
-        or $portal->{error} == PE_ERROR )
+        or $portal->{error} == PE_ERROR
+        or $portal->{error} == PE_LOGOUT_OK )
     {
         %templateParams = (
             %templateParams,
                 DISPLAY_RESETPASSWORD => 0,
                 DISPLAY_FORM          => 0,
+            PORTAL_URL            => $portal->{portal},
     );
     }
 }

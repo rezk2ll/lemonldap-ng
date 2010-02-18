@@ -110,32 +110,49 @@ sub extractFormInfo {
     my $self   = shift;
     my $server = $self->{_lassoServer};
     my $login;
+    my $logout;
     my $idp;
+    my $method;
+    my $request;
+    my $response;
     my %h;
 
-    # 1. Get URL parameters to know if we are receving SAML request or response
+    # 1. Get HTTP request informations to know
+    # if we are receving SAML request or response
     my $url              = $self->url();
+    my $request_method = $self->request_method();
+    my $content_type   = $self->content_type();
+
     my $saml_acs_art_url = $self->getMetaDataURL(
         "samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact");
     my $saml_acs_post_url = $self->getMetaDataURL(
         "samlSPSSODescriptorAssertionConsumerServiceHTTPPost");
     my $saml_acs_get_url = $self->getMetaDataURL(
         "samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect");
+    my $saml_slo_soap_url =
+      $self->getMetaDataURL( "samlSPSSODescriptorSingleLogoutServiceSOAP", 1 );
+    my $saml_slo_soap_url_ret =
+      $self->getMetaDataURL( "samlSPSSODescriptorSingleLogoutServiceSOAP", 2 );
+    my $saml_slo_get_url =
+      $self->getMetaDataURL( "samlSPSSODescriptorSingleLogoutServiceHTTP", 1 );
+    my $saml_slo_get_url_ret =
+      $self->getMetaDataURL( "samlSPSSODescriptorSingleLogoutServiceHTTP", 2 );
 
+    # 1.1 SSO assertion consumer
     if ( $url =~ /^($saml_acs_art_url|$saml_acs_post_url|$saml_acs_get_url)$/i )
     {
 
-        $self->lmLog( "URL $url detected as an assertion consumer URL",
+        $self->lmLog( "URL $url detected as an SSO assertion consumer URL",
             'debug' );
 
         # Create Login object
         $login = $self->createLogin($server);
 
-        # 1.1 HTTP REDIRECT
+        # 1.1.1 HTTP REDIRECT
         if ( $url =~ /^$saml_acs_get_url$/i ) {
 
             # Response in query string
-            my $response = $self->query_string();
+            $response = $self->query_string();
 
             $self->lmLog( "HTTP-REDIRECT: SAML Response $response", 'debug' );
 
@@ -153,10 +170,10 @@ sub extractFormInfo {
                 'debug' );
         }
 
-        # 1.2 POST
+        # 1.1.2 POST
         # TODO
 
-        # 1.3 ARTEFACT (SOAP)
+        # 1.1.3 ARTEFACT (SOAP)
         # TODO
 
         # Get SAML response
@@ -304,6 +321,191 @@ sub extractFormInfo {
         $self->{_lassoLogin} = $login;
 
         return PE_OK;
+    }
+
+    # 1.2 SLO
+    if ( $url =~
+/^($saml_slo_soap_url|$saml_slo_soap_url_ret|$saml_slo_get_url|$saml_slo_get_url_ret)$/i
+      )
+    {
+        $self->lmLog( "URL $url detected as an SLO URL", 'debug' );
+
+        # Create Logout object
+        $logout = $self->createLogout($server);
+
+        # 1.2.1 HTTP-REDIRECT
+        if ( $self->request_method() =~ /^GET$/ ) {
+
+            $method = Lasso::Constants::HTTP_METHOD_REDIRECT;
+            $self->lmLog( "SLO method: HTTP-REDIRECT", 'debug' );
+
+            if ( $self->param('SAMLResponse') ) {
+
+                # Response in query string
+                $response = $self->query_string();
+                $self->lmLog( "HTTP-REDIRECT: SAML Response $response",
+                    'debug' );
+
+            }
+
+            if ( $self->param('SAMLRequest') ) {
+
+                # Request in query string
+                $response = $self->query_string();
+                $self->lmLog( "HTTP-REDIRECT: SAML Request $request", 'debug' );
+
+            }
+
+        }
+
+        elsif ( $self->request_method() =~ /^POST$/ ) {
+
+            # 1.2.2 POST
+            if ( $self->content_type() !~ /xml/ ) {
+
+                $method = Lasso::Constants::HTTP_METHOD_POST;
+                $self->lmLog( "SLO method: HTTP-POST", 'debug' );
+
+                if ( $self->param('SAMLResponse') ) {
+
+                    # Response in body part
+                    $response = $self->param('SAMLResponse');
+                    $self->lmLog( "HTTP-POST: SAML Response $response",
+                        'debug' );
+
+                }
+
+                if ( $self->param('SAMLRequest') ) {
+
+                    # Request in body part
+                    $response = $self->param('SAMLRequest');
+                    $self->lmLog( "HTTP-POST: SAML Request $request", 'debug' );
+
+                }
+
+            }
+
+            # 1.2.3 SOAP
+            else {
+
+                $method = Lasso::Constants::HTTP_METHOD_SOAP;
+                $self->lmLog( "SLO method: HTTP-SOAP", 'debug' );
+
+                # SOAP is always a request
+                $request = $self->param('POSTDATA');
+                $self->lmLog( "HTTP-SOAP: SAML Request $request", 'debug' );
+
+            }
+        }
+
+        if ($response) {
+
+            # Process logout response
+            my $result = $self->processLogoutResponseMsg( $logout, $response );
+
+            unless ($result) {
+                $self->lmLog( "Fail to process logout response", 'error' );
+                return PE_ERROR;
+            }
+
+            $self->lmLog( "Logout response is valid", 'debug' );
+
+            # TODO replay protection
+
+            # Inform user that logout is OK
+            return PE_LOGOUT_OK;
+        }
+
+        elsif ($request) {
+
+            # Logout error
+            my $logout_error = 0;
+
+            # Lasso::Session dump
+            my $session_dump;
+
+            # Process logout request
+            unless ( $self->processLogoutRequestMsg( $logout, $request ) ) {
+                $self->lmLog( "Fail to process logout request", 'error' );
+                return PE_ERROR;
+            }
+
+            $self->lmLog( "Logout request is valid", 'debug' );
+
+            # Get NameID and SessionIndex
+            my $name_id       = $logout->request()->NameID;
+            my $session_index = $logout->request()->SessionIndex;
+            my $user          = $name_id->content;
+
+            unless ($user) {
+                $self->lmLog( "Fail to get NameID content from logout request",
+                    'error' );
+                return PE_ERROR;
+            }
+
+            $self->lmLog( "Logout request NameID content: $user", 'debug' );
+
+            # Get corresponding session
+            my $local_sessions =
+              $self->{globalStorage}
+              ->searchOn( $self->{globalStorageOptions}, "_user", $user, );
+
+            if ( my @local_sessions_keys = keys %$local_sessions ) {
+
+                # A session was found
+                foreach (@local_sessions_keys) {
+
+                    my $local_session = $_;
+
+                    # Get session
+                    $self->lmLog(
+                        "Retrieve session $local_session for user $user",
+                        'debug' );
+                    my $sessionInfo =
+                      $self->getApacheSession( $local_session, 1 );
+
+                    # Get Lasso::Session dump
+                    $session_dump = $sessionInfo->{_lassoSessionDump}
+                      if $sessionInfo->{_lassoSessionDump};
+
+                    # Delete Session
+                    $self->lmLog(
+                        "Delete session $local_session for user $user",
+                        'debug' );
+                    my $logout_result = $self->_deleteSession($sessionInfo);
+                    $self->lmLog( "Local Logout result: $logout_result",
+                        'debug' );
+                    $logout_error = 1 unless $logout_result;
+                }
+
+                # Set session from dump
+                $self->setSessionFromDump( $logout, $session_dump );
+            }
+            else {
+
+                # No corresponding session found
+                $self->lmLog( "No local session found for user $user",
+                    'debug' );
+
+                # TODO
+
+            }
+
+            #
+
+            # Logout response
+
+        }
+        else {
+
+            # This should not happen
+            $self->lmLog( "SLO request or response was not found", 'error' );
+
+            # Redirect user
+            $self->{mustRedirect} = 1;
+            $self->{error}        = $self->_subProcess(qw(autoRedirect));
+            return $self->{error};
+        }
     }
 
     # 2. IDP resolution
@@ -478,16 +680,18 @@ sub setAuthSessionInfo {
 
         # Wanted attributes are defined in IDP configuration
         foreach (
-            keys
-            %{ $self->{samlIDPMetaData}->{$idp}->{samlIDPMetaDataExportedAttr} }
+            keys %{
+                $self->{samlIDPMetaData}->{$idp}
+                  ->{samlIDPMetaDataExportedAttributes}
+            }
           )
         {
 
             # Extract fields from exportedAttr value
             my ( $mandatory, $name, $format, $friendly_name ) =
               split( /;/,
-                $self->{samlIDPMetaData}->{$idp}->{samlIDPMetaDataExportedAttr}
-                  ->{$_} );
+                $self->{samlIDPMetaData}->{$idp}
+                  ->{samlIDPMetaDataExportedAttributes}->{$_} );
 
             # Try to get value
             my $value =

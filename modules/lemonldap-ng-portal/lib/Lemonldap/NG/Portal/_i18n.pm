@@ -105,6 +105,7 @@ __END__
 # * PE_BADMAILTOKEN                      44
 # * PE_MAILERROR                         45
 # * PE_MAILOK                            46
+# * PE_LOGOUT_OK                         47
 
 # Not used in errors:
 # * PE_DONE                -1
@@ -163,6 +164,7 @@ sub error_fr {
         "La clé de confirmation est invalide ou trop ancienne",
         "L'envoi du mail a échoué",
         "Un mail vous a été envoyé",
+        "Vous avez été déconnecté",
     ];
 }
 
@@ -218,6 +220,7 @@ sub error_en {
         'Confirmation key is invalid or too old',
         'An error occurs when sending mail',
         'A mail has been sent',
+	'You have been disconnected',
     ];
 }
 
@@ -274,6 +277,7 @@ sub error_ro {
         'Cheie de confirmare este invalid sau prea veche',
         'Trimiterea mail nu a reuşit',
         'Un e-mail a fost trimis',
+	'Aţi fost deconectat',
     ];
 }
 

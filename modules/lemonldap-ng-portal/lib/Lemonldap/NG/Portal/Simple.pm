@@ -91,6 +91,7 @@ use constant {
     PE_BADMAILTOKEN                     => 44,
     PE_MAILERROR                        => 45,
     PE_MAILOK                           => 46,
+    PE_LOGOUT_OK                        => 47,
 
     # Portal messages
     PM_USER                  => 0,
@@ -118,6 +119,7 @@ our @EXPORT = qw( PE_INFO PE_REDIRECT PE_DONE PE_OK PE_SESSIONEXPIRED
   PE_PP_EXP_WARNING PE_PASSWORD_MISMATCH PE_PASSWORD_OK PE_NOTIFICATION
   PE_BADURL PE_NOSCHEME PE_BADOLDPASSWORD PE_MALFORMEDUSER PE_SESSIONNOTGRANTED
   PE_CONFIRM PE_MAILFORMEMPTY PE_BADMAILTOKEN PE_MAILERROR PE_MAILOK
+  PE_LOGOUT_OK
   PM_USER PM_DATE PM_IP PM_SESSIONS_DELETED PM_OTHER_SESSIONS
   PM_REMOVE_OTHER_SESSIONS PM_PP_GRACE PM_PP_EXP_WARNING
   PM_SAML_IDPSELECT PM_SAML_IDPCHOOSEN PM_REMEMBERCHOICE
@@ -594,13 +596,15 @@ sub safe {
     return $safe;
 }
 
-##@method private boolean _deleteSession(Apache::Session* h)
+##@method private boolean _deleteSession(Apache::Session* h, boolean preserveCookie)
 # Delete an existing session. If "securedCookie" is set to 2, the http session
 # will also be removed.
-# @param $h tied Apache::Session object
+# @param h tied Apache::Session object
+# @param preserveCookie do not delete cookie
 # @return True if session has been deleted
 sub _deleteSession {
     my ( $self, $h, $preserveCookie ) = @_;
+    my $result = 1;
 
     # Try to find a linked http session (securedCookie=>2)
     if ( my $id2 = $h->{_httpSession} ) {
@@ -625,13 +629,17 @@ sub _deleteSession {
               );
         }
     }
-    my $r;
+
+    my $logged_user = $h->{ $self->{whatToTrace} };
 
     # Try to purge local cache
     # (if an handler is running on the same server)
     eval { $self->{lmConf}->{refLocalStorage}->remove( $h->{_session_id} ); };
-    eval { $r = tied(%$h)->delete() };
-    $self->lmLog( $@, 'error' ) if ($@);
+    eval { tied(%$h)->delete() };
+    if ($@) {
+        $self->lmLog( $@, 'error' );
+        $result = 0;
+    }
 
     # Create an obsolete cookie to remove it
     push @{ $self->{cookie} },
@@ -645,22 +653,11 @@ sub _deleteSession {
         @_,
       ) unless ($preserveCookie);
 
-    # Call issuerDB logout
-    $self->_sub('issuerLogout');
-
-    # Call authentication logout
-    eval { $self->_sub('authLogout') };
-    if ($@) {
-        $self->lmLog( "Error when calling authLogout: $@", 'debug' );
-    }
-
     # Log
-    $self->_sub( 'userNotice',
-        $self->{sessionInfo}->{ $self->{whatToTrace} }
-          . " has been disconnected" );
+    $self->_sub( 'userNotice', "User $logged_user has been disconnected" );
 
     # Return the result of tied(%$h)->delete()
-    return $r;
+    return $result;
 }
 
 ##@method private void _dump( variable )
@@ -831,6 +828,19 @@ sub controlExistingSession {
 
             # Delete session in global storage
             $self->_deleteSession($h);
+
+            # Call issuerDB logout
+            eval { $self->_sub('issuerLogout'); };
+            if ($@) {
+                $self->lmLog( "Error when calling issuerLogout: $@", 'debug' );
+            }
+
+            # Call authentication logout
+            eval { $self->_sub('authLogout'); };
+            if ($@) {
+                $self->lmLog( "Error when calling authLogout: $@", 'debug' );
+            }
+
             $self->{error} = PE_REDIRECT;
 
             # Redirect user

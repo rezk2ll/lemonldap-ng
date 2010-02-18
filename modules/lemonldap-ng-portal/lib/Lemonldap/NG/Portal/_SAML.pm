@@ -17,7 +17,7 @@ our @EXPORT = qw(
   createIdentity createSession acceptSSO extractRelayState
   getAssertion getAttributeValue validateConditions
   createLogoutRequest createLogout initLogoutRequest buildLogoutRequestMsg
-  setSessionFromDump getMetaDataURL
+  setSessionFromDump getMetaDataURL processLogoutResponseMsg processLogoutRequestMsg
 );
 
 our $VERSION = '0.01';
@@ -634,16 +634,44 @@ sub setSessionFromDump {
     return $self->checkLassoError($@);
 }
 
-## @method string getMetaDataURL(string key)
+## @method string getMetaDataURL(string key, int index)
 # Get URL stored in a service metadata configuration key
 # @param key Metadata configuration key
+# @param index field index containing URL
 # @return url
 sub getMetaDataURL {
-    my ( $self, $key ) = splice @_;
+    my ( $self, $key, $index ) = splice @_;
+    $index = 3 unless defined $index;
 
     return unless defined $self->{$key};
 
-    return ( split( /;/, $self->{$key} ) )[3];
+    return ( split( /;/, $self->{$key} ) )[$index];
+}
+
+## @method boolean processLogoutResponseMsg(Lasso::Logout logout, string response)
+# Process logout response message
+# @param logout Lasso::Logout object
+# @param response SAML response
+# @return result
+sub processLogoutResponseMsg {
+    my ( $self, $logout, $response ) = splice @_;
+
+    eval { Lasso::Logout::process_response_msg( $logout, $response ); };
+
+    return $self->checkLassoError($@);
+}
+
+## @method boolean processLogoutRequestMsg(Lasso::Logout logout, string request)
+# Process logout request message
+# @param logout Lasso::Logout object
+# @param request SAML request
+# @return result
+sub processLogoutRequestMsg {
+    my ( $self, $logout, $request ) = splice @_;
+
+    eval { Lasso::Logout::process_request_msg( $logout, $request ); };
+
+    return $self->checkLassoError($@);
 }
 
 1;
@@ -771,6 +799,14 @@ Set session from dump in Lasso::Profile object
 =head2 getMetaDataURL
 
 Get URL stored in a service metadata configuration key
+
+=head2 processLogoutResponseMsg
+
+Process logout response message
+
+=head2 processLogoutRequestMsg
+
+Process logout request message
 
 =head1 SEE ALSO
 
