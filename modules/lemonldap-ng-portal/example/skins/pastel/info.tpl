@@ -12,11 +12,11 @@
 		<table><tbody><tr><th>
 		<div class="buttons">
 			<button type="submit" class="positive">
-				<img src="skins/common/accept.png" alt="" />
+				<img src="/skins/common/accept.png" alt="" />
 				<lang en="Continue" fr="Continuer" />
 			</button>
 			<button type="reset" class="negative" onclick="stop();">
-				<img src="skins/common/cancel.png" alt="" />
+				<img src="/skins/common/cancel.png" alt="" />
 				<lang en="Wait" fr="Attendre" />
 			</button>
 		</div>
