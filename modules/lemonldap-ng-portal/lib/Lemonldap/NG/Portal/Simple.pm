@@ -1377,6 +1377,23 @@ sub autoRedirect {
     PE_OK;
 }
 
+## @method void returnSOAPMessage()
+# Print SOAP message
+# @return void
+sub returnSOAPMessage {
+    my $self = shift;
+
+    # Return error if no SOAP message
+    return PE_ERROR unless $self->{SOAPMessage};
+
+    # Print HTTP header and SOAP message
+    print $self->header();
+    print $self->{SOAPMessage};
+
+    # Exit
+    $self->quit();
+}
+
 1;
 
 __END__

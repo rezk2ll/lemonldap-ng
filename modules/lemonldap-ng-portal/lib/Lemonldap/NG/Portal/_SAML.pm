@@ -18,7 +18,7 @@ our @EXPORT = qw(
   getAssertion getAttributeValue validateConditions
   createLogoutRequest createLogout initLogoutRequest buildLogoutRequestMsg
   setSessionFromDump getMetaDataURL processLogoutResponseMsg processLogoutRequestMsg
-  validateLogoutRequest
+  validateLogoutRequest buildLogoutResponseMsg
 );
 
 our $VERSION = '0.01';
@@ -263,7 +263,7 @@ sub createAuthnRequest {
     # Customize request
     my $request = $login->request();
     $request->NameIDPolicy()
-      ->Format(Lasso::Constants::SAML2_NAME_IDENTIFIER_FORMAT_EMAIL);
+      ->Format(Lasso::Constants::SAML2_NAME_IDENTIFIER_FORMAT_PERSISTENT);
     $request->NameIDPolicy()->AllowCreate(1);
 
     # Build authentication request
@@ -687,6 +687,18 @@ sub validateLogoutRequest {
     return $self->checkLassoError($@);
 }
 
+## @method boolean buildLogoutResponseMsg(Lasso::Logout logout)
+# Build logout response message
+# @param Lasso::Logout logout
+# @return boolean result
+sub buildLogoutResponseMsg {
+    my ( $self, $logout ) = splice @_;
+
+    eval { Lasso::Logout::build_response_msg($logout); };
+
+    return $self->checkLassoError($@);
+}
+
 1;
 
 __END__
@@ -824,6 +836,10 @@ Process logout request message
 =head2 validateLogoutRequest
 
 Validate logout request
+
+=head2 buildLogoutResponseMsg
+
+Build logout response msg
 
 =head1 SEE ALSO
 

@@ -481,12 +481,16 @@ sub extractFormInfo {
                 }
 
                 # Set session from dump
-                $self->setSessionFromDump( $logout, $session_dump );
+                unless ( $self->setSessionFromDump( $logout, $session_dump ) ) {
+                    $self->lmLog( "Cannot set session from dump in logout",
+                        'error' );
+                    return PE_ERROR;
+                }
 
                 # Validate request
                 unless ( $self->validateLogoutRequest($logout) ) {
                     $self->lmLog( "SLO request is not valid", 'error' );
-                    $logout_error = 1;
+                    return PE_ERROR;
                 }
             }
             else {
@@ -495,12 +499,52 @@ sub extractFormInfo {
                 $self->lmLog( "No local session found for user $user",
                     'debug' );
 
-                $logout_error = 1;
+                return PE_ERROR;
 
             }
 
             # Logout response
+            unless ( $self->buildLogoutResponseMsg($logout) ) {
+                $self->lmLog( "Unable to build SLO response", 'error' );
+                return PE_ERROR;
+            }
+
+            # Send response depending on request method
+            # HTTP-REDIRECT
+            if ( $method == Lasso::Constants::HTTP_METHOD_REDIRECT ) {
+
+                # Redirect user to response URL
+                my $slo_url = $logout->msg_url;
+                $self->lmLog( "Redirect user to $slo_url", 'debug' );
+
+                $self->{urldc} = $slo_url;
+
+                $self->{error} = $self->_subProcess(qw(autoRedirect));
+                return $self->{error};
+            }
+
+            # HTTP-POST
+            if ( $method == Lasso::Constants::HTTP_METHOD_POST ) {
+
             # TODO
+            }
+
+            # HTTP-SOAP
+            if ( $method == Lasso::Constants::HTTP_METHOD_SOAP ) {
+
+                my $slo_body = $logout->msg_body;
+
+                $self->lmLog( "SOAP response $slo_body", 'debug' );
+
+                $self->{SOAPMessage} = $slo_body;
+
+                $self->_subProcess(qw(returnSOAPMessage));
+
+                # If we are here, there was a problem with SOAP response
+                $self->lmLog( "Logout response was not sent trough SOAP",
+                    'error' );
+                return PE_ERROR;
+            }
 
         }
         else {
@@ -769,9 +813,7 @@ sub authLogout {
         return PE_ERROR;
     }
 
-    # Build Logout Request if Logout is initiated by SP
-    # TODO - test logout issuer
-
+    # Build Logout Request
     my $logout = $self->createLogoutRequest( $server, $session_dump );
     unless ($logout) {
         $self->lmLog( "Could not create logout request", 'error' );
