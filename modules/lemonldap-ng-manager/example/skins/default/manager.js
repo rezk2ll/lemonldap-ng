@@ -268,11 +268,11 @@ function samlAssertion(id) {
 }
 function samlIDP(id){
         currentId=id;
-        if($('#li_'+myB64('/samlIDPMetaData')).find('span').size()==1){
+        /*if($('#li_'+myB64('/samlIDPMetaData')).find('span').size()==1){
                 $('#delsamlidpb').hide();
         }else{
                 $('#delsamlidpb').show();
-        }
+        }*/
         $('#samlIDPMetaData').attr('value',lmtext(id));
         display('samlIDPMetaData',lmtext(id));
 }
@@ -322,6 +322,11 @@ function rulesRoot(id){
 	currentId=id;
 	display('default','');
 	$('#newrbr').show();
+}
+function samlIDPRoot(id){
+	currentId=id;
+	display('default', '');
+	$('#newsamlidpb').show();
 }
 function reloadAuthParams() {
 	setlmdata(currentId,$('#authText').attr('value'));
@@ -403,8 +408,8 @@ function delSamlIDP(id){
 function newSamlIDP(){
 	var value = prompt(text4newSamlIDP,'authentic');
 	if(!value){return false;}
-	var idpId='li_'+myB64('/samlIDPMetaData/'+value);
-	simpleTreeCollection[0].newAjaxNodeIn($('#li_c2FtbC9zYW1sSURQTWV0YURhdGE1'),idpId,value,scriptname+'?type=new&node=samlIDPMetaData/'+value,function(d,s){
+	var idpId='li_'+myB64('/samlIDPMetaDataExportedAttributes/'+value);
+	simpleTreeCollection[0].newAjaxNodeIn($('#li_c2FtbElEUE1ldGFEYXRh'),idpId,value,scriptname+'?type=new&node=samlIDPMetaData/'+value,function(d,s){
 		$('>span',s).attr('name',value).attr('help','default').attr('id','text_'+idpId).attr('onclick','samlIDP(\''+idpId+'\')');
 		samlIDP(idpId);
 	});

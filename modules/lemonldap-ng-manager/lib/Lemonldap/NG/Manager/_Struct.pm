@@ -244,7 +244,8 @@ sub struct {
         # SAML #
         ########
             samlIDPMetaData => {
-                _nodes  => ['nhash:/samlIDPMetaData:samlIDPMetaData:samlIDP'],
+                _nodes  => ['nhash:/samlIDPMetaDataExportedAttributes:samlIDPMetaData:samlIDP'],
+                _upload => ['/samlIDPMetaDataXML'],
                 _help   => 'default',
                 _call   => '$(\'#newsamlidpb\').show();',
             },

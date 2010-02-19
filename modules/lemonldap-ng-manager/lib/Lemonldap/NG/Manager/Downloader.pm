@@ -191,7 +191,7 @@ sub confNode {
         my $metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new();
         $metadata->initializeFromConfHash($h);
         my $text = $target;
-        $text =~ s/^.*\///;
+        $text =~ s/^\/([^\/]+)\/.*$/$1/;
         my $id = "$target";
         my $data = $metadata->toXML();
         $res .= $self->li($id)
@@ -200,7 +200,8 @@ sub confNode {
             text => $text,
             data => $data,
             js   => $js,
-            help => $help
+            help => $help,
+            target => "samlmetadata",
           ) . "</li>";
     }
 
@@ -302,10 +303,10 @@ sub corresp {
     return $h unless ($key);
     if ( my $k2 = $self->param('key') ) {
         # SAML identity providers
-        if ($key =~ /^samlIDPMetaData/i) {
-            $h = Lemonldap::NG::Common::Conf::SAML::Metadata::buildIDPStruct($h, $key);
+        if ($key =~ /^samlIDPMetaData(?!XML|ExportedAttributes)(\/[^\/]+\/)?/i) {
+            $h = Lemonldap::NG::Common::Conf::SAML::Metadata::buildIDPStruct( $h, $k2 );
         # Virtual hosts
-        } else {
+        } elsif ($key =~ /^virtualHosts/i) {
             $h = $self->cstruct( $h, $k2 );
         }
     }
@@ -441,7 +442,8 @@ sub span {
 
     # Data
     $args{data} = '' unless ( defined $args{data} );
-    $args{data} =~ s/"/&#39;/g;
+    $args{data} =~ s/"/&#39;/g
+      unless ( defined $args{target} and $args{target} =~ /samlmetadata/ );
     $args{data} = uri_escape( $args{data} );
 
     # ID

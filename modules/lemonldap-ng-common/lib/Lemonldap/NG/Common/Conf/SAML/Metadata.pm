@@ -48,31 +48,18 @@ sub setDebug {
 # @param string key The key into the manager struct
 sub buildIDPStruct {
     my ( $h, $k ) = @_;
-    return $h
-      unless (ref($h));
-    my @keys = split(/\//, $k);
-    return $h
-      unless (scalar @keys ge 2);
-    %{$h->{samlIDPMetaData}} = (
-        %{$h->{samlIDPMetaData}},
-          $keys[1] => {
-                _nodes => [
-                    qw(samlIDPMetaDataXML
-                       samlIDPMetaDataExportedAttributes)
-                  ],
-                samlIDPMetaDataXML =>
-                'samlmetadata:/samlIDPMetaData/' . $keys[1]
-                    . '/samlIDPMetaDataXML:samlIDPMetaDataXML:textarea',
-                samlIDPMetaDataExportedAttributes =>
-                'text:/samlIDPMetaData/' . $keys[1]
-                    . '/samlIDPMetaDataExportedAttributes'
-                    . ':samlIDPMetaDataExportedAttributes:text',
+    %$h = (
+      %$h,
+      samlIDPMetaData => {
+        $k => {
+          _nodes => [qw(samlIDPMetaDataXML samlIDPMetaDataExportedAttributes)],
+          samlIDPMetaDataXML => "samlmetadata:/samlIDPMetaDataXML/$k:samlIDPMetaDataXML:textarea",
+          samlIDPMetaDataExportedAttributes => {
+            _nodes => ["hash:/samlIDPMetaDataExportedAttributes/$k:samlIDPMetaDataExportedAttributes:btext"],
+            _js    => 'hashRoot'
+          },
               }
-          );
-    @{$h->{samlIDPMetaData}->{_nodes}} = (
-        @{$h->{samlIDPMetaData}->{_nodes}},
-        'n:' . $keys[1]
-          );
+      });
     return $h;
 }
 
