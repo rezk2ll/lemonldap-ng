@@ -402,8 +402,10 @@ sub error_type {
     return "positive"
       if (
         scalar(
-            grep { /^$code$/ }
-              ( PE_REDIRECT, PE_DONE, PE_OK, PE_PASSWORD_OK, PE_MAILOK, )
+            grep { /^$code$/ } (
+                PE_REDIRECT, PE_DONE, PE_OK, PE_PASSWORD_OK,
+                PE_MAILOK,   PE_LOGOUT_OK,
+            )
         )
       );
 
@@ -827,7 +829,10 @@ sub controlExistingSession {
         if ( $self->param('logout') ) {
 
             # Delete session in global storage
-            $self->_deleteSession($h);
+            unless ( $self->_deleteSession($h) ) {
+                $self->lmLog( "Unable to delete session $id", 'error' );
+                return PE_ERROR;
+            }
 
             # Call issuerDB logout
             eval { $self->_sub('issuerLogout'); };
@@ -841,11 +846,8 @@ sub controlExistingSession {
                 $self->lmLog( "Error when calling authLogout: $@", 'debug' );
             }
 
-            $self->{error} = PE_REDIRECT;
-
-            # Redirect user
-            $self->_subProcess(qw(autoRedirect));
-            return PE_FIRSTACCESS;
+            # Display logout message
+            return PE_LOGOUT_OK;
         }
 
         # If the user wants to purge other sessions
