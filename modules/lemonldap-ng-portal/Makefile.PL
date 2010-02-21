@@ -8,8 +8,9 @@ WriteMakefile(
     LICENSE      => 'gpl',
     META_MERGE   => {
         'recommends' => {
-            'MIME::Lite'          => 0,
-            'Email::Date::Format' => 0,
+            'Email::Date::Format'   => 0,
+            'Net::OpenID::Consumer' => 0,
+            'MIME::Lite'            => 0,
         },
     },
     BUILD_REQUIRES => { 'IO::String' => 0, },

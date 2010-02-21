@@ -1,0 +1,188 @@
+##@file
+# OpenID authentication backend file
+
+##@class
+# OpenID authentication backend class
+package Lemonldap::NG::Portal::AuthOpenID;
+
+use strict;
+use Lemonldap::NG::Portal::Simple;
+use Net::OpenID::Consumer;
+use LWP::UserAgent;
+
+our $VERSION = '0.1';
+
+## @apmethod int authInit()
+# @return Lemonldap::NG::Portal constant
+sub authInit {
+    my $self = shift;
+    $self->{csr} = Net::OpenID::Consumer->new(
+        ua              => LWP::UserAgent->new,
+        cache           => Cache::FileCache->new,
+        args            => $self,
+        consumer_secret => $self->{openIdSecret},
+        required_root   => $self->{portal},
+    );
+    PE_OK;
+}
+
+## @apmethod int extractFormInfo()
+# Read username return by OpenID authentication system.
+# @return Lemonldap::NG::Portal constant
+sub extractFormInfo {
+    my $self = shift;
+    my ( $url, $openid );
+
+    # 1. If no openid element has been detected
+    return PE_FIRSTACCESS
+      unless ( $url = $self->param('openIdUrl')
+        or $openid = $self->param('openid') );
+
+    # 2. Check OpenID responses
+    if ($openid) {
+        my $csr = $self->{csr};
+
+        # Remote error
+        unless ( $csr->is_server_response() ) {
+            $self->{msg} = 'No OpenID valid message found' . $csr->err();
+            $self->lmLog( $self->{msg}, 'debug' );
+            return PE_BADCREDENTIALS;
+        }
+
+        # TODO
+        if ( my $setup_url = $csr->user_setup_url ) {
+            $self->abort( 'Not implemented',
+                'OpenID setup URL not yet implemented' );
+        }
+
+        # Check if user has refused to share his authentication
+        elsif ( $csr->user_cancel() ) {
+            $self->{msg} = "OpenID request cancelled by user";
+            $self->lmLog( $self->{msg}, 'debug' );
+            return PE_FIRSTACCESS;
+        }
+
+        # TODO: check verified identity
+        elsif ( $self->{_openiduser} = $csr->verified_identity ) {
+
+            # TODO : set $self->{user}
+            return PE_OK;
+        }
+
+        # Other errors
+        else {
+            $self->abort( 'OpenID error', $csr->err() );
+        }
+    }
+
+    # 3. Check if an OpenID url has been submitted
+    else {
+        my $claimed_identity = $self->{csr}->claimed_identity($url);
+
+        # Check if url is valid
+        unless ($claimed_identity) {
+            $self->{msg} = "OpenID error : " . $self->{csr}->err();
+            $self->lmLog( $self->{msg}, 'debug' );
+            return PE_BADCREDENTIALS;
+        }
+
+        # Redirect user
+        $self->lmLog( "OpenID redirection to $url", 'debug' );
+        my $check_url = $claimed_identity->check_url(
+            return_to  => $self->{portal} . '?openid=1',
+            trust_root => $self->{portal},
+        );
+    }
+    PE_OK;
+}
+
+## @apmethod int setAuthSessionInfo()
+# Store user.
+# @return Lemonldap::NG::Portal constant
+sub setAuthSessionInfo {
+    my $self = shift;
+
+    # TODO
+
+    PE_OK;
+}
+
+## @apmethod int authenticate()
+# Does nothing.
+# @return Lemonldap::NG::Portal constant
+sub authenticate {
+    PE_OK;
+}
+
+1;
+__END__
+
+=head1 NAME
+
+=encoding utf8
+
+Lemonldap::NG::Portal::OpenID - Perl extension for building Lemonldap::NG
+compatible portals with OpenID authentication.
+
+=head1 SYNOPSIS
+
+  use Lemonldap::NG::Portal::SharedConf;
+  my $portal = new Lemonldap::NG::Portal::Simple(
+         configStorage     => {...}, # See Lemonldap::NG::Portal
+         authentication    => 'OpenID',
+    );
+
+  if($portal->process()) {
+    # Write here the menu with CGI methods. This page is displayed ONLY IF
+    # the user was not redirected here.
+    print $portal->header('text/html; charset=utf8'); # DON'T FORGET THIS (see CGI(3))
+    print "...";
+  }
+  else {
+    # If the user enters here, IT MEANS THAT CAS REDIRECTION DOES NOT WORK
+    print $portal->header('text/html; charset=utf8'); # DON'T FORGET THIS (see CGI(3))
+    print "<html><body><h1>Unable to work</h1>";
+    print "This server isn't well configured. Contact your administrator.";
+    print "</body></html>";
+  }
+
+=head1 DESCRIPTION
+
+This library just overload few methods of Lemonldap::NG::Portal::Simple to use
+OpenID authentication mechanism.
+
+See L<Lemonldap::NG::Portal::Simple> for usage and other methods.
+
+=head1 SEE ALSO
+
+L<Lemonldap::NG::Portal>, L<Lemonldap::NG::Portal::Simple>,
+http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Presentation
+
+=head1 AUTHOR
+
+Thomas Chemineau, E<lt>thomas.chemineau@linagora.comE<gt>,
+Xavier Guimard, E<lt>x.guimard@free.frE<gt>
+
+=head1 BUG REPORT
+
+Use OW2 system to report bug or ask for features:
+L<http://forge.objectweb.org/tracker/?group_id=274>
+
+=head1 DOWNLOAD
+
+Lemonldap::NG is available at
+L<http://forge.objectweb.org/project/showfiles.php?group_id=274>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (C) 2007 by Thomas Chemineau,
+E<lt>thomas.chemineau@linagora.comE<gt> and
+Xavier Guimard E<lt>x.guimard@free.frE<gt>
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself, either Perl version 5.8.4 or,
+at your option, any later version of Perl 5 you may have available.
+
+=cut
+
+

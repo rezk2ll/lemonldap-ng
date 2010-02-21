@@ -104,6 +104,7 @@ lib/Lemonldap/NG/Portal/AuthLA.pm
 lib/Lemonldap/NG/Portal/AuthLDAP.pm
 lib/Lemonldap/NG/Portal/AuthMulti.pm
 lib/Lemonldap/NG/Portal/AuthNull.pm
+lib/Lemonldap/NG/Portal/AuthOpenID.pm
 lib/Lemonldap/NG/Portal/AuthProxy.pm
 lib/Lemonldap/NG/Portal/AuthRemote.pm
 lib/Lemonldap/NG/Portal/AuthSAML.pm

@@ -455,7 +455,7 @@ cpan:	clean configure common_cpan handler_cpan portal_cpan manager_cpan
 		$(UNCOMPRESS) Lemonldap-NG-$$i-*.$(COMPRESSSUFFIX) \
 			$$($(COMPRESS) tzf Lemonldap-NG-$$i-*.$(COMPRESSSUFFIX) |grep META.yml); \
 		mv Lemonldap-NG-$$i-*/META.yml lemonldap-ng-$$($(PERL) -e "print lc('$$i')")/; \
-		rmdir Lemonldap-NG-$$i*/; \
+		rm -rf Lemonldap-NG-$$i*/; \
 		done
 
 common_cpan:	common_conf
