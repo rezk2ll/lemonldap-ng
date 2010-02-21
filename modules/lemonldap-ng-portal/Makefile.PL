@@ -10,6 +10,7 @@ WriteMakefile(
         'recommends' => {
             'Email::Date::Format'   => 0,
             'Net::OpenID::Consumer' => 0,
+            'Net::OpenID::Server'   => 0,
             'MIME::Lite'            => 0,
         },
     },

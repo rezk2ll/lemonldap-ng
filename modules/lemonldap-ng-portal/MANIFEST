@@ -111,6 +111,7 @@ lib/Lemonldap/NG/Portal/AuthSAML.pm
 lib/Lemonldap/NG/Portal/AuthSSL.pm
 lib/Lemonldap/NG/Portal/CDA.pm
 lib/Lemonldap/NG/Portal/IssuerDBNull.pm
+lib/Lemonldap/NG/Portal/IssuerDBOpenID.pm
 lib/Lemonldap/NG/Portal/IssuerDBSAML.pm
 lib/Lemonldap/NG/Portal/MailReset.pm
 lib/Lemonldap/NG/Portal/Menu.pm
