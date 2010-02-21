@@ -2,7 +2,8 @@
 # OpenID authentication backend file
 
 ##@class
-# OpenID authentication backend class
+# OpenID authentication backend class.
+# The form must return a openIdUrl field
 package Lemonldap::NG::Portal::AuthOpenID;
 
 use strict;
@@ -49,10 +50,11 @@ sub extractFormInfo {
             return PE_BADCREDENTIALS;
         }
 
-        # TODO
+        # If confirmation is needed
         if ( my $setup_url = $csr->user_setup_url ) {
-            $self->abort( 'Not implemented',
-                'OpenID setup URL not yet implemented' );
+            $self->lmLog( 'OpenID confirmation', 'debug' );
+            print $self->redirect($setup_url);
+            $self->quit();
         }
 
         # Check if user has refused to share his authentication
@@ -63,15 +65,15 @@ sub extractFormInfo {
         }
 
         # TODO: check verified identity
-        elsif ( $self->{_openiduser} = $csr->verified_identity ) {
-
-            # TODO : set $self->{user}
+        elsif ( $self->{user} = $csr->verified_identity ) {
             return PE_OK;
         }
 
         # Other errors
         else {
-            $self->abort( 'OpenID error', $csr->err() );
+            $self->{msg} = 'OpenID error';
+            $self->lmLog( $self->{msg}, 'debug' );
+            return PE_ERROR;
         }
     }
 
@@ -88,10 +90,14 @@ sub extractFormInfo {
 
         # Redirect user
         $self->lmLog( "OpenID redirection to $url", 'debug' );
+
+        # TODO: insert url=...
         my $check_url = $claimed_identity->check_url(
             return_to  => $self->{portal} . '?openid=1',
             trust_root => $self->{portal},
         );
+        print $self->redirect($check_url);
+        $self->quit();
     }
     PE_OK;
 }
