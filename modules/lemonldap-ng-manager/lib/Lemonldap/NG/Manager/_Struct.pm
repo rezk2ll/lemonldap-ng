@@ -23,7 +23,7 @@ sub cstruct {
     return $h unless (scalar(@tmp) > 1);
     my $k1 = $tmp[0];
     my $k2 = $tmp[1];
-    if ($k1 =~ /virtualHosts/i)
+    if ($k1 =~ /^virtualHosts/i)
     {
     %$h = (
         %$h,
@@ -42,7 +42,7 @@ sub cstruct {
             }
         );
     }
-    elsif ($k1 =~ /samlIDPMetaData/i)
+    elsif ($k1 =~ /^samlIDPMetaData/i)
     {
       %$h = (
           %$h,
@@ -689,9 +689,8 @@ sub testStruct {
         ########
         # SAML #
         ########
-        samlIDPMetaData => $testNotDefined,
-        samlIDPMetaDataXML => $testNotDefined,
         samlIDPMetaDataExportedAttributes => $testNotDefined,
+        samlIDPMetaDataXML => $testNotDefined,
         samlServicePrivateKey => $testNotDefined,
         samlEntityID => $testNotDefined,
         samlOrganizationDisplayName => $testNotDefined,
@@ -775,9 +774,8 @@ sub defaultConf {
         ########
         # SAML #
         ########
-        samlIDPMetaData => '',
-        samlIDPMetaDataXML => '',
-        samlIDPMetaDataExportedAttributes => '',
+        samlIDPMetaDataXML => { 'authentic' => {} },
+        samlIDPMetaDataExportedAttributes => { 'authentic' => { 'uid' => '0;uid;;' } },
         samlServicePrivateKey => '',
         samlEntityID                => 'http://auth.example.com/saml/metadata',
         samlOrganizationDisplayName => 'Example',
@@ -843,6 +841,8 @@ sub subDefaultConf {
     return {
         locationRules   => { default     => 'deny' },
         exportedHeaders => { 'Auth-User' => '$uid' },
+        samlIDPMetaDataXML => {},
+        samlIDPMetaDataExportedAttributes => { 'uid' => ';0;uid;;' },
     };
 }
 
