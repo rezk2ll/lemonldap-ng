@@ -132,6 +132,8 @@ sub confUpload {
     foreach ( @{ $result->getChildrenByTagName('ignore') } ) {
         my $node = $_->getAttribute('value');
         $node =~ s/^.*node=(.*?)(?:&.*)?\}$/$1/;
+        # HACK: do it better, this IS NOT the good solution.
+        $node =~ s/^(\/?samlIDPMetaData(?!XML|ExportedAttributes))\/.*/$1/;
         foreach my $k ( $self->findAllConfKeys( $self->corresp($node) ) ) {
             my $v = $self->keyToH( $k, $self->conf );
             $v = $self->keyToH( $k, $self->defaultConf ) unless ( defined $v );
