@@ -1389,7 +1389,7 @@ sub returnSOAPMessage {
     return PE_ERROR unless $self->{SOAPMessage};
 
     # Print HTTP header and SOAP message
-    print $self->header();
+    print $self->header( -type => 'application/xml' );
     print $self->{SOAPMessage};
 
     # Exit
