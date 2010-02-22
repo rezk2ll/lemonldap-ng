@@ -99,12 +99,12 @@
      <lang en="Delete key" fr="Effacer la clef" />
     </button>
 
-    <button id="newsamlidpb" style="display:none;" onclick="newSamlIDP();return false;" class="ui-state-default ui-corner-all">
-     <lang en="New identity provider" fr="Nouveau fournisseur d'identités" />
+    <button id="newsamlmetadatab" style="display:none;" onclick="newSamlMetaData();return false;" class="ui-state-default ui-corner-all">
+     <lang en="New metadatas" fr="Nouvelles métadatas" />
     </button>
 
-    <button id="delsamlidpb" style="display:none;" onclick="delSamlIDP(currentId);" class="ui-state-default ui-corner-all">
-     <lang en="Delete identity provider" fr="Supprimer le fournisseur d'identités" />
+    <button id="delsamlmetadatab" style="display:none;" onclick="delSamlMetaData(currentId);" class="ui-state-default ui-corner-all">
+     <lang en="Delete metadatas" fr="Supprimer les métadatas" />
     </button>
     </div>
 
@@ -188,22 +188,9 @@
      <input type="text" id="vhost" onchange="setlmtext(currentId,this.value)"/>
     </div>
 
-    <!-- samlService -->
-    <div id="content_samlService" class="hidden">
-     <table>
-      <tr>
-       <td><lang en="Binding" fr="Binding"/></td>
-       <td><input type="text" size="50" id="samlServiceBinding" onchange="setlmsamlservice(currentId)" disabled="disabled"/></td>
-      </tr>
-      <tr>
-       <td><lang en="Location" fr="URL"/></td>
-       <td><input type="text" size="50" id="samlServiceLocation" onchange="setlmsamlservice(currentId)"/></td>
-      </tr>
-      <tr>
-       <td><lang en="Response Location" fr="URL de retour"/></td>
-       <td><input type="text" size="50" id="samlServiceResponseLocation" onchange="setlmsamlservice(currentId)"/></td>
-      </tr>
-     </table>
+    <!-- samlMetaData -->
+    <div id="content_samlMetaData" class="hidden">
+      <input type="text" id="samlMetaData" onchange="setlmtext(currentId,this.value)"/>
     </div>
 
     <!-- samlAssertion -->
@@ -230,6 +217,23 @@
      </table>
     </div>
 
+    <!-- samlService -->
+    <div id="content_samlService" class="hidden">
+     <table>
+      <tr>
+       <td><lang en="Binding" fr="Binding"/></td>
+       <td><input type="text" size="50" id="samlServiceBinding" onchange="setlmsamlservice(currentId)" disabled="disabled"/></td>
+      </tr>
+      <tr>
+       <td><lang en="Location" fr="URL"/></td>
+       <td><input type="text" size="50" id="samlServiceLocation" onchange="setlmsamlservice(currentId)"/></td>
+      </tr>
+      <tr>
+       <td><lang en="Response Location" fr="URL de retour"/></td>
+       <td><input type="text" size="50" id="samlServiceResponseLocation" onchange="setlmsamlservice(currentId)"/></td>
+      </tr>
+     </table>
+    </div>
    </div>
 
    </form>

@@ -12,29 +12,58 @@ our $VERSION = '0.1';
 
 ## @method protected hashref cstruct(hashref h,string k)
 # Merge $h with the structure produced with $k and return it.
-# Used to manage virtual hosts.
+# Used to manage virtual hosts, and metadatas (IDP, SP).
 #@param $h Result of struct()
-#@param $k Name of the virtual host
+#@param $k Full path of the key
 #@return Tree structure
 sub cstruct {
     shift;
     my ( $h, $k ) = @_;
+    my @tmp = split(/\//, $k);
+    return $h unless (scalar(@tmp) > 1);
+    my $k1 = $tmp[0];
+    my $k2 = $tmp[1];
+    if ($k1 =~ /virtualHosts/i)
+    {
     %$h = (
         %$h,
         virtualHosts => {
-            $k => {
+              $k2 => {
                 _nodes => [qw(rules:rules:rules headers)],
                 rules  => {
-                    _nodes => ["hash:/locationRules/$k:rules:rules"],
+                      _nodes => ["hash:/locationRules/$k2:rules:rules"],
                     _js    => 'rulesRoot'
                 },
                 headers => {
-                    _nodes => ["hash:/exportedHeaders/$k"],
+                      _nodes => ["hash:/exportedHeaders/$k2"],
+                      _js    => 'hashRoot'
+                    },
+                }
+            }
+        );
+    }
+    elsif ($k1 =~ /samlIDPMetaData/i)
+    {
+      %$h = (
+          %$h,
+          samlIDPMetaData => {
+              $k2 => {
+                  _nodes => [
+                      qw(samlIDPMetaDataExportedAttributes samlIDPMetaDataXML)
+                    ],
+                  samlIDPMetaDataExportedAttributes => {
+                      _nodes => [
+                          "hash:/samlIDPMetaDataExportedAttributes/$k2"
+                        . ":samlIDPMetaDataExportedAttributes:btext"
+                        ],
                     _js    => 'hashRoot'
                 },
+                  samlIDPMetaDataXML => "samlmetadata:/samlIDPMetaDataXML/$k2"
+                                      . ":samlIDPMetaDataXML:textarea",
             }
         }
     );
+    }
     return $h;
 }
 
@@ -244,10 +273,10 @@ sub struct {
         # SAML #
         ########
             samlIDPMetaData => {
-                _nodes  => ['nhash:/samlIDPMetaDataExportedAttributes:samlIDPMetaData:samlIDP'],
+                _nodes  => ['nhash:/samlIDPMetaDataExportedAttributes:samlIDPMetaData:samlMetaData'],
                 _upload => ['/samlIDPMetaDataXML'],
                 _help   => 'default',
-                _call   => '$(\'#newsamlidpb\').show();',
+                _call   => '$(\'#newsamlmetadatab\').show();',
             },
 
             samlServiceMetaData => {

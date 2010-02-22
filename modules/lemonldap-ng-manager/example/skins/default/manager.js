@@ -266,15 +266,15 @@ function samlAssertion(id) {
 	$('#samlAssertionLocation').attr('value',t[3]);
 	display('samlAssertion',lmtext(id));
 }
-function samlIDP(id){
+function samlMetaData(id){
         currentId=id;
-        /*if($('#li_'+myB64('/samlIDPMetaData')).find('span').size()==1){
-                $('#delsamlidpb').hide();
+        if($('#li_'+myB64('/samlIDPMetaData')).find('span').size()==1){
+                $('#delsamlmetadatab').hide();
         }else{
-                $('#delsamlidpb').show();
-        }*/
-        $('#samlIDPMetaData').attr('value',lmtext(id));
-        display('samlIDPMetaData',lmtext(id));
+                $('#delsamlmetadatab').show();
+        }
+        $('#samlMetaData').attr('value',lmtext(id));
+        display('samlMetaData',lmtext(id));
 }
 function samlService(id) {
 	currentId=id;
@@ -323,10 +323,10 @@ function rulesRoot(id){
 	display('default','');
 	$('#newrbr').show();
 }
-function samlIDPRoot(id){
+function samlMetaDataRoot(id){
 	currentId=id;
 	display('default', '');
-	$('#newsamlidpb').show();
+	$('#newsamlmetadatab').show();
 }
 function reloadAuthParams() {
 	setlmdata(currentId,$('#authText').attr('value'));
@@ -398,20 +398,20 @@ function newVh(name){
 	vhost(vhId);
 	});
 }
-function delSamlIDP(id){
+function delSamlMetaData(id){
 	var idpname = $('#text_'+id).attr('name');
 	if(confirm('Delete '+idpname+' ?')){
 		$('#'+id).remove();
-		samlIDP(id);
+		samlMetaData(id);
 	}
 }
-function newSamlIDP(){
-	var value = prompt(text4newSamlIDP,'authentic');
-	if(!value){return false;}
-	var idpId='li_'+myB64('/samlIDPMetaDataExportedAttributes/'+value);
-	simpleTreeCollection[0].newAjaxNodeIn($('#li_c2FtbElEUE1ldGFEYXRh'),idpId,value,scriptname+'?type=new&node=samlIDPMetaData/'+value,function(d,s){
-		$('>span',s).attr('name',value).attr('help','default').attr('id','text_'+idpId).attr('onclick','samlIDP(\''+idpId+'\')');
-		samlIDP(idpId);
+function newSamlMetaData(){
+	var name = prompt(text4newSamlIDP,'authentic');
+	if(!name){return false;}
+	var idpId='li_'+myB64('/samlIDPMetaDataExportedAttributes/'+name);
+	simpleTreeCollection[0].newAjaxNodeIn($('#li_L3NhbWxJRFBNZXRhRGF0YQ2'),idpId,name,scriptname+'?type=new&node=samlIDPMetaData/'+name,function(d,s){
+		$('>span',s).attr('name',name).attr('help','default').attr('id','text_'+idpId).attr('onclick','samlMetaData(\''+idpId+'\')');
+		samlMetaData(idpId);
 	});
 }
 var cfgAttrDone=0;

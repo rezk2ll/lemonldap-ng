@@ -192,13 +192,11 @@ sub confNode {
         $metadata->initializeFromConfHash($h);
         my $text = $target;
         $text =~ s/^\/([^\/]+)\/.*$/$1/;
-        my $id = "$target";
-        my $data = $metadata->toXML();
-        $res .= $self->li($id)
+        $res .= $self->li("$target")
           . $self->span(
-            id   => $id,
+            id   => "$target",
             text => $text,
-            data => $data,
+            data => $metadata->toXML(),
             js   => $js,
             help => $help,
             target => "samlmetadata",
@@ -302,13 +300,7 @@ sub corresp {
     my $h = $self->struct();
     return $h unless ($key);
     if ( my $k2 = $self->param('key') ) {
-        # SAML identity providers
-        if ($key =~ /^samlIDPMetaData(?!XML|ExportedAttributes)(\/[^\/]+\/)?/i) {
-            $h = Lemonldap::NG::Common::Conf::SAML::Metadata::buildIDPStruct( $h, $k2 );
-        # Virtual hosts
-        } elsif ($key =~ /^virtualHosts/i) {
-            $h = $self->cstruct( $h, $k2 );
-        }
+        $h = $self->cstruct( $h, $key );
     }
     my @tmp1 = split /\//, $key;
     my $help;

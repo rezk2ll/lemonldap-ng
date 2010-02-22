@@ -67,8 +67,7 @@ sub confUpload {
         $id =~ s/\r//g;
         $id =~ s/^\///;
         $id =~ s/(?:\/[^\/]*)?$/\/$name/ if ($NK);
-        next if ( $id =~ /^(generalParameters|virtualHosts)/);
-        next if ( $id =~ /^samlIDPMetaData(?!XML|ExportedAttributes)(\/[^\/]+\/)?/i );
+        next if ( $id =~ /^(generalParameters|virtualHosts|samlIDPMetaData)/);
         my ( $confKey, $test ) = $self->getConfTests($id);
         my ( $res, $m );
 

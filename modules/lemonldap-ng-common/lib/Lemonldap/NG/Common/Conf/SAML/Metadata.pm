@@ -42,27 +42,6 @@ sub setDebug {
     return;
 }
 
-## @method public hashref buildIDPStruct (hashref h, string key)
-# Build a simple hashref to be included into the struct of manager.
-# @param hashref h The current manager struct
-# @param string key The key into the manager struct
-sub buildIDPStruct {
-    my ( $h, $k ) = @_;
-    %$h = (
-      %$h,
-      samlIDPMetaData => {
-        $k => {
-          _nodes => [qw(samlIDPMetaDataXML samlIDPMetaDataExportedAttributes)],
-          samlIDPMetaDataXML => "samlmetadata:/samlIDPMetaDataXML/$k:samlIDPMetaDataXML:textarea",
-          samlIDPMetaDataExportedAttributes => {
-            _nodes => ["hash:/samlIDPMetaDataExportedAttributes/$k:samlIDPMetaDataExportedAttributes:btext"],
-            _js    => 'hashRoot'
-          },
-              }
-      });
-    return $h;
-}
-
 ## @method public boolean initiliazeFromConf(string s)
 # Initialize this object from configuration string.
 # @param $s Configuration string.
