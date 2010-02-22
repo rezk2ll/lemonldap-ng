@@ -406,7 +406,7 @@ function delSamlMetaData(id){
 	}
 }
 function newSamlMetaData(){
-	var name = prompt(text4newSamlIDP,'authentic');
+	var name = prompt(text4newSamlMetaData,'authentic');
 	if(!name){return false;}
 	var idpId='li_'+myB64('/samlIDPMetaDataExportedAttributes/'+name);
 	simpleTreeCollection[0].newAjaxNodeIn($('#li_L3NhbWxJRFBNZXRhRGF0YQ2'),idpId,name,scriptname+'?type=new&node=samlIDPMetaData/'+name,function(d,s){

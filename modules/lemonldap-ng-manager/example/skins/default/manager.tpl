@@ -20,7 +20,7 @@
 	var text4newKey='<lang en="Key" fr="Clé" />';
 	var value4newKey='<lang en="Value" fr="Valeur" />';
 	var text4newVhost='<lang en="Virtual host name" fr="Nom de l\'hôte virtuel" />';
-	var text4newSamlIDP='<lang en="Identity provider name" fr="Nom du fournisseur d\'identités" />';
+	var text4newSamlMetaData='<lang en="SAML Metadatas name" fr="Nom des métadatas SAML" />';
 //]]></script>
 <script src="<TMPL_VAR NAME="DIR">/manager.js" type="text/JavaScript"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
