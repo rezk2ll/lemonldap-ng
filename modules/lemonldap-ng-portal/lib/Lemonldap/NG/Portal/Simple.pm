@@ -1396,6 +1396,48 @@ sub returnSOAPMessage {
     $self->quit();
 }
 
+## @method void autoPost()
+# Transfer POST data with auto submit
+# @return void
+sub autoPost {
+    my $self = shift;
+
+    # Get URL and Form fields
+    my $url        = $self->{postUrl};
+    my $formFields = $self->{postFields};
+
+    # Return error if no URL
+    return PE_ERROR unless $self->{postUrl};
+
+    # Print page
+    print $self->header();
+    print $self->start_html();
+    print $self->start_form( -action => $url );
+
+    $self->lmLog( "POST form action: $url", 'debug' );
+
+    # Create fields
+    foreach ( keys %$formFields ) {
+        print $self->textfield( -name => $_, -value => $formFields->{$_} );
+        $self->lmLog( "POST field $_: " . $formFields->{$_}, 'debug' );
+    }
+
+    print $self->submit();
+    print $self->end_form();
+
+    # Auto submit javascript
+    print "<script language=\"JavaScript\" type=\"text/javascript\">\n";
+    print "document.forms[0].submit();\n";
+    print "</script>\n";
+
+    # End page
+    print $self->end_html();
+
+    # Exit
+    $self->quit();
+
+}
+
 1;
 
 __END__
