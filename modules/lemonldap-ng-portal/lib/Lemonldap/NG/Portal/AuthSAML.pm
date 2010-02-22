@@ -51,18 +51,18 @@ sub authInit {
     $self->lmLog( "Service created", 'debug' );
 
     # Check presence of at least one identity provider in configuration
-    unless ( $self->{samlIDPMetaData}
-        and keys %{ $self->{samlIDPMetaData} } )
+    unless ( $self->{samlIDPMetaDataXML}
+        and keys %{ $self->{samlIDPMetaDataXML} } )
     {
         $self->lmLog( "No IDP found in configuration", 'error' );
         return PE_ERROR;
     }
 
     # Load identity provider metadata
-    # IDP are listed in $self->{samlIDPMetaData}
+    # IDP metadata are listed in $self->{samlIDPMetaDataXML}
     # Each key is the IDP name
     # Build IDP list for later use in extractFormInfo
-    foreach ( keys %{ $self->{samlIDPMetaData} } ) {
+    foreach ( keys %{ $self->{samlIDPMetaDataXML} } ) {
 
         $self->lmLog( "Get Metadata for IDP $_", 'debug' );
 
@@ -70,7 +70,7 @@ sub authInit {
         my $idp_metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new();
         unless (
             $idp_metadata->initializeFromConfHash(
-                $self->{samlIDPMetaData}->{$_}->{samlIDPMetaDataXML}
+                $self->{samlIDPMetaDataXML}->{$_}
             )
           )
         {
@@ -186,48 +186,12 @@ sub extractFormInfo {
         # Replay protection if this is a response to a created authn request
         my $assertion_responded = $saml_response->InResponseTo;
         if ($assertion_responded) {
-            my $assertion_sessions =
-              $self->{globalStorage}->searchOn( $self->{globalStorageOptions},
-                "ID", $assertion_responded, );
-
-            if ( my @assertion_keys = keys %$assertion_sessions ) {
-
-                # A session was found
-                foreach (@assertion_keys) {
-                    my $assertion_session = $_;
-
-                    # Delete it
-                    eval {
-                        tie %h, $self->{globalStorage}, $_,
-                          $self->{globalStorageOptions};
-                    };
-                    if ($@) {
-                        $self->lmLog(
-"Unable to recover assertion session $assertion_session (assertion ID $assertion_responded)",
-                            'error'
-                        );
-                        return PE_ERROR;
-                    }
-                    eval { tied(%h)->delete(); };
-                    if ($@) {
-                        $self->lmLog(
-"Unable to delete assertion session $assertion_session (assertion ID $assertion_responded)",
-                            'error'
-                        );
-                        return PE_ERROR;
-                    }
-                    $self->lmLog(
-"Assertion session $assertion_session (assertion ID $assertion_responded) was deleted",
-                        'debug'
-                    );
-                }
-            }
-            else {
+            unless ( $self->replayProtection($assertion_responded) ) {
 
                 # Assertion was already consumed or is expired
                 # Force authentication replay
                 $self->lmLog(
-"Assertion $assertion_responded already used or expired, replay authentication",
+"Message $assertion_responded already used or expired, replay authentication",
                     'error'
                 );
                 delete $self->{urldc};
@@ -410,7 +374,16 @@ sub extractFormInfo {
 
             $self->lmLog( "Logout response is valid", 'debug' );
 
-            # TODO replay protection
+            # Replay protection
+            my $samlID = $response->InResponseTo;
+
+            unless ( $self->replayProtection($samlID) ) {
+
+                # Logout request was already consumed or is expired
+                $self->lmLog( "Message $samlID already used or expired",
+                    'error' );
+                return PE_ERROR;
+            }
 
             # Inform user that logout is OK
             return PE_LOGOUT_OK;
@@ -730,19 +703,13 @@ sub setAuthSessionInfo {
         my @attributes = $attr_statement->Attribute();
 
         # Wanted attributes are defined in IDP configuration
-        foreach (
-            keys %{
-                $self->{samlIDPMetaData}->{$idp}
-                  ->{samlIDPMetaDataExportedAttributes}
-            }
-          )
+        foreach ( keys %{ $self->{samlIDPMetaDataExportedAttributes}->{$idp} } )
         {
 
             # Extract fields from exportedAttr value
             my ( $mandatory, $name, $format, $friendly_name ) =
               split( /;/,
-                $self->{samlIDPMetaData}->{$idp}
-                  ->{samlIDPMetaDataExportedAttributes}->{$_} );
+                $self->{samlIDPMetaDataExportedAttributes}->{$idp}->{$_} );
 
             # Try to get value
             my $value =

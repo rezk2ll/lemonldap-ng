@@ -18,7 +18,7 @@ our @EXPORT = qw(
   getAssertion getAttributeValue validateConditions
   createLogoutRequest createLogout initLogoutRequest buildLogoutRequestMsg
   setSessionFromDump getMetaDataURL processLogoutResponseMsg processLogoutRequestMsg
-  validateLogoutRequest buildLogoutResponseMsg
+  validateLogoutRequest buildLogoutResponseMsg replayProtection
 );
 
 our $VERSION = '0.01';
@@ -699,6 +699,61 @@ sub buildLogoutResponseMsg {
     return $self->checkLassoError($@);
 }
 
+## @method boolean replayProtection(string samlID)
+# Check if SAML message do not correspond to a previously responded message
+# @param samlID ID of initial SAML message
+# @return result
+sub replayProtection {
+    my ( $self, $samlID ) = splice @_;
+    my %h;
+
+    unless ($samlID) {
+        $self->lmLog( "Cannot verify replay because no SAML ID given",
+            'error' );
+        return 0;
+    }
+
+    my $sessions =
+      $self->{globalStorage}
+      ->searchOn( $self->{globalStorageOptions}, "ID", $samlID );
+
+    if ( my @keys = keys %$sessions ) {
+
+        # A session was found
+        foreach (@keys) {
+            my $session = $_;
+
+            # Delete it
+            eval {
+                tie %h, $self->{globalStorage}, $_,
+                  $self->{globalStorageOptions};
+            };
+            if ($@) {
+                $self->lmLog(
+"Unable to recover assertion session $session (Message ID $samlID)",
+                    'error'
+                );
+                return 0;
+            }
+            eval { tied(%h)->delete(); };
+            if ($@) {
+                $self->lmLog(
+"Unable to delete assertion session $session (Message ID $samlID)",
+                    'error'
+                );
+                return 0;
+            }
+            $self->lmLog(
+                "Assertion session $session (Message ID $samlID) was deleted",
+                'debug' );
+            return 1;
+        }
+    }
+
+    return 0;
+
+}
+
 1;
 
 __END__
@@ -840,6 +895,10 @@ Validate logout request
 =head2 buildLogoutResponseMsg
 
 Build logout response msg
+
+=head2 replayProtection
+
+Check if SAML message do not correspond to a previously responded message
 
 =head1 SEE ALSO
 
