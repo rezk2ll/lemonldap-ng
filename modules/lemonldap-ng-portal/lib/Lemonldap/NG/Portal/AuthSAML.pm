@@ -149,12 +149,71 @@ sub extractFormInfo {
         $login = $self->createLogin($server);
 
         # 1.1.1 HTTP REDIRECT
-        if ( $url =~ /^$saml_acs_get_url$/i ) {
+        if ( $request_method =~ /^GET$/ ) {
+
+            $method = Lasso::Constants::HTTP_METHOD_REDIRECT;
+            $self->lmLog( "SSO method: HTTP-REDIRECT", 'debug' );
+
+            if ( $self->param('SAMLResponse') ) {
 
             # Response in query string
             $response = $self->query_string();
+                $self->lmLog( "HTTP-REDIRECT: SAML Response $response",
+                    'debug' );
 
-            $self->lmLog( "HTTP-REDIRECT: SAML Response $response", 'debug' );
+            }
+
+            if ( $self->param('SAMLRequest') ) {
+
+                # Request in query string
+                $request = $self->query_string();
+                $self->lmLog( "HTTP-REDIRECT: SAML Request $request", 'debug' );
+
+            }
+
+        }
+
+        elsif ( $request_method =~ /^POST$/ ) {
+
+            # 1.2.2 POST
+            if ( $content_type !~ /xml/ ) {
+
+                $method = Lasso::Constants::HTTP_METHOD_POST;
+                $self->lmLog( "SSO method: HTTP-POST", 'debug' );
+
+                if ( $self->param('SAMLResponse') ) {
+
+                    # Response in body part
+                    $response = $self->param('SAMLResponse');
+                    $self->lmLog( "HTTP-POST: SAML Response $response",
+                        'debug' );
+
+                }
+
+                if ( $self->param('SAMLRequest') ) {
+
+                    # Request in body part
+                    $request = $self->param('SAMLRequest');
+                    $self->lmLog( "HTTP-POST: SAML Request $request", 'debug' );
+
+                }
+
+            }
+
+            # 1.2.3 SOAP
+            else {
+
+                $method = Lasso::Constants::HTTP_METHOD_SOAP;
+                $self->lmLog( "SSO method: HTTP-SOAP", 'debug' );
+
+                # SOAP is always a request
+                $request = $self->param('POSTDATA');
+                $self->lmLog( "HTTP-SOAP: SAML Request $request", 'debug' );
+
+            }
+        }
+
+        if ($response) {
 
             # Process authentication response
             my $result = $self->processAuthnResponseMsg( $login, $response );
@@ -168,13 +227,6 @@ sub extractFormInfo {
 
             $self->lmLog( "HTTP-REDIRECT: authentication response is valid",
                 'debug' );
-        }
-
-        # 1.1.2 POST
-        # TODO
-
-        # 1.1.3 ARTEFACT (SOAP)
-        # TODO
 
         # Get SAML response
         my $saml_response = $login->response();
@@ -286,6 +338,27 @@ sub extractFormInfo {
 
         return PE_OK;
     }
+        elsif ($request) {
+
+            # Do nothing
+            $self->lmLog(
+                "This module do not manage SSO request, see IssuerDBSAML",
+                'debug' );
+
+            return PE_OK;
+        }
+        else {
+
+            # This should not happen
+            $self->lmLog( "SSO request or response was not found", 'error' );
+
+            # Redirect user
+            $self->{mustRedirect} = 1;
+            $self->{error}        = $self->_subProcess(qw(autoRedirect));
+            return $self->{error};
+        }
+
+    }
 
     # 1.2 SLO
     if ( $url =~
@@ -298,7 +371,7 @@ sub extractFormInfo {
         $logout = $self->createLogout($server);
 
         # 1.2.1 HTTP-REDIRECT
-        if ( $self->request_method() =~ /^GET$/ ) {
+        if ( $request_method =~ /^GET$/ ) {
 
             $method = Lasso::Constants::HTTP_METHOD_REDIRECT;
             $self->lmLog( "SLO method: HTTP-REDIRECT", 'debug' );
@@ -315,17 +388,17 @@ sub extractFormInfo {
             if ( $self->param('SAMLRequest') ) {
 
                 # Request in query string
-                $response = $self->query_string();
+                $request = $self->query_string();
                 $self->lmLog( "HTTP-REDIRECT: SAML Request $request", 'debug' );
 
             }
 
         }
 
-        elsif ( $self->request_method() =~ /^POST$/ ) {
+        elsif ( $request_method =~ /^POST$/ ) {
 
             # 1.2.2 POST
-            if ( $self->content_type() !~ /xml/ ) {
+            if ( $content_type !~ /xml/ ) {
 
                 $method = Lasso::Constants::HTTP_METHOD_POST;
                 $self->lmLog( "SLO method: HTTP-POST", 'debug' );
@@ -342,7 +415,7 @@ sub extractFormInfo {
                 if ( $self->param('SAMLRequest') ) {
 
                     # Request in body part
-                    $response = $self->param('SAMLRequest');
+                    $request = $self->param('SAMLRequest');
                     $self->lmLog( "HTTP-POST: SAML Request $request", 'debug' );
 
                 }
@@ -375,7 +448,7 @@ sub extractFormInfo {
             $self->lmLog( "Logout response is valid", 'debug' );
 
             # Replay protection
-            my $samlID = $response->InResponseTo;
+            my $samlID = $logout->response()->InResponseTo;
 
             unless ( $self->replayProtection($samlID) ) {
 
@@ -400,7 +473,7 @@ sub extractFormInfo {
             # Process logout request
             unless ( $self->processLogoutRequestMsg( $logout, $request ) ) {
                 $self->lmLog( "Fail to process logout request", 'error' );
-                return PE_ERROR;
+                $logout_error = 1;
             }
 
             $self->lmLog( "Logout request is valid", 'debug' );
@@ -413,7 +486,7 @@ sub extractFormInfo {
             unless ($user) {
                 $self->lmLog( "Fail to get NameID content from logout request",
                     'error' );
-                return PE_ERROR;
+                $logout_error = 1;
             }
 
             $self->lmLog( "Logout request NameID content: $user", 'debug' );
@@ -457,14 +530,9 @@ sub extractFormInfo {
                 unless ( $self->setSessionFromDump( $logout, $session_dump ) ) {
                     $self->lmLog( "Cannot set session from dump in logout",
                         'error' );
-                    return PE_ERROR;
+                    $logout_error = 1;
                 }
 
-                # Validate request
-                unless ( $self->validateLogoutRequest($logout) ) {
-                    $self->lmLog( "SLO request is not valid", 'error' );
-                    return PE_ERROR;
-                }
             }
             else {
 
@@ -472,8 +540,15 @@ sub extractFormInfo {
                 $self->lmLog( "No local session found for user $user",
                     'debug' );
 
-                return PE_ERROR;
+                $logout_error = 1;
 
+            }
+
+            # Validate request if no previous error
+            unless ($logout_error) {
+                unless ( $self->validateLogoutRequest($logout) ) {
+                    $self->lmLog( "SLO request is not valid", 'error' );
+                }
             }
 
             # Logout response
@@ -499,7 +574,21 @@ sub extractFormInfo {
             # HTTP-POST
             if ( $method == Lasso::Constants::HTTP_METHOD_POST ) {
 
-            # TODO
+                # Use autosubmit form
+                my $slo_url  = $logout->msg_url;
+                my $slo_body = $logout->msg_body;
+
+                # TODO relayState ?
+
+                $self->{postUrl} = $slo_url;
+                $self->{postFields} = { 'SAMLResponse' => $slo_body };
+
+                $self->_subProcess(qw(autoPost));
+
+                # If we are here, there was a problem with POST response
+                $self->lmLog( "Logout response was not sent trough POST",
+                    'error' );
+                return PE_ERROR;
             }
 
             # HTTP-SOAP
@@ -764,6 +853,7 @@ sub authenticate {
 sub authLogout {
     my $self = shift;
     my %h;
+    my $method;
 
     # Get Lasso Server
     unless ( $self->{_lassoServer} ) {
@@ -809,14 +899,50 @@ sub authLogout {
         'debug'
     );
 
-    # Replace urldc value by SLO URL value
-    # TODO Manage other transport (POST, SOAP, ...)
+    # Force HTTP-REDIRECT method
+    # TODO choose method depending on IDP
+    $method = Lasso::Constants::HTTP_METHOD_REDIRECT;
+
+    # Send request depending on request method
+    # HTTP-REDIRECT
+    if ( $method == Lasso::Constants::HTTP_METHOD_REDIRECT ) {
+
+        # Redirect user to response URL
     my $slo_url = $logout->msg_url;
     $self->lmLog( "Redirect user to $slo_url", 'debug' );
 
     $self->{urldc} = $slo_url;
 
+        # Redirect done in Portal/Simple.pm
+        return;
+    }
+
+    # HTTP-POST
+    if ( $method == Lasso::Constants::HTTP_METHOD_POST ) {
+
+        # Use autosubmit form
+        my $slo_url  = $logout->msg_url;
+        my $slo_body = $logout->msg_body;
+
+        $self->{postUrl} = $slo_url;
+        $self->{postFields} = { 'SAMLRequest' => $slo_body };
+
+        # Post done in Portal/Simple.pm
+        return;
+    }
+
+    # HTTP-SOAP
+    if ( $method == Lasso::Constants::HTTP_METHOD_SOAP ) {
+
+        my $slo_url  = $logout->msg_url;
+        my $slo_body = $logout->msg_body;
+
+        $self->lmLog( "SOAP request $slo_body", 'debug' );
+
+        # TODO send SOAP request and manage response
     return;
+    }
+
 }
 
 1;

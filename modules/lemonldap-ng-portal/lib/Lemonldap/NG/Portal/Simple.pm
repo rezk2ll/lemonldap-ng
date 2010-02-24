@@ -846,6 +846,10 @@ sub controlExistingSession {
                 $self->lmLog( "Error when calling authLogout: $@", 'debug' );
             }
 
+            # Redirect or Post if asked by authLogout
+            $self->_subProcess(qw(autoRedirect)) if ( $self->{urldc} );
+            $self->_subProcess(qw(autoPost))     if ( $self->{postUrl} );
+
             # Display logout message
             return PE_LOGOUT_OK;
         }
