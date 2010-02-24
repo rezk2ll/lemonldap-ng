@@ -70,7 +70,7 @@ sub authInit {
         my $idp_metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new();
         unless (
             $idp_metadata->initializeFromConfHash(
-                $self->{samlIDPMetaDataXML}->{$_}
+                $self->{samlIDPMetaDataXML}->{$_}->{samlIDPMetaDataXML}
             )
           )
         {
