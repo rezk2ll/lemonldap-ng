@@ -115,6 +115,7 @@ sub extractFormInfo {
     my $method;
     my $request;
     my $response;
+    my $artifact;
     my %h;
 
     # 1. Get HTTP request informations to know
@@ -171,6 +172,27 @@ sub extractFormInfo {
 
             }
 
+            if ( $self->param('SAMLart') ) {
+
+                # Artifcat in query string
+                $artifact = $self->query_string();
+                $self->lmLog( "HTTP-REDIRECT: SAML Artifact $artifact",
+                    'debug' );
+
+                # Resolve Artifact
+                $method = Lasso::Constants::HTTP_METHOD_ARTIFACT_GET;
+                my $message =
+                  $self->resolveArtifact( $login, $artifact, $method );
+
+                # Request or response ?
+                if ( $message =~ /samlp:response/i ) {
+                    $response = $message;
+                }
+                else {
+                    $request = $message;
+                }
+            }
+
         }
 
         elsif ( $request_method =~ /^POST$/ ) {
@@ -198,6 +220,27 @@ sub extractFormInfo {
 
                 }
 
+                if ( $self->param('SAMLart') ) {
+
+                    # Artifcat in SAMLart param
+                    $artifact = $self->param('SAMLart');
+                    $self->lmLog( "HTTP-REDIRECT: SAML Artifact $artifact",
+                        'debug' );
+
+                    # Resolve Artifact
+                    $method = Lasso::Constants::HTTP_METHOD_ARTIFACT_POST;
+                    my $message =
+                      $self->resolveArtifact( $login, $artifact, $method );
+
+                    # Request or response ?
+                    if ( $message =~ /samlp:response/i ) {
+                        $response = $message;
+                    }
+                    else {
+                        $request = $message;
+                    }
+                }
+
             }
 
             # 1.2.3 SOAP
@@ -216,7 +259,13 @@ sub extractFormInfo {
         if ($response) {
 
             # Process authentication response
-            my $result = $self->processAuthnResponseMsg( $login, $response );
+            my $result;
+            if ($artifact) {
+                $result = $self->processArtResponseMsg( $login, $response );
+            }
+            else {
+                $result = $self->processAuthnResponseMsg( $login, $response );
+            }
 
             unless ($result) {
                 $self->lmLog(

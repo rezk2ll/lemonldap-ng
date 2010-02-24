@@ -9,6 +9,8 @@ use strict;
 use base qw(Exporter);
 use XML::Simple;
 use MIME::Base64;
+use LWP::UserAgent;    # SOAP call
+use HTTP::Request;     # SOAP call
 
 our @EXPORT = qw(
   loadLasso checkLassoError createServer addIDP addProvider getOrganizationName
@@ -19,6 +21,7 @@ our @EXPORT = qw(
   createLogoutRequest createLogout initLogoutRequest buildLogoutRequestMsg
   setSessionFromDump getMetaDataURL processLogoutResponseMsg processLogoutRequestMsg
   validateLogoutRequest buildLogoutResponseMsg replayProtection
+  resolveArtifact processArtResponseMsg
 );
 
 our $VERSION = '0.01';
@@ -265,6 +268,8 @@ sub createAuthnRequest {
     $request->NameIDPolicy()
       ->Format(Lasso::Constants::SAML2_NAME_IDENTIFIER_FORMAT_PERSISTENT);
     $request->NameIDPolicy()->AllowCreate(1);
+    $request
+      ->ProtocolBinding(Lasso::Constants::SAML2_METADATA_BINDING_ARTIFACT);
 
     # Build authentication request
     unless ( $self->buildAuthnRequestMsg($login) ) {
@@ -754,6 +759,69 @@ sub replayProtection {
 
 }
 
+## @method string resolveArtifact(Lasso::Profile profile, string artifact, int method)
+# Resolve artifact to get real SAML message
+# @param profile Lasso::Profile object
+# @param artifact Artifact message
+# @param method HTTP method
+# @return SAML message
+sub resolveArtifact {
+    my ( $self, $profile, $artifact, $method ) = splice @_;
+    my $message;
+
+    # LWP User Agent
+    my $ua = new LWP::UserAgent;
+    push @{ $ua->requests_redirectable }, 'POST';
+
+    # Login profile
+    if ( $profile->isa("Lasso::Login") ) {
+
+        # Init request message
+        eval { Lasso::Login::init_request( $profile, $artifact, $method ); };
+        return unless $self->checkLassoError($@);
+
+        # Build request message
+        eval { Lasso::Login::build_request_msg($profile); };
+        return unless $self->checkLassoError($@);
+
+        my $request = HTTP::Request->new( 'POST' => $profile->msg_url );
+        $request->content_type('text/xml');
+        $request->content( $profile->msg_body );
+
+        $self->lmLog(
+            "Send message " . $profile->msg_body . " to " . $profile->msg_url,
+            'debug' );
+
+        # SOAP call
+        my $soap_answer = $ua->request($request);
+        if ( $soap_answer->code() == "200" ) {
+            $message = $soap_answer->content();
+            $self->lmLog( "Get message $message", 'debug' );
+        }
+    }
+
+    return $message;
+}
+
+## @method boolean processArtResponseMsg(Lasso::Profile profile, string response)
+# Process artifact response message
+# @param profile Lasso::Profile object
+# @param response SAML response
+# @return result
+sub processArtResponseMsg {
+    my ( $self, $profile, $response ) = splice @_;
+
+    # Login profile
+    if ( $profile->isa("Lasso::Login") ) {
+
+        eval { Lasso::Login::process_response_msg( $profile, $response ); };
+        return $self->checkLassoError($@);
+
+    }
+
+    return 0;
+}
+
 1;
 
 __END__
@@ -899,6 +967,14 @@ Build logout response msg
 =head2 replayProtection
 
 Check if SAML message do not correspond to a previously responded message
+
+=head2 resolveArtifact
+
+Resolve artifact to get the real SAML message
+
+=head2 processArtResponseMsg
+
+Process artifact response message
 
 =head1 SEE ALSO
 
