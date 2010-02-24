@@ -67,7 +67,7 @@ sub confUpload {
         $id =~ s/\r//g;
         $id =~ s/^\///;
         $id =~ s/(?:\/[^\/]*)?$/\/$name/ if ($NK);
-        next if ( $id =~ /^(generalParameters|virtualHosts|samlIDPMetaData)/);
+        next if ( $id =~ /^(generalParameters|virtualHosts|samlIDPMetaDataNode)/);
         my ( $confKey, $test ) = $self->getConfTests($id);
         my ( $res, $m );
 
@@ -132,8 +132,6 @@ sub confUpload {
     foreach ( @{ $result->getChildrenByTagName('ignore') } ) {
         my $node = $_->getAttribute('value');
         $node =~ s/^.*node=(.*?)(?:&.*)?\}$/$1/;
-        # HACK: do it better, this IS NOT the good solution.
-        $node =~ s/^(\/?samlIDPMetaData(?!XML|ExportedAttributes))\/.*/$1/;
         foreach my $k ( $self->findAllConfKeys( $self->corresp($node) ) ) {
             my $v = $self->keyToH( $k, $self->conf );
             $v = $self->keyToH( $k, $self->defaultConf ) unless ( defined $v );
@@ -311,6 +309,30 @@ sub findAllConfKeys {
     return @res;
 }
 
+## @method protected String formatValue(string key, string value)
+# Format a value.
+# @param $key String "/path/key"
+# @param $value String
+# @return A formated value.
+sub formatValue {
+    my ( $self, $key, $value ) = @_;
+    my $newvalue = $value;
+    if ( $key =~ /^samlIDPMetaDataXML/ )
+    {
+        my $metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new();
+        if (ref($value))
+        {
+            $metadata->initializeFromConfHash($value);
+        }
+        else
+        {
+            $metadata->initializeFromXML($value);
+        }
+        $newvalue = $metadata->toHash();
+    }
+    return $newvalue;
+}
+
 ## @method protected void setKeyToH(hashref h,string key,string k2,string value)
 # Insert key=>$value in $h at the position declared with $key. If $k2 is set,
 # insert key=>{$k2=>$value}. Note that $key is splited with "/". The last part
@@ -324,6 +346,7 @@ sub setKeyToH {
     my ( $self, $h, $key, $k2 ) = @_;
     my $tmp = $h;
     $key =~ s/^\///;
+    $value = $self->formatValue($key, $value);
     while (1) {
         if ( $key =~ /\// ) {
             my $k = $`;

@@ -28,7 +28,8 @@ sub import {
     $l ||= "en";
     foreach $h (
         qw(authParams cookieName domain groups ldap macros storage timeout vars
-        whatToTrace virtualHosts portalForceAuthn default saml samlServicePrivateKey)
+        whatToTrace virtualHosts portalForceAuthn default samlIDPMetaDataNode
+        samlServicePrivateKey)
       )
     {
         *{"${caller_package}::help_$h"} = \&{"help_${h}_$l"};

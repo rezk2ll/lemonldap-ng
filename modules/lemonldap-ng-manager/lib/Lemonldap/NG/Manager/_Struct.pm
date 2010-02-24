@@ -42,11 +42,11 @@ sub cstruct {
             }
         );
     }
-    elsif ($k1 =~ /^samlIDPMetaData/i)
+    elsif ($k1 =~ /^samlIDPMetaDataNode/i)
     {
       %$h = (
           %$h,
-          samlIDPMetaData => {
+          samlIDPMetaDataNode => {
               $k2 => {
                   _nodes => [
                       qw(samlIDPMetaDataExportedAttributes samlIDPMetaDataXML)
@@ -73,7 +73,7 @@ sub cstruct {
 sub struct {
     my $self = shift;
     return {
-        _nodes => [qw(n:generalParameters n:variables n:virtualHosts n:samlServiceMetaData n:samlIDPMetaData)],
+        _nodes => [qw(n:generalParameters n:variables n:virtualHosts n:samlServiceMetaData n:samlIDPMetaDataNode)],
         _help  => 'default',
 
         ######################
@@ -272,8 +272,9 @@ sub struct {
         ########
         # SAML #
         ########
-            samlIDPMetaData => {
-                _nodes  => ['nhash:/samlIDPMetaDataExportedAttributes:samlIDPMetaData:samlMetaData'],
+            # virtual keys should not begin like configuration keys.
+            samlIDPMetaDataNode => {
+                _nodes  => ['nhash:/samlIDPMetaDataExportedAttributes:samlIDPMetaDataNode:samlMetaData'],
                 _upload => ['/samlIDPMetaDataXML'],
                 _help   => 'default',
                 _call   => '$(\'#newsamlmetadatab\').show();',
@@ -689,8 +690,23 @@ sub testStruct {
         ########
         # SAML #
         ########
-        samlIDPMetaDataExportedAttributes => $testNotDefined,
-        samlIDPMetaDataXML => $testNotDefined,
+        samlIDPMetaDataExportedAttributes => {
+            keyTest    => qr/^[a-zA-Z](?:[\w\-\.]*\w)?$/,
+            keyMsgFail => 'Bad metadata name',
+            '*'        => {
+                keyTest    => qr/^\w([\w\-]*\w)?$/,
+                keyMsgFail => 'Bad attribute name',
+                test       => $perlExpr,
+            },
+        },
+        samlIDPMetaDataXML => {
+            keyTest    => qr/^[a-zA-Z](?:[\w\-\.]*\w)?$/,
+            keyMsgFail => 'Bad metadata name',
+            '*'        => {
+                test       => sub { return 1; },
+                keyTest    => sub { return 1; },
+            },
+        },
         samlServicePrivateKey => $testNotDefined,
         samlEntityID => $testNotDefined,
         samlOrganizationDisplayName => $testNotDefined,
@@ -841,7 +857,7 @@ sub subDefaultConf {
     return {
         locationRules   => { default     => 'deny' },
         exportedHeaders => { 'Auth-User' => '$uid' },
-        samlIDPMetaDataXML => {},
+        samlIDPMetaDataXML => { {} },
         samlIDPMetaDataExportedAttributes => { 'uid' => ';0;uid;;' },
     };
 }

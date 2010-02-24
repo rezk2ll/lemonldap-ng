@@ -219,13 +219,27 @@ sub toXML {
 # @return string
 sub toConf {
     my $self = shift;
-    my $fields;
+    my $fields = $self->toHash();
     local $Data::Dumper::Indent  = 0;
     local $Data::Dumper::Varname = "data";
-    my $data = Dumper($self);
+    my $data = Dumper($fields);
     $data =~ s/^\s*(.*?)\s*$/$1/;
     $data =~ s/'/&#39;/g;
+    $data =~ s/^\$data[0-9]*\s*=\s*({?\s*.+\s*}?)/$1/g;
     return $data;
+}
+
+## @method public string toHash ()
+# Return this object in configuration hash format.
+# @return hashref
+sub toHash {
+    my $self = shift;
+    my $fields = ();
+    foreach (keys %$self)
+    {
+      $fields->{$_} = $self->{$_};
+    }
+    return $fields;
 }
 
 ## @method public hashref toStruct ()

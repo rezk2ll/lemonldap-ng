@@ -192,9 +192,9 @@ sub confNode {
         $metadata->initializeFromConfHash($h);
         my $text = $target;
         $text =~ s/^\/([^\/]+)\/.*$/$1/;
-        $res .= $self->li("$target")
+        $res .= $self->li("$target/")
           . $self->span(
-            id   => "$target",
+            id   => "$target/",
             text => $text,
             data => $metadata->toXML(),
             js   => $js,

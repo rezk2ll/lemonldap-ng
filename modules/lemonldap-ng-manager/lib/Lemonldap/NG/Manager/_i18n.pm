@@ -127,7 +127,7 @@ sub en {
 
         saml                        => 'SAML',
         samlServicePrivateKey       => 'Private Key',
-        samlIDPMetaData             => 'Identity providers',
+        samlIDPMetaDataNode         => 'Identity providers',
         samlIDPMetaDataXML          => 'Metadata XML',
         samlIDPMetaDataExportedAttributes => 'Exported attributes',
         samlServiceMetaData => 'SAML 2 Service',
@@ -264,7 +264,7 @@ sub fr {
 
         saml                        => 'SAML',
         samlServicePrivateKey       => 'Clé privée',
-        samlIDPMetaData             => 'Fournisseurs d\'identités',
+        samlIDPMetaDataNode         => 'Fournisseurs d\'identités',
         samlIDPMetaDataXML          => 'XML Metadata',
         samlIDPMetaDataExportedAttributes => 'Attributs exportés',
         samlServiceMetaData => 'Service SAML 2',
