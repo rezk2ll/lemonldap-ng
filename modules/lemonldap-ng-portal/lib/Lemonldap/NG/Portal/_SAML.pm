@@ -16,7 +16,8 @@ our @EXPORT = qw(
   loadLasso checkLassoError createServer addIDP addProvider getOrganizationName
   createAuthnRequest createLogin getHttpMethod initAuthnRequest
   buildAuthnRequestMsg processAuthnResponseMsg getNameIdentifier
-  createIdentity createSession acceptSSO extractRelayState
+  createIdentity createSession acceptSSO
+  storeRelayState extractRelayState
   getAssertion getAttributeValue validateConditions
   createLogoutRequest createLogout initLogoutRequest buildLogoutRequestMsg
   setSessionFromDump getMetaDataURL processLogoutResponseMsg processLogoutRequestMsg
@@ -253,13 +254,12 @@ sub createAuthnRequest {
         return;
     }
 
-    # Set RelayState as key1;value1;key2;value2;... encoded in base 64
-    my $relaystate;
+    # Set RelayState
+    my $infos;
     foreach (qw /_idp urldc/) {
-        $relaystate .= $_ . ";" . $self->{$_} . ";" if $self->{$_};
+        $infos->{$_} = $self->{$_} if $self->{$_};
     }
-    $relaystate =~ s/;$//;
-    $relaystate = encode_base64( $relaystate, '' );
+    my $relaystate = $self->storeRelayState($infos);
     $login->msg_relayState($relaystate);
     $self->lmLog( "Set $relaystate in RelayState", 'debug' );
 
@@ -435,28 +435,66 @@ sub acceptSSO {
     return $self->checkLassoError($@);
 }
 
-## @method boolean extractRelayState(Lasso::Login login)
-# Extract RelayState information into $self
-## @param login Lasso::Login object
-## @return result
-sub extractRelayState {
-    my ( $self, $login ) = splice @_;
+## @method string storeRelayState(hashref infos)
+# Store information in relayState database and return
+# corresponding session_id
+# @param infos HASH reference of information
+sub storeRelayState {
+    my ( $self, $infos ) = splice @_;
+    my %h;
 
-    # Get relayState in assertion
-    my $relaystate = $login->msg_relayState;
+    # Create relaystate session
+    eval {
+        tie %h, $self->{globalStorage}, undef, $self->{globalStorageOptions};
+    };
+    if ($@) {
+        $self->lmLog( "Unable to create relaystate session", 'error' );
+        return;
+    }
+
+    # Session type
+    $h{_type} = "relaystate";
+
+    # Store infos in relaystate session
+    foreach ( keys %$infos ) {
+        $h{$_} = $infos->{$_};
+    }
+
+    # Session ID
+    my $relaystate_id = $h{_session_id};
+
+    # Close session
+    untie %h;
+
+    # Return session ID
+    return $relaystate_id;
+
+}
+
+## @method boolean extractRelayState(string relaystate)
+# Extract RelayState information into $self
+# @param relayState relayState value
+# @return result
+sub extractRelayState {
+    my ( $self, $relaystate ) = splice @_;
+    my %h;
 
     return 0 unless $relaystate;
 
-    # Decode base64
-    $relaystate = decode_base64($relaystate);
-
-    # Recover values
-    my @values = split( /;/, $relaystate );
+    # Open relaystate session
+    eval {
+        tie %h, $self->{globalStorage}, $relaystate,
+          $self->{globalStorageOptions};
+    };
+    if ($@) {
+        $self->lmLog( "Unable to open relaystate session", 'error' );
+        return 0;
+    }
 
     # Push values in $self
-    my $i;
-    for ( $i = 0, $i < $#values, $i++ ) {
-        $self->{ $values[$i] } = $values[ $i++ ];
+    foreach ( keys %h ) {
+        next if $_ =~ /(type|_session_id)/;
+        $self->{$_} = $h{$_};
     }
 
     return 1;
@@ -906,6 +944,10 @@ Create Lasso::Session object
 =head2 acceptSSO
 
 Accept SSO from IDP
+
+=head2 storeRelayState
+
+Store information in relayState database and return
 
 =head2 extractRelayState
 

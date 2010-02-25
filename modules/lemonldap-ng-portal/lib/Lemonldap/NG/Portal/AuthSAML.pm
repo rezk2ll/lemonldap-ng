@@ -116,6 +116,7 @@ sub extractFormInfo {
     my $request;
     my $response;
     my $artifact;
+    my $relaystate;
     my %h;
 
     # 1. Get HTTP request informations to know
@@ -148,6 +149,9 @@ sub extractFormInfo {
 
         # Create Login object
         $login = $self->createLogin($server);
+
+        # Get relayState
+        $relaystate = $self->param('RelayState');
 
         # 1.1.1 HTTP REDIRECT
         if ( $request_method =~ /^GET$/ ) {
@@ -334,9 +338,8 @@ sub extractFormInfo {
         # TODO
 
         #  Extract RelayState information
-        if ( $self->extractRelayState($login) ) {
-            $self->lmLog( "RelayState found in authentication assertion",
-                'debug' );
+            if ( $self->extractRelayState($relaystate) ) {
+                $self->lmLog( "RelayState $relaystate extracted", 'debug' );
         }
 
         # Check IDP from RelayState
