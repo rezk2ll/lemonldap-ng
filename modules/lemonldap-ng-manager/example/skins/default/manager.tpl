@@ -19,8 +19,10 @@
 	var treejquerycss='<TMPL_VAR NAME="TREE_JQUERYCSS">';
 	var text4newKey='<lang en="Key" fr="Clé" />';
 	var value4newKey='<lang en="Value" fr="Valeur" />';
+	var value4newSamlAttribute='<lang en="Value" fr="Valeur" />';
 	var text4newVhost='<lang en="Virtual host name" fr="Nom de l\'hôte virtuel" />';
 	var text4newSamlMetaData='<lang en="SAML Metadatas name" fr="Nom des métadatas SAML" />';
+	var text4newSamlAttribute='<lang en="Attribute name" fr="Nom de l\'attribut" />';
 //]]></script>
 <script src="<TMPL_VAR NAME="DIR">/manager.js" type="text/JavaScript"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
@@ -105,6 +107,18 @@
 
     <button id="delsamlmetadatab" style="display:none;" onclick="delSamlMetaData(currentId);" class="ui-state-default ui-corner-all">
      <lang en="Delete metadatas" fr="Supprimer les métadatas" />
+    </button>
+
+    <button id="newsamlattributeb" style="display:none;" onclick="newSamlAttribute();return false;" class="ui-state-default ui-corner-all">
+     <lang en="New attribute" fr="Nouvel attribut" />
+    </button>
+
+    <button id="newsamlattributebr" style="display:none;" onclick="newSamlAttributeR();return false;" class="ui-state-default ui-corner-all">
+     <lang en="New attribute" fr="Nouvel attribut" />
+    </button>
+
+    <button id="delsamlattributeb" style="display:none;" onclick="delSamlAttribute();return false;" class="ui-state-default ui-corner-all">
+     <lang en="Delete attribute" fr="Supprimer l'attribut" />
     </button>
     </div>
 
@@ -192,6 +206,30 @@
     <div id="content_samlMetaData" class="hidden">
       <input type="text" id="samlMetaData" onchange="setlmtext(currentId,this.value)"/>
     </div>
+
+    <!-- samlAttribute -->
+    <div id="content_samlAttribute" class="hidden">
+     <table>
+      <tr>
+       <td><lang en="Key name" fr="Nom de la clef"/></td>
+       <td><input type="text" id="samlAttributeKey" onchange="setlmsamlattribute(currentId)"/></td>
+      </tr>
+      <tr>
+       <td><lang en="Name" fr="Nom"/></td>
+       <td><input type="text" id="samlAttributeName" onchange="setlmsamlattribute(currentId)"/></td>
+       <td><lang en="Mandatory" fr="Obligatoire"/></td>
+       <td><input id="samlAttributeMandatoryOn" type="radio" name="boolean" value="1" onclick="setlmsamlattribute(currentId)"/> <lang en="On" fr="Activé"/>
+           <input id="samlAttributeMandatoryOff" type="radio" name="boolean" value="0" onclick="setlmsamlattribute(currentId)"/> <lang en="Off" fr="Désactivé"/>
+       </td>
+      </tr>
+      <tr>
+       <td><lang en="Friendly name" fr="Nom alternatif"/></td>
+       <td><input type="text" id="samlAttributeFriendlyName" onchange="setlmsamlattribute(currentId)"/></td>
+       <td><lang en="Format" fr="Format"/></td>
+       <td><input type="text" id="samlAttributeFormat" onchange="setlmsamlattribute(currentId)"/></td>
+      </tr>
+     </table>
+   </div>
 
     <!-- samlAssertion -->
     <div id="content_samlAssertion" class="hidden">

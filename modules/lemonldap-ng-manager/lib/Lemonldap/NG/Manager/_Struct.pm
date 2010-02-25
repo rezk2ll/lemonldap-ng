@@ -54,9 +54,9 @@ sub cstruct {
                   samlIDPMetaDataExportedAttributes => {
                       _nodes => [
                           "hash:/samlIDPMetaDataExportedAttributes/$k2"
-                        . ":samlIDPMetaDataExportedAttributes:btext"
+                        . ":samlIDPMetaDataExportedAttributes:samlAttribute"
                         ],
-                    _js    => 'hashRoot'
+                      _js    => 'samlAttributeRoot'
                 },
                   samlIDPMetaDataXML => "samlmetadata:/samlIDPMetaDataXML/$k2"
                                       . ":samlIDPMetaDataXML:textarea",

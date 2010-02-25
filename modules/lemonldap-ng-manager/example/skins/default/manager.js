@@ -196,6 +196,19 @@ function setlmsamlassertion(id){
 	var v=def+';'+ind+';'+bin+';'+loc;
         setlmdata(id,v);
 }
+function setlmsamlattribute(id){
+	var name=$('#samlAttributeName').attr('value');
+	var form=$('#samlAttributeFormat').attr('value');
+	var altr=$('#samlAttributeFriendlyName').attr('value');
+	var mand='0';
+        if($('#samlAttributeMandatoryOn').attr('checked')==true){
+                mand='1';
+        }
+	var v=mand+';'+name+';'+form+';'+altr;
+	$('#text_'+id).attr('name',$('#samlAttributeKey').attr('value'));
+	$('#text_'+id).text($('#samlAttributeKey').attr('value'));
+	setlmdata(id,v);
+}
 function setlmsamlservice(id){
 	var bin=$('#samlServiceBinding').attr('value');
 	var loc=$('#samlServiceLocation').attr('value');
@@ -266,6 +279,27 @@ function samlAssertion(id) {
 	$('#samlAssertionBinding').attr('value',t[2]);
 	$('#samlAssertionLocation').attr('value',t[3]);
 	display('samlAssertion',lmtext(id));
+}
+function samlAttribute(id) {
+        currentId=id;
+	var t=lmdata(id).split(';');
+	if(t[0]==1){
+		$('#samlAttributeMandatoryOn').attr('checked',true);
+	}else{
+		$('#samlAttributeMandatoryOff').attr('checked',true);
+	}
+        $('#samlAttributeKey').attr('value',lmtext(id));
+	$('#samlAttributeName').attr('value',t[1]);
+	$('#samlAttributeFormat').attr('value',t[2]);
+	$('#samlAttributeFriendlyName').attr('value',t[3]);
+        display('samlAttribute',lmtext(id));
+        $('#newsamlattributeb,#delsamlattributeb').show();
+	$('#newsamlattributebr').hide();
+}
+function samlAttributeRoot(){
+	currentId=simpleTreeCollection[0].getSelected().attr('id');
+	display('default','');
+	$('#newsamlattributebr').show();
 }
 function samlMetaData(id){
         currentId=id;
@@ -400,12 +434,31 @@ function newVh(name){
 	vhost(vhId);
 	});
 }
+function delSamlAttribute(){
+	delKey();
+}
 function delSamlMetaData(id){
 	var idpname = $('#text_'+id).attr('name');
 	if(confirm('Delete '+idpname+' ?')){
 		$('#'+id).remove();
 		samlMetaData(id);
 	}
+}
+function newSamlAttribute(){
+	var newIdValue=newId(currentId);
+	simpleTreeCollection[0].newNodeAfter(newIdValue,text4newSamlAttribute,function(d,s){
+		$('>span',s).attr('onClick','samlAttribute("'+newIdValue+'")').attr('name',text4newSamlAttribute).attr('value',value4newSamlAttribute).attr('id','text_'+newIdValue);
+		samlAttribute(newIdValue);
+	});
+	return false;
+}
+function newSamlAttributeR(){
+	var newIdValue=newId(currentId);
+        simpleTreeCollection[0].addNode(newIdValue,text4newSamlAttribute,function(d,s){
+                $('>span',s).attr('onClick','samlAttribute("'+newIdValue+'")').attr('name',text4newSamlAttribute).attr('value',value4newSamlAttribute).attr('id','text_'+newIdValue);
+                samlAttribute(newIdValue);
+        });
+        return false;
 }
 function newSamlMetaData(){
 	var name = prompt(text4newSamlMetaData,'authentic');
