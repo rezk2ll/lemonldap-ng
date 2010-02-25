@@ -188,6 +188,7 @@ sub confNode {
     # saml metadata
     elsif ( $target =~ s/^samlmetadata:// ) {
         my $h = $self->keyToH($target, $self->conf);
+        $h = $h->{samlIDPMetaDataXML} if ( $h->{samlIDPMetaDataXML} );
         my $metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new();
         $metadata->initializeFromConfHash($h);
         my $text = $target;
