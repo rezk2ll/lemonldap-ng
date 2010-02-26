@@ -7,6 +7,8 @@ package Lemonldap::NG::Portal::UserDBSAML;
 
 use strict;
 use Lemonldap::NG::Portal::Simple;
+use Lemonldap::NG::Portal::_SAML;
+our @ISA = qw(Lemonldap::NG::Portal::_SAML);
 
 our $VERSION = '0.01';
 

@@ -5,10 +5,9 @@ Maintainer: Xavier Guimard <x.guimard@free.fr>
 DM-Upload-Allowed: yes
 Build-Depends: debhelper (>= 7), po-debconf
 Build-Depends-Indep:libapache-session-perl, libnet-ldap-perl, libdbi-perl,
- libwww-perl, libcache-cache-perl, libcgi-session-perl, libcrypt-rijndael-perl,
- libxml-libxslt-perl, libio-string-perl, libregexp-assemble-perl, liburi-perl,
- libstring-random-perl, libmime-lite-perl, libsoap-lite-perl,
- libconfig-inifiles-perl
+ libwww-perl, libcache-cache-perl, libcrypt-rijndael-perl, libxml-libxslt-perl,
+ libio-string-perl, libregexp-assemble-perl, liburi-perl, libstring-random-perl,
+ libmime-lite-perl, libsoap-lite-perl, libconfig-inifiles-perl
 Standards-Version: 3.8.3
 Homepage: http://lemonldap.ow2.org/
 
@@ -79,7 +78,7 @@ Depends: ${misc:Depends}, libapache-session-perl, libnet-ldap-perl,
  libxml-libxml-perl, libxml-libxslt-perl, libstring-random-perl,
  libsoap-lite-perl
 Recommends: libmime-lite-perl, libemail-date-format-perl
-Suggests: liblasso-perl, libcgi-session-perl, slapd
+Suggests: liblasso-perl, slapd
 Description: Lemonldap::NG authentication portal part
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application Apache servers.

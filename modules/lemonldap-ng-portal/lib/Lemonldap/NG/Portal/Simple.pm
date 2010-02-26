@@ -138,6 +138,7 @@ our $self;    # Safe cannot share a variable declared with my
 #@return Lemonldap::NG::Portal::Simple object
 sub new {
 
+    @ISA = qw(Lemonldap::NG::Common::CGI Exporter);
     binmode( STDOUT, ":utf8" );
     my $class = shift;
     return $class if ( ref($class) );

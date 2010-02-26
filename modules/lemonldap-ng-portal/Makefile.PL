@@ -19,7 +19,6 @@ WriteMakefile(
         'Apache::Session'        => 0,
         'Net::LDAP'              => 0,
         'CGI'                    => 3.08,
-        'CGI::Session'           => 0,
         'HTML::Template'         => 0,
         'Lemonldap::NG::Common'  => 0.93,
         'Lemonldap::NG::Handler' => 0.91,

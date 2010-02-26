@@ -6,24 +6,10 @@
 package Lemonldap::NG::Portal::_SAML;
 
 use strict;
-use base qw(Exporter);
 use XML::Simple;
 use MIME::Base64;
 use LWP::UserAgent;    # SOAP call
 use HTTP::Request;     # SOAP call
-
-our @EXPORT = qw(
-  loadLasso checkLassoError createServer addIDP addProvider getOrganizationName
-  createAuthnRequest createLogin getHttpMethod initAuthnRequest
-  buildAuthnRequestMsg processAuthnResponseMsg getNameIdentifier
-  createIdentity createSession acceptSSO
-  storeRelayState extractRelayState
-  getAssertion getAttributeValue validateConditions
-  createLogoutRequest createLogout initLogoutRequest buildLogoutRequestMsg
-  setSessionFromDump getMetaDataURL processLogoutResponseMsg processLogoutRequestMsg
-  validateLogoutRequest buildLogoutResponseMsg replayProtection
-  resolveArtifact processArtResponseMsg sendSOAPMessage
-);
 
 our $VERSION = '0.01';
 our $_samlCache;
