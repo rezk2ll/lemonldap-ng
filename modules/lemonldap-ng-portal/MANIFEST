@@ -143,7 +143,6 @@ t/10-Lemonldap-NG-Portal-i18n.t
 t/20-Lemonldap-NG-Portal-AuthApache.t
 t/21-Lemonldap-NG-Portal-AuthSSL.t
 t/22-Lemonldap-NG-Portal-AuthCAS.t
-t/23-Lemonldap-NG-Portal-AuthLA.t
 t/24-Lemonldap-NG-Portal-AuthRemote.t
 t/25-Lemonldap-NG-Portal-Multi.t
 t/26-Lemonldap-NG-Portal-AuthProxy.t
