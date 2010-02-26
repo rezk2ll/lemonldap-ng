@@ -22,7 +22,7 @@ our @EXPORT = qw(
   createLogoutRequest createLogout initLogoutRequest buildLogoutRequestMsg
   setSessionFromDump getMetaDataURL processLogoutResponseMsg processLogoutRequestMsg
   validateLogoutRequest buildLogoutResponseMsg replayProtection
-  resolveArtifact processArtResponseMsg
+  resolveArtifact processArtResponseMsg sendSOAPMessage
 );
 
 our $VERSION = '0.01';
@@ -161,7 +161,6 @@ sub addIDP {
 
     return 0 unless ( $server->isa("Lasso::Server") and defined $metadata );
 
-    no strict 'subs';
     return $self->addProvider( $server, Lasso::Constants::PROVIDER_ROLE_IDP,
         $metadata, $public_key, $ca_cert_chain );
 }
@@ -226,13 +225,14 @@ sub getOrganizationName {
     return $data->{OrganizationName}->{content};
 }
 
-## @method Lasso::Login createAuthnRequest(Lasso::Server server, string idp)
+## @method Lasso::Login createAuthnRequest(Lasso::Server server, string idp, int method)
 # Create authentication request for selected IDP
-# @param Lasso::Server server
-# @param string entityID
+# @param server Lasso::Server object
+# @param entityID IDP entityID
+# @param method HTTP method
 # @return Lasso::Login object
 sub createAuthnRequest {
-    my ( $self, $server, $idp ) = splice @_;
+    my ( $self, $server, $idp, $method ) = splice @_;
 
     # Create Lasso Login
     my $login = $self->createLogin($server);
@@ -242,9 +242,8 @@ sub createAuthnRequest {
         return;
     }
 
-    # Get HTTP method for selected IDP
-    my $method = $self->getHttpMethod( $server, $idp );
-
+    # Default method: HTTP REDIRECT
+    $method = Lasso::Constants::HTTP_METHOD_REDIRECT unless defined $method;
     $self->lmLog( "Use HTTP method $method", 'debug' );
 
     # Init authentication request
@@ -264,6 +263,7 @@ sub createAuthnRequest {
     $self->lmLog( "Set $relaystate in RelayState", 'debug' );
 
     # Customize request
+    # TODO Get customization parameters from IDP configuration
     my $request = $login->request();
     $request->NameIDPolicy()
       ->Format(Lasso::Constants::SAML2_NAME_IDENTIFIER_FORMAT_PERSISTENT);
@@ -316,7 +316,6 @@ sub getHttpMethod {
     # TODO
 
     # By default, use HTTP REDIRECT
-    no strict 'subs';
     return Lasso::Constants::HTTP_METHOD_REDIRECT;
 }
 
@@ -584,24 +583,25 @@ sub validateConditions {
     return 1;
 }
 
-## @method Lasso::Logout createLogoutRequest(Lasso::Server server, string session_dump)
+## @method Lasso::Logout createLogoutRequest(Lasso::Server server, string session_dump, int method)
 # Create logout request for selected entity
 # @param server Lasso::Server object
 # @param session_dump Lasso::Session dump
+# @param method HTTP method
 # @return Lasso::Login object
 sub createLogoutRequest {
-    my ( $self, $server, $session_dump ) = splice @_;
+    my ( $self, $server, $session_dump, $method ) = splice @_;
     my $session;
 
     # Create Lasso Logout
     my $logout = $self->createLogout($server);
 
-    # TODO Choose HTTP method
-    my $method = Lasso::Constants::HTTP_METHOD_REDIRECT;
+    # Default method: SOAP
+    $method = Lasso::Constants::HTTP_METHOD_SOAP unless defined $method;
     $self->lmLog( "Use HTTP method $method", 'debug' );
 
     unless ( $self->setSessionFromDump( $logout, $session_dump ) ) {
-        $self->lmLog( "Could fill Lasso::Logout with session dump", 'error' );
+        $self->lmLog( "Could not fill Lasso::Logout with session dump", 'error' );
         return;
     }
 
@@ -860,6 +860,35 @@ sub processArtResponseMsg {
     return 0;
 }
 
+## @method string sendSOAPMessage(string endpoint, string message)
+# Send SOAP message and get response
+# @param endpoint SOAP End Point
+# @param message SOAP message
+# @return SOAP response
+sub sendSOAPMessage {
+    my ( $self, $endpoint, $message ) = splice @_;
+    my $response;
+
+    # LWP User Agent
+    my $ua = new LWP::UserAgent;
+    push @{ $ua->requests_redirectable }, 'POST';
+
+    my $request = HTTP::Request->new( 'POST' => $endpoint );
+    $request->content_type('text/xml');
+    $request->content($message);
+
+    $self->lmLog( "Send SOAP message $message to $endpoint", 'debug' );
+
+    # SOAP call
+    my $soap_answer = $ua->request($request);
+    if ( $soap_answer->code() == "200" ) {
+        $response = $soap_answer->content();
+        $self->lmLog( "Get response $response", 'debug' );
+    }
+
+    return $response;
+}
+
 1;
 
 __END__
@@ -1017,6 +1046,10 @@ Resolve artifact to get the real SAML message
 =head2 processArtResponseMsg
 
 Process artifact response message
+
+=head2 sendSOAPMessage
+
+Send SOAP message and get response
 
 =head1 SEE ALSO
 

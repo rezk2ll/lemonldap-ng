@@ -835,16 +835,18 @@ sub controlExistingSession {
             }
 
             # Call issuerDB logout
-            eval { $self->_sub('issuerLogout'); };
+            eval { $self->{error} = $self->_sub('issuerLogout'); };
             if ($@) {
                 $self->lmLog( "Error when calling issuerLogout: $@", 'debug' );
             }
+            return $self->{error} if $self->{error};
 
             # Call authentication logout
-            eval { $self->_sub('authLogout'); };
+            eval { $self->{error} = $self->_sub('authLogout'); };
             if ($@) {
                 $self->lmLog( "Error when calling authLogout: $@", 'debug' );
             }
+            return $self->{error} if $self->{error};
 
             # Redirect or Post if asked by authLogout
             $self->_subProcess(qw(autoRedirect)) if ( $self->{urldc} );

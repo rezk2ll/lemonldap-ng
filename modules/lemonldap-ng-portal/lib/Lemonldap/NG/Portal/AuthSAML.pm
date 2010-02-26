@@ -422,6 +422,9 @@ sub extractFormInfo {
         # Create Logout object
         $logout = $self->createLogout($server);
 
+        # Get relayState
+        $relaystate = $self->param('RelayState');
+
         # 1.2.1 HTTP-REDIRECT
         if ( $request_method =~ /^GET$/ ) {
 
@@ -619,8 +622,12 @@ sub extractFormInfo {
 
                 $self->{urldc} = $slo_url;
 
-                $self->{error} = $self->_subProcess(qw(autoRedirect));
-                return $self->{error};
+                $self->_subProcess(qw(autoRedirect));
+
+                # If we are here, there was a problem with GET request
+                $self->lmLog( "Logout response was not sent trough GET",
+                    'error' );
+                return PE_ERROR;
             }
 
             # HTTP-POST
@@ -630,10 +637,13 @@ sub extractFormInfo {
                 my $slo_url  = $logout->msg_url;
                 my $slo_body = $logout->msg_body;
 
-                # TODO relayState ?
-
                 $self->{postUrl} = $slo_url;
                 $self->{postFields} = { 'SAMLResponse' => $slo_body };
+
+                # RelayState
+                $self->{postFields} =
+                  { $self->{postFields}, 'RelayState' => $relaystate }
+                  if ($relaystate);
 
                 $self->_subProcess(qw(autoPost));
 
@@ -775,9 +785,17 @@ sub extractFormInfo {
     }
 
     # 3. Build authentication request
+
+    # Force HTTP-REDIRECT method
+    # TODO choose method depending on IDP
+    $method = Lasso::Constants::HTTP_METHOD_REDIRECT;
+
+    # IDP entityID
     $self->{_idp} = $idp;
     my $IDPentityID = $self->{_idpList}->{$idp}->{entityID};
-    $login = $self->createAuthnRequest( $server, $IDPentityID );
+
+    # Create SSO request
+    $login = $self->createAuthnRequest( $server, $IDPentityID, $method );
 
     unless ($login) {
         $self->lmLog( "Could not create authentication request on $IDPentityID",
@@ -807,16 +825,46 @@ sub extractFormInfo {
         'debug'
     );
 
-    # Redirect user to IDP SSO URL
-    # Replace urldc value by SSO URL value and call sub autoRedirect
-    # TODO Manage other transport (POST, SOAP, ...)
+    # Send SSO request depending on request method
+    # HTTP-REDIRECT
+    if ( $method == Lasso::Constants::HTTP_METHOD_REDIRECT ) {
+
+        # Redirect user to response URL
     my $sso_url = $login->msg_url;
     $self->lmLog( "Redirect user to $sso_url", 'debug' );
 
     $self->{urldc} = $sso_url;
-    $self->{error} = $self->_subProcess(qw(autoRedirect));
 
-    return $self->{error};
+        $self->_subProcess(qw(autoRedirect));
+
+        # If we are here, there was a problem with GET request
+        $self->lmLog( "SSO request was not sent trough GET", 'error' );
+        return PE_ERROR;
+    }
+
+    # HTTP-POST
+    if ( $method == Lasso::Constants::HTTP_METHOD_POST ) {
+
+        # Use autosubmit form
+        my $sso_url  = $login->msg_url;
+        my $sso_body = $login->msg_body;
+
+        $self->{postUrl} = $sso_url;
+        $self->{postFields} = { 'SAMLRequest' => $sso_body };
+
+        # RelayState
+        $self->{postFields} =
+          { $self->{postFields}, 'RelayState' => $login->msg_relayState }
+          if ( $login->msg_relayState );
+
+        $self->_subProcess(qw(autoPost));
+
+        # If we are here, there was a problem with POST request
+        $self->lmLog( "SSO request was not sent trough POST", 'error' );
+        return PE_ERROR;
+    }
+
+    # No SOAP transport for SSO request
 }
 
 ## @apmethod int setAuthSessionInfo()
@@ -922,8 +970,12 @@ sub authLogout {
         return PE_ERROR;
     }
 
+    # Force SOAP method
+    # TODO choose method depending on IDP
+    $method = Lasso::Constants::HTTP_METHOD_SOAP;
+
     # Build Logout Request
-    my $logout = $self->createLogoutRequest( $server, $session_dump );
+    my $logout = $self->createLogoutRequest( $server, $session_dump, $method );
     unless ($logout) {
         $self->lmLog( "Could not create logout request", 'error' );
         return PE_ERROR;
@@ -950,10 +1002,6 @@ sub authLogout {
 "Keep Logout request ID $logout_request_id in assertion session $logout_request_session_id",
         'debug'
     );
-
-    # Force HTTP-REDIRECT method
-    # TODO choose method depending on IDP
-    $method = Lasso::Constants::HTTP_METHOD_REDIRECT;
 
     # Send request depending on request method
     # HTTP-REDIRECT
@@ -989,9 +1037,32 @@ sub authLogout {
         my $slo_url  = $logout->msg_url;
         my $slo_body = $logout->msg_body;
 
-        $self->lmLog( "SOAP request $slo_body", 'debug' );
+        # Send SOAP request and manage response
+        my $response = $self->sendSOAPMessage( $slo_url, $slo_body );
 
-        # TODO send SOAP request and manage response
+        # Create Logout object
+        $logout = $self->createLogout($server);
+
+        # Process logout response
+        my $result = $self->processLogoutResponseMsg( $logout, $response );
+
+        unless ($result) {
+            $self->lmLog( "Fail to process logout response", 'error' );
+            return PE_ERROR;
+        }
+
+        $self->lmLog( "Logout response is valid", 'debug' );
+
+        # Replay protection
+        my $samlID = $logout->response()->InResponseTo;
+
+        unless ( $self->replayProtection($samlID) ) {
+
+            # Logout request was already consumed or is expired
+            $self->lmLog( "Message $samlID already used or expired", 'error' );
+            return PE_ERROR;
+        }
+
     return;
     }
 
