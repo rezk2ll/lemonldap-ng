@@ -25,9 +25,11 @@ sub getUser {
 }
 
 ## @apmethod int setSessionInfo()
-# Do nothing
+# Store just user field (set by Auth*) in $whatToTrace.
 # @return Lemonldap::NG::Portal constant
 sub setSessionInfo {
+    my $self = shift;
+    $self->{sessionInfo}->{$self->{whatToTrace}} = $self->{user};
     PE_OK;
 }
 

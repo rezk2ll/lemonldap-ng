@@ -17,13 +17,9 @@ our $VERSION = '0.1';
 # @return Lemonldap::NG::Portal constant
 sub authInit {
     my $self = shift;
-    $self->{csr} = Net::OpenID::Consumer->new(
-        ua              => LWP::UserAgent->new,
-        cache           => Cache::FileCache->new,
-        args            => $self,
-        consumer_secret => $self->{openIdSecret},
-        required_root   => $self->{portal},
-    );
+    unless ( $self->{openIdSecret} ) {
+        $self->abort( 'Bad configuration', 'openIdSecret field is required' );
+    }
     PE_OK;
 }
 
@@ -32,12 +28,21 @@ sub authInit {
 # @return Lemonldap::NG::Portal constant
 sub extractFormInfo {
     my $self = shift;
+
+    $self->{csr} = Net::OpenID::Consumer->new(
+        ua              => LWP::UserAgent->new,
+        cache           => Cache::FileCache->new,
+        args            => $self,
+        consumer_secret => $self->{openIdSecret},
+        required_root   => $self->{portal},
+    );
+
     my ( $url, $openid );
 
     # 1. If no openid element has been detected
+    $openid = $self->param('openid');
     return PE_FIRSTACCESS
-      unless ( $url = $self->param('openIdUrl')
-        or $openid = $self->param('openid') );
+      unless ( $url = $self->param('openIdUrl') or $openid );
 
     # 2. Check OpenID responses
     if ($openid) {
@@ -52,7 +57,7 @@ sub extractFormInfo {
 
         # If confirmation is needed
         if ( my $setup_url = $csr->user_setup_url ) {
-            $self->lmLog( 'OpenID confirmation', 'debug' );
+            $self->lmLog( 'OpenID confirmation needed', 'debug' );
             print $self->redirect($setup_url);
             $self->quit();
         }
@@ -65,13 +70,17 @@ sub extractFormInfo {
         }
 
         # TODO: check verified identity
-        elsif ( $self->{user} = $csr->verified_identity ) {
+        elsif ( $self->{vident} = $csr->verified_identity ) {
+            $self->{user} = $self->{vident}->url();
+            $self->lmLog( "OpenID good authentication for $self->{user}",
+                'debug' );
+            $self->{mustRedirect} = 1;
             return PE_OK;
         }
 
         # Other errors
         else {
-            $self->{msg} = 'OpenID error';
+            $self->{msg} = 'OpenID error: ' . $csr->err;
             $self->lmLog( $self->{msg}, 'debug' );
             return PE_ERROR;
         }
