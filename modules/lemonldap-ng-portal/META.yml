@@ -34,3 +34,4 @@ recommends:
     MIME::Lite:           0
     Net::OpenID::Consumer:  0
     Net::OpenID::Server:  0
+    Net::Twitter:         0

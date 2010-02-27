@@ -12,6 +12,7 @@ WriteMakefile(
             'Net::OpenID::Consumer' => 0,
             'Net::OpenID::Server'   => 0,
             'MIME::Lite'            => 0,
+            'Net::Twitter'          => 0,
         },
     },
     BUILD_REQUIRES => { 'IO::String' => 0, },
