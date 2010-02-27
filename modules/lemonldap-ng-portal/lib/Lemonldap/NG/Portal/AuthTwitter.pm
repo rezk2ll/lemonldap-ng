@@ -1,9 +1,8 @@
 ##@file
-# OpenID authentication backend file
+# Twitter authentication backend file
 
 ##@class
-# OpenID authentication backend class.
-# The form must return a openIdUrl field
+# Twitter authentication backend class.
 package Lemonldap::NG::Portal::AuthTwitter;
 
 use strict;
@@ -24,21 +23,33 @@ sub authInit {
 }
 
 ## @apmethod int extractFormInfo()
-# Read username return by Twitter;
+# Authenticate users by Twitter and set user
 # @return Lemonldap::NG::Portal constant
 sub extractFormInfo {
     my $self = shift;
+
+    # Build Net::Twitter object
     $self->{twitter} = Net::Twitter->new(
         traits          => [qw/API::REST OAuth/],
         consumer_key    => $self->{twitterKey},
         consumer_secret => $self->{twitterSecret},
         clientname      => $self->{twitterAppName} || 'Lemonldap::NG'
     );
+
+    # 1. Request to authenticate
     unless ( $self->param('twitterback') ) {
         $self->lmLog( 'Redirection to Twitter', 'debug' );
         my $url;
-        # TODO : store url=...
-        eval { $url = $self->{twitter}->get_authorization_url( callback => "$self->{portal}?twitterback=1" ); };
+
+        # 1.1 Try to get token to dialog with Twitter
+        eval {
+            $url =
+              $self->{twitter}->get_authorization_url(
+                callback => "$self->{portal}?twitterback=1&url="
+                  . $self->get_url() );
+        };
+
+        #   If 401 is returned => application not declared on Twitter
         if ($@) {
             if ( $@ =~ /\b401\b/ ) {
                 $self->abort('Twitter application undeclared');
@@ -46,28 +57,49 @@ sub extractFormInfo {
             $self->lmLog( "Net::Twitter error: $@", 'error' );
             return PE_ERROR;
         }
-        # TODO: store token key and secret somewhere !
-        $self->redirect($url);
+
+        # 1.2 Store token key and secret in cookies
+        push @{ $self->{cookie} },
+          $self->cookie(
+            -name    => '_twitTok',
+            -value   => $self->{twitter}->request_token,
+            -expires => '+3m'
+          ),
+          $self->cookie(
+            -name    => '_twitSec',
+            -value   => $self->{twitter}->request_token_secret,
+            -expires => '+3m'
+          );
+
+        # 1.3 Redirect user to Twitter
+        $self->redirect( -uri => $url );
         $self->quit();
-        die;
     }
+
+    # 2. User is back from Twitter
     my $request_token = $self->param('oauth_token');
     my $verifier      = $self->param('oauth_verifier');
-    unless($request_token and $verifier) {
-        $self->lmLog('Twitter Oauth protocol error','error');
+    unless ( $request_token and $verifier ) {
+        $self->lmLog( 'Twitter OAuth protocol error', 'error' );
         return PE_ERROR;
     }
-    print STDERR "COUCOU $verifier\n";
-    $self->{twitter}->_request_request_token
+
+    # 2.1 Reconnect to Twitter
     (
         $self->{sessionInfo}->{_access_token},
         $self->{sessionInfo}->{_access_token_secret}
-        consumer_key    => $self->{twitterKey},
-        consumer_secret => $self->{twitterSecret},
-    ) = $self->{twitter}->request_access_token( token => $self->{twitterKey}, token_secret => $verifier, verifier => $verifier );
-    print STDERR "COUCOU\n";
+      )
+      = $self->{twitter}->request_access_token(
+        token        => $self->cookie('_twitTok'),
+        token_secret => $self->cookie('_twitSec'),
+        verifier     => $verifier
+      );
 
+    # 2.2 Ask for user_timeline : I've not found an other way to access to user
+    #     datas !
     my $status = eval { $self->{twitter}->user_timeline( { count => 1 } ) };
+
+    # 2.3 Check if user has accepted authentication
     if ($@) {
         if ( $@ =~ /\b401\b/ ) {
             $self->userError('Twitter authentication refused');
@@ -75,10 +107,19 @@ sub extractFormInfo {
         }
         $self->lmLog( "Net::Twitter error: $@", 'error' );
     }
-    $self->{user}        = $status->[0]->{user}->{screen_name};
+
+    # 2.4 Set $self->{user} to twitter.com/<username>
     $self->{twitterUser} = $status->[0]->{user};
+    $self->{user} = 'twitter.com/' . $status->{twitterUser}->{screen_name};
     $self->lmLog( "Good Twitter authentication for $self->{user}", 'debug' );
+
+    # Force redirection to avoid displaying OAuth datas
     $self->{mustRedirect} = 1;
+
+    # Clean temporaries cookies
+    push @{ $self->{cookie} },
+      $self->cookie( -name => '_twitTok', -value => 0, -expires => '-3m' ),
+      $self->cookie( -name => '_twitSec', -value => 0, -expires => '-3m' );
     PE_OK;
 }
 
@@ -88,7 +129,7 @@ sub extractFormInfo {
 sub setAuthSessionInfo {
     my $self = shift;
 
-    # TODO: set this to UserDBTwitter
+    # TODO: set a parameter to choose this
     foreach (qw(screen_name location lang name url)) {
         $self->{sessionInfo}->{$_} = $self->{twitterUser}->{$_};
     }
@@ -109,15 +150,15 @@ __END__
 
 =encoding utf8
 
-Lemonldap::NG::Portal::OpenID - Perl extension for building Lemonldap::NG
-compatible portals with OpenID authentication.
+Lemonldap::NG::Portal::AuthTwitter - Perl extension for building Lemonldap::NG
+compatible portals with Twitter authentication.
 
 =head1 SYNOPSIS
 
   use Lemonldap::NG::Portal::SharedConf;
   my $portal = new Lemonldap::NG::Portal::Simple(
          configStorage     => {...}, # See Lemonldap::NG::Portal
-         authentication    => 'OpenID',
+         authentication    => 'Twitter',
     );
 
   if($portal->process()) {
@@ -137,7 +178,7 @@ compatible portals with OpenID authentication.
 =head1 DESCRIPTION
 
 This library just overload few methods of Lemonldap::NG::Portal::Simple to use
-OpenID authentication mechanism.
+Twitter authentication mechanism.
 
 See L<Lemonldap::NG::Portal::Simple> for usage and other methods.
 

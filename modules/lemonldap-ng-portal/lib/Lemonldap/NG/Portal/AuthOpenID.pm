@@ -136,7 +136,7 @@ __END__
 
 =encoding utf8
 
-Lemonldap::NG::Portal::OpenID - Perl extension for building Lemonldap::NG
+Lemonldap::NG::Portal::AuthOpenID - Perl extension for building Lemonldap::NG
 compatible portals with OpenID authentication.
 
 =head1 SYNOPSIS

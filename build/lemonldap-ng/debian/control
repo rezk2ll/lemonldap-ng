@@ -7,8 +7,8 @@ Build-Depends: debhelper (>= 7), po-debconf
 Build-Depends-Indep:libapache-session-perl, libnet-ldap-perl, libdbi-perl,
  libwww-perl, libcache-cache-perl, libcrypt-rijndael-perl, libxml-libxslt-perl,
  libio-string-perl, libregexp-assemble-perl, liburi-perl, libstring-random-perl,
- libmime-lite-perl, libsoap-lite-perl, libconfig-inifiles-perl, libnet-twitter,
- libnet-openid-consumer
+ libmime-lite-perl, libsoap-lite-perl, libconfig-inifiles-perl,
+ libnet-twitter-perl, libnet-openid-consumer-perl
 Standards-Version: 3.8.3
 Homepage: http://lemonldap.ow2.org/
 
