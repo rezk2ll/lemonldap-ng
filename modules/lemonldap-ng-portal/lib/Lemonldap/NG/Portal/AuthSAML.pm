@@ -118,7 +118,6 @@ sub extractFormInfo {
     my $response;
     my $artifact;
     my $relaystate;
-    my %h;
 
     # 1. Get HTTP request informations to know
     # if we are receving SAML request or response
@@ -807,24 +806,10 @@ sub extractFormInfo {
     $self->lmLog( "Authentication request created", 'debug' );
 
     # Keep assertion ID in memory to prevent replay
-    my $assertion_id = $login->request()->ID;
-    eval {
-        tie %h, $self->{globalStorage}, undef, $self->{globalStorageOptions};
-    };
-    if ( $@ or !$assertion_id ) {
+    unless ( $self->storeReplayProtection( $login->request()->ID ) ) {
         $self->lmLog( "Unable to store assertion ID", 'error' );
         return PE_ERROR;
     }
-    $h{type}   = 'assertion';     # Session type
-    $h{_utime} = time();          # Creation time
-    $h{ID}     = $assertion_id;
-    my $assertion_session_id = $h{_session_id};
-    untie %h;
-
-    $self->lmLog(
-"Keep assertion ID $assertion_id in assertion session $assertion_session_id",
-        'debug'
-    );
 
     # Send SSO request depending on request method
     # HTTP-REDIRECT
@@ -953,7 +938,6 @@ sub authenticate {
 # @return nothing
 sub authLogout {
     my $self = shift;
-    my %h;
     my $method;
 
     # Get Lasso Server
@@ -985,24 +969,10 @@ sub authLogout {
     $self->lmLog( "Logout request created", 'debug' );
 
     # Keep request ID in memory to prevent replay
-    my $logout_request_id = $logout->request()->ID;
-    eval {
-        tie %h, $self->{globalStorage}, undef, $self->{globalStorageOptions};
-    };
-    if ( $@ or !$logout_request_id ) {
+    unless ( $self->storeReplayProtection( $logout->request()->ID ) ) {
         $self->lmLog( "Unable to store Logout request ID", 'error' );
         return PE_ERROR;
     }
-    $h{type}   = 'assertion';          # Session type
-    $h{_utime} = time();               # Creation time
-    $h{ID}     = $logout_request_id;
-    my $logout_request_session_id = $h{_session_id};
-    untie %h;
-
-    $self->lmLog(
-"Keep Logout request ID $logout_request_id in assertion session $logout_request_session_id",
-        'debug'
-    );
 
     # Send request depending on request method
     # HTTP-REDIRECT
@@ -1067,6 +1037,37 @@ sub authLogout {
     return;
     }
 
+}
+
+## @apmethod boolean authForce()
+# Check if authentication should be forced
+# @return nothing
+sub authForce {
+    my $self = shift;
+
+    my $url = $self->url();
+
+    my $saml_acs_art_url = $self->getMetaDataURL(
+        "samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact");
+    my $saml_acs_post_url = $self->getMetaDataURL(
+        "samlSPSSODescriptorAssertionConsumerServiceHTTPPost");
+    my $saml_acs_get_url = $self->getMetaDataURL(
+        "samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect");
+    my $saml_slo_soap_url =
+      $self->getMetaDataURL( "samlSPSSODescriptorSingleLogoutServiceSOAP", 1 );
+    my $saml_slo_soap_url_ret =
+      $self->getMetaDataURL( "samlSPSSODescriptorSingleLogoutServiceSOAP", 2 );
+    my $saml_slo_get_url =
+      $self->getMetaDataURL( "samlSPSSODescriptorSingleLogoutServiceHTTP", 1 );
+    my $saml_slo_get_url_ret =
+      $self->getMetaDataURL( "samlSPSSODescriptorSingleLogoutServiceHTTP", 2 );
+
+    return 1
+      if ( $url =~
+/^($saml_acs_art_url|$saml_acs_post_url|$saml_acs_get_url|$saml_slo_soap_url|$saml_slo_soap_url_ret|$saml_slo_get_url|$saml_slo_get_url_ret)$/
+      );
+
+    return 0;
 }
 
 1;

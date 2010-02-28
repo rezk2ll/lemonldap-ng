@@ -228,10 +228,6 @@ sub createAuthnRequest {
         return;
     }
 
-    # Default method: HTTP REDIRECT
-    $method = Lasso::Constants::HTTP_METHOD_REDIRECT unless defined $method;
-    $self->lmLog( "Use HTTP method $method", 'debug' );
-
     # Init authentication request
     unless ( $self->initAuthnRequest( $login, $idp, $method ) ) {
         $self->lmLog( "Could not initiate authentication request on $idp",
@@ -254,8 +250,6 @@ sub createAuthnRequest {
     $request->NameIDPolicy()
       ->Format(Lasso::Constants::SAML2_NAME_IDENTIFIER_FORMAT_PERSISTENT);
     $request->NameIDPolicy()->AllowCreate(1);
-    $request
-      ->ProtocolBinding(Lasso::Constants::SAML2_METADATA_BINDING_ARTIFACT);
 
     # Build authentication request
     unless ( $self->buildAuthnRequestMsg($login) ) {
@@ -289,20 +283,6 @@ sub createLogin {
     }
 
     return $login;
-}
-
-## @method int getHttpMethod(Lasso::Server server, string idp)
-# Find a compatible HTTP method
-# @param Lasso::Server server
-# @param string entityID
-# @return int HTTP method
-sub getHttpMethod {
-    my ( $self, $server, $idp ) = splice @_;
-
-    # TODO
-
-    # By default, use HTTP REDIRECT
-    return Lasso::Constants::HTTP_METHOD_REDIRECT;
 }
 
 ## @method boolean initAuthnRequest(Lasso::Login login, string idp, int method)
@@ -440,6 +420,9 @@ sub storeRelayState {
     # Session type
     $h{_type} = "relaystate";
 
+    # UNIX time
+    $h{_utime} = time();
+
     # Store infos in relaystate session
     foreach ( keys %$infos ) {
         $h{$_} = $infos->{$_};
@@ -478,7 +461,7 @@ sub extractRelayState {
 
     # Push values in $self
     foreach ( keys %h ) {
-        next if $_ =~ /(type|_session_id)/;
+        next if $_ =~ /(type|_session_id|_utime)/;
         $self->{$_} = $h{$_};
     }
 
@@ -582,12 +565,9 @@ sub createLogoutRequest {
     # Create Lasso Logout
     my $logout = $self->createLogout($server);
 
-    # Default method: SOAP
-    $method = Lasso::Constants::HTTP_METHOD_SOAP unless defined $method;
-    $self->lmLog( "Use HTTP method $method", 'debug' );
-
     unless ( $self->setSessionFromDump( $logout, $session_dump ) ) {
-        $self->lmLog( "Could not fill Lasso::Logout with session dump", 'error' );
+        $self->lmLog( "Could not fill Lasso::Logout with session dump",
+            'error' );
         return;
     }
 
@@ -728,6 +708,37 @@ sub buildLogoutResponseMsg {
     return $self->checkLassoError($@);
 }
 
+## @method boolean storeReplayProtection(string samlID)
+# Store ID of an SAML message in Replay Protection base
+# @param samlID ID of SAML message
+# @return result
+sub storeReplayProtection {
+    my ( $self, $samlID ) = splice @_;
+    my %h;
+
+    eval {
+        tie %h, $self->{globalStorage}, undef, $self->{globalStorageOptions};
+    };
+    if ( $@ or !$samlID ) {
+        $self->lmLog( "Unable to create replay protection session", 'error' );
+        return 0;
+    }
+
+    $h{type}   = 'assertion';    # Session type
+    $h{_utime} = time();         # Creation time
+    $h{ID}     = $samlID;
+
+    my $session_id = $h{_session_id};
+
+    untie %h;
+
+    $self->lmLog(
+        "Keep Logout request ID $samlID in assertion session $session_id",
+        'debug' );
+
+    return 1;
+}
+
 ## @method boolean replayProtection(string samlID)
 # Check if SAML message do not correspond to a previously responded message
 # @param samlID ID of initial SAML message
@@ -780,7 +791,6 @@ sub replayProtection {
     }
 
     return 0;
-
 }
 
 ## @method string resolveArtifact(Lasso::Profile profile, string artifact, int method)
@@ -928,10 +938,6 @@ Create authentication request for selected IDP
 
 Create Lasso::Login object
 
-=head2 getHttpMethod
-
-Find a compatible HTTP method
-
 =head2 initAuthnRequest
 
 Init authentication request
@@ -1020,6 +1026,10 @@ Validate logout request
 =head2 buildLogoutResponseMsg
 
 Build logout response msg
+
+=head2 storeReplayProtection
+
+Store ID of an SAML message in Replay Protection base
 
 =head2 replayProtection
 

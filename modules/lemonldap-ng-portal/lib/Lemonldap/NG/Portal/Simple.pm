@@ -850,7 +850,8 @@ sub controlExistingSession {
             return $self->{error} if $self->{error};
 
             # Redirect or Post if asked by authLogout
-            $self->_subProcess(qw(autoRedirect)) if ( $self->{urldc} );
+            $self->_subProcess(qw(autoRedirect))
+              if ( $self->{urldc} and $self->{urldc} ne $self->{portal} );
             $self->_subProcess(qw(autoPost))     if ( $self->{postUrl} );
 
             # Display logout message
@@ -890,9 +891,18 @@ sub controlExistingSession {
 #@return Lemonldap::NG::Portal constant
 sub existingSession {
     my $self = shift;
+    my $forceAuthn;
 
     # Check portalForceAuthn parameter
-    if ( $self->{portalForceAuthn} ) {
+    # and authForce method
+    eval { $forceAuthn = $self->authForce(); };
+    if ($@) {
+        $self->lmLog( "Error when calling authForce: $@", 'debug' );
+    }
+
+    $forceAuthn = 1 if ( $self->{portalForceAuthn} );
+
+    if ($forceAuthn) {
         my $referer = $self->referer();
         my $id      = $self->{id};
 
