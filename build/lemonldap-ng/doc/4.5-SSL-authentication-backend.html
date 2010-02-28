@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
 <head>
   <meta name="generator" content=
-  "HTML Tidy for Linux/x86 (vers 7 December 2008), see www.w3.org" />
+  "HTML Tidy for Linux/x86 (vers 25 March 2009), see www.w3.org" />
 
   <title>Lemonldap::NG documentation:
   4.5-SSL-authentication-backend.html</title>
@@ -155,6 +155,7 @@ SSLEngine On
 SSLVerifyClient optional
 SSLVerifyDepth 1
 SSLOptions +StdEnvVars
+SSLUserName SSL_CLIENT_S_DN_CN
 </pre>
     </div>
 
@@ -176,13 +177,15 @@ SSLRequire =&gt; 0,
       <li>authentication: the authentication method, here SSL (can be LDAP,
       Apache, etc.)</li>
 
-      <li>SSLVar: field of the certificate to use in mapping</li>
+      <li>SSLVar: field of the certificate affected to $user internal
+      variable</li>
 
       <li>SSLLDAPField: attribute in LDAP directory to use in mapping</li>
 
       <li>SSLRequire: if true, do not display authentication form if SSL
       certificate authentication fails (false by defautl).</li>
-    </ul>
+    </ul><strong class="strong">Note</strong>: SSLLDAPField is not required if
+    you do not use userDBLDAP.
   </div>
 
   <p class="footer"><a href="index.html">Index</a></p>

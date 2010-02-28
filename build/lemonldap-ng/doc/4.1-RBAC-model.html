@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
 <head>
   <meta name="generator" content=
-  "HTML Tidy for Linux/x86 (vers 7 December 2008), see www.w3.org" />
+  "HTML Tidy for Linux/x86 (vers 25 March 2009), see www.w3.org" />
 
   <title>Lemonldap::NG documentation: 4.1-RBAC-model.html</title>
   <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
@@ -221,7 +221,16 @@ Auth-Roles =&gt; $bbbRoles
     </div><br />
     <br />
     Now the protected application can read in the header HTTP_AUTH_ROLES the
-    role of the user.
+    role of the user.<br />
+    <br />
+    <strong class="strong">Note</strong>: if you have more than one role for
+    an application, you can join those roles with a separator (ex: ||):
+
+    <div class="code">
+      <pre>
+aaaRole =&gt; join(' || ', (map {/uid=(.*),ou=aaa.*/} (grep{/ou=aaa/} split(';',$ssoRoles)))
+</pre>
+    </div>
   </div>
 
   <p class="footer"><a href="index.html">Index</a></p>

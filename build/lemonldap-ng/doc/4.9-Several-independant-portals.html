@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
 <head>
   <meta name="generator" content=
-  "HTML Tidy for Linux/x86 (vers 7 December 2008), see www.w3.org" />
+  "HTML Tidy for Linux/x86 (vers 25 March 2009), see www.w3.org" />
 
   <title>Lemonldap::NG documentation:
   4.9-Several-independant-portals.html</title>
@@ -117,6 +117,23 @@
 </pre>
     </div>
 
+    <p class="paragraph"></p>You can also use $vhost inside portal URL, for
+    example:
+
+    <p class="paragraph"></p>
+
+    <div class="code">
+      <pre>
+<b class="bold">PACKAGE</b>-&gt;init(
+    {
+        # Dynamic portal
+        portal =&gt; ' <span class=
+"java-quote">"http://"</span>.$vhost.<span class=
+"java-quote">"/portal/"</span> ',
+    });
+</pre>
+    </div>
+
     <p class="paragraph"></p><strong class="strong">Note</strong>: $vhost will
     be replaced by $apacheRequest-&gt;hostname for each HTTP request.
 
@@ -159,7 +176,7 @@ my $portal_url  = <span class=
     <h3 class="heading-1-1"><span id="HApacheconfiguration">Apache
     configuration</span></h3><br />
     <br />
-    You will have to configure 2 wirtual hosts for the portals, and set a
+    You will have to configure 2 virtual hosts for the portals, and set a
     specific ErrorDocument for protected applications. Do this in
     etc/apache2.conf:<br />
     <br />

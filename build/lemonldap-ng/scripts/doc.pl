@@ -147,7 +147,7 @@ while ( my ( $url, $file ) = each %$docs ) {
         $div += @t;
         @t = ( $_ =~ /<\/div/i );
         $div -= @t;
-        $ind-- unless ($div);
+        #$ind-- unless ($div);
         s/\r//g;
         utf8::decode($_);
 

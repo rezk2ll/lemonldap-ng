@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
 <head>
   <meta name="generator" content=
-  "HTML Tidy for Linux/x86 (vers 7 December 2008), see www.w3.org" />
+  "HTML Tidy for Linux/x86 (vers 25 March 2009), see www.w3.org" />
 
   <title>Lemonldap::NG documentation:
   4.1-Configuration-parameter-list.html</title>
@@ -78,6 +78,9 @@
 
           <li><a href="#HSMTP28resetpasswordbymail29">SMTP (reset password by
           mail)</a></li>
+
+          <li><a href="#HTemplatescustomization">Templates
+          customization</a></li>
         </ul>
       </li>
 
@@ -86,7 +89,11 @@
         configuration (Portal only)</a>
 
         <ul>
+          <li><a href="#HCommon-1">Common</a></li>
+
           <li><a href="#HLDAP">LDAP</a></li>
+
+          <li><a href="#HDBI">DBI</a></li>
 
           <li><a href="#HSSL">SSL</a></li>
 
@@ -94,7 +101,10 @@
 
           <li><a href="#HRemote">Remote</a></li>
 
-          <li><a href="#HLibertyAlliance">Liberty Alliance</a></li>
+          <li><a href="#HLibertyAlliance28willbereplacedbySAMLin09529">Liberty
+          Alliance (will be replaced by SAML in 0.9.5)</a></li>
+
+          <li><a href="#HTwitter">Twitter</a></li>
         </ul>
       </li>
     </ul>
@@ -128,13 +138,47 @@ keyname =&gt; 'value',
 </pre>
     </div><br />
     <br />
-    The key name can also be seen when you access directly to the
-    configuration backend (for example with an LDAP browser if you choose the
-    <span class="wikilink"><a href="4.3-LDAP-configuration-backend.html">LDAP
-    configuration backend</a></span>).<br />
+    <strong class="strong">WARNING</strong>: if you modify these files,
+    updates will potentially erase your local modifications. You can choose to
+    copy the provided .pl file and override configuration in the new file, not
+    known from package, so not erased on updates.<br />
     <br />
-    When a key name contains one or more /, it means that it's multi-level
-    hash map. For example level1Key / level2Key will be used as:
+    For example to fork the portal page:
+
+    <div class="code">
+      <pre>
+# cp portal/index.pl portal/indexcustom.pl
+</pre>
+    </div><br />
+    <br />
+    And adapt apache configuration to server your file instead of default
+    file:
+
+    <div class="code">
+      <pre>
+# vi /etc/lemonldap-ng/apache2.conf
+</pre>
+    </div><br />
+    <br />
+
+    <div class="code">
+      <pre>
+&lt;VirtualHost *&gt;
+    ServerName auth.example.com<br /><br />    DocumentRoot /usr/local/lemonldap-ng/htdocs/portal/
+    DirectoryIndex indexcustom.pl<br /><br />    # Other configuration parameters
+&lt;/VirtualHost&gt;
+</pre>
+    </div>
+
+    <p class="paragraph"></p>The key name can also be seen when you access
+    directly to the configuration backend (for example with an LDAP browser if
+    you choose the <span class="wikilink"><a href=
+    "4.3-LDAP-configuration-backend.html">LDAP configuration
+    backend</a></span>).
+
+    <p class="paragraph"></p>When a key name contains one or more /, it means
+    that it's multi-level hash map. For example level1Key / level2Key will be
+    used as:
 
     <div class="code">
       <pre>
@@ -335,6 +379,26 @@ level1Key =&gt; { level2Key =&gt; 'value' },
         <td>notificationStorage</td>
 
         <td>0.9.3</td>
+
+        <td>No</td>
+
+        <td>X</td>
+
+        <td>&nbsp;</td>
+
+        <td>&nbsp;</td>
+
+        <td>&nbsp;</td>
+
+        <td>&nbsp;</td>
+      </tr>
+
+      <tr class="table-even">
+        <td>Issuer backend</td>
+
+        <td>issuerDB</td>
+
+        <td>0.9.5</td>
 
         <td>No</td>
 
@@ -555,6 +619,26 @@ level1Key =&gt; { level2Key =&gt; 'value' },
       </tr>
 
       <tr class="table-even">
+        <td>Cookie expiration</td>
+
+        <td>cookieExpiration</td>
+
+        <td>0.9.5</td>
+
+        <td>No</td>
+
+        <td>X</td>
+
+        <td>&nbsp;</td>
+
+        <td>&nbsp;</td>
+
+        <td>&nbsp;</td>
+
+        <td>&nbsp;</td>
+      </tr>
+
+      <tr class="table-odd">
         <td>Attributes from user backend</td>
 
         <td>exportedVars</td>
@@ -574,7 +658,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
         <td>&nbsp;</td>
       </tr>
 
-      <tr class="table-odd">
+      <tr class="table-even">
         <td>Local groups</td>
 
         <td>groups</td>
@@ -594,7 +678,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
         <td>&nbsp;</td>
       </tr>
 
-      <tr class="table-even">
+      <tr class="table-odd">
         <td>Macros</td>
 
         <td>macros</td>
@@ -614,7 +698,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
         <td>&nbsp;</td>
       </tr>
 
-      <tr class="table-odd">
+      <tr class="table-even">
         <td>Session lifetime for cronjob</td>
 
         <td>timeout</td>
@@ -634,7 +718,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
         <td>&nbsp;</td>
       </tr>
 
-      <tr class="table-even">
+      <tr class="table-odd">
         <td>Syslog facility</td>
 
         <td>syslog</td>
@@ -654,7 +738,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
         <td>&nbsp;</td>
       </tr>
 
-      <tr class="table-odd">
+      <tr class="table-even">
         <td>SOAP activation</td>
 
         <td>Soap</td>
@@ -674,7 +758,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
         <td>&nbsp;</td>
       </tr>
 
-      <tr class="table-even">
+      <tr class="table-odd">
         <td>Attributes exported in SOAP</td>
 
         <td>exportedAttr</td>
@@ -694,7 +778,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
         <td>&nbsp;</td>
       </tr>
 
-      <tr class="table-odd">
+      <tr class="table-even">
         <td>Store password in session</td>
 
         <td>storePassword</td>
@@ -714,7 +798,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
         <td>&nbsp;</td>
       </tr>
 
-      <tr class="table-even">
+      <tr class="table-odd">
         <td>Notification activation</td>
 
         <td>notification</td>
@@ -734,12 +818,32 @@ level1Key =&gt; { level2Key =&gt; 'value' },
         <td>&nbsp;</td>
       </tr>
 
-      <tr class="table-odd">
+      <tr class="table-even">
         <td>Trusted domains</td>
 
         <td>trustedDomains</td>
 
         <td>0.9.4</td>
+
+        <td>No</td>
+
+        <td>X</td>
+
+        <td>&nbsp;</td>
+
+        <td>&nbsp;</td>
+
+        <td>&nbsp;</td>
+
+        <td>&nbsp;</td>
+      </tr>
+
+      <tr class="table-odd">
+        <td>Rule for session granting</td>
+
+        <td>grantSessionRule</td>
+
+        <td>0.9.5</td>
 
         <td>No</td>
 
@@ -1221,26 +1325,6 @@ level1Key =&gt; { level2Key =&gt; 'value' },
       </tr>
 
       <tr class="table-odd">
-        <td>Mail subject</td>
-
-        <td>mailSubject</td>
-
-        <td>0.9.4</td>
-
-        <td>No</td>
-
-        <td>X</td>
-
-        <td>&nbsp;</td>
-
-        <td>&nbsp;</td>
-
-        <td>&nbsp;</td>
-
-        <td>&nbsp;</td>
-      </tr>
-
-      <tr class="table-even">
         <td>Regexp for random password</td>
 
         <td>randomPasswordRegexp</td>
@@ -1260,8 +1344,28 @@ level1Key =&gt; { level2Key =&gt; 'value' },
         <td>&nbsp;</td>
       </tr>
 
+      <tr class="table-even">
+        <td>Subject for password mail</td>
+
+        <td>mailSubject</td>
+
+        <td>0.9.4</td>
+
+        <td>No</td>
+
+        <td>X</td>
+
+        <td>&nbsp;</td>
+
+        <td>&nbsp;</td>
+
+        <td>&nbsp;</td>
+
+        <td>&nbsp;</td>
+      </tr>
+
       <tr class="table-odd">
-        <td>Body of the mail</td>
+        <td>Body for password mail</td>
 
         <td>mailBody</td>
 
@@ -1279,11 +1383,265 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>&nbsp;</td>
       </tr>
+
+      <tr class="table-even">
+        <td>Subject for confirmation mail</td>
+
+        <td>mailConfirmSubject</td>
+
+        <td>0.9.5</td>
+
+        <td>No</td>
+
+        <td>X</td>
+
+        <td>&nbsp;</td>
+
+        <td>&nbsp;</td>
+
+        <td>&nbsp;</td>
+
+        <td>&nbsp;</td>
+      </tr>
+
+      <tr class="table-odd">
+        <td>Body for confirmation mail</td>
+
+        <td>mailConfirmBody</td>
+
+        <td>0.9.5</td>
+
+        <td>No</td>
+
+        <td>X</td>
+
+        <td>&nbsp;</td>
+
+        <td>&nbsp;</td>
+
+        <td>&nbsp;</td>
+
+        <td>&nbsp;</td>
+      </tr>
+
+      <tr class="table-even">
+        <td>URL for mail reset</td>
+
+        <td>mailUrl</td>
+
+        <td>0.9.5</td>
+
+        <td>No</td>
+
+        <td>X</td>
+
+        <td>&nbsp;</td>
+
+        <td>&nbsp;</td>
+
+        <td>&nbsp;</td>
+
+        <td>&nbsp;</td>
+      </tr>
+    </table><br />
+    <br />
+    <strong class="strong">Note</strong>: setting mailBody and mailConfirmBody
+    will disable the use of default HTML templates.
+
+    <h4 class="heading-1-1-1"><span id="HTemplatescustomization">Templates
+    customization</span></h4><br />
+    <br />
+
+    <table class="wiki-table" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <th>Full name</th>
+
+        <th>Key name</th>
+
+        <th>Version</th>
+
+        <th>GUI</th>
+
+        <th>Portal</th>
+      </tr>
+
+      <tr class="table-odd">
+        <td>Skin name</td>
+
+        <td>portalSkin</td>
+
+        <td>0.9.5</td>
+
+        <td>No</td>
+
+        <td>X</td>
+      </tr>
+
+      <tr class="table-even">
+        <td>Display logout module</td>
+
+        <td>portalDisplayLogout</td>
+
+        <td>0.9.5</td>
+
+        <td>No</td>
+
+        <td>X</td>
+      </tr>
+
+      <tr class="table-odd">
+        <td>Display reset password form</td>
+
+        <td>portalDisplayResetPassword</td>
+
+        <td>0.9.5</td>
+
+        <td>No</td>
+
+        <td>X</td>
+      </tr>
+
+      <tr class="table-even">
+        <td>Display change password module</td>
+
+        <td>portalDisplayChangePassword</td>
+
+        <td>0.9.5</td>
+
+        <td>No</td>
+
+        <td>X</td>
+      </tr>
+
+      <tr class="table-odd">
+        <td>Display applications list</td>
+
+        <td>portalDisplayAppslist</td>
+
+        <td>0.9.5</td>
+
+        <td>No</td>
+
+        <td>X</td>
+      </tr>
+
+      <tr class="table-even">
+        <td>Allow form autocompletion</td>
+
+        <td>portalAutocomplete</td>
+
+        <td>0.9.5</td>
+
+        <td>No</td>
+
+        <td>X</td>
+      </tr>
+
+      <tr class="table-odd">
+        <td>Require old password (change)</td>
+
+        <td>portalRequireOldPassword</td>
+
+        <td>0.9.5</td>
+
+        <td>No</td>
+
+        <td>X</td>
+      </tr>
+
+      <tr class="table-even">
+        <td>User name session field</td>
+
+        <td>portalUserAttr</td>
+
+        <td>0.9.5</td>
+
+        <td>No</td>
+
+        <td>X</td>
+      </tr>
+
+      <tr class="table-odd">
+        <td>Open links in new window</td>
+
+        <td>portalOpenLinkInNewWindow</td>
+
+        <td>0.9.5</td>
+
+        <td>No</td>
+
+        <td>X</td>
+      </tr>
     </table>
 
     <h3 class="heading-1-1"><span id=
     "HAuthenticationconfiguration28Portalonly29">Authentication configuration
     (Portal only)</span></h3>
+
+    <h4 class="heading-1-1-1"><span id="HCommon">Common</span></h4><br />
+    <br />
+
+    <table class="wiki-table" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <th>Full name</th>
+
+        <th>Key name</th>
+
+        <th>Version</th>
+
+        <th>GUI</th>
+      </tr>
+
+      <tr class="table-odd">
+        <td>Delete other session</td>
+
+        <td>singleSession</td>
+
+        <td>0.9.5</td>
+
+        <td>No</td>
+      </tr>
+
+      <tr class="table-even">
+        <td>Delete other session if IP deffer</td>
+
+        <td>singleIP</td>
+
+        <td>0.9.5</td>
+
+        <td>No</td>
+      </tr>
+
+      <tr class="table-odd">
+        <td>Do not allow several users for 1 IP</td>
+
+        <td>singleUserByIP</td>
+
+        <td>0.9.5</td>
+
+        <td>No</td>
+      </tr>
+
+      <tr class="table-even">
+        <td>Display other sessions</td>
+
+        <td>notifyOther</td>
+
+        <td>0.9.5</td>
+
+        <td>No</td>
+      </tr>
+
+      <tr class="table-odd">
+        <td>Display deleted sessions</td>
+
+        <td>notifyDeleted</td>
+
+        <td>0.9.5</td>
+
+        <td>No</td>
+      </tr>
+    </table>
 
     <h4 class="heading-1-1-1"><span id="HLDAP">LDAP</span></h4><br />
     <br />
@@ -1300,7 +1658,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
       </tr>
 
       <tr class="table-odd">
-        <td>Server</td>
+        <td>LDAP server or Net::LDAP connexion string</td>
 
         <td>ldapServer</td>
 
@@ -1310,7 +1668,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
       </tr>
 
       <tr class="table-even">
-        <td>Port</td>
+        <td>LDAP Port</td>
 
         <td>ldapPort</td>
 
@@ -1320,7 +1678,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
       </tr>
 
       <tr class="table-odd">
-        <td>Search base</td>
+        <td>LDAP search base</td>
 
         <td>ldapBase</td>
 
@@ -1447,6 +1805,131 @@ level1Key =&gt; { level2Key =&gt; 'value' },
         <td>0.9.4</td>
 
         <td>No</td>
+      </tr>
+    </table>
+
+    <h4 class="heading-1-1-1"><span id="HDBI">DBI</span></h4><br />
+    <br />
+
+    <table class="wiki-table" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <th>Full name</th>
+
+        <th>Key name</th>
+
+        <th>Version</th>
+      </tr>
+
+      <tr class="table-odd">
+        <td>Connection chain</td>
+
+        <td>dbiAuthChain</td>
+
+        <td>0.9.5</td>
+      </tr>
+
+      <tr class="table-even">
+        <td>Connection user</td>
+
+        <td>dbiAuthUser</td>
+
+        <td>0.9.5</td>
+      </tr>
+
+      <tr class="table-odd">
+        <td>Connection password</td>
+
+        <td>dbiAuthPassword</td>
+
+        <td>0.9.5</td>
+      </tr>
+
+      <tr class="table-even">
+        <td>Authentication table</td>
+
+        <td>dbiAuthTable</td>
+
+        <td>0.9.5</td>
+      </tr>
+
+      <tr class="table-odd">
+        <td>Login column</td>
+
+        <td>dbiAuthLoginCol</td>
+
+        <td>0.9.5</td>
+      </tr>
+
+      <tr class="table-even">
+        <td>Password column</td>
+
+        <td>dbiAuthPasswordCol</td>
+
+        <td>0.9.5</td>
+      </tr>
+
+      <tr class="table-odd">
+        <td>Password hash</td>
+
+        <td>dbiAuthPasswordHash</td>
+
+        <td>0.9.5</td>
+      </tr>
+
+      <tr class="table-even">
+        <td>UserDB connection chain</td>
+
+        <td>dbiUserChain</td>
+
+        <td>0.9.5</td>
+      </tr>
+
+      <tr class="table-odd">
+        <td>UserDB connection user</td>
+
+        <td>dbiUserUser</td>
+
+        <td>0.9.5</td>
+      </tr>
+
+      <tr class="table-even">
+        <td>UserDB connection password</td>
+
+        <td>dbiUserPassword</td>
+
+        <td>0.9.5</td>
+      </tr>
+
+      <tr class="table-odd">
+        <td>UserDB table</td>
+
+        <td>dbiUserTable</td>
+
+        <td>0.9.5</td>
+      </tr>
+
+      <tr class="table-even">
+        <td>Mail column</td>
+
+        <td>dbiPasswordMailCol</td>
+
+        <td>0.9.5</td>
+      </tr>
+
+      <tr class="table-odd">
+        <td>Pivot from auth table</td>
+
+        <td>authPivot</td>
+
+        <td>0.9.5</td>
+      </tr>
+
+      <tr class="table-even">
+        <td>Pivot from user table</td>
+
+        <td>userPivot</td>
+
+        <td>0.9.5</td>
       </tr>
     </table>
 
@@ -1595,8 +2078,9 @@ level1Key =&gt; { level2Key =&gt; 'value' },
       </tr>
     </table>
 
-    <h4 class="heading-1-1-1"><span id="HLibertyAlliance">Liberty
-    Alliance</span></h4><br />
+    <h4 class="heading-1-1-1"><span id=
+    "HLibertyAlliance28willbereplacedbySAMLin09529">Liberty Alliance (will be
+    replaced by SAML in 0.9.5)</span></h4><br />
     <br />
 
     <table class="wiki-table" cellpadding="0" cellspacing="0" border="0">
@@ -1699,8 +2183,42 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>No</td>
       </tr>
-    </table><br />
+    </table>
+
+    <h4 class="heading-1-1-1"><span id="HTwitter">Twitter</span></h4><br />
     <br />
+
+    <table class="wiki-table" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <th>Full name</th>
+
+        <th>Key name</th>
+
+        <th>Version</th>
+
+        <th>GUI</th>
+      </tr>
+
+      <tr class="table-odd">
+        <td>twitter application key</td>
+
+        <td>twitterKey</td>
+
+        <td>0.9.5</td>
+
+        <td>No*</td>
+      </tr>
+
+      <tr class="table-even">
+        <td>twitter application secret</td>
+
+        <td>twitterSecret</td>
+
+        <td>0.9.5</td>
+
+        <td>No*</td>
+      </tr>
+    </table>
   </div>
 
   <p class="footer"><a href="index.html">Index</a></p>
