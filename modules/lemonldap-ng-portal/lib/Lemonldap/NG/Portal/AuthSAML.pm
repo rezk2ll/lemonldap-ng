@@ -272,14 +272,12 @@ sub extractFormInfo {
             }
 
             unless ($result) {
-                $self->lmLog(
-                    "HTTP-REDIRECT: Fail to process authentication response",
+                $self->lmLog( "SSO: Fail to process authentication response",
                     'error' );
                 return PE_ERROR;
             }
 
-            $self->lmLog( "HTTP-REDIRECT: authentication response is valid",
-                'debug' );
+            $self->lmLog( "SSO: authentication response is valid", 'debug' );
 
             # Get SAML response
             my $saml_response = $login->response();
@@ -727,7 +725,7 @@ sub extractFormInfo {
 
         foreach ( keys %{ $self->{_idpList} } ) {
             $html .=
-                '<tr><td><input type="radio" name="idp" value="' 
+              '<tr><td><input type="radio" name="idp" onclick="stop()" value="'
               . $_
               . '" /></td><td>'
               . $self->{_idpList}->{$_}->{name}

@@ -26,8 +26,13 @@
 	</form>
 	<script>
 	var i=5;
+	var _go=1;
+        function stop() {
+                _go=0;
+                $('#timer').html("...");
+        }
 	function go() {
-		$("#form").submit();
+		if(_go)$("#form").submit();
 	}
 	function timer() {
 		var h=$('#timer').html();
