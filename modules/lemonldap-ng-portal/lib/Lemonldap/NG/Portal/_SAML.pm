@@ -532,11 +532,13 @@ sub getAttributeValue {
 # @return result
 sub validateConditions {
     my ( $self, $assertion, $entityID ) = splice @_;
+    my $tolerance = 10;
     my $status;
 
+    # Time
     eval {
         $status =
-          Lasso::Saml2Assertion::validate_conditions( $assertion, $entityID );
+          Lasso::Saml2Assertion::validate_time_checks( $assertion, $tolerance );
     };
 
     if ($@) {
@@ -545,9 +547,30 @@ sub validateConditions {
     }
 
     unless ( $status eq Lasso::Constants::SAML2_ASSERTION_VALID ) {
-        $self->lmLog( "Conditions validations result: $status", 'error' );
+        $self->lmLog( "Time conditions validations result: $status", 'error' );
         return 0;
     }
+
+    $self->lmLog( "Time conditions validated", 'debug' );
+
+    # Audience
+    eval {
+        $status =
+          Lasso::Saml2Assertion::validate_audience( $assertion, $entityID );
+    };
+
+    if ($@) {
+        $self->checkLassoError($@);
+        return 0;
+    }
+
+    unless ( $status eq Lasso::Constants::SAML2_ASSERTION_VALID ) {
+        $self->lmLog( "Audience conditions validations result: $status",
+            'error' );
+        return 0;
+    }
+
+    $self->lmLog( "Audience conditions validated", 'debug' );
 
     return 1;
 }

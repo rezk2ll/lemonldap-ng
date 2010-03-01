@@ -324,12 +324,9 @@ sub extractFormInfo {
         unless (
             $self->validateConditions( $assertion, $self->{samlEntityID} ) )
         {
-            $self->lmLog( "Time or Audience conditions not validated",
-                'error' );
+                $self->lmLog( "Conditions not validated", 'error' );
             return PE_ERROR;
         }
-
-        $self->lmLog( "Conditions validated", 'debug' );
 
         # Check OneTimeUse flag
         # TODO
