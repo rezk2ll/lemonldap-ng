@@ -513,7 +513,17 @@ sub extractFormInfo {
                 return PE_ERROR;
             }
 
-            # Inform user that logout is OK
+            # If URL in RelayState, different from portal, redirect user
+            if ( $self->extractRelayState($relaystate) ) {
+                $self->lmLog( "RelayState $relaystate extracted", 'debug' );
+                $self->lmLog( "URL " . $self->{urldc} . " found in RelayState",
+                    'debug' );
+            }
+
+            $self->_subProcess(qw(autoRedirect))
+              if ( $self->{urldc} and $self->{urldc} ne $self->{portal} );
+
+            # Else, inform user that logout is OK
             return PE_LOGOUT_OK;
         }
 
@@ -604,6 +614,12 @@ sub extractFormInfo {
                 unless ( $self->validateLogoutRequest($logout) ) {
                     $self->lmLog( "SLO request is not valid", 'error' );
                 }
+            }
+
+            # Set RelayState
+            if ($relaystate) {
+                $logout->msg_relayState($relaystate);
+                $self->lmLog( "Set $relaystate in RelayState", 'debug' );
             }
 
             # Logout response

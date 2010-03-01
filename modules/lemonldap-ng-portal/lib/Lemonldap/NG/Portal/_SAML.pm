@@ -577,6 +577,15 @@ sub createLogoutRequest {
         return;
     }
 
+    # Set RelayState
+    my $infos;
+    foreach (qw /urldc/) {
+        $infos->{$_} = $self->{$_} if $self->{$_};
+    }
+    my $relaystate = $self->storeRelayState($infos);
+    $logout->msg_relayState($relaystate);
+    $self->lmLog( "Set $relaystate in RelayState", 'debug' );
+
     # Build logout request
     unless ( $self->buildLogoutRequestMsg($logout) ) {
         $self->lmLog( "Could not build logout request", 'error' );
