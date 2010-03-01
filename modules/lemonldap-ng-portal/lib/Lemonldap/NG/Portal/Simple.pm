@@ -104,7 +104,7 @@ use constant {
     PM_PP_EXP_WARNING        => 7,
     PM_SAML_IDPSELECT        => 8,
     PM_SAML_IDPCHOOSEN       => 9,
-    PM_REMEMBERCHOICE         => 10,
+    PM_REMEMBERCHOICE        => 10,
 };
 
 # EXPORTER PARAMETERS
@@ -333,7 +333,7 @@ sub setDefaultValues {
       "[LemonLDAP::NG] Password reset confirmation";
     $self->{mailSessionKey} ||= 'mail';
     $self->{mailUrl}        ||= $self->{portal} . "/mail.pl";
-    $self->{issuerDB}             ||= 'Null';
+    $self->{issuerDB}       ||= 'Null';
 
     # Set default userDB and passwordDB to DBI if authentication is DBI
     if ( $self->{authentication} =~ /DBI/i ) {
@@ -668,13 +668,13 @@ sub _deleteSession {
 # @param $variable
 # @return void
 sub _dump {
-	my $self = shift;
-	my $variable = shift;
+    my $self     = shift;
+    my $variable = shift;
 
-	use Data::Dumper;
+    use Data::Dumper;
     $self->lmLog( "Dump: " . Dumper($variable), 'debug' );
 
-	return;
+    return;
 }
 
 ##@method protected string info(string t)
@@ -852,7 +852,7 @@ sub controlExistingSession {
             # Redirect or Post if asked by authLogout
             $self->_subProcess(qw(autoRedirect))
               if ( $self->{urldc} and $self->{urldc} ne $self->{portal} );
-            $self->_subProcess(qw(autoPost))     if ( $self->{postUrl} );
+            $self->_subProcess(qw(autoPost)) if ( $self->{postUrl} );
 
             # Display logout message
             return PE_LOGOUT_OK;
@@ -954,7 +954,7 @@ sub issuerDBInit {
     my $issuerDB;
 
     # Get the current issuer module
-        $issuerDB = $self->{issuerDB};
+    $issuerDB = $self->{issuerDB};
 
     $self->{sessionInfo}->{_issuerDB} = $issuerDB;
 
@@ -1001,7 +1001,7 @@ sub passwordDBInit {
     my $passwordDB;
 
     # Get the current password module
-        $passwordDB = $self->{passwordDB};
+    $passwordDB = $self->{passwordDB};
 
     $self->{sessionInfo}->{_passwordDB} = $passwordDB;
 
@@ -1056,15 +1056,15 @@ sub setSessionInfo {
         );
     }
     else {
-    $self->{sessionInfo}->{_utime} = time();
-    $self->{sessionInfo}->{startTime} =
-      &POSIX::strftime( "%Y%m%d%H%M%S", localtime() );
-    $self->lmLog(
+        $self->{sessionInfo}->{_utime} = time();
+        $self->{sessionInfo}->{startTime} =
+          &POSIX::strftime( "%Y%m%d%H%M%S", localtime() );
+        $self->lmLog(
             "Store startTime: "
               . $self->{sessionInfo}->{startTime}
               . " in session",
-        'debug'
-    );
+            'debug'
+        );
     }
     return $self->SUPER::setSessionInfo();
 }

@@ -119,7 +119,7 @@ sub load {
     while ( @row = $sth->fetchrow_array ) {
         $res->{ $row[1] } = $row[2];
     }
-    unless($res) {
+    unless ($res) {
         $Lemonldap::NG::Common::Conf::msg .= "No configuration $cfgNum found";
         return 0;
     }

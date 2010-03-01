@@ -187,7 +187,7 @@ sub confNode {
 
     # saml metadata
     elsif ( $target =~ s/^samlmetadata:// ) {
-        my $h = $self->keyToH($target, $self->conf);
+        my $h = $self->keyToH( $target, $self->conf );
         $h = $h->{samlIDPMetaDataXML} if ( $h->{samlIDPMetaDataXML} );
         my $metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new();
         $metadata->initializeFromConfHash($h);
@@ -195,11 +195,11 @@ sub confNode {
         $text =~ s/^\/([^\/]+)\/.*$/$1/;
         $res .= $self->li("$target/")
           . $self->span(
-            id   => "$target/",
-            text => $text,
-            data => $metadata->toXML(),
-            js   => $js,
-            help => $help,
+            id     => "$target/",
+            text   => $text,
+            data   => $metadata->toXML(),
+            js     => $js,
+            help   => $help,
             target => "samlmetadata",
           ) . "</li>";
     }
@@ -216,11 +216,11 @@ sub confNode {
         unless ( defined $h ) {
             $self->lmLog( "$target does not exists in menu hash", "debug" );
             $h = {
-                text  => '',
-                hash  => {},
-                'int' => 0,
+                text     => '',
+                hash     => {},
+                'int'    => 0,
                 textarea => '',
-                bool => 0,
+                bool     => 0,
             }->{$type};
             $self->lmLog( "Type $type unknown", 'warn' ) unless ( defined $h );
         }
@@ -449,7 +449,7 @@ sub span {
 
     # Text
     my $tmp = $args{text};
-    $tmp  =~ s/"/&#39;/g;
+    $tmp =~ s/"/&#39;/g;
     $args{text} = join ' ', map { $self->translate($_) } split /\s+/,
       $args{text}
       unless ( $args{noT} );

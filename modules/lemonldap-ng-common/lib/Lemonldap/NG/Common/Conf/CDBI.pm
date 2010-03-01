@@ -3,7 +3,7 @@ package Lemonldap::NG::Common::Conf::CDBI;
 use strict;
 use DBI;
 require Storable;
-use Lemonldap::NG::Common::Conf::Constants; #inherits
+use Lemonldap::NG::Common::Conf::Constants;    #inherits
 
 our $VERSION = 0.1;
 
@@ -84,7 +84,8 @@ sub store {
     $fields =~ s/'/''/gs;
     my $tmp =
       $self->_dbh->do( "insert into "
-          . $self->{dbiTable} . " (cfgNum,data) values ($cfgNum,'$fields')");
+          . $self->{dbiTable}
+          . " (cfgNum,data) values ($cfgNum,'$fields')" );
     unless ($tmp) {
         $self->logError;
         return UNKNOWN_ERROR;
@@ -107,9 +108,10 @@ sub load {
         return 0;
     }
     my $r;
-    eval { $r = Storable::thaw($row->[1]); } ;
+    eval { $r = Storable::thaw( $row->[1] ); };
     if ($@) {
-        $Lemonldap::NG::Common::Conf::msg = "Bad stored data in conf database: $@";
+        $Lemonldap::NG::Common::Conf::msg =
+          "Bad stored data in conf database: $@";
         return 0;
     }
     return $r;

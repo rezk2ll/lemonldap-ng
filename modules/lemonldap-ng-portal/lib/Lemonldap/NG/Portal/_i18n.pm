@@ -220,7 +220,7 @@ sub error_en {
         'Confirmation key is invalid or too old',
         'An error occurs when sending mail',
         'A mail has been sent',
-	'You have been disconnected',
+        'You have been disconnected',
     ];
 }
 
@@ -277,7 +277,7 @@ sub error_ro {
         'Cheie de confirmare este invalid sau prea veche',
         'Trimiterea mail nu a reuşit',
         'Un e-mail a fost trimis',
-	'Aţi fost deconectat',
+        'Aţi fost deconectat',
     ];
 }
 

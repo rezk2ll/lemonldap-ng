@@ -29,7 +29,7 @@ sub getUser {
 # @return Lemonldap::NG::Portal constant
 sub setSessionInfo {
     my $self = shift;
-    $self->{sessionInfo}->{$self->{whatToTrace}} = $self->{user};
+    $self->{sessionInfo}->{ $self->{whatToTrace} } = $self->{user};
     PE_OK;
 }
 

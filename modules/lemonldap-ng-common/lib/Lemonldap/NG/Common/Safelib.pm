@@ -23,7 +23,7 @@ our $functions = [qw(&checkLogonHours &checkDate)];
 # @param $default_access optional what result to return for users without logons hours
 # @return 1 if access allowed, 0 else
 sub checkLogonHours {
-    my ($logon_hours, $syntax, $time_correction, $default_access) = @_;
+    my ( $logon_hours, $syntax, $time_correction, $default_access ) = @_;
 
     # Active Directory - logonHours: $attr_src_syntax = octetstring
     # Samba - sambaLogonHours: ???
@@ -39,29 +39,31 @@ sub checkLogonHours {
     # Begin with sunday at 0h00
     my $base2_logon_hours;
     if ( $syntax eq "octetstring" ) {
-        $base2_logon_hours = unpack ("B*", $logon_hours);
+        $base2_logon_hours = unpack( "B*", $logon_hours );
     }
     if ( $syntax eq "hexadecimal" ) {
+
         # Remove white spaces
         $logon_hours =~ s/ //g;
-        $base2_logon_hours = unpack ("B*", pack ("H*", $logon_hours));
+        $base2_logon_hours = unpack( "B*", pack( "H*", $logon_hours ) );
     }
 
     # Get the present day and hour
-    my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = gmtime(time);
+    my ( $sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst ) =
+      gmtime(time);
 
     # Get the hour position
-    my $hourpos = $wday*24 + $hour;
-    
+    my $hourpos = $wday * 24 + $hour;
+
     # Use time_correction
     if ($time_correction) {
-       my ($sign, $time) = ($time_correction =~ /([+|-]?)(\d+)/);
-       if ($sign =~ /-/) { $hourpos -= $time; }
-       else { $hourpos += $time; }
+        my ( $sign, $time ) = ( $time_correction =~ /([+|-]?)(\d+)/ );
+        if ( $sign =~ /-/ ) { $hourpos -= $time; }
+        else                { $hourpos += $time; }
     }
 
     # Get the corresponding byte
-    return substr($base2_logon_hours, $hourpos, 1);
+    return substr( $base2_logon_hours, $hourpos, 1 );
 }
 
 ## @function boolean checkDate(string start, string end, boolean default_access)
@@ -71,15 +73,15 @@ sub checkLogonHours {
 # @param $default_access optional what result to return for users without start or end start
 # @return 1 if access allowed, 0 else
 sub checkDate {
-    my ($start, $end, $default_access) = @_;
+    my ( $start, $end, $default_access ) = @_;
 
     # Get date in string
-    $start = substr($start, 0, 14);
-    $end = substr($end, 0, 14);
+    $start = substr( $start, 0, 14 );
+    $end   = substr( $end,   0, 14 );
 
     # Default access if no value
     $default_access ||= "0";
-    return $default_access unless ($start or $end);
+    return $default_access unless ( $start or $end );
 
     # If no start, set start to 0
     $start ||= 0;
@@ -88,21 +90,21 @@ sub checkDate {
     $end ||= 999999999999999;
 
     # Get the present day and hour
-    my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = gmtime(time);
+    my ( $sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst ) =
+      gmtime(time);
     $year += 1900;
-    $mon += 1;
-    $mon = "0".$mon if ($mon<10);
-    $mday = "0".$mday if ($mday<10);
-    $hour = "0".$hour if ($hour<10);
-    $min = "0".$min if ($min<10);
-    $sec = "0".$sec if ($sec<10);
+    $mon  += 1;
+    $mon  = "0" . $mon  if ( $mon < 10 );
+    $mday = "0" . $mday if ( $mday < 10 );
+    $hour = "0" . $hour if ( $hour < 10 );
+    $min  = "0" . $min  if ( $min < 10 );
+    $sec  = "0" . $sec  if ( $sec < 10 );
 
-    my $date = $year.$mon.$mday.$hour.$min.$sec;
+    my $date = $year . $mon . $mday . $hour . $min . $sec;
 
-    return 1 if ( ($date >= $start) and ($date <= $end) );
+    return 1 if ( ( $date >= $start ) and ( $date <= $end ) );
     return 0;
 }
-
 
 1;
 __END__

@@ -592,3 +592,7 @@ default-diff:
 	@$(DIFF) lemonldap-ng-manager/example/index.pl $(LMPREFIX)/htdocs/manager/index.pl ||true
 	@$(DIFF) lemonldap-ng-manager/example/sessions.pl $(LMPREFIX)/htdocs/manager/sessions.pl ||true
 
+tidy: clean
+	find lemon*/ -type f -name '*.pm' -exec perltidy -b {} \;
+	find lemon*/ -name '*.bak' -delete
+

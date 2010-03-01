@@ -49,9 +49,9 @@ sub dbh {
 # @param hash hash mechanism
 # @return hashed password
 sub hash_password {
-    my $self = shift;
+    my $self     = shift;
     my $password = shift;
-    my $hash = shift;
+    my $hash     = shift;
 
     if ( $hash =~ /^(md5|sha|sha1)$/i ) {
         $self->lmLog( "Using " . uc($hash) . " to hash password", 'debug' );
@@ -71,7 +71,7 @@ sub hash_password {
 # @param password password
 # @return boolean result
 sub check_password {
-    my $self = shift;
+    my $self        = shift;
     my $dbh         = shift;
     my $user        = $self->{user};
     my $password    = $self->{password};
@@ -118,12 +118,12 @@ sub check_password {
 # @param passwordCol optional password column
 # @return boolean result
 sub modify_password {
-    my $self = shift;
-    my $user = shift;
-    my $password = shift;
-    my $userCol = shift || $self->{dbiAuthLoginCol};
+    my $self        = shift;
+    my $user        = shift;
+    my $password    = shift;
+    my $userCol     = shift || $self->{dbiAuthLoginCol};
     my $passwordCol = shift || $self->{dbiAuthPasswordCol};
-    
+
     my $table = $self->{dbiAuthTable};
 
     eval {

@@ -713,7 +713,7 @@ EOT
 
 # fr
 sub help_default_fr {
-	print <<EOT;
+    print <<EOT;
 <h3>Bienvenue sur le gestionnaire de configuration</h3>
 <p>Les paramètres sont listés dans l'arbre de configuration sous différentes catégories :
 <ul>

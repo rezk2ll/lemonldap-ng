@@ -19,50 +19,48 @@ our $VERSION = '0.1';
 sub cstruct {
     shift;
     my ( $h, $k ) = @_;
-    my @tmp = split(/\//, $k);
-    return $h unless (scalar(@tmp) > 1);
+    my @tmp = split( /\//, $k );
+    return $h unless ( scalar(@tmp) > 1 );
     my $k1 = $tmp[0];
     my $k2 = $tmp[1];
-    if ($k1 =~ /^virtualHosts/i)
-    {
-    %$h = (
-        %$h,
-        virtualHosts => {
-              $k2 => {
-                _nodes => [qw(rules:rules:rules headers)],
-                rules  => {
-                      _nodes => ["hash:/locationRules/$k2:rules:rules"],
-                    _js    => 'rulesRoot'
-                },
-                headers => {
-                      _nodes => ["hash:/exportedHeaders/$k2"],
-                      _js    => 'hashRoot'
+    if ( $k1 =~ /^virtualHosts/i ) {
+        %$h = (
+            %$h,
+            virtualHosts => {
+                $k2 => {
+                    _nodes => [qw(rules:rules:rules headers)],
+                    rules  => {
+                        _nodes => ["hash:/locationRules/$k2:rules:rules"],
+                        _js    => 'rulesRoot'
+                    },
+                    headers => {
+                        _nodes => ["hash:/exportedHeaders/$k2"],
+                        _js    => 'hashRoot'
                     },
                 }
             }
         );
     }
-    elsif ($k1 =~ /^samlIDPMetaDataNode/i)
-    {
-      %$h = (
-          %$h,
-          samlIDPMetaDataNode => {
-              $k2 => {
-                  _nodes => [
-                      qw(samlIDPMetaDataExportedAttributes samlIDPMetaDataXML)
+    elsif ( $k1 =~ /^samlIDPMetaDataNode/i ) {
+        %$h = (
+            %$h,
+            samlIDPMetaDataNode => {
+                $k2 => {
+                    _nodes => [
+                        qw(samlIDPMetaDataExportedAttributes samlIDPMetaDataXML)
                     ],
-                  samlIDPMetaDataExportedAttributes => {
-                      _nodes => [
-                          "hash:/samlIDPMetaDataExportedAttributes/$k2"
-                        . ":samlIDPMetaDataExportedAttributes:samlAttribute"
+                    samlIDPMetaDataExportedAttributes => {
+                        _nodes => [
+                                "hash:/samlIDPMetaDataExportedAttributes/$k2"
+                              . ":samlIDPMetaDataExportedAttributes:samlAttribute"
                         ],
-                      _js    => 'samlAttributeRoot'
-                },
-                  samlIDPMetaDataXML => "samlmetadata:/samlIDPMetaDataXML/$k2"
-                                      . ":samlIDPMetaDataXML:textarea",
+                        _js => 'samlAttributeRoot'
+                    },
+                    samlIDPMetaDataXML => "samlmetadata:/samlIDPMetaDataXML/$k2"
+                      . ":samlIDPMetaDataXML:textarea",
+                }
             }
-        }
-    );
+        );
     }
     return $h;
 }
@@ -73,8 +71,10 @@ sub cstruct {
 sub struct {
     my $self = shift;
     return {
-        _nodes => [qw(n:generalParameters n:variables n:virtualHosts n:samlServiceMetaData n:samlIDPMetaDataNode)],
-        _help  => 'default',
+        _nodes => [
+            qw(n:generalParameters n:variables n:virtualHosts n:samlServiceMetaData n:samlIDPMetaDataNode)
+        ],
+        _help => 'default',
 
         ######################
         # GENERAL PARAMETERS #
@@ -83,7 +83,7 @@ sub struct {
             _nodes => [
                 qw(portalParams n:authParams logParams cookieParams sessionParams n:advancedParams)
             ],
-            _help  => 'default',
+            _help => 'default',
 
             # PORTAL PARAMETERS
             portalParams => {
@@ -92,7 +92,7 @@ sub struct {
                 ],
                 _help => 'portalParams',
 
-            portal => 'text:/portal',
+                portal              => 'text:/portal',
                 portalSkin          => 'text:/portalSkin',
                 portalDisplayLogout => 'text:/portalDisplayLogout',
                 portalDisplayResetPassword =>
@@ -183,13 +183,13 @@ sub struct {
                         _js    => 'hashRoot'
                     },
                 },
-                singleSession  => 'bool:/singleSession',
-                singleIP       => 'bool:/singleIP',
-                singleUserByIP => 'bool:/singleUserByIP',
-                notifyDeleted  => 'bool:/notifyDeleted',
-                notifyOther    => 'bool:/notifyOther',
-                storePassword  => 'bool:/storePassword',
-                timeout        => 'text:/timeout:timeout:text',
+                singleSession    => 'bool:/singleSession',
+                singleIP         => 'bool:/singleIP',
+                singleUserByIP   => 'bool:/singleUserByIP',
+                notifyDeleted    => 'bool:/notifyDeleted',
+                notifyOther      => 'bool:/notifyOther',
+                storePassword    => 'bool:/storePassword',
+                timeout          => 'text:/timeout:timeout:text',
                 grantSessionRule => 'text:/grantSessionRule',
             },
 
@@ -272,185 +272,187 @@ sub struct {
         ########
         # SAML #
         ########
-            # virtual keys should not begin like configuration keys.
-            samlIDPMetaDataNode => {
-                _nodes  => ['nhash:/samlIDPMetaDataExportedAttributes:samlIDPMetaDataNode:samlMetaData'],
-                _upload => ['/samlIDPMetaDataXML'],
-                _help   => 'default',
-                _call   => '$(\'#newsamlmetadatab\').show();',
-            },
+        # virtual keys should not begin like configuration keys.
+        samlIDPMetaDataNode => {
+            _nodes => [
+'nhash:/samlIDPMetaDataExportedAttributes:samlIDPMetaDataNode:samlMetaData'
+            ],
+            _upload => ['/samlIDPMetaDataXML'],
+            _help   => 'default',
+            _call   => '$(\'#newsamlmetadatab\').show();',
+        },
 
-            samlServiceMetaData => {
-                _nodes => [
-                    qw(samlEntityID
-                   samlServicePrivateKey
-                       n:samlOrganization
-                       n:samlSPSSODescriptor
-                       n:samlIDPSSODescriptor)
-                  ],
-                _help  => 'default',
+        samlServiceMetaData => {
+            _nodes => [
+                qw(samlEntityID
+                  samlServicePrivateKey
+                  n:samlOrganization
+                  n:samlSPSSODescriptor
+                  n:samlIDPSSODescriptor)
+            ],
+            _help => 'default',
 
-                # GLOBAL INFORMATIONS
-                samlEntityID => 'text:/samlEntityID',
+            # GLOBAL INFORMATIONS
+            samlEntityID => 'text:/samlEntityID',
             samlServicePrivateKey =>
               'textarea:/samlServicePrivateKey:samlServicePrivateKey:textarea',
-                samlOrganization => {
+            samlOrganization => {
+                _nodes => [
+                    qw(samlOrganizationDisplayName
+                      samlOrganizationName
+                      samlOrganizationURL)
+                ],
+                _help => 'default',
+                samlOrganizationDisplayName =>
+                  'text:/samlOrganizationDisplayName',
+                samlOrganizationURL  => 'text:/samlOrganizationURL',
+                samlOrganizationName => 'text:/samlOrganizationName',
+            },
+
+            # SERVICE PROVIDER
+            'samlSPSSODescriptor' => {
+                _nodes => [
+                    qw(samlSPSSODescriptorAuthnRequestsSigned
+                      samlSPSSODescriptorProtocolSupportEnumeration
+                      samlSPSSODescriptorKeyDescriptorSigning
+                      n:samlSPSSODescriptorSingleLogoutService
+                      n:samlSPSSODescriptorAssertionConsumerService
+                      n:samlSPSSODescriptorNameIDFormat)
+                ],
+                _help => 'default',
+
+                samlSPSSODescriptorAuthnRequestsSigned =>
+                  'bool:/samlSPSSODescriptorAuthnRequestsSigned',
+                samlSPSSODescriptorProtocolSupportEnumeration =>
+                  'text:/samlSPSSODescriptorProtocolSupportEnumeration',
+                samlSPSSODescriptorKeyDescriptorSigning =>
+                  'textarea:/samlSPSSODescriptorKeyDescriptorSigning',
+
+                samlSPSSODescriptorSingleLogoutService => {
                     _nodes => [
-                        qw(samlOrganizationDisplayName
-                           samlOrganizationName
-                           samlOrganizationURL)
-                      ],
-                    _help  => 'default',
-                    samlOrganizationDisplayName =>
-                        'text:/samlOrganizationDisplayName',
-                    samlOrganizationURL => 'text:/samlOrganizationURL',
-                    samlOrganizationName => 'text:/samlOrganizationName',
-                  },
+                        qw(samlSPSSODescriptorSingleLogoutServiceHTTP
+                          samlSPSSODescriptorSingleLogoutServiceSOAP)
+                    ],
+                    _help => 'default',
+                    samlSPSSODescriptorSingleLogoutServiceHTTP =>
+                      'samlService:/samlSPSSODescriptorSingleLogoutServiceHTTP',
+                    samlSPSSODescriptorSingleLogoutServiceSOAP =>
+                      'samlService:/samlSPSSODescriptorSingleLogoutServiceSOAP',
+                },
 
-                # SERVICE PROVIDER
-                'samlSPSSODescriptor' => {
+                samlSPSSODescriptorAssertionConsumerService => {
                     _nodes => [
-                        qw(samlSPSSODescriptorAuthnRequestsSigned
-                           samlSPSSODescriptorProtocolSupportEnumeration
-                           samlSPSSODescriptorKeyDescriptorSigning
-                           n:samlSPSSODescriptorSingleLogoutService
-                           n:samlSPSSODescriptorAssertionConsumerService
-                           n:samlSPSSODescriptorNameIDFormat)
-                      ],
-                    _help  => 'default',
-
-                    samlSPSSODescriptorAuthnRequestsSigned =>
-                      'bool:/samlSPSSODescriptorAuthnRequestsSigned',
-                    samlSPSSODescriptorProtocolSupportEnumeration =>
-                      'text:/samlSPSSODescriptorProtocolSupportEnumeration',
-                    samlSPSSODescriptorKeyDescriptorSigning =>
-                      'textarea:/samlSPSSODescriptorKeyDescriptorSigning',
-
-                    samlSPSSODescriptorSingleLogoutService => {
-                        _nodes => [
-                            qw(samlSPSSODescriptorSingleLogoutServiceHTTP
-                               samlSPSSODescriptorSingleLogoutServiceSOAP)
-                          ],
-                        _help  => 'default',
-                        samlSPSSODescriptorSingleLogoutServiceHTTP =>
-'samlService:/samlSPSSODescriptorSingleLogoutServiceHTTP',
-                        samlSPSSODescriptorSingleLogoutServiceSOAP =>
-'samlService:/samlSPSSODescriptorSingleLogoutServiceSOAP',
-                      },
-
-                    samlSPSSODescriptorAssertionConsumerService => {
-                        _nodes => [
-                            qw(samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact
-                               samlSPSSODescriptorAssertionConsumerServiceHTTPPost
-                               samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect)
-                          ],
-                        _help  => 'default',
-                        samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact =>
+                        qw(samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact
+                          samlSPSSODescriptorAssertionConsumerServiceHTTPPost
+                          samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect)
+                    ],
+                    _help => 'default',
+                    samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact =>
 'samlAssertion:/samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact',
-                        samlSPSSODescriptorAssertionConsumerServiceHTTPPost =>
+                    samlSPSSODescriptorAssertionConsumerServiceHTTPPost =>
 'samlAssertion:/samlSPSSODescriptorAssertionConsumerServiceHTTPPost',
-                        samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect =>
+                    samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect =>
 'samlAssertion:/samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect',
-                    },
+                },
 
-                    samlSPSSODescriptorNameIDFormat => {
-                        _nodes => [
-                            qw(samlSPSSODescriptorNameIDFormatX509SubjectName
-                               samlSPSSODescriptorNameIDFormatPersistent
-                               samlSPSSODescriptorNameIDFormatTransient)
-                        ],
-                        _help => 'default',
-                        samlSPSSODescriptorNameIDFormatX509SubjectName =>
-'bool:/samlSPSSODescriptorNameIDFormatX509SubjectName:samlNameIDFormatX509SubjectName:bool',
-                        samlSPSSODescriptorNameIDFormatPersistent =>
-'bool:/samlSPSSODescriptorNameIDFormatPersistent:samlNameIDFormatPersistent:bool',
-                        samlSPSSODescriptorNameIDFormatTransient =>
-'bool:/samlSPSSODescriptorNameIDFormatTransient:samlNameIDFormatTransient:bool',
-                      },
-                  },
-
-                # IDENTITY PROVIDER
-                samlIDPSSODescriptor => {
+                samlSPSSODescriptorNameIDFormat => {
                     _nodes => [
-                        qw(samlIDPSSODescriptorWantAuthnRequestsSigned
-                           samlIDPSSODescriptorProtocolSupportEnumeration
-                           samlIDPSSODescriptorKeyDescriptorSigning
-                           n:samlIDPSSODescriptorSingleSignOnService
-                           n:samlIDPSSODescriptorSingleLogoutService
-                           n:samlIDPSSODescriptorArtifactResolutionService
-                           n:samlIDPSSODescriptorNameIDFormat
-                           n:samlIDPSSODescriptorManageNameIDService)
-                      ],
-                    _help  => 'default',
+                        qw(samlSPSSODescriptorNameIDFormatX509SubjectName
+                          samlSPSSODescriptorNameIDFormatPersistent
+                          samlSPSSODescriptorNameIDFormatTransient)
+                    ],
+                    _help => 'default',
+                    samlSPSSODescriptorNameIDFormatX509SubjectName =>
+'bool:/samlSPSSODescriptorNameIDFormatX509SubjectName:samlNameIDFormatX509SubjectName:bool',
+                    samlSPSSODescriptorNameIDFormatPersistent =>
+'bool:/samlSPSSODescriptorNameIDFormatPersistent:samlNameIDFormatPersistent:bool',
+                    samlSPSSODescriptorNameIDFormatTransient =>
+'bool:/samlSPSSODescriptorNameIDFormatTransient:samlNameIDFormatTransient:bool',
+                },
+            },
 
-                    samlIDPSSODescriptorWantAuthnRequestsSigned =>
-                        'bool:/samlIDPSSODescriptorWantAuthnRequestsSigned',
-                    samlIDPSSODescriptorProtocolSupportEnumeration =>
-                        'text:/samlIDPSSODescriptorProtocolSupportEnumeration',
-                    samlIDPSSODescriptorKeyDescriptorSigning =>
-                        'textarea:/samlIDPSSODescriptorKeyDescriptorSigning',
+            # IDENTITY PROVIDER
+            samlIDPSSODescriptor => {
+                _nodes => [
+                    qw(samlIDPSSODescriptorWantAuthnRequestsSigned
+                      samlIDPSSODescriptorProtocolSupportEnumeration
+                      samlIDPSSODescriptorKeyDescriptorSigning
+                      n:samlIDPSSODescriptorSingleSignOnService
+                      n:samlIDPSSODescriptorSingleLogoutService
+                      n:samlIDPSSODescriptorArtifactResolutionService
+                      n:samlIDPSSODescriptorNameIDFormat
+                      n:samlIDPSSODescriptorManageNameIDService)
+                ],
+                _help => 'default',
 
-                    samlIDPSSODescriptorSingleSignOnService => {
-                        _nodes => [
-                            qw(samlIDPSSODescriptorSingleSignOnServiceHTTP
-                               samlIDPSSODescriptorSingleSignOnServiceSOAP)
-                          ],
-                        _help => 'default',
-                        samlIDPSSODescriptorSingleSignOnServiceHTTP =>
+                samlIDPSSODescriptorWantAuthnRequestsSigned =>
+                  'bool:/samlIDPSSODescriptorWantAuthnRequestsSigned',
+                samlIDPSSODescriptorProtocolSupportEnumeration =>
+                  'text:/samlIDPSSODescriptorProtocolSupportEnumeration',
+                samlIDPSSODescriptorKeyDescriptorSigning =>
+                  'textarea:/samlIDPSSODescriptorKeyDescriptorSigning',
+
+                samlIDPSSODescriptorSingleSignOnService => {
+                    _nodes => [
+                        qw(samlIDPSSODescriptorSingleSignOnServiceHTTP
+                          samlIDPSSODescriptorSingleSignOnServiceSOAP)
+                    ],
+                    _help => 'default',
+                    samlIDPSSODescriptorSingleSignOnServiceHTTP =>
 'samlService:/samlIDPSSODescriptorSingleSignOnServiceHTTP',
-                        samlIDPSSODescriptorSingleSignOnServiceSOAP =>
+                    samlIDPSSODescriptorSingleSignOnServiceSOAP =>
 'samlService:/samlIDPSSODescriptorSingleSignOnServiceSOAP',
-                      },
+                },
 
-                    samlIDPSSODescriptorSingleLogoutService => {
-                        _nodes => [
-                            qw(samlIDPSSODescriptorSingleLogoutServiceHTTP
-                               samlIDPSSODescriptorSingleLogoutServiceSOAP)
-                          ],
-                        _help  => 'default',
-                        samlIDPSSODescriptorSingleLogoutServiceHTTP =>
+                samlIDPSSODescriptorSingleLogoutService => {
+                    _nodes => [
+                        qw(samlIDPSSODescriptorSingleLogoutServiceHTTP
+                          samlIDPSSODescriptorSingleLogoutServiceSOAP)
+                    ],
+                    _help => 'default',
+                    samlIDPSSODescriptorSingleLogoutServiceHTTP =>
 'samlService:/samlIDPSSODescriptorSingleLogoutServiceHTTP',
-                        samlIDPSSODescriptorSingleLogoutServiceSOAP =>
+                    samlIDPSSODescriptorSingleLogoutServiceSOAP =>
 'samlService:/samlIDPSSODescriptorSingleLogoutServiceSOAP',
-                      },
+                },
 
-                    samlIDPSSODescriptorArtifactResolutionService => {
-                        _nodes => [
-                            qw(samlIDPSSODescriptorArtifactResolutionServiceArtifact)
-                          ],
-                        _help  => 'default',
-                        samlIDPSSODescriptorArtifactResolutionServiceArtifact =>
+                samlIDPSSODescriptorArtifactResolutionService => {
+                    _nodes => [
+                        qw(samlIDPSSODescriptorArtifactResolutionServiceArtifact)
+                    ],
+                    _help => 'default',
+                    samlIDPSSODescriptorArtifactResolutionServiceArtifact =>
 'samlAssertion:/samlIDPSSODescriptorArtifactResolutionServiceArtifact',
-                    },
+                },
 
-                    samlIDPSSODescriptorNameIDFormat => {
-                        _nodes => [
-                            qw(samlIDPSSODescriptorNameIDFormatX509SubjectName
-                               samlIDPSSODescriptorNameIDFormatPersistent
-                               samlIDPSSODescriptorNameIDFormatTransient)
-                        ],
-                        _help => 'default',
-                        samlIDPSSODescriptorNameIDFormatX509SubjectName =>
+                samlIDPSSODescriptorNameIDFormat => {
+                    _nodes => [
+                        qw(samlIDPSSODescriptorNameIDFormatX509SubjectName
+                          samlIDPSSODescriptorNameIDFormatPersistent
+                          samlIDPSSODescriptorNameIDFormatTransient)
+                    ],
+                    _help => 'default',
+                    samlIDPSSODescriptorNameIDFormatX509SubjectName =>
 'bool:/samlIDPSSODescriptorNameIDFormatX509SubjectName:samlNameIDFormatX509SubjectName:bool',
-                        samlIDPSSODescriptorNameIDFormatPersistent =>
+                    samlIDPSSODescriptorNameIDFormatPersistent =>
 'bool:/samlIDPSSODescriptorNameIDFormatPersistent:samlNameIDFormatPersistent:bool',
-                        samlIDPSSODescriptorNameIDFormatTransient =>
+                    samlIDPSSODescriptorNameIDFormatTransient =>
 'bool:/samlIDPSSODescriptorNameIDFormatTransient:samlNameIDFormatTransient:bool',
-                      },
+                },
 
-                    samlIDPSSODescriptorManageNameIDService => {
-                        _nodes => [
-                            qw(samlIDPSSODescriptorManageNameIDServiceHTTP
-                               samlIDPSSODescriptorManageNameIDServiceSOAP)
-                          ],
-                        _help  => 'default',
-                        samlIDPSSODescriptorManageNameIDServiceHTTP =>
+                samlIDPSSODescriptorManageNameIDService => {
+                    _nodes => [
+                        qw(samlIDPSSODescriptorManageNameIDServiceHTTP
+                          samlIDPSSODescriptorManageNameIDServiceSOAP)
+                    ],
+                    _help => 'default',
+                    samlIDPSSODescriptorManageNameIDServiceHTTP =>
 'samlService:/samlIDPSSODescriptorManageNameIDServiceHTTP',
-                        samlIDPSSODescriptorManageNameIDServiceSOAP =>
+                    samlIDPSSODescriptorManageNameIDServiceSOAP =>
 'samlService:/samlIDPSSODescriptorManageNameIDServiceSOAP',
-                      },
-                  },
-              },
+                },
+            },
+        },
     };
 }
 
@@ -654,7 +656,7 @@ sub testStruct {
         saml                  => $testNotDefined,
         samlServiceMetaData   => $testNotDefined,
         samlServicePrivateKey => $testNotDefined,
-        securedCookie => {
+        securedCookie         => {
             test    => qr/^(?:0|1|2)$/,
             msgFail => 'securedCookie must be 0, 1 or 2',
         },
@@ -703,20 +705,20 @@ sub testStruct {
             keyTest    => qr/^[a-zA-Z](?:[\w\-\.]*\w)?$/,
             keyMsgFail => 'Bad metadata name',
             '*'        => {
-                test       => sub { return 1; },
-                keyTest    => sub { return 1; },
+                test    => sub { return 1; },
+                keyTest => sub { return 1; },
             },
         },
-        samlServicePrivateKey => $testNotDefined,
-        samlEntityID => $testNotDefined,
-        samlOrganizationDisplayName => $testNotDefined,
-        samlOrganizationName => $testNotDefined,
-        samlOrganizationURL => $testNotDefined,
-        samlSPSSODescriptorAuthnRequestsSigned => $boolean,
+        samlServicePrivateKey                         => $testNotDefined,
+        samlEntityID                                  => $testNotDefined,
+        samlOrganizationDisplayName                   => $testNotDefined,
+        samlOrganizationName                          => $testNotDefined,
+        samlOrganizationURL                           => $testNotDefined,
+        samlSPSSODescriptorAuthnRequestsSigned        => $boolean,
         samlSPSSODescriptorProtocolSupportEnumeration => $testNotDefined,
-        samlSPSSODescriptorKeyDescriptorSigning => $testNotDefined,
-        samlSPSSODescriptorSingleLogoutServiceHTTP => $testNotDefined,
-        samlSPSSODescriptorSingleLogoutServiceSOAP => $testNotDefined,
+        samlSPSSODescriptorKeyDescriptorSigning       => $testNotDefined,
+        samlSPSSODescriptorSingleLogoutServiceHTTP    => $testNotDefined,
+        samlSPSSODescriptorSingleLogoutServiceSOAP    => $testNotDefined,
         samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact =>
           $testNotDefined,
         samlSPSSODescriptorAssertionConsumerServiceHTTPPost => $testNotDefined,
@@ -725,20 +727,20 @@ sub testStruct {
         samlSPSSODescriptorNameIDFormatX509SubjectName => $boolean,
         samlSPSSODescriptorNameIDFormatPersistent      => $boolean,
         samlSPSSODescriptorNameIDFormatTransient       => $boolean,
-        samlIDPSSODescriptorWantAuthnRequestsSigned => $boolean,
+        samlIDPSSODescriptorWantAuthnRequestsSigned    => $boolean,
         samlIDPSSODescriptorProtocolSupportEnumeration => $testNotDefined,
-        samlIDPSSODescriptorKeyDescriptorSigning => $testNotDefined,
-        samlIDPSSODescriptorSingleSignOnServiceHTTP => $testNotDefined,
-        samlIDPSSODescriptorSingleSignOnServiceSOAP => $testNotDefined,
-        samlIDPSSODescriptorSingleLogoutServiceHTTP => $testNotDefined,
-        samlIDPSSODescriptorSingleLogoutServiceSOAP => $testNotDefined,
+        samlIDPSSODescriptorKeyDescriptorSigning       => $testNotDefined,
+        samlIDPSSODescriptorSingleSignOnServiceHTTP    => $testNotDefined,
+        samlIDPSSODescriptorSingleSignOnServiceSOAP    => $testNotDefined,
+        samlIDPSSODescriptorSingleLogoutServiceHTTP    => $testNotDefined,
+        samlIDPSSODescriptorSingleLogoutServiceSOAP    => $testNotDefined,
         samlIDPSSODescriptorArtifactResolutionServiceArtifact =>
           $testNotDefined,
         samlIDPSSODescriptorNameIDFormatX509SubjectName => $boolean,
         samlIDPSSODescriptorNameIDFormatPersistent      => $boolean,
         samlSPSSODescriptorNameIDFormatTransient        => $boolean,
-        samlIDPSSODescriptorManageNameIDServiceHTTP => $testNotDefined,
-        samlIDPSSODescriptorManageNameIDServiceSOAP => $testNotDefined,
+        samlIDPSSODescriptorManageNameIDServiceHTTP     => $testNotDefined,
+        samlIDPSSODescriptorManageNameIDServiceSOAP     => $testNotDefined,
     };
 }
 
@@ -771,8 +773,8 @@ sub defaultConf {
         notifyDeleted      => '1',
         notifyOther        => '1',
         portal             => 'http://auth.example.com/',
-	portalSkin         => 'pastel',
-	portalUserAttr     => '_user',
+        portalSkin         => 'pastel',
+        portalUserAttr     => '_user',
         protection         => 'none',
         securedCookie      => '0',
         singleSession      => '0',
@@ -791,12 +793,13 @@ sub defaultConf {
         # SAML #
         ########
         samlIDPMetaDataXML => { 'authentic' => {} },
-        samlIDPMetaDataExportedAttributes => { 'authentic' => { 'uid' => '0;uid;;' } },
-        samlServicePrivateKey => '',
+        samlIDPMetaDataExportedAttributes =>
+          { 'authentic' => { 'uid' => '0;uid;;' } },
+        samlServicePrivateKey       => '',
         samlEntityID                => 'http://auth.example.com/saml/metadata',
         samlOrganizationDisplayName => 'Example',
-        samlOrganizationName => 'Example',
-        samlOrganizationURL => 'http://www.example.com',
+        samlOrganizationName        => 'Example',
+        samlOrganizationURL         => 'http://www.example.com',
         samlSPSSODescriptorAuthnRequestsSigned => '0',
         samlSPSSODescriptorProtocolSupportEnumeration =>
           'urn:oasis:names:tc:SAML:2.0:protocol',
@@ -820,7 +823,7 @@ sub defaultConf {
         samlSPSSODescriptorNameIDFormatX509SubjectName => '0',
         samlSPSSODescriptorNameIDFormatPersistent      => '1',
         samlSPSSODescriptorNameIDFormatTransient       => '0',
-        samlIDPSSODescriptorWantAuthnRequestsSigned => '0',
+        samlIDPSSODescriptorWantAuthnRequestsSigned    => '0',
         samlIDPSSODescriptorProtocolSupportEnumeration =>
           'urn:oasis:names:tc:SAML:2.0:protocol',
         samlIDPSSODescriptorKeyDescriptorSigning => '',
@@ -855,10 +858,10 @@ sub defaultConf {
 
 sub subDefaultConf {
     return {
-        locationRules   => { default     => 'deny' },
-        exportedHeaders => { 'Auth-User' => '$uid' },
-        samlIDPMetaDataXML => { {} },
-        samlIDPMetaDataExportedAttributes => { 'uid' => ';0;uid;;' },
+        locationRules                     => { default     => 'deny' },
+        exportedHeaders                   => { 'Auth-User' => '$uid' },
+        samlIDPMetaDataXML                => {             {} },
+        samlIDPMetaDataExportedAttributes => { 'uid'       => ';0;uid;;' },
     };
 }
 

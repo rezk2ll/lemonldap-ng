@@ -13,7 +13,7 @@ use Lemonldap::NG::Common::Conf::Serializer;
 our $VERSION = 0.02;
 
 BEGIN {
-    *Lemonldap::NG::Common::Conf::ldap     = \&ldap;
+    *Lemonldap::NG::Common::Conf::ldap = \&ldap;
 }
 
 sub prereq {
@@ -56,7 +56,7 @@ sub lastCfg {
 
 sub ldap {
     my $self = shift;
-    return $self->{ldap} if($self->{ldap});
+    return $self->{ldap} if ( $self->{ldap} );
 
     # Parse servers configuration
     my $useTls = 0;
@@ -106,16 +106,19 @@ sub ldap {
 }
 
 sub lock {
+
     # No lock for LDAP
     return 1;
 }
 
 sub isLocked {
+
     # No lock for LDAP
     return 0;
 }
 
 sub unlock {
+
     # No lock for LDAP
     return 1;
 }

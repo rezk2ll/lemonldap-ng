@@ -249,7 +249,7 @@ sub process {
     elsif ( $urldir eq $self->PC_LA_URLFTR ) {
 
         $self->{error} = $self->_subProcess(
-            qw( libertyFederationTerminationReturn autoRedirect ) );
+            qw( libertyFederationTerminationReturn autoRedirect ));
 
         # singleLogout : called when IDP request Logout.
     }

@@ -113,7 +113,7 @@ sub getNotification {
 
     # Prepare HTML code
     @notifs = map { $n->{$_} } sort keys %$n;
-    my $i = 0; # Notification count
+    my $i = 0;    # Notification count
     foreach my $notif (@notifs) {
         $i++;
         eval {

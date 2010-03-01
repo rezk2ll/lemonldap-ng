@@ -66,7 +66,7 @@ sub decrypt {
         $msg = '';
 
         # Obscure Perl re bug...
-        $tmp .="\0";
+        $tmp .= "\0";
         $tmp =~ s/\0*$//;
         return $tmp;
     }

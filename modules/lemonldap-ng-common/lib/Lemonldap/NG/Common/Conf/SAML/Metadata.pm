@@ -218,7 +218,7 @@ sub toXML {
 # Return this object in configuration string format.
 # @return string
 sub toConf {
-    my $self = shift;
+    my $self   = shift;
     my $fields = $self->toHash();
     local $Data::Dumper::Indent  = 0;
     local $Data::Dumper::Varname = "data";
@@ -233,11 +233,10 @@ sub toConf {
 # Return this object in configuration hash format.
 # @return hashref
 sub toHash {
-    my $self = shift;
+    my $self   = shift;
     my $fields = ();
-    foreach (keys %$self)
-    {
-      $fields->{$_} = $self->{$_};
+    foreach ( keys %$self ) {
+        $fields->{$_} = $self->{$_};
     }
     return $fields;
 }

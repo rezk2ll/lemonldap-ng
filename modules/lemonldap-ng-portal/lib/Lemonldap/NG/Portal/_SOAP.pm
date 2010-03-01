@@ -238,7 +238,7 @@ _RETURN $isAuthorizedURIResponse Response
 sub isAuthorizedURI {
     my $self = shift;
     my ( $id, $uri ) = @_;
-    die 'id is required' unless ($id);
+    die 'id is required'  unless ($id);
     die 'uri is required' unless ($uri);
 
     # Get user session.

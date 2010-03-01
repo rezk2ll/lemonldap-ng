@@ -67,7 +67,8 @@ sub confUpload {
         $id =~ s/\r//g;
         $id =~ s/^\///;
         $id =~ s/(?:\/[^\/]*)?$/\/$name/ if ($NK);
-        next if ( $id =~ /^(generalParameters|virtualHosts|samlIDPMetaDataNode)/);
+        next
+          if ( $id =~ /^(generalParameters|virtualHosts|samlIDPMetaDataNode)/ );
         my ( $confKey, $test ) = $self->getConfTests($id);
         my ( $res, $m );
 
@@ -317,15 +318,12 @@ sub findAllConfKeys {
 sub formatValue {
     my ( $self, $key, $value ) = @_;
     my $newvalue = $value;
-    if ( $key =~ /^samlIDPMetaDataXML/ )
-    {
+    if ( $key =~ /^samlIDPMetaDataXML/ ) {
         my $metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new();
-        if (ref($value))
-        {
+        if ( ref($value) ) {
             $metadata->initializeFromConfHash($value);
         }
-        else
-        {
+        else {
             $metadata->initializeFromXML($value);
         }
         $newvalue = $metadata->toHash();
@@ -346,7 +344,7 @@ sub setKeyToH {
     my ( $self, $h, $key, $k2 ) = @_;
     my $tmp = $h;
     $key =~ s/^\///;
-    $value = $self->formatValue($key, $value);
+    $value = $self->formatValue( $key, $value );
     while (1) {
         if ( $key =~ /\// ) {
             my $k = $`;

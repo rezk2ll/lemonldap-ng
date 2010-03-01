@@ -10,7 +10,7 @@ our $VERSION = 0.21;
 
 BEGIN {
     *Lemonldap::NG::Common::Conf::_soapCall = \&_soapCall;
-    *Lemonldap::NG::Common::Conf::_connect = \&_connect;
+    *Lemonldap::NG::Common::Conf::_connect  = \&_connect;
 
     sub SOAP::Transport::HTTP::Client::get_basic_credentials {
         return $Lemonldap::NG::Common::Conf::SOAP::username =>

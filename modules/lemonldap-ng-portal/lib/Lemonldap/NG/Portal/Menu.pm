@@ -101,7 +101,7 @@ sub new {
 # Password modification functions (TODO merge Menu.pm in Simple.pm to inherits those functions)
 # Default to LDAP
     $self->{portalObject}->{passwordDB} ||= 'LDAP';
-        if ( $self->{portalObject}->{passwordDB} =~ /DBI/i ) {
+    if ( $self->{portalObject}->{passwordDB} =~ /DBI/i ) {
         use Lemonldap::NG::Portal::PasswordDBDBI;    #inherits
         use Lemonldap::NG::Portal::_DBI
           ;    #link protected dbi Object used to change passwords only
@@ -110,13 +110,13 @@ sub new {
         *_passwordDBInit =
           *Lemonldap::NG::Portal::PasswordDBDBI::passwordDBInit;
     }
-        if ( $self->{portalObject}->{passwordDB} =~ /Null/i ) {
-            use Lemonldap::NG::Portal::PasswordDBNull;    #inherits
-            *_modifyPassword =
-              *Lemonldap::NG::Portal::PasswordDBNull::modifyPassword;
-            *_passwordDBInit =
-              *Lemonldap::NG::Portal::PasswordDBNull::passwordDBInit;
-        }
+    if ( $self->{portalObject}->{passwordDB} =~ /Null/i ) {
+        use Lemonldap::NG::Portal::PasswordDBNull;    #inherits
+        *_modifyPassword =
+          *Lemonldap::NG::Portal::PasswordDBNull::modifyPassword;
+        *_passwordDBInit =
+          *Lemonldap::NG::Portal::PasswordDBNull::passwordDBInit;
+    }
     if ( $self->{portalObject}->{passwordDB} =~ /LDAP/i ) {
         use Lemonldap::NG::Portal::PasswordDBLDAP;    #inherits
         use Lemonldap::NG::Portal::_LDAP
@@ -482,7 +482,7 @@ sub _isCategoryEmpty {
 
             # Return false
             return 0;
-    }
+        }
         else {
 
             # Return true

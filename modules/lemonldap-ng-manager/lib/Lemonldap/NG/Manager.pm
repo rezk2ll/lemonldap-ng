@@ -8,8 +8,8 @@ package Lemonldap::NG::Manager;
 use strict;
 use Lemonldap::NG::Handler::CGI qw(:globalStorage :locationRules);    #inherits
 use Lemonldap::NG::Manager::Help;                                     #inherits
-use Lemonldap::NG::Common::Conf;                                      #link protected conf Configuration
-use Lemonldap::NG::Common::Conf::Constants;                           #inherits
+use Lemonldap::NG::Common::Conf;              #link protected conf Configuration
+use Lemonldap::NG::Common::Conf::Constants;   #inherits
 
 our $VERSION = '0.93';
 our @ISA     = qw(
@@ -31,7 +31,7 @@ sub new {
         'See Apache logs for more' );
 
     # Try to load local configuration parameters
-    my $conf = Lemonldap::NG::Common::Conf->new( $self->{configStorage} );
+    my $conf      = Lemonldap::NG::Common::Conf->new( $self->{configStorage} );
     my $localconf = $conf->getLocalConf(MANAGERSECTION);
     if ($localconf) {
         $self->{$_} = $args->{$_} || $localconf->{$_}
@@ -39,8 +39,8 @@ sub new {
     }
 
     # Default values
-    $self->{managerSkin} = "default" unless defined $self->{managerSkin};
-    $self->{managerCss} = "accordion.css" unless defined $self->{managerCss};
+    $self->{managerSkin} = "default"       unless defined $self->{managerSkin};
+    $self->{managerCss}  = "accordion.css" unless defined $self->{managerCss};
     $self->{managerTreeAutoClose} = "true"
       unless defined $self->{managerTreeAutoClose};
     $self->{managerTreeJqueryCss} = "true"

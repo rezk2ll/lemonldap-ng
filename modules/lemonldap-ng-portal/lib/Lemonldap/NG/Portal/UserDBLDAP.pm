@@ -121,7 +121,7 @@ sub setSessionInfo {
 # Load all groups in $groups.
 # @return Lemonldap::NG::Portal constant
 sub setGroups {
-    my $self = shift;
+    my $self   = shift;
     my $groups = $self->{sessionInfo}->{groups};
 
     if ( $self->{ldapGroupBase} ) {
@@ -135,7 +135,9 @@ sub setGroups {
             and $self->{ldapGroupAttributeNameGroup} ne "dn" );
 
         # Get value for group search
-        my $group_value = $self->{ldap}->getLdapValue( $self->{entry}, $self->{ldapGroupAttributeNameUser} );
+        my $group_value =
+          $self->{ldap}
+          ->getLdapValue( $self->{entry}, $self->{ldapGroupAttributeNameUser} );
 
         $self->lmLog(
             "Searching LDAP groups in "
@@ -148,8 +150,8 @@ sub setGroups {
         $groups .= $self->{ldap}->searchGroups(
             $self->{ldapGroupBase}, $self->{ldapGroupAttributeName},
             $group_value,           $self->{ldapGroupAttributeNameSearch}
-                          );
-                    }
+        );
+    }
 
     $self->{sessionInfo}->{groups} = $groups;
     PE_OK;

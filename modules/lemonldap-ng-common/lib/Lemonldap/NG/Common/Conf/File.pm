@@ -1,7 +1,7 @@
 package Lemonldap::NG::Common::Conf::File;
 
 use strict;
-use Lemonldap::NG::Common::Conf::Constants; #inherits
+use Lemonldap::NG::Common::Conf::Constants;    #inherits
 use Lemonldap::NG::Common::Conf::Serializer;
 
 our $VERSION = 0.23;
@@ -74,8 +74,8 @@ sub store {
         $self->unlock;
         return UNKNOWN_ERROR;
     }
-    foreach my $k (sort keys %$fields) {
-    	print FILE "$k\n\t$fields->{$k}\n\n";
+    foreach my $k ( sort keys %$fields ) {
+        print FILE "$k\n\t$fields->{$k}\n\n";
     }
     close FILE;
     umask($mask);

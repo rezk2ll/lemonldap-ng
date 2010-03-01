@@ -3,14 +3,14 @@ package Lemonldap::NG::Common::Conf::Serializer;
 use Data::Dumper;
 
 BEGIN {
-    *Lemonldap::NG::Common::Conf::serialize = \&serialize;
+    *Lemonldap::NG::Common::Conf::serialize   = \&serialize;
     *Lemonldap::NG::Common::Conf::unserialize = \&unserialize;
 }
 
 sub serialize {
     my ( $self, $conf ) = @_;
     my $fields;
-    local $Data::Dumper::Indent = 0;
+    local $Data::Dumper::Indent  = 0;
     local $Data::Dumper::Varname = "data";
     while ( my ( $k, $v ) = each(%$conf) ) {
         next if ( $k =~ /^(?:reVHosts|cipher)$/ );

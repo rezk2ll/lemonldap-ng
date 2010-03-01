@@ -16,7 +16,7 @@ our $VERSION = '0.2';
 # @param regexp regular expression
 # @return complex password
 sub gen_password {
-    my $self = shift;
+    my $self   = shift;
     my $regexp = shift;
 
     my $random = new String::Random;
@@ -31,17 +31,17 @@ sub gen_password {
 # @param html optional set content type to HTML
 # @return boolean result
 sub send_mail {
-    my $self = shift;
-    my $mail = shift;
+    my $self    = shift;
+    my $mail    = shift;
     my $subject = shift;
-    my $body = shift;
-    my $html = shift;
+    my $body    = shift;
+    my $html    = shift;
 
-    $self->lmLog( "SMTP From " . $self->{mailFrom},       'debug' );
-    $self->lmLog( "SMTP To " . $mail,                     'debug' );
-    $self->lmLog( "SMTP Subject " . $subject, 'debug' );
-    $self->lmLog( "SMTP Body " . $body,       'debug' );
-    $self->lmLog( "SMTP HTML flag " . ($html?"on":"off"),       'debug' );
+    $self->lmLog( "SMTP From " . $self->{mailFrom}, 'debug' );
+    $self->lmLog( "SMTP To " . $mail,               'debug' );
+    $self->lmLog( "SMTP Subject " . $subject,       'debug' );
+    $self->lmLog( "SMTP Body " . $body,             'debug' );
+    $self->lmLog( "SMTP HTML flag " . ( $html ? "on" : "off" ), 'debug' );
     eval {
         my $message = MIME::Lite->new(
             From    => $self->{mailFrom},
@@ -50,7 +50,7 @@ sub send_mail {
             Type    => "TEXT",
             Data    => $body,
         );
-	$message->attr("content-type" => "text/html; charset=utf-8") if $html;
+        $message->attr( "content-type" => "text/html; charset=utf-8" ) if $html;
         $self->{SMTPServer}
           ? $message->send( "smtp", $self->{SMTPServer} )
           : $message->send();

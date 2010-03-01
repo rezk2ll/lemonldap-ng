@@ -15,9 +15,9 @@ our $VERSION = '0.2';
 # @param @func authorizated methods
 # @return Lemonldap::NG::Common::CGI::SOAPService object
 sub new {
-    my($class, $obj, @func) = @_;
-    s/.*::// foreach(@func);
-    return bless {obj=>$obj,func=>\@func}, $class;
+    my ( $class, $obj, @func ) = @_;
+    s/.*::// foreach (@func);
+    return bless { obj => $obj, func => \@func }, $class;
 }
 
 ## @method datas AUTOLOAD()
@@ -29,14 +29,14 @@ sub new {
 sub AUTOLOAD {
     my $self = shift;
     $AUTOLOAD =~ s/.*:://;
-    if(grep {$_ eq $AUTOLOAD} @{$self->{func}}){
+    if ( grep { $_ eq $AUTOLOAD } @{ $self->{func} } ) {
         my $tmp = $self->{obj}->$AUTOLOAD(@_);
-        unless(ref($tmp) and ref($tmp) eq 'SOAP::Data') {
+        unless ( ref($tmp) and ref($tmp) eq 'SOAP::Data' ) {
             $tmp = SOAP::Data->name( result => $tmp );
         }
         return $tmp;
     }
-    elsif($AUTOLOAD ne 'DESTROY') {
+    elsif ( $AUTOLOAD ne 'DESTROY' ) {
         die "$AUTOLOAD is not an authorizated function";
     }
     1;

@@ -51,7 +51,7 @@ sub modifyPassword {
         $self->{dbiAuthPassword} );
     return PE_ERROR unless $dbh;
 
-    my $user     = $self->{sessionInfo}->{_user};
+    my $user = $self->{sessionInfo}->{_user};
 
     # Check old passord
     if ( $self->{oldpassword} ) {
@@ -99,7 +99,7 @@ sub resetPassword {
     return PE_OK unless ( $self->{mail} && $self->{mail_token} );
 
     $self->lmLog( "Reset password request for " . $self->{mail}, 'debug' );
-    
+
     # Generate a complex password
     my $password = $self->gen_password( $self->{randomPasswordRegexp} );
 

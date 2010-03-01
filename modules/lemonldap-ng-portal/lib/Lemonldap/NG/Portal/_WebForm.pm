@@ -26,9 +26,9 @@ sub extractFormInfo {
       unless ( $self->param('user') );
     return PE_FORMEMPTY
       unless (
-            ( $self->{user} = $self->param('user') )
-            && (   ( $self->{password} = $self->param('password') )
-                || ( $self->{newpassword} = $self->param('newpassword') ) )
+        ( $self->{user} = $self->param('user') )
+        && (   ( $self->{password} = $self->param('password') )
+            || ( $self->{newpassword} = $self->param('newpassword') ) )
       );
     $self->{oldpassword}     = $self->param('oldpassword');
     $self->{confirmpassword} = $self->param('confirmpassword');

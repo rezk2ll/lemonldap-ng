@@ -7,9 +7,9 @@ package Lemonldap::NG::Manager::Sessions;
 
 use strict;
 use Lemonldap::NG::Handler::CGI qw(:globalStorage :locationRules);
-use Lemonldap::NG::Common::Apache::Session;    #inherits
-use Lemonldap::NG::Common::Conf; #link protected conf Configuration
-use Lemonldap::NG::Common::Conf::Constants; #inherits
+use Lemonldap::NG::Common::Apache::Session;   #inherits
+use Lemonldap::NG::Common::Conf;              #link protected conf Configuration
+use Lemonldap::NG::Common::Conf::Constants;   #inherits
 
 #inherits Apache::Session
 
@@ -38,7 +38,7 @@ sub new {
     my $config = Lemonldap::NG::Common::Conf->new( $self->{configStorage} );
     unless ($config) {
         $self->abort( "Unable to start",
-        "Configuration not loaded\n" . $Lemonldap::NG::Common::Conf::msg );
+            "Configuration not loaded\n" . $Lemonldap::NG::Common::Conf::msg );
     }
     my $localconf = $config->getLocalConf(MANAGERSECTION);
 

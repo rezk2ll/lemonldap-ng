@@ -5,7 +5,7 @@
 # This class adds virtual host support for Lemonldap::NG handlers.
 package Lemonldap::NG::Handler::Vhost;
 
-use Lemonldap::NG::Handler::Simple qw(:locationRules :headers); #inherits
+use Lemonldap::NG::Handler::Simple qw(:locationRules :headers);    #inherits
 use strict;
 use MIME::Base64;
 
@@ -35,8 +35,10 @@ sub locationRulesInit {
             }
             else {
                 $locationCondition->{$vhost}->[ $locationCount->{$vhost} ] =
-                  $class->conditionSub( $args->{locationRules}->{$vhost}->{$_} );
-                $locationRegexp->{$vhost}->[ $locationCount->{$vhost} ] = qr/$_/;
+                  $class->conditionSub(
+                    $args->{locationRules}->{$vhost}->{$_} );
+                $locationRegexp->{$vhost}->[ $locationCount->{$vhost} ] =
+                  qr/$_/;
                 $locationCount->{$vhost}++;
             }
         }

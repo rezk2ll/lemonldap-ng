@@ -9,7 +9,7 @@ use Data::Dumper;
 
 #inherits Cache::Cache
 
-our $VERSION  = "0.21";
+our $VERSION = "0.21";
 
 our $status   = {};
 our $activity = [];
@@ -142,85 +142,85 @@ sub run {
             }
             else {
 
-            # Total requests
-            print "<h2>Total</h2>\n<div id=\"total\"><pre>\n";
-            print sprintf( "%-30s : \%6d (%.02f / mn)\n",
-                $_, $c->{$_}, $c->{$_} / $mn )
-              foreach ( sort keys %$c );
-            print "\n</pre></div>\n";
+                # Total requests
+                print "<h2>Total</h2>\n<div id=\"total\"><pre>\n";
+                print sprintf( "%-30s : \%6d (%.02f / mn)\n",
+                    $_, $c->{$_}, $c->{$_} / $mn )
+                  foreach ( sort keys %$c );
+                print "\n</pre></div>\n";
 
-            # Average
-            print "<h2>Average for last " . MN_COUNT
-              . " minutes</h2>\n<div id=\"average\"><pre>\n";
-            print sprintf( "%-30s : %6s / mn\n", $_, $m->{$_} )
-              foreach ( sort keys %$m );
-            print "\n</pre></div>\n";
+                # Average
+                print "<h2>Average for last " . MN_COUNT
+                  . " minutes</h2>\n<div id=\"average\"><pre>\n";
+                print sprintf( "%-30s : %6s / mn\n", $_, $m->{$_} )
+                  foreach ( sort keys %$m );
+                print "\n</pre></div>\n";
 
-            # Users connected
-            print "<div id=\"users\"><p>\nTotal users : $u\n</p></div>\n";
+                # Users connected
+                print "<div id=\"users\"><p>\nTotal users : $u\n</p></div>\n";
 
-            # Local cache
-            my @t =
+                # Local cache
+                my @t =
                   $refLocalStorage->get_keys(
                     $localStorageOptions->{namespace} );
-            print "<div id=\"cache\"><p>\nLocal Cache : " . @t
-              . " objects\n</p></div>\n";
+                print "<div id=\"cache\"><p>\nLocal Cache : " . @t
+                  . " objects\n</p></div>\n";
 
                 # Uptime
                 print "<div id=\"up\"><p>\nServer up for : "
                   . &timeUp($mn)
                   . "\n</p></div>\n";
 
-            # Top uri
-            if ( $args->{top} ) {
-                print "<hr/>\n";
+                # Top uri
+                if ( $args->{top} ) {
+                    print "<hr/>\n";
                     $args->{categories} ||=
                       'REJECT,PORTAL_FIRSTACCESS,LOGOUT,OK';
 
-                # Vhost activity
-                print
+                    # Vhost activity
+                    print
 "<h2>Virtual Host activity</h2>\n<div id=\"vhost\"><pre>\n";
-                foreach (
-                    sort { $count->{vhost}->{$b} <=> $count->{vhost}->{$a} }
-                    keys %{ $count->{vhost} }
-                  )
-                {
+                    foreach (
+                        sort { $count->{vhost}->{$b} <=> $count->{vhost}->{$a} }
+                        keys %{ $count->{vhost} }
+                      )
+                    {
                         print
                           sprintf( "%-40s : %6d\n", $_, $count->{vhost}->{$_} );
-                }
-                print "\n</pre></div>\n";
+                    }
+                    print "\n</pre></div>\n";
 
-                # General
-                print "<h2>Top used URI</h2>\n<div id=\"uri\"><pre>\n";
-                my $i = 0;
-                foreach (
-                    sort { $count->{uri}->{$b} <=> $count->{uri}->{$a} }
-                    keys %{ $count->{uri} }
-                  )
-                {
-                    last if ( $i == $args->{top} );
-                    last unless ( $count->{uri}->{$_} );
-                    $i++;
+                    # General
+                    print "<h2>Top used URI</h2>\n<div id=\"uri\"><pre>\n";
+                    my $i = 0;
+                    foreach (
+                        sort { $count->{uri}->{$b} <=> $count->{uri}->{$a} }
+                        keys %{ $count->{uri} }
+                      )
+                    {
+                        last if ( $i == $args->{top} );
+                        last unless ( $count->{uri}->{$_} );
+                        $i++;
                         print
                           sprintf( "%-80s : %6d\n", $_, $count->{uri}->{$_} );
-                }
-                print "\n</pre></div>\n";
+                    }
+                    print "\n</pre></div>\n";
 
-                # Top by category
-                print
-"<table class=\"topByCat\"><tr><th style=\"width:20%\">Code</th><th>Top</th></tr>\n";
-                foreach my $cat ( split /,/, $args->{categories} ) {
+                    # Top by category
                     print
+"<table class=\"topByCat\"><tr><th style=\"width:20%\">Code</th><th>Top</th></tr>\n";
+                    foreach my $cat ( split /,/, $args->{categories} ) {
+                        print
                           "<tr><td>$cat</td><td nowrap>\n<div id=\"$cat\">\n";
-                    topByCat( $cat, $args->{top} );
-                    print "</div>\n</td></tr>";
+                        topByCat( $cat, $args->{top} );
+                        print "</div>\n</td></tr>";
+                    }
+                    print "</table>\n";
                 }
-                print "</table>\n";
-            }
 
-            &end;
+                &end;
+            }
         }
-    }
     }
 }
 

@@ -25,7 +25,7 @@ our $VERSION = '0.4';
 # @return new object
 sub new {
     my $class = shift;
-    my $self  = $class->SUPER::new() or $class->abort("Unable to build CGI");
+    my $self = $class->SUPER::new() or $class->abort("Unable to build CGI");
     $Lemonldap::NG::Handler::_CGI::_cgi = $self;
     unless ($Lemonldap::NG::Handler::_CGI::cookieName) {
         Lemonldap::NG::Handler::_CGI->init(@_);
@@ -216,9 +216,9 @@ sub grant {
     $vhost ||= $ENV{SERVER_NAME};
     $apacheRequest = Lemonldap::NG::Apache::Request->new(
         {
-        uri => $uri,
-        hostname => $vhost,
-        args => '',
+            uri      => $uri,
+            hostname => $vhost,
+            args     => '',
         }
     );
     for ( my $i = 0 ; $i < $locationCount->{$vhost} ; $i++ ) {
@@ -240,7 +240,7 @@ package Lemonldap::NG::Apache::Request;
 
 sub new {
     my $class = shift;
-    my $self = shift;
+    my $self  = shift;
     return bless $self, $class;
 }
 

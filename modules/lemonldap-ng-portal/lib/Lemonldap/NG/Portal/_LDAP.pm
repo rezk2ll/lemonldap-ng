@@ -393,9 +393,11 @@ sub searchGroups {
             if ( $portal->{ldapGroupRecursive} ) {
 
                 # Get searched value
-                my $group_value = $self->getLdapValue( $entry,  $portal->{ldapGroupAttributeNameGroup} );
+                my $group_value =
+                  $self->getLdapValue( $entry,
+                    $portal->{ldapGroupAttributeNameGroup} );
 
-		# Launch group search
+                # Launch group search
                 if ($group_value) {
 
                     $portal->lmLog( "Recursive search for $group_value",
@@ -438,22 +440,22 @@ sub searchGroups {
 # @param string attribute name
 # @return string value
 sub getLdapValue {
-	my $self = shift;
-	my $entry = shift;
-	my $attribute = shift;
+    my $self      = shift;
+    my $entry     = shift;
+    my $attribute = shift;
 
-	return $entry->dn() if ( $attribute eq "dn" );
+    return $entry->dn() if ( $attribute eq "dn" );
 
-	my $value;
+    my $value;
 
-	foreach ( $entry->get_value( $attribute ) ) {
-		$value .= $_;
-		$value .= ";";
-	}
+    foreach ( $entry->get_value($attribute) ) {
+        $value .= $_;
+        $value .= ";";
+    }
 
-        $value =~ s/;$//g;
+    $value =~ s/;$//g;
 
-	return $value;
+    return $value;
 }
 
 1;

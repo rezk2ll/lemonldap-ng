@@ -194,11 +194,11 @@ sub get_key_from_all_sessions() {
         my $r = $self->_soapCall( "get_key_from_all_sessions", $args );
         my $res;
         if ($r) {
-        foreach my $k ( keys %$r ) {
-            my $tmp = &$data( $r->{$k}, $k );
-            $res->{$k} = $tmp if ( defined($tmp) );
+            foreach my $k ( keys %$r ) {
+                my $tmp = &$data( $r->{$k}, $k );
+                $res->{$k} = $tmp if ( defined($tmp) );
+            }
         }
-    }
     }
     else {
         return $self->_soapCall( "get_key_from_all_sessions", $args, $data );
