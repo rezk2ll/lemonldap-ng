@@ -11,7 +11,7 @@ use Lemonldap::NG::Portal::_SAML;    #inherits
 use Lemonldap::NG::Common::Conf::SAML::Metadata;
 
 our $VERSION = '0.1';
-our @ISA = qw(Lemonldap::NG::Portal::_SAML);
+our @ISA     = qw(Lemonldap::NG::Portal::_SAML);
 
 ## @apmethod int authInit()
 # Load Lasso and metadata
@@ -121,7 +121,7 @@ sub extractFormInfo {
 
     # 1. Get HTTP request informations to know
     # if we are receving SAML request or response
-    my $url              = $self->url();
+    my $url            = $self->url();
     my $request_method = $self->request_method();
     my $content_type   = $self->content_type();
 
@@ -161,8 +161,8 @@ sub extractFormInfo {
 
             if ( $self->param('SAMLResponse') ) {
 
-            # Response in query string
-            $response = $self->query_string();
+                # Response in query string
+                $response = $self->query_string();
                 $self->lmLog( "HTTP-REDIRECT: SAML Response $response",
                     'debug' );
 
@@ -281,112 +281,112 @@ sub extractFormInfo {
             $self->lmLog( "HTTP-REDIRECT: authentication response is valid",
                 'debug' );
 
-        # Get SAML response
-        my $saml_response = $login->response();
-        unless ($saml_response) {
-            $self->lmLog( "No SAML response found", 'error' );
-            return PE_ERROR;
-        }
-
-        # Replay protection if this is a response to a created authn request
-        my $assertion_responded = $saml_response->InResponseTo;
-        if ($assertion_responded) {
-            unless ( $self->replayProtection($assertion_responded) ) {
-
-                # Assertion was already consumed or is expired
-                # Force authentication replay
-                $self->lmLog(
-"Message $assertion_responded already used or expired, replay authentication",
-                    'error'
-                );
-                delete $self->{urldc};
-                $self->{mustRedirect} = 1;
-                $self->{error}        = $self->_subProcess(qw(autoRedirect));
-                return $self->{error};
+            # Get SAML response
+            my $saml_response = $login->response();
+            unless ($saml_response) {
+                $self->lmLog( "No SAML response found", 'error' );
+                return PE_ERROR;
             }
-        }
-        else {
-            $self->lmLog(
-"Assertion is not a response to a created authentication request, do not control replay",
-                'debug'
-            );
-        }
 
-        # Get SAML assertion
-        my $assertion = $self->getAssertion($login);
+            # Replay protection if this is a response to a created authn request
+            my $assertion_responded = $saml_response->InResponseTo;
+            if ($assertion_responded) {
+                unless ( $self->replayProtection($assertion_responded) ) {
 
-        unless ($assertion) {
-            $self->lmLog( "No assertion found", 'error' );
-            return PE_ERROR;
-        }
-
-        # Check conditions - time and audience
-        unless (
-            $self->validateConditions( $assertion, $self->{samlEntityID} ) )
-        {
-                $self->lmLog( "Conditions not validated", 'error' );
-            return PE_ERROR;
-        }
-
-        # Check OneTimeUse flag
-        # TODO
-
-        # Check ProxyRestriction flag
-        # TODO
-
-        #  Extract RelayState information
-            if ( $self->extractRelayState($relaystate) ) {
-                $self->lmLog( "RelayState $relaystate extracted", 'debug' );
-        }
-
-        # Check IDP from RelayState
-        my $idp = $self->{_idp};
-        if ($idp) {
-            $self->lmLog( "IDP $idp found in RelayState", 'debug' );
-        }
-        else {
-
-            # Try to recover IDP from IDP cookie
-            my %cookies    = fetch CGI::Cookie;
-            my $idp_cookie = $cookies{ $self->{samlIdPResolveCookie} };
-            if ($idp_cookie) {
-                $idp = $idp_cookie->value;
-                $self->{_idp} = $idp;
-                $self->lmLog( "IDP $idp found in IDP resolution cookie",
-                    'debug' );
+                    # Assertion was already consumed or is expired
+                    # Force authentication replay
+                    $self->lmLog(
+"Message $assertion_responded already used or expired, replay authentication",
+                        'error'
+                    );
+                    delete $self->{urldc};
+                    $self->{mustRedirect} = 1;
+                    $self->{error} = $self->_subProcess(qw(autoRedirect));
+                    return $self->{error};
+                }
             }
             else {
                 $self->lmLog(
-"IDP was not found in RelayState or in IDP resolution cookie",
-                    'error'
+"Assertion is not a response to a created authentication request, do not control replay",
+                    'debug'
                 );
+            }
+
+            # Get SAML assertion
+            my $assertion = $self->getAssertion($login);
+
+            unless ($assertion) {
+                $self->lmLog( "No assertion found", 'error' );
                 return PE_ERROR;
             }
+
+            # Check conditions - time and audience
+            unless (
+                $self->validateConditions( $assertion, $self->{samlEntityID} ) )
+            {
+                $self->lmLog( "Conditions not validated", 'error' );
+                return PE_ERROR;
+            }
+
+            # Check OneTimeUse flag
+            # TODO
+
+            # Check ProxyRestriction flag
+            # TODO
+
+            #  Extract RelayState information
+            if ( $self->extractRelayState($relaystate) ) {
+                $self->lmLog( "RelayState $relaystate extracted", 'debug' );
+            }
+
+            # Check IDP from RelayState
+            my $idp = $self->{_idp};
+            if ($idp) {
+                $self->lmLog( "IDP $idp found in RelayState", 'debug' );
+            }
+            else {
+
+                # Try to recover IDP from IDP cookie
+                my %cookies    = fetch CGI::Cookie;
+                my $idp_cookie = $cookies{ $self->{samlIdPResolveCookie} };
+                if ($idp_cookie) {
+                    $idp = $idp_cookie->value;
+                    $self->{_idp} = $idp;
+                    $self->lmLog( "IDP $idp found in IDP resolution cookie",
+                        'debug' );
+                }
+                else {
+                    $self->lmLog(
+"IDP was not found in RelayState or in IDP resolution cookie",
+                        'error'
+                    );
+                    return PE_ERROR;
+                }
+            }
+
+            # Force redirection to portal if no urldc found
+            # (avoid displaying the whole SAML URL in user browser URL field)
+            $self->{mustRedirect} = 1 unless ( $self->{urldc} );
+
+            # Get NameID
+            my $nameid = $login->nameIdentifier;
+
+            # Set user
+            my $user = $nameid->content;
+
+            unless ($user) {
+                $self->lmLog( "No NameID value found", 'error' );
+                return PE_USERNOTFOUND;
+            }
+
+            $self->lmLog( "Find NameID: $user", 'debug' );
+            $self->{user} = $user;
+
+            # Store Lasso objects
+            $self->{_lassoLogin} = $login;
+
+            return PE_OK;
         }
-
-        # Force redirection to portal if no urldc found
-        # (avoid displaying the whole SAML URL in user browser URL field)
-        $self->{mustRedirect} = 1 unless ( $self->{urldc} );
-
-        # Get NameID
-        my $nameid = $login->nameIdentifier;
-
-        # Set user
-        my $user = $nameid->content;
-
-        unless ($user) {
-            $self->lmLog( "No NameID value found", 'error' );
-            return PE_USERNOTFOUND;
-        }
-
-        $self->lmLog( "Find NameID: $user", 'debug' );
-        $self->{user} = $user;
-
-        # Store Lasso objects
-        $self->{_lassoLogin} = $login;
-
-        return PE_OK;
-    }
         elsif ($request) {
 
             # Do nothing
@@ -829,10 +829,10 @@ sub extractFormInfo {
     if ( $method == Lasso::Constants::HTTP_METHOD_REDIRECT ) {
 
         # Redirect user to response URL
-    my $sso_url = $login->msg_url;
-    $self->lmLog( "Redirect user to $sso_url", 'debug' );
+        my $sso_url = $login->msg_url;
+        $self->lmLog( "Redirect user to $sso_url", 'debug' );
 
-    $self->{urldc} = $sso_url;
+        $self->{urldc} = $sso_url;
 
         $self->_subProcess(qw(autoRedirect));
 
@@ -992,10 +992,10 @@ sub authLogout {
     if ( $method == Lasso::Constants::HTTP_METHOD_REDIRECT ) {
 
         # Redirect user to response URL
-    my $slo_url = $logout->msg_url;
-    $self->lmLog( "Redirect user to $slo_url", 'debug' );
+        my $slo_url = $logout->msg_url;
+        $self->lmLog( "Redirect user to $slo_url", 'debug' );
 
-    $self->{urldc} = $slo_url;
+        $self->{urldc} = $slo_url;
 
         # Redirect done in Portal/Simple.pm
         return;
@@ -1047,7 +1047,7 @@ sub authLogout {
             return PE_ERROR;
         }
 
-    return;
+        return;
     }
 
 }
