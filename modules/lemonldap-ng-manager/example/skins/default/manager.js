@@ -223,7 +223,7 @@ function display(div,title) {
 	$('#content_'+div).removeClass('hidden');
 	$('#content_'+div).addClass('content');
 	$('#content_title').html(title);
-	$('#newkb,#newrb,#delkb,#newkbr,#newrbr,#bdelvh').hide();
+	$('#newkb,#newrb,#delkb,#newkbr,#newrbr,#bdelvh,#bnewvh').hide();
 	$('#newsamlmetadatab,#delsamlmetadatab').hide();
 	$('#newsamlattributeb,#delsamlattributeb').hide();
 	$('#newsamlattributebr').hide();
@@ -330,7 +330,7 @@ function vhost(id){
 	currentId=id;
 	$('#vhost').attr('value',lmtext(id));
 	display('vhost',lmtext(id));
-	$('#bdelvh').show();
+	$('#bdelvh,#bnewvh').show();
 }
 function cfgDatas(id){
 	var span=$('#'+id+' span');
