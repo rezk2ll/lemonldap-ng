@@ -225,6 +225,8 @@ function display(div,title) {
 	$('#content_title').html(title);
 	$('#newkb,#newrb,#delkb,#newkbr,#newrbr,#bdelvh').hide();
 	$('#newsamlmetadatab,#delsamlmetadatab').hide();
+	$('#newsamlattributeb,#delsamlattributeb').hide();
+	$('#newsamlattributebr').hide();
 }
 function none(id) {
 	currentId=id;
@@ -294,7 +296,6 @@ function samlAttribute(id) {
 	$('#samlAttributeFriendlyName').attr('value',t[3]);
         display('samlAttribute',lmtext(id));
         $('#newsamlattributeb,#delsamlattributeb').show();
-	$('#newsamlattributebr').hide();
 }
 function samlAttributeRoot(){
 	currentId=simpleTreeCollection[0].getSelected().attr('id');
