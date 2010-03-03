@@ -170,24 +170,24 @@ function setlmsamlassertion(id){
 	var t=$('#'+parentId).find('span').get();
 	for(i in t){
 		if(def=='1'){
-			var currentId=$(t[i]).attr('id');
-			if((currentId!='text_'+id)&&(currentId!='text_'+parentId)){
-				var d=$(t[i]).attr('value').split(';');
+			var currentId=$(t[i]).attr('id').replace('text_','');
+			if((currentId!=id)&&(currentId!=parentId)){
+				var d=lmdata(currentId).split(';');
 				d[0]='0';
-				$('#'+currentId).attr('value',d.join(';'));
+				setlmdata(currentId,d.join(';'));
 			}
 		// If off, force on the first one.
 		}else if(i<t.length-1){
-			var currentId=$(t[t.length-1-i]).attr('id');
-			var d=$(t[t.length-1-i]).attr('value').split(';');
+			var currentId=$(t[t.length-1-i]).attr('id').replace('text_','');
+			var d=lmdata(currentId).split(';');
 			if(t.length-1-i>1)
 			{
 				d[0]='0';
 			}else{
 				d[0]='1';
 		}
-			$('#'+currentId).attr('value',d.join(';'));
-			if(currentId=='test_'+id)
+			setlmdata(currentId,d.join(';'));
+			if(currentId==id)
 			{
 				def='1';
 			}
