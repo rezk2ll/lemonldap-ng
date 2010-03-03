@@ -913,18 +913,7 @@ sub setAuthSessionInfo {
 
     # TODO adapt _utime with SessionNotOnOrAfter
 
-    PE_OK;
-}
-
-## @apmethod int authenticate()
-# Accept SSO from IDP
-# @return PE_OK
-sub authenticate {
-    my $self   = shift;
-    my $server = $self->{_lassoServer};
-    my $login  = $self->{_lassoLogin};
-
-    # Accept SSO
+    # Establish federation (required for attribute request in UserDBSAML)
     unless ( $self->acceptSSO($login) ) {
         $self->lmLog( "Error while accepting SSO from IDP", 'error' );
         return PE_ERROR;
@@ -937,6 +926,17 @@ sub authenticate {
     # Dump Lasso objects in session
     $self->{sessionInfo}->{_lassoSessionDump}  = $session->dump()  if $session;
     $self->{sessionInfo}->{_lassoIdentityDump} = $identity->dump() if $identity;
+
+    $self->{_lassoLogin} = $login;
+
+    PE_OK;
+}
+
+## @apmethod int authenticate()
+# Set authenticationLevel
+# @return PE_OK
+sub authenticate {
+    my $self = shift;
 
     # Set authenticationLevel
     $self->{sessionInfo}->{authenticationLevel} = 5;
@@ -1021,6 +1021,11 @@ sub authLogout {
 
         # Send SOAP request and manage response
         my $response = $self->sendSOAPMessage( $slo_url, $slo_body );
+
+        unless ($response) {
+            $self->lmLog( "No logout response to SOAP request", 'error' );
+            return PE_ERROR;
+        }
 
         # Create Logout object
         $logout = $self->createLogout($server);

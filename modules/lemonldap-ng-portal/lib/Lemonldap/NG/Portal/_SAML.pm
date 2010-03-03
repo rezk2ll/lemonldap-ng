@@ -913,8 +913,130 @@ sub sendSOAPMessage {
         $response = $soap_answer->content();
         $self->lmLog( "Get response $response", 'debug' );
     }
+    else {
+        $self->lmLog( "No response to SOAP request", 'debug' );
+        return;
+    }
 
     return $response;
+}
+
+## @method Lasso::AssertionQuery createAttributeRequest(Lasso::Server server, Lasso::Login login, string idp, hashref attributes)
+# Create an attribute request
+# @param server Lasso::Server object
+# @param login Lasso::Login object
+# @param idp IDP entityID
+# @param attributes List of requested attributes
+# @return assertion request
+sub createAttributeRequest {
+    my ( $self, $server, $login, $idp, $attributes ) = splice @_;
+    my $query;
+
+    # Create assertion query
+    eval { $query = Lasso::AssertionQuery->new($server); };
+    if ($@) {
+        $self->checkLassoError($@);
+        return;
+    }
+
+    $self->lmLog( "Assertion query created", 'debug' );
+
+    # Set identity
+    eval {
+        Lasso::Profile::set_identity_from_dump( $query,
+            $login->get_identity()->dump );
+    };
+    if ($@) {
+        $self->checkLassoError($@);
+        return;
+    }
+
+    $self->lmLog( "Identity set in query", 'debug' );
+
+    # Init request
+    my $method = Lasso::Constants::HTTP_METHOD_SOAP;
+    my $type   = Lasso::Constants::ASSERTION_QUERY_REQUEST_TYPE_ATTRIBUTE;
+    eval {
+        Lasso::AssertionQuery::init_request( $query, $idp, $method, $type );
+    };
+    if ($@) {
+        $self->checkLassoError($@);
+        return;
+    }
+
+    $self->lmLog( "Assertion query request initiated", 'debug' );
+
+    # Store attributes in request
+    my @requested_attributes;
+    foreach ( keys %$attributes ) {
+
+        # Create SAML2 Attribute
+        my $attribute;
+
+        eval { $attribute = Lasso::Saml2Attribute->new(); };
+        if ($@) {
+            $self->checkLassoError($@);
+            return;
+        }
+
+        # Set attribute properties
+        my ( $mandatory, $name, $format, $friendly_name ) =
+          split( /;/, $attributes->{$_} );
+
+        $attribute->Name($name)                  if defined $name;
+        $attribute->NameFormat($format)          if defined $format;
+        $attribute->FriendlyName($friendly_name) if defined $friendly_name;
+
+        # Store attribute
+        push @requested_attributes, $attribute;
+    }
+
+    # Set attributes in request
+    eval { $query->request()->Attribute(@requested_attributes); };
+    if ($@) {
+        $self->checkLassoError($@);
+        return;
+    }
+
+    # Build message
+    eval { Lasso::AssertionQuery::build_request_msg($query); };
+    if ($@) {
+        $self->checkLassoError($@);
+        return;
+    }
+
+    # Return query
+    return $query;
+}
+
+## @method Lasso::AssertionQuery processAttributeResponse(Lasso::Server server, string response)
+# Process an attribute response
+# @param server Lasso::Server object
+# @param response Response content
+# @return assertion query
+sub processAttributeResponse {
+    my ( $self, $server, $response ) = splice @_;
+    my $query;
+
+    # Create assertion query
+    eval { $query = Lasso::AssertionQuery->new($server); };
+    if ($@) {
+        $self->checkLassoError($@);
+        return;
+    }
+
+    $self->lmLog( "Assertion query created", 'debug' );
+
+    # Process response
+    eval { Lasso::AssertionQuery::process_response_msg( $query, $response ); };
+    if ($@) {
+        $self->checkLassoError($@);
+        return;
+    }
+
+    $self->lmLog( "Attribute response is valid", 'debug' );
+
+    return $query;
 }
 
 1;
@@ -1078,6 +1200,14 @@ Process artifact response message
 =head2 sendSOAPMessage
 
 Send SOAP message and get response
+
+=head2 createAttributeRequest
+
+Create an attribute request
+
+=head2 processAttributeResponse
+
+Process an attribute response
 
 =head1 SEE ALSO
 

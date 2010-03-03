@@ -40,6 +40,7 @@ sub getUser {
 sub setSessionInfo {
     my $self   = shift;
     my $server = $self->{_lassoServer};
+    my $login  = $self->{_lassoLogin};
     my $idp    = $self->{_idp};
 
     my $exportedAttr;
@@ -70,7 +71,68 @@ sub setSessionInfo {
     }
 
     # Build Attribute Request
-    #
+    my $IDPentityID = $self->{_idpList}->{$idp}->{entityID};
+    my $query =
+      $self->createAttributeRequest( $server, $login, $IDPentityID,
+        $exportedAttr );
+
+    unless ($query) {
+        $self->lmLog( "Unable to build attribute request for $idp", 'error' );
+        return PE_ERROR;
+    }
+
+    # Use SOAP to send request and get response
+    my $query_url  = $query->msg_url;
+    my $query_body = $query->msg_body;
+
+    # Send SOAP request and manage response
+    my $response = $self->sendSOAPMessage( $query_url, $query_body );
+
+    unless ($response) {
+        $self->lmLog( "No attribute response to SOAP request", 'error' );
+        return PE_ERROR;
+    }
+
+    # Manage Attribute Response
+    my $result = $self->processAttributeResponse( $server, $response );
+
+    unless ($result) {
+        $self->lmLog( "Fail to process attribute response", 'error' );
+        return PE_ERROR;
+    }
+
+    # Attributes in response
+    my @response_attributes;
+    eval {
+        @response_attributes =
+          $result->getAssertion()->AttributeStatement()->Attribute();
+    };
+    if ($@) {
+        $self->lmLog( "No attributes defined in attribute response", 'error' );
+        return PE_ERROR;
+    }
+
+    # Check we have all required attributes
+    foreach ( keys %$exportedAttr ) {
+
+        # Extract fields from exportedAttr value
+        my ( $mandatory, $name, $format, $friendly_name ) =
+          split( /;/, $exportedAttr->{$_} );
+
+        # Try to get value
+        my $value = $self->getAttributeValue( $name, $format, $friendly_name,
+            \@response_attributes );
+
+        unless ($value) {
+            $self->lmLog(
+                "Attribute $_ is mandatory, but was not delivered by $idp",
+                'error' );
+            return PE_ERROR;
+        }
+
+        # Store value in sessionInfo
+        $self->{sessionInfo}->{$_} = $value;
+    }
 
     return PE_OK;
 
