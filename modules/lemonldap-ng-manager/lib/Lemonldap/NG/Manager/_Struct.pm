@@ -47,7 +47,7 @@ sub cstruct {
             samlIDPMetaDataNode => {
                 $k2 => {
                     _nodes => [
-                        qw(samlIDPMetaDataExportedAttributes samlIDPMetaDataXML)
+                        qw(samlIDPMetaDataExportedAttributes samlIDPMetaDataXML samlIDPMetaDataOptions)
                     ],
                     samlIDPMetaDataExportedAttributes => {
                         _nodes => [
@@ -58,6 +58,12 @@ sub cstruct {
                     },
                     samlIDPMetaDataXML => "samlmetadata:/samlIDPMetaDataXML/$k2"
                       . ":samlIDPMetaDataXML:textarea",
+                    samlIDPMetaDataOptions => {
+                        _nodes => [
+                                "hash:/samlIDPMetaDataOptions/$k2"
+                              . ":samlIDPMetaDataOptions:text"
+                        ]
+                    }
                 }
             }
         );
@@ -709,6 +715,14 @@ sub testStruct {
                 keyTest => sub { return 1; },
             },
         },
+        samlIDPMetaDataOptions => {
+            keyTest    => qr/^[a-zA-Z](?:[\w\-\.]*\w)?$/,
+            keyMsgFail => 'Bad metadata name',
+            '*'        => {
+                test    => sub { return 1; },
+                keyTest => sub { return 1; },
+            },
+        },
         samlServicePrivateKey                         => $testNotDefined,
         samlEntityID                                  => $testNotDefined,
         samlOrganizationDisplayName                   => $testNotDefined,
@@ -862,6 +876,14 @@ sub subDefaultConf {
         exportedHeaders                   => { 'Auth-User' => '$uid' },
         samlIDPMetaDataXML                => {             {} },
         samlIDPMetaDataExportedAttributes => { 'uid'       => ';0;uid;;' },
+        samlIDPMetaDataOptions            => {
+            'NameIDFormat'      => '',
+            'ForceAuthn'        => 0,
+            'AllowProxiedAuthn' => 1,
+            'SSOMethod'         => '',
+            'SLOMethod'         => '',
+            'resolutionRule'    => '',
+        },
     };
 }
 

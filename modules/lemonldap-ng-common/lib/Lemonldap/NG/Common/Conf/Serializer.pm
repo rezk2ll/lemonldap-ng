@@ -54,7 +54,7 @@ sub unserialize {
 
         # Manage hashes
         if ( $k =~
-/^(?:exportedVars|locationRules|groups|exportedHeaders|macros|globalStorageOptions|notificationStorageOptions|samlIDPMetaDataXML|samlIDPMetaDataExportedAttributes|samlSPMetaData)$/
+/^(?:exportedVars|locationRules|groups|exportedHeaders|macros|globalStorageOptions|notificationStorageOptions|samlIDPMetaDataXML|samlIDPMetaDataExportedAttributes|samlIDPMetaDataOptions)$/
             and $v ||= {}
             and not ref($v) )
         {
