@@ -236,7 +236,7 @@ sub struct {
         #############
 
         variables => {
-            _nodes => [qw(cn:exportedVars cn:macros n:groups)],
+            _nodes => [qw(cn:exportedVars cn:macros cn:groups)],
             _help  => 'default',
 
             # EXPORTED ATTRIBUTES

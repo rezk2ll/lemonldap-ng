@@ -435,8 +435,6 @@ sub span {
 
     # Data
     $args{data} = '' unless ( defined $args{data} );
-    $args{data} =~ s/"/&#39;/g
-      unless ( defined $args{target} and $args{target} =~ /samlmetadata/ );
     $args{data} = uri_escape( $args{data} );
 
     # ID

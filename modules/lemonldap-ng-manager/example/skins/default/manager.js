@@ -232,8 +232,8 @@ function none(id) {
 	currentId=id;
 	display('default','');
 }
-function hashRoot(){
-	currentId=simpleTreeCollection[0].getSelected().attr('id');
+function hashRoot(id){
+	currentId=id;
 	display('default','');
 	$('#newkbr').show();
 }

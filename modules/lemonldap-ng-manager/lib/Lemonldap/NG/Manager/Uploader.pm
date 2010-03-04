@@ -60,6 +60,10 @@ sub confUpload {
         # Unescape value
         $value = uri_unescape($value);
 
+        $self->lmLog(
+            "Upload process for attribute $name (id: $id / value: $value)",
+            'debug' );
+
         my $NK = 0;
         $id =~
           s/^text_(NewID_)?li_(\w+)(\d)(?:_\d+)?$/decode_base64($2.'='x $3)/e;
@@ -67,8 +71,12 @@ sub confUpload {
         $id =~ s/\r//g;
         $id =~ s/^\///;
         $id =~ s/(?:\/[^\/]*)?$/\/$name/ if ($NK);
+
+        $self->lmLog( "id transformed into $id", 'debug' );
+
         next
-          if ( $id =~ /^(generalParameters|virtualHosts|samlIDPMetaDataNode)/ );
+          if ( $id =~
+            /^(generalParameters|variables|virtualHosts|samlIDPMetaDataNode)/ );
         my ( $confKey, $test ) = $self->getConfTests($id);
         my ( $res, $m );
 
@@ -123,6 +131,7 @@ sub confUpload {
         }
 
         # 1.3.2 Store accepted parameter in $newConf
+        $self->lmLog( "Tests OK for $name, store $value in $confKey", 'debug' );
         $self->setKeyToH( $newConf, $confKey,
             $test->{keyTest}
             ? ( ( $id !~ /\// or $test->{'*'} ) ? {} : ( $name => $value ) )
