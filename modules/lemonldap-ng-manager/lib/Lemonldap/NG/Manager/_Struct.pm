@@ -47,7 +47,7 @@ sub cstruct {
             samlIDPMetaDataNode => {
                 $k2 => {
                     _nodes => [
-                        qw(samlIDPMetaDataExportedAttributes samlIDPMetaDataXML samlIDPMetaDataOptions)
+                        qw(samlIDPMetaDataXML samlIDPMetaDataExportedAttributes samlIDPMetaDataOptions)
                     ],
                     samlIDPMetaDataExportedAttributes => {
                         _nodes => [
@@ -60,10 +60,21 @@ sub cstruct {
                       . ":samlIDPMetaDataXML:textarea",
                     samlIDPMetaDataOptions => {
                         _nodes => [
-                                "hash:/samlIDPMetaDataOptions/$k2"
-                              . ":samlIDPMetaDataOptions:text"
-                        ]
-                    }
+                            qw(samlIDPMetaDataOptionsNameIDFormat samlIDPMetaDataOptionsForceAuthn samlIDPMetaDataOptionsAllowProxiedAuthn samlIDPMetaDataOptionsSSOBinding samlIDPMetaDataOptionsSLOBinding samlIDPMetaDataOptionsResolutionRule)
+                        ],
+                        samlIDPMetaDataOptionsNameIDFormat =>
+"text:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsNameIDFormat",
+                        samlIDPMetaDataOptionsForceAuthn =>
+"bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsForceAuthn",
+                        samlIDPMetaDataOptionsAllowProxiedAuthn =>
+"bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsAllowProxiedAuthn",
+                        samlIDPMetaDataOptionsSSOBinding =>
+"text:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsSSOBinding",
+                        samlIDPMetaDataOptionsSLOBinding =>
+"text:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsSLOBinding",
+                        samlIDPMetaDataOptionsResolutionRule =>
+"textarea:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsResolutionRule",
+                    },
                 }
             }
         );
@@ -875,14 +886,14 @@ sub subDefaultConf {
         locationRules                     => { default     => 'deny' },
         exportedHeaders                   => { 'Auth-User' => '$uid' },
         samlIDPMetaDataXML                => {             {} },
-        samlIDPMetaDataExportedAttributes => { 'uid'       => ';0;uid;;' },
+        samlIDPMetaDataExportedAttributes => { 'uid'       => '0;uid;;' },
         samlIDPMetaDataOptions            => {
-            'NameIDFormat'      => '',
-            'ForceAuthn'        => 0,
-            'AllowProxiedAuthn' => 1,
-            'SSOMethod'         => '',
-            'SLOMethod'         => '',
-            'resolutionRule'    => '',
+            'samlIDPMetaDataOptionsNameIDFormat'      => '',
+            'samlIDPMetaDataOptionsForceAuthn'        => '0',
+            'samlIDPMetaDataOptionsAllowProxiedAuthn' => '1',
+            'samlIDPMetaDataOptionsSSOBinding'        => '',
+            'samlIDPMetaDataOptionsSLOBinding'        => '',
+            'samlIDPMetaDataOptionsResolutionRule'    => '',
         },
     };
 }
