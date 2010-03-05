@@ -35,6 +35,7 @@ my $docs = {
     # Session backends
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocFileSessionStorage'         => '4.4-File-session-backend.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocMySQLSessionStorage'        => '4.4-MySQL-session-backend.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocPostGreSQLSessionStorage'        => '4.4-PostGreSQL-session-backend.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocLDAPSessionStorage'         => '4.4-LDAP-session-backend.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocSOAPSessionStorage'         => '4.4-SOAP-session-backend.html',
     # Authentication backends
@@ -208,6 +209,7 @@ while ( my ( $url, $file ) = each %$docs ) {
 	s#/xwiki/bin/view/NG/DocSOAPStorage#4.3-SOAP-configuration-backend.html#g;
 	s#/xwiki/bin/view/NG/DocFileSessionStorage#4.4-File-session-backend.html#g;
 	s#/xwiki/bin/view/NG/DocMySQLSessionStorage#4.4-MySQL-session-backend.html#g;
+	s#/xwiki/bin/view/NG/DocPostGreSQLSessionStorage#4.4-PostGreSQL-session-backend.html#g;
 	s#/xwiki/bin/view/NG/DocLDAPSessionStorage#4.4-LDAP-session-backend.html#g;
 	s#/xwiki/bin/view/NG/DocSOAPSessionStorage#4.4-SOAP-session-backend.html#g;
 	s#/xwiki/bin/view/NG/AuthLDAP#4.5-LDAP-authentication-backend.html#g;
