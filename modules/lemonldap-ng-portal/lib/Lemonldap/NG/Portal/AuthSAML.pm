@@ -739,7 +739,21 @@ sub extractFormInfo {
     # Case 1: IDP was choosen from portal IDP list
     $idp ||= $self->param("idp");
 
-    # TODO - other case (IP resolution, etc.)
+    # Case 2: check all IDP resolution rules
+    # The first match win
+    unless ($idp) {
+        foreach ( keys %{ $self->{_idpList} } ) {
+            my $cond =
+              $self->{samlIDPMetaDataOptions}->{$_}
+              ->{samlIDPMetaDataOptionsResolutionRule};
+            next unless defined $cond;
+            if ( $self->safe->reval($cond) ) {
+                $self->lmLog( "IDP $_ resolution rule match", 'debug' );
+                $idp = $_;
+                last;
+            }
+        }
+    }
 
     # Get confirmation flag
     my $confirm_flag = $self->param("confirm");
