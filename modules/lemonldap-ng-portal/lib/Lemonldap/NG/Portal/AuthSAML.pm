@@ -809,10 +809,15 @@ sub extractFormInfo {
     my $forceAuthn =
       $self->{samlIDPMetaDataOptions}->{$idp}
       ->{samlIDPMetaDataOptionsForceAuthn};
+    my $nameIDFormat =
+      $self->{samlIDPMetaDataOptions}->{$idp}
+      ->{samlIDPMetaDataOptionsNameIDFormat};
+    $nameIDFormat = $self->getNameIDFormat($nameIDFormat) if $nameIDFormat;
 
     # Create SSO request
     $login =
-      $self->createAuthnRequest( $server, $IDPentityID, $method, $forceAuthn );
+      $self->createAuthnRequest( $server, $IDPentityID, $method, $forceAuthn,
+        $nameIDFormat );
 
     unless ($login) {
         $self->lmLog( "Could not create authentication request on $IDPentityID",

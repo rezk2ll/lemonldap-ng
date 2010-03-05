@@ -211,15 +211,17 @@ sub getOrganizationName {
     return $data->{OrganizationName}->{content};
 }
 
-## @method Lasso::Login createAuthnRequest(Lasso::Server server, string idp, int method, boolean forceAuthn)
+## @method Lasso::Login createAuthnRequest(Lasso::Server server, string idp, int method, boolean forceAuthn, string nameIDFormat)
 # Create authentication request for selected IDP
 # @param server Lasso::Server object
 # @param entityID IDP entityID
 # @param method HTTP method
 # @param forceAuthn force authentication on IDP
+# @param nameIDFormat SAML2 NameIDFormat
 # @return Lasso::Login object
 sub createAuthnRequest {
-    my ( $self, $server, $idp, $method, $forceAuthn ) = splice @_;
+    my ( $self, $server, $idp, $method, $forceAuthn, $nameIDFormat ) =
+      splice @_;
 
     # Create Lasso Login
     my $login = $self->createLogin($server);
@@ -246,11 +248,18 @@ sub createAuthnRequest {
     $self->lmLog( "Set $relaystate in RelayState", 'debug' );
 
     # Customize request
-    # TODO Get customization parameters from IDP configuration
     my $request = $login->request();
-    $request->NameIDPolicy()
-      ->Format(Lasso::Constants::SAML2_NAME_IDENTIFIER_FORMAT_PERSISTENT);
+
+    # NameIDFormat
+    if ($nameIDFormat) {
+        $self->lmLog( "Use NameIDFormat $nameIDFormat", 'debug' );
+        $request->NameIDPolicy()->Format($nameIDFormat);
+    }
+
+    # Always allow NameID creation
     $request->NameIDPolicy()->AllowCreate(1);
+
+    # Force authentication
     if ($forceAuthn) {
         $self->lmLog( "Force authentication on IDP", 'debug' );
         $request->ForceAuthn(1);
@@ -1044,6 +1053,35 @@ sub processAttributeResponse {
     return $query;
 }
 
+## @method string getNameIDFormat(string format)
+# Convert configuration string into SAML2 NameIDFormat string
+# @param format configuration string
+# @return SAML2 NameIDFormat string
+sub getNameIDFormat {
+    my ( $self, $format ) = splice @_;
+
+    return Lasso::Constants::SAML2_NAME_IDENTIFIER_FORMAT_UNSPECIFIED
+      if ( $format =~ /unspecified/i );
+    return Lasso::Constants::SAML2_NAME_IDENTIFIER_FORMAT_EMAIL
+      if ( $format =~ /email/i );
+    return Lasso::Constants::SAML2_NAME_IDENTIFIER_FORMAT_X509
+      if ( $format =~ /x509/i );
+    return Lasso::Constants::SAML2_NAME_IDENTIFIER_FORMAT_WINDOWS
+      if ( $format =~ /windows/i );
+    return Lasso::Constants::SAML2_NAME_IDENTIFIER_FORMAT_KERBEROS
+      if ( $format =~ /kerberos/i );
+    return Lasso::Constants::SAML2_NAME_IDENTIFIER_FORMAT_ENTITY
+      if ( $format =~ /entity/i );
+    return Lasso::Constants::SAML2_NAME_IDENTIFIER_FORMAT_PERSISTENT
+      if ( $format =~ /persistent/i );
+    return Lasso::Constants::SAML2_NAME_IDENTIFIER_FORMAT_TRANSIENT
+      if ( $format =~ /transient/i );
+    return Lasso::Constants::SAML2_NAME_IDENTIFIER_FORMAT_ENCRYPTED
+      if ( $format =~ /encrypted/i );
+
+    return;
+}
+
 1;
 
 __END__
@@ -1213,6 +1251,10 @@ Create an attribute request
 =head2 processAttributeResponse
 
 Process an attribute response
+
+=head2 getNameIDFormat
+
+Convert configuration string into SAML2 NameIDFormat string
 
 =head1 SEE ALSO
 
