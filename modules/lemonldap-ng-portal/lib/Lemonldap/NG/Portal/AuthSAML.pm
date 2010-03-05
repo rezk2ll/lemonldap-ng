@@ -842,22 +842,42 @@ sub extractFormInfo {
 
     # 3. Build authentication request
 
-    # Force HTTP-REDIRECT method
-    # TODO choose method depending on IDP
-    $method = Lasso::Constants::HTTP_METHOD_REDIRECT;
-
     # IDP entityID
     $self->{_idp} = $idp;
     my $IDPentityID = $self->{_idpList}->{$idp}->{entityID};
 
-    # IDP Options
+    # IDP ForceAuthn
     my $forceAuthn =
       $self->{samlIDPMetaDataOptions}->{$idp}
       ->{samlIDPMetaDataOptionsForceAuthn};
+
+    # IDP NameIDFormat
     my $nameIDFormat =
       $self->{samlIDPMetaDataOptions}->{$idp}
       ->{samlIDPMetaDataOptionsNameIDFormat};
     $nameIDFormat = $self->getNameIDFormat($nameIDFormat) if $nameIDFormat;
+
+    # IDP HTTP method
+    $method =
+      $self->{samlIDPMetaDataOptions}->{$idp}
+      ->{samlIDPMetaDataOptionsSSOBinding};
+    $method = $self->getHttpMethod($method) if $method;
+
+    # If no method defined, get first HTTP method
+    unless ( defined $method ) {
+        my $protocolType = Lasso::Constants::MD_PROTOCOL_TYPE_SINGLE_SIGN_ON;
+        $method =
+          $self->getFirstHttpMethod( $server, $IDPentityID, $protocolType );
+    }
+
+    # Failback to HTTP-REDIRECT
+    unless ( defined $method and $method != -1 ) {
+        $self->lmLog( "No method found with IDP $idp for SSO profile",
+            'debug' );
+        $method = $self->getHttpMethod("redirect");
+    }
+
+    $self->lmLog( "Use method $method with IDP $idp for SSO profile", 'debug' );
 
     # Create SSO request
     $login =

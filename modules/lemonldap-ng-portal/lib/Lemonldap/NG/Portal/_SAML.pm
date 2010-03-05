@@ -1082,6 +1082,63 @@ sub getNameIDFormat {
     return;
 }
 
+## @method int getHttpMethod(string method)
+# Convert configuration string into Lasso HTTP Method integer
+# @param method configuration string
+# @return Lasso HTTP Method integer
+sub getHttpMethod {
+    my ( $self, $method ) = splice @_;
+
+    return Lasso::Constants::HTTP_METHOD_GET
+      if ( $method =~ /^(http)?[-_]?get$/i );
+    return Lasso::Constants::HTTP_METHOD_POST
+      if ( $method =~ /^(http)?[-_]?post$/i );
+    return Lasso::Constants::HTTP_METHOD_REDIRECT
+      if ( $method =~ /^(http)?[-_]?redirect$/i );
+    return Lasso::Constants::HTTP_METHOD_SOAP
+      if ( $method =~ /^(http)?[-_]?soap$/i );
+    return Lasso::Constants::HTTP_METHOD_ARTIFACT_GET
+      if ( $method =~ /^(artifact)[-_]get$/i );
+    return Lasso::Constants::HTTP_METHOD_ARTIFACT_POST
+      if ( $method =~ /^(artifact)[-_]post$/i );
+
+    return;
+}
+
+## @method int getFirstHttpMethod(Lasso::Server server, string entityID, int protcolType)
+# Find a suitable HTTP method for an entity with a given protocol
+# @param server Lasso::Server object
+# @param entityID entity ID
+# @param protocolType Lasso protocol type
+# @return Lasso HTTP Method
+sub getFirstHttpMethod {
+    my ( $self, $server, $entityID, $protocolType ) = splice @_;
+    my $entity_provider;
+    my $method;
+
+    # Get Lasso::Provider object
+    eval {
+        $entity_provider = Lasso::Server::get_provider( $server, $entityID );
+    };
+    if ($@) {
+        $self->checkLassoError($@);
+        return;
+    }
+
+    # Find HTTP method
+    eval {
+        $method =
+          Lasso::Provider::get_first_http_method( $server, $entity_provider,
+            $protocolType );
+    };
+    if ($@) {
+        $self->checkLassoError($@);
+        return;
+    }
+
+    return $method;
+}
+
 1;
 
 __END__
@@ -1255,6 +1312,14 @@ Process an attribute response
 =head2 getNameIDFormat
 
 Convert configuration string into SAML2 NameIDFormat string
+
+=head2 getHttpMethod
+
+Convert configuration string into Lasso HTTP Method integer
+
+=head2 getFirstHttpMethod
+
+Find a suitable HTTP method for an entity with a given protocol
 
 =head1 SEE ALSO
 
