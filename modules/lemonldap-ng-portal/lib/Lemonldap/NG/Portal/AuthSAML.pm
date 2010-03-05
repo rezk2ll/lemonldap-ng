@@ -327,10 +327,15 @@ sub extractFormInfo {
             }
 
             # Check OneTimeUse flag
-            # TODO
+            my $oneTimeUse = $assertion->Conditions()->OneTimeUse();
 
-            # Check ProxyRestriction flag
-            # TODO
+            if ($oneTimeUse) {
+                $self->lmLog( "Found oneTimeUse flag in assertion conditions",
+                    'debug' );
+
+                # Set a small cookie duration
+                $self->{cookieExpiration} = "+1m";
+            }
 
             #  Extract RelayState information
             if ( $self->extractRelayState($relaystate) ) {
@@ -356,6 +361,32 @@ sub extractFormInfo {
                 else {
                     $self->lmLog(
 "IDP was not found in RelayState or in IDP resolution cookie",
+                        'error'
+                    );
+                    return PE_ERROR;
+                }
+            }
+
+            # Check if assertion was proxied
+            # This mean the Issuer is not our IDP entityID
+            my $allowProxiedAuthn =
+              $self->{samlIDPMetaDataOptions}->{$idp}
+              ->{samlIDPMetaDataOptionsAllowProxiedAuthn};
+
+            unless ($allowProxiedAuthn) {
+                $self->lmLog(
+"Proxied authentication are not allowed, check Assertion Issuer",
+                    'debug'
+                );
+                my $assertion_issuer = $assertion->Issuer()->content();
+                $self->lmLog(
+                    "Found Issuer $assertion_issuer in $idp Assertion",
+                    'debug' );
+                if (
+                    $assertion_issuer ne $self->{_idpList}->{$idp}->{entityID} )
+                {
+                    $self->lmLog(
+"Assertion was proxied, and this is not allowed for IDP $idp",
                         'error'
                     );
                     return PE_ERROR;
