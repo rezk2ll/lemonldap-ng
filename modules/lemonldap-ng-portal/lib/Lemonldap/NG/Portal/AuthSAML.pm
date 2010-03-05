@@ -986,6 +986,8 @@ sub setAuthSessionInfo {
     # Store other informations in session
     $self->{sessionInfo}->{_user} = $self->{user};
     $self->{sessionInfo}->{_idp}  = $idp;
+    $self->{sessionInfo}->{_idpEntityID} =
+      $self->{_idpList}->{$idp}->{entityID};
 
     # TODO adapt _utime with SessionNotOnOrAfter
 
@@ -1025,6 +1027,8 @@ sub authenticate {
 # @return nothing
 sub authLogout {
     my $self = shift;
+    my $idp         = $self->{sessionInfo}->{_idp};
+    my $IDPentityID = $self->{sessionInfo}->{_idpEntityID};
     my $method;
 
     # Get Lasso Server
@@ -1042,9 +1046,27 @@ sub authLogout {
         return PE_ERROR;
     }
 
-    # Force SOAP method
-    # TODO choose method depending on IDP
-    $method = Lasso::Constants::HTTP_METHOD_SOAP;
+    # IDP HTTP method
+    $method =
+      $self->{samlIDPMetaDataOptions}->{$idp}
+      ->{samlIDPMetaDataOptionsSLOBinding};
+    $method = $self->getHttpMethod($method) if $method;
+
+    # If no method defined, get first HTTP method
+    unless ( defined $method ) {
+        my $protocolType = Lasso::Constants::MD_PROTOCOL_TYPE_SINGLE_LOGOUT;
+        $method =
+          $self->getFirstHttpMethod( $server, $IDPentityID, $protocolType );
+    }
+
+    # Failback to SOAP
+    unless ( defined $method and $method != -1 ) {
+        $self->lmLog( "No method found with IDP $idp for SLO profile",
+            'debug' );
+        $method = $self->getHttpMethod("soap");
+    }
+
+    $self->lmLog( "Use method $method with IDP $idp for SLO profile", 'debug' );
 
     # Build Logout Request
     my $logout = $self->createLogoutRequest( $server, $session_dump, $method );
