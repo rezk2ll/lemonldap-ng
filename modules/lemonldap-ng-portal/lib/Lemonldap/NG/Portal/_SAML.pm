@@ -211,14 +211,15 @@ sub getOrganizationName {
     return $data->{OrganizationName}->{content};
 }
 
-## @method Lasso::Login createAuthnRequest(Lasso::Server server, string idp, int method)
+## @method Lasso::Login createAuthnRequest(Lasso::Server server, string idp, int method, boolean forceAuthn)
 # Create authentication request for selected IDP
 # @param server Lasso::Server object
 # @param entityID IDP entityID
 # @param method HTTP method
+# @param forceAuthn force authentication on IDP
 # @return Lasso::Login object
 sub createAuthnRequest {
-    my ( $self, $server, $idp, $method ) = splice @_;
+    my ( $self, $server, $idp, $method, $forceAuthn ) = splice @_;
 
     # Create Lasso Login
     my $login = $self->createLogin($server);
@@ -250,6 +251,10 @@ sub createAuthnRequest {
     $request->NameIDPolicy()
       ->Format(Lasso::Constants::SAML2_NAME_IDENTIFIER_FORMAT_PERSISTENT);
     $request->NameIDPolicy()->AllowCreate(1);
+    if ($forceAuthn) {
+        $self->lmLog( "Force authentication on IDP", 'debug' );
+        $request->ForceAuthn(1);
+    }
 
     # Build authentication request
     unless ( $self->buildAuthnRequestMsg($login) ) {

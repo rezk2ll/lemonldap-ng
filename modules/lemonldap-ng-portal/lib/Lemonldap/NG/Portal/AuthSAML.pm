@@ -805,8 +805,14 @@ sub extractFormInfo {
     $self->{_idp} = $idp;
     my $IDPentityID = $self->{_idpList}->{$idp}->{entityID};
 
+    # IDP Options
+    my $forceAuthn =
+      $self->{samlIDPMetaDataOptions}->{$idp}
+      ->{samlIDPMetaDataOptionsForceAuthn};
+
     # Create SSO request
-    $login = $self->createAuthnRequest( $server, $IDPentityID, $method );
+    $login =
+      $self->createAuthnRequest( $server, $IDPentityID, $method, $forceAuthn );
 
     unless ($login) {
         $self->lmLog( "Could not create authentication request on $IDPentityID",
