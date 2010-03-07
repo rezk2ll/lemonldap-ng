@@ -2,7 +2,7 @@
 
   <div id="layout-login">
     <div id="layout-login-left">
-      <p><img src="/skins/<TMPL_VAR NAME="SKIN">/images/logo.png" /></p>
+      <p><img src="/skins/<TMPL_VAR NAME="SKIN">/images/logo-lock.png" /></p>
       <h1>
         <lang en="Welcome on your secured authentication portal." fr="Bienvenue sur votre portail d'authentification s&eacute;curis&eacute;e." />
       </h1>
