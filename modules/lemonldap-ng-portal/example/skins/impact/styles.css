@@ -147,6 +147,18 @@ div.title img {
   -webkit-border-radius:10px;
 }
 
+#content-all-info table.info {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#content-all-info table.info th,
+#content-all-info table.info td {
+  text-align: left;
+  border-bottom: 1px dotted #B5CFB6;
+  padding: 5px;
+}
+
 #content-left {
   position: absolute;
   width: 370px;
