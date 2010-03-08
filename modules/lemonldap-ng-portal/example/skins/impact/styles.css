@@ -37,7 +37,7 @@ hr.hashed {
   border: 0px;
   height: 1px;
   color: #ddd;
-  background: #aaa url("images/hatch.gif");
+  background: #aaa;
 }
 
 form input[name=user] {
@@ -68,21 +68,47 @@ form input[name=mail] {
 /* Custom classes                                                             */
 /* -------------------------------------------------------------------------- */
 
-span.text-help {
-  font-size: 0.9em;
-}
-
-span.text-info {
+span.text-error,
+div.text-error,
+p.text-error {
   color: #E00;
   font-weight: bold;
 }
 
-span.text-label {
+span.text-help,
+div.text-help,
+p.text-help {
+  font-size: 0.9em;
+}
+
+span.text-info,
+div.text-info,
+p.text-info {
+  font-style: italic;
+}
+
+span.text-label,
+div.text-label,
+p.text-label {
   font-weight: bold;
 }
 
+div.panel-buttons {
+  text-align: right;
+}
+
+div.title {
+  vertical-align: bottom;
+  font-weight: bold;
+  font-size: 2em;
+}
+
+div.title img {
+  vertical-align: bottom;
+}
+
 /* -------------------------------------------------------------------------- */
-/* Main layouts                                                               */
+/* Main layout                                                                */
 /* -------------------------------------------------------------------------- */
 
 #layout {
@@ -95,15 +121,7 @@ span.text-label {
   margin: auto;
 }
 
-.panel-buttons {
-  text-align: right;
-}
-
-/* -------------------------------------------------------------------------- */
-/* Login layout                                                               */
-/* -------------------------------------------------------------------------- */
-
-#layout-login {
+#content {
   padding: 20px;
   background-color: #F8F8F8;
   color: #000;
@@ -113,17 +131,33 @@ span.text-label {
   -webkit-border-radius:10px;
 }
 
-#layout-login-left {
+#content-all {
+  padding: 10px;
+  height: 322px;
+}
+
+#content-all-info {
+  padding: 10px;
+  margin-bottom: 15px;
+  background-color: #D5EFD1;
+  color: #000;
+  border: 1px solid #B5CFB6;
+  border-radius: 10px;
+  -moz-border-radius:10px;
+  -webkit-border-radius:10px;
+}
+
+#content-left {
   position: absolute;
   width: 370px;
   padding: 10px;
 }
 
-#layout-login-left h1 {
+#content-left h1 {
   font-size: 1.5em;
 }
 
-#layout-login-right {
+#content-right-login {
   height: 320px;
   margin-left: 400px;
   padding: 10px;
@@ -135,20 +169,20 @@ span.text-label {
   -webkit-border-radius:10px;
 }
 
-#layout-login-right h1 {
+#content-right-login h1 {
   font-size: 1.3em;
 }
 
-#layout-login-right hr {
+#content-right-login hr {
   color: #B5CFB6;
   background-color: #B5CFB6;
 }
 
-#layout-login-right img {
+#content-right-login img {
   vertical-align: top;
 }
 
-#layout-login-right a {
+#content-right-login a {
   vertical-align: bottom;
   text-decoration: underline;
 }
