@@ -22,6 +22,7 @@ our $page_title = 'Lemonldap::NG statistics';
 # @return Constant hash used to convert error codes into string.
 sub portalTab {
     return {
+        -3 => 'PE_INFO',
         -2 => 'PORTAL_REDIRECT',
         -1 => 'PORTAL_ALREADY_AUTHENTICATED',
         0  => 'PORTAL_OK',
@@ -35,18 +36,33 @@ sub portalTab {
         8  => 'PORTAL_APACHESESSIONERROR',
         9  => 'PORTAL_FIRSTACCESS',
         10 => 'PORTAL_BADCERTIFICATE',
-        11 => 'PORTAL_LA_FAILED',
-        12 => 'PORTAL_LA_ARTFAILED',
-        13 => 'PORTAL_LA_DEFEDFAILED',
-        14 => 'PORTAL_LA_QUERYEMPTY',
-        15 => 'PORTAL_LA_SOAPFAILED',
-        16 => 'PORTAL_LA_SLOFAILED',
-        17 => 'PORTAL_LA_SSOFAILED',
-        18 => 'PORTAL_LA_SSOINITFAILED',
-        19 => 'PORTAL_LA_SESSIONERROR',
-        20 => 'PORTAL_LA_SEPFAILED',
         21 => 'PORTAL_PP_ACCOUNT_LOCKED',
         22 => 'PORTAL_PP_PASSWORD_EXPIRED',
+        23 => 'PORTAL_CERTIFICATEREQUIRED',
+        24 => 'PORTAL_ERROR',
+        25 => 'PORTAL_PP_CHANGE_AFTER_RESET',
+        26 => 'PORTAL_PP_PASSWORD_MOD_NOT_ALLOWED',
+        27 => 'PORTAL_PP_MUST_SUPPLY_OLD_PASSWORD',
+        28 => 'PORTAL_PP_INSUFFICIENT_PASSWORD_QUALITY',
+        29 => 'PORTAL_PP_PASSWORD_TOO_SHORT',
+        30 => 'PORTAL_PP_PASSWORD_TOO_YOUNG',
+        31 => 'PORTAL_PP_PASSWORD_IN_HISTORY',
+        32 => 'PORTAL_PP_GRACE',
+        33 => 'PORTAL_PP_EXP_WARNING',
+        34 => 'PORTAL_PASSWORD_MISMATCH',
+        35 => 'PORTAL_PASSWORD_OK',
+        36 => 'PORTAL_NOTIFICATION',
+        37 => 'PORTAL_BADURL',
+        38 => 'PORTAL_NOSCHEME',
+        39 => 'PORTAL_BADOLDPASSWORD',
+        40 => 'PORTAL_MALFORMEDUSER',
+        41 => 'PORTAL_SESSIONNOTGRANTED',
+        42 => 'PORTAL_CONFIRM',
+        43 => 'PORTAL_MAILFORMEMPTY',
+        44 => 'PORTAL_BADMAILTOKEN',
+        45 => 'PORTAL_MAILERROR',
+        46 => 'PORTAL_MAILOK',
+        47 => 'PORTAL_LOGOUT_OK',
     };
 }
 
@@ -81,7 +97,10 @@ sub run {
         $lastMn = $mn;
 
         # Activity collect
-        if (/^(\S+)\s+=>\s+(\S+)\s+(OK|REJECT|REDIRECT|LOGOUT|\-?\d+)$/) {
+        if (
+/^(\S+)\s+=>\s+(\S+)\s+(OK|REJECT|REDIRECT|LOGOUT|UNPROTECT|\-?\d+)$/
+          )
+        {
             my ( $user, $uri, $code ) = ( $1, $2, $3 );
 
             # Portal error translation

@@ -210,9 +210,20 @@ sub abort {
     print $cgi->start_html(
         -title    => $t1,
         -encoding => 'utf8',
+        -style    => {
+            -code => '
+body{
+	background:#000;
+	color:#fff;
+	padding:10px 50px;
+	font-family:sans-serif;
+}
+        '
+        },
     );
-    print "<h1>$t1</h1>";
-    print "<p>$t2</p>";
+    print "<h1>$t1</h1><p>$t2</p>";
+    print
+'<center><img alt="Lemonldap::NG" src="http://lemonldap.ow2.org/logo_lemonldap-ng.png" /></center>';
     print STDERR ( ref($self) || $self ) . " error: $t1, $t2\n";
     exit;
 }

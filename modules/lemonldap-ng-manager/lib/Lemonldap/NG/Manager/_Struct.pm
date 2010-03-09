@@ -597,7 +597,7 @@ sub testStruct {
                 keyTest => $pcre,
                 test    => sub {
                     my $e = shift;
-                    return 1 if ( $e eq 'accept' or $e eq 'deny' );
+                    return 1 if ( $e =~ /^(?:accept|deny|unprotect)$/i );
                     if ( $e =~ s/^logout(?:_(?:app|sso|app_sso))?\s*// ) {
                         return (
                             $e =~ /^(?:https?:\/\/\S+)?$/
@@ -609,9 +609,7 @@ sub testStruct {
                 },
                 warnTest => sub {
                     my $e = shift;
-                    return ( 0, $assignMsg )
-                      if (  $e =~ $assignTest
-                        and $e !~ /^(?:accept|deny|logout)/ );
+                    return ( 0, $assignMsg ) if ( $e =~ $assignTest );
                     1;
                 },
             },

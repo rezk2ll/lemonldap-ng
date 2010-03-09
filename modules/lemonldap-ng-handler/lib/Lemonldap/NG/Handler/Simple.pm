@@ -38,14 +38,14 @@ our @EXPORT;
 # Shared variables
 our (
     $locationRegexp,       $locationCondition, $defaultCondition,
-    $forgeHeaders,         $apacheRequest,     $locationCount,
-    $cookieName,           $datas,             $globalStorage,
-    $globalStorageOptions, $localStorage,      $localStorageOptions,
-    $whatToTrace,          $https,             $refLocalStorage,
-    $safe,                 $port,              $statusPipe,
-    $statusOut,            $customFunctions,   $transform,
-    $cda,                  $childInitDone,     $httpOnly,
-    $cookieExpiration,
+    $locationProtection, $defaultProtection,   $forgeHeaders,
+    $apacheRequest,      $locationCount,       $cookieName,
+    $datas,              $globalStorage,       $globalStorageOptions,
+    $localStorage,       $localStorageOptions, $whatToTrace,
+    $https,              $refLocalStorage,     $safe,
+    $port,               $statusPipe,          $statusOut,
+    $customFunctions,    $transform,           $cda,
+    $childInitDone,      $httpOnly,            $cookieExpiration,
 );
 
 ##########################################
@@ -60,6 +60,7 @@ BEGIN {
         locationRules => [
             qw(
               $locationCondition $defaultCondition $locationCount
+              $locationProtection $defaultProtection
               $locationRegexp $apacheRequest $datas safe $customFunctions
               )
         ],
@@ -118,6 +119,8 @@ BEGIN {
             threads::shared::share($locationRegexp);
             threads::shared::share($locationCondition);
             threads::shared::share($defaultCondition);
+            threads::shared::share($locationProtection);
+            threads::shared::share($defaultProtection);
             threads::shared::share($forgeHeaders);
             threads::shared::share($locationCount);
             threads::shared::share($cookieName);
@@ -505,56 +508,80 @@ sub locationRulesInit {
     # Pre compilation : both regexp and conditions
     foreach ( sort keys %{ $args->{locationRules} } ) {
         if ( $_ eq 'default' ) {
-            $defaultCondition =
+            ( $defaultCondition, $defaultProtection ) =
               $class->conditionSub( $args->{locationRules}->{$_} );
         }
         else {
-            $locationCondition->[$locationCount] =
-              $class->conditionSub( $args->{locationRules}->{$_} );
+            (
+                $locationCondition->[$locationCount],
+                $locationProtection->[$locationCount]
+            ) = $class->conditionSub( $args->{locationRules}->{$_} );
             $locationRegexp->[$locationCount] = qr/$_/;
             $locationCount++;
         }
     }
 
     # Default police: all authenticated users are accepted
-    $defaultCondition = $class->conditionSub('accept')
+    ( $defaultCondition, $defaultProtection ) = $class->conditionSub('accept')
       unless ($defaultCondition);
     1;
 }
 
 ## @imethod protected codeRef conditionSub(string cond)
 # Returns a compiled function used to grant users (used by
-# locationRulesInit().
+# locationRulesInit(). The second value returned is a boolean that
+# tell if URL is protected.
 # @param $cond The boolean expression to use
+# @return array (ref(sub),boolean)
 sub conditionSub {
     my ( $class, $cond ) = splice @_;
-    return sub { 1 }
+    my ( $OK, $NOK ) = ( sub { 1 }, sub { 0 } );
+
+    # Simple cases : accept and deny
+    return ( $OK, 1 )
       if ( $cond =~ /^accept$/i );
-    return sub { 0 }
+    return ( $NOK, 1 )
       if ( $cond =~ /^deny$/i );
+
+    # Case unprotect : 2nd value is 0 since this URL is not protected
+    return ( $OK, 0 )
+      if ( $cond =~ /^unprotect$/i );
+
+    # Case logout
     if ( $cond =~ /^logout(?:_sso)?(?:\s+(.*))?$/i ) {
         my $url = $1;
-        return $url
-          ? sub { $datas->{_logout} = $url;     return 0 }
-          : sub { $datas->{_logout} = portal(); return 0 };
+        return (
+            $url
+            ? ( sub { $datas->{_logout} = $url; return 0 }, 1 )
+            : ( sub { $datas->{_logout} = portal(); return 0 }, 1 )
+        );
     }
+
+    # Since filter exists only with Apache>=2, logout_app and logout_app_sso
+    # targets are available only for it.
     if ( MP() == 2 ) {
+
+        # logout_app
         if ( $cond =~ /^logout_app(?:\s+(.*))?$/i ) {
             my $u = $1 || 'portal()';
             eval 'use Apache2::Filter' unless ( $INC{"Apache2/Filter.pm"} );
-            return sub {
+            return (
+                sub {
                 $apacheRequest->add_output_filter(
                     sub {
                         return $class->redirectFilter( $u, @_ );
                     }
                 );
                 1;
-            };
+                },
+                1
+            );
         }
         elsif ( $cond =~ /^logout_app_sso(?:\s+(.*))?$/i ) {
             eval 'use Apache2::Filter' unless ( $INC{"Apache2/Filter.pm"} );
             my $u = $1 || 'portal()';
-            return sub {
+            return (
+                sub {
                 $class->localUnlog;
                 $apacheRequest->add_output_filter(
                     sub {
@@ -567,14 +594,16 @@ sub conditionSub {
                     }
                 );
                 1;
-            };
+                },
+                1
+            );
         }
     }
     $cond =~ s/\$date/&POSIX::strftime("%Y%m%d%H%M%S",localtime())/e;
     $cond =~ s/\$(\w+)/\$datas->{$1}/g;
     $cond =~ s/\$datas->{vhost}/\$apacheRequest->hostname/g;
     my $sub = $class->safe->reval("sub {return ( $cond )}");
-    return $sub;
+    return ( $sub, 1 );
 }
 
 ## @imethod protected void defaultValuesInit(hashRef args)
@@ -759,6 +788,17 @@ sub updateStatus {
     };
 }
 
+## @rmethod protected boolean isProtected()
+# @return True if URI isn't protected (rule "unprotect")
+sub isProtected {
+    my ( $class, $uri ) = splice @_;
+    for ( my $i = 0 ; $i < $locationCount ; $i++ ) {
+        return $locationProtection->[$i]
+          if ( $uri =~ $locationRegexp->[$i] );
+    }
+    return $defaultProtection;
+}
+
 ## @rmethod protected boolean grant()
 # Grant or refuse client using compiled regexp and functions
 # @return True if the user is granted to access to the current URL
@@ -933,6 +973,15 @@ sub run ($$) {
     # I - recover the cookie
     my $id;
     unless ( $id = $class->fetchId ) {
+
+        # 1.1 Ignore unprotected URIs
+        unless ( $class->isProtected($uri) ) {
+            $class->updateStatus( $apacheRequest->connection->remote_ip,
+                $apacheRequest->uri, 'UNPROTECT' );
+            return OK;
+        }
+
+        # 1.2 Redirect users to the portal
         $class->lmLog( "$class: No cookie found", 'info' );
         $class->updateStatus( $apacheRequest->connection->remote_ip,
             $apacheRequest->uri, 'REDIRECT' );
@@ -957,6 +1006,13 @@ sub run ($$) {
                     'info' );
                 $class->updateStatus( $apacheRequest->connection->remote_ip,
                     $apacheRequest->uri, 'EXPIRED' );
+
+                # For unprotected URI, user is not redirected
+                unless ( $class->isProtected($uri) ) {
+                    $class->updateStatus( $apacheRequest->connection->remote_ip,
+                        $apacheRequest->uri, 'UNPROTECT' );
+                    return OK;
+                }
                 return $class->goToPortal($uri);
             }
             $datas->{$_} = $h{$_} foreach ( keys %h );
@@ -993,6 +1049,7 @@ sub run ($$) {
         PerlCleanupHandler => sub { $class->cleanLocalStorage(@_); DECLINED },
     );
 
+    #  Catch POST rules
     if ( defined( $transform->{$uri} ) ) {
         return &{ $transform->{$uri} };
     }

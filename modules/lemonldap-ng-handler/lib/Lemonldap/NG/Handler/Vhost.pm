@@ -29,13 +29,16 @@ sub locationRulesInit {
         $locationCount->{$vhost} = 0;
         foreach ( sort keys %{ $args->{locationRules}->{$vhost} } ) {
             if ( $_ eq 'default' ) {
-                $defaultCondition->{$vhost} =
+                ( $defaultCondition->{$vhost}, $defaultProtection->{$vhost} ) =
                   $class->conditionSub(
                     $args->{locationRules}->{$vhost}->{$_} );
             }
             else {
-                $locationCondition->{$vhost}->[ $locationCount->{$vhost} ] =
-                  $class->conditionSub(
+                (
+                    $locationCondition->{$vhost}->[ $locationCount->{$vhost} ],
+                    $locationProtection->{$vhost}->[ $locationCount->{$vhost} ]
+                  )
+                  = $class->conditionSub(
                     $args->{locationRules}->{$vhost}->{$_} );
                 $locationRegexp->{$vhost}->[ $locationCount->{$vhost} ] =
                   qr/$_/;
@@ -44,7 +47,8 @@ sub locationRulesInit {
         }
 
         # Default police
-        $defaultCondition->{$vhost} = $class->conditionSub('accept')
+        ( $defaultCondition->{$vhost}, $defaultProtection->{$vhost} ) =
+          $class->conditionSub('accept')
           unless ( $defaultCondition->{$vhost} );
     }
     1;
@@ -94,6 +98,19 @@ sub sendHeaders {
     else {
         lmSetHeaderIn( $apacheRequest, 'Auth-User' => $datas->{uid} );
     }
+}
+
+## @rmethod protected boolean isProtected()
+# @return True if URI isn't protected (rule "unprotect")
+sub isProtected {
+    my ( $class, $uri ) = splice @_;
+    my $vhost = $apacheRequest->hostname;
+    for ( my $i = 0 ; $i < $locationCount->{$vhost} ; $i++ ) {
+        if ( $uri =~ $locationRegexp->{$vhost}->[$i] ) {
+            return $locationProtection->{$vhost}->[$i];
+        }
+    }
+    return $defaultProtection->{$vhost};
 }
 
 ## @cmethod boolean grant()

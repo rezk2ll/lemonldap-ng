@@ -22,6 +22,7 @@ use Config::IniFiles;
 
 our $VERSION = 0.70;
 our $msg;
+our $configFiles;
 
 ## @cmethod Lemonldap::NG::Common::Conf new(hashRef arg)
 # Constructor.
@@ -62,27 +63,27 @@ sub new {
             }
         }
         unless ( $self->{type} ) {
-            $msg .= 'Error: configStorage: type is not defined';
+            $msg .= ' Error: configStorage: type is not defined.';
             return 0;
         }
         unless ( $self->{type} =~ /^[\w:]+$/ ) {
-            $msg .= "Error: configStorage: type is not well formed";
+            $msg .= ' Error: configStorage: type is not well formed.';
         }
         $self->{type} = "Lemonldap::NG::Common::Conf::$self->{type}"
           unless $self->{type} =~ /^Lemonldap::/;
         eval "require $self->{type}";
         if ($@) {
-            $msg .= "Error: Unknown package $self->{type}";
+            $msg .= " Error: Unknown package $self->{type}.";
             return 0;
         }
         return 0 unless $self->prereq;
         $self->{mdone}++;
-        $msg = "$self->{type} loaded";
+        $msg = "$self->{type} loaded.";
     }
     if ( $self->{localStorage} and not defined( $self->{refLocalStorage} ) ) {
         eval "use $self->{localStorage};";
         if ($@) {
-            $msg .= "Unable to load $self->{localStorage}: $@";
+            $msg .= " Unable to load $self->{localStorage}: $@.";
         }
         else {
             $self->{refLocalStorage} =
@@ -107,7 +108,7 @@ sub saveConf {
         return DATABASE_LOCKED if ( $self->isLocked or not $self->lock );
     }
     $conf->{cfgNum} = $last + 1 unless ( $self->{cfgNumFixed} );
-    $msg = "Configuration $conf->{cfgNum} stored";
+    $msg = "Configuration $conf->{cfgNum} stored.";
     return $self->store($conf);
 }
 
@@ -125,24 +126,24 @@ sub getConf {
         and ref( $self->{refLocalStorage} )
         and my $res = $self->{refLocalStorage}->get('conf') )
     {
-        $msg = "get configuration from cache without verification";
+        $msg = "get configuration from cache without verification.";
         return $res;
     }
     else {
         $args->{cfgNum} ||= $self->lastCfg;
         unless ( $args->{cfgNum} ) {
-            $msg = "No configuration available";
+            $msg = "No configuration available.";
             return 0;
         }
         my $r;
         unless ( ref( $self->{refLocalStorage} ) ) {
-            $msg = "get remote configuration (localStorage unavailable)";
+            $msg = "get remote configuration (localStorage unavailable).";
             $r   = $self->getDBConf($args);
         }
         else {
             $r = $self->{refLocalStorage}->get('conf');
             if ( $r->{cfgNum} == $args->{cfgNum} ) {
-                $msg = "configuration unchanged, get configuration from cache";
+                $msg = "configuration unchanged, get configuration from cache.";
             }
             else {
                 $r = $self->getDBConf($args);
@@ -159,7 +160,7 @@ sub getConf {
                 );
             };
             if ($@) {
-                $msg = "Bad key : $@";
+                $msg = "Bad key : $@.";
                 return 0;
             }
         }
@@ -181,20 +182,25 @@ sub getLocalConf {
     $section ||= DEFAULTSECTION;
     $file    ||= DEFAULTCONFFILE;
     $loaddefault = 1 unless ( defined $loaddefault );
+    my $cfg;
+
+    # First, search if this file has been parsed
+    unless ( $cfg = $configFiles->{$file} ) {
 
     # If default configuration cannot be read
     # - Error if configuration section is requested
     # - Silent exit for other section requests
     unless ( -r $file ) {
         if ( $section eq CONFSECTION ) {
-            $msg = "Cannot read $file to get configuration access parameters";
+                $msg =
+                  "Cannot read $file to get configuration access parameters.";
             return 0;
         }
-        return $r;
+            return 0;
     }
 
     # Parse ini file
-    my $cfg = Config::IniFiles->new( -file => $file, -allowcontinue => 1 );
+        $cfg = Config::IniFiles->new( -file => $file, -allowcontinue => 1 );
 
     unless ( defined $cfg ) {
         $msg = "Local config error: " . @Config::IniFiles::errors;
@@ -203,14 +209,16 @@ sub getLocalConf {
 
     # Check if default section exists
     unless ( $cfg->SectionExists(DEFAULTSECTION) ) {
-        $msg = "Default section (" . DEFAULTSECTION . ") is missing";
+            $msg = "Default section (" . DEFAULTSECTION . ") is missing.";
         return 0;
     }
 
     # Check if configuration section exists
     if ( $section eq CONFSECTION and !$cfg->SectionExists(CONFSECTION) ) {
-        $msg = "Configuration section (" . CONFSECTION . ") is missing";
+            $msg = "Configuration section (" . CONFSECTION . ") is missing.";
         return 0;
+    }
+        $configFiles->{$file} = $cfg;
     }
 
     # First load all default section parameters
@@ -220,7 +228,7 @@ sub getLocalConf {
             if ( $r->{$_} =~ /^[{\[].*[}\]]$/ ) {
                 eval "\$r->{$_} = $r->{$_}";
                 if ($@) {
-                    $msg = "Warning: error in file $file: $@. ";
+                    $msg = "Warning: error in file $file: $@.";
                     return 0;
                 }
             }
@@ -239,7 +247,7 @@ sub getLocalConf {
         if ( $r->{$_} =~ /^[{\[].*[}\]]$/ ) {
             eval "\$r->{$_} = $r->{$_}";
             if ($@) {
-                $msg = "Warning: error in file $file: $@. ";
+                $msg = "Warning: error in file $file: $@.";
                 return 0;
             }
         }
@@ -273,7 +281,7 @@ sub getDBConf {
           : $a[0];
     }
     my $conf = $self->load( $args->{cfgNum} );
-    $msg = "Get configuration $conf->{cfgNum}";
+    $msg = "Get configuration $conf->{cfgNum}.";
     my $re = Regexp::Assemble->new();
     foreach ( keys %{ $conf->{locationRules} } ) {
         $_ = quotemeta($_);

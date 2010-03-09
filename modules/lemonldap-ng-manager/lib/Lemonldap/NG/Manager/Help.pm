@@ -541,8 +541,9 @@ access is granted or not depending on the boolean expression result&nbsp;:</p>
 </pre>
 
 <p> This rule means that all URL starting with '/protected', are reserved to
-users member of 'group1'. You can also use 'accept' and 'deny' keywords.
-'accept' keyword means that all authenticated users are granted.</p>
+users member of 'group1'. You can also use 'accept', 'deny' and 'unprotect'
+keywords. 'accept' keyword means that all authenticated users are granted,
+'unprotect' means that authentication is not required.</p>
 
 <p> If URL doesn't match any regular expression, 'default' rule is called to
 grant or not.</p>
@@ -607,9 +608,10 @@ Exemple&nbsp;:</p>
 
 <p> La r&egrave;gle ci-dessus signifie que pour les URL commen&ccedil;ant par
 '/protected', les utilisateurs doivent appartenir au groupe 'group1'. Vous
-pouvez &eacute;galement utiliser les mots-clefs 'accept' et 'deny'. Attention,
-'accept' signifie que tous les utilisateurs authentifi&eacute;s peuvent
-acc&eacute;der.</p>
+pouvez &eacute;galement utiliser les mots-clefs 'accept', 'deny' et
+'unprotect'. Attention, 'accept' signifie que tous les utilisateurs
+authentifi&eacute;s peuvent acc&eacute;der, 'unprotect' signifie que
+l'authentification n'est pas obligatoire.</p>
 
 <p>Si l'URL demand&eacute;e ne correspond &agrave; aucune des expressions
 r&eacute;guli&egrave;res, le droit d'acc&egrave;s est calcul&eacute; &agrave;

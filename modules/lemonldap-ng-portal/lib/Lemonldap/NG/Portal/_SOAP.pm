@@ -356,7 +356,7 @@ sub _conditionSub {
     my ( $self, $id, $cond ) = splice @_;
     my $h = $self->getApacheSession( $id, 1 );
     return sub { 1 }
-      if ( $cond =~ /^accept$/i );
+      if ( $cond =~ /^(?:accept|unprotect)$/i );
     return sub { 0 }
       if ( !$h or $cond =~ /^(?:deny$|logout)/i );
     $cond =~ s/\$date/&POSIX::strftime("%Y%m%d%H%M%S",localtime())/e;

@@ -26,17 +26,18 @@ our @ISA     = qw(
 #@return Lemonldap::NG::Manager object
 sub new {
     my ( $class, $args ) = @_;
+
+    # Try to load local configuration parameters
+    my $conf = Lemonldap::NG::Common::Conf->new( $args->{configStorage} )
+      or Lemonldap::NG::Handler::CGI->abort( 'Unable to get configuration',
+        $Lemonldap::NG::Common::Conf::msg );
+    if ( my $localconf = $conf->getLocalConf(MANAGERSECTION) ) {
+        $args->{$_} ||= $localconf->{$_} foreach ( keys %$localconf );
+    }
+
     my $self = $class->SUPER::new($args)
       or $class->abort( 'Unable to start ' . __PACKAGE__,
         'See Apache logs for more' );
-
-    # Try to load local configuration parameters
-    my $conf      = Lemonldap::NG::Common::Conf->new( $self->{configStorage} );
-    my $localconf = $conf->getLocalConf(MANAGERSECTION);
-    if ($localconf) {
-        $self->{$_} = $args->{$_} || $localconf->{$_}
-          foreach ( keys %$localconf );
-    }
 
     # Default values
     $self->{managerSkin} = "default"       unless defined $self->{managerSkin};
