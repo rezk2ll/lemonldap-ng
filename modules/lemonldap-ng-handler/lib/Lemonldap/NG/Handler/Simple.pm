@@ -867,7 +867,7 @@ sub hideCookie {
     my $class = shift;
     $class->lmLog( "$class: removing cookie", 'debug' );
     my $tmp = lmHeaderIn( $apacheRequest, 'Cookie' );
-    $tmp =~ s/$cookieName(?:http)?[^,;]*[,;]?//o;
+    $tmp =~ s/$cookieName(?:http)?[^,;]*[,;]?//og;
     lmSetHeaderIn( $apacheRequest, 'Cookie' => $tmp );
 }
 
