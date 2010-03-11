@@ -855,7 +855,7 @@ sub extractFormInfo {
     my $nameIDFormat =
       $self->{samlIDPMetaDataOptions}->{$idp}
       ->{samlIDPMetaDataOptionsNameIDFormat};
-    $nameIDFormat ||= "transient"; # Default to transient
+    $nameIDFormat ||= "transient";    # Default to transient
     $nameIDFormat = $self->getNameIDFormat($nameIDFormat) if $nameIDFormat;
 
     # IDP HTTP method
@@ -1027,7 +1027,7 @@ sub authenticate {
 # Logout SP
 # @return nothing
 sub authLogout {
-    my $self = shift;
+    my $self        = shift;
     my $idp         = $self->{sessionInfo}->{_idp};
     my $IDPentityID = $self->{sessionInfo}->{_idpEntityID};
     my $method;

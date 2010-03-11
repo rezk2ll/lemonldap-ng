@@ -37,7 +37,7 @@ our @EXPORT;
 
 # Shared variables
 our (
-    $locationRegexp,       $locationCondition, $defaultCondition,
+    $locationRegexp,     $locationCondition,   $defaultCondition,
     $locationProtection, $defaultProtection,   $forgeHeaders,
     $apacheRequest,      $locationCount,       $cookieName,
     $datas,              $globalStorage,       $globalStorageOptions,
@@ -567,12 +567,12 @@ sub conditionSub {
             eval 'use Apache2::Filter' unless ( $INC{"Apache2/Filter.pm"} );
             return (
                 sub {
-                $apacheRequest->add_output_filter(
-                    sub {
-                        return $class->redirectFilter( $u, @_ );
-                    }
-                );
-                1;
+                    $apacheRequest->add_output_filter(
+                        sub {
+                            return $class->redirectFilter( $u, @_ );
+                        }
+                    );
+                    1;
                 },
                 1
             );
@@ -582,18 +582,18 @@ sub conditionSub {
             my $u = $1 || $class->portal();
             return (
                 sub {
-                $class->localUnlog;
-                $apacheRequest->add_output_filter(
-                    sub {
-                        return $class->redirectFilter(
-                            $class->portal() . "?url="
-                              . $class->encodeUrl($u)
-                              . "&logout=1",
-                            @_
-                        );
-                    }
-                );
-                1;
+                    $class->localUnlog;
+                    $apacheRequest->add_output_filter(
+                        sub {
+                            return $class->redirectFilter(
+                                $class->portal() . "?url="
+                                  . $class->encodeUrl($u)
+                                  . "&logout=1",
+                                @_
+                            );
+                        }
+                    );
+                    1;
                 },
                 1
             );

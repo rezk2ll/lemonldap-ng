@@ -187,37 +187,37 @@ sub getLocalConf {
     # First, search if this file has been parsed
     unless ( $cfg = $configFiles->{$file} ) {
 
-    # If default configuration cannot be read
-    # - Error if configuration section is requested
-    # - Silent exit for other section requests
-    unless ( -r $file ) {
-        if ( $section eq CONFSECTION ) {
+        # If default configuration cannot be read
+        # - Error if configuration section is requested
+        # - Silent exit for other section requests
+        unless ( -r $file ) {
+            if ( $section eq CONFSECTION ) {
                 $msg =
                   "Cannot read $file to get configuration access parameters.";
+                return 0;
+            }
             return 0;
         }
-            return 0;
-    }
 
-    # Parse ini file
+        # Parse ini file
         $cfg = Config::IniFiles->new( -file => $file, -allowcontinue => 1 );
 
-    unless ( defined $cfg ) {
-        $msg = "Local config error: " . @Config::IniFiles::errors;
-        return 0;
-    }
+        unless ( defined $cfg ) {
+            $msg = "Local config error: " . @Config::IniFiles::errors;
+            return 0;
+        }
 
-    # Check if default section exists
-    unless ( $cfg->SectionExists(DEFAULTSECTION) ) {
+        # Check if default section exists
+        unless ( $cfg->SectionExists(DEFAULTSECTION) ) {
             $msg = "Default section (" . DEFAULTSECTION . ") is missing.";
-        return 0;
-    }
+            return 0;
+        }
 
-    # Check if configuration section exists
-    if ( $section eq CONFSECTION and !$cfg->SectionExists(CONFSECTION) ) {
+        # Check if configuration section exists
+        if ( $section eq CONFSECTION and !$cfg->SectionExists(CONFSECTION) ) {
             $msg = "Configuration section (" . CONFSECTION . ") is missing.";
-        return 0;
-    }
+            return 0;
+        }
         $configFiles->{$file} = $cfg;
     }
 

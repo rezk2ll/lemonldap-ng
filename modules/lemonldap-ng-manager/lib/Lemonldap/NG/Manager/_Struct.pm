@@ -294,9 +294,9 @@ sub struct {
             _nodes => [
 'nhash:/samlIDPMetaDataExportedAttributes:samlIDPMetaDataNode:samlMetaData'
             ],
-            _upload => ['/samlIDPMetaDataXML'],
+            _upload => [ '/samlIDPMetaDataXML', '/samlIDPMetaDataOptions' ],
             _help   => 'default',
-            _call   => '$(\'#newsamlmetadatab\').show();',
+            _call => '$(\'#newsamlmetadatab\').show();',
         },
 
         samlServiceMetaData => {
@@ -818,6 +818,16 @@ sub defaultConf {
         samlIDPMetaDataXML => { 'authentic' => {} },
         samlIDPMetaDataExportedAttributes =>
           { 'authentic' => { 'uid' => '0;uid;;' } },
+        samlIDPMetaDataOptions => {
+            'authentic' => {
+                'samlIDPMetaDataOptionsNameIDFormat'      => '',
+                'samlIDPMetaDataOptionsForceAuthn'        => '0',
+                'samlIDPMetaDataOptionsAllowProxiedAuthn' => '1',
+                'samlIDPMetaDataOptionsSSOBinding'        => '',
+                'samlIDPMetaDataOptionsSLOBinding'        => '',
+                'samlIDPMetaDataOptionsResolutionRule'    => '',
+            }
+        },
         samlServicePrivateKey       => '',
         samlEntityID                => 'http://auth.example.com/saml/metadata',
         samlOrganizationDisplayName => 'Example',

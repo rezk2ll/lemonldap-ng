@@ -139,10 +139,13 @@ sub confUpload {
     }    # END LOOP
 
     # 1.4 Loading unchanged parameters (ajax nodes not open)
+    $self->lmLog( "Save unchanged parameters", 'debug' );
     foreach ( @{ $result->getChildrenByTagName('ignore') } ) {
         my $node = $_->getAttribute('value');
         $node =~ s/^.*node=(.*?)(?:&.*)?\}$/$1/;
+        $self->lmLog( "Unchanged node $node", 'debug' );
         foreach my $k ( $self->findAllConfKeys( $self->corresp($node) ) ) {
+            $self->lmLog( "Unchanged key $k (node $node)", 'debug' );
             my $v = $self->keyToH( $k, $self->conf );
             $v = $self->keyToH( $k, $self->defaultConf ) unless ( defined $v );
             if ( defined $v ) {
@@ -307,6 +310,7 @@ sub findAllConfKeys {
     }
     foreach my $n ( @{ $h->{_nodes} } ) {
         $n =~ s/^.*?:(.*?)(?:\:.*)?$/$1/;
+        $self->lmLog( "findAllConfKey: got node $n", 'debug' );
         if ( ref( $h->{$n} ) ) {
             push @res, $self->findAllConfKeys( $h->{$n} );
         }
