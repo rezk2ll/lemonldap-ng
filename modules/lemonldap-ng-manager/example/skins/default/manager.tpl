@@ -173,7 +173,8 @@
      <input type="file" name="file" id="file" size="50" />
      <button onclick="setlmfile(currentId);return false;" class="ui-state-default ui-corner-all">
       <lang en="Load" fr="Charger" />
-     </button>     
+     </button>
+     <span style="display:inline-block;width:20px;"><img id="fileloading" name="fileloading" src="<TMPL_VAR NAME="DIR">/ajax-loader.gif" style="vertical-align:middle;" /></span>
     </div>
 
     <!-- Specific to securedCookie (TODO push in _Struct.pm) -->

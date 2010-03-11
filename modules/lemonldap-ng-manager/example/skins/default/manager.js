@@ -158,6 +158,13 @@ function setlmdata(id,v){
 	$('#text_'+id).attr('value',escape(v));
 }
 function setlmfile(id){
+        $("#fileloading")
+        .ajaxStart(function(){
+                $(this).show();
+        })
+        .ajaxComplete(function(){
+                $(this).hide();
+        });
 	$.ajaxFileUpload({
 		url:scriptname,
 		secureuri:false,
@@ -295,6 +302,7 @@ function filearea(id) {
 	currentId=id;
 	$('#filearea').attr('value',lmdata(id));
 	display('filearea',lmtext(id));
+	$('#fileloading').hide();
 }
 function samlAssertion(id) {
 	currentId=id;
