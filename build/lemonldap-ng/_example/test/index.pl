@@ -75,6 +75,9 @@ td.emphase{
 background-color:#eee;
 font-weight:bold;
 }
+ul {
+list-style-type:none;
+}
 EOT
 
 # Read headers
@@ -123,8 +126,9 @@ foreach(sort keys %$headers) {
     <td $style><tt>\$_SERVER{$headers->{$_}}</tt></td>
     <td $style><ul>";
     foreach( split( /;/, $ENV{$headers->{$_}} ) ) {
-        print "<li>$_</li>";
+        print "<li>$_</li>" if $_ ne " ";
     }
+    print "☒" unless $ENV{$headers->{$_}};
     print "</ul></td>
     </tr>\n";
 }
@@ -142,7 +146,7 @@ foreach(sort keys %ENV) {
     $tmp =~ s/&/&amp;/g;
     $tmp =~ s/>/&gt;/g;
     $tmp =~ s/</&lt;/g;
-    print "<tr><td>$_</td><td>=&gt; $tmp</td></tr>\n";
+    print "<tr><td>$_</td><td><big>☞</big> $tmp</td></tr>\n";
 }
 print "</table>\n";
 print "</div>\n";
