@@ -157,6 +157,28 @@ function setlmtext(id,v){
 function setlmdata(id,v){
 	$('#text_'+id).attr('value',escape(v));
 }
+function setlmfile(id){
+	$.ajaxFileUpload({
+		url:scriptname,
+		secureuri:false,
+		fileElementId:'file',
+		dataType:'json',
+		success:function(data,status){
+			if(typeof(data.errors) != 'undefined' && data.errors != ''){
+				$('#help_content').html('<h3>Request failed</h3> Error code: '+data.errors+', ');
+			}else{
+				data.content = data.content.replace(/&lt;/g,'<').replace(/&gt;/g,'>');
+				setlmdata(id,data.content);
+				$('#filearea').attr('value',lmdata(id));
+				display('filearea',lmtext(id));
+			}
+		},
+		error:function(xhr, ajaxOptions, thrownError){
+			$('#help_content').html('<h3>Request failed</h3> Error code: '+xhr.status+', '+thrownError);
+		}
+	});
+	return false;
+}
 function setlmsamlassertion(id){
 	var ind=$('#samlAssertionIndex').attr('value');
 	var bin=$('#samlAssertionBinding').attr('value');
@@ -268,6 +290,11 @@ function textarea(id) {
 	currentId=id;
 	$('#textarea').attr('value',lmdata(id));
 	display('textarea',lmtext(id));
+}
+function filearea(id) {
+	currentId=id;
+	$('#filearea').attr('value',lmdata(id));
+	display('filearea',lmtext(id));
 }
 function samlAssertion(id) {
 	currentId=id;

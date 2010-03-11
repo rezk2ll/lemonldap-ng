@@ -12,6 +12,7 @@
 <script src="<TMPL_VAR NAME="DIR">/jquery-ui-1.7.2.custom.min.js" type="text/JavaScript"></script>
 <script src="<TMPL_VAR NAME="DIR">/jquery.cookie.js" type="text/JavaScript"></script>
 <script src="<TMPL_VAR NAME="DIR">/tree.js" type="text/JavaScript"></script>
+<script src="<TMPL_VAR NAME="DIR">/ajaxfileupload.js" type="text/JavaScript"></script>
 <script type="text/JavaScript">//<![CDATA[
 	var scriptname='<TMPL_VAR NAME="SCRIPT_NAME">';
 	var imagepath='<TMPL_VAR NAME="DIR">/';
@@ -163,6 +164,16 @@
     <!-- Simple textarea -->
     <div id="content_textarea" class="hidden">
      <textarea id="textarea" cols="80" rows="10" onchange="setlmdata(currentId,this.value)"></textarea>
+    </div>
+
+    <!-- File textarea -->
+    <div id="content_filearea" class="hidden">
+     <textarea readonly id="filearea" cols="80" rows="10"></textarea>
+     <p><lang en="Load from a file:" fr="Charger depuis un fichier:" /></p>
+     <input type="file" name="file" id="file" size="50" />
+     <button onclick="setlmfile(currentId);return false;" class="ui-state-default ui-corner-all">
+      <lang en="Load" fr="Charger" />
+     </button>     
     </div>
 
     <!-- Specific to securedCookie (TODO push in _Struct.pm) -->

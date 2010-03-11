@@ -9,6 +9,7 @@ use strict;
 use XML::LibXML;
 use XML::LibXSLT;
 use MIME::Base64;
+use JSON;
 
 # TODO
 use Data::Dumper;
@@ -258,6 +259,41 @@ sub confUpload {
     # 4. SEND JSON RESPONSE
     print $self->header(
         -type           => 'application/json',
+        -Content_Length => length($buf)
+    ) . $buf;
+    $self->quit();
+}
+
+## @method public void fileUpload (fieldname)
+# Retrieve a file from an HTTP request, and return it. This function is for
+# some functionnalities into the SAML2 modules of the manager, accessing
+# to data through Ajax requests.
+# @param $fieldname The name of the html input field.
+sub fileUpload {
+    my $self = shift;
+    my $fieldname = shift;
+
+    # Upload the file on the server.
+    my $UPLOAD_FH = $self->upload($fieldname);
+    my $content = '';
+    while ( <$UPLOAD_FH> )
+    {
+      $content .= "$_";
+    }
+    $content =~ s!<!&lt;!g;
+    $content =~ s!>!&gt;!g;
+
+    # Build JSON reponse
+    my $json = new JSON();
+    $json = $json->allow_nonref(['1']);
+    $json = $json->utf8(['1']);
+    my $json_content = $json->encode($content);
+    my $buf = '{"status":"OK", "content":' . $json_content . '}';
+
+    # Send JSON response
+    # text/html is recommended header for JSON data retrieved by JQuery.
+    print $self->header(
+        -type           => 'text/html',
         -Content_Length => length($buf)
     ) . $buf;
     $self->quit();

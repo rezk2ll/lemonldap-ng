@@ -57,7 +57,7 @@ sub cstruct {
                         _js => 'samlAttributeRoot'
                     },
                     samlIDPMetaDataXML => "samlmetadata:/samlIDPMetaDataXML/$k2"
-                      . ":samlIDPMetaDataXML:textarea",
+                      . ":samlIDPMetaDataXML:filearea",
                     samlIDPMetaDataOptions => {
                         _nodes => [
                             qw(samlIDPMetaDataOptionsNameIDFormat samlIDPMetaDataOptionsForceAuthn samlIDPMetaDataOptionsAllowProxiedAuthn samlIDPMetaDataOptionsSSOBinding samlIDPMetaDataOptionsSLOBinding samlIDPMetaDataOptionsResolutionRule)

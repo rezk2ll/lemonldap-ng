@@ -221,6 +221,7 @@ sub confNode {
                 'int'    => 0,
                 textarea => '',
                 bool     => 0,
+                filearea => '',
             }->{$type};
             $self->lmLog( "Type $type unknown", 'warn' ) unless ( defined $h );
         }
