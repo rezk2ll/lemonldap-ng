@@ -115,13 +115,18 @@ print "<p>To know who is connected in your applications, you can read HTTP heade
 print "<table>\n";
 print "<tr><th>Header</th><th>Perl CGI</th><th>PHP script</th><th>Value</th></tr>\n";
 foreach(sort keys %$headers) {
+    next if $_ =~ /(Accept|Cache|User-Agent|Connection|Keep-Alive)/i;
     $style = $_ eq 'Auth-User' ? 'class="emphase"' : '';
     print "<tr>
     <td $style>$_</td>
     <td $style><tt>\$ENV{$headers->{$_}}</tt></td>
     <td $style><tt>\$_SERVER{$headers->{$_}}</tt></td>
-    <td $style>$ENV{$headers->{$_}}</td>
-    </tr>\n"
+    <td $style><ul>";
+    foreach( split( /;/, $ENV{$headers->{$_}} ) ) {
+        print "<li>$_</li>";
+    }
+    print "</ul></td>
+    </tr>\n";
 }
 print "</table>\n";
 print "<p class=\"note\">Note that Lemonldap::NG cookie is hidden. So that application developpers can
