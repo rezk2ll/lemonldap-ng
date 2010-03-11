@@ -31,8 +31,6 @@ PORTALDIR=$(DOCUMENTROOT)/portal
 RPORTALDIR=$(DESTDIR)/$(PORTALDIR)
 PORTALSKINSDIR=$(PORTALDIR)/skins
 RPORTALSKINSDIR=$(DESTDIR)/$(PORTALSKINSDIR)
-LASPPORTALDIR=$(DOCUMENTROOT)/liberty-alliance-sp-portal
-RLASPPORTALDIR=$(DESTDIR)/$(LASPPORTALDIR)
 MANAGERDIR=$(DOCUMENTROOT)/manager
 RMANAGERDIR=$(DESTDIR)/$(MANAGERDIR)
 MANAGERSKINSDIR=$(MANAGERDIR)/skins
@@ -94,6 +92,11 @@ SRCPORTALDIR=lemonldap-ng-portal
 SRCMANAGERDIR=lemonldap-ng-manager
 EXAMPLELANG=en # For static Manager example only
 ERASECONFIG=1 # Set to 0 if you do not want to replace your configuration
+
+# Liberty Alliance support
+WITHLA=0 # Set to 1 if you want to install Liberty Alliance portal (deprecated by SAML2 support)
+LASPPORTALDIR=$(DOCUMENTROOT)/liberty-alliance-sp-portal
+RLASPPORTALDIR=$(DESTDIR)/$(LASPPORTALDIR)
 
 all:	configure common handler manager portal
 	@echo
@@ -299,8 +302,11 @@ install_manager_site:	install_conf_dir
 install_portal_site:	install_conf_dir
 	# Portal install
 	@install -v -d $(RPORTALDIR) $(RPORTALSKINSDIR) \
-		$(RPORTALDIR)/skins/ $(RLASPPORTALDIR) \
+		$(RPORTALDIR)/skins/ \
 		$(RCRONDIR) $(RCONFDIR)
+	@if [ "$(WITHLA)" -eq "1" ]; then \
+		install -v -d $(RLASPPORTALDIR); \
+	fi
 	@for skin in $$(ls lemonldap-ng-portal/example/skins/); do \
 		[ -h $(RPORTALDIR)/skins/$$skin ] && rm -f $(RPORTALDIR)/skins/$$skin; \
 		install -v -d $(RPORTALSKINSDIR)/$$skin; \
@@ -318,8 +324,10 @@ install_portal_site:	install_conf_dir
 		done; \
 	fi
 	# L-A portal install
-	@cp -pR --remove-destination ${SRCPORTALDIR}/example/AuthLA/* $(RLASPPORTALDIR)
-	@$(PERL) -i -pe 's#__DIR__#$(LASPPORTALDIR)/#g' $(RLASPPORTALDIR)/index.pl
+	@if [ "$(WITHLA)" -eq "1" ]; then \
+		cp -pR --remove-destination ${SRCPORTALDIR}/example/AuthLA/* $(RLASPPORTALDIR); \
+		$(PERL) -i -pe 's#__DIR__#$(LASPPORTALDIR)/#g' $(RLASPPORTALDIR)/index.pl; \
+	fi
 	# Cron files
 	@cp --remove-destination lemonldap-ng-portal/example/scripts/purgeCentralCache.cron.d $(RCRONDIR)/lemonldap-ng
 	@if [ ! "$(APACHEUSER)" ]; then \
@@ -355,7 +363,9 @@ install_examples_site:
 		$(REXAMPLESDIR)/manager/skins \
 		$(REXAMPLESDIR)/manager/images \
 	@rm -rf $$(find $(REXAMPLESDIR) -type d -name .svn)
-	@$(PERL) -i -pe 's#__DIR__#$(LASPPORTALDIR)#g' $(REXAMPLESDIR)/portal/AuthLA/index.pl
+	@if [ "$(WITHLA)" -eq "1" ]; then \
+		$(PERL) -i -pe 's#__DIR__#$(LASPPORTALDIR)#g' $(REXAMPLESDIR)/portal/AuthLA/index.pl; \
+	fi
 	@$(PERL) -i -pe 's#__SESSIONDIR__#$(APACHESESSIONFILEDIR)/#g;' $(REXAMPLESDIR)/portal/*.pl
 
 install_doc_site:
