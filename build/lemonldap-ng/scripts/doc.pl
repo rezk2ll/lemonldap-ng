@@ -53,7 +53,7 @@ my $docs = {
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/UserDBLDAP'                    => '4.6-LDAP-user-backend.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/UserDBNull'                    => '4.6-Null-user-backend.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/UserDBMulti'                   => '4.6-Multiple-user-backend.html',
-    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/userDBSAML'                      => '4.6-SAML-user-backend.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/userDBSAML'                    => '4.6-SAML-user-backend.html',
     # Password backends
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/PasswordDBLDAP'                => '4.7-LDAP-password-backend.html',
     # LDAP specificities
