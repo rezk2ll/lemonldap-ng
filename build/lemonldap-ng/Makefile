@@ -22,7 +22,6 @@ RBINDIR=$(DESTDIR)/$(BINDIR)
 DATADIR=$(LMPREFIX)/data
 RDATADIR=$(DESTDIR)/$(DATADIR)
 
-
 EXAMPLEROOT=`pwd`/example
 
 # Document roots for Apache VirtualHosts
@@ -69,8 +68,13 @@ APACHESESSIONFILEDIR=$(DATADIR)/sessions
 RAPACHESESSIONFILEDIR=$(DESTDIR)/$(APACHESESSIONFILEDIR)
 APACHESESSIONFILELOCKDIR=$(APACHESESSIONFILEDIR)/lock
 RAPACHESESSIONFILELOCKDIR=$(DESTDIR)/$(APACHESESSIONFILELOCKDIR)
+
+# Apache user/group
 APACHEUSER=
 APACHEGROUP=
+
+# Apache version
+APACHEVERSION=2
 
 # DNS Domain for cookie and virtual hosts
 DNSDOMAIN=example.com
@@ -80,12 +84,15 @@ LDAPHOST=localhost
 LDAPPORT=389
 LDAPSUFFIX=dc=example,dc=com
 
+# Virtual Host Listen IP and Port (*, *:80, ...)
+VHOSTLISTEN=*:80
+
 # Other
 VERSION=`head -n1 changelog |sed -e 's/lemonldap-ng (//' -e 's/).*$$//'`
 PORTALSKINS=`ls lemonldap-ng-portal/example/skins/`
 MANAGERSKINS=`ls lemonldap-ng-manager/example/skins/`
 DIFF=diff -aburN -x '*.bak' -x .svn -x '*.swp' --ignore-matching-lines='.*jquery.*' --ignore-matching-lines='.*lemonldap-ng\.ini.*'
-	
+
 SRCCOMMONDIR=lemonldap-ng-common
 SRCHANDLERDIR=lemonldap-ng-handler
 SRCPORTALDIR=lemonldap-ng-portal
@@ -228,7 +235,9 @@ install_site:	install_manager_site install_portal_site install_handler_site inst
 	@install -v -d $(RCONFDIR)
 	# Check if erase is wanted
 	@if [ "$(ERASECONFIG)" -eq "1" ]; then \
-		cp --remove-destination  _example/etc/apache* $(RCONFDIR); \
+		cp --remove-destination _example/etc/portal-apache$(APACHEVERSION).conf $(RCONFDIR); \
+		cp --remove-destination _example/etc/handler-apache$(APACHEVERSION).conf $(RCONFDIR); \
+		cp --remove-destination _example/etc/manager-apache$(APACHEVERSION).conf $(RCONFDIR); \
 		cp --remove-destination _example/etc/for_etc_hosts $(RCONFDIR); \
 	fi
 	@$(PERL) -i -pe 's#__HANDLER__#${HANDLERDIR}/MyHandler.pm#; \
@@ -236,7 +245,8 @@ install_site:	install_manager_site install_portal_site install_handler_site inst
 			s#__PORTALDIR__#$(PORTALDIR)/#g; \
 			s#__MANAGERDIR__#$(MANAGERDIR)/#g; \
 			s#__TESTDIR__#$(TESTDIR)/#g; \
-			s#__DOCDIR__#$(DOCDIR)/#g;' $(RCONFDIR)/apache*
+			s#__VHOSTLISTEN__#$(VHOSTLISTEN)#g; \
+			s#__DOCDIR__#$(DOCDIR)/#g;' $(RCONFDIR)/*apache*.conf
 	@$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)/for_etc_hosts
 	@echo
 	@echo "LemonLDAP::NG v${VERSION} is installed with these parameters:"
@@ -249,17 +259,18 @@ install_site:	install_manager_site install_portal_site install_handler_site inst
 	@echo
 	@echo "To finish configuration:"
 	@echo
-	@echo "1 - Add this in your Apache configuration file:"
-	@echo "    with Apache-1.3.x"
-	@echo "      include ${CONFDIR}/apache.conf"
-	@echo "    or with Apache-2.x:"
-	@echo "      include ${CONFDIR}/apache2.conf"
+	@echo "1 - Add this in your Apache $(APACHEVERSION) configuration file:"
+	@echo "      include ${CONFDIR}/portal-apache$(APACHEVERSION).conf"
+	@echo "      include ${CONFDIR}/handler-apache$(APACHEVERSION).conf"
+	@echo "      include ${CONFDIR}/manager-apache$(APACHEVERSION).conf"
 	@echo
-	@echo "2 - Restart Apache (or Apache2)"
+	@echo "2 - Restart Apache:"
+	@echo "      apache$(APACHEVERSION)ctl restart"
 	@echo
-	@echo "3 - Run 'make postconf' as root to update /etc/hosts" if your DNS service does not known auth.$(DNSDOMAIN) and manager.$(DNSDOMAIN)
+	@echo "3 - Run 'make postconf' as root to update /etc/hosts if your DNS service does not known auth.$(DNSDOMAIN) and manager.$(DNSDOMAIN)"
 	@echo
-	@echo "4 - Use the manager at http://manager.${DNSDOMAIN}/ (after Apache restart) to modify LemonLDAP::NG configuration."
+	@echo "4 - Use the manager from localhost at http://manager.${DNSDOMAIN}/ (after Apache restart) to modify LemonLDAP::NG configuration."
+	@echo "      Warning: If you access http://manager.${DNSDOMAIN}/ from other host, modify first Apache Manager configuration to allow access from non local address."
 	@echo
 	@echo "5 - Try to connect to http://test1.${DNSDOMAIN}/ or http://test2.${DNSDOMAIN}/"
 	@if [ ! "$(APACHEUSER)" ]; then \
