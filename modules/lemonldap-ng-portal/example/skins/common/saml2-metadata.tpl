@@ -51,19 +51,13 @@
       Binding="<TMPL_VAR NAME="samlIDPSSODescriptorSingleSignOnServiceHTTPBinding">"
       Location="<TMPL_VAR NAME="samlIDPSSODescriptorSingleSignOnServiceHTTPLocation">" />
 <TMPL_IF NAME="samlIDPSSODescriptorNameIDFormatX509SubjectName">
-    <NameIDFormat>
-        urn:oasis:names:tc:SAML:1.1:nameid-format:X509SubjectName
-    </NameIDFormat>
+    <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:X509SubjectName</NameIDFormat>
 </TMPL_IF>
 <TMPL_IF NAME="samlIDPSSODescriptorNameIDFormatPersistent">
-    <NameIDFormat>
-        urn:oasis:names:tc:SAML:2.0:nameid-format:persistent
-    </NameIDFormat>
+    <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:persistent</NameIDFormat>
 </TMPL_IF>
 <TMPL_IF NAME="samlIDPSSODescriptorNameIDFormatTransient">
-    <NameIDFormat>
-        urn:oasis:names:tc:SAML:2.0:nameid-format:transient
-    </NameIDFormat>
+    <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
 </TMPL_IF>
   </IDPSSODescriptor>
 
@@ -109,32 +103,20 @@
       Binding="<TMPL_VAR NAME="samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectBinding">"
       Location="<TMPL_VAR NAME="samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectLocation">" />
 <TMPL_IF NAME="samlSPSSODescriptorNameIDFormatX509SubjectName">
-    <NameIDFormat>
-        urn:oasis:names:tc:SAML:1.1:nameid-format:X509SubjectName
-    </NameIDFormat>
+    <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:X509SubjectName</NameIDFormat>
 </TMPL_IF>
 <TMPL_IF NAME="samlSPSSODescriptorNameIDFormatPersistent">
-    <NameIDFormat>
-        urn:oasis:names:tc:SAML:2.0:nameid-format:persistent
-    </NameIDFormat>
+    <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:persistent</NameIDFormat>
 </TMPL_IF>
 <TMPL_IF NAME="samlSPSSODescriptorNameIDFormatTransient">
-    <NameIDFormat>
-        urn:oasis:names:tc:SAML:2.0:nameid-format:transient
-    </NameIDFormat>
+    <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
 </TMPL_IF>
   </SPSSODescriptor>
 
   <Organization>
-    <OrganizationName xml:lang="en">
-      <TMPL_VAR NAME="samlOrganizationName">
-    </OrganizationName>
-    <OrganizationDisplayName xml:lang="en">
-      <TMPL_VAR NAME="samlOrganizationDisplayName">
-    </OrganizationDisplayName>
-    <OrganizationURL xml:lang="en">
-      <TMPL_VAR NAME="samlOrganizationURL">
-    </OrganizationURL>
+    <OrganizationName xml:lang="en"><TMPL_VAR NAME="samlOrganizationName"></OrganizationName>
+    <OrganizationDisplayName xml:lang="en"><TMPL_VAR NAME="samlOrganizationDisplayName"></OrganizationDisplayName>
+    <OrganizationURL xml:lang="en"><TMPL_VAR NAME="samlOrganizationURL"></OrganizationURL>
   </Organization>
 
 </EntityDescriptor>
