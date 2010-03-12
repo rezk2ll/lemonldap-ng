@@ -27,6 +27,7 @@ if ( $opts{help} ) {
     print "\t--ini,-i: path to lemonldap-ng.ini (if not stored in conf dir)\n";
     print "\t--preserve,-p: do not erase old files after import\n";
     print "\t--help,-h: show this message\n";
+    print "\t--verbose,-v: let me tell you my life\n";
     exit 0;
 }
 
@@ -36,18 +37,19 @@ my $old = {
     storage => $opts{storage} || $opts{dir} . "/storage.conf",
     apply   => $opts{apply}   || $opts{dir} . "/apply.conf",
     menuxml => $opts{menuxml} || $opts{dir} . "/apps-list.xml",
+    menudtd => $opts{dir} . "/apps-list.dtd",
 };
 my $new = $opts{ini} || $opts{dir} . "/lemonldap-ng.ini";
 my $datas;
 
 if ( $opts{verbose} ) {
     print "Using values:\n";
-    print "\tdir: " . $opts{dir} . "\n";
-    print "\tstorage: " . $opts{storage} . "\n";
-    print "\tapply: " . $opts{apply} . "\n";
-    print "\tstorage: " . $opts{menuxml} . "\n";
-    print "\tini: " . $opts{ini} . "\n";
-    print "\tpreserve: " . $opts{preserve} . "\n\n";
+    print "\tMain configuration dir: " . $opts{dir} . "\n";
+    print "\tFile storage: " . $old->{storage} . "\n";
+    print "\tFile apply: " . $old->{apply} . "\n";
+    print "\tFile menu: " . $old->{menuxml} . "\n";
+    print "\tNew ini file: " . $new . "\n";
+    print "\tPreserve: " . ($opts{preserve}?"yes":"no") . "\n\n";
 }
 
 # Convert storage.conf
@@ -65,14 +67,14 @@ if ( -r $old->{storage} ) {
     print "\n" if $opts{verbose};
 }
 elsif ( $opts{die} ) {
-    quit( 2, $old->{storage} . " is not readeable" );
+    quit( 2, $old->{storage} . " is not readable" );
 }
 else {
-    print STDERR $old->{storage} . " is not readeable\n";
+    print STDERR $old->{storage} . " is not readable\n";
 }
 
 # Convert apply.conf
-if ( -e $old->{apply} ) {
+if ( -r $old->{apply} ) {
     print "Parsing " . $old->{apply} . "\n" if $opts{verbose};
     open F, $old->{apply};
     while (<F>) {
@@ -85,9 +87,15 @@ if ( -e $old->{apply} ) {
     close F;
     print "\n" if $opts{verbose};
 }
+elsif ( $opts{die} ) {
+    quit( 2, $old->{apply} . " is not readable" );
+}
+else {
+    print STDERR $old->{apply} . " is not readable\n";
+}
 
 # Convert apps-list.xml
-if ( -e $old->{menuxml} ) {
+if ( -r $old->{menuxml} ) {
 
     print "Parsing " . $old->{menuxml} . "\n" if $opts{verbose};
 
@@ -106,6 +114,12 @@ if ( -e $old->{menuxml} ) {
 
     $datas->{ +PORTALSECTION }->{applicationList} = $value;
     print "\tapplicationList: $value\n\n" if $opts{verbose};
+}
+elsif ( $opts{die} ) {
+    quit( 2, $old->{menuxml} . " is not readable" );
+}
+else {
+    print STDERR $old->{menuxml} . " is not readable\n";
 }
 
 # Open ini configuration file
@@ -145,7 +159,7 @@ else {
         "Unable to create $new:\n\t"
           . join( "\n\t", @Config::IniFiles::errors ) );
     unless ( $opts{preserve} ) {
-        unlink $old->{storage}, $old->{apply}, $old->{menuxml};
+        unlink $old->{storage}, $old->{apply}, $old->{menuxml}, $old->{menudtd};
     }
 }
 

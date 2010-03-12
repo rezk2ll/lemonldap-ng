@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Linux/x86 (vers 7 December 2008), see www.w3.org" />
+
+  <title>Lemonldap::NG documentation:
+  3.4-Upgrade-from-0.9.4-to-1.0.html</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+  <style type="text/css">
+/*<![CDATA[*/
+    body{
+      background: #ddd;
+      font-family: sans-serif;
+      font-size: 11pt;
+      padding: 0 50px;
+    }
+    div.main-content{
+      padding: 10px;
+      background: #fff;
+      border: 2px #ccc solid;
+    }
+    a{
+      text-decoration: none;
+    }
+    p.footer{
+      text-align: center;
+      margin: 5px 0 0 0;
+    }
+    .heading-1{
+      text-align: center;
+      color: orange;
+      font-variant: small-caps;
+      font-size: 20pt;
+    }
+    .heading-1-1{
+      color: orange;
+      font-size: 14pt;
+      border-bottom: 2px #ccc solid;
+    }
+    pre{
+      background: #eee;
+      border: 2px #ccc solid;
+      padding: 5px;
+      border-left: 10px #ccc solid;
+    }
+    ul.star li{
+      list-style-type: square;
+    }
+  /*]]>*/
+  </style>
+</head>
+
+<body>
+  <div class="main-content">
+    <h2 class="heading-1"><span id="HUpgradefrom094to10">Upgrade from 0.9.4 to
+    1.0</span></h2>
+
+    <p class="paragraph"></p>
+
+    <ul>
+      <li><a href="#HWhat27snew">What's new</a></li>
+
+      <li><a href="#HApacheconfiguration">Apache configuration</a></li>
+
+      <li><a href="#HLocalLemonLDAP3A3ANGsettings">Local LemonLDAP::NG
+      settings</a></li>
+
+      <li><a href="#HLibertyAllianceportal">Liberty Alliance portal</a></li>
+    </ul>
+
+    <h3 class="heading-1-1"><span id="HWhat27snew">What's new</span></h3>
+
+    <p class="paragraph"></p>LemonLDAP::NG 1.0 come with some brand new
+    features:
+
+    <ul class="star">
+      <li>More authentication backends (DBI, proxy, SAML, ...)</li>
+
+      <li>Manager with Ajax</li>
+
+      <li>Unified configuration in a central ini file</li>
+
+      <li>Split Apache configuration for Portal/Manager/Handler</li>
+
+      <li>...</li>
+    </ul>All these changes require to take a look at following paragraphs if
+    you want to migrate your LemonLDAP::NG 0.9.4 installation.
+
+    <h3 class="heading-1-1"><span id="HApacheconfiguration">Apache
+    configuration</span></h3>
+
+    <p class="paragraph"></p>Now LemonLDAP::NG is shipped with 3 Apache
+    configuration files:
+
+    <ul class="star">
+      <li><strong class="strong">portal-apache2.conf</strong>: portal virtual
+      host</li>
+
+      <li><strong class="strong">manager-apache2.conf</strong>: manager
+      virtual host</li>
+
+      <li><strong class="strong">handler-apache2.conf</strong>: handler
+      declaration and protected application virtual hosts</li>
+    </ul><strong class="strong">Note</strong>: If you are still using Apache
+    1, those files are named <strong class=
+    "strong">portal-apache.conf</strong>, *manager-apache.conf*,
+    <strong class="strong">handler-apache.conf</strong>.
+
+    <p class="paragraph"></p>With LemonLDAP::NG, you should only have on file
+    (<strong class="strong">apache2.conf</strong>). So you need to report all
+    your Apache customization in those 3 files, and include them in the main
+    Apache configuration file (<strong class="strong">httpd.conf</strong>).
+
+    <h3 class="heading-1-1"><span id="HLocalLemonLDAP3A3ANGsettings">Local
+    LemonLDAP::NG settings</span></h3>
+
+    <p class="paragraph"></p>LemonLDAP::NG 0.9.4 used local files for some
+    settings:
+
+    <ul class="star">
+      <li><strong class="strong">apply.conf</strong>: URI used by Manager to
+      apply changes</li>
+
+      <li><strong class="strong">storage.cong</strong>: Configuration location
+      and Cache settings</li>
+
+      <li><strong class="strong">apps-list.xml</strong>: Application menu</li>
+    </ul>Those file are not used anymore, and merged into <strong class=
+    "strong">lemonldap-ng.ini</strong>.
+
+    <p class="paragraph"></p>There is a script in the bin/ directory called
+    <strong class="strong">lmMigrateConfFiles2ini</strong> designed to parse
+    old configuration files and copy parameters in the new file.
+
+    <p class="paragraph"></p>Script options:
+
+    <ul class="star">
+      <li><strong class="strong">--dir,-d</strong>: path to main configuration
+      directory (default: /etc/lemonldap-ng)</li>
+
+      <li><strong class="strong">--storage,-s</strong>: path to storage.conf
+      (if not stored in conf dir)</li>
+
+      <li><strong class="strong">--apply,-a</strong>: path to apply.conf (if
+      not stored in conf dir)</li>
+
+      <li><strong class="strong">--menuxml,-m</strong>: path to apps-list.xml
+      (if not stored in conf dir)</li>
+
+      <li><strong class="strong">--ini,-i</strong>: path to lemonldap-ng.ini
+      (if not stored in conf dir)</li>
+
+      <li><strong class="strong">--preserve,-p</strong>: do not erase old
+      files after import</li>
+
+      <li><strong class="strong">--help,-h</strong>: show this message</li>
+
+      <li><strong class="strong">--verbose,-v</strong>: let me tell you my
+      life</li>
+    </ul>Here is how you can use it, if you installed LemonLDAP::NG from the
+    tarball in the /usr/local/lemonldap-ng directory:
+
+    <div class="code">
+      <pre>
+$ sudo /usr/local/lemonldap-ng/bin/lmMigrateConfFiles2ini -d /usr/local/lemonldap-ng/etc -v -p
+</pre>
+    </div><br />
+    <br />
+    Remove the <strong class="strong">-p</strong> options if you want to
+    delete old files.
+
+    <h3 class="heading-1-1"><span id="HLibertyAllianceportal">Liberty Alliance
+    portal</span></h3><br />
+    <br />
+    Liberty Alliance portal is no more installed by default. Indeed,
+    LemonLDAP::NG has now SAML2 authentication backend!<br />
+    <br />
+    If you still want the Liberty Alliance portal, use this in install
+    command:
+
+    <div class="code">
+      <pre>
+$ sudo make install WITHLA=1
+</pre>
+    </div>
+  </div>
+
+  <p class="footer"><a href="index.html">Index</a></p>
+</body>
+</html>

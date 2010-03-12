@@ -17,7 +17,17 @@ lemonldap-ng (1.0-rc1) unstable; urgency=low
   * Portal index.pl use lemonldap-ng.ini to get parameters
   * CSS and Javascript minification capability
   * Apache configuration splitted into portal/manager/handler
-  * XML Menu deprecated
+  * XML Menu is deprecated
+  * LDAP recursive groups
+  * unprotect target in rules
+  * Force authentication parameter
+  * Store in user session Auth/UserDB/PasswordDB/IssuerDB used module
+  * Use a confirmation token for password reset by mail
+  * SOAP: isAuthorizedUri Web Service
+  * Confirm and Info stages in Portal
+  * Possibility to define a rule to grant session
+  * Configuration parameters for portal customization (skin, ...)
+  * Possibility to set cookie expiration
 
  -- Xavier Guimard <x.guimard@free.fr>  Thu, 31 Dec 2009 14:09:13 +0100
 

@@ -20,6 +20,7 @@ my $docs = {
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocInstallDebianPackages'      => '3.3-Install-from-debian-packages.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocInstallRedHatPackages'      => '3.3-Install-from-redhat-packages.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocInstallSuSEPackages'        => '3.3-Install-from-suse-packages.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocUpgrade094To10'             => '3.4-Upgrade-from-0.9.4-to-1.0.html',
     # Configuration overview
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocConfigOverwiew'             => '4.1-Configuration-overview.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/RBAC'                          => '4.1-RBAC-model.html',
@@ -198,6 +199,7 @@ while ( my ( $url, $file ) = each %$docs ) {
 	s#/xwiki/bin/view/NG/DocInstallDebianPackages#3.3-Install-from-debian-packages.html#g;
 	s#/xwiki/bin/view/NG/DocInstallRedHatPackages#3.3-Install-from-redhat-packages.html#g;
 	s#/xwiki/bin/view/NG/DocInstallSuSEPackages#3.3-Install-from-suse-packages.html#g;
+	s#/xwiki/bin/view/NG/DocUpgrade094To10#3.4-Upgrade-from-0.9.4-to-1.0.html#g;
 	s#/xwiki/bin/view/NG/DocConfigOverwiew#4.1-Configuration-overview.html#g;
 	s#/xwiki/bin/view/NG/RBAC#4.1-RBAC-model.html#g;
 	s#/xwiki/bin/view/NG/ConfigParameterList#4.1-Configuration-parameter-list.html#g;
