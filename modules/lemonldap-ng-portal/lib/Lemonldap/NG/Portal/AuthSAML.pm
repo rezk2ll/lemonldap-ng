@@ -855,7 +855,6 @@ sub extractFormInfo {
     my $nameIDFormat =
       $self->{samlIDPMetaDataOptions}->{$idp}
       ->{samlIDPMetaDataOptionsNameIDFormat};
-    $nameIDFormat ||= "transient";    # Default to transient
     $nameIDFormat = $self->getNameIDFormat($nameIDFormat) if $nameIDFormat;
 
     # IDP HTTP method
