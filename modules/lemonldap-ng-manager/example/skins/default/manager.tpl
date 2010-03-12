@@ -170,7 +170,7 @@
     <div id="content_filearea" class="hidden">
      <textarea readonly id="filearea" cols="80" rows="10"></textarea>
      <p><lang en="Load from a file:" fr="Charger depuis un fichier:" /></p>
-     <input type="file" name="file" id="file" size="50" />
+     <input type="file" name="file" id="file" size="50" style="margin-left:23px;"/>
      <button onclick="setlmfile(currentId);return false;" class="ui-state-default ui-corner-all">
       <lang en="Load" fr="Charger" />
      </button>
