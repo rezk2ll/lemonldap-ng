@@ -605,3 +605,13 @@ function myB64(s) {
         }
 	return res;
 }
+/* Function to download a file */
+function downloadFile(id,filename){
+	content=lmdata(id).replace(/\n/g,'\\n').replace(/"/g,'\"');
+	var inputs = '';
+	inputs+='<input type="hidden" name="filename" value="'+filename+'" />';
+	inputs+='<input type="textarea" style="display:none;" name="file" value="'+content+'" />';
+	jQuery('<form action="'+ scriptname +'" method="post" enctype="multipart/form-data">'+inputs+'</form>')
+	.appendTo('body').submit().remove();
+}
+

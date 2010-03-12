@@ -11,8 +11,8 @@
 <script src="<TMPL_VAR NAME="DIR">/jquery-1.3.2.min.js" type="text/JavaScript"></script>
 <script src="<TMPL_VAR NAME="DIR">/jquery-ui-1.7.2.custom.min.js" type="text/JavaScript"></script>
 <script src="<TMPL_VAR NAME="DIR">/jquery.cookie.js" type="text/JavaScript"></script>
+<script src="<TMPL_VAR NAME="DIR">/jquery.ajaxfileupload.js" type="text/JavaScript"></script>
 <script src="<TMPL_VAR NAME="DIR">/tree.js" type="text/JavaScript"></script>
-<script src="<TMPL_VAR NAME="DIR">/ajaxfileupload.js" type="text/JavaScript"></script>
 <script type="text/JavaScript">//<![CDATA[
 	var scriptname='<TMPL_VAR NAME="SCRIPT_NAME">';
 	var imagepath='<TMPL_VAR NAME="DIR">/';
@@ -169,6 +169,11 @@
     <!-- File textarea -->
     <div id="content_filearea" class="hidden">
      <textarea readonly id="filearea" cols="80" rows="10"></textarea>
+     <p>
+      <button onclick="downloadFile(currentId,'metadata.xml');return false;" class="ui-state-default ui-corner-all">
+       <lang en="Download this file" fr="T&eacute;l&eacute;charger ce fichier" />
+      </a>
+     </p>
      <table class="filearea">
       <tr>
        <td><lang en="Load from a file" fr="Charger depuis un fichier" /> :</td>

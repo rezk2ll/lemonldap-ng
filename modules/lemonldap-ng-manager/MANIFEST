@@ -34,8 +34,6 @@ example/mrtg/mrtg.cfg.example
 example/scripts/lmConfigEditor
 example/sessions.pl
 example/skins/default/accordion.css
-example/skins/default/ajax-loader.gif
-example/skins/default/ajaxfileupload.js
 example/skins/default/application_side_list.png
 example/skins/default/application_side_tree.png
 example/skins/default/arrow_refresh.png

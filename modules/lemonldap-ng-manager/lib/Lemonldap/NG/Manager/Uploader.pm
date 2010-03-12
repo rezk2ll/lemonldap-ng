@@ -291,13 +291,8 @@ sub fileUpload {
     my $json_content = $json->encode($content);
     my $buf = '{"status":"OK", "content":' . $json_content . '}';
 
-    # Send JSON response
-    # text/html is recommended header for JSON data retrieved by JQuery.
-    print $self->header(
-        -type           => 'text/html',
-        -Content_Length => length($buf)
-    ) . $buf;
-    $self->quit();
+    # Do not send response
+    return $buf;
 }
 
 ## @method public void fileUpload (fieldname)
@@ -313,7 +308,6 @@ sub urlUpload {
     my $url = ${$self->rparam($fieldname)};
 
     # Get contents from URL
-    print STDERR "---> " . $url . "\n";
     my $content = get $url;
     $content = '' unless(defined $content);
     $content =~ s!<!&lt;!g;
@@ -326,13 +320,8 @@ sub urlUpload {
     my $json_content = $json->encode($content);
     my $buf = '{"status":"OK", "content":' . $json_content . '}';
 
-    # Send JSON response
-    # text/html is recommended header for JSON data retrieved by JQuery.
-    print $self->header(
-        -type           => 'text/html',
-        -Content_Length => length($buf)
-    ) . $buf;
-    $self->quit();
+    # Do not send response
+    return $buf;
 }
 
 ## @method protected array applyTest(void* test,string value)
