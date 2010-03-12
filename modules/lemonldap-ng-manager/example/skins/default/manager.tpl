@@ -169,12 +169,28 @@
     <!-- File textarea -->
     <div id="content_filearea" class="hidden">
      <textarea readonly id="filearea" cols="80" rows="10"></textarea>
-     <p><lang en="Load from a file:" fr="Charger depuis un fichier:" /></p>
-     <input type="file" name="file" id="file" size="50" style="margin-left:23px;"/>
-     <button onclick="setlmfile(currentId);return false;" class="ui-state-default ui-corner-all">
-      <lang en="Load" fr="Charger" />
-     </button>
-     <span style="display:inline-block;width:20px;"><img id="fileloading" name="fileloading" src="<TMPL_VAR NAME="DIR">/ajax-loader.gif" style="vertical-align:middle;" /></span>
+     <table class="filearea">
+      <tr>
+       <td><lang en="Load from a file" fr="Charger depuis un fichier" /> :</td>
+       <td>
+        <input type="file" name="file" id="file" size="30"/>
+       </td>
+       <td>
+        <button onclick="setlmfile(currentId,file);return false;" class="ui-state-default ui-corner-all"><lang en="Load" fr="Charger" /></button>
+        <span class="loadimg"><img class="hidden" id="file-loadimg" src="<TMPL_VAR NAME="DIR">/spinner.gif" /></span>
+       </td>
+      </tr>
+      <tr>
+       <td><lang en="Load from a URL" fr="Charger depuis une URL" /> :</td>
+       <td>
+        <input type="text" name="url" id="url" size="40"/>
+       </td>
+       <td>
+        <button onclick="setlmfile(currentId,url);return false;" class="ui-state-default ui-corner-all"><lang en="Load" fr="Charger" /></button>
+        <span class="loadimg"><img class="hidden" id="url-loadimg" src="<TMPL_VAR NAME="DIR">/spinner.gif" /></span>
+       </td>
+      </tr>
+     </table>
     </div>
 
     <!-- Specific to securedCookie (TODO push in _Struct.pm) -->

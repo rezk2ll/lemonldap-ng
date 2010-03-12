@@ -196,3 +196,21 @@ input
 	background:#ddd;
 	font-weight:bold;
 }
+
+/* Filearea */
+#content_filearea table tr td
+{
+  text-align:left;
+  vertical-align:center;
+}
+#content_filearea table
+{
+  margin-left:auto;
+  margin-right:auto;
+  padding-left:20px;
+}
+#content_filearea span.loadimg
+{
+  display:inline-block;
+  width:20px;
+}

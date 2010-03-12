@@ -10,6 +10,7 @@ use XML::LibXML;
 use XML::LibXSLT;
 use MIME::Base64;
 use JSON;
+use LWP::Simple;
 
 # TODO
 use Data::Dumper;
@@ -280,6 +281,41 @@ sub fileUpload {
     {
       $content .= "$_";
     }
+    $content =~ s!<!&lt;!g;
+    $content =~ s!>!&gt;!g;
+
+    # Build JSON reponse
+    my $json = new JSON();
+    $json = $json->allow_nonref(['1']);
+    $json = $json->utf8(['1']);
+    my $json_content = $json->encode($content);
+    my $buf = '{"status":"OK", "content":' . $json_content . '}';
+
+    # Send JSON response
+    # text/html is recommended header for JSON data retrieved by JQuery.
+    print $self->header(
+        -type           => 'text/html',
+        -Content_Length => length($buf)
+    ) . $buf;
+    $self->quit();
+}
+
+## @method public void fileUpload (fieldname)
+# Retrieve a file from an URL, and return it. This function is for
+# some functionnalities into the SAML2 modules of the manager, accessing
+# to data through Ajax requests.
+# @param $fieldname The name of the html input field that contains the URL.
+sub urlUpload {
+    my $self = shift;
+    my $fieldname = shift;
+
+    # Get the URL
+    my $url = ${$self->rparam($fieldname)};
+
+    # Get contents from URL
+    print STDERR "---> " . $url . "\n";
+    my $content = get $url;
+    $content = '' unless(defined $content);
     $content =~ s!<!&lt;!g;
     $content =~ s!>!&gt;!g;
 

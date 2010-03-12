@@ -157,18 +157,19 @@ function setlmtext(id,v){
 function setlmdata(id,v){
 	$('#text_'+id).attr('value',escape(v));
 }
-function setlmfile(id){
-        $("#fileloading")
-        .ajaxStart(function(){
-                $(this).show();
-        })
-        .ajaxComplete(function(){
-                $(this).hide();
-        });
+function setlmfile(id,input){
+	var inputname=$(input).attr('id');
+	$("#"+inputname+"-loadimg")
+	.ajaxStart(function(){
+		$(this).show();
+	})
+	.ajaxComplete(function(){
+		$(this).hide();
+	});
 	$.ajaxFileUpload({
 		url:scriptname,
 		secureuri:false,
-		fileElementId:'file',
+		fileElementId:inputname,
 		dataType:'json',
 		success:function(data,status){
 			if(typeof(data.errors) != 'undefined' && data.errors != ''){
@@ -184,6 +185,8 @@ function setlmfile(id){
 			$('#help_content').html('<h3>Request failed</h3> Error code: '+xhr.status+', '+thrownError);
 		}
 	});
+	/* Remove global event on loading image */
+	$("#"+inputname+"-loadimg").unbind('ajaxStart');
 	return false;
 }
 function setlmsamlassertion(id){

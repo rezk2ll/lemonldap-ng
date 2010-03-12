@@ -73,6 +73,14 @@ sub new {
         $self->quit();
     }
 
+    # URL upload
+    elsif ( my $rurl = $self->rparam('url') ) {
+
+        require Lemonldap::NG::Manager::Uploader;    #inherits
+        $self->urlUpload('url');
+        $self->quit();
+    }
+
     # Else load conf
     require Lemonldap::NG::Manager::Downloader;      #inherits
     $self->{cfgNum} =
