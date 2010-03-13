@@ -72,7 +72,34 @@ sub confUpload {
         $NK = 1 if ($1);
         $id =~ s/\r//g;
         $id =~ s/^\///;
-        $id =~ s/(?:\/[^\/]*)?$/\/$name/ if ($NK);
+        if ($NK) {
+
+            # Special case: avoid bug with node created from parent node
+            if ( $id =~ /^(virtualHosts|samlIDPMetaDataExportedAttributes)/ ) {
+                $self->lmLog( "Special trigger for $id (attribute $name)",
+                    'debug' );
+
+                # A strange '5' appears at the end of value, remove it
+                $id =~ s/5$//;
+
+                # Virtual Host header
+                $id =~
+s/^virtualHosts\/([^\/]*)?\/header.*/exportedHeaders\/$1\/$name/;
+
+                # Virtual Host rule
+                $id =~
+                  s/^virtualHosts\/([^\/]*)?\/rule.*/locationRules\/$1\/$name/;
+
+                # SAML IDP attribute
+                $id =~
+s/^samlIDPMetaDataExportedAttributes\/([^\/]*)?.*/samlIDPMetaDataExportedAttributes\/$1\/$name/;
+            }
+
+            # Normal case
+            else {
+                $id =~ s/(?:\/[^\/]*)?$/\/$name/;
+            }
+        }
 
         $self->lmLog( "id transformed into $id", 'debug' );
 
@@ -272,25 +299,24 @@ sub confUpload {
 # to data through Ajax requests.
 # @param $fieldname The name of the html input field.
 sub fileUpload {
-    my $self = shift;
+    my $self      = shift;
     my $fieldname = shift;
 
     # Upload the file on the server.
     my $UPLOAD_FH = $self->upload($fieldname);
-    my $content = '';
-    while ( <$UPLOAD_FH> )
-    {
-      $content .= "$_";
+    my $content   = '';
+    while (<$UPLOAD_FH>) {
+        $content .= "$_";
     }
     $content =~ s!<!&lt;!g;
     $content =~ s!>!&gt;!g;
 
     # Build JSON reponse
     my $json = new JSON();
-    $json = $json->allow_nonref(['1']);
-    $json = $json->utf8(['1']);
+    $json = $json->allow_nonref( ['1'] );
+    $json = $json->utf8(         ['1'] );
     my $json_content = $json->encode($content);
-    my $buf = '{"status":"OK", "content":' . $json_content . '}';
+    my $buf          = '{"status":"OK", "content":' . $json_content . '}';
 
     # Do not send response
     return $buf;
@@ -302,24 +328,24 @@ sub fileUpload {
 # to data through Ajax requests.
 # @param $fieldname The name of the html input field that contains the URL.
 sub urlUpload {
-    my $self = shift;
+    my $self      = shift;
     my $fieldname = shift;
 
     # Get the URL
-    my $url = ${$self->rparam($fieldname)};
+    my $url = ${ $self->rparam($fieldname) };
 
     # Get contents from URL
     my $content = get $url;
-    $content = '' unless(defined $content);
+    $content = '' unless ( defined $content );
     $content =~ s!<!&lt;!g;
     $content =~ s!>!&gt;!g;
 
     # Build JSON reponse
     my $json = new JSON();
-    $json = $json->allow_nonref(['1']);
-    $json = $json->utf8(['1']);
+    $json = $json->allow_nonref( ['1'] );
+    $json = $json->utf8(         ['1'] );
     my $json_content = $json->encode($content);
-    my $buf = '{"status":"OK", "content":' . $json_content . '}';
+    my $buf          = '{"status":"OK", "content":' . $json_content . '}';
 
     # Do not send response
     return $buf;

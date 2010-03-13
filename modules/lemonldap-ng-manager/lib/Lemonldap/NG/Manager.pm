@@ -69,22 +69,22 @@ sub new {
     elsif ( my $rfile = $self->rparam('file') ) {
 
         require Lemonldap::NG::Manager::Uploader;    #inherits
-        my $result = $self->fileUpload('file');
+        my $result  = $self->fileUpload('file');
         my %headers = (
-            -type => 'text/html',
+            -type           => 'text/html',
             -Content_Length => length($result)
-          );
+        );
         if ( my $rfilename = $self->rparam('filename') ) {
-          $headers{-type} = 'application/octet-stream';
-          $headers{-attachment} = ${$rfilename};
-          $result =~ s/{.*"content":"(.*)"}$/$1/g;
+            $headers{-type}       = 'application/octet-stream';
+            $headers{-attachment} = ${$rfilename};
+            $result =~ s/{.*"content":"(.*)"}$/$1/g;
         }
-        print $self->header(%headers).$result;
+        print $self->header(%headers) . $result;
         $self->quit();
     }
 
     # Else load conf
-    require Lemonldap::NG::Manager::Downloader;      #inherits
+    require Lemonldap::NG::Manager::Downloader;    #inherits
     $self->{cfgNum} =
          $self->param('cfgNum')
       || $self->confObj->lastCfg()
