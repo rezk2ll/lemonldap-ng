@@ -811,9 +811,11 @@ sub extractFormInfo {
           . &Lemonldap::NG::Portal::_i18n::msg( PM_SAML_IDPCHOOSEN,
             $ENV{HTTP_ACCEPT_LANGUAGE} )
           . "</h3>\n"
-          . "<h4>$idp</h4>\n" . "<h5>("
+          . "<h4>"
+          . $self->{_idpList}->{$idp}->{name}
+	  ."</h4>\n" . "<p><i>"
           . $self->{_idpList}->{$idp}->{entityID}
-          . ")</h5>\n"
+          . "</i></p>\n"
           . "<input type=\"hidden\" name=\"idp\" value=\"$idp\" />\n";
 
         $self->info($html);
