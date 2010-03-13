@@ -70,10 +70,6 @@
      <lang en="Save" fr="Sauver" />
     </button>
 
-    <button id="bapply" onclick="$.post(scriptname,{apply:1},function(data){return 1},'html');" class="ui-state-default ui-corner-all">
-     <lang en="Apply" fr="Appliquer" />
-    </button>
-
     <button id="bnewvh" style="display:none;" onclick="newVh();return false;" class="ui-state-default ui-corner-all">
      <lang en="New virtual host" fr="Nouvel hôte virtuel" />
     </button>

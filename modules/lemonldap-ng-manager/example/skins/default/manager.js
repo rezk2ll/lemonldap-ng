@@ -269,6 +269,16 @@ function hashRoot(id){
 	display('default','');
 	$('#newkbr').show();
 }
+function vhostRoot(id){
+	currentId=id;
+	display('default','');
+	$('#bnewvh').show();
+}
+function samlIdpRoot(id){
+	currentId=id;
+	display('default','');
+	$('#newsamlmetadatab').show();
+}
 function authParams(id) {
 	currentId=id;
 	$('#authText').attr('value',lmdata(id));

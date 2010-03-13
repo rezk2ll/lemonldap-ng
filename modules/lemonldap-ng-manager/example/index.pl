@@ -6,12 +6,6 @@ use HTML::Template;
 
 my $manager = new Lemonldap::NG::Manager(
     {
-        # MANAGER CUSTOMIZATION
-        #managerSkin		=> 'default',
-        #managerCss		=> 'manager.css',
-        #managerTreeAutoClose	=> 'false',
-        #managerTreeJqueryCss	=> 'false',
-
         # ACCESS TO CONFIGURATION
 
         # By default, Lemonldap::NG uses the default storage.conf file to know

@@ -283,7 +283,7 @@ sub struct {
             _nodes  => ['nhash:/locationRules:virtualHosts:vhost'],
             _upload => ['/exportedHeaders'],
             _help   => 'default',
-            _call   => '$(\'#bnewvh\').show();',
+            _js     => 'vhostRoot',
         },
 
         ########
@@ -296,7 +296,7 @@ sub struct {
             ],
             _upload => [ '/samlIDPMetaDataXML', '/samlIDPMetaDataOptions' ],
             _help   => 'default',
-            _call => '$(\'#newsamlmetadatab\').show();',
+            _js     => 'samlIdpRoot',
         },
 
         samlServiceMetaData => {
@@ -713,7 +713,7 @@ sub testStruct {
             '*'        => {
                 keyTest    => qr/^\w([\w\-]*\w)?$/,
                 keyMsgFail => 'Bad attribute name',
-                test       => $perlExpr,
+                test       => sub { return 1; },
             },
         },
         samlIDPMetaDataXML => {
