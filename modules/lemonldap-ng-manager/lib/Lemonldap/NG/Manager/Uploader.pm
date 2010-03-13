@@ -243,13 +243,13 @@ sub confUpload {
     my $i   = 0;
     while ( my ( $type, $h ) = each %$errors ) {
         $buf .= ',' if ($i);
-        $buf .= "'$type':{";
+        $buf .= "\"$type\":{";
         $buf .= join(
             ',',
             map {
-                $h->{$_} =~ s/'/\\'/;
+                $h->{$_} =~ s/"/\\"/g;
                 $h->{$_} =~ s/\n/ /g;
-                "'$_':'$h->{$_}'"
+                "\"$_\":\"$h->{$_}\""
               } keys %$h
         );
         $buf .= '}';
@@ -259,9 +259,10 @@ sub confUpload {
 
     # 4. SEND JSON RESPONSE
     print $self->header(
-        -type           => 'application/json',
+        -type           => 'application/json; charset=utf-8',
         -Content_Length => length($buf)
-    ) . $buf;
+    );
+    print $buf;
     $self->quit();
 }
 
