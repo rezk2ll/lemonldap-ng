@@ -167,15 +167,52 @@ sub struct {
                 userDB         => 'text:/userDB:authParams:authParams',
                 ldapParams     => {
                     _nodes => [
-                        qw(ldapServer ldapPort ldapBase managerDn managerPassword)
+			qw(n:ldapConnection n:ldapFilters n:ldapGroups n:ldapPassword)
                     ],
                     _help           => 'ldap',
+
+			ldapConnection => {
+				_nodes => [
+				qw(ldapServer ldapPort ldapBase managerDn managerPassword)
+				],
                     ldapServer      => 'text:/ldapServer',
                     ldapPort        => 'int:/ldapPort',
                     ldapBase        => 'text:/ldapBase',
                     managerDn       => 'text:/managerDn',
                     managerPassword => 'text:/managerPassword',
                 },
+
+			ldapFilters => {
+                        _nodes =>
+                          [ qw(LDAPFilter AuthLDAPFilter mailLDAPFilter) ],
+				LDAPFilter => 'text:/LDAPFilter',
+				AuthLDAPFilter => 'text:/AuthLDAPFilter',
+				mailLDAPFilter => 'text:/mailLDAPFilter',
+			},
+
+			ldapGroups => {
+				_nodes => [
+				qw(ldapGroupBase ldapGroupObjectClass ldapGroupAttributeName ldapGroupAttributeNameUser ldapGroupAttributeNameSearch ldapGroupRecursive ldapGroupAttributeNameGroup)
+				],
+				ldapGroupBase => 'text:/ldapGroupBase',
+				ldapGroupObjectClass => 'text:/ldapGroupObjectClass',
+                        ldapGroupAttributeName =>
+                          'text:/ldapGroupAttributeName',
+                        ldapGroupAttributeNameUser =>
+                          'text:/ldapGroupAttributeNameUser',
+				ldapGroupRecursive => 'bool:/ldapGroupRecursive',
+                        ldapGroupAttributeNameGroup =>
+                          'text:/ldapGroupAttributeNameGroup',
+			},
+
+			ldapPassword => {
+                        _nodes => [ qw(ldapPpolicyControl ldapSetPassword) ],
+				ldapPpolicyControl => 'bool:/ldapPpolicyControl',
+				ldapSetPassword => 'bool:/ldapSetPassword',
+			},
+ 
+                },
+
                 SSLRequired => 'bool:/SSLRequired',
             },
 
