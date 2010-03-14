@@ -104,7 +104,7 @@ sub struct {
 
             # PORTAL PARAMETERS
             portalParams => {
-                _nodes => [ qw(portal n:portalModules n:portalCustomization) ],
+                _nodes => [qw(portal n:portalModules n:portalCustomization)],
                 _help => 'portalParams',
 
                 portal              => 'text:/portal',
@@ -190,10 +190,11 @@ sub struct {
             # COOKIE PARAMETERS
             cookieParams => {
                 _nodes =>
-                  [qw(cookieName domain securedCookie cookieExpiration)],
+                  [qw(cookieName domain cda securedCookie cookieExpiration)],
                 _help      => 'cookies',
                 cookieName => 'text:/cookieName:cookieName:text',
                 domain     => 'text:/domain:domain:text',
+                cda        => 'bool:/cda',
                 securedCookie =>
                   'int:/securedCookie:securedCookie:securedCookieValues',
                 cookieExpiration => 'text:/cookieExpiration',
@@ -230,7 +231,7 @@ sub struct {
                 ],
 
 		soap => {
-                    _nodes         => [ qw(Soap exportedAttr trustedDomains) ],
+                    _nodes         => [qw(Soap exportedAttr trustedDomains)],
                 Soap          => 'bool:/Soap',
                 exportedAttr  => 'text:/exportedAttr',
                 trustedDomains => 'text:/trustedDomains',
@@ -265,7 +266,7 @@ sub struct {
                 },
 
 		security => {
-                    _nodes      => [ qw(https userControl portalForceAuthn) ],
+                    _nodes      => [qw(https userControl portalForceAuthn)],
                 https         => 'bool:/https',
                 userControl    => 'text:/userControl:userControl:text',
                 portalForceAuthn =>

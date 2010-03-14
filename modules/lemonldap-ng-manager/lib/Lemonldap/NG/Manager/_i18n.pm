@@ -50,6 +50,7 @@ sub en {
         advancedParams   => 'Advanced parameters',
         authentication   => 'Authentication module',
         authParams       => 'Authentication',
+        cda              => 'Multiple domains',
         clickHereToForce => 'Click here to force',
         Configuration    => 'Configuration',
         confModuledeprecated =>
@@ -198,6 +199,7 @@ sub fr {
         advancedParams   => 'Paramètres avancés',
         authentication   => "Module d'authentification",
         authParams       => "Authentification",
+        cda              => 'Domaines multiples',
         clickHereToForce => 'Cliquer ici pour forcer',
         Configuration    => 'Configuration',
         confModuledeprecated =>
