@@ -104,23 +104,36 @@ sub struct {
 
             # PORTAL PARAMETERS
             portalParams => {
-                _nodes => [
-                    qw(portal portalSkin portalDisplayLogout portalDisplayResetPassword portalDisplayChangePassword portalDisplayAppslist portalAutocomplete portalRequireOldPassword portalUserAttr portalOpenLinkInNewWindow)
-                ],
+                _nodes => [ qw(portal n:portalModules n:portalCustomization) ],
                 _help => 'portalParams',
 
                 portal              => 'text:/portal',
-                portalSkin          => 'text:/portalSkin',
+
+		portalModules => {
+			_nodes => [
+			qw(portalDisplayLogout portalDisplayResetPassword portalDisplayChangePassword portalDisplayAppslist)
+			],
                 portalDisplayLogout => 'text:/portalDisplayLogout',
                 portalDisplayResetPassword =>
                   'text:/portalDisplayResetPassword',
                 portalDisplayChangePassword =>
                   'text:/portalDisplayChangePassword',
                 portalDisplayAppslist     => 'text:/portalDisplayAppslist',
+		},
+
+		portalCustomization => {
+			_nodes => [
+			qw(portalSkin portalAutocomplete portalRequireOldPassword portalUserAttr portalOpenLinkInNewWindow)
+		],	
+
+                portalSkin                => 'text:/portalSkin',
                 portalAutocomplete        => 'bool:/portalAutocomplete',
-                portalRequireOldPassword  => 'bool:/portalRequireOldPassword',
+                    portalRequireOldPassword =>
+                      'bool:/portalRequireOldPassword',
                 portalUserAttr            => 'text:/portalUserAttr',
-                portalOpenLinkInNewWindow => 'bool:/portalOpenLinkInNewWindow',
+                    portalOpenLinkInNewWindow =>
+                      'bool:/portalOpenLinkInNewWindow',
+            },
             },
 
             # AUTHENTICATION AND USERDB PARAMETERS
@@ -213,11 +226,16 @@ sub struct {
             # OTHER PARAMETERS
             advancedParams => {
                 _nodes => [
-                    qw(Soap exportedAttr trustedDomains https notifications passwordManagement userControl portalForceAuthn)
+                    qw(n:soap n:notifications n:passwordManagement n:security)
                 ],
+
+		soap => {
+                    _nodes         => [ qw(Soap exportedAttr trustedDomains) ],
                 Soap          => 'bool:/Soap',
-                https         => 'bool:/https',
                 exportedAttr  => 'text:/exportedAttr',
+                trustedDomains => 'text:/trustedDomains',
+		},
+
                 notifications => {
                     _nodes => [
                         qw(notification notificationStorage notificationStorageOptions)
@@ -230,21 +248,30 @@ sub struct {
                         _js    => 'hashRoot'
                     },
                 },
+
                 passwordManagement => {
                     _nodes => [
-                        qw(passwordDB SMTPServer mailFrom mailSubject randomPasswordRegexp mailBody)
+                        qw(passwordDB SMTPServer mailUrl mailFrom mailSubject mailBody mailConfirmSubject mailConfirmBody randomPasswordRegexp)
                     ],
                     passwordDB           => 'text:/passwordDB',
                     SMTPServer           => 'text:/SMTPServer',
+                    mailUrl              => 'text:/mailUrl',
                     mailFrom             => 'text:/mailFrom',
                     mailSubject          => 'text:/mailSubject',
+                    mailBody             => 'textarea:/mailBody',
+                    mailConfirmSubject   => 'text:/mailConfirmSubject',
+                    mailConfirmBody      => 'textarea:/mailConfirmBody',
                     randomPasswordRegexp => 'text:/randomPasswordRegexp',
-                    mailBody             => 'text:/mailBody',
                 },
-                trustedDomains => 'text:/trustedDomains',
+
+		security => {
+                    _nodes      => [ qw(https userControl portalForceAuthn) ],
+                https         => 'bool:/https',
                 userControl    => 'text:/userControl:userControl:text',
                 portalForceAuthn =>
                   'bool:/portalForceAuthn:portalForceAuthn:bool',
+		},
+
             }
         },
 
