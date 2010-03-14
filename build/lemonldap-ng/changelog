@@ -1,4 +1,4 @@
-lemonldap-ng (1.0-rc1) unstable; urgency=low
+lemonldap-ng (1.0rc1) unstable; urgency=low
 
   * Little Debian changes (see 0.9.4.1-2 Debian changelog)
   * AuthCAS: URL redirection and module load test

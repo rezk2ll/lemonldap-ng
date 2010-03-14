@@ -4,6 +4,5 @@ debian/tmp/usr/share/man/man3/Lemonldap::NG::Portal*
 debian/tmp/usr/share/perl5/auto/Lemonldap/NG/Portal
 debian/tmp/usr/share/perl5/Lemonldap/NG/Portal*
 debian/tmp/usr/share/lemonldap-ng/bin/buildPortalWSDL
-debian/tmp/var/lib/lemonldap-ng/liberty-alliance-sp-portal
 debian/tmp/var/lib/lemonldap-ng/portal
 debian/portal-apache*.conf /etc/lemonldap-ng
