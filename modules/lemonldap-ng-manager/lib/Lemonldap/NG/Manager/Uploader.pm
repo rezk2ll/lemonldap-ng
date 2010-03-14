@@ -12,7 +12,6 @@ use MIME::Base64;
 use JSON;
 use LWP::Simple;
 
-# TODO
 use Data::Dumper;
 use URI::Escape;
 use Lemonldap::NG::Common::Safelib;        #link protected safe Safe object
@@ -32,6 +31,10 @@ sub confUpload {
     my ( $self, $rdata ) = @_;
     $$rdata =~ s/<img.*?>//g;
     $$rdata =~ s/<li class="line".*?<\/li>//g;
+
+    # Variables to store current vhost and IDP name
+    my $vhostname;
+    my $idpname;
 
     # 1. ANALYSE DATAS
 
@@ -72,6 +75,20 @@ sub confUpload {
         $NK = 1 if ($1);
         $id =~ s/\r//g;
         $id =~ s/^\///;
+
+        # Get Virtual Host name
+        if ( $id =~ /locationRules\/([^\/]*)?$/ ) {
+            $self->lmLog( "Entering Virtual Host $name", 'debug' );
+            $vhostname = $name;
+        }
+
+        # Get SAML IDP name
+        if ( $id =~ /samlIDPMetaDataExportedAttributes\/([^\/]*)?$/ ) {
+            $self->lmLog( "Entering IDP $name", 'debug' );
+            $idpname = $name;
+        }
+
+        # Manage new keys
         if ($NK) {
 
             # Special case: avoid bug with node created from parent node
@@ -100,6 +117,14 @@ s/^samlIDPMetaDataExportedAttributes\/([^\/]*)?.*/samlIDPMetaDataExportedAttribu
                 $id =~ s/(?:\/[^\/]*)?$/\/$name/;
             }
         }
+
+        # Set current Virtual Host name
+        $id =~
+s/^(exportedHeaders|locationRules)\/([^\/]*)?\/(.*)$/$1\/$vhostname\/$3/;
+
+        # Set current SAML IDP name
+        $id =~
+s/^(samlIDPMetaDataXML|samlIDPMetaDataExportedAttributes|samlIDPMetaDataOptions)\/([^\/]*)?\/(.*)$/$1\/$idpname\/$3/;
 
         $self->lmLog( "id transformed into $id", 'debug' );
 
