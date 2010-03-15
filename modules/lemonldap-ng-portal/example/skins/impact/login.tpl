@@ -1,7 +1,7 @@
 <TMPL_INCLUDE NAME="header.tpl">
 
-  <div id="layout-login">
-    <div id="layout-login-left">
+  <div id="content">
+    <div id="content-left">
       <p><img src="/skins/<TMPL_VAR NAME="SKIN">/images/logo-lock.png" /></p>
       <h1>
         <lang en="Welcome on your secured authentication portal." fr="Bienvenue sur votre portail d'authentification s&eacute;curis&eacute;e." />
@@ -10,7 +10,7 @@
         <lang en="This space allow you to open a SSO session. This will help you to securely access to all applications authorized by your profil." fr="Cet espace vous permet d'ouvrir une session SSO. Celle-ci vous aidera &agrave; acc&eacute;der de mani&egrave;re totalement s&eacute;curis&eacute;e &agrave; l'ensemble des applications autoris&eacute;es par votre profil utilisateur." />
       </p>
     </div>
-    <div id="layout-login-right">
+    <div id="content-right-login">
       <h1><lang en="Open your SSO session" fr="Ouvrir une session SSO" /></h1>
       <hr class="solid" />
       <p><span class="text-info"><TMPL_VAR NAME="AUTH_ERROR"></span></p>
