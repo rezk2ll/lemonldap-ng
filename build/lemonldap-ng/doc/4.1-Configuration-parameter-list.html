@@ -105,6 +105,8 @@
           Alliance (will be replaced by SAML in 0.9.5)</a></li>
 
           <li><a href="#HTwitter">Twitter</a></li>
+
+          <li><a href="#HOpenID">OpenID</a></li>
         </ul>
       </li>
     </ul>
@@ -1806,6 +1808,26 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>No</td>
       </tr>
+
+      <tr class="table-even">
+        <td>Activate recursive groups</td>
+
+        <td>ldapGroupRecursive</td>
+
+        <td>1.0</td>
+
+        <td>No</td>
+      </tr>
+
+      <tr class="table-odd">
+        <td>Group link attribute name</td>
+
+        <td>ldapGroupAttributeNameGroup</td>
+
+        <td>1.0</td>
+
+        <td>No</td>
+      </tr>
     </table>
 
     <h4 class="heading-1-1-1"><span id="HDBI">DBI</span></h4><br />
@@ -2215,6 +2237,31 @@ level1Key =&gt; { level2Key =&gt; 'value' },
         <td>twitterSecret</td>
 
         <td>0.9.5</td>
+
+        <td>No*</td>
+      </tr>
+    </table>
+
+    <h4 class="heading-1-1-1"><span id="HOpenID">OpenID</span></h4><br />
+    <br />
+
+    <table class="wiki-table" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <th>Full name</th>
+
+        <th>Key name</th>
+
+        <th>Version</th>
+
+        <th>GUI</th>
+      </tr>
+
+      <tr class="table-odd">
+        <td>OpenID secret token</td>
+
+        <td>openIdSecret</td>
+
+        <td>1.0</td>
 
         <td>No*</td>
       </tr>

@@ -119,6 +119,11 @@ userDB =&gt; LDAP,
 
       <li>ldapGroupAttributeNameSearch: name(s) of the attribute storing the
       name of the group (this should be a list reference)</li>
+
+      <li>ldapGroupRecursive: activate recursive group functionality</li>
+
+      <li>ldapGroupAttributeNameGroup: name of the attribute in groups entries
+      used in the link</li>
     </ul>You can edit portal/index.pl to modify the values, for example:
 
     <div class="code">
@@ -127,7 +132,9 @@ ldapGroupBase =&gt; 'ou=groups,dc=example,dc=com',
 ldapGroupObjectClass =&gt; 'groupOfUniqueNames',
 ldapGroupAttributeName =&gt; 'uniqueMember',
 ldapGroupAttributeNameUser =&gt; 'dn',
+ldapGroupAttributeNameGroup =&gt; 'dn',
 ldapGroupAttributeNameSearch =&gt; ['cn'],
+ldapGroupRecursive =&gt; 1,
 </pre>
     </div>
 
@@ -151,7 +158,9 @@ ldapGroupBase =&gt; 'ou=groups,dc=example,dc=com',
 ldapGroupObjectClass =&gt; 'group',
 ldapGroupAttributeName =&gt; 'member',
 ldapGroupAttributeNameUser =&gt; 'dn',
+ldapGroupAttributeNameGroup =&gt; 'dn',
 ldapGroupAttributeNameSearch =&gt; ['cn'],
+ldapGroupRecursive =&gt; 1,
 </pre>
     </div>
 
