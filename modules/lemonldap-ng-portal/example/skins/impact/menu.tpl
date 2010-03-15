@@ -17,7 +17,7 @@
         <a href="#logout"><lang en="Logout" fr="Se d&eacute;connecter" /></a>
         </TMPL_IF>
       </p>
-      <p><lang en="Here are applications your are allowed to access to." fr="Voici la liste des applications auxquelles vous êtes autoris&eacute;es &agrave; acc&eacute;der." /></p>
+      <p><lang en="Here are applications your are allowed to access to." fr="Voici la liste des applications auxquelles vous &egrave;tes autoris&eacute;es &agrave; acc&eacute;der." /></p>
       <TMPL_IF NAME="DISPLAY_APPSLIST">
       <div id="content-all-info">
         <div id="appslist">
