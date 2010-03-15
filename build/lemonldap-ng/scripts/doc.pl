@@ -66,6 +66,7 @@ my $docs = {
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/Notifications'                 => '4.9-Notification-system.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/SeveralIndependantPortals'     => '4.9-Several-independant-portals.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/ResetPassword'                 => '4.9-Reset-password-by-mail.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/MultipleCookies'               => '4.9-Multiple-cookies.html',
     # Applications
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocAppDokuwiki'                => '5-Appli-Dokuwiki.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocAppGRR'                     => '5-Appli-GRR.html',
@@ -222,6 +223,7 @@ while ( my ( $url, $file ) = each %$docs ) {
 	s#/xwiki/bin/view/NG/CAS#4.5-CAS-authentication-backend.html#g;
 	s#/xwiki/bin/view/NG/AuthRemote#4.5-Remote-authentication-backend.html#g;
 	s#/xwiki/bin/view/NG/AuthMulti#4.5-Multiple-authentication-backend.html#g;
+	s#/xwiki/bin/view/NG/AuthProxy#4.5-Proxy-authentication-backend.html#g;
 	s#/xwiki/bin/view/NG/AuthSAML#4.5-SAML-authentication-backend.html#g;
 	s#/xwiki/bin/view/NG/AuthOpenID#4.5-OpenID-authentication-backend.html#g;
 	s#/xwiki/bin/view/NG/AuthTwitter#4.5-Twitter-authentication-backend.html#g;
@@ -236,6 +238,7 @@ while ( my ( $url, $file ) = each %$docs ) {
 	s#/xwiki/bin/view/NG/Notifications#4.9-Notification-system.html#g;
 	s#/xwiki/bin/view/NG/SeveralIndependantPortals#4.9-Several-independant-portals.html#g;
 	s#/xwiki/bin/view/NG/ResetPassword#4.9-Reset-password-by-mail.html#g;
+	s#/xwiki/bin/view/NG/MultipleCookies#4.9-Multiple-cookies.html#g;
 	s#/xwiki/bin/view/NG/DocAppDokuwiki#5-Appli-Dokuwiki.html#g;
 	s#/xwiki/bin/view/NG/DocAppGRR#5-Appli-GRR.html#g;
 	s#/xwiki/bin/view/NG/DocAppGLPI#5-Appli-GLPI.html#g;

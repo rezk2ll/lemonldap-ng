@@ -101,6 +101,8 @@
 
           <li><a href="#HRemote">Remote</a></li>
 
+          <li><a href="#HProxy">Proxy</a></li>
+
           <li><a href="#HLibertyAlliance28willbereplacedbySAMLin09529">Liberty
           Alliance (will be replaced by SAML in 0.9.5)</a></li>
 
@@ -117,60 +119,24 @@
     parameters. The colons are:
 
     <ul class="star">
-      <li>Full name: description of the parameter</li>
+      <li><strong class="strong">Full name</strong>: description of the
+      parameter</li>
 
-      <li>Key name: all configuration have a key, used by the Manager to store
-      them in configuration backend, or by script to override default
-      value.</li>
+      <li><strong class="strong">Key name</strong>: all configuration have a
+      key, used by the Manager to store them in configuration backend, or by
+      script to override default value.</li>
 
-      <li>Version: at which version the parameters appeared. If "0", it has
-      always been there (or we don't remember when)</li>
+      <li><strong class="strong">Version</strong>: at which version the
+      parameters appeared. If "0", it has always been there (or we don't
+      remember when)</li>
 
-      <li>GUI: is available in Manager GUI (in the last stable version)</li>
+      <li><strong class="strong">GUI</strong>: is available in Manager
+      GUI</li>
 
-      <li>Portal, Menu, Handler, Manager, Sessions: in which Perl Module the
-      parameter is used</li>
-    </ul>The key name can be used to ovveride the configuration, when you edit
-    portal/index.pl, manager/index.pl, manager/sessions.pl or
-    handler/MyHandler.pm, with this syntax:
-
-    <div class="code">
-      <pre>
-keyname =&gt; 'value',
-</pre>
-    </div><br />
-    <br />
-    <strong class="strong">WARNING</strong>: if you modify these files,
-    updates will potentially erase your local modifications. You can choose to
-    copy the provided .pl file and override configuration in the new file, not
-    known from package, so not erased on updates.<br />
-    <br />
-    For example to fork the portal page:
-
-    <div class="code">
-      <pre>
-# cp portal/index.pl portal/indexcustom.pl
-</pre>
-    </div><br />
-    <br />
-    And adapt apache configuration to server your file instead of default
-    file:
-
-    <div class="code">
-      <pre>
-# vi /etc/lemonldap-ng/apache2.conf
-</pre>
-    </div><br />
-    <br />
-
-    <div class="code">
-      <pre>
-&lt;VirtualHost *&gt;
-    ServerName auth.example.com<br /><br />    DocumentRoot /usr/local/lemonldap-ng/htdocs/portal/
-    DirectoryIndex indexcustom.pl<br /><br />    # Other configuration parameters
-&lt;/VirtualHost&gt;
-</pre>
-    </div>
+      <li><strong class="strong">Portal, Menu, Handler, Manager,
+      Sessions</strong>: in which Perl Module the parameter is used</li>
+    </ul>You can edit <strong class="strong">etc/lemonldap-ng.ini</strong> to
+    override locally any of these parameters
 
     <p class="paragraph"></p>The key name can also be seen when you access
     directly to the configuration backend (for example with an LDAP browser if
@@ -242,7 +208,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>0.9.3</td>
 
-        <td>No</td>
+        <td>Yes</td>
 
         <td>X</td>
 
@@ -262,7 +228,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>0.9.4</td>
 
-        <td>No</td>
+        <td>Yes</td>
 
         <td>X</td>
 
@@ -382,7 +348,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>0.9.3</td>
 
-        <td>No</td>
+        <td>Yes</td>
 
         <td>X</td>
 
@@ -400,7 +366,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>issuerDB</td>
 
-        <td>0.9.5</td>
+        <td>1.0</td>
 
         <td>No</td>
 
@@ -587,7 +553,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>0.9.4</td>
 
-        <td>No</td>
+        <td>Yes</td>
 
         <td>X</td>
 
@@ -625,9 +591,9 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>cookieExpiration</td>
 
-        <td>0.9.5</td>
+        <td>1.0</td>
 
-        <td>No</td>
+        <td>Yes</td>
 
         <td>X</td>
 
@@ -727,7 +693,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>0.9.3</td>
 
-        <td>No</td>
+        <td>Yes</td>
 
         <td>X</td>
 
@@ -747,7 +713,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>0.9.4</td>
 
-        <td>No</td>
+        <td>Yes</td>
 
         <td>X</td>
 
@@ -767,7 +733,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>0.9.4</td>
 
-        <td>No</td>
+        <td>Yes</td>
 
         <td>X</td>
 
@@ -787,7 +753,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>0.9.3</td>
 
-        <td>No</td>
+        <td>Yes</td>
 
         <td>X</td>
 
@@ -807,7 +773,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>0.9.3</td>
 
-        <td>No</td>
+        <td>Yes</td>
 
         <td>X</td>
 
@@ -827,7 +793,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>0.9.4</td>
 
-        <td>No</td>
+        <td>Yes</td>
 
         <td>X</td>
 
@@ -847,7 +813,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>0.9.5</td>
 
-        <td>No</td>
+        <td>Yes</td>
 
         <td>X</td>
 
@@ -861,93 +827,13 @@ level1Key =&gt; { level2Key =&gt; 'value' },
       </tr>
 
       <tr class="table-even">
-        <td>Portal object in Menu</td>
-
-        <td>portalObject</td>
-
-        <td>0.9.3</td>
-
-        <td>No</td>
-
-        <td>&nbsp;</td>
-
-        <td>X</td>
-
-        <td>&nbsp;</td>
-
-        <td>&nbsp;</td>
-
-        <td>&nbsp;</td>
-      </tr>
-
-      <tr class="table-odd">
-        <td>XML file for applications</td>
-
-        <td>apps / xmlfile</td>
-
-        <td>0.9.3</td>
-
-        <td>No</td>
-
-        <td>&nbsp;</td>
-
-        <td>X</td>
-
-        <td>&nbsp;</td>
-
-        <td>&nbsp;</td>
-
-        <td>&nbsp;</td>
-      </tr>
-
-      <tr class="table-even">
-        <td>Path for applications logos</td>
-
-        <td>apps / imgpath</td>
-
-        <td>0.9.3</td>
-
-        <td>No</td>
-
-        <td>&nbsp;</td>
-
-        <td>X</td>
-
-        <td>&nbsp;</td>
-
-        <td>&nbsp;</td>
-
-        <td>&nbsp;</td>
-      </tr>
-
-      <tr class="table-odd">
         <td>Display application tab</td>
 
         <td>modules / appslist</td>
 
         <td>0.9.3</td>
 
-        <td>No</td>
-
-        <td>&nbsp;</td>
-
-        <td>X</td>
-
-        <td>&nbsp;</td>
-
-        <td>&nbsp;</td>
-
-        <td>&nbsp;</td>
-      </tr>
-
-      <tr class="table-even">
-        <td>Display password tab</td>
-
-        <td>modules / password</td>
-
-        <td>0.9.3</td>
-
-        <td>No</td>
+        <td>Yes</td>
 
         <td>&nbsp;</td>
 
@@ -961,13 +847,13 @@ level1Key =&gt; { level2Key =&gt; 'value' },
       </tr>
 
       <tr class="table-odd">
-        <td>Display logout tab</td>
+        <td>Display password tab</td>
 
-        <td>modules / logout</td>
+        <td>modules / password</td>
 
         <td>0.9.3</td>
 
-        <td>No</td>
+        <td>Yes</td>
 
         <td>&nbsp;</td>
 
@@ -981,6 +867,26 @@ level1Key =&gt; { level2Key =&gt; 'value' },
       </tr>
 
       <tr class="table-even">
+        <td>Display logout tab</td>
+
+        <td>modules / logout</td>
+
+        <td>0.9.3</td>
+
+        <td>Yes</td>
+
+        <td>&nbsp;</td>
+
+        <td>X</td>
+
+        <td>&nbsp;</td>
+
+        <td>&nbsp;</td>
+
+        <td>&nbsp;</td>
+      </tr>
+
+      <tr class="table-odd">
         <td>Status module</td>
 
         <td>status</td>
@@ -1000,14 +906,14 @@ level1Key =&gt; { level2Key =&gt; 'value' },
         <td>&nbsp;</td>
       </tr>
 
-      <tr class="table-odd">
+      <tr class="table-even">
         <td>Force HTTPS in redirection</td>
 
         <td>https</td>
 
         <td>0</td>
 
-        <td>No</td>
+        <td>Yes</td>
 
         <td>&nbsp;</td>
 
@@ -1020,7 +926,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
         <td>&nbsp;</td>
       </tr>
 
-      <tr class="table-even">
+      <tr class="table-odd">
         <td>Force port in redirection</td>
 
         <td>port</td>
@@ -1040,7 +946,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
         <td>&nbsp;</td>
       </tr>
 
-      <tr class="table-odd">
+      <tr class="table-even">
         <td>Protection scheme</td>
 
         <td>protection</td>
@@ -1058,146 +964,6 @@ level1Key =&gt; { level2Key =&gt; 'value' },
         <td>X</td>
 
         <td>X</td>
-      </tr>
-
-      <tr class="table-even">
-        <td>Manager images path</td>
-
-        <td>dhtmlXTreeImageLocation</td>
-
-        <td>0</td>
-
-        <td>No</td>
-
-        <td>&nbsp;</td>
-
-        <td>&nbsp;</td>
-
-        <td>&nbsp;</td>
-
-        <td>X</td>
-
-        <td>&nbsp;</td>
-      </tr>
-
-      <tr class="table-odd">
-        <td>File apply.conf</td>
-
-        <td>applyConfFile</td>
-
-        <td>0</td>
-
-        <td>No</td>
-
-        <td>&nbsp;</td>
-
-        <td>&nbsp;</td>
-
-        <td>&nbsp;</td>
-
-        <td>X</td>
-
-        <td>&nbsp;</td>
-      </tr>
-
-      <tr class="table-even">
-        <td>CSS file</td>
-
-        <td>cssFile</td>
-
-        <td>0</td>
-
-        <td>No</td>
-
-        <td>&nbsp;</td>
-
-        <td>&nbsp;</td>
-
-        <td>&nbsp;</td>
-
-        <td>X</td>
-
-        <td>&nbsp;</td>
-      </tr>
-
-      <tr class="table-odd">
-        <td>Javascript file</td>
-
-        <td>jsFile</td>
-
-        <td>0</td>
-
-        <td>No</td>
-
-        <td>&nbsp;</td>
-
-        <td>&nbsp;</td>
-
-        <td>&nbsp;</td>
-
-        <td>X</td>
-
-        <td>&nbsp;</td>
-      </tr>
-
-      <tr class="table-even">
-        <td>Text area width</td>
-
-        <td>textareaW</td>
-
-        <td>0</td>
-
-        <td>No</td>
-
-        <td>&nbsp;</td>
-
-        <td>&nbsp;</td>
-
-        <td>&nbsp;</td>
-
-        <td>X</td>
-
-        <td>&nbsp;</td>
-      </tr>
-
-      <tr class="table-odd">
-        <td>Text area height</td>
-
-        <td>textareaH</td>
-
-        <td>0</td>
-
-        <td>No</td>
-
-        <td>&nbsp;</td>
-
-        <td>&nbsp;</td>
-
-        <td>&nbsp;</td>
-
-        <td>X</td>
-
-        <td>&nbsp;</td>
-      </tr>
-
-      <tr class="table-even">
-        <td>Input width</td>
-
-        <td>inputSize</td>
-
-        <td>0</td>
-
-        <td>No</td>
-
-        <td>&nbsp;</td>
-
-        <td>&nbsp;</td>
-
-        <td>&nbsp;</td>
-
-        <td>X</td>
-
-        <td>&nbsp;</td>
       </tr>
 
       <tr class="table-odd">
@@ -1293,7 +1059,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>0.9.4</td>
 
-        <td>No</td>
+        <td>Yes</td>
 
         <td>X</td>
 
@@ -1313,7 +1079,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>0.9.4</td>
 
-        <td>No</td>
+        <td>Yes</td>
 
         <td>X</td>
 
@@ -1333,7 +1099,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>0.9.4</td>
 
-        <td>No</td>
+        <td>Yes</td>
 
         <td>X</td>
 
@@ -1353,7 +1119,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>0.9.4</td>
 
-        <td>No</td>
+        <td>Yes</td>
 
         <td>X</td>
 
@@ -1373,7 +1139,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>0.9.4</td>
 
-        <td>No</td>
+        <td>Yes</td>
 
         <td>X</td>
 
@@ -1391,9 +1157,9 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>mailConfirmSubject</td>
 
-        <td>0.9.5</td>
+        <td>1.0</td>
 
-        <td>No</td>
+        <td>Yes</td>
 
         <td>X</td>
 
@@ -1411,9 +1177,9 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>mailConfirmBody</td>
 
-        <td>0.9.5</td>
+        <td>1.0</td>
 
-        <td>No</td>
+        <td>Yes</td>
 
         <td>X</td>
 
@@ -1431,9 +1197,9 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>mailUrl</td>
 
-        <td>0.9.5</td>
+        <td>1.0</td>
 
-        <td>No</td>
+        <td>Yes</td>
 
         <td>X</td>
 
@@ -1472,9 +1238,9 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>portalSkin</td>
 
-        <td>0.9.5</td>
+        <td>1.0</td>
 
-        <td>No</td>
+        <td>Yes</td>
 
         <td>X</td>
       </tr>
@@ -1484,9 +1250,9 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>portalDisplayLogout</td>
 
-        <td>0.9.5</td>
+        <td>1.0</td>
 
-        <td>No</td>
+        <td>Yes</td>
 
         <td>X</td>
       </tr>
@@ -1496,9 +1262,9 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>portalDisplayResetPassword</td>
 
-        <td>0.9.5</td>
+        <td>1.0</td>
 
-        <td>No</td>
+        <td>Yes</td>
 
         <td>X</td>
       </tr>
@@ -1508,9 +1274,9 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>portalDisplayChangePassword</td>
 
-        <td>0.9.5</td>
+        <td>1.0</td>
 
-        <td>No</td>
+        <td>Yes</td>
 
         <td>X</td>
       </tr>
@@ -1520,9 +1286,9 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>portalDisplayAppslist</td>
 
-        <td>0.9.5</td>
+        <td>1.0</td>
 
-        <td>No</td>
+        <td>Yes</td>
 
         <td>X</td>
       </tr>
@@ -1532,9 +1298,9 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>portalAutocomplete</td>
 
-        <td>0.9.5</td>
+        <td>1.0</td>
 
-        <td>No</td>
+        <td>Yes</td>
 
         <td>X</td>
       </tr>
@@ -1544,9 +1310,9 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>portalRequireOldPassword</td>
 
-        <td>0.9.5</td>
+        <td>1.0</td>
 
-        <td>No</td>
+        <td>Yes</td>
 
         <td>X</td>
       </tr>
@@ -1556,9 +1322,9 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>portalUserAttr</td>
 
-        <td>0.9.5</td>
+        <td>1.0</td>
 
-        <td>No</td>
+        <td>Yes</td>
 
         <td>X</td>
       </tr>
@@ -1568,9 +1334,9 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>portalOpenLinkInNewWindow</td>
 
-        <td>0.9.5</td>
+        <td>1.0</td>
 
-        <td>No</td>
+        <td>Yes</td>
 
         <td>X</td>
       </tr>
@@ -1599,19 +1365,19 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>singleSession</td>
 
-        <td>0.9.5</td>
+        <td>1.0</td>
 
-        <td>No</td>
+        <td>Yes</td>
       </tr>
 
       <tr class="table-even">
-        <td>Delete other session if IP deffer</td>
+        <td>Delete other session if IP differs</td>
 
         <td>singleIP</td>
 
-        <td>0.9.5</td>
+        <td>1.0</td>
 
-        <td>No</td>
+        <td>Yes</td>
       </tr>
 
       <tr class="table-odd">
@@ -1619,9 +1385,9 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>singleUserByIP</td>
 
-        <td>0.9.5</td>
+        <td>1.0</td>
 
-        <td>No</td>
+        <td>Yes</td>
       </tr>
 
       <tr class="table-even">
@@ -1629,9 +1395,9 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>notifyOther</td>
 
-        <td>0.9.5</td>
+        <td>1.0</td>
 
-        <td>No</td>
+        <td>Yes</td>
       </tr>
 
       <tr class="table-odd">
@@ -1639,9 +1405,9 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>notifyDeleted</td>
 
-        <td>0.9.5</td>
+        <td>1.0</td>
 
-        <td>No</td>
+        <td>Yes</td>
       </tr>
     </table>
 
@@ -1716,7 +1482,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>0</td>
 
-        <td>No</td>
+        <td>Yes</td>
       </tr>
 
       <tr class="table-odd">
@@ -1726,7 +1492,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>0.9</td>
 
-        <td>No</td>
+        <td>Yes</td>
       </tr>
 
       <tr class="table-even">
@@ -1736,7 +1502,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>0.9.4</td>
 
-        <td>No</td>
+        <td>Yes</td>
       </tr>
 
       <tr class="table-odd">
@@ -1746,7 +1512,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>0.9.1</td>
 
-        <td>No</td>
+        <td>Yes</td>
       </tr>
 
       <tr class="table-even">
@@ -1756,7 +1522,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>0.9.4</td>
 
-        <td>No</td>
+        <td>Yes</td>
       </tr>
 
       <tr class="table-odd">
@@ -1766,7 +1532,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>0.8</td>
 
-        <td>No</td>
+        <td>Yes</td>
       </tr>
 
       <tr class="table-even">
@@ -1776,7 +1542,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>0.9.4</td>
 
-        <td>No</td>
+        <td>Yes</td>
       </tr>
 
       <tr class="table-odd">
@@ -1786,7 +1552,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>0.9.4</td>
 
-        <td>No</td>
+        <td>Yes</td>
       </tr>
 
       <tr class="table-even">
@@ -1796,7 +1562,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>0.9.4</td>
 
-        <td>No</td>
+        <td>Yes</td>
       </tr>
 
       <tr class="table-odd">
@@ -1806,7 +1572,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>0.9.4</td>
 
-        <td>No</td>
+        <td>Yes</td>
       </tr>
 
       <tr class="table-even">
@@ -1816,7 +1582,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>1.0</td>
 
-        <td>No</td>
+        <td>Yes</td>
       </tr>
 
       <tr class="table-odd">
@@ -1826,7 +1592,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>1.0</td>
 
-        <td>No</td>
+        <td>Yes</td>
       </tr>
     </table>
 
@@ -1847,7 +1613,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>dbiAuthChain</td>
 
-        <td>0.9.5</td>
+        <td>1.0</td>
       </tr>
 
       <tr class="table-even">
@@ -1855,7 +1621,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>dbiAuthUser</td>
 
-        <td>0.9.5</td>
+        <td>1.0</td>
       </tr>
 
       <tr class="table-odd">
@@ -1863,7 +1629,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>dbiAuthPassword</td>
 
-        <td>0.9.5</td>
+        <td>1.0</td>
       </tr>
 
       <tr class="table-even">
@@ -1871,7 +1637,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>dbiAuthTable</td>
 
-        <td>0.9.5</td>
+        <td>1.0</td>
       </tr>
 
       <tr class="table-odd">
@@ -1879,7 +1645,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>dbiAuthLoginCol</td>
 
-        <td>0.9.5</td>
+        <td>1.0</td>
       </tr>
 
       <tr class="table-even">
@@ -1887,7 +1653,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>dbiAuthPasswordCol</td>
 
-        <td>0.9.5</td>
+        <td>1.0</td>
       </tr>
 
       <tr class="table-odd">
@@ -1895,7 +1661,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>dbiAuthPasswordHash</td>
 
-        <td>0.9.5</td>
+        <td>1.0</td>
       </tr>
 
       <tr class="table-even">
@@ -1903,7 +1669,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>dbiUserChain</td>
 
-        <td>0.9.5</td>
+        <td>1.0</td>
       </tr>
 
       <tr class="table-odd">
@@ -1911,7 +1677,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>dbiUserUser</td>
 
-        <td>0.9.5</td>
+        <td>1.0</td>
       </tr>
 
       <tr class="table-even">
@@ -1919,7 +1685,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>dbiUserPassword</td>
 
-        <td>0.9.5</td>
+        <td>1.0</td>
       </tr>
 
       <tr class="table-odd">
@@ -1927,7 +1693,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>dbiUserTable</td>
 
-        <td>0.9.5</td>
+        <td>1.0</td>
       </tr>
 
       <tr class="table-even">
@@ -1935,7 +1701,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>dbiPasswordMailCol</td>
 
-        <td>0.9.5</td>
+        <td>1.0</td>
       </tr>
 
       <tr class="table-odd">
@@ -1943,7 +1709,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>authPivot</td>
 
-        <td>0.9.5</td>
+        <td>1.0</td>
       </tr>
 
       <tr class="table-even">
@@ -1951,7 +1717,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>userPivot</td>
 
-        <td>0.9.5</td>
+        <td>1.0</td>
       </tr>
     </table>
 
@@ -1976,7 +1742,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>0</td>
 
-        <td>No</td>
+        <td>Yes</td>
       </tr>
 
       <tr class="table-even">
@@ -1986,7 +1752,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>0</td>
 
-        <td>No</td>
+        <td>Yes</td>
       </tr>
 
       <tr class="table-odd">
@@ -1996,7 +1762,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>0</td>
 
-        <td>No</td>
+        <td>Yes</td>
       </tr>
     </table>
 
@@ -2021,7 +1787,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>0</td>
 
-        <td>No</td>
+        <td>Yes</td>
       </tr>
 
       <tr class="table-even">
@@ -2031,7 +1797,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>0</td>
 
-        <td>No</td>
+        <td>Yes</td>
       </tr>
 
       <tr class="table-odd">
@@ -2041,7 +1807,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>0</td>
 
-        <td>No</td>
+        <td>Yes</td>
       </tr>
 
       <tr class="table-even">
@@ -2051,7 +1817,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>0</td>
 
-        <td>No</td>
+        <td>Yes</td>
       </tr>
     </table>
 
@@ -2076,7 +1842,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>0.9.4</td>
 
-        <td>No</td>
+        <td>Yes</td>
       </tr>
 
       <tr class="table-even">
@@ -2086,7 +1852,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>0.9.4</td>
 
-        <td>No</td>
+        <td>Yes</td>
       </tr>
 
       <tr class="table-odd">
@@ -2096,7 +1862,52 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>0.9.4</td>
 
-        <td>No</td>
+        <td>Yes</td>
+      </tr>
+    </table>
+
+    <h4 class="heading-1-1-1"><span id="HProxy">Proxy</span></h4><br />
+    <br />
+
+    <table class="wiki-table" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <th>Full name</th>
+
+        <th>Key name</th>
+
+        <th>Version</th>
+
+        <th>GUI</th>
+      </tr>
+
+      <tr class="table-odd">
+        <td>Target portal URL</td>
+
+        <td>soapAuthService</td>
+
+        <td>1.0</td>
+
+        <td>Yes</td>
+      </tr>
+
+      <tr class="table-even">
+        <td>Target cookie name</td>
+
+        <td>remoteCookieName</td>
+
+        <td>1.0</td>
+
+        <td>Yes</td>
+      </tr>
+
+      <tr class="table-odd">
+        <td>Target session SOAP end point</td>
+
+        <td>soapSessionService</td>
+
+        <td>1.0</td>
+
+        <td>Yes</td>
       </tr>
     </table>
 
@@ -2228,7 +2039,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>1.0</td>
 
-        <td>No*</td>
+        <td>Yes</td>
       </tr>
 
       <tr class="table-even">
@@ -2238,7 +2049,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>1.0</td>
 
-        <td>No*</td>
+        <td>Yes</td>
       </tr>
 
       <tr class="table-odd">
@@ -2248,7 +2059,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>1.0</td>
 
-        <td>No*</td>
+        <td>Yes</td>
       </tr>
     </table>
 
@@ -2273,7 +2084,7 @@ level1Key =&gt; { level2Key =&gt; 'value' },
 
         <td>1.0</td>
 
-        <td>No*</td>
+        <td>Yes</td>
       </tr>
     </table>
   </div>
