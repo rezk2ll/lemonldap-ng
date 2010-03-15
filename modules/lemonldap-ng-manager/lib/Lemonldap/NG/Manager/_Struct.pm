@@ -153,7 +153,7 @@ sub struct {
                     {
                         my $tmp = {
                             ldap => ['ldapParams'],
-                            ssl  => [qw(ldapParams SSLRequired)],
+                            ssl     => [qw(ldapParams sslParams)],
                             openid => ['openIdParams'],
                             twitter => ['twitterParams'],
                         }->{$mod};
@@ -228,7 +228,12 @@ sub struct {
                 },
 
                 # SSL
-                SSLRequired => 'bool:/SSLRequired',
+                sslParams => {
+                    _nodes       => [qw(SSLVar SSLLDAPField SSLRequire)],
+                    SSLVar       => 'text:/SSLVar',
+                    SSLLDAPField => 'text:/SSLLDAPField',
+                    SSLRequire   => 'bool:/SSLRequire',
+                },
 
                 # OpenID
                 openIdParams => {
@@ -796,7 +801,6 @@ sub testStruct {
         singleIP       => $boolean,
         singleUserByIP => $boolean,
         Soap           => $boolean,
-        SSLRequired    => $boolean,
         storePassword  => $boolean,
         syslog         => {
             test => qw/^(?:auth|authpriv|daemon|local\d|user)?$/,
@@ -881,6 +885,11 @@ sub testStruct {
         samlSPSSODescriptorNameIDFormatTransient        => $boolean,
         samlIDPSSODescriptorManageNameIDServiceHTTP     => $testNotDefined,
         samlIDPSSODescriptorManageNameIDServiceSOAP     => $testNotDefined,
+
+        # SSL
+        SSLVar       => $testNotDefined,
+        SSLLDAPField => $testNotDefined,
+        SSLRequire   => $boolean,
 
         # OpenID
         openIdSecret => $testNotDefined,
