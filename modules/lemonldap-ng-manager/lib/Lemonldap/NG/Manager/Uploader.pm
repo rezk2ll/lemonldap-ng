@@ -12,7 +12,6 @@ use MIME::Base64;
 use JSON;
 use LWP::Simple;
 
-use Data::Dumper;
 use URI::Escape;
 use Lemonldap::NG::Common::Safelib;        #link protected safe Safe object
 use Lemonldap::NG::Manager::Downloader;    #inherits
@@ -326,25 +325,43 @@ s/^(samlIDPMetaDataXML|samlIDPMetaDataExportedAttributes|samlIDPMetaDataOptions)
 sub fileUpload {
     my $self      = shift;
     my $fieldname = shift;
-
-    # Upload the file on the server.
-    my $UPLOAD_FH = $self->upload($fieldname);
+    my $filename  = shift;
     my $content   = '';
+
+    # Direct download
+    if ( $filename )
+    {
+      $content = ${ $self->rparam($fieldname) };
+      print $self->header(
+          -type           => 'application/force-download; charset=utf-8',
+          -attachment     => $filename,
+          -Content_Length => length $content
+        ) . $content;
+    }
+
+    # JSON request
+    else
+    {
+    my $UPLOAD_FH = $self->upload($fieldname);
     while (<$UPLOAD_FH>) {
         $content .= "$_";
     }
     $content =~ s!<!&lt;!g;
     $content =~ s!>!&gt;!g;
 
-    # Build JSON reponse
     my $json = new JSON();
     $json = $json->allow_nonref( ['1'] );
     $json = $json->utf8(         ['1'] );
     my $json_content = $json->encode($content);
-    my $buf          = '{"status":"OK", "content":' . $json_content . '}';
+      my $content      = '{"status":"OK", "content":' . $json_content . '}';
 
-    # Do not send response
-    return $buf;
+      print $self->header(
+          -type           => 'text/html; charset=utf-8',
+          -Content_Length => length $content
+        ) . $content;
+    }
+
+    $self->quit();
 }
 
 ## @method public void fileUpload (fieldname)
@@ -355,6 +372,7 @@ sub fileUpload {
 sub urlUpload {
     my $self      = shift;
     my $fieldname = shift;
+    my $content   = '';
 
     # Get the URL
     my $url = ${ $self->rparam($fieldname) };
@@ -370,10 +388,12 @@ sub urlUpload {
     $json = $json->allow_nonref( ['1'] );
     $json = $json->utf8(         ['1'] );
     my $json_content = $json->encode($content);
-    my $buf          = '{"status":"OK", "content":' . $json_content . '}';
+    $content         = '{"status":"OK", "content":' . $json_content . '}';
 
-    # Do not send response
-    return $buf;
+    print $self->header(
+        -type           => 'text/html; charset=utf-8',
+        -Content_Length => length $content
+      ) . $content;
 }
 
 ## @method protected array applyTest(void* test,string value)

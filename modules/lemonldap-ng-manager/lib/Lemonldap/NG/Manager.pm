@@ -68,18 +68,21 @@ sub new {
     # File upload/download
     elsif ( my $rfile = $self->rparam('file') ) {
 
-        require Lemonldap::NG::Manager::Uploader;    #inherits
-        my $result  = $self->fileUpload('file');
-        my %headers = (
-            -type           => 'text/html',
-            -Content_Length => length($result)
-        );
-        if ( my $rfilename = $self->rparam('filename') ) {
-            $headers{-type}       = 'application/octet-stream';
-            $headers{-attachment} = ${$rfilename};
-            $result =~ s/{.*"content":"(.*)"}$/$1/g;
+        my @params = ( 'file' );
+        if ( my $rfilename = $self->rparam('filename') )
+        {
+          push @params, ${ $rfilename };
         }
-        print $self->header(%headers) . $result;
+        require Lemonldap::NG::Manager::Uploader;    #inherits
+        $self->fileUpload(@params);
+        $self->quit();
+        }
+
+    # URL upload/download
+    elsif ( my $rurl = $self->rparam('url') ) {
+
+        require Lemonldap::NG::Manager::Uploader;    #inherits
+        $self->urlUpload('url');
         $self->quit();
     }
 

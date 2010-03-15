@@ -619,10 +619,10 @@ function myB64(s) {
 }
 /* Function to download a file */
 function downloadFile(id,filename){
-	content=lmdata(id).replace(/\n/g,'\\n').replace(/"/g,'\"');
+	var content=lmdata(id).replace(/"/g,'&#34;');
 	var inputs = '';
 	inputs+='<input type="hidden" name="filename" value="'+filename+'" />';
-	inputs+='<input type="textarea" style="display:none;" name="file" value="'+content+'" />';
+	inputs+='<textarea style="display:none;" name="file">'+content+'</textarea>';
 	jQuery('<form action="'+ scriptname +'" method="post" enctype="multipart/form-data">'+inputs+'</form>')
 	.appendTo('body').submit().remove();
 }
