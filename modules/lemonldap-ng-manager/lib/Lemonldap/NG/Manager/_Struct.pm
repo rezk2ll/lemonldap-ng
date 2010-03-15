@@ -98,7 +98,7 @@ sub struct {
         ######################
         generalParameters => {
             _nodes => [
-                qw(n:portalParams n:authParams n:logParams n:cookieParams n:sessionParams n:advancedParams)
+                qw(portalParams n:authParams logParams cookieParams sessionParams n:advancedParams)
             ],
             _help => 'default',
 
@@ -146,27 +146,14 @@ sub struct {
                       || $self->defaultConf()->{authentication};
                     my $udb = $self->conf->{userDB}
                       || $self->defaultConf()->{userDB};
-                    my $pdb = $self->conf->{passwordDB}
-                      || $self->defaultConf()->{passwordDB};
                     $auth = lc($auth);
                     $udb  = lc($udb);
-                    $pdb  = lc($pdb);
                     my %res;
-
-                    foreach my $mod (
-                        (
-                            $auth,
-                            ( $udb ne ( $auth or $pdb ) ? $udb : () ),
-                            ( $pdb ne ( $auth or $udb ) ? $pdb : () )
-                        )
-                      )
+                    foreach my $mod ( ( $auth, ( $auth ne $udb ? $udb : () ) ) )
                     {
                         my $tmp = {
                             ldap => ['ldapParams'],
-                            ssl     => [qw(ldapParams sslParams)],
-                            cas     => ['casParams'],
-                            remote  => ['remoteParams'],
-                            proxy   => ['proxyParams'],
+                            ssl  => [qw(ldapParams SSLRequired)],
                             openid => ['openIdParams'],
                             twitter => ['twitterParams'],
                         }->{$mod};
@@ -176,8 +163,7 @@ sub struct {
                     }
                     my @u = keys %res;
 
-              # Add authentication, userDB and passwordDB nodes at the beginning
-                    unshift( @u, "passwordDB" );
+                    # Add authentication and userDB nodes at the beginning
                     unshift( @u, "userDB" );
                     unshift( @u, "authentication" );
 
@@ -189,7 +175,6 @@ sub struct {
 
                 authentication => 'text:/authentication:authParams:authParams',
                 userDB         => 'text:/userDB:authParams:authParams',
-                passwordDB     => 'text:/passwordDB:authParams:authParams',
 
                 # LDAP
                 ldapParams     => {
@@ -243,44 +228,7 @@ sub struct {
                 },
 
                 # SSL
-                sslParams => {
-                    _nodes       => [qw(SSLVar SSLLDAPField SSLRequire)],
-                    SSLVar       => 'text:/SSLVar',
-                    SSLLDAPField => 'text:/SSLLDAPField',
-                    SSLRequire   => 'bool:/SSLRequire',
-                },
-
-                # CAS
-                casParams => {
-                    _nodes =>
-                      [qw(CAS_url CAS_loginUrl CAS_validationUrl CAS_CAFile)],
-                    CAS_url           => 'text:/CAS_url',
-                    CAS_loginUrl      => 'text:/CAS_loginUrl',
-                    CAS_validationUrl => 'text:/CAS_validationUrl',
-                    CAS_CAFile        => 'text:/CAS_CAFile',
-                },
-
-                # Remote
-                remoteParams => {
-                    _nodes => [
-                        qw(remotePortal remoteGlobalStorage remoteGlobalStorageOptions)
-                    ],
-                    remotePortal               => 'text:/remotePortal',
-                    remoteGlobalStorage        => 'text:/remoteGlobalStorage',
-                    remoteGlobalStorageOptions => {
-                        _nodes => ['hash:/remoteGlobalStorageOptions'],
-                        _js    => 'hashRoot'
-                    },
-                },
-
-                # Proxy
-                proxyParams => {
-                    _nodes =>
-                      [qw(soapAuthService remoteCookieName soapSessionService)],
-                    soapAuthService    => 'text:/soapAuthService',
-                    remoteCookieName   => 'text:/remoteCookieName',
-                    soapSessionService => 'text:/soapSessionService',
-                },
+                SSLRequired => 'bool:/SSLRequired',
 
                 # OpenID
                 openIdParams => {
@@ -321,14 +269,9 @@ sub struct {
             # SESSIONS PARAMETERS
             sessionParams => {
                 _nodes => [
-                    qw(grantSessionRule storePassword timeout n:sessionStorage n:multipleSessions)
+                    qw(sessionStorage grantSessionRule singleSession singleIP singleUserByIP notifyDeleted notifyOther timeout storePassword)
                 ],
                 _help          => 'storage',
-
-                grantSessionRule => 'textarea:/grantSessionRule',
-                storePassword    => 'bool:/storePassword',
-                timeout          => 'text:/timeout:timeout:text',
-
                 sessionStorage => {
                     _nodes        => [qw(globalStorage globalStorageOptions)],
                     globalStorage => 'text:/globalStorage',
@@ -337,17 +280,14 @@ sub struct {
                         _js    => 'hashRoot'
                     },
                 },
-
-                multipleSessions => {
-                    _nodes => [
-                        qw(singleSession singleIP singleUserByIP notifyDeleted notifyOther)
-                    ],
                 singleSession    => 'bool:/singleSession',
                 singleIP         => 'bool:/singleIP',
                 singleUserByIP   => 'bool:/singleUserByIP',
                 notifyDeleted    => 'bool:/notifyDeleted',
                 notifyOther      => 'bool:/notifyOther',
-                },
+                storePassword    => 'bool:/storePassword',
+                timeout          => 'text:/timeout:timeout:text',
+                grantSessionRule => 'text:/grantSessionRule',
             },
 
             # OTHER PARAMETERS
@@ -378,8 +318,9 @@ sub struct {
 
                 passwordManagement => {
                     _nodes => [
-                        qw(SMTPServer mailUrl mailFrom mailSubject mailBody mailConfirmSubject mailConfirmBody randomPasswordRegexp)
+                        qw(passwordDB SMTPServer mailUrl mailFrom mailSubject mailBody mailConfirmSubject mailConfirmBody randomPasswordRegexp)
                     ],
+                    passwordDB           => 'text:/passwordDB',
                     SMTPServer           => 'text:/SMTPServer',
                     mailUrl              => 'text:/mailUrl',
                     mailFrom             => 'text:/mailFrom',
@@ -465,7 +406,7 @@ sub struct {
             # GLOBAL INFORMATIONS
             samlEntityID => 'text:/samlEntityID',
             samlServicePrivateKey =>
-              'textarea:/samlServicePrivateKey:samlServicePrivateKey:textarea',
+              'filearea:/samlServicePrivateKey:samlServicePrivateKey:filearea',
             samlOrganization => {
                 _nodes => [
                     qw(samlOrganizationDisplayName
@@ -496,7 +437,7 @@ sub struct {
                 samlSPSSODescriptorProtocolSupportEnumeration =>
                   'text:/samlSPSSODescriptorProtocolSupportEnumeration',
                 samlSPSSODescriptorKeyDescriptorSigning =>
-                  'textarea:/samlSPSSODescriptorKeyDescriptorSigning',
+                  'filearea:/samlSPSSODescriptorKeyDescriptorSigning',
 
                 samlSPSSODescriptorSingleLogoutService => {
                     _nodes => [
@@ -560,7 +501,7 @@ sub struct {
                 samlIDPSSODescriptorProtocolSupportEnumeration =>
                   'text:/samlIDPSSODescriptorProtocolSupportEnumeration',
                 samlIDPSSODescriptorKeyDescriptorSigning =>
-                  'textarea:/samlIDPSSODescriptorKeyDescriptorSigning',
+                  'filearea:/samlIDPSSODescriptorKeyDescriptorSigning',
 
                 samlIDPSSODescriptorSingleSignOnService => {
                     _nodes => [
@@ -847,6 +788,7 @@ sub testStruct {
         singleIP       => $boolean,
         singleUserByIP => $boolean,
         Soap           => $boolean,
+        SSLRequired    => $boolean,
         storePassword  => $boolean,
         syslog         => {
             test => qw/^(?:auth|authpriv|daemon|local\d|user)?$/,
@@ -932,33 +874,6 @@ sub testStruct {
         samlIDPSSODescriptorManageNameIDServiceHTTP     => $testNotDefined,
         samlIDPSSODescriptorManageNameIDServiceSOAP     => $testNotDefined,
 
-        # SSL
-        SSLVar       => $testNotDefined,
-        SSLLDAPField => $testNotDefined,
-        SSLRequire   => $boolean,
-
-        # CAS
-        CAS_url           => $testNotDefined,
-        CAS_loginUrl      => $testNotDefined,
-        CAS_validationUrl => $testNotDefined,
-        CAS_CAFile        => $testNotDefined,
-
-        # Remote
-        remotePortal        => $testNotDefined,
-        remoteGlobalStorage => {
-            test    => qr/^[\w:]+$/,
-            msgFail => 'Bad module name',
-        },
-        remoteGlobalStorageOptions => {
-            keyTest    => qr/^\w+$/,
-            keyMsgFail => 'Bad parameter',
-        },
-
-        # Proxy
-        soapAuthService    => $testNotDefined,
-        remoteCookieName   => $testNotDefined,
-        soapSessionService => $testNotDefined,
-
         # OpenID
         openIdSecret => $testNotDefined,
 
@@ -1001,7 +916,6 @@ sub defaultConf {
         portalSkin         => 'pastel',
         portalUserAttr     => '_user',
         protection         => 'none',
-        remoteGlobalStorage   => 'Lemonldap::NG::Common::Apache::Session::SOAP',
         securedCookie      => '0',
         singleSession      => '0',
         singleIP           => '0',
@@ -1096,10 +1010,6 @@ sub subDefaultConf {
     return {
         locationRules                     => { default     => 'deny' },
         exportedHeaders                   => { 'Auth-User' => '$uid' },
-        remoteGlobalStorageOptions => {
-            'proxy' => 'https://remote/index.pl/sessions',
-            'ns'    => 'https://remote/Lemonldap/NG/Common/CGI/SOAPService',
-        },
         samlIDPMetaDataXML                => {             {} },
         samlIDPMetaDataExportedAttributes => { 'uid'       => '0;uid;;' },
         samlIDPMetaDataOptions            => {
