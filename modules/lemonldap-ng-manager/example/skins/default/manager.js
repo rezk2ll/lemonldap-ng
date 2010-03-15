@@ -154,8 +154,26 @@ function setlmtext(id,v){
 	$('#text_'+id).text(v);
 	}
 }
+function setlminputtext(id,input){
+	var inputname=$(input).attr('id');
+	var inputvalue=$(input).attr('value');
+	if(inputvalue.length==0){
+		alert('No '+inputname);
+		return false;
+	}
+        setlmtext(id,inputvalue);
+}
 function setlmdata(id,v){
 	$('#text_'+id).attr('value',escape(v));
+}
+function setlminputdata(id,input){
+	var inputname=$(input).attr('id');
+	var inputvalue=$(input).attr('value');
+	if(inputvalue.length==0){
+		alert('No '+inputname);
+		return false;
+	}
+        setlmdata(id,inputvalue);
 }
 function setlmfile(id,input){
 	var inputname=$(input).attr('id');

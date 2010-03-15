@@ -155,12 +155,20 @@
 
     <!-- Simple text -->
     <div id="content_text" class="hidden">
-     <input type="text" id="text" onchange="setlmdata(currentId,this.value)"/>
+     <input type="text" id="text" />
+     <br />
+     <button onclick="setlminputdata(currentId,text);return false;" class="ui-state-default ui-corner-all">
+     <lang en="Apply" fr="Appliquer" />
+     </button>
     </div>
 
     <!-- Simple textarea -->
     <div id="content_textarea" class="hidden">
-     <textarea id="textarea" cols="80" rows="10" onchange="setlmdata(currentId,this.value)"></textarea>
+     <textarea id="textarea" cols="80" rows="10"></textarea>
+     <br />
+     <button onclick="setlminputdata(currentId,textarea);return false;" class="ui-state-default ui-corner-all">
+     <lang en="Apply" fr="Appliquer" />
+     </button>
     </div>
 
     <!-- File textarea -->
@@ -197,44 +205,68 @@
 
     <!-- Specific to securedCookie (TODO push in _Struct.pm) -->
     <div id="content_securedCookie" class="hidden">
-    <input id="securedCookie0" type="radio" name="securedCookie" value="0" onclick="setlmdata('li_L3NlY3VyZWRDb29raWU1','0')" /> <lang en="Non secured cookie" fr="Cookie non sécurisé"/><br/>
-    <input id="securedCookie1" type="radio" name="securedCookie" value="1" onclick="setlmdata('li_L3NlY3VyZWRDb29raWU1','1')" /> <lang en="Secured cookie (HTTPS)" fr="Cookie sécurisé (HTTPS)"/><br/>
-    <input id="securedCookie2" type="radio" name="securedCookie" value="2" onclick="setlmdata('li_L3NlY3VyZWRDb29raWU1','2')" /> Double cookie (HTTP and HTTPS)<br/>
+     <input id="securedCookie0" type="radio" name="securedCookie" value="0" onclick="setlmdata('li_L3NlY3VyZWRDb29raWU1','0')" /> <lang en="Non secured cookie" fr="Cookie non sécurisé"/><br/>
+     <input id="securedCookie1" type="radio" name="securedCookie" value="1" onclick="setlmdata('li_L3NlY3VyZWRDb29raWU1','1')" /> <lang en="Secured cookie (HTTPS)" fr="Cookie sécurisé (HTTPS)"/><br/>
+     <input id="securedCookie2" type="radio" name="securedCookie" value="2" onclick="setlmdata('li_L3NlY3VyZWRDb29raWU1','2')" /> Double cookie (HTTP and HTTPS)<br/>
     </div>
 
     <!-- Integer -->
     <div id="content_int" class="hidden">
-    <input type="text" id="int" onchange="setlmdata(currentId,this.value)"/>
+     <input type="text" id="int" />
+     <br />
+     <button onclick="setlminputdata(currentId,int);return false;" class="ui-state-default ui-corner-all">
+     <lang en="Apply" fr="Appliquer" />
+     </button>
     </div>
 
     <!-- Boolean -->
     <div id="content_bool" class="hidden">
-    <input id="On" type="radio" name="boolean" value="1" onclick="setlmdata(currentId,1)"/> <lang en="On" fr="Activé"/>
-    <input id="Off" type="radio" name="boolean" value="0" onclick="setlmdata(currentId,0)"/> <lang en="Off" fr="Désactivé"/>
+     <input id="On" type="radio" name="boolean" value="1" onclick="setlmdata(currentId,1)"/> <lang en="On" fr="Activé"/>
+     <input id="Off" type="radio" name="boolean" value="0" onclick="setlmdata(currentId,0)"/> <lang en="Off" fr="Désactivé"/>
     </div>
 
     <div id="content_btext" class="hidden">
-    <input type="text" id="btextKey" onchange="setlmtext(currentId,this.value)"/> <input type="text" id="btextValue" onchange="setlmdata(currentId,this.value)"/>
+     <input type="text" id="btextKey" /> <input type="text" id="btextValue" />
+     <br />
+     <button onclick="setlminputtext(currentId,btextKey);setlminputdata(currentId,btextValue);return false;" class="ui-state-default ui-corner-all">
+     <lang en="Apply" fr="Appliquer" />
+     </button>
     </div>
 
     <!-- Rule -->
     <div id="content_rules" class="hidden">
-    <textarea id="rulKey" cols="30" rows="2" onchange="setlmtext(currentId,this.value)"></textarea>&nbsp;<textarea id="rulValue" cols="50" rows="2" onchange="setlmdata(currentId,this.value)"></textarea>
+     <textarea id="rulKey" cols="30" rows="2"></textarea>&nbsp;<textarea id="rulValue" cols="50" rows="2"></textarea>
+     <br />
+     <button onclick="setlminputtext(currentId,rulKey);setlminputdata(currentId,rulValue);return false;" class="ui-state-default ui-corner-all">
+     <lang en="Apply" fr="Appliquer" />
+     </button>
     </div>
 
     <!-- authParams -->
     <div id="content_authParams" class="hidden">
-    <input type="text" id="authText" onchange="reloadAuthParams()"/>
+    <input type="text" id="authText" />
+     <br />
+     <button onclick="reloadAuthParams();return false;" class="ui-state-default ui-corner-all">
+     <lang en="Apply" fr="Appliquer" />
+     </button>
     </div>
 
     <!-- Vhost -->
     <div id="content_vhost" class="hidden">
-     <input type="text" id="vhost" onchange="setlmtext(currentId,this.value)"/>
+     <input type="text" id="vhost" />
+     <br />
+     <button onclick="setlminputtext(currentId,vhost);return false;" class="ui-state-default ui-corner-all">
+     <lang en="Apply" fr="Appliquer" />
+     </button>
     </div>
 
     <!-- samlMetaData -->
     <div id="content_samlMetaData" class="hidden">
-      <input type="text" id="samlMetaData" onchange="setlmtext(currentId,this.value)"/>
+     <input type="text" id="samlMetaData" />
+     <br />
+     <button onclick="setlminputtext(currentId,samlMetaData);return false;" class="ui-state-default ui-corner-all">
+     <lang en="Apply" fr="Appliquer" />
+     </button>
     </div>
 
     <!-- samlAttribute -->
@@ -242,23 +274,27 @@
      <table>
       <tr>
        <td><lang en="Key name" fr="Nom de la clef"/></td>
-       <td><input type="text" id="samlAttributeKey" onchange="setlmsamlattribute(currentId)"/></td>
+       <td><input type="text" id="samlAttributeKey" /></td>
       </tr>
       <tr>
        <td><lang en="Name" fr="Nom"/></td>
-       <td><input type="text" id="samlAttributeName" onchange="setlmsamlattribute(currentId)"/></td>
+       <td><input type="text" id="samlAttributeName" /></td>
        <td><lang en="Mandatory" fr="Obligatoire"/></td>
-       <td><input id="samlAttributeMandatoryOn" type="radio" name="boolean" value="1" onclick="setlmsamlattribute(currentId)"/> <lang en="On" fr="Activé"/>
-           <input id="samlAttributeMandatoryOff" type="radio" name="boolean" value="0" onclick="setlmsamlattribute(currentId)"/> <lang en="Off" fr="Désactivé"/>
+       <td><input id="samlAttributeMandatoryOn" type="radio" name="boolean" value="1" /> <lang en="On" fr="Activé"/>
+           <input id="samlAttributeMandatoryOff" type="radio" name="boolean" value="0" /> <lang en="Off" fr="Désactivé"/>
        </td>
       </tr>
       <tr>
        <td><lang en="Friendly name" fr="Nom alternatif"/></td>
-       <td><input type="text" id="samlAttributeFriendlyName" onchange="setlmsamlattribute(currentId)"/></td>
+       <td><input type="text" id="samlAttributeFriendlyName" /></td>
        <td><lang en="Format" fr="Format"/></td>
-       <td><input type="text" id="samlAttributeFormat" onchange="setlmsamlattribute(currentId)"/></td>
+       <td><input type="text" id="samlAttributeFormat" /></td>
       </tr>
      </table>
+     <br />
+     <button onclick="setlmsamlattribute(currentId);return false;" class="ui-state-default ui-corner-all">
+     <lang en="Apply" fr="Appliquer" />
+     </button>
    </div>
 
     <!-- samlAssertion -->
@@ -266,23 +302,27 @@
      <table>
       <tr>
        <td><lang en="Default" fr="Par défaut"/></td>
-       <td><input id="samlAssertionDefaultOn" type="radio" name="boolean" value="1" onclick="setlmsamlassertion(currentId)"/> <lang en="On" fr="Activé"/>
-           <input id="samlAssertionDefaultOff" type="radio" name="boolean" value="0" onclick="setlmsamlassertion(currentId)"/> <lang en="Off" fr="Désactivé"/>
+       <td><input id="samlAssertionDefaultOn" type="radio" name="boolean" value="1" /> <lang en="On" fr="Activé"/>
+           <input id="samlAssertionDefaultOff" type="radio" name="boolean" value="0" /> <lang en="Off" fr="Désactivé"/>
        </td>
       </tr>
       <tr>
        <td><lang en="Index" fr="Index"/></td>
-       <td><input type="text" size="50" id="samlAssertionIndex" onchange="setlmsamlassertion(currentId)"/></td>
+       <td><input type="text" size="50" id="samlAssertionIndex" /></td>
       </tr>
       <tr>
        <td><lang en="Binding" fr="Binding"/></td>
-       <td><input type="text" size="50" id="samlAssertionBinding" onchange="setlmsamlassertion(currentId)" disabled="disabled"/></td>
+       <td><input type="text" size="50" id="samlAssertionBinding" disabled="disabled"/></td>
       </tr>
       <tr>
        <td><lang en="Location" fr="URL"/></td>
-       <td><input type="text" size="50" id="samlAssertionLocation" onchange="setlmsamlassertion(currentId)"/></td>
+       <td><input type="text" size="50" id="samlAssertionLocation" /></td>
       </tr>
      </table>
+     <br />
+     <button onclick="setlmsamlassertion(currentId);return false;" class="ui-state-default ui-corner-all">
+     <lang en="Apply" fr="Appliquer" />
+     </button>
     </div>
 
     <!-- samlService -->
@@ -290,18 +330,23 @@
      <table>
       <tr>
        <td><lang en="Binding" fr="Binding"/></td>
-       <td><input type="text" size="50" id="samlServiceBinding" onchange="setlmsamlservice(currentId)" disabled="disabled"/></td>
+       <td><input type="text" size="50" id="samlServiceBinding" disabled="disabled"/></td>
       </tr>
       <tr>
        <td><lang en="Location" fr="URL"/></td>
-       <td><input type="text" size="50" id="samlServiceLocation" onchange="setlmsamlservice(currentId)"/></td>
+       <td><input type="text" size="50" id="samlServiceLocation" /></td>
       </tr>
       <tr>
        <td><lang en="Response Location" fr="URL de retour"/></td>
-       <td><input type="text" size="50" id="samlServiceResponseLocation" onchange="setlmsamlservice(currentId)"/></td>
+       <td><input type="text" size="50" id="samlServiceResponseLocation" /></td>
       </tr>
      </table>
+     <br />
+     <button onclick="setlmsamlservice(currentId);return false;" class="ui-state-default ui-corner-all">
+     <lang en="Apply" fr="Appliquer" />
+     </button>
     </div>
+
    </div>
 
    </form>
