@@ -424,6 +424,8 @@ function reloadAuthParams() {
 			var node=$('#li_Z2VuZXJhbFBhcmFtZXRlcnMvYXV0aFBhcmFtcw2 >ul');
 			node.html(data);
 			simpleTreeCollection[0].setTreeNodes(node, true);
+			simpleTreeDefaultJqueryClasses();
+			simpleTreeToggleJqueryClasses();
 		},
 		error:function(xhr, ajaxOptions, thrownError){
 			$('#help_content').html('<h3>Request failed</h3> Error code: '+xhr.status+', '+thrownError);
