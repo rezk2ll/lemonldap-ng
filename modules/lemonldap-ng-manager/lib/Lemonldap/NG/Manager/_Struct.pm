@@ -269,9 +269,14 @@ sub struct {
             # SESSIONS PARAMETERS
             sessionParams => {
                 _nodes => [
-                    qw(sessionStorage grantSessionRule singleSession singleIP singleUserByIP notifyDeleted notifyOther timeout storePassword)
+                    qw(grantSessionRule storePassword timeout n:sessionStorage n:multipleSessions)
                 ],
                 _help          => 'storage',
+
+                grantSessionRule => 'textarea:/grantSessionRule',
+                storePassword    => 'bool:/storePassword',
+                timeout          => 'text:/timeout:timeout:text',
+
                 sessionStorage => {
                     _nodes        => [qw(globalStorage globalStorageOptions)],
                     globalStorage => 'text:/globalStorage',
@@ -280,14 +285,17 @@ sub struct {
                         _js    => 'hashRoot'
                     },
                 },
+
+                multipleSessions => {
+                    _nodes => [
+                        qw(singleSession singleIP singleUserByIP notifyDeleted notifyOther)
+                    ],
                 singleSession    => 'bool:/singleSession',
                 singleIP         => 'bool:/singleIP',
                 singleUserByIP   => 'bool:/singleUserByIP',
                 notifyDeleted    => 'bool:/notifyDeleted',
                 notifyOther      => 'bool:/notifyOther',
-                storePassword    => 'bool:/storePassword',
-                timeout          => 'text:/timeout:timeout:text',
-                grantSessionRule => 'text:/grantSessionRule',
+                },
             },
 
             # OTHER PARAMETERS
