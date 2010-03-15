@@ -24,6 +24,7 @@
 	var text4newVhost='<lang en="Virtual host name" fr="Nom de l\'hôte virtuel" />';
 	var text4newSamlMetaData='<lang en="SAML Metadatas name" fr="Nom des métadatas SAML" />';
 	var text4newSamlAttribute='<lang en="Attribute name" fr="Nom de l\'attribut" />';
+	var text4newFilename='<lang en="Filename" fr="Nom du fichier" />';
 //]]></script>
 <script src="<TMPL_VAR NAME="DIR">/manager.js" type="text/JavaScript"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
@@ -166,7 +167,7 @@
     <div id="content_filearea" class="hidden">
      <textarea readonly id="filearea" cols="80" rows="10"></textarea>
      <p>
-      <button onclick="downloadFile(currentId,'metadata.xml');return false;" class="ui-state-default ui-corner-all">
+      <button onclick="downloadFile(currentId);return false;" class="ui-state-default ui-corner-all">
        <lang en="Download this file" fr="T&eacute;l&eacute;charger ce fichier" />
       </a>
      </p>

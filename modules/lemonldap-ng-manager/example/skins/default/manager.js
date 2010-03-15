@@ -622,9 +622,11 @@ function myB64(s) {
 	return res;
 }
 /* Function to download a file */
-function downloadFile(id,filename){
+function downloadFile(id){
 	var content=lmdata(id).replace(/"/g,'&#34;');
 	var inputs = '';
+	var filename = prompt(text4newFilename,'lemonldap-ng.txt');
+	if(!filename){return false;}
 	inputs+='<input type="hidden" name="filename" value="'+filename+'" />';
 	inputs+='<textarea style="display:none;" name="file">'+content+'</textarea>';
 	jQuery('<form action="'+ scriptname +'" method="post" enctype="multipart/form-data">'+inputs+'</form>')
