@@ -148,23 +148,34 @@ sub struct {
                       || $self->defaultConf()->{userDB};
                     $auth = lc($auth);
                     $udb  = lc($udb);
-                    my %res = qw(authentication 1 userDB 1);
+                    my %res;
                     foreach my $mod ( ( $auth, ( $auth ne $udb ? $udb : () ) ) )
                     {
                         my $tmp = {
                             ldap => ['ldapParams'],
                             ssl  => [qw(ldapParams SSLRequired)],
+                            openid => ['openIdParams'],
                         }->{$mod};
                         if ($tmp) {
                             $res{$_}++ foreach (@$tmp);
                         }
                     }
                     my @u = keys %res;
+
+                    # Add authentication and userDB nodes at the beginning
+                    unshift( @u, "userDB" );
+                    unshift( @u, "authentication" );
+
+                    # Return nodes
                     return \@u;
                 },
+
                 _help          => 'authParams',
+
                 authentication => 'text:/authentication:authParams:authParams',
                 userDB         => 'text:/userDB:authParams:authParams',
+
+                # LDAP
                 ldapParams     => {
                     _nodes => [
 			qw(n:ldapConnection n:ldapFilters n:ldapGroups n:ldapPassword)
@@ -215,7 +226,14 @@ sub struct {
  
                 },
 
+                # SSL
                 SSLRequired => 'bool:/SSLRequired',
+
+                # OpenID
+                openIdParams => {
+                    _nodes       => [ qw(openIdSecret) ],
+                    openIdSecret => 'text:/openIdSecret',
+                }
             },
 
             # LOGS PARAMETERS
@@ -846,6 +864,9 @@ sub testStruct {
         samlSPSSODescriptorNameIDFormatTransient        => $boolean,
         samlIDPSSODescriptorManageNameIDServiceHTTP     => $testNotDefined,
         samlIDPSSODescriptorManageNameIDServiceSOAP     => $testNotDefined,
+
+        # OpenID
+        openIdSecret => $testNotDefined,
     };
 }
 
