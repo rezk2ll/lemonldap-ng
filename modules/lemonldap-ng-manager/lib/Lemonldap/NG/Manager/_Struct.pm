@@ -146,10 +146,20 @@ sub struct {
                       || $self->defaultConf()->{authentication};
                     my $udb = $self->conf->{userDB}
                       || $self->defaultConf()->{userDB};
+                    my $pdb = $self->conf->{passwordDB}
+                      || $self->defaultConf()->{passwordDB};
                     $auth = lc($auth);
                     $udb  = lc($udb);
+                    $pdb  = lc($pdb);
                     my %res;
-                    foreach my $mod ( ( $auth, ( $auth ne $udb ? $udb : () ) ) )
+
+                    foreach my $mod (
+                        (
+                            $auth,
+                            ( $udb ne ( $auth or $pdb ) ? $udb : () ),
+                            ( $pdb ne ( $auth or $udb ) ? $pdb : () )
+                        )
+                      )
                     {
                         my $tmp = {
                             ldap => ['ldapParams'],
@@ -164,7 +174,8 @@ sub struct {
                     }
                     my @u = keys %res;
 
-                    # Add authentication and userDB nodes at the beginning
+              # Add authentication, userDB and passwordDB nodes at the beginning
+                    unshift( @u, "passwordDB" );
                     unshift( @u, "userDB" );
                     unshift( @u, "authentication" );
 
@@ -176,6 +187,7 @@ sub struct {
 
                 authentication => 'text:/authentication:authParams:authParams',
                 userDB         => 'text:/userDB:authParams:authParams',
+                passwordDB     => 'text:/passwordDB:authParams:authParams',
 
                 # LDAP
                 ldapParams     => {
@@ -342,9 +354,8 @@ sub struct {
 
                 passwordManagement => {
                     _nodes => [
-                        qw(passwordDB SMTPServer mailUrl mailFrom mailSubject mailBody mailConfirmSubject mailConfirmBody randomPasswordRegexp)
+                        qw(SMTPServer mailUrl mailFrom mailSubject mailBody mailConfirmSubject mailConfirmBody randomPasswordRegexp)
                     ],
-                    passwordDB           => 'text:/passwordDB',
                     SMTPServer           => 'text:/SMTPServer',
                     mailUrl              => 'text:/mailUrl',
                     mailFrom             => 'text:/mailFrom',
