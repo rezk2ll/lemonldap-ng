@@ -217,3 +217,23 @@ div.title img {
   border: 0px;
 }
 
+/* -------------------------------------------------------------------------- */
+/* Applications layer                                                         */
+/* -------------------------------------------------------------------------- */
+
+#appslist ul.category,
+#appslist ul.category li {
+  margin: 0px;
+  padding: 0px;
+  list-style-type: none;
+}
+
+#appslist ul.cat-level-1 li.catname span {
+  display: none;
+}
+
+#appslist ul.cat-level-2,
+#appslist ul.cat-level-2 li {
+  display: list-item;
+}
+
