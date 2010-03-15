@@ -155,6 +155,7 @@ sub struct {
                             ldap => ['ldapParams'],
                             ssl  => [qw(ldapParams SSLRequired)],
                             openid => ['openIdParams'],
+                            twitter => ['twitterParams'],
                         }->{$mod};
                         if ($tmp) {
                             $res{$_}++ foreach (@$tmp);
@@ -231,9 +232,17 @@ sub struct {
 
                 # OpenID
                 openIdParams => {
-                    _nodes       => [ qw(openIdSecret) ],
+                    _nodes       => [qw(openIdSecret)],
                     openIdSecret => 'text:/openIdSecret',
-                }
+                },
+
+                # Twitter
+                twitterParams => {
+                    _nodes     => [qw(twitterKey twitterSecret twitterAppName)],
+                    twitterKey => 'text:/twitterKey',
+                    twitterSecret  => 'text:/twitterSecret',
+                    twitterAppName => 'text:/twitterAppName',
+                },
             },
 
             # LOGS PARAMETERS
@@ -867,6 +876,11 @@ sub testStruct {
 
         # OpenID
         openIdSecret => $testNotDefined,
+
+        # Twitter
+        twitterKey     => $testNotDefined,
+        twitterSecret  => $testNotDefined,
+        twitterAppName => $testNotDefined,
     };
 }
 
