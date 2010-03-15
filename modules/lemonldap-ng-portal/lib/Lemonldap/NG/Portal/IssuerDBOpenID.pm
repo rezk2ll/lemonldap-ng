@@ -17,6 +17,10 @@ sub issuerDBInit {
     my $self = shift;
     eval { require Net::OpenID::Server };
     $self->abort( 'Unable to load Net::OpenID::Server', $@ ) if ($@);
+    $self->lmLog(
+'OpenID provider module is not fully functionnal now, use for test purpose only',
+        'warn'
+    );
     return PE_OK;
 }
 
