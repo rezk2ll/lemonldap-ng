@@ -161,6 +161,16 @@ else {
         );
     }
 
+    # Adapt template for OpenID
+    if ( $portal->get_module("auth") =~ /openid/i ) {
+        %templateParams = (
+            %templateParams,
+            DISPLAY_RESETPASSWORD => 0,
+            DISPLAY_FORM          => 0,
+            DISPLAY_OPENID_FORM   => 1,
+        );
+    }
+
         # Adapt template if external authentication error
     # or logout is OK
     if (   $portal->{error} == PE_BADCERTIFICATE
@@ -172,18 +182,9 @@ else {
             %templateParams,
                 DISPLAY_RESETPASSWORD => 0,
                 DISPLAY_FORM          => 0,
+            DISPLAY_OPENID_FORM   => 0,
             PORTAL_URL            => $portal->{portal},
     );
-    }
-
-    # Adapt template for OpenID
-    if ( $portal->get_module("auth") =~ /openid/i ) {
-        %templateParams = (
-            %templateParams,
-            DISPLAY_RESETPASSWORD => 0,
-            DISPLAY_FORM          => 0,
-            DISPLAY_OPENID_FORM   => 1,
-        );
     }
 }
 
