@@ -5,8 +5,10 @@ package Lemonldap::NG::Common::Conf::SAML::Metadata;
 
 use strict;
 use warnings;
+use Crypt::OpenSSL::RSA;
 use Data::Dumper;
 use HTML::Template;
+use MIME::Base64;
 use XML::Simple;
 use Safe;
 
@@ -136,13 +138,11 @@ sub serviceToXML {
       samlOrganizationURL
       samlSPSSODescriptorAuthnRequestsSigned
       samlSPSSODescriptorProtocolSupportEnumeration
-      samlSPSSODescriptorKeyDescriptorSigning
       samlSPSSODescriptorNameIDFormatX509SubjectName
       samlSPSSODescriptorNameIDFormatPersistent
       samlSPSSODescriptorNameIDFormatTransient
       samlIDPSSODescriptorWantAuthnRequestsSigned
       samlIDPSSODescriptorProtocolSupportEnumeration
-      samlIDPSSODescriptorKeyDescriptorSigning
       samlIDPSSODescriptorNameIDFormatX509SubjectName
       samlIDPSSODescriptorNameIDFormatPersistent
       samlIDPSSODescriptorNameIDFormatTransient
@@ -150,6 +150,29 @@ sub serviceToXML {
 
     foreach (@param_auto) {
         $template->param( $_, $conf->{$_} );
+    }
+
+    # Format public keys.
+    my @param_keys = qw(
+      samlSPSSODescriptorKeyDescriptorSigning
+      samlIDPSSODescriptorKeyDescriptorSigning
+    );
+
+    foreach (@param_keys) {
+        my $str = '';
+        if (defined $conf->{$_} && length $conf->{$_} gt 0) {
+            if ( my $rsa_pub = Crypt::OpenSSL::RSA->new_public_key($conf->{$_}) )
+            {
+                my @params = $rsa_pub->get_key_parameters();
+                my $mod = encode_base64($params[0]->to_bin());
+                my $exp = encode_base64($params[1]->to_bin());
+                $str  = '<RSAKeyValue xmlns="http://www.w3.org/2000/09/xmldsig#">' . "\n\t";
+                $str .= '<Modulus>' . $mod . '</Modulus>' . "\n\t";
+                $str .= '<Exponent>' . $exp . '</Exponent>' . "\n";
+                $str .= '</RSAKeyValue>';
+            }
+        }
+        $template->param( $_, $str );
     }
 
     # Rebuilded parameters for SAML services
