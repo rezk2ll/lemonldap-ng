@@ -154,6 +154,7 @@ sub struct {
                         my $tmp = {
                             ldap => ['ldapParams'],
                             ssl     => [qw(ldapParams sslParams)],
+                            cas     => ['casParams'],
                             openid => ['openIdParams'],
                             twitter => ['twitterParams'],
                         }->{$mod};
@@ -233,6 +234,16 @@ sub struct {
                     SSLVar       => 'text:/SSLVar',
                     SSLLDAPField => 'text:/SSLLDAPField',
                     SSLRequire   => 'bool:/SSLRequire',
+                },
+
+                # OpenID
+                casParams => {
+                    _nodes =>
+                      [qw(CAS_url CAS_loginUrl CAS_validationUrl CAS_CAFile)],
+                    CAS_url           => 'text:/CAS_url',
+                    CAS_loginUrl      => 'text:/CAS_loginUrl',
+                    CAS_validationUrl => 'text:/CAS_validationUrl',
+                    CAS_CAFile        => 'text:/CAS_CAFile',
                 },
 
                 # OpenID
@@ -890,6 +901,12 @@ sub testStruct {
         SSLVar       => $testNotDefined,
         SSLLDAPField => $testNotDefined,
         SSLRequire   => $boolean,
+
+        # CAS
+        CAS_url           => $testNotDefined,
+        CAS_loginUrl      => $testNotDefined,
+        CAS_validationUrl => $testNotDefined,
+        CAS_CAFile        => $testNotDefined,
 
         # OpenID
         openIdSecret => $testNotDefined,
