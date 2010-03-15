@@ -146,9 +146,10 @@ sub confNode {
         my $h = $self->keyToH( $target, $self->conf );
         unless ($h) {
             my $tmp;
-            unless ( ($tmp) = ( $target =~ /^\/?(.*)\// )
+            unless ( ($tmp) = ( $target =~ /^\/?([^\/]*)/ )
                 and $h = $self->subDefaultConf()->{$tmp} )
             {
+                $self->lmLog( "Try to get default conf for $tmp", 'debug' );
                 $self->lmLog( "$target hash is not defined in configuration",
                     'error' );
                 return;

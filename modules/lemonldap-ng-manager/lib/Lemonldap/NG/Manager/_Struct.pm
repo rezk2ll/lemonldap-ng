@@ -98,7 +98,7 @@ sub struct {
         ######################
         generalParameters => {
             _nodes => [
-                qw(portalParams n:authParams logParams cookieParams sessionParams n:advancedParams)
+                qw(n:portalParams n:authParams n:logParams n:cookieParams n:sessionParams n:advancedParams)
             ],
             _help => 'default',
 
@@ -165,6 +165,8 @@ sub struct {
                             ldap => ['ldapParams'],
                             ssl     => [qw(ldapParams sslParams)],
                             cas     => ['casParams'],
+                            remote  => ['remoteParams'],
+                            proxy   => ['proxyParams'],
                             openid => ['openIdParams'],
                             twitter => ['twitterParams'],
                         }->{$mod};
@@ -248,7 +250,7 @@ sub struct {
                     SSLRequire   => 'bool:/SSLRequire',
                 },
 
-                # OpenID
+                # CAS
                 casParams => {
                     _nodes =>
                       [qw(CAS_url CAS_loginUrl CAS_validationUrl CAS_CAFile)],
@@ -256,6 +258,28 @@ sub struct {
                     CAS_loginUrl      => 'text:/CAS_loginUrl',
                     CAS_validationUrl => 'text:/CAS_validationUrl',
                     CAS_CAFile        => 'text:/CAS_CAFile',
+                },
+
+                # Remote
+                remoteParams => {
+                    _nodes => [
+                        qw(remotePortal remoteGlobalStorage remoteGlobalStorageOptions)
+                    ],
+                    remotePortal               => 'text:/remotePortal',
+                    remoteGlobalStorage        => 'text:/remoteGlobalStorage',
+                    remoteGlobalStorageOptions => {
+                        _nodes => ['hash:/remoteGlobalStorageOptions'],
+                        _js    => 'hashRoot'
+                    },
+                },
+
+                # Proxy
+                proxyParams => {
+                    _nodes =>
+                      [qw(soapAuthService remoteCookieName soapSessionService)],
+                    soapAuthService    => 'text:/soapAuthService',
+                    remoteCookieName   => 'text:/remoteCookieName',
+                    soapSessionService => 'text:/soapSessionService',
                 },
 
                 # OpenID
@@ -919,6 +943,22 @@ sub testStruct {
         CAS_validationUrl => $testNotDefined,
         CAS_CAFile        => $testNotDefined,
 
+        # Remote
+        remotePortal        => $testNotDefined,
+        remoteGlobalStorage => {
+            test    => qr/^[\w:]+$/,
+            msgFail => 'Bad module name',
+        },
+        remoteGlobalStorageOptions => {
+            keyTest    => qr/^\w+$/,
+            keyMsgFail => 'Bad parameter',
+        },
+
+        # Proxy
+        soapAuthService    => $testNotDefined,
+        remoteCookieName   => $testNotDefined,
+        soapSessionService => $testNotDefined,
+
         # OpenID
         openIdSecret => $testNotDefined,
 
@@ -961,6 +1001,7 @@ sub defaultConf {
         portalSkin         => 'pastel',
         portalUserAttr     => '_user',
         protection         => 'none',
+        remoteGlobalStorage   => 'Lemonldap::NG::Common::Apache::Session::SOAP',
         securedCookie      => '0',
         singleSession      => '0',
         singleIP           => '0',
@@ -1055,6 +1096,10 @@ sub subDefaultConf {
     return {
         locationRules                     => { default     => 'deny' },
         exportedHeaders                   => { 'Auth-User' => '$uid' },
+        remoteGlobalStorageOptions => {
+            'proxy' => 'https://remote/index.pl/sessions',
+            'ns'    => 'https://remote/Lemonldap/NG/Common/CGI/SOAPService',
+        },
         samlIDPMetaDataXML                => {             {} },
         samlIDPMetaDataExportedAttributes => { 'uid'       => '0;uid;;' },
         samlIDPMetaDataOptions            => {
