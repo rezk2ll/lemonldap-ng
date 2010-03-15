@@ -184,7 +184,7 @@ sub struct {
 
 			ldapFilters => {
                         _nodes =>
-                          [ qw(LDAPFilter AuthLDAPFilter mailLDAPFilter) ],
+                          [qw(LDAPFilter AuthLDAPFilter mailLDAPFilter)],
 				LDAPFilter => 'text:/LDAPFilter',
 				AuthLDAPFilter => 'text:/AuthLDAPFilter',
 				mailLDAPFilter => 'text:/mailLDAPFilter',
@@ -200,13 +200,15 @@ sub struct {
                           'text:/ldapGroupAttributeName',
                         ldapGroupAttributeNameUser =>
                           'text:/ldapGroupAttributeNameUser',
+                        ldapGroupAttributeNameSearch =>
+                          'text:/ldapGroupAttributeNameSearch',
 				ldapGroupRecursive => 'bool:/ldapGroupRecursive',
                         ldapGroupAttributeNameGroup =>
                           'text:/ldapGroupAttributeNameGroup',
 			},
 
 			ldapPassword => {
-                        _nodes => [ qw(ldapPpolicyControl ldapSetPassword) ],
+                        _nodes => [qw(ldapPpolicyControl ldapSetPassword)],
 				ldapPpolicyControl => 'bool:/ldapPpolicyControl',
 				ldapSetPassword => 'bool:/ldapSetPassword',
 			},
@@ -575,6 +577,9 @@ sub testStruct {
         SMTPServer           => $testNotDefined,
         cookieExpiration     => $testNotDefined,
         notificationStorage  => $testNotDefined,
+        mailUrl              => $testNotDefined,
+        mailConfirmSubject   => $testNotDefined,
+        mailConfirmBody      => $testNotDefined,
         authentication       => {
             test    => qr/^[a-zA-Z][\w\:]*$/,
             msgFail => 'Bad module name',
@@ -655,6 +660,18 @@ sub testStruct {
                 return 1;
             },
         },
+        ldapPpolicyControl           => $boolean,
+        ldapSetPassword              => $boolean,
+        mailLDAPFilter               => $testNotDefined,
+        LDAPFilter                   => $testNotDefined,
+        AuthLDAPFilter               => $testNotDefined,
+        ldapGroupRecursive           => $boolean,
+        ldapGroupObjectClass         => $testNotDefined,
+        ldapGroupBase                => $testNotDefined,
+        ldapGroupAttributeName       => $testNotDefined,
+        ldapGroupAttributeNameUser   => $testNotDefined,
+        ldapGroupAttributeNameSearch => $testNotDefined,
+        ldapGroupAttributeNameGroup  => $testNotDefined,
         locationRules => {
             keyTest => qr/^[a-zA-Z](?:[\w\-\.]*\w)?$/,
             msgFail => 'Bad virtual host name',
