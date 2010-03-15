@@ -159,6 +159,10 @@ function setlmdata(id,v){
 }
 function setlmfile(id,input){
 	var inputname=$(input).attr('id');
+	if($(input).attr('value').length==0){
+		alert('No '+inputname);
+		return false;
+	}
 	$("#"+inputname+"-loadimg")
 	.ajaxStart(function(){
 		$(this).show();
