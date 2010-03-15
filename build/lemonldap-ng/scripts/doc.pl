@@ -50,6 +50,7 @@ my $docs = {
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/AuthSAML'                      => '4.5-SAML-authentication-backend.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocLA?language=fr'             => '4.5-Liberty-Alliance-authentication-backend-fr.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/AuthOpenID'                      => '4.5-OpenID-authentication-backend.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/AuthTwitter'                      => '4.5-Twitter-authentication-backend.html',
     # User backends
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/UserDBLDAP'                    => '4.6-LDAP-user-backend.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/UserDBNull'                    => '4.6-Null-user-backend.html',
@@ -223,6 +224,7 @@ while ( my ( $url, $file ) = each %$docs ) {
 	s#/xwiki/bin/view/NG/AuthMulti#4.5-Multiple-authentication-backend.html#g;
 	s#/xwiki/bin/view/NG/AuthSAML#4.5-SAML-authentication-backend.html#g;
 	s#/xwiki/bin/view/NG/AuthOpenID#4.5-OpenID-authentication-backend.html#g;
+	s#/xwiki/bin/view/NG/AuthTwitter#4.5-Twitter-authentication-backend.html#g;
 	s#/xwiki/bin/view/NG/UserDBLDAP#4.6-LDAP-user-backend.html#g;
 	s#/xwiki/bin/view/NG/UserDBNull#4.6-Null-user-backend.html#g;
 	s#/xwiki/bin/view/NG/UserDBMulti#4.6-Multiple-user-backend.html#g;
