@@ -569,6 +569,42 @@ sub get_user {
     return "";
 }
 
+## @method string get_module(string type)
+# Return current used module
+# @param type auth/user/password/issuer
+# @return module name
+sub get_module {
+    my ( $self, $type ) = splice @_;
+
+    if ( $type =~ /auth/i ) {
+        if ( defined $self->{_multi}->{stack}->[0] ) {
+            return $self->{_multi}->{stack}->[0]->[0]->{n};
+        }
+        else {
+            return $self->{authentication};
+        }
+    }
+
+    if ( $type =~ /user/i ) {
+        if ( defined $self->{_multi}->{stack}->[1] ) {
+            return $self->{_multi}->{stack}->[1]->[0]->{n};
+        }
+        else {
+            return $self->{userDB};
+        }
+    }
+
+    if ( $type =~ /password/i ) {
+        return $self->{passwordDB};
+    }
+
+    if ( $type =~ /issuer/i ) {
+        return $self->{issuerDB};
+    }
+
+    return;
+}
+
 ##@method private Safe safe()
 # Provide the security jail.
 #@return Safe object
@@ -951,12 +987,9 @@ sub existingSession {
 # @return Lemonldap::NG::Portal constant
 sub issuerDBInit {
     my $self = shift;
-    my $issuerDB;
 
     # Get the current issuer module
-    $issuerDB = $self->{issuerDB};
-
-    $self->{sessionInfo}->{_issuerDB} = $issuerDB;
+    $self->{sessionInfo}->{_issuerDB} = $self->get_module("issuer");
 
     return $self->SUPER::issuerDBInit();
 }
@@ -977,17 +1010,9 @@ sub issuerDBInit {
 #@return Lemonldap::NG::Portal constant
 sub setAuthSessionInfo {
     my $self = shift;
-    my $auth;
 
     # Get the current authentication module
-    if ( defined $self->{_multi}->{stack}->[0] ) {
-        $auth = $self->{_multi}->{stack}->[0]->[0]->{n};
-    }
-    else {
-        $auth = $self->{authentication};
-    }
-
-    $self->{sessionInfo}->{_auth} = $auth;
+    $self->{sessionInfo}->{_auth} = $self->get_module("auth");
 
     return $self->SUPER::setAuthSessionInfo();
 }
@@ -998,12 +1023,9 @@ sub setAuthSessionInfo {
 # @return Lemonldap::NG::Portal constant
 sub passwordDBInit {
     my $self = shift;
-    my $passwordDB;
 
     # Get the current password module
-    $passwordDB = $self->{passwordDB};
-
-    $self->{sessionInfo}->{_passwordDB} = $passwordDB;
+    $self->{sessionInfo}->{_passwordDB} = $self->get_module("password");
 
     return $self->SUPER::passwordDBInit();
 }
@@ -1016,17 +1038,9 @@ sub passwordDBInit {
 #@return Lemonldap::NG::Portal constant
 sub setSessionInfo {
     my $self = shift;
-    my $userDB;
 
     # Get the current user module
-    if ( defined $self->{_multi}->{stack}->[1] ) {
-        $userDB = $self->{_multi}->{stack}->[1]->[0]->{n};
-    }
-    else {
-        $userDB = $self->{userDB};
-    }
-
-    $self->{sessionInfo}->{_userDB} = $userDB;
+    $self->{sessionInfo}->{_userDB} = $self->get_module("user");
 
     # Store IP address
     $self->{sessionInfo}->{ipAddr} = $ENV{REMOTE_ADDR};

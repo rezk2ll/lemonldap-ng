@@ -117,7 +117,7 @@ sub extractFormInfo {
 sub setAuthSessionInfo {
     my $self = shift;
 
-    # TODO
+    $self->{sessionInfo}->{'_user'} = $self->{user};
 
     PE_OK;
 }

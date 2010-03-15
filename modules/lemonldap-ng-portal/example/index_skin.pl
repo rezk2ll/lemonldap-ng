@@ -175,6 +175,16 @@ else {
             PORTAL_URL            => $portal->{portal},
     );
     }
+
+    # Adapt template for OpenID
+    if ( $portal->get_module("auth") =~ /openid/i ) {
+        %templateParams = (
+            %templateParams,
+            DISPLAY_RESETPASSWORD => 0,
+            DISPLAY_FORM          => 0,
+            DISPLAY_OPENID_FORM   => 1,
+        );
+    }
 }
 
 # HTML template creation

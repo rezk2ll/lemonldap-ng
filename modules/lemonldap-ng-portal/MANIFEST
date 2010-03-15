@@ -63,6 +63,7 @@ example/skins/common/mail_footer.tpl
 example/skins/common/mail_header.tpl
 example/skins/common/mail_password.tpl
 example/skins/common/ok.png
+example/skins/common/openid-16x16.gif
 example/skins/common/portal.js
 example/skins/common/saml2-metadata.tpl
 example/skins/common/stop.png

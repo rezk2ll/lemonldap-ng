@@ -44,6 +44,31 @@
         </form>
         </TMPL_IF>
 
+	<TMPL_IF NAME="DISPLAY_OPENID_FORM">
+	<form action="#" method="post" class="login">
+
+		<h3><lang en="Please enter your OpenID login" fr="Entrez votre identifiant OpenID"/></h3>
+		
+		<table>
+		<tr>
+		<td><input name="openIdUrl" type="text" /></td>
+		</tr>
+		<tr><td>
+		<div class="buttons">
+		<button type="reset" class="negative" tabindex="4">
+			<img src="/skins/common/cancel.png" alt="" />
+			<lang en="Cancel" fr="Annuler" />
+		</button>
+		<button type="submit" class="positive" tabindex="3">
+			<img src="/skins/common/accept.png" alt="" />
+			<lang en="Connect" fr="Se connecter" />
+		</button>
+		</div></td></tr>
+                </table>
+        </form>
+        </TMPL_IF>
+
+
 	<TMPL_INCLUDE NAME="password.tpl">
 
 	<TMPL_IF NAME="PORTAL_URL">
