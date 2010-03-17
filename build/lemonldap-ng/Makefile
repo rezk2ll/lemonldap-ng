@@ -348,7 +348,10 @@ install_portal_site:	install_conf_dir
 	fi
 	@$(PERL) -i -pe 's#__BINDIR__#$(BINDIR)#g;' $(RCRONDIR)/lemonldap-ng
 	# Clean SVN files
-	@rm -rf $$(find ${RPORTALDIR} $(RPORTALSKINSDIR) $(RLASPPORTALDIR) $(RCRONDIR) $(RCONFDIR) -type d -name .svn)
+	@rm -rf $$(find ${RPORTALDIR} $(RPORTALSKINSDIR) $(RCRONDIR) $(RCONFDIR) -type d -name .svn)
+	@if [ "$(WITHLA)" -eq "1" ]; then \
+		rm -rf $$(find $(RLASPPORTALDIR) -type d -name .svn); \
+	fi
 
 install_handler_site:	install_conf_dir
 	# Handler install

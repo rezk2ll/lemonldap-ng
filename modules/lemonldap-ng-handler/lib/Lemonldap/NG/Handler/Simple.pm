@@ -612,18 +612,19 @@ sub conditionSub {
 sub defaultValuesInit {
     my ( $class, $args ) = splice @_;
 
-    # Other values
+    # Warning: first start of handler load values from MyHanlder.pm
+    # and lemonldap-ng.ini
+    # These values should be erased by global configuration!
     $cookieName  = $args->{cookieName}  || $cookieName  || 'lemonldap';
     $whatToTrace = $args->{whatToTrace} || $whatToTrace || 'uid';
     $whatToTrace =~ s/\$//g;
-    $https = $args->{https} unless defined($https);
-    $https = 1 unless defined($https);
+    $https = defined($https) ? ( $https eq $args->{https} ? $https : $args->{https} ) : 1;
     $args->{securedCookie} = 1 unless defined( $args->{securedCookie} );
     $cookieName .= 'http' if ( $args->{securedCookie} == 2 and $https == 0 );
-    $port             = $args->{port} || 0 unless defined($port);
+    $port = defined($port) ? ( $port eq $args->{port} ? $port : $args->{port} ) : 0;
     $customFunctions  = $args->{customFunctions};
-    $cda              = $args->{cda} || 0 unless defined($cda);
-    $httpOnly         = $args->{httpOnly} || 1 unless defined($httpOnly);
+    $cda = defined($cda) ? ( $cda eq $args->{cda} ? $cda : $args->{cda} ) : 0;
+    $httpOnly = defined($httpOnly) ? ( $httpOnly eq $args->{httpOnly} ? $httpOnly : $args->{httpOnly} ) : 0;
     $cookieExpiration = $args->{cookieExpiration} || $cookieExpiration;
     1;
 }

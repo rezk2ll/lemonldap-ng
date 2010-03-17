@@ -351,8 +351,10 @@ sub struct {
             # OTHER PARAMETERS
             advancedParams => {
                 _nodes => [
-                    qw(n:soap n:notifications n:passwordManagement n:security)
+                    qw(customFunctions n:soap n:notifications n:passwordManagement n:security n:redirection)
                 ],
+
+                customFunctions => 'text:/customFunctions',
 
                 soap => {
                     _nodes         => [qw(Soap exportedAttr trustedDomains)],
@@ -389,12 +391,17 @@ sub struct {
                 },
 
                 security => {
-                    _nodes      => [qw(https userControl portalForceAuthn)],
-                    https       => 'bool:/https',
+                    _nodes      => [qw(userControl portalForceAuthn)],
                     userControl => 'text:/userControl:userControl:text',
                     portalForceAuthn =>
                       'bool:/portalForceAuthn:portalForceAuthn:bool',
                 },
+
+                redirection => {
+                    _nodes => [qw(https port)],
+                    https  => 'bool:/https',
+                    port   => 'int:/port',
+                  }
 
             }
         },
@@ -673,6 +680,7 @@ sub testStruct {
             test    => qr/^[a-zA-Z]\w*$/,
             msgFail => 'Bad cookie name',
         },
+        customFunctions => $testNotDefined,
         domain => {
             test    => qr/^\.?\w+(?:\.[a-zA-Z]\w*)*(?:\.[a-zA-Z]+)$/,
             msgFail => 'Bad domain',
@@ -809,6 +817,10 @@ sub testStruct {
         },
         notifyDeleted => $boolean,
         notifyOther   => $boolean,
+        port          => {
+            test    => qr/^\d*$/,
+            msgFail => 'Bad port number'
+        },
         portal        => {
             test    => qr/^https?:\/\/\S+$/,
             msgFail => 'Bad portal value',
