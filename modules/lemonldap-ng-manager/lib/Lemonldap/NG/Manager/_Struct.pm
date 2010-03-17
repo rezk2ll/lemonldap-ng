@@ -1026,7 +1026,7 @@ sub defaultConf {
         timeout             => '7200',
         userControl         => '^[\w\.\-@]+$',
         userDB              => 'LDAP',
-        passwordDB          => 'Null',
+        passwordDB          => 'LDAP',
         useXForwardedForIP  => '0',
         whatToTrace         => '$uid',
         ########
