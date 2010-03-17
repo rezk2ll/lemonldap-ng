@@ -312,7 +312,7 @@
       </tr>
       <tr>
        <td><lang en="Binding" fr="Binding"/></td>
-       <td><input type="text" size="50" id="samlAssertionBinding" disabled="disabled"/></td>
+       <td><select id="samlAssertionBinding"></select></td>
       </tr>
       <tr>
        <td><lang en="Location" fr="URL"/></td>
@@ -330,7 +330,7 @@
      <table>
       <tr>
        <td><lang en="Binding" fr="Binding"/></td>
-       <td><input type="text" size="50" id="samlServiceBinding" disabled="disabled"/></td>
+       <td><select id="samlServiceBinding"></select></td>
       </tr>
       <tr>
        <td><lang en="Location" fr="URL"/></td>

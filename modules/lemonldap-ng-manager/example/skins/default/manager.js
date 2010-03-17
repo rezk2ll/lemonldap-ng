@@ -337,7 +337,6 @@ function filearea(id) {
 	currentId=id;
 	$('#filearea').attr('value',lmdata(id));
 	display('filearea',lmtext(id));
-	$('#fileloading').hide();
 }
 function samlAssertion(id) {
 	currentId=id;
@@ -348,7 +347,11 @@ function samlAssertion(id) {
 		$('#samlAssertionDefaultOff').attr('checked',true);
 	}
 	$('#samlAssertionIndex').attr('value',t[1]);
-	$('#samlAssertionBinding').attr('value',t[2]);
+	formateSelect('samlAssertionBinding',[
+		'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact',
+		'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST',
+		'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect'
+		],t[2]);
 	$('#samlAssertionLocation').attr('value',t[3]);
 	display('samlAssertion',lmtext(id));
 }
@@ -386,7 +389,10 @@ function samlMetaData(id){
 function samlService(id) {
 	currentId=id;
 	var t=lmdata(id).split(';');
-	$('#samlServiceBinding').attr('value',t[0]);
+	formateSelect('samlServiceBinding',[
+		'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect',
+		'urn:oasis:names:tc:SAML:2.0:bindings:SOAP'
+		],t[0]);
 	$('#samlServiceLocation').attr('value',t[1]);
 	$('#samlServiceResponseLocation').attr('value',t[2]);
 	display('samlService',lmtext(id));
@@ -649,5 +655,15 @@ function downloadFile(id){
 	inputs+='<textarea style="display:none;" name="file">'+content+'</textarea>';
 	jQuery('<form action="'+ scriptname +'" method="post" enctype="multipart/form-data">'+inputs+'</form>')
 	.appendTo('body').submit().remove();
+}
+/* Could not be called directly in _Struct.pm, required values */
+function formateSelect(id,values,selectedValue) {
+	var options='';
+	for(i=0;i<values.length;i++){
+		options+='<option value="'+values[i]+'"';
+		if(selectedValue==values[i]){options+=' selected';}
+		options+='>'+values[i]+'</option>';
+	}
+	$('#'+id).empty().append(options);
 }
 
