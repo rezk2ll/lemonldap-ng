@@ -6,6 +6,7 @@
         <img src="/skins/<TMPL_VAR NAME="SKIN">/images/logo-info.png" />
         <lang en="Information" fr="Information" />
       </div>
+      <hr class="solid" />
       <p id="timer" class="text-error"><lang en="You'll be redirected in 10 seconds" fr="Vous allez &ecirc;tre redirig&eacute;(e) automatiquement dans 10 secondes"/></p>
       <div id="content-all-info">
         <TMPL_VAR NAME="MSG">

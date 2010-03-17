@@ -6,26 +6,28 @@
         <img src="/skins/<TMPL_VAR NAME="SKIN">/images/logo-ok.png" />
         <TMPL_VAR NAME="AUTH_ERROR">
       </div>
+      <hr class="solid" />
       <p>
         <span class="text-error"><lang en="Connected as" fr="Connect&eacute; en tant que" />: <u><TMPL_VAR NAME="AUTH_USER"></u></span>
-        <TMPL_IF NAME="DISPLAY_PASSWORD">
-        -
-        <a href="#password"><lang en="Reset password" fr="Changer de mot de passe" /></span></a>
-        </TMPL_IF>
-        <TMPL_IF NAME="DISPLAY_LOGOUT">
-        -
-        <a href="#logout"><lang en="Logout" fr="Se d&eacute;connecter" /></a>
-        </TMPL_IF>
       </p>
-      <p><lang en="Here are applications your are allowed to access to." fr="Voici la liste des applications auxquelles vous &egrave;tes autoris&eacute;es &agrave; acc&eacute;der." /></p>
       <TMPL_IF NAME="DISPLAY_APPSLIST">
       <div id="content-all-info">
+        <span class="text-label"><lang en="Choose an application your are allowed to access to" fr="Choisissez une application &agrave; laquelle vous &egrave;tes autoris&eacute;es &agrave; acc&eacute;der" /> :</span>
+        <p></p>
         <div id="appslist">
           <TMPL_VAR NAME="APPSLIST_MENU">
-          <!-- <TMPL_VAR NAME="APPSLIST_DESC"> -->
+          <TMPL_VAR NAME="APPSLIST_DESC">
         </div>
       </div>
       </TMPL_IF>
+      <ul class="nostyle" style="float:left;">
+        <TMPL_IF NAME="DISPLAY_PASSWORD">
+        <li><img src="/skins/<TMPL_VAR NAME="SKIN">/images/arrow.png" /><a href="#password"><lang en="Reset password" fr="Changer de mot de passe" /></a></li>
+        </TMPL_IF>
+        <TMPL_IF NAME="DISPLAY_LOGOUT">
+        <li><img src="/skins/<TMPL_VAR NAME="SKIN">/images/arrow.png" /><a href="#logout"><lang en="Logout" fr="Se d&eacute;connecter" /></a></li>
+        </TMPL_IF>
+      </ul>
     </div>
   </div>
 

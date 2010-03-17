@@ -136,6 +136,22 @@ div.title img {
   height: 322px;
 }
 
+#content-all ul.nostyle,
+#content-all ul.nostyle li {
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+#content-all table {
+  margin: 0px;
+  padding: 0px;
+}
+
+#content-all table tr td {
+  vertical-align: top;
+}
+
 #content-all-info {
   padding: 10px;
   margin-bottom: 15px;
@@ -169,7 +185,7 @@ div.title img {
   font-size: 1.5em;
 }
 
-#content-right-login {
+#content-right {
   height: 320px;
   margin-left: 400px;
   padding: 10px;
@@ -181,20 +197,20 @@ div.title img {
   -webkit-border-radius:10px;
 }
 
-#content-right-login h1 {
+#content-right h1 {
   font-size: 1.3em;
 }
 
-#content-right-login hr {
+#content-right hr {
   color: #B5CFB6;
   background-color: #B5CFB6;
 }
 
-#content-right-login img {
+#content-right img {
   vertical-align: top;
 }
 
-#content-right-login a {
+#content-right a {
   vertical-align: bottom;
   text-decoration: underline;
 }
@@ -221,19 +237,15 @@ div.title img {
 /* Applications layer                                                         */
 /* -------------------------------------------------------------------------- */
 
-#appslist ul.category,
-#appslist ul.category li {
-  margin: 0px;
-  padding: 0px;
-  list-style-type: none;
-}
-
-#appslist ul.cat-level-1 li.catname span {
+#appslist ul.category {
   display: none;
 }
 
-#appslist ul.cat-level-2,
-#appslist ul.cat-level-2 li {
-  display: list-item;
+#appslist div.appsdesc {
+  display: none;
+}
+
+#appsselector {
+  width: 300px;
 }
 

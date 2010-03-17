@@ -10,7 +10,7 @@
         <lang en="This space allow you to open a SSO session. This will help you to securely access to all applications authorized by your profil." fr="Cet espace vous permet d'ouvrir une session SSO. Celle-ci vous aidera &agrave; acc&eacute;der de mani&egrave;re totalement s&eacute;curis&eacute;e &agrave; l'ensemble des applications autoris&eacute;es par votre profil utilisateur." />
       </p>
     </div>
-    <div id="content-right-login">
+    <div id="content-right">
       <h1><lang en="Open your SSO session" fr="Ouvrir une session SSO" /></h1>
       <hr class="solid" />
       <p><span class="text-info"><TMPL_VAR NAME="AUTH_ERROR"></span></p>
