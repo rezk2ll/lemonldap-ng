@@ -168,6 +168,10 @@ div.title img {
   border-collapse: collapse;
 }
 
+#content-all-info table.info th {
+  background-color: #B5CFB6;
+}
+
 #content-all-info table.info th,
 #content-all-info table.info td {
   text-align: left;
