@@ -244,8 +244,10 @@
 
     <!-- authParams -->
     <div id="content_authParams" class="hidden">
-    <input type="text" id="authText" />
-     <br />
+     <select id="authText"></select>
+     <br/>
+     <input type="text" id="authOptions" class="hidden" />
+     <br/>
      <button onclick="reloadAuthParams();return false;" class="ui-state-default ui-corner-all">
      <lang en="Apply" fr="Appliquer" />
      </button>

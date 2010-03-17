@@ -303,7 +303,65 @@ function samlIdpRoot(id){
 }
 function authParams(id) {
 	currentId=id;
-	$('#authText').attr('value',lmdata(id));
+	var t=lmdata(id).split(' ');
+	if(t.length>1){
+		$('#authOptions').attr('value',t[1]);
+		$('#authOptions').show();
+	}else{
+		$('#authOptions').hide();
+	}
+	$('#authText').unbind('change');
+	$('#authText').change(function(){
+		var isMulti=false;
+		$('#content_authParams option:selected').each(function(){
+			if($(this).attr('value')=='Multi'){isMulti=true;}
+		});
+		if(isMulti){
+			$('#authOptions').show();
+		}else{
+			$('#authOptions').hide();
+		}
+	});
+	formateSelect('authText',[
+		'Apache',
+		'CAS',
+		'DBI',
+		'LA',
+		'LDAP',
+		'Multi',
+		'Null',
+		'OpenID',
+		'Proxy',
+		'Remote',
+		'SAML',
+		'SSL',
+		'Twitter'
+		],t[0]);
+	display('authParams',lmtext(id));
+}
+function userdbParams(id) {
+	currentId=id;
+	$('#authOptions').hide();
+	formateSelect('authText',[
+		'DBI',
+		'Env',
+		'LDAP',
+		'Multi',
+		'Null',
+		'Proxy',
+		'Remote',
+		'SAML'
+		],lmdata(id));
+	display('authParams',lmtext(id));
+}
+function passworddbParams(id) {
+	currentId=id;
+	$('#authOptions').hide();
+	formateSelect('authText',[
+		'DBI',
+		'LDAP',
+		'Null'
+		],lmdata(id));
 	display('authParams',lmtext(id));
 }
 function btext(id) {
@@ -442,7 +500,11 @@ function samlMetaDataRoot(id){
 	$('#newsamlmetadatab').show();
 }
 function reloadAuthParams() {
-	setlmdata(currentId,$('#authText').attr('value'));
+	var value=$('#authText').attr('value');
+	if($('#authOptions').is(':visible')==true){
+		value+=' '+$('#authOptions').attr('value');
+	}
+	setlmdata(currentId,value);
 	$.ajax({
 		type:"POST",
 		url:scriptname,

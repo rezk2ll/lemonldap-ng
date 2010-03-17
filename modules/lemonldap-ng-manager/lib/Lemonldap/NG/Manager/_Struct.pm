@@ -188,8 +188,8 @@ sub struct {
                 _help => 'authParams',
 
                 authentication => 'text:/authentication:authParams:authParams',
-                userDB         => 'text:/userDB:authParams:authParams',
-                passwordDB     => 'text:/passwordDB:authParams:authParams',
+                userDB         => 'text:/userDB:authParams:userdbParams',
+                passwordDB     => 'text:/passwordDB:authParams:passworddbParams',
 
                 # LDAP
                 ldapParams => {
@@ -672,7 +672,7 @@ sub testStruct {
         mailConfirmSubject   => $testNotDefined,
         mailConfirmBody      => $testNotDefined,
         authentication       => {
-            test    => qr/^[a-zA-Z][\w\:]*$/,
+            test    => qr/^[a-zA-Z]+(?:\s[\w\s:;]+)?$/,
             msgFail => 'Bad module name',
         },
         cda        => $boolean,
@@ -982,6 +982,9 @@ sub testStruct {
 ## @method protected hashref defaultConf()
 #@return Hashref of default values
 sub defaultConf {
+    my $self = shift;
+    my $portal = defined $self->{portal} ? $self->{portal} : 'http://auth.example.com';
+    $portal =~ s/\/$//;
     return {
         authentication  => 'LDAP',
         cda             => '0',
@@ -1007,7 +1010,7 @@ sub defaultConf {
           { dirName => '/var/lib/lemonldap-ng/notifications', },
         notifyDeleted       => '1',
         notifyOther         => '1',
-        portal              => 'http://auth.example.com/',
+        portal              => $portal,
         portalSkin          => 'pastel',
         portalUserAttr      => '_user',
         protection          => 'none',
@@ -1023,6 +1026,7 @@ sub defaultConf {
         timeout             => '7200',
         userControl         => '^[\w\.\-@]+$',
         userDB              => 'LDAP',
+        passwordDB          => 'Null',
         useXForwardedForIP  => '0',
         whatToTrace         => '$uid',
         ########
@@ -1042,7 +1046,7 @@ sub defaultConf {
             }
         },
         samlServicePrivateKey       => '',
-        samlEntityID                => 'http://auth.example.com/saml/metadata',
+        samlEntityID                => $portal . '/saml/metadata',
         samlOrganizationDisplayName => 'Example',
         samlOrganizationName        => 'Example',
         samlOrganizationURL         => 'http://www.example.com',
@@ -1052,20 +1056,20 @@ sub defaultConf {
         samlSPSSODescriptorKeyDescriptorSigning => '',
         samlSPSSODescriptorSingleLogoutServiceHTTP =>
           'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;'
-          . 'http://auth.example.com/saml/proxySingleLogout;'
-          . 'http://auth.example.com/saml/proxySingleLogoutReturn',
+          . $portal . '/saml/proxySingleLogout;'
+          . $portal . '/saml/proxySingleLogoutReturn',
         samlSPSSODescriptorSingleLogoutServiceSOAP =>
           'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;'
-          . 'http://auth.example.com/saml/proxySingleLogoutSOAP;',
+          . $portal . '/saml/proxySingleLogoutSOAP;',
         samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact =>
           '1;0;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact;'
-          . 'http://auth.example.com/saml/proxySingleSignOnArtifact',
+          . $portal . '/saml/proxySingleSignOnArtifact',
         samlSPSSODescriptorAssertionConsumerServiceHTTPPost =>
           '0;1;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;'
-          . 'http://auth.example.com/saml/proxySingleSignOnPost',
+          . $portal . '/saml/proxySingleSignOnPost',
         samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect =>
           '0;2;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;'
-          . 'http://auth.example.com/saml/proxySingleSignOnRedirect',
+          . $portal . '/saml/proxySingleSignOnRedirect',
         samlSPSSODescriptorNameIDFormatX509SubjectName => '0',
         samlSPSSODescriptorNameIDFormatPersistent      => '1',
         samlSPSSODescriptorNameIDFormatTransient       => '0',
@@ -1075,27 +1079,27 @@ sub defaultConf {
         samlIDPSSODescriptorKeyDescriptorSigning => '',
         samlIDPSSODescriptorSingleSignOnServiceHTTP =>
           'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;'
-          . 'http://auth.example.com/saml/singleSignOn;',
+          . $portal . '/saml/singleSignOn;',
         samlIDPSSODescriptorSingleSignOnServiceSOAP =>
           'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;'
-          . 'http://auth.example.com/saml/singleSignOnSOAP;',
+          . $portal . '/saml/singleSignOnSOAP;',
         samlIDPSSODescriptorSingleLogoutServiceHTTP =>
           'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;'
-          . 'http://auth.example.com/saml/singleLogout;'
-          . 'http://auth.example.com/saml/singleLogoutReturn',
+          . $portal . '/saml/singleLogout;'
+          . $portal . '/saml/singleLogoutReturn',
         samlIDPSSODescriptorSingleLogoutServiceSOAP =>
           'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;'
-          . 'http://auth.example.com/saml/singleLogoutSOAP;',
+          . $portal . '/saml/singleLogoutSOAP;',
         samlIDPSSODescriptorArtifactResolutionServiceArtifact =>
           '1;0;urn:oasis:names:tc:SAML:2.0:bindings:SOAP;'
-          . 'http://auth.example.com/saml/artifact',
+          . $portal . '/saml/artifact',
         samlIDPSSODescriptorManageNameIDServiceHTTP =>
           'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;'
-          . 'http://auth.example.com/saml/manageNameId;'
-          . 'http://auth.example.com/saml/manageNameIdReturn',
+          . $portal . '/saml/manageNameId;'
+          . $portal . '/saml/manageNameIdReturn',
         samlIDPSSODescriptorManageNameIDServiceSOAP =>
           'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;'
-          . 'http://auth.example.com/saml/manageNameIdSOAP;',
+          . $portal . '/saml/manageNameIdSOAP;',
         samlIDPSSODescriptorNameIDFormatX509SubjectName => '0',
         samlIDPSSODescriptorNameIDFormatPersistent      => '1',
         samlIDPSSODescriptorNameIDFormatTransient       => '0',
