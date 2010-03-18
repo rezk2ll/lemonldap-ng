@@ -169,6 +169,7 @@ sub struct {
                             proxy   => ['proxyParams'],
                             openid  => ['openIdParams'],
                             twitter => ['twitterParams'],
+                            dbi     => ['dbiParams'],
                         }->{$mod};
                         if ($tmp) {
                             $res{$_}++ foreach (@$tmp);
@@ -292,6 +293,48 @@ sub struct {
                     twitterKey => 'text:/twitterKey',
                     twitterSecret  => 'text:/twitterSecret',
                     twitterAppName => 'text:/twitterAppName',
+                },
+
+                # DBI
+                dbiParams => {
+                    _nodes => [qw(n:dbiConnection n:dbiSchema n:dbiPassword)],
+
+                    dbiConnection => {
+                        _nodes => [qw(n:dbiConnectionAuth n:dbiConnectionUser)],
+
+                        dbiConnectionAuth => {
+                            _nodes =>
+                              [qw(dbiAuthChain dbiAuthUser dbiAuthPassword)],
+                            dbiAuthChain    => 'text:/dbiAuthChain',
+                            dbiAuthUser     => 'text:/dbiAuthUser',
+                            dbiAuthPassword => 'text:/dbiAuthPassword',
+                        },
+
+                        dbiConnectionUser => {
+                            _nodes =>
+                              [qw(dbiUserChain dbiUserUser dbiUserPassword)],
+                            dbiUserChain    => 'text:/dbiUserChain',
+                            dbiUserUser     => 'text:/dbiUserUser',
+                            dbiUserPassword => 'text:/dbiUserPassword',
+                        },
+                    },
+
+                    dbiSchema => {
+                        _nodes => [
+                            qw(dbiAuthTable dbiUserTable dbiAuthLoginCol dbiAuthPasswordCol dbiAuthMailCol userPivot)
+                        ],
+                        dbiAuthTable       => 'text:/dbiAuthTable',
+                        dbiUserTable       => 'text:/dbiUserTable',
+                        dbiAuthLoginCol    => 'text:/dbiAuthLoginCol',
+                        dbiAuthPasswordCol => 'text:/dbiAuthPasswordCol',
+                        dbiAuthMailCol     => 'text:/dbiAuthMailCol',
+                        userPivot          => 'text:/userPivot',
+                    },
+
+                    dbiPassword => {
+                        _nodes              => [qw(dbiAuthPasswordHash)],
+                        dbiAuthPasswordHash => 'text:/dbiAuthPasswordHash',
+                    },
                 },
             },
 
@@ -642,7 +685,8 @@ sub testStruct {
         my $e = shift;
         $safe->reval( $e, 1 );
         return 1 unless ($@);
-        return 1 if ( $@ =~ /Global symbol "\$.*requires explicit package/ );
+        return 1
+          if ( $@ =~ /Global symbol "\$.*requires explicit package/ );
         return ( 1,
             "Function \"<b>$1</b>\" must be declared in customFunctions" )
           if ( $@ =~ /Bareword "(.*?)" not allowed while "strict subs"/ );
@@ -976,6 +1020,22 @@ sub testStruct {
         twitterKey     => $testNotDefined,
         twitterSecret  => $testNotDefined,
         twitterAppName => $testNotDefined,
+
+        # DBI
+        dbiAuthChain        => $testNotDefined,
+        dbiAuthUser         => $testNotDefined,
+        dbiAuthPassword     => $testNotDefined,
+        dbiUserChain        => $testNotDefined,
+        dbiUserUser         => $testNotDefined,
+        dbiUserPassword     => $testNotDefined,
+        dbiAuthTable        => $testNotDefined,
+        dbiUserTable        => $testNotDefined,
+        dbiAuthLoginCol     => $testNotDefined,
+        dbiAuthPasswordCol  => $testNotDefined,
+        dbiAuthMailCol      => $testNotDefined,
+        userPivot           => $testNotDefined,
+        dbiAuthPasswordHash => $testNotDefined,
+
     };
 }
 
