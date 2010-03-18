@@ -180,7 +180,7 @@
       </a>
      </p>
      <table class="filearea">
-      <tr>
+      <tr id="fileinput">
        <td><lang en="Load from a file" fr="Charger depuis un fichier" /> :</td>
        <td>
         <input type="file" name="file" id="file" size="30"/>
@@ -190,7 +190,7 @@
         <span class="loadimg"><img class="hidden" id="file-loadimg" src="<TMPL_VAR NAME="DIR">/spinner.gif" /></span>
        </td>
       </tr>
-      <tr>
+      <tr id="urlinput" class="hidden">
        <td><lang en="Load from a URL" fr="Charger depuis une URL" /> :</td>
        <td>
         <input type="text" name="url" id="url" size="40"/>

@@ -393,7 +393,10 @@ function textarea(id) {
 }
 function filearea(id) {
 	currentId=id;
+	$('#urlinput').hide();
 	$('#filearea').attr('value',lmdata(id));
+	/* Only samlIDPMetaDataXML element could be loaded from URL */
+	if(lmtext(id)=='samlIDPMetaDataXML'){$('#urlinput').show();}
 	display('filearea',lmtext(id));
 }
 function samlAssertion(id) {
