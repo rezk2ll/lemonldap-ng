@@ -54,6 +54,8 @@ sub new {
     }
     eval "use $globalStorage";
     $class->abort( "Unable to load $globalStorage", $@ ) if ($@);
+
+    $self->{managerSkin} = "default" unless defined $self->{managerSkin};
     return $self;
 }
 
@@ -492,6 +494,13 @@ sub start {
             ],
         },
     );
+    print '
+      <div id="header">
+       <img alt="Lemonldap::NG" src="' . $self->{imagePath} . 'logo_lemonldap-ng.png" class="logo" width="200" height="38" />
+       <p class="ui-state-default ui-corner-all"><a href="index.pl">Gestion de la configuration</a></p>
+       <p class="ui-state-default ui-corner-all ui-state-active"><a href="sessions.pl">Explorateur de sessions</a></p>
+      </div>
+    ';
 }
 
 ## @method protected void ajaxnode(string id, string text, string param)
@@ -549,13 +558,29 @@ body
 {
 	font: normal 12px arial, tahoma, helvetica, sans-serif;
 	margin:0;
-	padding:20px;
+}
+#header
+{
+	background-color:#000000;
+	padding:14px;
+	height:36px;
+	width:auto;
+}
+#header img, #header p
+{
+	float:left;
+}
+#header p
+{
+	margin:5px 10px;
+	padding:5px;
 }
 .simpleTree
 {
 	overflow:auto;
-	margin:0;
-	padding:0;
+	margin:20px;
+	margin-top:0px;
+	margin-bottom:0px;
 	/*
  * width: 250px;
  * height:350px;
