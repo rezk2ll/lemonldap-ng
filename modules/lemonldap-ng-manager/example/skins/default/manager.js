@@ -12,12 +12,15 @@ if (treejquerycss.match('true')){ treejquerycss = true; } else { treejquerycss =
 $(document).ready(function(){
 	/* Display/hide divs */
 	$("#buttons h1").click(function(){
+		$('#buttons h1 img').toggle();
 		$("#buttons_content").slideToggle('fast');
 	});
 	$("#edition h1").click(function(){
+		$('#edition h1 img').toggle();
 		$("#content").slideToggle('fast');
 	});
 	$("#help h1").click(function(){
+		$('#help h1 img').toggle();
 		$("#help_content").slideToggle('fast');
 	});
 
@@ -281,6 +284,12 @@ function display(div,title) {
 	$('#newsamlmetadatab,#delsamlmetadatab').hide();
 	$('#newsamlattributeb,#delsamlattributeb').hide();
 	$('#newsamlattributebr').hide();
+	var height_cur=$('#buttons').height()+$('#edition').height()+$('#help').height();
+	var height_max=$('#menu').height();
+	if(height_cur > height_max || $('#help_content').is(':visible')==false){
+		$('#help h1 img').toggle();
+		$('#help_content').toggle();
+	}
 }
 function none(id) {
 	currentId=id;

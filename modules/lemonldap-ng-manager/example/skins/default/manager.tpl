@@ -63,6 +63,8 @@
    <div id="buttons" class="ui-corner-all">
 
     <h1 class="ui-widget-header ui-corner-all">
+     <img src="<TMPL_VAR NAME="DIR">/images/1downarrow_16x16.png" />
+     <img src="<TMPL_VAR NAME="DIR">/images/1rightarrow_16x16.png" class="hidden" />
      <lang en="Available actions" fr="Actions disponibles" />
     </h1>
 
@@ -130,8 +132,9 @@
    <form action="#" onsubmit="return false">
 
     <h1 class="ui-widget-header ui-corner-all">
-     <lang en="Edit key " fr="Édition de la clé " />
-     <span id="content_title">&nbsp;</span>
+     <img src="<TMPL_VAR NAME="DIR">/images/1downarrow_16x16.png" />
+     <img src="<TMPL_VAR NAME="DIR">/images/1rightarrow_16x16.png" class="hidden" />
+     <lang en="Edit key " fr="Édition de la clé " /><span id="content_title">&nbsp;</span>
     </h1>
 
 
@@ -358,7 +361,11 @@
 
 <!-- Help -->
 <div id="help" class="ui-corner-all">
-  <h1 class="ui-widget-header ui-corner-all"><lang en="Help" fr="Aide"/></h1>
+  <h1 class="ui-widget-header ui-corner-all">
+    <img src="<TMPL_VAR NAME="DIR">/images/1downarrow_16x16.png" />
+    <img src="<TMPL_VAR NAME="DIR">/images/1rightarrow_16x16.png" class="hidden" />
+    <lang en="Help" fr="Aide"/>
+  </h1>
 
   <div id="help_content" class="ui-widget-content ui-corner-all">
   <!-- AJAX content -->

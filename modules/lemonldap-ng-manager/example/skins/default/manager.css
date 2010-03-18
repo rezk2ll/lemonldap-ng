@@ -111,6 +111,13 @@ input
 	cursor:pointer;
 }
 
+#help h1 img, #buttons h1 img, #edition h1 img
+{
+	vertical-align:bottom;
+	margin-bottom:2px;
+	margin-right:5px;
+}
+
 #help_content, #buttons_content, #content
 {
 	padding:5px 10px;
