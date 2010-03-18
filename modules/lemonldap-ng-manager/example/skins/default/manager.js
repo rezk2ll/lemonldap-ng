@@ -332,19 +332,19 @@ function authParams(id) {
 		}
 	});
 	formateSelect('authText',[
-		'Apache',
-		'CAS',
-		'DBI',
-		'LA',
-		'LDAP',
-		'Multi',
-		'Null',
-		'OpenID',
-		'Proxy',
-		'Remote',
-		'SAML',
-		'SSL',
-		'Twitter'
+		'Apache:Apache',
+		'CAS:Central Authentication Service (CAS)',
+		'DBI:Database (DBI)',
+		'LA:Liberty Alliance',
+		'LDAP:LDAP',
+		'Multi:Multi',
+		'Null:None',
+		'OpenID:OpenID',
+		'Proxy:Proxy',
+		'Remote:Remote',
+		'SAML:SAML v2',
+		'SSL:SSL',
+		'Twitter:Twitter'
 		],t[0]);
 	display('authParams',lmtext(id));
 }
@@ -352,14 +352,14 @@ function userdbParams(id) {
 	currentId=id;
 	$('#authOptions').hide();
 	formateSelect('authText',[
-		'DBI',
-		'Env',
-		'LDAP',
-		'Multi',
-		'Null',
-		'Proxy',
-		'Remote',
-		'SAML'
+		'DBI:Database (DBI)',
+		'Env:Environment',
+		'LDAP:LDAP',
+		'Multi:Multi',
+		'Null:None',
+		'Proxy:Proxy',
+		'Remote:Remote',
+		'SAML:SAML v2'
 		],lmdata(id));
 	display('authParams',lmtext(id));
 }
@@ -367,9 +367,9 @@ function passworddbParams(id) {
 	currentId=id;
 	$('#authOptions').hide();
 	formateSelect('authText',[
-		'DBI',
-		'LDAP',
-		'Null'
+		'DBI:Database (DBI)',
+		'LDAP:LDAP',
+		'Null:None'
 		],lmdata(id));
 	display('authParams',lmtext(id));
 }
@@ -469,8 +469,12 @@ function samlService(id) {
 }
 function securedCookieValues(id){
 	currentId=id;
-	$('#securedCookie'+lmdata(id)).attr('checked',1);
-	display('securedCookie',lmtext(id));
+	formateSelect('select',[
+		'0:'+text4securedCookie0,
+		'1:'+text4securedCookie1,
+		'2:'+text4securedCookie2
+		],lmdata(id));
+	display('select',lmtext(id));
 }
 function vhost(id){
 	currentId=id;
@@ -734,9 +738,10 @@ function downloadFile(id){
 function formateSelect(id,values,selectedValue) {
 	var options='';
 	for(i=0;i<values.length;i++){
-		options+='<option value="'+values[i]+'"';
-		if(selectedValue==values[i]){options+=' selected';}
-		options+='>'+values[i]+'</option>';
+		var t=values[i].split(':');
+		options+='<option value="'+t[0]+'"';
+		if(selectedValue==t[0]){options+=' selected';}
+		options+='>'+t[1]+'</option>';
 	}
 	$('#'+id).empty().append(options);
 }

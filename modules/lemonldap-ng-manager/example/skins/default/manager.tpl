@@ -25,6 +25,9 @@
 	var text4newSamlMetaData='<lang en="SAML Metadatas name" fr="Nom des métadatas SAML" />';
 	var text4newSamlAttribute='<lang en="Attribute name" fr="Nom de l\'attribut" />';
 	var text4newFilename='<lang en="Filename" fr="Nom du fichier" />';
+	var text4securedCookie0='<lang en="Non secured cookie" fr="Cookie non sécurisé"/>';
+	var text4securedCookie1='<lang en="Secured cookie (HTTPS)" fr="Cookie sécurisé (HTTPS)"/>';
+	var text4securedCookie2='Double cookie (HTTP and HTTPS)';
 //]]></script>
 <script src="<TMPL_VAR NAME="DIR">/manager.js" type="text/JavaScript"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
@@ -206,11 +209,13 @@
      </table>
     </div>
 
-    <!-- Specific to securedCookie (TODO push in _Struct.pm) -->
-    <div id="content_securedCookie" class="hidden">
-     <input id="securedCookie0" type="radio" name="securedCookie" value="0" onclick="setlmdata('li_L3NlY3VyZWRDb29raWU1','0')" /> <lang en="Non secured cookie" fr="Cookie non sécurisé"/><br/>
-     <input id="securedCookie1" type="radio" name="securedCookie" value="1" onclick="setlmdata('li_L3NlY3VyZWRDb29raWU1','1')" /> <lang en="Secured cookie (HTTPS)" fr="Cookie sécurisé (HTTPS)"/><br/>
-     <input id="securedCookie2" type="radio" name="securedCookie" value="2" onclick="setlmdata('li_L3NlY3VyZWRDb29raWU1','2')" /> Double cookie (HTTP and HTTPS)<br/>
+    <!-- Select -->
+    <div id="content_select" class="hidden">
+     <select id="select"></select>
+     <br /><br />
+     <button onclick="setlminputdata(currentId,select);return false;" class="ui-state-default ui-corner-all">
+     <lang en="Apply" fr="Appliquer" />
+     </button>
     </div>
 
     <!-- Integer -->

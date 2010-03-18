@@ -49,6 +49,8 @@ example/skins/default/folder_delete.png
 example/skins/default/folder_edit.png
 example/skins/default/help.png
 example/skins/default/hframe.png
+example/skins/default/images/1downarrow_16x16.png
+example/skins/default/images/1rightarrow_16x16.png
 example/skins/default/images/ui-bg_diagonals-thick_18_b81900_40x40.png
 example/skins/default/images/ui-bg_diagonals-thick_20_666666_40x40.png
 example/skins/default/images/ui-bg_flat_10_000000_40x100.png

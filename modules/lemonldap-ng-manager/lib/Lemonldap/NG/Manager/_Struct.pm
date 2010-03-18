@@ -312,7 +312,7 @@ sub struct {
                 domain     => 'text:/domain:domain:text',
                 cda        => 'bool:/cda',
                 securedCookie =>
-                  'int:/securedCookie:securedCookie:securedCookieValues',
+                  'select:/securedCookie:securedCookie:securedCookieValues',
                 cookieExpiration => 'text:/cookieExpiration',
             },
 
