@@ -22,7 +22,8 @@ sub scan {
     my ( $script, $filename, $args ) = @_;
     print STDERR "$filename\n";
     my ( $IN, $OUT );
-    open $IN, "HTTP_ACCEPT_LANGUAGE=$lang SCRIPT_NAME=__SCRIPTNAME__ SCRIPT_FILENAME=$script perl -I$lib $script '$args'|";
+    open $IN,
+"HTTP_ACCEPT_LANGUAGE=$lang SCRIPT_NAME=__SCRIPTNAME__ SCRIPT_FILENAME=$script perl -I$lib $script '$args'|";
     open $OUT, ">$filename";
     my $ind = 0;
     local ( $_, $1 );
@@ -57,7 +58,11 @@ sub scan {
         }
 
         # but+=button('$text{saveConf}','saveConf',nodeId);
-        elsif ( s/(but\+=)button\((['"])([^'"]*)\2,'saveConf.*$/$1'<input type=button value="$3" onclick="alert(\\'This is a demo\\');saveConf;"> &nbsp;';/ ) {
+        elsif (
+s/(but\+=)button\((['"])([^'"]*)\2,'saveConf.*$/$1'<input type=button value="$3" onclick="alert(\\'This is a demo\\');saveConf;"> &nbsp;';/
+          )
+        {
+
             # Nothing to do here
         }
         s#tree.setImagePath\(["'][^"']*["']\);#tree.setImagePath("imgs/")#;

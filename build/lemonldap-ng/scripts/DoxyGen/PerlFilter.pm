@@ -67,6 +67,7 @@ sub filter {
     while (<$infh>) {
         $endMark = 0 if (/^\s*use\s+AutoLoader/);
         last if ( $endMark and /^__END__$/ );
+
         #next if (/^$/);
         $cc = ( /^\s*#/           ? 1 : 0 );
         $lc = ( /[\{\}\[\];]\s*$/ ? 1 : 0 );
@@ -79,7 +80,7 @@ sub filter {
         }
         $cl = $cc;
         $ll = $lc;
-        $cl++ if(/\s#/);
+        $cl++ if (/\s#/);
     }
 
     #print STDERR @$file;

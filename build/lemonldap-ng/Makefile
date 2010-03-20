@@ -617,6 +617,6 @@ default-diff:
 	@$(DIFF) lemonldap-ng-manager/example/sessions.pl $(LMPREFIX)/htdocs/manager/sessions.pl ||true
 
 tidy: clean
-	find lemon*/ -type f -name '*.pm' -exec perltidy -b {} \;
+	find lemon*/ -type f \( -name '*.pm' -or -name '*.pl' \) -exec perltidy -b {} \;
 	find lemon*/ -name '*.bak' -delete
 

@@ -618,13 +618,20 @@ sub defaultValuesInit {
     $cookieName  = $args->{cookieName}  || $cookieName  || 'lemonldap';
     $whatToTrace = $args->{whatToTrace} || $whatToTrace || 'uid';
     $whatToTrace =~ s/\$//g;
-    $https = defined($https) ? ( $https eq $args->{https} ? $https : $args->{https} ) : 1;
+    $https =
+      defined($https)
+      ? ( $https eq $args->{https} ? $https : $args->{https} )
+      : 1;
     $args->{securedCookie} = 1 unless defined( $args->{securedCookie} );
     $cookieName .= 'http' if ( $args->{securedCookie} == 2 and $https == 0 );
-    $port = defined($port) ? ( $port eq $args->{port} ? $port : $args->{port} ) : 0;
-    $customFunctions  = $args->{customFunctions};
+    $port =
+      defined($port) ? ( $port eq $args->{port} ? $port : $args->{port} ) : 0;
+    $customFunctions = $args->{customFunctions};
     $cda = defined($cda) ? ( $cda eq $args->{cda} ? $cda : $args->{cda} ) : 0;
-    $httpOnly = defined($httpOnly) ? ( $httpOnly eq $args->{httpOnly} ? $httpOnly : $args->{httpOnly} ) : 0;
+    $httpOnly =
+      defined($httpOnly)
+      ? ( $httpOnly eq $args->{httpOnly} ? $httpOnly : $args->{httpOnly} )
+      : 0;
     $cookieExpiration = $args->{cookieExpiration} || $cookieExpiration;
     1;
 }

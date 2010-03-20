@@ -496,7 +496,9 @@ sub start {
     );
     print '
       <div id="header">
-       <img alt="Lemonldap::NG" src="' . $self->{imagePath} . 'logo_lemonldap-ng.png" class="logo" width="200" height="38" />
+       <img alt="Lemonldap::NG" src="'
+      . $self->{imagePath}
+      . 'logo_lemonldap-ng.png" class="logo" width="200" height="38" />
        <p class="ui-state-default ui-corner-all"><a href="index.pl">Gestion de la configuration</a></p>
        <p class="ui-state-default ui-corner-all ui-state-active"><a href="sessions.pl">Explorateur de sessions</a></p>
       </div>

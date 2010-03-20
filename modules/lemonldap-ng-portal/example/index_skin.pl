@@ -35,7 +35,7 @@ my $portal = Lemonldap::NG::Portal::SharedConf->new(
 );
 
 # Get skin value
-my $skin = $portal->{portalSkin};
+my $skin     = $portal->{portalSkin};
 my $skin_dir = $ENV{DOCUMENT_ROOT} . "/skins";
 my ( $skinfile, %templateParams );
 
@@ -67,7 +67,7 @@ if ( $portal->process() ) {
         my $menu = Lemonldap::NG::Portal::Menu->new(
             {
                 portalObject => $portal,
-                modules => {
+                modules      => {
                     appslist => $portal->{portalDisplayAppslist},
                     password => $portal->{portalDisplayChangePassword},
                     logout   => $portal->{portalDisplayLogout},
@@ -91,10 +91,10 @@ if ( $portal->process() ) {
         if ( $menu->displayModule("appslist") ) {
             %templateParams = (
                 %templateParams,
-                    APPSLIST_MENU => $menu->appslistMenu,
-                    APPSLIST_DESC => $menu->appslistDescription
-        );
-    }
+                APPSLIST_MENU => $menu->appslistMenu,
+                APPSLIST_DESC => $menu->appslistDescription
+            );
+        }
     }
 }
 
@@ -139,25 +139,25 @@ else {
         MAIL_URL              => $portal->{mailUrl},
     );
 
-        # Adapt template if password policy error
+    # Adapt template if password policy error
     if (
-            $portal->{portalDisplayChangePassword}
+        $portal->{portalDisplayChangePassword}
         and (  $portal->{error} == PE_PP_CHANGE_AFTER_RESET
-                or $portal->{error} == PE_PP_MUST_SUPPLY_OLD_PASSWORD
-                or $portal->{error} == PE_PP_INSUFFICIENT_PASSWORD_QUALITY
-                or $portal->{error} == PE_PP_PASSWORD_TOO_SHORT
-                or $portal->{error} == PE_PP_PASSWORD_TOO_YOUNG
-                or $portal->{error} == PE_PP_PASSWORD_IN_HISTORY
-                or $portal->{error} == PE_PASSWORD_MISMATCH
-                or $portal->{error} == PE_BADOLDPASSWORD )
+            or $portal->{error} == PE_PP_MUST_SUPPLY_OLD_PASSWORD
+            or $portal->{error} == PE_PP_INSUFFICIENT_PASSWORD_QUALITY
+            or $portal->{error} == PE_PP_PASSWORD_TOO_SHORT
+            or $portal->{error} == PE_PP_PASSWORD_TOO_YOUNG
+            or $portal->{error} == PE_PP_PASSWORD_IN_HISTORY
+            or $portal->{error} == PE_PASSWORD_MISMATCH
+            or $portal->{error} == PE_BADOLDPASSWORD )
       )
     {
         %templateParams = (
             %templateParams,
-                REQUIRE_OLDPASSWORD   => 1,
-                DISPLAY_PASSWORD      => 1,
-                DISPLAY_RESETPASSWORD => 0,
-                DISPLAY_FORM          => 0
+            REQUIRE_OLDPASSWORD   => 1,
+            DISPLAY_PASSWORD      => 1,
+            DISPLAY_RESETPASSWORD => 0,
+            DISPLAY_FORM          => 0
         );
     }
 
@@ -171,20 +171,20 @@ else {
         );
     }
 
-        # Adapt template if external authentication error
+    # Adapt template if external authentication error
     # or logout is OK
     if (   $portal->{error} == PE_BADCERTIFICATE
-              or $portal->{error} == PE_CERTIFICATEREQUIRED
+        or $portal->{error} == PE_CERTIFICATEREQUIRED
         or $portal->{error} == PE_ERROR
         or $portal->{error} == PE_LOGOUT_OK )
     {
         %templateParams = (
             %templateParams,
-                DISPLAY_RESETPASSWORD => 0,
-                DISPLAY_FORM          => 0,
+            DISPLAY_RESETPASSWORD => 0,
+            DISPLAY_FORM          => 0,
             DISPLAY_OPENID_FORM   => 0,
             PORTAL_URL            => $portal->{portal},
-    );
+        );
     }
 }
 

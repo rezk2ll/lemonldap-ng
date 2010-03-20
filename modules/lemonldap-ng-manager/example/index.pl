@@ -6,6 +6,7 @@ use HTML::Template;
 
 my $manager = new Lemonldap::NG::Manager(
     {
+
         # ACCESS TO CONFIGURATION
 
         # By default, Lemonldap::NG uses the default storage.conf file to know
@@ -28,8 +29,8 @@ my $manager = new Lemonldap::NG::Manager(
     }
 ) or Lemonldap::NG::Common::CGI->abort('Unable to start manager');
 
-our $skin = $manager->{managerSkin};
-our $skin_dir ='skins';
+our $skin     = $manager->{managerSkin};
+our $skin_dir = 'skins';
 our $main_dir = $ENV{DOCUMENT_ROOT};
 
 my $template = HTML::Template->new(
@@ -38,13 +39,13 @@ my $template = HTML::Template->new(
     cache             => 0,
     filter            => sub { $manager->translate_template(@_) },
 );
-$template->param(SCRIPT_NAME => $ENV{SCRIPT_NAME});
-$template->param(MENU => $manager->menu());
-$template->param(DIR => "$skin_dir/$skin");
-$template->param(CFGNUM => $manager->{cfgNum});
-$template->param(TREE_AUTOCLOSE => $manager->{managerTreeAutoClose});
-$template->param(TREE_JQUERYCSS => $manager->{managerTreeJqueryCss});
-$template->param(CSS => $manager->{managerCss});
+$template->param( SCRIPT_NAME    => $ENV{SCRIPT_NAME} );
+$template->param( MENU           => $manager->menu() );
+$template->param( DIR            => "$skin_dir/$skin" );
+$template->param( CFGNUM         => $manager->{cfgNum} );
+$template->param( TREE_AUTOCLOSE => $manager->{managerTreeAutoClose} );
+$template->param( TREE_JQUERYCSS => $manager->{managerTreeJqueryCss} );
+$template->param( CSS            => $manager->{managerCss} );
 print $manager->header('text/html; charset=utf-8');
 print $template->output;
 

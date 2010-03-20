@@ -3,9 +3,9 @@ use HTML::Template;
 
 my $portal = Lemonldap::NG::Portal::SharedConf->new(
 
-	# PORTAL CUSTOMIZATION
-	# Skin
-	#portalSkin => 'pastel',
+    # PORTAL CUSTOMIZATION
+    # Skin
+    #portalSkin => 'pastel',
 );
 
 my $skin       = $portal->{portalSkin};
@@ -20,9 +20,9 @@ my $error500 = 1 if ( $http_error eq "500" );
 my $error403 = 1 if ( $http_error eq "403" or !$error500 );
 
 my $template = HTML::Template->new(
-   filename => "$skin_dir/$skin/error.tpl",
-   die_on_bad_params => 0,
-   cache => 0,
+    filename          => "$skin_dir/$skin/error.tpl",
+    die_on_bad_params => 0,
+    cache             => 0,
     filter            => sub { $portal->translate_template(@_) }
 );
 

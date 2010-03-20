@@ -4,40 +4,39 @@
 # Copyright (C) 2002  Bart Schuller
 # Copyright (C) 2006  Phinex Informatik AG
 # All Rights Reserved
-# 
+#
 # Doxygen Filter is free software; you can redistribute it and/or modify
 # it under the same terms as Perl itself.
-# 
+#
 # Larry Wall's 'Artistic License' for perl can be found in
 # http://www.perl.com/pub/a/language/misc/Artistic.html
-# 
+#
 # =======================================================================
-# 
+#
 # Author: Aeby Thomas, Phinex Informatik AG,
 # 	  Based on DoxygenFilter from Bart Schuller
 # E-Mail: tom.aeby@phinex.ch
-# 
+#
 # Phinex Informatik AG
 # Thomas Aeby
 # Kirchweg 52
 # 1735 Giffers
-# 
+#
 # =======================================================================
-# 
+#
 # @(#) $Id: Filter.pm,v 1.2 2006/01/31 16:53:52 aeby Exp $
-# 
+#
 # Revision History:
-# 
+#
 # $Log: Filter.pm,v $
 # Revision 1.2  2006/01/31 16:53:52  aeby
 # added copyright info
 #
-#  
+#
 # =======================================================================
 
 ## @file
 # implementation of DoxyGen::Filter.
-
 
 ## @class
 # Filter from non-C++ syntax API docs to Doxygen-compatible syntax.
@@ -55,7 +54,7 @@ use strict;
 sub new {
     my $class = shift;
     my $outfh = shift || \*STDOUT;
-    return bless {outfh => $outfh}, $class;
+    return bless { outfh => $outfh }, $class;
 }
 
 ## @method virtual void filter($infh)=0
@@ -70,7 +69,7 @@ sub filter {
 # @param sig the method signature
 # @return Either "Public" or "Private".
 sub protection {
-    my($self, $sig) = @_;
+    my ( $self, $sig ) = @_;
     return $sig =~ /^(private|protected)/ ? "\u$1" : 'Public';
 }
 
@@ -79,7 +78,7 @@ sub protection {
 # Outputs the start of a javadoc comment.
 # @param command the javadoc command
 sub start {
-    my $self = shift;
+    my $self    = shift;
     my $command = shift;
     $self->print("/** $command\n");
     return $self;
@@ -99,7 +98,7 @@ sub end {
 # @param section The name of the section to divert all output to.
 # @see pop(), print(), flush()
 sub push {
-    my($self, $section) = @_;
+    my ( $self, $section ) = @_;
     $self->{current_section} = $section;
     return $self;
 }
@@ -108,7 +107,7 @@ sub push {
 # End a diversion to a section.
 # @see push(), flush()
 sub pop {
-    my($self) = @_;
+    my ($self) = @_;
     delete $self->{current_section};
     return $self;
 }
@@ -122,9 +121,10 @@ sub pop {
 sub print {
     my $self = shift;
     return unless @_;
-    if (my $section = $self->{current_section}) {
-        CORE::push @{$self->{sections}{$section}}, @_;
-    } else {
+    if ( my $section = $self->{current_section} ) {
+        CORE::push @{ $self->{sections}{$section} }, @_;
+    }
+    else {
         my $outfh = $self->{outfh};
         print $outfh @_;
     }
@@ -165,22 +165,22 @@ my @order = (
     'Private Running Functions',
     'Private Object Methods',
     'Private Functions',
-    );
+);
 ## @method void flush()
 # Flush the saved sections. Should be called at the end of a class.
 # @see push(), print()
 sub flush {
-    my $self = shift;
+    my $self     = shift;
     my $sections = $self->{sections};
     foreach (@order) {
         next unless $sections->{$_};
         $self->start("\@name $_\n")->end;
         $self->start("\@{")->end;
-	$self->print("\n");
-        $self->print(@{$sections->{$_}});
-	$self->print("\n");
+        $self->print("\n");
+        $self->print( @{ $sections->{$_} } );
+        $self->print("\n");
         $self->start("\@}")->end;
-	$self->print("\n");
+        $self->print("\n");
     }
     delete $self->{sections};
     return $self;

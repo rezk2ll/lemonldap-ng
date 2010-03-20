@@ -68,15 +68,14 @@ sub new {
     # File upload/download
     elsif ( my $rfile = $self->rparam('file') ) {
 
-        my @params = ( 'file' );
-        if ( my $rfilename = $self->rparam('filename') )
-        {
-          push @params, ${ $rfilename };
+        my @params = ('file');
+        if ( my $rfilename = $self->rparam('filename') ) {
+            push @params, ${$rfilename};
         }
         require Lemonldap::NG::Manager::Uploader;    #inherits
         $self->fileUpload(@params);
         $self->quit();
-        }
+    }
 
     # URL upload/download
     elsif ( my $rurl = $self->rparam('url') ) {
@@ -87,7 +86,7 @@ sub new {
     }
 
     # Else load conf
-    require Lemonldap::NG::Manager::Downloader;    #inherits
+    require Lemonldap::NG::Manager::Downloader;      #inherits
     $self->{cfgNum} =
          $self->param('cfgNum')
       || $self->confObj->lastCfg()

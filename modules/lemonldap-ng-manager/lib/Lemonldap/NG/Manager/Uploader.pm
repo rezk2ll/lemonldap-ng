@@ -329,35 +329,33 @@ sub fileUpload {
     my $content   = '';
 
     # Direct download
-    if ( $filename )
-    {
-      $content = ${ $self->rparam($fieldname) };
-      print $self->header(
-          -type           => 'application/force-download; charset=utf-8',
-          -attachment     => $filename,
-          -Content_Length => length $content
+    if ($filename) {
+        $content = ${ $self->rparam($fieldname) };
+        print $self->header(
+            -type           => 'application/force-download; charset=utf-8',
+            -attachment     => $filename,
+            -Content_Length => length $content
         ) . $content;
     }
 
     # JSON request
-    else
-    {
-    my $UPLOAD_FH = $self->upload($fieldname);
-    while (<$UPLOAD_FH>) {
-        $content .= "$_";
-    }
-    $content =~ s!<!&lt;!g;
-    $content =~ s!>!&gt;!g;
+    else {
+        my $UPLOAD_FH = $self->upload($fieldname);
+        while (<$UPLOAD_FH>) {
+            $content .= "$_";
+        }
+        $content =~ s!<!&lt;!g;
+        $content =~ s!>!&gt;!g;
 
-    my $json = new JSON();
-    $json = $json->allow_nonref( ['1'] );
-    $json = $json->utf8(         ['1'] );
-    my $json_content = $json->encode($content);
-      my $content      = '{"status":"OK", "content":' . $json_content . '}';
+        my $json = new JSON();
+        $json = $json->allow_nonref( ['1'] );
+        $json = $json->utf8(         ['1'] );
+        my $json_content = $json->encode($content);
+        my $content      = '{"status":"OK", "content":' . $json_content . '}';
 
-      print $self->header(
-          -type           => 'text/html; charset=utf-8',
-          -Content_Length => length $content
+        print $self->header(
+            -type           => 'text/html; charset=utf-8',
+            -Content_Length => length $content
         ) . $content;
     }
 
@@ -388,12 +386,12 @@ sub urlUpload {
     $json = $json->allow_nonref( ['1'] );
     $json = $json->utf8(         ['1'] );
     my $json_content = $json->encode($content);
-    $content         = '{"status":"OK", "content":' . $json_content . '}';
+    $content = '{"status":"OK", "content":' . $json_content . '}';
 
     print $self->header(
         -type           => 'text/html; charset=utf-8',
         -Content_Length => length $content
-      ) . $content;
+    ) . $content;
 }
 
 ## @method protected array applyTest(void* test,string value)

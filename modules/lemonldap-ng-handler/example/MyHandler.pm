@@ -7,17 +7,17 @@ __PACKAGE__->init(
 
         # ACCESS TO CONFIGURATION
 
-        # By default, Lemonldap::NG uses the default lemonldap-ng.ini file to know
-        # where to find is configuration
-        # (generaly /etc/lemonldap-ng/lemonldap-ng.ini)
-        # You can specify by yourself this file :
-        #configStorage => { confFile => '/path/to/my/file' },
-        # You can also specify directly the configuration
-        # (see Lemonldap::NG::Handler::SharedConf(3))
-        #configStorage => {
-        #      type => 'File',
-        #      dirName => '/usr/local/lemonldap-ng/data/conf/'
-        #},
+      # By default, Lemonldap::NG uses the default lemonldap-ng.ini file to know
+      # where to find is configuration
+      # (generaly /etc/lemonldap-ng/lemonldap-ng.ini)
+      # You can specify by yourself this file :
+      #configStorage => { confFile => '/path/to/my/file' },
+      # You can also specify directly the configuration
+      # (see Lemonldap::NG::Handler::SharedConf(3))
+      #configStorage => {
+      #      type => 'File',
+      #      dirName => '/usr/local/lemonldap-ng/data/conf/'
+      #},
 
         # OTHERS
         # You can also overload any parameter issued from manager

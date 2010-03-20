@@ -160,13 +160,16 @@ sub serviceToXML {
 
     foreach (@param_keys) {
         my $str = '';
-        if (defined $conf->{$_} && length $conf->{$_} gt 0) {
-            if ( my $rsa_pub = Crypt::OpenSSL::RSA->new_public_key($conf->{$_}) )
+        if ( defined $conf->{$_} && length $conf->{$_} gt 0 ) {
+            if ( my $rsa_pub =
+                Crypt::OpenSSL::RSA->new_public_key( $conf->{$_} ) )
             {
                 my @params = $rsa_pub->get_key_parameters();
-                my $mod = encode_base64($params[0]->to_bin());
-                my $exp = encode_base64($params[1]->to_bin());
-                $str  = '<RSAKeyValue xmlns="http://www.w3.org/2000/09/xmldsig#">' . "\n\t";
+                my $mod    = encode_base64( $params[0]->to_bin() );
+                my $exp    = encode_base64( $params[1]->to_bin() );
+                $str =
+                    '<RSAKeyValue xmlns="http://www.w3.org/2000/09/xmldsig#">'
+                  . "\n\t";
                 $str .= '<Modulus>' . $mod . '</Modulus>' . "\n\t";
                 $str .= '<Exponent>' . $exp . '</Exponent>' . "\n";
                 $str .= '</RSAKeyValue>';

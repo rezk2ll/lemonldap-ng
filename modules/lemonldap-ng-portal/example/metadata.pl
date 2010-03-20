@@ -34,10 +34,11 @@ my $portal = Lemonldap::NG::Portal::SharedConf->new(
     }
 );
 
-my $skin = 'common';
-my $skin_dir = $ENV{DOCUMENT_ROOT} . 'skins';
+my $skin      = 'common';
+my $skin_dir  = $ENV{DOCUMENT_ROOT} . 'skins';
 my $skin_file = 'saml2-metadata.tpl';
-my $metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new();
+my $metadata  = Lemonldap::NG::Common::Conf::SAML::Metadata->new();
 print $portal->header('text/xml; charset=utf-8');
-print $metadata->serviceToXML($skin_dir.'/'.$skin.'/'.$skin_file, $portal);
+print $metadata->serviceToXML( $skin_dir . '/' . $skin . '/' . $skin_file,
+    $portal );
 

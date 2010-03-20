@@ -190,7 +190,7 @@ sub struct {
 
                 authentication => 'text:/authentication:authParams:authParams',
                 userDB         => 'text:/userDB:authParams:userdbParams',
-                passwordDB     => 'text:/passwordDB:authParams:passworddbParams',
+                passwordDB => 'text:/passwordDB:authParams:passworddbParams',
 
                 # LDAP
                 ldapParams => {
@@ -725,7 +725,7 @@ sub testStruct {
             msgFail => 'Bad cookie name',
         },
         customFunctions => $testNotDefined,
-        domain => {
+        domain          => {
             test    => qr/^\.?\w+(?:\.[a-zA-Z]\w*)*(?:\.[a-zA-Z]+)$/,
             msgFail => 'Bad domain',
         },
@@ -865,7 +865,7 @@ sub testStruct {
             test    => qr/^\d*$/,
             msgFail => 'Bad port number'
         },
-        portal        => {
+        portal => {
             test    => qr/^https?:\/\/\S+$/,
             msgFail => 'Bad portal value',
         },
@@ -1043,7 +1043,8 @@ sub testStruct {
 #@return Hashref of default values
 sub defaultConf {
     my $self = shift;
-    my $portal = defined $self->{portal} ? $self->{portal} : 'http://auth.example.com';
+    my $portal =
+      defined $self->{portal} ? $self->{portal} : 'http://auth.example.com';
     $portal =~ s/\/$//;
     return {
         authentication  => 'LDAP',
@@ -1105,31 +1106,37 @@ sub defaultConf {
                 'samlIDPMetaDataOptionsResolutionRule'    => '',
             }
         },
-        samlServicePrivateKey       => '',
-        samlEntityID                => $portal . '/saml/metadata',
-        samlOrganizationDisplayName => 'Example',
-        samlOrganizationName        => 'Example',
-        samlOrganizationURL         => 'http://www.example.com',
+        samlServicePrivateKey                  => '',
+        samlEntityID                           => $portal . '/saml/metadata',
+        samlOrganizationDisplayName            => 'Example',
+        samlOrganizationName                   => 'Example',
+        samlOrganizationURL                    => 'http://www.example.com',
         samlSPSSODescriptorAuthnRequestsSigned => '0',
         samlSPSSODescriptorProtocolSupportEnumeration =>
           'urn:oasis:names:tc:SAML:2.0:protocol',
         samlSPSSODescriptorKeyDescriptorSigning => '',
         samlSPSSODescriptorSingleLogoutServiceHTTP =>
-          'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;'
-          . $portal . '/saml/proxySingleLogout;'
-          . $portal . '/saml/proxySingleLogoutReturn',
+          'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;' 
+          . $portal
+          . '/saml/proxySingleLogout;'
+          . $portal
+          . '/saml/proxySingleLogoutReturn',
         samlSPSSODescriptorSingleLogoutServiceSOAP =>
-          'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;'
-          . $portal . '/saml/proxySingleLogoutSOAP;',
+          'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;' 
+          . $portal
+          . '/saml/proxySingleLogoutSOAP;',
         samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact =>
-          '1;0;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact;'
-          . $portal . '/saml/proxySingleSignOnArtifact',
+          '1;0;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact;' 
+          . $portal
+          . '/saml/proxySingleSignOnArtifact',
         samlSPSSODescriptorAssertionConsumerServiceHTTPPost =>
-          '0;1;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;'
-          . $portal . '/saml/proxySingleSignOnPost',
+          '0;1;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;' 
+          . $portal
+          . '/saml/proxySingleSignOnPost',
         samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect =>
-          '0;2;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;'
-          . $portal . '/saml/proxySingleSignOnRedirect',
+          '0;2;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;' 
+          . $portal
+          . '/saml/proxySingleSignOnRedirect',
         samlSPSSODescriptorNameIDFormatX509SubjectName => '0',
         samlSPSSODescriptorNameIDFormatPersistent      => '1',
         samlSPSSODescriptorNameIDFormatTransient       => '0',
@@ -1138,28 +1145,37 @@ sub defaultConf {
           'urn:oasis:names:tc:SAML:2.0:protocol',
         samlIDPSSODescriptorKeyDescriptorSigning => '',
         samlIDPSSODescriptorSingleSignOnServiceHTTP =>
-          'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;'
-          . $portal . '/saml/singleSignOn;',
+          'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;' 
+          . $portal
+          . '/saml/singleSignOn;',
         samlIDPSSODescriptorSingleSignOnServiceSOAP =>
-          'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;'
-          . $portal . '/saml/singleSignOnSOAP;',
+          'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;' 
+          . $portal
+          . '/saml/singleSignOnSOAP;',
         samlIDPSSODescriptorSingleLogoutServiceHTTP =>
-          'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;'
-          . $portal . '/saml/singleLogout;'
-          . $portal . '/saml/singleLogoutReturn',
+          'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;' 
+          . $portal
+          . '/saml/singleLogout;'
+          . $portal
+          . '/saml/singleLogoutReturn',
         samlIDPSSODescriptorSingleLogoutServiceSOAP =>
-          'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;'
-          . $portal . '/saml/singleLogoutSOAP;',
+          'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;' 
+          . $portal
+          . '/saml/singleLogoutSOAP;',
         samlIDPSSODescriptorArtifactResolutionServiceArtifact =>
-          '1;0;urn:oasis:names:tc:SAML:2.0:bindings:SOAP;'
-          . $portal . '/saml/artifact',
+          '1;0;urn:oasis:names:tc:SAML:2.0:bindings:SOAP;' 
+          . $portal
+          . '/saml/artifact',
         samlIDPSSODescriptorManageNameIDServiceHTTP =>
-          'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;'
-          . $portal . '/saml/manageNameId;'
-          . $portal . '/saml/manageNameIdReturn',
+          'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;' 
+          . $portal
+          . '/saml/manageNameId;'
+          . $portal
+          . '/saml/manageNameIdReturn',
         samlIDPSSODescriptorManageNameIDServiceSOAP =>
-          'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;'
-          . $portal . '/saml/manageNameIdSOAP;',
+          'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;' 
+          . $portal
+          . '/saml/manageNameIdSOAP;',
         samlIDPSSODescriptorNameIDFormatX509SubjectName => '0',
         samlIDPSSODescriptorNameIDFormatPersistent      => '1',
         samlIDPSSODescriptorNameIDFormatTransient       => '0',

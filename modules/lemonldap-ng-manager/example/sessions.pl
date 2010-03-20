@@ -4,11 +4,12 @@ use strict;
 
 use Lemonldap::NG::Manager::Sessions;
 
-our $cgi = Lemonldap::NG::Manager::Sessions->new({
+our $cgi = Lemonldap::NG::Manager::Sessions->new(
+    {
 
         # REQUIRED PARAMETERS
-        jqueryUri     => 'skins/default/jquery-1.3.2.min.js',
-        imagePath     => '/images/',
+        jqueryUri => 'skins/default/jquery-1.3.2.min.js',
+        imagePath => '/images/',
 
         # PROTECTION, choose one of :
         # * protection by manager
@@ -27,9 +28,9 @@ our $cgi = Lemonldap::NG::Manager::Sessions->new({
         # You can also fix the port (for redirections after authentications)
         #port => 80,
 
-        # IP
-        # You can configure sessions explorer to use X-FORWARDED-FOR rather than REMOTRE_ADDR for IP
-        #useXForwardedForIP => 1,
+# IP
+# You can configure sessions explorer to use X-FORWARDED-FOR rather than REMOTRE_ADDR for IP
+#useXForwardedForIP => 1,
 
         # ACCESS TO CONFIGURATION
         # By default, Lemonldap::NG uses the default storage.conf file to know
@@ -58,6 +59,7 @@ our $cgi = Lemonldap::NG::Manager::Sessions->new({
         #    User     => 'http-user',
         #    Password => 'pass',
         #},
-});
+    }
+);
 
 $cgi->process();
