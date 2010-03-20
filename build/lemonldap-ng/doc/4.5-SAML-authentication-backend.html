@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
 <head>
   <meta name="generator" content=
-  "HTML Tidy for Linux/x86 (vers 7 December 2008), see www.w3.org" />
+  "HTML Tidy for Linux/x86 (vers 25 March 2009), see www.w3.org" />
 
   <title>Lemonldap::NG documentation:
   4.5-SAML-authentication-backend.html</title>
@@ -255,8 +255,8 @@ $ openssl rsa -pubout -in private_key.pem -out public_key.pem
       "http://auth.example.com/saml/metadata.">http://auth.example.com/saml/metadata.</a></span>
       Change this value to fit your portal URL.</li>
 
-      <li>Private key: copy all the content of your private key file, with
-      header and footer. This will not be published in metadata.</li>
+      <li>Private key: load your private key file. This will not be published
+      in metadata.</li>
     </ul>
 
     <h5 class="heading-1-1-1-1"><span id="HNodeOrganization">Node
@@ -280,8 +280,7 @@ $ openssl rsa -pubout -in private_key.pem -out public_key.pem
 
       <li>Protocol: Protocol support enumeration string. Do not change.</li>
 
-      <li>Signing Key: copy the content of your public key file,
-      <strong class="strong">without</strong> header and footer.</li>
+      <li>Signing Key: load your public key file.</li>
     </ul>
 
     <h6 class="heading-1-1-1-1-1"><span id="HNodeSingleLogout">Node

@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
 <head>
   <meta name="generator" content=
-  "HTML Tidy for Linux/x86 (vers 7 December 2008), see www.w3.org" />
+  "HTML Tidy for Linux/x86 (vers 25 March 2009), see www.w3.org" />
 
   <title>Lemonldap::NG documentation: 3.2-Install-from-tarball.html</title>
   <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
@@ -138,12 +138,23 @@ $ tar zxvf lemonldap-ng-*.tar.gz
     <div class="code">
       <pre>
 $ cd lemonldap-ng-*
-$ make &amp;&amp; make test
+$ make
+$ make configure
+$ make test
 $ sudo make install
 </pre>
     </div>
 
-    <p class="paragraph"></p>You can choose other Makefile targets:
+    <p class="paragraph"></p>You can modify location of default storage
+    configuration file in configure target:
+
+    <div class="code">
+      <pre>
+$ sudo make configure STORAGECONFFILE=/etc/lemonldap-ng/lemonldap-ng.ini
+</pre>
+    </div><br />
+    <br />
+    You can choose other Makefile targets:
 
     <ul class="star">
       <li>Perl libraries install :
@@ -200,31 +211,48 @@ $ sudo make install PARAM=VALUE PARAM=VALUE ...
     Available parameters are:
 
     <ul class="star">
-      <li>ERASECONFIG: set to 0 if you want to keep your configuration files
-      (default: 1)</li>
+      <li><strong class="strong">ERASECONFIG</strong>: set to 0 if you want to
+      keep your configuration files (default: 1)</li>
 
-      <li>DESTDIR: only for packaging, install the product in a jailroot
-      (default: "")</li>
+      <li><strong class="strong">DESTDIR</strong>: only for packaging, install
+      the product in a jailroot (default: "")</li>
 
-      <li>PREFIX: installation directory (default: /usr/local)</li>
+      <li><strong class="strong">PREFIX</strong>: installation directory
+      (default: /usr/local)</li>
 
-      <li>STORAGECONFFILE: location of default storage configuration file
-      (default: /usr/local/lemonldap-ng/etc/storage.conf)</li>
+      <li><strong class="strong">STORAGECONFFILE</strong>: location of default
+      storage configuration file (default:
+      /usr/local/lemonldap-ng/etc/lemonldap-ng.ini)</li>
 
-      <li>CRONDIR: Cronfile directory (default:
-      $PREFIX/etc/lemonldap-ng/cron.d)</li>
+      <li><strong class="strong">CRONDIR</strong>: Cronfile directory
+      (default: $PREFIX/etc/lemonldap-ng/cron.d)</li>
 
-      <li>APACHEUSER: user running Apache</li>
+      <li><strong class="strong">APACHEUSER</strong>: user running Apache</li>
 
-      <li>APACHEGROUP: group running Apache</li>
+      <li><strong class="strong">APACHEGROUP</strong>: group running
+      Apache</li>
 
-      <li>DNSDOMAIN: Main DNS domain (default: example.com)</li>
+      <li><strong class="strong">DNSDOMAIN</strong>: Main DNS domain (default:
+      example.com)</li>
 
-      <li>LDAPHOST: LDAP server (default: localhost)</li>
+      <li><strong class="strong">LDAPHOST</strong>: LDAP server (default:
+      localhost)</li>
 
-      <li>LDAPPORT: LDAP port (default: 389)</li>
+      <li><strong class="strong">LDAPPORT</strong>: LDAP port (default:
+      389)</li>
 
-      <li>LDAPSUFFIX: LDAP suffix (default: dc=example,dc=com)</li>
+      <li><strong class="strong">LDAPSUFFIX</strong>: LDAP suffix (default:
+      dc=example,dc=com)</li>
+
+      <li><strong class="strong">APACHEVERSION</strong>: Apache major version
+      (default: 2)</li>
+
+      <li><strong class="strong">VHOSTLISTEN</strong>: how listen parameter is
+      configured for virtual hosts in Apache (default: <strong class=
+      "strong">:80)</strong></li>
+
+      <li><strong class="strong">*WITHLA</strong>: install Liberty Alliance
+      portal (default: 0)</li>
     </ul>
   </div>
 

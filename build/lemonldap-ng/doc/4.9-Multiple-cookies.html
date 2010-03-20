@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
 <head>
   <meta name="generator" content=
-  "HTML Tidy for Linux/x86 (vers 7 December 2008), see www.w3.org" />
+  "HTML Tidy for Linux/x86 (vers 25 March 2009), see www.w3.org" />
 
   <title>Lemonldap::NG documentation: 4.9-Multiple-cookies.html</title>
   <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
@@ -55,7 +55,22 @@
 
 <body>
   <div class="main-content">
-    The securedCookie parameter of Lemonldap::NG can be set to :
+    <h2 class="heading-1"><span id="HMultiplecookies">Multiple
+    cookies</span></h2>
+
+    <p class="paragraph"></p>
+
+    <ul>
+      <li><a href="#HSecuredcookies">Secured cookies</a></li>
+
+      <li><a href="#HCookienames">Cookie names</a></li>
+    </ul>
+
+    <h3 class="heading-1-1"><span id="HSecuredcookies">Secured
+    cookies</span></h3>
+
+    <p class="paragraph"></p>The securedCookie parameter of Lemonldap::NG can
+    be set to:
 
     <ul class="star">
       <li><strong class="strong">0</strong> : a session is created in session
@@ -81,12 +96,14 @@
     </ul>In the last case, if the unprotected cookie can be shown by a hacker,
     he can not access to the https applications.
 
-    <p class="paragraph"></p>The names of the cookies can be change :
+    <h3 class="heading-1-1"><span id="HCookienames">Cookie names</span></h3>
+
+    <p class="paragraph"></p>The names of the cookies can be change:
 
     <ul class="star">
       <li>the cookieName parameter can contains 1 or 2 names separated by a
       space. The first is the name of the first cookie, the second is used in
-      the last case for the seconf cookie. If there is only 1 cookie, the
+      the last case for the second cookie. If there is only 1 cookie, the
       second will be named "&lt;cookieName&gt;http"</li>
     </ul>
   </div>

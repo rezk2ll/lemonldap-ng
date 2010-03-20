@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
 <head>
   <meta name="generator" content=
-  "HTML Tidy for Linux/x86 (vers 7 December 2008), see www.w3.org" />
+  "HTML Tidy for Linux/x86 (vers 25 March 2009), see www.w3.org" />
 
   <title>Lemonldap::NG documentation:
   3.4-Upgrade-from-0.9.4-to-1.0.html</title>
@@ -66,8 +66,11 @@
 
       <li><a href="#HApacheconfiguration">Apache configuration</a></li>
 
-      <li><a href="#HLocalLemonLDAP3A3ANGsettings">Local LemonLDAP::NG
-      settings</a></li>
+      <li><a href="#HLemonLDAP3A3ANGconfigurationfiles">LemonLDAP::NG
+      configuration files</a></li>
+
+      <li><a href="#HCustomizedscriptsparameters">Customized scripts
+      parameters</a></li>
 
       <li><a href="#HLibertyAllianceportal">Liberty Alliance portal</a></li>
     </ul>
@@ -115,8 +118,9 @@
     your Apache customization in those 3 files, and include them in the main
     Apache configuration file (<strong class="strong">httpd.conf</strong>).
 
-    <h3 class="heading-1-1"><span id="HLocalLemonLDAP3A3ANGsettings">Local
-    LemonLDAP::NG settings</span></h3>
+    <h3 class="heading-1-1"><span id=
+    "HLemonLDAP3A3ANGconfigurationfiles">LemonLDAP::NG configuration
+    files</span></h3>
 
     <p class="paragraph"></p>LemonLDAP::NG 0.9.4 used local files for some
     settings:
@@ -172,6 +176,52 @@ $ sudo /usr/local/lemonldap-ng/bin/lmMigrateConfFiles2ini -d /usr/local/lemonlda
     <br />
     Remove the <strong class="strong">-p</strong> options if you want to
     delete old files.
+
+    <h3 class="heading-1-1"><span id="HCustomizedscriptsparameters">Customized
+    scripts parameters</span></h3><br />
+    <br />
+    Before 1.0, we used to override some configuration parameters by editing
+    perl scripts (like <strong class="strong">portal/index.pl</strong>) and
+    setting values like this :<br />
+    <br />
+
+    <div class="code">
+      <pre>
+my $portal = Lemonldap::NG::Portal::SharedConf-&gt;<span class=
+"java-keyword">new</span>( {
+    portal =&gt; 'auth.example.com',
+    cookieName =&gt; 'lemonldap',
+    ldapPort =&gt; '390',
+    &hellip;
+} );
+</pre>
+    </div>
+
+    <p class="paragraph"></p>The new <strong class=
+    "strong">lemonldap-ng.ini</strong> file should be now used to do this, as
+    perl scripts are program files that are erased on software updates. You
+    have to know too that all configuration parameters are now available in
+    Manager interface.
+
+    <p class="paragraph"></p>If you still need to customize those program
+    files, please prefer to copy them:
+
+    <div class="code">
+      <pre>
+# cp portal/index.pl portal/indexcustom.pl
+</pre>
+    </div><br />
+    <br />
+    And declare your custom file in Apache configuration
+
+    <div class="code">
+      <pre>
+DirectoryIndex indexcustom.pl
+</pre>
+    </div><br />
+    <br />
+    This will prevent your local modifications to be dropped when you will
+    update your LemonLDAP::NG version.
 
     <h3 class="heading-1-1"><span id="HLibertyAllianceportal">Liberty Alliance
     portal</span></h3><br />
