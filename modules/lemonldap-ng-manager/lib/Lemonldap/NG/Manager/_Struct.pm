@@ -107,7 +107,7 @@ sub struct {
                 _nodes => [qw(portal n:portalModules n:portalCustomization)],
                 _help  => 'portalParams',
 
-                portal => 'text:/portal',
+                portal => 'text:/portal:portal:text',
 
                 portalModules => {
                     _nodes => [
@@ -461,19 +461,21 @@ sub struct {
             exportedVars => {
                 _nodes => ['hash:/exportedVars:vars:btext'],
                 _js    => 'hashRoot',
+		_help  => 'vars',
             },
 
             # MACROS
             macros => {
                 _nodes => ['hash:/macros:macros:btext'],
                 _js    => 'hashRoot',
+		_help  => 'macros',
             },
 
             # GROUPS
             groups => {
                 _nodes => ['hash:/groups:groups:btext'],
                 _js    => 'hashRoot',
-                _help  => 'default',
+		_help  => 'groups',
             },
         },
 

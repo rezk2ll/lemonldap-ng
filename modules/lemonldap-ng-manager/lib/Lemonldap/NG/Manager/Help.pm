@@ -29,7 +29,7 @@ sub import {
     foreach $h (
         qw(authParams cookieName domain groups ldap macros storage timeout vars
         whatToTrace virtualHosts portalForceAuthn default samlIDPMetaDataNode
-        samlServicePrivateKey)
+        samlServicePrivateKey portal securedCookie)
       )
     {
         *{"${caller_package}::help_$h"} = \&{"help_${h}_$l"};
@@ -41,282 +41,377 @@ __END__
 
 =pod
 =cut
+
+## authParams
+# en
 sub help_authParams_en {
     print <<EOT;
-<h3>Authentication Parameters</h3>
-<dl>
-<dt> Authentication type </dt>
-<dd> By default,Lemonldap::NG uses ldap authentication scheme using user
-password. You can change&nbsp;:
+<h3>Modules</h3>
+
+<p>LemonLDAP::NG use three types of modules:</p>
 <ul>
- <li>"SSL" : authentication is done by Apache and the portal checks if SSL
- variables are set (mail by default),</li>
- <li>"Apache" : authentication is done by Apache with any mechanism that set
-  <tt>REMOTE_USER</tt> environment variabme. this permits to use any Apache
-  authentication module as Basic, Kerberos, Pam,...</li>
- <li>"CAS" : authentication is done using CAS library.</li>
+ <li><tt>auhtentication</tt>: how authentication is done,</li>
+ <li><tt>userDB</tt>: how user information for session are collected,</li>
+ <li><tt>passwordDB</tt>: how password is changed.</li>
 </ul>
-</dd>
 
-<dt> Portal </dt>
-<dd> Set here the URL used to authenticate users (portal). The portal has to
-inherits from Lemonldap::NG::Portal::SharedConf.</dd>
+<h4>Authentication module</h4>
+<ul>
+ <li><tt>LDAP</tt>: authentication done with an LDAP directory,</li>
+ <li><tt>SSL</tt>: authentication is done by Apache <tt>mod_ssl</tt> and the portal checks 
+ if SSL variable is set,</li>
+ <li><tt>DBI</tt>: authentication done with a database</li>
+ <li><tt>Apache</tt>: authentication is done by Apache with any mechanism that set
+  <tt>REMOTE_USER</tt> environment variable. This allows to use any Apache
+  authentication module as <tt>mod_auth_basic</tt>, <tt>mod_auth_kerb</tt>, ...</li>
+ <li><tt>CAS</tt>: authentication is delegated to a CAS server,</li>
+ <li><tt>Remote</tt>: authentication is delegated to a remote LemonLDAP::NG portal,</li>
+ <li><tt>Proxy</tt>: authentication is done via Web Services on another LemonLDAP::NG portal,</li>
+ <li><tt>OpenID</tt>: authentication is delegated to an OpenID server,</li>
+ <li><tt>Twitter</tt>: authentication is delegated to Twitter,</li>
+ <li><tt>SAML</tt>: authentication is delegation to an SAML2 Identity Provider,</li>
+ <li><tt>None</tt>: transparent authentication (all users are logged),</li>
+ <li><tt>Multi</tt>: authentication modules are stacked, the first working opens the session.
+ You can associate conditions to each modules with following syntax:
+ <tt>Module Condtions;Module Conditions;Module Conditions</tt>
+</ul>
 
-<dt> Secured cookie (SSL) </dt>
-<dd> An authenticated user is known by his cookie. If all (virtual) hosts use
+<h4>Users module</h4>
+<ul>
+ <li><tt>LDAP</tt>: get attributes from an LDAP directory,</li>
+ <li><tt>DBI</tt>: get attributes from a database,</li>
+ <li><tt>Env</tt>: get attributes from Apache environment variables,</li>
+ <li><tt>SAML</tt>: use SAML2 attributes requests,</li>
+ <li><tt>Remote</tt>: delegated to a remote LemonLDAP::NG portal,</li>
+ <li><tt>Proxy</tt>: done via Web Services on another LemonLDAP::NG portal,</li>
+ <li><tt>None</tt>: nothing is collected,</li>
+ <li><tt>Multi</tt>: users modules are stacked.
+ You can associate conditions to each modules with following syntax:
+ <tt>Module Condtions;Module Conditions;Module Conditions</tt>
+</ul>
+
+<h4>Password module</h4>
+<ul>
+ <li><tt>LDAP</tt>: change password in an LDAP directory,</li>
+ <li><tt>DBI</tt>: change password in a database,</li>
+ <li><tt>None</tt>: do nothing,</li>
+</ul>
+
+EOT
+}
+
+#fr
+sub help_authParams_fr {
+    print <<EOT;
+<h3>Modules</h3>
+
+<p>LemonLDAP::NG utilise trois types de modules :</p>
+<ul>
+ <li><tt>auhtentication</tt> : comment est effectuée l'authentification,</li>
+ <li><tt>userDB</tt> : comment sont collectées les informations de l'utilisateur pour la session,</li>
+ <li><tt>passwordDB</tt> : comment est changé le mot de passe.</li>
+</ul>
+
+<h4>Module d'authentification</h4>
+<ul>
+ <li><tt>LDAP</tt> : authentification faite sur un annuaire LDAP,</li>
+ <li><tt>SSL</tt> : authentification faite par Apache <tt>mod_ssl</tt> et vérification par
+ le portail que la variable d'environnement SSL est définie,</li>
+ <li><tt>DBI</tt> : authentification faite sur une base de données</li>
+ <li><tt>Apache</tt> : authentification faite par Apache avec n'importe quel mécanisme qui définit
+  la variable d'environnement <tt>REMOTE_USER</tt>. Cela permet d'utiliser des modules
+  d'authentification comme <tt>mod_auth_basic</tt>, <tt>mod_auth_kerb</tt>, ...</li>
+ <li><tt>CAS</tt> : authentification faite sur un serveur CAS,</li>
+ <li><tt>Remote</tt> : authentification faite sur un portail LemonLDAP::NG distant,</li>
+ <li><tt>Proxy</tt> : authentification faite par Web Services sur un portail LemonLDAP::NG distant,</li>
+ <li><tt>OpenID</tt> : authentification faite sur un serveur OpenID,</li>
+ <li><tt>Twitter</tt> : authentification faite sur Twitter,</li>
+ <li><tt>SAML</tt> : authentication faite sur un fournisseur d'identité SAML2,</li>
+ <li><tt>None</tt> : authentification transparente (tous les utilisateurs sont authentifiés),</li>
+ <li><tt>Multi</tt> : les modules d'authentification sont empilés, le premier qui fonctionne ouvre la session.
+ Vous pouvez associer des conditions à chaque module avec la syntaxe suivante :
+ <tt>Module Condtions;Module Conditions;Module Conditions</tt>
+</ul>
+
+<h4>Module utilisateurs</h4>
+<ul>
+ <li><tt>LDAP</tt> : lecture des attributs sur un annuaire LDAP,</li>
+ <li><tt>DBI</tt> : lecture des attributs sur une base de données,</li>
+ <li><tt>Env</tt> : lecture des variables d'environnement Apache,</li>
+ <li><tt>SAML</tt> : utilisation de requêtes d'attributs SAML2,</li>
+ <li><tt>Remote</tt> : lecture des attributs sur un portail LemonLDAP::NG distant,</li>
+ <li><tt>Proxy</tt> : lecture des attributs par Web Services sur un portail LemonLDAP::NG distant,</li>
+ <li><tt>None</tt> : pas de lecture,</li>
+ <li><tt>Multi</tt> : les modules utilisateurs sont empilés.
+ Vous pouvez associer des conditions à chaque module avec la syntaxe suivante :
+ <tt>Module Condtions;Module Conditions;Module Conditions</tt>
+</ul>
+
+<h4>Module de mot de passe</h4>
+<ul>
+ <li><tt>LDAP</tt> : changement du mot de passe dans un annuaire LDAP,</li>
+ <li><tt>DBI</tt> : changement du mot de passe dans une base de données,</li>
+ <li><tt>None</tt> : pas de changement de mot de passe,</li>
+</ul>
+
+EOT
+}
+
+## portal
+# en
+sub help_portal_en {
+    print <<EOT;
+<h3>Portal</h3>
+<p>Set here the URL where users go to authenticate.</p>
+<p class="default">Default value: http://auth.example.com</p>
+<p class="info">This URL must be inside the principal SSO DNS domain</p>
+EOT
+}
+
+# fr
+sub help_portal_fr {
+    print <<EOT;
+<h3>Portail</h3>
+<p>Adresse où les utilisateurs viennent s'authentifier.</p>
+<p class="default">Valeur par défaut : http://auth.example.com</p>
+<p class="info">Cette adresse doit faire partie du domaine DNS principal.</p>
+EOT
+}
+
+## securedCookie
+# en
+sub help_securedCookie_en {
+    print <<EOT;
+<h3>Secured cookie</h3>
+<p>An authenticated user is known by his cookie. If all (virtual) hosts use
 HTTPS, set this value to 1 so the cookie will be protected and will not be
 transmitted unless https is used. You can also set it to generate 2 cookies,
 1 secure and the other not. Handlers detects if they are in https mode or not
-and will choose the good cookie.</dd>
-</dl>
+and will choose the good cookie.</p>
+<p class="default">Default value: 0</p>
 EOT
 }
 
-sub help_authParams_fr {
+# fr
+sub help_securedCookie_fr {
     print <<EOT;
-<h3>Param&egrave;tres d'authentification</h3>
-<dl>
-<dt> Type d'authentification </dt>
-<dd> Le sch&eacute;ma classique d'authentification Lemonldap::NG consiste
-&agrave; utiliser une authentification par v&eacute;rification de mot de passe
-sur un annuaire LDAP. Vous pouvez changer ceci en&nbsp;
-<ul>
- <li>"SSL" : l'authentification est confi&eacute;e &agrave; Apache et le
-  portail v&eacute;rifie les variables SSL (mail par d&eacute;faut),</li>
- <li>"Apache" : l'authentication est confi&eacute;e &agrave; Apache par un
-  m&eacute;canisme quelconque renseignant la variable d'environnement
-  <tt>REMOTE_USER</tt>. Ce m&eacute;canise permet d'utiliser tous les modules
-  d'authentification d'Apache tels Basic, Kerberos, Pam,...</li>
- <li>"CAS" : l'authentification est d&eacute;l&eacute;gu&eacute;e &agrave; la
-  librairie CAS.</li>
-</ul>
-</dd>
-
-<dt> Portail </dt>
-<dd> Indiquez ici l'URL ou seront renvoy&eacute;s les utilisateurs non
-authentifi&eacute;s. Cette URL doit bien sur correspondre &agrave; un portail
-utilisant Lemonldap::NG::Portal::SharedConf.</dd>
-
-<dt> Cookie s&eacute;curis&eacute; (SSL) </dt>
-<dd> Une fois authentifi&eacute;, l'utilisateur est reconnu par son cookie. Si
-tous les h&ocirc;tes virtuels de votre domaine son prot&eacute;g&eacute;s par
-SSL, mettez cette option &agrave; 1, ainsi le cookie ne sera
-pr&eacute;sent&eacute; par le navigateur qu'aux sites prot&eacute;g&eacute;s,
-ce qui &eacute;vite un vol de session. Vous pouvez également mettre cette
-valeur &agrave; 2 pour g&eacute;n&eacute;rer 2 cookies, l'un
-s&eacute;curis&eacute; et l'autre non. Les agents (handlers) d&eacute;tectent
-automatiquement s'il sont en mode https ou non et choisissent le bon cookie.
-</dd>
-</dl>
+<h3>Cookie sécurisé</h3>
+<p>Un utilisateur authentifié est reconnu par son cookie. Si tous les hôtes
+(virtuels) utilisent HTTPS, mettez cette valeur à 1 afin que les cookie soit protégé,
+c'est-à-dire qu'il ne sera envoyé qu'aux applications HTTPS. Il est également possible
+de générer 2 cookies (un sécurisé, l'autre non). Le Handler détecte alors lequel
+des deux utiliser.</p>
+<p class="default">Valeur par défaut : 0</p>
 EOT
 }
 
+## cookieName
+# en
 sub help_cookieName_en {
     print <<EOT;
 <h3>Cookie Name</h3>
-<p> Set here the name of the cookie ('lemonldap' by default).<br>
-
-WARNING, any change here needs to restart all the Apache servers that use
-a Lemonldap::NG::Handler.</p>
+<p>Set here the name of the cookie.<p>
+<p class="default">Default value: lemonldap</p>
+<p class="info">Any change here needs to restart all the Apache servers that use
+a Handler.</p>
 EOT
 }
 
+# fr
 sub help_cookieName_fr {
     print <<EOT;
 <h3>Nom de cookie</h3>
-<p> Indiquez ici le nom du cookie ('lemonldap' par d&eacute;faut).<br>
-
-ATTENTION, tout changement n&eacute;cessite le red&eacute;marrage de tous les
-serveurs Apache h&eacute;bergeant des agents de protection
-Lemonldap::NG::Handler.</p>
+<p>Indiquez ici le nom du cookie.</p>
+<p class="default">Valeur par défaut : lemonldap</p>
+<p class="info">Tout changement nécessite le redémarrage de tous les
+serveurs Apache hébergeant un Hanlder.</p>
 EOT
 }
 
+## domain
+# en
 sub help_domain_en {
     print <<EOT;
 <h3>Protected domain</h3>
-<p> Set here the main domain (or sub-domain) protected by Lemonldap::NG. If you
-use "Cross domain authentication", set here the domain of the portal.<br>
-WARNING : all the virtual hosts that are not under the same domain than the
-portal must be protected by handlers that inherits from
-Lemonldap::NG::Handler::CDA and if such handlers exist, you have to use
-Lemonldap::NG::Portal::CDA.
+<p>Set here the main DNS domain (or sub-domain) protected by LemonLDAP::NG.</p>
+<p class="default">Default value: example.com</p>
+<p class="info">If some protected applications belongs to another domain, you
+need to activate the cross-domain authentication feature (also called multiple domains).</p>
 EOT
 }
 
+# fr
 sub help_domain_fr {
     print <<EOT;
-<h3>Domaine prot&eacute;g&eacute;</h3>
-<p> Indiquez ici le nom du domaine (ou du sous-domaine) contenant vos
-applications &agrave; prot&eacute;ger. Si vous utilisez le "Cross domain
-authentication", indiquez ici le domaine du portail<br>
-ATTENTION : tous les h&ocirc;tes virtuels prot&eacute;g&eacute;s ne se trouvant
-pas dans le m&ecirc;me domaine que le portail doivent &ecirc;tre
-prot&eacute;g&eacute;s par un agent h&eacute;ritant de
-Lemonldap::NG::Handler::CDA et si un seul de ces agents est utilis&eacute;, le
-portail doit &ecirc;tre de type Lemonldap::NG::Portal::CDA.
+<h3>Domaine protégé</h3>
+<p>Indiquez ici le nom du domaine DNS (ou du sous-domaine) contenant vos
+applications à protéger.</p>
+<p class="default">Valeur par défaut : example.com</p>
+<p class="info">Si certaines applications protégées appartiennent à un domaine DNS
+différent, il faut alors activer l'option de domaines croisés (aussi appelée domaines multiples)</p>
 EOT
 }
 
+## groups
+# en
 sub help_groups_en {
     print <<EOT;
 <h3>User Groups</h3>
-<p> Groups are not required but accelerate the treatment of the requests. For
-example, if a virtual host is granted only for 3 users, the rule is&nbsp;:</p>
+<p>Groups are not required but accelerate the treatment of the requests. For
+example, if a virtual host is granted only for 3 users, the rule is:</p>
 <pre>
     # test.example.com - Rules
     default =&gt; \$uid eq "user1" or \$uid eq "user2" or \$uid eq "user3"
 </pre>
-<p> The problem is that this rule is calculated for each HTTP request. Other
+<p>The problem is that this rule is calculated for each HTTP request. Other
 example, if 2 sites have the same rules, any modification on one has to be
-write in the second. The 'groups' system solve this&nbsp;: groups are
+written in the second. The <tt>groups</tt> system solve this: groups are
 evaluated one time in the authentication phase, and the result is stored in the
-\$groups variable. The rule abode becomes&nbsp;:</p> 
+<tt>\$groups</tt> variable. The rule above becomes:</p>
 <pre>
     # Group declaration
     group1 =&gt; \$uid eq "user1" or \$uid eq "user2" or \$uid eq "user3"
 
-    # Use of the group :
+    # Use of the group
     # test.example.com - Rules
     default =&gt; \$groups =~ /\\bgroup1\\b/
 </pre>
-<p> The last rule is a Perl regular expression (PCRE) that means 'search the
-word "group1" in the string "groups"'.</p>
-<p> The \$groups string joins all the groups where the user matchs the
-expression. The groups are separated by a space in the \$groups string.</p>
+<p>The last rule is a Perl regular expression (PCRE) that means: search the
+word "group1" in the string <tt>\$groups</tt>.</p>
+<p>The <tt>\$groups</tt> string joins all the groups where the user matches the
+expression. The groups are separated by a space in the <tt>\$groups</tt> string.</p>
 EOT
 }
 
+# fr
 sub help_groups_fr {
     print <<EOT;
 <h3>Groupes d'utilisateurs</h3>
-<p>Les groupes ne sont pas indispensables mais acc&eacute;l&egrave;rent le
-traitement des requ&ecirc;tes. Par exemple, si un h&ocirc;te virtuel est
-autoris&eacute; nominativement &agrave; user, user2 et user3, la r&egrave;gle
-d'acc&egrave;s s'&eacute;crira&nbsp;:</p>
+<p>Les groupes ne sont pas indispensables mais accélèrent le
+traitement des requêtes. Par exemple, si un hôte virtuel est
+autorisé nominativement à user1, user2 et user3, la règle
+d'accès s'écrira&nbsp;:</p>
 <pre>
-    # test.example.com - R&egrave;gles
+    # test.example.com - Règles
     default =&gt; \$uid eq "user1" or \$uid eq "user2" or \$uid eq "user3"
 </pre>
-<p> Le probl&egrave;me est que cette expression sera calcul&eacute;e &agrave;
-chaque requ&ecirc;te HTTP. D'autre part, si 2 h&ocirc;tes virtuels ont la
-m&ecirc;me r&egrave;gle d'acc&egrave;s, toute modification doit &ecirc;tre
-r&eacute;percut&eacute;e sur les deux h&ocirc;tes virtuels. Le syst&egrave;me
-des groupes permet de r&eacute;soudre ces deux probl&egrave;mes&nbsp;: lors de
-la connexion au portail, les expressions complexes sont calcul&eacute;es une
-fois pour toute la session et le r&eacute;sultat est stock&eacute; dans la
-cha&icirc;ne \$groups. L'exemple pr&eacute;c&eacute;dent devient
+<p>Le problème est que cette expression sera calculée à
+chaque requête HTTP. D'autre part, si 2 hôtes virtuels ont la
+même règle d'accès, toute modification doit être
+répercutée sur les deux hôtes virtuels. Le système
+des groupes permet de résoudre ces deux problèmes&nbsp;: lors de
+la connexion au portail, les expressions complexes sont calculées une
+fois pour toute la session et le résultat est stocké dans la
+chaîne <tt>\$groups</tt>. L'exemple précédente devient
 alors&nbsp;:</p>
 <pre>
-    # D&eacute;claration d'un groupe
+    # Déclaration d'un groupe
     group1 =&gt; \$uid eq "user1" or \$uid eq "user2" or \$uid eq "user3"
 
-    # Utilisation :
-    # test.example.com - R&egrave;gles
+    # Utilisation
+    # test.example.com - Règles
     default =&gt; \$groups =~ /\\bgroup1\\b/
 </pre>
-<p> Cette derni&egrave;re expression est une expression r&eacute;guli&egrave;re
-Perl (PCRE) qui correspond &agrave; la recherche du mot group1 dans la
-cha&icirc;ne \$groups (\\b signifie d&eacute;but ou fin de mot).</p>
-
-<p>La variable export&eacute;e \$groups est une cha&icirc;ne de
-caract&egrave;res compos&eacute;s de tous les noms de groupes auquels
-l'utilisateur connect&eacute; appartient (c'est &agrave; dire les noms de
+<p>Cette dernière expression est une expression régulière
+Perl (PCRE) qui correspond à la recherche du mot group1 dans la
+chaîne <tt>\$groups</tt> (\\b signifie début ou fin de mot).</p>
+<p>La variable exportée <tt>\$groups</tt> est une chaîne de
+caractères composée de tous les noms de groupes auxquels
+l'utilisateur connecté appartient (c'est à dire les noms de
 groupe pour lesquels l'expression est vraie).</p>
 EOT
 }
 
+## ldap
+# en
 sub help_ldap_en {
     print <<EOT;
-<h3>LDAP Parameters</h3>
-<p>LDAP parameters are used to identify users. They must be set even if
-authentication is done by another system (SSL for example).</p>
+<h3>LDAP parameters</h3>
+
 <ul>
-  <li>LDAP base : required (except if your server accepts the requests without
-   base). Example&nbsp;:
-  <pre>   dc=example, dc=com </pre></li>
-  <li>LDAP server port : 389 by default&nbsp;;</li>
-  <li>LDAP server : Name(s) (or IP address(es)) of the LDAP server(s).
+  <li>Server host: Name(s) (or IP address(es)) of the LDAP server(s).
    You can specify more than one server separated by commas and/or spaces,
    they will be tried in the specified order.
-   You can also use encrypted connections&nbsp;:
+   You can also use encrypted connections:
    <ul>
-    <li>LDAPS : instead of a server name, use&nbsp;:
-     <pre>   ldaps://server/</pre>
-     and don't forget to change port (636 for example).
+    <li><tt>LDAPS</tt>: instead of a server name, use:
+     <pre>ldaps://server/</pre>
     </li>
-    <li>TLS : instead of a server name, use&nbsp;:
-     <pre>   ldap+tls://server/</pre>
+    <li><tt>TLS</tt>: instead of a server name, use:
+     <pre>ldap+tls://server/</pre>
      you can also set any of the parameters needed by Net::LDAP start_tls
-     function&nbsp;:
-     <pre>   ldap+tls://server/?verify=none&amp;capath=/etc/ssl</pre>
+     function:
+     <pre>ldap+tls://server/?verify=none&amp;capath=/etc/ssl</pre>
      See Net::LDAP(3) manual page to know all available parameters.
      You can also set caPath or caFile parameters in the new() function when
      building the portal (because they should depend on local file system).
     </li>
    </ul>
   </li>
-  <li>LDAP account : optional, must be set if anonymous connection cannot
+  <li>Server port: only used if no LDAP URI used in Server host</li>
+  <li>Users search base: DN of users branch. Example:
+  <pre>dc=example, dc=com</pre>
+  </li>
+  <li>Account: optional, must be set if anonymous connection cannot
    access to the wanted LDAP attributes. This account is used before LDAP
-   authentication to find user's dn&nbsp;;
+   authentication to find user DN. It is also used for password modification.
    </li>
-  <li>LDAP password : password corresponding to the account above.
+  <li>Password: password corresponding to the account above.
 </ul>
 EOT
 }
 
+# fr
 sub help_ldap_fr {
     print <<EOT;
-<h3>Param&egrave;tres LDAP</h3>
-<p> Les param&egrave;tres LDAP servent &agrave; identifier les utilisateurs.
-Ils doivent &ecirc;tre renseign&eacute;s m&ecirc;me si l'authentification est
-r&eacute;alis&eacute;e par un autre moyen (SSL par exemple).</p>
+<h3>Paramètres LDAP</h3>
 <ul>
-  <li>Base de recherche LDAP : obligatoire (&agrave; moins que votre serveur
-  LDAP accepte les requ&ecirc;tes sans base). Exemple&nbsp;:
-  <pre>   dc=example, dc=com </pre></li>
-  <li>Port du serveur LDAP : 389 par d&eacute;faut&nbsp;;</li>
-  <li>Serveur LDAP : Nom(s) (ou adresse(s) IP) du(des) serveur(s) LDAP.
-   Vous pouvez indiquer plusieurs serveurs ici s&eacute;par&eacute;s par des
-   virgules et/ou des espaces. Ils seront test&eacute;s dans l'ordre
-   indiqu&eacute;. Vous pouvez &eacute;galement utiliser des connexions
-   chiffr&eacute;es&nbsp;:
+  <li>Hôte: Nom(s) (ou adresse(s) IP) du(des) serveur(s) LDAP.
+   Vous pouvez indiquer plusieurs serveurs ici séparés par des
+   virgules et/ou des espaces. Ils seront testés dans l'ordre
+   indiqué. Vous pouvez également utiliser des connexions
+   chiffrées&nbsp;:
    <ul>
-    <li>LDAPS : au lieu de noms de serveurs, indiquez ici&nbsp;:
-     <pre>   ldaps://serveur/</pre>
-     et n'oubliez pas de changer le port (636 en g&eacute;n&eacute;ral).
+    <li><tt>LDAPS</tt> : au lieu de noms de serveurs, indiquez ici&nbsp;:
+     <pre>ldaps://serveur/</pre>
     </li>
-    <li>TLS : au lieu de noms de serveurs, indiquez ici&nbsp;:
-     <pre>   ldap+tls://serveur/</pre>
-     vous pouvez &eacute;galement y ajouter tous les param&egrave;tres
-     demand&eacute;s par la fonction start_tls de Net::LDAP&nbsp;:
-     <pre>   ldap+tls://serveur/?verify=none&amp;capath=/etc/ssl</pre>
-     Reportez-vous &agrave; la page de manuel de Net::LDAP(3) pour
-     conna&icirc;tre les param&egrave;tres disponibles.
-     Vous pouvez &eacute;galement utiliser les param&egrave;tres caPath ou
+    <li><tt>TLS</tt> : au lieu de noms de serveurs, indiquez ici&nbsp;:
+     <pre>ldap+tls://serveur/</pre>
+     vous pouvez également y ajouter tous les paramètres
+     demandés par la fonction start_tls de Net::LDAP&nbsp;:
+     <pre>ldap+tls://serveur/?verify=none&amp;capath=/etc/ssl</pre>
+     Reportez-vous à la page de manuel de Net::LDAP(3) pour
+     connaître les paramètres disponibles.
+     Vous pouvez également utiliser les paramètres caPath ou
      caFile lors de la construction du portail dans la fonction new() (car
-     ils peuvent d&eacute;pendre du syst&egrave;me de fichier local).
+     ils peuvent dépendre du système de fichier local).
     </li>
    </ul>
   </li>
-  <li>Compte de connexion LDAP : optionnel, &agrave; renseigner si les
-   attributs LDAP utilis&eacute;s ne sont pas accessibles par une session
-    anonyme. Ce compte est utilis&eacute; avant l'authentification pour trouver
-    le dn de l'utilisateur&nbsp;;
+  <li>Port: utilisé seulement si l'hôte n'est pas une URI LDAP</li>
+  <li>Base de recherche des utilisateurs: DN de la branche des utilisateurs.
+  Exemple&nbsp;:
+  <pre>dc=example, dc=com </pre></li>
+  <li>Compte de connexion LDAP: optionnel, à renseigner si les
+   attributs LDAP utilisés ne sont pas accessibles par une session
+    anonyme. Ce compte est utilisé avant l'authentification pour trouver
+    le dn de l'utilisateur. Il est également utilisé pour la modification du mot de passe.
    </li>
-  <li>Mot de passe LDAP : mot de passe correspondant au compte ci-dessus.
+  <li>Mot de passe LDAP: mot de passe correspondant au compte ci-dessus.
 </ul>
 EOT
 }
 
+## macros
+# en
 sub help_macros_en {
     print <<EOT;
 <h3>Macros</h3>
-<p> Macros are used to add new variables to user variables attributes). Those
-new variables are calculated from other variables issued from LDAP attributes.
-They can be used anywhere and are seen as LDAP attributes.
+<p> Macros are used to add new variables to user variables attributes. Those
+new variables are calculated from other variables issued from user attributes.
+They can be used anywhere and are seen as normal attributes.
 This mechanism avoid to do more than one time the same operation in the
-authentication phase. Example&nbsp;:</p>
+authentication phase. Example:</p>
 <pre>
     # macros
     long_name =&gt; \$givenname . " " . \$surname
@@ -329,37 +424,38 @@ authentication phase. Example&nbsp;:</p>
     ^/admin/ =&gt; \$admin
 </pre>
 
-<h4> Tips </h4>
+<h4>Tips</h4>
 
-<h5> Redefining LDAP attributes </h5>
-<p> You can create a macro with the same name than an exported value. If so,
-the attribute is redefined. Example&nbsp;:</p>
+<h5>Redefining attributes</h5>
+<p>You can create a macro with the same name than an exported value. If so,
+the attribute is redefined. Example:</p>
 <pre>
     uid =&gt; $uid . "\\\@domain.com"
 </pre>
 
-<h5> Using regexp </h5>
+<h5>Using regural expressions</h5>
 
-<p> Suppose you want to extract the string 'admin' or 'user' in an attribute,
+<p>Suppose you want to extract the string 'admin' or 'user' in an attribute,
 in Perl, you can use <tt>\$mail&nbsp;=~&nbsp;s/^.*(user|admin)/\$1/</tt>. To
 use it in Lemonldap::NG, you have to do the following&nbsp;:</p>
 <pre>
     mail =&gt; (\$mail =~ /(user|admin)/)[0]
 </pre>
-<p> Explanation : '\$mail =~ /(user|admin)/' returns 0 or 1, but
-'(\$mail =~ /(user|admin)/)' is a "list context" so it returns an array
-containing all elements recognized. So '(\$mail =~ /(user|admin)/)[0]'
+<p>Explanation: <tt>\$mail =~ /(user|admin)/</tt> returns 0 or 1, but
+<tt>(\$mail =~ /(user|admin)/)</tt> is a "list context" so it returns an array
+containing all elements recognized. So <tt>(\$mail =~ /(user|admin)/)[0]</tt>
 returns the first element.</p>
 EOT
 }
 
+# fr
 sub help_macros_fr {
     print <<EOT;
 <h3>Macros</h3>
-<p> Les macros permettent d'ajouter des variables calcul&eacute;es &agrave;
-partir des attributs LDAP (variables export&eacute;es). Elles sont ensuite vues
-comme des attributs LDAP.
-Elles &eacute;vitent de r&eacute;p&eacute;ter le m&ecirc;me calcul plusieurs
+<p>Les macros permettent d'ajouter des variables calculées à
+partir des attributs de l'utilisateur (variables exportées). Elles sont ensuite vues
+comme des attributs classiques.
+Elles évitent de répéter le même calcul plusieurs
 fois dans la phase d'authentification. Exemple&nbsp;:</p>
 <pre>
     # macros
@@ -373,106 +469,98 @@ fois dans la phase d'authentification. Exemple&nbsp;:</p>
     ^/admin/ =&gt; \$admin
 </pre>
 
-<h4> Astuces </h4>
+<h4>Astuces</h4>
 
-<h5> Redéfinir les attributs LDAP </h5>
-<p> Une macro peut porter le même nom
-You can create a macro with the same name than an exported value. If so,
-the attribute is redefined. Example&nbsp;:</p>
+<h5>Redéfinir les attributs</h5>
+<p>Une macro peut porter le même nom qu'un attribut exporté. 
+Si c'est la cas, l'attribut est redéfini. Exemple&nbsp;:</p>
 <pre>
     uid =&gt; $uid . "\\\@domain.com"
 </pre>
 
-<h5> Using regexp </h5>
+<h5>Utilisation des expressions régulières</h5>
 
-<p> Suppose you want to extract the string 'admin' or 'user' in an attribute,
-in Perl, you can use <tt>\$mail&nbsp;=~&nbsp;s/^.*(user|admin)/\$1/</tt>. To
-use it in Lemonldap::NG, you have to do the following&nbsp;:</p>
+<p>En supposant que l'on souhaite extraire la chaîne 'admin' ou 'user' d'un attribut,
+en Perl, on peut utiliser <tt>\$mail&nbsp;=~&nbsp;s/^.*(user|admin)/\$1/</tt>. Pour
+l'utiliser dans Lemonldap::NG, il faut faire&nbsp;:</p>
 <pre>
     mail =&gt; (\$mail =~ /(user|admin)/)[0]
 </pre>
-<p> Explanation : '\$mail =~ /(user|admin)/' returns 0 or 1, but
-'(\$mail =~ /(user|admin)/)' is a "list context" so it returns an array
-containing all elements recognized. So '(\$mail =~ /(user|admin)/)[0]'
-returns the first element.</p>
+<p>Explication&nbsp;: <tt>\$mail =~ /(user|admin)/</tt> retourne 0 ou 1, mais
+<tt>(\$mail =~ /(user|admin)/)</tt> est un contexte de liste donc il retourne un tableau
+contenant tous les éléments reconnus. Donc <tt>(\$mail =~ /(user|admin)/)[0]</tt>
+renvoie le premier élément.</p>
 EOT
 }
 
+## storage
+# en
 sub help_storage_en {
     print <<EOT;
 <h3>Sessions Storage</h3>
-<p> Lemonldap::NG sessions storage works with modules that inherits from
+<p>Lemonldap::NG sessions storage works with modules that inherits from
 Apache::Session. You have to set here the choosen module and add the
-corresponding parameters&nbsp;:</p>
-<p>Examples :</p>
+corresponding parameters.</p>
+<p>Examples:</p>
 <ul>
-  <li>Module =&gt; Apache::Session::File, <br>options :
-    <ul>
-      <li> Directory =&gt; /var/lib/lemonldap-ng/sessions</li>
-    </ul>
+  <li>Module <tt>Apache::Session::File</tt>:
+  <pre>Directory =&gt; /var/lib/lemonldap-ng/sessions</pre>
   </li>
-  <li>Module =&gt; Apache::Session::MySQL, <br>options :
-    <ul>
-      <li> DataSource =&gt; DBI:mysql:database=lemon;host=1.2.3.4</li>
-      <li> UserName =&gt; Lemonldap
-      <li> Password =&gt; mypass
-      <li> timeout =&gt; 7200
-    </ul>
+  <li>Module <tt>Apache::Session::MySQL</tt>:
+      <pre>
+      DataSource =&gt; DBI:mysql:database=lemon;host=1.2.3.4
+      UserName =&gt; Lemonldap
+      Password =&gt; mypass
+      </pre>
   </li>
 </ul>
-<p>
-<b>Note</b>&nbsp;: if you use <tt><b>purgeCentralCache</b></tt> script provided
- in the portal sources (to use in crontab), you can set the <b>timeout</b>
- parameter to manage sessions end (7200 secondes by default).
-</p>
 EOT
 }
 
+# fr
 sub help_storage_fr {
     print <<EOT;
 <h3>Stockage des sessions</h3>
-<p> Le stockage des sessions Lemonldap::NG est r&eacute;alis&eacute; au travers
-des modules h&eacute;rit&eacute;s de Apache::Session. Vous devez indiquer ici
-le module choisi et indiquer les param&egrave;tres correspondants &agrave; ce
-module&nbsp;:</p>
-<p>Exemples :</p>
+<p>Le stockage des sessions Lemonldap::NG est réalisé au travers
+des modules hérités de Apache::Session. Vous devez indiquer ici
+le module choisi et les paramètres correspondants.</p>
+<p>Exemples&nbsp;:</p>
 <ul>
-  <li>Module =&gt; Apache::Session::File, <br>options :
-    <ul>
-      <li> Directory =&gt; /var/lib/lemonldap-ng/sessions</li>
-    </ul>
+  <li>Module <tt>Apache::Session::File</tt>:
+      <pre> Directory =&gt; /var/lib/lemonldap-ng/sessions</pre>
   </li>
-  <li>Module =&gt; Apache::Session::MySQL, <br>options :
-    <ul>
-      <li> DataSource =&gt; DBI:mysql:database=lemon;host=1.2.3.4</li>
-      <li> UserName =&gt; Lemonldap
-      <li> Password =&gt; mypass
-      <li> timeout =&gt; 7200
-    </ul>
+  <li>Module <tt>Apache::Session::MySQL</tt>:
+      <pre>
+      DataSource =&gt; DBI:mysql:database=lemon;host=1.2.3.4
+      UserName =&gt; Lemonldap
+      Password =&gt; mypass
+      </pre>
   </li>
 </ul>
-<p>
-<b>Note</b>&nbsp;: si vous utilisez le script <tt><b>purgeCentralCache</b></tt>
- fourni dans les sources du portail (&agrave; mettre en crontab), vous pouvez
- ajouter le param&egrave;tre <b>timeout</b> pour g&eacute;rer la destruction
- des sessions (7200 secondes par d&eacute;faut).
-</p>
 EOT
 }
 
+## timeout
+# en
 sub help_timeout_en {
     print <<EOT;
 <h3>Sessions timeout</h3>
 <p> Set here the sessions timeout in seconds. It will be used by the
-purgeCentralStorage script given in the source tree.
+<tt>purgeCentralStorage</tt> script installed in cron directory.</p>
+<p class="info">The timeout does not take into account user activity. A timeout of 2 hours
+will close a session 2 hours after its creation, even if user is still using it.</p>
 EOT
 }
 
+# fr
 sub help_timeout_fr {
     print <<EOT;
-<h3>Dur&eacute;e de vie des sessions</h3>
-<p> Indiquez ici la dur&eacute;e de vie des sessions en secondes. Elle est
-utilis&eacute;e par le script purgeCentralStorage fourni dans les sources.
+<h3>Durée de vie des sessions</h3>
+<p>Indiquez ici la durée de vie des sessions en secondes. Elle est
+utilisée par le script <tt>purgeCentralStorage</tt> installé dans le cron.</p>
+<p class="info">La durée de vie ne tient pas compte de l'activité de l'utilisateur. Une durée
+de vie de 2 heures fermera la session 2 heures après sa création, même si l'utilisateur est
+toujours en train de l'utiliser.</p>
 EOT
 }
 
@@ -679,7 +767,7 @@ sub help_portalForceAuthn_en {
 <h3>Force authentication on portal</h3>
 <p>By default, once user is authenticated on portal, when he comes back to it, the authentication is kept and the menu is displayed.</p>
 <p>Enabling this option will force the user to reauthenticate, and its session will be updated.</p>
-<p class="info">ID and start date of the session are not modified. The update date is added in field <tt>updateDate</tt>.Other informations are updated.</p>
+<p class="info">ID and start date of the session are not modified. The update date is added in field <tt>updateDate</tt>. Other informations are updated.</p>
 <p class="default">Default value: 0</p>
 EOT
 }
