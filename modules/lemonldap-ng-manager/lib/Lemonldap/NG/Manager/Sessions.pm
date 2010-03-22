@@ -490,6 +490,7 @@ sub start {
         -style => {
             -src => [
                 "$ENV{SCRIPT_NAME}/css",
+                "skins/" . $self->{managerSkin} . "/jquery-ui-1.7.2.custom.css",
                 ( $self->{personnalCss} ? $self->{personnalCss} : () )
             ],
         },
