@@ -638,6 +638,7 @@ function uploadConf(f){
 			var c='<h3>'+data.result.msg+'</h3><dl>';
 			if(data.result.cfgNum<=0){
 				if(typeof(data.errors)!='undefined'){
+					c+='<h4>Errors</h4>';
 					for(m in data.errors){
 						c+='<dt>'+m+'</dt><dd>'+data.errors[m]+'</dd>';
 					}
@@ -653,11 +654,20 @@ function uploadConf(f){
 				cfgAttrDone++;
 			}
 			if(typeof(data.warnings)!='undefined'){
+				c+='<h4>Warnings</h4>';
 				for(m in data.warnings){
 					c+='<dt>'+m+'</dt><dd>'+data.warnings[m]+'</dd>';
 				}
 			}
 			c+='</dl>'+data.result.other;
+			if(typeof(data.applyStatus)!='undefined'){
+				c+='<h4>Application status</h4>';
+				c+='<ul>';
+				for(m in data.applyStatus){
+					c+='<li>'+m+': '+data.applyStatus[m]+'</li>';
+				}
+				c+='</ul>';
+			}
 			$('#help_content').html(c);
 		},
 		error:function(xhr, ajaxOptions, thrownError){

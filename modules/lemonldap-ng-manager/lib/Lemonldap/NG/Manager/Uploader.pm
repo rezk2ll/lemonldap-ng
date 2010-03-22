@@ -258,6 +258,10 @@ s/^(samlIDPMetaDataXML|samlIDPMetaDataExportedAttributes|samlIDPMetaDataOptions)
             $self->_sub( 'userNotice',
 "Conf $errors->{result}->{cfgNum} saved by $newConf->{cfgAuthor}"
             );
+
+            # Reload Handlers listed in apply section
+            $errors->{applyStatus} = $self->applyConf();
+
         }
 
         # other cases
@@ -528,6 +532,51 @@ sub stylesheet {
     my $style_doc = $self->parser->parse_string( join( '', <DATA> ) );
     close DATA;
     $stylesheet = $xslt->parse_stylesheet($style_doc);
+}
+
+## @method private applyConf()
+# Try to apply configuration by reloading Handlers
+# @return reload status
+sub applyConf {
+    my $self = shift;
+    my $status;
+
+    # Get apply section values
+    my $localConf = $self->confObj->getLocalConf( APPLYSECTION, undef, 0 );
+
+    # Create user agent
+    my $ua = new LWP::UserAgent( requests_redirectable => [] );
+    $ua->timeout(10);
+
+    # Parse apply values
+    foreach ( keys %$localConf ) {
+        my ( $host, $request ) = ( $_, $localConf->{$_} );
+        my ( $method, $vhost, $uri ) =
+          ( $request =~ /^(https?):\/\/([^\/]+)(.*)$/ );
+        unless ($vhost) {
+            $vhost = $host;
+            $uri   = $request;
+        }
+        my $r =
+          HTTP::Request->new( 'GET', "$method://$host$uri",
+            HTTP::Headers->new( Host => $vhost ) );
+        my $response = $ua->request($r);
+        if ( $response->code != 200 ) {
+            $status->{$host} =
+              "Error " . $response->code . " (" . $response->message . ")";
+            $self->_sub( 'userError',
+                    "Apply configuration for $host: error "
+                  . $response->code . " ("
+                  . $response->message
+                  . ")" );
+        }
+        else {
+            $status->{$host} = "OK";
+            $self->_sub( 'userNotice', "Apply configuration for $host: ok" );
+        }
+    }
+
+    return $status;
 }
 
 1;
