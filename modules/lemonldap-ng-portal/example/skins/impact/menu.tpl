@@ -47,7 +47,7 @@
           <p class="text-label">
             <lang en="Are you sure ?" fr="&Ecirc;tes vous s&ucirc;r ?" /> :
           </p>
-          <button type="submit" class="positive" onclick="location.href=<TMPL_VAR NAME="LOGOUT_URL">;return false;">
+          <button type="submit" class="positive" onclick="location.href='<TMPL_VAR NAME="LOGOUT_URL">';return false;">
             <lang en="I'm sure" fr="Je suis s&ucirc;r" />
           </button>
         </div>

@@ -50,7 +50,7 @@
     <div id="content-all">
       <div class="title">
         <img src="/skins/<TMPL_VAR NAME="SKIN">/images/logo-info.png" />
-        <lang en="SSO session expired" fr="Session SSO expir&eacute;e" />
+        <lang en="SSO session inactive" fr="Session SSO inactive" />
       </div>
       <hr class="solid" />
       <p class="text-error"><TMPL_VAR NAME="AUTH_ERROR"></p>
