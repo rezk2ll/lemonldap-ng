@@ -485,7 +485,7 @@ sub struct {
         virtualHosts => {
             _nodes  => ['nhash:/locationRules:virtualHosts:vhost'],
             _upload => ['/exportedHeaders'],
-            _help   => 'default',
+            _help   => 'virtualHosts',
             _js     => 'vhostRoot',
         },
 

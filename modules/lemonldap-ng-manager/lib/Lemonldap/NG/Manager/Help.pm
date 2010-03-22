@@ -564,103 +564,101 @@ toujours en train de l'utiliser.</p>
 EOT
 }
 
+## vars
+# en
 sub help_vars_en {
     print <<EOT;
-<h3>Variables (LDAP attributes)</h3>
-<p> Set here the LDAP attributes you need in your configuration or in exported
-headers.</p>
-<p> Declare as the following&nbsp;:</p>
-<pre>  &lt;MyName&gt; =&gt; &lt;real LDAP attribute name&gt;</pre>
-<p>Examples :</p>
+<h3>Exported variables</h3>
+<p>Set here the attributes that will be collected from <tt>userDb</tt></p>
+<p>Declare as the following:</p>
+<pre>MyName =&gt; real_attribute_name</pre>
+<p>Examples:</p>
 <pre>
   uid   =&gt; uid
   unit  =&gt; ou
 </pre>
-Declared names can be used in rules, groups, macros and HTTP headers by using
-them with '\$'. Example&nbsp;:
+<p>Declared names can be used in rules, groups, macros and HTTP headers by using
+them with '\$'. Example:
 <pre>
   group1 =&gt; \$uid eq 'user1' or \$uid eq 'user2'
 </pre>
 EOT
 }
 
+# fr
 sub help_vars_fr {
     print <<EOT;
-<h3>Variables (attributs LDAP)</h3>
-<p> Indiquez ici tous les attributs LDAP dont vous avez besoin dans votre
-configuration (pour d&eacute;finir les groupes, les macros, les r&egrave;gles
-d'acc&egrave;s aux h&ocirc;tes virtuels ou encore les en-t&ecirc;tes HTTP).</p>
-<p>La d&eacute;claration d'une variable se fait sous la forme&nbsp;:</p>
-<pre>  &lt;nom declare&gt; =&gt; &lt;nom de l'attribut LDAP&gt;</pre>
-<p>Exemples :</p>
+<h3>Variables exportées</h3>
+<p>Indiquez ici tous les attributs qui seront collectés depuis <tt>userDB</tt></p>
+<p>La déclaration d'une variable se fait sous la forme&nbsp;:</p>
+<pre>  MonNom =&gt; nom_reel_attribute</pre>
+<p>Exemples&nbsp;:</p>
 <pre>
   uid  =&gt; uid
   unite  =&gt; ou
 </pre>
-Les noms d&eacute;clar&eacute;s s'utilisent ensuite dans les r&egrave;gles, les
-groupes, les macros ou les en-t&ecirc;tes HTTP en les faisant
-pr&eacute;c&eacute;der du signe '\$'. Exemple&nbsp;:
+<p>Les noms déclarés s'utilisent ensuite dans les règles, les
+groupes, les macros ou les en-têtes HTTP en les faisant
+précéder du signe '\$'. Exemple&nbsp;:
 <pre>
   group1 =&gt; \$uid eq 'user1' or \$uid eq 'user2'
 </pre>
 EOT
 }
 
+## virtualHosts
+# en
 sub help_virtualHosts_en {
     print <<EOT;
 <h3>Virtual Hosts</h3>
-
-<p> A virtual host configuration is cutted in 2 pieces&nbsp;: the rules and the
+<p>A virtual host configuration is cutted in 2 pieces: the rules and the
 HTTP headers.</p>
+<p class="info">If portal and Handlers are not in the same domain than declared
+in <tt>General Parameters</tt> menu, active Cross-Domain Authenticatin functionnality.
+Else, session cookie is not seen by Handlers.
 
-<p> <u>Note</u> : If portal and handlers are not in the same domain than declared
-in "General Parameters" menu, <u>you have to use</u> CDA modules. Else, session
-cookie is not seen by handlers.
-
-<h4> Rules </h4>
-
-<p> A rule associates a regular expression with a perl boolean expression.
+<h4>Rules</h4>
+<p>A rule associates a regular expression with a perl boolean expression.
 When a user tries to access to an URL that match with the regular expression,
-access is granted or not depending on the boolean expression result&nbsp;:</p>
-
+access is granted or not depending on the boolean expression result:</p>
 <pre>
   # Virtual host test.example.com - rules
   ^/protected =&gt; \$groups =~ /\\bgroup1\\b/
 </pre>
 
-<p> This rule means that all URL starting with '/protected', are reserved to
-users member of 'group1'. You can also use 'accept', 'deny' and 'unprotect'
-keywords. 'accept' keyword means that all authenticated users are granted,
-'unprotect' means that authentication is not required.</p>
+<p>This rule means that all URL starting with <tt>/protected</tt> are reserved to
+users member of <tt>group1</tt>. You can also use <tt>accept</tt>, <tt>deny</tt> and <tt>unprotect</tt>
+keywords</p>
+<ul>
+ <li><tt>accept</tt>: all authenticated users are granted,</li>
+ <li><tt>deny</tt>: no one is granted,</li>
+ <li><tt>unprotect</tt>: authenticaion not required.</li>
+</ul>
 
-<p> If URL doesn't match any regular expression, 'default' rule is called to
+<p>If URL doesn't match any regular expression, <tt>default</tt> rule is called to
 grant or not.</p>
 
-<h5> Logout </h5>
-
-You can also write Logout rules to intercept application logout url using the
-reserved words&nbsp;:
+<h5>Logout</h5>
+<p>You can also write Logout rules to intercept application logout url using the
+reserved words:</p>
 <ul>
- <li>logout_sso URL : the request generates a redirection to the portal to call
+ <li><tt>logout_sso URL</tt>: the request generates a redirection to the portal to call
   logout mechanism. The request is not given to the application so its logout
   function is not called. After logout, the user is redirected to the URL,</li>
- <li>logout_app URL (Apache-2.x only) : the request is transmitted to the
-  application, but the result is not displayed : the user is redirected to the
+ <li><tt>logout_app URL</tt> (Apache-2.x only)  the request is transmitted to the
+  application, but the result is not displayed: the user is redirected to the
   URL,</li>
- <li>logout_app_sso URL (Apache-2.x only) : the request is transmitted to the
+ <li><tt>logout_app_sso URL</tt> (Apache-2.x only): the request is transmitted to the
   application and then, the user is redirected to the portal with the logout
   call and then, he is redirected to the given URL.</li>
 </ul>
 
-<h4> Headers </h4>
+<h4>Headers</h4>
+<p>Headers are used to inform the remote application on the connected user.
+They are declared as:</p>
+<pre>&lt;Header Name&gt;&nbsp;=&gt;&nbsp;&lt;Perl expression&gt;.</pre>
 
-<p> Headers are used to inform the remote application on the connected user.
-They are declared as&nbsp;:
-<tt>&lt;Header Name&gt;&nbsp;=&gt;&nbsp;&lt;Perl expression&gt;.
-</p>
-
-<p> Examples :</p>
-
+<p>Examples:</p>
 <pre>
   Auth-User =&gt; \$uid
   Unite     =&gt; \$departmentUID
@@ -668,72 +666,70 @@ They are declared as&nbsp;:
 EOT
 }
 
+# fr
 sub help_virtualHosts_fr {
     print <<EOT;
-<h3>H&ocirc;tes virtuels</h3>
+<h3>Hôtes virtuels</h3>
 
-<p> La configuration d'un h&ocirc;te virtuel est divis&eacute;e en 2
-parties&nbsp;: les r&egrave;gles et les en-t&ecirc;tes HTTP export&eacute;s.</p>
+<p> La configuration d'un hôte virtuel est divisée en 2
+parties&nbsp;: les règles et les en-têtes HTTP.</p>
 
-<p> <u>Note</u> : pour que le m&eacute;canisme d'authentification fonctionne,
-tous les h&ocirc;tes virtuels et le portail doivent se trouver dans le domaine
-d&eacute;clar&eacute; dans les param&egrave;tres g&eacute;n&eacute;raux ou
-<u>utiliser les modules CDA</u> <i>(Cross-Domain-Authentication)</i> qui
-g&egrave;re la transmission de l'identifiant.</p>
+<p class="info"> Pour que le mécanisme d'authentification fonctionne,
+tous les hôtes virtuels et le portail doivent se trouver dans le domaine
+déclaré dans les paramètres généraux ou alors il faut activer la fonction
+Cross-Domain-Authentication.</p>
 
-<h4> R&egrave;gles</h4>
-
-<p>Une r&egrave;gle associe une expression r&eacute;guli&egrave;re perl
-&agrave; une expression bool&eacute;enne. Lors de l'acc&egrave;s d'un
-utilisateur, si l'URL demand&eacute;e correspond &agrave; la r&egrave;gle, le
-droit d'acc&egrave;s est calcul&eacute; par l'expression bool&eacute;enne.
+<h4>Règles</h4>
+<p>Une règle associe une expression régulière perl
+à une expression booléenne. Lors de l'accès d'un
+utilisateur, si l'URL demandée correspond à la règle, le
+droit d'accès est calculé par l'expression booléenne.
 Exemple&nbsp;:</p>
-
 <pre>
-  # H&ocirc;te virtuel test.example.com - r&egrave;gles
+  # Hôte virtuel test.example.com - règles
   ^/protected =&gt; \$groups =~ /\\bgroup1\\b/
 </pre>
 
-<p> La r&egrave;gle ci-dessus signifie que pour les URL commen&ccedil;ant par
-'/protected', les utilisateurs doivent appartenir au groupe 'group1'. Vous
-pouvez &eacute;galement utiliser les mots-clefs 'accept', 'deny' et
-'unprotect'. Attention, 'accept' signifie que tous les utilisateurs
-authentifi&eacute;s peuvent acc&eacute;der, 'unprotect' signifie que
-l'authentification n'est pas obligatoire.</p>
-
-<p>Si l'URL demand&eacute;e ne correspond &agrave; aucune des expressions
-r&eacute;guli&egrave;res, le droit d'acc&egrave;s est calcul&eacute; &agrave;
-partir de l'expression bool&eacute;enne d&eacute;finie dans la r&egrave;gle par
-d&eacute;faut (default).</p>
-
-<h5> Logout </h5>
-
-Vous pouvez &eacute;galement &eacute;crire des r&egrave;gles pour intercepter
-les URL de d&eacute;connexions des applications en utilisant les
-mots-clefs&nbsp;:
+<p>La règle ci-dessus signifie que pour les URL commençant par
+<tt>/protected</tt>, les utilisateurs doivent appartenir au groupe <tt>group1</tt>.
+Vous pouvez également utiliser les mots-clefs <tt>accept</tt>, <tt>deny</tt> et
+<tt>unprotect</tt>:</p>
 <ul>
- <li>logout_sso URL : la requ&ecirc;te entraine une redirection vers le portail
-  avec l'appel au syst&egrave;me de d&eacute;loguage. La requ&ecirc;te n'est
-  pas transmise &agrave; l'applicationthe. Apr&egrave;s d&eacute;loguage,
-  l'utilisateur est renvoy&eacute; vers l'URL,</li>
- <li>logout_app URL (Apache-2.x seulement) : la requ&ecirc;te est transmise
-  &agrave; l'applications mais le r&eacute;sultat n'est pas
-  affich&eacute;&nbsp;: l'utilisateur est redirig&eacute; vers l'URL,</li>
- <li>logout_app_sso URL (Apache-2.x seulement) : la requ&ecirc;te est transmise
-  &agrave; l'application et ensuite, l'utilisateur est redirig&eacute; vers le
-  portail avec appel au syst&egrave;me de d&eacute;loguage. Il est ensuite
-  redirig&eacute; vers l'URL.</li>
+ <li><tt>accept</tt>: tous les utilisateurs authentifiés peuvent accéder,</li>
+ <li><tt>deny</tt>: personne ne peut accéder,</li>
+ <li><tt>unprotect</tt>: l'authentification n'est pas obligatoire.</li>
 </ul>
 
-<h4> En-t&ecirc;tes</h4>
+<p>Si l'URL demandée ne correspond à aucune des expressions
+régulières, le droit d'accès est calculé à
+partir de l'expression booléenne définie dans la règle par
+défaut (<tt>default</tt>).</p>
 
-<p> Les en-t&ecirc;tes servant &agrave; l'application &agrave; savoir qui est
-connect&eacute; se d&eacute;clarent comme suit&nbsp;: <tt>&lt;nom de
-l'en-t&ecirc;te&gt; =&gt; &lt;expression Perl&gt;.
-</p>
+<h5>Déconnexion</h5>
+Vous pouvez également écrire des règles pour intercepter
+les URL de déconnexions des applications en utilisant les
+mots-clefs&nbsp;:
+<ul>
+ <li><tt>logout_sso URL</tt> : la requête entraîne une redirection vers le portail
+  avec l'appel au système de déconnexion. La requête n'est
+  pas transmise à l'application. Après déconnexion,
+  l'utilisateur est renvoyé vers l'URL,</li>
+ <li><tt>logout_app URL</tt> (Apache-2.x seulement) : la requête est transmise
+  à l'applications mais le résultat n'est pas
+  affiché&nbsp;: l'utilisateur est redirigé vers l'URL,</li>
+ <li><tt>logout_app_sso URL</tt> (Apache-2.x seulement) : la requête est transmise
+  à l'application et ensuite, l'utilisateur est redirigé vers le
+  portail avec appel au système de déconnexion. Il est ensuite
+  redirigé vers l'URL.</li>
+</ul>
 
-<p> Exemples :</p>
+<h4>En-têtes</h4>
 
+<p>Les en-têtes permettant à l'application de savoir qui est
+connecté se déclarent comme suit&nbsp;:</p>
+<pre>&lt;nom de l'en-t&ecirc;te&gt; =&gt; &lt;expression Perl&gt;.</pre>
+
+<p>Exemples :</p>
 <pre>
   Auth-User =&gt; \$uid
   Unite     =&gt; \$departmentUID
@@ -741,22 +737,27 @@ l'en-t&ecirc;te&gt; =&gt; &lt;expression Perl&gt;.
 EOT
 }
 
+## whatToTrace
+# en
 sub help_whatToTrace_en {
     print <<EOT;
-<h3>What to log in Apache</h3>
-<p> Set here le name of the variable (attribute) or macro that has to be used
-in proected application Apache logs (don't forget "\$"). By default&nbsp;:
-\$uid</p>
+<h3>User name in Apache</h3>
+<p>Set here the name of the variable (attribute) or macro that has to be used
+in protected application Apache logs (don't forget "\$").</p>
+<p class="info">This value will be pushed in <tt>REMOTE_USER</tt> environment variable.</p>
+<p class="default">Default value: \$uid</p>
 EOT
 }
 
+# fr
 sub help_whatToTrace_fr {
     print <<EOT;
-<h3>Donn&eacute;e &agrave; journaliser dans Apache</h3>
-<p> Indiquez ici le nom de la variable (attribut) ou de la macro qui doit
-&ecirc;tre utilis&eacute;e pour alimenter les journaux Apache des applications
-prot&eacute;g&eacute;es (n'oubliez pas le "\$"). Par d&eacute;faut&nbsp;:
-\$uid</p>
+<h3>Nom de l'utilisateur dans Apache</h3>
+<p>Indiquez ici le nom de la variable (attribut) ou de la macro qui doit
+être utilisée pour alimenter les journaux Apache des applications
+protégées (n'oubliez pas le "\$").</p>
+<p class="info">Cette valeur sera inscrite dans la variable d'environnement <tt>REMOTE_USER</tt>.</p>
+<p class="default">Valeur par défaut : \$uid</p>
 EOT
 }
 
@@ -793,6 +794,8 @@ sub help_default_en {
 <li>General parameters</li>
 <li>Variables</li>
 <li>Virtual hosts</li>
+<li>SAML2 service</li>
+<li>SAML2 identity providers</li>
 </ul>
 </p>
 <p>Select a category to display parameters and sub categories.</p>
@@ -810,6 +813,8 @@ sub help_default_fr {
 <li>Paramètres généraux</li>
 <li>Variables</li>
 <li>Hôtes virtuels</li>
+<li>Service SAML2</li>
+<li>Fournisseurs d'identité SAML2</li>
 </ul>
 <p>Chosir une catégorie pour afficher les paramètres et sous catégories.</p>
 <p>Cliquer sur le bouton <tt>Sauvegarder</tt> pour enregistrer les modifications.</p>
@@ -867,7 +872,7 @@ EOT
 sub help_samlServicePrivateKey_en {
     print <<EOT;
 <h3>SAML service private key</h3>
-<p>Paste here the service private key in PEM format, with header and footer.</p>
+<p>Load here the service private key in PEM format.</p>
 <p>Example:</p>
 <pre>
 -----BEGIN RSA PRIVATE KEY-----
@@ -880,7 +885,7 @@ yJcaxZIi68VekQIgUTljUcS4HwLkn4jBhIq4gg21humTvKai3GYUszm+PZUCIDnR
 X1EobS0/HFKASpX7GG4VTi9Rbd5jWbM5ZfSlCjLJ
 -----END RSA PRIVATE KEY-----
 </pre>
-<p class="info">The corresponding public key or certificate must be set inside SAML service metadata.</p>
+<p class="info">The corresponding public key or certificate must be loaded inside SAML service metadata.</p>
 EOT
 }
 
@@ -888,7 +893,7 @@ EOT
 sub help_samlServicePrivateKey_fr {
     print <<EOT;
 <h3>Clé privée du service SAML</h3>
-<p>Coller ici la clé privé du service au format PEM, en consevant l'en-tête et le pied.</p>
+<p>Charger ici la clé privé du service au format PEM.</p>
 <p>Exemple :</p>
 <pre>
 -----BEGIN RSA PRIVATE KEY-----
@@ -901,7 +906,7 @@ yJcaxZIi68VekQIgUTljUcS4HwLkn4jBhIq4gg21humTvKai3GYUszm+PZUCIDnR
 X1EobS0/HFKASpX7GG4VTi9Rbd5jWbM5ZfSlCjLJ
 -----END RSA PRIVATE KEY-----
 </pre>
-<p class="info">La clé publique ou le certificat correspondant doit être défini dans les metadonnées du service.</p>
+<p class="info">La clé publique ou le certificat correspondant doit être chargé dans les metadonnées du service.</p>
 EOT
 }
 
