@@ -20,17 +20,10 @@ our $cgi = Lemonldap::NG::Manager::Sessions->new(
         # protection  => 'authenticate',
         # * nothing : not protected
 
-        # REDIRECTIONS
-        # You have to set this to explain to the handler if runs under SSL
-        # or not (for redirections after authentications). Default is true.
-        https => 0,
-
-        # You can also fix the port (for redirections after authentications)
-        #port => 80,
-
-# IP
-# You can configure sessions explorer to use X-FORWARDED-FOR rather than REMOTRE_ADDR for IP
-#useXForwardedForIP => 1,
+        # IP
+        # You can configure sessions explorer to use X-FORWARDED-FOR
+        # rather than REMOTRE_ADDR for IP
+        #useXForwardedForIP => 1,
 
         # ACCESS TO CONFIGURATION
         # By default, Lemonldap::NG uses the default storage.conf file to know

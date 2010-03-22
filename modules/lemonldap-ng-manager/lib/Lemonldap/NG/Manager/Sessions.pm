@@ -503,6 +503,7 @@ sub start {
        <p class="ui-state-default ui-corner-all"><a href="index.pl">Gestion de la configuration</a></p>
        <p class="ui-state-default ui-corner-all ui-state-active"><a href="sessions.pl">Explorateur de sessions</a></p>
       </div>
+      <div id="body" class="ui-widget ui-widget-content ui-corner-all">
     ';
 }
 
@@ -547,6 +548,7 @@ sub end {
     my $self = shift;
     print
 '</ul></li></ul></div></td><td valign="top"><div id="content" style="overflow:auto;height:600px;"></div></td></tr></table>';
+    print '</div>';
     print $self->end_html();
 }
 
@@ -562,10 +564,15 @@ body
 	/*font: normal 12px arial, tahoma, helvetica, sans-serif;*/
 	font:normal 9pt sans-serif;
 	margin:0;
+	background-color:#000;
+}
+a
+{
+	text-decoration:none;
 }
 #header
 {
-	background-color:#000000;
+	background-color:#000;
 	padding:14px;
 	height:36px;
 	width:auto;
@@ -579,12 +586,14 @@ body
 	margin:5px 10px;
 	padding:5px;
 }
+#body
+{
+	margin: 0 10px;
+}
 .simpleTree
 {
 	overflow:auto;
-	margin:20px;
-	margin-top:0px;
-	margin-bottom:0px;
+	margin:20px 0;
 	/*
  * width: 250px;
  * height:350px;
@@ -613,7 +622,7 @@ body
 .simpleTree .root
 {
     margin-left:-16px;
-    background: url($self->{imagePath}root.gif) no-repeat 16px 0 #ffffff;
+    background: url($self->{imagePath}root.gif) no-repeat 16px 0;
 }
 .simpleTree .line
 {
@@ -654,36 +663,36 @@ body
 .simpleTree .folder-open
 {
     margin-left:-16px;
-    background: url($self->{imagePath}collapsable.gif) 0 -2px no-repeat #fff;
+    background: url($self->{imagePath}collapsable.gif) 0 -2px no-repeat;
 }
 .simpleTree .folder-open-last
 {
     margin-left:-16px;
-    background: url($self->{imagePath}collapsable-last.gif) 0 -2px no-repeat #fff;
+    background: url($self->{imagePath}collapsable-last.gif) 0 -2px no-repeat;
 }
 .simpleTree .folder-close
 {
     margin-left:-16px;
-    background: url($self->{imagePath}expandable.gif) 0 -2px no-repeat #fff;
+    background: url($self->{imagePath}expandable.gif) 0 -2px no-repeat;
 }
 .simpleTree .folder-close-last
 {
     margin-left:-16px;
-    background: url($self->{imagePath}expandable-last.gif) 0 -2px no-repeat #fff;
+    background: url($self->{imagePath}expandable-last.gif) 0 -2px no-repeat;
 }
 .simpleTree .doc
 {
     margin-left:-16px;
-    background: url($self->{imagePath}leaf.gif) 0 -1px no-repeat #fff;
+    background: url($self->{imagePath}leaf.gif) 0 -1px no-repeat;
 }
 .simpleTree .doc-last
 {
     margin-left:-16px;
-    background: url($self->{imagePath}leaf-last.gif) 0 -1px no-repeat #fff;
+    background: url($self->{imagePath}leaf-last.gif) 0 -1px no-repeat;
 }
 .simpleTree .ajax
 {
-    background: url($self->{imagePath}spinner.gif) no-repeat 0 0 #ffffff;
+    background: url($self->{imagePath}spinner.gif) no-repeat 0 0;
     height: 16px;
     display:none;
 }
@@ -714,7 +723,6 @@ body
 }
 #drag_container
 {
-    background:#ffffff;
     color:#000;
     font: normal 11px arial, tahoma, helvetica, sans-serif;
     border: 1px dashed #767676;
@@ -729,7 +737,6 @@ body
 #drag_container li
 {
     list-style: none;
-    background-color:#ffffff;
     line-height:18px;
     white-space: nowrap;
     padding:1px 1px 0px 16px;
@@ -742,16 +749,16 @@ body
 
 #drag_container li.doc, #drag_container li.doc-last
 {
-    background: url($self->{imagePath}leaf.gif) no-repeat -17px 0 #ffffff;
+    background: url($self->{imagePath}leaf.gif) no-repeat -17px 0;
 }
 #drag_container .folder-close, #drag_container .folder-close-last
 {
-    background: url($self->{imagePath}expandable.gif) no-repeat -17px 0 #ffffff;
+    background: url($self->{imagePath}expandable.gif) no-repeat -17px 0;
 }
 
 #drag_container .folder-open, #drag_container .folder-open-last
 {
-    background: url($self->{imagePath}collapsable.gif) no-repeat -17px 0 #ffffff;
+    background: url($self->{imagePath}collapsable.gif) no-repeat -17px 0;
 }
 EOF
 }
