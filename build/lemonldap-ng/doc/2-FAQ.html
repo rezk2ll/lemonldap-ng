@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
 <head>
   <meta name="generator" content=
-  "HTML Tidy for Linux/x86 (vers 25 March 2009), see www.w3.org" />
+  "HTML Tidy for Linux/x86 (vers 7 December 2008), see www.w3.org" />
 
   <title>Lemonldap::NG documentation: 2-FAQ.html</title>
   <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
@@ -56,7 +56,7 @@
 <body>
   <div class="main-content">
     <h2 class="heading-1"><span id=
-    "HLemonldap3A3ANGFrequentlyAskedQuestions">Lemonldap::NG Frequently Asked
+    "HLemonLDAP3A3ANGFrequentlyAskedQuestions">LemonLDAP::NG Frequently Asked
     Questions</span></h2>
 
     <p class="paragraph"></p>
@@ -69,8 +69,10 @@
           <li><a href="#HWhatisaWebSSO3F">What is a Web-SSO ?</a></li>
 
           <li><a href=
-          "#HWhatbringsLemonldap3A3ANGcomparedtotheotherWebSSO3F">What brings
-          Lemonldap::NG compared to the other Web-SSO ?</a></li>
+          "#HWhatbringsLemonLDAP3A3ANGcomparedtotheotherWebSSO3F">What brings
+          LemonLDAP::NG compared to the other Web-SSO ?</a></li>
+
+          <li><a href="#HIsitreallyfree3F">Is it really free?</a></li>
         </ul>
       </li>
 
@@ -78,23 +80,20 @@
         <a href="#HConfiguration">Configuration</a>
 
         <ul>
-          <li><a href="#HWhattypeofconfigurationstoragehastobeused3F">What
-          type of configuration storage has to be used ?</a></li>
+          <li><a href="#HWhereistheconfiguration3F">Where is the
+          configuration?</a></li>
 
           <li><a href="#HTheprovidedexampleworkswithHTTP2CbutnotwithHTTPS">The
           provided example works with HTTP, but not with HTTPS.</a></li>
 
-          <li><a href="#HForwhatisusedthe22https22parameter3F">For what is
-          used the "https" parameter ?</a></li>
-
           <li><a href="#HWhatisanautoprotectedCGI3F">What is an auto-protected
-          CGI ?</a></li>
+          CGI?</a></li>
 
-          <li><a href="#HHowtouseLemonldap3A3ANGwithActiveDirectory3F">How to
-          use Lemonldap::NG with Active-Directory ?</a></li>
+          <li><a href="#HHowtouseLemonLDAP3A3ANGwithActiveDirectory3F">How to
+          use LemonLDAP::NG with Active-Directory ?</a></li>
 
-          <li><a href="#HHowtouseLemonldap3A3ANGasreverseproxy3F">How to use
-          Lemonldap::NG as reverse-proxy ?</a></li>
+          <li><a href="#HHowtouseLemonLDAP3A3ANGasreverseproxy3F">How to use
+          LemonLDAP::NG as reverse-proxy ?</a></li>
         </ul>
       </li>
 
@@ -102,33 +101,20 @@
         <a href="#HOperation">Operation</a>
 
         <ul>
-          <li><a href="#HWithwhatservesthehandlerlocalcache3F">With what
-          serves the handler local cache ?</a></li>
+          <li><a href="#HWhatisHandlerlocalcache3F">What is Handler local
+          cache?</a></li>
 
           <li><a href=
-          "#HWhyhandlerslocalcachecannotbeconfiguredbythemanager3F">Why
-          handlers local cache can not be configured by the manager ?</a></li>
-
-          <li><a href=
-          "#HWhatisthe7E7ECrossDomainAuthentication7E7E28CDA293F">What is the
-          <i class="italic">Cross Domain Authentication</i> (CDA) ?</a></li>
+          "#HWhyhandlerslocalcachecannotbeconfiguredbytheManager3F">Why
+          handlers local cache can not be configured by the Manager?</a></li>
 
           <li><a href=
           "#HHowworksthe7E7ECrossDomainAuthentication7E7E28CDA293F">How works
           the <i class="italic">Cross Domain Authentication</i> (CDA)
           ?</a></li>
 
-          <li><a href="#HWhatis22notificationsystem22">What is "notification
-          system"</a></li>
-        </ul>
-      </li>
-
-      <li>
-        <a href="#HAuthentication">Authentication</a>
-
-        <ul>
-          <li><a href="#HHowtochangeauthenticationscheme3F">How to change
-          authentication scheme ?</a></li>
+          <li><a href="#HWhatis22notificationsystem223F">What is "notification
+          system"?</a></li>
         </ul>
       </li>
 
@@ -143,88 +129,71 @@
 
     <p class="paragraph"></p>A SSO <i class="italic">(Single Sign On)</i> is a
     system that is used to share authentications between many applications.
-    Users authentify themself only one time and is never prompted when he
-    tries to access to another application. Kerberos (used in Active
-    Directory) for example is a SSO. The problem with these systems is that in
-    addition to their heaviness, they apply only to internal networks and to
-    relatively homogeneous machines.
+    User logs in only one time and is never prompted when he tries to access
+    to another application. Kerberos (used in Active Directory) for example is
+    an SSO mechanism. The problem with these systems is that in addition to
+    their heaviness, they apply only to internal networks and to relatively
+    homogeneous machines.
 
     <p class="paragraph"></p>The Web-SSO is the bearing of this principle
     restricted with the Web applications. The user is thus authenticated with
-    the first access to a protected Web application and the authentifications
+    the first access to a protected Web application and the authentications
     are propagated when it changes application. The large advantage is whereas
     the system is usable on Internet without pre-necessary on the stations
     customers (they just have to accept session cookies). For example, when a
-    user reaches a Google letter-box, it is not authentified if it reaches the
-    groups management application or any other Google application.
+    user reaches a Google letter-box, it is not authenticated if it reaches
+    the groups management application or any other Google application.
 
     <h4 class="heading-1-1-1"><span id=
-    "HWhatbringsLemonldap3A3ANGcomparedtotheotherWebSSO3F">What brings
-    Lemonldap::NG compared to the other Web-SSO ?</span></h4>
+    "HWhatbringsLemonLDAP3A3ANGcomparedtotheotherWebSSO3F">What brings
+    LemonLDAP::NG compared to the other Web-SSO ?</span></h4>
 
     <ul class="star">
-      <li>Lemonldap::NG like lemonldap run as Perl Apache modules and offer
-      performances which make unperceivable the treatment of the access
-      control.</li>
+      <li>LemonLDAP::NG run as Perl Apache modules and offer performances
+      which make imperceivable the treatment of the access control.</li>
 
-      <li>One of the other strong points of Lemonldap::NG is its capacity to
+      <li>One of the other strong points of LemonLDAP::NG is its capacity to
       manage the rights in a centralized way: the standard SSO Kerberos or
       CASE allow authentication share but delegate management access
-      authorizations to the applications. In the case of Lemonldap::NG,
+      authorizations to the applications. In the case of LemonLDAP::NG,
       management rights can be centralized completely, partly or at all for
-      each application&nbsp;: Lemonldap::NG provides a system of authorization
-      based on the sorting of the URL by regular expressions associated to
-      rules. It also provides HTTP headers containing any of the user LDAP
-      atributes to the remote application. The remote application can then
-      manage the traceability of the access and possibly authorization (see to
-      it <span class="wikiexternallink"><a href=
-      "http://wiki.lemonldap.objectweb.org1-Overview.html#HAuthentication2CAuthorizationandAccountingmechanisms">
-      documentation AAA</a></span>).</li>
+      each application: LemonLDAP::NG provides a system of authorization based
+      on the sorting of the URL by regular expressions associated to rules. It
+      also provides HTTP headers containing any of the user attributes to the
+      remote application. The remote application can then manage the
+      traceability of the access and possibly authorization.</li>
 
-      <li>Lemonldap::NG can publish every LDAP attributes or calculated
+      <li>LemonLDAP::NG can publish every user attributes or calculate
       expressions issued from them. So applications can avoid consulting LDAP
-      server.</li>
+      or database server.</li>
 
-      <li>Lemonldap::NG treats all the hosted sites independently (virtual or
+      <li>LemonLDAP::NG treats all the hosted sites independently (virtual or
       real): every application can so have its personalized HTTP headers.</li>
 
-      <li>Lemonldap::NG provide an web based administration interface simply
+      <li>LemonLDAP::NG provide an web based administration interface simply
       presenting the configuration, the access policy and the per sites
-      headers (see the <span class="wikiexternallink"><a href=
-      "http://lemonldap.objectweb.org/NG/ManagerDemo/fr/">demonstration</a></span>).
-      A restricted interface can also be used to show only some virtual hosts
-      (for reading and/or writing): the interface of administration can thus
-      be partially delegated.</li>
+      headers.</li>
     </ul>
+
+    <h4 class="heading-1-1-1"><span id="HIsitreallyfree3F">Is it really
+    free?</span></h4>
+
+    <p class="paragraph"></p>Yes, LemonLDAP::NG is released under GPL license
+    (see <span class="wikilink"><a href=
+    "/xwiki/bin/view/Main/License">here</a></span>).
 
     <h3 class="heading-1-1"><span id=
     "HConfiguration">Configuration</span></h3>
 
-    <h4 class="heading-1-1-1"><span id=
-    "HWhattypeofconfigurationstoragehastobeused3F">What type of configuration
-    storage has to be used ?</span></h4>
+    <h4 class="heading-1-1-1"><span id="HWhereistheconfiguration3F">Where is
+    the configuration?</span></h4>
 
-    <p class="paragraph"></p>Lemonldap::NG provides 3 configuration storage
-    systems:
+    <p class="paragraph"></p>LemonLDAP::NG stores its configuration in a
+    global storage. See available backends <span class="wikilink"><a href=
+    "3-Table-of-contents.html">here</a></span>.
 
-    <ul class="star">
-      <li><strong class="strong">File</strong>: the most simple system, it can
-      be used only if all your servers share a file system. It can be used for
-      example if all virtual hosts are on the same server,</li>
-
-      <li><strong class="strong">DBI</strong>: <span class=
-      "wikiexternallink"><a href=
-      "http://www.linuxmanpages.com/man3/DBI.3pm.php">DBI(3)</a></span> is a
-      database access module for the Perl programming language. Used with
-      Lemonldap::NG, it permits to share configuration between servers that
-      can access to the same database. This is the recommended sheme on a
-      server network.</li>
-
-      <li><strong class="strong">SOAP</strong>: This system is not a real
-      storage system, but permits to a remote server to access to the
-      configuration by a single HTTP(S) connection. The SOAP server use File
-      or DBI to access to the real configuration and act as a proxy.</li>
-    </ul>
+    <p class="paragraph"></p>You can also manage local parameters by editing
+    <strong class="strong">lemonldap-ng.ini</strong> file.
 
     <h4 class="heading-1-1-1"><span id=
     "HTheprovidedexampleworkswithHTTP2CbutnotwithHTTPS">The provided example
@@ -232,187 +201,133 @@
 
     <p class="paragraph"></p>In the redirection mechanism to the portal then
     to the protected site, you have to indicate to the handler if users access
-    by HTTPS or HTTP to it. This is done by the <tt>https</tt> parameter. This
-    parameter has to be configured directly in the handlers is not accessible
-    by the manager interface:
-
-    <p class="paragraph"></p>
-    <pre>
-__PACKAGE__-&gt;init ( {
-    localStorage        =&gt; "Cache::FileCache",
-    localStorageOptions =&gt; {
-              'namespace'          =&gt; 'MyNamespace',
-              'default_expires_in' =&gt; 600,
-              'directory_umask'    =&gt; '007',
-              'cache_root'         =&gt; '/tmp',
-              'cache_depth'        =&gt; 5,
-    },
-    configStorage       =&gt; {
-              type                 =&gt; 'File',
-              dirName              =&gt; '/var/lib/lemonldap-ng/conf',
-    },
-    <strong class="strong">https               =&gt; 1</strong>,
-} );
-</pre>
-
-    <h4 class="heading-1-1-1"><span id=
-    "HForwhatisusedthe22https22parameter3F">For what is used the "https"
-    parameter ?</span></h4>
-
-    <p class="paragraph"></p>This parameter is used only in authentication
-    portal redirections. It is just used to indicate to the portal that after
-    authentification, the user must be redirected towards the application
-    using https and not http.
+    by HTTPS or HTTP to it. This is done by the <tt>https</tt> parameter. You
+    can also edit <tt>port</tt> to force port in redirections.
 
     <h4 class="heading-1-1-1"><span id="HWhatisanautoprotectedCGI3F">What is
-    an auto-protected CGI ?</span></h4>
+    an auto-protected CGI?</span></h4>
 
-    <p class="paragraph"></p>When you have just 1 Perl CGI to protect in a
+    <p class="paragraph"></p>When you have just one Perl CGI to protect in a
     VirtualHost, you can use an auto-protected CGI instead of using a
-    Lemonldap::NG handler:
+    LemonLDAP::NG handler:
 
     <p class="paragraph"></p>
-    <pre>
-  use Lemonldap::NG::Handler::CGI;
-  my $cgi = Lemonldap::NG::Handler::CGI-&gt;new ( {
+
+    <div class="code">
+      <pre>
+use Lemonldap::NG::Handler::CGI;
+  my $cgi = Lemonldap::NG::Handler::CGI-&gt;<span class=
+"java-keyword">new</span> ( {
       # same parameters than a Lemonldap::NG::Handler::SharedConf handler
     }
   );
   $cgi-&gt;authenticate;
 </pre>
+    </div>
 
     <p class="paragraph"></p>In the example above, $cgi is a CGI(3) object.
     The only difference is that it has some additional functions:
 
     <ul class="star">
-      <li>authenticate : to call Lemonldap::NG authentication mechanism,</li>
+      <li>authenticate: to call LemonLDAP::NG authentication mechanism,</li>
 
-      <li>autorize : use it if you want to use the manager to manage the
+      <li>authorize: use it if you want to use the manager to manage the
       access policy,</li>
 
-      <li>user : returns an hash table containing user parameters,</li>
+      <li>user: returns an hash table containing user parameters,</li>
 
-      <li>group : used to validate group permet de valider group
-      membership.</li>
+      <li>group: used to validate group membership.</li>
     </ul>This type of CGI is very usefull when rights can not be distinguish
     by URL (fields in POST requests for example). See the
     Lemonldap::NG::Handler::CGI(3) man page for more.
 
     <h4 class="heading-1-1-1"><span id=
-    "HHowtouseLemonldap3A3ANGwithActiveDirectory3F">How to use Lemonldap::NG
+    "HHowtouseLemonLDAP3A3ANGwithActiveDirectory3F">How to use LemonLDAP::NG
     with Active-Directory ?</span></h4>
 
-    <p class="paragraph"></p>Active-Directory uses <tt>cn</tt> field instead
-    of <tt>uid</tt> as unique identifier. You have so to modify Lemonldap::NG
-    configuration in 2 points&nbsp;:
+    <p class="paragraph"></p>Active-Directory uses <tt>sAMAccountName</tt>
+    field instead of <tt>uid</tt> as unique identifier.
 
-    <ol>
-      <li>the field <tt>cn</tt> (or <tt>samAccountName</tt>) has to be used to
-      find the user in the portal,</li>
+    <p class="paragraph"></p>You have so to modify LemonLDAP::NG
+    configuration:
 
-      <li>Apache has to use this field in logs.</li>
-    </ol>For the second point, you have to replace <tt>$uid</tt> by
-    <tt>$cn</tt> in the field "General Parameters -&gt; Attribute to use in
-    Apache's logs" (and to verify that this variable is an exported
-    attribute). The LDAP filter change needs to overload a subroutine in the
-    portail. This can be done so&nbsp;:
+    <ul class="star">
+      <li>Modify LDAP authentication filter (<span class="wikilink"><a href=
+      "4.5-LDAP-authentication-backend.html">Auth LDAP</a></span>)</li>
 
-    <p class="paragraph"></p>
-    <pre>
-#!/usr/bin/perl
-use Lemonldap::NG::Portal::SharedConf;
-my $portal = Lemonldap::NG::Portal::SharedConf-&gt;new(
-    {
-        configStorage =&gt; {
-            type    =&gt; 'File',
-            dirName =&gt; '/var/lib/lemonldap-ng/conf',
-        },
-        <strong class="strong">formateFilter =&gt; sub {</strong>
-            my $self = shift;
-            $self-&gt;{filter} = "(&amp;(cn=" . $self-&gt;{user} . ")(objectClass=person))";
-            PE_OK;
-        } # end of overload
-    }
-);
-</pre>
+      <li>Add <tt>sAMAccountName</tt> to exported attributes</li>
+
+      <li>Set <tt>whatToTrace</tt> parameter to <tt>$samAccountName</tt>.</li>
+    </ul>
 
     <h4 class="heading-1-1-1"><span id=
-    "HHowtouseLemonldap3A3ANGasreverseproxy3F">How to use Lemonldap::NG as
+    "HHowtouseLemonLDAP3A3ANGasreverseproxy3F">How to use LemonLDAP::NG as
     reverse-proxy ?</span></h4>
 
-    <p class="paragraph"></p>Lemonldap::NG protects Apache VirtualHosts. To
+    <p class="paragraph"></p>LemonLDAP::NG protects Apache VirtualHosts. To
     use it as reverse-proxy, you just have to configure Apache as
-    reverse-proxy&nbsp;:
+    reverse-proxy:
 
     <p class="paragraph"></p>
-    <pre>
+
+    <div class="code">
+      <pre>
 # httpd.conf
-&lt;VirtualHost *&gt;
+&lt;VirtualHost&gt;
   ServerName MyApplication.com
   PerlRequire MyFile
   PerlHeaderParserHandler My::Package
   ProxyPass / <span class="nobr"><a href=
-"http://real-server/">http://real-server/</a></span>
+"http://real&amp;#45;server/">http://real-server/</a></span>
   ProxyPassReverse / <span class="nobr"><a href=
-"http://real-server/">http://real-server/</a></span>
-  # You can also use mod_rewrite instead of mod_proxy
-  # RewriteEngine On
-  # RewriteRule /(.*)$ <span class="nobr"><a href=
-"http://serveur-reel/$1">http://serveur-reel/$1</a></span> [P]
+"http://real&amp;#45;server/">http://real-server/</a></span>
 &lt;/VirtualHost&gt;
 </pre>
+    </div>
 
-    <p class="paragraph"></p>If you prefer to use a Perl proxy, Lemonldap::NG
+    <p class="paragraph"></p>If you prefer to use a Perl proxy, LemonLDAP::NG
     provides one (Lemonldap::NG::Handler::Proxy(3))
 
     <h3 class="heading-1-1"><span id="HOperation">Operation</span></h3>
 
-    <h4 class="heading-1-1-1"><span id=
-    "HWithwhatservesthehandlerlocalcache3F">With what serves the handler local
-    cache ?</span></h4>
+    <h4 class="heading-1-1-1"><span id="HWhatisHandlerlocalcache3F">What is
+    Handler local cache?</span></h4>
 
-    <p class="paragraph"></p>The handler local cache is used for 2 things :
+    <p class="paragraph"></p>The handler local cache is used for 2 things:
 
     <ul class="star">
-      <li>share configuration between Apache process : this avoid downloading
+      <li>share configuration between Apache process: this avoid downloading
       configuration for each new process. This is required for the reload
       mechanism system that avoid restarting Apache,</li>
 
-      <li>share sessions between Apache process and threads : this avoid
-      having to request the central sessions storage for each hit. For example
-      with Apache::Session::MySQL, we transform TCP requests in file system
+      <li>share sessions between Apache process and threads: this avoid having
+      to request the central sessions storage for each hit. For example with
+      Apache::Session::MySQL, we transform TCP requests in file system
       requests. This increase performances.</li>
     </ul>
 
     <h4 class="heading-1-1-1"><span id=
-    "HWhyhandlerslocalcachecannotbeconfiguredbythemanager3F">Why handlers
-    local cache can not be configured by the manager ?</span></h4>
+    "HWhyhandlerslocalcachecannotbeconfiguredbytheManager3F">Why handlers
+    local cache can not be configured by the Manager?</span></h4>
 
-    <p class="paragraph"></p>The local cache has to be choosed nad configured
-    for each server: for example with the Cache::FileCache module, the storage
-    directory can be different. An other point is that the local storage can
-    not be reloaded without restarting Apache, but all parameters managed by
-    the manager can do it.
-
-    <h4 class="heading-1-1-1"><span id=
-    "HWhatisthe7E7ECrossDomainAuthentication7E7E28CDA293F">What is the
-    <i class="italic">Cross Domain Authentication</i> (CDA) ?</span></h4>
-
-    <p class="paragraph"></p>The Lemonldap::NG sessions propagation system is
-    based on cookies, but cookies are attached to a DNS domain. Lemonldap::NG
-    provides a system to bypass this restriction: you just have to use a
-    Lemonldap::NG::Portal::CDA portal and Lemonldap::NG::Handler::CDA handlers
-    in all protected sites outwards the portal DNS domain.
+    <p class="paragraph"></p>The local cache has to be choosen and configured
+    for each server: for example with the <tt>Cache::FileCache</tt> module,
+    the storage directory can be different. An other point is that the local
+    storage can not be reloaded without restarting Apache, but all parameters
+    managed by the manager can do it.
 
     <h4 class="heading-1-1-1"><span id=
     "HHowworksthe7E7ECrossDomainAuthentication7E7E28CDA293F">How works the
     <i class="italic">Cross Domain Authentication</i> (CDA) ?</span></h4>
 
-    <p class="paragraph"></p>Lemonldap::NG::Portal::CDA portal detects if
-    required URL is in the same domain. If not, it adds a parameter to this
-    request. When the user returns to the protected application,
-    Lemonldap::NG::Handler::CDA agent detects this parameter et generate a
-    cookie in its domain.
+    <p class="paragraph"></p>The LemonLDAP::NG sessions propagation system is
+    based on cookies, but cookies are attached to a DNS domain. LemonLDAP::NG
+    provides a system to bypass this restriction.
+
+    <p class="paragraph"></p>Lemonldap::NG portal detects if required URL is
+    in the same domain. If not, it adds a parameter to this request. When the
+    user returns to the protected application, Lemonldap::NG Handler detects
+    this parameter et generate a cookie in its domain.
 
     <ul class="star">
       <li><span class="wikilink"><a href=
@@ -420,8 +335,8 @@ my $portal = Lemonldap::NG::Portal::SharedConf-&gt;new(
       (en)</li>
     </ul>
 
-    <h4 class="heading-1-1-1"><span id="HWhatis22notificationsystem22">What is
-    "notification system"</span></h4>
+    <h4 class="heading-1-1-1"><span id="HWhatis22notificationsystem223F">What
+    is "notification system"?</span></h4>
 
     <p class="paragraph"></p>It's a system used to notify a message to a user
     using the portal. If the message contains checkboxes, they have to be all
@@ -432,41 +347,10 @@ my $portal = Lemonldap::NG::Portal::SharedConf-&gt;new(
       "4.9-Notification-system.html">Documentation</a></span> (en)</li>
     </ul>
 
-    <h3 class="heading-1-1"><span id=
-    "HAuthentication">Authentication</span></h3>
-
-    <h4 class="heading-1-1-1"><span id=
-    "HHowtochangeauthenticationscheme3F">How to change authentication scheme
-    ?</span></h4>
-
-    <p class="paragraph"></p>Lemonldap::NG provides several authentication
-    modes (to use in the "authentification" field of the administration
-    interface)&nbsp;:
-
-    <ul class="star">
-      <li><strong class="strong">ldap</strong> : this is the default mode :
-      portal tries to connect to the LDAP server with the user
-      credentials,</li>
-
-      <li><strong class="strong">CAS</strong> : Lemonldap::NG portal becomes a
-      simple CAS proxy : if the user is not authenticated, it is redirected to
-      the CAS portal,</li>
-
-      <li><strong class="strong">SSL</strong> : in this scheme, authentication
-      is done by Apache by SSL. This is usefull to replace complete SSL
-      protection: only one SSL negociation is used instead,</li>
-
-      <li><strong class="strong">Apache</strong> : in this scheme,
-      authentication is done by Apache. For example with Kerberos, the Apache
-      Kerberos module protects only the portal. This increases performances
-      because only one Kerberos negociation has to be done for all protected
-      applications.</li>
-    </ul>
-
     <h3 class="heading-1-1"><span id="HErroranddebugmessages">Error and debug
     messages</span></h3>
 
-    <p class="paragraph"></p>Lemonldap::NG produces error and debug messages
+    <p class="paragraph"></p>LemonLDAP::NG produces error and debug messages
     logged by Apache (in error.log by default). You can adapt debug level by
     setting LogLevel parameter in Apache configuration file.
 

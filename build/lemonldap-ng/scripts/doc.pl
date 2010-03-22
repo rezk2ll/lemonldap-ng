@@ -11,8 +11,7 @@ my $docs = {
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/Presentation?language=fr' => '1-Overview-fr.html',
 
     # FAQ
-    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/FAQ?language=en' => '2-FAQ.html',
-    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/FAQ?language=fr' => '2-FAQ-fr.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/FAQ' => '2-FAQ.html',
 
     #TOC
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/Documentation?language=en' => '3-Table-of-contents.html',
@@ -60,15 +59,18 @@ my $docs = {
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocLA?language=fr' => '4.5-Liberty-Alliance-authentication-backend-fr.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/AuthOpenID'        => '4.5-OpenID-authentication-backend.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/AuthTwitter'       => '4.5-Twitter-authentication-backend.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/AuthDBI'           => '4.5-DBI-authentication-backend.html',
 
     # User backends
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/UserDBLDAP'  => '4.6-LDAP-user-backend.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/UserDBNull'  => '4.6-Null-user-backend.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/UserDBMulti' => '4.6-Multiple-user-backend.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/userDBSAML'  => '4.6-SAML-user-backend.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/userDBDBI'   => '4.6-DBI-user-backend.html',
 
     # Password backends
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/PasswordDBLDAP' => '4.7-LDAP-password-backend.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/PasswordDBDBI'  => '4.7-DBI-password-backend.html',
 
     # LDAP specificities
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocPpolicy' => '4.8-Configure-password-policy.html',
@@ -200,7 +202,6 @@ while ( my ( $url, $file ) = each %$docs ) {
         # FR translation
         if ( $file =~ /-fr\.html/ ) {
             s#/xwiki/bin/view/NG/Presentation#1-Overview-fr.html#g;
-            s#/xwiki/bin/view/NG/FAQ#2-FAQ-fr.html#g;
             s#/xwiki/bin/view/NG/Documentation#3-Table-of-contents-fr.html#g;
             s#/xwiki/bin/view/NG/DocLA#4.5-Configure-Liberty-Alliance-fr.html#g;
             s#/xwiki/bin/view/NG/Erreurs#6-Errors-fr.html#g;
@@ -209,13 +210,13 @@ while ( my ( $url, $file ) = each %$docs ) {
         # EN translation
         else {
             s#/xwiki/bin/view/NG/Presentation#1-Overview.html#g;
-            s#/xwiki/bin/view/NG/FAQ#2-FAQ.html#g;
             s#/xwiki/bin/view/NG/Documentation#3-Table-of-contents.html#g;
             s#/xwiki/bin/view/NG/DocLA#4.5-Configure-Liberty-Alliance-fr.html#g;    # Only FR
             s#/xwiki/bin/view/NG/Erreurs#6-Errors.html#g;
         }
 
         # Default lang
+        s#/xwiki/bin/view/NG/FAQ#2-FAQ.html#g;
         s#/xwiki/bin/view/NG/DocPrereq#3.1-Install-prerequesites.html#g;
         s#/xwiki/bin/view/NG/DocInstallTarball#3.2-Install-from-tarball.html#g;
         s#/xwiki/bin/view/NG/DocInstallDebianPackages#3.3-Install-from-debian-packages.html#g;
@@ -246,11 +247,14 @@ while ( my ( $url, $file ) = each %$docs ) {
         s#/xwiki/bin/view/NG/AuthSAML#4.5-SAML-authentication-backend.html#g;
         s#/xwiki/bin/view/NG/AuthOpenID#4.5-OpenID-authentication-backend.html#g;
         s#/xwiki/bin/view/NG/AuthTwitter#4.5-Twitter-authentication-backend.html#g;
+        s#/xwiki/bin/view/NG/AuthDBI#4.5-DBI-authentication-backend.html#g;
         s#/xwiki/bin/view/NG/UserDBLDAP#4.6-LDAP-user-backend.html#g;
         s#/xwiki/bin/view/NG/UserDBNull#4.6-Null-user-backend.html#g;
         s#/xwiki/bin/view/NG/UserDBMulti#4.6-Multiple-user-backend.html#g;
         s#/xwiki/bin/view/NG/UserDBSAML#4.6-SAML-user-backend.html#g;
+        s#/xwiki/bin/view/NG/UserDBDBI#4.6-DBI-user-backend.html#g;
         s#/xwiki/bin/view/NG/PasswordDBLDAP#4.7-LDAP-password-backend.html#g;
+        s#/xwiki/bin/view/NG/PasswordDBDBI#4.7-DBI-password-backend.html#g;
         s#/xwiki/bin/view/NG/DocPpolicy#4.8-Configure-password-policy.html#g;
         s#/xwiki/bin/view/NG/LDAPSchema#4.8-Configure-LDAP-schema.html#g;
         s#/xwiki/bin/view/NG/CDA#4.9-Cross-domain-authentication.html#g;

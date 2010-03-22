@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
 <head>
   <meta name="generator" content=
-  "HTML Tidy for Linux/x86 (vers 25 March 2009), see www.w3.org" />
+  "HTML Tidy for Linux/x86 (vers 7 December 2008), see www.w3.org" />
 
   <title>Lemonldap::NG documentation:
   4.9-Cross-domain-authentication.html</title>
@@ -64,9 +64,8 @@
     <ul>
       <li><a href="#HPresentation">Presentation</a></li>
 
-      <li><a href="#HConfigureHandler">Configure Handler</a></li>
-
-      <li><a href="#HConfigurePortal">Configure Portal</a></li>
+      <li><a href="#HConfigureLemonLDAP3A3ANG">Configure
+      LemonLDAP::NG</a></li>
     </ul>
 
     <h3 class="heading-1-1"><span id="HPresentation">Presentation</span></h3>
@@ -80,47 +79,22 @@
     Cross-Domain Authentication. It will create cookies on all protected
     domains.
 
-    <h3 class="heading-1-1"><span id="HConfigureHandler">Configure
-    Handler</span></h3>
+    <h3 class="heading-1-1"><span id="HConfigureLemonLDAP3A3ANG">Configure
+    LemonLDAP::NG</span></h3>
 
-    <p class="paragraph"></p>Just add "cda =&gt; 1" in constructor, in
-    handler/MyHandler.pm:
+    <p class="paragraph"></p>In Manager, go in General Parameters &gt; Cookies
+    &gt; Multiple domain and active the functionality.
 
-    <p class="paragraph"></p>
-
-    <div class="code">
-      <pre>
-<span class="java-keyword">package</span> My::Package;
-use Lemonldap::NG::Handler::SharedConf;
-@ISA = qw(Lemonldap::NG::Handler::SharedConf);<br /><br /><b class=
-"bold">PACKAGE</b>-&gt;init(
-    {
-        cda =&gt; 1,
-    }
-);
-1;
-</pre>
-    </div>
-
-    <h3 class="heading-1-1"><span id="HConfigurePortal">Configure
-    Portal</span></h3>
-
-    <p class="paragraph"></p>Just add "cda =&gt; 1" in constructor, in
-    portal/index.pl:
-
-    <p class="paragraph"></p>
+    <p class="paragraph"></p>To use this feature only locally, edit
+    <strong class="strong">lemonldap-ng.ini</strong> and in section [all] add
+    the cda parameter:
 
     <div class="code">
       <pre>
-my $portal = Lemonldap::NG::Portal::SharedConf-&gt;<span class=
-"java-keyword">new</span>(
-    {
-     cda =&gt; 1,
-    });
+[all]
+cda = 1
 </pre>
     </div>
-
-    <p class="paragraph"></p>
   </div>
 
   <p class="footer"><a href="index.html">Index</a></p>
