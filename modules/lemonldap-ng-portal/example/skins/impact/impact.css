@@ -290,3 +290,7 @@ ul.nostyle li {
   margin-left: 10px;
 }
 
+.ui-tabs-hide {
+	display:none;
+}
+
