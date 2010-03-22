@@ -8,10 +8,10 @@
       </div>
       <hr class="solid" />
       <p id="timer" class="text-error"><lang en="You'll be redirected in 10 seconds" fr="Vous allez &ecirc;tre redirig&eacute;(e) automatiquement dans 10 secondes"/></p>
+      <form id="form" action="<TMPL_VAR NAME="URL">" method="get" class="login">
       <div id="content-all-info">
         <TMPL_VAR NAME="MSG">
       </div>
-      <form id="form" action="<TMPL_VAR NAME="URL">" method="get" class="login">
         <div class="panel-buttons">
           <button type="reset" class="negative" tabindex="4" onclick="stop();">
             <lang en="Wait" fr="Attendre" />

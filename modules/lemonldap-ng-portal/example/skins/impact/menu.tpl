@@ -12,7 +12,7 @@
       </p>
       <TMPL_IF NAME="DISPLAY_APPSLIST">
       <div id="content-all-info">
-        <span class="text-label"><lang en="Choose an application your are allowed to access to" fr="Choisissez une application &agrave; laquelle vous &egrave;tes autoris&eacute;es &agrave; acc&eacute;der" /> :</span>
+        <span class="text-label"><lang en="Choose an application your are allowed to access to" fr="Choisissez une application &agrave; laquelle vous &ecirc;tes autoris&eacute;es &agrave; acc&eacute;der" /> :</span>
         <p></p>
         <div id="appslist">
           <TMPL_VAR NAME="APPSLIST_MENU">
@@ -22,10 +22,10 @@
       </TMPL_IF>
       <ul class="nostyle" style="float:left;">
         <TMPL_IF NAME="DISPLAY_PASSWORD">
-        <li><img src="/skins/<TMPL_VAR NAME="SKIN">/images/arrow.png" /><a href="#password"><lang en="Reset password" fr="Changer de mot de passe" /></a></li>
+        <li><img src="/skins/<TMPL_VAR NAME="SKIN">/images/arrow.png" /><a href="#"><lang en="Reset password" fr="Changer de mot de passe" /></a></li>
         </TMPL_IF>
         <TMPL_IF NAME="DISPLAY_LOGOUT">
-        <li><img src="/skins/<TMPL_VAR NAME="SKIN">/images/arrow.png" /><a href="#logout"><lang en="Logout" fr="Se d&eacute;connecter" /></a></li>
+        <li><img src="/skins/<TMPL_VAR NAME="SKIN">/images/arrow.png" /><a href="#" onclick="showLogoutBox('<TMPL_VAR NAME="LOGOUT_URL">');"><lang en="Logout" fr="Se d&eacute;connecter" /></a></li>
         </TMPL_IF>
       </ul>
     </div>

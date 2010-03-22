@@ -1,5 +1,4 @@
 
-/* jQuery */
 $(document).ready(function(){
 	var select='<select id="appsselector">';
 	$('#appslist').find('li.appname').each(function(index){
@@ -11,11 +10,19 @@ $(document).ready(function(){
 	select+='</select>';
 	select+='<input type="button" onclick="goToApplication();return false;" value="OK" />';
 	$('#appslist').append(select);
+	$('#logout').hide();
 });
 
 function goToApplication(){
 	var select=$('#appsselector option:selected').get(0);
 	var url=$(select).attr('value');
 	location.href=url;
+}
+
+function showLogoutBox(url){
+	if(confirm('Are you sure?')==true){
+		location.href=url;
+	}
+	return false;
 }
 

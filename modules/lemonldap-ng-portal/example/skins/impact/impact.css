@@ -1,4 +1,4 @@
-/* CSS for skin STANDARD */
+/* CSS for skin IMPACT */
 /* Shipped with LemonLDAP::NG */
 
 /* -------------------------------------------------------------------------- */
@@ -27,16 +27,7 @@ hr.solid {
   margin-bottom: 15px;
   border: 0px;
   height: 1px;
-  color: #ddd;
-  background: #aaa;
-}
-
-hr.hashed {
-  margin-top: 15px;
-  margin-bottom: 15px;
-  border: 0px;
-  height: 1px;
-  color: #ddd;
+  color: #aaa;
   background: #aaa;
 }
 
@@ -107,6 +98,13 @@ div.title img {
   vertical-align: bottom;
 }
 
+ul.nostyle,
+ul.nostyle li {
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px;
+}
+
 /* -------------------------------------------------------------------------- */
 /* Main layout                                                                */
 /* -------------------------------------------------------------------------- */
@@ -134,13 +132,6 @@ div.title img {
 #content-all {
   padding: 10px;
   height: 322px;
-}
-
-#content-all ul.nostyle,
-#content-all ul.nostyle li {
-  list-style-type: none;
-  margin: 0px;
-  padding: 0px;
 }
 
 #content-all table {

@@ -13,7 +13,7 @@
     <div id="content-right">
       <h1><lang en="Open your SSO session" fr="Ouvrir une session SSO" /></h1>
       <hr class="solid" />
-      <p><span class="text-info"><TMPL_VAR NAME="AUTH_ERROR"></span></p>
+      <p><span class="text-error"><TMPL_VAR NAME="AUTH_ERROR"></span></p>
       <form action="#" method="post" class="login">
         <input type="hidden" name="url" value="" />
         <input type="hidden" name="timezone" />
@@ -26,7 +26,7 @@
           <span class="text-label"><lang en="Password" fr="Mot de passe"/></span><br/>
           <input name="password" type="password" tabindex="2" /><br/>
         </p>
-        <hr class="hashed" />
+        <hr class="solid" />
         <div class="panel-buttons">
           <button type="reset" class="negative" tabindex="4">
             <lang en="Cancel" fr="Annuler" />
