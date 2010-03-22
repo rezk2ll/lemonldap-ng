@@ -6,7 +6,7 @@
 
   <IDPSSODescriptor
       WantAuthnRequestsSigned="<TMPL_VAR NAME="samlIDPSSODescriptorWantAuthnRequestsSigned">"
-      protocolSupportEnumeration="<TMPL_VAR NAME="samlIDPSSODescriptorProtocolSupportEnumeration">">
+      protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
     <KeyDescriptor use="signing">
       <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
         <ds:KeyValue>
@@ -63,7 +63,7 @@
 
   <SPSSODescriptor
       AuthnRequestsSigned="<TMPL_VAR NAME="samlSPSSODescriptorAuthnRequestsSigned">"
-      protocolSupportEnumeration="<TMPL_VAR NAME="samlSPSSODescriptorProtocolSupportEnumeration">">
+      protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
     <KeyDescriptor use="signing">
       <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
         <ds:KeyValue>

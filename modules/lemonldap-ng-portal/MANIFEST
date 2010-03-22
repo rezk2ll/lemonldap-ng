@@ -73,6 +73,7 @@ example/skins/common/vcard_edit.png
 example/skins/common/vcss-blue.gif
 example/skins/common/warning.png
 example/skins/common/warning_triangle.png
+example/skins/impact/confirm.tpl
 example/skins/impact/error.tpl
 example/skins/impact/footer.tpl
 example/skins/impact/header.tpl
@@ -87,7 +88,10 @@ example/skins/impact/impact.css
 example/skins/impact/impact.js
 example/skins/impact/info.tpl
 example/skins/impact/login.tpl
+example/skins/impact/mail.tpl
 example/skins/impact/menu.tpl
+example/skins/impact/notification.tpl
+example/skins/impact/password.tpl
 example/skins/impact/README
 example/skins/pastel/confirm.tpl
 example/skins/pastel/error.tpl
