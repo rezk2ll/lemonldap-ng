@@ -4,7 +4,7 @@
     <div id="content-all">
       <div class="title">
         <img src="/skins/<TMPL_VAR NAME="SKIN">/images/logo-warn.png" />
-        <lang en="Attention" fr="Attention" />
+        <lang en="Warning" fr="Attention" />
       </div>
       <p></p>
       <div id="content-all-info">
