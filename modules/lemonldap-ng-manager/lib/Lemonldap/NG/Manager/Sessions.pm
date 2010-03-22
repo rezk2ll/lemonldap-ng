@@ -489,14 +489,14 @@ sub start {
         ],
         -style => {
             -src => [
-                "$ENV{SCRIPT_NAME}/css",
                 "skins/" . $self->{managerSkin} . "/jquery-ui-1.7.2.custom.css",
+                "$ENV{SCRIPT_NAME}/css",
                 ( $self->{personnalCss} ? $self->{personnalCss} : () )
             ],
         },
     );
     print '
-      <div id="header">
+      <div id="header" class="ui-widget ui-helper-clearfix">
        <img alt="Lemonldap::NG" src="'
       . $self->{imagePath}
       . 'logo_lemonldap-ng.png" class="logo" width="200" height="38" />
@@ -559,7 +559,8 @@ sub css {
     print <<"EOF";
 body
 {
-	font: normal 12px arial, tahoma, helvetica, sans-serif;
+	/*font: normal 12px arial, tahoma, helvetica, sans-serif;*/
+	font:normal 9pt sans-serif;
 	margin:0;
 }
 #header
