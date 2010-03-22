@@ -11,6 +11,7 @@ use XML::LibXSLT;
 use MIME::Base64;
 use JSON;
 use LWP::Simple;
+use LWP::UserAgent;
 
 use URI::Escape;
 use Lemonldap::NG::Common::Safelib;        #link protected safe Safe object

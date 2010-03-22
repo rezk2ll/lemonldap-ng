@@ -217,7 +217,6 @@ sub en {
         samlSPSSODescriptor                  => 'Service Provider',
         samlSPSSODescriptorAuthnRequestsSigned =>
           'Signed Authentication Request',
-        samlSPSSODescriptorProtocolSupportEnumeration => 'Protocol',
         samlSPSSODescriptorKeyDescriptorSigning       => 'Signing Key',
         samlSPSSODescriptorSingleLogoutService        => 'Single Logout',
         samlSPSSODescriptorSingleLogoutServiceHTTP    => 'HTTP Service',
@@ -235,7 +234,6 @@ sub en {
         samlIDPSSODescriptor                           => 'Identity Provider',
         samlIDPSSODescriptorWantAuthnRequestsSigned =>
           'Signed Authentication Request',
-        samlIDPSSODescriptorProtocolSupportEnumeration => 'Protocol',
         samlIDPSSODescriptorKeyDescriptorSigning       => 'Clef de signature',
         samlIDPSSODescriptorSingleSignOnService        => 'Single Sign on',
         samlIDPSSODescriptorSingleSignOnServiceHTTP    => 'HTTP Service',
@@ -431,7 +429,6 @@ sub fr {
         samlSPSSODescriptor                  => 'Fournisseur de service',
         samlSPSSODescriptorAuthnRequestsSigned =>
           'Requête d\'authentification signé',
-        samlSPSSODescriptorProtocolSupportEnumeration => 'Protocole',
         samlSPSSODescriptorKeyDescriptorSigning       => 'Clef de signature',
         samlSPSSODescriptorSingleLogoutService        => 'Single Logout',
         samlSPSSODescriptorSingleLogoutServiceHTTP    => 'Service HTTP',
@@ -449,7 +446,6 @@ sub fr {
         samlIDPSSODescriptor => 'Fournisseur d\'identité',
         samlIDPSSODescriptorWantAuthnRequestsSigned =>
           'Requête d\'authentification signé',
-        samlIDPSSODescriptorProtocolSupportEnumeration => 'Protocole',
         samlIDPSSODescriptorKeyDescriptorSigning       => 'Clef de signature',
         samlIDPSSODescriptorSingleSignOnService        => 'Single Sign on',
         samlIDPSSODescriptorSingleSignOnServiceHTTP    => 'Service HTTP',

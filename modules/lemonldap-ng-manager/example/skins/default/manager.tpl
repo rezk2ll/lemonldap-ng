@@ -316,11 +316,11 @@
            <input id="samlAssertionDefaultOff" type="radio" name="boolean" value="0" /> <lang en="Off" fr="Désactivé"/>
        </td>
       </tr>
-      <tr>
+      <tr class="hidden">
        <td><lang en="Index" fr="Index"/></td>
        <td><input type="text" size="50" id="samlAssertionIndex" /></td>
       </tr>
-      <tr>
+      <tr class="hidden">
        <td><lang en="Binding" fr="Binding"/></td>
        <td><select id="samlAssertionBinding"></select></td>
       </tr>
@@ -338,7 +338,7 @@
     <!-- samlService -->
     <div id="content_samlService" class="hidden">
      <table>
-      <tr>
+      <tr class="hidden">
        <td><lang en="Binding" fr="Binding"/></td>
        <td><select id="samlServiceBinding"></select></td>
       </tr>

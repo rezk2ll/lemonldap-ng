@@ -332,19 +332,19 @@ function authParams(id) {
 		}
 	});
 	formateSelect('authText',[
-		'Apache:Apache',
-		'CAS:Central Authentication Service (CAS)',
-		'DBI:Database (DBI)',
-		'LA:Liberty Alliance',
-		'LDAP:LDAP',
-		'Multi:Multi',
-		'Null:None',
-		'OpenID:OpenID',
-		'Proxy:Proxy',
-		'Remote:Remote',
-		'SAML:SAML v2',
-		'SSL:SSL',
-		'Twitter:Twitter'
+		'Apache=Apache',
+		'CAS=Central Authentication Service (CAS)',
+		'DBI=Database (DBI)',
+		'LA=Liberty Alliance',
+		'LDAP=LDAP',
+		'Multi=Multi',
+		'Null=None',
+		'OpenID=OpenID',
+		'Proxy=Proxy',
+		'Remote=Remote',
+		'SAML=SAML v2',
+		'SSL=SSL',
+		'Twitter=Twitter'
 		],t[0]);
 	display('authParams',lmtext(id));
 }
@@ -352,14 +352,14 @@ function userdbParams(id) {
 	currentId=id;
 	$('#authOptions').hide();
 	formateSelect('authText',[
-		'DBI:Database (DBI)',
-		'Env:Environment',
-		'LDAP:LDAP',
-		'Multi:Multi',
-		'Null:None',
-		'Proxy:Proxy',
-		'Remote:Remote',
-		'SAML:SAML v2'
+		'DBI=Database (DBI)',
+		'Env=Environment',
+		'LDAP=LDAP',
+		'Multi=Multi',
+		'Null=None',
+		'Proxy=Proxy',
+		'Remote=Remote',
+		'SAML=SAML v2'
 		],lmdata(id));
 	display('authParams',lmtext(id));
 }
@@ -418,9 +418,9 @@ function samlAssertion(id) {
 	}
 	$('#samlAssertionIndex').attr('value',t[1]);
 	formateSelect('samlAssertionBinding',[
-		'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact',
-		'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST',
-		'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect'
+		'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact=Artifact',
+		'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST=HTTP POST',
+		'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect=HTTP Redirect'
 		],t[2]);
 	$('#samlAssertionLocation').attr('value',t[3]);
 	display('samlAssertion',lmtext(id));
@@ -460,8 +460,8 @@ function samlService(id) {
 	currentId=id;
 	var t=lmdata(id).split(';');
 	formateSelect('samlServiceBinding',[
-		'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect',
-		'urn:oasis:names:tc:SAML:2.0:bindings:SOAP'
+		'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect=HTTP Redirect',
+		'urn:oasis:names:tc:SAML:2.0:bindings:SOAP=SOAP'
 		],t[0]);
 	$('#samlServiceLocation').attr('value',t[1]);
 	$('#samlServiceResponseLocation').attr('value',t[2]);
@@ -748,10 +748,11 @@ function downloadFile(id){
 function formateSelect(id,values,selectedValue) {
 	var options='';
 	for(i=0;i<values.length;i++){
-		var t=values[i].split(':');
-		options+='<option value="'+t[0]+'"';
-		if(selectedValue==t[0]){options+=' selected';}
-		options+='>'+t[1]+'</option>';
+		var key=values[i].substring(0,values[i].indexOf('='));
+		var val=values[i].substring(values[i].indexOf('=')+1);
+		options+='<option value="'+key+'"';
+		if(selectedValue==key){options+=' selected';}
+		options+='>'+val+'</option>';
 	}
 	$('#'+id).empty().append(options);
 }

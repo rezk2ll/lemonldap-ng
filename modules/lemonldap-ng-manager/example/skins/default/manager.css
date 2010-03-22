@@ -239,3 +239,12 @@ option
   display:inline-block;
   width:20px;
 }
+
+/* saml */
+#content_samlAssertion table,
+#content_samlService table
+{
+  margin-left:auto;
+  margin-right:auto;
+}
+
