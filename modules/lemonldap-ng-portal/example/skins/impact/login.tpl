@@ -1,6 +1,8 @@
 <TMPL_INCLUDE NAME="header.tpl">
 
   <div id="content">
+
+    <TMPL_IF NAME="DISPLAY_FORM">
     <div id="content-left">
       <p><img src="/skins/<TMPL_VAR NAME="SKIN">/images/logo-lock.png" /></p>
       <h1>
@@ -42,6 +44,36 @@
       </p>
       </TMPL_IF>
     </div>
+    </TMPL_IF>
+
+    <TMPL_IF NAME="PORTAL_URL">
+    <div id="content-all">
+      <div class="title">
+        <img src="/skins/<TMPL_VAR NAME="SKIN">/images/logo-info.png" />
+        <lang en="SSO session expired" fr="Session SSO expir&eacute;e" />
+      </div>
+      <hr class="solid" />
+      <p class="text-error"><TMPL_VAR NAME="AUTH_ERROR"></p>
+      <p>
+        <img src="/skins/<TMPL_VAR NAME="SKIN">/images/arrow.png" /><a href="<TMPL_VAR NAME="PORTAL_URL">" class="positive"><lang en="Go to portal" fr="Aller au portail" /></a>
+      </p>
+    </div>
+    </TMPL_IF>
+
+    <TMPL_IF NAME="LOGOUT_URL">
+    <div id="content-all">
+      <div class="title">
+        <img src="/skins/<TMPL_VAR NAME="SKIN">/images/logo-info.png" />
+        <lang en="Close your SSO session" fr="Fermer votre Session SSO" />
+      </div>
+      <hr class="solid" />
+      <p class="text-error"><TMPL_VAR NAME="AUTH_ERROR"></p>
+      <p>
+        <img src="/skins/<TMPL_VAR NAME="SKIN">/images/arrow.png" /><a href="<TMPL_VAR NAME="LOGOUT_URL">" class="negative"><lang en="Logout" fr="Se d&eacute;connecter"/></a>
+      </p>
+    </div>
+    </TMPL_IF>
+
   </div>
 
 <TMPL_INCLUDE NAME="footer.tpl">

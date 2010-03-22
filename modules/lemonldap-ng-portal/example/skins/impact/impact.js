@@ -20,9 +20,11 @@ function goToApplication(){
 }
 
 function showLogoutBox(url){
-	if(confirm('Are you sure?')==true){
-		location.href=url;
-	}
+	$('#layout').fadeTo('fast',0.1);
+	jConfirm(confirmlogoutmsg, confirmlogouttitle, function(r) {
+		$('#layout').fadeTo('fast',1);
+		if(r){location.href=url;};
+	});
 	return false;
 }
 

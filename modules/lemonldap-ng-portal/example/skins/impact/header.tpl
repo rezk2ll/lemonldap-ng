@@ -11,13 +11,15 @@
         <link href="skins/common/favicon.ico" rel="shortcut icon" />
         <script type="text/javascript" src="/skins/common/jquery-1.3.2.min.js"></script>
         <script type="text/javascript" src="/skins/common/jquery-ui-1.7.2.custom.min.js"></script>
-        <script type="text/javascript" src="/skins/<TMPL_VAR NAME="SKIN">/impact.js"></script>
         <script type="text/javascript">//<![CDATA[
             var displaytab='<TMPL_VAR NAME="DISPLAY_TAB">';
             var autocomplete='<TMPL_VAR NAME="AUTOCOMPLETE">';
             var login='<TMPL_VAR NAME="LOGIN">';
             var newwindow='<TMPL_VAR NAME="NEWWINDOW">';
+            var confirmlogoutmsg='<lang en="Are your sure you want to disconnect ?" fr="&Ecirc;tes vous s&ucirc;re de vouloir vous d&eacute;connectez ?" />';
+            var confirmlogouttitle='<lang en="Confirmation" fr="Confirmation" />';
         //]]></script>
+        <script type="text/javascript" src="/skins/<TMPL_VAR NAME="SKIN">/impact.js"></script>
         <script type="text/javascript" src="/skins/common/portal.js"></script>
 </head>
 <body>
