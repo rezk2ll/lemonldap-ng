@@ -7,10 +7,10 @@ package Lemonldap::NG::Handler::Proxy;
 
 use strict;
 
-use Lemonldap::NG::Handler::Simple qw(:apache :headers);
+use Lemonldap::NG::Handler::Simple qw(:apache :headers :traces);
 use LWP::UserAgent;
 
-our $VERSION = '0.41';
+our $VERSION = '0.42';
 
 ##########################################
 # COMPATIBILITY WITH APACHE AND APACHE 2 #
@@ -85,7 +85,7 @@ sub run($$) {
 
     # copy POST data, if any
     if ( $r->method eq "POST" ) {
-        my $len = $r->header_in('Content-Length');
+        my $len = $r->headers_in->{'Content-Length'};
         my $buf;
         $r->read( $buf, $len );
         $request->content($buf);
@@ -142,7 +142,6 @@ sub headers {
             1;
         }
     );
-    $r->send_http_header;
     $headers_set = 1;
 }
 
