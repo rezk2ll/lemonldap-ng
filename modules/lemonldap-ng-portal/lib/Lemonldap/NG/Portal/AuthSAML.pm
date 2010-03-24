@@ -367,32 +367,6 @@ sub extractFormInfo {
                 }
             }
 
-            # Check if assertion was proxied
-            # This mean the Issuer is not our IDP entityID
-            my $allowProxiedAuthn =
-              $self->{samlIDPMetaDataOptions}->{$idp}
-              ->{samlIDPMetaDataOptionsAllowProxiedAuthn};
-
-            unless ($allowProxiedAuthn) {
-                $self->lmLog(
-"Proxied authentication are not allowed, check Assertion Issuer",
-                    'debug'
-                );
-                my $assertion_issuer = $assertion->Issuer()->content();
-                $self->lmLog(
-                    "Found Issuer $assertion_issuer in $idp Assertion",
-                    'debug' );
-                if (
-                    $assertion_issuer ne $self->{_idpList}->{$idp}->{entityID} )
-                {
-                    $self->lmLog(
-"Assertion was proxied, and this is not allowed for IDP $idp",
-                        'error'
-                    );
-                    return PE_ERROR;
-                }
-            }
-
             # Force redirection to portal if no urldc found
             # (avoid displaying the whole SAML URL in user browser URL field)
             $self->{mustRedirect} = 1 unless ( $self->{urldc} );
@@ -604,8 +578,6 @@ sub extractFormInfo {
                     # Get Lasso::Session dump
                     $session_dump = $sessionInfo->{_lassoSessionDump}
                       if $sessionInfo->{_lassoSessionDump};
-
-               # TODO test SessionIndex to be sure to select the correct session
 
                     # Delete Session
                     $self->lmLog(
@@ -859,6 +831,11 @@ sub extractFormInfo {
       ->{samlIDPMetaDataOptionsNameIDFormat};
     $nameIDFormat = $self->getNameIDFormat($nameIDFormat) if $nameIDFormat;
 
+    # IDP ProxyRestriction
+    my $allowProxiedAuthn =
+      $self->{samlIDPMetaDataOptions}->{$idp}
+      ->{samlIDPMetaDataOptionsAllowProxiedAuthn};
+
     # IDP HTTP method
     $method =
       $self->{samlIDPMetaDataOptions}->{$idp}
@@ -884,7 +861,7 @@ sub extractFormInfo {
     # Create SSO request
     $login =
       $self->createAuthnRequest( $server, $IDPentityID, $method, $forceAuthn,
-        $nameIDFormat );
+        $nameIDFormat, $allowProxiedAuthn );
 
     unless ($login) {
         $self->lmLog( "Could not create authentication request on $IDPentityID",

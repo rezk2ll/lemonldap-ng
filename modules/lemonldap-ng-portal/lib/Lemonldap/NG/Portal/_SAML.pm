@@ -211,17 +211,19 @@ sub getOrganizationName {
     return $data->{OrganizationName}->{content};
 }
 
-## @method Lasso::Login createAuthnRequest(Lasso::Server server, string idp, int method, boolean forceAuthn, string nameIDFormat)
+## @method Lasso::Login createAuthnRequest(Lasso::Server server, string idp, int method, boolean forceAuthn, string nameIDFormat, boolean allowProxiedAuthn)
 # Create authentication request for selected IDP
 # @param server Lasso::Server object
 # @param entityID IDP entityID
 # @param method HTTP method
 # @param forceAuthn force authentication on IDP
 # @param nameIDFormat SAML2 NameIDFormat
+# @param allowProxiedAuthn allow proxy on IDP
 # @return Lasso::Login object
 sub createAuthnRequest {
-    my ( $self, $server, $idp, $method, $forceAuthn, $nameIDFormat ) =
-      splice @_;
+    my ( $self, $server, $idp, $method, $forceAuthn, $nameIDFormat,
+        $allowProxiedAuthn )
+      = splice @_;
 
     # Create Lasso Login
     my $login = $self->createLogin($server);
@@ -263,6 +265,24 @@ sub createAuthnRequest {
     if ($forceAuthn) {
         $self->lmLog( "Force authentication on IDP", 'debug' );
         $request->ForceAuthn(1);
+    }
+
+    # Allow proxy
+    unless ($allowProxiedAuthn) {
+        $self->lmLog( "Do not allow this request to be proxied", 'debug' );
+        eval {
+            my $proxyRestriction = Lasso::Saml2ProxyRestriction->new();
+            $proxyRestriction->Audience($idp);
+            $proxyRestriction->Count(0);
+            my $conditions = $request->Conditions()
+              || Lasso::Saml2Conditions->new();
+            $conditions->ProxyRestriction($proxyRestriction);
+            $request->Conditions($conditions);
+        };
+        if ($@) {
+            $self->checkLassoError($@);
+            return;
+        }
     }
 
     # Build authentication request
