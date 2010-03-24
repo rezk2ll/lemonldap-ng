@@ -364,7 +364,9 @@ $ openssl rsa -pubout -in private_key.pem -out public_key.pem
       request</li>
 
       <li>Allow proxied authentication: allow an authentication response to be
-      issued from another IDP that the one we register (proxy IDP)</li>
+      issued from another IDP that the one we register (proxy IDP). If you
+      disallow this, you should also disallow direct login form IDP, because
+      proxy restiction is set in authentication requests.</li>
 
       <li>SSO binding: force binding to use for SSO (http-redirect, http-post,
       etc.)</li>
@@ -375,6 +377,10 @@ $ openssl rsa -pubout -in private_key.pem -out public_key.pem
       <li>Resolution rule: Perl expression that will be evaluate to know if
       this IDP is the default for the connected user. You can use for example
       $ENV{ to get user's IP.</li>
+
+      <li>Allow login from IDP: allow a user to connect directly from an IDP
+      link. In this case, authentication is not a response to an issued
+      authentication request, and we have less control on conditions.</li>
     </ul>
 
     <h3 class="heading-1-1"><span id="HPartnerIDPconfiguration">Partner IDP

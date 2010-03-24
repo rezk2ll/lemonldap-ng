@@ -367,6 +367,16 @@ sub extractFormInfo {
                 }
             }
 
+            # Check if we accept direct login from IDP
+            my $allowLoginFromIDP =
+              $self->{samlIDPMetaDataOptions}->{$idp}
+              ->{samlIDPMetaDataOptionsAllowLoginFromIDP};
+            if ( !$assertion_responded and !$allowLoginFromIDP ) {
+                $self->lmLog( "Direct login from IDP $idp is not allowed",
+                    'error' );
+                return PE_ERROR;
+            }
+
             # Force redirection to portal if no urldc found
             # (avoid displaying the whole SAML URL in user browser URL field)
             $self->{mustRedirect} = 1 unless ( $self->{urldc} );

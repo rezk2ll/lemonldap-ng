@@ -60,7 +60,7 @@ sub cstruct {
                       . ":samlIDPMetaDataXML:filearea",
                     samlIDPMetaDataOptions => {
                         _nodes => [
-                            qw(samlIDPMetaDataOptionsNameIDFormat samlIDPMetaDataOptionsForceAuthn samlIDPMetaDataOptionsAllowProxiedAuthn samlIDPMetaDataOptionsSSOBinding samlIDPMetaDataOptionsSLOBinding samlIDPMetaDataOptionsResolutionRule)
+                            qw(samlIDPMetaDataOptionsNameIDFormat samlIDPMetaDataOptionsForceAuthn samlIDPMetaDataOptionsAllowProxiedAuthn samlIDPMetaDataOptionsSSOBinding samlIDPMetaDataOptionsSLOBinding samlIDPMetaDataOptionsResolutionRule samlIDPMetaDataOptionsAllowLoginFromIDP)
                         ],
                         samlIDPMetaDataOptionsNameIDFormat =>
 "text:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsNameIDFormat",
@@ -74,6 +74,8 @@ sub cstruct {
 "text:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsSLOBinding",
                         samlIDPMetaDataOptionsResolutionRule =>
 "textarea:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsResolutionRule",
+                        samlIDPMetaDataOptionsAllowLoginFromIDP =>
+"bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsAllowLoginFromIDP",
                     },
                 }
             }
@@ -1103,6 +1105,7 @@ sub defaultConf {
                 'samlIDPMetaDataOptionsSSOBinding'        => '',
                 'samlIDPMetaDataOptionsSLOBinding'        => '',
                 'samlIDPMetaDataOptionsResolutionRule'    => '',
+                'samlIDPMetaDataOptionsAllowLoginFromIDP' => '1',
             }
         },
         samlServicePrivateKey                  => '',
@@ -1194,6 +1197,7 @@ sub subDefaultConf {
             'samlIDPMetaDataOptionsSSOBinding'        => '',
             'samlIDPMetaDataOptionsSLOBinding'        => '',
             'samlIDPMetaDataOptionsResolutionRule'    => '',
+            'samlIDPMetaDataOptionsAllowLoginFromIDP' => '1',
         },
     };
 }

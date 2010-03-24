@@ -206,6 +206,7 @@ sub en {
         samlIDPMetaDataOptionsForceAuthn   => 'Force authentication',
         samlIDPMetaDataOptionsAllowProxiedAuthn =>
           'Allow proxied authentication',
+        samlIDPMetaDataOptionsAllowLoginFromIDP => 'Allow login from IDP',
         samlIDPMetaDataOptionsSSOBinding     => 'SSO binding',
         samlIDPMetaDataOptionsSLOBinding     => 'SLO binding',
         samlIDPMetaDataOptionsResolutionRule => 'Resolution rule',
@@ -419,6 +420,8 @@ sub fr {
         samlIDPMetaDataOptionsForceAuthn   => 'Authentification forcée',
         samlIDPMetaDataOptionsAllowProxiedAuthn =>
           'Authentification proxy autorisée',
+        samlIDPMetaDataOptionsAllowLoginFromIDP =>
+          'Authentification depuis le fournisseur autorisée',
         samlIDPMetaDataOptionsSSOBinding     => 'Méthode SSO',
         samlIDPMetaDataOptionsSLOBinding     => 'Méthode SLO',
         samlIDPMetaDataOptionsResolutionRule => 'Règle de résolution',
