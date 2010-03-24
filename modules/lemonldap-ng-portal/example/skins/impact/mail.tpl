@@ -4,36 +4,37 @@
     <div id="content-all">
       <div class="title">
         <img src="/skins/<TMPL_VAR NAME="SKIN">/images/logo-ok.png" />
-        <TMPL_VAR NAME="AUTH_ERROR">
+        <lang en="Forgot your password?" fr="Mot de passe oubli&eacute; ?"/>
       </div>
-      <p></p>
-
-        <TMPL_IF NAME="DISPLAY_FORM">
-
-        <form action="#" method="post" class="login">
-
-        <h3><lang en="Forgot your password?" fr="Mot de passe oubli&eacute; ?"/></h3>
-
-                <table>
-                <tr><th><lang en="Mail" fr="Adresse mail"/></th>
-                <td><input name="mail" type="text"/></td>
-                </tr>
-                <tr><td colspan="2">
-                <div class="buttons">
+      <hr class="solid" />
+      <TMPL_IF NAME="DISPLAY_FORM">
+      <p class="text-error"><TMPL_VAR NAME="AUTH_ERROR"></p>
+      <form action="#" method="post" class="login">
+      <div id="content-all-info">
+        <table>
+          <tr>
+            <th><lang en="Mail" fr="Adresse mail"/></th>
+            <td><input name="mail" type="text"/></td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <div class="buttons">
                 <button type="submit" class="positive">
-                        <img src="/skins/common/accept.png" alt="" />
-                        <lang en="Send me a new password" fr="Envoyez-moi un nouveau mot de passe" />
+                  <lang en="Send me a new password" fr="Envoyez-moi un nouveau mot de passe" />
                 </button>
-                </div></td></tr>
-                </table>
-
-        </form>
-        </TMPL_IF>
-
-	<div class="panel-buttons">
-	<button type="button" class="positive" tabindex="1" onclick="location.href='<TMPL_VAR NAME="PORTAL_URL">';return false;">
-	<lang en="Go to portal" fr="Aller au portail" />
-	</button>
-	</div>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      </form>
+      </TMPL_IF>
+      <div class="panel-buttons">
+        <button type="button" class="positive" tabindex="1" onclick="location.href='<TMPL_VAR NAME="PORTAL_URL">';return false;">
+          <lang en="Go to portal" fr="Aller au portail" />
+        </button>
+      </div>
+    </div>
+  </div>
 
 <TMPL_INCLUDE NAME="footer.tpl">

@@ -6,23 +6,19 @@
         <img src="/skins/<TMPL_VAR NAME="SKIN">/images/logo-ok.png" />
         <lang en="You have some new messages" fr="Vous avez de nouveaux messages"/>
       </div>
-      <p></p>
-
-	<form action="#" method="post" class="login">
-		<h3><lang en="New message(s)" fr="Nouveaux messages"/>&nbsp;:</h3>
-		<table>
-		<tr><td>
-		<TMPL_VAR NAME="NOTIFICATION">
-		<div class="buttons">
-			<button type="submit" class="positive">
-				<img src="/skins/common/accept.png" alt="" />
-				<lang en="Accept" fr="Accepter" />
-			</button>
-		</div>
-		</td></tr>
-		</table>
-	</form>
-
-</div>
+      <hr class="solid" />
+      <p class="text-error"><lang en="New message(s)" fr="Nouveaux messages"/></p>
+      <form action="#" method="post" class="login">
+      <div id="content-all-info">
+        <TMPL_VAR NAME="NOTIFICATION">
+      </div>
+      <div class="buttons">
+        <button type="submit" class="positive">
+          <lang en="Accept" fr="Accepter" />
+        </button>
+      </div>
+      </form>
+    </div>
+  </div>
 
 <TMPL_INCLUDE NAME="footer.tpl">
