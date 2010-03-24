@@ -41,7 +41,6 @@ __END__
 
 =pod
 =cut
-
 ## authParams
 # en
 sub help_authParams_en {

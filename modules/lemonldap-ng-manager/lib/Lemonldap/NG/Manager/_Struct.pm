@@ -128,7 +128,7 @@ sub struct {
                         qw(portalSkin portalAutocomplete portalRequireOldPassword portalUserAttr portalOpenLinkInNewWindow)
                     ],
 
-                    portalSkin         => 'text:/portalSkin:portalParams:skinSelect',
+                    portalSkin => 'text:/portalSkin:portalParams:skinSelect',
                     portalAutocomplete => 'bool:/portalAutocomplete',
                     portalRequireOldPassword =>
                       'bool:/portalRequireOldPassword',
@@ -467,21 +467,21 @@ sub struct {
             exportedVars => {
                 _nodes => ['hash:/exportedVars:vars:btext'],
                 _js    => 'hashRoot',
-		_help  => 'vars',
+                _help  => 'vars',
             },
 
             # MACROS
             macros => {
                 _nodes => ['hash:/macros:macros:btext'],
                 _js    => 'hashRoot',
-		_help  => 'macros',
+                _help  => 'macros',
             },
 
             # GROUPS
             groups => {
                 _nodes => ['hash:/groups:groups:btext'],
                 _js    => 'hashRoot',
-		_help  => 'groups',
+                _help  => 'groups',
             },
         },
 
@@ -956,15 +956,15 @@ sub testStruct {
                 keyTest => sub { return 1; },
             },
         },
-        samlServicePrivateKey                         => $testNotDefined,
-        samlEntityID                                  => $testNotDefined,
-        samlOrganizationDisplayName                   => $testNotDefined,
-        samlOrganizationName                          => $testNotDefined,
-        samlOrganizationURL                           => $testNotDefined,
-        samlSPSSODescriptorAuthnRequestsSigned        => $boolean,
-        samlSPSSODescriptorKeyDescriptorSigning       => $testNotDefined,
-        samlSPSSODescriptorSingleLogoutServiceHTTP    => $testNotDefined,
-        samlSPSSODescriptorSingleLogoutServiceSOAP    => $testNotDefined,
+        samlServicePrivateKey                      => $testNotDefined,
+        samlEntityID                               => $testNotDefined,
+        samlOrganizationDisplayName                => $testNotDefined,
+        samlOrganizationName                       => $testNotDefined,
+        samlOrganizationURL                        => $testNotDefined,
+        samlSPSSODescriptorAuthnRequestsSigned     => $boolean,
+        samlSPSSODescriptorKeyDescriptorSigning    => $testNotDefined,
+        samlSPSSODescriptorSingleLogoutServiceHTTP => $testNotDefined,
+        samlSPSSODescriptorSingleLogoutServiceSOAP => $testNotDefined,
         samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact =>
           $testNotDefined,
         samlSPSSODescriptorAssertionConsumerServiceHTTPPost => $testNotDefined,
@@ -1108,12 +1108,12 @@ sub defaultConf {
                 'samlIDPMetaDataOptionsAllowLoginFromIDP' => '1',
             }
         },
-        samlServicePrivateKey                  => '',
-        samlEntityID                           => $portal . '/saml/metadata',
-        samlOrganizationDisplayName            => 'Example',
-        samlOrganizationName                   => 'Example',
-        samlOrganizationURL                    => 'http://www.example.com',
-        samlSPSSODescriptorAuthnRequestsSigned => '0',
+        samlServicePrivateKey                   => '',
+        samlEntityID                            => $portal . '/saml/metadata',
+        samlOrganizationDisplayName             => 'Example',
+        samlOrganizationName                    => 'Example',
+        samlOrganizationURL                     => 'http://www.example.com',
+        samlSPSSODescriptorAuthnRequestsSigned  => '0',
         samlSPSSODescriptorKeyDescriptorSigning => '',
         samlSPSSODescriptorSingleLogoutServiceHTTP =>
           'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;' 
@@ -1141,7 +1141,7 @@ sub defaultConf {
         samlSPSSODescriptorNameIDFormatPersistent      => '1',
         samlSPSSODescriptorNameIDFormatTransient       => '0',
         samlIDPSSODescriptorWantAuthnRequestsSigned    => '0',
-        samlIDPSSODescriptorKeyDescriptorSigning => '',
+        samlIDPSSODescriptorKeyDescriptorSigning       => '',
         samlIDPSSODescriptorSingleSignOnServiceHTTP =>
           'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;' 
           . $portal

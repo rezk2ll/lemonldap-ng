@@ -524,7 +524,8 @@ sub ajaxNode {
 sub window {
     my $self = shift;
     my $root = shift;
-    print '<div style="margin:5px; background:#DDD;" class="ui-corner-all ui-widget-content"><table border="0" width="100%"><tr style="text-align:center;">
+    print
+'<div style="margin:5px; background:#DDD;" class="ui-corner-all ui-widget-content"><table border="0" width="100%"><tr style="text-align:center;">
       <td><a href="' . $ENV{SCRIPT_NAME} . '">Sessions actives</a></td>
       <td><a href="'
       . $ENV{SCRIPT_NAME} . '?ipclasses=1">R&eacute;seaux</a></td>
