@@ -261,6 +261,17 @@
      </button>
     </div>
 
+    <!-- Skin -->
+    <div id="content_skin" class="hidden">
+     <img src="" alt="" />
+     <br /> 
+     <select id="skinText" onchange="changeSkinImage(this.value);return false;"></select>
+     <br />
+     <button onclick="setlminputdata(currentId,skinText);return false;" class="ui-state-default ui-corner-all">
+     <lang en="Apply" fr="Appliquer" />
+     </button>
+    </div>
+
     <!-- Vhost -->
     <div id="content_vhost" class="hidden">
      <input type="text" id="vhost" />

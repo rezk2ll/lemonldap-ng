@@ -128,7 +128,7 @@ sub struct {
                         qw(portalSkin portalAutocomplete portalRequireOldPassword portalUserAttr portalOpenLinkInNewWindow)
                     ],
 
-                    portalSkin         => 'text:/portalSkin',
+                    portalSkin         => 'text:/portalSkin:portalParams:skinSelect',
                     portalAutocomplete => 'bool:/portalAutocomplete',
                     portalRequireOldPassword =>
                       'bool:/portalRequireOldPassword',

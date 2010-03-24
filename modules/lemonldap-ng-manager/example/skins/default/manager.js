@@ -373,6 +373,20 @@ function passworddbParams(id) {
 		],lmdata(id));
 	display('authParams',lmtext(id));
 }
+function skinSelect(id) {
+	currentId=id;
+	formateSelect('skinText',[
+		'pastel=Pastel',
+		'impact=Impact',
+		],lmdata(id));
+	changeSkinImage(lmdata(id));
+	display('skin',lmtext(id));
+}
+function changeSkinImage(skin) {
+	var imgsrc = imagepath + skin + '.png';
+	$('#content_skin>img').attr('src', imgsrc);
+	$('#content_skin>img').attr('alt', skin);
+}
 function btext(id) {
 	currentId=id;
 	$('#btextKey').attr('value',lmtext(id));
