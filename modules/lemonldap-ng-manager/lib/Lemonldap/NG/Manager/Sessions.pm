@@ -524,7 +524,7 @@ sub ajaxNode {
 sub window {
     my $self = shift;
     my $root = shift;
-    print '<table border="0" width="100%"><tr style="text-align:center;">
+    print '<div style="margin:5px; background:#DDD;" class="ui-corner-all ui-widget-content"><table border="0" width="100%"><tr style="text-align:center;">
       <td><a href="' . $ENV{SCRIPT_NAME} . '">Sessions actives</a></td>
       <td><a href="'
       . $ENV{SCRIPT_NAME} . '?ipclasses=1">R&eacute;seaux</a></td>
@@ -536,8 +536,8 @@ sub window {
       <td><form action="'
       . $ENV{SCRIPT_NAME}
       . '" method="get">Recherche par IP <input name="fullip" /><input type="submit" value="OK" /></form></td>
-    </tr></table>
-    <table border="0" width="100%"><tr><td width="300px" valign="top"><div style="overflow:auto;height:600px;">
+    </tr></table></div><div style="margin:5px;" class="ui-corner-all ui-widget-content">
+    <table border="0" width="100%"><tr><td width="300px" valign="top"><div style="overflow:auto;height:580px;">
     <ul class="simpleTree"><li class="root" id="root"><span>' . $root
       . '</span><ul>';
 }
@@ -547,7 +547,7 @@ sub window {
 sub end {
     my $self = shift;
     print
-'</ul></li></ul></div></td><td valign="top"><div id="content" style="overflow:auto;height:600px;"></div></td></tr></table>';
+'</ul></li></ul></div></td><td valign="top"><div id="content" style="overflow:auto;height:580px;"></div></td></tr></table></div>';
     print '</div>';
     print $self->end_html();
 }
