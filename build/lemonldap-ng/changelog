@@ -14,22 +14,27 @@ lemonldap-ng (1.0rc1) unstable; urgency=low
     - Proxy
     - Env (UserDB only)
     - SAML
+    - OpenID
+    - Twitter
   * Portal index.pl use lemonldap-ng.ini to get parameters
   * CSS and Javascript minification capability
   * Apache configuration splitted into portal/manager/handler
   * XML Menu is deprecated
-  * LDAP recursive groups
+  * LDAP: recursive groups
   * unprotect target in rules
   * Force authentication parameter
   * Store in user session Auth/UserDB/PasswordDB/IssuerDB used module
-  * Use a confirmation token for password reset by mail
+  * Use a confirmation token and HTML templates for password reset by mail
   * SOAP: isAuthorizedUri Web Service
   * Confirm and Info stages in Portal
   * Possibility to define a rule to grant session
   * Configuration parameters for portal customization (skin, ...)
   * Possibility to set cookie expiration
+  * LDAP: option to modify password as user
+  * Correct bugs in Handler::Proxy
+  * New portal skin: impact
 
- -- Xavier Guimard <x.guimard@free.fr>  Thu, 31 Dec 2009 14:09:13 +0100
+ -- Xavier Guimard <x.guimard@free.fr>  Wed, 24 Mar 2010 23:00:00 +0100
 
 lemonldap-ng (0.9.4.1) unstable; urgency=low
 
