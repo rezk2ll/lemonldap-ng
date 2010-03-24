@@ -236,9 +236,13 @@ sub struct {
                     },
 
                     ldapPassword => {
-                        _nodes => [qw(ldapPpolicyControl ldapSetPassword)],
+                        _nodes => [
+                            qw(ldapPpolicyControl ldapSetPassword ldapChangePasswordAsUser)
+                        ],
                         ldapPpolicyControl => 'bool:/ldapPpolicyControl',
                         ldapSetPassword    => 'bool:/ldapSetPassword',
+                        ldapChangePasswordAsUser =>
+                          'bool:/ldapChangePasswordAsUser',
                     },
 
                 },
@@ -794,6 +798,7 @@ sub testStruct {
         },
         ldapPpolicyControl           => $boolean,
         ldapSetPassword              => $boolean,
+        ldapChangePasswordAsUser     => $boolean,
         mailLDAPFilter               => $testNotDefined,
         LDAPFilter                   => $testNotDefined,
         AuthLDAPFilter               => $testNotDefined,

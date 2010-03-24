@@ -13,7 +13,7 @@ use strict;
 
 our @EXPORT = qw(ldap);
 
-our $VERSION = '0.2';
+our $VERSION = '0.3';
 
 ## @cmethod Lemonldap::NG::Portal::_LDAP new(Lemonldap::NG::Portal::Simple portal)
 # Build a Net::LDAP object using parameters issued from $portal
@@ -97,7 +97,16 @@ sub loadPP {
     my $self = shift;
     return 1 if ($ppLoaded);
 
-    # require Perl module
+    # Minimal version of Net::LDAP required
+    eval { use Net::LDAP 0.38 };
+    if ($@) {
+        $self->{portal}->lmLog(
+            "Module Net::LDAP is too old for password policy, please install version 0.38 or higher",
+            'error' );
+        return 0;
+    }
+
+    # Require Perl module
     eval { require Net::LDAP::Control::PasswordPolicy };
     if ($@) {
         $self->{portal}->lmLog(
@@ -198,6 +207,13 @@ sub userModifyPassword {
 
         if ( $self->{portal}->{ldapSetPassword} ) {
 
+            # Bind as user if oldpassword and ldapChangePasswordAsUser
+            if ( $oldpassword and $self->{ldapChangePasswordAsUser} ) {
+
+                $mesg = $self->bind( $dn, password => $oldpassword );
+                return PE_BADOLDPASSWORD if ( $mesg->code != 0 );
+            }
+
             # Use SetPassword extended operation
             use Net::LDAP::Extension::SetPassword;
             $mesg =
@@ -222,8 +238,9 @@ sub userModifyPassword {
                 $mesg = $self->bind( $dn, password => $oldpassword );
                 return PE_BADOLDPASSWORD if ( $mesg->code != 0 );
 
-                # Rebind as Manager
-                $self->bind();
+          # Rebind as Manager only if user is not granted to change its password
+                $self->bind()
+                  unless $self->{portal}->{ldapChangePasswordAsUser};
             }
 
             # Use standard modification
@@ -244,6 +261,13 @@ sub userModifyPassword {
         my $pp = Net::LDAP::Control::PasswordPolicy->new;
 
         if ( $self->{portal}->{ldapSetPassword} ) {
+
+            # Bind as user if oldpassword and ldapChangePasswordAsUser
+            if ( $oldpassword and $self->{ldapChangePasswordAsUser} ) {
+
+                $mesg = $self->bind( $dn, password => $oldpassword );
+                return PE_BADOLDPASSWORD if ( $mesg->code != 0 );
+            }
 
 # Use SetPassword extended operation
 # Warning: need a patch on Perl-LDAP
@@ -273,8 +297,9 @@ sub userModifyPassword {
                 $mesg = $self->bind( $dn, password => $oldpassword );
                 return PE_BADOLDPASSWORD if ( $mesg->code != 0 );
 
-                # Rebind as Manager
-                $self->bind();
+          # Rebind as Manager only if user is not granted to change its password
+                $self->bind()
+                  unless $self->{portal}->{ldapChangePasswordAsUser};
             }
 
             # Use standard modification

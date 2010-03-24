@@ -367,9 +367,9 @@ function passworddbParams(id) {
 	currentId=id;
 	$('#authOptions').hide();
 	formateSelect('authText',[
-		'DBI:Database (DBI)',
-		'LDAP:LDAP',
-		'Null:None'
+		'DBI=Database (DBI)',
+		'LDAP=LDAP',
+		'Null=None'
 		],lmdata(id));
 	display('authParams',lmtext(id));
 }
