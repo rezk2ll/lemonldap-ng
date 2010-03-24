@@ -98,12 +98,10 @@ sub loadPP {
     return 1 if ($ppLoaded);
 
     # Minimal version of Net::LDAP required
-    eval { use Net::LDAP 0.38 };
-    if ($@) {
-        $self->{portal}->lmLog(
-            "Module Net::LDAP is too old for password policy, please install version 0.38 or higher",
-            'error' );
-        return 0;
+    if ( $Net::LDAP::VERSION < 0.38 ) {
+        $self->{portal}->abort(
+"Module Net::LDAP is too old for password policy, please install version 0.38 or higher"
+        );
     }
 
     # Require Perl module
