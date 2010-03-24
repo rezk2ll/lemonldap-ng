@@ -9,6 +9,7 @@ use strict;
 use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::_SAML;    #inherits
 use Lemonldap::NG::Common::Conf::SAML::Metadata;
+use POSIX;
 
 our $VERSION = '0.1';
 our @ISA     = qw(Lemonldap::NG::Portal::_SAML);
@@ -978,7 +979,29 @@ sub setAuthSessionInfo {
     $self->{sessionInfo}->{_idpEntityID} =
       $self->{_idpList}->{$idp}->{entityID};
 
-    # TODO adapt _utime with SessionNotOnOrAfter
+    # Adapt _utime with SessionNotOnOrAfter
+    my $sessionNotOnOrAfter =
+      $assertion->AuthnStatement()->SessionNotOnOrAfter();
+
+    my ( $year, $mon, $mday, $hour, $min, $sec, $ztime ) =
+      ( $sessionNotOnOrAfter =~
+          /(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(Z)?/ );
+    my $samltime = mktime( $sec, $min, $hour, $mday, $mon - 1, $year - 1900 );
+
+    $self->lmLog(
+"Convert SessionNotOnOrAfter $sessionNotOnOrAfter in timestamp: $samltime",
+        'debug'
+    );
+    my $utime   = time();
+    my $timeout = $self->{timeout};
+
+    if ( $utime + $timeout > $samltime ) {
+
+        # Use SAML time to determine the start of the session
+        #$self->{sessionInfo}->{_utime} = $samltime - $timeout;
+        $self->lmLog( "Adjust session _utime with SAML time not active yet",
+            'debug' );
+    }
 
     # Establish federation (required for attribute request in UserDBSAML)
     unless ( $self->acceptSSO($login) ) {

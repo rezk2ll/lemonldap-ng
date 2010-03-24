@@ -1070,7 +1070,7 @@ sub setSessionInfo {
         );
     }
     else {
-        $self->{sessionInfo}->{_utime} = time();
+        $self->{sessionInfo}->{_utime} ||= time();
         $self->{sessionInfo}->{startTime} =
           &POSIX::strftime( "%Y%m%d%H%M%S", localtime() );
         $self->lmLog(
