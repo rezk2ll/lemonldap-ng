@@ -63,15 +63,18 @@ sub cstruct {
                             qw(samlIDPMetaDataOptionsNameIDFormat samlIDPMetaDataOptionsForceAuthn samlIDPMetaDataOptionsAllowProxiedAuthn samlIDPMetaDataOptionsSSOBinding samlIDPMetaDataOptionsSLOBinding samlIDPMetaDataOptionsResolutionRule samlIDPMetaDataOptionsAllowLoginFromIDP samlIDPMetaDataOptionsAdaptSessionUtime)
                         ],
                         samlIDPMetaDataOptionsNameIDFormat =>
-"text:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsNameIDFormat",
+"text:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsNameIDFormat"
+                          . ":default:nameIdFormatParams",
                         samlIDPMetaDataOptionsForceAuthn =>
 "bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsForceAuthn",
                         samlIDPMetaDataOptionsAllowProxiedAuthn =>
 "bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsAllowProxiedAuthn",
                         samlIDPMetaDataOptionsSSOBinding =>
-"text:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsSSOBinding",
+"text:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsSSOBinding"
+                          . ":default:bindingParams",
                         samlIDPMetaDataOptionsSLOBinding =>
-"text:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsSLOBinding",
+"text:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsSLOBinding"
+                          . ":default:bindingParams",
                         samlIDPMetaDataOptionsResolutionRule =>
 "textarea:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsResolutionRule",
                         samlIDPMetaDataOptionsAllowLoginFromIDP =>

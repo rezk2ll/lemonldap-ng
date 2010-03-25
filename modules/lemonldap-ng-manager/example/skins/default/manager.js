@@ -403,6 +403,35 @@ function changeSkinImage(skin) {
 	$('#content_skin>img').attr('src', imgsrc);
 	$('#content_skin>img').attr('alt', skin);
 }
+function nameIdFormatParams(id) {
+	currentId=id;
+	formateSelect('select',[
+			'=',
+			'unspecified=Unspecified',
+			'email=Email',
+			'x509=X509 certificate',
+			'windows=Windows',
+			'kerberos=Kerberos',
+			'entity=Entity',
+			'persistent=Persistent',
+			'transient=Transient',
+			'encrypted=Encrypted',
+			],lmdata(id));
+	display('select',lmtext(id));
+}
+function bindingParams(id) {
+	currentId=id;
+	formateSelect('select',[
+			'=',
+			'http-get=GET',
+			'http-post=POST',
+			'http-redirect=REDIRECT',
+			'http-soap=SOAP',
+			'artifact-get=Artifact GET',
+			'artifact-post=Artifact POST',
+			],lmdata(id));
+	display('select',lmtext(id));
+}
 function btext(id) {
 	currentId=id;
 	$('#btextKey').attr('value',lmtext(id));
@@ -631,11 +660,18 @@ function newVh(name){
 function delSamlAttribute(){
 	delKey();
 }
-function delSamlMetaData(id){
+function delIdpSamlMetaData(id){
 	var idpname = $('#text_'+id).attr('name');
 	if(confirm('Delete '+idpname+' ?')){
 		$('#'+id).remove();
-		samlMetaData(id);
+		samlIdpMetaData(id);
+	}
+}
+function delSpSamlMetaData(id){
+	var spname = $('#text_'+id).attr('name');
+	if(confirm('Delete '+spname+' ?')){
+		$('#'+id).remove();
+		samlSpMetaData(id);
 	}
 }
 function newSamlAttribute(){

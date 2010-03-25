@@ -219,11 +219,7 @@
 
     <!-- Select -->
     <div id="content_select" class="hidden">
-     <select id="select"></select>
-     <br /><br />
-     <button onclick="setlminputdata(currentId,select);return false;" class="ui-state-default ui-corner-all">
-     <lang en="Apply" fr="Appliquer" />
-     </button>
+     <select id="select" onchange="setlmdata(currentId,this.value);return false;"></select>
     </div>
 
     <!-- Integer -->
