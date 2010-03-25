@@ -179,6 +179,8 @@ sub struct {
                       || $self->defaultConf()->{userDB};
                     my $pdb = $self->conf->{passwordDB}
                       || $self->defaultConf()->{passwordDB};
+                    my $idb = $self->conf->{issurDB}
+                      || $self->defaultConf()->{issuerDB};
                     $auth = lc($auth);
                     $udb  = lc($udb);
                     $pdb  = lc($pdb);
@@ -187,8 +189,9 @@ sub struct {
                     foreach my $mod (
                         (
                             $auth,
-                            ( $udb ne ( $auth or $pdb ) ? $udb : () ),
-                            ( $pdb ne ( $auth or $udb ) ? $pdb : () )
+                            ( $udb ne ( $auth or $pdb or $idb ) ? $udb : () ),
+                            ( $pdb ne ( $auth or $udb or $idb ) ? $pdb : () ),
+                            ( $idb ne ( $auth or $udb or $pdb ) ? $idb : () ),
                         )
                       )
                     {
@@ -208,7 +211,8 @@ sub struct {
                     }
                     my @u = keys %res;
 
-              # Add authentication, userDB and passwordDB nodes at the beginning
+    # Add authentication, userDB, passwordDB and issuerDB nodes at the beginning
+                    unshift( @u, "issuerDB" );
                     unshift( @u, "passwordDB" );
                     unshift( @u, "userDB" );
                     unshift( @u, "authentication" );
@@ -222,6 +226,7 @@ sub struct {
                 authentication => 'text:/authentication:authParams:authParams',
                 userDB         => 'text:/userDB:authParams:userdbParams',
                 passwordDB => 'text:/passwordDB:authParams:passworddbParams',
+                issuerDB   => 'text:/issuerDB:authParams:issuerdbParams',
 
                 # LDAP
                 ldapParams => {
@@ -816,6 +821,7 @@ sub testStruct {
             },
         },
         https    => $boolean,
+        issuerDB => $testNotDefined,
         ldapBase => {
             test    => qr/^(?:\w+=.*|)$/,
             msgFail => 'Bad LDAP base',
@@ -1123,6 +1129,7 @@ sub defaultConf {
             'LockDirectory' => '/var/lib/lemonldap-ng/sessions/lock/'
         },
         https           => '0',
+        issuerDB        => 'Null',
         ldapBase        => 'dc=example,dc=com',
         ldapPort        => '389',
         ldapServer      => 'localhost',

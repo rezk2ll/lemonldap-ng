@@ -379,6 +379,16 @@ function passworddbParams(id) {
 		],lmdata(id));
 	display('authParams',lmtext(id));
 }
+function issuerdbParams(id) {
+	currentId=id;
+	$('#authOptions').hide();
+	formateSelect('authText',[
+		'SAML=SAML v2',
+		'OpenID=OpenID',
+		'Null=None'
+		],lmdata(id));
+	display('authParams',lmtext(id));
+}
 function skinSelect(id) {
 	currentId=id;
 	formateSelect('skinText',[
