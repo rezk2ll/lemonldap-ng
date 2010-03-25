@@ -423,7 +423,6 @@ function bindingParams(id) {
 	currentId=id;
 	formateSelect('select',[
 			'=',
-			'http-get=GET',
 			'http-post=POST',
 			'http-redirect=REDIRECT',
 			'http-soap=SOAP',

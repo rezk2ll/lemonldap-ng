@@ -1296,8 +1296,6 @@ sub getNameIDFormat {
 sub getHttpMethod {
     my ( $self, $method ) = splice @_;
 
-    return Lasso::Constants::HTTP_METHOD_GET
-      if ( $method =~ /^(http)?[-_]?get$/i );
     return Lasso::Constants::HTTP_METHOD_POST
       if ( $method =~ /^(http)?[-_]?post$/i );
     return Lasso::Constants::HTTP_METHOD_REDIRECT
