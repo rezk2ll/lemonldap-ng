@@ -994,13 +994,19 @@ sub setAuthSessionInfo {
     );
     my $utime   = time();
     my $timeout = $self->{timeout};
+    my $adaptSessionUtime =
+      $self->{samlIDPMetaDataOptions}->{$idp}
+      ->{samlIDPMetaDataOptionsAdaptSessionUtime};
 
-    if ( $utime + $timeout > $samltime ) {
+    if ( ( $utime + $timeout > $samltime ) and $adaptSessionUtime ) {
 
         # Use SAML time to determine the start of the session
-        #$self->{sessionInfo}->{_utime} = $samltime - $timeout;
-        $self->lmLog( "Adjust session _utime with SAML time not active yet",
-            'debug' );
+        my $new_utime = $samltime - $timeout;
+        $self->{sessionInfo}->{_utime} = $new_utime;
+        $self->lmLog(
+"Adapt _utime with SessionNotOnOrAfter value, new _utime: $new_utime",
+            'debug'
+        );
     }
 
     # Establish federation (required for attribute request in UserDBSAML)

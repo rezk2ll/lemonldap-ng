@@ -60,7 +60,7 @@ sub cstruct {
                       . ":samlIDPMetaDataXML:filearea",
                     samlIDPMetaDataOptions => {
                         _nodes => [
-                            qw(samlIDPMetaDataOptionsNameIDFormat samlIDPMetaDataOptionsForceAuthn samlIDPMetaDataOptionsAllowProxiedAuthn samlIDPMetaDataOptionsSSOBinding samlIDPMetaDataOptionsSLOBinding samlIDPMetaDataOptionsResolutionRule samlIDPMetaDataOptionsAllowLoginFromIDP)
+                            qw(samlIDPMetaDataOptionsNameIDFormat samlIDPMetaDataOptionsForceAuthn samlIDPMetaDataOptionsAllowProxiedAuthn samlIDPMetaDataOptionsSSOBinding samlIDPMetaDataOptionsSLOBinding samlIDPMetaDataOptionsResolutionRule samlIDPMetaDataOptionsAllowLoginFromIDP samlIDPMetaDataOptionsAdaptSessionUtime)
                         ],
                         samlIDPMetaDataOptionsNameIDFormat =>
 "text:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsNameIDFormat",
@@ -76,6 +76,8 @@ sub cstruct {
 "textarea:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsResolutionRule",
                         samlIDPMetaDataOptionsAllowLoginFromIDP =>
 "bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsAllowLoginFromIDP",
+                        samlIDPMetaDataOptionsAdaptSessionUtime =>
+"bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsAdaptSessionUtime",
                     },
                 }
             }
@@ -1106,6 +1108,7 @@ sub defaultConf {
                 'samlIDPMetaDataOptionsSLOBinding'        => '',
                 'samlIDPMetaDataOptionsResolutionRule'    => '',
                 'samlIDPMetaDataOptionsAllowLoginFromIDP' => '1',
+                'samlIDPMetaDataOptionsAdaptSessionUtime' => '1',
             }
         },
         samlServicePrivateKey                   => '',
@@ -1198,6 +1201,7 @@ sub subDefaultConf {
             'samlIDPMetaDataOptionsSLOBinding'        => '',
             'samlIDPMetaDataOptionsResolutionRule'    => '',
             'samlIDPMetaDataOptionsAllowLoginFromIDP' => '1',
+            'samlIDPMetaDataOptionsAdaptSessionUtime' => '1',
         },
     };
 }

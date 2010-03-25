@@ -207,6 +207,7 @@ sub en {
         samlIDPMetaDataOptionsAllowProxiedAuthn =>
           'Allow proxied authentication',
         samlIDPMetaDataOptionsAllowLoginFromIDP => 'Allow login from IDP',
+        samlIDPMetaDataOptionsAdaptSessionUtime => 'Adapt session lifetime',
         samlIDPMetaDataOptionsSSOBinding        => 'SSO binding',
         samlIDPMetaDataOptionsSLOBinding        => 'SLO binding',
         samlIDPMetaDataOptionsResolutionRule    => 'Resolution rule',
@@ -422,6 +423,8 @@ sub fr {
           'Authentification proxy autorisée',
         samlIDPMetaDataOptionsAllowLoginFromIDP =>
           'Authentification depuis le fournisseur autorisée',
+        samlIDPMetaDataOptionsAdaptSessionUtime =>
+          'Adapatation de la durée de vie de la session',
         samlIDPMetaDataOptionsSSOBinding     => 'Méthode SSO',
         samlIDPMetaDataOptionsSLOBinding     => 'Méthode SLO',
         samlIDPMetaDataOptionsResolutionRule => 'Règle de résolution',
