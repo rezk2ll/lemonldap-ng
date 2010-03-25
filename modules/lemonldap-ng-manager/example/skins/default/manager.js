@@ -590,7 +590,7 @@ function reloadAuthParams() {
 	$.ajax({
 		type:"POST",
 		url:scriptname,
-		data:{node:'generalParameters/authParams',conf:'authentication userDB passwordDB',cfgNum:lmdata('li_cm9vdA2'),authentication:lmdata('li_L2F1dGhlbnRpY2F0aW9u0'),userDB:lmdata('li_L3VzZXJEQg2'),passwordDB:lmdata('li_L3Bhc3N3b3JkREI1')},
+		data:{node:'generalParameters/authParams',conf:'authentication userDB passwordDB issuerDB',cfgNum:lmdata('li_cm9vdA2'),authentication:lmdata('li_L2F1dGhlbnRpY2F0aW9u0'),userDB:lmdata('li_L3VzZXJEQg2'),passwordDB:lmdata('li_L3Bhc3N3b3JkREI1'),issuerDB:lmdata('li_L2lzc3VlckRC0')},
 		dataType:'html',
 		success:function(data){
 			var node=$('#li_Z2VuZXJhbFBhcmFtZXRlcnMvYXV0aFBhcmFtcw2 >ul');

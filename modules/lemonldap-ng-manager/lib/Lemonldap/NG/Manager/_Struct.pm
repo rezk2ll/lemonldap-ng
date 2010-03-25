@@ -1055,7 +1055,7 @@ sub testStruct {
           $testNotDefined,
         samlIDPSSODescriptorNameIDFormatX509SubjectName => $boolean,
         samlIDPSSODescriptorNameIDFormatPersistent      => $boolean,
-        samlSPSSODescriptorNameIDFormatTransient        => $boolean,
+        samlIDPSSODescriptorNameIDFormatTransient        => $boolean,
         samlIDPSSODescriptorManageNameIDServiceHTTP     => $testNotDefined,
         samlIDPSSODescriptorManageNameIDServiceSOAP     => $testNotDefined,
 
