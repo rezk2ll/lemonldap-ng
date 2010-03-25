@@ -20,87 +20,11 @@ our @ISA     = qw(Lemonldap::NG::Portal::_SAML);
 sub authInit {
     my $self = shift;
 
-    # Load Lasso
-    return PE_ERROR unless $self->loadLasso();
+    # Load SAML service
+    return PE_ERROR unless $self->loadService();
 
-    # Activate SOAP
-    $self->abort( 'To use SAML, you must activate SOAP (Soap => 1)', 'error' )
-      unless ( $self->{Soap} );
-
-    # Check presence of private key in configuration
-    unless ( $self->{samlServicePrivateKey} ) {
-        $self->lmLog( "SAML private key not found in configuration", 'error' );
-        return PE_ERROR;
-    }
-
-    # Get metadata from configuration
-    $self->lmLog( "Get Metadata for this service", 'debug' );
-    my $service_metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new();
-
-    # Create Lasso server with service metadata
-    my $server = $self->createServer(
-        $service_metadata->serviceToXML(
-            $ENV{DOCUMENT_ROOT} . "/skins/common/saml2-metadata.tpl", $self
-        ),
-        $self->{samlServicePrivateKey},
-    );
-
-    unless ($server) {
-        $self->lmLog( 'Unable to create Lasso server', 'error' );
-        return PE_ERROR;
-    }
-
-    $self->lmLog( "Service created", 'debug' );
-
-    # Check presence of at least one identity provider in configuration
-    unless ( $self->{samlIDPMetaDataXML}
-        and keys %{ $self->{samlIDPMetaDataXML} } )
-    {
-        $self->lmLog( "No IDP found in configuration", 'error' );
-        return PE_ERROR;
-    }
-
-    # Load identity provider metadata
-    # IDP metadata are listed in $self->{samlIDPMetaDataXML}
-    # Each key is the IDP name
-    # Build IDP list for later use in extractFormInfo
-    foreach ( keys %{ $self->{samlIDPMetaDataXML} } ) {
-
-        $self->lmLog( "Get Metadata for IDP $_", 'debug' );
-
-        # Get metadata from configuration
-        my $idp_metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new();
-        unless (
-            $idp_metadata->initializeFromConfHash(
-                $self->{samlIDPMetaDataXML}->{$_}->{samlIDPMetaDataXML}
-            )
-          )
-        {
-            $self->lmLog( "Fail to read IDP $_ Metadata from configuration",
-                'error' );
-            return PE_ERROR;
-        }
-
-        # Add this IDP to Lasso::Server
-        my $result = $self->addIDP( $server, $idp_metadata->toXML() );
-
-        unless ($result) {
-            $self->lmLog( "Fail to use IDP $_ Metadata", 'error' );
-            return PE_ERROR;
-        }
-
-        # Store IDP entityID and Organization Name
-        my $entityID = $idp_metadata->{entityID};
-        my $name = $self->getOrganizationName( $server, $entityID )
-          || ucfirst($_);
-        $self->{_idpList}->{$_}->{entityID} = $entityID;
-        $self->{_idpList}->{$_}->{name}     = $name;
-
-        $self->lmLog( "IDP $_ added", 'debug' );
-    }
-
-    # Store Lasso::Server object
-    $self->{_lassoServer} = $server;
+    # Load SAML identity providers
+    return PE_ERROR unless $self->loadIDPs();
 
     PE_OK;
 }

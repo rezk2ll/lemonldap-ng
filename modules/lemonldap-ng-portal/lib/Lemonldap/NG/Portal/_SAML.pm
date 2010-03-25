@@ -6,6 +6,7 @@
 package Lemonldap::NG::Portal::_SAML;
 
 use strict;
+use Lemonldap::NG::Common::Conf::SAML::Metadata;
 use XML::Simple;
 use MIME::Base64;
 use LWP::UserAgent;    # SOAP call
@@ -80,6 +81,120 @@ sub loadLasso {
     }
 
     return 1;
+}
+
+## @method boolean loadService()
+# Load SAML service by creating a SAML server
+# @return boolean result
+sub loadService {
+    my $self = shift;
+
+    # Load Lasso
+    return 0 unless $self->loadLasso();
+
+    # Activate SOAP
+    $self->abort( 'To use SAML, you must activate SOAP (Soap => 1)', 'error' )
+      unless ( $self->{Soap} );
+
+    # Check presence of private key in configuration
+    unless ( $self->{samlServicePrivateKey} ) {
+        $self->lmLog( "SAML private key not found in configuration", 'error' );
+        return 0;
+    }
+
+    # Get metadata from configuration
+    $self->lmLog( "Get Metadata for this service", 'debug' );
+    my $service_metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new();
+
+    # Create Lasso server with service metadata
+    my $server = $self->createServer(
+        $service_metadata->serviceToXML(
+            $ENV{DOCUMENT_ROOT} . "/skins/common/saml2-metadata.tpl", $self
+        ),
+        $self->{samlServicePrivateKey},
+    );
+
+    # Log
+    unless ($server) {
+        $self->lmLog( 'Unable to create Lasso server', 'error' );
+        return 0;
+    }
+    $self->lmLog( "Service created", 'debug' );
+
+    # Store Lasso::Server object
+    $self->{_lassoServer} = $server;
+
+    return 1;
+}
+
+## @method boolean loadIDPs()
+# Load SAML identity providers
+# @return boolean result
+sub loadIDPs {
+    my $self = shift;
+
+    # Check if SAML service is loaded
+    return 0 unless $self->{_lassoServer};
+
+    # Check presence of at least one identity provider in configuration
+    unless ( $self->{samlIDPMetaDataXML}
+        and keys %{ $self->{samlIDPMetaDataXML} } )
+    {
+        $self->lmLog( "No IDP found in configuration", 'error' );
+        return 0;
+    }
+
+    # Load identity provider metadata
+    # IDP metadata are listed in $self->{samlIDPMetaDataXML}
+    # Each key is the IDP name
+    # Build IDP list for later use in extractFormInfo
+    foreach ( keys %{ $self->{samlIDPMetaDataXML} } ) {
+
+        $self->lmLog( "Get Metadata for IDP $_", 'debug' );
+
+        # Get metadata from configuration
+        my $idp_metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new();
+        unless (
+            $idp_metadata->initializeFromConfHash(
+                $self->{samlIDPMetaDataXML}->{$_}->{samlIDPMetaDataXML}
+            )
+          )
+        {
+            $self->lmLog( "Fail to read IDP $_ Metadata from configuration",
+                'error' );
+            return 0;
+        }
+
+        # Add this IDP to Lasso::Server
+        my $result = $self->addIDP(
+            $self->{_lassoServer}, $idp_metadata->toXML()
+        );
+
+        unless ($result) {
+            $self->lmLog( "Fail to use IDP $_ Metadata", 'error' );
+            return 0;
+        }
+
+        # Store IDP entityID and Organization Name
+        my $entityID = $idp_metadata->{entityID};
+        my $name = $self->getOrganizationName( $self->{_lassoServer}, $entityID )
+          || ucfirst($_);
+        $self->{_idpList}->{$_}->{entityID} = $entityID;
+        $self->{_idpList}->{$_}->{name}     = $name;
+
+        $self->lmLog( "IDP $_ added", 'debug' );
+    }
+
+    return 1;
+}
+
+## @method boolean loadSPs()
+# Load SAML service providers
+# @return boolean result
+sub loadSPs {
+    my $self = shift;
+    $self->abort('This feature is not released');
+    return 0;
 }
 
 ## @method boolean checkLassoError(Lasso::Error error, string level)
