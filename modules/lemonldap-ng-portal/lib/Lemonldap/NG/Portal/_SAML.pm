@@ -148,6 +148,7 @@ sub loadIDPs {
     # IDP metadata are listed in $self->{samlIDPMetaDataXML}
     # Each key is the IDP name
     # Build IDP list for later use in extractFormInfo
+    $self->{_idpList} = ();
     foreach ( keys %{ $self->{samlIDPMetaDataXML} } ) {
 
         $self->lmLog( "Get Metadata for IDP $_", 'debug' );
@@ -179,6 +180,7 @@ sub loadIDPs {
         my $entityID = $idp_metadata->{entityID};
         my $name = $self->getOrganizationName( $self->{_lassoServer}, $entityID )
           || ucfirst($_);
+        $self->{_idpList}->{$_} = ();
         $self->{_idpList}->{$_}->{entityID} = $entityID;
         $self->{_idpList}->{$_}->{name}     = $name;
 
@@ -209,6 +211,7 @@ sub loadSPs {
     # SP metadata are listed in $self->{samlSPMetaDataXML}
     # Each key is the SP name
     # Build SP list for later use in extractFormInfo
+    $self->{_spList} = ();
     foreach ( keys %{ $self->{samlSPMetaDataXML} } ) {
 
         $self->lmLog( "Get Metadata for SP $_", 'debug' );
@@ -240,6 +243,7 @@ sub loadSPs {
         my $entityID = $sp_metadata->{entityID};
         my $name = $self->getOrganizationName( $self->{_lassoServer}, $entityID )
           || ucfirst($_);
+        $self->{_spList}->{$_} = ();
         $self->{_spList}->{$_}->{entityID} = $entityID;
         $self->{_spList}->{$_}->{name}     = $name;
 
@@ -330,7 +334,8 @@ sub addSP {
 
     return 0 unless ( $server->isa("Lasso::Server") and defined $metadata );
 
-    return 0;
+    return $self->addProvider( $server, Lasso::Constants::PROVIDER_ROLE_SP,
+        $metadata, $public_key, $ca_cert_chain );
 }
 
 ## @method boolean addProvider(Lasso::Server server, int role, string metadata, string public_key, string ca_cert_chain)
