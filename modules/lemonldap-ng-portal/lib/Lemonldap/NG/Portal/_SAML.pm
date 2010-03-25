@@ -193,8 +193,60 @@ sub loadIDPs {
 # @return boolean result
 sub loadSPs {
     my $self = shift;
-    $self->abort('This feature is not released');
+
+    # Check if SAML service is loaded
+    return 0 unless $self->{_lassoServer};
+
+    # Check presence of at least one service provider in configuration
+    unless ( $self->{samlSPMetaDataXML}
+        and keys %{ $self->{samlSPMetaDataXML} } )
+    {
+        $self->lmLog( "No SP found in configuration", 'error' );
+        return 0;
+    }
+
+    # Load service provider metadata
+    # SP metadata are listed in $self->{samlSPMetaDataXML}
+    # Each key is the SP name
+    # Build SP list for later use in extractFormInfo
+    foreach ( keys %{ $self->{samlSPMetaDataXML} } ) {
+
+        $self->lmLog( "Get Metadata for SP $_", 'debug' );
+
+        # Get metadata from configuration
+        my $sp_metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new();
+        unless (
+            $sp_metadata->initializeFromConfHash(
+                $self->{samlSPMetaDataXML}->{$_}->{samlSPMetaDataXML}
+            )
+          )
+        {
+            $self->lmLog( "Fail to read SP $_ Metadata from configuration",
+                'error' );
+            return 0;
+        }
+
+        # Add this SP to Lasso::Server
+        my $result = $self->addSP(
+            $self->{_lassoServer}, $sp_metadata->toXML()
+        );
+
+        unless ($result) {
+            $self->lmLog( "Fail to use SP $_ Metadata", 'error' );
     return 0;
+        }
+
+        # Store IDP entityID and Organization Name
+        my $entityID = $sp_metadata->{entityID};
+        my $name = $self->getOrganizationName( $self->{_lassoServer}, $entityID )
+          || ucfirst($_);
+        $self->{_spList}->{$_}->{entityID} = $entityID;
+        $self->{_spList}->{$_}->{name}     = $name;
+
+        $self->lmLog( "SP $_ added", 'debug' );
+    }
+
+    return 1;
 }
 
 ## @method boolean checkLassoError(Lasso::Error error, string level)
@@ -264,6 +316,21 @@ sub addIDP {
 
     return $self->addProvider( $server, Lasso::Constants::PROVIDER_ROLE_IDP,
         $metadata, $public_key, $ca_cert_chain );
+}
+
+## @method boolean addSP(Lasso::Server server, string metadata, string public_key, string ca_cert_chain)
+# Add SP to an existing Lasso::Server
+# @param Lasso::Server Lasso::Server object
+# @param string metadata SP metadata
+# @param string optional public key
+# @param string optional ca cert chain
+# @return boolean result
+sub addSP {
+    my ( $self, $server, $metadata, $public_key, $ca_cert_chain ) = splice @_;
+
+    return 0 unless ( $server->isa("Lasso::Server") and defined $metadata );
+
+    return 0;
 }
 
 ## @method boolean addProvider(Lasso::Server server, int role, string metadata, string public_key, string ca_cert_chain)

@@ -18,8 +18,14 @@ our $VERSION = '0.01';
 # @return Lemonldap::NG::Portal error code
 sub issuerDBInit {
     my $self = shift;
-    $self->abort('This feature is not released');
-    return PE_OK;
+
+    # Load SAML service
+    return PE_ERROR unless $self->loadService();
+
+    # Load SAML identity providers
+    return PE_ERROR unless $self->loadSPs();
+
+    PE_OK;
 }
 
 ## @apmethod int issuerForUnAuthUser()
