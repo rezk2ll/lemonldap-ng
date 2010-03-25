@@ -1167,7 +1167,7 @@ __END__
 
 =encoding utf8
 
-Lemonldap::NG::Portal::_SAML
+Lemonldap::NG::Portal::_SAML - Common SAML functions
 
 =head1 SYNOPSIS
 
