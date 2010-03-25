@@ -281,7 +281,8 @@ function display(div,title) {
 	$('#content_'+div).addClass('content');
 	$('#content_title').html(title);
 	$('#newkb,#newrb,#delkb,#newkbr,#newrbr,#bdelvh,#bnewvh').hide();
-	$('#newsamlmetadatab,#delsamlmetadatab').hide();
+	$('#newidpsamlmetadatab,#delidpsamlmetadatab').hide();
+	$('#newspsamlmetadatab,#delspsamlmetadatab').hide();
 	$('#newsamlattributeb,#delsamlattributeb').hide();
 	$('#newsamlattributebr').hide();
 	var height_cur=$('#buttons').height()+$('#edition').height()+$('#help').height();
@@ -308,7 +309,12 @@ function vhostRoot(id){
 function samlIdpRoot(id){
 	currentId=id;
 	display('default','');
-	$('#newsamlmetadatab').show();
+	$('#newidpsamlmetadatab').show();
+}
+function samlSpRoot(id){
+	currentId=id;
+	display('default','');
+	$('#newspsamlmetadatab').show();
 }
 function authParams(id) {
 	currentId=id;
@@ -418,8 +424,9 @@ function filearea(id) {
 	currentId=id;
 	$('#urlinput').hide();
 	$('#filearea').attr('value',lmdata(id));
-	/* Only samlIDPMetaDataXML element could be loaded from URL */
+	/* Only samlIDPMetaDataXML and samlSPMetaDataXML element could be loaded from URL */
 	if(lmtext(id)=='samlIDPMetaDataXML'){$('#urlinput').show();}
+	if(lmtext(id)=='samlSPMetaDataXML') {$('#urlinput').show();}
 	display('filearea',lmtext(id));
 }
 function samlAssertion(id) {
@@ -459,16 +466,27 @@ function samlAttributeRoot(){
 	display('default','');
 	$('#newsamlattributebr').show();
 }
-function samlMetaData(id){
+function samlIdpMetaData(id){
         currentId=id;
-        $('#samlMetaData').attr('value',lmtext(id));
-        display('samlMetaData',lmtext(id));
+        $('#samlIdpMetaData').attr('value',lmtext(id));
+        display('samlIdpMetaData',lmtext(id));
         if($('#li_'+myB64('/samlIDPMetaDataNode')).find('span').size()==1){
-                $('#delsamlmetadatab').hide();
+                $('#delidpsamlmetadatab').hide();
         }else{
-                $('#delsamlmetadatab').show();
+                $('#delidpsamlmetadatab').show();
         }
-	$('#newsamlmetadatab').show();
+	$('#newidpsamlmetadatab').show();
+}
+function samlSpMetaData(id){
+        currentId=id;
+        $('#samlSpMetaData').attr('value',lmtext(id));
+        display('samlSpMetaData',lmtext(id));
+        if($('#li_'+myB64('/samlSPMetaDataNode')).find('span').size()==1){
+                $('#delspsamlmetadatab').hide();
+        }else{
+                $('#delspsamlmetadatab').show();
+        }
+	$('#newspsamlmetadatab').show();
 }
 function samlService(id) {
 	currentId=id;
@@ -523,11 +541,6 @@ function rulesRoot(id){
 	currentId=id;
 	display('default','');
 	$('#newrbr').show();
-}
-function samlMetaDataRoot(id){
-	currentId=id;
-	display('default', '');
-	$('#newsamlmetadatab').show();
 }
 function reloadAuthParams() {
 	var value=$('#authText').attr('value');
@@ -631,13 +644,22 @@ function newSamlAttributeR(){
         });
         return false;
 }
-function newSamlMetaData(){
-	var name = prompt(text4newSamlMetaData,'authentic');
+function newIdpSamlMetaData(){
+	var name = prompt(text4newSamlMetaData,'idp-example');
 	if(!name){return false;}
 	var idpId='li_'+myB64('/samlIDPMetaDataExportedAttributes/'+name);
 	simpleTreeCollection[0].newAjaxNodeIn($('#li_L3NhbWxJRFBNZXRhRGF0YU5vZGU1'),idpId,name,scriptname+'?type=new&node=/samlIDPMetaDataNode/'+name,function(d,s){
-		$('>span',s).attr('name',name).attr('help','default').attr('id','text_'+idpId).attr('onclick','samlMetaData(\''+idpId+'\')');
-		samlMetaData(idpId);
+		$('>span',s).attr('name',name).attr('help','default').attr('id','text_'+idpId).attr('onclick','samlIdpMetaData(\''+idpId+'\')');
+		samlIdpMetaData(idpId);
+	});
+}
+function newSpSamlMetaData(){
+	var name = prompt(text4newSamlMetaData,'sp-example');
+	if(!name){return false;}
+	var spId='li_'+myB64('/samlSPMetaDataExportedAttributes/'+name);
+	simpleTreeCollection[0].newAjaxNodeIn($('#li_L3NhbWxTUE1ldGFEYXRhTm9kZQ2'),spId,name,scriptname+'?type=new&node=/samlSPMetaDataNode/'+name,function(d,s){
+		$('>span',s).attr('name',name).attr('help','default').attr('id','text_'+spId).attr('onclick','samlSpMetaData(\''+spId+'\')');
+		samlSpMetaData(spId);
 	});
 }
 var cfgAttrDone=0;

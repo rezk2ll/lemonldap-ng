@@ -35,6 +35,7 @@ sub confUpload {
     # Variables to store current vhost and IDP name
     my $vhostname;
     my $idpname;
+    my $spname;
 
     # 1. ANALYSE DATAS
 
@@ -88,11 +89,20 @@ sub confUpload {
             $idpname = $name;
         }
 
+        # Get SAML SP name
+        if ( $id =~ /samlSPMetaDataExportedAttributes\/([^\/]*)?$/ ) {
+            $self->lmLog( "Entering SP $name", 'debug' );
+            $spname = $name;
+        }
+
         # Manage new keys
         if ($NK) {
 
             # Special case: avoid bug with node created from parent node
-            if ( $id =~ /^(virtualHosts|samlIDPMetaDataExportedAttributes)/ ) {
+            if ( $id =~
+/^(virtualHosts|samlIDPMetaDataExportedAttributes|samlSPMetaDataExportedAttributes)/
+              )
+            {
                 $self->lmLog( "Special trigger for $id (attribute $name)",
                     'debug' );
 
@@ -110,6 +120,11 @@ s/^virtualHosts\/([^\/]*)?\/header.*/exportedHeaders\/$1\/$name/;
                 # SAML IDP attribute
                 $id =~
 s/^samlIDPMetaDataExportedAttributes\/([^\/]*)?.*/samlIDPMetaDataExportedAttributes\/$1\/$name/;
+
+                # SAML SP attribute
+                $id =~
+s/^samlSPMetaDataExportedAttributes\/([^\/]*)?.*/samlSPMetaDataExportedAttributes\/$1\/$name/;
+
             }
 
             # Normal case
@@ -126,11 +141,16 @@ s/^(exportedHeaders|locationRules)\/([^\/]*)?\/(.*)$/$1\/$vhostname\/$3/;
         $id =~
 s/^(samlIDPMetaDataXML|samlIDPMetaDataExportedAttributes|samlIDPMetaDataOptions)\/([^\/]*)?\/(.*)$/$1\/$idpname\/$3/;
 
+        # Set current SAML SP name
+        $id =~
+s/^(samlSPMetaDataXML|samlSPMetaDataExportedAttributes|samlSPMetaDataOptions)\/([^\/]*)?\/(.*)$/$1\/$spname\/$3/;
+
         $self->lmLog( "id transformed into $id", 'debug' );
 
         next
           if ( $id =~
-            /^(generalParameters|variables|virtualHosts|samlIDPMetaDataNode)/ );
+/^(generalParameters|variables|virtualHosts|samlIDPMetaDataNode|samlSPMetaDataNode)/
+          );
         my ( $confKey, $test ) = $self->getConfTests($id);
         my ( $res, $m );
 
@@ -467,7 +487,7 @@ sub findAllConfKeys {
 sub formatValue {
     my ( $self, $key, $value ) = @_;
     my $newvalue = $value;
-    if ( $key =~ /^samlIDPMetaDataXML/ ) {
+    if ( $key =~ /^(samlIDPMetaDataXML|samlSPMetaDataXML)/ ) {
         my $metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new();
         if ( ref($value) ) {
             $metadata->initializeFromConfHash($value);

@@ -83,6 +83,33 @@ sub cstruct {
             }
         );
     }
+    elsif ( $k1 =~ /^samlSPMetaDataNode/i ) {
+        %$h = (
+            %$h,
+            samlSPMetaDataNode => {
+                $k2 => {
+                    _nodes => [
+                        qw(samlSPMetaDataXML samlSPMetaDataExportedAttributes samlSPMetaDataOptions)
+                    ],
+                    samlSPMetaDataExportedAttributes => {
+                        _nodes => [
+                                "hash:/samlSPMetaDataExportedAttributes/$k2"
+                              . ":samlSPMetaDataExportedAttributes:samlAttribute"
+                        ],
+                        _js => 'samlAttributeRoot'
+                    },
+                    samlSPMetaDataXML => "samlmetadata:/samlSPMetaDataXML/$k2"
+                      . ":samlSPMetaDataXML:filearea",
+                    samlSPMetaDataOptions => {
+                        _nodes =>
+                          ['samlSPMetaDataOptionsRequestedAuthnContext'],
+                        samlSPMetaDataOptionsRequestedAuthnContext =>
+"text:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsRequestedAuthnContext",
+                    },
+                }
+            }
+        );
+    }
     return $h;
 }
 
@@ -93,7 +120,7 @@ sub struct {
     my $self = shift;
     return {
         _nodes => [
-            qw(n:generalParameters n:variables n:virtualHosts n:samlServiceMetaData n:samlIDPMetaDataNode)
+            qw(n:generalParameters n:variables n:virtualHosts n:samlServiceMetaData n:samlIDPMetaDataNode n:samlSPMetaDataNode)
         ],
         _help => 'default',
 
@@ -503,11 +530,20 @@ sub struct {
         # virtual keys should not begin like configuration keys.
         samlIDPMetaDataNode => {
             _nodes => [
-'nhash:/samlIDPMetaDataExportedAttributes:samlIDPMetaDataNode:samlMetaData'
+'nhash:/samlIDPMetaDataExportedAttributes:samlIDPMetaDataNode:samlIdpMetaData'
             ],
             _upload => [ '/samlIDPMetaDataXML', '/samlIDPMetaDataOptions' ],
             _help   => 'default',
             _js     => 'samlIdpRoot',
+        },
+
+        samlSPMetaDataNode => {
+            _nodes => [
+'nhash:/samlSPMetaDataExportedAttributes:samlSPMetaDataNode:samlSpMetaData'
+            ],
+            _upload => [ '/samlSPMetaDataXML', '/samlSPMetaDataOptions' ],
+            _help   => 'default',
+            _js     => 'samlSpRoot',
         },
 
         samlServiceMetaData => {
@@ -958,6 +994,31 @@ sub testStruct {
                 keyTest => sub { return 1; },
             },
         },
+        samlSPMetaDataExportedAttributes => {
+            keyTest    => qr/^[a-zA-Z](?:[\w\-\.]*\w)?$/,
+            keyMsgFail => 'Bad metadata name',
+            '*'        => {
+                keyTest    => qr/^\w([\w\-]*\w)?$/,
+                keyMsgFail => 'Bad attribute name',
+                test       => sub { return 1; },
+            },
+        },
+        samlSPMetaDataXML => {
+            keyTest    => qr/^[a-zA-Z](?:[\w\-\.]*\w)?$/,
+            keyMsgFail => 'Bad metadata name',
+            '*'        => {
+                test    => sub { return 1; },
+                keyTest => sub { return 1; },
+            },
+        },
+        samlSPMetaDataOptions => {
+            keyTest    => qr/^[a-zA-Z](?:[\w\-\.]*\w)?$/,
+            keyMsgFail => 'Bad metadata name',
+            '*'        => {
+                test    => sub { return 1; },
+                keyTest => sub { return 1; },
+            },
+        },
         samlServicePrivateKey                      => $testNotDefined,
         samlEntityID                               => $testNotDefined,
         samlOrganizationDisplayName                => $testNotDefined,
@@ -1096,26 +1157,20 @@ sub defaultConf {
         ########
         # SAML #
         ########
-        samlIDPMetaDataXML => { 'authentic' => {} },
-        samlIDPMetaDataExportedAttributes =>
-          { 'authentic' => { 'uid' => '0;uid;;' } },
-        samlIDPMetaDataOptions => {
-            'authentic' => {
-                'samlIDPMetaDataOptionsNameIDFormat'      => '',
-                'samlIDPMetaDataOptionsForceAuthn'        => '0',
-                'samlIDPMetaDataOptionsAllowProxiedAuthn' => '1',
-                'samlIDPMetaDataOptionsSSOBinding'        => '',
-                'samlIDPMetaDataOptionsSLOBinding'        => '',
-                'samlIDPMetaDataOptionsResolutionRule'    => '',
-                'samlIDPMetaDataOptionsAllowLoginFromIDP' => '1',
-                'samlIDPMetaDataOptionsAdaptSessionUtime' => '1',
-            }
-        },
         samlServicePrivateKey                   => '',
         samlEntityID                            => $portal . '/saml/metadata',
         samlOrganizationDisplayName             => 'Example',
         samlOrganizationName                    => 'Example',
         samlOrganizationURL                     => 'http://www.example.com',
+        samlIDPMetaDataOptionsNameIDFormat      => '',
+        samlIDPMetaDataOptionsForceAuthn        => '0',
+        samlIDPMetaDataOptionsAllowProxiedAuthn => '1',
+        samlIDPMetaDataOptionsSSOBinding        => '',
+        samlIDPMetaDataOptionsSLOBinding        => '',
+        samlIDPMetaDataOptionsResolutionRule    => '',
+        samlIDPMetaDataOptionsAllowLoginFromIDP => '1',
+        samlIDPMetaDataOptionsAdaptSessionUtime => '1',
+        samlSPMetaDataOptionsRequestedAuthnContext => '',
         samlSPSSODescriptorAuthnRequestsSigned  => '0',
         samlSPSSODescriptorKeyDescriptorSigning => '',
         samlSPSSODescriptorSingleLogoutServiceHTTP =>
@@ -1191,18 +1246,8 @@ sub subDefaultConf {
             'proxy' => 'https://remote/index.pl/sessions',
             'ns'    => 'https://remote/Lemonldap/NG/Common/CGI/SOAPService',
         },
-        samlIDPMetaDataXML                => {       {} },
         samlIDPMetaDataExportedAttributes => { 'uid' => '0;uid;;' },
-        samlIDPMetaDataOptions            => {
-            'samlIDPMetaDataOptionsNameIDFormat'      => '',
-            'samlIDPMetaDataOptionsForceAuthn'        => '0',
-            'samlIDPMetaDataOptionsAllowProxiedAuthn' => '1',
-            'samlIDPMetaDataOptionsSSOBinding'        => '',
-            'samlIDPMetaDataOptionsSLOBinding'        => '',
-            'samlIDPMetaDataOptionsResolutionRule'    => '',
-            'samlIDPMetaDataOptionsAllowLoginFromIDP' => '1',
-            'samlIDPMetaDataOptionsAdaptSessionUtime' => '1',
-        },
+        samlSPMetaDataExportedAttributes  => { 'uid' => '0;uid;;' },
     };
 }
 

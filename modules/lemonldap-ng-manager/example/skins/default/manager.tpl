@@ -104,12 +104,20 @@
      <lang en="Delete key" fr="Effacer la clef" />
     </button>
 
-    <button id="newsamlmetadatab" style="display:none;" onclick="newSamlMetaData();return false;" class="ui-state-default ui-corner-all">
-     <lang en="New metadatas" fr="Nouvelles métadatas" />
+    <button id="newidpsamlmetadatab" style="display:none;" onclick="newIdpSamlMetaData();return false;" class="ui-state-default ui-corner-all">
+     <lang en="New identity provider" fr="Nouveau fournisseur d'identité" />
     </button>
 
-    <button id="delsamlmetadatab" style="display:none;" onclick="delSamlMetaData(currentId);" class="ui-state-default ui-corner-all">
-     <lang en="Delete metadatas" fr="Supprimer les métadatas" />
+    <button id="delidpsamlmetadatab" style="display:none;" onclick="delIdpSamlMetaData(currentId);" class="ui-state-default ui-corner-all">
+     <lang en="Delete identity provider" fr="Supprimer le fournisseur d'identité" />
+    </button>
+
+    <button id="newspsamlmetadatab" style="display:none;" onclick="newSpSamlMetaData();return false;" class="ui-state-default ui-corner-all">
+     <lang en="New service provider" fr="Nouveau fournisseur de service" />
+    </button>
+
+    <button id="delspsamlmetadatab" style="display:none;" onclick="delSpSamlMetaData(currentId);" class="ui-state-default ui-corner-all">
+     <lang en="Delete service provider" fr="Supprimer le fournisseur de service" />
     </button>
 
     <button id="newsamlattributeb" style="display:none;" onclick="newSamlAttribute();return false;" class="ui-state-default ui-corner-all">
@@ -281,11 +289,20 @@
      </button>
     </div>
 
-    <!-- samlMetaData -->
-    <div id="content_samlMetaData" class="hidden">
-     <input type="text" id="samlMetaData" />
+    <!-- samlIdpMetaData -->
+    <div id="content_samlIdpMetaData" class="hidden">
+     <input type="text" id="samlIdpMetaData" />
      <br />
-     <button onclick="setlminputtext(currentId,samlMetaData);return false;" class="ui-state-default ui-corner-all">
+     <button onclick="setlminputtext(currentId,samlIdpMetaData);return false;" class="ui-state-default ui-corner-all">
+     <lang en="Apply" fr="Appliquer" />
+     </button>
+    </div>
+
+    <!-- samlSpMetaData -->
+    <div id="content_samlSpMetaData" class="hidden">
+     <input type="text" id="samlSpMetaData" />
+     <br />
+     <button onclick="setlminputtext(currentId,samlSpMetaData);return false;" class="ui-state-default ui-corner-all">
      <lang en="Apply" fr="Appliquer" />
      </button>
     </div>

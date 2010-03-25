@@ -190,6 +190,7 @@ sub confNode {
     elsif ( $target =~ s/^samlmetadata:// ) {
         my $h = $self->keyToH( $target, $self->conf );
         $h = $h->{samlIDPMetaDataXML} if ( $h->{samlIDPMetaDataXML} );
+        $h = $h->{samlSPMetaDataXML}  if ( $h->{samlSPMetaDataXML} );
         my $metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new();
         $metadata->initializeFromConfHash($h);
         my $text = $target;
@@ -204,7 +205,6 @@ sub confNode {
             target => "samlmetadata",
           ) . "</li>";
     }
-
     else {
         $target =~ s/^(\w+)://;
         my $type = $1 || 'text';
@@ -213,7 +213,17 @@ sub confNode {
         $text =~ s/^.*\///;
         my $h = $self->keyToH( $target, $self->conf );
 
+        # Try to get value from defaultConf
         $h = $self->keyToH( $target, $self->defaultConf ) unless ( defined $h );
+
+        # If no value found, try to remove 2 first target components
+        # to manage complex hash like samlIDPMetaDataOptions
+        unless ( defined $h ) {
+            $target =~ /([^\/]*)$/;
+            $h = $self->keyToH( $1, $self->defaultConf );
+        }
+
+        # If still no value, set a default value depending on type
         unless ( defined $h ) {
             $self->lmLog( "$target does not exists in menu hash", "debug" );
             $h = {
