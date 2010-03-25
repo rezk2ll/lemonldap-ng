@@ -343,7 +343,7 @@ $ openssl rsa -pubout -in private_key.pem -out public_key.pem
       "uid" will then be used as $uid in access rules)</li>
 
       <li>Mandatory : if set to "On", then session will not open if this
-      attribure is not given by IDP.</li>
+      attribute is not given by IDP.</li>
 
       <li>Name : SAML attribute name.</li>
 
@@ -356,7 +356,7 @@ $ openssl rsa -pubout -in private_key.pem -out public_key.pem
     Options</span></h5>
 
     <ul class="star">
-      <li>NameID format: force NameID format here (email, persitent,
+      <li>NameID format: force NameID format here (email, persistent,
       transient, etc.). If no value, will use first NameID Format activated in
       metadata.</li>
 
@@ -381,6 +381,12 @@ $ openssl rsa -pubout -in private_key.pem -out public_key.pem
       <li>Allow login from IDP: allow a user to connect directly from an IDP
       link. In this case, authentication is not a response to an issued
       authentication request, and we have less control on conditions.</li>
+
+      <li>Adapt session lifetime: session lifetime will be adapted from
+      SessionNotOnOrAfter value found in authentication response. It means
+      that if the IDP propose to close session earlier than the default
+      LemonLDAP::NG timeout, the session _utime will be modified so that
+      session is erased at the date indicated by the IDP.</li>
     </ul>
 
     <h3 class="heading-1-1"><span id="HPartnerIDPconfiguration">Partner IDP
