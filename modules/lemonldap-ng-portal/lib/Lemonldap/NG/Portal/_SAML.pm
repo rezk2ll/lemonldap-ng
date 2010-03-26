@@ -84,7 +84,7 @@ sub loadLasso {
 }
 
 ## @method boolean loadService()
-# Load SAML service by creating a SAML server
+# Load SAML service by creating a Lasso::Server
 # @return boolean result
 sub loadService {
     my $self = shift;
@@ -239,7 +239,7 @@ sub loadSPs {
     return 0;
         }
 
-        # Store IDP entityID and Organization Name
+        # Store SP entityID and Organization Name
         my $entityID = $sp_metadata->{entityID};
         my $name = $self->getOrganizationName( $self->{_lassoServer}, $entityID )
           || ucfirst($_);
@@ -1368,6 +1368,18 @@ and user information loading
 =head2 loadLasso
 
 Load Lasso module
+
+=head2 loadService
+
+Load SAML service by creating a Lasso::Server
+
+=head2 loadIDPs
+
+Load SAML identity providers
+
+=head2 loadSPs
+
+Load SAML service providers
 
 =head2 checkLassoError
 
