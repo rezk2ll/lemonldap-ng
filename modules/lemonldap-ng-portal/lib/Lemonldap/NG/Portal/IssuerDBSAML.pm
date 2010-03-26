@@ -37,21 +37,8 @@ sub issuerDBInit {
 sub issuerForUnAuthUser {
     my $self = shift;
     my $server = $self->{_lassoServer};
-    my $login;
-    my $logout;
-    my $idp;
-    my $method;
-    my $request;
-    my $response;
-    my $artifact;
-    my $relaystate;
 
-    # 1. Get HTTP request informations to know
-    # if we are receving SAML request or response
-    my $url            = $self->url();
-    my $request_method = $self->request_method();
-    my $content_type   = $self->content_type();
-
+    # Get configuration parameter
     my $saml_sso_soap_url =
       $self->getMetaDataURL( "samlIDPSSODescriptorSingleSignOnServiceSOAP", 1 );
     my $saml_sso_soap_url_ret =
@@ -61,90 +48,26 @@ sub issuerForUnAuthUser {
     my $saml_sso_get_url_ret =
       $self->getMetaDataURL( "samlIDPSSODescriptorSingleSignOnServiceHTTP", 2 );
 
-    # 1.1 SSO request
     if ( $url =~ /^($saml_sso_soap_url|$saml_sso_get_url)$/i )
     {   
 
         $self->lmLog( "URL $url detected as an SSO request URL", 'debug' );
 
-        # Create Login object
-        $login = $self->createLogin($server);
+        # Get HTTP request informations to know
+        # if we are receving SAML request or response
+        my $url            = $self->url();
+        my $request_method = $self->request_method();
+        my $content_type   = $self->content_type();
 
-        # Get relayState
-        $relaystate = $self->param('RelayState');
+        # Check message
+        my ( $request, $response, $method, $relaystate, $artifact ) =
+          $self->checkMessage($url, $request_method, $content_type);
 
-        # 1.1.1 HTTP REDIRECT
-        if ( $request_method =~ /^GET$/ ) {
-
-            $method = Lasso::Constants::HTTP_METHOD_REDIRECT;
-            $self->lmLog( "SSO method: HTTP-REDIRECT", 'debug' );
-
-            if ( $self->param('SAMLResponse') ) {
-
-                # Response in query string
-                $response = $self->query_string();
-                $self->lmLog( "HTTP-REDIRECT: SAML Response $response",
-                    'debug' );
-
-            }
-
-            if ( $self->param('SAMLRequest') ) {
-
-                # Request in query string
-                $request = $self->query_string();
-                $self->lmLog( "HTTP-REDIRECT: SAML Request $request", 'debug' );
-
-            }
-
-            if ( $self->param('SAMLart') ) {
-
-                # Artifcat in query string
-                $artifact = $self->query_string();
-                $self->lmLog( "HTTP-REDIRECT: SAML Artifact $artifact",
-                    'debug' );
-
-                # Resolve Artifact
-                $method = Lasso::Constants::HTTP_METHOD_ARTIFACT_GET;
-                my $message =
-                  $self->resolveArtifact( $login, $artifact, $method );
-
-                # Request or response ?
-                if ( $message =~ /samlp:response/i ) {
-                    $response = $message;
-                }
-                else {
-                    $request = $message;
-                }
-            }
-
-        }
-
-        # 1.2.1 HTTP POST AND SOAP
-        elsif ( $request_method =~ /^POST$/ ) {
-
-            # 1.2.2 POST
-            if ( $content_type !~ /xml/ ) {
-
-                $method = Lasso::Constants::HTTP_METHOD_POST;
-                $self->lmLog( "SSO method: HTTP-POST", 'debug' );
-
-            }
-
-            # 1.2.3 SOAP
-            else {
-
-                $method = Lasso::Constants::HTTP_METHOD_SOAP;
-                $self->lmLog( "SSO method: HTTP-SOAP", 'debug' );
-
-                # SOAP is always a request
-                $request = $self->param('POSTDATA');
-                $self->lmLog( "HTTP-SOAP: SAML Request $request", 'debug' );
-
-            }
-
-        }
-
+        # Process the request
         if ( $request ) {
+
+            # Create Login object
+            my $login = $self->createLogin( $server );
 
             # Process authentication request
             my $result;

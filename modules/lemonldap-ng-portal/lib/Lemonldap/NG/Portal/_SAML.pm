@@ -253,6 +253,144 @@ sub loadSPs {
     return 1;
 }
 
+## @method checkMessage
+# Check SAML requests and responses
+# @param string url
+# @param string request method
+# @param string content type
+# @return ( $request, $response, $method, $relaystate )
+sub checkMessage {
+    my $self           = shift;
+    my $url            = shift;
+    my $request_method = shift;
+    my $content_type   = shift;
+    my $request;
+    my $response;
+    my $method;
+    my $relaystate;
+    my $artifact;
+
+    # Check if SAML service is loaded
+    return ($request, $response, $method, $relaystate)
+      unless $self->{_lassoServer};
+
+    # Create Login object
+    my $login = $self->createLogin( $self->{_lassoServer} );
+
+    # Get relayState
+    $relaystate = $self->param('RelayState');
+
+    # 1. HTTP REDIRECT
+    if ( $request_method =~ /^GET$/ ) {
+
+        $method = Lasso::Constants::HTTP_METHOD_REDIRECT;
+        $self->lmLog( "SSO method: HTTP-REDIRECT", 'debug' );
+
+        if ( $self->param('SAMLResponse') ) {
+
+            # Response in query string
+            $response = $self->query_string();
+            $self->lmLog( "HTTP-REDIRECT: SAML Response $response",
+                'debug' );
+
+        }
+
+        if ( $self->param('SAMLRequest') ) {
+
+            # Request in query string
+            $request = $self->query_string();
+            $self->lmLog( "HTTP-REDIRECT: SAML Request $request", 'debug' );
+
+        }
+
+        if ( $self->param('SAMLart') ) {
+
+            # Artifact in query string
+            $artifact = $self->query_string();
+            $self->lmLog( "HTTP-REDIRECT: SAML Artifact $artifact",
+                'debug' );
+
+            # Resolve Artifact
+            $method = Lasso::Constants::HTTP_METHOD_ARTIFACT_GET;
+            my $message =
+              $self->resolveArtifact( $login, $artifact, $method );
+
+            # Request or response ?
+            if ( $message =~ /samlp:response/i ) {
+                $response = $message;
+            }
+            else {
+                $request = $message;
+            }
+        }
+
+    }
+
+    # 2 HTTP POST AND SOAP
+    elsif ( $request_method =~ /^POST$/ ) {
+
+        # 2.1 POST
+        if ( $content_type !~ /xml/ ) {
+
+            $method = Lasso::Constants::HTTP_METHOD_POST;
+            $self->lmLog( "SSO method: HTTP-POST", 'debug' );
+
+            if ( $self->param('SAMLResponse') ) {
+
+                # Response in body part
+                $response = $self->param('SAMLResponse');
+                $self->lmLog( "HTTP-POST: SAML Response $response", 'debug' );
+
+            }
+
+            if ( $self->param('SAMLRequest') ) {
+
+                # Request in body part
+                $request = $self->param('SAMLRequest');
+                $self->lmLog( "HTTP-POST: SAML Request $request", 'debug' );
+
+            }
+
+            if ( $self->param('SAMLart') ) {
+
+                # Artifcat in SAMLart param
+                $artifact = $self->param('SAMLart');
+                $self->lmLog( "HTTP-REDIRECT: SAML Artifact $artifact", 'debug' );
+
+                # Resolve Artifact
+                $method = Lasso::Constants::HTTP_METHOD_ARTIFACT_POST;
+                my $message =
+                  $self->resolveArtifact( $login, $artifact, $method );
+
+                # Request or response ?
+                if ( $message =~ /samlp:response/i ) {
+                    $response = $message;
+                }
+                else {
+                    $request = $message;
+                }
+
+            }
+
+        }
+
+        # 2.2 SOAP
+        else {
+
+            $method = Lasso::Constants::HTTP_METHOD_SOAP;
+            $self->lmLog( "SSO method: HTTP-SOAP", 'debug' );
+
+            # SOAP is always a request
+            $request = $self->param('POSTDATA');
+            $self->lmLog( "HTTP-SOAP: SAML Request $request", 'debug' );
+
+        }
+
+    }
+
+    return ( $request, $response, $method, $relaystate, $artifact ? 1 : 0 );
+}
+
 ## @method boolean checkLassoError(Lasso::Error error, string level)
 # Log Lasso error code and message if this is actually a Lasso::Error with code > 0
 # @param Lasso::Error Lasso error object
