@@ -733,6 +733,7 @@ function uploadConf(f){
 				$('#cfgNum').text(data.result.cfgNum);
 				setCfgAttributes(data.cfgDatas);
 				cfgAttrDone++;
+				display('cfgDatas','');
 			}
 			if(typeof(data.warnings)!='undefined'){
 				c+='<h4>Warnings</h4>';
