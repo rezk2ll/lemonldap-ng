@@ -11,6 +11,7 @@ use HTML::Template;
 use MIME::Base64;
 use XML::Simple;
 use Safe;
+use Encode;
 
 our $VERSION = '0.1';
 our $DEBUG   = 0;
@@ -237,7 +238,10 @@ sub toXML {
     # Serialize XML
     my $xml = $xs->XMLout($self);
 
-    return $xml;
+    # Force UTF-8 encoding
+    my $xml_utf8 = encode( "utf8", $xml );
+
+    return $xml_utf8;
 }
 
 ## @method public string toConf ()
