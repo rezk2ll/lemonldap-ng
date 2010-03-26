@@ -532,6 +532,19 @@ sub buildAuthnRequestMsg {
     return $self->checkLassoError($@);
 }
 
+## @method boolean processAuthnRequestMsg(Lasso::Login login, string request)
+# Process authentication request message
+# @param login Lasso::Login object
+# @param response SAML request
+# @return result
+sub processAuthnRequestMsg {
+    my ( $self, $login, $request ) = splice @_;
+
+    eval { Lasso::Login::process_authn_request_msg( $login, $request ); };
+
+    return $self->checkLassoError($@);
+}
+
 ## @method boolean processAuthnResponseMsg(Lasso::Login login, string response)
 # Process authentication response message
 # @param login Lasso::Login object
@@ -1088,6 +1101,25 @@ sub resolveArtifact {
     }
 
     return $message;
+}
+
+## @method boolean processArtRequestMsg(Lasso::Profile profile, string request)
+# Process artifact request message
+# @param profile Lasso::Profile object
+# @param response SAML request
+# @return result
+sub processArtRequestMsg {
+    my ( $self, $profile, $request ) = splice @_;
+
+    # Login profile
+    if ( $profile->isa("Lasso::Login") ) {
+
+        eval { Lasso::Login::process_request_msg( $profile, $request ); };
+        return $self->checkLassoError($@);
+
+    }
+
+    return 0;
 }
 
 ## @method boolean processArtResponseMsg(Lasso::Profile profile, string response)
