@@ -13,7 +13,6 @@ our @ISA = qw(Lemonldap::NG::Portal::_SAML);
 our $VERSION = '0.01';
 
 ## @method void issuerDBInit()
-# TODO
 # Load and check SAML configuration
 # @return Lemonldap::NG::Portal error code
 sub issuerDBInit {
@@ -35,7 +34,7 @@ sub issuerDBInit {
 # $self->{url}
 # @return Lemonldap::NG::Portal error code
 sub issuerForUnAuthUser {
-    my $self = shift;
+    my $self   = shift;
     my $server = $self->{_lassoServer};
 
     # Get configuration parameter
@@ -48,26 +47,25 @@ sub issuerForUnAuthUser {
     my $saml_sso_get_url_ret =
       $self->getMetaDataURL( "samlIDPSSODescriptorSingleSignOnServiceHTTP", 2 );
 
-    if ( $url =~ /^($saml_sso_soap_url|$saml_sso_get_url)$/i )
-    {   
+    # Get HTTP request informations to know
+    # if we are receving SAML request or response
+    my $url            = $self->url();
+    my $request_method = $self->request_method();
+    my $content_type   = $self->content_type();
+
+    if ( $url =~ /^($saml_sso_soap_url|$saml_sso_get_url)$/i ) {
 
         $self->lmLog( "URL $url detected as an SSO request URL", 'debug' );
 
-        # Get HTTP request informations to know
-        # if we are receving SAML request or response
-        my $url            = $self->url();
-        my $request_method = $self->request_method();
-        my $content_type   = $self->content_type();
-
         # Check message
         my ( $request, $response, $method, $relaystate, $artifact ) =
-          $self->checkMessage($url, $request_method, $content_type);
+          $self->checkMessage( $url, $request_method, $content_type );
 
         # Process the request
-        if ( $request ) {
+        if ($request) {
 
             # Create Login object
-            my $login = $self->createLogin( $server );
+            my $login = $self->createLogin($server);
 
             # Process authentication request
             my $result;
