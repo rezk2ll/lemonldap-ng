@@ -13,11 +13,11 @@
 %define perl_vendorarch %(eval "`%{__perl} -V:installvendorarch`"; echo $installvendorarch)
 
 %define real_name lemonldap-ng
-%define real_version 0.9.4
-%define cpan_common_version  0.94
-%define cpan_handler_version 0.91
-%define cpan_manager_version 0.90
-%define cpan_portal_version  0.89
+%define real_version 0.9.4.1
+%define cpan_common_version  0.95
+%define cpan_handler_version 0.92
+%define cpan_manager_version 0.91
+%define cpan_portal_version  0.90
 
 %define lm_prefix /usr
 %define lm_sharedir /usr/share/lemonldap-ng
@@ -337,8 +337,8 @@ rm -rf %{buildroot}
 %dir %{perl_vendorlib}/auto/Lemonldap
 %dir %{perl_vendorlib}/auto/Lemonldap/NG
 %dir %{lm_confdir}
-%config %{lm_confdir}
-%config %{lm_vardir}/conf
+%config(noreplace) %{lm_confdir}
+%config(noreplace) %{lm_vardir}/conf
 %{lm_vardir}/sessions
 %{lm_sharedir}/ressources
 
@@ -367,7 +367,7 @@ rm -rf %{buildroot}
 %{lm_vardir}/portal
 %{lm_sharedir}/bin/purgeCentralCache
 %{lm_sharedir}/bin/buildPortalWSDL
-%config /etc/cron.d/lemonldap-ng
+%config(noreplace) /etc/cron.d/lemonldap-ng
 %{lm_examplesdir}/portal
 %{lm_sharedir}/portal-skins
 
@@ -405,6 +405,15 @@ rm -rf %{buildroot}
 # Changelog
 #==============================================================================
 %changelog
+* Thu Oct 13 2009 Clement Oudot <clem.oudot@gmail.com> - 0.9.4.1-1
+- [RPM]  Use config(noreplace) to prevent config files from being erased
+- [CODE] Safe jail update
+- [CODE] Many little bugs in Handler/CGI.pm
+- [CODE] Apache::Session::LDAP was not usable with session explorer
+- [CODE] syslog facility was not taken in account in Common/CGI.pm
+- [CODE] require failed in _Multi.pm
+- [DOC]  doc update
+- [DEB]  run debconf translation (Closes: #550552 / bugs.debian.org)
 * Mon Jul 6 2009 Clement Oudot <coudot@linagora.com> - 0.9.4-1
 - Upgrade to release 0.9.4
 - Remove cronjob patch (included in 0.9.4)
