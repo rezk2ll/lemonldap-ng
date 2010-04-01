@@ -60,13 +60,15 @@ sub cstruct {
                       . ":samlIDPMetaDataXML:filearea",
                     samlIDPMetaDataOptions => {
                         _nodes => [
-                            qw(samlIDPMetaDataOptionsNameIDFormat samlIDPMetaDataOptionsForceAuthn samlIDPMetaDataOptionsAllowProxiedAuthn samlIDPMetaDataOptionsSSOBinding samlIDPMetaDataOptionsSLOBinding samlIDPMetaDataOptionsResolutionRule samlIDPMetaDataOptionsAllowLoginFromIDP samlIDPMetaDataOptionsAdaptSessionUtime samlIDPMetaDataOptionsSignSSOMessage samlIDPMetaDataOptionsCheckSSOMessageSignature samlIDPMetaDataOptionsSignSLOMessage samlIDPMetaDataOptionsCheckSLOMessageSignature)
+                            qw(samlIDPMetaDataOptionsNameIDFormat samlIDPMetaDataOptionsForceAuthn samlIDPMetaDataOptionsIsPassive samlIDPMetaDataOptionsAllowProxiedAuthn samlIDPMetaDataOptionsSSOBinding samlIDPMetaDataOptionsSLOBinding samlIDPMetaDataOptionsResolutionRule samlIDPMetaDataOptionsAllowLoginFromIDP samlIDPMetaDataOptionsAdaptSessionUtime samlIDPMetaDataOptionsSignSSOMessage samlIDPMetaDataOptionsCheckSSOMessageSignature samlIDPMetaDataOptionsSignSLOMessage samlIDPMetaDataOptionsCheckSLOMessageSignature)
                         ],
                         samlIDPMetaDataOptionsNameIDFormat =>
 "text:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsNameIDFormat"
                           . ":default:nameIdFormatParams",
                         samlIDPMetaDataOptionsForceAuthn =>
 "bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsForceAuthn",
+                        samlIDPMetaDataOptionsIsPassive =>
+"bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsIsPassive",
                         samlIDPMetaDataOptionsAllowProxiedAuthn =>
 "bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsAllowProxiedAuthn",
                         samlIDPMetaDataOptionsSSOBinding =>
@@ -1182,6 +1184,7 @@ sub defaultConf {
         samlOrganizationURL                     => 'http://www.example.com',
         samlIDPMetaDataOptionsNameIDFormat      => '',
         samlIDPMetaDataOptionsForceAuthn        => '0',
+        samlIDPMetaDataOptionsIsPassive         => '0',
         samlIDPMetaDataOptionsAllowProxiedAuthn => '1',
         samlIDPMetaDataOptionsSSOBinding        => '',
         samlIDPMetaDataOptionsSLOBinding        => '',

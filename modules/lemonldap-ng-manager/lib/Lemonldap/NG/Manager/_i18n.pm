@@ -205,6 +205,7 @@ sub en {
         samlIDPMetaDataOptions             => 'Options',
         samlIDPMetaDataOptionsNameIDFormat => 'NameID format',
         samlIDPMetaDataOptionsForceAuthn   => 'Force authentication',
+        samlIDPMetaDataOptionsIsPassive    => 'Passive authentication',
         samlIDPMetaDataOptionsAllowProxiedAuthn =>
           'Allow proxied authentication',
         samlIDPMetaDataOptionsAllowLoginFromIDP => 'Allow login from IDP',
@@ -432,6 +433,7 @@ sub fr {
         samlIDPMetaDataOptions             => 'Options',
         samlIDPMetaDataOptionsNameIDFormat => 'Format NameID',
         samlIDPMetaDataOptionsForceAuthn   => 'Authentification forcée',
+        samlIDPMetaDataOptionsIsPassive    => 'Authentication passive',
         samlIDPMetaDataOptionsAllowProxiedAuthn =>
           'Authentification proxy autorisée',
         samlIDPMetaDataOptionsAllowLoginFromIDP =>

@@ -815,6 +815,11 @@ sub extractFormInfo {
       $self->{samlIDPMetaDataOptions}->{$idp}
       ->{samlIDPMetaDataOptionsForceAuthn};
 
+    # IDP IsPassive
+    my $isPassive =
+      $self->{samlIDPMetaDataOptions}->{$idp}
+      ->{samlIDPMetaDataOptionsIsPassive};
+
     # IDP NameIDFormat
     my $nameIDFormat =
       $self->{samlIDPMetaDataOptions}->{$idp}
@@ -856,7 +861,7 @@ sub extractFormInfo {
     # Create SSO request
     $login =
       $self->createAuthnRequest( $server, $IDPentityID, $method, $forceAuthn,
-        $nameIDFormat, $allowProxiedAuthn, $signSSOMessage );
+        $isPassive, $nameIDFormat, $allowProxiedAuthn, $signSSOMessage );
 
     unless ($login) {
         $self->lmLog( "Could not create authentication request on $IDPentityID",

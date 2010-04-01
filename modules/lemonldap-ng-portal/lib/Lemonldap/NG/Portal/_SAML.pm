@@ -534,20 +534,23 @@ sub getOrganizationName {
     return $data->{OrganizationName}->{content};
 }
 
-## @method Lasso::Login createAuthnRequest(Lasso::Server server, string idp, int method, boolean forceAuthn, string nameIDFormat, boolean allowProxiedAuthn, boolean signSSOMessage)
+## @method Lasso::Login createAuthnRequest(Lasso::Server server, string idp, int method, boolean forceAuthn, boolean isPassive, string nameIDFormat, boolean allowProxiedAuthn, boolean signSSOMessage)
 # Create authentication request for selected IDP
 # @param server Lasso::Server object
 # @param entityID IDP entityID
 # @param method HTTP method
 # @param forceAuthn force authentication on IDP
+# @param isPassive require passive authentication
 # @param nameIDFormat SAML2 NameIDFormat
 # @param allowProxiedAuthn allow proxy on IDP
 # @param signSSOMessage sign request
 # @return Lasso::Login object
 sub createAuthnRequest {
-    my ( $self, $server, $idp, $method, $forceAuthn, $nameIDFormat,
-        $allowProxiedAuthn, $signSSOMessage )
-      = splice @_;
+    my (
+        $self,         $server,            $idp,
+        $method,       $forceAuthn,        $isPassive,
+        $nameIDFormat, $allowProxiedAuthn, $signSSOMessage
+    ) = splice @_;
 
     # Create Lasso Login
     my $login = $self->createLogin($server);
@@ -589,6 +592,12 @@ sub createAuthnRequest {
     if ($forceAuthn) {
         $self->lmLog( "Force authentication on IDP", 'debug' );
         $request->ForceAuthn(1);
+    }
+
+    # Passive authentication
+    if ($isPassive) {
+        $self->lmLog( "Passive authentication on IDP", 'debug' );
+        $request->IsPassive(1);
     }
 
     # Allow proxy
