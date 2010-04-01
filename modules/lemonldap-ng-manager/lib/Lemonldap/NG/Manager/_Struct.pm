@@ -60,7 +60,7 @@ sub cstruct {
                       . ":samlIDPMetaDataXML:filearea",
                     samlIDPMetaDataOptions => {
                         _nodes => [
-                            qw(samlIDPMetaDataOptionsNameIDFormat samlIDPMetaDataOptionsForceAuthn samlIDPMetaDataOptionsAllowProxiedAuthn samlIDPMetaDataOptionsSSOBinding samlIDPMetaDataOptionsSLOBinding samlIDPMetaDataOptionsResolutionRule samlIDPMetaDataOptionsAllowLoginFromIDP samlIDPMetaDataOptionsAdaptSessionUtime samlIDPMetaDataOptionsSignSSORequest samlIDPMetaDataOptionsCheckSSOResponseSignature)
+                            qw(samlIDPMetaDataOptionsNameIDFormat samlIDPMetaDataOptionsForceAuthn samlIDPMetaDataOptionsAllowProxiedAuthn samlIDPMetaDataOptionsSSOBinding samlIDPMetaDataOptionsSLOBinding samlIDPMetaDataOptionsResolutionRule samlIDPMetaDataOptionsAllowLoginFromIDP samlIDPMetaDataOptionsAdaptSessionUtime samlIDPMetaDataOptionsSignSSOMessage samlIDPMetaDataOptionsCheckSSOMessageSignature samlIDPMetaDataOptionsSignSLOMessage samlIDPMetaDataOptionsCheckSLOMessageSignature)
                         ],
                         samlIDPMetaDataOptionsNameIDFormat =>
 "text:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsNameIDFormat"
@@ -81,10 +81,14 @@ sub cstruct {
 "bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsAllowLoginFromIDP",
                         samlIDPMetaDataOptionsAdaptSessionUtime =>
 "bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsAdaptSessionUtime",
-                        samlIDPMetaDataOptionsSignSSORequest =>
-"bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsSignSSORequest",
-                        samlIDPMetaDataOptionsCheckSSOResponseSignature =>
-"bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsCheckSSOResponseSignature",
+                        samlIDPMetaDataOptionsSignSSOMessage =>
+"bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsSignSSOMessage",
+                        samlIDPMetaDataOptionsCheckSSOMessageSignature =>
+"bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsCheckSSOMessageSignature",
+                        samlIDPMetaDataOptionsSignSLOMessage =>
+"bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsSignSLOMessage",
+                        samlIDPMetaDataOptionsCheckSLOMessageSignature =>
+"bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsCheckSLOMessageSignature",
                     },
                 }
             }
@@ -1184,8 +1188,10 @@ sub defaultConf {
         samlIDPMetaDataOptionsResolutionRule    => '',
         samlIDPMetaDataOptionsAllowLoginFromIDP => '1',
         samlIDPMetaDataOptionsAdaptSessionUtime => '1',
-        samlIDPMetaDataOptionsSignSSORequest    => '1',
-        samlIDPMetaDataOptionsCheckSSOResponseSignature => '1',
+        samlIDPMetaDataOptionsSignSSOMessage    => '1',
+        samlIDPMetaDataOptionsCheckSSOMessageSignature => '1',
+        samlIDPMetaDataOptionsSignSLOMessage           => '1',
+        samlIDPMetaDataOptionsCheckSLOMessageSignature => '1',
         samlSPMetaDataOptionsRequestedAuthnContext => '',
         samlSPSSODescriptorAuthnRequestsSigned  => '0',
         samlSPSSODescriptorKeyDescriptorSigning => '',

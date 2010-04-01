@@ -209,9 +209,12 @@ sub en {
           'Allow proxied authentication',
         samlIDPMetaDataOptionsAllowLoginFromIDP => 'Allow login from IDP',
         samlIDPMetaDataOptionsAdaptSessionUtime => 'Adapt session lifetime',
-        samlIDPMetaDataOptionsSignSSORequest       => 'Sign SSO request',
-        samlIDPMetaDataOptionsCheckSSOResponseSignature =>
-          'Check SSO response signature',
+        samlIDPMetaDataOptionsSignSSOMessage    => 'Sign SSO message',
+        samlIDPMetaDataOptionsCheckSSOMessageSignature =>
+          'Check SSO message signature',
+        samlIDPMetaDataOptionsSignSLOMessage => 'Sign SLO message',
+        samlIDPMetaDataOptionsCheckSLOMessageSignature =>
+          'Check SLO message signature',
         samlIDPMetaDataOptionsSSOBinding        => 'SSO binding',
         samlIDPMetaDataOptionsSLOBinding        => 'SLO binding',
         samlIDPMetaDataOptionsResolutionRule    => 'Resolution rule',
@@ -435,9 +438,12 @@ sub fr {
           'Authentification depuis le fournisseur autorisée',
         samlIDPMetaDataOptionsAdaptSessionUtime =>
           'Adapatation de la durée de vie de la session',
-        samlIDPMetaDataOptionsSignSSORequest => 'Signature requête SSO',
-        samlIDPMetaDataOptionsCheckSSOResponseSignature =>
-          'Vérification de la signature de la réponse SSO',
+        samlIDPMetaDataOptionsSignSSOMessage => 'Signature des messages SSO',
+        samlIDPMetaDataOptionsCheckSSOMessageSignature =>
+          'Vérification de la signature des messages SSO',
+        samlIDPMetaDataOptionsSignSLOMessage => 'Signature des messages SLO',
+        samlIDPMetaDataOptionsCheckSLOMessageSignature =>
+          'Vérification de la signature des messages SLO',
         samlIDPMetaDataOptionsSSOBinding     => 'Méthode SSO',
         samlIDPMetaDataOptionsSLOBinding     => 'Méthode SLO',
         samlIDPMetaDataOptionsResolutionRule => 'Règle de résolution',

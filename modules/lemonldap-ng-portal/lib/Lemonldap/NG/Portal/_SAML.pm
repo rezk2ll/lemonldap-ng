@@ -534,7 +534,7 @@ sub getOrganizationName {
     return $data->{OrganizationName}->{content};
 }
 
-## @method Lasso::Login createAuthnRequest(Lasso::Server server, string idp, int method, boolean forceAuthn, string nameIDFormat, boolean allowProxiedAuthn, boolean signSSORequest)
+## @method Lasso::Login createAuthnRequest(Lasso::Server server, string idp, int method, boolean forceAuthn, string nameIDFormat, boolean allowProxiedAuthn, boolean signSSOMessage)
 # Create authentication request for selected IDP
 # @param server Lasso::Server object
 # @param entityID IDP entityID
@@ -542,11 +542,11 @@ sub getOrganizationName {
 # @param forceAuthn force authentication on IDP
 # @param nameIDFormat SAML2 NameIDFormat
 # @param allowProxiedAuthn allow proxy on IDP
-# @param signSSORequest sign request
+# @param signSSOMessage sign request
 # @return Lasso::Login object
 sub createAuthnRequest {
     my ( $self, $server, $idp, $method, $forceAuthn, $nameIDFormat,
-        $allowProxiedAuthn, $signSSORequest )
+        $allowProxiedAuthn, $signSSOMessage )
       = splice @_;
 
     # Create Lasso Login
@@ -610,8 +610,8 @@ sub createAuthnRequest {
     }
 
     # Signature
-    unless ($signSSORequest) {
-        $self->lmLog( "Do not sign this request", 'debug' );
+    unless ($signSSOMessage) {
+        $self->lmLog( "Do not sign this SSO request", 'debug' );
         return unless ( $self->disableSignature($login) );
     }
 
@@ -952,14 +952,15 @@ sub validateConditions {
     return 1;
 }
 
-## @method Lasso::Logout createLogoutRequest(Lasso::Server server, string session_dump, int method)
+## @method Lasso::Logout createLogoutRequest(Lasso::Server server, string session_dump, int method, boolean signSLOMessage)
 # Create logout request for selected entity
 # @param server Lasso::Server object
 # @param session_dump Lasso::Session dump
 # @param method HTTP method
+# @param signSLOMessage sign request
 # @return Lasso::Login object
 sub createLogoutRequest {
-    my ( $self, $server, $session_dump, $method ) = splice @_;
+    my ( $self, $server, $session_dump, $method, $signSLOMessage ) = splice @_;
     my $session;
 
     # Create Lasso Logout
@@ -985,6 +986,12 @@ sub createLogoutRequest {
     my $relaystate = $self->storeRelayState($infos);
     $logout->msg_relayState($relaystate);
     $self->lmLog( "Set $relaystate in RelayState", 'debug' );
+
+    # Signature
+    unless ($signSLOMessage) {
+        $self->lmLog( "Do not sign this SLO request", 'debug' );
+        return unless ( $self->disableSignature($logout) );
+    }
 
     # Build logout request
     unless ( $self->buildLogoutRequestMsg($logout) ) {
@@ -1534,6 +1541,21 @@ sub disableSignature {
     return $self->checkLassoError($@);
 }
 
+## @method boolean forceSignature(Lasso::Profile profile)
+# Modify Lasso signature hint to force signature
+# @param profile Lasso profile object
+# @return result
+sub forceSignature {
+    my ( $self, $profile ) = splice @_;
+
+    eval {
+        Lasso::Profile::set_signature_hint( $profile,
+            Lasso::Constants::PROFILE_SIGNATURE_HINT_FORCE );
+    };
+
+    return $self->checkLassoError($@);
+}
+
 1;
 
 __END__
@@ -1731,6 +1753,10 @@ Find a suitable HTTP method for an entity with a given protocol
 =head2 disableSignature
 
 Modify Lasso signature hint to disable signature
+
+=head2 forceSignature
+
+Modify Lasso signature hint to force signature
 
 =head1 SEE ALSO
 
