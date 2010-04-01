@@ -60,7 +60,7 @@ sub cstruct {
                       . ":samlIDPMetaDataXML:filearea",
                     samlIDPMetaDataOptions => {
                         _nodes => [
-                            qw(samlIDPMetaDataOptionsNameIDFormat samlIDPMetaDataOptionsForceAuthn samlIDPMetaDataOptionsIsPassive samlIDPMetaDataOptionsAllowProxiedAuthn samlIDPMetaDataOptionsSSOBinding samlIDPMetaDataOptionsSLOBinding samlIDPMetaDataOptionsResolutionRule samlIDPMetaDataOptionsAllowLoginFromIDP samlIDPMetaDataOptionsAdaptSessionUtime samlIDPMetaDataOptionsSignSSOMessage samlIDPMetaDataOptionsCheckSSOMessageSignature samlIDPMetaDataOptionsSignSLOMessage samlIDPMetaDataOptionsCheckSLOMessageSignature)
+                            qw(samlIDPMetaDataOptionsNameIDFormat samlIDPMetaDataOptionsForceAuthn samlIDPMetaDataOptionsIsPassive samlIDPMetaDataOptionsAllowProxiedAuthn samlIDPMetaDataOptionsSSOBinding samlIDPMetaDataOptionsSLOBinding samlIDPMetaDataOptionsResolutionRule samlIDPMetaDataOptionsAllowLoginFromIDP samlIDPMetaDataOptionsAdaptSessionUtime samlIDPMetaDataOptionsSignSSOMessage samlIDPMetaDataOptionsCheckSSOMessageSignature samlIDPMetaDataOptionsSignSLOMessage samlIDPMetaDataOptionsCheckSLOMessageSignature samlIDPMetaDataOptionsRequestedAuthnContext)
                         ],
                         samlIDPMetaDataOptionsNameIDFormat =>
 "text:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsNameIDFormat"
@@ -91,6 +91,9 @@ sub cstruct {
 "bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsSignSLOMessage",
                         samlIDPMetaDataOptionsCheckSLOMessageSignature =>
 "bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsCheckSLOMessageSignature",
+                        samlIDPMetaDataOptionsRequestedAuthnContext =>
+"text:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsRequestedAuthnContext"
+                          . ":default:authnContextParams",
                     },
                 }
             }
@@ -1195,6 +1198,7 @@ sub defaultConf {
         samlIDPMetaDataOptionsCheckSSOMessageSignature => '1',
         samlIDPMetaDataOptionsSignSLOMessage           => '1',
         samlIDPMetaDataOptionsCheckSLOMessageSignature => '1',
+        samlIDPMetaDataOptionsRequestedAuthnContext    => '',
         samlSPMetaDataOptionsRequestedAuthnContext => '',
         samlSPSSODescriptorAuthnRequestsSigned  => '0',
         samlSPSSODescriptorKeyDescriptorSigning => '',

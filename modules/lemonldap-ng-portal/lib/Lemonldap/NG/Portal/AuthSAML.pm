@@ -322,6 +322,43 @@ sub extractFormInfo {
                 return PE_ERROR;
             }
 
+            # Check authentication context
+            my $requestedAuthnContext =
+              $self->{samlIDPMetaDataOptions}->{$idp}
+              ->{samlIDPMetaDataOptionsRequestedAuthnContext};
+            $requestedAuthnContext =
+              $self->getAuthnContext($requestedAuthnContext)
+              if $requestedAuthnContext;
+
+            if ($requestedAuthnContext) {
+                $self->lmLog(
+                    "Requested authentication context: $requestedAuthnContext",
+                    'debug'
+                );
+                my $responseAuthnContext;
+                eval {
+                    $responseAuthnContext =
+                      $assertion->AuthnStatement()->AuthnContext()
+                      ->AuthnContextClassRef();
+                };
+                if ($@) {
+                    $self->lmLog(
+                        "Unable to get authentication context from $idp",
+                        'error' );
+                    return PE_ERROR;
+                }
+                $self->lmLog(
+                    "Found authentication context: $responseAuthnContext",
+                    'debug' );
+                if ( $responseAuthnContext ne $requestedAuthnContext ) {
+                    $self->lmLog(
+"Bad authentication context ($responseAuthnContext instead of $requestedAuthnContext)",
+                        'error'
+                    );
+                    return PE_ERROR;
+                }
+            }
+
             # Force redirection to portal if no urldc found
             # (avoid displaying the whole SAML URL in user browser URL field)
             $self->{mustRedirect} = 1 unless ( $self->{urldc} );
@@ -858,10 +895,19 @@ sub extractFormInfo {
       $self->{samlIDPMetaDataOptions}->{$idp}
       ->{samlIDPMetaDataOptionsSignSSOMessage};
 
+    # Authentication Context
+    my $requestedAuthnContext =
+      $self->{samlIDPMetaDataOptions}->{$idp}
+      ->{samlIDPMetaDataOptionsRequestedAuthnContext};
+    $requestedAuthnContext = $self->getAuthnContext($requestedAuthnContext)
+      if $requestedAuthnContext;
+
     # Create SSO request
-    $login =
-      $self->createAuthnRequest( $server, $IDPentityID, $method, $forceAuthn,
-        $isPassive, $nameIDFormat, $allowProxiedAuthn, $signSSOMessage );
+    $login = $self->createAuthnRequest(
+        $server,            $IDPentityID,    $method,
+        $forceAuthn,        $isPassive,      $nameIDFormat,
+        $allowProxiedAuthn, $signSSOMessage, $requestedAuthnContext
+    );
 
     unless ($login) {
         $self->lmLog( "Could not create authentication request on $IDPentityID",

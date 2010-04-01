@@ -534,7 +534,7 @@ sub getOrganizationName {
     return $data->{OrganizationName}->{content};
 }
 
-## @method Lasso::Login createAuthnRequest(Lasso::Server server, string idp, int method, boolean forceAuthn, boolean isPassive, string nameIDFormat, boolean allowProxiedAuthn, boolean signSSOMessage)
+## @method Lasso::Login createAuthnRequest(Lasso::Server server, string idp, int method, boolean forceAuthn, boolean isPassive, string nameIDFormat, boolean allowProxiedAuthn, boolean signSSOMessage, string requestedAuthnContext)
 # Create authentication request for selected IDP
 # @param server Lasso::Server object
 # @param entityID IDP entityID
@@ -544,12 +544,14 @@ sub getOrganizationName {
 # @param nameIDFormat SAML2 NameIDFormat
 # @param allowProxiedAuthn allow proxy on IDP
 # @param signSSOMessage sign request
+# @param requestedAuthnContext authentication context
 # @return Lasso::Login object
 sub createAuthnRequest {
     my (
         $self,         $server,            $idp,
         $method,       $forceAuthn,        $isPassive,
-        $nameIDFormat, $allowProxiedAuthn, $signSSOMessage
+        $nameIDFormat, $allowProxiedAuthn, $signSSOMessage,
+        $requestedAuthnContext
     ) = splice @_;
 
     # Create Lasso Login
@@ -622,6 +624,20 @@ sub createAuthnRequest {
     unless ($signSSOMessage) {
         $self->lmLog( "Do not sign this SSO request", 'debug' );
         return unless ( $self->disableSignature($login) );
+    }
+
+    # Requested authentication context
+    if ($requestedAuthnContext) {
+        $self->lmLog( "Request $requestedAuthnContext context", 'debug' );
+        eval {
+            my $context = Lasso::Samlp2RequestedAuthnContext->new();
+            $context->AuthnContextClassRef($requestedAuthnContext);
+            $request->RequestedAuthnContext($context);
+        };
+        if ($@) {
+            $self->checkLassoError($@);
+            return;
+        }
     }
 
     # Build authentication request
@@ -1565,6 +1581,25 @@ sub forceSignature {
     return $self->checkLassoError($@);
 }
 
+## @method getAuthnContext(string context)
+# Convert configuration string into SAML2 AuthnContextClassRef string
+# @param context configuration string
+# @return SAML2 AuthnContextClassRef string
+sub getAuthnContext {
+    my ( $self, $context ) = splice @_;
+
+    return Lasso::Constants::SAML2_AUTHN_CONTEXT_KERBEROS
+      if ( $context =~ /^kerberos$/i );
+    return Lasso::Constants::SAML2_AUTHN_CONTEXT_PASSWORD_PROTECTED_TRANSPORT
+      if ( $context =~ /^password[-_ ]protected[-_ ]transport$/i );
+    return Lasso::Constants::SAML2_AUTHN_CONTEXT_PASSWORD
+      if ( $context =~ /^password$/i );
+    return Lasso::Constants::SAML2_AUTHN_CONTEXT_X509
+      if ( $context =~ /^x509$/i );
+
+    return;
+}
+
 1;
 
 __END__
@@ -1766,6 +1801,10 @@ Modify Lasso signature hint to disable signature
 =head2 forceSignature
 
 Modify Lasso signature hint to force signature
+
+=head2 getAuthnContext
+
+Convert configuration string into SAML2 AuthnContextClassRef string
 
 =head1 SEE ALSO
 

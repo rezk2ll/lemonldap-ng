@@ -435,6 +435,17 @@ function bindingParams(id) {
 			],lmdata(id));
 	display('select',lmtext(id));
 }
+function authnContextParams(id) {
+	currentId=id;
+	formateSelect('select',[
+			'=',
+			'kerberos=Kerberos',
+			'password-protected-transport=Password protected transport',
+			'password=Password',
+			'x509=X509 certificate',
+			],lmdata(id));
+	display('select',lmtext(id));
+}
 function btext(id) {
 	currentId=id;
 	$('#btextKey').attr('value',lmtext(id));
