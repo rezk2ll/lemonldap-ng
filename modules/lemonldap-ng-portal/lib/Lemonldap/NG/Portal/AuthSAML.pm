@@ -187,6 +187,39 @@ sub extractFormInfo {
 
         if ($response) {
 
+            # Try to recover IDP from IDP cookie
+            my %cookies    = fetch CGI::Cookie;
+            my $idp_cookie = $cookies{ $self->{samlIdPResolveCookie} };
+            if ($idp_cookie) {
+                $idp = $idp_cookie->value;
+                $self->lmLog( "IDP $idp found in IDP resolution cookie",
+                    'debug' );
+            }
+            else {
+                $self->lmLog( "IDP was not found in IDP resolution cookie",
+                    'warn' );
+            }
+
+            # Do we check signature?
+            if ($idp) {
+                my $checkSSOResponseSignature =
+                  $self->{samlIDPMetaDataOptions}->{$idp}
+                  ->{samlIDPMetaDataOptionsCheckSSOResponseSignature};
+                unless ($checkSSOResponseSignature) {
+                    $self->lmLog(
+"SSO response signature from IDP $idp will not be checked",
+                        'debug'
+                    );
+                    $self->disableSignature($login);
+                }
+            }
+            else {
+                $self->lmLog(
+"Will not check checkSSOResponseSignature option because no IDP was found",
+                    'debug'
+                );
+            }
+
             # Process authentication response
             my $result;
             if ($artifact) {
@@ -267,30 +300,23 @@ sub extractFormInfo {
                 $self->lmLog( "RelayState $relaystate extracted", 'debug' );
             }
 
-            # Check IDP from RelayState
-            my $idp = $self->{_idp};
-            if ($idp) {
+            # Update IDP from RelayState
+            if ( $self->{_idp} ) {
+                $idp = $self->{_idp};
                 $self->lmLog( "IDP $idp found in RelayState", 'debug' );
             }
             else {
 
-                # Try to recover IDP from IDP cookie
-                my %cookies    = fetch CGI::Cookie;
-                my $idp_cookie = $cookies{ $self->{samlIdPResolveCookie} };
-                if ($idp_cookie) {
-                    $idp = $idp_cookie->value;
-                    $self->{_idp} = $idp;
-                    $self->lmLog( "IDP $idp found in IDP resolution cookie",
-                        'debug' );
+                $self->lmLog( "IDP was not found in RelayState", 'debug' );
                 }
-                else {
+
+            unless ($idp) {
                     $self->lmLog(
 "IDP was not found in RelayState or in IDP resolution cookie",
                         'error'
                     );
                     return PE_ERROR;
                 }
-            }
 
             # Check if we accept direct login from IDP
             my $allowLoginFromIDP =

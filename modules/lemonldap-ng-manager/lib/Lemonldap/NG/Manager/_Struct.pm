@@ -60,7 +60,7 @@ sub cstruct {
                       . ":samlIDPMetaDataXML:filearea",
                     samlIDPMetaDataOptions => {
                         _nodes => [
-                            qw(samlIDPMetaDataOptionsNameIDFormat samlIDPMetaDataOptionsForceAuthn samlIDPMetaDataOptionsAllowProxiedAuthn samlIDPMetaDataOptionsSSOBinding samlIDPMetaDataOptionsSLOBinding samlIDPMetaDataOptionsResolutionRule samlIDPMetaDataOptionsAllowLoginFromIDP samlIDPMetaDataOptionsAdaptSessionUtime samlIDPMetaDataOptionsSignSSORequest)
+                            qw(samlIDPMetaDataOptionsNameIDFormat samlIDPMetaDataOptionsForceAuthn samlIDPMetaDataOptionsAllowProxiedAuthn samlIDPMetaDataOptionsSSOBinding samlIDPMetaDataOptionsSLOBinding samlIDPMetaDataOptionsResolutionRule samlIDPMetaDataOptionsAllowLoginFromIDP samlIDPMetaDataOptionsAdaptSessionUtime samlIDPMetaDataOptionsSignSSORequest samlIDPMetaDataOptionsCheckSSOResponseSignature)
                         ],
                         samlIDPMetaDataOptionsNameIDFormat =>
 "text:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsNameIDFormat"
@@ -83,6 +83,8 @@ sub cstruct {
 "bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsAdaptSessionUtime",
                         samlIDPMetaDataOptionsSignSSORequest =>
 "bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsSignSSORequest",
+                        samlIDPMetaDataOptionsCheckSSOResponseSignature =>
+"bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsCheckSSOResponseSignature",
                     },
                 }
             }
@@ -1183,6 +1185,7 @@ sub defaultConf {
         samlIDPMetaDataOptionsAllowLoginFromIDP => '1',
         samlIDPMetaDataOptionsAdaptSessionUtime => '1',
         samlIDPMetaDataOptionsSignSSORequest    => '1',
+        samlIDPMetaDataOptionsCheckSSOResponseSignature => '1',
         samlSPMetaDataOptionsRequestedAuthnContext => '',
         samlSPSSODescriptorAuthnRequestsSigned  => '0',
         samlSPSSODescriptorKeyDescriptorSigning => '',

@@ -612,14 +612,7 @@ sub createAuthnRequest {
     # Signature
     unless ($signSSORequest) {
         $self->lmLog( "Do not sign this request", 'debug' );
-        eval {
-            $login->set_signature_hint
-              (Lasso::Constants::PROFILE_SIGNATURE_HINT_FORBID);
-        };
-        if ($@) {
-            $self->checkLassoError($@);
-            return;
-        }
+        return unless ( $self->disableSignature($login) );
     }
 
     # Build authentication request
@@ -1526,6 +1519,21 @@ sub getFirstHttpMethod {
     return $method;
 }
 
+## @method boolean disableSignature(Lasso::Profile profile)
+# Modify Lasso signature hint to disable signature
+# @param profile Lasso profile object
+# @return result
+sub disableSignature {
+    my ( $self, $profile ) = splice @_;
+
+    eval {
+        Lasso::Profile::set_signature_hint( $profile,
+            Lasso::Constants::PROFILE_SIGNATURE_HINT_FORBID );
+    };
+
+    return $self->checkLassoError($@);
+}
+
 1;
 
 __END__
@@ -1719,6 +1727,10 @@ Convert configuration string into Lasso HTTP Method integer
 =head2 getFirstHttpMethod
 
 Find a suitable HTTP method for an entity with a given protocol
+
+=head2 disableSignature
+
+Modify Lasso signature hint to disable signature
 
 =head1 SEE ALSO
 
