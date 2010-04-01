@@ -27,6 +27,10 @@ $(document).ready(function(){
 	/* Load default help */
 	$('#help_content').load(scriptname+'?help=default');
 
+	/* Display configuration datas */
+	getCfgAttributes();
+	display('cfgDatas','');
+
 	/* Simple Tree */
 	simpleTreeCollection = $(".simpleTree").simpleTree({
 		autoclose:treeautoclose,
