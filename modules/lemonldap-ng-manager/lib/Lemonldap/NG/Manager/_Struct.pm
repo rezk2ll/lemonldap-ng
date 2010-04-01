@@ -60,7 +60,7 @@ sub cstruct {
                       . ":samlIDPMetaDataXML:filearea",
                     samlIDPMetaDataOptions => {
                         _nodes => [
-                            qw(samlIDPMetaDataOptionsNameIDFormat samlIDPMetaDataOptionsForceAuthn samlIDPMetaDataOptionsAllowProxiedAuthn samlIDPMetaDataOptionsSSOBinding samlIDPMetaDataOptionsSLOBinding samlIDPMetaDataOptionsResolutionRule samlIDPMetaDataOptionsAllowLoginFromIDP samlIDPMetaDataOptionsAdaptSessionUtime)
+                            qw(samlIDPMetaDataOptionsNameIDFormat samlIDPMetaDataOptionsForceAuthn samlIDPMetaDataOptionsAllowProxiedAuthn samlIDPMetaDataOptionsSSOBinding samlIDPMetaDataOptionsSLOBinding samlIDPMetaDataOptionsResolutionRule samlIDPMetaDataOptionsAllowLoginFromIDP samlIDPMetaDataOptionsAdaptSessionUtime samlIDPMetaDataOptionsSignSSORequest)
                         ],
                         samlIDPMetaDataOptionsNameIDFormat =>
 "text:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsNameIDFormat"
@@ -81,6 +81,8 @@ sub cstruct {
 "bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsAllowLoginFromIDP",
                         samlIDPMetaDataOptionsAdaptSessionUtime =>
 "bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsAdaptSessionUtime",
+                        samlIDPMetaDataOptionsSignSSORequest =>
+"bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsSignSSORequest",
                     },
                 }
             }
@@ -1180,6 +1182,7 @@ sub defaultConf {
         samlIDPMetaDataOptionsResolutionRule    => '',
         samlIDPMetaDataOptionsAllowLoginFromIDP => '1',
         samlIDPMetaDataOptionsAdaptSessionUtime => '1',
+        samlIDPMetaDataOptionsSignSSORequest    => '1',
         samlSPMetaDataOptionsRequestedAuthnContext => '',
         samlSPSSODescriptorAuthnRequestsSigned  => '0',
         samlSPSSODescriptorKeyDescriptorSigning => '',

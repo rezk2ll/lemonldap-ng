@@ -793,10 +793,16 @@ sub extractFormInfo {
 
     $self->lmLog( "Use method $method with IDP $idp for SSO profile", 'debug' );
 
+    # Signature hint
+    my $signSSORequest =
+      $self->{samlIDPMetaDataOptions}->{$idp}
+      ->{samlIDPMetaDataOptionsSignSSORequest};
+    $signSSORequest = 1 unless defined $signSSORequest;
+
     # Create SSO request
     $login =
       $self->createAuthnRequest( $server, $IDPentityID, $method, $forceAuthn,
-        $nameIDFormat, $allowProxiedAuthn );
+        $nameIDFormat, $allowProxiedAuthn, $signSSORequest );
 
     unless ($login) {
         $self->lmLog( "Could not create authentication request on $IDPentityID",

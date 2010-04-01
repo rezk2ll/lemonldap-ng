@@ -167,9 +167,8 @@ sub loadIDPs {
         }
 
         # Add this IDP to Lasso::Server
-        my $result = $self->addIDP(
-            $self->{_lassoServer}, $idp_metadata->toXML()
-        );
+        my $result =
+          $self->addIDP( $self->{_lassoServer}, $idp_metadata->toXML() );
 
         unless ($result) {
             $self->lmLog( "Fail to use IDP $_ Metadata", 'error' );
@@ -178,7 +177,8 @@ sub loadIDPs {
 
         # Store IDP entityID and Organization Name
         my $entityID = $idp_metadata->{entityID};
-        my $name = $self->getOrganizationName( $self->{_lassoServer}, $entityID )
+        my $name =
+          $self->getOrganizationName( $self->{_lassoServer}, $entityID )
           || ucfirst($_);
         $self->{_idpList}->{$_} = ();
         $self->{_idpList}->{$_}->{entityID} = $entityID;
@@ -230,9 +230,8 @@ sub loadSPs {
         }
 
         # Add this SP to Lasso::Server
-        my $result = $self->addSP(
-            $self->{_lassoServer}, $sp_metadata->toXML()
-        );
+        my $result =
+          $self->addSP( $self->{_lassoServer}, $sp_metadata->toXML() );
 
         unless ($result) {
             $self->lmLog( "Fail to use SP $_ Metadata", 'error' );
@@ -241,7 +240,8 @@ sub loadSPs {
 
         # Store SP entityID and Organization Name
         my $entityID = $sp_metadata->{entityID};
-        my $name = $self->getOrganizationName( $self->{_lassoServer}, $entityID )
+        my $name =
+          $self->getOrganizationName( $self->{_lassoServer}, $entityID )
           || ucfirst($_);
         $self->{_spList}->{$_} = ();
         $self->{_spList}->{$_}->{entityID} = $entityID;
@@ -271,7 +271,7 @@ sub checkMessage {
     my $artifact;
 
     # Check if SAML service is loaded
-    return ($request, $response, $method, $relaystate)
+    return ( $request, $response, $method, $relaystate )
       unless $self->{_lassoServer};
 
     # Create Login object
@@ -290,8 +290,7 @@ sub checkMessage {
 
             # Response in query string
             $response = $self->query_string();
-            $self->lmLog( "HTTP-REDIRECT: SAML Response $response",
-                'debug' );
+            $self->lmLog( "HTTP-REDIRECT: SAML Response $response", 'debug' );
 
         }
 
@@ -307,13 +306,11 @@ sub checkMessage {
 
             # Artifact in query string
             $artifact = $self->query_string();
-            $self->lmLog( "HTTP-REDIRECT: SAML Artifact $artifact",
-                'debug' );
+            $self->lmLog( "HTTP-REDIRECT: SAML Artifact $artifact", 'debug' );
 
             # Resolve Artifact
             $method = Lasso::Constants::HTTP_METHOD_ARTIFACT_GET;
-            my $message =
-              $self->resolveArtifact( $login, $artifact, $method );
+            my $message = $self->resolveArtifact( $login, $artifact, $method );
 
             # Request or response ?
             if ( $message =~ /samlp:response/i ) {
@@ -355,7 +352,8 @@ sub checkMessage {
 
                 # Artifcat in SAMLart param
                 $artifact = $self->param('SAMLart');
-                $self->lmLog( "HTTP-REDIRECT: SAML Artifact $artifact", 'debug' );
+                $self->lmLog( "HTTP-REDIRECT: SAML Artifact $artifact",
+                    'debug' );
 
                 # Resolve Artifact
                 $method = Lasso::Constants::HTTP_METHOD_ARTIFACT_POST;
@@ -536,7 +534,7 @@ sub getOrganizationName {
     return $data->{OrganizationName}->{content};
 }
 
-## @method Lasso::Login createAuthnRequest(Lasso::Server server, string idp, int method, boolean forceAuthn, string nameIDFormat, boolean allowProxiedAuthn)
+## @method Lasso::Login createAuthnRequest(Lasso::Server server, string idp, int method, boolean forceAuthn, string nameIDFormat, boolean allowProxiedAuthn, boolean signSSORequest)
 # Create authentication request for selected IDP
 # @param server Lasso::Server object
 # @param entityID IDP entityID
@@ -544,10 +542,11 @@ sub getOrganizationName {
 # @param forceAuthn force authentication on IDP
 # @param nameIDFormat SAML2 NameIDFormat
 # @param allowProxiedAuthn allow proxy on IDP
+# @param signSSORequest sign request
 # @return Lasso::Login object
 sub createAuthnRequest {
     my ( $self, $server, $idp, $method, $forceAuthn, $nameIDFormat,
-        $allowProxiedAuthn )
+        $allowProxiedAuthn, $signSSORequest )
       = splice @_;
 
     # Create Lasso Login
@@ -603,6 +602,19 @@ sub createAuthnRequest {
               || Lasso::Saml2Conditions->new();
             $conditions->ProxyRestriction($proxyRestriction);
             $request->Conditions($conditions);
+        };
+        if ($@) {
+            $self->checkLassoError($@);
+            return;
+        }
+    }
+
+    # Signature
+    unless ($signSSORequest) {
+        $self->lmLog( "Do not sign this request", 'debug' );
+        eval {
+            $login->set_signature_hint
+              (Lasso::Constants::PROFILE_SIGNATURE_HINT_FORBID);
         };
         if ($@) {
             $self->checkLassoError($@);
