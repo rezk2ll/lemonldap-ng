@@ -293,7 +293,7 @@ sub checkMessage {
     }
 
     # Get relayState (eventually previously backup'd)
-    $relaystate = $self->param('RelayState');
+    $relaystate = $self->param('RelayState')
       unless ( $relaystate = $self->getHiddenFormValue('RelayState') );
 
     # 1. HTTP REDIRECT
