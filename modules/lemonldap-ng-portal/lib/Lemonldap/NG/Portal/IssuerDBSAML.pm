@@ -113,8 +113,58 @@ sub issuerForUnAuthUser {
 # @return Lemonldap::NG::Portal error code
 sub issuerForAuthUser {
     my $self = shift;
+    my $server = $self->{_lassoServer};
 
-    print STDERR "IssuerDBSAML: issuerForAuthUser\n";
+    # Get configuration parameter
+    my $saml_sso_soap_url =
+      $self->getMetaDataURL( "samlIDPSSODescriptorSingleSignOnServiceSOAP", 1 );
+    my $saml_sso_soap_url_ret =
+      $self->getMetaDataURL( "samlIDPSSODescriptorSingleSignOnServiceSOAP", 2 );
+    my $saml_sso_get_url =
+      $self->getMetaDataURL( "samlIDPSSODescriptorSingleSignOnServiceHTTP", 1 );
+    my $saml_sso_get_url_ret =
+      $self->getMetaDataURL( "samlIDPSSODescriptorSingleSignOnServiceHTTP", 2 );
+
+    # Get HTTP request informations to know
+    # if we are receving SAML request or response
+    my $url            = $self->url();
+    my $request_method = $self->request_method();
+    my $content_type   = $self->content_type();
+
+    if ( $url =~ /^($saml_sso_soap_url|$saml_sso_get_url)$/i ) {
+
+        $self->lmLog( "URL $url detected as an SSO request URL", 'debug' );
+
+        # Check message
+        my ( $request, $response, $method, $relaystate, $artifact ) =
+          $self->checkMessage( $url, $request_method, $content_type );
+
+        # Process the request
+        if ( $request ) {
+
+            # Create Login object
+            my $login = $self->createLogin($server);
+
+            # Process authentication request
+            my $result;
+            if ($artifact) {
+                $result = $self->processArtRequestMsg( $login, $request );
+            }
+            else {
+                $result = $self->processAuthnRequestMsg( $login, $request );
+            }
+
+            unless ($result) {
+                $self->lmLog( "SSO: Fail to process authentication request",
+                    'error' );
+                return PE_ERROR;
+            }
+
+            $self->lmLog( "SSO: authentication request is valid", 'debug' );
+
+        }
+
+    }
 
     PE_OK;
 }
