@@ -150,7 +150,9 @@ sub serviceToXML {
     );
 
     foreach (@param_auto) {
-        $template->param( $_, $conf->{$_} );
+        if ( defined $conf->{$_} ) {
+            $template->param( $_, $conf->{$_} );
+        }
     }
 
     # Format public keys.
@@ -195,10 +197,12 @@ sub serviceToXML {
     );
 
     foreach (@param_service) {
-        my @_tab = split( /;/, $conf->{$_} );
-        $template->param( $_ . 'Binding',          $_tab[0] );
-        $template->param( $_ . 'Location',         $_tab[1] );
-        $template->param( $_ . 'ResponseLocation', $_tab[2] );
+        if ( defined $conf->{$_} ) {
+            my @_tab = split( /;/, $conf->{$_} );
+            $template->param( $_ . 'Binding',          $_tab[0] );
+            $template->param( $_ . 'Location',         $_tab[1] );
+            $template->param( $_ . 'ResponseLocation', $_tab[2] );
+        }
     }
 
     # Rebuilded parameters for SAML assertions
@@ -212,11 +216,13 @@ sub serviceToXML {
       samlIDPSSODescriptorArtifactResolutionServiceArtifact
     );
     foreach (@param_assertion) {
-        my @_tab = split( /;/, $conf->{$_} );
-        $template->param( $_ . 'Default', $_tab[0] ? 'true' : 'false' );
-        $template->param( $_ . 'Index',   $_tab[1] );
-        $template->param( $_ . 'Binding', $_tab[2] );
-        $template->param( $_ . 'Location', $_tab[3] );
+        if ( defined $conf->{$_} ) {
+            my @_tab = split( /;/, $conf->{$_} );
+            $template->param( $_ . 'Default', $_tab[0] ? 'true' : 'false' );
+            $template->param( $_ . 'Index',   $_tab[1] );
+            $template->param( $_ . 'Binding', $_tab[2] );
+            $template->param( $_ . 'Location', $_tab[3] );
+        }
     }
 
     # Return the XML metadata.
