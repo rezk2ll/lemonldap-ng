@@ -95,10 +95,12 @@ sub issuerForUnAuthUser {
             my $isPassive = $saml_request->IsPassive();
 
             if ($isPassive) {
-                $self->lmLog( "Found isPassive flag in assertion conditions",
-                    'debug' );
+                $self->lmLog( "Found isPassive flag in SAML request", 'debug' );
                 return PE_ERROR;
             }
+
+            # Save dump into SAMLRequest hidden field
+            $self->setHiddenFormValue( 'SAMLRequest', $saml_request->dump() );
 
         }
 

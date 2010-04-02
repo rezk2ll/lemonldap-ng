@@ -17,6 +17,7 @@
       <hr class="solid" />
       <p><span class="text-error"><TMPL_VAR NAME="AUTH_ERROR"></span></p>
       <form action="#" method="post" class="login">
+        <TMPL_VAR NAME="HIDDEN_INPUTS">
         <input type="hidden" name="url" value="" />
         <input type="hidden" name="timezone" />
         <p>

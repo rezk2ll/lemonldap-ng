@@ -9,6 +9,7 @@
       <hr class="solid" />
       <p class="text-error"><lang en="New message(s)" fr="Nouveaux messages"/></p>
       <form action="#" method="post" class="login">
+      <TMPL_VAR NAME="HIDDEN_INPUTS">
       <div id="content-all-info">
         <TMPL_VAR NAME="NOTIFICATION">
       </div>

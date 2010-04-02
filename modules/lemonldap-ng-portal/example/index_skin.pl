@@ -108,6 +108,7 @@ elsif ( my $notif = $portal->notification ) {
         AUTH_ERROR_TYPE => $portal->error_type,
         NOTIFICATION    => $notif,
         SKIN            => $skin,
+        HIDDEN_INPUTS   => $portal->buildHiddenForm(),
     );
 }
 
@@ -121,6 +122,7 @@ elsif ( $portal->{error} == PE_CONFIRM ) {
         AUTH_URL        => $portal->get_url,
         MSG             => $portal->info(),
         SKIN            => $skin,
+        HIDDEN_INPUTS   => $portal->buildHiddenForm(),
     );
 }
 
@@ -137,6 +139,7 @@ else {
         DISPLAY_RESETPASSWORD => $portal->{portalDisplayResetPassword},
         DISPLAY_FORM          => 1,
         MAIL_URL              => $portal->{mailUrl},
+        HIDDEN_INPUTS         => $portal->buildHiddenForm(),
     );
 
     # Adapt template if password policy error

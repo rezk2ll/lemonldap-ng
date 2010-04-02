@@ -7,6 +7,7 @@
 	<div class="loginlogo"></div>
 
 	<form id="form" action="<TMPL_VAR NAME="URL">" method="post" class="login">
+		<TMPL_VAR NAME="HIDDEN_INPUTS">
 		<p><input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" /></p>
 		<input type="hidden" id="confirm" name="confirm" value="1" />
 		<TMPL_VAR NAME="MSG">

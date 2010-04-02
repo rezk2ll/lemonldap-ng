@@ -7,6 +7,7 @@
 	<div class="loginlogo"></div>
 
 	<form action="#" method="post" class="login">
+		<TMPL_VAR NAME="HIDDEN_INPUTS">
 		<h3><lang en="New message(s)" fr="Nouveaux messages"/>&nbsp;:</h3>
 		<table>
 		<tr><td>

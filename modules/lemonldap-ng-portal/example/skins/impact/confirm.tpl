@@ -9,6 +9,7 @@
       <hr class="solid" />
       <p id="timer" class="text-error"><lang en="Automaticaly accept in 5 seconds" fr="Acceptation automatique dans 5 secondes"/></p>
       <form id="form" action="<TMPL_VAR NAME="URL">" method="get" class="login">
+        <TMPL_VAR NAME="HIDDEN_INPUTS">
         <input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
         <input type="hidden" id="confirm" name="confirm" value="1" />
         <div id="content-all-info">

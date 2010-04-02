@@ -320,6 +320,7 @@ sub setDefaultValues {
     $self->{portalForceAuthnInterval} = 5
       unless ( defined( $self->{portalForceAuthnInterval} ) );
     $self->{portalUserAttr} ||= "_user";
+    $self->{portalHiddenFormValues} = ();
     $self->{securedCookie}  ||= 0;
     $self->{cookieName}     ||= "lemonldap";
     $self->{authentication} ||= 'LDAP';
@@ -363,6 +364,52 @@ sub setDefaultValues {
 
     # SAML
     $self->{samlIdPResolveCookie} ||= "lemonldapidp";
+}
+
+##@method protected void setHiddenFormValue(string fieldname, string value)
+# Add element into $self->{portalHiddenFormValues}, those values could be
+# used to hide values into HTML form.
+#@param $fieldname The field name which will contain the correponding value
+#@param $value The associated value
+sub setHiddenFormValue {
+    my $self = shift;
+    my $key  = shift;
+    my $val  = shift;
+    $self->{portalHiddenFormValues}->{$key} = $val;
+}
+
+##@method public array getHiddenFormFields()
+# Return all hidden field names.
+#@return array All hidden field names
+sub getHiddenFormFields {
+    my $self = shift;
+    return keys %{$self->{portalHiddenFormValues}};
+}
+
+##@method public void getHiddenFormValue(string fieldname)
+# Get value into $self->{portalHiddenFormValues}.
+#@param $fieldname The existing field name which contains a value
+#@return string The associated value
+sub getHiddenFormValue {
+    my $self = shift;
+    my $key  = shift;
+    return '' unless ( defined($self->{portalHiddenFormValues}->{$key}) );
+    return $self->{portalHiddenFormValues}->{$key}
+}
+
+##@method public string buildHiddenForm()
+# Return an HTML representation of hidden values.
+#@return string
+sub buildHiddenForm {
+    my $self = shift;
+    my @keys = $self->getHiddenFormFields();
+    my $val  = ''; 
+    foreach ( @keys )
+    {
+      $val .= '<input type="hidden" name="' . $_ . '" id="' . $_ . '" value="'
+           .  encode_base64($self->getHiddenFormValue($_)) . '" />';
+    }
+    return $val;
 }
 
 =begin WSDL
