@@ -208,6 +208,7 @@ sub serviceToXML {
       samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact
       samlSPSSODescriptorAssertionConsumerServiceHTTPPost
       samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect
+      samlSPSSODescriptorArtifactResolutionServiceArtifact
       samlIDPSSODescriptorArtifactResolutionServiceArtifact
     );
     foreach (@param_assertion) {

@@ -78,6 +78,11 @@
         </ds:KeyValue>
       </ds:KeyInfo>
     </KeyDescriptor>
+    <ArtifactResolutionService
+      isDefault="<TMPL_VAR NAME="samlSPSSODescriptorArtifactResolutionServiceArtifactDefault">"
+      index="<TMPL_VAR NAME="samlSPSSODescriptorArtifactResolutionServiceArtifactIndex">"
+      Binding="<TMPL_VAR NAME="samlSPSSODescriptorArtifactResolutionServiceArtifactBinding">"
+      Location="<TMPL_VAR NAME="samlSPSSODescriptorArtifactResolutionServiceArtifactLocation">" />
     <SingleLogoutService
       Binding="<TMPL_VAR NAME="samlSPSSODescriptorSingleLogoutServiceSOAPBinding">"
       Location="<TMPL_VAR NAME="samlSPSSODescriptorSingleLogoutServiceSOAPLocation">" />

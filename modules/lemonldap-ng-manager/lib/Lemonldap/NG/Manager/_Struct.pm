@@ -600,6 +600,7 @@ sub struct {
                       samlSPSSODescriptorKeyDescriptorSigning
                       n:samlSPSSODescriptorSingleLogoutService
                       n:samlSPSSODescriptorAssertionConsumerService
+                      n:samlSPSSODescriptorArtifactResolutionService
                       n:samlSPSSODescriptorNameIDFormat)
                 ],
                 _help => 'default',
@@ -634,6 +635,15 @@ sub struct {
 'samlAssertion:/samlSPSSODescriptorAssertionConsumerServiceHTTPPost',
                     samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect =>
 'samlAssertion:/samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect',
+                },
+
+                samlSPSSODescriptorArtifactResolutionService => {
+                    _nodes => [
+                        qw(samlSPSSODescriptorArtifactResolutionServiceArtifact)
+                    ],
+                    _help => 'default',
+                    samlSPSSODescriptorArtifactResolutionServiceArtifact =>
+'samlAssertion:/samlSPSSODescriptorArtifactResolutionServiceArtifact',
                 },
 
                 samlSPSSODescriptorNameIDFormat => {
@@ -1054,6 +1064,7 @@ sub testStruct {
         samlSPSSODescriptorAssertionConsumerServiceHTTPPost => $testNotDefined,
         samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect =>
           $testNotDefined,
+        samlSPSSODescriptorArtifactResolutionServiceArtifact => $testNotDefined,
         samlSPSSODescriptorNameIDFormatX509SubjectName => $boolean,
         samlSPSSODescriptorNameIDFormatPersistent      => $boolean,
         samlSPSSODescriptorNameIDFormatTransient       => $boolean,
@@ -1223,6 +1234,10 @@ sub defaultConf {
           '0;2;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;' 
           . $portal
           . '/saml/proxySingleSignOnRedirect',
+        samlSPSSODescriptorArtifactResolutionServiceArtifact =>
+          '1;0;urn:oasis:names:tc:SAML:2.0:bindings:SOAP;' 
+          . $portal
+          . '/saml/artifact',
         samlSPSSODescriptorNameIDFormatX509SubjectName => '0',
         samlSPSSODescriptorNameIDFormatPersistent      => '1',
         samlSPSSODescriptorNameIDFormatTransient       => '0',

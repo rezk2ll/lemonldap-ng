@@ -245,6 +245,9 @@ sub en {
         samlSPSSODescriptorAssertionConsumerServiceHTTPPost => 'HTTP POST',
         samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect =>
           'HTTP Redirect',
+        samlSPSSODescriptorArtifactResolutionService => 'Artifact Resolution',
+        samlSPSSODescriptorArtifactResolutionServiceArtifact =>
+          'Artifact Service',
         samlSPSSODescriptorNameIDFormat                => 'NameID Format',
         samlSPSSODescriptorNameIDFormatX509SubjectName => 'x509',
         samlSPSSODescriptorNameIDFormatPersistent      => 'Persistent',
@@ -477,6 +480,10 @@ sub fr {
         samlSPSSODescriptorAssertionConsumerServiceHTTPPost => 'POST HTTP',
         samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect =>
           'Redirection HTTP',
+        samlSPSSODescriptorArtifactResolutionService =>
+          'Résolution d\'Artifact',
+        samlSPSSODescriptorArtifactResolutionServiceArtifact =>
+          'Service Artifact',
         samlSPSSODescriptorNameIDFormat                => 'Format NameID',
         samlSPSSODescriptorNameIDFormatX509SubjectName => 'x509',
         samlSPSSODescriptorNameIDFormatPersistent      => 'Persistant',
