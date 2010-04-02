@@ -225,7 +225,7 @@ sub en {
         samlSPMetaDataXML                          => 'Metadata',
         samlSPMetaDataExportedAttributes           => 'Exported attributes',
         samlSPMetaDataOptions                      => 'Options',
-        samlSPMetaDataOptionsRequestedAuthnContext => 'Authentication context',
+        samlSPMetaDataOptionsOneTimeUse  => 'One time use',
         samlServiceMetaData                     => 'SAML 2 Service',
         samlEntityID                            => 'Entity Identifier',
         samlOrganization                        => 'Organization',
@@ -457,8 +457,7 @@ sub fr {
         samlSPMetaDataXML                    => 'Metadonnées',
         samlSPMetaDataExportedAttributes     => 'Attributs exportés',
         samlSPMetaDataOptions                => 'Options',
-        samlSPMetaDataOptionsRequestedAuthnContext =>
-          'Contexte d\'authentification',
+        samlSPMetaDataOptionsOneTimeUse  => 'Utilisation unique',
         samlServiceMetaData                  => 'Service SAML 2',
         samlEntityID                         => 'Identifiant d\'entité',
         samlOrganization                     => 'Organisation',

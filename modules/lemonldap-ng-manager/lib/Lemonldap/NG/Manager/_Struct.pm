@@ -117,10 +117,9 @@ sub cstruct {
                     samlSPMetaDataXML => "samlmetadata:/samlSPMetaDataXML/$k2"
                       . ":samlSPMetaDataXML:filearea",
                     samlSPMetaDataOptions => {
-                        _nodes =>
-                          ['samlSPMetaDataOptionsRequestedAuthnContext'],
-                        samlSPMetaDataOptionsRequestedAuthnContext =>
-"text:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsRequestedAuthnContext",
+                        _nodes => ['samlSPMetaDataOptionsOneTimeUse'],
+                        samlSPMetaDataOptionsOneTimeUse =>
+"bool:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsOneTimeUse",
                     },
                 }
             }
@@ -1199,7 +1198,7 @@ sub defaultConf {
         samlIDPMetaDataOptionsSignSLOMessage           => '1',
         samlIDPMetaDataOptionsCheckSLOMessageSignature => '1',
         samlIDPMetaDataOptionsRequestedAuthnContext    => '',
-        samlSPMetaDataOptionsRequestedAuthnContext => '',
+        samlSPMetaDataOptionsOneTimeUse                => '0',
         samlSPSSODescriptorAuthnRequestsSigned  => '0',
         samlSPSSODescriptorKeyDescriptorSigning => '',
         samlSPSSODescriptorSingleLogoutServiceHTTP =>
