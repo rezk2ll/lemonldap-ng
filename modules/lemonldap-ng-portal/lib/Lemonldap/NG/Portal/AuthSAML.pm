@@ -82,20 +82,12 @@ sub extractFormInfo {
         $self->lmLog( "URL $url detected as an SSO assertion consumer URL",
             'debug' );
 
-        # Create Login object
-        $login = $self->createLogin($server);
-
         # Do we check signature?
+        my $checkSSOMessageSignature;
         if ($idp) {
-            my $checkSSOMessageSignature =
+            $checkSSOMessageSignature =
               $self->{samlIDPMetaDataOptions}->{$idp}
               ->{samlIDPMetaDataOptionsCheckSSOMessageSignature};
-            unless ($checkSSOMessageSignature) {
-                $self->lmLog(
-                    "SSO message signature from IDP $idp will not be checked",
-                    'debug' );
-                $self->disableSignature($login);
-            }
         }
         else {
             $self->lmLog(
@@ -104,115 +96,13 @@ sub extractFormInfo {
             );
         }
 
-        # Get relayState
-        $relaystate = $self->param('RelayState');
+        # Check SAML Message
+        my ( $request, $response, $method, $relaystate, $artifact ) =
+          $self->checkMessage( $url, $request_method, $content_type, "login",
+            $checkSSOMessageSignature );
 
-        # 1.1.1 HTTP REDIRECT
-        if ( $request_method =~ /^GET$/ ) {
-
-            $method = Lasso::Constants::HTTP_METHOD_REDIRECT;
-            $self->lmLog( "SSO method: HTTP-REDIRECT", 'debug' );
-
-            if ( $self->param('SAMLResponse') ) {
-
-                # Response in query string
-                $response = $self->query_string();
-                $self->lmLog( "HTTP-REDIRECT: SAML Response $response",
-                    'debug' );
-
-            }
-
-            if ( $self->param('SAMLRequest') ) {
-
-                # Request in query string
-                $request = $self->query_string();
-                $self->lmLog( "HTTP-REDIRECT: SAML Request $request", 'debug' );
-
-            }
-
-            if ( $self->param('SAMLart') ) {
-
-                # Artifcat in query string
-                $artifact = $self->query_string();
-                $self->lmLog( "HTTP-REDIRECT: SAML Artifact $artifact",
-                    'debug' );
-
-                # Resolve Artifact
-                $method = Lasso::Constants::HTTP_METHOD_ARTIFACT_GET;
-                my $message =
-                  $self->resolveArtifact( $login, $artifact, $method );
-
-                # Request or response ?
-                if ( $message =~ /samlp:response/i ) {
-                    $response = $message;
-                }
-                else {
-                    $request = $message;
-                }
-            }
-
-        }
-
-        elsif ( $request_method =~ /^POST$/ ) {
-
-            # 1.2.2 POST
-            if ( $content_type !~ /xml/ ) {
-
-                $method = Lasso::Constants::HTTP_METHOD_POST;
-                $self->lmLog( "SSO method: HTTP-POST", 'debug' );
-
-                if ( $self->param('SAMLResponse') ) {
-
-                    # Response in body part
-                    $response = $self->param('SAMLResponse');
-                    $self->lmLog( "HTTP-POST: SAML Response $response",
-                        'debug' );
-
-                }
-
-                if ( $self->param('SAMLRequest') ) {
-
-                    # Request in body part
-                    $request = $self->param('SAMLRequest');
-                    $self->lmLog( "HTTP-POST: SAML Request $request", 'debug' );
-
-                }
-
-                if ( $self->param('SAMLart') ) {
-
-                    # Artifcat in SAMLart param
-                    $artifact = $self->param('SAMLart');
-                    $self->lmLog( "HTTP-REDIRECT: SAML Artifact $artifact",
-                        'debug' );
-
-                    # Resolve Artifact
-                    $method = Lasso::Constants::HTTP_METHOD_ARTIFACT_POST;
-                    my $message =
-                      $self->resolveArtifact( $login, $artifact, $method );
-
-                    # Request or response ?
-                    if ( $message =~ /samlp:response/i ) {
-                        $response = $message;
-                    }
-                    else {
-                        $request = $message;
-                    }
-                }
-
-            }
-
-            # 1.2.3 SOAP
-            else {
-
-                $method = Lasso::Constants::HTTP_METHOD_SOAP;
-                $self->lmLog( "SSO method: HTTP-SOAP", 'debug' );
-
-                # SOAP is always a request
-                $request = $self->param('POSTDATA');
-                $self->lmLog( "HTTP-SOAP: SAML Request $request", 'debug' );
-
-            }
-        }
+        # Create Login object
+        $login = $self->createLogin($server);
 
         if ($response) {
 
@@ -413,20 +303,12 @@ sub extractFormInfo {
     {
         $self->lmLog( "URL $url detected as an SLO URL", 'debug' );
 
-        # Create Logout object
-        $logout = $self->createLogout($server);
-
         # Do we check signature?
+        my $checkSLOMessageSignature;
         if ($idp) {
-            my $checkSLOMessageSignature =
+            $checkSLOMessageSignature =
               $self->{samlIDPMetaDataOptions}->{$idp}
               ->{samlIDPMetaDataOptionsCheckSLOMessageSignature};
-            unless ($checkSLOMessageSignature) {
-                $self->lmLog(
-                    "SLO message signature from IDP $idp will not be checked",
-                    'debug' );
-                $self->disableSignature($logout);
-            }
         }
         else {
             $self->lmLog(
@@ -435,73 +317,13 @@ sub extractFormInfo {
             );
         }
 
-        # Get relayState
-        $relaystate = $self->param('RelayState');
+        # Check SAML Message
+        my ( $request, $response, $method, $relaystate, $artifact ) =
+          $self->checkMessage( $url, $request_method, $content_type, "logout",
+            $checkSLOMessageSignature );
 
-        # 1.2.1 HTTP-REDIRECT
-        if ( $request_method =~ /^GET$/ ) {
-
-            $method = Lasso::Constants::HTTP_METHOD_REDIRECT;
-            $self->lmLog( "SLO method: HTTP-REDIRECT", 'debug' );
-
-            if ( $self->param('SAMLResponse') ) {
-
-                # Response in query string
-                $response = $self->query_string();
-                $self->lmLog( "HTTP-REDIRECT: SAML Response $response",
-                    'debug' );
-
-            }
-
-            if ( $self->param('SAMLRequest') ) {
-
-                # Request in query string
-                $request = $self->query_string();
-                $self->lmLog( "HTTP-REDIRECT: SAML Request $request", 'debug' );
-
-            }
-
-        }
-
-        elsif ( $request_method =~ /^POST$/ ) {
-
-            # 1.2.2 POST
-            if ( $content_type !~ /xml/ ) {
-
-                $method = Lasso::Constants::HTTP_METHOD_POST;
-                $self->lmLog( "SLO method: HTTP-POST", 'debug' );
-
-                if ( $self->param('SAMLResponse') ) {
-
-                    # Response in body part
-                    $response = $self->param('SAMLResponse');
-                    $self->lmLog( "HTTP-POST: SAML Response $response",
-                        'debug' );
-
-                }
-
-                if ( $self->param('SAMLRequest') ) {
-
-                    # Request in body part
-                    $request = $self->param('SAMLRequest');
-                    $self->lmLog( "HTTP-POST: SAML Request $request", 'debug' );
-
-                }
-
-            }
-
-            # 1.2.3 SOAP
-            else {
-
-                $method = Lasso::Constants::HTTP_METHOD_SOAP;
-                $self->lmLog( "SLO method: HTTP-SOAP", 'debug' );
-
-                # SOAP is always a request
-                $request = $self->param('POSTDATA');
-                $self->lmLog( "HTTP-SOAP: SAML Request $request", 'debug' );
-
-            }
-        }
+        # Create Logout object
+        $logout = $self->createLogout($server);
 
         if ($response) {
 
@@ -642,12 +464,6 @@ sub extractFormInfo {
                     $self->lmLog( "SLO message to IDP $idp will not be signed",
                         'debug' );
                     $self->disableSignature($logout);
-                }
-                else {
-
-                    # Force signature here because it
-                    # can have been disabled before
-                    $self->forceSignature($logout);
                 }
             }
             else {

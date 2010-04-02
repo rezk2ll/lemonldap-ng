@@ -253,29 +253,44 @@ sub loadSPs {
     return 1;
 }
 
-## @method checkMessage
+## @method array checkMessage(string url, string request_method, string content_type, string profile_type, boolean check_sig)
 # Check SAML requests and responses
-# @param string url
-# @param string request method
-# @param string content type
-# @return ( $request, $response, $method, $relaystate )
+# @param url
+# @param request_method
+# @param content_type
+# @param profile_type login or logout
+# @param check_sig
+# @return ( $request, $response, $method, $relaystate, $artifact )
 sub checkMessage {
     my $self           = shift;
     my $url            = shift;
     my $request_method = shift;
     my $content_type   = shift;
+    my $profile_type   = shift || "login";
+    my $check_sig      = shift;
     my $request;
     my $response;
     my $method;
     my $relaystate;
-    my $artifact;
+    my $artifact = 0;
 
     # Check if SAML service is loaded
-    return ( $request, $response, $method, $relaystate )
+    return ( $request, $response, $method, $relaystate, $artifact )
       unless $self->{_lassoServer};
 
-    # Create Login object
-    my $login = $self->createLogin( $self->{_lassoServer} );
+    # Create Profile object
+    my $profile;
+    $profile = $self->createLogin( $self->{_lassoServer} )
+      if ( $profile_type eq "login" );
+    $profile = $self->createLogout( $self->{_lassoServer} )
+      if ( $profile_type eq "logout" );
+
+    # Signature
+    $check_sig = 1 unless defined $check_sig;
+    unless ($check_sig) {
+        $self->lmLog( "Message signature will not be checked", 'debug' );
+        $self->disableSignature($profile);
+    }
 
     # Get relayState
     $relaystate = $self->param('RelayState');
@@ -284,7 +299,7 @@ sub checkMessage {
     if ( $request_method =~ /^GET$/ ) {
 
         $method = Lasso::Constants::HTTP_METHOD_REDIRECT;
-        $self->lmLog( "SSO method: HTTP-REDIRECT", 'debug' );
+        $self->lmLog( "SAML method: HTTP-REDIRECT", 'debug' );
 
         if ( $self->param('SAMLResponse') ) {
 
@@ -310,7 +325,8 @@ sub checkMessage {
 
             # Resolve Artifact
             $method = Lasso::Constants::HTTP_METHOD_ARTIFACT_GET;
-            my $message = $self->resolveArtifact( $login, $artifact, $method );
+            my $message =
+              $self->resolveArtifact( $profile, $artifact, $method );
 
             # Request or response ?
             if ( $message =~ /samlp:response/i ) {
@@ -330,7 +346,7 @@ sub checkMessage {
         if ( $content_type !~ /xml/ ) {
 
             $method = Lasso::Constants::HTTP_METHOD_POST;
-            $self->lmLog( "SSO method: HTTP-POST", 'debug' );
+            $self->lmLog( "SAML method: HTTP-POST", 'debug' );
 
             if ( $self->param('SAMLResponse') ) {
 
@@ -358,7 +374,7 @@ sub checkMessage {
                 # Resolve Artifact
                 $method = Lasso::Constants::HTTP_METHOD_ARTIFACT_POST;
                 my $message =
-                  $self->resolveArtifact( $login, $artifact, $method );
+                  $self->resolveArtifact( $profile, $artifact, $method );
 
                 # Request or response ?
                 if ( $message =~ /samlp:response/i ) {
@@ -376,7 +392,7 @@ sub checkMessage {
         else {
 
             $method = Lasso::Constants::HTTP_METHOD_SOAP;
-            $self->lmLog( "SSO method: HTTP-SOAP", 'debug' );
+            $self->lmLog( "SAML method: HTTP-SOAP", 'debug' );
 
             # SOAP is always a request
             $request = $self->param('POSTDATA');
