@@ -99,9 +99,6 @@ sub issuerForUnAuthUser {
                 return PE_ERROR;
             }
 
-            # Save dump into SAMLRequest hidden field
-            $self->setHiddenFormValue( 'SAMLRequest', $saml_request->dump() );
-
         }
 
     }

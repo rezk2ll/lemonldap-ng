@@ -375,15 +375,10 @@ sub setHiddenFormValue {
     my $self = shift;
     my $key  = shift;
     my $val  = shift;
-    $self->{portalHiddenFormValues}->{$key} = $val;
-}
-
-##@method public array getHiddenFormFields()
-# Return all hidden field names.
-#@return array All hidden field names
-sub getHiddenFormFields {
-    my $self = shift;
-    return keys %{$self->{portalHiddenFormValues}};
+    if ( $val ) {
+        $key = 'lmhidden_' . $key;
+        $self->{portalHiddenFormValues}->{$key} = encode_base64( $val );
+    }
 }
 
 ##@method public void getHiddenFormValue(string fieldname)
@@ -393,8 +388,12 @@ sub getHiddenFormFields {
 sub getHiddenFormValue {
     my $self = shift;
     my $key  = shift;
-    return '' unless ( defined($self->{portalHiddenFormValues}->{$key}) );
-    return $self->{portalHiddenFormValues}->{$key}
+    $key = 'lmhidden_' . $key;
+    if ( my $val = $self->param($key) )
+    {
+      return decode_base64( $val );
+    }
+    return undef;
 }
 
 ##@method public string buildHiddenForm()
@@ -402,12 +401,12 @@ sub getHiddenFormValue {
 #@return string
 sub buildHiddenForm {
     my $self = shift;
-    my @keys = $self->getHiddenFormFields();
+    my @keys = keys %{$self->{portalHiddenFormValues}};
     my $val  = ''; 
     foreach ( @keys )
     {
-      $val .= '<input type="hidden" name="' . $_ . '" id="' . $_ . '" value="'
-           .  encode_base64($self->getHiddenFormValue($_)) . '" />';
+      $val .= '<input type="hidden" name="' . $_ . '" id="' . $_
+           .  '" value="' .  $self->{portalHiddenFormValues}->{$_} . '" />';
     }
     return $val;
 }
