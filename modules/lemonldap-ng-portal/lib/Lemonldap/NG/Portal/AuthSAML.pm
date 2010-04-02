@@ -72,6 +72,8 @@ sub extractFormInfo {
       $self->getMetaDataURL( "samlSPSSODescriptorSingleLogoutServiceHTTP", 1 );
     my $saml_slo_get_url_ret =
       $self->getMetaDataURL( "samlSPSSODescriptorSingleLogoutServiceHTTP", 2 );
+    my $saml_ars_url = $self->getMetaDataURL(
+        "samlSPSSODescriptorArtifactResolutionServiceArtifact");
 
     # 1.1 SSO assertion consumer
     if ( $url =~ /^($saml_acs_art_url|$saml_acs_post_url|$saml_acs_get_url)$/i )
@@ -730,6 +732,14 @@ sub extractFormInfo {
             $self->{error}        = $self->_subProcess(qw(autoRedirect));
             return $self->{error};
         }
+    }
+
+    # 1.3 Artefact
+    if ( $url =~ /^($saml_ars_url)$/i ) {
+
+        $self->lmLog( "URL $url detected as an artefact resolution service URL",
+            'debug' );
+
     }
 
     # 2. IDP resolution
