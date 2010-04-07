@@ -117,6 +117,7 @@ sub issuerForAuthUser {
     my $login;
     my $protocolProfile;
     my $artifact_method;
+    my $authn_context;
 
     # Get configuration parameter
     my $saml_sso_soap_url =
@@ -176,7 +177,33 @@ sub issuerForAuthUser {
     
     # TODO Build NameID
 
-    # TODO Build Assertion
+            # Convert authentication method into SAML2 string
+            $authn_context = Lasso::Constants::SAML2_AUTHN_CONTEXT_UNSPECIFIED;
+
+            if ( $self->get_module('auth') =~ /(LDAP|DBI)/i ) {
+                if ( $self->https() ) {
+                    $authn_context =
+                      $self->getAuthnContext("password-protected-transport");
+                }
+                else {
+                    $authn_context = $self->getAuthnContext("password");
+                }
+            }
+
+            if ( $self->get_module('auth') =~ /(SSL)/i ) {
+                $authn_context = $self->getAuthnContext("x509");
+            }
+
+            $self->lmLog( "Authentication context is $authn_context", 'debug' );
+
+            # Build Assertion
+            # TODO manage NotOnOrAfter date
+            unless ( $self->buildAssertion( $login, $authn_context ) ) {
+                $self->lmLog( "Unable to build assertion", 'error' );
+                return PE_ERROR;
+            }
+
+            $self->lmLog( "SSO: assertion is built", 'debug' );
 
             # TODO relayState
 

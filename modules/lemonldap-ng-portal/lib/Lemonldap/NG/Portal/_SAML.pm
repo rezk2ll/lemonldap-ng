@@ -795,6 +795,34 @@ sub buildArtifactMsg {
     return $self->checkLassoError($@);
 }
 
+## @method boolean buildAssertion(Lasso::Login login, string authn_context)
+# Build assertion
+# @param login Lasso::Login object
+# @param authn_context SAML2 authentication context
+# @return boolean result
+sub buildAssertion {
+    my ( $self, $login, $authn_context ) = splice @_;
+
+    # Convert time in SAML2 time
+    my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = gmtime(time);
+    $year += 1900;
+    $mon++;
+    $mon  = $mon  > 9 ? $mon  : "0". $mon;
+    $mday = $mday > 9 ? $mday : "0". $mday;
+    $hour = $hour > 9 ? $hour : "0". $hour;
+    $min  = $min  > 9 ? $min  : "0". $min;
+    $sec  = $sec  > 9 ? $sec  : "0". $sec;
+
+    my $saml2time = "$year-$mon-$mday"."T"."$hour-$min-$sec"."Z";
+
+    eval {
+        Lasso::Login::build_assertion( $login, $authn_context, $saml2time, undef,
+            undef, undef );
+    };
+
+    return $self->checkLassoError($@);
+}
+
 ## @method boolean processAuthnResponseMsg(Lasso::Login login, string response)
 # Process authentication response message
 # @param login Lasso::Login object
@@ -1778,6 +1806,10 @@ Build authentication response message
 =head2 buildArtifactMsg
 
 Build artifact message
+
+=head2 buildAssertion
+
+Build assertion
 
 =head2 processAuthnResponseMsg
 
