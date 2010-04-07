@@ -272,11 +272,21 @@ sub checkMessage {
     my $response;
     my $method;
     my $relaystate;
-    my $artifact = 0;
+    my $artifact;
 
     # Check if SAML service is loaded
     return ( $request, $response, $method, $relaystate, $artifact )
       unless $self->{_lassoServer};
+
+    # 1. Get hidden fields
+    $request    = $self->getHiddenFormValue('SAMLRequest');
+    $response   = $self->getHiddenFormValue('SAMLResponse');
+    $method     = $self->getHiddenFormValue('Method');
+    $relaystate = $self->getHiddenFormValue('RelayState');
+    $artifact   = $self->getHiddenFormValue('SAMLart');
+
+    # 2. If no hidden fields, check HTTP request contents
+    unless ( $request or $response ) {
 
     # Create Profile object
     my $profile;
@@ -292,11 +302,10 @@ sub checkMessage {
         $self->disableSignature($profile);
     }
 
-    # Get relayState (eventually previously backup'd)
-    $relaystate = $self->param('RelayState')
-      unless ( $relaystate = $self->getHiddenFormValue('RelayState') );
+        # Get relayState
+        $relaystate = $self->param('RelayState');
 
-    # 1. HTTP REDIRECT
+        # 2.1. HTTP REDIRECT
     if ( $request_method =~ /^GET$/ ) {
 
         $method = Lasso::Constants::HTTP_METHOD_REDIRECT;
@@ -306,7 +315,8 @@ sub checkMessage {
 
             # Response in query string
             $response = $self->query_string();
-            $self->lmLog( "HTTP-REDIRECT: SAML Response $response", 'debug' );
+                $self->lmLog( "HTTP-REDIRECT: SAML Response $response",
+                    'debug' );
 
         }
 
@@ -322,7 +332,8 @@ sub checkMessage {
 
             # Artifact in query string
             $artifact = $self->query_string();
-            $self->lmLog( "HTTP-REDIRECT: SAML Artifact $artifact", 'debug' );
+                $self->lmLog( "HTTP-REDIRECT: SAML Artifact $artifact",
+                    'debug' );
 
             # Resolve Artifact
             $method = Lasso::Constants::HTTP_METHOD_ARTIFACT_GET;
@@ -340,37 +351,25 @@ sub checkMessage {
 
     }
 
-    # 2. HTTP POST AND SOAP
+        # 2.2. HTTP POST AND SOAP
     elsif ( $request_method =~ /^POST$/ ) {
 
-        # 2.1. POST
+            # 2.2.1. POST
         if ( $content_type !~ /xml/ ) {
 
-            my $hidden = 0;
             $method = Lasso::Constants::HTTP_METHOD_POST;
             $self->lmLog( "SAML method: HTTP-POST", 'debug' );
 
-            if ( $response = $self->getHiddenFormValue('SAMLResponse') ) {
-
-                # Do not need to get artifact (which has been saved), because
-                # we have previously resolve it to get this response.
-                $hidden = 1;
-
-            } elsif ( $self->param('SAMLResponse') ) {
+                if ( $self->param('SAMLResponse') ) {
 
                 # Response in body part
                 $response = $self->param('SAMLResponse');
-                $self->lmLog( "HTTP-POST: SAML Response $response", 'debug' );
+                    $self->lmLog( "HTTP-POST: SAML Response $response",
+                        'debug' );
 
             }
 
-            if ( $request = $self->getHiddenFormValue('SAMLRequest') ) {
-
-                # Do not need to get artifact (which has been saved), because
-                # we have previously resolve it to get this request.
-                $hidden = 1;
-
-            } elsif ( $self->param('SAMLRequest') ) {
+                if ( $self->param('SAMLRequest') ) {
 
                 # Request in body part
                 $request = $self->param('SAMLRequest');
@@ -378,7 +377,7 @@ sub checkMessage {
 
             }
 
-            if ( !$hidden && $self->param('SAMLart') ) {
+                if ( $self->param('SAMLart') ) {
 
                 # Artifact in SAMLart param
                 $artifact = $self->param('SAMLart');
@@ -402,7 +401,7 @@ sub checkMessage {
 
         }
 
-        # 2.2. SOAP
+            # 2.2.2. SOAP
         else {
 
             $method = Lasso::Constants::HTTP_METHOD_SOAP;
@@ -416,22 +415,19 @@ sub checkMessage {
 
     }
 
-    # Get method previously backup'd
-    $method = $self->getHiddenFormValue('Method')
-      if ( $self->getHiddenFormValue('Method') );
-
-    # Get artifact previously backup'd
-    $artifact = $self->getHiddenFormValue('SAMLArt')
-      if ( $self->getHiddenFormValue('SAMLArt') );
+    }
+    else {
+        $self->lmLog( "Keep values from hidden fields", 'debug' );
+    }
 
     # 3. Backup values into hidden form values, if process is interrupted
     # later in LemonLDAP::NG
 
-    $self->setHiddenFormValue('SAMLRequest', $request);
-    $self->setHiddenFormValue('SAMLResponse', $response);
-    $self->setHiddenFormValue('Method', $method);
-    $self->setHiddenFormValue('RelayState', $relaystate);
-    $self->setHiddenFormValue('SAMLArt', $artifact);
+    $self->setHiddenFormValue( 'SAMLRequest',  $request );
+    $self->setHiddenFormValue( 'SAMLResponse', $response );
+    $self->setHiddenFormValue( 'Method',       $method );
+    $self->setHiddenFormValue( 'RelayState',   $relaystate );
+    $self->setHiddenFormValue( 'SAMLart',      $artifact );
 
     return ( $request, $response, $method, $relaystate, $artifact ? 1 : 0 );
 }

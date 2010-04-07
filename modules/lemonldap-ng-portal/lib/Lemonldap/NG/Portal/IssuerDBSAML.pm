@@ -95,7 +95,10 @@ sub issuerForUnAuthUser {
             my $isPassive = $saml_request->IsPassive();
 
             if ($isPassive) {
-                $self->lmLog( "Found isPassive flag in SAML request", 'debug' );
+                $self->lmLog(
+"Found isPassive flag in SAML request, not compatible with unauthenticated user",
+                    'error'
+                );
                 return PE_ERROR;
             }
 
@@ -140,7 +143,7 @@ sub issuerForAuthUser {
           $self->checkMessage( $url, $request_method, $content_type );
 
         # Process the request
-        if ( $request ) {
+        if ($request) {
 
             # Create Login object
             my $login = $self->createLogin($server);
