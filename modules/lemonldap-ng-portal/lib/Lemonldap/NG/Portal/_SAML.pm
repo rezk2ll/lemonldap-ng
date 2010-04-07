@@ -770,6 +770,31 @@ sub validateRequestMsg {
     return $self->checkLassoError($@);
 }
 
+## @method boolean buildAuthnResponseMsg(Lasso::Login login)
+# Build authentication response message
+# @param login Lasso::Login object
+# @return boolean result
+sub buildAuthnResponseMsg {
+    my ( $self, $login ) = splice @_;
+
+    eval { Lasso::Login::build_authn_response_msg($login); };
+
+    return $self->checkLassoError($@);
+}
+
+## @method boolean buildArtifactMsg(Lasso::Login login, int method)
+# Build artifact message
+# @param login Lasso::Login object
+# @param method HTTP method
+# @return boolean result
+sub buildArtifactMsg {
+    my ( $self, $login, $method ) = splice @_;
+
+    eval { Lasso::Login::build_artifact_msg( $login, $method ); };
+
+    return $self->checkLassoError($@);
+}
+
 ## @method boolean processAuthnResponseMsg(Lasso::Login login, string response)
 # Process authentication response message
 # @param login Lasso::Login object
@@ -1745,6 +1770,14 @@ Process authentication request message
 =head2 validateRequestMsg
 
 Validate request message
+
+=head2 buildAuthnResponseMsg
+
+Build authentication response message
+
+=head2 buildArtifactMsg
+
+Build artifact message
 
 =head2 processAuthnResponseMsg
 

@@ -115,6 +115,8 @@ sub issuerForAuthUser {
     my $self = shift;
     my $server = $self->{_lassoServer};
     my $login;
+    my $protocolProfile;
+    my $artifact_method;
 
     # Get configuration parameter
     my $saml_sso_soap_url =
@@ -176,17 +178,118 @@ sub issuerForAuthUser {
 
     # TODO Build Assertion
 
+            # TODO relayState
+
     # TODO Push mandatory attributes
 
-    # TODO Build AuthnResponse
+            # Build SAML response
+            $protocolProfile = $login->protocolProfile();
+
+            # Artifact
+            if ( $protocolProfile ==
+                Lasso::Constants::LOGIN_PROTOCOL_PROFILE_BRWS_ART )
+            {
+
+                # Choose method
+                $artifact_method = $self->getHttpMethod("artifact-get")
+                  if ( $method == $self->getHttpMethod("redirect") );
+                $artifact_method = $self->getHttpMethod("artifact-post")
+                  if ( $method == $self->getHttpMethod("post") );
+
+                # Build artifact message
+                unless ( $self->buildArtifactMsg( $login, $artifact_method ) ) {
+                    $self->lmLog(
+                        "Unable to build SSO artifact response message",
+                        'error' );
+                    return PE_ERROR;
+                }
+
+                $self->lmLog( "SSO: artifact response is built", 'debug' );
     
-    # TODO Send AuthnResponse
+                # TODO Get artifact ID and Content, and store them
 
     }
 
+            # No artifact
+            else {
+
+                unless ( $self->buildAuthnResponseMsg($login) ) {
+                    $self->lmLog( "Unable to build SSO response message",
+                        'error' );
+                    return PE_ERROR;
     }
 
-    PE_OK;
+                $self->lmLog( "SSO: authentication response is built",
+                    'debug' );
+
+            }
+
+            # Send SSO Response
+
+            # HTTP-REDIRECT
+            if ( $protocolProfile eq
+                Lasso::Constants::LOGIN_PROTOCOL_PROFILE_REDIRECT
+                or $artifact_method == $self->getHttpMethod("artifact-get") )
+            {
+
+                # Redirect user to response URL
+                my $sso_url = $login->msg_url;
+                $self->lmLog( "Redirect user to $sso_url", 'debug' );
+
+                $self->{urldc} = $sso_url;
+
+                $self->_subProcess(qw(autoRedirect));
+
+                # If we are here, there was a problem with GET request
+                $self->lmLog( "SSO response was not sent trough GET", 'error' );
+                return PE_ERROR;
+            }
+
+            # HTTP-POST
+            if ( $protocolProfile eq
+                Lasso::Constants::LOGIN_PROTOCOL_PROFILE_BRWS_POST
+                or $artifact_method == $self->getHttpMethod("artifact-post") )
+            {
+
+                # Use autosubmit form
+                my $sso_url  = $login->msg_url;
+                my $sso_body = $login->msg_body;
+
+                $self->{postUrl} = $sso_url;
+                $self->{postFields} = { 'SAMLResponse' => $sso_body };
+
+                # RelayState
+                $self->{postFields}->{'RelayState'} = $login->msg_relayState
+                  if ( $login->msg_relayState );
+
+                $self->_subProcess(qw(autoPost));
+
+                # If we are here, there was a problem with POST request
+                $self->lmLog( "SSO response was not sent trough POST",
+                    'error' );
+                return PE_ERROR;
+            }
+
+        }
+
+        elsif ($response) {
+            $self->lmLog(
+                "Authentication responses are not managed by this module",
+                'debug' );
+            return PE_OK;
+        }
+
+        else {
+
+            # No request or response
+            # This should not happen
+            $self->lmLog( "No request or response found", 'debug' );
+            return PE_OK;
+        }
+
+    }
+
+    return PE_OK;
 }
 
 ## @apmethod int issuerLogout()

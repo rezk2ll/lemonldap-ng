@@ -508,8 +508,7 @@ sub extractFormInfo {
                 $self->{postFields} = { 'SAMLResponse' => $slo_body };
 
                 # RelayState
-                $self->{postFields} =
-                  { $self->{postFields}, 'RelayState' => $relaystate }
+                $self->{postFields}->{'RelayState'} = $relaystate
                   if ($relaystate);
 
                 $self->_subProcess(qw(autoPost));
@@ -777,8 +776,7 @@ sub extractFormInfo {
         $self->{postFields} = { 'SAMLRequest' => $sso_body };
 
         # RelayState
-        $self->{postFields} =
-          { $self->{postFields}, 'RelayState' => $login->msg_relayState }
+        $self->{postFields}->{'RelayState'} = $login->msg_relayState
           if ( $login->msg_relayState );
 
         $self->_subProcess(qw(autoPost));
