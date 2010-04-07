@@ -28,10 +28,8 @@ sub issuerDBInit {
 }
 
 ## @apmethod int issuerForUnAuthUser()
-# TODO
-# Check if there is an SAML authentication request.
-# Called only for unauthenticated users, it store SAML request in
-# $self->{url}
+# Check if there is an SAML authentication request
+# Called only for unauthenticated users, check isPassive flag
 # @return Lemonldap::NG::Portal error code
 sub issuerForUnAuthUser {
     my $self   = shift;
@@ -110,13 +108,13 @@ sub issuerForUnAuthUser {
 }
 
 ## @apmethod int issuerForAuthUser()
-# TODO
 # Check if there is an SAML authentication request for an authenticated user
-# and build assertions
+# Build assertions and redirect user
 # @return Lemonldap::NG::Portal error code
 sub issuerForAuthUser {
     my $self = shift;
     my $server = $self->{_lassoServer};
+    my $login;
 
     # Get configuration parameter
     my $saml_sso_soap_url =
@@ -146,7 +144,7 @@ sub issuerForAuthUser {
         if ($request) {
 
             # Create Login object
-            my $login = $self->createLogin($server);
+            $login = $self->createLogin($server);
 
             # Process authentication request
             my $result;
@@ -163,9 +161,28 @@ sub issuerForAuthUser {
                 return PE_ERROR;
             }
 
+            # Validate request
+            unless ( $self->validateRequestMsg( $login, 1, 1 ) ) {
+                $self->lmLog( "Unable to validate SSO request message",
+                    'error' );
+                return PE_ERROR;
+        }
+
             $self->lmLog( "SSO: authentication request is valid", 'debug' );
 
-        }
+    # TODO Check AuthnRequest conditions
+    
+    # TODO Build NameID
+
+    # TODO Build Assertion
+
+    # TODO Push mandatory attributes
+
+    # TODO Build AuthnResponse
+    
+    # TODO Send AuthnResponse
+
+    }
 
     }
 
@@ -191,16 +208,19 @@ __END__
 
 =encoding utf8
 
-Lemonldap::NG::Portal::IssuerDBSAML - SAML IssuerDB for Lemonldap::NG
+Lemonldap::NG::Portal::IssuerDBSAML - SAML IssuerDB for LemonLDAP::NG
 
 =head1 SYNOPSIS
 
-  use Lemonldap::NG::Portal::IssuerDBSAML;
-  #TODO
+  use Lemonldap::NG::Portal::SharedConf;
+
+  my $portal = Lemonldap::NG::Portal::SharedConf->new({
+      issuerDB => SAML,
+  });
 
 =head1 DESCRIPTION
 
-SAML IssuerDB for Lemonldap::NG
+SAML IssuerDB for LemonLDAP::NG
 
 =head1 SEE ALSO
 

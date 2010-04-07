@@ -756,6 +756,20 @@ sub processAuthnRequestMsg {
     return $self->checkLassoError($@);
 }
 
+## @method boolean validateRequestMsg(Lasso::Login login, boolean auth, boolean consent)
+# Validate request message
+# @param login Lasso::Login object
+# @param auth is user authenticated?
+# @param consent is consent obtained?
+# @return result
+sub validateRequestMsg {
+    my ( $self, $login, $auth, $consent ) = splice @_;
+
+    eval { Lasso::Login::validate_request_msg( $login, $auth, $consent ); };
+
+    return $self->checkLassoError($@);
+}
+
 ## @method boolean processAuthnResponseMsg(Lasso::Login login, string response)
 # Process authentication response message
 # @param login Lasso::Login object
@@ -1680,6 +1694,10 @@ Load SAML identity providers
 
 Load SAML service providers
 
+=head2 checkMessage
+
+Check SAML requests and responses
+
 =head2 checkLassoError
 
 Log Lasso error code and message if this is actually a Lasso::Error with code > 0
@@ -1691,6 +1709,10 @@ Load service metadata and create Lasso::Server object
 =head2 addIDP
 
 Add IDP to an existing Lasso::Server
+
+=head2 addSP
+
+Add SP to an existing Lasso::Server
 
 =head2 addProvider
 
@@ -1715,6 +1737,14 @@ Init authentication request
 =head2 buildAuthnRequestMsg
 
 Build authentication request message
+
+=head2 processAuthnRequestMsg
+
+Process authentication request message
+
+=head2 validateRequestMsg
+
+Validate request message
 
 =head2 processAuthnResponseMsg
 
@@ -1808,6 +1838,10 @@ Check if SAML message do not correspond to a previously responded message
 =head2 resolveArtifact
 
 Resolve artifact to get the real SAML message
+
+=head2 processArtRequestMsg
+
+Process artifact response message
 
 =head2 processArtResponseMsg
 
