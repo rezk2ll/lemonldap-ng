@@ -1281,8 +1281,7 @@ sub storeReplayProtection {
 
     untie %h;
 
-    $self->lmLog(
-        "Keep Logout request ID $samlID in assertion session $session_id",
+    $self->lmLog( "Keep request ID $samlID in assertion session $session_id",
         'debug' );
 
     return 1;
@@ -1384,6 +1383,100 @@ sub resolveArtifact {
     }
 
     return $message;
+}
+
+## @method boolean storeArtifact(string id, string message)
+# Store artifact
+# @param id Artifact ID
+# @param message Artifact content
+# @return result
+sub storeArtifact {
+    my ( $self, $id, $message ) = splice @_;
+    my %h;
+
+    eval {
+        tie %h, $self->{globalStorage}, undef, $self->{globalStorageOptions};
+    };
+    if ( $@ or !$id or !$message ) {
+        $self->lmLog( "Unable to create artifact session", 'error' );
+        return 0;
+    }
+
+    $h{type}    = 'artifact';    # Session type
+    $h{_utime}  = time();        # Creation time
+    $h{ID}      = $id;
+    $h{message} = $message;
+
+    my $session_id = $h{_session_id};
+
+    untie %h;
+
+    $self->lmLog( "Keep artifact $id in session $session_id", 'debug' );
+
+    return 1;
+}
+
+## @method string loadArtifact(string id)
+# Load artifact
+# @param id Artifact ID
+# @return Artifact message
+sub loadArtifact {
+    my ( $self, $id ) = splice @_;
+    my $message;
+    my %h;
+
+    unless ($id) {
+        $self->lmLog( "Cannot load artifact because no id given", 'error' );
+        return;
+    }
+
+    my $sessions =
+      $self->{globalStorage}
+      ->searchOn( $self->{globalStorageOptions}, "ID", $id );
+
+    if ( my @keys = keys %$sessions ) {
+
+        my $nb_sessions = $#keys + 1;
+
+        $self->lmLog( "Found $nb_sessions sessions for artifact $id", 'debug' );
+
+        # There should only be 1 result
+        return if ( $nb_sessions != 1 );
+
+        my $session_id = shift @keys;
+        my $session    = $session_id;
+
+        # Open session
+        eval {
+            tie %h, $self->{globalStorage}, $session_id,
+              $self->{globalStorageOptions};
+        };
+        if ($@) {
+            $self->lmLog(
+                "Unable to recover artifact session $session (ID $id)",
+                'error' );
+            return;
+        }
+
+        # Get message
+        $message = $h{message};
+
+        $self->lmLog( "Load artifact message $message", 'debug' );
+
+        # Delete session
+        eval { tied(%h)->delete(); };
+        if ($@) {
+            $self->lmLog( "Unable to delete artifact session $session (ID $id)",
+                'error' );
+            return;
+        }
+        $self->lmLog( "Artifact session $session (ID $id) was deleted",
+            'debug' );
+
+        return $message;
+    }
+
+    return;
 }
 
 ## @method boolean processArtRequestMsg(Lasso::Profile profile, string request)
@@ -1945,6 +2038,14 @@ Check if SAML message do not correspond to a previously responded message
 =head2 resolveArtifact
 
 Resolve artifact to get the real SAML message
+
+=head2 storeArtifact
+
+Store artifact
+
+=head2 loadArtifact
+
+Load artifact
 
 =head2 processArtRequestMsg
 

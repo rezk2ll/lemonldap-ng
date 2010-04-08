@@ -111,6 +111,26 @@ sub issuerForUnAuthUser {
         $self->lmLog( "URL $url detected as an artefact resolution service URL",
             'debug' );
 
+        # Create Login object
+        my $login = $self->createLogin($server);
+
+        # Artefact request are sent with SOAP trough POST
+        my $data = $self->param('POSTDATA');
+
+        unless ( $self->processArtRequestMsg( $login, $data ) ) {
+            $self->lmLog( "Unable to process artifact request message",
+                'error' );
+            return PE_ERROR;
+        }
+
+        my $artifact_id = $login->assertionArtifact();
+
+        # Load artifact message
+        $self->{SOAPMessage} = $self->loadArtifact($artifact_id);
+
+        # Return SOAP message
+        $self->returnSOAPMessage();
+
     }
 
     PE_OK;
@@ -206,7 +226,6 @@ sub issuerForAuthUser {
             $self->lmLog( "Authentication context is $authn_context", 'debug' );
 
             # Build Assertion
-            # TODO manage NotOnOrAfter date
             unless ( $self->buildAssertion( $login, $authn_context ) ) {
                 $self->lmLog( "Unable to build assertion", 'error' );
                 return PE_ERROR;
@@ -242,8 +261,11 @@ sub issuerForAuthUser {
 
                 $self->lmLog( "SSO: artifact response is built", 'debug' );
     
-                # TODO Get artifact ID and Content, and store them
+                # Get artifact ID and Content, and store them
+                my $artifact_id      = $login->assertionArtifact;
+                my $artifact_message = $login->response->export_to_xml;
 
+                $self->storeArtifact( $artifact_id, $artifact_message );
     }
 
             # No artifact
