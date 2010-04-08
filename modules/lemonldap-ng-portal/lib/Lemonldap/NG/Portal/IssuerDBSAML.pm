@@ -44,6 +44,8 @@ sub issuerForUnAuthUser {
       $self->getMetaDataURL( "samlIDPSSODescriptorSingleSignOnServiceHTTP", 1 );
     my $saml_sso_get_url_ret =
       $self->getMetaDataURL( "samlIDPSSODescriptorSingleSignOnServiceHTTP", 2 );
+    my $saml_ars_url = $self->getMetaDataURL(
+        "samlIDPSSODescriptorArtifactResolutionServiceArtifact");
 
     # Get HTTP request informations to know
     # if we are receving SAML request or response
@@ -101,6 +103,13 @@ sub issuerForUnAuthUser {
             }
 
         }
+
+    }
+
+    if ( $url =~ /^(\Q$saml_ars_url\E)$/i ) {
+
+        $self->lmLog( "URL $url detected as an artefact resolution service URL",
+            'debug' );
 
     }
 
