@@ -51,7 +51,7 @@ sub issuerForUnAuthUser {
     my $request_method = $self->request_method();
     my $content_type   = $self->content_type();
 
-    if ( $url =~ /^($saml_sso_soap_url|$saml_sso_get_url)$/i ) {
+    if ( $url =~ /^(\Q$saml_sso_soap_url\E|\Q$saml_sso_get_url\E)$/i ) {
 
         $self->lmLog( "URL $url detected as an SSO request URL", 'debug' );
 
@@ -135,7 +135,7 @@ sub issuerForAuthUser {
     my $request_method = $self->request_method();
     my $content_type   = $self->content_type();
 
-    if ( $url =~ /^($saml_sso_soap_url|$saml_sso_get_url)$/i ) {
+    if ( $url =~ /^(\Q$saml_sso_soap_url\E|\Q$saml_sso_get_url\E)$/i ) {
 
         $self->lmLog( "URL $url detected as an SSO request URL", 'debug' );
 

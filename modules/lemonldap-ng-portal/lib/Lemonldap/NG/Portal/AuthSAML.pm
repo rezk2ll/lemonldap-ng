@@ -75,7 +75,9 @@ sub extractFormInfo {
         "samlSPSSODescriptorArtifactResolutionServiceArtifact");
 
     # 1.1 SSO assertion consumer
-    if ( $url =~ /^($saml_acs_art_url|$saml_acs_post_url|$saml_acs_get_url)$/i )
+    if ( $url =~
+/^(\Q$saml_acs_art_url\E|\Q$saml_acs_post_url\E|\Q$saml_acs_get_url\E)$/i
+      )
     {
 
         $self->lmLog( "URL $url detected as an SSO assertion consumer URL",
@@ -297,7 +299,7 @@ sub extractFormInfo {
 
     # 1.2 SLO
     if ( $url =~
-/^($saml_slo_soap_url|$saml_slo_soap_url_ret|$saml_slo_get_url|$saml_slo_get_url_ret)$/i
+/^(\Q$saml_slo_soap_url\E|\Q$saml_slo_soap_url_ret\E|\Q$saml_slo_get_url\E|\Q$saml_slo_get_url_ret\E)$/i
       )
     {
         $self->lmLog( "URL $url detected as an SLO URL", 'debug' );
@@ -549,7 +551,7 @@ sub extractFormInfo {
     }
 
     # 1.3 Artefact
-    if ( $url =~ /^($saml_ars_url)$/i ) {
+    if ( $url =~ /^(\Q$saml_ars_url\E)$/i ) {
 
         $self->lmLog( "URL $url detected as an artefact resolution service URL",
             'debug' );
@@ -1053,7 +1055,7 @@ sub authForce {
 
     return 1
       if ( $url =~
-/^($saml_acs_art_url|$saml_acs_post_url|$saml_acs_get_url|$saml_slo_soap_url|$saml_slo_soap_url_ret|$saml_slo_get_url|$saml_slo_get_url_ret)$/
+/^(\Q$saml_acs_art_url\E|\Q$saml_acs_post_url\E|\Q$saml_acs_get_url\E|\Q$saml_slo_soap_url\E|\Q$saml_slo_soap_url_ret\E|\Q$saml_slo_get_url\E|\Q$saml_slo_get_url_ret\E)$/
       );
 
     return 0;
