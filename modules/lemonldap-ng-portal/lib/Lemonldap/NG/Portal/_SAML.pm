@@ -803,21 +803,18 @@ sub buildArtifactMsg {
 sub buildAssertion {
     my ( $self, $login, $authn_context ) = splice @_;
 
-    # Convert time in SAML2 time
-    my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = gmtime(time);
-    $year += 1900;
-    $mon++;
-    $mon  = $mon  > 9 ? $mon  : "0". $mon;
-    $mday = $mday > 9 ? $mday : "0". $mday;
-    $hour = $hour > 9 ? $hour : "0". $hour;
-    $min  = $min  > 9 ? $min  : "0". $min;
-    $sec  = $sec  > 9 ? $sec  : "0". $sec;
-
-    my $saml2time = "$year-$mon-$mday"."T"."$hour-$min-$sec"."Z";
+    # Dates
+    my $time                    = time();
+    my $timeout                 = $time + $self->{timeout};
+    my $authenticationInstant   = $self->timestamp2samldate($time);
+    my $reauthenticateOnOrAfter = $self->timestamp2samldate($timeout);
+    my $notBefore               = $authenticationInstant;
+    my $notOnOrAfter            = $reauthenticateOnOrAfter;
 
     eval {
-        Lasso::Login::build_assertion( $login, $authn_context, $saml2time, undef,
-            undef, undef );
+        Lasso::Login::build_assertion( $login, $authn_context,
+            $authenticationInstant, $reauthenticateOnOrAfter, $notBefore,
+            $notOnOrAfter );
     };
 
     return $self->checkLassoError($@);
@@ -1691,7 +1688,7 @@ sub forceSignature {
     return $self->checkLassoError($@);
 }
 
-## @method getAuthnContext(string context)
+## @method string getAuthnContext(string context)
 # Convert configuration string into SAML2 AuthnContextClassRef string
 # @param context configuration string
 # @return SAML2 AuthnContextClassRef string
@@ -1708,6 +1705,50 @@ sub getAuthnContext {
       if ( $context =~ /^x509$/i );
 
     return;
+}
+
+## @method string timestamp2samldate(string timestamp)
+# Convert timestamp into SAML2 date format
+# @param timestamp UNIX timestamp
+# @return SAML2 date
+sub timestamp2samldate {
+    my ( $self, $timestamp ) = splice @_;
+
+    my ( $sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst ) =
+      gmtime($timestamp);
+
+    $year += 1900;
+    $mon++;
+    $mon  = $mon > 9  ? $mon  : "0" . $mon;
+    $mday = $mday > 9 ? $mday : "0" . $mday;
+    $hour = $hour > 9 ? $hour : "0" . $hour;
+    $min  = $min > 9  ? $min  : "0" . $min;
+    $sec  = $sec > 9  ? $sec  : "0" . $sec;
+
+    my $samldate = "$year-$mon-$mday" . "T" . "$hour:$min:$sec" . "Z";
+
+    $self->lmLog( "Convert timestamp $timestamp in SAML2 date: $samldate",
+        'debug' );
+
+    return $samldate;
+}
+
+## @method string samldate2timestamp(string samldate)
+# Convert SAML2 date format into timestamp
+# @param tsamldate SAML2 date format
+# @return UNIX timestamp
+sub samldate2timestamp {
+    my ( $self, $samldate ) = splice @_;
+
+    my ( $year, $mon, $mday, $hour, $min, $sec, $ztime ) =
+      ( $samldate =~ /(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(Z)?/ );
+
+    my $timestamp = mktime( $sec, $min, $hour, $mday, $mon - 1, $year - 1900 );
+
+    $self->lmLog( "Convert SAML2 date $samldate in timestamp: $timestamp",
+        'debug' );
+
+    return $timestamp;
 }
 
 1;
@@ -1947,6 +1988,14 @@ Modify Lasso signature hint to force signature
 =head2 getAuthnContext
 
 Convert configuration string into SAML2 AuthnContextClassRef string
+
+=head2 timestamp2samldate
+
+Convert timestamp into SAML2 date format
+
+=head2 samldate2timestamp
+
+Convert SAML2 date format into timestamp
 
 =head1 SEE ALSO
 

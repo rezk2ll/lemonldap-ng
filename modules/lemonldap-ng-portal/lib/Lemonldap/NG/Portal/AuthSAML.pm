@@ -842,15 +842,7 @@ sub setAuthSessionInfo {
     my $sessionNotOnOrAfter =
       $assertion->AuthnStatement()->SessionNotOnOrAfter();
 
-    my ( $year, $mon, $mday, $hour, $min, $sec, $ztime ) =
-      ( $sessionNotOnOrAfter =~
-          /(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(Z)?/ );
-    my $samltime = mktime( $sec, $min, $hour, $mday, $mon - 1, $year - 1900 );
-
-    $self->lmLog(
-"Convert SessionNotOnOrAfter $sessionNotOnOrAfter in timestamp: $samltime",
-        'debug'
-    );
+    my $samltime = $self->samldate2timestamp($sessionNotOnOrAfter);
     my $utime   = time();
     my $timeout = $self->{timeout};
     my $adaptSessionUtime =
