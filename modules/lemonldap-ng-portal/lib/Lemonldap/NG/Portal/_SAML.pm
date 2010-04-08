@@ -11,6 +11,7 @@ use XML::Simple;
 use MIME::Base64;
 use LWP::UserAgent;    # SOAP call
 use HTTP::Request;     # SOAP call
+use POSIX;             # Convert SAML2 date into timestamp
 
 our $VERSION = '0.01';
 our $_samlCache;

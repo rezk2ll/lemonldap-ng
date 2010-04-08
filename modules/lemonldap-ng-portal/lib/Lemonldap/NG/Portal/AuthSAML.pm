@@ -9,7 +9,6 @@ use strict;
 use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::_SAML;    #inherits
 use Lemonldap::NG::Common::Conf::SAML::Metadata;
-use POSIX;
 
 our $VERSION = '0.1';
 our @ISA     = qw(Lemonldap::NG::Portal::_SAML);
