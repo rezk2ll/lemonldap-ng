@@ -46,6 +46,7 @@ my $docs = {
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocPostGreSQLSessionStorage' => '4.4-PostGreSQL-session-backend.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocLDAPSessionStorage'       => '4.4-LDAP-session-backend.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocSOAPSessionStorage'       => '4.4-SOAP-session-backend.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocMemcachedSessionStorage'  => '4.4-Memcached-session-backend.html',
 
     # Authentication backends
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/AuthLDAP'          => '4.5-LDAP-authentication-backend.html',
@@ -237,6 +238,7 @@ while ( my ( $url, $file ) = each %$docs ) {
         s#/xwiki/bin/view/NG/DocPostGreSQLSessionStorage#4.4-PostGreSQL-session-backend.html#g;
         s#/xwiki/bin/view/NG/DocLDAPSessionStorage#4.4-LDAP-session-backend.html#g;
         s#/xwiki/bin/view/NG/DocSOAPSessionStorage#4.4-SOAP-session-backend.html#g;
+        s#/xwiki/bin/view/NG/DocMemcachedSessionStorage#4.4-Memcached-session-backend.html#g;
         s#/xwiki/bin/view/NG/AuthLDAP#4.5-LDAP-authentication-backend.html#g;
         s#/xwiki/bin/view/NG/SSL#4.5-SSL-authentication-backend.html#g;
         s#/xwiki/bin/view/NG/Kerberos#4.5-Apache-and-Kerberos-authentication-backend.html#g;

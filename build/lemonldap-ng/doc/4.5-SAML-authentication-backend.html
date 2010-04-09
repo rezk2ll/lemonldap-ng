@@ -363,6 +363,9 @@ $ openssl rsa -pubout -in private_key.pem -out public_key.pem
       <li>Force authentication: set ForceAuthn flag in authentication
       request</li>
 
+      <li>Passive authentication: set IsPassive flag in authentication
+      request</li>
+
       <li>Allow proxied authentication: allow an authentication response to be
       issued from another IDP that the one we register (proxy IDP). If you
       disallow this, you should also disallow direct login form IDP, because
@@ -387,6 +390,19 @@ $ openssl rsa -pubout -in private_key.pem -out public_key.pem
       that if the IDP propose to close session earlier than the default
       LemonLDAP::NG timeout, the session _utime will be modified so that
       session is erased at the date indicated by the IDP.</li>
+
+      <li>Sign SSO message: sign SSO message</li>
+
+      <li>Check SSO message signature: check SSO message signature</li>
+
+      <li>Sign SLO message: sign SLO message</li>
+
+      <li>Check SLO message signature: check SLO message signature</li>
+
+      <li>Required authentication context: this context is set in
+      authentication request, and then checked in authentication response. If
+      authentication context in response is not the one requested, an error is
+      raised.</li>
     </ul>
 
     <h3 class="heading-1-1"><span id="HPartnerIDPconfiguration">Partner IDP
