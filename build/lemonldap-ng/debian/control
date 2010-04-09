@@ -4,7 +4,7 @@ Priority: extra
 Maintainer: Xavier Guimard <x.guimard@free.fr>
 DM-Upload-Allowed: yes
 Build-Depends: debhelper (>= 7), po-debconf
-Build-Depends-Indep:libapache-session-perl, libnet-ldap-perl, libdbi-perl,
+Build-Depends-Indep:libapache-session-perl, libnet-ldap-perl (>=1:0.38), libdbi-perl,
  libwww-perl, libcache-cache-perl, libcrypt-rijndael-perl, libxml-libxslt-perl,
  libio-string-perl, libregexp-assemble-perl, liburi-perl, libstring-random-perl,
  libmime-lite-perl, libsoap-lite-perl, libconfig-inifiles-perl,
@@ -73,7 +73,7 @@ Description: Lemonldap::NG manager part
 
 Package: liblemonldap-ng-portal-perl
 Architecture: all
-Depends: ${misc:Depends}, libapache-session-perl, libnet-ldap-perl,
+Depends: ${misc:Depends}, libapache-session-perl, libnet-ldap-perl (>=1:0.38),
  liblemonldap-ng-conf-perl (= ${binary:Version}), libhtml-template-perl,
  libjs-jquery, liblemonldap-ng-handler-perl (= ${binary:Version}),
  libxml-libxml-perl, libxml-libxslt-perl, libstring-random-perl,

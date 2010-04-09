@@ -5,8 +5,6 @@ set -e
 
 . /usr/share/debconf/confmodule
 
-LAEXAMPLEPORTALFILE=/usr/share/doc/liblemonldap-ng-portal-perl/examples/AuthLA/index.pl
-LAPORTALFILE=/var/lib/lemonldap-ng/liberty-alliance-sp-portal/index.pl
 EXAMPLEPORTALFILE=/usr/share/doc/liblemonldap-ng-portal-perl/examples/index_skin.pl
 PORTALFILE=/var/lib/lemonldap-ng/portal/index.pl
 SESSIONSDIR=/var/lib/lemonldap-ng/sessions
@@ -16,10 +14,8 @@ WSDLFILE=/var/lib/lemonldap-ng/portal/portal.wsdl
 
 if [ "$1" == "configure" ]
 then
-    [ -e $LAPORTALFILE ] || cp $LAEXAMPLEPORTALFILE $LAPORTALFILE
     [ -e $PORTALFILE ] || cp $EXAMPLEPORTALFILE $PORTALFILE
     chmod +x $PORTALFILE
-    chmod +x $LAPORTALFILE
     chmod 770 $SESSIONSDIR
     chmod 770 $SESSIONSDIR/lock
     chown -R www-data:www-data $SESSIONSDIR

@@ -82,8 +82,7 @@ install: build
 			$(CURDIR)/debian/tmp$(LMSHAREDIR)manager-skins/default/*.tpl \
 			$(CURDIR)/debian/tmp$(LMSHAREDIR)portal-skins/pastel/*.tpl
 	# postinst provides initial portal, manager and sessions-explorer
-	rm -f debian/tmp/var/lib/lemonldap-ng/portal/index.pl \
-		debian/tmp/var/lib/lemonldap-ng/liberty-alliance-sp-portal/index.pl
+	rm -f debian/tmp/var/lib/lemonldap-ng/portal/index.pl
 
 # Build architecture-independent files here.
 binary-indep: build install
