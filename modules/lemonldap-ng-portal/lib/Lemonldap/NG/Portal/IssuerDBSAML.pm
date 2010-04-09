@@ -125,8 +125,29 @@ sub issuerForUnAuthUser {
 
         my $artifact_id = $login->assertionArtifact();
 
-        # Load artifact message
-        $self->{SOAPMessage} = $self->loadArtifact($artifact_id);
+        # Load artifact message into login response
+        my $art_message = $self->loadArtifact($artifact_id);
+        eval { $login->response( Lasso::Node::new_from_dump($art_message) ); };
+        if ($@) {
+            $self->checkLassoError($@);
+            $self->lmLog( "Cannot load response", 'error' );
+            return PE_ERROR;
+        }
+
+        $self->lmLog( "Response loaded", 'debug' );
+
+        # Build artifact response
+        eval { Lasso::Login::build_response_msg($login); };
+        if ($@) {
+            $self->checkLassoError($@);
+            $self->lmLog( "Cannot build artifact response", 'error' );
+            return PE_ERROR;
+        }
+        $self->lmLog( "Artifact response built", 'debug' );
+
+        $self->{SOAPMessage} = $login->msg_body;
+
+        $self->lmLog( "Send SOAP Message: " . $self->{SOAPMessage}, 'debug' );
 
         # Return SOAP message
         $self->returnSOAPMessage();
@@ -263,7 +284,7 @@ sub issuerForAuthUser {
     
                 # Get artifact ID and Content, and store them
                 my $artifact_id      = $login->assertionArtifact;
-                my $artifact_message = $login->response->export_to_xml;
+                my $artifact_message = $login->response->dump;
 
                 $self->storeArtifact( $artifact_id, $artifact_message );
     }
