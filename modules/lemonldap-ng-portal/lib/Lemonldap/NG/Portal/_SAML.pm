@@ -919,11 +919,9 @@ sub storeRelayState {
     my %h;
 
     # Create relaystate session
-    eval {
-        tie %h, $self->{globalStorage}, undef, $self->{globalStorageOptions};
-    };
+    eval { tie %h, $self->{samlStorage}, undef, $self->{samlStorageOptions}; };
     if ($@) {
-        $self->lmLog( "Unable to create relaystate session", 'error' );
+        $self->lmLog( "Unable to create relaystate session: $@", 'error' );
         return;
     }
 
@@ -961,11 +959,10 @@ sub extractRelayState {
 
     # Open relaystate session
     eval {
-        tie %h, $self->{globalStorage}, $relaystate,
-          $self->{globalStorageOptions};
+        tie %h, $self->{samlStorage}, $relaystate, $self->{samlStorageOptions};
     };
     if ($@) {
-        $self->lmLog( "Unable to open relaystate session", 'error' );
+        $self->lmLog( "Unable to open relaystate session: $@", 'error' );
         return 0;
     }
 
@@ -1265,11 +1262,10 @@ sub storeReplayProtection {
     my ( $self, $samlID ) = splice @_;
     my %h;
 
-    eval {
-        tie %h, $self->{globalStorage}, undef, $self->{globalStorageOptions};
-    };
+    eval { tie %h, $self->{samlStorage}, undef, $self->{samlStorageOptions}; };
     if ( $@ or !$samlID ) {
-        $self->lmLog( "Unable to create replay protection session", 'error' );
+        $self->lmLog( "Unable to create replay protection session: $@",
+            'error' );
         return 0;
     }
 
@@ -1302,8 +1298,8 @@ sub replayProtection {
     }
 
     my $sessions =
-      $self->{globalStorage}
-      ->searchOn( $self->{globalStorageOptions}, "ID", $samlID );
+      $self->{samlStorage}
+      ->searchOn( $self->{samlStorageOptions}, "ID", $samlID );
 
     if ( my @keys = keys %$sessions ) {
 
@@ -1313,8 +1309,7 @@ sub replayProtection {
 
             # Delete it
             eval {
-                tie %h, $self->{globalStorage}, $_,
-                  $self->{globalStorageOptions};
+                tie %h, $self->{samlStorage}, $_, $self->{samlStorageOptions};
             };
             if ($@) {
                 $self->lmLog(
@@ -1394,11 +1389,9 @@ sub storeArtifact {
     my ( $self, $id, $message ) = splice @_;
     my %h;
 
-    eval {
-        tie %h, $self->{globalStorage}, undef, $self->{globalStorageOptions};
-    };
+    eval { tie %h, $self->{samlStorage}, undef, $self->{samlStorageOptions}; };
     if ( $@ or !$id or !$message ) {
-        $self->lmLog( "Unable to create artifact session", 'error' );
+        $self->lmLog( "Unable to create artifact session: $@", 'error' );
         return 0;
     }
 
@@ -1431,8 +1424,7 @@ sub loadArtifact {
     }
 
     my $sessions =
-      $self->{globalStorage}
-      ->searchOn( $self->{globalStorageOptions}, "ID", $id );
+      $self->{samlStorage}->searchOn( $self->{samlStorageOptions}, "ID", $id );
 
     if ( my @keys = keys %$sessions ) {
 
@@ -1448,12 +1440,12 @@ sub loadArtifact {
 
         # Open session
         eval {
-            tie %h, $self->{globalStorage}, $session_id,
-              $self->{globalStorageOptions};
+            tie %h, $self->{samlStorage}, $session_id,
+              $self->{samlStorageOptions};
         };
         if ($@) {
             $self->lmLog(
-                "Unable to recover artifact session $session (ID $id)",
+                "Unable to recover artifact session $session (ID $id): $@",
                 'error' );
             return;
         }

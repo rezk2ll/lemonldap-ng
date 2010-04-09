@@ -163,6 +163,12 @@ sub new {
     $self->abort( "Configuration error",
         "Module " . $self->{globalStorage} . " not found in \@INC" )
       if ($@);
+    if ( $self->{samlStorage} ne $self->{globalStorage} ) {
+        eval "require " . $self->{samlStorage};
+        $self->abort( "Configuration error",
+            "Module " . $self->{samlStorage} . " not found in \@INC" )
+          if ($@);
+    }
     $self->abort( "Configuration error",
         "You've to indicate a domain for cookies" )
       unless ( $self->{domain} );
@@ -363,7 +369,9 @@ sub setDefaultValues {
     $self->{ldapGroupRecursive}           ||= 0;
 
     # SAML
-    $self->{samlIdPResolveCookie} ||= "lemonldapidp";
+    $self->{samlIdPResolveCookie} ||= $self->{cookieName} . "idp";
+    $self->{samlStorage}          ||= $self->{globalStorage};
+    $self->{samlStorageOptions}   ||= $self->{globalStorageOptions};
 }
 
 ##@method protected void setHiddenFormValue(string fieldname, string value)
@@ -375,9 +383,9 @@ sub setHiddenFormValue {
     my $self = shift;
     my $key  = shift;
     my $val  = shift;
-    if ( $val ) {
+    if ($val) {
         $key = 'lmhidden_' . $key;
-        $self->{portalHiddenFormValues}->{$key} = encode_base64( $val );
+        $self->{portalHiddenFormValues}->{$key} = encode_base64($val);
     }
 }
 
@@ -389,9 +397,8 @@ sub getHiddenFormValue {
     my $self = shift;
     my $key  = shift;
     $key = 'lmhidden_' . $key;
-    if ( my $val = $self->param($key) )
-    {
-      return decode_base64( $val );
+    if ( my $val = $self->param($key) ) {
+        return decode_base64($val);
     }
     return undef;
 }
@@ -401,12 +408,16 @@ sub getHiddenFormValue {
 #@return string
 sub buildHiddenForm {
     my $self = shift;
-    my @keys = keys %{$self->{portalHiddenFormValues}};
+    my @keys = keys %{ $self->{portalHiddenFormValues} };
     my $val  = ''; 
-    foreach ( @keys )
-    {
-      $val .= '<input type="hidden" name="' . $_ . '" id="' . $_
-           .  '" value="' .  $self->{portalHiddenFormValues}->{$_} . '" />';
+    foreach (@keys) {
+        $val .=
+            '<input type="hidden" name="' 
+          . $_ 
+          . '" id="' 
+          . $_
+          . '" value="'
+          . $self->{portalHiddenFormValues}->{$_} . '" />';
     }
     return $val;
 }
