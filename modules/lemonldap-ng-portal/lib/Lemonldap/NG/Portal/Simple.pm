@@ -537,22 +537,26 @@ sub getApacheSession {
     return \%h;
 }
 
-##@method void updateSession(hashRef infos)
+## @method void updateSession(hashRef infos, string id)
 # Update session stored.
-# If lemonldap cookie exists, reads it and search session. If the session is
-# available, update datas with $info.
-#@param $infos hash
+# If no id is given, try to get it from cookie.
+# If the session is available, update datas with $info.
+# @param infos hash reference of informations to update
+# @param id Session ID
+# @return nothing
 sub updateSession {
 
     # TODO: update all caches
-    my $self    = shift;
-    my ($infos) = @_;
+    my ( $self, $infos, $id ) = splice @_;
     my %cookies = fetch CGI::Cookie;
 
-    # Test if Lemonldap::NG cookie is available
-    if ( $cookies{ $self->{cookieName} }
-        and my $id = $cookies{ $self->{cookieName} }->value )
-    {
+    # Session ID
+    unless ($id) {
+        $id = $cookies{ $self->{cookieName} }->value
+          if defined $cookies{ $self->{cookieName} };
+    }
+
+    if ($id) {
         my $h = $self->getApacheSession($id) or return undef;
 
         # Store/update session values
