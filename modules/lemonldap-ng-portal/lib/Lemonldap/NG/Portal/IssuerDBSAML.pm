@@ -155,6 +155,9 @@ sub issuerForAuthUser {
     my $artifact_method;
     my $authn_context;
 
+    # Session ID
+    my $session_id = $self->{sessionInfo}->{_session_id} || $self->{id};
+
     # Get configuration parameter
     my $saml_sso_soap_url =
       $self->getMetaDataURL( "samlIDPSSODescriptorSingleSignOnServiceSOAP", 1 );
@@ -291,10 +294,9 @@ sub issuerForAuthUser {
                 # Get artifact ID and Content, and store them
                 my $artifact_id      = $login->get_artifact;
                 my $artifact_message = $login->get_artifact_message;
-                my $artifact_session_id = $self->{sessionInfo}->{_session_id};
 
                 $self->storeArtifact( $artifact_id, $artifact_message,
-                    $artifact_session_id );
+                    $session_id );
     }
 
             # No artifact
@@ -315,13 +317,15 @@ sub issuerForAuthUser {
             if ( $login->is_identity_dirty ) {
                 $self->lmLog( "Save Lasso identity in session", 'debug' );
                 $self->updateSession(
-                    { _lassoIdentityDump => $login->get_identity->dump } );
+                    { _lassoIdentityDump => $login->get_identity->dump },
+                    $session_id );
             }
 
             if ( $login->is_session_dirty ) {
                 $self->lmLog( "Save Lasso session in session", 'debug' );
                 $self->updateSession(
-                    { _lassoSessionDump => $login->get_session->dump } );
+                    { _lassoSessionDump => $login->get_session->dump },
+                    $session_id );
             }
 
             # Send SSO Response
