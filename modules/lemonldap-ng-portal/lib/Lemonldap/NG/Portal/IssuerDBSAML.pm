@@ -291,8 +291,10 @@ sub issuerForAuthUser {
                 # Get artifact ID and Content, and store them
                 my $artifact_id      = $login->get_artifact;
                 my $artifact_message = $login->get_artifact_message;
+                my $artifact_session_id = $self->{sessionInfo}->{_session_id};
 
-                $self->storeArtifact( $artifact_id, $artifact_message );
+                $self->storeArtifact( $artifact_id, $artifact_message,
+                    $artifact_session_id );
     }
 
             # No artifact

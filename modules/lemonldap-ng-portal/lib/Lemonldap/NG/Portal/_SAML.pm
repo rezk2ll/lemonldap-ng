@@ -1393,13 +1393,14 @@ sub resolveArtifact {
     return $message;
 }
 
-## @method boolean storeArtifact(string id, string message)
+## @method boolean storeArtifact(string id, string message, string session_id)
 # Store artifact
 # @param id Artifact ID
 # @param message Artifact content
+# @param session_id Session ID
 # @return result
 sub storeArtifact {
-    my ( $self, $id, $message ) = splice @_;
+    my ( $self, $id, $message, $session_id ) = splice @_;
     my %h;
 
     eval { tie %h, $self->{samlStorage}, undef, $self->{samlStorageOptions}; };
@@ -1412,23 +1413,24 @@ sub storeArtifact {
     $h{_utime}  = time();        # Creation time
     $h{ID}      = $id;
     $h{message} = $message;
+    $h{session_id} = $session_id;
 
-    my $session_id = $h{_session_id};
+    my $art_session_id = $h{_session_id};
 
     untie %h;
 
-    $self->lmLog( "Keep artifact $id in session $session_id", 'debug' );
+    $self->lmLog( "Keep artifact $id in session $art_session_id", 'debug' );
 
     return 1;
 }
 
-## @method string loadArtifact(string id)
+## @method hashRef loadArtifact(string id)
 # Load artifact
 # @param id Artifact ID
-# @return Artifact message
+# @return Artifact session content
 sub loadArtifact {
     my ( $self, $id ) = splice @_;
-    my $message;
+    my $art_session;
     my %h;
 
     unless ($id) {
@@ -1463,10 +1465,10 @@ sub loadArtifact {
             return;
         }
 
-        # Get message
-        $message = $h{message};
-
-        $self->lmLog( "Load artifact message $message", 'debug' );
+        # Get session contents
+        foreach ( keys %h ) {
+            $art_session->{$_} = $h{$_};
+        }
 
         # Delete session
         eval { tied(%h)->delete(); };
@@ -1478,7 +1480,7 @@ sub loadArtifact {
         $self->lmLog( "Artifact session $session (ID $id) was deleted",
             'debug' );
 
-        return $message;
+        return $art_session;
     }
 
     return;
@@ -1500,8 +1502,8 @@ sub createArtifactResponse {
     my $artifact_id = $login->assertionArtifact();
 
     # Load artifact message into login response
-    my $art_message = $self->loadArtifact($artifact_id);
-    eval { $login->set_artifact_message($art_message); };
+    my $art_session = $self->loadArtifact($artifact_id);
+    eval { $login->set_artifact_message( $art_session->{message} ); };
     if ($@) {
         $self->checkLassoError($@);
         $self->lmLog( "Cannot load artifact message", 'error' );
@@ -1509,6 +1511,29 @@ sub createArtifactResponse {
     }
 
     $self->lmLog( "Response loaded", 'debug' );
+
+    # Get Lasso session
+    my $session_id = $art_session->{session_id};
+    unless ($session_id) {
+        $self->lmLog( "Cannot find session_id in artifact session", 'error' );
+        return;
+    }
+
+    my $session = $self->getApacheSession( $session_id, 1 );
+    unless ( defined $session ) {
+        $self->lmLog( "Unable to open session $session_id", 'error' );
+        return;
+    }
+
+    my $lassoSession = $session->{_lassoSessionDump};
+
+    if ($lassoSession) {
+        unless ( $self->setSessionFromDump( $login, $lassoSession ) ) {
+            $self->lmLog( "Unable to load Lasso Session", 'error' );
+            return;
+        }
+        $self->lmLog( "Lasso Session loaded", 'debug' );
+    }
 
     # Build artifact response
     eval { Lasso::Login::build_response_msg($login); };
@@ -1519,6 +1544,14 @@ sub createArtifactResponse {
     }
     $self->lmLog( "Artifact response built", 'debug' );
 
+    # Store Lasso session
+    if ( $login->is_session_dirty ) {
+        $self->lmLog( "Save Lasso session in session", 'debug' );
+        $self->updateSession(
+            { _lassoSessionDump => $login->get_session->dump }, $session_id );
+    }
+
+    # Return artifact message
     return $login->msg_body;
 }
 
