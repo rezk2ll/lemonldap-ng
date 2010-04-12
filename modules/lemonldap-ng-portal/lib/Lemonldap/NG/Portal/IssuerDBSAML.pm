@@ -185,6 +185,26 @@ sub issuerForAuthUser {
             # Create Login object
             $login = $self->createLogin($server);
 
+            # Load Session and Identity if they exist
+            my $session  = $self->{sessionInfo}->{_lassoSessionDump};
+            my $identity = $self->{sessionInfo}->{_lassoIdentityDump};
+
+            if ($session) {
+                unless ( $self->setSessionFromDump( $login, $session ) ) {
+                    $self->lmLog( "Unable to load Lasso Session", 'error' );
+                    return PE_ERROR;
+                }
+                $self->lmLog( "Lasso Session loaded", 'debug' );
+            }
+
+            if ($identity) {
+                unless ( $self->setIdentityFromDump( $login, $identity ) ) {
+                    $self->lmLog( "Unable to load Lasso Identity", 'error' );
+                    return PE_ERROR;
+                }
+                $self->lmLog( "Lasso Identity loaded", 'debug' );
+            }
+
             # Process authentication request
             my $result;
             if ($artifact) {
@@ -287,6 +307,19 @@ sub issuerForAuthUser {
                 $self->lmLog( "SSO: authentication response is built",
                     'debug' );
 
+            }
+
+            # Save Identity and Session
+            if ( $login->is_identity_dirty ) {
+                $self->lmLog( "Save Lasso identity in session", 'debug' );
+                $self->updateSession(
+                    { _lassoIdentityDump => $login->get_identity->dump } );
+            }
+
+            if ( $login->is_session_dirty ) {
+                $self->lmLog( "Save Lasso session in session", 'debug' );
+                $self->updateSession(
+                    { _lassoSessionDump => $login->get_session->dump } );
             }
 
             # Send SSO Response

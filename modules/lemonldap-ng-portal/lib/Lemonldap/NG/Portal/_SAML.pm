@@ -1177,7 +1177,7 @@ sub buildLogoutRequestMsg {
     return $self->checkLassoError($@);
 }
 
-## @method boolean setSessionFromDump(Lasso::Profile profile)
+## @method boolean setSessionFromDump(Lasso::Profile profile, string dump)
 # Set session from dump in Lasso::Profile object
 # @param profile Lasso::Profile object
 # @param dump Lasso::Session XML dump
@@ -1186,6 +1186,19 @@ sub setSessionFromDump {
     my ( $self, $profile, $dump ) = splice @_;
 
     eval { Lasso::Profile::set_session_from_dump( $profile, $dump ); };
+
+    return $self->checkLassoError($@);
+}
+
+## @method boolean setIdentityFromDump(Lasso::Profile profile, string dump)
+# Set identity from dump in Lasso::Profile object
+# @param profile Lasso::Profile object
+# @param dump Lasso::Identity XML dump
+# @return result
+sub setIdentityFromDump {
+    my ( $self, $profile, $dump ) = splice @_;
+
+    eval { Lasso::Profile::set_identity_from_dump( $profile, $dump ); };
 
     return $self->checkLassoError($@);
 }
@@ -1601,14 +1614,9 @@ sub createAttributeRequest {
     $self->lmLog( "Assertion query created", 'debug' );
 
     # Set identity
-    eval {
-        Lasso::Profile::set_identity_from_dump( $query,
-            $login->get_identity()->dump );
-    };
-    if ($@) {
-        $self->checkLassoError($@);
-        return;
-    }
+    return
+      unless (
+        $self->setIdentityFromDump( $query, $login->get_identity()->dump ) );
 
     $self->lmLog( "Identity set in query", 'debug' );
 
@@ -2036,6 +2044,10 @@ Build logout request message
 =head2 setSessionFromDump
 
 Set session from dump in Lasso::Profile object
+
+=head2 setIdentityFromDump
+
+Set identity from dump in Lasso::Profile object
 
 =head2 getMetaDataURL
 
