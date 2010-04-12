@@ -108,44 +108,26 @@ sub issuerForUnAuthUser {
 
     if ( $url =~ /^(\Q$saml_ars_url\E)$/i ) {
 
-        $self->lmLog( "URL $url detected as an artefact resolution service URL",
+        $self->lmLog( "URL $url detected as an artifact resolution service URL",
             'debug' );
+
+        # Artifact request are sent with SOAP trough POST
+        my $art_request = $self->param('POSTDATA');
+        my $art_response;
 
         # Create Login object
         my $login = $self->createLogin($server);
 
-        # Artefact request are sent with SOAP trough POST
-        my $data = $self->param('POSTDATA');
-
-        unless ( $self->processArtRequestMsg( $login, $data ) ) {
-            $self->lmLog( "Unable to process artifact request message",
+        # Create artifact response
+        unless ( $art_response =
+            $self->createArtifactResponse( $login, $art_request ) )
+        {
+            $self->lmLog( "Unable to create artifact response message",
                 'error' );
             return PE_ERROR;
         }
 
-        my $artifact_id = $login->assertionArtifact();
-
-        # Load artifact message into login response
-        my $art_message = $self->loadArtifact($artifact_id);
-        eval { $login->set_artifact_message($art_message); };
-        if ($@) {
-            $self->checkLassoError($@);
-            $self->lmLog( "Cannot load artifact message", 'error' );
-            return PE_ERROR;
-        }
-
-        $self->lmLog( "Response loaded", 'debug' );
-
-        # Build artifact response
-        eval { Lasso::Login::build_response_msg($login); };
-        if ($@) {
-            $self->checkLassoError($@);
-            $self->lmLog( "Cannot build artifact response", 'error' );
-            return PE_ERROR;
-        }
-        $self->lmLog( "Artifact response built", 'debug' );
-
-        $self->{SOAPMessage} = $login->msg_body;
+        $self->{SOAPMessage} = $art_response;
 
         $self->lmLog( "Send SOAP Message: " . $self->{SOAPMessage}, 'debug' );
 
@@ -155,6 +137,7 @@ sub issuerForUnAuthUser {
         # If we are here, there was a problem with SOAP request
         $self->lmLog( "Artifact response was not sent trough SOAP", 'error' );
         return PE_ERROR;
+
     }
 
     PE_OK;

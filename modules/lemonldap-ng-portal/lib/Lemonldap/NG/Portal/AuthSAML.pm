@@ -550,11 +550,38 @@ sub extractFormInfo {
         }
     }
 
-    # 1.3 Artefact
+    # 1.3 Artifact
     if ( $url =~ /^(\Q$saml_ars_url\E)$/i ) {
 
-        $self->lmLog( "URL $url detected as an artefact resolution service URL",
+        $self->lmLog( "URL $url detected as an artifact resolution service URL",
             'debug' );
+
+        # Artifact request are sent with SOAP trough POST
+        my $art_request = $self->param('POSTDATA');
+        my $art_response;
+
+        # Create Login object
+        $login = $self->createLogin($server);
+
+        # Create artifact response
+        unless ( $art_response =
+            $self->createArtifactResponse( $login, $art_request ) )
+        {
+            $self->lmLog( "Unable to create artifact response message",
+                'error' );
+            return PE_ERROR;
+        }
+
+        $self->{SOAPMessage} = $art_response;
+
+        $self->lmLog( "Send SOAP Message: " . $self->{SOAPMessage}, 'debug' );
+
+        # Return SOAP message
+        $self->returnSOAPMessage();
+
+        # If we are here, there was a problem with SOAP request
+        $self->lmLog( "Artifact response was not sent trough SOAP", 'error' );
+        return PE_ERROR;
 
     }
 

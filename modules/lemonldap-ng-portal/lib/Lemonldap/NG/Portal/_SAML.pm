@@ -1471,6 +1471,44 @@ sub loadArtifact {
     return;
 }
 
+## @method string createArtifactResponse(Lasso::Login login, string request)
+# Process artifact request and build response
+# @param login Lasso::Login object
+# @param request Artifact request
+# @return Artifact response
+sub createArtifactResponse {
+    my ( $self, $login, $request ) = splice @_;
+
+    unless ( $self->processArtRequestMsg( $login, $request ) ) {
+        $self->lmLog( "Unable to process artifact request message", 'error' );
+        return;
+    }
+
+    my $artifact_id = $login->assertionArtifact();
+
+    # Load artifact message into login response
+    my $art_message = $self->loadArtifact($artifact_id);
+    eval { $login->set_artifact_message($art_message); };
+    if ($@) {
+        $self->checkLassoError($@);
+        $self->lmLog( "Cannot load artifact message", 'error' );
+        return;
+    }
+
+    $self->lmLog( "Response loaded", 'debug' );
+
+    # Build artifact response
+    eval { Lasso::Login::build_response_msg($login); };
+    if ($@) {
+        $self->checkLassoError($@);
+        $self->lmLog( "Cannot build artifact response", 'error' );
+        return;
+    }
+    $self->lmLog( "Artifact response built", 'debug' );
+
+    return $login->msg_body;
+}
+
 ## @method boolean processArtRequestMsg(Lasso::Profile profile, string request)
 # Process artifact request message
 # @param profile Lasso::Profile object
@@ -2038,6 +2076,10 @@ Store artifact
 =head2 loadArtifact
 
 Load artifact
+
+=head2 createArtifactResponse
+
+Process artifact request and build response
 
 =head2 processArtRequestMsg
 
