@@ -1868,6 +1868,8 @@ sub getAuthnContext {
       if ( $context =~ /^password$/i );
     return Lasso::Constants::SAML2_AUTHN_CONTEXT_X509
       if ( $context =~ /^x509$/i );
+    return Lasso::Constants::SAML2_AUTHN_CONTEXT_UNSPECIFIED
+      if ( $context =~ /^unspecified$/i );
 
     return;
 }

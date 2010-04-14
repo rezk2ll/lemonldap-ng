@@ -234,22 +234,13 @@ sub issuerForAuthUser {
 
             # TODO Check AuthnRequest conditions
 
-            # Convert authentication method into SAML2 string
-            $authn_context = Lasso::Constants::SAML2_AUTHN_CONTEXT_UNSPECIFIED;
+            # Map authenticationLevel with SAML2 authentication context
+	    my $authenticationLevel = $self->{sessionInfo}->{authenticationLevel};
 
-            if ( $self->get_module('auth') =~ /(LDAP|DBI)/i ) {
-                if ( $self->https() ) {
-                    $authn_context =
-                      $self->getAuthnContext("password-protected-transport");
-                }
-                else {
-                    $authn_context = $self->getAuthnContext("password");
-                }
-            }
-
-            if ( $self->get_module('auth') =~ /(SSL)/i ) {
-                $authn_context = $self->getAuthnContext("x509");
-            }
+            $authn_context = $self->getAuthnContext("unspecified");
+            $authn_context = $self->getAuthnContext("password") if ( $authenticationLevel == "2" );
+            $authn_context = $self->getAuthnContext("password-protected-transport") if ( $authenticationLevel == "3" );
+            $authn_context = $self->getAuthnContext("x509") if ( $authenticationLevel == "5" );
 
             $self->lmLog( "Authentication context is $authn_context", 'debug' );
 
