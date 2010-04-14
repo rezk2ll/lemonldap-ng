@@ -1154,7 +1154,7 @@ sub setMacros {
     local $self = shift;
     $self->safe->share('$self');
     while ( my ( $n, $e ) = each( %{ $self->{macros} } ) ) {
-        $e =~ s/\$(\w+)/\$self->{sessionInfo}->{$1}/g;
+        $e =~ s/\$(?!ENV)(\w+)/\$self->{sessionInfo}->{$1}/g;
         $self->{sessionInfo}->{$n} = $self->safe->reval($e);
     }
     PE_OK;
