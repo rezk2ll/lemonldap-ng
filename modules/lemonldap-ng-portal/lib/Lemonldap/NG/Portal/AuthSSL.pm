@@ -38,7 +38,6 @@ sub extractFormInfo {
     my $self = shift;
     my $user = $self->https ? $ENV{ $self->{SSLVar} } : 0;
     if ($user) {
-        $self->{sessionInfo}->{authenticationLevel} = 5;
         $self->{user} = $user;
         $self->{AuthLDAPFilter} ||=
           '(&(' . $self->{SSLLDAPField} . "=$user)(objectClass=inetOrgPerson))";
@@ -54,7 +53,7 @@ sub extractFormInfo {
 }
 
 ## @apmethod int setAuthSessionInfo()
-# Store user.
+# Set _user and authenticationLevel.
 # @return Lemonldap::NG::Portal constant
 sub setAuthSessionInfo {
     my $self = shift;
@@ -62,6 +61,8 @@ sub setAuthSessionInfo {
     # Store user certificate login for basic rules
     $self->{sessionInfo}->{'_user'} = $self->{'user'};
 
+    # authenticationLevel 5 for SSL
+    $self->{sessionInfo}->{authenticationLevel} = 5;
     PE_OK;
 }
 

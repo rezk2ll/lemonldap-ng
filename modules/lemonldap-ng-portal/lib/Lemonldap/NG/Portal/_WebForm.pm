@@ -44,8 +44,11 @@ sub extractFormInfo {
 sub setAuthSessionInfo {
     my $self = shift;
 
-    # Level 2 for web form based authentication
+    # authenticationLevel
+    # 2 for user/password with HTTP
+    # 3 for user/password with HTTPS
     $self->{sessionInfo}->{authenticationLevel} = 2;
+    $self->{sessionInfo}->{authenticationLevel} = 3 if ( $self->https() );
 
     # Store user submitted login for basic rules
     $self->{sessionInfo}->{'_user'} = $self->{'user'};

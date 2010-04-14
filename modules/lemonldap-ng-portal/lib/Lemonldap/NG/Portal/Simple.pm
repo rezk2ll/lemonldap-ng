@@ -409,7 +409,7 @@ sub getHiddenFormValue {
 sub buildHiddenForm {
     my $self = shift;
     my @keys = keys %{ $self->{portalHiddenFormValues} };
-    my $val  = ''; 
+    my $val  = '';
     foreach (@keys) {
         $val .=
             '<input type="hidden" name="' 

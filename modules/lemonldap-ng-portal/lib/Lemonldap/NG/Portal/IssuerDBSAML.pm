@@ -148,7 +148,7 @@ sub issuerForUnAuthUser {
 # Build assertions and redirect user
 # @return Lemonldap::NG::Portal error code
 sub issuerForAuthUser {
-    my $self = shift;
+    my $self   = shift;
     my $server = $self->{_lassoServer};
     my $login;
     my $protocolProfile;
@@ -228,12 +228,12 @@ sub issuerForAuthUser {
                 $self->lmLog( "Unable to validate SSO request message",
                     'error' );
                 return PE_ERROR;
-        }
+            }
 
             $self->lmLog( "SSO: authentication request is valid", 'debug' );
 
-    # TODO Check AuthnRequest conditions
-    
+            # TODO Check AuthnRequest conditions
+
             # Convert authentication method into SAML2 string
             $authn_context = Lasso::Constants::SAML2_AUTHN_CONTEXT_UNSPECIFIED;
 
@@ -300,7 +300,7 @@ sub issuerForAuthUser {
 
             # TODO relayState
 
-    # TODO Push mandatory attributes
+            # TODO Push mandatory attributes
 
             # Build SAML response
             $protocolProfile = $login->protocolProfile();
@@ -325,14 +325,14 @@ sub issuerForAuthUser {
                 }
 
                 $self->lmLog( "SSO: artifact response is built", 'debug' );
-    
+
                 # Get artifact ID and Content, and store them
                 my $artifact_id      = $login->get_artifact;
                 my $artifact_message = $login->get_artifact_message;
 
                 $self->storeArtifact( $artifact_id, $artifact_message,
                     $session_id );
-    }
+            }
 
             # No artifact
             else {
@@ -341,7 +341,7 @@ sub issuerForAuthUser {
                     $self->lmLog( "Unable to build SSO response message",
                         'error' );
                     return PE_ERROR;
-    }
+                }
 
                 $self->lmLog( "SSO: authentication response is built",
                     'debug' );

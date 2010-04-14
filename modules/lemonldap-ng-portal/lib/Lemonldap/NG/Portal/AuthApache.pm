@@ -16,18 +16,6 @@ sub authInit {
     PE_OK;
 }
 
-## @apmethod int setAuthSessionInfo()
-# Store user.
-# @return Lemonldap::NG::Portal constant
-sub setAuthSessionInfo {
-    my $self = shift;
-
-    # Store user submitted login for basic rules
-    $self->{sessionInfo}->{'_user'} = $self->{'user'};
-
-    PE_OK;
-}
-
 ## @apmethod int extractFormInfo()
 # Read username return by Apache authentication system.
 # By default, authentication is valid if REMOTE_USER environment
@@ -43,6 +31,21 @@ sub extractFormInfo {
 
     # This is needed for Kerberos authentication
     $self->{user} =~ s/^(.*)@.*$/$1/g;
+    PE_OK;
+}
+
+## @apmethod int setAuthSessionInfo()
+# Set _user and authenticationLevel.
+# @return Lemonldap::NG::Portal constant
+sub setAuthSessionInfo {
+    my $self = shift;
+
+    # Store user submitted login for basic rules
+    $self->{sessionInfo}->{'_user'} = $self->{'user'};
+
+    # authenticationLevel 4 for external authentication
+    $self->{sessionInfo}->{authenticationLevel} = 4;
+
     PE_OK;
 }
 

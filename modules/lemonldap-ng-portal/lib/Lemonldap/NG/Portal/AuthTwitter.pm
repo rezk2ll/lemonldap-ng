@@ -124,7 +124,7 @@ sub extractFormInfo {
 }
 
 ## @apmethod int setAuthSessionInfo()
-# Store user.
+# Set authenticationLevel and Twitter attributes.
 # @return Lemonldap::NG::Portal constant
 sub setAuthSessionInfo {
     my $self = shift;
@@ -133,6 +133,10 @@ sub setAuthSessionInfo {
     foreach (qw(screen_name location lang name url)) {
         $self->{sessionInfo}->{$_} = $self->{twitterUser}->{$_};
     }
+
+    # authenticationLevel 4 for external authentication
+    $self->{sessionInfo}->{authenticationLevel} = 4;
+
     PE_OK;
 }
 

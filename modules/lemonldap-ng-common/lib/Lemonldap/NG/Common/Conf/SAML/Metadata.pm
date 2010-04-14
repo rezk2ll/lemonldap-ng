@@ -215,6 +215,7 @@ sub serviceToXML {
       samlSPSSODescriptorArtifactResolutionServiceArtifact
       samlIDPSSODescriptorArtifactResolutionServiceArtifact
     );
+
     foreach (@param_assertion) {
         if ( defined $conf->{$_} ) {
             my @_tab = split( /;/, $conf->{$_} );

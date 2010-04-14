@@ -62,13 +62,16 @@ sub extractFormInfo {
 }
 
 ## @apmethod int setAuthSessionInfo()
-# Does nothing here.
+# Set _user and authenticationLevel.
 # @return Lemonldap::NG::Portal constant
 sub setAuthSessionInfo {
     my $self = shift;
 
     # Store user submitted login for basic rules
     $self->{sessionInfo}->{'_user'} = $self->{'user'};
+
+    # authenticationLevel 4 for external authentication
+    $self->{sessionInfo}->{authenticationLevel} = 4;
 
     PE_OK;
 }

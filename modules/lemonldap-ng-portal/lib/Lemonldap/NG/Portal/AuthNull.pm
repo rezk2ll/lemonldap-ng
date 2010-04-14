@@ -18,12 +18,13 @@ sub authInit {
 }
 
 ## @apmethod int setAuthSessionInfo()
-# Set _user value to 'anonymous'
+# Set _user value to 'anonymous' and authenticationLevel to 0
 # @return Lemonldap::NG::Portal constant
 sub setAuthSessionInfo {
     my $self = shift;
 
     $self->{sessionInfo}->{'_user'} = 'anonymous';
+    $self->{sessionInfo}->{authenticationLevel} = 0;
 
     PE_OK;
 }

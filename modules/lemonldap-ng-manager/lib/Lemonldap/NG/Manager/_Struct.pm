@@ -1065,20 +1065,20 @@ sub testStruct {
         samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect =>
           $testNotDefined,
         samlSPSSODescriptorArtifactResolutionServiceArtifact => $testNotDefined,
-        samlSPSSODescriptorNameIDFormatX509SubjectName => $boolean,
-        samlSPSSODescriptorNameIDFormatPersistent      => $boolean,
-        samlSPSSODescriptorNameIDFormatTransient       => $boolean,
-        samlIDPSSODescriptorWantAuthnRequestsSigned    => $boolean,
-        samlIDPSSODescriptorKeyDescriptorSigning       => $testNotDefined,
-        samlIDPSSODescriptorSingleSignOnServiceHTTP    => $testNotDefined,
-        samlIDPSSODescriptorSingleSignOnServiceSOAP    => $testNotDefined,
-        samlIDPSSODescriptorSingleLogoutServiceHTTP    => $testNotDefined,
-        samlIDPSSODescriptorSingleLogoutServiceSOAP    => $testNotDefined,
+        samlSPSSODescriptorNameIDFormatX509SubjectName       => $boolean,
+        samlSPSSODescriptorNameIDFormatPersistent            => $boolean,
+        samlSPSSODescriptorNameIDFormatTransient             => $boolean,
+        samlIDPSSODescriptorWantAuthnRequestsSigned          => $boolean,
+        samlIDPSSODescriptorKeyDescriptorSigning             => $testNotDefined,
+        samlIDPSSODescriptorSingleSignOnServiceHTTP          => $testNotDefined,
+        samlIDPSSODescriptorSingleSignOnServiceSOAP          => $testNotDefined,
+        samlIDPSSODescriptorSingleLogoutServiceHTTP          => $testNotDefined,
+        samlIDPSSODescriptorSingleLogoutServiceSOAP          => $testNotDefined,
         samlIDPSSODescriptorArtifactResolutionServiceArtifact =>
           $testNotDefined,
         samlIDPSSODescriptorNameIDFormatX509SubjectName => $boolean,
         samlIDPSSODescriptorNameIDFormatPersistent      => $boolean,
-        samlIDPSSODescriptorNameIDFormatTransient        => $boolean,
+        samlIDPSSODescriptorNameIDFormatTransient       => $boolean,
         samlIDPSSODescriptorManageNameIDServiceHTTP     => $testNotDefined,
         samlIDPSSODescriptorManageNameIDServiceSOAP     => $testNotDefined,
 
@@ -1210,8 +1210,8 @@ sub defaultConf {
         samlIDPMetaDataOptionsCheckSLOMessageSignature => '1',
         samlIDPMetaDataOptionsRequestedAuthnContext    => '',
         samlSPMetaDataOptionsOneTimeUse                => '0',
-        samlSPSSODescriptorAuthnRequestsSigned  => '0',
-        samlSPSSODescriptorKeyDescriptorSigning => '',
+        samlSPSSODescriptorAuthnRequestsSigned         => '0',
+        samlSPSSODescriptorKeyDescriptorSigning        => '',
         samlSPSSODescriptorSingleLogoutServiceHTTP =>
           'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;' 
           . $portal

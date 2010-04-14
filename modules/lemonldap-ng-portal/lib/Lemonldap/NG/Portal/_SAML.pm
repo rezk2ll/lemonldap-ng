@@ -181,7 +181,7 @@ sub loadIDPs {
         my $name =
           $self->getOrganizationName( $self->{_lassoServer}, $entityID )
           || ucfirst($_);
-        $self->{_idpList}->{$_} = ();
+        $self->{_idpList}->{$_}             = ();
         $self->{_idpList}->{$_}->{entityID} = $entityID;
         $self->{_idpList}->{$_}->{name}     = $name;
 
@@ -236,7 +236,7 @@ sub loadSPs {
 
         unless ($result) {
             $self->lmLog( "Fail to use SP $_ Metadata", 'error' );
-    return 0;
+            return 0;
         }
 
         # Store SP entityID and Organization Name
@@ -244,7 +244,7 @@ sub loadSPs {
         my $name =
           $self->getOrganizationName( $self->{_lassoServer}, $entityID )
           || ucfirst($_);
-        $self->{_spList}->{$_} = ();
+        $self->{_spList}->{$_}             = ();
         $self->{_spList}->{$_}->{entityID} = $entityID;
         $self->{_spList}->{$_}->{name}     = $name;
 
@@ -289,104 +289,55 @@ sub checkMessage {
     # 2. If no hidden fields, check HTTP request contents
     unless ( $request or $response ) {
 
-    # Create Profile object
-    my $profile;
-    $profile = $self->createLogin( $self->{_lassoServer} )
-      if ( $profile_type eq "login" );
-    $profile = $self->createLogout( $self->{_lassoServer} )
-      if ( $profile_type eq "logout" );
+        # Create Profile object
+        my $profile;
+        $profile = $self->createLogin( $self->{_lassoServer} )
+          if ( $profile_type eq "login" );
+        $profile = $self->createLogout( $self->{_lassoServer} )
+          if ( $profile_type eq "logout" );
 
-    # Signature
-    $check_sig = 1 unless defined $check_sig;
-    unless ($check_sig) {
-        $self->lmLog( "Message signature will not be checked", 'debug' );
-        $self->disableSignature($profile);
-    }
+        # Signature
+        $check_sig = 1 unless defined $check_sig;
+        unless ($check_sig) {
+            $self->lmLog( "Message signature will not be checked", 'debug' );
+            $self->disableSignature($profile);
+        }
 
         # Get relayState
         $relaystate = $self->param('RelayState');
 
         # 2.1. HTTP REDIRECT
-    if ( $request_method =~ /^GET$/ ) {
+        if ( $request_method =~ /^GET$/ ) {
 
-        $method = Lasso::Constants::HTTP_METHOD_REDIRECT;
-        $self->lmLog( "SAML method: HTTP-REDIRECT", 'debug' );
+            $method = Lasso::Constants::HTTP_METHOD_REDIRECT;
+            $self->lmLog( "SAML method: HTTP-REDIRECT", 'debug' );
 
-        if ( $self->param('SAMLResponse') ) {
+            if ( $self->param('SAMLResponse') ) {
 
-            # Response in query string
-            $response = $self->query_string();
+                # Response in query string
+                $response = $self->query_string();
                 $self->lmLog( "HTTP-REDIRECT: SAML Response $response",
                     'debug' );
 
-        }
-
-        if ( $self->param('SAMLRequest') ) {
-
-            # Request in query string
-            $request = $self->query_string();
-            $self->lmLog( "HTTP-REDIRECT: SAML Request $request", 'debug' );
-
-        }
-
-        if ( $self->param('SAMLart') ) {
-
-            # Artifact in query string
-            $artifact = $self->query_string();
-                $self->lmLog( "HTTP-REDIRECT: SAML Artifact $artifact",
-                    'debug' );
-
-            # Resolve Artifact
-            $method = Lasso::Constants::HTTP_METHOD_ARTIFACT_GET;
-            my $message =
-              $self->resolveArtifact( $profile, $artifact, $method );
-
-            # Request or response ?
-            if ( $message =~ /samlp:response/i ) {
-                $response = $message;
             }
-            else {
-                $request = $message;
-            }
-        }
 
-    }
+            if ( $self->param('SAMLRequest') ) {
 
-        # 2.2. HTTP POST AND SOAP
-    elsif ( $request_method =~ /^POST$/ ) {
-
-            # 2.2.1. POST
-        if ( $content_type !~ /xml/ ) {
-
-            $method = Lasso::Constants::HTTP_METHOD_POST;
-            $self->lmLog( "SAML method: HTTP-POST", 'debug' );
-
-                if ( $self->param('SAMLResponse') ) {
-
-                # Response in body part
-                $response = $self->param('SAMLResponse');
-                    $self->lmLog( "HTTP-POST: SAML Response $response",
-                        'debug' );
+                # Request in query string
+                $request = $self->query_string();
+                $self->lmLog( "HTTP-REDIRECT: SAML Request $request", 'debug' );
 
             }
 
-                if ( $self->param('SAMLRequest') ) {
+            if ( $self->param('SAMLart') ) {
 
-                # Request in body part
-                $request = $self->param('SAMLRequest');
-                $self->lmLog( "HTTP-POST: SAML Request $request", 'debug' );
-
-            }
-
-                if ( $self->param('SAMLart') ) {
-
-                # Artifact in SAMLart param
-                $artifact = $self->param('SAMLart');
+                # Artifact in query string
+                $artifact = $self->query_string();
                 $self->lmLog( "HTTP-REDIRECT: SAML Artifact $artifact",
                     'debug' );
 
                 # Resolve Artifact
-                $method = Lasso::Constants::HTTP_METHOD_ARTIFACT_POST;
+                $method = Lasso::Constants::HTTP_METHOD_ARTIFACT_GET;
                 my $message =
                   $self->resolveArtifact( $profile, $artifact, $method );
 
@@ -397,24 +348,73 @@ sub checkMessage {
                 else {
                     $request = $message;
                 }
-
             }
 
         }
 
+        # 2.2. HTTP POST AND SOAP
+        elsif ( $request_method =~ /^POST$/ ) {
+
+            # 2.2.1. POST
+            if ( $content_type !~ /xml/ ) {
+
+                $method = Lasso::Constants::HTTP_METHOD_POST;
+                $self->lmLog( "SAML method: HTTP-POST", 'debug' );
+
+                if ( $self->param('SAMLResponse') ) {
+
+                    # Response in body part
+                    $response = $self->param('SAMLResponse');
+                    $self->lmLog( "HTTP-POST: SAML Response $response",
+                        'debug' );
+
+                }
+
+                if ( $self->param('SAMLRequest') ) {
+
+                    # Request in body part
+                    $request = $self->param('SAMLRequest');
+                    $self->lmLog( "HTTP-POST: SAML Request $request", 'debug' );
+
+                }
+
+                if ( $self->param('SAMLart') ) {
+
+                    # Artifact in SAMLart param
+                    $artifact = $self->param('SAMLart');
+                    $self->lmLog( "HTTP-REDIRECT: SAML Artifact $artifact",
+                        'debug' );
+
+                    # Resolve Artifact
+                    $method = Lasso::Constants::HTTP_METHOD_ARTIFACT_POST;
+                    my $message =
+                      $self->resolveArtifact( $profile, $artifact, $method );
+
+                    # Request or response ?
+                    if ( $message =~ /samlp:response/i ) {
+                        $response = $message;
+                    }
+                    else {
+                        $request = $message;
+                    }
+
+                }
+
+            }
+
             # 2.2.2. SOAP
-        else {
+            else {
 
-            $method = Lasso::Constants::HTTP_METHOD_SOAP;
-            $self->lmLog( "SAML method: HTTP-SOAP", 'debug' );
+                $method = Lasso::Constants::HTTP_METHOD_SOAP;
+                $self->lmLog( "SAML method: HTTP-SOAP", 'debug' );
 
-            # SOAP is always a request
-            $request = $self->param('POSTDATA');
-            $self->lmLog( "HTTP-SOAP: SAML Request $request", 'debug' );
+                # SOAP is always a request
+                $request = $self->param('POSTDATA');
+                $self->lmLog( "HTTP-SOAP: SAML Request $request", 'debug' );
+
+            }
 
         }
-
-    }
 
     }
     else {
@@ -1409,10 +1409,10 @@ sub storeArtifact {
         return 0;
     }
 
-    $h{type}    = 'artifact';    # Session type
-    $h{_utime}  = time();        # Creation time
-    $h{ID}      = $id;
-    $h{message} = $message;
+    $h{type}       = 'artifact';    # Session type
+    $h{_utime}     = time();        # Creation time
+    $h{ID}         = $id;
+    $h{message}    = $message;
     $h{session_id} = $session_id;
 
     my $art_session_id = $h{_session_id};

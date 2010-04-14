@@ -195,15 +195,15 @@ sub extractFormInfo {
             else {
 
                 $self->lmLog( "IDP was not found in RelayState", 'debug' );
-                }
+            }
 
             unless ($idp) {
-                    $self->lmLog(
+                $self->lmLog(
 "IDP was not found in RelayState or in IDP resolution cookie",
-                        'error'
-                    );
-                    return PE_ERROR;
-                }
+                    'error'
+                );
+                return PE_ERROR;
+            }
 
             # Check if we accept direct login from IDP
             my $allowLoginFromIDP =
@@ -871,8 +871,8 @@ sub setAuthSessionInfo {
       $assertion->AuthnStatement()->SessionNotOnOrAfter();
 
     my $samltime = $self->samldate2timestamp($sessionNotOnOrAfter);
-    my $utime   = time();
-    my $timeout = $self->{timeout};
+    my $utime    = time();
+    my $timeout  = $self->{timeout};
     my $adaptSessionUtime =
       $self->{samlIDPMetaDataOptions}->{$idp}
       ->{samlIDPMetaDataOptionsAdaptSessionUtime};

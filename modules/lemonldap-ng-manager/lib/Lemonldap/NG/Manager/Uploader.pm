@@ -373,11 +373,11 @@ sub fileUpload {
         $content =~ s!>!&gt;!g;
 
         # Red Hat / Debian compatibilities
-        my $json = new JSON();
+        my $json         = new JSON();
         my $json_content = '';
-        if ($JSON::VERSION lt 2) {
+        if ( $JSON::VERSION lt 2 ) {
             local $JSON::UTF8 = 1;
-            $json_content = $json->objToJson([$content]);
+            $json_content = $json->objToJson( [$content] );
             $json_content =~ s/^\[//;
             $json_content =~ s/\]$//;
         }
@@ -387,7 +387,7 @@ sub fileUpload {
             $json_content = $json->encode($content);
         }
 
-        my $content      = '{"status":"OK", "content":' . $json_content . '}';
+        my $content = '{"status":"OK", "content":' . $json_content . '}';
         print $self->header(
             -type           => 'text/html; charset=utf-8',
             -Content_Length => length $content
@@ -418,11 +418,11 @@ sub urlUpload {
 
     # Build JSON reponse
     # Require Red Hat and Debian compatibilites
-    my $json = new JSON();
+    my $json         = new JSON();
     my $json_content = '';
-    if ($JSON::VERSION lt 2) {
+    if ( $JSON::VERSION lt 2 ) {
         local $JSON::UTF8 = 1;
-        $json_content = $json->objToJson([$content]);
+        $json_content = $json->objToJson( [$content] );
         $json_content =~ s/^\[//;
         $json_content =~ s/\]$//;
     }
