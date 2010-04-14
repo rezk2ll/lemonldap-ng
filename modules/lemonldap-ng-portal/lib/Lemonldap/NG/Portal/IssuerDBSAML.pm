@@ -234,8 +234,6 @@ sub issuerForAuthUser {
 
     # TODO Check AuthnRequest conditions
     
-    # TODO Build NameID
-
             # Convert authentication method into SAML2 string
             $authn_context = Lasso::Constants::SAML2_AUTHN_CONTEXT_UNSPECIFIED;
 
@@ -262,6 +260,43 @@ sub issuerForAuthUser {
             }
 
             $self->lmLog( "SSO: assertion is built", 'debug' );
+
+            # Build NameID
+            # Default NameID Format
+            my $nameIDFormat = $self->getNameIDFormat("email");
+            my $nameIDContent;
+
+            # Check NameID Policy in request
+            if ( $login->request()->NameIDPolicy ) {
+                $nameIDFormat = $login->request()->NameIDPolicy->Format();
+            }
+
+            # TODO use options to map format with session vars
+            # TODO Take the first value of a multivaluated var ( split ;)
+            # TODO support other formats
+            $nameIDContent = $self->{sessionInfo}->{mail}
+              if ( $nameIDFormat eq $self->getNameIDFormat("email") );
+
+            $login->nameIdentifier->Format($nameIDFormat);
+            $login->nameIdentifier->content($nameIDContent) if $nameIDContent;
+
+            # Get response assertion
+            my @response_assertions = $login->response->Assertion;
+
+            unless ( $response_assertions[0] ) {
+                $self->lmLog( "Unable to get response assertion", 'error' );
+                return PE_ERROR;
+            }
+
+            # Set subject NameID
+            $response_assertions[0]
+              ->set_subject_name_id( $login->nameIdentifier );
+
+            # Set response assertion
+            $login->response->Assertion(@response_assertions);
+
+            $self->lmLog( "NameID Format is $nameIDFormat",   'debug' );
+            $self->lmLog( "NameID Content is $nameIDContent", 'debug' );
 
             # TODO relayState
 
