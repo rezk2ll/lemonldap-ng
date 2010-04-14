@@ -248,6 +248,8 @@ install_site:	install_manager_site install_portal_site install_handler_site inst
 			s#__VHOSTLISTEN__#$(VHOSTLISTEN)#g; \
 			s#__DOCDIR__#$(DOCDIR)/#g;' $(RCONFDIR)/*apache*.conf
 	@$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)/for_etc_hosts
+	# Fix a lost of rights on the main directory
+	chmod 755 $(LMPREFIX)
 	@echo
 	@echo "LemonLDAP::NG v${VERSION} is installed with these parameters:"
 	@echo "  - System configuration: ${CONFDIR}"
