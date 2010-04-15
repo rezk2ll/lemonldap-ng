@@ -376,7 +376,7 @@ sub ldap {
 # @param string key Attribute name in group containing searched value
 # @param string value Searched value
 # @param string attributes to get from found groups (array ref)
-# @return string groups separated with ;
+# @return string groups separated with multiValuesSeparator
 sub searchGroups {
     my $self       = shift;
     my $base       = shift;
@@ -390,7 +390,7 @@ sub searchGroups {
     # Creating search filter
     my $searchFilter =
       "(&(objectClass=" . $portal->{ldapGroupObjectClass} . ")(|";
-    foreach ( split( /[;]/, $value ) ) {
+    foreach ( split( $portal->{multiValuesSeparator}, $value ) ) {
         $searchFilter .= "(" . $key . "=" . $_ . ")";
     }
     $searchFilter .= "))";
@@ -430,7 +430,9 @@ sub searchGroups {
                       $self->searchGroups( $base, $key, $group_value,
                         $attributes );
 
-                    $groups .= $recursive_groups . "; " if ($recursive_groups);
+                    $groups .=
+                      $recursive_groups . $portal->{multiValuesSeparator}
+                      if ($recursive_groups);
                 }
             }
 
@@ -448,17 +450,17 @@ sub searchGroups {
                 }
             }
             $groups =~ s/\|$//g;
-            $groups .= "; ";
+            $groups .= $portal->{multiValuesSeparator};
         }
 
-        $groups =~ s/; $//g;
+        $groups =~ s/\Q$portal->{multiValuesSeparator}\E$//;
     }
 
     return $groups;
 }
 
 ## @method string getLdapValue(Net::LDAP::Entry entry, string attribute)
-# Get the dn, or the attribute value with ; separator for multi-valuated attributes
+# Get the dn, or the attribute value with a separator for multi-valuated attributes
 # @param Net::LDAP::Entry LDAP entry
 # @param string attribute name
 # @return string value
@@ -473,10 +475,10 @@ sub getLdapValue {
 
     foreach ( $entry->get_value($attribute) ) {
         $value .= $_;
-        $value .= ";";
+        $value .= $self->{portal}->{multiValuesSeparator};
     }
 
-    $value =~ s/;$//g;
+    $value =~ s/\Q$self->{portal}->{multiValuesSeparator}\E$//;
 
     return $value;
 }

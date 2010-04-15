@@ -294,8 +294,6 @@ sub issuerForAuthUser {
             $self->lmLog( "NameID Format is $nameIDFormat",   'debug' );
             $self->lmLog( "NameID Content is $nameIDContent", 'debug' );
 
-            # TODO relayState
-
             # TODO Push mandatory attributes
 
             # Build SAML response

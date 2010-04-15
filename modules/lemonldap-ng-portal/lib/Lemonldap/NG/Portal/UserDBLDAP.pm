@@ -87,7 +87,7 @@ sub search {
 ## @apmethod int setSessionInfo()
 # 7) Load all parameters included in exportedVars parameter.
 # Multi-value parameters are loaded in a single string with
-# '; ' separator
+# a separator (param multiValuesSeparator)
 # @return Lemonldap::NG::Portal constant
 sub setSessionInfo {
     my $self = shift;
@@ -95,18 +95,21 @@ sub setSessionInfo {
     unless ( $self->{exportedVars} ) {
         foreach (qw(uid cn mail)) {
             $self->{sessionInfo}->{$_} =
-              join( '; ', $self->{entry}->get_value($_) ) || "";
+              $self->{ldap}->getLdapValue( $self->{entry}, $_ ) || "";
         }
     }
     elsif ( ref( $self->{exportedVars} ) eq 'HASH' ) {
         foreach ( keys %{ $self->{exportedVars} } ) {
+
+            # Special code to catch env var
             if ( my $tmp = $ENV{$_} ) {
                 $tmp =~ s/[\r\n]/ /gs;
                 $self->{sessionInfo}->{$_} = $tmp;
             }
             else {
-                $self->{sessionInfo}->{$_} = join( '; ',
-                    $self->{entry}->get_value( $self->{exportedVars}->{$_} ) )
+                $self->{sessionInfo}->{$_} =
+                  $self->{ldap}
+                  ->getLdapValue( $self->{entry}, $self->{exportedVars}->{$_} )
                   || "";
             }
         }

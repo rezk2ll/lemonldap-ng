@@ -338,9 +338,10 @@ sub setDefaultValues {
     $self->{mailSubject}          ||= "[LemonLDAP::NG] Your new password";
     $self->{mailConfirmSubject} ||=
       "[LemonLDAP::NG] Password reset confirmation";
-    $self->{mailSessionKey} ||= 'mail';
-    $self->{mailUrl}        ||= $self->{portal} . "/mail.pl";
-    $self->{issuerDB}       ||= 'Null';
+    $self->{mailSessionKey}       ||= 'mail';
+    $self->{mailUrl}              ||= $self->{portal} . "/mail.pl";
+    $self->{issuerDB}             ||= 'Null';
+    $self->{multiValuesSeparator} ||= '; ';
 
     # Set default userDB and passwordDB to DBI if authentication is DBI
     if ( $self->{authentication} =~ /DBI/i ) {
@@ -1170,7 +1171,8 @@ sub setLocalGroups {
     $self->safe->share('$self');
     while ( my ( $group, $expr ) = each %{ $self->{groups} } ) {
         $expr =~ s/\$(\w+)/\$self->{sessionInfo}->{$1}/g;
-        $groups .= "$group; " if ( $self->safe->reval($expr) );
+        $groups .= $group . $self->{multiValuesSeparator}
+          if ( $self->safe->reval($expr) );
     }
     $self->{sessionInfo}->{groups} = $groups;
     PE_OK;

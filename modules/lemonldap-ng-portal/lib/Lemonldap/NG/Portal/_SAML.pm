@@ -995,7 +995,7 @@ sub getAssertion {
 
 ## @method string getAttributeValue(string name, string format, string friendly_name, array_ref attributes)
 # Get SAML attribute value corresponding to name, format and friendly_name
-# Multivaluated values are separated by ';'
+# Multivaluated values are separated by multiValuesSeparator
 # @param name SAML attribute name
 # @param format optional SAML attribute format
 # @param friendly_name optional SAML attribute friendly name
@@ -1024,9 +1024,9 @@ sub getAttributeValue {
             my $xs      = XML::Simple->new();
             my $data    = $xs->XMLin( $_->dump() );
             my $content = $data->{content};
-            $value .= $content . ";" if $content;
+            $value .= $content . $self->{multiValuesSeparator} if $content;
         }
-        $value =~ s/;$//;
+        $value =~ s/\Q$self->{multiValuesSeparator}\E$//;
     }
 
     return $value;
