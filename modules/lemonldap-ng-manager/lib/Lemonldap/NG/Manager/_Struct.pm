@@ -994,7 +994,7 @@ sub testStruct {
         useXForwardedForIP => $boolean,
         variables          => $testNotDefined,
         whatToTrace        => {
-            test    => qr/^\$?[a-zA-Z]\w*$/,
+            test    => qr/^\$?_?[a-zA-Z]\w*$/,
             msgFail => 'Bad value',
         },
         ########

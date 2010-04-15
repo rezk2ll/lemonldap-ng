@@ -755,7 +755,8 @@ sub _deleteSession {
       ) unless ($preserveCookie);
 
     # Log
-    $self->_sub( 'userNotice', "User $logged_user has been disconnected" );
+    $self->_sub( 'userNotice', "User $logged_user has been disconnected" )
+      if $logged_user;
 
     # Return the result of tied(%$h)->delete()
     return $result;
@@ -1106,41 +1107,20 @@ sub setSessionInfo {
 
     # Store IP address
     $self->{sessionInfo}->{ipAddr} = $ENV{REMOTE_ADDR};
-    $self->lmLog(
-        "Store ipAddr: " . $self->{sessionInfo}->{ipAddr} . " in session",
-        'debug' );
 
     # Extract and store client IP from X-FORWARDED-FOR header
     my $xheader = $ENV{HTTP_X_FORWARDED_FOR};
     $xheader =~ s/(.*?)(\,)+.*/$1/ if $xheader;
     $self->{sessionInfo}->{xForwardedForAddr} = $xheader || $ENV{REMOTE_ADDR};
-    $self->lmLog(
-        "Store xForwardedForAddr: "
-          . $self->{sessionInfo}->{xForwardedForAddr}
-          . " in session",
-        'debug'
-    );
 
     if ( $self->{updateSession} ) {
         $self->{sessionInfo}->{updateTime} =
           &POSIX::strftime( "%Y%m%d%H%M%S", localtime() );
-        $self->lmLog(
-            "Store updateTime: "
-              . $self->{sessionInfo}->{updateTime}
-              . " in session",
-            'debug'
-        );
     }
     else {
         $self->{sessionInfo}->{_utime} ||= time();
         $self->{sessionInfo}->{startTime} =
           &POSIX::strftime( "%Y%m%d%H%M%S", localtime() );
-        $self->lmLog(
-            "Store startTime: "
-              . $self->{sessionInfo}->{startTime}
-              . " in session",
-            'debug'
-        );
     }
     return $self->SUPER::setSessionInfo();
 }
@@ -1189,19 +1169,11 @@ sub authenticate {
     return $tmp if ( $tmp = $self->SUPER::authenticate() );
 
     # Log good authentication
-    $self->_sub( 'userNotice',
-        "Good authentication for "
-          . $self->{sessionInfo}->{ $self->{whatToTrace} } );
+    my $user = $self->{sessionInfo}->{ $self->{whatToTrace} };
+    $self->_sub( 'userNotice', "Good authentication for $user" ) if $user;
 
     # Set _lastAuthnUTime
     $self->{sessionInfo}->{_lastAuthnUTime} = time();
-
-    $self->lmLog(
-        "Store _lastAuthnUTime: "
-          . $self->{sessionInfo}->{_lastAuthnUTime}
-          . " in session",
-        'debug'
-    );
 
     PE_OK;
 }
@@ -1361,8 +1333,13 @@ sub store {
     # Main session
     my $h = $self->getApacheSession( $self->{id} )
       or return PE_APACHESESSIONERROR;
-    $h->{$_} = $self->{sessionInfo}->{$_}
-      foreach ( keys %{ $self->{sessionInfo} } );
+    foreach ( keys %{ $self->{sessionInfo} } ) {
+        next unless defined $self->{sessionInfo}->{$_};
+        $self->lmLog(
+            "Store " . $self->{sessionInfo}->{$_} . " in session key $_",
+            'debug' );
+        $h->{$_} = $self->{sessionInfo}->{$_};
+    }
     untie %$h;
 
     PE_OK;
