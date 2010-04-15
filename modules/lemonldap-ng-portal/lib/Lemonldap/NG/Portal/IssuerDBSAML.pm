@@ -235,12 +235,17 @@ sub issuerForAuthUser {
             # TODO Check AuthnRequest conditions
 
             # Map authenticationLevel with SAML2 authentication context
-	    my $authenticationLevel = $self->{sessionInfo}->{authenticationLevel};
+            my $authenticationLevel =
+              $self->{sessionInfo}->{authenticationLevel};
 
             $authn_context = $self->getAuthnContext("unspecified");
-            $authn_context = $self->getAuthnContext("password") if ( $authenticationLevel == "2" );
-            $authn_context = $self->getAuthnContext("password-protected-transport") if ( $authenticationLevel == "3" );
-            $authn_context = $self->getAuthnContext("x509") if ( $authenticationLevel == "5" );
+            $authn_context = $self->getAuthnContext("password")
+              if ( $authenticationLevel == "2" );
+            $authn_context =
+              $self->getAuthnContext("password-protected-transport")
+              if ( $authenticationLevel == "3" );
+            $authn_context = $self->getAuthnContext("tls-client")
+              if ( $authenticationLevel == "5" );
 
             $self->lmLog( "Authentication context is $authn_context", 'debug' );
 
