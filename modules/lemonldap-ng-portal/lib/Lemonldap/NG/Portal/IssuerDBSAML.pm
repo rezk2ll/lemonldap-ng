@@ -234,12 +234,10 @@ sub issuerForAuthUser {
                 return PE_ERROR;
             }
 
-            $self->lmLog(
-                "Using SP "
-                  . $self->{_spList}->{$entityID}->{name}
-                  . " configuration",
-                'debug'
-            );
+            # Get SP Name from EntityID
+            my $sp = $self->{_spList}->{$entityID}->{name};
+
+            $self->lmLog( "Using SP $sp configuration", 'debug' );
 
             # Validate request
             unless ( $self->validateRequestMsg( $login, 1, 1 ) ) {
@@ -313,6 +311,99 @@ sub issuerForAuthUser {
             $self->lmLog( "NameID Content is $nameIDContent", 'debug' );
 
             # TODO Push mandatory attributes
+            my @attributes;
+
+            foreach (
+                keys %{ $self->{samlSPMetaDataExportedAttributes}->{$sp} } )
+            {
+
+                # Extract fields from exportedAttr value
+                my ( $mandatory, $name, $format, $friendly_name ) =
+                  split( /;/,
+                    $self->{samlSPMetaDataExportedAttributes}->{$sp}->{$_} );
+
+                # Name is required
+                next unless $name;
+
+                # Do not send attribute if not mandatory
+                unless ($mandatory) {
+                    $self->lmLog( "SAML2 attribute $name is not mandatory",
+                        'debug' );
+                    next;
+                }
+
+                # Error if corresponding attribute is not in user session
+                my $value = $self->{sessionInfo}->{$_};
+                unless ( defined $value ) {
+                    $self->lmLog(
+"Session key $_ is required to set SAML $name attribute",
+                        'error'
+                    );
+                    return PE_ERROR;
+                }
+
+                $self->lmLog(
+                    "SAML2 attribute $name will be set with $_ session key",
+                    'debug' );
+
+                # SAML2 attribute
+                my $attribute;
+
+                eval { $attribute = Lasso::Saml2Attribute->new(); };
+                if ($@) {
+                    $self->checkLassoError($@);
+                    return PE_ERROR;
+                }
+
+                # Default values
+                $friendly_name ||= $name;
+                $format ||= Lasso::Constants::SAML2_ATTRIBUTE_NAME_FORMAT_BASIC;
+
+                # Set attribute properties
+                $attribute->Name($name);
+                $attribute->NameFormat($format);
+                $attribute->FriendlyName($friendly_name);
+
+                # Set attribute value(s)
+                my @values = split $self->{multiValuesSeparator}, $value;
+                my @saml2values;
+
+                foreach (@values) {
+
+                    # SAML2 attribute value
+                    my $saml2value;
+
+                    eval { $saml2value = Lasso::Saml2AttributeValue->new(); };
+                    if ($@) {
+                        $self->checkLassoError($@);
+                        return PE_ERROR;
+                    }
+
+                    my @any;
+
+                    my $textNode;
+                    eval { $textNode = Lasso::MiscTextNode->new(); };
+                    if ($@) {
+                        $self->checkLassoError($@);
+                        return PE_ERROR;
+                    }
+
+                    $textNode->text_child(1);
+                    $textNode->content($_);
+
+                    push @any, $textNode;
+
+                    $saml2value->any(@any);
+
+                    push @saml2values, $saml2value;
+
+                    $self->lmLog( "Push $_ in SAML attribute $name", 'debug' );
+
+                }
+
+                $attribute->AttributeValue(@saml2values);
+
+            }
 
             # Build SAML response
             $protocolProfile = $login->protocolProfile();
