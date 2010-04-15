@@ -244,9 +244,8 @@ sub loadSPs {
         my $name =
           $self->getOrganizationName( $self->{_lassoServer}, $entityID )
           || ucfirst($_);
-        $self->{_spList}->{$_}             = ();
-        $self->{_spList}->{$_}->{entityID} = $entityID;
-        $self->{_spList}->{$_}->{name}     = $name;
+        $self->{_spList}->{$entityID}->{confKey} = $_;
+        $self->{_spList}->{$entityID}->{name}    = $name;
 
         $self->lmLog( "SP $_ added", 'debug' );
     }

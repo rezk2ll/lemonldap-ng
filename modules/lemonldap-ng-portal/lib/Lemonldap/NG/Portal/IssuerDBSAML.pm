@@ -223,6 +223,24 @@ sub issuerForAuthUser {
                 return PE_ERROR;
             }
 
+            # Get EntityID
+            my $entityID = $login->request->Issuer->content;
+
+            $self->lmLog( "Request issued from $entityID", 'debug' );
+
+            # Find EntityID in SPList
+            unless ( defined $self->{_spList}->{$entityID} ) {
+                $self->lmLog( "$entityID do not match any known SP", 'error' );
+                return PE_ERROR;
+            }
+
+            $self->lmLog(
+                "Using SP "
+                  . $self->{_spList}->{$entityID}->{name}
+                  . " configuration",
+                'debug'
+            );
+
             # Validate request
             unless ( $self->validateRequestMsg( $login, 1, 1 ) ) {
                 $self->lmLog( "Unable to validate SSO request message",
