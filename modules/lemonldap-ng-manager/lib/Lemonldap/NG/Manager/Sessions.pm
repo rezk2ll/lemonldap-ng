@@ -56,6 +56,9 @@ sub new {
     $class->abort( "Unable to load $globalStorage", $@ ) if ($@);
 
     $self->{managerSkin} = "default" unless defined $self->{managerSkin};
+
+    $self->{multiValuesSeparator} ||= "; ";
+
     return $self;
 }
 
@@ -247,7 +250,8 @@ sub process {
 "<input type=\"button\" onclick=\"del('$id');\" value=\"Effacer la session\" /><p><b>Session d&eacute;marr&eacute;e le</b> "
               . localtime( $h{_utime} )
               . '</p><p><b>Membre des groupes SSO :</b><ul>';
-            print "<li>$_</li>" foreach ( sort split /\s+/, $h{groups} );
+            print "<li>$_</li>"
+              foreach ( sort split $self->{multiValuesSeparator}, $h{groups} );
             print '</ul></p>';
             print
 '<p><b>Attributs et macros :</b></p><table border="0" witdh="100%">';
