@@ -177,7 +177,7 @@ sub extractFormInfo {
             }
 
             # Check OneTimeUse flag
-            my $oneTimeUse = $assertion->Conditions()->OneTimeUse();
+            my $oneTimeUse = $assertion->has_one_time_use();
 
             if ($oneTimeUse) {
                 $self->lmLog( "Found oneTimeUse flag in assertion conditions",

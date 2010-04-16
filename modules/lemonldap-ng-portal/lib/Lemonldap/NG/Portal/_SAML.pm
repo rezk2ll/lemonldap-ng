@@ -804,7 +804,7 @@ sub buildAssertion {
     my ( $self, $login, $authn_context ) = splice @_;
 
     # Dates
-    my $time                    = time();
+    my $time                    = $self->{sessionInfo}->{_utime} || time();
     my $timeout                 = $time + $self->{timeout};
     my $authenticationInstant   = $self->timestamp2samldate($time);
     my $reauthenticateOnOrAfter = $self->timestamp2samldate($timeout);
