@@ -292,25 +292,10 @@ sub issuerForAuthUser {
             $login->nameIdentifier->Format($nameIDFormat);
             $login->nameIdentifier->content($nameIDContent) if $nameIDContent;
 
-            # Get response assertion
-            my @response_assertions = $login->response->Assertion;
-
-            unless ( $response_assertions[0] ) {
-                $self->lmLog( "Unable to get response assertion", 'error' );
-                return PE_ERROR;
-            }
-
-            # Set subject NameID
-            $response_assertions[0]
-              ->set_subject_name_id( $login->nameIdentifier );
-
-            # Set response assertion
-            $login->response->Assertion(@response_assertions);
-
             $self->lmLog( "NameID Format is $nameIDFormat",   'debug' );
             $self->lmLog( "NameID Content is $nameIDContent", 'debug' );
 
-            # TODO Push mandatory attributes
+            # Push mandatory attributes
             my @attributes;
 
             foreach (
@@ -403,7 +388,43 @@ sub issuerForAuthUser {
 
                 $attribute->AttributeValue(@saml2values);
 
+                # Push attribute in attribute list
+                push @attributes, $attribute;
+
             }
+
+            # Create attribute statement
+            my $attribute_statement;
+
+            eval {
+                $attribute_statement = Lasso::Saml2AttributeStatement->new();
+            };
+            if ($@) {
+                $self->checkLassoError($@);
+                return PE_ERROR;
+            }
+
+            # Register attributes in attribute statement
+            $attribute_statement->Attribute(@attributes);
+
+            # Get response assertion
+            my @response_assertions = $login->response->Assertion;
+
+            unless ( $response_assertions[0] ) {
+                $self->lmLog( "Unable to get response assertion", 'error' );
+                return PE_ERROR;
+            }
+
+            # Set subject NameID
+            $response_assertions[0]
+              ->set_subject_name_id( $login->nameIdentifier );
+
+            # Add attribute statement in response assertion
+            my @attributes_statement = ($attribute_statement);
+            $response_assertions[0]->AttributeStatement(@attributes_statement);
+
+            # Set response assertion
+            $login->response->Assertion(@response_assertions);
 
             # Build SAML response
             $protocolProfile = $login->protocolProfile();
