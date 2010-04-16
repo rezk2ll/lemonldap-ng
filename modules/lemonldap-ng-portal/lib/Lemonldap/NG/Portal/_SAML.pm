@@ -299,7 +299,7 @@ sub checkMessage {
         $check_sig = 1 unless defined $check_sig;
         unless ($check_sig) {
             $self->lmLog( "Message signature will not be checked", 'debug' );
-            $self->disableSignature($profile);
+            $self->disableSignatureVerification($profile);
         }
 
         # Get relayState
@@ -1852,6 +1852,36 @@ sub forceSignature {
     return $self->checkLassoError($@);
 }
 
+## @method boolean disableSignatureVerification(Lasso::Profile profile)
+# Modify Lasso signature hint to disable signature verification
+# @param profile Lasso profile object
+# @return result
+sub disableSignatureVerification {
+    my ( $self, $profile ) = splice @_;
+
+    eval {
+        Lasso::Profile::set_signature_verify_hint( $profile,
+            Lasso::Constants::PROFILE_SIGNATURE_HINT_FORBID );
+    };
+
+    return $self->checkLassoError($@);
+}
+
+## @method boolean forceSignatureVerification(Lasso::Profile profile)
+# Modify Lasso signature hint to force signature verification
+# @param profile Lasso profile object
+# @return result
+sub forceSignatureVerification {
+    my ( $self, $profile ) = splice @_;
+
+    eval {
+        Lasso::Profile::set_signature_verify_hint( $profile,
+            Lasso::Constants::PROFILE_SIGNATURE_HINT_FORCE );
+    };
+
+    return $self->checkLassoError($@);
+}
+
 ## @method string getAuthnContext(string context)
 # Convert configuration string into SAML2 AuthnContextClassRef string
 # @param context configuration string
@@ -2168,6 +2198,14 @@ Modify Lasso signature hint to disable signature
 =head2 forceSignature
 
 Modify Lasso signature hint to force signature
+
+=head2 disableSignatureVerification
+
+Modify Lasso signature hint to disable signature verification
+
+=head2 forceSignatureVerification
+
+Modify Lasso signature hint to force signature verification
 
 =head2 getAuthnContext
 

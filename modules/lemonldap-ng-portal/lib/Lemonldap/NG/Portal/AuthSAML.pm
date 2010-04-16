@@ -83,6 +83,9 @@ sub extractFormInfo {
         $self->lmLog( "URL $url detected as an SSO assertion consumer URL",
             'debug' );
 
+        # Create Login object
+        $login = $self->createLogin($server);
+
         # Do we check signature?
         my $checkSSOMessageSignature;
         if ($idp) {
@@ -102,8 +105,10 @@ sub extractFormInfo {
           $self->checkMessage( $url, $request_method, $content_type, "login",
             $checkSSOMessageSignature );
 
-        # Create Login object
-        $login = $self->createLogin($server);
+        unless ($checkSSOMessageSignature) {
+            $self->lmLog( "Message signature will not be checked", 'debug' );
+            $self->disableSignatureVerification($login);
+        }
 
         if ($response) {
 
@@ -304,6 +309,9 @@ sub extractFormInfo {
     {
         $self->lmLog( "URL $url detected as an SLO URL", 'debug' );
 
+        # Create Logout object
+        $logout = $self->createLogout($server);
+
         # Do we check signature?
         my $checkSLOMessageSignature;
         if ($idp) {
@@ -318,13 +326,15 @@ sub extractFormInfo {
             );
         }
 
+        unless ($checkSLOMessageSignature) {
+            $self->lmLog( "Message signature will not be checked", 'debug' );
+            $self->disableSignatureVerification($logout);
+        }
+
         # Check SAML Message
         my ( $request, $response, $method, $relaystate, $artifact ) =
           $self->checkMessage( $url, $request_method, $content_type, "logout",
             $checkSLOMessageSignature );
-
-        # Create Logout object
-        $logout = $self->createLogout($server);
 
         if ($response) {
 
