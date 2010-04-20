@@ -34,6 +34,7 @@ sub issuerDBInit {
 sub issuerForUnAuthUser {
     my $self   = shift;
     my $server = $self->{_lassoServer};
+    my $idp;
 
     # Get configuration parameter
     my $saml_sso_soap_url =
@@ -44,8 +45,24 @@ sub issuerForUnAuthUser {
       $self->getMetaDataURL( "samlIDPSSODescriptorSingleSignOnServiceHTTP", 1 );
     my $saml_sso_get_url_ret =
       $self->getMetaDataURL( "samlIDPSSODescriptorSingleSignOnServiceHTTP", 2 );
+    my $saml_slo_soap_url =
+      $self->getMetaDataURL( "samlIDPSSODescriptorSingleLogoutServiceSOAP", 1 );
+    my $saml_slo_soap_url_ret =
+      $self->getMetaDataURL( "samlIDPSSODescriptorSingleLogoutServiceSOAP", 2 );
+    my $saml_slo_get_url =
+      $self->getMetaDataURL( "samlIDPSSODescriptorSingleLogoutServiceHTTP", 1 );
+    my $saml_slo_get_url_ret =
+      $self->getMetaDataURL( "samlIDPSSODescriptorSingleLogoutServiceHTTP", 2 );
     my $saml_ars_url = $self->getMetaDataURL(
         "samlIDPSSODescriptorArtifactResolutionServiceArtifact");
+
+    # Try to recover IDP from IDP cookie
+    my %cookies    = fetch CGI::Cookie;
+    my $idp_cookie = $cookies{ $self->{samlIdPResolveCookie} };
+    if ($idp_cookie) {
+        $idp = $idp_cookie->value;
+        $self->lmLog( "IDP $idp found in IDP resolution cookie", 'debug' );
+    }
 
     # Get HTTP request informations to know
     # if we are receving SAML request or response
@@ -53,6 +70,7 @@ sub issuerForUnAuthUser {
     my $request_method = $self->request_method();
     my $content_type   = $self->content_type();
 
+    # 1.1. SSO
     if ( $url =~ /^(\Q$saml_sso_soap_url\E|\Q$saml_sso_get_url\E)$/i ) {
 
         $self->lmLog( "URL $url detected as an SSO request URL", 'debug' );
@@ -106,6 +124,152 @@ sub issuerForUnAuthUser {
 
     }
 
+    # 1.2. SLO
+    if ( $url =~
+/^(\Q$saml_slo_soap_url\E|\Q$saml_slo_soap_url_ret\E|\Q$saml_slo_get_url\E|\Q$saml_slo_get_url_ret\E)$/i
+      )
+    {
+
+        $self->lmLog( "URL $url detected as an SLO URL", 'debug' );
+
+        # Create Logout object
+        my $logout = $self->createLogout($server);
+
+        # Do we check signature?
+        my $checkSLOMessageSignature;
+        if ($idp) {
+            $checkSLOMessageSignature =
+              $self->{samlIDPMetaDataOptions}->{$idp}
+              ->{samlIDPMetaDataOptionsCheckSLOMessageSignature};
+        }
+        else {
+            $self->lmLog(
+                "IDP not found, disable checkSLOMessageSignature option",
+                'debug'
+            );
+        }
+        unless ($checkSLOMessageSignature) {
+            $self->lmLog( "Message signature will not be checked", 'debug' );
+            $self->disableSignatureVerification($logout);
+        }
+
+        # Check SAML Message
+        my ( $request, $response, $method, $relaystate, $artifact ) =
+          $self->checkMessage( $url, $request_method, $content_type, "logout" );
+
+        if ($request) {
+
+            # Process logout request
+            unless ( $self->processLogoutRequestMsg( $logout, $request ) ) {
+                $self->lmLog( "SLO: Fail to process logout request", 'error' );
+                return PE_ERROR;
+            }
+
+            $self->lmLog( "SLO: Logout request is valid", 'debug' );
+
+            # Get SAML request
+            my $saml_request = $logout->request();
+            unless ($saml_request) {
+                $self->lmLog( "No SAML request found", 'error' );
+                return PE_ERROR;
+            }
+
+            print STDERR $saml_request->dump() . "\n";
+
+            # Set RelayState
+            if ($relaystate) {
+                $logout->msg_relayState($relaystate);
+                $self->lmLog( "Set $relaystate in RelayState", 'debug' );
+            }
+
+            # Do we set signature?
+            if ($idp) {
+                my $signSLOMessage =
+                  $self->{samlIDPMetaDataOptions}->{$idp}
+                  ->{samlIDPMetaDataOptionsSignSLOMessage};
+                unless ($signSLOMessage) {
+                    $self->lmLog( "SLO message to IDP $idp will not be signed",
+                        'debug' );
+                    $self->disableSignature($logout);
+                }
+            }
+            else {
+                $self->lmLog(
+                    "IDP not found, disable checkSLOMessageSignature option",
+                    'debug'
+                );
+            }
+
+            # Logout response
+            unless ( $self->buildLogoutResponseMsg($logout) ) {
+                $self->lmLog( "Unable to build SLO response", 'error' );
+                return PE_ERROR;
+            }
+
+            print STDERR $logout->dump() . "\n";
+
+            # Send response depending on request method
+            # HTTP-REDIRECT
+            if ( $method == Lasso::Constants::HTTP_METHOD_REDIRECT ) {
+
+                # Redirect user to response URL
+                my $slo_url = $logout->msg_url;
+                $self->lmLog( "Redirect user to $slo_url", 'debug' );
+
+                $self->{urldc} = $slo_url;
+
+                $self->_subProcess(qw(autoRedirect));
+
+                # If we are here, there was a problem with GET request
+                $self->lmLog( "Logout response was not sent trough GET",
+                    'error' );
+                return PE_ERROR;
+            }
+
+            # HTTP-POST
+            if ( $method == Lasso::Constants::HTTP_METHOD_POST ) {
+
+                # Use autosubmit form
+                my $slo_url  = $logout->msg_url;
+                my $slo_body = $logout->msg_body;
+
+                $self->{postUrl} = $slo_url;
+                $self->{postFields} = { 'SAMLResponse' => $slo_body };
+
+                # RelayState
+                $self->{postFields}->{'RelayState'} = $relaystate
+                  if ($relaystate);
+
+                $self->_subProcess(qw(autoPost));
+
+                # If we are here, there was a problem with POST response
+                $self->lmLog( "Logout response was not sent trough POST",
+                    'error' );
+                return PE_ERROR;
+            }
+
+            # HTTP-SOAP
+            if ( $method == Lasso::Constants::HTTP_METHOD_SOAP ) {
+
+                my $slo_body = $logout->msg_body;
+
+                $self->lmLog( "SOAP response $slo_body", 'debug' );
+
+                $self->{SOAPMessage} = $slo_body;
+
+                $self->_subProcess(qw(returnSOAPMessage));
+
+                # If we are here, there was a problem with SOAP response
+                $self->lmLog( "Logout response was not sent trough SOAP",
+                    'error' );
+                return PE_ERROR;
+            }
+
+        }
+
+    }
+
+    # 1.3. Artifacts
     if ( $url =~ /^(\Q$saml_ars_url\E)$/i ) {
 
         $self->lmLog( "URL $url detected as an artifact resolution service URL",
@@ -167,6 +331,14 @@ sub issuerForAuthUser {
       $self->getMetaDataURL( "samlIDPSSODescriptorSingleSignOnServiceHTTP", 1 );
     my $saml_sso_get_url_ret =
       $self->getMetaDataURL( "samlIDPSSODescriptorSingleSignOnServiceHTTP", 2 );
+    my $saml_slo_soap_url =
+      $self->getMetaDataURL( "samlIDPSSODescriptorSingleLogoutServiceSOAP", 1 );
+    my $saml_slo_soap_url_ret =
+      $self->getMetaDataURL( "samlIDPSSODescriptorSingleLogoutServiceSOAP", 2 );
+    my $saml_slo_get_url =
+      $self->getMetaDataURL( "samlIDPSSODescriptorSingleLogoutServiceHTTP", 1 );
+    my $saml_slo_get_url_ret =
+      $self->getMetaDataURL( "samlIDPSSODescriptorSingleLogoutServiceHTTP", 2 );
 
     # Get HTTP request informations to know
     # if we are receving SAML request or response
@@ -174,6 +346,7 @@ sub issuerForAuthUser {
     my $request_method = $self->request_method();
     my $content_type   = $self->content_type();
 
+    # 1.1. SSO
     if ( $url =~ /^(\Q$saml_sso_soap_url\E|\Q$saml_sso_get_url\E)$/i ) {
 
         $self->lmLog( "URL $url detected as an SSO request URL", 'debug' );
