@@ -641,6 +641,8 @@ sub issuerForAuthUser {
 
         if ($request) {
 
+            my $logout_error = 0;
+
             # Load Session and Identity if they exist
             my $session  = $self->{sessionInfo}->{_lassoSessionDump};
             my $identity = $self->{sessionInfo}->{_lassoIdentityDump};
@@ -671,8 +673,6 @@ sub issuerForAuthUser {
 
             # Get EntityID
             my $entityID = $logout->request->Issuer->content;
-            my $name_id  = $logout->request()->NameID;
-            my $user     = $name_id->content;
 
             $self->lmLog( "Request issued from $entityID", 'debug' );
 
@@ -687,6 +687,9 @@ sub issuerForAuthUser {
                     $id;
                 } @entitiesID;
 
+            # Get current user identifier
+            my $user = $self->{sessionInfo}->{_user};
+
             # Get corresponding session
             my $local_sessions =
               $self->{samlStorage}
@@ -695,7 +698,6 @@ sub issuerForAuthUser {
             if ( my @local_sessions_keys = keys %$local_sessions ) {
 
                 my $session_dump;
-                my $logout_error = 0;
 
                 # A session was found
                 foreach (@local_sessions_keys) {
@@ -736,10 +738,12 @@ sub issuerForAuthUser {
                 # No corresponding session found
                 $self->lmLog( "No local session found for user $user",
                     'debug' );
+                $logout_error = 1;
+
             }
 
             # Validate request if no previous error
-            unless ( $self->validateLogoutRequest($logout) ) {
+            unless ( !$logout_error && $self->validateLogoutRequest($logout) ) {
                 $self->lmLog( "SLO request is not valid", 'error' );
             }
 
