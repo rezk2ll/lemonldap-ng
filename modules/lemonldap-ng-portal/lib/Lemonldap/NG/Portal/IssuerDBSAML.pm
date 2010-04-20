@@ -34,7 +34,6 @@ sub issuerDBInit {
 sub issuerForUnAuthUser {
     my $self   = shift;
     my $server = $self->{_lassoServer};
-    my $idp;
 
     # Get configuration parameter
     my $saml_sso_soap_url =
@@ -55,14 +54,6 @@ sub issuerForUnAuthUser {
       $self->getMetaDataURL( "samlIDPSSODescriptorSingleLogoutServiceHTTP", 2 );
     my $saml_ars_url = $self->getMetaDataURL(
         "samlIDPSSODescriptorArtifactResolutionServiceArtifact");
-
-    # Try to recover IDP from IDP cookie
-    my %cookies    = fetch CGI::Cookie;
-    my $idp_cookie = $cookies{ $self->{samlIdPResolveCookie} };
-    if ($idp_cookie) {
-        $idp = $idp_cookie->value;
-        $self->lmLog( "IDP $idp found in IDP resolution cookie", 'debug' );
-    }
 
     # Get HTTP request informations to know
     # if we are receving SAML request or response
@@ -135,24 +126,6 @@ sub issuerForUnAuthUser {
         # Create Logout object
         my $logout = $self->createLogout($server);
 
-        # Do we check signature?
-        my $checkSLOMessageSignature;
-        if ($idp) {
-            $checkSLOMessageSignature =
-              $self->{samlIDPMetaDataOptions}->{$idp}
-              ->{samlIDPMetaDataOptionsCheckSLOMessageSignature};
-        }
-        else {
-            $self->lmLog(
-                "IDP not found, disable checkSLOMessageSignature option",
-                'debug'
-            );
-        }
-        unless ($checkSLOMessageSignature) {
-            $self->lmLog( "Message signature will not be checked", 'debug' );
-            $self->disableSignatureVerification($logout);
-        }
-
         # Check SAML Message
         my ( $request, $response, $method, $relaystate, $artifact ) =
           $self->checkMessage( $url, $request_method, $content_type, "logout" );
@@ -174,30 +147,10 @@ sub issuerForUnAuthUser {
                 return PE_ERROR;
             }
 
-            print STDERR $saml_request->dump() . "\n";
-
             # Set RelayState
             if ($relaystate) {
                 $logout->msg_relayState($relaystate);
                 $self->lmLog( "Set $relaystate in RelayState", 'debug' );
-            }
-
-            # Do we set signature?
-            if ($idp) {
-                my $signSLOMessage =
-                  $self->{samlIDPMetaDataOptions}->{$idp}
-                  ->{samlIDPMetaDataOptionsSignSLOMessage};
-                unless ($signSLOMessage) {
-                    $self->lmLog( "SLO message to IDP $idp will not be signed",
-                        'debug' );
-                    $self->disableSignature($logout);
-                }
-            }
-            else {
-                $self->lmLog(
-                    "IDP not found, disable checkSLOMessageSignature option",
-                    'debug'
-                );
             }
 
             # Logout response
@@ -206,64 +159,10 @@ sub issuerForUnAuthUser {
                 return PE_ERROR;
             }
 
-            print STDERR $logout->dump() . "\n";
-
-            # Send response depending on request method
-            # HTTP-REDIRECT
-            if ( $method == Lasso::Constants::HTTP_METHOD_REDIRECT ) {
-
-                # Redirect user to response URL
-                my $slo_url = $logout->msg_url;
-                $self->lmLog( "Redirect user to $slo_url", 'debug' );
-
-                $self->{urldc} = $slo_url;
-
-                $self->_subProcess(qw(autoRedirect));
-
-                # If we are here, there was a problem with GET request
-                $self->lmLog( "Logout response was not sent trough GET",
-                    'error' );
-                return PE_ERROR;
-            }
-
-            # HTTP-POST
-            if ( $method == Lasso::Constants::HTTP_METHOD_POST ) {
-
-                # Use autosubmit form
-                my $slo_url  = $logout->msg_url;
-                my $slo_body = $logout->msg_body;
-
-                $self->{postUrl} = $slo_url;
-                $self->{postFields} = { 'SAMLResponse' => $slo_body };
-
-                # RelayState
-                $self->{postFields}->{'RelayState'} = $relaystate
-                  if ($relaystate);
-
-                $self->_subProcess(qw(autoPost));
-
-                # If we are here, there was a problem with POST response
-                $self->lmLog( "Logout response was not sent trough POST",
-                    'error' );
-                return PE_ERROR;
-            }
-
-            # HTTP-SOAP
-            if ( $method == Lasso::Constants::HTTP_METHOD_SOAP ) {
-
-                my $slo_body = $logout->msg_body;
-
-                $self->lmLog( "SOAP response $slo_body", 'debug' );
-
-                $self->{SOAPMessage} = $slo_body;
-
-                $self->_subProcess(qw(returnSOAPMessage));
-
-                # If we are here, there was a problem with SOAP response
-                $self->lmLog( "Logout response was not sent trough SOAP",
-                    'error' );
-                return PE_ERROR;
-            }
+            # Send logout response
+            return PE_ERROR
+              unless ($self->sendLogoutResponseAfterLogoutRequest(
+                $logout, $method, $relaystate));
 
         }
 
@@ -725,6 +624,146 @@ sub issuerForAuthUser {
 
     }
 
+    # 1.2. SLO
+    if ( $url =~
+/^(\Q$saml_slo_soap_url\E|\Q$saml_slo_soap_url_ret\E|\Q$saml_slo_get_url\E|\Q$saml_slo_get_url_ret\E)$/i
+      )
+    {
+
+        $self->lmLog( "URL $url detected as an SLO URL", 'debug' );
+
+        # Create Logout object
+        my $logout = $self->createLogout($server);
+
+        # Check SAML Message
+        my ( $request, $response, $method, $relaystate, $artifact ) =
+          $self->checkMessage( $url, $request_method, $content_type, "logout" );
+
+        if ($request) {
+
+            # Load Session and Identity if they exist
+            my $session  = $self->{sessionInfo}->{_lassoSessionDump};
+            my $identity = $self->{sessionInfo}->{_lassoIdentityDump};
+
+            if ($session) {
+                unless ( $self->setSessionFromDump( $logout, $session ) ) {
+                    $self->lmLog( "Unable to load Lasso Session", 'error' );
+                    return PE_ERROR;
+                }
+                $self->lmLog( "Lasso Session loaded", 'debug' );
+            }
+
+            if ($identity) {
+                unless ( $self->setIdentityFromDump( $logout, $identity ) ) {
+                    $self->lmLog( "Unable to load Lasso Identity", 'error' );
+                    return PE_ERROR;
+                }
+                $self->lmLog( "Lasso Identity loaded", 'debug' );
+            }
+
+            # Process logout request
+            unless ( $self->processLogoutRequestMsg( $logout, $request ) ) {
+                $self->lmLog( "SLO: Fail to process logout request", 'error' );
+                return PE_ERROR;
+            }
+
+            $self->lmLog( "SLO: Logout request is valid", 'debug' );
+
+            # Get EntityID
+            my $entityID = $logout->request->Issuer->content;
+            my $name_id  = $logout->request()->NameID;
+            my $user     = $name_id->content;
+
+            $self->lmLog( "Request issued from $entityID", 'debug' );
+
+            # TODO
+            # Get all entityID into the current session, to send logout requests
+            # on all of them.
+
+            my @entitiesID = $session =~ /RemoteProviderID="[^"]+"/g;
+            @entitiesID = map {
+                    my $id = $_;
+                    $id =~ s/RemoteProviderID="([^"]+)"/$1/;
+                    $id;
+                } @entitiesID;
+
+            # Get corresponding session
+            my $local_sessions =
+              $self->{samlStorage}
+              ->searchOn( $self->{samlStorageOptions}, "_user", $user, );
+
+            if ( my @local_sessions_keys = keys %$local_sessions ) {
+
+                my $session_dump;
+                my $logout_error = 0;
+
+                # A session was found
+                foreach (@local_sessions_keys) {
+
+                    my $local_session = $_;
+
+                    # Get session
+                    $self->lmLog(
+                        "Retrieve session $local_session for user $user",
+                        'debug' );
+                    my $sessionInfo =
+                      $self->getApacheSession( $local_session, 1 );
+
+                    # Get Lasso::Session dump
+                    $session_dump = $sessionInfo->{_lassoSessionDump}
+                      if $sessionInfo->{_lassoSessionDump};
+
+                    # Delete Session
+                    $self->lmLog(
+                        "Delete session $local_session for user $user",
+                        'debug' );
+                    my $logout_result = $self->_deleteSession($sessionInfo);
+                    $self->lmLog( "Local Logout result: $logout_result",
+                        'debug' );
+                    $logout_error = 1 unless $logout_result;
+                }
+
+                # Set session from dump
+                unless ( $self->setSessionFromDump( $logout, $session_dump ) ) {
+                    $self->lmLog( "Cannot set session from dump in logout",
+                        'error' );
+                    $logout_error = 1;
+                }
+
+            }
+            else {
+
+                # No corresponding session found
+                $self->lmLog( "No local session found for user $user",
+                    'debug' );
+            }
+
+            # Validate request if no previous error
+            unless ( $self->validateLogoutRequest($logout) ) {
+                $self->lmLog( "SLO request is not valid", 'error' );
+            }
+
+            # Set RelayState
+            if ($relaystate) {
+                $logout->msg_relayState($relaystate);
+                $self->lmLog( "Set $relaystate in RelayState", 'debug' );
+            }
+
+            # Logout response
+            unless ( $self->buildLogoutResponseMsg($logout) ) {
+                $self->lmLog( "Unable to build SLO response", 'error' );
+                return PE_ERROR;
+            }
+
+            # Send logout response
+            return PE_ERROR
+              unless ($self->sendLogoutResponseAfterLogoutRequest(
+                $logout, $method, $relaystate));
+
+        }
+
+    }
+
     return PE_OK;
 }
 
@@ -737,6 +776,79 @@ sub issuerLogout {
     print STDERR "IssuerDBSAML: issuerLogout\n";
 
     PE_OK;
+}
+
+## @pmethod int sendLogoutResponseAfterLogoutRequest(Lasso::Logout $logout,
+#  int $method string $relaystate)
+# Send logout response issue from a logout request.
+# @param $logout Lasso Logout object
+# @param $method Method to use
+# @param $relaystate The relay state
+# @return boolean False if failed.
+sub sendLogoutResponseAfterLogoutRequest {
+    my $self = shift;
+    my $logout = shift;
+    my $method = shift;
+    my $relaystate = shift;
+
+    # Send response depending on request method
+    # HTTP-REDIRECT
+    if ( $method == Lasso::Constants::HTTP_METHOD_REDIRECT ) {
+
+        # Redirect user to response URL
+        my $slo_url = $logout->msg_url;
+        $self->lmLog( "Redirect user to $slo_url", 'debug' );
+
+        $self->{urldc} = $slo_url;
+
+        $self->_subProcess(qw(autoRedirect));
+
+        # If we are here, there was a problem with GET request
+        $self->lmLog( "Logout response was not sent trough GET", 'error' );
+
+        return 0;
+    }
+
+    # HTTP-POST
+    if ( $method == Lasso::Constants::HTTP_METHOD_POST ) {
+
+        # Use autosubmit form
+        my $slo_url  = $logout->msg_url;
+        my $slo_body = $logout->msg_body;
+
+        $self->{postUrl} = $slo_url;
+        $self->{postFields} = { 'SAMLResponse' => $slo_body };
+
+        # RelayState
+        $self->{postFields}->{'RelayState'} = $relaystate
+          if ($relaystate);
+
+        $self->_subProcess(qw(autoPost));
+
+        # If we are here, there was a problem with POST response
+        $self->lmLog( "Logout response was not sent trough POST", 'error' );
+
+        return 0;
+    }
+
+    # HTTP-SOAP
+    if ( $method == Lasso::Constants::HTTP_METHOD_SOAP ) {
+
+        my $slo_body = $logout->msg_body;
+
+        $self->lmLog( "SOAP response $slo_body", 'debug' );
+
+        $self->{SOAPMessage} = $slo_body;
+
+        $self->_subProcess(qw(returnSOAPMessage));
+
+        # If we are here, there was a problem with SOAP response
+        $self->lmLog( "Logout response was not sent trough SOAP",  'error' );
+
+        return 0;
+    }
+
+    return 1;
 }
 
 1;
