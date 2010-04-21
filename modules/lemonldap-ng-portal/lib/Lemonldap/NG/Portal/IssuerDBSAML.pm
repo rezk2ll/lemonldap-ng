@@ -677,9 +677,8 @@ sub issuerForAuthUser {
             $self->lmLog( "Request issued from $entityID", 'debug' );
 
             # TODO
-            # Get all entityID into the current session, to send logout requests
-            # on all of them.
-
+            # Get all entityID into the current session, to send logout
+            # requests on all of them.
             my @entitiesID = $session =~ /RemoteProviderID="[^"]+"/g;
             @entitiesID = map {
                     my $id = $_;
@@ -687,65 +686,31 @@ sub issuerForAuthUser {
                     $id;
                 } @entitiesID;
 
-            # Get current user identifier
-            my $user = $self->{sessionInfo}->{_user};
+            # Foreach SP found in session, get it from configuration,
+            # and send the appropriate logout request (HTTP,POST,SOAP).
+            foreach (@entitiesID) {
 
-            # Get corresponding session
-            my $local_sessions =
-              $self->{samlStorage}
-              ->searchOn( $self->{samlStorageOptions}, "_user", $user, );
+                # Do not process logout on SP that initiate the
+                # logout request
+                next if ($entityID =~ /^$_$/);
 
-            if ( my @local_sessions_keys = keys %$local_sessions ) {
-
-                my $session_dump;
-
-                # A session was found
-                foreach (@local_sessions_keys) {
-
-                    my $local_session = $_;
-
-                    # Get session
+                # Find EntityID in SPList
+                unless ( defined $self->{_spList}->{$entityID} ) {
                     $self->lmLog(
-                        "Retrieve session $local_session for user $user",
-                        'debug' );
-                    my $sessionInfo =
-                      $self->getApacheSession( $local_session, 1 );
-
-                    # Get Lasso::Session dump
-                    $session_dump = $sessionInfo->{_lassoSessionDump}
-                      if $sessionInfo->{_lassoSessionDump};
-
-                    # Delete Session
-                    $self->lmLog(
-                        "Delete session $local_session for user $user",
-                        'debug' );
-                    my $logout_result = $self->_deleteSession($sessionInfo);
-                    $self->lmLog( "Local Logout result: $logout_result",
-                        'debug' );
-                    $logout_error = 1 unless $logout_result;
+                      "$entityID does not match any known SP", 'error' );
+                    return PE_ERROR;
                 }
 
-                # Set session from dump
-                unless ( $self->setSessionFromDump( $logout, $session_dump ) ) {
-                    $self->lmLog( "Cannot set session from dump in logout",
-                        'error' );
-                    $logout_error = 1;
-                }
-
-            }
-            else {
-
-                # No corresponding session found
-                $self->lmLog( "No local session found for user $user",
-                    'debug' );
-                $logout_error = 1;
+                $self->lmLog( "Initiate logout request on $_", 'debug' );
 
             }
 
             # Validate request if no previous error
-            unless ( !$logout_error && $self->validateLogoutRequest($logout) ) {
+            unless ( $self->validateLogoutRequest($logout) ) {
                 $self->lmLog( "SLO request is not valid", 'error' );
             }
+
+            $self->lmLog( "SLO request is valid", 'debug' );
 
             # Set RelayState
             if ($relaystate) {
@@ -753,11 +718,24 @@ sub issuerForAuthUser {
                 $self->lmLog( "Set $relaystate in RelayState", 'debug' );
             }
 
+            $self->lmLog( "Relay state", 'debug' );
+
             # Logout response
             unless ( $self->buildLogoutResponseMsg($logout) ) {
                 $self->lmLog( "Unable to build SLO response", 'error' );
                 return PE_ERROR;
             }
+
+            $self->lmLog( "Build logout response", 'debug' );
+
+            # Delete Session
+            my $user = $self->{sessionInfo}->{user};
+            unless ( $self->_deleteSession($self->{sessionInfo}) ) {
+                $self->lmLog( "Fail to delete session $session_id for user $user",
+                  'debug' );
+            }
+
+            $self->lmLog( "Send logout response", 'debug' );
 
             # Send logout response
             return PE_ERROR
