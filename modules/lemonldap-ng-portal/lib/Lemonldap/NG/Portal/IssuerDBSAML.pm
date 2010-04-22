@@ -6,6 +6,7 @@
 package Lemonldap::NG::Portal::IssuerDBSAML;
 
 use strict;
+use Lemonldap::NG::Common::Conf::SAML::Metadata;
 use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::_SAML;
 our @ISA = qw(Lemonldap::NG::Portal::_SAML);
@@ -671,39 +672,7 @@ sub issuerForAuthUser {
 
             $self->lmLog( "SLO: Logout request is valid", 'debug' );
 
-            # Get EntityID
-            my $entityID = $logout->request->Issuer->content;
-
-            $self->lmLog( "Request issued from $entityID", 'debug' );
-
-            # TODO
-            # Get all entityID into the current session, to send logout
-            # requests on all of them.
-            my @entitiesID = $session =~ /RemoteProviderID="[^"]+"/g;
-            @entitiesID = map {
-                    my $id = $_;
-                    $id =~ s/RemoteProviderID="([^"]+)"/$1/;
-                    $id;
-                } @entitiesID;
-
-            # Foreach SP found in session, get it from configuration,
-            # and send the appropriate logout request (HTTP,POST,SOAP).
-            foreach (@entitiesID) {
-
-                # Do not process logout on SP that initiate the
-                # logout request
-                next if ($entityID =~ /^$_$/);
-
-                # Find EntityID in SPList
-                unless ( defined $self->{_spList}->{$entityID} ) {
-                    $self->lmLog(
-                      "$entityID does not match any known SP", 'error' );
-                    return PE_ERROR;
-                }
-
-                $self->lmLog( "Initiate logout request on $_", 'debug' );
-
-            }
+            $self->sendLogoutRequestToServiceProviders($logout);
 
             # Validate request if no previous error
             unless ( $self->validateLogoutRequest($logout) ) {
@@ -830,6 +799,137 @@ sub sendLogoutResponseAfterLogoutRequest {
 
     return 1;
 }
+
+sub sendLogoutRequestToServiceProviders {
+    my $self = shift;
+    my $logout = shift;
+    my $server = $self->{_lassoServer};
+
+    # Get EntityID
+    my $entityID = $logout->request->Issuer->content;
+
+    # Reset providerID into Lasso::Logout object
+    $self->resetProviderIdIndex($logout);
+
+    # Page header
+    print $self->header();
+    print $self->start_html();
+    print '<ul>';
+
+    # Foreach SP found in session, get it from configuration, and send the
+    # appropriate logout request (HTTP,POST,SOAP).
+    while ( my $providerID = $self->getNextProviderId($logout) ) {
+
+        # Do not process logout on SP that initiate the logout request
+        next if ($entityID =~ /^$providerID$/);
+
+        # Find EntityID in SPList
+        unless ( defined $self->{_spList}->{$providerID} ) {
+            $self->lmLog( "$entityID does not match any known SP", 'error' );
+            return PE_ERROR;
+        }
+
+        # Get first HTTP method
+        my $protocolType = Lasso::Constants::MD_PROTOCOL_TYPE_SINGLE_LOGOUT;
+        my $method =
+          $self->getFirstHttpMethod( $server, $providerID, $protocolType );
+
+        # Initiate the logout request
+        unless ( $self->initLogoutRequest( $logout, $providerID, $method ) )
+        {
+            $self->lmLog( "Initiate logout request failed for $providerID",
+              'error' );
+            next;
+        }
+
+        # Build request message
+        unless ( $self->buildLogoutRequestMsg( $logout ) )
+        {
+            $self->lmLog( "Build logout request failed for $providerID",
+              'error' );
+            next;
+        }
+
+        # Send logout request to the provider depending of the request method
+        # HTTP-REDIRECT
+        if ( $method == Lasso::Constants::HTTP_METHOD_REDIRECT ) {
+
+            # Redirect user to response URL
+            my $slo_url = $logout->msg_url;
+
+            print '<li>' . $providerID . '...'
+                . '<iframe src="' . $slo_url . '" alt="" marginwidth="0"'
+                . 'marginheight="0" scrolling="no" style="border: none"'
+                . ' width="12" height="12">'
+                . '<img src="' . $slo_url . '" width="12" height="12"></img>'
+                . '</iframe></li>';
+        }
+
+        # HTTP-POST
+        if ( $method == Lasso::Constants::HTTP_METHOD_POST ) {
+
+            # Use autosubmit form
+            my $slo_url  = $logout->msg_url;
+            my $slo_body = $logout->msg_body;
+
+            #$self->{postUrl} = $slo_url;
+            #$self->{postFields} = { 'SAMLResponse' => $slo_body };
+
+            # RelayState
+            #$self->{postFields}->{'RelayState'} = $relaystate
+              #if ($relaystate);
+
+            $self->lmLog( "POST method not yet available", 'debug' );
+
+        }
+
+        # HTTP-SOAP
+        if ( $method == Lasso::Constants::HTTP_METHOD_SOAP ) {
+
+            my $slo_url  = $logout->msg_url;
+            my $slo_body = $logout->msg_body;
+
+            # Send SOAP request and manage response
+            my $sp_response = $self->sendSOAPMessage( $slo_url, $slo_body );
+
+            unless ($sp_response) {
+                $self->lmLog( "No logout response to SOAP request", 'error' );
+                next;
+            }
+
+            # Create Logout object
+            my $sp_logout = $self->createLogout($server);
+
+            # Process logout response
+            my $sp_result =
+              $self->processLogoutResponseMsg( $sp_logout, $sp_response );
+
+            unless ($sp_result) {
+                $self->lmLog( "Fail to process logout response", 'error' );
+                next;
+            }
+
+            $self->lmLog( "Logout response is valid", 'debug' );
+
+            # Replay protection
+            my $samlID = $sp_logout->response()->InResponseTo;
+
+            unless ( $self->replayProtection($samlID) ) {
+
+                # Logout request was already consumed or is expired
+                $self->lmLog( "Message $samlID already used or expired", 'error' );
+                next;
+            }
+
+        }
+
+    }
+
+    # End page
+    print '</ul>';
+    print $self->end_html();
+
+}    
 
 1;
 

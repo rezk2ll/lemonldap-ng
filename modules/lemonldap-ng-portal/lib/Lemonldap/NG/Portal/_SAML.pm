@@ -577,6 +577,37 @@ sub getOrganizationName {
     return $data->{OrganizationName}->{content};
 }
 
+## @method string getNextProviderId(Lasso::Logout logout)
+# Returns the provider id from providerID_index in list of providerIDs in
+# principal session with the exception of initial service provider ID.
+# @param logout Lasso::Logout object
+# @return string
+sub getNextProviderId {
+    my $self = shift;
+    my $logout = shift;
+    my $providerId;
+
+    eval { $providerId = Lasso::Logout::get_next_providerID($logout); };
+    if ($@) {
+        $self->checkLassoError($@);
+        return;
+    }
+
+    return $providerId;
+}
+
+## @method boolean resetProviderIdIndex(Lasso::Logout logout)
+# Reset the providerID_index attribute in Lasso::Logout object
+# @param logout Lasso::Logout object
+# @return boolean
+sub resetProviderIdIndex {
+    my $self = shift;
+    my $logout = shift;
+
+    eval { Lasso::Logout::reset_providerID_index($logout); };
+    return $self->checkLassoError($@);
+}
+
 ## @method Lasso::Login createAuthnRequest(Lasso::Server server, string idp, int method, boolean forceAuthn, boolean isPassive, string nameIDFormat, boolean allowProxiedAuthn, boolean signSSOMessage, string requestedAuthnContext)
 # Create authentication request for selected IDP
 # @param server Lasso::Server object
