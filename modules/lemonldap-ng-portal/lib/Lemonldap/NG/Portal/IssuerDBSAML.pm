@@ -708,9 +708,8 @@ sub issuerForAuthUser {
             # Validate request if no previous error
             unless ( $self->validateLogoutRequest($logout) ) {
                 $self->lmLog( "SLO request is not valid", 'error' );
+                $logout_error = 1;
             }
-
-            $self->lmLog( "SLO request is valid", 'debug' );
 
             # Set RelayState
             if ($relaystate) {
@@ -718,21 +717,20 @@ sub issuerForAuthUser {
                 $self->lmLog( "Set $relaystate in RelayState", 'debug' );
             }
 
-            $self->lmLog( "Relay state", 'debug' );
-
             # Logout response
             unless ( $self->buildLogoutResponseMsg($logout) ) {
                 $self->lmLog( "Unable to build SLO response", 'error' );
                 return PE_ERROR;
             }
 
-            $self->lmLog( "Build logout response", 'debug' );
-
             # Delete Session
+            if (!$logout_error) {
             my $user = $self->{sessionInfo}->{user};
-            unless ( $self->_deleteSession($self->{sessionInfo}) ) {
+                my $local_session =  $self->getApacheSession($session_id, 1);
+                unless ( $self->_deleteSession($local_session) ) {
                 $self->lmLog( "Fail to delete session $session_id for user $user",
                   'debug' );
+            }
             }
 
             $self->lmLog( "Send logout response", 'debug' );
