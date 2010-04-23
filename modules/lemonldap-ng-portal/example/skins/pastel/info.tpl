@@ -7,6 +7,7 @@
 	<div class="loginlogo"></div>
 
 	<form id="form" action="<TMPL_VAR NAME="URL">" method="get" class="login">
+		<TMPL_VAR NAME="HIDDEN_INPUTS">
 		<TMPL_VAR NAME="MSG">
 		<p id="timer"><lang en="You'll be redirected in 10 seconds" fr="Vous allez &ecirc;tre redirig&eacute;(e) automatiquement dans 10 secondes"/></p>
 		<table><tbody><tr><th>
@@ -30,7 +31,14 @@
 		$('#timer').html("...");
 	}
 	function go() {
-		if(_go)$("#form").submit();
+		if(_go) {
+			if($("#lmhidden_HttpRedirect").length){
+				url=$("#form").attr('action');
+				window.location=url;
+			}else{
+				$("#form").submit();
+			}
+		}
 	}
 	function timer() {
 		var h=$('#timer').html();

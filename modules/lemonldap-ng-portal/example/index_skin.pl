@@ -55,6 +55,7 @@ if ( $portal->process() ) {
             MSG             => $info,
             SKIN            => $skin,
             URL             => $portal->{urldc},
+            HIDDEN_INPUTS   => $portal->buildHiddenForm(),
         );
     }
 

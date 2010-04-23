@@ -973,8 +973,11 @@ sub sendLogoutRequestToServiceProviders {
     # End of information block to be displayed to the user.
     $info .= '</ul>';
 
+    # Print some information to the user. The URL to be redirected should
+    # not be send via a form (because it does not work all time).
     if ($providerCount) {
       $self->info($info);
+      $self->setHiddenFormValue('HttpRedirect', 'true');
     }
 
     return $providerCount;
