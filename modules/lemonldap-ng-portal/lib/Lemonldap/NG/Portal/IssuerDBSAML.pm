@@ -163,7 +163,7 @@ sub issuerForUnAuthUser {
             # Send logout response
             return PE_ERROR
               unless ($self->sendLogoutResponseAfterLogoutRequest(
-                $logout, $method, $relaystate));
+                $logout, $method, $relaystate, 0));
 
         }
 
@@ -672,7 +672,12 @@ sub issuerForAuthUser {
 
             $self->lmLog( "SLO: Logout request is valid", 'debug' );
 
+            # Proceed to logout on all others SP
+            my $logout_dump = $logout->dump;
             $self->sendLogoutRequestToServiceProviders($logout);
+            $logout = Lasso::Logout::new_from_dump($server, $logout_dump);
+            $self->setSessionFromDump( $logout, $session );
+            $self->setIdentityFromDump( $logout, $identity );
 
             # Validate request if no previous error
             unless ( $self->validateLogoutRequest($logout) ) {
@@ -707,7 +712,7 @@ sub issuerForAuthUser {
             # Send logout response
             return PE_ERROR
               unless ($self->sendLogoutResponseAfterLogoutRequest(
-                $logout, $method, $relaystate));
+                $logout, $method, $relaystate, 1));
 
         }
 
@@ -739,6 +744,7 @@ sub sendLogoutResponseAfterLogoutRequest {
     my $logout = shift;
     my $method = shift;
     my $relaystate = shift;
+    my $wait = shift;
 
     # Send response depending on request method
     # HTTP-REDIRECT
@@ -748,14 +754,32 @@ sub sendLogoutResponseAfterLogoutRequest {
         my $slo_url = $logout->msg_url;
         $self->lmLog( "Redirect user to $slo_url", 'debug' );
 
-        $self->{urldc} = $slo_url;
+        # Redirect immediately
+        if (!$wait) {
 
+            $self->{urldc} = $slo_url;
         $self->_subProcess(qw(autoRedirect));
-
-        # If we are here, there was a problem with GET request
         $self->lmLog( "Logout response was not sent trough GET", 'error' );
 
         return 0;
+    }
+
+        # Redirect in few second
+        else {
+
+            print '
+              <script>
+              function redirect() {
+                window.location = \'' . $slo_url . '\';
+              }
+              window.setTimeout(\'redirect()\',5000);
+              </script>';
+
+            print $self->end_html();
+
+            exit;
+        }
+
     }
 
     # HTTP-POST
@@ -831,8 +855,9 @@ sub sendLogoutRequestToServiceProviders {
 
         # Get first HTTP method
         my $protocolType = Lasso::Constants::MD_PROTOCOL_TYPE_SINGLE_LOGOUT;
-        my $method =
-          $self->getFirstHttpMethod( $server, $providerID, $protocolType );
+        #my $method =
+        #  $self->getFirstHttpMethod( $server, $providerID, $protocolType );
+        my $method = Lasso::Constants::HTTP_METHOD_REDIRECT;
 
         # Initiate the logout request
         unless ( $self->initLogoutRequest( $logout, $providerID, $method ) )
@@ -850,6 +875,8 @@ sub sendLogoutRequestToServiceProviders {
             next;
         }
 
+        $self->lmLog( "Send logout request to $providerID", 'debug' );
+
         # Send logout request to the provider depending of the request method
         # HTTP-REDIRECT
         if ( $method == Lasso::Constants::HTTP_METHOD_REDIRECT ) {
@@ -859,10 +886,11 @@ sub sendLogoutRequestToServiceProviders {
 
             print '<li>' . $providerID . '...'
                 . '<iframe src="' . $slo_url . '" alt="" marginwidth="0"'
-                . 'marginheight="0" scrolling="no" style="border: none"'
-                . ' width="12" height="12">'
-                . '<img src="' . $slo_url . '" width="12" height="12"></img>'
+                . ' marginheight="0" scrolling="no" style="border: none"'
+                . ' width="5" height="5">'
+                . '<img src="' . $slo_url . '" width="5" height="5" />'
                 . '</iframe></li>';
+
         }
 
         # HTTP-POST
@@ -927,7 +955,6 @@ sub sendLogoutRequestToServiceProviders {
 
     # End page
     print '</ul>';
-    print $self->end_html();
 
 }    
 
