@@ -105,6 +105,7 @@ use constant {
     PM_SAML_IDPSELECT        => 8,
     PM_SAML_IDPCHOOSEN       => 9,
     PM_REMEMBERCHOICE        => 10,
+    PM_SAML_SPLOGOUT         => 11,
 };
 
 # EXPORTER PARAMETERS

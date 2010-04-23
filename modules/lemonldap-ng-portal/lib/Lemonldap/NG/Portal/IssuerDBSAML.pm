@@ -674,7 +674,10 @@ sub issuerForAuthUser {
 
             # Proceed to logout on all others SP
             my $logout_dump = $logout->dump;
+            my $provider_nb =
             $self->sendLogoutRequestToServiceProviders($logout);
+
+            # Rebuild Lasso::Logout object. All data have already been checked.
             $logout = Lasso::Logout::new_from_dump($server, $logout_dump);
             $self->setSessionFromDump( $logout, $session );
             $self->setIdentityFromDump( $logout, $identity );
@@ -707,12 +710,17 @@ sub issuerForAuthUser {
             }
             }
 
-            $self->lmLog( "Send logout response", 'debug' );
-
             # Send logout response
-            return PE_ERROR
-              unless ($self->sendLogoutResponseAfterLogoutRequest(
-                $logout, $method, $relaystate, 1));
+            # The process could be stopped here, if no information have to be
+            # displayed to the user.
+            my $err = $self->sendLogoutResponseAfterLogoutRequest(
+                $logout, $method, $relaystate, $provider_nb);
+            if ($err eq PE_INFO) {
+                return PE_INFO;
+            }
+            elsif (!$err) {
+                return PE_ERROR;
+            }
 
         }
 
@@ -738,13 +746,14 @@ sub issuerLogout {
 # @param $logout Lasso Logout object
 # @param $method Method to use
 # @param $relaystate The relay state
+# @param $seconds Time to wait before redirecting, in seconds
 # @return boolean False if failed.
 sub sendLogoutResponseAfterLogoutRequest {
     my $self = shift;
     my $logout = shift;
     my $method = shift;
     my $relaystate = shift;
-    my $wait = shift;
+    my $seconds = shift;
 
     # Send response depending on request method
     # HTTP-REDIRECT
@@ -753,31 +762,23 @@ sub sendLogoutResponseAfterLogoutRequest {
         # Redirect user to response URL
         my $slo_url = $logout->msg_url;
         $self->lmLog( "Redirect user to $slo_url", 'debug' );
+        $self->{urldc} = $slo_url;
 
         # Redirect immediately
-        if (!$wait) {
+        if (!$seconds) {
 
-            $self->{urldc} = $slo_url;
         $self->_subProcess(qw(autoRedirect));
+
         $self->lmLog( "Logout response was not sent trough GET", 'error' );
 
-        return 0;
+            return PE_ERROR;
     }
 
-        # Redirect in few second
+        # Redirect in few seconds
         else {
 
-            print '
-              <script>
-              function redirect() {
-                window.location = \'' . $slo_url . '\';
-              }
-              window.setTimeout(\'redirect()\',5000);
-              </script>';
+            return PE_INFO;
 
-            print $self->end_html();
-
-            exit;
         }
 
     }
@@ -801,7 +802,7 @@ sub sendLogoutResponseAfterLogoutRequest {
         # If we are here, there was a problem with POST response
         $self->lmLog( "Logout response was not sent trough POST", 'error' );
 
-        return 0;
+        return PE_ERROR;
     }
 
     # HTTP-SOAP
@@ -818,16 +819,25 @@ sub sendLogoutResponseAfterLogoutRequest {
         # If we are here, there was a problem with SOAP response
         $self->lmLog( "Logout response was not sent trough SOAP",  'error' );
 
-        return 0;
+        return PE_ERROR;
     }
 
-    return 1;
+    return PE_OK;
 }
 
+## @pmethod int sendLogoutRequestToServiceProviders(Lasso::Logout $logout)
+# Send logout response issue from a logout request to all other service
+# providers. If information have to be displayed to users, such as
+# iframe to send HTTP-Redirect or HTTP-POST logout request, then
+# $self->{_info} will be updated.
+# @param $logout Lasso Logout object
+# @return int Number of concerned providers.
 sub sendLogoutRequestToServiceProviders {
     my $self = shift;
     my $logout = shift;
     my $server = $self->{_lassoServer};
+    my $providerCount = 0;
+    my $info = '';
 
     # Get EntityID
     my $entityID = $logout->request->Issuer->content;
@@ -835,10 +845,12 @@ sub sendLogoutRequestToServiceProviders {
     # Reset providerID into Lasso::Logout object
     $self->resetProviderIdIndex($logout);
 
-    # Page header
-    print $self->header();
-    print $self->start_html();
-    print '<ul>';
+    # Header of the block which will be displayed to the user, if needed.
+    #$info .= &Lemonldap::NG::Portal::_i18n::msg(
+    #           PM_SAML_SPLOGOUT,
+    #           $ENV{HTTP_ACCEPT_LANGUAGE}
+    #         ) . '<ul>';
+    $info .= 'Logout in progress, please wait few seconds...<ul>';
 
     # Foreach SP found in session, get it from configuration, and send the
     # appropriate logout request (HTTP,POST,SOAP).
@@ -850,8 +862,11 @@ sub sendLogoutRequestToServiceProviders {
         # Find EntityID in SPList
         unless ( defined $self->{_spList}->{$providerID} ) {
             $self->lmLog( "$entityID does not match any known SP", 'error' );
-            return PE_ERROR;
+            next;
         }
+
+        # Get SP Name from EntityID
+        my $providerName = $self->{_spList}->{$providerID}->{name};
 
         # Get first HTTP method
         my $protocolType = Lasso::Constants::MD_PROTOCOL_TYPE_SINGLE_LOGOUT;
@@ -884,12 +899,14 @@ sub sendLogoutRequestToServiceProviders {
             # Redirect user to response URL
             my $slo_url = $logout->msg_url;
 
-            print '<li>' . $providerID . '...'
+            $info .= '<li>' . $providerName . '...'
                 . '<iframe src="' . $slo_url . '" alt="" marginwidth="0"'
                 . ' marginheight="0" scrolling="no" style="border: none"'
-                . ' width="5" height="5">'
-                . '<img src="' . $slo_url . '" width="5" height="5" />'
+                . ' width="0" height="0">'
+                . '<img src="' . $slo_url . '" width="0" height="0" />'
                 . '</iframe></li>';
+
+            $providerCount++;
 
         }
 
@@ -953,8 +970,14 @@ sub sendLogoutRequestToServiceProviders {
 
     }
 
-    # End page
-    print '</ul>';
+    # End of information block to be displayed to the user.
+    $info .= '</ul>';
+
+    if ($providerCount) {
+      $self->info($info);
+    }
+
+    return $providerCount;
 
 }    
 
