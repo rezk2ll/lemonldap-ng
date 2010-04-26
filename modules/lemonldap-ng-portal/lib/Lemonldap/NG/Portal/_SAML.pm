@@ -1980,6 +1980,231 @@ sub samldate2timestamp {
     return $timestamp;
 }
 
+## @pmethod int sendLogoutRequestToServiceProvider(Lasso::Logout $logout, int $method, string $relaystate, int $wait)
+# Send logout response issue from a logout request.
+# @param $logout Lasso Logout object
+# @param $method Method to use
+# @param $relaystate The relay state
+# @param $wait If true, do not call to autoRedirect or autoPost function
+# @return boolean False if failed.
+sub sendLogoutResponseToServiceProvider {
+    my $self = shift;
+    my $logout = shift;
+    my $method = shift;
+    my $relaystate = shift;
+    my $seconds = shift;
+
+    # Logout response
+    unless ( $self->buildLogoutResponseMsg($logout) ) {
+        $self->lmLog( "Unable to build SLO response", 'error' );
+        return 0;
+    }
+
+    # Send response depending on request method
+    # HTTP-REDIRECT
+    if ( $method == Lasso::Constants::HTTP_METHOD_REDIRECT ) {
+
+        # Redirect user to response URL
+        my $slo_url = $logout->msg_url;
+        $self->{urldc} = $slo_url;
+
+        $self->lmLog( "Redirect user to $slo_url", 'debug' );
+
+        # Redirect immediately
+        if ( !$seconds ) {
+
+            $self->_subProcess(qw(autoRedirect));
+
+            # If we are here, there was a problem with HTTP-REDIRECT response
+            $self->lmLog( "Logout response was not sent trough GET", 'error' );
+
+            return 0;
+
+        }
+
+    }
+
+    # HTTP-POST
+    if ( $method == Lasso::Constants::HTTP_METHOD_POST ) {
+
+        # Use autosubmit form
+        my $slo_url  = $logout->msg_url;
+        my $slo_body = $logout->msg_body;
+
+        $self->{postUrl} = $slo_url;
+        $self->{postFields} = { 'SAMLResponse' => $slo_body };
+
+        # RelayState
+        $self->{postFields}->{'RelayState'} = $relaystate
+          if ($relaystate);
+
+        $self->_subProcess(qw(autoPost));
+
+        # If we are here, there was a problem with POST response
+        $self->lmLog( "Logout response was not sent trough POST", 'error' );
+
+        return 0;
+
+    }
+
+    # HTTP-SOAP
+    if ( $method == Lasso::Constants::HTTP_METHOD_SOAP ) {
+
+        my $slo_body = $logout->msg_body;
+        $self->{SOAPMessage} = $slo_body;
+
+        $self->lmLog( "SOAP response $slo_body", 'debug' );
+
+        $self->_subProcess(qw(returnSOAPMessage));
+
+        # If we are here, there was a problem with SOAP response
+        $self->lmLog( "Logout response was not sent trough SOAP",  'error' );
+
+        return 0;
+
+    }
+
+    return 1;
+
+}
+
+## @pmethod int sendLogoutRequestToServiceProvider(Lasso::Logout $logout, string $providerID, int $method)
+# Send logout response issue from a logout request to a service provider
+# If information have to be displayed to users, such as iframe to send
+# HTTP-Redirect or HTTP-POST logout request, then $self->{_info} will be
+# updated.
+# @param $logout Lasso Logout object
+# @param $providerID The concerned service provider
+# @param $method The method used to send the logout request
+# @return int Number of concerned providers.
+sub sendLogoutRequestToServiceProvider {
+    my $self = shift;
+    my $logout = shift;
+    my $providerID = shift;
+    my $method = shift;
+    my $server = $self->{_lassoServer};
+    my $info;
+
+    # Test if provider is mentionned
+    if ( !$providerID ) {
+        return ( 0, undef, undef );
+    }
+
+    # Find EntityID in SPList
+    unless ( defined $self->{_spList}->{$providerID} ) {
+        $self->lmLog( "$providerID does not match any known SP", 'error' );
+        return ( 0, undef, undef );
+    }
+
+    # Get SP Name from EntityID
+    my $providerName = $self->{_spList}->{$providerID}->{name};
+
+    # Get first HTTP method
+    my $protocolType = Lasso::Constants::MD_PROTOCOL_TYPE_SINGLE_LOGOUT;
+
+    #my $method =
+    #  $self->getFirstHttpMethod( $server, $providerID, $protocolType );
+    if ( !$method ) {
+        $method = Lasso::Constants::HTTP_METHOD_REDIRECT;
+    }
+
+    # Initiate the logout request
+    unless ( $self->initLogoutRequest( $logout, $providerID, $method ) ) {
+        $self->lmLog( "Initiate logout request failed for $providerID",
+          'error' );
+        return ( 0, $method, undef );
+    }
+
+    # Build request message
+    unless ( $self->buildLogoutRequestMsg( $logout ) ) {
+        $self->lmLog( "Build logout request failed for $providerID", 'error' );
+        return ( 0, $method, undef );
+    }
+
+    $self->lmLog( "Send logout request to $providerID", 'debug' );
+
+    # Send logout request to the provider depending of the request method
+    # HTTP-REDIRECT
+    if ( $method == Lasso::Constants::HTTP_METHOD_REDIRECT ) {
+
+        # Redirect user to response URL
+        my $slo_url = $logout->msg_url;
+
+        $info .= '<li>'
+               . $providerName . '...'
+               . '<iframe src="'
+               . $slo_url
+               . '" alt="" marginwidth="0"'
+               . ' marginheight="0" scrolling="no" style="border: none"'
+               . ' width="0" height="0">'
+               . '<img src="'
+               . $slo_url
+               . '" width="0" height="0" />'
+               . '</iframe></li>';
+
+    }
+
+    # HTTP-POST
+    if ( $method == Lasso::Constants::HTTP_METHOD_POST ) {
+
+        # Use autosubmit form
+        my $slo_url  = $logout->msg_url;
+        my $slo_body = $logout->msg_body;
+
+        #$self->{postUrl} = $slo_url;
+        #$self->{postFields} = { 'SAMLResponse' => $slo_body };
+
+        # RelayState
+        #$self->{postFields}->{'RelayState'} = $relaystate
+          #if ($relaystate);
+
+        $self->lmLog( "POST method not yet available", 'debug' );
+
+    }
+
+    # HTTP-SOAP
+    if ( $method == Lasso::Constants::HTTP_METHOD_SOAP ) {
+
+        my $slo_url  = $logout->msg_url;
+        my $slo_body = $logout->msg_body;
+
+        # Send SOAP request and manage response
+        my $sp_response = $self->sendSOAPMessage( $slo_url, $slo_body );
+
+        unless ( $sp_response ) {
+            $self->lmLog( "No logout response to SOAP request", 'error' );
+            return ( 0, $method, undef );
+        }
+
+        # Create Logout object
+        my $sp_logout = $self->createLogout($server);
+
+        # Process logout response
+        my $sp_result =
+          $self->processLogoutResponseMsg( $sp_logout, $sp_response );
+
+        unless ( $sp_result ) {
+            $self->lmLog( "Fail to process logout response", 'error' );
+            return ( 0, $method, undef );
+        }
+
+        $self->lmLog( "Logout response is valid", 'debug' );
+
+        # Replay protection
+        my $samlID = $sp_logout->response()->InResponseTo;
+
+        unless ( $self->replayProtection($samlID) ) {
+            # Logout request was already consumed or is expired
+            $self->lmLog( "Message $samlID already used or expired", 'error' );
+            return ( 0, $method, undef );
+        }
+
+    }
+
+    return ( 1, $method, $info );
+
+}
+
 1;
 
 __END__
