@@ -162,8 +162,11 @@ sub issuerForUnAuthUser {
 
             # Send logout response
             return PE_ERROR
-              unless ($self->sendLogoutResponseAfterLogoutRequest(
-                $logout, $method, $relaystate, 0));
+              unless (
+                $self->sendLogoutResponseAfterLogoutRequest(
+                    $logout, $method, $relaystate, 0
+                )
+              );
 
         }
 
@@ -362,8 +365,10 @@ sub issuerForAuthUser {
             $nameIDContent = $self->{sessionInfo}->{mail}
               if ( $nameIDFormat eq $self->getNameIDFormat("email") );
 
-            $login->nameIdentifier->Format($nameIDFormat);
-            $login->nameIdentifier->content($nameIDContent) if $nameIDContent;
+            my $nameIdentifier = Lasso::Saml2NameID->new();
+            $nameIdentifier->Format($nameIDFormat);
+            $nameIdentifier->content($nameIDContent) if $nameIDContent;
+            $login->nameIdentifier($nameIdentifier);
 
             $self->lmLog( "NameID Format is $nameIDFormat",   'debug' );
             $self->lmLog( "NameID Content is $nameIDContent", 'debug' );
@@ -678,7 +683,7 @@ sub issuerForAuthUser {
             $self->sendLogoutRequestToServiceProviders($logout);
 
             # Rebuild Lasso::Logout object. All data have already been checked.
-            $logout = Lasso::Logout::new_from_dump($server, $logout_dump);
+            $logout = Lasso::Logout::new_from_dump( $server, $logout_dump );
             $self->setSessionFromDump( $logout, $session );
             $self->setIdentityFromDump( $logout, $identity );
 
@@ -701,11 +706,12 @@ sub issuerForAuthUser {
             }
 
             # Delete Session
-            if (!$logout_error) {
+            if ( !$logout_error ) {
             my $user = $self->{sessionInfo}->{user};
-                my $local_session =  $self->getApacheSession($session_id, 1);
+                my $local_session = $self->getApacheSession( $session_id, 1 );
                 unless ( $self->_deleteSession($local_session) ) {
-                $self->lmLog( "Fail to delete session $session_id for user $user",
+                    $self->lmLog(
+                        "Fail to delete session $session_id for user $user",
                   'debug' );
             }
             }
@@ -713,12 +719,13 @@ sub issuerForAuthUser {
             # Send logout response
             # The process could be stopped here, if no information have to be
             # displayed to the user.
-            my $err = $self->sendLogoutResponseAfterLogoutRequest(
-                $logout, $method, $relaystate, $provider_nb);
-            if ($err eq PE_INFO) {
+            my $err =
+              $self->sendLogoutResponseAfterLogoutRequest( $logout, $method,
+                $relaystate, $provider_nb );
+            if ( $err eq PE_INFO ) {
                 return PE_INFO;
             }
-            elsif (!$err) {
+            elsif ( !$err ) {
                 return PE_ERROR;
             }
 
@@ -765,7 +772,7 @@ sub sendLogoutResponseAfterLogoutRequest {
         $self->{urldc} = $slo_url;
 
         # Redirect immediately
-        if (!$seconds) {
+        if ( !$seconds ) {
 
         $self->_subProcess(qw(autoRedirect));
 
@@ -857,7 +864,7 @@ sub sendLogoutRequestToServiceProviders {
     while ( my $providerID = $self->getNextProviderId($logout) ) {
 
         # Do not process logout on SP that initiate the logout request
-        next if ($entityID =~ /^$providerID$/);
+        next if ( $entityID =~ /^$providerID$/ );
 
         # Find EntityID in SPList
         unless ( defined $self->{_spList}->{$providerID} ) {
@@ -870,21 +877,20 @@ sub sendLogoutRequestToServiceProviders {
 
         # Get first HTTP method
         my $protocolType = Lasso::Constants::MD_PROTOCOL_TYPE_SINGLE_LOGOUT;
+
         #my $method =
         #  $self->getFirstHttpMethod( $server, $providerID, $protocolType );
         my $method = Lasso::Constants::HTTP_METHOD_REDIRECT;
 
         # Initiate the logout request
-        unless ( $self->initLogoutRequest( $logout, $providerID, $method ) )
-        {
+        unless ( $self->initLogoutRequest( $logout, $providerID, $method ) ) {
             $self->lmLog( "Initiate logout request failed for $providerID",
               'error' );
             next;
         }
 
         # Build request message
-        unless ( $self->buildLogoutRequestMsg( $logout ) )
-        {
+        unless ( $self->buildLogoutRequestMsg($logout) ) {
             $self->lmLog( "Build logout request failed for $providerID",
               'error' );
             next;
@@ -899,11 +905,16 @@ sub sendLogoutRequestToServiceProviders {
             # Redirect user to response URL
             my $slo_url = $logout->msg_url;
 
-            $info .= '<li>' . $providerName . '...'
-                . '<iframe src="' . $slo_url . '" alt="" marginwidth="0"'
+            $info .= '<li>'
+              . $providerName . '...'
+              . '<iframe src="'
+              . $slo_url
+              . '" alt="" marginwidth="0"'
                 . ' marginheight="0" scrolling="no" style="border: none"'
                 . ' width="0" height="0">'
-                . '<img src="' . $slo_url . '" width="0" height="0" />'
+              . '<img src="'
+              . $slo_url
+              . '" width="0" height="0" />'
                 . '</iframe></li>';
 
             $providerCount++;
@@ -962,7 +973,8 @@ sub sendLogoutRequestToServiceProviders {
             unless ( $self->replayProtection($samlID) ) {
 
                 # Logout request was already consumed or is expired
-                $self->lmLog( "Message $samlID already used or expired", 'error' );
+                $self->lmLog( "Message $samlID already used or expired",
+                    'error' );
                 next;
             }
 
@@ -977,7 +989,7 @@ sub sendLogoutRequestToServiceProviders {
     # not be send via a form (because it does not work all time).
     if ($providerCount) {
       $self->info($info);
-      $self->setHiddenFormValue('HttpRedirect', 'true');
+        $self->setHiddenFormValue( 'HttpRedirect', 'true' );
     }
 
     return $providerCount;
