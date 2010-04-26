@@ -365,10 +365,17 @@ sub issuerForAuthUser {
             $nameIDContent = $self->{sessionInfo}->{mail}
               if ( $nameIDFormat eq $self->getNameIDFormat("email") );
 
+            if ( $login->nameIdentifier ) {
+                $login->nameIdentifier->Format($nameIDFormat);
+                $login->nameIdentifier->content($nameIDContent)
+                  if $nameIDContent;
+            }
+            else {
             my $nameIdentifier = Lasso::Saml2NameID->new();
             $nameIdentifier->Format($nameIDFormat);
             $nameIdentifier->content($nameIDContent) if $nameIDContent;
             $login->nameIdentifier($nameIdentifier);
+            }
 
             $self->lmLog( "NameID Format is $nameIDFormat",   'debug' );
             $self->lmLog( "NameID Content is $nameIDContent", 'debug' );
