@@ -508,6 +508,13 @@ sub issuerForAuthUser {
             my @attributes_statement = ($attribute_statement);
             $response_assertions[0]->AttributeStatement(@attributes_statement);
 
+            # Set sessionIndex
+            # sessionIndex is the 4 first characters of session_id
+            my $sessionIndex = substr $session_id, 0, 4;
+            my @authn_statements = $response_assertions[0]->AuthnStatement();
+            $authn_statements[0]->SessionIndex($sessionIndex);
+            $response_assertions[0]->AuthnStatement(@authn_statements);
+
             # Set response assertion
             $login->response->Assertion(@response_assertions);
 
