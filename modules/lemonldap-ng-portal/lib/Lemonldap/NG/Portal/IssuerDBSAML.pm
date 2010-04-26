@@ -687,7 +687,7 @@ sub issuerForAuthUser {
             # Proceed to logout on all others SP
             my $logout_dump = $logout->dump;
             my $provider_nb =
-            $self->sendLogoutRequestToServiceProviders($logout);
+              $self->sendLogoutRequestToServiceProviders($logout);
 
             # Rebuild Lasso::Logout object. All data have already been checked.
             $logout = Lasso::Logout::new_from_dump( $server, $logout_dump );
@@ -781,12 +781,11 @@ sub sendLogoutResponseAfterLogoutRequest {
         # Redirect immediately
         if ( !$seconds ) {
 
-        $self->_subProcess(qw(autoRedirect));
-
-        $self->lmLog( "Logout response was not sent trough GET", 'error' );
-
+            $self->_subProcess(qw(autoRedirect));
+            $self->lmLog( "Logout response was not sent trough GET", 'error' );
             return PE_ERROR;
-    }
+
+        }
 
         # Redirect in few seconds
         else {
@@ -849,6 +848,7 @@ sub sendLogoutResponseAfterLogoutRequest {
 sub sendLogoutRequestToServiceProviders {
     my $self = shift;
     my $logout = shift;
+    my $method = shift;
     my $server = $self->{_lassoServer};
     my $providerCount = 0;
     my $info = '';
@@ -860,11 +860,10 @@ sub sendLogoutRequestToServiceProviders {
     $self->resetProviderIdIndex($logout);
 
     # Header of the block which will be displayed to the user, if needed.
-    #$info .= &Lemonldap::NG::Portal::_i18n::msg(
-    #           PM_SAML_SPLOGOUT,
-    #           $ENV{HTTP_ACCEPT_LANGUAGE}
-    #         ) . '<ul>';
-    $info .= 'Logout in progress, please wait few seconds...<ul>';
+    $info .= &Lemonldap::NG::Portal::_i18n::msg(
+               PM_SAML_SPLOGOUT,
+               $ENV{HTTP_ACCEPT_LANGUAGE}
+             ) . '<ul>';
 
     # Foreach SP found in session, get it from configuration, and send the
     # appropriate logout request (HTTP,POST,SOAP).
@@ -887,7 +886,9 @@ sub sendLogoutRequestToServiceProviders {
 
         #my $method =
         #  $self->getFirstHttpMethod( $server, $providerID, $protocolType );
-        my $method = Lasso::Constants::HTTP_METHOD_REDIRECT;
+        if ( !$method ) {
+            $method = Lasso::Constants::HTTP_METHOD_REDIRECT;
+        }
 
         # Initiate the logout request
         unless ( $self->initLogoutRequest( $logout, $providerID, $method ) ) {
