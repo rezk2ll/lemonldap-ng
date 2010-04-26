@@ -40,3 +40,11 @@ $(document).ready(function(){
 	if(login){ $("input[type=password]:first").focus(); }
 	if(newwindow){ $('#appslist a[href^="http://"]').attr("target", "_blank"); }
 });
+
+function isHiddenFormValueSet(option){
+	if($('#lmhidden_'+option).length){
+		return true;
+	}else{
+		return false;
+	}
+}

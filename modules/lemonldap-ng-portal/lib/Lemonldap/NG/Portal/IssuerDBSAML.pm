@@ -990,6 +990,7 @@ sub sendLogoutRequestToServiceProviders {
     if ($providerCount) {
       $self->info($info);
         $self->setHiddenFormValue( 'HttpRedirect', 'true' );
+        $self->setHiddenFormValue( 'HideSubmitButton', 'true' );
     }
 
     return $providerCount;

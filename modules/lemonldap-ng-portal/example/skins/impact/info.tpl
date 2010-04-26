@@ -34,7 +34,7 @@
   }
   function go() {
     if(_go) {
-      if($("#lmhidden_HttpRedirect").length){
+      if(isHiddenFormValueSet('HttpRedirect')){
         url=$("#form").attr('action');
         window.location=url;
       }else{
@@ -50,6 +50,9 @@
     window.setTimeout('timer()',1000);
   }
   $(document).ready(function(){
+    if(isHiddenFormValueSet('HideSubmitButton')){
+      $('#form button[type=submit]').attr('disabled','disabled');
+    }
     window.setTimeout('go()',10000);
     window.setTimeout('timer()',1000);
   });
