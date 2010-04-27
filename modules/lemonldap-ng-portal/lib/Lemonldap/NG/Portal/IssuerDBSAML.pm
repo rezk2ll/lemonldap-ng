@@ -661,8 +661,6 @@ sub issuerForAuthUser {
 
         if ($request) {
 
-            my $logout_error = 0;
-
             # Load Session and Identity if they exist
             my $session  = $self->{sessionInfo}->{_lassoSessionDump};
             my $identity = $self->{sessionInfo}->{_lassoIdentityDump};
@@ -704,7 +702,7 @@ sub issuerForAuthUser {
             # Validate request if no previous error
             unless ( $self->validateLogoutRequest($logout) ) {
                 $self->lmLog( "SLO request is not valid", 'error' );
-                $logout_error = 1;
+                return PE_ERROR;
             }
 
             # Set RelayState
@@ -714,14 +712,12 @@ sub issuerForAuthUser {
             }
 
             # Delete Session
-            if ( !$logout_error ) {
             my $user = $self->{sessionInfo}->{user};
                 my $local_session = $self->getApacheSession( $session_id, 1 );
                 unless ( $self->_deleteSession($local_session) ) {
                     $self->lmLog(
                         "Fail to delete session $session_id for user $user",
                   'debug' );
-            }
             }
 
             # Send logout response. The process could be stopped here, if no
@@ -752,9 +748,47 @@ sub issuerForAuthUser {
 sub issuerLogout {
     my $self = shift;
 
-    print STDERR "IssuerDBSAML: issuerLogout\n";
+    # Session ID
+    my $session_id = $self->{sessionInfo}->{_session_id} || $self->{id};
 
-    PE_OK;
+    # Create Logout object
+    my $logout = $self->createLogout($self->{_lassoServer});
+
+    # Load Session and Identity if they exist
+    my $session  = $self->{sessionInfo}->{_lassoSessionDump};
+    my $identity = $self->{sessionInfo}->{_lassoIdentityDump};
+
+    if ($session) {
+        unless ( $self->setSessionFromDump( $logout, $session ) ) {
+            $self->lmLog( "Unable to load Lasso Session", 'error' );
+            return PE_ERROR;
+        }
+        $self->lmLog( "Lasso Session loaded", 'debug' );
+    }
+
+    # No need to initiate logout requests on SP, if no SAML session is
+    # available into the session.
+    else {
+        return PE_OK;
+    }
+
+    if ($identity) {
+        unless ( $self->setIdentityFromDump( $logout, $identity ) ) {
+            $self->lmLog( "Unable to load Lasso Identity", 'error' );
+            return PE_ERROR;
+        }
+        $self->lmLog( "Lasso Identity loaded", 'debug' );
+    }
+
+    # Proceed to logout on all others SP.
+    # Verify that logout response is correctly sent. If we have to wait for
+    # providers during HTTP-REDIRECT process, return PE_INFO to notify to wait
+    # for them.
+    if ( $self->sendLogoutRequestToServiceProviders($logout) ) {
+        return PE_INFO;
+    }
+
+    return PE_OK;
 }
 
 ## @pmethod int sendLogoutRequestToServiceProviders(Lasso::Logout $logout)
@@ -773,7 +807,10 @@ sub sendLogoutRequestToServiceProviders {
     my $info = '';
 
     # Get EntityID
-    my $entityID = $logout->request->Issuer->content;
+    my $entityID;
+    if ( $logout->request && $logout->request->Issuer ) {
+        $entityID = $logout->request->Issuer->content;
+    }
 
     # Reset providerID into Lasso::Logout object
     $self->resetProviderIdIndex($logout);
@@ -789,7 +826,7 @@ sub sendLogoutRequestToServiceProviders {
     while ( my $providerID = $self->getNextProviderId($logout) ) {
 
         # Do not process logout on SP that initiate the logout request
-        next if ( $entityID =~ /^$providerID$/ );
+        next if ( $entityID && $entityID =~ /^$providerID$/ );
 
         # Send logout request
         my ( $rstatus, $rmethod, $rinfo ) =

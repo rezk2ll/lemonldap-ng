@@ -188,6 +188,7 @@ else {
             DISPLAY_FORM          => 0,
             DISPLAY_OPENID_FORM   => 0,
             PORTAL_URL            => $portal->{portal},
+            MSG                   => $portal->info(),
         );
     }
 }

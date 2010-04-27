@@ -55,6 +55,11 @@
       </div>
       <hr class="solid" />
       <p class="text-error"><TMPL_VAR NAME="AUTH_ERROR"></p>
+      <TMPL_IF NAME="MSG">
+      <div id="content-all-info">
+        <TMPL_VAR NAME="MSG">
+      </div>
+      </TMPL_IF>
       <p>
         <img src="/skins/<TMPL_VAR NAME="SKIN">/images/arrow.png" /><a href="<TMPL_VAR NAME="PORTAL_URL">" class="positive"><lang en="Go to portal" fr="Aller au portail" /></a>
       </p>

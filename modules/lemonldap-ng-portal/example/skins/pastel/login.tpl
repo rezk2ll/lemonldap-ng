@@ -75,6 +75,7 @@
 
 	<TMPL_IF NAME="PORTAL_URL">
 	<div id="logout">
+        <TMPL_IF NAME="MSG"><TMPL_VAR NAME="MSG"></TMPL_IF>
         <div class="buttons">
                 <a href="<TMPL_VAR NAME="PORTAL_URL">" class="positive">
                         <img src="/skins/common/accept.png" alt="" />

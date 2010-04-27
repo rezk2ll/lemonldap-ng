@@ -309,7 +309,7 @@ sub msg_en {
         'Select your Identity Provider',
         'Redirection to your Identity Provider',
         'Remember my choice',
-        'Logout in progress, please wait few seconds...'
+        'Logout from service providers...'
     ];
 }
 
@@ -327,7 +327,7 @@ sub msg_fr {
         'Choisissez votre fournisseur d\'identité',
         'Redirection vers votre fournisseur d\'identité',
         'Se souvenir de mon choix',
-        'Déconnexion en cours, veuillez patienter quelques instants...'
+        'Déconnexion des services...'
     ];
 }
 
