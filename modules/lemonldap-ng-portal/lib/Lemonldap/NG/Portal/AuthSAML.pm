@@ -367,7 +367,8 @@ sub extractFormInfo {
             }
 
             $self->_subProcess(qw(autoRedirect))
-              if ( $self->{urldc} and $self->{portal} !~ /\Q$self->{urldc}\E\/?/ );
+              if (  $self->{urldc}
+                and $self->{portal} !~ /\Q$self->{urldc}\E\/?/ );
 
             # Else, inform user that logout is OK
             return PE_LOGOUT_OK;

@@ -8,8 +8,6 @@ package Lemonldap::NG::Manager::Downloader;
 use strict;
 use MIME::Base64;
 
-# TODO
-use Data::Dumper;
 use URI::Escape;
 
 require Lemonldap::NG::Manager::_Struct;    #inherits

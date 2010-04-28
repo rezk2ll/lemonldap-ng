@@ -771,8 +771,8 @@ sub _dump {
     my $self     = shift;
     my $variable = shift;
 
-    use Data::Dumper;
-    $self->lmLog( "Dump: " . Dumper($variable), 'debug' );
+    require Data::Dumper;
+    $self->lmLog( "Dump: " . Data::Dumper::Dumper($variable), 'debug' );
 
     return;
 }
@@ -936,7 +936,10 @@ sub controlExistingSession {
             }
 
             # Call issuerDB logout
-            eval { $self->{error} = $self->_subProcess(qw(issuerDBInit issuerLogout)); };
+            eval {
+                $self->{error} =
+                  $self->_subProcess(qw(issuerDBInit issuerLogout));
+            };
             if ($@) {
                 $self->lmLog( "Error when calling issuerLogout: $@", 'debug' );
             }
@@ -1258,6 +1261,10 @@ sub removeOther {
             $ENV{HTTP_ACCEPT_LANGUAGE} )
           . "</a></p>"
     ) if ( $self->{notifyOther} and @{ $self->{otherSessions} } );
+
+    # Since we have used getApacheSession, $self->{id} has been set, we must
+    # remove it
+    $self->{id} = '';
     PE_OK;
 }
 

@@ -174,13 +174,14 @@ sub issuerForUnAuthUser {
 
     # 1.3. SLO SOAP replay (send SOAP requests asynchronously)
     # http://auth.example.com/saml/relaySingleLogoutSOAP
-    my $saml_slo_url_relay_soap = 'http://auth.example.com/saml/relaySingleLogoutSOAP';
+    my $saml_slo_url_relay_soap =
+      'http://auth.example.com/saml/relaySingleLogoutSOAP';
     if ( $url =~ /^(\Q$saml_slo_url_relay_soap\E)/i ) {
 
-         $self->lmLog( "URL $url detected as a relay service URL", 'debug' );
+        $self->lmLog( "URL $url detected as a relay service URL", 'debug' );
 
-         my $r = $self->param('relay');
-         print STDERR "$r\n";
+        my $r = $self->param('relay');
+        print STDERR "$r\n";
 
     }
 
@@ -383,10 +384,10 @@ sub issuerForAuthUser {
                   if $nameIDContent;
             }
             else {
-            my $nameIdentifier = Lasso::Saml2NameID->new();
-            $nameIdentifier->Format($nameIDFormat);
-            $nameIdentifier->content($nameIDContent) if $nameIDContent;
-            $login->nameIdentifier($nameIdentifier);
+                my $nameIdentifier = Lasso::Saml2NameID->new();
+                $nameIdentifier->Format($nameIDFormat);
+                $nameIdentifier->content($nameIDContent) if $nameIDContent;
+                $login->nameIdentifier($nameIdentifier);
             }
 
             $self->lmLog( "NameID Format is $nameIDFormat",   'debug' );
@@ -725,25 +726,27 @@ sub issuerForAuthUser {
 
             # Delete Session
             my $user = $self->{sessionInfo}->{user};
-                my $local_session = $self->getApacheSession( $session_id, 1 );
-                unless ( $self->_deleteSession($local_session) ) {
-                    $self->lmLog(
-                        "Fail to delete session $session_id for user $user",
-                  'debug' );
+            my $local_session = $self->getApacheSession( $session_id, 1 );
+            unless ( $self->_deleteSession($local_session) ) {
+                $self->lmLog(
+                    "Fail to delete session $session_id for user $user",
+                    'debug' );
             }
 
             # Send logout response. The process could be stopped here, if no
             # there are no providers to wait for logout via HTTP-REDIRECT
             # method.
-            my $status = $self->sendLogoutResponseToServiceProvider(
-                $logout, $method, $relaystate, $provider_nb );
+            my $status =
+              $self->sendLogoutResponseToServiceProvider( $logout, $method,
+                $relaystate, $provider_nb );
 
             # Verify that logout response is correctly sent. If we have to wait
             # for providers during HTTP-REDIRECT process, return PE_INFO to
             # notify to wait for them.
             if ( $provider_nb && $status ) {
                 return PE_INFO;
-            } elsif ( !$status ) {
+            }
+            elsif ( !$status ) {
                 return PE_ERROR;
             }
 
@@ -764,7 +767,7 @@ sub issuerLogout {
     my $session_id = $self->{sessionInfo}->{_session_id} || $self->{id};
 
     # Create Logout object
-    my $logout = $self->createLogout($self->{_lassoServer});
+    my $logout = $self->createLogout( $self->{_lassoServer} );
 
     # Load Session and Identity if they exist
     my $session  = $self->{sessionInfo}->{_lassoSessionDump};
@@ -811,12 +814,12 @@ sub issuerLogout {
 # @param $logout Lasso Logout object
 # @return int Number of concerned providers.
 sub sendLogoutRequestToServiceProviders {
-    my $self = shift;
-    my $logout = shift;
-    my $method = shift;
-    my $server = $self->{_lassoServer};
+    my $self           = shift;
+    my $logout         = shift;
+    my $method         = shift;
+    my $server         = $self->{_lassoServer};
     my $providersCount = 0;
-    my $info = '';
+    my $info           = '';
 
     # Get EntityID
     my $entityID;
@@ -828,10 +831,10 @@ sub sendLogoutRequestToServiceProviders {
     $self->resetProviderIdIndex($logout);
 
     # Header of the block which will be displayed to the user, if needed.
-    $info .= &Lemonldap::NG::Portal::_i18n::msg(
-               PM_SAML_SPLOGOUT,
-               $ENV{HTTP_ACCEPT_LANGUAGE}
-             ) . '<ul>';
+    $info .=
+      &Lemonldap::NG::Portal::_i18n::msg( PM_SAML_SPLOGOUT,
+        $ENV{HTTP_ACCEPT_LANGUAGE} )
+      . '<ul>';
 
     # Foreach SP found in session, get it from configuration, and send the
     # appropriate logout request (HTTP,POST,SOAP).
@@ -842,16 +845,16 @@ sub sendLogoutRequestToServiceProviders {
 
         # Send logout request
         my ( $rstatus, $rmethod, $rinfo ) =
-          $self->sendLogoutRequestToServiceProvider(
-            $logout, $providerID, undef, 1 );
+          $self->sendLogoutRequestToServiceProvider( $logout, $providerID,
+            undef, 1 );
 
-        next unless ( $rstatus );
+        next unless ($rstatus);
 
         # Count providers that have to be request by HTTP redirect
-            $providersCount++;
+        $providersCount++;
 
         # Add information if necessary
-        if ( $rinfo ) {
+        if ($rinfo) {
             $info .= $rinfo;
         }
 
@@ -862,15 +865,15 @@ sub sendLogoutRequestToServiceProviders {
 
     # Print some information to the user. The URL to be redirected should
     # not be send via a form (because it does not work all time).
-    if ( $providersCount ) {
-        $self->info( $info );
-        $self->setHiddenFormValue( 'HttpRedirect', 'true' );
+    if ($providersCount) {
+        $self->info($info);
+        $self->setHiddenFormValue( 'HttpRedirect',     'true' );
         $self->setHiddenFormValue( 'HideSubmitButton', 'true' );
     }
 
     return $providersCount;
 
-}    
+}
 
 1;
 

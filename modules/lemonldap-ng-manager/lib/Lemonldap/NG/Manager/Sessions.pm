@@ -3,6 +3,12 @@
 
 ## @class
 # Session explorer.
+# Synopsis:
+#  * build a new Lemonldap::NG::Manager::Sessions object
+#  * insert tree() result in HTML
+#
+# tree() loads on of the tree methods.
+# new() manage ajax requests (inserted in HTML tree)
 package Lemonldap::NG::Manager::Sessions;
 
 use strict;
@@ -10,6 +16,7 @@ use Lemonldap::NG::Handler::CGI qw(:globalStorage :locationRules);
 use Lemonldap::NG::Common::Apache::Session;   #inherits
 use Lemonldap::NG::Common::Conf;              #link protected conf Configuration
 use Lemonldap::NG::Common::Conf::Constants;   #inherits
+require Lemonldap::NG::Manager::_i18n;        #inherits
 
 #inherits Apache::Session
 
@@ -18,15 +25,14 @@ our $whatToTrace;
 
 our $VERSION = '0.11';
 
-use base qw(Lemonldap::NG::Handler::CGI);
+our @ISA = qw(
+  Lemonldap::NG::Handler::CGI
+  Lemonldap::NG::Manager::_i18n
+);
 
 ## @cmethod Lemonldap::NG::Manager::Sessions new(hashRef args)
 # Constructor.
-# @param $args Arguments for Lemonldap::NG::Handler::CGI::new(). Must contains
-# 3 keys for Lemonldap::NG::Manager::Sessions:
-# - jqueryUri HTTP path to jquery.js
-# - personnalCss Optional HTTP path to custom CSS file
-# - imagePath HTTP path to the images directory
+# @param $args Arguments for Lemonldap::NG::Handler::CGI::new()
 # @return New Lemonldap::NG::Manager::Sessions object
 sub new {
     my ( $class, $args ) = @_;
@@ -34,399 +40,544 @@ sub new {
       or $class->abort( 'Unable to start ' . __PACKAGE__,
         'See Apache logs for more' );
 
-    # Try to get configuration values from local configuration
+    # Try to get configuration values from global configuration
     my $config = Lemonldap::NG::Common::Conf->new( $self->{configStorage} );
     unless ($config) {
         $self->abort( "Unable to start",
             "Configuration not loaded\n" . $Lemonldap::NG::Common::Conf::msg );
     }
+
+    # Load parameters from lemonldap-ng.ini.
     my $localconf = $config->getLocalConf(MANAGERSECTION);
 
+    # Local args prepends global args
     if ($localconf) {
         $self->{$_} = $args->{$_} || $localconf->{$_}
           foreach ( keys %$localconf );
     }
 
-    # Check some paramaters
-    foreach (qw(jqueryUri personnalCss imagePath)) {
-        $self->{$_}
-          or $self->lmLog( "$_ is not set, falling to default value", 'debug' );
-    }
+    # Now try to load Apache::Session module
     eval "use $globalStorage";
     $class->abort( "Unable to load $globalStorage", $@ ) if ($@);
 
-    $self->{managerSkin} = "default" unless defined $self->{managerSkin};
+    # Check if we use X-FORWARDED-FOR header for IP
+    $self->{ipField} =
+      $self->{useXForwardedForIP} ? "xForwardedForAddr" : "ipAddr";
 
-    $self->{multiValuesSeparator} ||= "; ";
+    # Now we're ready to display sessions. Choose display type
+    foreach my $k ( $self->param() ) {
+
+        # Case ajax request : execute corresponding sub and quit
+        if ( grep { $_ eq $k } qw(delete session id uidByIp uid letter p) ) {
+            print $self->header( -type => 'text/html;charset=utf-8' );
+            print $self->$k( $self->param($k) );
+            $self->quit();
+        }
+
+        # Case else : store tree type choosen to use it later in tree()
+        elsif ( grep { $_ eq $k } qw(doubleIp fullip fulluid ipclasses) ) {
+            $self->{_tree} = $k;
+            last;
+        }
+    }
+
+    # default display : list by uid
+    $self->{_tree} ||= 'list';
 
     return $self;
 }
 
-## @method void process()
-# Main method.
-sub process {
+## @method string tree()
+# Launch required tree builder. It can be one of :
+#  * doubleIp()
+#  * fullip()
+#  * fulluid()
+#  * ipclasses()
+#  * list() (default)
+# @return string XML tree
+sub tree {
     my $self = shift;
 
-    if ( $ENV{PATH_INFO} eq "/css" ) {
-        print $self->header_public( $ENV{SCRIPT_FILENAME}, -type => 'text/css',
+    my $sub = $self->{_tree};
+    $self->lmLog( "Building chosen tree : $sub", 'debug' );
+    my ( $r, $legend ) = $self->$sub( $self->param($sub) );
+    return
+qq{<ul class="simpleTree"><li class="root" id="root"><span>$legend</span><ul>$r</ul></li></ul>};
+}
+
+################
+# TREE METHODS #
+################
+
+## @method protected string list()
+# Build default tree (by letter)
+# @return string XML tree
+sub list {
+    my $self = shift;
+    my ( $byUid, $count, $res );
+    $count = 0;
+
+    # Parse all sessions to store first letter
+    $globalStorage->get_key_from_all_sessions(
+        $globalStorageOptions,
+        sub {
+            my $entry = shift;
+            next if ( $entry->{_httpSessionType} );
+            $entry->{$whatToTrace} =~ /^(\w)/ or return undef;
+            $byUid->{$1}++;
+            $count++;
+            undef;
+        }
+    );
+
+    # Build tree sorted by first letter
+    foreach my $letter ( sort keys %$byUid ) {
+        $res .= $self->ajaxNode(
+
+            # ID
+            "li_$letter",
+
+            # Legend
+            "$letter <i><small>($byUid->{$letter} "
+              . (
+                  $byUid->{$letter} == 1
+                ? $self->translate('session')
+                : $self->translate('sessions')
+              )
+              . ")</small></i>",
+
+            # Next request
+            "letter=$letter"
         );
-        $self->css;
-        exit;
     }
-    elsif ( $ENV{PATH_INFO} eq "/js" ) {
-        print $self->header_public( $ENV{SCRIPT_FILENAME},
-            -type => 'text/javascript', );
-        $self->js;
-        exit;
-    }
-
-    # Check if we use X-FORWARDED-FOR header for IP
-    my $ipField = $self->{useXForwardedForIP} ? "xForwardedForAddr" : "ipAddr";
-
-    # Beginning of the job
-
-    # User connected from more than 1 IP
-    if ( $self->param('doubleIp') ) {
-        my ( $byUid, $byIp );
-        $globalStorage->get_key_from_all_sessions(
-            $globalStorageOptions,
-            sub {
-                my $entry = shift;
-                my $id    = shift;
-                next if ( $entry->{_httpSessionType} );
-                push @{ $byUid->{ $entry->{$whatToTrace} }
-                      ->{ $entry->{$ipField} } },
-                  { id => $id, _utime => $entry->{_utime} };
-                undef;
-            }
-        );
-        $self->start('Sessions multi-IP');
-        $self->window("Sessions multi-IP");
-        foreach my $uid (
-            sort { ( keys %{ $byUid->{$b} } ) <=> ( keys %{ $byUid->{$a} } ) }
-            keys %$byUid
+    return (
+        $res,
+        "$count "
+          . (
+              $count == 1
+            ? $self->translate('session')
+            : $self->translate('sessions')
           )
-        {
-            last if ( ( keys %{ $byUid->{$uid} } ) == 1 );
-            print "<li id=\"di$uid\" class=\"closed\"><span>$uid</span><ul>";
-            foreach my $ip ( sort keys %{ $byUid->{$uid} } ) {
-                print "<li class=\"open\" id=\"di$ip\"><span>$ip</span><ul>";
-                foreach my $session ( sort { $a->{_utime} <=> $b->{_utime} }
-                    @{ $byUid->{$uid}->{$ip} } )
-                {
-                    print
-"<li id=\"di$session->{id}\"><span onclick=\"display('$session->{id}');\">"
-                      . localtime( $session->{_utime} )
-                      . "</span></li>";
-                }
-                print "</ul></li>";
-            }
-            print "</ul></li>";
+    );
+}
+
+## @method protected string doubleIp()
+# Build tree with users connected from more than 1 IP
+# @return string XML tree
+sub doubleIp {
+    my $self = shift;
+    my ( $byUid, $byIp, $res, $count );
+
+    # Parse all sessions
+    $globalStorage->get_key_from_all_sessions(
+        $globalStorageOptions,
+        sub {
+            my $entry = shift;
+            my $id    = shift;
+            next if ( $entry->{_httpSessionType} );
+            push @{ $byUid->{ $entry->{$whatToTrace} }
+                  ->{ $entry->{ $self->{ipField} } } },
+              { id => $id, _utime => $entry->{_utime} };
+            undef;
         }
-        $self->end();
+    );
+
+    # Build tree sorted by uid (or other field chosen in whatToTrace parameter)
+    foreach my $uid (
+        sort { ( keys %{ $byUid->{$b} } ) <=> ( keys %{ $byUid->{$a} } ) }
+        keys %$byUid
+      )
+    {
+
+        # Parse only uid that are connected from more than 1 IP
+        last if ( ( keys %{ $byUid->{$uid} } ) == 1 );
+        $count++;
+
+        # Build UID node with IP as sub node
+        $res .= "<li id=\"di$uid\" class=\"closed\"><span>$uid</span><ul>";
+        foreach my $ip ( sort keys %{ $byUid->{$uid} } ) {
+            $res .= "<li class=\"open\" id=\"di$ip\"><span>$ip</span><ul>";
+
+            # For each IP node, store sessions sorted by start time
+            foreach my $session ( sort { $a->{_utime} <=> $b->{_utime} }
+                @{ $byUid->{$uid}->{$ip} } )
+            {
+                $res .=
+"<li id=\"di$session->{id}\"><span onclick=\"displaySession('$session->{id}');\">"
+                  . localtime( $session->{_utime} )
+                  . "</span></li>";
+            }
+            $res .= "</ul></li>";
+        }
+        $res .= "</ul></li>";
     }
 
-    # Request for IP addresses
-    elsif ( my $req = $self->param('fullip') ) {
-        my $byUid;
-        my $reip = quotemeta($req);
-        $reip =~ s/\\\*/\.\*/g;
-        $globalStorage->get_key_from_all_sessions(
-            $globalStorageOptions,
-            sub {
-                my $entry = shift;
-                my $id    = shift;
-                next if ( $entry->{_httpSessionType} );
-                if ( $entry->{$ipField} eq $reip ) {
-                    push @{ $byUid->{ $entry->{$ipField} }
-                          ->{ $entry->{$whatToTrace} } },
-                      { id => $id, _utime => $entry->{_utime} };
-                }
-                undef;
-            }
-        );
-        $self->start("IP : $req");
-        $self->window("$req");
-        foreach my $ip ( sort keys %$byUid ) {
-            print "<li id=\"fi$ip\"><span>$ip</span><ul>";
-            foreach my $uid ( sort keys %{ $byUid->{$ip} } ) {
-                $self->ajaxNode(
-                    $uid,
-                    $uid
-                      . (
-                        @{ $byUid->{$ip}->{$uid} } > 1
-                        ? " <i><u><small>("
-                          . @{ $byUid->{$ip}->{$uid} }
-                          . " sessions)</small></u></i>"
-                        : ''
-                      ),
-                    "uid=$uid"
-                );
-            }
-            print "</ul></li>";
-        }
-        $self->end();
-    }
+    return (
+        $res,
+        "$count "
+          . (
+              $count == 1
+            ? $self->translate('user')
+            : $self->translate('users')
+          )
+    );
+}
 
-    # Request for users
-    elsif ( my $req = $self->param('fulluid') ) {
-        my $byUid;
-        my $reuser = quotemeta($req);
-        $reuser =~ s/\\\*/\.\*/g;
-        $globalStorage->get_key_from_all_sessions(
-            $globalStorageOptions,
-            sub {
-                my $entry = shift;
-                my $id    = shift;
-                next if ( $entry->{_httpSessionType} );
-                if ( $entry->{$whatToTrace} =~ /^$reuser$/ ) {
-                    push @{ $byUid->{ $entry->{$whatToTrace} } },
-                      { id => $id, _utime => $entry->{_utime} };
-                }
-                undef;
+## @method protected string fullip(string req)
+# Build single IP tree
+# @param $req Optional IP request (127* for example)
+# @return string XML tree
+sub fullip {
+    my ( $self, $req ) = splice @_;
+    my ( $byUid, $res );
+
+    # Build regexp based on IP request
+    my $reip = quotemeta($req);
+    $reip =~ s/\\\*/\.\*/g;
+
+    # Parse all sessions and store only if IP match regexp
+    $globalStorage->get_key_from_all_sessions(
+        $globalStorageOptions,
+        sub {
+            my $entry = shift;
+            my $id    = shift;
+            next if ( $entry->{_httpSessionType} );
+            if ( $entry->{ $self->{ipField} } eq $reip ) {
+                push @{ $byUid->{ $entry->{ $self->{ipField} } }
+                      ->{ $entry->{$whatToTrace} } },
+                  { id => $id, _utime => $entry->{_utime} };
             }
-        );
-        $self->start("Users : $req");
-        $self->window("$req");
-        foreach my $uid ( sort keys %$byUid ) {
-            $self->ajaxNode(
+            undef;
+        }
+    );
+
+    # Build tree sorted by IP
+    foreach my $ip ( sort keys %$byUid ) {
+        $res .= "<li id=\"fi$ip\"><span>$ip</span><ul>";
+        foreach my $uid ( sort keys %{ $byUid->{$ip} } ) {
+            $res .= $self->ajaxNode(
                 $uid,
                 $uid
                   . (
-                    @{ $byUid->{$uid} } > 1
+                    @{ $byUid->{$ip}->{$uid} } > 1
                     ? " <i><u><small>("
-                      . @{ $byUid->{$uid} }
+                      . @{ $byUid->{$ip}->{$uid} }
                       . " sessions)</small></u></i>"
                     : ''
                   ),
                 "uid=$uid"
             );
         }
-        $self->end();
+        $res .= "</ul></li>";
     }
+    return $res;
+}
 
-    # Ajax request to delete a session
-    elsif ( my $id = $self->param('delete') ) {
-        my %h;
-        print $self->header( -type => 'text/html; charset=utf8' );
-        eval { tie %h, $globalStorage, $id, $globalStorageOptions; };
-        if ($@) {
-            print "<strong>Error : $@</strong>\n";
+## @method protected string fulluid(string req)
+# Build single uid tree
+# @param $req request (examples: foo*, foo.bar)
+# @return string XML tree
+sub fulluid {
+    my ( $self, $req ) = splice @_;
+    my ( $byUid, $res );
+
+    # Build regexp based on request
+    my $reuser = quotemeta($req);
+    $reuser =~ s/\\\*/\.\*/g;
+
+    # Parse all sessions to find user that match regexp
+    $globalStorage->get_key_from_all_sessions(
+        $globalStorageOptions,
+        sub {
+            my $entry = shift;
+            my $id    = shift;
+            next if ( $entry->{_httpSessionType} );
+            if ( $entry->{$whatToTrace} =~ /^$reuser$/ ) {
+                push @{ $byUid->{ $entry->{$whatToTrace} } },
+                  { id => $id, _utime => $entry->{_utime} };
+            }
+            undef;
+        }
+    );
+
+    # Build tree sorted by uid
+    foreach my $uid ( sort keys %$byUid ) {
+        $res .= $self->ajaxNode(
+            $uid,
+            $uid
+              . (
+                @{ $byUid->{$uid} } > 1
+                ? " <i><u><small>("
+                  . @{ $byUid->{$uid} }
+                  . " sessions)</small></u></i>"
+                : ''
+              ),
+            "uid=$uid"
+        );
+    }
+}
+
+## @method protected string ipclasses()
+# Build IP classes tree (call _ipclasses())
+# @return string XML tree
+sub ipclasses {
+    my $self = shift;
+    return $self->_ipclasses();
+}
+
+##################
+# AJAX RESPONSES #
+##################
+
+## @method protected string delete(string id)
+# Delete a session
+# @param id Session identifier
+# @return string XML tree
+sub delete {
+    my ( $self, $id ) = splice @_;
+    my %h;
+    eval { tie %h, $globalStorage, $id, $globalStorageOptions; };
+    if ($@) {
+        if ( $@ =~ /does not exist in the data store/i ) {
+
+            # TODO: display error
         }
         else {
-            my $uid = $h{uid};
-            if ( $h{_httpSession} ) {
-                my %h2;
-                eval {
-                    tie %h2, $globalStorage, $h{_httpSession},
-                      $globalStorageOptions;
-                    tied(%h2)->delete();
-                };
-                if ($@) {
-                    print "<strong>Error : $@</strong><br/>";
-                }
-            }
-            eval { tied(%h)->delete(); };
-            if ($@) {
-                print "<strong>Error : $@</strong><br/>";
-            }
-            else {
-                print "<strong>Session effac&eacute;e ($uid)</strong>";
-            }
-
+            $self->abort( 'Apache::Session error', $@ );
         }
     }
-
-    # Ajax request to dump a session
-    elsif ( my $id = ( $self->param('session') || $self->param('id') ) ) {
-        my %h;
-        print $self->header( -type => 'text/html; charset=utf8' );
-        eval { tie %h, $globalStorage, $id, $globalStorageOptions; };
-        if ($@) {
-            print "<strong>Error : $@</strong>\n";
-        }
-        else {
-            print
-"<input type=\"button\" onclick=\"del('$id');\" value=\"Effacer la session\" /><p><b>Session d&eacute;marr&eacute;e le</b> "
-              . localtime( $h{_utime} )
-              . '</p><p><b>Membre des groupes SSO :</b><ul>';
-            print "<li>$_</li>"
-              foreach ( sort split $self->{multiValuesSeparator}, $h{groups} );
-            print '</ul></p>';
-            print
-'<p><b>Attributs et macros :</b></p><table border="0" witdh="100%">';
-            foreach my $attr ( sort keys %h ) {
-                next if ( $attr =~ /^(?:_utime|groups)$/ );
-
-                # Hide password value
-                if ( $attr =~ /^_password$/ ) { $h{$attr} = "******"; }
-                print '<tr valign="top"><th style="text-align:left;">'
-                  . htmlquote($attr)
-                  . '</th><td>:</td><td>'
-                  . htmlquote( $h{$attr} )
-                  . '</td></tr>'
-                  if ( $h{$attr} );
-            }
-            print '</table>';
-            untie %h;
-        }
-    }
-
-    # Ajax request to see users by IP
-    elsif ( my $ip = $self->param('uidByIp') ) {
-        my $byUser;
-        print $self->header( -type => 'text/html; charset=utf8' );
-        $globalStorage->get_key_from_all_sessions(
-            $globalStorageOptions,
-            sub {
-                my $entry = shift;
-                my $id    = shift;
-                next if ( $entry->{_httpSessionType} );
-                if ( $entry->{$ipField} eq $ip ) {
-                    push @{ $byUser->{ $entry->{$whatToTrace} } },
-                      { id => $id, _utime => $entry->{_utime} };
-                }
-                undef;
-            }
-        );
-        foreach my $user ( sort keys %$byUser ) {
-            print "<li id=\"ip$user\"><span>$user</span><ul>";
-            foreach my $session ( sort { $a->{_utime} <=> $b->{_utime} }
-                @{ $byUser->{$user} } )
-            {
-                print
-"<li id=\"ip$session->{id}\"><span onclick=\"display('$session->{id}');\">"
-                  . localtime( $session->{_utime} )
-                  . "</span></li>";
-            }
-            print "</ul></li>";
-        }
-    }
-
-    # Ajax request to see connexions from a user
-    elsif ( my $uid = $self->param('uid') ) {
-        my $byIp;
-        print $self->header( -type => 'text/html; charset=utf8' );
-        $globalStorage->get_key_from_all_sessions(
-            $globalStorageOptions,
-            sub {
-                my $entry = shift;
-                my $id    = shift;
-                next if ( $entry->{_httpSessionType} );
-                if ( $entry->{$whatToTrace} eq $uid ) {
-                    push @{ $byIp->{ $entry->{$ipField} } },
-                      { id => $id, _utime => $entry->{_utime} };
-                }
-                undef;
-            }
-        );
-        foreach my $ip ( sort keys %$byIp ) {
-            print "<li class=\"open\" id=\"uid$ip\"><span>$ip</span><ul>";
-            foreach my $session ( sort { $a->{_utime} <=> $b->{_utime} }
-                @{ $byIp->{$ip} } )
-            {
-                print
-"<li id=\"uid$session->{id}\"><span onclick=\"display('$session->{id}');\">"
-                  . localtime( $session->{_utime} )
-                  . "</span></li>";
-            }
-            print "</ul></li>";
-        }
-    }
-
-    # Ajax request to list users starting by a letter
-    elsif ( defined( $self->param('letter') ) ) {
-        my $letter = $self->param('letter');
-        my ($byUid);
-        print $self->header( -type => 'text/html; charset=utf8' );
-        $globalStorage->get_key_from_all_sessions(
-            $globalStorageOptions,
-            sub {
-                my $entry = shift;
-                next if ( $entry->{_httpSessionType} );
-                $entry->{$whatToTrace} =~ /^$letter/ or return undef;
-                $byUid->{ $entry->{$whatToTrace} }++;
-            },
-        );
-        foreach my $uid ( sort keys %$byUid ) {
-            $self->ajaxNode(
-                $uid,
-                $uid
-                  . (
-                    $byUid->{$uid} > 1
-                    ? " <i><u><small>($byUid->{$uid} sessions)</small></u></i>"
-                    : ''
-                  ),
-                "uid=$uid"
-            );
-        }
-    }
-
-    # Display by IP classes
-    elsif ( $self->param('ipclasses') ) {
-        my $partial = $self->param('p') ? $self->param('p') . '.' : '';
-        my $repartial = quotemeta($partial);
-        my ( $byIp, $count );
-        $globalStorage->get_key_from_all_sessions(
-            $globalStorageOptions,
-            sub {
-                my $entry = shift;
-                next if ( $entry->{_httpSessionType} );
-                $entry->{$ipField} =~ /^$repartial(\d+)/ or return undef;
-                $byIp->{$1}++;
-                $count++;
-                undef;
-            }
-        );
-
-        # Ajax request to list ip subclasses
-        if ($partial) {
-            print $self->header( -type => 'text/html; charset=utf8' );
-        }
-
-        # Display by IP subclass
-        else {
-            $self->start("Active sessions ($count)");
-            $self->window(
-                "Sessions par r&eacute;seaux <i><small>($count)</small></i>");
-        }
-        foreach my $ip ( sort { $a <=> $b } keys %$byIp ) {
-            $self->ajaxNode(
-                "$partial$ip",
-                "$partial$ip <i><small>($byIp->{$ip})</small></i>",
-                (
-                    $partial !~ /^\d+\.\d+\.\d+/
-                    ? "ipclasses=1&p=$partial$ip"
-                    : "uidByIp=$partial$ip"
-                )
-            );
-        }
-        $self->end() unless ($partial);
-    }
-
-    # Default display
     else {
-        my ( $byUid, $count );
-        $globalStorage->get_key_from_all_sessions(
-            $globalStorageOptions,
-            sub {
-                my $entry = shift;
-                next if ( $entry->{_httpSessionType} );
-                $entry->{$whatToTrace} =~ /^(\w)/ or return undef;
-                $byUid->{$1}++;
-                $count++;
-                undef;
+        my $uid = $h{uid};
+        if ( $h{_httpSession} ) {
+            my %h2;
+            eval {
+                tie %h2, $globalStorage, $h{_httpSession},
+                  $globalStorageOptions;
+                tied(%h2)->delete();
+            };
+            if ($@) {
+                $self->lmLog( "Apache::Session error: $@", 'error' );
             }
-        );
-        $self->start("Active sessions ($count)");
-        $self->window("Sessions <i><small>($count)</small></i>");
-        foreach my $letter ( sort keys %$byUid ) {
-            $self->ajaxNode( "li_$letter",
-                "$letter <i><small>($byUid->{$letter} sessions)</small></i>",
-                "letter=$letter" );
         }
-        $self->end();
+        eval { tied(%h)->delete(); };
+        if ($@) {
+            $self->abort( 'Apache::Session error', $@ );
+        }
+        else {
+            return
+                "<strong>"
+              . $self->translate('sessionDeleted')
+              . "($uid)</strong>";
+        }
     }
+}
+
+## @method protected string session()
+# Build session dump.
+# @return string XML tree
+sub session {
+    my ( $self, $id ) = splice @_;
+    my ( %h, $res );
+    eval { tie %h, $globalStorage, $id, $globalStorageOptions; };
+    if ($@) {
+        $self->lmLog( 'Apache::Session error', $@ );
+        return "Apache::Session error: $@";
+    }
+    $res .=
+        "<input type=\"button\" onclick=\"del('$id');\" value=\""
+      . $self->translate('deleteSession')
+      . "\" /><p><b>"
+      . $self->translate('sessionStartedAt')
+      . ":</b> "
+      . localtime( $h{_utime} )
+      . '</p><p><b>'
+      . $self->translate('memberOfSSOGroups')
+      . ' :</b><ul>';
+    $res .= "<li>$_</li>" foreach ( sort split /\s+/, $h{groups} );
+    $res .= '</ul></p>';
+    $res .=
+        '<p><b>'
+      . $self->translate('attributesAndMacros')
+      . ' :</b></p><table border="0" witdh="100%">';
+    foreach my $attr ( sort keys %h ) {
+        next if ( $attr =~ /^(?:_utime|groups)$/ );
+
+        # Hide password value
+        if ( $attr =~ /^_password$/ ) { $h{$attr} = "******"; }
+        $res .=
+            '<tr valign="top"><th style="text-align:left;">'
+          . htmlquote($attr)
+          . '</th><td>:</td><td>'
+          . htmlquote( $h{$attr} )
+          . '</td></tr>'
+          if ( $h{$attr} );
+    }
+    $res .= '</table>';
+    untie %h;
+    return $res;
+}
+
+## @method protected string uidByIp()
+# Build single IP tree
+# @return string XML tree
+sub uidByIp {
+    my ( $self, $ip ) = splice @_;
+    my ( $byUser, $res );
+    $globalStorage->get_key_from_all_sessions(
+        $globalStorageOptions,
+        sub {
+            my $entry = shift;
+            my $id    = shift;
+            next if ( $entry->{_httpSessionType} );
+            if ( $entry->{ $self->{ipField} } eq $ip ) {
+                push @{ $byUser->{ $entry->{$whatToTrace} } },
+                  { id => $id, _utime => $entry->{_utime} };
+            }
+            undef;
+        }
+    );
+    foreach my $user ( sort keys %$byUser ) {
+        $res .= "<li id=\"ip$user\"><span>$user</span><ul>";
+        foreach my $session ( sort { $a->{_utime} <=> $b->{_utime} }
+            @{ $byUser->{$user} } )
+        {
+            $res .=
+"<li id=\"ip$session->{id}\"><span onclick=\"displaySession('$session->{id}');\">"
+              . localtime( $session->{_utime} )
+              . "</span></li>";
+        }
+        $res .= "</ul></li>";
+    }
+    return $res;
+}
+
+## @method protected string uid()
+# Build single UID tree part
+# @return string XML tree
+sub uid {
+    my ( $self, $uid ) = splice @_;
+    my ( $byIp, $res );
+    $globalStorage->get_key_from_all_sessions(
+        $globalStorageOptions,
+        sub {
+            my $entry = shift;
+            my $id    = shift;
+            next if ( $entry->{_httpSessionType} );
+            if ( $entry->{$whatToTrace} eq $uid ) {
+                push @{ $byIp->{ $entry->{ $self->{ipField} } } },
+                  { id => $id, _utime => $entry->{_utime} };
+            }
+            undef;
+        }
+    );
+    foreach my $ip ( sort keys %$byIp ) {
+        $res .= "<li class=\"open\" id=\"uid$ip\"><span>$ip</span><ul>";
+        foreach my $session ( sort { $a->{_utime} <=> $b->{_utime} }
+            @{ $byIp->{$ip} } )
+        {
+            $res .=
+"<li id=\"uid$session->{id}\"><span onclick=\"displaySession('$session->{id}');\">"
+              . localtime( $session->{_utime} )
+              . "</span></li>";
+        }
+        $res .= "</ul></li>";
+    }
+    return $res;
+}
+
+# Ajax request to list users starting by a letter
+## @method protected string letter()
+# Build letter XML part
+# @return string XML tree
+sub letter {
+    my $self   = shift;
+    my $letter = $self->param('letter');
+    my ( $byUid, $res );
+    $globalStorage->get_key_from_all_sessions(
+        $globalStorageOptions,
+        sub {
+            my $entry = shift;
+            next if ( $entry->{_httpSessionType} );
+            $entry->{$whatToTrace} =~ /^$letter/ or return undef;
+            $byUid->{ $entry->{$whatToTrace} }++;
+        },
+    );
+    foreach my $uid ( sort keys %$byUid ) {
+        $res .= $self->ajaxNode(
+            $uid,
+            $uid
+              . (
+                $byUid->{$uid} > 1
+                ? " <i><u><small>($byUid->{$uid} "
+                  . (
+                      $byUid->{$uid} == 1
+                    ? $self->translate('session')
+                    : $self->translate('sessions')
+                  )
+                  . ")</small></u></i>"
+                : ''
+              ),
+            "uid=$uid"
+        );
+    }
+    return $res;
+}
+
+## @method protected string p()
+# Build IP classes sub tree (call _ipclasses())
+# @return string XML tree
+sub p {
+    my $self = shift;
+    my @t    = $self->_ipclasses(@_);
+    return $t[0];
+}
+
+## @method private string _ipclasses()
+# Build IP classes (sub) tree
+# @return string XML tree
+sub _ipclasses {
+    my ( $self, $p ) = splice @_;
+    my $partial = $p ? "$p." : '';
+    my $repartial = quotemeta($partial);
+    my ( $byIp, $count, $res );
+    $globalStorage->get_key_from_all_sessions(
+        $globalStorageOptions,
+        sub {
+            my $entry = shift;
+            next if ( $entry->{_httpSessionType} );
+            $entry->{ $self->{ipField} } =~ /^$repartial(\d+)/ or return undef;
+            $byIp->{$1}++;
+            $count++;
+            undef;
+        }
+    );
+
+    foreach my $ip ( sort { $a <=> $b } keys %$byIp ) {
+        $res .= $self->ajaxNode(
+            "$partial$ip",
+            "$partial$ip <i><small>($byIp->{$ip} "
+              . (
+                  $byIp->{$ip} == 1 ? $self->translate('session')
+                : $self->translate('sessions')
+              )
+              . ")</small></i>",
+            (
+                $partial !~ /^\d+\.\d+\.\d+/ ? "ipclasses=1&p=$partial$ip"
+                : "uidByIp=$partial$ip"
+            )
+        );
+    }
+    return (
+        $res,
+        "$count "
+          . (
+              $count == 1
+            ? $self->translate('session')
+            : $self->translate('sessions')
+          )
+    );
+
+    #return $res;
 }
 
 ## @fn protected string htmlquote(string s)
@@ -435,797 +586,23 @@ sub process {
 # @return HTML string
 sub htmlquote {
     my $s = shift;
-    $s =~ s/&/&amp;/g;
     $s =~ s/</&lt;/g;
     $s =~ s/>/&gt;/g;
+    $s =~ s/&/&amp;/g;
     return $s;
 }
 
-## @method protected void start()
-# Display HTTP and HTML headers.
-sub start {
-    my $self = shift;
-    print $self->header( -type => 'text/html; charset=utf8', );
-    print $self->start_html(
-        -title => shift || 'Sessions Lemonldap::NG',
-        -encoding => 'utf8',
-        -script   => [
-            {
-                -language => 'JavaScript1.2',
-                -src      => $self->{jqueryUri} || 'jquery.js',
-            },
-            {
-                -language => 'JavaScript1.2',
-                -src      => "$ENV{SCRIPT_NAME}/js",
-            },
-            {
-                -language => 'JavaScript1.2',
-                -code     => '$(document).ready(function(){
-            var simpleTreeCollection
-            simpleTreeCollection = $(".simpleTree").simpleTree({
-                autoclose: true,
-                drag: false,
-                afterClick:function(node){
-                //alert("text-"+$("span:first",node).text());
-                },
-                afterDblClick:function(node){
-                //alert("text-"+$("span:first",node).text());
-                },
-                afterMove:function(destination, source, pos){
-                //alert("destination-"+$("span:first",destination).text()+" source-"+$("span:first",source).text()+" pos-"+pos);
-                },
-                afterAjax:function() {
-                //alert("Loaded");
-                },
-                animate:true
-                //,docToFolderConvert:true
-                });
-            });
-            function del(session) {
-                $("#content").load("' . $ENV{SCRIPT_NAME} . '?delete="+session);
-            }
-            function display(session) {
-                $("#content").load("'
-                  . $ENV{SCRIPT_NAME} . '?session="+session);
-            }
-            ',
-            },
-        ],
-        -style => {
-            -src => [
-                "skins/" . $self->{managerSkin} . "/jquery-ui-1.7.2.custom.css",
-                "$ENV{SCRIPT_NAME}/css",
-                ( $self->{personnalCss} ? $self->{personnalCss} : () )
-            ],
-        },
-    );
-    print '
-      <div id="header" class="ui-widget ui-helper-clearfix">
-       <img alt="Lemonldap::NG" src="'
-      . $self->{imagePath}
-      . 'logo_lemonldap-ng.png" class="logo" width="200" height="38" />
-       <p class="ui-state-default ui-corner-all"><a href="index.pl">Gestion de la configuration</a></p>
-       <p class="ui-state-default ui-corner-all ui-state-active"><a href="sessions.pl">Explorateur de sessions</a></p>
-      </div>
-      <div id="body" class="ui-widget ui-widget-content ui-corner-all">
-    ';
-}
-
-## @method protected void ajaxnode(string id, string text, string param)
+## @method private void ajaxnode(string id, string text, string param)
 # Display tree node with Ajax functions inside for opening the node.
 # @param $id HTML id of the element.
 # @param $text text to display
 # @param $param Parameters for the Ajax query
 sub ajaxNode {
     my ( $self, $id, $text, $param ) = @_;
-    print
+    return
 "<li id=\"$id\"><span>$text</span>\n<ul class=\"ajax\"><li id=\"sub_$id\">{url:$ENV{SCRIPT_NAME}?$param}</li></ul></li>\n";
 }
 
-## @method protected void window(string root)
-# Design the main window
-# @param $root Text to display in the root node of the tree
-sub window {
-    my $self = shift;
-    my $root = shift;
-    print
-'<div style="margin:5px; background:#DDD;" class="ui-corner-all ui-widget-content"><table border="0" width="100%"><tr style="text-align:center;">
-      <td><a href="' . $ENV{SCRIPT_NAME} . '">Sessions actives</a></td>
-      <td><a href="'
-      . $ENV{SCRIPT_NAME} . '?ipclasses=1">R&eacute;seaux</a></td>
-      <td><a href="'
-      . $ENV{SCRIPT_NAME} . '?doubleIp=1">Utilisateurs multi-IP</a></td>
-      <td><form action="'
-      . $ENV{SCRIPT_NAME}
-      . '" method="get">Recherche par UID <input name="fulluid" /><input type="submit" value="OK" /></form></td>
-      <td><form action="'
-      . $ENV{SCRIPT_NAME}
-      . '" method="get">Recherche par IP <input name="fullip" /><input type="submit" value="OK" /></form></td>
-    </tr></table></div><div style="margin:5px;" class="ui-corner-all ui-widget-content">
-    <table border="0" width="100%"><tr><td width="300px" valign="top"><div style="overflow:auto;height:580px;">
-    <ul class="simpleTree"><li class="root" id="root"><span>' . $root
-      . '</span><ul>';
-}
-
-## @method protected void end()
-# Display the end of HTML page.
-sub end {
-    my $self = shift;
-    print
-'</ul></li></ul></div></td><td valign="top"><div id="content" style="overflow:auto;height:580px;"></div></td></tr></table></div>';
-    print '</div>';
-    print $self->end_html();
-}
-
-1;
-
-## @method protected css()
-# Display the main CSS file (called by http://manager.example.com/sessions.pl/css)
-sub css {
-    my $self = shift;
-    print <<"EOF";
-body
-{
-	/*font: normal 12px arial, tahoma, helvetica, sans-serif;*/
-	font:normal 9pt sans-serif;
-	margin:0;
-	background-color:#000;
-}
-a
-{
-	text-decoration:none;
-}
-#header
-{
-	background-color:#000;
-	padding:14px;
-	height:36px;
-	width:auto;
-}
-#header img, #header p
-{
-	float:left;
-}
-#header p
-{
-	margin:5px 10px;
-	padding:5px;
-}
-#body
-{
-	margin: 0 10px;
-}
-.simpleTree
-{
-	overflow:auto;
-	margin:20px 0;
-	/*
- * width: 250px;
- * height:350px;
- * overflow:auto;
- * border: 1px solid #444444;
- * */
-}
-.simpleTree li
-{
-    list-style: none;
-    margin:0;
-    padding:0 0 0 34px;
-    line-height: 14px;
-}
-.simpleTree li span
-{
-    display:inline;
-    clear: left;
-    white-space: nowrap;
-}
-.simpleTree ul
-{
-    margin:0; 
-    padding:0;
-}
-.simpleTree .root
-{
-    margin-left:-16px;
-    background: url($self->{imagePath}root.gif) no-repeat 16px 0;
-}
-.simpleTree .line
-{
-    margin:0 0 0 -16px;
-    padding:0;
-    line-height: 3px;
-    height:3px;
-    font-size:3px;
-    background: url($self->{imagePath}line_bg.gif) 0 0 no-repeat transparent;
-}
-.simpleTree .line-last
-{
-    margin:0 0 0 -16px;
-    padding:0;
-    line-height: 3px;
-    height:3px;
-    font-size:3px;
-    background: url($self->{imagePath}spacer.gif) 0 0 no-repeat transparent;
-}
-.simpleTree .line-over
-{
-    margin:0 0 0 -16px;
-    padding:0;
-    line-height: 3px;
-    height:3px;
-    font-size:3px;
-    background: url($self->{imagePath}line_bg_over.gif) 0 0 no-repeat transparent;
-}
-.simpleTree .line-over-last
-{
-    margin:0 0 0 -16px;
-    padding:0;
-    line-height: 3px;
-    height:3px;
-    font-size:3px;
-    background: url($self->{imagePath}line_bg_over_last.gif) 0 0 no-repeat transparent;
-}
-.simpleTree .folder-open
-{
-    margin-left:-16px;
-    background: url($self->{imagePath}collapsable.gif) 0 -2px no-repeat;
-}
-.simpleTree .folder-open-last
-{
-    margin-left:-16px;
-    background: url($self->{imagePath}collapsable-last.gif) 0 -2px no-repeat;
-}
-.simpleTree .folder-close
-{
-    margin-left:-16px;
-    background: url($self->{imagePath}expandable.gif) 0 -2px no-repeat;
-}
-.simpleTree .folder-close-last
-{
-    margin-left:-16px;
-    background: url($self->{imagePath}expandable-last.gif) 0 -2px no-repeat;
-}
-.simpleTree .doc
-{
-    margin-left:-16px;
-    background: url($self->{imagePath}leaf.gif) 0 -1px no-repeat;
-}
-.simpleTree .doc-last
-{
-    margin-left:-16px;
-    background: url($self->{imagePath}leaf-last.gif) 0 -1px no-repeat;
-}
-.simpleTree .ajax
-{
-    background: url($self->{imagePath}spinner.gif) no-repeat 0 0;
-    height: 16px;
-    display:none;
-}
-.simpleTree .ajax li
-{
-    display:none;
-    margin:0; 
-    padding:0;
-}
-.simpleTree .trigger
-{
-    display:inline;
-    margin-left:-32px;
-    width: 28px;
-    height: 11px;
-    cursor:pointer;
-}
-.simpleTree .text
-{
-    cursor: default;
-}
-.simpleTree .active
-{
-    cursor: default;
-    background-color:#F7BE77;
-    padding:0px 2px;
-    border: 1px dashed #444;
-}
-#drag_container
-{
-    color:#000;
-    font: normal 11px arial, tahoma, helvetica, sans-serif;
-    border: 1px dashed #767676;
-}
-#drag_container ul
-{
-    list-style: none;
-    padding:0;
-    margin:0;
-}
-
-#drag_container li
-{
-    list-style: none;
-    line-height:18px;
-    white-space: nowrap;
-    padding:1px 1px 0px 16px;
-    margin:0;
-}
-#drag_container li span
-{
-    padding:0;
-}
-
-#drag_container li.doc, #drag_container li.doc-last
-{
-    background: url($self->{imagePath}leaf.gif) no-repeat -17px 0;
-}
-#drag_container .folder-close, #drag_container .folder-close-last
-{
-    background: url($self->{imagePath}expandable.gif) no-repeat -17px 0;
-}
-
-#drag_container .folder-open, #drag_container .folder-open-last
-{
-    background: url($self->{imagePath}collapsable.gif) no-repeat -17px 0;
-}
-EOF
-}
-
-## @method protected js()
-# Display the main javascript file (called by http://manager.example.com/sessions.pl/js)
-sub js {
-    my $self = shift;
-    print <<"EOF";
-/*
-* jQuery SimpleTree Drag&Drop plugin
-* Update on 22th May 2008
-* Version 0.3
-*
-* Licensed under BSD <http://en.wikipedia.org/wiki/BSD_License>
-* Copyright (c) 2008, Peter Panov <panov\@elcat.kg>, IKEEN Group http://www.ikeen.com
-* All rights reserved.
-*
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted provided that the following conditions are met:
-*     * Redistributions of source code must retain the above copyright
-*       notice, this list of conditions and the following disclaimer.
-*     * Redistributions in binary form must reproduce the above copyright
-*       notice, this list of conditions and the following disclaimer in the
-*       documentation and/or other materials provided with the distribution.
-*     * Neither the name of the Peter Panov, IKEEN Group nor the
-*       names of its contributors may be used to endorse or promote products
-*       derived from this software without specific prior written permission.
-*
-* THIS SOFTWARE IS PROVIDED BY Peter Panov, IKEEN Group ``AS IS'' AND ANY
-* EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-* DISCLAIMED. IN NO EVENT SHALL Peter Panov, IKEEN Group BE LIABLE FOR ANY
-* DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
-
-
-\$.fn.simpleTree = function(opt){
-	return this.each(function(){
-		var TREE = this;
-		var ROOT = \$('.root',this);
-		var mousePressed = false;
-		var mouseMoved = false;
-		var dragMoveType = false;
-		var dragNode_destination = false;
-		var dragNode_source = false;
-		var dragDropTimer = false;
-		var ajaxCache = Array();
-
-		TREE.option = {
-			drag:		true,
-			animate:	false,
-			autoclose:	false,
-			speed:		'fast',
-			afterAjax:	false,
-			afterMove:	false,
-			afterClick:	false,
-			afterDblClick:	false,
-			// added by Erik Dohmen (2BinBusiness.nl) to make context menu cliks available
-			afterContextMenu:	false,
-			docToFolderConvert:false
-		};
-		TREE.option = \$.extend(TREE.option,opt);
-		\$.extend(this, {getSelected: function(){
-			return \$('span.active', this).parent();
-		}});
-		TREE.closeNearby = function(obj)
-		{
-			\$(obj).siblings().filter('.folder-open, .folder-open-last').each(function(){
-				var childUl = \$('>ul',this);
-				var className = this.className;
-				this.className = className.replace('open','close');
-				if(TREE.option.animate)
-				{
-					childUl.animate({height:"toggle"},TREE.option.speed);
-				}else{
-					childUl.hide();
-				}
-			});
-		};
-		TREE.nodeToggle = function(obj)
-		{
-			var childUl = \$('>ul',obj);
-			if(childUl.is(':visible')){
-				obj.className = obj.className.replace('open','close');
-
-				if(TREE.option.animate)
-				{
-					childUl.animate({height:"toggle"},TREE.option.speed);
-				}else{
-					childUl.hide();
-				}
-			}else{
-				obj.className = obj.className.replace('close','open');
-				if(TREE.option.animate)
-				{
-					childUl.animate({height:"toggle"},TREE.option.speed, function(){
-						if(TREE.option.autoclose)TREE.closeNearby(obj);
-						if(childUl.is('.ajax'))TREE.setAjaxNodes(childUl, obj.id);
-					});
-				}else{
-					childUl.show();
-					if(TREE.option.autoclose)TREE.closeNearby(obj);
-					if(childUl.is('.ajax'))TREE.setAjaxNodes(childUl, obj.id);
-				}
-			}
-		};
-		TREE.setAjaxNodes = function(node, parentId, callback)
-		{
-			if(\$.inArray(parentId,ajaxCache) == -1){
-				ajaxCache[ajaxCache.length]=parentId;
-				var url = \$.trim(\$('>li', node).text());
-				if(url && url.indexOf('url:'))
-				{
-					url=\$.trim(url.replace(/.*\\{url:(.*)\\}/i ,'\$1'));
-					\$.ajax({
-						type: "GET",
-						url: url,
-						contentType:'html',
-						cache:false,
-						success: function(responce){
-							node.removeAttr('class');
-							node.html(responce);
-							\$.extend(node,{url:url});
-							TREE.setTreeNodes(node, true);
-							if(typeof TREE.option.afterAjax == 'function')
-							{
-								TREE.option.afterAjax(node);
-							}
-							if(typeof callback == 'function')
-							{
-								callback(node);
-							}
-						}
-					});
-				}
-				
-			}
-		};
-		TREE.setTreeNodes = function(obj, useParent){
-			obj = useParent? obj.parent():obj;
-			\$('li>span', obj).addClass('text')
-			.bind('selectstart', function() {
-				return false;
-			}).click(function(){
-				\$('.active',TREE).attr('class','text');
-				if(this.className=='text')
-				{
-					this.className='active';
-				}
-				if(typeof TREE.option.afterClick == 'function')
-				{
-					TREE.option.afterClick(\$(this).parent());
-				}
-				return false;
-			}).dblclick(function(){
-				mousePressed = false;
-				TREE.nodeToggle(\$(this).parent().get(0));
-				if(typeof TREE.option.afterDblClick == 'function')
-				{
-					TREE.option.afterDblClick(\$(this).parent());
-				}
-				return false;
-				// added by Erik Dohmen (2BinBusiness.nl) to make context menu actions
-				// available
-			}).bind("contextmenu",function(){
-				\$('.active',TREE).attr('class','text');
-				if(this.className=='text')
-				{
-					this.className='active';
-				}
-				if(typeof TREE.option.afterContextMenu == 'function')
-				{
-					TREE.option.afterContextMenu(\$(this).parent());
-				}
-				return false;
-			}).mousedown(function(event){
-				mousePressed = true;
-				cloneNode = \$(this).parent().clone();
-				var LI = \$(this).parent();
-				if(TREE.option.drag)
-				{
-					\$('>ul', cloneNode).hide();
-					\$('body').append('<div id="drag_container"><ul></ul></div>');
-					\$('#drag_container').hide().css({opacity:'0.8'});
-					\$('#drag_container >ul').append(cloneNode);
-					\$("<img>").attr({id	: "tree_plus",src	: "$self->{imagePath}plus.gif"}).css({width: "7px",display: "block",position: "absolute",left	: "5px",top: "5px", display:'none'}).appendTo("body");
-					\$(document).bind("mousemove", {LI:LI}, TREE.dragStart).bind("mouseup",TREE.dragEnd);
-				}
-				return false;
-			}).mouseup(function(){
-				if(mousePressed && mouseMoved && dragNode_source)
-				{
-					TREE.moveNodeToFolder(\$(this).parent());
-				}
-				TREE.eventDestroy();
-			});
-			\$('li', obj).each(function(i){
-				var className = this.className;
-				var open = false;
-				var cloneNode=false;
-				var LI = this;
-				var childNode = \$('>ul',this);
-				if(childNode.size()>0){
-					var setClassName = 'folder-';
-					if(className && className.indexOf('open')>=0){
-						setClassName=setClassName+'open';
-						open=true;
-					}else{
-						setClassName=setClassName+'close';
-					}
-					this.className = setClassName + (\$(this).is(':last-child')? '-last':'');
-
-					if(!open || className.indexOf('ajax')>=0)childNode.hide();
-
-					TREE.setTrigger(this);
-				}else{
-					var setClassName = 'doc';
-					this.className = setClassName + (\$(this).is(':last-child')? '-last':'');
-				}
-			}).before('<li class="line">&nbsp;</li>')
-			.filter(':last-child').after('<li class="line-last"></li>');
-			TREE.setEventLine(\$('.line, .line-last', obj));
-		};
-		TREE.setTrigger = function(node){
-			\$('>span',node).before('<img class="trigger" src="$self->{imagePath}spacer.gif" border=0>');
-			var trigger = \$('>.trigger', node);
-			trigger.click(function(event){
-				TREE.nodeToggle(node);
-			});
-			if(!\$.browser.msie)
-			{
-				trigger.css('float','left');
-			}
-		};
-		TREE.dragStart = function(event){
-			var LI = \$(event.data.LI);
-			if(mousePressed)
-			{
-				mouseMoved = true;
-				if(dragDropTimer) clearTimeout(dragDropTimer);
-				if(\$('#drag_container:not(:visible)')){
-					\$('#drag_container').show();
-					LI.prev('.line').hide();
-					dragNode_source = LI;
-				}
-				\$('#drag_container').css({position:'absolute', "left" : (event.pageX + 5), "top": (event.pageY + 15) });
-				if(LI.is(':visible'))LI.hide();
-				var temp_move = false;
-				if(event.target.tagName.toLowerCase()=='span' && \$.inArray(event.target.className, Array('text','active','trigger'))!= -1)
-				{
-					var parent = event.target.parentNode;
-					var offs = \$(parent).offset({scroll:false});
-					var screenScroll = {x : (offs.left - 3),y : event.pageY - offs.top};
-					var isrc = \$("#tree_plus").attr('src');
-					var ajaxChildSize = \$('>ul.ajax',parent).size();
-					var ajaxChild = \$('>ul.ajax',parent);
-					screenScroll.x += 19;
-					screenScroll.y = event.pageY - screenScroll.y + 5;
-
-					if(parent.className.indexOf('folder-close')>=0 && ajaxChildSize==0)
-					{
-						if(isrc.indexOf('minus')!=-1)\$("#tree_plus").attr('src','$self->{imagePath}plus.gif');
-						\$("#tree_plus").css({"left": screenScroll.x, "top": screenScroll.y}).show();
-						dragDropTimer = setTimeout(function(){
-							parent.className = parent.className.replace('close','open');
-							\$('>ul',parent).show();
-						}, 700);
-					}else if(parent.className.indexOf('folder')>=0 && ajaxChildSize==0){
-						if(isrc.indexOf('minus')!=-1)\$("#tree_plus").attr('src','$self->{imagePath}plus.gif');
-						\$("#tree_plus").css({"left": screenScroll.x, "top": screenScroll.y}).show();
-					}else if(parent.className.indexOf('folder-close')>=0 && ajaxChildSize>0)
-					{
-						mouseMoved = false;
-						\$("#tree_plus").attr('src','$self->{imagePath}minus.gif');
-						\$("#tree_plus").css({"left": screenScroll.x, "top": screenScroll.y}).show();
-
-						\$('>ul',parent).show();
-						/*
-							Thanks for the idea of Erik Dohmen
-						*/
-						TREE.setAjaxNodes(ajaxChild,parent.id, function(){
-							parent.className = parent.className.replace('close','open');
-							mouseMoved = true;
-							\$("#tree_plus").attr('src','$self->{imagePath}plus.gif');
-							\$("#tree_plus").css({"left": screenScroll.x, "top": screenScroll.y}).show();
-						});
-
-					}else{
-						if(TREE.option.docToFolderConvert)
-						{
-							\$("#tree_plus").css({"left": screenScroll.x, "top": screenScroll.y}).show();
-						}else{
-							\$("#tree_plus").hide();
-						}
-					}
-				}else{
-					\$("#tree_plus").hide();
-				}
-				return false;
-			}
-			return true;
-		};
-		TREE.dragEnd = function(){
-			if(dragDropTimer) clearTimeout(dragDropTimer);
-			TREE.eventDestroy();
-		};
-		TREE.setEventLine = function(obj){
-			obj.mouseover(function(){
-				if(this.className.indexOf('over')<0 && mousePressed && mouseMoved)
-				{
-					this.className = this.className.replace('line','line-over');
-				}
-			}).mouseout(function(){
-				if(this.className.indexOf('over')>=0)
-				{
-					this.className = this.className.replace('-over','');
-				}
-			}).mouseup(function(){
-				if(mousePressed && dragNode_source && mouseMoved)
-				{
-					dragNode_destination = \$(this).parents('li:first');
-					TREE.moveNodeToLine(this);
-					TREE.eventDestroy();
-				}
-			});
-		};
-		TREE.checkNodeIsLast = function(node)
-		{
-			if(node.className.indexOf('last')>=0)
-			{
-				var prev_source = dragNode_source.prev().prev();
-				if(prev_source.size()>0)
-				{
-					prev_source[0].className+='-last';
-				}
-				node.className = node.className.replace('-last','');
-			}
-		};
-		TREE.checkLineIsLast = function(line)
-		{
-			if(line.className.indexOf('last')>=0)
-			{
-				var prev = \$(line).prev();
-				if(prev.size()>0)
-				{
-					prev[0].className = prev[0].className.replace('-last','');
-				}
-				dragNode_source[0].className+='-last';
-			}
-		};
-		TREE.eventDestroy = function()
-		{
-			// added by Erik Dohmen (2BinBusiness.nl), the unbind mousemove TREE.dragStart action
-			// like this other mousemove actions binded through other actions ain't removed (use it myself
-			// to determine location for context menu)
-			\$(document).unbind('mousemove',TREE.dragStart).unbind('mouseup').unbind('mousedown');
-			\$('#drag_container, #tree_plus').remove();
-			if(dragNode_source)
-			{
-				\$(dragNode_source).show().prev('.line').show();
-			}
-			dragNode_destination = dragNode_source = mousePressed = mouseMoved = false;
-			//ajaxCache = Array();
-		};
-		TREE.convertToFolder = function(node){
-			node[0].className = node[0].className.replace('doc','folder-open');
-			node.append('<ul><li class="line-last"></li></ul>');
-			TREE.setTrigger(node[0]);
-			TREE.setEventLine(\$('.line, .line-last', node));
-		};
-		TREE.convertToDoc = function(node){
-			\$('>ul', node).remove();
-			\$('img', node).remove();
-			node[0].className = node[0].className.replace(/folder-(open|close)/gi , 'doc');
-		};
-		TREE.moveNodeToFolder = function(node)
-		{
-			if(!TREE.option.docToFolderConvert && node[0].className.indexOf('doc')!=-1)
-			{
-				return true;
-			}else if(TREE.option.docToFolderConvert && node[0].className.indexOf('doc')!=-1){
-				TREE.convertToFolder(node);
-			}
-			TREE.checkNodeIsLast(dragNode_source[0]);
-			var lastLine = \$('>ul >.line-last', node);
-			if(lastLine.size()>0)
-			{
-				TREE.moveNodeToLine(lastLine[0]);
-			}
-		};
-		TREE.moveNodeToLine = function(node){
-			TREE.checkNodeIsLast(dragNode_source[0]);
-			TREE.checkLineIsLast(node);
-			var parent = \$(dragNode_source).parents('li:first');
-			var line = \$(dragNode_source).prev('.line');
-			\$(node).before(dragNode_source);
-			\$(dragNode_source).before(line);
-			node.className = node.className.replace('-over','');
-			var nodeSize = \$('>ul >li', parent).not('.line, .line-last').filter(':visible').size();
-			if(TREE.option.docToFolderConvert && nodeSize==0)
-			{
-				TREE.convertToDoc(parent);
-			}else if(nodeSize==0)
-			{
-				parent[0].className=parent[0].className.replace('open','close');
-				\$('>ul',parent).hide();
-			}
-
-			// added by Erik Dohmen (2BinBusiness.nl) select node
-			if(\$('span:first',dragNode_source).attr('class')=='text')
-			{
-				\$('.active',TREE).attr('class','text');
-				\$('span:first',dragNode_source).attr('class','active');
-			}
-
-			if(typeof(TREE.option.afterMove) == 'function')
-			{
-				var pos = \$(dragNode_source).prevAll(':not(.line)').size();
-				TREE.option.afterMove(\$(node).parents('li:first'), \$(dragNode_source), pos);
-			}
-		};
-
-		TREE.addNode = function(id, text, callback)
-		{
-			var temp_node = \$('<li><ul><li id="'+id+'"><span>'+text+'</span></li></ul></li>');
-			TREE.setTreeNodes(temp_node);
-			dragNode_destination = TREE.getSelected();
-			dragNode_source = \$('.doc-last',temp_node);
-			TREE.moveNodeToFolder(dragNode_destination);
-			temp_node.remove();
-			if(typeof(callback) == 'function')
-			{
-				callback(dragNode_destination, dragNode_source);
-			}
-		};
-		TREE.delNode = function(callback)
-		{
-			dragNode_source = TREE.getSelected();
-			TREE.checkNodeIsLast(dragNode_source[0]);
-			dragNode_source.prev().remove();
-			dragNode_source.remove();
-			if(typeof(callback) == 'function')
-			{
-				callback(dragNode_destination);
-			}
-		};
-
-		TREE.init = function(obj)
-		{
-			TREE.setTreeNodes(obj, false);
-		};
-		TREE.init(ROOT);
-	});
-}
-EOF
-}
 1;
 __END__
 

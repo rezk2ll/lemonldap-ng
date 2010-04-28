@@ -585,7 +585,7 @@ sub getOrganizationName {
 # @param logout Lasso::Logout object
 # @return string
 sub getNextProviderId {
-    my $self = shift;
+    my $self   = shift;
     my $logout = shift;
     my $providerId;
 
@@ -603,7 +603,7 @@ sub getNextProviderId {
 # @param logout Lasso::Logout object
 # @return boolean
 sub resetProviderIdIndex {
-    my $self = shift;
+    my $self   = shift;
     my $logout = shift;
 
     eval { Lasso::Logout::reset_providerID_index($logout); };
@@ -1324,7 +1324,7 @@ sub storeReplayProtection {
     $h{ID}     = $samlID;
 
     if ( defined $samlData && $samlData ) {
-      $h{data} = $samlData;
+        $h{data} = $samlData;
     }
 
     my $session_id = $h{_session_id};
@@ -1999,11 +1999,11 @@ sub samldate2timestamp {
 # @param $wait If true, do not call to autoRedirect or autoPost function
 # @return boolean False if failed.
 sub sendLogoutResponseToServiceProvider {
-    my $self = shift;
-    my $logout = shift;
-    my $method = shift;
+    my $self       = shift;
+    my $logout     = shift;
+    my $method     = shift;
     my $relaystate = shift;
-    my $seconds = shift;
+    my $seconds    = shift;
 
     # Logout response
     unless ( $self->buildLogoutResponseMsg($logout) ) {
@@ -2069,7 +2069,7 @@ sub sendLogoutResponseToServiceProvider {
         $self->_subProcess(qw(returnSOAPMessage));
 
         # If we are here, there was a problem with SOAP response
-        $self->lmLog( "Logout response was not sent trough SOAP",  'error' );
+        $self->lmLog( "Logout response was not sent trough SOAP", 'error' );
 
         return 0;
 
@@ -2090,12 +2090,12 @@ sub sendLogoutResponseToServiceProvider {
 # @param $relay If SOAP method, build a relay logout request
 # @return int Number of concerned providers.
 sub sendLogoutRequestToServiceProvider {
-    my $self = shift;
-    my $logout = shift;
+    my $self       = shift;
+    my $logout     = shift;
     my $providerID = shift;
-    my $method = shift;
-    my $relay = shift;
-    my $server = $self->{_lassoServer};
+    my $method     = shift;
+    my $relay      = shift;
+    my $server     = $self->{_lassoServer};
     my $info;
 
     # Test if provider is mentionned
@@ -2117,13 +2117,14 @@ sub sendLogoutRequestToServiceProvider {
     if ( !$method ) {
         $method =
           $self->getFirstHttpMethod( $server, $providerID, $protocolType );
+
         #$method = Lasso::Constants::HTTP_METHOD_SOAP;
     }
 
     # Initiate the logout request
     unless ( $self->initLogoutRequest( $logout, $providerID, $method ) ) {
         $self->lmLog( "Initiate logout request failed for $providerID",
-          'error' );
+            'error' );
         return ( 0, $method, undef );
     }
 
@@ -2138,22 +2139,22 @@ sub sendLogoutRequestToServiceProvider {
     if ( $method == Lasso::Constants::HTTP_METHOD_REDIRECT ) {
 
         $self->lmLog( "Send HTTP-REDIRECT logout request to $providerID",
-          'debug' );
+            'debug' );
 
         # Redirect user to response URL
         my $slo_url = $logout->msg_url;
 
         $info .= '<li>'
-               . $providerName . '...'
-               . '<iframe src="'
-               . $slo_url
-               . '" alt="" marginwidth="0"'
-               . ' marginheight="0" scrolling="no" style="border: none"'
-               . ' width="0" height="0">'
-               . '<img src="'
-               . $slo_url
-               . '" width="0" height="0" />'
-               . '</iframe></li>';
+          . $providerName . '...'
+          . '<iframe src="'
+          . $slo_url
+          . '" alt="" marginwidth="0"'
+          . ' marginheight="0" scrolling="no" style="border: none"'
+          . ' width="0" height="0">'
+          . '<img src="'
+          . $slo_url
+          . '" width="0" height="0" />'
+          . '</iframe></li>';
 
     }
 
@@ -2171,7 +2172,7 @@ sub sendLogoutRequestToServiceProvider {
 
         # RelayState
         #$self->{postFields}->{'RelayState'} = $relaystate
-          #if ($relaystate);
+        #if ($relaystate);
 
         $self->lmLog( "POST method not yet available", 'debug' );
 
@@ -2184,67 +2185,71 @@ sub sendLogoutRequestToServiceProvider {
         $relay = 1 unless ( defined $relay );
 
         # Build a relay request, to be used after SLO process is done
-        if ( $relay ) {
+        if ($relay) {
 
-            $self->lmLog( "Store SOAP logout request for $providerID", 'debug' );
+            $self->lmLog( "Store SOAP logout request for $providerID",
+                'debug' );
 
             my $samlID = $logout->request()->ID;
             my $random = new String::Random;
-            my $cookieName = $self->{cookieName} . '-r'
-                           . $random->randregex('[A-Z]{3}[a-z]{5}.\d{2}');
+            my $cookieName =
+                $self->{cookieName} . '-r'
+              . $random->randregex('[A-Z]{3}[a-z]{5}.\d{2}');
 
             # Store information in temporary storage, to be reused then.
-            return ( 0, $method, undef)
-              unless ( $self->storeReplayProtection($samlID, $logout->dump) );
+            return ( 0, $method, undef )
+              unless ( $self->storeReplayProtection( $samlID, $logout->dump ) );
 
             # Build the cookie that will be used to retrieve this SOAP request.
             push @{ $self->{cookie} },
-                $self->cookie(
-                    -name    => $cookieName,
-                    -value   => $samlID,
-                    -expires => '+3m'
-                );
+              $self->cookie(
+                -name    => $cookieName,
+                -value   => $samlID,
+                -expires => '+3m'
+              );
 
             # Build the URL that could be used to play this logout request
-            my $slo_url = 'http://auth.example.com/saml/relaySingleLogoutSOAP?relay=' . $cookieName;
+            my $slo_url =
+              'http://auth.example.com/saml/relaySingleLogoutSOAP?relay='
+              . $cookieName;
 
             # Display information to the user
             $info .= '<li>'
-                  . $providerName . '...'
-                  . '<img src="'
-                  . $slo_url
-                  . '" width="0" height="0" /></li>';
+              . $providerName . '...'
+              . '<img src="'
+              . $slo_url
+              . '" width="0" height="0" /></li>';
 
         }
 
         # Send the request directly
         else {
 
-        $self->lmLog( "Send SOAP logout request to $providerID", 'debug' );
+            $self->lmLog( "Send SOAP logout request to $providerID", 'debug' );
 
-        my $slo_url  = $logout->msg_url;
-        my $slo_body = $logout->msg_body;
+            my $slo_url  = $logout->msg_url;
+            my $slo_body = $logout->msg_body;
 
-        # Send SOAP request and manage response
-        my $sp_response = $self->sendSOAPMessage( $slo_url, $slo_body );
+            # Send SOAP request and manage response
+            my $sp_response = $self->sendSOAPMessage( $slo_url, $slo_body );
 
-        unless ($sp_response) {
-            $self->lmLog( "No logout response to SOAP request", 'error' );
-            return ( 0, $method, undef );
+            unless ($sp_response) {
+                $self->lmLog( "No logout response to SOAP request", 'error' );
+                return ( 0, $method, undef );
+            }
+
+            # Process logout response
+            my $sp_result =
+              $self->processLogoutResponseMsg( $logout, $sp_response );
+
+            unless ($sp_result) {
+                $self->lmLog( "Fail to process logout response", 'error' );
+                return ( 0, $method, undef );
+            }
+
+            $self->lmLog( "Logout response is valid", 'debug' );
+
         }
-
-        # Process logout response
-        my $sp_result =
-          $self->processLogoutResponseMsg( $logout, $sp_response );
-
-        unless ($sp_result) {
-            $self->lmLog( "Fail to process logout response", 'error' );
-            return ( 0, $method, undef );
-        }
-
-        $self->lmLog( "Logout response is valid", 'debug' );
-
-    }
 
     }
 

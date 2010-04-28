@@ -47,8 +47,7 @@ sub setAuthSessionInfo {
     # authenticationLevel
     # 2 for user/password with HTTP
     # 3 for user/password with HTTPS
-    $self->{sessionInfo}->{authenticationLevel} = 2;
-    $self->{sessionInfo}->{authenticationLevel} = 3 if ( $self->https() );
+    $self->{sessionInfo}->{authenticationLevel} = ( $self->https() ? 3 : 2 );
 
     # Store user submitted login for basic rules
     $self->{sessionInfo}->{'_user'} = $self->{'user'};

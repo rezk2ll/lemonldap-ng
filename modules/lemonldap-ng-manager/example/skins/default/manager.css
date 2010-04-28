@@ -110,6 +110,8 @@ option
 #data
 {
 	margin:0 0 0 320px;
+    overflow-y:auto;
+    height:96%;
 }
 
 #buttons, #edition, #help
@@ -149,13 +151,13 @@ option
 	max-height:200px;
 }
 
-#css-switch
+#css-switch, #query-switch
 {
 	padding:5px 10px;
 	margin-bottom:10px;
 	border:solid #bbb 1px;
 }
-#css-switch a
+#css-switch a, #query-switch a
 {
 	padding-left:20px;
 	margin-left:10px;
@@ -169,6 +171,12 @@ option
 #css-switch a[alt=accordion]
 {
 	background:url("application_side_list.png") no-repeat;
+}
+
+#query-switch a
+{
+    /* REPLACE IMAGE */
+    background:url("application_side_tree.png") no-repeat;
 }
 
 /* Help messages */

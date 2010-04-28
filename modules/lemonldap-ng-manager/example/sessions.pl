@@ -1,58 +1,48 @@
 #!/usr/bin/perl
 
 use strict;
-
 use Lemonldap::NG::Manager::Sessions;
+use HTML::Template;
 
-our $cgi = Lemonldap::NG::Manager::Sessions->new(
+my $cgi = Lemonldap::NG::Manager::Sessions->new(
     {
 
-        # REQUIRED PARAMETERS
-        jqueryUri => 'skins/default/jquery-1.3.2.min.js',
-        imagePath => '/images/',
-
-        # PROTECTION, choose one of :
-        # * protection by manager
-        # protection  => 'manager',
-        # * specify yourself the rule to apply (same as in the manager)
-        # protection  => 'rule: $uid=admin',
-        # * all authenticate users are granted
-        # protection  => 'authenticate',
-        # * nothing : not protected
-
-        # IP
-        # You can configure sessions explorer to use X-FORWARDED-FOR
-        # rather than REMOTRE_ADDR for IP
-        #useXForwardedForIP => 1,
+        # SESSION EXPLORER CUSTOMIZATION
+        #managerSkin		=> 'default',
 
         # ACCESS TO CONFIGURATION
+
         # By default, Lemonldap::NG uses the default storage.conf file to know
         # where to find is configuration
         # (generaly /etc/lemonldap-ng/storage.conf)
         # You can specify by yourself this file :
-        #configStorage => { confFile => '/path/to/my/file' },
+        #configStorage => { type => 'File', dirName => '/path/to/my/file' },
 
         # You can also specify directly the configuration
         # (see Lemonldap::NG::Handler::SharedConf(3))
         #configStorage => {
         #      type => 'File',
-        #      directory => '/usr/local/lemonldap-ng/conf/'
-        #},
-
-        # OTHERS
-        # You can also overload any parameter issued from manager
-        # configuration. Example:
-        #globalStorage => 'Lemonldap::NG::Common::Apache::Session::SOAP',
-        #globalStorageOptions => {
-        #    proxy => 'http://auth.example.com/index.pl/sessions',
-        #    proxyOptions => {
-        #        timeout => 5,
-        #    },
-        #    # If soapserver is protected by HTTP Basic:
-        #    User     => 'http-user',
-        #    Password => 'pass',
+        #      directory => '/usr/local/lemonlda-ng/conf/'
         #},
     }
-);
+) or Lemonldap::NG::Common::CGI->abort('Unable to start sessions explorer');
 
-$cgi->process();
+my $skin     = $cgi->{managerSkin} or $cgi->abort('managerSkin is not defined');
+my $css      = 'tree.css';
+my $skin_dir = 'skins';
+my $main_dir = $ENV{DOCUMENT_ROOT};
+
+my $template = HTML::Template->new(
+    filename          => "$main_dir/$skin_dir/$skin/sessions.tpl",
+    die_on_bad_params => 0,
+    cache             => 0,
+    filter            => sub { $cgi->translate_template(@_) },
+);
+$template->param( SCRIPT_NAME    => $ENV{SCRIPT_NAME} );
+$template->param( TREE           => $cgi->tree() );
+$template->param( DIR            => "$skin_dir/$skin" );
+$template->param( TREE_AUTOCLOSE => $cgi->{managerTreeAutoClose} );
+$template->param( CSS            => $css );
+print $cgi->header('text/html; charset=utf-8');
+print $template->output;
+
