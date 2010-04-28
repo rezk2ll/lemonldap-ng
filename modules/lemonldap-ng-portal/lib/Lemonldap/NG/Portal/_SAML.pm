@@ -12,6 +12,7 @@ use MIME::Base64;
 use LWP::UserAgent;    # SOAP call
 use HTTP::Request;     # SOAP call
 use POSIX;             # Convert SAML2 date into timestamp
+use Encode;            # Encode attribute values
 
 our $VERSION = '0.01';
 our $_samlCache;
@@ -1057,6 +1058,10 @@ sub getAttributeValue {
             $value .= $content . $self->{multiValuesSeparator} if $content;
         }
         $value =~ s/\Q$self->{multiValuesSeparator}\E$//;
+
+        # Force UTF-8
+        $value = encode( "utf-8", $value );
+
     }
 
     return $value;
@@ -2114,7 +2119,7 @@ sub sendLogoutRequestToServiceProvider {
     }
 
     # Build request message
-    unless ( $self->buildLogoutRequestMsg( $logout ) ) {
+    unless ( $self->buildLogoutRequestMsg($logout) ) {
         $self->lmLog( "Build logout request failed for $providerID", 'error' );
         return ( 0, $method, undef );
     }
@@ -2174,7 +2179,7 @@ sub sendLogoutRequestToServiceProvider {
         # Send SOAP request and manage response
         my $sp_response = $self->sendSOAPMessage( $slo_url, $slo_body );
 
-        unless ( $sp_response ) {
+        unless ($sp_response) {
             $self->lmLog( "No logout response to SOAP request", 'error' );
             return ( 0, $method, undef );
         }
@@ -2183,7 +2188,7 @@ sub sendLogoutRequestToServiceProvider {
         my $sp_result =
           $self->processLogoutResponseMsg( $logout, $sp_response );
 
-        unless ( $sp_result ) {
+        unless ($sp_result) {
             $self->lmLog( "Fail to process logout response", 'error' );
             return ( 0, $method, undef );
         }
