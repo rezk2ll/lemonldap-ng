@@ -2101,11 +2101,10 @@ sub sendLogoutRequestToServiceProvider {
 
     # Get first HTTP method
     my $protocolType = Lasso::Constants::MD_PROTOCOL_TYPE_SINGLE_LOGOUT;
-
-    #my $method =
-    #  $self->getFirstHttpMethod( $server, $providerID, $protocolType );
     if ( !$method ) {
-        $method = Lasso::Constants::HTTP_METHOD_REDIRECT;
+        $method =
+          $self->getFirstHttpMethod( $server, $providerID, $protocolType );
+        #$method = Lasso::Constants::HTTP_METHOD_REDIRECT;
     }
 
     # Initiate the logout request
