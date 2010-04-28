@@ -435,9 +435,9 @@ sub process {
 # @return HTML string
 sub htmlquote {
     my $s = shift;
+    $s =~ s/&/&amp;/g;
     $s =~ s/</&lt;/g;
     $s =~ s/>/&gt;/g;
-    $s =~ s/&/&amp;/g;
     return $s;
 }
 
