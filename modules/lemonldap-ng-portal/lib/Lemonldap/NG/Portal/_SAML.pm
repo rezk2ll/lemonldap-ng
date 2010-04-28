@@ -2069,7 +2069,7 @@ sub sendLogoutResponseToServiceProvider {
 }
 
 ## @pmethod int sendLogoutRequestToServiceProvider(Lasso::Logout $logout, string $providerID, int $method)
-# Send logout response issue from a logout request to a service provider
+# Send a logout request to a service provider
 # If information have to be displayed to users, such as iframe to send
 # HTTP-Redirect or HTTP-POST logout request, then $self->{_info} will be
 # updated.
@@ -2104,7 +2104,6 @@ sub sendLogoutRequestToServiceProvider {
     if ( !$method ) {
         $method =
           $self->getFirstHttpMethod( $server, $providerID, $protocolType );
-        #$method = Lasso::Constants::HTTP_METHOD_REDIRECT;
     }
 
     # Initiate the logout request
@@ -2120,11 +2119,12 @@ sub sendLogoutRequestToServiceProvider {
         return ( 0, $method, undef );
     }
 
-    $self->lmLog( "Send logout request to $providerID", 'debug' );
-
     # Send logout request to the provider depending of the request method
     # HTTP-REDIRECT
     if ( $method == Lasso::Constants::HTTP_METHOD_REDIRECT ) {
+
+        $self->lmLog( "Send HTTP-REDIRECT logout request to $providerID",
+          'debug' );
 
         # Redirect user to response URL
         my $slo_url = $logout->msg_url;
@@ -2146,6 +2146,8 @@ sub sendLogoutRequestToServiceProvider {
     # HTTP-POST
     if ( $method == Lasso::Constants::HTTP_METHOD_POST ) {
 
+        $self->lmLog( "Send POST logout request to $providerID", 'debug' );
+
         # Use autosubmit form
         my $slo_url  = $logout->msg_url;
         my $slo_body = $logout->msg_body;
@@ -2164,6 +2166,8 @@ sub sendLogoutRequestToServiceProvider {
     # HTTP-SOAP
     if ( $method == Lasso::Constants::HTTP_METHOD_SOAP ) {
 
+        $self->lmLog( "Send SOAP logout request to $providerID", 'debug' );
+
         my $slo_url  = $logout->msg_url;
         my $slo_body = $logout->msg_body;
 
@@ -2175,12 +2179,9 @@ sub sendLogoutRequestToServiceProvider {
             return ( 0, $method, undef );
         }
 
-        # Create Logout object
-        my $sp_logout = $self->createLogout($server);
-
         # Process logout response
         my $sp_result =
-          $self->processLogoutResponseMsg( $sp_logout, $sp_response );
+          $self->processLogoutResponseMsg( $logout, $sp_response );
 
         unless ( $sp_result ) {
             $self->lmLog( "Fail to process logout response", 'error' );
@@ -2188,15 +2189,6 @@ sub sendLogoutRequestToServiceProvider {
         }
 
         $self->lmLog( "Logout response is valid", 'debug' );
-
-        # Replay protection
-        my $samlID = $sp_logout->response()->InResponseTo;
-
-        unless ( $self->replayProtection($samlID) ) {
-            # Logout request was already consumed or is expired
-            $self->lmLog( "Message $samlID already used or expired", 'error' );
-            return ( 0, $method, undef );
-        }
 
     }
 
@@ -2473,6 +2465,14 @@ Convert timestamp into SAML2 date format
 =head2 samldate2timestamp
 
 Convert SAML2 date format into timestamp
+
+=head2 sendLogoutResponseToServiceProvider
+
+Send logout response issue from a logout request
+
+=head2 sendLogoutRequestToServiceProvider
+
+Send logout request to a service provider
 
 =head1 SEE ALSO
 
