@@ -367,7 +367,7 @@ sub extractFormInfo {
             }
 
             $self->_subProcess(qw(autoRedirect))
-              if ( $self->{urldc} and $self->{urldc} ne $self->{portal} );
+              if ( $self->{urldc} and $self->{portal} !~ /\Q$self->{urldc}\E\/?/ );
 
             # Else, inform user that logout is OK
             return PE_LOGOUT_OK;
@@ -931,7 +931,7 @@ sub authenticate {
 
 ## @apmethod void authLogout()
 # Logout SP
-# @return nothing
+# @return Lemonldap::NG::Portal error code
 sub authLogout {
     my $self        = shift;
     my $idp         = $self->{sessionInfo}->{_idp};
@@ -1008,7 +1008,7 @@ sub authLogout {
         $self->{urldc} = $slo_url;
 
         # Redirect done in Portal/Simple.pm
-        return;
+        return PE_OK;
     }
 
     # HTTP-POST
@@ -1022,7 +1022,7 @@ sub authLogout {
         $self->{postFields} = { 'SAMLRequest' => $slo_body };
 
         # Post done in Portal/Simple.pm
-        return;
+        return PE_OK;
     }
 
     # HTTP-SOAP
@@ -1062,7 +1062,7 @@ sub authLogout {
             return PE_ERROR;
         }
 
-        return;
+        return PE_OK;
     }
 
 }
