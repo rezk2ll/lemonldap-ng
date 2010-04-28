@@ -172,7 +172,19 @@ sub issuerForUnAuthUser {
 
     }
 
-    # 1.3. Artifacts
+    # 1.3. SLO SOAP replay (send SOAP requests asynchronously)
+    # http://auth.example.com/saml/relaySingleLogoutSOAP
+    my $saml_slo_url_relay_soap = 'http://auth.example.com/saml/relaySingleLogoutSOAP';
+    if ( $url =~ /^(\Q$saml_slo_url_relay_soap\E)/i ) {
+
+         $self->lmLog( "URL $url detected as a relay service URL", 'debug' );
+
+         my $r = $self->param('relay');
+         print STDERR "$r\n";
+
+    }
+
+    # 1.4. Artifacts
     if ( $url =~ /^(\Q$saml_ars_url\E)$/i ) {
 
         $self->lmLog( "URL $url detected as an artifact resolution service URL",
@@ -830,14 +842,13 @@ sub sendLogoutRequestToServiceProviders {
 
         # Send logout request
         my ( $rstatus, $rmethod, $rinfo ) =
-          $self->sendLogoutRequestToServiceProvider( $logout, $providerID );
+          $self->sendLogoutRequestToServiceProvider(
+            $logout, $providerID, undef, 1 );
 
         next unless ( $rstatus );
 
         # Count providers that have to be request by HTTP redirect
-        if ( $rmethod == Lasso::Constants::HTTP_METHOD_REDIRECT ) {
             $providersCount++;
-            }
 
         # Add information if necessary
         if ( $rinfo ) {

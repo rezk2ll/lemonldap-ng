@@ -9,6 +9,7 @@ use strict;
 use Lemonldap::NG::Common::Conf::SAML::Metadata;
 use XML::Simple;
 use MIME::Base64;
+use String::Random;
 use LWP::UserAgent;    # SOAP call
 use HTTP::Request;     # SOAP call
 use POSIX;             # Convert SAML2 date into timestamp
@@ -1305,9 +1306,10 @@ sub buildLogoutResponseMsg {
 ## @method boolean storeReplayProtection(string samlID)
 # Store ID of an SAML message in Replay Protection base
 # @param samlID ID of SAML message
+# @param samlData Optional data to store
 # @return result
 sub storeReplayProtection {
-    my ( $self, $samlID ) = splice @_;
+    my ( $self, $samlID, $samlData ) = splice @_;
     my %h;
 
     eval { tie %h, $self->{samlStorage}, undef, $self->{samlStorageOptions}; };
@@ -1320,6 +1322,10 @@ sub storeReplayProtection {
     $h{type}   = 'assertion';    # Session type
     $h{_utime} = time();         # Creation time
     $h{ID}     = $samlID;
+
+    if ( defined $samlData && $samlData ) {
+      $h{data} = $samlData;
+    }
 
     my $session_id = $h{_session_id};
 
@@ -2081,12 +2087,14 @@ sub sendLogoutResponseToServiceProvider {
 # @param $logout Lasso Logout object
 # @param $providerID The concerned service provider
 # @param $method The method used to send the logout request
+# @param $relay If SOAP method, build a relay logout request
 # @return int Number of concerned providers.
 sub sendLogoutRequestToServiceProvider {
     my $self = shift;
     my $logout = shift;
     my $providerID = shift;
     my $method = shift;
+    my $relay = shift;
     my $server = $self->{_lassoServer};
     my $info;
 
@@ -2109,6 +2117,7 @@ sub sendLogoutRequestToServiceProvider {
     if ( !$method ) {
         $method =
           $self->getFirstHttpMethod( $server, $providerID, $protocolType );
+        #$method = Lasso::Constants::HTTP_METHOD_SOAP;
     }
 
     # Initiate the logout request
@@ -2171,6 +2180,46 @@ sub sendLogoutRequestToServiceProvider {
     # HTTP-SOAP
     if ( $method == Lasso::Constants::HTTP_METHOD_SOAP ) {
 
+        # Fix a default value for the relay parameter
+        $relay = 1 unless ( defined $relay );
+
+        # Build a relay request, to be used after SLO process is done
+        if ( $relay ) {
+
+            $self->lmLog( "Store SOAP logout request for $providerID", 'debug' );
+
+            my $samlID = $logout->request()->ID;
+            my $random = new String::Random;
+            my $cookieName = $self->{cookieName} . '-r'
+                           . $random->randregex('[A-Z]{3}[a-z]{5}.\d{2}');
+
+            # Store information in temporary storage, to be reused then.
+            return ( 0, $method, undef)
+              unless ( $self->storeReplayProtection($samlID, $logout->dump) );
+
+            # Build the cookie that will be used to retrieve this SOAP request.
+            push @{ $self->{cookie} },
+                $self->cookie(
+                    -name    => $cookieName,
+                    -value   => $samlID,
+                    -expires => '+3m'
+                );
+
+            # Build the URL that could be used to play this logout request
+            my $slo_url = 'http://auth.example.com/saml/relaySingleLogoutSOAP?relay=' . $cookieName;
+
+            # Display information to the user
+            $info .= '<li>'
+                  . $providerName . '...'
+                  . '<img src="'
+                  . $slo_url
+                  . '" width="0" height="0" /></li>';
+
+        }
+
+        # Send the request directly
+        else {
+
         $self->lmLog( "Send SOAP logout request to $providerID", 'debug' );
 
         my $slo_url  = $logout->msg_url;
@@ -2194,6 +2243,8 @@ sub sendLogoutRequestToServiceProvider {
         }
 
         $self->lmLog( "Logout response is valid", 'debug' );
+
+    }
 
     }
 
