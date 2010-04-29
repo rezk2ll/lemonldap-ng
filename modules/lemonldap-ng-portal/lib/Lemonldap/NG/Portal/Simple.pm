@@ -51,8 +51,8 @@ use constant {
     # Portal errors
     # Developers warning, do not use PE_INFO, it's reserved to autoRedirect.
     # If you want to send an information, use $self->info('text').
-    PE_INFO_KO                          => -5,
-    PE_INFO_OK                          => -4,
+    PE_IMG_NOK                          => -5,
+    PE_IMG_OK                           => -4,
     PE_INFO                             => -3,
     PE_REDIRECT                         => -2,
     PE_DONE                             => -1,
@@ -111,7 +111,7 @@ use constant {
 };
 
 # EXPORTER PARAMETERS
-our @EXPORT = qw( PE_INFO_KO PE_INFO_OK PE_INFO PE_REDIRECT PE_DONE PE_OK
+our @EXPORT = qw( PE_IMG_NOK PE_IMG_OK PE_INFO PE_REDIRECT PE_DONE PE_OK
   PE_SESSIONEXPIRED PE_FORMEMPTY PE_WRONGMANAGERACCOUNT PE_USERNOTFOUND
   PE_BADCREDENTIALS PE_LDAPCONNECTFAILED PE_LDAPERROR PE_APACHESESSIONERROR
   PE_FIRSTACCESS PE_BADCERTIFICATE PE_PP_ACCOUNT_LOCKED PE_PP_PASSWORD_EXPIRED

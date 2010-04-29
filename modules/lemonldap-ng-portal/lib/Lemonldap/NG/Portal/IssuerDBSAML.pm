@@ -175,6 +175,7 @@ sub issuerForUnAuthUser {
     }
 
     # 1.3. SLO SOAP replay (send SOAP requests asynchronously)
+    #      This URL is used by IMG html tag, and should returned PE_IMG_*
     if ( $url =~ /^(\Q$saml_slo_url_relay_soap\E)/i ) {
 
         $self->lmLog( "URL $url detected as a relay service URL", 'debug' );
@@ -229,10 +230,10 @@ sub issuerForUnAuthUser {
         unless ($rstatus) {
             $self->lmLog( "Fail to process SOAP logout request to $providerID",
               'error' );
-            return PE_INFO_KO;
+            return PE_IMG_NOK;
         }
 
-        return PE_INFO_OK;
+        return PE_IMG_OK;
 
     }
 

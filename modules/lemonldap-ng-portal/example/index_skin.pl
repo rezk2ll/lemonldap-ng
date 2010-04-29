@@ -48,9 +48,9 @@ my ( $skinfile, %templateParams );
 if ( $portal->process() ) {
 
     # 1.1 Image mode
-    if ( $portal->{error} == PE_INFO_OK || $portal->{error} == PE_INFO_KO ) {
+    if ( $portal->{error} == PE_IMG_OK || $portal->{error} == PE_IMG_NOK ) {
         $skinfile = $skin_dir . '/common/ok.png';
-        if ( $portal->{error} == PE_INFO_KO ) {
+        if ( $portal->{error} == PE_IMG_NOK ) {
             $skinfile = $skin_dir . '/common/warning.png';
         }
         $portal->printImage($skinfile, 'image/png');
