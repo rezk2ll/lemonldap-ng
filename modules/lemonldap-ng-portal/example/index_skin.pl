@@ -47,8 +47,18 @@ my ( $skinfile, %templateParams );
 
 if ( $portal->process() ) {
 
-    # 1.1 Case : there is a message to display
-    if ( my $info = $portal->info() ) {
+    # 1.1 Image mode
+    if ( $portal->{error} == PE_INFO_OK || $portal->{error} == PE_INFO_KO ) {
+        $skinfile = $skin_dir . '/common/ok.png';
+        if ( $portal->{error} == PE_INFO_KO ) {
+            $skinfile = $skin_dir . '/common/warning.png';
+        }
+        $portal->printImage($skinfile, 'image/png');
+        exit;
+    }
+
+    # 1.2 Case : there is a message to display
+    elsif ( my $info = $portal->info() ) {
         $skinfile       = 'info.tpl';
         %templateParams = (
             AUTH_ERROR_TYPE => $portal->error_type,
@@ -59,7 +69,7 @@ if ( $portal->process() ) {
         );
     }
 
-    # 1.2 Case : display menu
+    # 1.3 Case : display menu
     else {
         $skinfile = 'menu.tpl';
 

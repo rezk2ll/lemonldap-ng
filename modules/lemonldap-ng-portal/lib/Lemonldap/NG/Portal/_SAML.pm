@@ -1360,6 +1360,7 @@ sub replayProtection {
         # A session was found
         foreach (@keys) {
             my $session = $_;
+            my $result  = 1;
 
             # Delete it
             eval {
@@ -1372,6 +1373,9 @@ sub replayProtection {
                 );
                 return 0;
             }
+            if (defined $h{data}) {
+                $result = $h{data};
+            }
             eval { tied(%h)->delete(); };
             if ($@) {
                 $self->lmLog(
@@ -1383,7 +1387,7 @@ sub replayProtection {
             $self->lmLog(
                 "Assertion session $session (Message ID $samlID) was deleted",
                 'debug' );
-            return 1;
+            return $result;
         }
     }
 
@@ -2117,9 +2121,15 @@ sub sendLogoutRequestToServiceProvider {
     if ( !$method ) {
         $method =
           $self->getFirstHttpMethod( $server, $providerID, $protocolType );
-
-        #$method = Lasso::Constants::HTTP_METHOD_SOAP;
     }
+
+    # Fix a default value for the relay parameter
+    $relay = 0 unless ( defined $relay );
+
+    # Build the request unless this is a SOAP relay logout request
+    unless ( $method == Lasso::Constants::HTTP_METHOD_SOAP && $relay ) {
+
+        $self->lmLog( "No logout request found, build it", 'debug' );
 
     # Initiate the logout request
     unless ( $self->initLogoutRequest( $logout, $providerID, $method ) ) {
@@ -2132,6 +2142,8 @@ sub sendLogoutRequestToServiceProvider {
     unless ( $self->buildLogoutRequestMsg($logout) ) {
         $self->lmLog( "Build logout request failed for $providerID", 'error' );
         return ( 0, $method, undef );
+    }
+
     }
 
     # Send logout request to the provider depending of the request method
@@ -2181,44 +2193,41 @@ sub sendLogoutRequestToServiceProvider {
     # HTTP-SOAP
     if ( $method == Lasso::Constants::HTTP_METHOD_SOAP ) {
 
-        # Fix a default value for the relay parameter
-        $relay = 1 unless ( defined $relay );
-
         # Build a relay request, to be used after SLO process is done
         if ($relay) {
 
-            $self->lmLog( "Store SOAP logout request for $providerID",
+            $self->lmLog( "Build SOAP relay logout request for $providerID",
                 'debug' );
 
-            my $samlID = $logout->request()->ID;
             my $random = new String::Random;
-            my $cookieName =
-                $self->{cookieName} . '-r'
-              . $random->randregex('[A-Z]{3}[a-z]{5}.\d{2}');
+            my $samlID = $random->randregex('[a-z0-9]{32}');
+
+            # Build needed information to be stored into samlStorage
+            my $samlData = ();
+            unless ( $logout->get_session() && $logout->get_identity() ) {
+                $self->lmLog(
+                    "No session and identity found into logout object",
+                    'error' );
+                return ( 0, $method, undef );
+            }
+            $samlData->{_lassoSessionDump}  = $logout->get_session->dump;
+            $samlData->{_lassoIdentityDump} = $logout->get_identity->dump;
+            $samlData->{_providerID}        = $providerID;
 
             # Store information in temporary storage, to be reused then.
             return ( 0, $method, undef )
-              unless ( $self->storeReplayProtection( $samlID, $logout->dump ) );
+              unless ( $self->storeReplayProtection( $samlID, $samlData ) );
 
-            # Build the cookie that will be used to retrieve this SOAP request.
-            push @{ $self->{cookie} },
-              $self->cookie(
-                -name    => $cookieName,
-                -value   => $samlID,
-                -expires => '+3m'
-              );
+            $self->lmLog( "Store request for $providerID", 'debug' );
 
             # Build the URL that could be used to play this logout request
-            my $slo_url =
-              'http://auth.example.com/saml/relaySingleLogoutSOAP?relay='
-              . $cookieName;
+            my $slo_url = $self->{portal}
+              . '/saml/relaySingleLogoutSOAP?relay=' . $samlID;
 
             # Display information to the user
             $info .= '<li>'
-              . $providerName . '...'
-              . '<img src="'
-              . $slo_url
-              . '" width="0" height="0" /></li>';
+              . $providerName . '...&nbsp;&nbsp;'
+              . '<img src="' . $slo_url . '" width="10" height="10" /></li>';
 
         }
 

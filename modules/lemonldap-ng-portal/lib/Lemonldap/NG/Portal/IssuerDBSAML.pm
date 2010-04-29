@@ -55,6 +55,8 @@ sub issuerForUnAuthUser {
       $self->getMetaDataURL( "samlIDPSSODescriptorSingleLogoutServiceHTTP", 2 );
     my $saml_ars_url = $self->getMetaDataURL(
         "samlIDPSSODescriptorArtifactResolutionServiceArtifact");
+    my $saml_slo_url_relay_soap = $self->{portal}
+      . '/saml/relaySingleLogoutSOAP';
 
     # Get HTTP request informations to know
     # if we are receving SAML request or response
@@ -173,15 +175,64 @@ sub issuerForUnAuthUser {
     }
 
     # 1.3. SLO SOAP replay (send SOAP requests asynchronously)
-    # http://auth.example.com/saml/relaySingleLogoutSOAP
-    my $saml_slo_url_relay_soap =
-      'http://auth.example.com/saml/relaySingleLogoutSOAP';
     if ( $url =~ /^(\Q$saml_slo_url_relay_soap\E)/i ) {
 
         $self->lmLog( "URL $url detected as a relay service URL", 'debug' );
 
-        my $r = $self->param('relay');
-        print STDERR "$r\n";
+        # Check if relay parameter is present (mandatory)
+        my $samlID;
+        unless ( $samlID = $self->param('relay') ) {
+            $self->lmLog( "No relayID detected", 'error' );
+            return PE_ERROR;
+        }
+
+        # Retrieve the corresponding data from samlStorage
+        my $samlData = $self->replayProtection($samlID);
+        unless ( $samlData && $samlData ne 1 ) {
+            $self->lmLog( "No logout dump found for samlID $samlID", 'error' );
+            return PE_ERROR;
+        }
+
+        # Rebuild the logout object
+        my $logout;
+        unless ( $logout = $self->createLogout($server) ) {
+            $self->lmLog( "Could not rebuild logout object",
+              'error' );
+            return PE_ERROR;
+        }
+
+        # Load Session and Identity if they exist
+        my $session    = $samlData->{_lassoSessionDump};
+        my $identity   = $samlData->{_lassoIdentityDump};
+        my $providerID = $samlData->{_providerID};
+
+        if ($session) {
+            unless ( $self->setSessionFromDump( $logout, $session ) ) {
+                $self->lmLog( "Unable to load Lasso Session", 'error' );
+                return PE_ERROR;
+            }
+            $self->lmLog( "Lasso Session loaded", 'debug' );
+        }
+
+        if ($identity) {
+            unless ( $self->setIdentityFromDump( $logout, $identity ) ) {
+                $self->lmLog( "Unable to load Lasso Identity", 'error' );
+                return PE_ERROR;
+            }
+            $self->lmLog( "Lasso Identity loaded", 'debug' );
+        }
+
+        # Send the logout request
+        my ( $rstatus, $rmethod, $rinfo ) =
+          $self->sendLogoutRequestToServiceProvider(
+            $logout, $providerID, Lasso::Constants::HTTP_METHOD_SOAP );
+        unless ($rstatus) {
+            $self->lmLog( "Fail to process SOAP logout request to $providerID",
+              'error' );
+            return PE_INFO_KO;
+        }
+
+        return PE_INFO_OK;
 
     }
 

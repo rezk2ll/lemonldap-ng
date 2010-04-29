@@ -29,6 +29,7 @@
 	function stop() {
 		_go=0;
 		$('#timer').html("...");
+		$('#form button[type=submit]').attr('disabled','');
 	}
 	function go() {
 		if(_go) {
