@@ -56,6 +56,9 @@ sub new {
           foreach ( keys %$localconf );
     }
 
+    # Load default skin if no other specified
+    $self->{managerSkin} ||= 'default';
+
     # Now try to load Apache::Session module
     eval "use $globalStorage";
     $class->abort( "Unable to load $globalStorage", $@ ) if ($@);
@@ -586,9 +589,9 @@ sub _ipclasses {
 # @return HTML string
 sub htmlquote {
     my $s = shift;
+    $s =~ s/&/&amp;/g;
     $s =~ s/</&lt;/g;
     $s =~ s/>/&gt;/g;
-    $s =~ s/&/&amp;/g;
     return $s;
 }
 
