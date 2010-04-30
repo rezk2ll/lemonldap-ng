@@ -183,9 +183,8 @@ sub loadIDPs {
         my $name =
           $self->getOrganizationName( $self->{_lassoServer}, $entityID )
           || ucfirst($_);
-        $self->{_idpList}->{$_}             = ();
-        $self->{_idpList}->{$_}->{entityID} = $entityID;
-        $self->{_idpList}->{$_}->{name}     = $name;
+        $self->{_idpList}->{$entityID}->{confKey} = $_;
+        $self->{_idpList}->{$entityID}->{name}    = $name;
 
         $self->lmLog( "IDP $_ added", 'debug' );
     }
@@ -255,13 +254,12 @@ sub loadSPs {
     return 1;
 }
 
-## @method array checkMessage(string url, string request_method, string content_type, string profile_type, boolean check_sig)
+## @method array checkMessage(string url, string request_method, string content_type, string profile_type)
 # Check SAML requests and responses
 # @param url
 # @param request_method
 # @param content_type
 # @param profile_type login or logout
-# @param check_sig
 # @return ( $request, $response, $method, $relaystate, $artifact )
 sub checkMessage {
     my $self           = shift;
@@ -269,9 +267,9 @@ sub checkMessage {
     my $request_method = shift;
     my $content_type   = shift;
     my $profile_type   = shift || "login";
-    my $check_sig      = shift;
     my $request;
     my $response;
+    my $message;
     my $method;
     my $relaystate;
     my $artifact;
@@ -296,13 +294,6 @@ sub checkMessage {
           if ( $profile_type eq "login" );
         $profile = $self->createLogout( $self->{_lassoServer} )
           if ( $profile_type eq "logout" );
-
-        # Signature
-        $check_sig = 1 unless defined $check_sig;
-        unless ($check_sig) {
-            $self->lmLog( "Message signature will not be checked", 'debug' );
-            $self->disableSignatureVerification($profile);
-        }
 
         # Get relayState
         $relaystate = $self->param('RelayState');
@@ -339,7 +330,7 @@ sub checkMessage {
 
                 # Resolve Artifact
                 $method = Lasso::Constants::HTTP_METHOD_ARTIFACT_GET;
-                my $message =
+                $message =
                   $self->resolveArtifact( $profile, $artifact, $method );
 
                 # Request or response ?
@@ -388,7 +379,7 @@ sub checkMessage {
 
                     # Resolve Artifact
                     $method = Lasso::Constants::HTTP_METHOD_ARTIFACT_POST;
-                    my $message =
+                    $message =
                       $self->resolveArtifact( $profile, $artifact, $method );
 
                     # Request or response ?
@@ -431,6 +422,7 @@ sub checkMessage {
     $self->setHiddenFormValue( 'RelayState',   $relaystate );
     $self->setHiddenFormValue( 'SAMLart',      $artifact );
 
+    # 4. Return values
     return ( $request, $response, $method, $relaystate, $artifact ? 1 : 0 );
 }
 
@@ -647,7 +639,7 @@ sub createAuthnRequest {
 
     # Set RelayState
     my $infos;
-    foreach (qw /_idp urldc/) {
+    foreach (qw /urldc/) {
         $infos->{$_} = $self->{$_} if $self->{$_};
     }
     my $relaystate = $self->storeRelayState($infos);
@@ -1373,7 +1365,7 @@ sub replayProtection {
                 );
                 return 0;
             }
-            if (defined $h{data}) {
+            if ( defined $h{data} ) {
                 $result = $h{data};
             }
             eval { tied(%h)->delete(); };
@@ -1907,22 +1899,7 @@ sub disableSignatureVerification {
 
     eval {
         Lasso::Profile::set_signature_verify_hint( $profile,
-            Lasso::Constants::PROFILE_SIGNATURE_HINT_FORBID );
-    };
-
-    return $self->checkLassoError($@);
-}
-
-## @method boolean forceSignatureVerification(Lasso::Profile profile)
-# Modify Lasso signature hint to force signature verification
-# @param profile Lasso profile object
-# @return result
-sub forceSignatureVerification {
-    my ( $self, $profile ) = splice @_;
-
-    eval {
-        Lasso::Profile::set_signature_verify_hint( $profile,
-            Lasso::Constants::PROFILE_SIGNATURE_HINT_FORCE );
+            Lasso::Constants::PROFILE_SIGNATURE_VERIFY_HINT_IGNORE );
     };
 
     return $self->checkLassoError($@);
@@ -2140,7 +2117,8 @@ sub sendLogoutRequestToServiceProvider {
 
     # Build request message
     unless ( $self->buildLogoutRequestMsg($logout) ) {
-        $self->lmLog( "Build logout request failed for $providerID", 'error' );
+            $self->lmLog( "Build logout request failed for $providerID",
+                'error' );
         return ( 0, $method, undef );
     }
 
@@ -2221,13 +2199,16 @@ sub sendLogoutRequestToServiceProvider {
             $self->lmLog( "Store request for $providerID", 'debug' );
 
             # Build the URL that could be used to play this logout request
-            my $slo_url = $self->{portal}
-              . '/saml/relaySingleLogoutSOAP?relay=' . $samlID;
+            my $slo_url =
+              $self->{portal} . '/saml/relaySingleLogoutSOAP?relay=' . $samlID;
 
             # Display information to the user
             $info .= '<li>'
-              . $providerName . '...&nbsp;&nbsp;'
-              . '<img src="' . $slo_url . '" width="10" height="10" /></li>';
+              . $providerName
+              . '...&nbsp;&nbsp;'
+              . '<img src="'
+              . $slo_url
+              . '" width="10" height="10" /></li>';
 
         }
 
@@ -2519,10 +2500,6 @@ Modify Lasso signature hint to force signature
 =head2 disableSignatureVerification
 
 Modify Lasso signature hint to disable signature verification
-
-=head2 forceSignatureVerification
-
-Modify Lasso signature hint to force signature verification
 
 =head2 getAuthnContext
 

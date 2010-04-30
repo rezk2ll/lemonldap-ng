@@ -37,19 +37,13 @@ sub extractFormInfo {
     my $login;
     my $logout;
     my $idp;
+    my $idpConfKey;
     my $method;
     my $request;
     my $response;
     my $artifact;
     my $relaystate;
-
-    # Try to recover IDP from IDP cookie
-    my %cookies    = fetch CGI::Cookie;
-    my $idp_cookie = $cookies{ $self->{samlIdPResolveCookie} };
-    if ($idp_cookie) {
-        $idp = $idp_cookie->value;
-        $self->lmLog( "IDP $idp found in IDP resolution cookie", 'debug' );
-    }
+    my $signature_status;
 
     # 1. Get HTTP request informations to know
     # if we are receving SAML request or response
@@ -83,32 +77,15 @@ sub extractFormInfo {
         $self->lmLog( "URL $url detected as an SSO assertion consumer URL",
             'debug' );
 
+        # Check SAML Message
+        my ( $request, $response, $method, $relaystate, $artifact ) =
+          $self->checkMessage( $url, $request_method, $content_type, "login" );
+
         # Create Login object
         $login = $self->createLogin($server);
 
-        # Do we check signature?
-        my $checkSSOMessageSignature;
-        if ($idp) {
-            $checkSSOMessageSignature =
-              $self->{samlIDPMetaDataOptions}->{$idp}
-              ->{samlIDPMetaDataOptionsCheckSSOMessageSignature};
-        }
-        else {
-            $self->lmLog(
-"Will not check checkSSOMessageSignature option because no IDP was found",
-                'debug'
-            );
-        }
-
-        # Check SAML Message
-        my ( $request, $response, $method, $relaystate, $artifact ) =
-          $self->checkMessage( $url, $request_method, $content_type, "login",
-            $checkSSOMessageSignature );
-
-        unless ($checkSSOMessageSignature) {
-            $self->lmLog( "Message signature will not be checked", 'debug' );
+        # Ignore signature verification
             $self->disableSignatureVerification($login);
-        }
 
         if ($response) {
 
@@ -128,6 +105,39 @@ sub extractFormInfo {
             }
 
             $self->lmLog( "SSO: authentication response is valid", 'debug' );
+
+            # Get IDP entityID
+            $idp = $login->remote_providerID();
+
+            $self->lmLog( "Found entityID $idp in SAML message", 'debug' );
+
+            # IDP conf key
+            $idpConfKey = $self->{_idpList}->{$idp}->{confKey};
+
+            unless ($idpConfKey) {
+                $self->lmLog( "$idp do not match any IDP in configuration",
+                    'error' );
+                return PE_ERROR;
+            }
+
+            $self->lmLog( "$idp match $idpConfKey IDP in configuration",
+                'debug' );
+
+            # Do we check signature?
+            my $checkSSOMessageSignature =
+              $self->{samlIDPMetaDataOptions}->{$idpConfKey}
+              ->{samlIDPMetaDataOptionsCheckSSOMessageSignature};
+
+            if ($checkSSOMessageSignature) {
+
+              # TODO
+              #$signature_status = $login->signature_status;
+              #$self->lmLog( "Signature status is $signature_status", 'debug' );
+            }
+            else {
+                $self->lmLog( "Message signature will not be checked",
+                    'debug' );
+            }
 
             # Get SAML response
             my $saml_response = $login->response();
@@ -192,37 +202,20 @@ sub extractFormInfo {
                 $self->lmLog( "RelayState $relaystate extracted", 'debug' );
             }
 
-            # Update IDP from RelayState
-            if ( $self->{_idp} ) {
-                $idp = $self->{_idp};
-                $self->lmLog( "IDP $idp found in RelayState", 'debug' );
-            }
-            else {
-
-                $self->lmLog( "IDP was not found in RelayState", 'debug' );
-            }
-
-            unless ($idp) {
-                $self->lmLog(
-"IDP was not found in RelayState or in IDP resolution cookie",
-                    'error'
-                );
-                return PE_ERROR;
-            }
-
             # Check if we accept direct login from IDP
             my $allowLoginFromIDP =
-              $self->{samlIDPMetaDataOptions}->{$idp}
+              $self->{samlIDPMetaDataOptions}->{$idpConfKey}
               ->{samlIDPMetaDataOptionsAllowLoginFromIDP};
             if ( !$assertion_responded and !$allowLoginFromIDP ) {
-                $self->lmLog( "Direct login from IDP $idp is not allowed",
+                $self->lmLog(
+                    "Direct login from IDP $idpConfKey is not allowed",
                     'error' );
                 return PE_ERROR;
             }
 
             # Check authentication context
             my $requestedAuthnContext =
-              $self->{samlIDPMetaDataOptions}->{$idp}
+              $self->{samlIDPMetaDataOptions}->{$idpConfKey}
               ->{samlIDPMetaDataOptionsRequestedAuthnContext};
             $requestedAuthnContext =
               $self->getAuthnContext($requestedAuthnContext)
@@ -241,8 +234,9 @@ sub extractFormInfo {
                 };
                 if ($@) {
                     $self->lmLog(
-                        "Unable to get authentication context from $idp",
-                        'error' );
+                        "Unable to get authentication context from $idpConfKey",
+                        'error'
+                    );
                     return PE_ERROR;
                 }
                 $self->lmLog(
@@ -277,6 +271,8 @@ sub extractFormInfo {
 
             # Store Lasso objects
             $self->{_lassoLogin} = $login;
+            $self->{_idp}        = $idp;
+            $self->{_idpConfKey} = $idpConfKey;
 
             return PE_OK;
         }
@@ -309,32 +305,15 @@ sub extractFormInfo {
     {
         $self->lmLog( "URL $url detected as an SLO URL", 'debug' );
 
+        # Check SAML Message
+        my ( $request, $response, $method, $relaystate, $artifact ) =
+          $self->checkMessage( $url, $request_method, $content_type, "logout" );
+
         # Create Logout object
         $logout = $self->createLogout($server);
 
-        # Do we check signature?
-        my $checkSLOMessageSignature;
-        if ($idp) {
-            $checkSLOMessageSignature =
-              $self->{samlIDPMetaDataOptions}->{$idp}
-              ->{samlIDPMetaDataOptionsCheckSLOMessageSignature};
-        }
-        else {
-            $self->lmLog(
-"Will not check checkSLOMessageSignature option because no IDP was found",
-                'debug'
-            );
-        }
-
-        unless ($checkSLOMessageSignature) {
-            $self->lmLog( "Message signature will not be checked", 'debug' );
+        # Ignore signature verification
             $self->disableSignatureVerification($logout);
-        }
-
-        # Check SAML Message
-        my ( $request, $response, $method, $relaystate, $artifact ) =
-          $self->checkMessage( $url, $request_method, $content_type, "logout",
-            $checkSLOMessageSignature );
 
         if ($response) {
 
@@ -347,6 +326,37 @@ sub extractFormInfo {
             }
 
             $self->lmLog( "Logout response is valid", 'debug' );
+
+            # Get IDP entityID
+            $idp = $logout->remote_providerID();
+
+            $self->lmLog( "Found entityID $idp in SAML message", 'debug' );
+
+            # IDP conf key
+            $idpConfKey = $self->{_idpList}->{$idp}->{confKey};
+
+            unless ($idpConfKey) {
+                $self->lmLog( "$idp do not match any IDP in configuration",
+                    'error' );
+                return PE_ERROR;
+            }
+
+            $self->lmLog( "$idp match $idpConfKey IDP in configuration",
+                'debug' );
+
+            # Do we check signature?
+            my $checkSLOMessageSignature =
+              $self->{samlIDPMetaDataOptions}->{$idpConfKey}
+              ->{samlIDPMetaDataOptionsCheckSLOMessageSignature};
+
+            if ($checkSLOMessageSignature) {
+
+                # TODO
+            }
+            else {
+                $self->lmLog( "Message signature will not be checked",
+                    'debug' );
+            }
 
             # Replay protection
             my $samlID = $logout->response()->InResponseTo;
@@ -389,6 +399,37 @@ sub extractFormInfo {
             }
 
             $self->lmLog( "Logout request is valid", 'debug' );
+
+            # Get IDP entityID
+            $idp = $logout->remote_providerID();
+
+            $self->lmLog( "Found entityID $idp in SAML message", 'debug' );
+
+            # IDP conf key
+            $idpConfKey = $self->{_idpList}->{$idp}->{confKey};
+
+            unless ($idpConfKey) {
+                $self->lmLog( "$idp do not match any IDP in configuration",
+                    'error' );
+                return PE_ERROR;
+            }
+
+            $self->lmLog( "$idp match $idpConfKey IDP in configuration",
+                'debug' );
+
+            # Do we check signature?
+            my $checkSLOMessageSignature =
+              $self->{samlIDPMetaDataOptions}->{$idpConfKey}
+              ->{samlIDPMetaDataOptionsCheckSLOMessageSignature};
+
+            if ($checkSLOMessageSignature) {
+
+                # TODO
+            }
+            else {
+                $self->lmLog( "Message signature will not be checked",
+                    'debug' );
+            }
 
             # Get NameID and SessionIndex
             my $name_id       = $logout->request()->NameID;
@@ -468,22 +509,15 @@ sub extractFormInfo {
             }
 
             # Do we set signature?
-            if ($idp) {
                 my $signSLOMessage =
-                  $self->{samlIDPMetaDataOptions}->{$idp}
+              $self->{samlIDPMetaDataOptions}->{$idpConfKey}
                   ->{samlIDPMetaDataOptionsSignSLOMessage};
                 unless ($signSLOMessage) {
-                    $self->lmLog( "SLO message to IDP $idp will not be signed",
+                $self->lmLog(
+                    "SLO message to IDP $idpConfKey will not be signed",
                         'debug' );
                     $self->disableSignature($logout);
                 }
-            }
-            else {
-                $self->lmLog(
-"Will not check signSLOMessage option because no IDP was found",
-                    'debug'
-                );
-            }
 
             # Logout response
             unless ( $self->buildLogoutResponseMsg($logout) ) {
@@ -598,6 +632,14 @@ sub extractFormInfo {
 
     # 2. IDP resolution
 
+    # Try to recover IDP from IDP cookie
+    my %cookies    = fetch CGI::Cookie;
+    my $idp_cookie = $cookies{ $self->{samlIdPResolveCookie} };
+    if ($idp_cookie) {
+        $idp = $idp_cookie->value;
+        $self->lmLog( "IDP $idp found in IDP resolution cookie", 'debug' );
+    }
+
     # If no IDP resolve cookie, find another way to get it
     # Case 1: IDP was choosen from portal IDP list
     $idp ||= $self->param("idp");
@@ -606,12 +648,14 @@ sub extractFormInfo {
     # The first match win
     unless ($idp) {
         foreach ( keys %{ $self->{_idpList} } ) {
+            my $idpConfKey = $self->{_idpList}->{$_}->{confKey};
             my $cond =
-              $self->{samlIDPMetaDataOptions}->{$_}
+              $self->{samlIDPMetaDataOptions}->{$idpConfKey}
               ->{samlIDPMetaDataOptionsResolutionRule};
             next unless defined $cond;
             if ( $self->safe->reval($cond) ) {
-                $self->lmLog( "IDP $_ resolution rule match", 'debug' );
+                $self->lmLog( "IDP $idpConfKey resolution rule match",
+                    'debug' );
                 $idp = $_;
                 last;
             }
@@ -677,7 +721,7 @@ sub extractFormInfo {
           . $self->{_idpList}->{$idp}->{name}
           . "</h4>\n"
           . "<p><i>"
-          . $self->{_idpList}->{$idp}->{entityID}
+          . $idp
           . "</i></p>\n"
           . "<input type=\"hidden\" name=\"idp\" value=\"$idp\" />\n";
 
@@ -707,74 +751,80 @@ sub extractFormInfo {
 
     # 3. Build authentication request
 
-    # IDP entityID
-    $self->{_idp} = $idp;
-    my $IDPentityID = $self->{_idpList}->{$idp}->{entityID};
+    # IDP conf key
+    $idpConfKey = $self->{_idpList}->{$idp}->{confKey};
+
+    unless ($idpConfKey) {
+        $self->lmLog( "$idp do not match any IDP in configuration", 'error' );
+        return PE_ERROR;
+    }
+
+    $self->lmLog( "$idp match $idpConfKey IDP in configuration", 'debug' );
 
     # IDP ForceAuthn
     my $forceAuthn =
-      $self->{samlIDPMetaDataOptions}->{$idp}
+      $self->{samlIDPMetaDataOptions}->{$idpConfKey}
       ->{samlIDPMetaDataOptionsForceAuthn};
 
     # IDP IsPassive
     my $isPassive =
-      $self->{samlIDPMetaDataOptions}->{$idp}
+      $self->{samlIDPMetaDataOptions}->{$idpConfKey}
       ->{samlIDPMetaDataOptionsIsPassive};
 
     # IDP NameIDFormat
     my $nameIDFormat =
-      $self->{samlIDPMetaDataOptions}->{$idp}
+      $self->{samlIDPMetaDataOptions}->{$idpConfKey}
       ->{samlIDPMetaDataOptionsNameIDFormat};
     $nameIDFormat = $self->getNameIDFormat($nameIDFormat) if $nameIDFormat;
 
     # IDP ProxyRestriction
     my $allowProxiedAuthn =
-      $self->{samlIDPMetaDataOptions}->{$idp}
+      $self->{samlIDPMetaDataOptions}->{$idpConfKey}
       ->{samlIDPMetaDataOptionsAllowProxiedAuthn};
 
     # IDP HTTP method
     $method =
-      $self->{samlIDPMetaDataOptions}->{$idp}
+      $self->{samlIDPMetaDataOptions}->{$idpConfKey}
       ->{samlIDPMetaDataOptionsSSOBinding};
     $method = $self->getHttpMethod($method) if $method;
 
     # If no method defined, get first HTTP method
     unless ( defined $method ) {
         my $protocolType = Lasso::Constants::MD_PROTOCOL_TYPE_SINGLE_SIGN_ON;
-        $method =
-          $self->getFirstHttpMethod( $server, $IDPentityID, $protocolType );
+        $method = $self->getFirstHttpMethod( $server, $idp, $protocolType );
     }
 
     # Failback to HTTP-REDIRECT
     unless ( defined $method and $method != -1 ) {
-        $self->lmLog( "No method found with IDP $idp for SSO profile",
+        $self->lmLog( "No method found with IDP $idpConfKey for SSO profile",
             'debug' );
         $method = $self->getHttpMethod("redirect");
     }
 
-    $self->lmLog( "Use method $method with IDP $idp for SSO profile", 'debug' );
+    $self->lmLog( "Use method $method with IDP $idpConfKey for SSO profile",
+        'debug' );
 
     # Set signature
     my $signSSOMessage =
-      $self->{samlIDPMetaDataOptions}->{$idp}
+      $self->{samlIDPMetaDataOptions}->{$idpConfKey}
       ->{samlIDPMetaDataOptionsSignSSOMessage};
 
     # Authentication Context
     my $requestedAuthnContext =
-      $self->{samlIDPMetaDataOptions}->{$idp}
+      $self->{samlIDPMetaDataOptions}->{$idpConfKey}
       ->{samlIDPMetaDataOptionsRequestedAuthnContext};
     $requestedAuthnContext = $self->getAuthnContext($requestedAuthnContext)
       if $requestedAuthnContext;
 
     # Create SSO request
     $login = $self->createAuthnRequest(
-        $server,            $IDPentityID,    $method,
+        $server,            $idp,            $method,
         $forceAuthn,        $isPassive,      $nameIDFormat,
         $allowProxiedAuthn, $signSSOMessage, $requestedAuthnContext
     );
 
     unless ($login) {
-        $self->lmLog( "Could not create authentication request on $IDPentityID",
+        $self->lmLog( "Could not create authentication request on $idpConfKey",
             'error' );
         return PE_ERROR;
     }
@@ -836,6 +886,7 @@ sub setAuthSessionInfo {
     my $server = $self->{_lassoServer};
     my $login  = $self->{_lassoLogin};
     my $idp    = $self->{_idp};
+    my $idpConfKey = $self->{_idpConfKey};
 
     # Get SAML assertion
     my $assertion = $self->getAssertion($login);
@@ -853,13 +904,16 @@ sub setAuthSessionInfo {
         my @attributes = $attr_statement->Attribute();
 
         # Wanted attributes are defined in IDP configuration
-        foreach ( keys %{ $self->{samlIDPMetaDataExportedAttributes}->{$idp} } )
+        foreach (
+            keys %{ $self->{samlIDPMetaDataExportedAttributes}->{$idpConfKey} }
+          )
         {
 
             # Extract fields from exportedAttr value
             my ( $mandatory, $name, $format, $friendly_name ) =
               split( /;/,
-                $self->{samlIDPMetaDataExportedAttributes}->{$idp}->{$_} );
+                $self->{samlIDPMetaDataExportedAttributes}->{$idpConfKey}
+                  ->{$_} );
 
             # Try to get value
             my $value =
@@ -874,8 +928,7 @@ sub setAuthSessionInfo {
     # Store other informations in session
     $self->{sessionInfo}->{_user} = $self->{user};
     $self->{sessionInfo}->{_idp}  = $idp;
-    $self->{sessionInfo}->{_idpEntityID} =
-      $self->{_idpList}->{$idp}->{entityID};
+    $self->{sessionInfo}->{_idpConfKey} = $idpConfKey;
 
     # Adapt _utime with SessionNotOnOrAfter
     my $sessionNotOnOrAfter =
@@ -885,7 +938,7 @@ sub setAuthSessionInfo {
     my $utime    = time();
     my $timeout  = $self->{timeout};
     my $adaptSessionUtime =
-      $self->{samlIDPMetaDataOptions}->{$idp}
+      $self->{samlIDPMetaDataOptions}->{$idpConfKey}
       ->{samlIDPMetaDataOptionsAdaptSessionUtime};
 
     if ( ( $utime + $timeout > $samltime ) and $adaptSessionUtime ) {
@@ -901,7 +954,8 @@ sub setAuthSessionInfo {
 
     # Establish federation (required for attribute request in UserDBSAML)
     unless ( $self->acceptSSO($login) ) {
-        $self->lmLog( "Error while accepting SSO from IDP", 'error' );
+        $self->lmLog( "Error while accepting SSO from IDP $idpConfKey",
+            'error' );
         return PE_ERROR;
     }
 
@@ -936,7 +990,7 @@ sub authenticate {
 sub authLogout {
     my $self        = shift;
     my $idp         = $self->{sessionInfo}->{_idp};
-    my $IDPentityID = $self->{sessionInfo}->{_idpEntityID};
+    my $idpConfKey = $self->{sessionInfo}->{_idpConfKey};
     my $method;
 
     # Get Lasso Server
@@ -956,29 +1010,29 @@ sub authLogout {
 
     # IDP HTTP method
     $method =
-      $self->{samlIDPMetaDataOptions}->{$idp}
+      $self->{samlIDPMetaDataOptions}->{$idpConfKey}
       ->{samlIDPMetaDataOptionsSLOBinding};
     $method = $self->getHttpMethod($method) if $method;
 
     # If no method defined, get first HTTP method
     unless ( defined $method ) {
         my $protocolType = Lasso::Constants::MD_PROTOCOL_TYPE_SINGLE_LOGOUT;
-        $method =
-          $self->getFirstHttpMethod( $server, $IDPentityID, $protocolType );
+        $method = $self->getFirstHttpMethod( $server, $idp, $protocolType );
     }
 
     # Failback to SOAP
     unless ( defined $method and $method != -1 ) {
-        $self->lmLog( "No method found with IDP $idp for SLO profile",
+        $self->lmLog( "No method found with IDP $idpConfKey for SLO profile",
             'debug' );
         $method = $self->getHttpMethod("soap");
     }
 
-    $self->lmLog( "Use method $method with IDP $idp for SLO profile", 'debug' );
+    $self->lmLog( "Use method $method with IDP $idpConfKey for SLO profile",
+        'debug' );
 
     # Set signature
     my $signSLOMessage =
-      $self->{samlIDPMetaDataOptions}->{$idp}
+      $self->{samlIDPMetaDataOptions}->{$idpConfKey}
       ->{samlIDPMetaDataOptionsSignSLOMessage};
 
     # Build Logout Request
