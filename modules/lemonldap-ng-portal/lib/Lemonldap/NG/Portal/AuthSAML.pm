@@ -640,6 +640,9 @@ sub extractFormInfo {
         $self->lmLog( "IDP $idp found in IDP resolution cookie", 'debug' );
     }
 
+    # Check if IDP from cookie is known in our configuration
+    $idp = undef unless exists $self->{_idpList}->{$idp};
+
     # If no IDP resolve cookie, find another way to get it
     # Case 1: IDP was choosen from portal IDP list
     $idp ||= $self->param("idp");
