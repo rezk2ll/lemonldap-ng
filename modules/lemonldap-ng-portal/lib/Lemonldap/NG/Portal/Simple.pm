@@ -535,9 +535,10 @@ sub getApacheSession {
         }
         return 0;
     }
-    $self->setApacheUser( $h{ $self->{whatToTrace} } )
-      if ( $id and not $noInfo );
-    $self->{id} = $h{_session_id};
+    unless ($noInfo) {
+        $self->setApacheUser( $h{ $self->{whatToTrace} } ) if ($id);
+        $self->{id} = $h{_session_id};
+    }
     return \%h;
 }
 
@@ -712,7 +713,7 @@ sub _deleteSession {
 
     # Try to find a linked http session (securedCookie=>2)
     if ( my $id2 = $h->{_httpSession} ) {
-        if ( my $h2 = $self->getApacheSession($id2) ) {
+        if ( my $h2 = $self->getApacheSession( $id2, 1 ) ) {
 
             # Try to purge local cache
             # (if an handler is running on the same server)
@@ -1219,7 +1220,7 @@ sub removeOther {
             $self->{sessionInfo}->{ $self->{whatToTrace} } );
         foreach my $id ( keys %$sessions ) {
             next if ( $current and ( $current eq $id ) );
-            my $h = $self->getApacheSession($id) or next;
+            my $h = $self->getApacheSession( $id, 1 ) or next;
             if (
                 $self->{singleSession}
                 or (    $self->{singleIP}
@@ -1250,7 +1251,7 @@ sub removeOther {
             $self->{ipAddr}, $ENV{REMOTE_ADDR} );
         foreach my $id ( keys %$sessions ) {
             next if ( $current and $current eq $id );
-            my $h = $self->getApacheSession($id) or next;
+            my $h = $self->getApacheSession( $id, 1 ) or next;
             unless ( $self->{sessionInfo}->{ $self->{whatToTrace} } eq
                 $h->{ $self->{whatToTrace} } )
             {
@@ -1284,10 +1285,6 @@ sub removeOther {
             $ENV{HTTP_ACCEPT_LANGUAGE} )
           . "</a></p>"
     ) if ( $self->{notifyOther} and @{ $self->{otherSessions} } );
-
-    # Since we have used getApacheSession, $self->{id} has been set, we must
-    # remove it
-    $self->{id} = '';
     PE_OK;
 }
 
@@ -1353,7 +1350,7 @@ sub store {
 
     # Create second session for unsecure cookie
     if ( $self->{securedCookie} == 2 ) {
-        my $h2 = $self->getApacheSession(undef);
+        my $h2 = $self->getApacheSession( undef, 1 );
         $h2->{$_} = $self->{sessionInfo}->{$_}
           foreach ( keys %{ $self->{sessionInfo} } );
         $self->{sessionInfo}->{_httpSession} = $h2->{_session_id};

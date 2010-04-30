@@ -82,8 +82,7 @@ ok( $cgi->_sub('mySubtest') eq 'OK2', '_sub mechanism 2' );
 # SOAP
 SKIP: {
     eval { require SOAP::Lite };
-    skip
-      "SOAP::Lite is not installed, so CGI SOAP functions will not work", 3
+    skip "SOAP::Lite is not installed, so CGI SOAP functions will not work", 3
       if ($@);
     $ENV{HTTP_SOAPACTION} =
       'http://localhost/Lemonldap/NG/Common/CGI/SOAPService#soapfunc';

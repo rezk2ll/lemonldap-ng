@@ -17,11 +17,11 @@ my $h;
 ok(
     $h = new Lemonldap::NG::Common::Conf(
         {
-            type     => 'LDAP',
-	    ldapServer => 'ldap://localhost',
-	    ldapConfBase => 'ou=conf,ou=websso,dc=example,dc=com',
-	    ldapBindDN => 'cn=admin,dc=example,dc=com',
-	    ldapBindPassword => 'secret',
+            type             => 'LDAP',
+            ldapServer       => 'ldap://localhost',
+            ldapConfBase     => 'ou=conf,ou=websso,dc=example,dc=com',
+            ldapBindDN       => 'cn=admin,dc=example,dc=com',
+            ldapBindPassword => 'secret',
         }
     )
 );

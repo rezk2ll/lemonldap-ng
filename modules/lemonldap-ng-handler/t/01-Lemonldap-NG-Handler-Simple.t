@@ -38,7 +38,8 @@ ok(
 );
 
 ok( $h->defaultValuesInit(), 'defaultValuesInit' );
-ok( $h->portalInit( { portal => 'http://auth.example.com' } ) or 1, 'portalInit' );
+ok( $h->portalInit( { portal => 'http://auth.example.com' } )
+      or 1, 'portalInit' );
 ok(
     $h->globalStorageInit(
         {

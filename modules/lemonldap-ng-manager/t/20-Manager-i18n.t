@@ -10,9 +10,8 @@ BEGIN {
         fr => 'French',
     );
     require Test::More;
-    Test::More->import(tests => ( scalar keys(%lang) ));
+    Test::More->import( tests => ( scalar keys(%lang) ) );
 }
-
 
 use_ok('Lemonldap::NG::Manager::_i18n');
 

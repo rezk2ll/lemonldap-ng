@@ -14,7 +14,7 @@ BEGIN { use_ok('Lemonldap::NG::Common::Conf') }
 # its man page ( perldoc Test::More ) for help writing this test script.
 
 my $h;
-my $inifile = "lemonldap-ng.ini";
+my $inifile     = "lemonldap-ng.ini";
 my $confsection = "configuration";
 
 ok(
@@ -28,10 +28,10 @@ ok(
 
 $h = bless {}, 'Lemonldap::NG::Common::Conf';
 
-ok( 
+ok(
     (
-        %$h = (%$h , %{ $h->getLocalConf( $confsection, $inifile, 0) })
-            and exists $h->{localStorage}
+        %$h = ( %$h, %{ $h->getLocalConf( $confsection, $inifile, 0 ) } )
+          and exists $h->{localStorage}
     ),
     "Read $inifile"
 );
