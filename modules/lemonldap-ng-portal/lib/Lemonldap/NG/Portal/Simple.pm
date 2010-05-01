@@ -798,14 +798,14 @@ sub info {
 sub printImage {
     my ( $self, $file, $type ) = @_;
     binmode STDOUT;
-    unless (open(IMAGE, '<', $file)) {
+    unless ( open( IMAGE, '<', $file ) ) {
         $self->lmLog( "Could not display image '$file'", 'error' );
         return;
     }
     print $self->header(
-        $type . '; charset=utf-8; content-length=' . (stat($file))[10]);
+        $type . '; charset=utf-8; content-length=' . ( stat($file) )[10] );
     my $buffer = "";
-    while (read(IMAGE, $buffer, 4096)) {
+    while ( read( IMAGE, $buffer, 4096 ) ) {
         print $buffer;
     }
     close(IMAGE);
@@ -883,17 +883,22 @@ sub controlUrlOrigin {
         $self->{urldc} = decode_base64($url);
         $self->{urldc} =~ s/[\r\n]//sg;
 
+        # For logout request, test if Referer comes from an authorizated site
+        my $tmp =
+          ( $self->param('logout') ? $ENV{HTTP_REFERER} : $self->{urldc} );
+
         # REJECT [\0<'"`] in URL or encoded '%' and non protected hosts
         if (
             $self->{urldc} =~ /(?:\0|<|'|"|`|\%(?:00|25|3C|22|27|2C))/
-            or ( $self->{urldc} !~
-m#^https?://(?:$self->{reVHosts}$self->{trustedDomains})(?::\d+)?(?:/.*)?$#o
-                and not $self->param('logout') )
+            or ( $tmp !~
+/^https?:\/\/(?:$self->{reVHosts}$self->{trustedDomains})(?::\d+)?(?:\/.*)?$/o
+            )
           )
         {
             $self->lmLog(
-                "XSS attack detected (param: urldc | value: "
-                  . $self->{urldc} . ")",
+                "XSS attack detected (param: "
+                  . ( $self->param('logout') ? 'HTTP Referer' : 'urldc' )
+                  . " | value: $tmp)",
                 "warn"
             );
             delete $self->{urldc};
