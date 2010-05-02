@@ -14,9 +14,9 @@ use LWP::UserAgent;    # SOAP call
 use HTTP::Request;     # SOAP call
 use POSIX;             # Convert SAML2 date into timestamp
 use Encode;            # Encode attribute values
-use Date::Format
+use Date::Format;
 
-  our $VERSION = '0.01';
+our $VERSION = '0.01';
 our $_samlCache;
 
 BEGIN {
