@@ -39,7 +39,8 @@ sub extractFormInfo {
     my (
         $login,      $logout,     $idp,
         $idpConfKey, $request,    $response,
-        $artifact,   $relaystate, $signature_status
+        $artifact,   $relaystate, $signature_status,
+	$method
     );
 
     # 1. Get HTTP request informations to know
