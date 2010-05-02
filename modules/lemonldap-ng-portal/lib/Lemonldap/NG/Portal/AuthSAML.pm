@@ -34,16 +34,13 @@ sub authInit {
 sub extractFormInfo {
     my $self   = shift;
     my $server = $self->{_lassoServer};
-    my $login;
-    my $logout;
-    my $idp;
-    my $idpConfKey;
-    my $method;
-    my $request;
-    my $response;
-    my $artifact;
-    my $relaystate;
-    my $signature_status;
+
+    # TODO: seems to be unused (redefined later)
+    my (
+        $login,      $logout,     $idp,
+        $idpConfKey, $request,    $response,
+        $artifact,   $relaystate, $signature_status
+    );
 
     # 1. Get HTTP request informations to know
     # if we are receving SAML request or response
@@ -69,11 +66,11 @@ sub extractFormInfo {
         "samlSPSSODescriptorArtifactResolutionServiceArtifact");
 
     # 1.1 SSO assertion consumer
+    # TODO: if $saml_acs_art_url,... are fixed, add a /o
     if ( $url =~
 /^(\Q$saml_acs_art_url\E|\Q$saml_acs_post_url\E|\Q$saml_acs_get_url\E)$/i
       )
     {
-
         $self->lmLog( "URL $url detected as an SSO assertion consumer URL",
             'debug' );
 
@@ -85,7 +82,7 @@ sub extractFormInfo {
         $login = $self->createLogin($server);
 
         # Ignore signature verification
-            $self->disableSignatureVerification($login);
+        $self->disableSignatureVerification($login);
 
         if ($response) {
 
@@ -299,7 +296,7 @@ sub extractFormInfo {
     }
 
     # 1.2 SLO
-    if ( $url =~
+    elsif ( $url =~
 /^(\Q$saml_slo_soap_url\E|\Q$saml_slo_soap_url_ret\E|\Q$saml_slo_get_url\E|\Q$saml_slo_get_url_ret\E)$/i
       )
     {
@@ -313,7 +310,7 @@ sub extractFormInfo {
         $logout = $self->createLogout($server);
 
         # Ignore signature verification
-            $self->disableSignatureVerification($logout);
+        $self->disableSignatureVerification($logout);
 
         if ($response) {
 
@@ -509,15 +506,15 @@ sub extractFormInfo {
             }
 
             # Do we set signature?
-                my $signSLOMessage =
+            my $signSLOMessage =
               $self->{samlIDPMetaDataOptions}->{$idpConfKey}
-                  ->{samlIDPMetaDataOptionsSignSLOMessage};
-                unless ($signSLOMessage) {
+              ->{samlIDPMetaDataOptionsSignSLOMessage};
+            unless ($signSLOMessage) {
                 $self->lmLog(
                     "SLO message to IDP $idpConfKey will not be signed",
-                        'debug' );
-                    $self->disableSignature($logout);
-                }
+                    'debug' );
+                $self->disableSignature($logout);
+            }
 
             # Logout response
             unless ( $self->buildLogoutResponseMsg($logout) ) {
@@ -544,7 +541,7 @@ sub extractFormInfo {
             }
 
             # HTTP-POST
-            if ( $method == Lasso::Constants::HTTP_METHOD_POST ) {
+            elsif ( $method == Lasso::Constants::HTTP_METHOD_POST ) {
 
                 # Use autosubmit form
                 my $slo_url  = $logout->msg_url;
@@ -566,7 +563,7 @@ sub extractFormInfo {
             }
 
             # HTTP-SOAP
-            if ( $method == Lasso::Constants::HTTP_METHOD_SOAP ) {
+            elsif ( $method == Lasso::Constants::HTTP_METHOD_SOAP ) {
 
                 my $slo_body = $logout->msg_body;
 
@@ -596,7 +593,7 @@ sub extractFormInfo {
     }
 
     # 1.3 Artifact
-    if ( $url =~ /^(\Q$saml_ars_url\E)$/i ) {
+    elsif ( $url =~ /^(\Q$saml_ars_url\E)$/i ) {
 
         $self->lmLog( "URL $url detected as an artifact resolution service URL",
             'debug' );
@@ -713,7 +710,7 @@ sub extractFormInfo {
     }
 
     # If IDP is found but not confirmed, let the user confirm it
-    if ( $confirm_flag != 1 ) {
+    elsif ( $confirm_flag != 1 ) {
         $self->lmLog( "IDP $idp selected, need user confirmation", 'debug' );
 
         # Choosen IDP
@@ -858,7 +855,7 @@ sub extractFormInfo {
     }
 
     # HTTP-POST
-    if ( $method == Lasso::Constants::HTTP_METHOD_POST ) {
+    elsif ( $method == Lasso::Constants::HTTP_METHOD_POST ) {
 
         # Use autosubmit form
         my $sso_url  = $login->msg_url;
@@ -885,10 +882,10 @@ sub extractFormInfo {
 # Extract attributes sent in authentication statement
 # @return Lemonldap::NG::Portal error code
 sub setAuthSessionInfo {
-    my $self   = shift;
-    my $server = $self->{_lassoServer};
-    my $login  = $self->{_lassoLogin};
-    my $idp    = $self->{_idp};
+    my $self       = shift;
+    my $server     = $self->{_lassoServer};
+    my $login      = $self->{_lassoLogin};
+    my $idp        = $self->{_idp};
     my $idpConfKey = $self->{_idpConfKey};
 
     # Get SAML assertion
@@ -929,8 +926,8 @@ sub setAuthSessionInfo {
     }
 
     # Store other informations in session
-    $self->{sessionInfo}->{_user} = $self->{user};
-    $self->{sessionInfo}->{_idp}  = $idp;
+    $self->{sessionInfo}->{_user}       = $self->{user};
+    $self->{sessionInfo}->{_idp}        = $idp;
     $self->{sessionInfo}->{_idpConfKey} = $idpConfKey;
 
     # Adapt _utime with SessionNotOnOrAfter
@@ -991,8 +988,8 @@ sub authenticate {
 # Logout SP
 # @return Lemonldap::NG::Portal error code
 sub authLogout {
-    my $self        = shift;
-    my $idp         = $self->{sessionInfo}->{_idp};
+    my $self       = shift;
+    my $idp        = $self->{sessionInfo}->{_idp};
     my $idpConfKey = $self->{sessionInfo}->{_idpConfKey};
     my $method;
 
@@ -1070,7 +1067,7 @@ sub authLogout {
     }
 
     # HTTP-POST
-    if ( $method == Lasso::Constants::HTTP_METHOD_POST ) {
+    elsif ( $method == Lasso::Constants::HTTP_METHOD_POST ) {
 
         # Use autosubmit form
         my $slo_url  = $logout->msg_url;
@@ -1084,7 +1081,7 @@ sub authLogout {
     }
 
     # HTTP-SOAP
-    if ( $method == Lasso::Constants::HTTP_METHOD_SOAP ) {
+    elsif ( $method == Lasso::Constants::HTTP_METHOD_SOAP ) {
 
         my $slo_url  = $logout->msg_url;
         my $slo_body = $logout->msg_body;

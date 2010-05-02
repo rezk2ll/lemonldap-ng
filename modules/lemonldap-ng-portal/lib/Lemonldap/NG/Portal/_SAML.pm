@@ -14,8 +14,9 @@ use LWP::UserAgent;    # SOAP call
 use HTTP::Request;     # SOAP call
 use POSIX;             # Convert SAML2 date into timestamp
 use Encode;            # Encode attribute values
+use Date::Format
 
-our $VERSION = '0.01';
+  our $VERSION = '0.01';
 our $_samlCache;
 
 BEGIN {
@@ -262,19 +263,13 @@ sub loadSPs {
 # @param profile_type login or logout
 # @return ( $request, $response, $method, $relaystate, $artifact )
 sub checkMessage {
-    my $self           = shift;
-    my $url            = shift;
-    my $request_method = shift;
-    my $content_type   = shift;
-    my $profile_type   = shift || "login";
-    my $request;
-    my $response;
-    my $message;
-    my $method;
-    my $relaystate;
-    my $artifact;
+    my ( $self, $url, $request_method, $content_type, $profile_type ) =
+      splice @_;
+    $profile_type ||= "login";
+    my ( $request, $response, $message, $method, $relaystate, $artifact );
 
     # Check if SAML service is loaded
+    # TODO : return undefined values ???
     return ( $request, $response, $method, $relaystate, $artifact )
       unless $self->{_lassoServer};
 
@@ -362,7 +357,7 @@ sub checkMessage {
 
                 }
 
-                if ( $self->param('SAMLRequest') ) {
+                elsif ( $self->param('SAMLRequest') ) {
 
                     # Request in body part
                     $request = $self->param('SAMLRequest');
@@ -370,7 +365,7 @@ sub checkMessage {
 
                 }
 
-                if ( $self->param('SAMLart') ) {
+                elsif ( $self->param('SAMLart') ) {
 
                     # Artifact in SAMLart param
                     $artifact = $self->param('SAMLart');
@@ -1935,23 +1930,8 @@ sub getAuthnContext {
 sub timestamp2samldate {
     my ( $self, $timestamp ) = splice @_;
 
-    my ( $sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst ) =
-      gmtime($timestamp);
-
-    $year += 1900;
-    $mon++;
-    $mon  = $mon > 9  ? $mon  : "0" . $mon;
-    $mday = $mday > 9 ? $mday : "0" . $mday;
-    $hour = $hour > 9 ? $hour : "0" . $hour;
-    $min  = $min > 9  ? $min  : "0" . $min;
-    $sec  = $sec > 9  ? $sec  : "0" . $sec;
-
-    my $samldate = "$year-$mon-$mday" . "T" . "$hour:$min:$sec" . "Z";
-
-    $self->lmLog( "Convert timestamp $timestamp in SAML2 date: $samldate",
-        'debug' );
-
-    return $samldate;
+    my @t = gmtime($timestamp);
+    return strftime( "%Y-%m-%dT%R:%SZ", @t );
 }
 
 ## @method string samldate2timestamp(string samldate)
@@ -1980,11 +1960,7 @@ sub samldate2timestamp {
 # @param $wait If true, do not call to autoRedirect or autoPost function
 # @return boolean False if failed.
 sub sendLogoutResponseToServiceProvider {
-    my $self       = shift;
-    my $logout     = shift;
-    my $method     = shift;
-    my $relaystate = shift;
-    my $seconds    = shift;
+    my ( $self, $logout, $method, $relaystate, $seconds ) = splice @_;
 
     # Logout response
     unless ( $self->buildLogoutResponseMsg($logout) ) {
@@ -2017,7 +1993,7 @@ sub sendLogoutResponseToServiceProvider {
     }
 
     # HTTP-POST
-    if ( $method == Lasso::Constants::HTTP_METHOD_POST ) {
+    elsif ( $method == Lasso::Constants::HTTP_METHOD_POST ) {
 
         # Use autosubmit form
         my $slo_url  = $logout->msg_url;
@@ -2040,7 +2016,7 @@ sub sendLogoutResponseToServiceProvider {
     }
 
     # HTTP-SOAP
-    if ( $method == Lasso::Constants::HTTP_METHOD_SOAP ) {
+    elsif ( $method == Lasso::Constants::HTTP_METHOD_SOAP ) {
 
         my $slo_body = $logout->msg_body;
         $self->{SOAPMessage} = $slo_body;
@@ -2071,12 +2047,8 @@ sub sendLogoutResponseToServiceProvider {
 # @param $relay If SOAP method, build a relay logout request
 # @return int Number of concerned providers.
 sub sendLogoutRequestToServiceProvider {
-    my $self       = shift;
-    my $logout     = shift;
-    my $providerID = shift;
-    my $method     = shift;
-    my $relay      = shift;
-    my $server     = $self->{_lassoServer};
+    my ( $self, $logout, $providerID, $method, $relay ) = splice @_;
+    my $server = $self->{_lassoServer};
     my $info;
 
     # Test if provider is mentionned
@@ -2108,19 +2080,19 @@ sub sendLogoutRequestToServiceProvider {
 
         $self->lmLog( "No logout request found, build it", 'debug' );
 
-    # Initiate the logout request
-    unless ( $self->initLogoutRequest( $logout, $providerID, $method ) ) {
-        $self->lmLog( "Initiate logout request failed for $providerID",
-            'error' );
-        return ( 0, $method, undef );
-    }
+        # Initiate the logout request
+        unless ( $self->initLogoutRequest( $logout, $providerID, $method ) ) {
+            $self->lmLog( "Initiate logout request failed for $providerID",
+                'error' );
+            return ( 0, $method, undef );
+        }
 
-    # Build request message
-    unless ( $self->buildLogoutRequestMsg($logout) ) {
+        # Build request message
+        unless ( $self->buildLogoutRequestMsg($logout) ) {
             $self->lmLog( "Build logout request failed for $providerID",
                 'error' );
-        return ( 0, $method, undef );
-    }
+            return ( 0, $method, undef );
+        }
 
     }
 
@@ -2149,7 +2121,7 @@ sub sendLogoutRequestToServiceProvider {
     }
 
     # HTTP-POST
-    if ( $method == Lasso::Constants::HTTP_METHOD_POST ) {
+    elsif ( $method == Lasso::Constants::HTTP_METHOD_POST ) {
 
         $self->lmLog( "Send POST logout request to $providerID", 'debug' );
 
@@ -2169,7 +2141,7 @@ sub sendLogoutRequestToServiceProvider {
     }
 
     # HTTP-SOAP
-    if ( $method == Lasso::Constants::HTTP_METHOD_SOAP ) {
+    elsif ( $method == Lasso::Constants::HTTP_METHOD_SOAP ) {
 
         # Build a relay request, to be used after SLO process is done
         if ($relay) {
