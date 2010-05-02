@@ -14,7 +14,6 @@ use LWP::UserAgent;    # SOAP call
 use HTTP::Request;     # SOAP call
 use POSIX;             # Convert SAML2 date into timestamp
 use Encode;            # Encode attribute values
-require Date::Format;
 
 our $VERSION = '0.01';
 our $_samlCache;
@@ -1931,7 +1930,7 @@ sub timestamp2samldate {
     my ( $self, $timestamp ) = splice @_;
 
     my @t = gmtime($timestamp);
-    return Date::Format::strftime( "%Y-%m-%dT%R:%SZ", @t );
+    return POSIX::strftime( "%Y-%m-%dT%R:%SZ", @t );
 }
 
 ## @method string samldate2timestamp(string samldate)
