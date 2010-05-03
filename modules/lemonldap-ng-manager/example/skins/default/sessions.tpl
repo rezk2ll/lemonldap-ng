@@ -30,8 +30,8 @@
 <!-- Header -->
 <div id="header">
    <img alt="Lemonldap::NG" src="<TMPL_VAR NAME="DIR">/logo_lemonldap-ng.png" class="logo" width="200" height="38" />
-   <p class="ui-state-default ui-corner-all ui-state-active"><a href="index.pl"><lang en="Configuration management" fr="Gestion de la configuration"/></a></p>
-   <p class="ui-state-default ui-corner-all"><a href="sessions.pl"><lang en="Sessions explorer" fr="Explorateur de sessions"/></a></p>
+   <p class="ui-state-default ui-corner-all"><a href="index.pl"><lang en="Configuration management" fr="Gestion de la configuration"/></a></p>
+   <p class="ui-state-default ui-corner-all ui-state-active"><a href="sessions.pl"><lang en="Sessions explorer" fr="Explorateur de sessions"/></a></p>
 <!-- Header -->
 </div>
 
