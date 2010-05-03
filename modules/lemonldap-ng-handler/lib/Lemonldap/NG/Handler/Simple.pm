@@ -611,11 +611,6 @@ sub conditionSub {
         my ( $ZimbraPreAuthKey, $ZimbraAccount, $ZimbraBy, $ZimbraUri ) =
           ( $1, $2, $3, $4 );
 
-        $class->lmLog(
-"Calling Zimbra preauth with $ZimbraPreAuthKey, $ZimbraAccount, $ZimbraBy and $ZimbraUri",
-            'debug'
-        );
-
         my $ZimbraExpires   = 0;
         my $ZimbraTimestamp = gmtime() * 1000;
 

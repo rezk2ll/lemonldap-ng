@@ -559,7 +559,7 @@ sub _compileRules {
 sub _conditionSub {
     my ( $self, $cond ) = splice @_;
     return sub { 1 }
-      if ( $cond =~ /^(?:accept|unprotect)$/i );
+      if ( $cond =~ /^(?:accept$|unprotect$|zimbra_preauth)/i );
     return sub { 0 }
       if ( $cond =~ /^(?:deny$|logout)/i );
     $cond =~ s/\$date/&POSIX::strftime("%Y%m%d%H%M%S",localtime())/e;
