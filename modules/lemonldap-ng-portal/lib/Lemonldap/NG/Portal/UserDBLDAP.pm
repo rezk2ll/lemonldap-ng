@@ -117,6 +117,8 @@ sub setSessionInfo {
     else {
         $self->abort('Only hash reference are supported now in exportedVars');
     }
+    # Store other informations in session
+    $self->{sessionInfo}->{'_user'} = $self->{user};
     PE_OK;
 }
 
