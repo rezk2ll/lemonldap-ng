@@ -62,11 +62,17 @@ _RETURN $getCookiesResponse Response
 # This subroutine works only for portals working with user and password
 #@param user uid
 #@param password password
+#@param sessionid optional session identifier
 #@return session => { error => code , cookies => { cookieName1 => value ,... } }
 sub getCookies {
     my $self = shift;
+    my $user      = shift;
+    my $password  = shift;
+    my $sessionid = shift;
+    $self->{user}     = $user;
+    $self->{password} = $password;
+    $self->{id}       = $sessionid if ( defined($sessionid) && $sessionid );
     $self->{error} = PE_OK;
-    ( $self->{user}, $self->{password} ) = ( shift, shift );
     $self->lmLog( "SOAP authentication request for $self->{user}", 'debug' );
     unless ( $self->{user} && $self->{password} ) {
         $self->{error} = PE_FORMEMPTY;
