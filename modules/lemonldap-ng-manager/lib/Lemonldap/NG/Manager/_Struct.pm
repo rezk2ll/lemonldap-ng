@@ -888,7 +888,7 @@ sub testStruct {
                 test    => sub {
                     my $e = shift;
                     return 1 if ( $e =~ /^(?:accept|deny|unprotect)$/i );
-                    if ( $e =~ s/^logout(?:_(?:app|sso|app_sso))?\s*// ) {
+                    if ( $e =~ s/^logout(?:_(?:app_sso|app|sso))?\s*// ) {
                         return (
                             $e =~ /^(?:https?:\/\/\S+)?$/
                             ? 1
