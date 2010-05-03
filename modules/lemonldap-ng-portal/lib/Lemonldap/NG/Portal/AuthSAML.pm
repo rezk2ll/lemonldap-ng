@@ -37,10 +37,9 @@ sub extractFormInfo {
 
     # TODO: seems to be unused (redefined later)
     my (
-        $login,      $logout,     $idp,
-        $idpConfKey, $request,    $response,
-        $artifact,   $relaystate, $signature_status,
-	$method
+        $login,            $logout,   $idp,      $idpConfKey,
+        $request,          $response, $artifact, $relaystate,
+        $signature_status, $method
     );
 
     # 1. Get HTTP request informations to know
@@ -127,10 +126,13 @@ sub extractFormInfo {
               ->{samlIDPMetaDataOptionsCheckSSOMessageSignature};
 
             if ($checkSSOMessageSignature) {
-
-              # TODO
-              #$signature_status = $login->signature_status;
-              #$self->lmLog( "Signature status is $signature_status", 'debug' );
+                unless ( $self->checkSignatureStatus($login) ) {
+                    $self->lmLog( "Signature is not valid", 'error' );
+                    return PE_ERROR;
+                }
+                else {
+                    $self->lmLog( "Signature is valid", 'debug' );
+                }
             }
             else {
                 $self->lmLog( "Message signature will not be checked",
@@ -348,8 +350,13 @@ sub extractFormInfo {
               ->{samlIDPMetaDataOptionsCheckSLOMessageSignature};
 
             if ($checkSLOMessageSignature) {
-
-                # TODO
+                unless ( $self->checkSignatureStatus($logout) ) {
+                    $self->lmLog( "Signature is not valid", 'error' );
+                    return PE_ERROR;
+                }
+                else {
+                    $self->lmLog( "Signature is valid", 'debug' );
+                }
             }
             else {
                 $self->lmLog( "Message signature will not be checked",
@@ -421,8 +428,13 @@ sub extractFormInfo {
               ->{samlIDPMetaDataOptionsCheckSLOMessageSignature};
 
             if ($checkSLOMessageSignature) {
-
-                # TODO
+                unless ( $self->checkSignatureStatus($logout) ) {
+                    $self->lmLog( "Signature is not valid", 'error' );
+                    return PE_ERROR;
+                }
+                else {
+                    $self->lmLog( "Signature is valid", 'debug' );
+                }
             }
             else {
                 $self->lmLog( "Message signature will not be checked",

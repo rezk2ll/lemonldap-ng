@@ -2218,6 +2218,18 @@ sub sendLogoutRequestToServiceProvider {
 
 }
 
+## @method boolean checkSignatureStatus(Lasso::Profile profile)
+# Check signature status
+# @param profile Lasso::Profile object
+# @return result
+sub checkSignatureStatus {
+    my ( $self, $profile ) = splice @_;
+
+    eval { Lasso::Profile::get_signature_status($profile); };
+
+    return $self->checkLassoError($@);
+}
+
 1;
 
 __END__
@@ -2491,6 +2503,10 @@ Send logout response issue from a logout request
 =head2 sendLogoutRequestToServiceProvider
 
 Send logout request to a service provider
+
+=head2 checkSignatureStatus
+
+Check signature status
 
 =head1 SEE ALSO
 
