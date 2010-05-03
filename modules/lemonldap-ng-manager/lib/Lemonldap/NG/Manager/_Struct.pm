@@ -895,6 +895,16 @@ sub testStruct {
                             : ( 0, "bad url \"$e\"" )
                         );
                     }
+                    elsif ( $e =~ s/^zimbra_preauth\s*// ) {
+                        return (
+                            $e =~ /^(?:(\S+)\s+(\S+)\s+(\S+)\s+(\S+))$/
+                            ? 1
+                            : (
+                                0,
+"Zimbra preauth need arguments preAuthKey, Account, By and Uri"
+                            )
+                        );
+                    }
                     return &$perlExpr($e);
                 },
                 warnTest => sub {
