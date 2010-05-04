@@ -1951,7 +1951,7 @@ sub samldate2timestamp {
     return $timestamp;
 }
 
-## @pmethod int sendLogoutRequestToServiceProvider(Lasso::Logout $logout, int $method, string $relaystate, int $wait)
+## @pmethod int sendLogoutResponseToServiceProvider(Lasso::Logout $logout, int $method, string $relaystate, int $wait)
 # Send logout response issue from a logout request.
 # @param $logout Lasso Logout object
 # @param $method Method to use
