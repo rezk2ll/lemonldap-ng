@@ -1044,8 +1044,15 @@ sub run ($$) {
     $class->lmSetApacheUser( $apacheRequest, $datas->{$whatToTrace} );
 
     # AUTHORIZATION
+    my $kc = keys %$datas;
     return $class->forbidden($uri) unless ( $class->grant($uri) );
     $class->updateStatus( $datas->{$whatToTrace}, $apacheRequest->uri, 'OK' );
+
+    # Store local macros
+    if ( keys %$datas > $kc and $refLocalStorage ) {
+        $class->lmLog("Update local cache","debug");
+        $refLocalStorage->set( $id, $datas, "10 minutes" );
+    }
 
     # ACCOUNTING
     # 2 - Inform remote application
