@@ -23,6 +23,7 @@ print Lemonldap::NG::Common::BuildWSDL->new->buildWSDL(<<EOT);
       <complexType name="CookiesSequence">
         <sequence>
           __XMLCOOKIELIST__
+          <element name="lemonldapupdate" type="xsd:string"></element>
         </sequence>
       </complexType>
       <complexType name="AttributesSequence">

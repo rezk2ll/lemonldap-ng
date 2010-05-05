@@ -1111,9 +1111,6 @@ sub setAuthSessionInfo {
     # Get the current authentication module
     $self->{sessionInfo}->{_auth} = $self->get_module("auth");
 
-    # Store primary informations
-    $self->{sessionInfo}->{'_utime'} = time();
-
     return $self->SUPER::setAuthSessionInfo();
 }
 

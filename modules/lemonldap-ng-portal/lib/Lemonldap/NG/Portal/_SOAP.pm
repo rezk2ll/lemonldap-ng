@@ -83,6 +83,7 @@ sub getCookies {
               setMacros setLocalGroups setGroups authenticate removeOther grantSession
               store buildCookie)
         );
+        $self->updateSession();
     }
     my @tmp = ();
     push @tmp, SOAP::Data->name( error => $self->{error} );
@@ -91,6 +92,8 @@ sub getCookies {
         foreach ( @{ $self->{cookie} } ) {
             push @cookies, SOAP::Data->name( $_->name, $_->value );
         }
+        push @cookies, SOAP::Data->name(
+            $self->{cookieName} . 'update', time() );
     }
     else {
         my @cookieNames = split /\s+/, $self->{cookieName};

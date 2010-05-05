@@ -360,6 +360,7 @@ install_handler_site:	install_conf_dir
 	@install -v -d ${RHANDLERDIR}
 	@cp --remove-destination ${SRCHANDLERDIR}/example/MyHandler.pm ${RHANDLERDIR}
 	@cp --remove-destination ${SRCHANDLERDIR}/example/MyHandlerZimbra.pm ${RHANDLERDIR}
+	@cp --remove-destination ${SRCHANDLERDIR}/example/MyUpdateCookieHandler.pm ${RHANDLERDIR}
 	@rm -rf $$(find $(RHANDLERDIR) -type d -name .svn)
 
 install_test_site:
