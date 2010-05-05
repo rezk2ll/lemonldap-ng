@@ -95,10 +95,12 @@
       <li>Sessions explorer</li>
 
       <li>Control on session uniqueness</li>
+
+      <li>Session purge</li>
     </ul>Indeed, Memcached does not provide any mean to get all sessions
     (without knowning each ID of each session). This is mandatory to display
-    all sessions in Session Explorer, and to find a corresponding session when
-    testing session uniqueness.
+    all sessions in Session Explorer, to purge sessions and to find a
+    corresponding session when testing session uniqueness.
 
     <p class="paragraph"></p>To disable sessions explorer, you can forbid
     access in apache configuration:
@@ -128,6 +130,11 @@ notifyOther = 0
 </pre>
     </div>
 
+    <p class="paragraph"></p>For sessions purge, a solution can be to patch
+    Apache::Session::Memcached, with this patch: <span class=
+    "wikiexternallink"><a href=
+    "https://rt.cpan.org/Ticket/Display.html?id=56429">https://rt.cpan.org/Ticket/Display.html?id=56429</a></span>.
+
     <h3 class="heading-1-1"><span id=
     "HLemonLDAP3A3ANGconfiguration">LemonLDAP::NG configuration</span></h3>
 
@@ -139,7 +146,12 @@ notifyOther = 0
     options:
 
     <ul class="star">
-      <li>Servers: list of Memcached servers, separated by spaces</li>
+      <li><strong class="strong">Servers</strong>: list of Memcached servers,
+      separated by spaces</li>
+
+      <li><strong class="strong">Expiration</strong>: time in seconds after
+      which session will be deleted from cache (<strong class="strong">require
+      a patch</strong>)</li>
     </ul>Example:
 
     <p class="paragraph"></p>

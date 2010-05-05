@@ -172,6 +172,8 @@
       <li>Config::IniFiles</li>
 
       <li>JSON</li>
+
+      <li>Digest::HMAC</li>
     </ul>
 
     <h4 class="heading-1-1-1"><span id="HSpecificfunctionalities">Specific
@@ -242,23 +244,29 @@
 
     <div class="code">
       <pre>
-# apt-get install apache2 libapache2-mod-perl2 libapache-session-perl libnet-ldap-perl libcache-cache-perl libdbi-perl perl-modules libwww-perl libcache-cache-perl libxml-simple-perl  libsoap-lite-perl libhtml-template-perl libregexp-assemble-perl libjs-jquery libxml-libxml-perl libcrypt-rijndael-perl libio-string-perl libxml-libxslt-perl libconfig-inifiles-perl libjson-perl libstring-random-perl libemail-date-format-perl libmime-lite-perl libcrypt-openssl-rsa-perl
+# apt-get install apache2 libapache2-mod-perl2 libapache-session-perl libnet-ldap-perl libcache-cache-perl libdbi-perl perl-modules libwww-perl libcache-cache-perl libxml-simple-perl  libsoap-lite-perl libhtml-template-perl libregexp-assemble-perl libjs-jquery libxml-libxml-perl libcrypt-rijndael-perl libio-string-perl libxml-libxslt-perl libconfig-inifiles-perl libjson-perl libstring-random-perl libemail-date-format-perl libmime-lite-perl libcrypt-openssl-rsa-perl libdigest-hmac-perl
 </pre>
     </div>
 
     <h4 class="heading-1-1-1"><span id="HYUM">YUM</span></h4><br />
     <br />
-    Some Perl dependencies are hosted in <span class=
-    "wikiexternallink"><a href="https://rpmrepo.org/">RPMForge</a></span>
-    repository, you can activate this repository: <span class=
-    "wikiexternallink"><a href=
-    "https://rpmrepo.org/RPMforge/Using">https://rpmrepo.org/RPMforge/Using</a></span><br />
+    Choose a repository which hosted Perl dependencies:
 
-    <br />
+    <ul class="star">
+      <li><span class="wikiexternallink"><a href=
+      "http://fedoraproject.org/wiki/EPEL/">EPEL</a></span> repository, you
+      can activate this repository: <span class="wikiexternallink"><a href=
+      "http://fedoraproject.org/wiki/EPEL/FAQ#howtouse">http://fedoraproject.org/wiki/EPEL/FAQ#howtouse</a></span></li>
+
+      <li><span class="wikiexternallink"><a href=
+      "https://rpmrepo.org/">RPMForge</a></span> repository, you can activate
+      this repository: <span class="wikiexternallink"><a href=
+      "https://rpmrepo.org/RPMforge/Using">https://rpmrepo.org/RPMforge/Using</a></span></li>
+    </ul>
 
     <div class="code">
       <pre>
-# yum install httpd mod_perl perl-Apache-Session perl-LDAP perl-XML-SAX perl-XML-NamespaceSupport perl-HTML-Template perl-Regexp-Assemble perl-Error perl-IPC-ShareLite perl-Cache-Cache perl-FreezeThaw perl-XML-Simple perl-version perl-CGI-Session perl-DBD-Pg perl-XML-LibXML-Common perl-BSD-Resource perl-XML-LibXML perl-Crypt-Rijndael perl-IO-<span class="java-object">String</span> perl-XML-LibXSLT perl-SOAP-Lite perl-Config-IniFiles perl-JSON
+# yum install httpd mod_perl perl-Apache-Session perl-LDAP perl-XML-SAX perl-XML-NamespaceSupport perl-HTML-Template perl-Regexp-Assemble perl-Error perl-IPC-ShareLite perl-Cache-Cache perl-FreezeThaw perl-XML-Simple perl-version perl-CGI-Session perl-DBD-Pg perl-XML-LibXML-Common perl-BSD-Resource perl-XML-LibXML perl-Crypt-Rijndael perl-IO-<span class="java-object">String</span> perl-XML-LibXSLT perl-SOAP-Lite perl-Config-IniFiles perl-JSON perl-Digest-HMAC
 </pre>
     </div>
 
