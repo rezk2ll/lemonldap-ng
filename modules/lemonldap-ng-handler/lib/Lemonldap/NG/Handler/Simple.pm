@@ -22,7 +22,6 @@ use Lemonldap::NG::Common::Safelib;    #link protected safe Safe object
 require Data::Dumper;
 require POSIX;
 use CGI::Util 'expires';
-use Digest::HMAC_SHA1 qw(hmac_sha1 hmac_sha1_hex);    # Zimbra preauth
 
 #inherits Cache::Cache
 #inherits Apache::Session
@@ -600,43 +599,11 @@ sub conditionSub {
             );
         }
     }
+
+    # Replace some strings in condition
     $cond =~ s/\$date/&POSIX::strftime("%Y%m%d%H%M%S",localtime())/e;
     $cond =~ s/\$(\w+)/\$datas->{$1}/g;
     $cond =~ s/\$datas->{vhost}/\$apacheRequest->hostname/g;
-
-    # Zimbra preauth trigger
-    if ( $cond =~ /^zimbra_preauth(?:\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+))?$/i ) {
-
-        # Get preauth parameters
-        my ( $ZimbraPreAuthKey, $ZimbraAccount, $ZimbraBy, $ZimbraUri ) =
-          ( $1, $2, $3, $4 );
-
-        my $ZimbraExpires   = 0;
-        my $ZimbraTimestamp = gmtime() * 1000;
-
-        # Compute preauth value
-        my $ZimbraComputedValue = hmac_sha1_hex(
-            "$ZimbraAccount|$ZimbraBy|$ZimbraExpires|$ZimbraTimestamp",
-            $ZimbraPreAuthKey );
-
-        # Redirect user
-        return (
-            $class->safe->reval(
-                "sub {
-    \$datas->{_redirect} = 'http';
-    \$datas->{_redirect} .= ( \$https ? 's' : '' ) . '://' ;
-    \$datas->{_redirect} .= \$apacheRequest->get_server_name;
-    \$datas->{_redirect} .= ':' . ( \$port ? \$port : \$apacheRequest->get_server_port );
-    \$datas->{_redirect} .= '$ZimbraUri';
-    \$datas->{_redirect} .= '?account='.$ZimbraAccount;
-    \$datas->{_redirect} .= '&by=$ZimbraBy';
-    \$datas->{_redirect} .= '&expires=$ZimbraExpires';
-    \$datas->{_redirect} .= '&preauth=$ZimbraComputedValue';
-    return 0; }"
-            ),
-            1
-        );
-    }
 
     # Eval sub
     my $sub = $class->safe->reval("sub {return ( $cond )}");
@@ -869,15 +836,6 @@ sub forbidden {
         my $u = $datas->{_logout};
         $class->localUnlog;
         return $class->goToPortal( $u, 'logout=1' );
-    }
-    elsif ( $datas->{_redirect} ) {
-        $class->updateStatus( $datas->{$whatToTrace}, $_[0], 'REDIRECT' );
-        my $u = $datas->{_redirect};
-        $class->lmLog(
-            "Redirect " . $apacheRequest->connection->remote_ip . " to $u",
-            'debug' );
-        lmSetHeaderOut( $apacheRequest, 'Location' => $u );
-        return REDIRECT;
     }
     $class->updateStatus( $datas->{$whatToTrace}, $_[0], 'REJECT' );
     $apacheRequest->push_handlers(

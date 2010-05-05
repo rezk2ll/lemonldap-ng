@@ -359,6 +359,7 @@ install_handler_site:	install_conf_dir
 	# Handler install
 	@install -v -d ${RHANDLERDIR}
 	@cp --remove-destination ${SRCHANDLERDIR}/example/MyHandler.pm ${RHANDLERDIR}
+	@cp --remove-destination ${SRCHANDLERDIR}/example/MyHandlerZimbra.pm ${RHANDLERDIR}
 	@rm -rf $$(find $(RHANDLERDIR) -type d -name .svn)
 
 install_test_site:
@@ -605,6 +606,7 @@ default-diff:
 	@# Handler
 	@$(DIFF) lemonldap-ng-handler/lib/Lemonldap/NG/Handler /usr/local/share/perl/5.10.0/Lemonldap/NG/Handler ||true
 	@$(DIFF) lemonldap-ng-handler/example/MyHandler.pm $(LMPREFIX)/handler/MyHandler.pm ||true
+	@$(DIFF) lemonldap-ng-handler/example/MyHandlerZimbra.pm $(LMPREFIX)/handler/MyHandlerZimbra.pm ||true
 	@# Common
 	@$(DIFF) lemonldap-ng-common/lib/Lemonldap/NG/Common /usr/local/share/perl/5.10.0/Lemonldap/NG/Common ||true
 	@$(DIFF) lemonldap-ng-common/lib/Lemonldap/NG/Common.pm /usr/local/share/perl/5.10.0/Lemonldap/NG/Common.pm ||true
