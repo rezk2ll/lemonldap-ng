@@ -94,7 +94,7 @@ Edit you Zimbra vhost configuration like this to catch a specific SSO URL
 
 	# Default Handler
 	PerlRequire __HANDLERDIR__/MyHandler.pm
-	PerlHeaderParserHandler My::Zimbra
+	PerlHeaderParserHandler My::Package
 
 	# Load Zimbra Handler
 	PerlRequire __HANDLERDIR__/MyHandlerZimbra.pm

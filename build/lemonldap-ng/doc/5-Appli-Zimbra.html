@@ -146,7 +146,7 @@
 &lt;VirtualHost *&gt;
         ServerName zimbra.example.com<br /><br />        # Default Handler
         PerlRequire <b class="bold">HANDLERDIR</b>/MyHandler.pm
-        PerlHeaderParserHandler My::Zimbra<br /><br />        # Load Zimbra Handler
+        PerlHeaderParserHandler My::Package<br /><br />        # Load Zimbra Handler
         PerlRequire <b class=
 "bold">HANDLERDIR</b>/MyHandlerZimbra.pm<br /><br />        # Zimbra SSO URL
         &lt;Location /zimbrasso&gt;<br /><br />                PerlSetVar ZimbraPreAuthKey XXXX

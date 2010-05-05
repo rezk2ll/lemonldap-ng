@@ -91,6 +91,8 @@ my $docs = {
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocAppPLA'                 => '5-Appli-phpLDAPadmin.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocAppSympa'               => '5-Appli-Sympa.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocAppBugzilla'            => '5-Appli-Bugzilla.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocAppLiferay'             => '5-Appli-Liferay.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocAppZimbra'              => '5-Appli-Zimbra.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocAppTomcatValve'         => '5-Appli-Tomcat-Valve.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocAppBasicAuthentication' => '5-Appli-HTTP-Basic-Authentication.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocAppSelfMade'            => '5-Appli-self-made.html',
@@ -270,6 +272,8 @@ while ( my ( $url, $file ) = each %$docs ) {
         s#/xwiki/bin/view/NG/DocAppPLA#5-Appli-phpLDAPadmin.html#g;
         s#/xwiki/bin/view/NG/DocAppSympa#5-Appli-Sympa.html#g;
         s#/xwiki/bin/view/NG/DocAppBugzilla#5-Appli-Bugzilla.html#g;
+        s#/xwiki/bin/view/NG/DocAppLiferay#5-Appli-Liferay.html#g;
+        s#/xwiki/bin/view/NG/DocAppZimbra#5-Appli-Zimbra.html#g;
         s#/xwiki/bin/view/NG/DocAppTomcatValve#5-Appli-Tomcat-Valve.html#g;
         s#/xwiki/bin/view/NG/DocAppBasicAuthentication#5-Appli-HTTP-Basic-Authentication.html#g;
         s#/xwiki/bin/view/NG/DocAppselfMade#5-Appli-self-made.html#g;
