@@ -890,7 +890,8 @@ sub controlUrlOrigin {
         # REJECT [\0<'"`] in URL or encoded '%' and non protected hosts
         if (
             $self->{urldc} =~ /(?:\0|<|'|"|`|\%(?:00|25|3C|22|27|2C))/
-            or ( $tmp !~
+            or (    $tmp
+                and $tmp !~
 /^https?:\/\/(?:$self->{reVHosts}$self->{trustedDomains})(?::\d+)?(?:\/.*)?$/o
             )
           )
