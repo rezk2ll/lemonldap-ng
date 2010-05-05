@@ -2120,6 +2120,7 @@ sub sendLogoutRequestToServiceProvider {
     }
 
     # HTTP-POST
+    # TODO
     elsif ( $method == Lasso::Constants::HTTP_METHOD_POST ) {
 
         $self->lmLog( "Send POST logout request to $providerID", 'debug' );
@@ -2215,6 +2216,71 @@ sub sendLogoutRequestToServiceProvider {
     }
 
     return ( 1, $method, $info );
+
+}
+
+## @pmethod int sendLogoutRequestToServiceProviders(Lasso::Logout logout)
+# Send logout response issue from a logout request to all other service
+# providers. If information have to be displayed to users, such as
+# iframe to send HTTP-Redirect or HTTP-POST logout request, then
+# $self->{_info} will be updated.
+# @param logout Lasso Logout object
+# @return int Number of concerned providers.
+sub sendLogoutRequestToServiceProviders {
+    my $self           = shift;
+    my $logout         = shift;
+    my $server         = $self->{_lassoServer};
+    my $providersCount = 0;
+    my $info           = '';
+
+    # Get EntityID
+    my $entityID = $logout->remote_providerID();
+
+    # Reset providerID into Lasso::Logout object
+    $self->resetProviderIdIndex($logout);
+
+    # Header of the block which will be displayed to the user, if needed.
+    $info .=
+      &Lemonldap::NG::Portal::_i18n::msg( Lemonldap::NG::Portal::Simple::PM_SAML_SPLOGOUT,
+        $ENV{HTTP_ACCEPT_LANGUAGE} )
+      . '<ul>';
+
+    # Foreach SP found in session, get it from configuration, and send the
+    # appropriate logout request (HTTP,POST,SOAP).
+    while ( my $providerID = $self->getNextProviderId($logout) ) {
+
+        # Do not process logout on SP that initiate the logout request
+        next if ( $entityID && $entityID =~ /^$providerID$/ );
+
+        # Send logout request
+        my ( $rstatus, $rmethod, $rinfo ) =
+          $self->sendLogoutRequestToServiceProvider( $logout, $providerID,
+            undef, 1 );
+
+        next unless ($rstatus);
+
+        # Count providers that have to be request by HTTP redirect
+        $providersCount++;
+
+        # Add information if necessary
+        if ($rinfo) {
+            $info .= $rinfo;
+        }
+
+    }
+
+    # End of information block to be displayed to the user.
+    $info .= '</ul>';
+
+    # Print some information to the user. The URL to be redirected should
+    # not be send via a form (because it does not work all time).
+    if ($providersCount) {
+        $self->info($info);
+        $self->setHiddenFormValue( 'HttpRedirect',     'true' );
+        $self->setHiddenFormValue( 'HideSubmitButton', 'true' );
+    }
+
+    return $providersCount;
 
 }
 
@@ -2503,6 +2569,13 @@ Send logout response issue from a logout request
 =head2 sendLogoutRequestToServiceProvider
 
 Send logout request to a service provider
+
+=head2 sendLogoutRequestToServiceProviders
+
+Send logout response issue from a logout request to all other service
+providers. If information have to be displayed to users, such as
+iframe to send HTTP-Redirect or HTTP-POST logout request, then          
+$self->{_info} will be updated.                                         
 
 =head2 checkSignatureStatus
 

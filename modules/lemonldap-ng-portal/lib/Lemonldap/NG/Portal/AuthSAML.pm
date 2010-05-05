@@ -35,13 +35,6 @@ sub extractFormInfo {
     my $self   = shift;
     my $server = $self->{_lassoServer};
 
-    # TODO: seems to be unused (redefined later)
-    my (
-        $login,            $logout,   $idp,      $idpConfKey,
-        $request,          $response, $artifact, $relaystate,
-        $signature_status, $method
-    );
-
     # 1. Get HTTP request informations to know
     # if we are receving SAML request or response
     my $url            = $self->url();
@@ -66,9 +59,8 @@ sub extractFormInfo {
         "samlSPSSODescriptorArtifactResolutionServiceArtifact");
 
     # 1.1 SSO assertion consumer
-    # TODO: if $saml_acs_art_url,... are fixed, add a /o
     if ( $url =~
-/^(\Q$saml_acs_art_url\E|\Q$saml_acs_post_url\E|\Q$saml_acs_get_url\E)$/i
+/^(\Q$saml_acs_art_url\E|\Q$saml_acs_post_url\E|\Q$saml_acs_get_url\E)$/io
       )
     {
         $self->lmLog( "URL $url detected as an SSO assertion consumer URL",
@@ -79,7 +71,7 @@ sub extractFormInfo {
           $self->checkMessage( $url, $request_method, $content_type, "login" );
 
         # Create Login object
-        $login = $self->createLogin($server);
+        my $login = $self->createLogin($server);
 
         # Ignore signature verification
         $self->disableSignatureVerification($login);
@@ -104,12 +96,12 @@ sub extractFormInfo {
             $self->lmLog( "SSO: authentication response is valid", 'debug' );
 
             # Get IDP entityID
-            $idp = $login->remote_providerID();
+            my $idp = $login->remote_providerID();
 
             $self->lmLog( "Found entityID $idp in SAML message", 'debug' );
 
             # IDP conf key
-            $idpConfKey = $self->{_idpList}->{$idp}->{confKey};
+            my $idpConfKey = $self->{_idpList}->{$idp}->{confKey};
 
             unless ($idpConfKey) {
                 $self->lmLog( "$idp do not match any IDP in configuration",
@@ -184,17 +176,6 @@ sub extractFormInfo {
             {
                 $self->lmLog( "Conditions not validated", 'error' );
                 return PE_ERROR;
-            }
-
-            # Check OneTimeUse flag
-            my $oneTimeUse = $assertion->has_one_time_use();
-
-            if ($oneTimeUse) {
-                $self->lmLog( "Found oneTimeUse flag in assertion conditions",
-                    'debug' );
-
-                # Set a small cookie duration
-                $self->{cookieExpiration} = "+1m";
             }
 
             #  Extract RelayState information
@@ -300,7 +281,7 @@ sub extractFormInfo {
 
     # 1.2 SLO
     elsif ( $url =~
-/^(\Q$saml_slo_soap_url\E|\Q$saml_slo_soap_url_ret\E|\Q$saml_slo_get_url\E|\Q$saml_slo_get_url_ret\E)$/i
+/^(\Q$saml_slo_soap_url\E|\Q$saml_slo_soap_url_ret\E|\Q$saml_slo_get_url\E|\Q$saml_slo_get_url_ret\E)$/io
       )
     {
         $self->lmLog( "URL $url detected as an SLO URL", 'debug' );
@@ -310,7 +291,7 @@ sub extractFormInfo {
           $self->checkMessage( $url, $request_method, $content_type, "logout" );
 
         # Create Logout object
-        $logout = $self->createLogout($server);
+        my $logout = $self->createLogout($server);
 
         # Ignore signature verification
         $self->disableSignatureVerification($logout);
@@ -328,12 +309,12 @@ sub extractFormInfo {
             $self->lmLog( "Logout response is valid", 'debug' );
 
             # Get IDP entityID
-            $idp = $logout->remote_providerID();
+            my $idp = $logout->remote_providerID();
 
             $self->lmLog( "Found entityID $idp in SAML message", 'debug' );
 
             # IDP conf key
-            $idpConfKey = $self->{_idpList}->{$idp}->{confKey};
+            my $idpConfKey = $self->{_idpList}->{$idp}->{confKey};
 
             unless ($idpConfKey) {
                 $self->lmLog( "$idp do not match any IDP in configuration",
@@ -406,12 +387,12 @@ sub extractFormInfo {
             $self->lmLog( "Logout request is valid", 'debug' );
 
             # Get IDP entityID
-            $idp = $logout->remote_providerID();
+            my $idp = $logout->remote_providerID();
 
             $self->lmLog( "Found entityID $idp in SAML message", 'debug' );
 
             # IDP conf key
-            $idpConfKey = $self->{_idpList}->{$idp}->{confKey};
+            my $idpConfKey = $self->{_idpList}->{$idp}->{confKey};
 
             unless ($idpConfKey) {
                 $self->lmLog( "$idp do not match any IDP in configuration",
@@ -455,6 +436,7 @@ sub extractFormInfo {
             $self->lmLog( "Logout request NameID content: $user", 'debug' );
 
             # Get corresponding session
+	    # TODO use SAML sessionIndex
             my $local_sessions =
               $self->{samlStorage}
               ->searchOn( $self->{samlStorageOptions}, "_user", $user, );
@@ -606,7 +588,7 @@ sub extractFormInfo {
     }
 
     # 1.3 Artifact
-    elsif ( $url =~ /^(\Q$saml_ars_url\E)$/i ) {
+    elsif ( $url =~ /^(\Q$saml_ars_url\E)$/io ) {
 
         $self->lmLog( "URL $url detected as an artifact resolution service URL",
             'debug' );
@@ -616,7 +598,7 @@ sub extractFormInfo {
         my $art_response;
 
         # Create Login object
-        $login = $self->createLogin($server);
+        my $login = $self->createLogin($server);
 
         # Create artifact response
         unless ( $art_response =
@@ -643,6 +625,7 @@ sub extractFormInfo {
     # 2. IDP resolution
 
     # Try to recover IDP from IDP cookie
+    my $idp;
     my %cookies    = fetch CGI::Cookie;
     my $idp_cookie = $cookies{ $self->{samlIdPResolveCookie} };
     if ($idp_cookie) {
@@ -765,7 +748,7 @@ sub extractFormInfo {
     # 3. Build authentication request
 
     # IDP conf key
-    $idpConfKey = $self->{_idpList}->{$idp}->{confKey};
+    my $idpConfKey = $self->{_idpList}->{$idp}->{confKey};
 
     unless ($idpConfKey) {
         $self->lmLog( "$idp do not match any IDP in configuration", 'error' );
@@ -796,7 +779,7 @@ sub extractFormInfo {
       ->{samlIDPMetaDataOptionsAllowProxiedAuthn};
 
     # IDP HTTP method
-    $method =
+    my $method =
       $self->{samlIDPMetaDataOptions}->{$idpConfKey}
       ->{samlIDPMetaDataOptionsSSOBinding};
     $method = $self->getHttpMethod($method) if $method;
@@ -830,7 +813,7 @@ sub extractFormInfo {
       if $requestedAuthnContext;
 
     # Create SSO request
-    $login = $self->createAuthnRequest(
+    my $login = $self->createAuthnRequest(
         $server,            $idp,            $method,
         $forceAuthn,        $isPassive,      $nameIDFormat,
         $allowProxiedAuthn, $signSSOMessage, $requestedAuthnContext
@@ -1160,7 +1143,7 @@ sub authForce {
 
     return 1
       if ( $url =~
-/^(\Q$saml_acs_art_url\E|\Q$saml_acs_post_url\E|\Q$saml_acs_get_url\E|\Q$saml_slo_soap_url\E|\Q$saml_slo_soap_url_ret\E|\Q$saml_slo_get_url\E|\Q$saml_slo_get_url_ret\E)$/
+/^(\Q$saml_acs_art_url\E|\Q$saml_acs_post_url\E|\Q$saml_acs_get_url\E|\Q$saml_slo_soap_url\E|\Q$saml_slo_soap_url_ret\E|\Q$saml_slo_get_url\E|\Q$saml_slo_get_url_ret\E)$/io
       );
 
     return 0;

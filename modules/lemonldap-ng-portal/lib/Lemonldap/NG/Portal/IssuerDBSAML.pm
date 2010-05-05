@@ -65,7 +65,7 @@ sub issuerForUnAuthUser {
     my $content_type   = $self->content_type();
 
     # 1.1. SSO
-    if ( $url =~ /^(\Q$saml_sso_soap_url\E|\Q$saml_sso_get_url\E)$/i ) {
+    if ( $url =~ /^(\Q$saml_sso_soap_url\E|\Q$saml_sso_get_url\E)$/io ) {
 
         $self->lmLog( "URL $url detected as an SSO request URL", 'debug' );
 
@@ -73,8 +73,8 @@ sub issuerForUnAuthUser {
         my ( $request, $response, $method, $relaystate, $artifact ) =
           $self->checkMessage( $url, $request_method, $content_type );
 
-            # Create Login object
-            my $login = $self->createLogin($server);
+        # Create Login object
+        my $login = $self->createLogin($server);
 
         # Ignore signature verification
         $self->disableSignatureVerification($login);
@@ -142,7 +142,7 @@ sub issuerForUnAuthUser {
 
     # 1.2. SLO
     if ( $url =~
-/^(\Q$saml_slo_soap_url\E|\Q$saml_slo_soap_url_ret\E|\Q$saml_slo_get_url\E|\Q$saml_slo_get_url_ret\E)$/i
+/^(\Q$saml_slo_soap_url\E|\Q$saml_slo_soap_url_ret\E|\Q$saml_slo_get_url\E|\Q$saml_slo_get_url_ret\E)$/io
       )
     {
 
@@ -207,6 +207,7 @@ sub issuerForUnAuthUser {
             }
 
             # Send logout response
+	    # TODO sendLogoutResponseAfterLogoutRequest does not exists
             return PE_ERROR
               unless (
                 $self->sendLogoutResponseAfterLogoutRequest(
@@ -220,7 +221,7 @@ sub issuerForUnAuthUser {
 
     # 1.3. SLO SOAP replay (send SOAP requests asynchronously)
     #      This URL is used by IMG html tag, and should returned PE_IMG_*
-    if ( $url =~ /^(\Q$saml_slo_url_relay_soap\E)/i ) {
+    if ( $url =~ /^(\Q$saml_slo_url_relay_soap\E)/io ) {
 
         $self->lmLog( "URL $url detected as a relay service URL", 'debug' );
 
@@ -272,7 +273,7 @@ sub issuerForUnAuthUser {
             Lasso::Constants::HTTP_METHOD_SOAP );
         unless ($rstatus) {
             $self->lmLog( "Fail to process SOAP logout request to $providerID",
-              'error' );
+                'error' );
             return PE_IMG_NOK;
         }
 
@@ -281,7 +282,7 @@ sub issuerForUnAuthUser {
     }
 
     # 1.4. Artifacts
-    if ( $url =~ /^(\Q$saml_ars_url\E)$/i ) {
+    if ( $url =~ /^(\Q$saml_ars_url\E)$/io ) {
 
         $self->lmLog( "URL $url detected as an artifact resolution service URL",
             'debug' );
@@ -361,7 +362,7 @@ sub issuerForAuthUser {
     my $content_type   = $self->content_type();
 
     # 1.1. SSO
-    if ( $url =~ /^(\Q$saml_sso_soap_url\E|\Q$saml_sso_get_url\E)$/i ) {
+    if ( $url =~ /^(\Q$saml_sso_soap_url\E|\Q$saml_sso_get_url\E)$/io ) {
 
         $self->lmLog( "URL $url detected as an SSO request URL", 'debug' );
 
@@ -765,7 +766,7 @@ sub issuerForAuthUser {
 
     # 1.2. SLO
     if ( $url =~
-/^(\Q$saml_slo_soap_url\E|\Q$saml_slo_soap_url_ret\E|\Q$saml_slo_get_url\E|\Q$saml_slo_get_url_ret\E)$/i
+/^(\Q$saml_slo_soap_url\E|\Q$saml_slo_soap_url_ret\E|\Q$saml_slo_get_url\E|\Q$saml_slo_get_url_ret\E)$/io
       )
     {
 
@@ -932,75 +933,6 @@ sub issuerLogout {
     }
 
     return PE_OK;
-}
-
-## @pmethod int sendLogoutRequestToServiceProviders(Lasso::Logout $logout)
-# Send logout response issue from a logout request to all other service
-# providers. If information have to be displayed to users, such as
-# iframe to send HTTP-Redirect or HTTP-POST logout request, then
-# $self->{_info} will be updated.
-# @param $logout Lasso Logout object
-# @return int Number of concerned providers.
-sub sendLogoutRequestToServiceProviders {
-    my $self           = shift;
-    my $logout         = shift;
-    my $method         = shift;
-    my $server         = $self->{_lassoServer};
-    my $providersCount = 0;
-    my $info           = '';
-
-    # Get EntityID
-    my $entityID;
-    if ( $logout->request && $logout->request->Issuer ) {
-        $entityID = $logout->request->Issuer->content;
-    }
-
-    # Reset providerID into Lasso::Logout object
-    $self->resetProviderIdIndex($logout);
-
-    # Header of the block which will be displayed to the user, if needed.
-    $info .=
-      &Lemonldap::NG::Portal::_i18n::msg( PM_SAML_SPLOGOUT,
-        $ENV{HTTP_ACCEPT_LANGUAGE} )
-      . '<ul>';
-
-    # Foreach SP found in session, get it from configuration, and send the
-    # appropriate logout request (HTTP,POST,SOAP).
-    while ( my $providerID = $self->getNextProviderId($logout) ) {
-
-        # Do not process logout on SP that initiate the logout request
-        next if ( $entityID && $entityID =~ /^$providerID$/ );
-
-        # Send logout request
-        my ( $rstatus, $rmethod, $rinfo ) =
-          $self->sendLogoutRequestToServiceProvider( $logout, $providerID,
-            undef, 1 );
-
-        next unless ($rstatus);
-
-        # Count providers that have to be request by HTTP redirect
-        $providersCount++;
-
-        # Add information if necessary
-        if ($rinfo) {
-            $info .= $rinfo;
-        }
-
-    }
-
-    # End of information block to be displayed to the user.
-    $info .= '</ul>';
-
-    # Print some information to the user. The URL to be redirected should
-    # not be send via a form (because it does not work all time).
-    if ($providersCount) {
-        $self->info($info);
-        $self->setHiddenFormValue( 'HttpRedirect',     'true' );
-        $self->setHiddenFormValue( 'HideSubmitButton', 'true' );
-    }
-
-    return $providersCount;
-
 }
 
 1;
