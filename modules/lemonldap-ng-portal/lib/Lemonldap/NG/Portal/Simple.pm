@@ -1147,6 +1147,7 @@ sub setSessionInfo {
     $xheader =~ s/(.*?)(\,)+.*/$1/ if $xheader;
     $self->{sessionInfo}->{xForwardedForAddr} = $xheader || $ENV{REMOTE_ADDR};
 
+    # Date and time
     if ( $self->{updateSession} ) {
         $self->{sessionInfo}->{updateTime} =
           &POSIX::strftime( "%Y%m%d%H%M%S", localtime() );
@@ -1156,6 +1157,17 @@ sub setSessionInfo {
         $self->{sessionInfo}->{startTime} =
           &POSIX::strftime( "%Y%m%d%H%M%S", localtime() );
     }
+
+    # Get environment variables matching exportedVars
+    foreach ( keys %{ $self->{exportedVars} } ) {
+        if ( my $tmp = $ENV{ $self->{exportedVars}->{$_} } ) {
+            $tmp =~ s/[\r\n]/ /gs;
+            $self->{sessionInfo}->{$_} = $tmp;
+            delete $self->{exportedVars}->{$_};
+        }
+    }
+
+    # Call UserDB setSessionInfo
     return $self->SUPER::setSessionInfo();
 }
 

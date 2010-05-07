@@ -28,7 +28,6 @@ sub getUser {
 # Do nothing
 # @return Lemonldap::NG::Portal constant
 sub setSessionInfo {
-    my $self = shift;
     PE_OK;
 }
 
@@ -38,5 +37,6 @@ sub setSessionInfo {
 sub setGroups {
     PE_OK;
 }
+
 1;
 

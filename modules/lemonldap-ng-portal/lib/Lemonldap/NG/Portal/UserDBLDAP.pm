@@ -100,20 +100,12 @@ sub setSessionInfo {
     }
     elsif ( ref( $self->{exportedVars} ) eq 'HASH' ) {
         foreach ( keys %{ $self->{exportedVars} } ) {
-
-            # Special code to catch env var
-            if ( my $tmp = $ENV{$_} ) {
-                $tmp =~ s/[\r\n]/ /gs;
-                $self->{sessionInfo}->{$_} = $tmp;
-            }
-            else {
                 $self->{sessionInfo}->{$_} =
                   $self->{ldap}
                   ->getLdapValue( $self->{entry}, $self->{exportedVars}->{$_} )
                   || "";
             }
         }
-    }
     else {
         $self->abort('Only hash reference are supported now in exportedVars');
     }
