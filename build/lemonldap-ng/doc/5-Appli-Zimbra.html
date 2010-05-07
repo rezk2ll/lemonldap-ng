@@ -74,6 +74,9 @@
 
           <li><a href="#HConfigureZimbravirtualhostinApache">Configure Zimbra
           virtual host in Apache</a></li>
+
+          <li><a href="#HConfigureZimbraHandlerparameters">Configure Zimbra
+          Handler parameters</a></li>
         </ul>
       </li>
     </ul><strong class="strong">Warning</strong>: feature in developpement.
@@ -136,27 +139,47 @@
     Apache</span></h4>
 
     <p class="paragraph"></p>You will configure Zimbra vhost like other
-    protected vhost. Then Zimbra SSO URL will be protected by a second Handler
-    that will build Zimbra preauth URL:
+    protected vhost but you will use Zimbra handler instead of default
+    handler.
 
     <p class="paragraph"></p>
 
     <div class="code">
       <pre>
 &lt;VirtualHost *&gt;
-        ServerName zimbra.example.com<br /><br />        # Default Handler
-        PerlRequire <b class="bold">HANDLERDIR</b>/MyHandler.pm
-        PerlHeaderParserHandler My::Package<br /><br />        # Load Zimbra Handler
-        PerlRequire <b class=
-"bold">HANDLERDIR</b>/MyHandlerZimbra.pm<br /><br />        # Zimbra SSO URL
-        &lt;Location /zimbrasso&gt;<br /><br />                PerlSetVar ZimbraPreAuthKey XXXX
-                PerlSetVar ZimbraAccountKey uid
-                PerlSetVar ZimbraBy id
-                PerlSetVar ZimbraUrl /service/preauth<br /><br />                PerlHeaderParserHandler My::Zimbra<br /><br />        &lt;/Location&gt;<br /><br />&lt;/VirtualHost&gt;
+        ServerName zimbra.example.com<br /><br />        # Load Zimbra Handler
+        PerlRequire __HANDLERDIR__/MyHandlerZimbra.pm
+        PerlHeaderParserHandler My::Zimbra<br /><br />&lt;/VirtualHost&gt;
 </pre>
     </div>
 
-    <p class="paragraph"></p>
+    <h4 class="heading-1-1-1"><span id=
+    "HConfigureZimbraHandlerparameters">Configure Zimbra Handler
+    parameters</span></h4>
+
+    <p class="paragraph"></p>Go in Manager, Default parameters &gt; Advanced
+    parameters &gt; Special handlers &gt; Zimbra, and edit the different keys:
+
+    <ul class="star">
+      <li><strong class="strong">Preauthentication key</strong>: the one you
+      grab from zmprov command</li>
+
+      <li><strong class="strong">Account session key</strong>: session field
+      used as zimbra user account (by default: uid)</li>
+
+      <li><strong class="strong">Account type</strong>: for Zimbra this can be
+      name, id or foreignKey (by default: id)</li>
+
+      <li><strong class="strong">Preauthentication URL</strong>: Zimbra
+      preauthentication URL, either with full URL (ex: <span class=
+      "nobr"><a href=
+      "http://zimbra.lan/service/preauth">http://zimbra.lan/service/preauth</a></span>),
+      either only with path (ex: /service/preauth) (by default:
+      /service/preauth)</li>
+
+      <li><strong class="strong">Local SSO URL pattern</strong>: regular
+      expression to match the SSO URL (by default: ^/zimbrasso$)</li>
+    </ul>
   </div>
 
   <p class="footer"><a href="index.html">Index</a></p>

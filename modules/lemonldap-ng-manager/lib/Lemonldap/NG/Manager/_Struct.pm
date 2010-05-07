@@ -450,7 +450,7 @@ sub struct {
             # OTHER PARAMETERS
             advancedParams => {
                 _nodes => [
-                    qw(customFunctions n:soap n:notifications n:passwordManagement n:security n:redirection)
+                    qw(customFunctions n:soap n:notifications n:passwordManagement n:security n:redirection n:specialHandlers)
                 ],
 
                 customFunctions => 'text:/customFunctions',
@@ -500,9 +500,25 @@ sub struct {
                     _nodes => [qw(https port)],
                     https  => 'bool:/https',
                     port   => 'int:/port',
-                  }
+                },
 
-            }
+                specialHandlers => {
+                    _nodes => [qw(zimbraHandler)],
+
+                    # Zimbra
+                    zimbraHandler => {
+                        _nodes => [
+                            qw(zimbraPreAuthKey zimbraAccountKey zimbraBy zimbraUrl zimbraSsoUrl)
+                        ],
+                        zimbraPreAuthKey => 'text:/zimbraPreAuthKey',
+                        zimbraAccountKey => 'text:/zimbraAccountKey',
+                        zimbraBy     => 'text:/zimbraBy:default:zimbraByParams',
+                        zimbraUrl    => 'text:/zimbraUrl',
+                        zimbraSsoUrl => 'text:/zimbraSsoUrl',
+                    },
+                },
+
+            },
         },
 
         #############
@@ -896,16 +912,6 @@ sub testStruct {
                             : ( 0, "bad url \"$e\"" )
                         );
                     }
-                    elsif ( $e =~ s/^zimbra_preauth\s*// ) {
-                        return (
-                            $e =~ /^(?:(\S+)\s+(\S+)\s+(\S+)\s+(\S+))$/
-                            ? 1
-                            : (
-                                0,
-"Zimbra preauth need arguments preAuthKey, Account, By and Uri"
-                            )
-                        );
-                    }
                     return &$perlExpr($e);
                 },
                 warnTest => sub {
@@ -1146,6 +1152,13 @@ sub testStruct {
         dbiAuthMailCol      => $testNotDefined,
         userPivot           => $testNotDefined,
         dbiAuthPasswordHash => $testNotDefined,
+
+        # Zimbra
+        zimbraPreAuthKey => $testNotDefined,
+        zimbraAccountKey => $testNotDefined,
+        zimbraBy         => $testNotDefined,
+        zimbraUrl        => $testNotDefined,
+        zimbraSsoUrl     => $testNotDefined,
 
     };
 }

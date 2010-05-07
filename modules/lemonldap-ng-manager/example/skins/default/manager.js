@@ -457,6 +457,16 @@ function timeoutActivityParams(id) {
 			],lmdata(id));
 	display('select',lmtext(id));
 }
+function zimbraByParams(id) {
+	currentId=id;
+	formateSelect('select',[
+			'=',
+			'name=User name',
+			'id=User id',
+			'foreignPrincipal=Foreign principal',
+			],lmdata(id));
+	display('select',lmtext(id));
+}
 function btext(id) {
 	currentId=id;
 	$('#btextKey').attr('value',lmtext(id));

@@ -14,9 +14,51 @@ use Digest::HMAC_SHA1 qw(hmac_sha1 hmac_sha1_hex);
 
 our $VERSION = '0.1';
 
-# @method run()
+# Shared variables
+our ( $zimbraPreAuthKey, $zimbraAccountKey, $zimbraBy, $zimbraUrl,
+    $zimbraSsoUrl, $timeout );
+
+## @imethod protected void defaultValuesInit(hashRef args)
+# Overload defaultValuesInit
+# @param $args reference to the configuration hash
+sub defaultValuesInit {
+    my ( $class, $args ) = splice @_;
+
+    # Catch Zimbra parameters
+    $zimbraPreAuthKey = $args->{'zimbraPreAuthKey'} || $zimbraPreAuthKey;
+    $zimbraAccountKey =
+         $args->{'zimbraAccountKey'}
+      || $zimbraAccountKey
+      || 'uid';
+    $zimbraBy  = $args->{'zimbraBy'}  || $zimbraBy  || 'id';
+    $zimbraUrl = $args->{'zimbraUrl'} || $zimbraUrl || '/service/preauth';
+    $zimbraSsoUrl = $args->{'zimbraSsoUrl'} || $zimbraSsoUrl || '^/zimbrasso$';
+    $timeout      = $args->{'timeout'}      || $timeout      || '0';
+
+    # Display found values in debug mode
+    $class->lmLog( "zimbraPreAuthKey: $zimbraPreAuthKey", 'debug' );
+    $class->lmLog( "zimbraAccountKey: $zimbraAccountKey", 'debug' );
+    $class->lmLog( "zimbraBy: $zimbraBy",                 'debug' );
+    $class->lmLog( "zimbraUrl: $zimbraUrl",               'debug' );
+    $class->lmLog( "zimbraSsoUrl: $zimbraSsoUrl",         'debug' );
+    $class->lmLog( "timeout: $timeout",                   'debug' );
+
+    # Delete Zimbra parameters
+    delete $args->{'zimbraPreAuthKey'};
+    delete $args->{'zimbraAccountKey'};
+    delete $args->{'zimbraBy'};
+    delete $args->{'zimbraUrl'};
+    delete $args->{'zimbraSsoUrl'};
+    delete $args->{'timeout'};
+
+    # Call main subroutine
+    return $class->SUPER::defaultValuesInit($args);
+}
+
+## @rmethod Apache2::Const run(Apache2::RequestRec r)
 # Overload main run method
-# return Apache error code
+# @param r Current request
+# @return Apache2::Const value (OK, FORBIDDEN, REDIRECT or SERVER_ERROR
 sub run {
     my $class = shift;
     my $r     = $_[0];
@@ -25,42 +67,67 @@ sub run {
     # Continue only if user is authorized
     return $ret unless $ret eq OK;
 
-    # Get configuration parameters
-    my $ZimbraPreAuthKey = $r->dir_config('ZimbraPreAuthKey');
-    my $ZimbraAccountKey = $r->dir_config('ZimbraAccountKey') || "uid";
-    my $ZimbraBy         = $r->dir_config('ZimbraBy') || "id";
-    my $ZimbraUrl        = $r->dir_config('ZimbraUrl');
+    # Get current URI
+    my $args = $r->args;
+    my $uri = $r->uri . ( $args ? "?$args" : "" );
 
-    unless ( $ZimbraPreAuthKey and $ZimbraUrl ) {
-        $class->lmLog( "No preauth key or URL configured", 'error' );
+    # Return if we are not on a Zimbra SSO URI
+    return OK unless ( $uri =~ $zimbraSsoUrl );
+
+    # Check mandatory parameters
+    unless ($zimbraPreAuthKey) {
+        $class->lmLog( "No Zimbra preauth key configured", 'error' );
         return SERVER_ERROR;
     }
 
-    # Other values
-    my $ZimbraAccount   = $datas->{$ZimbraAccountKey};
-    my $ZimbraExpires   = 0;
-    my $ZimbraTimestamp = gmtime() * 1000;
-
-    # Compute preauth value
-    my $ZimbraComputedValue =
-      hmac_sha1_hex( "$ZimbraAccount|$ZimbraBy|$ZimbraExpires|$ZimbraTimestamp",
-        $ZimbraPreAuthKey );
-
-    # Build PreAuth URL
-    my $zimbra_url;
-    $zimbra_url .= $ZimbraUrl;
-    $zimbra_url .= '?account=' . $ZimbraAccount;
-    $zimbra_url .= '&by=' . $ZimbraBy;
-    $zimbra_url .= '&expires=' . $ZimbraExpires;
-    $zimbra_url .= '&preauth=' . $ZimbraComputedValue;
-
-    $class->lmLog( "Build Zimbra URL $zimbra_url", 'debug' );
+    # Build URL
+    my $zimbra_url = $class->_buildZimbraPreAuthUrl(
+        $zimbraPreAuthKey,           $zimbraUrl,
+        $datas->{$zimbraAccountKey}, $zimbraBy
+    );
 
     # Header location
     lmSetHeaderOut( $r, 'Location' => $zimbra_url );
 
     # Return REDIRECT
     return REDIRECT;
+}
+
+## @method private string _buildZimbraPreAuthUrl(string key, string url, string account, string by)
+# Build Zimbra PreAuth URL
+# @param key PreAuthKey
+# @param url URL
+# @param account User account
+# @param by Account type
+# @return Zimbra PreAuth URL
+sub _buildZimbraPreAuthUrl {
+    my ( $class, $key, $url, $account, $by ) = splice @_;
+
+    # Expiration time is calculated with _utime and timeout
+    my $expires = $timeout ? ( $datas->{_utime} + $timeout ) * 1000 : $timeout;
+
+    # Timestamp
+    my $timestamp = time() * 1000;
+
+    # Compute preauth value
+    my $computed_value =
+      hmac_sha1_hex( "$account|$by|$expires|$timestamp", $key );
+
+    $class->lmLog(
+        "Compute value $account|$by|$expires|$timestamp into $computed_value",
+        'debug' );
+
+    # Build PreAuth URL
+    my $zimbra_url;
+    $zimbra_url .= $url;
+    $zimbra_url .= '?account=' . $account;
+    $zimbra_url .= '&by=' . $by;
+    $zimbra_url .= '&expires=' . $expires;
+    $zimbra_url .= '&preauth=' . $computed_value;
+
+    $class->lmLog( "Build Zimbra URL $zimbra_url", 'debug' );
+
+    return $zimbra_url;
 }
 
 1;
@@ -81,35 +148,32 @@ for users authenticated by Lemonldap::NG
   @ISA = qw(Lemonldap::NG::Handler::ZimbraPreAuth);
 
   __PACKAGE__->init ( {
+
+    # Zimbra parameters
+    zimbraPreAuthKey => 'XXXX',
+    zimbraAccountKey => 'uid',
+    zimbraBy         => 'id',
+    zimbraUrl        => '/service/preauth',
+    zimbraSsoUrl     => '^/zimbrasso$',
+
+    # Common parameters
+    timeout          => '72000',
+
     # See Lemonldap::NG::Handler for more
+
   } );
   1;
 
 =head1 DESCRIPTION
 
-Edit you Zimbra vhost configuration like this to catch a specific SSO URL
+Edit you Zimbra vhost configuration like this:
 
 <VirtualHost *>
 	ServerName zimbra.example.com
 
-	# Default Handler
-	PerlRequire __HANDLERDIR__/MyHandler.pm
-	PerlHeaderParserHandler My::Package
-
 	# Load Zimbra Handler
 	PerlRequire __HANDLERDIR__/MyHandlerZimbra.pm
-
-	# Zimbra SSO URL
-	<Location /zimbrasso>
-
-		PerlSetVar ZimbraPreAuthKey XXXX
-		PerlSetVar ZimbraAccountKey uid
-		PerlSetVar ZimbraBy id
-		PerlSetVar ZimbraUrl /service/preauth
-
 		PerlHeaderParserHandler My::Zimbra
-
-	</Location>
 
 </VirtualHost>
 
@@ -119,6 +183,7 @@ See L<Lemonldap::NG::Handler>
 
 =head1 SEE ALSO
 
+http://wiki.zimbra.com/wiki/Preauth
 L<Lemonldap::NG::Handler>
 
 =head1 AUTHOR
