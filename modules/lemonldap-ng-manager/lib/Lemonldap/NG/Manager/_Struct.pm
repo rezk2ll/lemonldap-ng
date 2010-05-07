@@ -417,13 +417,14 @@ sub struct {
             # SESSIONS PARAMETERS
             sessionParams => {
                 _nodes => [
-                    qw(grantSessionRule storePassword timeout n:sessionStorage n:multipleSessions)
+                    qw(grantSessionRule storePassword timeout timeoutActivity n:sessionStorage n:multipleSessions)
                 ],
                 _help => 'storage',
 
                 grantSessionRule => 'textarea:/grantSessionRule',
                 storePassword    => 'bool:/storePassword',
                 timeout          => 'text:/timeout:timeout:text',
+                timeoutActivity   => 'text:/timeoutActivity:timeoutActivity:timeoutActivityParams',
 
                 sessionStorage => {
                     _nodes        => [qw(globalStorage globalStorageOptions)],
@@ -993,6 +994,10 @@ sub testStruct {
             test    => qr/^\d*$/,
             msgFail => 'Bad number'
         },
+        timeoutActivity => {
+            test    => qr/^\d*$/,
+            msgFail => 'Bad number',
+        },
         userControl => {
             test    => $pcre,
             msgFail => 'Bad regular expression',
@@ -1192,6 +1197,7 @@ sub defaultConf {
         storePassword       => '0',
         syslog              => '',
         timeout             => '7200',
+        timeoutActivity     => '0',
         userControl         => '^[\w\.\-@]+$',
         userDB              => 'LDAP',
         passwordDB          => 'LDAP',

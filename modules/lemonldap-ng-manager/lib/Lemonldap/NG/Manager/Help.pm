@@ -563,6 +563,29 @@ toujours en train de l'utiliser.</p>
 EOT
 }
 
+## timeoutActivity
+# en
+sub help_timeoutActivity_en {
+    print <<EOT;
+<h3>Sessions activity timeout</h3>
+<p> Set here the sessions activity timeout in seconds. It will be used by the
+<tt>purgeCentralStorage</tt> script installed in cron directory.</p>
+<p class="info">The activity timeout takes into account user activity. A activity timeout of
+15 minutes will close a session 15 minutes after last user activity.</p>
+EOT
+}
+
+# fr
+sub help_timeoutActivity_fr {
+    print <<EOT;
+<h3>Délai d'inactivité des sessions</h3>
+<p>Indiquez ici le délai d'inactivité des sessions en secondes. Il est
+utilisée par le script <tt>purgeCentralStorage</tt> installé dans le cron.</p>
+<p class="info">Le délai d'inactivité des sessions tient compte de l'activité de l'utilisateur.
+Un délai d'inactivité de 15 minutes fermera la session 15 minutes après la dernière activité de l'utilisateur.</p>
+EOT
+}
+
 ## vars
 # en
 sub help_vars_en {

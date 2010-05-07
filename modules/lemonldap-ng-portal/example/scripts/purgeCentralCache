@@ -34,6 +34,7 @@ print "Configuration loaded\n" if $debug;
 # Timeout
 #=============================================================================
 $conf->{timeout} ||= 7200;
+$conf->{timeoutActivity} ||= 0;
 
 print "Timeout value: ".$conf->{timeout}."\n" if $debug;
 
@@ -91,7 +92,16 @@ for my $backend (@backends) {
         my $entry = shift;
         my $id    = shift;
 	    my $time  = time;
-            push @t, $id if ( $time - $entry->{_utime} > $conf->{timeout} );
+            # Session expired
+            if ( $time - $entry->{_utime} > $conf->{timeout} ) {
+                push @t, $id;
+            }
+            # User has no activity, so considere the session has expired
+            elsif ( $conf->{timeoutActivity} and $entry->{_lastSeen}
+                and $time - $entry->{_lastSeen} > $conf->{timeoutActivity} )
+            {
+                push @t, $id
+            }
         undef;
     }
     );

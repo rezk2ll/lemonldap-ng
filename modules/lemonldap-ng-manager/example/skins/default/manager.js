@@ -446,6 +446,17 @@ function authnContextParams(id) {
 			],lmdata(id));
 	display('select',lmtext(id));
 }
+function timeoutActivityParams(id) {
+	currentId=id;
+	formateSelect('select',[
+			'0=None',
+			'900=15 min',
+			'1800=30 min',
+			'2700=45 min',
+			'3600=60 min',
+			],lmdata(id));
+	display('select',lmtext(id));
+}
 function btext(id) {
 	currentId=id;
 	$('#btextKey').attr('value',lmtext(id));

@@ -46,6 +46,7 @@ our (
     $port,               $statusPipe,          $statusOut,
     $customFunctions,    $transform,           $cda,
     $childInitDone,      $httpOnly,            $cookieExpiration,
+    $timeoutActivity,
 );
 
 ##########################################
@@ -76,6 +77,7 @@ BEGIN {
         post   => [qw($transform)],
         cda    => ['$cda'],
         cookie => [qw($cookieName $https $httpOnly $cookieExpiration)],
+        session => ['$timeoutActivity'],
     );
     push( @EXPORT_OK, @{ $EXPORT_TAGS{$_} } ) foreach ( keys %EXPORT_TAGS );
     $EXPORT_TAGS{all} = \@EXPORT_OK;
@@ -134,6 +136,7 @@ BEGIN {
             threads::shared::share($refLocalStorage);
             threads::shared::share($statusPipe);
             threads::shared::share($statusOut);
+            threads::shared::share($timeoutActivity);
         };
     }
     elsif ( MP() == 1 ) {
@@ -639,6 +642,7 @@ sub defaultValuesInit {
       ? ( $httpOnly eq $args->{httpOnly} ? $httpOnly : $args->{httpOnly} )
       : 0;
     $cookieExpiration = $args->{cookieExpiration} || $cookieExpiration;
+    $timeoutActivity = $args->{timeoutActivity} || $timeoutActivity || 0;
     1;
 }
 
@@ -1029,6 +1033,11 @@ sub run ($$) {
                 }
                 return $class->goToPortal($uri);
             }
+
+            # Update the session to notify activity, if necessary
+            $h{_lastSeen} = time() if ( $timeoutActivity );
+
+            # Store data in current shared variables
             $datas->{$_} = $h{$_} foreach ( keys %h );
 
             # Store now the user in the local storage
