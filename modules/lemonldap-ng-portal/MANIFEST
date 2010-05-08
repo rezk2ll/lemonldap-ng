@@ -146,7 +146,6 @@ lib/Lemonldap/NG/Portal/PasswordDBNull.pm
 lib/Lemonldap/NG/Portal/SharedConf.pm
 lib/Lemonldap/NG/Portal/Simple.pm
 lib/Lemonldap/NG/Portal/UserDBDBI.pm
-lib/Lemonldap/NG/Portal/UserDBEnv.pm
 lib/Lemonldap/NG/Portal/UserDBLDAP.pm
 lib/Lemonldap/NG/Portal/UserDBMulti.pm
 lib/Lemonldap/NG/Portal/UserDBNull.pm
@@ -169,7 +168,6 @@ t/24-Lemonldap-NG-Portal-AuthRemote.t
 t/25-Lemonldap-NG-Portal-Multi.t
 t/26-Lemonldap-NG-Portal-AuthProxy.t
 t/30-Lemonldap-NG-Portal-UserDBNull.t
-t/31-Lemonldap-NG-Portal-UserDBEnv.t
 t/40-Lemonldap-NG-Portal-CDA.t
 t/50-Lemonldap-NG-Portal-Menu.t
 t/60-Lemonldap-NG-Portal-IssuerDBSAML.t

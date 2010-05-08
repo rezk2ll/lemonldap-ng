@@ -363,7 +363,6 @@ function userdbParams(id) {
 	$('#authOptions').hide();
 	formateSelect('authText',[
 		'DBI=Database (DBI)',
-		'Env=Environment',
 		'LDAP=LDAP',
 		'Multi=Multi',
 		'Null=None',

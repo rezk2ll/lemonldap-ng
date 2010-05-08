@@ -89,6 +89,8 @@ example/skins/default/page_edit.png
 example/skins/default/pastel.png
 example/skins/default/plus.gif
 example/skins/default/root.gif
+example/skins/default/sessions.js
+example/skins/default/sessions.tpl
 example/skins/default/spacer.gif
 example/skins/default/spinner.gif
 example/skins/default/tree.css
