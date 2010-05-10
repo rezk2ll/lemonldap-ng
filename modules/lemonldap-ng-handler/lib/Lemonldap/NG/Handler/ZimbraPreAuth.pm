@@ -122,6 +122,7 @@ sub _buildZimbraPreAuthUrl {
     $zimbra_url .= $url;
     $zimbra_url .= '?account=' . $account;
     $zimbra_url .= '&by=' . $by;
+    $zimbra_url .= '&timestamp=' . $timestamp;
     $zimbra_url .= '&expires=' . $expires;
     $zimbra_url .= '&preauth=' . $computed_value;
 
