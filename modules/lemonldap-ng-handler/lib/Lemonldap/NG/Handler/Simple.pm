@@ -46,7 +46,7 @@ our (
     $port,               $statusPipe,          $statusOut,
     $customFunctions,    $transform,           $cda,
     $childInitDone,      $httpOnly,            $cookieExpiration,
-    $timeoutActivity,
+    $timeoutActivity,    $datasUpdate,
 );
 
 ##########################################
@@ -61,7 +61,7 @@ BEGIN {
         locationRules => [
             qw(
               $locationCondition $defaultCondition $locationCount
-              $locationProtection $defaultProtection
+              $locationProtection $defaultProtection $datasUpdate
               $locationRegexp $apacheRequest $datas safe $customFunctions
               )
         ],
@@ -1002,7 +1002,7 @@ sub run ($$) {
     # II - recover the user datas
     #  2.1 search if the user was the same as previous (very efficient in
     #      persistent connection).
-    unless ( $id eq $datas->{_session_id} ) {
+    unless ( $id eq $datas->{_session_id} and ( time() - $datasUpdate < 60 ) ) {
 
         # 2.2 search in the local cache if exists
         unless ( $refLocalStorage and $datas = $refLocalStorage->get($id) ) {
@@ -1038,6 +1038,7 @@ sub run ($$) {
                 $refLocalStorage->set( $id, $datas, "10 minutes" );
             }
             untie %h;
+            $datasUpdate = time();
         }
     }
 
