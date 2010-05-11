@@ -65,7 +65,7 @@ sub run {
     my $ret   = $class->SUPER::run(@_);
 
     # Continue only if user is authorized
-    return $ret unless $ret eq OK;
+    return $ret unless ( $ret == OK );
 
     # Get current URI
     my $args = $r->args;
@@ -118,15 +118,10 @@ sub _buildZimbraPreAuthUrl {
         'debug' );
 
     # Build PreAuth URL
-    my $zimbra_url;
-    $zimbra_url .= $url;
-    $zimbra_url .= '?account=' . $account;
-    $zimbra_url .= '&by=' . $by;
-    $zimbra_url .= '&timestamp=' . $timestamp;
-    $zimbra_url .= '&expires=' . $expires;
-    $zimbra_url .= '&preauth=' . $computed_value;
+    my $zimbra_url =
+"$url?account=$account&by=$by&timestamp=$timestamp&expires=$expires&preauth=$computed_value";
 
-    $class->lmLog( "Build Zimbra URL $zimbra_url", 'debug' );
+    $class->lmLog( "Build Zimbra URL: $zimbra_url", 'debug' );
 
     return $zimbra_url;
 }
