@@ -319,9 +319,10 @@ sub struct {
                 # Remote
                 remoteParams => {
                     _nodes => [
-                        qw(remotePortal remoteGlobalStorage remoteGlobalStorageOptions)
+                        qw(remotePortal remoteCookieName remoteGlobalStorage remoteGlobalStorageOptions)
                     ],
                     remotePortal        => 'text:/remotePortal',
+                    remoteCookieName    => 'text:/remoteCookieName',
                     remoteGlobalStorage => 'text:/remoteGlobalStorage',
                     remoteGlobalStorageOptions =>
                       { _nodes => ['hash:/remoteGlobalStorageOptions'], },
