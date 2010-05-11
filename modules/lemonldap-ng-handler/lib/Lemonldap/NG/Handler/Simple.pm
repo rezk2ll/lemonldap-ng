@@ -72,11 +72,11 @@ BEGIN {
               lmSetHeaderOut lmSetErrHeaderOut $cookieName $https $port
               )
         ],
-        traces => [qw( $whatToTrace $statusPipe $statusOut lmLog )],
-        apache => [qw( MP OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR )],
-        post   => [qw($transform)],
-        cda    => ['$cda'],
-        cookie => [qw($cookieName $https $httpOnly $cookieExpiration)],
+        traces  => [qw( $whatToTrace $statusPipe $statusOut lmLog )],
+        apache  => [qw( MP OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR )],
+        post    => [qw($transform)],
+        cda     => ['$cda'],
+        cookie  => [qw($cookieName $https $httpOnly $cookieExpiration)],
         session => ['$timeoutActivity'],
     );
     push( @EXPORT_OK, @{ $EXPORT_TAGS{$_} } ) foreach ( keys %EXPORT_TAGS );
@@ -627,22 +627,15 @@ sub defaultValuesInit {
     $cookieName  = $args->{cookieName}  || $cookieName  || 'lemonldap';
     $whatToTrace = $args->{whatToTrace} || $whatToTrace || 'uid';
     $whatToTrace =~ s/\$//g;
-    $https =
-      defined($https)
-      ? ( $https eq $args->{https} ? $https : $args->{https} )
-      : 1;
+    $https = defined($https) ? $https : $args->{https};
     $args->{securedCookie} = 1 unless defined( $args->{securedCookie} );
     $cookieName .= 'http' if ( $args->{securedCookie} == 2 and $https == 0 );
-    $port =
-      defined($port) ? ( $port eq $args->{port} ? $port : $args->{port} ) : 0;
-    $customFunctions = $args->{customFunctions};
-    $cda = defined($cda) ? ( $cda eq $args->{cda} ? $cda : $args->{cda} ) : 0;
-    $httpOnly =
-      defined($httpOnly)
-      ? ( $httpOnly eq $args->{httpOnly} ? $httpOnly : $args->{httpOnly} )
-      : 0;
+    $port ||= $args->{port};
+    $customFunctions  = $args->{customFunctions};
+    $cda              = defined($cda) ? $cda : $args->{cda};
+    $httpOnly         = defined($httpOnly) ? $httpOnly : $args->{httpOnly};
     $cookieExpiration = $args->{cookieExpiration} || $cookieExpiration;
-    $timeoutActivity = $args->{timeoutActivity} || $timeoutActivity || 0;
+    $timeoutActivity  = $args->{timeoutActivity} || $timeoutActivity || 0;
     1;
 }
 
@@ -1035,7 +1028,7 @@ sub run ($$) {
             }
 
             # Update the session to notify activity, if necessary
-            $h{_lastSeen} = time() if ( $timeoutActivity );
+            $h{_lastSeen} = time() if ($timeoutActivity);
 
             # Store data in current shared variables
             $datas->{$_} = $h{$_} foreach ( keys %h );
@@ -1059,7 +1052,7 @@ sub run ($$) {
 
     # Store local macros
     if ( keys %$datas > $kc and $refLocalStorage ) {
-        $class->lmLog("Update local cache","debug");
+        $class->lmLog( "Update local cache", "debug" );
         $refLocalStorage->set( $id, $datas, "10 minutes" );
     }
 
