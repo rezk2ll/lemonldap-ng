@@ -195,18 +195,6 @@ sub extractFormInfo {
             }
 
             # Check authentication context
-            my $requestedAuthnContext =
-              $self->{samlIDPMetaDataOptions}->{$idpConfKey}
-              ->{samlIDPMetaDataOptionsRequestedAuthnContext};
-            $requestedAuthnContext =
-              $self->getAuthnContext($requestedAuthnContext)
-              if $requestedAuthnContext;
-
-            if ($requestedAuthnContext) {
-                $self->lmLog(
-                    "Requested authentication context: $requestedAuthnContext",
-                    'debug'
-                );
                 my $responseAuthnContext;
                 eval {
                     $responseAuthnContext =
@@ -216,21 +204,18 @@ sub extractFormInfo {
                 if ($@) {
                     $self->lmLog(
                         "Unable to get authentication context from $idpConfKey",
-                        'error'
-                    );
-                    return PE_ERROR;
+                    'debug' );
+                $responseAuthnContext = $self->getAuthnContext("unspecified");
                 }
+            else {
                 $self->lmLog(
                     "Found authentication context: $responseAuthnContext",
                     'debug' );
-                if ( $responseAuthnContext ne $requestedAuthnContext ) {
-                    $self->lmLog(
-"Bad authentication context ($responseAuthnContext instead of $requestedAuthnContext)",
-                        'error'
-                    );
-                    return PE_ERROR;
-                }
             }
+
+            # Map authentication context to authentication level
+            $self->{sessionInfo}->{authenticationLevel} =
+              $self->authnContext2authnLevel($responseAuthnContext);
 
             # Force redirection to portal if no urldc found
             # (avoid displaying the whole SAML URL in user browser URL field)
@@ -969,14 +954,9 @@ sub setAuthSessionInfo {
 }
 
 ## @apmethod int authenticate()
-# Set authenticationLevel
+# Do nothing
 # @return PE_OK
 sub authenticate {
-    my $self = shift;
-
-    # Set authenticationLevel
-    $self->{sessionInfo}->{authenticationLevel} = 5;
-
     PE_OK;
 }
 

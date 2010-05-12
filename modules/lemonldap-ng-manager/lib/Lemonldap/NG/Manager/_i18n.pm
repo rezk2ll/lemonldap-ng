@@ -236,7 +236,7 @@ sub en {
         samlIDPMetaDataOptionsSLOBinding     => 'SLO binding',
         samlIDPMetaDataOptionsResolutionRule => 'Resolution rule',
         samlIDPMetaDataOptionsRequestedAuthnContext =>
-          'Required authentication context',
+          'Requested authentication context',
         samlSPMetaDataNode               => 'SAML service providers',
         samlSPMetaDataXML                => 'Metadata',
         samlSPMetaDataExportedAttributes => 'Exported attributes',
@@ -487,7 +487,7 @@ sub fr {
         samlIDPMetaDataOptionsSLOBinding     => 'Méthode SLO',
         samlIDPMetaDataOptionsResolutionRule => 'Règle de résolution',
         samlIDPMetaDataOptionsRequestedAuthnContext =>
-          'Contexte d\'authentification requis',
+          'Contexte d\'authentification demandé',
         samlSPMetaDataNode               => 'Fournisseurs de service SAML',
         samlSPMetaDataXML                => 'Metadonnées',
         samlSPMetaDataExportedAttributes => 'Attributs exportés',

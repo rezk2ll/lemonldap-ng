@@ -441,7 +441,7 @@ function authnContextParams(id) {
 			'kerberos=Kerberos',
 			'password-protected-transport=Password protected transport',
 			'password=Password',
-			'x509=X509 certificate',
+			'tls-client=TLS client certificate',
 			],lmdata(id));
 	display('select',lmtext(id));
 }

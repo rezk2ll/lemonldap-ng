@@ -695,6 +695,7 @@ sub createAuthnRequest {
         eval {
             my $context = Lasso::Samlp2RequestedAuthnContext->new();
             $context->AuthnContextClassRef($requestedAuthnContext);
+            $context->Comparison("minimum");
             $request->RequestedAuthnContext($context);
         };
         if ($@) {
@@ -1949,7 +1950,8 @@ sub samldate2timestamp {
     my ( $year, $mon, $mday, $hour, $min, $sec, $ztime ) =
       ( $samldate =~ /(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(Z)?/ );
 
-    my $timestamp = timegm( $sec, $min, $hour, $mday, $mon - 1, $year - 1900, 0 );
+    my $timestamp =
+      timegm( $sec, $min, $hour, $mday, $mon - 1, $year - 1900, 0 );
 
     $self->lmLog( "Convert SAML2 date $samldate in timestamp: $timestamp",
         'debug' );
@@ -2303,6 +2305,38 @@ sub checkSignatureStatus {
     return $self->checkLassoError($@);
 }
 
+## @method int authnContext2authnLevel(string authnContext)
+# Return authentication level corresponding to authnContext
+# @param authnContext SAML authentication context
+# return authentication level
+sub authnContext2authnLevel {
+    my ( $self, $authnContext ) = splice @_;
+
+    return 2 if ( $authnContext eq $self->getAuthnContext("password") );
+    return 3
+      if (
+        $authnContext eq $self->getAuthnContext("password-protected-transport")
+      );
+    return 5 if ( $authnContext eq $self->getAuthnContext("tls-client") );
+    return 0;
+
+}
+
+## @method int authnLevel2authnContext(int authnLevel)
+# Return SAML authentication context corresponding to authnLevel
+# @param authnLevel internal authentication level
+# return SAML authentication context
+sub authnLevel2authnContext {
+    my ( $self, $authnLevel ) = splice @_;
+
+    return $self->getAuthnContext("password") if ( $authnLevel == 2 );
+    return $self->getAuthnContext("password-protected-transport")
+      if ( $authnLevel == 3 );
+    return $self->getAuthnContext("tls-client") if ( $authnLevel == 5 );
+    return $self->getAuthnContext("unspecified");
+
+}
+
 1;
 
 __END__
@@ -2587,6 +2621,14 @@ $self->{_info} will be updated.
 =head2 checkSignatureStatus
 
 Check signature status
+
+=head2 authnContext2authnLevel
+
+Return authentication level corresponding to authnContext
+
+=head2 authnLevel2authnContext
+
+Return SAML authentication context corresponding to authnLevel
 
 =head1 SEE ALSO
 
