@@ -211,7 +211,7 @@ sub issuerForUnAuthUser {
             return PE_ERROR
               unless (
                 $self->sendLogoutResponseToServiceProvider(
-                    $logout, $method, $relaystate, 0 );
+                    $logout, $method, $relaystate, 0 )
               );
 
         }
