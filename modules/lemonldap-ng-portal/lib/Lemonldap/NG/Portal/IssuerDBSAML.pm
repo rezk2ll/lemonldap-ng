@@ -210,9 +210,8 @@ sub issuerForUnAuthUser {
             # TODO sendLogoutResponseAfterLogoutRequest does not exists
             return PE_ERROR
               unless (
-                $self->sendLogoutResponseAfterLogoutRequest(
-                    $logout, $method, $relaystate, 0
-                )
+                $self->sendLogoutResponseToServiceProvider(
+                    $logout, $method, $relaystate, 0 );
               );
 
         }
