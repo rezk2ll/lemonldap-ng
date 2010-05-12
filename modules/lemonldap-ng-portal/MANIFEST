@@ -156,6 +156,7 @@ Makefile.PL
 MANIFEST			This list of files
 META.yml
 README
+t/.01-Lemonldap-NG-Portal-Simple.t.swp
 t/01-Lemonldap-NG-Portal-Simple.t
 t/02-Lemonldap-NG-Portal-SharedConf.t
 t/03-XSS-protection.t
@@ -171,6 +172,7 @@ t/30-Lemonldap-NG-Portal-UserDBNull.t
 t/40-Lemonldap-NG-Portal-CDA.t
 t/50-Lemonldap-NG-Portal-Menu.t
 t/60-Lemonldap-NG-Portal-IssuerDBSAML.t
+t/61-Lemonldap-NG-Portal-SAML.t
 t/63-Lemonldap-NG-Portal-AuthSAML.t
 t/64-Lemonldap-NG-Portal-UserDBSAML.t
 t/99-pod.t

@@ -13,6 +13,7 @@ use String::Random;
 use LWP::UserAgent;    # SOAP call
 use HTTP::Request;     # SOAP call
 use POSIX;             # Convert SAML2 date into timestamp
+use Time::Local;       # Convert SAML2 date into timestamp
 use Encode;            # Encode attribute values
 
 our $VERSION = '0.01';
@@ -1930,7 +1931,12 @@ sub timestamp2samldate {
     my ( $self, $timestamp ) = splice @_;
 
     my @t = gmtime($timestamp);
-    return POSIX::strftime( "%Y-%m-%dT%R:%SZ", @t );
+    my $samldate = POSIX::strftime( "%Y-%m-%dT%TZ", @t );
+
+    $self->lmLog( "Convert timestamp $timestamp in SAML2 date: $samldate",
+        'debug' );
+
+    return $samldate;
 }
 
 ## @method string samldate2timestamp(string samldate)
@@ -1943,7 +1949,7 @@ sub samldate2timestamp {
     my ( $year, $mon, $mday, $hour, $min, $sec, $ztime ) =
       ( $samldate =~ /(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(Z)?/ );
 
-    my $timestamp = mktime( $sec, $min, $hour, $mday, $mon - 1, $year - 1900 );
+    my $timestamp = timegm( $sec, $min, $hour, $mday, $mon - 1, $year - 1900, 0 );
 
     $self->lmLog( "Convert SAML2 date $samldate in timestamp: $timestamp",
         'debug' );
