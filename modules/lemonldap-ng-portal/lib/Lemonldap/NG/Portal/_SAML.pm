@@ -2241,7 +2241,8 @@ sub sendLogoutRequestToServiceProviders {
 
     # Header of the block which will be displayed to the user, if needed.
     $info .=
-      &Lemonldap::NG::Portal::_i18n::msg( Lemonldap::NG::Portal::Simple::PM_SAML_SPLOGOUT,
+      &Lemonldap::NG::Portal::_i18n::msg
+      ( Lemonldap::NG::Portal::Simple::PM_SAML_SPLOGOUT,
         $ENV{HTTP_ACCEPT_LANGUAGE} )
       . '<ul>';
 

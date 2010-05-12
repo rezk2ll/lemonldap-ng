@@ -8,7 +8,8 @@ use Lemonldap::NG::Handler::ZimbraPreAuth;
 
 __PACKAGE__->init(
     {
-	    # See Lemonldap::NG::Handler
+
+        # See Lemonldap::NG::Handler
     }
 );
 

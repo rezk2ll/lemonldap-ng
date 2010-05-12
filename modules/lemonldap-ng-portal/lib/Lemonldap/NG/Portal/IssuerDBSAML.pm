@@ -207,7 +207,7 @@ sub issuerForUnAuthUser {
             }
 
             # Send logout response
-	    # TODO sendLogoutResponseAfterLogoutRequest does not exists
+            # TODO sendLogoutResponseAfterLogoutRequest does not exists
             return PE_ERROR
               unless (
                 $self->sendLogoutResponseAfterLogoutRequest(

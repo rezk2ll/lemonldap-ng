@@ -53,11 +53,11 @@ $ENV{QUERY_STRING}    = '';
 ok(
     $p = My::Portal->new(
         {
-            globalStorage              => 'Apache::Session::File',
-            domain                     => 'example.com',
-            authentication             => 'Proxy',
-            portal                     => 'http://abc',
-	    soapAuthService            => 'https://lm.com',
+            globalStorage   => 'Apache::Session::File',
+            domain          => 'example.com',
+            authentication  => 'Proxy',
+            portal          => 'http://abc',
+            soapAuthService => 'https://lm.com',
         }
     ),
     'Portal object'

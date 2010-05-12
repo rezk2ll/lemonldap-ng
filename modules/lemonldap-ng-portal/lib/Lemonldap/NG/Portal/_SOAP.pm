@@ -65,14 +65,11 @@ _RETURN $getCookiesResponse Response
 #@param sessionid optional session identifier
 #@return session => { error => code , cookies => { cookieName1 => value ,... } }
 sub getCookies {
-    my $self = shift;
-    my $user      = shift;
-    my $password  = shift;
-    my $sessionid = shift;
+    my ( $self, $user, $password, $sessionid ) = splice @_;
     $self->{user}     = $user;
     $self->{password} = $password;
     $self->{id}       = $sessionid if ( defined($sessionid) && $sessionid );
-    $self->{error} = PE_OK;
+    $self->{error}    = PE_OK;
     $self->lmLog( "SOAP authentication request for $self->{user}", 'debug' );
     unless ( $self->{user} && $self->{password} ) {
         $self->{error} = PE_FORMEMPTY;
@@ -92,8 +89,8 @@ sub getCookies {
         foreach ( @{ $self->{cookie} } ) {
             push @cookies, SOAP::Data->name( $_->name, $_->value );
         }
-        push @cookies, SOAP::Data->name(
-            $self->{cookieName} . 'update', time() );
+        push @cookies,
+          SOAP::Data->name( $self->{cookieName} . 'update', time() );
     }
     else {
         my @cookieNames = split /\s+/, $self->{cookieName};

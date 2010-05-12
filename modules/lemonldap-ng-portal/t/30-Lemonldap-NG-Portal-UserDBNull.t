@@ -15,24 +15,23 @@ BEGIN { use_ok('Lemonldap::NG::Portal::Simple') }
 
 # Fake ENV
 $ENV{"REQUEST_METHOD"} = 'GET';
-$ENV{"TEST_STRING"} = 'OK';
-$ENV{"REMOTE_ADDR"} = '127.0.0.1';
+$ENV{"TEST_STRING"}    = 'OK';
+$ENV{"REMOTE_ADDR"}    = '127.0.0.1';
 
 my $p;
 
 ok(
     $p = Lemonldap::NG::Portal::Simple->new(
         {
-            globalStorage  => 'Apache::Session::File',
-            domain         => 'example.com',
-	    userDB         => 'Null',
-	    exportedVars   => { uid => "TEST_STRING", },
+            globalStorage => 'Apache::Session::File',
+            domain        => 'example.com',
+            userDB        => 'Null',
+            exportedVars  => { uid => "TEST_STRING", },
         }
     )
 );
 
-ok ( $p->setSessionInfo() == PE_OK, 'Run setSessionInfo'  );
+ok( $p->setSessionInfo() == PE_OK, 'Run setSessionInfo' );
 
-ok ( $p->{sessionInfo}->{"uid"} eq "OK", 'Read info in session' );
-
+ok( $p->{sessionInfo}->{"uid"} eq "OK", 'Read info in session' );
 

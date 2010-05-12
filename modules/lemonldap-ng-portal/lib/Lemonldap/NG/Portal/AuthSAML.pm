@@ -436,7 +436,7 @@ sub extractFormInfo {
             $self->lmLog( "Logout request NameID content: $user", 'debug' );
 
             # Get corresponding session
-	    # TODO use SAML sessionIndex
+            # TODO use SAML sessionIndex
             my $local_sessions =
               $self->{samlStorage}
               ->searchOn( $self->{samlStorageOptions}, "_user", $user, );

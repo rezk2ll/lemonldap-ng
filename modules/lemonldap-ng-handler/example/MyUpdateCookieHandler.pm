@@ -6,6 +6,7 @@ use Lemonldap::NG::Handler::UpdateCookie;
 
 __PACKAGE__->init(
     {
+
         # See Lemonldap::NG::Handler
     }
 );

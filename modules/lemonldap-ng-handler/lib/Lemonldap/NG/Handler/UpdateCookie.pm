@@ -33,12 +33,14 @@ sub run {
                 $datas->{_session_id} = 0;
                 $clear = 1;
             }
-            elsif ( $refLocalStorage and my $ldatas = $refLocalStorage->get($id) ) {
+            elsif ( $refLocalStorage
+                and my $ldatas = $refLocalStorage->get($id) )
+            {
                 if ( $ldatas->{_utime} lt $utime ) {
                     $clear = 1;
                 }
             }
-            if ( $clear ) {
+            if ($clear) {
                 $class->lmLog( "$class: remove $id from local cache", 'debug' );
                 $refLocalStorage->remove($id);
             }

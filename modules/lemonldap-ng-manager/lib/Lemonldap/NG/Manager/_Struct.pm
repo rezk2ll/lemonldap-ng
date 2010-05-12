@@ -425,7 +425,8 @@ sub struct {
                 grantSessionRule => 'textarea:/grantSessionRule',
                 storePassword    => 'bool:/storePassword',
                 timeout          => 'text:/timeout:timeout:text',
-                timeoutActivity   => 'text:/timeoutActivity:timeoutActivity:timeoutActivityParams',
+                timeoutActivity =>
+                  'text:/timeoutActivity:timeoutActivity:timeoutActivityParams',
 
                 sessionStorage => {
                     _nodes        => [qw(globalStorage globalStorageOptions)],
