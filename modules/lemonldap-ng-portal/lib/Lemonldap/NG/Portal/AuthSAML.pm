@@ -423,8 +423,8 @@ sub extractFormInfo {
             # Get corresponding session
             # TODO use SAML sessionIndex
             my $local_sessions =
-              $self->{samlStorage}
-              ->searchOn( $self->{samlStorageOptions}, "_user", $user, );
+              $self->{globalStorage}
+              ->searchOn( $self->{globalStorageOptions}, "_user", $user, );
 
             if ( my @local_sessions_keys = keys %$local_sessions ) {
 

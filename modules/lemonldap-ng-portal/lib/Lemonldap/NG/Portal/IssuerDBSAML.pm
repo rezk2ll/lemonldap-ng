@@ -211,7 +211,8 @@ sub issuerForUnAuthUser {
             return PE_ERROR
               unless (
                 $self->sendLogoutResponseToServiceProvider(
-                    $logout, $method, $relaystate, 0 )
+                    $logout, $method, $relaystate, 0
+                )
               );
 
         }
@@ -447,7 +448,8 @@ sub issuerForAuthUser {
             my $authenticationLevel =
               $self->{sessionInfo}->{authenticationLevel};
 
-            $authn_context = $self->authnLevel2authnContext( $authenticationLevel );
+            $authn_context =
+              $self->authnLevel2authnContext($authenticationLevel);
 
             $self->lmLog( "Authentication context is $authn_context", 'debug' );
 
@@ -621,11 +623,15 @@ sub issuerForAuthUser {
             $response_assertions[0]->AttributeStatement(@attributes_statement);
 
             # Set sessionIndex
-            # sessionIndex is the 4 first characters of session_id
-            my $sessionIndex = substr $session_id, 0, 4;
+            # sessionIndex is the encrypted session_id
+            my $sessionIndex     = $self->{cipher}->encrypt($session_id);
             my @authn_statements = $response_assertions[0]->AuthnStatement();
             $authn_statements[0]->SessionIndex($sessionIndex);
             $response_assertions[0]->AuthnStatement(@authn_statements);
+
+            $self->lmLog(
+                "Set sessionIndex $sessionIndex (encrypted from $session_id)",
+                'debug' );
 
             # Set response assertion
             $login->response->Assertion(@response_assertions);
@@ -845,12 +851,20 @@ sub issuerForAuthUser {
                 $self->lmLog( "Set $relaystate in RelayState", 'debug' );
             }
 
-            # Delete Session
+            # Get session index
+            my $session_index    = $logout->request()->SessionIndex;
+            my $local_session_id = $self->{cipher}->decrypt($session_index);
+
+            $self->lmLog(
+"Get session id $local_session_id (decrypted from $session_index)",
+                'debug'
+            );
+
             my $user = $self->{sessionInfo}->{user};
-            my $local_session = $self->getApacheSession( $session_id, 1 );
+            my $local_session = $self->getApacheSession( $local_session_id, 1 );
             unless ( $self->_deleteSession($local_session) ) {
                 $self->lmLog(
-                    "Fail to delete session $session_id for user $user",
+                    "Fail to delete session $local_session_id for user $user",
                     'debug' );
             }
 
@@ -883,9 +897,6 @@ sub issuerForAuthUser {
 # @return Lemonldap::NG::Portal error code
 sub issuerLogout {
     my $self = shift;
-
-    # Session ID
-    my $session_id = $self->{sessionInfo}->{_session_id} || $self->{id};
 
     # Create Logout object
     my $logout = $self->createLogout( $self->{_lassoServer} );
