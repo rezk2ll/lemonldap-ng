@@ -5,7 +5,7 @@ use Test::More tests => 3;
 # Test Lasso presence and load _SAML module
 SKIP: {
     eval "use Lasso;";
-    skip "Lasso is not installed, can't test SAML features", 1 if ($@);
+    skip "Lasso is not installed, can't test SAML features", 3 if ($@);
     use_ok('Lemonldap::NG::Portal::Simple');
 
     # Portal object
