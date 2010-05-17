@@ -853,6 +853,16 @@ sub issuerForAuthUser {
 
             # Get session index
             my $session_index    = $logout->request()->SessionIndex;
+
+            # SLO requests without session index are not accepted
+            unless ($session_index) {
+                $self->lmLog(
+                    "No session index in SLO request from $spConfKey SP",
+                    'error' );
+                return PE_ERROR;
+            }
+
+            # Decrypt session index
             my $local_session_id = $self->{cipher}->decrypt($session_index);
 
             $self->lmLog(
