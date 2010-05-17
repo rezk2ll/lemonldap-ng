@@ -221,6 +221,19 @@ sub extractFormInfo {
             # (avoid displaying the whole SAML URL in user browser URL field)
             $self->{mustRedirect} = 1 unless ( $self->{urldc} );
 
+            # Get SessionIndex
+            my $session_index;
+
+            eval {
+                $session_index = $assertion->AuthnStatement()->SessionIndex();
+            };
+            if ( $@ or !defined($session_index) ) {
+                $self->lmLog( "No SessionIndex found", 'debug' );
+            }
+            else {
+                $self->lmLog( "Found SessionIndex $session_index", 'debug' );
+            }
+
             # Get NameID
             my $nameid = $login->nameIdentifier;
 
@@ -232,13 +245,15 @@ sub extractFormInfo {
                 return PE_USERNOTFOUND;
             }
 
-            $self->lmLog( "Find NameID: $user", 'debug' );
+            $self->lmLog( "Found NameID: $user", 'debug' );
             $self->{user} = $user;
 
             # Store Lasso objects
             $self->{_lassoLogin} = $login;
             $self->{_idp}        = $idp;
             $self->{_idpConfKey} = $idpConfKey;
+            $self->{_nameID}       = $nameid->dump;
+            $self->{_sessionIndex} = $session_index;
 
             return PE_OK;
         }
@@ -412,46 +427,90 @@ sub extractFormInfo {
             my $session_index = $logout->request()->SessionIndex;
             my $user          = $name_id->content;
 
-            unless ($user) {
-                $self->lmLog( "Fail to get NameID content from logout request",
+            unless ($name_id) {
+                $self->lmLog( "Fail to get NameID from logout request",
                     'error' );
                 $logout_error = 1;
             }
 
             $self->lmLog( "Logout request NameID content: $user", 'debug' );
 
-            # Get corresponding session
-            # TODO use SAML sessionIndex
+            # Get SAML sessions with the same NameID
             my $local_sessions =
-              $self->{globalStorage}
-              ->searchOn( $self->{globalStorageOptions}, "_user", $user, );
+              $self->{samlStorage}->searchOn( $self->{samlStorageOptions},
+                "_nameID", $name_id->dump );
 
             if ( my @local_sessions_keys = keys %$local_sessions ) {
 
-                # A session was found
+                # At least one session was found
                 foreach (@local_sessions_keys) {
 
                     my $local_session = $_;
 
                     # Get session
                     $self->lmLog(
-                        "Retrieve session $local_session for user $user",
+                        "Retrieve SAML session $local_session for user $user",
                         'debug' );
+
                     my $sessionInfo =
                       $self->getApacheSession( $local_session, 1 );
 
-                    # Get Lasso::Session dump
-                    $session_dump = $sessionInfo->{_lassoSessionDump}
-                      if $sessionInfo->{_lassoSessionDump};
+              # If session index is defined and not equal to SAML session index,
+              # jump to next session
+                    if ( defined $session_index
+                        and $session_index ne $sessionInfo->{_sessionIndex} )
+                    {
+                        $self->lmLog(
+"Session $local_session has not the good session index, skipping",
+                            'debug'
+                        );
+                        next;
+                    }
 
-                    # Delete Session
+                    # Delete session
+                    else {
+
+                        # Open real session
+                        my $real_session = $sessionInfo->{_id};
+
+                        my $realSessionInfo =
+                          $self->getApacheSession( $sessionInfo->{_id}, 1 );
+
+                    # Get Lasso::Session dump
+                  # This value is erased if a next session match the SLO request
+                        if (   $realSessionInfo
+                            && $realSessionInfo->{_lassoSessionDump} )
+                        {
+                            $self->lmLog(
+"Get Lasso::Session dump from session $real_session",
+                                'debug'
+                            );
+                            $session_dump =
+                              $realSessionInfo->{_lassoSessionDump};
+                        }
+
+                        # Delete real session
+                        my $del_real_result =
+                          $self->_deleteSession($realSessionInfo);
+
                     $self->lmLog(
-                        "Delete session $local_session for user $user",
-                        'debug' );
-                    my $logout_result = $self->_deleteSession($sessionInfo);
-                    $self->lmLog( "Local Logout result: $logout_result",
-                        'debug' );
-                    $logout_error = 1 unless $logout_result;
+"Delete real session $real_session result: $del_real_result",
+                            'debug'
+                        );
+
+                        $logout_error = 1 unless $del_real_result;
+
+                        # Delete SAML session
+                        my $del_saml_result =
+                          $self->_deleteSession($sessionInfo);
+
+                        $self->lmLog(
+"Delete SAML session $local_session result: $del_saml_result",
+                            'debug'
+                        );
+
+                        $logout_error = 1 unless $del_saml_result;
+                    }
                 }
 
                 # Set session from dump
@@ -465,8 +524,7 @@ sub extractFormInfo {
             else {
 
                 # No corresponding session found
-                $self->lmLog( "No local session found for user $user",
-                    'debug' );
+                $self->lmLog( "No SAML session found for user $user", 'debug' );
 
                 $logout_error = 1;
 
@@ -967,7 +1025,43 @@ sub authLogout {
     my $self       = shift;
     my $idp        = $self->{sessionInfo}->{_idp};
     my $idpConfKey = $self->{sessionInfo}->{_idpConfKey};
+    my $session_id = $self->{sessionInfo}->{_session_id};
     my $method;
+
+    # Real session was previously deleted,
+    # remove corresponding SAML sessions
+    my $local_sessions =
+      $self->{samlStorage}
+      ->searchOn( $self->{samlStorageOptions}, "_id", $session_id );
+
+    if ( my @local_sessions_keys = keys %$local_sessions ) {
+
+        # At least one session was found
+        foreach (@local_sessions_keys) {
+
+            my $local_session = $_;
+
+            # Get session
+            $self->lmLog(
+                "Retrieve SAML session $local_session (linked to $session_id)",
+                'debug'
+            );
+
+            my $sessionInfo = $self->getApacheSession( $local_session, 1 );
+
+            # Delete session
+            my $del_saml_result = $self->_deleteSession($sessionInfo);
+
+            $self->lmLog(
+                "Delete SAML session $local_session result: $del_saml_result",
+                'debug' );
+        }
+    }
+    else {
+
+        # No corresponding session found
+        $self->lmLog( "No SAML session found for $session_id", 'debug' );
+    }
 
     # Get Lasso Server
     unless ( $self->{_lassoServer} ) {
@@ -1127,6 +1221,48 @@ sub authForce {
       );
 
     return 0;
+}
+
+## @apmethod boolean authFinish()
+# Associate NameID and SessionIndex to a local session
+# @return Lemonldap::NG::Portal error code
+sub authFinish {
+    my $self = shift;
+    my %h;
+
+    # Real session was stored, get id and utime
+    my $id    = $self->{id};
+    my $utime = $self->{sessionInfo}->{_utime};
+
+    # Get saved Lasso objects
+    my $nameid        = $self->{_nameID};
+    my $session_index = $self->{_sessionIndex};
+
+    $self->lmLog(
+        "Store NameID $nameid and SessionIndex $session_index for session $id",
+        'debug'
+    );
+
+    # Save SAML session
+    eval { tie %h, $self->{samlStorage}, undef, $self->{samlStorageOptions}; };
+    if ($@) {
+        $self->lmLog( "Unable to create SAML session: $@", 'error' );
+        return PE_ERROR;
+    }
+
+    $h{type}          = 'saml';            # Session type
+    $h{_utime}        = $utime;            # Creation time
+    $h{_id}           = $id;               # SSO session id
+    $h{_nameID}       = $nameid;           # SAML NameID
+    $h{_sessionIndex} = $session_index;    # SAML SessionIndex
+
+    my $session_id = $h{_session_id};
+
+    untie %h;
+
+    $self->lmLog( "Link session $id to SAML session $session_id", 'debug' );
+
+    return PE_OK;
 }
 
 1;

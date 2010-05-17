@@ -711,6 +711,12 @@ sub _deleteSession {
     my ( $self, $h, $preserveCookie ) = @_;
     my $result = 1;
 
+    # Return false if $h is not a hashref
+    if (ref $h ne "HASH") {
+	    $self->lmLog("_deleteSession: \$h is not a session object", 'error');
+            return 0;
+    }
+
     # Try to find a linked http session (securedCookie=>2)
     if ( my $id2 = $h->{_httpSession} ) {
         if ( my $h2 = $self->getApacheSession( $id2, 1 ) ) {
@@ -836,6 +842,7 @@ sub printImage {
 #    - extractFormInfo
 #    - setAuthSessionInfo
 #    - authenticate
+#    - authFinish
 #  - userDB module:
 #    - userDBInit
 #    - getUser
@@ -858,8 +865,8 @@ sub process {
           issuerForUnAuthUser authInit extractFormInfo userDBInit getUser
           setAuthSessionInfo passwordDBInit modifyPassword setSessionInfo
           setMacros setLocalGroups setGroups authenticate removeOther
-          grantSession store buildCookie checkNotification issuerForAuthUser
-          autoRedirect)
+          grantSession store authFinish buildCookie checkNotification
+          issuerForAuthUser autoRedirect)
     );
     $self->updateStatus;
     return ( ( $self->{error} > 0 ) ? 0 : 1 );
@@ -1064,7 +1071,7 @@ sub existingSession {
                 qw(issuerDBInit issuerForUnAuthUser authInit extractFormInfo
                   userDBInit getUser setAuthSessionInfo setSessionInfo
                   setMacros setLocalGroups setGroups authenticate
-                  store)
+                  store authFinish)
             );
             return $self->{error} || PE_DONE;
         }
@@ -1170,8 +1177,6 @@ sub setSessionInfo {
     # Call UserDB setSessionInfo
     return $self->SUPER::setSessionInfo();
 }
-
-# resetPasswordByMail(): must be implemented in PasswordDB* module
 
 ##@apmethod int setMacro()
 # Macro mechanism.
@@ -1389,6 +1394,23 @@ sub store {
     untie %$h;
 
     PE_OK;
+}
+
+## @apmethod int authFinish
+# Call authFinish method from authentication module
+# @return Lemonldap::NG::Portal constant
+sub authFinish {
+    my $self = shift;
+
+    eval { $self->{error} = $self->SUPER::authFinish; };
+    if ($@) {
+        $self->lmLog(
+            "Optional authFinish method not defined in current authentication module: $@",
+            'debug' );
+        return PE_OK;
+    }
+
+    return $self->{error};
 }
 
 ##@apmethod int buildCookie()
