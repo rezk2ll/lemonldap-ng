@@ -852,10 +852,11 @@ sub issuerForAuthUser {
             }
 
             # Get session index
-            my $session_index    = $logout->request()->SessionIndex;
+            my $session_index;
+            eval { $session_index = $logout->request()->SessionIndex; };
 
             # SLO requests without session index are not accepted
-            unless (defined $session_index) {
+            if ( $@ or !defined $session_index ) {
                 $self->lmLog(
                     "No session index in SLO request from $spConfKey SP",
                     'error' );
