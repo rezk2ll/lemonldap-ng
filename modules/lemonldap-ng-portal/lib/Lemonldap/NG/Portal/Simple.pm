@@ -712,8 +712,8 @@ sub _deleteSession {
     my $result = 1;
 
     # Return false if $h is not a hashref
-    if (ref $h ne "HASH") {
-	    $self->lmLog("_deleteSession: \$h is not a session object", 'error');
+    if ( ref $h ne "HASH" ) {
+        $self->lmLog( "_deleteSession: \$h is not a session object", 'error' );
             return 0;
     }
 
@@ -1405,8 +1405,9 @@ sub authFinish {
     eval { $self->{error} = $self->SUPER::authFinish; };
     if ($@) {
         $self->lmLog(
-            "Optional authFinish method not defined in current authentication module: $@",
-            'debug' );
+"Optional authFinish method not defined in current authentication module: $@",
+            'debug'
+        );
         return PE_OK;
     }
 
@@ -1460,7 +1461,43 @@ sub checkNotification {
     return PE_OK;
 }
 
-# issuerForAuthUser(): must be implemented in IssuerDB* module
+## @apmethod int issuerForAuthUser()
+# Check IssuerDB activation rule and then call IssuerDB module method
+# @return Lemonldap::NG::Portal constant
+sub issuerForAuthUser {
+    my $self = shift;
+
+    # If no rule defined, it's ok
+    return $self->SUPER::issuerForAuthUser()
+      unless defined $self->{issuerActivationRule};
+
+    # Check activation rule
+    my $issuerActivationRule = $self->{issuerActivationRule};
+    $issuerActivationRule =~ s/\$(\w+)/\$self->{sessionInfo}->{$1}/g;
+
+    $self->lmLog( "Applying issuerActivationRule: $issuerActivationRule",
+        'debug' );
+
+    unless ( $self->safe->reval($issuerActivationRule) ) {
+        $self->lmLog(
+            "User "
+              . $self->{sessionInfo}->{_user}
+              . " was not allowed to use IssuerDB module",
+            'warn'
+        );
+        return PE_OK;
+    }
+
+    $self->lmLog(
+        "User "
+          . $self->{sessionInfo}->{_user}
+          . " allowed to use IssuerDB module",
+        'debug'
+    );
+
+    # Call IssuerDB module method
+    return $self->SUPER::issuerForAuthUser();
+}
 
 ##@apmethod int autoRedirect()
 # If the user was redirected to the portal, we will now redirect him

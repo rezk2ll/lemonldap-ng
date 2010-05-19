@@ -492,10 +492,12 @@ sub struct {
                 },
 
                 security => {
-                    _nodes      => [qw(userControl portalForceAuthn)],
+                    _nodes =>
+                      [qw(userControl portalForceAuthn issuerActivationRule)],
                     userControl => 'text:/userControl:userControl:text',
                     portalForceAuthn =>
                       'bool:/portalForceAuthn:portalForceAuthn:bool',
+                    issuerActivationRule => 'textarea:/issuerActivationRule',
                 },
 
                 redirection => {
@@ -865,6 +867,14 @@ sub testStruct {
             },
         },
         https    => $boolean,
+        issuerActivationRule => {
+            test     => $perlExpr,
+            warnTest => sub {
+                my $e = shift;
+                return ( 0, $assignMsg ) if ( $e =~ $assignTest );
+                1;
+            },
+        },
         issuerDB => $testNotDefined,
         ldapBase => {
             test    => qr/^(?:\w+=.*|)$/,
