@@ -2069,8 +2069,9 @@ sub sendLogoutRequestToServiceProvider {
         return ( 0, undef, undef );
     }
 
-    # Get SP Name from EntityID
+    # Get SP Name and Conf Key from EntityID
     my $providerName = $self->{_spList}->{$providerID}->{name};
+    my $spConfKey    = $self->{_spList}->{$providerID}->{confKey};
 
     # Get first HTTP method
     my $protocolType = Lasso::Constants::MD_PROTOCOL_TYPE_SINGLE_LOGOUT;
@@ -2081,6 +2082,17 @@ sub sendLogoutRequestToServiceProvider {
 
     # Fix a default value for the relay parameter
     $relay = 0 unless ( defined $relay );
+
+    # Signature
+    my $signSLOMessage =
+      $self->{samlSPMetaDataOptions}->{$spConfKey}
+      ->{samlSPMetaDataOptionsSignSLOMessage};
+
+    unless ($signSLOMessage) {
+        $self->lmLog( "Do not sign this SLO request", 'debug' );
+        return ( 0, undef, undef )
+          unless ( $self->disableSignature($logout) );
+    }
 
     # Build the request unless this is a SOAP relay logout request
     unless ( $method == Lasso::Constants::HTTP_METHOD_SOAP && $relay ) {

@@ -232,10 +232,14 @@ sub issuerForUnAuthUser {
                 $self->lmLog( "Set $relaystate in RelayState", 'debug' );
             }
 
-            # Logout response
-            unless ( $self->buildLogoutResponseMsg($logout) ) {
-                $self->lmLog( "Unable to build SLO response", 'error' );
-                return PE_ERROR;
+            # Signature
+            my $signSLOMessage =
+              $self->{samlSPMetaDataOptions}->{$spConfKey}
+              ->{samlSPMetaDataOptionsSignSLOMessage};
+
+            unless ($signSLOMessage) {
+                $self->lmLog( "Do not sign this SLO response", 'debug' );
+                return PE_ERROR unless ( $self->disableSignature($logout) );
             }
 
             # Send logout response
@@ -683,6 +687,16 @@ sub issuerForAuthUser {
             # Set response assertion
             $login->response->Assertion(@response_assertions);
 
+            # Signature
+            my $signSSOMessage =
+              $self->{samlSPMetaDataOptions}->{$spConfKey}
+              ->{samlSPMetaDataOptionsSignSSOMessage};
+
+            unless ($signSSOMessage) {
+                $self->lmLog( "Do not sign this SSO response", 'debug' );
+                return PE_ERROR unless ( $self->disableSignature($login) );
+            }
+
             # Build SAML response
             $protocolProfile = $login->protocolProfile();
 
@@ -940,6 +954,16 @@ sub issuerForAuthUser {
                 $self->lmLog(
                     "Fail to delete session $local_session_id for user $user",
                     'debug' );
+            }
+
+            # Signature
+            my $signSLOMessage =
+              $self->{samlSPMetaDataOptions}->{$spConfKey}
+              ->{samlSPMetaDataOptionsSignSLOMessage};
+
+            unless ($signSLOMessage) {
+                $self->lmLog( "Do not sign this SLO response", 'debug' );
+                return PE_ERROR unless ( $self->disableSignature($logout) );
             }
 
             # Send logout response. The process could be stopped here, if no
