@@ -829,6 +829,10 @@ sub issuerForAuthUser {
             # Do we check signature?
             # TODO
 
+            # Get session index
+            my $session_index;
+            eval { $session_index = $logout->request()->SessionIndex; };
+
             # Proceed to logout on all others SP
             my $logout_dump = $logout->dump;
             my $provider_nb =
@@ -850,10 +854,6 @@ sub issuerForAuthUser {
                 $logout->msg_relayState($relaystate);
                 $self->lmLog( "Set $relaystate in RelayState", 'debug' );
             }
-
-            # Get session index
-            my $session_index;
-            eval { $session_index = $logout->request()->SessionIndex; };
 
             # SLO requests without session index are not accepted
             if ( $@ or !defined $session_index ) {
