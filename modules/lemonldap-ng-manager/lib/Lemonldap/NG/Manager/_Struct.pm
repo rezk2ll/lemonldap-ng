@@ -118,8 +118,11 @@ sub cstruct {
                       . ":samlSPMetaDataXML:filearea",
                     samlSPMetaDataOptions => {
                         _nodes => [
-qw(samlSPMetaDataOptionsOneTimeUse samlSPMetaDataOptionsSignSSOMessage samlSPMetaDataOptionsCheckSSOMessageSignature samlSPMetaDataOptionsSignSLOMessage samlSPMetaDataOptionsCheckSLOMessageSignature)
+                            qw(samlSPMetaDataOptionsNameIDFormat samlSPMetaDataOptionsOneTimeUse samlSPMetaDataOptionsSignSSOMessage samlSPMetaDataOptionsCheckSSOMessageSignature samlSPMetaDataOptionsSignSLOMessage samlSPMetaDataOptionsCheckSLOMessageSignature)
                         ],
+                        samlSPMetaDataOptionsNameIDFormat =>
+"text:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsNameIDFormat"
+                          . ":default:nameIdFormatParams",
                         samlSPMetaDataOptionsOneTimeUse =>
 "bool:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsOneTimeUse",
                         samlSPMetaDataOptionsSignSSOMessage =>
@@ -1260,6 +1263,7 @@ sub defaultConf {
         samlIDPMetaDataOptionsSignSLOMessage           => '1',
         samlIDPMetaDataOptionsCheckSLOMessageSignature => '1',
         samlIDPMetaDataOptionsRequestedAuthnContext    => '',
+        samlSPMetaDataOptionsNameIDFormat              => '',
         samlSPMetaDataOptionsOneTimeUse                => '0',
         samlSPMetaDataOptionsSignSSOMessage            => '1',
         samlSPMetaDataOptionsCheckSSOMessageSignature  => '1',

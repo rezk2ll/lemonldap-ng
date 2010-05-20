@@ -242,6 +242,7 @@ sub en {
         samlSPMetaDataXML                => 'Metadata',
         samlSPMetaDataExportedAttributes => 'Exported attributes',
         samlSPMetaDataOptions            => 'Options',
+        samlSPMetaDataOptionsNameIDFormat   => 'Default NameID format',
         samlSPMetaDataOptionsOneTimeUse  => 'One time use',
         samlSPMetaDataOptionsSignSSOMessage => 'Sign SSO message',
         samlSPMetaDataOptionsCheckSSOMessageSignature =>
@@ -476,7 +477,7 @@ sub fr {
         samlIDPMetaDataXML                 => 'Metadonnées',
         samlIDPMetaDataExportedAttributes  => 'Attributs exportés',
         samlIDPMetaDataOptions             => 'Options',
-        samlIDPMetaDataOptionsNameIDFormat => 'Format NameID',
+        samlIDPMetaDataOptionsNameIDFormat => 'Format du NameID',
         samlIDPMetaDataOptionsForceAuthn   => 'Authentification forcée',
         samlIDPMetaDataOptionsIsPassive    => 'Authentication passive',
         samlIDPMetaDataOptionsAllowProxiedAuthn =>
@@ -500,6 +501,7 @@ sub fr {
         samlSPMetaDataXML                => 'Metadonnées',
         samlSPMetaDataExportedAttributes => 'Attributs exportés',
         samlSPMetaDataOptions            => 'Options',
+        samlSPMetaDataOptionsNameIDFormat   => 'Format par défaut du NameID',
         samlSPMetaDataOptionsOneTimeUse  => 'Utilisation unique',
         samlSPMetaDataOptionsSignSSOMessage => 'Signature des messages SSO',
         samlSPMetaDataOptionsCheckSSOMessageSignature =>

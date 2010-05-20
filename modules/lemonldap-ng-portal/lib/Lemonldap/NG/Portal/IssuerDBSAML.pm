@@ -512,10 +512,14 @@ sub issuerForAuthUser {
 
             $self->lmLog( "SSO: assertion is built", 'debug' );
 
-            # Build NameID
-            # Default NameID Format
-            my $nameIDFormat = $self->getNameIDFormat("email");
-            my $nameIDContent;
+            # Get default NameID Format from configuration
+            # Set to "email" if no value in configuration
+            my $nameIDFormatKey =
+              $self->{samlSPMetaDataOptions}->{$spConfKey}
+              ->{samlSPMetaDataOptionsNameIDFormat} || "email";
+            my $nameIDFormat = $self->getNameIDFormat($nameIDFormatKey);
+
+            $self->lmLog( "Default NameID format is $nameIDFormat", 'debug' );
 
             # Check NameID Policy in request
             if ( $login->request()->NameIDPolicy ) {
@@ -525,6 +529,7 @@ sub issuerForAuthUser {
             # TODO use options to map format with session vars
             # TODO Take the first value of a multivaluated var ( split ;)
             # TODO support other formats
+            my $nameIDContent;
             $nameIDContent = $self->{sessionInfo}->{mail}
               if ( $nameIDFormat eq $self->getNameIDFormat("email") );
 
