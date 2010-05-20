@@ -116,7 +116,23 @@ sub issuerForUnAuthUser {
             $self->lmLog( "$sp match $spConfKey SP in configuration", 'debug' );
 
             # Do we check signature?
-            # TODO
+            my $checkSSOMessageSignature =
+              $self->{samlSPMetaDataOptions}->{$spConfKey}
+              ->{samlSPMetaDataOptionsCheckSSOMessageSignature};
+
+            if ($checkSSOMessageSignature) {
+                unless ( $self->checkSignatureStatus($login) ) {
+                    $self->lmLog( "Signature is not valid", 'error' );
+                    return PE_ERROR;
+                }
+                else {
+                    $self->lmLog( "Signature is valid", 'debug' );
+                }
+            }
+            else {
+                $self->lmLog( "Message signature will not be checked",
+                    'debug' );
+            }
 
             # Get SAML request
             my $saml_request = $login->request();
@@ -185,7 +201,23 @@ sub issuerForUnAuthUser {
             $self->lmLog( "$sp match $spConfKey SP in configuration", 'debug' );
 
             # Do we check signature?
-            # TODO
+            my $checkSLOMessageSignature =
+              $self->{samlSPMetaDataOptions}->{$spConfKey}
+              ->{samlSPMetaDataOptionsCheckSLOMessageSignature};
+
+            if ($checkSLOMessageSignature) {
+                unless ( $self->checkSignatureStatus($logout) ) {
+                    $self->lmLog( "Signature is not valid", 'error' );
+                    return PE_ERROR;
+                }
+                else {
+                    $self->lmLog( "Signature is valid", 'debug' );
+                }
+            }
+            else {
+                $self->lmLog( "Message signature will not be checked",
+                    'debug' );
+            }
 
             # Get SAML request
             my $saml_request = $logout->request();
@@ -207,7 +239,6 @@ sub issuerForUnAuthUser {
             }
 
             # Send logout response
-            # TODO sendLogoutResponseAfterLogoutRequest does not exists
             return PE_ERROR
               unless (
                 $self->sendLogoutResponseToServiceProvider(
@@ -431,7 +462,23 @@ sub issuerForAuthUser {
             $self->lmLog( "$sp match $spConfKey SP in configuration", 'debug' );
 
             # Do we check signature?
-            # TODO
+            my $checkSSOMessageSignature =
+              $self->{samlSPMetaDataOptions}->{$spConfKey}
+              ->{samlSPMetaDataOptionsCheckSSOMessageSignature};
+
+            if ($checkSSOMessageSignature) {
+                unless ( $self->checkSignatureStatus($login) ) {
+                    $self->lmLog( "Signature is not valid", 'error' );
+                    return PE_ERROR;
+                }
+                else {
+                    $self->lmLog( "Signature is valid", 'debug' );
+                }
+            }
+            else {
+                $self->lmLog( "Message signature will not be checked",
+                    'debug' );
+            }
 
             # Validate request
             unless ( $self->validateRequestMsg( $login, 1, 1 ) ) {
@@ -827,7 +874,23 @@ sub issuerForAuthUser {
             $self->lmLog( "$sp match $spConfKey SP in configuration", 'debug' );
 
             # Do we check signature?
-            # TODO
+            my $checkSLOMessageSignature =
+              $self->{samlSPMetaDataOptions}->{$spConfKey}
+              ->{samlSPMetaDataOptionsCheckSLOMessageSignature};
+
+            if ($checkSLOMessageSignature) {
+                unless ( $self->checkSignatureStatus($logout) ) {
+                    $self->lmLog( "Signature is not valid", 'error' );
+                    return PE_ERROR;
+                }
+                else {
+                    $self->lmLog( "Signature is valid", 'debug' );
+                }
+            }
+            else {
+                $self->lmLog( "Message signature will not be checked",
+                    'debug' );
+            }
 
             # Get session index
             my $session_index;

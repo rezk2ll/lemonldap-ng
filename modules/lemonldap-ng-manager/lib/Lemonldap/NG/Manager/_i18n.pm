@@ -243,6 +243,12 @@ sub en {
         samlSPMetaDataExportedAttributes => 'Exported attributes',
         samlSPMetaDataOptions            => 'Options',
         samlSPMetaDataOptionsOneTimeUse  => 'One time use',
+        samlSPMetaDataOptionsSignSSOMessage => 'Sign SSO message',
+        samlSPMetaDataOptionsCheckSSOMessageSignature =>
+          'Check SSO message signature',
+        samlSPMetaDataOptionsSignSLOMessage => 'Sign SLO message',
+        samlSPMetaDataOptionsCheckSLOMessageSignature =>
+          'Check SLO message signature',
         samlServiceMetaData              => 'SAML 2 Service',
         samlEntityID                     => 'Entity Identifier',
         samlOrganization                 => 'Organization',
@@ -272,7 +278,7 @@ sub en {
         samlIDPSSODescriptor                           => 'Identity Provider',
         samlIDPSSODescriptorWantAuthnRequestsSigned =>
           'Signed Authentication Request',
-        samlIDPSSODescriptorKeyDescriptorSigning      => 'Clef de signature',
+        samlIDPSSODescriptorKeyDescriptorSigning      => 'Signing Key',
         samlIDPSSODescriptorSingleSignOnService       => 'Single Sign on',
         samlIDPSSODescriptorSingleSignOnServiceHTTP   => 'HTTP Service',
         samlIDPSSODescriptorSingleSignOnServiceSOAP   => 'SOAP Service',
@@ -495,6 +501,12 @@ sub fr {
         samlSPMetaDataExportedAttributes => 'Attributs exportés',
         samlSPMetaDataOptions            => 'Options',
         samlSPMetaDataOptionsOneTimeUse  => 'Utilisation unique',
+        samlSPMetaDataOptionsSignSSOMessage => 'Signature des messages SSO',
+        samlSPMetaDataOptionsCheckSSOMessageSignature =>
+          'Vérification de la signature des messages SSO',
+        samlSPMetaDataOptionsSignSLOMessage => 'Signature des messages SLO',
+        samlSPMetaDataOptionsCheckSLOMessageSignature =>
+          'Vérification de la signature des messages SLO',
         samlServiceMetaData              => 'Service SAML 2',
         samlEntityID                     => 'Identifiant d\'entité',
         samlOrganization                 => 'Organisation',

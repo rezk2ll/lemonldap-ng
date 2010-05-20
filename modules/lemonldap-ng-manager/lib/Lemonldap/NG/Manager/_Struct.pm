@@ -117,9 +117,19 @@ sub cstruct {
                     samlSPMetaDataXML => "samlmetadata:/samlSPMetaDataXML/$k2"
                       . ":samlSPMetaDataXML:filearea",
                     samlSPMetaDataOptions => {
-                        _nodes => ['samlSPMetaDataOptionsOneTimeUse'],
+                        _nodes => [
+qw(samlSPMetaDataOptionsOneTimeUse samlSPMetaDataOptionsSignSSOMessage samlSPMetaDataOptionsCheckSSOMessageSignature samlSPMetaDataOptionsSignSLOMessage samlSPMetaDataOptionsCheckSLOMessageSignature)
+                        ],
                         samlSPMetaDataOptionsOneTimeUse =>
 "bool:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsOneTimeUse",
+                        samlSPMetaDataOptionsSignSSOMessage =>
+"bool:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsSignSSOMessage",
+                        samlSPMetaDataOptionsCheckSSOMessageSignature =>
+"bool:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsCheckSSOMessageSignature",
+                        samlSPMetaDataOptionsSignSLOMessage =>
+"bool:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsSignSLOMessage",
+                        samlSPMetaDataOptionsCheckSLOMessageSignature =>
+"bool:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsCheckSLOMessageSignature",
                     },
                 }
             }
@@ -1251,6 +1261,10 @@ sub defaultConf {
         samlIDPMetaDataOptionsCheckSLOMessageSignature => '1',
         samlIDPMetaDataOptionsRequestedAuthnContext    => '',
         samlSPMetaDataOptionsOneTimeUse                => '0',
+        samlSPMetaDataOptionsSignSSOMessage            => '1',
+        samlSPMetaDataOptionsCheckSSOMessageSignature  => '1',
+        samlSPMetaDataOptionsSignSLOMessage            => '1',
+        samlSPMetaDataOptionsCheckSLOMessageSignature  => '1',
         samlSPSSODescriptorAuthnRequestsSigned         => '0',
         samlSPSSODescriptorKeyDescriptorSigning        => '',
         samlSPSSODescriptorSingleLogoutServiceHTTP =>
