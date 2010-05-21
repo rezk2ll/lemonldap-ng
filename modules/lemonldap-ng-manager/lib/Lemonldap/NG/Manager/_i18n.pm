@@ -215,6 +215,11 @@ sub en {
         zimbraUrl                    => 'Preauthentication URL',
 
         saml                               => 'SAML',
+        samlNameIDFormatMap                => 'NameID formats',
+        samlNameIDFormatMapEmail           => 'Email',
+        samlNameIDFormatMapX509            => 'X509',
+        samlNameIDFormatMapWindows         => 'Windows',
+        samlNameIDFormatMapKerberos        => 'Kerberos',
         samlServicePrivateKey              => 'Private Key',
         samlIDPMetaDataNode                => 'SAML identity providers',
         samlIDPMetaDataXML                 => 'Metadata',
@@ -472,6 +477,11 @@ sub fr {
         zimbraUrl        => 'URL de préauthentification',
 
         saml                               => 'SAML',
+        samlNameIDFormatMap                => 'Formats de NameID',
+        samlNameIDFormatMapEmail           => 'Email',
+        samlNameIDFormatMapX509            => 'X509',
+        samlNameIDFormatMapWindows         => 'Windows',
+        samlNameIDFormatMapKerberos        => 'Kerberos',
         samlServicePrivateKey              => 'Clé privée',
         samlIDPMetaDataNode                => 'Fournisseurs d\'identité SAML',
         samlIDPMetaDataXML                 => 'Metadonnées',

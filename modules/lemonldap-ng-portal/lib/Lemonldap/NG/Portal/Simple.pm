@@ -577,6 +577,18 @@ sub updateSession {
 
 }
 
+## @method string getFirstValue(string value)
+# Get the first value of a multivaluated session value
+# @param value the complete value
+# @return first value
+sub getFirstValue {
+    my ( $self, $value ) = splice @_;
+
+    my @values = split /\Q$self->{multiValuesSeparator}\E/, $value;
+
+    return $values[0];
+}
+
 ##@method protected int _subProcess(array @subs)
 # Execute methods until an error is returned.
 # If $self->{$sub} exists, launch it, else launch $self->$sub

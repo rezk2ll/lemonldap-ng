@@ -526,12 +526,31 @@ sub issuerForAuthUser {
                 $nameIDFormat = $login->request()->NameIDPolicy->Format();
             }
 
-            # TODO use options to map format with session vars
-            # TODO Take the first value of a multivaluated var ( split ;)
-            # TODO support other formats
+            # Get session key associated with NameIDFormat
+            # Not for unspecified, transient, persistent, entity, encrypted
+            my $nameIDFormatConfiguration = {
+                $self->getNameIDFormat("email") => 'samlNameIDFormatMapEmail',
+                $self->getNameIDFormat("x509")  => 'samlNameIDFormatMapX509',
+                $self->getNameIDFormat("windows") =>
+                  'samlNameIDFormatMapWindows',
+                $self->getNameIDFormat("kerberos") =>
+                  'samlNameIDFormatMapKerberos',
+            };
+
+            my $nameIDSessionKey =
+              $self->{ $nameIDFormatConfiguration->{$nameIDFormat} };
+
             my $nameIDContent;
-            $nameIDContent = $self->{sessionInfo}->{mail}
-              if ( $nameIDFormat eq $self->getNameIDFormat("email") );
+            if ( defined $self->{sessionInfo}->{$nameIDSessionKey} ) {
+                $nameIDContent =
+                  $self->getFirstValue(
+                    $self->{sessionInfo}->{$nameIDSessionKey} );
+            }
+
+            # Manage Entity NameID format
+            if ( $nameIDFormat eq $self->getNameIDFormat("entity") ) {
+                $nameIDContent = $self->{samlEntityID};
+            }
 
             if ( $login->nameIdentifier ) {
                 $login->nameIdentifier->Format($nameIDFormat);
@@ -545,8 +564,11 @@ sub issuerForAuthUser {
                 $login->nameIdentifier($nameIdentifier);
             }
 
-            $self->lmLog( "NameID Format is $nameIDFormat",   'debug' );
-            $self->lmLog( "NameID Content is $nameIDContent", 'debug' );
+            $self->lmLog( "NameID Format is " . $login->nameIdentifier->Format,
+                'debug' );
+            $self->lmLog(
+                "NameID Content is " . $login->nameIdentifier->content,
+                'debug' );
 
             # Push mandatory attributes
             my @attributes;

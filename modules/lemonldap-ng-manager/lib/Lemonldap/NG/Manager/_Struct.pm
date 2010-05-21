@@ -604,6 +604,7 @@ sub struct {
             _nodes => [
                 qw(samlEntityID
                   samlServicePrivateKey
+                  n:samlNameIDFormatMap
                   n:samlOrganization
                   n:samlSPSSODescriptor
                   n:samlIDPSSODescriptor)
@@ -614,6 +615,18 @@ sub struct {
             samlEntityID => 'text:/samlEntityID',
             samlServicePrivateKey =>
               'filearea:/samlServicePrivateKey:samlServicePrivateKey:filearea',
+            samlNameIDFormatMap => {
+                _nodes => [
+                    qw(samlNameIDFormatMapEmail samlNameIDFormatMapX509 samlNameIDFormatMapWindows samlNameIDFormatMapKerberos)
+                ],
+                _help                    => 'default',
+                samlNameIDFormatMapEmail => 'text:/samlNameIDFormatMapEmail',
+                samlNameIDFormatMapX509  => 'text:/samlNameIDFormatMapX509',
+                samlNameIDFormatMapWindows =>
+                  'text:/samlNameIDFormatMapWindows',
+                samlNameIDFormatMapKerberos =>
+                  'text:/samlNameIDFormatMapKerberos',
+            },
             samlOrganization => {
                 _nodes => [
                     qw(samlOrganizationDisplayName
@@ -1127,6 +1140,10 @@ sub testStruct {
         samlIDPSSODescriptorNameIDFormatTransient       => $boolean,
         samlIDPSSODescriptorManageNameIDServiceHTTP     => $testNotDefined,
         samlIDPSSODescriptorManageNameIDServiceSOAP     => $testNotDefined,
+        samlNameIDFormatMapEmail                        => $testNotDefined,
+        samlNameIDFormatMapX509                         => $testNotDefined,
+        samlNameIDFormatMapWindows                      => $testNotDefined,
+        samlNameIDFormatMapKerberos                     => $testNotDefined,
 
         # SSL
         SSLVar       => $testNotDefined,
@@ -1337,6 +1354,10 @@ sub defaultConf {
         samlIDPSSODescriptorNameIDFormatX509SubjectName => '0',
         samlIDPSSODescriptorNameIDFormatPersistent      => '1',
         samlIDPSSODescriptorNameIDFormatTransient       => '0',
+        samlNameIDFormatMapEmail                        => 'mail',
+        samlNameIDFormatMapX509                         => 'mail',
+        samlNameIDFormatMapWindows                      => 'uid',
+        samlNameIDFormatMapKerberos                     => 'uid',
     };
 }
 
