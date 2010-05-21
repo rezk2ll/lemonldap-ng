@@ -58,7 +58,7 @@ sub defaultValuesInit {
 ## @rmethod Apache2::Const run(Apache2::RequestRec r)
 # Overload main run method
 # @param r Current request
-# @return Apache2::Const value (OK, FORBIDDEN, REDIRECT or SERVER_ERROR
+# @return Apache2::Const value (OK, FORBIDDEN, REDIRECT or SERVER_ERROR)
 sub run {
     my $class = shift;
     my $r     = $_[0];

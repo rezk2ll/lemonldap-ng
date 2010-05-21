@@ -520,7 +520,7 @@ sub struct {
                 },
 
                 specialHandlers => {
-                    _nodes => [qw(zimbraHandler)],
+                    _nodes => [qw(zimbraHandler sympaHandler)],
 
                     # Zimbra
                     zimbraHandler => {
@@ -532,6 +532,13 @@ sub struct {
                         zimbraBy     => 'text:/zimbraBy:default:zimbraByParams',
                         zimbraUrl    => 'text:/zimbraUrl',
                         zimbraSsoUrl => 'text:/zimbraSsoUrl',
+                    },
+
+                    # Sympa
+                    sympaHandler => {
+                        _nodes       => [qw(sympaSecret sympaMailKey)],
+                        sympaSecret => 'text:/sympaSecret',
+                        sympaMailKey => 'text:/sympaMailKey',
                     },
                 },
 
@@ -1201,6 +1208,10 @@ sub testStruct {
         zimbraBy         => $testNotDefined,
         zimbraUrl        => $testNotDefined,
         zimbraSsoUrl     => $testNotDefined,
+
+        # Sympa
+        sympaSecret => $testNotDefined,
+        sympaMailKey => $testNotDefined,
 
     };
 }

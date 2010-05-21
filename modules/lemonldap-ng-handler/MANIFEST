@@ -3,6 +3,7 @@ example/autoProtectedCGI.pl
 example/menu.pl
 example/MyHandler.pm
 example/MyHandlerLog4Perl.pm
+example/MyHandlerSympa.pm
 example/MyHandlerZimbra.pm
 example/MyUpdateCookieHandler.pm
 lib/Lemonldap/NG/Handler.pm
