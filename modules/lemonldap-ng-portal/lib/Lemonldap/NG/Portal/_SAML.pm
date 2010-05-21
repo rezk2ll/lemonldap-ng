@@ -269,7 +269,6 @@ sub checkMessage {
     my ( $request, $response, $message, $method, $relaystate, $artifact );
 
     # Check if SAML service is loaded
-    # TODO : return undefined values ???
     return ( $request, $response, $method, $relaystate, $artifact )
       unless $self->{_lassoServer};
 
@@ -1519,18 +1518,12 @@ sub loadArtifact {
     return;
 }
 
-## @method string createArtifactResponse(Lasso::Login login, string request)
-# Process artifact request and build response
+## @method string createArtifactResponse(Lasso::Login login)
+# Create artifact response
 # @param login Lasso::Login object
-# @param request Artifact request
 # @return Artifact response
 sub createArtifactResponse {
-    my ( $self, $login, $request ) = splice @_;
-
-    unless ( $self->processArtRequestMsg( $login, $request ) ) {
-        $self->lmLog( "Unable to process artifact request message", 'error' );
-        return;
-    }
+    my ( $self, $login ) = splice @_;
 
     my $artifact_id = $login->assertionArtifact();
 
@@ -2349,6 +2342,37 @@ sub authnLevel2authnContext {
 
 }
 
+## @method boolean checkDestination(Lasso::Node message, string url)
+# If SAML Destination attribute is present, check it
+# @param message SAML request or response
+# @param url Requested URL
+# @return Result
+sub checkDestination {
+    my ( $self, $message, $url ) = splice @_;
+    my $destination;
+
+    # Read Destination
+    eval { $destination = $message->Destination(); };
+
+    # Ok if no Destination
+    if ( $@ or !$destination ) {
+        $self->lmLog( "No Destination in SAML message", 'debug' );
+        return 1;
+    }
+
+    $self->lmLog( "Destination $destination found in SAML message", 'debug' );
+
+    # Compare Destination and URL
+    if ( $destination =~ /^$url$/ ) {
+        $self->lmLog( "Destination match URL $url", 'debug' );
+        return 1;
+    }
+    else {
+        $self->lmLog( "Destination does not match URL $url", 'error' );
+        return 0;
+    }
+}
+
 1;
 
 __END__
@@ -2557,7 +2581,7 @@ Load artifact
 
 =head2 createArtifactResponse
 
-Process artifact request and build response
+Create artifact response
 
 =head2 processArtRequestMsg
 
@@ -2641,6 +2665,10 @@ Return authentication level corresponding to authnContext
 =head2 authnLevel2authnContext
 
 Return SAML authentication context corresponding to authnLevel
+
+=head2 checkDestination
+
+If SAML Destination attribute is present, check it
 
 =head1 SEE ALSO
 

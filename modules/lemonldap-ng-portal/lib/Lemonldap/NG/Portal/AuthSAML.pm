@@ -138,6 +138,10 @@ sub extractFormInfo {
                 return PE_ERROR;
             }
 
+            # Check Destination
+            return PE_ERROR
+              unless ( $self->checkDestination( $saml_response, $url ) );
+
             # Replay protection if this is a response to a created authn request
             my $assertion_responded = $saml_response->InResponseTo;
             if ($assertion_responded) {
@@ -308,6 +312,10 @@ sub extractFormInfo {
 
             $self->lmLog( "Logout response is valid", 'debug' );
 
+            # Check Destination
+            return PE_ERROR
+              unless ( $self->checkDestination( $logout->response, $url ) );
+
             # Get IDP entityID
             my $idp = $logout->remote_providerID();
 
@@ -385,6 +393,10 @@ sub extractFormInfo {
             }
 
             $self->lmLog( "Logout request is valid", 'debug' );
+
+            # Check Destination
+            return PE_ERROR
+              unless ( $self->checkDestination( $logout->request, $url ) );
 
             # Get IDP entityID
             my $idp = $logout->remote_providerID();
@@ -643,10 +655,19 @@ sub extractFormInfo {
         # Create Login object
         my $login = $self->createLogin($server);
 
+        # Process request message
+        unless ( $self->processArtRequestMsg( $login, $art_request ) ) {
+            $self->lmLog( "Unable to process artifact request message",
+                'error' );
+            return PE_ERROR;
+        }
+
+        # Check Destination
+        return PE_ERROR
+          unless ( $self->checkDestination( $login->request, $url ) );
+
         # Create artifact response
-        unless ( $art_response =
-            $self->createArtifactResponse( $login, $art_request ) )
-        {
+        unless ( $art_response = $self->createArtifactResponse($login) ) {
             $self->lmLog( "Unable to create artifact response message",
                 'error' );
             return PE_ERROR;

@@ -141,6 +141,10 @@ sub issuerForUnAuthUser {
                 return PE_ERROR;
             }
 
+            # Check Destination
+            return PE_ERROR
+              unless ( $self->checkDestination( $saml_request, $url ) );
+
             # Check isPassive flag
             my $isPassive = $saml_request->IsPassive();
 
@@ -152,6 +156,21 @@ sub issuerForUnAuthUser {
                 return PE_ERROR;
             }
 
+        }
+
+        elsif ($response) {
+            $self->lmLog(
+                "Authentication responses are not managed by this module",
+                'debug' );
+            return PE_OK;
+        }
+
+        else {
+
+            # No request or response
+            # This should not happen
+            $self->lmLog( "No request or response found", 'debug' );
+            return PE_OK;
         }
 
     }
@@ -225,6 +244,10 @@ sub issuerForUnAuthUser {
                 $self->lmLog( "No SAML request found", 'error' );
                 return PE_ERROR;
             }
+
+            # Check Destination
+            return PE_ERROR
+              unless ( $self->checkDestination( $saml_request, $url ) );
 
             # Set RelayState
             if ($relaystate) {
@@ -329,10 +352,19 @@ sub issuerForUnAuthUser {
         # Create Login object
         my $login = $self->createLogin($server);
 
+        # Process request message
+        unless ( $self->processArtRequestMsg( $login, $art_request ) ) {
+            $self->lmLog( "Unable to process artifact request message",
+                'error' );
+            return PE_ERROR;
+        }
+
+        # Check Destination
+        return PE_ERROR
+          unless ( $self->checkDestination( $login->request, $url ) );
+
         # Create artifact response
-        unless ( $art_response =
-            $self->createArtifactResponse( $login, $art_request ) )
-        {
+        unless ( $art_response = $self->createArtifactResponse($login) ) {
             $self->lmLog( "Unable to create artifact response message",
                 'error' );
             return PE_ERROR;
@@ -494,6 +526,10 @@ sub issuerForAuthUser {
             $self->lmLog( "SSO: authentication request is valid", 'debug' );
 
             # TODO Check AuthnRequest conditions
+
+            # Check Destination
+            return PE_ERROR
+              unless ( $self->checkDestination( $login->request, $url ) );
 
             # Map authenticationLevel with SAML2 authentication context
             my $authenticationLevel =
@@ -932,6 +968,10 @@ sub issuerForAuthUser {
                 $self->lmLog( "Message signature will not be checked",
                     'debug' );
             }
+
+            # Check Destination
+            return PE_ERROR
+              unless ( $self->checkDestination( $logout->request, $url ) );
 
             # Get session index
             my $session_index;
