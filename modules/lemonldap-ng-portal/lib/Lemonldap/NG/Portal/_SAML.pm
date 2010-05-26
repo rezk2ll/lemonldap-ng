@@ -144,8 +144,7 @@ sub loadIDPs {
     unless ( $self->{samlIDPMetaDataXML}
         and keys %{ $self->{samlIDPMetaDataXML} } )
     {
-        $self->lmLog( "No IDP found in configuration", 'error' );
-        return 0;
+        $self->lmLog( "No IDP found in configuration", 'warn' );
     }
 
     # Load identity provider metadata
@@ -206,8 +205,7 @@ sub loadSPs {
     unless ( $self->{samlSPMetaDataXML}
         and keys %{ $self->{samlSPMetaDataXML} } )
     {
-        $self->lmLog( "No SP found in configuration", 'error' );
-        return 0;
+        $self->lmLog( "No SP found in configuration", 'warn' );
     }
 
     # Load service provider metadata
