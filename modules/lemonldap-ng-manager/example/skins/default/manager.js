@@ -575,9 +575,9 @@ function samlService(id) {
 function securedCookieValues(id){
 	currentId=id;
 	formateSelect('select',[
-		'0:'+text4securedCookie0,
-		'1:'+text4securedCookie1,
-		'2:'+text4securedCookie2
+		'0='+text4securedCookie0,
+		'1='+text4securedCookie1,
+		'2='+text4securedCookie2
 		],lmdata(id));
 	display('select',lmtext(id));
 }

@@ -850,7 +850,7 @@ sub testStruct {
         },
         customFunctions => $testNotDefined,
         domain          => {
-            test    => qr/^\.?\w+(?:\.[a-zA-Z]\w*)*(?:\.[a-zA-Z]+)$/,
+            test    => qr/^\.?[\w\-]+(?:\.[a-zA-Z][\w\-]*)*(?:\.[a-zA-Z]+)$/,
             msgFail => 'Bad domain',
         },
         exportedHeaders => {

@@ -97,7 +97,7 @@ sub loadService {
     return 0 unless $self->loadLasso();
 
     # Activate SOAP
-    $self->abort( 'To use SAML, you must activate SOAP (Soap => 1)', 'error' )
+    $self->abort( 'To use SAML, you must activate SOAP (Soap => 1)')
       unless ( $self->{Soap} );
 
     # Check presence of private key in configuration
