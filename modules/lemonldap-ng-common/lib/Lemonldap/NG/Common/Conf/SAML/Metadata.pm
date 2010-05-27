@@ -259,8 +259,7 @@ sub toXML {
     # Force UTF-8 encoding
     my $xml_utf8 = encode( "utf8", $xml );
 
-    # Lasso wants Exponent after Modulus in Key Info
-    # See bug #LEMONLDAP-68
+    # XML schema requires Exponent after Modulus in KeyInfo
     $xml_utf8 =~
 s#<Exponent>(.+)</Exponent>\s*<Modulus>(.+)</Modulus>#<Modulus>$2</Modulus>\n<Exponent>$1</Exponent>#mg;
 
