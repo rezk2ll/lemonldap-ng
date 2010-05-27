@@ -137,12 +137,10 @@ sub serviceToXML {
       samlOrganizationName
       samlOrganizationDisplayName
       samlOrganizationURL
-      samlSPSSODescriptorAuthnRequestsSigned
       samlSPSSODescriptorProtocolSupportEnumeration
       samlSPSSODescriptorNameIDFormatX509SubjectName
       samlSPSSODescriptorNameIDFormatPersistent
       samlSPSSODescriptorNameIDFormatTransient
-      samlIDPSSODescriptorWantAuthnRequestsSigned
       samlIDPSSODescriptorProtocolSupportEnumeration
       samlIDPSSODescriptorNameIDFormatX509SubjectName
       samlIDPSSODescriptorNameIDFormatPersistent
@@ -155,7 +153,19 @@ sub serviceToXML {
         }
     }
 
-    # Format public keys.
+    # Boolean parameters
+    my @param_boolean = qw(
+      samlSPSSODescriptorAuthnRequestsSigned
+      samlIDPSSODescriptorWantAuthnRequestsSigned
+    );
+
+    foreach (@param_boolean) {
+        if ( defined $conf->{$_} ) {
+            $template->param( $_, $conf->{$_} ? 'true' : 'false' );
+        }
+    }
+
+    # Format public keys
     my @param_keys = qw(
       samlSPSSODescriptorKeyDescriptorSigning
       samlIDPSSODescriptorKeyDescriptorSigning

@@ -97,7 +97,7 @@ sub loadService {
     return 0 unless $self->loadLasso();
 
     # Activate SOAP
-    $self->abort( 'To use SAML, you must activate SOAP (Soap => 1)')
+    $self->abort('To use SAML, you must activate SOAP (Soap => 1)')
       unless ( $self->{Soap} );
 
     # Check presence of private key in configuration
@@ -1403,6 +1403,11 @@ sub resolveArtifact {
         # Build request message
         eval { Lasso::Login::build_request_msg($profile); };
         return unless $self->checkLassoError($@);
+
+        unless ( $profile->msg_url ) {
+            $self->lmLog( "No artifcat resolution URL found", 'error' );
+            return;
+        }
 
         my $request = HTTP::Request->new( 'POST' => $profile->msg_url );
         $request->content_type('text/xml');
