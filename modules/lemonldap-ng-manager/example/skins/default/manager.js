@@ -514,7 +514,8 @@ function samlAssertion(id) {
 	formateSelect('samlAssertionBinding',[
 		'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact=Artifact',
 		'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST=HTTP POST',
-		'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect=HTTP Redirect'
+		'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect=HTTP Redirect',
+		'urn:oasis:names:tc:SAML:2.0:bindings:SOAP=SOAP'
 		],t[2]);
 	$('#samlAssertionLocation').attr('value',t[3]);
 	display('samlAssertion',lmtext(id));
