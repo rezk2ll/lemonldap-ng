@@ -1818,6 +1818,23 @@ sub getHttpMethod {
     return;
 }
 
+## @method int getHttpMethodString(int method)
+# Convert configuration Lasso HTTP Method integer into string
+# @param method Lasso HTTP Method
+# @return method string
+sub getHttpMethodString {
+    my ( $self, $method ) = splice @_;
+
+    return "POST"     if ( $method == Lasso::Constants::HTTP_METHOD_POST );
+    return "REDIRECT" if ( $method == Lasso::Constants::HTTP_METHOD_REDIRECT );
+    return "SOAP"     if ( $method == Lasso::Constants::HTTP_METHOD_SOAP );
+    return "ARTIFACT GET"
+      if ( $method == Lasso::Constants::HTTP_METHOD_ARTIFACT_GET );
+    return "ARTIFACT POST"
+      if ( $method == Lasso::Constants::HTTP_METHOD_ARTIFACT_POST );
+
+    return "UNDEFINED";
+}
 ## @method int getFirstHttpMethod(Lasso::Server server, string entityID, int protcolType)
 # Find a suitable HTTP method for an entity with a given protocol
 # @param server Lasso::Server object
@@ -2613,6 +2630,10 @@ Convert configuration string into SAML2 NameIDFormat string
 =head2 getHttpMethod
 
 Convert configuration string into Lasso HTTP Method integer
+
+=head2 getHttpMethodString
+
+Convert configuration Lasso HTTP Method integer into string
 
 =head2 getFirstHttpMethod
 

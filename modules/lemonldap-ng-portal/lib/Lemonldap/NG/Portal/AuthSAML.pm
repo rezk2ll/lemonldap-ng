@@ -885,8 +885,12 @@ sub extractFormInfo {
         $method = $self->getHttpMethod("redirect");
     }
 
-    $self->lmLog( "Use method $method with IDP $idpConfKey for SSO profile",
-        'debug' );
+    $self->lmLog(
+        "Use method "
+          . $self->getHttpMethodString($method)
+          . " with IDP $idpConfKey for SSO profile",
+        'debug'
+    );
 
     # Set signature
     my $signSSOMessage =
@@ -1142,8 +1146,12 @@ sub authLogout {
         $method = $self->getHttpMethod("soap");
     }
 
-    $self->lmLog( "Use method $method with IDP $idpConfKey for SLO profile",
-        'debug' );
+    $self->lmLog(
+        "Use method "
+          . $self->getHttpMethodString($method)
+          . " with IDP $idpConfKey for SLO profile",
+        'debug'
+    );
 
     # Set signature
     my $signSLOMessage =
