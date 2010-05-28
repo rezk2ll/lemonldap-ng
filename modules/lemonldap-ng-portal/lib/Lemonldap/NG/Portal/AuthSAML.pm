@@ -729,6 +729,10 @@ sub extractFormInfo {
     if ( $confirm_flag == -1 or !$idp ) {
         $self->lmLog( "No IDP found, redirecting user to IDP list", 'debug' );
 
+        # Control url parameter
+        my $urlcheck = $self->controlUrlOrigin();
+        return $urlcheck unless ( $urlcheck == PE_OK );
+
         # IDP list
         my $html = "<h3>"
           . &Lemonldap::NG::Portal::_i18n::msg( PM_SAML_IDPSELECT,
@@ -749,6 +753,10 @@ sub extractFormInfo {
           . &Lemonldap::NG::Portal::_i18n::msg( PM_REMEMBERCHOICE,
             $ENV{HTTP_ACCEPT_LANGUAGE} )
           . "</td></tr></table>\n"
+
+          # URL
+          . '<input type="hidden" name="url" value="'
+          . $self->param("url") . '" />'
 
           # Script to autoselect first choice
           . '<script>$("[type=radio]:first").attr("checked","checked");</script>';
@@ -773,6 +781,10 @@ sub extractFormInfo {
     elsif ( $confirm_flag != 1 ) {
         $self->lmLog( "IDP $idp selected, need user confirmation", 'debug' );
 
+        # Control url parameter
+        my $urlcheck = $self->controlUrlOrigin();
+        return $urlcheck unless ( $urlcheck == PE_OK );
+
         # Choosen IDP
         my $html = '<h3>'
           . &Lemonldap::NG::Portal::_i18n::msg( PM_SAML_IDPCHOOSEN,
@@ -783,6 +795,8 @@ sub extractFormInfo {
           . "<p><i>"
           . $idp
           . "</i></p>\n"
+          . "<input type=\"hidden\" name=\"url\" value=\""
+          . $self->param("url") . "\" />"
           . "<input type=\"hidden\" name=\"idp\" value=\"$idp\" />\n";
 
         $self->info($html);
@@ -793,6 +807,10 @@ sub extractFormInfo {
     # Here confirmation is OK (confirm_flag == 1), store choosen IDP in cookie
     unless ( $idp_cookie and ( $idp eq $idp_cookie->value ) ) {
         $self->lmLog( "Build cookie to remember $idp as IDP choice", 'debug' );
+
+        # Control url parameter
+        my $urlcheck = $self->controlUrlOrigin();
+        return $urlcheck unless ( $urlcheck == PE_OK );
 
         # User can choose temporary (0) or persistent cookie (1)
         my $cookie_type = $self->param("cookie_type") || "0";
