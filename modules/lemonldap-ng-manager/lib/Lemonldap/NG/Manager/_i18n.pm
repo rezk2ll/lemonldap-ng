@@ -246,6 +246,7 @@ sub en {
         samlIDPMetaDataOptionsResolutionRule => 'Resolution rule',
         samlIDPMetaDataOptionsRequestedAuthnContext =>
           'Requested authentication context',
+        samlIDPMetaDataOptionsForceUTF8     => 'Force UTF-8',
         samlSPMetaDataNode               => 'SAML service providers',
         samlSPMetaDataXML                => 'Metadata',
         samlSPMetaDataExportedAttributes => 'Exported attributes',
@@ -516,6 +517,7 @@ sub fr {
         samlIDPMetaDataOptionsResolutionRule => 'Règle de résolution',
         samlIDPMetaDataOptionsRequestedAuthnContext =>
           'Contexte d\'authentification demandé',
+        samlIDPMetaDataOptionsForceUTF8     => 'Forcer l\'UTF-8',
         samlSPMetaDataNode               => 'Fournisseurs de service SAML',
         samlSPMetaDataXML                => 'Metadonnées',
         samlSPMetaDataExportedAttributes => 'Attributs exportés',

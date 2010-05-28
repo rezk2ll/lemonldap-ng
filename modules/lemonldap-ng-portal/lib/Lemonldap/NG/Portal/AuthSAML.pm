@@ -984,6 +984,11 @@ sub setAuthSessionInfo {
         return PE_ERROR;
     }
 
+    # Force UTF-8
+    my $force_utf8 =
+      $self->{samlIDPMetaDataOptions}->{$idpConfKey}
+      ->{samlIDPMetaDataOptionsForceUTF8};
+
     # Try to get attributes if attribute statement is present in assertion
     my $attr_statement = $assertion->AttributeStatement();
     if ($attr_statement) {
@@ -1006,7 +1011,7 @@ sub setAuthSessionInfo {
             # Try to get value
             my $value =
               $self->getAttributeValue( $name, $format, $friendly_name,
-                \@attributes );
+                \@attributes, $force_utf8 );
 
             # Store value in sessionInfo
             $self->{sessionInfo}->{$_} = $value if defined $value;

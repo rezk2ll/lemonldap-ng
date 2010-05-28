@@ -42,8 +42,14 @@ sub setSessionInfo {
     my $server = $self->{_lassoServer};
     my $login  = $self->{_lassoLogin};
     my $idp    = $self->{_idp};
+    my $idpConfKey = $self->{_idpConfKey};
 
     my $exportedAttr;
+
+    # Force UTF-8
+    my $force_utf8 =
+      $self->{samlIDPMetaDataOptions}->{$idpConfKey}
+      ->{samlIDPMetaDataOptionsForceUTF8};
 
     # Get all required attributes, not already set
     # in setAuthSessionInfo()
@@ -121,7 +127,7 @@ sub setSessionInfo {
 
         # Try to get value
         my $value = $self->getAttributeValue( $name, $format, $friendly_name,
-            \@response_attributes );
+            \@response_attributes, $force_utf8 );
 
         unless ($value) {
             $self->lmLog(

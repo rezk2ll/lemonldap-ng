@@ -60,7 +60,7 @@ sub cstruct {
                       . ":samlIDPMetaDataXML:filearea",
                     samlIDPMetaDataOptions => {
                         _nodes => [
-                            qw(samlIDPMetaDataOptionsNameIDFormat samlIDPMetaDataOptionsForceAuthn samlIDPMetaDataOptionsIsPassive samlIDPMetaDataOptionsAllowProxiedAuthn samlIDPMetaDataOptionsSSOBinding samlIDPMetaDataOptionsSLOBinding samlIDPMetaDataOptionsResolutionRule samlIDPMetaDataOptionsAllowLoginFromIDP samlIDPMetaDataOptionsAdaptSessionUtime samlIDPMetaDataOptionsSignSSOMessage samlIDPMetaDataOptionsCheckSSOMessageSignature samlIDPMetaDataOptionsSignSLOMessage samlIDPMetaDataOptionsCheckSLOMessageSignature samlIDPMetaDataOptionsRequestedAuthnContext)
+                            qw(samlIDPMetaDataOptionsNameIDFormat samlIDPMetaDataOptionsForceAuthn samlIDPMetaDataOptionsIsPassive samlIDPMetaDataOptionsAllowProxiedAuthn samlIDPMetaDataOptionsSSOBinding samlIDPMetaDataOptionsSLOBinding samlIDPMetaDataOptionsResolutionRule samlIDPMetaDataOptionsAllowLoginFromIDP samlIDPMetaDataOptionsAdaptSessionUtime samlIDPMetaDataOptionsSignSSOMessage samlIDPMetaDataOptionsCheckSSOMessageSignature samlIDPMetaDataOptionsSignSLOMessage samlIDPMetaDataOptionsCheckSLOMessageSignature samlIDPMetaDataOptionsRequestedAuthnContext samlIDPMetaDataOptionsForceUTF8)
                         ],
                         samlIDPMetaDataOptionsNameIDFormat =>
 "text:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsNameIDFormat"
@@ -94,6 +94,8 @@ sub cstruct {
                         samlIDPMetaDataOptionsRequestedAuthnContext =>
 "text:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsRequestedAuthnContext"
                           . ":default:authnContextParams",
+                        samlIDPMetaDataOptionsForceUTF8 =>
+"bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsForceUTF8",
                     },
                 }
             }
@@ -1303,6 +1305,7 @@ sub defaultConf {
         samlIDPMetaDataOptionsSignSLOMessage           => '1',
         samlIDPMetaDataOptionsCheckSLOMessageSignature => '1',
         samlIDPMetaDataOptionsRequestedAuthnContext    => '',
+        samlIDPMetaDataOptionsForceUTF8                => '0',
         samlSPMetaDataOptionsNameIDFormat              => '',
         samlSPMetaDataOptionsOneTimeUse                => '0',
         samlSPMetaDataOptionsSignSSOMessage            => '1',

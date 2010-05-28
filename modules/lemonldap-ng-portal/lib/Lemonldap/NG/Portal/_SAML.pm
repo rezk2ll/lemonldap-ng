@@ -1010,15 +1010,18 @@ sub getAssertion {
     return $assertion;
 }
 
-## @method string getAttributeValue(string name, string format, string friendly_name, array_ref attributes)
+## @method string getAttributeValue(string name, string format, string friendly_name, array_ref attributes, boolean force_utf8)
 # Get SAML attribute value corresponding to name, format and friendly_name
 # Multivaluated values are separated by multiValuesSeparator
+# If force_utf8 flag is set, value is encoded in UTF-8
 # @param name SAML attribute name
 # @param format optional SAML attribute format
 # @param friendly_name optional SAML attribute friendly name
+# @param force_utf8 optional flag to force value in UTF-8
 # @return attribute value
 sub getAttributeValue {
-    my ( $self, $name, $format, $friendly_name, $attributes ) = splice @_;
+    my ( $self, $name, $format, $friendly_name, $attributes, $force_utf8 ) =
+      splice @_;
     my $value;
 
     # Loop on attributes
@@ -1045,8 +1048,8 @@ sub getAttributeValue {
         }
         $value =~ s/\Q$self->{multiValuesSeparator}\E$//;
 
-        # Force UTF-8
-        $value = encode( "utf-8", $value );
+        # Encode UTF-8 if force_utf8 flag
+        $value = encode( "utf8", $value ) if $force_utf8;
 
     }
 
