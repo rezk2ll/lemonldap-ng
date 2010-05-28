@@ -30,11 +30,17 @@
       Binding="<TMPL_VAR NAME="samlIDPSSODescriptorSingleLogoutServiceSOAPBinding">"
       Location="<TMPL_VAR NAME="samlIDPSSODescriptorSingleLogoutServiceSOAPLocation">" />
     <SingleLogoutService
-      Binding="<TMPL_VAR NAME="samlIDPSSODescriptorSingleLogoutServiceHTTPBinding">"
-      Location="<TMPL_VAR NAME="samlIDPSSODescriptorSingleLogoutServiceHTTPLocation">"
-      <TMPL_IF NAME="samlIDPSSODescriptorSingleLogoutServiceHTTPResponseLocation">
-      ResponseLocation="<TMPL_VAR NAME="samlIDPSSODescriptorSingleLogoutServiceHTTPResponseLocation">" />
-      </TMPL_IF>
+      Binding="<TMPL_VAR NAME="samlIDPSSODescriptorSingleLogoutServiceHTTPRedirectBinding">"
+      Location="<TMPL_VAR NAME="samlIDPSSODescriptorSingleLogoutServiceHTTPRedirectLocation">"
+      <TMPL_IF NAME="samlIDPSSODescriptorSingleLogoutServiceHTTPRedirectResponseLocation">
+      ResponseLocation="<TMPL_VAR NAME="samlIDPSSODescriptorSingleLogoutServiceHTTPRedirectResponseLocation">"
+      </TMPL_IF>/>
+    <SingleLogoutService
+      Binding="<TMPL_VAR NAME="samlIDPSSODescriptorSingleLogoutServiceHTTPPostBinding">"
+      Location="<TMPL_VAR NAME="samlIDPSSODescriptorSingleLogoutServiceHTTPPostLocation">"
+      <TMPL_IF NAME="samlIDPSSODescriptorSingleLogoutServiceHTTPPostResponseLocation">
+      ResponseLocation="<TMPL_VAR NAME="samlIDPSSODescriptorSingleLogoutServiceHTTPPostResponseLocation">"
+      </TMPL_IF>/>
     <ManageNameIDService
       Binding="<TMPL_VAR NAME="samlIDPSSODescriptorManageNameIDServiceSOAPBinding">"
       Location="<TMPL_VAR NAME="samlIDPSSODescriptorManageNameIDServiceSOAPLocation">" />
@@ -48,8 +54,17 @@
       Binding="<TMPL_VAR NAME="samlIDPSSODescriptorSingleSignOnServiceSOAPBinding">"
       Location="<TMPL_VAR NAME="samlIDPSSODescriptorSingleSignOnServiceSOAPLocation">" />
     <SingleSignOnService
-      Binding="<TMPL_VAR NAME="samlIDPSSODescriptorSingleSignOnServiceHTTPBinding">"
-      Location="<TMPL_VAR NAME="samlIDPSSODescriptorSingleSignOnServiceHTTPLocation">" />
+      Binding="<TMPL_VAR NAME="samlIDPSSODescriptorSingleSignOnServiceHTTPRedirectBinding">"
+      Location="<TMPL_VAR NAME="samlIDPSSODescriptorSingleSignOnServiceHTTPRedirectLocation">"
+      <TMPL_IF NAME="samlIDPSSODescriptorSingleSignOnServiceHTTPRedirectResponseLocation">
+      ResponseLocation="<TMPL_VAR NAME="samlIDPSSODescriptorSingleSignOnServiceHTTPRedirectResponseLocation">"
+      </TMPL_IF>/>
+    <SingleSignOnService
+      Binding="<TMPL_VAR NAME="samlIDPSSODescriptorSingleSignOnServiceHTTPPostBinding">"
+      Location="<TMPL_VAR NAME="samlIDPSSODescriptorSingleSignOnServiceHTTPPostLocation">"
+      <TMPL_IF NAME="samlIDPSSODescriptorSingleSignOnServiceHTTPPostResponseLocation">
+      ResponseLocation="<TMPL_VAR NAME="samlIDPSSODescriptorSingleSignOnServiceHTTPPostResponseLocation">"
+      </TMPL_IF>/>
 <TMPL_IF NAME="samlIDPSSODescriptorNameIDFormatX509SubjectName">
     <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:X509SubjectName</NameIDFormat>
 </TMPL_IF>
@@ -87,10 +102,16 @@
       Binding="<TMPL_VAR NAME="samlSPSSODescriptorSingleLogoutServiceSOAPBinding">"
       Location="<TMPL_VAR NAME="samlSPSSODescriptorSingleLogoutServiceSOAPLocation">" />
     <SingleLogoutService
-      Binding="<TMPL_VAR NAME="samlSPSSODescriptorSingleLogoutServiceHTTPBinding">"
-      Location="<TMPL_VAR NAME="samlSPSSODescriptorSingleLogoutServiceHTTPLocation">"
-      <TMPL_IF NAME="samlSPSSODescriptorSingleLogoutServiceHTTPResponseLocation">
-      ResponseLocation="<TMPL_VAR NAME="samlSPSSODescriptorSingleLogoutServiceHTTPResponseLocation">"
+      Binding="<TMPL_VAR NAME="samlSPSSODescriptorSingleLogoutServiceHTTPRedirectBinding">"
+      Location="<TMPL_VAR NAME="samlSPSSODescriptorSingleLogoutServiceHTTPRedirectLocation">"
+      <TMPL_IF NAME="samlSPSSODescriptorSingleLogoutServiceHTTPRedirectResponseLocation">
+      ResponseLocation="<TMPL_VAR NAME="samlSPSSODescriptorSingleLogoutServiceHTTPRedirectResponseLocation">"
+      </TMPL_IF>/>
+    <SingleLogoutService
+      Binding="<TMPL_VAR NAME="samlSPSSODescriptorSingleLogoutServiceHTTPPostBinding">"
+      Location="<TMPL_VAR NAME="samlSPSSODescriptorSingleLogoutServiceHTTPPostLocation">"
+      <TMPL_IF NAME="samlSPSSODescriptorSingleLogoutServiceHTTPPostResponseLocation">
+      ResponseLocation="<TMPL_VAR NAME="samlSPSSODescriptorSingleLogoutServiceHTTPPostResponseLocation">"
       </TMPL_IF>/>
     <AssertionConsumerService
       isDefault="<TMPL_VAR NAME="samlSPSSODescriptorAssertionConsumerServiceHTTPArtifactDefault">"

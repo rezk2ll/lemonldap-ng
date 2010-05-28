@@ -196,11 +196,14 @@ sub serviceToXML {
     # "binding;location;responseLocation"
     # The last value, responseLocation, is optional.
     my @param_service = qw(
-      samlSPSSODescriptorSingleLogoutServiceHTTP
+      samlSPSSODescriptorSingleLogoutServiceHTTPRedirect
+      samlSPSSODescriptorSingleLogoutServiceHTTPPost
       samlSPSSODescriptorSingleLogoutServiceSOAP
-      samlIDPSSODescriptorSingleSignOnServiceHTTP
+      samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect
+      samlIDPSSODescriptorSingleSignOnServiceHTTPPost
       samlIDPSSODescriptorSingleSignOnServiceSOAP
-      samlIDPSSODescriptorSingleLogoutServiceHTTP
+      samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect
+      samlIDPSSODescriptorSingleLogoutServiceHTTPPost
       samlIDPSSODescriptorSingleLogoutServiceSOAP
       samlIDPSSODescriptorManageNameIDServiceHTTP
       samlIDPSSODescriptorManageNameIDServiceSOAP
