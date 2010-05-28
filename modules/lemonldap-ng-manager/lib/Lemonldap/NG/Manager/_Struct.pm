@@ -666,12 +666,15 @@ sub struct {
 
                 samlSPSSODescriptorSingleLogoutService => {
                     _nodes => [
-                        qw(samlSPSSODescriptorSingleLogoutServiceHTTP
+                        qw(samlSPSSODescriptorSingleLogoutServiceHTTPRedirect
+                          samlSPSSODescriptorSingleLogoutServiceHTTPPost
                           samlSPSSODescriptorSingleLogoutServiceSOAP)
                     ],
                     _help => 'default',
-                    samlSPSSODescriptorSingleLogoutServiceHTTP =>
-                      'samlService:/samlSPSSODescriptorSingleLogoutServiceHTTP',
+                    samlSPSSODescriptorSingleLogoutServiceHTTPRedirect =>
+'samlService:/samlSPSSODescriptorSingleLogoutServiceHTTPRedirect',
+                    samlSPSSODescriptorSingleLogoutServiceHTTPPost =>
+'samlService:/samlSPSSODescriptorSingleLogoutServiceHTTPPost',
                     samlSPSSODescriptorSingleLogoutServiceSOAP =>
                       'samlService:/samlSPSSODescriptorSingleLogoutServiceSOAP',
                 },
@@ -736,24 +739,30 @@ sub struct {
 
                 samlIDPSSODescriptorSingleSignOnService => {
                     _nodes => [
-                        qw(samlIDPSSODescriptorSingleSignOnServiceHTTP
+                        qw(samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect
+                          samlIDPSSODescriptorSingleSignOnServiceHTTPPost
                           samlIDPSSODescriptorSingleSignOnServiceSOAP)
                     ],
                     _help => 'default',
-                    samlIDPSSODescriptorSingleSignOnServiceHTTP =>
-'samlService:/samlIDPSSODescriptorSingleSignOnServiceHTTP',
+                    samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect =>
+'samlService:/samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect',
+                    samlIDPSSODescriptorSingleSignOnServiceHTTPPost =>
+'samlService:/samlIDPSSODescriptorSingleSignOnServiceHTTPPost',
                     samlIDPSSODescriptorSingleSignOnServiceSOAP =>
 'samlService:/samlIDPSSODescriptorSingleSignOnServiceSOAP',
                 },
 
                 samlIDPSSODescriptorSingleLogoutService => {
                     _nodes => [
-                        qw(samlIDPSSODescriptorSingleLogoutServiceHTTP
+                        qw(samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect
+                          samlIDPSSODescriptorSingleLogoutServiceHTTPPost
                           samlIDPSSODescriptorSingleLogoutServiceSOAP)
                     ],
                     _help => 'default',
-                    samlIDPSSODescriptorSingleLogoutServiceHTTP =>
-'samlService:/samlIDPSSODescriptorSingleLogoutServiceHTTP',
+                    samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect =>
+'samlService:/samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect',
+                    samlIDPSSODescriptorSingleLogoutServiceHTTPPost =>
+'samlService:/samlIDPSSODescriptorSingleLogoutServiceHTTPPost',
                     samlIDPSSODescriptorSingleLogoutServiceSOAP =>
 'samlService:/samlIDPSSODescriptorSingleLogoutServiceSOAP',
                 },
@@ -1123,7 +1132,8 @@ sub testStruct {
         samlOrganizationURL                        => $testNotDefined,
         samlSPSSODescriptorAuthnRequestsSigned     => $boolean,
         samlSPSSODescriptorKeyDescriptorSigning    => $testNotDefined,
-        samlSPSSODescriptorSingleLogoutServiceHTTP => $testNotDefined,
+        samlSPSSODescriptorSingleLogoutServiceHTTPRedirect => $testNotDefined,
+        samlSPSSODescriptorSingleLogoutServiceHTTPPost     => $testNotDefined,
         samlSPSSODescriptorSingleLogoutServiceSOAP => $testNotDefined,
         samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact =>
           $testNotDefined,
@@ -1136,9 +1146,11 @@ sub testStruct {
         samlSPSSODescriptorNameIDFormatTransient             => $boolean,
         samlIDPSSODescriptorWantAuthnRequestsSigned          => $boolean,
         samlIDPSSODescriptorKeyDescriptorSigning             => $testNotDefined,
-        samlIDPSSODescriptorSingleSignOnServiceHTTP          => $testNotDefined,
+        samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect  => $testNotDefined,
+        samlIDPSSODescriptorSingleSignOnServiceHTTPPost      => $testNotDefined,
         samlIDPSSODescriptorSingleSignOnServiceSOAP          => $testNotDefined,
-        samlIDPSSODescriptorSingleLogoutServiceHTTP          => $testNotDefined,
+        samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect  => $testNotDefined,
+        samlIDPSSODescriptorSingleLogoutServiceHTTPPost      => $testNotDefined,
         samlIDPSSODescriptorSingleLogoutServiceSOAP          => $testNotDefined,
         samlIDPSSODescriptorArtifactResolutionServiceArtifact =>
           $testNotDefined,
@@ -1299,8 +1311,14 @@ sub defaultConf {
         samlSPMetaDataOptionsCheckSLOMessageSignature  => '1',
         samlSPSSODescriptorAuthnRequestsSigned         => '0',
         samlSPSSODescriptorKeyDescriptorSigning        => '',
-        samlSPSSODescriptorSingleLogoutServiceHTTP =>
+        samlSPSSODescriptorSingleLogoutServiceHTTPRedirect =>
           'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;' 
+          . $portal
+          . '/saml/proxySingleLogout;'
+          . $portal
+          . '/saml/proxySingleLogoutReturn',
+        samlSPSSODescriptorSingleLogoutServiceHTTPPost =>
+          'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;' 
           . $portal
           . '/saml/proxySingleLogout;'
           . $portal
@@ -1330,16 +1348,26 @@ sub defaultConf {
         samlSPSSODescriptorNameIDFormatTransient       => '0',
         samlIDPSSODescriptorWantAuthnRequestsSigned    => '0',
         samlIDPSSODescriptorKeyDescriptorSigning       => '',
-        samlIDPSSODescriptorSingleSignOnServiceHTTP =>
+        samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect =>
           'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;' 
+          . $portal
+          . '/saml/singleSignOn;',
+        samlIDPSSODescriptorSingleSignOnServiceHTTPPost =>
+          'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;' 
           . $portal
           . '/saml/singleSignOn;',
         samlIDPSSODescriptorSingleSignOnServiceSOAP =>
           'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;' 
           . $portal
           . '/saml/singleSignOnSOAP;',
-        samlIDPSSODescriptorSingleLogoutServiceHTTP =>
+        samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect =>
           'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;' 
+          . $portal
+          . '/saml/singleLogout;'
+          . $portal
+          . '/saml/singleLogoutReturn',
+        samlIDPSSODescriptorSingleLogoutServiceHTTPPost =>
+          'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;' 
           . $portal
           . '/saml/singleLogout;'
           . $portal

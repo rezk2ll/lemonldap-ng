@@ -269,8 +269,9 @@ sub en {
           'Signed Authentication Request',
         samlSPSSODescriptorKeyDescriptorSigning     => 'Signing Key',
         samlSPSSODescriptorSingleLogoutService      => 'Single Logout',
-        samlSPSSODescriptorSingleLogoutServiceHTTP  => 'HTTP Service',
-        samlSPSSODescriptorSingleLogoutServiceSOAP  => 'SOAP Service',
+        samlSPSSODescriptorSingleLogoutServiceHTTPRedirect => 'HTTP Redirect',
+        samlSPSSODescriptorSingleLogoutServiceHTTPPost     => 'HTTP POST',
+        samlSPSSODescriptorSingleLogoutServiceSOAP         => 'SOAP',
         samlSPSSODescriptorAssertionConsumerService => 'Assertion Consumer',
         samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact =>
           'HTTP Artifact',
@@ -289,11 +290,13 @@ sub en {
           'Signed Authentication Request',
         samlIDPSSODescriptorKeyDescriptorSigning      => 'Signing Key',
         samlIDPSSODescriptorSingleSignOnService       => 'Single Sign on',
-        samlIDPSSODescriptorSingleSignOnServiceHTTP   => 'HTTP Service',
-        samlIDPSSODescriptorSingleSignOnServiceSOAP   => 'SOAP Service',
+        samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect => 'HTTP Redirect',
+        samlIDPSSODescriptorSingleSignOnServiceHTTPPost     => 'HTTP POST',
+        samlIDPSSODescriptorSingleSignOnServiceSOAP         => 'SOAP',
         samlIDPSSODescriptorSingleLogoutService       => 'Single Logout',
-        samlIDPSSODescriptorSingleLogoutServiceHTTP   => 'HTTP Service',
-        samlIDPSSODescriptorSingleLogoutServiceSOAP   => 'SOAP Service',
+        samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect => 'HTTP Redirect',
+        samlIDPSSODescriptorSingleLogoutServiceHTTPPost     => 'HTTP POST',
+        samlIDPSSODescriptorSingleLogoutServiceSOAP         => 'SOAP',
         samlIDPSSODescriptorArtifactResolutionService => 'Artifact Resolution',
         samlIDPSSODescriptorArtifactResolutionServiceArtifact =>
           'Artifact Service',
@@ -302,8 +305,8 @@ sub en {
         samlIDPSSODescriptorNameIDFormatPersistent      => 'Persistent',
         samlIDPSSODescriptorNameIDFormatTransient       => 'Transient',
         samlIDPSSODescriptorManageNameIDService         => 'NameID Manager',
-        samlIDPSSODescriptorManageNameIDServiceHTTP     => 'HTTP Service',
-        samlIDPSSODescriptorManageNameIDServiceSOAP     => 'SOAP Service',
+        samlIDPSSODescriptorManageNameIDServiceHTTP     => 'HTTP Redirect',
+        samlIDPSSODescriptorManageNameIDServiceSOAP     => 'SOAP',
     };
 }
 
@@ -536,8 +539,10 @@ sub fr {
           'Requête d\'authentification signé',
         samlSPSSODescriptorKeyDescriptorSigning     => 'Clef de signature',
         samlSPSSODescriptorSingleLogoutService      => 'Single Logout',
-        samlSPSSODescriptorSingleLogoutServiceHTTP  => 'Service HTTP',
-        samlSPSSODescriptorSingleLogoutServiceSOAP  => 'Service SOAP',
+        samlSPSSODescriptorSingleLogoutServiceHTTPRedirect =>
+          'Redirection HTTP',
+        samlSPSSODescriptorSingleLogoutServiceHTTPPost => 'POST HTTP',
+        samlSPSSODescriptorSingleLogoutServiceSOAP     => 'SOAP',
         samlSPSSODescriptorAssertionConsumerService => 'Assertions',
         samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact =>
           'HTTP Artifact',
@@ -557,11 +562,15 @@ sub fr {
           'Requête d\'authentification signé',
         samlIDPSSODescriptorKeyDescriptorSigning    => 'Clef de signature',
         samlIDPSSODescriptorSingleSignOnService     => 'Single Sign on',
-        samlIDPSSODescriptorSingleSignOnServiceHTTP => 'Service HTTP',
-        samlIDPSSODescriptorSingleSignOnServiceSOAP => 'Service SOAP',
+        samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect =>
+          'Redirection HTTP',
+        samlIDPSSODescriptorSingleSignOnServiceHTTPPost => 'POST HTTP',
+        samlIDPSSODescriptorSingleSignOnServiceSOAP     => 'SOAP',
         samlIDPSSODescriptorSingleLogoutService     => 'Single Logout',
-        samlIDPSSODescriptorSingleLogoutServiceHTTP => 'Service HTTP',
-        samlIDPSSODescriptorSingleLogoutServiceSOAP => 'Service SOAP',
+        samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect =>
+          'Redirection HTTP',
+        samlIDPSSODescriptorSingleLogoutServiceHTTPPost => 'POST HTTP',
+        samlIDPSSODescriptorSingleLogoutServiceSOAP     => 'SOAP',
         samlIDPSSODescriptorArtifactResolutionService =>
           'Résolution d\'Artifact',
         samlIDPSSODescriptorArtifactResolutionServiceArtifact =>
@@ -571,8 +580,8 @@ sub fr {
         samlIDPSSODescriptorNameIDFormatPersistent      => 'Persistant',
         samlIDPSSODescriptorNameIDFormatTransient       => 'Temporaire',
         samlIDPSSODescriptorManageNameIDService     => 'Gestionnaire de NameID',
-        samlIDPSSODescriptorManageNameIDServiceHTTP => 'Service HTTP',
-        samlIDPSSODescriptorManageNameIDServiceSOAP => 'Service SOAP',
+        samlIDPSSODescriptorManageNameIDServiceHTTP => 'Redirection HTTP',
+        samlIDPSSODescriptorManageNameIDServiceSOAP => 'SOAP',
     };
 }
 

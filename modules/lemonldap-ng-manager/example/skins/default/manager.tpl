@@ -344,9 +344,9 @@
        <td><lang en="Index" fr="Index"/></td>
        <td><input type="text" size="50" id="samlAssertionIndex" /></td>
       </tr>
-      <tr class="hidden">
+      <tr>
        <td><lang en="Binding" fr="Binding"/></td>
-       <td><select id="samlAssertionBinding"></select></td>
+       <td><select disabled="disabled" id="samlAssertionBinding"></select></td>
       </tr>
       <tr>
        <td><lang en="Location" fr="URL"/></td>
@@ -362,9 +362,9 @@
     <!-- samlService -->
     <div id="content_samlService" class="hidden">
      <table>
-      <tr class="hidden">
+      <tr>
        <td><lang en="Binding" fr="Binding"/></td>
-       <td><select id="samlServiceBinding"></select></td>
+       <td><select disabled="disabled" id="samlServiceBinding"></select></td>
       </tr>
       <tr>
        <td><lang en="Location" fr="URL"/></td>

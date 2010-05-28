@@ -51,10 +51,16 @@ sub extractFormInfo {
       $self->getMetaDataURL( "samlSPSSODescriptorSingleLogoutServiceSOAP", 1 );
     my $saml_slo_soap_url_ret =
       $self->getMetaDataURL( "samlSPSSODescriptorSingleLogoutServiceSOAP", 2 );
-    my $saml_slo_get_url =
-      $self->getMetaDataURL( "samlSPSSODescriptorSingleLogoutServiceHTTP", 1 );
-    my $saml_slo_get_url_ret =
-      $self->getMetaDataURL( "samlSPSSODescriptorSingleLogoutServiceHTTP", 2 );
+    my $saml_slo_get_url = $self->getMetaDataURL(
+        "samlSPSSODescriptorSingleLogoutServiceHTTPRedirect", 1 );
+    my $saml_slo_get_url_ret = $self->getMetaDataURL(
+        "samlSPSSODescriptorSingleLogoutServiceHTTPRedirect", 2 );
+    my $saml_slo_post_url =
+      $self->getMetaDataURL( "samlSPSSODescriptorSingleLogoutServiceHTTPPost",
+        1 );
+    my $saml_slo_post_url_ret =
+      $self->getMetaDataURL( "samlSPSSODescriptorSingleLogoutServiceHTTPPost",
+        2 );
     my $saml_ars_url = $self->getMetaDataURL(
         "samlSPSSODescriptorArtifactResolutionServiceArtifact");
 
@@ -285,7 +291,7 @@ sub extractFormInfo {
 
     # 1.2 SLO
     elsif ( $url =~
-/^(\Q$saml_slo_soap_url\E|\Q$saml_slo_soap_url_ret\E|\Q$saml_slo_get_url\E|\Q$saml_slo_get_url_ret\E)$/io
+/^(\Q$saml_slo_soap_url\E|\Q$saml_slo_soap_url_ret\E|\Q$saml_slo_get_url\E|\Q$saml_slo_get_url_ret\E|Q$saml_slo_post_url\E|\Q$saml_slo_post_url_ret\E)$/io
       )
     {
         $self->lmLog( "URL $url detected as an SLO URL", 'debug' );
@@ -1249,14 +1255,20 @@ sub authForce {
       $self->getMetaDataURL( "samlSPSSODescriptorSingleLogoutServiceSOAP", 1 );
     my $saml_slo_soap_url_ret =
       $self->getMetaDataURL( "samlSPSSODescriptorSingleLogoutServiceSOAP", 2 );
-    my $saml_slo_get_url =
-      $self->getMetaDataURL( "samlSPSSODescriptorSingleLogoutServiceHTTP", 1 );
-    my $saml_slo_get_url_ret =
-      $self->getMetaDataURL( "samlSPSSODescriptorSingleLogoutServiceHTTP", 2 );
+    my $saml_slo_get_url = $self->getMetaDataURL(
+        "samlSPSSODescriptorSingleLogoutServiceHTTPRedirect", 1 );
+    my $saml_slo_get_url_ret = $self->getMetaDataURL(
+        "samlSPSSODescriptorSingleLogoutServiceHTTPRedirect", 2 );
+    my $saml_slo_post_url =
+      $self->getMetaDataURL( "samlSPSSODescriptorSingleLogoutServiceHTTPPost",
+        1 );
+    my $saml_slo_post_url_ret =
+      $self->getMetaDataURL( "samlSPSSODescriptorSingleLogoutServiceHTTPPost",
+        2 );
 
     return 1
       if ( $url =~
-/^(\Q$saml_acs_art_url\E|\Q$saml_acs_post_url\E|\Q$saml_acs_get_url\E|\Q$saml_slo_soap_url\E|\Q$saml_slo_soap_url_ret\E|\Q$saml_slo_get_url\E|\Q$saml_slo_get_url_ret\E)$/io
+/^(\Q$saml_acs_art_url\E|\Q$saml_acs_post_url\E|\Q$saml_acs_get_url\E|\Q$saml_slo_soap_url\E|\Q$saml_slo_soap_url_ret\E|\Q$saml_slo_get_url\E|\Q$saml_slo_get_url_ret\E|\Q$saml_slo_post_url\E|\Q$saml_slo_post_url_ret\E)$/io
       );
 
     return 0;

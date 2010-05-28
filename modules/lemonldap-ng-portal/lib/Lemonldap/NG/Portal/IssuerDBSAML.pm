@@ -41,18 +41,30 @@ sub issuerForUnAuthUser {
       $self->getMetaDataURL( "samlIDPSSODescriptorSingleSignOnServiceSOAP", 1 );
     my $saml_sso_soap_url_ret =
       $self->getMetaDataURL( "samlIDPSSODescriptorSingleSignOnServiceSOAP", 2 );
-    my $saml_sso_get_url =
-      $self->getMetaDataURL( "samlIDPSSODescriptorSingleSignOnServiceHTTP", 1 );
-    my $saml_sso_get_url_ret =
-      $self->getMetaDataURL( "samlIDPSSODescriptorSingleSignOnServiceHTTP", 2 );
+    my $saml_sso_get_url = $self->getMetaDataURL(
+        "samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect", 1 );
+    my $saml_sso_get_url_ret = $self->getMetaDataURL(
+        "samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect", 2 );
+    my $saml_sso_post_url =
+      $self->getMetaDataURL( "samlIDPSSODescriptorSingleSignOnServiceHTTPPost",
+        1 );
+    my $saml_sso_post_url_ret =
+      $self->getMetaDataURL( "samlIDPSSODescriptorSingleSignOnServiceHTTPPost",
+        2 );
     my $saml_slo_soap_url =
       $self->getMetaDataURL( "samlIDPSSODescriptorSingleLogoutServiceSOAP", 1 );
     my $saml_slo_soap_url_ret =
       $self->getMetaDataURL( "samlIDPSSODescriptorSingleLogoutServiceSOAP", 2 );
-    my $saml_slo_get_url =
-      $self->getMetaDataURL( "samlIDPSSODescriptorSingleLogoutServiceHTTP", 1 );
-    my $saml_slo_get_url_ret =
-      $self->getMetaDataURL( "samlIDPSSODescriptorSingleLogoutServiceHTTP", 2 );
+    my $saml_slo_get_url = $self->getMetaDataURL(
+        "samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect", 1 );
+    my $saml_slo_get_url_ret = $self->getMetaDataURL(
+        "samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect", 2 );
+    my $saml_slo_post_url =
+      $self->getMetaDataURL( "samlIDPSSODescriptorSingleLogoutServiceHTTPPost",
+        1 );
+    my $saml_slo_post_url_ret =
+      $self->getMetaDataURL( "samlIDPSSODescriptorSingleLogoutServiceHTTPPost",
+        2 );
     my $saml_ars_url = $self->getMetaDataURL(
         "samlIDPSSODescriptorArtifactResolutionServiceArtifact");
     my $saml_slo_url_relay_soap =
@@ -65,7 +77,10 @@ sub issuerForUnAuthUser {
     my $content_type   = $self->content_type();
 
     # 1.1. SSO
-    if ( $url =~ /^(\Q$saml_sso_soap_url\E|\Q$saml_sso_get_url\E)$/io ) {
+    if ( $url =~
+/^(\Q$saml_sso_soap_url\E|Q$saml_sso_soap_url_ret\E|\Q$saml_sso_get_url\E|Q$saml_sso_get_url_ret\E|Q$saml_sso_post_url\E|Q$saml_sso_post_url\E)$/io
+      )
+    {
 
         $self->lmLog( "URL $url detected as an SSO request URL", 'debug' );
 
@@ -177,7 +192,7 @@ sub issuerForUnAuthUser {
 
     # 1.2. SLO
     if ( $url =~
-/^(\Q$saml_slo_soap_url\E|\Q$saml_slo_soap_url_ret\E|\Q$saml_slo_get_url\E|\Q$saml_slo_get_url_ret\E)$/io
+/^(\Q$saml_slo_soap_url\E|\Q$saml_slo_soap_url_ret\E|\Q$saml_slo_get_url\E|\Q$saml_slo_get_url_ret\E|Q$saml_slo_post_url\E|\Q$saml_slo_post_url_ret\E)$/io
       )
     {
 
@@ -409,18 +424,30 @@ sub issuerForAuthUser {
       $self->getMetaDataURL( "samlIDPSSODescriptorSingleSignOnServiceSOAP", 1 );
     my $saml_sso_soap_url_ret =
       $self->getMetaDataURL( "samlIDPSSODescriptorSingleSignOnServiceSOAP", 2 );
-    my $saml_sso_get_url =
-      $self->getMetaDataURL( "samlIDPSSODescriptorSingleSignOnServiceHTTP", 1 );
-    my $saml_sso_get_url_ret =
-      $self->getMetaDataURL( "samlIDPSSODescriptorSingleSignOnServiceHTTP", 2 );
+    my $saml_sso_get_url = $self->getMetaDataURL(
+        "samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect", 1 );
+    my $saml_sso_get_url_ret = $self->getMetaDataURL(
+        "samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect", 2 );
+    my $saml_sso_post_url =
+      $self->getMetaDataURL( "samlIDPSSODescriptorSingleSignOnServiceHTTPPost",
+        1 );
+    my $saml_sso_post_url_ret =
+      $self->getMetaDataURL( "samlIDPSSODescriptorSingleSignOnServiceHTTPPost",
+        2 );
     my $saml_slo_soap_url =
       $self->getMetaDataURL( "samlIDPSSODescriptorSingleLogoutServiceSOAP", 1 );
     my $saml_slo_soap_url_ret =
       $self->getMetaDataURL( "samlIDPSSODescriptorSingleLogoutServiceSOAP", 2 );
-    my $saml_slo_get_url =
-      $self->getMetaDataURL( "samlIDPSSODescriptorSingleLogoutServiceHTTP", 1 );
-    my $saml_slo_get_url_ret =
-      $self->getMetaDataURL( "samlIDPSSODescriptorSingleLogoutServiceHTTP", 2 );
+    my $saml_slo_get_url = $self->getMetaDataURL(
+        "samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect", 1 );
+    my $saml_slo_get_url_ret = $self->getMetaDataURL(
+        "samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect", 2 );
+    my $saml_slo_post_url =
+      $self->getMetaDataURL( "samlIDPSSODescriptorSingleLogoutServiceHTTPPost",
+        1 );
+    my $saml_slo_post_url_ret =
+      $self->getMetaDataURL( "samlIDPSSODescriptorSingleLogoutServiceHTTPPost",
+        2 );
 
     # Get HTTP request informations to know
     # if we are receving SAML request or response
@@ -429,7 +456,10 @@ sub issuerForAuthUser {
     my $content_type   = $self->content_type();
 
     # 1.1. SSO
-    if ( $url =~ /^(\Q$saml_sso_soap_url\E|\Q$saml_sso_get_url\E)$/io ) {
+    if ( $url =~
+/^(\Q$saml_sso_soap_url\E|Q$saml_sso_soap_url_ret\E|\Q$saml_sso_get_url\E|Q$saml_sso_get_url_ret\E|Q$saml_sso_post_url\E|Q$saml_sso_post_url\E)$/io
+      )
+    {
 
         $self->lmLog( "URL $url detected as an SSO request URL", 'debug' );
 
@@ -888,7 +918,7 @@ sub issuerForAuthUser {
 
     # 1.2. SLO
     if ( $url =~
-/^(\Q$saml_slo_soap_url\E|\Q$saml_slo_soap_url_ret\E|\Q$saml_slo_get_url\E|\Q$saml_slo_get_url_ret\E)$/io
+/^(\Q$saml_slo_soap_url\E|\Q$saml_slo_soap_url_ret\E|\Q$saml_slo_get_url\E|\Q$saml_slo_get_url_ret\E|Q$saml_slo_post_url\E|\Q$saml_slo_post_url_ret\E)$/io
       )
     {
 
