@@ -192,10 +192,13 @@ sub serviceToXML {
                  and my $certificate =
                  Crypt::OpenSSL::X509->new_from_string($conf->{$_}) )
             {
+                $certificate = $certificate->as_string();
+                $certificate =~ s/^-----BEGIN CERTIFICATE-----\n?//g;
+                $certificate =~ s/\n?-----END CERTIFICATE-----$//g;
                 $str =
                     '<ds:X509Data>' . "\n\t"
                   . '<ds:X509Certificate>' . "\n\t"
-                  . $certificate->as_string()
+                  . $certificate
                   . '</ds:X509Certificate>' . "\n"
                   . '</ds:X509Data>';
             }
