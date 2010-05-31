@@ -8,16 +8,20 @@ WriteMakefile(
     LICENSE      => 'gpl',
     META_MERGE   => {
         'recommends' => {
+            'Crypt::OpenSSL::X509'  => 0,
             'Email::Date::Format'   => 0,
+            'Lasso'                 => 0,
+            'MIME::Lite'            => 0,
             'Net::OpenID::Consumer' => 0,
             'Net::OpenID::Server'   => 0,
-            'MIME::Lite'            => 0,
             'Net::Twitter'          => 0,
-            'Lasso'                 => 0,
         },
     },
-    BUILD_REQUIRES => { 'IO::String' => 0, },
-    PREREQ_PM      => {
+    BUILD_REQUIRES => {
+        'Crypt::OpenSSL::X509' => 0,
+        'IO::String'           => 0,
+    },
+    PREREQ_PM => {
         'Apache::Session'        => 0,
         'Net::LDAP'              => 0,
         'CGI'                    => 3.08,

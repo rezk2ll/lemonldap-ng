@@ -8,7 +8,7 @@ Build-Depends-Indep:libapache-session-perl, libnet-ldap-perl (>=1:0.38), libdbi-
  libwww-perl, libcache-cache-perl, libcrypt-rijndael-perl, libxml-libxslt-perl,
  libio-string-perl, libregexp-assemble-perl, liburi-perl, libstring-random-perl,
  libmime-lite-perl, libsoap-lite-perl, libconfig-inifiles-perl,
- libnet-twitter-perl, libnet-openid-consumer-perl
+ libnet-twitter-perl, libnet-openid-consumer-perl, libcrypt-openssl-x509-perl
 Standards-Version: 3.8.3
 Homepage: http://lemonldap.ow2.org/
 
@@ -77,7 +77,7 @@ Depends: ${misc:Depends}, libapache-session-perl, libnet-ldap-perl (>=1:0.38),
  liblemonldap-ng-conf-perl (= ${binary:Version}), libhtml-template-perl,
  libjs-jquery, liblemonldap-ng-handler-perl (= ${binary:Version}),
  libxml-libxml-perl, libxml-libxslt-perl, libstring-random-perl,
- libsoap-lite-perl
+ libsoap-lite-perl, libcrypt-openssl-x509-perl
 Recommends: libmime-lite-perl, libemail-date-format-perl,
  libnet-openid-consumer-perl | libnet-twitter-perl | liblasso-perl
 Suggests: slapd
