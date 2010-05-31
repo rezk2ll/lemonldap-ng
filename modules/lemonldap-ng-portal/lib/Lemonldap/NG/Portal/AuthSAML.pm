@@ -1024,8 +1024,16 @@ sub setAuthSessionInfo {
     $self->{sessionInfo}->{_idpConfKey} = $idpConfKey;
 
     # Adapt _utime with SessionNotOnOrAfter
-    my $sessionNotOnOrAfter =
+    my $sessionNotOnOrAfter;
+    eval {
+        $sessionNotOnOrAfter =
       $assertion->AuthnStatement()->SessionNotOnOrAfter();
+    };
+
+    if ( $@ or !$sessionNotOnOrAfter ) {
+        $self->lmLog( "No SessionNotOnOrAfter value found", 'debug' );
+    }
+    else {
 
     my $samltime = $self->samldate2timestamp($sessionNotOnOrAfter);
     my $utime    = time();
@@ -1043,6 +1051,8 @@ sub setAuthSessionInfo {
 "Adapt _utime with SessionNotOnOrAfter value, new _utime: $new_utime",
             'debug'
         );
+    }
+
     }
 
     # Establish federation (required for attribute request in UserDBSAML)

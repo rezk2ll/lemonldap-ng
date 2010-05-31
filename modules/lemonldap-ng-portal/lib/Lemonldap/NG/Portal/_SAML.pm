@@ -1958,7 +1958,7 @@ sub timestamp2samldate {
 
 ## @method string samldate2timestamp(string samldate)
 # Convert SAML2 date format into timestamp
-# @param tsamldate SAML2 date format
+# @param samldate SAML2 date format
 # @return UNIX timestamp
 sub samldate2timestamp {
     my ( $self, $samldate ) = splice @_;
