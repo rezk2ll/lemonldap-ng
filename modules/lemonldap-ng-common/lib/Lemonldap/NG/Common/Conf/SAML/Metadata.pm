@@ -6,6 +6,7 @@ package Lemonldap::NG::Common::Conf::SAML::Metadata;
 use strict;
 use warnings;
 use Crypt::OpenSSL::RSA;
+use Crypt::OpenSSL::X509;
 use Data::Dumper;
 use HTML::Template;
 use MIME::Base64;
@@ -167,18 +168,36 @@ sub serviceToXML {
     foreach (@param_keys) {
         my $str = '';
         if ( defined $conf->{$_} && length $conf->{$_} gt 0 ) {
-            if ( my $rsa_pub =
-                Crypt::OpenSSL::RSA->new_public_key( $conf->{$_} ) )
+
+            # Public Key ?
+            if ( $conf->{$_} =~ /^-----BEGIN PUBLIC KEY-----/
+                and my $rsa_pub =
+                Crypt::OpenSSL::RSA->new_public_key($conf->{$_}) )
             {
                 my @params = $rsa_pub->get_key_parameters();
                 my $mod    = encode_base64( $params[0]->to_bin() );
                 my $exp    = encode_base64( $params[1]->to_bin() );
                 $str =
-                    '<RSAKeyValue xmlns="http://www.w3.org/2000/09/xmldsig#">'
-                  . "\n\t";
-                $str .= '<Modulus>' . $mod . '</Modulus>' . "\n\t";
-                $str .= '<Exponent>' . $exp . '</Exponent>' . "\n";
-                $str .= '</RSAKeyValue>';
+                    '<ds:KeyValue>' . "\n\t"
+                  . '<RSAKeyValue xmlns="http://www.w3.org/2000/09/xmldsig#">'
+                  . "\n\t\t"
+                  . '<Modulus>' . $mod . '</Modulus>' . "\n\t\t"
+                  . '<Exponent>' . $exp . '</Exponent>' . "\n\t"
+                  . '</RSAKeyValue>' . "\n"
+                  . '</ds:KeyValue>';
+            }
+
+            # Certificate ?
+            if ( $conf->{$_} =~ /^-----BEGIN CERTIFICATE-----/
+                 and my $certificate =
+                 Crypt::OpenSSL::X509->new_from_string($conf->{$_}) )
+            {
+                $str =
+                    '<ds:X509Data>' . "\n\t"
+                  . '<ds:X509Certificate>' . "\n\t"
+                  . $certificate->as_string()
+                  . '</ds:X509Certificate>' . "\n"
+                  . '</ds:X509Data>';
             }
         }
         $template->param( $_, $str );
