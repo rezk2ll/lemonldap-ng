@@ -137,14 +137,6 @@ sub serviceToXML {
       samlOrganizationName
       samlOrganizationDisplayName
       samlOrganizationURL
-      samlSPSSODescriptorProtocolSupportEnumeration
-      samlSPSSODescriptorNameIDFormatX509SubjectName
-      samlSPSSODescriptorNameIDFormatPersistent
-      samlSPSSODescriptorNameIDFormatTransient
-      samlIDPSSODescriptorProtocolSupportEnumeration
-      samlIDPSSODescriptorNameIDFormatX509SubjectName
-      samlIDPSSODescriptorNameIDFormatPersistent
-      samlIDPSSODescriptorNameIDFormatTransient
     );
 
     foreach (@param_auto) {
@@ -156,6 +148,7 @@ sub serviceToXML {
     # Boolean parameters
     my @param_boolean = qw(
       samlSPSSODescriptorAuthnRequestsSigned
+      samlSPSSODescriptorWantAssertionsSigned
       samlIDPSSODescriptorWantAuthnRequestsSigned
     );
 
@@ -205,8 +198,7 @@ sub serviceToXML {
       samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect
       samlIDPSSODescriptorSingleLogoutServiceHTTPPost
       samlIDPSSODescriptorSingleLogoutServiceSOAP
-      samlIDPSSODescriptorManageNameIDServiceHTTP
-      samlIDPSSODescriptorManageNameIDServiceSOAP
+      samlAttributeAuthorityDescriptorAttributeServiceSOAP
     );
 
     foreach (@param_service) {

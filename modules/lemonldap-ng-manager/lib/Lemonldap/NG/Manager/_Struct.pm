@@ -616,7 +616,8 @@ sub struct {
                   n:samlNameIDFormatMap
                   n:samlOrganization
                   n:samlSPSSODescriptor
-                  n:samlIDPSSODescriptor)
+                  n:samlIDPSSODescriptor
+                  n:samlAttributeAuthorityDescriptor)
             ],
             _help => 'default',
 
@@ -624,6 +625,8 @@ sub struct {
             samlEntityID => 'text:/samlEntityID',
             samlServicePrivateKey =>
               'filearea:/samlServicePrivateKey:samlServicePrivateKey:filearea',
+
+            # NAMEID FORMAT MAP
             samlNameIDFormatMap => {
                 _nodes => [
                     qw(samlNameIDFormatMapEmail samlNameIDFormatMapX509 samlNameIDFormatMapWindows samlNameIDFormatMapKerberos)
@@ -636,6 +639,8 @@ sub struct {
                 samlNameIDFormatMapKerberos =>
                   'text:/samlNameIDFormatMapKerberos',
             },
+
+            # ORGANIZATION
             samlOrganization => {
                 _nodes => [
                     qw(samlOrganizationDisplayName
@@ -653,16 +658,19 @@ sub struct {
             'samlSPSSODescriptor' => {
                 _nodes => [
                     qw(samlSPSSODescriptorAuthnRequestsSigned
+                      samlSPSSODescriptorWantAssertionsSigned
                       samlSPSSODescriptorKeyDescriptorSigning
                       n:samlSPSSODescriptorSingleLogoutService
                       n:samlSPSSODescriptorAssertionConsumerService
                       n:samlSPSSODescriptorArtifactResolutionService
-                      n:samlSPSSODescriptorNameIDFormat)
+                      )
                 ],
                 _help => 'default',
 
                 samlSPSSODescriptorAuthnRequestsSigned =>
                   'bool:/samlSPSSODescriptorAuthnRequestsSigned',
+                samlSPSSODescriptorWantAssertionsSigned =>
+                  'bool:/samlSPSSODescriptorWantAssertionsSigned',
                 samlSPSSODescriptorKeyDescriptorSigning =>
                   'filearea:/samlSPSSODescriptorKeyDescriptorSigning',
 
@@ -704,21 +712,6 @@ sub struct {
                     samlSPSSODescriptorArtifactResolutionServiceArtifact =>
 'samlAssertion:/samlSPSSODescriptorArtifactResolutionServiceArtifact',
                 },
-
-                samlSPSSODescriptorNameIDFormat => {
-                    _nodes => [
-                        qw(samlSPSSODescriptorNameIDFormatX509SubjectName
-                          samlSPSSODescriptorNameIDFormatPersistent
-                          samlSPSSODescriptorNameIDFormatTransient)
-                    ],
-                    _help => 'default',
-                    samlSPSSODescriptorNameIDFormatX509SubjectName =>
-'bool:/samlSPSSODescriptorNameIDFormatX509SubjectName:samlNameIDFormatX509SubjectName:bool',
-                    samlSPSSODescriptorNameIDFormatPersistent =>
-'bool:/samlSPSSODescriptorNameIDFormatPersistent:samlNameIDFormatPersistent:bool',
-                    samlSPSSODescriptorNameIDFormatTransient =>
-'bool:/samlSPSSODescriptorNameIDFormatTransient:samlNameIDFormatTransient:bool',
-                },
             },
 
             # IDENTITY PROVIDER
@@ -728,9 +721,7 @@ sub struct {
                       samlIDPSSODescriptorKeyDescriptorSigning
                       n:samlIDPSSODescriptorSingleSignOnService
                       n:samlIDPSSODescriptorSingleLogoutService
-                      n:samlIDPSSODescriptorArtifactResolutionService
-                      n:samlIDPSSODescriptorNameIDFormat
-                      n:samlIDPSSODescriptorManageNameIDService)
+                      n:samlIDPSSODescriptorArtifactResolutionService)
                 ],
                 _help => 'default',
 
@@ -778,33 +769,22 @@ sub struct {
 'samlAssertion:/samlIDPSSODescriptorArtifactResolutionServiceArtifact',
                 },
 
-                samlIDPSSODescriptorNameIDFormat => {
-                    _nodes => [
-                        qw(samlIDPSSODescriptorNameIDFormatX509SubjectName
-                          samlIDPSSODescriptorNameIDFormatPersistent
-                          samlIDPSSODescriptorNameIDFormatTransient)
-                    ],
-                    _help => 'default',
-                    samlIDPSSODescriptorNameIDFormatX509SubjectName =>
-'bool:/samlIDPSSODescriptorNameIDFormatX509SubjectName:samlNameIDFormatX509SubjectName:bool',
-                    samlIDPSSODescriptorNameIDFormatPersistent =>
-'bool:/samlIDPSSODescriptorNameIDFormatPersistent:samlNameIDFormatPersistent:bool',
-                    samlIDPSSODescriptorNameIDFormatTransient =>
-'bool:/samlIDPSSODescriptorNameIDFormatTransient:samlNameIDFormatTransient:bool',
                 },
 
-                samlIDPSSODescriptorManageNameIDService => {
+            # ATTRIBUTE AUTHORITY
+            samlAttributeAuthorityDescriptor => {
+                _nodes =>
+                  [qw(n:samlAttributeAuthorityDescriptorAttributeService)],
+                _help                                            => 'default',
+                samlAttributeAuthorityDescriptorAttributeService => {
                     _nodes => [
-                        qw(samlIDPSSODescriptorManageNameIDServiceHTTP
-                          samlIDPSSODescriptorManageNameIDServiceSOAP)
+                        qw(samlAttributeAuthorityDescriptorAttributeServiceSOAP)
                     ],
-                    _help => 'default',
-                    samlIDPSSODescriptorManageNameIDServiceHTTP =>
-'samlService:/samlIDPSSODescriptorManageNameIDServiceHTTP',
-                    samlIDPSSODescriptorManageNameIDServiceSOAP =>
-'samlService:/samlIDPSSODescriptorManageNameIDServiceSOAP',
+                    samlAttributeAuthorityDescriptorAttributeServiceSOAP =>
+'samlService:/samlAttributeAuthorityDescriptorAttributeServiceSOAP',
                 },
             },
+
         },
     };
 }
@@ -1133,6 +1113,7 @@ sub testStruct {
         samlOrganizationName                       => $testNotDefined,
         samlOrganizationURL                        => $testNotDefined,
         samlSPSSODescriptorAuthnRequestsSigned     => $boolean,
+        samlSPSSODescriptorWantAssertionsSigned            => $boolean,
         samlSPSSODescriptorKeyDescriptorSigning    => $testNotDefined,
         samlSPSSODescriptorSingleLogoutServiceHTTPRedirect => $testNotDefined,
         samlSPSSODescriptorSingleLogoutServiceHTTPPost     => $testNotDefined,
@@ -1143,9 +1124,6 @@ sub testStruct {
         samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect =>
           $testNotDefined,
         samlSPSSODescriptorArtifactResolutionServiceArtifact => $testNotDefined,
-        samlSPSSODescriptorNameIDFormatX509SubjectName       => $boolean,
-        samlSPSSODescriptorNameIDFormatPersistent            => $boolean,
-        samlSPSSODescriptorNameIDFormatTransient             => $boolean,
         samlIDPSSODescriptorWantAuthnRequestsSigned          => $boolean,
         samlIDPSSODescriptorKeyDescriptorSigning             => $testNotDefined,
         samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect  => $testNotDefined,
@@ -1156,15 +1134,11 @@ sub testStruct {
         samlIDPSSODescriptorSingleLogoutServiceSOAP          => $testNotDefined,
         samlIDPSSODescriptorArtifactResolutionServiceArtifact =>
           $testNotDefined,
-        samlIDPSSODescriptorNameIDFormatX509SubjectName => $boolean,
-        samlIDPSSODescriptorNameIDFormatPersistent      => $boolean,
-        samlIDPSSODescriptorNameIDFormatTransient       => $boolean,
-        samlIDPSSODescriptorManageNameIDServiceHTTP     => $testNotDefined,
-        samlIDPSSODescriptorManageNameIDServiceSOAP     => $testNotDefined,
         samlNameIDFormatMapEmail                        => $testNotDefined,
         samlNameIDFormatMapX509                         => $testNotDefined,
         samlNameIDFormatMapWindows                      => $testNotDefined,
         samlNameIDFormatMapKerberos                     => $testNotDefined,
+        samlAttributeAuthorityDescriptorAttributeServiceSOAP => $testNotDefined,
 
         # SSL
         SSLVar       => $testNotDefined,
@@ -1312,7 +1286,8 @@ sub defaultConf {
         samlSPMetaDataOptionsCheckSSOMessageSignature  => '1',
         samlSPMetaDataOptionsSignSLOMessage            => '1',
         samlSPMetaDataOptionsCheckSLOMessageSignature  => '1',
-        samlSPSSODescriptorAuthnRequestsSigned         => '0',
+        samlSPSSODescriptorAuthnRequestsSigned         => '1',
+        samlSPSSODescriptorWantAssertionsSigned        => '1',
         samlSPSSODescriptorKeyDescriptorSigning        => '',
         samlSPSSODescriptorSingleLogoutServiceHTTPRedirect =>
           'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;' 
@@ -1346,10 +1321,7 @@ sub defaultConf {
           '1;0;urn:oasis:names:tc:SAML:2.0:bindings:SOAP;' 
           . $portal
           . '/saml/artifact',
-        samlSPSSODescriptorNameIDFormatX509SubjectName => '0',
-        samlSPSSODescriptorNameIDFormatPersistent      => '1',
-        samlSPSSODescriptorNameIDFormatTransient       => '0',
-        samlIDPSSODescriptorWantAuthnRequestsSigned    => '0',
+        samlIDPSSODescriptorWantAuthnRequestsSigned => '1',
         samlIDPSSODescriptorKeyDescriptorSigning       => '',
         samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect =>
           'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;' 
@@ -1383,23 +1355,15 @@ sub defaultConf {
           '1;0;urn:oasis:names:tc:SAML:2.0:bindings:SOAP;' 
           . $portal
           . '/saml/artifact',
-        samlIDPSSODescriptorManageNameIDServiceHTTP =>
-          'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;' 
-          . $portal
-          . '/saml/manageNameId;'
-          . $portal
-          . '/saml/manageNameIdReturn',
-        samlIDPSSODescriptorManageNameIDServiceSOAP =>
-          'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;' 
-          . $portal
-          . '/saml/manageNameIdSOAP;',
-        samlIDPSSODescriptorNameIDFormatX509SubjectName => '0',
-        samlIDPSSODescriptorNameIDFormatPersistent      => '1',
-        samlIDPSSODescriptorNameIDFormatTransient       => '0',
         samlNameIDFormatMapEmail                        => 'mail',
         samlNameIDFormatMapX509                         => 'mail',
         samlNameIDFormatMapWindows                      => 'uid',
         samlNameIDFormatMapKerberos                     => 'uid',
+        samlAttributeAuthorityDescriptorAttributeServiceSOAP =>
+          'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;' 
+          . $portal
+          . '/saml/AA/SOAP;',
+
     };
 }
 

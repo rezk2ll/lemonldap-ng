@@ -41,15 +41,6 @@
       <TMPL_IF NAME="samlIDPSSODescriptorSingleLogoutServiceHTTPPostResponseLocation">
       ResponseLocation="<TMPL_VAR NAME="samlIDPSSODescriptorSingleLogoutServiceHTTPPostResponseLocation">"
       </TMPL_IF>/>
-    <ManageNameIDService
-      Binding="<TMPL_VAR NAME="samlIDPSSODescriptorManageNameIDServiceSOAPBinding">"
-      Location="<TMPL_VAR NAME="samlIDPSSODescriptorManageNameIDServiceSOAPLocation">" />
-    <ManageNameIDService
-      Binding="<TMPL_VAR NAME="samlIDPSSODescriptorManageNameIDServiceHTTPBinding">"
-      Location="<TMPL_VAR NAME="samlIDPSSODescriptorManageNameIDServiceHTTPLocation">"
-      <TMPL_IF NAME="samlIDPSSODescriptorManageNameIDServiceHTTPResponseLocation">
-      ResponseLocation="<TMPL_VAR NAME="samlIDPSSODescriptorManageNameIDServiceHTTPResponseLocation">"
-      </TMPL_IF>/>
     <SingleSignOnService
       Binding="<TMPL_VAR NAME="samlIDPSSODescriptorSingleSignOnServiceSOAPBinding">"
       Location="<TMPL_VAR NAME="samlIDPSSODescriptorSingleSignOnServiceSOAPLocation">" />
@@ -65,19 +56,17 @@
       <TMPL_IF NAME="samlIDPSSODescriptorSingleSignOnServiceHTTPPostResponseLocation">
       ResponseLocation="<TMPL_VAR NAME="samlIDPSSODescriptorSingleSignOnServiceHTTPPostResponseLocation">"
       </TMPL_IF>/>
-<TMPL_IF NAME="samlIDPSSODescriptorNameIDFormatX509SubjectName">
+    <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</NameIDFormat>
     <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:X509SubjectName</NameIDFormat>
-</TMPL_IF>
-<TMPL_IF NAME="samlIDPSSODescriptorNameIDFormatPersistent">
-    <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:persistent</NameIDFormat>
-</TMPL_IF>
-<TMPL_IF NAME="samlIDPSSODescriptorNameIDFormatTransient">
+    <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:WindowsDomainQualifiedName</NameIDFormat>
+    <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:kerberos</NameIDFormat>
+    <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:entity</NameIDFormat>
     <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
-</TMPL_IF>
   </IDPSSODescriptor>
 
   <SPSSODescriptor
       AuthnRequestsSigned="<TMPL_VAR NAME="samlSPSSODescriptorAuthnRequestsSigned">"
+      WantAssertionsSigned="<TMPL_VAR NAME="samlSPSSODescriptorWantAssertionsSigned">"
       protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
     <KeyDescriptor use="signing">
       <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
@@ -128,17 +117,34 @@
       index="<TMPL_VAR NAME="samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectIndex">"
       Binding="<TMPL_VAR NAME="samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectBinding">"
       Location="<TMPL_VAR NAME="samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectLocation">" />
-<TMPL_IF NAME="samlSPSSODescriptorNameIDFormatX509SubjectName">
+    <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</NameIDFormat>
     <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:X509SubjectName</NameIDFormat>
-</TMPL_IF>
-<TMPL_IF NAME="samlSPSSODescriptorNameIDFormatPersistent">
-    <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:persistent</NameIDFormat>
-</TMPL_IF>
-<TMPL_IF NAME="samlSPSSODescriptorNameIDFormatTransient">
+    <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:WindowsDomainQualifiedName</NameIDFormat>
+    <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:kerberos</NameIDFormat>
+    <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:entity</NameIDFormat>
     <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
-</TMPL_IF>
   </SPSSODescriptor>
 
+  <AttributeAuthorityDescriptor
+    protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+    <KeyDescriptor use="signing">
+      <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+        <ds:KeyValue>
+          <TMPL_VAR NAME="samlIDPSSODescriptorKeyDescriptorSigning">
+        </ds:KeyValue>
+      </ds:KeyInfo>
+    </KeyDescriptor>
+    <AttributeService
+      Binding="<TMPL_VAR NAME="samlAttributeAuthorityDescriptorAttributeServiceSOAPBinding">"
+      Location="<TMPL_VAR NAME="samlAttributeAuthorityDescriptorAttributeServiceSOAPLocation">"/>
+    <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</NameIDFormat>
+    <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:X509SubjectName</NameIDFormat>
+    <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:WindowsDomainQualifiedName</NameIDFormat>
+    <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:kerberos</NameIDFormat>
+    <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:entity</NameIDFormat>
+    <NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:transient</NameIDFormat>
+  </AttributeAuthorityDescriptor>
+  
   <Organization>
     <OrganizationName xml:lang="en"><TMPL_VAR NAME="samlOrganizationName"></OrganizationName>
     <OrganizationDisplayName xml:lang="en"><TMPL_VAR NAME="samlOrganizationDisplayName"></OrganizationDisplayName>

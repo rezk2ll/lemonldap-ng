@@ -268,6 +268,7 @@ sub en {
         samlSPSSODescriptor              => 'Service Provider',
         samlSPSSODescriptorAuthnRequestsSigned =>
           'Signed Authentication Request',
+        samlSPSSODescriptorWantAssertionsSigned => 'Want Assertions Signed',
         samlSPSSODescriptorKeyDescriptorSigning     => 'Signing Key',
         samlSPSSODescriptorSingleLogoutService      => 'Single Logout',
         samlSPSSODescriptorSingleLogoutServiceHTTPRedirect => 'HTTP Redirect',
@@ -282,15 +283,11 @@ sub en {
         samlSPSSODescriptorArtifactResolutionService => 'Artifact Resolution',
         samlSPSSODescriptorArtifactResolutionServiceArtifact =>
           'Artifact Service',
-        samlSPSSODescriptorNameIDFormat                => 'NameID Format',
-        samlSPSSODescriptorNameIDFormatX509SubjectName => 'x509',
-        samlSPSSODescriptorNameIDFormatPersistent      => 'Persistent',
-        samlSPSSODescriptorNameIDFormatTransient       => 'Transient',
         samlIDPSSODescriptor                           => 'Identity Provider',
         samlIDPSSODescriptorWantAuthnRequestsSigned =>
-          'Signed Authentication Request',
+          'Want Authentication Request Signed',
         samlIDPSSODescriptorKeyDescriptorSigning      => 'Signing Key',
-        samlIDPSSODescriptorSingleSignOnService       => 'Single Sign on',
+        samlIDPSSODescriptorSingleSignOnService             => 'Single Sign On',
         samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect => 'HTTP Redirect',
         samlIDPSSODescriptorSingleSignOnServiceHTTPPost     => 'HTTP POST',
         samlIDPSSODescriptorSingleSignOnServiceSOAP         => 'SOAP',
@@ -301,13 +298,9 @@ sub en {
         samlIDPSSODescriptorArtifactResolutionService => 'Artifact Resolution',
         samlIDPSSODescriptorArtifactResolutionServiceArtifact =>
           'Artifact Service',
-        samlIDPSSODescriptorNameIDFormat                => 'NameID Format',
-        samlIDPSSODescriptorNameIDFormatX509SubjectName => 'x509',
-        samlIDPSSODescriptorNameIDFormatPersistent      => 'Persistent',
-        samlIDPSSODescriptorNameIDFormatTransient       => 'Transient',
-        samlIDPSSODescriptorManageNameIDService         => 'NameID Manager',
-        samlIDPSSODescriptorManageNameIDServiceHTTP     => 'HTTP Redirect',
-        samlIDPSSODescriptorManageNameIDServiceSOAP     => 'SOAP',
+        samlAttributeAuthorityDescriptor => 'Attribute Authority',
+        samlAttributeAuthorityDescriptorAttributeService => 'Attribute Service',
+        samlAttributeAuthorityDescriptorAttributeServiceSOAP => 'SOAP',
     };
 }
 
@@ -538,8 +531,10 @@ sub fr {
         samlOrganizationURL              => 'URL',
         samlSPSSODescriptor              => 'Fournisseur de service',
         samlSPSSODescriptorAuthnRequestsSigned =>
-          'Requête d\'authentification signé',
-        samlSPSSODescriptorKeyDescriptorSigning     => 'Clef de signature',
+          'Requêtes d\'authentification signées',
+        samlSPSSODescriptorWantAssertionsSigned =>
+          'Exige des assertions signées',
+        samlSPSSODescriptorKeyDescriptorSigning => 'Clé de signature',
         samlSPSSODescriptorSingleLogoutService      => 'Single Logout',
         samlSPSSODescriptorSingleLogoutServiceHTTPRedirect =>
           'Redirection HTTP',
@@ -555,15 +550,11 @@ sub fr {
           'Résolution d\'Artifact',
         samlSPSSODescriptorArtifactResolutionServiceArtifact =>
           'Service Artifact',
-        samlSPSSODescriptorNameIDFormat                => 'Format NameID',
-        samlSPSSODescriptorNameIDFormatX509SubjectName => 'x509',
-        samlSPSSODescriptorNameIDFormatPersistent      => 'Persistant',
-        samlSPSSODescriptorNameIDFormatTransient       => 'Temporaire',
         samlIDPSSODescriptor => 'Fournisseur d\'identité',
         samlIDPSSODescriptorWantAuthnRequestsSigned =>
-          'Requête d\'authentification signé',
-        samlIDPSSODescriptorKeyDescriptorSigning    => 'Clef de signature',
-        samlIDPSSODescriptorSingleSignOnService     => 'Single Sign on',
+          'Exige des requêtes d\'authentification signées',
+        samlIDPSSODescriptorKeyDescriptorSigning => 'Clé de signature',
+        samlIDPSSODescriptorSingleSignOnService  => 'Single Sign On',
         samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect =>
           'Redirection HTTP',
         samlIDPSSODescriptorSingleSignOnServiceHTTPPost => 'POST HTTP',
@@ -577,13 +568,10 @@ sub fr {
           'Résolution d\'Artifact',
         samlIDPSSODescriptorArtifactResolutionServiceArtifact =>
           'Service Artifact',
-        samlIDPSSODescriptorNameIDFormat                => 'Format NameID',
-        samlIDPSSODescriptorNameIDFormatX509SubjectName => 'x509',
-        samlIDPSSODescriptorNameIDFormatPersistent      => 'Persistant',
-        samlIDPSSODescriptorNameIDFormatTransient       => 'Temporaire',
-        samlIDPSSODescriptorManageNameIDService     => 'Gestionnaire de NameID',
-        samlIDPSSODescriptorManageNameIDServiceHTTP => 'Redirection HTTP',
-        samlIDPSSODescriptorManageNameIDServiceSOAP => 'SOAP',
+        samlAttributeAuthorityDescriptor => 'Autorité d\'attributs',
+        samlAttributeAuthorityDescriptorAttributeService =>
+          'Service d\'attributs',
+        samlAttributeAuthorityDescriptorAttributeServiceSOAP => 'SOAP',
     };
 }
 
