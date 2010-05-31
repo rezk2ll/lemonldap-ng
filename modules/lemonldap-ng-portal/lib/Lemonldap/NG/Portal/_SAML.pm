@@ -1658,15 +1658,14 @@ sub sendSOAPMessage {
     return $response;
 }
 
-## @method Lasso::AssertionQuery createAttributeRequest(Lasso::Server server, Lasso::Login login, string idp, hashref attributes)
+## @method Lasso::AssertionQuery createAttributeRequest(Lasso::Server server, string idp, hashref attributes)
 # Create an attribute request
 # @param server Lasso::Server object
-# @param login Lasso::Login object
 # @param idp IDP entityID
 # @param attributes List of requested attributes
 # @return assertion request
 sub createAttributeRequest {
-    my ( $self, $server, $login, $idp, $attributes ) = splice @_;
+    my ( $self, $server, $idp, $attributes ) = splice @_;
     my $query;
 
     # Create assertion query
@@ -1677,13 +1676,6 @@ sub createAttributeRequest {
     }
 
     $self->lmLog( "Assertion query created", 'debug' );
-
-    # Set identity
-    return
-      unless (
-        $self->setIdentityFromDump( $query, $login->get_identity()->dump ) );
-
-    $self->lmLog( "Identity set in query", 'debug' );
 
     # Init request
     my $method = Lasso::Constants::HTTP_METHOD_SOAP;

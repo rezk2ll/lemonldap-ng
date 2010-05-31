@@ -40,7 +40,6 @@ sub getUser {
 sub setSessionInfo {
     my $self   = shift;
     my $server = $self->{_lassoServer};
-    my $login  = $self->{_lassoLogin};
     my $idp    = $self->{_idp};
     my $idpConfKey = $self->{_idpConfKey};
 
@@ -53,18 +52,21 @@ sub setSessionInfo {
 
     # Get all required attributes, not already set
     # in setAuthSessionInfo()
-    foreach ( keys %{ $self->{samlIDPMetaDataExportedAttributes}->{$idp} } ) {
+    foreach (
+        keys %{ $self->{samlIDPMetaDataExportedAttributes}->{$idpConfKey} } )
+    {
 
         # Extract fields from exportedAttr value
         my ( $mandatory, $name, $format, $friendly_name ) =
           split( /;/,
-            $self->{samlIDPMetaDataExportedAttributes}->{$idp}->{$_} );
+            $self->{samlIDPMetaDataExportedAttributes}->{$idpConfKey}->{$_} );
 
         # Keep mandatory attributes not sent in authentication response
         if ( $mandatory and not defined $self->{sessionInfo}->{$_} ) {
             $exportedAttr->{$_} =
-              $self->{samlIDPMetaDataExportedAttributes}->{$idp}->{$_};
-            $self->lmLog( "Attribute $_ will be requested to $idp", 'debug' );
+              $self->{samlIDPMetaDataExportedAttributes}->{$idpConfKey}->{$_};
+            $self->lmLog( "Attribute $_ will be requested to $idpConfKey",
+                'debug' );
         }
     }
 
@@ -77,13 +79,12 @@ sub setSessionInfo {
     }
 
     # Build Attribute Request
-    my $IDPentityID = $self->{_idpList}->{$idp}->{entityID};
     my $query =
-      $self->createAttributeRequest( $server, $login, $IDPentityID,
-        $exportedAttr );
+      $self->createAttributeRequest( $server, $idp, $exportedAttr );
 
     unless ($query) {
-        $self->lmLog( "Unable to build attribute request for $idp", 'error' );
+        $self->lmLog( "Unable to build attribute request for $idpConfKey",
+            'error' );
         return PE_ERROR;
     }
 
