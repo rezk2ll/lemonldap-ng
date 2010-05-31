@@ -366,7 +366,7 @@ sub checkMessage {
 
                     # Artifact in SAMLart param
                     $artifact = $self->param('SAMLart');
-                    $self->lmLog( "HTTP-REDIRECT: SAML Artifact $artifact",
+                    $self->lmLog( "HTTP-POST: SAML Artifact $artifact",
                         'debug' );
 
                     # Resolve Artifact

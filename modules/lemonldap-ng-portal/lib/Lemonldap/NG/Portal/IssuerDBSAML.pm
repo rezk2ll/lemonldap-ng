@@ -883,7 +883,14 @@ sub issuerForAuthUser {
                 my $sso_body = $login->msg_body;
 
                 $self->{postUrl} = $sso_url;
+
+                if ( $artifact_method == $self->getHttpMethod("artifact-post") )
+                {
+                    $self->{postFields} = { 'SAMLart' => $sso_body };
+                }
+                else {
                 $self->{postFields} = { 'SAMLResponse' => $sso_body };
+                }
 
                 # RelayState
                 $self->{postFields}->{'RelayState'} = $login->msg_relayState
