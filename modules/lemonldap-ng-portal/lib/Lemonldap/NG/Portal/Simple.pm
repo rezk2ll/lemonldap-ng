@@ -1616,15 +1616,15 @@ sub autoPost {
     }
     ";
 
+    my $message =
+      &Lemonldap::NG::Portal::_i18n::msg( PM_REDIRECTION,
+        $ENV{HTTP_ACCEPT_LANGUAGE} );
+
     # Print page
     print $self->header();
-    print $self->start_html( -style => { -code => $css } );
+    print $self->start_html( -title => $message, -style => { -code => $css } );
 
-    print $self->h1(
-        &Lemonldap::NG::Portal::_i18n::msg( PM_REDIRECTION,
-            $ENV{HTTP_ACCEPT_LANGUAGE}
-        )
-    );
+    print $self->h1($message);
 
     print $self->start_form( -action => $url );
 
