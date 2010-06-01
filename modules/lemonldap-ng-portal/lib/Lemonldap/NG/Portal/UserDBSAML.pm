@@ -110,9 +110,7 @@ sub setSessionInfo {
     }
 
     # Add this IDP to Lasso::Server as AA
-    my $result = $self->addAA( $server, $idp_metadata->toXML() );
-
-    unless ($result) {
+    unless ( $self->addAA( $server, $idp_metadata->toXML() ) ) {
         $self->lmLog(
             "Fail to use IDP $idpConfKey Metadata as Attribute Authority",
             'error' );

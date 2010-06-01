@@ -373,11 +373,11 @@ sub issuerForUnAuthUser {
         unless ( $self->processArtRequestMsg( $login, $art_request ) ) {
             $self->lmLog( "Unable to process artifact request message",
                 'error' );
-            return $self->returnSOAPMessage();
+            $self->returnSOAPMessage();
         }
 
         # Check Destination
-        return $self->returnSOAPMessage();
+        $self->returnSOAPMessage()
           unless ( $self->checkDestination( $login->request, $url ) );
 
         # Create artifact response
