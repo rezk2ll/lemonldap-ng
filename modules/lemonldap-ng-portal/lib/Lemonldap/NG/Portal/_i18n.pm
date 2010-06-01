@@ -294,6 +294,7 @@ sub error_ro {
 # * PM_SAML_IDPCHOOSEN          9
 # * PM_REMEMBERCHOICE          10
 # * PM_SAML_SPLOGOUT           11
+# * PM_REDIRECTION             12
 
 sub msg_en {
     use utf8;
@@ -309,7 +310,8 @@ sub msg_en {
         'Select your Identity Provider',
         'Redirection to your Identity Provider',
         'Remember my choice',
-        'Logout from service providers...'
+        'Logout from service providers...',
+        'Redirection in progress...',
     ];
 }
 
@@ -327,7 +329,8 @@ sub msg_fr {
         'Choisissez votre fournisseur d\'identité',
         'Redirection vers votre fournisseur d\'identité',
         'Se souvenir de mon choix',
-        'Déconnexion des services...'
+        'Déconnexion des services...',
+        'Redirection en cours...',
     ];
 }
 

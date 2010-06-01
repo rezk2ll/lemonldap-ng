@@ -108,6 +108,7 @@ use constant {
     PM_SAML_IDPCHOOSEN       => 9,
     PM_REMEMBERCHOICE        => 10,
     PM_SAML_SPLOGOUT         => 11,
+    PM_REDIRECTION           => 12,
 };
 
 # EXPORTER PARAMETERS
@@ -126,6 +127,7 @@ our @EXPORT = qw( PE_IMG_NOK PE_IMG_OK PE_INFO PE_REDIRECT PE_DONE PE_OK
   PM_USER PM_DATE PM_IP PM_SESSIONS_DELETED PM_OTHER_SESSIONS
   PM_REMOVE_OTHER_SESSIONS PM_PP_GRACE PM_PP_EXP_WARNING
   PM_SAML_IDPSELECT PM_SAML_IDPCHOOSEN PM_REMEMBERCHOICE PM_SAML_SPLOGOUT
+  PM_REDIRECTION
 );
 our %EXPORT_TAGS = ( 'all' => [ @EXPORT, 'import' ], );
 
@@ -1597,9 +1599,33 @@ sub autoPost {
     # Return error if no URL
     return PE_ERROR unless $self->{postUrl};
 
+    # Simple CSS
+    my $css = "
+    body {
+    background: #ddd;
+    color: #fff;
+    }
+    h1 {
+    size: 10pt;
+    text-align: center;
+    letter-spacing: 5px;
+    margin-top: 100px;
+    }
+    form {
+    display: none;
+    }
+    ";
+
     # Print page
     print $self->header();
-    print $self->start_html();
+    print $self->start_html( -style => { -code => $css } );
+
+    print $self->h1(
+        &Lemonldap::NG::Portal::_i18n::msg( PM_REDIRECTION,
+            $ENV{HTTP_ACCEPT_LANGUAGE}
+        )
+    );
+
     print $self->start_form( -action => $url );
 
     $self->lmLog( "POST form action: $url", 'debug' );
