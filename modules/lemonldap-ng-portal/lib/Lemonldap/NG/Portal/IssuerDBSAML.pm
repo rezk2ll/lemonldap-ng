@@ -69,6 +69,8 @@ sub issuerForUnAuthUser {
         "samlIDPSSODescriptorArtifactResolutionServiceArtifact");
     my $saml_slo_url_relay_soap =
       $self->{portal} . '/saml/relaySingleLogoutSOAP';
+    my $saml_att_soap_url = $self->getMetaDataURL(
+        "samlAttributeAuthorityDescriptorAttributeServiceSOAP", 1 );
 
     # Get HTTP request informations to know
     # if we are receving SAML request or response
@@ -371,18 +373,18 @@ sub issuerForUnAuthUser {
         unless ( $self->processArtRequestMsg( $login, $art_request ) ) {
             $self->lmLog( "Unable to process artifact request message",
                 'error' );
-            return PE_ERROR;
+            return $self->returnSOAPMessage();
         }
 
         # Check Destination
-        return PE_ERROR
+        return $self->returnSOAPMessage();
           unless ( $self->checkDestination( $login->request, $url ) );
 
         # Create artifact response
         unless ( $art_response = $self->createArtifactResponse($login) ) {
             $self->lmLog( "Unable to create artifact response message",
                 'error' );
-            return PE_ERROR;
+            $self->returnSOAPMessage();
         }
 
         $self->{SOAPMessage} = $art_response;
@@ -394,12 +396,40 @@ sub issuerForUnAuthUser {
 
         # If we are here, there was a problem with SOAP request
         $self->lmLog( "Artifact response was not sent trough SOAP", 'error' );
-        return PE_ERROR;
+        $self->quit();
 
     }
 
     # 1.5 Attribute query
+    if ( $url =~ /^(\Q$saml_att_soap_url\E)$/io ) {
+
+        $self->lmLog( "URL $url detected as an attribute service URL",
+            'debug' );
+
+        # Attribute request are sent with SOAP trough POST
+        my $att_request = $self->param('POSTDATA');
+        my $att_response;
+
+        # Create query object
+        my $query = $self->createAssertionQuery($server);
+
+        unless ($query) {
+            $self->lmLog( "Unable to create Assertion Query", 'error' );
+            $self->returnSOAPMessage();
+        }
+
+        $self->lmLog( "Assertion Query created", 'debug' );
+
     # TODO
+
+        # Return SOAP message
+        $self->returnSOAPMessage();
+
+        # If we are here, there was a problem with SOAP request
+        $self->lmLog( "Attribute response was not sent trough SOAP", 'error' );
+        $self->quit();
+
+    }
 
     PE_OK;
 }

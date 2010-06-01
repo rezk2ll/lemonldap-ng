@@ -1673,6 +1673,24 @@ sub sendSOAPMessage {
     return $response;
 }
 
+## @method Lasso::AssertionQuery createAssertionQuery(Lasso::Server server)
+# Create a new assertion query
+# @param server Lasso::Server object
+# @return assertion query
+sub createAssertionQuery {
+    my ( $self, $server ) = splice @_;
+    my $query;
+
+    # Create assertion query
+    eval { $query = Lasso::AssertionQuery->new($server); };
+    if ($@) {
+        $self->checkLassoError($@);
+        return;
+    }
+
+    return $query;
+}
+
 ## @method Lasso::AssertionQuery createAttributeRequest(Lasso::Server server, string idp, hashref attributes, Lasso::Saml2NameID nameid)
 # Create an attribute request
 # @param server Lasso::Server object
@@ -1685,11 +1703,7 @@ sub createAttributeRequest {
     my $query;
 
     # Create assertion query
-    eval { $query = Lasso::AssertionQuery->new($server); };
-    if ($@) {
-        $self->checkLassoError($@);
-        return;
-    }
+    return unless $self->createAssertionQuery($server);
 
     $self->lmLog( "Assertion query created", 'debug' );
 
@@ -1766,11 +1780,7 @@ sub processAttributeResponse {
     my $query;
 
     # Create assertion query
-    eval { $query = Lasso::AssertionQuery->new($server); };
-    if ($@) {
-        $self->checkLassoError($@);
-        return;
-    }
+    return unless $self->createAssertionQuery($server);
 
     $self->lmLog( "Assertion query created", 'debug' );
 
@@ -2636,6 +2646,10 @@ Process artifact response message
 =head2 sendSOAPMessage
 
 Send SOAP message and get response
+
+=head2 createAssertionQuery
+
+Create a new assertion query
 
 =head2 createAttributeRequest
 
