@@ -766,16 +766,29 @@ sub issuerForAuthUser {
             my @attributes_statement = ($attribute_statement);
             $response_assertions[0]->AttributeStatement(@attributes_statement);
 
+            # Get AuthnStatement
+            my @authn_statements = $response_assertions[0]->AuthnStatement();
+
             # Set sessionIndex
             # sessionIndex is the encrypted session_id
             my $sessionIndex     = $self->{cipher}->encrypt($session_id);
-            my @authn_statements = $response_assertions[0]->AuthnStatement();
             $authn_statements[0]->SessionIndex($sessionIndex);
-            $response_assertions[0]->AuthnStatement(@authn_statements);
 
             $self->lmLog(
                 "Set sessionIndex $sessionIndex (encrypted from $session_id)",
                 'debug' );
+
+            # Set SessionNotOnOrAfter
+            my $time                = $self->{sessionInfo}->{_utime} || time();
+            my $timeout             = $time + $self->{timeout};
+            my $sessionNotOnOrAfter = $self->timestamp2samldate($timeout);
+            $authn_statements[0]->SessionNotOnOrAfter($sessionNotOnOrAfter);
+
+            $self->lmLog( "Set sessionNotOnOrAfter $sessionNotOnOrAfter",
+                'debug' );
+
+            # Register AuthnStatement in assertion
+            $response_assertions[0]->AuthnStatement(@authn_statements);
 
             # Set response assertion
             $login->response->Assertion(@response_assertions);
