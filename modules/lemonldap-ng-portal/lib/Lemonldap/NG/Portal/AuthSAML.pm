@@ -262,7 +262,7 @@ sub extractFormInfo {
             $self->{_lassoLogin} = $login;
             $self->{_idp}        = $idp;
             $self->{_idpConfKey} = $idpConfKey;
-            $self->{_nameID}       = $nameid->dump;
+            $self->{_nameID}       = $nameid;
             $self->{_sessionIndex} = $session_index;
 
             return PE_OK;
@@ -1327,7 +1327,7 @@ sub authFinish {
     $h{type}          = 'saml';            # Session type
     $h{_utime}        = $utime;            # Creation time
     $h{_id}           = $id;               # SSO session id
-    $h{_nameID}       = $nameid;           # SAML NameID
+    $h{_nameID}       = $nameid->dump;     # SAML NameID
     $h{_sessionIndex} = $session_index;    # SAML SessionIndex
 
     my $session_id = $h{_session_id};

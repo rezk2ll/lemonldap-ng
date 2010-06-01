@@ -1673,14 +1673,15 @@ sub sendSOAPMessage {
     return $response;
 }
 
-## @method Lasso::AssertionQuery createAttributeRequest(Lasso::Server server, string idp, hashref attributes)
+## @method Lasso::AssertionQuery createAttributeRequest(Lasso::Server server, string idp, hashref attributes, Lasso::Saml2NameID nameid)
 # Create an attribute request
 # @param server Lasso::Server object
 # @param idp IDP entityID
 # @param attributes List of requested attributes
-# @return assertion request
+# @param nameid Subject NameID
+# @return attribute request
 sub createAttributeRequest {
-    my ( $self, $server, $idp, $attributes ) = splice @_;
+    my ( $self, $server, $idp, $attributes, $nameid ) = splice @_;
     my $query;
 
     # Create assertion query
@@ -1704,6 +1705,13 @@ sub createAttributeRequest {
     }
 
     $self->lmLog( "Assertion query request initiated", 'debug' );
+
+    # Set NameID
+    eval { $query->nameIdentifier($nameid); };
+    if ($@) {
+        $self->checkLassoError($@);
+        return;
+    }
 
     # Store attributes in request
     my @requested_attributes;

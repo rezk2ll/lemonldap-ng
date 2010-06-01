@@ -866,6 +866,7 @@ sub issuerForAuthUser {
 
             # Keep SAML elements for later queries
             my %h;
+            my $nameid = $login->nameIdentifier;
             eval {
                 tie %h, $self->{samlStorage}, undef,
                   $self->{samlStorageOptions};
@@ -878,7 +879,7 @@ sub issuerForAuthUser {
             $h{type}    = 'saml';                    # Session type
             $h{_utime}  = $time;                     # Creation time
             $h{_id}     = $session_id;               # SSO session id
-            $h{_nameID} = $login->nameIdentifier;    # SAML NameID
+            $h{_nameID} = $nameid->dump;    # SAML NameID
 
             my $saml_session_id = $h{_session_id};
 

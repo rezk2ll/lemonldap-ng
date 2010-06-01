@@ -41,6 +41,7 @@ sub setSessionInfo {
     my $self   = shift;
     my $idp    = $self->{_idp};
     my $idpConfKey = $self->{_idpConfKey};
+    my $nameid     = $self->{_nameID};
 
     my $exportedAttr;
 
@@ -119,7 +120,8 @@ sub setSessionInfo {
     }
 
     # Build Attribute Request
-    my $query = $self->createAttributeRequest( $server, $idp, $exportedAttr );
+    my $query =
+      $self->createAttributeRequest( $server, $idp, $exportedAttr, $nameid );
 
     unless ($query) {
         $self->lmLog( "Unable to build attribute request for $idpConfKey",
