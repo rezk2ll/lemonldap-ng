@@ -39,7 +39,6 @@ sub getUser {
 # @return Lemonldap::NG::Portal error code
 sub setSessionInfo {
     my $self   = shift;
-    my $server = $self->{_lassoServer};
     my $idp    = $self->{_idp};
     my $idpConfKey = $self->{_idpConfKey};
 
@@ -78,9 +77,49 @@ sub setSessionInfo {
         return PE_OK;
     }
 
+    # Create a new server object
+    my $service_metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new();
+
+    # Create Lasso server with service metadata
+    my $server = $self->createServer(
+        $service_metadata->serviceToXML(
+            $ENV{DOCUMENT_ROOT} . "/skins/common/saml2-metadata.tpl", $self
+        ),
+        $self->{samlServicePrivateKey},
+    );
+
+    unless ($server) {
+        $self->lmLog( "Unable to create Lasso server", 'error' );
+        return PE_ERROR;
+    }
+    $self->lmLog( "Service for attribute request created", 'debug' );
+
+    # Add current IDP as Attribute Authority
+    my $idp_metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new();
+    unless (
+        $idp_metadata->initializeFromConfHash(
+            $self->{samlIDPMetaDataXML}->{$idpConfKey}->{samlIDPMetaDataXML}
+        )
+      )
+    {
+        $self->lmLog(
+            "Fail to read IDP $idpConfKey Metadata from configuration",
+            'error' );
+        return PE_ERROR;
+    }
+
+    # Add this IDP to Lasso::Server as AA
+    my $result = $self->addAA( $server, $idp_metadata->toXML() );
+
+    unless ($result) {
+        $self->lmLog(
+            "Fail to use IDP $idpConfKey Metadata as Attribute Authority",
+            'error' );
+        return PE_ERROR;
+    }
+
     # Build Attribute Request
-    my $query =
-      $self->createAttributeRequest( $server, $idp, $exportedAttr );
+    my $query = $self->createAttributeRequest( $server, $idp, $exportedAttr );
 
     unless ($query) {
         $self->lmLog( "Unable to build attribute request for $idpConfKey",

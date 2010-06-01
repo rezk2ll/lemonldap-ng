@@ -17,7 +17,6 @@ use Time::Local;       # Convert SAML2 date into timestamp
 use Encode;            # Encode attribute values
 
 our $VERSION = '0.01';
-our $_samlCache;
 
 BEGIN {
 
@@ -455,8 +454,7 @@ sub checkLassoError {
 sub createServer {
     my ( $self, $metadata, $private_key, $private_key_password, $certificate ) =
       splice @_;
-    my $server = $_samlCache->{$metadata};
-    return $server if ($server);
+    my $server;
 
     eval {
         $server = Lasso::Server::new_from_buffers( $metadata, $private_key,
@@ -500,6 +498,23 @@ sub addSP {
     return 0 unless ( $server->isa("Lasso::Server") and defined $metadata );
 
     return $self->addProvider( $server, Lasso::Constants::PROVIDER_ROLE_SP,
+        $metadata, $public_key, $ca_cert_chain );
+}
+
+## @method boolean addAA(Lasso::Server server, string metadata, string public_key, string ca_cert_chain)
+# Add Attribute Authority to an existing Lasso::Server
+# @param Lasso::Server Lasso::Server object
+# @param string metadata AA metadata
+# @param string optional public key
+# @param string optional ca cert chain
+# @return boolean result
+sub addAA {
+    my ( $self, $server, $metadata, $public_key, $ca_cert_chain ) = splice @_;
+
+    return 0 unless ( $server->isa("Lasso::Server") and defined $metadata );
+
+    return $self->addProvider( $server,
+        Lasso::Constants::PROVIDER_ROLE_ATTRIBUTE_AUTHORITY,
         $metadata, $public_key, $ca_cert_chain );
 }
 
@@ -2444,6 +2459,10 @@ Add IDP to an existing Lasso::Server
 =head2 addSP
 
 Add SP to an existing Lasso::Server
+
+=head2 addAA
+
+Add Attribute Authority to an existing Lasso::Server
 
 =head2 addProvider
 
