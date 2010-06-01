@@ -1703,7 +1703,7 @@ sub createAttributeRequest {
     my $query;
 
     # Create assertion query
-    return unless $self->createAssertionQuery($server);
+    return unless ( $query = $self->createAssertionQuery($server) );
 
     $self->lmLog( "Assertion query created", 'debug' );
 
@@ -1780,7 +1780,7 @@ sub processAttributeResponse {
     my $query;
 
     # Create assertion query
-    return unless $self->createAssertionQuery($server);
+    return unless ( $query = $self->createAssertionQuery($server) );
 
     $self->lmLog( "Assertion query created", 'debug' );
 
