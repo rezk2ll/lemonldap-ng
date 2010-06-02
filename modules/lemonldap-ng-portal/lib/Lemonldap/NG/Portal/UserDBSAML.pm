@@ -151,7 +151,7 @@ sub setSessionInfo {
     my @response_attributes;
     eval {
         @response_attributes =
-          $result->getAssertion()->AttributeStatement()->Attribute();
+          $result->response()->Assertion()->AttributeStatement()->Attribute();
     };
     if ($@) {
         $self->lmLog( "No attributes defined in attribute response", 'error' );
@@ -171,10 +171,13 @@ sub setSessionInfo {
 
         unless ($value) {
             $self->lmLog(
-                "Attribute $_ is mandatory, but was not delivered by $idp",
-                'error' );
+"Attribute $_ is mandatory, but was not delivered by $idpConfKey",
+                'error'
+            );
             return PE_ERROR;
         }
+
+        $self->lmLog( "Get value $value for attribute $_", 'debug' );
 
         # Store value in sessionInfo
         $self->{sessionInfo}->{$_} = $value;

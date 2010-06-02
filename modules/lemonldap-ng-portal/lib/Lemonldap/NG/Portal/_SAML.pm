@@ -1727,6 +1727,8 @@ sub createAttributeRequest {
         return;
     }
 
+    $self->lmLog("Set NameID ".$nameid->dump." in assertion query", 'debug');
+
     # Store attributes in request
     my @requested_attributes;
     foreach ( keys %$attributes ) {
