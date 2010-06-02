@@ -527,7 +527,11 @@ sub issuerForUnAuthUser {
                 # Skip if name does not match
                 next unless ( $rname =~ /^$name$/ );
 
-                #TODO check format and friendly name
+                # Check format and friendly name
+                next if ( $rformat and $rformat !~ /^$format$/ );
+                next
+                  if (  $rfriendly_name
+                    and $rfriendly_name !~ /^$friendly_name$/ );
 
                 $self->lmLog(
                     "SP $spConfKey is authorized to access attribute $rname",
