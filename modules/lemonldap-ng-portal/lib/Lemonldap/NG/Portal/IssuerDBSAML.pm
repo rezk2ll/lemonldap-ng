@@ -417,9 +417,80 @@ sub issuerForUnAuthUser {
             $self->returnSOAPMessage();
         }
 
+        # Get SP entityID
+        my $sp = $query->remote_providerID();
+
+        $self->lmLog( "Found entityID $sp in SAML message", 'debug' );
+
+        # SP conf key
+        my $spConfKey = $self->{_spList}->{$sp}->{confKey};
+
+        unless ($spConfKey) {
+            $self->lmLog( "$sp do not match any SP in configuration", 'error' );
+            return PE_ERROR;
+        }
+
+        $self->lmLog( "$sp match $spConfKey SP in configuration", 'debug' );
+
+        # Check Destination
+        $self->returnSOAPMessage()
+          unless ( $self->checkDestination( $query->request, $url ) );
+
         # Validate request
         unless ( $self->validateAttributeRequest($query) ) {
             $self->lmLog( "Attribute request not valid", 'error' );
+            $self->returnSOAPMessage();
+        }
+
+        # Get NameID
+        my $name_id = $query->request()->NameID;
+        my $user    = $name_id->content;
+
+        unless ($name_id) {
+            $self->lmLog( "Fail to get NameID from attribute request",
+                'error' );
+            $self->returnSOAPMessage();
+        }
+
+        # Get sessionInfo for the given NameID
+        my $sessionInfo;
+        my $saml_sessions =
+          $self->{samlStorage}
+          ->searchOn( $self->{samlStorageOptions}, "_nameID", $name_id->dump );
+
+        if ( my @saml_sessions_keys = keys %$saml_sessions ) {
+
+            # Warning if more than one session found
+            if ( $#saml_sessions_keys > 0 ) {
+                $self->lmLog( "More than one SAML session found for user $user",
+                    'warn' );
+            }
+
+            # Take the first session
+            my $saml_session = shift @saml_sessions_keys;
+
+            # Get session
+            $self->lmLog( "Retrieve SAML session $saml_session for user $user",
+                'debug' );
+
+            my $samlSessionInfo = $self->getSamlSession($saml_session);
+
+            # Get real session
+            my $real_session = $samlSessionInfo->{_id};
+
+            $self->lmLog( "Retrieve real session $real_session for user $user",
+                'debug' );
+
+            $sessionInfo = $self->getApacheSession( $real_session, 1 );
+
+            unless ($sessionInfo) {
+                $self->lmLog( "Cannot get session $real_session", 'error' );
+                $self->returnSOAPMessage();
+            }
+
+        }
+        else {
+            $self->lmLog( "No SAML session found for user $user", 'error' );
             $self->returnSOAPMessage();
         }
 

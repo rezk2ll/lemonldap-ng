@@ -2459,6 +2459,32 @@ sub checkDestination {
     }
 }
 
+## @method hashref getSamlSession(string id)
+# Try to recover the SAML session corresponding to id and return session datas
+# If id is set to undef, return a new session
+# @param id session reference
+# @return session datas
+sub getSamlSession {
+    my ( $self, $id ) = splice @_;
+    my %h;
+
+    # Trying to recover session from SAML session storage
+    eval { tie %h, $self->{samlStorage}, $id, $self->{samlStorageOptions}; };
+    if ( $@ or not tied(%h) ) {
+
+        # Session not available
+        if ($id) {
+            $self->lmLog( "SAML session $id isn't yet available", 'info' );
+        }
+        else {
+            $self->lmLog( "Unable to create new SAML session: $@", 'error' );
+        }
+        return 0;
+    }
+
+    return \%h;
+}
+
 1;
 
 __END__
@@ -2775,6 +2801,10 @@ Return SAML authentication context corresponding to authnLevel
 =head2 checkDestination
 
 If SAML Destination attribute is present, check it
+
+=head2 getSamlSession
+
+Try to recover the SAML session corresponding to id and return session datas
 
 =head1 SEE ALSO
 

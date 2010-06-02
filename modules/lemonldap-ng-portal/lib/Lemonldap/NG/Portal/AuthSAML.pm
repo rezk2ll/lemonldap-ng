@@ -470,8 +470,7 @@ sub extractFormInfo {
                         "Retrieve SAML session $local_session for user $user",
                         'debug' );
 
-                    my $sessionInfo =
-                      $self->getApacheSession( $local_session, 1 );
+                    my $sessionInfo = $self->getSamlSession($local_session);
 
               # If session index is defined and not equal to SAML session index,
               # jump to next session
