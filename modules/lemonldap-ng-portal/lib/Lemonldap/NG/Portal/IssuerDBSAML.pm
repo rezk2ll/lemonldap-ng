@@ -443,14 +443,15 @@ sub issuerForUnAuthUser {
         }
 
         # Get NameID
-        my $name_id = $query->request()->NameID;
-        my $user    = $name_id->content;
+        my $name_id = $query->nameIdentifier();
 
         unless ($name_id) {
             $self->lmLog( "Fail to get NameID from attribute request",
                 'error' );
             $self->returnSOAPMessage();
         }
+
+        my $user = $name_id->content();
 
         # Get sessionInfo for the given NameID
         my $sessionInfo;
