@@ -1575,8 +1575,8 @@ sub autoRedirect {
 sub returnSOAPMessage {
     my $self = shift;
 
-    # Return error if no SOAP message
-    return PE_ERROR unless $self->{SOAPMessage};
+    # Quit if no SOAP message
+    $self->quit() unless $self->{SOAPMessage};
 
     # Print HTTP header and SOAP message
     print $self->header( -type => 'application/xml' );
@@ -1596,8 +1596,8 @@ sub autoPost {
     my $url        = $self->{postUrl};
     my $formFields = $self->{postFields};
 
-    # Return error if no URL
-    return PE_ERROR unless $self->{postUrl};
+    # Quit if no URL
+    $self->quit() unless $self->{postUrl};
 
     # Simple CSS
     my $css = "
