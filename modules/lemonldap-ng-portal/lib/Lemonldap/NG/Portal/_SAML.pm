@@ -1808,6 +1808,23 @@ sub processAttributeRequest {
     return $query;
 }
 
+## @method string buildAttributeResponse(Lasso::AssertionQuery query)
+# Build attribute response
+# @param query Lasso::AssertionQuery object
+# @return attribute response
+sub buildAttributeResponse {
+    my ( $self, $query ) = splice @_;
+
+    eval { Lasso::AssertionQuery::build_response_msg($query); };
+
+    if ($@) {
+        $self->checkLassoError($@);
+        return;
+    }
+
+    return $query->msg_body;
+}
+
 ## @method Lasso::AssertionQuery processAttributeResponse(Lasso::Server server, string response)
 # Process an attribute response
 # @param server Lasso::Server object
@@ -2726,6 +2743,10 @@ Validate an attribute request
 =head2 processAttributeRequest
 
 Process an attribute request
+
+=head2 buildAttributeResponse
+
+Build attribute response
 
 =head2 processAttributeResponse
 

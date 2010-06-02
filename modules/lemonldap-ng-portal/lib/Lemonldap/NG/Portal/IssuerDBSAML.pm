@@ -495,7 +495,145 @@ sub issuerForUnAuthUser {
             $self->returnSOAPMessage();
         }
 
-    # TODO
+        # Get requested attributes
+        my @requested_attributes;
+        eval { @requested_attributes = $query->request()->Attribute(); };
+        if ($@) {
+            $self->checkLassoError($@);
+            $self->returnSOAPMessage();
+        }
+
+        # Returned attributes
+        my @returned_attributes;
+
+        # Browse SP authorized attributes
+        foreach (
+            keys %{ $self->{samlSPMetaDataExportedAttributes}->{$spConfKey} } )
+        {
+            my $sp_attr = $_;
+
+            # Extract fields from exportedAttr value
+            my ( $mandatory, $name, $format, $friendly_name ) =
+              split( /;/,
+                $self->{samlSPMetaDataExportedAttributes}->{$spConfKey}
+                  ->{$sp_attr} );
+
+            foreach (@requested_attributes) {
+                my $req_attr       = $_;
+                my $rname          = $req_attr->Name();
+                my $rformat        = $req_attr->NameFormat();
+                my $rfriendly_name = $req_attr->FriendlyName();
+
+                # Skip if name does not match
+                next unless ( $rname =~ /^$name$/ );
+
+                #TODO check format and friendly name
+
+                $self->lmLog(
+                    "SP $spConfKey is authorized to access attribute $rname",
+                    'debug' );
+
+                $self->lmLog(
+                    "Attribute $rname is linked to $sp_attr session key",
+                    'debug' );
+
+                # Get session value
+                if ( $sessionInfo->{$sp_attr} ) {
+
+                    my @values = split $self->{multiValuesSeparator},
+                      $sessionInfo->{$sp_attr};
+                    my @saml2values;
+
+                    foreach (@values) {
+
+                        # TODO check if values were set in requested attribute
+                        # In this case, only requested values can be returned
+
+                        # SAML2 attribute value
+                        my $saml2value;
+
+                        eval {
+                            $saml2value = Lasso::Saml2AttributeValue->new();
+                        };
+                        if ($@) {
+                            $self->checkLassoError($@);
+                            $self->returnSOAPMessage();
+                        }
+
+                        my @any;
+
+                        my $textNode;
+                        eval { $textNode = Lasso::MiscTextNode->new(); };
+                        if ($@) {
+                            $self->checkLassoError($@);
+                            $self->returnSOAPMessage();
+                        }
+
+                        $textNode->text_child(1);
+                        $textNode->content($_);
+
+                        push @any, $textNode;
+
+                        $saml2value->any(@any);
+
+                        push @saml2values, $saml2value;
+
+                        $self->lmLog( "Push $_ in SAML attribute $name",
+                            'debug' );
+
+                    }
+
+                    $req_attr->AttributeValue(@saml2values);
+
+                    # Push attribute in attribute list
+                    push @returned_attributes, $req_attr;
+
+                }
+                else {
+                    $self->lmLog( "No session value for $sp_attr", 'debug' );
+                }
+
+            }
+
+        }
+
+        # Create attribute statement
+        my $attribute_statement;
+
+        eval { $attribute_statement = Lasso::Saml2AttributeStatement->new(); };
+        if ($@) {
+            $self->checkLassoError($@);
+            $self->returnSOAPMessage();
+        }
+
+        # Register attributes in attribute statement
+        $attribute_statement->Attribute(@requested_attributes);
+
+        # Create assetion
+        my $assertion;
+
+        eval { $assertion = Lasso::Saml2Assertion->new(); };
+        if ($@) {
+            $self->checkLassoError($@);
+            $self->returnSOAPMessage();
+        }
+
+        # Add attribute statement in response assertion
+        my @attributes_statement = ($attribute_statement);
+        $assertion->AttributeStatement(@attributes_statement);
+
+        # Set response assertion
+        $query->response->Assertion( ($assertion) );
+
+        # Build response
+        $att_response = $self->buildAttributeResponse($query);
+
+        unless ($att_response) {
+            $self->lmLog( "Unable to build attribute response", 'error' );
+            $self->returnSOAPMessage();
+        }
+
+        $self->{SOAPMessage} = $att_response;
 
         # Return SOAP message
         $self->returnSOAPMessage();
