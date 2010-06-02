@@ -1770,6 +1770,44 @@ sub createAttributeRequest {
     return $query;
 }
 
+## @method boolean validateAttributeRequest(Lasso::AssertionQuery query)
+# Validate an attribute request
+# @param query Lasso::AssertionQuery object
+# @return result
+sub validateAttributeRequest {
+    my ( $self, $query ) = splice @_;
+
+    eval { Lasso::AssertionQuery::validate_request($query); };
+
+    return $self->checkLassoError($@);
+}
+
+## @method Lasso::AssertionQuery processAttributeRequest(Lasso::Server server, string request)
+# Process an attribute request
+# @param server Lasso::Server object
+# @param request Request content
+# @return assertion query
+sub processAttributeRequest {
+    my ( $self, $server, $request ) = splice @_;
+    my $query;
+
+    # Create assertion query
+    return unless ( $query = $self->createAssertionQuery($server) );
+
+    $self->lmLog( "Assertion query created", 'debug' );
+
+    # Process response
+    eval { Lasso::AssertionQuery::process_request_msg( $query, $request ); };
+    if ($@) {
+        $self->checkLassoError($@);
+        return;
+    }
+
+    $self->lmLog( "Attribute request is valid", 'debug' );
+
+    return $query;
+}
+
 ## @method Lasso::AssertionQuery processAttributeResponse(Lasso::Server server, string response)
 # Process an attribute response
 # @param server Lasso::Server object
@@ -2654,6 +2692,14 @@ Create a new assertion query
 =head2 createAttributeRequest
 
 Create an attribute request
+
+=head2 validateAttributeRequest
+
+Validate an attribute request
+
+=head2 processAttributeRequest
+
+Process an attribute request
 
 =head2 processAttributeResponse
 

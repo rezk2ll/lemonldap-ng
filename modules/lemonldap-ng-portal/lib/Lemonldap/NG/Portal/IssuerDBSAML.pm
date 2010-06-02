@@ -410,15 +410,18 @@ sub issuerForUnAuthUser {
         my $att_request = $self->param('POSTDATA');
         my $att_response;
 
-        # Create query object
-        my $query = $self->createAssertionQuery($server);
-
+        # Process request
+        my $query = $self->processAttributeRequest( $server, $att_request );
         unless ($query) {
-            $self->lmLog( "Unable to create Assertion Query", 'error' );
+            $self->lmLog( "Unable to process attribute request", 'error' );
             $self->returnSOAPMessage();
         }
 
-        $self->lmLog( "Assertion Query created", 'debug' );
+        # Validate request
+        unless ( $self->validateAttributeRequest($query) ) {
+            $self->lmLog( "Attribute request not valid", 'error' );
+            $self->returnSOAPMessage();
+        }
 
     # TODO
 
