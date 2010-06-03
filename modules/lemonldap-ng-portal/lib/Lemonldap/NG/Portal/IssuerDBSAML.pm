@@ -1306,8 +1306,12 @@ sub issuerForAuthUser {
 
             # Rebuild Lasso::Logout object. All data have already been checked.
             $logout = Lasso::Logout::new_from_dump( $server, $logout_dump );
-            $self->setSessionFromDump( $logout, $session );
-            $self->setIdentityFromDump( $logout, $identity );
+            if ($session) {
+                $self->setSessionFromDump( $logout, $session );
+            }
+            if ($identity) {
+                $self->setIdentityFromDump( $logout, $identity );
+            }
 
             # Validate request if no previous error
             unless ( $self->validateLogoutRequest($logout) ) {
