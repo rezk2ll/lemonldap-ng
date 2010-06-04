@@ -1162,7 +1162,7 @@ sub testStruct {
         samlServicePrivateKeySig                        => $testNotDefined,
         samlServicePublicKeySig                         => $testNotDefined,
         samlServicePrivateKeyEnc                        => $testNotDefined,
-        samlServicePublicKeyEnc                         => $testNotdefined,
+        samlServicePublicKeyEnc                         => $testNotDefined,
 
         # SSL
         SSLVar       => $testNotDefined,
