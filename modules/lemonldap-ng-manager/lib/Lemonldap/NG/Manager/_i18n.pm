@@ -301,6 +301,11 @@ sub en {
         samlAttributeAuthorityDescriptor => 'Attribute Authority',
         samlAttributeAuthorityDescriptorAttributeService => 'Attribute Service',
         samlAttributeAuthorityDescriptorAttributeServiceSOAP => 'SOAP',
+        samlServiceSecurity      => 'Security parameters',
+        samlServicePrivateKeySig => 'Private key for signature',
+        samlServicePublicKeySig  => 'Public key for signature',
+        samlServicePrivateKeyEnc => 'Private key for encryption',
+        samlServicePublicKeyEnc  => 'Public key for encryption',
     };
 }
 
@@ -572,6 +577,11 @@ sub fr {
         samlAttributeAuthorityDescriptorAttributeService =>
           'Service d\'attributs',
         samlAttributeAuthorityDescriptorAttributeServiceSOAP => 'SOAP',
+        samlServiceSecurity      => 'Paramètres de sécurité',
+        samlServicePrivateKeySig => 'Clé privée de signature',
+        samlServicePublicKeySig  => 'Clé publique de signature',
+        samlServicePrivateKeyEnc => 'Clé privée de chiffrement',
+        samlServicePublicKeyEnc  => 'Clé publique de chiffrement',
     };
 }
 

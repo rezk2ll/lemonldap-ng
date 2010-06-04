@@ -613,6 +613,7 @@ sub struct {
             _nodes => [
                 qw(samlEntityID
                   samlServicePrivateKey
+                  n:samlServiceSecurity
                   n:samlNameIDFormatMap
                   n:samlOrganization
                   n:samlSPSSODescriptor
@@ -625,6 +626,25 @@ sub struct {
             samlEntityID => 'text:/samlEntityID',
             samlServicePrivateKey =>
               'filearea:/samlServicePrivateKey:samlServicePrivateKey:filearea',
+
+            # SECURITY NODE
+            samlServiceSecurity => {
+                _nodes => [
+                    qw(samlServicePrivateKeySig
+                       samlServicePublicKeySig
+                       samlServicePrivateKeyEnc
+                       samlServicePublicKeyEnc)
+                ],
+                _help => 'default',
+                samlServicePrivateKeySig =>
+'filearea:/samlServicePrivateKeySig:samlServicePrivateKeySig:filearea',
+                samlServicePublicKeySig  =>
+'filearea:/samlServicePublicKeySig:samlServicePublicKeySig:filearea',
+                samlServicePrivateKeyEnc =>
+'filearea:/samlServicePrivateKeyEnc:samlServicePrivateKeyEnc:filearea',
+                samlServicePublicKeyEnc  =>
+'filearea:/samlServicePublicKeyEnc:samlServicePublicKeyEnc:filearea',
+            },
 
             # NAMEID FORMAT MAP
             samlNameIDFormatMap => {
@@ -1139,6 +1159,10 @@ sub testStruct {
         samlNameIDFormatMapWindows                      => $testNotDefined,
         samlNameIDFormatMapKerberos                     => $testNotDefined,
         samlAttributeAuthorityDescriptorAttributeServiceSOAP => $testNotDefined,
+        samlServicePrivateKeySig                        => $testNotDefined,
+        samlServicePublicKeySig                         => $testNotDefined,
+        samlServicePrivateKeyEnc                        => $testNotDefined,
+        samlServicePublicKeyEnc                         => $testNotdefined,
 
         # SSL
         SSLVar       => $testNotDefined,
