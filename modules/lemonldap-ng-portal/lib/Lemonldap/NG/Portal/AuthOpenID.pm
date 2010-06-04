@@ -10,6 +10,7 @@ use strict;
 use Lemonldap::NG::Portal::Simple;
 use Net::OpenID::Consumer;
 use LWP::UserAgent;
+use Cache::FileCache;
 
 our $VERSION = '0.1';
 
