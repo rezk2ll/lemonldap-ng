@@ -728,7 +728,7 @@ sub _deleteSession {
     # Return false if $h is not a hashref
     if ( ref $h ne "HASH" ) {
         $self->lmLog( "_deleteSession: \$h is not a session object", 'error' );
-            return 0;
+        return 0;
     }
 
     # Try to find a linked http session (securedCookie=>2)
@@ -1534,13 +1534,16 @@ sub autoRedirect {
         # Cross-domain mechanism
         if (    $self->{cda}
             and $self->{id}
-            and $self->{urldc} !~ m#^https?://[^/]*$self->{domain}/#oi )
+            and $self->{urldc} !~ m#^http(s?)://[^/]*$self->{domain}/#oi )
         {
+            my $ssl = $1;
             $self->lmLog( 'CDA request', 'debug' );
             $self->{urldc} .=
                 ( $self->{urldc} =~ /\?/ ? '&' : '?' )
               . $self->{cookieName} . "="
-              . $self->{id};
+              . ( ( $self->{securedCookie} != 2 or $ssl )
+                ? $self->{id}
+                : $self->{sessionInfo}->{_httpSession} );
         }
         $self->updateStatus;
         print $self->SUPER::redirect(
