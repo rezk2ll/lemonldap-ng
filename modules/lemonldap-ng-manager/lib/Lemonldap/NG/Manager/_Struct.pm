@@ -60,7 +60,7 @@ sub cstruct {
                       . ":samlIDPMetaDataXML:filearea",
                     samlIDPMetaDataOptions => {
                         _nodes => [
-                            qw(samlIDPMetaDataOptionsNameIDFormat samlIDPMetaDataOptionsForceAuthn samlIDPMetaDataOptionsIsPassive samlIDPMetaDataOptionsAllowProxiedAuthn samlIDPMetaDataOptionsSSOBinding samlIDPMetaDataOptionsSLOBinding samlIDPMetaDataOptionsResolutionRule samlIDPMetaDataOptionsAllowLoginFromIDP samlIDPMetaDataOptionsAdaptSessionUtime samlIDPMetaDataOptionsSignSSOMessage samlIDPMetaDataOptionsCheckSSOMessageSignature samlIDPMetaDataOptionsSignSLOMessage samlIDPMetaDataOptionsCheckSLOMessageSignature samlIDPMetaDataOptionsRequestedAuthnContext samlIDPMetaDataOptionsForceUTF8)
+                            qw(samlIDPMetaDataOptionsNameIDFormat samlIDPMetaDataOptionsForceAuthn samlIDPMetaDataOptionsIsPassive samlIDPMetaDataOptionsAllowProxiedAuthn samlIDPMetaDataOptionsSSOBinding samlIDPMetaDataOptionsSLOBinding samlIDPMetaDataOptionsResolutionRule samlIDPMetaDataOptionsAllowLoginFromIDP samlIDPMetaDataOptionsAdaptSessionUtime samlIDPMetaDataOptionsSignSSOMessage samlIDPMetaDataOptionsCheckSSOMessageSignature samlIDPMetaDataOptionsSignSLOMessage samlIDPMetaDataOptionsCheckSLOMessageSignature samlIDPMetaDataOptionsRequestedAuthnContext samlIDPMetaDataOptionsForceUTF8 samlIDPMetaDataOptionsEncryptionMode)
                         ],
                         samlIDPMetaDataOptionsNameIDFormat =>
 "text:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsNameIDFormat"
@@ -96,6 +96,8 @@ sub cstruct {
                           . ":default:authnContextParams",
                         samlIDPMetaDataOptionsForceUTF8 =>
 "bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsForceUTF8",
+                        samlIDPMetaDataOptionsEncryptionMode =>
+"text:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsEncryptionMode:default:encryptionModeParams",
                     },
                 }
             }
@@ -120,7 +122,7 @@ sub cstruct {
                       . ":samlSPMetaDataXML:filearea",
                     samlSPMetaDataOptions => {
                         _nodes => [
-                            qw(samlSPMetaDataOptionsNameIDFormat samlSPMetaDataOptionsOneTimeUse samlSPMetaDataOptionsSignSSOMessage samlSPMetaDataOptionsCheckSSOMessageSignature samlSPMetaDataOptionsSignSLOMessage samlSPMetaDataOptionsCheckSLOMessageSignature)
+                            qw(samlSPMetaDataOptionsNameIDFormat samlSPMetaDataOptionsOneTimeUse samlSPMetaDataOptionsSignSSOMessage samlSPMetaDataOptionsCheckSSOMessageSignature samlSPMetaDataOptionsSignSLOMessage samlSPMetaDataOptionsCheckSLOMessageSignature samlSPMetaDataOptionsEncryptionMode)
                         ],
                         samlSPMetaDataOptionsNameIDFormat =>
 "text:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsNameIDFormat"
@@ -135,6 +137,8 @@ sub cstruct {
 "bool:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsSignSLOMessage",
                         samlSPMetaDataOptionsCheckSLOMessageSignature =>
 "bool:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsCheckSLOMessageSignature",
+                        samlSPMetaDataOptionsEncryptionMode =>
+"text:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsEncryptionMode:default:encryptionModeParams",
                     },
                 }
             }
@@ -1304,12 +1308,14 @@ sub defaultConf {
         samlIDPMetaDataOptionsCheckSLOMessageSignature => '1',
         samlIDPMetaDataOptionsRequestedAuthnContext    => '',
         samlIDPMetaDataOptionsForceUTF8                => '0',
+        samlIDPMetaDataOptionsEncryptionMode           => 'none',
         samlSPMetaDataOptionsNameIDFormat              => '',
         samlSPMetaDataOptionsOneTimeUse                => '0',
         samlSPMetaDataOptionsSignSSOMessage            => '1',
         samlSPMetaDataOptionsCheckSSOMessageSignature  => '1',
         samlSPMetaDataOptionsSignSLOMessage            => '1',
         samlSPMetaDataOptionsCheckSLOMessageSignature  => '1',
+        samlSPMetaDataOptionsEncryptionMode            => 'none',
         samlSPSSODescriptorAuthnRequestsSigned         => '1',
         samlSPSSODescriptorWantAssertionsSigned        => '1',
         samlSPSSODescriptorKeyDescriptorSigning        => '',

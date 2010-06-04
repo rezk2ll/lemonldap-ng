@@ -445,6 +445,15 @@ function authnContextParams(id) {
 			],lmdata(id));
 	display('select',lmtext(id));
 }
+function encryptionModeParams(id) {
+	currentId=id;
+	formateSelect('select',[
+			'none=None',
+			'nameid=Name ID',
+			'assertion=Assertion',
+			],lmdata(id));
+	display('select',lmtext(id));
+}
 function timeoutActivityParams(id) {
 	currentId=id;
 	formateSelect('select',[

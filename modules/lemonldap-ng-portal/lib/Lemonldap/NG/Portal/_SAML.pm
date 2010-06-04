@@ -185,6 +185,28 @@ sub loadIDPs {
         $self->{_idpList}->{$entityID}->{confKey} = $_;
         $self->{_idpList}->{$entityID}->{name}    = $name;
 
+        # Set encryption mode
+        my $encryption_mode =
+          $self->{samlIDPMetaDataOptions}->{$_}
+          ->{samlIDPMetaDataOptionsEncryptionMode};
+        my $lasso_encryption_mode = $self->getEncryptionMode($encryption_mode);
+
+        unless (
+            $self->setProviderEncryptionMode(
+                $self->{_lassoServer}->get_provider($entityID),
+                $lasso_encryption_mode
+            )
+          )
+        {
+            $self->lmLog(
+                "Unable to set encryption mode $encryption_mode on IDP $_",
+                'error' );
+            return 0;
+        }
+
+        $self->lmLog( "Set encryption mode $encryption_mode on IDP $_",
+            'debug' );
+
         $self->lmLog( "IDP $_ added", 'debug' );
     }
 
@@ -245,6 +267,28 @@ sub loadSPs {
           || ucfirst($_);
         $self->{_spList}->{$entityID}->{confKey} = $_;
         $self->{_spList}->{$entityID}->{name}    = $name;
+
+        # Set encryption mode
+        my $encryption_mode =
+          $self->{samlSPMetaDataOptions}->{$_}
+          ->{samlSPMetaDataOptionsEncryptionMode};
+        my $lasso_encryption_mode = $self->getEncryptionMode($encryption_mode);
+
+        unless (
+            $self->setProviderEncryptionMode(
+                $self->{_lassoServer}->get_provider($entityID),
+                $lasso_encryption_mode
+            )
+          )
+        {
+            $self->lmLog(
+                "Unable to set encryption mode $encryption_mode on SP $_",
+                'error' );
+            return 0;
+        }
+
+        $self->lmLog( "Set encryption mode $encryption_mode on SP $_",
+            'debug' );
 
         $self->lmLog( "SP $_ added", 'debug' );
     }
@@ -1912,7 +1956,8 @@ sub getHttpMethodString {
     my ( $self, $method ) = splice @_;
 
     return "POST"     if ( $method == Lasso::Constants::HTTP_METHOD_POST );
-    return "REDIRECT" if ( $method == Lasso::Constants::HTTP_METHOD_REDIRECT );
+    return "REDIRECT"
+      if ( $method == Lasso::Constants::HTTP_METHOD_REDIRECT );
     return "SOAP"     if ( $method == Lasso::Constants::HTTP_METHOD_SOAP );
     return "ARTIFACT GET"
       if ( $method == Lasso::Constants::HTTP_METHOD_ARTIFACT_GET );
@@ -2575,6 +2620,36 @@ sub createAttributeValue {
     return $saml2value;
 }
 
+## @method int getEncryptionMode(string encryption_mode)
+# Return Lasso encryption mode
+# @param encryption_mode Encryption mode string
+# @return Lasso encryption mode
+sub getEncryptionMode {
+    my ( $self, $encryption_mode ) = splice @_;
+
+    return Lasso::Constants::ENCRYPTION_MODE_NAMEID
+      if ( $encryption_mode =~ /^nameid$/i );
+    return Lasso::Constants::ENCRYPTION_MODE_ASSERTION
+      if ( $encryption_mode =~ /^assertion$/i );
+    return Lasso::Constants::ENCRYPTION_MODE_NONE;
+}
+
+## @method boolean setProviderEncryptionMode(Lasso::Provider provider, int encryption_mode)
+# Set encryption mode on a provider
+# @param provider Lasso::Provider object
+# @param encryption_mode Lasso encryption mode
+# @return result
+sub setProviderEncryptionMode {
+    my ( $self, $provider, $encryption_mode ) = splice @_;
+
+    eval {
+        Lasso::Provider::set_encryption_mode( $provider, $encryption_mode );
+    };
+
+    return $self->checkLassoError($@);
+
+}
+
 1;
 
 __END__
@@ -2907,6 +2982,14 @@ Create a new SAML attribute
 =head2 createAttributeValue
 
 Create a new SAML attribute value
+
+=head2 getEncryptionMode
+
+Return Lasso encryption mode
+
+=head2 setProviderEncryptionMode
+
+Set encryption mode on a provider
 
 =head1 SEE ALSO
 

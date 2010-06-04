@@ -247,6 +247,7 @@ sub en {
         samlIDPMetaDataOptionsRequestedAuthnContext =>
           'Requested authentication context',
         samlIDPMetaDataOptionsForceUTF8     => 'Force UTF-8',
+        samlIDPMetaDataOptionsEncryptionMode => 'Encryption mode',
         samlSPMetaDataNode               => 'SAML service providers',
         samlSPMetaDataXML                => 'Metadata',
         samlSPMetaDataExportedAttributes => 'Exported attributes',
@@ -259,6 +260,7 @@ sub en {
         samlSPMetaDataOptionsSignSLOMessage => 'Sign SLO message',
         samlSPMetaDataOptionsCheckSLOMessageSignature =>
           'Check SLO message signature',
+        samlSPMetaDataOptionsEncryptionMode => 'Encryption mode',
         samlServiceMetaData              => 'SAML 2 Service',
         samlEntityID                     => 'Entity Identifier',
         samlOrganization                 => 'Organization',
@@ -516,6 +518,7 @@ sub fr {
         samlIDPMetaDataOptionsRequestedAuthnContext =>
           'Contexte d\'authentification demandé',
         samlIDPMetaDataOptionsForceUTF8     => 'Forcer l\'UTF-8',
+        samlIDPMetaDataOptionsEncryptionMode => 'Mode de chiffrement',
         samlSPMetaDataNode               => 'Fournisseurs de service SAML',
         samlSPMetaDataXML                => 'Metadonnées',
         samlSPMetaDataExportedAttributes => 'Attributs exportés',
@@ -528,6 +531,7 @@ sub fr {
         samlSPMetaDataOptionsSignSLOMessage => 'Signature des messages SLO',
         samlSPMetaDataOptionsCheckSLOMessageSignature =>
           'Vérification de la signature des messages SLO',
+        samlSPMetaDataOptionsEncryptionMode => 'Mode de chiffrement',
         samlServiceMetaData              => 'Service SAML 2',
         samlEntityID                     => 'Identifiant d\'entité',
         samlOrganization                 => 'Organisation',
