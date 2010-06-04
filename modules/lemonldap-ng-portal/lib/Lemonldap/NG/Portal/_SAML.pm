@@ -1727,7 +1727,8 @@ sub createAttributeRequest {
         return;
     }
 
-    $self->lmLog("Set NameID ".$nameid->dump." in assertion query", 'debug');
+    $self->lmLog( "Set NameID " . $nameid->dump . " in assertion query",
+        'debug' );
 
     # Store attributes in request
     my @requested_attributes;
@@ -2504,6 +2505,76 @@ sub getSamlSession {
     return \%h;
 }
 
+## @method Lasso::Saml2Attribute createAttribute(string name, string format, string friendly_name)
+# Create a new SAML attribute
+# @param name Attribute name
+# @param format optional Attribute format
+# @param friendly_name optional Attribute friendly name
+# @return SAML attribute
+sub createAttribute {
+    my ( $self, $name, $format, $friendly_name ) = splice @_;
+    my $attribute;
+
+    # Name is required
+    return unless defined $name;
+
+    # SAML2 attribute
+    eval { $attribute = Lasso::Saml2Attribute->new(); };
+    if ($@) {
+        $self->checkLassoError($@);
+        return;
+    }
+
+    # Default values
+    $friendly_name ||= $name;
+    $format ||= Lasso::Constants::SAML2_ATTRIBUTE_NAME_FORMAT_BASIC;
+
+    # Set attribute properties
+    $attribute->Name($name);
+    $attribute->NameFormat($format);
+    $attribute->FriendlyName($friendly_name);
+
+    return $attribute;
+}
+
+## @method Lasso::Saml2AttributeValue createAttributeValue(string value)
+# Create a new SAML attribute value
+# @param value Value to store
+# @return SAML attribute value
+sub createAttributeValue {
+    my ( $self, $value ) = splice @_;
+    my $saml2value;
+
+    # Value is required
+    return unless defined $value;
+
+    # SAML2 attribute value
+    eval { $saml2value = Lasso::Saml2AttributeValue->new(); };
+    if ($@) {
+        $self->checkLassoError($@);
+        return;
+    }
+
+    my @any;
+
+    # Text node
+    my $textNode;
+    eval { $textNode = Lasso::MiscTextNode->new(); };
+    if ($@) {
+        $self->checkLassoError($@);
+        return;
+    }
+
+    $textNode->text_child(1);
+    $textNode->content($value);
+
+    push @any, $textNode;
+
+    $saml2value->any(@any);
+
+    return $saml2value;
+}
+
 1;
 
 __END__
@@ -2828,6 +2899,14 @@ If SAML Destination attribute is present, check it
 =head2 getSamlSession
 
 Try to recover the SAML session corresponding to id and return session datas
+
+=head2 createAttribute
+
+Create a new SAML attribute
+
+=head2 createAttributeValue
+
+Create a new SAML attribute value
 
 =head1 SEE ALSO
 

@@ -541,6 +541,15 @@ sub issuerForUnAuthUser {
                     "Attribute $rname is linked to $sp_attr session key",
                     'debug' );
 
+                # Check if values are given
+                my $rvalue =
+                  $self->getAttributeValue( $rname, $rformat, $rfriendly_name,
+                    [$req_attr] );
+
+                $self->lmLog( "Some values are explicitely requested: $rvalue",
+                    'debug' )
+                  if defined $rvalue;
+
                 # Get session value
                 if ( $sessionInfo->{$sp_attr} ) {
 
@@ -548,49 +557,60 @@ sub issuerForUnAuthUser {
                       $sessionInfo->{$sp_attr};
                     my @saml2values;
 
+                    # SAML2 attribute
+                    my $ret_attr =
+                      $self->createAttribute( $rname, $rformat,
+                        $rfriendly_name );
+
+                    unless ($ret_attr) {
+                        $self->lmLog( "Unable to create a new SAML attribute",
+                            'error' );
+                            $self->returnSOAPMessage();
+                        }
+
                     foreach (@values) {
 
-                        # TODO check if values were set in requested attribute
+                        my $local_value = $_;
+
+                        # Check if values were set in requested attribute
                         # In this case, only requested values can be returned
+                        if (
+                            $rvalue
+                            and !map( /^$local_value$/,
+                                split( $self->{multiValuesSeparator}, $rvalue )
+                            )
+                          )
+                        {
+                            $self->lmLog(
+"$local_value value is not in requested values, it will not be sent",
+                                'warn'
+                            );
+                            next;
+                        }
 
                         # SAML2 attribute value
-                        my $saml2value;
+                        my $saml2value =
+                          $self->createAttributeValue($local_value);
 
-                        eval {
-                            $saml2value = Lasso::Saml2AttributeValue->new();
-                        };
-                        if ($@) {
-                            $self->checkLassoError($@);
+                        unless ($saml2value) {
+                            $self->lmLog(
+                                "Unable to create a new SAML attribute value",
+                                'error' );
                             $self->returnSOAPMessage();
                         }
-
-                        my @any;
-
-                        my $textNode;
-                        eval { $textNode = Lasso::MiscTextNode->new(); };
-                        if ($@) {
-                            $self->checkLassoError($@);
-                            $self->returnSOAPMessage();
-                        }
-
-                        $textNode->text_child(1);
-                        $textNode->content($_);
-
-                        push @any, $textNode;
-
-                        $saml2value->any(@any);
 
                         push @saml2values, $saml2value;
 
-                        $self->lmLog( "Push $_ in SAML attribute $name",
+                        $self->lmLog(
+                            "Push $local_value in SAML attribute $name",
                             'debug' );
 
                     }
 
-                    $req_attr->AttributeValue(@saml2values);
+                    $ret_attr->AttributeValue(@saml2values);
 
                     # Push attribute in attribute list
-                    push @returned_attributes, $req_attr;
+                    push @returned_attributes, $ret_attr;
 
                 }
                 else {
@@ -611,7 +631,7 @@ sub issuerForUnAuthUser {
         }
 
         # Register attributes in attribute statement
-        $attribute_statement->Attribute(@requested_attributes);
+        $attribute_statement->Attribute(@returned_attributes);
 
         # Create assetion
         my $assertion;
@@ -922,22 +942,14 @@ sub issuerForAuthUser {
                     'debug' );
 
                 # SAML2 attribute
-                my $attribute;
+                my $attribute =
+                  $self->createAttribute( $name, $format, $friendly_name );
 
-                eval { $attribute = Lasso::Saml2Attribute->new(); };
-                if ($@) {
-                    $self->checkLassoError($@);
+                unless ($attribute) {
+                    $self->lmLog( "Unable to create a new SAML attribute",
+                        'error' );
                     return PE_ERROR;
                 }
-
-                # Default values
-                $friendly_name ||= $name;
-                $format ||= Lasso::Constants::SAML2_ATTRIBUTE_NAME_FORMAT_BASIC;
-
-                # Set attribute properties
-                $attribute->Name($name);
-                $attribute->NameFormat($format);
-                $attribute->FriendlyName($friendly_name);
 
                 # Set attribute value(s)
                 my @values = split $self->{multiValuesSeparator}, $value;
@@ -946,29 +958,15 @@ sub issuerForAuthUser {
                 foreach (@values) {
 
                     # SAML2 attribute value
-                    my $saml2value;
+                    my $saml2value = $self->createAttributeValue($_);
 
-                    eval { $saml2value = Lasso::Saml2AttributeValue->new(); };
-                    if ($@) {
+                    unless ($saml2value) {
+                        $self->lmLog(
+                            "Unable to create a new SAML attribute value",
+                            'error' );
                         $self->checkLassoError($@);
                         return PE_ERROR;
                     }
-
-                    my @any;
-
-                    my $textNode;
-                    eval { $textNode = Lasso::MiscTextNode->new(); };
-                    if ($@) {
-                        $self->checkLassoError($@);
-                        return PE_ERROR;
-                    }
-
-                    $textNode->text_child(1);
-                    $textNode->content($_);
-
-                    push @any, $textNode;
-
-                    $saml2value->any(@any);
 
                     push @saml2values, $saml2value;
 
