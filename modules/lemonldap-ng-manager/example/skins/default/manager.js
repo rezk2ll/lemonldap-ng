@@ -530,7 +530,12 @@ function samlAttribute(id) {
 	}
         $('#samlAttributeKey').attr('value',lmtext(id));
 	$('#samlAttributeName').attr('value',t[1]);
-	$('#samlAttributeFormat').attr('value',t[2]);
+	formateSelect('samlAttributeFormat',[
+			'=',
+			'urn:oasis:names:tc:SAML:2.0:attrname-format:unspecified=Unspecified',
+			'urn:oasis:names:tc:SAML:2.0:attrname-format:uri=URI',
+			'urn:oasis:names:tc:SAML:2.0:attrname-format:basic=Basic'
+			],t[2]);
 	$('#samlAttributeFriendlyName').attr('value',t[3]);
         display('samlAttribute',lmtext(id));
         $('#newsamlattributeb,#delsamlattributeb').show();

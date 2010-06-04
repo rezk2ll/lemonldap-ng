@@ -322,7 +322,7 @@
        <td><lang en="Friendly name" fr="Nom alternatif"/></td>
        <td><input type="text" id="samlAttributeFriendlyName" /></td>
        <td><lang en="Format" fr="Format"/></td>
-       <td><input type="text" id="samlAttributeFormat" /></td>
+       <td><select id="samlAttributeFormat"></select></td>
       </tr>
      </table>
      <br />
