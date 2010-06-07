@@ -686,6 +686,9 @@ sub issuerForAuthUser {
     # Session ID
     my $session_id = $self->{sessionInfo}->{_session_id} || $self->{id};
 
+    # Session creation timestamp
+    my $time = $self->{sessionInfo}->{_utime} || time();
+
     # Get configuration parameter
     my $saml_sso_soap_url =
       $self->getMetaDataURL( "samlIDPSSODescriptorSingleSignOnServiceSOAP", 1 );
@@ -823,6 +826,112 @@ sub issuerForAuthUser {
             $self->lmLog( "SSO: authentication request is valid", 'debug' );
 
             # TODO Check AuthnRequest conditions
+
+            # Get ForceAuthn flag
+            my $force_authn;
+
+            eval { $force_authn = $login->request()->ForceAuthn(); };
+            if ($@) {
+                $self->lmLog( "Unable to get ForceAuthn flag, set it to false",
+                    'warn' );
+                $force_authn = 0;
+            }
+
+            $self->lmLog( "Found ForceAuthn flag with value $force_authn",
+                'debug' );
+
+            # Get ForceAuthn sessions for this session_id
+            my $forceAuthn_sessions =
+              $self->{samlStorage}->searchOn( $self->{samlStorageOptions},
+                "_idForceAuthn", $session_id );
+
+            my $forceAuthn_session;
+
+            if ( my @forceAuthn_sessions_keys = keys %$forceAuthn_sessions ) {
+
+                # Warning if more than one session found
+                if ( $#forceAuthn_sessions_keys > 0 ) {
+                    $self->lmLog(
+"More than one ForceAuthn session found for session $session_id",
+                        'warn'
+                    );
+                }
+
+                # Take the first session
+                $forceAuthn_session = shift @forceAuthn_sessions_keys;
+
+                # Get session
+                $self->lmLog(
+"Retrieve ForceAuthn session $forceAuthn_session for session $session_id",
+                    'debug'
+                );
+
+                my $forceAuthnSessionInfo =
+                  $self->getSamlSession($forceAuthn_session);
+
+                # Check forceAuthn flag for current SP
+                if ( $forceAuthnSessionInfo->{$spConfKey} ) {
+
+                    $self->lmLog(
+"User was already forced to reauthenticate for SP $spConfKey",
+                        'debug'
+                    );
+                    $force_authn = 1;
+                }
+            }
+            else {
+                $self->lmLog(
+                    "No ForceAuthn session found for session $session_id",
+                    'debug' );
+            }
+
+            # Force authentication if flag is on, or previous flag still active
+            if ($force_authn) {
+
+                # Store flag for further requests
+                my $forceAuthnSessionInfo =
+                  $self->getSamlSession($forceAuthn_session);
+                $forceAuthnSessionInfo->{$spConfKey} = 1;
+
+                unless ($forceAuthn_session) {
+                    $forceAuthnSessionInfo->{'_idForceAuthn'} = $session_id;
+                    $forceAuthnSessionInfo->{'_utime'}        = $time;
+                    $forceAuthn_session = $forceAuthnSessionInfo->{_session_id};
+                    $self->lmLog(
+                        "Create ForceAuthn session $forceAuthn_session",
+                        'debug' );
+                }
+
+                untie %$forceAuthnSessionInfo;
+
+                $self->lmLog(
+"Set ForceAuthn flag for SP $spConfKey in ForceAuthn session $forceAuthn_session",
+                    'debug'
+                );
+
+                # Replay authentication process
+                $self->{updateSession} = 1;
+                $self->{error}         = $self->_subProcess(
+                    qw(issuerDBInit issuerForUnAuthUser authInit extractFormInfo
+                      userDBInit getUser setAuthSessionInfo setSessionInfo
+                      setMacros setLocalGroups setGroups authenticate
+                      store authFinish)
+                );
+
+                # Return error if any
+                return $self->{error} if $self->{error} > 0;
+
+                # Else remove flag
+                my $forceAuthnSessionInfo =
+                  $self->getSamlSession($forceAuthn_session);
+                $forceAuthnSessionInfo->{$spConfKey} = 0;
+                untie %$forceAuthnSessionInfo;
+
+                $self->lmLog(
+"Unset ForceAuthn flag for SP $spConfKey in ForceAuthn session $forceAuthn_session",
+                    'debug'
+                );
+            }
 
             # Check Destination
             return PE_ERROR
@@ -1024,7 +1133,6 @@ sub issuerForAuthUser {
                 'debug' );
 
             # Set SessionNotOnOrAfter
-            my $time                = $self->{sessionInfo}->{_utime} || time();
             my $timeout             = $time + $self->{timeout};
             my $sessionNotOnOrAfter = $self->timestamp2samldate($timeout);
             $authn_statements[0]->SessionNotOnOrAfter($sessionNotOnOrAfter);
