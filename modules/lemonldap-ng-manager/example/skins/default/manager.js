@@ -888,6 +888,13 @@ function downloadFile(id){
 function generateFile(id){
 	/* If samlServicePrivateKey* elements, then generate keys */
         if(lmtext(id)=='samlServicePrivateKeySig'||lmtext(id)=='samlServicePrivateKeyEnc'){
+		$('#button-loadimg')
+		.ajaxStart(function(){
+			$(this).show();
+		})
+		.ajaxComplete(function(){
+			$(this).hide();
+		});
 		$.ajax({
 			type:'POST',
 			url:scriptname,
@@ -900,12 +907,11 @@ function generateFile(id){
 				if(lmtext(id)=='samlServicePrivateKeySig'){_name='samlServicePublicKeySig';}
 				if(lmtext(id)=='samlServicePrivateKeyEnc'){_name='samlServicePublicKeyEnc';}
 				_id=$('#'+lmparent(id)+' span[name='+_name+']').attr('id').replace(/text_/,'');
-				alert(_id);
 				setlmdata(_id,data.content.public);
-				$('#filearea').attr('value',lmdata(id));
-				display('filearea',lmtext(id));
+				filearea(id);
 			}
 		});
+		$('#button-loadimg').unbind('ajaxStart');
 	}
 }
 /* Could not be called directly in _Struct.pm, required values */
