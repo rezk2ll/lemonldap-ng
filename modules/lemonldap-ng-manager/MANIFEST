@@ -102,6 +102,7 @@ lib/Lemonldap/NG/Manager/_i18n.pm
 lib/Lemonldap/NG/Manager/_Struct.pm
 lib/Lemonldap/NG/Manager/Downloader.pm
 lib/Lemonldap/NG/Manager/Help.pm
+lib/Lemonldap/NG/Manager/Request.pm
 lib/Lemonldap/NG/Manager/Sessions.pm
 lib/Lemonldap/NG/Manager/Uploader.pm
 Makefile.PL
