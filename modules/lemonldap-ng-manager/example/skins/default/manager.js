@@ -505,6 +505,7 @@ function textarea(id) {
 function filearea(id) {
 	currentId=id;
 	$('#urlinput').hide();
+	$('#downloadfile').hide();
 	$('#generatefile').hide();
 	$('#filearea').attr('value',lmdata(id));
 	/* Only samlIDPMetaDataXML and samlSPMetaDataXML element could be loaded from URL */
@@ -513,6 +514,8 @@ function filearea(id) {
 	/* Only samlServicePrivateKey* elements could generate keys */
 	if(lmtext(id)=='samlServicePrivateKeySig'){$('#generatefile').show();}
 	if(lmtext(id)=='samlServicePrivateKeyEnc'){$('#generatefile').show();}
+	/* If data, then allow to download */
+	if(lmdata(id).length){$('#downloadfile').show();}
 	display('filearea',lmtext(id));
 }
 function samlAssertion(id) {

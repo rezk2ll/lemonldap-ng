@@ -193,7 +193,7 @@
        <lang en="Download this file" fr="T&eacute;l&eacute;charger ce fichier" />
       </button>
       <button id="generatefile" onclick="generateFile(currentId);return false;" class="ui-state-default ui-corner-all">
-       <lang en="Generate" fr="Générer" />
+       <lang en="Generate" fr="G&eacute;n&eacute;rer" />
       </button>
      </p>
      <table class="filearea">
