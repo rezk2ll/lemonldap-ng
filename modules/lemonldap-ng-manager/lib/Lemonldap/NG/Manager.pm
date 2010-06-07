@@ -16,6 +16,7 @@ our @ISA     = qw(
   Lemonldap::NG::Handler::CGI
   Lemonldap::NG::Manager::Downloader
   Lemonldap::NG::Manager::Uploader
+  Lemonldap::NG::Manager::Request
   Lemonldap::NG::Manager::_Struct
   Lemonldap::NG::Manager::_i18n
 );
@@ -82,6 +83,14 @@ sub new {
 
         require Lemonldap::NG::Manager::Uploader;    #inherits
         $self->urlUpload('url');
+        $self->quit();
+    }
+
+    # Ask requests
+    elsif ( my $rreq = $self->rparam('request') ) {
+
+        require Lemonldap::NG::Manager::Request;     #inherits
+        $self->request($rreq);
         $self->quit();
     }
 

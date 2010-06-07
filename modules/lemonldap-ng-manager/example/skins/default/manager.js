@@ -505,10 +505,14 @@ function textarea(id) {
 function filearea(id) {
 	currentId=id;
 	$('#urlinput').hide();
+	$('#generatefile').hide();
 	$('#filearea').attr('value',lmdata(id));
 	/* Only samlIDPMetaDataXML and samlSPMetaDataXML element could be loaded from URL */
 	if(lmtext(id)=='samlIDPMetaDataXML'){$('#urlinput').show();}
 	if(lmtext(id)=='samlSPMetaDataXML') {$('#urlinput').show();}
+	/* Only samlServicePrivateKey* elements could generate keys */
+	if(lmtext(id)=='samlServicePrivateKeySig'){$('#generatefile').show();}
+	if(lmtext(id)=='samlServicePrivateKeyEnc'){$('#generatefile').show();}
 	display('filearea',lmtext(id));
 }
 function samlAssertion(id) {
@@ -877,6 +881,30 @@ function downloadFile(id){
 	jQuery('<form action="'+ scriptname +'" method="post" enctype="multipart/form-data">'+inputs+'</form>')
 	.appendTo('body').submit().remove();
 }
+/* Function to generate a file */
+function generateFile(id){
+	/* If samlServicePrivateKey* elements, then generate keys */
+        if(lmtext(id)=='samlServicePrivateKeySig'||lmtext(id)=='samlServicePrivateKeyEnc'){
+		$.ajax({
+			type:'POST',
+			url:scriptname,
+			data:{request: 'generateKeys'},
+			dataType:'json',
+			success:function(data){
+				var _name;
+				var _id;
+				setlmdata(id,data.content.private);
+				if(lmtext(id)=='samlServicePrivateKeySig'){_name='samlServicePublicKeySig';}
+				if(lmtext(id)=='samlServicePrivateKeyEnc'){_name='samlServicePublicKeyEnc';}
+				_id=$('#'+lmparent(id)+' span[name='+_name+']').attr('id').replace(/text_/,'');
+				alert(_id);
+				setlmdata(_id,data.content.public);
+				$('#filearea').attr('value',lmdata(id));
+				display('filearea',lmtext(id));
+			}
+		});
+	}
+}
 /* Could not be called directly in _Struct.pm, required values */
 function formateSelect(id,values,selectedValue) {
 	var options='';
@@ -889,4 +917,3 @@ function formateSelect(id,values,selectedValue) {
 	}
 	$('#'+id).empty().append(options);
 }
-
