@@ -565,8 +565,8 @@ sub issuerForUnAuthUser {
                     unless ($ret_attr) {
                         $self->lmLog( "Unable to create a new SAML attribute",
                             'error' );
-                            $self->returnSOAPMessage();
-                        }
+                        $self->returnSOAPMessage();
+                    }
 
                     foreach (@values) {
 
@@ -846,6 +846,7 @@ sub issuerForAuthUser {
                 "_idForceAuthn", $session_id );
 
             my $forceAuthn_session;
+            my $forceAuthnSessionInfo;
 
             if ( my @forceAuthn_sessions_keys = keys %$forceAuthn_sessions ) {
 
@@ -866,7 +867,7 @@ sub issuerForAuthUser {
                     'debug'
                 );
 
-                my $forceAuthnSessionInfo =
+                $forceAuthnSessionInfo =
                   $self->getSamlSession($forceAuthn_session);
 
                 # Check forceAuthn flag for current SP
@@ -878,6 +879,8 @@ sub issuerForAuthUser {
                     );
                     $force_authn = 1;
                 }
+
+                untie %$forceAuthnSessionInfo;
             }
             else {
                 $self->lmLog(
@@ -889,11 +892,12 @@ sub issuerForAuthUser {
             if ($force_authn) {
 
                 # Store flag for further requests
-                my $forceAuthnSessionInfo =
+                $forceAuthnSessionInfo =
                   $self->getSamlSession($forceAuthn_session);
                 $forceAuthnSessionInfo->{$spConfKey} = 1;
 
                 unless ($forceAuthn_session) {
+                    $forceAuthnSessionInfo->{'_type'}         = "forceAuthn";
                     $forceAuthnSessionInfo->{'_idForceAuthn'} = $session_id;
                     $forceAuthnSessionInfo->{'_utime'}        = $time;
                     $forceAuthn_session = $forceAuthnSessionInfo->{_session_id};
@@ -922,7 +926,7 @@ sub issuerForAuthUser {
                 return $self->{error} if $self->{error} > 0;
 
                 # Else remove flag
-                my $forceAuthnSessionInfo =
+                $forceAuthnSessionInfo =
                   $self->getSamlSession($forceAuthn_session);
                 $forceAuthnSessionInfo->{$spConfKey} = 0;
                 untie %$forceAuthnSessionInfo;
@@ -1125,7 +1129,7 @@ sub issuerForAuthUser {
 
             # Set sessionIndex
             # sessionIndex is the encrypted session_id
-            my $sessionIndex     = $self->{cipher}->encrypt($session_id);
+            my $sessionIndex = $self->{cipher}->encrypt($session_id);
             $authn_statements[0]->SessionIndex($sessionIndex);
 
             $self->lmLog(
@@ -1229,9 +1233,9 @@ sub issuerForAuthUser {
                 return PE_ERROR;
             }
 
-            $h{type}    = 'saml';                    # Session type
-            $h{_utime}  = $time;                     # Creation time
-            $h{_id}     = $session_id;               # SSO session id
+            $h{type}    = 'saml';           # Session type
+            $h{_utime}  = $time;            # Creation time
+            $h{_id}     = $session_id;      # SSO session id
             $h{_nameID} = $nameid->dump;    # SAML NameID
 
             my $saml_session_id = $h{_session_id};
@@ -1280,7 +1284,7 @@ sub issuerForAuthUser {
                     $self->{postFields} = { 'SAMLart' => $sso_body };
                 }
                 else {
-                $self->{postFields} = { 'SAMLResponse' => $sso_body };
+                    $self->{postFields} = { 'SAMLResponse' => $sso_body };
                 }
 
                 # RelayState
