@@ -9,12 +9,12 @@
       protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
     <KeyDescriptor use="signing">
       <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
-          <TMPL_VAR NAME="samlIDPSSODescriptorKeyDescriptorSigning">
+          <TMPL_VAR NAME="samlServicePublicKeySig">
       </ds:KeyInfo>
     </KeyDescriptor>
     <KeyDescriptor use="encryption">
       <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
-          <TMPL_VAR NAME="samlIDPSSODescriptorKeyDescriptorSigning">
+          <TMPL_VAR NAME="samlServicePublicKeyEnc">
       </ds:KeyInfo>
     </KeyDescriptor>
     <ArtifactResolutionService
@@ -66,12 +66,12 @@
       protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
     <KeyDescriptor use="signing">
       <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
-          <TMPL_VAR NAME="samlSPSSODescriptorKeyDescriptorSigning">
+          <TMPL_VAR NAME="samlServicePublicKeySig">
       </ds:KeyInfo>
     </KeyDescriptor>
     <KeyDescriptor use="encryption">
       <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
-          <TMPL_VAR NAME="samlSPSSODescriptorKeyDescriptorSigning">
+          <TMPL_VAR NAME="samlServicePublicKeyEnc">
       </ds:KeyInfo>
     </KeyDescriptor>
     <ArtifactResolutionService
@@ -121,7 +121,7 @@
     protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
     <KeyDescriptor use="signing">
       <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
-          <TMPL_VAR NAME="samlIDPSSODescriptorKeyDescriptorSigning">
+          <TMPL_VAR NAME="samlServicePublicKeySig">
       </ds:KeyInfo>
     </KeyDescriptor>
     <AttributeService

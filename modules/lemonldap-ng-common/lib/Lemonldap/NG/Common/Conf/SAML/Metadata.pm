@@ -161,18 +161,25 @@ sub serviceToXML {
 
     # Format public keys
     my @param_keys = qw(
-      samlSPSSODescriptorKeyDescriptorSigning
-      samlIDPSSODescriptorKeyDescriptorSigning
+      samlServicePublicKeySig
+      samlServicePublicKeyEnc
     );
 
     foreach (@param_keys) {
         my $str = '';
-        if ( defined $conf->{$_} && length $conf->{$_} gt 0 ) {
-
+        my $val = $conf->{$_};
+        # A default value for samlServicePublicKeyEnc parameter
+        if ( $_ =~ /samlServicePublicKeyEnc/ ) {
+            unless ( $val && length $val gt 0 ) {
+                $val = $conf->{samlServicePublicKeySig};
+            }
+        }
+        # Generate XML
+        if ( defined $val && length $val gt 0 ) {
             # Public Key ?
-            if ( $conf->{$_} =~ /^-----BEGIN PUBLIC KEY-----/
+            if ( $val =~ /^-----BEGIN PUBLIC KEY-----/
                 and my $rsa_pub =
-                Crypt::OpenSSL::RSA->new_public_key($conf->{$_}) )
+                Crypt::OpenSSL::RSA->new_public_key($val) )
             {
                 my @params = $rsa_pub->get_key_parameters();
                 my $mod    = encode_base64( $params[0]->to_bin() );
@@ -186,11 +193,10 @@ sub serviceToXML {
                   . '</RSAKeyValue>' . "\n"
                   . '</ds:KeyValue>';
             }
-
             # Certificate ?
-            if ( $conf->{$_} =~ /^-----BEGIN CERTIFICATE-----/
+            if ( $val =~ /^-----BEGIN CERTIFICATE-----/
                  and my $certificate =
-                 Crypt::OpenSSL::X509->new_from_string($conf->{$_}) )
+                 Crypt::OpenSSL::X509->new_from_string($val) )
             {
                 $certificate = $certificate->as_string();
                 $certificate =~ s/^-----BEGIN CERTIFICATE-----\n?//g;
