@@ -683,7 +683,6 @@ sub struct {
                 _nodes => [
                     qw(samlSPSSODescriptorAuthnRequestsSigned
                       samlSPSSODescriptorWantAssertionsSigned
-                      samlSPSSODescriptorKeyDescriptorSigning
                       n:samlSPSSODescriptorSingleLogoutService
                       n:samlSPSSODescriptorAssertionConsumerService
                       n:samlSPSSODescriptorArtifactResolutionService
@@ -695,8 +694,6 @@ sub struct {
                   'bool:/samlSPSSODescriptorAuthnRequestsSigned',
                 samlSPSSODescriptorWantAssertionsSigned =>
                   'bool:/samlSPSSODescriptorWantAssertionsSigned',
-                samlSPSSODescriptorKeyDescriptorSigning =>
-                  'filearea:/samlSPSSODescriptorKeyDescriptorSigning',
 
                 samlSPSSODescriptorSingleLogoutService => {
                     _nodes => [
@@ -742,7 +739,6 @@ sub struct {
             samlIDPSSODescriptor => {
                 _nodes => [
                     qw(samlIDPSSODescriptorWantAuthnRequestsSigned
-                      samlIDPSSODescriptorKeyDescriptorSigning
                       n:samlIDPSSODescriptorSingleSignOnService
                       n:samlIDPSSODescriptorSingleLogoutService
                       n:samlIDPSSODescriptorArtifactResolutionService)
@@ -751,8 +747,6 @@ sub struct {
 
                 samlIDPSSODescriptorWantAuthnRequestsSigned =>
                   'bool:/samlIDPSSODescriptorWantAuthnRequestsSigned',
-                samlIDPSSODescriptorKeyDescriptorSigning =>
-                  'filearea:/samlIDPSSODescriptorKeyDescriptorSigning',
 
                 samlIDPSSODescriptorSingleSignOnService => {
                     _nodes => [
@@ -1138,7 +1132,6 @@ sub testStruct {
         samlOrganizationURL                        => $testNotDefined,
         samlSPSSODescriptorAuthnRequestsSigned     => $boolean,
         samlSPSSODescriptorWantAssertionsSigned            => $boolean,
-        samlSPSSODescriptorKeyDescriptorSigning    => $testNotDefined,
         samlSPSSODescriptorSingleLogoutServiceHTTPRedirect => $testNotDefined,
         samlSPSSODescriptorSingleLogoutServiceHTTPPost     => $testNotDefined,
         samlSPSSODescriptorSingleLogoutServiceSOAP => $testNotDefined,
@@ -1149,7 +1142,6 @@ sub testStruct {
           $testNotDefined,
         samlSPSSODescriptorArtifactResolutionServiceArtifact => $testNotDefined,
         samlIDPSSODescriptorWantAuthnRequestsSigned          => $boolean,
-        samlIDPSSODescriptorKeyDescriptorSigning             => $testNotDefined,
         samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect  => $testNotDefined,
         samlIDPSSODescriptorSingleSignOnServiceHTTPPost      => $testNotDefined,
         samlIDPSSODescriptorSingleSignOnServiceSOAP          => $testNotDefined,
@@ -1318,7 +1310,6 @@ sub defaultConf {
         samlSPMetaDataOptionsEncryptionMode            => 'none',
         samlSPSSODescriptorAuthnRequestsSigned         => '1',
         samlSPSSODescriptorWantAssertionsSigned        => '1',
-        samlSPSSODescriptorKeyDescriptorSigning        => '',
         samlSPSSODescriptorSingleLogoutServiceHTTPRedirect =>
           'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;' 
           . $portal
@@ -1352,7 +1343,6 @@ sub defaultConf {
           . $portal
           . '/saml/artifact',
         samlIDPSSODescriptorWantAuthnRequestsSigned => '1',
-        samlIDPSSODescriptorKeyDescriptorSigning       => '',
         samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect =>
           'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;' 
           . $portal
@@ -1393,6 +1383,10 @@ sub defaultConf {
           'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;' 
           . $portal
           . '/saml/AA/SOAP;',
+        samlServicePrivateKeySig                        => '',
+        samlServicePublicKeySig                         => '',
+        samlServicePrivateKeyEnc                        => '',
+        samlServicePublicKeyEnc                         => '',
 
     };
 }

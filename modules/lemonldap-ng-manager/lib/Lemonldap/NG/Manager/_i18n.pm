@@ -271,7 +271,6 @@ sub en {
         samlSPSSODescriptorAuthnRequestsSigned =>
           'Signed Authentication Request',
         samlSPSSODescriptorWantAssertionsSigned => 'Want Assertions Signed',
-        samlSPSSODescriptorKeyDescriptorSigning     => 'Signing Key',
         samlSPSSODescriptorSingleLogoutService      => 'Single Logout',
         samlSPSSODescriptorSingleLogoutServiceHTTPRedirect => 'HTTP Redirect',
         samlSPSSODescriptorSingleLogoutServiceHTTPPost     => 'HTTP POST',
@@ -288,7 +287,6 @@ sub en {
         samlIDPSSODescriptor                           => 'Identity Provider',
         samlIDPSSODescriptorWantAuthnRequestsSigned =>
           'Want Authentication Request Signed',
-        samlIDPSSODescriptorKeyDescriptorSigning      => 'Signing Key',
         samlIDPSSODescriptorSingleSignOnService             => 'Single Sign On',
         samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect => 'HTTP Redirect',
         samlIDPSSODescriptorSingleSignOnServiceHTTPPost     => 'HTTP POST',
@@ -543,7 +541,6 @@ sub fr {
           'Requêtes d\'authentification signées',
         samlSPSSODescriptorWantAssertionsSigned =>
           'Exige des assertions signées',
-        samlSPSSODescriptorKeyDescriptorSigning => 'Clé de signature',
         samlSPSSODescriptorSingleLogoutService      => 'Single Logout',
         samlSPSSODescriptorSingleLogoutServiceHTTPRedirect =>
           'Redirection HTTP',
@@ -562,7 +559,6 @@ sub fr {
         samlIDPSSODescriptor => 'Fournisseur d\'identité',
         samlIDPSSODescriptorWantAuthnRequestsSigned =>
           'Exige des requêtes d\'authentification signées',
-        samlIDPSSODescriptorKeyDescriptorSigning => 'Clé de signature',
         samlIDPSSODescriptorSingleSignOnService  => 'Single Sign On',
         samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect =>
           'Redirection HTTP',
