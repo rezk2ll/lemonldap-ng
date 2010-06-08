@@ -13,7 +13,6 @@ Standards-Version: 3.8.3
 Homepage: http://lemonldap.ow2.org/
 
 Package: lemonldap-ng
-Section: perl
 Architecture: all
 Depends: ${misc:Depends}, liblemonldap-ng-handler-perl (= ${binary:Version}),
  liblemonldap-ng-manager-perl (= ${binary:Version}),

@@ -548,7 +548,7 @@ sub getApacheSession {
 # Update session stored.
 # If no id is given, try to get it from cookie.
 # If the session is available, update datas with $info.
-# @param infos hash reference of informations to update
+# @param infos hash reference of information to update
 # @param id Session ID
 # @return nothing
 sub updateSession {
@@ -1764,7 +1764,7 @@ Lemonldap::Portal::* libraries.
 
 =over
 
-=item * ldapServer: server(s) used to retrive session informations and to valid
+=item * ldapServer: server(s) used to retrive session information and to valid
 credentials (localhost by default). More than one server can be set here
 separated by commas. The servers will be tested in the specifies order.
 To use TLS, set "ldap+tls://server" and to use LDAPS, set "ldaps://server"
@@ -1791,7 +1791,7 @@ default, anonymous bind is used.
 only on your server.
 
 =item * globalStorage: required: L<Apache::Session> library to used to store
-session informations.
+session information.
 
 =item * globalStorageOptions: parameters to bind to L<Apache::Session> module
 
@@ -1901,7 +1901,7 @@ Use grantSessionRule parameter to allow session opening.
 
 =head3 store
 
-Stores the informations collected by setSessionInfo into the central cache.
+Stores information collected by setSessionInfo into the central cache.
 The portal connects the cache using the L<Apache::Session> module passed by
 the globalStorage parameters (see constructor).
 

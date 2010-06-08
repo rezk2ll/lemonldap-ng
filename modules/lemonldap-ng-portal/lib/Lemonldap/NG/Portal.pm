@@ -361,7 +361,7 @@ default).
 only on your server.
 
 =item * globalStorage : required: L<Apache::Session> library to used to store
-session informations.
+session information.
 
 =item * globalStorageOptions : parameters to bind to L<Apache::Session> module
 
