@@ -95,10 +95,19 @@ sub loadService {
     # Load Lasso
     return 0 unless $self->loadLasso();
 
-    # Check presence of private key in configuration
-    unless ( $self->{samlServicePrivateKey} ) {
-        $self->lmLog( "SAML private key not found in configuration", 'error' );
+    # Check presence of private and public key in configuration
+    my $publicKeySig  = $self->{samlServicePublicKeySig};
+    my $privateKeySig = $self->{samlServicePrivateKeySig};
+    my $privateKeyEnc = $self->{samlServicePrivateKeyEnc};
+    unless ( $privateKeySig and $publicKeySig ) {
+        $self->lmLog( "SAML private and public key not found in configuration",
+            'error' );
         return 0;
+    }
+    unless ( $privateKeyEnc ) {
+        $self->lmLog( "SAML private encryption key not found in configuration, "
+            . "use private signature key", 'debug' );
+        $privateKeyEnc = $privateKeySig;
     }
 
     # Get metadata from configuration
@@ -110,7 +119,7 @@ sub loadService {
         $service_metadata->serviceToXML(
             $ENV{DOCUMENT_ROOT} . "/skins/common/saml2-metadata.tpl", $self
         ),
-        $self->{samlServicePrivateKey},
+        $privateKeySig, undef, $privateKeyEnc
     );
 
     # Log
@@ -484,21 +493,31 @@ sub checkLassoError {
     return 1;
 }
 
-## @method Lasso::Server createServer(string metadata, string private_key, string private_key_password, string certificate)
+## @method Lasso::Server createServer(string metadata, string private_key, string private_key_password, string private_key_enc, string private_key_enc_password, string certificate)
 # Load service metadata and create Lasso::Server object
 # @param string metadata
 # @param string private key
 # @param string optional private key password
+# @param string optional private key for encryption
+# @param string optional private key password for encryption
 # @param string optional certificate
 # @return Lasso::Server object
 sub createServer {
-    my ( $self, $metadata, $private_key, $private_key_password, $certificate ) =
-      splice @_;
+    my ( $self, $metadata,
+         $private_key, $private_key_password,
+         $private_key_enc, $private_key_enc_password,
+         $certificate ) = splice @_;
     my $server;
 
     eval {
         $server = Lasso::Server::new_from_buffers( $metadata, $private_key,
             $private_key_password, $certificate );
+        # Can not set password for private encryption key, Lasso does not
+        # provide it.
+        if ( $private_key_enc ) {
+            Lasso::Server::set_encryption_private_key(
+                $server, $private_key_enc );
+        }
     };
 
     if ($@) {
