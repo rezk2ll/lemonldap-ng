@@ -616,7 +616,6 @@ sub struct {
         samlServiceMetaData => {
             _nodes => [
                 qw(samlEntityID
-                  samlServicePrivateKey
                   n:samlServiceSecurity
                   n:samlNameIDFormatMap
                   n:samlOrganization
@@ -628,8 +627,6 @@ sub struct {
 
             # GLOBAL INFORMATIONS
             samlEntityID => 'text:/samlEntityID',
-            samlServicePrivateKey =>
-              'filearea:/samlServicePrivateKey:samlServicePrivateKey:filearea',
 
             # SECURITY NODE
             samlServiceSecurity => {
@@ -1033,9 +1030,6 @@ sub testStruct {
             keyTest => qr/^(?:none|authentificate|manager|)$/,
             msgFail => 'must be one of none authentificate manager',
         },
-        saml                  => $testNotDefined,
-        samlServiceMetaData   => $testNotDefined,
-        samlServicePrivateKey => $testNotDefined,
         securedCookie         => {
             test    => qr/^(?:0|1|2)$/,
             msgFail => 'securedCookie must be 0, 1 or 2',
@@ -1075,6 +1069,8 @@ sub testStruct {
         ########
         # SAML #
         ########
+        saml                  => $testNotDefined,
+        samlServiceMetaData   => $testNotDefined,
         samlIDPMetaDataExportedAttributes => {
             keyTest    => qr/^[a-zA-Z](?:[\w\-\.]*\w)?$/,
             keyMsgFail => 'Bad metadata name',
@@ -1125,7 +1121,6 @@ sub testStruct {
                 keyTest => sub { return 1; },
             },
         },
-        samlServicePrivateKey                      => $testNotDefined,
         samlEntityID                               => $testNotDefined,
         samlOrganizationDisplayName                => $testNotDefined,
         samlOrganizationName                       => $testNotDefined,
@@ -1280,7 +1275,6 @@ sub defaultConf {
         ########
         # SAML #
         ########
-        samlServicePrivateKey                   => '',
         samlEntityID                            => $portal . '/saml/metadata',
         samlOrganizationDisplayName             => 'Example',
         samlOrganizationName                    => 'Example',

@@ -29,7 +29,8 @@ sub import {
     foreach $h (
         qw(authParams cookieName domain groups ldap macros storage timeout
         timeoutActivity vars whatToTrace virtualHosts portalForceAuthn default
-        samlIDPMetaDataNode samlServicePrivateKey portal securedCookie)
+        samlIDPMetaDataNode samlServicePrivateKeySig samlServicePrivateKeyEnc
+        portal securedCookie)
       )
     {
         *{"${caller_package}::help_$h"} = \&{"help_${h}_$l"};
@@ -889,11 +890,11 @@ sub help_saml_fr {
 EOT
 }
 
-## samlServicePrivateKey
+## samlServicePrivateKeySig
 # en
-sub help_samlServicePrivateKey_en {
+sub help_samlServicePrivateKeySig_en {
     print <<EOT;
-<h3>SAML service private key</h3>
+<h3>SAML service private key for signature</h3>
 <p>Load here the service private key in PEM format.</p>
 <p>Example:</p>
 <pre>
@@ -912,10 +913,53 @@ EOT
 }
 
 # fr
-sub help_samlServicePrivateKey_fr {
+sub help_samlServicePrivateKeySig_fr {
     print <<EOT;
-<h3>Clé privée du service SAML</h3>
+<h3>Clé privée de signature du service SAML</h3>
 <p>Charger ici la clé privé du service au format PEM.</p>
+<p>Exemple :</p>
+<pre>
+-----BEGIN RSA PRIVATE KEY-----
+MIIBOgIBAAJBANZ2b5wb43eJRYnln2bfo+neq6ZQYksmFtn3juDB/UklfwVN0XPi
+8NBHXFQjfXPeVse6Ztjl+C443jRCkSawVZMCAwEAAQJBALO56WrADG5+waIApwdF
+YE575wmnz9f+gaQEzN4adDM5CgKplp5a5HUxinkLSMuYHNW7E8sh27A6wsF8zeiZ
+9mECIQD1kno1Y9st1NtGsrK9yXL55oTbXD7cdx1m4c2i+5E+WQIhAN+Rx065mJuh
+2nsZ7FESLorDzpdrI0SvuNAUI5+7uG3LAiBRvR28Y65yxOTv1U81aLZCg/443a12
+yJcaxZIi68VekQIgUTljUcS4HwLkn4jBhIq4gg21humTvKai3GYUszm+PZUCIDnR
+X1EobS0/HFKASpX7GG4VTi9Rbd5jWbM5ZfSlCjLJ
+-----END RSA PRIVATE KEY-----
+</pre>
+<p class="info">La clé publique ou le certificat correspondant doit être chargé dans les metadonnées du service.</p>
+EOT
+}
+
+## samlServicePrivateKeyEnc
+# en
+sub help_samlServicePrivateKeyEnc_en {
+    print <<EOT;
+<h3>SAML service private key for encryption</h3>
+<p>Load here the service private key in PEM format. If empty, Lemonldap::NG will use the SAML service private key for signature.</p>
+<p>Example:</p>
+<pre>
+-----BEGIN RSA PRIVATE KEY-----
+MIIBOgIBAAJBANZ2b5wb43eJRYnln2bfo+neq6ZQYksmFtn3juDB/UklfwVN0XPi
+8NBHXFQjfXPeVse6Ztjl+C443jRCkSawVZMCAwEAAQJBALO56WrADG5+waIApwdF
+YE575wmnz9f+gaQEzN4adDM5CgKplp5a5HUxinkLSMuYHNW7E8sh27A6wsF8zeiZ
+9mECIQD1kno1Y9st1NtGsrK9yXL55oTbXD7cdx1m4c2i+5E+WQIhAN+Rx065mJuh
+2nsZ7FESLorDzpdrI0SvuNAUI5+7uG3LAiBRvR28Y65yxOTv1U81aLZCg/443a12
+yJcaxZIi68VekQIgUTljUcS4HwLkn4jBhIq4gg21humTvKai3GYUszm+PZUCIDnR
+X1EobS0/HFKASpX7GG4VTi9Rbd5jWbM5ZfSlCjLJ
+-----END RSA PRIVATE KEY-----
+</pre>
+<p class="info">The corresponding public key or certificate must be loaded inside SAML service metadata.</p>
+EOT
+}
+
+# fr
+sub help_samlServicePrivateKeyEnc_fr {
+    print <<EOT;
+<h3>Clé privée de chiffrement du service SAML</h3>
+<p>Charger ici la clé privé du service au format PEM. Si non définie, Lemonldap::NG utilisera la clé privé de signature du service SAML.</p>
 <p>Exemple :</p>
 <pre>
 -----BEGIN RSA PRIVATE KEY-----
