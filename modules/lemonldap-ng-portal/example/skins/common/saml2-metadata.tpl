@@ -124,6 +124,11 @@
           <TMPL_VAR NAME="samlServicePublicKeySig">
       </ds:KeyInfo>
     </KeyDescriptor>
+    <KeyDescriptor use="encryption">
+      <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+          <TMPL_VAR NAME="samlServicePublicKeyEnc">
+      </ds:KeyInfo>
+    </KeyDescriptor>
     <AttributeService
       Binding="<TMPL_VAR NAME="samlAttributeAuthorityDescriptorAttributeServiceSOAPBinding">"
       Location="<TMPL_VAR NAME="samlAttributeAuthorityDescriptorAttributeServiceSOAPLocation">"/>
