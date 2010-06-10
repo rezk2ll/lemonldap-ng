@@ -180,9 +180,16 @@ sub extractFormInfo {
                 return PE_ERROR;
             }
 
+            # Do we check conditions?
+            my $checkConditions =
+              $self->{samlIDPMetaDataOptions}->{$idpConfKey}
+              ->{samlIDPMetaDataOptionsCheckConditions};
+
             # Check conditions - time and audience
-            unless (
-                $self->validateConditions( $assertion, $self->{samlEntityID} ) )
+            if ( $checkConditions
+                and
+                !$self->validateConditions( $assertion, $self->{samlEntityID} )
+              )
             {
                 $self->lmLog( "Conditions not validated", 'error' );
                 return PE_ERROR;

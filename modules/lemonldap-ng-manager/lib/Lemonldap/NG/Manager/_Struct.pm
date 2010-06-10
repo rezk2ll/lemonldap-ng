@@ -60,7 +60,7 @@ sub cstruct {
                       . ":samlIDPMetaDataXML:filearea",
                     samlIDPMetaDataOptions => {
                         _nodes => [
-                            qw(samlIDPMetaDataOptionsNameIDFormat samlIDPMetaDataOptionsForceAuthn samlIDPMetaDataOptionsIsPassive samlIDPMetaDataOptionsAllowProxiedAuthn samlIDPMetaDataOptionsSSOBinding samlIDPMetaDataOptionsSLOBinding samlIDPMetaDataOptionsResolutionRule samlIDPMetaDataOptionsAllowLoginFromIDP samlIDPMetaDataOptionsAdaptSessionUtime samlIDPMetaDataOptionsSignSSOMessage samlIDPMetaDataOptionsCheckSSOMessageSignature samlIDPMetaDataOptionsSignSLOMessage samlIDPMetaDataOptionsCheckSLOMessageSignature samlIDPMetaDataOptionsRequestedAuthnContext samlIDPMetaDataOptionsForceUTF8 samlIDPMetaDataOptionsEncryptionMode)
+                            qw(samlIDPMetaDataOptionsNameIDFormat samlIDPMetaDataOptionsForceAuthn samlIDPMetaDataOptionsIsPassive samlIDPMetaDataOptionsAllowProxiedAuthn samlIDPMetaDataOptionsSSOBinding samlIDPMetaDataOptionsSLOBinding samlIDPMetaDataOptionsResolutionRule samlIDPMetaDataOptionsAllowLoginFromIDP samlIDPMetaDataOptionsAdaptSessionUtime samlIDPMetaDataOptionsSignSSOMessage samlIDPMetaDataOptionsCheckSSOMessageSignature samlIDPMetaDataOptionsSignSLOMessage samlIDPMetaDataOptionsCheckSLOMessageSignature samlIDPMetaDataOptionsRequestedAuthnContext samlIDPMetaDataOptionsForceUTF8 samlIDPMetaDataOptionsEncryptionMode samlIDPMetaDataOptionsCheckConditions)
                         ],
                         samlIDPMetaDataOptionsNameIDFormat =>
 "text:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsNameIDFormat"
@@ -98,6 +98,8 @@ sub cstruct {
 "bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsForceUTF8",
                         samlIDPMetaDataOptionsEncryptionMode =>
 "text:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsEncryptionMode:default:encryptionModeParams",
+                        samlIDPMetaDataOptionsCheckConditions =>
+"bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsCheckConditions",
                     },
                 }
             }
@@ -1295,6 +1297,7 @@ sub defaultConf {
         samlIDPMetaDataOptionsRequestedAuthnContext    => '',
         samlIDPMetaDataOptionsForceUTF8                => '0',
         samlIDPMetaDataOptionsEncryptionMode           => 'none',
+        samlIDPMetaDataOptionsCheckConditions          => '1',
         samlSPMetaDataOptionsNameIDFormat              => '',
         samlSPMetaDataOptionsOneTimeUse                => '0',
         samlSPMetaDataOptionsSignSSOMessage            => '1',

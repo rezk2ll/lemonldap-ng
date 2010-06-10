@@ -2106,8 +2106,8 @@ sub timestamp2samldate {
 sub samldate2timestamp {
     my ( $self, $samldate ) = splice @_;
 
-    my ( $year, $mon, $mday, $hour, $min, $sec, $ztime ) =
-      ( $samldate =~ /(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(Z)?/ );
+    my ( $year, $mon, $mday, $hour, $min, $sec, $msec, $ztime ) =
+      ( $samldate =~ /(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(\.\d+)?(Z)?/ );
 
     my $timestamp =
       timegm( $sec, $min, $hour, $mday, $mon - 1, $year - 1900, 0 );
