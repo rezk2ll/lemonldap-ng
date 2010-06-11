@@ -104,9 +104,12 @@ sub loadService {
             'error' );
         return 0;
     }
-    unless ( $privateKeyEnc ) {
-        $self->lmLog( "SAML private encryption key not found in configuration, "
-            . "use private signature key", 'debug' );
+    unless ($privateKeyEnc) {
+        $self->lmLog(
+            "SAML private encryption key not found in configuration, "
+              . "use private signature key",
+            'debug'
+        );
         $privateKeyEnc = $privateKeySig;
     }
 
@@ -119,7 +122,9 @@ sub loadService {
         $service_metadata->serviceToXML(
             $ENV{DOCUMENT_ROOT} . "/skins/common/saml2-metadata.tpl", $self
         ),
-        $privateKeySig, undef, $privateKeyEnc
+        $privateKeySig,
+        undef,
+        $privateKeyEnc
     );
 
     # Log
@@ -503,20 +508,20 @@ sub checkLassoError {
 # @param string optional certificate
 # @return Lasso::Server object
 sub createServer {
-    my ( $self, $metadata,
-         $private_key, $private_key_password,
-         $private_key_enc, $private_key_enc_password,
-         $certificate ) = splice @_;
+    my ( $self, $metadata, $private_key, $private_key_password,
+        $private_key_enc, $private_key_enc_password, $certificate )
+      = splice @_;
     my $server;
 
     eval {
         $server = Lasso::Server::new_from_buffers( $metadata, $private_key,
             $private_key_password, $certificate );
+
         # Can not set password for private encryption key, Lasso does not
         # provide it.
-        if ( $private_key_enc ) {
-            Lasso::Server::set_encryption_private_key(
-                $server, $private_key_enc );
+        if ($private_key_enc) {
+            Lasso::Server::set_encryption_private_key( $server,
+                $private_key_enc );
         }
     };
 
@@ -1231,15 +1236,21 @@ sub createLogoutRequest {
 
 }
 
-## @method Lasso::Logout createLogout(Lasso::Server server)
+## @method Lasso::Logout createLogout(Lasso::Server server, string dump)
 # Create Lasso::Logout object
 # @param server Lasso::Server object
+# @param dump optional XML dump
 # @return Lasso::Logout object
 sub createLogout {
-    my ( $self, $server ) = splice @_;
+    my ( $self, $server, $dump ) = splice @_;
     my $logout;
 
+    if ($dump) {
+        eval { $logout = Lasso::Logout::new_from_dump( $server, $dump ); };
+    }
+    else {
     eval { $logout = Lasso::Logout->new($server); };
+    }
 
     if ($@) {
         $self->checkLassoError($@);
@@ -2106,8 +2117,8 @@ sub timestamp2samldate {
 sub samldate2timestamp {
     my ( $self, $samldate ) = splice @_;
 
-    my ( $year, $mon, $mday, $hour, $min, $sec, $msec, $ztime ) =
-      ( $samldate =~ /(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(\.\d+)?(Z)?/ );
+    my ( $year, $mon, $mday, $hour, $min, $sec, $msec, $ztime ) = ( $samldate =~
+          /(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(\.\d+)?(Z)?/ );
 
     my $timestamp =
       timegm( $sec, $min, $hour, $mday, $mon - 1, $year - 1900, 0 );
