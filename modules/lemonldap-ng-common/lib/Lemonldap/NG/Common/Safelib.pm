@@ -6,14 +6,17 @@
 package Lemonldap::NG::Common::Safelib;
 
 use strict;
+use Encode;
+use MIME::Base64;
 
 #use AutoLoader qw(AUTOLOAD);
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 # Set here all the names of functions that must be available in Safe objects.
 # Not that only functions, not methods, can be written here
-our $functions = [qw(&checkLogonHours &checkDate)];
+our $functions =
+  [qw(&checkLogonHours &checkDate &basic &unicode2iso &iso2unicode)];
 
 ## @function boolean checkLogonHours(string logon_hours, string syntax, string time_correction, boolean default_access)
 # Function to check logon hours
@@ -23,7 +26,7 @@ our $functions = [qw(&checkLogonHours &checkDate)];
 # @param $default_access optional what result to return for users without logons hours
 # @return 1 if access allowed, 0 else
 sub checkLogonHours {
-    my ( $logon_hours, $syntax, $time_correction, $default_access ) = @_;
+    my ( $logon_hours, $syntax, $time_correction, $default_access ) = splice @_;
 
     # Active Directory - logonHours: $attr_src_syntax = octetstring
     # Samba - sambaLogonHours: ???
@@ -73,7 +76,7 @@ sub checkLogonHours {
 # @param $default_access optional what result to return for users without start or end start
 # @return 1 if access allowed, 0 else
 sub checkDate {
-    my ( $start, $end, $default_access ) = @_;
+    my ( $start, $end, $default_access ) = splice @_;
 
     # Get date in string
     $start = substr( $start, 0, 14 );
@@ -104,6 +107,41 @@ sub checkDate {
 
     return 1 if ( ( $date >= $start ) and ( $date <= $end ) );
     return 0;
+}
+
+## @function string basic(string login, string password)
+# Return string that can be used for HTTP-BASIC authentication
+# @param login User login
+# @param password User password
+# @return Authorization header content
+sub basic {
+    my ( $login, $password ) = splice @_;
+
+    # UTF-8 strings should be ISO encoded
+    $login    = &unicode2iso($login);
+    $password = &unicode2iso($password);
+
+    return "Basic " . encode_base64( $login . ":" . $password );
+}
+
+## @function string unicode2iso(string string)
+# Convert UTF-8 in ISO-8859-1
+# @param string UTF-8 string
+# @return ISO string
+sub unicode2iso {
+    my ($string) = splice @_;
+
+    return encode( "iso-8859-1", decode( "utf-8", $string ) );
+}
+
+## @function string iso2unicode(string string)
+# Convert ISO-8859-1 in UTF-8
+# @param string ISO string
+# @return UTF-8 string
+sub iso2unicode {
+    my ($string) = splice @_;
+
+    return encode( "utf-8", decode( "iso-8859-1", $string ) );
 }
 
 1;
