@@ -2676,6 +2676,50 @@ sub setProviderEncryptionMode {
 
 }
 
+## @method boolean deleteSAMLSecondarySessions(string session_id)
+# Find and delete SAML sessions bounded to a primary session
+# @param session_id Primary session ID
+# @return result
+sub deleteSAMLSecondarySessions {
+    my ( $self, $session_id ) = splice @_;
+    my $result = 1;
+
+    # Find SAML sessions
+    my $saml_sessions =
+      $self->{samlStorage}
+      ->searchOn( $self->{samlStorageOptions}, "_id", $session_id );
+
+    if ( my @saml_sessions_keys = keys %$saml_sessions ) {
+
+        foreach my $saml_session (@saml_sessions_keys) {
+
+            # Get session
+            $self->lmLog( "Retrieve SAML session $saml_session", 'debug' );
+
+            my $samlSessionInfo = $self->getSamlSession($saml_session);
+
+            # Delete session
+            eval { tied(%$samlSessionInfo)->delete() };
+
+            if ($@) {
+                $self->lmLog( "Unable to delete SAML session $saml_session: $@",
+                    'error' );
+                $result = 0;
+            }
+            else {
+                $self->lmLog( "SAML session $saml_session deleted", 'debug' );
+            }
+
+        }
+    }
+    else {
+        $self->lmLog( "No SAML session found for session $session_id ",
+            'debug' );
+    }
+
+    return $result;
+}
+
 1;
 
 __END__
@@ -3016,6 +3060,10 @@ Return Lasso encryption mode
 =head2 setProviderEncryptionMode
 
 Set encryption mode on a provider
+
+=head2 deleteSAMLSecondarySessions
+
+Find and delete SAML sessions bounded to a primary session
 
 =head1 SEE ALSO
 

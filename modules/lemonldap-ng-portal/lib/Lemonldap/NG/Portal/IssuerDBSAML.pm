@@ -309,11 +309,15 @@ sub issuerForUnAuthUser {
                 $self->lmLog( "Lasso Identity loaded", 'debug' );
             }
 
+            # Close SAML sessions
+            unless ( $self->deleteSAMLSecondarySessions($local_session_id) ) {
+                $self->lmLog( "Fail to delete SAML sessions", 'error' );
+            }
+
             # Close local session
             unless ( $self->_deleteSession($local_session) ) {
                 $self->lmLog( "Fail to delete session $local_session_id",
                     'error' );
-                $self->returnSOAPMessage();
             }
 
             # Send SLO request to SOAP compliant SP
@@ -1516,10 +1520,17 @@ sub issuerForAuthUser {
 
             my $user = $self->{sessionInfo}->{user};
             my $local_session = $self->getApacheSession( $local_session_id, 1 );
+
+            # Close SAML sessions
+            unless ( $self->deleteSAMLSecondarySessions($local_session_id) ) {
+                $self->lmLog( "Fail to delete SAML sessions", 'error' );
+            }
+
+            # Close local session
             unless ( $self->_deleteSession($local_session) ) {
                 $self->lmLog(
                     "Fail to delete session $local_session_id for user $user",
-                    'debug' );
+                    'error' );
             }
 
             # Signature
