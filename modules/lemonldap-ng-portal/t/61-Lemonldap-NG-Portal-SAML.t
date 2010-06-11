@@ -1,11 +1,11 @@
 # Unit tests for common SAML functions
 
-use Test::More tests => 3;
+use Test::More tests => 4;
 
 # Test Lasso presence and load _SAML module
 SKIP: {
     eval "use Lasso;";
-    skip "Lasso is not installed, can't test SAML features", 3 if ($@);
+    skip "Lasso is not installed, can't test SAML features", 4 if ($@);
     use_ok('Lemonldap::NG::Portal::Simple');
 
     # Portal object
@@ -28,8 +28,9 @@ SKIP: {
     );
 
     # Date/timestamp conversion
-    my $timestamp = "1273653920";
-    my $samldate  = "2010-05-12T08:45:20Z";
+    my $timestamp  = "1273653920";
+    my $samldate   = "2010-05-12T08:45:20Z";
+    my $samldatems = "2010-05-12T08:45:20.123456Z";
 
     ok(
         $p->timestamp2samldate($timestamp) eq $samldate,
@@ -38,6 +39,10 @@ SKIP: {
     ok(
         $p->samldate2timestamp($samldate) eq $timestamp,
         "SAML2 date conversion into timestamp"
+    );
+    ok(
+        $p->samldate2timestamp($samldatems) eq $timestamp,
+        "SAML2 date (with ms) conversion into timestamp"
     );
 
 }
