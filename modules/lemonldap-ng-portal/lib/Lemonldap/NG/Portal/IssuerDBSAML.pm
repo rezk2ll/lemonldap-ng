@@ -312,19 +312,30 @@ sub issuerForUnAuthUser {
             # Close SAML sessions
             unless ( $self->deleteSAMLSecondarySessions($local_session_id) ) {
                 $self->lmLog( "Fail to delete SAML sessions", 'error' );
+                $self->returnSOAPMessage();
             }
 
             # Close local session
             unless ( $self->_deleteSession($local_session) ) {
                 $self->lmLog( "Fail to delete session $local_session_id",
                     'error' );
+                $self->returnSOAPMessage();
             }
 
-            # Send SLO request to SOAP compliant SP
-            # TODO
+            # Try to send SLO request trough SOAP
+            $self->resetProviderIdIndex($logout);
+            while ( my $providerID = $self->getNextProviderId($logout) ) {
 
-            # Set SLO status to partial if non SOAP compliant SP
-            # TODO
+                # Do not process logout on SP that initiate the logout request
+                next if ( $sp =~ /^$providerID$/ );
+
+                # Send logout request
+                my ( $rstatus, $rmethod, $rinfo ) =
+                  $self->sendLogoutRequestToServiceProvider( $logout,
+                    $providerID, $self->getHttpMethod('soap'), 0 );
+
+                # TODO manage rstatus
+            }
 
             # Validate request if no previous error
             unless ( $self->validateLogoutRequest($logout) ) {
