@@ -1791,7 +1791,7 @@ sub createAttributeRequest {
     $self->lmLog( "Assertion query request initiated", 'debug' );
 
     # Set NameID
-    eval { $query->nameIdentifier($nameid); };
+    eval { $query->request()->Subject()->NameID($nameid); };
     if ($@) {
         $self->checkLassoError($@);
         return;
