@@ -328,6 +328,7 @@ sub issuerForUnAuthUser {
             }
 
             # Try to send SLO request trough SOAP
+            my $logout_dump = $logout->dump;
             $self->resetProviderIdIndex($logout);
             while ( my $providerID = $self->getNextProviderId($logout) ) {
 
@@ -340,6 +341,15 @@ sub issuerForUnAuthUser {
                     $providerID, $self->getHttpMethod('soap'), 0 );
 
                 # TODO manage rstatus
+            }
+
+            # Rebuild Lasso::Logout object. All data have already been checked.
+            $logout = $self->createLogout( $server, $logout_dump );
+            if ($session) {
+                $self->setSessionFromDump( $logout, $session );
+            }
+            if ($identity) {
+                $self->setIdentityFromDump( $logout, $identity );
             }
 
             # Validate request if no previous error
