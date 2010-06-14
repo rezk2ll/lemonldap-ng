@@ -103,8 +103,9 @@ sub extractFormInfo {
 
         # TODO: insert url=...
         my $check_url = $claimed_identity->check_url(
-            return_to  => $self->{portal} . '?openid=1',
-            trust_root => $self->{portal},
+            return_to      => $self->{portal} . '?openid=1',
+            trust_root     => $self->{portal},
+            delayed_return => 1,
         );
         print $self->redirect($check_url);
         $self->quit();
