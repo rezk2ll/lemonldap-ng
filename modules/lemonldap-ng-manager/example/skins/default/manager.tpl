@@ -28,6 +28,7 @@
 	var text4securedCookie0='<lang en="Non secured cookie" fr="Cookie non sécurisé"/>';
 	var text4securedCookie1='<lang en="Secured cookie (HTTPS)" fr="Cookie sécurisé (HTTPS)"/>';
 	var text4securedCookie2='Double cookie (HTTP and HTTPS)';
+	var text4newGeneratedFile='<lang en="Password (optional)" fr="Mot de passe (optionnel)" />';
 //]]></script>
 <script src="<TMPL_VAR NAME="DIR">/manager.js" type="text/JavaScript"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf8" />

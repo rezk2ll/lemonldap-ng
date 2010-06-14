@@ -888,6 +888,7 @@ function downloadFile(id){
 function generateFile(id){
 	/* If samlServicePrivateKey* elements, then generate keys */
         if(lmtext(id)=='samlServicePrivateKeySig'||lmtext(id)=='samlServicePrivateKeyEnc'){
+		var password = prompt(text4newGeneratedFile,'');
 		$('#button-loadimg')
 		.ajaxStart(function(){
 			$(this).show();
@@ -898,16 +899,20 @@ function generateFile(id){
 		$.ajax({
 			type:'POST',
 			url:scriptname,
-			data:{request: 'generateKeys'},
+			data:{request: 'generateKeys',password: password},
 			dataType:'json',
 			success:function(data){
-				var _name;
+				var _public;
 				var _id;
 				setlmdata(id,data.content.private);
-				if(lmtext(id)=='samlServicePrivateKeySig'){_name='samlServicePublicKeySig';}
-				if(lmtext(id)=='samlServicePrivateKeyEnc'){_name='samlServicePublicKeyEnc';}
-				_id=$('#'+lmparent(id)+' span[name='+_name+']').attr('id').replace(/text_/,'');
+				if(lmtext(id)=='samlServicePrivateKeySig'){_public='samlServicePublicKeySig';}
+				if(lmtext(id)=='samlServicePrivateKeyEnc'){_public='samlServicePublicKeyEnc';}
+				_id=$('#'+lmparent(id)+' span[name='+_public+']').attr('id').replace(/text_/,'');
 				setlmdata(_id,data.content.public);
+				if(password.length){
+					_id=$('#'+lmparent(id)+' span[name='+lmtext(id)+'Pwd]').attr('id').replace(/text_/,'');
+					setlmdata(_id,password);
+				}
 				filearea(id);
 			}
 		});

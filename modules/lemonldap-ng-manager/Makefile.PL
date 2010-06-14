@@ -6,7 +6,11 @@ WriteMakefile(
     NAME         => 'Lemonldap::NG::Manager',
     VERSION_FROM => 'lib/Lemonldap/NG/Manager.pm',    # finds $VERSION
     LICENSE      => 'perl',
-    BUILD_REQUIRES => { 'IO::String' => 0, },
+    BUILD_REQUIRES => {
+        'Convert::PEM'         => 0,
+        'Crypt::OpenSSL::RSA'  => 0,
+        'IO::String'           => 0,
+    },
     PREREQ_PM    => {
         'CGI'                    => 3.08,
         'HTML::Template'         => 0,
@@ -23,6 +27,8 @@ WriteMakefile(
             ABSTRACT_FROM =>
               'lib/Lemonldap/NG/Manager.pm',    # retrieve abstract from module
             AUTHOR => 'Xavier Guimard <x.guimard@free.fr>'
+              . ', Clément Oudot <clement@oodo.net>'
+              . ', Thomas Chemineau <thomas.chemineau@gmail.com>'
           )
         : ()
     ),

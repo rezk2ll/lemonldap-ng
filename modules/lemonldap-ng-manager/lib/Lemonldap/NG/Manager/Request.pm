@@ -6,6 +6,7 @@
 package Lemonldap::NG::Manager::Request;
 
 use strict;
+use Convert::PEM;
 use Crypt::OpenSSL::RSA;
 use JSON;
 use MIME::Base64;
@@ -23,15 +24,51 @@ sub request {
     # GENERATE PRIVATE/PUBLIC KEYS
     #
     if ($request =~ /generateKeys/i) {
-        my $rsa = Crypt::OpenSSL::RSA->generate_key(2048);
-        %$response = (
-            'private' => $rsa->get_private_key_string(),
-            'public'  => $rsa->get_public_key_x509_string(),
-          );
+        my $password = $self->rparam('password');
+        $password = $password ? ${$password} : undef;
+        $response = $self->generateKeys($password);
     }
     if (defined $response) {
         $self->sendJSONResponse($response);
     }
+}
+
+##@method public hashref generateKeys(string password)
+# Return a hashref containing private and public keys
+# @param $password A password to protect the private key
+# @return Hashref
+sub generateKeys {
+    my ($self, $password) = splice @_;
+        my $rsa = Crypt::OpenSSL::RSA->generate_key(2048);
+    my $keys    = undef;
+    %$keys      = (
+            'private' => $rsa->get_private_key_string(),
+            'public'  => $rsa->get_public_key_x509_string(),
+          );
+    if ($password) {
+        my $pem = Convert::PEM->new(
+            Name => 'RSA PRIVATE KEY',
+            ASN  => qq(
+                RSAPrivateKey SEQUENCE {
+                    version INTEGER,
+                    n INTEGER,
+                    e INTEGER,
+                    d INTEGER,
+                    p INTEGER,
+                    q INTEGER,
+                    dp INTEGER,
+                    dq INTEGER,
+                    iqmp INTEGER
+    }
+               )
+           );
+        my %param = ();
+        $param{Content}  = $keys->{private};
+        $param{Content}  = $pem->decode(%param);
+        $param{Password} = $password;
+        $keys->{private}  = $pem->encode(%param);
+    }
+    return $keys;
 }
 
 ##@method public void sendJSONResponse(string content)
