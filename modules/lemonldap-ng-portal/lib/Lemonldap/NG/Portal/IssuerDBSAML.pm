@@ -289,6 +289,9 @@ sub issuerForUnAuthUser {
             # Open local session
             my $local_session = $self->getApacheSession( $local_session_id, 1 );
 
+            # Try to close session only if not previously closed
+            if ($local_session) {
+
             # Load Session and Identity if they exist
             my $session  = $local_session->{_lassoSessionDump};
             my $identity = $local_session->{_lassoIdentityDump};
@@ -302,15 +305,18 @@ sub issuerForUnAuthUser {
             }
 
             if ($identity) {
-                unless ( $self->setIdentityFromDump( $logout, $identity ) ) {
-                    $self->lmLog( "Unable to load Lasso Identity", 'error' );
+                    unless ( $self->setIdentityFromDump( $logout, $identity ) )
+                    {
+                        $self->lmLog( "Unable to load Lasso Identity",
+                            'error' );
                     $self->returnSOAPMessage();
                 }
                 $self->lmLog( "Lasso Identity loaded", 'debug' );
             }
 
             # Close SAML sessions
-            unless ( $self->deleteSAMLSecondarySessions($local_session_id) ) {
+                unless ( $self->deleteSAMLSecondarySessions($local_session_id) )
+                {
                 $self->lmLog( "Fail to delete SAML sessions", 'error' );
                 $self->returnSOAPMessage();
             }
@@ -335,6 +341,10 @@ sub issuerForUnAuthUser {
                     $providerID, $self->getHttpMethod('soap'), 0 );
 
                 # TODO manage rstatus
+            }
+            }
+            else {
+                $self->lmLog( "No local session found", 'debug' );
             }
 
             # Validate request if no previous error
