@@ -303,8 +303,10 @@ sub en {
         samlAttributeAuthorityDescriptorAttributeServiceSOAP => 'SOAP',
         samlServiceSecurity      => 'Security parameters',
         samlServicePrivateKeySig => 'Private key for signature',
+        samlServicePrivateKeySigPwd => 'Password of the private key for signature',
         samlServicePublicKeySig  => 'Public key for signature',
         samlServicePrivateKeyEnc => 'Private key for encryption',
+        samlServicePrivateKeyEncPwd => 'Password of the private key for encryption',
         samlServicePublicKeyEnc  => 'Public key for encryption',
     };
 }
@@ -579,8 +581,10 @@ sub fr {
         samlAttributeAuthorityDescriptorAttributeServiceSOAP => 'SOAP',
         samlServiceSecurity      => 'Paramètres de sécurité',
         samlServicePrivateKeySig => 'Clé privée de signature',
+        samlServicePrivateKeySigPwd => 'Mot de passe de la clé privée de signature',
         samlServicePublicKeySig  => 'Clé publique de signature',
         samlServicePrivateKeyEnc => 'Clé privée de chiffrement',
+        samlServicePrivateKeyEncPwd => 'Mot de passe de la clé privée de chiffrement',
         samlServicePublicKeyEnc  => 'Clé publique de chiffrement',
     };
 }

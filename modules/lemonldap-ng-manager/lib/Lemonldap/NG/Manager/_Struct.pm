@@ -634,17 +634,23 @@ sub struct {
             samlServiceSecurity => {
                 _nodes => [
                     qw(samlServicePrivateKeySig
+                       samlServicePrivateKeySigPwd
                        samlServicePublicKeySig
                        samlServicePrivateKeyEnc
+                       samlServicePrivateKeyEncPwd
                        samlServicePublicKeyEnc)
                 ],
                 _help => 'default',
                 samlServicePrivateKeySig =>
 'filearea:/samlServicePrivateKeySig:samlServicePrivateKeySig:filearea',
+                samlServicePrivateKeySigPwd =>
+'text:/samlServicePrivateKeySigPwd',
                 samlServicePublicKeySig  =>
 'filearea:/samlServicePublicKeySig:samlServicePublicKeySig:filearea',
                 samlServicePrivateKeyEnc =>
 'filearea:/samlServicePrivateKeyEnc:samlServicePrivateKeyEnc:filearea',
+                samlServicePrivateKeyEncPwd =>
+'text:/samlServicePrivateKeyEncPwd',
                 samlServicePublicKeyEnc  =>
 'filearea:/samlServicePublicKeyEnc:samlServicePublicKeyEnc:filearea',
             },
@@ -1153,8 +1159,10 @@ sub testStruct {
         samlNameIDFormatMapKerberos                     => $testNotDefined,
         samlAttributeAuthorityDescriptorAttributeServiceSOAP => $testNotDefined,
         samlServicePrivateKeySig                        => $testNotDefined,
+        samlServicePrivateKeySigPwd                     => $testNotDefined,
         samlServicePublicKeySig                         => $testNotDefined,
         samlServicePrivateKeyEnc                        => $testNotDefined,
+        samlServicePrivateKeyEncPwd                     => $testNotDefined,
         samlServicePublicKeyEnc                         => $testNotDefined,
 
         # SSL
@@ -1381,8 +1389,10 @@ sub defaultConf {
           . $portal
           . '/saml/AA/SOAP;',
         samlServicePrivateKeySig                        => '',
+        samlServicePrivateKeySigPwd                     => '',
         samlServicePublicKeySig                         => '',
         samlServicePrivateKeyEnc                        => '',
+        samlServicePrivateKeyEncPwd                     => '',
         samlServicePublicKeyEnc                         => '',
 
     };
