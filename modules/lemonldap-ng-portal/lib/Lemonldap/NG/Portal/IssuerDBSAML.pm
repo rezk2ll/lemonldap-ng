@@ -340,7 +340,13 @@ sub issuerForUnAuthUser {
                   $self->sendLogoutRequestToServiceProvider( $logout,
                     $providerID, $self->getHttpMethod('soap'), 0 );
 
-                # TODO manage rstatus
+                if ($rstatus) {
+                    $self->lmLog( "SOAP SLO successful on $providerID",
+                        'debug' );
+                }
+                else {
+                    $self->lmLog( "SOAP SLO error on $providerID", 'debug' );
+                }
             }
 
             # Rebuild Lasso::Logout object. All data have already been checked.
