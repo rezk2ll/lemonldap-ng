@@ -632,13 +632,13 @@ sub struct {
 
             # SECURITY NODE
             samlServiceSecurity => {
+                _nodes => [qw(n:samlServiceSecuritySig n:samlServiceSecurityEnc)],
+                _help  => 'default',
+                samlServiceSecuritySig => {
                 _nodes => [
                     qw(samlServicePrivateKeySig
                        samlServicePrivateKeySigPwd
-                       samlServicePublicKeySig
-                       samlServicePrivateKeyEnc
-                       samlServicePrivateKeyEncPwd
-                       samlServicePublicKeyEnc)
+                           samlServicePublicKeySig)
                 ],
                 _help => 'default',
                 samlServicePrivateKeySig =>
@@ -647,12 +647,21 @@ sub struct {
 'text:/samlServicePrivateKeySigPwd',
                 samlServicePublicKeySig  =>
 'filearea:/samlServicePublicKeySig:samlServicePublicKeySig:filearea',
+               },
+               samlServiceSecurityEnc => {
+                   _nodes => [
+                       qw(samlServicePrivateKeyEnc
+                          samlServicePrivateKeyEncPwd
+                          samlServicePublicKeyEnc)
+                   ],
+                _help => 'default',
                 samlServicePrivateKeyEnc =>
 'filearea:/samlServicePrivateKeyEnc:samlServicePrivateKeyEnc:filearea',
                 samlServicePrivateKeyEncPwd =>
 'text:/samlServicePrivateKeyEncPwd',
                 samlServicePublicKeyEnc  =>
 'filearea:/samlServicePublicKeyEnc:samlServicePublicKeyEnc:filearea',
+            },
             },
 
             # NAMEID FORMAT MAP

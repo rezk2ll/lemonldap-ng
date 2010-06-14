@@ -302,12 +302,14 @@ sub en {
         samlAttributeAuthorityDescriptorAttributeService => 'Attribute Service',
         samlAttributeAuthorityDescriptorAttributeServiceSOAP => 'SOAP',
         samlServiceSecurity      => 'Security parameters',
-        samlServicePrivateKeySig => 'Private key for signature',
-        samlServicePrivateKeySigPwd => 'Password of the private key for signature',
-        samlServicePublicKeySig  => 'Public key for signature',
-        samlServicePrivateKeyEnc => 'Private key for encryption',
-        samlServicePrivateKeyEncPwd => 'Password of the private key for encryption',
-        samlServicePublicKeyEnc  => 'Public key for encryption',
+        samlServiceSecuritySig   => 'Signature',
+        samlServiceSecurityEnc   => 'Encryption',
+        samlServicePrivateKeySig => 'Private key',
+        samlServicePrivateKeySigPwd => 'Private key password',
+        samlServicePublicKeySig  => 'Public key',
+        samlServicePrivateKeyEnc => 'Private key',
+        samlServicePrivateKeyEncPwd => 'Private key password',
+        samlServicePublicKeyEnc  => 'Public key',
     };
 }
 
@@ -580,12 +582,14 @@ sub fr {
           'Service d\'attributs',
         samlAttributeAuthorityDescriptorAttributeServiceSOAP => 'SOAP',
         samlServiceSecurity      => 'Paramètres de sécurité',
-        samlServicePrivateKeySig => 'Clé privée de signature',
-        samlServicePrivateKeySigPwd => 'Mot de passe de la clé privée de signature',
-        samlServicePublicKeySig  => 'Clé publique de signature',
-        samlServicePrivateKeyEnc => 'Clé privée de chiffrement',
-        samlServicePrivateKeyEncPwd => 'Mot de passe de la clé privée de chiffrement',
-        samlServicePublicKeyEnc  => 'Clé publique de chiffrement',
+        samlServiceSecuritySig   => 'Signature',
+        samlServiceSecurityEnc   => 'Chiffrement',
+        samlServicePrivateKeySig => 'Clé privée',
+        samlServicePrivateKeySigPwd => 'Mot de passe de la clé privée',
+        samlServicePublicKeySig  => 'Clé publique',
+        samlServicePrivateKeyEnc => 'Clé privée',
+        samlServicePrivateKeyEncPwd => 'Mot de passe de la clé privée',
+        samlServicePublicKeyEnc  => 'Clé publique',
     };
 }
 
