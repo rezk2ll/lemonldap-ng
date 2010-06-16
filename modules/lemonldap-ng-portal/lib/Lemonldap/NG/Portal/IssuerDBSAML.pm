@@ -393,6 +393,70 @@ sub issuerForUnAuthUser {
 
         }
 
+        elsif ($response) {
+
+            # Process logout response
+            my $result = $self->processLogoutResponseMsg( $logout, $response );
+
+            unless ($result) {
+                $self->lmLog( "Fail to process logout response", 'error' );
+                return PE_IMG_NOK;
+            }
+
+            $self->lmLog( "Logout response is valid", 'debug' );
+
+            # Check Destination
+            return PE_IMG_NOK
+              unless ( $self->checkDestination( $logout->response, $url ) );
+
+            # Get SP entityID
+            my $sp = $logout->remote_providerID();
+
+            $self->lmLog( "Found entityID $sp in SAML message", 'debug' );
+
+            # SP conf key
+            my $spConfKey = $self->{_spList}->{$sp}->{confKey};
+
+            unless ($spConfKey) {
+                $self->lmLog( "$sp do not match any SP in configuration",
+                    'error' );
+                return PE_IMG_NOK;
+            }
+
+            $self->lmLog( "$sp match $spConfKey SP in configuration", 'debug' );
+
+            # Do we check signature?
+            my $checkSLOMessageSignature =
+              $self->{samlSPMetaDataOptions}->{$spConfKey}
+              ->{samlSPMetaDataOptionsCheckSLOMessageSignature};
+
+            if ($checkSLOMessageSignature) {
+                unless ( $self->checkSignatureStatus($logout) ) {
+                    $self->lmLog( "Signature is not valid", 'error' );
+                    return PE_IMG_NOK;
+                }
+                else {
+                    $self->lmLog( "Signature is valid", 'debug' );
+                }
+            }
+            else {
+                $self->lmLog( "Message signature will not be checked",
+                    'debug' );
+            }
+
+            # SLO response is OK
+            $self->lmLog( "Display OK status for SLO on $spConfKey", 'debug' );
+            return PE_IMG_OK;
+        }
+
+        else {
+
+            # No request or response
+            # This should not happen
+            $self->lmLog( "No request or response found", 'debug' );
+            return PE_OK;
+        }
+
     }
 
     # 1.3. SLO relay (send SOAP requests asynchronously)
@@ -1632,6 +1696,24 @@ sub issuerForAuthUser {
                 return PE_ERROR;
             }
 
+        }
+
+        elsif ($response) {
+
+            # No SLO response should be here
+            # else it means SSO session was not closed
+            $self->lmLog(
+                "SLO response found on an active SSO session, ignoring it",
+                'debug' );
+            return PE_OK;
+        }
+
+        else {
+
+            # No request or response
+            # This should not happen
+            $self->lmLog( "No request or response found", 'debug' );
+            return PE_OK;
         }
 
     }

@@ -2295,17 +2295,15 @@ sub sendLogoutRequestToServiceProvider {
         # Redirect user to response URL
         my $slo_url = $logout->msg_url;
 
-        $info .= '<li>'
-          . $providerName . '...'
+        $info .=
+            '<tr>' . '<td>'
           . '<iframe src="'
           . $slo_url
           . '" alt="" marginwidth="0"'
           . ' marginheight="0" scrolling="no" style="border: none"'
-          . ' width="0" height="0">'
-          . '<img src="'
-          . $slo_url
-          . '" width="0" height="0" />'
-          . '</iframe></li>';
+          . ' width="10px" height="10px" frameborder="0">'
+          . '</iframe>' . '</td>' . '<td>'
+          . $providerName . '</td>' . '</tr>';
 
     }
 
@@ -2331,17 +2329,15 @@ sub sendLogoutRequestToServiceProvider {
           $self->{portal} . '/saml/relaySingleLogoutPOST?relay=' . $relayID;
 
         # Create iFrame
-        $info .= '<li>'
-          . $providerName . '...'
+        $info .=
+            '<tr>' . '<td>'
           . '<iframe src="'
           . $slo_url
           . '" alt="" marginwidth="0"'
           . ' marginheight="0" scrolling="no" style="border: none"'
-          . ' width="0" height="0">'
-          . '<img src="'
-          . $slo_url
-          . '" width="0" height="0" />'
-          . '</iframe></li>';
+          . ' width="10px" height="10px" frameborder="0">'
+          . '</iframe>' . '</td>' . '<td>'
+          . $providerName . '</td>' . '</tr>';
 
     }
 
@@ -2380,12 +2376,11 @@ sub sendLogoutRequestToServiceProvider {
               $self->{portal} . '/saml/relaySingleLogoutSOAP?relay=' . $samlID;
 
             # Display information to the user
-            $info .= '<li>'
-              . $providerName
-              . '...&nbsp;&nbsp;'
-              . '<img src="'
+            $info .= '<tr>'
+              . '<td><img src="'
               . $slo_url
-              . '" width="10" height="10" /></li>';
+              . '" width="10px" height="10px" />' . '</td>' . '<td>'
+              . $providerName . '</td>' . '</tr>';
 
         }
 
@@ -2445,11 +2440,12 @@ sub sendLogoutRequestToServiceProviders {
     $self->resetProviderIdIndex($logout);
 
     # Header of the block which will be displayed to the user, if needed.
-    $info .=
-      &Lemonldap::NG::Portal::_i18n::msg
+    $info .= '<h2>'
+      . &Lemonldap::NG::Portal::_i18n::msg
       ( Lemonldap::NG::Portal::Simple::PM_SAML_SPLOGOUT,
         $ENV{HTTP_ACCEPT_LANGUAGE} )
-      . '<ul>';
+      . '</h2>'
+      . '<table class="sloState">';
 
     # Foreach SP found in session, get it from configuration, and send the
     # appropriate logout request (HTTP,POST,SOAP).
@@ -2476,7 +2472,7 @@ sub sendLogoutRequestToServiceProviders {
     }
 
     # End of information block to be displayed to the user.
-    $info .= '</ul>';
+    $info .= '</table>';
 
     # Print some information to the user. The URL to be redirected should
     # not be send via a form (because it does not work all time).
