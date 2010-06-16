@@ -486,7 +486,7 @@ sub issuerForUnAuthUser {
 
         # Get data to build POST form
         $self->{postUrl} = $relayInfos->{url};
-        $self->{postFields}->{'SAMLResponse'} = $relayInfos->{body};
+        $self->{postFields}->{'SAMLRequest'} = $relayInfos->{body};
 
         $self->_subProcess(qw(autoPost));
 
