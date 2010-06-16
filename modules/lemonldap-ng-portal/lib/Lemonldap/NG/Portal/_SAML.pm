@@ -2310,23 +2310,38 @@ sub sendLogoutRequestToServiceProvider {
     }
 
     # HTTP-POST
-    # TODO
     elsif ( $method == Lasso::Constants::HTTP_METHOD_POST ) {
 
-        $self->lmLog( "Send POST logout request to $providerID", 'debug' );
+        $self->lmLog( "Build POST relay logout request to $providerID",
+            'debug' );
 
-        # Use autosubmit form
-        my $slo_url  = $logout->msg_url;
-        my $slo_body = $logout->msg_body;
+        # Create a new relay session
+        my $relayInfos = $self->getSamlSession();
 
-        #$self->{postUrl} = $slo_url;
-        #$self->{postFields} = { 'SAMLResponse' => $slo_body };
+        # Store infos
+        $relayInfos->{type}   = 'relay';
+        $relayInfos->{_utime} = time;
+        $relayInfos->{url}    = $logout->msg_url;
+        $relayInfos->{body}   = $logout->msg_body;
 
-        # RelayState
-        #$self->{postFields}->{'RelayState'} = $relaystate
-        #if ($relaystate);
+        my $relayID = $relayInfos->{_session_id};
 
-        $self->lmLog( "POST method not yet available", 'debug' );
+        # Build the URL that could be used to play this logout request
+        my $slo_url =
+          $self->{portal} . '/saml/relaySingleLogoutPOST?relay=' . $relayID;
+
+        # Create iFrame
+        $info .= '<li>'
+          . $providerName . '...'
+          . '<iframe src="'
+          . $slo_url
+          . '" alt="" marginwidth="0"'
+          . ' marginheight="0" scrolling="no" style="border: none"'
+          . ' width="0" height="0">'
+          . '<img src="'
+          . $slo_url
+          . '" width="0" height="0" />'
+          . '</iframe></li>';
 
     }
 

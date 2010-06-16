@@ -69,6 +69,8 @@ sub issuerForUnAuthUser {
         "samlIDPSSODescriptorArtifactResolutionServiceArtifact");
     my $saml_slo_url_relay_soap =
       $self->{portal} . '/saml/relaySingleLogoutSOAP';
+    my $saml_slo_url_relay_post =
+      $self->{portal} . '/saml/relaySingleLogoutPOST';
     my $saml_att_soap_url = $self->getMetaDataURL(
         "samlAttributeAuthorityDescriptorAttributeServiceSOAP", 1 );
 
@@ -393,11 +395,14 @@ sub issuerForUnAuthUser {
 
     }
 
-    # 1.3. SLO SOAP replay (send SOAP requests asynchronously)
+    # 1.3. SLO relay (send SOAP requests asynchronously)
+
+    # 1.3.1 SOAP
     #      This URL is used by IMG html tag, and should returned PE_IMG_*
     if ( $url =~ /^(\Q$saml_slo_url_relay_soap\E)/io ) {
 
-        $self->lmLog( "URL $url detected as a relay service URL", 'debug' );
+        $self->lmLog( "URL $url detected as a SOAP relay service URL",
+            'debug' );
 
         # Check if relay parameter is present (mandatory)
         my $samlID;
@@ -453,6 +458,41 @@ sub issuerForUnAuthUser {
 
         return PE_IMG_OK;
 
+    }
+
+    # 1.3.2 POST
+    #      This URL is used as iframe source, and autoPost a form
+    #      Can return an error img
+    if ( $url =~ /^(\Q$saml_slo_url_relay_post\E)/io ) {
+
+        $self->lmLog( "URL $url detected as a POST relay service URL",
+            'debug' );
+
+        # Check if relay parameter is present (mandatory)
+        my $relayID;
+        unless ( $relayID = $self->param('relay') ) {
+            $self->lmLog( "No relayID detected", 'error' );
+            return PE_IMG_NOK;
+        }
+
+        # Retrieve the corresponding data from samlStorage
+        my $relayInfos = $self->getSamlSession($relayID);
+        unless ($relayInfos) {
+            $self->lmLog( "Could not get relay session $relayID", 'error' );
+            return PE_IMG_NOK;
+        }
+
+        $self->lmLog( "Found relay session $relayID", 'debug' );
+
+        # Get data to build POST form
+        $self->{postUrl} = $relayInfos->{url};
+        $self->{postFields}->{'SAMLResponse'} = $relayInfos->{body};
+
+        $self->_subProcess(qw(autoPost));
+
+        # If we are here, there was a problem with POST response
+        $self->lmLog( "Logout response was not sent trough POST", 'error' );
+        return PE_IMG_NOK;
     }
 
     # 1.4. Artifacts
