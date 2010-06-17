@@ -1166,13 +1166,20 @@ sub issuerForAuthUser {
             my $nameIDFormatKey =
               $self->{samlSPMetaDataOptions}->{$spConfKey}
               ->{samlSPMetaDataOptionsNameIDFormat} || "email";
-            my $nameIDFormat = $self->getNameIDFormat($nameIDFormatKey);
-
-            $self->lmLog( "Default NameID format is $nameIDFormat", 'debug' );
+            my $nameIDFormat;
 
             # Check NameID Policy in request
             if ( $login->request()->NameIDPolicy ) {
                 $nameIDFormat = $login->request()->NameIDPolicy->Format();
+                $self->lmLog( "Get NameID format $nameIDFormat from request",
+                    'debug' );
+            }
+
+            # NameID unspecified is forced to default NameID format
+            if (  !$nameIDFormat
+                or $nameIDFormat eq $self->getNameIDFormat("unspecified") )
+            {
+                $nameIDFormat = $self->getNameIDFormat($nameIDFormatKey);
             }
 
             # Get session key associated with NameIDFormat
