@@ -272,6 +272,13 @@ sub extractFormInfo {
             $self->{_nameID}       = $nameid;
             $self->{_sessionIndex} = $session_index;
 
+            # Store Token
+            my $saml_token = $assertion->export_to_xml;
+
+            $self->lmLog( "SAML Token: $saml_token", 'debug' );
+
+            $self->{_samlToken} = $saml_token;
+
             return PE_OK;
         }
         elsif ($request) {
@@ -1075,6 +1082,7 @@ sub setAuthSessionInfo {
     # Dump Lasso objects in session
     $self->{sessionInfo}->{_lassoSessionDump}  = $session->dump()  if $session;
     $self->{sessionInfo}->{_lassoIdentityDump} = $identity->dump() if $identity;
+    $self->{sessionInfo}->{_samlToken} = $self->{_samlToken};
 
     $self->{_lassoLogin} = $login;
 
