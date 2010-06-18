@@ -825,9 +825,12 @@ sub issuerForUnAuthUser {
         }
 
         # Create attribute statement
+        if ( scalar @returned_attributes ) {
         my $attribute_statement;
 
-        eval { $attribute_statement = Lasso::Saml2AttributeStatement->new(); };
+            eval {
+                $attribute_statement = Lasso::Saml2AttributeStatement->new();
+            };
         if ($@) {
             $self->checkLassoError($@);
             $self->returnSOAPMessage();
@@ -851,6 +854,7 @@ sub issuerForUnAuthUser {
 
         # Set response assertion
         $query->response->Assertion( ($assertion) );
+        }
 
         # Build response
         $att_response = $self->buildAttributeResponse($query);
@@ -1304,20 +1308,6 @@ sub issuerForAuthUser {
 
             }
 
-            # Create attribute statement
-            my $attribute_statement;
-
-            eval {
-                $attribute_statement = Lasso::Saml2AttributeStatement->new();
-            };
-            if ($@) {
-                $self->checkLassoError($@);
-                return PE_ERROR;
-            }
-
-            # Register attributes in attribute statement
-            $attribute_statement->Attribute(@attributes);
-
             # Get response assertion
             my @response_assertions = $login->response->Assertion;
 
@@ -1330,9 +1320,28 @@ sub issuerForAuthUser {
             $response_assertions[0]
               ->set_subject_name_id( $login->nameIdentifier );
 
+            # Create attribute statement
+            if ( scalar @attributes ) {
+
+            my $attribute_statement;
+
+            eval {
+                    $attribute_statement =
+                      Lasso::Saml2AttributeStatement->new();
+            };
+            if ($@) {
+                $self->checkLassoError($@);
+                return PE_ERROR;
+            }
+
+            # Register attributes in attribute statement
+            $attribute_statement->Attribute(@attributes);
+
             # Add attribute statement in response assertion
             my @attributes_statement = ($attribute_statement);
-            $response_assertions[0]->AttributeStatement(@attributes_statement);
+                $response_assertions[0]
+                  ->AttributeStatement(@attributes_statement);
+            }
 
             # Get AuthnStatement
             my @authn_statements = $response_assertions[0]->AuthnStatement();
