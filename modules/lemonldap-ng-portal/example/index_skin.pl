@@ -139,6 +139,19 @@ elsif ( $portal->{error} == PE_CONFIRM ) {
     );
 }
 
+# 2.3 There is a message to display
+elsif ( my $info = $portal->info() ) {
+    $skinfile       = 'info.tpl';
+    %templateParams = (
+        AUTH_ERROR      => $portal->error,
+        AUTH_ERROR_TYPE => $portal->error_type,
+        MSG             => $info,
+        SKIN            => $skin,
+        URL             => $portal->{urldc},
+        HIDDEN_INPUTS   => $portal->buildHiddenForm(),
+    );
+}
+
 # 2.3 Authentication has been refused OR this is the first access
 else {
     $skinfile       = 'login.tpl';
