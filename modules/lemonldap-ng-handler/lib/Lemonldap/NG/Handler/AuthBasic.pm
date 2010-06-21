@@ -78,6 +78,7 @@ sub run ($$) {
             $user = decode_base64($user);
             ( $user, $pass ) = ( $user =~ /^(.*?):(.*)$/ );
             my $r = $soap->getCookies( $user, $pass );
+            my $cv;
 
             # Catch SOAP errors
             if ( $r->fault ) {
@@ -100,16 +101,16 @@ sub run ($$) {
                     );
                     return AUTH_REQUIRED;
                 }
-                $id = $res->{cookies}->{$cookieName};
+                $cv = $res->{cookies}->{$cookieName};
             }
 
             # Now, normal work to find session
             my %h;
-            eval { tie %h, $globalStorage, $id, $globalStorageOptions; };
+            eval { tie %h, $globalStorage, $cv, $globalStorageOptions; };
             if ($@) {
 
                 # The cookie isn't yet available
-                $class->lmLog( "The cookie $id isn't yet available: $@",
+                $class->lmLog( "The cookie $cv isn't yet available: $@",
                     'info' );
                 $class->updateStatus( $apacheRequest->connection->remote_ip,
                     $apacheRequest->uri, 'EXPIRED' );
