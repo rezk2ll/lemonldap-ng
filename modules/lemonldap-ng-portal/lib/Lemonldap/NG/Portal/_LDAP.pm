@@ -9,6 +9,7 @@ use Net::LDAP;    #inherits
 use Exporter;
 use base qw(Exporter Net::LDAP);
 use Lemonldap::NG::Portal::Simple;
+use Encode;
 use strict;
 
 our @EXPORT = qw(ldap);
@@ -60,6 +61,9 @@ sub new {
         }
     }
     $self->{portal} = $portal;
+
+    # Setting default LDAP password storage encoding to utf-8
+    $self->{portal}->{ldapPwdEnc} ||= 'utf-8';
     return $self;
 }
 
@@ -80,6 +84,16 @@ sub bind {
         $args{password} = $self->{portal}->{managerPassword};
     }
     if ( $dn && $args{password} ) {
+        if ( $self->{portal}->{ldapPwdEnc} ne 'utf-8' ) {
+            eval {
+                my $tmp = encode(
+                    $self->{portal}->{ldapPwdEnc},
+                    decode( 'utf-8', $args{password} )
+                );
+                $args{password} = $tmp;
+            };
+            print STDERR "$@\n" if ($@);
+        }
         $mesg = $self->SUPER::bind( $dn, %args );
     }
     else {

@@ -309,12 +309,13 @@ sub struct {
 
                     ldapPassword => {
                         _nodes => [
-                            qw(ldapPpolicyControl ldapSetPassword ldapChangePasswordAsUser)
+                            qw(ldapPpolicyControl ldapSetPassword ldapChangePasswordAsUser ldapPwdEnc)
                         ],
                         ldapPpolicyControl => 'bool:/ldapPpolicyControl',
                         ldapSetPassword    => 'bool:/ldapSetPassword',
                         ldapChangePasswordAsUser =>
                           'bool:/ldapChangePasswordAsUser',
+                        ldapPwdEnc => 'text:/ldapPwdEnc',
                     },
 
                 },
@@ -952,6 +953,10 @@ sub testStruct {
                 return 1;
             },
         },
+        ldapPwdEnc => {
+            test    => qr/^\w[\w\-]*\w$/,
+            msgFail => 'Bad encoding',
+        },
         ldapPpolicyControl           => $boolean,
         ldapSetPassword              => $boolean,
         ldapChangePasswordAsUser     => $boolean,
@@ -1261,6 +1266,7 @@ sub defaultConf {
         issuerDB        => 'Null',
         ldapBase        => 'dc=example,dc=com',
         ldapPort        => '389',
+        ldapPwdEnc      => 'utf-8',
         ldapServer      => 'localhost',
         locationRules   => { 'test.example.com' => { default => 'accept' }, },
         managerDn       => '',

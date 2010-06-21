@@ -126,7 +126,7 @@ sub error_fr {
         "Connexion impossible au serveur LDAP",
         "Erreur anormale du serveur LDAP",
         "Erreur du module Apache::Session choisi",
-        "Authentification exigée",
+        "Veuillez-vous authentifier",
         "Certificat invalide",
         "Échec de l'initialisation de Lasso:Login ou Lasso:Logout",
         "Échec de la résolution de l'artefact Liberty Alliance",
