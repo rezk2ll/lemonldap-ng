@@ -28,18 +28,18 @@ sub defaultValuesInit {
 
     # If not, try to read it from /etc/lemonldap-ng/sympa.secret
     if ( !$sympaSecret and -r '/etc/lemonldap-ng/sympa.secret' ) {
-    open S, '/etc/lemonldap-ng/sympa.secret'
-  or die "Unable to open /etc/lemonldap-ng/sympa.secret";
-    $sympaSecret = join( '', <S> );
-    close S;
-    $sympaSecret =~ s/[\r\n]//g;
+        open S, '/etc/lemonldap-ng/sympa.secret'
+          or die "Unable to open /etc/lemonldap-ng/sympa.secret";
+        $sympaSecret = join( '', <S> );
+        close S;
+        $sympaSecret =~ s/[\r\n]//g;
     }
 
     # Sympa mail key
     $sympaMailKey = $args->{'sympaMailKey'} || $sympaMailKey || "mail";
 
     # Display found values in debug mode
-    $class->lmLog( "sympaSecret: $sympaSecret", 'debug' );
+    $class->lmLog( "sympaSecret: $sympaSecret",   'debug' );
     $class->lmLog( "sympaMailKey: $sympaMailKey", 'debug' );
 
     # Delete Sympa parameters

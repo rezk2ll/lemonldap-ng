@@ -38,8 +38,8 @@ sub getUser {
 # Get all required attributes
 # @return Lemonldap::NG::Portal error code
 sub setSessionInfo {
-    my $self   = shift;
-    my $idp    = $self->{_idp};
+    my $self       = shift;
+    my $idp        = $self->{_idp};
     my $idpConfKey = $self->{_idpConfKey};
     my $nameid     = $self->{_nameID};
 
@@ -87,9 +87,12 @@ sub setSessionInfo {
             'error' );
         return 0;
     }
-    unless ( $privateKeyEnc ) {
-        $self->lmLog( "SAML private encryption key not found in configuration, "
-            . "use private signature key", 'debug' );
+    unless ($privateKeyEnc) {
+        $self->lmLog(
+            "SAML private encryption key not found in configuration, "
+              . "use private signature key",
+            'debug'
+        );
         $privateKeyEnc = $privateKeySig;
     }
 
@@ -101,7 +104,9 @@ sub setSessionInfo {
         $service_metadata->serviceToXML(
             $ENV{DOCUMENT_ROOT} . "/skins/common/saml2-metadata.tpl", $self
         ),
-        $privateKeySig, undef, $privateKeyEnc
+        $privateKeySig,
+        undef,
+        $privateKeyEnc
     );
 
     unless ($server) {

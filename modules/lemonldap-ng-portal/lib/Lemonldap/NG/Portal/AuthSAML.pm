@@ -212,18 +212,18 @@ sub extractFormInfo {
             }
 
             # Check authentication context
-                my $responseAuthnContext;
-                eval {
-                    $responseAuthnContext =
-                      $assertion->AuthnStatement()->AuthnContext()
-                      ->AuthnContextClassRef();
-                };
-                if ($@) {
-                    $self->lmLog(
-                        "Unable to get authentication context from $idpConfKey",
+            my $responseAuthnContext;
+            eval {
+                $responseAuthnContext =
+                  $assertion->AuthnStatement()->AuthnContext()
+                  ->AuthnContextClassRef();
+            };
+            if ($@) {
+                $self->lmLog(
+                    "Unable to get authentication context from $idpConfKey",
                     'debug' );
                 $responseAuthnContext = $self->getAuthnContext("unspecified");
-                }
+            }
             else {
                 $self->lmLog(
                     "Found authentication context: $responseAuthnContext",
@@ -266,9 +266,9 @@ sub extractFormInfo {
             $self->{user} = $user;
 
             # Store Lasso objects
-            $self->{_lassoLogin} = $login;
-            $self->{_idp}        = $idp;
-            $self->{_idpConfKey} = $idpConfKey;
+            $self->{_lassoLogin}   = $login;
+            $self->{_idp}          = $idp;
+            $self->{_idpConfKey}   = $idpConfKey;
             $self->{_nameID}       = $nameid;
             $self->{_sessionIndex} = $session_index;
 
@@ -507,7 +507,7 @@ sub extractFormInfo {
                         my $realSessionInfo =
                           $self->getApacheSession( $sessionInfo->{_id}, 1 );
 
-                    # Get Lasso::Session dump
+                  # Get Lasso::Session dump
                   # This value is erased if a next session match the SLO request
                         if (   $realSessionInfo
                             && $realSessionInfo->{_lassoSessionDump} )
@@ -524,7 +524,7 @@ sub extractFormInfo {
                         my $del_real_result =
                           $self->_deleteSession($realSessionInfo);
 
-                    $self->lmLog(
+                        $self->lmLog(
 "Delete real session $real_session result: $del_real_result",
                             'debug'
                         );
@@ -1040,7 +1040,7 @@ sub setAuthSessionInfo {
     my $sessionNotOnOrAfter;
     eval {
         $sessionNotOnOrAfter =
-      $assertion->AuthnStatement()->SessionNotOnOrAfter();
+          $assertion->AuthnStatement()->SessionNotOnOrAfter();
     };
 
     if ( $@ or !$sessionNotOnOrAfter ) {
@@ -1048,23 +1048,23 @@ sub setAuthSessionInfo {
     }
     else {
 
-    my $samltime = $self->samldate2timestamp($sessionNotOnOrAfter);
-    my $utime    = time();
-    my $timeout  = $self->{timeout};
-    my $adaptSessionUtime =
-      $self->{samlIDPMetaDataOptions}->{$idpConfKey}
-      ->{samlIDPMetaDataOptionsAdaptSessionUtime};
+        my $samltime = $self->samldate2timestamp($sessionNotOnOrAfter);
+        my $utime    = time();
+        my $timeout  = $self->{timeout};
+        my $adaptSessionUtime =
+          $self->{samlIDPMetaDataOptions}->{$idpConfKey}
+          ->{samlIDPMetaDataOptionsAdaptSessionUtime};
 
-    if ( ( $utime + $timeout > $samltime ) and $adaptSessionUtime ) {
+        if ( ( $utime + $timeout > $samltime ) and $adaptSessionUtime ) {
 
-        # Use SAML time to determine the start of the session
-        my $new_utime = $samltime - $timeout;
-        $self->{sessionInfo}->{_utime} = $new_utime;
-        $self->lmLog(
+            # Use SAML time to determine the start of the session
+            my $new_utime = $samltime - $timeout;
+            $self->{sessionInfo}->{_utime} = $new_utime;
+            $self->lmLog(
 "Adapt _utime with SessionNotOnOrAfter value, new _utime: $new_utime",
-            'debug'
-        );
-    }
+                'debug'
+            );
+        }
 
     }
 

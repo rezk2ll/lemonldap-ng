@@ -1539,11 +1539,13 @@ sub autoRedirect {
             my $ssl = $1;
             $self->lmLog( 'CDA request', 'debug' );
             $self->{urldc} .=
-                ( $self->{urldc} =~ /\?/ ? '&' : '?' )
+                ( $self->{urldc} =~ /\?/ ? '&' : '?' ) 
               . $self->{cookieName} . "="
-              . ( ( $self->{securedCookie} != 2 or $ssl )
+              . (
+                ( $self->{securedCookie} != 2 or $ssl )
                 ? $self->{id}
-                : $self->{sessionInfo}->{_httpSession} );
+                : $self->{sessionInfo}->{_httpSession}
+              );
         }
         $self->updateStatus;
         print $self->SUPER::redirect(

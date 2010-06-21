@@ -168,18 +168,20 @@ sub serviceToXML {
     foreach (@param_keys) {
         my $str = '';
         my $val = $conf->{$_};
+
         # A default value for samlServicePublicKeyEnc parameter
         if ( $_ =~ /samlServicePublicKeyEnc/ ) {
             unless ( $val && length $val gt 0 ) {
                 $val = $conf->{samlServicePublicKeySig};
             }
         }
+
         # Generate XML
         if ( defined $val && length $val gt 0 ) {
+
             # Public Key ?
             if ( $val =~ /^-----BEGIN PUBLIC KEY-----/
-                and my $rsa_pub =
-                Crypt::OpenSSL::RSA->new_public_key($val) )
+                and my $rsa_pub = Crypt::OpenSSL::RSA->new_public_key($val) )
             {
                 my @params = $rsa_pub->get_key_parameters();
                 my $mod    = encode_base64( $params[0]->to_bin() );
@@ -188,15 +190,21 @@ sub serviceToXML {
                     '<ds:KeyValue>' . "\n\t"
                   . '<RSAKeyValue xmlns="http://www.w3.org/2000/09/xmldsig#">'
                   . "\n\t\t"
-                  . '<Modulus>' . $mod . '</Modulus>' . "\n\t\t"
-                  . '<Exponent>' . $exp . '</Exponent>' . "\n\t"
+                  . '<Modulus>'
+                  . $mod
+                  . '</Modulus>'
+                  . "\n\t\t"
+                  . '<Exponent>'
+                  . $exp
+                  . '</Exponent>' . "\n\t"
                   . '</RSAKeyValue>' . "\n"
                   . '</ds:KeyValue>';
             }
+
             # Certificate ?
             if ( $val =~ /^-----BEGIN CERTIFICATE-----/
-                 and my $certificate =
-                 Crypt::OpenSSL::X509->new_from_string($val) )
+                and my $certificate =
+                Crypt::OpenSSL::X509->new_from_string($val) )
             {
                 $certificate = $certificate->as_string();
                 $certificate =~ s/^-----BEGIN CERTIFICATE-----\n?//g;

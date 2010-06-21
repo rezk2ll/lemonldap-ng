@@ -866,34 +866,34 @@ sub issuerForUnAuthUser {
 
         # Create attribute statement
         if ( scalar @returned_attributes ) {
-        my $attribute_statement;
+            my $attribute_statement;
 
             eval {
                 $attribute_statement = Lasso::Saml2AttributeStatement->new();
             };
-        if ($@) {
-            $self->checkLassoError($@);
-            $self->returnSOAPMessage();
-        }
+            if ($@) {
+                $self->checkLassoError($@);
+                $self->returnSOAPMessage();
+            }
 
-        # Register attributes in attribute statement
-        $attribute_statement->Attribute(@returned_attributes);
+            # Register attributes in attribute statement
+            $attribute_statement->Attribute(@returned_attributes);
 
-        # Create assetion
-        my $assertion;
+            # Create assetion
+            my $assertion;
 
-        eval { $assertion = Lasso::Saml2Assertion->new(); };
-        if ($@) {
-            $self->checkLassoError($@);
-            $self->returnSOAPMessage();
-        }
+            eval { $assertion = Lasso::Saml2Assertion->new(); };
+            if ($@) {
+                $self->checkLassoError($@);
+                $self->returnSOAPMessage();
+            }
 
-        # Add attribute statement in response assertion
-        my @attributes_statement = ($attribute_statement);
-        $assertion->AttributeStatement(@attributes_statement);
+            # Add attribute statement in response assertion
+            my @attributes_statement = ($attribute_statement);
+            $assertion->AttributeStatement(@attributes_statement);
 
-        # Set response assertion
-        $query->response->Assertion( ($assertion) );
+            # Set response assertion
+            $query->response->Assertion( ($assertion) );
         }
 
         # Build response
@@ -1363,22 +1363,22 @@ sub issuerForAuthUser {
             # Create attribute statement
             if ( scalar @attributes ) {
 
-            my $attribute_statement;
+                my $attribute_statement;
 
-            eval {
+                eval {
                     $attribute_statement =
                       Lasso::Saml2AttributeStatement->new();
-            };
-            if ($@) {
-                $self->checkLassoError($@);
-                return PE_ERROR;
-            }
+                };
+                if ($@) {
+                    $self->checkLassoError($@);
+                    return PE_ERROR;
+                }
 
-            # Register attributes in attribute statement
-            $attribute_statement->Attribute(@attributes);
+                # Register attributes in attribute statement
+                $attribute_statement->Attribute(@attributes);
 
-            # Add attribute statement in response assertion
-            my @attributes_statement = ($attribute_statement);
+                # Add attribute statement in response assertion
+                my @attributes_statement = ($attribute_statement);
                 $response_assertions[0]
                   ->AttributeStatement(@attributes_statement);
             }

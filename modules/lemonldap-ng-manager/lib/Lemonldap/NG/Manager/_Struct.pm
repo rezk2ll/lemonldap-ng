@@ -546,7 +546,7 @@ sub struct {
                     # Sympa
                     sympaHandler => {
                         _nodes       => [qw(sympaSecret sympaMailKey)],
-                        sympaSecret => 'text:/sympaSecret',
+                        sympaSecret  => 'text:/sympaSecret',
                         sympaMailKey => 'text:/sympaMailKey',
                     },
                 },
@@ -633,36 +633,37 @@ sub struct {
 
             # SECURITY NODE
             samlServiceSecurity => {
-                _nodes => [qw(n:samlServiceSecuritySig n:samlServiceSecurityEnc)],
-                _help  => 'default',
+                _nodes =>
+                  [qw(n:samlServiceSecuritySig n:samlServiceSecurityEnc)],
+                _help                  => 'default',
                 samlServiceSecuritySig => {
-                _nodes => [
-                    qw(samlServicePrivateKeySig
-                       samlServicePrivateKeySigPwd
-                           samlServicePublicKeySig)
-                ],
-                _help => 'default',
-                samlServicePrivateKeySig =>
+                    _nodes => [
+                        qw(samlServicePrivateKeySig
+                          samlServicePrivateKeySigPwd
+                          samlServicePublicKeySig)
+                    ],
+                    _help => 'default',
+                    samlServicePrivateKeySig =>
 'filearea:/samlServicePrivateKeySig:samlServicePrivateKeySig:filearea',
-                samlServicePrivateKeySigPwd =>
-'text:/samlServicePrivateKeySigPwd',
-                samlServicePublicKeySig  =>
+                    samlServicePrivateKeySigPwd =>
+                      'text:/samlServicePrivateKeySigPwd',
+                    samlServicePublicKeySig =>
 'filearea:/samlServicePublicKeySig:samlServicePublicKeySig:filearea',
-               },
-               samlServiceSecurityEnc => {
-                   _nodes => [
-                       qw(samlServicePrivateKeyEnc
+                },
+                samlServiceSecurityEnc => {
+                    _nodes => [
+                        qw(samlServicePrivateKeyEnc
                           samlServicePrivateKeyEncPwd
                           samlServicePublicKeyEnc)
-                   ],
-                _help => 'default',
-                samlServicePrivateKeyEnc =>
+                    ],
+                    _help => 'default',
+                    samlServicePrivateKeyEnc =>
 'filearea:/samlServicePrivateKeyEnc:samlServicePrivateKeyEnc:filearea',
-                samlServicePrivateKeyEncPwd =>
-'text:/samlServicePrivateKeyEncPwd',
-                samlServicePublicKeyEnc  =>
+                    samlServicePrivateKeyEncPwd =>
+                      'text:/samlServicePrivateKeyEncPwd',
+                    samlServicePublicKeyEnc =>
 'filearea:/samlServicePublicKeyEnc:samlServicePublicKeyEnc:filearea',
-            },
+                },
             },
 
             # NAMEID FORMAT MAP
@@ -802,7 +803,7 @@ sub struct {
 'samlAssertion:/samlIDPSSODescriptorArtifactResolutionServiceArtifact',
                 },
 
-                },
+            },
 
             # ATTRIBUTE AUTHORITY
             samlAttributeAuthorityDescriptor => {
@@ -923,7 +924,7 @@ sub testStruct {
                 1;
             },
         },
-        https    => $boolean,
+        https                => $boolean,
         issuerActivationRule => {
             test     => $perlExpr,
             warnTest => sub {
@@ -1052,7 +1053,7 @@ sub testStruct {
             keyTest => qr/^(?:none|authentificate|manager|)$/,
             msgFail => 'must be one of none authentificate manager',
         },
-        securedCookie         => {
+        securedCookie => {
             test    => qr/^(?:0|1|2)$/,
             msgFail => 'securedCookie must be 0, 1 or 2',
         },
@@ -1091,8 +1092,8 @@ sub testStruct {
         ########
         # SAML #
         ########
-        saml                  => $testNotDefined,
-        samlServiceMetaData   => $testNotDefined,
+        saml                              => $testNotDefined,
+        samlServiceMetaData               => $testNotDefined,
         samlIDPMetaDataExportedAttributes => {
             keyTest    => qr/^[a-zA-Z](?:[\w\-\.]*\w)?$/,
             keyMsgFail => 'Bad metadata name',
@@ -1143,15 +1144,15 @@ sub testStruct {
                 keyTest => sub { return 1; },
             },
         },
-        samlEntityID                               => $testNotDefined,
-        samlOrganizationDisplayName                => $testNotDefined,
-        samlOrganizationName                       => $testNotDefined,
-        samlOrganizationURL                        => $testNotDefined,
-        samlSPSSODescriptorAuthnRequestsSigned     => $boolean,
+        samlEntityID                                       => $testNotDefined,
+        samlOrganizationDisplayName                        => $testNotDefined,
+        samlOrganizationName                               => $testNotDefined,
+        samlOrganizationURL                                => $testNotDefined,
+        samlSPSSODescriptorAuthnRequestsSigned             => $boolean,
         samlSPSSODescriptorWantAssertionsSigned            => $boolean,
         samlSPSSODescriptorSingleLogoutServiceHTTPRedirect => $testNotDefined,
         samlSPSSODescriptorSingleLogoutServiceHTTPPost     => $testNotDefined,
-        samlSPSSODescriptorSingleLogoutServiceSOAP => $testNotDefined,
+        samlSPSSODescriptorSingleLogoutServiceSOAP         => $testNotDefined,
         samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact =>
           $testNotDefined,
         samlSPSSODescriptorAssertionConsumerServiceHTTPPost => $testNotDefined,
@@ -1167,17 +1168,17 @@ sub testStruct {
         samlIDPSSODescriptorSingleLogoutServiceSOAP          => $testNotDefined,
         samlIDPSSODescriptorArtifactResolutionServiceArtifact =>
           $testNotDefined,
-        samlNameIDFormatMapEmail                        => $testNotDefined,
-        samlNameIDFormatMapX509                         => $testNotDefined,
-        samlNameIDFormatMapWindows                      => $testNotDefined,
-        samlNameIDFormatMapKerberos                     => $testNotDefined,
+        samlNameIDFormatMapEmail                             => $testNotDefined,
+        samlNameIDFormatMapX509                              => $testNotDefined,
+        samlNameIDFormatMapWindows                           => $testNotDefined,
+        samlNameIDFormatMapKerberos                          => $testNotDefined,
         samlAttributeAuthorityDescriptorAttributeServiceSOAP => $testNotDefined,
-        samlServicePrivateKeySig                        => $testNotDefined,
-        samlServicePrivateKeySigPwd                     => $testNotDefined,
-        samlServicePublicKeySig                         => $testNotDefined,
-        samlServicePrivateKeyEnc                        => $testNotDefined,
-        samlServicePrivateKeyEncPwd                     => $testNotDefined,
-        samlServicePublicKeyEnc                         => $testNotDefined,
+        samlServicePrivateKeySig                             => $testNotDefined,
+        samlServicePrivateKeySigPwd                          => $testNotDefined,
+        samlServicePublicKeySig                              => $testNotDefined,
+        samlServicePrivateKeyEnc                             => $testNotDefined,
+        samlServicePrivateKeyEncPwd                          => $testNotDefined,
+        samlServicePublicKeyEnc                              => $testNotDefined,
 
         # SSL
         SSLVar       => $testNotDefined,
@@ -1237,7 +1238,7 @@ sub testStruct {
         zimbraSsoUrl     => $testNotDefined,
 
         # Sympa
-        sympaSecret => $testNotDefined,
+        sympaSecret  => $testNotDefined,
         sympaMailKey => $testNotDefined,
 
     };
@@ -1395,20 +1396,20 @@ sub defaultConf {
           '1;0;urn:oasis:names:tc:SAML:2.0:bindings:SOAP;' 
           . $portal
           . '/saml/artifact',
-        samlNameIDFormatMapEmail                        => 'mail',
-        samlNameIDFormatMapX509                         => 'mail',
-        samlNameIDFormatMapWindows                      => 'uid',
-        samlNameIDFormatMapKerberos                     => 'uid',
+        samlNameIDFormatMapEmail    => 'mail',
+        samlNameIDFormatMapX509     => 'mail',
+        samlNameIDFormatMapWindows  => 'uid',
+        samlNameIDFormatMapKerberos => 'uid',
         samlAttributeAuthorityDescriptorAttributeServiceSOAP =>
           'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;' 
           . $portal
           . '/saml/AA/SOAP;',
-        samlServicePrivateKeySig                        => '',
-        samlServicePrivateKeySigPwd                     => '',
-        samlServicePublicKeySig                         => '',
-        samlServicePrivateKeyEnc                        => '',
-        samlServicePrivateKeyEncPwd                     => '',
-        samlServicePublicKeyEnc                         => '',
+        samlServicePrivateKeySig    => '',
+        samlServicePrivateKeySigPwd => '',
+        samlServicePublicKeySig     => '',
+        samlServicePrivateKeyEnc    => '',
+        samlServicePrivateKeyEncPwd => '',
+        samlServicePublicKeyEnc     => '',
 
     };
 }

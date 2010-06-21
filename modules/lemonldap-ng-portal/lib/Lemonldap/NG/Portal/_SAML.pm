@@ -1249,7 +1249,7 @@ sub createLogout {
         eval { $logout = Lasso::Logout::new_from_dump( $server, $dump ); };
     }
     else {
-    eval { $logout = Lasso::Logout->new($server); };
+        eval { $logout = Lasso::Logout->new($server); };
     }
 
     if ($@) {
@@ -1981,10 +1981,10 @@ sub getHttpMethod {
 sub getHttpMethodString {
     my ( $self, $method ) = splice @_;
 
-    return "POST"     if ( $method == Lasso::Constants::HTTP_METHOD_POST );
+    return "POST" if ( $method == Lasso::Constants::HTTP_METHOD_POST );
     return "REDIRECT"
       if ( $method == Lasso::Constants::HTTP_METHOD_REDIRECT );
-    return "SOAP"     if ( $method == Lasso::Constants::HTTP_METHOD_SOAP );
+    return "SOAP" if ( $method == Lasso::Constants::HTTP_METHOD_SOAP );
     return "ARTIFACT GET"
       if ( $method == Lasso::Constants::HTTP_METHOD_ARTIFACT_GET );
     return "ARTIFACT POST"
