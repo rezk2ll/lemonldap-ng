@@ -152,7 +152,7 @@ elsif ( my $info = $portal->info() ) {
     );
 }
 
-# 2.3 Authentication has been refused OR this is the first access
+# 2.4 Authentication has been refused OR this is the first access
 else {
     $skinfile       = 'login.tpl';
     %templateParams = (

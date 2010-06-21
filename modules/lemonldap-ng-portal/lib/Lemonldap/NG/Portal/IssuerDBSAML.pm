@@ -71,6 +71,8 @@ sub issuerForUnAuthUser {
       $self->{portal} . '/saml/relaySingleLogoutSOAP';
     my $saml_slo_url_relay_post =
       $self->{portal} . '/saml/relaySingleLogoutPOST';
+    my $saml_slo_url_relay_term =
+      $self->{portal} . '/saml/relaySingleLogoutTermination';
     my $saml_att_soap_url = $self->getMetaDataURL(
         "samlAttributeAuthorityDescriptorAttributeServiceSOAP", 1 );
 
@@ -584,6 +586,34 @@ sub issuerForUnAuthUser {
         # If we are here, there was a problem with POST response
         $self->lmLog( "Logout response was not sent trough POST", 'error' );
         return PE_IMG_NOK;
+    }
+
+    # 1.3.3 Termination
+    #      Used to send SLO response to SP issuing SLO request
+    if ( $url =~ /^(\Q$saml_slo_url_relay_term\E)/io ) {
+
+        $self->lmLog(
+            "URL $url detected as a SLO Termination relay service URL",
+            'debug' );
+
+        # Check if relay parameter is present (mandatory)
+        my $relayID;
+        unless ( $relayID = $self->param('relay') ) {
+            $self->lmLog( "No relayID detected", 'error' );
+            return PE_ERROR;
+        }
+
+        # Retrieve the corresponding data from samlStorage
+        my $relayInfos = $self->getSamlSession($relayID);
+        unless ($relayInfos) {
+            $self->lmLog( "Could not get relay session $relayID", 'error' );
+            return PE_ERROR;
+        }
+
+        $self->lmLog( "Found relay session $relayID", 'debug' );
+
+        # TODO
+        $self->abort("Work in progress");
     }
 
     # 1.4. Artifacts
@@ -1657,15 +1687,17 @@ sub issuerForAuthUser {
                 return PE_ERROR;
             }
 
+            # Create SLO status session and get ID
+            my $sloStatusSessionInfo = $self->getSamlSession();
+            $sloStatusSessionInfo->{type}    = 'sloStatus';
+            $sloStatusSessionInfo->{_utime}  = 'time';
+            $sloStatusSessionInfo->{_logout} = $logout->dump;
+            my $relayID = $sloStatusSessionInfo->{_session_id};
+            untie %$sloStatusSessionInfo;
+
             # Prepare logout on all others SP
             my $provider_nb =
-              $self->sendLogoutRequestToServiceProviders($logout);
-
-            # Set RelayState
-            if ($relaystate) {
-                $logout->msg_relayState($relaystate);
-                $self->lmLog( "Set $relaystate in RelayState", 'debug' );
-            }
+              $self->sendLogoutRequestToServiceProviders( $logout, $relayID );
 
             # Get session index
             my $session_index;
@@ -1712,21 +1744,32 @@ sub issuerForAuthUser {
                 return PE_ERROR unless ( $self->disableSignature($logout) );
             }
 
-            # Send logout response. The process could be stopped here, if no
-            # there are no providers to wait for logout via HTTP-REDIRECT
-            # method.
-            my $status =
-              $self->sendLogoutResponseToServiceProvider( $logout, $method,
-                $relaystate, $provider_nb );
-
-            # Verify that logout response is correctly sent. If we have to wait
-            # for providers during HTTP-REDIRECT process, return PE_INFO to
-            # notify to wait for them.
-            if ( $provider_nb && $status ) {
-                return PE_INFO;
+            # Set RelayState
+            if ($relaystate) {
+                $logout->msg_relayState($relaystate);
+                $self->lmLog( "Set $relaystate in RelayState", 'debug' );
             }
-            elsif ( !$status ) {
+
+            # If no waiting SP, return directly SLO response
+            unless ($provider_nb) {
+                unless (
+                    $self->sendLogoutResponseToServiceProvider(
+                        $logout, $method
+                    )
+                  )
+                {
+                    $self->lmLog( "Fail to send SLO response", 'error' );
                 return PE_ERROR;
+            }
+            }
+
+            # Else build SLO status relay URL and display info
+            else {
+                $self->{urldc} =
+                    $self->{portal}
+                  . '/saml/relaySingleLogoutTermination?relay='
+                  . $relayID;
+                return PE_INFO;
             }
 
         }

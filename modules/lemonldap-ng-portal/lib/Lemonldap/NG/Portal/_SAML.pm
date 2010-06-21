@@ -2129,15 +2129,13 @@ sub samldate2timestamp {
     return $timestamp;
 }
 
-## @pmethod int sendLogoutResponseToServiceProvider(Lasso::Logout $logout, int $method, string $relaystate, int $wait)
+## @pmethod int sendLogoutResponseToServiceProvider(Lasso::Logout $logout, int $method)
 # Send logout response issue from a logout request.
 # @param $logout Lasso Logout object
 # @param $method Method to use
-# @param $relaystate The relay state
-# @param $wait If true, do not call to autoRedirect or autoPost function
 # @return boolean False if failed.
 sub sendLogoutResponseToServiceProvider {
-    my ( $self, $logout, $method, $relaystate, $seconds ) = splice @_;
+    my ( $self, $logout, $method ) = splice @_;
 
     # Logout response
     unless ( $self->buildLogoutResponseMsg($logout) ) {
@@ -2155,9 +2153,6 @@ sub sendLogoutResponseToServiceProvider {
 
         $self->lmLog( "Redirect user to $slo_url", 'debug' );
 
-        # Redirect immediately
-        if ( !$seconds ) {
-
             $self->_subProcess(qw(autoRedirect));
 
             # If we are here, there was a problem with HTTP-REDIRECT response
@@ -2167,14 +2162,13 @@ sub sendLogoutResponseToServiceProvider {
 
         }
 
-    }
-
     # HTTP-POST
     elsif ( $method == Lasso::Constants::HTTP_METHOD_POST ) {
 
         # Use autosubmit form
         my $slo_url  = $logout->msg_url;
         my $slo_body = $logout->msg_body;
+        my $relaystate = $logout->msg_relayState;
 
         $self->{postUrl} = $slo_url;
         $self->{postFields} = { 'SAMLResponse' => $slo_body };
@@ -2450,28 +2444,22 @@ sub sendLogoutRequestToServiceProvider {
 
 }
 
-## @pmethod int sendLogoutRequestToServiceProviders(Lasso::Logout logout)
+## @pmethod int sendLogoutRequestToServiceProviders(Lasso::Logout logout, string relayState )
 # Send logout response issue from a logout request to all other service
 # providers. If information have to be displayed to users, such as
 # iframe to send HTTP-Redirect or HTTP-POST logout request, then
 # $self->{_info} will be updated.
 # @param logout Lasso Logout object
+# @param relayState Relay State for SLO status
 # @return int Number of concerned providers.
 sub sendLogoutRequestToServiceProviders {
-    my $self           = shift;
-    my $logout         = shift;
+    my ( $self, $logout, $relayState ) = splice @_;
     my $server         = $self->{_lassoServer};
     my $providersCount = 0;
     my $info           = '';
 
     # Reset providerID into Lasso::Logout object
     $self->resetProviderIdIndex($logout);
-
-    # Create SLO status session and store ID in RelayState
-    my $sloStatusSessionInfo = $self->getSamlSession();
-    $sloStatusSessionInfo->{type}   = 'sloStatus';
-    $sloStatusSessionInfo->{_utime} = 'time';
-    my $relayState = $sloStatusSessionInfo->{_session_id};
 
     # Header of the block which will be displayed to the user, if needed.
     $info .= '<h2>'
@@ -2510,7 +2498,8 @@ sub sendLogoutRequestToServiceProviders {
     if ($providersCount) {
         $self->info($info);
         $self->setHiddenFormValue( 'HttpRedirect',     'true' );
-        $self->setHiddenFormValue( 'HideSubmitButton', 'true' );
+
+        #        $self->setHiddenFormValue( 'HideSubmitButton', 'true' );
     }
 
     return $providersCount;
