@@ -444,6 +444,23 @@ sub issuerForUnAuthUser {
                     'debug' );
             }
 
+            # Store success status for this SLO request
+            my $sloStatusSessionInfos = $self->getSamlSession($relaystate);
+
+            if ($sloStatusSessionInfos) {
+                $sloStatusSessionInfos->{$spConfKey} = 1;
+                untie %$sloStatusSessionInfos;
+                $self->lmLog(
+                    "Store SLO status for $spConfKey in session $relaystate",
+                    'debug' );
+            }
+            else {
+                $self->lmLog(
+"Unable to store SLO status for $spConfKey in session $relaystate",
+                    'warn'
+                );
+            }
+
             # SLO response is OK
             $self->lmLog( "Display OK status for SLO on $spConfKey", 'debug' );
             return PE_IMG_OK;
@@ -469,18 +486,20 @@ sub issuerForUnAuthUser {
             'debug' );
 
         # Check if relay parameter is present (mandatory)
-        my $samlID;
-        unless ( $samlID = $self->param('relay') ) {
+        my $relayID;
+        unless ( $relayID = $self->param('relay') ) {
             $self->lmLog( "No relayID detected", 'error' );
             return PE_IMG_NOK;
         }
 
         # Retrieve the corresponding data from samlStorage
-        my $samlData = $self->replayProtection($samlID);
-        unless ( $samlData && $samlData ne 1 ) {
-            $self->lmLog( "No logout dump found for samlID $samlID", 'error' );
+        my $relayInfos = $self->getSamlSession($relayID);
+        unless ($relayInfos) {
+            $self->lmLog( "Could not get relay session $relayID", 'error' );
             return PE_IMG_NOK;
         }
+
+        $self->lmLog( "Found relay session $relayID", 'debug' );
 
         # Rebuild the logout object
         my $logout;
@@ -490,9 +509,11 @@ sub issuerForUnAuthUser {
         }
 
         # Load Session and Identity if they exist
-        my $session    = $samlData->{_lassoSessionDump};
-        my $identity   = $samlData->{_lassoIdentityDump};
-        my $providerID = $samlData->{_providerID};
+        my $session    = $relayInfos->{_lassoSessionDump};
+        my $identity   = $relayInfos->{_lassoIdentityDump};
+        my $providerID = $relayInfos->{_providerID};
+        my $relayState = $relayInfos->{_relayState};
+        my $spConfKey  = $self->{_spList}->{$providerID}->{confKey};
 
         if ($session) {
             unless ( $self->setSessionFromDump( $logout, $session ) ) {
@@ -520,8 +541,26 @@ sub issuerForUnAuthUser {
             return PE_IMG_NOK;
         }
 
-        return PE_IMG_OK;
+        # Store success status for this SLO request
+        my $sloStatusSessionInfos = $self->getSamlSession($relayState);
 
+        if ($sloStatusSessionInfos) {
+            $sloStatusSessionInfos->{$spConfKey} = 1;
+            untie %$sloStatusSessionInfos;
+            $self->lmLog(
+                "Store SLO status for $spConfKey in session $relayState",
+                'debug' );
+        }
+        else {
+            $self->lmLog(
+"Unable to store SLO status for $spConfKey in session $relayState",
+                'warn'
+            );
+        }
+
+        # SLO response is OK
+        $self->lmLog( "Display OK status for SLO on $spConfKey", 'debug' );
+        return PE_IMG_OK;
     }
 
     # 1.3.2 POST
@@ -551,6 +590,7 @@ sub issuerForUnAuthUser {
         # Get data to build POST form
         $self->{postUrl} = $relayInfos->{url};
         $self->{postFields}->{'SAMLRequest'} = $relayInfos->{body};
+        $self->{postFields}->{'RelayState'}  = $relayInfos->{relayState};
 
         $self->_subProcess(qw(autoPost));
 

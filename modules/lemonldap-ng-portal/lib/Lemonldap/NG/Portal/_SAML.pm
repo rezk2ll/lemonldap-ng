@@ -2213,7 +2213,7 @@ sub sendLogoutResponseToServiceProvider {
 
 }
 
-## @pmethod int sendLogoutRequestToServiceProvider(Lasso::Logout $logout, string $providerID, int $method)
+## @pmethod int sendLogoutRequestToServiceProvider(Lasso::Logout $logout, string $providerID, int $method, boolean $relay, string $relayState)
 # Send a logout request to a service provider
 # If information have to be displayed to users, such as iframe to send
 # HTTP-Redirect or HTTP-POST logout request, then $self->{_info} will be
@@ -2222,9 +2222,11 @@ sub sendLogoutResponseToServiceProvider {
 # @param $providerID The concerned service provider
 # @param $method The method used to send the logout request
 # @param $relay If SOAP method, build a relay logout request
+# @param $relayState Relay State for SLO status
 # @return int Number of concerned providers.
 sub sendLogoutRequestToServiceProvider {
-    my ( $self, $logout, $providerID, $method, $relay ) = splice @_;
+    my ( $self, $logout, $providerID, $method, $relay, $relayState ) =
+      splice @_;
     my $server = $self->{_lassoServer};
     my $info;
 
@@ -2262,6 +2264,18 @@ sub sendLogoutRequestToServiceProvider {
         $self->lmLog( "Do not sign this SLO request", 'debug' );
         return ( 0, undef, undef )
           unless ( $self->disableSignature($logout) );
+    }
+
+    # Relay State
+    if ($relayState) {
+        eval { $logout->msg_relayState($relayState); };
+        if ($@) {
+            $self->lmLog(
+"Unable to set Relay State $relayState in SLO request for $spConfKey",
+                'error'
+            );
+            return ( 0, $method, undef );
+        }
     }
 
     # Build the request unless this is a SOAP relay logout request
@@ -2321,6 +2335,7 @@ sub sendLogoutRequestToServiceProvider {
         $relayInfos->{_utime} = time;
         $relayInfos->{url}    = $logout->msg_url;
         $relayInfos->{body}   = $logout->msg_body;
+        $relayInfos->{relayState} = $logout->msg_relayState;
 
         my $relayID = $relayInfos->{_session_id};
 
@@ -2350,30 +2365,29 @@ sub sendLogoutRequestToServiceProvider {
             $self->lmLog( "Build SOAP relay logout request for $providerID",
                 'debug' );
 
-            my $random = new String::Random;
-            my $samlID = $random->randregex('[a-z0-9]{32}');
+            # Create a new relay session
+            my $relayInfos = $self->getSamlSession();
 
             # Build needed information to be stored into samlStorage
-            my $samlData = ();
             unless ( $logout->get_session() && $logout->get_identity() ) {
                 $self->lmLog(
                     "No session and identity found into logout object",
                     'error' );
                 return ( 0, $method, undef );
             }
-            $samlData->{_lassoSessionDump}  = $logout->get_session->dump;
-            $samlData->{_lassoIdentityDump} = $logout->get_identity->dump;
-            $samlData->{_providerID}        = $providerID;
 
-            # Store information in temporary storage, to be reused then.
-            return ( 0, $method, undef )
-              unless ( $self->storeReplayProtection( $samlID, $samlData ) );
+            $relayInfos->{type}               = 'relay';
+            $relayInfos->{_utime}             = time;
+            $relayInfos->{_lassoSessionDump}  = $logout->get_session->dump;
+            $relayInfos->{_lassoIdentityDump} = $logout->get_identity->dump;
+            $relayInfos->{_providerID}        = $providerID;
+            $relayInfos->{_relayState}        = $logout->msg_relayState;
 
-            $self->lmLog( "Store request for $providerID", 'debug' );
+            my $relayID = $relayInfos->{_session_id};
 
             # Build the URL that could be used to play this logout request
             my $slo_url =
-              $self->{portal} . '/saml/relaySingleLogoutSOAP?relay=' . $samlID;
+              $self->{portal} . '/saml/relaySingleLogoutSOAP?relay=' . $relayID;
 
             # Display information to the user
             $info .= '<tr>'
@@ -2409,6 +2423,23 @@ sub sendLogoutRequestToServiceProvider {
                 return ( 0, $method, undef );
             }
 
+            # Store success status for this SLO request
+            my $sloStatusSessionInfos = $self->getSamlSession($relayState);
+
+            if ($sloStatusSessionInfos) {
+                $sloStatusSessionInfos->{$spConfKey} = 1;
+                untie %$sloStatusSessionInfos;
+                $self->lmLog(
+                    "Store SLO status for $spConfKey in session $relayState",
+                    'debug' );
+            }
+            else {
+                $self->lmLog(
+"Unable to store SLO status for $spConfKey in session $relayState",
+                    'warn'
+                );
+            }
+
             $self->lmLog( "Logout response is valid", 'debug' );
 
         }
@@ -2439,6 +2470,12 @@ sub sendLogoutRequestToServiceProviders {
     # Reset providerID into Lasso::Logout object
     $self->resetProviderIdIndex($logout);
 
+    # Create SLO status session and store ID in RelayState
+    my $sloStatusSessionInfo = $self->getSamlSession();
+    $sloStatusSessionInfo->{type}   = 'sloStatus';
+    $sloStatusSessionInfo->{_utime} = 'time';
+    my $relayState = $sloStatusSessionInfo->{_session_id};
+
     # Header of the block which will be displayed to the user, if needed.
     $info .= '<h2>'
       . &Lemonldap::NG::Portal::_i18n::msg
@@ -2457,7 +2494,7 @@ sub sendLogoutRequestToServiceProviders {
         # Send logout request
         my ( $rstatus, $rmethod, $rinfo ) =
           $self->sendLogoutRequestToServiceProvider( $logout, $providerID,
-            undef, 1 );
+            undef, 1, $relayState );
 
         next unless ($rstatus);
 
