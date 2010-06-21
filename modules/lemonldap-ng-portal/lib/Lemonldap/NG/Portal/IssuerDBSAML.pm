@@ -329,13 +329,15 @@ sub issuerForUnAuthUser {
                 $self->returnSOAPMessage();
             }
 
+            # Validate request if no previous error
+            unless ( $self->validateLogoutRequest($logout) ) {
+                $self->lmLog( "SLO request is not valid", 'error' );
+                $self->returnSOAPMessage();
+            }
+
             # Try to send SLO request trough SOAP
-            my $logout_dump = $logout->dump;
             $self->resetProviderIdIndex($logout);
             while ( my $providerID = $self->getNextProviderId($logout) ) {
-
-                # Do not process logout on SP that initiate the logout request
-                next if ( $sp =~ /^$providerID$/ );
 
                 # Send logout request
                 my ( $rstatus, $rmethod, $rinfo ) =
@@ -349,21 +351,6 @@ sub issuerForUnAuthUser {
                 else {
                     $self->lmLog( "SOAP SLO error on $providerID", 'debug' );
                 }
-            }
-
-            # Rebuild Lasso::Logout object. All data have already been checked.
-            $logout = $self->createLogout( $server, $logout_dump );
-            if ($session) {
-                $self->setSessionFromDump( $logout, $session );
-            }
-            if ($identity) {
-                $self->setIdentityFromDump( $logout, $identity );
-            }
-
-            # Validate request if no previous error
-            unless ( $self->validateLogoutRequest($logout) ) {
-                $self->lmLog( "SLO request is not valid", 'error' );
-                $self->returnSOAPMessage();
             }
 
             # Set RelayState
@@ -1664,35 +1651,25 @@ sub issuerForAuthUser {
             return PE_ERROR
               unless ( $self->checkDestination( $logout->request, $url ) );
 
-            # Get session index
-            my $session_index;
-            eval { $session_index = $logout->request()->SessionIndex; };
-
-            # Proceed to logout on all others SP
-            my $logout_dump = $logout->dump;
-            my $provider_nb =
-              $self->sendLogoutRequestToServiceProviders($logout);
-
-            # Rebuild Lasso::Logout object. All data have already been checked.
-            $logout = $self->createLogout( $server, $logout_dump );
-            if ($session) {
-                $self->setSessionFromDump( $logout, $session );
-            }
-            if ($identity) {
-                $self->setIdentityFromDump( $logout, $identity );
-            }
-
             # Validate request if no previous error
             unless ( $self->validateLogoutRequest($logout) ) {
                 $self->lmLog( "SLO request is not valid", 'error' );
                 return PE_ERROR;
             }
 
+            # Prepare logout on all others SP
+            my $provider_nb =
+              $self->sendLogoutRequestToServiceProviders($logout);
+
             # Set RelayState
             if ($relaystate) {
                 $logout->msg_relayState($relaystate);
                 $self->lmLog( "Set $relaystate in RelayState", 'debug' );
             }
+
+            # Get session index
+            my $session_index;
+            eval { $session_index = $logout->request()->SessionIndex; };
 
             # SLO requests without session index are not accepted
             if ( $@ or !defined $session_index ) {

@@ -2464,9 +2464,6 @@ sub sendLogoutRequestToServiceProviders {
     my $providersCount = 0;
     my $info           = '';
 
-    # Get EntityID
-    my $entityID = $logout->remote_providerID();
-
     # Reset providerID into Lasso::Logout object
     $self->resetProviderIdIndex($logout);
 
@@ -2487,9 +2484,6 @@ sub sendLogoutRequestToServiceProviders {
     # Foreach SP found in session, get it from configuration, and send the
     # appropriate logout request (HTTP,POST,SOAP).
     while ( my $providerID = $self->getNextProviderId($logout) ) {
-
-        # Do not process logout on SP that initiate the logout request
-        next if ( $entityID && $entityID =~ /^$providerID$/ );
 
         # Send logout request
         my ( $rstatus, $rmethod, $rinfo ) =
