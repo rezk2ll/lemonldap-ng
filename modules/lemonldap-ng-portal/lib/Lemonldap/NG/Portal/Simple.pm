@@ -1285,7 +1285,7 @@ sub removeOther {
     if ( $self->{singleUserByIP} ) {
         my $sessions =
           $self->{globalStorage}->searchOn( $self->{globalStorageOptions},
-            $self->{ipAddr}, $ENV{REMOTE_ADDR} );
+            'ipAddr', $ENV{REMOTE_ADDR} );
         foreach my $id ( keys %$sessions ) {
             next if ( $current and $current eq $id );
             my $h = $self->getApacheSession( $id, 1 ) or next;
