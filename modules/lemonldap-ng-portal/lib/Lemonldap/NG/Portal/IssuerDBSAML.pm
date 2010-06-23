@@ -598,7 +598,7 @@ sub issuerForUnAuthUser {
 
         # Check if relay parameter is present (mandatory)
         my $relayID;
-        unless ( $relayID = $self->param('relay') ) {
+        unless ( $relayID = $self->getHiddenFormValue('relay') ) {
             $self->lmLog( "No relayID detected", 'error' );
             return PE_ERROR;
         }
@@ -1843,8 +1843,8 @@ sub issuerForAuthUser {
             else {
                 $self->{urldc} =
                     $self->{portal}
-                  . '/saml/relaySingleLogoutTermination?relay='
-                  . $relayID;
+                  . '/saml/relaySingleLogoutTermination';
+		$self->setHiddenFormValue('relay', $relayID);
                 return PE_INFO;
             }
 

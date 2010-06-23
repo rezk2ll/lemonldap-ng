@@ -31,18 +31,12 @@
   function stop() {
     _go=0;
     $('#timer').html("...");
-    $('#form button[type=submit]').attr('disabled','');
   }
   function go() {
     if(_go) {
-      if(isHiddenFormValueSet('HttpRedirect')){
-        url=$("#form").attr('action');
-        window.location=url;
-      }else{
         $("#form").submit();
       }
     }
-  }
   function timer() {
     var h=$('#timer').html();
     i--;
@@ -51,9 +45,6 @@
     window.setTimeout('timer()',1000);
   }
   $(document).ready(function(){
-    if(isHiddenFormValueSet('HideSubmitButton')){
-      $('#form button[type=submit]').attr('disabled','disabled');
-    }
     window.setTimeout('go()',10000);
     window.setTimeout('timer()',1000);
   });
