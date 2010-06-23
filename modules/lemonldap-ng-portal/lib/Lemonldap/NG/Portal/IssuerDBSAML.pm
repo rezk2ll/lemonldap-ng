@@ -465,7 +465,7 @@ sub issuerForUnAuthUser {
 
     }
 
-    # 1.3. SLO relay (send SOAP requests asynchronously)
+    # 1.3. SLO relay
 
     # 1.3.1 SOAP
     #      This URL is used by IMG html tag, and should returned PE_IMG_*
@@ -612,8 +612,82 @@ sub issuerForUnAuthUser {
 
         $self->lmLog( "Found relay session $relayID", 'debug' );
 
-        # TODO
-        $self->abort("Work in progress");
+        # Get data from relay session
+        my $logout_dump  = $relayInfos->{_logout};
+        my $session_dump = $relayInfos->{_session};
+        my $method       = $relayInfos->{_method};
+
+        unless ($logout_dump) {
+            $self->lmLog( "Could not get logout dump", 'error' );
+            return PE_ERROR;
+        }
+
+        # Rebuild Lasso::Logout object
+        my $logout = $self->createLogout( $server, $logout_dump );
+
+        unless ($logout) {
+            $self->lmLog( "Could not build Lasso::Logout", 'error' );
+            return PE_ERROR;
+        }
+
+        # Inject session
+        unless ($session_dump) {
+            $self->lmLog( "Could not get session dump", 'error' );
+            return PE_ERROR;
+        }
+
+        unless ( $self->setSessionFromDump( $logout, $session_dump ) ) {
+            $self->lmLog( "Could not set session from dump", 'error' );
+            return PE_ERROR;
+        }
+
+        # Get Lasso::Session
+        my $session = $logout->get_session();
+
+        unless ($session) {
+            $self->lmLog( "Could not get session from logout", 'error' );
+            return PE_ERROR;
+        }
+
+        # Loop on assertions and remove them if SLO status is OK
+        $self->resetProviderIdIndex($logout);
+
+        while ( my $sp = $self->getNextProviderId($logout) ) {
+
+            # Try to get SLO status from SLO session
+            my $spConfKey = $self->{_spList}->{$sp}->{confKey};
+            my $status    = $relayInfos->{$spConfKey};
+
+            # Remove assertion if status is OK
+            if ($status) {
+                eval { $session->remove_assertion($sp); };
+
+                if ($@) {
+                    $self->lmLog( "Unable to remove assertion for $sp",
+                        'warn' );
+                }
+                else {
+                    $self->lmLog( "Assertion removed for $sp", 'debug' );
+                }
+            }
+            else {
+                $self->lmLog(
+                    "SLO status was not ok for $sp, assertion not removed",
+                    'debug' );
+            }
+        }
+
+        # Reinject session
+        unless ( $session->is_empty() ) {
+            $self->setSessionFromDump( $logout, $session->dump );
+        }
+
+        # Send SLO response
+        $self->sendLogoutResponseToServiceProvider( $logout, $method );
+
+        # If we are here, SLO response was not sent
+        $self->lmLog( "Fail to send SLO response", 'error' );
+        return PE_ERROR;
     }
 
     # 1.4. Artifacts
@@ -1687,11 +1761,19 @@ sub issuerForAuthUser {
                 return PE_ERROR;
             }
 
+            # Set RelayState
+            if ($relaystate) {
+                $logout->msg_relayState($relaystate);
+                $self->lmLog( "Set $relaystate in RelayState", 'debug' );
+            }
+
             # Create SLO status session and get ID
             my $sloStatusSessionInfo = $self->getSamlSession();
             $sloStatusSessionInfo->{type}    = 'sloStatus';
             $sloStatusSessionInfo->{_utime}  = 'time';
             $sloStatusSessionInfo->{_logout} = $logout->dump;
+            $sloStatusSessionInfo->{_session} = $logout->get_session()->dump;
+            $sloStatusSessionInfo->{_method}  = $method;
             my $relayID = $sloStatusSessionInfo->{_session_id};
             untie %$sloStatusSessionInfo;
 
@@ -1742,12 +1824,6 @@ sub issuerForAuthUser {
             unless ($signSLOMessage) {
                 $self->lmLog( "Do not sign this SLO response", 'debug' );
                 return PE_ERROR unless ( $self->disableSignature($logout) );
-            }
-
-            # Set RelayState
-            if ($relaystate) {
-                $logout->msg_relayState($relaystate);
-                $self->lmLog( "Set $relaystate in RelayState", 'debug' );
             }
 
             # If no waiting SP, return directly SLO response
