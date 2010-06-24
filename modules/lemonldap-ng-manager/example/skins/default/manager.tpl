@@ -29,6 +29,8 @@
 	var text4securedCookie1='<lang en="Secured cookie (HTTPS)" fr="Cookie sécurisé (HTTPS)"/>';
 	var text4securedCookie2='Double cookie (HTTP and HTTPS)';
 	var text4newGeneratedFile='<lang en="Password (optional)" fr="Mot de passe (optionnel)" />';
+	var text4edit='<lang en="Edit" fr="Éditer" />';
+	var text4protect='<lang en="Protect" fr="Protéger" />';
 //]]></script>
 <script src="<TMPL_VAR NAME="DIR">/manager.js" type="text/JavaScript"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
@@ -188,7 +190,7 @@
 
     <!-- File textarea -->
     <div id="content_filearea" class="hidden">
-     <textarea readonly id="filearea" cols="80" rows="10"></textarea>
+     <textarea readonly="readonly" id="filearea" cols="80" rows="10"></textarea>
      <table>
       <tr>
        <td>
@@ -197,6 +199,11 @@
       </button>
       <button id="generatefile" onclick="generateFile(currentId);return false;" class="ui-state-default ui-corner-all">
        <lang en="Generate" fr="G&eacute;n&eacute;rer" />
+      </button>
+      <button id="switchreadonly" onclick="switchReadonly('#filearea');return false;" class="ui-state-default ui-corner-all">
+      </button>
+      <button onclick="setlminputdata(currentId,filearea);return false;" class="ui-state-default ui-corner-all">
+       <lang en="Apply" fr="Appliquer" />
       </button>
        </td>
        <td>

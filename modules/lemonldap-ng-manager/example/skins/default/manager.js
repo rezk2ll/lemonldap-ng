@@ -516,6 +516,8 @@ function filearea(id) {
 	if(lmtext(id)=='samlServicePrivateKeyEnc'){$('#generatefile').show();}
 	/* If data, then allow to download */
 	if(lmdata(id).length){$('#downloadfile').show();}
+	/* Set switchReadonly text */
+	$('#switchreadonly').text(text4edit);
 	display('filearea',lmtext(id));
 }
 function samlAssertion(id) {
@@ -931,3 +933,14 @@ function formateSelect(id,values,selectedValue) {
 	}
 	$('#'+id).empty().append(options);
 }
+/* Function to switch readOnly flag */
+function switchReadonly(selector) {
+	if ( $(selector).attr("readonly") ) {
+		$("#switchreadonly").text(text4protect);
+		$(selector).removeAttr("readonly");
+	} else {
+		$("#switchreadonly").text(text4edit);
+		$(selector).attr("readonly","readonly");
+	}
+}
+
