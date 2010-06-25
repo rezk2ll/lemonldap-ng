@@ -506,18 +506,9 @@ sub findAllConfKeys {
 # @return A formated value.
 sub formatValue {
     my ( $self, $key, $value ) = @_;
-    my $newvalue = $value;
-    if ( $key =~ /^(samlIDPMetaDataXML|samlSPMetaDataXML)/ ) {
-        my $metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new();
-        if ( ref($value) ) {
-            $metadata->initializeFromConfHash($value);
-        }
-        else {
-            $metadata->initializeFromXML($value);
-        }
-        $newvalue = $metadata->toHash();
-    }
-    return $newvalue;
+
+    # Not used now
+    return $value;
 }
 
 ## @method protected void setKeyToH(hashref h,string key,string k2,string value)

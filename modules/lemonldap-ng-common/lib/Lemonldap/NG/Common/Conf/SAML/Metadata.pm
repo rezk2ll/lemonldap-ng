@@ -14,8 +14,7 @@ use XML::Simple;
 use Safe;
 use Encode;
 
-our $VERSION = '0.1';
-our $DEBUG   = 0;
+our $VERSION = '0.2';
 
 ## @cmethod Lemonldap::NG::Common::Conf::SAML::Metadata new(hashRef args)
 # Class constructor.
@@ -31,19 +30,6 @@ sub new {
         %$self = @_;
     }
     return $self;
-}
-
-## @method void setDebug(boolean debug)
-# Set debug flag
-# @param boolean debug value
-# @return nothing
-sub setDebug {
-    my $self = shift;
-    my $debug = shift || 1;
-
-    $DEBUG = $debug;
-
-    return;
 }
 
 ## @method public boolean initiliazeFromConf(string s)

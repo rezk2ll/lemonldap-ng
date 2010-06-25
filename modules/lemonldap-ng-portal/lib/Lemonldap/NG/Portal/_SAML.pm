@@ -165,22 +165,18 @@ sub loadIDPs {
 
         $self->lmLog( "Get Metadata for IDP $_", 'debug' );
 
-        # Get metadata from configuration
-        my $idp_metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new();
-        unless (
-            $idp_metadata->initializeFromConfHash(
-                $self->{samlIDPMetaDataXML}->{$_}->{samlIDPMetaDataXML}
-            )
-          )
-        {
-            $self->lmLog( "Fail to read IDP $_ Metadata from configuration",
-                'error' );
-            return 0;
+        my $idp_metadata =
+          $self->{samlIDPMetaDataXML}->{$_}->{samlIDPMetaDataXML};
+
+        # Check metadata format
+        if ( ref $idp_metadata eq "HASH" ) {
+            $self->abort(
+"Metadata for IDP $_ is in old format. Please reload them from Manager"
+            );
         }
 
         # Add this IDP to Lasso::Server
-        my $result =
-          $self->addIDP( $self->{_lassoServer}, $idp_metadata->toXML() );
+        my $result = $self->addIDP( $self->{_lassoServer}, $idp_metadata );
 
         unless ($result) {
             $self->lmLog( "Fail to use IDP $_ Metadata", 'error' );
@@ -188,7 +184,7 @@ sub loadIDPs {
         }
 
         # Store IDP entityID and Organization Name
-        my $entityID = $idp_metadata->{entityID};
+        my ($entityID) = ( $idp_metadata =~ /entityID="(.+?)"/i );
         my $name =
           $self->getOrganizationName( $self->{_lassoServer}, $entityID )
           || ucfirst($_);
@@ -248,22 +244,17 @@ sub loadSPs {
 
         $self->lmLog( "Get Metadata for SP $_", 'debug' );
 
-        # Get metadata from configuration
-        my $sp_metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new();
-        unless (
-            $sp_metadata->initializeFromConfHash(
-                $self->{samlSPMetaDataXML}->{$_}->{samlSPMetaDataXML}
-            )
-          )
-        {
-            $self->lmLog( "Fail to read SP $_ Metadata from configuration",
-                'error' );
-            return 0;
+        my $sp_metadata = $self->{samlSPMetaDataXML}->{$_}->{samlSPMetaDataXML};
+
+        # Check metadata format
+        if ( ref $sp_metadata eq "HASH" ) {
+            $self->abort(
+"Metadata for SP $_ is in old format. Please reload them from Manager"
+            );
         }
 
         # Add this SP to Lasso::Server
-        my $result =
-          $self->addSP( $self->{_lassoServer}, $sp_metadata->toXML() );
+        my $result = $self->addSP( $self->{_lassoServer}, $sp_metadata );
 
         unless ($result) {
             $self->lmLog( "Fail to use SP $_ Metadata", 'error' );
@@ -271,7 +262,7 @@ sub loadSPs {
         }
 
         # Store SP entityID and Organization Name
-        my $entityID = $sp_metadata->{entityID};
+        my ($entityID) = ( $sp_metadata =~ /entityID="(.+?)"/i );
         my $name =
           $self->getOrganizationName( $self->{_lassoServer}, $entityID )
           || ucfirst($_);

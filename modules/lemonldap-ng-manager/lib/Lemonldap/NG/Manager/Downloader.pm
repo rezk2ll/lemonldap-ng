@@ -189,15 +189,25 @@ sub confNode {
         my $h = $self->keyToH( $target, $self->conf );
         $h = $h->{samlIDPMetaDataXML} if ( $h->{samlIDPMetaDataXML} );
         $h = $h->{samlSPMetaDataXML}  if ( $h->{samlSPMetaDataXML} );
+        my $data;
+
+        # Manage old metadata format
+        if ( ref($h) eq "HASH" ) {
+            $self->lmLog( "Convert metadata from old format", 'debug' );
         my $metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new();
         $metadata->initializeFromConfHash($h);
+            $data = $metadata->toXML();
+        }
+        else {
+            $data = $h;
+        }
         my $text = $target;
         $text =~ s/^\/([^\/]+)\/.*$/$1/;
         $res .= $self->li("$target/")
           . $self->span(
             id     => "$target/",
             text   => $text,
-            data   => $metadata->toXML(),
+            data   => $data,
             js     => $js,
             help   => $help,
             target => "samlmetadata",
