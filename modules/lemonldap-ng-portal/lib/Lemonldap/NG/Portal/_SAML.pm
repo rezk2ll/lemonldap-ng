@@ -17,6 +17,7 @@ use Time::Local;       # Convert SAML2 date into timestamp
 use Encode;            # Encode attribute values
 
 our $VERSION = '0.01';
+our $samlCache;
 
 BEGIN {
 
@@ -86,14 +87,33 @@ sub loadLasso {
     return 1;
 }
 
-## @method boolean loadService()
+## @method boolean loadService(boolean no_cache)
 # Load SAML service by creating a Lasso::Server
+# @param no_cache Disable cache use
 # @return boolean result
 sub loadService {
-    my $self = shift;
+    my ( $self, $no_cache ) = splice @_;
+    my $server;
 
     # Load Lasso
     return 0 unless $self->loadLasso();
+
+    # Try to restore server from cache
+    unless ($no_cache) {
+
+        # Check if Lasso::Server is present in self
+        return 1 if $self->{_lassoServer};
+
+        # Check if Lasso::Server can be restored from cache
+        if ( $samlCache->{_lassoServerDump} ) {
+            $self->lmLog( "Restore server from cache", 'debug' );
+            eval {
+                $self->{_lassoServer} = Lasso::Server::new_from_dump(
+                    $samlCache->{_lassoServerDump} );
+            };
+            return 1 if $self->checkLassoError($@);
+        }
+    }
 
     # Check presence of private and public key in configuration
     my $publicKeySig  = $self->{samlServicePublicKeySig};
@@ -136,18 +156,29 @@ sub loadService {
 
     # Store Lasso::Server object
     $self->{_lassoServer} = $server;
+    $samlCache->{_lassoServerDump} = $server->dump unless $no_cache;
 
     return 1;
 }
 
-## @method boolean loadIDPs()
+## @method boolean loadIDPs(boolean no_cache)
 # Load SAML identity providers
+# @param no_cache Disable cache use
 # @return boolean result
 sub loadIDPs {
-    my $self = shift;
+    my ( $self, $no_cache ) = splice @_;
 
     # Check if SAML service is loaded
     return 0 unless $self->{_lassoServer};
+
+    # Check cache
+    unless ($no_cache) {
+        if ( $samlCache->{_idpList} ) {
+            $self->lmLog( "Load IDPs from cache", 'debug' );
+            $self->{_idpList} = $samlCache->{_idpList};
+            return 1;
+        }
+    }
 
     # Check presence of at least one identity provider in configuration
     unless ( $self->{samlIDPMetaDataXML}
@@ -216,17 +247,32 @@ sub loadIDPs {
         $self->lmLog( "IDP $_ added", 'debug' );
     }
 
+    # Cache Lasso::Server
+    $samlCache->{_idpList} = $self->{_idpList} unless $no_cache;
+    $samlCache->{_lassoServerDump} = $self->{_lassoServer}->dump
+      unless $no_cache;
+
     return 1;
 }
 
-## @method boolean loadSPs()
+## @method boolean loadSPs(boolean no_cache)
 # Load SAML service providers
+# @param no_cache Disable cache use
 # @return boolean result
 sub loadSPs {
-    my $self = shift;
+    my ( $self, $no_cache ) = splice @_;
 
     # Check if SAML service is loaded
     return 0 unless $self->{_lassoServer};
+
+    # Check cache
+    unless ($no_cache) {
+        if ( $samlCache->{_spList} ) {
+            $self->lmLog( "Load SPs from cache", 'debug' );
+            $self->{_spList} = $samlCache->{_spList};
+            return 1;
+        }
+    }
 
     # Check presence of at least one service provider in configuration
     unless ( $self->{samlSPMetaDataXML}
@@ -293,6 +339,11 @@ sub loadSPs {
 
         $self->lmLog( "SP $_ added", 'debug' );
     }
+
+    # Cache Lasso::Server
+    $samlCache->{_spList} = $self->{_spList} unless $no_cache;
+    $samlCache->{_lassoServerDump} = $self->{_lassoServer}->dump
+      unless $no_cache;
 
     return 1;
 }

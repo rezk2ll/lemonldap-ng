@@ -187,8 +187,8 @@ sub confNode {
     # saml metadata
     elsif ( $target =~ s/^samlmetadata:// ) {
         my $h = $self->keyToH( $target, $self->conf );
-        $h = $h->{samlIDPMetaDataXML} if ( $h->{samlIDPMetaDataXML} );
-        $h = $h->{samlSPMetaDataXML}  if ( $h->{samlSPMetaDataXML} );
+        $h = $h->{samlIDPMetaDataXML} if ( ref $h && $h->{samlIDPMetaDataXML} );
+        $h = $h->{samlSPMetaDataXML}  if ( ref $h && $h->{samlSPMetaDataXML} );
         my $data;
 
         # Manage old metadata format

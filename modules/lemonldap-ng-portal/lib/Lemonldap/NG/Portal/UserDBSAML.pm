@@ -78,59 +78,25 @@ sub setSessionInfo {
         return PE_OK;
     }
 
-    # Check presence of private and public key in configuration
-    my $publicKeySig  = $self->{samlServicePublicKeySig};
-    my $privateKeySig = $self->{samlServicePrivateKeySig};
-    my $privateKeyEnc = $self->{samlServicePrivateKeyEnc};
-    unless ( $privateKeySig and $publicKeySig ) {
-        $self->lmLog( "SAML private and public key not found in configuration",
-            'error' );
-        return 0;
-    }
-    unless ($privateKeyEnc) {
-        $self->lmLog(
-            "SAML private encryption key not found in configuration, "
-              . "use private signature key",
-            'debug'
-        );
-        $privateKeyEnc = $privateKeySig;
-    }
-
-    # Get metadata from configuration
-    my $service_metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new();
-
-    # Create Lasso server with service metadata
-    my $server = $self->createServer(
-        $service_metadata->serviceToXML(
-            $ENV{DOCUMENT_ROOT} . "/skins/common/saml2-metadata.tpl", $self
-        ),
-        $privateKeySig,
-        undef,
-        $privateKeyEnc
-    );
+    # Save current Lasso::Server object, and get a new one
+    my $current_server = $self->{_lassoServer};
+    $self->loadService(1);
+    my $server = $self->{_lassoServer};
 
     unless ($server) {
-        $self->lmLog( "Unable to create Lasso server", 'error' );
+        $self->lmLog( "Unable to create service for attribute request",
+            'error' );
         return PE_ERROR;
     }
+
     $self->lmLog( "Service for attribute request created", 'debug' );
 
     # Add current IDP as Attribute Authority
-    my $idp_metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new();
-    unless (
-        $idp_metadata->initializeFromConfHash(
-            $self->{samlIDPMetaDataXML}->{$idpConfKey}->{samlIDPMetaDataXML}
-        )
-      )
-    {
-        $self->lmLog(
-            "Fail to read IDP $idpConfKey Metadata from configuration",
-            'error' );
-        return PE_ERROR;
-    }
+    my $idp_metadata =
+      $self->{samlIDPMetaDataXML}->{$idpConfKey}->{samlIDPMetaDataXML};
 
     # Add this IDP to Lasso::Server as AA
-    unless ( $self->addAA( $server, $idp_metadata->toXML() ) ) {
+    unless ( $self->addAA( $server, $idp_metadata ) ) {
         $self->lmLog(
             "Fail to use IDP $idpConfKey Metadata as Attribute Authority",
             'error' );
@@ -202,6 +168,9 @@ sub setSessionInfo {
         # Store value in sessionInfo
         $self->{sessionInfo}->{$_} = $value;
     }
+
+    # Restore current Lasso::Server
+    $self->{_lassoServer} = $current_server;
 
     return PE_OK;
 
