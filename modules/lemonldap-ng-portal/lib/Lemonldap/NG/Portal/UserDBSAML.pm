@@ -8,6 +8,7 @@ package Lemonldap::NG::Portal::UserDBSAML;
 use strict;
 use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::_SAML;
+use Encode;
 our @ISA = qw(Lemonldap::NG::Portal::_SAML);
 
 our $VERSION = '0.01';
@@ -94,6 +95,10 @@ sub setSessionInfo {
     # Add current IDP as Attribute Authority
     my $idp_metadata =
       $self->{samlIDPMetaDataXML}->{$idpConfKey}->{samlIDPMetaDataXML};
+
+    if ( $self->{samlMetadataForceUTF8} ) {
+        $idp_metadata = encode( "utf8", $idp_metadata );
+    }
 
     # Add this IDP to Lasso::Server as AA
     unless ( $self->addAA( $server, $idp_metadata ) ) {
