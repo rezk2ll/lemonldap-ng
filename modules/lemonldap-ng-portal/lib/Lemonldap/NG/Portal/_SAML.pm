@@ -205,6 +205,10 @@ sub loadIDPs {
             );
         }
 
+        if ( $self->{samlMetadataForceUTF8} ) {
+            $idp_metadata = encode( "utf8", $idp_metadata );
+        }
+
         # Add this IDP to Lasso::Server
         my $result = $self->addIDP( $self->{_lassoServer}, $idp_metadata );
 
@@ -296,6 +300,10 @@ sub loadSPs {
             $self->abort(
 "Metadata for SP $_ is in old format. Please reload them from Manager"
             );
+        }
+
+        if ( $self->{samlMetadataForceUTF8} ) {
+            $sp_metadata = encode( "utf8", $sp_metadata );
         }
 
         # Add this SP to Lasso::Server

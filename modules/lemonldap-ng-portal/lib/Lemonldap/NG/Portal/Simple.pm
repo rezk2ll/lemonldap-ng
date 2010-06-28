@@ -378,6 +378,8 @@ sub setDefaultValues {
     $self->{samlIdPResolveCookie} ||= $self->{cookieName} . "idp";
     $self->{samlStorage}          ||= $self->{globalStorage};
     $self->{samlStorageOptions}   ||= $self->{globalStorageOptions};
+    $self->{samlMetadataForceUTF8} = 1
+      unless ( defined( $self->{samlMetadataForceUTF8} ) );
 }
 
 ##@method protected void setHiddenFormValue(string fieldname, string value)
