@@ -60,8 +60,17 @@ sub cstruct {
                       . ":samlIDPMetaDataXML:filearea",
                     samlIDPMetaDataOptions => {
                         _nodes => [
-                            qw(samlIDPMetaDataOptionsNameIDFormat samlIDPMetaDataOptionsForceAuthn samlIDPMetaDataOptionsIsPassive samlIDPMetaDataOptionsAllowProxiedAuthn samlIDPMetaDataOptionsSSOBinding samlIDPMetaDataOptionsSLOBinding samlIDPMetaDataOptionsResolutionRule samlIDPMetaDataOptionsAllowLoginFromIDP samlIDPMetaDataOptionsAdaptSessionUtime samlIDPMetaDataOptionsSignSSOMessage samlIDPMetaDataOptionsCheckSSOMessageSignature samlIDPMetaDataOptionsSignSLOMessage samlIDPMetaDataOptionsCheckSLOMessageSignature samlIDPMetaDataOptionsRequestedAuthnContext samlIDPMetaDataOptionsForceUTF8 samlIDPMetaDataOptionsEncryptionMode samlIDPMetaDataOptionsCheckConditions)
+                            qw(samlIDPMetaDataOptionsResolutionRule samlIDPMetaDataOptionsAuthnRequest samlIDPMetaDataOptionsSession samlIDPMetaDataOptionsSignature samlIDPMetaDataOptionsBinding samlIDPMetaDataOptionsSecurity)
                         ],
+
+                        samlIDPMetaDataOptionsResolutionRule =>
+"textarea:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsResolutionRule",
+
+                        samlIDPMetaDataOptionsAuthnRequest => {
+                            _nodes => [
+                                qw(samlIDPMetaDataOptionsNameIDFormat samlIDPMetaDataOptionsForceAuthn samlIDPMetaDataOptionsIsPassive samlIDPMetaDataOptionsAllowProxiedAuthn samlIDPMetaDataOptionsAllowLoginFromIDP samlIDPMetaDataOptionsRequestedAuthnContext)
+                            ],
+
                         samlIDPMetaDataOptionsNameIDFormat =>
 "text:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsNameIDFormat"
                           . ":default:nameIdFormatParams",
@@ -71,18 +80,31 @@ sub cstruct {
 "bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsIsPassive",
                         samlIDPMetaDataOptionsAllowProxiedAuthn =>
 "bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsAllowProxiedAuthn",
-                        samlIDPMetaDataOptionsSSOBinding =>
-"text:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsSSOBinding"
-                          . ":default:bindingParams",
-                        samlIDPMetaDataOptionsSLOBinding =>
-"text:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsSLOBinding"
-                          . ":default:bindingParams",
-                        samlIDPMetaDataOptionsResolutionRule =>
-"textarea:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsResolutionRule",
                         samlIDPMetaDataOptionsAllowLoginFromIDP =>
 "bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsAllowLoginFromIDP",
+                            samlIDPMetaDataOptionsRequestedAuthnContext =>
+"text:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsRequestedAuthnContext"
+                              . ":default:authnContextParams",
+
+                        },
+
+                        samlIDPMetaDataOptionsSession => {
+                            _nodes => [
+                                qw(samlIDPMetaDataOptionsAdaptSessionUtime samlIDPMetaDataOptionsForceUTF8)
+                            ],
+
                         samlIDPMetaDataOptionsAdaptSessionUtime =>
 "bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsAdaptSessionUtime",
+                            samlIDPMetaDataOptionsForceUTF8 =>
+"bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsForceUTF8",
+
+                        },
+
+                        samlIDPMetaDataOptionsSignature => {
+                            _nodes => [
+                                qw(samlIDPMetaDataOptionsSignSSOMessage samlIDPMetaDataOptionsCheckSSOMessageSignature samlIDPMetaDataOptionsSignSLOMessage samlIDPMetaDataOptionsCheckSLOMessageSignature)
+                            ],
+
                         samlIDPMetaDataOptionsSignSSOMessage =>
 "bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsSignSSOMessage",
                         samlIDPMetaDataOptionsCheckSSOMessageSignature =>
@@ -91,15 +113,35 @@ sub cstruct {
 "bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsSignSLOMessage",
                         samlIDPMetaDataOptionsCheckSLOMessageSignature =>
 "bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsCheckSLOMessageSignature",
-                        samlIDPMetaDataOptionsRequestedAuthnContext =>
-"text:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsRequestedAuthnContext"
-                          . ":default:authnContextParams",
-                        samlIDPMetaDataOptionsForceUTF8 =>
-"bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsForceUTF8",
+
+                        },
+
+                        samlIDPMetaDataOptionsBinding => {
+                            _nodes => [
+                                qw(samlIDPMetaDataOptionsSSOBinding samlIDPMetaDataOptionsSLOBinding)
+                            ],
+
+                            samlIDPMetaDataOptionsSSOBinding =>
+"text:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsSSOBinding"
+                              . ":default:bindingParams",
+                            samlIDPMetaDataOptionsSLOBinding =>
+"text:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsSLOBinding"
+                              . ":default:bindingParams",
+
+                        },
+
+                        samlIDPMetaDataOptionsSecurity => {
+                            _nodes => [
+                                qw(samlIDPMetaDataOptionsEncryptionMode samlIDPMetaDataOptionsCheckConditions)
+                            ],
+
                         samlIDPMetaDataOptionsEncryptionMode =>
 "text:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsEncryptionMode:default:encryptionModeParams",
                         samlIDPMetaDataOptionsCheckConditions =>
 "bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsCheckConditions",
+
+                        },
+
                     },
                 }
             }
@@ -124,13 +166,26 @@ sub cstruct {
                       . ":samlSPMetaDataXML:filearea",
                     samlSPMetaDataOptions => {
                         _nodes => [
-                            qw(samlSPMetaDataOptionsNameIDFormat samlSPMetaDataOptionsOneTimeUse samlSPMetaDataOptionsSignSSOMessage samlSPMetaDataOptionsCheckSSOMessageSignature samlSPMetaDataOptionsSignSLOMessage samlSPMetaDataOptionsCheckSLOMessageSignature samlSPMetaDataOptionsEncryptionMode)
+                            qw(samlSPMetaDataOptionsAuthnResponse samlSPMetaDataOptionsSignature samlSPMetaDataOptionsSecurity)
                         ],
+
+                        samlSPMetaDataOptionsAuthnResponse => {
+                            _nodes => [
+                                qw(samlSPMetaDataOptionsNameIDFormat samlSPMetaDataOptionsOneTimeUse)
+                            ],
+
                         samlSPMetaDataOptionsNameIDFormat =>
 "text:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsNameIDFormat"
                           . ":default:nameIdFormatParams",
                         samlSPMetaDataOptionsOneTimeUse =>
 "bool:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsOneTimeUse",
+                        },
+
+                        samlSPMetaDataOptionsSignature => {
+                            _nodes => [
+                                qw(samlSPMetaDataOptionsSignSSOMessage samlSPMetaDataOptionsCheckSSOMessageSignature samlSPMetaDataOptionsSignSLOMessage samlSPMetaDataOptionsCheckSLOMessageSignature)
+                            ],
+
                         samlSPMetaDataOptionsSignSSOMessage =>
 "bool:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsSignSSOMessage",
                         samlSPMetaDataOptionsCheckSSOMessageSignature =>
@@ -139,8 +194,15 @@ sub cstruct {
 "bool:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsSignSLOMessage",
                         samlSPMetaDataOptionsCheckSLOMessageSignature =>
 "bool:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsCheckSLOMessageSignature",
+                        },
+                        samlSPMetaDataOptionsSecurity => {
+
+                            _nodes =>
+                              [ qw(samlSPMetaDataOptionsEncryptionMode) ],
+
                         samlSPMetaDataOptionsEncryptionMode =>
 "text:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsEncryptionMode:default:encryptionModeParams",
+                    },
                     },
                 }
             }
