@@ -741,6 +741,8 @@ sub createAuthnRequest {
         $nameIDFormat, $allowProxiedAuthn, $signSSOMessage,
         $requestedAuthnContext
     ) = splice @_;
+    my $proxyCount;
+    my $proxyRequestedAuthnContext;
 
     # Create Lasso Login
     my $login = $self->createLogin($server);
@@ -768,6 +770,50 @@ sub createAuthnRequest {
 
     # Customize request
     my $request = $login->request();
+
+    # Maybe we are in IDP proxy mode (SAML request received on IDP side)
+    # In this case:
+    # * Check proxy conditions
+    # * Forward some authn constraints
+    if ( $self->{_samlRequest} ) {
+
+        $self->lmLog( "IDP Proxy mode detected", 'debug' );
+
+        # Get ProxyCount value
+        eval { $proxyCount = $self->{_samlRequest}->Scoping()->ProxyCount() };
+
+        # Deny request if ProxyCount eq 0
+        if ( defined $proxyCount ) {
+
+            $self->lmLog( "Found proxyCount $proxyCount in proxied request",
+                'debug' );
+
+            if ( $proxyCount eq 0 ) {
+                $self->lmLog( "SAML request cannot be proxied (ProxyCount 0)",
+                    'error' );
+                return;
+            }
+            else {
+
+                # Decrease ProxyCount
+                my $scoping = $self->{_samlRequest}->Scoping();
+                $scoping->ProxyCount( $proxyCount-- );
+                eval { $request->Scoping($scoping); };
+            }
+        }
+
+        # isPassive
+        eval { $isPassive = $self->{_samlRequest}->IsPassive(); };
+
+        # forceAuthn
+        eval { $forceAuthn = $self->{_samlRequest}->ForceAuthn(); };
+
+        # requestedAuthnContext
+        eval {
+            $proxyRequestedAuthnContext =
+              $self->{_samlRequest}->RequestedAuthnContext();
+        };
+    }
 
     # NameIDFormat
     if ($nameIDFormat) {
@@ -815,7 +861,12 @@ sub createAuthnRequest {
     }
 
     # Requested authentication context
-    if ($requestedAuthnContext) {
+    if ($proxyRequestedAuthnContext) {
+        $self->lmLog( "Use RequestedAuthnContext from proxied request",
+            'debug' );
+        $request->RequestedAuthnContext($proxyRequestedAuthnContext);
+    }
+    elsif ($requestedAuthnContext) {
         $self->lmLog( "Request $requestedAuthnContext context", 'debug' );
         eval {
             my $context = Lasso::Samlp2RequestedAuthnContext->new();

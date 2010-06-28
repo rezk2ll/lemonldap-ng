@@ -177,6 +177,10 @@ sub issuerForUnAuthUser {
                 return PE_ERROR;
             }
 
+            # Store SAML request in memory in case of proxying
+            $self->{_samlRequest} = $saml_request;
+
+            return PE_OK;
         }
 
         elsif ($response) {
