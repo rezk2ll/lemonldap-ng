@@ -1582,25 +1582,19 @@ sub issuerForAuthUser {
             }
 
             # Keep SAML elements for later queries
-            my %h;
             my $nameid = $login->nameIdentifier;
-            eval {
-                tie %h, $self->{samlStorage}, undef,
-                  $self->{samlStorageOptions};
-            };
-            if ($@) {
-                $self->lmLog( "Unable to create SAML session: $@", 'error' );
-                return PE_ERROR;
-            }
+            my $samlSessionInfo = $self->getSamlSession();
 
-            $h{type}    = 'saml';           # Session type
-            $h{_utime}  = $time;            # Creation time
-            $h{_id}     = $session_id;      # SSO session id
-            $h{_nameID} = $nameid->dump;    # SAML NameID
+            return PE_ERROR unless $samlSessionInfo;
 
-            my $saml_session_id = $h{_session_id};
+            $samlSessionInfo->{type}    = 'saml';           # Session type
+            $samlSessionInfo->{_utime}  = $time;            # Creation time
+            $samlSessionInfo->{_id}     = $session_id;      # SSO session id
+            $samlSessionInfo->{_nameID} = $nameid->dump;    # SAML NameID
 
-            untie %h;
+            my $saml_session_id = $samlSessionInfo->{_session_id};
+
+            untie %$samlSessionInfo;
 
             $self->lmLog(
                 "Link session $session_id to SAML session $saml_session_id",

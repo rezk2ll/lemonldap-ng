@@ -1332,21 +1332,19 @@ sub authFinish {
     );
 
     # Save SAML session
-    eval { tie %h, $self->{samlStorage}, undef, $self->{samlStorageOptions}; };
-    if ($@) {
-        $self->lmLog( "Unable to create SAML session: $@", 'error' );
-        return PE_ERROR;
-    }
+    my $samlSessionInfo = $self->getSamlSession();
 
-    $h{type}          = 'saml';            # Session type
-    $h{_utime}        = $utime;            # Creation time
-    $h{_id}           = $id;               # SSO session id
-    $h{_nameID}       = $nameid->dump;     # SAML NameID
-    $h{_sessionIndex} = $session_index;    # SAML SessionIndex
+    return PE_ERROR unless $samlSessionInfo;
 
-    my $session_id = $h{_session_id};
+    $samlSessionInfo->{type}          = 'saml';            # Session type
+    $samlSessionInfo->{_utime}        = $utime;            # Creation time
+    $samlSessionInfo->{_id}           = $id;               # SSO session id
+    $samlSessionInfo->{_nameID}       = $nameid->dump;     # SAML NameID
+    $samlSessionInfo->{_sessionIndex} = $session_index;    # SAML SessionIndex
 
-    untie %h;
+    my $session_id = $samlSessionInfo->{_session_id};
+
+    untie %$samlSessionInfo;
 
     $self->lmLog( "Link session $id to SAML session $session_id", 'debug' );
 

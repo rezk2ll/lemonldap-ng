@@ -1112,31 +1112,28 @@ sub acceptSSO {
 # @param infos HASH reference of information
 sub storeRelayState {
     my ( $self, $infos ) = splice @_;
-    my %h;
 
     # Create relaystate session
-    eval { tie %h, $self->{samlStorage}, undef, $self->{samlStorageOptions}; };
-    if ($@) {
-        $self->lmLog( "Unable to create relaystate session: $@", 'error' );
-        return;
-    }
+    my $samlSessionInfo = $self->getSamlSession();
+
+    return unless $samlSessionInfo;
 
     # Session type
-    $h{_type} = "relaystate";
+    $samlSessionInfo->{_type} = "relaystate";
 
     # UNIX time
-    $h{_utime} = time();
+    $samlSessionInfo->{_utime} = time();
 
     # Store infos in relaystate session
     foreach ( keys %$infos ) {
-        $h{$_} = $infos->{$_};
+        $samlSessionInfo->{$_} = $infos->{$_};
     }
 
     # Session ID
-    my $relaystate_id = $h{_session_id};
+    my $relaystate_id = $samlSessionInfo->{_session_id};
 
     # Close session
-    untie %h;
+    untie %$samlSessionInfo;
 
     # Return session ID
     return $relaystate_id;
@@ -1149,24 +1146,21 @@ sub storeRelayState {
 # @return result
 sub extractRelayState {
     my ( $self, $relaystate ) = splice @_;
-    my %h;
 
     return 0 unless $relaystate;
 
     # Open relaystate session
-    eval {
-        tie %h, $self->{samlStorage}, $relaystate, $self->{samlStorageOptions};
-    };
-    if ($@) {
-        $self->lmLog( "Unable to open relaystate session: $@", 'error' );
-        return 0;
-    }
+    my $samlSessionInfo = $self->getSamlSession($relaystate);
+
+    return 0 unless $samlSessionInfo;
 
     # Push values in $self
-    foreach ( keys %h ) {
+    foreach ( keys %$samlSessionInfo ) {
         next if $_ =~ /(type|_session_id|_utime)/;
-        $self->{$_} = $h{$_};
+        $self->{$_} = $samlSessionInfo->{$_};
     }
+
+    untie %$samlSessionInfo;
 
     return 1;
 }
@@ -1483,26 +1477,22 @@ sub buildLogoutResponseMsg {
 # @return result
 sub storeReplayProtection {
     my ( $self, $samlID, $samlData ) = splice @_;
-    my %h;
 
-    eval { tie %h, $self->{samlStorage}, undef, $self->{samlStorageOptions}; };
-    if ( $@ or !$samlID ) {
-        $self->lmLog( "Unable to create replay protection session: $@",
-            'error' );
-        return 0;
-    }
+    my $samlSessionInfo = $self->getSamlSession();
 
-    $h{type}   = 'assertion';    # Session type
-    $h{_utime} = time();         # Creation time
-    $h{ID}     = $samlID;
+    return 0 unless $samlSessionInfo;
+
+    $samlSessionInfo->{type}   = 'assertion';    # Session type
+    $samlSessionInfo->{_utime} = time();         # Creation time
+    $samlSessionInfo->{ID}     = $samlID;
 
     if ( defined $samlData && $samlData ) {
-        $h{data} = $samlData;
+        $samlSessionInfo->{data} = $samlData;
     }
 
-    my $session_id = $h{_session_id};
+    my $session_id = $samlSessionInfo->{_session_id};
 
-    untie %h;
+    untie %$samlSessionInfo;
 
     $self->lmLog( "Keep request ID $samlID in assertion session $session_id",
         'debug' );
@@ -1516,7 +1506,6 @@ sub storeReplayProtection {
 # @return result
 sub replayProtection {
     my ( $self, $samlID ) = splice @_;
-    my %h;
 
     unless ($samlID) {
         $self->lmLog( "Cannot verify replay because no SAML ID given",
@@ -1536,20 +1525,14 @@ sub replayProtection {
             my $result  = 1;
 
             # Delete it
-            eval {
-                tie %h, $self->{samlStorage}, $_, $self->{samlStorageOptions};
-            };
-            if ($@) {
-                $self->lmLog(
-"Unable to recover assertion session $session (Message ID $samlID)",
-                    'error'
-                );
-                return 0;
+            my $samlSessionInfo = $self->getSamlSession($_);
+
+            return 0 unless $samlSessionInfo;
+
+            if ( defined $samlSessionInfo->{data} ) {
+                $result = $samlSessionInfo->{data};
             }
-            if ( defined $h{data} ) {
-                $result = $h{data};
-            }
-            eval { tied(%h)->delete(); };
+            eval { tied(%$samlSessionInfo)->delete(); };
             if ($@) {
                 $self->lmLog(
 "Unable to delete assertion session $session (Message ID $samlID)",
@@ -1624,23 +1607,20 @@ sub resolveArtifact {
 # @return result
 sub storeArtifact {
     my ( $self, $id, $message, $session_id ) = splice @_;
-    my %h;
 
-    eval { tie %h, $self->{samlStorage}, undef, $self->{samlStorageOptions}; };
-    if ( $@ or !$id or !$message ) {
-        $self->lmLog( "Unable to create artifact session: $@", 'error' );
-        return 0;
-    }
+    my $samlSessionInfo = $self->getSamlSession();
 
-    $h{type}       = 'artifact';    # Session type
-    $h{_utime}     = time();        # Creation time
-    $h{ID}         = $id;
-    $h{message}    = $message;
-    $h{session_id} = $session_id;
+    return 0 unless $samlSessionInfo;
 
-    my $art_session_id = $h{_session_id};
+    $samlSessionInfo->{type}       = 'artifact';    # Session type
+    $samlSessionInfo->{_utime}     = time();        # Creation time
+    $samlSessionInfo->{ID}         = $id;
+    $samlSessionInfo->{message}    = $message;
+    $samlSessionInfo->{session_id} = $session_id;
 
-    untie %h;
+    my $art_session_id = $samlSessionInfo->{_session_id};
+
+    untie %$samlSessionInfo;
 
     $self->lmLog( "Keep artifact $id in session $art_session_id", 'debug' );
 
@@ -1654,7 +1634,6 @@ sub storeArtifact {
 sub loadArtifact {
     my ( $self, $id ) = splice @_;
     my $art_session;
-    my %h;
 
     unless ($id) {
         $self->lmLog( "Cannot load artifact because no id given", 'error' );
@@ -1677,24 +1656,17 @@ sub loadArtifact {
         my $session    = $session_id;
 
         # Open session
-        eval {
-            tie %h, $self->{samlStorage}, $session_id,
-              $self->{samlStorageOptions};
-        };
-        if ($@) {
-            $self->lmLog(
-                "Unable to recover artifact session $session (ID $id): $@",
-                'error' );
-            return;
-        }
+        my $samlSessionInfo = $self->getSamlSession($session_id);
+
+        return unless $samlSessionInfo;
 
         # Get session contents
-        foreach ( keys %h ) {
-            $art_session->{$_} = $h{$_};
+        foreach ( keys %$samlSessionInfo ) {
+            $art_session->{$_} = $samlSessionInfo->{$_};
         }
 
         # Delete session
-        eval { tied(%h)->delete(); };
+        eval { tied(%$samlSessionInfo)->delete(); };
         if ($@) {
             $self->lmLog( "Unable to delete artifact session $session (ID $id)",
                 'error' );
