@@ -219,10 +219,18 @@ sub issuerForUnAuthUser {
             # Process logout request
             unless ( $self->processLogoutRequestMsg( $logout, $request ) ) {
                 $self->lmLog( "SLO: Fail to process logout request", 'error' );
-                $self->returnSOAPMessage();
+
+                # Cannot send SLO error response if request not processed
+                return PE_ERROR;
             }
 
             $self->lmLog( "SLO: Logout request is valid", 'debug' );
+
+            # We accept only SOAP here
+            unless ( $method eq $self->getHttpMethod('soap') ) {
+                $self->lmLog( "Only SOAP requests allowed here", 'error' );
+                $self->sendSLOErrorResponse( $logout, $method );
+            }
 
             # Get SP entityID
             my $sp = $logout->remote_providerID();
@@ -235,7 +243,7 @@ sub issuerForUnAuthUser {
             unless ($spConfKey) {
                 $self->lmLog( "$sp do not match any SP in configuration",
                     'error' );
-                $self->returnSOAPMessage();
+                $self->sendSLOErrorResponse( $logout, $method );
             }
 
             $self->lmLog( "$sp match $spConfKey SP in configuration", 'debug' );
@@ -248,7 +256,7 @@ sub issuerForUnAuthUser {
             if ($checkSLOMessageSignature) {
                 unless ( $self->checkSignatureStatus($logout) ) {
                     $self->lmLog( "Signature is not valid", 'error' );
-                    $self->returnSOAPMessage();
+                    $self->sendSLOErrorResponse( $logout, $method );
                 }
                 else {
                     $self->lmLog( "Signature is valid", 'debug' );
@@ -263,11 +271,11 @@ sub issuerForUnAuthUser {
             my $saml_request = $logout->request();
             unless ($saml_request) {
                 $self->lmLog( "No SAML request found", 'error' );
-                $self->returnSOAPMessage();
+                $self->sendSLOErrorResponse( $logout, $method );
             }
 
             # Check Destination
-            $self->returnSOAPMessage()
+            $self->sendSLOErrorResponse( $logout, $method )
               unless ( $self->checkDestination( $saml_request, $url ) );
 
             # Get session index
@@ -279,7 +287,7 @@ sub issuerForUnAuthUser {
                 $self->lmLog(
                     "No session index in SLO request from $spConfKey SP",
                     'error' );
-                $self->returnSOAPMessage();
+                $self->sendSLOErrorResponse( $logout, $method );
             }
 
             # Decrypt session index
@@ -295,7 +303,7 @@ sub issuerForUnAuthUser {
 
             unless ($local_session) {
                 $self->lmLog( "No local session found", 'error' );
-                $self->returnSOAPMessage();
+                $self->sendSLOErrorResponse( $logout, $method );
             }
 
             # Load Session and Identity if they exist
@@ -305,7 +313,7 @@ sub issuerForUnAuthUser {
             if ($session) {
                 unless ( $self->setSessionFromDump( $logout, $session ) ) {
                     $self->lmLog( "Unable to load Lasso Session", 'error' );
-                    $self->returnSOAPMessage();
+                    $self->sendSLOErrorResponse( $logout, $method );
                 }
                 $self->lmLog( "Lasso Session loaded", 'debug' );
             }
@@ -313,7 +321,7 @@ sub issuerForUnAuthUser {
             if ($identity) {
                 unless ( $self->setIdentityFromDump( $logout, $identity ) ) {
                     $self->lmLog( "Unable to load Lasso Identity", 'error' );
-                    $self->returnSOAPMessage();
+                    $self->sendSLOErrorResponse( $logout, $method );
                 }
                 $self->lmLog( "Lasso Identity loaded", 'debug' );
             }
@@ -321,20 +329,20 @@ sub issuerForUnAuthUser {
             # Close SAML sessions
             unless ( $self->deleteSAMLSecondarySessions($local_session_id) ) {
                 $self->lmLog( "Fail to delete SAML sessions", 'error' );
-                $self->returnSOAPMessage();
+                $self->sendSLOErrorResponse( $logout, $method );
             }
 
             # Close local session
             unless ( $self->_deleteSession($local_session) ) {
                 $self->lmLog( "Fail to delete session $local_session_id",
                     'error' );
-                $self->returnSOAPMessage();
+                $self->sendSLOErrorResponse( $logout, $method );
             }
 
             # Validate request if no previous error
             unless ( $self->validateLogoutRequest($logout) ) {
                 $self->lmLog( "SLO request is not valid", 'error' );
-                $self->returnSOAPMessage();
+                $self->sendSLOErrorResponse( $logout, $method );
             }
 
             # Try to send SLO request trough SOAP
@@ -368,16 +376,14 @@ sub issuerForUnAuthUser {
 
             unless ($signSLOMessage) {
                 $self->lmLog( "Do not sign this SLO response", 'debug' );
-                $self->returnSOAPMessage()
+                $self->sendSLOErrorResponse( $logout, $method )
                   unless ( $self->disableSignature($logout) );
             }
 
             # Send logout response
-            $self->returnSOAPMessage()
+            $self->sendSLOErrorResponse( $logout, $method )
               unless (
-                $self->sendLogoutResponseToServiceProvider(
-                    $logout, $method, $relaystate, 0
-                )
+                $self->sendLogoutResponseToServiceProvider( $logout, $method )
               );
 
         }
@@ -1688,26 +1694,6 @@ sub issuerForAuthUser {
 
         if ($request) {
 
-            # Load Session and Identity if they exist
-            my $session  = $self->{sessionInfo}->{_lassoSessionDump};
-            my $identity = $self->{sessionInfo}->{_lassoIdentityDump};
-
-            if ($session) {
-                unless ( $self->setSessionFromDump( $logout, $session ) ) {
-                    $self->lmLog( "Unable to load Lasso Session", 'error' );
-                    return PE_ERROR;
-                }
-                $self->lmLog( "Lasso Session loaded", 'debug' );
-            }
-
-            if ($identity) {
-                unless ( $self->setIdentityFromDump( $logout, $identity ) ) {
-                    $self->lmLog( "Unable to load Lasso Identity", 'error' );
-                    return PE_ERROR;
-                }
-                $self->lmLog( "Lasso Identity loaded", 'debug' );
-            }
-
             # Process logout request
             unless ( $self->processLogoutRequestMsg( $logout, $request ) ) {
                 $self->lmLog( "SLO: Fail to process logout request", 'error' );
@@ -1715,6 +1701,26 @@ sub issuerForAuthUser {
             }
 
             $self->lmLog( "SLO: Logout request is valid", 'debug' );
+
+            # Load Session and Identity if they exist
+            my $session  = $self->{sessionInfo}->{_lassoSessionDump};
+            my $identity = $self->{sessionInfo}->{_lassoIdentityDump};
+
+            if ($session) {
+                unless ( $self->setSessionFromDump( $logout, $session ) ) {
+                    $self->lmLog( "Unable to load Lasso Session", 'error' );
+                    return $self->sendSLOErrorResponse( $logout, $method );
+                }
+                $self->lmLog( "Lasso Session loaded", 'debug' );
+            }
+
+            if ($identity) {
+                unless ( $self->setIdentityFromDump( $logout, $identity ) ) {
+                    $self->lmLog( "Unable to load Lasso Identity", 'error' );
+                    return $self->sendSLOErrorResponse( $logout, $method );
+                }
+                $self->lmLog( "Lasso Identity loaded", 'debug' );
+            }
 
             # Get SP entityID
             my $sp = $logout->remote_providerID();
@@ -1727,7 +1733,7 @@ sub issuerForAuthUser {
             unless ($spConfKey) {
                 $self->lmLog( "$sp do not match any SP in configuration",
                     'error' );
-                return PE_ERROR;
+                return $self->sendSLOErrorResponse( $logout, $method );
             }
 
             $self->lmLog( "$sp match $spConfKey SP in configuration", 'debug' );
@@ -1740,7 +1746,7 @@ sub issuerForAuthUser {
             if ($checkSLOMessageSignature) {
                 unless ( $self->checkSignatureStatus($logout) ) {
                     $self->lmLog( "Signature is not valid", 'error' );
-                    return PE_ERROR;
+                    return $self->sendSLOErrorResponse( $logout, $method );
                 }
                 else {
                     $self->lmLog( "Signature is valid", 'debug' );
@@ -1752,13 +1758,13 @@ sub issuerForAuthUser {
             }
 
             # Check Destination
-            return PE_ERROR
+            return $self->sendSLOErrorResponse( $logout, $method )
               unless ( $self->checkDestination( $logout->request, $url ) );
 
             # Validate request if no previous error
             unless ( $self->validateLogoutRequest($logout) ) {
                 $self->lmLog( "SLO request is not valid", 'error' );
-                return PE_ERROR;
+                return $self->sendSLOErrorResponse( $logout, $method );
             }
 
             # Set RelayState
@@ -1790,7 +1796,7 @@ sub issuerForAuthUser {
                 $self->lmLog(
                     "No session index in SLO request from $spConfKey SP",
                     'error' );
-                return PE_ERROR;
+                return $self->sendSLOErrorResponse( $logout, $method );
             }
 
             # Decrypt session index
@@ -1823,7 +1829,8 @@ sub issuerForAuthUser {
 
             unless ($signSLOMessage) {
                 $self->lmLog( "Do not sign this SLO response", 'debug' );
-                return PE_ERROR unless ( $self->disableSignature($logout) );
+                return $self->sendSLOErrorResponse( $logout, $method )
+                  unless ( $self->disableSignature($logout) );
             }
 
             # If no waiting SP, return directly SLO response
@@ -1835,16 +1842,15 @@ sub issuerForAuthUser {
                   )
                 {
                     $self->lmLog( "Fail to send SLO response", 'error' );
-                return PE_ERROR;
+                    return $self->sendSLOErrorResponse( $logout, $method );
             }
             }
 
             # Else build SLO status relay URL and display info
             else {
                 $self->{urldc} =
-                    $self->{portal}
-                  . '/saml/relaySingleLogoutTermination';
-		$self->setHiddenFormValue('relay', $relayID);
+                  $self->{portal} . '/saml/relaySingleLogoutTermination';
+                $self->setHiddenFormValue( 'relay', $relayID );
                 return PE_INFO;
             }
 

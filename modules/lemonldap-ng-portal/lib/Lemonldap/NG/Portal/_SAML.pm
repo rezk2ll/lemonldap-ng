@@ -93,7 +93,6 @@ sub loadLasso {
 # @return boolean result
 sub loadService {
     my ( $self, $no_cache ) = splice @_;
-    my $server;
 
     # Load Lasso
     return 0 unless $self->loadLasso();
@@ -2787,6 +2786,34 @@ sub deleteSAMLSecondarySessions {
     return $result;
 }
 
+## @method boolean sendSLOErrorResponse(Lasso::Logout logout, string method)
+# Send an SLO error response
+# @param logout Lasso::Logout object
+# @param method HTTP method
+# return result
+sub sendSLOErrorResponse {
+    my ( $self, $logout, $method ) = splice @_;
+
+    # Load empty session
+    my $session =
+      '<Session xmlns="http://lasso.entrouvert.org/namespaces/0.0"/>';
+
+    unless ( $self->setSessionFromDump( $logout, $session ) ) {
+        $self->lmLog( "Coul not set empty session in logout object", 'error' );
+        return 0;
+    }
+
+    # Send unvalidated SLO response
+    unless ( $self->sendLogoutResponseToServiceProvider( $logout, $method ) ) {
+        $self->lmLog( "Could not send SLO error response", 'error' );
+        return 0;
+    }
+
+    $self->lmLog( "SLO response error sent", 'debug' );
+
+    return 1;
+}
+
 1;
 
 __END__
@@ -3131,6 +3158,10 @@ Set encryption mode on a provider
 =head2 deleteSAMLSecondarySessions
 
 Find and delete SAML sessions bounded to a primary session
+
+=head2 sendSLOErrorResponse
+
+Send an SLO error response
 
 =head1 SEE ALSO
 
