@@ -1441,9 +1441,24 @@ sub processLogoutResponseMsg {
 sub processLogoutRequestMsg {
     my ( $self, $logout, $request ) = splice @_;
 
+    # Process the request
     eval { Lasso::Logout::process_request_msg( $logout, $request ); };
 
-    return $self->checkLassoError($@);
+    return 0 unless $self->checkLassoError($@);
+
+    # Check NotOnOrAfter optional attribute
+    my $notOnOrAfter;
+
+    eval { $notOnOrAfter = $logout->request()->NotOnOrAfter(); };
+
+    return 1 if ( $@ or !$notOnOrAfter );
+
+    $self->lmLog( "Found NotOnOrAfter $notOnOrAfter in logout request",
+        'debug' );
+
+    my $expirationTime = $self->samldate2timestamp($notOnOrAfter);
+
+    return ( time > $expirationTime );
 }
 
 ## @method boolean validateLogoutRequest(Lasso::Logout logout)

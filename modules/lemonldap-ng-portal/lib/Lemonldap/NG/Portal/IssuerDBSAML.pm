@@ -1776,7 +1776,8 @@ sub issuerForAuthUser {
             $sloStatusSessionInfo->{type}    = 'sloStatus';
             $sloStatusSessionInfo->{_utime}  = 'time';
             $sloStatusSessionInfo->{_logout} = $logout->dump;
-            $sloStatusSessionInfo->{_session} = $logout->get_session()->dump;
+            $sloStatusSessionInfo->{_session} =
+              $logout->get_session() ? $logout->get_session()->dump : "";
             $sloStatusSessionInfo->{_method}  = $method;
             my $relayID = $sloStatusSessionInfo->{_session_id};
             untie %$sloStatusSessionInfo;
