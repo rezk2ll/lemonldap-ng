@@ -578,11 +578,23 @@ sub extractFormInfo {
             my $signSLOMessage =
               $self->{samlIDPMetaDataOptions}->{$idpConfKey}
               ->{samlIDPMetaDataOptionsSignSLOMessage};
-            unless ($signSLOMessage) {
+
+            if ( $signSLOMessage == 0 ) {
                 $self->lmLog(
                     "SLO message to IDP $idpConfKey will not be signed",
                     'debug' );
                 $self->disableSignature($logout);
+            }
+            elsif ( $signSLOMessage == 1 ) {
+                $self->lmLog( "SLO message to IDP $idpConfKey will be signed",
+                    'debug' );
+                $self->forceSignature($logout);
+            }
+            else {
+                $self->lmLog(
+"SLO message to IDP $idpConfKey signature according to metadata",
+                    'debug'
+                );
             }
 
             # Logout response

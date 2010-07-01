@@ -240,6 +240,7 @@ sub confNode {
                 'int'    => 0,
                 textarea => '',
                 bool     => 0,
+		trool    => -1,
                 filearea => '',
                 select   => '',
             }->{$type};

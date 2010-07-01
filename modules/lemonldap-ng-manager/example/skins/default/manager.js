@@ -487,6 +487,13 @@ function bool(id) {
 	if(lmdata(id)==1){$('#On').attr('checked',true)}else{$('#Off').attr('checked',true)}
 	display('bool',lmtext(id));
 }
+function trool(id) {
+	currentId=id;
+	if(lmdata(id)==1){$('#On').attr('checked',true)}
+	if(lmdata(id)==0){$('#Off').attr('checked',true)}
+	else{$('#Default').attr('checked',true)}
+	display('trool',lmtext(id));
+}
 function int(id) {
 	currentId=id;
 	$('#int').attr('value',lmdata(id));

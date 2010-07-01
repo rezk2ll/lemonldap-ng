@@ -382,10 +382,17 @@ sub issuerForUnAuthUser {
               $self->{samlSPMetaDataOptions}->{$spConfKey}
               ->{samlSPMetaDataOptionsSignSLOMessage};
 
-            unless ($signSLOMessage) {
-                $self->lmLog( "Do not sign this SLO response", 'debug' );
-                $self->sendSLOErrorResponse( $logout, $method )
-                  unless ( $self->disableSignature($logout) );
+            if ( $signSLOMessage == 0 ) {
+                $self->lmLog( "SLO response will not be signed", 'debug' );
+                $self->disableSignature($logout);
+            }
+            elsif ( $signSLOMessage == 1 ) {
+                $self->lmLog( "SLO response will be signed", 'debug' );
+                $self->forceSignature($logout);
+            }
+            else {
+                $self->lmLog( "SLO response signature according to metadata",
+                    'debug' );
             }
 
             # Send logout response
@@ -1521,9 +1528,17 @@ sub issuerForAuthUser {
               $self->{samlSPMetaDataOptions}->{$spConfKey}
               ->{samlSPMetaDataOptionsSignSSOMessage};
 
-            unless ($signSSOMessage) {
-                $self->lmLog( "Do not sign this SSO response", 'debug' );
-                return PE_ERROR unless ( $self->disableSignature($login) );
+            if ( $signSSOMessage == 0 ) {
+                $self->lmLog( "SSO response will not be signed", 'debug' );
+                $self->disableSignature($login);
+            }
+            elsif ( $signSSOMessage == 1 ) {
+                $self->lmLog( "SSO response will be signed", 'debug' );
+                $self->forceSignature($login);
+            }
+            else {
+                $self->lmLog( "SLO response signature according to metadata",
+                    'debug' );
             }
 
             # Build SAML response

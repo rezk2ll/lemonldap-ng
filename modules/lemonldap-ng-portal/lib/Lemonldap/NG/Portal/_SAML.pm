@@ -855,9 +855,16 @@ sub createAuthnRequest {
     }
 
     # Signature
-    unless ($signSSOMessage) {
-        $self->lmLog( "Do not sign this SSO request", 'debug' );
-        return unless ( $self->disableSignature($login) );
+    if ( $signSSOMessage == 0 ) {
+        $self->lmLog( "SSO request will not be signed", 'debug' );
+        $self->disableSignature($login);
+    }
+    elsif ( $signSSOMessage == 1 ) {
+        $self->lmLog( "SSO request will be signed", 'debug' );
+        $self->forceSignature($login);
+    }
+    else {
+        $self->lmLog( "SSO request signature according to metadata", 'debug' );
     }
 
     # Requested authentication context
@@ -1339,9 +1346,16 @@ sub createLogoutRequest {
     $self->lmLog( "Set $relaystate in RelayState", 'debug' );
 
     # Signature
-    unless ($signSLOMessage) {
-        $self->lmLog( "Do not sign this SLO request", 'debug' );
-        return unless ( $self->disableSignature($logout) );
+    if ( $signSLOMessage == 0 ) {
+        $self->lmLog( "SLO request will not be signed", 'debug' );
+        $self->disableSignature($logout);
+    }
+    elsif ( $signSLOMessage == 1 ) {
+        $self->lmLog( "SLO request will be signed", 'debug' );
+        $self->forceSignature($logout);
+    }
+    else {
+        $self->lmLog( "SLO request signature according to metadata", 'debug' );
     }
 
     # Build logout request
@@ -2369,10 +2383,16 @@ sub sendLogoutRequestToServiceProvider {
       $self->{samlSPMetaDataOptions}->{$spConfKey}
       ->{samlSPMetaDataOptionsSignSLOMessage};
 
-    unless ($signSLOMessage) {
-        $self->lmLog( "Do not sign this SLO request", 'debug' );
-        return ( 0, undef, undef )
-          unless ( $self->disableSignature($logout) );
+    if ( $signSLOMessage == 0 ) {
+        $self->lmLog( "SLO request will not be signed", 'debug' );
+        $self->disableSignature($logout);
+    }
+    elsif ( $signSLOMessage == 1 ) {
+        $self->lmLog( "SLO request will be signed", 'debug' );
+        $self->forceSignature($logout);
+    }
+    else {
+        $self->lmLog( "SLO request signature according to metadata", 'debug' );
     }
 
     # Relay State

@@ -106,11 +106,11 @@ sub cstruct {
                             ],
 
                         samlIDPMetaDataOptionsSignSSOMessage =>
-"bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsSignSSOMessage",
+"trool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsSignSSOMessage",
                         samlIDPMetaDataOptionsCheckSSOMessageSignature =>
 "bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsCheckSSOMessageSignature",
                         samlIDPMetaDataOptionsSignSLOMessage =>
-"bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsSignSLOMessage",
+"trool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsSignSLOMessage",
                         samlIDPMetaDataOptionsCheckSLOMessageSignature =>
 "bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsCheckSLOMessageSignature",
 
@@ -187,11 +187,11 @@ sub cstruct {
                             ],
 
                         samlSPMetaDataOptionsSignSSOMessage =>
-"bool:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsSignSSOMessage",
+"trool:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsSignSSOMessage",
                         samlSPMetaDataOptionsCheckSSOMessageSignature =>
 "bool:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsCheckSSOMessageSignature",
                         samlSPMetaDataOptionsSignSLOMessage =>
-"bool:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsSignSLOMessage",
+"trool:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsSignSLOMessage",
                         samlSPMetaDataOptionsCheckSLOMessageSignature =>
 "bool:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsCheckSLOMessageSignature",
                         },
