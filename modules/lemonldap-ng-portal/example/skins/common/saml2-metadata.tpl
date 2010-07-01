@@ -52,6 +52,12 @@
       <TMPL_IF NAME="samlIDPSSODescriptorSingleSignOnServiceHTTPPostResponseLocation">
       ResponseLocation="<TMPL_VAR NAME="samlIDPSSODescriptorSingleSignOnServiceHTTPPostResponseLocation">"
       </TMPL_IF>/>
+    <SingleSignOnService
+      Binding="<TMPL_VAR NAME="samlIDPSSODescriptorSingleSignOnServiceHTTPArtifactBinding">"
+      Location="<TMPL_VAR NAME="samlIDPSSODescriptorSingleSignOnServiceHTTPArtifactLocation">"
+      <TMPL_IF NAME="samlIDPSSODescriptorSingleSignOnServiceHTTPArtifactResponseLocation">
+      ResponseLocation="<TMPL_VAR NAME="samlIDPSSODescriptorSingleSignOnServiceHTTPArtifactResponseLocation">"
+      </TMPL_IF>/>
     <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</NameIDFormat>
     <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:X509SubjectName</NameIDFormat>
     <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:WindowsDomainQualifiedName</NameIDFormat>

@@ -216,6 +216,7 @@ sub serviceToXML {
       samlSPSSODescriptorSingleLogoutServiceSOAP
       samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect
       samlIDPSSODescriptorSingleSignOnServiceHTTPPost
+      samlIDPSSODescriptorSingleSignOnServiceHTTPArtifact
       samlIDPSSODescriptorSingleSignOnServiceSOAP
       samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect
       samlIDPSSODescriptorSingleLogoutServiceHTTPPost
