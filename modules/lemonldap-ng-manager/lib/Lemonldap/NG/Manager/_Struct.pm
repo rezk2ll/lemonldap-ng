@@ -197,8 +197,7 @@ sub cstruct {
                         },
                         samlSPMetaDataOptionsSecurity => {
 
-                            _nodes =>
-                              [ qw(samlSPMetaDataOptionsEncryptionMode) ],
+                            _nodes => [qw(samlSPMetaDataOptionsEncryptionMode)],
 
                         samlSPMetaDataOptionsEncryptionMode =>
 "text:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsEncryptionMode:default:encryptionModeParams",
@@ -830,6 +829,7 @@ sub struct {
                     _nodes => [
                         qw(samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect
                           samlIDPSSODescriptorSingleSignOnServiceHTTPPost
+                          samlIDPSSODescriptorSingleSignOnServiceHTTPArtifact
                           samlIDPSSODescriptorSingleSignOnServiceSOAP)
                     ],
                     _help => 'default',
@@ -837,6 +837,8 @@ sub struct {
 'samlService:/samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect',
                     samlIDPSSODescriptorSingleSignOnServiceHTTPPost =>
 'samlService:/samlIDPSSODescriptorSingleSignOnServiceHTTPPost',
+                    samlIDPSSODescriptorSingleSignOnServiceHTTPArtifact =>
+'samlService:/samlIDPSSODescriptorSingleSignOnServiceHTTPArtifact',
                     samlIDPSSODescriptorSingleSignOnServiceSOAP =>
 'samlService:/samlIDPSSODescriptorSingleSignOnServiceSOAP',
                 },
@@ -1224,6 +1226,7 @@ sub testStruct {
         samlIDPSSODescriptorWantAuthnRequestsSigned          => $boolean,
         samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect  => $testNotDefined,
         samlIDPSSODescriptorSingleSignOnServiceHTTPPost      => $testNotDefined,
+        samlIDPSSODescriptorSingleSignOnServiceHTTPArtifact  => $testNotDefined,
         samlIDPSSODescriptorSingleSignOnServiceSOAP          => $testNotDefined,
         samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect  => $testNotDefined,
         samlIDPSSODescriptorSingleLogoutServiceHTTPPost      => $testNotDefined,
@@ -1434,6 +1437,10 @@ sub defaultConf {
           'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;' 
           . $portal
           . '/saml/singleSignOn;',
+        samlIDPSSODescriptorSingleSignOnServiceHTTPArtifact =>
+          'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact;' 
+          . $portal
+          . '/saml/singleSignOnArtifact;',
         samlIDPSSODescriptorSingleSignOnServiceSOAP =>
           'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;' 
           . $portal

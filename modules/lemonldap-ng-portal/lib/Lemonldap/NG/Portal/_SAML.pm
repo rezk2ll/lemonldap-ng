@@ -881,10 +881,34 @@ sub createAuthnRequest {
     }
 
     # Build authentication request
+
+    # Artifact
+    if (   $method == $self->getHttpMethod("artifact-get")
+        or $method == $self->getHttpMethod("artifact-post") )
+    {
+
+        # Build artifact message
+        unless ( $self->buildArtifactMsg( $login, $method ) ) {
+            $self->lmLog( "Unable to build SSO artifact response message",
+                'error' );
+            return;
+        }
+
+        $self->lmLog( "SSO: artifact response is built", 'debug' );
+
+        # Get artifact ID and Content, and store them
+        my $artifact_id      = $login->get_artifact;
+        my $artifact_message = $login->get_artifact_message;
+
+        $self->storeArtifact( $artifact_id, $artifact_message );
+    }
+
+    else {
     unless ( $self->buildAuthnRequestMsg($login) ) {
         $self->lmLog( "Could not build authentication request on $idp",
             'error' );
         return;
+    }
     }
 
     return $login;
@@ -1631,7 +1655,7 @@ sub storeArtifact {
     $samlSessionInfo->{_utime}     = time();        # Creation time
     $samlSessionInfo->{ID}         = $id;
     $samlSessionInfo->{message}    = $message;
-    $samlSessionInfo->{session_id} = $session_id;
+    $samlSessionInfo->{session_id} = $session_id if $session_id;
 
     my $art_session_id = $samlSessionInfo->{_session_id};
 
@@ -1716,12 +1740,11 @@ sub createArtifactResponse {
 
     $self->lmLog( "Response loaded", 'debug' );
 
-    # Get Lasso session
+    # Try to get Lasso session
     my $session_id = $art_session->{session_id};
-    unless ($session_id) {
-        $self->lmLog( "Cannot find session_id in artifact session", 'error' );
-        return;
-    }
+    if ($session_id) {
+        $self->lmLog( "Find session_id $session_id in artifact session",
+            'manage' );
 
     my $session = $self->getApacheSession( $session_id, 1 );
     unless ( defined $session ) {
@@ -1739,6 +1762,11 @@ sub createArtifactResponse {
         $self->lmLog( "Lasso Session loaded", 'debug' );
     }
 
+    }
+    else {
+        $self->lmLog( "No session_id in artifact session", 'manage' );
+    }
+
     # Build artifact response
     eval { Lasso::Login::build_response_msg($login); };
     if ($@) {
@@ -1748,8 +1776,8 @@ sub createArtifactResponse {
     }
     $self->lmLog( "Artifact response built", 'debug' );
 
-    # Store Lasso session
-    if ( $login->is_session_dirty ) {
+    # Store Lasso session if session opened
+    if ( $session_id and $login->is_session_dirty ) {
         $self->lmLog( "Save Lasso session in session", 'debug' );
         $self->updateSession(
             { _lassoSessionDump => $login->get_session->dump }, $session_id );

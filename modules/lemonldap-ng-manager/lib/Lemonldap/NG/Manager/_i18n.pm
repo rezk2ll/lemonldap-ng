@@ -299,6 +299,7 @@ sub en {
         samlIDPSSODescriptorSingleSignOnService             => 'Single Sign On',
         samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect => 'HTTP Redirect',
         samlIDPSSODescriptorSingleSignOnServiceHTTPPost     => 'HTTP POST',
+        samlIDPSSODescriptorSingleSignOnServiceHTTPArtifact => 'HTTP Artifact',
         samlIDPSSODescriptorSingleSignOnServiceSOAP         => 'SOAP',
         samlIDPSSODescriptorSingleLogoutService             => 'Single Logout',
         samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect => 'HTTP Redirect',
@@ -585,6 +586,7 @@ sub fr {
         samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect =>
           'Redirection HTTP',
         samlIDPSSODescriptorSingleSignOnServiceHTTPPost => 'POST HTTP',
+        samlIDPSSODescriptorSingleSignOnServiceHTTPArtifact => 'HTTP Artifact',
         samlIDPSSODescriptorSingleSignOnServiceSOAP     => 'SOAP',
         samlIDPSSODescriptorSingleLogoutService         => 'Single Logout',
         samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect =>

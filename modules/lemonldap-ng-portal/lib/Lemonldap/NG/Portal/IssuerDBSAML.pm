@@ -1173,8 +1173,6 @@ sub issuerForAuthUser {
 
             $self->lmLog( "SSO: authentication request is valid", 'debug' );
 
-            # TODO Check AuthnRequest conditions
-
             # Get ForceAuthn flag
             my $force_authn;
 

@@ -591,6 +591,7 @@ function samlService(id) {
 	formateSelect('samlServiceBinding',[
 		'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect=HTTP Redirect',
 		'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST=HTTP POST',
+		'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact=HTTP Artifact',
 		'urn:oasis:names:tc:SAML:2.0:bindings:SOAP=SOAP'
 		],t[0]);
 	$('#samlServiceLocation').attr('value',t[1]);
