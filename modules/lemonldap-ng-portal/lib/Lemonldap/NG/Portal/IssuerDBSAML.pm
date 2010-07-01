@@ -51,6 +51,10 @@ sub issuerForUnAuthUser {
     my $saml_sso_post_url_ret =
       $self->getMetaDataURL( "samlIDPSSODescriptorSingleSignOnServiceHTTPPost",
         2 );
+    my $saml_sso_art_url = $self->getMetaDataURL(
+        "samlIDPSSODescriptorSingleSignOnServiceHTTPArtifact", 1 );
+    my $saml_sso_art_url_ret = $self->getMetaDataURL(
+        "samlIDPSSODescriptorSingleSignOnServiceHTTPArtifact", 2 );
     my $saml_slo_soap_url =
       $self->getMetaDataURL( "samlIDPSSODescriptorSingleLogoutServiceSOAP", 1 );
     my $saml_slo_soap_url_ret =
@@ -84,7 +88,7 @@ sub issuerForUnAuthUser {
 
     # 1.1. SSO
     if ( $url =~
-/^(\Q$saml_sso_soap_url\E|Q$saml_sso_soap_url_ret\E|\Q$saml_sso_get_url\E|Q$saml_sso_get_url_ret\E|Q$saml_sso_post_url\E|Q$saml_sso_post_url\E)$/io
+/^(\Q$saml_sso_soap_url\E|\Q$saml_sso_soap_url_ret\E|\Q$saml_sso_get_url\E|\Q$saml_sso_get_url_ret\E|\Q$saml_sso_post_url\E|\Q$saml_sso_post_url_ret\E|\Q$saml_sso_art_url\E|\Q$saml_sso_art_url_ret\E)$/io
       )
     {
 
@@ -202,7 +206,7 @@ sub issuerForUnAuthUser {
 
     # 1.2. SLO
     if ( $url =~
-/^(\Q$saml_slo_soap_url\E|\Q$saml_slo_soap_url_ret\E|\Q$saml_slo_get_url\E|\Q$saml_slo_get_url_ret\E|Q$saml_slo_post_url\E|\Q$saml_slo_post_url_ret\E)$/io
+/^(\Q$saml_slo_soap_url\E|\Q$saml_slo_soap_url_ret\E|\Q$saml_slo_get_url\E|\Q$saml_slo_get_url_ret\E|\Q$saml_slo_post_url\E|\Q$saml_slo_post_url_ret\E)$/io
       )
     {
 
@@ -1052,6 +1056,10 @@ sub issuerForAuthUser {
     my $saml_sso_post_url_ret =
       $self->getMetaDataURL( "samlIDPSSODescriptorSingleSignOnServiceHTTPPost",
         2 );
+    my $saml_sso_art_url = $self->getMetaDataURL(
+        "samlIDPSSODescriptorSingleSignOnServiceHTTPArtifact", 1 );
+    my $saml_sso_art_url_ret = $self->getMetaDataURL(
+        "samlIDPSSODescriptorSingleSignOnServiceHTTPArtifact", 2 );
     my $saml_slo_soap_url =
       $self->getMetaDataURL( "samlIDPSSODescriptorSingleLogoutServiceSOAP", 1 );
     my $saml_slo_soap_url_ret =
@@ -1075,7 +1083,7 @@ sub issuerForAuthUser {
 
     # 1.1. SSO
     if ( $url =~
-/^(\Q$saml_sso_soap_url\E|Q$saml_sso_soap_url_ret\E|\Q$saml_sso_get_url\E|Q$saml_sso_get_url_ret\E|Q$saml_sso_post_url\E|Q$saml_sso_post_url\E)$/io
+/^(\Q$saml_sso_soap_url\E|\Q$saml_sso_soap_url_ret\E|\Q$saml_sso_get_url\E|\Q$saml_sso_get_url_ret\E|\Q$saml_sso_post_url\E|\Q$saml_sso_post_url_ret\E|\Q$saml_sso_art_url\E|\Q$saml_sso_art_url_ret\E)$/io
       )
     {
 
@@ -1672,7 +1680,7 @@ sub issuerForAuthUser {
 
     # 1.2. SLO
     if ( $url =~
-/^(\Q$saml_slo_soap_url\E|\Q$saml_slo_soap_url_ret\E|\Q$saml_slo_get_url\E|\Q$saml_slo_get_url_ret\E|Q$saml_slo_post_url\E|\Q$saml_slo_post_url_ret\E)$/io
+/^(\Q$saml_slo_soap_url\E|\Q$saml_slo_soap_url_ret\E|\Q$saml_slo_get_url\E|\Q$saml_slo_get_url_ret\E|\Q$saml_slo_post_url\E|\Q$saml_slo_post_url_ret\E)$/io
       )
     {
 
