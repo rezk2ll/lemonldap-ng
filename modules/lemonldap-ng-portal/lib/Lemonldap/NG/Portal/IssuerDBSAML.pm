@@ -1905,6 +1905,14 @@ sub issuerForAuthUser {
 sub issuerLogout {
     my $self = shift;
 
+    # Session ID
+    my $session_id = $self->{sessionInfo}->{_session_id} || $self->{id};
+
+    # Close SAML sessions
+    unless ( $self->deleteSAMLSecondarySessions($session_id) ) {
+        $self->lmLog( "Fail to delete SAML sessions", 'error' );
+    }
+
     # Create Logout object
     my $logout = $self->createLogout( $self->{_lassoServer} );
 
