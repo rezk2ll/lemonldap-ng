@@ -878,7 +878,7 @@ sub process {
     $self->{error} = PE_OK;
     $self->{error} = $self->_subProcess(
         qw(controlUrlOrigin checkNotifBack controlExistingSession issuerDBInit
-          issuerForUnAuthUser authInit extractFormInfo userDBInit getUser
+          authInit issuerForUnAuthUser extractFormInfo userDBInit getUser
           setAuthSessionInfo passwordDBInit modifyPassword setSessionInfo
           setMacros setLocalGroups setGroups authenticate removeOther
           grantSession store authFinish buildCookie checkNotification
@@ -1084,7 +1084,7 @@ sub existingSession {
 
             # Process
             $self->{error} = $self->_subProcess(
-                qw(issuerDBInit issuerForUnAuthUser authInit extractFormInfo
+                qw(issuerDBInit authInit issuerForUnAuthUser extractFormInfo
                   userDBInit getUser setAuthSessionInfo setSessionInfo
                   setMacros setLocalGroups setGroups authenticate
                   store authFinish)

@@ -1291,7 +1291,7 @@ sub issuerForAuthUser {
                 # Replay authentication process
                 $self->{updateSession} = 1;
                 $self->{error}         = $self->_subProcess(
-                    qw(issuerDBInit issuerForUnAuthUser authInit extractFormInfo
+                    qw(issuerDBInit authInit issuerForUnAuthUser extractFormInfo
                       userDBInit getUser setAuthSessionInfo setSessionInfo
                       setMacros setLocalGroups setGroups authenticate
                       store authFinish)
