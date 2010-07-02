@@ -279,6 +279,50 @@ sub extractFormInfo {
 
             $self->{_samlToken} = $saml_token;
 
+            # Restore initial SAML request in case of proxying
+            my $saml_sessions =
+              $self->{samlStorage}->searchOn( $self->{samlStorageOptions},
+                "ProxyID", $assertion_responded );
+
+            if ( my @saml_sessions_keys = keys %$saml_sessions ) {
+
+                # Warning if more than one session found
+                if ( $#saml_sessions_keys > 0 ) {
+                    $self->lmLog(
+"More than one SAML proxy session found for ID $assertion_responded",
+                        'warn'
+                    );
+                }
+
+                # Take the first session
+                my $saml_session = shift @saml_sessions_keys;
+
+                # Get session
+                $self->lmLog(
+"Retrieve SAML proxy session $saml_session for ID $assertion_responded",
+                    'debug'
+                );
+
+                my $samlSessionInfo = $self->getSamlSession($saml_session);
+
+                $self->{_proxiedRequest}    = $samlSessionInfo->{Request};
+                $self->{_proxiedMethod}     = $samlSessionInfo->{Method};
+                $self->{_proxiedRelayState} = $samlSessionInfo->{RelayState};
+                $self->{_proxiedArtifact}   = $samlSessionInfo->{Artifact};
+
+               # Save values in hidden fields in case of other user interactions
+                $self->setHiddenFormValue( 'SAMLRequest',
+                    $self->{_proxiedRequest} );
+                $self->setHiddenFormValue( 'Method', $self->{_proxiedMethod} );
+                $self->setHiddenFormValue( 'RelayState',
+                    $self->{_proxiedRelayState} );
+                $self->setHiddenFormValue( 'SAMLart',
+                    $self->{_proxiedArtifact} );
+
+                # Close session
+                untie %$samlSessionInfo;
+            }
+
             return PE_OK;
         }
         elsif ($request) {
@@ -945,9 +989,31 @@ sub extractFormInfo {
     $self->lmLog( "Authentication request created", 'debug' );
 
     # Keep assertion ID in memory to prevent replay
-    unless ( $self->storeReplayProtection( $login->request()->ID ) ) {
+    my $samlID = $login->request()->ID;
+    unless ( $self->storeReplayProtection($samlID) ) {
         $self->lmLog( "Unable to store assertion ID", 'error' );
         return PE_ERROR;
+    }
+
+    # Keep initial SAML request data in memory in case of proxing
+    if ( $self->{_proxiedSamlRequest} ) {
+
+        my $samlSessionInfo = $self->getSamlSession();
+
+        return PE_ERROR unless $samlSessionInfo;
+
+        $samlSessionInfo->{type}       = 'proxy';
+        $samlSessionInfo->{_utime}     = time;
+        $samlSessionInfo->{Request}    = $self->{_proxiedRequest};
+        $samlSessionInfo->{Method}     = $self->{_proxiedMethod};
+        $samlSessionInfo->{RelayState} = $self->{_proxiedRelayState};
+        $samlSessionInfo->{Artifact}   = $self->{_proxiedArtifact};
+        $samlSessionInfo->{ProxyID}    = $samlID;
+
+        untie %$samlSessionInfo;
+
+        $self->lmLog( "Keep initial SAML request data in memory for ID $samlID",
+            'debug' );
     }
 
     # Send SSO request depending on request method

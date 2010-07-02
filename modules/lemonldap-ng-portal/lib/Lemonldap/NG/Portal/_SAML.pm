@@ -775,12 +775,14 @@ sub createAuthnRequest {
     # In this case:
     # * Check proxy conditions
     # * Forward some authn constraints
-    if ( $self->{_samlRequest} ) {
+    if ( $self->{_proxiedSamlRequest} ) {
 
         $self->lmLog( "IDP Proxy mode detected", 'debug' );
 
         # Get ProxyCount value
-        eval { $proxyCount = $self->{_samlRequest}->Scoping()->ProxyCount() };
+        eval {
+            $proxyCount = $self->{_proxiedSamlRequest}->Scoping()->ProxyCount();
+        };
 
         # Deny request if ProxyCount eq 0
         if ( defined $proxyCount ) {
@@ -796,22 +798,22 @@ sub createAuthnRequest {
             else {
 
                 # Decrease ProxyCount
-                my $scoping = $self->{_samlRequest}->Scoping();
+                my $scoping = $self->{_proxiedSamlRequest}->Scoping();
                 $scoping->ProxyCount( $proxyCount-- );
                 eval { $request->Scoping($scoping); };
             }
         }
 
         # isPassive
-        eval { $isPassive = $self->{_samlRequest}->IsPassive(); };
+        eval { $isPassive = $self->{_proxiedSamlRequest}->IsPassive(); };
 
         # forceAuthn
-        eval { $forceAuthn = $self->{_samlRequest}->ForceAuthn(); };
+        eval { $forceAuthn = $self->{_proxiedSamlRequest}->ForceAuthn(); };
 
         # requestedAuthnContext
         eval {
             $proxyRequestedAuthnContext =
-              $self->{_samlRequest}->RequestedAuthnContext();
+              $self->{_proxiedSamlRequest}->RequestedAuthnContext();
         };
     }
 

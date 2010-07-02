@@ -181,8 +181,12 @@ sub issuerForUnAuthUser {
                 return PE_ERROR;
             }
 
-            # Store SAML request in memory in case of proxying
-            $self->{_samlRequest} = $saml_request;
+            # Store SAML elements in memory in case of proxying
+            $self->{_proxiedSamlRequest} = $saml_request;
+            $self->{_proxiedRequest}     = $request;
+            $self->{_proxiedMethod}      = $method;
+            $self->{_proxiedRelayState}  = $relaystate;
+            $self->{_proxiedArtifact}    = $artifact;
 
             return PE_OK;
         }
@@ -1088,17 +1092,27 @@ sub issuerForAuthUser {
     my $request_method = $self->request_method();
     my $content_type   = $self->content_type();
 
-    # 1.1. SSO
+    # 1.1. SSO (SSO URL or Proxy Mode)
     if ( $url =~
 /^(\Q$saml_sso_soap_url\E|\Q$saml_sso_soap_url_ret\E|\Q$saml_sso_get_url\E|\Q$saml_sso_get_url_ret\E|\Q$saml_sso_post_url\E|\Q$saml_sso_post_url_ret\E|\Q$saml_sso_art_url\E|\Q$saml_sso_art_url_ret\E)$/io
-      )
+        or $self->{_proxiedRequest} )
     {
 
         $self->lmLog( "URL $url detected as an SSO request URL", 'debug' );
 
         # Check message
-        my ( $request, $response, $method, $relaystate, $artifact ) =
+        my ( $request, $response, $method, $relaystate, $artifact );
+
+        if ( $self->{_proxiedRequest} ) {
+            $request    = $self->{_proxiedRequest};
+            $method     = $self->{_proxiedMethod};
+            $relaystate = $self->{_proxiedRelayState};
+            $artifact   = $self->{_proxiedArtifact};
+        }
+        else {
+            ( $request, $response, $method, $relaystate, $artifact ) =
           $self->checkMessage( $url, $request_method, $content_type );
+        }
 
         # Create Login object
         my $login = $self->createLogin($server);
@@ -1298,9 +1312,11 @@ sub issuerForAuthUser {
                 );
             }
 
-            # Check Destination
+            # Check Destination (only in non proxy mode)
+            unless ( $self->{_proxiedRequest} ) {
             return PE_ERROR
               unless ( $self->checkDestination( $login->request, $url ) );
+            }
 
             # Map authenticationLevel with SAML2 authentication context
             my $authenticationLevel =
