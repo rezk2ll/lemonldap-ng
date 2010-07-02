@@ -1415,6 +1415,8 @@ sub buildLogoutRequestMsg {
 sub setSessionFromDump {
     my ( $self, $profile, $dump ) = splice @_;
 
+    $self->lmLog( "Loading Session dump: $dump", 'debug' );
+
     eval { Lasso::Profile::set_session_from_dump( $profile, $dump ); };
 
     return $self->checkLassoError($@);
@@ -2869,11 +2871,11 @@ sub deleteSAMLSecondarySessions {
     return $result;
 }
 
-## @method boolean sendSLOErrorResponse(Lasso::Logout logout, string method)
+## @method void sendSLOErrorResponse(Lasso::Logout logout, string method)
 # Send an SLO error response
 # @param logout Lasso::Logout object
 # @param method HTTP method
-# return result
+# @return nothing
 sub sendSLOErrorResponse {
     my ( $self, $logout, $method ) = splice @_;
 
@@ -2882,19 +2884,19 @@ sub sendSLOErrorResponse {
       '<Session xmlns="http://lasso.entrouvert.org/namespaces/0.0"/>';
 
     unless ( $self->setSessionFromDump( $logout, $session ) ) {
-        $self->lmLog( "Coul not set empty session in logout object", 'error' );
-        return 0;
+        $self->lmLog( "Could not set empty session in logout object", 'error' );
+        $self->quit();
     }
 
     # Send unvalidated SLO response
     unless ( $self->sendLogoutResponseToServiceProvider( $logout, $method ) ) {
         $self->lmLog( "Could not send SLO error response", 'error' );
-        return 0;
+        $self->quit();
     }
 
     $self->lmLog( "SLO response error sent", 'debug' );
 
-    return 1;
+    $self->quit();
 }
 
 1;
