@@ -952,7 +952,9 @@ sub extractFormInfo {
 
     # Send SSO request depending on request method
     # HTTP-REDIRECT
-    if ( $method == Lasso::Constants::HTTP_METHOD_REDIRECT ) {
+    if (   $method == $self->getHttpMethod('redirect')
+        or $method == $self->getHttpMethod('artifact-get') )
+    {
 
         # Redirect user to response URL
         my $sso_url = $login->msg_url;
@@ -968,14 +970,22 @@ sub extractFormInfo {
     }
 
     # HTTP-POST
-    elsif ( $method == Lasso::Constants::HTTP_METHOD_POST ) {
+    elsif ($method == $self->getHttpMethod('post')
+        or $method == $self->getHttpMethod('artifact-post') )
+    {
 
         # Use autosubmit form
         my $sso_url  = $login->msg_url;
         my $sso_body = $login->msg_body;
 
         $self->{postUrl} = $sso_url;
+
+        if ( $method == $self->getHttpMethod("artifact-post") ) {
+            $self->{postFields} = { 'SAMLart' => $sso_body };
+        }
+        else {
         $self->{postFields} = { 'SAMLRequest' => $sso_body };
+        }
 
         # RelayState
         $self->{postFields}->{'RelayState'} = $login->msg_relayState

@@ -888,20 +888,16 @@ sub createAuthnRequest {
     }
 
     # Build authentication request
+    unless ( $self->buildAuthnRequestMsg($login) ) {
+        $self->lmLog( "Could not build authentication request on $idp",
+            'error' );
+        return;
+    }
 
     # Artifact
     if (   $method == $self->getHttpMethod("artifact-get")
         or $method == $self->getHttpMethod("artifact-post") )
     {
-
-        # Build artifact message
-        unless ( $self->buildArtifactMsg( $login, $method ) ) {
-            $self->lmLog( "Unable to build SSO artifact response message",
-                'error' );
-            return;
-        }
-
-        $self->lmLog( "SSO: artifact response is built", 'debug' );
 
         # Get artifact ID and Content, and store them
         my $artifact_id      = $login->get_artifact;
@@ -909,15 +905,6 @@ sub createAuthnRequest {
 
         $self->storeArtifact( $artifact_id, $artifact_message );
     }
-
-    else {
-    unless ( $self->buildAuthnRequestMsg($login) ) {
-        $self->lmLog( "Could not build authentication request on $idp",
-            'error' );
-        return;
-    }
-    }
-
     return $login;
 }
 
