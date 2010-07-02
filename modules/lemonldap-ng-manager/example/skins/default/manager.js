@@ -489,9 +489,9 @@ function bool(id) {
 }
 function trool(id) {
 	currentId=id;
-	if(lmdata(id)==1){$('#On').attr('checked',true)}
-	if(lmdata(id)==0){$('#Off').attr('checked',true)}
-	else{$('#Default').attr('checked',true)}
+	if(lmdata(id)==1){$('#TrOn').attr('checked',true)}
+	else{if(lmdata(id)==0){$('#TrOff').attr('checked',true)}
+	else{$('#TrDefault').attr('checked',true)}}
 	display('trool',lmtext(id));
 }
 function int(id) {

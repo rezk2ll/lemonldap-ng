@@ -257,9 +257,9 @@
 
     <!-- Troolean -->
     <div id="content_trool" class="hidden">
-     <input id="On" type="radio" name="boolean" value="1" onclick="setlmdata(currentId,1)"/> <lang en="On" fr="Activé"/>
-     <input id="Off" type="radio" name="boolean" value="0" onclick="setlmdata(currentId,0)"/> <lang en="Off" fr="Désactivé"/>
-     <input id="Default" type="radio" name="boolean" value="-1" onclick="setlmdata(currentId,-1)"/> <lang en="Default" fr="Par défaut"/>
+     <input id="TrOn" type="radio" name="troolean" value="1" onclick="setlmdata(currentId,1)"/> <lang en="On" fr="Activé"/>
+     <input id="TrOff" type="radio" name="troolean" value="0" onclick="setlmdata(currentId,0)"/> <lang en="Off" fr="Désactivé"/>
+     <input id="TrDefault" type="radio" name="troolean" value="-1" onclick="setlmdata(currentId,-1)"/> <lang en="Default" fr="Par défaut"/>
     </div>
 
     <div id="content_btext" class="hidden">
