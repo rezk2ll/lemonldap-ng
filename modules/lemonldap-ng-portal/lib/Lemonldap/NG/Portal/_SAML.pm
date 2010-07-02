@@ -1745,7 +1745,7 @@ sub createArtifactResponse {
     my $session_id = $art_session->{session_id};
     if ($session_id) {
         $self->lmLog( "Find session_id $session_id in artifact session",
-            'manage' );
+            'debug' );
 
     my $session = $self->getApacheSession( $session_id, 1 );
     unless ( defined $session ) {
@@ -1765,7 +1765,7 @@ sub createArtifactResponse {
 
     }
     else {
-        $self->lmLog( "No session_id in artifact session", 'manage' );
+        $self->lmLog( "No session_id in artifact session", 'debug' );
     }
 
     # Build artifact response
