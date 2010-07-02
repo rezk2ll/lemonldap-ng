@@ -947,7 +947,7 @@ sub checkNotifBack {
         }
         else {
             $self->{error} = $self->_subProcess(
-                qw(checkNotification issuerDBInit issuerForAuthUser autoRedirect)
+                qw(checkNotification issuerDBInit authInit issuerForAuthUser autoRedirect)
             );
             return $self->{error} || PE_DONE;
         }
@@ -991,7 +991,7 @@ sub controlExistingSession {
             # Call issuerDB logout
             eval {
                 $self->{error} =
-                  $self->_subProcess(qw(issuerDBInit issuerLogout));
+                  $self->_subProcess(qw(issuerDBInit authInit issuerLogout));
             };
             if ($@) {
                 $self->lmLog( "Error when calling issuerLogout: $@", 'debug' );
@@ -1027,7 +1027,7 @@ sub controlExistingSession {
         my $r = $self->_sub( 'existingSession', $id, $self->{sessionInfo} );
         if ( $r == PE_DONE ) {
             $self->{error} = $self->_subProcess(
-                qw(checkNotification issuerDBInit issuerForAuthUser autoRedirect)
+                qw(checkNotification issuerDBInit authInit issuerForAuthUser autoRedirect)
             );
             return $self->{error} || PE_DONE;
         }
@@ -1114,9 +1114,9 @@ sub issuerDBInit {
     return $self->SUPER::issuerDBInit();
 }
 
-# issuerForUnAuthUser(): must be implemented in IssuerDB* module
-
 # authInit(): must be implemented in Auth* module
+
+# issuerForUnAuthUser(): must be implemented in IssuerDB* module
 
 # extractFormInfo(): must be implemented in Auth* module
 # * set $self->{user}

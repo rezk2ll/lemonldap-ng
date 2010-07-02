@@ -1744,7 +1744,7 @@ sub issuerForAuthUser {
             if ($session) {
                 unless ( $self->setSessionFromDump( $logout, $session ) ) {
                     $self->lmLog( "Unable to load Lasso Session", 'error' );
-                    return $self->sendSLOErrorResponse( $logout, $method );
+                    $self->sendSLOErrorResponse( $logout, $method );
                 }
                 $self->lmLog( "Lasso Session loaded", 'debug' );
             }
@@ -1752,7 +1752,7 @@ sub issuerForAuthUser {
             if ($identity) {
                 unless ( $self->setIdentityFromDump( $logout, $identity ) ) {
                     $self->lmLog( "Unable to load Lasso Identity", 'error' );
-                    return $self->sendSLOErrorResponse( $logout, $method );
+                    $self->sendSLOErrorResponse( $logout, $method );
                 }
                 $self->lmLog( "Lasso Identity loaded", 'debug' );
             }
@@ -1768,7 +1768,7 @@ sub issuerForAuthUser {
             unless ($spConfKey) {
                 $self->lmLog( "$sp do not match any SP in configuration",
                     'error' );
-                return $self->sendSLOErrorResponse( $logout, $method );
+                $self->sendSLOErrorResponse( $logout, $method );
             }
 
             $self->lmLog( "$sp match $spConfKey SP in configuration", 'debug' );
@@ -1781,7 +1781,7 @@ sub issuerForAuthUser {
             if ($checkSLOMessageSignature) {
                 unless ( $self->checkSignatureStatus($logout) ) {
                     $self->lmLog( "Signature is not valid", 'error' );
-                    return $self->sendSLOErrorResponse( $logout, $method );
+                    $self->sendSLOErrorResponse( $logout, $method );
                 }
                 else {
                     $self->lmLog( "Signature is valid", 'debug' );
@@ -1793,13 +1793,13 @@ sub issuerForAuthUser {
             }
 
             # Check Destination
-            return $self->sendSLOErrorResponse( $logout, $method )
+            $self->sendSLOErrorResponse( $logout, $method )
               unless ( $self->checkDestination( $logout->request, $url ) );
 
             # Validate request if no previous error
             unless ( $self->validateLogoutRequest($logout) ) {
                 $self->lmLog( "SLO request is not valid", 'error' );
-                return $self->sendSLOErrorResponse( $logout, $method );
+                $self->sendSLOErrorResponse( $logout, $method );
             }
 
             # Set RelayState
@@ -1832,7 +1832,7 @@ sub issuerForAuthUser {
                 $self->lmLog(
                     "No session index in SLO request from $spConfKey SP",
                     'error' );
-                return $self->sendSLOErrorResponse( $logout, $method );
+                $self->sendSLOErrorResponse( $logout, $method );
             }
 
             # Decrypt session index
@@ -1865,7 +1865,7 @@ sub issuerForAuthUser {
 
             unless ($signSLOMessage) {
                 $self->lmLog( "Do not sign this SLO response", 'debug' );
-                return $self->sendSLOErrorResponse( $logout, $method )
+                $self->sendSLOErrorResponse( $logout, $method )
                   unless ( $self->disableSignature($logout) );
             }
 
@@ -1878,7 +1878,7 @@ sub issuerForAuthUser {
                   )
                 {
                     $self->lmLog( "Fail to send SLO response", 'error' );
-                    return $self->sendSLOErrorResponse( $logout, $method );
+                    $self->sendSLOErrorResponse( $logout, $method );
             }
             }
 
