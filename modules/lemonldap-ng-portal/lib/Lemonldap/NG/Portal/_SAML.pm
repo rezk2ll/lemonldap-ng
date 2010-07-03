@@ -2881,7 +2881,7 @@ sub sendSLOErrorResponse {
 
     # Load empty session
     my $session =
-      '<Session xmlns="http://lasso.entrouvert.org/namespaces/0.0"/>';
+      '<Session xmlns="http://www.entrouvert.org/namespaces/lasso/0.0"/>';
 
     unless ( $self->setSessionFromDump( $logout, $session ) ) {
         $self->lmLog( "Could not set empty session in logout object", 'error' );
