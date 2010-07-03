@@ -2327,8 +2327,8 @@ sub sendLogoutResponseToServiceProvider {
 
 }
 
-## @pmethod int sendLogoutRequestToServiceProvider(Lasso::Logout $logout, string $providerID, int $method, boolean $relay, string $relayState)
-# Send a logout request to a service provider
+## @pmethod int sendLogoutRequestToProvider(Lasso::Logout $logout, string $providerID, int $method, boolean $relay, string $relayState)
+# Send a logout request to a provider
 # If information have to be displayed to users, such as iframe to send
 # HTTP-Redirect or HTTP-POST logout request, then $self->{_info} will be
 # updated.
@@ -2338,7 +2338,7 @@ sub sendLogoutResponseToServiceProvider {
 # @param $relay If SOAP method, build a relay logout request
 # @param $relayState Relay State for SLO status
 # @return int Number of concerned providers.
-sub sendLogoutRequestToServiceProvider {
+sub sendLogoutRequestToProvider {
     my ( $self, $logout, $providerID, $method, $relay, $relayState ) =
       splice @_;
     my $server = $self->{_lassoServer};
@@ -2349,15 +2349,18 @@ sub sendLogoutRequestToServiceProvider {
         return ( 0, undef, undef );
     }
 
-    # Find EntityID in SPList
-    unless ( defined $self->{_spList}->{$providerID} ) {
-        $self->lmLog( "$providerID does not match any known SP", 'error' );
+    my $type = defined $self->{_spList}->{$providerID} ? "SP" : "IDP";
+
+    # Find EntityID in spList or idpList
+    unless ( defined $self->{ '_' . lc($type) . 'List' }->{$providerID} ) {
+        $self->lmLog( "$providerID does not match any known $type", 'error' );
         return ( 0, undef, undef );
     }
 
-    # Get SP Name and Conf Key from EntityID
-    my $providerName = $self->{_spList}->{$providerID}->{name};
-    my $spConfKey    = $self->{_spList}->{$providerID}->{confKey};
+    # Get Provider Name and Conf Key from EntityID
+    my $providerName =
+      $self->{ '_' . lc($type) . 'List' }->{$providerID}->{name};
+    my $confKey = $self->{ '_' . lc($type) . 'List' }->{$providerID}->{confKey};
 
     # Get first HTTP method
     my $protocolType = Lasso::Constants::MD_PROTOCOL_TYPE_SINGLE_LOGOUT;
@@ -2371,8 +2374,8 @@ sub sendLogoutRequestToServiceProvider {
 
     # Signature
     my $signSLOMessage =
-      $self->{samlSPMetaDataOptions}->{$spConfKey}
-      ->{samlSPMetaDataOptionsSignSLOMessage};
+      $self->{ 'saml' . $type . 'MetaDataOptions' }->{$confKey}
+      ->{ 'saml' . $type . 'MetaDataOptionsSignSLOMessage' };
 
     if ( $signSLOMessage == 0 ) {
         $self->lmLog( "SLO request will not be signed", 'debug' );
@@ -2391,7 +2394,7 @@ sub sendLogoutRequestToServiceProvider {
         eval { $logout->msg_relayState($relayState); };
         if ($@) {
             $self->lmLog(
-"Unable to set Relay State $relayState in SLO request for $spConfKey",
+"Unable to set Relay State $relayState in SLO request for $confKey",
                 'error'
             );
             return ( 0, $method, undef );
@@ -2547,15 +2550,15 @@ sub sendLogoutRequestToServiceProvider {
             my $sloStatusSessionInfos = $self->getSamlSession($relayState);
 
             if ($sloStatusSessionInfos) {
-                $sloStatusSessionInfos->{$spConfKey} = 1;
+                $sloStatusSessionInfos->{$confKey} = 1;
                 untie %$sloStatusSessionInfos;
                 $self->lmLog(
-                    "Store SLO status for $spConfKey in session $relayState",
+                    "Store SLO status for $confKey in session $relayState",
                     'debug' );
             }
             else {
                 $self->lmLog(
-"Unable to store SLO status for $spConfKey in session $relayState",
+"Unable to store SLO status for $confKey in session $relayState",
                     'warn'
                 );
             }
@@ -2570,15 +2573,15 @@ sub sendLogoutRequestToServiceProvider {
 
 }
 
-## @pmethod int sendLogoutRequestToServiceProviders(Lasso::Logout logout, string relayState )
-# Send logout response issue from a logout request to all other service
+## @pmethod int sendLogoutRequestToProviders(Lasso::Logout logout, string relayState )
+# Send logout response issue from a logout request to all other
 # providers. If information have to be displayed to users, such as
 # iframe to send HTTP-Redirect or HTTP-POST logout request, then
 # $self->{_info} will be updated.
 # @param logout Lasso Logout object
 # @param relayState Relay State for SLO status
 # @return int Number of concerned providers.
-sub sendLogoutRequestToServiceProviders {
+sub sendLogoutRequestToProviders {
     my ( $self, $logout, $relayState ) = splice @_;
     my $server         = $self->{_lassoServer};
     my $providersCount = 0;
@@ -2601,8 +2604,8 @@ sub sendLogoutRequestToServiceProviders {
 
         # Send logout request
         my ( $rstatus, $rmethod, $rinfo ) =
-          $self->sendLogoutRequestToServiceProvider( $logout, $providerID,
-            undef, 1, $relayState );
+          $self->sendLogoutRequestToProvider( $logout, $providerID, undef, 1,
+            $relayState );
 
         next unless ($rstatus);
 
@@ -3193,13 +3196,13 @@ Convert SAML2 date format into timestamp
 
 Send logout response issue from a logout request
 
-=head2 sendLogoutRequestToServiceProvider
+=head2 sendLogoutRequestToProvider
 
-Send logout request to a service provider
+Send logout request to a provider
 
-=head2 sendLogoutRequestToServiceProviders
+=head2 sendLogoutRequestToProviders
 
-Send logout response issue from a logout request to all other service
+Send logout response issue from a logout request to all other
 providers. If information have to be displayed to users, such as
 iframe to send HTTP-Redirect or HTTP-POST logout request, then          
 $self->{_info} will be updated.                                         

@@ -363,8 +363,8 @@ sub issuerForUnAuthUser {
 
                 # Send logout request
                 my ( $rstatus, $rmethod, $rinfo ) =
-                  $self->sendLogoutRequestToServiceProvider( $logout,
-                    $providerID, $self->getHttpMethod('soap'), 0 );
+                  $self->sendLogoutRequestToProvider( $logout, $providerID,
+                    $self->getHttpMethod('soap'), 0 );
 
                 if ($rstatus) {
                     $self->lmLog( "SOAP SLO successful on $providerID",
@@ -547,7 +547,7 @@ sub issuerForUnAuthUser {
 
         # Send the logout request
         my ( $rstatus, $rmethod, $rinfo ) =
-          $self->sendLogoutRequestToServiceProvider( $logout, $providerID,
+          $self->sendLogoutRequestToProvider( $logout, $providerID,
             Lasso::Constants::HTTP_METHOD_SOAP );
         unless ($rstatus) {
             $self->lmLog( "Fail to process SOAP logout request to $providerID",
@@ -1821,7 +1821,7 @@ sub issuerForAuthUser {
 
             # Prepare logout on all others SP
             my $provider_nb =
-              $self->sendLogoutRequestToServiceProviders( $logout, $relayID );
+              $self->sendLogoutRequestToProviders( $logout, $relayID );
 
             # Get session index
             my $session_index;
@@ -1962,7 +1962,7 @@ sub issuerLogout {
     # Verify that logout response is correctly sent. If we have to wait for
     # providers during HTTP-REDIRECT process, return PE_INFO to notify to wait
     # for them.
-    if ( $self->sendLogoutRequestToServiceProviders($logout) ) {
+    if ( $self->sendLogoutRequestToProviders($logout) ) {
         return PE_INFO;
     }
 
