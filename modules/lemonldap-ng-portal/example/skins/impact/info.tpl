@@ -39,7 +39,7 @@
     }
   function timer() {
     var h=$('#timer').html();
-    i--;
+    if(i>0){i--;}
     h=h.replace(/\d+/,i);
     $('#timer').html(h);
     window.setTimeout('timer()',1000);
