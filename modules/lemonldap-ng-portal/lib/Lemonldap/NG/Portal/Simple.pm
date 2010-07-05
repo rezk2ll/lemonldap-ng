@@ -517,10 +517,12 @@ sub redirect {
     }
 }
 
-## @method protected hashref getApacheSession(string id)
+## @method protected hashref getApacheSession(string id, boolean noInfo)
 # Try to recover the session corresponding to id and return session datas.
 # If $id is set to undef, return a new session.
-# @param $id session reference
+# @param id session reference
+# @param noInfo do not set Apache REMOTE_USER
+# return session hashref
 sub getApacheSession {
     my ( $self, $id, $noInfo ) = @_;
     my %h;
@@ -566,7 +568,7 @@ sub updateSession {
     }
 
     if ($id) {
-        my $h = $self->getApacheSession($id) or return undef;
+        my $h = $self->getApacheSession( $id, 1 ) or return undef;
 
         # Store/update session values
         foreach ( keys %$infos ) {

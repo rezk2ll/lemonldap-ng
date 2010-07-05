@@ -1415,7 +1415,9 @@ sub authFinish {
     my $session_index = $self->{_sessionIndex};
 
     $self->lmLog(
-        "Store NameID $nameid and SessionIndex $session_index for session $id",
+        "Store NameID "
+          . $nameid->dump
+          . " and SessionIndex $session_index for session $id",
         'debug'
     );
 

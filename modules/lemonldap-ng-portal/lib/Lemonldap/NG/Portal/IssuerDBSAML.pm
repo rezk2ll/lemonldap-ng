@@ -1620,6 +1620,14 @@ sub issuerForAuthUser {
 
             # Keep SAML elements for later queries
             my $nameid = $login->nameIdentifier;
+
+            $self->lmLog(
+                "Store NameID "
+                  . $nameid->dump
+                  . " and SessionIndex $sessionIndex for session $session_id",
+                'debug'
+            );
+
             my $samlSessionInfo = $self->getSamlSession();
 
             return PE_ERROR unless $samlSessionInfo;
@@ -1628,6 +1636,8 @@ sub issuerForAuthUser {
             $samlSessionInfo->{_utime}  = $time;            # Creation time
             $samlSessionInfo->{_id}     = $session_id;      # SSO session id
             $samlSessionInfo->{_nameID} = $nameid->dump;    # SAML NameID
+            $samlSessionInfo->{_sessionIndex} =
+              $sessionIndex;                                # SAML SessionIndex
 
             my $saml_session_id = $samlSessionInfo->{_session_id};
 
@@ -1796,6 +1806,18 @@ sub issuerForAuthUser {
             $self->sendSLOErrorResponse( $logout, $method )
               unless ( $self->checkDestination( $logout->request, $url ) );
 
+            # Get session index
+            my $session_index;
+            eval { $session_index = $logout->request()->SessionIndex; };
+
+            # SLO requests without session index are not accepted
+            if ( $@ or !defined $session_index ) {
+                $self->lmLog(
+                    "No session index in SLO request from $spConfKey SP",
+                    'error' );
+                $self->sendSLOErrorResponse( $logout, $method );
+            }
+
             # Validate request if no previous error
             unless ( $self->validateLogoutRequest($logout) ) {
                 $self->lmLog( "SLO request is not valid", 'error' );
@@ -1822,18 +1844,6 @@ sub issuerForAuthUser {
             # Prepare logout on all others SP
             my $provider_nb =
               $self->sendLogoutRequestToProviders( $logout, $relayID );
-
-            # Get session index
-            my $session_index;
-            eval { $session_index = $logout->request()->SessionIndex; };
-
-            # SLO requests without session index are not accepted
-            if ( $@ or !defined $session_index ) {
-                $self->lmLog(
-                    "No session index in SLO request from $spConfKey SP",
-                    'error' );
-                $self->sendSLOErrorResponse( $logout, $method );
-            }
 
             # Decrypt session index
             my $local_session_id = $self->{cipher}->decrypt($session_index);
