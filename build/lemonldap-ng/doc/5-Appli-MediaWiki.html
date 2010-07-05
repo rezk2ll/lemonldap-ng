@@ -147,9 +147,7 @@ $_SERVER['PHP_AUTH_USER'] = $_SERVER['REMOTE_USER'];
     ServerName mediawiki.example.com<br /><br />    # SSO protection
     PerlHeaderParserHandler My::Package<br /><br />    # DocumentRoot
     DocumentRoot /<span class="java-keyword">var</span>/www/html/mediawiki/
-    DirectoryIndex index.php<br /><br />    LogLevel debug
-    ErrorDocument 403 <span class="nobr"><a href=
-"http://auth.example.com/error&amp;#45;sso.pl">http://auth.example.com/error-sso.pl</a></span>
+    DirectoryIndex index.php<br /><br />    LogLevel warn
     ErrorLog /<span class=
 "java-keyword">var</span>/log/httpd/mediawiki-error.log
     CustomLog /<span class=

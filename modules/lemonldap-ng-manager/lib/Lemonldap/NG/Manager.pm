@@ -11,7 +11,7 @@ use Lemonldap::NG::Manager::Help;                                     #inherits
 use Lemonldap::NG::Common::Conf;              #link protected conf Configuration
 use Lemonldap::NG::Common::Conf::Constants;   #inherits
 
-our $VERSION = '0.93';
+our $VERSION = '0.94';
 our @ISA     = qw(
   Lemonldap::NG::Handler::CGI
   Lemonldap::NG::Manager::Downloader

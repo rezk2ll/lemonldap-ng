@@ -1,3 +1,106 @@
+lemonldap-ng (1.0rc2) unstable; urgency=low
+
+    * [LEMONLDAP-20] - Parameter remoteCookieName is not available in
+        Manager
+    * [LEMONLDAP-21] - Special characters from SAML attribute statement are
+      not well encoded
+    * [LEMONLDAP-41] - Lasso CRITICAL error in AuthSAML logout process
+    * [LEMONLDAP-42] - [SAML][SP] Attrubtes sent trought IDP initiated SSO are
+      not registered into session
+    * [LEMONLDAP-43] - [SAML][SP] IDP should not be read from IDP cookie, but
+      from SAML request or response
+    * [LEMONLDAP-50] - [SAML][SP] OneTimeUse flag should not reduce session
+      duration
+    * [LEMONLDAP-53] - [SAML][IDP] sendLogoutResponseAfterLogoutRequest method
+      does not exists
+    * [LEMONLDAP-54] - Handler parameters (https, port, etc.) are not taken
+      into account if only defined in Manager, and not in ini file
+    * [LEMONLDAP-62] - [SAML] samldate2timestamp is not returning correct
+      timestamp
+    * [LEMONLDAP-64] - SLO error with simpleSAMLphp
+    * [LEMONLDAP-68] - Failed to load signing key for
+      http://urlIDP/saml/metadata
+    * [LEMONLDAP-69] - domain cannot contain "-" in Manager
+    * [LEMONLDAP-71] - samlIDPSSODescriptorArtifactResolutionServiceArtifact
+      wrong binding in Manager
+    * [LEMONLDAP-72] - [SAML] UTF-8 encoded attributes are reencoded
+    * [LEMONLDAP-73] - [SAML] Initial URL is not kept when IDP is choosen in
+      AuthSAML
+    * [LEMONLDAP-74] - [error] Unable to open relaystate session
+    * [LEMONLDAP-75] - SSO HTTP-POST profile not declared in IDP metadata
+    * [LEMONLDAP-76] - [SAML] SOAP SLO denied on IDP
+    * [LEMONLDAP-77] - Error when no SessionNotOnOrAfter value in authn
+      statement
+    * [LEMONLDAP-78] - Request Denied on SOAP SLO request on IDP
+    * [LEMONLDAP-79] - Mandatory attributes are not requested
+    * [LEMONLDAP-81] - SessionNotOnOrAfter should be set explicitely
+    * [LEMONLDAP-82] - CDA always use secured cookie even if requested site is
+      a http one
+    * [LEMONLDAP-100] - Secondary SAML session should be destroyed when
+      primary session is deleted
+    * [LEMONLDAP-105] - Error on SLO request for already closed session
+    * [LEMONLDAP-109] - Do not send AttributeStatement when no attribute
+      should be sent
+    * [LEMONLDAP-112] - Handler/AuthBasic does not use local cache
+    * [LEMONLDAP-113] - Lemonldap::NG is not compatible with the use of a LDAP
+      server using a different encoding than UTF-8 for storing passwords
+    * [LEMONLDAP-114] - Bad usage of Apache::Session::searchOn() on portal
+    * [LEMONLDAP-115] - In info page, when clicking on "Continue", we are not
+      redirected to urldc
+    * [LEMONLDAP-119] - Special UTF-8 characters raise error in metadata
+    * [LEMONLDAP-122] - Secondary SAML session are not deleted on local IDP
+      logout
+    * [LEMONLDAP-124] - Stop info/confirm timer at 0
+    * [LEMONLDAP-37] - [SAML] Proxy restriction should include all known IDP,
+      and not only target IDP
+    * [LEMONLDAP-44] - [SAML][SP] IDP list when unknown IDP in IDP cookie
+    * [LEMONLDAP-46] - [logout] verify referer into logout process
+    * [LEMONLDAP-47] - [SAML] RequestedAuthnContext should always be
+      translated into authenticationLevel
+    * [LEMONLDAP-51] - [SAML][IDP] SAML sessionIndex value should be a crypted
+      value of LL::NG session_id
+    * [LEMONLDAP-55] - Distribute SympaAutoLogin Handler
+    * [LEMONLDAP-70] - Do not throw error if no SP or no IDP configured
+    * [LEMONLDAP-80] - POST fields should be hidden
+    * [LEMONLDAP-87] - Attribute format selection in Manager
+    * [LEMONLDAP-89] - Security keys in service metadata
+    * [LEMONLDAP-90] - Group IDP and SP options
+    * [LEMONLDAP-91] - SOAP configuration parameter is not needed in SAML
+    * [LEMONLDAP-98] - Add option to disable SAML conditions checks
+    * [LEMONLDAP-104] - Store entities metadata in raw format
+    * [LEMONLDAP-106] - Display OK or ERROR icons on HTTP REDIRECT and HTTP
+      POST SLO iframes
+    * [LEMONLDAP-107] - Manage asynchronous SLO request on closed SSO session
+      (SAML IDP)
+    * [LEMONLDAP-126] - Put SAML parameters in Manager
+    * [LEMONLDAP-2] - [SAML] Attribute authority
+    * [LEMONLDAP-10] - [SAML] Manage certificate in service metadata
+    * [LEMONLDAP-31] - [SAML] Proxy IDP
+    * [LEMONLDAP-32] - [SAML] Manage Artifact methods for SAML messages
+      emission in SP
+    * [LEMONLDAP-33] - [SAML] Check "Destination" attribute
+    * [LEMONLDAP-35] - [SAML] Manage SLO trough SOAP
+    * [LEMONLDAP-36] - [SAML] Check dates and other conditions in SLO requests
+    * [LEMONLDAP-40] - [SAML] Dedicated portal errors code for SAML errors
+    * [LEMONLDAP-49] - [SAML][IDP] Manage encrypted NameID
+    * [LEMONLDAP-52] - IssuerDB activation rule
+    * [LEMONLDAP-56] - [SAML][IDP] SLO trough HTTP-POST
+    * [LEMONLDAP-66] - [SAMl][IDP] Options to check message signatures
+    * [LEMONLDAP-67] - [SAML][IDP] Map NameID Format to local session keys
+    * [LEMONLDAP-86] - Do not parse metadata on each authentication
+    * [LEMONLDAP-88] - Better signature management
+    * [LEMONLDAP-108] - NameID unspecified format should use the default
+      NameID format
+    * [LEMONLDAP-110] - Store SAML token in session
+    * [LEMONLDAP-111] - Build SLO response request with other SLO request
+      status
+    * [LEMONLDAP-116] - Allow metadata edition in Manager
+    * [LEMONLDAP-3] - [SAML] Attribute authority declaration in metadata
+    * [LEMONLDAP-83] - Set NameID in attribute request
+    * [LEMONLDAP-84] - Check format and friendly name of requested attribute
+    * [LEMONLDAP-85] - Check requested attribute values
+    * [LEMONLDAP-96] - Add encryptionkey in Attribute Authority metadata
+
 lemonldap-ng (1.0rc1) unstable; urgency=low
 
   * Little Debian changes (see 0.9.4.1-2 Debian changelog)
