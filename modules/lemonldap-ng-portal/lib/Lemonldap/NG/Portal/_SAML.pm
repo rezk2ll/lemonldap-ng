@@ -117,7 +117,9 @@ sub loadService {
     # Check presence of private and public key in configuration
     my $publicKeySig  = $self->{samlServicePublicKeySig};
     my $privateKeySig = $self->{samlServicePrivateKeySig};
+    my $privateKeySigPwd = $self->{samlServicePrivateKeySigPwd};
     my $privateKeyEnc = $self->{samlServicePrivateKeyEnc};
+    my $privateKeyEncPwd = $self->{samlServicePrivateKeyEncPwd};
     unless ( $privateKeySig and $publicKeySig ) {
         $self->lmLog( "SAML private and public key not found in configuration",
             'error' );
@@ -130,6 +132,7 @@ sub loadService {
             'debug'
         );
         $privateKeyEnc = $privateKeySig;
+        $privateKeyEncPwd = $privateKeySigPwd;
     }
 
     # Get metadata from configuration
@@ -142,8 +145,9 @@ sub loadService {
             $ENV{DOCUMENT_ROOT} . "/skins/common/saml2-metadata.tpl", $self
         ),
         $privateKeySig,
-        undef,
-        $privateKeyEnc
+        $privateKeySigPwd,
+        $privateKeyEnc,
+        $privateKeyEncPwd,
     );
 
     # Log
@@ -566,11 +570,10 @@ sub createServer {
         $server = Lasso::Server::new_from_buffers( $metadata, $private_key,
             $private_key_password, $certificate );
 
-        # Can not set password for private encryption key, Lasso does not
-        # provide it.
+        # Set private key for encryption
         if ($private_key_enc) {
-            Lasso::Server::set_encryption_private_key( $server,
-                $private_key_enc );
+            Lasso::Server::set_encryption_private_key_with_password( $server,
+                $private_key_enc, $private_key_enc_password );
         }
     };
 
