@@ -685,7 +685,8 @@ sub struct {
                   n:samlOrganization
                   n:samlSPSSODescriptor
                   n:samlIDPSSODescriptor
-                  n:samlAttributeAuthorityDescriptor)
+                  n:samlAttributeAuthorityDescriptor
+                  n:samlAdvanced)
             ],
             _help => 'default',
 
@@ -881,6 +882,22 @@ sub struct {
                     samlAttributeAuthorityDescriptorAttributeServiceSOAP =>
 'samlService:/samlAttributeAuthorityDescriptorAttributeServiceSOAP',
                 },
+            },
+
+            # ADVANCED SAML PARAMETERS
+            samlAdvanced => {
+                _nodes => [
+                    qw(samlIdPResolveCookie samlMetadataForceUTF8 samlStorage n:samlStorageOptions)
+                ],
+
+                samlIdPResolveCookie  => 'text:/samlIdPResolveCookie',
+                samlMetadataForceUTF8 => 'bool:/samlMetadataForceUTF8',
+                    samlStorage        => 'text:/samlStorage',
+                    samlStorageOptions => {
+                        _nodes => ['hash:/samlStorageOptions'],
+                        _js    => 'hashRoot',
+                    },
+
             },
 
         },
@@ -1244,6 +1261,16 @@ sub testStruct {
         samlServicePrivateKeyEnc                             => $testNotDefined,
         samlServicePrivateKeyEncPwd                          => $testNotDefined,
         samlServicePublicKeyEnc                              => $testNotDefined,
+        samlIdPResolveCookie                                 => $testNotDefined,
+        samlMetadataForceUTF8                                => $boolean,
+        samlStorage                                          => {
+            test    => qr/^[\w:]*$/,
+            msgFail => 'Bad module name',
+        },
+        samlStorageOptions => {
+            keyTest    => qr/^\w+$/,
+            keyMsgFail => 'Bad parameter',
+        },
 
         # SSL
         SSLVar       => $testNotDefined,
@@ -1479,6 +1506,7 @@ sub defaultConf {
         samlServicePrivateKeyEnc    => '',
         samlServicePrivateKeyEncPwd => '',
         samlServicePublicKeyEnc     => '',
+        samlMetadataForceUTF8       => 1,
 
     };
 }

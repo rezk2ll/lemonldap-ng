@@ -320,6 +320,11 @@ sub en {
         samlServicePrivateKeyEnc    => 'Private key',
         samlServicePrivateKeyEncPwd => 'Private key password',
         samlServicePublicKeyEnc     => 'Public key',
+        samlAdvanced                => 'Advanced',
+        samlIdPResolveCookie        => 'IDP resolution cookie name',
+        samlMetadataForceUTF8       => 'UTF8 metadata conversion',
+        samlStorage                 => 'SAML sessions module name',
+        samlStorageOptions          => 'SAML sessions module options',
     };
 }
 
@@ -610,6 +615,11 @@ sub fr {
         samlServicePrivateKeyEnc    => 'Clé privée',
         samlServicePrivateKeyEncPwd => 'Mot de passe de la clé privée',
         samlServicePublicKeyEnc     => 'Clé publique',
+        samlAdvanced                => 'Avancé',
+        samlIdPResolveCookie        => 'Nom du cookie de résolution IDP',
+        samlMetadataForceUTF8       => 'Conversion des métadonnées en UTF8',
+        samlStorage                 => 'Nom du module des session SAML',
+        samlStorageOptions          => 'Options du module des sessions SAML',
     };
 }
 
