@@ -2425,6 +2425,13 @@ sub sendLogoutRequestToProvider {
 
     }
 
+    # Keep message ID in memory to prevent replay
+    my $samlID = $logout->request()->ID;
+    unless ( $self->storeReplayProtection($samlID) ) {
+        $self->lmLog( "Unable to store message ID", 'error' );
+        return ( 0, $method, undef );
+    }
+
     # Send logout request to the provider depending of the request method
     # HTTP-REDIRECT
     if ( $method == Lasso::Constants::HTTP_METHOD_REDIRECT ) {
