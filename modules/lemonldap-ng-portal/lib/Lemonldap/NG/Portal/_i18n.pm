@@ -118,6 +118,8 @@ __END__
 # * PE_SAML_SIGNATURE_ERROR              57
 # * PE_SAML_ART_ERROR                    58
 # * PE_SAML_SESSION_ERROR                59
+# * PE_SAML_LOAD_SP_ERROR                60
+# * PE_SAML_ATTR_ERROR                   61
 
 # Not used in errors:
 # * PE_DONE                -1
@@ -189,6 +191,8 @@ sub error_fr {
         "Erreur lors de la gestion de la signature du message SAML",
         "Une erreur est survenue lors de l'utilisation d'un artefact SAML",
         "Erreur de communication avec les sessions SAML",
+        "Problème au chargement d'un fournisseur de service",
+        "Une erreur est survenue lors de l'échange d'attributs SAML",
     ];
 }
 
@@ -257,6 +261,8 @@ sub error_en {
         "Error in SAML message signature management",
         "An error occured during SAML artifact use",
         "Communication error with SAML sessions",
+        "Problem when loading a service provider",
+        "An error occured during SAML attributes exchange",
     ];
 }
 
@@ -326,6 +332,8 @@ sub error_ro {
         "Error in SAML message signature management",
         "An error occured during SAML artifact use",
         "Communication error with SAML sessions",
+        "Problem when loading a service provider",
+        "An error occured during SAML attributes exchange",
     ];
 }
 

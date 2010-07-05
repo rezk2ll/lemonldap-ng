@@ -20,10 +20,10 @@ sub issuerDBInit {
     my $self = shift;
 
     # Load SAML service
-    return PE_ERROR unless $self->loadService();
+    return PE_SAML_LOAD_SERVICE_ERROR unless $self->loadService();
 
-    # Load SAML identity providers
-    return PE_ERROR unless $self->loadSPs();
+    # Load SAML service providers
+    return PE_SAML_LOAD_SP_ERROR unless $self->loadSPs();
 
     PE_OK;
 }
@@ -119,7 +119,7 @@ sub issuerForUnAuthUser {
             unless ($result) {
                 $self->lmLog( "SSO: Fail to process authentication request",
                     'error' );
-                return PE_ERROR;
+                return PE_SAML_SSO_ERROR;
             }
 
             $self->lmLog( "SSO: authentication request is valid", 'debug' );
@@ -135,7 +135,7 @@ sub issuerForUnAuthUser {
             unless ($spConfKey) {
                 $self->lmLog( "$sp do not match any SP in configuration",
                     'error' );
-                return PE_ERROR;
+                return PE_SAML_UNKNOWN_ENTITY;
             }
 
             $self->lmLog( "$sp match $spConfKey SP in configuration", 'debug' );
@@ -148,7 +148,7 @@ sub issuerForUnAuthUser {
             if ($checkSSOMessageSignature) {
                 unless ( $self->checkSignatureStatus($login) ) {
                     $self->lmLog( "Signature is not valid", 'error' );
-                    return PE_ERROR;
+                    return PE_SAML_SIGNATURE_ERROR;
                 }
                 else {
                     $self->lmLog( "Signature is valid", 'debug' );
@@ -163,11 +163,11 @@ sub issuerForUnAuthUser {
             my $saml_request = $login->request();
             unless ($saml_request) {
                 $self->lmLog( "No SAML request found", 'error' );
-                return PE_ERROR;
+                return PE_SAML_SSO_ERROR;
             }
 
             # Check Destination
-            return PE_ERROR
+            return PE_SAML_DESTINATION_ERROR
               unless ( $self->checkDestination( $saml_request, $url ) );
 
             # Check isPassive flag
@@ -178,7 +178,7 @@ sub issuerForUnAuthUser {
 "Found isPassive flag in SAML request, not compatible with unauthenticated user",
                     'error'
                 );
-                return PE_ERROR;
+                return PE_SAML_SSO_ERROR;
             }
 
             # Store SAML elements in memory in case of proxying
@@ -233,7 +233,7 @@ sub issuerForUnAuthUser {
                 $self->lmLog( "SLO: Fail to process logout request", 'error' );
 
                 # Cannot send SLO error response if request not processed
-                return PE_ERROR;
+                return PE_SAML_SLO_ERROR;
             }
 
             $self->lmLog( "SLO: Logout request is valid", 'debug' );
@@ -625,14 +625,14 @@ sub issuerForUnAuthUser {
         my $relayID;
         unless ( $relayID = $self->getHiddenFormValue('relay') ) {
             $self->lmLog( "No relayID detected", 'error' );
-            return PE_ERROR;
+            return PE_SAML_SLO_ERROR;
         }
 
         # Retrieve the corresponding data from samlStorage
         my $relayInfos = $self->getSamlSession($relayID);
         unless ($relayInfos) {
             $self->lmLog( "Could not get relay session $relayID", 'error' );
-            return PE_ERROR;
+            return PE_SAML_SESSION_ERROR;
         }
 
         $self->lmLog( "Found relay session $relayID", 'debug' );
@@ -644,7 +644,7 @@ sub issuerForUnAuthUser {
 
         unless ($logout_dump) {
             $self->lmLog( "Could not get logout dump", 'error' );
-            return PE_ERROR;
+            return PE_SAML_SLO_ERROR;
         }
 
         # Rebuild Lasso::Logout object
@@ -652,18 +652,18 @@ sub issuerForUnAuthUser {
 
         unless ($logout) {
             $self->lmLog( "Could not build Lasso::Logout", 'error' );
-            return PE_ERROR;
+            return PE_SAML_SLO_ERROR;
         }
 
         # Inject session
         unless ($session_dump) {
             $self->lmLog( "Could not get session dump", 'error' );
-            return PE_ERROR;
+            return PE_SAML_SLO_ERROR;
         }
 
         unless ( $self->setSessionFromDump( $logout, $session_dump ) ) {
             $self->lmLog( "Could not set session from dump", 'error' );
-            return PE_ERROR;
+            return PE_SAML_SLO_ERROR;
         }
 
         # Get Lasso::Session
@@ -671,7 +671,7 @@ sub issuerForUnAuthUser {
 
         unless ($session) {
             $self->lmLog( "Could not get session from logout", 'error' );
-            return PE_ERROR;
+            return PE_SAML_SLO_ERROR;
         }
 
         # Loop on assertions and remove them if SLO status is OK
@@ -712,7 +712,7 @@ sub issuerForUnAuthUser {
 
         # If we are here, SLO response was not sent
         $self->lmLog( "Fail to send SLO response", 'error' );
-        return PE_ERROR;
+        return PE_SAML_SLO_ERROR;
     }
 
     # 1.4. Artifacts
@@ -786,7 +786,7 @@ sub issuerForUnAuthUser {
 
         unless ($spConfKey) {
             $self->lmLog( "$sp do not match any SP in configuration", 'error' );
-            return PE_ERROR;
+            return PE_SAML_UNKNOWN_ENTITY;
         }
 
         $self->lmLog( "$sp match $spConfKey SP in configuration", 'debug' );
@@ -1130,7 +1130,7 @@ sub issuerForAuthUser {
             if ($session) {
                 unless ( $self->setSessionFromDump( $login, $session ) ) {
                     $self->lmLog( "Unable to load Lasso Session", 'error' );
-                    return PE_ERROR;
+                    return PE_SAML_SSO_ERROR;
                 }
                 $self->lmLog( "Lasso Session loaded", 'debug' );
             }
@@ -1138,7 +1138,7 @@ sub issuerForAuthUser {
             if ($identity) {
                 unless ( $self->setIdentityFromDump( $login, $identity ) ) {
                     $self->lmLog( "Unable to load Lasso Identity", 'error' );
-                    return PE_ERROR;
+                    return PE_SAML_SSO_ERROR;
                 }
                 $self->lmLog( "Lasso Identity loaded", 'debug' );
             }
@@ -1155,7 +1155,7 @@ sub issuerForAuthUser {
             unless ($result) {
                 $self->lmLog( "SSO: Fail to process authentication request",
                     'error' );
-                return PE_ERROR;
+                return PE_SAML_SSO_ERROR;
             }
 
             # Get SP entityID
@@ -1169,7 +1169,7 @@ sub issuerForAuthUser {
             unless ($spConfKey) {
                 $self->lmLog( "$sp do not match any SP in configuration",
                     'error' );
-                return PE_ERROR;
+                return PE_SAML_UNKNOWN_ENTITY;
             }
 
             $self->lmLog( "$sp match $spConfKey SP in configuration", 'debug' );
@@ -1182,7 +1182,7 @@ sub issuerForAuthUser {
             if ($checkSSOMessageSignature) {
                 unless ( $self->checkSignatureStatus($login) ) {
                     $self->lmLog( "Signature is not valid", 'error' );
-                    return PE_ERROR;
+                    return PE_SAML_SIGNATURE_ERROR;
                 }
                 else {
                     $self->lmLog( "Signature is valid", 'debug' );
@@ -1197,7 +1197,7 @@ sub issuerForAuthUser {
             unless ( $self->validateRequestMsg( $login, 1, 1 ) ) {
                 $self->lmLog( "Unable to validate SSO request message",
                     'error' );
-                return PE_ERROR;
+                return PE_SAML_SSO_ERROR;
             }
 
             $self->lmLog( "SSO: authentication request is valid", 'debug' );
@@ -1314,7 +1314,7 @@ sub issuerForAuthUser {
 
             # Check Destination (only in non proxy mode)
             unless ( $self->{_proxiedRequest} ) {
-            return PE_ERROR
+                return PE_SAML_DESTINATION_ERROR
               unless ( $self->checkDestination( $login->request, $url ) );
             }
 
@@ -1330,7 +1330,7 @@ sub issuerForAuthUser {
             # Build Assertion
             unless ( $self->buildAssertion( $login, $authn_context ) ) {
                 $self->lmLog( "Unable to build assertion", 'error' );
-                return PE_ERROR;
+                return PE_SAML_SSO_ERROR;
             }
 
             $self->lmLog( "SSO: assertion is built", 'debug' );
@@ -1431,7 +1431,7 @@ sub issuerForAuthUser {
 "Session key $_ is required to set SAML $name attribute",
                         'error'
                     );
-                    return PE_ERROR;
+                    return PE_SAML_SSO_ERROR;
                 }
 
                 $self->lmLog(
@@ -1445,7 +1445,7 @@ sub issuerForAuthUser {
                 unless ($attribute) {
                     $self->lmLog( "Unable to create a new SAML attribute",
                         'error' );
-                    return PE_ERROR;
+                    return PE_SAML_SSO_ERROR;
                 }
 
                 # Set attribute value(s)
@@ -1462,7 +1462,7 @@ sub issuerForAuthUser {
                             "Unable to create a new SAML attribute value",
                             'error' );
                         $self->checkLassoError($@);
-                        return PE_ERROR;
+                        return PE_SAML_SSO_ERROR;
                     }
 
                     push @saml2values, $saml2value;
@@ -1483,7 +1483,7 @@ sub issuerForAuthUser {
 
             unless ( $response_assertions[0] ) {
                 $self->lmLog( "Unable to get response assertion", 'error' );
-                return PE_ERROR;
+                return PE_SAML_SSO_ERROR;
             }
 
             # Set subject NameID
@@ -1501,7 +1501,7 @@ sub issuerForAuthUser {
                 };
                 if ($@) {
                     $self->checkLassoError($@);
-                    return PE_ERROR;
+                    return PE_SAML_SSO_ERROR;
                 }
 
                 # Register attributes in attribute statement
@@ -1576,7 +1576,7 @@ sub issuerForAuthUser {
                     $self->lmLog(
                         "Unable to build SSO artifact response message",
                         'error' );
-                    return PE_ERROR;
+                    return PE_SAML_ART_ERROR;
                 }
 
                 $self->lmLog( "SSO: artifact response is built", 'debug' );
@@ -1595,7 +1595,7 @@ sub issuerForAuthUser {
                 unless ( $self->buildAuthnResponseMsg($login) ) {
                     $self->lmLog( "Unable to build SSO response message",
                         'error' );
-                    return PE_ERROR;
+                    return PE_SAML_SSO_ERROR;
                 }
 
                 $self->lmLog( "SSO: authentication response is built",
@@ -1630,7 +1630,7 @@ sub issuerForAuthUser {
 
             my $samlSessionInfo = $self->getSamlSession();
 
-            return PE_ERROR unless $samlSessionInfo;
+            return PE_SAML_SESSION_ERROR unless $samlSessionInfo;
 
             $samlSessionInfo->{type}    = 'saml';           # Session type
             $samlSessionInfo->{_utime}  = $time;            # Creation time
@@ -1665,7 +1665,7 @@ sub issuerForAuthUser {
 
                 # If we are here, there was a problem with GET request
                 $self->lmLog( "SSO response was not sent trough GET", 'error' );
-                return PE_ERROR;
+                return PE_SAML_SSO_ERROR;
             }
 
             # HTTP-POST
@@ -1697,7 +1697,7 @@ sub issuerForAuthUser {
                 # If we are here, there was a problem with POST request
                 $self->lmLog( "SSO response was not sent trough POST",
                     'error' );
-                return PE_ERROR;
+                return PE_SAML_SSO_ERROR;
             }
 
         }
@@ -1742,7 +1742,7 @@ sub issuerForAuthUser {
             # Process logout request
             unless ( $self->processLogoutRequestMsg( $logout, $request ) ) {
                 $self->lmLog( "SLO: Fail to process logout request", 'error' );
-                return PE_ERROR;
+                return PE_SAML_SLO_ERROR;
             }
 
             $self->lmLog( "SLO: Logout request is valid", 'debug' );
@@ -1949,7 +1949,7 @@ sub issuerLogout {
     if ($session) {
         unless ( $self->setSessionFromDump( $logout, $session ) ) {
             $self->lmLog( "Unable to load Lasso Session", 'error' );
-            return PE_ERROR;
+            return PE_SAML_SLO_ERROR;
         }
         $self->lmLog( "Lasso Session loaded", 'debug' );
     }
@@ -1963,7 +1963,7 @@ sub issuerLogout {
     if ($identity) {
         unless ( $self->setIdentityFromDump( $logout, $identity ) ) {
             $self->lmLog( "Unable to load Lasso Identity", 'error' );
-            return PE_ERROR;
+            return PE_SAML_SLO_ERROR;
         }
         $self->lmLog( "Lasso Identity loaded", 'debug' );
     }

@@ -24,7 +24,7 @@ sub userDBInit {
         return PE_OK;
     }
     else {
-        return PE_ERROR;
+        return PE_SAML_ERROR;
     }
 }
 
@@ -87,7 +87,7 @@ sub setSessionInfo {
     unless ($server) {
         $self->lmLog( "Unable to create service for attribute request",
             'error' );
-        return PE_ERROR;
+        return PE_SAML_LOAD_SERVICE_ERROR;
     }
 
     $self->lmLog( "Service for attribute request created", 'debug' );
@@ -105,7 +105,7 @@ sub setSessionInfo {
         $self->lmLog(
             "Fail to use IDP $idpConfKey Metadata as Attribute Authority",
             'error' );
-        return PE_ERROR;
+        return PE_SAML_LOAD_IDP_ERROR;
     }
 
     # Build Attribute Request
@@ -115,7 +115,7 @@ sub setSessionInfo {
     unless ($query) {
         $self->lmLog( "Unable to build attribute request for $idpConfKey",
             'error' );
-        return PE_ERROR;
+        return PE_SAML_ATTR_ERROR;
     }
 
     # Use SOAP to send request and get response
@@ -127,7 +127,7 @@ sub setSessionInfo {
 
     unless ($response) {
         $self->lmLog( "No attribute response to SOAP request", 'error' );
-        return PE_ERROR;
+        return PE_SAML_ATTR_ERROR;
     }
 
     # Manage Attribute Response
@@ -135,7 +135,7 @@ sub setSessionInfo {
 
     unless ($result) {
         $self->lmLog( "Fail to process attribute response", 'error' );
-        return PE_ERROR;
+        return PE_SAML_ATTR_ERROR;
     }
 
     # Attributes in response
@@ -146,7 +146,7 @@ sub setSessionInfo {
     };
     if ($@) {
         $self->lmLog( "No attributes defined in attribute response", 'error' );
-        return PE_ERROR;
+        return PE_SAML_ATTR_ERROR;
     }
 
     # Check we have all required attributes
@@ -165,7 +165,7 @@ sub setSessionInfo {
 "Attribute $_ is mandatory, but was not delivered by $idpConfKey",
                 'error'
             );
-            return PE_ERROR;
+            return PE_SAML_ATTR_ERROR;
         }
 
         $self->lmLog( "Get value $value for attribute $_", 'debug' );
