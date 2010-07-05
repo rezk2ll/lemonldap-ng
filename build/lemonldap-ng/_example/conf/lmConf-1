@@ -14,7 +14,7 @@ ldapPort
 	__LDAPPORT__
 
 authentication
-	'ldap'
+	'LDAP'
 
 locationRules
 	'$data1 = {&#39;test2.__DNSDOMAIN__&#39; => {&#39;default&#39; => &#39;accept&#39;,&#39;^/logout&#39; => &#39;logout_sso http://auth.__DNSDOMAIN__&#39;},&#39;test1.__DNSDOMAIN__&#39; => {&#39;default&#39; => &#39;accept&#39;,&#39;^/logout&#39; => &#39;logout_sso http://auth.__DNSDOMAIN__&#39;}};'
@@ -23,7 +23,7 @@ domain
 	'__DNSDOMAIN__'
 
 timeout
-	7200
+	72000
 
 groups
 	'$data1 = {};'

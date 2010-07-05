@@ -217,6 +217,8 @@ else {
         or $portal->{error} == PE_SAML_SIGNATURE_ERROR
         or $portal->{error} == PE_SAML_ART_ERROR
         or $portal->{error} == PE_SAML_SESSION_ERROR
+        or $portal->{error} == PE_SAML_LOAD_SP_ERROR
+        or $portal->{error} == PE_SAML_ATTR_ERROR
         or $portal->{error} == PE_LOGOUT_OK )
     {
         %templateParams = (
