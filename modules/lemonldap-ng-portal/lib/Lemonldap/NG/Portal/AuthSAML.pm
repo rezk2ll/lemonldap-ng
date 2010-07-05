@@ -20,10 +20,10 @@ sub authInit {
     my $self = shift;
 
     # Load SAML service
-    return PE_ERROR unless $self->loadService();
+    return PE_SAML_LOAD_SERVICE_ERROR unless $self->loadService();
 
     # Load SAML identity providers
-    return PE_ERROR unless $self->loadIDPs();
+    return PE_SAML_LOAD_IDP_ERROR unless $self->loadIDPs();
 
     PE_OK;
 }
@@ -96,7 +96,7 @@ sub extractFormInfo {
             unless ($result) {
                 $self->lmLog( "SSO: Fail to process authentication response",
                     'error' );
-                return PE_ERROR;
+                return PE_SAML_SSO_ERROR;
             }
 
             $self->lmLog( "SSO: authentication response is valid", 'debug' );
@@ -112,7 +112,7 @@ sub extractFormInfo {
             unless ($idpConfKey) {
                 $self->lmLog( "$idp do not match any IDP in configuration",
                     'error' );
-                return PE_ERROR;
+                return PE_SAML_UNKNOWN_ENTITY;
             }
 
             $self->lmLog( "$idp match $idpConfKey IDP in configuration",
@@ -126,7 +126,7 @@ sub extractFormInfo {
             if ($checkSSOMessageSignature) {
                 unless ( $self->checkSignatureStatus($login) ) {
                     $self->lmLog( "Signature is not valid", 'error' );
-                    return PE_ERROR;
+                    return PE_SAML_SIGNATURE_ERROR;
                 }
                 else {
                     $self->lmLog( "Signature is valid", 'debug' );
@@ -141,11 +141,11 @@ sub extractFormInfo {
             my $saml_response = $login->response();
             unless ($saml_response) {
                 $self->lmLog( "No SAML response found", 'error' );
-                return PE_ERROR;
+                return PE_SAML_SSO_ERROR;
             }
 
             # Check Destination
-            return PE_ERROR
+            return PE_SAML_DESTINATION_ERROR
               unless ( $self->checkDestination( $saml_response, $url ) );
 
             # Replay protection if this is a response to a created authn request
@@ -177,7 +177,7 @@ sub extractFormInfo {
 
             unless ($assertion) {
                 $self->lmLog( "No assertion found", 'error' );
-                return PE_ERROR;
+                return PE_SAML_SSO_ERROR;
             }
 
             # Do we check conditions?
@@ -192,7 +192,7 @@ sub extractFormInfo {
               )
             {
                 $self->lmLog( "Conditions not validated", 'error' );
-                return PE_ERROR;
+                return PE_SAML_CONDITIONS_ERROR;
             }
 
             #  Extract RelayState information
@@ -208,7 +208,7 @@ sub extractFormInfo {
                 $self->lmLog(
                     "Direct login from IDP $idpConfKey is not allowed",
                     'error' );
-                return PE_ERROR;
+                return PE_SAML_IDPSSOINITIATED_NOTALLOWED;
             }
 
             # Check authentication context
@@ -259,7 +259,7 @@ sub extractFormInfo {
 
             unless ($user) {
                 $self->lmLog( "No NameID value found", 'error' );
-                return PE_USERNOTFOUND;
+                return PE_SAML_SSO_ERROR;
             }
 
             $self->lmLog( "Found NameID: $user", 'debug' );
@@ -371,13 +371,13 @@ sub extractFormInfo {
 
             unless ($result) {
                 $self->lmLog( "Fail to process logout response", 'error' );
-                return PE_ERROR;
+                return PE_SAML_SLO_ERROR;
             }
 
             $self->lmLog( "Logout response is valid", 'debug' );
 
             # Check Destination
-            return PE_ERROR
+            return PE_SAML_DESTINATION_ERROR
               unless ( $self->checkDestination( $logout->response, $url ) );
 
             # Get IDP entityID
@@ -391,7 +391,7 @@ sub extractFormInfo {
             unless ($idpConfKey) {
                 $self->lmLog( "$idp do not match any IDP in configuration",
                     'error' );
-                return PE_ERROR;
+                return PE_SAML_UNKNOWN_ENTITY;
             }
 
             $self->lmLog( "$idp match $idpConfKey IDP in configuration",
@@ -405,7 +405,7 @@ sub extractFormInfo {
             if ($checkSLOMessageSignature) {
                 unless ( $self->checkSignatureStatus($logout) ) {
                     $self->lmLog( "Signature is not valid", 'error' );
-                    return PE_ERROR;
+                    return PE_SAML_SIGNATURE_ERROR;
                 }
                 else {
                     $self->lmLog( "Signature is valid", 'debug' );
@@ -424,7 +424,7 @@ sub extractFormInfo {
                 # Logout request was already consumed or is expired
                 $self->lmLog( "Message $samlID already used or expired",
                     'error' );
-                return PE_ERROR;
+                return PE_SAML_SLO_ERROR;
             }
 
             # If URL in RelayState, different from portal, redirect user
@@ -459,7 +459,7 @@ sub extractFormInfo {
             $self->lmLog( "Logout request is valid", 'debug' );
 
             # Check Destination
-            return PE_ERROR
+            return PE_SAML_DESTINATION_ERROR
               unless ( $self->checkDestination( $logout->request, $url ) );
 
             # Get IDP entityID
@@ -473,7 +473,7 @@ sub extractFormInfo {
             unless ($idpConfKey) {
                 $self->lmLog( "$idp do not match any IDP in configuration",
                     'error' );
-                return PE_ERROR;
+                return PE_SAML_UNKNOWN_ENTITY;
             }
 
             $self->lmLog( "$idp match $idpConfKey IDP in configuration",
@@ -487,7 +487,7 @@ sub extractFormInfo {
             if ($checkSLOMessageSignature) {
                 unless ( $self->checkSignatureStatus($logout) ) {
                     $self->lmLog( "Signature is not valid", 'error' );
-                    return PE_ERROR;
+                    return PE_SAML_SIGNATURE_ERROR;
                 }
                 else {
                     $self->lmLog( "Signature is valid", 'debug' );
@@ -644,7 +644,7 @@ sub extractFormInfo {
             # Logout response
             unless ( $self->buildLogoutResponseMsg($logout) ) {
                 $self->lmLog( "Unable to build SLO response", 'error' );
-                return PE_ERROR;
+                return PE_SAML_SLO_ERROR;
             }
 
             # Send response depending on request method
@@ -662,7 +662,7 @@ sub extractFormInfo {
                 # If we are here, there was a problem with GET request
                 $self->lmLog( "Logout response was not sent trough GET",
                     'error' );
-                return PE_ERROR;
+                return PE_SAML_SLO_ERROR;
             }
 
             # HTTP-POST
@@ -684,7 +684,7 @@ sub extractFormInfo {
                 # If we are here, there was a problem with POST response
                 $self->lmLog( "Logout response was not sent trough POST",
                     'error' );
-                return PE_ERROR;
+                return PE_SAML_SLO_ERROR;
             }
 
             # HTTP-SOAP
@@ -701,7 +701,7 @@ sub extractFormInfo {
                 # If we are here, there was a problem with SOAP response
                 $self->lmLog( "Logout response was not sent trough SOAP",
                     'error' );
-                return PE_ERROR;
+                return PE_SAML_SLO_ERROR;
             }
 
         }
@@ -734,18 +734,18 @@ sub extractFormInfo {
         unless ( $self->processArtRequestMsg( $login, $art_request ) ) {
             $self->lmLog( "Unable to process artifact request message",
                 'error' );
-            return PE_ERROR;
+            return PE_SAML_ART_ERROR;
         }
 
         # Check Destination
-        return PE_ERROR
+        return PE_SAML_DESTINATION_ERROR
           unless ( $self->checkDestination( $login->request, $url ) );
 
         # Create artifact response
         unless ( $art_response = $self->createArtifactResponse($login) ) {
             $self->lmLog( "Unable to create artifact response message",
                 'error' );
-            return PE_ERROR;
+            return PE_SAML_ART_ERROR;
         }
 
         $self->{SOAPMessage} = $art_response;
@@ -757,7 +757,7 @@ sub extractFormInfo {
 
         # If we are here, there was a problem with SOAP request
         $self->lmLog( "Artifact response was not sent trough SOAP", 'error' );
-        return PE_ERROR;
+        return PE_SAML_ART_ERROR;
 
     }
 
@@ -909,7 +909,7 @@ sub extractFormInfo {
 
     unless ($idpConfKey) {
         $self->lmLog( "$idp do not match any IDP in configuration", 'error' );
-        return PE_ERROR;
+        return PE_SAML_UNKNOWN_ENTITY;
     }
 
     $self->lmLog( "$idp match $idpConfKey IDP in configuration", 'debug' );
@@ -983,7 +983,7 @@ sub extractFormInfo {
     unless ($login) {
         $self->lmLog( "Could not create authentication request on $idpConfKey",
             'error' );
-        return PE_ERROR;
+        return PE_SAML_SSO_ERROR;
     }
 
     $self->lmLog( "Authentication request created", 'debug' );
@@ -992,7 +992,7 @@ sub extractFormInfo {
     my $samlID = $login->request()->ID;
     unless ( $self->storeReplayProtection($samlID) ) {
         $self->lmLog( "Unable to store assertion ID", 'error' );
-        return PE_ERROR;
+        return PE_SAML_SSO_ERROR;
     }
 
     # Keep initial SAML request data in memory in case of proxing
@@ -1000,7 +1000,7 @@ sub extractFormInfo {
 
         my $samlSessionInfo = $self->getSamlSession();
 
-        return PE_ERROR unless $samlSessionInfo;
+        return PE_SAML_SESSION_ERROR unless $samlSessionInfo;
 
         $samlSessionInfo->{type}       = 'proxy';
         $samlSessionInfo->{_utime}     = time;
@@ -1032,7 +1032,7 @@ sub extractFormInfo {
 
         # If we are here, there was a problem with GET request
         $self->lmLog( "SSO request was not sent trough GET", 'error' );
-        return PE_ERROR;
+        return PE_SAML_SSO_ERROR;
     }
 
     # HTTP-POST
@@ -1061,7 +1061,7 @@ sub extractFormInfo {
 
         # If we are here, there was a problem with POST request
         $self->lmLog( "SSO request was not sent trough POST", 'error' );
-        return PE_ERROR;
+        return PE_SAML_SSO_ERROR;
     }
 
     # No SOAP transport for SSO request
@@ -1082,7 +1082,7 @@ sub setAuthSessionInfo {
 
     unless ($assertion) {
         $self->lmLog( "No assertion found", 'error' );
-        return PE_ERROR;
+        return PE_SAML_SSO_ERROR;
     }
 
     # Force UTF-8
@@ -1160,7 +1160,7 @@ sub setAuthSessionInfo {
     unless ( $self->acceptSSO($login) ) {
         $self->lmLog( "Error while accepting SSO from IDP $idpConfKey",
             'error' );
-        return PE_ERROR;
+        return PE_SAML_SSO_ERROR;
     }
 
     # Get created Lasso::Session and Lasso::Identity
@@ -1241,7 +1241,7 @@ sub authLogout {
 
     unless ($session_dump) {
         $self->lmLog( "Could not get session dump from session", 'error' );
-        return PE_ERROR;
+        return PE_SAML_SLO_ERROR;
     }
 
     # IDP HTTP method
@@ -1281,7 +1281,7 @@ sub authLogout {
         $signSLOMessage );
     unless ($logout) {
         $self->lmLog( "Could not create logout request", 'error' );
-        return PE_ERROR;
+        return PE_SAML_SLO_ERROR;
     }
 
     $self->lmLog( "Logout request created", 'debug' );
@@ -1289,7 +1289,7 @@ sub authLogout {
     # Keep request ID in memory to prevent replay
     unless ( $self->storeReplayProtection( $logout->request()->ID ) ) {
         $self->lmLog( "Unable to store Logout request ID", 'error' );
-        return PE_ERROR;
+        return PE_SAML_SLO_ERROR;
     }
 
     # Send request depending on request method
@@ -1331,7 +1331,7 @@ sub authLogout {
 
         unless ($response) {
             $self->lmLog( "No logout response to SOAP request", 'error' );
-            return PE_ERROR;
+            return PE_SAML_SLO_ERROR;
         }
 
         # Create Logout object
@@ -1342,7 +1342,7 @@ sub authLogout {
 
         unless ($result) {
             $self->lmLog( "Fail to process logout response", 'error' );
-            return PE_ERROR;
+            return PE_SAML_SLO_ERROR;
         }
 
         $self->lmLog( "Logout response is valid", 'debug' );
@@ -1354,7 +1354,7 @@ sub authLogout {
 
             # Logout request was already consumed or is expired
             $self->lmLog( "Message $samlID already used or expired", 'error' );
-            return PE_ERROR;
+            return PE_SAML_SLO_ERROR;
         }
 
         return PE_OK;
@@ -1424,7 +1424,7 @@ sub authFinish {
     # Save SAML session
     my $samlSessionInfo = $self->getSamlSession();
 
-    return PE_ERROR unless $samlSessionInfo;
+    return PE_SAML_SESSION_ERROR unless $samlSessionInfo;
 
     $samlSessionInfo->{type}          = 'saml';            # Session type
     $samlSessionInfo->{_utime}        = $utime;            # Creation time

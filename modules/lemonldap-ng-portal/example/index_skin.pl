@@ -205,6 +205,18 @@ else {
     if (   $portal->{error} == PE_BADCERTIFICATE
         or $portal->{error} == PE_CERTIFICATEREQUIRED
         or $portal->{error} == PE_ERROR
+        or $portal->{error} == PE_SAML_ERROR
+        or $portal->{error} == PE_SAML_LOAD_SERVICE_ERROR
+        or $portal->{error} == PE_SAML_LOAD_IDP_ERROR
+        or $portal->{error} == PE_SAML_SSO_ERROR
+        or $portal->{error} == PE_SAML_UNKNOWN_ENTITY
+        or $portal->{error} == PE_SAML_DESTINATION_ERROR
+        or $portal->{error} == PE_SAML_CONDITIONS_ERROR
+        or $portal->{error} == PE_SAML_IDPSSOINITIATED_NOTALLOWED
+        or $portal->{error} == PE_SAML_SLO_ERROR
+        or $portal->{error} == PE_SAML_SIGNATURE_ERROR
+        or $portal->{error} == PE_SAML_ART_ERROR
+        or $portal->{error} == PE_SAML_SESSION_ERROR
         or $portal->{error} == PE_LOGOUT_OK )
     {
         %templateParams = (

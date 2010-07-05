@@ -106,6 +106,18 @@ __END__
 # * PE_MAILERROR                         45
 # * PE_MAILOK                            46
 # * PE_LOGOUT_OK                         47
+# * PE_SAML_ERROR                        48
+# * PE_SAML_LOAD_SERVICE_ERROR           49
+# * PE_SAML_LOAD_IDP_ERROR               50
+# * PE_SAML_SSO_ERROR                    51
+# * PE_SAML_UNKNOWN_ENTITY               52
+# * PE_SAML_DESTINATION_ERROR            53
+# * PE_SAML_CONDITIONS_ERROR             54
+# * PE_SAML_IDPSSOINITIATED_NOTALLOWED   55
+# * PE_SAML_SLO_ERROR                    56
+# * PE_SAML_SIGNATURE_ERROR              57
+# * PE_SAML_ART_ERROR                    58
+# * PE_SAML_SESSION_ERROR                59
 
 # Not used in errors:
 # * PE_DONE                -1
@@ -165,6 +177,18 @@ sub error_fr {
         "L'envoi du mail a échoué",
         "Un mail vous a été envoyé",
         "Vous avez été déconnecté",
+        "Erreur SAML non définie",
+        "Impossible de charger le service SAML",
+        "Problème au chargement d'un fournisseur d'identité",
+        "Une erreur est survenue lors de l'authentification SAML",
+        "Le partenaire SAML n'est pas reconnu",
+        "La destination du message SAML est incorrecte",
+        "Les conditions du message SAML ne sont pas respectées",
+"L'authentification initiée par le fournisseur d'identité n'est pas autorisée",
+        "Une erreur est survenur lors de la déconnexion SAML",
+        "Erreur lors de la gestion de la signature du message SAML",
+        "Une erreur est survenue lors de l'utilisation d'un artefact SAML",
+        "Erreur de communication avec les sessions SAML",
     ];
 }
 
@@ -221,6 +245,18 @@ sub error_en {
         'An error occurs when sending mail',
         'A mail has been sent',
         'You have been disconnected',
+        "Undefined SAML error",
+        "Unable to load SAML service",
+        "Problem when loading an identity provider",
+        "An error occured during SAML single sign on",
+        "SAML entity is not known",
+        "SAML message destination is not correct",
+        "SAML message conditions are not respected",
+        "Identity provider initiated single sign on is not authorized",
+        "An error occured during SAML single logout",
+        "Error in SAML message signature management",
+        "An error occured during SAML artifact use",
+        "Communication error with SAML sessions",
     ];
 }
 
@@ -278,6 +314,18 @@ sub error_ro {
         'Trimiterea mail nu a reuşit',
         'Un e-mail a fost trimis',
         'Aţi fost deconectat',
+        "Undefined SAML error",
+        "Unable to load SAML service",
+        "Problem when loading an identity provider",
+        "An error occured during SAML single sign on",
+        "SAML entity is not known",
+        "SAML message destination is not correct",
+        "SAML message conditions are not respected",
+        "Identity provider initiated single sign on is not authorized",
+        "An error occured during SAML single logout",
+        "Error in SAML message signature management",
+        "An error occured during SAML artifact use",
+        "Communication error with SAML sessions",
     ];
 }
 
