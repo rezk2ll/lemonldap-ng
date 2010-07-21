@@ -204,9 +204,9 @@ sub new {
     ) ? 1 : 0;
 
     # Push authentication/userDB/passwordDb/issuerDB modules in @ISA
-    foreach (qw(authentication userDB passwordDB issuerDB)) {
+    foreach my $type (qw(authentication userDB passwordDB issuerDB)) {
         my $module_name = 'Lemonldap::NG::Portal::';
-        my $db_type     = $_;
+        my $db_type     = $type;
         my $db_name     = $self->{$db_type};
 
         # Adapt module type to real module name
