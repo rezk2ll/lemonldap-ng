@@ -1,14 +1,14 @@
-##@file
+## @file
 # Module for password reset by mail
 
-##@class Lemonldap::NG::Portal::MailReset
+## @class Lemonldap::NG::Portal::MailReset
 # Module for password reset by mail
 package Lemonldap::NG::Portal::MailReset;
 
 use strict;
 use warnings;
 
-our $VERSION = '0.1';
+our $VERSION = '0.2';
 
 use Lemonldap::NG::Portal::Simple qw(:all);
 use base qw(Lemonldap::NG::Portal::SharedConf Exporter);
@@ -18,7 +18,7 @@ use HTML::Template;
 *EXPORT_TAGS = *Lemonldap::NG::Portal::Simple::EXPORT_TAGS;
 *EXPORT      = *Lemonldap::NG::Portal::Simple::EXPORT;
 
-##@method boolean process()
+## @method boolean process()
 # Call functions to handle password reset by mail issued from
 # - itself:
 #   - smtpInit
@@ -37,17 +37,19 @@ use HTML::Template;
 # - passwordDB module:
 #   - passwordDBInit
 #   - resetPassword
-#@return 1 if all is OK
+# @return 1 if all is OK
 sub process {
-    my ($self) = @_;
+    my ($self) = splice @_;
 
     # Process subroutines
     $self->{error} = PE_OK;
+
     $self->{error} = $self->_subProcess(
         qw(smtpInit userDBInit passwordDBInit extractMailInfo
           getUser setSessionInfo setMacros setLocalGroups setGroups
           storeMailSession sendConfirmationMail resetPassword sendPasswordMail)
     );
+
     return (
         (
                  $self->{error} <= 0
@@ -57,12 +59,14 @@ sub process {
     );
 }
 
-##@method int smtpInit()
+## @method int smtpInit()
 # Load SMTP methods
-#@return Lemonldap::NG::Portal constant
+# @return Lemonldap::NG::Portal constant
 sub smtpInit {
-    my ($self) = @_;
+    my ($self) = splice @_;
+
     eval { use base qw(Lemonldap::NG::Portal::_SMTP) };
+
     if ($@) {
         $self->lmLog( "Unable to load SMTP functions ($@)", 'error' );
         return PE_ERROR;
@@ -71,11 +75,11 @@ sub smtpInit {
     PE_OK;
 }
 
-##@method int extractMailInfo
+## @method int extractMailInfo
 # Get mail from form or from mail_token
-#@return Lemonldap::NG::Portal constant
+# @return Lemonldap::NG::Portal constant
 sub extractMailInfo {
-    my ($self) = @_;
+    my ($self) = splice @_;
 
     return PE_MAILFORMEMPTY
       unless ( $self->param('mail') || $self->param('mail_token') );
@@ -111,8 +115,11 @@ sub extractMailInfo {
     PE_OK;
 }
 
+## @method int storeMailSession
+# Create mail session and store token
+# @return Lemonldap::NG::Portal constant
 sub storeMailSession {
-    my ($self) = @_;
+    my ($self) = splice @_;
 
     # Skip this step if confirmation was already sent
     return PE_OK if $self->{mail_token};
@@ -132,8 +139,11 @@ sub storeMailSession {
     PE_OK;
 }
 
+## @method int sendConfirmationMail
+# Send confirmation mail
+# @return Lemonldap::NG::Portal constant
 sub sendConfirmationMail {
-    my ($self) = @_;
+    my ($self) = splice @_;
 
     # Skip this step if confirmation was already sent
     return PE_OK if $self->{mail_token};
@@ -172,8 +182,11 @@ sub sendConfirmationMail {
     PE_MAILOK;
 }
 
+## @method int sendPasswordMail
+# Send mail containing the new password
+# @return Lemonldap::NG::Portal constant
 sub sendPasswordMail {
-    my ($self) = @_;
+    my ($self) = splice @_;
 
     # Build mail content
     my $subject = $self->{mailSubject};
@@ -206,6 +219,7 @@ sub sendPasswordMail {
 
     PE_MAILOK;
 }
+
 1;
 
 __END__
@@ -220,7 +234,7 @@ Lemonldap::NG::Portal::MailReset - Manage password reset by mail
 
   use Lemonldap::NG::Portal::MailReset;
   
-  my $portal = new Lemonldap::NG::Portal::Reset();
+  my $portal = new Lemonldap::NG::Portal::MailReset();
  
   $portal->process();
 
