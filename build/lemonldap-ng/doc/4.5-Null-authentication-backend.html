@@ -8,7 +8,7 @@
   "HTML Tidy for Linux/x86 (vers 25 March 2009), see www.w3.org" />
 
   <title>Lemonldap::NG documentation:
-  4.9-Cross-domain-authentication.html</title>
+  4.5-Null-authentication-backend.html</title>
   <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
   <style type="text/css">
 /*<![CDATA[*/
@@ -56,43 +56,51 @@
 
 <body>
   <div class="main-content">
-    <h2 class="heading-1"><span id="HCrossdomainauthentication">Cross-domain
-    authentication</span></h2>
+    <h2 class="heading-1"><span id="HNullauthenticationbackend">Null
+    authentication backend</span></h2>
 
     <p class="paragraph"></p>
 
     <ul>
       <li><a href="#HPresentation">Presentation</a></li>
 
-      <li><a href="#HConfigureLemonLDAP3A3ANG">Configure
-      LemonLDAP::NG</a></li>
+      <li>
+        <a href="#HConfiguration">Configuration</a>
+
+        <ul>
+          <li><a href="#HManager">Manager</a></li>
+
+          <li><a href="#HLocal">Local</a></li>
+        </ul>
+      </li>
     </ul>
 
     <h3 class="heading-1-1"><span id="HPresentation">Presentation</span></h3>
 
-    <p class="paragraph"></p>Cookies are only sent to sites within the same
-    domain. So if "auth.example.com " is your portal, it would have created a
-    cookie only for ".example.com": the SSO will work for test.example.com but
-    not for test.acme.com.
+    <p class="paragraph"></p>Null authentication backend create a SSO session
+    without asking anything to the user. So the only informations you get in
+    the SSO session is the session start time and the IP address.
 
-    <p class="paragraph"></p>To bypass this, LemonLDAP::NG propose CDA:
-    Cross-Domain Authentication. It will create cookies on all protected
-    domains.
+    <p class="paragraph"></p>It can be used to track users on public websites.
 
-    <h3 class="heading-1-1"><span id="HConfigureLemonLDAP3A3ANG">Configure
-    LemonLDAP::NG</span></h3>
+    <h3 class="heading-1-1"><span id=
+    "HConfiguration">Configuration</span></h3>
 
-    <p class="paragraph"></p>In Manager, go in General Parameters &gt; Cookies
-    &gt; Multiple domain and active the functionality.
+    <h4 class="heading-1-1-1"><span id="HManager">Manager</span></h4>
 
-    <p class="paragraph"></p>To use this feature only locally, edit
-    <strong class="strong">lemonldap-ng.ini</strong> and in section [all] add
-    the cda parameter:
+    <p class="paragraph"></p>Go in General Parameters &gt; Modules &gt;
+    Authentication and choose <strong class="strong">None</strong>.
+
+    <h4 class="heading-1-1-1"><span id="HLocal">Local</span></h4>
+
+    <p class="paragraph"></p>Edit lemonldap-ng.ini, and add in section portal
+
+    <p class="paragraph"></p>
 
     <div class="code">
       <pre>
-[all]
-cda = 1
+[portal]
+authentication = Null
 </pre>
     </div>
   </div>
