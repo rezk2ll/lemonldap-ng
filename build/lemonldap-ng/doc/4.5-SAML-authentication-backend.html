@@ -65,72 +65,51 @@
       <li><a href="#HPresentation">Presentation</a></li>
 
       <li>
-        <a href="#HTechnicalrequirements">Technical requirements</a>
+        <a href="#HConfiguration">Configuration</a>
 
         <ul>
-          <li><a href="#HLasso">Lasso</a></li>
+          <li><a href="#HSAMLService">SAML Service</a></li>
 
-          <li><a href="#HApacherewriterules">Apache rewrite rules</a></li>
-
-          <li><a href="#HSAML2IDP">SAML2 IDP</a></li>
-
-          <li><a href="#HPublic2Fprivatekey">Public/private key</a></li>
-        </ul>
-      </li>
-
-      <li>
-        <a href="#HLemonLDAP3A3ANGconfiguration">LemonLDAP::NG
-        configuration</a>
-
-        <ul>
           <li><a href="#HAuthenticationandUserDB">Authentication and
           UserDB</a></li>
 
+          <li><a href=
+          "#HRegisterLemonLDAP3A3ANGonpartnerIdentityProvider">Register
+          LemonLDAP::NG on partner Identity Provider</a></li>
+
           <li>
-            <a href="#HSAML2Service">SAML2 Service</a>
+            <a href=
+            "#HRegisterpartnerIdentityProvideronLemonLDAP3A3ANG">Register
+            partner Identity Provider on LemonLDAP::NG</a>
 
             <ul>
-              <li><a href="#HNodeSAML2Service">Node SAML 2 Service</a></li>
+              <li><a href="#HMetadata">Metadata</a></li>
 
-              <li><a href="#HNodeOrganization">Node Organization</a></li>
+              <li><a href="#HExportedattributes">Exported attributes</a></li>
 
               <li>
-                <a href="#HNodeServiceProvider">Node Service Provider</a>
+                <a href="#HOptions">Options</a>
 
                 <ul>
-                  <li><a href="#HNodeSingleLogout">Node SingleLogout</a></li>
+                  <li><a href="#HGeneraloptions">General options</a></li>
 
-                  <li><a href="#HNodeAssertionConsumer">Node Assertion
-                  Consumer</a></li>
+                  <li><a href="#HAuthenticationrequest">Authentication
+                  request</a></li>
 
-                  <li><a href="#HNodeNameIDFormat">Node NameID Format</a></li>
+                  <li><a href="#HSession">Session</a></li>
+
+                  <li><a href="#HSignature">Signature</a></li>
+
+                  <li><a href="#HBinding">Binding</a></li>
+
+                  <li><a href="#HSecurity">Security</a></li>
                 </ul>
               </li>
-
-              <li><a href="#HNodeIdentityProvider">Node Identity
-              Provider</a></li>
-            </ul>
-          </li>
-
-          <li>
-            <a href="#HIdentityProviderregistration">Identity Provider
-            registration</a>
-
-            <ul>
-              <li><a href="#HMetadataXML">Metadata XML</a></li>
-
-              <li><a href="#HNodeExportedattributes">Node Exported
-              attributes</a></li>
-
-              <li><a href="#HNodeOptions">Node Options</a></li>
             </ul>
           </li>
         </ul>
       </li>
-
-      <li><a href="#HPartnerIDPconfiguration">Partner IDP
-      configuration</a></li>
-    </ul><strong class="strong">Since LemonLDAP::NG 1.0</strong>
+    </ul><strong class="strong">Since LemonLDAP::NG 1.0rc1</strong>
 
     <h3 class="heading-1-1"><span id="HPresentation">Presentation</span></h3>
 
@@ -144,82 +123,16 @@
     rule.
 
     <p class="paragraph"></p>For each IDP, you can configure attributes that
-    are asked. Some can be mandatory, so if they are not givn by IDP, the
-    session will not open.
-
-    <h3 class="heading-1-1"><span id="HTechnicalrequirements">Technical
-    requirements</span></h3>
-
-    <h4 class="heading-1-1-1"><span id="HLasso">Lasso</span></h4>
-
-    <p class="paragraph"></p>SAML2 implementation is based on <span class=
-    "wikiexternallink"><a href="http://lasso.entrouvert.org">Lasso</a></span>.
-    You will need a very recent version of Lasso (&gt;= 2.2.91).
-
-    <p class="paragraph"></p>For lucky Debian users, there are packages
-    available here: <span class="wikiexternallink"><a href=
-    "http://deb.entrouvert.org/">http://deb.entrouvert.org/</a></span>.
-
-    <p class="paragraph"></p>You will only need to install liblasso3-perl
-    package:
-
-    <div class="code">
-      <pre>
-$ sudo apt-get install liblasso3-perl
-</pre>
-    </div>
-
-    <h4 class="heading-1-1-1"><span id="HApacherewriterules">Apache rewrite
-    rules</span></h4><br />
-    <br />
-    Be sure that mod_rewrite is installed and that SAML2 rewrite rules are
-    activated in <strong class="strong">etc/portal-apache2.conf</strong>:
-
-    <div class="code">
-      <pre>
-&lt;IfModule mod_rewrite.c&gt;
-        RewriteEngine On
-        RewriteRule ^/saml/metadata /metadata.pl
-        RewriteRule ^/saml/.* /index.pl
-&lt;/IfModule&gt;
-</pre>
-    </div>
-
-    <h4 class="heading-1-1-1"><span id="HSAML2IDP">SAML2 IDP</span></h4>
-
-    <p class="paragraph"></p>Of course you need an SAML2 IDP. If you don't
-    have one, you can check:
-
-    <ul class="star">
-      <li><span class="wikiexternallink"><a href=
-      "http://authentic.labs.libre-entreprise.org/">Authentic</a></span></li>
-
-      <li><span class="wikiexternallink"><a href=
-      "https://rnd.feide.no/simplesamlphp">simpleSAMLphp</a></span></li>
-    </ul>
-
-    <h4 class="heading-1-1-1"><span id="HPublic2Fprivatekey">Public/private
-    key</span></h4>
-
-    <p class="paragraph"></p>Since SAML2 use a lot a signature and encoding,
-    you need to generate a public/private key pair.
-
-    <p class="paragraph"></p>You can do this with openssl:
-
-    <div class="code">
-      <pre>
-$ openssl genrsa -out private_key.pem 1024
-$ openssl rsa -pubout -in private_key.pem -out public_key.pem
-</pre>
-    </div>
+    are collected. Some can be mandatory, so if they are not retruned by IDP,
+    the session will not open.
 
     <h3 class="heading-1-1"><span id=
-    "HLemonLDAP3A3ANGconfiguration">LemonLDAP::NG configuration</span></h3>
+    "HConfiguration">Configuration</span></h3>
 
-    <p class="paragraph"></p>All configuration can be done with LemonLDAP::NG
-    Manager. Connect to it first (by default <span class=
-    "wikiexternallink"><a href=
-    "http://manager.example.com">http://manager.example.com</a></span>).
+    <h4 class="heading-1-1-1"><span id="HSAMLService">SAML Service</span></h4>
+
+    <p class="paragraph"></p>See <span class="wikilink"><a href=
+    "SAMLService.html">SAML service configuration chapter</a></span>.
 
     <h4 class="heading-1-1-1"><span id=
     "HAuthenticationandUserDB">Authentication and UserDB</span></h4>
@@ -239,179 +152,177 @@ $ openssl rsa -pubout -in private_key.pem -out public_key.pem
       <li>Display password change: 0</li>
     </ul>
 
-    <h4 class="heading-1-1-1"><span id="HSAML2Service">SAML2
-    Service</span></h4>
+    <h4 class="heading-1-1-1"><span id=
+    "HRegisterLemonLDAP3A3ANGonpartnerIdentityProvider">Register LemonLDAP::NG
+    on partner Identity Provider</span></h4>
 
-    <p class="paragraph"></p>This is where you configure SAML2 settings for
-    LemonLDAP::NG service. These settings will be used to build metadata that
-    will be shared with identity providers.
-
-    <h5 class="heading-1-1-1-1"><span id="HNodeSAML2Service">Node SAML 2
-    Service</span></h5>
-
-    <ul class="star">
-      <li>Entity Identifier: your EntityID, often use as metadata URL, by
-      default <span class="nobr"><a href=
-      "http://auth.example.com/saml/metadata.">http://auth.example.com/saml/metadata.</a></span>
-      Change this value to fit your portal URL.</li>
-
-      <li>Private key: load your private key file. This will not be published
-      in metadata.</li>
-    </ul>
-
-    <h5 class="heading-1-1-1-1"><span id="HNodeOrganization">Node
-    Organization</span></h5>
-
-    <ul class="star">
-      <li>Display Name: will be displayed on IDP, this is often your society
-      name</li>
-
-      <li>Name: internal name</li>
-
-      <li>URL: URL of your society</li>
-    </ul>
-
-    <h5 class="heading-1-1-1-1"><span id="HNodeServiceProvider">Node Service
-    Provider</span></h5>
-
-    <ul class="star">
-      <li>Signed Authentication Request: set to On to require signed
-      authentication request. Off by default.</li>
-
-      <li>Signing Key: load your public key file.</li>
-    </ul>
-
-    <h6 class="heading-1-1-1-1-1"><span id="HNodeSingleLogout">Node
-    SingleLogout</span></h6>
-
-    <p class="paragraph"></p>For each binding you can set:
-
-    <ul class="star">
-      <li>Location: Access Point for SLO request. Change this value to fit
-      your portal URL.</li>
-
-      <li>Response Location: Access Point for SLO response. Change this value
-      to fit your portal URL.</li>
-    </ul>
-
-    <h6 class="heading-1-1-1-1-1"><span id="HNodeAssertionConsumer">Node
-    Assertion Consumer</span></h6>
-
-    <p class="paragraph"></p>For each binding you can set:
-
-    <ul class="star">
-      <li>Default: will this binding be used by default for authentication
-      response</li>
-
-      <li>Location: Access Point for SSO request and response. Change this
-      value to fit your portal URL.</li>
-    </ul>
-
-    <h6 class="heading-1-1-1-1-1"><span id="HNodeNameIDFormat">Node NameID
-    Format</span></h6>
-
-    <p class="paragraph"></p>For each NameID Format, you can activate and
-    deactivate it in metadata. The first will be chosen by default if no
-    NameID Format is set in authentication request.
-
-    <h5 class="heading-1-1-1-1"><span id="HNodeIdentityProvider">Node Identity
-    Provider</span></h5>
-
-    <p class="paragraph"></p>Not used here.
+    <p class="paragraph"></p>After configuring <span class="wikilink"><a href=
+    "SAMLService.html">SAML Service</a></span>, you can export metadata to
+    your partner Identity Provider. They are available at the EntityID URL, by
+    default: <strong class="strong"><span class="nobr"><a href=
+    "http://auth.example.com/saml/metadata">http://auth.example.com/saml/metadata</a></span></strong>.
 
     <h4 class="heading-1-1-1"><span id=
-    "HIdentityProviderregistration">Identity Provider registration</span></h4>
+    "HRegisterpartnerIdentityProvideronLemonLDAP3A3ANG">Register partner
+    Identity Provider on LemonLDAP::NG</span></h4>
 
-    <p class="paragraph"></p>Now you have to register partner IDP. For that,
-    select node Identity Providers and click on New metadatas.
+    <p class="paragraph"></p>In the Manager, select node Identity Providers
+    and click on New metadatas:
+
+    <p class="paragraph"></p><img src="manager-saml-idp-new.png" alt=
+    "manager-saml-idp-new.png" />
 
     <p class="paragraph"></p>The IDP name is asked, enter it and click OK.
 
-    <h5 class="heading-1-1-1-1"><span id="HMetadataXML">Metadata
-    XML</span></h5>
+    <p class="paragraph"></p>Now you have access to the IDP parameters list:
+
+    <p class="paragraph"></p><img src=
+    "/xwiki/bin/download/NG/AuthSAML/manager-saml-idp-list.png" alt=
+    "manager-saml-idp-list.png" />
+
+    <h5 class="heading-1-1-1-1"><span id="HMetadata">Metadata</span></h5>
 
     <p class="paragraph"></p>You must register IDP metadata here. You can do
-    it either by uploading the file, or with IDP metadata URL.
+    it either by uploading the file, or get it from IDP metadata URL (this
+    require a network link between your server and the IDP):
 
-    <h5 class="heading-1-1-1-1"><span id="HNodeExportedattributes">Node
-    Exported attributes</span></h5>
+    <p class="paragraph"></p><img src="manager-saml-idp-metadata.png" alt=
+    "manager-saml-idp-metadata.png" />
+
+    <p class="paragraph"></p>You can also copy/paste the metadata: just click
+    on the <strong class="strong">Edit</strong> button. When the text is
+    pasted, click on the <strong class="strong">Apply</strong> button to keep
+    the value.
+
+    <h5 class="heading-1-1-1-1"><span id="HExportedattributes">Exported
+    attributes</span></h5>
 
     <p class="paragraph"></p>For each attribute, you can set:
 
     <ul class="star">
-      <li>Key name: name of the key in LemonLDAP::NG session (for example
-      "uid" will then be used as $uid in access rules)</li>
+      <li><strong class="strong">Key name</strong>: name of the key in
+      LemonLDAP::NG session (for example "uid" will then be used as $uid in
+      access rules)</li>
 
-      <li>Mandatory : if set to "On", then session will not open if this
-      attribute is not given by IDP.</li>
+      <li><strong class="strong">Mandatory</strong>: if set to "On", then
+      session will not open if this attribute is not given by IDP.</li>
 
-      <li>Name : SAML attribute name.</li>
+      <li><strong class="strong">Name</strong>: SAML attribute name.</li>
 
-      <li>Friendly Name: optional, SAML attribute friendly name.</li>
+      <li><strong class="strong">Friendly Name</strong>: optional, SAML
+      attribute friendly name.</li>
 
-      <li>Format: optional, SAML attribute format.</li>
-    </ul>
+      <li><strong class="strong">Format</strong>: optional, SAML attribute
+      format.</li>
+    </ul><img src="manager-saml-idp-attribute.png" alt=
+    "manager-saml-idp-attribute.png" />
 
-    <h5 class="heading-1-1-1-1"><span id="HNodeOptions">Node
-    Options</span></h5>
+    <h5 class="heading-1-1-1-1"><span id="HOptions">Options</span></h5>
+
+    <h6 class="heading-1-1-1-1-1"><span id="HGeneraloptions">General
+    options</span></h6>
 
     <ul class="star">
-      <li>NameID format: force NameID format here (email, persistent,
-      transient, etc.). If no value, will use first NameID Format activated in
-      metadata.</li>
+      <li><strong class="strong">Resolution Rule</strong>: rule that will be
+      applied to preselect an IDP for a user. You have access to all
+      environment variable, like user IP address.</li>
+    </ul>For example, to preselect this IDP for users comming from
+    129.168.0.0/16 network:<br />
+    <br />
 
-      <li>Force authentication: set ForceAuthn flag in authentication
-      request</li>
+    <div class="code">
+      <pre>
+$ENV{ =~ /^192.168/
+</pre>
+    </div>
 
-      <li>Passive authentication: set IsPassive flag in authentication
-      request</li>
+    <h6 class="heading-1-1-1-1-1"><span id=
+    "HAuthenticationrequest">Authentication request</span></h6>
 
-      <li>Allow proxied authentication: allow an authentication response to be
-      issued from another IDP that the one we register (proxy IDP). If you
-      disallow this, you should also disallow direct login form IDP, because
-      proxy restiction is set in authentication requests.</li>
+    <ul class="star">
+      <li><strong class="strong">NameID format</strong>: force NameID format
+      here (email, persistent, transient, etc.). If no value, will use first
+      NameID Format activated in metadata.</li>
 
-      <li>SSO binding: force binding to use for SSO (http-redirect, http-post,
-      etc.)</li>
+      <li><strong class="strong">Force authentication</strong>: set ForceAuthn
+      flag in authentication request</li>
 
-      <li>SLO binding: force binding to use for SLO (http-redirect, http-post,
-      etc.)</li>
+      <li><strong class="strong">Passive authentication</strong>: set
+      IsPassive flag in authentication request</li>
 
-      <li>Resolution rule: Perl expression that will be evaluate to know if
-      this IDP is the default for the connected user. You can use for example
-      $ENV{ to get user's IP.</li>
+      <li><strong class="strong">Allow proxied authentication</strong>: allow
+      an authentication response to be issued from another IDP that the one we
+      register (proxy IDP). If you disallow this, you should also disallow
+      direct login form IDP, because proxy restiction is set in authentication
+      requests.</li>
 
-      <li>Allow login from IDP: allow a user to connect directly from an IDP
-      link. In this case, authentication is not a response to an issued
-      authentication request, and we have less control on conditions.</li>
+      <li><strong class="strong">Allow login from IDP</strong>: allow a user
+      to connect directly from an IDP link. In this case, authentication is
+      not a response to an issued authentication request, and we have less
+      control on conditions.</li>
 
-      <li>Adapt session lifetime: session lifetime will be adapted from
-      SessionNotOnOrAfter value found in authentication response. It means
-      that if the IDP propose to close session earlier than the default
-      LemonLDAP::NG timeout, the session _utime will be modified so that
-      session is erased at the date indicated by the IDP.</li>
-
-      <li>Sign SSO message: sign SSO message</li>
-
-      <li>Check SSO message signature: check SSO message signature</li>
-
-      <li>Sign SLO message: sign SLO message</li>
-
-      <li>Check SLO message signature: check SLO message signature</li>
-
-      <li>Required authentication context: this context is set in
-      authentication request, and then checked in authentication response. If
-      authentication context in response is not the one requested, an error is
-      raised.</li>
+      <li><strong class="strong">Requested authentication context</strong>:
+      this context is declared in authentication request. When receiving the
+      request, the real authentication context will be mapped ton an internal
+      authenticationLevel, that you can check to allow or deny session
+      creation.</li>
     </ul>
 
-    <h3 class="heading-1-1"><span id="HPartnerIDPconfiguration">Partner IDP
-    configuration</span></h3>
+    <h6 class="heading-1-1-1-1-1"><span id="HSession">Session</span></h6>
 
-    <p class="paragraph"></p>You have to give LemonLDAP::NG metadata to your
-    partner. After previous steps, metadata can be viewed at Entity Identifier
-    URL (by default <span class="nobr"><a href=
-    "http://auth.example.com/saml/metadata/">http://auth.example.com/saml/metadata/</a></span>)
+    <ul class="star">
+      <li><strong class="strong">Adapt session lifetime</strong>: session
+      lifetime will be adapted from SessionNotOnOrAfter value found in
+      authentication response. It means that if the IDP propose to close
+      session earlier than the default LemonLDAP::NG timeout, the session
+      _utime will be modified so that session is erased at the date indicated
+      by the IDP.</li>
+
+      <li><strong class="strong">Force UTF-8</strong>: this will force UTF-8
+      conversion of attributes values collected from IDP.</li>
+    </ul>
+
+    <h6 class="heading-1-1-1-1-1"><span id=
+    "HSignature">Signature</span></h6><br />
+    <br />
+    These options override service signature options (see <span class=
+    "wikilink"><a href="SAMLService.html">SAML service
+    configuration</a></span>).
+
+    <ul class="star">
+      <li><strong class="strong">Sign SSO message</strong>: sign SSO
+      message</li>
+
+      <li><strong class="strong">Check SSO message signature</strong>: check
+      SSO message signature</li>
+
+      <li><strong class="strong">Sign SLO message</strong>: sign SLO
+      message</li>
+
+      <li><strong class="strong">Check SLO message signature</strong>: check
+      SLO message signature</li>
+    </ul>
+
+    <h6 class="heading-1-1-1-1-1"><span id="HBinding">Binding</span></h6>
+
+    <ul class="star">
+      <li><strong class="strong">SSO binding</strong>: force binding to use
+      for SSO (http-redirect, http-post, etc.)</li>
+
+      <li><strong class="strong">SLO binding</strong>: force binding to use
+      for SLO (http-redirect, http-post, etc.)</li>
+    </ul>
+
+    <h6 class="heading-1-1-1-1-1"><span id="HSecurity">Security</span></h6>
+
+    <ul class="star">
+      <li><strong class="strong">Encryption mode</strong>: set the encryption
+      mode for this IDP (None, NameID or Assertion).</li>
+
+      <li><strong class="strong">Check conditions</strong>: set to Off to
+      disable conditions checking on authentication responses. Use with
+      caution.</li>
+    </ul>
   </div>
 
   <p class="footer"><a href="index.html">Index</a></p>

@@ -184,6 +184,8 @@ my $docs = {
       '6-References.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/Accounting' =>
       '6-Accounting.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/SAMLService' =>
+      'SAML-Service.html',
 };
 
 my %imgs;
@@ -376,6 +378,7 @@ s#/xwiki/bin/view/NG/DocAppBasicAuthentication#5-Appli-HTTP-Basic-Authentication
         s#/xwiki/bin/view/NG/Roadmap#6-Roadmap.html#g;
         s#/xwiki/bin/view/NG/References#6-References.html#g;
         s#/xwiki/bin/view/NG/Accounting#6-Accounting.html#g;
+        s#/xwiki/bin/view/NG/SAMLService#SAMLService.html#g;
 
         # Remove pages not yet created
         s#<li><a class=\"wikicreatelink\".*##g;

@@ -51,9 +51,185 @@
     }
   /*]]>*/
   </style>
+  <style type="text/css">
+/*<![CDATA[*/
+  div.c1 {margin-left: 2em}
+  /*]]>*/
+  </style>
 </head>
 
 <body>
+  <div class="main-content">
+    <h2 class="heading-1"><span id="HSAMLIssuerBackend">SAML Issuer
+    Backend</span></h2>
+
+    <p class="paragraph"></p>
+
+    <ul>
+      <li><a href="#HSAMLService">SAML Service</a></li>
+
+      <li><a href="#HIssuerDB">IssuerDB</a></li>
+
+      <li><a href="#HRegisterLemonLDAP3A3ANGonpartnerServiceProvider">Register
+      LemonLDAP::NG on partner Service Provider</a></li>
+
+      <li>
+        <a href="#HRegisterpartnerServiceProvideronLemonLDAP3A3ANG">Register
+        partner Service Provider on LemonLDAP::NG</a>
+
+        <div class="c1">
+          <ul>
+            <li><a href="#HMetadata">Metadata</a></li>
+
+            <li><a href="#HExportedattributes">Exported attributes</a></li>
+
+            <li>
+              <a href="#HOptions">Options</a>
+
+              <ul>
+                <li><a href="#HAuthenticationresponse">Authentication
+                response</a></li>
+
+                <li><a href="#HSignature">Signature</a></li>
+
+                <li><a href="#HSecurity">Security</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </li>
+    </ul><strong class="strong">Since LemonLDAP::NG 1.0rc2</strong>
+
+    <h2 class="heading-1"><span id="HPresentation">Presentation</span></h2>
+
+    <h2 class="heading-1"><span id="HConfiguration">Configuration</span></h2>
+
+    <h3 class="heading-1-1"><span id="HSAMLService">SAML Service</span></h3>
+
+    <p class="paragraph"></p>See <span class="wikilink"><a href=
+    "SAMLService.html">SAML service configuration chapter</a></span>.
+
+    <h3 class="heading-1-1"><span id="HIssuerDB">IssuerDB</span></h3><br />
+    <br />
+    In General Parameters &gt; Modules &gt; Issuer module, select
+    <strong class="strong">SAML v2</strong>.<br />
+    <br />
+    You can add an Issuer rule that will be checked to allow a user to use
+    Issuer module. This can be helpful to prevent some users to use the SAML
+    module. Set in in General Parameters &gt; Advanced Parameters &gt;
+    Security &gt; Issuer Activation Rule.<br />
+    <br />
+    For example, allow only users from "SAML" group:<br />
+    <br />
+
+    <div class="code">
+      <pre>
+$groups =~ /SAML/
+</pre>
+    </div>
+
+    <h3 class="heading-1-1"><span id=
+    "HRegisterLemonLDAP3A3ANGonpartnerServiceProvider">Register LemonLDAP::NG
+    on partner Service Provider</span></h3><br />
+    <br />
+    After configuring <span class="wikilink"><a href="SAMLService.html">SAML
+    Service</a></span>, you can export metadata to your partner Service
+    Provider. They are available at the EntityID URL, by default:
+    <strong class="strong"><span class="nobr"><a href=
+    "http://auth.example.com/saml/metadata">http://auth.example.com/saml/metadata</a></span></strong>.
+
+    <h3 class="heading-1-1"><span id=
+    "HRegisterpartnerServiceProvideronLemonLDAP3A3ANG">Register partner
+    Service Provider on LemonLDAP::NG</span></h3><br />
+    <br />
+    In the Manager, select node Servce Providers and click on New
+    metadatas:<br />
+    <br />
+    <img src="manager-saml-sp-new.png" alt="manager-saml-sp-new.png" /><br />
+    <br />
+    The SP name is asked, enter it and click OK.<br />
+    <br />
+    Now you have access to the SP parameters list.
+
+    <h5 class="heading-1-1-1-1"><span id=
+    "HMetadata">Metadata</span></h5><br />
+    <br />
+    You must register SP metadata here. You can do it either by uploading the
+    file, or get it from SP metadata URL (this require a network link between
+    your server and the SP).<br />
+    <br />
+    You can also copy/paste the metadata: just click on the <strong class=
+    "strong">Edit</strong> button. When the text is pasted, click on the
+    <strong class="strong">Apply</strong> button to keep the value.
+
+    <h5 class="heading-1-1-1-1"><span id="HExportedattributes">Exported
+    attributes</span></h5><br />
+    <br />
+    For each attribute, you can set:
+
+    <ul class="star">
+      <li><strong class="strong">Key name</strong>: name of the key in
+      LemonLDAP::NG session</li>
+
+      <li><strong class="strong">Mandatory</strong>: if set to "On", then this
+      attribute will be sent in authentication response. Else it just will be
+      sent trough an attribute response, if explicitely requested in an
+      attribute request.</li>
+
+      <li><strong class="strong">Name</strong>: SAML attribute name.</li>
+
+      <li><strong class="strong">Friendly Name</strong>: optional, SAML
+      attribute friendly name.</li>
+
+      <li><strong class="strong">Format</strong>: optional, SAML attribute
+      format.</li>
+    </ul>
+
+    <h5 class="heading-1-1-1-1"><span id="HOptions">Options</span></h5>
+
+    <h6 class="heading-1-1-1-1-1"><span id=
+    "HAuthenticationresponse">Authentication response</span></h6>
+
+    <ul class="star">
+      <li><strong class="strong">Default NameID format</strong>: if no NameID
+      format is requested, or the NameID format <strong class=
+      "strong">undefined</strong>, this NameID format will be used. If no
+      value, the default NameID format is <strong class=
+      "strong">Email</strong>.</li>
+
+      <li><strong class="strong">One Time Use</strong>: set the OneTimeUse
+      flag in authentication response.</li>
+    </ul>
+
+    <h6 class="heading-1-1-1-1-1"><span id=
+    "HSignature">Signature</span></h6><br />
+    <br />
+    These options override service signature options (see <span class=
+    "wikilink"><a href="SAMLService.html">SAML service
+    configuration</a></span>).
+
+    <ul class="star">
+      <li><strong class="strong">Sign SSO message</strong>: sign SSO
+      message</li>
+
+      <li><strong class="strong">Check SSO message signature</strong>: check
+      SSO message signature</li>
+
+      <li><strong class="strong">Sign SLO message</strong>: sign SLO
+      message</li>
+
+      <li><strong class="strong">Check SLO message signature</strong>: check
+      SLO message signature</li>
+    </ul>
+
+    <h6 class="heading-1-1-1-1-1"><span id="HSecurity">Security</span></h6>
+
+    <ul class="star">
+      <li><strong class="strong">Encryption mode</strong>: set the encryption
+      mode for this IDP (None, NameID or Assertion).</li>
+    </ul>
+  </div>
+
   <p class="footer"><a href="index.html">Index</a></p>
 </body>
 </html>
