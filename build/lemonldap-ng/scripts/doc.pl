@@ -170,6 +170,8 @@ my $docs = {
       => '5-Appli-HTTP-Basic-Authentication.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocAppSelfMade' =>
       '5-Appli-self-made.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocAppGoogleApps' =>
+      '5-Appli-Google-Apps.html',
 
     # Other
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/Main/Contacts' =>
@@ -373,7 +375,8 @@ s#/xwiki/bin/view/NG/SeveralIndependantPortals#4.10-Several-independant-portals.
         s#/xwiki/bin/view/NG/DocAppDrupal#5-Appli-Drupal.html#g;
         s#/xwiki/bin/view/NG/DocAppTomcatValve#5-Appli-Tomcat-Valve.html#g;
 s#/xwiki/bin/view/NG/DocAppBasicAuthentication#5-Appli-HTTP-Basic-Authentication.html#g;
-        s#/xwiki/bin/view/NG/DocAppselfMade#5-Appli-self-made.html#g;
+        s#/xwiki/bin/view/NG/DocAppSelfMade#5-Appli-self-made.html#g;
+        s#/xwiki/bin/view/NG/DocAppGoogleApps#5-Appli-Google-Apps.html#g;
         s#/xwiki/bin/view/Main/Contacts#6-Contacts.html#g;
         s#/xwiki/bin/view/NG/Roadmap#6-Roadmap.html#g;
         s#/xwiki/bin/view/NG/References#6-References.html#g;

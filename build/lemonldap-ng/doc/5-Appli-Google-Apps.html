@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Linux/x86 (vers 25 March 2009), see www.w3.org" />
+
+  <title>Lemonldap::NG documentation: 5-Appli-Google-Apps.html</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+  <style type="text/css">
+/*<![CDATA[*/
+    body{
+      background: #ddd;
+      font-family: sans-serif;
+      font-size: 11pt;
+      padding: 0 50px;
+    }
+    div.main-content{
+      padding: 10px;
+      background: #fff;
+      border: 2px #ccc solid;
+    }
+    a{
+      text-decoration: none;
+    }
+    p.footer{
+      text-align: center;
+      margin: 5px 0 0 0;
+    }
+    .heading-1{
+      text-align: center;
+      color: orange;
+      font-variant: small-caps;
+      font-size: 20pt;
+    }
+    .heading-1-1{
+      color: orange;
+      font-size: 14pt;
+      border-bottom: 2px #ccc solid;
+    }
+    pre{
+      background: #eee;
+      border: 2px #ccc solid;
+      padding: 5px;
+      border-left: 10px #ccc solid;
+    }
+    ul.star li{
+      list-style-type: square;
+    }
+  /*]]>*/
+  </style>
+</head>
+
+<body>
+  <div class="main-content">
+    <h2 class="heading-1"><span id="HGoogleApps">Google Apps</span></h2>
+
+    <h3 class="heading-1-1"><span id="HPresentation">Presentation</span></h3>
+
+    <p class="paragraph"></p>Google Apps can use SAML to authenticate users,
+    behaving as an SAML service provider, as explained here: <span class=
+    "wikiexternallink"><a href=
+    "http://code.google.com/googleapps/domain/sso/saml_reference_implementation.html">
+    http://code.google.com/googleapps/domain/sso/saml_reference_implementation.html</a></span>.
+
+    <p class="paragraph"></p>To work with LemonLDAP::NG it requires:
+
+    <ul class="star">
+      <li>An enterprise Google Apps account</li>
+
+      <li>LemonLDAP::NG 1.0 configured as Identity Provider</li>
+
+      <li>Registered users on Google Apps with the same email than those used
+      by LemonLDAP::NG (email will be the NameID exchanged between Google Apps
+      and LemonLDAP::NG)</li>
+    </ul>
+
+    <h3 class="heading-1-1"><span id=
+    "HConfiguration">Configuration</span></h3>
+
+    <h4 class="heading-1-1-1"><span id="HGoogleApps">Google Apps</span></h4>
+
+    <p class="paragraph"></p><strong class="strong">Note</strong>: this part
+    is based on SimpleSAMLPHP documentation: <span class=
+    "wikiexternallink"><a href=
+    "http://simplesamlphp.org/docs/1.6/simplesamlphp-googleapps">http://simplesamlphp.org/docs/1.6/simplesamlphp-googleapps</a></span>.
+
+    <p class="paragraph"></p>As administrator, go in Google Apps control panel
+    and clik on <strong class="strong">Advanced tools</strong>:
+
+    <p class="paragraph"></p><img src="googleapps-menu.png" alt=
+    "googleapps-menu.png" />
+
+    <p class="paragraph"></p>Then select "Set up single sign-on (SSO)":
+
+    <p class="paragraph"></p><img src=
+    "/xwiki/bin/download/NG/DocAppGoogleApps/googleapps-sso.png" alt=
+    "googleapps-sso.png" />
+
+    <p class="paragraph"></p>Now configure all SAML parameters:
+
+    <p class="paragraph"></p><img src=
+    "/xwiki/bin/download/NG/DocAppGoogleApps/googleapps-ssoconfig.png" alt=
+    "googleapps-ssoconfig.png" />
+
+    <ul class="star">
+      <li><strong class="strong">Enable Single Sign-On</strong>: check the
+      box. Uncheck it to disable SAML authentication (for example, if your
+      Identity Provider is down).</li>
+
+      <li><strong class="strong">Sign-in page URL</strong>: SSO access point
+      (HTTP-Redirect binding). Example: <span class="nobr"><a href=
+      "http://auth.example.com/saml/singleSignOn">http://auth.example.com/saml/singleSignOn</a></span></li>
+
+      <li><strong class="strong">Sign-out page URL</strong>: this in not the
+      SLO access point (Google Apps does not support SLO), but the main logout
+      page. Example: <span class="nobr"><a href=
+      "http://auth.example.com/?logout=1">http://auth.example.com/?logout=1</a></span></li>
+
+      <li><strong class="strong">Change password URL</strong>: where users can
+      change their password. Example: <span class="nobr"><a href=
+      "http://auth.example.com">http://auth.example.com</a></span></li>
+    </ul>For the certificate, you can build id from the signing private key
+    registered in Manager. Select the key, and export it (button
+    <strong class="strong">Download this file</strong>):
+
+    <p class="paragraph"></p><img src="googleapps-export-priv-key.png" alt=
+    "googleapps-export-priv-key.png" />
+
+    <p class="paragraph"></p>After choosing the file name (for example
+    lemonldapn-ng-priv.key), download the key on your disk.
+
+    <p class="paragraph"></p>The use openssl to generate an auto-signed
+    certificate:
+
+    <p class="paragraph"></p>
+
+    <div class="code">
+      <pre>
+$ openssl req -<span class=
+"java-keyword">new</span> -key lemonldap-ng-priv.key -out cert.csr
+$ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out cert.pem
+</pre>
+    </div>
+
+    <p class="paragraph"></p>You can the upload the certificate (cert.pem) on
+    Google Apps.
+
+    <h4 class="heading-1-1-1"><span id=
+    "HLemonLDAP3A3ANG">LemonLDAP::NG</span></h4>
+
+    <p class="paragraph"></p>You should have configured LemonLDAP::NG as an
+    SAML Identity Provider, following <span class="wikilink"><a href=
+    "4.8-SAML-issuer-backend.html">this documentation</a></span>.
+
+    <p class="paragraph"></p>Now we will add Google Apps as a new SAML Service
+    Provider:
+
+    <ol>
+      <li>In Manager, click on <strong class="strong">SAML service
+      providers</strong> and the button <strong class="strong">New
+      metadatas</strong>.</li>
+
+      <li>Set <strong class="strong">GoogleApps</strong> as Service Provider
+      name.</li>
+
+      <li>Set <strong class="strong">Email</strong> in <strong class=
+      "strong">Options</strong> &gt; *Authentication Response* &gt;
+      <strong class="strong">Default NameID format</strong></li>
+
+      <li>Disable all signature flags in <strong class=
+      "strong">Options</strong> &gt; *Signature*, except <strong class=
+      "strong">Sign SSO message</strong> which should be to <strong class=
+      "strong">On</strong></li>
+
+      <li>Select <strong class="strong">Metadata</strong>, and unprotect the
+      field to paste the following value:</li>
+    </ol>
+
+    <div class="code">
+      <pre>
+&lt;md:EntityDescriptor entityID=<span class=
+"java-quote">"google.com"</span> xmlns=<span class=
+"java-quote">"urn:oasis:names:tc:SAML:2.0:metadata"</span> xmlns:ds=<span class="java-quote">"http://www.w3.org/2000/09/xmldsig#"</span> xmlns:md=<span class="java-quote">"urn:oasis:names:tc:SAML:2.0:metadata"</span>&gt;
+  &lt;SPSSODescriptor protocolSupportEnumeration=<span class=
+"java-quote">"urn:oasis:names:tc:SAML:2.0:protocol"</span>&gt;
+    &lt;AssertionConsumerService Binding=<span class=
+"java-quote">"urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"</span> Location=<span class="java-quote">"https://www.google.com/a/*mydomain.org*/acs"</span> index=<span class="java-quote">"1"</span> /&gt;
+    &lt;NameIDFormat&gt;urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress&lt;/NameIDFormat&gt;
+  &lt;/SPSSODescriptor&gt;
+&lt;/md:EntityDescriptor&gt;
+</pre>
+    </div>
+
+    <p class="paragraph"></p>You just have to change <strong class=
+    "strong">mydomain.org</strong> into your Google Apps domain.
+
+    <p class="paragraph"></p>Then click on <strong class=
+    "strong">Apply</strong>, and <strong class="strong">Save</strong> to save
+    the whole configuration.
+  </div>
+
+  <p class="footer"><a href="index.html">Index</a></p>
+</body>
+</html>
