@@ -142,6 +142,8 @@ my $docs = {
       '4.10-Custom-functions.html',
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/MultipleCookies' =>
       '4.10-Multiple-cookies.html',
+    'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/FormReplay' =>
+      '4.10-Form-replay.html',
 
     # Applications
     'http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/DocAppDokuwiki' =>
@@ -363,6 +365,7 @@ s#/xwiki/bin/view/NG/SeveralIndependantPortals#4.10-Several-independant-portals.
         s#/xwiki/bin/view/NG/ResetPassword#4.10-Reset-password-by-mail.html#g;
         s#/xwiki/bin/view/NG/CustomFunctions#4.10-Custom-functions.html#g;
         s#/xwiki/bin/view/NG/MultipleCookies#4.10-Multiple-cookies.html#g;
+        s#/xwiki/bin/view/NG/FormReplay#4.10-Form-replay.html#g;
         s#/xwiki/bin/view/NG/DocAppDokuwiki#5-Appli-Dokuwiki.html#g;
         s#/xwiki/bin/view/NG/DocAppGRR#5-Appli-GRR.html#g;
         s#/xwiki/bin/view/NG/DocAppGLPI#5-Appli-GLPI.html#g;
