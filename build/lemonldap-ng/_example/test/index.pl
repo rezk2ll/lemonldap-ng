@@ -110,7 +110,7 @@ print "<li><tt>\$ENV{REMOTE_USER}</tt>: $ENV{REMOTE_USER}</li>\n";
 print "</ul></li>\n";
 print "</ul>\n";
 print "<p class=\"note\">Be carefull, the <tt>\$ENV{REMOTE_USER}</tt> is set only if your script is 
-in the same server than Lemonldap::NG Handler (<tt>\$whatToTrace</tt> parameter). If you use
+in the same server than LemonLDAP::NG Handler (<tt>\$whatToTrace</tt> parameter). If you use
 it on a reverse-proxy, <tt>\$ENV{REMOTE_USER}</tt> is not set.</p>\n";
 
 print "<h2>HTTP headers</h2>\n";
@@ -133,10 +133,21 @@ foreach(sort keys %$headers) {
     </tr>\n";
 }
 print "</table>\n";
-print "<p class=\"note\">Note that Lemonldap::NG cookie is hidden. So that application developpers can
+print "<p class=\"note\">Note that LemonLDAP::NG cookie is hidden. So that application developpers can
 not spoof sessions.</p>\n";
 print "<p class=\"note\">You can access to any information (IP address or LDAP attribute) by customizing
-exported headers with the <a href=\"$manager_url\">Lemonldap::NG Management interface</a></p>\n";
+exported headers with the <a href=\"$manager_url\">LemonLDAP::NG Management interface</a></p>\n";
+
+print "<h2>Script parameters</h2>\n";
+print "<p>Find here all GET or POST parameters sent to this page:</p>\n";
+print "<table>\n";
+print "<tr><th>Parameter</th><th>Value</th></tr>\n";
+foreach(sort $cgi->param()) {
+    my $tmp = $cgi->param($_);
+    print "<tr><td>$_</td><td><big>☞</big> $tmp</td></tr>\n";
+}
+print "<p class=\"note\">POST parameters can be forged by LemonLDAP::NG to autosubmit forms</p>\n";
+print "</table>\n";
 
 print "<h2>Environment for Perl CGI</h2>\n";
 print "<table>\n";
