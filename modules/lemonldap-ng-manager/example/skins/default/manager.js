@@ -176,10 +176,6 @@ function setlmdata(id,v){
 function setlminputdata(id,input){
 	var inputname=$(input).attr('id');
 	var inputvalue=$(input).attr('value');
-	if(inputvalue.length==0){
-		alert('No '+inputname);
-		return false;
-	}
         setlmdata(id,inputvalue);
 }
 function setlmfile(id,input){
