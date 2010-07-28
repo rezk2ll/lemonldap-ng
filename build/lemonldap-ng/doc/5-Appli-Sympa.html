@@ -68,21 +68,30 @@
       <li><a href="#HPresentation">Presentation</a></li>
 
       <li>
-        <a href="#HIntegrationwithLemonLDAP3A3ANG">Integration with
-        LemonLDAP::NG</a>
+        <a href="#HMagicauthentication">Magic authentication</a>
 
         <ul>
-          <li><a href="#HPresentation-1">Presentation</a></li>
-
           <li><a href="#HSympaconfiguration">Sympa configuration</a></li>
 
           <li><a href="#HApacheconfiguration">Apache configuration</a></li>
 
           <li><a href="#HLemonLDAP3A3ANGconfiguration">LemonLDAP::NG
           configuration</a></li>
+        </ul>
+      </li>
 
-          <li><a href="#HSympaautologin28version3E3D09429">Sympa auto-login
-          (version &gt;=0.9.4)</a></li>
+      <li>
+        <a href="#HSympaautologin">Sympa auto-login</a>
+
+        <ul>
+          <li><a href="#HConfigureSympavirtualhostinApache">Configure Sympa
+          virtual host in Apache</a></li>
+
+          <li><a href="#HConfigureSympaHandlerparameters">Configure Sympa
+          Handler parameters</a></li>
+
+          <li><a href="#HForolderrelease2809429">For older release
+          (0.9.4)</a></li>
         </ul>
       </li>
     </ul>
@@ -94,22 +103,19 @@
     "http://www.sympa.org">http://www.sympa.org</a></span> for more
     informations.
 
-    <h3 class="heading-1-1"><span id=
-    "HIntegrationwithLemonLDAP3A3ANG">Integration with
-    LemonLDAP::NG</span></h3>
+    <p class="paragraph"></p>There are two ways to configure SSO with Sympa:
 
-    <h4 class="heading-1-1-1"><span id=
-    "HPresentation">Presentation</span></h4>
+    <ul class="star">
+      <li>Sympa provides a magic authentication mecanism, which display a
+      special button on the interface. When the user click on it, if he has
+      already an SSO session, he is directly authenticated.</li>
 
-    <p class="paragraph"></p>Sympa provides a magic authentication mecanism,
-    which display a special button on the interface. When the user click on
-    it, if he has already an SSO session, he is directly authenticated.
+      <li>LemonLDAP::NG has also a Sympa auto-login feature (since 0.9.4) so
+      users are automatically authenticated into Sympa.</li>
+    </ul>
 
-    <p class="paragraph"></p>This works for CAS, Shibboleth and LemonLDAP::NG.
-
-    <p class="paragraph"></p>For Lemonldap::NG you an also add the "sympa
-    auto-login" feature (since 0.9.4) so users are automatically authenticated
-    into Sympa.
+    <h3 class="heading-1-1"><span id="HMagicauthentication">Magic
+    authentication</span></h3>
 
     <h4 class="heading-1-1-1"><span id="HSympaconfiguration">Sympa
     configuration</span></h4><br />
@@ -217,13 +223,51 @@ mail =&gt; $mail
 </pre>
     </div>
 
-    <h4 class="heading-1-1-1"><span id=
-    "HSympaautologin28version3E3D09429">Sympa auto-login (version
-    &gt;=0.9.4)</span></h4>
+    <h3 class="heading-1-1"><span id="HSympaautologin">Sympa
+    auto-login</span></h3>
 
-    <p class="paragraph"></p>To avoid that users need to click on the
-    "authenticate" button, you can use Lemonldap::NG::Handler::SympaAutoLogin
-    instead of Lemonldap::NG::Handler::SharedConf :
+    <p class="paragraph"></p><strong class="strong">Note</strong> : this
+    configuration <span class="c1">enforces</span> your sympa security, as the
+    sympa auth cookie is neither visible nor editable by users.
+
+    <h4 class="heading-1-1-1"><span id=
+    "HConfigureSympavirtualhostinApache">Configure Sympa virtual host in
+    Apache</span></h4>
+
+    <p class="paragraph"></p>You will configure Sympa vhost like other
+    protected vhost but you will use Sympa handler instead of default handler.
+
+    <p class="paragraph"></p>
+
+    <div class="code">
+      <pre>
+&lt;VirtualHost *&gt;
+        ServerName sympa.example.com<br /><br />        # Load Sympa Handler
+        PerlRequire __HANDLERDIR__/MyHandlerSympa.pm
+        PerlHeaderParserHandler My::Sympa<br /><br />&lt;/VirtualHost&gt;
+</pre>
+    </div>
+
+    <h4 class="heading-1-1-1"><span id=
+    "HConfigureSympaHandlerparameters">Configure Sympa Handler
+    parameters</span></h4>
+
+    <p class="paragraph"></p>Go in Manager, Default parameters &gt; Advanced
+    parameters &gt; Special handlers &gt; Sympa, and edit the different keys:
+
+    <ul class="star">
+      <li><strong class="strong">Shared key</strong>: correspond to the cookie
+      parameter of sympa.conf</li>
+
+      <li><strong class="strong">Mail session key</strong>: session field
+      where to find user mail (by default: mail)</li>
+    </ul>
+
+    <h4 class="heading-1-1-1"><span id="HForolderrelease2809429">For older
+    release (0.9.4)</span></h4>
+
+    <p class="paragraph"></p>The above method does not work for LemonLDAP::NG
+    &lt; 1.0. Follow these steps instead:
 
     <ul class="star">
       <li>edit the file /var/lib/lemonldap-ng/handler/MyHandler.pm and replace
@@ -239,10 +283,6 @@ mail =&gt; $mail
     </ul><strong class="strong">Warning</strong> : you must have and header
     named "mail" and containing the good user's mail value (the one used by
     Sympa).
-
-    <p class="paragraph"></p><strong class="strong">Note</strong> : this
-    configuration <span class="c1">enforces</span> your sympa security, as the
-    sympa auth cookie is neither visible nor editable by users.
   </div>
 
   <p class="footer"><a href="index.html">Index</a></p>
