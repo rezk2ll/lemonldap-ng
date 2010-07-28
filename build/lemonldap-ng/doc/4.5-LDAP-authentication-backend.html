@@ -99,40 +99,55 @@ authentication =&gt; LDAP,
 </pre>
     </div><br />
     <br />
-    If no authentication backend is configured, LDAP is choosen by
+    If no authentication backend is configured, LDAP is chosen by
     default.<br />
     <br />
     You can use the following parameters, in Manager or in portal/index.pl:
 
     <ul class="star">
-      <li>ldapServer: server(s) used to retrive session informations and to
-      valid credentials (localhost by default). More than one server can be
-      set here separated by commas. The servers will be tested in the
-      specifies order. To use TLS, set "ldap+tls://server" and to use LDAPS,
-      set ldaps://server" instead of server name. If you use TLS, you can set
-      any of the Net::LDAP-&gt;start_tls() sub like
+      <li><strong class="strong">ldapServer</strong>: server(s) used to
+      retrieve session informations and to valid credentials (localhost by
+      default). More than one server can be set here separated by commas. The
+      servers will be tested in the specifies order. To use TLS, set
+      "ldap+tls://server" and to use LDAPS, set ldaps://server" instead of
+      server name. If you use TLS, you can set any of the
+      Net::LDAP-&gt;start_tls() sub like
       "ldap/tls://server/verify=none&amp;capath=/etc/ssl". You can also use
       caFile and caPath parameters.</li>
 
-      <li>ldapPort: TCP port used by LDAP server. Can be overriden by an LDAP
-      URI in ldapServer.</li>
+      <li><strong class="strong">ldapPort</strong>: TCP port used by LDAP
+      server. Can be overriden by an LDAP URI in ldapServer.</li>
 
-      <li>ldapBase: Base of search in the LDAP directory.</li>
+      <li><strong class="strong">ldapBase</strong>: Base of search in the LDAP
+      directory.</li>
 
-      <li>LDAPFilter and AuthLDAPFilter: filter for the search in LDAP
+      <li><strong class="strong">LDAPFilter</strong> and <strong class=
+      "strong">AuthLDAPFilter</strong>: filter for the search in LDAP
       directory. Default is
       (&amp;(uid=$user)(objectClass=inetOrgPerson)).</li>
 
-      <li>managerDn: DN used to connect to LDAP server. By default, anonymous
-      bind is used.</li>
+      <li><strong class="strong">managerDn</strong>: DN used to connect to
+      LDAP server. By default, anonymous bind is used.</li>
 
-      <li>managerPassword: password to used to connect to ldap server. By
-      default, anonymous bind is used.</li>
+      <li><strong class="strong">managerPassword</strong>: password to used to
+      connect to LDAP server. By default, anonymous bind is used.</li>
 
-      <li>ldapPpolicyControl: set to 1 to use LDAP Password Policy control
-      (see <span class="wikilink"><a href=
+      <li><strong class="strong">ldapPpolicyControl</strong>: set to 1 to use
+      LDAP Password Policy control (see <span class="wikilink"><a href=
       "4.9-Configure-password-policy.html">LDAP Password
       Policy</a></span>).</li>
+
+      <li><strong class="strong">ldapPwdEnc</strong>: encoding of the
+      password.</li>
+
+      <li><strong class="strong">ldapTimeout</strong>: server idle
+      timeout.</li>
+
+      <li><strong class="strong">ldapVersion</strong>: LDAP protocol
+      version.</li>
+
+      <li><strong class="strong">ldapRaw</strong>: regular expression matching
+      binary attributes.</li>
     </ul>
 
     <h3 class="heading-1-1"><span id=

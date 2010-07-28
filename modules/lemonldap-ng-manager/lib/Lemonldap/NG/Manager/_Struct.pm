@@ -334,13 +334,16 @@ sub struct {
 
                     ldapConnection => {
                         _nodes => [
-                            qw(ldapServer ldapPort ldapBase managerDn managerPassword)
+                            qw(ldapServer ldapPort ldapBase managerDn managerPassword ldapTimeout ldapVersion ldapRaw)
                         ],
                         ldapServer      => 'text:/ldapServer',
                         ldapPort        => 'int:/ldapPort',
                         ldapBase        => 'text:/ldapBase',
                         managerDn       => 'text:/managerDn',
                         managerPassword => 'text:/managerPassword',
+                        ldapTimeout     => 'int:/ldapTimeout',
+                        ldapVersion     => 'int:/ldapVersion',
+                        ldapRaw         => 'text:/ldapRaw',
                     },
 
                     ldapFilters => {
@@ -1052,6 +1055,9 @@ sub testStruct {
         ldapGroupAttributeNameUser   => $testNotDefined,
         ldapGroupAttributeNameSearch => $testNotDefined,
         ldapGroupAttributeNameGroup  => $testNotDefined,
+        ldapTimeout                  => $testNotDefined,
+        ldapVersion                  => $testNotDefined,
+        ldapRaw                      => $testNotDefined,
         locationRules                => {
             keyTest => qr/^[a-zA-Z](?:[\w\-\.]*\w)?$/,
             msgFail => 'Bad virtual host name',
@@ -1361,6 +1367,8 @@ sub defaultConf {
         ldapPort        => '389',
         ldapPwdEnc      => 'utf-8',
         ldapServer      => 'localhost',
+        ldapTimeout     => '120',
+        ldapVersion     => '3',
         locationRules   => { 'test.example.com' => { default => 'accept' }, },
         managerDn       => '',
         managerPassword => '',

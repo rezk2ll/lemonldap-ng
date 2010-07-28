@@ -44,6 +44,9 @@ sub new {
         \@servers,
         onerror => undef,
         ( $portal->{ldapPort} ? ( port => $portal->{ldapPort} ) : () ),
+        ( $portal->{ldapTimeout} ? ( timeout => $portal->{ldapTimeout} ) : () ),
+        ( $portal->{ldapVersion} ? ( version => $portal->{ldapVersion} ) : () ),
+        ( $portal->{ldapRaw}     ? ( raw     => $portal->{ldapRaw} )     : () ),
     );
     unless ($self) {
         $portal->lmLog( $@, 'error' );

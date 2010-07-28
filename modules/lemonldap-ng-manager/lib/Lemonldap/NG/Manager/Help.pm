@@ -356,7 +356,10 @@ sub help_ldap_en {
    access to the wanted LDAP attributes. This account is used before LDAP
    authentication to find user DN. It is also used for password modification.
    </li>
-  <li>Password: password corresponding to the account above.
+  <li>Password: password corresponding to the account above.</li>
+  <li>Timeout: Idle timeout of the server in seconds (by default: 120).</li>
+  <li>Version: protocol version (by default: 3).</li>
+  <li>Binary attributes: regular expression to match binary attributes (see Net::LDAP(3) manual page).</li>
 </ul>
 EOT
 }
@@ -397,7 +400,10 @@ sub help_ldap_fr {
     anonyme. Ce compte est utilisé avant l'authentification pour trouver
     le dn de l'utilisateur. Il est également utilisé pour la modification du mot de passe.
    </li>
-  <li>Mot de passe LDAP: mot de passe correspondant au compte ci-dessus.
+  <li>Mot de passe LDAP: mot de passe correspondant au compte ci-dessus.</li>
+  <li>Temps maximum d'inactivité: temps maximum d'inactivité du serveur en secondes (par défaut: 120).</li>
+  <li>Version: version du protocole (par défaut: 3).</li>
+  <li>Attributs binaires: expression régulière de correspondance des attributs binaires (voir le manuel Net::LDAP(3)).</li>
 </ul>
 EOT
 }
