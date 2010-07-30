@@ -66,6 +66,13 @@ input#text, select
 	text-align:center;
 }
 
+input#int
+{
+	width:100px;
+	text-align:center;
+}
+
+
 option
 {
 	margin:5px;

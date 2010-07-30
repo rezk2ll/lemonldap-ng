@@ -242,7 +242,9 @@
 
     <!-- Integer -->
     <div id="content_int" class="hidden">
+     <button onclick="decrease();return false;" class="ui-state-default ui-corner-all"> - </button>
      <input type="text" id="int" />
+     <button onclick="increase();return false;" class="ui-state-default ui-corner-all"> + </button>
      <br />
      <button onclick="setlminputdata(currentId,int);return false;" class="ui-state-default ui-corner-all">
      <lang en="Apply" fr="Appliquer" />

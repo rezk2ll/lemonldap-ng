@@ -947,4 +947,17 @@ function switchReadonly(selector) {
 		$(selector).attr("readonly","readonly");
 	}
 }
+/* Increase or decrease integer */
+function increase() {
+	current = parseInt($("#int").val());
+	if (current != NaN){
+		$("#int").val(current+1)
+	}
+}
+function decrease() {
+	current = parseInt($("#int").val());
+	if (current != NaN){
+		$("#int").val(current-1)
+	}
+}
 

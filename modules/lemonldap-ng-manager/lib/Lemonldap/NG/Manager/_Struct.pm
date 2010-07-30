@@ -510,7 +510,7 @@ sub struct {
 
                 grantSessionRule => 'textarea:/grantSessionRule',
                 storePassword    => 'bool:/storePassword',
-                timeout          => 'text:/timeout:timeout:text',
+                timeout          => 'int:/timeout:timeout:int',
                 timeoutActivity =>
                   'text:/timeoutActivity:timeoutActivity:timeoutActivityParams',
 
@@ -1391,7 +1391,7 @@ sub defaultConf {
         SSLRequired         => '0',
         storePassword       => '0',
         syslog              => '',
-        timeout             => '7200',
+        timeout             => '72000',
         timeoutActivity     => '0',
         userControl         => '^[\w\.\-@]+$',
         userDB              => 'LDAP',
