@@ -1,5 +1,6 @@
 lemonldap-ng (1.0rc2) unstable; urgency=low
 
+    * Debian policy 3.9.1
     * [LEMONLDAP-20] - Parameter remoteCookieName is not available in
         Manager
     * [LEMONLDAP-21] - Special characters from SAML attribute statement are

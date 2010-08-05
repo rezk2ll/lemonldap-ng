@@ -78,7 +78,8 @@ Depends: ${misc:Depends}, libapache-session-perl, libnet-ldap-perl (>=1:0.38),
  libxml-libxml-perl, libxml-libxslt-perl, libstring-random-perl,
  libsoap-lite-perl, libcrypt-openssl-x509-perl
 Recommends: libmime-lite-perl, libemail-date-format-perl,
- libnet-openid-consumer-perl | libnet-twitter-perl | liblasso-perl
+ libnet-openid-consumer-perl | liblasso3-perl (>=2.2.91) | libnet-twitter-perl,
+ libconvert-pem-perl
 Suggests: slapd
 Description: Lemonldap::NG authentication portal part
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
