@@ -24,15 +24,16 @@ WriteMakefile(
     LICENSE      => 'perl',
     BUILD_REQUIRES => { 'IO::String' => 0, },
     PREREQ_PM    => {
-        'CGI'              => 3.08,
-        'DBI'              => 0,
-        'Storable'         => 0,
-        'Regexp::Assemble' => 0,
         'Cache::Cache'     => 0,
-        'SOAP::Lite'       => 0,
-        'Crypt::Rijndael'  => 0,
-        'HTTP::Headers'    => 0,
+        'CGI'              => 3.08,
         'Config::IniFiles' => 0,
+        'Crypt::Rijndael'  => 0,
+        'DBI'              => 0,
+        'HTTP::Headers'    => 0,
+        'Regexp::Assemble' => 0,
+        'SOAP::Lite'       => 0,
+        'Storable'         => 0,
+        'XML::Simple'      => 0,
     },                                               # e.g., Module::Name => 1.1
     #EXE_FILES => [ 'scripts/convertConfig', ],
     (

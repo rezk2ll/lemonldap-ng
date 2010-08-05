@@ -245,7 +245,7 @@ sub fullip {
             my $entry = shift;
             my $id    = shift;
             next if ( $entry->{_httpSessionType} );
-            if ( $entry->{ $self->{ipField} } eq $reip ) {
+            if ( $entry->{ $self->{ipField} } =~ /$reip/ ) {
                 push @{ $byUid->{ $entry->{ $self->{ipField} } }
                       ->{ $entry->{$whatToTrace} } },
                   { id => $id, _utime => $entry->{_utime} };
