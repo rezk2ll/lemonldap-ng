@@ -8,6 +8,7 @@ WriteMakefile(
     LICENSE      => 'gpl',
     META_MERGE   => {
         'recommends' => {
+            'Convert::PEM'          => 0,
             'Crypt::OpenSSL::X509'  => 0,
             'Email::Date::Format'   => 0,
             'Lasso'                 => 0,
