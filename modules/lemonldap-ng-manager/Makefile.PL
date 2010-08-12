@@ -14,6 +14,7 @@ WriteMakefile(
     PREREQ_PM    => {
         'CGI'                    => 3.08,
         'HTML::Template'         => 0,
+        'JSON'                   => 0,
         'Lemonldap::NG::Common'  => 0.96,
         'Lemonldap::NG::Handler' => 0.93,
         'LWP::UserAgent'         => 0,

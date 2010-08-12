@@ -920,6 +920,9 @@ function generateFile(id){
 					setlmdata(_id,password);
 				}
 				filearea(id);
+			},
+			error:function(xhr, ajaxOptions, thrownError){
+				$('#help_content').html('<h3>Request failed</h3> Error code: '+xhr.status+', '+thrownError);
 			}
 		});
 		$('#button-loadimg').unbind('ajaxStart');

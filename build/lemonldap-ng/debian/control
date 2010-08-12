@@ -64,7 +64,7 @@ Depends: ${misc:Depends}, libjs-jquery, libhtml-template-perl,
  liblemonldap-ng-conf-perl (= ${binary:Version}),
  liblemonldap-ng-handler-perl (= ${binary:Version}),
  libxml-libxml-perl, libxml-libxslt-perl, libcrypt-openssl-rsa-perl,
- libxml-simple-perl
+ libxml-simple-perl, libjson-perl
 Recommends: libcache-cache-perl, libapache-session-perl, libsoap-lite-perl
 Description: Lemonldap::NG manager part
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
