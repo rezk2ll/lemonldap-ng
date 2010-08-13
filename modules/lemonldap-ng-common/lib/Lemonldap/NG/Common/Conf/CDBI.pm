@@ -49,7 +49,7 @@ sub _dbh {
     return $self->{_dbh} if ( $self->{_dbh} and $self->{_dbh}->ping );
     return DBI->connect_cached(
         $self->{dbiChain}, $self->{dbiUser},
-        $self->{dbiPassword}, { RaiseError => 1 }
+        $self->{dbiPassword}, { RaiseError => 1, AutoCommit => 1 }
     );
 }
 
