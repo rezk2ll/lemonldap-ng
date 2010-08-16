@@ -1354,13 +1354,7 @@ sub defaultConf {
         cda             => '0',
         cookieName      => 'lemonldap',
         domain          => 'example.com',
-        exportedHeaders => { 'test.example.com' => { 'Auth-User' => '$uid' }, },
-        exportedVars    => { cn => 'cn', mail => 'mail', uid => 'uid', },
         globalStorage   => 'Apache::Session::File',
-        globalStorageOptions => {
-            'Directory'     => '/var/lib/lemonldap-ng/sessions/',
-            'LockDirectory' => '/var/lib/lemonldap-ng/sessions/lock/'
-        },
         https         => '0',
         issuerDB      => 'Null',
         ldapBase      => 'dc=example,dc=com',
@@ -1369,17 +1363,10 @@ sub defaultConf {
         ldapServer    => 'localhost',
         ldapTimeout   => '120',
         ldapVersion   => '3',
-        locationRules => { 'test.example.com' => { default => 'accept' }, },
-        macros        => {
-            '_whatToTrace' =>
-'$_auth eq \'LDAP\' ? $uid : ($_auth eq \'SAML\' ? "$_user\\@$_idpConfKey" : "$_user\\@$_auth" )'
-        },
         managerDn           => '',
         managerPassword     => '',
         notification        => '0',
         notificationStorage => 'File',
-        notificationStorageOptions =>
-          { dirName => '/var/lib/lemonldap-ng/notifications', },
         notifyDeleted       => '1',
         notifyOther         => '1',
         portal              => $portal,
@@ -1525,8 +1512,19 @@ sub defaultConf {
 
 sub subDefaultConf {
     return {
-        locationRules              => { default     => 'deny' },
         exportedHeaders            => { 'Auth-User' => '$uid' },
+        exportedVars => { cn => 'cn', mail => 'mail', uid => 'uid', },
+        globalStorageOptions => {
+            'Directory'     => '/var/lib/lemonldap-ng/sessions/',
+            'LockDirectory' => '/var/lib/lemonldap-ng/sessions/lock/'
+        },
+        locationRules => { default => 'deny' },
+        macros        => {
+            '_whatToTrace' =>
+'$_auth eq \'LDAP\' ? $uid : ($_auth eq \'SAML\' ? "$_user\\@$_idpConfKey" : "$_user\\@$_auth" )'
+        },
+        notificationStorageOptions =>
+          { dirName => '/var/lib/lemonldap-ng/notifications', },
         remoteGlobalStorageOptions => {
             'proxy' => 'https://remote/index.pl/sessions',
             'ns'    => 'https://remote/Lemonldap/NG/Common/CGI/SOAPService',

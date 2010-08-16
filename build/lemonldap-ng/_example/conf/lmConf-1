@@ -37,9 +37,6 @@ exportedHeaders
 ldapBase
 	'__LDAPSUFFIX__'
 
-macros
-	'$data1 = {};'
-
 globalStorageOptions
 	'$data1 = {&#39;Directory&#39; => &#39;__SESSIONDIR__&#39;};'
 
