@@ -71,16 +71,16 @@ sub cstruct {
                                 qw(samlIDPMetaDataOptionsNameIDFormat samlIDPMetaDataOptionsForceAuthn samlIDPMetaDataOptionsIsPassive samlIDPMetaDataOptionsAllowProxiedAuthn samlIDPMetaDataOptionsAllowLoginFromIDP samlIDPMetaDataOptionsRequestedAuthnContext)
                             ],
 
-                        samlIDPMetaDataOptionsNameIDFormat =>
+                            samlIDPMetaDataOptionsNameIDFormat =>
 "text:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsNameIDFormat"
-                          . ":default:nameIdFormatParams",
-                        samlIDPMetaDataOptionsForceAuthn =>
+                              . ":default:nameIdFormatParams",
+                            samlIDPMetaDataOptionsForceAuthn =>
 "bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsForceAuthn",
-                        samlIDPMetaDataOptionsIsPassive =>
+                            samlIDPMetaDataOptionsIsPassive =>
 "bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsIsPassive",
-                        samlIDPMetaDataOptionsAllowProxiedAuthn =>
+                            samlIDPMetaDataOptionsAllowProxiedAuthn =>
 "bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsAllowProxiedAuthn",
-                        samlIDPMetaDataOptionsAllowLoginFromIDP =>
+                            samlIDPMetaDataOptionsAllowLoginFromIDP =>
 "bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsAllowLoginFromIDP",
                             samlIDPMetaDataOptionsRequestedAuthnContext =>
 "text:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsRequestedAuthnContext"
@@ -93,7 +93,7 @@ sub cstruct {
                                 qw(samlIDPMetaDataOptionsAdaptSessionUtime samlIDPMetaDataOptionsForceUTF8)
                             ],
 
-                        samlIDPMetaDataOptionsAdaptSessionUtime =>
+                            samlIDPMetaDataOptionsAdaptSessionUtime =>
 "bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsAdaptSessionUtime",
                             samlIDPMetaDataOptionsForceUTF8 =>
 "bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsForceUTF8",
@@ -105,13 +105,13 @@ sub cstruct {
                                 qw(samlIDPMetaDataOptionsSignSSOMessage samlIDPMetaDataOptionsCheckSSOMessageSignature samlIDPMetaDataOptionsSignSLOMessage samlIDPMetaDataOptionsCheckSLOMessageSignature)
                             ],
 
-                        samlIDPMetaDataOptionsSignSSOMessage =>
+                            samlIDPMetaDataOptionsSignSSOMessage =>
 "trool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsSignSSOMessage",
-                        samlIDPMetaDataOptionsCheckSSOMessageSignature =>
+                            samlIDPMetaDataOptionsCheckSSOMessageSignature =>
 "bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsCheckSSOMessageSignature",
-                        samlIDPMetaDataOptionsSignSLOMessage =>
+                            samlIDPMetaDataOptionsSignSLOMessage =>
 "trool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsSignSLOMessage",
-                        samlIDPMetaDataOptionsCheckSLOMessageSignature =>
+                            samlIDPMetaDataOptionsCheckSLOMessageSignature =>
 "bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsCheckSLOMessageSignature",
 
                         },
@@ -135,9 +135,9 @@ sub cstruct {
                                 qw(samlIDPMetaDataOptionsEncryptionMode samlIDPMetaDataOptionsCheckConditions)
                             ],
 
-                        samlIDPMetaDataOptionsEncryptionMode =>
+                            samlIDPMetaDataOptionsEncryptionMode =>
 "text:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsEncryptionMode:default:encryptionModeParams",
-                        samlIDPMetaDataOptionsCheckConditions =>
+                            samlIDPMetaDataOptionsCheckConditions =>
 "bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsCheckConditions",
 
                         },
@@ -174,10 +174,10 @@ sub cstruct {
                                 qw(samlSPMetaDataOptionsNameIDFormat samlSPMetaDataOptionsOneTimeUse)
                             ],
 
-                        samlSPMetaDataOptionsNameIDFormat =>
+                            samlSPMetaDataOptionsNameIDFormat =>
 "text:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsNameIDFormat"
-                          . ":default:nameIdFormatParams",
-                        samlSPMetaDataOptionsOneTimeUse =>
+                              . ":default:nameIdFormatParams",
+                            samlSPMetaDataOptionsOneTimeUse =>
 "bool:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsOneTimeUse",
                         },
 
@@ -186,22 +186,22 @@ sub cstruct {
                                 qw(samlSPMetaDataOptionsSignSSOMessage samlSPMetaDataOptionsCheckSSOMessageSignature samlSPMetaDataOptionsSignSLOMessage samlSPMetaDataOptionsCheckSLOMessageSignature)
                             ],
 
-                        samlSPMetaDataOptionsSignSSOMessage =>
+                            samlSPMetaDataOptionsSignSSOMessage =>
 "trool:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsSignSSOMessage",
-                        samlSPMetaDataOptionsCheckSSOMessageSignature =>
+                            samlSPMetaDataOptionsCheckSSOMessageSignature =>
 "bool:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsCheckSSOMessageSignature",
-                        samlSPMetaDataOptionsSignSLOMessage =>
+                            samlSPMetaDataOptionsSignSLOMessage =>
 "trool:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsSignSLOMessage",
-                        samlSPMetaDataOptionsCheckSLOMessageSignature =>
+                            samlSPMetaDataOptionsCheckSLOMessageSignature =>
 "bool:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsCheckSLOMessageSignature",
                         },
                         samlSPMetaDataOptionsSecurity => {
 
                             _nodes => [qw(samlSPMetaDataOptionsEncryptionMode)],
 
-                        samlSPMetaDataOptionsEncryptionMode =>
+                            samlSPMetaDataOptionsEncryptionMode =>
 "text:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsEncryptionMode:default:encryptionModeParams",
-                    },
+                        },
                     },
                 }
             }
@@ -895,11 +895,11 @@ sub struct {
 
                 samlIdPResolveCookie  => 'text:/samlIdPResolveCookie',
                 samlMetadataForceUTF8 => 'bool:/samlMetadataForceUTF8',
-                    samlStorage        => 'text:/samlStorage',
-                    samlStorageOptions => {
-                        _nodes => ['hash:/samlStorageOptions'],
-                        _js    => 'hashRoot',
-                    },
+                samlStorage           => 'text:/samlStorage',
+                samlStorageOptions    => {
+                    _nodes => ['hash:/samlStorageOptions'],
+                    _js    => 'hashRoot',
+                },
 
             },
 
@@ -1083,7 +1083,7 @@ sub testStruct {
             },
         },
         macros => {
-            keyTest    => qr/^[a-zA-Z]\w*$/,
+            keyTest    => qr/^[_a-zA-Z]\w*$/,
             keyMsgFail => 'Bad macro name',
             test       => $perlExpr,
             warnTest   => sub {
@@ -1361,18 +1361,22 @@ sub defaultConf {
             'Directory'     => '/var/lib/lemonldap-ng/sessions/',
             'LockDirectory' => '/var/lib/lemonldap-ng/sessions/lock/'
         },
-        https           => '0',
-        issuerDB        => 'Null',
-        ldapBase        => 'dc=example,dc=com',
-        ldapPort        => '389',
-        ldapPwdEnc      => 'utf-8',
-        ldapServer      => 'localhost',
-        ldapTimeout     => '120',
-        ldapVersion     => '3',
-        locationRules   => { 'test.example.com' => { default => 'accept' }, },
-        managerDn       => '',
-        managerPassword => '',
-        notification    => '0',
+        https         => '0',
+        issuerDB      => 'Null',
+        ldapBase      => 'dc=example,dc=com',
+        ldapPort      => '389',
+        ldapPwdEnc    => 'utf-8',
+        ldapServer    => 'localhost',
+        ldapTimeout   => '120',
+        ldapVersion   => '3',
+        locationRules => { 'test.example.com' => { default => 'accept' }, },
+        macros        => {
+            '_whatToTrace' =>
+'$_auth eq \'LDAP\' ? $uid : ($_auth eq \'SAML\' ? "$_user\\@$_idpConfKey" : "$_user\\@$_auth" )'
+        },
+        managerDn           => '',
+        managerPassword     => '',
+        notification        => '0',
         notificationStorage => 'File',
         notificationStorageOptions =>
           { dirName => '/var/lib/lemonldap-ng/notifications', },
@@ -1397,7 +1401,7 @@ sub defaultConf {
         userDB              => 'LDAP',
         passwordDB          => 'LDAP',
         useXForwardedForIP  => '0',
-        whatToTrace         => '$uid',
+        whatToTrace         => '$_whatToTrace',
         ########
         # SAML #
         ########
