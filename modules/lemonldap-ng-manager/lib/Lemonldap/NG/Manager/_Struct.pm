@@ -1347,7 +1347,9 @@ sub testStruct {
 sub defaultConf {
     my $self = shift;
     my $portal =
-      defined $self->{portal} ? $self->{portal} : 'http://auth.example.com';
+      defined $self->{_conf}->{portal}
+      ? $self->{_conf}->{portal}
+      : 'http://auth.example.com';
     $portal =~ s/\/$//;
     return {
         authentication  => 'LDAP',
