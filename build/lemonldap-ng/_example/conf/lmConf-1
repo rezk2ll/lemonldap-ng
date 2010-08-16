@@ -4,9 +4,6 @@ globalStorage
 cookieName
 	'lemonldap'
 
-whatToTrace
-	'$uid'
-
 exportedVars
 	'$data1 = {&#39;uid&#39; => &#39;uid&#39;,&#39;cn&#39; => &#39;cn&#39;,&#39;mail&#39; => &#39;mail&#39;};'
 
