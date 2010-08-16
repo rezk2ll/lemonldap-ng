@@ -9,7 +9,7 @@ my $portal = Lemonldap::NG::Portal::SharedConf->new(
 );
 
 my $skin       = $portal->{portalSkin};
-my $skin_dir   = $ENV{DOCUMENT_ROOT} . "skins";
+my $skin_dir   = $ENV{DOCUMENT_ROOT} . "/skins";
 my $portal_url = $portal->{portal};
 my $logout_url = "$portal_url?logout=1";
 
