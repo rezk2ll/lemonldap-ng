@@ -66,6 +66,7 @@ sub lock {
     else{
         # TODO
     }
+    };
 }
 
 sub isLocked {
