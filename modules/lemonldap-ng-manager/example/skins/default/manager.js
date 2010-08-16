@@ -915,10 +915,8 @@ function generateFile(id){
 				if(lmtext(id)=='samlServicePrivateKeyEnc'){_public='samlServicePublicKeyEnc';}
 				_id=$('#'+lmparent(id)+' span[name='+_public+']').attr('id').replace(/text_/,'');
 				setlmdata(_id,data.content.public);
-				if(password.length){
 					_id=$('#'+lmparent(id)+' span[name='+lmtext(id)+'Pwd]').attr('id').replace(/text_/,'');
 					setlmdata(_id,password);
-				}
 				filearea(id);
 			},
 			error:function(xhr, ajaxOptions, thrownError){
