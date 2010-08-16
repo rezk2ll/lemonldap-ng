@@ -458,6 +458,7 @@ sub span {
     # Data
     $args{data} = '' unless ( defined $args{data} );
     $args{data} = uri_escape( $args{data} );
+    $args{data} =~ s/"/%22/g;
 
     # ID
     $args{id} = "li_" . encode_base64( $args{id}, '' );
