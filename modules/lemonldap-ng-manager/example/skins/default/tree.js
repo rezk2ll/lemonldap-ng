@@ -478,7 +478,7 @@ $.fn.simpleTree = function(opt){
 		TREE.newNodeIn = function(node, id, text, callback)
 		{
 			var temp_node = $('<li><ul><li id="'+id+'"><span>'+text+'</span></li></ul></li>');
-			TREE.setTreeNodes(temp_node,true);
+			TREE.setTreeNodes(temp_node,false);
 			destination = node;
 			dragNode_source = $('.doc-last',temp_node);
 			TREE.moveNodeToFolder(destination);
@@ -499,7 +499,7 @@ $.fn.simpleTree = function(opt){
 		TREE.newAjaxNodeIn = function(node,id,text,url,callback)
 		{
 			var temp_node = $('<li><ul><li id="'+id+'"><span>'+text+'</span><ul class="ajax"><li id="new">.{url:'+url+'}</li></ul></li></ul></li>');
-			TREE.setTreeNodes(temp_node,true);
+			TREE.setTreeNodes(temp_node,false);
 			destination = node;
 			dragNode_source = $('.folder-close-last',temp_node);
 			TREE.moveNodeToFolder(destination);

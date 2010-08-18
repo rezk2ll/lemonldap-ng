@@ -101,6 +101,7 @@ lemonldap-ng (1.0rc2) unstable; urgency=low
     * [LEMONLDAP-84] - Check format and friendly name of requested attribute
     * [LEMONLDAP-85] - Check requested attribute values
     * [LEMONLDAP-96] - Add encryptionkey in Attribute Authority metadata
+    * Upgrade to JQuery-1.4.2
 
 lemonldap-ng (1.0rc1) unstable; urgency=low
 
