@@ -109,9 +109,8 @@ sub initializeFromXML {
 # SAML 2 description.
 # @return string
 sub serviceToXML {
-    my $self     = shift;
-    my $file     = shift;
-    my ($conf)   = @_;
+    my ( $self, $file, $conf ) = splice @_;
+
     my $template = HTML::Template->new(
         filename          => "$file",
         die_on_bad_params => 0,
@@ -127,9 +126,7 @@ sub serviceToXML {
     );
 
     foreach (@param_auto) {
-        if ( defined $conf->{$_} ) {
-            $template->param( $_, $conf->{$_} );
-        }
+        $template->param( $_, $self->getValue( $_, $conf ) );
     }
 
     # Boolean parameters
@@ -140,9 +137,7 @@ sub serviceToXML {
     );
 
     foreach (@param_boolean) {
-        if ( defined $conf->{$_} ) {
-            $template->param( $_, $conf->{$_} ? 'true' : 'false' );
-        }
+        $template->param( $_, $self->getValue( $_, $conf ) ? 'true' : 'false' );
     }
 
     # Format public keys
@@ -153,7 +148,7 @@ sub serviceToXML {
 
     foreach (@param_keys) {
         my $str = '';
-        my $val = $conf->{$_};
+        my $val = $self->getValue( $_, $conf );
 
         # A default value for samlServicePublicKeyEnc parameter
         if ( $_ =~ /samlServicePublicKeyEnc/ ) {
@@ -225,13 +220,11 @@ sub serviceToXML {
     );
 
     foreach (@param_service) {
-        if ( defined $conf->{$_} ) {
-            my @_tab = split( /;/, $conf->{$_} );
+        my @_tab = split( /;/, $self->getValue( $_, $conf ) );
             $template->param( $_ . 'Binding',          $_tab[0] );
             $template->param( $_ . 'Location',         $_tab[1] );
             $template->param( $_ . 'ResponseLocation', $_tab[2] );
         }
-    }
 
     # Rebuilded parameters for SAML assertions
     # A samlAssertion value is formated like the following:
@@ -245,14 +238,12 @@ sub serviceToXML {
     );
 
     foreach (@param_assertion) {
-        if ( defined $conf->{$_} ) {
-            my @_tab = split( /;/, $conf->{$_} );
+        my @_tab = split( /;/, $self->getValue( $_, $conf ) );
             $template->param( $_ . 'Default', $_tab[0] ? 'true' : 'false' );
             $template->param( $_ . 'Index',   $_tab[1] );
             $template->param( $_ . 'Binding', $_tab[2] );
             $template->param( $_ . 'Location', $_tab[3] );
         }
-    }
 
     # Return the XML metadata.
     return $template->output;
@@ -407,6 +398,30 @@ sub _loadFile {
     my $string = <FILE>;
     close FILE;
     return $string;
+}
+
+#@method string getValue(string key, hashref conf)
+# Get the value for a metadata configuration key
+# Replace #PORTAL# macro
+# @param key Configuration key
+# @param conf Configuration hash ref
+# @return value
+sub getValue {
+    my ( $self, $key, $conf ) = splice @_;
+
+    # Get portal value
+    my $portal = $conf->{portal} || "http://auth.example.com";
+    $portal =~ s/\/$//;
+
+    # Try to get value for the given key in configuraiton
+    my $value = $conf->{$key};
+    return unless defined $value;
+
+    # Replace #PORTAL# macro
+    $value =~ s/#PORTAL#/$portal/g;
+
+    # Return value
+    return $value;
 }
 
 1;

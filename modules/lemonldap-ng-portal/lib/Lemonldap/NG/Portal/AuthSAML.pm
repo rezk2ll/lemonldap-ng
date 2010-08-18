@@ -186,9 +186,11 @@ sub extractFormInfo {
               ->{samlIDPMetaDataOptionsCheckConditions};
 
             # Check conditions - time and audience
-            if ( $checkConditions
-                and
-                !$self->validateConditions( $assertion, $self->{samlEntityID} )
+            if (
+                $checkConditions
+                and !$self->validateConditions(
+                    $assertion, $self->getMetaDataURL( "samlEntityID", 0 )
+                )
               )
             {
                 $self->lmLog( "Conditions not validated", 'error' );

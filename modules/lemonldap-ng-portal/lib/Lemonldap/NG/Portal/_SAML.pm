@@ -1440,6 +1440,7 @@ sub setIdentityFromDump {
 
 ## @method string getMetaDataURL(string key, int index)
 # Get URL stored in a service metadata configuration key
+# Replace #PORTAL# macro
 # @param key Metadata configuration key
 # @param index field index containing URL
 # @return url
@@ -1449,7 +1450,17 @@ sub getMetaDataURL {
 
     return unless defined $self->{$key};
 
-    return ( split( /;/, $self->{$key} ) )[$index];
+    my $url = ( split( /;/, $self->{$key} ) )[$index];
+
+    # Get portal value
+    my $portal = $self->{portal};
+    $portal =~ s/\/$//;
+
+    # Replace #PORTAL# macro
+    $url =~ s/#PORTAL#/$portal/g;
+
+    # Return URL
+    return $url;
 }
 
 ## @method boolean processLogoutResponseMsg(Lasso::Logout logout, string response)

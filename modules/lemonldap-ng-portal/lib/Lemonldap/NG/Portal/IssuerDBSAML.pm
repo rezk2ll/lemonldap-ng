@@ -1379,7 +1379,7 @@ sub issuerForAuthUser {
 
             # Manage Entity NameID format
             if ( $nameIDFormat eq $self->getNameIDFormat("entity") ) {
-                $nameIDContent = $self->{samlEntityID};
+                $nameIDContent = $self->getMetaDataURL( "samlEntityID", 0 );
             }
 
             if ( $login->nameIdentifier ) {
