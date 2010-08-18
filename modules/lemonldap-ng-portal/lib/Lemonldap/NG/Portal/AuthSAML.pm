@@ -796,7 +796,7 @@ sub extractFormInfo {
 
         foreach ( keys %{ $self->{_idpList} } ) {
             $html .=
-              '<tr><td><input type="radio" name="idp" onclick="stop()" value="'
+                '<tr><td><input type="radio" name="idp" value="' 
               . $_
               . '" /></td><td>'
               . $self->{_idpList}->{$_}->{name}
@@ -820,6 +820,9 @@ sub extractFormInfo {
           . '<script>$("[type=radio]:first").attr("checked","checked");</script>';
 
         $self->info($html);
+
+        # Timer not active on IDP list
+        $self->{activeTimer} = 0;
 
         # Delete existing IDP resolution cookie
         push @{ $self->{cookie} },

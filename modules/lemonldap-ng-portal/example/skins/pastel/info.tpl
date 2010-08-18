@@ -43,8 +43,16 @@
 		window.setTimeout('timer()',1000);
 	}
 	$(document).ready(function(){
+		// Check if timer should be activated (true by default)
+		var activeTimer = true;
+		if (!<TMPL_VAR NAME="ACTIVE_TIMER">) {activeTimer = false;}
+
+                if (activeTimer) {
 		window.setTimeout('go()',10000);
 		window.setTimeout('timer()',1000);
+		} else {
+			stop();
+		}
 	});
 	</script>
 

@@ -366,6 +366,7 @@ sub setDefaultValues {
     $self->{mailUrl}              ||= $self->{portal} . "/mail.pl";
     $self->{issuerDB}             ||= 'Null';
     $self->{multiValuesSeparator} ||= '; ';
+    $self->{activeTimer} = 1 unless ( defined( $self->{activeTimer} ) );
 
     # Set default userDB and passwordDB to DBI if authentication is DBI
     if ( $self->{authentication} =~ /DBI/i ) {

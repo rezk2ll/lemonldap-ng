@@ -68,6 +68,7 @@ if ( $portal->process() ) {
             SKIN            => $skin,
             URL             => $portal->{urldc},
             HIDDEN_INPUTS   => $portal->buildHiddenForm(),
+            ACTIVE_TIMER    => $portal->{activeTimer},
         );
     }
 
@@ -136,6 +137,7 @@ elsif ( $portal->{error} == PE_CONFIRM ) {
         MSG             => $portal->info(),
         SKIN            => $skin,
         HIDDEN_INPUTS   => $portal->buildHiddenForm(),
+        ACTIVE_TIMER    => $portal->{activeTimer},
     );
 }
 
@@ -149,6 +151,7 @@ elsif ( my $info = $portal->info() ) {
         SKIN            => $skin,
         URL             => $portal->{urldc},
         HIDDEN_INPUTS   => $portal->buildHiddenForm(),
+        ACTIVE_TIMER    => $portal->{activeTimer},
     );
 }
 
