@@ -166,6 +166,7 @@ else {
         DISPLAY_FORM          => 1,
         MAIL_URL              => $portal->{mailUrl},
         HIDDEN_INPUTS         => $portal->buildHiddenForm(),
+        LOGIN_INFO            => $portal->loginInfo(),
     );
 
     # Adapt template if password policy error

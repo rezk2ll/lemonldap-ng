@@ -123,6 +123,7 @@ use constant {
     PM_REMEMBERCHOICE        => 10,
     PM_SAML_SPLOGOUT         => 11,
     PM_REDIRECTION           => 12,
+    PM_BACKTOSP              => 13,
 };
 
 # EXPORTER PARAMETERS
@@ -145,7 +146,7 @@ our @EXPORT = qw( PE_IMG_NOK PE_IMG_OK PE_INFO PE_REDIRECT PE_DONE PE_OK
   PM_USER PM_DATE PM_IP PM_SESSIONS_DELETED PM_OTHER_SESSIONS
   PM_REMOVE_OTHER_SESSIONS PM_PP_GRACE PM_PP_EXP_WARNING
   PM_SAML_IDPSELECT PM_SAML_IDPCHOOSEN PM_REMEMBERCHOICE PM_SAML_SPLOGOUT
-  PM_REDIRECTION
+  PM_REDIRECTION PM_BACKTOSP
 );
 our %EXPORT_TAGS = ( 'all' => [ @EXPORT, 'import' ], );
 
@@ -830,6 +831,16 @@ sub info {
     my ( $self, $t ) = @_;
     $self->{_info} .= $t if ( defined $t );
     return $self->{_info};
+}
+
+##@method protected string loginInfo(string t)
+# Get or set info to display to the user on login screen
+# @param $t optional text to store
+# @return HTML text to display
+sub loginInfo {
+    my ( $self, $t ) = @_;
+    $self->{_loginInfo} .= $t if ( defined $t );
+    return $self->{_loginInfo};
 }
 
 ##@method public void printImage(string file, string type)

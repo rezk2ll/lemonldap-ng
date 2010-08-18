@@ -73,6 +73,12 @@
 
 	<TMPL_INCLUDE NAME="password.tpl">
 
+	<TMPL_IF NAME="LOGIN_INFO">
+	<div class="login_info">
+	<TMPL_VAR NAME="LOGIN_INFO">
+	</div>
+	</TMPL_IF>
+
 	<TMPL_IF NAME="PORTAL_URL">
 	<div id="logout">
         <TMPL_IF NAME="MSG"><TMPL_VAR NAME="MSG"></TMPL_IF>

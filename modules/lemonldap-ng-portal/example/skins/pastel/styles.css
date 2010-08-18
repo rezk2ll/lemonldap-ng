@@ -386,8 +386,9 @@ p.removeOther{
 font-weight:bold;
 }
 
-div.link {
+div.link, div.login_info {
 	text-align:center;
 	font-weight:bold;
 	margin:40px 200px;
 }
+

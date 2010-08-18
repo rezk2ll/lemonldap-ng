@@ -351,6 +351,7 @@ sub error_ro {
 # * PM_REMEMBERCHOICE          10
 # * PM_SAML_SPLOGOUT           11
 # * PM_REDIRECTION             12
+# * PM_BACKTOSP                13
 
 sub msg_en {
     use utf8;
@@ -368,6 +369,7 @@ sub msg_en {
         'Remember my choice',
         'Logout from service providers...',
         'Redirection in progress...',
+        'Go back to service provider',
     ];
 }
 
@@ -387,6 +389,7 @@ sub msg_fr {
         'Se souvenir de mon choix',
         'Déconnexion des services...',
         'Redirection en cours...',
+        'Retourner sur le fournisseur de service',
     ];
 }
 
