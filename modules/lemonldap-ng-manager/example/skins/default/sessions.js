@@ -20,6 +20,9 @@ function del(id) {
 		dataType:'html',
 		success:function(data){
 			$('#data').html(data);
+			// Delete session from tree
+			$('#uid'+id).remove();
+			$('#ip'+id).remove();
 		},
 		error:function(xhr, ajaxOptions, thrownError){
 			$('#data').html('<h3>Request failed</h3> Error code: '+xhr.status+', '+thrownError);
