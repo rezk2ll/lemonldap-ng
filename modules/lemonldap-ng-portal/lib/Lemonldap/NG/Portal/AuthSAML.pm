@@ -765,39 +765,8 @@ sub extractFormInfo {
 
     # 2. IDP resolution
 
-    # Try to recover IDP from IDP cookie
-    my $idp;
-    my %cookies    = fetch CGI::Cookie;
-    my $idp_cookie = $cookies{ $self->{samlIdPResolveCookie} };
-    if ($idp_cookie) {
-        $idp = $idp_cookie->value;
-        $self->lmLog( "IDP $idp found in IDP resolution cookie", 'debug' );
-    }
-
-    # Check if IDP from cookie is known in our configuration
-    $idp = undef unless exists $self->{_idpList}->{$idp};
-
-    # If no IDP resolve cookie, find another way to get it
-    # Case 1: IDP was choosen from portal IDP list
-    $idp ||= $self->param("idp");
-
-    # Case 2: check all IDP resolution rules
-    # The first match win
-    unless ($idp) {
-        foreach ( keys %{ $self->{_idpList} } ) {
-            my $idpConfKey = $self->{_idpList}->{$_}->{confKey};
-            my $cond =
-              $self->{samlIDPMetaDataOptions}->{$idpConfKey}
-              ->{samlIDPMetaDataOptionsResolutionRule};
-            next unless defined $cond;
-            if ( $self->safe->reval($cond) ) {
-                $self->lmLog( "IDP $idpConfKey resolution rule match",
-                    'debug' );
-                $idp = $_;
-                last;
-            }
-        }
-    }
+    # Search a selected IdP
+    my ( $idp, $idp_cookie ) = $self->_sub('getIDP');
 
     # Get confirmation flag
     my $confirm_flag = $self->param("confirm");
@@ -882,7 +851,7 @@ sub extractFormInfo {
     }
 
     # Here confirmation is OK (confirm_flag == 1), store choosen IDP in cookie
-    unless ( $idp_cookie and ( $idp eq $idp_cookie->value ) ) {
+    unless ( $idp_cookie and $idp eq $idp_cookie ) {
         $self->lmLog( "Build cookie to remember $idp as IDP choice", 'debug' );
 
         # Control url parameter
@@ -1052,7 +1021,7 @@ sub extractFormInfo {
             $self->{postFields} = { 'SAMLart' => $sso_body };
         }
         else {
-        $self->{postFields} = { 'SAMLRequest' => $sso_body };
+            $self->{postFields} = { 'SAMLRequest' => $sso_body };
         }
 
         # RelayState
@@ -1184,6 +1153,57 @@ sub setAuthSessionInfo {
 # @return PE_OK
 sub authenticate {
     PE_OK;
+}
+
+## @method protected *string getIDP()
+# Try to find an IdP using :
+# * HTTP parameter
+# * "samlIdPResolveCookie" cookie
+# * rules
+#
+# @return Array containing :
+# * IdP found (or undef)
+# * Cookie value if exists
+sub getIDP {
+    my $self = shift;
+    my $idp;
+
+    my %cookies    = fetch CGI::Cookie;
+    my $idp_cookie = $cookies{ $self->{samlIdPResolveCookie} };
+    $idp_cookie &&= $idp_cookie->value;
+
+    # Try to recover IDP from args or IDP cookie
+    unless ( $idp = $self->param("idp") ) {
+        if ( $idp = $idp_cookie ) {
+            $self->lmLog( "IDP $idp found in IDP resolution cookie", 'debug' );
+        }
+
+        # Case 2: check all IDP resolution rules
+        # The first match win
+        else {
+            foreach ( keys %{ $self->{_idpList} } ) {
+                my $idpConfKey = $self->{_idpList}->{$_}->{confKey};
+                my $cond =
+                  $self->{samlIDPMetaDataOptions}->{$idpConfKey}
+                  ->{samlIDPMetaDataOptionsResolutionRule};
+                next unless defined $cond;
+                if ( $self->safe->reval($cond) ) {
+                    $self->lmLog( "IDP $idpConfKey resolution rule match",
+                        'debug' );
+                    $idp = $_;
+                    last;
+                }
+            }
+        }
+        $self->lmLog( 'No IdP found', 'debug' ) unless ($idp);
+    }
+
+    # Alert when selected IdP is unknown
+    unless ( exists $self->{_idpList}->{$idp} ) {
+        $self->_sub( 'userError', "Required IDP $idp does not exists" );
+        $idp = undef;
+    }
+    return ( $idp, $idp_cookie );
 }
 
 ## @apmethod void authLogout()
