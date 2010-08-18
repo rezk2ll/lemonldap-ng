@@ -36,8 +36,6 @@ MANAGERSKINSDIR=$(MANAGERDIR)/skins
 RMANAGERSKINSDIR=$(DESTDIR)/$(MANAGERSKINSDIR)
 SESSIONSEXPLORERDIR=$(MANAGERDIR)
 RSESSIONSEXPLORERDIR=$(DESTDIR)/$(SESSIONSEXPLORERDIR)
-SESSIONSEXPLORERDATADIR=$(SESSIONSEXPLORERDIR)/images
-RSESSIONSEXPLORERDATADIR=$(DESTDIR)/$(SESSIONSEXPLORERDATADIR)
 DOCDIR=$(DOCUMENTROOT)/doc
 RDOCDIR=$(DESTDIR)/$(DOCDIR)
 TESTDIR=$(DOCUMENTROOT)/test
@@ -284,13 +282,12 @@ install_site:	install_manager_site install_portal_site install_handler_site inst
 install_manager_site:	install_conf_dir
 	# Manager install
 	@install -v -d ${RMANAGERDIR} ${RMANAGERSKINSDIR} \
-		${RSESSIONSEXPLORERDIR} $(RSESSIONSEXPLORERDATADIR) \
+		${RSESSIONSEXPLORERDIR} \
 		$(RCONFDIR) ${RMANAGERDIR}/skins/
 	@for skin in $$(ls lemonldap-ng-manager/example/skins/); do \
 		[ -h $(RMANAGERDIR)/skins/$$skin ] && rm -f $(RMANAGERDIR)/skins/$$skin; \
 		install -v -d $(RMANAGERSKINSDIR)/$$skin; \
 	done
-	@find ${RSESSIONSEXPLORERDIR} -type l -name images -delete
 	@cp -pR --remove-destination ${SRCMANAGERDIR}/example/index.pl ${RMANAGERDIR}
 	@cp -pR --remove-destination ${SRCMANAGERDIR}/example/skins/* $(RMANAGERSKINSDIR)
 	@if [ "$(MANAGERDIR)/skins/" != "$(MANAGERSKINSDIR)/" ]; then \
@@ -302,14 +299,8 @@ install_manager_site:	install_conf_dir
 	@$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)/$(CONFFILENAME)
 	# Sessions explorer install
 	@cp -pR --remove-destination ${SRCMANAGERDIR}/example/sessions.pl $(RSESSIONSEXPLORERDIR)
-	@cp -pR --remove-destination ${SRCMANAGERDIR}/example/images $(RSESSIONSEXPLORERDIR)
-	@if [ "${SESSIONSEXPLORERDIR}/images/" != "${SESSIONSEXPLORERDATADIR}/" ]; then \
-		mv -f ${RSESSIONSEXPLORERDIR}/images/* ${RSESSIONSEXPLORERDATADIR}; \
-		rm -rf ${RMANAGERDIR}/images; \
-		ln -s $$(echo ${SESSIONSEXPLORERDATADIR} | sed -e 's/\/$$//') ${RMANAGERDIR}/images; \
-	fi
 	@rm -rf $$(find ${RMANAGERDIR} ${RMANAGERSKINSDIR} \
-		${RSESSIONSEXPLORERDIR} $(RSESSIONSEXPLORERDATADIR) \
+		${RSESSIONSEXPLORERDIR} \
 		$(RCONFDIR) -type d -name .svn)
 
 install_portal_site:	install_conf_dir
@@ -380,7 +371,6 @@ install_examples_site:
 	done
 	@rm -rf $(REXAMPLESDIR)/portal/skins \
 		$(REXAMPLESDIR)/manager/skins \
-		$(REXAMPLESDIR)/manager/images \
 	@rm -rf $$(find $(REXAMPLESDIR) -type d -name .svn)
 	@if [ "$(WITHLA)" -eq "1" ]; then \
 		$(PERL) -i -pe 's#__DIR__#$(LASPPORTALDIR)#g' $(REXAMPLESDIR)/portal/AuthLA/index.pl; \
@@ -588,7 +578,6 @@ debian-diff:
 	@# Manager
 	@$(DIFF) lemonldap-ng-manager/lib/Lemonldap/NG/Manager /usr/share/perl5/Lemonldap/NG/Manager ||true
 	@$(DIFF) lemonldap-ng-manager/lib/Lemonldap/NG/Manager.pm /usr/share/perl5/Lemonldap/NG/Manager.pm ||true
-	@$(DIFF) lemonldap-ng-manager/example/images /usr/share/lemonldap-ng/sessions-explorer-imgs ||true
 	@$(DIFF) lemonldap-ng-manager/example/index.pl /var/lib/lemonldap-ng/manager/index.pl ||true
 	@$(DIFF) lemonldap-ng-manager/example/sessions.pl /var/lib/lemonldap-ng/manager/sessions.pl ||true
 	@for i in $(MANAGERSKINS); do \
@@ -618,7 +607,6 @@ default-diff:
 	@# Manager
 	@$(DIFF) lemonldap-ng-manager/lib/Lemonldap/NG/Manager /usr/local/share/perl/5.10.0/Lemonldap/NG/Manager ||true
 	@$(DIFF) lemonldap-ng-manager/lib/Lemonldap/NG/Manager.pm /usr/local/share/perl/5.10.0/Lemonldap/NG/Manager.pm ||true
-	@$(DIFF) lemonldap-ng-manager/example/images $(LMPREFIX)/htdocs/manager/images ||true
 	@$(DIFF) lemonldap-ng-manager/example/skins $(LMPREFIX)/htdocs/manager/skins ||true
 	@$(DIFF) lemonldap-ng-manager/example/index.pl $(LMPREFIX)/htdocs/manager/index.pl ||true
 	@$(DIFF) lemonldap-ng-manager/example/sessions.pl $(LMPREFIX)/htdocs/manager/sessions.pl ||true
