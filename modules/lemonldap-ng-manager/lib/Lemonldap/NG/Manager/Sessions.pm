@@ -180,7 +180,7 @@ sub doubleIp {
             next if ( $entry->{_httpSessionType} );
             push @{ $byUid->{ $entry->{$whatToTrace} }
                   ->{ $entry->{ $self->{ipField} } } },
-              { id => $id, _utime => $entry->{_utime} };
+              { id => $id, startTime => $entry->{startTime} };
             undef;
         }
     );
@@ -202,12 +202,12 @@ sub doubleIp {
             $res .= "<li class=\"open\" id=\"di$ip\"><span>$ip</span><ul>";
 
             # For each IP node, store sessions sorted by start time
-            foreach my $session ( sort { $a->{_utime} <=> $b->{_utime} }
+            foreach my $session ( sort { $a->{startTime} <=> $b->{startTime} }
                 @{ $byUid->{$uid}->{$ip} } )
             {
                 $res .=
 "<li id=\"di$session->{id}\"><span onclick=\"displaySession('$session->{id}');\">"
-                  . localtime( $session->{_utime} )
+                  . $self->_stToStr( $session->{startTime} )
                   . "</span></li>";
             }
             $res .= "</ul></li>";
@@ -248,7 +248,7 @@ sub fullip {
             if ( $entry->{ $self->{ipField} } =~ /$reip/ ) {
                 push @{ $byUid->{ $entry->{ $self->{ipField} } }
                       ->{ $entry->{$whatToTrace} } },
-                  { id => $id, _utime => $entry->{_utime} };
+                  { id => $id, startTime => $entry->{startTime} };
             }
             undef;
         }
@@ -297,7 +297,7 @@ sub fulluid {
             next if ( $entry->{_httpSessionType} );
             if ( $entry->{$whatToTrace} =~ /^$reuser$/ ) {
                 push @{ $byUid->{ $entry->{$whatToTrace} } },
-                  { id => $id, _utime => $entry->{_utime} };
+                  { id => $id, startTime => $entry->{startTime} };
             }
             undef;
         }
@@ -392,7 +392,7 @@ sub session {
       . "\" /><p><b>"
       . $self->translate('sessionStartedAt')
       . ":</b> "
-      . localtime( $h{_utime} )
+      . $self->_stToStr( $h{startTime} )
       . '</p><p><b>'
       . $self->translate('memberOfSSOGroups')
       . ' :</b><ul>';
@@ -402,18 +402,30 @@ sub session {
         '<p><b>'
       . $self->translate('attributesAndMacros')
       . ' :</b></p><table border="0" witdh="100%">';
-    foreach my $attr ( sort keys %h ) {
-        next if ( $attr =~ /^(?:_utime|groups)$/ );
+    foreach my $attr (
+        sort {
+            return $a cmp $b
+              if ( ( $a =~ /^_/ and $b =~ /^_/ )
+                or ( $a !~ /^_/ and $b !~ /^_/ ) );
+            return $b cmp $a
+        } keys %h
+      )
+    {
+        next if ( $attr =~ /^(?:groups)$/ );
+
+        my $value = htmlquote( $h{$attr} );
 
         # Hide password value
-        if ( $attr =~ /^_password$/ ) { $h{$attr} = "******"; }
+        $value = "******" if ( $attr =~ /^_password$/ );
+        $value .= ' <i>(' . localtime($value) . ')</i>'
+          if ( $attr eq '_utime' );
         $res .=
             '<tr valign="top"><th style="text-align:left;">'
           . htmlquote($attr)
           . '</th><td>:</td><td>'
-          . htmlquote( $h{$attr} )
+          . $value
           . '</td></tr>'
-          if ( $h{$attr} );
+          if ($value);
     }
     $res .= '</table>';
     untie %h;
@@ -434,19 +446,19 @@ sub uidByIp {
             next if ( $entry->{_httpSessionType} );
             if ( $entry->{ $self->{ipField} } eq $ip ) {
                 push @{ $byUser->{ $entry->{$whatToTrace} } },
-                  { id => $id, _utime => $entry->{_utime} };
+                  { id => $id, startTime => $entry->{startTime} };
             }
             undef;
         }
     );
     foreach my $user ( sort keys %$byUser ) {
         $res .= "<li id=\"ip$user\"><span>$user</span><ul>";
-        foreach my $session ( sort { $a->{_utime} <=> $b->{_utime} }
+        foreach my $session ( sort { $a->{startTime} <=> $b->{startTime} }
             @{ $byUser->{$user} } )
         {
             $res .=
 "<li id=\"ip$session->{id}\"><span onclick=\"displaySession('$session->{id}');\">"
-              . localtime( $session->{_utime} )
+              . $self->_stToStr( $session->{startTime} )
               . "</span></li>";
         }
         $res .= "</ul></li>";
@@ -468,19 +480,19 @@ sub uid {
             next if ( $entry->{_httpSessionType} );
             if ( $entry->{$whatToTrace} eq $uid ) {
                 push @{ $byIp->{ $entry->{ $self->{ipField} } } },
-                  { id => $id, _utime => $entry->{_utime} };
+                  { id => $id, startTime => $entry->{startTime} };
             }
             undef;
         }
     );
     foreach my $ip ( sort keys %$byIp ) {
         $res .= "<li class=\"open\" id=\"uid$ip\"><span>$ip</span><ul>";
-        foreach my $session ( sort { $a->{_utime} <=> $b->{_utime} }
+        foreach my $session ( sort { $a->{startTime} <=> $b->{startTime} }
             @{ $byIp->{$ip} } )
         {
             $res .=
 "<li id=\"uid$session->{id}\"><span onclick=\"displaySession('$session->{id}');\">"
-              . localtime( $session->{_utime} )
+              . $self->_stToStr( $session->{startTime} )
               . "</span></li>";
         }
         $res .= "</ul></li>";
@@ -604,6 +616,15 @@ sub ajaxNode {
     my ( $self, $id, $text, $param ) = @_;
     return
 "<li id=\"$id\"><span>$text</span>\n<ul class=\"ajax\"><li id=\"sub_$id\">{url:$ENV{SCRIPT_NAME}?$param}</li></ul></li>\n";
+}
+
+## @method private string _stToStr(string)
+# Transform a utime string into readeable string (ex: "2010-08-18 13:03:13")
+# @return Formated string
+sub _stToStr {
+    shift;
+    return
+      sprintf( '%d-%02d-%02d %d:%02d:%02d', unpack( 'a4a2a2a2a2a2', shift ) );
 }
 
 1;
