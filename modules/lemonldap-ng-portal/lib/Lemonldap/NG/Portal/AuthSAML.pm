@@ -771,9 +771,18 @@ sub extractFormInfo {
     # Get confirmation flag
     my $confirm_flag = $self->param("confirm");
 
-    # If confirmation is -1, or IDP was not resolve, let the user choose its IDP
+    # If confirmation is -1 from IDP list,
+    # return error to get next authentication method
+    # with AuthMulti
+    if ( $confirm_flag == -1 and $self->param("idplist") ) {
+        $self->lmLog( "SAML authentication refused by user", 'error' );
+        return PE_ERROR;
+    }
+
+    # If confirmation is -1 from resolved IDP screen,
+    # or IDP was not resolve, let the user choose its IDP
     if ( $confirm_flag == -1 or !$idp ) {
-        $self->lmLog( "No IDP found, redirecting user to IDP list", 'debug' );
+        $self->lmLog( "Redirecting user to IDP list", 'debug' );
 
         # Control url parameter
         my $urlcheck = $self->controlUrlOrigin();
@@ -803,6 +812,9 @@ sub extractFormInfo {
           # URL
           . '<input type="hidden" name="url" value="'
           . $self->param("url") . '" />'
+
+          # IDP list flag
+          . '<input type="hidden" name="idplist" value="1" />'
 
           # Script to autoselect first choice
           . '<script>$("[type=radio]:first").attr("checked","checked");</script>';
@@ -1195,11 +1207,11 @@ sub getIDP {
                 }
             }
         }
-        $self->lmLog( 'No IdP found', 'debug' ) unless ($idp);
+        $self->lmLog( 'No IDP found', 'debug' ) unless ($idp);
     }
 
-    # Alert when selected IdP is unknown
-    unless ( exists $self->{_idpList}->{$idp} ) {
+    # Alert when selected IDP is unknown
+    if ( $idp and !exists $self->{_idpList}->{$idp} ) {
         $self->_sub( 'userError', "Required IDP $idp does not exists" );
         $idp = undef;
     }
