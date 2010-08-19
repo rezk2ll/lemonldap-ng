@@ -367,6 +367,8 @@ sub setDefaultValues {
     $self->{issuerDB}             ||= 'Null';
     $self->{multiValuesSeparator} ||= '; ';
     $self->{activeTimer} = 1 unless ( defined( $self->{activeTimer} ) );
+    $self->{infoFormMethod}    ||= "get";
+    $self->{confirmFormMethod} ||= "post";
 
     # Set default userDB and passwordDB to DBI if authentication is DBI
     if ( $self->{authentication} =~ /DBI/i ) {
@@ -1630,6 +1632,12 @@ sub returnSOAPMessage {
 # @return void
 sub autoPost {
     my $self = shift;
+
+    # Display info before redirecting
+    if ( $self->info() ) {
+        $self->{infoFormMethod} = "post";
+        return PE_INFO;
+    }
 
     # Get URL and Form fields
     my $url        = $self->{postUrl};

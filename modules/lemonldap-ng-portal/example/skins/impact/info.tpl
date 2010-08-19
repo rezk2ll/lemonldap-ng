@@ -8,7 +8,7 @@
       </div>
       <hr class="solid" />
       <p id="timer" class="text-error"><lang en="You'll be redirected in 10 seconds" fr="Vous allez &ecirc;tre redirig&eacute;(e) automatiquement dans 10 secondes"/></p>
-      <form id="form" action="<TMPL_VAR NAME="URL">" method="get" class="login">
+      <form id="form" action="<TMPL_VAR NAME="URL">" method="<TMPL_VAR NAME="FORM_METHOD">" class="login">
       <TMPL_VAR NAME="HIDDEN_INPUTS">
       <div id="content-all-info">
         <TMPL_VAR NAME="MSG">
