@@ -110,7 +110,7 @@ sub issuerForUnAuthUser {
             # Process authentication request
             my $result;
             if ($artifact) {
-                $result = $self->processArtRequestMsg( $login, $request );
+                $result = $self->processArtResponseMsg( $login, $request );
             }
             else {
                 $result = $self->processAuthnRequestMsg( $login, $request );
@@ -1154,7 +1154,7 @@ sub issuerForAuthUser {
             # Process authentication request
             my $result;
             if ($artifact) {
-                $result = $self->processArtRequestMsg( $login, $request );
+                $result = $self->processArtResponseMsg( $login, $request );
             }
             else {
                 $result = $self->processAuthnRequestMsg( $login, $request );
@@ -1561,7 +1561,7 @@ sub issuerForAuthUser {
                 $self->forceSignature($login);
             }
             else {
-                $self->lmLog( "SLO response signature according to metadata",
+                $self->lmLog( "SSO response signature according to metadata",
                     'debug' );
             }
 
@@ -1575,9 +1575,11 @@ sub issuerForAuthUser {
 
                 # Choose method
                 $artifact_method = $self->getHttpMethod("artifact-get")
-                  if ( $method == $self->getHttpMethod("redirect") );
+                  if ( $method == $self->getHttpMethod("redirect")
+                    || $method == $self->getHttpMethod("artifact-get") );
                 $artifact_method = $self->getHttpMethod("artifact-post")
-                  if ( $method == $self->getHttpMethod("post") );
+                  if ( $method == $self->getHttpMethod("post")
+                    || $method == $self->getHttpMethod("artifact-post") );
 
                 # Build artifact message
                 unless ( $self->buildArtifactMsg( $login, $artifact_method ) ) {
