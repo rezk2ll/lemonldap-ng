@@ -9,6 +9,7 @@
 package Lemonldap::NG::Common::CGI::SOAPServer;
 use SOAP::Transport::HTTP;
 use base qw(SOAP::Transport::HTTP::Server);
+use bytes;
 
 our $VERSION = '0.32';
 
@@ -39,7 +40,7 @@ sub handle {
     my $cgi  = shift;
 
     my $content = $cgi->param('POSTDATA');
-    my $length  = length($content);
+    my $length  = bytes::length($content);
 
     if ( !$length ) {
         $self->response( HTTP::Response->new(411) )    # LENGTH REQUIRED

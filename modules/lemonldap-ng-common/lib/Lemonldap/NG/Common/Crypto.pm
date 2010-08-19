@@ -9,6 +9,7 @@ package Lemonldap::NG::Common::Crypto;
 use strict;
 use Crypt::Rijndael;
 use MIME::Base64;
+use bytes;
 use base qw(Crypt::Rijndael);
 
 our $VERSION = '0.2';
@@ -34,7 +35,7 @@ sub encrypt {
     my $tmp;
     eval {
         $tmp = encode_base64(
-            $self->SUPER::encrypt( $str . "\0" x ( 16 - length($str) % 16 ) ),
+            $self->SUPER::encrypt( $str . "\0" x ( 16 - bytes::length($str) % 16 ) ),
             '' );
     };
     if ($@) {
