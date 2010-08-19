@@ -78,6 +78,7 @@ sub handle {
         -Content_Length => $self->response->header('Content-Length'),
         -SOAPServer     => 'Lemonldap::NG CGI',
     );
+    binmode( STDOUT, ":bytes" );
     print $self->response->content;
 }
 
