@@ -45,7 +45,12 @@ $(document).ready(function(){
 		var action = $("form.login").attr("action");
 		var method = $("form.login").attr("method");
 
-		var back_url = action.substring(0,action.indexOf("?")) + "?";
+		var back_url = "";
+		if (action.indexOf("?") != -1) {
+			back_url = action.substring(0,action.indexOf("?")) + "?";
+		} else {
+			back_url = action + "?";
+		}
 
 		$("form.login input[type=hidden]").each(function(index){
 			back_url = back_url + "&" + $(this).attr("name") + "=" + $(this).val();
