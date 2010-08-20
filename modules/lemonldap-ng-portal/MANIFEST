@@ -57,6 +57,7 @@ example/skins/common/error.png
 example/skins/common/favicon.ico
 example/skins/common/jquery-1.4.2.min.js
 example/skins/common/jquery-ui-1.7.2.custom.min.js
+example/skins/common/jquery.base64.js
 example/skins/common/key.png
 example/skins/common/mail_confirm.tpl
 example/skins/common/mail_footer.tpl

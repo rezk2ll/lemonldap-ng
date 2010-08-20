@@ -39,6 +39,25 @@ $(document).ready(function(){
 	);
 	if(login){ $("input[type=password]:first").focus(); }
 	if(newwindow){ $('#appslist a[href^="http://"]').attr("target", "_blank"); }
+
+	// Complete removeOther link
+	if ($("p.removeOther").length) {
+		var action = $("form.login").attr("action");
+		var method = $("form.login").attr("method");
+
+		var back_url = action.substring(0,action.indexOf("?")) + "?";
+
+		$("form.login input[type=hidden]").each(function(index){
+			back_url = back_url + "&" + $(this).attr("name") + "=" + $(this).val();
+		});
+
+		var link = $("p.removeOther a").attr("href");
+
+		link = link + "&method=" + method + "&url=" + $.base64Encode(back_url);
+
+		$("p.removeOther a").attr("href",link);
+
+	}
 });
 
 function isHiddenFormValueSet(option){

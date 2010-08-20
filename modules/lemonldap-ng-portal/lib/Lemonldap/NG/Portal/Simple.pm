@@ -1437,15 +1437,12 @@ sub _mkDateIpArray {
 
 ## @method private string _mkRemoveOtherLink()
 # Build the removeOther link
+# Last part of URL is built trough javascript
 # @return removeOther link in HTML code
 sub _mkRemoveOtherLink {
     my $self = shift;
 
-    my $link =
-        $self->{portal}
-      . "?removeOther=1&infoFormMethod="
-      . $self->{infoFormMethod} . "&url="
-      . encode_base64( $self->{urldc} );
+    my $link = $self->{portal} . "?removeOther=1";
 
     return "<p class=\"removeOther\"><a href=\"$link\" onclick=\"_go=0\">"
       . &Lemonldap::NG::Portal::_i18n::msg( PM_REMOVE_OTHER_SESSIONS,
@@ -1630,7 +1627,7 @@ sub autoRedirect {
 
     # Display info before redirecting
     if ( $self->info() ) {
-        $self->{infoFormMethod} = "get";
+        $self->{infoFormMethod} = $self->param('method') || "get";
         $self->clearHiddenFormValue();
         my ($query_string) = ( $self->{urldc} =~ /.+?\?(.+)/ );
         if ($query_string) {
@@ -1723,7 +1720,7 @@ sub autoPost {
 
     # Display info before redirecting
     if ( $self->info() ) {
-        $self->{infoFormMethod} = "post";
+        $self->{infoFormMethod} = $self->param('method') || "post";
         $self->clearHiddenFormValue();
         $self->{urldc}          = $url;
         foreach ( keys %$formFields ) {
