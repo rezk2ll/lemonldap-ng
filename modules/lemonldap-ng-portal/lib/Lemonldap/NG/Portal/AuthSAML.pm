@@ -1443,6 +1443,9 @@ sub authFinish {
     my $self = shift;
     my %h;
 
+    # Clear SAML hidden fields (not used anymore)
+    $self->clearHiddenFormValue( ['SAMLRequest', 'SAMLResponse', 'Method', 'RelayState', 'SAMLart' ] );
+
     # Real session was stored, get id and utime
     my $id    = $self->{id};
     my $utime = $self->{sessionInfo}->{_utime};

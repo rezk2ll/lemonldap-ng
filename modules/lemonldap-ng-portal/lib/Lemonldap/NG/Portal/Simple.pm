@@ -404,43 +404,95 @@ sub setDefaultValues {
       unless ( defined( $self->{samlMetadataForceUTF8} ) );
 }
 
-##@method protected void setHiddenFormValue(string fieldname, string value)
+## @method protected void setHiddenFormValue(string fieldname, string value, string prefix, boolean base64)
 # Add element into $self->{portalHiddenFormValues}, those values could be
 # used to hide values into HTML form.
-#@param $fieldname The field name which will contain the correponding value
-#@param $value The associated value
+# @param fieldname The field name which will contain the correponding value
+# @param value The associated value
+# @param prefix Prefix of the field key
+# @param base64 Encode value in base64
+# @return nothing
 sub setHiddenFormValue {
-    my $self = shift;
-    my $key  = shift;
-    my $val  = shift;
+    my ( $self, $key, $val, $prefix, $base64 ) = splice @_;
+
+    # Default values
+    $prefix = "lmhidden_" unless defined $prefix;
+    $base64 = 1           unless defined $base64;
+
+    # Store value
     if ($val) {
-        $key = 'lmhidden_' . $key;
-        $self->{portalHiddenFormValues}->{$key} = encode_base64($val);
+        $key = $prefix . $key;
+        $val = encode_base64($val) if $base64;
+        $self->{portalHiddenFormValues}->{$key} = $val;
     }
 }
 
-##@method public void getHiddenFormValue(string fieldname)
+## @method public void getHiddenFormValue(string fieldname, string prefix, boolean base64)
 # Get value into $self->{portalHiddenFormValues}.
-#@param $fieldname The existing field name which contains a value
-#@return string The associated value
+# @param fieldname The existing field name which contains a value
+# @param prefix Prefix of the field key
+# @param base64 Decode value from base64
+# @return string The associated value
 sub getHiddenFormValue {
-    my $self = shift;
-    my $key  = shift;
-    $key = 'lmhidden_' . $key;
+    my ( $self, $key, $prefix, $base64 ) = splice @_;
+
+    # Default values
+    $prefix = "lmhidden_" unless defined $prefix;
+    $base64 = 1           unless defined $base64;
+
+    $key = $prefix . $key;
+
+    # Get value
     if ( my $val = $self->param($key) ) {
-        return decode_base64($val);
+        $val = decode_base64($val) if $base64;
+        return $val;
     }
+
+    # No value found
     return undef;
+}
+
+## @method protected void clearHiddenFormValue(arrayref keys)
+# Clear values form stored hidden fields
+# Delete all keys if no keys provided
+# @param keys Array reference of keys
+# @return nothing
+sub clearHiddenFormValues {
+    my ( $self, $keys ) = splice @_;
+
+    unless ( defined $keys ) {
+        delete $self->{portalHiddenFormValues};
+    }
+    else {
+        delete $self->{portalHiddenFormValues}->{$_} foreach (@$keys);
+    }
+
+    return;
 }
 
 ##@method public string buildHiddenForm()
 # Return an HTML representation of hidden values.
-#@return string
+# @return HTML code
 sub buildHiddenForm {
     my $self = shift;
     my @keys = keys %{ $self->{portalHiddenFormValues} };
     my $val  = '';
+
     foreach (@keys) {
+
+        # Check XSS attacks
+        if ( $self->{portalHiddenFormValues}->{$_} =~
+            m/(?:\0|<|'|"|`|\%(?:00|25|3C|22|27|2C))/ )
+        {
+            $self->lmLog(
+                "XSS attack detected (param: $_ | value: "
+                  . $self->{portalHiddenFormValues}->{$_} . ")",
+                "warn"
+            );
+            next;
+        }
+
+        # Build hidden input HTML code
         $val .=
             '<input type="hidden" name="' 
           . $_ 
@@ -449,6 +501,7 @@ sub buildHiddenForm {
           . '" value="'
           . $self->{portalHiddenFormValues}->{$_} . '" />';
     }
+
     return $val;
 }
 
@@ -1561,7 +1614,22 @@ sub autoRedirect {
       if ( $self->{mustRedirect} or $self->info() );
 
     # Display info before redirecting
-    return PE_INFO if ( $self->info() );
+    if ( $self->info() ) {
+        $self->{infoFormMethod} = "get";
+        my ($query_string) = ( $self->{urldc} =~ /.+?\?(.+)/ );
+        if ($query_string) {
+            $self->lmLog(
+                "Transfrom query string $query_string into hidden form values",
+                'debug'
+            );
+            my $query      = CGI->new($query_string);
+            my $formFields = $query->Vars;
+            foreach ( keys %$formFields ) {
+                $self->setHiddenFormValue( $_, $formFields->{$_}, "", 0 );
+            }
+        }
+        return PE_INFO;
+    }
 
     # Redirection should be made if
     #  - urldc defined
@@ -1633,15 +1701,19 @@ sub returnSOAPMessage {
 sub autoPost {
     my $self = shift;
 
-    # Display info before redirecting
-    if ( $self->info() ) {
-        $self->{infoFormMethod} = "post";
-        return PE_INFO;
-    }
-
     # Get URL and Form fields
     my $url        = $self->{postUrl};
     my $formFields = $self->{postFields};
+
+    # Display info before redirecting
+    if ( $self->info() ) {
+        $self->{infoFormMethod} = "post";
+        $self->{urldc}          = $url;
+        foreach ( keys %$formFields ) {
+            $self->setHiddenFormValue( $_, $formFields->{$_}, "", 0 );
+        }
+        return PE_INFO;
+    }
 
     # Quit if no URL
     $self->quit() unless $self->{postUrl};
