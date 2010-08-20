@@ -457,7 +457,7 @@ sub getHiddenFormValue {
 # Delete all keys if no keys provided
 # @param keys Array reference of keys
 # @return nothing
-sub clearHiddenFormValues {
+sub clearHiddenFormValue {
     my ( $self, $keys ) = splice @_;
 
     unless ( defined $keys ) {
@@ -1616,6 +1616,7 @@ sub autoRedirect {
     # Display info before redirecting
     if ( $self->info() ) {
         $self->{infoFormMethod} = "get";
+        $self->clearHiddenFormValue();
         my ($query_string) = ( $self->{urldc} =~ /.+?\?(.+)/ );
         if ($query_string) {
             $self->lmLog(
@@ -1708,6 +1709,7 @@ sub autoPost {
     # Display info before redirecting
     if ( $self->info() ) {
         $self->{infoFormMethod} = "post";
+        $self->clearHiddenFormValue();
         $self->{urldc}          = $url;
         foreach ( keys %$formFields ) {
             $self->setHiddenFormValue( $_, $formFields->{$_}, "", 0 );
