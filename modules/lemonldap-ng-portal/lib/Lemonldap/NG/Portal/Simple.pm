@@ -1406,10 +1406,7 @@ sub removeOther {
             ),
             @{ $self->{otherSessions} }
           )
-          . "<p class=\"removeOther\"><a href=\"$self->{portal}?removeOther=1\" onclick=\"_go=0\">"
-          . &Lemonldap::NG::Portal::_i18n::msg( PM_REMOVE_OTHER_SESSIONS,
-            $ENV{HTTP_ACCEPT_LANGUAGE} )
-          . "</a></p>"
+          . $self->_mkRemoveOtherLink()
     ) if ( $self->{notifyOther} and @{ $self->{otherSessions} } );
     PE_OK;
 }
@@ -1436,6 +1433,24 @@ sub _mkDateIpArray {
     }
     $tmp .= '</tbody></table>';
     return $tmp;
+}
+
+## @method private string _mkRemoveOtherLink()
+# Build the removeOther link
+# @return removeOther link in HTML code
+sub _mkRemoveOtherLink {
+    my $self = shift;
+
+    my $link =
+        $self->{portal}
+      . "?removeOther=1&infoFormMethod="
+      . $self->{infoFormMethod} . "&url="
+      . encode_base64( $self->{urldc} );
+
+    return "<p class=\"removeOther\"><a href=\"$link\" onclick=\"_go=0\">"
+      . &Lemonldap::NG::Portal::_i18n::msg( PM_REMOVE_OTHER_SESSIONS,
+        $ENV{HTTP_ACCEPT_LANGUAGE} )
+      . "</a></p>";
 }
 
 ##@apmethod int grantSession()
