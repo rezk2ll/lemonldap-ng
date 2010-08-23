@@ -31,6 +31,7 @@ $ENV{SCRIPT_FILENAME} = '/tmp/test.pl';
 $ENV{REQUEST_METHOD}  = 'GET';
 $ENV{REQUEST_URI}     = '/';
 $ENV{QUERY_STRING}    = '';
+$ENV{REMOTE_ADDR}     = '127.0.0.1';
 
 ok(
     $p = Lemonldap::NG::Portal::Simple->new(

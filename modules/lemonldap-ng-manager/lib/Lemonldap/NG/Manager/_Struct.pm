@@ -276,8 +276,6 @@ sub struct {
                       || $self->defaultConf()->{userDB};
                     my $pdb = $self->conf->{passwordDB}
                       || $self->defaultConf()->{passwordDB};
-                    my $idb = $self->conf->{issurDB}
-                      || $self->defaultConf()->{issuerDB};
                     $auth = lc($auth);
                     $udb  = lc($udb);
                     $pdb  = lc($pdb);
@@ -286,9 +284,8 @@ sub struct {
                     foreach my $mod (
                         (
                             $auth,
-                            ( $udb ne ( $auth or $pdb or $idb ) ? $udb : () ),
-                            ( $pdb ne ( $auth or $udb or $idb ) ? $pdb : () ),
-                            ( $idb ne ( $auth or $udb or $pdb ) ? $idb : () ),
+                            ( $udb ne ( $auth or $pdb ) ? $udb : () ),
+                            ( $pdb ne ( $auth or $udb ) ? $pdb : () ),
                         )
                       )
                     {
@@ -323,7 +320,16 @@ sub struct {
                 authentication => 'text:/authentication:authParams:authParams',
                 userDB         => 'text:/userDB:authParams:userdbParams',
                 passwordDB => 'text:/passwordDB:authParams:passworddbParams',
-                issuerDB   => 'text:/issuerDB:authParams:issuerdbParams',
+
+                # IssuerDB branch
+                issuerDB => {
+                    _nodes       => [qw(issuerDBSAML)],
+                    issuerDBSAML => {
+                        _nodes => [qw(issuerDBSAMLPath issuerDBSAMLRule)],
+                        issuerDBSAMLPath => 'text:/issuerDBSAMLPath',
+                        issuerDBSAMLRule => 'text:/issuerDBSAMLRule',
+                    },
+                },
 
                 # LDAP
                 ldapParams => {
@@ -578,12 +584,10 @@ sub struct {
                 },
 
                 security => {
-                    _nodes =>
-                      [qw(userControl portalForceAuthn issuerActivationRule)],
+                    _nodes      => [qw(userControl portalForceAuthn)],
                     userControl => 'text:/userControl:userControl:text',
                     portalForceAuthn =>
                       'bool:/portalForceAuthn:portalForceAuthn:bool',
-                    issuerActivationRule => 'textarea:/issuerActivationRule',
                 },
 
                 redirection => {
@@ -1009,7 +1013,8 @@ sub testStruct {
             },
         },
         https                => $boolean,
-        issuerActivationRule => {
+        issuerDBSAMLPath => $testNotDefined,
+        issuerDBSAMLRule => {
             test     => $perlExpr,
             warnTest => sub {
                 my $e = shift;
@@ -1017,7 +1022,6 @@ sub testStruct {
                 1;
             },
         },
-        issuerDB => $testNotDefined,
         ldapBase => {
             test    => qr/^(?:\w+=.*|)$/,
             msgFail => 'Bad LDAP base',
@@ -1353,7 +1357,8 @@ sub defaultConf {
         domain          => 'example.com',
         globalStorage   => 'Apache::Session::File',
         https         => '0',
-        issuerDB      => 'Null',
+        issuerDBSAMLPath    => '^/saml/',
+        issuerDBSAMLRule    => '0',
         ldapBase      => 'dc=example,dc=com',
         ldapPort      => '389',
         ldapPwdEnc    => 'utf-8',

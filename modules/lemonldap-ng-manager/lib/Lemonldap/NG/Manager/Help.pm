@@ -48,11 +48,12 @@ sub help_authParams_en {
     print <<EOT;
 <h3>Modules</h3>
 
-<p>LemonLDAP::NG use three types of modules:</p>
+<p>LemonLDAP::NG use four types of modules:</p>
 <ul>
  <li><tt>auhtentication</tt>: how authentication is done,</li>
  <li><tt>userDB</tt>: how user information for session are collected,</li>
  <li><tt>passwordDB</tt>: how password is changed.</li>
+ <li><tt>issuerDB</tt>: how use local authentication trough other protocols.</li>
 </ul>
 
 <h4>Authentication module</h4>
@@ -94,7 +95,12 @@ sub help_authParams_en {
 <ul>
  <li><tt>LDAP</tt>: change password in an LDAP directory,</li>
  <li><tt>DBI</tt>: change password in a database,</li>
- <li><tt>None</tt>: do nothing,</li>
+ <li><tt>None</tt>: do nothing.</li>
+</ul>
+
+<h4>Issuer module</h4>
+<ul>
+ <li><tt>SAML</tt>: Manage SAML 2.0 SSO, SLO and attribute requests.</li>
 </ul>
 
 EOT
@@ -110,6 +116,7 @@ sub help_authParams_fr {
  <li><tt>auhtentication</tt> : comment est effectuée l'authentification,</li>
  <li><tt>userDB</tt> : comment sont collectées les informations de l'utilisateur pour la session,</li>
  <li><tt>passwordDB</tt> : comment est changé le mot de passe.</li>
+ <li><tt>issuerDB</tt> : comment utiliser l'authentification local à travers d'autres protocoles.</li>
 </ul>
 
 <h4>Module d'authentification</h4>
@@ -151,7 +158,12 @@ sub help_authParams_fr {
 <ul>
  <li><tt>LDAP</tt> : changement du mot de passe dans un annuaire LDAP,</li>
  <li><tt>DBI</tt> : changement du mot de passe dans une base de données,</li>
- <li><tt>None</tt> : pas de changement de mot de passe,</li>
+ <li><tt>None</tt> : pas de changement de mot de passe.</li>
+</ul>
+
+<h4>Module de fournisseur d'identité</h4>
+<ul>
+ <li><tt>SAML</tt> : gère les requêtes SSO, SLO et demande d'attributs SAML 2.0. </li>
 </ul>
 
 EOT

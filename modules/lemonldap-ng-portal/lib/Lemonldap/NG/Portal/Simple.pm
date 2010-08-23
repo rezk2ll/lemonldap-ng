@@ -204,8 +204,8 @@ sub new {
           or $self->param('logout')
     ) ? 1 : 0;
 
-    # Push authentication/userDB/passwordDb/issuerDB modules in @ISA
-    foreach my $type (qw(authentication userDB passwordDB issuerDB)) {
+    # Push authentication/userDB/passwordDB modules in @ISA
+    foreach my $type (qw(authentication userDB passwordDB)) {
         my $module_name = 'Lemonldap::NG::Portal::';
         my $db_type     = $type;
         my $db_name     = $self->{$db_type};
@@ -214,7 +214,6 @@ sub new {
         $db_type =~ s/authentication/Auth/;
         $db_type =~ s/userDB/UserDB/;
         $db_type =~ s/passwordDB/PasswordDB/;
-        $db_type =~ s/issuerDB/IssuerDB/;
 
         # Full module name
         $module_name .= $db_type . $db_name;
@@ -233,6 +232,71 @@ sub new {
             my %h = split( /\s*[=;]\s*/, $db_name ) if ($db_name);
             %$self = ( %h, %$self );
         }
+    }
+
+    # Check issuerDB path to load the correct issuerDB module
+    foreach my $issuerDBtype (qw(SAML OpenID)) {
+        my $module_name = 'Lemonldap::NG::Portal::IssuerDB' . $issuerDBtype;
+
+        $self->lmLog( "[IssuerDB activation] Try issuerDB module $issuerDBtype",
+            'debug' );
+
+        # Check the path
+        my $path = $self->{ "issuerDB" . $issuerDBtype . "Path" };
+        if ( defined $path ) {
+            $self->lmLog( "[IssuerDB activation] Found path $path", 'debug' );
+
+            # Get current path
+            my $url_path = $self->url( -absolute => 1 );
+            $self->lmLog(
+                "[IssuerDB activation] Path of current request is $url_path",
+                'debug' );
+
+            # Match regular expression
+            if ( $url_path =~ m#$path# ) {
+                $self->abort( "Configuration error",
+                    "Unable to load $module_name" )
+                  unless $self->loadModule($module_name);
+
+                # Remember loaded module
+                $self->{_activeIssuerDB} = $issuerDBtype;
+                $self->lmLog(
+"[IssuerDB activation] IssuerDB module $issuerDBtype loaded",
+                    'debug'
+                );
+                last;
+
+            }
+            else {
+                $self->lmLog(
+                    "[IssuerDB activation] Path do not match, trying next",
+                    'debug' );
+                next;
+            }
+
+        }
+        else {
+            $self->lmLog( "[IssuerDB activation] No path defined", 'debug' );
+            next;
+        }
+
+    }
+
+    # Load default issuerDB module if none was choosed
+    unless ( $self->{_activeIssuerDB} ) {
+
+        # Manage old configuration format
+        my $db_type = $self->{'issuerDB'} || 'Null';
+
+        my $module_name = 'Lemonldap::NG::Portal::IssuerDB' . $db_type;
+
+        $self->abort( "Configuration error", "Unable to load $module_name" )
+          unless $self->loadModule($module_name);
+
+        # Remember loaded module
+        $self->{_activeIssuerDB} = $db_type;
+        $self->lmLog( "[IssuerDB activation] IssuerDB module $db_type loaded",
+            'debug' );
     }
 
     # Notifications
@@ -364,7 +428,6 @@ sub setDefaultValues {
       "[LemonLDAP::NG] Password reset confirmation";
     $self->{mailSessionKey}       ||= 'mail';
     $self->{mailUrl}              ||= $self->{portal} . "/mail.pl";
-    $self->{issuerDB}             ||= 'Null';
     $self->{multiValuesSeparator} ||= '; ';
     $self->{activeTimer} = 1 unless ( defined( $self->{activeTimer} ) );
     $self->{infoFormMethod}    ||= "get";
@@ -658,6 +721,45 @@ sub updateSession {
 
 }
 
+## @method void addSessionValue(string key, string value, string id)
+# Add a value into session key if not already present
+# @param key Session key
+# @param value Value to add
+# @param id optional Session identifier
+sub addSessionValue {
+    my ( $self, $key, $value, $id ) = splice @_;
+
+    # Mandatory parameters
+    return unless defined $key;
+    return unless defined $value;
+
+    # Get current key value
+    my $old_value = $self->{sessionInfo}->{$key};
+
+    # Split old values
+    if ( defined $old_value ) {
+        my @old_values = split /\Q$self->{multiValuesSeparator}\E/, $old_value;
+
+        # Do nothing if value already exists
+        foreach (@old_values) {
+            return if ( $_ eq $value );
+        }
+
+        # Add separator
+        $old_value .= $self->{multiValuesSeparator};
+    }
+    else {
+        $old_value = "";
+    }
+
+    # Store new value
+    my $new_value = $old_value . $value;
+    $self->updateSession( { $key => $new_value }, $id );
+
+    # Return
+    return;
+}
+
 ## @method string getFirstValue(string value)
 # Get the first value of a multivaluated session value
 # @param value the complete value
@@ -758,7 +860,7 @@ sub get_module {
     }
 
     if ( $type =~ /issuer/i ) {
-        return $self->{issuerDB};
+        return $self->{_activeIssuerDB};
     }
 
     return;
@@ -834,7 +936,7 @@ sub _deleteSession {
         }
     }
 
-    my $logged_user = $h->{ $self->{whatToTrace} };
+    my $logged_user = $h->{ $self->{whatToTrace} } || 'unknown';
 
     # Try to purge local cache
     # (if an handler is running on the same server)
@@ -1075,15 +1177,32 @@ sub controlExistingSession {
                 return PE_ERROR;
             }
 
-            # Call issuerDB logout
-            eval {
+            # Call issuerDB logout on each used issuerDBmodule
+            my $issuerDBList = $self->{sessionInfo}->{_issuerDB};
+            if ( defined $issuerDBList ) {
+                foreach my $issuerDBtype (
+                    split( /\Q$self->{multiValuesSeparator}\E/, $issuerDBList )
+                  )
+                {
+                    my $module_name =
+                      'Lemonldap::NG::Portal::IssuerDB' . $issuerDBtype;
+
+                    $self->lmLog(
+                        "Process logout for issuerDB module $issuerDBtype",
+                        'debug' );
+
+                    # Load current IssuerDB module
+                    unless ( $self->loadModule($module_name) ) {
+                        $self->lmLog( "Unable to load $module_name", 'error' );
+                        next;
+                    }
+
                 $self->{error} =
-                  $self->_subProcess(qw(issuerDBInit authInit issuerLogout));
-            };
-            if ($@) {
-                $self->lmLog( "Error when calling issuerLogout: $@", 'debug' );
+                      $self->_subProcess( $module_name . "::issuerDBInit",
+                        'authInit', $module_name . '::issuerLogout' );
+
+                }
             }
-            return $self->{error} if $self->{error} > 0;
 
             # Call authentication logout
             eval { $self->{error} = $self->_sub('authLogout'); };
@@ -1188,18 +1307,7 @@ sub existingSession {
     PE_DONE;
 }
 
-## @apmethod int issuerDBInit()
-# Set _issuerDB
-# call issuerDBInit in issuerDB* module
-# @return Lemonldap::NG::Portal constant
-sub issuerDBInit {
-    my $self = shift;
-
-    # Get the current issuer module
-    $self->{sessionInfo}->{_issuerDB} = $self->get_module("issuer");
-
-    return $self->SUPER::issuerDBInit();
-}
+# issuerDBInit(): must be implemented in IssuerDB* module
 
 # authInit(): must be implemented in Auth* module
 
@@ -1577,38 +1685,48 @@ sub checkNotification {
 }
 
 ## @apmethod int issuerForAuthUser()
-# Check IssuerDB activation rule and then call IssuerDB module method
+# Check IssuerDB activation rule
+# Register used module in user session
 # @return Lemonldap::NG::Portal constant
 sub issuerForAuthUser {
     my $self = shift;
 
-    # If no rule defined, it's ok
-    return $self->SUPER::issuerForAuthUser()
-      unless defined $self->{issuerActivationRule};
+    # User information
+    my $logged_user = $self->{sessionInfo}->{ $self->{whatToTrace} }
+      || 'unknown';
 
-    # Check activation rule
-    my $issuerActivationRule = $self->{issuerActivationRule};
-    $issuerActivationRule =~ s/\$(\w+)/\$self->{sessionInfo}->{$1}/g;
+    # Get active module
+    my $issuerDBtype = $self->get_module('issuer');
 
-    $self->lmLog( "Applying issuerActivationRule: $issuerActivationRule",
-        'debug' );
+    # Eval activation rule
+    my $rule = $self->{ 'issuerDB' . $issuerDBtype . 'Rule' };
 
-    unless ( $self->safe->reval($issuerActivationRule) ) {
+    if ( defined $rule ) {
+        $rule =~ s/\$(\w+)/\$self->{sessionInfo}->{$1}/g;
+
+        $self->lmLog( "Applying rule: $rule", 'debug' );
+
+        unless ( $self->safe->reval($rule) ) {
         $self->lmLog(
-            "User "
-              . $self->{sessionInfo}->{_user}
-              . " was not allowed to use IssuerDB module",
+                "User  $logged_user"
+                  . " was not allowed to use IssuerDB $issuerDBtype",
             'warn'
         );
+
         return PE_OK;
     }
 
+    }
+    else {
+        $self->lmLog( "No rule found for IssuerDB $issuerDBtype", 'debug' );
+    }
+
     $self->lmLog(
-        "User "
-          . $self->{sessionInfo}->{_user}
-          . " allowed to use IssuerDB module",
-        'debug'
-    );
+        "User  $logged_user" . " allowed to use IssuerDB $issuerDBtype",
+        'debug' );
+
+    # Register IssuerDB module in session
+    $self->addSessionValue( '_issuerDB', $issuerDBtype, $self->{id} );
 
     # Call IssuerDB module method
     return $self->SUPER::issuerForAuthUser();
