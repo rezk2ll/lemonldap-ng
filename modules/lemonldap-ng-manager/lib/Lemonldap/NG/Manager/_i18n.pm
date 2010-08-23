@@ -328,6 +328,7 @@ sub en {
         samlAdvanced                => 'Advanced',
         samlIdPResolveCookie        => 'IDP resolution cookie name',
         samlMetadataForceUTF8       => 'UTF8 metadata conversion',
+        samlUserDBIdentityKey       => 'SAML identity storage key',
         samlStorage                 => 'SAML sessions module name',
         samlStorageOptions          => 'SAML sessions module options',
     };
@@ -628,6 +629,7 @@ sub fr {
         samlAdvanced                => 'Avancé',
         samlIdPResolveCookie        => 'Nom du cookie de résolution IDP',
         samlMetadataForceUTF8       => 'Conversion des métadonnées en UTF8',
+        samlUserDBIdentityKey       => 'Clé de stockage de l\'identité SAML',
         samlStorage                 => 'Nom du module des session SAML',
         samlStorageOptions          => 'Options du module des sessions SAML',
     };

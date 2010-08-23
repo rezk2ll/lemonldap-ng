@@ -152,5 +152,32 @@ sub setGroups {
     PE_OK;
 }
 
+## @method boolean setUserDBValue(string key, string value)
+# Store a value in UserDB
+# @param key Key in user information
+# @param value Value to store
+# @return result
+sub setUserDBValue {
+    my ( $self, $key, $value ) = splice @_;
+
+    # Mandatory attributes
+    return 0 unless defined $key;
+
+    # Write in LDAP
+    $self->lmLog( "Replace $key attribute in LDAP with value $value", 'debug' );
+    my $modification =
+      $self->{ldap}->modify( $self->{dn}, replace => { $key => $value } );
+
+    # Check result
+    if ( $modification->code ) {
+        $self->lmLog(
+            "LDAP error " . $modification->code . ": " . $modification->error,
+            'error' );
+        return 0;
+    }
+
+    return 1;
+}
+
 1;
 

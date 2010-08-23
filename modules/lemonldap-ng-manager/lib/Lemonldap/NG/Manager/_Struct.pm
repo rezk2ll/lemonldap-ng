@@ -894,11 +894,12 @@ sub struct {
             # ADVANCED SAML PARAMETERS
             samlAdvanced => {
                 _nodes => [
-                    qw(samlIdPResolveCookie samlMetadataForceUTF8 samlStorage n:samlStorageOptions)
+                    qw(samlIdPResolveCookie samlMetadataForceUTF8 samlUserDBIdentityKey samlStorage n:samlStorageOptions)
                 ],
 
                 samlIdPResolveCookie  => 'text:/samlIdPResolveCookie',
                 samlMetadataForceUTF8 => 'bool:/samlMetadataForceUTF8',
+                samlUserDBIdentityKey => 'text:/samlUserDBIdentityKey',
                 samlStorage           => 'text:/samlStorage',
                 samlStorageOptions    => {
                     _nodes => ['hash:/samlStorageOptions'],
@@ -1273,6 +1274,7 @@ sub testStruct {
         samlServicePublicKeyEnc                              => $testNotDefined,
         samlIdPResolveCookie                                 => $testNotDefined,
         samlMetadataForceUTF8                                => $boolean,
+        samlUserDBIdentityKey                                => $testNotDefined,
         samlStorage                                          => {
             test    => qr/^[\w:]*$/,
             msgFail => 'Bad module name',

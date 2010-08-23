@@ -1615,10 +1615,42 @@ sub issuerForAuthUser {
 
             # Save Identity and Session
             if ( $login->is_identity_dirty ) {
+
+                # Update session
                 $self->lmLog( "Save Lasso identity in session", 'debug' );
                 $self->updateSession(
                     { _lassoIdentityDump => $login->get_identity->dump },
                     $session_id );
+
+                # Update UserDB
+                if ( $self->{samlUserDBIdentityKey} ) {
+                    $self->lmLog( "Save Lasso identity in UserDB", 'debug' );
+                    my $result;
+                    eval {
+                        $result = $self->setUserDBValue(
+                            $self->{samlUserDBIdentityKey},
+                            $login->get_identity->dump
+                        );
+                    };
+                    if ($@) {
+                        $self->lmLog(
+                            "Error when storing identity dump in UserDB: $@",
+                            'error' );
+                    }
+                    if ( !$result ) {
+                        $self->lmLog(
+"Unknown error when storing identity dump in UserDB",
+                            'error'
+                        );
+                    }
+                }
+                else {
+                    $self->lmLog(
+"Lasso identity not saved in UserDB, please configure samlUserDBIdentityKey",
+                        'info'
+                    );
+                }
+
             }
 
             if ( $login->is_session_dirty ) {
