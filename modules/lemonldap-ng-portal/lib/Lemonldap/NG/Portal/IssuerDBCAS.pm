@@ -11,7 +11,7 @@ use Lemonldap::NG::Portal::Simple;
 our $VERSION = '0.01';
 
 ## @method void issuerDBInit()
-# TODO
+# Nothing to do
 # @return Lemonldap::NG::Portal error code
 sub issuerDBInit {
     my $self = shift;
@@ -19,18 +19,36 @@ sub issuerDBInit {
 }
 
 ## @apmethod int issuerForUnAuthUser()
-# TODO
+# Manage CAS request for unauthenticated user
 # @return Lemonldap::NG::Portal error code
 sub issuerForUnAuthUser {
     my $self = shift;
+
+    # CAS URLs
+    my $cas_login_url           = $self->{portal} . '/cas/login';
+    my $cas_logout_url          = $self->{portal} . '/cas/logout';
+    my $cas_validate_url        = $self->{portal} . '/cas/validate';
+    my $cas_serviceValidate_url = $self->{portal} . '/cas/serviceValidate';
+    my $cas_proxyValidate_url   = $self->{portal} . '/cas/proxyValidate';
+    my $cas_proxy_url           = $self->{portal} . '/cas/proxy';
+
     PE_OK;
 }
 
 ## @apmethod int issuerForAuthUser()
-# TODO
+# Manage CAS request for unauthenticated user
 # @return Lemonldap::NG::Portal error code
 sub issuerForAuthUser {
     my $self   = shift;
+
+    # CAS URLs
+    my $cas_login_url           = $self->{portal} . '/cas/login';
+    my $cas_logout_url          = $self->{portal} . '/cas/logout';
+    my $cas_validate_url        = $self->{portal} . '/cas/validate';
+    my $cas_serviceValidate_url = $self->{portal} . '/cas/serviceValidate';
+    my $cas_proxyValidate_url   = $self->{portal} . '/cas/proxyValidate';
+    my $cas_proxy_url           = $self->{portal} . '/cas/proxy';
+
     PE_OK;
 }
 
@@ -38,6 +56,7 @@ sub issuerForAuthUser {
 # Do nothing
 # @return Lemonldap::NG::Portal error code
 sub issuerLogout {
+    my $self = shift;
     PE_OK;
 }
 
@@ -62,7 +81,7 @@ http://www.jasig.org/cas/protocol
 
 =head1 AUTHOR
 
-Clement OUDOT, E<lt>clement@oodo.,etE<gt>
+Clement OUDOT, E<lt>clement@oodo.netE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
