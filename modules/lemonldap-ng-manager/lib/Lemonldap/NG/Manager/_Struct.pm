@@ -323,11 +323,16 @@ sub struct {
 
                 # IssuerDB branch
                 issuerDB => {
-                    _nodes       => [qw(issuerDBSAML)],
+                    _nodes       => [qw(issuerDBSAML issuerDBCAS)],
                     issuerDBSAML => {
                         _nodes => [qw(issuerDBSAMLPath issuerDBSAMLRule)],
                         issuerDBSAMLPath => 'text:/issuerDBSAMLPath',
                         issuerDBSAMLRule => 'text:/issuerDBSAMLRule',
+                    },
+                    issuerDBCAS => {
+                        _nodes => [qw(issuerDBCASPath issuerDBCASRule)],
+                        issuerDBCASPath => 'text:/issuerDBCASPath',
+                        issuerDBCASRule => 'text:/issuerDBCASRule',
                     },
                 },
 
@@ -1023,6 +1028,15 @@ sub testStruct {
                 1;
             },
         },
+        issuerDBCASPath => $testNotDefined,
+        issuerDBCASRule => {
+            test     => $perlExpr,
+            warnTest => sub {
+                my $e = shift;
+                return ( 0, $assignMsg ) if ( $e =~ $assignTest );
+                1;
+            },
+        },
         ldapBase => {
             test    => qr/^(?:\w+=.*|)$/,
             msgFail => 'Bad LDAP base',
@@ -1361,6 +1375,8 @@ sub defaultConf {
         https         => '0',
         issuerDBSAMLPath    => '^/saml/',
         issuerDBSAMLRule    => '0',
+        issuerDBCASPath     => '^/cas/',
+        issuerDBCASRule     => '0',
         ldapBase      => 'dc=example,dc=com',
         ldapPort      => '389',
         ldapPwdEnc    => 'utf-8',
