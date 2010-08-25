@@ -465,6 +465,10 @@ sub setDefaultValues {
     $self->{samlStorageOptions}   ||= $self->{globalStorageOptions};
     $self->{samlMetadataForceUTF8} = 1
       unless ( defined( $self->{samlMetadataForceUTF8} ) );
+
+    # CAS
+    $self->{casStorage}        ||= $self->{globalStorage};
+    $self->{casStorageOptions} ||= $self->{globalStorageOptions};
 }
 
 ## @method protected void setHiddenFormValue(string fieldname, string value, string prefix, boolean base64)
