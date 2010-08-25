@@ -35,6 +35,31 @@ sub getCasSession {
     return \%h;
 }
 
+## @method void returnCasValidateError()
+# Return an error for CAS VALIDATE request
+# @return nothing
+sub returnCasValidateError {
+    my ($self) = splice @_;
+
+    print $self->header();
+    print "no\n\n";
+
+    $self->quit();
+}
+
+## @method void returnCasValidateSuccess(string username)
+# Return success for CAS VALIDATE request
+# @param username User name
+# @return nothing
+sub returnCasValidateSuccess {
+    my ( $self, $username ) = splice @_;
+
+    print $self->header();
+    print "yes\n$username\n";
+
+    $self->quit();
+}
+
 __END__
 
 =head1 NAME
@@ -57,6 +82,14 @@ This module contains common methods for CAS
 
 Try to recover the CAS session corresponding to id and return session datas
 If id is set to undef, return a new session
+
+=head2 returnCasValidateError
+
+Return an error for CAS VALIDATE request
+
+=head2 returnCasValidateSuccess
+
+Return success for CAS VALIDATE request
 
 =head1 SEE ALSO
 

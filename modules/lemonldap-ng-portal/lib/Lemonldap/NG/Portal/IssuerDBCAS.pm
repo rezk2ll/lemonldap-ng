@@ -59,12 +59,111 @@ sub issuerForUnAuthUser {
 
         # Gateway
         # Authentication must use non-interactive mean
-        # TODO
         if ( $gateway eq 'true' ) {
-            $self->lmLog( "Gateway authentication not managed", 'error' );
-            return PE_ERROR;
+
+            # TODO
+            $self->lmLog( "Gateway authentication not managed", 'warn' );
+
         }
 
+    }
+
+    # 2. LOGOUT
+    if ( $url =~ /\Q$cas_logout_url\E/io ) {
+
+        $self->lmLog( "URL $url detected as an CAS LOGOUT URL", 'debug' );
+
+        # GET parameters
+        my $logout_url = $self->param('url');
+
+        if ($logout_url) {
+
+            # We should display a link to the provided URL
+            # TODO
+            $self->lmLog( "Return URL not managed", 'warn' );
+        }
+
+        return PE_LOGOUT_OK;
+
+    }
+
+    # 3. VALIDATE [CAS 1.0]
+    if ( $url =~ /\Q$cas_validate_url\E/io ) {
+
+        $self->lmLog( "URL $url detected as an CAS VALIDATE URL", 'debug' );
+
+        # GET parameters
+        my $service = $self->param('service');
+        my $ticket  = $self->param('ticket');
+        my $renew   = $self->param('renew');
+
+        # Required parameters: service and ticket
+        unless ( $service and $ticket ) {
+            $self->lmLog( "Service and Ticket parameters required", 'error' );
+            $self->returnCasValidateError();
+        }
+
+        # Get CAS session corresponding to ticket
+        $ticket =~ s/^ST-//;
+
+        my $casServiceSession = $self->getCasSession($ticket);
+
+        unless ($casServiceSession) {
+            $self->lmLog( "Service ticket session $ticket not found", 'error' );
+            untie %$casServiceSession;
+            $self->returnCasValidateError();
+        }
+
+        $self->lmLog( "Service ticket session $ticket found", 'debug' );
+
+        # Check service
+        unless ( $service eq $casServiceSession->{service} ) {
+            $self->lmLog(
+                "Submitted service $service does not match initial service "
+                  . $casServiceSession->{service},
+                'error'
+            );
+            untie %$casServiceSession;
+            $self->returnCasValidateError();
+        }
+
+        $self->lmLog( "Submitted service $service math initial servce",
+            'debug' );
+
+        # Check renew
+        if ( $renew eq 'true' ) {
+
+            # We should check the ST was delivered with primary credentials
+            # TODO
+            $self->lmLog( "Renew parameter not managed", 'warn' );
+        }
+
+        # Open local session
+        my $localSession =
+          $self->getApacheSession( $casServiceSession->{id}, 1 );
+
+        unless ($localSession) {
+            $self->lmLog(
+                "Local session " . $casServiceSession->{id} . " notfound",
+                'error' );
+            untie %$casServiceSession;
+            $self->returnCasValidateError();
+        }
+
+        # Get username
+        my $username = $localSession->{ $self->{whatToTrace} };
+
+        $self->lmLog( "Get username $username", 'debug' );
+
+        # Close sessions
+        untie %$casServiceSession;
+        untie %$localSession;
+
+        # Return success message
+        $self->returnCasValidateSuccess($username);
+
+        # We should not be there
+        return PE_ERROR;
     }
 
     PE_OK;
@@ -149,6 +248,47 @@ sub issuerForAuthUser {
         $self->{urldc} = $service_url;
 
         return $self->_subProcess(qw(autoRedirect));
+    }
+
+    # 2. LOGOUT
+    if ( $url =~ /\Q$cas_logout_url\E/io ) {
+
+        $self->lmLog( "URL $url detected as an CAS LOGOUT URL", 'debug' );
+
+        # GET parameters
+        my $logout_url = $self->param('url');
+
+        if ($logout_url) {
+
+            # We should display a link to the provided URL
+            # TODO
+        }
+
+        # Delete linked CAS sessions
+        # TODO
+
+        # Delete local session
+        unless (
+            $self->_deleteSession( $self->getApacheSession( $session_id, 1 ) ) )
+        {
+            $self->lmLog( "Fail to delete session $session_id ", 'error' );
+        }
+
+        return PE_LOGOUT_OK;
+
+    }
+
+    # 3. VALIDATE [CAS 1.0]
+    if ( $url =~ /\Q$cas_validate_url\E/io ) {
+
+        $self->lmLog( "URL $url detected as an CAS VALIDATE URL", 'debug' );
+
+        # This URL is not called by authenticated users
+        $self->lmLog(
+            "CAS VALIDATE URL called by authenticated user, ignore it",
+            'info' );
+
+        return PE_OK;
     }
 
     PE_OK;
