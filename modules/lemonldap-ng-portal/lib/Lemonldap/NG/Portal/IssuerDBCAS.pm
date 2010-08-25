@@ -103,14 +103,21 @@ sub issuerForUnAuthUser {
             $self->returnCasValidateError();
         }
 
+        $self->lmLog(
+            "Get validate request with ticket $ticket for service $service",
+            'debug' );
+
         # Get CAS session corresponding to ticket
-        $ticket =~ s/^ST-//;
+        unless ( $ticket =~ s/^ST-// ) {
+            $self->lmLog( "Provided ticket is not a service ticket (ST)",
+                'error' );
+            $self->returnCasValidateError();
+        }
 
         my $casServiceSession = $self->getCasSession($ticket);
 
         unless ($casServiceSession) {
             $self->lmLog( "Service ticket session $ticket not found", 'error' );
-            untie %$casServiceSession;
             $self->returnCasValidateError();
         }
 
@@ -192,6 +199,9 @@ sub issuerForAuthUser {
     # Session ID
     my $session_id = $self->{sessionInfo}->{_session_id} || $self->{id};
 
+    # Session creation timestamp
+    my $time = $self->{sessionInfo}->{_utime} || time();
+
     # 1. LOGIN
     if ( $url =~ /\Q$cas_login_url\E/io ) {
 
@@ -229,6 +239,7 @@ sub issuerForAuthUser {
         $casServiceSession->{type}    = 'casService';
         $casServiceSession->{service} = $service;
         $casServiceSession->{id}      = $session_id;
+        $casServiceSession->{_utime}  = $time;
 
         my $casServiceSessionID = $casServiceSession->{_session_id};
         my $casServiceTicket    = "ST-" . $casServiceSessionID;
@@ -244,6 +255,8 @@ sub issuerForAuthUser {
             ? $service .= '&ticket=' . $casServiceTicket
             : $service .= '?ticket=' . $casServiceTicket
         );
+
+        $self->lmLog( "Redirect user to $service_url", 'debug' );
 
         $self->{urldc} = $service_url;
 
@@ -283,7 +296,7 @@ sub issuerForAuthUser {
 
         $self->lmLog( "URL $url detected as an CAS VALIDATE URL", 'debug' );
 
-        # This URL is not called by authenticated users
+        # This URL must not be called by authenticated users
         $self->lmLog(
             "CAS VALIDATE URL called by authenticated user, ignore it",
             'info' );
