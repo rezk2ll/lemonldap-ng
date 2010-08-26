@@ -37,6 +37,7 @@ example/AuthLA/tpl/themes/federid/msg-std.png
 example/AuthLA/tpl/themes/federid/page-bg.png
 example/AuthLA/tpl/themes/federid/sso.css
 example/AuthLA/tpl/themes/federid/wui.css
+example/cas.pl
 example/error.pl
 example/index.pl
 example/index_simple.pl

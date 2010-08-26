@@ -80,7 +80,7 @@ sub deleteCasSecondarySessions {
             # Get session
             $self->lmLog( "Retrieve CAS session $cas_session", 'debug' );
 
-            my $casSessionInfo = $self->getSamlSession($cas_session);
+            my $casSessionInfo = $self->getCasSession($cas_session);
 
             # Delete session
             eval { tied(%$casSessionInfo)->delete() };
