@@ -187,6 +187,9 @@ sub issuerForUnAuthUser {
         my $pgtUrl  = $self->param('pgtUrl');
         my $renew   = $self->param('renew');
 
+        # PGTIOU
+        my $casProxyGrantingTicketIOU;
+
         # Required parameters: service and ticket
         unless ( $service and $ticket ) {
             $self->lmLog( "Service and Ticket parameters required", 'error' );
@@ -246,9 +249,74 @@ sub issuerForUnAuthUser {
         # Proxy granting ticket
         if ($pgtUrl) {
 
+            # Create a proxy granting ticket
+            $self->lmLog(
+                "Create a CAS proxy granting ticket for service $service",
+                'debug' );
+
+            my $casProxyGrantingSession = $self->getCasSession();
+
+            if ($casProxyGrantingSession) {
+
+                $casProxyGrantingSession->{type}    = 'casProxyGranting';
+                $casProxyGrantingSession->{service} = $service;
+                $casProxyGrantingSession->{_cas_id} =
+                  $casServiceSession->{_cas_id};
+                $casProxyGrantingSession->{_utime} =
+                  $casServiceSession->{_utime};
+
+                my $casProxyGrantingSessionID =
+                  $casProxyGrantingSession->{_session_id};
+                my $casProxyGrantingTicket =
+                  "TGT-" . $casProxyGrantingSessionID;
+
+                untie %$casProxyGrantingSession;
+
+                $self->lmLog(
+"CAS proxy granting session $casProxyGrantingSessionID created",
+                    'debug'
+                );
+
+                # Generate the proxy granting ticket IOU
+                my $tmpCasSession = $self->getCasSession();
+
+                if ($tmpCasSession) {
+
+                    $casProxyGrantingTicketIOU =
+                      "PGTIOU-" . $tmpCasSession->{_session_id};
+                    $self->deleteCasSession($tmpCasSession);
+                $self->lmLog(
+"Generate proxy granting ticket IOU $casProxyGrantingTicketIOU",
+                    'debug'
+                );
+
             # Request pgtUrl
-            # TODO
-            $self->lmLog( "PgtUrl parameter not managed", 'warn' );
+                if (
+                    $self->callPgtUrl(
+                            $pgtUrl,
+                            $casProxyGrantingTicketIOU,
+                        $casProxyGrantingTicket
+                    )
+                  )
+                {
+                    $self->lmLog(
+                        "Proxy granting URL $pgtUrl called with success",
+                        'debug' );
+                }
+                else {
+                        $self->lmLog(
+                            "Error calling proxy granting URL $pgtUrl",
+                        'warn' );
+                    $casProxyGrantingTicketIOU = undef;
+                }
+                }
+
+            }
+            else {
+                $self->lmLog(
+                    "Error in proxy granting ticket management, bypass it",
+                    'warn' );
+            }
         }
 
         # Open local session
@@ -275,7 +343,8 @@ sub issuerForUnAuthUser {
         untie %$localSession;
 
         # Return success message
-        $self->returnCasServiceValidateSuccess($username);
+        $self->returnCasServiceValidateSuccess( $username,
+            $casProxyGrantingTicketIOU );
 
         # We should not be there
         return PE_ERROR;

@@ -6,6 +6,7 @@
 package Lemonldap::NG::Portal::_CAS;
 
 use strict;
+use LWP::UserAgent;
 
 our $VERSION = '0.01';
 
@@ -88,12 +89,13 @@ sub returnCasServiceValidateError {
     $self->quit();
 }
 
-## @method void returnCasServiceValidateSuccess(string username)
+## @method void returnCasServiceValidateSuccess(string username, string pgtIou)
 # Return success for CAS SERVICE VALIDATE request
 # @param username User name
+# @param pgtIou Proxy granting ticket IOU
 # @return nothing
 sub returnCasServiceValidateSuccess {
-    my ( $self, $username ) = splice @_;
+    my ( $self, $username, $pgtIou ) = splice @_;
 
     $self->lmLog( "Return CAS service validate success with username $username",
         'debug' );
@@ -102,6 +104,12 @@ sub returnCasServiceValidateSuccess {
     print "<cas:serviceResponse xmlns:cas='http://www.yale.edu/tp/cas'>\n";
     print "\t<cas:authenticationSuccess>\n";
     print "\t\t<cas:user>$username</cas:user>\n";
+    if ( defined $pgtIou ) {
+        $self->lmLog( "Add proxy granting ticket $pgtIou in response",
+            'debug' );
+        print
+          "\t\t<cas:proxyGrantingTicket>$pgtIou</cas:proxyGrantingTicket>\n";
+    }
     print "\t</cas:authenticationSuccess>\n";
     print "</cas:serviceResponse>\n";
 
@@ -172,6 +180,35 @@ sub deleteCasSession {
     return 1;
 }
 
+## @method boolean callPgtUrl(string pgtUrl, string pgtIou, string pgtId)
+# Call proxy granting URL on CAS client
+# @param pgtUrl Proxy granting URL
+# @param pgtIou Proxy granting ticket IOU
+# @param pgtId Proxy granting ticket
+# @return result
+sub callPgtUrl {
+    my ( $self, $pgtUrl, $pgtIou, $pgtId ) = splice @_;
+
+    # LWP User Agent
+    my $ua = new LWP::UserAgent;
+    push @{ $ua->requests_redirectable }, 'POST';
+    $ua->env_proxy();
+
+    # Build URL
+    my $url = $pgtUrl;
+    $url .= ( $pgtUrl =~ /\?/ ? '&' : '?' );
+    $url .= "pgtIou=$pgtIou&pgtId=$pgtId";
+
+    $self->lmLog( "Call URL $url", 'debug' );
+
+    # GET URL
+    my $response = $ua->get($url);
+
+    # Return result
+    return $response->is_success();
+
+}
+
 1;
 
 __END__
@@ -220,6 +257,10 @@ Return success for CAS SERVICE VALIDATE request
 =head2 deleteCasSession
 
 Delete an opened CAS session
+
+=head2 callPgtUrl
+
+Call proxy granting URL on CAS client
 
 =head1 SEE ALSO
 
