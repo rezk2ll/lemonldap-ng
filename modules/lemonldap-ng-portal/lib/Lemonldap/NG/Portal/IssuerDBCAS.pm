@@ -176,9 +176,14 @@ sub issuerForUnAuthUser {
     }
 
     # 4. SERVICE VALIDATE [CAS 2.0]
-    if ( $url =~ /\Q$cas_serviceValidate_url\E/io ) {
+    # 5. PROXY VALIDATE [CAS 2.0]
+    if ( $url =~ /(\Q$cas_serviceValidate_url\E|\Q$cas_proxyValidate_url\E)/io )
+    {
 
-        $self->lmLog( "URL $url detected as an CAS SERVICE VALIDATE URL",
+        my $urlType =
+          ( $url =~ /\Q$cas_serviceValidate_url\E/ ? 'SERVICE' : 'PROXY' );
+
+        $self->lmLog( "URL $url detected as an CAS $urlType VALIDATE URL",
             'debug' );
 
         # GET parameters
@@ -198,27 +203,37 @@ sub issuerForUnAuthUser {
         }
 
         $self->lmLog(
-"Get service validate request with ticket $ticket for service $service",
+            "Get "
+              . lc($urlType)
+              . " validate request with ticket $ticket for service $service",
             'debug'
         );
 
         # Get CAS session corresponding to ticket
-        unless ( $ticket =~ s/^ST-// ) {
+        if ( $urlType eq 'SERVICE' and !( $ticket =~ s/^ST-// ) ) {
             $self->lmLog( "Provided ticket is not a service ticket (ST)",
                 'error' );
             $self->returnCasServiceValidateError( 'INVALID_TICKET',
                 'Provided ticket is not a service ticket' );
         }
+        elsif ( $urlType eq 'PROXY' and !( $ticket =~ s/^(P|S)T-// ) ) {
+            $self->lmLog(
+                "Provided ticket is not a service or proxy ticket ($1T)",
+                'error' );
+            $self->returnCasServiceValidateError( 'INVALID_TICKET',
+                'Provided ticket is not a service or proxy ticket' );
+        }
 
         my $casServiceSession = $self->getCasSession($ticket);
 
         unless ($casServiceSession) {
-            $self->lmLog( "Service ticket session $ticket not found", 'error' );
+            $self->lmLog( "$urlType ticket session $ticket not found",
+                'error' );
             $self->returnCasServiceValidateError( 'INVALID_TICKET',
                 'Ticket not found' );
         }
 
-        $self->lmLog( "Service ticket session $ticket found", 'debug' );
+        $self->lmLog( "$urlType ticket session $ticket found", 'debug' );
 
         # Check service
         unless ( $service eq $casServiceSession->{service} ) {
@@ -246,6 +261,9 @@ sub issuerForUnAuthUser {
             $self->lmLog( "Renew parameter not managed", 'warn' );
         }
 
+        # Proxies (for PROXY VALIDATE only)
+        my $proxies = $casServiceSession->{proxies};
+
         # Proxy granting ticket
         if ($pgtUrl) {
 
@@ -258,6 +276,7 @@ sub issuerForUnAuthUser {
 
             if ($casProxyGrantingSession) {
 
+                # PGT session
                 $casProxyGrantingSession->{type}    = 'casProxyGranting';
                 $casProxyGrantingSession->{service} = $service;
                 $casProxyGrantingSession->{_cas_id} =
@@ -265,10 +284,16 @@ sub issuerForUnAuthUser {
                 $casProxyGrantingSession->{_utime} =
                   $casServiceSession->{_utime};
 
+                # Trace proxies
+                $casProxyGrantingSession->{proxies} =
+                  (   $proxies
+                    ? $proxies . $self->{multiValuesSeparator} . $pgtUrl
+                    : $pgtUrl );
+
                 my $casProxyGrantingSessionID =
                   $casProxyGrantingSession->{_session_id};
                 my $casProxyGrantingTicket =
-                  "TGT-" . $casProxyGrantingSessionID;
+                  "PGT-" . $casProxyGrantingSessionID;
 
                 untie %$casProxyGrantingSession;
 
@@ -344,7 +369,81 @@ sub issuerForUnAuthUser {
 
         # Return success message
         $self->returnCasServiceValidateSuccess( $username,
-            $casProxyGrantingTicketIOU );
+            $casProxyGrantingTicketIOU, $proxies );
+
+        # We should not be there
+        return PE_ERROR;
+    }
+
+    # 6. PROXY [CAS 2.0]
+    if ( $url =~ /\Q$cas_proxy_url\E/io ) {
+
+        $self->lmLog( "URL $url detected as an CAS PROXY URL", 'debug' );
+
+        # GET parameters
+        my $pgt           = $self->param('pgt');
+        my $targetService = $self->param('targetService');
+
+        # Required parameters: pgt and targetService
+        unless ( $pgt and $targetService ) {
+            $self->lmLog( "Pgt and TargetService parameters required",
+                'error' );
+            $self->returnCasProxyError( 'INVALID_REQUEST',
+                'Missing mandatory parameters (pgt, targetService)' );
+        }
+
+        $self->lmLog(
+            "Get proxy request with ticket $pgt for service $targetService",
+            'debug' );
+
+        # Get CAS session corresponding to ticket
+        unless ( $pgt =~ s/^PGT-// ) {
+            $self->lmLog(
+                "Provided ticket is not a proxy granting ticket (PGT)",
+                'error' );
+            $self->returnCasProxyError( 'BAD_PGT',
+                'Provided ticket is not a proxy granting ticket' );
+        }
+
+        my $casProxyGrantingSession = $self->getCasSession($pgt);
+
+        unless ($casProxyGrantingSession) {
+            $self->lmLog( "Proxy granting ticket session $pgt not found",
+                'error' );
+            $self->returnCasProxyError( 'BAD_PGT', 'Ticket not found' );
+        }
+
+        $self->lmLog( "Proxy granting session $pgt found", 'debug' );
+
+        # Create a proxy ticket
+        $self->lmLog( "Create a CAS proxy ticket for service $targetService",
+            'debug' );
+
+        my $casProxySession = $self->getCasSession();
+
+        unless ($casProxySession) {
+            $self->lmLog( "Unable to create CAS proxy session", 'error' );
+            $self->returnCasProxyError( 'INTERNAL_ERROR',
+                'Error in proxy session management' );
+        }
+
+        $casProxySession->{type}    = 'casProxy';
+        $casProxySession->{service} = $targetService;
+        $casProxySession->{_cas_id} = $casProxyGrantingSession->{_cas_id};
+        $casProxySession->{_utime}  = $casProxyGrantingSession->{_utime};
+        $casProxySession->{proxies} = $casProxyGrantingSession->{proxies};
+
+        my $casProxySessionID = $casProxySession->{_session_id};
+        my $casProxyTicket    = "PT-" . $casProxySessionID;
+
+        # Close sessions
+        untie %$casProxySession;
+        untie %$casProxyGrantingSession;
+
+        $self->lmLog( "CAS proxy session $casProxySessionID created", 'debug' );
+
+        # Return success message
+        $self->returnCasProxySuccess($casProxyTicket);
 
         # We should not be there
         return PE_ERROR;
@@ -492,6 +591,32 @@ sub issuerForAuthUser {
             "CAS SERVICE VALIDATE URL called by authenticated user, ignore it",
             'info'
         );
+
+        return PE_OK;
+    }
+
+    # 5. PROXY VALIDATE [CAS 2.0]
+    if ( $url =~ /\Q$cas_proxyValidate_url\E/io ) {
+
+        $self->lmLog( "URL $url detected as an CAS PROXY VALIDATE URL",
+            'debug' );
+
+        # This URL must not be called by authenticated users
+        $self->lmLog(
+            "CAS PROXY VALIDATE URL called by authenticated user, ignore it",
+            'info' );
+
+        return PE_OK;
+    }
+
+    # 6. PROXY [CAS 2.0]
+    if ( $url =~ /\Q$cas_proxy_url\E/io ) {
+
+        $self->lmLog( "URL $url detected as an CAS PROXY URL", 'debug' );
+
+        # This URL must not be called by authenticated users
+        $self->lmLog( "CAS PROXY URL called by authenticated user, ignore it",
+            'info' );
 
         return PE_OK;
     }

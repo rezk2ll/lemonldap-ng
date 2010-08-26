@@ -4,11 +4,12 @@ use CGI;
 use AuthCAS;
 
 # Configuration
-my $cas_url = 'https://auth.example.com/cas';
-my $cas     = new AuthCAS( casUrl => $cas_url );
-my $cgi     = new CGI;
-my $pgtUrl  = $cgi->url() . "%3Fproxy%3D1";
-my $pgtFile = '/tmp/pgt.txt';
+my $cas_url        = 'https://auth.example.com/cas';
+my $cas            = new AuthCAS( casUrl => $cas_url );
+my $cgi            = new CGI;
+my $pgtUrl         = $cgi->url() . "%3Fproxy%3D1";
+my $pgtFile        = '/tmp/pgt.txt';
+my $proxiedService = 'http://webmail';
 
 # Act as a CAS proxy
 $cas->proxyMode( pgtFile => '/tmp/pgt.txt', pgtCallbackUrl => $pgtUrl );
@@ -41,7 +42,7 @@ else {
     # Ticket receveived
     else {
         print $cgi->h1("CAS login done");
-        print $cgi->h2("Received ticket: $ticket");
+        print $cgi->h2("Service ticket: $ticket");
 
         # Get user
         my $user = $cas->validateST( $cgi->url(), $ticket );
@@ -56,17 +57,37 @@ else {
         my $pgtId = $cas->{pgtId};
         if ($pgtId) {
             print $cgi->h2("Proxy granting ticket: $pgtId");
+
+            # Try to request proxy ticket
+            my $pt = $cas->retrievePT($proxiedService);
+
+            if ($pt) {
+
+                print $cgi->h2("Proxy ticket: $pt");
+
+                # Use proxy ticket
+                my ( $puser, @proxies ) =
+                  $cas->validatePT( $proxiedService, $pt );
+
+                print $cgi->h2("Proxied user: $puser");
+                print $cgi->h2("Proxies used: @proxies");
+
+            }
+            else {
+                print $cgi->h2( "Error: " . &AuthCAS::get_errors() );
+            }
         }
         else {
             print $cgi->h2("Error: Unable to get proxy granting ticket");
         }
+
     }
 
     print $cgi->end_html();
 
-}
+    # Remove PGT file
+    unlink $pgtFile;
 
-# Remove PGT file
-unlink $pgtFile;
+}
 
 exit;

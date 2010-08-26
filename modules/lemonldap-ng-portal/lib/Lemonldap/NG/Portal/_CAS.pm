@@ -89,13 +89,14 @@ sub returnCasServiceValidateError {
     $self->quit();
 }
 
-## @method void returnCasServiceValidateSuccess(string username, string pgtIou)
+## @method void returnCasServiceValidateSuccess(string username, string pgtIou, string proxies)
 # Return success for CAS SERVICE VALIDATE request
 # @param username User name
 # @param pgtIou Proxy granting ticket IOU
+# @param proxies List of used CAS proxies
 # @return nothing
 sub returnCasServiceValidateSuccess {
-    my ( $self, $username, $pgtIou ) = splice @_;
+    my ( $self, $username, $pgtIou, $proxies ) = splice @_;
 
     $self->lmLog( "Return CAS service validate success with username $username",
         'debug' );
@@ -110,12 +111,60 @@ sub returnCasServiceValidateSuccess {
         print
           "\t\t<cas:proxyGrantingTicket>$pgtIou</cas:proxyGrantingTicket>\n";
     }
+    if ($proxies) {
+        $self->lmLog( "Add proxies $proxies in response", 'debug' );
+        print "\t\t<cas:proxies>\n";
+        print "\t\t\t<cas:proxy>$_</cas:proxy>\n"
+          foreach ( split( /$self->{multiValuesSeparator}/, $proxies ) );
+        print "\t\t</cas:proxies>\n";
+    }
     print "\t</cas:authenticationSuccess>\n";
     print "</cas:serviceResponse>\n";
 
     $self->quit();
 }
 
+## @method void returnCasProxyError(string code, string text)
+# Return an error for CAS PROXY request
+# @param code CAS error code
+# @param text Error text
+# @return nothing
+sub returnCasProxyError {
+    my ( $self, $code, $text ) = splice @_;
+
+    $code ||= 'INTERNAL_ERROR';
+    $text ||= 'No description provided';
+
+    $self->lmLog( "Return CAS proxy error $code ($text)", 'debug' );
+
+    print $self->header( -type => 'application/xml' );
+    print "<cas:serviceResponse xmlns:cas='http://www.yale.edu/tp/cas'>\n";
+    print "\t<cas:proxyFailure code=\"$code\">\n";
+    print "\t\t$text\n";
+    print "\t</cas:proxyFailure>\n";
+    print "</cas:serviceResponse>\n";
+
+    $self->quit();
+}
+
+## @method void returnCasProxySuccess(string ticket)
+# Return success for CAS PROXY request
+# @param ticket Proxy ticket
+# @return nothing
+sub returnCasProxySuccess {
+    my ( $self, $ticket ) = splice @_;
+
+    $self->lmLog( "Return CAS proxy success with ticket $ticket", 'debug' );
+
+    print $self->header( -type => 'application/xml' );
+    print "<cas:serviceResponse xmlns:cas='http://www.yale.edu/tp/cas'>\n";
+    print "\t<cas:proxySuccess>\n";
+    print "\t\t<cas:proxyTicket>$ticket</cas:proxyTicket>\n";
+    print "\t</cas:proxySuccess>\n";
+    print "</cas:serviceResponse>\n";
+
+    $self->quit();
+}
 ## @method boolean deleteCasSecondarySessions(string session_id)
 # Find and delete CAS sessions bounded to a primary session
 # @param session_id Primary session ID
@@ -253,6 +302,14 @@ Return an error for CAS SERVICE VALIDATE request
 =head2 returnCasServiceValidateSuccess
 
 Return success for CAS SERVICE VALIDATE request
+
+=head2 returnCasProxyError
+
+Return an error for CAS PROXY request
+
+=head2 returnCasProxySuccess
+
+Return success for CAS PROXY request
 
 =head2 deleteCasSession
 
