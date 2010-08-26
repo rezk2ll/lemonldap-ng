@@ -175,6 +175,112 @@ sub issuerForUnAuthUser {
         return PE_ERROR;
     }
 
+    # 4. SERVICE VALIDATE [CAS 2.0]
+    if ( $url =~ /\Q$cas_serviceValidate_url\E/io ) {
+
+        $self->lmLog( "URL $url detected as an CAS SERVICE VALIDATE URL",
+            'debug' );
+
+        # GET parameters
+        my $service = $self->param('service');
+        my $ticket  = $self->param('ticket');
+        my $pgtUrl  = $self->param('pgtUrl');
+        my $renew   = $self->param('renew');
+
+        # Required parameters: service and ticket
+        unless ( $service and $ticket ) {
+            $self->lmLog( "Service and Ticket parameters required", 'error' );
+            $self->returnCasServiceValidateError( 'INVALID_REQUEST',
+                'Missing mandatory parameters (service, ticket)' );
+        }
+
+        $self->lmLog(
+"Get service validate request with ticket $ticket for service $service",
+            'debug'
+        );
+
+        # Get CAS session corresponding to ticket
+        unless ( $ticket =~ s/^ST-// ) {
+            $self->lmLog( "Provided ticket is not a service ticket (ST)",
+                'error' );
+            $self->returnCasServiceValidateError( 'INVALID_TICKET',
+                'Provided ticket is not a service ticket' );
+        }
+
+        my $casServiceSession = $self->getCasSession($ticket);
+
+        unless ($casServiceSession) {
+            $self->lmLog( "Service ticket session $ticket not found", 'error' );
+            $self->returnCasServiceValidateError( 'INVALID_TICKET',
+                'Ticket not found' );
+        }
+
+        $self->lmLog( "Service ticket session $ticket found", 'debug' );
+
+        # Check service
+        unless ( $service eq $casServiceSession->{service} ) {
+            $self->lmLog(
+                "Submitted service $service does not match initial service "
+                  . $casServiceSession->{service},
+                'error'
+            );
+
+            # CAS protocol: invalidate ticket if service is invalid
+            $self->deleteCasSession($casServiceSession);
+
+            $self->returnCasServiceValidateError( 'INVALID_SERVICE',
+                'Submitted service does not match initial service' );
+        }
+
+        $self->lmLog( "Submitted service $service match initial servce",
+            'debug' );
+
+        # Check renew
+        if ( $renew eq 'true' ) {
+
+            # We should check the ST was delivered with primary credentials
+            # TODO
+            $self->lmLog( "Renew parameter not managed", 'warn' );
+        }
+
+        # Proxy granting ticket
+        if ($pgtUrl) {
+
+            # Request pgtUrl
+            # TODO
+            $self->lmLog( "PgtUrl parameter not managed", 'warn' );
+        }
+
+        # Open local session
+        my $localSession =
+          $self->getApacheSession( $casServiceSession->{_cas_id}, 1 );
+
+        unless ($localSession) {
+            $self->lmLog(
+                "Local session " . $casServiceSession->{_cas_id} . " notfound",
+                'error'
+            );
+            untie %$casServiceSession;
+            $self->returnCasServiceValidateError( 'INTERNAL_ERROR',
+                'No session associated to ticket' );
+        }
+
+        # Get username
+        my $username = $localSession->{ $self->{whatToTrace} };
+
+        $self->lmLog( "Get username $username", 'debug' );
+
+        # Close sessions
+        untie %$casServiceSession;
+        untie %$localSession;
+
+        # Return success message
+        $self->returnCasServiceValidateSuccess($username);
+
+        # We should not be there
+        return PE_ERROR;
+    }
+
     return PE_OK;
 }
 
@@ -302,6 +408,21 @@ sub issuerForAuthUser {
         $self->lmLog(
             "CAS VALIDATE URL called by authenticated user, ignore it",
             'info' );
+
+        return PE_OK;
+    }
+
+    # 4. SERVICE VALIDATE [CAS 2.0]
+    if ( $url =~ /\Q$cas_serviceValidate_url\E/io ) {
+
+        $self->lmLog( "URL $url detected as an CAS SERVICE VALIDATE URL",
+            'debug' );
+
+        # This URL must not be called by authenticated users
+        $self->lmLog(
+            "CAS SERVICE VALIDATE URL called by authenticated user, ignore it",
+            'info'
+        );
 
         return PE_OK;
     }

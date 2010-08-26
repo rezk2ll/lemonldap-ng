@@ -41,6 +41,8 @@ sub getCasSession {
 sub returnCasValidateError {
     my ($self) = splice @_;
 
+    $self->lmLog( "Return CAS validate error", 'debug' );
+
     print $self->header();
     print "no\n\n";
 
@@ -54,8 +56,54 @@ sub returnCasValidateError {
 sub returnCasValidateSuccess {
     my ( $self, $username ) = splice @_;
 
+    $self->lmLog( "Return CAS validate success with username $username",
+        'debug' );
+
     print $self->header();
     print "yes\n$username\n";
+
+    $self->quit();
+}
+
+## @method void returnCasServiceValidateError(string code, string text)
+# Return an error for CAS SERVICE VALIDATE request
+# @param code CAS error code
+# @param text Error text
+# @return nothing
+sub returnCasServiceValidateError {
+    my ( $self, $code, $text ) = splice @_;
+
+    $code ||= 'INTERNAL_ERROR';
+    $text ||= 'No description provided';
+
+    $self->lmLog( "Return CAS service validate error $code ($text)", 'debug' );
+
+    print $self->header( -type => 'application/xml' );
+    print "<cas:serviceResponse xmlns:cas='http://www.yale.edu/tp/cas'>\n";
+    print "\t<cas:authenticationFailure code=\"$code\">\n";
+    print "\t\t$text\n";
+    print "\t</cas:authenticationFailure>\n";
+    print "</cas:serviceResponse>\n";
+
+    $self->quit();
+}
+
+## @method void returnCasServiceValidateSuccess(string username)
+# Return success for CAS SERVICE VALIDATE request
+# @param username User name
+# @return nothing
+sub returnCasServiceValidateSuccess {
+    my ( $self, $username ) = splice @_;
+
+    $self->lmLog( "Return CAS service validate success with username $username",
+        'debug' );
+
+    print $self->header( -type => 'application/xml' );
+    print "<cas:serviceResponse xmlns:cas='http://www.yale.edu/tp/cas'>\n";
+    print "\t<cas:authenticationSuccess>\n";
+    print "\t\t<cas:user>$username</cas:user>\n";
+    print "\t</cas:authenticationSuccess>\n";
+    print "</cas:serviceResponse>\n";
 
     $self->quit();
 }
@@ -83,17 +131,7 @@ sub deleteCasSecondarySessions {
             my $casSessionInfo = $self->getCasSession($cas_session);
 
             # Delete session
-            eval { tied(%$casSessionInfo)->delete() };
-
-            if ($@) {
-                $self->lmLog( "Unable to delete CAS session $cas_session: $@",
-                    'error' );
-                $result = 0;
-            }
-            else {
-                $self->lmLog( "CAS session $cas_session deleted", 'debug' );
-            }
-
+            $result = $self->deleteCasSession($casSessionInfo);
         }
     }
     else {
@@ -103,6 +141,35 @@ sub deleteCasSecondarySessions {
 
     return $result;
 
+}
+
+## @method boolean deleteCasSession(hashref session)
+# Delete an opened CAS session
+# @param session Tied session object
+# @return result
+sub deleteCasSession {
+    my ( $self, $session ) = splice @_;
+
+    # Check session object
+    unless ( ref($session) eq 'HASH' ) {
+        $self->lmLog( "Provided session is not a HASH reference", 'error' );
+        return 0;
+    }
+
+    # Get session_id
+    my $session_id = $session->{_session_id};
+
+    # Delete session
+    eval { tied(%$session)->delete() };
+
+    if ($@) {
+        $self->lmLog( "Unable to delete CAS session $session_id: $@", 'error' );
+        return 0;
+    }
+
+    $self->lmLog( "CAS session $session_id deleted", 'debug' );
+
+    return 1;
 }
 
 1;
@@ -141,6 +208,18 @@ Return success for CAS VALIDATE request
 =head2 deleteCasSecondarySessions
 
 Find and delete CAS sessions bounded to a primary session
+
+=head2 returnCasServiceValidateError
+
+Return an error for CAS SERVICE VALIDATE request
+
+=head2 returnCasServiceValidateSuccess
+
+Return success for CAS SERVICE VALIDATE request
+
+=head2 deleteCasSession
+
+Delete an opened CAS session
 
 =head1 SEE ALSO
 
