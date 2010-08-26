@@ -17,7 +17,8 @@ our $VERSION = '0.01';
 # @return Lemonldap::NG::Portal error code
 sub issuerDBInit {
     my $self = shift;
-    PE_OK;
+
+    return PE_OK;
 }
 
 ## @apmethod int issuerForUnAuthUser()
@@ -147,12 +148,13 @@ sub issuerForUnAuthUser {
 
         # Open local session
         my $localSession =
-          $self->getApacheSession( $casServiceSession->{id}, 1 );
+          $self->getApacheSession( $casServiceSession->{_cas_id}, 1 );
 
         unless ($localSession) {
             $self->lmLog(
-                "Local session " . $casServiceSession->{id} . " notfound",
-                'error' );
+                "Local session " . $casServiceSession->{_cas_id} . " notfound",
+                'error'
+            );
             untie %$casServiceSession;
             $self->returnCasValidateError();
         }
@@ -173,7 +175,7 @@ sub issuerForUnAuthUser {
         return PE_ERROR;
     }
 
-    PE_OK;
+    return PE_OK;
 }
 
 ## @apmethod int issuerForAuthUser()
@@ -215,11 +217,11 @@ sub issuerForAuthUser {
           || $self->param('gateway');
 
         # Renew
+        if ( $renew eq 'true' ) {
+
         # Authentication must be replayed
         # TODO
-        if ( $renew eq 'true' ) {
-            $self->lmLog( "Authentication renewal not managed", 'error' );
-            return PE_ERROR;
+            $self->lmLog( "Authentication renewal not managed", 'warn' );
         }
 
         # If no service defined, exit
@@ -238,7 +240,7 @@ sub issuerForAuthUser {
 
         $casServiceSession->{type}    = 'casService';
         $casServiceSession->{service} = $service;
-        $casServiceSession->{id}      = $session_id;
+        $casServiceSession->{_cas_id} = $session_id;
         $casServiceSession->{_utime}  = $time;
 
         my $casServiceSessionID = $casServiceSession->{_session_id};
@@ -278,7 +280,7 @@ sub issuerForAuthUser {
         }
 
         # Delete linked CAS sessions
-        # TODO
+        $self->deleteCasSecondarySessions($session_id);
 
         # Delete local session
         unless (
@@ -304,7 +306,7 @@ sub issuerForAuthUser {
         return PE_OK;
     }
 
-    PE_OK;
+    return PE_OK;
 }
 
 ## @apmethod int issuerLogout()
@@ -313,9 +315,13 @@ sub issuerForAuthUser {
 sub issuerLogout {
     my $self = shift;
 
-    # TODO
+    # Session ID
+    my $session_id = $self->{sessionInfo}->{_session_id} || $self->{id};
 
-    PE_OK;
+    # Delete linked CAS sessions
+    $self->deleteCasSecondarySessions($session_id);
+
+    return PE_OK;
 }
 
 1;

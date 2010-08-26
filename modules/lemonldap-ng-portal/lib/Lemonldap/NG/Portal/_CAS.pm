@@ -60,6 +60,53 @@ sub returnCasValidateSuccess {
     $self->quit();
 }
 
+## @method boolean deleteCasSecondarySessions(string session_id)
+# Find and delete CAS sessions bounded to a primary session
+# @param session_id Primary session ID
+# @return result
+sub deleteCasSecondarySessions {
+    my ( $self, $session_id ) = splice @_;
+    my $result = 1;
+
+    # Find CAS sessions
+    my $cas_sessions =
+      $self->{casStorage}
+      ->searchOn( $self->{casStorageOptions}, "_cas_id", $session_id );
+
+    if ( my @cas_sessions_keys = keys %$cas_sessions ) {
+
+        foreach my $cas_session (@cas_sessions_keys) {
+
+            # Get session
+            $self->lmLog( "Retrieve CAS session $cas_session", 'debug' );
+
+            my $casSessionInfo = $self->getSamlSession($cas_session);
+
+            # Delete session
+            eval { tied(%$casSessionInfo)->delete() };
+
+            if ($@) {
+                $self->lmLog( "Unable to delete CAS session $cas_session: $@",
+                    'error' );
+                $result = 0;
+            }
+            else {
+                $self->lmLog( "CAS session $cas_session deleted", 'debug' );
+            }
+
+        }
+    }
+    else {
+        $self->lmLog( "No CAS session found for session $session_id ",
+            'debug' );
+    }
+
+    return $result;
+
+}
+
+1;
+
 __END__
 
 =head1 NAME
@@ -91,9 +138,13 @@ Return an error for CAS VALIDATE request
 
 Return success for CAS VALIDATE request
 
+=head2 deleteCasSecondarySessions
+
+Find and delete CAS sessions bounded to a primary session
+
 =head1 SEE ALSO
 
-L<Lemonldap::NG::Portal::IssuerDBCAS>,
+L<Lemonldap::NG::Portal::IssuerDBCAS>
 
 =head1 AUTHOR
 
