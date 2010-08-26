@@ -296,8 +296,6 @@ sub en {
         samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact =>
           'HTTP Artifact',
         samlSPSSODescriptorAssertionConsumerServiceHTTPPost => 'HTTP POST',
-        samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect =>
-          'HTTP Redirect',
         samlSPSSODescriptorArtifactResolutionService => 'Artifact Resolution',
         samlSPSSODescriptorArtifactResolutionServiceArtifact =>
           'Artifact Service',
@@ -595,8 +593,6 @@ sub fr {
         samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact =>
           'HTTP Artifact',
         samlSPSSODescriptorAssertionConsumerServiceHTTPPost => 'POST HTTP',
-        samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect =>
-          'Redirection HTTP',
         samlSPSSODescriptorArtifactResolutionService =>
           'Résolution d\'Artifact',
         samlSPSSODescriptorArtifactResolutionServiceArtifact =>

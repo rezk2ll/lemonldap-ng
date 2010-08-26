@@ -232,7 +232,6 @@ sub serviceToXML {
     my @param_assertion = qw(
       samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact
       samlSPSSODescriptorAssertionConsumerServiceHTTPPost
-      samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect
       samlSPSSODescriptorArtifactResolutionServiceArtifact
       samlIDPSSODescriptorArtifactResolutionServiceArtifact
     );

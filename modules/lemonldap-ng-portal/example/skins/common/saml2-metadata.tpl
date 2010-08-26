@@ -110,11 +110,6 @@
       index="<TMPL_VAR NAME="samlSPSSODescriptorAssertionConsumerServiceHTTPPostIndex">"
       Binding="<TMPL_VAR NAME="samlSPSSODescriptorAssertionConsumerServiceHTTPPostBinding">"
       Location="<TMPL_VAR NAME="samlSPSSODescriptorAssertionConsumerServiceHTTPPostLocation">" />
-    <AssertionConsumerService
-      isDefault="<TMPL_VAR NAME="samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectDefault">"
-      index="<TMPL_VAR NAME="samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectIndex">"
-      Binding="<TMPL_VAR NAME="samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectBinding">"
-      Location="<TMPL_VAR NAME="samlSPSSODescriptorAssertionConsumerServiceHTTPRedirectLocation">" />
     <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</NameIDFormat>
     <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:X509SubjectName</NameIDFormat>
     <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:WindowsDomainQualifiedName</NameIDFormat>

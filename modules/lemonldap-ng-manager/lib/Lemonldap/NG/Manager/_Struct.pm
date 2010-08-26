@@ -803,16 +803,13 @@ sub struct {
                 samlSPSSODescriptorAssertionConsumerService => {
                     _nodes => [
                         qw(samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact
-                          samlSPSSODescriptorAssertionConsumerServiceHTTPPost
-                          samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect)
+                          samlSPSSODescriptorAssertionConsumerServiceHTTPPost)
                     ],
                     _help => 'default',
                     samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact =>
 'samlAssertion:/samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact',
                     samlSPSSODescriptorAssertionConsumerServiceHTTPPost =>
 'samlAssertion:/samlSPSSODescriptorAssertionConsumerServiceHTTPPost',
-                    samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect =>
-'samlAssertion:/samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect',
                 },
 
                 samlSPSSODescriptorArtifactResolutionService => {
@@ -1262,8 +1259,6 @@ sub testStruct {
         samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact =>
           $testNotDefined,
         samlSPSSODescriptorAssertionConsumerServiceHTTPPost => $testNotDefined,
-        samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect =>
-          $testNotDefined,
         samlSPSSODescriptorArtifactResolutionServiceArtifact => $testNotDefined,
         samlIDPSSODescriptorWantAuthnRequestsSigned          => $boolean,
         samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect  => $testNotDefined,
@@ -1466,10 +1461,6 @@ sub defaultConf {
           '0;1;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;' 
           . '#PORTAL#'
           . '/saml/proxySingleSignOnPost',
-        samlSPSSODescriptorAssertionConsumerServiceHTTPRedirect =>
-          '0;2;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;' 
-          . '#PORTAL#'
-          . '/saml/proxySingleSignOnRedirect',
         samlSPSSODescriptorArtifactResolutionServiceArtifact =>
           '1;0;urn:oasis:names:tc:SAML:2.0:bindings:SOAP;' 
           . '#PORTAL#'
