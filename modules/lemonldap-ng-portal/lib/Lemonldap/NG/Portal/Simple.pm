@@ -241,6 +241,18 @@ sub new {
         $self->lmLog( "[IssuerDB activation] Try issuerDB module $issuerDBtype",
             'debug' );
 
+        # Check activation flag
+        my $activation =
+          $self->{ "issuerDB" . $issuerDBtype . "Activation" } ||= "0";
+
+        unless ($activation) {
+            $self->lmLog(
+                "[IssuerDB activation] Activation flag set to off, trying next",
+                'debug'
+            );
+            next;
+        }
+
         # Check the path
         my $path = $self->{ "issuerDB" . $issuerDBtype . "Path" };
         if ( defined $path ) {

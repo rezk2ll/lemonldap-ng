@@ -323,16 +323,32 @@ sub struct {
 
                 # IssuerDB branch
                 issuerDB => {
-                    _nodes       => [qw(issuerDBSAML issuerDBCAS)],
+                    _nodes => [qw(issuerDBSAML issuerDBCAS issuerDBOpenID)],
                     issuerDBSAML => {
-                        _nodes => [qw(issuerDBSAMLPath issuerDBSAMLRule)],
+                        _nodes => [
+                            qw(issuerDBSAMLActivation issuerDBSAMLPath issuerDBSAMLRule)
+                        ],
+                        issuerDBSAMLActivation =>
+                          'bool:/issuerDBSAMLActivation',
                         issuerDBSAMLPath => 'text:/issuerDBSAMLPath',
                         issuerDBSAMLRule => 'text:/issuerDBSAMLRule',
                     },
                     issuerDBCAS => {
-                        _nodes => [qw(issuerDBCASPath issuerDBCASRule)],
+                        _nodes => [
+                            qw(issuerDBCASActivation issuerDBCASPath issuerDBCASRule)
+                        ],
+                        issuerDBCASActivation => 'bool:/issuerDBCASActivation',
                         issuerDBCASPath => 'text:/issuerDBCASPath',
                         issuerDBCASRule => 'text:/issuerDBCASRule',
+                    },
+                    issuerDBOpenID => {
+                        _nodes => [
+                            qw(issuerDBOpenIDActivation issuerDBOpenIDPath issuerDBOpenIDRule)
+                        ],
+                        issuerDBOpenIDActivation =>
+                          'bool:/issuerDBOpenIDActivation',
+                        issuerDBOpenIDPath => 'text:/issuerDBOpenIDPath',
+                        issuerDBOpenIDRule => 'text:/issuerDBOpenIDRule',
                     },
                 },
 
@@ -1031,6 +1047,7 @@ sub testStruct {
             },
         },
         https                => $boolean,
+        issuerDBSAMLActivation => $boolean,
         issuerDBSAMLPath => $testNotDefined,
         issuerDBSAMLRule => {
             test     => $perlExpr,
@@ -1040,8 +1057,19 @@ sub testStruct {
                 1;
             },
         },
+        issuerDBCASActivation => $boolean,
         issuerDBCASPath => $testNotDefined,
         issuerDBCASRule => {
+            test     => $perlExpr,
+            warnTest => sub {
+                my $e = shift;
+                return ( 0, $assignMsg ) if ( $e =~ $assignTest );
+                1;
+            },
+        },
+        issuerDBOpenIDActivation => $boolean,
+        issuerDBOpenIDPath       => $testNotDefined,
+        issuerDBOpenIDRule       => {
             test     => $perlExpr,
             warnTest => sub {
                 my $e = shift;
@@ -1387,10 +1415,15 @@ sub defaultConf {
         domain          => 'example.com',
         globalStorage   => 'Apache::Session::File',
         https         => '0',
+        issuerDBSAMLActivation   => '0',
         issuerDBSAMLPath    => '^/saml/',
-        issuerDBSAMLRule    => '0',
+        issuerDBSAMLRule         => '1',
+        issuerDBCASActivation    => '0',
         issuerDBCASPath     => '^/cas/',
-        issuerDBCASRule     => '0',
+        issuerDBCASRule          => '1',
+        issuerDBOpenIDActivation => '0',
+        issuerDBOpenIDPath       => '^/cas/',
+        issuerDBOpenIDRule       => '1',
         ldapBase      => 'dc=example,dc=com',
         ldapPort      => '389',
         ldapPwdEnc    => 'utf-8',
