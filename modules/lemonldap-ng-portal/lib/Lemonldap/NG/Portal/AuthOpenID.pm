@@ -30,8 +30,10 @@ sub authInit {
 sub extractFormInfo {
     my $self = shift;
 
+    my $ua = LWP::UserAgent->new();
+    # TODO : LWP options to use a proxy for example
     $self->{csr} = Net::OpenID::Consumer->new(
-        ua              => LWP::UserAgent->new,
+        ua              => $ua,
         cache           => Cache::FileCache->new,
         args            => $self,
         consumer_secret => $self->{openIdSecret},
