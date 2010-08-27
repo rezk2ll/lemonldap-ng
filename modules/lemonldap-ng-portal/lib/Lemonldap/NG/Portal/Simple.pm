@@ -125,6 +125,7 @@ use constant {
     PM_SAML_SPLOGOUT         => 11,
     PM_REDIRECTION           => 12,
     PM_BACKTOSP              => 13,
+    PM_BACKTOCASURL          => 14,
 };
 
 # EXPORTER PARAMETERS
@@ -147,7 +148,7 @@ our @EXPORT = qw( PE_IMG_NOK PE_IMG_OK PE_INFO PE_REDIRECT PE_DONE PE_OK
   PM_USER PM_DATE PM_IP PM_SESSIONS_DELETED PM_OTHER_SESSIONS
   PM_REMOVE_OTHER_SESSIONS PM_PP_GRACE PM_PP_EXP_WARNING
   PM_SAML_IDPSELECT PM_SAML_IDPCHOOSEN PM_REMEMBERCHOICE PM_SAML_SPLOGOUT
-  PM_REDIRECTION PM_BACKTOSP
+  PM_REDIRECTION PM_BACKTOSP PM_BACKTOCASURL
 );
 our %EXPORT_TAGS = ( 'all' => [ @EXPORT, 'import' ], );
 
@@ -1102,7 +1103,8 @@ sub controlUrlOrigin {
     $self->{_url} ||= '';
     if ( my $url = $self->param('url') ) {
 
-        # REJECT NON BASE64 URL
+        # REJECT NON BASE64 URL except for CAS IssuerDB
+        if ( $self->get_module('issuer') ne "CAS" ) {
         if ( $url =~ m#[^A-Za-z0-9\+/=]# ) {
             $self->lmLog( "XSS attack detected (param: url | value: $url)",
                 "warn" );
@@ -1111,6 +1113,8 @@ sub controlUrlOrigin {
 
         $self->{urldc} = decode_base64($url);
         $self->{urldc} =~ s/[\r\n]//sg;
+        }
+        else { $self->{urldc} = $url; }
 
         # For logout request, test if Referer comes from an authorizated site
         my $tmp =

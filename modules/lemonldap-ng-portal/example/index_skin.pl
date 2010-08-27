@@ -134,7 +134,7 @@ elsif ( $portal->{error} == PE_CONFIRM ) {
     %templateParams = (
         AUTH_ERROR      => $portal->error,
         AUTH_ERROR_TYPE => $portal->error_type,
-        AUTH_URL        => $portal->get_url,
+        URL             => $portal->get_url,
         MSG             => $portal->info(),
         SKIN            => $skin,
         HIDDEN_INPUTS   => $portal->buildHiddenForm(),

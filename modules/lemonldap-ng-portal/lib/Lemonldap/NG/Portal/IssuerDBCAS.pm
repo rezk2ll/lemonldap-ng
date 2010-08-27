@@ -59,11 +59,19 @@ sub issuerForUnAuthUser {
         $self->setHiddenFormValue( 'gateway', $gateway );
 
         # Gateway
-        # Authentication must use non-interactive mean
         if ( $gateway eq 'true' ) {
 
-            # TODO
-            $self->lmLog( "Gateway authentication not managed", 'warn' );
+            # User should already be authenticated
+            $self->lmLog(
+                "Gateway authentication requested, but user is not logged in",
+                'error' );
+
+            # Redirect user to the service
+            $self->lmLog( "Redirect user to $service", 'debug' );
+
+            $self->{urldc} = $service;
+
+            return $self->_subProcess(qw(autoRedirect));
 
         }
 
@@ -79,9 +87,19 @@ sub issuerForUnAuthUser {
 
         if ($logout_url) {
 
-            # We should display a link to the provided URL
-            # TODO
-            $self->lmLog( "Return URL not managed", 'warn' );
+            # Display a link to the provided URL
+            $self->lmLog( "Logout URL $logout_url will be displayed", 'debug' );
+
+            $self->info(
+                "<h3>"
+                  . &Lemonldap::NG::Portal::_i18n::msg( PM_BACKTOCASURL,
+                    $ENV{HTTP_ACCEPT_LANGUAGE} )
+                  . "</h3>"
+            );
+            $self->info("<p><a href=\"$logout_url\">$logout_url</a></p>");
+            $self->{activeTimer} = 0;
+
+            return PE_CONFIRM;
         }
 
         return PE_LOGOUT_OK;
@@ -107,13 +125,6 @@ sub issuerForUnAuthUser {
         $self->lmLog(
             "Get validate request with ticket $ticket for service $service",
             'debug' );
-
-        # Get CAS session corresponding to ticket
-        unless ( $ticket =~ s/^ST-// ) {
-            $self->lmLog( "Provided ticket is not a service ticket (ST)",
-                'error' );
-            $self->returnCasValidateError();
-        }
 
         my $casServiceSession = $self->getCasSession($ticket);
 
@@ -285,10 +296,11 @@ sub issuerForUnAuthUser {
                   $casServiceSession->{_utime};
 
                 # Trace proxies
-                $casProxyGrantingSession->{proxies} =
-                  (   $proxies
+                $casProxyGrantingSession->{proxies} = (
+                      $proxies
                     ? $proxies . $self->{multiValuesSeparator} . $pgtUrl
-                    : $pgtUrl );
+                    : $pgtUrl
+                );
 
                 my $casProxyGrantingSessionID =
                   $casProxyGrantingSession->{_session_id};
@@ -547,12 +559,6 @@ sub issuerForAuthUser {
         # GET parameters
         my $logout_url = $self->param('url');
 
-        if ($logout_url) {
-
-            # We should display a link to the provided URL
-            # TODO
-        }
-
         # Delete linked CAS sessions
         $self->deleteCasSecondarySessions($session_id);
 
@@ -561,6 +567,23 @@ sub issuerForAuthUser {
             $self->_deleteSession( $self->getApacheSession( $session_id, 1 ) ) )
         {
             $self->lmLog( "Fail to delete session $session_id ", 'error' );
+        }
+
+        if ($logout_url) {
+
+            # Display a link to the provided URL
+            $self->lmLog( "Logout URL $logout_url will be displayed", 'debug' );
+
+            $self->info(
+                "<h3>"
+                  . &Lemonldap::NG::Portal::_i18n::msg( PM_BACKTOCASURL,
+                    $ENV{HTTP_ACCEPT_LANGUAGE} )
+                  . "</h3>"
+            );
+            $self->info("<p><a href=\"$logout_url\">$logout_url</a></p>");
+            $self->{activeTimer} = 0;
+
+            return PE_CONFIRM;
         }
 
         return PE_LOGOUT_OK;
