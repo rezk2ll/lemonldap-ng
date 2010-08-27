@@ -8,7 +8,7 @@ package Lemonldap::NG::Portal::AuthCAS;
 use strict;
 use Lemonldap::NG::Portal::Simple;
 
-our $VERSION = '0.13';
+our $VERSION = '0.20';
 
 ## @apmethod int authInit()
 # Try to load AuthCAS perl module
@@ -37,27 +37,37 @@ sub extractFormInfo {
         CAFile => $self->{CAS_CAFile},
     );
 
-    my $casLoginUrl      = $self->{CAS_loginUrl};
-    my $casValidationUrl = $self->{CAS_validationUrl};
+    # Local URL
+    my $local_url = $self->url();
+
+    # Add URL parameter if present
     if ( $self->{_url} ) {
         my $url_param = 'url=' . $self->{_url};
-        $casLoginUrl .= ( $casLoginUrl =~ /\?/ ? '&' : '?' ) . $url_param;
-        $casValidationUrl .=
-          ( $casValidationUrl =~ /\?/ ? '&' : '?' ) . $url_param;
+        $local_url .= ( $local_url =~ /\?/ ? '&' : '?' ) . $url_param;
     }
 
-    my $login_url = $cas->getServerLoginURL($casLoginUrl);
+    # Build login URL
+    my $login_url = $cas->getServerLoginURL($local_url);
 
+    # Check Service Ticket
     my $ticket = $self->param('ticket');
 
     # Unless a ticket has been found, we redirect the user
-    unless ( $self->{user} = $cas->validateST( $casValidationUrl, $ticket ) ) {
-        print $self->redirect(
-            -uri    => $login_url,
-            -status => '303 See Other'
-        );
-        exit;
+    unless ($ticket) {
+        $self->lmLog( "Redirect user to $login_url", 'debug' );
+        $self->{urldc} = $login_url;
+        return $self->_subProcess(qw(autoRedirect));
     }
+
+    # Ticket found, try to validate it
+    unless ( $self->{user} = $cas->validateST( $local_url, $ticket ) ) {
+        $self->lmLog( "CAS error: " . &AuthCAS::get_errors(), 'error' );
+        return PE_ERROR;
+    }
+    else {
+        $self->lmLog( "CAS user found: " . $self->{user}, 'debug' );
+    }
+
     PE_OK;
 }
 

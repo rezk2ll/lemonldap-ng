@@ -405,11 +405,8 @@ sub struct {
 
                 # CAS
                 casParams => {
-                    _nodes =>
-                      [qw(CAS_url CAS_loginUrl CAS_validationUrl CAS_CAFile)],
+                    _nodes     => [qw(CAS_url CAS_CAFile)],
                     CAS_url           => 'text:/CAS_url',
-                    CAS_loginUrl      => 'text:/CAS_loginUrl',
-                    CAS_validationUrl => 'text:/CAS_validationUrl',
                     CAS_CAFile        => 'text:/CAS_CAFile',
                 },
 
@@ -1300,8 +1297,6 @@ sub testStruct {
 
         # CAS
         CAS_url           => $testNotDefined,
-        CAS_loginUrl      => $testNotDefined,
-        CAS_validationUrl => $testNotDefined,
         CAS_CAFile        => $testNotDefined,
 
         # Remote
