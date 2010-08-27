@@ -147,20 +147,24 @@ s/^(samlSPMetaDataXML|samlSPMetaDataExportedAttributes|samlSPMetaDataOptions)\/(
 
         $self->lmLog( "id transformed into $id", 'debug' );
 
-        next
           if ( $id =~
 /^(generalParameters|variables|virtualHosts|samlIDPMetaDataNode|samlSPMetaDataNode)/
-          );
+          )
+        {
+            $self->lmLog( "Ignoring attribute $name (id $id)", 'debug' );
+            next;
+        }
+
+        # Get tests
         my ( $confKey, $test ) = $self->getConfTests($id);
         my ( $res, $m );
 
+        # Set a default test if no test defined
         if ( !defined($test) ) {
-            $errors->{errors}->{$name} =
-              "Key $name: Lemonldap::NG::Manager error, see Apache's logs";
             $self->lmLog(
-                "Unknown configuration key $id (name: $name, value: $value)",
-                'error' );
-            next;
+                "No test defined for key $id (name: $name, value: $value)",
+                'warn' );
+            $test = { test => sub { 1 }, msgFail => 'Ok' };
         }
 
         if ( $test->{'*'} and $id =~ /\// ) { $test = $test->{'*'} }
@@ -205,7 +209,6 @@ s/^(samlSPMetaDataXML|samlSPMetaDataExportedAttributes|samlSPMetaDataOptions)\/(
         }
 
         # 1.3.2 Store accepted parameter in $newConf
-        $self->lmLog( "Tests OK for $name, store $value in $confKey", 'debug' );
         $self->setKeyToH( $newConf, $confKey,
             $test->{keyTest}
             ? ( ( $id !~ /\// or $test->{'*'} ) ? {} : ( $name => $value ) )
@@ -461,13 +464,27 @@ sub applyTest {
 
 ## @method protected array getConfTests(string id)
 # Call Lemonldap::NG::Manager::_Struct::testStruct().
+# @param id Element ID in HTML Struct
+# @return An array with configuration key and tests expression
 sub getConfTests {
     my ( $self, $id ) = @_;
+
+    $self->lmLog( "getConfTests: get id $id", 'debug' );
+
     my ( $confKey, $tmp ) = ( $id =~ /^(.*?)(?:\/(.*))?$/ );
+
+    $self->lmLog( "getConfTests: split $id in $confKey and $tmp", 'debug' )
+      if defined $tmp;
+
     my $h = $self->testStruct()->{$confKey};
+
+    # '*' is used in virtualHosts tests
     if ( $h and $h->{'*'} and my ( $k, $v ) = ( $tmp =~ /^(.*?)\/(.*)$/ ) ) {
+        $self->lmLog( "getConfKey: '*' in tests, return $confKey/$k", 'debug' );
         return ( "$confKey/$k", $h->{'*'} );
     }
+
+    $self->lmLog( "getConfTests: return $confKey", 'debug' );
     return ( $confKey, $h );
 }
 
@@ -522,6 +539,8 @@ sub setKeyToH {
     my $value = pop;
     return unless ( ref($value) or length($value) );
     my ( $self, $h, $key, $k2 ) = @_;
+
+    $self->lmLog( "setKeyToH: key $key / k2 $k2 / value $value", 'debug' );
     my $tmp = $h;
     $key =~ s/^\///;
     $value = $self->formatValue( $key, $value );
@@ -533,10 +552,20 @@ sub setKeyToH {
         }
         else {
             if ($k2) {
-                $tmp->{$key} = {} unless ( ref( $tmp->{$key} ) );
+                unless ( ref( $tmp->{$key} ) ) {
+                    $self->lmLog(
+"setKeyToH: k2 $k2 set, but $key is not a reference, create it",
+                        'error'
+                    );
+                    $tmp->{$key} = {};
+                }
+                $self->lmLog(
+                    "setKeyToH: set $value in key $k2 inside key $key",
+                    'debug' );
                 $tmp->{$key}->{$k2} = $value;
             }
             else {
+                $self->lmLog( "setKeyToH: set $value in key $key", 'debug' );
                 $tmp->{$key} = $value;
             }
             last;

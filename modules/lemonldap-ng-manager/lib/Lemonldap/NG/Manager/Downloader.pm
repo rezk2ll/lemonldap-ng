@@ -177,7 +177,7 @@ sub confNode {
         }
     }
 
-    # subnode is a conditaional node
+    # subnode is a conditional node
     elsif ( $target =~ s/^sub:// ) {
         foreach my $s ( $self->_sub($target) ) {
             $res .= $self->confNode( $node, $s, $help );
@@ -233,7 +233,7 @@ sub confNode {
 
         # If still no value, set a default value depending on type
         unless ( defined $h ) {
-            $self->lmLog( "$target does not exists in menu hash", "debug" );
+            $self->lmLog( "$target has no default value", "debug" );
             $h = {
                 text     => '',
                 hash     => {},

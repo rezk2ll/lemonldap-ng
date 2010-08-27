@@ -405,21 +405,34 @@ sub struct {
 
                 # CAS
                 casParams => {
-                    _nodes     => [qw(CAS_url CAS_CAFile)],
+                    _nodes => [
+                        qw(CAS_url CAS_CAFile CAS_pgtFile cn:CAS_proxiedServices)
+                    ],
                     CAS_url           => 'text:/CAS_url',
                     CAS_CAFile        => 'text:/CAS_CAFile',
+                    CAS_pgtFile         => 'text:/CAS_pgtFile',
+                    CAS_proxiedServices => {
+                        _nodes => ['hash:/CAS_proxiedServices:default:btext'],
+                        _js    => 'hashRoot',
+                        _help  => 'default',
+                    },
+
                 },
 
                 # Remote
                 remoteParams => {
                     _nodes => [
-                        qw(remotePortal remoteCookieName remoteGlobalStorage remoteGlobalStorageOptions)
+                        qw(remotePortal remoteCookieName remoteGlobalStorage cn:remoteGlobalStorageOptions)
                     ],
                     remotePortal        => 'text:/remotePortal',
                     remoteCookieName    => 'text:/remoteCookieName',
                     remoteGlobalStorage => 'text:/remoteGlobalStorage',
-                    remoteGlobalStorageOptions =>
-                      { _nodes => ['hash:/remoteGlobalStorageOptions'], },
+                    remoteGlobalStorageOptions => {
+                        _nodes =>
+                          ['hash:/remoteGlobalStorageOptions:default:btext'],
+                        _js   => 'hashRoot',
+                        _help => 'default',
+                    },
                 },
 
                 # Proxy
@@ -523,11 +536,12 @@ sub struct {
                   'text:/timeoutActivity:timeoutActivity:timeoutActivityParams',
 
                 sessionStorage => {
-                    _nodes        => [qw(globalStorage globalStorageOptions)],
+                    _nodes => [qw(globalStorage cn:globalStorageOptions)],
                     globalStorage => 'text:/globalStorage',
                     globalStorageOptions => {
-                        _nodes => ['hash:/globalStorageOptions'],
-                        _js    => 'hashRoot'
+                        _nodes => ['hash:/globalStorageOptions:storage:btext'],
+                        _js    => 'hashRoot',
+                        _help  => 'storage',
                     },
                 },
 
@@ -560,14 +574,17 @@ sub struct {
 
                 notifications => {
                     _nodes => [
-                        qw(notification notificationStorage notificationStorageOptions)
+                        qw(notification notificationStorage cn:notificationStorageOptions)
                     ],
                     _help                      => 'notifications',
                     notification               => 'bool:/notification',
                     notificationStorage        => 'text:/notificationStorage',
                     notificationStorageOptions => {
-                        _nodes => ['hash:/notificationStorageOptions'],
-                        _js    => 'hashRoot'
+                        _nodes => [
+'hash:/notificationStorageOptions:notifications:btext'
+                        ],
+                        _js   => 'hashRoot',
+                        _help => 'notifications',
                     },
                 },
 
@@ -893,7 +910,7 @@ sub struct {
             # ADVANCED SAML PARAMETERS
             samlAdvanced => {
                 _nodes => [
-                    qw(samlIdPResolveCookie samlMetadataForceUTF8 samlUserDBIdentityKey samlStorage n:samlStorageOptions)
+                    qw(samlIdPResolveCookie samlMetadataForceUTF8 samlUserDBIdentityKey samlStorage cn:samlStorageOptions)
                 ],
 
                 samlIdPResolveCookie  => 'text:/samlIdPResolveCookie',
@@ -901,8 +918,9 @@ sub struct {
                 samlUserDBIdentityKey => 'text:/samlUserDBIdentityKey',
                 samlStorage           => 'text:/samlStorage',
                 samlStorageOptions    => {
-                    _nodes => ['hash:/samlStorageOptions'],
+                    _nodes => ['hash:/samlStorageOptions:default:btext'],
                     _js    => 'hashRoot',
+                    _help  => 'default',
                 },
 
             },
@@ -1298,6 +1316,11 @@ sub testStruct {
         # CAS
         CAS_url           => $testNotDefined,
         CAS_CAFile        => $testNotDefined,
+        CAS_pgtFile         => $testNotDefined,
+        CAS_proxiedServices => {
+            keyTest    => qr/^\w+$/,
+            keyMsgFail => 'Bad CAS proxied service identifier',
+        },
 
         # Remote
         remotePortal        => $testNotDefined,
@@ -1358,6 +1381,7 @@ sub defaultConf {
     my $self = shift;
     return {
         authentication  => 'LDAP',
+        CAS_pgtFile         => '/tmp/pgt.txt',
         cda             => '0',
         cookieName      => 'lemonldap',
         domain          => 'example.com',
