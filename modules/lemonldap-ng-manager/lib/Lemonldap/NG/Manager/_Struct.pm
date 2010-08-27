@@ -419,6 +419,12 @@ sub struct {
                     SSLRequire   => 'bool:/SSLRequire',
                 },
 
+                # OpenID
+                openIDParams => {
+                    _nodes       => [qw(openIdSecret)],
+                    openIdSecret => 'text:/openIdSecret',
+                },
+
                 # CAS
                 casParams => {
                     _nodes => [
@@ -1422,8 +1428,8 @@ sub defaultConf {
         issuerDBCASPath     => '^/cas/',
         issuerDBCASRule          => '1',
         issuerDBOpenIDActivation => '0',
-        issuerDBOpenIDPath       => '^/cas/',
-        issuerDBOpenIDRule       => '1',
+        issuerDBOpenIDPath     => '^/openidserver/',
+        issuerDBOpenIDRule     => '1',
         ldapBase      => 'dc=example,dc=com',
         ldapPort      => '389',
         ldapPwdEnc    => 'utf-8',

@@ -158,7 +158,18 @@ elsif ( my $info = $portal->info() ) {
     );
 }
 
-# 2.4 Authentication has been refused OR this is the first access
+# 2.4 OpenID menu page
+elsif ( $portal->{error} == PE_OPENID_EMPTY ) {
+    $skinfile       = 'openid.tpl';
+    my $p = $portal->{portal}.$portal->{issuerDBOpenIDPath};
+    $p =~ s#(?<!:)/\^?/#/#g;
+    %templateParams = (
+        SKIN            => $skin,
+        PROVIDERURI => $p,
+    );
+}
+
+# 2.5 Authentication has been refused OR this is the first access
 else {
     $skinfile       = 'login.tpl';
     %templateParams = (

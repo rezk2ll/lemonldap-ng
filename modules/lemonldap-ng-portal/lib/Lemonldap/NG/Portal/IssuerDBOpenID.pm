@@ -17,6 +17,8 @@ sub issuerDBInit {
     my $self = shift;
     eval { require Net::OpenID::Server };
     $self->abort( 'Unable to load Net::OpenID::Server', $@ ) if ($@);
+
+    # TODO secret
     $self->lmLog(
 'OpenID provider module is not fully functionnal now, use for test purpose only',
         'warn'
@@ -29,10 +31,93 @@ sub issuerDBInit {
 # @return Lemonldap::NG::Portal error code
 sub issuerForUnAuthUser {
     my $self = shift;
-    if ( $ENV{PATH_INFO} =~ /^\/openid/ ) {
 
-        # TODO: store GET and POST params somewhere...
+    # Restore datas
+    $self->restoreOpenIDprm();
+    my $mode = $self->param('openid.mode');
+
+    print STDERR Dumper($self->{_prm}); use Data::Dumper;
+    unless($mode) {
+        $self->lmLog( 'OpenID SP test', 'debug' );
+        return PE_OPENID_EMPTY;
     }
+    
+    my ( $type, $data );
+    if($mode eq 'associate') {
+        return $self->_openIDResponse( $self->openIDServer->_mode_associate() );
+    }
+    elsif($mode eq 'check_authentication'){
+        return $self->_openIDResponse( $self->openIDServer->_mode_check_authentication() );
+    }
+    else {
+        # TODO: store datas
+        $self->setHiddenFormValue('openidprm',Storable::nfreeze($self->{_prm}));
+        return PE_OK;
+    }
+}
+
+sub restoreOpenIDprm {
+    my $self   = shift;
+    if(my $tmp = $self->getHiddenFormValue('openidprm')){
+        eval { $tmp = Storable::thaw($tmp); $self->{_prm}->{$_} = $tmp->{$_} foreach(keys %$tmp);};
+    }
+}
+
+sub openIDServer {
+    my $self = shift;
+    return $self->{_openidserver} if($self->{_openidserver});
+    $self->{_openidPortal} = $self->{portal} . "/openidserver/";
+    $self->{_openidPortal} =~ s#(?<!:)//#/#g;
+
+    $self->{_openidserver} = Net::OpenID::Server->new(
+
+        # TODO
+        server_secret=> sub{return 'azertt'},
+        post_args    => $self->{_prm},
+        get_args     => $self->{_prm},
+        endpoint_url => $self->{_openidPortal},
+        setup_url    => $self->{_openidPortal},
+        get_user     => sub {
+            print STDERR "############### 0#\n";
+            return $self->{sessionInfo}
+              ->{ $self->{OpenIdAttr} || $self->{whatToTrace} };
+        },
+        get_identity => sub {
+            my ( $u, $identity ) = @_;
+            print STDERR "############### 1 $u, $identity#\n";
+            return $identity unless $u;
+            return $self->{_openidPortal} . $u->username;
+        },
+        is_identity => sub {
+            my ( $u, $identity ) = @_;
+            return 0 unless($u and $identity);
+            return $u eq ( split '/', $identity )[-1];
+        },
+        is_trusted => sub {
+            my ( $u, $trust_root, $is_identity ) = @_;
+            print STDERR "############### 3 $u, $trust_root, $is_identity#\n";
+            return $is_identity;
+        }
+    );
+    return $self->{_openidserver};
+}
+
+sub _openIDResponse {
+    my ($self,$type,$data)=splice @_;
+    if ( $type eq 'redirect' ) {
+        $self->lmLog( 'OpenID redirection', 'debug' );
+        print $self->redirect($data);
+    }
+    elsif ( $type eq 'setup' ) {
+        $self->lmLog( 'OpenID setup', 'debug' );
+        $self->abort('Must never append !!!');
+    }
+    else {
+        $self->lmLog( 'OpenID generated page', 'debug' );
+        print $self->header($type);
+        print $data;
+    }
+    $self->quit();
     PE_OK;
 }
 
@@ -41,53 +126,9 @@ sub issuerForUnAuthUser {
 # @return Lemonldap::NG::Portal error code
 sub issuerForAuthUser {
     my $self   = shift;
-    my $portal = $self->{portal};
-    $portal .= 'index.pl' if ( $portal =~ /\/$/ );
+    $self->restoreOpenIDprm();
 
-    #TODO: Catch openIdSetup
-    my $server = Net::OpenID::Server->new(
-        post_args    => $self->params(),
-        get_args     => $self->params(),
-        endpoint_url => $portal . "/openid/",
-        setup_url    => $self->{portal},
-        get_user     => sub {
-            return $self->{sessionInfo}
-              ->{ $self->{OpenIdAttr} || $self->{whatToTrace} };
-        },
-        get_identity => sub {
-            my ( $u, $identity ) = @_;
-            return $identity unless $u;
-            return $portal . "/openid/" . $u->username;
-        },
-        is_identity => sub {
-            my ( $u, $identity ) = @_;
-            return $u && $u->username eq ( split '/', $identity )[-1];
-        },
-        is_trusted => sub {
-            my ( $u, $trust_root, $is_identity ) = @_;
-            return $is_identity;
-        }
-    );
-
-    my ( $type, $data ) = $server->handle_page();
-
-    if ( $type eq 'redirect' ) {
-        print $self->redirect($data);
-        $self->quit();
-    }
-    elsif ( $type eq 'setup' ) {
-
-        # TODO: what is in $data;
-        print $self->redirect( $portal
-              . "?openIdSetup=1&trust_root=$data->{trust_root}&return_to=$data->{return_to}"
-        );
-        print $self->quit();
-    }
-    else {
-        print $self->header($type);
-        print $data;
-        $self->quit();
-    }
+    $self->_openIDResponse( $self->openIDServer->handle_page() );
 
     PE_OK;
 }
