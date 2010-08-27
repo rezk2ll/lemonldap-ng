@@ -19,7 +19,7 @@ sub authInit {
     # require Perl module
     eval { require AuthCAS };
     if ($@) {
-        $self->lmLog( "Module AuthCAS not found in @INC", 'error' );
+        $self->lmLog( "CAS: Module AuthCAS not found in @INC", 'error' );
         return PE_ERROR;
     }
 
@@ -46,6 +46,42 @@ sub extractFormInfo {
         $local_url .= ( $local_url =~ /\?/ ? '&' : '?' ) . $url_param;
     }
 
+    # Act as a proxy if proxied services configured
+    my $proxy = ref( $self->{CAS_proxiedServices} ) ? 1 : 0;
+
+    if ($proxy) {
+        $self->lmLog( "CAS: Proxy mode activated", 'debug' );
+        my $proxy_url = $self->url() . '?casProxy=1';
+        $cas->proxyMode(
+            pgtFile        => $self->{CAS_pgtFile},
+            pgtCallbackUrl => $proxy_url
+        );
+    }
+
+    # Catch proxy callback
+    if ( $self->param('casProxy') ) {
+        $self->lmLog( "CAS: Proxy callback detected", 'debug' );
+
+        my $pgtIou = $self->param('pgtIou');
+        my $pgtId  = $self->param('pgtId');
+
+        if ( $pgtIou and $pgtId ) {
+
+            # Store pgtId and pgtIou
+            unless ( $cas->storePGT( $pgtIou, $pgtId ) ) {
+                $self->lmLog( "CAS: error " . &AuthCAS::get_errors(), 'error' );
+            }
+            else {
+                $self->lmLog( "CAS: Store pgtIou $pgtIou and pgtId $pgtId",
+                    'debug' );
+            }
+        }
+
+        # Exit
+        print $self->header();
+        $self->quit();
+    }
+
     # Build login URL
     my $login_url = $cas->getServerLoginURL($local_url);
 
@@ -54,18 +90,53 @@ sub extractFormInfo {
 
     # Unless a ticket has been found, we redirect the user
     unless ($ticket) {
-        $self->lmLog( "Redirect user to $login_url", 'debug' );
+        $self->lmLog( "CAS: Redirect user to $login_url", 'debug' );
         $self->{urldc} = $login_url;
         return $self->_subProcess(qw(autoRedirect));
     }
 
+    $self->lmLog( "CAS: Service Ticket received: $ticket", 'debug' );
+
     # Ticket found, try to validate it
     unless ( $self->{user} = $cas->validateST( $local_url, $ticket ) ) {
-        $self->lmLog( "CAS error: " . &AuthCAS::get_errors(), 'error' );
+        $self->lmLog( "CAS: error " . &AuthCAS::get_errors(), 'error' );
         return PE_ERROR;
     }
     else {
-        $self->lmLog( "CAS user found: " . $self->{user}, 'debug' );
+        $self->lmLog( "CAS: user " . $self->{user} . "found", 'debug' );
+    }
+
+    # Request proxy tickets for proxied services
+    if ($proxy) {
+
+        # Check we received a PGT
+        my $pgtId = $cas->{pgtId};
+
+        unless ($pgtId) {
+            $self->lmLog( "CAS: Proxy mode activated, but no PGT received",
+                'error' );
+            return PE_ERROR;
+        }
+
+        # Get a proxy ticket for each proxied service
+        foreach ( keys %{ $self->{CAS_proxiedServices} } ) {
+            my $service = $self->{CAS_proxiedServices}->{$_};
+            my $pt      = $cas->retrievePT($service);
+
+            unless ($pt) {
+                $self->lmLog(
+                    "CAS: No proxy ticket recevied for service $service",
+                    'error' );
+                return PE_ERROR;
+            }
+
+            $self->lmLog( "CAS: Received proxy ticket $pt for service $service",
+                'debug' );
+
+            # Store it in session
+            $self->{sessionInfo}->{ '_casPT' . $_ } = $pt;
+        }
+
     }
 
     PE_OK;
