@@ -182,7 +182,15 @@ sub authLogout {
     PE_OK;
 }
 
+## @apmethod boolean authForce()
+# Does nothing
+# @return result
+sub authForce {
+    return 0;
+}
+
 1;
+
 __END__
 
 =head1 NAME
