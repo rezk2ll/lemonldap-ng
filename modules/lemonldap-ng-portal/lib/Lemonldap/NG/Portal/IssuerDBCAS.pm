@@ -506,8 +506,21 @@ sub issuerForAuthUser {
         if ( $renew eq 'true' ) {
 
         # Authentication must be replayed
-        # TODO
-            $self->lmLog( "Authentication renewal not managed", 'warn' );
+            $self->lmLog( "Authentication renew requested", 'debug' );
+            $self->{updateSession} = 1;
+            $self->{error}         = $self->_subProcess(
+                qw(issuerDBInit authInit issuerForUnAuthUser extractFormInfo
+                  userDBInit getUser setAuthSessionInfo setSessionInfo
+                  setMacros setLocalGroups setGroups authenticate
+                  store authFinish)
+            );
+
+            # Return error if any
+            if ( $self->{error} > 0 ) {
+                $self->lmLog( "Error in authentication renew process",
+                    'error' );
+                return $self->{error};
+            }
         }
 
         # If no service defined, exit
@@ -522,7 +535,10 @@ sub issuerForAuthUser {
 
         my $casServiceSession = $self->getCasSession();
 
-        return PE_ERROR unless $casServiceSession;
+        unless ($casServiceSession) {
+            $self->lmLog( "Unable to create CAS session", 'error' );
+            return PE_ERROR;
+        }
 
         $casServiceSession->{type}    = 'casService';
         $casServiceSession->{service} = $service;
