@@ -126,6 +126,7 @@ use constant {
     PM_REDIRECTION           => 12,
     PM_BACKTOSP              => 13,
     PM_BACKTOCASURL          => 14,
+    PM_LOGOUT                => 15,
 };
 
 # EXPORTER PARAMETERS
@@ -148,7 +149,7 @@ our @EXPORT = qw( PE_IMG_NOK PE_IMG_OK PE_INFO PE_REDIRECT PE_DONE PE_OK
   PM_USER PM_DATE PM_IP PM_SESSIONS_DELETED PM_OTHER_SESSIONS
   PM_REMOVE_OTHER_SESSIONS PM_PP_GRACE PM_PP_EXP_WARNING
   PM_SAML_IDPSELECT PM_SAML_IDPCHOOSEN PM_REMEMBERCHOICE PM_SAML_SPLOGOUT
-  PM_REDIRECTION PM_BACKTOSP PM_BACKTOCASURL
+  PM_REDIRECTION PM_BACKTOSP PM_BACKTOCASURL PM_LOGOUT
 );
 our %EXPORT_TAGS = ( 'all' => [ @EXPORT, 'import' ], );
 
@@ -1186,7 +1187,9 @@ sub controlExistingSession {
             and $id = $cookies{ $self->{cookieName} }->value )
       )
     {
-        my $h = $self->getApacheSession($id) or return PE_OK;
+        my $h = $self->getApacheSession($id);
+
+        if ( defined $h ) {
         %{ $self->{sessionInfo} } = %$h;
 
         # Logout if required
@@ -1202,7 +1205,10 @@ sub controlExistingSession {
             my $issuerDBList = $self->{sessionInfo}->{_issuerDB};
             if ( defined $issuerDBList ) {
                 foreach my $issuerDBtype (
-                    split( /\Q$self->{multiValuesSeparator}\E/, $issuerDBList )
+                        split(
+                            /\Q$self->{multiValuesSeparator}\E/,
+                            $issuerDBList
+                        )
                   )
                 {
                     my $module_name =
@@ -1210,11 +1216,13 @@ sub controlExistingSession {
 
                     $self->lmLog(
                         "Process logout for issuerDB module $issuerDBtype",
-                        'debug' );
+                            'debug'
+                        );
 
                     # Load current IssuerDB module
                     unless ( $self->loadModule($module_name) ) {
-                        $self->lmLog( "Unable to load $module_name", 'error' );
+                            $self->lmLog( "Unable to load $module_name",
+                                'error' );
                         next;
                     }
 
@@ -1228,9 +1236,51 @@ sub controlExistingSession {
             # Call authentication logout
             eval { $self->{error} = $self->_sub('authLogout'); };
             if ($@) {
-                $self->lmLog( "Error when calling authLogout: $@", 'debug' );
+                    $self->lmLog( "Error when calling authLogout: $@",
+                        'debug' );
             }
             return $self->{error} if $self->{error} > 0;
+
+                # Collect logout services and build hidden iFrames
+                if ( defined $self->{logoutServices} ) {
+
+                    $self->lmLog(
+                        "Create iFrames to forward logout to services",
+                        'debug' );
+
+                    $self->info(
+                        "<h3>"
+                          . &Lemonldap::NG::Portal::_i18n::msg
+                          ( Lemonldap::NG::Portal::Simple::PM_LOGOUT,
+                            $ENV{HTTP_ACCEPT_LANGUAGE} )
+                          . "</h3>"
+                    );
+
+                    foreach ( keys %{ $self->{logoutServices} } ) {
+                        my $logoutServiceName = $_;
+                        my $logoutServiceUrl =
+                          $self->{logoutServices}->{$logoutServiceName};
+
+                        $self->lmLog(
+"Find logout service $logoutServiceName ($logoutServiceUrl)",
+                            'debug'
+                        );
+
+                        my $iframe =
+                            "<iframe src=\"$logoutServiceUrl\""
+                          . " alt=\"$logoutServiceName\" marginwidth=\"0\""
+                          . " marginheight=\"0\" scrolling=\"no\" style=\"border: none;display: hidden;margin: 0\""
+                          . " width=\"0\" height=\"0\" frameborder=\"0\">"
+                          . "</iframe>";
+
+                        $self->info($iframe);
+                    }
+
+                    # Redirect on logout page if no other target defined
+                    if ( !$self->{urldc} and !$self->{postUrl} ) {
+                        $self->{urldc} = $ENV{SCRIPT_NAME} . "?logout=1";
+                    }
+                }
 
             # Redirect or Post if asked by authLogout
             $self->_subProcess(qw(autoRedirect))
@@ -1262,6 +1312,13 @@ sub controlExistingSession {
             return $r;
         }
     }
+    }
+
+    # Display logout success if logout asked
+    # and we do not have valid session
+    return PE_LOGOUT_OK if $self->param('logout');
+
+    # Else continue authentication process
     PE_OK;
 }
 

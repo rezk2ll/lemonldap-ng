@@ -584,7 +584,7 @@ sub struct {
             # OTHER PARAMETERS
             advancedParams => {
                 _nodes => [
-                    qw(customFunctions n:soap n:notifications n:passwordManagement n:security n:redirection n:specialHandlers)
+                    qw(customFunctions n:soap n:notifications n:passwordManagement n:security n:redirection n:specialHandlers cn:logoutServices)
                 ],
 
                 customFunctions => 'text:/customFunctions',
@@ -660,6 +660,12 @@ sub struct {
                         sympaSecret  => 'text:/sympaSecret',
                         sympaMailKey => 'text:/sympaMailKey',
                     },
+                },
+
+                logoutServices => {
+                    _nodes => ['hash:/logoutServices:default:btext'],
+                    _js    => 'hashRoot',
+                    _help  => 'default',
                 },
 
             },
@@ -1148,6 +1154,10 @@ sub testStruct {
                     1;
                 },
             },
+        },
+        logoutServices => {
+            keyTest    => qr/^\w+$/,
+            keyMsgFail => 'Bad name',
         },
         macros => {
             keyTest    => qr/^[_a-zA-Z]\w*$/,

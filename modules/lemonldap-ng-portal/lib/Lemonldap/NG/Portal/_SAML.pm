@@ -2612,11 +2612,11 @@ sub sendLogoutRequestToProviders {
     $self->resetProviderIdIndex($logout);
 
     # Header of the block which will be displayed to the user, if needed.
-    $info .= '<h2>'
+    $info .= '<h3>'
       . &Lemonldap::NG::Portal::_i18n::msg
       ( Lemonldap::NG::Portal::Simple::PM_SAML_SPLOGOUT,
         $ENV{HTTP_ACCEPT_LANGUAGE} )
-      . '</h2>'
+      . '</h3>'
       . '<table class="sloState">';
 
     # Foreach SP found in session, get it from configuration, and send the

@@ -98,6 +98,10 @@ sub confUpload {
         # Manage new keys
         if ($NK) {
 
+            # If a strange '5' appears at the end of value, remove it
+            # -> javascript base64 bug?
+            $id =~ s/5$//;
+
             # Special case: avoid bug with node created from parent node
             if ( $id =~
 /^(virtualHosts|samlIDPMetaDataExportedAttributes|samlSPMetaDataExportedAttributes)/
@@ -105,9 +109,6 @@ sub confUpload {
             {
                 $self->lmLog( "Special trigger for $id (attribute $name)",
                     'debug' );
-
-                # A strange '5' appears at the end of value, remove it
-                $id =~ s/5$//;
 
                 # Virtual Host header
                 $id =~

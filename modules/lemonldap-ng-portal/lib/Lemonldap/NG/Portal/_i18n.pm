@@ -353,6 +353,7 @@ sub error_ro {
 # * PM_REDIRECTION             12
 # * PM_BACKTOSP                13
 # * PM_BACKTOCASURL            14
+# * PM_LOGOUT                  15
 
 sub msg_en {
     use utf8;
@@ -372,6 +373,7 @@ sub msg_en {
         'Redirection in progress...',
         'Go back to service provider',
 'The application you just logged out of has provided a link it would like you to follow',
+        'Logout from other applications...',
     ];
 }
 
@@ -393,6 +395,7 @@ sub msg_fr {
         'Redirection en cours...',
         'Retourner sur le fournisseur de service',
 'Le service duquel vous arrivez a fourni un lien que vous êtes invité à suivre',
+        'Déconnexion des autres applications...'
     ];
 }
 
