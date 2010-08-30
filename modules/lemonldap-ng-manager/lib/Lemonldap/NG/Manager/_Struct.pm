@@ -428,10 +428,12 @@ sub struct {
                 # CAS
                 casParams => {
                     _nodes => [
-                        qw(CAS_url CAS_CAFile CAS_pgtFile cn:CAS_proxiedServices)
+                        qw(CAS_url CAS_CAFile CAS_renew CAS_gateway CAS_pgtFile cn:CAS_proxiedServices)
                     ],
                     CAS_url           => 'text:/CAS_url',
                     CAS_CAFile        => 'text:/CAS_CAFile',
+                    CAS_renew           => 'bool:/CAS_renew',
+                    CAS_gateway         => 'bool:/CAS_gateway',
                     CAS_pgtFile         => 'text:/CAS_pgtFile',
                     CAS_proxiedServices => {
                         _nodes => ['hash:/CAS_proxiedServices:default:btext'],
@@ -1350,6 +1352,8 @@ sub testStruct {
         # CAS
         CAS_url           => $testNotDefined,
         CAS_CAFile        => $testNotDefined,
+        CAS_renew           => $boolean,
+        CAS_gateway         => $boolean,
         CAS_pgtFile         => $testNotDefined,
         CAS_proxiedServices => {
             keyTest    => qr/^\w+$/,

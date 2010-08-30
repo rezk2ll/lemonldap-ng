@@ -1105,14 +1105,14 @@ sub controlUrlOrigin {
 
         # REJECT NON BASE64 URL except for CAS IssuerDB
         if ( $self->get_module('issuer') ne "CAS" ) {
-        if ( $url =~ m#[^A-Za-z0-9\+/=]# ) {
-            $self->lmLog( "XSS attack detected (param: url | value: $url)",
-                "warn" );
-            return PE_BADURL;
-        }
+            if ( $url =~ m#[^A-Za-z0-9\+/=]# ) {
+                $self->lmLog( "XSS attack detected (param: url | value: $url)",
+                    "warn" );
+                return PE_BADURL;
+            }
 
-        $self->{urldc} = decode_base64($url);
-        $self->{urldc} =~ s/[\r\n]//sg;
+            $self->{urldc} = decode_base64($url);
+            $self->{urldc} =~ s/[\r\n]//sg;
         }
         else { $self->{urldc} = $url; }
 
@@ -1218,7 +1218,7 @@ sub controlExistingSession {
                         next;
                     }
 
-                $self->{error} =
+                    $self->{error} =
                       $self->_subProcess( $module_name . "::issuerDBInit",
                         'authInit', $module_name . '::issuerLogout' );
 
@@ -1728,14 +1728,14 @@ sub issuerForAuthUser {
         $self->lmLog( "Applying rule: $rule", 'debug' );
 
         unless ( $self->safe->reval($rule) ) {
-        $self->lmLog(
-                "User  $logged_user"
+            $self->lmLog(
+                "User $logged_user"
                   . " was not allowed to use IssuerDB $issuerDBtype",
-            'warn'
-        );
+                'warn'
+            );
 
-        return PE_OK;
-    }
+            return PE_OK;
+        }
 
     }
     else {
@@ -1743,7 +1743,7 @@ sub issuerForAuthUser {
     }
 
     $self->lmLog(
-        "User  $logged_user" . " allowed to use IssuerDB $issuerDBtype",
+        "User $logged_user" . " allowed to use IssuerDB $issuerDBtype",
         'debug' );
 
     # Register IssuerDB module in session
@@ -1861,7 +1861,7 @@ sub autoPost {
     if ( $self->info() ) {
         $self->{infoFormMethod} = $self->param('method') || "post";
         $self->clearHiddenFormValue();
-        $self->{urldc}          = $url;
+        $self->{urldc} = $url;
         foreach ( keys %$formFields ) {
             $self->setHiddenFormValue( $_, $formFields->{$_}, "", 0 );
         }

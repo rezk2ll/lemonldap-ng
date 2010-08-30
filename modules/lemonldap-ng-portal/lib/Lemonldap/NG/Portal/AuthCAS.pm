@@ -84,6 +84,8 @@ sub extractFormInfo {
 
     # Build login URL
     my $login_url = $cas->getServerLoginURL($local_url);
+    $login_url .= '&renew=true'   if $self->{CAS_renew};
+    $login_url .= '&gateway=true' if $self->{CAS_gateway};
 
     # Check Service Ticket
     my $ticket = $self->param('ticket');
