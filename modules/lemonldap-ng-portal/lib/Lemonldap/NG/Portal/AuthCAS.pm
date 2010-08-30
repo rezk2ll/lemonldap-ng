@@ -32,6 +32,7 @@ sub authInit {
 # @return Lemonldap::NG::Portal constant
 sub extractFormInfo {
     my $self = shift;
+
     my $cas  = new AuthCAS(
         casUrl => $self->{CAS_url},
         CAFile => $self->{CAS_CAFile},
@@ -105,7 +106,7 @@ sub extractFormInfo {
         return PE_ERROR;
     }
     else {
-        $self->lmLog( "CAS: user " . $self->{user} . " found", 'debug' );
+        $self->lmLog( "CAS: User " . $self->{user} . " found", 'debug' );
     }
 
     # Request proxy tickets for proxied services
@@ -179,7 +180,18 @@ sub authFinish {
 sub authLogout {
     my $self = shift;
 
-    # TODO
+    my $cas = new AuthCAS(
+        casUrl => $self->{CAS_url},
+        CAFile => $self->{CAS_CAFile},
+    );
+
+    # Build CAS logout URL
+    my $logout_url = $cas->getServerLogoutURL( $self->url() );
+
+    $self->lmLog( "Build CAS logout URL: $logout_url", 'debug' );
+
+    # Register CAS logout URL in logoutServices
+    $self->{logoutServices}->{CASserver} = $logout_url;
 
     PE_OK;
 }
@@ -210,8 +222,6 @@ compatible portals with CAS authentication. EXPERIMENTAL AND NOT FINISHED!
          authentication    => 'CAS',
          CAS_url           => 'https://cas.myserver',
          CAS_CAFile        => '/etc/httpd/conf/ssl.crt/ca-bundle.crt',
-         CAS_loginUrl      => 'http://myserver/app.cgi',
-         CAS_validationUrl => 'http://myserver/app.cgi',
     );
 
   if($portal->process()) {
