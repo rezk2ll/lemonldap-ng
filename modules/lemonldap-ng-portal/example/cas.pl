@@ -36,7 +36,9 @@ else {
     # First time access
     unless ($ticket) {
         print $cgi->h1("Click below to use CAS");
-        print $cgi->h2("<a href=\"$login_url\">CAS LOGIN</a>");
+        print $cgi->h2("<a href=\"$login_url\">Simple login</a>");
+        print $cgi->h2("<a href=\"$login_url&renew=true\">Renew login</a>");
+        print $cgi->h2("<a href=\"$login_url&gateway=true\">Gateway login</a>");
     }
 
     # Ticket receveived
@@ -80,6 +82,8 @@ else {
         else {
             print $cgi->h2("Error: Unable to get proxy granting ticket");
         }
+
+	print $cgi->h2("<a href=\"".$cgi->url."\">Home</a>");
 
     }
 

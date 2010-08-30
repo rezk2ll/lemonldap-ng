@@ -153,8 +153,16 @@ sub issuerForUnAuthUser {
         if ( $renew eq 'true' ) {
 
             # We should check the ST was delivered with primary credentials
-            # TODO
-            $self->lmLog( "Renew parameter not managed", 'warn' );
+            $self->lmLog( "Renew flag detected ", 'debug' );
+
+            unless ( $casServiceSession->{renew} ) {
+                $self->lmLog(
+"Authentication renew requested, but not done in former authentication process",
+                    'error'
+                );
+                untie %$casServiceSession;
+                $self->returnCasValidateError();
+            }
         }
 
         # Open local session
@@ -268,8 +276,17 @@ sub issuerForUnAuthUser {
         if ( $renew eq 'true' ) {
 
             # We should check the ST was delivered with primary credentials
-            # TODO
-            $self->lmLog( "Renew parameter not managed", 'warn' );
+            $self->lmLog( "Renew flag detected ", 'debug' );
+
+            unless ( $casServiceSession->{renew} ) {
+                $self->lmLog(
+"Authentication renew requested, but not done in former authentication process",
+                    'error'
+                );
+                untie %$casServiceSession;
+                $self->returnCasValidateError();
+            }
+
         }
 
         # Proxies (for PROXY VALIDATE only)
@@ -529,6 +546,17 @@ sub issuerForAuthUser {
             return PE_OK;
         }
 
+        # Check last authentication time to decide if
+        # the authentication is recent or not
+        my $casRenewFlag = 0;
+        my $last_authn_utime = $self->{sessionInfo}->{_lastAuthnUTime} || 0;
+        if ( time() - $last_authn_utime < $self->{portalForceAuthnInterval} ) {
+            $self->lmLog(
+                "Authentication is recent, will set CAS renew flag to true",
+                'debug' );
+            $casRenewFlag = 1;
+        }
+
         # Create a service ticket
         $self->lmLog( "Create a CAS service ticket for service $service",
             'debug' );
@@ -542,6 +570,7 @@ sub issuerForAuthUser {
 
         $casServiceSession->{type}    = 'casService';
         $casServiceSession->{service} = $service;
+        $casServiceSession->{renew}   = $casRenewFlag;
         $casServiceSession->{_cas_id} = $session_id;
         $casServiceSession->{_utime}  = $time;
 
