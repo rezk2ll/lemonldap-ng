@@ -103,7 +103,7 @@ sub extractFormInfo {
         return PE_ERROR;
     }
     else {
-        $self->lmLog( "CAS: user " . $self->{user} . "found", 'debug' );
+        $self->lmLog( "CAS: user " . $self->{user} . " found", 'debug' );
     }
 
     # Request proxy tickets for proxied services
@@ -161,6 +161,24 @@ sub setAuthSessionInfo {
 # Does nothing.
 # @return Lemonldap::NG::Portal constant
 sub authenticate {
+    PE_OK;
+}
+
+## @apmethod int authFinish()
+# Does nothing.
+# @return Lemonldap::NG::Portal constant
+sub authFinish {
+    PE_OK;
+}
+
+## @apmethod int authLogout()
+# Call CAS server logout URL
+# @return Lemonldap::NG::Portal constant
+sub authLogout {
+    my $self = shift;
+
+    # TODO
+
     PE_OK;
 }
 
