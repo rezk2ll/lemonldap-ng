@@ -2024,7 +2024,9 @@ sub issuerLogout {
     # Verify that logout response is correctly sent. If we have to wait for
     # providers during HTTP-REDIRECT process, return PE_INFO to notify to wait
     # for them.
+    # Redirect on logout page when all is done.
     if ( $self->sendLogoutRequestToProviders($logout) ) {
+        $self->{urldc} = $ENV{SCRIPT_NAME} . "?logout=1";
         return PE_INFO;
     }
 
