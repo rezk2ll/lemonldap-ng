@@ -93,6 +93,7 @@ example/skins/impact/login.tpl
 example/skins/impact/mail.tpl
 example/skins/impact/menu.tpl
 example/skins/impact/notification.tpl
+example/skins/impact/openid.tpl
 example/skins/impact/password.tpl
 example/skins/impact/README
 example/skins/pastel/confirm.tpl
@@ -106,10 +107,12 @@ example/skins/pastel/login.tpl
 example/skins/pastel/mail.tpl
 example/skins/pastel/menu.tpl
 example/skins/pastel/notification.tpl
+example/skins/pastel/openid.tpl
 example/skins/pastel/password.tpl
 example/skins/pastel/styles.css
 example/slavePortal.pl
 lib/Lemonldap/NG/Portal.pm
+lib/Lemonldap/NG/Portal/_CAS.pm
 lib/Lemonldap/NG/Portal/_DBI.pm
 lib/Lemonldap/NG/Portal/_i18n.pm
 lib/Lemonldap/NG/Portal/_LDAP.pm
@@ -134,6 +137,7 @@ lib/Lemonldap/NG/Portal/AuthSAML.pm
 lib/Lemonldap/NG/Portal/AuthSSL.pm
 lib/Lemonldap/NG/Portal/AuthTwitter.pm
 lib/Lemonldap/NG/Portal/CDA.pm
+lib/Lemonldap/NG/Portal/IssuerDBCAS.pm
 lib/Lemonldap/NG/Portal/IssuerDBNull.pm
 lib/Lemonldap/NG/Portal/IssuerDBOpenID.pm
 lib/Lemonldap/NG/Portal/IssuerDBSAML.pm
@@ -176,4 +180,5 @@ t/60-Lemonldap-NG-Portal-IssuerDBSAML.t
 t/61-Lemonldap-NG-Portal-SAML.t
 t/63-Lemonldap-NG-Portal-AuthSAML.t
 t/64-Lemonldap-NG-Portal-UserDBSAML.t
+t/65-Lemonldap-NG-Portal-IssuerDBCAS.t
 t/99-pod.t
