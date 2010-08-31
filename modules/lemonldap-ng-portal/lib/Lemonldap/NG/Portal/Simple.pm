@@ -1897,6 +1897,7 @@ sub returnSOAPMessage {
     $self->quit() unless $self->{SOAPMessage};
 
     # Print HTTP header and SOAP message
+    binmode( STDOUT, ":bytes" );
     print $self->header( -type => 'application/xml' );
     print $self->{SOAPMessage};
 
