@@ -1,7 +1,6 @@
-debian/tmp/usr/share/perl5/Lemonldap/NG/Manager*
-debian/tmp/usr/share/perl5/auto/Lemonldap/NG/Manager
+/usr/share/perl5/Lemonldap/NG/Manager*
+/usr/share/perl5/auto/Lemonldap/NG/Manager
 debian/manager-apache*.conf /etc/lemonldap-ng
-debian/tmp/usr/share/lemonldap-ng/manager-skins
-debian/tmp/usr/share/lemonldap-ng/sessions-explorer-imgs
-debian/tmp/var/lib/lemonldap-ng/manager
-debian/tmp/usr/share/lemonldap-ng/bin/lmConfigEditor
+/usr/share/lemonldap-ng/manager-skins
+/var/lib/lemonldap-ng/manager
+/usr/share/lemonldap-ng/bin/lmConfigEditor

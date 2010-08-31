@@ -1,8 +1,8 @@
-debian/tmp/usr/share/lemonldap-ng/bin/purgeCentralCache
-debian/tmp/usr/share/lemonldap-ng/portal-skins
-debian/tmp/usr/share/man/man3/Lemonldap::NG::Portal*
-debian/tmp/usr/share/perl5/auto/Lemonldap/NG/Portal
-debian/tmp/usr/share/perl5/Lemonldap/NG/Portal*
-debian/tmp/usr/share/lemonldap-ng/bin/buildPortalWSDL
-debian/tmp/var/lib/lemonldap-ng/portal
+/usr/share/lemonldap-ng/bin/purgeCentralCache
+/usr/share/lemonldap-ng/portal-skins
+/usr/share/man/man3/Lemonldap::NG::Portal*
+/usr/share/perl5/auto/Lemonldap/NG/Portal
+/usr/share/perl5/Lemonldap/NG/Portal*
+/usr/share/lemonldap-ng/bin/buildPortalWSDL
+/var/lib/lemonldap-ng/portal
 debian/portal-apache*.conf /etc/lemonldap-ng

@@ -1,8 +1,8 @@
-debian/tmp/etc/lemonldap-ng/lemonldap-ng.ini
-debian/tmp/etc/lemonldap-ng/for_etc_hosts
-debian/tmp/usr/share/perl5/Lemonldap/NG/Common*
-debian/tmp/usr/share/man/man3/Lemonldap::NG::Common*
-debian/tmp/usr/share/lemonldap-ng/ressources
-debian/tmp/usr/share/lemonldap-ng/bin/convertConfig
-debian/tmp/usr/share/lemonldap-ng/bin/lmMigrateConfFiles2ini
-debian/tmp/var/lib/lemonldap-ng/conf/
+/etc/lemonldap-ng/lemonldap-ng.ini
+/etc/lemonldap-ng/for_etc_hosts
+/usr/share/perl5/Lemonldap/NG/Common*
+/usr/share/man/man3/Lemonldap::NG::Common*
+/usr/share/lemonldap-ng/ressources
+/usr/share/lemonldap-ng/bin/convertConfig
+/usr/share/lemonldap-ng/bin/lmMigrateConfFiles2ini
+/var/lib/lemonldap-ng/conf/
