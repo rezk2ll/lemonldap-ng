@@ -580,6 +580,9 @@ sub issuerForUnAuthUser {
             );
         }
 
+        # Delete relay session
+        eval { tied(%$relayInfos)->delete(); };
+
         # SLO response is OK
         $self->lmLog( "Display OK status for SLO on $spConfKey", 'debug' );
         return PE_IMG_OK;
@@ -613,6 +616,9 @@ sub issuerForUnAuthUser {
         $self->{postUrl} = $relayInfos->{url};
         $self->{postFields}->{'SAMLRequest'} = $relayInfos->{body};
         $self->{postFields}->{'RelayState'}  = $relayInfos->{relayState};
+
+        # Delete relay session
+        eval { tied(%$relayInfos)->delete(); };
 
         $self->_subProcess(qw(autoPost));
 
@@ -714,6 +720,9 @@ sub issuerForUnAuthUser {
         unless ( $session->is_empty() ) {
             $self->setSessionFromDump( $logout, $session->dump );
         }
+
+        # Delete relay session
+        eval { tied(%$relayInfos)->delete(); };
 
         # Send SLO response
         $self->sendLogoutResponseToServiceProvider( $logout, $method );
@@ -844,7 +853,7 @@ sub issuerForUnAuthUser {
             my $samlSessionInfo = $self->getSamlSession($saml_session);
 
             # Get real session
-            my $real_session = $samlSessionInfo->{_id};
+            my $real_session = $samlSessionInfo->{_saml_id};
 
             $self->lmLog( "Retrieve real session $real_session for user $user",
                 'debug' );
@@ -1225,8 +1234,9 @@ sub issuerForAuthUser {
 
             # Get ForceAuthn sessions for this session_id
             my $forceAuthn_sessions =
-              $self->{samlStorage}->searchOn( $self->{samlStorageOptions},
-                "_idForceAuthn", $session_id );
+              $self->{samlStorage}
+              ->searchOn( $self->{samlStorageOptions}, "_saml_id",
+                $session_id );
 
             my $forceAuthn_session;
             my $forceAuthnSessionInfo;
@@ -1281,7 +1291,7 @@ sub issuerForAuthUser {
 
                 unless ($forceAuthn_session) {
                     $forceAuthnSessionInfo->{'_type'}         = "forceAuthn";
-                    $forceAuthnSessionInfo->{'_idForceAuthn'} = $session_id;
+                    $forceAuthnSessionInfo->{'_saml_id'} = $session_id;
                     $forceAuthnSessionInfo->{'_utime'}        = $time;
                     $forceAuthn_session = $forceAuthnSessionInfo->{_session_id};
                     $self->lmLog(
@@ -1676,7 +1686,7 @@ sub issuerForAuthUser {
 
             $samlSessionInfo->{type}    = 'saml';           # Session type
             $samlSessionInfo->{_utime}  = $time;            # Creation time
-            $samlSessionInfo->{_id}     = $session_id;      # SSO session id
+            $samlSessionInfo->{_saml_id} = $session_id;      # SSO session id
             $samlSessionInfo->{_nameID} = $nameid->dump;    # SAML NameID
             $samlSessionInfo->{_sessionIndex} =
               $sessionIndex;                                # SAML SessionIndex
@@ -1875,7 +1885,7 @@ sub issuerForAuthUser {
             # Create SLO status session and get ID
             my $sloStatusSessionInfo = $self->getSamlSession();
             $sloStatusSessionInfo->{type}    = 'sloStatus';
-            $sloStatusSessionInfo->{_utime}  = 'time';
+            $sloStatusSessionInfo->{_utime}  = time;
             $sloStatusSessionInfo->{_logout} = $logout->dump;
             $sloStatusSessionInfo->{_session} =
               $logout->get_session() ? $logout->get_session()->dump : "";

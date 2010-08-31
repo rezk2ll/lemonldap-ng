@@ -1674,7 +1674,7 @@ sub storeArtifact {
     $samlSessionInfo->{_utime}     = time();        # Creation time
     $samlSessionInfo->{ID}         = $id;
     $samlSessionInfo->{message}    = $message;
-    $samlSessionInfo->{session_id} = $session_id if $session_id;
+    $samlSessionInfo->{_saml_id} = $session_id if $session_id;
 
     my $art_session_id = $samlSessionInfo->{_session_id};
 
@@ -1760,7 +1760,7 @@ sub createArtifactResponse {
     $self->lmLog( "Response loaded", 'debug' );
 
     # Try to get Lasso session
-    my $session_id = $art_session->{session_id};
+    my $session_id = $art_session->{_saml_id};
     if ($session_id) {
         $self->lmLog( "Find session_id $session_id in artifact session",
             'debug' );
@@ -2862,7 +2862,7 @@ sub deleteSAMLSecondarySessions {
     # Find SAML sessions
     my $saml_sessions =
       $self->{samlStorage}
-      ->searchOn( $self->{samlStorageOptions}, "_id", $session_id );
+      ->searchOn( $self->{samlStorageOptions}, "_saml_id", $session_id );
 
     if ( my @saml_sessions_keys = keys %$saml_sessions ) {
 

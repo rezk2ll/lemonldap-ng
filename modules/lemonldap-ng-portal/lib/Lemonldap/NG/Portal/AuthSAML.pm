@@ -321,8 +321,8 @@ sub extractFormInfo {
                 $self->setHiddenFormValue( 'SAMLart',
                     $self->{_proxiedArtifact} );
 
-                # Close session
-                untie %$samlSessionInfo;
+                # Delete session
+                eval { tied(%$samlSessionInfo)->delete(); };
             }
 
             return PE_OK;
@@ -548,10 +548,10 @@ sub extractFormInfo {
                     else {
 
                         # Open real session
-                        my $real_session = $sessionInfo->{_id};
+                        my $real_session = $sessionInfo->{_saml_id};
 
                         my $realSessionInfo =
-                          $self->getApacheSession( $sessionInfo->{_id}, 1 );
+                          $self->getApacheSession( $sessionInfo->{_saml_id}, 1 );
 
                   # Get Lasso::Session dump
                   # This value is erased if a next session match the SLO request
@@ -1233,38 +1233,7 @@ sub authLogout {
 
     # Real session was previously deleted,
     # remove corresponding SAML sessions
-    my $local_sessions =
-      $self->{samlStorage}
-      ->searchOn( $self->{samlStorageOptions}, "_id", $session_id );
-
-    if ( my @local_sessions_keys = keys %$local_sessions ) {
-
-        # At least one session was found
-        foreach (@local_sessions_keys) {
-
-            my $local_session = $_;
-
-            # Get session
-            $self->lmLog(
-                "Retrieve SAML session $local_session (linked to $session_id)",
-                'debug'
-            );
-
-            my $sessionInfo = $self->getApacheSession( $local_session, 1 );
-
-            # Delete session
-            my $del_saml_result = $self->_deleteSession($sessionInfo);
-
-            $self->lmLog(
-                "Delete SAML session $local_session result: $del_saml_result",
-                'debug' );
-        }
-    }
-    else {
-
-        # No corresponding session found
-        $self->lmLog( "No SAML session found for $session_id", 'debug' );
-    }
+    $self->deleteSAMLSecondarySessions($session_id);
 
     # Get Lasso Server
     unless ( $self->{_lassoServer} ) {
@@ -1465,7 +1434,7 @@ sub authFinish {
 
     $samlSessionInfo->{type}          = 'saml';            # Session type
     $samlSessionInfo->{_utime}        = $utime;            # Creation time
-    $samlSessionInfo->{_id}           = $id;               # SSO session id
+    $samlSessionInfo->{_saml_id}      = $id;               # SSO session id
     $samlSessionInfo->{_nameID}       = $nameid->dump;     # SAML NameID
     $samlSessionInfo->{_sessionIndex} = $session_index;    # SAML SessionIndex
 
