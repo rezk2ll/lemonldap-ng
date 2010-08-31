@@ -10,6 +10,7 @@ use strict;
 use MIME::Base64;
 use Time::Local;
 use CGI;
+use utf8;
 
 #parameter syslog Indicates syslog facility for logging user actions
 
@@ -317,6 +318,9 @@ sub translate_template {
     $lang = lc($lang);
     $lang =~ s/-/_/g;
     $lang =~ s/^(..).*$/$1/;
+
+    # Decode UTF-8
+    utf8::decode($$text_ref);
 
     # Test if a translation is available for the selected language
     # If not available, return the first translated string
