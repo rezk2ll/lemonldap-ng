@@ -263,6 +263,7 @@ sub new {
 
             # Get current path
             my $url_path = $self->url( -absolute => 1 );
+            $url_path =~ s#^//#/#;
             $self->lmLog(
                 "[IssuerDB activation] Path of current request is $url_path",
                 'debug' );
@@ -1189,7 +1190,7 @@ sub controlExistingSession {
     {
         my $h = $self->getApacheSession($id);
 
-        if ( $h ) {
+        if ($h) {
         %{ $self->{sessionInfo} } = %$h;
 
         # Logout if required
