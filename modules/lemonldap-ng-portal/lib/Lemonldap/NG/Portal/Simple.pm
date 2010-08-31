@@ -1189,7 +1189,7 @@ sub controlExistingSession {
     {
         my $h = $self->getApacheSession($id);
 
-        if ( defined $h ) {
+        if ( $h ) {
         %{ $self->{sessionInfo} } = %$h;
 
         # Logout if required
