@@ -6,6 +6,7 @@ use strict;
 
 my $portal = Lemonldap::NG::Portal::SharedConf->new(
     {
+openIdSecret => 'azertyuii',
 
         # ACCESS TO CONFIGURATION
         # By default, Lemonldap::NG uses the default lemonldap-ng.ini file to
@@ -134,7 +135,7 @@ elsif ( $portal->{error} == PE_CONFIRM ) {
     %templateParams = (
         AUTH_ERROR      => $portal->error,
         AUTH_ERROR_TYPE => $portal->error_type,
-        URL             => $portal->get_url,
+        AUTH_URL        => $portal->get_url,
         MSG             => $portal->info(),
         SKIN            => $skin,
         HIDDEN_INPUTS   => $portal->buildHiddenForm(),
@@ -159,13 +160,17 @@ elsif ( my $info = $portal->info() ) {
 }
 
 # 2.4 OpenID menu page
-elsif ( $portal->{error} == PE_OPENID_EMPTY ) {
+elsif ( $portal->{error} == PE_OPENID_EMPTY or $portal->{error} == PE_OPENID_BADID ) {
     $skinfile       = 'openid.tpl';
     my $p = $portal->{portal}.$portal->{issuerDBOpenIDPath};
     $p =~ s#(?<!:)/\^?/#/#g;
     %templateParams = (
+        AUTH_ERROR            => $portal->error,
+        AUTH_ERROR_TYPE       => $portal->error_type,
         SKIN            => $skin,
         PROVIDERURI => $p,
+        BADID => ($portal->{error} == PE_OPENID_BADID),
+        ID => $portal->{_openidPortal}.$portal->{sessionInfo}->{ $portal->{OpenIdAttr} || $portal->{whatToTrace} }
     );
 }
 

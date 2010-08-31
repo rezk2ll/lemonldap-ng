@@ -120,6 +120,8 @@ __END__
 # * PE_SAML_SESSION_ERROR                59
 # * PE_SAML_LOAD_SP_ERROR                60
 # * PE_SAML_ATTR_ERROR                   61
+# * PE_OPENID_EMPTY                      62
+# * PE_OPENID_BADID                      63
 
 # Not used in errors:
 # * PE_DONE                -1
@@ -193,6 +195,8 @@ sub error_fr {
         "Erreur de communication avec les sessions SAML",
         "Problème au chargement d'un fournisseur de service",
         "Une erreur est survenue lors de l'échange d'attributs SAML",
+        "Ceci est une page OpenID destinée aux servers",
+        "Vous tentez d'utiliser une identité OpenID qui ne vous appartient pas",
     ];
 }
 
@@ -249,20 +253,22 @@ sub error_en {
         'An error occurs when sending mail',
         'A mail has been sent',
         'You have been disconnected',
-        "Undefined SAML error",
-        "Unable to load SAML service",
-        "Problem when loading an identity provider",
-        "An error occured during SAML single sign on",
-        "SAML entity is not known",
-        "SAML message destination is not correct",
-        "SAML message conditions are not respected",
-        "Identity provider initiated single sign on is not authorized",
-        "An error occured during SAML single logout",
-        "Error in SAML message signature management",
-        "An error occured during SAML artifact use",
-        "Communication error with SAML sessions",
-        "Problem when loading a service provider",
-        "An error occured during SAML attributes exchange",
+        'Undefined SAML error',
+        'Unable to load SAML service',
+        'Problem when loading an identity provider',
+        'An error occured during SAML single sign on',
+        'SAML entity is not known',
+        'SAML message destination is not correct',
+        'SAML message conditions are not respected',
+        'Identity provider initiated single sign on is not authorized',
+        'An error occured during SAML single logout',
+        'Error in SAML message signature management',
+        'An error occured during SAML artifact use',
+        'Communication error with SAML sessions',
+        'Problem when loading a service provider',
+        'An error occured during SAML attributes exchange',
+        'This is an OpenID endpoint page',
+        'You try to use an OpenID identity which is not yours',
     ];
 }
 
@@ -334,6 +340,8 @@ sub error_ro {
         "Communication error with SAML sessions",
         "Problem when loading a service provider",
         "An error occured during SAML attributes exchange",
+        'This is an OpenID endpoint page',
+        'You try to use an OpenID identity which is not yours',
     ];
 }
 

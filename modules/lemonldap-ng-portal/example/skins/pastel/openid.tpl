@@ -16,7 +16,11 @@
         <div id="page">
 
         <div id="header"></div>
-	<div class="message warning" style="display:block"><ul><li>This is an OpenID endpoint page</li></ul></div>
+	<div class="message <TMPL_VAR NAME="AUTH_ERROR_TYPE">" style="display:block"><ul><li><TMPL_VAR NAME="AUTH_ERROR"></li></ul></div>
 	<div class="loginlogo"></div>
+		<TMPL_IF NAME="ID">
+			<p><lang en="Your identity is" fr="Votre identit&eacute; est"/>&nbsp;:</p>
+		<p><b><TMPL_VAR NAME="ID"></b></p>
+		</TMPL_IF>
 
 <TMPL_INCLUDE NAME="footer.tpl">

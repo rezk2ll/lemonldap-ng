@@ -18,7 +18,11 @@
       <p><img src="/skins/<TMPL_VAR NAME="SKIN">/images/logo-lock.png" /></p>
     </div>
     <div id="content-right">
-      <p><span class="text-error">This is an OpenID endpoint page</span></p>
+		<p><span class="text-error"><TMPL_VAR NAME="AUTH_ERROR"></span></p>
+		<TMPL_IF NAME="ID">
+			<p><lang en="Your identity is" fr="Votre identit&eacute; est"/>&nbsp;:</p>
+			<p><b><TMPL_VAR NAME="ID"></b></p>
+		</TMPL_IF>
     </div>
 
 <TMPL_INCLUDE NAME="footer.tpl">
