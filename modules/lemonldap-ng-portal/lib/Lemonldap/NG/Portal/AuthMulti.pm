@@ -24,5 +24,20 @@ sub authenticate {
     return $self->_multi->try( 'authenticate', 0 );
 }
 
+sub authFinish {
+    my $self = shift;
+    return $self->_multi->try( 'authFinish', 0 );
+}
+
+sub authLogout {
+    my $self = shift;
+    return $self->_multi->try( 'authLogout', 0 );
+}
+
+sub authForce {
+    my $self = shift;
+    return $self->_multi->try( 'authForce', 0 );
+}
+
 1;
 
