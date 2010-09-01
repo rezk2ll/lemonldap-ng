@@ -53,10 +53,12 @@ sub new {
 
     # Display help if ?help=
     if ( $self->param('help') ) {
+
         print $self->header_public( $ENV{SCRIPT_FILENAME},
             -type => 'text/html; charset=utf8' );
         &Lemonldap::NG::Manager::Help::import( $self->{language} );
         my $chap = $self->param('help');
+        $self->lmLog( "Manager request: Help chapter $chap", 'debug' );
         eval { no strict "refs"; &{"help_$chap"} };
         $self->quit();
     }
@@ -64,6 +66,7 @@ sub new {
     # Save conf if ?data=
     elsif ( my $rdata = $self->rparam('data') ) {
 
+        $self->lmLog( "Manager request: Save data $rdata", 'debug' );
         require Lemonldap::NG::Manager::Uploader;    #inherits
         $self->confUpload($rdata);
         $self->quit();
@@ -72,6 +75,7 @@ sub new {
     # File upload/download
     elsif ( my $rfile = $self->rparam('file') ) {
 
+        $self->lmLog( "Manager request: File $rfile", 'debug' );
         my @params = ('file');
         if ( my $rfilename = $self->rparam('filename') ) {
             push @params, ${$rfilename};
@@ -84,6 +88,7 @@ sub new {
     # URL upload/download
     elsif ( my $rurl = $self->rparam('url') ) {
 
+        $self->lmLog( "Manager request: URL $rurl", 'debug' );
         require Lemonldap::NG::Manager::Uploader;    #inherits
         $self->urlUpload('url');
         $self->quit();
@@ -92,6 +97,7 @@ sub new {
     # Ask requests
     elsif ( my $rreq = $self->rparam('request') ) {
 
+        $self->lmLog( "Manager request: $rreq", 'debug' );
         require Lemonldap::NG::Manager::Request;     #inherits
         $self->request($rreq);
         $self->quit();
@@ -103,14 +109,21 @@ sub new {
          $self->param('cfgNum')
       || $self->confObj->lastCfg()
       || 'UNAVAILABLE';
+
     if ( my $p = $self->param('node') ) {
+
+        $self->lmLog( "Manager request: load node $p", 'debug' );
         print $self->header( -type => 'text/html; charset=utf8', );
         print $self->node($p);
         $self->quit();
     }
     if ( $self->param('cfgAttr') ) {
+
+        $self->lmLog( "Manager request: load configuration attributes",
+            'debug' );
         $self->sendCfgParams( $self->conf );
     }
+
     return $self;
 }
 

@@ -338,6 +338,9 @@ s/^(samlSPMetaDataXML|samlSPMetaDataExportedAttributes|samlSPMetaDataOptions)\/(
     $buf .= '}';
 
     # 4. SEND JSON RESPONSE
+    binmode( STDOUT, ':bytes' );    # Else JSON is invalid
+    use utf8;
+    utf8::encode($buf);             # Reencode message
     print $self->header(
         -type           => 'application/json; charset=utf-8',
         -Content_Length => length($buf)

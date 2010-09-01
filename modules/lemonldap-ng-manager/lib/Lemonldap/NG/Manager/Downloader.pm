@@ -369,7 +369,7 @@ sub sendCfgParams {
     foreach (qw(cfgAuthor cfgAuthorIP cfgDate)) {
         my $tmp = $h->{$_} || 'anonymous';
         $tmp =~ s/'/\\'/g;
-        push @buf, "$_:'$tmp'";
+        push @buf, "\"$_\":\"$tmp\"";
     }
     $_ = '{' . join( ',', @buf ) . '}';
     print $self->header(

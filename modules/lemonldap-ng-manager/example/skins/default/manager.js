@@ -833,7 +833,8 @@ function getCfgAttributes() {
 			cfgAttrDone++;
 		},
 		error:function(xhr, ajaxOptions, thrownError){
-			setCfgAttributes({cfgAuthor:'unknown',cfgAuthorIP:'unknown',cfgDate:'unknown'});
+			var msg = 'Error code: '+xhr.status+', '+thrownError; 
+			setCfgAttributes({cfgAuthor:msg,cfgAuthorIP:msg,cfgDate:msg});
 		}
 	});
 }
