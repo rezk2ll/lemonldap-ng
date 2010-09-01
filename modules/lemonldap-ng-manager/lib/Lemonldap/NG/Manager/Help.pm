@@ -108,6 +108,7 @@ EOT
 
 #fr
 sub help_authParams_fr {
+    use utf8;
     print <<EOT;
 <h3>Modules</h3>
 
@@ -182,6 +183,7 @@ EOT
 
 # fr
 sub help_portal_fr {
+    use utf8;
     print <<EOT;
 <h3>Portail</h3>
 <p>Adresse où les utilisateurs viennent s'authentifier.</p>
@@ -206,6 +208,7 @@ EOT
 
 # fr
 sub help_securedCookie_fr {
+    use utf8;
     print <<EOT;
 <h3>Cookie sécurisé</h3>
 <p>Un utilisateur authentifié est reconnu par son cookie. Si tous les hôtes
@@ -231,6 +234,7 @@ EOT
 
 # fr
 sub help_cookieName_fr {
+    use utf8;
     print <<EOT;
 <h3>Nom de cookie</h3>
 <p>Indiquez ici le nom du cookie.</p>
@@ -254,6 +258,7 @@ EOT
 
 # fr
 sub help_domain_fr {
+    use utf8;
     print <<EOT;
 <h3>Domaine protégé</h3>
 <p>Indiquez ici le nom du domaine DNS (ou du sous-domaine) contenant vos
@@ -297,6 +302,7 @@ EOT
 
 # fr
 sub help_groups_fr {
+    use utf8;
     print <<EOT;
 <h3>Groupes d'utilisateurs</h3>
 <p>Les groupes ne sont pas indispensables mais accélèrent le
@@ -378,6 +384,7 @@ EOT
 
 # fr
 sub help_ldap_fr {
+    use utf8;
     print <<EOT;
 <h3>Paramètres LDAP</h3>
 <ul>
@@ -468,6 +475,7 @@ EOT
 
 # fr
 sub help_macros_fr {
+    use utf8;
     print <<EOT;
 <h3>Macros</h3>
 <p>Les macros permettent d'ajouter des variables calculées à
@@ -537,6 +545,7 @@ EOT
 
 # fr
 sub help_storage_fr {
+    use utf8;
     print <<EOT;
 <h3>Stockage des sessions</h3>
 <p>Le stockage des sessions Lemonldap::NG est réalisé au travers
@@ -572,6 +581,7 @@ EOT
 
 # fr
 sub help_timeout_fr {
+    use utf8;
     print <<EOT;
 <h3>Durée de vie des sessions</h3>
 <p>Indiquez ici la durée de vie des sessions en secondes. Elle est
@@ -596,6 +606,7 @@ EOT
 
 # fr
 sub help_timeoutActivity_fr {
+    use utf8;
     print <<EOT;
 <h3>Délai d'inactivité des sessions</h3>
 <p>Indiquez ici le délai d'inactivité des sessions en secondes. Il est
@@ -628,6 +639,7 @@ EOT
 
 # fr
 sub help_vars_fr {
+    use utf8;
     print <<EOT;
 <h3>Variables exportées</h3>
 <p>Indiquez ici tous les attributs qui seront collectés depuis <tt>userDB</tt></p>
@@ -709,6 +721,7 @@ EOT
 
 # fr
 sub help_virtualHosts_fr {
+    use utf8;
     print <<EOT;
 <h3>Hôtes virtuels</h3>
 
@@ -792,6 +805,7 @@ EOT
 
 # fr
 sub help_whatToTrace_fr {
+    use utf8;
     print <<EOT;
 <h3>Nom de l'utilisateur dans Apache</h3>
 <p>Indiquez ici le nom de la variable (attribut) ou de la macro qui doit
@@ -816,6 +830,7 @@ EOT
 
 #fr
 sub help_portalForceAuthn_fr {
+    use utf8;
     print <<EOT;
 <h3>Forcer l'authentification sur le portail</h3>
 <p>Par défaut, lorsqu'un utilisateur est authentifié sur le portail, lorsqu'il y revient son authentification est conservée et le menu est affiché.</p>
@@ -847,6 +862,7 @@ EOT
 
 # fr
 sub help_default_fr {
+    use utf8;
     print <<EOT;
 <h3>Bienvenue sur le gestionnaire de configuration</h3>
 <p>Les paramètres sont listés dans l'arbre de configuration sous différentes catégories :
@@ -888,6 +904,7 @@ EOT
 
 # fr
 sub help_saml_fr {
+    use utf8;
     print <<EOT;
 <h3>SAML</h3>
 <p>LemonLDAP::NG est compatible SAML, et peut être utilisé en tant que :
@@ -932,6 +949,7 @@ EOT
 
 # fr
 sub help_samlServicePrivateKeySig_fr {
+    use utf8;
     print <<EOT;
 <h3>Clé privée de signature du service SAML</h3>
 <p>Charger ici la clé privé du service au format PEM.</p>
@@ -975,6 +993,7 @@ EOT
 
 # fr
 sub help_samlServicePrivateKeyEnc_fr {
+    use utf8;
     print <<EOT;
 <h3>Clé privée de chiffrement du service SAML</h3>
 <p>Charger ici la clé privé du service au format PEM. Si non définie, Lemonldap::NG utilisera la clé privé de signature du service SAML.</p>

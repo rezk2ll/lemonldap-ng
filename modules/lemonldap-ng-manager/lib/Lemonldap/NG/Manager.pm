@@ -28,6 +28,9 @@ our @ISA     = qw(
 sub new {
     my ( $class, $args ) = @_;
 
+    # Output UTF-8
+    binmode( STDOUT, ':utf8' );
+
     # Try to load local configuration parameters
     my $conf = Lemonldap::NG::Common::Conf->new( $args->{configStorage} )
       or Lemonldap::NG::Handler::CGI->abort( 'Unable to get configuration',

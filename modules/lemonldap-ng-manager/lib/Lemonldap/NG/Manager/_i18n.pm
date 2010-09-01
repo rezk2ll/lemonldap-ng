@@ -345,6 +345,7 @@ sub en {
 }
 
 sub fr {
+    use utf8;
     return {
         advancedParams      => 'Paramètres avancés',
         attributesAndMacros => 'Attributs et macros',
