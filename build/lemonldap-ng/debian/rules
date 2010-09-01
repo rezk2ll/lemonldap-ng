@@ -80,8 +80,8 @@ install: build
 	#test -n "$$LOCALBUILD" || ./scripts/minifiercss $$(find debian/tmp/ -name '*.css')
 	perl -i -pe 's#src=(["'"'"']).*?jquery(-\d[\.\w\-]*?)?.js#src=$$1/javascript/jquery/jquery.js#i' \
 			$(CURDIR)/debian/tmp/examples/manager/*.pl \
-			$(CURDIR)/debian/tmp$(LMSHAREDIR)manager-skins/default/*.tpl \
-			$(CURDIR)/debian/tmp$(LMSHAREDIR)portal-skins/pastel/*.tpl
+			$(CURDIR)/debian/tmp$(LMSHAREDIR)manager-skins/*/*.tpl \
+			$(CURDIR)/debian/tmp$(LMSHAREDIR)portal-skins/*/*.tpl
 	# postinst provides initial portal, manager and sessions-explorer
 	rm -f debian/tmp/var/lib/lemonldap-ng/portal/index.pl
 

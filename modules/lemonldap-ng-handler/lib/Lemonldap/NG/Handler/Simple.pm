@@ -19,7 +19,6 @@ use MIME::Base64;
 use Exporter 'import';
 use Safe;
 use Lemonldap::NG::Common::Safelib;    #link protected safe Safe object
-require Data::Dumper;
 require POSIX;
 use CGI::Util 'expires';
 
@@ -321,6 +320,7 @@ sub statusProcess {
         $statusPipe->autoflush(1);
     }
     else {
+        require Data::Dumper;
         $statusPipe->reader();
         $statusOut->writer();
         my $fdin  = $statusPipe->fileno;

@@ -2,7 +2,6 @@ package Lemonldap::NG::Handler::UpdateCookie;
 
 use strict;
 use Lemonldap::NG::Handler::SharedConf qw(:all);
-use Data::Dumper;
 our @ISA = qw(Lemonldap::NG::Handler::SharedConf);
 
 our $VERSION = '0.1';
