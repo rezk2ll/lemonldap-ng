@@ -115,10 +115,10 @@ sub loadService {
     }
 
     # Check presence of private and public key in configuration
-    my $publicKeySig  = $self->{samlServicePublicKeySig};
-    my $privateKeySig = $self->{samlServicePrivateKeySig};
+    my $publicKeySig     = $self->{samlServicePublicKeySig};
+    my $privateKeySig    = $self->{samlServicePrivateKeySig};
     my $privateKeySigPwd = $self->{samlServicePrivateKeySigPwd};
-    my $privateKeyEnc = $self->{samlServicePrivateKeyEnc};
+    my $privateKeyEnc    = $self->{samlServicePrivateKeyEnc};
     my $privateKeyEncPwd = $self->{samlServicePrivateKeyEncPwd};
     unless ( $privateKeySig and $publicKeySig ) {
         $self->lmLog( "SAML private and public key not found in configuration",
@@ -131,7 +131,7 @@ sub loadService {
               . "use private signature key",
             'debug'
         );
-        $privateKeyEnc = $privateKeySig;
+        $privateKeyEnc    = $privateKeySig;
         $privateKeyEncPwd = $privateKeySigPwd;
     }
 
@@ -1670,10 +1670,10 @@ sub storeArtifact {
 
     return 0 unless $samlSessionInfo;
 
-    $samlSessionInfo->{type}       = 'artifact';    # Session type
-    $samlSessionInfo->{_utime}     = time();        # Creation time
-    $samlSessionInfo->{ID}         = $id;
-    $samlSessionInfo->{message}    = $message;
+    $samlSessionInfo->{type}     = 'artifact';                   # Session type
+    $samlSessionInfo->{_utime}   = time();                       # Creation time
+    $samlSessionInfo->{ID}       = $id;
+    $samlSessionInfo->{message}  = $message;
     $samlSessionInfo->{_saml_id} = $session_id if $session_id;
 
     my $art_session_id = $samlSessionInfo->{_session_id};
@@ -1765,21 +1765,21 @@ sub createArtifactResponse {
         $self->lmLog( "Find session_id $session_id in artifact session",
             'debug' );
 
-    my $session = $self->getApacheSession( $session_id, 1 );
-    unless ( defined $session ) {
-        $self->lmLog( "Unable to open session $session_id", 'error' );
-        return;
-    }
-
-    my $lassoSession = $session->{_lassoSessionDump};
-
-    if ($lassoSession) {
-        unless ( $self->setSessionFromDump( $login, $lassoSession ) ) {
-            $self->lmLog( "Unable to load Lasso Session", 'error' );
+        my $session = $self->getApacheSession( $session_id, 1 );
+        unless ( defined $session ) {
+            $self->lmLog( "Unable to open session $session_id", 'error' );
             return;
         }
-        $self->lmLog( "Lasso Session loaded", 'debug' );
-    }
+
+        my $lassoSession = $session->{_lassoSessionDump};
+
+        if ($lassoSession) {
+            unless ( $self->setSessionFromDump( $login, $lassoSession ) ) {
+                $self->lmLog( "Unable to load Lasso Session", 'error' );
+                return;
+            }
+            $self->lmLog( "Lasso Session loaded", 'debug' );
+        }
 
     }
     else {
@@ -2287,21 +2287,21 @@ sub sendLogoutResponseToServiceProvider {
 
         $self->lmLog( "Redirect user to $slo_url", 'debug' );
 
-            $self->_subProcess(qw(autoRedirect));
+        $self->_subProcess(qw(autoRedirect));
 
-            # If we are here, there was a problem with HTTP-REDIRECT response
-            $self->lmLog( "Logout response was not sent trough GET", 'error' );
+        # If we are here, there was a problem with HTTP-REDIRECT response
+        $self->lmLog( "Logout response was not sent trough GET", 'error' );
 
-            return 0;
+        return 0;
 
-        }
+    }
 
     # HTTP-POST
     elsif ( $method == Lasso::Constants::HTTP_METHOD_POST ) {
 
         # Use autosubmit form
-        my $slo_url  = $logout->msg_url;
-        my $slo_body = $logout->msg_body;
+        my $slo_url    = $logout->msg_url;
+        my $slo_body   = $logout->msg_body;
         my $relaystate = $logout->msg_relayState;
 
         $self->{postUrl} = $slo_url;
@@ -2475,10 +2475,10 @@ sub sendLogoutRequestToProvider {
         my $relayInfos = $self->getSamlSession();
 
         # Store infos
-        $relayInfos->{type}   = 'relay';
-        $relayInfos->{_utime} = time;
-        $relayInfos->{url}    = $logout->msg_url;
-        $relayInfos->{body}   = $logout->msg_body;
+        $relayInfos->{type}       = 'relay';
+        $relayInfos->{_utime}     = time;
+        $relayInfos->{url}        = $logout->msg_url;
+        $relayInfos->{body}       = $logout->msg_body;
         $relayInfos->{relayState} = $logout->msg_relayState;
 
         my $relayID = $relayInfos->{_session_id};

@@ -83,7 +83,7 @@ else {
             print $cgi->h2("Error: Unable to get proxy granting ticket");
         }
 
-	print $cgi->h2("<a href=\"".$cgi->url."\">Home</a>");
+        print $cgi->h2( "<a href=\"" . $cgi->url . "\">Home</a>" );
 
     }
 

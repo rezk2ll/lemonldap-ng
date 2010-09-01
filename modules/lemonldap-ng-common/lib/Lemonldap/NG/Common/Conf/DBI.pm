@@ -47,25 +47,27 @@ sub dbh {
     my $self = shift;
     $self->{dbiTable} ||= "lmConfig";
     return $self->{dbh} if ( $self->{dbh} and $self->{dbh}->ping );
-    return DBI->connect_cached(
-        $self->{dbiChain}, $self->{dbiUser},
-        $self->{dbiPassword}, { RaiseError => 1, AutoCommit => 1 }
-    );
+    return DBI->connect_cached( $self->{dbiChain}, $self->{dbiUser},
+        $self->{dbiPassword}, { RaiseError => 1, AutoCommit => 1 } );
 }
 
 sub lock {
     my $self = shift;
     my $sth;
     eval {
-    if($self->{dbiChain}=~/mysql/i){
-        $sth = $self->dbh->prepare_cached( q{SELECT GET_LOCK(?, 5)}, {}, 1 );
-        $sth->execute('lmconf');
-        my @row = $sth->fetchrow_array;
-        return $row[0] || 0;
-    }
-    else{
-        # TODO
-    }
+        if ( $self->{dbiChain} =~ /mysql/i )
+        {
+            $sth =
+              $self->dbh->prepare_cached( q{SELECT GET_LOCK(?, 5)}, {}, 1 );
+            $sth->execute('lmconf');
+            my @row = $sth->fetchrow_array;
+            return $row[0] || 0;
+        }
+        else {
+
+            # TODO
+            return 1;
+        }
     };
 }
 

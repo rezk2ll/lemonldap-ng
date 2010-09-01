@@ -128,6 +128,7 @@ use constant {
     PM_BACKTOSP              => 13,
     PM_BACKTOCASURL          => 14,
     PM_LOGOUT                => 15,
+    PM_OPENID_EXCHANGE       => 16,
 };
 
 # EXPORTER PARAMETERS
@@ -150,7 +151,7 @@ our @EXPORT = qw( PE_IMG_NOK PE_IMG_OK PE_INFO PE_REDIRECT PE_DONE PE_OK
   PM_USER PM_DATE PM_IP PM_SESSIONS_DELETED PM_OTHER_SESSIONS
   PM_REMOVE_OTHER_SESSIONS PM_PP_GRACE PM_PP_EXP_WARNING
   PM_SAML_IDPSELECT PM_SAML_IDPCHOOSEN PM_REMEMBERCHOICE PM_SAML_SPLOGOUT
-  PM_REDIRECTION PM_BACKTOSP PM_BACKTOCASURL PM_LOGOUT
+  PM_REDIRECTION PM_BACKTOSP PM_BACKTOCASURL PM_LOGOUT PM_OPENID_EXCHANGE
 );
 our %EXPORT_TAGS = ( 'all' => [ @EXPORT, 'import' ], );
 
@@ -1192,56 +1193,56 @@ sub controlExistingSession {
         my $h = $self->getApacheSession($id);
 
         if ($h) {
-        %{ $self->{sessionInfo} } = %$h;
+            %{ $self->{sessionInfo} } = %$h;
 
-        # Logout if required
-        if ( $self->param('logout') ) {
+            # Logout if required
+            if ( $self->param('logout') ) {
 
-            # Delete session in global storage
-            unless ( $self->_deleteSession($h) ) {
-                $self->lmLog( "Unable to delete session $id", 'error' );
-                return PE_ERROR;
-            }
+                # Delete session in global storage
+                unless ( $self->_deleteSession($h) ) {
+                    $self->lmLog( "Unable to delete session $id", 'error' );
+                    return PE_ERROR;
+                }
 
-            # Call issuerDB logout on each used issuerDBmodule
-            my $issuerDBList = $self->{sessionInfo}->{_issuerDB};
-            if ( defined $issuerDBList ) {
-                foreach my $issuerDBtype (
+                # Call issuerDB logout on each used issuerDBmodule
+                my $issuerDBList = $self->{sessionInfo}->{_issuerDB};
+                if ( defined $issuerDBList ) {
+                    foreach my $issuerDBtype (
                         split(
                             /\Q$self->{multiValuesSeparator}\E/,
                             $issuerDBList
                         )
-                  )
-                {
-                    my $module_name =
-                      'Lemonldap::NG::Portal::IssuerDB' . $issuerDBtype;
+                      )
+                    {
+                        my $module_name =
+                          'Lemonldap::NG::Portal::IssuerDB' . $issuerDBtype;
 
-                    $self->lmLog(
-                        "Process logout for issuerDB module $issuerDBtype",
+                        $self->lmLog(
+                            "Process logout for issuerDB module $issuerDBtype",
                             'debug'
                         );
 
-                    # Load current IssuerDB module
-                    unless ( $self->loadModule($module_name) ) {
+                        # Load current IssuerDB module
+                        unless ( $self->loadModule($module_name) ) {
                             $self->lmLog( "Unable to load $module_name",
                                 'error' );
-                        next;
+                            next;
+                        }
+
+                        $self->{error} =
+                          $self->_subProcess( $module_name . "::issuerDBInit",
+                            'authInit', $module_name . '::issuerLogout' );
+
                     }
-
-                    $self->{error} =
-                      $self->_subProcess( $module_name . "::issuerDBInit",
-                        'authInit', $module_name . '::issuerLogout' );
-
                 }
-            }
 
-            # Call authentication logout
-            eval { $self->{error} = $self->_sub('authLogout'); };
-            if ($@) {
+                # Call authentication logout
+                eval { $self->{error} = $self->_sub('authLogout'); };
+                if ($@) {
                     $self->lmLog( "Error when calling authLogout: $@",
                         'debug' );
-            }
-            return $self->{error} if $self->{error} > 0;
+                }
+                return $self->{error} if $self->{error} > 0;
 
                 # Collect logout services and build hidden iFrames
                 if ( defined $self->{logoutServices} ) {
@@ -1284,36 +1285,36 @@ sub controlExistingSession {
                     }
                 }
 
-            # Redirect or Post if asked by authLogout
-            $self->_subProcess(qw(autoRedirect))
-              if ( $self->{urldc} and $self->{urldc} ne $self->{portal} );
-            $self->_subProcess(qw(autoPost)) if ( $self->{postUrl} );
+                # Redirect or Post if asked by authLogout
+                $self->_subProcess(qw(autoRedirect))
+                  if ( $self->{urldc} and $self->{urldc} ne $self->{portal} );
+                $self->_subProcess(qw(autoPost)) if ( $self->{postUrl} );
 
-            # Display logout message
-            return PE_LOGOUT_OK;
-        }
+                # Display logout message
+                return PE_LOGOUT_OK;
+            }
 
-        # If the user wants to purge other sessions
-        elsif ( $self->param('removeOther') ) {
-            $self->{notifyDeleted} = 1;
-            $self->{singleSession} = 1;
-            $self->_sub( 'removeOther', $id );
-        }
-        untie %$h;
-        $self->{id} = $id;
+            # If the user wants to purge other sessions
+            elsif ( $self->param('removeOther') ) {
+                $self->{notifyDeleted} = 1;
+                $self->{singleSession} = 1;
+                $self->_sub( 'removeOther', $id );
+            }
+            untie %$h;
+            $self->{id} = $id;
 
-        # A session has been find => calling &existingSession
-        my $r = $self->_sub( 'existingSession', $id, $self->{sessionInfo} );
-        if ( $r == PE_DONE ) {
-            $self->{error} = $self->_subProcess(
-                qw(checkNotification issuerDBInit authInit issuerForAuthUser autoRedirect)
-            );
-            return $self->{error} || PE_DONE;
+            # A session has been find => calling &existingSession
+            my $r = $self->_sub( 'existingSession', $id, $self->{sessionInfo} );
+            if ( $r == PE_DONE ) {
+                $self->{error} = $self->_subProcess(
+                    qw(checkNotification issuerDBInit authInit issuerForAuthUser autoRedirect)
+                );
+                return $self->{error} || PE_DONE;
+            }
+            else {
+                return $r;
+            }
         }
-        else {
-            return $r;
-        }
-    }
     }
 
     # Display logout success if logout asked

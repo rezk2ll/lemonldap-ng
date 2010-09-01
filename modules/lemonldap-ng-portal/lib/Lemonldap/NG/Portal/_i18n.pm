@@ -406,7 +406,7 @@ sub msg_fr {
         'Retourner sur le fournisseur de service',
 'Le service duquel vous arrivez a fourni un lien que vous êtes invité à suivre',
         'Déconnexion des autres applications...'
-        'Souhaitez-vous vous identifier sur ce site ?',
+          'Souhaitez-vous vous identifier sur ce site ?',
     ];
 }
 

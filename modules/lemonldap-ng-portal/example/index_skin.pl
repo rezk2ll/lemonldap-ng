@@ -159,17 +159,20 @@ elsif ( my $info = $portal->info() ) {
 }
 
 # 2.4 OpenID menu page
-elsif ( $portal->{error} == PE_OPENID_EMPTY or $portal->{error} == PE_OPENID_BADID ) {
-    $skinfile       = 'openid.tpl';
-    my $p = $portal->{portal}.$portal->{issuerDBOpenIDPath};
+elsif ($portal->{error} == PE_OPENID_EMPTY
+    or $portal->{error} == PE_OPENID_BADID )
+{
+    $skinfile = 'openid.tpl';
+    my $p = $portal->{portal} . $portal->{issuerDBOpenIDPath};
     $p =~ s#(?<!:)/\^?/#/#g;
     %templateParams = (
-        AUTH_ERROR            => $portal->error,
-        AUTH_ERROR_TYPE       => $portal->error_type,
+        AUTH_ERROR      => $portal->error,
+        AUTH_ERROR_TYPE => $portal->error_type,
         SKIN            => $skin,
-        PROVIDERURI => $p,
-        BADID => ($portal->{error} == PE_OPENID_BADID),
-        ID => $portal->{_openidPortal}.$portal->{sessionInfo}->{ $portal->{OpenIdAttr} || $portal->{whatToTrace} }
+        PROVIDERURI     => $p,
+        ID              => $portal->{_openidPortal}
+          . $portal->{sessionInfo}
+          ->{ $portal->{OpenIdAttr} || $portal->{whatToTrace} }
     );
 }
 

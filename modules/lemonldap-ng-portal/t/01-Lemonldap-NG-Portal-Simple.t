@@ -87,8 +87,8 @@ $p->{store}          = sub {
     $self->{id} = 1;
     PE_OK;
 };
-$p->{authenticate}  = sub { PE_OK };
-$p->{authFinish}    = sub { PE_OK };
+$p->{authenticate} = sub { PE_OK };
+$p->{authFinish}   = sub { PE_OK };
 ok( $p->process > 0, 'User OK' );
 
 # Cookie test

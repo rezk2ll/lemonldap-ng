@@ -613,7 +613,7 @@ sub issuerForUnAuthUser {
         $self->lmLog( "Found relay session $relayID", 'debug' );
 
         # Get data to build POST form
-        $self->{postUrl} = $relayInfos->{url};
+        $self->{postUrl}                     = $relayInfos->{url};
         $self->{postFields}->{'SAMLRequest'} = $relayInfos->{body};
         $self->{postFields}->{'RelayState'}  = $relayInfos->{relayState};
 
@@ -1128,7 +1128,7 @@ sub issuerForAuthUser {
         }
         else {
             ( $request, $response, $method, $relaystate, $artifact ) =
-          $self->checkMessage( $url, $request_method, $content_type );
+              $self->checkMessage( $url, $request_method, $content_type );
         }
 
         # Create Login object
@@ -1290,9 +1290,9 @@ sub issuerForAuthUser {
                 $forceAuthnSessionInfo->{$spConfKey} = 1;
 
                 unless ($forceAuthn_session) {
-                    $forceAuthnSessionInfo->{'_type'}         = "forceAuthn";
+                    $forceAuthnSessionInfo->{'_type'}    = "forceAuthn";
                     $forceAuthnSessionInfo->{'_saml_id'} = $session_id;
-                    $forceAuthnSessionInfo->{'_utime'}        = $time;
+                    $forceAuthnSessionInfo->{'_utime'}   = $time;
                     $forceAuthn_session = $forceAuthnSessionInfo->{_session_id};
                     $self->lmLog(
                         "Create ForceAuthn session $forceAuthn_session",
@@ -1333,7 +1333,7 @@ sub issuerForAuthUser {
             # Check Destination (only in non proxy mode)
             unless ( $self->{_proxiedRequest} ) {
                 return PE_SAML_DESTINATION_ERROR
-              unless ( $self->checkDestination( $login->request, $url ) );
+                  unless ( $self->checkDestination( $login->request, $url ) );
             }
 
             # Map authenticationLevel with SAML2 authentication context
@@ -1684,12 +1684,12 @@ sub issuerForAuthUser {
 
             return PE_SAML_SESSION_ERROR unless $samlSessionInfo;
 
-            $samlSessionInfo->{type}    = 'saml';           # Session type
-            $samlSessionInfo->{_utime}  = $time;            # Creation time
+            $samlSessionInfo->{type}     = 'saml';           # Session type
+            $samlSessionInfo->{_utime}   = $time;            # Creation time
             $samlSessionInfo->{_saml_id} = $session_id;      # SSO session id
-            $samlSessionInfo->{_nameID} = $nameid->dump;    # SAML NameID
+            $samlSessionInfo->{_nameID}  = $nameid->dump;    # SAML NameID
             $samlSessionInfo->{_sessionIndex} =
-              $sessionIndex;                                # SAML SessionIndex
+              $sessionIndex;                                 # SAML SessionIndex
 
             my $saml_session_id = $samlSessionInfo->{_session_id};
 
@@ -1889,7 +1889,7 @@ sub issuerForAuthUser {
             $sloStatusSessionInfo->{_logout} = $logout->dump;
             $sloStatusSessionInfo->{_session} =
               $logout->get_session() ? $logout->get_session()->dump : "";
-            $sloStatusSessionInfo->{_method}  = $method;
+            $sloStatusSessionInfo->{_method} = $method;
             my $relayID = $sloStatusSessionInfo->{_session_id};
             untie %$sloStatusSessionInfo;
 
@@ -1941,7 +1941,7 @@ sub issuerForAuthUser {
                 {
                     $self->lmLog( "Fail to send SLO response", 'error' );
                     $self->sendSLOErrorResponse( $logout, $method );
-            }
+                }
             }
 
             # Else build SLO status relay URL and display info

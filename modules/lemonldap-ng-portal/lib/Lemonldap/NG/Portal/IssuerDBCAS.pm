@@ -339,30 +339,30 @@ sub issuerForUnAuthUser {
                     $casProxyGrantingTicketIOU =
                       "PGTIOU-" . $tmpCasSession->{_session_id};
                     $self->deleteCasSession($tmpCasSession);
-                $self->lmLog(
+                    $self->lmLog(
 "Generate proxy granting ticket IOU $casProxyGrantingTicketIOU",
-                    'debug'
-                );
+                        'debug'
+                    );
 
-            # Request pgtUrl
-                if (
-                    $self->callPgtUrl(
+                    # Request pgtUrl
+                    if (
+                        $self->callPgtUrl(
                             $pgtUrl,
                             $casProxyGrantingTicketIOU,
-                        $casProxyGrantingTicket
-                    )
-                  )
-                {
-                    $self->lmLog(
-                        "Proxy granting URL $pgtUrl called with success",
-                        'debug' );
-                }
-                else {
+                            $casProxyGrantingTicket
+                        )
+                      )
+                    {
+                        $self->lmLog(
+                            "Proxy granting URL $pgtUrl called with success",
+                            'debug' );
+                    }
+                    else {
                         $self->lmLog(
                             "Error calling proxy granting URL $pgtUrl",
-                        'warn' );
-                    $casProxyGrantingTicketIOU = undef;
-                }
+                            'warn' );
+                        $casProxyGrantingTicketIOU = undef;
+                    }
                 }
 
             }
@@ -485,7 +485,7 @@ sub issuerForUnAuthUser {
 # Manage CAS request for unauthenticated user
 # @return Lemonldap::NG::Portal error code
 sub issuerForAuthUser {
-    my $self   = shift;
+    my $self = shift;
 
     my $portal = $self->{portal};
     $portal =~ s/\/$//;
@@ -522,7 +522,7 @@ sub issuerForAuthUser {
         # Renew
         if ( $renew eq 'true' ) {
 
-        # Authentication must be replayed
+            # Authentication must be replayed
             $self->lmLog( "Authentication renew requested", 'debug' );
             $self->{updateSession} = 1;
             $self->{error}         = $self->_subProcess(

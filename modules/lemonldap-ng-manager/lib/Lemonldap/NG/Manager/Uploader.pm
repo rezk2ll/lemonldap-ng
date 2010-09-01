@@ -148,7 +148,7 @@ s/^(samlSPMetaDataXML|samlSPMetaDataExportedAttributes|samlSPMetaDataOptions)\/(
 
         $self->lmLog( "id transformed into $id", 'debug' );
 
-          if ( $id =~
+        if ( $id =~
 /^(generalParameters|variables|virtualHosts|samlIDPMetaDataNode|samlSPMetaDataNode)/
           )
         {

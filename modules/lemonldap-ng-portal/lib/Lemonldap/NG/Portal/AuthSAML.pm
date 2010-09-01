@@ -551,7 +551,8 @@ sub extractFormInfo {
                         my $real_session = $sessionInfo->{_saml_id};
 
                         my $realSessionInfo =
-                          $self->getApacheSession( $sessionInfo->{_saml_id}, 1 );
+                          $self->getApacheSession( $sessionInfo->{_saml_id},
+                            1 );
 
                   # Get Lasso::Session dump
                   # This value is erased if a next session match the SLO request

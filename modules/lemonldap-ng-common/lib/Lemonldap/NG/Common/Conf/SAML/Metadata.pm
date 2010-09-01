@@ -221,10 +221,10 @@ sub serviceToXML {
 
     foreach (@param_service) {
         my @_tab = split( /;/, $self->getValue( $_, $conf ) );
-            $template->param( $_ . 'Binding',          $_tab[0] );
-            $template->param( $_ . 'Location',         $_tab[1] );
-            $template->param( $_ . 'ResponseLocation', $_tab[2] );
-        }
+        $template->param( $_ . 'Binding',          $_tab[0] );
+        $template->param( $_ . 'Location',         $_tab[1] );
+        $template->param( $_ . 'ResponseLocation', $_tab[2] );
+    }
 
     # Rebuilded parameters for SAML assertions
     # A samlAssertion value is formated like the following:
@@ -238,11 +238,11 @@ sub serviceToXML {
 
     foreach (@param_assertion) {
         my @_tab = split( /;/, $self->getValue( $_, $conf ) );
-            $template->param( $_ . 'Default', $_tab[0] ? 'true' : 'false' );
-            $template->param( $_ . 'Index',   $_tab[1] );
-            $template->param( $_ . 'Binding', $_tab[2] );
-            $template->param( $_ . 'Location', $_tab[3] );
-        }
+        $template->param( $_ . 'Default', $_tab[0] ? 'true' : 'false' );
+        $template->param( $_ . 'Index',   $_tab[1] );
+        $template->param( $_ . 'Binding', $_tab[2] );
+        $template->param( $_ . 'Location', $_tab[3] );
+    }
 
     # Return the XML metadata.
     return $template->output;

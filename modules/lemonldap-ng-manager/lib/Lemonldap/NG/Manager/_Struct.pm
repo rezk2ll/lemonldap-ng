@@ -338,8 +338,8 @@ sub struct {
                             qw(issuerDBCASActivation issuerDBCASPath issuerDBCASRule)
                         ],
                         issuerDBCASActivation => 'bool:/issuerDBCASActivation',
-                        issuerDBCASPath => 'text:/issuerDBCASPath',
-                        issuerDBCASRule => 'text:/issuerDBCASRule',
+                        issuerDBCASPath       => 'text:/issuerDBCASPath',
+                        issuerDBCASRule       => 'text:/issuerDBCASRule',
                     },
                     issuerDBOpenID => {
                         _nodes => [
@@ -430,8 +430,8 @@ sub struct {
                     _nodes => [
                         qw(CAS_url CAS_CAFile CAS_renew CAS_gateway CAS_pgtFile cn:CAS_proxiedServices)
                     ],
-                    CAS_url           => 'text:/CAS_url',
-                    CAS_CAFile        => 'text:/CAS_CAFile',
+                    CAS_url             => 'text:/CAS_url',
+                    CAS_CAFile          => 'text:/CAS_CAFile',
                     CAS_renew           => 'bool:/CAS_renew',
                     CAS_gateway         => 'bool:/CAS_gateway',
                     CAS_pgtFile         => 'text:/CAS_pgtFile',
@@ -448,9 +448,9 @@ sub struct {
                     _nodes => [
                         qw(remotePortal remoteCookieName remoteGlobalStorage cn:remoteGlobalStorageOptions)
                     ],
-                    remotePortal        => 'text:/remotePortal',
-                    remoteCookieName    => 'text:/remoteCookieName',
-                    remoteGlobalStorage => 'text:/remoteGlobalStorage',
+                    remotePortal               => 'text:/remotePortal',
+                    remoteCookieName           => 'text:/remoteCookieName',
+                    remoteGlobalStorage        => 'text:/remoteGlobalStorage',
                     remoteGlobalStorageOptions => {
                         _nodes =>
                           ['hash:/remoteGlobalStorageOptions:default:btext'],
@@ -561,7 +561,7 @@ sub struct {
 
                 sessionStorage => {
                     _nodes => [qw(globalStorage cn:globalStorageOptions)],
-                    globalStorage => 'text:/globalStorage',
+                    globalStorage        => 'text:/globalStorage',
                     globalStorageOptions => {
                         _nodes => ['hash:/globalStorageOptions:storage:btext'],
                         _js    => 'hashRoot',
@@ -1060,10 +1060,10 @@ sub testStruct {
                 1;
             },
         },
-        https                => $boolean,
+        https                  => $boolean,
         issuerDBSAMLActivation => $boolean,
-        issuerDBSAMLPath => $testNotDefined,
-        issuerDBSAMLRule => {
+        issuerDBSAMLPath       => $testNotDefined,
+        issuerDBSAMLRule       => {
             test     => $perlExpr,
             warnTest => sub {
                 my $e = shift;
@@ -1072,8 +1072,8 @@ sub testStruct {
             },
         },
         issuerDBCASActivation => $boolean,
-        issuerDBCASPath => $testNotDefined,
-        issuerDBCASRule => {
+        issuerDBCASPath       => $testNotDefined,
+        issuerDBCASRule       => {
             test     => $perlExpr,
             warnTest => sub {
                 my $e = shift;
@@ -1319,7 +1319,7 @@ sub testStruct {
         samlSPSSODescriptorSingleLogoutServiceSOAP         => $testNotDefined,
         samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact =>
           $testNotDefined,
-        samlSPSSODescriptorAssertionConsumerServiceHTTPPost => $testNotDefined,
+        samlSPSSODescriptorAssertionConsumerServiceHTTPPost  => $testNotDefined,
         samlSPSSODescriptorArtifactResolutionServiceArtifact => $testNotDefined,
         samlIDPSSODescriptorWantAuthnRequestsSigned          => $boolean,
         samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect  => $testNotDefined,
@@ -1360,8 +1360,8 @@ sub testStruct {
         SSLRequire   => $boolean,
 
         # CAS
-        CAS_url           => $testNotDefined,
-        CAS_CAFile        => $testNotDefined,
+        CAS_url             => $testNotDefined,
+        CAS_CAFile          => $testNotDefined,
         CAS_renew           => $boolean,
         CAS_gateway         => $boolean,
         CAS_pgtFile         => $testNotDefined,
@@ -1428,38 +1428,38 @@ sub testStruct {
 sub defaultConf {
     my $self = shift;
     return {
-        authentication  => 'LDAP',
-        CAS_pgtFile         => '/tmp/pgt.txt',
-        cda             => '0',
-        cookieName      => 'lemonldap',
-        domain          => 'example.com',
-        globalStorage   => 'Apache::Session::File',
-        https         => '0',
+        authentication           => 'LDAP',
+        CAS_pgtFile              => '/tmp/pgt.txt',
+        cda                      => '0',
+        cookieName               => 'lemonldap',
+        domain                   => 'example.com',
+        globalStorage            => 'Apache::Session::File',
+        https                    => '0',
         issuerDBSAMLActivation   => '0',
-        issuerDBSAMLPath    => '^/saml/',
+        issuerDBSAMLPath         => '^/saml/',
         issuerDBSAMLRule         => '1',
         issuerDBCASActivation    => '0',
-        issuerDBCASPath     => '^/cas/',
+        issuerDBCASPath          => '^/cas/',
         issuerDBCASRule          => '1',
         issuerDBOpenIDActivation => '0',
-        issuerDBOpenIDPath     => '^/openidserver/',
-        issuerDBOpenIDRule     => '1',
-        ldapBase      => 'dc=example,dc=com',
-        ldapPort      => '389',
-        ldapPwdEnc    => 'utf-8',
-        ldapServer    => 'localhost',
-        ldapTimeout   => '120',
-        ldapVersion   => '3',
-        managerDn           => '',
-        managerPassword     => '',
-        notification        => '0',
-        notificationStorage => 'File',
-        notifyDeleted       => '1',
-        notifyOther         => '1',
-        portal              => 'http://auth.example.com',
-        portalSkin          => 'pastel',
-        portalUserAttr      => '_user',
-        protection          => 'none',
+        issuerDBOpenIDPath       => '^/openidserver/',
+        issuerDBOpenIDRule       => '1',
+        ldapBase                 => 'dc=example,dc=com',
+        ldapPort                 => '389',
+        ldapPwdEnc               => 'utf-8',
+        ldapServer               => 'localhost',
+        ldapTimeout              => '120',
+        ldapVersion              => '3',
+        managerDn                => '',
+        managerPassword          => '',
+        notification             => '0',
+        notificationStorage      => 'File',
+        notifyDeleted            => '1',
+        notifyOther              => '1',
+        portal                   => 'http://auth.example.com',
+        portalSkin               => 'pastel',
+        portalUserAttr           => '_user',
+        protection               => 'none',
         remoteGlobalStorage => 'Lemonldap::NG::Common::Apache::Session::SOAP',
         securedCookie       => '0',
         singleSession       => '0',
@@ -1480,19 +1480,19 @@ sub defaultConf {
         # SAML #
         ########
         samlEntityID                       => '#PORTAL#' . '/saml/metadata',
-        samlOrganizationDisplayName             => 'Example',
-        samlOrganizationName                    => 'Example',
-        samlOrganizationURL                     => 'http://www.example.com',
-        samlIDPMetaDataOptionsNameIDFormat      => '',
-        samlIDPMetaDataOptionsForceAuthn        => '0',
-        samlIDPMetaDataOptionsIsPassive         => '0',
-        samlIDPMetaDataOptionsAllowProxiedAuthn => '1',
-        samlIDPMetaDataOptionsSSOBinding        => '',
-        samlIDPMetaDataOptionsSLOBinding        => '',
-        samlIDPMetaDataOptionsResolutionRule    => '',
-        samlIDPMetaDataOptionsAllowLoginFromIDP => '1',
-        samlIDPMetaDataOptionsAdaptSessionUtime => '1',
-        samlIDPMetaDataOptionsSignSSOMessage    => '1',
+        samlOrganizationDisplayName        => 'Example',
+        samlOrganizationName               => 'Example',
+        samlOrganizationURL                => 'http://www.example.com',
+        samlIDPMetaDataOptionsNameIDFormat => '',
+        samlIDPMetaDataOptionsForceAuthn   => '0',
+        samlIDPMetaDataOptionsIsPassive    => '0',
+        samlIDPMetaDataOptionsAllowProxiedAuthn        => '1',
+        samlIDPMetaDataOptionsSSOBinding               => '',
+        samlIDPMetaDataOptionsSLOBinding               => '',
+        samlIDPMetaDataOptionsResolutionRule           => '',
+        samlIDPMetaDataOptionsAllowLoginFromIDP        => '1',
+        samlIDPMetaDataOptionsAdaptSessionUtime        => '1',
+        samlIDPMetaDataOptionsSignSSOMessage           => '1',
         samlIDPMetaDataOptionsCheckSSOMessageSignature => '1',
         samlIDPMetaDataOptionsSignSLOMessage           => '1',
         samlIDPMetaDataOptionsCheckSLOMessageSignature => '1',
@@ -1510,68 +1510,68 @@ sub defaultConf {
         samlSPSSODescriptorAuthnRequestsSigned         => '1',
         samlSPSSODescriptorWantAssertionsSigned        => '1',
         samlSPSSODescriptorSingleLogoutServiceHTTPRedirect =>
-          'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;' 
+          'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;'
           . '#PORTAL#'
           . '/saml/proxySingleLogout;'
           . '#PORTAL#'
           . '/saml/proxySingleLogoutReturn',
         samlSPSSODescriptorSingleLogoutServiceHTTPPost =>
-          'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;' 
+          'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;'
           . '#PORTAL#'
           . '/saml/proxySingleLogout;'
           . '#PORTAL#'
           . '/saml/proxySingleLogoutReturn',
         samlSPSSODescriptorSingleLogoutServiceSOAP =>
-          'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;' 
+          'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;'
           . '#PORTAL#'
           . '/saml/proxySingleLogoutSOAP;',
         samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact =>
-          '1;0;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact;' 
+          '1;0;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact;'
           . '#PORTAL#'
           . '/saml/proxySingleSignOnArtifact',
         samlSPSSODescriptorAssertionConsumerServiceHTTPPost =>
-          '0;1;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;' 
+          '0;1;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;'
           . '#PORTAL#'
           . '/saml/proxySingleSignOnPost',
         samlSPSSODescriptorArtifactResolutionServiceArtifact =>
-          '1;0;urn:oasis:names:tc:SAML:2.0:bindings:SOAP;' 
+          '1;0;urn:oasis:names:tc:SAML:2.0:bindings:SOAP;'
           . '#PORTAL#'
           . '/saml/artifact',
         samlIDPSSODescriptorWantAuthnRequestsSigned => '1',
         samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect =>
-          'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;' 
+          'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;'
           . '#PORTAL#'
           . '/saml/singleSignOn;',
         samlIDPSSODescriptorSingleSignOnServiceHTTPPost =>
-          'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;' 
+          'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;'
           . '#PORTAL#'
           . '/saml/singleSignOn;',
         samlIDPSSODescriptorSingleSignOnServiceHTTPArtifact =>
-          'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact;' 
+          'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact;'
           . '#PORTAL#'
           . '/saml/singleSignOnArtifact;',
         samlIDPSSODescriptorSingleSignOnServiceSOAP =>
-          'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;' 
+          'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;'
           . '#PORTAL#'
           . '/saml/singleSignOnSOAP;',
         samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect =>
-          'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;' 
+          'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect;'
           . '#PORTAL#'
           . '/saml/singleLogout;'
           . '#PORTAL#'
           . '/saml/singleLogoutReturn',
         samlIDPSSODescriptorSingleLogoutServiceHTTPPost =>
-          'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;' 
+          'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;'
           . '#PORTAL#'
           . '/saml/singleLogout;'
           . '#PORTAL#'
           . '/saml/singleLogoutReturn',
         samlIDPSSODescriptorSingleLogoutServiceSOAP =>
-          'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;' 
+          'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;'
           . '#PORTAL#'
           . '/saml/singleLogoutSOAP;',
         samlIDPSSODescriptorArtifactResolutionServiceArtifact =>
-          '1;0;urn:oasis:names:tc:SAML:2.0:bindings:SOAP;' 
+          '1;0;urn:oasis:names:tc:SAML:2.0:bindings:SOAP;'
           . '#PORTAL#'
           . '/saml/artifact',
         samlNameIDFormatMapEmail    => 'mail',
@@ -1579,7 +1579,7 @@ sub defaultConf {
         samlNameIDFormatMapWindows  => 'uid',
         samlNameIDFormatMapKerberos => 'uid',
         samlAttributeAuthorityDescriptorAttributeServiceSOAP =>
-          'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;' 
+          'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;'
           . '#PORTAL#'
           . '/saml/AA/SOAP;',
         samlServicePrivateKeySig    => '',
@@ -1595,7 +1595,7 @@ sub defaultConf {
 
 sub subDefaultConf {
     return {
-        exportedHeaders            => { 'Auth-User' => '$uid' },
+        exportedHeaders => { 'Auth-User' => '$uid' },
         exportedVars => { cn => 'cn', mail => 'mail', uid => 'uid', },
         globalStorageOptions => {
             'Directory'     => '/var/lib/lemonldap-ng/sessions/',

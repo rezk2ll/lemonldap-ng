@@ -194,8 +194,8 @@ sub confNode {
         # Manage old metadata format
         if ( ref($h) eq "HASH" ) {
             $self->lmLog( "Convert metadata from old format", 'debug' );
-        my $metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new();
-        $metadata->initializeFromConfHash($h);
+            my $metadata = Lemonldap::NG::Common::Conf::SAML::Metadata->new();
+            $metadata->initializeFromConfHash($h);
             $data = $metadata->toXML();
         }
         else {
@@ -240,7 +240,7 @@ sub confNode {
                 'int'    => 0,
                 textarea => '',
                 bool     => 0,
-		trool    => -1,
+                trool    => -1,
                 filearea => '',
                 select   => '',
             }->{$type};

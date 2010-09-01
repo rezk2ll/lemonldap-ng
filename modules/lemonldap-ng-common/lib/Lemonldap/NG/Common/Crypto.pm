@@ -35,8 +35,11 @@ sub encrypt {
     my $tmp;
     eval {
         $tmp = encode_base64(
-            $self->SUPER::encrypt( $str . "\0" x ( 16 - bytes::length($str) % 16 ) ),
-            '' );
+            $self->SUPER::encrypt(
+                $str . "\0" x ( 16 - bytes::length($str) % 16 )
+            ),
+            ''
+        );
     };
     if ($@) {
         $msg = "Crypt::Rijndael error : $@";

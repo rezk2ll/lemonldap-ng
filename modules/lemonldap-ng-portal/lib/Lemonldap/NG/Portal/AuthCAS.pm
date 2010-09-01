@@ -33,7 +33,7 @@ sub authInit {
 sub extractFormInfo {
     my $self = shift;
 
-    my $cas  = new AuthCAS(
+    my $cas = new AuthCAS(
         casUrl => $self->{CAS_url},
         CAFile => $self->{CAS_CAFile},
     );

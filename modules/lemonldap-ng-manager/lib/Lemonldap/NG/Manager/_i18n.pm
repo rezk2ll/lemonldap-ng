@@ -622,10 +622,10 @@ sub fr {
         samlIDPSSODescriptorSingleSignOnService => 'Single Sign On',
         samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect =>
           'Redirection HTTP',
-        samlIDPSSODescriptorSingleSignOnServiceHTTPPost => 'POST HTTP',
+        samlIDPSSODescriptorSingleSignOnServiceHTTPPost     => 'POST HTTP',
         samlIDPSSODescriptorSingleSignOnServiceHTTPArtifact => 'HTTP Artifact',
-        samlIDPSSODescriptorSingleSignOnServiceSOAP     => 'SOAP',
-        samlIDPSSODescriptorSingleLogoutService         => 'Single Logout',
+        samlIDPSSODescriptorSingleSignOnServiceSOAP         => 'SOAP',
+        samlIDPSSODescriptorSingleLogoutService             => 'Single Logout',
         samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect =>
           'Redirection HTTP',
         samlIDPSSODescriptorSingleLogoutServiceHTTPPost => 'POST HTTP',
