@@ -819,8 +819,8 @@ sub libertySetSessionInfo {
     $self->{user} = $uidValues[0]
       if (@uidValues);
 
-    # authenticationLevel 4 for external authentication
-    $self->{sessionInfo}->{authenticationLevel} = 4;
+    # authenticationLevel 1 for external authentication
+    $self->{sessionInfo}->{authenticationLevel} = 1;
 
     return PE_OK;
 }

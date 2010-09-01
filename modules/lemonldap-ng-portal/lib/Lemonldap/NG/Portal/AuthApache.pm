@@ -43,7 +43,7 @@ sub setAuthSessionInfo {
     # Store user submitted login for basic rules
     $self->{sessionInfo}->{'_user'} = $self->{'user'};
 
-    # authenticationLevel 4 for external authentication
+    # authenticationLevel 4 for Apache authentication
     $self->{sessionInfo}->{authenticationLevel} = 4;
 
     PE_OK;
