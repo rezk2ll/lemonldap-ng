@@ -6,7 +6,6 @@ use strict;
 
 my $portal = Lemonldap::NG::Portal::SharedConf->new(
     {
-openIdSecret => 'azertyuii',
 
         # ACCESS TO CONFIGURATION
         # By default, Lemonldap::NG uses the default lemonldap-ng.ini file to
