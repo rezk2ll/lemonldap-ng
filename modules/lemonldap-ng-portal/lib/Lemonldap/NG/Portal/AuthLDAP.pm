@@ -17,9 +17,13 @@ use base qw(Lemonldap::NG::Portal::_WebForm);
 *_search        = *Lemonldap::NG::Portal::UserDBLDAP::search;
 
 ## @apmethod int authInit()
-# Load Net::LDAP::Control::PasswordPolicy if needed
+# Set _authnLevel
 # @return Lemonldap::NG::Portal constant
 sub authInit {
+    my $self = shift;
+
+    $self->{_authnLevel} = $self->{ldapAuthnLevel};
+
     PE_OK;
 }
 

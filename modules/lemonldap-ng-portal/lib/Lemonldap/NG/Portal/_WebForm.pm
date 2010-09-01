@@ -45,11 +45,13 @@ sub setAuthSessionInfo {
     my $self = shift;
 
     # authenticationLevel
-    # 1 for user/password with HTTP and password can be remebered
-    # 2 for user/password with HTTP
-    # 3 for user/password with HTTPS
-    $self->{sessionInfo}->{authenticationLevel} =
-      ( $self->https() ? 3 : ( $self->{portalAutocomplete} ? 1 : 2 ) );
+    # -1 if password can be remebered
+    # +1 for user/password with HTTPS
+    $self->{_authnLevel} ||= 0;
+    $self->{_authnLevel} += 1 if $self->https();
+    $self->{_authnLevel} -= 1 if $self->{portalAutocomplete};
+
+    $self->{sessionInfo}->{authenticationLevel} = $self->{_authnLevel};
 
     # Store user submitted login for basic rules
     $self->{sessionInfo}->{'_user'} = $self->{'user'};

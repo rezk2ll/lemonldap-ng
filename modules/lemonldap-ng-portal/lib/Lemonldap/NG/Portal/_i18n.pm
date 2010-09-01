@@ -405,8 +405,8 @@ sub msg_fr {
         'Redirection en cours...',
         'Retourner sur le fournisseur de service',
 'Le service duquel vous arrivez a fourni un lien que vous êtes invité à suivre',
-        'Déconnexion des autres applications...'
-          'Souhaitez-vous vous identifier sur ce site ?',
+        'Déconnexion des autres applications...',
+        'Souhaitez-vous vous identifier sur ce site ?',
     ];
 }
 

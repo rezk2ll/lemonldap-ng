@@ -61,8 +61,7 @@ sub setAuthSessionInfo {
     # Store user certificate login for basic rules
     $self->{sessionInfo}->{'_user'} = $self->{'user'};
 
-    # authenticationLevel 5 for SSL
-    $self->{sessionInfo}->{authenticationLevel} = 5;
+    $self->{sessionInfo}->{authenticationLevel} = $self->{SSLAuthnLevel};
     PE_OK;
 }
 
@@ -73,7 +72,8 @@ sub setAuthSessionInfo {
 sub authenticate {
     my $self = shift;
     if (    $self->{sessionInfo}->{authenticationLevel}
-        and $self->{sessionInfo}->{authenticationLevel} > 4 )
+        and $self->{sessionInfo}->{authenticationLevel} >=
+        $self->{SSLAuthnLevel} )
     {
         return PE_OK;
     }

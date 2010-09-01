@@ -487,6 +487,17 @@ sub setDefaultValues {
     # CAS
     $self->{casStorage}        ||= $self->{globalStorage};
     $self->{casStorageOptions} ||= $self->{globalStorageOptions};
+
+    # Authentication levels
+    $self->{ldapAuthnLevel}    = 2 unless defined $self->{ldapAuthnLevel};
+    $self->{dbiAuthnLevel}     = 2 unless defined $self->{dbiAuthnLevel};
+    $self->{SSLAuthnLevel}     = 5 unless defined $self->{SSLAuthnLevel};
+    $self->{CAS_authnLevel}    = 1 unless defined $self->{CAS_authnLevel};
+    $self->{openIdAuthnLevel}  = 1 unless defined $self->{openIdAuthnLevel};
+    $self->{twitterAuthnLevel} = 1 unless defined $self->{twitterAuthnLevel};
+    $self->{apacheAuthnLevel}  = 4 unless defined $self->{apacheAuthnLevel};
+    $self->{nullAuthnLevel}    = 2 unless defined $self->{nullAuthnLevel};
+
 }
 
 ## @method protected void setHiddenFormValue(string fieldname, string value, string prefix, boolean base64)

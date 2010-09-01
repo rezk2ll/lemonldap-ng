@@ -28,6 +28,8 @@ sub authInit {
         return PE_ERROR;
     }
 
+    $self->{_authnLevel} = $self->{dbiAuthnLevel};
+
     PE_OK;
 }
 

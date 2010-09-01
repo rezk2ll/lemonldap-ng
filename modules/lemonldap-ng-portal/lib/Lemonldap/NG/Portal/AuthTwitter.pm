@@ -134,8 +134,7 @@ sub setAuthSessionInfo {
         $self->{sessionInfo}->{$_} = $self->{twitterUser}->{$_};
     }
 
-    # authenticationLevel 1 for external authentication
-    $self->{sessionInfo}->{authenticationLevel} = 1;
+    $self->{sessionInfo}->{authenticationLevel} = $self->{twitterAuthnLevel};
 
     PE_OK;
 }

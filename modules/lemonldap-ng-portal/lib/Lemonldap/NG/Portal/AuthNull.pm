@@ -24,7 +24,7 @@ sub setAuthSessionInfo {
     my $self = shift;
 
     $self->{sessionInfo}->{'_user'} = 'anonymous';
-    $self->{sessionInfo}->{authenticationLevel} = 0;
+    $self->{sessionInfo}->{authenticationLevel} = $self->{nullAuthnLevel};
 
     PE_OK;
 }

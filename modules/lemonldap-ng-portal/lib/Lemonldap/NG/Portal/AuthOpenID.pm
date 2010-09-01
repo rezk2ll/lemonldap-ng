@@ -123,8 +123,7 @@ sub setAuthSessionInfo {
 
     $self->{sessionInfo}->{'_user'} = $self->{user};
 
-    # Since OpenID doesn't share authentication level, falling to 1
-    $self->{sessionInfo}->{authenticationLevel} = 1;
+    $self->{sessionInfo}->{authenticationLevel} = $self->{openIdAuthnLevel};
 
     PE_OK;
 }

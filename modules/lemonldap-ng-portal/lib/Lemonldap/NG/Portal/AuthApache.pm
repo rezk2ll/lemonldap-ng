@@ -43,8 +43,7 @@ sub setAuthSessionInfo {
     # Store user submitted login for basic rules
     $self->{sessionInfo}->{'_user'} = $self->{'user'};
 
-    # authenticationLevel 4 for Apache authentication
-    $self->{sessionInfo}->{authenticationLevel} = 4;
+    $self->{sessionInfo}->{authenticationLevel} = $self->{apacheAuthnLevel};
 
     PE_OK;
 }

@@ -298,6 +298,8 @@ sub struct {
                             openid  => ['openIdParams'],
                             twitter => ['twitterParams'],
                             dbi     => ['dbiParams'],
+                            apache  => ['apacheParams'],
+                            null    => ['nullParams'],
                         }->{$mod};
                         if ($tmp) {
                             $res{$_}++ foreach (@$tmp);
@@ -355,9 +357,11 @@ sub struct {
                 # LDAP
                 ldapParams => {
                     _nodes => [
-                        qw(n:ldapConnection n:ldapFilters n:ldapGroups n:ldapPassword)
+                        qw(ldapAuthnLevel n:ldapConnection n:ldapFilters n:ldapGroups n:ldapPassword)
                     ],
                     _help => 'ldap',
+
+                    ldapAuthnLevel => 'int:/ldapAuthnLevel',
 
                     ldapConnection => {
                         _nodes => [
@@ -413,23 +417,20 @@ sub struct {
 
                 # SSL
                 sslParams => {
-                    _nodes       => [qw(SSLVar SSLLDAPField SSLRequire)],
-                    SSLVar       => 'text:/SSLVar',
-                    SSLLDAPField => 'text:/SSLLDAPField',
-                    SSLRequire   => 'bool:/SSLRequire',
-                },
-
-                # OpenID
-                openIDParams => {
-                    _nodes       => [qw(openIdSecret)],
-                    openIdSecret => 'text:/openIdSecret',
+                    _nodes =>
+                      [qw(SSLAuthnLevel SSLVar SSLLDAPField SSLRequire)],
+                    SSLAuthnLevel => 'int:/SSLAuthnLevel',
+                    SSLVar        => 'text:/SSLVar',
+                    SSLLDAPField  => 'text:/SSLLDAPField',
+                    SSLRequire    => 'bool:/SSLRequire',
                 },
 
                 # CAS
                 casParams => {
                     _nodes => [
-                        qw(CAS_url CAS_CAFile CAS_renew CAS_gateway CAS_pgtFile cn:CAS_proxiedServices)
+                        qw(CAS_authnLevel CAS_url CAS_CAFile CAS_renew CAS_gateway CAS_pgtFile cn:CAS_proxiedServices)
                     ],
+                    CAS_authnLevel      => 'int:/CAS_authnLevel',
                     CAS_url             => 'text:/CAS_url',
                     CAS_CAFile          => 'text:/CAS_CAFile',
                     CAS_renew           => 'bool:/CAS_renew',
@@ -470,21 +471,29 @@ sub struct {
 
                 # OpenID
                 openIdParams => {
-                    _nodes       => [qw(openIdSecret)],
-                    openIdSecret => 'text:/openIdSecret',
+                    _nodes           => [qw(openIdAuthnLevel openIdSecret)],
+                    openIdAuthnLevel => 'int:/openIdAuthnLevel',
+                    openIdSecret     => 'text:/openIdSecret',
                 },
 
                 # Twitter
                 twitterParams => {
-                    _nodes     => [qw(twitterKey twitterSecret twitterAppName)],
-                    twitterKey => 'text:/twitterKey',
-                    twitterSecret  => 'text:/twitterSecret',
-                    twitterAppName => 'text:/twitterAppName',
+                    _nodes => [
+                        qw(twitterAuthnLevel twitterKey twitterSecret twitterAppName)
+                    ],
+                    twitterAuthnLevel => 'int:/twitterAuthnLevel',
+                    twitterKey        => 'text:/twitterKey',
+                    twitterSecret     => 'text:/twitterSecret',
+                    twitterAppName    => 'text:/twitterAppName',
                 },
 
                 # DBI
                 dbiParams => {
-                    _nodes => [qw(n:dbiConnection n:dbiSchema n:dbiPassword)],
+                    _nodes => [
+                        qw(dbiAuthnLevel n:dbiConnection n:dbiSchema n:dbiPassword)
+                    ],
+
+                    dbiAuthnLevel => 'int:/dbiAuthnLevel',
 
                     dbiConnection => {
                         _nodes => [qw(n:dbiConnectionAuth n:dbiConnectionUser)],
@@ -523,6 +532,19 @@ sub struct {
                         dbiAuthPasswordHash => 'text:/dbiAuthPasswordHash',
                     },
                 },
+
+                # Apache
+                apacheParams => {
+                    _nodes           => [qw(apacheAuthnLevel)],
+                    apacheAuthnLevel => 'int:/apacheAuthnLevel',
+                },
+
+                # Null
+                nullParams => {
+                    _nodes         => [qw(nullAuthnLevel)],
+                    nullAuthnLevel => 'int:/nullAuthnLevel',
+                },
+
             },
 
             # LOGS PARAMETERS
@@ -978,6 +1000,8 @@ sub testStruct {
         return ( 0, $@ );
     };
     my $boolean = { test => qr/^(?:0|1)?$/, msgFail => 'Value must be 0 or 1' };
+    my $integer =
+      { test => qr/^(?:\d)+$/, msgFail => 'Value must be an integer' };
     my $pcre = sub {
         my $r = shift;
         my $q;
@@ -1091,7 +1115,8 @@ sub testStruct {
                 1;
             },
         },
-        ldapBase => {
+        ldapAuthnLevel => $integer,
+        ldapBase       => {
             test    => qr/^(?:\w+=.*|)$/,
             msgFail => 'Bad LDAP base',
         },
@@ -1355,11 +1380,13 @@ sub testStruct {
         },
 
         # SSL
-        SSLVar       => $testNotDefined,
-        SSLLDAPField => $testNotDefined,
-        SSLRequire   => $boolean,
+        SSLAuthnLevel => $integer,
+        SSLVar        => $testNotDefined,
+        SSLLDAPField  => $testNotDefined,
+        SSLRequire    => $boolean,
 
         # CAS
+        CAS_authnLevel      => $integer,
         CAS_url             => $testNotDefined,
         CAS_CAFile          => $testNotDefined,
         CAS_renew           => $boolean,
@@ -1387,14 +1414,17 @@ sub testStruct {
         soapSessionService => $testNotDefined,
 
         # OpenID
-        openIdSecret => $testNotDefined,
+        openIdAuthnLevel => $integer,
+        openIdSecret     => $testNotDefined,
 
         # Twitter
-        twitterKey     => $testNotDefined,
-        twitterSecret  => $testNotDefined,
-        twitterAppName => $testNotDefined,
+        twitterAuthnLevel => $integer,
+        twitterKey        => $testNotDefined,
+        twitterSecret     => $testNotDefined,
+        twitterAppName    => $testNotDefined,
 
         # DBI
+        dbiAuthnLevel       => $integer,
         dbiAuthChain        => $testNotDefined,
         dbiAuthUser         => $testNotDefined,
         dbiAuthPassword     => $testNotDefined,
@@ -1408,6 +1438,12 @@ sub testStruct {
         dbiAuthMailCol      => $testNotDefined,
         userPivot           => $testNotDefined,
         dbiAuthPasswordHash => $testNotDefined,
+
+        # Apache
+        apacheAuthnLevel => $integer,
+
+        # Null
+        nullAuthnLevel => $integer,
 
         # Zimbra
         zimbraPreAuthKey => $testNotDefined,
@@ -1590,6 +1626,15 @@ sub defaultConf {
         samlServicePublicKeyEnc     => '',
         samlMetadataForceUTF8       => 1,
 
+        # Authentication levels
+        ldapAuthnLevel    => 2,
+        dbiAuthnLevel     => 2,
+        SSLAuthnLevel     => 5,
+        CAS_authnLevel    => 1,
+        openIdAuthnLevel  => 1,
+        twitterAuthnLevel => 1,
+        apacheAuthnLevel  => 4,
+        nullAuthnLevel    => 0,
     };
 }
 
