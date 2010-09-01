@@ -8,9 +8,8 @@ package Lemonldap::NG::Portal::AuthOpenID;
 
 use strict;
 use Lemonldap::NG::Portal::Simple;
-use Net::OpenID::Consumer;
 use LWP::UserAgent;
-use Cache::FileCache;
+require Cache::FileCache;
 
 our $VERSION = '0.1';
 
@@ -18,9 +17,9 @@ our $VERSION = '0.1';
 # @return Lemonldap::NG::Portal constant
 sub authInit {
     my $self = shift;
-    unless ( $self->{openIdSecret} ) {
-        $self->abort( 'Bad configuration', 'openIdSecret field is required' );
-    }
+    eval { require Net::OpenID::Consumer };
+    $self->abort( 'Unable to load Net::OpenID::Consumer', $@ ) if ($@);
+    $self->{openIdSecret} ||= $self->{cipher}->encrypt(0);
     PE_OK;
 }
 
@@ -34,7 +33,7 @@ sub extractFormInfo {
     # TODO : LWP options to use a proxy for example
     $self->{csr} = Net::OpenID::Consumer->new(
         ua              => $ua,
-        cache           => Cache::FileCache->new,
+        cache           => $self->{refLocalStorage} || Cache::FileCache->new,
         args            => $self,
         consumer_secret => $self->{openIdSecret},
         required_root   => $self->{portal},
@@ -123,8 +122,8 @@ sub setAuthSessionInfo {
 
     $self->{sessionInfo}->{'_user'} = $self->{user};
 
-    # authenticationLevel 4 for external authentication
-    $self->{sessionInfo}->{authenticationLevel} = 4;
+    # Since OpenID doesn't share authentication level, falling to 1
+    $self->{sessionInfo}->{authenticationLevel} = 1;
 
     PE_OK;
 }

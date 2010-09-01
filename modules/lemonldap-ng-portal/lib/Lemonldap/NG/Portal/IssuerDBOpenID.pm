@@ -17,7 +17,7 @@ sub issuerDBInit {
     my $self = shift;
     eval { require Net::OpenID::Server };
     $self->abort( 'Unable to load Net::OpenID::Server', $@ ) if ($@);
-    $self->{openIdSecret} ||= $self->{conf}->crypt(0);
+    $self->{openIdSecret} ||= $self->{cipher}->encrypt(0);
     return PE_OK;
 }
 
@@ -154,7 +154,7 @@ sub _openIDResponse {
         if ( $self->{_openIdTrustRequired} ) {
 
             # TODO
-            $self->info( "<h2>Site demandé " . $data->{trust_root} . "</h2>" );
+            $self->info( "<h2>Site demand&eacute; " . $data->{trust_root} . "</h2>" );
             $self->lmLog( 'OpenID confirmation', 'debug' );
             $self->storeOpenIDprm();
             return PE_CONFIRM;
