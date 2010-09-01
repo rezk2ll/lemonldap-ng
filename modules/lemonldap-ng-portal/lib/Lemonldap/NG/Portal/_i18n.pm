@@ -196,7 +196,7 @@ sub error_fr {
         "Problème au chargement d'un fournisseur de service",
         "Une erreur est survenue lors de l'échange d'attributs SAML",
         "Ceci est une page OpenID destinée aux servers",
-        "Vous tentez d'utiliser une identité OpenID qui ne vous appartient pas",
+"Vous tentez d'utiliser une identité OpenID qui ne vous appartient pas",
     ];
 }
 
@@ -362,6 +362,7 @@ sub error_ro {
 # * PM_BACKTOSP                13
 # * PM_BACKTOCASURL            14
 # * PM_LOGOUT                  15
+# * PM_OPENID_EXCHANGE         16
 
 sub msg_en {
     use utf8;
@@ -382,6 +383,7 @@ sub msg_en {
         'Go back to service provider',
 'The application you just logged out of has provided a link it would like you to follow',
         'Logout from other applications...',
+        'Do you want to authenticate yourself on this site ?',
     ];
 }
 
@@ -404,6 +406,7 @@ sub msg_fr {
         'Retourner sur le fournisseur de service',
 'Le service duquel vous arrivez a fourni un lien que vous êtes invité à suivre',
         'Déconnexion des autres applications...'
+        'Souhaitez-vous vous identifier sur ce site ?',
     ];
 }
 

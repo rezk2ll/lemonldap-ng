@@ -115,7 +115,7 @@ sub openIDServer {
         is_identity => sub {
             my ( $u, $identity ) = @_;
             return 0 unless ( $u and $identity );
-            if( $u eq ( split '/', $identity )[-1]){
+            if ( $u eq ( split '/', $identity )[-1] ) {
                 return 1;
             }
             else {
@@ -154,14 +154,20 @@ sub _openIDResponse {
         if ( $self->{_openIdTrustRequired} ) {
 
             # TODO
-            $self->info( "<h2>Site demand&eacute; " . $data->{trust_root} . "</h2>" );
+            $self->info(
+                '<h2>'
+                  . &Lemonldap::NG::Portal::_i18n::msg( PM_OPENID_EXCHANGE,
+                    $ENV{HTTP_ACCEPT_LANGUAGE} )
+                  . "</h2>"
+            );
             $self->lmLog( 'OpenID confirmation', 'debug' );
             $self->storeOpenIDprm();
             return PE_CONFIRM;
         }
         if ( $self->{_badOpenIdentity} ) {
             $self->userNotice(
-                "The user $self->{sessionInfo}->{_user} tries to use the id \"$data->{identity}\" on $data->{trust_root}");
+"The user $self->{sessionInfo}->{_user} tries to use the id \"$data->{identity}\" on $data->{trust_root}"
+            );
             return PE_OPENID_BADID;
         }
     }
