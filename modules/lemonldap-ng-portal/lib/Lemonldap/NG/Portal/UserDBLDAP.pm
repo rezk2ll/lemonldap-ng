@@ -12,9 +12,16 @@ use Lemonldap::NG::Portal::_LDAP 'ldap';    #link protected ldap
 our $VERSION = '0.2';
 
 ## @method int userDBInit()
-# Does nothing.
+# Transform ldapGroupAttributeNameSearch in ARRAY ref
 # @return Lemonldap::NG::Portal constant
 sub userDBInit {
+    my $self = shift;
+
+    unless ( ref $self->{ldapGroupAttributeNameSearch} eq 'ARRAY' ) {
+        my @values = split( /\s/, $self->{ldapGroupAttributeNameSearch} );
+        $self->{ldapGroupAttributeNameSearch} = \@values;
+    }
+
     PE_OK;
 }
 
