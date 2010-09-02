@@ -17,6 +17,7 @@ use Lemonldap::NG::Common::Apache::Session;   #inherits
 use Lemonldap::NG::Common::Conf;              #link protected conf Configuration
 use Lemonldap::NG::Common::Conf::Constants;   #inherits
 require Lemonldap::NG::Manager::_i18n;        #inherits
+use utf8;
 
 #inherits Apache::Session
 
@@ -39,6 +40,9 @@ sub new {
     my $self = $class->SUPER::new($args)
       or $class->abort( 'Unable to start ' . __PACKAGE__,
         'See Apache logs for more' );
+
+    # Output UTF-8
+    binmode( STDOUT, ':utf8' );
 
     # Try to get configuration values from global configuration
     my $config = Lemonldap::NG::Common::Conf->new( $self->{configStorage} );
@@ -66,6 +70,9 @@ sub new {
     # Check if we use X-FORWARDED-FOR header for IP
     $self->{ipField} =
       $self->{useXForwardedForIP} ? "xForwardedForAddr" : "ipAddr";
+
+    # Multi values separator
+    $self->{multiValuesSeparator} ||= '; ';
 
     # Now we're ready to display sessions. Choose display type
     foreach my $k ( $self->param() ) {
@@ -102,7 +109,7 @@ sub tree {
     my $self = shift;
 
     my $sub = $self->{_tree};
-    $self->lmLog( "Building chosen tree : $sub", 'debug' );
+    $self->lmLog( "Building chosen tree: $sub", 'debug' );
     my ( $r, $legend ) = $self->$sub( $self->param($sub) );
     return
 qq{<ul class="simpleTree"><li class="root" id="root"><span>$legend</span><ul>$r</ul></li></ul>};
@@ -338,19 +345,26 @@ sub ipclasses {
 # @return string XML tree
 sub delete {
     my ( $self, $id ) = splice @_;
-    my %h;
+    my ( %h, $res );
+
+    # Try to read session
     eval { tie %h, $globalStorage, $id, $globalStorageOptions; };
     if ($@) {
         if ( $@ =~ /does not exist in the data store/i ) {
-
-            # TODO: display error
+            $self->lmLog( "Apache::Session error: $@", 'error' );
+            $res .= '<div id="help" class="ui-corner-all">';
+            $res .= '<h1 class="ui-widget-header ui-corner-all">'
+              . $self->translate('error') . '</h1>';
+            $res .= '<div class="ui-corner-all ui-widget-content">';
+            $res .= "Apache::Session error: $@";
+            $res .= '</div></div>';
+            return $res;
         }
         else {
-            $self->abort( 'Apache::Session error', $@ );
+            $self->abort("Apache::Session error: $@");
         }
     }
     else {
-        my $uid = $h{uid};
         if ( $h{_httpSession} ) {
             my %h2;
             eval {
@@ -360,6 +374,13 @@ sub delete {
             };
             if ($@) {
                 $self->lmLog( "Apache::Session error: $@", 'error' );
+                $res .= '<div id="help" class="ui-corner-all">';
+                $res .= '<h1 class="ui-widget-header ui-corner-all">'
+                  . $self->translate('error') . '</h1>';
+                $res .= '<div class="ui-corner-all ui-widget-content">';
+                $res .= "Apache::Session error: $@";
+                $res .= '</div></div>';
+                return $res;
             }
         }
         eval { tied(%h)->delete(); };
@@ -367,10 +388,12 @@ sub delete {
             $self->abort( 'Apache::Session error', $@ );
         }
         else {
-            return
-                "<strong>"
-              . $self->translate('sessionDeleted')
-              . "($uid)</strong>";
+            $self->lmLog( "Session $id deleted", 'info' );
+            $res .= '<div id="help" class="ui-corner-all">';
+            $res .= '<h1 class="ui-widget-header ui-corner-all">'
+              . $self->translate('sessionDeleted') . '</h1>';
+            $res .= '</div>';
+            return $res;
         }
     }
 }
@@ -381,54 +404,167 @@ sub delete {
 sub session {
     my ( $self, $id ) = splice @_;
     my ( %h, $res );
+
+    # Try to read session
     eval { tie %h, $globalStorage, $id, $globalStorageOptions; };
     if ($@) {
-        $self->lmLog( 'Apache::Session error', $@ );
-        return "Apache::Session error: $@";
+        $self->lmLog( "Apache::Session error: $@", 'error' );
+        $res .= '<div id="help" class="ui-corner-all">';
+        $res .= '<h1 class="ui-widget-header ui-corner-all">'
+          . $self->translate('error') . '</h1>';
+        $res .= '<div class="ui-corner-all ui-widget-content">';
+        $res .= "Apache::Session error: $@";
+        $res .= '</div></div>';
+        return $res;
     }
+
+    # Session is avalaible, print content
+    my %session = %h;
+    untie %h;
+
+    # General informations
+
+    $res .= '<div id="edition" class="ui-corner-all">';
+    $res .= '<h1 class="ui-widget-header ui-corner-all">';
+    $res .= $self->translate('sessionTitle');
+    $res .= '</h1>';
+
     $res .=
-        "<input type=\"button\" onclick=\"del('$id');\" value=\""
-      . $self->translate('deleteSession')
-      . "\" /><p><b>"
+        "<p><strong>"
       . $self->translate('sessionStartedAt')
-      . ":</b> "
-      . $self->_stToStr( $h{startTime} )
-      . '</p><p><b>'
-      . $self->translate('memberOfSSOGroups')
-      . ' :</b><ul>';
-    $res .= "<li>$_</li>" foreach ( sort split /\s+/, $h{groups} );
-    $res .= '</ul></p>';
+      . ":</strong> "
+      . $self->_stToStr( $session{startTime} ) . "</p>";
+
+    # Transform values
+    # -> split multiple values
+    # -> decode UTF8
+    # -> Manage dates
+    # -> Hide password
+    # -> quote HTML
+    foreach ( keys %session ) {
+
+        # Remove empty value
+        delete $session{$_} unless ( length $session{$_} );
+
+        # Quote HTML
+        my $value = htmlquote( $session{$_} );
+
+        # Values in sessions are UTF8
+        utf8::decode($value);
+
+        # Multiple values
+        if ( $value =~ m/$self->{multiValuesSeparator}/ ) {
+            my $newvalue = '<ul>';
+            $newvalue .= "<li>$_</li>"
+              foreach ( split( $self->{multiValuesSeparator}, $value ) );
+            $newvalue .= '</ul>';
+            $value = $newvalue;
+        }
+
+        # Hide password
+        $value = '******' if ( $_ =~ /^_password$/ );
+
+        # Manage timestamp
+        if ( $_ =~ /^(_utime|_lastAuthnUTime)$/ ) {
+            $value = "$value (" . localtime($value) . ")";
+        }
+
+        # Manage dates
+        if ( $_ =~ /^(startTime|updateTime)$/ ) {
+            $value = "$value (" . $self->_stToStr($value) . ")";
+        }
+
+        # Register value
+        $session{$_} = $value;
+    }
+
+    # Map attributes to categories
+    my $categories = {
+        'dateTitle'       => [qw(_utime startTime updateTime _lastAuthnUTime)],
+        'connectionTitle' => [qw(ipAddr xForwardedForAddr _timezone)],
+        'authenticationTitle' =>
+          [qw(_session_id _user _password authenticationLevel)],
+        'modulesTitle' => [qw(_auth _userDB _passwordDB _issuerDB)],
+        'saml'    => [qw(_samlToken _lassoSessionDump _lassoIdentityDump)],
+        'groups'   => [qw(groups)],
+        'ldap'    => [qw(dn)],
+    };
+
+    # Display categories
+    foreach my $category ( keys %$categories ) {
+
+        # Test if category is not empty
+        my $empty = 1;
+        foreach ( @{ $categories->{$category} } ) {
+            $empty = 0 if exists $session{$_};
+        }
+        next if ($empty);
+
+        # Display category
+        $res .= '<div class="ui-corner-all ui-widget-content category">';
+        $res .= '<h2 class="ui-corner-all ui-widget-header">'
+          . $self->translate($category) . '</h2>';
+        $res .= '<ul>';
+
+        foreach my $attribute ( @{ $categories->{$category} } ) {
+
+            # Hide empty attributes
+            next unless exists $session{$attribute};
+
+            # Display attribute
     $res .=
-        '<p><b>'
-      . $self->translate('attributesAndMacros')
-      . ' :</b></p><table border="0" witdh="100%">';
-    foreach my $attr (
+                '<li><strong>'
+              . $self->translate($attribute)
+              . '</strong> (<tt>$'
+              . $attribute
+              . '</tt>): '
+              . $session{$attribute} . '</li>';
+
+            # Delete attribute, to hide it
+            delete $session{$attribute};
+        }
+        $res .= '</ul>';
+        $res .= '</div>';
+    }
+
+    # Other attributes
+    $res .= '<div class="ui-corner-all ui-widget-content category">';
+    $res .= '<h2 class="ui-corner-all ui-widget-header">'
+      . $self->translate('attributesAndMacros') . '</h2>';
+    $res .= '<ul>';
+
+    foreach my $attribute (
         sort {
             return $a cmp $b
               if ( ( $a =~ /^_/ and $b =~ /^_/ )
                 or ( $a !~ /^_/ and $b !~ /^_/ ) );
             return $b cmp $a
-        } keys %h
+        } keys %session
       )
     {
-        next if ( $attr =~ /^(?:groups)$/ );
 
-        my $value = htmlquote( $h{$attr} );
-
-        # Hide password value
-        $value = "******" if ( $attr =~ /^_password$/ );
-        $value .= ' <i>(' . localtime($value) . ')</i>'
-          if ( $attr eq '_utime' );
+        # Display attribute
         $res .=
-            '<tr valign="top"><th style="text-align:left;">'
-          . htmlquote($attr)
-          . '</th><td>:</td><td>'
-          . $value
-          . '</td></tr>'
-          if ($value);
+            '<li><strong>'
+          . $attribute
+          . '</strong>: '
+          . $session{$attribute} . '</li>';
     }
-    $res .= '</table>';
-    untie %h;
+
+    $res .= '</ul>';
+    $res .= '</div>';
+
+    # Delete button
+    $res .= '<div style="text-align:center">';
+    $res .=
+        "<input type=\"button\" onclick=\"del('$id');\""
+      . ' class="ui-state-default ui-corner-all"'
+      . " value=\""
+      . $self->translate('deleteSession') . "\" />";
+    $res .= '</div>';
+
+    $res .= '</div>';
+
     return $res;
 }
 

@@ -40,6 +40,14 @@
 
 <!-- Menu (tree) -->
 <div id="menu">
+
+   <!-- Tree CSS choice -->
+   <div id="css-switch" class="ui-corner-all ui-widget-content">
+      <span><lang en="Menu style" fr="Style de menu" /></span>
+      <a href="#" alt="tree"><lang en="Tree" fr="Arbre" /></a>
+      <a href="#" alt="accordion"><lang en="Accordion" fr="Accordéon" /></a>
+   </div>
+
    <!-- Query choice -->
    <div class="ui-corner-all ui-widget-header" style="text-align:center;">
       <span><lang en="Query" fr="Requête" /></span>
@@ -49,6 +57,7 @@
       <a href="<TMPL_VAR NAME="SCRIPT_NAME">?ipclasses=1" alt="ip"><lang en="per IP" fr="par IP" /></a>
       <a href="<TMPL_VAR NAME="SCRIPT_NAME">?doubleIp=1" alt="2ip"><lang en="double IP" fr="doubles IP" /></a>
    </div>
+
    <TMPL_VAR NAME="TREE">
 </div>
 

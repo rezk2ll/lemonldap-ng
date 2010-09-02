@@ -263,3 +263,17 @@ option
   margin-right:auto;
 }
 
+/* Sessions explorer */
+div.category {
+	margin: 5px 50px;
+}
+
+div.category h2 {
+	margin: 5px 50px;
+}
+
+div.category ul {
+	text-align: left;
+	list-style-position:inside;
+	list-style-image:url("bullet_orange.png");
+}
