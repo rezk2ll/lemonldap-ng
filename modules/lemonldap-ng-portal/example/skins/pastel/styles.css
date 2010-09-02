@@ -151,7 +151,7 @@ background:#FFFFFF url("../common/email.png") 5px 5px no-repeat;
 padding-left: 25px;
 }
 
-form input[name=openIdUrl] {
+form input[name=openid_identifier] {
 background:#FFFFFF url("../common/openid-16x16.gif") 5px 5px no-repeat;
 padding-left: 25px;
 width: 300px;

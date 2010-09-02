@@ -53,7 +53,7 @@
 		
 		<table>
 		<tr>
-		<td><input name="openIdUrl" type="text" /></td>
+		<td><input name="openid_identifier" type="text" /></td>
 		</tr>
 		<tr><td>
 		<div class="buttons">

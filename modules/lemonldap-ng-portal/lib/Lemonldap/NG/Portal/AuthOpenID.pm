@@ -3,7 +3,7 @@
 
 ##@class
 # OpenID authentication backend class.
-# The form must return a openIdUrl field
+# The form must return a openid_identifier field
 package Lemonldap::NG::Portal::AuthOpenID;
 
 use strict;
@@ -45,7 +45,7 @@ sub extractFormInfo {
     # 1. If no openid element has been detected
     $openid = $self->param('openid');
     return PE_FIRSTACCESS
-      unless ( $url = $self->param('openIdUrl') or $openid );
+      unless ( $url = $self->param('openid_identifier') or $openid );
 
     # 2. Check OpenID responses
     if ($openid) {
