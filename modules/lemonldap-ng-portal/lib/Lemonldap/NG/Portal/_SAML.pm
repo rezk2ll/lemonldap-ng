@@ -2669,12 +2669,16 @@ sub checkSignatureStatus {
 sub authnContext2authnLevel {
     my ( $self, $authnContext ) = splice @_;
 
-    return 2 if ( $authnContext eq $self->getAuthnContext("password") );
-    return 3
+    return $self->{samlAuthnContextMapPassword}
+      if ( $authnContext eq $self->getAuthnContext("password") );
+    return $self->{samlAuthnContextMapPasswordProtectedTransport}
       if (
         $authnContext eq $self->getAuthnContext("password-protected-transport")
       );
-    return 5 if ( $authnContext eq $self->getAuthnContext("tls-client") );
+    return $self->{samlAuthnContextMapKerberos}
+      if ( $authnContext eq $self->getAuthnContext("kerberos") );
+    return $self->{samlAuthnContextMapTLSClient}
+      if ( $authnContext eq $self->getAuthnContext("tls-client") );
     return 0;
 
 }
@@ -2686,10 +2690,15 @@ sub authnContext2authnLevel {
 sub authnLevel2authnContext {
     my ( $self, $authnLevel ) = splice @_;
 
-    return $self->getAuthnContext("password") if ( $authnLevel == 2 );
+    return $self->getAuthnContext("password")
+      if ( $authnLevel == $self->{samlAuthnContextMapPassword} );
     return $self->getAuthnContext("password-protected-transport")
-      if ( $authnLevel == 3 );
-    return $self->getAuthnContext("tls-client") if ( $authnLevel == 5 );
+      if (
+        $authnLevel == $self->{samlAuthnContextMapPasswordProtectedTransport} );
+    return $self->getAuthnContext("kerberos")
+      if ( $authnLevel == $self->{samlAuthnContextMapKerberos} );
+    return $self->getAuthnContext("tls-client")
+      if ( $authnLevel == $self->{samlAuthnContextMapTLSClient} );
     return $self->getAuthnContext("unspecified");
 
 }

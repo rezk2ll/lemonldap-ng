@@ -351,6 +351,12 @@ sub en {
         samlUserDBIdentityKey       => 'SAML identity storage key',
         samlStorage                 => 'SAML sessions module name',
         samlStorageOptions          => 'SAML sessions module options',
+        samlAuthnContextMap         => 'Authentication contexts',
+        samlAuthnContextMapPassword => 'Password',
+        samlAuthnContextMapPasswordProtectedTransport =>
+          'Password protected transport',
+        samlAuthnContextMapTLSClient => 'TLS client',
+        samlAuthnContextMapKerberos  => 'Kerberos',
     };
 }
 
@@ -673,6 +679,12 @@ sub fr {
         samlUserDBIdentityKey       => 'Clé de stockage de l\'identité SAML',
         samlStorage                 => 'Nom du module des session SAML',
         samlStorageOptions          => 'Options du module des sessions SAML',
+        samlAuthnContextMap         => 'Contextes d\'authentification',
+        samlAuthnContextMapPassword => 'Mot de passe',
+        samlAuthnContextMapPasswordProtectedTransport =>
+          'Mot de passe protégé',
+        samlAuthnContextMapTLSClient => 'Client TLS',
+        samlAuthnContextMapKerberos  => 'Kerberos',
     };
 }
 

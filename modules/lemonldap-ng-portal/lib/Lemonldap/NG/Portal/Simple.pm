@@ -483,6 +483,14 @@ sub setDefaultValues {
     $self->{samlStorageOptions}   ||= $self->{globalStorageOptions};
     $self->{samlMetadataForceUTF8} = 1
       unless ( defined( $self->{samlMetadataForceUTF8} ) );
+    $self->{samlAuthnContextMapPassword} = 2
+      unless defined $self->{samlAuthnContextMapPassword};
+    $self->{samlAuthnContextMapPasswordProtectedTransport} = 3
+      unless defined $self->{samlAuthnContextMapPasswordProtectedTransport};
+    $self->{samlAuthnContextMapTLSClient} = 5
+      unless defined $self->{samlAuthnContextMapTLSClient};
+    $self->{samlAuthnContextMapKerberos} = 4
+      unless defined $self->{samlAuthnContextMapKerberos};
 
     # CAS
     $self->{casStorage}        ||= $self->{globalStorage};

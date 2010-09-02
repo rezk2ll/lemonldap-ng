@@ -760,6 +760,7 @@ sub struct {
                 qw(samlEntityID
                   n:samlServiceSecurity
                   n:samlNameIDFormatMap
+                  n:samlAuthnContextMap
                   n:samlOrganization
                   n:samlSPSSODescriptor
                   n:samlIDPSSODescriptor
@@ -818,6 +819,22 @@ sub struct {
                   'text:/samlNameIDFormatMapWindows',
                 samlNameIDFormatMapKerberos =>
                   'text:/samlNameIDFormatMapKerberos',
+            },
+
+            # AUTHN CONTEXT MAP
+            samlAuthnContextMap => {
+                _nodes => [
+                    qw(samlAuthnContextMapPassword samlAuthnContextMapPasswordProtectedTransport samlAuthnContextMapTLSClient samlAuthnContextMapKerberos)
+                ],
+                _help => 'default',
+                samlAuthnContextMapPassword =>
+                  'int:/samlAuthnContextMapPassword',
+                samlAuthnContextMapPasswordProtectedTransport =>
+                  'int:/samlAuthnContextMapPasswordProtectedTransport',
+                samlAuthnContextMapTLSClient =>
+                  'int:/samlAuthnContextMapTLSClient',
+                samlAuthnContextMapKerberos =>
+                  'int:/samlAuthnContextMapKerberos',
             },
 
             # ORGANIZATION
@@ -1378,6 +1395,10 @@ sub testStruct {
             keyTest    => qr/^\w+$/,
             keyMsgFail => 'Bad parameter',
         },
+        samlAuthnContextMapPassword                   => $integer,
+        samlAuthnContextMapPasswordProtectedTransport => $integer,
+        samlAuthnContextMapTLSClient                  => $integer,
+        samlAuthnContextMapKerberos                   => $integer,
 
         # SSL
         SSLAuthnLevel => $integer,
@@ -1625,6 +1646,10 @@ sub defaultConf {
         samlServicePrivateKeyEncPwd => '',
         samlServicePublicKeyEnc     => '',
         samlMetadataForceUTF8       => 1,
+        samlAuthnContextMapPassword                   => 2,
+        samlAuthnContextMapPasswordProtectedTransport => 3,
+        samlAuthnContextMapTLSClient                  => 5,
+        samlAuthnContextMapKerberos                   => 4,
 
         # Authentication levels
         ldapAuthnLevel    => 2,
