@@ -209,6 +209,20 @@ sub new {
           or $self->param('logout')
     ) ? 1 : 0;
 
+    # Athentication backend choice
+    my $auth = $self->param('auth');
+    if ($auth) {
+        $self->lmLog( "Authentication module choice in URL: $auth", 'debug' );
+        foreach ( split( /\s/, $self->{authChoiceModules} ) ) {
+            if ( $auth eq $_ ) {
+                $self->lmLog( "Authentication module $auth can be choosed",
+                    'debug' );
+                $self->{authentication} = $auth;
+                last;
+            }
+        }
+    }
+
     # Push authentication/userDB/passwordDB modules in @ISA
     foreach my $type (qw(authentication userDB passwordDB)) {
         my $module_name = 'Lemonldap::NG::Portal::';
@@ -384,6 +398,9 @@ sub loadModule {
 
     # Push module in @ISA
     push @ISA, $module;
+
+    $self->lmLog( "Module $module loaded", 'debug' );
+
     return 1;
 }
 
