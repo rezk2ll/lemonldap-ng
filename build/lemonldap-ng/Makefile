@@ -447,11 +447,10 @@ manager_uninstall:	manager
 	@rm -vf manager_uninstall
 
 dist:	clean
-	@- LIST=* \
-	mkdir -p lemonldap-ng-$(VERSION) && \
-	cp -pR lemonldap-ng-common/ lemonldap-ng-manager/ lemonldap-ng-portal/ lemonldap-ng-handler/ $$LIST lemonldap-ng-$(VERSION)
-	@- rm -rf $$(find lemonldap-ng-$(VERSION) -name .svn -print)
-	@- find $$dir -name '*.bak' -delete
+	@mkdir -p lemonldap-ng-$(VERSION)
+	@cp -pRH $$(find * -maxdepth 0|grep -v lemonldap-ng-$(VERSION)) lemonldap-ng-$(VERSION)
+	@rm -rf $$(find lemonldap-ng-$(VERSION) -name .svn -print)
+	@find $$dir -name '*.bak' -delete
 	@rm -rf lemonldap-ng-$(VERSION)/lemonldap-ng-$(VERSION)
 	@$(COMPRESS) lemonldap-ng-$(VERSION).$(COMPRESSSUFFIX) lemonldap-ng-$(VERSION)
 	@rm -rf lemonldap-ng-$(VERSION)
