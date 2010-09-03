@@ -1392,8 +1392,20 @@ sub controlExistingSession {
                     }
                 }
 
-                # Call authentication logout
+                # Call logout for the module used to authenticate
+                if ( $h->{'_auth'} ne $self->get_module('auth') ) {
+                    $self->loadModule(
+                        "Lemonldap::NG::Portal::Auth" . $h->{_auth} );
+                    eval {
+                        $self->{error} =
+                          $self->_sub( "Lemonldap::NG::Portal::Auth"
+                              . $h->{_auth}
+                              . "::authLogout" );
+                    };
+                }
+                else {
                 eval { $self->{error} = $self->_sub('authLogout'); };
+                }
                 if ($@) {
                     $self->lmLog( "Error when calling authLogout: $@",
                         'debug' );
@@ -1401,7 +1413,7 @@ sub controlExistingSession {
                 return $self->{error} if $self->{error} > 0;
 
                 # Collect logout services and build hidden iFrames
-                if ( defined $self->{logoutServices} ) {
+                if ( %{ $self->{logoutServices} } ) {
 
                     $self->lmLog(
                         "Create iFrames to forward logout to services",
