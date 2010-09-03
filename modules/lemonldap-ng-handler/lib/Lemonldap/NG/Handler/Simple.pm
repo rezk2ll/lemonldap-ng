@@ -1065,12 +1065,9 @@ sub run ($$) {
     # Hide Lemonldap::NG cookie
     $class->hideCookie;
 
-    # Cleanup and log
+    # Log
     $apacheRequest->push_handlers(
         PerlLogHandler => sub { $class->logGranted( $uri, $datas ); DECLINED },
-    );
-    $apacheRequest->push_handlers(
-        PerlCleanupHandler => sub { $class->cleanLocalStorage(@_); DECLINED },
     );
 
     #  Catch POST rules
@@ -1201,18 +1198,6 @@ sub status($$) {
         );
     }
     return OK;
-}
-
-#################
-# OTHER METHODS #
-#################
-
-## @rmethod protected int cleanLocalStorage()
-# Clean expired values from the local cache.
-# @return Apache2::Const::DECLINED
-sub cleanLocalStorage {
-    $refLocalStorage->purge() if ($refLocalStorage);
-    return DECLINED;
 }
 
 1;
