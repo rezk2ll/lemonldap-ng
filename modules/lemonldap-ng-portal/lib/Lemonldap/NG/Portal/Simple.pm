@@ -216,6 +216,11 @@ sub new {
     # Get authentication choice
     my $authChoice = $self->param( $self->{authChoiceParam} );
 
+    # Check XSS Attack
+    $authChoice = ""
+      if (  $authChoice
+        and $self->checkXSSParam( $self->{authChoiceParam}, $authChoice ) );
+
     $self->lmLog( "Authentication choice found in URL: $authChoice", 'debug' )
       if $authChoice;
 
@@ -257,7 +262,8 @@ sub new {
                 if ( $auth and $userDB and $passwordDB ) {
 
                     # Options to store in the loop
-                    my $optionsLoop = { name => $name, key => $_, module => $auth };
+                    my $optionsLoop =
+                      { name => $name, key => $_, module => $auth };
 
                     # Get displayType for this module
 
@@ -696,16 +702,8 @@ sub buildHiddenForm {
     foreach (@keys) {
 
         # Check XSS attacks
-        if ( $self->{portalHiddenFormValues}->{$_} =~
-            m/(?:\0|<|'|"|`|\%(?:00|25|3C|22|27|2C))/ )
-        {
-            $self->lmLog(
-                "XSS attack detected (param: $_ | value: "
-                  . $self->{portalHiddenFormValues}->{$_} . ")",
-                "warn"
-            );
-            next;
-        }
+        next
+          if $self->checkXSSAttack( $_, $self->{portalHiddenFormValues}->{$_} );
 
         # Build hidden input HTML code
         $val .=
@@ -718,6 +716,23 @@ sub buildHiddenForm {
     }
 
     return $val;
+}
+
+## @method boolean checkXSSAttack(string name, string value)
+# Check value to detect XSS attack
+# @param name Parameter name
+# @param value Parameter value
+# @return 1 if attack detected, 0 else
+sub checkXSSAttack {
+    my ( $self, $name, $value ) = splice @_;
+
+    if ( $value =~ m/(?:\0|<|'|"|`|\%(?:00|25|3C|22|27|2C))/ ) {
+        $self->lmLog( "XSS attack detected (param: $name | value: $value)",
+            "warn" );
+        return 1;
+    }
+
+    return 0;
 }
 
 =begin WSDL
@@ -975,10 +990,7 @@ sub get_user {
     my $self = shift;
     return "" unless $self->{user};
     return $self->{user}
-      unless ( $self->{user} =~ m/(?:\0|<|'|"|`|\%(?:00|25|3C|22|27|2C))/ );
-    $self->lmLog(
-        "XSS attack detected (param: user | value: " . $self->{user} . ")",
-        "warn" );
+      unless ( $self->checkXSSAttack( 'user', $self->{user} ) );
     return "";
 }
 
@@ -1242,7 +1254,8 @@ sub controlUrlOrigin {
         # REJECT NON BASE64 URL except for CAS IssuerDB
         if ( $self->get_module('issuer') ne "CAS" ) {
             if ( $url =~ m#[^A-Za-z0-9\+/=]# ) {
-                $self->lmLog( "XSS attack detected (param: url | value: $url)",
+                $self->lmLog(
+                    "Value must be in BASE64 (param: url | value: $url)",
                     "warn" );
                 return PE_BADURL;
             }
@@ -1256,17 +1269,26 @@ sub controlUrlOrigin {
         my $tmp =
           ( $self->param('logout') ? $ENV{HTTP_REFERER} : $self->{urldc} );
 
-        # REJECT [\0<'"`] in URL or encoded '%' and non protected hosts
+        # XSS attack
         if (
-            $self->{urldc} =~ /(?:\0|<|'|"|`|\%(?:00|25|3C|22|27|2C))/
-            or (    $tmp
-                and $tmp !~
-/^https?:\/\/(?:$self->{reVHosts}$self->{trustedDomains})(?::\d+)?(?:\/.*)?$/o
+            $self->checkXSSAttack(
+                $self->param('logout') ? 'HTTP Referer' : 'urldc',
+                $self->{urldc}
             )
           )
         {
+            delete $self->{urldc};
+            return PE_BADURL;
+        }
+
+        # Non protected hosts
+        if (    $tmp
+                and $tmp !~
+/^https?:\/\/(?:$self->{reVHosts}$self->{trustedDomains})(?::\d+)?(?:\/.*)?$/o
+            )
+        {
             $self->lmLog(
-                "XSS attack detected (param: "
+                "URL contains a non protected host (param: "
                   . ( $self->param('logout') ? 'HTTP Referer' : 'urldc' )
                   . " | value: $tmp)",
                 "warn"
@@ -1274,8 +1296,10 @@ sub controlUrlOrigin {
             delete $self->{urldc};
             return PE_BADURL;
         }
+
         $self->{_url} = $url;
     }
+
     PE_OK;
 }
 
