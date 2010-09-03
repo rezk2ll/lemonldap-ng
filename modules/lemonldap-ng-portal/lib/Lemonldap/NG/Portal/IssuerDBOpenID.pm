@@ -66,7 +66,8 @@ sub issuerForAuthUser {
 
     unless ( $mode =~ /^checkid_(?:immediate|setup)/ ) {
         $self->lmLog(
-            "OpenID error : $mode is not known at this step (issuerForAuthUser)"
+"OpenID error : $mode is not known at this step (issuerForAuthUser)",
+            'error'
         );
         return PE_ERROR;
     }
