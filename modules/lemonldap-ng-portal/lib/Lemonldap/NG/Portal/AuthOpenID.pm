@@ -105,7 +105,14 @@ sub extractFormInfo {
         my $check_url = $claimed_identity->check_url(
             return_to => $self->{portal}
               . '?openid=1'
-              . ( $self->{_url} ? "&url=$self->{_url}" : '' ),
+              . ( $self->{_url} ? "&url=$self->{_url}" : '' )
+              . (
+                $self->param( $self->{authChoiceParam} )
+                ? "&"
+                  . $self->{authChoiceParam} . "="
+                  . $self->param( $self->{authChoiceParam} )
+                : ''
+              ),
             trust_root     => $self->{portal},
             delayed_return => 1,
         );
