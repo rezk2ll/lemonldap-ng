@@ -193,6 +193,15 @@ else {
         LOGIN_INFO            => $portal->loginInfo(),
     );
 
+    # Authentication loop
+    if ( $portal->{authLoop} ) {
+        %templateParams = (
+            %templateParams,
+            AUTH_LOOP    => $portal->{authLoop},
+            CHOICE_PARAM => $portal->{authChoiceParam},
+        );
+    }
+
     # Adapt template if password policy error
     if (
         $portal->{portalDisplayChangePassword}

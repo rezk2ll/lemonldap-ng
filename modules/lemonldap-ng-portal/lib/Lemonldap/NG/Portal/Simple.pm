@@ -209,18 +209,110 @@ sub new {
           or $self->param('logout')
     ) ? 1 : 0;
 
-    # Athentication backend choice
-    my $auth = $self->param('auth');
-    if ($auth) {
-        $self->lmLog( "Authentication module choice in URL: $auth", 'debug' );
-        foreach ( split( /\s/, $self->{authChoiceModules} ) ) {
-            if ( $auth eq $_ ) {
-                $self->lmLog( "Authentication module $auth can be choosed",
+    #==============================
+    # Authentication backend choice
+    #==============================
+
+    # Get authentication choice
+    my $authChoice = $self->param( $self->{authChoiceParam} );
+
+    $self->lmLog( "Authentication choice found in URL: $authChoice", 'debug' )
+      if $authChoice;
+
+    if ( defined $self->{authChoiceModules} ) {
+
+        # No backend choosen, or not declared, list all avaible
+        unless ( $authChoice
+            and exists $self->{authChoiceModules}->{$authChoice} )
+        {
+
+            $self->lmLog( "No authentication choice done, or wrong choice",
                     'debug' );
-                $self->{authentication} = $auth;
+
+            my @authLoop;
+
+            foreach ( sort keys %{ $self->{authChoiceModules} } ) {
+
+                my $name = $_;
+
+                # Name can have a digit as first character
+                # for sorting purpose
+                # Remove it in displayed name
+                $name =~ s/^(\d*)?(\s*)?//;
+
+                # Find modules associated to authChoice
+                my ( $auth, $userDB, $passwordDB ) =
+                  split( /\|/, $self->{authChoiceModules}->{$_} );
+
+                # What do display
+                # -> login/password form (LDAP, DBI, ...)
+                # -> OpenID form
+                # -> logo with link (ex: CAS, SSL, etc.)
+                my $displayType = {
+                    'standardform' => [qw(LDAP DBI)],
+                    'openidform'   => [qw(OpenID)],
+                    'logo'         => [qw(CAS Twitter SAML)],
+                };
+
+                if ( $auth and $userDB and $passwordDB ) {
+
+                    # Options to store in the loop
+                    my $optionsLoop = { name => $name, key => $_, module => $auth };
+
+                    # Get displayType for this module
+
+                    foreach my $type ( keys %$displayType ) {
+                        foreach my $backend ( @{ $displayType->{$type} } ) {
+                            if ( $auth eq $backend ) {
+                                $self->lmLog(
+                                    "Display type $type for module $auth",
+                                    'debug' );
+
+                                $optionsLoop->{$type} = 1;
                 last;
             }
         }
+    }
+
+                    # Register item in loop
+                    push @authLoop, $optionsLoop;
+
+                    $self->lmLog(
+                        "Authentication choice $name will be displayed",
+                        'debug' );
+                }
+
+                else {
+                    $self->abort("Authentication choice $_ value is invalid");
+                }
+
+            }
+
+            # Register value for template
+            $self->{authLoop} = \@authLoop;
+        }
+
+        # Else load choosen modules
+        else {
+
+            # Find modules associated to authChoice
+            my ( $auth, $userDB, $passwordDB ) =
+              split( /\|/, $self->{authChoiceModules}->{$authChoice} );
+
+            if ( $auth and $userDB and $passwordDB ) {
+                $self->lmLog( "Authentication module $auth selected", 'debug' );
+                $self->lmLog( "User module $userDB selected",         'debug' );
+                $self->lmLog( "Password module $passwordDB selected", 'debug' );
+                $self->{authentication} = $auth;
+                $self->{userDB}         = $userDB;
+                $self->{passwordDB}     = $passwordDB;
+            }
+            else {
+                $self->abort(
+                    "Authentication choice $authChoice value is invalid");
+            }
+        }
+
     }
 
     # Push authentication/userDB/passwordDB modules in @ISA
@@ -467,6 +559,7 @@ sub setDefaultValues {
     $self->{activeTimer} = 1 unless ( defined( $self->{activeTimer} ) );
     $self->{infoFormMethod}    ||= "get";
     $self->{confirmFormMethod} ||= "post";
+    $self->{authChoiceParam}   ||= "lmAuth";
 
     # Set default userDB and passwordDB to DBI if authentication is DBI
     if ( $self->{authentication} =~ /DBI/i ) {
@@ -519,7 +612,8 @@ sub setDefaultValues {
     $self->{SSLAuthnLevel}     = 5 unless defined $self->{SSLAuthnLevel};
     $self->{CAS_authnLevel}    = 1 unless defined $self->{CAS_authnLevel};
     $self->{openIdAuthnLevel}  = 1 unless defined $self->{openIdAuthnLevel};
-    $self->{twitterAuthnLevel} = 1 unless defined $self->{twitterAuthnLevel};
+    $self->{twitterAuthnLevel} = 1
+      unless defined $self->{twitterAuthnLevel};
     $self->{apacheAuthnLevel}  = 4 unless defined $self->{apacheAuthnLevel};
     $self->{nullAuthnLevel}    = 2 unless defined $self->{nullAuthnLevel};
 
@@ -932,7 +1026,9 @@ sub safe {
     return $safe if ($safe);
     $safe = new Safe;
     my @t =
-      $self->{customFunctions} ? split( /\s+/, $self->{customFunctions} ) : ();
+      $self->{customFunctions}
+      ? split( /\s+/, $self->{customFunctions} )
+      : ();
     foreach (@t) {
         my $sub = $_;
         unless (/::/) {
@@ -1323,7 +1419,8 @@ sub controlExistingSession {
 
                 # Redirect or Post if asked by authLogout
                 $self->_subProcess(qw(autoRedirect))
-                  if ( $self->{urldc} and $self->{urldc} ne $self->{portal} );
+                  if (  $self->{urldc}
+                    and $self->{urldc} ne $self->{portal} );
                 $self->_subProcess(qw(autoPost)) if ( $self->{postUrl} );
 
                 # Display logout message
@@ -1480,7 +1577,8 @@ sub setSessionInfo {
     # Extract and store client IP from X-FORWARDED-FOR header
     my $xheader = $ENV{HTTP_X_FORWARDED_FOR};
     $xheader =~ s/(.*?)(\,)+.*/$1/ if $xheader;
-    $self->{sessionInfo}->{xForwardedForAddr} = $xheader || $ENV{REMOTE_ADDR};
+    $self->{sessionInfo}->{xForwardedForAddr} = $xheader
+      || $ENV{REMOTE_ADDR};
 
     # Date and time
     if ( $self->{updateSession} ) {
@@ -1564,7 +1662,10 @@ sub removeOther {
     my ( $self, $current ) = @_;
     $self->{deleted}       = [];
     $self->{otherSessions} = [];
-    if ( $self->{singleSession} or $self->{singleIP} or $self->{notifyOther} ) {
+    if (   $self->{singleSession}
+        or $self->{singleIP}
+        or $self->{notifyOther} )
+    {
         my $sessions =
           $self->{globalStorage}->searchOn( $self->{globalStorageOptions},
             $self->{whatToTrace},
@@ -1991,7 +2092,10 @@ sub autoPost {
 
     # Print page
     print $self->header();
-    print $self->start_html( -title => $message, -style => { -code => $css } );
+    print $self->start_html(
+        -title => $message,
+        -style => { -code => $css }
+    );
 
     print $self->h1($message);
 

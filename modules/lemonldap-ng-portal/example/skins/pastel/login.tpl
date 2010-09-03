@@ -5,14 +5,124 @@
 	<div class="loginlogo"></div>
 
 	<TMPL_IF NAME="DISPLAY_FORM">
+
 	<form action="#" method="post" class="login">
-
-		<h3><lang en="Please enter your credentials" fr="Merci de vous authentifier"/></h3>
 		
+	<!-- Hidden fields -->
 		<TMPL_VAR NAME="HIDDEN_INPUTS">
-
 	        <p><input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" /></p>
 	        <p><input type="hidden" name="timezone" /></p>
+	<p><input type="hidden" id="authKey" name="<TMPL_VAR NAME="CHOICE_PARAM">" value="" /></p>
+
+	<TMPL_IF AUTH_LOOP>
+	<!-- Authentication loop -->
+
+	<!-- tabs -->
+	<div id="authMenu">
+	<ul>
+	<TMPL_LOOP NAME="AUTH_LOOP">
+	<li title="<TMPL_VAR NAME="key">"><a href="#<TMPL_VAR NAME="name">"><TMPL_VAR NAME="name"></a></li>
+	</TMPL_LOOP>
+	</ul>
+	</div>
+	
+	<!-- Forms -->
+	<TMPL_LOOP NAME="AUTH_LOOP">
+
+	<div id="<TMPL_VAR NAME="name">">
+
+        <TMPL_IF NAME="standardform">
+
+		<h3><lang en="Please enter your credentials" fr="Merci de vous authentifier"/></h3>		
+
+		<table>
+		<tr><th><lang en="Login" fr="Identifiant"/></th>
+		<td><input name="user" type="text" value="<TMPL_VAR NAME="LOGIN">" tabindex="1" /></td>
+		</tr>
+		<tr><th><lang en="Password" fr="Mot de passe"/></th>
+		<td><input name="password" type="password" tabindex="2" /></td>
+		</tr>
+		<tr><td colspan="2">
+		<div class="buttons">
+		<button type="reset" class="negative" tabindex="4">
+			<img src="/skins/common/cancel.png" alt="" />
+			<lang en="Cancel" fr="Annuler" />
+		</button>
+		<button type="submit" class="positive" tabindex="3">
+			<img src="/skins/common/accept.png" alt="" />
+			<lang en="Connect" fr="Se connecter" />
+		</button>
+		</div></td></tr>
+		<TMPL_IF NAME="DISPLAY_RESETPASSWORD">
+                <tr><td colspan="2">
+                <div class="buttons">
+		<button class="positive" tabindex="5" onclick="$(location).attr('href','<TMPL_VAR NAME="MAIL_URL">');return false">
+                        <img src="/skins/common/email.png" alt="" />
+                        <lang en="Reset my password" fr="R&eacute;initialiser mon mot de passe"/>
+		</button>
+                </div></td></tr>
+        	</TMPL_IF>
+                </table>
+
+	</TMPL_IF>
+
+        <TMPL_IF NAME="openidform">
+
+		<h3><lang en="Please enter your OpenID login" fr="Entrez votre identifiant OpenID"/></h3>
+		
+		<table>
+		<tr>
+		<td><input name="openid_identifier" type="text" /></td>
+		</tr>
+		<tr><td>
+		<div class="buttons">
+		<button type="reset" class="negative" tabindex="4">
+			<img src="/skins/common/cancel.png" alt="" />
+			<lang en="Cancel" fr="Annuler" />
+		</button>
+		<button type="submit" class="positive" tabindex="3">
+			<img src="/skins/common/accept.png" alt="" />
+			<lang en="Connect" fr="Se connecter" />
+		</button>
+		</div></td></tr>
+                </table>
+
+	</TMPL_IF>
+
+        <TMPL_IF NAME="logo">
+
+		<h3><lang en="Authentication with" fr="Authentification avec"/> <TMPL_VAR NAME="module"></h3>		
+
+		<table>
+	        <TMPL_IF NAME="module">
+		<tr><td>
+		<img src="/skins/common/<TMPL_VAR NAME="module">.png" />
+		</td></tr>
+		</TMPL_IF>
+
+		<tr><td>
+		<div class="buttons">
+		<button type="reset" class="negative" tabindex="4">
+			<img src="/skins/common/cancel.png" alt="" />
+			<lang en="Cancel" fr="Annuler" />
+		</button>
+		<button type="submit" class="positive" tabindex="3">
+			<img src="/skins/common/accept.png" alt="" />
+			<lang en="Connect" fr="Se connecter" />
+		</button>
+		</div></td></tr>
+                </table>
+
+	</TMPL_IF>
+
+	</div>
+
+	</TMPL_LOOP>
+
+	<TMPL_ELSE>
+	<!-- Standard login form -->
+
+		<h3><lang en="Please enter your credentials" fr="Merci de vous authentifier"/></h3>		
 
 		<table>
 		<tr><th><lang en="Login" fr="Identifiant"/></th>
@@ -42,6 +152,8 @@
                 </div></td></tr>
         	</TMPL_IF>
                 </table>
+
+        </TMPL_IF>
 
         </form>
         </TMPL_IF>

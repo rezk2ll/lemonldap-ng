@@ -19,6 +19,16 @@ $(document).ready(function(){
 	$("input[name=timezone]").val( -(new Date().getTimezoneOffset()/60) );
 	$("#menu").tabs({ fx: { opacity: 'toggle' } });
 	$("#menu").tabs("select",displaytab);
+
+	/* Authentication choice */
+	$("#authMenu").tabs({
+		fx: { opacity: 'toggle' },
+		show:function(event,ui) {
+		$('#authKey').val($('#authMenu li.ui-tabs-selected').attr('title'));
+		return true;
+		},
+	});
+
 	$("input[type!=hidden]:first").focus();
 	$("input[type='password']").attr("autocomplete",autocomplete);
 	$("#appslist li[class!=catname]").hover(
