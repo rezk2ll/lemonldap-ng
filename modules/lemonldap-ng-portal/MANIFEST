@@ -156,6 +156,7 @@ lib/Lemonldap/NG/Portal/UserDBDBI.pm
 lib/Lemonldap/NG/Portal/UserDBLDAP.pm
 lib/Lemonldap/NG/Portal/UserDBMulti.pm
 lib/Lemonldap/NG/Portal/UserDBNull.pm
+lib/Lemonldap/NG/Portal/UserDBOpenID.pm
 lib/Lemonldap/NG/Portal/UserDBProxy.pm
 lib/Lemonldap/NG/Portal/UserDBRemote.pm
 lib/Lemonldap/NG/Portal/UserDBSAML.pm
