@@ -219,7 +219,7 @@ sub new {
     # Check XSS Attack
     $authChoice = ""
       if (  $authChoice
-        and $self->checkXSSParam( $self->{authChoiceParam}, $authChoice ) );
+        and $self->checkXSSAttack( $self->{authChoiceParam}, $authChoice ) );
 
     $self->lmLog( "Authentication choice found in URL: $authChoice", 'debug' )
       if $authChoice;
