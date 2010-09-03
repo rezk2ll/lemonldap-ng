@@ -41,9 +41,13 @@ sub extractFormInfo {
     # Local URL
     my $local_url = $self->url();
 
-    # Add URL parameter if present
+    # Add request state parameters
     if ( $self->{_url} ) {
         my $url_param = 'url=' . $self->{_url};
+        $local_url .= ( $local_url =~ /\?/ ? '&' : '?' ) . $url_param;
+    }
+    if ( $self->param( $self->{authChoiceParam} ) ) {
+        my $url_param = $self->{authChoiceParam}.'=' . $self->param( $self->{authChoiceParam} );
         $local_url .= ( $local_url =~ /\?/ ? '&' : '?' ) . $url_param;
     }
 
