@@ -256,7 +256,7 @@ sub new {
                 my $displayType = {
                     'standardform' => [qw(LDAP DBI)],
                     'openidform'   => [qw(OpenID)],
-                    'logo'         => [qw(CAS Twitter SAML)],
+                    'logo'         => [qw(CAS Twitter SAML SSL Apache)],
                 };
 
                 if ( $auth and $userDB and $passwordDB ) {
