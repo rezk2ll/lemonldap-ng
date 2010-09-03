@@ -373,7 +373,7 @@ sub safe {
             }";
         $class->lmLog( $@, 'error' ) if ($@);
     }
-    $safe->share_from( 'main', ['%ENV'] );
+    $safe->share_from( 'main', ['%ENV', 'APR::Table::set'] );
     $safe->share_from( 'Lemonldap::NG::Common::Safelib',
         $Lemonldap::NG::Common::Safelib::functions );
     $safe->share( '&encode_base64', '$datas', '&lmSetHeaderIn',
@@ -609,7 +609,9 @@ sub conditionSub {
     $cond =~ s/\$datas->{vhost}/\$apacheRequest->hostname/g;
 
     # Eval sub
-    my $sub = $class->safe->reval("sub {return ( $cond )}");
+    my $sub =
+      $class->safe->wrap_code_ref(
+        $class->safe->reval("sub {return ( $cond )}") );
 
     # Return sub and protected flag
     return ( $sub, 1 );
@@ -693,7 +695,8 @@ sub forgeHeadersInit {
           "lmSetHeaderIn(\$apacheRequest,'$_' => join('',split(/[\\r\\n]+/,"
           . $tmp{$_} . ")));";
     }
-    $forgeHeaders = $class->safe->reval("sub {$sub};");
+    $forgeHeaders =
+      $class->safe->wrap_code_ref( $class->safe->reval("sub {$sub};") );
     $class->lmLog( "$class: Unable to forge headers: $@: sub {$sub}", 'error' )
       if ($@);
     1;
@@ -734,8 +737,9 @@ sub postUrlInit {
             $h{$_} = "'$h{$_}'" if ( $h{$_} =~ /^\w+$/ );
             $tmp .= "'$_'=>$h{$_},";
         }
-        my $sub = $class->safe->reval(
-            "sub{
+        my $sub = $class->safe->wrap_code_ref(
+            $class->safe->reval(
+                "sub{
             my \$f = shift;
             my \$l;
             unless(\$f->ctx){
@@ -752,6 +756,7 @@ sub postUrlInit {
             }
             return OK;
         }"
+            )
         );
         $class->lmLog( "Compiling POST request for $url", 'debug' );
         $transform->{$url} = sub {

@@ -368,7 +368,9 @@ sub _conditionSub {
     $cond =~ s/\$date/&POSIX::strftime("%Y%m%d%H%M%S",localtime())/e;
     $cond =~ s/\$(\w+)/$h->{$1}/g;
     my $sub;
-    $sub = $self->safe->reval("sub {my \$self = shift; return ( $cond )}");
+    $sub =
+      $self->safe->wrap_code_ref(
+        $self->safe->reval("sub {my \$self = shift; return ( $cond )}") );
     return $sub;
 }
 

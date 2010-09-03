@@ -151,7 +151,8 @@ sub displayModule {
     # Else parse display condition
     my $cond = $self->{modules}->{$modulename};
     $cond =~ s/\$(\w+)/$self->{portalObject}->{sessionInfo}->{$1}/g;
-    return $self->_safe->reval("sub {return ( $cond )}");
+    return $self->safe->wrap_code_ref(
+        $self->_safe->reval("sub {return ( $cond )}") );
     return 0;
 }
 
@@ -565,7 +566,9 @@ sub _conditionSub {
     $cond =~ s/\$date/&POSIX::strftime("%Y%m%d%H%M%S",localtime())/e;
     $cond =~ s/\$(\w+)/\$self->{portalObject}->{sessionInfo}->{$1}/g;
     my $sub;
-    $sub = $self->_safe->reval("sub {my \$self = shift; return ( $cond )}");
+    $sub =
+      $self->safe->wrap_code_ref(
+        $self->_safe->reval("sub {my \$self = shift; return ( $cond )}") );
     return $sub;
 }
 
