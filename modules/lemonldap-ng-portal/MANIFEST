@@ -49,6 +49,7 @@ example/scripts/buildPortalWSDL
 example/scripts/purgeCentralCache
 example/scripts/purgeCentralCache.cron.d
 example/skins/common/accept.png
+example/skins/common/Apache.png
 example/skins/common/application_cascade.png
 example/skins/common/bullet_go.png
 example/skins/common/cancel.png
@@ -68,8 +69,10 @@ example/skins/common/mail_password.tpl
 example/skins/common/ok.png
 example/skins/common/openid-16x16.gif
 example/skins/common/portal.js
+example/skins/common/SAML.png
 example/skins/common/saml2-metadata.tpl
 example/skins/common/stop.png
+example/skins/common/Twitter.png
 example/skins/common/user_suit.png
 example/skins/common/valid-xhtml10-blue.png
 example/skins/common/vcard_edit.png
@@ -116,7 +119,6 @@ lib/Lemonldap/NG/Portal.pm
 lib/Lemonldap/NG/Portal/_CAS.pm
 lib/Lemonldap/NG/Portal/_DBI.pm
 lib/Lemonldap/NG/Portal/_i18n.pm
-lib/Lemonldap/NG/Portal/_i18n.pm.ERR
 lib/Lemonldap/NG/Portal/_LDAP.pm
 lib/Lemonldap/NG/Portal/_Multi.pm
 lib/Lemonldap/NG/Portal/_Proxy.pm
