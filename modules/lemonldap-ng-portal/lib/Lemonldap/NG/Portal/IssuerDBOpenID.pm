@@ -36,7 +36,6 @@ sub issuerForUnAuthUser {
         return PE_OPENID_EMPTY;
     }
 
-    my ( $type, $data );
     if ( $mode eq 'associate' ) {
         return $self->_openIDResponse( $self->openIDServer->_mode_associate() );
     }
@@ -58,8 +57,20 @@ sub issuerForAuthUser {
 
     # Restore datas
     $self->restoreOpenIDprm();
+    my $mode = $self->param('openid.mode');
 
-    return $self->_openIDResponse( $self->openIDServer->handle_page() );
+    unless ($mode) {
+        $self->lmLog( 'OpenID SP test', 'debug' );
+        return PE_OPENID_EMPTY;
+    }
+
+    unless ( $mode =~ /^checkid_(?:immediate|setup)/ ) {
+        $self->lmLog(
+            "OpenID error : $mode is not known at this step (issuerForAuthUser)"
+        );
+        return PE_ERROR;
+    }
+    return $self->_openIDResponse( $self->openIDServer->_mode_checkid() );
 }
 
 ## @apmethod int issuerLogout()
@@ -146,6 +157,8 @@ sub openIDServer {
 
 sub _openIDResponse {
     my ( $self, $type, $data ) = splice @_;
+
+    # TODO: use autoRedirect instead
     if ( $type eq 'redirect' ) {
         $self->lmLog( 'OpenID redirection', 'debug' );
         print $self->redirect($data);

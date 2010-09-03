@@ -100,15 +100,42 @@ sub extractFormInfo {
             return PE_BADCREDENTIALS;
         }
 
-        # Redirect user
+        # Build the redirection
         $self->lmLog( "OpenID redirection to $url", 'debug' );
-
-        # TODO: insert url=...
         my $check_url = $claimed_identity->check_url(
-            return_to      => $self->{portal} . '?openid=1',
+            return_to => $self->{portal}
+              . '?openid=1'
+              . ( $self->{_url} ? "&url=$self->{_url}" : '' ),
             trust_root     => $self->{portal},
             delayed_return => 1,
         );
+
+        # If UserDB uses OpenID, add "OpenID Simple Registration Extension"
+        # compatible fields
+        if (   $self->{userDB} =~ /^OpenID/
+            or $self->{stack}->[1]->[0]->{m} =~ /^OpenID/ )
+        {
+            my ( @r, @o );
+            foreach my $k ( values %{ $self->{exportedVars} } ) {
+                if ( $k =~
+/^(?:(?:(?:full|nick)nam|languag|postcod|timezon)e|country|gender|email|dob)$/
+                  )
+                {
+                    if   (s/^!//) { push @r, $k }
+                    else          { push @o, $k }
+                }
+                else {
+                    $self->lmLog(
+"Unknown \"OpenID Simple Registration Extension\" field name: $k",
+                        'error'
+                    );
+                }
+            }
+            my @tmp =
+              ( @r ? ( 'openid.sreg.required' => join( ',', @r ) ) : () ),
+              ( @o ? ( 'openid.sreg.optional' => join( ',', @o ) ) : () );
+            OpenID::util::push_url_arg( \$check_url, @tmp ) if (@tmp);
+        }
         print $self->redirect($check_url);
         $self->quit();
     }

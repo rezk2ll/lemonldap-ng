@@ -362,6 +362,7 @@ function userdbParams(id) {
 		'LDAP=LDAP',
 		'Multi=Multi',
 		'Null=None',
+		'OpenID=OpenID',
 		'Proxy=Proxy',
 		'Remote=Remote',
 		'SAML=SAML v2'
