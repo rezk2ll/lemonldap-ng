@@ -5,7 +5,7 @@
 
 # change 'tests => 1' to 'tests => last_test_to_print';
 
-use Test::More tests => 11;
+use Test::More tests => 10;
 BEGIN { use_ok( 'Lemonldap::NG::Handler::Simple', ':all' ) }
 
 #########################
@@ -55,4 +55,3 @@ ok( $h->forgeHeadersInit( { exportedHeaders => { Auth => '$uid', } } ),
 
 ok( $h->grant('/s'),                   'grant OK' );
 ok( !$h->grant('/no'),                 'grant NOK' );
-ok( $h->cleanLocalStorage == DECLINED, 'cleanLocalStorage' );
