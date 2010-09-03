@@ -7,6 +7,7 @@ package Lemonldap::NG::Portal::AuthCAS;
 
 use strict;
 use Lemonldap::NG::Portal::Simple;
+use URI::Escape;
 
 our $VERSION = '0.20';
 
@@ -43,11 +44,13 @@ sub extractFormInfo {
 
     # Add request state parameters
     if ( $self->{_url} ) {
-        my $url_param = 'url=' . $self->{_url};
+        my $url_param = 'url=' . uri_escape( $self->{_url} );
         $local_url .= ( $local_url =~ /\?/ ? '&' : '?' ) . $url_param;
     }
     if ( $self->param( $self->{authChoiceParam} ) ) {
-        my $url_param = $self->{authChoiceParam}.'=' . $self->param( $self->{authChoiceParam} );
+        my $url_param =
+          $self->{authChoiceParam} . '='
+          . uri_escape( $self->param( $self->{authChoiceParam} ) );
         $local_url .= ( $local_url =~ /\?/ ? '&' : '?' ) . $url_param;
     }
 
@@ -57,6 +60,15 @@ sub extractFormInfo {
     if ($proxy) {
         $self->lmLog( "CAS: Proxy mode activated", 'debug' );
         my $proxy_url = $self->url() . '?casProxy=1';
+
+        if ( $self->param( $self->{authChoiceParam} ) ) {
+            $proxy_url .= '&'
+              . $self->{authChoiceParam} . '='
+              . ( $self->param( $self->{authChoiceParam} ) );
+        }
+
+        $self->lmLog( "CAS Proxy URL: $proxy_url", 'debug' );
+
         $cas->proxyMode(
             pgtFile        => $self->{CAS_pgtFile},
             pgtCallbackUrl => $proxy_url
