@@ -8,6 +8,7 @@ package Lemonldap::NG::Handler::Vhost;
 use Lemonldap::NG::Handler::Simple qw(:locationRules :headers);    #inherits
 use strict;
 use MIME::Base64;
+use constant SAFEWRAP => ( Safe->can("wrap_code_re") ? 1 : 0 );
 
 our $VERSION = '0.55';
 
@@ -78,8 +79,11 @@ sub forgeHeadersInit {
 
         #$sub = "\$forgeHeaders->{'$vhost'} = sub {$sub};";
         #eval "$sub";
-        $forgeHeaders->{$vhost} =
-          $class->safe->wrap_code_ref( $class->safe->reval("sub {$sub}") );
+        $forgeHeaders->{$vhost} = (
+            SAFEWRAP
+            ? $class->safe->wrap_code_ref( $class->safe->reval("sub {$sub}") )
+            : $class->safe->reval("sub {$sub}")
+        );
         $class->lmLog( "$class: Unable to forge headers: $@: sub {$sub}",
             'error' )
           if ($@);

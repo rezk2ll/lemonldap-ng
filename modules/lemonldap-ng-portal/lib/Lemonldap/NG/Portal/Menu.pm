@@ -11,6 +11,7 @@ require Lemonldap::NG::Common::CGI;
 use Lemonldap::NG::Portal::SharedConf;
 use Lemonldap::NG::Common::Safelib;    #link protected safe Safe object
 use Safe;
+use constant SAFEWRAP => ( Safe->can("wrap_code_re") ? 1 : 0 );
 
 #inherits Net::LDAP::Control::PasswordPolicy
 
@@ -151,9 +152,13 @@ sub displayModule {
     # Else parse display condition
     my $cond = $self->{modules}->{$modulename};
     $cond =~ s/\$(\w+)/$self->{portalObject}->{sessionInfo}->{$1}/g;
-    return $self->safe->wrap_code_ref(
-        $self->_safe->reval("sub {return ( $cond )}") );
-    return 0;
+    return (
+        SAFEWRAP
+        ? $self->safe->wrap_code_ref(
+            $self->safe->reval("sub{return($cond)}")
+          )
+        : $self->safe->reval("sub{return($cond)}")
+    );
 }
 
 ## @method string displayTab()
@@ -565,10 +570,12 @@ sub _conditionSub {
       if ( $cond =~ /^(?:deny$|logout)/i );
     $cond =~ s/\$date/&POSIX::strftime("%Y%m%d%H%M%S",localtime())/e;
     $cond =~ s/\$(\w+)/\$self->{portalObject}->{sessionInfo}->{$1}/g;
-    my $sub;
-    $sub =
-      $self->safe->wrap_code_ref(
-        $self->_safe->reval("sub {my \$self = shift; return ( $cond )}") );
+    my $sub = "sub {my \$self = shift; return ( $cond )}";
+    $sub = (
+        SAFEWRAP
+        ? $self->safe->wrap_code_ref( $self->safe->reval($sub) )
+        : $self->safe->reval($sub)
+    );
     return $sub;
 }
 

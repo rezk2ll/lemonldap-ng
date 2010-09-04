@@ -8,6 +8,8 @@ package Lemonldap::NG::Portal::_SOAP;
 use strict;
 use Lemonldap::NG::Portal::Simple;
 require SOAP::Lite;
+use Safe;
+use constant SAFEWRAP => ( Safe->can("wrap_code_re") ? 1 : 0 );
 
 our $VERSION = '0.2';
 
@@ -367,10 +369,12 @@ sub _conditionSub {
       if ( !$h or $cond =~ /^(?:deny$|logout)/i );
     $cond =~ s/\$date/&POSIX::strftime("%Y%m%d%H%M%S",localtime())/e;
     $cond =~ s/\$(\w+)/$h->{$1}/g;
-    my $sub;
-    $sub =
-      $self->safe->wrap_code_ref(
-        $self->safe->reval("sub {my \$self = shift; return ( $cond )}") );
+    my $sub = "sub {my \$self = shift; return ( $cond )}";
+    $sub = (
+        SAFEWRAP
+        ? $self->safe->wrap_code_ref( $self->safe->reval($sub) )
+        : $self->safe->reval($sub)
+    );
     return $sub;
 }
 
