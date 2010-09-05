@@ -271,6 +271,7 @@ my $template = HTML::Template->new(
     filename          => "$skin_dir/$skin/$skinfile",
     die_on_bad_params => 0,
     cache             => 0,
+    global_vars       => 1,
     filter            => sub { $portal->translate_template(@_) }
 );
 
