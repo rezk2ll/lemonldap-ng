@@ -154,10 +154,10 @@ sub displayModule {
     $cond =~ s/\$(\w+)/$self->{portalObject}->{sessionInfo}->{$1}/g;
     return (
         SAFEWRAP
-        ? $self->safe->wrap_code_ref(
-            $self->safe->reval("sub{return($cond)}")
+        ? $self->_safe->wrap_code_ref(
+            $self->_safe->reval("sub{return($cond)}")
           )
-        : $self->safe->reval("sub{return($cond)}")
+        : $self->_safe->reval("sub{return($cond)}")
     );
 }
 
@@ -573,8 +573,8 @@ sub _conditionSub {
     my $sub = "sub {my \$self = shift; return ( $cond )}";
     $sub = (
         SAFEWRAP
-        ? $self->safe->wrap_code_ref( $self->safe->reval($sub) )
-        : $self->safe->reval($sub)
+        ? $self->_safe->wrap_code_ref( $self->_safe->reval($sub) )
+        : $self->_safe->reval($sub)
     );
     return $sub;
 }

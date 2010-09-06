@@ -474,6 +474,9 @@ sub new {
           . ')';
     }
 
+    # Other
+    $self->{logoutServices} ||= {};
+
     return $self;
 }
 
