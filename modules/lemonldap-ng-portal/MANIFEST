@@ -112,7 +112,9 @@ example/skins/pastel/mail.tpl
 example/skins/pastel/menu.tpl
 example/skins/pastel/notification.tpl
 example/skins/pastel/openid.tpl
+example/skins/pastel/openidform.tpl
 example/skins/pastel/password.tpl
+example/skins/pastel/standardform.tpl
 example/skins/pastel/styles.css
 example/slavePortal.pl
 lib/Lemonldap/NG/Portal.pm
