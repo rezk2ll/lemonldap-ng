@@ -4,8 +4,9 @@
 
 	<div class="loginlogo"></div>
 
-	<TMPL_IF NAME="DISPLAY_FORM">
+	<TMPL_IF AUTH_LOOP>
 
+	<!-- Authentication loop -->
 	<form action="#" method="post" class="login">
 		
 	<!-- Hidden fields -->
@@ -14,14 +15,11 @@
 	        <p><input type="hidden" name="timezone" /></p>
 	<p><input type="hidden" id="authKey" name="<TMPL_VAR NAME="CHOICE_PARAM">" value="" /></p>
 
-	<TMPL_IF AUTH_LOOP>
-	<!-- Authentication loop -->
-
 	<!-- tabs -->
 	<div id="authMenu">
 	<ul>
 	<TMPL_LOOP NAME="AUTH_LOOP">
-	<li title="<TMPL_VAR NAME="key">"><a href="#<TMPL_VAR NAME="name">"><TMPL_VAR NAME="name"></a></li>
+	<li title="<TMPL_VAR NAME="key">"><a href="#<TMPL_VAR NAME="key">"><TMPL_VAR NAME="name"></a></li>
 	</TMPL_LOOP>
 	</ul>
 	</div>
@@ -29,7 +27,7 @@
 	<!-- Forms -->
 	<TMPL_LOOP NAME="AUTH_LOOP">
 
-	<div id="<TMPL_VAR NAME="name">">
+	<div id="<TMPL_VAR NAME="key">">
 
         <TMPL_IF NAME="standardform">
 
@@ -73,18 +71,29 @@
 
 	</TMPL_LOOP>
 
-	<TMPL_ELSE>
-
-	<TMPL_INCLUDE NAME="standardform.tpl">
+        </form>
 
         </TMPL_IF>
 
+	<TMPL_IF NAME="DISPLAY_FORM">
+
+	<form action="#" method="post" class="login">
+	<!-- Hidden fields -->
+	<TMPL_VAR NAME="HIDDEN_INPUTS">
+	<p><input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" /></p>
+	<p><input type="hidden" name="timezone" /></p>
+	<TMPL_INCLUDE NAME="standardform.tpl">
         </form>
+
         </TMPL_IF>
 
 	<TMPL_IF NAME="DISPLAY_OPENID_FORM">
 
 	<form action="#" method="post" class="login">
+	<!-- Hidden fields -->
+	<TMPL_VAR NAME="HIDDEN_INPUTS">
+	<p><input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" /></p>
+	<p><input type="hidden" name="timezone" /></p>
 	<TMPL_INCLUDE NAME="openidform.tpl">
 	</form>
 		

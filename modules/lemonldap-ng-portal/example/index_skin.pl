@@ -199,6 +199,9 @@ else {
             %templateParams,
             AUTH_LOOP    => $portal->{authLoop},
             CHOICE_PARAM => $portal->{authChoiceParam},
+            CHOICE_VALUE        => $portal->{_authChoice},
+            DISPLAY_FORM        => 0,
+            DISPLAY_OPENID_FORM => 0,
         );
     }
 
@@ -225,7 +228,7 @@ else {
     }
 
     # Adapt template for OpenID
-    if ( $portal->get_module("auth") =~ /openid/i ) {
+    if ( $portal->get_module("auth") =~ /openid/i and !$portal->{authLoop} ) {
         %templateParams = (
             %templateParams,
             DISPLAY_RESETPASSWORD => 0,

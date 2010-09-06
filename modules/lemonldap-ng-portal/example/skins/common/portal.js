@@ -28,6 +28,7 @@ $(document).ready(function(){
 		return true;
 		},
 	});
+	$("#authMenu").tabs("select",choicetab);
 
 	$("input[type!=hidden]:first").focus();
 	$("input[type='password']").attr("autocomplete",autocomplete);

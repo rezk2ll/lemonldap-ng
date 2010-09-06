@@ -214,25 +214,53 @@ sub new {
     #==============================
 
     # Get authentication choice
-    my $authChoice = $self->param( $self->{authChoiceParam} );
+    $self->{_authChoice} = $self->param( $self->{authChoiceParam} );
 
     # Check XSS Attack
-    $authChoice = ""
-      if (  $authChoice
-        and $self->checkXSSAttack( $self->{authChoiceParam}, $authChoice ) );
+    $self->{_authChoice} = ""
+      if (  $self->{_authChoice}
+        and
+        $self->checkXSSAttack( $self->{authChoiceParam}, $self->{_authChoice} )
+      );
 
-    $self->lmLog( "Authentication choice found in URL: $authChoice", 'debug' )
-      if $authChoice;
+    $self->lmLog( "Authentication choice found in URL: " . $self->{_authChoice},
+        'debug' )
+      if $self->{_authChoice};
 
-    if ( defined $self->{authChoiceModules} ) {
-
-        # No backend choosen, or not declared, list all avaible
-        unless ( $authChoice
-            and exists $self->{authChoiceModules}->{$authChoice} )
+    # No backend choosen, or not declared
+    unless ( $self->{_authChoice}
+        and exists $self->{authChoiceModules}->{ $self->{_authChoice} } )
         {
 
             $self->lmLog( "No authentication choice done, or wrong choice",
                     'debug' );
+        $self->{_authChoice} = "";
+    }
+
+    # Else load choosen modules
+    else {
+
+        # Find modules associated to authChoice
+        my ( $auth, $userDB, $passwordDB ) =
+          split( /\|/, $self->{authChoiceModules}->{ $self->{_authChoice} } );
+
+        if ( $auth and $userDB and $passwordDB ) {
+            $self->lmLog( "Authentication module $auth selected", 'debug' );
+            $self->lmLog( "User module $userDB selected",         'debug' );
+            $self->lmLog( "Password module $passwordDB selected", 'debug' );
+            $self->{authentication} = $auth;
+            $self->{userDB}         = $userDB;
+            $self->{passwordDB}     = $passwordDB;
+        }
+        else {
+            $self->abort( "Authentication choice "
+                  . $self->{_authChoice}
+                  . " value is invalid" );
+        }
+    }
+
+    # Display choice if defined
+    if ( defined $self->{authChoiceModules} ) {
 
             my @authLoop;
 
@@ -262,16 +290,14 @@ sub new {
                 if ( $auth and $userDB and $passwordDB ) {
 
                     # Options to store in the loop
-                    my $optionsLoop =
-                      { name => $name, key => $_, module => $auth };
+                my $optionsLoop = { name => $name, key => $_, module => $auth };
 
                     # Get displayType for this module
 
                     foreach my $type ( keys %$displayType ) {
                         foreach my $backend ( @{ $displayType->{$type} } ) {
                             if ( $auth eq $backend ) {
-                                $self->lmLog(
-                                    "Display type $type for module $auth",
+                            $self->lmLog( "Display type $type for module $auth",
                                     'debug' );
 
                                 $optionsLoop->{$type} = 1;
@@ -283,8 +309,7 @@ sub new {
                     # Register item in loop
                     push @authLoop, $optionsLoop;
 
-                    $self->lmLog(
-                        "Authentication choice $name will be displayed",
+                $self->lmLog( "Authentication choice $name will be displayed",
                         'debug' );
                 }
 
@@ -296,28 +321,6 @@ sub new {
 
             # Register value for template
             $self->{authLoop} = \@authLoop;
-        }
-
-        # Else load choosen modules
-        else {
-
-            # Find modules associated to authChoice
-            my ( $auth, $userDB, $passwordDB ) =
-              split( /\|/, $self->{authChoiceModules}->{$authChoice} );
-
-            if ( $auth and $userDB and $passwordDB ) {
-                $self->lmLog( "Authentication module $auth selected", 'debug' );
-                $self->lmLog( "User module $userDB selected",         'debug' );
-                $self->lmLog( "Password module $passwordDB selected", 'debug' );
-                $self->{authentication} = $auth;
-                $self->{userDB}         = $userDB;
-                $self->{passwordDB}     = $passwordDB;
-            }
-            else {
-                $self->abort(
-                    "Authentication choice $authChoice value is invalid");
-            }
-        }
 
     }
 
