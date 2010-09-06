@@ -11,9 +11,9 @@
 		
 	<!-- Hidden fields -->
 		<TMPL_VAR NAME="HIDDEN_INPUTS">
-	        <p><input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" /></p>
-	        <p><input type="hidden" name="timezone" /></p>
-	<p><input type="hidden" id="authKey" name="<TMPL_VAR NAME="CHOICE_PARAM">" value="" /></p>
+	<input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
+	<input type="hidden" name="timezone" />
+	<input type="hidden" id="authKey" name="<TMPL_VAR NAME="CHOICE_PARAM">" value="" />
 
 	<!-- tabs -->
 	<div id="authMenu">
@@ -80,8 +80,8 @@
 	<form action="#" method="post" class="login">
 	<!-- Hidden fields -->
 	<TMPL_VAR NAME="HIDDEN_INPUTS">
-	<p><input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" /></p>
-	<p><input type="hidden" name="timezone" /></p>
+	<input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
+	<input type="hidden" name="timezone" />
 	<TMPL_INCLUDE NAME="standardform.tpl">
         </form>
 
@@ -92,8 +92,8 @@
 	<form action="#" method="post" class="login">
 	<!-- Hidden fields -->
 	<TMPL_VAR NAME="HIDDEN_INPUTS">
-	<p><input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" /></p>
-	<p><input type="hidden" name="timezone" /></p>
+	<input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
+	<input type="hidden" name="timezone" />
 	<TMPL_INCLUDE NAME="openidform.tpl">
 	</form>
 		

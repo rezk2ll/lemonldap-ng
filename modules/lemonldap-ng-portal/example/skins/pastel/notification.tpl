@@ -8,6 +8,7 @@
 
 	<form action="#" method="post" class="login">
 		<TMPL_VAR NAME="HIDDEN_INPUTS">
+		<input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
 		<h3><lang en="New message(s)" fr="Nouveaux messages"/>&nbsp;:</h3>
 		<table>
 		<tr><td>

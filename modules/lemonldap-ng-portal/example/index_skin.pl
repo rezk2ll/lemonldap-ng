@@ -124,6 +124,7 @@ elsif ( my $notif = $portal->notification ) {
         NOTIFICATION    => $notif,
         SKIN            => $skin,
         HIDDEN_INPUTS   => $portal->buildHiddenForm(),
+        AUTH_URL        => $portal->get_url,
     );
 }
 
@@ -134,12 +135,14 @@ elsif ( $portal->{error} == PE_CONFIRM ) {
     %templateParams = (
         AUTH_ERROR      => $portal->error,
         AUTH_ERROR_TYPE => $portal->error_type,
-        URL             => $portal->get_url,
+        AUTH_URL        => $portal->get_url,
         MSG             => $portal->info(),
         SKIN            => $skin,
         HIDDEN_INPUTS   => $portal->buildHiddenForm(),
         ACTIVE_TIMER    => $portal->{activeTimer},
         FORM_METHOD     => $portal->{confirmFormMethod},
+        CHOICE_PARAM    => $portal->{authChoiceParam},
+        CHOICE_VALUE    => $portal->{_authChoice},
     );
 }
 
@@ -155,6 +158,8 @@ elsif ( my $info = $portal->info() ) {
         HIDDEN_INPUTS   => $portal->buildHiddenForm(),
         ACTIVE_TIMER    => $portal->{activeTimer},
         FORM_METHOD     => $portal->{infoFormMethod},
+        CHOICE_PARAM    => $portal->{authChoiceParam},
+        CHOICE_VALUE    => $portal->{_authChoice},
     );
 }
 

@@ -1,13 +1,16 @@
 <TMPL_INCLUDE NAME="header.tpl">
 
-	<div class="message <TMPL_VAR NAME="AUTH_ERROR_TYPE">"><ul><li>
+	<div class="message warning">
+	<ul><li>
       <lang en="Information" fr="Information"/>
-    </li></ul></div>
+	</li></ul>
+	</div>
 
 	<div class="loginlogo"></div>
 
 	<form id="form" action="<TMPL_VAR NAME="URL">" method="<TMPL_VAR NAME="FORM_METHOD">" class="login">
 		<TMPL_VAR NAME="HIDDEN_INPUTS">
+		<input type="hidden" id="authKey" name="<TMPL_VAR NAME="CHOICE_PARAM">" value="<TMPL_VAR NAME="CHOICE_VALUE">" />
 		<TMPL_VAR NAME="MSG">
 		<p id="timer"><lang en="You'll be redirected in 10 seconds" fr="Vous allez &ecirc;tre redirig&eacute;(e) automatiquement dans 10 secondes"/></p>
 		<table><tbody><tr><th>
