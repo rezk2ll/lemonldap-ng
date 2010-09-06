@@ -4,5 +4,6 @@
 /usr/share/perl5/auto/Lemonldap/NG/Portal
 /usr/share/perl5/Lemonldap/NG/Portal*
 /usr/share/lemonldap-ng/bin/buildPortalWSDL
+/usr/share/lemonldap-ng/portal
 /var/lib/lemonldap-ng/portal
 debian/portal-apache*.conf /etc/lemonldap-ng

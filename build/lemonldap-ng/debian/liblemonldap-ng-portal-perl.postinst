@@ -5,8 +5,9 @@ set -e
 
 . /usr/share/debconf/confmodule
 
-EXAMPLEPORTALFILE=/usr/share/doc/liblemonldap-ng-portal-perl/examples/index_skin.pl
-PORTALFILE=/var/lib/lemonldap-ng/portal/index.pl
+REFDIR=/usr/share/lemonldap-ng/portal/
+RUNDIR=/var/lib/lemonldap-ng/portal/
+FILES=$(find $REFDIR -name '*pl' -printf "%f ")
 SESSIONSDIR=/var/lib/lemonldap-ng/sessions
 
 BUILDPORTALWSDL=/usr/share/lemonldap-ng/bin/buildPortalWSDL
@@ -14,13 +15,12 @@ WSDLFILE=/var/lib/lemonldap-ng/portal/portal.wsdl
 
 if [ "$1" == "configure" ]
 then
-    [ -e $PORTALFILE ] || cp $EXAMPLEPORTALFILE $PORTALFILE
-    chmod +x $PORTALFILE
-    chmod 770 $SESSIONSDIR
-    chmod 770 $SESSIONSDIR/lock
-    chown -R www-data:www-data $SESSIONSDIR
-    $BUILDPORTALWSDL > $WSDLFILE || true
+	for file in $FILES; do
+		[ -e "$RUNDIR$file" ] || ln -s $REFDIR$file $RUNDIR$file
+	done
+	chmod 770 $SESSIONSDIR
+	chmod 770 $SESSIONSDIR/lock
+	chown -R www-data:www-data $SESSIONSDIR
+	$BUILDPORTALWSDL > $WSDLFILE || true
 fi
-
-
 

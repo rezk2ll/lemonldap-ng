@@ -5,13 +5,15 @@ set -e
 
 . /usr/share/debconf/confmodule
 
-MANAGERFILE=/var/lib/lemonldap-ng/manager/index.pl
-SESSIONSFILE=/var/lib/lemonldap-ng/manager/sessions.pl
+REFDIR=/usr/share/lemonldap-ng/manager/
+RUNDIR=/var/lib/lemonldap-ng/manager/
+FILES=$(find $REFDIR -name '*pl' -printf "%f ")
 
 if [ "$1" == "configure" ]
 then
-    chmod +x $SESSIONSFILE
-    chmod +x $MANAGERFILE
+	for file in $FILES; do
+		[ -e "$RUNDIR$file" ] || ln -s $REFDIR$file $RUNDIR$file
+	done
 fi
 
 

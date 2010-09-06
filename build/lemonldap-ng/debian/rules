@@ -83,7 +83,9 @@ install: build
 			$(CURDIR)/debian/tmp$(LMSHAREDIR)manager-skins/*/*.tpl \
 			$(CURDIR)/debian/tmp$(LMSHAREDIR)portal-skins/*/*.tpl
 	# postinst provides initial portal, manager and sessions-explorer
-	rm -f debian/tmp/var/lib/lemonldap-ng/portal/index.pl
+	mkdir debian/tmp/usr/share/lemonldap-ng/manager debian/tmp/usr/share/lemonldap-ng/portal
+	mv debian/tmp/var/lib/lemonldap-ng/portal/*.pl debian/tmp/usr/share/lemonldap-ng/portal/
+	mv debian/tmp/var/lib/lemonldap-ng/manager/*pl debian/tmp/usr/share/lemonldap-ng/manager/
 
 # Build architecture-independent files here.
 binary-indep: build install

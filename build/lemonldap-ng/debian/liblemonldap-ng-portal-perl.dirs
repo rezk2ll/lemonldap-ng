@@ -1,5 +1,7 @@
 /etc/lemonldap-ng
 /usr/share/lemonldap-ng/bin
+/usr/share/lemonldap-ng/portal
+/usr/share/lemonldap-ng/portal-skins
 /var/lib/lemonldap-ng/portal
 /var/lib/lemonldap-ng/sessions
 /var/lib/lemonldap-ng/sessions/lock
