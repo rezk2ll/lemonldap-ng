@@ -268,6 +268,7 @@ else {
             DISPLAY_RESETPASSWORD => 0,
             DISPLAY_FORM          => 0,
             DISPLAY_OPENID_FORM   => 0,
+            AUTH_LOOP             => [],
             PORTAL_URL            => $portal->{portal},
             MSG                   => $portal->info(),
         );

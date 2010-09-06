@@ -2,15 +2,12 @@
 
   <div id="content">
 
-    <TMPL_IF NAME="DISPLAY_FORM">
+    <TMPL_IF AUTH_LOOP>
+
+    <!-- Authentication loop -->
     <div id="content-left">
-      <p><img src="/skins/<TMPL_VAR NAME="SKIN">/images/logo-lock.png" /></p>
-      <h1>
-        <lang en="Welcome on your secured authentication portal." fr="Bienvenue sur votre portail d'authentification s&eacute;curis&eacute;e." />
-      </h1>
-      <p>
-        <lang en="This space allow you to open a SSO session. This will help you to securely access to all applications authorized by your profil." fr="Cet espace vous permet d'ouvrir une session SSO. Celle-ci vous aidera &agrave; acc&eacute;der de mani&egrave;re totalement s&eacute;curis&eacute;e &agrave; l'ensemble des applications autoris&eacute;es par votre profil utilisateur." />
-      </p>
+
+      <TMPL_INCLUDE NAME="authmessage.tpl">
 
       <TMPL_IF NAME="LOGIN_INFO">
       <div>
@@ -19,23 +16,55 @@
       </TMPL_IF>
 
     </div>
+
     <div id="content-right">
+
       <h1><lang en="Open your SSO session" fr="Ouvrir une session SSO" /></h1>
       <hr class="solid" />
       <p><span class="text-error"><TMPL_VAR NAME="AUTH_ERROR"></span></p>
+
       <form action="#" method="post" class="login">
+
+      <!-- Hidden fields -->
         <TMPL_VAR NAME="HIDDEN_INPUTS">
-        <input type="hidden" name="url" value="" />
+      <input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
         <input type="hidden" name="timezone" />
-        <p>
-          <span class="text-label"><lang en="Login" fr="Identifiant de compte"/></span><br/>
-          <input name="user" type="text" value="" tabindex="1" /><br/>
-          <span class="text-help">(<lang en="for example: jdoe" fr="par exemple: toto"/>)</span>
-        </p>
-        <p>
-          <span class="text-label"><lang en="Password" fr="Mot de passe"/></span><br/>
-          <input name="password" type="password" tabindex="2" /><br/>
-        </p>
+      <input type="hidden" id="authKey" name="<TMPL_VAR NAME="CHOICE_PARAM">" value="" />
+
+      <!-- tabs -->
+      <div id="authMenu">
+      <ul>
+        <TMPL_LOOP NAME="AUTH_LOOP">
+        <li title="<TMPL_VAR NAME="key">"><a href="#<TMPL_VAR NAME="key">"><TMPL_VAR NAME="name"></a></li>
+        </TMPL_LOOP>
+      </ul>
+      </div>
+
+      <!-- Forms -->
+      <TMPL_LOOP NAME="AUTH_LOOP">
+
+      <div id="<TMPL_VAR NAME="key">">
+
+      <TMPL_IF NAME="standardform">
+
+      <TMPL_INCLUDE NAME="standardform.tpl">
+
+      </TMPL_IF>
+
+      <TMPL_IF NAME="openidform">
+
+      <TMPL_INCLUDE NAME="openidform.tpl">
+
+      </TMPL_IF>
+
+      <TMPL_IF NAME="logo">
+
+        <TMPL_IF NAME="module">
+        <div class="authLogo">
+        <img src="/skins/common/<TMPL_VAR NAME="module">.png" />
+        </div>
+        </TMPL_IF>
+
         <hr class="solid" />
         <div class="panel-buttons">
           <button type="reset" class="negative" tabindex="4">
@@ -45,13 +74,73 @@
             <lang en="Connect" fr="Se connecter" />
           </button>
         </div>
-      </form>
-      <TMPL_IF NAME="DISPLAY_RESETPASSWORD">
-      <p>
-        <img src="/skins/<TMPL_VAR NAME="SKIN">/images/arrow.png" /><a href="<TMPL_VAR NAME="MAIL_URL">"><lang en="Reset my password" fr="R&eacute;initialiser mon mot de passe"/></a>
-      </p>
+
       </TMPL_IF>
+
+      </div>
+
+      </TMPL_LOOP>
+
+      </form>
+
     </div>
+
+      </TMPL_IF>
+
+    <TMPL_IF NAME="DISPLAY_FORM">
+
+    <div id="content-left">
+
+      <TMPL_INCLUDE NAME="authmessage.tpl">
+
+      <TMPL_IF NAME="LOGIN_INFO">
+      <div>
+        <TMPL_VAR NAME="LOGIN_INFO">
+      </div>
+      </TMPL_IF>
+
+    </div>
+
+    <div id="content-right">
+      <h1><lang en="Open your SSO session" fr="Ouvrir une session SSO" /></h1>
+      <hr class="solid" />
+      <p><span class="text-error"><TMPL_VAR NAME="AUTH_ERROR"></span></p>
+      <form action="#" method="post" class="login">
+        <TMPL_VAR NAME="HIDDEN_INPUTS">
+        <input type="hidden" name="url" value="" />
+        <input type="hidden" name="timezone" />
+        <TMPL_INCLUDE NAME="standardform.tpl">
+      </form>
+    </div>
+
+    </TMPL_IF>
+
+    <TMPL_IF NAME="DISPLAY_OPENID_FORM">
+
+    <div id="content-left">
+
+      <TMPL_INCLUDE NAME="authmessage.tpl">
+
+      <TMPL_IF NAME="LOGIN_INFO">
+      <div>
+        <TMPL_VAR NAME="LOGIN_INFO">
+      </div>
+      </TMPL_IF>
+
+    </div>
+
+    <div id="content-right">
+      <h1><lang en="Open your SSO session" fr="Ouvrir une session SSO" /></h1>
+      <hr class="solid" />
+      <p><span class="text-error"><TMPL_VAR NAME="AUTH_ERROR"></span></p>
+      <form action="#" method="post" class="login">
+        <TMPL_VAR NAME="HIDDEN_INPUTS">
+        <input type="hidden" name="url" value="" />
+        <input type="hidden" name="timezone" />
+        <TMPL_INCLUDE NAME="openidform.tpl">
+      </form>
+    </div>
+
     </TMPL_IF>
 
     <TMPL_IF NAME="PORTAL_URL">

@@ -10,6 +10,7 @@
       <p class="text-error"><lang en="New message(s)" fr="Nouveaux messages"/></p>
       <form action="#" method="post" class="login">
       <TMPL_VAR NAME="HIDDEN_INPUTS">
+      <input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
       <div id="content-all-info">
         <TMPL_VAR NAME="NOTIFICATION">
       </div>
