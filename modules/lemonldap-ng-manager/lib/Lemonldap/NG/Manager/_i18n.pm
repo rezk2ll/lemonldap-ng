@@ -64,6 +64,8 @@ sub en {
         apacheParams        => 'Apache parameters',
         apacheAuthnLevel    => 'Authentication level',
         attributesAndMacros => 'Attributes and macros',
+        authChoiceModules   => 'Allowed modules',
+        authChoiceParam     => 'URL parameter',
         authentication      => 'Authentication module',
         authenticationLevel => 'Authentication level',
         authenticationTitle => 'Authentication',
@@ -99,6 +101,7 @@ sub en {
         casParams           => 'CAS parameters',
         cda                 => 'Multiple domains',
         clickHereToForce    => 'Click here to force',
+        choiceParams        => 'Choice parameters',
         Configuration       => 'Configuration',
         confModuledeprecated =>
 'This module has been deprecated, set "forceUpload=1" in lemonldap-ng.ini to use it',
@@ -407,6 +410,8 @@ sub fr {
         apacheParams        => 'Paramètres Apache',
         apacheAuthnLevel    => 'Niveau d\'authentification',
         attributesAndMacros => 'Attributs et macros',
+        authChoiceModules   => 'Modules autorisés',
+        authChoiceParam     => 'Parmètre de l\'URL',
         authentication      => "Module d'authentification",
         authenticationLevel => 'Niveau d\'authentification',
         authenticationTitle => 'Authentification',
@@ -442,6 +447,7 @@ sub fr {
         casParams           => 'Paramètres CAS',
         cda                 => 'Domaines multiples',
         clickHereToForce    => 'Cliquer ici pour forcer',
+        choiceParams        => 'Paramètres des choix',
         Configuration       => 'Configuration',
         confModuledeprecated =>
 "Ce module est obsolète, indiquez \"forceUpload=1\" dans le fichier lemonldap-ng.ini pour l'utiliser",

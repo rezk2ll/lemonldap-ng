@@ -104,7 +104,7 @@ sub confUpload {
 
             # Special case: avoid bug with node created from parent node
             if ( $id =~
-/^(virtualHosts|samlIDPMetaDataExportedAttributes|samlSPMetaDataExportedAttributes)/
+/^(virtualHosts|samlIDPMetaDataExportedAttributes|samlSPMetaDataExportedAttributes|generalParameters\/authParams\/choiceParams)/
               )
             {
                 $self->lmLog( "Special trigger for $id (attribute $name)",
@@ -125,6 +125,10 @@ s/^samlIDPMetaDataExportedAttributes\/([^\/]*)?.*/samlIDPMetaDataExportedAttribu
                 # SAML SP attribute
                 $id =~
 s/^samlSPMetaDataExportedAttributes\/([^\/]*)?.*/samlSPMetaDataExportedAttributes\/$1\/$name/;
+
+                # Authentication choice
+                $id =~
+s/^generalParameters\/authParams\/choiceParams\/([^\/]*)?.*/authChoiceModules\/$name/;
 
             }
 

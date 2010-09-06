@@ -285,6 +285,7 @@ function display(div,title) {
 	$('#newspsamlmetadatab,#delspsamlmetadatab').hide();
 	$('#newsamlattributeb,#delsamlattributeb').hide();
 	$('#newsamlattributebr').hide();
+	$('#newchoicer,#newchoice,#delchoice').hide();
 	var height_cur=$('#buttons').height()+$('#edition').height()+$('#help').height();
 	var height_max=$('#menu').height();
 	if(height_cur > height_max || $('#help_content').is(':visible')==false){
@@ -337,57 +338,57 @@ function authParams(id) {
 			$('#authOptions').hide();
 		}
 	});
-	formateSelect('authText',[
+	formateSelectAuth('authText',t[0]);
+	display('authParams',lmtext(id));
+}
+function formateSelectAuth(id,value){
+	formateSelect(id,[
 		'Apache=Apache',
 		'CAS=Central Authentication Service (CAS)',
 		'DBI=Database (DBI)',
 		'LA=Liberty Alliance',
 		'LDAP=LDAP',
-		'Multi=Multi',
+		'Multi=Multiple',
 		'Null=None',
 		'OpenID=OpenID',
 		'Proxy=Proxy',
 		'Remote=Remote',
 		'SAML=SAML v2',
 		'SSL=SSL',
-		'Twitter=Twitter'
-		],t[0]);
-	display('authParams',lmtext(id));
+		'Twitter=Twitter',
+		'Choice=Authentication choice'
+		],value);
 }
 function userdbParams(id) {
 	currentId=id;
 	$('#authOptions').hide();
-	formateSelect('authText',[
+	formateSelectUser('authText',lmdata(id));
+	display('authParams',lmtext(id));
+}
+function formateSelectUser(id,value){
+	formateSelect(id,[
 		'DBI=Database (DBI)',
 		'LDAP=LDAP',
-		'Multi=Multi',
+		'Multi=Multiple',
 		'Null=None',
 		'OpenID=OpenID',
 		'Proxy=Proxy',
 		'Remote=Remote',
 		'SAML=SAML v2'
-		],lmdata(id));
-	display('authParams',lmtext(id));
+		],value);
 }
 function passworddbParams(id) {
 	currentId=id;
 	$('#authOptions').hide();
-	formateSelect('authText',[
+	formateSelectPassword('authText',lmdata(id));
+	display('authParams',lmtext(id));
+}
+function formateSelectPassword(id,value){
+	formateSelect(id,[
 		'DBI=Database (DBI)',
 		'LDAP=LDAP',
 		'Null=None'
-		],lmdata(id));
-	display('authParams',lmtext(id));
-}
-function issuerdbParams(id) {
-	currentId=id;
-	$('#authOptions').hide();
-	formateSelect('authText',[
-		'SAML=SAML v2',
-		'OpenID=OpenID',
-		'Null=None'
-		],lmdata(id));
-	display('authParams',lmtext(id));
+		],value);
 }
 function skinSelect(id) {
 	currentId=id;
@@ -962,5 +963,48 @@ function decrease() {
 	if (current != NaN){
 		$("#int").val(current-1)
 	}
+}
+/* Authentication choice */
+function authChoiceRoot(id){
+	currentId=id;
+	display('default','');
+	$('#newchoicer').show();
+}
+function newChoiceR(){
+	var newIdValue=newId(currentId);
+	simpleTreeCollection[0].addNode(newIdValue,text4newKey,function(d,s){
+		$('>span',s).attr('onClick','authChoice("'+newIdValue+'")').attr('name',text4newKey).attr('value','Null|Null|Null').attr('id','text_'+newIdValue);
+		authChoice(newIdValue);
+	});
+	return false;
+}
+function newChoice(){
+	var newIdValue=newId(currentId);
+	simpleTreeCollection[0].newNodeAfter(newIdValue,text4newKey,function(d,s){
+		$('>span',s).attr('onClick','authChoice("'+newIdValue+'")').attr('name',text4newKey).attr('value','Null|Null|Null').attr('id','text_'+newIdValue);
+		authChoice(newIdValue);
+	});
+	return false;
+}
+function delChoice(){
+	delKey();
+}
+function authChoice(id){
+	currentId=id;
+	var t=lmdata(id).split('|');
+	$('#authChoiceKey').attr('value',lmtext(id));
+	formateSelectAuth('authChoiceAuth',t[0]);
+	formateSelectUser('authChoiceUser',t[1]);
+	formateSelectPassword('authChoicePassword',t[2]);
+	display('authChoice',lmtext(id));
+	$('#newchoice,#delchoice').show();
+}
+function setlmauthchoice(id){
+	var key=$('#authChoiceKey').attr('value');
+	var auth=$('#authChoiceAuth').attr('value');
+	var user=$('#authChoiceUser').attr('value');
+	var password=$('#authChoicePassword').attr('value');
+	setlmtext(id,key);
+	setlmdata(id,auth+'|'+user+'|'+password);
 }
 

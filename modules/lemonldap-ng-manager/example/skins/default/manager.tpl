@@ -134,6 +134,19 @@
     <button id="delsamlattributeb" style="display:none;" onclick="delSamlAttribute();return false;" class="ui-state-default ui-corner-all">
      <lang en="Delete attribute" fr="Supprimer l'attribut" />
     </button>
+
+    <button id="newchoice" style="display:none;" onclick="newChoice();return false;" class="ui-state-default ui-corner-all">
+     <lang en="New choice" fr="Nouveau choix" />
+    </button>
+
+    <button id="newchoicer" style="display:none;" onclick="newChoiceR();return false;" class="ui-state-default ui-corner-all">
+     <lang en="New choice" fr="Nouveau choix" />
+    </button>
+
+    <button id="delchoice" style="display:none;" onclick="delChoice();return false;" class="ui-state-default ui-corner-all">
+     <lang en="Delete choice" fr="Supprimer le choix" />
+    </button>
+
     </div>
 
    <!-- Buttons -->
@@ -407,6 +420,32 @@
      <lang en="Apply" fr="Appliquer" />
      </button>
     </div>
+
+    <!-- authChoice -->
+    <div id="content_authChoice" class="hidden">
+     <table>
+      <tr>
+       <td><lang en="Key name" fr="Nom de la clef"/></td>
+       <td><input type="text" id="authChoiceKey" /></td>
+      </tr>
+      <tr>
+       <td><lang en="Authentication module" fr="Module d'authentification"/></td>
+       <td><select id="authChoiceAuth"></select></td>
+      </tr>
+      <tr>
+       <td><lang en="User module" fr="Module d'utilisateurs"/></td>
+       <td><select id="authChoiceUser"></select></td>
+      </tr>
+      <tr>
+       <td><lang en="Password module" fr="Module de mots de passe"/></td>
+       <td><select id="authChoicePassword"></select></td>
+      </tr>
+     </table>
+     <br />
+     <button onclick="setlmauthchoice(currentId);return false;" class="ui-state-default ui-corner-all">
+     <lang en="Apply" fr="Appliquer" />
+     </button>
+   </div>
 
    </div>
 

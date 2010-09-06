@@ -300,6 +300,9 @@ sub struct {
                             dbi     => ['dbiParams'],
                             apache  => ['apacheParams'],
                             null    => ['nullParams'],
+                            choice  => [
+                                qw(ldapParams sslParams casParams remoteParams proxyParams openIdParams twitterParams dbiParams apacheParams nullParams choiceParams)
+                            ]
                         }->{$mod};
                         if ($tmp) {
                             $res{$_}++ foreach (@$tmp);
@@ -543,6 +546,18 @@ sub struct {
                 nullParams => {
                     _nodes         => [qw(nullAuthnLevel)],
                     nullAuthnLevel => 'int:/nullAuthnLevel',
+                },
+
+                # Choice
+                choiceParams => {
+                    _nodes => [qw(authChoiceParam n:authChoiceModules)],
+                    authChoiceParam    => 'text:/authChoiceParam',
+                    authChoiceModules => {
+                        _nodes =>
+                          ['hash:/authChoiceModules:default:authChoice'],
+                        _js   => 'authChoiceRoot',
+                        _help => 'default',
+                    },
                 },
 
             },
@@ -1466,6 +1481,13 @@ sub testStruct {
         # Null
         nullAuthnLevel => $integer,
 
+        # Choice
+        authChoiceParams  => $testNotDefined,
+        authChoiceModules => {
+            keyTest    => qr/^(\d*)?\w+$/,
+            keyMsgFail => 'Bad choice key',
+        },
+
         # Zimbra
         zimbraPreAuthKey => $testNotDefined,
         zimbraAccountKey => $testNotDefined,
@@ -1486,6 +1508,7 @@ sub defaultConf {
     my $self = shift;
     return {
         authentication           => 'LDAP',
+        authChoiceParam          => 'lmAuth',
         CAS_pgtFile              => '/tmp/pgt.txt',
         cda                      => '0',
         cookieName               => 'lemonldap',

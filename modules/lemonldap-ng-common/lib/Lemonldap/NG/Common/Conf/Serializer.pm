@@ -102,7 +102,7 @@ sub unserialize {
 
         # Manage hashes
         if ( $k =~
-/^(?:exportedVars|locationRules|groups|exportedHeaders|macros|globalStorageOptions|remoteGlobalStorageOptions|notificationStorageOptions|samlIDPMetaDataXML|samlIDPMetaDataExportedAttributes|samlIDPMetaDataOptions|samlSPMetaDataXML|samlSPMetaDataExportedAttributes|samlSPMetaDataOptions|samlStorageOptions|CAS_proxiedServices|logoutServices)$/
+/^(?:exportedVars|locationRules|groups|exportedHeaders|macros|globalStorageOptions|remoteGlobalStorageOptions|notificationStorageOptions|samlIDPMetaDataXML|samlIDPMetaDataExportedAttributes|samlIDPMetaDataOptions|samlSPMetaDataXML|samlSPMetaDataExportedAttributes|samlSPMetaDataOptions|samlStorageOptions|CAS_proxiedServices|logoutServices|authChoiceModules)$/
             and $v ||= {}
             and not ref($v) )
         {
