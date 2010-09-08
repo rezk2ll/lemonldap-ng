@@ -213,17 +213,23 @@ sub new {
     # Authentication backend choice
     #==============================
 
+    if ( $self->{authentication} eq 'Choice' ) {
+
     # Get authentication choice
     $self->{_authChoice} = $self->param( $self->{authChoiceParam} );
 
     # Check XSS Attack
     $self->{_authChoice} = ""
-      if (  $self->{_authChoice}
-        and
-        $self->checkXSSAttack( $self->{authChoiceParam}, $self->{_authChoice} )
+          if (
+            $self->{_authChoice}
+            and $self->checkXSSAttack(
+                $self->{authChoiceParam},
+                $self->{_authChoice}
+            )
       );
 
-    $self->lmLog( "Authentication choice found in URL: " . $self->{_authChoice},
+        $self->lmLog(
+            "Authentication choice found in URL: " . $self->{_authChoice},
         'debug' )
       if $self->{_authChoice};
 
@@ -242,7 +248,8 @@ sub new {
 
         # Find modules associated to authChoice
         my ( $auth, $userDB, $passwordDB ) =
-          split( /\|/, $self->{authChoiceModules}->{ $self->{_authChoice} } );
+              split( /\|/,
+                $self->{authChoiceModules}->{ $self->{_authChoice} } );
 
         if ( $auth and $userDB and $passwordDB ) {
             $self->lmLog( "Authentication module $auth selected", 'debug' );
@@ -290,14 +297,16 @@ sub new {
                 if ( $auth and $userDB and $passwordDB ) {
 
                     # Options to store in the loop
-                my $optionsLoop = { name => $name, key => $_, module => $auth };
+                    my $optionsLoop =
+                      { name => $name, key => $_, module => $auth };
 
                     # Get displayType for this module
 
                     foreach my $type ( keys %$displayType ) {
                         foreach my $backend ( @{ $displayType->{$type} } ) {
                             if ( $auth eq $backend ) {
-                            $self->lmLog( "Display type $type for module $auth",
+                                $self->lmLog(
+                                    "Display type $type for module $auth",
                                     'debug' );
 
                                 $optionsLoop->{$type} = 1;
@@ -309,7 +318,8 @@ sub new {
                     # Register item in loop
                     push @authLoop, $optionsLoop;
 
-                $self->lmLog( "Authentication choice $name will be displayed",
+                    $self->lmLog(
+                        "Authentication choice $name will be displayed",
                         'debug' );
                 }
 
@@ -322,6 +332,7 @@ sub new {
             # Register value for template
             $self->{authLoop} = \@authLoop;
 
+    }
     }
 
     # Push authentication/userDB/passwordDB modules in @ISA
@@ -477,9 +488,6 @@ sub new {
           . ')';
     }
 
-    # Other
-    $self->{logoutServices} ||= {};
-
     return $self;
 }
 
@@ -584,6 +592,14 @@ sub setDefaultValues {
         $self->{userDB}     ||= "Null";
         $self->{passwordDB} ||= "Null";
     }
+
+    # Set userDB and passwordDB to Null if authentication is Choice
+    if ( $self->{authentication} =~ /Choice/i ) {
+        $self->{userDB}     = "Null";
+        $self->{passwordDB} = "Null";
+    }
+
+    # Else default to LDAP
     else {
 
         # Default to LDAP
@@ -628,6 +644,9 @@ sub setDefaultValues {
       unless defined $self->{twitterAuthnLevel};
     $self->{apacheAuthnLevel}  = 4 unless defined $self->{apacheAuthnLevel};
     $self->{nullAuthnLevel}    = 2 unless defined $self->{nullAuthnLevel};
+
+    # Other
+    $self->{logoutServices} ||= {};
 
 }
 
