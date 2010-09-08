@@ -1,5 +1,7 @@
 <TMPL_INCLUDE NAME="header.tpl">
 
+	<div id="menucontent">
+
 	<div class="message <TMPL_VAR NAME="AUTH_ERROR_TYPE">"><ul><li><TMPL_VAR NAME="AUTH_ERROR"></li></ul></div>
 
 	<div id="menu">
@@ -39,6 +41,8 @@
 		</div>
 		</div>
 		</TMPL_IF>
+	</div>
+
 	</div>
 
 <TMPL_INCLUDE NAME="footer.tpl">
