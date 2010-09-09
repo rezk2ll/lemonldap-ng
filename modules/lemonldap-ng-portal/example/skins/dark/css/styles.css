@@ -1,0 +1,53 @@
+/* CSS for skin DARK */
+/* Shipped with LemonLDAP::NG */
+
+/* Use buttons CSS */
+@import url("../../common/buttons.css");
+
+/* Structure */
+body{
+background:#000;
+color:#fff;
+font-family:sans-serif;
+font-weight:bold;
+font-size:8pt;
+margin:0;
+padding:0;
+}
+
+/* Login page */
+#logincontent{
+margin:100px auto;
+background:#4B4B4B;
+padding:10px;
+width:600px;
+-moz-border-radius:10px 10px 10px 10px;
+}
+
+#logincontent form{
+background:#E4E4E4;
+opacity:0.9;
+margin: 20px -200px 20px 250px;
+padding:10px;
+-moz-border-radius:10px 10px 10px 10px;
+}
+
+div.loginlogo {
+background:url(../images/lock.png) no-repeat center;
+width:200px;
+height:200px;
+margin:30px 10px;
+float:left;
+}
+
+/* Footer */
+#footer {
+text-align:center;
+font-size:6pt;
+}
+
+/* JQuery tabs */
+.ui-tabs-hide {
+	display:none;
+}
+

@@ -1,0 +1,1 @@
+../pastel/confirm.tpl

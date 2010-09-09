@@ -1,0 +1,1 @@
+../pastel/error.tpl

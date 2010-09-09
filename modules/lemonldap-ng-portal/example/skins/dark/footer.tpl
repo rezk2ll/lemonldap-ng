@@ -1,0 +1,1 @@
+../pastel/footer.tpl
