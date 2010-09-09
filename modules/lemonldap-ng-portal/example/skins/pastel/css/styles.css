@@ -1,11 +1,14 @@
 /* CSS for skin PASTEL */
 /* Shipped with LemonLDAP::NG */
 
+/* Use buttons CSS */
+@import url("../../common/buttons.css");
+
 body {
 font-family:Arial, Helvetica, Verdana;
 font-size:11pt;
 color:#000;
-background:#eee url(hatch.gif);
+background:#eee url(../images/hatch.gif);
 margin:0;
 padding:0;
 }
@@ -56,7 +59,7 @@ font-size:8pt;
 }
 
 div.loginlogo {
-background:url(lock.png) no-repeat center;
+background:url(../images/lock.png) no-repeat center;
 width:200px;
 height:250px;
 float:left;
@@ -76,10 +79,6 @@ margin:13px 15px 0 0;
 }
 
 div.message {
-background-color:#f5f5f5;
-border:1px solid #dedede;
-border-top:1px solid #eee;
-border-left:1px solid #eee;
 margin:20px 50px;
 padding:0;
 display:none;
@@ -108,15 +107,15 @@ padding:3px 0 3px 30px;
 }
 
 .message.negative li {
-background-image:url("../common/warning.png");
+background-image:url("../../common/warning.png");
 }
 
 .message.positive li {
-background-image:url("../common/ok.png");
+background-image:url("../../common/ok.png");
 }
 
 .message.warning li {
-background-image:url("../common/warning_triangle.png");
+background-image:url("../../common/warning_triangle.png");
 }
 
 form {
@@ -152,128 +151,24 @@ width: 200px;
 }
 
 form input[name=user] {
-background:#FFFFFF url("../common/user_suit.png") 5px 5px no-repeat;
+background:#FFFFFF url("../../common/user_suit.png") 5px 5px no-repeat;
 padding-left:25px;
 }
 
 form input[type=password] {
-background:#FFFFFF url("../common/key.png") 5px 5px no-repeat;
+background:#FFFFFF url("../../common/key.png") 5px 5px no-repeat;
 padding-left: 25px;
 }
 
 form input[name=mail] {
-background:#FFFFFF url("../common/email.png") 5px 5px no-repeat;
+background:#FFFFFF url("../../common/email.png") 5px 5px no-repeat;
 padding-left: 25px;
 }
 
 form input[name=openid_identifier] {
-background:#FFFFFF url("../common/openid-16x16.gif") 5px 5px no-repeat;
+background:#FFFFFF url("../../common/openid-16x16.gif") 5px 5px no-repeat;
 padding-left: 25px;
 width: 300px;
-}
-
-/* BUTTONS */
-/* See http://particletree.com/features/rediscovering-the-button-element/ */
-
-.buttons {
-margin:0;
-}
-
-form .buttons {
-margin:10px 0 0 0;
-}
-
-.buttons a, .buttons button {
-display:block;
-float:right;
-margin:0 0 0 7px;
-background-color:#f5f5f5;
-border:1px solid #dedede;
-border-top:1px solid #eee;
-border-left:1px solid #eee;
-text-decoration:none;
-font-weight:bold;
-color:#565656;
-cursor:pointer;
-padding:5px 10px 6px 7px; /* Links */
-}
-
-.buttons button {
-width:auto;
-overflow:visible;
-padding:4px 10px 3px 7px; /* IE6 */
-}
-
-.buttons button[type]{
-padding:5px 10px 5px 7px; /* Firefox */
-line-height:17px; /* Safari */
-}
-
-*:first-child+html button[type]{
-padding:4px 10px 3px 7px; /* IE7 */
-}
-
-.buttons button img, .buttons a img{
-margin:0 3px -3px 0 !important;
-padding:0;
-border:none;
-width:16px;
-height:16px;
-}
-
-/* STANDARD */
-
-button:hover, .buttons a:hover, .message{
-background-color:#dff4ff;
-border:1px solid #c2e1ef;
-color:#336699;
-}
-
-.buttons a:active{
-background-color:#6299c5;
-border:1px solid #6299c5;
-color:#fff;
-}
-
-/* POSITIVE */
-button.positive, .buttons a.positive{
-color:#529214;
-}
-
-.buttons a.positive:hover, button.positive:hover, div.positive{
-background-color:#E6EFC2;
-border:1px solid #C6D880;
-color:#529214;
-}
-
-.buttons a.positive:active{
-background-color:#529214;
-border:1px solid #529214;
-color:#fff;
-}
-
-/* NEGATIVE */
-.buttons a.negative, button.negative{
-color:#d12f19;
-}
-
-.buttons a.negative:hover, button.negative:hover, div.negative{
-background:#fbe3e4;
-border:1px solid #fbc2c4;
-color:#d12f19;
-}
-
-.buttons a.negative:active{
-background-color:#d12f19;
-border:1px solid #d12f19;
-color:#fff;
-}
-
-/* WARNING */
-div.warning{
-background-color:#ffe17a; 
-border:1px solid #ffca10;
-color:#a03400;
 }
 
 /* Application list (JQuery tabs) */
@@ -285,7 +180,7 @@ display:none;
 .ui-tabs-nav {
 text-align:left;
 margin:10px 0;
-padding:10px 5px;
+padding:12px 5px 10px 5px;
 background-color:#C6D880;
 }
 
@@ -294,6 +189,7 @@ display:inline;
 margin-left:10px;
 padding:9px 10px 6px 10px;
 font-size:10pt;
+-moz-border-radius:10px 10px 10px 10px;
 }
 
 .ui-tabs-nav li a{
@@ -335,7 +231,7 @@ list-style-type:none;
 background-repeat:no-repeat;
 background-position:0 2px;
 padding:2px 5px 2px 20px;
-background-image:url("../common/bullet_go.png");
+background-image:url("../../common/bullet_go.png");
 }
 
 ul.category li.appname span {

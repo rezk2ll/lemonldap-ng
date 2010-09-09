@@ -6,7 +6,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta http-equiv="Content-Script-Type" content="text/javascript" />
 	<meta http-equiv="cache-control" content="no-cache" />
-        <link rel="stylesheet" type="text/css" href="/skins/<TMPL_VAR NAME="SKIN">/styles.css" />
+        <link rel="stylesheet" type="text/css" href="/skins/<TMPL_VAR NAME="SKIN">/css/styles.css" />
         <link href="skins/common/favicon.ico" rel="icon" type="image/x-icon" />
         <link href="skins/common/favicon.ico" rel="shortcut icon" />
         <script type="text/javascript" src="/skins/common/jquery-1.4.2.min.js"></script>

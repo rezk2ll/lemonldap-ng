@@ -52,6 +52,7 @@ example/skins/common/accept.png
 example/skins/common/Apache.png
 example/skins/common/application_cascade.png
 example/skins/common/bullet_go.png
+example/skins/common/buttons.css
 example/skins/common/cancel.png
 example/skins/common/CAS.png
 example/skins/common/door_out.png
@@ -104,12 +105,13 @@ example/skins/impact/password.tpl
 example/skins/impact/README
 example/skins/impact/standardform.tpl
 example/skins/pastel/confirm.tpl
+example/skins/pastel/css/styles.css
 example/skins/pastel/error.tpl
 example/skins/pastel/footer.tpl
-example/skins/pastel/hatch.gif
 example/skins/pastel/header.tpl
+example/skins/pastel/images/hatch.gif
+example/skins/pastel/images/lock.png
 example/skins/pastel/info.tpl
-example/skins/pastel/lock.png
 example/skins/pastel/login.tpl
 example/skins/pastel/mail.tpl
 example/skins/pastel/menu.tpl
@@ -118,7 +120,6 @@ example/skins/pastel/openid.tpl
 example/skins/pastel/openidform.tpl
 example/skins/pastel/password.tpl
 example/skins/pastel/standardform.tpl
-example/skins/pastel/styles.css
 example/slavePortal.pl
 lib/Lemonldap/NG/Portal.pm
 lib/Lemonldap/NG/Portal/_CAS.pm
