@@ -4,8 +4,11 @@
 /* Use buttons CSS */
 @import url("../../common/buttons.css");
 
+/* Use input icons CSS */
+@import url("../../common/inputicons.css");
+
 /* Structure */
-body{
+body {
 background:#000;
 color:#fff;
 font-family:sans-serif;
@@ -15,20 +18,78 @@ margin:0;
 padding:0;
 }
 
+/* Lists */
+ul {
+list-style:none;
+margin:0;
+padding:5px;
+}
+
+li {
+list-style:none;
+}
+
+/* Links */
+a img,:link img,:visited img {
+border:none;
+}
+
+a, a:link, a:visited {
+text-decoration:none;
+color:orange;
+}
+
+/* Texts */
+h3 {
+margin:10px 0;
+padding: 0 10px;
+opacity:1;
+color:#000;
+font-size:12pt;
+border-left: orange solid 20px;
+}
+
+/* Tables */
+table {
+border:0;
+margin:0;
+}
+
+th {
+text-align:right;
+color:#000;
+border-bottom:orange solid 2px;
+font-size:9pt;
+padding:5px;
+}
+
+/* Forms */
+input {
+border:1px solid #CCC;
+padding:5px;
+width: 200px;
+}
+
+form input[name=openid_identifier] {
+width: 300px;
+}
+
 /* Login page */
-#logincontent{
-margin:100px auto;
+#logincontent {
+margin:100px auto 20px auto;
 background:#4B4B4B;
 padding:10px;
 width:600px;
+height:310px;
 -moz-border-radius:10px 10px 10px 10px;
 }
 
-#logincontent form{
+#logincontent form {
 background:#E4E4E4;
 opacity:0.9;
-margin: 20px -200px 20px 250px;
+margin: 20px -100px 20px 250px;
 padding:10px;
+height:230px;
 -moz-border-radius:10px 10px 10px 10px;
 }
 
@@ -36,18 +97,74 @@ div.loginlogo {
 background:url(../images/lock.png) no-repeat center;
 width:200px;
 height:200px;
-margin:30px 10px;
+margin:40px 10px;
 float:left;
+}
+
+#authMenu {
+text-align:center;
+background:#FFF;
+padding:5px;
+font-size:9pt;
+-moz-border-radius:10px 10px 10px 10px;
+}
+
+#authMenu .ui-tabs-nav li a {
+color:#CCC;
+}
+
+#authMenu li.ui-tabs-selected a {
+color:#000;
 }
 
 /* Footer */
 #footer {
 text-align:center;
-font-size:6pt;
+font-weight:normal;
+}
+
+/* Message box */
+div.message {
+-moz-border-radius:10px 10px 10px 10px;
+}
+
+div.message li {
+background-repeat:no-repeat;
+background-position:5px 0;
+padding:3px 0 3px 40px;
+}
+
+.message.negative li {
+background-image:url("../../common/warning.png");
+}
+
+.message.positive li {
+background-image:url("../../common/ok.png");
+}
+
+.message.warning li {
+background-image:url("../../common/warning_triangle.png");
 }
 
 /* JQuery tabs */
 .ui-tabs-hide {
-	display:none;
+display:none;
+}
+
+.ui-tabs-nav {
+text-align:left;
+margin:2px 0;
+padding:6px 2px 5px 2px;
+}
+
+.ui-tabs-nav li{
+display:inline;
+margin-left:10px;
+}
+
+.ui-tabs-nav li a{
+}
+
+li.ui-tabs-selected{
 }
 

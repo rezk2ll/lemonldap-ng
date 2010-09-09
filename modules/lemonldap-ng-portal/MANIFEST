@@ -59,6 +59,7 @@ example/skins/common/door_out.png
 example/skins/common/email.png
 example/skins/common/error.png
 example/skins/common/favicon.ico
+example/skins/common/inputicons.css
 example/skins/common/jquery-1.4.2.min.js
 example/skins/common/jquery-ui-1.7.2.custom.min.js
 example/skins/common/jquery.base64.js
