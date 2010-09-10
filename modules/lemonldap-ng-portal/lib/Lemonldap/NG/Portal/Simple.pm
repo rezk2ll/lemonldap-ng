@@ -1295,9 +1295,20 @@ sub controlExistingSession {
                             next;
                         }
 
-                        $self->{error} =
-                          $self->_subProcess( $module_name . "::issuerDBInit",
-                            'authInit', $module_name . '::issuerLogout' );
+                        # Load authentication module
+                        my $authModule = 'Lemonldap::NG::Portal::Auth'
+                          . $self->{sessionInfo}->{_auth};
+                        unless ( $self->loadModule($authModule) ) {
+                            $self->lmLog( "Unable to load $module_name",
+                                'error' );
+                            next;
+                        }
+
+                        $self->{error} = $self->_subProcess(
+                            $module_name . "::issuerDBInit",
+                            $authModule . "::authInit",
+                            $module_name . '::issuerLogout'
+                        );
 
                     }
                 }
