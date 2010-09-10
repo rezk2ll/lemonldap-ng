@@ -209,132 +209,6 @@ sub new {
           or $self->param('logout')
     ) ? 1 : 0;
 
-    #==============================
-    # Authentication backend choice
-    #==============================
-
-    if ( $self->{authentication} eq 'Choice' ) {
-
-    # Get authentication choice
-    $self->{_authChoice} = $self->param( $self->{authChoiceParam} );
-
-    # Check XSS Attack
-    $self->{_authChoice} = ""
-          if (
-            $self->{_authChoice}
-            and $self->checkXSSAttack(
-                $self->{authChoiceParam},
-                $self->{_authChoice}
-            )
-      );
-
-        $self->lmLog(
-            "Authentication choice found in URL: " . $self->{_authChoice},
-        'debug' )
-      if $self->{_authChoice};
-
-    # No backend choosen, or not declared
-    unless ( $self->{_authChoice}
-        and exists $self->{authChoiceModules}->{ $self->{_authChoice} } )
-        {
-
-            $self->lmLog( "No authentication choice done, or wrong choice",
-                    'debug' );
-        $self->{_authChoice} = "";
-    }
-
-    # Else load choosen modules
-    else {
-
-        # Find modules associated to authChoice
-        my ( $auth, $userDB, $passwordDB ) =
-              split( /\|/,
-                $self->{authChoiceModules}->{ $self->{_authChoice} } );
-
-        if ( $auth and $userDB and $passwordDB ) {
-            $self->lmLog( "Authentication module $auth selected", 'debug' );
-            $self->lmLog( "User module $userDB selected",         'debug' );
-            $self->lmLog( "Password module $passwordDB selected", 'debug' );
-            $self->{authentication} = $auth;
-            $self->{userDB}         = $userDB;
-            $self->{passwordDB}     = $passwordDB;
-        }
-        else {
-            $self->abort( "Authentication choice "
-                  . $self->{_authChoice}
-                  . " value is invalid" );
-        }
-    }
-
-    # Display choice if defined
-    if ( defined $self->{authChoiceModules} ) {
-
-            my @authLoop;
-
-            foreach ( sort keys %{ $self->{authChoiceModules} } ) {
-
-                my $name = $_;
-
-                # Name can have a digit as first character
-                # for sorting purpose
-                # Remove it in displayed name
-                $name =~ s/^(\d*)?(\s*)?//;
-
-                # Find modules associated to authChoice
-                my ( $auth, $userDB, $passwordDB ) =
-                  split( /\|/, $self->{authChoiceModules}->{$_} );
-
-                # What do display
-                # -> login/password form (LDAP, DBI, ...)
-                # -> OpenID form
-                # -> logo with link (ex: CAS, SSL, etc.)
-                my $displayType = {
-                    'standardform' => [qw(LDAP DBI)],
-                    'openidform'   => [qw(OpenID)],
-                    'logo'         => [qw(CAS Twitter SAML SSL Apache)],
-                };
-
-                if ( $auth and $userDB and $passwordDB ) {
-
-                    # Options to store in the loop
-                    my $optionsLoop =
-                      { name => $name, key => $_, module => $auth };
-
-                    # Get displayType for this module
-
-                    foreach my $type ( keys %$displayType ) {
-                        foreach my $backend ( @{ $displayType->{$type} } ) {
-                            if ( $auth eq $backend ) {
-                                $self->lmLog(
-                                    "Display type $type for module $auth",
-                                    'debug' );
-
-                                $optionsLoop->{$type} = 1;
-                last;
-            }
-        }
-    }
-
-                    # Register item in loop
-                    push @authLoop, $optionsLoop;
-
-                    $self->lmLog(
-                        "Authentication choice $name will be displayed",
-                        'debug' );
-                }
-
-                else {
-                    $self->abort("Authentication choice $_ value is invalid");
-                }
-
-            }
-
-            # Register value for template
-            $self->{authLoop} = \@authLoop;
-
-    }
-    }
-
     # Push authentication/userDB/passwordDB modules in @ISA
     foreach my $type (qw(authentication userDB passwordDB)) {
         my $module_name = 'Lemonldap::NG::Portal::';
@@ -593,10 +467,10 @@ sub setDefaultValues {
         $self->{passwordDB} ||= "Null";
     }
 
-    # Set userDB and passwordDB to Null if authentication is Choice
+    # Set userDB and passwordDB to Choice if authentication is Choice
     if ( $self->{authentication} =~ /Choice/i ) {
-        $self->{userDB}     = "Null";
-        $self->{passwordDB} = "Null";
+        $self->{userDB}     = "Choice";
+        $self->{passwordDB} = "Choice";
     }
 
     # Else default to LDAP
@@ -1030,6 +904,9 @@ sub get_module {
         if ( defined $self->{_multi}->{stack}->[0] ) {
             return $self->{_multi}->{stack}->[0]->[0]->{n};
         }
+        if ( defined $self->{_choice}->{modules} ) {
+            return $self->{_choice}->{modules}->[0]->{n};
+        }
         else {
             return $self->{authentication};
         }
@@ -1039,13 +916,21 @@ sub get_module {
         if ( defined $self->{_multi}->{stack}->[1] ) {
             return $self->{_multi}->{stack}->[1]->[0]->{n};
         }
+        if ( defined $self->{_choice}->{modules} ) {
+            return $self->{_choice}->{modules}->[1]->{n};
+        }
         else {
             return $self->{userDB};
         }
     }
 
     if ( $type =~ /password/i ) {
+        if ( defined $self->{_choice}->{modules} ) {
+            return $self->{_choice}->{modules}->[2]->{n};
+        }
+        else {
         return $self->{passwordDB};
+    }
     }
 
     if ( $type =~ /issuer/i ) {

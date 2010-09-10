@@ -6,57 +6,84 @@
 package Lemonldap::NG::Portal::AuthChoice;
 
 use strict;
+use Lemonldap::NG::Portal::_Choice;
 use Lemonldap::NG::Portal::Simple;
 
-our $VERSION = '0.1';
+our $VERSION = '0.10';
 
 ## @apmethod int authInit()
-# Does nothing
+# Build authentication loop
+# Check authChoice parameter
 # @return Lemonldap::NG::Portal constant
 sub authInit {
-    PE_OK;
+    my $self = shift;
+
+    # Build authLoop
+    $self->{authLoop} = $self->_buildAuthLoop();
+
+    # Get authentication choice
+    $self->{_authChoice} = $self->param( $self->{authChoiceParam} );
+
+    # Check XSS Attack
+    $self->{_authChoice} = ""
+      if (  $self->{_authChoice}
+        and
+        $self->checkXSSAttack( $self->{authChoiceParam}, $self->{_authChoice} )
+      );
+
+    $self->lmLog( "Authentication choice found in URL: " . $self->{_authChoice},
+        'debug' )
+      if $self->{_authChoice};
+
+    return $self->_choice->try( 'authInit', 0 );
 }
 
 ## @apmethod int setAuthSessionInfo()
 # Does nothing
 # @return Lemonldap::NG::Portal constant
 sub setAuthSessionInfo {
-    PE_OK;
+    my $self = shift;
+    return $self->_choice->try( 'setAuthSessionInfo', 0 );
 }
 
 ## @apmethod int extractFormInfo()
-# Always display form
+# Does nothing
 # @return Lemonldap::NG::Portal constant
 sub extractFormInfo {
-    PE_FIRSTACCESS;
+    my $self = shift;
+    return $self->_choice->try( 'extractFormInfo', 0 );
 }
 
 ## @apmethod int authenticate()
 # Does nothing.
 # @return Lemonldap::NG::Portal constant
 sub authenticate {
-    PE_OK;
+    my $self = shift;
+    return $self->_choice->try( 'authenticate', 0 );
 }
 
 ## @apmethod int authFinish()
 # Does nothing.
 # @return Lemonldap::NG::Portal constant
 sub authFinish {
-    PE_OK;
+    my $self = shift;
+    return $self->_choice->try( 'authFinish', 0 );
 }
 
 ## @apmethod int authLogout()
 # Does nothing
 # @return Lemonldap::NG::Portal constant
 sub authLogout {
-    PE_OK;
+    my $self = shift;
+    return $self->_choice->try( 'authLogout', 0 );
 }
 
 ## @apmethod boolean authForce()
 # Does nothing
 # @return result
 sub authForce {
-    return 0;
+    my $self = shift;
+    return $self->_choice->try( 'authForce', 0 );
 }
 
 1;

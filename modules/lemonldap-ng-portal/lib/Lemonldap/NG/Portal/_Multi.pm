@@ -115,8 +115,8 @@ sub replay {
     my ( $self, $sub ) = splice @_;
     my @subs = ();
     foreach (
-        qw(authInit extractFormInfo setAuthSessionInfo userDBInit getUser
-        setSessionInfo setGroups)
+        qw(authInit extractFormInfo userDBInit getUser setAuthSessionInfo
+        setSessionInfo setGroups authFinish)
       )
     {
         push @subs, $_;
