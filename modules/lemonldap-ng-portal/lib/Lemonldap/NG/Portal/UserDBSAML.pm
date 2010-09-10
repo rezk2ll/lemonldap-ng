@@ -18,12 +18,11 @@ our $VERSION = '0.01';
 # @return Lemonldap::NG::Portal error code
 sub userDBInit {
     my $self = shift;
-    if (   $self->{authentication} =~ /^SAML/
-        or $self->{stack}->[0]->[0]->{m} =~ /^SAML/ )
-    {
+    if ( $self->get_module('auth') eq 'SAML' ) {
         return PE_OK;
     }
     else {
+        $self->lmLog( "SAML user module require SAML authentication", 'error' );
         return PE_SAML_ERROR;
     }
 }
