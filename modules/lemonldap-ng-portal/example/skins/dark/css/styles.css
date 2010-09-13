@@ -74,8 +74,8 @@ form input[name=openid_identifier] {
 width: 300px;
 }
 
-/* Login page */
-#logincontent {
+/* Login and mail page */
+#logincontent, #mailcontent {
 margin:100px auto 20px auto;
 background:#4B4B4B;
 padding:10px;
@@ -84,13 +84,24 @@ height:310px;
 -moz-border-radius:10px 10px 10px 10px;
 }
 
-#logincontent form {
+#logincontent form, #mailcontent form {
 background:#E4E4E4;
 opacity:0.9;
 margin: 20px -100px 20px 250px;
 padding:10px;
-height:230px;
 -moz-border-radius:10px 10px 10px 10px;
+}
+
+#logincontent form {
+height:230px;
+}
+
+#mailcontent form {
+height:200px;
+}
+
+#mailcontent div.link {
+margin:20px 0 0 250px;
 }
 
 div.loginlogo {
@@ -115,6 +126,10 @@ color:#CCC;
 
 #authMenu li.ui-tabs-selected a {
 color:#000;
+}
+
+tr.authLogo {
+text-align:center;
 }
 
 /* Footer */

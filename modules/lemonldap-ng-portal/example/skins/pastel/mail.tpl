@@ -1,5 +1,7 @@
 <TMPL_INCLUDE NAME="header.tpl">
 
+	<div id="mailcontent">
+
 	<div class="message <TMPL_VAR NAME="AUTH_ERROR_TYPE">"><ul><li><TMPL_VAR NAME="AUTH_ERROR"></li></ul></div>
 
 	<div class="loginlogo"></div>
@@ -31,5 +33,7 @@
                         <lang en="Go back to portal" fr="Retourner au portail" />
                 </a>
         </div>
+
+	</div>
 
 <TMPL_INCLUDE NAME="footer.tpl">

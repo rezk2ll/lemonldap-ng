@@ -49,7 +49,7 @@
 
 		<table>
 	        <TMPL_IF NAME="module">
-		<tr><td>
+		<tr class="authLogo"><td>
 		<img src="/skins/common/<TMPL_VAR NAME="module">.png" />
 		</td></tr>
 		</TMPL_IF>
