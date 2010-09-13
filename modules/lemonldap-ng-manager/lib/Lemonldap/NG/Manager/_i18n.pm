@@ -48,6 +48,7 @@ __END__
 sub en {
     return {
         _auth               => 'Authentication',
+        _authChoice         => 'Authentication choice',
         _userDB             => 'User',
         _passwordDB         => 'Password',
         _issuerDB           => 'Issuer',
@@ -56,7 +57,9 @@ sub en {
         _user               => 'Login',
         _password           => 'Password',
         _utime              => 'Session timestamp',
-        _lastAuthnUTime     => 'Authentication timesamp',
+        _lastAuthnUTime     => 'Authentication timestamp',
+        _idp                => 'IDP EntityID',
+        _idpConfKey         => 'IDP configuration key',
         _samlToken          => 'SAML token',
         _lassoSessionDump   => 'Lasso session dump',
         _lassoIdentityDump  => 'Lasso identity dump',
@@ -394,6 +397,7 @@ sub fr {
     use utf8;
     return {
         _auth               => 'Authentification',
+        _authChoice         => 'Choix d\'authentification',
         _userDB             => 'Utilisateur',
         _passwordDB         => 'Mot de passe',
         _issuerDB           => 'Fournisseur',
@@ -403,6 +407,8 @@ sub fr {
         _password           => 'Mot de passe',
         _utime              => 'Tampon de la session',
         _lastAuthnUTime     => 'Tampon d\'authentification ',
+        _idp                => 'Identifiant d\'entité de l\'IDP',
+        _idpConfKey         => 'Clé de configuration de l\'IDP',
         _samlToken          => ' Jeton SAML ',
         _lassoSessionDump   => ' Dump session Lasso ',
         _lassoIdentityDump  => 'Dump identité Lasso',

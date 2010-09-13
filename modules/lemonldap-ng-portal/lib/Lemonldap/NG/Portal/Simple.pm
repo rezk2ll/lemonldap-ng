@@ -1295,18 +1295,8 @@ sub controlExistingSession {
                             next;
                         }
 
-                        # Load authentication module
-                        my $authModule = 'Lemonldap::NG::Portal::Auth'
-                          . $self->{sessionInfo}->{_auth};
-                        unless ( $self->loadModule($authModule) ) {
-                            $self->lmLog( "Unable to load $module_name",
-                                'error' );
-                            next;
-                        }
-
                         $self->{error} = $self->_subProcess(
                             $module_name . "::issuerDBInit",
-                            $authModule . "::authInit",
                             $module_name . '::issuerLogout'
                         );
 
@@ -1393,7 +1383,7 @@ sub controlExistingSession {
             untie %$h;
             $self->{id} = $id;
 
-            # A session has been find => calling &existingSession
+            # A session has been found => call existingSession
             my $r = $self->_sub( 'existingSession', $id, $self->{sessionInfo} );
             if ( $r == PE_DONE ) {
                 $self->{error} = $self->_subProcess(
@@ -1428,7 +1418,7 @@ sub existingSession {
 
     # Check portalForceAuthn parameter
     # and authForce method
-    eval { $forceAuthn = $self->authForce(); };
+    eval { $forceAuthn = $self->_sub('authForce'); };
     if ($@) {
         $self->lmLog( "Error when calling authForce: $@", 'debug' );
     }

@@ -31,7 +31,7 @@ sub authInit {
         $self->checkXSSAttack( $self->{authChoiceParam}, $self->{_authChoice} )
       );
 
-    $self->lmLog( "Authentication choice found in URL: " . $self->{_authChoice},
+    $self->lmLog( "Authentication choice found: " . $self->{_authChoice},
         'debug' )
       if $self->{_authChoice};
 
@@ -39,10 +39,13 @@ sub authInit {
 }
 
 ## @apmethod int setAuthSessionInfo()
-# Does nothing
+# Remember authChoice in session
 # @return Lemonldap::NG::Portal constant
 sub setAuthSessionInfo {
     my $self = shift;
+
+    $self->{sessionInfo}->{_authChoice} = $self->{_authChoice};
+
     return $self->_choice->try( 'setAuthSessionInfo', 0 );
 }
 
@@ -87,6 +90,7 @@ sub authForce {
 }
 
 1;
+
 __END__
 
 =head1 NAME

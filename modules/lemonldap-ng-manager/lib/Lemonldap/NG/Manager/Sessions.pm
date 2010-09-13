@@ -484,8 +484,10 @@ sub session {
         'connectionTitle' => [qw(ipAddr xForwardedForAddr _timezone)],
         'authenticationTitle' =>
           [qw(_session_id _user _password authenticationLevel)],
-        'modulesTitle' => [qw(_auth _userDB _passwordDB _issuerDB)],
-        'saml'    => [qw(_samlToken _lassoSessionDump _lassoIdentityDump)],
+        'modulesTitle' => [qw(_auth _userDB _passwordDB _issuerDB _authChoice)],
+        'saml'         => [
+            qw(_idp _idpConfKey _samlToken _lassoSessionDump _lassoIdentityDump)
+        ],
         'groups'   => [qw(groups)],
         'ldap'    => [qw(dn)],
     };

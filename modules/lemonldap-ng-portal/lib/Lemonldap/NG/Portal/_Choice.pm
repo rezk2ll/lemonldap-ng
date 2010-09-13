@@ -20,6 +20,9 @@ sub new {
     # Create object with portal parameter
     my $self = bless { p => $portal }, $class;
 
+    # Recover authChoice from session
+    $portal->{_authChoice} ||= $portal->{sessionInfo}->{_authChoice};
+
     # Test authChoice
     unless ( $portal->{_authChoice}
         and exists $portal->{authChoiceModules}->{ $portal->{_authChoice} } )
@@ -44,7 +47,7 @@ sub new {
         };
 
 	if ($@) {
-		$portal->lmLog("SAML choice force no tested: $@", 'debug');
+            $portal->lmLog( "SAML choice force not tested: $@", 'debug' );
 	}
 
         # Force SAML choice if needed
@@ -69,18 +72,15 @@ sub new {
         my $userDBModule     = $modulePrefix . 'UserDB' . $userDB;
         my $passwordDBModule = $modulePrefix . 'PasswordDB' . $passwordDB;
 
-        foreach ( $authModule, $userDBModule, $passwordDBModule ) {
-            $portal->abort( 'Bad configuration', "Unable to load $_" )
-              unless $portal->loadModule($_);
+        foreach my $module ( $authModule, $userDBModule, $passwordDBModule ) {
+            $portal->abort( 'Bad configuration', "Unable to load $module" )
+              unless $portal->loadModule($module);
         }
 
         $self->{modules} = [
             { m => $authModule,   n => $auth },
             { m => $userDBModule, n => $userDB },
-            {
-                m => $passwordDBModule,
-                n => $passwordDB
-            },
+            { m => $passwordDBModule, n => $passwordDB }
         ];
 
         $portal->lmLog( "Authentication module $auth selected", 'debug' );
