@@ -99,39 +99,9 @@ sub new {
     $self->{portalObject}->{'user'} =
       $self->{portalObject}->{sessionInfo}->{'_user'};
 
-# Password modification functions (TODO merge Menu.pm in Simple.pm to inherits those functions)
-# Default to LDAP
-    $self->{portalObject}->{passwordDB} ||= 'LDAP';
-    if ( $self->{portalObject}->{passwordDB} =~ /DBI/i ) {
-        use Lemonldap::NG::Portal::PasswordDBDBI;    #inherits
-        use Lemonldap::NG::Portal::_DBI
-          ;    #link protected dbi Object used to change passwords only
-        *_modifyPassword =
-          *Lemonldap::NG::Portal::PasswordDBDBI::modifyPassword;
-        *_passwordDBInit =
-          *Lemonldap::NG::Portal::PasswordDBDBI::passwordDBInit;
-    }
-    if ( $self->{portalObject}->{passwordDB} =~ /Null/i ) {
-        use Lemonldap::NG::Portal::PasswordDBNull;    #inherits
-        *_modifyPassword =
-          *Lemonldap::NG::Portal::PasswordDBNull::modifyPassword;
-        *_passwordDBInit =
-          *Lemonldap::NG::Portal::PasswordDBNull::passwordDBInit;
-    }
-    if ( $self->{portalObject}->{passwordDB} =~ /LDAP/i ) {
-        use Lemonldap::NG::Portal::PasswordDBLDAP;    #inherits
-        use Lemonldap::NG::Portal::_LDAP
-          'ldap';    #link protected ldap Object used to change passwords only
-        *_modifyPassword =
-          *Lemonldap::NG::Portal::PasswordDBLDAP::modifyPassword;
-        *_passwordDBInit =
-          *Lemonldap::NG::Portal::PasswordDBLDAP::passwordDBInit;
-    }
-
     # Change password (only if newpassword submitted)
-    $self->{portalObject}->{error} = &_passwordDBInit( $self->{portalObject} )
-      if $self->{portalObject}->{'newpassword'};
-    $self->{portalObject}->{error} = &_modifyPassword( $self->{portalObject} )
+    $self->{portalObject}->{error} =
+      $self->{portalObject}->_subProcess(qw(passwordDBInit modifyPassword))
       if $self->{portalObject}->{'newpassword'};
 
     return $self;
