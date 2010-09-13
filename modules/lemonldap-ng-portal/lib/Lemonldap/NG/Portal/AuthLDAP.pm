@@ -39,6 +39,7 @@ sub authenticate {
     # Set the dn unless done before
     unless ( $self->{dn} ) {
         my $tmp = $self->_subProcess(qw(_formateFilter _search));
+        $self->{sessionInfo}->{dn} = $self->{dn};
         return $tmp if ($tmp);
     }
     return $self->ldap->userBind( $self->{dn}, password => $self->{password} );
