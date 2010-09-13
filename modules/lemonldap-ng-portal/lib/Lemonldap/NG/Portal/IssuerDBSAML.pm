@@ -25,6 +25,10 @@ sub issuerDBInit {
     # Load SAML service providers
     return PE_SAML_LOAD_SP_ERROR unless $self->loadSPs();
 
+    # Load SAML identity providers
+    # Required to manage SLO in Proxy mode
+    return PE_SAML_LOAD_IDP_ERROR unless $self->loadIDPs();
+
     PE_OK;
 }
 
