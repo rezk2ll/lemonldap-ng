@@ -243,7 +243,7 @@ sub struct {
                     ],
                     portalDisplayLogout => 'text:/portalDisplayLogout',
                     portalDisplayResetPassword =>
-                      'text:/portalDisplayResetPassword',
+                      'bool:/portalDisplayResetPassword',
                     portalDisplayChangePassword =>
                       'text:/portalDisplayChangePassword',
                     portalDisplayAppslist => 'text:/portalDisplayAppslist',
@@ -1539,6 +1539,10 @@ sub defaultConf {
         portal                   => 'http://auth.example.com',
         portalSkin               => 'pastel',
         portalUserAttr           => '_user',
+        portalDisplayAppslist       => '1',
+        portalDisplayChangePassword => '$_auth eq LDAP or $_auth eq DBI',
+        portalDisplayLogout         => '1',
+        portalDisplayResetPassword  => '1',
         protection               => 'none',
         remoteGlobalStorage => 'Lemonldap::NG::Common::Apache::Session::SOAP',
         securedCookie       => '0',
