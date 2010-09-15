@@ -277,6 +277,7 @@ sub struct {
                     my $pdb = $self->conf->{passwordDB}
                       || $self->defaultConf()->{passwordDB};
                     $auth = lc($auth);
+                    $auth =~ s/\s.*$//;    # For Multi
                     $udb  = lc($udb);
                     $pdb  = lc($pdb);
                     my %res;
@@ -302,7 +303,10 @@ sub struct {
                             null    => ['nullParams'],
                             choice  => [
                                 qw(ldapParams sslParams casParams remoteParams proxyParams openIdParams twitterParams dbiParams apacheParams nullParams choiceParams)
-                            ]
+                            ],
+                            multi => [
+                                qw(ldapParams sslParams casParams remoteParams proxyParams openIdParams twitterParams dbiParams apacheParams nullParams choiceParams)
+                            ],
                         }->{$mod};
                         if ($tmp) {
                             $res{$_}++ foreach (@$tmp);
