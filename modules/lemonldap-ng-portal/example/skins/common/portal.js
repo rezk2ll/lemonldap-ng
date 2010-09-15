@@ -22,7 +22,8 @@ $(document).ready(function(){
 
 	/* Authentication choice */
 	$("#authMenu").tabs({
-		fx: { opacity: 'toggle' },
+		fx: {opacity: 'toggle'},
+		cookie: {name: 'lemonldapauthchoice'},
 		show:function(event,ui) {
 		$('#authKey').val($('#authMenu li.ui-tabs-selected').attr('title'));
 		return true;

@@ -12,6 +12,7 @@
         <script type="text/javascript" src="/skins/common/jquery-1.4.2.min.js"></script>
         <script type="text/javascript" src="/skins/common/jquery-ui-1.7.2.custom.min.js"></script>
         <script type="text/javascript" src="/skins/common/jquery.base64.js"></script>
+        <script type="text/javascript" src="/skins/common/jquery.cookie.js"></script>
         <script type="text/javascript">//<![CDATA[
             var displaytab='<TMPL_VAR NAME="DISPLAY_TAB">';
             var choicetab='<TMPL_VAR NAME="CHOICE_VALUE">';
