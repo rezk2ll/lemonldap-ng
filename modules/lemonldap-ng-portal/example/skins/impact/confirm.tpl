@@ -17,11 +17,11 @@
           <TMPL_VAR NAME="MSG">
         </div>
         <div class="panel-buttons">
-          <button type="reset" class="negative" tabindex="4" onclick="stop();">
-            <lang en="Wait" fr="Attendre" />
+          <button type="submit" class="negative" tabindex="4" onclick="$('#confirm').attr('value','-1');">
+            <lang en="Refuse" fr="Refuser" />
           </button>
           <button type="submit" class="positive" tabindex="3">
-            <lang en="Continue" fr="Continuer" />
+            <lang en="Accept" fr="Accepter" />
           </button>
         </div>
       </form>
