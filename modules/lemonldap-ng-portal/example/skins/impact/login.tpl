@@ -143,6 +143,20 @@
 
     </TMPL_IF>
 
+    <TMPL_IF NAME="DISPLAY_PASSWORD">
+
+      <div id="content-all">
+      <div class="title">
+        <img src="/skins/<TMPL_VAR NAME="SKIN">/images/logo-info.png" />
+        <lang en="Password change" fr="Changement de mot de passe" />
+      </div>
+      <hr class="solid" />
+      <p class="text-error"><TMPL_VAR NAME="AUTH_ERROR"></p>
+      <TMPL_INCLUDE NAME="password.tpl">
+      </div>
+
+    </TMPL_IF>
+
     <TMPL_IF NAME="PORTAL_URL">
     <div id="content-all">
       <div class="title">

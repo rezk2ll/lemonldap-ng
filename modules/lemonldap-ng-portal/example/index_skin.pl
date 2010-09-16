@@ -79,7 +79,7 @@ if ( $portal->process() ) {
         # Initialize menu elements
         $portal->_sub('menuInit');
 
-        $skinfile = 'menu2.tpl';
+        $skinfile = 'menu.tpl';
 
         %templateParams = (
             AUTH_USER => $portal->{sessionInfo}->{ $portal->{portalUserAttr} },

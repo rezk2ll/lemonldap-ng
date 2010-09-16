@@ -1,4 +1,3 @@
-        <TMPL_IF NAME="DISPLAY_PASSWORD">
         <div id="password">
         <form action="#" method="post" class="password">
         <h3><lang en="Change your password" fr="Changez votre mot de passe" /></h3>
@@ -29,4 +28,3 @@
         </td></tr></table>
         </form>
         </div>
-        </TMPL_IF>

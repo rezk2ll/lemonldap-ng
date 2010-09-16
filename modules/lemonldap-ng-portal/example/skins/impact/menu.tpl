@@ -9,26 +9,36 @@
       </div>
       <hr class="solid" />
       <p>
-        <span class="text-error"><lang en="Connected as" fr="Connect&eacute; en tant que" />: <u><TMPL_VAR NAME="AUTH_USER"></u></span>
+        <span class="text-error"><lang en="Connected as" fr="Connect&eacute; en tant que " />: <u><TMPL_VAR NAME="AUTH_USER"></u></span>
       </p>
 
       <div id="menu">
+
+      <TMPL_IF DISPLAY_MODULES>
         <ul>
-          <TMPL_IF NAME="DISPLAY_APPSLIST">
+        <TMPL_LOOP NAME="DISPLAY_MODULES">
+          <TMPL_IF NAME="Appslist">
           <li><a href="#appslist"><span><img src="/skins/common/application_cascade.png" width="16" height="16" alt="appslist" /> <lang en="Your applications" fr="Vos applications" /></span></a></li>
           </TMPL_IF>
-          <TMPL_IF NAME="DISPLAY_PASSWORD">
+          <TMPL_IF NAME="ChangePassword">
           <li><a href="#password"><span><img src="/skins/common/vcard_edit.png" width="16" height="16" alt="password" /> <lang en="Password" fr="Mot de passe" /></span></a></li>
           </TMPL_IF>
-          <TMPL_IF NAME="DISPLAY_LOGOUT">
+          <TMPL_IF NAME="Logout">
           <li><a href="#logout"><span><img src="/skins/common/door_out.png" width="16" height="16" alt="logout" /> <lang en="Logout" fr="Se d&eacute;connecter" /></span></a></li>
           </TMPL_IF>
+        </TMPL_LOOP>
         </ul>
+      </TMPL_IF>
+
       </div>
 
       <div id="content-all-info2">
 
-        <TMPL_IF NAME="DISPLAY_APPSLIST">
+      <TMPL_IF DISPLAY_MODULES>
+
+        <TMPL_LOOP NAME="DISPLAY_MODULES">
+
+        <TMPL_IF NAME="Appslist">
         <div id="appslist">
           <br/><br/>
           <p class="text-label">
@@ -39,9 +49,11 @@
         </div>
         </TMPL_IF>
 
+	<TMPL_IF NAME="ChangePassword">
         <TMPL_INCLUDE NAME="password.tpl">
+        </TMPL_IF>
 
-        <TMPL_IF NAME="DISPLAY_LOGOUT">
+        <TMPL_IF NAME="Logout">
         <div id="logout">
           <br/><br/><br/>
           <p class="text-label">
@@ -52,6 +64,10 @@
           </button>
         </div>
         </TMPL_IF>
+
+	</TMPL_LOOP>
+
+      </TMPL_IF>
 
       </div>
     </div>
