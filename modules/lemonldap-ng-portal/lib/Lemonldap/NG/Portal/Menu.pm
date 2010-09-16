@@ -11,7 +11,7 @@ require Lemonldap::NG::Common::CGI;
 use Lemonldap::NG::Portal::SharedConf;
 use Lemonldap::NG::Common::Safelib;    #link protected safe Safe object
 use Safe;
-use constant SAFEWRAP => ( Safe->can("wrap_code_re") ? 1 : 0 );
+use constant SAFEWRAP => ( Safe->can("wrap_code_ref") ? 1 : 0 );
 
 #inherits Net::LDAP::Control::PasswordPolicy
 

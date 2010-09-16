@@ -9,7 +9,7 @@ use strict;
 use Lemonldap::NG::Portal::Simple;
 require SOAP::Lite;
 use Safe;
-use constant SAFEWRAP => ( Safe->can("wrap_code_re") ? 1 : 0 );
+use constant SAFEWRAP => ( Safe->can("wrap_code_ref") ? 1 : 0 );
 
 our $VERSION = '0.2';
 

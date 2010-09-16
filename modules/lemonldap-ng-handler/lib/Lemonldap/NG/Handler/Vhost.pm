@@ -8,7 +8,7 @@ package Lemonldap::NG::Handler::Vhost;
 use Lemonldap::NG::Handler::Simple qw(:locationRules :headers);    #inherits
 use strict;
 use MIME::Base64;
-use constant SAFEWRAP => ( Safe->can("wrap_code_re") ? 1 : 0 );
+use constant SAFEWRAP => ( Safe->can("wrap_code_ref") ? 1 : 0 );
 
 our $VERSION = '0.55';
 

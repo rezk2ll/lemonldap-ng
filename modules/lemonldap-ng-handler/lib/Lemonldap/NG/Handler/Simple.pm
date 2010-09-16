@@ -21,7 +21,7 @@ use Safe;
 use Lemonldap::NG::Common::Safelib;    #link protected safe Safe object
 require POSIX;
 use CGI::Util 'expires';
-use constant SAFEWRAP => ( Safe->can("wrap_code_re") ? 1 : 0 );
+use constant SAFEWRAP => ( Safe->can("wrap_code_ref") ? 1 : 0 );
 
 #inherits Cache::Cache
 #inherits Apache::Session
