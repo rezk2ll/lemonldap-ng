@@ -101,7 +101,11 @@
 		
         </TMPL_IF>
 
+	<TMPL_IF NAME="DISPLAY_PASSWORD">
+
 	<TMPL_INCLUDE NAME="password.tpl">
+
+        </TMPL_IF>
 
 	<TMPL_IF NAME="LOGIN_INFO">
 	<div class="login_info">

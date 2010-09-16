@@ -362,6 +362,9 @@ sub new {
           . ')';
     }
 
+    # Load Menu functions
+    $self->loadModule('Lemonldap::NG::Portal::Menu');
+
     return $self;
 }
 
@@ -644,9 +647,10 @@ _RETURN $string Error string
 
 =cut
 
-##@method string error(string lang)
+##@method string error(string lang, int code)
 # error calls Portal/_i18n.pm to display error in the wanted language.
 #@param $lang optional (browser language is used instead)
+#@param $code optional error code
 #@return error message
 sub error {
     my $self = shift;
@@ -1904,7 +1908,7 @@ sub issuerForAuthUser {
 sub autoRedirect {
     my $self = shift;
 
-    # default redirection URL
+    # Default redirection URL
     $self->{urldc} ||= $self->{portal}
       if ( $self->{mustRedirect} or $self->info() );
 

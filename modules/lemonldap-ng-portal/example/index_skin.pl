@@ -75,41 +75,26 @@ if ( $portal->process() ) {
 
     # 1.3 Case : display menu
     else {
-        $skinfile = 'menu.tpl';
 
-        # Menu creation
-        use Lemonldap::NG::Portal::Menu;
-        my $menu = Lemonldap::NG::Portal::Menu->new(
-            {
-                portalObject => $portal,
-                modules      => {
-                    appslist => $portal->{portalDisplayAppslist},
-                    password => $portal->{portalDisplayChangePassword},
-                    logout   => $portal->{portalDisplayLogout},
-                },
-            }
-        );
+        # Initialize menu elements
+        $portal->_sub('menuInit');
+
+        $skinfile = 'menu2.tpl';
+
         %templateParams = (
             AUTH_USER => $portal->{sessionInfo}->{ $portal->{portalUserAttr} },
             AUTOCOMPLETE        => $portal->{portalAutocomplete},
             SKIN                => $skin,
-            AUTH_ERROR          => $portal->error,
-            AUTH_ERROR_TYPE     => $portal->error_type,
-            DISPLAY_APPSLIST    => $menu->displayModule("appslist"),
-            DISPLAY_PASSWORD    => $menu->displayModule("password"),
-            DISPLAY_LOGOUT      => $menu->displayModule("logout"),
-            DISPLAY_TAB         => $menu->displayTab,
+            AUTH_ERROR      => $portal->error( undef, $portal->{menuError} ),
+            AUTH_ERROR_TYPE => $portal->error_type( $portal->{menuError} ),
+            DISPLAY_TAB     => $portal->{menuDisplayTab},
             LOGOUT_URL          => "$ENV{SCRIPT_NAME}?logout=1",
             REQUIRE_OLDPASSWORD => $portal->{portalRequireOldPassword},
+            DISPLAY_MODULES     => $portal->{menuDisplayModules},
+            APPSLIST_MENU       => $portal->{menuAppslistMenu},
+            APPSLIST_DESC       => $portal->{menuAppslistDesc},
         );
 
-        if ( $menu->displayModule("appslist") ) {
-            %templateParams = (
-                %templateParams,
-                APPSLIST_MENU => $menu->appslistMenu,
-                APPSLIST_DESC => $menu->appslistDescription
-            );
-        }
     }
 }
 

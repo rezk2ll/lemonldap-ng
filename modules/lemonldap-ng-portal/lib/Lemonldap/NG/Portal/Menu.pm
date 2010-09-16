@@ -7,143 +7,48 @@ package Lemonldap::NG::Portal::Menu;
 
 use strict;
 use warnings;
-require Lemonldap::NG::Common::CGI;
-use Lemonldap::NG::Portal::SharedConf;
+use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Common::Safelib;    #link protected safe Safe object
 use Safe;
 use constant SAFEWRAP => ( Safe->can("wrap_code_ref") ? 1 : 0 );
 
-#inherits Net::LDAP::Control::PasswordPolicy
+our $VERSION = '0.4';
 
-our $VERSION = '0.3';
+# Global variables
+our ( $defaultCondition, $locationCondition, $locationRegexp, $cfgNum,
+    $catlevel ) = ( undef, undef, undef, 0, 0 );
 
-### ACCESS CONTROL DISPLAY SYSTEM
-
-our ( $defaultCondition, $locationCondition, $locationRegexp, $cfgNum, $path ) =
-  ( undef, undef, undef, 0 );
-
-## @method private Safe _safe()
-# Build and returns security jail.
-# Includes custom functions
-# @return Safe object
-sub _safe {
+## @method void menuInit()
+# Prepare menu template elements
+# @return nothing
+sub menuInit {
     my $self = shift;
-    return $self->{_safe} if ( $self->{_safe} );
-    $self->{_safe} = new Safe;
-    $self->{customFunctions} ||= $self->{portalObject}->{customFunctions};
-    my @t =
-      $self->{customFunctions} ? split( /\s+/, $self->{customFunctions} ) : ();
-    foreach (@t) {
-        my $sub = $_;
-        unless (/::/) {
-            $sub = "$self->{caller}::$_";
-        }
-        else {
-            s/^.*:://;
-        }
-        next if ( __PACKAGE__->can($_) );
-        eval "sub $_ {
-            return $sub(\$path,\@_);
-        }";
-        $self->{portalObject}->lmLog( $@, 'error' ) if ($@);
-    }
-    $self->{_safe}->share_from( 'main', ['%ENV'] );
-    $self->{_safe}->share_from( 'Lemonldap::NG::Common::Safelib',
-        $Lemonldap::NG::Common::Safelib::functions );
-    $self->{_safe}->share( '&encode_base64', @t );
-    return $self->{_safe};
-}
-
-my $catlevel = 0;
-
-##@cmethod Lemonldap::NG::Portal::Menu new(hashRef args)
-# Constructor.
-# $args->{portalObject} is required.
-#@param $args hash reference
-#@return new object
-sub new {
-    my $class = shift;
-    my $self  = {};
-    bless( $self, $class );
-
-    # Get configuration
-    $self->Lemonldap::NG::Portal::Simple::getConf(@_)
-      or Lemonldap::NG::Common::CGI->abort(
-        "Unable to read $class->new() parameters");
-
-    # Portal is required
-    Lemonldap::NG::Common::CGI->abort("Portal object required")
-      unless ( $self->{portalObject} );
-
-    # Fill sessionInfo (yet done in portal...)
-    #&Lemonldap::NG::Portal::Simple::getSessionInfo( $self->{portalObject} );
-
-    # Default values
     $self->{apps}->{imgpath} ||= '/apps/';
-    $self->{modules}->{appslist} = 0
-      unless defined $self->{modules}->{appslist};
-    $self->{modules}->{password} = 0
-      unless defined $self->{modules}->{password};
-    $self->{modules}->{logout} = 1 unless defined $self->{modules}->{logout};
-    $self->{'caller'} = caller;
 
-    # Store POST data in $self->{portalObject}
-    $self->{portalObject}->{'newpassword'} =
-      $self->{portalObject}->param('newpassword');
-    $self->{portalObject}->{'confirmpassword'} =
-      $self->{portalObject}->param('confirmpassword');
-    $self->{portalObject}->{'oldpassword'} =
-      $self->{portalObject}->param('oldpassword');
-    $self->{portalObject}->{'dn'} =
-      $self->{portalObject}->{sessionInfo}->{'dn'};
-    $self->{portalObject}->{'user'} =
-      $self->{portalObject}->{sessionInfo}->{'_user'};
+    # Modules to display
+    $self->{menuModules} ||= "Appslist ChangePassword Logout";
+    $self->{menuDisplayModules} = $self->displayModules();
 
-    # Change password (only if newpassword submitted)
-    $self->{portalObject}->{error} =
-      $self->{portalObject}->_subProcess(qw(passwordDBInit modifyPassword))
-      if $self->{portalObject}->{'newpassword'};
+    # Extract password from POST data
+    $self->{oldpassword}     = $self->param('oldpassword');
+    $self->{newpassword}     = $self->param('newpassword');
+    $self->{confirmpassword} = $self->param('confirmpassword');
+    $self->{dn}              = $self->{sessionInfo}->{dn};
+    $self->{user}            = $self->{sessionInfo}->{_user};
 
-    return $self;
-}
+    # Try to change password
+    $self->{menuError} = $self->_subProcess(qw(passwordDBInit modifyPassword));
 
-## @method boolean displayModule(string modulename)
-# Return true if the user can see the module.
-# Use for HTML::Template variable.
-# @param $modulename string
-# @return boolean
-sub displayModule {
-    my ( $self, $modulename ) = splice @_;
+    # Default menu error code
+    $self->{menuError} ||= $self->{error};
 
-    # Manage "0" and "1" rules
-    return 1 if ( $self->{modules}->{$modulename} eq "1" );
-    return 0 if ( $self->{modules}->{$modulename} eq "0" );
-
-    # Else parse display condition
-    my $cond = $self->{modules}->{$modulename};
-    $cond =~ s/\$(\w+)/$self->{portalObject}->{sessionInfo}->{$1}/g;
-    return (
-        SAFEWRAP
-        ? $self->_safe->wrap_code_ref(
-            $self->_safe->reval("sub{return($cond)}")
-          )
-        : $self->_safe->reval("sub{return($cond)}")
-    );
-}
-
-## @method string displayTab()
-# Tells which tab should be selected.
-# Design for Jquery tabs.
-# @return password, appslist or logout
-sub displayTab {
-    my $self = shift;
-
-    # Display password tab if password change is needed or failed
-    return "password"
+    # Tab to display
+    $self->{menuDisplayTab} = "appslist";
+    $self->{menuDisplayTab} = "password"
       if (
         (
             scalar(
-                grep { $_ == $self->{portalObject}->{error} } (
+                grep { $_ == $self->{menuError} } (
                     25,    #PE_PP_CHANGE_AFTER_RESET
                     27,    #PE_PP_MUST_SUPPLY_OLD_PASSWORD
                     28,    #PE_PP_INSUFFICIENT_PASSWORD_QUALITY
@@ -157,11 +62,40 @@ sub displayTab {
                 )
             )
         )
-        && $self->displayModule("password")
       );
 
-    return "appslist" if ( $self->displayModule("appslist") );
-    return "logout";
+    # Application list
+    $self->{menuAppslistMenu} = $self->appslistMenu();
+    $self->{menuAppslistDesc} = $self->appslistDescription();
+
+    return;
+}
+
+## @method arrayref displayModules()
+# List modules that can be displayed in Menu
+# @return modules list
+sub displayModules {
+    my $self           = shift;
+    my $displayModules = [];
+
+    # Modules list
+    my @modules = split( /\s/, $self->{menuModules} );
+
+    # Foreach module, eval condition
+    # Store module in result if condition is valid
+    foreach my $module (@modules) {
+        my $cond = $self->{ 'portalDisplay' . $module };
+        $cond = 1 unless defined $cond;
+        $cond =~ s/\$(\w+)/$self->{sessionInfo}->{$1}/g;
+
+        $self->lmLog( "Evaluate condition $cond for module $module", 'debug' );
+
+        if ( $self->safe->reval($cond) ) {
+            push @$displayModules, { $module => 1 };
+        }
+    }
+
+    return $displayModules;
 }
 
 ## @method string appslistMenu()
@@ -171,15 +105,15 @@ sub appslistMenu {
     my $self = shift;
 
     # We no more use XML file for menu configuration
-    unless ( defined $self->{portalObject}->{applicationList} ) {
-        $self->{portalObject}->abort(
+    unless ( defined $self->{applicationList} ) {
+        $self->abort(
             "XML menu configuration is deprecated",
 "Please use lmMigrateConfFiles2ini to migrate your menu configuration"
         );
     }
 
     # Use configuration to get menu parameters
-    my $applicationList = $self->{portalObject}->{applicationList};
+    my $applicationList = $self->{applicationList};
     my $filteredList    = $self->_filter($applicationList);
     return $self->_displayConfCategory( "", $applicationList, $catlevel );
 }
@@ -191,8 +125,8 @@ sub appslistDescription {
     my $self = shift;
 
     # We no more use XML file for menu configuration
-    unless ( defined $self->{portalObject}->{applicationList} ) {
-        $self->{portalObject}->lmLog(
+    unless ( defined $self->{applicationList} ) {
+        $self->lmLog(
 "XML menu configuration is deprecated. Please use lmMigrateConfFiles2ini to migrate your menu configuration",
             'error'
         );
@@ -200,7 +134,7 @@ sub appslistDescription {
     }
 
     # Use configuration to get menu parameters
-    my $applicationList = $self->{portalObject}->{applicationList};
+    my $applicationList = $self->{applicationList};
     return $self->_displayConfDescription( "", $applicationList );
 }
 
@@ -255,16 +189,6 @@ sub _displayConfCategory {
     $html .= "</ul>\n";
 
     return $html;
-}
-
-## @method private string _userParam(string arg)
-# Returns value of $arg variable stored in session.
-# @param $arg string to modify
-# @return string modified
-sub _userParam {
-    my ( $self, $arg ) = splice @_;
-    $arg =~ s/\$([\w]+)/$self->{portalObject}->{sessionInfo}->{$1}/g;
-    return $arg;
 }
 
 ## @method private string _displayConfApplication()
@@ -475,11 +399,11 @@ sub _isCategoryEmpty {
 sub _grant {
     my ( $self, $uri ) = splice @_;
     $uri =~ m{(\w+)://([^/:]+)(:\d+)?(/.*)?$} or return 0;
-    my ( $protocol, $vhost, $port );
+    my ( $protocol, $vhost, $port, $path );
     ( $protocol, $vhost, $port, $path ) = ( $1, $2, $3, $4 );
     $path ||= '/';
     $self->_compileRules()
-      if ( $cfgNum != $self->{portalObject}->{cfgNum} );
+      if ( $cfgNum != $self->{cfgNum} );
     return -1 unless ( defined( $defaultCondition->{$vhost} ) );
 
     if ( defined $locationRegexp->{$vhost} ) {    # Not just a default rule
@@ -490,8 +414,8 @@ sub _grant {
         }
     }
     unless ( $defaultCondition->{$vhost} ) {
-        $self->{portalObject}
-          ->lmLog( "Application $uri did not match any configured virtual host",
+        $self->lmLog(
+            "Application $uri did not match any configured virtual host",
             'warn' );
         return 0;
     }
@@ -504,18 +428,18 @@ sub _grant {
 # @return True
 sub _compileRules {
     my $self = shift;
-    foreach my $vhost ( keys %{ $self->{portalObject}->{locationRules} } ) {
+    foreach my $vhost ( keys %{ $self->{locationRules} } ) {
         my $i = 0;
-        foreach ( keys %{ $self->{portalObject}->{locationRules}->{$vhost} } ) {
+        foreach ( keys %{ $self->{locationRules}->{$vhost} } ) {
             if ( $_ eq 'default' ) {
                 $defaultCondition->{$vhost} =
                   $self->_conditionSub(
-                    $self->{portalObject}->{locationRules}->{$vhost}->{$_} );
+                    $self->{locationRules}->{$vhost}->{$_} );
             }
             else {
                 $locationCondition->{$vhost}->[$i] =
                   $self->_conditionSub(
-                    $self->{portalObject}->{locationRules}->{$vhost}->{$_} );
+                    $self->{locationRules}->{$vhost}->{$_} );
                 $locationRegexp->{$vhost}->[$i] = qr/$_/;
                 $i++;
             }
@@ -524,7 +448,7 @@ sub _compileRules {
         # Default policy
         $defaultCondition->{$vhost} ||= $self->_conditionSub('accept');
     }
-    $cfgNum = $self->{portalObject}->{cfgNum};
+    $cfgNum = $self->{cfgNum};
     1;
 }
 
@@ -539,12 +463,12 @@ sub _conditionSub {
     return sub { 0 }
       if ( $cond =~ /^(?:deny$|logout)/i );
     $cond =~ s/\$date/&POSIX::strftime("%Y%m%d%H%M%S",localtime())/e;
-    $cond =~ s/\$(\w+)/\$self->{portalObject}->{sessionInfo}->{$1}/g;
+    $cond =~ s/\$(\w+)/\$self->{sessionInfo}->{$1}/g;
     my $sub = "sub {my \$self = shift; return ( $cond )}";
     $sub = (
         SAFEWRAP
-        ? $self->_safe->wrap_code_ref( $self->_safe->reval($sub) )
-        : $self->_safe->reval($sub)
+        ? $self->safe->wrap_code_ref( $self->safe->reval($sub) )
+        : $self->safe->reval($sub)
     );
     return $sub;
 }
@@ -557,45 +481,23 @@ __END__
 
 =encoding utf8
 
-Lemonldap::NG::Portal::Menu - Enhanced menu to display to authenticated users
+Lemonldap::NG::Portal::Menu - Portal menu functions
 
 =head1 SYNOPSIS
 
-    use Lemonldap::NG::Portal::Menu;
-    my $menu = Lemonldap::NG::Portal::Menu->new(
+    use Lemonldap::NG::Portal::Simple;
+    my $portal = Lemonldap::NG::Portal::Simple->new(
       {
-        portalObject => $portal,
-        apps => {
-            xmlfile => "/var/lib/lemonldap-ng/conf/apps-list.xml",
-            imgpath => "apps/",
-        },
-        modules => {
-            appslist => 1,
-            password => 1,
-            logout => 1,
-        },
       }
     );
 
-    # Print HTML code of authorized applications list
-    print $menu->appslistMenu;
+    # Init portal menu
+    $portal->menuInit();
+
 
 =head1 DESCRIPTION
 
-Lemonldap::NG::Portal::Menu provides these web modules:
-
-=over
-
-=item * Application list: display a full menu with all authorized applications
-
-=item * Password: allow the user to change its password (with LDAP auth only)
-
-=item * Logout: display a simple logout confirmation page
-
-=back
-
-These web modules are designed to be used in HTML::Template, with the help of 
-Jquery scripts. Without that, this will only output raw HTML code.
+Lemonldap::NG::Portal::Menu is used to build menu.
 
 =head1 SEE ALSO
 
