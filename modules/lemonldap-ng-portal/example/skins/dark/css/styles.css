@@ -44,7 +44,6 @@ h3 {
 margin:10px 0;
 padding: 0 10px;
 opacity:1;
-color:#000;
 font-size:12pt;
 border-left: orange solid 20px;
 }
@@ -57,7 +56,6 @@ margin:0;
 
 th {
 text-align:right;
-color:#000;
 border-bottom:orange solid 2px;
 font-size:9pt;
 padding:5px;
@@ -74,8 +72,8 @@ form input[name=openid_identifier] {
 width: 300px;
 }
 
-/* Login and mail page */
-#logincontent, #mailcontent {
+/* All contents */
+#logincontent, #mailcontent, #errorcontent, #menucontent {
 margin:100px auto 20px auto;
 background:#4B4B4B;
 padding:10px;
@@ -90,6 +88,7 @@ opacity:0.9;
 margin: 20px -100px 20px 250px;
 padding:10px;
 -moz-border-radius:10px 10px 10px 10px;
+color:#000;
 }
 
 #logincontent form {
@@ -136,6 +135,73 @@ text-align:center;
 #footer {
 text-align:center;
 font-weight:normal;
+clear:both;
+}
+
+/* Logout and error */
+#logout .buttons a, #logout .buttons button, #error .buttons a, #error .buttons button {
+display:block;
+display:inline !important;
+float:none;
+margin:0;
+width:150px;
+}
+
+#logincontent #logout, #errorcontent #error {
+margin-top:60px;
+}
+
+/* Menu */
+#menucontent {
+margin:20px auto;
+width:80%;
+height:auto;
+}
+
+#menucontent #logout {
+text-align:center;
+padding:10px 20px 20px 20px;
+background:#E4E4E4;
+opacity:0.9;
+-moz-border-radius:10px 10px 10px 10px;
+color:#000;
+margin:20px auto;
+width:400px;
+}
+
+#menucontent #password {
+text-align:center;
+padding:10px 20px 20px 20px;
+background:#E4E4E4;
+opacity:0.9;
+-moz-border-radius:10px 10px 10px 10px;
+color:#000;
+margin:20px auto;
+width:600px;
+}
+
+#menucontent div.user {
+text-align:right;
+margin:10px 20px 0 0;
+}
+
+#menucontent .ui-tabs-nav {
+text-align:center;
+background:#E4E4E4;
+padding:5px;
+font-size:9pt;
+opacity:0.9;
+-moz-border-radius:10px 10px 10px 10px;
+margin:10px auto;
+width:600px;
+}
+
+#menucontent .ui-tabs-nav li a {
+color:#CCC;
+}
+
+#menucontent li.ui-tabs-selected a {
+color:#000;
 }
 
 /* Message box */
@@ -181,5 +247,22 @@ margin-left:10px;
 }
 
 li.ui-tabs-selected{
+}
+
+/* Applications list */
+ul.cat-level-0 {
+float:left;
+width:200px;
+}
+
+div.appsdesc {
+display:none;
+overflow:hidden;
+margin:30px 50px 30px 230px;
+padding:10px;
+background:#E4E4E4;
+opacity:0.9;
+-moz-border-radius:10px 10px 10px 10px;
+color:#000;
 }
 

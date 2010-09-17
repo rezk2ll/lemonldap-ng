@@ -1,16 +1,18 @@
 <TMPL_INCLUDE NAME="header.tpl">
 
-	<div class="loginlogo"></div>
-
-        <div id="error">
+	<div id="errorcontent">
 
 	<TMPL_IF ERROR403>
-        	<h3><lang en="You have no access authorization for this application" fr="Vous n'avez pas les droits d'acc&egrave;s &agrave; cette application" /></h3>
+        	<div class="message negative"><ul><li><lang en="You have no access authorization for this application" fr="Vous n'avez pas les droits d'acc&egrave;s &agrave; cette application" /></li></ul></div>
 	</TMPL_IF>
 
 	<TMPL_IF ERROR500>
-        	<h3><lang en="Error occurs on the server" fr="Une erreur est survenue sur le serveur" /></h3>
+        	<div class="message negative"><ul><li><lang en="Error occurs on the server" fr="Une erreur est survenue sur le serveur" /></li></ul></div>
 	</TMPL_IF>
+
+	<div class="loginlogo"></div>
+
+        <div id="error">
 
 	<div class="buttons">
 		<a href="<TMPL_VAR NAME="PORTAL_URL">" class="positive">
@@ -26,5 +28,7 @@
 	</div>
 
         </div>
+
+	</div>
 
 <TMPL_INCLUDE NAME="footer.tpl">

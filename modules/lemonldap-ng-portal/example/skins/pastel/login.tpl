@@ -122,6 +122,7 @@
                         <lang en="Go to portal" fr="Aller au portail" />
                 </a>
 	</div>
+	</div>
 	</TMPL_IF>
 
 	<TMPL_IF NAME="LOGOUT_URL">
