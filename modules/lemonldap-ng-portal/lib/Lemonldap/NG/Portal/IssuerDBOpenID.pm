@@ -15,7 +15,7 @@ our $VERSION = '0.01';
 # @return Lemonldap::NG::Portal error code
 sub issuerDBInit {
     my $self = shift;
-    eval { require Net::OpenID::Server };
+    eval { require Lemonldap::NG::Common::OpenID::Server };
     $self->abort( 'Unable to load Net::OpenID::Server', $@ ) if ($@);
     $self->{openIdSecret} ||= $self->{cipher}->encrypt(0);
     return PE_OK;
@@ -107,7 +107,7 @@ sub openIDServer {
     $self->{_openidPortal} = $self->{portal} . "/openidserver/";
     $self->{_openidPortal} =~ s#(?<!:)//#/#g;
 
-    $self->{_openidserver} = Net::OpenID::Server->new(
+    $self->{_openidserver} = Lemonldap::NG::Common::OpenID::Server->new(
 
         # TODO
         server_secret => sub { return $self->{openIdSecret} },
