@@ -7,11 +7,13 @@ package Lemonldap::NG::Portal::_SOAP;
 
 use strict;
 use Lemonldap::NG::Portal::Simple;
+use Lemonldap::NG::Portal::_LibAccess;
 require SOAP::Lite;
 use Safe;
 use constant SAFEWRAP => ( Safe->can("wrap_code_ref") ? 1 : 0 );
 
 our $VERSION = '0.2';
+our @ISA = qw(Lemonldap::NG::Portal::_LibAccess);
 
 ## @method void startSoapServices()
 # Check the URI requested (PATH_INFO environment variable) and launch the
@@ -255,51 +257,10 @@ sub isAuthorizedURI {
         $self->lmLog( "Session $id does not exists ($@)", 'warn' );
         return 0;
     }
-
-    # Initialize values relative to URI.
-    $uri =~ m{(\w+)://([^/:]+)(:\d+)?(/.*)?$} or return -1;
-
-    my ( $protocol, $vhost, $port, $path ) = ( $1, $2, $3, $4 );
-    $path ||= '/';
-
-    # Location rules variables.
-    my ( $defaultCondition, $locationCondition, $locationRegexp );
-
-    # Compile location rules.
-    foreach my $vhost ( keys %{ $self->{locationRules} } ) {
-        my $i = 0;
-        foreach my $vpath ( keys %{ $self->{locationRules}->{$vhost} } ) {
-            if ( $vpath eq 'default' ) {
-                $defaultCondition->{$vhost} =
-                  $self->_conditionSub( $id,
-                    $self->{locationRules}->{$vhost}->{$vpath} );
-            }
-            else {
-                $locationCondition->{$vhost}->[$i] =
-                  $self->_conditionSub( $id,
-                    $self->{locationRules}->{$vhost}->{$vpath} );
-                $locationRegexp->{$vhost}->[$i] = qr/$vpath/;
-                $i++;
-            }
-        }
-        $defaultCondition->{$vhost} ||= $self->_conditionSub( $id, 'accept' );
-    }
-
-    # Test rules.
-    unless ( defined( $defaultCondition->{$vhost} ) ) {
-        $self->lmLog( "No default condition builded", 'warn' );
-        return 0;
-    }
-    if ( defined $locationRegexp->{$vhost} ) {
-        for ( my $i = 0 ; $i < @{ $locationRegexp->{$vhost} } ; $i++ ) {
-            if ( $path =~ $locationRegexp->{$vhost}->[$i] ) {
-                return &{ $locationCondition->{$vhost}->[$i] }($self);
-            }
-        }
-    }
-    return 0 unless ( $defaultCondition->{$vhost} );
-    return &{ $defaultCondition->{$vhost} }($self);
-    return 1;
+    $self->{sessionInfo} = $h;
+    my $r = $self->_grant($uri);
+    untie %$h;
+    return $r;
 }
 
 =begin WSDL
@@ -354,28 +315,6 @@ sub _buildSoapHash {
         }
     }
     return \SOAP::Data->value(@tmp);
-}
-
-## @method private CODE _conditionSub(string cond)
-# Return subroutine giving authorization condition.
-# @param $cond boolean expression
-# @return Compiled routine
-sub _conditionSub {
-    my ( $self, $id, $cond ) = splice @_;
-    my $h = $self->getApacheSession( $id, 1 );
-    return sub { 1 }
-      if ( $cond =~ /^(?:accept|unprotect)$/i );
-    return sub { 0 }
-      if ( !$h or $cond =~ /^(?:deny$|logout)/i );
-    $cond =~ s/\$date/&POSIX::strftime("%Y%m%d%H%M%S",localtime())/e;
-    $cond =~ s/\$(\w+)/$h->{$1}/g;
-    my $sub = "sub {my \$self = shift; return ( $cond )}";
-    $sub = (
-        SAFEWRAP
-        ? $self->safe->wrap_code_ref( $self->safe->reval($sub) )
-        : $self->safe->reval($sub)
-    );
-    return $sub;
 }
 
 1;

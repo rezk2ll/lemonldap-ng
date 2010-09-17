@@ -145,6 +145,7 @@ lib/Lemonldap/NG/Portal/_Choice.pm
 lib/Lemonldap/NG/Portal/_DBI.pm
 lib/Lemonldap/NG/Portal/_i18n.pm
 lib/Lemonldap/NG/Portal/_LDAP.pm
+lib/Lemonldap/NG/Portal/_LibAccess.pm
 lib/Lemonldap/NG/Portal/_Multi.pm
 lib/Lemonldap/NG/Portal/_Proxy.pm
 lib/Lemonldap/NG/Portal/_Remote.pm
