@@ -101,6 +101,52 @@ sub restoreOpenIDprm {
     $self->{openIDRestored} = 1;
 }
 
+sub sregHook {
+    my ( $self, %prm ) = splice @_;
+    my ( %r, @req, @opt );
+    while ( my ( $k, $v ) = each %prm ) {
+        if ( $k eq 'policy_url' ) {
+            if ( $v =~ m{^https?://\S+} ) {
+                $self->{openIdCustomerPolicy} = $v;
+            }
+        }
+        elsif ( $k eq 'required' ) {
+            push @req, split( /,/, $v );
+        }
+        elsif ( $k eq 'optional' ) {
+            push @opt,
+              grep { defined $self->{"openIdSreg_$_"} } split( /,/, $v );
+        }
+        else {
+            $self->lmLog( "Unknown OpenID SREG request $k", 'error' );
+        }
+    }
+
+    # If a required data is not available, returns nothing
+    foreach my $k (@req) {
+        unless ( $self->{"openIdSreg_$k"} ) {
+            $self->lmLog(
+"Parameter $k is required by customer but not defined in configuration",
+                'notice'
+            );
+            return ();
+        }
+    }
+    foreach my $k ( @req, @opt ) {
+        unless ( $k =~
+/^(?:(?:(?:full|nick)nam|languag|postcod|timezon)e|country|gender|email|dob)$/
+          )
+        {
+            $self->lmLog(
+                "Requested parameter $k is not a valid OpenID SREG parameter",
+                'error' );
+            return ();
+        }
+        $r{$k} = $self->{sessionInfo}->{ $self->{"openIdSreg_$k"} };
+    }
+    return %r;
+}
+
 sub openIDServer {
     my $self = shift;
     return $self->{_openidserver} if ( $self->{_openidserver} );
@@ -151,7 +197,12 @@ sub openIDServer {
                 $self->{_openIdTrustRequired} = 1;
                 return 0;
             }
-        }
+        },
+        extensions => {
+            sreg => sub {
+                return $self->sregHook(@_);
+            },
+        },
     );
     return $self->{_openidserver};
 }
