@@ -668,10 +668,11 @@ sub struct {
                 },
 
                 security => {
-                    _nodes      => [qw(userControl portalForceAuthn)],
+                    _nodes      => [qw(userControl portalForceAuthn key)],
                     userControl => 'text:/userControl:userControl:text',
                     portalForceAuthn =>
                       'bool:/portalForceAuthn:portalForceAuthn:bool',
+                    key         => 'text:/key:key:text',
                 },
 
                 redirection => {
@@ -1151,6 +1152,7 @@ sub testStruct {
                 1;
             },
         },
+        key            => $testNotDefined,
         ldapAuthnLevel => $integer,
         ldapBase       => {
             test    => qr/^(?:\w+=.*|)$/,
@@ -1528,6 +1530,7 @@ sub defaultConf {
         issuerDBOpenIDActivation => '0',
         issuerDBOpenIDPath       => '^/openidserver/',
         issuerDBOpenIDRule       => '1',
+        key      => join( '', map { chr( int( rand(94) ) + 33 ) } ( 1 .. 16 ) ),
         ldapBase                 => 'dc=example,dc=com',
         ldapPort                 => '389',
         ldapPwdEnc               => 'utf-8',
