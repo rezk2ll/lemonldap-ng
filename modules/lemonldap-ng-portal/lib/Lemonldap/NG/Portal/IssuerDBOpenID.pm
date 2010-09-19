@@ -75,12 +75,15 @@ sub issuerForAuthUser {
 }
 
 ## @apmethod int issuerLogout()
-# TODO
+# Does nothing since OpenID does not provide any logout system
 # @return Lemonldap::NG::Portal error code
 sub issuerLogout {
     PE_OK;
 }
 
+## @method private void storeOpenIDprm()
+# Store openid parameters in a hidden value for forms using
+# setHiddenFormValue()
 sub storeOpenIDprm {
     my $self = shift;
     delete( $self->{_prm}->{lmhidden_openidprm} );
@@ -88,6 +91,8 @@ sub storeOpenIDprm {
         Storable::nfreeze( $self->{_prm} ) );
 }
 
+## @method private void restoreOpenIDprm()
+# Restore initial openid parameters stored with storeOpenIDprm()
 sub restoreOpenIDprm {
     my $self = shift;
     return if ( $self->{openIDRestored} );
@@ -101,6 +106,9 @@ sub restoreOpenIDprm {
     $self->{openIDRestored} = 1;
 }
 
+## @method protected hash sregHook(hash prm)
+# Hook called to add SREG parameters to the OpenID response
+# @return Hash containing wanted parameters
 sub sregHook {
     my ( $self, %prm ) = splice @_;
     my ( %r, @req, @opt );
@@ -153,6 +161,9 @@ m{^https?://(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-z
     return %r;
 }
 
+## @method private Lemonldap::NG::Common::OpenID::Server openIDServer()
+# Create if not done a new Lemonldap::NG::Common::OpenID::Server objet
+# @return Lemonldap::NG::Common::OpenID::Server object
 sub openIDServer {
     my $self = shift;
     return $self->{_openidserver} if ( $self->{_openidserver} );
@@ -188,6 +199,8 @@ sub openIDServer {
             }
         },
         is_trusted => sub {
+
+	    # TODO: manage extensions here
             my ( $u, $trust_root, $is_identity ) = @_;
             return 0 unless ( $u and $is_identity );
             if ( $self->{sessionInfo}->{"_openidTrust$trust_root"} ) {
@@ -213,6 +226,9 @@ sub openIDServer {
     return $self->{_openidserver};
 }
 
+## @method private int _openIDResponse()
+# Manage Lemonldap::NG::Common::OpenID::Server responses
+# @return Lemonldap::NG::Portal error code
 sub _openIDResponse {
     my ( $self, $type, $data ) = splice @_;
 
