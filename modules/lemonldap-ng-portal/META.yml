@@ -32,6 +32,7 @@ meta-spec:
     url:      http://module-build.sourceforge.net/META-spec-v1.4.html
     version:  1.4
 recommends:
+    Convert::PEM:         0
     Crypt::OpenSSL::X509:  0
     Email::Date::Format:  0
     Lasso:                0

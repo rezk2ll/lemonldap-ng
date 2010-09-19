@@ -8,7 +8,8 @@ Build-Depends-Indep:libapache-session-perl, libnet-ldap-perl (>=1:0.38), libdbi-
  libwww-perl, libcache-cache-perl, libcrypt-rijndael-perl, libxml-libxslt-perl,
  libio-string-perl, libregexp-assemble-perl, liburi-perl, libstring-random-perl,
  libmime-lite-perl, libsoap-lite-perl, libconfig-inifiles-perl,
- libnet-twitter-perl, libnet-openid-consumer-perl, libcrypt-openssl-x509-perl
+ libnet-twitter-perl, libnet-openid-consumer-perl, libnet-openid-server-perl,
+ libcrypt-openssl-x509-perl
 Standards-Version: 3.9.1
 Homepage: http://lemonldap.ow2.org/
 
@@ -80,7 +81,7 @@ Depends: ${misc:Depends}, libapache-session-perl, libnet-ldap-perl (>=1:0.38),
  libxml-libxml-perl, libxml-libxslt-perl, libstring-random-perl,
  libsoap-lite-perl, libcrypt-openssl-x509-perl
 Recommends: libmime-lite-perl, libemail-date-format-perl,
- libnet-openid-consumer-perl | liblasso3-perl (>=2.2.91) | libnet-twitter-perl,
+ libnet-openid-consumer-perl | libnet-openid-server-perl | liblasso3-perl (>=2.2.91) | libnet-twitter-perl,
  libconvert-pem-perl
 Suggests: slapd
 Description: Lemonldap::NG authentication portal part
