@@ -153,7 +153,7 @@ sub getConf {
             delete $r->{reVHosts};
         }
         else {
-            print STDERR 'Warning: key is not defined, set it in the manager !'
+            print STDERR "Warning: key is not defined, set it in the manager !\n"
               unless ( $r->{key} );
             eval {
                 $r->{cipher} = Lemonldap::NG::Common::Crypto->new(

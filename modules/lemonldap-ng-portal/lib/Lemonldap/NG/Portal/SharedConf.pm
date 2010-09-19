@@ -16,6 +16,7 @@ use Lemonldap::NG::Common::Conf::Constants; #inherits
 
 our $VERSION = '0.70';
 use base qw(Lemonldap::NG::Portal::Simple);
+our $confCached;
 
 ##################
 # OVERLOADED SUB #
@@ -35,24 +36,15 @@ sub getConf {
         %args = @_;
     }
 
-    %$self = ( %$self, %args );
-
-    # Get global configuration
-    my $globalconf = $self->_getLmConf;
-    return 0 unless $globalconf;
-
-    # Get local configuration
-    my $localconf = $self->_getLocalLmConf;
-
-    # Configuration load order:
-    # 1/ Global configuration
-    # 2/ Local file configuration
-    # 3/ Script embedded configuration
-    $self->{$_} = $args{$_} || $globalconf->{$_} foreach ( keys %$globalconf );
-    if ($localconf) {
-        $self->{$_} = $args{$_} || $localconf->{$_}
-          foreach ( keys %$localconf );
+    my $num = $self->__lmConf->lastCfg;
+    unless ( $confCached and $confCached->{cfgNum} == $num ) {
+        %$confCached = (
+            %args,
+            %{ $self->__lmConf->getLocalConf(PORTALSECTION) },
+            %{ $self->__lmConf->getConf( cfgNum => $num ) }
+        );
     }
+    %$self = ( %$self, %$confCached );
     1;
 }
 
@@ -68,30 +60,15 @@ sub getProtectedSites {
     return ();
 }
 
-## @method private hashref _getLmConf()
-# Call and return Lemonldap::NG::Common::Conf::getConf() value.
-# @return Lemonldap::NG shared configuration
-sub _getLmConf {
+sub __lmConf {
     my $self = shift;
-    $self->{lmConf} = Lemonldap::NG::Common::Conf->new( $self->{configStorage} )
-      unless $self->{lmConf};
-    return 0 unless ( ref( $self->{lmConf} ) );
-    return $self->{lmConf}->getConf;
-}
-
-## @method private hashref _getLocalLmConf()
-# Call and return Lemonldap::NG::Common::getLocalConf() value
-# @return Lemonldap::NG local configuration
-sub _getLocalLmConf {
-    my $self = shift;
-
-    # Get Configuration object
-    unless ( defined $self->{lmConf} ) {
-        return 0 unless $self->_getLmConf();
-    }
-
-    # Get local configuration parameters for portal
-    return $self->{lmConf}->getLocalConf(PORTALSECTION);
+    return $self->{lmConf} if ( $self->{lmConf} );
+    my $r = Lemonldap::NG::Common::Conf->new( $self->{configStorage} );
+    $self->abort(
+        "Cannot create configuration object",
+        $Lemonldap::NG::Common::Conf::msg
+    ) unless ( ref($r) );
+    $self->{lmConf} = $r;
 }
 
 1;
