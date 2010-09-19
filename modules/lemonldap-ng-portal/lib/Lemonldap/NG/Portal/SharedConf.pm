@@ -39,12 +39,11 @@ sub getConf {
     my $num = $self->__lmConf->lastCfg;
     unless ( $confCached and $confCached->{cfgNum} == $num ) {
         %$confCached = (
-            %args,
+            %{ $self->__lmConf->getConf( cfgNum => $num ) },
             %{ $self->__lmConf->getLocalConf(PORTALSECTION) },
-            %{ $self->__lmConf->getConf( cfgNum => $num ) }
         );
     }
-    %$self = ( %$self, %$confCached );
+    %$self = ( %$self, %$confCached, %args, );
     1;
 }
 
