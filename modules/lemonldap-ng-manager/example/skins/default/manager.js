@@ -397,6 +397,7 @@ function skinSelect(id) {
 	formateSelect('skinText',[
 		'pastel=Pastel',
 		'impact=Impact',
+		'dark=Dark',
 		],lmdata(id));
 	changeSkinImage(lmdata(id));
 	display('skin',lmtext(id));
