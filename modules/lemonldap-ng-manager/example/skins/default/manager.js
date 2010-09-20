@@ -286,6 +286,8 @@ function display(div,title) {
 	$('#newsamlattributeb,#delsamlattributeb').hide();
 	$('#newsamlattributebr').hide();
 	$('#newchoicer,#newchoice,#delchoice').hide();
+	$('#newcategoryr,#delcategory').hide();
+	$('#newapplicationr,#delapplication').hide();
 	var height_cur=$('#buttons').height()+$('#edition').height()+$('#help').height();
 	var height_max=$('#menu').height();
 	if(height_cur > height_max || $('#help_content').is(':visible')==false){
@@ -1006,5 +1008,34 @@ function setlmauthchoice(id){
 	var password=$('#authChoicePassword').attr('value');
 	setlmtext(id,key);
 	setlmdata(id,auth+'|'+user+'|'+password);
+}
+
+/* Application list */
+function applicationListCategoryRoot(id){
+	currentId=id;
+	display('default','');
+	$('#newcategoryr').show();
+}
+
+function newCategoryR(){
+	var name = prompt(text4newCategory,'mycategory');
+	if(!name){return false;}
+	var newIdValue=newId(currentId);
+	simpleTreeCollection[0].addNode(newIdValue,name,function(d,s){
+		$('>span',s).attr('onClick','applicationListCategory("'+newIdValue+'")').attr('name',name).attr('value','My Category').attr('id','text_'+newIdValue);
+		applicationListCategory(newIdValue);
+	});
+	return false;
+}
+
+function delCategory(){
+	delKey();
+}
+function applicationListCategory(id){
+	currentId=id;
+	$('#applicationListCategoryKey').attr('value',lmtext(id));
+	$('#applicationListCategoryName').attr('value',lmdata(id));
+	display('applicationListCategory',lmtext(id));
+	$('#delcategory,#newapplicationr').show();
 }
 

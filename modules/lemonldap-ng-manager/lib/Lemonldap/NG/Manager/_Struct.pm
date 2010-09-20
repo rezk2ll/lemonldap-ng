@@ -232,29 +232,38 @@ sub struct {
 
             # PORTAL PARAMETERS
             portalParams => {
-                _nodes => [qw(portal n:portalModules n:portalCustomization)],
+                _nodes => [qw(portal n:portalMenu n:portalCustomization)],
                 _help  => 'portalParams',
 
                 portal => 'text:/portal:portal:text',
 
+                portalMenu => {
+                    _nodes        => [qw(portalModules cn:applicationList)],
                 portalModules => {
                     _nodes => [
                         qw(portalDisplayLogout portalDisplayResetPassword portalDisplayChangePassword portalDisplayAppslist)
                     ],
                     portalDisplayLogout => 'text:/portalDisplayLogout',
-                    portalDisplayResetPassword =>
-                      'bool:/portalDisplayResetPassword',
                     portalDisplayChangePassword =>
                       'text:/portalDisplayChangePassword',
                     portalDisplayAppslist => 'text:/portalDisplayAppslist',
                 },
+                    applicationList => {
+                        _nodes => [
+'hash:/applicationList:default:applicationListCategory'
+                        ],
+                        _js => 'applicationListCategoryRoot',
+                    },
+                },
 
                 portalCustomization => {
                     _nodes => [
-                        qw(portalSkin portalAutocomplete portalRequireOldPassword portalUserAttr portalOpenLinkInNewWindow)
+                        qw(portalSkin portalDisplayResetPassword portalAutocomplete portalRequireOldPassword portalUserAttr portalOpenLinkInNewWindow)
                     ],
 
                     portalSkin => 'text:/portalSkin:portalParams:skinSelect',
+                    portalDisplayResetPassword =>
+                      'bool:/portalDisplayResetPassword',
                     portalAutocomplete => 'bool:/portalAutocomplete',
                     portalRequireOldPassword =>
                       'bool:/portalRequireOldPassword',
@@ -1048,6 +1057,10 @@ sub testStruct {
     my $testNotDefined = { test => sub { 1 }, msgFail => 'Ok' };
 
     return {
+        applicationList => {
+            keyTest    => qr/^(\d*)?\w+$/,
+            keyMsgFail => 'Bad category ID',
+        },
         mailFrom             => $testNotDefined,
         trustedDomains       => $testNotDefined,
         exportedAttr         => $testNotDefined,

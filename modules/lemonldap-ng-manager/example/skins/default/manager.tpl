@@ -31,6 +31,8 @@
 	var text4newGeneratedFile='<lang en="Password (optional)" fr="Mot de passe (optionnel)" />';
 	var text4edit='<lang en="Edit" fr="Éditer" />';
 	var text4protect='<lang en="Protect" fr="Protéger" />';
+	var text4newCategory='<lang en="Category identifier" fr="Identifiant de la catégorie" />';
+	var text4newApplication='<lang en="Application identifier" fr="Identifiant de l\'application" />';
 //]]></script>
 <script src="<TMPL_VAR NAME="DIR">/manager.js" type="text/JavaScript"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
@@ -146,6 +148,23 @@
     <button id="delchoice" style="display:none;" onclick="delChoice();return false;" class="ui-state-default ui-corner-all">
      <lang en="Delete choice" fr="Supprimer le choix" />
     </button>
+
+    <button id="newcategoryr" style="display:none;" onclick="newCategoryR();return false;" class="ui-state-default ui-corner-all">
+     <lang en="New category" fr="Nouvelle catégorie" />
+    </button>
+
+    <button id="delcategory" style="display:none;" onclick="delCategory();return false;" class="ui-state-default ui-corner-all">
+     <lang en="Delete category" fr="Supprimer la catégorie" />
+    </button>
+
+    <button id="newapplicationr" style="display:none;" onclick="newApplicationR();return false;" class="ui-state-default ui-corner-all">
+     <lang en="New application" fr="Nouvelle application" />
+    </button>
+
+    <button id="delapplication" style="display:none;" onclick="delApplication();return false;" class="ui-state-default ui-corner-all">
+     <lang en="Delete application" fr="Supprimer l'application" />
+    </button>
+
 
     </div>
 
@@ -446,6 +465,24 @@
      <lang en="Apply" fr="Appliquer" />
      </button>
    </div>
+
+    <!-- applicationList -->
+    <div id="content_applicationListCategory" class="hidden">
+     <table>
+      <tr>
+       <td><lang en="Key" fr="Nom de la clef"/></td>
+       <td><input type="text" id="applicationListCategoryKey" /></td>
+      </tr>
+      <tr>
+       <td><lang en="Display name" fr="Nom à afficher"/></td>
+       <td><input type="text" id="applicationListCategoryName" /></td>
+      </tr>
+     </table>
+     <br />
+     <button onclick="setlminputtext(currentId,'#applicationListCategoryKey');setlminputdata(currentId,'#applicationListCategoryName');return false;" class="ui-state-default ui-corner-all">
+     <lang en="Apply" fr="Appliquer" />
+     </button>
+    </div>
 
    </div>
 
