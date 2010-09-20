@@ -91,6 +91,7 @@ if ( $portal->process() ) {
             LOGOUT_URL          => "$ENV{SCRIPT_NAME}?logout=1",
             REQUIRE_OLDPASSWORD => $portal->{portalRequireOldPassword},
             DISPLAY_MODULES     => $portal->{menuDisplayModules},
+            APPSLIST_LOOP       => $portal->{menuAppslist},
             APPSLIST_MENU       => $portal->{menuAppslistMenu},
             APPSLIST_DESC       => $portal->{menuAppslistDesc},
         );

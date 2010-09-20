@@ -61,6 +61,7 @@ sub menuInit {
       );
 
     # Application list
+    $self->{menuAppslist}     = $self->appslist();
     $self->{menuAppslistMenu} = $self->appslistMenu();
     $self->{menuAppslistDesc} = $self->appslistDescription();
 
@@ -92,6 +93,114 @@ sub displayModules {
     }
 
     return $displayModules;
+}
+
+## @method arrayref appslist()
+# Returns categories and appplications list as HTML::Template loop
+# @return categories and applications list
+sub appslist {
+    my ($self) = splice @_;
+    my $appslist = [];
+
+    return $appslist unless defined $self->{applicationList};
+
+    # Reset level
+    $catlevel = 0;
+
+    my $applicationList = $self->{applicationList};
+    my $filteredList    = $self->_filter($applicationList);
+    push @$appslist,
+      $self->_buildCategoryHash( "", $applicationList, $catlevel );
+
+    return $appslist->[0]->{categories};
+}
+
+## @method private hashref _buildCategoryHash()
+# Build hash for a category
+# @param catname Category name
+# @param cathash Hash of category elements
+# @param catlevel Category level
+# @return Category Hash
+sub _buildCategoryHash {
+    my ( $self, $catname, $cathash, $catlevel ) = splice @_;
+    my $applications;
+    my $categories;
+
+    # Extract applications from hash
+    my $apphash;
+    foreach my $catkey ( keys %$cathash ) {
+        next if $catkey =~ /(type|options)/;
+        if ( $cathash->{$catkey}->{type} eq "application" ) {
+            $apphash->{$catkey} = $cathash->{$catkey};
+        }
+    }
+
+    # Display applications first
+    if ( scalar keys %$apphash > 0 ) {
+        foreach my $appkey ( keys %$apphash ) {
+            push @$applications,
+              $self->_buildApplicationHash( $appkey, $apphash->{$appkey} );
+        }
+    }
+
+    # Display subcategories
+    foreach my $catkey ( keys %$cathash ) {
+        next if $catkey =~ /(type|options)/;
+        if ( $cathash->{$catkey}->{type} eq "category" ) {
+            push @$categories,
+              $self->_buildCategoryHash( $catkey, $cathash->{$catkey},
+                $catlevel + 1 );
+        }
+    }
+
+    my $categoryHash =
+      { category => 1, catname => $catname, catlevel => $catlevel };
+    $categoryHash->{appplications} = $applications if $applications;
+    $categoryHash->{categories}    = $categories   if $categories;
+    return $categoryHash;
+}
+
+## @method private hashref _buildApplicationHash()
+# Build hash for an application
+# @param $appid Application ID
+# @param $apphash Hash of application elements
+# @return Application Hash
+sub _buildApplicationHash {
+    my ( $self, $appid, $apphash ) = splice @_;
+    my $applications;
+
+    # Get application items
+    my $appname = $apphash->{options}->{name} || $appid;
+    my $appuri  = $apphash->{options}->{uri}  || "";
+    my $appdesc = $apphash->{options}->{description};
+    my $applogo = $apphash->{options}->{logo};
+
+    # Detect sub applications
+    my $subapphash;
+    foreach my $key ( keys %$apphash ) {
+        next if $key =~ /(type|options)/;
+        if ( $apphash->{$key}->{type} eq "application" ) {
+            $subapphash->{$key} = $apphash->{$key};
+        }
+    }
+
+    # Display sub applications
+    if ( scalar keys %$subapphash > 0 ) {
+        foreach my $appkey ( keys %$subapphash ) {
+            push @$applications,
+              $self->_buildApplicationHash( $appkey, $subapphash->{$appkey} );
+        }
+    }
+
+    my $applicationHash = {
+        application => 1,
+        appname     => $appname,
+        appuri      => $appuri,
+        appdesc     => $appdesc,
+        applogo     => $applogo
+    };
+    $applicationHash->{applications} = $applications if $applications;
+    return $applicationHash;
 }
 
 ## @method string appslistMenu()
