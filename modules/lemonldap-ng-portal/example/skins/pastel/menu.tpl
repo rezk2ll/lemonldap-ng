@@ -28,20 +28,118 @@
 	</TMPL_IF>
 
                 <div class="menulogo"></div>
-
 	<!-- Tabs content -->
 	<TMPL_LOOP NAME="DISPLAY_MODULES">
 
 	<TMPL_IF NAME="Appslist">
-
-		<!-- The old fashion -->
 		<div id="appslist">
+
+		<!-- Plain HTML (no loops)
 		<TMPL_VAR NAME="APPSLIST_MENU">
 		<TMPL_VAR NAME="APPSLIST_DESC">
+		-->
+
+		<TMPL_LOOP NAME="APPSLIST_LOOP">
+		<!-- Template loops -->
+
+		<TMPL_IF NAME="category">
+		<!-- Category -->
+
+		<div class="category cat-level-<TMPL_VAR NAME="catlevel">">
+		<p class="catname"><TMPL_VAR NAME="catname"></p>
+
+		<TMPL_IF applications>
+		<!-- Applications -->
+
+		<TMPL_LOOP NAME=applications>
+
+		<!-- Application -->
+
+		<div class="application <TMPL_VAR NAME="appid">">
+
+		<!-- Logo (optional) -->
+		<TMPL_IF NAME="applogo">
+		<img 	src="/skins/common/apps/<TMPL_VAR NAME="applogo">"
+			class="applogo <TMPL_VAR NAME="appid">"
+			alt="<TMPL_VAR NAME="appname">" />
+		</TMPL_IF>
+
+		<!-- Name and link (mandatory) -->
+		<p class="appname <TMPL_VAR NAME="appid">">
+		<a href="<TMPL_VAR NAME="appurl">" alt="<TMPL_VAR NAME="appname">">
+		<TMPL_VAR NAME="appname">
+		</a>
+		</p>
+
+		<!-- Logo (optional) -->
+		<TMPL_IF NAME="appdesc">
+		<p class="appdesc <TMPL_VAR NAME="appid">">
+		<TMPL_VAR NAME="appdesc">
+		</p>
+		</TMPL_IF>
+
                 </div>
 
-		<!-- TODO use LOOPS -->
+		<!-- End of applications loop -->
+		</TMPL_LOOP>
+		</TMPL_IF>
 
+		<TMPL_IF categories>
+		<!-- Sub categories -->
+
+		<TMPL_LOOP NAME=categories>
+		<div class="category cat-level-<TMPL_VAR NAME="catlevel">">
+		<p class="catname"><TMPL_VAR NAME="catname"></p>
+
+		<TMPL_IF applications>
+		<!-- Applications in sub category -->
+
+		<TMPL_LOOP NAME=applications>
+
+		<!-- Application in sub category-->
+
+		<div class="application <TMPL_VAR NAME="appid">">
+
+		<!-- Logo (optional) -->
+		<TMPL_IF NAME="applogo">
+		<img 	src="/skins/common/apps/<TMPL_VAR NAME="applogo">"
+			class="applogo <TMPL_VAR NAME="appid">"
+			alt="<TMPL_VAR NAME="appname">" />
+		</TMPL_IF>
+
+		<!-- Name and link (mandatory) -->
+		<p class="appname <TMPL_VAR NAME="appid">">
+		<a href="<TMPL_VAR NAME="appurl">" alt="<TMPL_VAR NAME="appname">">
+		<TMPL_VAR NAME="appname">
+		</a>
+		</p>
+
+		<!-- Logo (optional) -->
+		<TMPL_IF NAME="appdesc">
+		<p class="appdesc <TMPL_VAR NAME="appid">">
+		<TMPL_VAR NAME="appdesc">
+		</p>
+		</TMPL_IF>
+
+		</div>
+
+		<!-- End of applications loop -->
+		</TMPL_LOOP>
+		</TMPL_IF>
+
+		</div>
+
+		<!-- End of sub categories loop -->
+		</TMPL_LOOP>
+		</TMPL_IF>
+
+		</div>
+
+		<!-- End of categories loop -->
+		</TMPL_IF>
+		</TMPL_LOOP>
+
+	</div>
 		</TMPL_IF>
 
 	<TMPL_IF NAME="ChangePassword">

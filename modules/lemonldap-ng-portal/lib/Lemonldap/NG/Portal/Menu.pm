@@ -88,7 +88,10 @@ sub displayModules {
         $self->lmLog( "Evaluate condition $cond for module $module", 'debug' );
 
         if ( $self->safe->reval($cond) ) {
-            push @$displayModules, { $module => 1 };
+            my $moduleHash = { $module => 1 };
+            $moduleHash->{'APPSLIST_LOOP'} = $self->appslist()
+              if ( $module eq 'Appslist' );
+            push @$displayModules, $moduleHash;
         }
     }
 
@@ -96,7 +99,7 @@ sub displayModules {
 }
 
 ## @method arrayref appslist()
-# Returns categories and appplications list as HTML::Template loop
+# Returns categories and applications list as HTML::Template loop
 # @return categories and applications list
 sub appslist {
     my ($self) = splice @_;
@@ -155,7 +158,7 @@ sub _buildCategoryHash {
 
     my $categoryHash =
       { category => 1, catname => $catname, catlevel => $catlevel };
-    $categoryHash->{appplications} = $applications if $applications;
+    $categoryHash->{applications} = $applications if $applications;
     $categoryHash->{categories}    = $categories   if $categories;
     return $categoryHash;
 }

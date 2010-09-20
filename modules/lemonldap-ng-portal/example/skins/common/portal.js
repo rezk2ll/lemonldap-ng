@@ -33,6 +33,8 @@ $(document).ready(function(){
 
 	$("input[type!=hidden]:first").focus();
 	$("input[type='password']").attr("autocomplete",autocomplete);
+
+	/*
 	$("#appslist li[class!=catname]").hover(
 		function(){
 			var appid = $(this).attr("title");
@@ -49,6 +51,8 @@ $(document).ready(function(){
 			}
 		}
 	);
+	*/
+
 	if(login){ $("input[type=password]:first").focus(); }
 	if(newwindow){ $('#appslist a[href^="http://"]').attr("target", "_blank"); }
 
