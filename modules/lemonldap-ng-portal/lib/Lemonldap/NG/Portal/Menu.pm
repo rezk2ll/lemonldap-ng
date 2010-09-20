@@ -62,8 +62,9 @@ sub menuInit {
 
     # Application list
     $self->{menuAppslist}     = $self->appslist();
-    $self->{menuAppslistMenu} = $self->appslistMenu();
-    $self->{menuAppslistDesc} = $self->appslistDescription();
+    $self->{menuAppslistMenu} = $self->appslistMenu();    # For old templates
+    $self->{menuAppslistDesc} =
+      $self->appslistDescription();                       # For old templates
 
     return;
 }
@@ -125,14 +126,15 @@ sub appslist {
 # @param catlevel Category level
 # @return Category Hash
 sub _buildCategoryHash {
-    my ( $self, $catname, $cathash, $catlevel ) = splice @_;
+    my ( $self, $catid, $cathash, $catlevel ) = splice @_;
+    my $catname = $cathash->{catname} || $catid;
     my $applications;
     my $categories;
 
     # Extract applications from hash
     my $apphash;
-    foreach my $catkey ( keys %$cathash ) {
-        next if $catkey =~ /(type|options)/;
+    foreach my $catkey ( sort keys %$cathash ) {
+        next if $catkey =~ /(type|options|catname)/;
         if ( $cathash->{$catkey}->{type} eq "application" ) {
             $apphash->{$catkey} = $cathash->{$catkey};
         }
@@ -140,15 +142,15 @@ sub _buildCategoryHash {
 
     # Display applications first
     if ( scalar keys %$apphash > 0 ) {
-        foreach my $appkey ( keys %$apphash ) {
+        foreach my $appkey ( sort keys %$apphash ) {
             push @$applications,
               $self->_buildApplicationHash( $appkey, $apphash->{$appkey} );
         }
     }
 
     # Display subcategories
-    foreach my $catkey ( keys %$cathash ) {
-        next if $catkey =~ /(type|options)/;
+    foreach my $catkey ( sort keys %$cathash ) {
+        next if $catkey =~ /(type|options|catname)/;
         if ( $cathash->{$catkey}->{type} eq "category" ) {
             push @$categories,
               $self->_buildCategoryHash( $catkey, $cathash->{$catkey},
@@ -156,8 +158,12 @@ sub _buildCategoryHash {
         }
     }
 
-    my $categoryHash =
-      { category => 1, catname => $catname, catlevel => $catlevel };
+    my $categoryHash = {
+        category => 1,
+        catname  => $catname,
+        catid    => $catid,
+        catlevel => $catlevel
+    };
     $categoryHash->{applications} = $applications if $applications;
     $categoryHash->{categories}    = $categories   if $categories;
     return $categoryHash;
@@ -180,8 +186,8 @@ sub _buildApplicationHash {
 
     # Detect sub applications
     my $subapphash;
-    foreach my $key ( keys %$apphash ) {
-        next if $key =~ /(type|options)/;
+    foreach my $key ( sort keys %$apphash ) {
+        next if $key =~ /(type|options|catname)/;
         if ( $apphash->{$key}->{type} eq "application" ) {
             $subapphash->{$key} = $apphash->{$key};
         }
@@ -189,7 +195,7 @@ sub _buildApplicationHash {
 
     # Display sub applications
     if ( scalar keys %$subapphash > 0 ) {
-        foreach my $appkey ( keys %$subapphash ) {
+        foreach my $appkey ( sort keys %$subapphash ) {
             push @$applications,
               $self->_buildApplicationHash( $appkey, $subapphash->{$appkey} );
         }
@@ -269,7 +275,7 @@ sub _displayConfCategory {
     # Extract applications from hash
     my $apphash;
     foreach $key ( keys %$cathash ) {
-        next if $key =~ /(type|options)/;
+        next if $key =~ /(type|options|catname)/;
         if ( $cathash->{$key}->{type} eq "application" ) {
             $apphash->{$key} = $cathash->{$key};
         }
@@ -286,7 +292,7 @@ sub _displayConfCategory {
 
     # Display subcategories
     foreach $key ( keys %$cathash ) {
-        next if $key =~ /(type|options)/;
+        next if $key =~ /(type|options|catname)/;
         if ( $cathash->{$key}->{type} eq "category" ) {
             $html .=
               $self->_displayConfCategory( $key, $cathash->{$key}, $catlevel );
@@ -324,7 +330,7 @@ sub _displayConfApplication {
     # Detect sub applications
     my $subapphash;
     foreach $key ( keys %$apphash ) {
-        next if $key =~ /(type|options)/;
+        next if $key =~ /(type|options|catname)/;
         if ( $apphash->{$key}->{type} eq "application" ) {
             $subapphash->{$key} = $apphash->{$key};
         }
@@ -377,7 +383,7 @@ sub _displayConfDescription {
 
     # Sublevels
     foreach $key ( keys %$apphash ) {
-        next if $key =~ /(type|options)/;
+        next if $key =~ /(type|options|catname)/;
         $html .= $self->_displayConfDescription( $key, $apphash->{$key} );
     }
 
@@ -420,7 +426,7 @@ sub _filterHash {
     my $appkey;
 
     foreach $key ( keys %$apphash ) {
-        next if $key =~ /(type|options)/;
+        next if $key =~ /(type|options|catname)/;
         if ( $apphash->{$key}->{type} eq "category" ) {
 
             # Filter the category
@@ -430,7 +436,7 @@ sub _filterHash {
 
             # Find sub applications and filter them
             foreach $appkey ( keys %{ $apphash->{$key} } ) {
-                next if $appkey =~ /(type|options)/;
+                next if $appkey =~ /(type|options|catname)/;
 
                 # We have sub elements, so we filter them
                 $self->_filterHash( $apphash->{$key} );
@@ -466,7 +472,7 @@ sub _isCategoryEmpty {
 
     # Test sub categories
     foreach $key ( keys %$apphash ) {
-        next if $key =~ /(type|options)/;
+        next if $key =~ /(type|options|catname)/;
         if ( $apphash->{$key}->{type} eq "category" ) {
             delete $apphash->{$key}
               if $self->_isCategoryEmpty( $apphash->{$key} );
