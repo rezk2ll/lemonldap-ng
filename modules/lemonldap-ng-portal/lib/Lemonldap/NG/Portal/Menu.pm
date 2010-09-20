@@ -200,7 +200,8 @@ sub _buildApplicationHash {
         appname     => $appname,
         appuri      => $appuri,
         appdesc     => $appdesc,
-        applogo     => $applogo
+        applogo     => $applogo,
+        appid       => $appid,
     };
     $applicationHash->{applications} = $applications if $applications;
     return $applicationHash;

@@ -221,6 +221,10 @@ float:left;
 width:30%;
 }
 
+div.application:hover {
+background:#eee;
+}
+
 div.application img.applogo {
 width:32px;
 height:32px;
