@@ -1,8 +1,4 @@
 Changes
-example/apps/docs.png
-example/apps/tools.png
-example/apps/web.png
-example/apps/wheels.png
 example/AuthLA/idps.xml
 example/AuthLA/index.pl
 example/AuthLA/liberty/assertionConsumer.pl
@@ -51,6 +47,10 @@ example/scripts/purgeCentralCache.cron.d
 example/skins/common/accept.png
 example/skins/common/Apache.png
 example/skins/common/application_cascade.png
+example/skins/common/apps/docs.png
+example/skins/common/apps/tools.png
+example/skins/common/apps/web.png
+example/skins/common/apps/wheels.png
 example/skins/common/bullet_go.png
 example/skins/common/buttons.css
 example/skins/common/cancel.png
