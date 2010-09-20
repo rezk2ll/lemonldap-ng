@@ -46,7 +46,7 @@
 		<!-- Category -->
 
 		<div class="category cat-level-<TMPL_VAR NAME="catlevel">">
-		<p class="catname"><TMPL_VAR NAME="catname"></p>
+		<h3 class="catname"><TMPL_VAR NAME="catname"></h3>
 
 		<TMPL_IF applications>
 		<!-- Applications -->
@@ -65,11 +65,11 @@
 		</TMPL_IF>
 
 		<!-- Name and link (mandatory) -->
-		<p class="appname <TMPL_VAR NAME="appid">">
-		<a href="<TMPL_VAR NAME="appurl">" alt="<TMPL_VAR NAME="appname">">
+		<h4 class="appname <TMPL_VAR NAME="appid">">
+		<a href="<TMPL_VAR NAME="appuri">" alt="<TMPL_VAR NAME="appname">">
 		<TMPL_VAR NAME="appname">
 		</a>
-		</p>
+		</h4>
 
 		<!-- Logo (optional) -->
 		<TMPL_IF NAME="appdesc">
@@ -78,6 +78,7 @@
 		</p>
 		</TMPL_IF>
 
+		<div class="clearfix"></div>
                 </div>
 
 		<!-- End of applications loop -->
@@ -89,7 +90,7 @@
 
 		<TMPL_LOOP NAME=categories>
 		<div class="category cat-level-<TMPL_VAR NAME="catlevel">">
-		<p class="catname"><TMPL_VAR NAME="catname"></p>
+		<h3 class="catname"><TMPL_VAR NAME="catname"></h3>
 
 		<TMPL_IF applications>
 		<!-- Applications in sub category -->
@@ -108,11 +109,11 @@
 		</TMPL_IF>
 
 		<!-- Name and link (mandatory) -->
-		<p class="appname <TMPL_VAR NAME="appid">">
-		<a href="<TMPL_VAR NAME="appurl">" alt="<TMPL_VAR NAME="appname">">
+		<h4 class="appname <TMPL_VAR NAME="appid">">
+		<a href="<TMPL_VAR NAME="appuri">" alt="<TMPL_VAR NAME="appname">">
 		<TMPL_VAR NAME="appname">
 		</a>
-		</p>
+		</h4>
 
 		<!-- Logo (optional) -->
 		<TMPL_IF NAME="appdesc">
@@ -121,18 +122,21 @@
 		</p>
 		</TMPL_IF>
 
+		<div class="clearfix"></div>
 		</div>
 
 		<!-- End of applications loop -->
 		</TMPL_LOOP>
 		</TMPL_IF>
 
+		<div class="clearfix"></div>
 		</div>
 
 		<!-- End of sub categories loop -->
 		</TMPL_LOOP>
 		</TMPL_IF>
 
+		<div class="clearfix"></div>
 		</div>
 
 		<!-- End of categories loop -->
