@@ -319,7 +319,6 @@ install_portal_site:	install_conf_dir
 	@cp -pR --remove-destination ${SRCPORTALDIR}/example/error.pl ${RPORTALDIR}
 	@cp -pR --remove-destination ${SRCPORTALDIR}/example/mail.pl ${RPORTALDIR}
 	@cp -pR --remove-destination ${SRCPORTALDIR}/example/metadata.pl ${RPORTALDIR}
-	@cp -pR --remove-destination ${SRCPORTALDIR}/example/apps ${RPORTALDIR}
 	@cp -pR --remove-destination ${SRCPORTALDIR}/example/skins/* $(RPORTALSKINSDIR)
 	@if [ "$(PORTALDIR)/skins/" != "$(PORTALSKINSDIR)/" ]; then \
 		for skin in $$(ls lemonldap-ng-portal/example/skins/); do \
