@@ -238,10 +238,10 @@ sub struct {
                 portal => 'text:/portal:portal:text',
 
                 portalMenu => {
-                    _nodes        => [qw(portalModules cn:applicationList)],
+                    _nodes        => [qw(portalModules applicationList)],
                 portalModules => {
                     _nodes => [
-                        qw(portalDisplayLogout portalDisplayResetPassword portalDisplayChangePassword portalDisplayAppslist)
+                            qw(portalDisplayLogout portalDisplayChangePassword portalDisplayAppslist)
                     ],
                     portalDisplayLogout => 'text:/portalDisplayLogout',
                     portalDisplayChangePassword =>
@@ -250,7 +250,7 @@ sub struct {
                 },
                     applicationList => {
                         _nodes => [
-'hash:/applicationList:default:applicationListCategory'
+'applicationlist:/applicationList:default:applicationListCategory'
                         ],
                         _js => 'applicationListCategoryRoot',
                     },
@@ -1526,6 +1526,9 @@ sub testStruct {
 sub defaultConf {
     my $self = shift;
     return {
+        applicationList => {
+            'default' => { catname => 'Default category', type => "category" }
+        },
         authentication           => 'LDAP',
         authChoiceParam          => 'lmAuth',
         CAS_pgtFile              => '/tmp/pgt.txt',

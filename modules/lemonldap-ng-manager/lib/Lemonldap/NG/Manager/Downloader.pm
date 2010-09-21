@@ -23,7 +23,8 @@ sub node {
     my $res;
     $node =~ s/^\///;
 
-    #$self->lmLog( "Processing to node: $node", 'debug' );
+    $self->lmLog( "Processing to node: $node", 'debug' );
+
     if ( my ( $tmp, $help, $js ) = $self->corresp($node) ) {
 
         # Menu node
@@ -36,7 +37,9 @@ sub node {
 
             # Scan subnodes
             foreach ( @{ $tmp->{_nodes} } ) {
+                $self->lmLog( "Scan subnode $_", 'debug' );
                 my $flag = ( $_ =~ s/^(\w+):// ? $1 : '' );
+                $self->lmLog( "Found flag $flag", 'debug' ) if $flag;
                 my ( $target, $_h, $_j ) = split /:\s*/;
                 $help ||= $_h;
 
@@ -62,6 +65,7 @@ sub node {
 
                 # subnode is a node
                 if ( ref( $tmp->{$target} ) ) {
+                    $self->lmLog( "$target is a subnode of $node", 'debug' );
                     $res .= $self->li( "$node/$target", "closed" )
                       . $self->span(
                         id   => "$node/$target",
@@ -76,7 +80,7 @@ sub node {
                 }
 
                 # subnode points to a configuration node
-                elsif ( $flag =~ /^n?hash$/ ) {
+                elsif ( $flag =~ /^(n?hash|applicationlist)$/ ) {
                     $res .=
                       $self->confNode( $node, "$flag:$target", $help, $_j );
                 }
@@ -213,6 +217,45 @@ sub confNode {
             target => "samlmetadata",
           ) . "</li>";
     }
+
+    # Application list
+    elsif ( $target =~ s/^applicationlist:// ) {
+        $self->lmLog( "Load applications list (target $target)", 'debug' );
+
+        my $h = $self->keyToH( $target, $self->conf );
+
+        # Try to get value from defaultConf
+        $h = $self->keyToH( $target, $self->defaultConf ) unless ( defined $h );
+
+        unless ( defined $h ) {
+            $self->lmLog( "$target is not defined in configuration", 'error' );
+            return;
+        }
+
+        # Loop on categories
+        foreach ( sort keys %$h ) {
+
+            # Build ID
+            my $id = "$target/$_";
+            $id =~ s/=*$//;
+
+            # Display menu item
+            $self->lmLog( "Display menu item for category $_", 'debug' );
+
+            # Here, "notranslate" is set to true : hashvalues must not be
+            # translated
+            $res .= $self->li($id)
+              . $self->span(
+                id   => $id,
+                text => "$_",
+                data => $h->{$_}->{catname},
+                js   => $js,
+                help => $help,
+                noT  => 1
+              ) . "</li>";
+        }
+    }
+
     else {
         $target =~ s/^(\w+)://;
         my $type = $1 || 'text';
@@ -320,14 +363,24 @@ sub keyToH {
 sub corresp {
     my ( $self, $key, $last ) = @_;
     $key =~ s/^\///;
+
+    $self->lmLog( "Look for key $key in configuration", 'debug' );
+
     my $h = $self->struct();
+
+    # No key, return complete struct
     return $h unless ($key);
+
+    # Key as URL parameter, call cstruct
     if ( my $k2 = $self->param('key') ) {
         $h = $self->cstruct( $h, $key );
     }
+
     my @tmp1 = split /\//, $key;
     my $help;
     my $js;
+
+    # Browse key components
     while ( $_ = shift(@tmp1) ) {
         if ( ref($h) and defined $h->{$_} ) {
             $help = $h->{_help} if ( $h->{_help} );
@@ -351,6 +404,7 @@ sub corresp {
         # If the key does not exist in manager tree, it must be defined in
         # configuration hash
         else {
+            $self->lmLog( "Key $_ does not exist in manager tree", 'debug' );
             return "$h/" . join( '/', $_, @tmp1 );
         }
     }

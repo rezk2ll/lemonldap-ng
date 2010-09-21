@@ -36,6 +36,7 @@ sub confUpload {
     my $vhostname;
     my $idpname;
     my $spname;
+    my $catid;
 
     # 1. ANALYSE DATAS
 
@@ -77,6 +78,8 @@ sub confUpload {
         $id =~ s/\r//g;
         $id =~ s/^\///;
 
+        $self->lmLog( "id decoded into $id", 'debug' );
+
         # Get Virtual Host name
         if ( $id =~ /locationRules\/([^\/]*)?$/ ) {
             $self->lmLog( "Entering Virtual Host $name", 'debug' );
@@ -95,6 +98,12 @@ sub confUpload {
             $spname = $name;
         }
 
+        # Get menu category id
+        if ( $id =~ /applicationList(\/[^\/]*)?$/ ) {
+            $self->lmLog( "Entering category $name", 'debug' );
+            $catid = $name;
+        }
+
         # Manage new keys
         if ($NK) {
 
@@ -104,7 +113,7 @@ sub confUpload {
 
             # Special case: avoid bug with node created from parent node
             if ( $id =~
-/^(virtualHosts|samlIDPMetaDataExportedAttributes|samlSPMetaDataExportedAttributes|generalParameters\/authParams\/choiceParams)/
+/^(virtualHosts|samlIDPMetaDataExportedAttributes|samlSPMetaDataExportedAttributes|generalParameters\/authParams\/choiceParams|generalParameters\/portalParams\/portalMenu\/applicationList|applicationList)/
               )
             {
                 $self->lmLog( "Special trigger for $id (attribute $name)",
@@ -129,6 +138,10 @@ s/^samlSPMetaDataExportedAttributes\/([^\/]*)?.*/samlSPMetaDataExportedAttribute
                 # Authentication choice
                 $id =~
 s/^generalParameters\/authParams\/choiceParams\/([^\/]*)?.*/authChoiceModules\/$name/;
+
+                # Applications list category
+                $id =~
+s/^(generalParameters\/portalParams\/portalMenu\/)?applicationList$/applicationList\/$name/;
 
             }
 
@@ -214,10 +227,29 @@ s/^(samlSPMetaDataXML|samlSPMetaDataExportedAttributes|samlSPMetaDataOptions)\/(
         }
 
         # 1.3.2 Store accepted parameter in $newConf
-        $self->setKeyToH( $newConf, $confKey,
+
+        # Special trick for categories and applications
+        if ( defined $catid ) {
+            $self->lmLog( "Register category $catid data", 'debug' );
+
+            # Set catname
+            $self->setKeyToH( $newConf, "applicationList/$catid/catname",
+                $value );
+
+            # Set type to category
+            $self->setKeyToH( $newConf, "applicationList/$catid/type",
+                "category" );
+
+            $catid = undef;
+        }
+        else {
+            $self->setKeyToH(
+                $newConf, $confKey,
             $test->{keyTest}
             ? ( ( $id !~ /\// or $test->{'*'} ) ? {} : ( $name => $value ) )
-            : $value );
+                : $value
+            );
+        }
     }    # END LOOP
 
     # 1.4 Loading unchanged parameters (ajax nodes not open)
