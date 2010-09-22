@@ -64,7 +64,7 @@ $(document).ready(function(){
 			simpleTreeToggleJqueryClasses();
 		},
 		animate:true,
-		docToFolderConvert:false
+		docToFolderConvert:true
 	});
 	if(treejquerycss){simpleTreeDefaultJqueryClasses();}
 
@@ -1032,11 +1032,55 @@ function newCategoryR(){
 function delCategory(){
 	delKey();
 }
+
 function applicationListCategory(id){
 	currentId=id;
 	$('#applicationListCategoryKey').attr('value',lmtext(id));
 	$('#applicationListCategoryName').attr('value',lmdata(id));
 	display('applicationListCategory',lmtext(id));
 	$('#delcategory,#newapplicationr').show();
+}
+
+function newApplicationR(){
+	var name = prompt(text4newApplication,'myapplication');
+	if(!name){return false;}
+	var newIdValue=newId(currentId);
+	simpleTreeCollection[0].addNode(newIdValue,name,function(d,s){
+		$('>span',s).attr('onClick','applicationListApplication("'+newIdValue+'")').attr('name',name).attr('value','My application|http://www.example.com|This is a nice application|logo.png|auto').attr('id','text_'+newIdValue);
+		applicationListApplication(newIdValue);
+	});
+	return false;
+}
+
+function delApplication(){
+	delKey();
+}
+
+function setlmapplication(id){
+	var key=$('#applicationListApplicationKey').attr('value');
+	var name=$('#applicationListApplicationName').attr('value');
+	var url=$('#applicationListApplicationURL').attr('value');
+	var desc=$('#applicationListApplicationDescription').attr('value');
+	var logo=$('#applicationListApplicationLogo').attr('value');
+	var display=$('#applicationListApplicationDisplay').attr('value');
+	setlmtext(id,key);
+	setlmdata(id,name+'|'+url+'|'+desc+'|'+logo+'|'+display);
+}
+
+function applicationListApplication(id){
+	currentId=id;
+	$('#applicationListApplicationKey').attr('value',lmtext(id));
+	var t=lmdata(id).split('|');
+	$('#applicationListApplicationName').attr('value',t[0]);
+	$('#applicationListApplicationURL').attr('value',t[1]);
+	$('#applicationListApplicationDescription').attr('value',t[2]);
+	$('#applicationListApplicationLogo').attr('value',t[3]);
+	formateSelect('applicationListApplicationDisplay',[
+		'auto=Automatic',
+		'on=On',
+		'off=Off',
+		],t[4]);
+	display('applicationListApplication',lmtext(id));
+	$('#delapplication').show();
 }
 

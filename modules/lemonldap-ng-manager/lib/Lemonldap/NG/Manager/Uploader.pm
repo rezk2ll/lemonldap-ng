@@ -36,7 +36,6 @@ sub confUpload {
     my $vhostname;
     my $idpname;
     my $spname;
-    my $catid;
 
     # 1. ANALYSE DATAS
 
@@ -63,6 +62,10 @@ sub confUpload {
             $_->getAttribute('name'),
             $_->getAttribute('value')
         );
+
+        # For menu categories and applications
+        my $catid = undef;
+        my $appid = undef;
 
         # Unescape value
         $value = uri_unescape($value);
@@ -98,10 +101,16 @@ sub confUpload {
             $spname = $name;
         }
 
-        # Get menu category id
-        if ( $id =~ /applicationList(\/[^\/]*)?$/ ) {
+        # Get menu category and application id
+        if ( $id =~ /applicationList/ ) {
+            if ( $value =~ /^(.*)?\|(.*)?\|(.*)?\|(.*)?\|(.*?)$/ ) {
+                $self->lmLog( "Entering application $name", 'debug' );
+                $appid = $name;
+            }
+            else {
             $self->lmLog( "Entering category $name", 'debug' );
             $catid = $name;
+        }
         }
 
         # Manage new keys
@@ -113,7 +122,7 @@ sub confUpload {
 
             # Special case: avoid bug with node created from parent node
             if ( $id =~
-/^(virtualHosts|samlIDPMetaDataExportedAttributes|samlSPMetaDataExportedAttributes|generalParameters\/authParams\/choiceParams|generalParameters\/portalParams\/portalMenu\/applicationList|applicationList)/
+/^(virtualHosts|samlIDPMetaDataExportedAttributes|samlSPMetaDataExportedAttributes|generalParameters\/authParams\/choiceParams)/
               )
             {
                 $self->lmLog( "Special trigger for $id (attribute $name)",
@@ -139,11 +148,10 @@ s/^samlSPMetaDataExportedAttributes\/([^\/]*)?.*/samlSPMetaDataExportedAttribute
                 $id =~
 s/^generalParameters\/authParams\/choiceParams\/([^\/]*)?.*/authChoiceModules\/$name/;
 
-                # Applications list category
-                $id =~
-s/^(generalParameters\/portalParams\/portalMenu\/)?applicationList$/applicationList\/$name/;
-
             }
+
+	    # Do nothing for applicationList (managed at stage 1.3.2)
+	    elsif ( $id =~ /applicationList/) {}
 
             # Normal case
             else {
@@ -228,7 +236,7 @@ s/^(samlSPMetaDataXML|samlSPMetaDataExportedAttributes|samlSPMetaDataOptions)\/(
 
         # 1.3.2 Store accepted parameter in $newConf
 
-        # Special trick for categories and applications
+        # Menu category
         if ( defined $catid ) {
             $self->lmLog( "Register category $catid data", 'debug' );
 
@@ -240,7 +248,32 @@ s/^(samlSPMetaDataXML|samlSPMetaDataExportedAttributes|samlSPMetaDataOptions)\/(
             $self->setKeyToH( $newConf, "applicationList/$catid/type",
                 "category" );
 
-            $catid = undef;
+        }
+
+        # Menu application
+        elsif ( defined $appid ) {
+            $self->lmLog( "Register application $appid data", 'debug' );
+            ($catid) = ( $id =~ /applicationList\/([^\/]+)?/ );
+
+            # Get options from splitted value
+            my @t = split( /\|/, $value );
+
+            # Set applications options
+            $self->setKeyToH( $newConf,
+                "applicationList/$catid/$appid/options/name", $t[0] );
+            $self->setKeyToH( $newConf,
+                "applicationList/$catid/$appid/options/uri", $t[1] );
+            $self->setKeyToH( $newConf,
+                "applicationList/$catid/$appid/options/description", $t[2] );
+            $self->setKeyToH( $newConf,
+                "applicationList/$catid/$appid/options/logo", $t[3] );
+            $self->setKeyToH( $newConf,
+                "applicationList/$catid/$appid/options/display", $t[4] );
+
+            # Set type to application
+            $self->setKeyToH( $newConf, "applicationList/$catid/$appid/type",
+                "application" );
+
         }
         else {
             $self->setKeyToH(

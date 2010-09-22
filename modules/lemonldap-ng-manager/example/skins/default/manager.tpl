@@ -466,7 +466,7 @@
      </button>
    </div>
 
-    <!-- applicationList -->
+    <!-- applicationList Category-->
     <div id="content_applicationListCategory" class="hidden">
      <table>
       <tr>
@@ -480,6 +480,40 @@
      </table>
      <br />
      <button onclick="setlminputtext(currentId,'#applicationListCategoryKey');setlminputdata(currentId,'#applicationListCategoryName');return false;" class="ui-state-default ui-corner-all">
+     <lang en="Apply" fr="Appliquer" />
+     </button>
+    </div>
+
+    <!-- applicationList Application-->
+    <div id="content_applicationListApplication" class="hidden">
+     <table>
+      <tr>
+       <td><lang en="Key" fr="Nom de la clef"/></td>
+       <td><input type="text" id="applicationListApplicationKey" /></td>
+      </tr>
+      <tr>
+       <td><lang en="Display name" fr="Nom à afficher"/></td>
+       <td><input type="text" id="applicationListApplicationName" /></td>
+      </tr>
+      <tr>
+       <td><lang en="Adress" fr="Adresse"/></td>
+       <td><input type="text" id="applicationListApplicationURL" /></td>
+      </tr>
+      <tr>
+       <td><lang en="Description" fr="Description"/></td>
+       <td><textarea id="applicationListApplicationDescription" /></textarea></td>
+      </tr>
+      <tr>
+       <td><lang en="Logo (file name)" fr="Logo (nom du fichier)"/></td>
+       <td><input type="text" id="applicationListApplicationLogo" /></td>
+      </tr>
+      <tr>
+       <td><lang en="Display mode" fr="Mode d'affichage"/></td>
+       <td><select id="applicationListApplicationDisplay"></select></td>
+      </tr>
+     </table>
+     <br />
+     <button onclick="setlmapplication(currentId);return false;" class="ui-state-default ui-corner-all">
      <lang en="Apply" fr="Appliquer" />
      </button>
     </div>

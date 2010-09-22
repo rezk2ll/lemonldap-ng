@@ -233,26 +233,71 @@ sub confNode {
         }
 
         # Loop on categories
-        foreach ( sort keys %$h ) {
+        foreach my $catid ( sort keys %$h ) {
 
             # Build ID
-            my $id = "$target/$_";
+            my $id = "$target/$catid";
             $id =~ s/=*$//;
 
             # Display menu item
-            $self->lmLog( "Display menu item for category $_", 'debug' );
+            $self->lmLog( "Display menu item for category $catid", 'debug' );
 
             # Here, "notranslate" is set to true : hashvalues must not be
             # translated
             $res .= $self->li($id)
               . $self->span(
                 id   => $id,
-                text => "$_",
-                data => $h->{$_}->{catname},
+                text => "$catid",
+                data => $h->{$catid}->{catname},
                 js   => $js,
                 help => $help,
                 noT  => 1
+              );
+
+            delete $h->{$catid}->{type};
+            delete $h->{$catid}->{catname};
+
+            # Loop on applications
+
+            if ( %{ $h->{$catid} } ) {
+                $res .= '<ul>';
+
+                #    $res .= '<li class="line">&nbsp;</li>';
+            }
+
+            foreach my $appid ( sort keys %{ $h->{$catid} } ) {
+
+                $id = "$target/$catid/$appid";
+                $id =~ s/=*$//;
+
+                my $data =
+                    $h->{$catid}->{$appid}->{options}->{name} . "|"
+                  . $h->{$catid}->{$appid}->{options}->{uri} . "|"
+                  . $h->{$catid}->{$appid}->{options}->{description} . "|"
+                  . $h->{$catid}->{$appid}->{options}->{logo} . "|"
+                  . $h->{$catid}->{$appid}->{options}->{display};
+
+                # Display menu item
+                $self->lmLog( "Display menu item for application $appid",
+                    'debug' );
+
+                $res .= $self->li($id)
+                  . $self->span(
+                    id   => $id,
+                    text => "$appid",
+                    data => $data,
+                    js   => "applicationListApplication",
+                    help => $help,
+                    noT  => 1
               ) . "</li>";
+
+            }
+
+            if ( %{ $h->{$catid} } ) {
+                $res .= '</ul>';
+            }
+
+            $res .= "</li>";
         }
     }
 
