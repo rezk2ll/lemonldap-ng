@@ -447,11 +447,11 @@ sub _filterHash {
               || "auto";
             my $appuri = $apphash->{$key}->{options}->{uri};
 
-            # Remove if display is "no"
-            delete $apphash->{$key} and next if ( $appdisplay eq "no" );
+            # Remove if display is "no" or "off"
+            delete $apphash->{$key} and next if ( $appdisplay =~ /^(no|off)$/ );
 
-            # Keep node if display is "yes"
-            next if ( $appdisplay eq "yes" );
+            # Keep node if display is "yes" or "on"
+            next if ( $appdisplay =~ /^(yes|on)$/ );
 
             # Check grant function if display is "auto" (this is the default)
             delete $apphash->{$key} unless ( $self->_grant($appuri) );
