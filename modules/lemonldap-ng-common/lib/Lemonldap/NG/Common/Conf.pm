@@ -153,7 +153,8 @@ sub getConf {
             delete $r->{reVHosts};
         }
         else {
-            print STDERR "Warning: key is not defined, set it in the manager !\n"
+            print STDERR
+              "Warning: key is not defined, set it in the manager !\n"
               unless ( $r->{key} );
             eval {
                 $r->{cipher} = Lemonldap::NG::Common::Crypto->new(
@@ -179,7 +180,7 @@ sub getConf {
 # @return Lemonldap::NG configuration
 sub getLocalConf {
     my ( $self, $section, $file, $loaddefault ) = @_;
-    my $r;
+    my $r = {};
 
     $section ||= DEFAULTSECTION;
     $file    ||= DEFAULTCONFFILE;
@@ -196,9 +197,9 @@ sub getLocalConf {
             if ( $section eq CONFSECTION ) {
                 $msg =
                   "Cannot read $file to get configuration access parameters.";
-                return 0;
+                return $r;
             }
-            return 0;
+            return $r;
         }
 
         # Parse ini file
@@ -206,19 +207,19 @@ sub getLocalConf {
 
         unless ( defined $cfg ) {
             $msg = "Local config error: " . @Config::IniFiles::errors;
-            return 0;
+            return $r;
         }
 
         # Check if default section exists
         unless ( $cfg->SectionExists(DEFAULTSECTION) ) {
             $msg = "Default section (" . DEFAULTSECTION . ") is missing.";
-            return 0;
+            return $r;
         }
 
         # Check if configuration section exists
         if ( $section eq CONFSECTION and !$cfg->SectionExists(CONFSECTION) ) {
             $msg = "Configuration section (" . CONFSECTION . ") is missing.";
-            return 0;
+            return $r;
         }
         $configFiles->{$file} = $cfg;
     }
@@ -231,7 +232,7 @@ sub getLocalConf {
                 eval "\$r->{$_} = $r->{$_}";
                 if ($@) {
                     $msg = "Warning: error in file $file: $@.";
-                    return 0;
+                    return $r;
                 }
             }
         }
@@ -241,7 +242,7 @@ sub getLocalConf {
     return $r if ( $section eq DEFAULTSECTION );
 
     # Check if requested section exists
-    return 0 unless $cfg->SectionExists($section);
+    return $r unless $cfg->SectionExists($section);
 
     # Load section parameters
     foreach ( $cfg->Parameters($section) ) {
@@ -250,7 +251,7 @@ sub getLocalConf {
             eval "\$r->{$_} = $r->{$_}";
             if ($@) {
                 $msg = "Warning: error in file $file: $@.";
-                return 0;
+                return $r;
             }
         }
     }
