@@ -200,7 +200,7 @@ sub openIDServer {
         },
         is_trusted => sub {
 
-	    # TODO: manage extensions here
+            # TODO: manage extensions here
             my ( $u, $trust_root, $is_identity ) = @_;
             return 0 unless ( $u and $is_identity );
             if ( $self->{sessionInfo}->{"_openidTrust$trust_root"} ) {

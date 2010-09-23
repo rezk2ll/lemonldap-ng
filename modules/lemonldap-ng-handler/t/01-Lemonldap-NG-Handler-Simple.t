@@ -53,5 +53,5 @@ ok( $h->forgeHeadersInit, 'forgeHeadersInit' );
 ok( $h->forgeHeadersInit( { exportedHeaders => { Auth => '$uid', } } ),
     'forgeHeadersInit 2' );
 
-ok( $h->grant('/s'),                   'grant OK' );
-ok( !$h->grant('/no'),                 'grant NOK' );
+ok( $h->grant('/s'),   'grant OK' );
+ok( !$h->grant('/no'), 'grant NOK' );

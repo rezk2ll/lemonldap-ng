@@ -488,8 +488,8 @@ sub session {
         'saml'         => [
             qw(_idp _idpConfKey _samlToken _lassoSessionDump _lassoIdentityDump)
         ],
-        'groups'   => [qw(groups)],
-        'ldap'    => [qw(dn)],
+        'groups' => [qw(groups)],
+        'ldap'   => [qw(dn)],
     };
 
     # Display categories
@@ -514,7 +514,7 @@ sub session {
             next unless exists $session{$attribute};
 
             # Display attribute
-    $res .=
+            $res .=
                 '<li><strong>'
               . $self->translate($attribute)
               . '</strong> (<tt>$'

@@ -13,7 +13,7 @@ use Safe;
 use constant SAFEWRAP => ( Safe->can("wrap_code_ref") ? 1 : 0 );
 
 our $VERSION = '0.2';
-our @ISA = qw(Lemonldap::NG::Portal::_LibAccess);
+our @ISA     = qw(Lemonldap::NG::Portal::_LibAccess);
 
 ## @method void startSoapServices()
 # Check the URI requested (PATH_INFO environment variable) and launch the

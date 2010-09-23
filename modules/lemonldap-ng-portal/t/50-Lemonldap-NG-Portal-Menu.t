@@ -13,19 +13,20 @@ BEGIN { use_ok('Lemonldap::NG::Portal::Menu') }
 # Insert your test code below, the Test::More module is use()ed here so read
 # its man page ( perldoc Test::More ) for help writing this test script.
 
-$ENV{REQUEST_METHOD}  = 'GET';
+$ENV{REQUEST_METHOD} = 'GET';
 
 # Build portal
-my $p = Lemonldap::NG::Portal::Simple->new({
-	globalStorage => 'Apache::Session::File',
-	domain => 'example.com',
-	error => 0,
-	applicationList => {},
-});
+my $p = Lemonldap::NG::Portal::Simple->new(
+    {
+        globalStorage   => 'Apache::Session::File',
+        domain          => 'example.com',
+        error           => 0,
+        applicationList => {},
+    }
+);
 
 # Init menu
 $p->menuInit();
 
-ok( ref $p->{menuDisplayModules} eq 'ARRAY' ,
-    'Modules displayed' );
+ok( ref $p->{menuDisplayModules} eq 'ARRAY', 'Modules displayed' );
 

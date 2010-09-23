@@ -289,7 +289,7 @@ sub confNode {
                     js   => "applicationListApplication",
                     help => $help,
                     noT  => 1
-              ) . "</li>";
+                  ) . "</li>";
 
             }
 

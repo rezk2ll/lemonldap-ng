@@ -83,12 +83,12 @@ if ( $portal->process() ) {
 
         %templateParams = (
             AUTH_USER => $portal->{sessionInfo}->{ $portal->{portalUserAttr} },
-            AUTOCOMPLETE        => $portal->{portalAutocomplete},
-            SKIN                => $skin,
+            AUTOCOMPLETE    => $portal->{portalAutocomplete},
+            SKIN            => $skin,
             AUTH_ERROR      => $portal->error( undef, $portal->{menuError} ),
             AUTH_ERROR_TYPE => $portal->error_type( $portal->{menuError} ),
             DISPLAY_TAB     => $portal->{menuDisplayTab},
-            LOGOUT_URL          => "$ENV{SCRIPT_NAME}?logout=1",
+            LOGOUT_URL      => "$ENV{SCRIPT_NAME}?logout=1",
             REQUIRE_OLDPASSWORD => $portal->{portalRequireOldPassword},
             DISPLAY_MODULES     => $portal->{menuDisplayModules},
             APPSLIST_MENU => $portal->{menuAppslistMenu},    # For old templates
@@ -187,8 +187,8 @@ else {
     if ( $portal->{authLoop} ) {
         %templateParams = (
             %templateParams,
-            AUTH_LOOP    => $portal->{authLoop},
-            CHOICE_PARAM => $portal->{authChoiceParam},
+            AUTH_LOOP           => $portal->{authLoop},
+            CHOICE_PARAM        => $portal->{authChoiceParam},
             CHOICE_VALUE        => $portal->{_authChoice},
             DISPLAY_FORM        => 0,
             DISPLAY_OPENID_FORM => 0,

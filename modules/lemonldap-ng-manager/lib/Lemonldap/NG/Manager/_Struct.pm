@@ -240,15 +240,15 @@ sub struct {
 
                 portalMenu => {
                     _nodes        => [qw(portalModules applicationList)],
-                portalModules => {
-                    _nodes => [
+                    portalModules => {
+                        _nodes => [
                             qw(portalDisplayLogout portalDisplayChangePassword portalDisplayAppslist)
-                    ],
-                    portalDisplayLogout => 'text:/portalDisplayLogout',
-                    portalDisplayChangePassword =>
-                      'text:/portalDisplayChangePassword',
-                    portalDisplayAppslist => 'text:/portalDisplayAppslist',
-                },
+                        ],
+                        portalDisplayLogout => 'text:/portalDisplayLogout',
+                        portalDisplayChangePassword =>
+                          'text:/portalDisplayChangePassword',
+                        portalDisplayAppslist => 'text:/portalDisplayAppslist',
+                    },
                     applicationList => {
                         _nodes => [
 'applicationlist:/applicationList:default:applicationListCategory'
@@ -288,8 +288,8 @@ sub struct {
                       || $self->defaultConf()->{passwordDB};
                     $auth = lc($auth);
                     $auth =~ s/\s.*$//;    # For Multi
-                    $udb  = lc($udb);
-                    $pdb  = lc($pdb);
+                    $udb = lc($udb);
+                    $pdb = lc($pdb);
                     my %res;
 
                     foreach my $mod (
@@ -565,7 +565,7 @@ sub struct {
                 # Choice
                 choiceParams => {
                     _nodes => [qw(authChoiceParam n:authChoiceModules)],
-                    authChoiceParam    => 'text:/authChoiceParam',
+                    authChoiceParam   => 'text:/authChoiceParam',
                     authChoiceModules => {
                         _nodes =>
                           ['hash:/authChoiceModules:default:authChoice'],
@@ -682,7 +682,7 @@ sub struct {
                     userControl => 'text:/userControl:userControl:text',
                     portalForceAuthn =>
                       'bool:/portalForceAuthn:portalForceAuthn:bool',
-                    key         => 'text:/key:key:text',
+                    key => 'text:/key:key:text',
                 },
 
                 redirection => {
@@ -1443,7 +1443,7 @@ sub testStruct {
         SSLRequire    => $boolean,
 
         # CAS
-        CAS_authnLevel      => $integer,
+        CAS_authnLevel => $integer,
         CAS_url        => {
             test    => Lemonldap::NG::Common::Regexp::HTTP_URI,
             msgFail => 'Bad CAS url',
@@ -1552,26 +1552,26 @@ sub defaultConf {
         issuerDBOpenIDPath       => '^/openidserver/',
         issuerDBOpenIDRule       => '1',
         key      => join( '', map { chr( int( rand(94) ) + 33 ) } ( 1 .. 16 ) ),
-        ldapBase                 => 'dc=example,dc=com',
-        ldapPort                 => '389',
-        ldapPwdEnc               => 'utf-8',
-        ldapServer               => 'localhost',
-        ldapTimeout              => '120',
-        ldapVersion              => '3',
-        managerDn                => '',
-        managerPassword          => '',
-        notification             => '0',
-        notificationStorage      => 'File',
-        notifyDeleted            => '1',
-        notifyOther              => '1',
-        portal                   => 'http://auth.example.com',
-        portalSkin               => 'pastel',
-        portalUserAttr           => '_user',
+        ldapBase => 'dc=example,dc=com',
+        ldapPort => '389',
+        ldapPwdEnc                  => 'utf-8',
+        ldapServer                  => 'localhost',
+        ldapTimeout                 => '120',
+        ldapVersion                 => '3',
+        managerDn                   => '',
+        managerPassword             => '',
+        notification                => '0',
+        notificationStorage         => 'File',
+        notifyDeleted               => '1',
+        notifyOther                 => '1',
+        portal                      => 'http://auth.example.com',
+        portalSkin                  => 'pastel',
+        portalUserAttr              => '_user',
         portalDisplayAppslist       => '1',
         portalDisplayChangePassword => '$_auth eq LDAP or $_auth eq DBI',
         portalDisplayLogout         => '1',
         portalDisplayResetPassword  => '1',
-        protection               => 'none',
+        protection                  => 'none',
         remoteGlobalStorage => 'Lemonldap::NG::Common::Apache::Session::SOAP',
         securedCookie       => '0',
         singleSession       => '0',
@@ -1694,13 +1694,13 @@ sub defaultConf {
           'urn:oasis:names:tc:SAML:2.0:bindings:SOAP;'
           . '#PORTAL#'
           . '/saml/AA/SOAP;',
-        samlServicePrivateKeySig    => '',
-        samlServicePrivateKeySigPwd => '',
-        samlServicePublicKeySig     => '',
-        samlServicePrivateKeyEnc    => '',
-        samlServicePrivateKeyEncPwd => '',
-        samlServicePublicKeyEnc     => '',
-        samlMetadataForceUTF8       => 1,
+        samlServicePrivateKeySig                      => '',
+        samlServicePrivateKeySigPwd                   => '',
+        samlServicePublicKeySig                       => '',
+        samlServicePrivateKeyEnc                      => '',
+        samlServicePrivateKeyEncPwd                   => '',
+        samlServicePublicKeyEnc                       => '',
+        samlMetadataForceUTF8                         => 1,
         samlAuthnContextMapPassword                   => 2,
         samlAuthnContextMapPasswordProtectedTransport => 3,
         samlAuthnContextMapTLSClient                  => 5,

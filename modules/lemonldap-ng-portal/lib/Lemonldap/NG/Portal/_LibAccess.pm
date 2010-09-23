@@ -24,7 +24,6 @@ sub _grant {
     my ( $protocol, $vhost, $port, $path );
     ( $protocol, $vhost, $port, $path ) = ( $1, $2, $3, $4 );
     $path ||= '/';
-    print STDERR "$cfgNum : $self->{cfgNum}\n";
     $self->_compileRules()
       if ( $cfgNum != $self->{cfgNum} );
     return -1 unless ( defined( $defaultCondition->{$vhost} ) );

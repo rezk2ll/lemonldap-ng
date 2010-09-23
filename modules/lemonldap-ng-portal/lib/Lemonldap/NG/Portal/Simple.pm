@@ -512,15 +512,15 @@ sub setDefaultValues {
     $self->{casStorageOptions} ||= $self->{globalStorageOptions};
 
     # Authentication levels
-    $self->{ldapAuthnLevel}    = 2 unless defined $self->{ldapAuthnLevel};
-    $self->{dbiAuthnLevel}     = 2 unless defined $self->{dbiAuthnLevel};
-    $self->{SSLAuthnLevel}     = 5 unless defined $self->{SSLAuthnLevel};
-    $self->{CAS_authnLevel}    = 1 unless defined $self->{CAS_authnLevel};
-    $self->{openIdAuthnLevel}  = 1 unless defined $self->{openIdAuthnLevel};
+    $self->{ldapAuthnLevel}   = 2 unless defined $self->{ldapAuthnLevel};
+    $self->{dbiAuthnLevel}    = 2 unless defined $self->{dbiAuthnLevel};
+    $self->{SSLAuthnLevel}    = 5 unless defined $self->{SSLAuthnLevel};
+    $self->{CAS_authnLevel}   = 1 unless defined $self->{CAS_authnLevel};
+    $self->{openIdAuthnLevel} = 1 unless defined $self->{openIdAuthnLevel};
     $self->{twitterAuthnLevel} = 1
       unless defined $self->{twitterAuthnLevel};
-    $self->{apacheAuthnLevel}  = 4 unless defined $self->{apacheAuthnLevel};
-    $self->{nullAuthnLevel}    = 2 unless defined $self->{nullAuthnLevel};
+    $self->{apacheAuthnLevel} = 4 unless defined $self->{apacheAuthnLevel};
+    $self->{nullAuthnLevel}   = 2 unless defined $self->{nullAuthnLevel};
 
     # Other
     $self->{logoutServices} ||= {};
@@ -933,8 +933,8 @@ sub get_module {
             return $self->{_choice}->{modules}->[2]->{n};
         }
         else {
-        return $self->{passwordDB};
-    }
+            return $self->{passwordDB};
+        }
     }
 
     if ( $type =~ /issuer/i ) {
@@ -1197,9 +1197,9 @@ sub controlUrlOrigin {
 
         # Non protected hosts
         if (    $tmp
-                and $tmp !~
+            and $tmp !~
 /^https?:\/\/(?:$self->{reVHosts}$self->{trustedDomains})(?::\d+)?(?:\/.*)?$/o
-            )
+          )
         {
             $self->lmLog(
                 "URL contains a non protected host (param: "
@@ -1319,7 +1319,7 @@ sub controlExistingSession {
                     };
                 }
                 else {
-                eval { $self->{error} = $self->_sub('authLogout'); };
+                    eval { $self->{error} = $self->_sub('authLogout'); };
                 }
                 if ($@) {
                     $self->lmLog( "Error when calling authLogout: $@",

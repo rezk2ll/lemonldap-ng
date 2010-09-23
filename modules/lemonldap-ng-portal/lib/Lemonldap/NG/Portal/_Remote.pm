@@ -16,7 +16,7 @@ our $initDone;
 # Checks if remote portal parameters are set.
 # @return Lemonldap::NG::Portal constant
 sub init {
-    my $self    = shift;
+    my $self = shift;
     return PE_OK if ($initDone);
 
     my @missing = ();

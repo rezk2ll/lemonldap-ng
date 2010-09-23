@@ -112,10 +112,10 @@ sub confUpload {
                 $appflag = 1;
             }
             else {
-            $self->lmLog( "Entering category $name", 'debug' );
+                $self->lmLog( "Entering category $name", 'debug' );
                 $catid = $name;  # Remeber category for applications coming next
                 $catflag = 1;
-        }
+            }
         }
 
         # Manage new keys
@@ -155,7 +155,7 @@ s/^generalParameters\/authParams\/choiceParams\/([^\/]*)?.*/authChoiceModules\/$
 
             }
 
-	    # Do nothing for applicationList (managed at stage 1.3.2)
+            # Do nothing for applicationList (managed at stage 1.3.2)
             elsif ( $id =~ /applicationList/ ) { $id = "applicationList"; }
 
             # Normal case
@@ -282,8 +282,8 @@ s/^(samlSPMetaDataXML|samlSPMetaDataExportedAttributes|samlSPMetaDataOptions)\/(
         else {
             $self->setKeyToH(
                 $newConf, $confKey,
-            $test->{keyTest}
-            ? ( ( $id !~ /\// or $test->{'*'} ) ? {} : ( $name => $value ) )
+                $test->{keyTest}
+                ? ( ( $id !~ /\// or $test->{'*'} ) ? {} : ( $name => $value ) )
                 : $value
             );
         }

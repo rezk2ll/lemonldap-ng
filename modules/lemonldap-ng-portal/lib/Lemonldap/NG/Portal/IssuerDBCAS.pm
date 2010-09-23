@@ -585,7 +585,7 @@ sub issuerForAuthUser {
         # Redirect to service
         my $service_url = $service;
         $service_url .= (
-              $service =~ /\?/
+            $service =~ /\?/
             ? '&ticket=' . $casServiceTicket
             : '?ticket=' . $casServiceTicket
         );

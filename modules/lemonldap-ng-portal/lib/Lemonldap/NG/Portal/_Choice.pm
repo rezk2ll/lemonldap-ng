@@ -46,9 +46,9 @@ sub new {
             $samlForce = $portal->$authForce;
         };
 
-	if ($@) {
+        if ($@) {
             $portal->lmLog( "SAML choice force not tested: $@", 'debug' );
-	}
+        }
 
         # Force SAML choice if needed
         if ($samlForce) {
@@ -78,8 +78,8 @@ sub new {
         }
 
         $self->{modules} = [
-            { m => $authModule,   n => $auth },
-            { m => $userDBModule, n => $userDB },
+            { m => $authModule,       n => $auth },
+            { m => $userDBModule,     n => $userDB },
             { m => $passwordDBModule, n => $passwordDB }
         ];
 
