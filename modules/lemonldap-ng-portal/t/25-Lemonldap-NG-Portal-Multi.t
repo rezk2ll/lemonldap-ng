@@ -23,6 +23,11 @@ our $buf;
 tie *STDOUT, 'IO::String', $buf;
 our $lastpos = 0;
 
+sub lmLog {
+    my ( $self, $mess, $level ) = @_;
+    print STDERR "$mess\n" unless ( $level =~ /^(?:debug|info)$/ );
+}
+
 sub diff {
     my $str = $buf;
     $str =~ s/^.{$lastpos}//s if ($lastpos);

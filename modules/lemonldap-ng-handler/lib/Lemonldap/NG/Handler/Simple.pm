@@ -72,7 +72,7 @@ BEGIN {
               lmSetHeaderOut lmSetErrHeaderOut $cookieName $https $port
               )
         ],
-        traces  => [qw( $whatToTrace $statusPipe $statusOut lmLog )],
+        traces  => [qw( $whatToTrace $statusPipe $statusOut)],
         apache  => [qw( MP OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR )],
         post    => [qw($transform)],
         cda     => ['$cda'],

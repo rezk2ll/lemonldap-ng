@@ -9,7 +9,7 @@ use Test::More tests => 1;
 
 BEGIN {
     use_ok('Lemonldap::NG::Handler::CGI');
-    sub Lemonldap::NG::Handler::CGI::lmLog { }
+#    sub Lemonldap::NG::Handler::CGI::lmLog { }
 }
 
 #########################

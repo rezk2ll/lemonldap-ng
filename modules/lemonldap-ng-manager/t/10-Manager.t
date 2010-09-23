@@ -15,6 +15,7 @@ BEGIN { use_ok('Lemonldap::NG::Manager') }
 # Insert your test code below, the Test::More module is use()ed here so read
 # its man page ( perldoc Test::More ) for help writing this test script.
 
+__END__
 $ENV{SCRIPT_NAME}     = "__SCRIPTNAME__";
 $ENV{SCRIPT_FILENAME} = $0;
 my $h;
