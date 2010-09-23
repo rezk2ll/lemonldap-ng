@@ -7,6 +7,7 @@ package Lemonldap::NG::Manager::_Struct;
 
 use strict;
 use Lemonldap::NG::Common::Conf::SAML::Metadata;
+use Lemonldap::NG::Common::Regexp;
 
 our $VERSION = '0.1';
 
@@ -1032,7 +1033,7 @@ sub struct {
 # @return hashref
 sub testStruct {
     my $safe       = Safe->new();
-    my $assignTest = qr/(?<=[^=<!>\?])=(?![=~])/;
+    my $assignTest = qr/(?<=[^=<!>\|\?])=(?![=~])/;
     my $assignMsg  = 'containsAnAssignment';
     my $perlExpr   = sub {
         my $e = shift;
@@ -1089,7 +1090,7 @@ sub testStruct {
             msgFail => 'Bad domain',
         },
         exportedHeaders => {
-            keyTest    => qr/^[a-zA-Z](?:[\w\-\.]*\w)?$/,
+            keyTest    => Lemonldap::NG::Common::Regexp::HOSTNAME,
             keyMsgFail => 'Bad virtual host name',
             '*'        => {
                 keyTest    => qr/^\w([\w\-]*\w)?$/,
@@ -1208,7 +1209,7 @@ sub testStruct {
         ldapVersion                  => $testNotDefined,
         ldapRaw                      => $testNotDefined,
         locationRules                => {
-            keyTest => qr/^[a-zA-Z](?:[\w\-\.]*\w)?$/,
+            keyTest => Lemonldap::NG::Common::Regexp::HOSTNAME,
             msgFail => 'Bad virtual host name',
             '*'     => {
                 keyTest => $pcre,
@@ -1217,7 +1218,8 @@ sub testStruct {
                     return 1 if ( $e =~ /^(?:accept|deny|unprotect)$/i );
                     if ( $e =~ s/^logout(?:_(?:app_sso|app|sso))?\s*// ) {
                         return (
-                            $e =~ /^(?:https?:\/\/\S+)?$/
+                            $e eq ''
+                              or $e =~ Lemonldap::NG::Common::Regexp::HTTP_URI
                             ? 1
                             : ( 0, "bad url \"$e\"" )
                         );
@@ -1442,7 +1444,10 @@ sub testStruct {
 
         # CAS
         CAS_authnLevel      => $integer,
-        CAS_url             => $testNotDefined,
+        CAS_url        => {
+            test    => Lemonldap::NG::Common::Regexp::HTTP_URI,
+            msgFail => 'Bad CAS url',
+        },
         CAS_CAFile          => $testNotDefined,
         CAS_renew           => $boolean,
         CAS_gateway         => $boolean,
