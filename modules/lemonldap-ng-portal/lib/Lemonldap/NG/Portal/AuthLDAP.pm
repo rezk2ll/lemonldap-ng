@@ -32,6 +32,8 @@ sub authInit {
 # @return Lemonldap::NG::Portal constant
 sub authenticate {
     my $self = shift;
+    $self->{_authnLevel} = $self->{ldapAuthnLevel};
+
     unless ( $self->ldap ) {
         return PE_LDAPCONNECTFAILED;
     }

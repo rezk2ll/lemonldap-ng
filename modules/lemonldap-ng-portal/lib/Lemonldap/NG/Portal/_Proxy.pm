@@ -11,25 +11,28 @@ use MIME::Base64;
 use SOAP::Lite;
 
 our $VERSION = '0.1';
+our $initDone;
 
 ## @apmethod int proxyInit()
 # Checks if remote portal parameters are set.
 # @return Lemonldap::NG::Portal constant
 sub proxyInit {
     my $self = shift;
-    return PE_OK if ( $self->{_proxyInitDone} );
-    my @missing = ();
-    foreach (qw(soapAuthService)) {
-        push @missing, $_ unless ( defined( $self->{$_} ) );
-    }
     $self->{soapSessionService} ||=
       $self->{soapAuthService} . 'index.pl/sessions';
     $self->{soapSessionService} =~ s/\.plindex.pl/\.pl/;
     $self->{remoteCookieName} ||= $self->{cookieName};
+
+    return PE_OK if ($initDone);
+
+    my @missing = ();
+    foreach (qw(soapAuthService)) {
+        push @missing, $_ unless ( defined( $self->{$_} ) );
+    }
     $self->abort( "Missing parameters",
         "Required parameters: " . join( ', ', @missing ) )
       if (@missing);
-    $self->{_proxyInitDone}++;
+    $initDone = 1;
     PE_OK;
 }
 

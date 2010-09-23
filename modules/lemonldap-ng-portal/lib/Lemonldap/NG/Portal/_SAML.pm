@@ -18,6 +18,7 @@ use Encode;            # Encode attribute values
 
 our $VERSION = '0.01';
 our $samlCache;
+our $initGlibDone;
 
 BEGIN {
 
@@ -61,6 +62,7 @@ BEGIN {
 # @return boolean result
 sub loadLasso {
     my $self = shift;
+    return 1 if ($initGlibDone);
 
     # Catch GLib Lasso messages (require Glib)
     if (GLIB) {
@@ -84,6 +86,7 @@ sub loadLasso {
         return 0;
     }
 
+    $initGlibDone = 1;
     return 1;
 }
 

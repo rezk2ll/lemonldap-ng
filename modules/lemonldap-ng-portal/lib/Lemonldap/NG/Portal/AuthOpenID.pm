@@ -12,14 +12,19 @@ use LWP::UserAgent;
 require Cache::FileCache;
 
 our $VERSION = '0.1';
+our $initDone;
 
 ## @apmethod int authInit()
 # @return Lemonldap::NG::Portal constant
 sub authInit {
     my $self = shift;
+    $self->{openIdSecret} ||= $self->{cipher}->encrypt(0);
+    return PE_OK if ($initDone);
+
     eval { require Net::OpenID::Consumer };
     $self->abort( 'Unable to load Net::OpenID::Consumer', $@ ) if ($@);
-    $self->{openIdSecret} ||= $self->{cipher}->encrypt(0);
+
+    $initDone = 1;
     PE_OK;
 }
 

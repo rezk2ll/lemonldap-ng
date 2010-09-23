@@ -10,12 +10,15 @@ use base qw(Lemonldap::NG::Portal::_WebForm Lemonldap::NG::Portal::_DBI);
 use strict;
 
 our $VERSION = '0.1';
+our $initDone;
 
 ## @apmethod int authInit()
 # Check DBI paramaters
 #@return Lemonldap::NG::Portal constant
 sub authInit {
     my $self = shift;
+    return PE_OK if ($initDone);
+
     unless ($self->{dbiAuthChain}
         and $self->{dbiAuthTable}
         and $self->{dbiAuthUser}
@@ -28,8 +31,7 @@ sub authInit {
         return PE_ERROR;
     }
 
-    $self->{_authnLevel} = $self->{dbiAuthnLevel};
-
+    $initDone = 1;
     PE_OK;
 }
 
@@ -38,6 +40,7 @@ sub authInit {
 #@return Lemonldap::NG::Portal constant
 sub authenticate {
     my $self = shift;
+    $self->{_authnLevel} = $self->{dbiAuthnLevel};
 
     # Connect
     my $dbh =

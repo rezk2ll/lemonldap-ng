@@ -10,12 +10,15 @@ use Lemonldap::NG::Portal::Simple;
 use MIME::Base64;
 
 our $VERSION = '0.1';
+our $initDone;
 
 ## @apmethod int init()
 # Checks if remote portal parameters are set.
 # @return Lemonldap::NG::Portal constant
 sub init {
     my $self    = shift;
+    return PE_OK if ($initDone);
+
     my @missing = ();
     foreach (qw(remotePortal remoteGlobalStorage)) {
         push @missing, $_ unless ( defined( $self->{$_} ) );
@@ -28,6 +31,8 @@ sub init {
         "Module " . $self->{remoteGlobalStorage} . " not found in \@INC" )
       if ($@);
     $self->{remoteCookieName} ||= $self->{cookieName};
+
+    $initDone = 1;
     PE_OK;
 }
 

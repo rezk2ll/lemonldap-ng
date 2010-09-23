@@ -7,18 +7,24 @@ package Lemonldap::NG::Portal::AuthTwitter;
 
 use strict;
 use Lemonldap::NG::Portal::Simple;
-use Net::Twitter;
 
 our $VERSION = '0.1';
+our $initDone;
 
 ## @apmethod int authInit()
 # @return Lemonldap::NG::Portal constant
 sub authInit {
     my $self = shift;
+    return PE_OK if ($initDone);
+
     unless ( $self->{twitterKey} and $self->{twitterSecret} ) {
         $self->abort( 'Bad configuration',
             'twitterKey and twitterSecret parameters are required' );
     }
+    eval { require Net::Twitter };
+    $self->abort("Unable to load Net::Twitter: $@") if ($@);
+
+    $initDone = 1;
     PE_OK;
 }
 

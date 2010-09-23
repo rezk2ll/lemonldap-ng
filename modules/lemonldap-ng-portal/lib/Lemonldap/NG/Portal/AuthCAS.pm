@@ -10,12 +10,14 @@ use Lemonldap::NG::Portal::Simple;
 use URI::Escape;
 
 our $VERSION = '0.20';
+our $initDone;
 
 ## @apmethod int authInit()
 # Try to load AuthCAS perl module
 # @return Lemonldap::NG::Portal constant
 sub authInit {
     my $self = shift;
+    return PE_OK if ($initDone);
 
     # require Perl module
     eval { require AuthCAS };
@@ -24,6 +26,7 @@ sub authInit {
         return PE_ERROR;
     }
 
+    $initDone = 1;
     PE_OK;
 }
 
