@@ -44,7 +44,8 @@ BEGIN {
         eval 'use constant LASSO => 1';
 
         # Check Lasso version >= 2.2.91
-        my $lasso_check_version_mode = Lasso::Constants::CHECK_VERSION_NUMERIC;
+        my $lasso_check_version_mode =
+          eval 'Lasso::Constants::CHECK_VERSION_NUMERIC';
         my $check_version =
           Lasso::check_version( 2, 2, 91, $lasso_check_version_mode );
         unless ($check_version) {
