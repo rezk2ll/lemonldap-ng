@@ -32,10 +32,14 @@ sub confUpload {
     $$rdata =~ s/<img.*?>//g;
     $$rdata =~ s/<li class="line".*?<\/li>//g;
 
-    # Variables to store current vhost and IDP name
+    # Variables to store current:
+    # - Virtual host name
+    # - SP and IDP name
+    # - Menu category ID
     my $vhostname;
     my $idpname;
     my $spname;
+    my $catid;
 
     # 1. ANALYSE DATAS
 
@@ -64,8 +68,8 @@ sub confUpload {
         );
 
         # For menu categories and applications
-        my $catid = undef;
-        my $appid = undef;
+        my $catflag = 0;
+        my $appflag = 0;
 
         # Unescape value
         $value = uri_unescape($value);
@@ -101,15 +105,16 @@ sub confUpload {
             $spname = $name;
         }
 
-        # Get menu category and application id
+        # Set menu category and application flags
         if ( $id =~ /applicationList/ ) {
             if ( $value =~ /^(.*)?\|(.*)?\|(.*)?\|(.*)?\|(.*?)$/ ) {
                 $self->lmLog( "Entering application $name", 'debug' );
-                $appid = $name;
+                $appflag = 1;
             }
             else {
             $self->lmLog( "Entering category $name", 'debug' );
-            $catid = $name;
+                $catid = $name;  # Remeber category for applications coming next
+                $catflag = 1;
         }
         }
 
@@ -151,7 +156,7 @@ s/^generalParameters\/authParams\/choiceParams\/([^\/]*)?.*/authChoiceModules\/$
             }
 
 	    # Do nothing for applicationList (managed at stage 1.3.2)
-	    elsif ( $id =~ /applicationList/) {}
+            elsif ( $id =~ /applicationList/ ) { $id = "applicationList"; }
 
             # Normal case
             else {
@@ -237,41 +242,40 @@ s/^(samlSPMetaDataXML|samlSPMetaDataExportedAttributes|samlSPMetaDataOptions)\/(
         # 1.3.2 Store accepted parameter in $newConf
 
         # Menu category
-        if ( defined $catid ) {
-            $self->lmLog( "Register category $catid data", 'debug' );
+        if ($catflag) {
+            $self->lmLog( "Register category $name data", 'debug' );
 
             # Set catname
-            $self->setKeyToH( $newConf, "applicationList/$catid/catname",
+            $self->setKeyToH( $newConf, "applicationList/$name/catname",
                 $value );
 
             # Set type to category
-            $self->setKeyToH( $newConf, "applicationList/$catid/type",
+            $self->setKeyToH( $newConf, "applicationList/$name/type",
                 "category" );
 
         }
 
         # Menu application
-        elsif ( defined $appid ) {
-            $self->lmLog( "Register application $appid data", 'debug' );
-            ($catid) = ( $id =~ /applicationList\/([^\/]+)?/ );
+        elsif ($appflag) {
+            $self->lmLog( "Register application $name data", 'debug' );
 
             # Get options from splitted value
             my @t = split( /\|/, $value );
 
             # Set applications options
             $self->setKeyToH( $newConf,
-                "applicationList/$catid/$appid/options/name", $t[0] );
+                "applicationList/$catid/$name/options/name", $t[0] );
             $self->setKeyToH( $newConf,
-                "applicationList/$catid/$appid/options/uri", $t[1] );
+                "applicationList/$catid/$name/options/uri", $t[1] );
             $self->setKeyToH( $newConf,
-                "applicationList/$catid/$appid/options/description", $t[2] );
+                "applicationList/$catid/$name/options/description", $t[2] );
             $self->setKeyToH( $newConf,
-                "applicationList/$catid/$appid/options/logo", $t[3] );
+                "applicationList/$catid/$name/options/logo", $t[3] );
             $self->setKeyToH( $newConf,
-                "applicationList/$catid/$appid/options/display", $t[4] );
+                "applicationList/$catid/$name/options/display", $t[4] );
 
             # Set type to application
-            $self->setKeyToH( $newConf, "applicationList/$catid/$appid/type",
+            $self->setKeyToH( $newConf, "applicationList/$catid/$name/type",
                 "application" );
 
         }
