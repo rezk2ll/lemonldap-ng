@@ -583,10 +583,11 @@ sub issuerForAuthUser {
             'debug' );
 
         # Redirect to service
-        my $service_url = (
+        my $service_url = $service;
+        $service_url .= (
               $service =~ /\?/
-            ? $service .= '&ticket=' . $casServiceTicket
-            : $service .= '?ticket=' . $casServiceTicket
+            ? '&ticket=' . $casServiceTicket
+            : '?ticket=' . $casServiceTicket
         );
 
         $self->lmLog( "Redirect user to $service_url", 'debug' );
