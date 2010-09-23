@@ -1397,10 +1397,12 @@ sub authForce {
     my $saml_slo_post_url_ret =
       $self->getMetaDataURL( "samlSPSSODescriptorSingleLogoutServiceHTTPPost",
         2 );
+    my $saml_ars_url = $self->getMetaDataURL(
+        "samlSPSSODescriptorArtifactResolutionServiceArtifact");
 
     return 1
       if ( $url =~
-/^(\Q$saml_acs_art_url\E|\Q$saml_acs_post_url\E|\Q$saml_acs_get_url\E|\Q$saml_slo_soap_url\E|\Q$saml_slo_soap_url_ret\E|\Q$saml_slo_get_url\E|\Q$saml_slo_get_url_ret\E|\Q$saml_slo_post_url\E|\Q$saml_slo_post_url_ret\E)$/io
+/^(\Q$saml_acs_art_url\E|\Q$saml_acs_post_url\E|\Q$saml_acs_get_url\E|\Q$saml_slo_soap_url\E|\Q$saml_slo_soap_url_ret\E|\Q$saml_slo_get_url\E|\Q$saml_slo_get_url_ret\E|\Q$saml_slo_post_url\E|\Q$saml_slo_post_url_ret\E|\Q$saml_ars_url\E)$/io
       );
 
     return 0;
