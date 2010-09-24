@@ -1102,6 +1102,11 @@ sub printImage {
     close(IMAGE);
 }
 
+sub stamp {
+    my $self = shift;
+    return $self->{cipher}->encrypt( time() );
+}
+
 ###############################################################
 # MAIN subroutine: call all steps until one returns something #
 #                  different than PE_OK                       #
@@ -1159,9 +1164,23 @@ sub process {
 
 ##@apmethod int controlUrlOrigin()
 # If the user was redirected here, loads 'url' parameter.
+# Check also confirm parameter.
 #@return Lemonldap::NG::Portal constant
 sub controlUrlOrigin {
     my $self = shift;
+    if ( my $c = $self->param('confirm') ) {
+        $c =~ s/^(-?)(.*)$/${1}1/;
+        my $time = time() - $self->{cipher}->decrypt($2);
+        if ( $time < 600 ) {
+            $self->lmLog( "Confirm parameter accepted $c", 'debug' );
+            $self->param( 'confirm', $c );
+            print STDERR "DEBUG ".$self->param('confirm')."\n";
+        }
+        else {
+            $self->lmLog( 'Confirmation to old, refused', 'notice' );
+            $self->param( 'confirm', 0 );
+        }
+    }
     $self->{_url} ||= '';
     if ( my $url = $self->param('url') ) {
 

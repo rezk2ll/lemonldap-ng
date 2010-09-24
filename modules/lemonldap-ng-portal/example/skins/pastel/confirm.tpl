@@ -10,7 +10,7 @@
 		<TMPL_VAR NAME="HIDDEN_INPUTS">
 		<input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
 	        <input type="hidden" id="authKey" name="<TMPL_VAR NAME="CHOICE_PARAM">" value="<TMPL_VAR NAME="CHOICE_VALUE">" />
-		<input type="hidden" id="confirm" name="confirm" value="1" />
+		<input type="hidden" id="confirm" name="confirm" value="<TMPL_VAR NAME="CONFIRMKEY">" />
 		<TMPL_VAR NAME="MSG">
 		<p id="timer"><lang en="Automaticaly accept in 5 seconds" fr="Acceptation automatique dans 5 secondes"/></p>
 		<table><tbody><tr><td>
@@ -19,7 +19,7 @@
 				<img src="/skins/common/accept.png" alt="" />
 				<lang en="Accept" fr="Accepter" />
 			</button>
-			<button type="submit" class="negative" onclick="$('#confirm').attr('value','-1');">
+			<button type="submit" class="negative" onclick="$('#confirm').attr('value','-<TMPL_VAR NAME="CONFIRMKEY">');">
 				<img src="/skins/common/cancel.png" alt="" />
 				<lang en="Refuse" fr="Refuser" />
 			</button>

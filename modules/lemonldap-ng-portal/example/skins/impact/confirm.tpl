@@ -12,12 +12,12 @@
         <TMPL_VAR NAME="HIDDEN_INPUTS">
         <input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
         <input type="hidden" id="authKey" name="<TMPL_VAR NAME="CHOICE_PARAM">" value="<TMPL_VAR NAME="CHOICE_VALUE">" />
-        <input type="hidden" id="confirm" name="confirm" value="1" />
+        <input type="hidden" id="confirm" name="confirm" value="<TMPL_VAR NAME="CONFIRMKEY">" />
         <div id="content-all-info">
           <TMPL_VAR NAME="MSG">
         </div>
         <div class="panel-buttons">
-          <button type="submit" class="negative" tabindex="4" onclick="$('#confirm').attr('value','-1');">
+          <button type="submit" class="negative" tabindex="4" onclick="$('#confirm').attr('value','-<TMPL_VAR NAME="CONFIRMKEY">');">
             <lang en="Refuse" fr="Refuser" />
           </button>
           <button type="submit" class="positive" tabindex="3">

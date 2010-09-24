@@ -15,6 +15,7 @@ our $VERSION = '0.01';
 # @return Lemonldap::NG::Portal error code
 sub issuerDBInit {
     my $self = shift;
+
     eval { require Lemonldap::NG::Common::OpenID::Server };
     $self->abort( 'Unable to load Net::OpenID::Server', $@ ) if ($@);
     $self->{openIdSecret} ||= $self->{cipher}->encrypt(0);
@@ -170,12 +171,13 @@ sub openIDServer {
     $self->{_openidPortal} = $self->{portal} . "/openidserver/";
     $self->{_openidPortal} =~ s#(?<!:)//#/#g;
 
+    my $sub = sub { return $self->param(@_) };
     $self->{_openidserver} = Lemonldap::NG::Common::OpenID::Server->new(
 
         # TODO
         server_secret => sub { return $self->{openIdSecret} },
-        post_args     => $self->{_prm},
-        get_args      => $self->{_prm},
+        post_args     => $sub,
+        get_args      => $sub,
         endpoint_url => $self->{_openidPortal},
         setup_url    => $self->{_openidPortal},
         get_user     => sub {
@@ -207,12 +209,16 @@ sub openIDServer {
                 $self->lmLog( 'OpenID request already trusted', 'debug' );
                 return 1;
             }
-            elsif ( $self->param("confirm") ) {
+            elsif ( $self->param("confirm") == 1 ) {
                 $self->updateSession( { "_openidTrust$trust_root" => 1 } );
                 return 1;
             }
+            elsif ( $self->param("confirm") == -1 ) {
+                return 0;
+            }
             else {
-                $self->lmLog( 'OpenID request not trusted', 'debug' );
+                $self->lmLog( 'OpenID request not trusted' . $sub->("confirm"),
+                    'debug' );
                 $self->{_openIdTrustRequired} = 1;
                 return 0;
             }
@@ -251,20 +257,30 @@ sub _openIDResponse {
             $self->storeOpenIDprm();
             return PE_CONFIRM;
         }
-        if ( $self->{_badOpenIdentity} ) {
+        elsif ( $self->{_badOpenIdentity} ) {
             $self->userNotice(
 "The user $self->{sessionInfo}->{_user} tries to use the id \"$data->{identity}\" on $data->{trust_root}"
             );
             return PE_OPENID_BADID;
         }
-    }
+
+        # User has refused sharing its datas
     else {
+            $self->userNotice( $self->{sessionInfo}->{ $self->{whatToTrace} }
+                  . ' refused to share its OpenIdentity' );
+            return PE_OK;
+        }
+    }
+    elsif ($type) {
         $self->lmLog( 'OpenID generated page', 'debug' );
+        print STDERR "$type\n";
         print $self->header($type);
         print $data;
     }
+    else {
+        $self->abort( 'OpenID error ', $self->openIDServer->err() );
+    }
     $self->quit();
-    PE_OK;
 }
 
 1;

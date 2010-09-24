@@ -12,7 +12,8 @@ sub new {
     my $self  = fields::new($class);
     my %opts  = splice @_;
     $self->$_( delete $opts{$_} ) foreach (qw(extensions));
-    return $self->SUPER::new(%opts);
+    $self->SUPER::new(%opts);
+    #$self->{get_args} = sub { $self->param(@_) };
 }
 
 sub extensions {
@@ -47,50 +48,50 @@ sub signed_return_url {
     return $self->SUPER::signed_return_url(%opts);
 }
 
-*args = \&get_args;
+#*args = \&get_args;
 
-sub get_args {
-    my $self = shift;
-
-    if ( my $what = shift ) {
-        Carp::croak("Too many parameters") if @_;
-
-        # Lemonldap::NG only (direct CGI)
-        $self->{get_args} = sub { $what->param( $_[0] ) };
-
-        # INCLUDE IN PROPOSED PATCH FOR Net::OpenID::Server
-        #my $getter;
-        #if ( !ref $what ) {
-        #    Carp::croak("No get_args defined") unless $self->{get_args};
-        #    return $self->{get_args}->($what) || "";
-        #}
-        #elsif ( ref $what eq "HASH" ) {
-        #    $getter = sub { $_[0] ? $what->{ $_[0] } : ( keys %$what ); };
-        #}
-        #elsif ( ref $what eq "Apache" ) {
-        #    my %get = $what->args;
-        #    $getter = sub { $_[0] ? $get{ $_[0] } : ( keys %get ); };
-        #}
-        #elsif ( ref $what eq "CODE" ) {
-        #    $getter = $what;
-        #}
-        #else {
-        #    my $r = eval { $what->can('param') };
-        #    if ( $@ or not $r ) {
-        #        Carp::croak("Unknown parameter type ($what)");
-        #    }
-        #    else {
-        #        $getter = sub {
-        #            $_[0] ? scalar $what->param( $_[0] ) : ( $what->param() );
-        #        };
-        #    }
-        #}
-        #if ($getter) {
-        #    $self->{get_args} = $getter;
-        #}
-    }
-    $self->{get_args};
-}
+#sub get_args {
+#    my $self = shift;
+#
+#    if ( my $what = shift ) {
+#        Carp::croak("Too many parameters") if @_;
+#
+#        # Lemonldap::NG only (direct CGI)
+#        $self->{get_args} = sub { $what->param( $_[0] ) };
+#
+#        # INCLUDE IN PROPOSED PATCH FOR Net::OpenID::Server
+#        #my $getter;
+#        #if ( !ref $what ) {
+#        #    Carp::croak("No get_args defined") unless $self->{get_args};
+#        #    return $self->{get_args}->($what) || "";
+#        #}
+#        #elsif ( ref $what eq "HASH" ) {
+#        #    $getter = sub { $_[0] ? $what->{ $_[0] } : ( keys %$what ); };
+#        #}
+#        #elsif ( ref $what eq "Apache" ) {
+#        #    my %get = $what->args;
+#        #    $getter = sub { $_[0] ? $get{ $_[0] } : ( keys %get ); };
+#        #}
+#        #elsif ( ref $what eq "CODE" ) {
+#        #    $getter = $what;
+#        #}
+#        #else {
+#        #    my $r = eval { $what->can('param') };
+#        #    if ( $@ or not $r ) {
+#        #        Carp::croak("Unknown parameter type ($what)");
+#        #    }
+#        #    else {
+#        #        $getter = sub {
+#        #            $_[0] ? scalar $what->param( $_[0] ) : ( $what->param() );
+#        #        };
+#        #    }
+#        #}
+#        #if ($getter) {
+#        #    $self->{get_args} = $getter;
+#        #}
+#    }
+#    $self->{get_args};
+#}
 
 1;
 __END__

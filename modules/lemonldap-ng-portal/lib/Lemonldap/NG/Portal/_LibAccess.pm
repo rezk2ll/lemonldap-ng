@@ -50,7 +50,6 @@ sub _grant {
 # @return True
 sub _compileRules {
     my $self = shift;
-    print STDERR "$cfgNum\n";
     foreach my $vhost ( keys %{ $self->{locationRules} } ) {
         my $i = 0;
         foreach ( keys %{ $self->{locationRules}->{$vhost} } ) {
@@ -88,7 +87,6 @@ sub _conditionSub {
     $cond =~ s/\$date/&POSIX::strftime("%Y%m%d%H%M%S",localtime())/e;
     $cond =~ s/\$(\w+)/\$self->{sessionInfo}->{$1}/g;
     my $sub = "sub {my \$self = shift; return ( $cond )}";
-    print STDERR "$sub\n";
     $sub = (
         SAFEWRAP
         ? $self->safe->wrap_code_ref( $self->safe->reval($sub) )

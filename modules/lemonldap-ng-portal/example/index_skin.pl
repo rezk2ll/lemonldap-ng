@@ -128,6 +128,7 @@ elsif ( $portal->{error} == PE_CONFIRM ) {
         FORM_METHOD     => $portal->{confirmFormMethod},
         CHOICE_PARAM    => $portal->{authChoiceParam},
         CHOICE_VALUE    => $portal->{_authChoice},
+        CONFIRMKEY      => $portal->stamp(),
     );
 }
 

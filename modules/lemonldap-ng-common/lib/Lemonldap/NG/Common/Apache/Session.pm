@@ -224,10 +224,11 @@ BEGIN {
         my $redis = Redis->new(%$args);
         my @keys   = $redis->keys('*');
         my %res;
-        foreach my $k ( @keys ) {
+        foreach my $k (@keys) {
             my $v = $redis->get($k);
-            my $v = eval { thaw(MIME::Base64::decode_base64($redis->get($k))) };
-            next if($@);
+            my $v =
+              eval { thaw( MIME::Base64::decode_base64( $redis->get($k) ) ) };
+            next if ($@);
             if ( ref($data) eq 'CODE' ) {
                 $res{$k} = &$data( $v, $k );
             }
