@@ -35,6 +35,8 @@ sub handler_mp2 : method {
     shift->run(@_);
 }
 
+*lmLog = *Lemonldap::NG::Handler::Simple::lmLog;
+
 ########
 # MAIN #
 ########
