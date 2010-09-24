@@ -225,7 +225,6 @@ BEGIN {
         my @keys   = $redis->keys('*');
         my %res;
         foreach my $k (@keys) {
-            my $v = $redis->get($k);
             my $v =
               eval { thaw( MIME::Base64::decode_base64( $redis->get($k) ) ) };
             next if ($@);

@@ -1104,7 +1104,7 @@ sub testStruct {
             },
         },
         exportedVars => {
-            keyTest    => qr/^[a-zA-Z][\w-]*$/,
+            keyTest    => qr/^!?[a-zA-Z][\w-]*$/,
             keyMsgFail => 'Bad variable name',
             test       => qr/^[a-zA-Z][\w-]*$/,
             msgFail    => 'Bad attribute name',

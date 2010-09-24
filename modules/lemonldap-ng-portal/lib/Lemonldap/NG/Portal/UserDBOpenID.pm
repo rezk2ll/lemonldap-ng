@@ -45,12 +45,15 @@ sub setSessionInfo {
     my $self = shift;
     if ( ref( $self->{exportedVars} ) eq 'HASH' ) {
         foreach my $k ( keys %{ $self->{exportedVars} } ) {
-            $k =~ s/^!//;
+            my $required = ($k =~ s/^!//);
             $self->{sessionInfo}->{$k} =
               $self->param("openid.sreg.$self->{exportedVars}->{$k}")
               if ( $k =~
 /^(?:(?:(?:full|nick)nam|languag|postcod|timezon)e|country|gender|email|dob)$/
               );
+
+            $self->lmLog( "Required parameter $k is not provided by OpenID server, aborted", 'warn' ) if($required);
+            return PE_ERROR;
         }
     }
     else {

@@ -128,12 +128,12 @@ sub extractFormInfo {
             or $self->{stack}->[1]->[0]->{m} =~ /^OpenID/ )
         {
             my ( @r, @o );
-            foreach my $k ( values %{ $self->{exportedVars} } ) {
+            while ( my ( $v, $k ) = each %{ $self->{exportedVars} } ) {
                 if ( $k =~
 /^(?:(?:(?:full|nick)nam|languag|postcod|timezon)e|country|gender|email|dob)$/
                   )
                 {
-                    if   (s/^!//) { push @r, $k }
+                    if   ( $v =~ s/^!// ) { push @r, $k }
                     else          { push @o, $k }
                 }
                 else {
@@ -143,9 +143,9 @@ sub extractFormInfo {
                     );
                 }
             }
-            my @tmp =
-              ( @r ? ( 'openid.sreg.required' => join( ',', @r ) ) : () ),
-              ( @o ? ( 'openid.sreg.optional' => join( ',', @o ) ) : () );
+            my @tmp;
+            push @tmp, 'openid.sreg.required' => join( ',', @r ) if (@r);
+            push @tmp, 'openid.sreg.optional' => join( ',', @o ) if (@o);
             OpenID::util::push_url_arg( \$check_url, @tmp ) if (@tmp);
         }
         print $self->redirect($check_url);

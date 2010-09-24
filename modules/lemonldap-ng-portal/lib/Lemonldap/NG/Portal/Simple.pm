@@ -1104,7 +1104,7 @@ sub printImage {
 
 sub stamp {
     my $self = shift;
-    return $self->{cipher}->encrypt( time() );
+    return $self->{cipher} ? $self->{cipher}->encrypt( time() ) : 1;
 }
 
 ###############################################################
@@ -1170,15 +1170,17 @@ sub controlUrlOrigin {
     my $self = shift;
     if ( my $c = $self->param('confirm') ) {
         $c =~ s/^(-?)(.*)$/${1}1/;
-        my $time = time() - $self->{cipher}->decrypt($2);
-        if ( $time < 600 ) {
-            $self->lmLog( "Confirm parameter accepted $c", 'debug' );
-            $self->param( 'confirm', $c );
-            print STDERR "DEBUG ".$self->param('confirm')."\n";
-        }
-        else {
-            $self->lmLog( 'Confirmation to old, refused', 'notice' );
-            $self->param( 'confirm', 0 );
+        if($self->{cipher}) {
+            my $time = time() - $self->{cipher}->decrypt($2);
+            if ( $time < 600 ) {
+                $self->lmLog( "Confirm parameter accepted $c", 'debug' );
+                $self->param( 'confirm', $c );
+                print STDERR "DEBUG ".$self->param('confirm')."\n";
+            }
+            else {
+                $self->lmLog( 'Confirmation to old, refused', 'notice' );
+                $self->param( 'confirm', 0 );
+            }
         }
     }
     $self->{_url} ||= '';

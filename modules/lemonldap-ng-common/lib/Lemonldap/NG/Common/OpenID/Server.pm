@@ -18,22 +18,22 @@ sub new {
 
 sub extensions {
     my $self = shift;
-    $self->{_extensions} = @_;
+    $self->{_extensions} = shift;;
 }
 
 sub signed_return_url {
     my ( $self, %opts ) = splice @_;
-    my $extra;
     if ( ref $self->{_extensions} ) {
         my $list = $self->args();
-        my @list = $self->get_args();
+        my @list = $self->get_args->();
         my %h;
         foreach my $arg (@list) {
-            next unless ( $arg =~ /^openid\.(\w+)(\.[\w\.]+)?/ );
+            print STDERR "ARG: $arg\n";
+            next unless ( $arg =~ /^openid\.(\w+)\.([\w\.]+)?/ );
             my $tmp = $1;
             my $val = $2;
             if ( defined $self->{_extensions}->{$tmp} ) {
-                push @{ $h{$tmp} }, $val, scalar self->get_args($arg);
+                push @{ $h{$tmp} }, $val, scalar $self->args->($arg);
             }
         }
         my %vars;
@@ -43,7 +43,7 @@ sub signed_return_url {
                 $vars{"openid.$ns.$k"} = $v;
             }
         }
-        $opts{extra_fields} = \%vars;
+        $opts{additional_fields} = \%vars;
     }
     return $self->SUPER::signed_return_url(%opts);
 }
