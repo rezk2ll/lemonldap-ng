@@ -57,7 +57,7 @@ BEGIN {
     }
 
     sub Apache::Session::get_key_from_all_sessions {
-        return 0;
+        die "This Apache module is not supported by Lemonldap::NG";
     }
 
     sub Apache::Session::MySQL::get_key_from_all_sessions {
@@ -224,12 +224,6 @@ BEGIN {
             }
         }
         return \%res;
-    }
-
-    sub Apache::Session::Memcached::get_key_from_all_sessions {
-
-        # TODO
-        die('Apache::Session::Memcached is not supported by Lemonldap::NG');
     }
 }
 

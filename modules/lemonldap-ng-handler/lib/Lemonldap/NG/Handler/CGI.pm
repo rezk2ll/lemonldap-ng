@@ -31,8 +31,14 @@ sub new {
         Lemonldap::NG::Handler::_CGI->init(@_);
         Lemonldap::NG::Handler::_CGI->initLocalStorage(@_);
     }
-    $class->abort("Unable to get configuration")
-      unless Lemonldap::NG::Handler::_CGI->testConf() == OK;
+    unless ( eval { Lemonldap::NG::Handler::_CGI->testConf() } == OK ) {
+        if ( $_[0]->{noAbort} ) {
+            $self->{noConf} = $@;
+        }
+        else {
+            $class->abort( "Unable to get configuration", $@ );
+        }
+    }
 
     # Arguments
     my @args = splice @_;
@@ -83,6 +89,10 @@ sub new {
 # @return boolean : true if authentication is good. Exit before else
 sub authenticate {
     my $self    = shift;
+    $self->abort(
+        "Can't authenticate because configuration has not been loaded",
+        $self->{noConf} )
+      if ( $self->{noConf} );
     my %cookies = fetch CGI::Cookie;
     my $id;
     unless ( $cookies{$cookieName} and $id = $cookies{$cookieName}->value ) {
@@ -126,6 +136,10 @@ sub authorize {
 # 0 if user isn't granted
 sub testUri {
     my $self = shift;
+    $self->abort(
+        "Can't test URI because configuration has not been loaded",
+        $self->{noConf} )
+      if ( $self->{noConf} );
     my $uri  = shift;
     my $host =
       ( $uri =~ s#^(?:https?://)?([^/]*)/#/# ) ? $1 : $ENV{SERVER_NAME};
