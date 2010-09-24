@@ -61,9 +61,7 @@ BEGIN {
     }
 
     sub Apache::Session::MySQL::get_key_from_all_sessions {
-        my $class = shift;
-        my $args  = shift;
-        my $data  = shift;
+        my ( $class, $args, $data ) = @_;
 
         my $dbh =
           DBI->connect( $args->{DataSource}, $args->{UserName},
@@ -99,9 +97,7 @@ BEGIN {
       \&Apache::Session::MySQL::get_key_from_all_sessions;
 
     sub Apache::Session::File::get_key_from_all_sessions {
-        my $class = shift;
-        my $args  = shift;
-        my $data  = shift;
+        my ( $class, $args, $data ) = @_;
         $args->{Directory} ||= '/tmp';
 
         unless ( opendir DIR, $args->{Directory} ) {
@@ -132,9 +128,7 @@ BEGIN {
 
     sub Apache::Session::PHP::get_key_from_all_sessions {
         require Apache::Session::Serialize::PHP;
-        my $class = shift;
-        my $args  = shift;
-        my $data  = shift;
+        my ( $class, $args, $data ) = @_;
 
         my $directory = $args->{SavePath} || '/tmp';
         unless ( opendir DIR, $args->{SavePath} ) {
@@ -166,9 +160,7 @@ BEGIN {
     }
 
     sub Apache::Session::DB_File::get_key_from_all_sessions {
-        my $class = shift;
-        my $args  = shift;
-        my $data  = shift;
+        my ( $class, $args, $data ) = @_;
 
         if ( !tied %{ $class->{dbm} } ) {
             my $rv = tie %{ $class->{dbm} }, 'DB_File', $args->{FileName};
@@ -195,9 +187,7 @@ BEGIN {
     }
 
     sub Apache::Session::LDAP::get_key_from_all_sessions {
-        my $class = shift;
-        my $args  = shift;
-        my $data  = shift;
+        my ( $class, $args, $data ) = @_;
 
         my $ldap = Apache::Session::Store::LDAP::ldap( { args => $args } );
         my $msg = $ldap->search(
@@ -221,6 +211,32 @@ BEGIN {
             }
             else {
                 $res{$k} = thaw($v);
+            }
+        }
+        return \%res;
+    }
+
+    sub Apache::Session::NoSQL::get_key_from_all_sessions {
+        require Redis;
+        require MIME::Base64;
+        my ( $class, $args, $data ) = @_;
+        die "Only Redis is supported" unless ( $args->{Driver} eq 'Redis' );
+        my $redis = Redis->new(%$args);
+        my @keys   = $redis->keys('*');
+        my %res;
+        foreach my $k ( @keys ) {
+            my $v = $redis->get($k);
+            my $v = eval { thaw(MIME::Base64::decode_base64($redis->get($k))) };
+            next if($@);
+            if ( ref($data) eq 'CODE' ) {
+                $res{$k} = &$data( $v, $k );
+            }
+            elsif ($data) {
+                $data = [$data] unless ( ref($data) );
+                $res{$k}->{$_} = $v->{$_} foreach (@$data);
+            }
+            else {
+                $res{$k} = $v;
             }
         }
         return \%res;
