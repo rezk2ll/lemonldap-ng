@@ -31,7 +31,8 @@ sub translate {
                 return $r;
             }
             else {
-                print STDERR __PACKAGE__ . ": $text not translated in $_\n";
+                $self->lmLog( __PACKAGE__ . ": $text not translated in $_",
+                    'error' );
                 return $text;
             }
         }

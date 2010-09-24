@@ -96,7 +96,10 @@ sub lmLog {
         }
     }
     else {
-        print STDERR "$mess\n" unless ( $level =~ /^(?:debug)$/ );
+        $self->{hideLogLevels} = 'debug|info'
+          unless defined( $self->{hideLogLevels} );
+        print STDERR "[$level] $mess\n"
+          unless ( $level =~ /^(?:$self->{hideLogLevels})$/ );
     }
 }
 
