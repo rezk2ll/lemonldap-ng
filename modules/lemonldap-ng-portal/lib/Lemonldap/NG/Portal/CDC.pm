@@ -66,7 +66,7 @@ sub process {
         # Add IDP value
         $self->lmLog( "[CDC] Will add IDP $idp to IDP list", 'debug' );
 
-        my $encoded_idp = encode_base64($idp);
+        my $encoded_idp = encode_base64( $idp, '' );
 
         # Remove IDP value if already present
         $cdc_cookie =~ s/$encoded_idp(\s+)?//g;
@@ -101,21 +101,24 @@ sub process {
         # Get last IDP from cookie
         if ($cdc_cookie) {
             $cdc_idp = decode_base64( ( split /\s+/, $cdc_cookie )[-1] );
-
             $self->lmLog( "[CDC] Get value $cdc_idp", 'debug' );
         }
-
+        else {
+            $self->lmLog( "[CDC] No cookie, set a default value", 'debug' );
+            $cdc_idp = 'notfound';
+        }
     }
 
     # Redirect if needed
     if ( $self->{urldc} ) {
 
         # Add CDC IDP in return URL if needed
+        # olStyleUrl can be set to 1 to use & instead of ;
         $self->{urldc} .= (
             $cdc_idp
             ? (
                 $self->{urldc} =~ /\?/
-                ? '&idp=' . $cdc_idp
+                ? ( $self->{oldStyleUrl} ? '&' : ';' ) . 'idp=' . $cdc_idp
                 : '?idp=' . $cdc_idp
               )
             : ''

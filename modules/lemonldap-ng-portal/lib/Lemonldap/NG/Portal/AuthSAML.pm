@@ -6,6 +6,7 @@
 package Lemonldap::NG::Portal::AuthSAML;
 
 use strict;
+use MIME::Base64;
 use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::_SAML;    #inherits
 use Lemonldap::NG::Common::Conf::SAML::Metadata;
@@ -1175,7 +1176,8 @@ sub authenticate {
 # Try to find an IdP using :
 # * HTTP parameter
 # * "samlIdPResolveCookie" cookie
-# * rules
+# * Rules
+# * Common Domain Cookie
 #
 # @return Array containing :
 # * IdP found (or undef)
@@ -1188,13 +1190,15 @@ sub getIDP {
     my $idp_cookie = $cookies{ $self->{samlIdPResolveCookie} };
     $idp_cookie &&= $idp_cookie->value;
 
-    # Try to recover IDP from args or IDP cookie
+    # Case 1: Recover IDP from args
     unless ( $idp = $self->param("idp") ) {
+
+        # Case 2: Recover IDP from cookie
         if ( $idp = $idp_cookie ) {
             $self->lmLog( "IDP $idp found in IDP resolution cookie", 'debug' );
         }
 
-        # Case 2: check all IDP resolution rules
+        # Case 3: check all IDP resolution rules
         # The first match win
         else {
             foreach ( keys %{ $self->{_idpList} } ) {
@@ -1211,6 +1215,32 @@ sub getIDP {
                 }
             }
         }
+
+        # Case 4: use Common Domain Cookie
+        if ( !$idp and $self->{samlCommonDomainCookieActivation} ) {
+
+            $self->lmLog(
+                "Will try to use Common Domain Cookie for IDP resolution",
+                'debug' );
+
+            # Add current URL to CDC Reader URL
+            my $return_url = encode_base64( $self->self_url(), '' );
+
+            my $cdc_reader_url = $self->{samlCommonDomainCookieReader};
+
+            $cdc_reader_url .=
+              ( $self->{samlCommonDomainCookieReader} =~ /\?/
+                ? '&url=' . $return_url
+                : '?url=' . $return_url );
+
+            $self->lmLog( "Redirect user to $cdc_reader_url", 'debug' );
+
+            $self->{urldc} = $cdc_reader_url;
+
+            return $self->_sub('autoRedirect');
+
+        }
+
         $self->lmLog( 'No IDP found', 'debug' ) unless ($idp);
     }
 
@@ -1219,6 +1249,7 @@ sub getIDP {
         $self->_sub( 'userError', "Required IDP $idp does not exists" );
         $idp = undef;
     }
+
     return ( $idp, $idp_cookie );
 }
 
