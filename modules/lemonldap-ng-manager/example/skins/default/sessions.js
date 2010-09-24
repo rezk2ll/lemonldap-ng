@@ -1,8 +1,8 @@
-function displaySession (id) {
+function displaySession(id) {
 	$.ajax({
 		type:"POST",
 		url:scriptname,
-		data:{session:id},
+		data:{'session':id},
 		dataType:'html',
 		success:function(data){
 			$('#data').html(data);
@@ -16,7 +16,7 @@ function del(id) {
 	$.ajax({
 		type:"POST",
 		url:scriptname,
-		data:{delete:id},
+		data:{'delete':id},
 		dataType:'html',
 		success:function(data){
 			$('#data').html(data);
