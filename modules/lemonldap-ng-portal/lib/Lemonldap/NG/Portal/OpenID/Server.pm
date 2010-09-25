@@ -53,23 +53,24 @@ sub _mode_checkid {
     my $is_trusted =
       $self->_proxy( "is_trusted", $u, $trust_root, $is_identity );
 
-    my ( %extArgs, %extVars, %is_ext_trusted );
+    my ( %extVars, %is_ext_trusted );
     my $is_exts_trusted = 1;
     if ( ref( $self->{_extensions} ) ) {
         my @list = $self->get_args->();
+	my %extArgs;
         foreach my $arg (@list) {
             print STDERR "ARG: $arg\n";
             next unless ( $arg =~ /^openid\.(\w+)\.([\w\.]+)?/ );
             my $tmp = $1;
             my $val = $2;
             if ( defined $self->{_extensions}->{$tmp} ) {
-                push @{ $extArgs{$tmp} }, $val, scalar $self->args->($arg);
+                $extArgs{$tmp}->{$val} = scalar $self->args->($arg);
             }
         }
         foreach my $ns ( keys %extArgs ) {
             my %h;
             ( $is_ext_trusted{$ns}, %h ) =
-              $self->{_extensions}->{$ns}->( @{ $extArgs{$ns} } );
+              $self->{_extensions}->{$ns}->( $u, $is_identity, $is_trusted, $extArgs{$ns} );
             while ( my ( $k, $v ) = each %h ) {
                 $extVars{"openid.$ns.$k"} = $v;
             }

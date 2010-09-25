@@ -111,11 +111,13 @@ sub restoreOpenIDprm {
 # Hook called to add SREG parameters to the OpenID response
 # @return Hash containing wanted parameters
 sub sregHook {
-    my ( $self, %prm ) = splice @_;
+    my ( $self, $u, $is_identity, $is_trusted, $prm ) = splice @_;
     my ( %r, @req, @opt );
 
+    return ( 0, %$prm ) unless ($is_identity);
+
     # TODO: verify that request has been accepted
-    while ( my ( $k, $v ) = each %prm ) {
+    while ( my ( $k, $v ) = each %$prm ) {
         if ( $k eq 'policy_url' ) {
             if ( $v =~
 m{^https?://(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))(?::(?:(?:[0-9]*)))?(?:/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*)(?:/(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*))*))))?$}
