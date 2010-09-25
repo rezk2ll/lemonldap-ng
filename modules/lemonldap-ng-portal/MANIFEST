@@ -195,6 +195,7 @@ lib/Lemonldap/NG/Portal/Menu.pm
 lib/Lemonldap/NG/Portal/Notification.pm
 lib/Lemonldap/NG/Portal/Notification/DBI.pm
 lib/Lemonldap/NG/Portal/Notification/File.pm
+lib/Lemonldap/NG/Portal/OpenID/Server.pm
 lib/Lemonldap/NG/Portal/PasswordDBChoice.pm
 lib/Lemonldap/NG/Portal/PasswordDBDBI.pm
 lib/Lemonldap/NG/Portal/PasswordDBLDAP.pm

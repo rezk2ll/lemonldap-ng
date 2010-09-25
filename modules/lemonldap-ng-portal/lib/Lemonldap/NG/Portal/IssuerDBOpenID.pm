@@ -16,7 +16,7 @@ our $VERSION = '0.01';
 sub issuerDBInit {
     my $self = shift;
 
-    eval { require Lemonldap::NG::Common::OpenID::Server };
+    eval { require Lemonldap::NG::Portal::OpenID::Server };
     $self->abort( 'Unable to load Net::OpenID::Server', $@ ) if ($@);
     $self->{openIdSecret} ||= $self->{cipher}->encrypt(0);
     return PE_OK;
@@ -113,6 +113,8 @@ sub restoreOpenIDprm {
 sub sregHook {
     my ( $self, %prm ) = splice @_;
     my ( %r, @req, @opt );
+
+    # TODO: verify that request has been accepted
     while ( my ( $k, $v ) = each %prm ) {
         if ( $k eq 'policy_url' ) {
             if ( $v =~
@@ -159,12 +161,14 @@ m{^https?://(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-z
         }
         $r{$k} = $self->{sessionInfo}->{ $self->{"openIdSreg_$k"} };
     }
-    return %r;
+
+    # TODO: return 0 is federation has not been accepted
+    return 1, %r;
 }
 
-## @method private Lemonldap::NG::Common::OpenID::Server openIDServer()
-# Create if not done a new Lemonldap::NG::Common::OpenID::Server objet
-# @return Lemonldap::NG::Common::OpenID::Server object
+## @method private Lemonldap::NG::Portal::OpenID::Server openIDServer()
+# Create if not done a new Lemonldap::NG::Portal::OpenID::Server objet
+# @return Lemonldap::NG::Portal::OpenID::Server object
 sub openIDServer {
     my $self = shift;
     return $self->{_openidserver} if ( $self->{_openidserver} );
@@ -172,7 +176,7 @@ sub openIDServer {
     $self->{_openidPortal} =~ s#(?<!:)//#/#g;
 
     my $sub = sub { return $self->param(@_) };
-    $self->{_openidserver} = Lemonldap::NG::Common::OpenID::Server->new(
+    $self->{_openidserver} = Lemonldap::NG::Portal::OpenID::Server->new(
 
         # TODO
         server_secret => sub { return $self->{openIdSecret} },
@@ -233,7 +237,7 @@ sub openIDServer {
 }
 
 ## @method private int _openIDResponse()
-# Manage Lemonldap::NG::Common::OpenID::Server responses
+# Manage Lemonldap::NG::Portal::OpenID::Server responses
 # @return Lemonldap::NG::Portal error code
 sub _openIDResponse {
     my ( $self, $type, $data ) = splice @_;
@@ -265,7 +269,7 @@ sub _openIDResponse {
         }
 
         # User has refused sharing its datas
-    else {
+        else {
             $self->userNotice( $self->{sessionInfo}->{ $self->{whatToTrace} }
                   . ' refused to share its OpenIdentity' );
             return PE_OK;
