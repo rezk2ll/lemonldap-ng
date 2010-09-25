@@ -57,7 +57,7 @@ sub _mode_checkid {
     my $is_exts_trusted = 1;
     if ( ref( $self->{_extensions} ) ) {
         my @list = $self->get_args->();
-	my %extArgs;
+        my %extArgs;
         foreach my $arg (@list) {
             print STDERR "ARG: $arg\n";
             next unless ( $arg =~ /^openid\.(\w+)\.([\w\.]+)?/ );
@@ -67,10 +67,11 @@ sub _mode_checkid {
                 $extArgs{$tmp}->{$val} = scalar $self->args->($arg);
             }
         }
-        foreach my $ns ( keys %extArgs ) {
+        foreach my $ns ( keys %{ $self->{_extensions} } ) {
             my %h;
             ( $is_ext_trusted{$ns}, %h ) =
-              $self->{_extensions}->{$ns}->( $u, $is_identity, $is_trusted, $extArgs{$ns} );
+              $self->{_extensions}->{$ns}
+              ->( $u, $is_identity, $is_trusted, $extArgs{$ns} || {} );
             while ( my ( $k, $v ) = each %h ) {
                 $extVars{"openid.$ns.$k"} = $v;
             }

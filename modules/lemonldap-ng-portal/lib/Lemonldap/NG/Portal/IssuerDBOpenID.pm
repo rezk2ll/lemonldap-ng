@@ -114,6 +114,7 @@ sub sregHook {
     my ( $self, $u, $is_identity, $is_trusted, $prm ) = splice @_;
     my ( %r, @req, @opt );
 
+    return 0 unless (%$prm);
     return ( 0, %$prm ) unless ($is_identity);
 
     # TODO: verify that request has been accepted
