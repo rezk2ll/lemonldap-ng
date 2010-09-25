@@ -79,9 +79,9 @@ install: build
 	#test -n "$$LOCALBUILD" || ./scripts/minifierjs $$(find debian/tmp/ -name '*.js')
 	#test -n "$$LOCALBUILD" || ./scripts/minifiercss $$(find debian/tmp/ -name '*.css')
 	perl -i -pe 's#src=(["'"'"']).*?jquery(-\d[\.\w\-]*?)?.js#src=$$1/javascript/jquery/jquery.js#i' \
-			$(CURDIR)/debian/tmp/examples/manager/*.pl \
-			$(CURDIR)/debian/tmp$(LMSHAREDIR)manager-skins/*/*.tpl \
-			$(CURDIR)/debian/tmp$(LMSHAREDIR)portal-skins/*/*.tpl
+		$$(find $(CURDIR)/debian/tmp/examples/manager/ -name *.pl -type f) \
+		$$(find	$(CURDIR)/debian/tmp$(LMSHAREDIR)manager-skins/*/ \
+			$(CURDIR)/debian/tmp$(LMSHAREDIR)portal-skins/*/ -type f -name *.tpl)
 	# postinst provides initial portal, manager and sessions-explorer
 	mkdir debian/tmp/usr/share/lemonldap-ng/manager debian/tmp/usr/share/lemonldap-ng/portal
 	mv debian/tmp/var/lib/lemonldap-ng/portal/*.pl debian/tmp/usr/share/lemonldap-ng/portal/
