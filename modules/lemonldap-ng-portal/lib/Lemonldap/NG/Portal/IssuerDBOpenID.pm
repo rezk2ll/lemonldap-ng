@@ -9,16 +9,19 @@ use strict;
 use Lemonldap::NG::Portal::Simple;
 
 our $VERSION = '0.01';
+our $initDone;
 
 ## @method void issuerDBInit()
 # Do nothing
 # @return Lemonldap::NG::Portal error code
 sub issuerDBInit {
     my $self = shift;
+    return PE_OK if ($initDone);
+    $self->{openIdSecret} ||= $self->{cipher}->encrypt(0);
 
     eval { require Lemonldap::NG::Portal::OpenID::Server };
     $self->abort( 'Unable to load Net::OpenID::Server', $@ ) if ($@);
-    $self->{openIdSecret} ||= $self->{cipher}->encrypt(0);
+    $initDone = 1;
     return PE_OK;
 }
 
@@ -107,68 +110,6 @@ sub restoreOpenIDprm {
     $self->{openIDRestored} = 1;
 }
 
-## @method protected hash sregHook(hash prm)
-# Hook called to add SREG parameters to the OpenID response
-# @return Hash containing wanted parameters
-sub sregHook {
-    my ( $self, $u, $is_identity, $is_trusted, $prm ) = splice @_;
-    my ( %r, @req, @opt );
-
-    return 0 unless (%$prm);
-    return ( 0, %$prm ) unless ($is_identity);
-
-    # TODO: verify that request has been accepted
-    while ( my ( $k, $v ) = each %$prm ) {
-        if ( $k eq 'policy_url' ) {
-            if ( $v =~
-m{^https?://(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)))(?::(?:(?:[0-9]*)))?(?:/(?:(?:(?:(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*)(?:/(?:(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*)(?:;(?:(?:[a-zA-Z0-9\-_.!~*'():@&=+\$,]+|(?:%[a-fA-F0-9][a-fA-F0-9]))*))*))*))))?$}
-              )
-            {
-                $self->{openIdCustomerPolicy} = $v;
-            }
-            else {
-                $self->lmLog( "Bad policy url", 'error' );
-            }
-        }
-        elsif ( $k eq 'required' ) {
-            push @req, split( /,/, $v );
-        }
-        elsif ( $k eq 'optional' ) {
-            push @opt,
-              grep { defined $self->{"openIdSreg_$_"} } split( /,/, $v );
-        }
-        else {
-            $self->lmLog( "Unknown OpenID SREG request $k", 'error' );
-        }
-    }
-
-    # If a required data is not available, returns nothing
-    foreach my $k (@req) {
-        unless ( $self->{"openIdSreg_$k"} ) {
-            $self->lmLog(
-"Parameter $k is required by customer but not defined in configuration",
-                'notice'
-            );
-            return ();
-        }
-    }
-    foreach my $k ( @req, @opt ) {
-        unless ( $k =~
-/^(?:(?:(?:full|nick)nam|languag|postcod|timezon)e|country|gender|email|dob)$/
-          )
-        {
-            $self->lmLog(
-                "Requested parameter $k is not a valid OpenID SREG parameter",
-                'error' );
-            return ();
-        }
-        $r{$k} = $self->{sessionInfo}->{ $self->{"openIdSreg_$k"} };
-    }
-
-    # TODO: return 0 is federation has not been accepted
-    return 1, %r;
-}
-
 ## @method private Lemonldap::NG::Portal::OpenID::Server openIDServer()
 # Create if not done a new Lemonldap::NG::Portal::OpenID::Server objet
 # @return Lemonldap::NG::Portal::OpenID::Server object
@@ -232,7 +173,8 @@ sub openIDServer {
         },
         extensions => {
             sreg => sub {
-                return $self->sregHook(@_);
+                require Lemonldap::NG::Portal::OpenID::SREG;
+                return $self->Lemonldap::NG::Portal::OpenID::SREG::sregHook(@_);
             },
         },
     );

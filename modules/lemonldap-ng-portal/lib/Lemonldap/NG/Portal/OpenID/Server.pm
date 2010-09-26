@@ -3,6 +3,7 @@ package Lemonldap::NG::Portal::OpenID::Server;
 use strict;
 use fields qw(_extensions setup_url);
 use Net::OpenID::Server;
+use Lemonldap::NG::Common::Regexp;
 
 our @ISA     = qw(Net::OpenID::Server);
 our $VERSION = '0.1';
@@ -30,13 +31,16 @@ sub _mode_checkid {
     my ( $mode, $redirect_for_setup ) = @_;
 
     my $return_to = $self->args("openid.return_to");
-    return $self->_fail("no_return_to") unless $return_to =~ m!^https?://!;
+    return $self->_fail("no_return_to")
+      unless ( $return_to
+        and $return_to =~ Lemonldap::NG::Common::Regexp::HTTP_URI );
 
     my $trust_root = $self->args("openid.trust_root") || $return_to;
     $trust_root = $self->args("openid.realm")
       if $self->args('openid.ns') eq $OPENID2_NS;
     return $self->_fail("invalid_trust_root")
-      unless _url_is_under( $trust_root, $return_to );
+      unless ( $trust_root =~ Lemonldap::NG::Common::Regexp::HTTP_URI
+        and _url_is_under( $trust_root, $return_to ) );
 
     my $identity = $self->args("openid.identity");
 
@@ -63,20 +67,23 @@ sub _mode_checkid {
             next unless ( $arg =~ /^openid\.(\w+)\.([\w\.]+)?/ );
             my $tmp = $1;
             my $val = $2;
-            if ( defined $self->{_extensions}->{$tmp} ) {
-                $extArgs{$tmp}->{$val} = scalar $self->args->($arg);
-            }
+            $extArgs{$tmp}->{$val} = scalar $self->args->($arg);
         }
         foreach my $ns ( keys %{ $self->{_extensions} } ) {
-            my %h;
-            ( $is_ext_trusted{$ns}, %h ) =
-              $self->{_extensions}->{$ns}
-              ->( $u, $is_identity, $is_trusted, $extArgs{$ns} || {} );
-            while ( my ( $k, $v ) = each %h ) {
-                $extVars{"openid.$ns.$k"} = $v;
+            my $h;
+            ( $is_ext_trusted{$ns}, $h ) = $self->{_extensions}->{$ns}->(
+                $u, $trust_root, $is_identity, $is_trusted,
+                delete( $extArgs{$ns} ) || {}
+            );
+            if ($h) {
+                while ( my ( $k, $v ) = each %$h ) {
+                    $extVars{"openid.$ns.$k"} = $v;
+                }
             }
             $is_exts_trusted &&= $is_ext_trusted{$ns};
         }
+
+        # TODO: warn if keys(%extArgs)
     }
 
     # assertion path:
@@ -93,10 +100,11 @@ sub _mode_checkid {
         return ( "redirect", $ret_url );
     }
 
- # assertion could not be made, so user requires setup (login/trust.. something)
- # two ways that can happen:  caller might have asked us for an immediate return
- # with a setup URL (the default), or explictly said that we're in control of
- # the user-agent's full window, and we can do whatever we want with them now.
+    # Assertion could not be made, so user requires setup (login/trust...
+    # something). Two ways that can happen:  caller might have asked us for an
+    # immediate return with a setup URL (the default), or explictly said that
+    # we're in control of the user-agent's full window, and we can do whatever
+    # we want with them now.
 
     # TODO: call extension sub for setup
     my %setup_args = (
@@ -109,7 +117,8 @@ sub _mode_checkid {
     $setup_args{ $self->_setup_map('ns') } = $self->args('openid.ns')
       if $self->args('openid.ns');
 
-    my $setup_url = $self->{setup_url} or Carp::croak("No setup_url defined.");
+    my $setup_url = $self->{setup_url}
+      or Carp::croak("No setup_url defined.");
     _push_url_arg( \$setup_url, %setup_args );
 
     if ( $mode eq "checkid_immediate" ) {
