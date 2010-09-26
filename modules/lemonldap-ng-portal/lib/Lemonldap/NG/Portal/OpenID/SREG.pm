@@ -63,6 +63,8 @@ sub sregHook {
               . "is(are) not valid OpenID SREG parameter",
             'error'
         );
+
+	# TODO: change this
         return prompt( $self, OI_INVALID, $prm, \%msg );
     }
 
@@ -75,15 +77,14 @@ sub sregHook {
             );
 
             # TODO
-            #return prompt( $self, OI_);
             return ( 0, {} );
         }
     }
     foreach my $k ( @req, @opt ) {
+
+	# TODO: confirm
         $r{$k} = $self->{sessionInfo}->{ $self->{"openIdSreg_$k"} } || '';
     }
-
-    # TODO: return 0 is federation has not been accepted
     return 1, \%r;
 }
 

@@ -121,8 +121,6 @@ sub openIDServer {
 
     my $sub = sub { return $self->param(@_) };
     $self->{_openidserver} = Lemonldap::NG::Portal::OpenID::Server->new(
-
-        # TODO
         server_secret => sub { return $self->{openIdSecret} },
         post_args     => $sub,
         get_args      => $sub,
@@ -149,8 +147,6 @@ sub openIDServer {
             }
         },
         is_trusted => sub {
-
-            # TODO: manage extensions here
             my ( $u, $trust_root, $is_identity ) = @_;
             return 0 unless ( $u and $is_identity );
             if ( $self->{sessionInfo}->{"_openidTrust$trust_root"} ) {
