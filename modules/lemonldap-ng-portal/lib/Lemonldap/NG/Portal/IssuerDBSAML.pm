@@ -1716,9 +1716,9 @@ sub issuerForAuthUser {
                     'debug' );
 
                 # Redirection to CDC Writer page in a hidden iframe
-                my $cdc_writer_url = $self->{samlCommonDomainCookieReader};
+                my $cdc_writer_url = $self->{samlCommonDomainCookieWriter};
                 $cdc_writer_url .= (
-                    $self->{samlCommonDomainCookieReader} =~ /\?/
+                    $self->{samlCommonDomainCookieWriter} =~ /\?/
                     ? '&idp=' . $cdc_idp
                     : '?url=' . $cdc_idp
                 );
