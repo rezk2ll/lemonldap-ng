@@ -205,6 +205,9 @@ sub new {
       unless ( $self->{domain} );
     $self->{domain} =~ s/^([^\.])/.$1/;
 
+    # Load Menu functions
+    $self->loadModule('Lemonldap::NG::Portal::Menu');
+
     # Rules to allow redirection
     $self->{mustRedirect} = (
         ( $ENV{REQUEST_METHOD} eq 'POST' and not $self->param('newpassword') )
@@ -363,9 +366,6 @@ sub new {
             ( map { s/\./\\\./g; $_ } split /\s+/, $self->{trustedDomains} ) )
           . ')';
     }
-
-    # Load Menu functions
-    $self->loadModule('Lemonldap::NG::Portal::Menu');
 
     return $self;
 }

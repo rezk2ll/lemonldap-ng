@@ -18,22 +18,21 @@ our @ISA     = qw(Lemonldap::NG::Portal::_LibAccess);
 ## @method void startSoapServices()
 # Check the URI requested (PATH_INFO environment variable) and launch the
 # corresponding SOAP methods using soapTest().
-# If "soapOnly" is set, reject otehr request. Else, simply return.
+# If "soapOnly" is set, reject other request. Else, simply return.
 sub startSoapServices {
     my $self = shift;
-    $self->{CustomSOAPServices} ||= {};
 
-    # TODO: insert here the SAML SOAP functions
-    $self->{CustomSOAPServices}->{'/SAMLAuthority'} = ''
-      if ( $self->{SAMLIssuer} );
+    # Load SOAP services
+    $self->{CustomSOAPServices} ||= {};
     if (
         $ENV{PATH_INFO}
         and my $tmp = {
             %{ $self->{CustomSOAPServices} },
-            '/sessions'      => 'getAttributes isAuthorizedURI',
+            '/sessions' =>
+              'getCookies getAttributes isAuthorizedURI getMenuApplications',
             '/adminSessions' => 'getAttributes setAttributes isAuthorizedURI '
               . 'newSession deleteSession get_key_from_all_sessions',
-            '/config' => 'getConfig lastCfg getXmlMenu'
+            '/config' => 'getConfig lastCfg'
         }->{ $ENV{PATH_INFO} }
       )
     {
@@ -240,7 +239,7 @@ _RETURN $isAuthorizedURIResponse Response
 
 =cut
 
-## @method boolean isAuthorizedURI (int id, string uri)
+## @method boolean isAuthorizedURI (string id, string uri)
 # Check user's authorization for uri.
 # @param $id Id of the session
 # @param $uri URL string
@@ -265,29 +264,32 @@ sub isAuthorizedURI {
 
 =begin WSDL
 
-_IN file $string Menu XML file complete path
-_RETURN $getXmlMenuResponse Response
+_IN id $string Cookie value
+_RETURN $getMenuApplicationsResponse Response
 
 =end WSDL
 
 =cut
 
-##@method SOAP::Data getXmlMenu(string file)
-#@param file
+##@method SOAP::Data getMenuApplications(string id)
+# @param $id Id of the session
 #@return SOAP::Data
-sub getXmlMenu {
-    my $self = shift;
-    my ($file) = @_;
-    die 'file is required' unless ($file);
-    die 'file cannot be read' unless ( -r $file );
+sub getMenuApplications {
+    my ( $self, $id ) = splice @_;
+    die 'id is required' unless ($id);
 
-    # Load XML::Simple
-    use XML::Simple;
+    $self->lmLog( "SOAP getMenuApplications request for id $id", 'debug' );
 
-    # Get XML content
-    my $xml = new XML::Simple( ForceArray => '1' );
+    # Get user session.
+    my $h = $self->getApacheSession( $id, 1 );
+    unless ($h) {
+        $self->lmLog( "Session $id does not exists ($@)", 'warn' );
+        return 0;
+    }
 
-    return _buildSoapHash( $xml->XMLin($file) );
+    $self->{sessionInfo} = $h;
+    return _buildSoapHash( { menu => $self->appslist() } );
+
 }
 
 #######################

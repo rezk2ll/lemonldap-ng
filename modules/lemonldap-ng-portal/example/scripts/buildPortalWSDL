@@ -156,6 +156,13 @@ print Lemonldap::NG::Common::BuildWSDL->new->buildWSDL(<<EOT);
     <wsdl:part name="result" type="xsd:boolean" />
   </wsdl:message>
 
+  <wsdl:message name="getMenuApplicationsRequest">
+    <wsdl:part name="id" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="getMenuApplicationsResponse">
+    <wsdl:part name="result" type="xsd:anyType" />
+  </wsdl:message>
+
   <wsdl:portType name="sessionsPortType">
     <wsdl:operation name="getAttributes" parameterOrder="id">
       <wsdl:input message="impl:getAttributesRequest" name="getAttributesRequest" />
@@ -164,6 +171,10 @@ print Lemonldap::NG::Common::BuildWSDL->new->buildWSDL(<<EOT);
     <wsdl:operation name="isAuthorizedURI" parameterOrder="id uri">
       <wsdl:input message="impl:isAuthorizedURIRequest" name="isAuthorizedURIRequest" />
       <wsdl:output message="impl:isAuthorizedURIResponse" name="isAuthorizedURIResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getMenuApplications" parameterOrder="id">
+      <wsdl:input message="impl:getMenuApplicationsRequest" name="getMenuApplicationsRequest" />
+      <wsdl:output message="impl:getMenuApplicationsResponse" name="getMenuApplicationsResponse" />
     </wsdl:operation>
   </wsdl:portType>
 
@@ -187,46 +198,21 @@ print Lemonldap::NG::Common::BuildWSDL->new->buildWSDL(<<EOT);
         <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/CGI/SOAPService" use="encoded" />
       </wsdl:output>
     </wdsl:operation>
+    <wdsl:operation name="getMenuApplications">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="getMenuApplicationsRequest">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/CGI/SOAPService" use="encoded" />
+      </wsdl:input>
+      <wsdl:output name="getMenuApplicationsResponse">
+        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/CGI/SOAPService" use="encoded" />
+      </wsdl:output>
+    </wdsl:operation>
+
   </wsdl:binding>
 
   <wsdl:service name="sessionsService">
     <wsdl:port binding="impl:sessionsBinding" name="sessionsPort">
       <wsdlsoap:address location="__PORTAL__/sessions" />
-    </wsdl:port>
-  </wsdl:service>
-
-  <!-- configuration service -->
-
-  <wsdl:message name="getXmlMenuRequest">
-    <wsdl:part name="file" type="xsd:string" />
-  </wsdl:message>
-  <wsdl:message name="getXmlMenuResponse">
-    <wsdl:part name="result" type="xsd:string" />
-  </wsdl:message>
-
-  <wsdl:portType name="configPortType">
-    <wsdl:operation name="getXmlMenu" parameterOrder="file">
-      <wsdl:input message="impl:getXmlMenuRequest" name="getXmlMenuRequest" />
-      <wsdl:output message="impl:getXmlMenuResponse" name="getXmlMenuResponse" />
-    </wsdl:operation>
-  </wsdl:portType>
-
-  <wsdl:binding name="configBinding" type="impl:configPortType">
-    <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="getXmlMenu">
-      <wsdlsoap:operation soapAction="" />
-      <wsdl:input name="getXmlMenuRequest">
-        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/CGI/SOAPService" use="encoded" />
-      </wsdl:input>
-      <wsdl:output name="getXmlMenuResponse">
-        <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/CGI/SOAPService" use="encoded" />
-      </wsdl:output>
-    </wsdl:operation>
-  </wsdl:binding>
-
-  <wsdl:service name="configService">
-    <wsdl:port binding="impl:configBinding" name="configPort">
-      <wsdlsoap:address location="__PORTAL__/config" />
     </wsdl:port>
   </wsdl:service>
 
