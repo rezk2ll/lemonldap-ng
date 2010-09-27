@@ -394,6 +394,11 @@ sub en {
           'Password protected transport',
         samlAuthnContextMapTLSClient => 'TLS client',
         samlAuthnContextMapKerberos  => 'Kerberos',
+        samlCommonDomainCookie           => 'Common Domain Cookie',
+        samlCommonDomainCookieActivation => 'Activation',
+        samlCommonDomainCookieDomain     => 'Common domain',
+        samlCommonDomainCookieReader     => 'Reader URL',
+        samlCommonDomainCookieWriter     => 'Writer URL',
     };
 }
 
@@ -757,6 +762,11 @@ sub fr {
           'Mot de passe protégé',
         samlAuthnContextMapTLSClient => 'Client TLS',
         samlAuthnContextMapKerberos  => 'Kerberos',
+        samlCommonDomainCookie           => 'Cookie de Domaine Commun',
+        samlCommonDomainCookieActivation => 'Activation',
+        samlCommonDomainCookieDomain     => 'Domaine commun',
+        samlCommonDomainCookieReader     => 'URL de lecture',
+        samlCommonDomainCookieWriter     => 'URL d\'écriture',
     };
 }
 

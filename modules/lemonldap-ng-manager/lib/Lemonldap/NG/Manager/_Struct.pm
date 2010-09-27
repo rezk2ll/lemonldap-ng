@@ -1009,7 +1009,7 @@ sub struct {
             # ADVANCED SAML PARAMETERS
             samlAdvanced => {
                 _nodes => [
-                    qw(samlIdPResolveCookie samlMetadataForceUTF8 samlUserDBIdentityKey samlStorage cn:samlStorageOptions)
+                    qw(samlIdPResolveCookie samlMetadataForceUTF8 samlUserDBIdentityKey samlStorage cn:samlStorageOptions n:samlCommonDomainCookie)
                 ],
 
                 samlIdPResolveCookie  => 'text:/samlIdPResolveCookie',
@@ -1020,6 +1020,19 @@ sub struct {
                     _nodes => ['hash:/samlStorageOptions:default:btext'],
                     _js    => 'hashRoot',
                     _help  => 'default',
+                },
+                samlCommonDomainCookie => {
+                    _nodes => [
+                        qw(samlCommonDomainCookieActivation samlCommonDomainCookieDomain samlCommonDomainCookieReader samlCommonDomainCookieWriter)
+                    ],
+                    samlCommonDomainCookieActivation =>
+                      'bool:/samlCommonDomainCookieActivation',
+                    samlCommonDomainCookieDomain =>
+                      'text:/samlCommonDomainCookieDomain',
+                    samlCommonDomainCookieReader =>
+                      'text:/samlCommonDomainCookieReader',
+                    samlCommonDomainCookieWriter =>
+                      'text:/samlCommonDomainCookieWriter',
                 },
 
             },
@@ -1435,6 +1448,19 @@ sub testStruct {
         samlAuthnContextMapPasswordProtectedTransport => $integer,
         samlAuthnContextMapTLSClient                  => $integer,
         samlAuthnContextMapKerberos                   => $integer,
+        samlCommonDomainCookieActivation              => $boolean,
+        samlCommonDomainCookieDomain                  => {
+            test    => Lemonldap::NG::Common::Regexp::HOSTNAME,
+            msgFail => 'Bad domain',
+        },
+        samlCommonDomainCookieReader => {
+            test    => Lemonldap::NG::Common::Regexp::HTTP_URI,
+            msgFail => 'Bad URI',
+        },
+        samlCommonDomainCookieWriter => {
+            test    => Lemonldap::NG::Common::Regexp::HTTP_URI,
+            msgFail => 'Bad URI',
+        },
 
         # SSL
         SSLAuthnLevel => $integer,
@@ -1705,6 +1731,7 @@ sub defaultConf {
         samlAuthnContextMapPasswordProtectedTransport => 3,
         samlAuthnContextMapTLSClient                  => 5,
         samlAuthnContextMapKerberos                   => 4,
+        samlCommonDomainCookieActivation              => 0,
 
         # Authentication levels
         ldapAuthnLevel    => 2,
