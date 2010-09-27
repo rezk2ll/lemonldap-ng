@@ -1705,6 +1705,42 @@ sub issuerForAuthUser {
 
             # Send SSO Response
 
+            # Register IDP in Common Domain Cookie if needed
+            if (    $self->{samlCommonDomainCookieActivation}
+                and $self->{samlCommonDomainCookieWriter} )
+            {
+                my $cdc_idp = $self->getMetaDataURL( "samlEntityID", 0 );
+
+                $self->lmLog(
+                    "Will register IDP $cdc_idp in Common Domain Cookie",
+                    'debug' );
+
+                # Redirection to CDC Writer page in a hidden iframe
+                my $cdc_writer_url = $self->{samlCommonDomainCookieReader};
+                $cdc_writer_url .= (
+                    $self->{samlCommonDomainCookieReader} =~ /\?/
+                    ? '&idp=' . $cdc_idp
+                    : '?url=' . $cdc_idp
+                );
+
+                my $cdc_iframe =
+                    "<iframe src=\"$cdc_writer_url\""
+                  . " alt=\"Common Dommain Cookie\" marginwidth=\"0\""
+                  . " marginheight=\"0\" scrolling=\"no\" style=\"border: none;display: hidden;margin: 0\""
+                  . " width=\"0\" height=\"0\" frameborder=\"0\">"
+                  . "</iframe>";
+
+                $self->info(
+                    "<h3>"
+                      . &Lemonldap::NG::Portal::_i18n::msg
+                      ( Lemonldap::NG::Portal::Simple::PM_CDC_WRITER,
+                        $ENV{HTTP_ACCEPT_LANGUAGE} )
+                      . "</h3>"
+                );
+
+                $self->info($cdc_iframe);
+            }
+
             # HTTP-REDIRECT
             if ( $protocolProfile eq
                 Lasso::Constants::LOGIN_PROTOCOL_PROFILE_REDIRECT

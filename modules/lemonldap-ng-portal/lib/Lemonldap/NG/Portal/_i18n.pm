@@ -363,6 +363,7 @@ sub error_ro {
 # * PM_BACKTOCASURL            14
 # * PM_LOGOUT                  15
 # * PM_OPENID_EXCHANGE         16
+# * PM_CDC_WRITER              17
 
 sub msg_en {
     use utf8;
@@ -383,7 +384,8 @@ sub msg_en {
         'Go back to service provider',
 'The application you just logged out of has provided a link it would like you to follow',
         'Logout from other applications...',
-        'Do you want to authenticate yourself on this site ?',
+        'Do you want to authenticate yourself on this site?',
+        'Update Common Domain Cookie',
     ];
 }
 
@@ -407,6 +409,7 @@ sub msg_fr {
 'Le service duquel vous arrivez a fourni un lien que vous êtes invité à suivre',
         'Déconnexion des autres applications...',
         'Souhaitez-vous vous identifier sur ce site ?',
+        'Mise à jour du cookie de domaine commun',
     ];
 }
 

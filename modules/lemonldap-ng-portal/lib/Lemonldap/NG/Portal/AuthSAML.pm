@@ -1217,7 +1217,10 @@ sub getIDP {
         }
 
         # Case 4: use Common Domain Cookie
-        if ( !$idp and $self->{samlCommonDomainCookieActivation} ) {
+        if (   !$idp
+            and $self->{samlCommonDomainCookieActivation}
+            and $self->{samlCommonDomainCookieReader} )
+        {
 
             $self->lmLog(
                 "Will try to use Common Domain Cookie for IDP resolution",
@@ -1228,10 +1231,11 @@ sub getIDP {
 
             my $cdc_reader_url = $self->{samlCommonDomainCookieReader};
 
-            $cdc_reader_url .=
-              ( $self->{samlCommonDomainCookieReader} =~ /\?/
+            $cdc_reader_url .= (
+                $self->{samlCommonDomainCookieReader} =~ /\?/
                 ? '&url=' . $return_url
-                : '?url=' . $return_url );
+                : '?url=' . $return_url
+            );
 
             $self->lmLog( "Redirect user to $cdc_reader_url", 'debug' );
 

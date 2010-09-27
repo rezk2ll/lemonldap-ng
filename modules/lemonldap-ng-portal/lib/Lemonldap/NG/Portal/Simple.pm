@@ -129,6 +129,7 @@ use constant {
     PM_BACKTOCASURL          => 14,
     PM_LOGOUT                => 15,
     PM_OPENID_EXCHANGE       => 16,
+    PM_CDC_WRITER            => 17,
 };
 
 # EXPORTER PARAMETERS
@@ -152,6 +153,7 @@ our @EXPORT = qw( PE_IMG_NOK PE_IMG_OK PE_INFO PE_REDIRECT PE_DONE PE_OK
   PM_REMOVE_OTHER_SESSIONS PM_PP_GRACE PM_PP_EXP_WARNING
   PM_SAML_IDPSELECT PM_SAML_IDPCHOOSEN PM_REMEMBERCHOICE PM_SAML_SPLOGOUT
   PM_REDIRECTION PM_BACKTOSP PM_BACKTOCASURL PM_LOGOUT PM_OPENID_EXCHANGE
+  PM_CDC_WRITER
 );
 our %EXPORT_TAGS = ( 'all' => [ @EXPORT, 'import' ], );
 
@@ -1170,12 +1172,12 @@ sub controlUrlOrigin {
     my $self = shift;
     if ( my $c = $self->param('confirm') ) {
         $c =~ s/^(-?)(.*)$/${1}1/;
-        if($self->{cipher}) {
+        if ( $self->{cipher} ) {
             my $time = time() - $self->{cipher}->decrypt($2);
             if ( $time < 600 ) {
                 $self->lmLog( "Confirm parameter accepted $c", 'debug' );
                 $self->param( 'confirm', $c );
-                print STDERR "DEBUG ".$self->param('confirm')."\n";
+                print STDERR "DEBUG " . $self->param('confirm') . "\n";
             }
             else {
                 $self->lmLog( 'Confirmation to old, refused', 'notice' );
