@@ -152,6 +152,9 @@ sub _buildAuthLoop {
 
         my $name = $_;
 
+        # Ignore 'forcedSAML'
+        next if $name eq 'forcedSAML';
+
         # Name can have a digit as first character
         # for sorting purpose
         # Remove it in displayed name
