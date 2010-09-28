@@ -686,9 +686,10 @@ sub struct {
                 },
 
                 redirection => {
-                    _nodes => [qw(https port)],
+                    _nodes => [qw(https port useRedirectOnForbidden)],
                     https  => 'bool:/https',
                     port   => 'int:/port',
+                    useRedirectOnForbidden => 'bool:/useRedirectOnForbidden',
                 },
 
                 specialHandlers => {
@@ -1338,6 +1339,7 @@ sub testStruct {
             test    => qr/^[a-zA-Z][\w\:]*$/,
             msgFail => 'Bad module name',
         },
+        useRedirectOnForbidden => $boolean,
         useXForwardedForIP => $boolean,
         variables          => $testNotDefined,
         whatToTrace        => {
@@ -1612,6 +1614,7 @@ sub defaultConf {
         userControl         => '^[\w\.\-@]+$',
         userDB              => 'LDAP',
         passwordDB          => 'LDAP',
+        useRedirectOnForbidden => '0',
         useXForwardedForIP  => '0',
         whatToTrace         => '$_whatToTrace',
         ########

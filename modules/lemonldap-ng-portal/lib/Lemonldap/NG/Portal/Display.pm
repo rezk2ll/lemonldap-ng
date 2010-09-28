@@ -19,10 +19,33 @@ sub display {
     my $skin     = $self->{portalSkin};
     my $skin_dir = $ENV{DOCUMENT_ROOT} . "/skins";
     my ( $skinfile, %templateParams );
+    my $http_error = $self->param('lmError');
+
+    # 0. Display error page
+    if ($http_error) {
+
+        $skinfile = 'error.tpl';
+
+        # Error code
+        my $error500 = 1 if ( $http_error eq "500" );
+        my $error403 = 1 if ( $http_error eq "403" );
+
+        # Check URL
+        $self->_sub('controlUrlOrigin');
+
+        %templateParams = (
+            PORTAL_URL => $self->{portal},
+            LOGOUT_URL => $self->{portal} . "?logout=1",
+            URL        => $self->{urldc},
+            SKIN       => $self->{portalSkin},
+            ERROR403   => $error403,
+            ERROR500   => $error500,
+        );
+
+    }
 
     # 1. Good authentication
-
-    if ( $self->process() ) {
+    elsif ( $self->process() ) {
 
         # 1.1 Image mode
         if ( $self->{error} == PE_IMG_OK || $self->{error} == PE_IMG_NOK ) {

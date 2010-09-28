@@ -316,7 +316,6 @@ install_portal_site:	install_conf_dir
 		install -v -d $(RPORTALSKINSDIR)/$$skin; \
 	done
 	@cp -pR --remove-destination ${SRCPORTALDIR}/example/index_skin.pl ${RPORTALDIR}/index.pl
-	@cp -pR --remove-destination ${SRCPORTALDIR}/example/error.pl ${RPORTALDIR}
 	@cp -pR --remove-destination ${SRCPORTALDIR}/example/mail.pl ${RPORTALDIR}
 	@cp -pR --remove-destination ${SRCPORTALDIR}/example/metadata.pl ${RPORTALDIR}
 	@cp -pR --remove-destination ${SRCPORTALDIR}/example/cdc.pl ${RPORTALDIR}
@@ -566,7 +565,6 @@ debian-diff:
 		$(DIFF) -x 'jquery*' lemonldap-ng-portal/example/skins/$$i /usr/share/lemonldap-ng/portal-skins/$$i; \
 	done ||true
 	@$(DIFF) lemonldap-ng-portal/example/index_skin.pl /var/lib/lemonldap-ng/portal/index.pl ||true
-	@$(DIFF) lemonldap-ng-portal/example/error.pl /var/lib/lemonldap-ng/portal/error.pl ||true
 	@$(DIFF) lemonldap-ng-portal/example/mail.pl /var/lib/lemonldap-ng/portal/mail.pl ||true
 	@$(DIFF) lemonldap-ng-portal/example/metadata.pl /var/lib/lemonldap-ng/portal/metadata.pl ||true
 	@$(DIFF) lemonldap-ng-portal/example/cdc.pl /var/lib/lemonldap-ng/portal/cdc.pl ||true
@@ -593,7 +591,6 @@ default-diff:
 	@$(DIFF) lemonldap-ng-portal/example/scripts/buildPortalWSDL $(LMPREFIX)/bin/buildPortalWSDL ||true
 	@$(DIFF) lemonldap-ng-portal/example/skins $(LMPREFIX)/htdocs/portal/skins ||true
 	@$(DIFF) lemonldap-ng-portal/example/index_skin.pl $(LMPREFIX)/htdocs/portal/index.pl ||true
-	@$(DIFF) lemonldap-ng-portal/example/error.pl $(LMPREFIX)/htdocs/portal/error.pl ||true
 	@$(DIFF) lemonldap-ng-portal/example/mail.pl $(LMPREFIX)/htdocs/portal/mail.pl ||true
 	@$(DIFF) lemonldap-ng-portal/example/metadata.pl $(LMPREFIX)/htdocs/portal/metadata.pl ||true
 	@$(DIFF) lemonldap-ng-portal/example/cdc.pl $(LMPREFIX)/htdocs/portal/cdc.pl ||true

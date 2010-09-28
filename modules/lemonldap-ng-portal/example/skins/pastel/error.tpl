@@ -14,6 +14,14 @@
 
         <div id="error">
 
+
+	<TMPL_IF URL>
+	<h3>
+	<lang en="You were redirect from " fr="Vous avez été redirigé depuis " />
+	<a href="<TMPL_VAR NAME="URL">"><TMPL_VAR NAME="URL"></a>
+	</h3>
+	</TMPL_IF>
+
 	<div class="buttons">
 		<a href="<TMPL_VAR NAME="PORTAL_URL">" class="positive">
 			<img src="/skins/common/accept.png" alt="" />

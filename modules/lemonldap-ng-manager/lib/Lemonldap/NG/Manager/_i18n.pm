@@ -270,6 +270,7 @@ sub en {
         userDB                       => 'Users module',
         userControl                  => 'Username control',
         userPivot                    => 'Login field name in user table',
+        useRedirectOnForbidden       => 'Redirect on forbidden',
         useXForwardedForIP           => "Use X-Forwarded-For header address",
         variables                    => "Variables",
         virtualHosts                 => 'Virtual Hosts',
@@ -628,6 +629,7 @@ sub fr {
         userDB            => "Module d'utilisateurs",
         userControl       => "Contrôle du nom d'utilisateur",
         userPivot         => 'Champ identifiant dans la table des utilisateurs',
+        useRedirectOnForbidden => 'Redirection pour les accès interdits',
         useXForwardedForIP =>
           "Utiliser l'adresse IP de l'en-tête X-Forwarded-For",
         variables         => "Variables",

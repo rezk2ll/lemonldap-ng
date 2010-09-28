@@ -35,7 +35,6 @@ example/AuthLA/tpl/themes/federid/sso.css
 example/AuthLA/tpl/themes/federid/wui.css
 example/cas.pl
 example/cdc.pl
-example/error.pl
 example/index.pl
 example/index_simple.pl
 example/index_skin.pl

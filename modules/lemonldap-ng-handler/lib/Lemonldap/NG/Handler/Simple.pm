@@ -46,7 +46,7 @@ our (
     $port,               $statusPipe,          $statusOut,
     $customFunctions,    $transform,           $cda,
     $childInitDone,      $httpOnly,            $cookieExpiration,
-    $timeoutActivity,    $datasUpdate,
+    $timeoutActivity,    $datasUpdate,         $useRedirectOnForbidden,
 );
 
 ##########################################
@@ -73,7 +73,9 @@ BEGIN {
               )
         ],
         traces  => [qw( $whatToTrace $statusPipe $statusOut)],
-        apache  => [qw( MP OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR )],
+        apache => [
+            qw( MP OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR useRedirectOnForbidden )
+        ],
         post    => [qw($transform)],
         cda     => ['$cda'],
         cookie  => [qw($cookieName $https $httpOnly $cookieExpiration)],
@@ -137,6 +139,7 @@ BEGIN {
             threads::shared::share($statusPipe);
             threads::shared::share($statusOut);
             threads::shared::share($timeoutActivity);
+            threads::shared::share($useRedirectOnForbidden);
         };
     }
     elsif ( MP() == 1 ) {
@@ -643,6 +646,10 @@ sub defaultValuesInit {
     $httpOnly         = defined($httpOnly) ? $httpOnly : $args->{httpOnly};
     $cookieExpiration = $args->{cookieExpiration} || $cookieExpiration;
     $timeoutActivity  = $args->{timeoutActivity} || $timeoutActivity || 0;
+    $useRedirectOnForbidden =
+      defined($useRedirectOnForbidden)
+      ? $useRedirectOnForbidden
+      : $args->{useRedirectOnForbidden};
     1;
 }
 
@@ -825,8 +832,9 @@ sub isProtected {
     return $defaultProtection;
 }
 
-## @rmethod protected boolean grant()
+## @rmethod protected boolean grant(string uri)
 # Grant or refuse client using compiled regexp and functions
+# @param uri URI requested
 # @return True if the user is granted to access to the current URL
 sub grant {
     my ( $class, $uri ) = splice @_;
@@ -837,10 +845,11 @@ sub grant {
     return &$defaultCondition($datas);
 }
 
-## @rmethod protected int forbidden()
+## @rmethod protected int forbidden(string uri)
 # Used to reject non authorizated requests.
 # Inform the status processus and call logForbidden().
-# @return Apache2::Const::FORBIDDEN
+# @param uri URI requested
+# @return Apache2::Const::REDIRECT or Apache2::Const::FORBIDDEN
 sub forbidden {
     my ( $class, $uri ) = splice @_;
     if ( $datas->{_logout} ) {
@@ -853,7 +862,16 @@ sub forbidden {
     $apacheRequest->push_handlers(
         PerlLogHandler => sub { $class->logForbidden( $uri, $datas ); DECLINED }
     );
+
+    # Redirect or Forbidden?
+    if ($useRedirectOnForbidden) {
+        $class->lmLog( "Use redirect for forbidden access", 'debug' );
+        return $class->goToPortal( $uri, 'lmError=403' );
+    }
+    else {
+        $class->lmLog( "Return forbidden access", 'debug' );
     return FORBIDDEN;
+    }
 }
 
 ## @rmethod protected void logForbidden(string uri,hashref datas)
