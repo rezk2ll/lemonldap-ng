@@ -45,16 +45,33 @@ sub setSessionInfo {
     my $self = shift;
     if ( ref( $self->{exportedVars} ) eq 'HASH' ) {
         foreach my $k ( keys %{ $self->{exportedVars} } ) {
-            my $required = ($k =~ s/^!//);
-            $self->{sessionInfo}->{$k} =
-              $self->param("openid.sreg.$self->{exportedVars}->{$k}")
-              if ( $k =~
+            my $attr = $k;
+            my $required = ( $attr =~ s/^!// );
+            if ( $self->{exportedVars}->{$k} =~
 /^(?:(?:(?:full|nick)nam|languag|postcod|timezon)e|country|gender|email|dob)$/
+              )
+            {
+                $self->{sessionInfo}->{$attr} =
+                  $self->param("openid.sreg.$self->{exportedVars}->{$k}");
+            }
+            else {
+                $self->abort(
+                    'Configuration error',
+                    $self->{exportedVars}->{$k}
+                      . ' is not a valid OpenID SREG attribute'
+                );
+            }
+
+            if ($required and not defined($self->{sessionInfo}->{$attr})) {
+                $self->lmLog(
+"Required parameter $attr is not provided by OpenID server, aborted",
+                    'warn'
               );
 
-            $self->lmLog( "Required parameter $k is not provided by OpenID server, aborted", 'warn' ) if($required);
+                # TODO: create a PE_* for that
             return PE_ERROR;
         }
+    }
     }
     else {
         $self->abort('Only hash reference are supported now in exportedVars');

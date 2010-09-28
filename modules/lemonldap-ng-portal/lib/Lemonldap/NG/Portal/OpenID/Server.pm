@@ -5,8 +5,15 @@ use fields qw(_extensions setup_url);
 use Net::OpenID::Server;
 use Lemonldap::NG::Common::Regexp;
 
+use constant DEBUG => 0;
+
 our @ISA     = qw(Net::OpenID::Server);
 our $VERSION = '0.1';
+
+my $OPENID2_NS        = qq!http://specs.openid.net/auth/2.0!;
+my $OPENID2_ID_SELECT = qq!http://specs.openid.net/auth/2.0/identifier_select!;
+
+*_push_url_arg = *Net::OpenID::Server::_push_url_arg;
 
 sub new {
     my $class = shift;
@@ -23,9 +30,6 @@ sub extensions {
     $self->{_extensions} = shift;
 }
 
-my $OPENID2_NS        = qq!http://specs.openid.net/auth/2.0!;
-my $OPENID2_ID_SELECT = qq!http://specs.openid.net/auth/2.0/identifier_select!;
-
 sub _mode_checkid {
     my Lemonldap::NG::Portal::OpenID::Server $self = shift;
     my ( $mode, $redirect_for_setup ) = @_;
@@ -40,7 +44,7 @@ sub _mode_checkid {
       if $self->args('openid.ns') eq $OPENID2_NS;
     return $self->_fail("invalid_trust_root")
       unless ( $trust_root =~ Lemonldap::NG::Common::Regexp::HTTP_URI
-        and _url_is_under( $trust_root, $return_to ) );
+        and Net::OpenID::Server::_url_is_under( $trust_root, $return_to ) );
 
     my $identity = $self->args("openid.identity");
 
@@ -63,13 +67,13 @@ sub _mode_checkid {
         my @list = $self->get_args->();
         my %extArgs;
         foreach my $arg (@list) {
-            print STDERR "ARG: $arg\n";
             next unless ( $arg =~ /^openid\.(\w+)\.([\w\.]+)?/ );
             my $tmp = $1;
             my $val = $2;
             $extArgs{$tmp}->{$val} = scalar $self->args->($arg);
         }
         foreach my $ns ( keys %{ $self->{_extensions} } ) {
+            print STDERR "Launching OpenIP $ns hook\n" if(DEBUG);
             my $h;
             ( $is_ext_trusted{$ns}, $h ) = $self->{_extensions}->{$ns}->(
                 $u, $trust_root, $is_identity, $is_trusted,
@@ -77,7 +81,8 @@ sub _mode_checkid {
             );
             if ($h) {
                 while ( my ( $k, $v ) = each %$h ) {
-                    $extVars{"openid.$ns.$k"} = $v;
+                    print STDERR "$ns returned data: $k => $v\n" if(DEBUG);
+                    $extVars{"$ns.$k"} = $v;
                 }
             }
             $is_exts_trusted &&= $is_ext_trusted{$ns};
@@ -88,13 +93,13 @@ sub _mode_checkid {
 
     # assertion path:
     if ( $is_identity && $is_trusted && $is_exts_trusted ) {
-        my %sArgs = {
+        my %sArgs = (
             identity     => $identity,
             claimed_id   => $self->args('openid.claimed_id'),
             return_to    => $return_to,
             assoc_handle => $self->args("openid.assoc_handle"),
             ns           => $self->args('openid.ns'),
-        };
+        );
         $sArgs{additional_fields} = \%extVars if (%extVars);
         my $ret_url = $self->signed_return_url(%sArgs);
         return ( "redirect", $ret_url );

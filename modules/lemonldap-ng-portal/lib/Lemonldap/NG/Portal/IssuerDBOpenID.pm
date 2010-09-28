@@ -78,7 +78,8 @@ sub issuerForAuthUser {
         );
         return PE_ERROR;
     }
-    return $self->_openIDResponse( $self->openIDServer->_mode_checkid() );
+    my @r = $self->openIDServer->_mode_checkid();
+    return $self->_openIDResponse(@r);
 }
 
 ## @apmethod int issuerLogout()
@@ -192,15 +193,19 @@ sub _openIDResponse {
         print $self->redirect($data);
     }
     elsif ( $type eq 'setup' ) {
-        if ( $self->{_openIdTrustRequired} ) {
+        if ( $self->{_openIdTrustRequired} or $self->{_openIdTrustExtMsg} ) {
 
             # TODO
             $self->info(
                 '<h2>'
-                  . &Lemonldap::NG::Portal::_i18n::msg( PM_OPENID_EXCHANGE,
-                    $ENV{HTTP_ACCEPT_LANGUAGE} )
+                  . sprintf(
+                    &Lemonldap::NG::Portal::_i18n::msg(PM_OPENID_EXCHANGE),
+                    $data->{trust_root}
+                  )
                   . "</h2>"
             );
+            $self->info( $self->{_openIdTrustExtMsg} )
+              if ( $self->{_openIdTrustExtMsg} );
             $self->lmLog( 'OpenID confirmation', 'debug' );
             $self->storeOpenIDprm();
             return PE_CONFIRM;
@@ -220,8 +225,7 @@ sub _openIDResponse {
         }
     }
     elsif ($type) {
-        $self->lmLog( 'OpenID generated page', 'debug' );
-        print STDERR "$type\n";
+        $self->lmLog( "OpenID generated page ($type)", 'debug' );
         print $self->header($type);
         print $data;
     }

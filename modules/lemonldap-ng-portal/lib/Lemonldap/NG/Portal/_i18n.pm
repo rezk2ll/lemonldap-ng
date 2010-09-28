@@ -38,6 +38,7 @@ sub error {
 # @return Error string for the $code in the $lang language
 sub msg {
     my ( $msg, $lang ) = splice @_;
+    $lang ||= $ENV{HTTP_ACCEPT_LANGUAGE};
     $lang = lc($lang);
     $lang =~ s/-/_/g;
     $msg = 0 if ( $msg < 0 );
@@ -364,6 +365,9 @@ sub error_ro {
 # * PM_LOGOUT                  15
 # * PM_OPENID_EXCHANGE         16
 # * PM_CDC_WRITER              17
+# * PM_OPENID_RPNS             18
+# * PM_OPENID_PA               19
+# * PM_OPENID_AP               20
 
 sub msg_en {
     use utf8;
@@ -384,8 +388,11 @@ sub msg_en {
         'Go back to service provider',
 'The application you just logged out of has provided a link it would like you to follow',
         'Logout from other applications...',
-        'Do you want to authenticate yourself on this site?',
+        'Do you want to authenticate yourself on %s ?',
         'Update Common Domain Cookie',
+        'Parameter %s requested for federation isn\'t available',
+        'Data usage policy is available at',
+        'Do you agree to provide the following parameters&nbsp;?',
     ];
 }
 
@@ -408,8 +415,11 @@ sub msg_fr {
         'Retourner sur le fournisseur de service',
 'Le service duquel vous arrivez a fourni un lien que vous êtes invité à suivre',
         'Déconnexion des autres applications...',
-        'Souhaitez-vous vous identifier sur ce site ?',
+        'Souhaitez-vous vous identifier sur le site %s ?',
         'Mise à jour du cookie de domaine commun',
+        'Le paramètre %s exigé pour la fédération n\'est pas disponible',
+        'La politique d\'utilisation des données est disponible ici',
+        'Consentez-vous à communiquer les paramètres suivants&nbsp;?',
     ];
 }
 

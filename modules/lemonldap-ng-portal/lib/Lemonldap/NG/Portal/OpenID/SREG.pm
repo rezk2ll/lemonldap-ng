@@ -8,38 +8,45 @@ package Lemonldap::NG::Portal::OpenID::SREG;
 
 use strict;
 use Lemonldap::NG::Common::Regexp;
-use constant { OI_INVALID => 1, };
+use Lemonldap::NG::Portal::Simple;
 
 ## @method protected hash sregHook(hash prm)
 # Hook called to add SREG parameters to the OpenID response
 # @return Hash containing wanted parameters
 sub sregHook {
     my ( $self, $u, $trust_root, $is_id, $is_trusted, $prm ) = splice @_;
-    my ( %r, @req, @opt );
+    my ( @req, @opt );
 
     return 0 unless (%$prm);
     return ( 0, $prm ) unless ($is_id);
 
-    my %msg;
+    $self->lmLog( "SREG start", 'debug' );
 
     # TODO: verify that request has been accepted
     my $accepted = 1;
     while ( my ( $k, $v ) = each %$prm ) {
         if ( $k eq 'policy_url' ) {
             if ( $v =~ Lemonldap::NG::Common::Regexp::HTTP_URI ) {
-                $msg{policy} = $v;
-                my $p =
-                  $self->{sessionInfo}->{"_openidTrust$trust_root\_Policy"};
-                $accepted = 0 unless ( $p and $p eq $v );
+                $self->{_openIdTrustExtMsg} .=
+                    '<dl><dt>'
+                  . &Lemonldap::NG::Portal::_i18n::msg(PM_OPENID_PA)
+                  . "&nbsp;:</dt><dd><a href=\"$v\">$v</a></dd></dl>";
+
+                # TODO: is it important to notify policy changes ?
+                #my $p =
+                #  $self->{sessionInfo}->{"_openidTrust$trust_root\_Policy"};
+                #$accepted = 0 unless ( $p and $p eq $v );
             }
             else {
                 $self->lmLog( "Bad policy url", 'error' );
             }
         }
         elsif ( $k eq 'required' ) {
+            $self->lmLog( "Required attr $v", 'debug' );
             push @req, split( /,/, $v );
         }
         elsif ( $k eq 'optional' ) {
+            $self->lmLog( "Optional attr $v", 'debug' );
             push @opt,
               grep { defined $self->{"openIdSreg_$_"} } split( /,/, $v );
         }
@@ -49,48 +56,159 @@ sub sregHook {
     }
 
     # Check if required keys are valid SREG requests
-    if (
-        my @tmp =
-        map { s/\W/\./sg }
-        grep
-/^(?:(?:(?:full|nick)nam|languag|postcod|timezon)e|country|gender|email|dob)$/,
-        @req, @opt
-      )
-    {
-        $self->lmLog(
-            "Requested parameter(s) "
-              . join( ',', @tmp )
-              . "is(are) not valid OpenID SREG parameter",
-            'error'
-        );
+    # TODO: reject bad SREG request ?
+    @req = sregfilter( $self, @req );
+    @opt = sregfilter( $self, @opt );
 
-	# TODO: change this
-        return prompt( $self, OI_INVALID, $prm, \%msg );
-    }
+    # If nothing is asked,
+    return ( 1, {} ) unless ( @req and @opt );
 
     # If a required data is not available, returns nothing
     foreach my $k (@req) {
         unless ( $self->{"openIdSreg_$k"} ) {
             $self->lmLog(
-"Parameter $k is required by customer but not defined in configuration",
+"Parameter $k is required by $trust_root but not defined in configuration",
                 'notice'
             );
 
-            # TODO
+            $self->info(
+                '<h2>'
+                  . sprintf(
+                    &Lemonldap::NG::Portal::_i18n::msg(PM_OPENID_RPNS),
+                    $k
+                  )
+                  . '</h2>'
+            );
             return ( 0, {} );
         }
     }
-    foreach my $k ( @req, @opt ) {
 
-	# TODO: confirm
-        $r{$k} = $self->{sessionInfo}->{ $self->{"openIdSreg_$k"} } || '';
+    # Now set datas
+    my ( %r, %msg, %ag );
+
+    print STDERR Dumper( $self->{_prm} );
+    use Data::Dumper;
+
+    # Requested parameters: check if already agreed or confirm is set
+    foreach my $k (@req) {
+        my $agree = $self->{sessionInfo}->{"_openidTrust$trust_root\_$k"};
+        if ($accepted) {
+            unless ( $self->param('confirm') or $agree ) {
+                $accepted = 0;
+            }
+            elsif ( !$agree ) {
+                $self->updateSession( { "_openidTrust$trust_root\_$k" => 1 } );
+            }
+        }
+        $self->{"openIdSreg_$k"} =~ s/^\$//;
+        $msg{req}->{$k} = $r{$k} =
+          $self->{sessionInfo}->{ $self->{"openIdSreg_$k"} } || '';
     }
-    return 1, \%r;
+
+    # TODO: NOTHING WORKS HERE
+    # Optional parameters:
+    foreach my $k (@opt) {
+        $self->{"openIdSreg_$k"} =~ s/^\$//;
+        my $agree = $self->{sessionInfo}->{"_openidTrust$trust_root\_$k"};
+        if ($accepted) {
+
+            # First, check if already accepted
+            unless ( $self->param('confirm') or defined($agree) ) {
+                $accepted = 0;
+                $r{$k} = $self->{sessionInfo}->{ $self->{"openIdSreg_$k"} }
+                  || '';
+            }
+
+            # If confirmation is returned, check the value for this field
+            elsif ( $self->param('confirm') ) {
+                my $ck;
+                if ( defined( $self->param("sreg_$k") ) ) {
+                    my $ck = ( $self->param("sreg_$k") == 'OK' );
+                }
+                    # Store the value returned
+                    if ( !defined($agree) or $agree != $ck ) {
+                        $self->{sessionInfo}->{"_openidTrust$trust_root\_$k"} =
+                          1;
+                        $self->updateSession(
+                            { "_openidTrust$trust_root\_$k" => $ck } );
+                        $agree = $ck;
+                    }
+
+                # This case happends only if user manipulates form datas
+                elsif ( not defined($agree) ) {
+                    $accepted = 0;
+                }
+            }
+        }
+
+        # TODO: updateSession()
+        $msg{opt}->{$k} = $self->{sessionInfo}->{ $self->{"openIdSreg_$k"} }
+          || '';
+
+        # Store the value only if user agree it
+        if ($agree) {
+            $r{$k}  = $msg{opt}->{$k};
+            $ag{$k} = 1;
+        }
+        else {
+            $ag{$k} = 0;
+        }
+    }
+
+    # Check if user has agreed request
+    if ($accepted) {
+        $self->_sub( 'userInfo',
+            $self->{sessionInfo}->{ $self->{whatToTrace} }
+              . " has accepted OpenID SREG exchange with $trust_root" );
+        return ( 1, \%r );
+    }
+
+    # else build message and return 0
+    else {
+
+        # No choice for requested parameters: just an information
+        $self->{_openIdTrustExtMsg} .=
+          "<p>" . &Lemonldap::NG::Portal::_i18n::msg(PM_OPENID_AP) . "</p><ul>";
+        foreach my $k (@req) {
+            $self->{_openIdTrustExtMsg} .= "<li>$k: $r{$k}</li>";
+        }
+
+        # For optional parameters: checkboxes are displayed
+        $self->{_openIdTrustExtMsg} .= '</ul>';
+        foreach my $k (@opt) {
+            $self->{_openIdTrustExtMsg} .=
+                qq#<input type="checkbox" value="OK"#
+              . ( $ag{$k} ? 'checked="checked"' : '' )
+              . qq# name="sreg_$k" /> $k: $r{$k}<br />#;
+        }
+        $self->lmLog( 'Building validation form', 'debug' );
+        return ( 0, $prm );
+    }
 }
 
-sub prompt {
-    return ( 0, {} );
+sub sregfilter {
+    my ( $self, @attr ) = splice @_;
+    my ( @ret, @rej );
+    foreach my $s (@attr) {
+        if ( $s =~
+/^(?:(?:(?:full|nick)nam|languag|postcod|timezon)e|country|gender|email|dob)$/
+          )
+        {
+            push @ret, $s;
+        }
+        else {
+            $s =~ s/\W/\./sg;
+            push @rej, $s;
+        }
+        if (@rej) {
+            $self->lmLog(
+                "Requested parameter(s) "
+                  . join( ',', @rej )
+                  . "is(are) not valid OpenID SREG parameter(s)",
+                'error'
+            );
+        }
+        return @ret;
+    }
 }
-
 1;
-

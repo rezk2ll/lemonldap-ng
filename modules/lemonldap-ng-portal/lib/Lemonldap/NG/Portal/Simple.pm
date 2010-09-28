@@ -134,6 +134,9 @@ use constant {
     PM_LOGOUT                => 15,
     PM_OPENID_EXCHANGE       => 16,
     PM_CDC_WRITER            => 17,
+    PM_OPENID_RPNS           => 18,    # OpenID "requested parameter is not set"
+    PM_OPENID_PA             => 19,    # "OpenID policy available at"
+    PM_OPENID_AP             => 20,    # OpenID "Asked parameter"
 };
 
 # EXPORTER PARAMETERS
@@ -157,7 +160,7 @@ our @EXPORT = qw( PE_IMG_NOK PE_IMG_OK PE_INFO PE_REDIRECT PE_DONE PE_OK
   PM_REMOVE_OTHER_SESSIONS PM_PP_GRACE PM_PP_EXP_WARNING
   PM_SAML_IDPSELECT PM_SAML_IDPCHOOSEN PM_REMEMBERCHOICE PM_SAML_SPLOGOUT
   PM_REDIRECTION PM_BACKTOSP PM_BACKTOCASURL PM_LOGOUT PM_OPENID_EXCHANGE
-  PM_CDC_WRITER
+  PM_CDC_WRITER PM_OPENID_RPNS PM_OPENID_PA PM_OPENID_AP
 );
 our %EXPORT_TAGS = ( 'all' => [ @EXPORT, 'import' ], );
 
@@ -1364,9 +1367,7 @@ sub controlExistingSession {
                     $self->info(
                         "<h3>"
                           . &Lemonldap::NG::Portal::_i18n::msg
-                          ( Lemonldap::NG::Portal::Simple::PM_LOGOUT,
-                            $ENV{HTTP_ACCEPT_LANGUAGE} )
-                          . "</h3>"
+                          (Lemonldap::NG::Portal::Simple::PM_LOGOUT) . "</h3>"
                     );
 
                     foreach ( keys %{ $self->{logoutServices} } ) {
@@ -1697,19 +1698,14 @@ sub removeOther {
     }
     $self->info(
         $self->_mkDateIpArray(
-            &Lemonldap::NG::Portal::_i18n::msg( PM_SESSIONS_DELETED,
-                $ENV{HTTP_ACCEPT_LANGUAGE}
-            ),
+            &Lemonldap::NG::Portal::_i18n::msg(PM_SESSIONS_DELETED),
             @{ $self->{deleted} }
         )
     ) if ( $self->{notifyDeleted} and @{ $self->{deleted} } );
     $self->info(
         $self->_mkDateIpArray(
-            &Lemonldap::NG::Portal::_i18n::msg( PM_OTHER_SESSIONS,
-                $ENV{HTTP_ACCEPT_LANGUAGE}
-            ),
-            @{ $self->{otherSessions} }
-          )
+            &Lemonldap::NG::Portal::_i18n::msg(PM_OTHER_SESSIONS),
+            @{ $self->{otherSessions} } )
           . $self->_mkRemoveOtherLink()
     ) if ( $self->{notifyOther} and @{ $self->{otherSessions} } );
     PE_OK;
@@ -1724,9 +1720,7 @@ sub _mkDateIpArray {
     my ( $self, $title, @datas ) = @_;
     my $tmp = "<h3>$title</h3>";
     $tmp .= "<table class=\"info\"><tbody><tr>";
-    $tmp .= '<th>'
-      . &Lemonldap::NG::Portal::_i18n::msg( $_, $ENV{HTTP_ACCEPT_LANGUAGE} )
-      . '</th>'
+    $tmp .= '<th>' . &Lemonldap::NG::Portal::_i18n::msg($_) . '</th>'
       foreach ( PM_USER, PM_DATE, PM_IP );
     $tmp .= '</tr>';
     foreach (@datas) {
@@ -1748,9 +1742,9 @@ sub _mkRemoveOtherLink {
 
     my $link = $self->{portal} . "?removeOther=1";
 
-    return "<p class=\"removeOther\"><a href=\"$link\" onclick=\"_go=0\">"
-      . &Lemonldap::NG::Portal::_i18n::msg( PM_REMOVE_OTHER_SESSIONS,
-        $ENV{HTTP_ACCEPT_LANGUAGE} )
+    return
+        "<p class=\"removeOther\"><a href=\"$link\" onclick=\"_go=0\">"
+      . &Lemonldap::NG::Portal::_i18n::msg(PM_REMOVE_OTHER_SESSIONS)
       . "</a></p>";
 }
 
@@ -2064,9 +2058,7 @@ sub autoPost {
     }
     ";
 
-    my $message =
-      &Lemonldap::NG::Portal::_i18n::msg( PM_REDIRECTION,
-        $ENV{HTTP_ACCEPT_LANGUAGE} );
+    my $message = &Lemonldap::NG::Portal::_i18n::msg(PM_REDIRECTION);
 
     # Print page
     print $self->header();
