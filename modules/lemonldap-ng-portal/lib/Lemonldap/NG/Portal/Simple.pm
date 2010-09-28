@@ -209,8 +209,9 @@ sub new {
       unless ( $self->{domain} );
     $self->{domain} =~ s/^([^\.])/.$1/;
 
-    # Load Menu functions
+    # Load Display and Menu functions
     $self->loadModule('Lemonldap::NG::Portal::Menu');
+    $self->loadModule('Lemonldap::NG::Portal::Display');
 
     # Rules to allow redirection
     $self->{mustRedirect} = (
