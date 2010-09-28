@@ -352,12 +352,8 @@ sub statusProcess {
 sub safe {
     my $class = shift;
 
-    #no strict 'refs';
-    #return ${"$class\::safe"} if (${"$class\::safe"});
     return $safe if ($safe);
 
-    #$class->lmLog( "Compiling safe jail for $class", 'debug' );
-    #my $safe = new Safe;
     $safe = new Safe;
     my @t = $customFunctions ? split( /\s+/, $customFunctions ) : ();
     foreach (@t) {
@@ -383,7 +379,6 @@ sub safe {
     $safe->share( '&encode_base64', '$datas', '&lmSetHeaderIn',
         '$apacheRequest', '&portal', @t );
 
-    #return ${"$class\::safe"} = $safe;
     return $safe;
 }
 
@@ -447,7 +442,7 @@ sub childInit {
         $s->push_handlers(
             PerlPostConfigHandler => sub {
                 my ( $c, $l, $t, $s ) = splice @_;
-                $s->add_version_component('Lemonldap::NG::Handler');
+                $s->add_version_component('Lemonldap::NG::Handler/'.$VERSION);
             }
         ) unless ( $args->{hideSignature} );
     }
