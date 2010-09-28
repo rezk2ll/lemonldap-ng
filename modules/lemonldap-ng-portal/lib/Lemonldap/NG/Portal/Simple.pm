@@ -31,6 +31,10 @@ use Safe;
 #inherits Lemonldap::NG::Portal::AuthSSL
 #inherits Lemonldap::NG::Portal::Menu
 #link Lemonldap::NG::Portal::Notification protected notification
+#inherits Lemonldap::NG::Portal::IssuerDBCAS
+#inherits Lemonldap::NG::Portal::IssuerDBNull
+#inherits Lemonldap::NG::Portal::IssuerDBOpenID
+#inherits Lemonldap::NG::Portal::IssuerDBSAML
 #inherits Lemonldap::NG::Portal::UserDBDBI
 #inherits Lemonldap::NG::Portal::UserDBEnv
 #inherits Lemonldap::NG::Portal::UserDBLDAP
@@ -1177,7 +1181,6 @@ sub controlUrlOrigin {
             if ( $time < 600 ) {
                 $self->lmLog( "Confirm parameter accepted $c", 'debug' );
                 $self->param( 'confirm', $c );
-                print STDERR "DEBUG " . $self->param('confirm') . "\n";
             }
             else {
                 $self->lmLog( 'Confirmation to old, refused', 'notice' );

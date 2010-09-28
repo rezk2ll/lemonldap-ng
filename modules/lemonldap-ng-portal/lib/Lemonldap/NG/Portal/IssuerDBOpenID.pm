@@ -8,6 +8,9 @@ package Lemonldap::NG::Portal::IssuerDBOpenID;
 use strict;
 use Lemonldap::NG::Portal::Simple;
 
+# Special comments for doxygen
+#inherits Lemonldap::NG::Portal::OpenID::Server
+
 our $VERSION = '0.01';
 our $initDone;
 
