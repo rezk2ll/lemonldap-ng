@@ -222,7 +222,7 @@ BEGIN {
         my ( $class, $args, $data ) = @_;
         die "Only Redis is supported" unless ( $args->{Driver} eq 'Redis' );
         my $redis = Redis->new(%$args);
-        my @keys   = $redis->keys('*');
+        my @keys  = $redis->keys('*');
         my %res;
         foreach my $k (@keys) {
             my $v =

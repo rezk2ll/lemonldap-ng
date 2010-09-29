@@ -1340,9 +1340,9 @@ sub testStruct {
             msgFail => 'Bad module name',
         },
         useRedirectOnForbidden => $boolean,
-        useXForwardedForIP => $boolean,
-        variables          => $testNotDefined,
-        whatToTrace        => {
+        useXForwardedForIP     => $boolean,
+        variables              => $testNotDefined,
+        whatToTrace            => {
             test    => qr/^\$?_?[a-zA-Z]\w*$/,
             msgFail => 'Bad value',
         },
@@ -1615,8 +1615,8 @@ sub defaultConf {
         userDB              => 'LDAP',
         passwordDB          => 'LDAP',
         useRedirectOnForbidden => '0',
-        useXForwardedForIP  => '0',
-        whatToTrace         => '$_whatToTrace',
+        useXForwardedForIP     => '0',
+        whatToTrace            => '$_whatToTrace',
         ########
         # SAML #
         ########

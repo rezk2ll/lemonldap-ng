@@ -393,8 +393,8 @@ sub en {
         samlAuthnContextMapPassword => 'Password',
         samlAuthnContextMapPasswordProtectedTransport =>
           'Password protected transport',
-        samlAuthnContextMapTLSClient => 'TLS client',
-        samlAuthnContextMapKerberos  => 'Kerberos',
+        samlAuthnContextMapTLSClient     => 'TLS client',
+        samlAuthnContextMapKerberos      => 'Kerberos',
         samlCommonDomainCookie           => 'Common Domain Cookie',
         samlCommonDomainCookieActivation => 'Activation',
         samlCommonDomainCookieDomain     => 'Common domain',
@@ -762,8 +762,8 @@ sub fr {
         samlAuthnContextMapPassword => 'Mot de passe',
         samlAuthnContextMapPasswordProtectedTransport =>
           'Mot de passe protégé',
-        samlAuthnContextMapTLSClient => 'Client TLS',
-        samlAuthnContextMapKerberos  => 'Kerberos',
+        samlAuthnContextMapTLSClient     => 'Client TLS',
+        samlAuthnContextMapKerberos      => 'Kerberos',
         samlCommonDomainCookie           => 'Cookie de Domaine Commun',
         samlCommonDomainCookieActivation => 'Activation',
         samlCommonDomainCookieDomain     => 'Domaine commun',

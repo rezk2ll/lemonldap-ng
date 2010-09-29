@@ -72,7 +72,7 @@ BEGIN {
               lmSetHeaderOut lmSetErrHeaderOut $cookieName $https $port
               )
         ],
-        traces  => [qw( $whatToTrace $statusPipe $statusOut)],
+        traces => [qw( $whatToTrace $statusPipe $statusOut)],
         apache => [
             qw( MP OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR useRedirectOnForbidden )
         ],
@@ -442,7 +442,8 @@ sub childInit {
         $s->push_handlers(
             PerlPostConfigHandler => sub {
                 my ( $c, $l, $t, $s ) = splice @_;
-                $s->add_version_component('Lemonldap::NG::Handler/'.$VERSION);
+                $s->add_version_component(
+                    'Lemonldap::NG::Handler/' . $VERSION );
             }
         ) unless ( $args->{hideSignature} );
     }
@@ -865,7 +866,7 @@ sub forbidden {
     }
     else {
         $class->lmLog( "Return forbidden access", 'debug' );
-    return FORBIDDEN;
+        return FORBIDDEN;
     }
 }
 

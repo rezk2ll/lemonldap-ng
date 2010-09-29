@@ -88,7 +88,7 @@ sub new {
 # If nothing is found, redirects the user to the Lemonldap::NG portal.
 # @return boolean : true if authentication is good. Exit before else
 sub authenticate {
-    my $self    = shift;
+    my $self = shift;
     $self->abort(
         "Can't authenticate because configuration has not been loaded",
         $self->{noConf} )
@@ -136,11 +136,10 @@ sub authorize {
 # 0 if user isn't granted
 sub testUri {
     my $self = shift;
-    $self->abort(
-        "Can't test URI because configuration has not been loaded",
+    $self->abort( "Can't test URI because configuration has not been loaded",
         $self->{noConf} )
       if ( $self->{noConf} );
-    my $uri  = shift;
+    my $uri = shift;
     my $host =
       ( $uri =~ s#^(?:https?://)?([^/]*)/#/# ) ? $1 : $ENV{SERVER_NAME};
     return -1 unless ( Lemonldap::NG::Handler::_CGI->vhostAvailable($host) );
