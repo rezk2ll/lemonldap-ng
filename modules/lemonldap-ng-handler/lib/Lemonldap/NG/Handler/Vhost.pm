@@ -5,7 +5,8 @@
 # This class adds virtual host support for Lemonldap::NG handlers.
 package Lemonldap::NG::Handler::Vhost;
 
-use Lemonldap::NG::Handler::Simple qw(:locationRules :headers);    #inherits
+use Lemonldap::NG::Handler::Simple qw(:locationRules :headers :post :apache)
+  ;    #inherits
 use strict;
 use MIME::Base64;
 use constant SAFEWRAP => ( Safe->can("wrap_code_ref") ? 1 : 0 );
@@ -77,8 +78,6 @@ sub forgeHeadersInit {
               . $tmp{$_} . ")));";
         }
 
-        #$sub = "\$forgeHeaders->{'$vhost'} = sub {$sub};";
-        #eval "$sub";
         $forgeHeaders->{$vhost} = (
             SAFEWRAP
             ? $class->safe->wrap_code_ref( $class->safe->reval("sub {$sub}") )
@@ -137,6 +136,110 @@ sub grant {
         return 0;
     }
     return &{ $defaultCondition->{$vhost} }($datas);
+}
+
+## @imethod protected void postUrlInit()
+# Prepare methods to post form attributes
+sub postUrlInit {
+    my ( $class, $args ) = splice @_;
+
+    # Do nothing if no POST configured
+    return unless ( $args->{post} );
+
+    # Load required modules
+    eval 'use Apache2::Filter;use URI';
+
+    # Prepare transform sub
+    $transform = {};
+
+    # Browse all vhost
+    foreach my $vhost ( keys %{ $args->{post} } ) {
+
+        # Browse all POST URI
+        while ( my ( $url, $d ) = each( %{ $args->{post}->{$vhost} } ) ) {
+
+            # Where to POST
+            $d->{postUrl} ||= $url;
+
+            # Register POST form for POST URL
+            $transform->{$vhost}->{ $d->{postUrl} } =
+              sub { $class->buildPostForm( $d->{postUrl} ) }
+              if ( $url ne $d->{postUrl} );
+
+            # Get datas to POST
+            my $expr = $d->{expr};
+            my %postdata;
+
+            # Manage old and new configuration format
+            # OLD: expr => 'param1 => value1, param2 => value2',
+            # NEW : expr => { param1 => value1, param2 => value2 },
+            if ( ref $expr eq 'HASH' ) {
+                %postdata = %$expr;
+            }
+            else {
+                %postdata = split /(?:\s*=>\s*|\s*,\s*)/, $expr;
+            }
+
+            # Build string for URI::query_form
+            my $tmp;
+            foreach ( keys %postdata ) {
+                $postdata{$_} =~ s/\$(\w+)/\$datas->{$1}/g;
+                $postdata{$_} = "'$postdata{$_}'"
+                  if ( $postdata{$_} =~ /^\w+$/ );
+                $tmp .= "'$_'=>$postdata{$_},";
+            }
+
+            # Build subroutine
+            my $sub = "sub{
+            my \$f = shift;
+            my \$l;
+            unless(\$f->ctx){
+            \$f->ctx(1);
+            my \$u=URI->new('http:');
+            \$u->query_form({$tmp});
+            my \$s=\$u->query();
+            \$l = \$f->r->headers_in->{'Content-Length'};
+            \$f->r->headers_in->set( 'Content-Length' => length(\$s) );
+            \$f->r->headers_in->set( 'Content-Type' => 'application/x-www-form-urlencoded' );
+            \$f->print(\$s);
+            while ( \$f->read( my \$b, \$l ) ) {}
+            \$f->seen_eos(1);
+            }
+            return OK;
+        }"
+              ;
+            $sub = (
+                SAFEWRAP
+                ? $class->safe->wrap_code_ref( $class->safe->reval($sub) )
+                : $class->safe->reval($sub)
+            );
+            $class->lmLog( "Compiling POST request for $url (vhost $vhost)",
+                'debug' );
+            $transform->{$vhost}->{$url} = sub {
+                return $class->buildPostForm($url)
+                  if ( $apacheRequest->method ne 'POST' );
+                $apacheRequest->add_input_filter($sub);
+                OK;
+              }
+        }
+
+    }
+
+}
+
+## @rmethod protected transformUri(string uri)
+# Transform URI to replay POST forms
+# @param uri URI to catch
+# @return Apache2::Const
+sub transformUri {
+    my ( $class, $uri ) = splice @_;
+    my $vhost = $apacheRequest->hostname;
+
+    if ( defined( $transform->{$vhost}->{$uri} ) ) {
+        return &{ $transform->{$vhost}->{$uri} };
+    }
+
+    OK;
 }
 
 1;

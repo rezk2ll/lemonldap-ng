@@ -808,6 +808,13 @@ sub postUrlInit {
     }
 }
 
+## @imethod protected buildPostForm(string url, int count)
+# Build form that will be posted by client
+# Fill an input hidden with fake value to
+# reach the size of initial request
+# @param url Target of POST
+# @param count Fake input size
+# @return Apache2::Const::OK
 sub buildPostForm {
     my $class = shift;
     my $url   = shift;
@@ -987,6 +994,20 @@ sub fetchId {
     return ( $t =~ /$cookieName=([^,; ]+)/o ) ? $1 : 0;
 }
 
+## @rmethod protected transformUri(string uri)
+# Transform URI to replay POST forms
+# @param uri URI to catch
+# @return Apache2::Const
+sub transformUri {
+    my ( $class, $uri ) = splice @_;
+
+    if ( defined( $transform->{$uri} ) ) {
+        return &{ $transform->{$uri} };
+    }
+
+    OK;
+}
+
 # MAIN SUBROUTINE called by Apache (using PerlHeaderParserHandler option)
 
 ## @rmethod int run(Apache2::RequestRec apacheRequest)
@@ -1127,9 +1148,9 @@ sub run ($$) {
     );
 
     #  Catch POST rules
-    if ( defined( $transform->{$uri} ) ) {
-        return &{ $transform->{$uri} };
-    }
+    $class->transformUri($uri);
+
+    # Return OK
     OK;
 }
 
