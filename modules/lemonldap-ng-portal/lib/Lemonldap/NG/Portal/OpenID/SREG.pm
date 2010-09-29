@@ -19,13 +19,18 @@ sub sregHook {
 
     # Refuse federation if rejected by user
     return 0 if ( $self->param('confirm') == -1 );
+
+    # If identity is not trusted, does nothing
     return ( 0, $prm ) unless ($is_id);
 
     $self->lmLog( "SREG start", 'debug' );
 
-    # TODO: verify that request has been accepted
     my $accepted = 1;
+
+    # Check all parameters
     while ( my ( $k, $v ) = each %$prm ) {
+
+        # Store policy if provided
         if ( $k eq 'policy_url' ) {
             if ( $v =~ Lemonldap::NG::Common::Regexp::HTTP_URI ) {
                 $self->{_openIdTrustExtMsg} .=
@@ -33,7 +38,8 @@ sub sregHook {
                   . &Lemonldap::NG::Portal::_i18n::msg(PM_OPENID_PA)
                   . "&nbsp;:</dt><dd><a href=\"$v\">$v</a></dd></dl>";
 
-                # TODO: is it important to notify policy changes ?
+                # Question: is it important to notify policy changes ?
+                # if yes, uncomment this
                 #my $p =
                 #  $self->{sessionInfo}->{"_openidTrust$trust_root\_Policy"};
                 #$accepted = 0 unless ( $p and $p eq $v );
@@ -42,10 +48,14 @@ sub sregHook {
                 $self->lmLog( "Bad policy url", 'error' );
             }
         }
+
+        # Parse required attributes
         elsif ( $k eq 'required' ) {
             $self->lmLog( "Required attr $v", 'debug' );
             push @req, split( /,/, $v );
         }
+
+        # Parse optional attributes
         elsif ( $k eq 'optional' ) {
             $self->lmLog( "Optional attr $v", 'debug' );
             push @opt,
@@ -57,7 +67,7 @@ sub sregHook {
     }
 
     # Check if required keys are valid SREG requests
-    # TODO: reject bad SREG request ?
+    # Question: reject bad SREG request ? Not done yet
     @req = sregfilter( $self, @req );
     @opt = sregfilter( $self, @opt );
 
@@ -125,7 +135,6 @@ sub sregHook {
 
                 # Store the value returned
                 if ( !defined($agree) or $agree != $ck ) {
-                    $self->{sessionInfo}->{"_openidTrust$trust_root\_$k"} = 1;
                     $self->updateSession(
                         { "_openidTrust$trust_root\_$k" => $ck } );
                     $agree = $ck;
@@ -140,6 +149,9 @@ sub sregHook {
         # Store the value only if user agree it
         if ($agree) {
             $r{$k}  = $msg{opt}->{$k};
+            $ag{$k} = 1;
+        }
+        elsif ( !defined($agree) ) {
             $ag{$k} = 1;
         }
         else {
@@ -178,6 +190,10 @@ sub sregHook {
     }
 }
 
+## @method private array sregfilter(array attr)
+# Filter the arguments passed as parameters by checking their compliance with
+# SREG.
+# @return fitered datas
 sub sregfilter {
     my ( $self, @attr ) = splice @_;
     my ( @ret, @rej );

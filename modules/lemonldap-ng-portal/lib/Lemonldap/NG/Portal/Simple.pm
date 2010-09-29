@@ -781,11 +781,13 @@ sub updateSession {
     my ( $self, $infos, $id ) = splice @_;
     my %cookies = fetch CGI::Cookie;
 
-    # Session ID
-    unless ($id) {
-        $id = $cookies{ $self->{cookieName} }->value
-          if defined $cookies{ $self->{cookieName} };
-    }
+    # Update sessionInfo datas
+    $self->{sessionInfo}->{$_} = $infos->{$_} unless ($id);
+
+    # Recover session ID unless given
+    $id ||= $self->{id};
+    $id ||= $cookies{ $self->{cookieName} }->value
+      if ( defined $cookies{ $self->{cookieName} } );
 
     if ($id) {
         my $h = $self->getApacheSession( $id, 1 ) or return undef;
@@ -800,7 +802,6 @@ sub updateSession {
 
         untie %$h;
     }
-
 }
 
 ## @method void addSessionValue(string key, string value, string id)
