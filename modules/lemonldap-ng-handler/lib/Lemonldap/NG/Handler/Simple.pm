@@ -731,23 +731,50 @@ sub initLocalStorage {
 # Prepare methods to post form attributes
 sub postUrlInit {
     my ( $class, $args ) = splice @_;
+
+    # Do nothing if no POST configured
     return unless ( $args->{post} );
+
+    # Load required modules
     eval 'use Apache2::Filter;use URI';
+
+    # Prepare transform sub
     $transform = {};
+
+    #  Browse all POST URI
     while ( my ( $url, $d ) = each( %{ $args->{post} } ) ) {
+
+        # Where to POST
         $d->{postUrl} ||= $url;
+
+        # Register POST form for POST URL
         $transform->{ $d->{postUrl} } =
           sub { $class->buildPostForm( $d->{postUrl} ) }
           if ( $url ne $d->{postUrl} );
 
+        # Get datas to POST
         my $expr = $d->{expr};
-        $expr =~ s/\$(\w+)/\$datas->{$1}/g;
-        my %h = split /(?:\s*=>\s*|\s*,\s*)/, $expr;
-        my $tmp;
-        foreach ( keys %h ) {
-            $h{$_} = "'$h{$_}'" if ( $h{$_} =~ /^\w+$/ );
-            $tmp .= "'$_'=>$h{$_},";
+        my %postdata;
+
+        # Manage old and new configuration format
+        # OLD: expr => 'param1 => value1, param2 => value2',
+        # NEW : expr => { param1 => value1, param2 => value2 },
+        if ( ref $expr eq 'HASH' ) {
+            %postdata = %$expr;
         }
+        else {
+            %postdata = split /(?:\s*=>\s*|\s*,\s*)/, $expr;
+        }
+
+        # Build string for URI::query_form
+        my $tmp;
+        foreach ( keys %postdata ) {
+            $postdata{$_} =~ s/\$(\w+)/\$datas->{$1}/g;
+            $postdata{$_} = "'$postdata{$_}'" if ( $postdata{$_} =~ /^\w+$/ );
+            $tmp .= "'$_'=>$postdata{$_},";
+        }
+
+        # Build subroutine
         my $sub = "sub{
             my \$f = shift;
             my \$l;
