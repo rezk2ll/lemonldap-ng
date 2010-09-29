@@ -134,7 +134,7 @@ sub extractFormInfo {
                   )
                 {
                     if   ( $v =~ s/^!// ) { push @r, $k }
-                    else          { push @o, $k }
+                    else                  { push @o, $k }
                 }
                 else {
                     $self->lmLog(

@@ -17,7 +17,8 @@ sub sregHook {
     my ( $self, $u, $trust_root, $is_id, $is_trusted, $prm ) = splice @_;
     my ( @req, @opt );
 
-    return 0 unless (%$prm);
+    # Refuse federation if rejected by user
+    return 0 if ( $self->param('confirm') == -1 );
     return ( 0, $prm ) unless ($is_id);
 
     $self->lmLog( "SREG start", 'debug' );
@@ -86,9 +87,6 @@ sub sregHook {
     # Now set datas
     my ( %r, %msg, %ag );
 
-    print STDERR Dumper( $self->{_prm} );
-    use Data::Dumper;
-
     # Requested parameters: check if already agreed or confirm is set
     foreach my $k (@req) {
         my $agree = $self->{sessionInfo}->{"_openidTrust$trust_root\_$k"};
@@ -105,7 +103,6 @@ sub sregHook {
           $self->{sessionInfo}->{ $self->{"openIdSreg_$k"} } || '';
     }
 
-    # TODO: NOTHING WORKS HERE
     # Optional parameters:
     foreach my $k (@opt) {
         $self->{"openIdSreg_$k"} =~ s/^\$//;
@@ -120,23 +117,18 @@ sub sregHook {
             }
 
             # If confirmation is returned, check the value for this field
-            elsif ( $self->param('confirm') ) {
-                my $ck;
+            elsif ( $self->param('confirm') == 1 ) {
+                my $ck = 0;
                 if ( defined( $self->param("sreg_$k") ) ) {
-                    my $ck = ( $self->param("sreg_$k") == 'OK' );
+                    $ck = ( $self->param("sreg_$k") == 'OK' ) || 0;
                 }
-                    # Store the value returned
-                    if ( !defined($agree) or $agree != $ck ) {
-                        $self->{sessionInfo}->{"_openidTrust$trust_root\_$k"} =
-                          1;
-                        $self->updateSession(
-                            { "_openidTrust$trust_root\_$k" => $ck } );
-                        $agree = $ck;
-                    }
 
-                # This case happends only if user manipulates form datas
-                elsif ( not defined($agree) ) {
-                    $accepted = 0;
+                # Store the value returned
+                if ( !defined($agree) or $agree != $ck ) {
+                    $self->{sessionInfo}->{"_openidTrust$trust_root\_$k"} = 1;
+                    $self->updateSession(
+                        { "_openidTrust$trust_root\_$k" => $ck } );
+                    $agree = $ck;
                 }
             }
         }

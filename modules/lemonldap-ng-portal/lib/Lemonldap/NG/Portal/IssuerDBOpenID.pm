@@ -173,6 +173,7 @@ sub openIDServer {
         },
         extensions => {
             sreg => sub {
+                return ( 1, {} ) unless (@_);
                 require Lemonldap::NG::Portal::OpenID::SREG;
                 return $self->Lemonldap::NG::Portal::OpenID::SREG::sregHook(@_);
             },
