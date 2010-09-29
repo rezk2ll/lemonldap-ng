@@ -62,14 +62,14 @@ sub setSessionInfo {
                 );
             }
 
-            if ($required and not defined($self->{sessionInfo}->{$attr})) {
+            if ( $required and not defined( $self->{sessionInfo}->{$attr} ) ) {
                 $self->lmLog(
 "Required parameter $attr is not provided by OpenID server, aborted",
                     'warn'
                 );
 
                 # TODO: create a PE_* for that
-                return PE_ERROR;
+                return PE_MISSINGREQATTR;
             }
         }
     }
