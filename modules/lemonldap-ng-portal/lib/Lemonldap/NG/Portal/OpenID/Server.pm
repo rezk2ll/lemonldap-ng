@@ -118,6 +118,7 @@ sub _mode_checkid {
         $self->_setup_map("return_to"),    $return_to,
         $self->_setup_map("identity"),     $identity,
         $self->_setup_map("assoc_handle"), $self->args("openid.assoc_handle"),
+        %extVars,
     );
     $setup_args{ $self->_setup_map('ns') } = $self->args('openid.ns')
       if $self->args('openid.ns');

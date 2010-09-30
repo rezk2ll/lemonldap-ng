@@ -22,5 +22,9 @@ then
 	chmod 770 $SESSIONSDIR/lock
 	chown -R www-data:www-data $SESSIONSDIR
 	$BUILDPORTALWSDL > $WSDLFILE || true
+
+	[ -d /etc/apache2/sites-available/ ] && \
+		[ ! -e /etc/apache2/sites-available/portal-apache2.conf ] && \
+		ln -s /etc/lemonldap-ng/portal-apache2.conf /etc/apache2/sites-available/portal-apache2.conf
 fi
 
