@@ -25,6 +25,7 @@ then
 
 	[ -d /etc/apache2/sites-available/ ] && \
 		[ ! -e /etc/apache2/sites-available/portal-apache2.conf ] && \
-		ln -s /etc/lemonldap-ng/portal-apache2.conf /etc/apache2/sites-available/portal-apache2.conf
+		ln -s /etc/lemonldap-ng/portal-apache2.conf /etc/apache2/sites-available/portal-apache2.conf \
+		|| true
 fi
 

@@ -16,7 +16,8 @@ then
 	done
 	[ -d /etc/apache2/sites-available/ ] && \
 		[ ! -e /etc/apache2/sites-available/manager-apache2.conf ] && \
-		ln -s /etc/lemonldap-ng/manager-apache2.conf /etc/apache2/sites-available/manager-apache2.conf
+		ln -s /etc/lemonldap-ng/manager-apache2.conf /etc/apache2/sites-available/manager-apache2.conf \
+		|| true
 fi
 
 

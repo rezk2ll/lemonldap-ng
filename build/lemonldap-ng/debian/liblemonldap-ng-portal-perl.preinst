@@ -1,0 +1,15 @@
+#!/bin/bash
+# Maintainer: #DEBHELPER#
+
+set -e
+
+. /usr/share/debconf/confmodule
+
+if [ "$1" == "configure" ]
+then
+	[ -f /var/lib/lemonldap-ng/portal/index.pl ] && \
+		diff /var/lib/lemonldap-ng/portal/index.pl \
+			/usr/share/doc/liblemonldap-ng-portal-perl/examples/index_skin.pl && \
+		rm -rf /var/lib/lemonldap-ng/portal/index.pl
+fi
+
