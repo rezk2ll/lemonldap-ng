@@ -165,6 +165,21 @@
      <lang en="Delete application" fr="Supprimer l'application" />
     </button>
 
+    <button id="newpostr" style="display:none;" onclick="newPostR();return false;" class="ui-state-default ui-corner-all">
+     <lang en="New POST URL" fr="Nouvelle URL POST" />
+    </button>
+
+    <button id="delpost" style="display:none;" onclick="delPost();return false;" class="ui-state-default ui-corner-all">
+     <lang en="Delete POST URL" fr="Supprimer l'URL POST" />
+    </button>
+
+    <button id="newpostdatar" style="display:none;" onclick="newPostDataR();return false;" class="ui-state-default ui-corner-all">
+     <lang en="New POST data" fr="Nouvelle donnée POST" />
+    </button>
+
+    <button id="delpostdata" style="display:none;" onclick="delPostData();return false;" class="ui-state-default ui-corner-all">
+     <lang en="Delete POST data" fr="Supprimer la donnée POST" />
+    </button>
 
     </div>
 
@@ -514,6 +529,32 @@
      </table>
      <br />
      <button onclick="setlmapplication(currentId);return false;" class="ui-state-default ui-corner-all">
+     <lang en="Apply" fr="Appliquer" />
+     </button>
+    </div>
+
+    <!-- Post -->
+    <div id="content_post" class="hidden">
+     <table>
+      <tr>
+       <td><lang en="POST URL" fr="URL POST"/></td>
+       <td><input type="text" id="postKey" /></td>
+      </tr>
+      <tr>
+       <td><lang en="Target URL (optional)" fr="URL cible (optionnelle)"/></td>
+       <td><input type="text" id="postUrl" /></td>
+      </tr>
+     </table>
+     <br />
+     <button onclick="setlminputtext(currentId,postKey);setlminputdata(currentId,postUrl);return false;" class="ui-state-default ui-corner-all">
+     <lang en="Apply" fr="Appliquer" />
+     </button>
+    </div>
+ 
+    <div id="content_postdata" class="hidden">
+     <input type="text" id="postDataKey" /> <input type="text" id="postDataValue" />
+     <br />
+     <button onclick="setlminputtext(currentId,postDataKey,'postdata:');setlminputdata(currentId,postDataValue);return false;" class="ui-state-default ui-corner-all">
      <lang en="Apply" fr="Appliquer" />
      </button>
     </div>

@@ -80,7 +80,7 @@ sub node {
                 }
 
                 # subnode points to a configuration node
-                elsif ( $flag =~ /^(n?hash|applicationlist)$/ ) {
+                elsif ( $flag =~ /^(n?hash|applicationlist|post)$/ ) {
                     $res .=
                       $self->confNode( $node, "$flag:$target", $help, $_j );
                 }
@@ -261,8 +261,6 @@ sub confNode {
 
             if ( %{ $h->{$catid} } ) {
                 $res .= '<ul>';
-
-                #    $res .= '<li class="line">&nbsp;</li>';
             }
 
             foreach my $appid ( sort keys %{ $h->{$catid} } ) {
@@ -299,6 +297,81 @@ sub confNode {
 
             $res .= "</li>";
         }
+    }
+
+    # POST
+    elsif ( $target =~ s/^post:// ) {
+        $self->lmLog( "Load POST data (target $target)", 'debug' );
+
+        my $h = $self->keyToH( $target, $self->conf );
+
+        # Try to get value from defaultConf
+        unless ($h) {
+            unless ( $h = $self->subDefaultConf()->{post} ) {
+                $self->lmLog( "Try to get default conf for post", 'debug' );
+                $self->lmLog( "$target hash is not defined in configuration",
+                    'error' );
+                return;
+            }
+        }
+
+        # Loop on POST URI
+        foreach my $posturi ( sort keys %$h ) {
+
+            # Build ID
+            my $id = "$target/$posturi";
+            $id =~ s/=*$//;
+
+            # Display menu item
+            $self->lmLog( "Display menu item for POST URI $posturi", 'debug' );
+
+            # Here, "notranslate" is set to true : hashvalues must not be
+            # translated
+            $res .= $self->li($id)
+              . $self->span(
+                id   => $id,
+                text => "$posturi",
+                data => $h->{$posturi}->{postUrl},
+                js   => $js,
+                help => $help,
+                noT  => 1
+              );
+
+            # Loop on post data (expr)
+
+            if ( %{ $h->{$posturi}->{expr} } ) {
+                $res .= '<ul>';
+            }
+
+            foreach my $postdata ( sort keys %{ $h->{$posturi}->{expr} } ) {
+
+                $id = "$target/$posturi/$postdata";
+                $id =~ s/=*$//;
+
+                # Display menu item
+                $self->lmLog( "Display menu item for POST data $postdata",
+                    'debug' );
+
+                $res .= $self->li($id)
+                  . $self->span(
+                    id   => $id,
+                    text => "$postdata",
+                    name => "postdata:$postdata",
+                    data => $h->{$posturi}->{expr}->{$postdata},
+                    js   => "postData",
+                    help => $help,
+                    noT  => 1
+                  ) . "</li>";
+
+            }
+
+            if ( %{ $h->{$posturi}->{expr} } ) {
+                $res .= '</ul>';
+            }
+
+            $res .= "</li>";
+        }
+
     }
 
     else {
@@ -568,7 +641,8 @@ sub span {
     $args{js} .= "('$args{id}')" unless ( $args{js} =~ /\(/ );
 
     # Text
-    my $tmp = $args{text};
+    $args{name} ||= $args{text};
+    my $tmp = $args{name};
     $tmp =~ s/"/&#39;/g;
     $args{text} = join ' ', map { $self->translate($_) } split /\s+/,
       $args{text}

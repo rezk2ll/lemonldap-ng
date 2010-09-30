@@ -29,7 +29,7 @@ sub cstruct {
             %$h,
             virtualHosts => {
                 $k2 => {
-                    _nodes => [qw(rules:rules:rules headers)],
+                    _nodes => [qw(rules:rules:rules headers post:post:post)],
                     rules  => {
                         _nodes => ["hash:/locationRules/$k2:rules:rules"],
                         _js    => 'rulesRoot'
@@ -37,6 +37,10 @@ sub cstruct {
                     headers => {
                         _nodes => ["hash:/exportedHeaders/$k2"],
                         _js    => 'hashRoot'
+                    },
+                    post => {
+                        _nodes => ["post:/post/$k2:post:post"],
+                        _js    => 'postRoot'
                     },
                 }
             }
@@ -759,7 +763,7 @@ sub struct {
         #################
         virtualHosts => {
             _nodes  => ['nhash:/locationRules:virtualHosts:vhost'],
-            _upload => ['/exportedHeaders'],
+            _upload => [ '/exportedHeaders', '/post' ],
             _help   => 'virtualHosts',
             _js     => 'vhostRoot',
         },
@@ -1305,6 +1309,11 @@ sub testStruct {
             test    => qr/\w+$/,
             msgFail => 'Unvalid session field',
         },
+        post => {
+            keyTest    => Lemonldap::NG::Common::Regexp::HOSTNAME,
+            keyMsgFail => 'Bad virtual host name',
+            '*'        => { keyTest => $pcre, },
+        },
         protection => {
             keyTest => qr/^(?:none|authentificate|manager|)$/,
             msgFail => 'must be one of none authentificate manager',
@@ -1763,6 +1772,7 @@ sub subDefaultConf {
         },
         notificationStorageOptions =>
           { dirName => '/var/lib/lemonldap-ng/notifications', },
+        post                       => { none => { expr => {}, }, },
         remoteGlobalStorageOptions => {
             'proxy' => 'https://remote/index.pl/sessions',
             'ns'    => 'https://remote/Lemonldap/NG/Common/CGI/SOAPService',

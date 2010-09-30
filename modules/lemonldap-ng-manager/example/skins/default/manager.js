@@ -152,23 +152,25 @@ function lmdata(id){
 function lmparent(id){
 	return $('#'+id).parent().parent().attr('id');
 }
-function setlmtext(id,v){
+function setlmtext(id,v,prefixvalue){
+	if(!prefixvalue){prefixvalue="";}
 	if(v.length==0){
 		alert("Null value");
 	}
 	else {
-	$('#text_'+id).attr('name',v);
+	$('#text_'+id).attr('name',prefixvalue+v);
 	$('#text_'+id).text(v);
 	}
 }
-function setlminputtext(id,input){
+function setlminputtext(id,input,prefixvalue){
 	var inputname=$(input).attr('id');
 	var inputvalue=$(input).attr('value');
+	if(!prefixvalue){prefixvalue="";}
 	if(inputvalue.length==0){
 		alert('No '+inputname);
 		return false;
 	}
-        setlmtext(id,inputvalue);
+        setlmtext(id,inputvalue,prefixvalue);
 }
 function setlmdata(id,v){
 	$('#text_'+id).attr('value',escape(v));
@@ -288,6 +290,8 @@ function display(div,title) {
 	$('#newchoicer,#newchoice,#delchoice').hide();
 	$('#newcategoryr,#delcategory').hide();
 	$('#newapplicationr,#delapplication').hide();
+	$('#newpostr,#delpost').hide();
+	$('#newpostdatar,#delpostdata').hide();
 	var height_cur=$('#buttons').height()+$('#edition').height()+$('#help').height();
 	var height_max=$('#menu').height();
 	if(height_cur > height_max || $('#help_content').is(':visible')==false){
@@ -1082,5 +1086,57 @@ function applicationListApplication(id){
 		],t[4]);
 	display('applicationListApplication',lmtext(id));
 	$('#delapplication').show();
+}
+
+/* Post */
+function postRoot(id){
+	currentId=id;
+	display('default','');
+	$('#newpostr').show();
+}
+
+function newPostR(){
+	var newIdValue=newId(currentId);
+	var newPostKey = 'none';
+	simpleTreeCollection[0].addNode(newIdValue,newPostKey,function(d,s){
+		$('>span',s).attr('onClick','post("'+newIdValue+'")').attr('name',newPostKey).attr('value','').attr('id','text_'+newIdValue);
+		post(newIdValue);
+	});
+	return false;
+}
+
+function newPostDataR(){
+	var newIdValue=newId(currentId);
+	var newPostKey = 'login';
+	simpleTreeCollection[0].addNode(newIdValue,newPostKey,function(d,s){
+		$('>span',s).attr('onClick','postData("'+newIdValue+'")').attr('name','postdata:'+newPostKey).attr('value','$uid').attr('id','text_'+newIdValue);
+		postData(newIdValue);
+	});
+	return false;
+}
+
+function post(id){
+	 currentId=id;
+         $('#postKey').attr('value',lmtext(id));
+         $('#postUrl').attr('value',lmdata(id));
+	 display('post',lmtext(lmparent(id)));
+	 $('#delpost,#newpostdatar').show();
+}
+
+function postData(id){
+	 currentId=id;
+	 var cleankey = lmtext(id).replace('postdata:','');
+         $('#postDataKey').attr('value',cleankey);
+         $('#postDataValue').attr('value',lmdata(id));
+	 display('postdata',cleankey);
+	 $('#delpostdata').show();
+}
+
+function delPost(){
+	delKey();
+}
+
+function delPostData(){
+	delKey();
 }
 

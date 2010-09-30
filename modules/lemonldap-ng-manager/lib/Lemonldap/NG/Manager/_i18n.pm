@@ -215,6 +215,7 @@ sub en {
         portalRequireOldPassword     => 'Require old password',
         portalSkin                   => 'Skin',
         portalUserAttr               => 'User attribute',
+        post                         => 'Form replay',
         proxyParams                  => 'Proxy parameters',
         randomPasswordRegexp         => 'Regexp for password generation',
         redirection                  => 'Handler redirections',
@@ -573,6 +574,7 @@ sub fr {
         portalRequireOldPassword     => 'Ancien mot de passe requis',
         portalSkin                   => 'Thème visuel',
         portalUserAttr               => "Attribut de l'utilisateur",
+        post                         => 'Rejeu de formulaires',
         proxyParams                  => 'Paramètres Proxy',
         randomPasswordRegexp =>
           'Expression regulière pour la génération des mots de passe',

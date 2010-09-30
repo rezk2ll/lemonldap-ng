@@ -36,10 +36,12 @@ sub confUpload {
     # - Virtual host name
     # - SP and IDP name
     # - Menu category ID
+    # - POST URL name
     my $vhostname;
     my $idpname;
     my $spname;
     my $catid;
+    my $postname;
 
     # 1. ANALYSE DATAS
 
@@ -70,6 +72,10 @@ sub confUpload {
         # For menu categories and applications
         my $catflag = 0;
         my $appflag = 0;
+
+        # For POST URL keys
+        my $postflag = 0;
+        my $postdataflag = 0;
 
         # Unescape value
         $value = uri_unescape($value);
@@ -118,6 +124,19 @@ sub confUpload {
             }
         }
 
+        # Get POST URL name
+        if ( $id =~ /post\/([^\/]*)?\/.*$/ ) {
+            if ( $name =~ s/^postdata:// ) {
+                $self->lmLog( "POST data $name", 'debug' );
+                $postdataflag = 1;
+            }
+            else {
+            $self->lmLog( "Entering POST URL $name", 'debug' );
+                $postflag = 1;
+            $postname = $name;
+        }
+        }
+
         # Manage new keys
         if ($NK) {
 
@@ -140,6 +159,9 @@ s/^virtualHosts\/([^\/]*)?\/header.*/exportedHeaders\/$1\/$name/;
                 # Virtual Host rule
                 $id =~
                   s/^virtualHosts\/([^\/]*)?\/rule.*/locationRules\/$1\/$name/;
+
+                # Virtual Host post
+                $id =~ s/^virtualHosts\/([^\/]*)?\/post.*/post\/$1\/$name/;
 
                 # SAML IDP attribute
                 $id =~
@@ -166,7 +188,7 @@ s/^generalParameters\/authParams\/choiceParams\/([^\/]*)?.*/authChoiceModules\/$
 
         # Set current Virtual Host name
         $id =~
-s/^(exportedHeaders|locationRules)\/([^\/]*)?\/(.*)$/$1\/$vhostname\/$3/;
+s/^(exportedHeaders|locationRules|post)\/([^\/]*)?\/(.*)$/$1\/$vhostname\/$3/;
 
         # Set current SAML IDP name
         $id =~
@@ -175,6 +197,9 @@ s/^(samlIDPMetaDataXML|samlIDPMetaDataExportedAttributes|samlIDPMetaDataOptions)
         # Set current SAML SP name
         $id =~
 s/^(samlSPMetaDataXML|samlSPMetaDataExportedAttributes|samlSPMetaDataOptions)\/([^\/]*)?\/(.*)$/$1\/$spname\/$3/;
+
+        # Set current POST URL  name
+        $id =~ s/^(post)\/([^\/]*)?\/(.*)$/$1\/$vhostname\/$postname/;
 
         $self->lmLog( "id transformed into $id", 'debug' );
 
@@ -279,6 +304,29 @@ s/^(samlSPMetaDataXML|samlSPMetaDataExportedAttributes|samlSPMetaDataOptions)\/(
                 "application" );
 
         }
+
+        # Post URL
+        elsif ($postflag) {
+            $self->lmLog( "Register POST URL $name data", 'debug' );
+
+            # Set postUrl
+            $self->setKeyToH(
+                $newConf, "post/$vhostname",
+                "$postname", { postUrl => $value }
+            ) if $value;
+        }
+
+        # Post data
+        elsif ($postdataflag) {
+            $self->lmLog( "Register POST data $name", 'debug' );
+
+            # Set post data in expr
+            $self->setKeyToH( $newConf, "post/$vhostname", "$postname",
+                { expr => { $name => $value } } )
+              if $value;
+        }
+
+        # Default case
         else {
             $self->setKeyToH(
                 $newConf, $confKey,
@@ -636,10 +684,41 @@ sub setKeyToH {
                     );
                     $tmp->{$key} = {};
                 }
+
+                # Value can be an hashref
+                if ( ref($value) eq 'HASH' ) {
+                    foreach my $vv ( keys %$value ) {
+
+                        # vv can be an hashref
+                        if ( ref( $value->{$vv} ) eq 'HASH' ) {
+                            foreach my $vvv ( keys %{ $value->{$vv} } ) {
+                                $self->lmLog(
+                                    "setKeyToH: set "
+                                      . $value->{$vv}->{$vvv}
+                                      . " in key $vvv in key $vv in key $k2 inside key $key",
+                                    'debug'
+                                );
+                                $tmp->{$key}->{$k2}->{$vv}->{$vvv} =
+                                  $value->{$vv}->{$vvv};
+                            }
+                        }
+                        else {
+                            $self->lmLog(
+                                "setKeyToH: set "
+                                  . $value->{$vv}
+                                  . " in key $vv in key $k2 inside key $key",
+                                'debug'
+                            );
+                            $tmp->{$key}->{$k2}->{$vv} = $value->{$vv};
+                        }
+                    }
+                }
+                else {
                 $self->lmLog(
                     "setKeyToH: set $value in key $k2 inside key $key",
                     'debug' );
                 $tmp->{$key}->{$k2} = $value;
+            }
             }
             else {
                 $self->lmLog( "setKeyToH: set $value in key $key", 'debug' );
