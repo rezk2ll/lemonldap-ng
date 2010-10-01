@@ -529,6 +529,27 @@ sub session {
         $res .= '</div>';
     }
 
+    # OpenID
+    my $openidempty = 1;
+    foreach ( keys %session ) {
+        $openidempty = 0 if $_ =~ /^openid/;
+    }
+    unless ($openidempty) {
+        $res .= '<div class="ui-corner-all ui-widget-content category">';
+        $res .=
+          '<h2 class="ui-corner-all ui-widget-header">' . 'OpenID' . '</h2>';
+        $res .= '<ul>';
+
+        foreach ( keys %session ) {
+            next if $_ !~ /^openid/;
+            $res .=
+              '<li><strong>' . $_ . '</strong>: ' . $session{$_} . '</li>';
+
+            # Delete attribute, to hide it
+            delete $session{$_};
+        }
+    }
+
     # Other attributes
     $res .= '<div class="ui-corner-all ui-widget-content category">';
     $res .= '<h2 class="ui-corner-all ui-widget-header">'
