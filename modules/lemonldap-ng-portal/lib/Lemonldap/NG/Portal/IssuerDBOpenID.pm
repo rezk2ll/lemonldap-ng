@@ -97,7 +97,7 @@ sub storeOpenIDprm {
 
     # Store all openid.* parameters
     my $params = {};
-    foreach ( $self->{_prm} ) {
+    foreach ( keys %{ $self->{_prm} } ) {
         next if $_ !~ /^openid\./;
         $params->{$_} = $self->{_prm}->{$_};
     }
