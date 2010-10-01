@@ -124,9 +124,7 @@ sub extractFormInfo {
 
         # If UserDB uses OpenID, add "OpenID Simple Registration Extension"
         # compatible fields
-        if (   $self->{userDB} =~ /^OpenID/
-            or $self->{stack}->[1]->[0]->{m} =~ /^OpenID/ )
-        {
+        if ( $self->get_module('user') eq 'OpenID' ) {
             my ( @r, @o );
             while ( my ( $v, $k ) = each %{ $self->{exportedVars} } ) {
                 if ( $k =~
