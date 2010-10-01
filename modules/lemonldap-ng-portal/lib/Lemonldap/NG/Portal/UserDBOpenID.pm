@@ -53,10 +53,11 @@ sub setSessionInfo {
                   $self->param("openid.sreg.$self->{exportedVars}->{$k}");
             }
             else {
-                $self->abort(
-                    'Configuration error',
-                    $self->{exportedVars}->{$k}
-                      . ' is not a valid OpenID SREG attribute'
+                $self->lmLog(
+                    'Ignoring attribute '
+                      . $self->{exportedVars}->{$k}
+                      . ' which is not a valid OpenID SREG attribute',
+                    'warn'
                 );
             }
 
