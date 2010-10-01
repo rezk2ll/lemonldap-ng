@@ -41,7 +41,9 @@ background:#fff;
 border:1px solid #C6D880;
 text-align:center;
 -moz-box-shadow:0 3px 6px rgba(0, 0, 0, 0.25);
+-webkit-box-shadow:0 3px 6px rgba(0, 0, 0, 0.25);
 -moz-border-radius:10px 10px 10px 10px;
+-webkit-border-radius:10px 10px 10px 10px;
 }
 
 #footer {
@@ -59,6 +61,7 @@ background-color:#f5f5f5;
 border:1px solid #dedede;
 font-size:8pt;
 -moz-border-radius:10px 10px 10px 10px;
+-webkit-border-radius:10px 10px 10px 10px;
 }
 
 div.loginlogo {
@@ -87,7 +90,9 @@ padding:0;
 display:none;
 text-align:left;
 -moz-box-shadow:0 3px 6px rgba(0, 0, 0, 0.25);
+-webkit-box-shadow:0 3px 6px rgba(0, 0, 0, 0.25);
 -moz-border-radius:10px 10px 10px 10px;
+-webkit-border-radius:10px 10px 10px 10px;
 }
 
 ul {
@@ -131,7 +136,9 @@ background-color:#dff4ff;
 border:1px solid #c2e1ef;
 color:#336699;
 -moz-box-shadow:0 3px 6px rgba(0, 0, 0, 0.25);
+-webkit-box-shadow:0 3px 6px rgba(0, 0, 0, 0.25);
 -moz-border-radius:10px 10px 10px 10px;
+-webkit-border-radius:10px 10px 10px 10px;
 }
 
 form.login, form.password {
@@ -176,6 +183,7 @@ margin-left:10px;
 padding:9px 10px 6px 10px;
 font-size:10pt;
 -moz-border-radius:10px 10px 10px 10px;
+-webkit-border-radius:10px 10px 10px 10px;
 }
 
 .ui-tabs-nav li a{
@@ -200,7 +208,9 @@ clear:both;
 div.category {
 border:1px solid #c2e1ef;
 -moz-box-shadow:0 3px 6px rgba(0, 0, 0, 0.25);
+-webkit-box-shadow:0 3px 6px rgba(0, 0, 0, 0.25);
 -moz-border-radius:10px 10px 10px 10px;
+-webkit-border-radius:10px 10px 10px 10px;
 margin:10px 50px;
 padding:0;
 clear:both;

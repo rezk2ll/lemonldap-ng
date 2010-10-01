@@ -80,6 +80,7 @@ padding:10px;
 width:600px;
 height:310px;
 -moz-border-radius:10px 10px 10px 10px;
+-webkit-border-radius:10px 10px 10px 10px;
 }
 
 #logincontent form, #mailcontent form {
@@ -88,6 +89,7 @@ opacity:0.9;
 margin: 20px -100px 20px 250px;
 padding:10px;
 -moz-border-radius:10px 10px 10px 10px;
+-webkit-border-radius:10px 10px 10px 10px;
 color:#000;
 }
 
@@ -117,6 +119,7 @@ background:#FFF;
 padding:5px;
 font-size:9pt;
 -moz-border-radius:10px 10px 10px 10px;
+-webkit-border-radius:10px 10px 10px 10px;
 }
 
 #authMenu .ui-tabs-nav li a {
@@ -164,6 +167,7 @@ padding:10px 20px 20px 20px;
 background:#E4E4E4;
 opacity:0.9;
 -moz-border-radius:10px 10px 10px 10px;
+-webkit-border-radius:10px 10px 10px 10px;
 color:#000;
 margin:20px auto;
 width:400px;
@@ -175,6 +179,7 @@ padding:10px 20px 20px 20px;
 background:#E4E4E4;
 opacity:0.9;
 -moz-border-radius:10px 10px 10px 10px;
+-webkit-border-radius:10px 10px 10px 10px;
 color:#000;
 margin:20px auto;
 width:600px;
@@ -192,6 +197,7 @@ padding:5px;
 font-size:9pt;
 opacity:0.9;
 -moz-border-radius:10px 10px 10px 10px;
+-webkit-border-radius:10px 10px 10px 10px;
 margin:10px auto;
 width:600px;
 }
@@ -207,6 +213,7 @@ color:#000;
 /* Message box */
 div.message {
 -moz-border-radius:10px 10px 10px 10px;
+-webkit-border-radius:10px 10px 10px 10px;
 }
 
 div.message li {
@@ -258,6 +265,7 @@ div.category {
 background:#E4E4E4;
 opacity:0.9;
 -moz-border-radius:10px 10px 10px 10px;
+-webkit-border-radius:10px 10px 10px 10px;
 color:#000;
 margin:10px 50px;
 padding:10px 20px;
