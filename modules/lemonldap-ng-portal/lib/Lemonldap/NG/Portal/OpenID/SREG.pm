@@ -71,8 +71,8 @@ sub sregHook {
     @req = sregfilter( $self, @req );
     @opt = sregfilter( $self, @opt );
 
-    # If nothing is asked,
-    return ( 1, {} ) unless ( @req and @opt );
+    # Return if nothing is asked
+    return ( 1, {} ) unless ( @req or @opt );
 
     # If a required data is not available, returns nothing
     foreach my $k (@req) {
