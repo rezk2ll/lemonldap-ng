@@ -15,10 +15,8 @@ our $VERSION = '0.01';
 # @return Lemonldap::NG::Portal error code
 sub userDBInit {
     my $self = shift;
-    if (   $self->{authentication} =~ /^OpenID/
-        or $self->{stack}->[0]->[0]->{m} =~ /^OpenID/ )
-    {
-        return PE_OK;
+
+    if ( $self->get_module('auth') eq 'OpenID' ) {
     }
     else {
         $self->lmLog(
@@ -68,7 +66,6 @@ sub setSessionInfo {
                     'warn'
                 );
 
-                # TODO: create a PE_* for that
                 return PE_MISSINGREQATTR;
             }
         }
