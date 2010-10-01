@@ -94,9 +94,15 @@ sub issuerLogout {
 # setHiddenFormValue()
 sub storeOpenIDprm {
     my $self = shift;
-    delete( $self->{_prm}->{lmhidden_openidprm} );
-    $self->setHiddenFormValue( 'openidprm',
-        Storable::nfreeze( $self->{_prm} ) );
+
+    # Store all openid.* parameters
+    my $params = {};
+    foreach ( $self->{_prm} ) {
+        next if $_ !~ /^openid\./;
+        $params->{$_} = $self->{_prm}->{$_};
+    }
+
+    $self->setHiddenFormValue( 'openidprm', Storable::nfreeze($params) );
 }
 
 ## @method private void restoreOpenIDprm()
