@@ -532,7 +532,7 @@ sub session {
     # OpenID
     my $openidempty = 1;
     foreach ( keys %session ) {
-        $openidempty = 0 if $_ =~ /^openid/;
+        $openidempty = 0 if $_ =~ /^_openid/;
     }
     unless ($openidempty) {
         $res .= '<div class="ui-corner-all ui-widget-content category">';
@@ -541,13 +541,16 @@ sub session {
         $res .= '<ul>';
 
         foreach ( keys %session ) {
-            next if $_ !~ /^openid/;
+            next if $_ !~ /^_openid/;
             $res .=
               '<li><strong>' . $_ . '</strong>: ' . $session{$_} . '</li>';
 
             # Delete attribute, to hide it
             delete $session{$_};
         }
+
+        $res .= '</ul>';
+        $res .= '</div>';
     }
 
     # Other attributes
