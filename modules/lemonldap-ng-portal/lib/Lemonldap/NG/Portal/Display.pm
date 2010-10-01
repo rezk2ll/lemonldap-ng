@@ -163,7 +163,9 @@ sub display {
             PROVIDERURI     => $p,
             ID              => $self->{_openidPortal}
               . $self->{sessionInfo}
-              ->{ $self->{OpenIdAttr} || $self->{whatToTrace} }
+              ->{ $self->{OpenIdAttr} || $self->{whatToTrace} },
+            PORTAL_URL => $self->{portal},
+            MSG        => $self->info(),
         );
     }
 

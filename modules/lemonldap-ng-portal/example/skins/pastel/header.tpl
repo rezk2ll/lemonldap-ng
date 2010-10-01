@@ -7,8 +7,12 @@
         <meta http-equiv="Content-Script-Type" content="text/javascript" />
 	<meta http-equiv="cache-control" content="no-cache" />
         <link rel="stylesheet" type="text/css" href="/skins/<TMPL_VAR NAME="SKIN">/css/styles.css" />
-        <link href="skins/common/favicon.ico" rel="icon" type="image/x-icon" />
-        <link href="skins/common/favicon.ico" rel="shortcut icon" />
+        <link href="/skins/common/favicon.ico" rel="icon" type="image/x-icon" />
+        <link href="/skins/common/favicon.ico" rel="shortcut icon" />
+        <TMPL_IF NAME="PROVIDERURI">
+        <link rel="openid.server" href="<TMPL_VAR NAME="PROVIDERURI">" />
+        <link rel="openid2.provider" href="<TMPL_VAR NAME="PROVIDERURI">" />
+        </TMPL_IF>
         <script type="text/javascript" src="/skins/common/jquery-1.4.2.min.js"></script>
         <script type="text/javascript" src="/skins/common/jquery-ui-1.7.2.custom.min.js"></script>
         <script type="text/javascript" src="/skins/common/jquery.base64.js"></script>
