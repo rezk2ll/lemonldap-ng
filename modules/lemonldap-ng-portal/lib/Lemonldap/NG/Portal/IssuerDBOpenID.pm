@@ -43,6 +43,10 @@ sub issuerForUnAuthUser {
         return PE_OPENID_EMPTY;
     }
 
+    # Fill user attribute with OpenID user identity
+    $self->{user} = ( split '/', $self->param('openid.identity') )[-1];
+    $self->lmLog( "Get OpenID user " . $self->{user}, 'debug' );
+
     if ( $mode eq 'associate' ) {
         return $self->_openIDResponse( $self->openIDServer->_mode_associate() );
     }
@@ -204,12 +208,12 @@ sub _openIDResponse {
 
             # TODO
             $self->info(
-                '<h2>'
+                '<h3>'
                   . sprintf(
                     &Lemonldap::NG::Portal::_i18n::msg(PM_OPENID_EXCHANGE),
                     $data->{trust_root}
                   )
-                  . "</h2>"
+                  . "</h3>"
             );
             $self->info( $self->{_openIdTrustExtMsg} )
               if ( $self->{_openIdTrustExtMsg} );
