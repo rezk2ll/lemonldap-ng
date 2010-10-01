@@ -781,8 +781,17 @@ sub updateSession {
     my ( $self, $infos, $id ) = splice @_;
     my %cookies = fetch CGI::Cookie;
 
+    # Return if no infos to update
+    return undef unless ( ref $infos eq 'HASH' and %$infos );
+
     # Update sessionInfo datas
-    $self->{sessionInfo}->{$_} = $infos->{$_} unless ($id);
+    if ($id) {
+        foreach ( keys %$infos ) {
+            $self->lmLog( "Update sessionInfo $_ with " . $infos->{$_},
+                'debug' );
+            $self->{sessionInfo}->{$_} = $infos->{$_};
+        }
+    }
 
     # Recover session ID unless given
     $id ||= $self->{id};
@@ -794,6 +803,7 @@ sub updateSession {
 
         # Store/update session values
         foreach ( keys %$infos ) {
+            $self->lmLog( "Update session $_ with " . $infos->{$_}, 'debug' );
             $h->{$_} = $infos->{$_};
         }
 
