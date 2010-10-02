@@ -81,25 +81,34 @@ sub rparam {
 # @param $level Level (debug|info|notice|error)
 sub lmLog {
     my ( $self, $mess, $level ) = @_;
-    $mess = ( ref($self) ? ref($self) : $self ) . ": $mess"
-      if ( $level eq 'debug' );
+    my $call;
+    if ( $level eq 'debug' ) {
+        $mess = ( ref($self) ? ref($self) : $self ) . ": $mess";
+    }
+    else {
+        my @tmp = caller();
+        $call = "$tmp[1] $tmp[2]:";
+    }
     if ( $self->r and MP() ) {
         $self->abort( "Level is required",
             'the parameter "level" is required when lmLog() is used' )
           unless ($level);
         if ( MP() == 2 ) {
             require Apache2::Log;
+            Apache2::ServerRec->log->debug($call) if ($call);
             Apache2::ServerRec->log->$level($mess);
         }
         else {
+            Apache->server->log->debug($call) if ($call);
             Apache->server->log->$level($mess);
         }
     }
     else {
         $self->{hideLogLevels} = 'debug|info'
           unless defined( $self->{hideLogLevels} );
-        print STDERR "[$level] $mess\n"
-          unless ( $level =~ /^(?:$self->{hideLogLevels})$/ );
+        my $re = qr/^(?:$self->{hideLogLevels})$/;
+        print STDERR "$call\n" if ( $call and 'debug' !~ $re );
+        print STDERR "[$level] $mess\n" unless ( $level =~ $re );
     }
 }
 
