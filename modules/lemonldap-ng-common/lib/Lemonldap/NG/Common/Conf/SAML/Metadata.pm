@@ -1,3 +1,5 @@
+##@class
+# SAML Metadata object for Lemonldap::NG
 
 ##@class
 # SAML Metadata object for Lemonldap::NG

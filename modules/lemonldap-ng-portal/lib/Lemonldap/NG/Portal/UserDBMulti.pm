@@ -1,6 +1,11 @@
+## @file
+# UserDB chaining mechanism
+
+## @class
+# UserDB chaining mechanism
 package Lemonldap::NG::Portal::UserDBMulti;
 
-use Lemonldap::NG::Portal::_Multi;
+use Lemonldap::NG::Portal::_Multi;    #inherits
 
 our $VERSION = '0.1';
 

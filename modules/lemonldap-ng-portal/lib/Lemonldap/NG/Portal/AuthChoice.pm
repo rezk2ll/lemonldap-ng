@@ -9,6 +9,8 @@ use strict;
 use Lemonldap::NG::Portal::_Choice;
 use Lemonldap::NG::Portal::Simple;
 
+#inherits Lemonldap::NG::Portal::_Choice
+
 our $VERSION = '0.10';
 
 ## @apmethod int authInit()

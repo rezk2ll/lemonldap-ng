@@ -10,6 +10,7 @@ use Lemonldap::NG::Portal::Simple;
 
 # Special comments for doxygen
 #inherits Lemonldap::NG::Portal::OpenID::Server
+#link Lemonldap::NG::Portal::OpenID::SREG protected sreg_extension
 
 our $VERSION = '0.01';
 our $initDone;

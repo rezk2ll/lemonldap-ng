@@ -1,6 +1,11 @@
+## @file
+# Authentication chaining mechanism
+
+## @class
+# Authentication chaining mechanism
 package Lemonldap::NG::Portal::AuthMulti;
 
-use Lemonldap::NG::Portal::_Multi;
+use Lemonldap::NG::Portal::_Multi;    #inherits
 
 our $VERSION = '0.1';
 

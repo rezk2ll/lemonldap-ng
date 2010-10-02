@@ -10,7 +10,7 @@ use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::_LDAP 'ldap';    #link protected ldap
 use Lemonldap::NG::Portal::UserDBLDAP;      #inherits
 
-#use Lemonldap::NG::Portal::_SMTP;          #inherits
+#inherits Lemonldap::NG::Portal::_SMTP
 
 our $VERSION = '0.3';
 

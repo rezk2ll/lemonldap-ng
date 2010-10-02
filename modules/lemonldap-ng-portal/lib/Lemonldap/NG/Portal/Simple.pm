@@ -23,22 +23,40 @@ use Safe;
 
 # Special comments for doxygen
 #inherits Lemonldap::NG::Portal::_SOAP
-#inherits Lemonldap::NG::Portal::AuthApache
-#inherits Lemonldap::NG::Portal::AuthDBI
-#inherits Lemonldap::NG::Portal::AuthCAS
-#inherits Lemonldap::NG::Portal::AuthLDAP
-#inherits Lemonldap::NG::Portal::AuthRemote
-#inherits Lemonldap::NG::Portal::AuthSSL
-#inherits Lemonldap::NG::Portal::Menu
-#link Lemonldap::NG::Portal::Notification protected notification
+#inherits Lemonldap::NG::Portal::AuthApache;
+#inherits Lemonldap::NG::Portal::AuthCAS;
+#inherits Lemonldap::NG::Portal::AuthChoice;
+#inherits Lemonldap::NG::Portal::AuthDBI;
+#inherits Lemonldap::NG::Portal::AuthLA;
+#inherits Lemonldap::NG::Portal::AuthLDAP;
+#inherits Lemonldap::NG::Portal::AuthMulti;
+#inherits Lemonldap::NG::Portal::AuthNull;
+#inherits Lemonldap::NG::Portal::AuthOpenID;
+#inherits Lemonldap::NG::Portal::AuthProxy;
+#inherits Lemonldap::NG::Portal::AuthRemote;
+#inherits Lemonldap::NG::Portal::AuthSAML;
+#inherits Lemonldap::NG::Portal::AuthSSL;
+#inherits Lemonldap::NG::Portal::AuthTwitter;
+#inherits Lemonldap::NG::Portal::Display;
 #inherits Lemonldap::NG::Portal::IssuerDBCAS
 #inherits Lemonldap::NG::Portal::IssuerDBNull
 #inherits Lemonldap::NG::Portal::IssuerDBOpenID
 #inherits Lemonldap::NG::Portal::IssuerDBSAML
-#inherits Lemonldap::NG::Portal::UserDBDBI
-#inherits Lemonldap::NG::Portal::UserDBEnv
-#inherits Lemonldap::NG::Portal::UserDBLDAP
-#inherits Lemonldap::NG::Portal::UserDBRemote
+#inherits Lemonldap::NG::Portal::Menu
+#link Lemonldap::NG::Portal::Notification protected notification
+#inherits Lemonldap::NG::Portal::PasswordDBChoice;
+#inherits Lemonldap::NG::Portal::PasswordDBDBI;
+#inherits Lemonldap::NG::Portal::PasswordDBLDAP;
+#inherits Lemonldap::NG::Portal::PasswordDBNull;
+#inherits Lemonldap::NG::Portal::UserDBChoice;
+#inherits Lemonldap::NG::Portal::UserDBDBI;
+#inherits Lemonldap::NG::Portal::UserDBLDAP;
+#inherits Lemonldap::NG::Portal::UserDBMulti;
+#inherits Lemonldap::NG::Portal::UserDBNull;
+#inherits Lemonldap::NG::Portal::UserDBOpenID;
+#inherits Lemonldap::NG::Portal::UserDBProxy;
+#inherits Lemonldap::NG::Portal::UserDBRemote;
+#inherits Lemonldap::NG::Portal::UserDBSAML;
 #inherits Lemonldap::NG::Portal::PasswordDBDBI
 #inherits Lemonldap::NG::Portal::PasswordDBLDAP
 #inherits Apache::Session

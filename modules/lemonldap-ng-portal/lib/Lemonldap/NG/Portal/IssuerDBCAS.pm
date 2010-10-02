@@ -8,7 +8,7 @@ package Lemonldap::NG::Portal::IssuerDBCAS;
 use strict;
 use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::_CAS;
-our @ISA = qw(Lemonldap::NG::Portal::_CAS);
+use base qw(Lemonldap::NG::Portal::_CAS);
 
 our $VERSION = '0.01';
 

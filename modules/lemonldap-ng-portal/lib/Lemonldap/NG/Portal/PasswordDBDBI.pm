@@ -10,7 +10,7 @@ use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::AuthDBI;    #inherits
 use base qw(Lemonldap::NG::Portal::_DBI );
 
-#use Lemonldap::NG::Portal::_SMTP;     #inherits
+#inherits Lemonldap::NG::Portal::_SMTP
 
 our $VERSION = '0.1';
 

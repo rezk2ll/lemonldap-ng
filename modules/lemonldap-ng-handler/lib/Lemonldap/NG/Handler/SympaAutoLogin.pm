@@ -9,7 +9,7 @@ package Lemonldap::NG::Handler::SympaAutoLogin;
 
 use strict;
 use Lemonldap::NG::Handler::SharedConf qw(:all);
-our @ISA = qw(Lemonldap::NG::Handler::SharedConf);
+use base qw(Lemonldap::NG::Handler::SharedConf);
 use Digest::MD5;
 
 our $VERSION = '0.2';

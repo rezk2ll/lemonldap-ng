@@ -9,9 +9,9 @@ use strict;
 use warnings;
 use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::_LibAccess;
+use base qw(Lemonldap::NG::Portal::_LibAccess);
 
 our $VERSION  = '0.4';
-our @ISA      = qw(Lemonldap::NG::Portal::_LibAccess);
 our $catlevel = 0;
 
 ## @method void menuInit()

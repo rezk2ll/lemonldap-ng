@@ -16,6 +16,9 @@ use POSIX;             # Convert SAML2 date into timestamp
 use Time::Local;       # Convert SAML2 date into timestamp
 use Encode;            # Encode attribute values
 
+# Special comments for doxygen
+#inherits Lemonldap::NG::Common::Conf::SAML::Metadata protected service_metadata
+
 our $VERSION = '0.01';
 our $samlCache;
 our $initGlibDone;
