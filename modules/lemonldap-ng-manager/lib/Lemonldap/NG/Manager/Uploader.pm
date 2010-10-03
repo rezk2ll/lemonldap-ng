@@ -373,7 +373,7 @@ s/^(samlSPMetaDataXML|samlSPMetaDataExportedAttributes|samlSPMetaDataOptions)\/(
                 $errors->{error}->{$name} = $msg;
             }
         };
-            $errors->{warnings}->{$name} = "Test $name failed" if($@);
+            $errors->{warnings}->{$name} = "Test $name failed: $@" if($@);
         }
     }
 

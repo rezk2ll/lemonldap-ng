@@ -1798,9 +1798,11 @@ sub subDefaultConf {
 sub globalTests {
     my ( $self, $conf ) = splice @_;
     return {
-        'portalIsInDomain' => sub {
 
-	    # TODO: better parsing
+        # TODO: better parsing using Common::Regexp
+
+        # 1. check if portal is in domain
+        portalIsInDomain => sub {
             return (
                 1,
                 (
@@ -1809,6 +1811,53 @@ sub globalTests {
                     : "Portal seems not to be in the domain $conf->{domain}"
                 )
             );
+        },
+
+        # 2. check if virtual hosts are in the domain
+        vhostInDomainOrCDA => sub {
+            return 1 if ( $conf->{cda} );
+            my @pb;
+            foreach my $vh ( keys %{ $conf->{locationRules} } ) {
+                push @pb, $vh unless ( index( $vh, $conf->{domain} ) >= 0 );
+            }
+            return (
+                1,
+                (
+                    @pb
+                    ? 'Virtual hosts '
+                      . join( ', ', @pb )
+                      . " are not in $conf->{domain} and cross-domain-authentication is not set"
+                    : undef
+                )
+            );
+        },
+
+        # 3. Remove unused and non-customize parameters
+        compactModules => sub {
+            foreach my $k ( keys %$conf ) {
+                next if ( ref $conf->{$k} );
+                if (
+
+                    # SAML keys
+                    (
+                            $k =~ /^saml/i
+                        and not( $conf->{issuerDBSAMLActivation} )
+                        and not( $conf->{authentication} =~ /saml/i )
+                    )
+
+                    # TODO OpenID, CAS,...
+                  )
+                {
+                    my $v = $self->defaultConf()->{$k};
+                    if ( defined($v) and $conf->{$k} eq $v ) {
+                        delete $conf->{$k};
+                    }
+                    else {
+                        print STDERR "$k:\n\t$conf->{$k} => $v\n";
+                    }
+                }
+            }
+            return 1;
         },
     };
 }
