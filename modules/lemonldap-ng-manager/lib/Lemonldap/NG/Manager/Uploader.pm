@@ -74,7 +74,7 @@ sub confUpload {
         my $appflag = 0;
 
         # For POST URL keys
-        my $postflag = 0;
+        my $postflag     = 0;
         my $postdataflag = 0;
 
         # Unescape value
@@ -131,10 +131,10 @@ sub confUpload {
                 $postdataflag = 1;
             }
             else {
-            $self->lmLog( "Entering POST URL $name", 'debug' );
+                $self->lmLog( "Entering POST URL $name", 'debug' );
                 $postflag = 1;
-            $postname = $name;
-        }
+                $postname = $name;
+            }
         }
 
         # Manage new keys
@@ -716,11 +716,11 @@ sub setKeyToH {
                     }
                 }
                 else {
-                $self->lmLog(
-                    "setKeyToH: set $value in key $k2 inside key $key",
-                    'debug' );
-                $tmp->{$key}->{$k2} = $value;
-            }
+                    $self->lmLog(
+                        "setKeyToH: set $value in key $k2 inside key $key",
+                        'debug' );
+                    $tmp->{$key}->{$k2} = $value;
+                }
             }
             else {
                 $self->lmLog( "setKeyToH: set $value in key $key", 'debug' );

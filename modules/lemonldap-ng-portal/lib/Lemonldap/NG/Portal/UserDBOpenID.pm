@@ -67,6 +67,7 @@ sub setSessionInfo {
                     'warn'
                 );
 
+                $self->{mustRedirect} = 0;
                 return PE_MISSINGREQATTR;
             }
         }

@@ -98,6 +98,8 @@ SRCMANAGERDIR=lemonldap-ng-manager
 EXAMPLELANG=en # For static Manager example only
 ERASECONFIG=1 # Set to 0 if you do not want to replace your configuration
 
+DIFFPREFIX=
+
 # Liberty Alliance support
 WITHLA=0 # Set to 1 if you want to install Liberty Alliance portal (deprecated by SAML2 support)
 LASPPORTALDIR=$(DOCUMENTROOT)/liberty-alliance-sp-portal
@@ -560,30 +562,30 @@ diff: debian-diff
 
 debian-diff:
 	@# Portal
-	@$(DIFF) lemonldap-ng-portal/lib/Lemonldap/NG/Portal /usr/share/perl5/Lemonldap/NG/Portal ||true
-	@$(DIFF) lemonldap-ng-portal/example/scripts/purgeCentralCache /usr/share/lemonldap-ng/bin/purgeCentralCache ||true
-	@$(DIFF) lemonldap-ng-portal/example/scripts/buildPortalWSDL /usr/share/lemonldap-ng/bin/buildPortalWSDL ||true
+	@$(DIFF) lemonldap-ng-portal/lib/Lemonldap/NG/Portal $(DIFFPREFIX)/usr/share/perl5/Lemonldap/NG/Portal ||true
+	@$(DIFF) lemonldap-ng-portal/example/scripts/purgeCentralCache $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/purgeCentralCache ||true
+	@$(DIFF) lemonldap-ng-portal/example/scripts/buildPortalWSDL $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/buildPortalWSDL ||true
 	@for i in $(PORTALSKINS); do \
-		$(DIFF) -x 'jquery*' lemonldap-ng-portal/example/skins/$$i /usr/share/lemonldap-ng/portal-skins/$$i; \
+		$(DIFF) -x 'jquery*' lemonldap-ng-portal/example/skins/$$i $(DIFFPREFIX)/usr/share/lemonldap-ng/portal-skins/$$i; \
 	done ||true
-	@$(DIFF) lemonldap-ng-portal/example/index_skin.pl /var/lib/lemonldap-ng/portal/index.pl ||true
-	@$(DIFF) lemonldap-ng-portal/example/mail.pl /var/lib/lemonldap-ng/portal/mail.pl ||true
-	@$(DIFF) lemonldap-ng-portal/example/metadata.pl /var/lib/lemonldap-ng/portal/metadata.pl ||true
-	@$(DIFF) lemonldap-ng-portal/example/cdc.pl /var/lib/lemonldap-ng/portal/cdc.pl ||true
+	@$(DIFF) lemonldap-ng-portal/example/index_skin.pl $(DIFFPREFIX)/var/lib/lemonldap-ng/portal/index.pl ||true
+	@$(DIFF) lemonldap-ng-portal/example/mail.pl $(DIFFPREFIX)/var/lib/lemonldap-ng/portal/mail.pl ||true
+	@$(DIFF) lemonldap-ng-portal/example/metadata.pl $(DIFFPREFIX)/var/lib/lemonldap-ng/portal/metadata.pl ||true
+	@$(DIFF) lemonldap-ng-portal/example/cdc.pl $(DIFFPREFIX)/var/lib/lemonldap-ng/portal/cdc.pl ||true
 	@# Handler
-	@$(DIFF) lemonldap-ng-handler/lib/Lemonldap/NG/Handler /usr/share/perl5/Lemonldap/NG/Handler ||true
+	@$(DIFF) lemonldap-ng-handler/lib/Lemonldap/NG/Handler $(DIFFPREFIX)/usr/share/perl5/Lemonldap/NG/Handler ||true
 	@# Common
-	@$(DIFF) lemonldap-ng-common/lib/Lemonldap/NG/Common /usr/share/perl5/Lemonldap/NG/Common ||true
-	@$(DIFF) lemonldap-ng-common/lib/Lemonldap/NG/Common.pm /usr/share/perl5/Lemonldap/NG/Common.pm ||true
-	@$(DIFF) lemonldap-ng-common/scripts/lmMigrateConfFiles2ini /usr/share/lemonldap-ng/bin/lmMigrateConfFiles2ini ||true
-	@$(DIFF) lemonldap-ng-common/scripts/convertConfig /usr/share/lemonldap-ng/bin/convertConfig ||true
+	@$(DIFF) lemonldap-ng-common/lib/Lemonldap/NG/Common $(DIFFPREFIX)/usr/share/perl5/Lemonldap/NG/Common ||true
+	@$(DIFF) lemonldap-ng-common/lib/Lemonldap/NG/Common.pm $(DIFFPREFIX)/usr/share/perl5/Lemonldap/NG/Common.pm ||true
+	@$(DIFF) lemonldap-ng-common/scripts/lmMigrateConfFiles2ini $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/lmMigrateConfFiles2ini ||true
+	@$(DIFF) lemonldap-ng-common/scripts/convertConfig $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/convertConfig ||true
 	@# Manager
-	@$(DIFF) lemonldap-ng-manager/lib/Lemonldap/NG/Manager /usr/share/perl5/Lemonldap/NG/Manager ||true
-	@$(DIFF) lemonldap-ng-manager/lib/Lemonldap/NG/Manager.pm /usr/share/perl5/Lemonldap/NG/Manager.pm ||true
-	@$(DIFF) lemonldap-ng-manager/example/index.pl /var/lib/lemonldap-ng/manager/index.pl ||true
-	@$(DIFF) lemonldap-ng-manager/example/sessions.pl /var/lib/lemonldap-ng/manager/sessions.pl ||true
+	@$(DIFF) lemonldap-ng-manager/lib/Lemonldap/NG/Manager $(DIFFPREFIX)/usr/share/perl5/Lemonldap/NG/Manager ||true
+	@$(DIFF) lemonldap-ng-manager/lib/Lemonldap/NG/Manager.pm $(DIFFPREFIX)/usr/share/perl5/Lemonldap/NG/Manager.pm ||true
+	@$(DIFF) lemonldap-ng-manager/example/index.pl $(DIFFPREFIX)/var/lib/lemonldap-ng/manager/index.pl ||true
+	@$(DIFF) lemonldap-ng-manager/example/sessions.pl $(DIFFPREFIX)/var/lib/lemonldap-ng/manager/sessions.pl ||true
 	@for i in $(MANAGERSKINS); do \
-		$(DIFF) -x 'jquery*' lemonldap-ng-manager/example/skins/$$i /usr/share/lemonldap-ng/manager-skins/$$i; \
+		$(DIFF) -x 'jquery*' lemonldap-ng-manager/example/skins/$$i $(DIFFPREFIX)/usr/share/lemonldap-ng/manager-skins/$$i; \
 	done ||true
 
 default-diff:

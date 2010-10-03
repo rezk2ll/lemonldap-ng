@@ -6,13 +6,12 @@
 package Lemonldap::NG::Portal::OpenID::Server;
 
 use strict;
-use fields qw(_extensions setup_url);
+use base qw(Net::OpenID::Server);
+use fields qw(_extensions);
 use Net::OpenID::Server;
 use Lemonldap::NG::Common::Regexp;
 
 use constant DEBUG => 0;
-
-use base qw(Net::OpenID::Server);
 
 our $VERSION = '0.1';
 
@@ -91,7 +90,7 @@ sub _mode_checkid {
             $extArgs{$tmp}->{$val} = scalar $self->args->($arg);
         }
         foreach my $ns ( keys %{ $self->{_extensions} } ) {
-            print STDERR "Launching OpenIP $ns hook\n" if(DEBUG);
+            print STDERR "Launching OpenIP $ns hook\n" if (DEBUG);
             my $h;
             ( $is_ext_trusted{$ns}, $h ) = $self->{_extensions}->{$ns}->(
                 $u, $trust_root, $is_identity, $is_trusted,
@@ -99,7 +98,7 @@ sub _mode_checkid {
             );
             if ($h) {
                 while ( my ( $k, $v ) = each %$h ) {
-                    print STDERR "$ns returned data: $k => $v\n" if(DEBUG);
+                    print STDERR "$ns returned data: $k => $v\n" if (DEBUG);
                     $extVars{"$ns.$k"} = $v;
                 }
             }
