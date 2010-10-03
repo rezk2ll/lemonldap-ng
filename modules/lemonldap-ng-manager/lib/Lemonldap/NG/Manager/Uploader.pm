@@ -338,7 +338,7 @@ s/^(samlSPMetaDataXML|samlSPMetaDataExportedAttributes|samlSPMetaDataOptions)\/(
     }    # END LOOP
 
     # 1.4 Loading unchanged parameters (ajax nodes not open)
-    $self->lmLog( "Save unchanged parameters", 'debug' );
+    $self->lmLog( "Restore unchanged parameters", 'debug' );
     foreach ( @{ $result->getChildrenByTagName('ignore') } ) {
         my $node = $_->getAttribute('value');
         $node =~ s/^.*node=(.*?)(?:&.*)?\}$/$1/;
@@ -356,7 +356,28 @@ s/^(samlSPMetaDataXML|samlSPMetaDataExportedAttributes|samlSPMetaDataOptions)\/(
         }
     }
 
-    # 1.5 Author attributes for accounting
+    # 1.5 Global tests
+    $self->lmLog( "Launch global tests", 'debug' );
+    {
+        my $tests = $self->globalTests($newConf);
+        while ( my ( $name, $sub ) = each %$tests ) {
+        my ( $res, $msg );
+        eval {
+            ( $res, $msg ) = $sub->();
+            if ($res) {
+                if ($msg) {
+                        $errors->{warnings}->{$name} = $msg;
+                }
+            }
+            else {
+                $errors->{error}->{$name} = $msg;
+            }
+        };
+            $errors->{warnings}->{$name} = "Test $name failed" if($@);
+        }
+    }
+
+    # 1.6 Author attributes for accounting
     $newConf->{cfgAuthor}   = $ENV{REMOTE_USER} || 'anonymous';
     $newConf->{cfgAuthorIP} = $ENV{REMOTE_ADDR};
     $newConf->{cfgDate}     = time();

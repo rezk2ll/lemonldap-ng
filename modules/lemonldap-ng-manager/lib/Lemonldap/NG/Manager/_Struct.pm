@@ -1782,4 +1782,27 @@ sub subDefaultConf {
     };
 }
 
+## @method hashref globalTests(hashref conf)
+# Return a hash ref where keys are the names of the tests and values
+# subroutines to execute
+# @param $conf Configuration to test
+# @return hash ref where keys are the names of the tests and values
+sub globalTests {
+    my ( $self, $conf ) = splice @_;
+    return {
+        'portalIsInDomain' => sub {
+
+	    # TODO: better parsing
+            return (
+                1,
+                (
+                    index( $conf->{portal}, $conf->{domain} ) > 0
+                    ? ''
+                    : "Portal seems not to be in the domain $conf->{domain}"
+                )
+            );
+        },
+    };
+}
+
 1;
