@@ -513,6 +513,8 @@ doxygen:	clean
 	mv -f doc/devel/tmp/* doc/devel/html/
 	rm -rf doc/devel/tmp
 	$(PERL) -i -pe 's/Graphical Class Hierarchy/Class Collaboration Graph/' doc/devel/html/inherits.html doc/devel/html/tree.html
+	# Some files are not generated
+	for i in doc/devel/html/*dot; do dot -T png -o $${i/.dot/.png} $$i; rm -f $$i; done
 
 distclean:	clean
 
