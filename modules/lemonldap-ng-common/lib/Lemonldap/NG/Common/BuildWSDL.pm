@@ -1,9 +1,18 @@
+## @file
+# Utility to build WSDL files
+
+## @class
+# Class utility to build WSDL files
 package Lemonldap::NG::Common::BuildWSDL;
 
 use Lemonldap::NG::Common::Conf;
 
 our $VERSION = '0.1';
 
+## @cmethod Lemonldap::NG::Common::Conf new(hashref configStorage);
+# Constructor
+# @param $configStorage Configuration access parameters
+# @return Lemonldap::NG::Common::Conf new object
 sub new {
     my ( $class, $configStorage ) = @_;
     my $self = bless {}, $class;
@@ -13,6 +22,10 @@ sub new {
     return $self;
 }
 
+## @method string buildWSDL(string xml)
+# Parse XML string to sustitute macros
+# @param $xml XML string
+# @return Parsed XML string
 sub buildWSDL {
     my ( $self, $xml ) = @_;
     my $portal = $self->{conf}->{portal};

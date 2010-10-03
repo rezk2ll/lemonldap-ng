@@ -1,8 +1,13 @@
+## @file
+# Lemonldap::NG special handler
+
+## @class
+# Lemonldap::NG special handler
 package Lemonldap::NG::Handler::UpdateCookie;
 
 use strict;
 use Lemonldap::NG::Handler::SharedConf qw(:all);
-our @ISA = qw(Lemonldap::NG::Handler::SharedConf);
+use base qw(Lemonldap::NG::Handler::SharedConf);
 
 our $VERSION = '0.1';
 
@@ -83,7 +88,7 @@ cookie sent by client, to reload session in local cache.
 
 =head1 DESCRIPTION
 
-Lemonldap::NG::Handler::UpdateCookie is a special Lemonldap::NG:: hander that
+Lemonldap::NG::Handler::UpdateCookie is a special Lemonldap::NG:: handler that
 allow a session to be removed from local cache of the current handler, if a
 update cookie is sent by the user.
 

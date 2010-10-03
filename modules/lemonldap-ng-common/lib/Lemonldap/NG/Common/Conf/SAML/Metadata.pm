@@ -1,4 +1,4 @@
-##@class
+##@file
 # SAML Metadata object for Lemonldap::NG
 
 ##@class

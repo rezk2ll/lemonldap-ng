@@ -533,8 +533,8 @@ sub checkMessage {
 
 ## @method boolean checkLassoError(Lasso::Error error, string level)
 # Log Lasso error code and message if this is actually a Lasso::Error with code > 0
-# @param Lasso::Error Lasso error object
-# @param string optional log level (debug by default)
+# @param error Lasso error object
+# @param level optional log level (debug by default)
 # @return 1 if no error
 sub checkLassoError {
     my ( $self, $error, $level ) = splice @_;
@@ -561,11 +561,11 @@ sub checkLassoError {
 ## @method Lasso::Server createServer(string metadata, string private_key, string private_key_password, string private_key_enc, string private_key_enc_password, string certificate)
 # Load service metadata and create Lasso::Server object
 # @param string metadata
-# @param string private key
-# @param string optional private key password
-# @param string optional private key for encryption
-# @param string optional private key password for encryption
-# @param string optional certificate
+# @param private_key private key
+# @param private_key_password optional private key password
+# @param private_key_enc optional private key for encryption
+# @param private_key_enc_password optional private key password for encryption
+# @param certificate optional certificate
 # @return Lasso::Server object
 sub createServer {
     my ( $self, $metadata, $private_key, $private_key_password,
@@ -594,10 +594,10 @@ sub createServer {
 
 ## @method boolean addIDP(Lasso::Server server, string metadata, string public_key, string ca_cert_chain)
 # Add IDP to an existing Lasso::Server
-# @param Lasso::Server Lasso::Server object
-# @param string metadata IDP metadata
-# @param string optional public key
-# @param string optional ca cert chain
+# @param server Lasso::Server object
+# @param metadata IDP metadata
+# @param public_key optional public key
+# @param ca_cert_chain optional ca cert chain
 # @return boolean result
 sub addIDP {
     my ( $self, $server, $metadata, $public_key, $ca_cert_chain ) = splice @_;
@@ -610,10 +610,10 @@ sub addIDP {
 
 ## @method boolean addSP(Lasso::Server server, string metadata, string public_key, string ca_cert_chain)
 # Add SP to an existing Lasso::Server
-# @param Lasso::Server Lasso::Server object
-# @param string metadata SP metadata
-# @param string optional public key
-# @param string optional ca cert chain
+# @param server Lasso::Server object
+# @param metadata SP metadata
+# @param public_key optional public key
+# @param ca_cert_chain optional ca cert chain
 # @return boolean result
 sub addSP {
     my ( $self, $server, $metadata, $public_key, $ca_cert_chain ) = splice @_;
@@ -626,10 +626,10 @@ sub addSP {
 
 ## @method boolean addAA(Lasso::Server server, string metadata, string public_key, string ca_cert_chain)
 # Add Attribute Authority to an existing Lasso::Server
-# @param Lasso::Server Lasso::Server object
-# @param string metadata AA metadata
-# @param string optional public key
-# @param string optional ca cert chain
+# @param server Lasso::Server object
+# @param metadata AA metadata
+# @param public_key optional public key
+# @param ca_cert_chain optional ca cert chain
 # @return boolean result
 sub addAA {
     my ( $self, $server, $metadata, $public_key, $ca_cert_chain ) = splice @_;
@@ -643,11 +643,11 @@ sub addAA {
 
 ## @method boolean addProvider(Lasso::Server server, int role, string metadata, string public_key, string ca_cert_chain)
 # Add provider to an existing Lasso::Server
-# @param Lasso::Server Lasso::Server object
-# @param int role (IDP, SP or Both)
-# @param string metadata IDP metadata
-# @param string optional public key
-# @param string optional ca cert chain
+# @param server Lasso::Server object
+# @param role (IDP, SP or Both)
+# @param metadata IDP metadata
+# @param public_key optional public key
+# @param ca_cert_chain optional ca cert chain
 # @return boolean result
 sub addProvider {
     my ( $self, $server, $role, $metadata, $public_key, $ca_cert_chain ) =
@@ -946,9 +946,9 @@ sub createLogin {
 
 ## @method boolean initAuthnRequest(Lasso::Login login, string idp, int method)
 # Init authentication request
-# @param Lasso::Login login
-# @param string entityID
-# @param int HTTP method
+# @param login Lasso::Login
+# @param idp entityID
+# @param method HTTP method
 # @return boolean result
 sub initAuthnRequest {
     my ( $self, $login, $idp, $method ) = splice @_;
@@ -960,7 +960,7 @@ sub initAuthnRequest {
 
 ## @method boolean buildAuthnRequestMsg(Lasso::Login login)
 # Build authentication request message
-# @param Lasso::Login login
+# @param login Lasso::Login
 # @return boolean result
 sub buildAuthnRequestMsg {
     my ( $self, $login ) = splice @_;
@@ -973,7 +973,7 @@ sub buildAuthnRequestMsg {
 ## @method boolean processAuthnRequestMsg(Lasso::Login login, string request)
 # Process authentication request message
 # @param login Lasso::Login object
-# @param response SAML request
+# @param request SAML request
 # @return result
 sub processAuthnRequestMsg {
     my ( $self, $login, $request ) = splice @_;

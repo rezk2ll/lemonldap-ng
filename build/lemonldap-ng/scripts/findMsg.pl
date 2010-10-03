@@ -18,6 +18,11 @@ foreach my $module (qw(common handler manager portal)) {
     foreach my $file (@files) {
         open F, $file;
         $file =~ s#.*/NG/##;
+        $_ = <F>;
+        unless(/^##\s*\@file/){
+            push @{ $errorMsg->{$module}->{undocumented} }, $file;
+            next;
+        }
         my $autoload = 0;
         while (<F>) {
             next if /^(?:\s*#|\*lmLog|sub lmLog)/;
@@ -47,6 +52,9 @@ foreach my $module (qw(common handler manager portal)) {
         close F;
     }
     print "\n###### " . uc($module) . " ######\n";
+    foreach ( @{ $errorMsg->{$module}->{undocumented} } ) {
+        print "## Undocumented ## $_\n";
+    }
     foreach my $level (qw(error warn notice info)) {
         foreach ( @{ $errorMsg->{$module}->{$level} } ) {
             print "[$level] $_\n";

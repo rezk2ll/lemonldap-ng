@@ -1,3 +1,8 @@
+## @file
+# Subclass of Net::OpenID::Server that manage OpenID extensions
+
+## @class
+# Subclass of Net::OpenID::Server that manage OpenID extensions
 package Lemonldap::NG::Portal::OpenID::Server;
 
 use strict;
@@ -7,7 +12,8 @@ use Lemonldap::NG::Common::Regexp;
 
 use constant DEBUG => 0;
 
-our @ISA     = qw(Net::OpenID::Server);
+use base qw(Net::OpenID::Server);
+
 our $VERSION = '0.1';
 
 my $OPENID2_NS        = qq!http://specs.openid.net/auth/2.0!;
@@ -15,6 +21,10 @@ my $OPENID2_ID_SELECT = qq!http://specs.openid.net/auth/2.0/identifier_select!;
 
 *_push_url_arg = *Net::OpenID::Server::_push_url_arg;
 
+## @cmethod Lemonldap::NG::Portal::OpenID::Server new(hash opts)
+# Call Net::OpenID::Server::new() and store extensions
+# @param %opts Net::OpenID::Server options
+# @return Lemonldap::NG::Portal::OpenID::Server new object
 sub new {
     my $class = shift;
     my $self  = fields::new($class);
@@ -25,11 +35,19 @@ sub new {
     #$self->{get_args} = sub { $self->param(@_) };
 }
 
+## @method protected void extensions()
+# Manage "extensions" constructor parameter
 sub extensions {
     my $self = shift;
     $self->{_extensions} = shift;
 }
 
+## @method protected list _mode_checkid(string mode, boolean redirect_for_setup)
+# Overload Net::OpenID::Server::_mode_checkid to call extensions hook
+# @param $mode OpenID mode
+# @param $redirect_for_setup indicates that user must be redirected or not for
+# setup
+# @return (string $type, hashref parameters)
 sub _mode_checkid {
     my Lemonldap::NG::Portal::OpenID::Server $self = shift;
     my ( $mode, $redirect_for_setup ) = @_;

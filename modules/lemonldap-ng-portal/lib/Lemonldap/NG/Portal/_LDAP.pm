@@ -70,7 +70,7 @@ sub new {
     return $self;
 }
 
-## @method Net::LDAP::Message bind(string dn, %args)
+## @method Net::LDAP::Message bind(string dn, hash args)
 # Reimplementation of Net::LDAP::bind(). Connection is done :
 # - with $dn and $args->{password} as dn/password if defined,
 # - or with Lemonldap::NG account,
@@ -132,7 +132,7 @@ sub loadPP {
     $ppLoaded = 1;
 }
 
-## @method protected int userBind(string dn, %args)
+## @method protected int userBind(string dn, hash args)
 # Call bind() with dn/password and return
 # @param $dn LDAP distinguish name
 # @param %args See Net::LDAP(3) manpage for more
@@ -389,10 +389,10 @@ sub ldap {
 
 ## @method string searchGroups(string base, string key, string value, string attributes)
 # Get groups from LDAP directory
-# @param string base LDAP search base
-# @param string key Attribute name in group containing searched value
-# @param string value Searched value
-# @param string attributes to get from found groups (array ref)
+# @param base LDAP search base
+# @param key Attribute name in group containing searched value
+# @param value Searched value
+# @param attributes to get from found groups (array ref)
 # @return string groups separated with multiValuesSeparator
 sub searchGroups {
     my $self       = shift;
@@ -478,7 +478,7 @@ sub searchGroups {
 
 ## @method string getLdapValue(Net::LDAP::Entry entry, string attribute)
 # Get the dn, or the attribute value with a separator for multi-valuated attributes
-# @param Net::LDAP::Entry LDAP entry
+# @param LDAP entry
 # @param string attribute name
 # @return string value
 sub getLdapValue {

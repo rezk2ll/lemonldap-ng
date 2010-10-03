@@ -123,6 +123,7 @@ sub filter {
                     $self->print("};\n");
                 }
                 $current_class = $args;
+                die "$line $command $args" unless($args);
                 $self->emit_class( $args, $line,
                     [ "\@$command $args", @more, "\@nosubgrouping" ] );
             }
@@ -395,6 +396,7 @@ s#Lemonldap/NG/(\w+)#"lemonldap-ng-".lc($1)."/lib/Lemonldap/NG/$1"#e;
         $self->more( @$doc[ 1 .. $#$doc ] );
         $self->end();
     }
+    die unless($class);
     $self->print("class $class");
 
     if ( @current_isa or @current_priv_isa ) {

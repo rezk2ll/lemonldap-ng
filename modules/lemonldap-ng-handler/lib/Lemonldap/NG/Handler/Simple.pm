@@ -194,14 +194,21 @@ sub logout_mp2 : method {
 sub lmLog {
     my ( $class, $mess, $level ) = splice @_;
     die "Level is required" unless ($level);
+    my $call;
+    unless ( $level eq 'debug' ) {
+        my @tmp = caller();
+        $call = "$tmp[1] $tmp[2]:";
+    }
     if ( MP() == 2 ) {
+        Apache2::ServerRec->log->debug($call) if ($call);
         Apache2::ServerRec->log->$level($mess);
     }
     elsif ( MP() == 1 ) {
+        Apache->server->log->debug($call) if ($call);
         Apache->server->log->$level($mess);
     }
     else {
-        print STDERR "$mess\n";
+        print STDERR "[$level] $mess\n";
     }
 }
 

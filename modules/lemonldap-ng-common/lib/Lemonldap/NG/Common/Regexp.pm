@@ -1,3 +1,6 @@
+## @file
+# Common regexp issued from Regexp::Common
+
 package Lemonldap::NG::Common::Regexp;
 
 use constant {

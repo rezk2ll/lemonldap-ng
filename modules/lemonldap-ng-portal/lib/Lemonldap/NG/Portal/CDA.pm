@@ -1,3 +1,8 @@
+## @file
+# Deprecated: use "cda" parameter instead
+
+## @class
+# Deprecated: use "cda" parameter instead
 package Lemonldap::NG::Portal::CDA;
 
 use strict;
@@ -14,6 +19,10 @@ use base ('Lemonldap::NG::Portal::SharedConf');
 # OVERLOADED SUB #
 ##################
 
+## @cmethod Lemonldap::NG::Portal::CDA new(array params)
+# Call Lemonldap::NG::Portal::SharedConf::new() with "cda" parameter set to 1
+# @param params Lemonldap::NG::Portal::SharedConf::new() parameters
+# @return New Lemonldap::NG::Portal::CDA object
 sub new {
     my $class = shift;
     my $self  = $class->SUPER::new(@_);
