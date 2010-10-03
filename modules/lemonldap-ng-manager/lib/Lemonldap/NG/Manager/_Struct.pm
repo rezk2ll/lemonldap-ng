@@ -1784,7 +1784,15 @@ sub subDefaultConf {
 
 ## @method hashref globalTests(hashref conf)
 # Return a hash ref where keys are the names of the tests and values
-# subroutines to execute
+# subroutines to execute.
+#
+# Subroutines can return one of the followings :
+# - (1)         : everything is OK
+# - (1,message) : OK with a warning
+# - (0,message) : NOK
+#
+# Those subroutines can also modify configuration.
+#
 # @param $conf Configuration to test
 # @return hash ref where keys are the names of the tests and values
 sub globalTests {
@@ -1806,3 +1814,4 @@ sub globalTests {
 }
 
 1;
+
