@@ -60,7 +60,7 @@ _RETURN $getCookiesResponse Response
 
 =cut
 
-##@method SOAP::Data getCookies(string user,string password)
+##@method SOAP::Data getCookies(string user,string password, string sessionid)
 # Called in SOAP context, returns cookies in an array.
 # This subroutine works only for portals working with user and password
 #@param user uid

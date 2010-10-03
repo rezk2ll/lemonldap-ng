@@ -478,8 +478,8 @@ sub searchGroups {
 
 ## @method string getLdapValue(Net::LDAP::Entry entry, string attribute)
 # Get the dn, or the attribute value with a separator for multi-valuated attributes
-# @param LDAP entry
-# @param string attribute name
+# @param entry LDAP entry
+# @param attribute Attribute name
 # @return string value
 sub getLdapValue {
     my $self      = shift;

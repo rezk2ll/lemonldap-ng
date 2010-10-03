@@ -240,7 +240,7 @@ sub filter {
             $current_class = $1;
             $self->emit_class( $current_class, $line );
         }
-        elsif (/^\s*sub\s+([\w:]+)/) {
+        elsif (/^sub\s+([\w:]+)/) {
             my ( $proto, $name, @args ) = $self->analyze_sub( $line - 1 );
             if ( $current_class && @args && ( $args[0] eq "\$self" ) ) {
                 $self->push( $self->protection($proto) . ' Object Methods' );
@@ -284,7 +284,7 @@ sub analyze_sub {
     my ( $self, $line ) = @_;
 
     my $file = $self->file_contents();
-    $file->[$line] =~ /sub\s+(.*)\{/;
+    $file->[$line] =~ /^sub\s+(.*)\{/;
     my $name = $1;
     my $proto;
     my @args;

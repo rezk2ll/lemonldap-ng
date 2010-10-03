@@ -119,7 +119,7 @@ sub appslist {
     return $appslist->[0]->{categories};
 }
 
-## @method private hashref _buildCategoryHash()
+## @method private hashref _buildCategoryHash(string catname,hashref cathash, int catlevel)
 # Build hash for a category
 # @param catname Category name
 # @param cathash Hash of category elements
@@ -169,7 +169,7 @@ sub _buildCategoryHash {
     return $categoryHash;
 }
 
-## @method private hashref _buildApplicationHash()
+## @method private hashref _buildApplicationHash(string appid, hashref apphash)
 # Build hash for an application
 # @param $appid Application ID
 # @param $apphash Hash of application elements
@@ -253,7 +253,7 @@ sub appslistDescription {
     return $self->_displayConfDescription( "", $applicationList );
 }
 
-## @method string _displayConfCategory()
+## @method string _displayConfCategory(string catname, hashref cathash, int catlevel)
 # Creates and returns HTML code for a category.
 # @param catname Category name
 # @param cathash Hash of category elements
@@ -306,7 +306,7 @@ sub _displayConfCategory {
     return $html;
 }
 
-## @method private string _displayConfApplication()
+## @method private string _displayConfApplication(string appid, hashref apphash)
 # Creates HTML code for an application.
 # @param $appid Application ID
 # @param $apphash Hash of application elements
@@ -350,7 +350,7 @@ sub _displayConfApplication {
     return $html;
 }
 
-## @method private string _displayConfDescription()
+## @method private string _displayConfDescription(string appid, hashref apphash)
 # Create HTML code for application description.
 # @param $appid Application ID
 # @param $apphash Hash
@@ -390,7 +390,7 @@ sub _displayConfDescription {
     return $html;
 }
 
-## @method private string _filter()
+## @method private string _filter(hashref apphash)
 # Duplicate hash reference
 # Remove unauthorized menu elements
 # Hide empty categories
@@ -415,7 +415,7 @@ sub _filter {
     return $filteredHash;
 }
 
-## @method private string _filterHash()
+## @method private string _filterHash(hashref apphash)
 # Remove unauthorized menu elements
 # @param $apphash Menu elements
 # @return filtered hash
@@ -461,7 +461,7 @@ sub _filterHash {
 
 }
 
-## @method private void _isCategoryEmpty()
+## @method private void _isCategoryEmpty(hashref apphash)
 # Check if a category is empty
 # @param $apphash Menu elements
 # @return boolean

@@ -560,7 +560,7 @@ sub checkLassoError {
 
 ## @method Lasso::Server createServer(string metadata, string private_key, string private_key_password, string private_key_enc, string private_key_enc_password, string certificate)
 # Load service metadata and create Lasso::Server object
-# @param string metadata
+# @param metadata SAML metadatas
 # @param private_key private key
 # @param private_key_password optional private key password
 # @param private_key_enc optional private key for encryption
@@ -670,7 +670,7 @@ sub addProvider {
 ## @method string getOrganizationName(Lasso::Server server, string idp)
 # Return name of organization picked up from metadata
 #@param server Lasso::Server object
-#@param string entityID
+#@param idp entity ID
 #@return string organization name
 sub getOrganizationName {
     my ( $self, $server, $idp ) = splice @_;
@@ -735,7 +735,7 @@ sub resetProviderIdIndex {
 ## @method Lasso::Login createAuthnRequest(Lasso::Server server, string idp, int method, boolean forceAuthn, boolean isPassive, string nameIDFormat, boolean allowProxiedAuthn, boolean signSSOMessage, string requestedAuthnContext)
 # Create authentication request for selected IDP
 # @param server Lasso::Server object
-# @param entityID IDP entityID
+# @param idp IDP entityID
 # @param method HTTP method
 # @param forceAuthn force authentication on IDP
 # @param isPassive require passive authentication
@@ -1172,7 +1172,7 @@ sub storeRelayState {
 
 ## @method boolean extractRelayState(string relaystate)
 # Extract RelayState information into $self
-# @param relayState relayState value
+# @param relaystate Relay state value
 # @return result
 sub extractRelayState {
     my ( $self, $relaystate ) = splice @_;
@@ -1213,13 +1213,14 @@ sub getAssertion {
     return $assertion;
 }
 
-## @method string getAttributeValue(string name, string format, string friendly_name, array_ref attributes, boolean force_utf8)
+## @method string getAttributeValue(string name, string format, string friendly_name, arrayref attributes, boolean force_utf8)
 # Get SAML attribute value corresponding to name, format and friendly_name
 # Multivaluated values are separated by multiValuesSeparator
 # If force_utf8 flag is set, value is encoded in UTF-8
 # @param name SAML attribute name
 # @param format optional SAML attribute format
 # @param friendly_name optional SAML attribute friendly name
+# @param attributes Attributes
 # @param force_utf8 optional flag to force value in UTF-8
 # @return attribute value
 sub getAttributeValue {
@@ -1394,8 +1395,8 @@ sub createLogout {
 ## @method boolean initLogoutRequest(Lasso::Logout logout, string entityID, int method)
 # Init logout request
 # @param logout Lasso::Logout object
-# @param entityID
-# @param HTTP method
+# @param entityID Entity ID
+# @param method HTTP method
 # @return result
 sub initLogoutRequest {
     my ( $self, $logout, $entityID, $method ) = splice @_;
@@ -1525,7 +1526,7 @@ sub validateLogoutRequest {
 
 ## @method boolean buildLogoutResponseMsg(Lasso::Logout logout)
 # Build logout response message
-# @param Lasso::Logout logout
+# @param logout Lasso::Logout object
 # @return boolean result
 sub buildLogoutResponseMsg {
     my ( $self, $logout ) = splice @_;
@@ -1535,7 +1536,7 @@ sub buildLogoutResponseMsg {
     return $self->checkLassoError($@);
 }
 
-## @method boolean storeReplayProtection(string samlID)
+## @method boolean storeReplayProtection(string samlID, string samlData)
 # Store ID of an SAML message in Replay Protection base
 # @param samlID ID of SAML message
 # @param samlData Optional data to store
@@ -1816,7 +1817,7 @@ sub createArtifactResponse {
 ## @method boolean processArtRequestMsg(Lasso::Profile profile, string request)
 # Process artifact request message
 # @param profile Lasso::Profile object
-# @param response SAML request
+# @param request SAML request
 # @return result
 sub processArtRequestMsg {
     my ( $self, $profile, $request ) = splice @_;
@@ -2133,7 +2134,7 @@ sub getHttpMethodString {
 
     return "UNDEFINED";
 }
-## @method int getFirstHttpMethod(Lasso::Server server, string entityID, int protcolType)
+## @method int getFirstHttpMethod(Lasso::Server server, string entityID, int protocolType)
 # Find a suitable HTTP method for an entity with a given protocol
 # @param server Lasso::Server object
 # @param entityID entity ID

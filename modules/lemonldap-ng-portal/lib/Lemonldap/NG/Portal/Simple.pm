@@ -1088,7 +1088,7 @@ sub _deleteSession {
     return $result;
 }
 
-##@method private void _dump( variable )
+##@method private void _dump(void* variable)
 # Dump variable in debug mode
 # @param $variable
 # @return void

@@ -11,7 +11,7 @@ use MIME::Lite;
 
 our $VERSION = '0.2';
 
-## @method string gen_password()
+## @method string gen_password(string regexp)
 # Generate a complex password based on a regular expression
 # @param regexp regular expression
 # @return complex password
@@ -23,7 +23,7 @@ sub gen_password {
     return $random->randregex($regexp);
 }
 
-## @method int send_mail()
+## @method int send_mail(string mail, string subject, string body, string html)
 # Send mail
 # @param mail recipient address
 # @param subject mail subject

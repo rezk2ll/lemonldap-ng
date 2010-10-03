@@ -14,7 +14,7 @@ our @EXPORT = qw(dbh);
 
 our $VERSION = '0.1';
 
-## @method protected Lemonldap::NG::Portal::_DBI dbh()
+## @method protected Lemonldap::NG::Portal::_DBI dbh(string dbiChain, string dbiUser, string dbiPassword)
 # Create connection to database
 # @param dbiChain DBI connection chain
 # @param dbiUser DBI connection user
@@ -43,7 +43,7 @@ sub dbh {
     return $dbh;
 }
 
-## @method protected Lemonldap::NG::Portal::_DBI hash_password()
+## @method protected Lemonldap::NG::Portal::_DBI hash_password(string password, string hash)
 # Return hashed password for SQL SELECT WHERE clause
 # @param password clear password
 # @param hash hash mechanism
@@ -65,7 +65,7 @@ sub hash_password {
 
 }
 
-## @method protected Lemonldap::NG::Portal::_DBI check_password()
+## @method protected Lemonldap::NG::Portal::_DBI check_password(string user, string password)
 # Verify user and password with SQL SELECT
 # @param user user
 # @param password password
@@ -110,7 +110,7 @@ sub check_password {
 
 }
 
-## @method protected Lemonldap::NG::Portal::_DBI modify_password()
+## @method protected Lemonldap::NG::Portal::_DBI modify_password(string user, string password, string userCol, string passwordCol)
 # Modify password with SQL UPDATE
 # @param user user
 # @param password password

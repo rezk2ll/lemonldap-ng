@@ -316,12 +316,12 @@ sub toStruct {
     return $self->_toStruct( '', $struct );
 }
 
-## @method private hashref _toStruct (Hashref node)
+## @method private hashref _toStruct (string path, hashref node)
 # Return a preformated structure to be stored into Manager structure.
 # NOT USED FOR THE MOMENT.
 # @param $path The path of the node.
 # @param $node The current node into the hashref tree.
-# @return Hashref A structure to be inserted into Manager structure.
+# @return hashref A structure to be inserted into Manager structure.
 sub _toStruct {
     my $self = shift;
     my $path = shift;
@@ -370,10 +370,10 @@ sub _toStruct {
     return 0;
 }
 
-## @method public static boolean load(Array files)
+## @method public static boolean load(array files)
 # Return an array of Metadata object.
-# @param $files Array of filenames
-# @return Array of Metadata objects
+# @param @files Array of filenames
+# @return array of Metadata objects
 sub load {
     my @files     = splice @_;
     my @metadatas = ();

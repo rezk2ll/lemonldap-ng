@@ -470,11 +470,12 @@ s/^(samlSPMetaDataXML|samlSPMetaDataExportedAttributes|samlSPMetaDataOptions)\/(
     $self->quit();
 }
 
-## @method public void fileUpload (fieldname)
+## @method public void fileUpload(string fieldname, string filename)
 # Retrieve a file from an HTTP request, and return it. This function is for
 # some functionnalities into the SAML2 modules of the manager, accessing
 # to data through Ajax requests.
 # @param $fieldname The name of the html input field.
+# @param $filename File name
 sub fileUpload {
     my $self      = shift;
     my $fieldname = shift;
@@ -660,6 +661,7 @@ sub formatValue {
 # @param $h New Lemonldap::NG configuration
 # @param $key String "/path/key"
 # @param $k2 Optional subkey
+# @param $value Value
 sub setKeyToH {
     my $value = pop;
     return unless ( ref($value) or length($value) );
