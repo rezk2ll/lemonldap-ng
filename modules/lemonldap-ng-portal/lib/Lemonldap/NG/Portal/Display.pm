@@ -7,6 +7,7 @@ package Lemonldap::NG::Portal::Display;
 
 use strict;
 use Lemonldap::NG::Portal::Simple;
+use utf8;
 
 our $VERSION = '1.00';
 
@@ -80,9 +81,11 @@ sub display {
             $self->_sub('menuInit');
 
             $skinfile = 'menu.tpl';
+            my $auth_user = $self->{sessionInfo}->{ $self->{portalUserAttr} };
+            utf8::decode($auth_user);
 
             %templateParams = (
-                AUTH_USER => $self->{sessionInfo}->{ $self->{portalUserAttr} },
+                AUTH_USER       => $auth_user,
                 AUTOCOMPLETE    => $self->{portalAutocomplete},
                 SKIN            => $skin,
                 AUTH_ERROR      => $self->error( undef, $self->{menuError} ),
