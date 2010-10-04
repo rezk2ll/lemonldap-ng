@@ -361,19 +361,19 @@ s/^(samlSPMetaDataXML|samlSPMetaDataExportedAttributes|samlSPMetaDataOptions)\/(
     {
         my $tests = $self->globalTests($newConf);
         while ( my ( $name, $sub ) = each %$tests ) {
-        my ( $res, $msg );
-        eval {
-            ( $res, $msg ) = $sub->();
-            if ($res) {
-                if ($msg) {
+            my ( $res, $msg );
+            eval {
+                ( $res, $msg ) = $sub->();
+                if ($res) {
+                    if ($msg) {
                         $errors->{warnings}->{$name} = $msg;
+                    }
                 }
-            }
-            else {
-                $errors->{error}->{$name} = $msg;
-            }
-        };
-            $errors->{warnings}->{$name} = "Test $name failed: $@" if($@);
+                else {
+                    $errors->{error}->{$name} = $msg;
+                }
+            };
+            $errors->{warnings}->{$name} = "Test $name failed: $@" if ($@);
         }
     }
 

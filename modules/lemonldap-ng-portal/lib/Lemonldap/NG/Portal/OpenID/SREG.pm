@@ -235,16 +235,16 @@ sub sregfilter {
     }
 
     # Warn if some parameters are rejected
-        if (@rej) {
-            $self->lmLog(
-                "Requested parameter(s) "
-                  . join( ',', @rej )
-                  . "is(are) not valid OpenID SREG parameter(s)",
+    if (@rej) {
+        $self->lmLog(
+            "Requested parameter(s) "
+              . join( ',', @rej )
+              . "is(are) not valid OpenID SREG parameter(s)",
             'warn'
-            );
-        }
+        );
+    }
 
     # Return valid SREG parameters
-        return @ret;
+    return @ret;
 }
 1;
