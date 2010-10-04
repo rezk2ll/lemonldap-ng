@@ -1799,9 +1799,11 @@ sub globalTests {
     my ( $self, $conf ) = splice @_;
     return {
 
+        # 1. CHECKS
+
         # TODO: better parsing using Common::Regexp
 
-        # 1. check if portal is in domain
+        # Check if portal is in domain
         portalIsInDomain => sub {
             return (
                 1,
@@ -1813,7 +1815,7 @@ sub globalTests {
             );
         },
 
-        # 2. check if virtual hosts are in the domain
+        # Check if virtual hosts are in the domain
         vhostInDomainOrCDA => sub {
             return 1 if ( $conf->{cda} );
             my @pb;
@@ -1832,32 +1834,44 @@ sub globalTests {
             );
         },
 
-        # 3. Remove unused and non-customize parameters
-        compactModules => sub {
-            foreach my $k ( keys %$conf ) {
-                next if ( ref $conf->{$k} );
-                if (
-
-                    # SAML keys
-                    (
-                            $k =~ /^saml/i
-                        and not( $conf->{issuerDBSAMLActivation} )
-                        and not( $conf->{authentication} =~ /saml/i )
-                    )
-
-                    # TODO OpenID, CAS,...
-                  )
-                {
-                    my $v = $self->defaultConf()->{$k};
-                    if ( defined($v) and $conf->{$k} eq $v ) {
-                        delete $conf->{$k};
-                    }
-                    else {
-                        print STDERR "$k:\n\t$conf->{$k} => $v\n";
-                    }
-                }
+        # Check if "userDB" and "authentication" are consistent
+        authAndUserDBConsistency => sub {
+            foreach my $type (qw(OpenID SAML)) {
+                return ( 0,
+"\"$type\" can not be used as user database without using \"$type\" for authentication"
+                );
             }
             return 1;
+        },
+
+        # 2. MODIFICATIONS
+
+        # Remove unused and non-customize parameters
+        compactModules => sub {
+            foreach my $k ( keys %$conf ) {
+
+                # No analysis for hash keys
+                next if ( ref $conf->{$k} );
+
+                # Check federation modules
+                foreach my $type (qw(CAS OpenID SAML)) {
+                    if (
+                        (
+                                $k =~ /^$type/i
+                            and not( $conf->{"issuerDB${type}Activation"} )
+                            and not( $conf->{authentication} =~ /$type/i )
+                            and not( $conf->{userDB}         =~ /$type/i )
+                        )
+                      )
+                    {
+                        my $v = $self->defaultConf()->{$k};
+                        if ( defined($v) and $conf->{$k} eq $v ) {
+                            delete $conf->{$k};
+                        }
+                    }
+                }
+                return 1;
+            }
         },
     };
 }
