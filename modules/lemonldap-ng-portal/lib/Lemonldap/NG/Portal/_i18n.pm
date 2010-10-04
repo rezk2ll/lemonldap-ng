@@ -396,7 +396,7 @@ sub msg_en {
         'Update Common Domain Cookie',
         'Parameter %s requested for federation isn\'t available',
         'Data usage policy is available at',
-        'Do you agree to provide the following parameters&nbsp;?',
+        'Do you agree to provide the following parameters?',
     ];
 }
 

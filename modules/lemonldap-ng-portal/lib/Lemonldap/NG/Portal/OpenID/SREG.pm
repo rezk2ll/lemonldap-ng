@@ -9,6 +9,7 @@ package Lemonldap::NG::Portal::OpenID::SREG;
 use strict;
 use Lemonldap::NG::Common::Regexp;
 use Lemonldap::NG::Portal::Simple;
+use utf8;
 
 ## @method protected hash sregHook(hash prm)
 # Hook called to add SREG parameters to the OpenID response
@@ -170,21 +171,40 @@ sub sregHook {
     # else build message and return 0
     else {
 
-        # No choice for requested parameters: just an information
         $self->{_openIdTrustExtMsg} .=
-          "<p>" . &Lemonldap::NG::Portal::_i18n::msg(PM_OPENID_AP) . "</p><ul>";
+          "<h3>" . &Lemonldap::NG::Portal::_i18n::msg(PM_OPENID_AP) . "</h3>\n";
+
+        $self->{_openIdTrustExtMsg} .= "<table class=\"openidsreg\">\n";
+
+        # No choice for requested parameters: just an information
         foreach my $k (@req) {
-            $self->{_openIdTrustExtMsg} .= "<li>$k: $r{$k}</li>";
+            $self->{_openIdTrustExtMsg} .=
+                "<tr class=\"required\">\n" . "<td>"
+              . "<input type=\"checkbox\" disabled=\"disabled\" checked=\"checked\"/>"
+              . "</td>\n"
+              . "<td>$k</td>\n" . "<td>"
+              . utf8::decode( $r{$k} )
+              . "</td>\n"
+              . "</tr>\n";
         }
 
         # For optional parameters: checkboxes are displayed
-        $self->{_openIdTrustExtMsg} .= '</ul>';
         foreach my $k (@opt) {
             $self->{_openIdTrustExtMsg} .=
-                qq#<input type="checkbox" value="OK"#
+                "<tr class=\"optional\">\n" 
+              . "<td>\n"
+              . "<input type=\"checkbox\" value=\"OK\""
               . ( $ag{$k} ? 'checked="checked"' : '' )
-              . qq# name="sreg_$k" /> $k: $r{$k}<br />#;
+              . " name=\"sreg_$k\" />"
+              . "</td>\n"
+              . "<td>$k</td>\n" . "<td>"
+              . utf8::decode( $r{$k} )
+              . "</td>\n"
+              . "</tr>\n";
         }
+
+        $self->{_openIdTrustExtMsg} .= "</table>\n";
+
         $self->lmLog( 'Building validation form', 'debug' );
         return ( 0, $prm );
     }
