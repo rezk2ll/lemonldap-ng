@@ -137,7 +137,7 @@ sub extractFormInfo {
                 else {
                     $self->lmLog(
 "Unknown \"OpenID Simple Registration Extension\" field name: $k",
-                        'error'
+                        'warn'
                     );
                 }
             }
