@@ -1846,7 +1846,7 @@ sub globalTests {
 
         # 2. MODIFICATIONS
 
-        # Remove unused and non-customize parameters
+        # Remove unused and non-customized parameters
         compactModules => sub {
             foreach my $k ( keys %$conf ) {
 
@@ -1855,12 +1855,28 @@ sub globalTests {
 
                 # Check federation modules
                 foreach my $type (qw(CAS OpenID SAML)) {
+
+                    # Check authChoice values
+                    my ( $authChoice, $userDBChoice ) = ( undef, undef );
+                    if ( $conf->{authentication} eq 'Choice'
+                        and defined $conf->{authChoiceModules} )
+                    {
+                        foreach ( keys %{ $conf->{authChoiceModules} } ) {
+                            my ( $auth, $userDB, $passwordDB ) =
+                              split( '|', $conf->{authChoiceModules}->{$_} );
+                            $authChoice   = 1 if $auth   =~ /$type/i;
+                            $userDBChoice = 1 if $userDB =~ /$type/i;
+                        }
+                    }
+
                     if (
                         (
                                 $k =~ /^$type/i
                             and not( $conf->{"issuerDB${type}Activation"} )
                             and not( $conf->{authentication} =~ /$type/i )
                             and not( $conf->{userDB}         =~ /$type/i )
+                            and not( defined $authChoice
+                                or defined $userDBChoice )
                         )
                       )
                     {
