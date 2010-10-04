@@ -231,7 +231,7 @@ sub struct {
         ######################
         generalParameters => {
             _nodes => [
-                qw(n:portalParams n:authParams n:logParams n:cookieParams n:sessionParams n:advancedParams)
+                qw(n:portalParams n:authParams n:issuerParams n:logParams n:cookieParams n:sessionParams n:advancedParams)
             ],
             _help => 'default',
 
@@ -278,7 +278,7 @@ sub struct {
                 },
             },
 
-            # AUTHENTICATION AND USERDB PARAMETERS
+            # AUTHENTICATION / USERDB / PASWWORDDB PARAMETERS
             authParams => {
 
                # Displayed nodes depend on authentication/userDB modules choosed
@@ -329,7 +329,6 @@ sub struct {
                     my @u = keys %res;
 
     # Add authentication, userDB, passwordDB and issuerDB nodes at the beginning
-                    unshift( @u, "issuerDB" );
                     unshift( @u, "passwordDB" );
                     unshift( @u, "userDB" );
                     unshift( @u, "authentication" );
@@ -343,37 +342,6 @@ sub struct {
                 authentication => 'text:/authentication:authParams:authParams',
                 userDB         => 'text:/userDB:authParams:userdbParams',
                 passwordDB => 'text:/passwordDB:authParams:passworddbParams',
-
-                # IssuerDB branch
-                issuerDB => {
-                    _nodes => [qw(issuerDBSAML issuerDBCAS issuerDBOpenID)],
-                    issuerDBSAML => {
-                        _nodes => [
-                            qw(issuerDBSAMLActivation issuerDBSAMLPath issuerDBSAMLRule)
-                        ],
-                        issuerDBSAMLActivation =>
-                          'bool:/issuerDBSAMLActivation',
-                        issuerDBSAMLPath => 'text:/issuerDBSAMLPath',
-                        issuerDBSAMLRule => 'text:/issuerDBSAMLRule',
-                    },
-                    issuerDBCAS => {
-                        _nodes => [
-                            qw(issuerDBCASActivation issuerDBCASPath issuerDBCASRule)
-                        ],
-                        issuerDBCASActivation => 'bool:/issuerDBCASActivation',
-                        issuerDBCASPath       => 'text:/issuerDBCASPath',
-                        issuerDBCASRule       => 'text:/issuerDBCASRule',
-                    },
-                    issuerDBOpenID => {
-                        _nodes => [
-                            qw(issuerDBOpenIDActivation issuerDBOpenIDPath issuerDBOpenIDRule)
-                        ],
-                        issuerDBOpenIDActivation =>
-                          'bool:/issuerDBOpenIDActivation',
-                        issuerDBOpenIDPath => 'text:/issuerDBOpenIDPath',
-                        issuerDBOpenIDRule => 'text:/issuerDBOpenIDRule',
-                    },
-                },
 
                 # LDAP
                 ldapParams => {
@@ -578,6 +546,56 @@ sub struct {
                     },
                 },
 
+            },
+
+            # ISSUERDB PARAMETERS
+            issuerParams => {
+                _nodes       => [qw(issuerDBSAML issuerDBCAS issuerDBOpenID)],
+                issuerDBSAML => {
+                    _nodes => [
+                        qw(issuerDBSAMLActivation issuerDBSAMLPath issuerDBSAMLRule)
+                    ],
+                    issuerDBSAMLActivation => 'bool:/issuerDBSAMLActivation',
+                    issuerDBSAMLPath       => 'text:/issuerDBSAMLPath',
+                    issuerDBSAMLRule       => 'text:/issuerDBSAMLRule',
+                },
+                issuerDBCAS => {
+                    _nodes => [
+                        qw(issuerDBCASActivation issuerDBCASPath issuerDBCASRule)
+                    ],
+                    issuerDBCASActivation => 'bool:/issuerDBCASActivation',
+                    issuerDBCASPath       => 'text:/issuerDBCASPath',
+                    issuerDBCASRule       => 'text:/issuerDBCASRule',
+                },
+                issuerDBOpenID => {
+                    _nodes => [
+                        qw(issuerDBOpenIDActivation issuerDBOpenIDPath issuerDBOpenIDRule n:issuerDBOpenIDOptions)
+                    ],
+                    issuerDBOpenIDActivation =>
+                      'bool:/issuerDBOpenIDActivation',
+                    issuerDBOpenIDPath    => 'text:/issuerDBOpenIDPath',
+                    issuerDBOpenIDRule    => 'text:/issuerDBOpenIDRule',
+                    issuerDBOpenIDOptions => {
+                        _nodes =>
+                          [qw(openIdIssuerSecret openIdAttr n:openIdSreg)],
+                        openIdIssuerSecret => 'text:/openIdIssuerSecret',
+                        openIdAttr         => 'text:openIdAttr',
+                        openIdSreg         => {
+                            _nodes => [
+                                qw(openIdSreg_fullname openIdSreg_nickname openIdSreg_language openIdSreg_postcode openIdSreg_timezone openIdSreg_country openIdSreg_gender openIdSreg_email openIdSreg_dob)
+                            ],
+                            openIdSreg_fullname => 'text:openIdSreg_fullname',
+                            openIdSreg_nickname => 'text:openIdSreg_nickname',
+                            openIdSreg_language => 'text:openIdSreg_language',
+                            openIdSreg_postcode => 'text:openIdSreg_postcode',
+                            openIdSreg_timezone => 'text:openIdSreg_timezone',
+                            openIdSreg_country  => 'text:openIdSreg_country',
+                            openIdSreg_gender   => 'text:openIdSreg_gender',
+                            openIdSreg_email    => 'text:openIdSreg_email',
+                            openIdSreg_dob      => 'text:openIdSreg_dob',
+                        },
+                    },
+                },
             },
 
             # LOGS PARAMETERS
@@ -1560,6 +1578,19 @@ sub testStruct {
         sympaSecret  => $testNotDefined,
         sympaMailKey => $testNotDefined,
 
+        # OpenID Issuer
+        openIdIssuerSecret  => $testNotDefined,
+        openIdAttr          => $testNotDefined,
+        openIdSreg_fullname => $testNotDefined,
+        openIdSreg_nickname => $testNotDefined,
+        openIdSreg_language => $testNotDefined,
+        openIdSreg_postcode => $testNotDefined,
+        openIdSreg_timezone => $testNotDefined,
+        openIdSreg_country  => $testNotDefined,
+        openIdSreg_gender   => $testNotDefined,
+        openIdSreg_email    => $testNotDefined,
+        openIdSreg_dob      => $testNotDefined,
+
     };
 }
 
@@ -1601,6 +1632,10 @@ sub defaultConf {
         notificationStorage         => 'File',
         notifyDeleted               => '1',
         notifyOther                 => '1',
+        openIdSreg_fullname         => 'cn',
+        openIdSreg_nickname         => 'uid',
+        openIdSreg_timezone         => '_timezone',
+        openIdSreg_email            => 'mail',
         portal                      => 'http://auth.example.com',
         portalSkin                  => 'pastel',
         portalUserAttr              => '_user',
@@ -1754,6 +1789,7 @@ sub defaultConf {
         twitterAuthnLevel => 1,
         apacheAuthnLevel  => 4,
         nullAuthnLevel    => 0,
+
     };
 }
 

@@ -21,7 +21,7 @@ our $initDone;
 sub issuerDBInit {
     my $self = shift;
     return PE_OK if ($initDone);
-    $self->{openIdSecret} ||= $self->{cipher}->encrypt(0);
+    $self->{openIdIssuerSecret} ||= $self->{cipher}->encrypt(0);
 
     eval { require Lemonldap::NG::Portal::OpenID::Server };
     $self->abort( 'Unable to load Net::OpenID::Server', $@ ) if ($@);
@@ -136,14 +136,14 @@ sub openIDServer {
 
     my $sub = sub { return $self->param(@_) };
     $self->{_openidserver} = Lemonldap::NG::Portal::OpenID::Server->new(
-        server_secret => sub { return $self->{openIdSecret} },
+        server_secret => sub { return $self->{openIdIssuerSecret} },
         post_args     => $sub,
         get_args      => $sub,
         endpoint_url => $self->{_openidPortal},
         setup_url    => $self->{_openidPortal},
         get_user     => sub {
             return $self->{sessionInfo}
-              ->{ $self->{OpenIdAttr} || $self->{whatToTrace} };
+              ->{ $self->{openIdAttr} || $self->{whatToTrace} };
         },
         get_identity => sub {
             my ( $u, $identity ) = @_;
