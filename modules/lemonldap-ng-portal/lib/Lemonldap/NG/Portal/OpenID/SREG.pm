@@ -84,12 +84,12 @@ sub sregHook {
             );
 
             $self->info(
-                '<h2>'
+                '<h3>'
                   . sprintf(
                     &Lemonldap::NG::Portal::_i18n::msg(PM_OPENID_RPNS),
                     $k
                   )
-                  . '</h2>'
+                  . '</h3>'
             );
             return ( 0, {} );
         }
@@ -178,18 +178,20 @@ sub sregHook {
 
         # No choice for requested parameters: just an information
         foreach my $k (@req) {
+            utf8::decode( $msg{req}->{$k} );
             $self->{_openIdTrustExtMsg} .=
                 "<tr class=\"required\">\n" . "<td>"
               . "<input type=\"checkbox\" disabled=\"disabled\" checked=\"checked\"/>"
               . "</td>\n"
               . "<td>$k</td>\n" . "<td>"
-              . utf8::decode( $r{$k} )
+              . $msg{req}->{$k}
               . "</td>\n"
               . "</tr>\n";
         }
 
         # For optional parameters: checkboxes are displayed
         foreach my $k (@opt) {
+            utf8::decode( $msg{opt}->{$k} );
             $self->{_openIdTrustExtMsg} .=
                 "<tr class=\"optional\">\n" 
               . "<td>\n"
@@ -198,7 +200,7 @@ sub sregHook {
               . " name=\"sreg_$k\" />"
               . "</td>\n"
               . "<td>$k</td>\n" . "<td>"
-              . utf8::decode( $r{$k} )
+              . $msg{opt}->{$k}
               . "</td>\n"
               . "</tr>\n";
         }
