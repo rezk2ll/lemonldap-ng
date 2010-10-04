@@ -197,6 +197,8 @@ sub sregHook {
 sub sregfilter {
     my ( $self, @attr ) = splice @_;
     my ( @ret, @rej );
+
+    # Browse attributes
     foreach my $s (@attr) {
         if ( $s =~
 /^(?:(?:(?:full|nick)nam|languag|postcod|timezon)e|country|gender|email|dob)$/
@@ -208,15 +210,19 @@ sub sregfilter {
             $s =~ s/\W/\./sg;
             push @rej, $s;
         }
+    }
+
+    # Warn if some parameters are rejected
         if (@rej) {
             $self->lmLog(
                 "Requested parameter(s) "
                   . join( ',', @rej )
                   . "is(are) not valid OpenID SREG parameter(s)",
-                'error'
+            'warn'
             );
         }
+
+    # Return valid SREG parameters
         return @ret;
-    }
 }
 1;
