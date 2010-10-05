@@ -4,12 +4,11 @@ Priority: extra
 Maintainer: Xavier Guimard <x.guimard@free.fr>
 DM-Upload-Allowed: yes
 Build-Depends: debhelper (>= 7), po-debconf
-Build-Depends-Indep:libapache-session-perl, libnet-ldap-perl (>=1:0.38), libdbi-perl,
- libwww-perl, libcache-cache-perl, libcrypt-rijndael-perl, libxml-libxslt-perl,
- libio-string-perl, libregexp-assemble-perl, liburi-perl, libstring-random-perl,
- libmime-lite-perl, libsoap-lite-perl, libconfig-inifiles-perl,
- libnet-twitter-perl, libnet-openid-consumer-perl, libnet-openid-server-perl,
- libcrypt-openssl-x509-perl
+Build-Depends-Indep:libapache-session-perl, libnet-ldap-perl (>=1:0.38),
+ libdbi-perl, libwww-perl, libcache-cache-perl, libcrypt-rijndael-perl,
+ libxml-libxslt-perl, libio-string-perl, libregexp-assemble-perl, liburi-perl,
+ libstring-random-perl, libmime-lite-perl, libsoap-lite-perl,
+ libconfig-inifiles-perl, libcrypt-openssl-x509-perl
 Standards-Version: 3.9.1
 Homepage: http://lemonldap.ow2.org/
 
@@ -37,9 +36,10 @@ Description: Lemonldap::NG Web-SSO system documentation
 Package: liblemonldap-ng-handler-perl
 Architecture: all
 Depends: ${misc:Depends}, libapache-session-perl, libwww-perl,
- libcache-cache-perl, liblemonldap-ng-conf-perl (= ${binary:Version}),
+ liblemonldap-ng-conf-perl (= ${binary:Version}),
  libapache2-mod-perl2, liburi-perl
-Suggests: liblemonldap-ng-portal-perl
+Recommends: libdbi-perl
+Suggests: liblemonldap-ng-portal-perl, libsoap-lite-perl
 Description: Lemonldap::NG Apache module part
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application Apache servers.
@@ -49,10 +49,9 @@ Description: Lemonldap::NG Apache module part
 
 Package: liblemonldap-ng-conf-perl
 Architecture: all
-Depends: ${misc:Depends}, libdbi-perl, debconf, libcache-cache-perl,
- libregexp-assemble-perl, libcrypt-rijndael-perl, libconfig-inifiles-perl,
- libxml-simple-perl
-Recommends: libsoap-lite-perl
+Depends: ${misc:Depends}, debconf, libcache-cache-perl, libregexp-assemble-perl,
+ libcrypt-rijndael-perl, libconfig-inifiles-perl, libxml-simple-perl
+Recommends: libsoap-lite-perl, libdbi-perl
 Description: Lemonldap::NG common files
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application Apache servers.
@@ -67,7 +66,7 @@ Depends: ${misc:Depends}, libjs-jquery, libhtml-template-perl,
  libxml-libxml-perl, libxml-libxslt-perl, libcrypt-openssl-rsa-perl,
  libxml-simple-perl, libjson-perl
 Pre-Depends: debconf
-Recommends: libcache-cache-perl, libapache-session-perl, libsoap-lite-perl
+Recommends: libapache-session-perl, libsoap-lite-perl
 Description: Lemonldap::NG manager part
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application Apache servers.
@@ -82,10 +81,11 @@ Depends: ${misc:Depends}, libapache-session-perl, libnet-ldap-perl (>=1:0.38),
  libxml-libxml-perl, libxml-libxslt-perl, libstring-random-perl,
  libsoap-lite-perl, libcrypt-openssl-x509-perl
 Pre-Depends: debconf
-Recommends: libmime-lite-perl, libemail-date-format-perl,
- libnet-openid-consumer-perl | libnet-openid-server-perl | liblasso3-perl (>=2.2.91) | libnet-twitter-perl,
- libconvert-pem-perl
-Suggests: slapd
+Recommends: libmime-lite-perl, libemail-date-format-perl, libconvert-pem-perl
+ libnet-openid-consumer-perl | libnet-openid-server-perl |
+ liblasso3-perl (>=2.2.91) | libnet-twitter-perl
+Suggests: slapd, libnet-twitter-perl, libnet-openid-consumer-perl,
+ libnet-openid-server-perl, liblasso3-perl
 Description: Lemonldap::NG authentication portal part
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application Apache servers.
