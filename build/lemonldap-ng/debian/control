@@ -81,7 +81,7 @@ Depends: ${misc:Depends}, libapache-session-perl, libnet-ldap-perl (>=1:0.38),
  libxml-libxml-perl, libxml-libxslt-perl, libstring-random-perl,
  libsoap-lite-perl, libcrypt-openssl-x509-perl
 Pre-Depends: debconf
-Recommends: libmime-lite-perl, libemail-date-format-perl, libconvert-pem-perl
+Recommends: libmime-lite-perl, libemail-date-format-perl, libconvert-pem-perl,
  libnet-openid-consumer-perl | libnet-openid-server-perl |
  liblasso3-perl (>=2.2.91) | libnet-twitter-perl
 Suggests: slapd, libnet-twitter-perl, libnet-openid-consumer-perl,
