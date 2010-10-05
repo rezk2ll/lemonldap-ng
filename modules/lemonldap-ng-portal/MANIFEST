@@ -229,6 +229,7 @@ t/24-Lemonldap-NG-Portal-AuthRemote.t
 t/25-Lemonldap-NG-Portal-Multi.t
 t/26-Lemonldap-NG-Portal-AuthProxy.t
 t/27-Lemonldap-NG-Portal-AuthOpenID.t
+t/27-Lemonldap-NG-Portal-IssuerDBOpenID.t
 t/27-Lemonldap-NG-Portal-UserDBOpenID.t
 t/30-Lemonldap-NG-Portal-UserDBNull.t
 t/40-Lemonldap-NG-Portal-CDA.t
