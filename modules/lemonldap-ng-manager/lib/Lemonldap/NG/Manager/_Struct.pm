@@ -1092,6 +1092,10 @@ sub testStruct {
         return ( $@ ? ( 0, $@ ) : 1 );
     };
     my $testNotDefined = { test => sub { 1 }, msgFail => 'Ok' };
+    my $lmAttrOrMacro = {
+        test    => qr/^\$[a-zA-Z_]\w*$/,
+        msgFail => 'Value must be in the form $attr'
+    };
 
     return {
         applicationList => {
@@ -1369,10 +1373,8 @@ sub testStruct {
         useRedirectOnForbidden => $boolean,
         useXForwardedForIP     => $boolean,
         variables              => $testNotDefined,
-        whatToTrace            => {
-            test    => qr/^\$?_?[a-zA-Z]\w*$/,
-            msgFail => 'Bad value',
-        },
+        whatToTrace            => $lmAttrOrMacro,
+
         ########
         # SAML #
         ########
@@ -1581,15 +1583,15 @@ sub testStruct {
         # OpenID Issuer
         openIdIssuerSecret  => $testNotDefined,
         openIdAttr          => $testNotDefined,
-        openIdSreg_fullname => $testNotDefined,
-        openIdSreg_nickname => $testNotDefined,
-        openIdSreg_language => $testNotDefined,
-        openIdSreg_postcode => $testNotDefined,
-        openIdSreg_timezone => $testNotDefined,
-        openIdSreg_country  => $testNotDefined,
-        openIdSreg_gender   => $testNotDefined,
-        openIdSreg_email    => $testNotDefined,
-        openIdSreg_dob      => $testNotDefined,
+        openIdSreg_fullname => $lmAttrOrMacro,
+        openIdSreg_nickname => $lmAttrOrMacro,
+        openIdSreg_language => $lmAttrOrMacro,
+        openIdSreg_postcode => $lmAttrOrMacro,
+        openIdSreg_timezone => $lmAttrOrMacro,
+        openIdSreg_country  => $lmAttrOrMacro,
+        openIdSreg_gender   => $lmAttrOrMacro,
+        openIdSreg_email    => $lmAttrOrMacro,
+        openIdSreg_dob      => $lmAttrOrMacro,
 
     };
 }
@@ -1875,9 +1877,43 @@ sub globalTests {
             foreach my $type (qw(OpenID SAML)) {
                 return ( 0,
 "\"$type\" can not be used as user database without using \"$type\" for authentication"
-                );
+                  )
+                  if (  $conf->{userDB} =~ /$type/
+                    and $conf->{authentication} !~ /$type/ );
             }
             return 1;
+        },
+
+        # Check that OpenID macros exists
+        checkAttrAndMacros => sub {
+            my @tmp;
+            foreach my $k ( keys %$conf ) {
+                if ( $k =~
+/^(?:openIdSreg_(?:(?:(?:full|nick)nam|languag|postcod|timezon)e|country|gender|email|dob)|whatToTrace)$/
+                  )
+                {
+                    my $v = $conf->{$k};
+                    $v =~ s/^$//;
+                    next if ( $v =~ /^_/ );
+                    push @tmp, $k
+                      unless (
+                        defined(
+                            $conf->{exportedVars}->{$v}
+                              or defined( $conf->{macros}->{$v} )
+                        )
+                      );
+                }
+            }
+            return (
+                1,
+                (
+                    @tmp
+                    ? 'Values of parameters '
+                      . join( ',', @tmp )
+                      . ' are not defined in exported attributes or macros'
+                    : ''
+                )
+            );
         },
 
         # 2. MODIFICATIONS
