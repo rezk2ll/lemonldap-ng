@@ -179,7 +179,7 @@ sub issuerForUnAuthUser {
         }
 
         # Get username
-        my $username = $localSession->{ $self->{whatToTrace} };
+        my $username = $localSession->{ $self->{casAttr} || $self->{whatToTrace} };
 
         $self->lmLog( "Get username $username", 'debug' );
 
@@ -388,7 +388,7 @@ sub issuerForUnAuthUser {
         }
 
         # Get username
-        my $username = $localSession->{ $self->{whatToTrace} };
+        my $username = $localSession->{ $self->{casAttr} || $self->{whatToTrace} };
 
         $self->lmLog( "Get username $username", 'debug' );
 

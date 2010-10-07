@@ -561,11 +561,21 @@ sub struct {
                 },
                 issuerDBCAS => {
                     _nodes => [
-                        qw(issuerDBCASActivation issuerDBCASPath issuerDBCASRule)
+                        qw(issuerDBCASActivation issuerDBCASPath issuerDBCASRule issuerDBCASOptions)
                     ],
                     issuerDBCASActivation => 'bool:/issuerDBCASActivation',
                     issuerDBCASPath       => 'text:/issuerDBCASPath',
                     issuerDBCASRule       => 'text:/issuerDBCASRule',
+                    issuerDBCASOptions    => {
+                        _nodes => [qw(casAttr casStorage cn:casStorageOptions)],
+                        casAttr           => 'text:casAttr',
+                        casStorage        => 'text:/casStorage',
+                        casStorageOptions => {
+                            _nodes => ['hash:/casStorageOptions:default:btext'],
+                            _js    => 'hashRoot',
+                            _help  => 'default',
+                        },
+                    },
                 },
                 issuerDBOpenID => {
                     _nodes => [
@@ -1512,6 +1522,15 @@ sub testStruct {
         CAS_proxiedServices => {
             keyTest    => qr/^\w+$/,
             keyMsgFail => 'Bad CAS proxied service identifier',
+        },
+        casAttr    => $testNotDefined,
+        casStorage => {
+            test    => qr/^[\w:]*$/,
+            msgFail => 'Bad module name',
+        },
+        casStorageOptions => {
+            keyTest    => qr/^\w+$/,
+            keyMsgFail => 'Bad parameter',
         },
 
         # Remote
