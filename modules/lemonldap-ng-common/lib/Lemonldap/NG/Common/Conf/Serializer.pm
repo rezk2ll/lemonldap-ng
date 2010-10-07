@@ -101,8 +101,29 @@ sub unserialize {
         $v =~ s/^'(.*)'$/$1/s;
 
         # Manage hashes
-        if ( $k =~
-/^(?:exportedVars|locationRules|groups|exportedHeaders|macros|globalStorageOptions|remoteGlobalStorageOptions|notificationStorageOptions|samlIDPMetaDataXML|samlIDPMetaDataExportedAttributes|samlIDPMetaDataOptions|samlSPMetaDataXML|samlSPMetaDataExportedAttributes|samlSPMetaDataOptions|samlStorageOptions|CAS_proxiedServices|logoutServices|authChoiceModules|applicationList|post|casStorageOptions)$/
+        if ( $k =~ /^(?x:
+	applicationList
+	|authChoiceModules
+	|CAS_proxiedServices
+	|casStorageOptions
+	|exportedHeaders
+	|exportedVars
+	|globalStorageOptions
+	|groups
+	|locationRules
+	|logoutServices
+	|macros
+	|notificationStorageOptions
+	|post
+	|remoteGlobalStorageOptions
+	|samlIDPMetaDataExportedAttributes
+	|samlIDPMetaDataOptions
+	|samlIDPMetaDataXML
+	|samlSPMetaDataExportedAttributes
+	|samlSPMetaDataOptions
+	|samlSPMetaDataXML
+	|samlStorageOptions
+	)$/
             and $v ||= {}
             and not ref($v) )
         {
