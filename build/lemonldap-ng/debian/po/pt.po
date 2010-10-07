@@ -11,6 +11,7 @@ msgstr ""
 "PO-Revision-Date: 2007-11-18 18:35+0000\n"
 "Last-Translator: Américo Monteiro <a_monteiro@netcabo.pt>\n"
 "Language-Team: Portuguese <traduz@debianpt.org>\n"
+"Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -31,8 +32,8 @@ msgid ""
 "manager."
 msgstr ""
 "Indique aqui o nome ou endereço IP do servidor LDAP que vai ser usado pelo "
-"Lemonldap::NG. Você pode modificar este valor posteriormente usando o "
-"gestor Lemonldap::NG."
+"Lemonldap::NG. Você pode modificar este valor posteriormente usando o gestor "
+"Lemonldap::NG."
 
 #. Type: string
 #. Description
@@ -79,8 +80,8 @@ msgid ""
 "Set here the port used by the LDAP server. You can modify this value later "
 "using the Lemonldap::NG manager."
 msgstr ""
-"Indique aqui o porto usado pelo servidor LDAP. Você pode modificar este valor "
-"posteriormente usando o gestor Lemonldap::NG."
+"Indique aqui o porto usado pelo servidor LDAP. Você pode modificar este "
+"valor posteriormente usando o gestor Lemonldap::NG."
 
 #. Type: string
 #. Description
@@ -114,8 +115,8 @@ msgid ""
 msgstr ""
 "Indique aqui a conta que o Lemonldap::NG terá que usar para os seus pedidos "
 "LDAP. Deixar isto vazio causa a utilização de ligações anónimas pelo "
-"Lemonldap::NG. Você pode modificar este valor posteriormente usando o "
-"gestor Lemonldap::NG."
+"Lemonldap::NG. Você pode modificar este valor posteriormente usando o gestor "
+"Lemonldap::NG."
 
 #. Type: string
 #. Description
@@ -132,4 +133,3 @@ msgid ""
 msgstr ""
 "Indique aqui a password para a conta do Lemonldap::NG. Você pode modificar "
 "este valor posteriormente usando o gestor Lemonldap::NG."
-

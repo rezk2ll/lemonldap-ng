@@ -8,6 +8,7 @@ msgstr ""
 "PO-Revision-Date: 2008-05-27 18:03+0200\n"
 "Last-Translator: Daniel Kavan <kuan@maradan.org>\n"
 "Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -26,9 +27,8 @@ msgid ""
 "Lemonldap::NG. You can modify this value later using the Lemonldap::NG "
 "manager."
 msgstr ""
-"Nastavte jméno nebo IP adresu LDAP serveru, který má být používán "
-"Lemonldap::NG. Tuto adresu můžete později změnit pomocí Lemonldap::NG "
-"manažeru."
+"Nastavte jméno nebo IP adresu LDAP serveru, který má být používán Lemonldap::"
+"NG. Tuto adresu můžete později změnit pomocí Lemonldap::NG manažeru."
 
 #. Type: string
 #. Description
@@ -43,8 +43,8 @@ msgid ""
 "Set here the main domain protected by Lemonldap::NG. You can modify this "
 "value later using the Lemonldap::NG manager."
 msgstr ""
-"Vložte doménu, kterou bude Lemonldap::NG chránit. Tuto doménu můžete "
-"později změnit pomocí Lemonldap::NG manažeru."
+"Vložte doménu, kterou bude Lemonldap::NG chránit. Tuto doménu můžete později "
+"změnit pomocí Lemonldap::NG manažeru."
 
 #. Type: string
 #. Description
@@ -91,8 +91,8 @@ msgid ""
 "Set here the search base to use in LDAP queries. You can modify this value "
 "later using the Lemonldap::NG manager."
 msgstr ""
-"Nastavte kořen LDAP stromu pro použití v LDAP dotazech. Hodnotu můžete později "
-"změnit pomocí Lemonldap::NG manažeru."
+"Nastavte kořen LDAP stromu pro použití v LDAP dotazech. Hodnotu můžete "
+"později změnit pomocí Lemonldap::NG manažeru."
 
 #. Type: string
 #. Description
@@ -108,9 +108,9 @@ msgid ""
 "Leaving it blank causes Lemonldap::NG to use anonymous connections. You can "
 "modify this value later using the Lemonldap::NG manager."
 msgstr ""
-"Nastavte účet, který bude Lemonldap::NG používat pro své LDAP dotazy. "
-"Pokud necháte prázdné, Lemonldap::NG bude používat anonymní spojení. Účet "
-"můžete později změnit pomocí Lemonldap::NG manažeru."
+"Nastavte účet, který bude Lemonldap::NG používat pro své LDAP dotazy. Pokud "
+"necháte prázdné, Lemonldap::NG bude používat anonymní spojení. Účet můžete "
+"později změnit pomocí Lemonldap::NG manažeru."
 
 #. Type: string
 #. Description
@@ -125,6 +125,5 @@ msgid ""
 "Set here the password for the Lemonldap::NG LDAP account. You can modify "
 "this value later using the Lemonldap::NG manager."
 msgstr ""
-"Vložte heslo pro Lemonldap::NG LDAP účet. Hodnotu můžete později "
-"změnit pomocí Lemonldap::NG manažeru."
-
+"Vložte heslo pro Lemonldap::NG LDAP účet. Hodnotu můžete později změnit "
+"pomocí Lemonldap::NG manažeru."
