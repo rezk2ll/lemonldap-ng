@@ -58,8 +58,8 @@ sub extractFormInfo {
 
         # Remote error
         unless ( $csr->is_server_response() ) {
-            $self->{msg} = 'No OpenID valid message found' . $csr->err();
-            $self->lmLog( $self->{msg}, 'info' );
+            $self->{_msg} = 'No OpenID valid message found' . $csr->err();
+            $self->lmLog( $self->{_msg}, 'info' );
             return PE_BADCREDENTIALS;
         }
 
@@ -72,8 +72,8 @@ sub extractFormInfo {
 
         # Check if user has refused to share his authentication
         elsif ( $csr->user_cancel() ) {
-            $self->{msg} = "OpenID request cancelled by user";
-            $self->lmLog( $self->{msg}, 'info' );
+            $self->{_msg} = "OpenID request cancelled by user";
+            $self->lmLog( $self->{_msg}, 'info' );
             return PE_FIRSTACCESS;
         }
 
@@ -88,8 +88,8 @@ sub extractFormInfo {
 
         # Other errors
         else {
-            $self->{msg} = 'OpenID error: ' . $csr->err;
-            $self->lmLog( $self->{msg}, 'warn' );
+            $self->{_msg} = 'OpenID error: ' . $csr->err;
+            $self->lmLog( $self->{_msg}, 'warn' );
             return PE_ERROR;
         }
     }
@@ -100,8 +100,8 @@ sub extractFormInfo {
 
         # Check if url is valid
         unless ($claimed_identity) {
-            $self->{msg} = "OpenID error : " . $self->{csr}->err();
-            $self->lmLog( $self->{msg}, 'warn' );
+            $self->{_msg} = "OpenID error : " . $self->{csr}->err();
+            $self->lmLog( $self->{_msg}, 'warn' );
             return PE_BADCREDENTIALS;
         }
 

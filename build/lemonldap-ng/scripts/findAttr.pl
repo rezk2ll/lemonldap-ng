@@ -7,7 +7,8 @@ use strict;
 my $IGNORE = join(
     '|', qw(
       csr urldc cfgNum p (?:s|rS)essionInfo dn user mustRedirect password dbi\w+
-      reVHosts stack timezone vident _\w+ lmConf
+      reVHosts stack timezone vident _\w+ lmConf table (?:st|db)h res id
+      refLocalStorage
       )
 );
 
@@ -52,8 +53,11 @@ foreach my $module (qw(common handler manager portal)) {
 
 open F, 'lemonldap-ng-manager/lib/Lemonldap/NG/Manager/_Struct.pm';
 my $managedAttr;
+my $buf;
 while (<F>) {
-    $managedAttr->{$1}++ if (/'\w+:\/(\w+)/);
+    $buf = '' if($buf =~ /,$/);
+    $buf.=$_;
+    $managedAttr->{$1}++ if ($buf =~ /=>\s*'\w+:\/(\w+)/s);
 }
 my $unmanagedAttr;
 foreach my $module (qw(common handler manager portal)) {

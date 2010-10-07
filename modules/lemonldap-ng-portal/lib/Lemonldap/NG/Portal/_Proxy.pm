@@ -58,7 +58,7 @@ sub proxyQuery {
               . $soap->error( 'fr', $res->{error} )->result() );
         return PE_BADCREDENTIALS;
     }
-    $self->{remoteId} = $res->{cookies}->{ $self->{remoteCookieName} }
+    $self->{_remoteId} = $res->{cookies}->{ $self->{remoteCookieName} }
       or $self->abort("No cookie named $self->{remoteCookieName}");
     $self->{_proxyQueryDone}++;
     PE_OK;
@@ -73,7 +73,7 @@ sub setSessionInfo {
     my $soap =
       SOAP::Lite->proxy( $self->{soapSessionService} )
       ->uri('urn:Lemonldap::NG::Common::CGI::SOAPService');
-    my $r = $soap->getAttributes( $self->{remoteId} );
+    my $r = $soap->getAttributes( $self->{_remoteId} );
     if ( $r->fault ) {
         $self->abort( "Unable to query authentication service",
             $r->fault->{faultstring} );

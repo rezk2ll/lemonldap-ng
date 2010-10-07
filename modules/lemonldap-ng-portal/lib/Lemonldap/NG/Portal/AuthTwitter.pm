@@ -35,7 +35,7 @@ sub extractFormInfo {
     my $self = shift;
 
     # Build Net::Twitter object
-    $self->{twitter} = Net::Twitter->new(
+    $self->{_twitter} = Net::Twitter->new(
         traits          => [qw/API::REST OAuth/],
         consumer_key    => $self->{twitterKey},
         consumer_secret => $self->{twitterSecret},
@@ -50,7 +50,7 @@ sub extractFormInfo {
         # 1.1 Try to get token to dialog with Twitter
         eval {
             $url =
-              $self->{twitter}->get_authorization_url(
+              $self->{_twitter}->get_authorization_url(
                 callback => "$self->{portal}?twitterback=1&url="
                   . $self->get_url() );
         };
@@ -68,12 +68,12 @@ sub extractFormInfo {
         push @{ $self->{cookie} },
           $self->cookie(
             -name    => '_twitTok',
-            -value   => $self->{twitter}->request_token,
+            -value   => $self->{_twitter}->request_token,
             -expires => '+3m'
           ),
           $self->cookie(
             -name    => '_twitSec',
-            -value   => $self->{twitter}->request_token_secret,
+            -value   => $self->{_twitter}->request_token_secret,
             -expires => '+3m'
           );
 
@@ -95,7 +95,7 @@ sub extractFormInfo {
         $self->{sessionInfo}->{_access_token},
         $self->{sessionInfo}->{_access_token_secret}
       )
-      = $self->{twitter}->request_access_token(
+      = $self->{_twitter}->request_access_token(
         token        => $self->cookie('_twitTok'),
         token_secret => $self->cookie('_twitSec'),
         verifier     => $verifier
@@ -103,7 +103,7 @@ sub extractFormInfo {
 
     # 2.2 Ask for user_timeline : I've not found an other way to access to user
     #     datas !
-    my $status = eval { $self->{twitter}->user_timeline( { count => 1 } ) };
+    my $status = eval { $self->{_twitter}->user_timeline( { count => 1 } ) };
 
     # 2.3 Check if user has accepted authentication
     if ($@) {
@@ -115,8 +115,8 @@ sub extractFormInfo {
     }
 
     # 2.4 Set $self->{user} to twitter.com/<username>
-    $self->{twitterUser} = $status->[0]->{user};
-    $self->{user} = 'twitter.com/' . $status->{twitterUser}->{screen_name};
+    $self->{_twitterUser} = $status->[0]->{user};
+    $self->{user} = 'twitter.com/' . $status->{_twitterUser}->{screen_name};
     $self->lmLog( "Good Twitter authentication for $self->{user}", 'debug' );
 
     # Force redirection to avoid displaying OAuth datas
@@ -137,7 +137,7 @@ sub setAuthSessionInfo {
 
     # TODO: set a parameter to choose this
     foreach (qw(screen_name location lang name url)) {
-        $self->{sessionInfo}->{$_} = $self->{twitterUser}->{$_};
+        $self->{sessionInfo}->{$_} = $self->{_twitterUser}->{$_};
     }
 
     $self->{sessionInfo}->{authenticationLevel} = $self->{twitterAuthnLevel};
