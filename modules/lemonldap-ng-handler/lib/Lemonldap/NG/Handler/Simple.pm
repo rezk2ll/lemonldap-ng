@@ -957,19 +957,23 @@ sub hideCookie {
 sub encodeUrl {
     my ( $class, $url ) = splice @_;
     my $u = $url;
-    if ( $url !~ m#^https?://# ) {
+    $url = $class->_buildUrl($url) if ( $url !~ m#^https?://# );
+    return encode_base64( $u, '' );
+}
+
+sub _buildUrl {
+    my ( $class, $s ) = splice @_;
         my $portString = $port || $apacheRequest->get_server_port();
         $portString =
             ( $https  && $portString == 443 ) ? ''
           : ( !$https && $portString == 80 )  ? ''
           :                                     ':' . $portString;
-        $u = "http"
+    return
+        "http"
           . ( $https ? "s" : "" ) . "://"
           . $apacheRequest->get_server_name()
           . $portString
-          . $url;
-    }
-    return encode_base64( $u, '' );
+      . $s;
 }
 
 ## @rmethod protected int goToPortal(string url, string arg)
@@ -1041,12 +1045,8 @@ sub run ($$) {
         $class->lmLog( 'CDA request', 'debug' );
         $apacheRequest->args($args);
         my $host = $apacheRequest->get_server_name();
-        my $portString = $port || $apacheRequest->get_server_port();
         lmSetErrHeaderOut( $apacheRequest,
-                'Location' => "http"
-              . ( $https ? 's' : '' )
-              . "://$host:$portString"
-              . $apacheRequest->uri
+            $class->_buildUrl( $apacheRequest->uri )
               . ( $args ? "?" . $args : "" ) );
         $host =~ s/^[^\.]+\.(.*\..*$)/$1/;
         lmSetErrHeaderOut(
