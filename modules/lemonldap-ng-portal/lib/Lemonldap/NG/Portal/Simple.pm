@@ -788,6 +788,45 @@ sub getApacheSession {
     return \%h;
 }
 
+## @method void updatePersistentSession(hashRef infos, string uid)
+# Update persistent session.
+# Call updateSession() and store %$infos in a persistent session.
+# Note that if the session does not exists, it will be created.
+# @param infos hash reference of information to update
+# @param id Session ID
+# @return nothing
+sub updatePersistentSession {
+    my ( $self, $infos, $uid ) = splice @_;
+
+    # Return if no infos to update
+    return undef unless ( ref $infos eq 'HASH' and %$infos );
+
+    # update current session
+    $self->updateSession( $self, $infos );
+
+    my $h = $self->getApacheSession( $uid, 1 );
+    unless ($h) {
+        my %opts = %{ $self->{globalStorageOptions} };
+        $opts{setId} = $uid;
+        eval { tie %$h, $self->{globalStorage}, undef, \%opts; };
+        if ($@) {
+            $self->lmLog( "Unable to create persistent session : $@", 'error' );
+            return undef;
+        }
+    }
+    foreach ( keys %$infos ) {
+        $self->lmLog( "Update persistent session $_ with " . $infos->{$_},
+            'debug' );
+        if ( defined( $h->{$_} ) ) {
+            $h->{$_} = $infos->{$_};
+        }
+        else {
+            delete $h->{$_};
+        }
+    }
+    untie %$h;
+}
+
 ## @method void updateSession(hashRef infos, string id)
 # Update session stored.
 # If no id is given, try to get it from cookie.
@@ -799,7 +838,6 @@ sub updateSession {
 
     # TODO: update all caches
     my ( $self, $infos, $id ) = splice @_;
-    my %cookies = fetch CGI::Cookie;
 
     # Return if no infos to update
     return undef unless ( ref $infos eq 'HASH' and %$infos );
@@ -815,8 +853,11 @@ sub updateSession {
 
     # Recover session ID unless given
     $id ||= $self->{id};
+    unless ($id) {
+        my %cookies = fetch CGI::Cookie;
     $id ||= $cookies{ $self->{cookieName} }->value
       if ( defined $cookies{ $self->{cookieName} } );
+    }
 
     if ($id) {
         my $h = $self->getApacheSession( $id, 1 ) or return undef;
