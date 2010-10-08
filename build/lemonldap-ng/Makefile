@@ -219,6 +219,7 @@ install_bin:	install_conf_dir
 	# Binary install
 	@install -v -d $(RBINDIR)
 	@cp --preserve=mode --remove-destination \
+		${SRCHANDLERDIR}/example/scripts/purgeLocalCache \
 		${SRCPORTALDIR}/example/scripts/purgeCentralCache \
 		${SRCPORTALDIR}/example/scripts/buildPortalWSDL \
 		${SRCCOMMONDIR}/scripts/convertConfig \
@@ -355,6 +356,7 @@ install_handler_site:	install_conf_dir
 	@cp --remove-destination ${SRCHANDLERDIR}/example/MyHandlerZimbra.pm ${RHANDLERDIR}
 	@cp --remove-destination ${SRCHANDLERDIR}/example/MyHandlerSympa.pm ${RHANDLERDIR}
 	@cp --remove-destination ${SRCHANDLERDIR}/example/MyUpdateCookieHandler.pm ${RHANDLERDIR}
+	@cp --remove-destination lemonldap-ng-handler/example/scripts/purgeLocalCache.cron.d $(RCRONDIR)/lemonldap-ng
 	@rm -rf $$(find $(RHANDLERDIR) -type d -name .svn)
 
 install_test_site:
@@ -575,6 +577,7 @@ debian-diff:
 	@$(DIFF) lemonldap-ng-portal/example/cdc.pl $(DIFFPREFIX)/var/lib/lemonldap-ng/portal/cdc.pl ||true
 	@# Handler
 	@$(DIFF) lemonldap-ng-handler/lib/Lemonldap/NG/Handler $(DIFFPREFIX)/usr/share/perl5/Lemonldap/NG/Handler ||true
+	@$(DIFF) lemonldap-ng-portal/example/scripts/purgeLocalCache $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/purgeLocalCache ||true
 	@# Common
 	@$(DIFF) lemonldap-ng-common/lib/Lemonldap/NG/Common $(DIFFPREFIX)/usr/share/perl5/Lemonldap/NG/Common ||true
 	@$(DIFF) lemonldap-ng-common/lib/Lemonldap/NG/Common.pm $(DIFFPREFIX)/usr/share/perl5/Lemonldap/NG/Common.pm ||true
@@ -604,6 +607,7 @@ default-diff:
 	@$(DIFF) lemonldap-ng-handler/example/MyHandler.pm $(LMPREFIX)/handler/MyHandler.pm ||true
 	@$(DIFF) lemonldap-ng-handler/example/MyHandlerZimbra.pm $(LMPREFIX)/handler/MyHandlerZimbra.pm ||true
 	@$(DIFF) lemonldap-ng-handler/example/MyHandlerSympa.pm $(LMPREFIX)/handler/MyHandlerSympa.pm ||true
+	@$(DIFF) lemonldap-ng-portal/example/scripts/purgeLocalCache $(LMPREFIX)/bin/purgeLocalCache ||true
 	@# Common
 	@$(DIFF) lemonldap-ng-common/lib/Lemonldap/NG/Common /usr/local/share/perl/5.10.0/Lemonldap/NG/Common ||true
 	@$(DIFF) lemonldap-ng-common/lib/Lemonldap/NG/Common.pm /usr/local/share/perl/5.10.0/Lemonldap/NG/Common.pm ||true

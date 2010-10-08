@@ -19,7 +19,8 @@ my $nb_purged = 0;
 #=============================================================================
 # Load configuration
 #=============================================================================
-my $lmconf    = Lemonldap::NG::Common::Conf->new();
+my $lmconf = Lemonldap::NG::Common::Conf->new()
+  or die $Lemonldap::NG::Common::Conf::msg;
 my $conf = $lmconf->getConf or die "Unable to get configuration ($!)";
 my $localconf = $lmconf->getLocalConf(PORTALSECTION)
   or die "Unable to get local configuration ($!)";

@@ -101,7 +101,8 @@ sub unserialize {
         $v =~ s/^'(.*)'$/$1/s;
 
         # Manage hashes
-        if ( $k =~ /^(?x:
+        if (
+            $k =~ /^(?x:
 	applicationList
 	|authChoiceModules
 	|CAS_proxiedServices
@@ -124,8 +125,8 @@ sub unserialize {
 	|samlSPMetaDataXML
 	|samlStorageOptions
 	)$/
-            and $v ||= {}
-            and not ref($v) )
+            and $v ||= {} and not ref($v)
+          )
         {
             $conf->{$k} = {};
 

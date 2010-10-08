@@ -6,6 +6,8 @@ example/MyHandlerLog4Perl.pm
 example/MyHandlerSympa.pm
 example/MyHandlerZimbra.pm
 example/MyUpdateCookieHandler.pm
+example/scripts/purgeLocalCache
+example/scripts/purgeLocalCache.cron.d
 lib/Lemonldap/NG/Handler.pm
 lib/Lemonldap/NG/Handler/AuthBasic.pm
 lib/Lemonldap/NG/Handler/CDA.pm
