@@ -1103,7 +1103,7 @@ sub testStruct {
     };
     my $testNotDefined = { test => sub { 1 }, msgFail => 'Ok' };
     my $lmAttrOrMacro = {
-        test    => qr/^\$[a-zA-Z_]\w*$/,
+        test    => qr/^\$?[a-zA-Z_]\w*$/,
         msgFail => 'Value must be in the form $attr'
     };
 
