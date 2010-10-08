@@ -221,6 +221,8 @@ sub new {
     $self->abort( "Configuration error",
         "Module " . $self->{globalStorage} . " not found in \@INC" )
       if ($@);
+    $self->{globalStorageOptions}->{backend} = $self->{globalStorage};
+    $self->{globalStorage} = 'Lemonldap::NG::Common::Apache::Session';
     if ( $self->{samlStorage} ne $self->{globalStorage} ) {
         eval "require " . $self->{samlStorage};
         $self->abort( "Configuration error",

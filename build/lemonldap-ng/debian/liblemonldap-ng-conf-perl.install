@@ -1,7 +1,8 @@
 /etc/lemonldap-ng/lemonldap-ng.ini
 /etc/lemonldap-ng/for_etc_hosts
-/usr/share/perl5/Lemonldap/NG/Common*
 /usr/share/man/man3/Lemonldap::NG::Common*
+/usr/share/perl5/auto/Lemonldap/NG/Common
+/usr/share/perl5/Lemonldap/NG/Common*
 /usr/share/lemonldap-ng/ressources
 /usr/share/lemonldap-ng/bin/convertConfig
 /usr/share/lemonldap-ng/bin/lmMigrateConfFiles2ini

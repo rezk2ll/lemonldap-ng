@@ -64,8 +64,12 @@ sub new {
     $self->{managerSkin} ||= 'default';
 
     # Now try to load Apache::Session module
-    eval "use $globalStorage";
+    unless ( $globalStorage->can('populate') ) {
+        eval "require $globalStorage";
     $class->abort( "Unable to load $globalStorage", $@ ) if ($@);
+    }
+    %{ $self->{globalStorageOptions} } = %$globalStorageOptions;
+    $self->{globalStorageOptions}->{backend} = $globalStorage;
 
     # Check if we use X-FORWARDED-FOR header for IP
     $self->{ipField} =
@@ -128,8 +132,8 @@ sub list {
     $count = 0;
 
     # Parse all sessions to store first letter
-    $globalStorage->get_key_from_all_sessions(
-        $globalStorageOptions,
+    Lemonldap::NG::Common::Apache::Session->get_key_from_all_sessions(
+        $self->{globalStorageOptions},
         sub {
             my $entry = shift;
             next if ( $entry->{_httpSessionType} );
@@ -179,8 +183,8 @@ sub doubleIp {
     my ( $byUid, $byIp, $res, $count );
 
     # Parse all sessions
-    $globalStorage->get_key_from_all_sessions(
-        $globalStorageOptions,
+    Lemonldap::NG::Common::Apache::Session->get_key_from_all_sessions(
+        $self->{globalStorageOptions},
         sub {
             my $entry = shift;
             my $id    = shift;
@@ -246,8 +250,8 @@ sub fullip {
     $reip =~ s/\\\*/\.\*/g;
 
     # Parse all sessions and store only if IP match regexp
-    $globalStorage->get_key_from_all_sessions(
-        $globalStorageOptions,
+    Lemonldap::NG::Common::Apache::Session->get_key_from_all_sessions(
+        $self->{globalStorageOptions},
         sub {
             my $entry = shift;
             my $id    = shift;
@@ -296,8 +300,8 @@ sub fulluid {
     $reuser =~ s/\\\*/\.\*/g;
 
     # Parse all sessions to find user that match regexp
-    $globalStorage->get_key_from_all_sessions(
-        $globalStorageOptions,
+    Lemonldap::NG::Common::Apache::Session->get_key_from_all_sessions(
+        $self->{globalStorageOptions},
         sub {
             my $entry = shift;
             my $id    = shift;
@@ -600,8 +604,8 @@ sub session {
 sub uidByIp {
     my ( $self, $ip ) = splice @_;
     my ( $byUser, $res );
-    $globalStorage->get_key_from_all_sessions(
-        $globalStorageOptions,
+    Lemonldap::NG::Common::Apache::Session->get_key_from_all_sessions(
+        $self->{globalStorageOptions},
         sub {
             my $entry = shift;
             my $id    = shift;
@@ -634,8 +638,8 @@ sub uidByIp {
 sub uid {
     my ( $self, $uid ) = splice @_;
     my ( $byIp, $res );
-    $globalStorage->get_key_from_all_sessions(
-        $globalStorageOptions,
+    Lemonldap::NG::Common::Apache::Session->get_key_from_all_sessions(
+        $self->{globalStorageOptions},
         sub {
             my $entry = shift;
             my $id    = shift;
@@ -670,8 +674,8 @@ sub letter {
     my $self   = shift;
     my $letter = $self->param('letter');
     my ( $byUid, $res );
-    $globalStorage->get_key_from_all_sessions(
-        $globalStorageOptions,
+    Lemonldap::NG::Common::Apache::Session->get_key_from_all_sessions(
+        $self->{globalStorageOptions},
         sub {
             my $entry = shift;
             next if ( $entry->{_httpSessionType} );
@@ -717,12 +721,13 @@ sub _ipclasses {
     my $partial = $p ? "$p." : '';
     my $repartial = quotemeta($partial);
     my ( $byIp, $count, $res );
-    $globalStorage->get_key_from_all_sessions(
-        $globalStorageOptions,
+    Lemonldap::NG::Common::Apache::Session->get_key_from_all_sessions(
+        $self->{globalStorageOptions},
         sub {
             my $entry = shift;
             next if ( $entry->{_httpSessionType} );
-            $entry->{ $self->{ipField} } =~ /^$repartial(\d+)/ or return undef;
+            $entry->{ $self->{ipField} } =~ /^$repartial(\d+)/
+              or return undef;
             $byIp->{$1}++;
             $count++;
             undef;
