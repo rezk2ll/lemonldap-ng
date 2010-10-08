@@ -809,10 +809,13 @@ sub updatePersistentSession {
     my ( $self, $infos, $uid ) = splice @_;
 
     # Return if no infos to update
-    return undef unless ( ref $infos eq 'HASH' and %$infos );
+    return () unless ( ref $infos eq 'HASH' and %$infos );
 
     # update current session
     $self->updateSession( $self, $infos );
+
+    $uid ||= $self->{sessionInfo}->{ $self->{whatToTrace} };
+    return () unless ($uid);
 
     my $h = $self->getApacheSession( $self->_md5hash($uid), 1 );
     unless ($h) {
@@ -821,7 +824,7 @@ sub updatePersistentSession {
         eval { tie %$h, $self->{globalStorage}, undef, \%opts; };
         if ($@) {
             $self->lmLog( "Unable to create persistent session : $@", 'error' );
-            return undef;
+            return ();
         }
     }
     foreach ( keys %$infos ) {
@@ -850,7 +853,7 @@ sub updateSession {
     my ( $self, $infos, $id ) = splice @_;
 
     # Return if no infos to update
-    return undef unless ( ref $infos eq 'HASH' and %$infos );
+    return () unless ( ref $infos eq 'HASH' and %$infos );
 
     # Update sessionInfo datas
     if ($id) {
@@ -870,7 +873,7 @@ sub updateSession {
     }
 
     if ($id) {
-        my $h = $self->getApacheSession( $id, 1 ) or return undef;
+        my $h = $self->getApacheSession( $id, 1 ) or return ();
 
         # Store/update session values
         foreach ( keys %$infos ) {
@@ -894,8 +897,8 @@ sub addSessionValue {
     my ( $self, $key, $value, $id ) = splice @_;
 
     # Mandatory parameters
-    return unless defined $key;
-    return unless defined $value;
+    return () unless defined $key;
+    return () unless defined $value;
 
     # Get current key value
     my $old_value = $self->{sessionInfo}->{$key};
@@ -906,7 +909,7 @@ sub addSessionValue {
 
         # Do nothing if value already exists
         foreach (@old_values) {
-            return if ( $_ eq $value );
+            return () if ( $_ eq $value );
         }
 
         # Add separator
@@ -921,7 +924,7 @@ sub addSessionValue {
     $self->updateSession( { $key => $new_value }, $id );
 
     # Return
-    return;
+    return ();
 }
 
 ## @method string getFirstValue(string value)

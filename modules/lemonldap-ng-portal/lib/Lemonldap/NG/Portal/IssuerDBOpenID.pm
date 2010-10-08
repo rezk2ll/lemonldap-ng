@@ -169,7 +169,7 @@ sub openIDServer {
                 return 1;
             }
             elsif ( $self->param("confirm") == 1 ) {
-                $self->updateSession( { "_openidTrust$trust_root" => 1 } );
+                $self->updatePersistentSession( { "_openidTrust$trust_root" => 1 } );
                 return 1;
             }
             elsif ( $self->param("confirm") == -1 ) {

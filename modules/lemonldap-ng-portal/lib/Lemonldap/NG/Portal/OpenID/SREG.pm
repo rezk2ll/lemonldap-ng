@@ -96,7 +96,7 @@ sub sregHook {
     }
 
     # Now set datas
-    my ( %r, %msg, %ag );
+    my ( %r, %msg, %ag, %toStore );
 
     # Requested parameters: check if already agreed or confirm is set
     foreach my $k (@req) {
@@ -106,7 +106,7 @@ sub sregHook {
                 $accepted = 0;
             }
             elsif ( !$agree ) {
-                $self->updateSession( { "_openidTrust$trust_root\_$k" => 1 } );
+                $toStore{"_openidTrust$trust_root\_$k"} = 1;
             }
         }
         $self->{"openIdSreg_$k"} =~ s/^\$//;
@@ -136,14 +136,12 @@ sub sregHook {
 
                 # Store the value returned
                 if ( !defined($agree) or $agree != $ck ) {
-                    $self->updateSession(
-                        { "_openidTrust$trust_root\_$k" => $ck } );
+                    $toStore{"_openidTrust$trust_root\_$k"} = $ck;
                     $agree = $ck;
                 }
             }
         }
 
-        # TODO: updateSession()
         $msg{opt}->{$k} = $self->{sessionInfo}->{ $self->{"openIdSreg_$k"} }
           || '';
 
@@ -159,6 +157,7 @@ sub sregHook {
             $ag{$k} = 0;
         }
     }
+    $self->updatePersistentSession( \%toStore ) if (%toStore);
 
     # Check if user has agreed request
     if ($accepted) {
