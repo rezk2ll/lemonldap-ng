@@ -20,6 +20,7 @@ use Lemonldap::NG::Common::Safelib;    #link protected safe Safe object
 use Lemonldap::NG::Common::Apache::Session
   ;    #link protected session Apache::Session object
 use Safe;
+use Digest::MD5;
 
 # Special comments for doxygen
 #inherits Lemonldap::NG::Portal::_SOAP
@@ -788,6 +789,15 @@ sub getApacheSession {
     return \%h;
 }
 
+## @method protected string _md5hash(string s)
+# Return md5(s)
+# @param $s String to hash
+# @return hashed value
+sub _md5hash {
+    my ( $self, $s ) = splice @_;
+    return substr( Digest::MD5::md5_hex($s), 0, 32 );
+}
+
 ## @method void updatePersistentSession(hashRef infos, string uid)
 # Update persistent session.
 # Call updateSession() and store %$infos in a persistent session.
@@ -804,7 +814,7 @@ sub updatePersistentSession {
     # update current session
     $self->updateSession( $self, $infos );
 
-    my $h = $self->getApacheSession( $uid, 1 );
+    my $h = $self->getApacheSession( $self->_md5hash($uid), 1 );
     unless ($h) {
         my %opts = %{ $self->{globalStorageOptions} };
         $opts{setId} = $uid;
@@ -1654,7 +1664,24 @@ sub setSessionInfo {
     }
 
     # Call UserDB setSessionInfo
-    return $self->SUPER::setSessionInfo();
+    if ( my $res = $self->SUPER::setSessionInfo() ) {
+        return $res;
+    }
+
+    # Restore persistent datas for
+    unless ( $self->{id} ) {
+        my $h2 =
+          $self->getApacheSession(
+            $self->_md5hash( $self->{sessionInfo}->{ $self->{whatToTrace} } ),
+            1 );
+        if ($h2) {
+            foreach my $k ( keys %$h2 ) {
+                $self->{sessionInfo}->{$k} = $h2->{$k};
+            }
+        untie %$h2;
+    }
+    }
+    PE_OK;
 }
 
 ##@apmethod int setMacro()
@@ -1871,12 +1898,12 @@ sub store {
     # Main session
     my $h = $self->getApacheSession( $self->{id} )
       or return PE_APACHESESSIONERROR;
-    foreach ( keys %{ $self->{sessionInfo} } ) {
-        next unless defined $self->{sessionInfo}->{$_};
+    foreach my $k ( keys %{ $self->{sessionInfo} } ) {
+        next unless defined $self->{sessionInfo}->{$k};
         $self->lmLog(
-            "Store " . $self->{sessionInfo}->{$_} . " in session key $_",
+            "Store " . $self->{sessionInfo}->{$k} . " in session key $k",
             'debug' );
-        $h->{$_} = $self->{sessionInfo}->{$_};
+        $h->{$k} = $self->{sessionInfo}->{$k};
     }
     untie %$h;
 
