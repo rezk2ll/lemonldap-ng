@@ -956,11 +956,15 @@ sub hideCookie {
 # Encode URl in the format used by Lemonldap::NG::Portal for redirections.
 sub encodeUrl {
     my ( $class, $url ) = splice @_;
-    my $u = $url;
     $url = $class->_buildUrl($url) if ( $url !~ m#^https?://# );
-    return encode_base64( $u, '' );
+    $class->lmLog( $url, 'error' );
+    return encode_base64( $url, '' );
 }
 
+## @method private string _buildUrl(string s)
+# Transform /<s> into http(s?)://<host>:<port>/s
+# @param $s path
+# @return URL
 sub _buildUrl {
     my ( $class, $s ) = splice @_;
         my $portString = $port || $apacheRequest->get_server_port();

@@ -13,7 +13,21 @@ use constant SAFEWRAP => ( Safe->can("wrap_code_ref") ? 1 : 0 );
 
 our $VERSION = '0.55';
 
-## @cmethod void locationRulesInit(hashRef args)
+## @imethod protected void defaultValuesInit(hashRef args)
+# Set default values for non-customized variables
+# @param $args reference to the configuration hash
+sub defaultValuesInit {
+    my ( $class, $args ) = splice @_;
+    $args->{https} = { _ => $args->{https} } unless ( ref( $args->{https} ) );
+    if ( $args->{vhostHttps} ) {
+        while ( my ( $k, $v ) = each( %{ $args->{vhostHttps} } ) ) {
+            $args->{https}->{$k} = $v;
+        }
+    }
+    $class->Lemonldap::NG::Handler::Simple::defaultValuesInit($args);
+}
+
+## @imethod void locationRulesInit(hashRef args)
 # Compile rules.
 # Rules are stored in $args->{locationRules}->{&lt;virtualhost&gt;} that contains
 # regexp=>test expressions where :
@@ -56,7 +70,7 @@ sub locationRulesInit {
     1;
 }
 
-## @cmethod void forgeHeadersInit(hashRef args)
+## @imethod void forgeHeadersInit(hashRef args)
 # Create the &$forgeHeaders->{&lt;virtualhost&gt;} subroutines used to insert
 # headers into the HTTP request.
 # @param $args reference to the configuration hash
@@ -90,7 +104,7 @@ sub forgeHeadersInit {
     1;
 }
 
-## @cmethod void sendHeaders()
+## @rmethod void sendHeaders()
 # Launch function compiled by forgeHeadersInit() for the current virtual host
 sub sendHeaders {
     my $class = shift;
@@ -117,7 +131,7 @@ sub isProtected {
     return $defaultProtection->{$vhost};
 }
 
-## @cmethod boolean grant()
+## @rmethod boolean grant()
 # Grant or refuse client using compiled regexp and functions
 # @return True if the user is granted to access to the current URL
 sub grant {
@@ -240,6 +254,36 @@ sub transformUri {
     }
 
     OK;
+}
+
+## @cmethod private string _buildUrl(string s)
+# Transform /<s> into http(s?)://<host>:<port>/s
+# @param $s path
+# @return URL
+sub _buildUrl {
+    my ( $class, $s ) = splice @_;
+    my $portString = $port || $apacheRequest->get_server_port();
+    my $vhost = $apacheRequest->hostname;
+    my $_https =
+      ( defined( $https->{$vhost} ) ? $https->{$vhost} : $https->{_} );
+    $portString =
+        ( $_https  && $portString == 443 ) ? ''
+      : ( !$_https && $portString == 80 )  ? ''
+      :                                      ':' . $portString;
+    $class->lmLog(
+        "http"
+          . ( $_https ? "s" : "" ) . "://"
+          . $apacheRequest->get_server_name()
+          . $portString
+          . $s,
+        'error'
+    );
+    return
+        "http"
+      . ( $_https ? "s" : "" ) . "://"
+      . $apacheRequest->get_server_name()
+      . $portString
+      . $s;
 }
 
 1;
