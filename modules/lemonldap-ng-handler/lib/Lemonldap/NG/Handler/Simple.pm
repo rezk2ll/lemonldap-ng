@@ -957,7 +957,6 @@ sub hideCookie {
 sub encodeUrl {
     my ( $class, $url ) = splice @_;
     $url = $class->_buildUrl($url) if ( $url !~ m#^https?://# );
-    $class->lmLog( $url, 'error' );
     return encode_base64( $url, '' );
 }
 
