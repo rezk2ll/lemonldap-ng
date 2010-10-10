@@ -18,10 +18,13 @@ our $VERSION = '0.55';
 # @param $args reference to the configuration hash
 sub defaultValuesInit {
     my ( $class, $args ) = splice @_;
-    $args->{https} = { _ => $args->{https} } unless ( ref( $args->{https} ) );
-    if ( $args->{vhostHttps} ) {
-        while ( my ( $k, $v ) = each( %{ $args->{vhostHttps} } ) ) {
-            $args->{https}->{$k} = $v;
+    foreach my $t (qw(https port)) {
+        $args->{$t} = { _ => $args->{$t} } unless ( ref( $args->{$t} ) );
+        my $n = 'vhost' . ucfirst($t);
+        if ( $args->{$n} ) {
+            while ( my ( $k, $v ) = each( %{ $args->{$n} } ) ) {
+                $args->{$t}->{$k} = $v;
+            }
         }
     }
     $class->Lemonldap::NG::Handler::Simple::defaultValuesInit($args);
@@ -262,8 +265,11 @@ sub transformUri {
 # @return URL
 sub _buildUrl {
     my ( $class, $s ) = splice @_;
-    my $portString = $port || $apacheRequest->get_server_port();
     my $vhost = $apacheRequest->hostname;
+    my $portString =
+         $port->{$vhost}
+      || $port->{_}
+      || $apacheRequest->get_server_port();
     my $_https =
       ( defined( $https->{$vhost} ) ? $https->{$vhost} : $https->{_} );
     $portString =
