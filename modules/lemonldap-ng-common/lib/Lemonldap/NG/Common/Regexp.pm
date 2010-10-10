@@ -3,6 +3,8 @@
 
 package Lemonldap::NG::Common::Regexp;
 
+use AutoLoader 'AUTOLOAD';
+
 use constant {
     HOST =>
 qr{^(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:[a-zA-Z][-a-zA-Z0-9]*[a-zA-Z0-9]|[a-zA-Z])[.]?)|(?:[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+)|.{0})$},
@@ -13,4 +15,18 @@ qr{^(?:https?://(?:(?:(?:(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:
 };
 
 1;
+
+__END__
+
+=pod
+
+=cut
+
+sub reDomainsToHost {
+    my $list = shift;
+    return qr/^$/ unless($list);
+    $list =~ s/^\./\\\./;
+    $list = join('|',split (/\s+/,$list);
+    return qr/^(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:$list)$/;
+}
 

@@ -7,6 +7,7 @@ package Lemonldap::NG::Portal::IssuerDBOpenID;
 
 use strict;
 use Lemonldap::NG::Portal::Simple;
+use Lemonldap::NG::Common::Regexp;
 
 # Special comments for doxygen
 #inherits Lemonldap::NG::Portal::OpenID::Server
@@ -20,8 +21,14 @@ our $initDone;
 # @return Lemonldap::NG::Portal error code
 sub issuerDBInit {
     my $self = shift;
-    return PE_OK if ($initDone);
     $self->{openIdIssuerSecret} ||= $self->{cipher}->encrypt(0);
+    my $tmp = $self->{openIdSPList};
+    $tmp =~ s/^(\d);//;
+    $self->{_openIdSPListIsWhite} = $1 + 0;
+    $self->{_reopenIdSPList} =
+      Lemonldap::NG::Common::Regexp::reDomainsToHost($tmp);
+
+    return PE_OK if ($initDone);
 
     eval { require Lemonldap::NG::Portal::OpenID::Server };
     $self->abort( 'Unable to load Net::OpenID::Server', $@ ) if ($@);
@@ -164,12 +171,22 @@ sub openIDServer {
         is_trusted => sub {
             my ( $u, $trust_root, $is_identity ) = @_;
             return 0 unless ( $u and $is_identity );
+            my $tmp = $trust_root;
+            $tmp =~ m#^http//(.*?)/#;
+            if ( $tmp =~
+                $self->{_reopenIdSPList} xor $self->{_openIdSPListIsWhite} )
+            {
+                $self->lmLog( "$trust_root is forbidden for openID exchange",
+                    'warn' );
+                return 0;
+            }
             if ( $self->{sessionInfo}->{"_openidTrust$trust_root"} ) {
                 $self->lmLog( 'OpenID request already trusted', 'debug' );
                 return 1;
             }
             elsif ( $self->param("confirm") == 1 ) {
-                $self->updatePersistentSession( { "_openidTrust$trust_root" => 1 } );
+                $self->updatePersistentSession(
+                    { "_openidTrust$trust_root" => 1 } );
                 return 1;
             }
             elsif ( $self->param("confirm") == -1 ) {

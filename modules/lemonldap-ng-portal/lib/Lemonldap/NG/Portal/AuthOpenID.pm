@@ -8,8 +8,9 @@ package Lemonldap::NG::Portal::AuthOpenID;
 
 use strict;
 use Lemonldap::NG::Portal::Simple;
+use Lemonldap::NG::Common::Regexp;
 use LWP::UserAgent;
-require Cache::FileCache;
+use Cache::FileCache;
 
 our $VERSION = '0.1';
 our $initDone;
@@ -19,6 +20,12 @@ our $initDone;
 sub authInit {
     my $self = shift;
     $self->{openIdSecret} ||= $self->{cipher}->encrypt(0);
+    my $tmp = $self->{openIdIDPList};
+    $tmp =~ s/^(\d);//;
+    $self->{_openIdIDPListIsWhite} = $1 + 0;
+    $self->{_reopenIdIDPList} =
+      Lemonldap::NG::Common::Regexp::reDomainsToHost($tmp);
+
     return PE_OK if ($initDone);
 
     eval { require Net::OpenID::Consumer };
@@ -96,6 +103,16 @@ sub extractFormInfo {
 
     # 3. Check if an OpenID url has been submitted
     else {
+        my $tmp = $url;
+        $tmp =~ m#^http//(.*?)/#;
+        if ( $tmp =~
+            $self->{_reopenIdIDPList} xor $self->{_openIdIDPListIsWhite} )
+        {
+            $self->lmLog( "$url is forbidden for openID exchange", 'warn' );
+            $self->{_msg} =
+              "OpenID error: $tmp is forbidden for OpenID echange";
+            return PE_BADURL;
+        }
         my $claimed_identity = $self->{csr}->claimed_identity($url);
 
         # Check if url is valid
