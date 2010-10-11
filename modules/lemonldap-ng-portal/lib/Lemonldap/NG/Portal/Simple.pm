@@ -738,6 +738,7 @@ sub error_type {
 # Overload CGI::header() to add Lemonldap::NG cookie.
 sub header {
     my $self = shift;
+    unshift @_, '-type' unless ($#_);
     if ( $self->{cookie} ) {
         $self->SUPER::header( @_, -cookie => $self->{cookie} );
     }
