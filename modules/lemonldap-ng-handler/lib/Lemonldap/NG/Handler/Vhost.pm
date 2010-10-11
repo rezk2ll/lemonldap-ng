@@ -19,11 +19,21 @@ our $VERSION = '0.55';
 sub defaultValuesInit {
     my ( $class, $args ) = splice @_;
     foreach my $t (qw(https port)) {
+
+        # Skip Handler initialization (values not defined)
+        next unless defined $args->{$t};
+
+        # Record default value in key '_'
         $args->{$t} = { _ => $args->{$t} } unless ( ref( $args->{$t} ) );
+
+        # Override with vhost options
+        if ( defined $args->{vhostOptions} ) {
         my $n = 'vhost' . ucfirst($t);
-        if ( $args->{$n} ) {
-            while ( my ( $k, $v ) = each( %{ $args->{$n} } ) ) {
-                $args->{$t}->{$k} = $v;
+            foreach my $k ( keys %{ $args->{vhostOptions} } ) {
+                my $v = $args->{vhostOptions}->{$k}->{$n};
+                $class->lmLog( "Options $t for vhost $k: $v", 'debug' );
+                $args->{$t}->{$k} = $v
+                  if ( $v >= 0 );    # Keep default value if $v is negative
             }
         }
     }
@@ -276,20 +286,13 @@ sub _buildUrl {
         ( $_https  && $portString == 443 ) ? ''
       : ( !$_https && $portString == 80 )  ? ''
       :                                      ':' . $portString;
-    $class->lmLog(
-        "http"
-          . ( $_https ? "s" : "" ) . "://"
-          . $apacheRequest->get_server_name()
-          . $portString
-          . $s,
-        'error'
-    );
-    return
-        "http"
+    my $url = "http"
       . ( $_https ? "s" : "" ) . "://"
       . $apacheRequest->get_server_name()
       . $portString
       . $s;
+    $class->lmLog( "Build URL $url", 'debug' );
+    return $url;
 }
 
 1;

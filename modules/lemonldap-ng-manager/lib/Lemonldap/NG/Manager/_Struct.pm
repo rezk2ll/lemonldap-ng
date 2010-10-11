@@ -29,7 +29,9 @@ sub cstruct {
             %$h,
             virtualHosts => {
                 $k2 => {
-                    _nodes => [qw(rules:rules:rules headers post:post:post)],
+                    _nodes => [
+                        qw(rules:rules:rules headers post:post:post vhostOptions)
+                    ],
                     rules  => {
                         _nodes => ["hash:/locationRules/$k2:rules:rules"],
                         _js    => 'rulesRoot'
@@ -41,6 +43,11 @@ sub cstruct {
                     post => {
                         _nodes => ["post:/post/$k2:post:post"],
                         _js    => 'postRoot'
+                    },
+                    vhostOptions => {
+                        _nodes     => [qw(vhostPort vhostHttps)],
+                        vhostPort  => "int:/vhostOptions/$k2/vhostPort",
+                        vhostHttps => "trool:/vhostOptions/$k2/vhostHttps",
                     },
                 }
             }
@@ -463,7 +470,8 @@ sub struct {
                     _nodes           => [qw(openIdAuthnLevel openIdSecret openIdIDPList)],
                     openIdAuthnLevel => 'int:/openIdAuthnLevel',
                     openIdSecret     => 'text:/openIdSecret',
-		    openIdIDPList    => 'text:/openIdIDPList:authopenid:openididplist',
+                    openIdIDPList =>
+                      'text:/openIdIDPList:authopenid:openididplist',
                 },
 
                 # Twitter
@@ -586,7 +594,8 @@ sub struct {
                       'bool:/issuerDBOpenIDActivation',
                     issuerDBOpenIDPath    => 'text:/issuerDBOpenIDPath',
                     issuerDBOpenIDRule    => 'text:/issuerDBOpenIDRule',
-		    openIdSPList    => 'text:/openIdSPList:issuerdbopenid:openididplist',
+                    openIdSPList =>
+                      'text:/openIdSPList:issuerdbopenid:openididplist',
                     issuerDBOpenIDOptions => {
                         _nodes =>
                           [qw(openIdIssuerSecret openIdAttr n:openIdSreg)],
@@ -793,7 +802,7 @@ sub struct {
         #################
         virtualHosts => {
             _nodes  => ['nhash:/locationRules:virtualHosts:vhost'],
-            _upload => [ '/exportedHeaders', '/post' ],
+            _upload => [qw(/exportedHeaders /post /vhostPort /vhostHttps)],
             _help   => 'virtualHosts',
             _js     => 'vhostRoot',
         },
@@ -1108,7 +1117,6 @@ sub testStruct {
         test    => qr/^\$?[a-zA-Z_]\w*$/,
         msgFail => 'Value must be in the form $attr'
     };
-
     return {
         applicationList => {
             keyTest    => qr/^(\d*)?\w+$/,
@@ -1385,6 +1393,14 @@ sub testStruct {
         useRedirectOnForbidden => $boolean,
         useXForwardedForIP     => $boolean,
         variables              => $testNotDefined,
+        vhostOptions           => {
+            keyTest    => Lemonldap::NG::Common::Regexp::HOSTNAME,
+            keyMsgFail => 'Bad virtual host name',
+            '*'        => {
+                keyTest    => qr/^vhost(Port|Https)$/,
+                keyMsgFail => 'Bad option name',
+            },
+        },
         whatToTrace            => $lmAttrOrMacro,
 
         ########
@@ -1683,6 +1699,8 @@ sub defaultConf {
         passwordDB          => 'LDAP',
         useRedirectOnForbidden => '0',
         useXForwardedForIP     => '0',
+        vhostPort              => '-1',
+        vhostHttps             => '-1',
         whatToTrace            => '$_whatToTrace',
         ########
         # SAML #

@@ -124,6 +124,7 @@ sub unserialize {
 	|samlSPMetaDataOptions
 	|samlSPMetaDataXML
 	|samlStorageOptions
+	|vhostOptions
 	)$/
             and $v ||= {} and not ref($v)
           )
