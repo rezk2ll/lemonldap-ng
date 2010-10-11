@@ -22,7 +22,7 @@ sub sregHook {
     return 0 if ( $self->param('confirm') == -1 );
 
     # If identity is not trusted, does nothing
-    return ( 0, $prm ) unless ($is_id);
+    return ( 0, $prm ) unless ($is_id and $is_trusted);
 
     $self->lmLog( "SREG start", 'debug' );
 

@@ -124,6 +124,7 @@ __END__
 # * PE_OPENID_EMPTY                      62
 # * PE_OPENID_BADID                      63
 # * PE_MISSINGREQATTR                    64
+# * PE_BADPARTNER                        65
 
 # Not used in errors:
 # * PE_DONE                -1
@@ -200,6 +201,7 @@ sub error_fr {
         'Ceci est une page destinée aux serveurs OpenID',
 'Vous tentez d\'utiliser une identité OpenID qui ne vous appartient pas',
         'Un attribut exigé n\'est pas disponible',
+        'Fédération interdite par la politique de sécurité',
     ];
 }
 
@@ -273,6 +275,7 @@ sub error_en {
         'This is an OpenID endpoint page',
         'You try to use an OpenID identity which is not yours',
         'A required attribute is not available',
+        'Federation forbidden by security policy',
     ];
 }
 

@@ -178,9 +178,10 @@ sub openIDServer {
             {
                 $self->lmLog( "$trust_root is forbidden for openID exchange",
                     'warn' );
+                $self->{_openIdForbidden} = 1;
                 return 0;
             }
-            if ( $self->{sessionInfo}->{"_openidTrust$trust_root"} ) {
+            elsif ( $self->{sessionInfo}->{"_openidTrust$trust_root"} ) {
                 $self->lmLog( 'OpenID request already trusted', 'debug' );
                 return 1;
             }
@@ -244,6 +245,9 @@ sub _openIDResponse {
 "The user $self->{sessionInfo}->{_user} tries to use the id \"$data->{identity}\" on $data->{trust_root}"
             );
             return PE_OPENID_BADID;
+        }
+        elsif ( $self->{_openIdForbidden} ) {
+            return PE_BADPARTNER;
         }
 
         # User has refused sharing its datas
