@@ -336,13 +336,13 @@ install_portal_site:	install_conf_dir
 		$(PERL) -i -pe 's#__DIR__#$(LASPPORTALDIR)/#g' $(RLASPPORTALDIR)/index.pl; \
 	fi
 	# Cron files
-	@cp --remove-destination lemonldap-ng-portal/example/scripts/purgeCentralCache.cron.d $(RCRONDIR)/lemonldap-ng
+	@cp --remove-destination lemonldap-ng-portal/example/scripts/purgeCentralCache.cron.d $(RCRONDIR)/lemonldap-ng-portal
 	@if [ ! "$(APACHEUSER)" ]; then \
-		$(PERL) -i -pe 's#__APACHEUSER__#root#g;' $(RCRONDIR)/lemonldap-ng; \
+		$(PERL) -i -pe 's#__APACHEUSER__#root#g;' $(RCRONDIR)/lemonldap-ng-portal; \
 	else \
-		$(PERL) -i -pe 's#__APACHEUSER__#$(APACHEUSER)#g;' $(RCRONDIR)/lemonldap-ng; \
+		$(PERL) -i -pe 's#__APACHEUSER__#$(APACHEUSER)#g;' $(RCRONDIR)/lemonldap-ng-portal; \
 	fi
-	@$(PERL) -i -pe 's#__BINDIR__#$(BINDIR)#g;' $(RCRONDIR)/lemonldap-ng
+	@$(PERL) -i -pe 's#__BINDIR__#$(BINDIR)#g;' $(RCRONDIR)/lemonldap-ng-portal
 	# Clean SVN files
 	@rm -rf $$(find ${RPORTALDIR} $(RPORTALSKINSDIR) $(RCRONDIR) $(RCONFDIR) -type d -name .svn)
 	@if [ "$(WITHLA)" -eq "1" ]; then \
@@ -356,7 +356,13 @@ install_handler_site:	install_conf_dir
 	@cp --remove-destination ${SRCHANDLERDIR}/example/MyHandlerZimbra.pm ${RHANDLERDIR}
 	@cp --remove-destination ${SRCHANDLERDIR}/example/MyHandlerSympa.pm ${RHANDLERDIR}
 	@cp --remove-destination ${SRCHANDLERDIR}/example/MyUpdateCookieHandler.pm ${RHANDLERDIR}
-	@cp --remove-destination lemonldap-ng-handler/example/scripts/purgeLocalCache.cron.d $(RCRONDIR)/lemonldap-ng
+	@cp --remove-destination lemonldap-ng-handler/example/scripts/purgeLocalCache.cron.d $(RCRONDIR)/lemonldap-ng-handler
+	@if [ ! "$(APACHEUSER)" ]; then \
+		$(PERL) -i -pe 's#__APACHEUSER__#root#g;' $(RCRONDIR)/lemonldap-ng-handler; \
+	else \
+		$(PERL) -i -pe 's#__APACHEUSER__#$(APACHEUSER)#g;' $(RCRONDIR)/lemonldap-ng-handler; \
+	fi
+	@$(PERL) -i -pe 's#__BINDIR__#$(BINDIR)#g;' $(RCRONDIR)/lemonldap-ng-handler
 	@rm -rf $$(find $(RHANDLERDIR) -type d -name .svn)
 
 install_test_site:
