@@ -275,6 +275,14 @@ function setlmsamlservice(id){
         var v=bin+';'+loc+';'+rep;
         setlmdata(id,v);
 }
+function setopenididplist(id){
+	var type=0;
+	var list=$('#openid_serverlist_text').attr('value');
+	if($('#openid_serverlist_white').attr('checked')==true){
+		type=1;
+	}
+	setlmdata(id,type+';'+list);
+}
 function display(div,title) {
 	var divs=$('#content').children();
 	divs.toggleClass('hidden',true);
@@ -609,6 +617,17 @@ function samlService(id) {
 	$('#samlServiceLocation').attr('value',t[1]);
 	$('#samlServiceResponseLocation').attr('value',t[2]);
 	display('samlService',lmtext(id));
+}
+function openididplist(id) {
+	currentId=id;
+	var t=lmdata(id).split(';');
+	if(t[0]==1){
+		$('#openid_serverlist_white').attr('checked',true);
+	}else{
+		$('#openid_serverlist_black').attr('checked',true);
+	}
+	$('#openid_serverlist_text').attr('value',t[1]);
+	display('openid_serverlist',lmtext(id));
 }
 function securedCookieValues(id){
 	currentId=id;

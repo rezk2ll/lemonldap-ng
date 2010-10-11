@@ -455,6 +455,26 @@
      </button>
     </div>
 
+    <!-- OpenID black/white lists -->
+    <div id="content_openid_serverlist" class="hidden">
+     <table>
+      <tr>
+       <td><lang en="List type" fr="Type de liste"/></td>
+       <td><input id="openid_serverlist_black" type="radio" name="boolean" value="0" /> <lang en="Black list" fr="Liste noire"/>
+           <input id="openid_serverlist_white" type="radio" name="boolean" value="1" /> <lang en="White list" fr="Liste blanche"/>
+       </td>
+      </tr>
+      <tr>
+       <td><lang en="List" fr="Liste"/></td>
+       <td><input type="text" size="50" id="openid_serverlist_text" /></td>
+      </tr>
+     </table>
+     <br />
+     <button onclick="setopenididplist(currentId);return false;" class="ui-state-default ui-corner-all">
+     <lang en="Apply" fr="Appliquer" />
+     </button>
+    </div>
+
     <!-- authChoice -->
     <div id="content_authChoice" class="hidden">
      <table>

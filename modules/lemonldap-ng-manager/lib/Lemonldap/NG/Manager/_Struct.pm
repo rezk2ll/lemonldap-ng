@@ -460,9 +460,10 @@ sub struct {
 
                 # OpenID
                 openIdParams => {
-                    _nodes           => [qw(openIdAuthnLevel openIdSecret)],
+                    _nodes           => [qw(openIdAuthnLevel openIdSecret openIdIDPList)],
                     openIdAuthnLevel => 'int:/openIdAuthnLevel',
                     openIdSecret     => 'text:/openIdSecret',
+		    openIdIDPList    => 'text:/openIdIDPList:authopenid:openididplist',
                 },
 
                 # Twitter
@@ -579,12 +580,13 @@ sub struct {
                 },
                 issuerDBOpenID => {
                     _nodes => [
-                        qw(issuerDBOpenIDActivation issuerDBOpenIDPath issuerDBOpenIDRule n:issuerDBOpenIDOptions)
+                        qw(issuerDBOpenIDActivation issuerDBOpenIDPath issuerDBOpenIDRule openIdSPList n:issuerDBOpenIDOptions)
                     ],
                     issuerDBOpenIDActivation =>
                       'bool:/issuerDBOpenIDActivation',
                     issuerDBOpenIDPath    => 'text:/issuerDBOpenIDPath',
                     issuerDBOpenIDRule    => 'text:/issuerDBOpenIDRule',
+		    openIdSPList    => 'text:/openIdSPList:issuerdbopenid:openididplist',
                     issuerDBOpenIDOptions => {
                         _nodes =>
                           [qw(openIdIssuerSecret openIdAttr n:openIdSreg)],
