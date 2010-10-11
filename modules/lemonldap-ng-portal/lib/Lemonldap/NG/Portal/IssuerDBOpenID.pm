@@ -172,7 +172,7 @@ sub openIDServer {
             my ( $u, $trust_root, $is_identity ) = @_;
             return 0 unless ( $u and $is_identity );
             my $tmp = $trust_root;
-            $tmp =~ m#^http//(.*?)/#;
+            $tmp =~ s#^http://(.*?)/#$1#;
             if ( $tmp =~
                 $self->{_reopenIdSPList} xor $self->{_openIdSPListIsWhite} )
             {
