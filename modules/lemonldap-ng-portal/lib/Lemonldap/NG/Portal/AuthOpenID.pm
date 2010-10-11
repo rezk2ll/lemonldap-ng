@@ -111,7 +111,7 @@ sub extractFormInfo {
             $self->lmLog( "$url is forbidden for openID exchange", 'warn' );
             $self->{_msg} =
               "OpenID error: $tmp is forbidden for OpenID echange";
-            return PE_BADURL;
+            return PE_BADPARTNER;
         }
         my $claimed_identity = $self->{csr}->claimed_identity($url);
 
