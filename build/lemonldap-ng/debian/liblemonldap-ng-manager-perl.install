@@ -1,6 +1,6 @@
 /usr/share/perl5/Lemonldap/NG/Manager*
 /usr/share/perl5/auto/Lemonldap/NG/Manager
-debian/manager-apache*.conf /etc/lemonldap-ng
+/etc/lemonldap-ng/manager-apache*.conf
 /usr/share/lemonldap-ng/manager-skins
 /usr/share/lemonldap-ng/manager
 /var/lib/lemonldap-ng/manager

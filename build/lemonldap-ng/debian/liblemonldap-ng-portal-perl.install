@@ -6,4 +6,4 @@
 /usr/share/lemonldap-ng/bin/buildPortalWSDL
 /usr/share/lemonldap-ng/portal
 /var/lib/lemonldap-ng/portal
-debian/portal-apache*.conf /etc/lemonldap-ng
+/etc/lemonldap-ng/portal-apache*.conf
