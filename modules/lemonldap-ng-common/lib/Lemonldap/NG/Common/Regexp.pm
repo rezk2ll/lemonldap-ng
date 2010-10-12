@@ -21,12 +21,11 @@ __END__
 =pod
 
 =cut
-
 sub reDomainsToHost {
     my $list = shift;
-    return qr/^$/ unless($list);
-    $list =~ s/^\./\\\./;
-    $list = join('|',split (/\s+/,$list);
+    return qr/^$/ unless ($list);
+    $list =~ s/^\./\\\./g;
+    $list = join( '|', split( /\s+/, $list ) );
     return qr/^(?:(?:(?:[a-zA-Z0-9][-a-zA-Z0-9]*)?[a-zA-Z0-9])[.])*(?:$list)$/;
 }
 
