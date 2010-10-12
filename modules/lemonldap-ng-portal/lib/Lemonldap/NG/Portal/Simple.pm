@@ -833,7 +833,7 @@ sub updatePersistentSession {
     foreach ( keys %$infos ) {
         $self->lmLog( "Update persistent session key $_ with " . $infos->{$_},
             'debug' );
-        if ( defined( $h->{$_} ) ) {
+        if ( defined( $info->{$_} ) ) {
             $h->{$_} = $infos->{$_};
         }
         else {
