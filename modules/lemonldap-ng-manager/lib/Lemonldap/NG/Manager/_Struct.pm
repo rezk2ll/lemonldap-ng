@@ -802,7 +802,7 @@ sub struct {
         #################
         virtualHosts => {
             _nodes  => ['nhash:/locationRules:virtualHosts:vhost'],
-            _upload => [qw(/exportedHeaders /post /vhostPort /vhostHttps)],
+            _upload => [qw(/exportedHeaders /post /vhostOptions)],
             _help   => 'virtualHosts',
             _js     => 'vhostRoot',
         },
