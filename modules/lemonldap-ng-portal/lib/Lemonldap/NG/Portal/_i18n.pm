@@ -211,7 +211,7 @@ sub error_fr {
 sub error_en {
     [
         'User authenticated',
-        'Your connection has expired; You must to be authentified once again',
+        'Your connection has expired, you must authenticate once again',
         'User and password fields must be filled',
         'Wrong directory manager account or password',
         'User not found in directory',
@@ -348,6 +348,7 @@ sub error_ro {
         'Problemă la încărcarea unui furnizor de servicii',
         'A apărut o eroare în timpul schimbului de SAML atribute',
         'Această pagină este proiectat pentru servere OpenID',
+'Când încercaţi să utilizaţi o identitate OpenID care nu este a ta',
 'Când încercaţi să utilizaţi o identitate OpenID care nu vă aparţine',
         'Un atribut solicitate nu sunt disponibile',
     ];
