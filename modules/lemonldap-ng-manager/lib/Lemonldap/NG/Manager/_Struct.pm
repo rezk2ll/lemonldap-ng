@@ -588,19 +588,20 @@ sub struct {
                 },
                 issuerDBOpenID => {
                     _nodes => [
-                        qw(issuerDBOpenIDActivation issuerDBOpenIDPath issuerDBOpenIDRule openIdSPList n:issuerDBOpenIDOptions)
+                        qw(issuerDBOpenIDActivation issuerDBOpenIDPath issuerDBOpenIDRule n:issuerDBOpenIDOptions)
                     ],
                     issuerDBOpenIDActivation =>
                       'bool:/issuerDBOpenIDActivation',
                     issuerDBOpenIDPath    => 'text:/issuerDBOpenIDPath',
                     issuerDBOpenIDRule    => 'text:/issuerDBOpenIDRule',
-                    openIdSPList =>
-                      'text:/openIdSPList:issuerdbopenid:openididplist',
                     issuerDBOpenIDOptions => {
-                        _nodes =>
-                          [qw(openIdIssuerSecret openIdAttr n:openIdSreg)],
+                        _nodes => [
+                            qw(openIdIssuerSecret openIdAttr openIdSPList n:openIdSreg)
+                        ],
                         openIdIssuerSecret => 'text:/openIdIssuerSecret',
                         openIdAttr         => 'text:openIdAttr',
+                        openIdSPList =>
+                          'text:/openIdSPList:issuerdbopenid:openididplist',
                         openIdSreg         => {
                             _nodes => [
                                 qw(openIdSreg_fullname openIdSreg_nickname openIdSreg_language openIdSreg_postcode openIdSreg_timezone openIdSreg_country openIdSreg_gender openIdSreg_email openIdSreg_dob)
@@ -1053,12 +1054,11 @@ sub struct {
             # ADVANCED SAML PARAMETERS
             samlAdvanced => {
                 _nodes => [
-                    qw(samlIdPResolveCookie samlMetadataForceUTF8 samlUserDBIdentityKey samlStorage cn:samlStorageOptions n:samlCommonDomainCookie)
+                    qw(samlIdPResolveCookie samlMetadataForceUTF8 samlStorage cn:samlStorageOptions n:samlCommonDomainCookie)
                 ],
 
                 samlIdPResolveCookie  => 'text:/samlIdPResolveCookie',
                 samlMetadataForceUTF8 => 'bool:/samlMetadataForceUTF8',
-                samlUserDBIdentityKey => 'text:/samlUserDBIdentityKey',
                 samlStorage           => 'text:/samlStorage',
                 samlStorageOptions    => {
                     _nodes => ['hash:/samlStorageOptions:default:btext'],
@@ -1494,7 +1494,6 @@ sub testStruct {
         samlServicePublicKeyEnc                              => $testNotDefined,
         samlIdPResolveCookie                                 => $testNotDefined,
         samlMetadataForceUTF8                                => $boolean,
-        samlUserDBIdentityKey                                => $testNotDefined,
         samlStorage                                          => {
             test    => qr/^[\w:]*$/,
             msgFail => 'Bad module name',

@@ -800,21 +800,22 @@ sub _md5hash {
     return substr( Digest::MD5::md5_hex($s), 0, 32 );
 }
 
-## @method void updatePersistentSession(hashRef infos, string uid)
+## @method void updatePersistentSession(hashRef infos, string uid, string id)
 # Update persistent session.
 # Call updateSession() and store %$infos in a persistent session.
 # Note that if the session does not exists, it will be created.
 # @param infos hash reference of information to update
-# @param id Session ID
+# @param uid optional Unhashed persistent session ID
+# @param id optional SSO session ID
 # @return nothing
 sub updatePersistentSession {
-    my ( $self, $infos, $uid ) = splice @_;
+    my ( $self, $infos, $uid, $id ) = splice @_;
 
     # Return if no infos to update
     return () unless ( ref $infos eq 'HASH' and %$infos );
 
-    # update current session
-    $self->updateSession( $self, $infos );
+    # Update current session
+    $self->updateSession( $self, $infos, $id );
 
     $uid ||= $self->{sessionInfo}->{ $self->{whatToTrace} };
     return () unless ($uid);
@@ -825,12 +826,12 @@ sub updatePersistentSession {
         $opts{setId} = $uid;
         eval { tie %$h, $self->{globalStorage}, undef, \%opts; };
         if ($@) {
-            $self->lmLog( "Unable to create persistent session : $@", 'error' );
+            $self->lmLog( "Unable to create persistent session: $@", 'warn' );
             return ();
         }
     }
     foreach ( keys %$infos ) {
-        $self->lmLog( "Update persistent session $_ with " . $infos->{$_},
+        $self->lmLog( "Update persistent session key $_ with " . $infos->{$_},
             'debug' );
         if ( defined( $h->{$_} ) ) {
             $h->{$_} = $infos->{$_};
