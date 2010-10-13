@@ -1,0 +1,107 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+
+
+<h1><a name="handler_status" id="handler_status">Handler Status</a></h1>
+<div class="level1">
+
+</div>
+<!-- SECTION "Handler Status" [1-30] -->
+<h2><a name="presentation" id="presentation">Presentation</a></h2>
+<div class="level2">
+
+<p>
+
+When status feature is activated, Handlers and portal will collect statistics and save them in their local cache. This means that if several Handlers are deployed, each will manage its own statistics.
+</p>
+
+<p>
+The statistics are collected trough a daemon launched by the Handler. It can be seen in system processes, for example:
+
+</p>
+<pre class="code">
+perl -MLemonldap::NG::Handler::Status -I/etc/perl -I/usr/local/lib/perl/5.10.1 -I/usr/local/share/perl/5.10.1 -I/usr/lib/perl5 -I/usr/share/perl5 -I/usr/lib/perl/5.10 -I/usr/share/perl/5.10 -I/usr/local/lib/site_perl -I. -I/etc/apache2 -e &amp;Lemonldap::NG::Handler::Status::run(Cache::FileCache,{?          &#039;cache_depth&#039; =&gt; 5,?          &#039;cache_root&#039; =&gt; &#039;/tmp&#039;,?          &#039;directory_umask&#039; =&gt; &#039;007&#039;,?          &#039;default_expires_in&#039; =&gt; 600,?          &#039;namespace&#039; =&gt; &#039;MyNamespace&#039;?        }?);
+</pre>
+
+<p>
+Statistics are displayed when calling the status path on an Handler (for example: <a href="http://test1.example.com/status" class="urlextern" title="http://test1.example.com/status"  rel="nofollow">http://test1.example.com/status</a>).
+</p>
+
+<p>
+Example of status page:
+</p>
+
+<p>
+<a href="/_detail/screenshots/1.00/status_standard.png?id=documentation%3A1.00%3Astatus" class="media" title="screenshots:1.00:status_standard.png"><img src="../../../media/screenshots/1.00/status_standard.png" class="mediacenter" alt="" /></a>
+</p>
+
+</div>
+<!-- SECTION "Presentation" [31-1069] -->
+<h2><a name="configuration" id="configuration">Configuration</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Configuration" [1070-1096] -->
+<h3><a name="apache" id="apache">Apache</a></h3>
+<div class="level3">
+
+<p>
+
+You need to give access to status path in the Handler Apache configuration:
+</p>
+<pre class="code file apache">    <span class="co1"># Uncomment this to activate status module</span>
+    &lt;<span class="kw3">Location</span> /status&gt;
+        <span class="kw1">Order</span> <span class="kw1">deny</span>,<span class="kw1">allow</span>
+        <span class="kw1">Allow</span> from 127.0.0.0/8
+        PerlHeaderParserHandler My::Package-&gt;status
+    &lt;/<span class="kw3">Location</span>&gt;</pre>
+
+<p>
+Then restart Apache.
+</p>
+
+<p>
+<p><div class="notetip">You should change the <code>Allow</code> directive to match administration IP, or use another Apache protection mean.
+</div></p>
+</p>
+
+</div>
+<!-- SECTION "Apache" [1097-1557] -->
+<h3><a name="lemonldapng" id="lemonldapng">LemonLDAP::NG</a></h3>
+<div class="level3">
+
+<p>
+
+Edit <code>lemonldap-ng.ini</code>, and activate status in the <code>handler</code> section:
+</p>
+<pre class="code file ini"><span class="re0"><span class="br0">&#91;</span>handler<span class="br0">&#93;</span></span>
+# Set status to 1 if you want to have the report of activity <span class="br0">&#40;</span>used for
+# example to inform MRTG<span class="br0">&#41;</span>
+<span class="re1">status</span> <span class="sy0">=</span><span class="re2"> 1</span></pre>
+
+<p>
+Then restart Apache.
+</p>
+
+</div>
+<!-- SECTION "LemonLDAP::NG" [1558-] --></div><!-- closes <div class="dokuwiki export">-->
