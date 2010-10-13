@@ -28,7 +28,7 @@ foreach my $module (qw(common handler manager portal)) {
             next if /^(?:\s*#|\*lmLog|sub lmLog)/;
             $autoload = 1 if (/use\s+AutoLoader/);
             last if ( /^__END__$/ and not $autoload );
-            next unless (/lmLog|STDERR/);
+            next unless (/abort|lmLog|STDERR/);
             if (/lmLog/) {
                 $_ .= <F> while ( !/[\)\}];/s );
             }
@@ -42,6 +42,10 @@ foreach my $module (qw(common handler manager portal)) {
                   or next;
                 ( $msg, $level ) = ( $1, $3 );
             }
+	    elsif (/abort/) {
+	    	/abort\s*\(\s*(.+?)\s*(?:,\s*(.+?)\s*)?\)/s or next;
+		( $msg, $level ) = ( "$1 ($2)", 'abort' );
+	    }
             else {
                 $level = 'error';
                 /STDERR\s+(.*)(?:\s+if\s*\()?;$/ or next;
@@ -55,7 +59,7 @@ foreach my $module (qw(common handler manager portal)) {
     foreach ( @{ $errorMsg->{$module}->{undocumented} } ) {
         print "## Undocumented ## $_\n";
     }
-    foreach my $level (qw(error warn notice info)) {
+    foreach my $level (qw(abort error warn notice info)) {
         foreach ( @{ $errorMsg->{$module}->{$level} } ) {
             print "[$level] $_\n";
         }
