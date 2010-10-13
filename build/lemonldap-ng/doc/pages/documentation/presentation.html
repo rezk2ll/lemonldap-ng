@@ -1,0 +1,420 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+
+
+<h1><a name="presentation" id="presentation">Presentation</a></h1>
+<div class="level1">
+
+<p>
+
+LemonLDAP::NG is a modular WebSSO (Single Sign On) based on Apache::Session modules. It simplifies the build of a protected area with a few changes in the application.
+</p>
+
+<p>
+It manages both authentication and authorization and provides headers for accounting. So you can have a full AAA protection for your web space as described below.
+</p>
+
+</div>
+<!-- SECTION "Presentation" [1-361] -->
+<h2><a name="architecture" id="architecture">Architecture</a></h2>
+<div class="level2">
+
+<p>
+
+<a href="/_detail/documentation/lemonldap-ng-architecture.png?id=documentation%3Apresentation" class="media" title="documentation:lemonldap-ng-architecture.png"><img src="../../media/documentation/lemonldap-ng-architecture.png" class="mediacenter" alt="" width="600" /></a>
+</p>
+
+</div>
+<!-- SECTION "Architecture" [362-444] -->
+<h3><a name="main_components" id="main_components">Main components</a></h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> <strong>Manager</strong>: used to manage LemonLDAP::NG configuration and to explore sessions. Dedicated to administrators</div>
+</li>
+<li class="level1"><div class="li"> <strong>Portal</strong>: used to authenticate users, and display applications list</div>
+</li>
+<li class="level1"><div class="li"> <strong>Handler</strong>: Apache modules used to protect applications</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Main components" [445-720] -->
+<h3><a name="databases" id="databases">Databases</a></h3>
+<div class="level3">
+
+<p>
+
+<p><div class="noteclassic">We call “database” a backend where we can read or write a data. This can be a file, an <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> directory, …
+</div></p>
+</p>
+
+<p>
+We split databases in two categories:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>External databases</strong>: not managed by LemonLDAP::NG, for example user database</div>
+</li>
+<li class="level1"><div class="li"> <strong>Internal databases</strong>: only used by LemonLDAP::NG</div>
+</li>
+</ul>
+
+<p>
+
+Main external databases are:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Authentication</strong>: how authenticate users</div>
+</li>
+<li class="level1"><div class="li"> <strong>User</strong>: where collect user data</div>
+</li>
+<li class="level1"><div class="li"> <strong>Password</strong>: where change the password</div>
+</li>
+</ul>
+
+<p>
+
+Main internal databases are:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Configuration</strong>: where configuration is stored. This does not include Apache configuration which is not managed by LemonLDAP::NG</div>
+</li>
+<li class="level1"><div class="li"> <strong>Sessions</strong>: where sessions are stored.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Notifications</strong>: messages displayed to connected users</div>
+</li>
+<li class="level1"><div class="li"> <strong>Cache</strong>: cache for configuration and sessions</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Databases" [721-1522] -->
+<h2><a name="kinematics" id="kinematics">Kinematics</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Kinematics" [1523-1546] -->
+<h3><a name="login" id="login">Login</a></h3>
+<div class="level3">
+
+<p>
+
+<a href="/_detail/documentation/lemonldapng-sso.png?id=documentation%3Apresentation" class="media" title="documentation:lemonldapng-sso.png"><img src="../../media/documentation/lemonldapng-sso.png" class="mediacenter" alt="" width="800" /></a>
+
+</p>
+<ol>
+<li class="level1"><div class="li"> User tries to access protected application, his request is catched by Handler</div>
+</li>
+<li class="level1"><div class="li"> SSO cookie is not detected, so Handler redirects user to Portal</div>
+</li>
+<li class="level1"><div class="li"> User authenticates on Portal</div>
+</li>
+<li class="level1"><div class="li"> Portal checks authentication</div>
+</li>
+<li class="level1"><div class="li"> If authentication succeed, Portal collect user data</div>
+</li>
+<li class="level1"><div class="li"> Portal creates a session to store user data</div>
+</li>
+<li class="level1"><div class="li"> Portal gets the session key</div>
+</li>
+<li class="level1"><div class="li"> Portal creates SSO cookie with session key as value</div>
+</li>
+<li class="level1"><div class="li"> User is redirected on protected application, with his new cookie</div>
+</li>
+<li class="level1"><div class="li"> Handler gets session get from cookie and gets session</div>
+</li>
+<li class="level1"><div class="li"> Handler stores user data in its cache</div>
+</li>
+<li class="level1"><div class="li"> Handler check access rule and send headers to protected applications</div>
+</li>
+<li class="level1"><div class="li"> Protected application sends response to Handler</div>
+</li>
+<li class="level1"><div class="li"> Handler sends the response to user</div>
+</li>
+</ol>
+
+<p>
+
+Handler will then check SSO cookie for each <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> request.
+</p>
+
+</div>
+<!-- SECTION "Login" [1547-2411] -->
+<h3><a name="logout" id="logout">Logout</a></h3>
+<div class="level3">
+
+<p>
+
+Default use case:
+</p>
+<ol>
+<li class="level1"><div class="li"> User clicks on the logout link in Portal</div>
+</li>
+<li class="level1"><div class="li"> Portal destroys session and redirects user on itself with an empty SSO cookie</div>
+</li>
+<li class="level1"><div class="li"> User is redirected on portal and his SSO cookie is empty</div>
+</li>
+</ol>
+
+<p>
+
+LemonLDAP::NG is also able to catch logout request on protected applications, with different behavior:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>SSO logout</strong>: the request is not forwarded to application, only the SSO session is closed</div>
+</li>
+<li class="level1"><div class="li"> <strong>Application logout</strong>: the request is forwarded to application but SSO session is not closed</div>
+</li>
+<li class="level1"><div class="li"> <strong>SSO and Application logout</strong>: the request is forwarded to application and SSO session is closed</div>
+</li>
+</ul>
+
+<p>
+
+After logout process, the user is redirected on portal, or on a configured <acronym title="Uniform Resource Locator">URL</acronym>.
+</p>
+
+<p>
+<p><div class="notewarning">Handlers have a session cache, with a default lifetime of 10 minutes. So for Handler on different physical servers than the Portal, a disconnected user can still be authorized still the cache expires.
+</div></p>
+</p>
+
+</div>
+<!-- SECTION "Logout" [2412-3340] -->
+<h3><a name="cross_domain_authentication_cda" id="cross_domain_authentication_cda">Cross Domain Authentication (CDA)</a></h3>
+<div class="level3">
+
+<p>
+
+<p><div class="noteclassic">For security reason, a cookie provided for a domain cannot be sent to another domain. To extend SSO on several domains, a cross-domain mechanism is implemented in LemonLDAP::NG.
+</div></p>
+
+</p>
+<ol>
+<li class="level1"><div class="li"> User owns SSO cookie on the main domain (see <span class="curid"><a href="../documentation/presentation.html#login" class="wikilink1" title="documentation:presentation">Login kinematics</a></span>)</div>
+</li>
+<li class="level1"><div class="li"> User tries to access a protected application in a different domain</div>
+</li>
+<li class="level1"><div class="li"> Handler does not see SSO cookie (because it is not in main domain) and redirects user on Portal</div>
+</li>
+<li class="level1"><div class="li"> Portal recognizes the user with its SSO cookie, and see he is coming from a different domain</div>
+</li>
+<li class="level1"><div class="li"> Portal redirects user on protected application with his session ID as <acronym title="Uniform Resource Locator">URL</acronym> parameter</div>
+</li>
+<li class="level1"><div class="li"> Handler detects <acronym title="Uniform Resource Locator">URL</acronym> parameter and create a SSO cookie on its domain, with session ID as value</div>
+</li>
+</ol>
+
+</div>
+<!-- SECTION "Cross Domain Authentication (CDA)" [3341-4122] -->
+<h2><a name="authentication_authorization_and_accounting_aaa_mechanisms" id="authentication_authorization_and_accounting_aaa_mechanisms">Authentication, Authorization and Accounting (AAA) mechanisms</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Authentication, Authorization and Accounting (AAA) mechanisms" [4123-4197] -->
+<h3><a name="authentication" id="authentication">Authentication</a></h3>
+<div class="level3">
+
+<p>
+
+If a user is not authenticated and attempts to connect to an area protected by a LemonLDAP::NG compatible Handler, he is redirected to a portal.
+</p>
+
+<p>
+Authentication process main steps are:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Control <acronym title="Uniform Resource Locator">URL</acronym> origin</strong>: prevent XSS attacks and bad redirections</div>
+</li>
+<li class="level1"><div class="li"> <strong>Control existing session</strong>: detect SSO session, apply configured constraints (1 session per user, 1 session per IP, …)</div>
+</li>
+<li class="level1"><div class="li"> <strong>Extract form info</strong>: get login/password, certificate, environment varibale (depending on authentication module)</div>
+</li>
+<li class="level1"><div class="li"> <strong>Get user info</strong>: contact user database to collect attributes</div>
+</li>
+<li class="level1"><div class="li"> <strong>Set macros</strong>: compute configured macros</div>
+</li>
+<li class="level1"><div class="li"> <strong>Set groups</strong>: request user database to find groups</div>
+</li>
+<li class="level1"><div class="li"> <strong>Set local groups</strong>: compute configured groups</div>
+</li>
+<li class="level1"><div class="li"> <strong>Authenticate</strong>: contact authentication database to check credentials</div>
+</li>
+<li class="level1"><div class="li"> <strong>Grant session</strong>: check rights to open SSO session</div>
+</li>
+<li class="level1"><div class="li"> <strong>Store</strong>: store user info in session database</div>
+</li>
+<li class="level1"><div class="li"> <strong>Build cookie</strong>: build SSO cookie with session ID</div>
+</li>
+<li class="level1"><div class="li"> <strong>Redirect</strong>: redirect user on protected application or on Portal</div>
+</li>
+</ul>
+
+<p>
+
+LemonLDAP::NG SSO cookies are generated by Apache::Session, they are as secure as a 128-bit random cookie. You may use the securedCookie options to avoid session hijacking.
+</p>
+
+</div>
+<!-- SECTION "Authentication" [4198-5426] -->
+<h3><a name="authorization" id="authorization">Authorization</a></h3>
+<div class="level3">
+
+<p>
+
+Authorization is controlled only by Handlers. An authorization is defined by:
+</p>
+<ul>
+<li class="level1"><div class="li"> An <acronym title="Uniform Resource Locator">URL</acronym> pattern (or <code>default</code> to match all URLs)</div>
+</li>
+<li class="level1"><div class="li"> An access rule</div>
+</li>
+</ul>
+
+<p>
+
+<p><div class="noteclassic">Authorizations are defined inside a virtualhost and takes effect only on it. There are no <em>global</em> authorizations.
+</div></p>
+</p>
+
+<p>
+Access rules values can be:
+</p>
+<ul>
+<li class="level1"><div class="li"> <code>accept</code>: all authenticated users can pass</div>
+</li>
+<li class="level1"><div class="li"> <code>deny</code>: nobody is welcomed</div>
+</li>
+<li class="level1"><div class="li"> <code>unprotect</code>: all is open!</div>
+</li>
+<li class="level1"><div class="li"> <code>logout_sso</code>, <code>logout_app</code>, <code>logout_app_sso</code>: catch logout request</div>
+</li>
+<li class="level1"><div class="li"> <acronym title="Practical Extraction and Report Language">Perl</acronym> expression: perl code snippet that returns 0 or 1 </div>
+</li>
+</ul>
+
+<p>
+
+Some examples:
+</p>
+<ul>
+<li class="level1"><div class="li"> Accept all authenticated users:</div>
+<ul>
+<li class="level2"><div class="li"> <acronym title="Uniform Resource Locator">URL</acronym> pattern: <code>default</code></div>
+</li>
+<li class="level2"><div class="li"> Access rule: <code>accept</code></div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> Restrict /admin to administrators group</div>
+<ul>
+<li class="level2"><div class="li"> <acronym title="Uniform Resource Locator">URL</acronym> pattern: <code>^/admin/</code></div>
+</li>
+<li class="level2"><div class="li"> Access rule: <code>$groups =~ /\badministrators\b/</code></div>
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+
+<p><div class="notetip"><code>\b</code> means start or end of a word in PCRE (<acronym title="Practical Extraction and Report Language">Perl</acronym> Compatible Regular Expressions)
+</div></p>
+</p>
+
+</div>
+<!-- SECTION "Authorization" [5427-6358] -->
+<h3><a name="accounting" id="accounting">Accounting</a></h3>
+<div class="level3">
+
+</div>
+
+<h4><a name="logging_portal_access" id="logging_portal_access">Logging portal access</a></h4>
+<div class="level4">
+
+<p>
+
+Portal produce a <code>notice</code> message in Apache logs when a user authenticates (or fails to authenticate) and logs out.
+</p>
+
+</div>
+
+<h4><a name="logging_application_access" id="logging_application_access">Logging application access</a></h4>
+<div class="level4">
+
+<p>
+
+Handler inform Apache of connected user (parameter <code>whatToTrace</code>), so you can see user login in Apache access logs.
+</p>
+
+<p>
+The real accounting has to be done by the application itself.
+</p>
+
+<p>
+LemonLDAP::NG can export <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> headers either using a proxy or protecting directly the application.
+</p>
+
+<p>
+An <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> header is defined by:
+</p>
+<ul>
+<li class="level1"><div class="li"> A name</div>
+</li>
+<li class="level1"><div class="li"> A value</div>
+</li>
+</ul>
+
+<p>
+
+<p><div class="noteclassic">Headers are defined inside a virtualhost and takes effect only on it. There are no <em>global</em> headers.
+</div></p>
+</p>
+
+<p>
+The header value is a <acronym title="Practical Extraction and Report Language">Perl</acronym> expression, returning a string.
+</p>
+
+<p>
+Some examples:
+</p>
+<ul>
+<li class="level1"><div class="li"> Send login in Auth-User:</div>
+<ul>
+<li class="level2"><div class="li"> Name: <code>Auth-User</code></div>
+</li>
+<li class="level2"><div class="li"> Value: <code>$uid</code></div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> Send “Lastname, firstname” in Auth-Name:</div>
+<ul>
+<li class="level2"><div class="li"> Name: <code>Auth-Name</code></div>
+</li>
+<li class="level2"><div class="li"> Value: <code>$sn + ”, ” + $gn</code></div>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Accounting" [6359-] --></div><!-- closes <div class="dokuwiki export">-->

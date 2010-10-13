@@ -1,0 +1,182 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+
+
+<h1><a name="quick_start_tutorial" id="quick_start_tutorial">Quick start tutorial</a></h1>
+<div class="level1">
+
+<p>
+
+<p><div class="noteimportant">
+This tutorial will guide you into a minimal installation and configuration procedure. You need some prerequisites:
+</p>
+<ul>
+<li class="level1"><div class="li"> A computer with a GNU/Linux or recent UNIX system</div>
+</li>
+<li class="level1"><div class="li"> A web browser launched from the computer (to access localhost)</div>
+</li>
+<li class="level1"><div class="li"> An <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> directory with a user account (suffix: dc=example,dc=com)</div>
+</li>
+<li class="level1"><div class="li"> A cup of coffee (or tea, we are open minded)</div>
+</li>
+</ul>
+
+<p>
+
+</div></p>
+</p>
+
+</div>
+<!-- SECTION "Quick start tutorial" [1-417] -->
+<h2><a name="installation" id="installation">Installation</a></h2>
+<div class="level2">
+
+<p>
+
+LemonLDAP::NG is written in <acronym title="Practical Extraction and Report Language">Perl</acronym> and requires a lot of <acronym title="Practical Extraction and Report Language">Perl</acronym> dependencies. <a href="../documentation/latest/prereq.html" class="wikilink1" title="documentation:latest:prereq">You must install them first</a>.
+</p>
+
+<p>
+Get the tarball on <a href="../download.html" class="wikilink1" title="download">Download page</a>  and follow next steps:
+</p>
+
+</div>
+<!-- SECTION "Installation" [418-652] -->
+<h3><a name="extract" id="extract">Extract</a></h3>
+<div class="level3">
+<pre class="code">
+$ tar zxvf lemonldap-ng-*.tar.gz
+$ cd lemonldap-ng-*
+</pre>
+
+</div>
+<!-- SECTION "Extract" [653-740] -->
+<h3><a name="build" id="build">Build</a></h3>
+<div class="level3">
+<pre class="code">
+$ make
+$ make test
+</pre>
+
+</div>
+<!-- SECTION "Build" [741-792] -->
+<h3><a name="install" id="install">Install</a></h3>
+<div class="level3">
+<pre class="code">
+$ sudo make install
+</pre>
+
+<p>
+<p><div class="notetip">
+If your <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> suffix is not dc=example,dc=com, use:
+
+</p>
+<pre class="code">
+$ sudo make install LDAPSUFFIX=mysuffix
+</pre>
+
+<p>
+
+You can also change the host and port with options LDAPHOST and LDAPPORT.
+
+</div></p>
+</p>
+
+</div>
+<!-- SECTION "Install" [793-1047] -->
+<h2><a name="configuration" id="configuration">Configuration</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Configuration" [1048-1074] -->
+<h3><a name="system" id="system">System</a></h3>
+<div class="level3">
+
+<p>
+
+Update your /etc/hosts to map SSO URLs to localhost:
+
+</p>
+<pre class="code">
+$ sudo make postconf
+</pre>
+
+</div>
+<!-- SECTION "System" [1075-1182] -->
+<h3><a name="apache" id="apache">Apache</a></h3>
+<div class="level3">
+
+<p>
+
+Include LemonLDAP::NG configuration in your main Apache configuration:
+</p>
+<pre class="code file apache"><span class="kw1">include</span> /usr/local/lemonldap-ng/etc/portal-apache2.conf
+<span class="kw1">include</span> /usr/local/lemonldap-ng/etc/handler-apache2.conf
+<span class="kw1">include</span> /usr/local/lemonldap-ng/etc/manager-apache2.conf</pre>
+
+<p>
+Restart Apache:
+
+</p>
+<pre class="code">
+$ sudo apachectl configtest
+$ sudo apachectl restart
+</pre>
+
+</div>
+<!-- SECTION "Apache" [1183-1550] -->
+<h2><a name="run" id="run">Run</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Run" [1551-1567] -->
+<h3><a name="open_sso_session" id="open_sso_session">Open SSO session</a></h3>
+<div class="level3">
+
+<p>
+
+Go on <a href="http://auth.example.com" class="urlextern" title="http://auth.example.com"  rel="nofollow">http://auth.example.com</a> and log with <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> user account.
+</p>
+
+</div>
+<!-- SECTION "Open SSO session" [1568-1658] -->
+<h3><a name="access_protected_application" id="access_protected_application">Access protected application</a></h3>
+<div class="level3">
+
+<p>
+
+Try <a href="http://test1.example.com" class="urlextern" title="http://test1.example.com"  rel="nofollow">http://test1.example.com</a> and <a href="http://test2.example.com" class="urlextern" title="http://test2.example.com"  rel="nofollow">http://test2.example.com</a>
+</p>
+
+</div>
+<!-- SECTION "Access protected application" [1659-1757] -->
+<h3><a name="edit_configuration" id="edit_configuration">Edit configuration</a></h3>
+<div class="level3">
+
+<p>
+
+Go on <a href="http://manager.example.com" class="urlextern" title="http://manager.example.com"  rel="nofollow">http://manager.example.com</a>
+</p>
+
+</div>
+<!-- SECTION "Edit configuration" [1758-] --></div><!-- closes <div class="dokuwiki export">-->
