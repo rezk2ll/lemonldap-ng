@@ -831,12 +831,14 @@ sub updatePersistentSession {
         }
     }
     foreach ( keys %$infos ) {
-        $self->lmLog( "Update persistent session key $_ with " . $infos->{$_},
+        if ( defined( $infos->{$_} ) ) {
+            $self->lmLog(
+                "Update persistent session key $_ with " . $infos->{$_},
             'debug' );
-        if ( defined( $info->{$_} ) ) {
             $h->{$_} = $infos->{$_};
         }
         else {
+            $self->lmLog( "Delete persistent session key $_", 'debug' );
             delete $h->{$_};
         }
     }
@@ -880,8 +882,15 @@ sub updateSession {
 
         # Store/update session values
         foreach ( keys %$infos ) {
-            $self->lmLog( "Update session $_ with " . $infos->{$_}, 'debug' );
+            if ( defined( $infos->{$_} ) ) {
+                $self->lmLog( "Update session key $_ with " . $infos->{$_},
+                    'debug' );
             $h->{$_} = $infos->{$_};
+        }
+            else {
+                $self->lmLog( "Delete session key $_", 'debug' );
+                delete $h->{$_};
+            }
         }
 
         # Store updateTime
