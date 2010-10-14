@@ -834,7 +834,7 @@ sub updatePersistentSession {
         if ( defined( $infos->{$_} ) ) {
             $self->lmLog(
                 "Update persistent session key $_ with " . $infos->{$_},
-            'debug' );
+                'debug' );
             $h->{$_} = $infos->{$_};
         }
         else {
@@ -873,8 +873,8 @@ sub updateSession {
     $id ||= $self->{id};
     unless ($id) {
         my %cookies = fetch CGI::Cookie;
-    $id ||= $cookies{ $self->{cookieName} }->value
-      if ( defined $cookies{ $self->{cookieName} } );
+        $id ||= $cookies{ $self->{cookieName} }->value
+          if ( defined $cookies{ $self->{cookieName} } );
     }
 
     if ($id) {
@@ -885,8 +885,8 @@ sub updateSession {
             if ( defined( $infos->{$_} ) ) {
                 $self->lmLog( "Update session key $_ with " . $infos->{$_},
                     'debug' );
-            $h->{$_} = $infos->{$_};
-        }
+                $h->{$_} = $infos->{$_};
+            }
             else {
                 $self->lmLog( "Delete session key $_", 'debug' );
                 delete $h->{$_};
@@ -1693,8 +1693,8 @@ sub setSessionInfo {
             foreach my $k ( keys %$h2 ) {
                 $self->{sessionInfo}->{$k} = $h2->{$k};
             }
-        untie %$h2;
-    }
+            untie %$h2;
+        }
     }
     PE_OK;
 }

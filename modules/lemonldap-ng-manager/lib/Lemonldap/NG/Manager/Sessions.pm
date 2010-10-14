@@ -66,7 +66,7 @@ sub new {
     # Now try to load Apache::Session module
     unless ( $globalStorage->can('populate') ) {
         eval "require $globalStorage";
-    $class->abort( "Unable to load $globalStorage", $@ ) if ($@);
+        $class->abort( "Unable to load $globalStorage", $@ ) if ($@);
     }
     %{ $self->{globalStorageOptions} } = %$globalStorageOptions;
     $self->{globalStorageOptions}->{backend} = $globalStorage;

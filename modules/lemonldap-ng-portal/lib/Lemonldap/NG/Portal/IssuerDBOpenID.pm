@@ -191,6 +191,8 @@ sub openIDServer {
                 return 1;
             }
             elsif ( $self->param("confirm") == -1 ) {
+                $self->updatePersistentSession(
+                    { "_openidTrust$trust_root" => 0 } );
                 return 0;
             }
             else {

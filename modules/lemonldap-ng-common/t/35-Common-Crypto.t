@@ -28,6 +28,7 @@ ok(
 foreach my $i ( 1 .. 17 ) {
     my $s = '';
     $s = join( '', map { chr( int( rand(94) ) + 33 ) } ( 1 .. $i ) );
-    ok( $c->decrypt( $c->encrypt($s) ) eq $s, "Test with $i characters string" );
+    ok( $c->decrypt( $c->encrypt($s) ) eq $s,
+        "Test with $i characters string" );
 }
 

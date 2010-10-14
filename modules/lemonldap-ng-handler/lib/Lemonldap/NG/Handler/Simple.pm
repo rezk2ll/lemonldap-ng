@@ -966,16 +966,16 @@ sub encodeUrl {
 # @return URL
 sub _buildUrl {
     my ( $class, $s ) = splice @_;
-        my $portString = $port || $apacheRequest->get_server_port();
-        $portString =
-            ( $https  && $portString == 443 ) ? ''
-          : ( !$https && $portString == 80 )  ? ''
-          :                                     ':' . $portString;
+    my $portString = $port || $apacheRequest->get_server_port();
+    $portString =
+        ( $https  && $portString == 443 ) ? ''
+      : ( !$https && $portString == 80 )  ? ''
+      :                                     ':' . $portString;
     return
         "http"
-          . ( $https ? "s" : "" ) . "://"
-          . $apacheRequest->get_server_name()
-          . $portString
+      . ( $https ? "s" : "" ) . "://"
+      . $apacheRequest->get_server_name()
+      . $portString
       . $s;
 }
 

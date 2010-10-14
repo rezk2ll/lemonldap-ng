@@ -28,7 +28,7 @@ sub defaultValuesInit {
 
         # Override with vhost options
         if ( defined $args->{vhostOptions} ) {
-        my $n = 'vhost' . ucfirst($t);
+            my $n = 'vhost' . ucfirst($t);
             foreach my $k ( keys %{ $args->{vhostOptions} } ) {
                 my $v = $args->{vhostOptions}->{$k}->{$n};
                 $class->lmLog( "Options $t for vhost $k: $v", 'debug' );

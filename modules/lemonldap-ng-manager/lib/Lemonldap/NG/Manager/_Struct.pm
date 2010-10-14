@@ -32,7 +32,7 @@ sub cstruct {
                     _nodes => [
                         qw(rules:rules:rules headers post:post:post vhostOptions)
                     ],
-                    rules  => {
+                    rules => {
                         _nodes => ["hash:/locationRules/$k2:rules:rules"],
                         _js    => 'rulesRoot'
                     },
@@ -467,7 +467,7 @@ sub struct {
 
                 # OpenID
                 openIdParams => {
-                    _nodes           => [qw(openIdAuthnLevel openIdSecret openIdIDPList)],
+                    _nodes => [qw(openIdAuthnLevel openIdSecret openIdIDPList)],
                     openIdAuthnLevel => 'int:/openIdAuthnLevel',
                     openIdSecret     => 'text:/openIdSecret',
                     openIdIDPList =>
@@ -602,7 +602,7 @@ sub struct {
                         openIdAttr         => 'text:openIdAttr',
                         openIdSPList =>
                           'text:/openIdSPList:issuerdbopenid:openididplist',
-                        openIdSreg         => {
+                        openIdSreg => {
                             _nodes => [
                                 qw(openIdSreg_fullname openIdSreg_nickname openIdSreg_language openIdSreg_postcode openIdSreg_timezone openIdSreg_country openIdSreg_gender openIdSreg_email openIdSreg_dob)
                             ],
@@ -1401,7 +1401,7 @@ sub testStruct {
                 keyMsgFail => 'Bad option name',
             },
         },
-        whatToTrace            => $lmAttrOrMacro,
+        whatToTrace => $lmAttrOrMacro,
 
         ########
         # SAML #
