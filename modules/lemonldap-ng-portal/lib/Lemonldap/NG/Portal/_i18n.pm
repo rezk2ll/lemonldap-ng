@@ -348,7 +348,6 @@ sub error_ro {
         'Problemă la încărcarea unui furnizor de servicii',
         'A apărut o eroare în timpul schimbului de SAML atribute',
         'Această pagină este proiectat pentru servere OpenID',
-'Când încercaţi să utilizaţi o identitate OpenID care nu este a ta',
 'Când încercaţi să utilizaţi o identitate OpenID care nu vă aparţine',
         'Un atribut solicitate nu sunt disponibile',
         'Federation forbidden by security policy',

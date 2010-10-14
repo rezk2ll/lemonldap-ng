@@ -1,6 +1,6 @@
 package My::Portal;
 
-use Test::More tests => 13;
+use Test::More tests => 14;
 use strict;
 
 our @ISA = qw(Lemonldap::NG::Portal::IssuerDBOpenID
@@ -39,6 +39,7 @@ SKIP: {
             uid  => 'test',
             mail => 'x.x.org'
         },
+        whatToTrace => 'uid',
       },
       __PACKAGE__;
 
