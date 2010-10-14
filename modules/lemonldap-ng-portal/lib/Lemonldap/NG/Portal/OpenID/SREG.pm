@@ -131,7 +131,7 @@ sub sregHook {
             elsif ( $self->param('confirm') == 1 ) {
                 my $ck = 0;
                 if ( defined( $self->param("sreg_$k") ) ) {
-                    $ck = ( $self->param("sreg_$k") == 'OK' ) || 0;
+                    $ck = ( $self->param("sreg_$k") eq 'OK' ) || 0;
                 }
 
                 # Store the value returned
