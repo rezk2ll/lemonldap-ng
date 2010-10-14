@@ -8,7 +8,7 @@ Build-Depends-Indep:libapache-session-perl, libnet-ldap-perl (>=1:0.38),
  libdbi-perl, libwww-perl, libcache-cache-perl, libcrypt-rijndael-perl,
  libxml-libxslt-perl, libio-string-perl, libregexp-assemble-perl, liburi-perl,
  libstring-random-perl, libmime-lite-perl, libsoap-lite-perl,
- libconfig-inifiles-perl, libcrypt-openssl-x509-perl
+ libconfig-inifiles-perl, libcrypt-openssl-x509-perl, libcrypt-openssl-rsa-perl
 Standards-Version: 3.9.1
 Homepage: http://lemonldap.ow2.org/
 

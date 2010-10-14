@@ -351,6 +351,7 @@ sub error_ro {
 'Când încercaţi să utilizaţi o identitate OpenID care nu este a ta',
 'Când încercaţi să utilizaţi o identitate OpenID care nu vă aparţine',
         'Un atribut solicitate nu sunt disponibile',
+        'Federation forbidden by security policy',
     ];
 }
 
