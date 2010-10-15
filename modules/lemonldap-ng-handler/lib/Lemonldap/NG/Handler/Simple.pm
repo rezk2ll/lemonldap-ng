@@ -1048,14 +1048,15 @@ sub run ($$) {
         $class->lmLog( 'CDA request', 'debug' );
         $apacheRequest->args($args);
         my $host = $apacheRequest->get_server_name();
+        my $redirectUrl   = $class->_buildUrl( $apacheRequest->uri );
+        my $redirectHttps = ( $redirectUrl =~ m/^ĥttps/ );
         lmSetErrHeaderOut( $apacheRequest,
-            $class->_buildUrl( $apacheRequest->uri )
-              . ( $args ? "?" . $args : "" ) );
+            'Location' => $redirectUrl . ( $args ? "?" . $args : "" ) );
         $host =~ s/^[^\.]+\.(.*\..*$)/$1/;
         lmSetErrHeaderOut(
             $apacheRequest,
             'Set-Cookie' => "$str; domain=$host; path=/"
-              . ( $https    ? "; secure"   : "" )
+              . ( $redirectHttps ? "; secure"   : "" )
               . ( $httpOnly ? "; HttpOnly" : "" )
               . (
                 $cookieExpiration
