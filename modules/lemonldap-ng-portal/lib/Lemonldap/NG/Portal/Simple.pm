@@ -215,6 +215,8 @@ sub new {
     $self->setDefaultValues();
 
     # Test mandatory elements
+
+    # 1. Sessions backend
     $self->abort( "Configuration error",
         "You've to indicate a an Apache::Session storage module !" )
       unless ( $self->{globalStorage} );
@@ -222,14 +224,22 @@ sub new {
     $self->abort( "Configuration error",
         "Module " . $self->{globalStorage} . " not found in \@INC" )
       if ($@);
+
+    # Use LemonLDAP::NG custom Apache::Session
     $self->{globalStorageOptions}->{backend} = $self->{globalStorage};
     $self->{globalStorage} = 'Lemonldap::NG::Common::Apache::Session';
-    if ( $self->{samlStorage} ne $self->{globalStorage} ) {
-        eval "require " . $self->{samlStorage};
+
+    # Load other storages if needed
+    foreach my $otherStorage ( $self->{samlStorage}, $self->{casStorage} ) {
+        if ( $otherStorage ne $self->{globalStorage} ) {
+            eval "require " . $otherStorage;
         $self->abort( "Configuration error",
-            "Module " . $self->{samlStorage} . " not found in \@INC" )
+                "Module " . $otherStorage . " not found in \@INC" )
           if ($@);
     }
+    }
+
+    # 2. Domain
     $self->abort( "Configuration error",
         "You've to indicate a domain for cookies" )
       unless ( $self->{domain} );
