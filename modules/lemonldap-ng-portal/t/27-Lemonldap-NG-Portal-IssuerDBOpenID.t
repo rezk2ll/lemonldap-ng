@@ -28,7 +28,7 @@ SKIP: {
     skip(
         "Net::OpenID::Consumer is not installed, so "
           . "Lemonldap::NG::Portal::AuthOpenID will not be useable",
-        2
+        14
     ) if ($@);
     use_ok('Lemonldap::NG::Portal::OpenID::Server');
     use_ok('Lemonldap::NG::Portal::IssuerDBOpenID');
