@@ -100,11 +100,6 @@ ERASECONFIG=1 # Set to 0 if you do not want to replace your configuration
 
 DIFFPREFIX=
 
-# Liberty Alliance support
-WITHLA=0 # Set to 1 if you want to install Liberty Alliance portal (deprecated by SAML2 support)
-LASPPORTALDIR=$(DOCUMENTROOT)/liberty-alliance-sp-portal
-RLASPPORTALDIR=$(DESTDIR)/$(LASPPORTALDIR)
-
 all:	configure common handler manager portal
 	@echo
 	@echo "Building succeed. Now run :"
@@ -311,9 +306,6 @@ install_portal_site:	install_conf_dir
 	@install -v -d $(RPORTALDIR) $(RPORTALSKINSDIR) \
 		$(RPORTALDIR)/skins/ \
 		$(RCRONDIR) $(RCONFDIR)
-	@if [ "$(WITHLA)" -eq "1" ]; then \
-		install -v -d $(RLASPPORTALDIR); \
-	fi
 	@for skin in $$(ls lemonldap-ng-portal/example/skins/); do \
 		[ -h $(RPORTALDIR)/skins/$$skin ] && rm -f $(RPORTALDIR)/skins/$$skin; \
 		install -v -d $(RPORTALSKINSDIR)/$$skin; \
@@ -330,11 +322,6 @@ install_portal_site:	install_conf_dir
 			ln -s $(PORTALSKINSDIR)/$$skin $(RPORTALDIR)/skins/$$skin; \
 		done; \
 	fi
-	# L-A portal install
-	@if [ "$(WITHLA)" -eq "1" ]; then \
-		cp -pR --remove-destination ${SRCPORTALDIR}/example/AuthLA/* $(RLASPPORTALDIR); \
-		$(PERL) -i -pe 's#__DIR__#$(LASPPORTALDIR)/#g' $(RLASPPORTALDIR)/index.pl; \
-	fi
 	# Cron files
 	@cp --remove-destination lemonldap-ng-portal/example/scripts/purgeCentralCache.cron.d $(RCRONDIR)/lemonldap-ng-portal
 	@if [ ! "$(APACHEUSER)" ]; then \
@@ -345,9 +332,6 @@ install_portal_site:	install_conf_dir
 	@$(PERL) -i -pe 's#__BINDIR__#$(BINDIR)#g;' $(RCRONDIR)/lemonldap-ng-portal
 	# Clean SVN files
 	@rm -rf $$(find ${RPORTALDIR} $(RPORTALSKINSDIR) $(RCRONDIR) $(RCONFDIR) -type d -name .svn)
-	@if [ "$(WITHLA)" -eq "1" ]; then \
-		rm -rf $$(find $(RLASPPORTALDIR) -type d -name .svn); \
-	fi
 
 install_handler_site:	install_conf_dir
 	# Handler install
@@ -382,9 +366,6 @@ install_examples_site:
 	@rm -rf $(REXAMPLESDIR)/portal/skins \
 		$(REXAMPLESDIR)/manager/skins \
 	@rm -rf $$(find $(REXAMPLESDIR) -type d -name .svn)
-	@if [ "$(WITHLA)" -eq "1" ]; then \
-		$(PERL) -i -pe 's#__DIR__#$(LASPPORTALDIR)#g' $(REXAMPLESDIR)/portal/AuthLA/index.pl; \
-	fi
 	@$(PERL) -i -pe 's#__SESSIONDIR__#$(APACHESESSIONFILEDIR)/#g;' $(REXAMPLESDIR)/portal/*.pl
 
 install_doc_site:

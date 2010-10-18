@@ -28,7 +28,6 @@ use Digest::MD5;
 #inherits Lemonldap::NG::Portal::AuthCAS;
 #inherits Lemonldap::NG::Portal::AuthChoice;
 #inherits Lemonldap::NG::Portal::AuthDBI;
-#inherits Lemonldap::NG::Portal::AuthLA;
 #inherits Lemonldap::NG::Portal::AuthLDAP;
 #inherits Lemonldap::NG::Portal::AuthMulti;
 #inherits Lemonldap::NG::Portal::AuthNull;
