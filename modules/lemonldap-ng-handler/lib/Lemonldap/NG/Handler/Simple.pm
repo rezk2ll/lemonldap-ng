@@ -187,6 +187,22 @@ sub logout_mp2 : method {
     shift->unlog(@_);
 }
 
+sub abort {
+    my ( $class, $mess ) = splice @_;
+    my $args = $apacheRequest->args;
+    my $uri = $apacheRequest->uri . ( $args ? "?$args" : "" );
+    $apacheRequest->push_handlers(
+        PerlLogHandler => sub { $_[0]->status(FORBIDDEN); DECLINED; } );
+    $class->lmLog( $mess, 'error' );
+    if ($useRedirectOnForbidden) {
+        $class->lmLog( "Use redirect for error", 'debug' );
+        return $class->goToPortal( $uri, 'lmError=500' );
+    }
+    else {
+        return SERVER_ERROR;
+    }
+}
+
 ## @rmethod void lmLog(string mess, string level)
 # Wrapper for Apache log system
 # @param $mess message to log
@@ -897,7 +913,11 @@ sub forbidden {
     }
     $class->updateStatus( $datas->{$whatToTrace}, $_[0], 'REJECT' );
     $apacheRequest->push_handlers(
-        PerlLogHandler => sub { $_[0]->status(FORBIDDEN); $class->logForbidden( $uri, $datas ); DECLINED }
+        PerlLogHandler => sub {
+            $_[0]->status(FORBIDDEN);
+            $class->logForbidden( $uri, $datas );
+            DECLINED;
+        }
     );
 
     # Redirect or Forbidden?
@@ -1047,7 +1067,7 @@ sub run ($$) {
         my $str = $1;
         $class->lmLog( 'CDA request', 'debug' );
         $apacheRequest->args($args);
-        my $host = $apacheRequest->get_server_name();
+        my $host          = $apacheRequest->get_server_name();
         my $redirectUrl   = $class->_buildUrl( $apacheRequest->uri );
         my $redirectHttps = ( $redirectUrl =~ m/^ĥttps/ );
         lmSetErrHeaderOut( $apacheRequest,
@@ -1057,7 +1077,7 @@ sub run ($$) {
             $apacheRequest,
             'Set-Cookie' => "$str; domain=$host; path=/"
               . ( $redirectHttps ? "; secure"   : "" )
-              . ( $httpOnly ? "; HttpOnly" : "" )
+              . ( $httpOnly      ? "; HttpOnly" : "" )
               . (
                 $cookieExpiration
                 ? "; expires=" . expires( $cookieExpiration, 'cookie' )
