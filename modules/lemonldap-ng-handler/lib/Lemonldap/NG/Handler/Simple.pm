@@ -897,7 +897,7 @@ sub forbidden {
     }
     $class->updateStatus( $datas->{$whatToTrace}, $_[0], 'REJECT' );
     $apacheRequest->push_handlers(
-        PerlLogHandler => sub { $class->logForbidden( $uri, $datas ); DECLINED }
+        PerlLogHandler => sub { $_[0]->status(FORBIDDEN); $class->logForbidden( $uri, $datas ); DECLINED }
     );
 
     # Redirect or Forbidden?
