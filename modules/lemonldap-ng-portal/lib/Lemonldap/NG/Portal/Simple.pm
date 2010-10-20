@@ -211,23 +211,25 @@ sub new {
       or $self->abort( "Configuration error",
         "Unable to get configuration: $Lemonldap::NG::Common::Conf::msg" );
 
-    # Default values
-    $self->setDefaultValues();
-
     # Test mandatory elements
 
     # 1. Sessions backend
     $self->abort( "Configuration error",
         "You've to indicate a an Apache::Session storage module !" )
       unless ( $self->{globalStorage} );
+    unless ( $self->{globalStorage}->can('populate') ) {
     eval "require " . $self->{globalStorage};
     $self->abort( "Configuration error",
         "Module " . $self->{globalStorage} . " not found in \@INC" )
       if ($@);
+    }
 
     # Use LemonLDAP::NG custom Apache::Session
     $self->{globalStorageOptions}->{backend} = $self->{globalStorage};
     $self->{globalStorage} = 'Lemonldap::NG::Common::Apache::Session';
+
+    # Default values
+    $self->setDefaultValues();
 
     # Load other storages if needed
     foreach my $otherStorage ( $self->{samlStorage}, $self->{casStorage} ) {
