@@ -192,7 +192,7 @@ sub abort {
     my $args = $apacheRequest->args;
     my $uri = $apacheRequest->uri . ( $args ? "?$args" : "" );
     $apacheRequest->push_handlers(
-        PerlLogHandler => sub { $_[0]->status(FORBIDDEN); DECLINED; } );
+        PerlLogHandler => sub { $_[0]->status(SERVER_ERROR); DECLINED; } );
     $class->lmLog( $mess, 'error' );
     if ($useRedirectOnForbidden) {
         $class->lmLog( "Use redirect for error", 'debug' );
@@ -209,7 +209,7 @@ sub abort {
 # @param $level string (debug, info, warning or error)
 sub lmLog {
     my ( $class, $mess, $level ) = splice @_;
-    die "Level is required" unless ($level);
+    $class->abort("Level is required") unless ($level);
     my $call;
     unless ( $level eq 'debug' ) {
         my @tmp = caller();
@@ -485,7 +485,7 @@ sub childInit {
 sub purgeCache {
     my $class = shift;
     eval "use $localStorage;";
-    die("Unable to load $localStorage: $@") if ($@);
+    $class->abort("Unable to load $localStorage: $@") if ($@);
 
     # At each Apache (re)start, we've to clear the cache to avoid living
     # with old datas
@@ -677,7 +677,7 @@ sub defaultValuesInit {
 # @param $args reference to the configuration hash
 sub portalInit {
     my ( $class, $args ) = splice @_;
-    die("portal parameter required") unless ( $args->{portal} );
+    $class->abort("portal parameter required") unless ( $args->{portal} );
     if ( $args->{portal} =~ /[\$\(&\|"']/ ) {
         my $portal = $class->conditionSub( $args->{portal} );
         eval "sub portal {return &\$portal}";
@@ -685,7 +685,7 @@ sub portalInit {
     else {
         eval "sub portal {return '$args->{portal}'}";
     }
-    die("Unable to read portal parameter ($@)") if ($@);
+    $class->abort("Unable to read portal parameter ($@)") if ($@);
     1;
 }
 
@@ -694,9 +694,10 @@ sub portalInit {
 # @param $args reference to the configuration hash
 sub globalStorageInit {
     my ( $class, $args ) = splice @_;
-    $globalStorage = $args->{globalStorage} or die "globalStorage required";
+    $globalStorage = $args->{globalStorage}
+      or $class->abort("globalStorage required");
     eval "use $globalStorage;";
-    die($@) if ($@);
+    $class->abort($@) if ($@);
     $globalStorageOptions = $args->{globalStorageOptions};
 }
 

@@ -86,7 +86,7 @@ sub defaultValuesInit {
 # @return boolean
 sub localInit {
     my ( $class, $args ) = splice @_;
-    die(
+    $class->abort(
 "$class : unable to build configuration : $Lemonldap::NG::Common::Conf::msg"
       )
       unless ( $lmConf =
