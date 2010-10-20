@@ -47,6 +47,7 @@ our (
     $customFunctions,    $transform,           $cda,
     $childInitDone,      $httpOnly,            $cookieExpiration,
     $timeoutActivity,    $datasUpdate,         $useRedirectOnForbidden,
+    $useRedirectOnError,
 );
 
 ##########################################
@@ -74,7 +75,8 @@ BEGIN {
         ],
         traces => [qw( $whatToTrace $statusPipe $statusOut)],
         apache => [
-            qw( MP OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR useRedirectOnForbidden )
+            qw( MP OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR
+	    $useRedirectOnForbidden $useRedirectOnError )
         ],
         post    => [qw($transform)],
         cda     => ['$cda'],
@@ -140,6 +142,7 @@ BEGIN {
             threads::shared::share($statusOut);
             threads::shared::share($timeoutActivity);
             threads::shared::share($useRedirectOnForbidden);
+            threads::shared::share($useRedirectOnError);
         };
     }
     elsif ( MP() == 1 ) {
@@ -187,20 +190,34 @@ sub logout_mp2 : method {
     shift->unlog(@_);
 }
 
+## @rmethod int abort(string mess)
+# Logs message and exit or redirect to the portal if "useRedirectOnError" is
+# set to true.
+# @param $mess Message to log
+# @return Apache2::Const::REDIRECT or Apache2::Const::SERVER_ERROR
 sub abort {
     my ( $class, $mess ) = splice @_;
+
+    # If abort is called without a valid request, fall to die
+    eval {
     my $args = $apacheRequest->args;
     my $uri = $apacheRequest->uri . ( $args ? "?$args" : "" );
+
+    # Set error 500 in logs even if "useRedirectOnError" is set
     $apacheRequest->push_handlers(
         PerlLogHandler => sub { $_[0]->status(SERVER_ERROR); DECLINED; } );
     $class->lmLog( $mess, 'error' );
-    if ($useRedirectOnForbidden) {
+
+    # Redirect or die
+    if ($useRedirectOnError) {
         $class->lmLog( "Use redirect for error", 'debug' );
         return $class->goToPortal( $uri, 'lmError=500' );
     }
     else {
         return SERVER_ERROR;
     }
+    };
+    die $mess if ($@);
 }
 
 ## @rmethod void lmLog(string mess, string level)
@@ -209,7 +226,7 @@ sub abort {
 # @param $level string (debug, info, warning or error)
 sub lmLog {
     my ( $class, $mess, $level ) = splice @_;
-    $class->abort("Level is required") unless ($level);
+    die("Level is required") unless ($level);
     my $call;
     unless ( $level eq 'debug' ) {
         my @tmp = caller();
@@ -485,7 +502,7 @@ sub childInit {
 sub purgeCache {
     my $class = shift;
     eval "use $localStorage;";
-    $class->abort("Unable to load $localStorage: $@") if ($@);
+    die("Unable to load $localStorage: $@") if ($@);
 
     # At each Apache (re)start, we've to clear the cache to avoid living
     # with old datas
@@ -665,6 +682,10 @@ sub defaultValuesInit {
     $httpOnly         = defined($httpOnly) ? $httpOnly : $args->{httpOnly};
     $cookieExpiration = $args->{cookieExpiration} || $cookieExpiration;
     $timeoutActivity  = $args->{timeoutActivity} || $timeoutActivity || 0;
+    $useRedirectOnError =
+      defined($useRedirectOnError)
+      ? $useRedirectOnError
+      : $args->{useRedirectOnError};
     $useRedirectOnForbidden =
       defined($useRedirectOnForbidden)
       ? $useRedirectOnForbidden
@@ -677,7 +698,7 @@ sub defaultValuesInit {
 # @param $args reference to the configuration hash
 sub portalInit {
     my ( $class, $args ) = splice @_;
-    $class->abort("portal parameter required") unless ( $args->{portal} );
+    die("portal parameter required") unless ( $args->{portal} );
     if ( $args->{portal} =~ /[\$\(&\|"']/ ) {
         my $portal = $class->conditionSub( $args->{portal} );
         eval "sub portal {return &\$portal}";
@@ -685,7 +706,7 @@ sub portalInit {
     else {
         eval "sub portal {return '$args->{portal}'}";
     }
-    $class->abort("Unable to read portal parameter ($@)") if ($@);
+    die("Unable to read portal parameter ($@)") if ($@);
     1;
 }
 
@@ -695,9 +716,9 @@ sub portalInit {
 sub globalStorageInit {
     my ( $class, $args ) = splice @_;
     $globalStorage = $args->{globalStorage}
-      or $class->abort("globalStorage required");
+      or die("globalStorage required");
     eval "use $globalStorage;";
-    $class->abort($@) if ($@);
+    die($@) if ($@);
     $globalStorageOptions = $args->{globalStorageOptions};
 }
 
@@ -1274,10 +1295,8 @@ sub redirectFilter {
 sub status($$) {
     my ( $class, $r ) = splice @_;
     $class->lmLog( "$class: request for status", 'debug' );
-    unless ( $statusPipe and $statusOut ) {
-        $class->lmLog( "$class: status page can not be displayed", 'error' );
-        return SERVER_ERROR;
-    }
+    return $class->abort("$class: status page can not be displayed")
+    	unless ( $statusPipe and $statusOut );
     $r->handler("perl-script");
     print $statusPipe "STATUS" . ( $r->args ? " " . $r->args : '' ) . "\n";
     my $buf;

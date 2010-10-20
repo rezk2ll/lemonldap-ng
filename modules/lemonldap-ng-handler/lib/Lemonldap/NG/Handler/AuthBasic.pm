@@ -82,12 +82,8 @@ sub run ($$) {
 
             # Catch SOAP errors
             if ( $r->fault ) {
-                $class->lmLog(
-                    "SOAP request to the portal failed: "
-                      . $r->fault->{faultstring},
-                    'error'
-                );
-                return SERVER_ERROR;
+                return $class->abort( "SOAP request to the portal failed: "
+                      . $r->fault->{faultstring} );
             }
             else {
                 my $res = $r->result();

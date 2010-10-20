@@ -86,7 +86,7 @@ sub defaultValuesInit {
 # @return boolean
 sub localInit {
     my ( $class, $args ) = splice @_;
-    $class->abort(
+    die(
 "$class : unable to build configuration : $Lemonldap::NG::Common::Conf::msg"
       )
       unless ( $lmConf =
@@ -122,10 +122,8 @@ sub localInit {
 sub run($$) {
     my ( $class, $r ) = splice @_;
     if ( time() - $lastReload > $reloadTime ) {
-        unless ( my $tmp = $class->testConf(1) == OK ) {
-            $class->lmLog( "$class: No configuration found", 'error' );
-            return SERVER_ERROR;
-        }
+        die( "$class: No configuration found" )
+          unless ( $class->testConf(1) == OK );
     }
     return $class->SUPER::run($r);
 }

@@ -75,10 +75,8 @@ sub run {
     return OK unless ( $uri =~ $zimbraSsoUrl );
 
     # Check mandatory parameters
-    unless ($zimbraPreAuthKey) {
-        $class->lmLog( "No Zimbra preauth key configured", 'error' );
-        return SERVER_ERROR;
-    }
+    return $class->abort("No Zimbra preauth key configured");
+    unless ($zimbraPreAuthKey);
 
     # Build URL
     my $zimbra_url = $class->_buildZimbraPreAuthUrl(
