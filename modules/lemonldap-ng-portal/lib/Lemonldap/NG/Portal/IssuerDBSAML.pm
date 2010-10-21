@@ -1315,8 +1315,8 @@ sub issuerForAuthUser {
                 $self->{error}         = $self->_subProcess(
                     qw(issuerDBInit authInit issuerForUnAuthUser extractFormInfo
                       userDBInit getUser setAuthSessionInfo setSessionInfo
-                      setMacros setLocalGroups setGroups authenticate
-                      store authFinish)
+                      setMacros setLocalGroups setGroups setPersistentSessionInfo
+                      authenticate store authFinish)
                 );
 
                 # Return error if any

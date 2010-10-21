@@ -1240,6 +1240,7 @@ sub stamp {
 #    - controlExistingSession
 #    - setMacros
 #    - setLocalGroups
+#    - setPersistentSessionInfo
 #    - removeOther
 #    - grantSession
 #    - store
@@ -1274,8 +1275,8 @@ sub process {
         qw(controlUrlOrigin checkNotifBack controlExistingSession issuerDBInit
           authInit issuerForUnAuthUser extractFormInfo userDBInit getUser
           setAuthSessionInfo passwordDBInit modifyPassword setSessionInfo
-          setMacros setLocalGroups setGroups authenticate removeOther
-          grantSession store authFinish buildCookie checkNotification
+          setMacros setLocalGroups setGroups setPersistentSessionInfo authenticate
+          removeOther grantSession store authFinish buildCookie checkNotification
           issuerForAuthUser autoRedirect)
     );
     $self->updateStatus;
@@ -1595,8 +1596,8 @@ sub existingSession {
             $self->{error} = $self->_subProcess(
                 qw(issuerDBInit authInit issuerForUnAuthUser extractFormInfo
                   userDBInit getUser setAuthSessionInfo setSessionInfo
-                  setMacros setLocalGroups setGroups authenticate
-                  store authFinish)
+                  setMacros setLocalGroups setGroups setPersistentSessionInfo
+                  authenticate store authFinish)
             );
             return $self->{error} || PE_DONE;
         }
@@ -1694,19 +1695,6 @@ sub setSessionInfo {
         return $res;
     }
 
-    # Restore persistent datas for
-    unless ( $self->{id} ) {
-        my $h2 =
-          $self->getApacheSession(
-            $self->_md5hash( $self->{sessionInfo}->{ $self->{whatToTrace} } ),
-            1 );
-        if ($h2) {
-            foreach my $k ( keys %$h2 ) {
-                $self->{sessionInfo}->{$k} = $h2->{$k};
-            }
-            untie %$h2;
-        }
-    }
     PE_OK;
 }
 
@@ -1742,6 +1730,29 @@ sub setLocalGroups {
 }
 
 # setGroups(): must be implemented in UserDB* module
+
+##@apmethod int setPersistentSessionInfo()
+# Restore persistent session info
+#@return Lemonldap::NG::Portal constant
+sub setPersistentSessionInfo {
+    my $self = shift;
+
+    # Do not restore infos if session already opened
+    unless ( $self->{id} ) {
+        my $h =
+          $self->getApacheSession(
+            $self->_md5hash( $self->{sessionInfo}->{ $self->{whatToTrace} } ),
+            1 );
+        if ($h) {
+            foreach my $k ( keys %$h ) {
+                $self->{sessionInfo}->{$k} = $h->{$k};
+            }
+            untie %$h;
+        }
+    }
+
+    PE_OK;
+}
 
 ##@apmethod int authenticate()
 # Call authenticate() in Auth* module and call userNotice().
