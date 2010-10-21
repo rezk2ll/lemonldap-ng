@@ -40,5 +40,6 @@ t/35-Common-Crypto.t
 t/36-Common-Regexp.t
 t/99-pod.t
 tools/apache-session-mysql.sql
-tools/lmConfig.mysql
+tools/lmConfig.CDBI.mysql
+tools/lmConfig.RDBI.mysql
 tools/sso.schema
