@@ -1290,8 +1290,13 @@ sub process {
 sub controlUrlOrigin {
     my $self = shift;
     if ( my $c = $self->param('confirm') ) {
+
+        # Replace confirm stamp by 1 or -1
         $c =~ s/^(-?)(.*)$/${1}1/;
-        if ( $self->{cipher} ) {
+
+        # Decrypt confirm stamp if cipher available
+        # and confirm not already decrypted
+        if ( $self->{cipher} and $2 ne "1" ) {
             my $time = time() - $self->{cipher}->decrypt($2);
             if ( $time < 600 ) {
                 $self->lmLog( "Confirm parameter accepted $c", 'debug' );
