@@ -540,7 +540,9 @@ sub setDefaultValues {
     # SAML
     $self->{samlIdPResolveCookie} ||= $self->{cookieName} . "idp";
     $self->{samlStorage}          ||= $self->{globalStorage};
-    $self->{samlStorageOptions}   ||= $self->{globalStorageOptions};
+    if ( !$self->{samlStorageOptions} or !%{ $self->{samlStorageOptions} } ) {
+        $self->{samlStorageOptions} = $self->{globalStorageOptions};
+    }
     $self->{samlMetadataForceUTF8} = 1
       unless ( defined( $self->{samlMetadataForceUTF8} ) );
     $self->{samlAuthnContextMapPassword} = 2
@@ -554,7 +556,9 @@ sub setDefaultValues {
 
     # CAS
     $self->{casStorage}        ||= $self->{globalStorage};
-    $self->{casStorageOptions} ||= $self->{globalStorageOptions};
+    if ( !$self->{casStorageOptions} or !%{ $self->{casStorageOptions} } ) {
+        $self->{casStorageOptions} = $self->{globalStorageOptions};
+    }
 
     # Authentication levels
     $self->{ldapAuthnLevel}   = 2 unless defined $self->{ldapAuthnLevel};
