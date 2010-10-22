@@ -1,0 +1,239 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+
+
+<h1><a name="manage_virtual_hosts" id="manage_virtual_hosts">Manage virtual hosts</a></h1>
+<div class="level1">
+
+<p>
+
+LemonLDAP::NG configuration is build around Apache virtual hosts. Each virtual host is a protected resource, with access rules, headers, POST data and options.
+</p>
+
+</div>
+<!-- SECTION "Manage virtual hosts" [1-197] -->
+<h2><a name="apache_configuration" id="apache_configuration">Apache configuration</a></h2>
+<div class="level2">
+
+<p>
+
+To protect a virtual host in Apache, the LemonLDAP::NG Handler must be activated (see <a href="../../documentation/latest/configlocation.html#apache" class="wikilink1" title="documentation:latest:configlocation">Apache global configuration</a>).
+</p>
+
+<p>
+Then you can take any virtual host, and simply add this line to protect it:
+</p>
+<pre class="code file apache">PerlHeaderParserHandler My::Package</pre>
+
+<p>
+For example, a protected virtual host for a local application:
+</p>
+<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:80&gt;
+        <span class="kw1">ServerName</span> localsite.example.com
+&nbsp;
+        PerlHeaderParserHandler My::Package
+&nbsp;
+        <span class="kw1">DocumentRoot</span> /var/www/localsite
+&nbsp;
+        <span class="kw1">ErrorLog</span> /var/log/apache2/localsite_error.log
+        <span class="kw1">CustomLog</span> /var/log/apache2/localsite_access.log combined
+&nbsp;
+&lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
+
+<p>
+And a protected virtual host with LemonLDAP::NG as reverse proxy:
+</p>
+<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:80&gt;
+        <span class="kw1">ServerName</span> proxysite.example.com
+&nbsp;
+        PerlHeaderParserHandler My::Package
+&nbsp;
+        <span class="kw1">ProxyPreserveHost</span> <span class="kw2">on</span>
+        <span class="kw1">ProxyPass</span> / http://APPLICATION_IP/
+        <span class="kw1">ProxyPassReverse</span> / http://APPLICATION_IP/
+&nbsp;
+        <span class="kw1">ErrorLog</span> /var/log/apache2/proxysite_error.log
+        <span class="kw1">CustomLog</span> /var/log/apache2/proxysite_access.log combined
+&lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
+
+<p>
+<p><div class="noteclassic">The <code>ProxyPreserveHost</code> directive will forward the Host header to the protected application
+</div></p>
+</p>
+
+<p>
+<p><div class="notetip">Using the reverse proxy mode, you will not have the <code>REMOTE_USER</code> environment variable set. Indeed, this variable is set by the Handler on the physical server hosting the Handler, and not on other servers where the Handler is not installed.
+</p>
+
+<p>
+But this magic Apache configuration will let you transform the Auth-User <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> header in <code>REMOTE_USER</code> envronment variable:
+</p>
+<pre class="code file apache"><span class="kw1">SetEnvIfNoCase</span> Auth-<span class="kw1">User</span> <span class="st0">&quot;(.*)&quot;</span> REMOTE_USER=$<span class="nu0">1</span></pre>
+
+<p>
+
+</div></p>
+</p>
+
+</div>
+<!-- SECTION "Apache configuration" [198-1899] -->
+<h2><a name="lemonldapng_configuration" id="lemonldapng_configuration">LemonLDAP::NG configuration</a></h2>
+<div class="level2">
+
+<p>
+
+An apache virtual host protected by LemonLDAP::NG Handler must be registered in LemonLDAP::NG configuration.
+</p>
+
+<p>
+To do this, use the Manager, and go in <code>Virtual Hosts</code> branch. You can add, delete or modify a virtual host here.
+</p>
+
+<p>
+A virtual host contains:
+</p>
+<ul>
+<li class="level1"><div class="li"> Access rules: check user&#039;s right on <acronym title="Uniform Resource Locator">URL</acronym> patterns</div>
+</li>
+<li class="level1"><div class="li"> <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> headers: forge information sent to protected applications</div>
+</li>
+<li class="level1"><div class="li"> POST data: use form replay</div>
+</li>
+<li class="level1"><div class="li"> Options: redirection port and protocol</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "LemonLDAP::NG configuration" [1900-2387] -->
+<h3><a name="access_rules" id="access_rules">Access rules</a></h3>
+<div class="level3">
+
+<p>
+
+There is a <code>default</code> access rule which is used if no other access rule match the current <acronym title="Uniform Resource Locator">URL</acronym>. Else, each access rule refers to an <acronym title="Uniform Resource Locator">URL</acronym> pattern.
+</p>
+
+<p>
+Access rule value is an expression, evaluated for each request, and returning 1 if user is authorized, 0 else.
+</p>
+
+<p>
+Access rules examples:
+
+</p>
+<pre class="code">
+^/site/.*$ =&gt; $uid eq &quot;admin&quot; or $groups =~ /\bgroup2\b/
+^/(js|css) =&gt; accept
+default =&gt; deny
+</pre>
+
+<p>
+Access rules accepts special targets:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>accept</strong>: all authenticated users can pass</div>
+</li>
+<li class="level1"><div class="li"> <strong>deny</strong>: nobody is welcomed</div>
+</li>
+<li class="level1"><div class="li"> <strong>unprotect</strong>: all is open!</div>
+</li>
+<li class="level1"><div class="li"> <strong>logout_sso</strong>: request is not forwarded to application, <acronym title="Single Sign On">SSO</acronym> session is closed</div>
+</li>
+<li class="level1"><div class="li"> <strong>logout_app</strong>: request is forwarded to application, <acronym title="Single Sign On">SSO</acronym> session remains open</div>
+</li>
+<li class="level1"><div class="li"> <strong>logout_app_sso</strong>: request is forwarded to application, <acronym title="Single Sign On">SSO</acronym> session is closed</div>
+</li>
+</ul>
+
+<p>
+
+<p><div class="notetip">The logout* targets can have an <acronym title="Uniform Resource Locator">URL</acronym> as parameter. By default, user will be redirected on portal if no <acronym title="Uniform Resource Locator">URL</acronym> defined, or on the specified <acronym title="Uniform Resource Locator">URL</acronym> if any.
+</div></p>
+</p>
+
+</div>
+<!-- SECTION "Access rules" [2388-3368] -->
+<h3><a name="http_headers" id="http_headers">HTTP headers</a></h3>
+<div class="level3">
+
+<p>
+
+Headers are sent to application, they are not visible to users.
+</p>
+
+<p>
+Headers value can be a single session key or a full <acronym title="Practical Extraction and Report Language">Perl</acronym> expression. For example:
+
+</p>
+<pre class="code">
+Auth-User =&gt; $uid
+Unit =&gt; &#039;Unit-&#039;.$ou
+</pre>
+
+<p>
+<p><div class="notetip">By default, <acronym title="Single Sign On">SSO</acronym> cookie is hidden, so protected applications cannot get <acronym title="Single Sign On">SSO</acronym> session key. But you can forward this key if it is really needed:
+
+</p>
+<pre class="code">
+Session-ID =&gt; $_session_id
+</pre>
+
+<p>
+
+
+</div></p>
+</p>
+
+</div>
+<!-- SECTION "HTTP headers" [3369-3795] -->
+<h3><a name="post_data" id="post_data">POST data</a></h3>
+<div class="level3">
+
+<p>
+
+<img src="/lib/images/smileys/fixme.gif" class="middle" alt="FIXME" /> Add link to form replay page
+</p>
+
+</div>
+<!-- SECTION "POST data" [3796-3852] -->
+<h3><a name="options" id="options">Options</a></h3>
+<div class="level3">
+
+<p>
+
+Two options are available:
+</p>
+<ul>
+<li class="level1"><div class="li"> Port</div>
+</li>
+<li class="level1"><div class="li"> HTTPS</div>
+</li>
+</ul>
+
+<p>
+
+These options are used to build redirection <acronym title="Uniform Resource Locator">URL</acronym> (when user is not logged, or for <acronym title="Cross Domain Authentication">CDA</acronym> requests). By default, default values are used. These options are only here to override default values.
+</p>
+
+</div>
+<!-- SECTION "Options" [3853-] --></div><!-- closes <div class="dokuwiki export">-->

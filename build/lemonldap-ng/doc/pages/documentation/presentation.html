@@ -31,7 +31,7 @@ LemonLDAP::NG is a modular WebSSO (Single Sign On) based on Apache::Session modu
 </p>
 
 <p>
-It manages both authentication and authorization and provides headers for accounting. So you can have a full AAA protection for your web space as described below.
+It manages both authentication and authorization and provides headers for accounting. So you can have a full <acronym title="Authentication Authorization Accounting">AAA</acronym> protection for your web space as described below.
 </p>
 
 </div>
@@ -124,7 +124,7 @@ Main internal databases are:
 <ol>
 <li class="level1"><div class="li"> User tries to access protected application, his request is catched by Handler</div>
 </li>
-<li class="level1"><div class="li"> SSO cookie is not detected, so Handler redirects user to Portal</div>
+<li class="level1"><div class="li"> <acronym title="Single Sign On">SSO</acronym> cookie is not detected, so Handler redirects user to Portal</div>
 </li>
 <li class="level1"><div class="li"> User authenticates on Portal</div>
 </li>
@@ -136,7 +136,7 @@ Main internal databases are:
 </li>
 <li class="level1"><div class="li"> Portal gets the session key</div>
 </li>
-<li class="level1"><div class="li"> Portal creates SSO cookie with session key as value</div>
+<li class="level1"><div class="li"> Portal creates <acronym title="Single Sign On">SSO</acronym> cookie with session key as value</div>
 </li>
 <li class="level1"><div class="li"> User is redirected on protected application, with his new cookie</div>
 </li>
@@ -154,7 +154,7 @@ Main internal databases are:
 
 <p>
 
-Handler will then check SSO cookie for each <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> request.
+Handler will then check <acronym title="Single Sign On">SSO</acronym> cookie for each <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> request.
 </p>
 
 </div>
@@ -169,9 +169,9 @@ Default use case:
 <ol>
 <li class="level1"><div class="li"> User clicks on the logout link in Portal</div>
 </li>
-<li class="level1"><div class="li"> Portal destroys session and redirects user on itself with an empty SSO cookie</div>
+<li class="level1"><div class="li"> Portal destroys session and redirects user on itself with an empty <acronym title="Single Sign On">SSO</acronym> cookie</div>
 </li>
-<li class="level1"><div class="li"> User is redirected on portal and his SSO cookie is empty</div>
+<li class="level1"><div class="li"> User is redirected on portal and his <acronym title="Single Sign On">SSO</acronym> cookie is empty</div>
 </li>
 </ol>
 
@@ -180,11 +180,11 @@ Default use case:
 LemonLDAP::NG is also able to catch logout request on protected applications, with different behavior:
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>SSO logout</strong>: the request is not forwarded to application, only the SSO session is closed</div>
+<li class="level1"><div class="li"> <strong><acronym title="Single Sign On">SSO</acronym> logout</strong>: the request is not forwarded to application, only the <acronym title="Single Sign On">SSO</acronym> session is closed</div>
 </li>
-<li class="level1"><div class="li"> <strong>Application logout</strong>: the request is forwarded to application but SSO session is not closed</div>
+<li class="level1"><div class="li"> <strong>Application logout</strong>: the request is forwarded to application but <acronym title="Single Sign On">SSO</acronym> session is not closed</div>
 </li>
-<li class="level1"><div class="li"> <strong>SSO and Application logout</strong>: the request is forwarded to application and SSO session is closed</div>
+<li class="level1"><div class="li"> <strong><acronym title="Single Sign On">SSO</acronym> and Application logout</strong>: the request is forwarded to application and <acronym title="Single Sign On">SSO</acronym> session is closed</div>
 </li>
 </ul>
 
@@ -205,22 +205,22 @@ After logout process, the user is redirected on portal, or on a configured <acro
 
 <p>
 
-<p><div class="noteclassic">For security reason, a cookie provided for a domain cannot be sent to another domain. To extend SSO on several domains, a cross-domain mechanism is implemented in LemonLDAP::NG.
+<p><div class="noteclassic">For security reason, a cookie provided for a domain cannot be sent to another domain. To extend <acronym title="Single Sign On">SSO</acronym> on several domains, a cross-domain mechanism is implemented in LemonLDAP::NG.
 </div></p>
 
 </p>
 <ol>
-<li class="level1"><div class="li"> User owns SSO cookie on the main domain (see <span class="curid"><a href="../documentation/presentation.html#login" class="wikilink1" title="documentation:presentation">Login kinematics</a></span>)</div>
+<li class="level1"><div class="li"> User owns <acronym title="Single Sign On">SSO</acronym> cookie on the main domain (see <span class="curid"><a href="../documentation/presentation.html#login" class="wikilink1" title="documentation:presentation">Login kinematics</a></span>)</div>
 </li>
 <li class="level1"><div class="li"> User tries to access a protected application in a different domain</div>
 </li>
-<li class="level1"><div class="li"> Handler does not see SSO cookie (because it is not in main domain) and redirects user on Portal</div>
+<li class="level1"><div class="li"> Handler does not see <acronym title="Single Sign On">SSO</acronym> cookie (because it is not in main domain) and redirects user on Portal</div>
 </li>
-<li class="level1"><div class="li"> Portal recognizes the user with its SSO cookie, and see he is coming from a different domain</div>
+<li class="level1"><div class="li"> Portal recognizes the user with its <acronym title="Single Sign On">SSO</acronym> cookie, and see he is coming from a different domain</div>
 </li>
 <li class="level1"><div class="li"> Portal redirects user on protected application with his session ID as <acronym title="Uniform Resource Locator">URL</acronym> parameter</div>
 </li>
-<li class="level1"><div class="li"> Handler detects <acronym title="Uniform Resource Locator">URL</acronym> parameter and create a SSO cookie on its domain, with session ID as value</div>
+<li class="level1"><div class="li"> Handler detects <acronym title="Uniform Resource Locator">URL</acronym> parameter and create a <acronym title="Single Sign On">SSO</acronym> cookie on its domain, with session ID as value</div>
 </li>
 </ol>
 
@@ -243,9 +243,9 @@ If a user is not authenticated and attempts to connect to an area protected by a
 Authentication process main steps are:
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>Control <acronym title="Uniform Resource Locator">URL</acronym> origin</strong>: prevent XSS attacks and bad redirections</div>
+<li class="level1"><div class="li"> <strong>Control <acronym title="Uniform Resource Locator">URL</acronym> origin</strong>: prevent <acronym title="Cross Site Scripting">XSS</acronym> attacks and bad redirections</div>
 </li>
-<li class="level1"><div class="li"> <strong>Control existing session</strong>: detect SSO session, apply configured constraints (1 session per user, 1 session per IP, …)</div>
+<li class="level1"><div class="li"> <strong>Control existing session</strong>: detect <acronym title="Single Sign On">SSO</acronym> session, apply configured constraints (1 session per user, 1 session per <acronym title="Internet Protocol">IP</acronym>, …)</div>
 </li>
 <li class="level1"><div class="li"> <strong>Extract form info</strong>: get login/password, certificate, environment varibale (depending on authentication module)</div>
 </li>
@@ -259,11 +259,11 @@ Authentication process main steps are:
 </li>
 <li class="level1"><div class="li"> <strong>Authenticate</strong>: contact authentication database to check credentials</div>
 </li>
-<li class="level1"><div class="li"> <strong>Grant session</strong>: check rights to open SSO session</div>
+<li class="level1"><div class="li"> <strong>Grant session</strong>: check rights to open <acronym title="Single Sign On">SSO</acronym> session</div>
 </li>
 <li class="level1"><div class="li"> <strong>Store</strong>: store user info in session database</div>
 </li>
-<li class="level1"><div class="li"> <strong>Build cookie</strong>: build SSO cookie with session ID</div>
+<li class="level1"><div class="li"> <strong>Build cookie</strong>: build <acronym title="Single Sign On">SSO</acronym> cookie with session ID</div>
 </li>
 <li class="level1"><div class="li"> <strong>Redirect</strong>: redirect user on protected application or on Portal</div>
 </li>
@@ -271,7 +271,7 @@ Authentication process main steps are:
 
 <p>
 
-LemonLDAP::NG SSO cookies are generated by Apache::Session, they are as secure as a 128-bit random cookie. You may use the securedCookie options to avoid session hijacking.
+LemonLDAP::NG <acronym title="Single Sign On">SSO</acronym> cookies are generated by Apache::Session, they are as secure as a 128-bit random cookie. You may use the securedCookie options to avoid session hijacking.
 </p>
 
 </div>

@@ -35,7 +35,7 @@ This tutorial will guide you into a minimal installation and configuration proce
 </li>
 <li class="level1"><div class="li"> A web browser launched from the computer (to access localhost)</div>
 </li>
-<li class="level1"><div class="li"> An <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> directory with a user account (suffix: dc=example,dc=com)</div>
+<li class="level1"><div class="li"> An <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> directory with a user account (default suffix: dc=example,dc=com)</div>
 </li>
 <li class="level1"><div class="li"> A cup of coffee (or tea, we are open minded)</div>
 </li>
@@ -47,7 +47,7 @@ This tutorial will guide you into a minimal installation and configuration proce
 </p>
 
 </div>
-<!-- SECTION "Quick start tutorial" [1-417] -->
+<!-- SECTION "Quick start tutorial" [1-425] -->
 <h2><a name="installation" id="installation">Installation</a></h2>
 <div class="level2">
 
@@ -57,11 +57,11 @@ LemonLDAP::NG is written in <acronym title="Practical Extraction and Report Lang
 </p>
 
 <p>
-Get the tarball on <a href="../download.html" class="wikilink1" title="download">Download page</a>  and follow next steps:
+Get the tarball on <a href="../download.html" class="wikilink1" title="download">Download page</a>  and follow next steps (or install using packages):
 </p>
 
 </div>
-<!-- SECTION "Installation" [418-652] -->
+<!-- SECTION "Installation" [426-688] -->
 <h3><a name="extract" id="extract">Extract</a></h3>
 <div class="level3">
 <pre class="code">
@@ -70,7 +70,7 @@ $ cd lemonldap-ng-*
 </pre>
 
 </div>
-<!-- SECTION "Extract" [653-740] -->
+<!-- SECTION "Extract" [689-776] -->
 <h3><a name="build" id="build">Build</a></h3>
 <div class="level3">
 <pre class="code">
@@ -79,7 +79,7 @@ $ make test
 </pre>
 
 </div>
-<!-- SECTION "Build" [741-792] -->
+<!-- SECTION "Build" [777-828] -->
 <h3><a name="install" id="install">Install</a></h3>
 <div class="level3">
 <pre class="code">
@@ -103,18 +103,18 @@ You can also change the host and port with options LDAPHOST and LDAPPORT.
 </p>
 
 </div>
-<!-- SECTION "Install" [793-1047] -->
+<!-- SECTION "Install" [829-1083] -->
 <h2><a name="configuration" id="configuration">Configuration</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Configuration" [1048-1074] -->
+<!-- SECTION "Configuration" [1084-1110] -->
 <h3><a name="system" id="system">System</a></h3>
 <div class="level3">
 
 <p>
 
-Update your /etc/hosts to map SSO URLs to localhost:
+Update your /etc/hosts to map <acronym title="Single Sign On">SSO</acronym> URLs to localhost:
 
 </p>
 <pre class="code">
@@ -122,7 +122,7 @@ $ sudo make postconf
 </pre>
 
 </div>
-<!-- SECTION "System" [1075-1182] -->
+<!-- SECTION "System" [1111-1218] -->
 <h3><a name="apache" id="apache">Apache</a></h3>
 <div class="level3">
 
@@ -144,12 +144,12 @@ $ sudo apachectl restart
 </pre>
 
 </div>
-<!-- SECTION "Apache" [1183-1550] -->
+<!-- SECTION "Apache" [1219-1586] -->
 <h2><a name="run" id="run">Run</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Run" [1551-1567] -->
+<!-- SECTION "Run" [1587-1603] -->
 <h3><a name="open_sso_session" id="open_sso_session">Open SSO session</a></h3>
 <div class="level3">
 
@@ -159,17 +159,17 @@ Go on <a href="http://auth.example.com" class="urlextern" title="http://auth.exa
 </p>
 
 </div>
-<!-- SECTION "Open SSO session" [1568-1658] -->
+<!-- SECTION "Open SSO session" [1604-1694] -->
 <h3><a name="access_protected_application" id="access_protected_application">Access protected application</a></h3>
 <div class="level3">
 
 <p>
 
-Try <a href="http://test1.example.com" class="urlextern" title="http://test1.example.com"  rel="nofollow">http://test1.example.com</a> and <a href="http://test2.example.com" class="urlextern" title="http://test2.example.com"  rel="nofollow">http://test2.example.com</a>
+Try <a href="http://test1.example.com" class="urlextern" title="http://test1.example.com"  rel="nofollow">http://test1.example.com</a> or <a href="http://test2.example.com" class="urlextern" title="http://test2.example.com"  rel="nofollow">http://test2.example.com</a>
 </p>
 
 </div>
-<!-- SECTION "Access protected application" [1659-1757] -->
+<!-- SECTION "Access protected application" [1695-1792] -->
 <h3><a name="edit_configuration" id="edit_configuration">Edit configuration</a></h3>
 <div class="level3">
 
@@ -179,4 +179,4 @@ Go on <a href="http://manager.example.com" class="urlextern" title="http://manag
 </p>
 
 </div>
-<!-- SECTION "Edit configuration" [1758-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Edit configuration" [1793-] --></div><!-- closes <div class="dokuwiki export">-->

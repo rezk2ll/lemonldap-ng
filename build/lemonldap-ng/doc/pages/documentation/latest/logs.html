@@ -32,7 +32,7 @@
 
 <p>
 
-By default, LemonLDAP::NG uses Apache logs to store user actions:
+By default, LemonLDAP::NG uses Apache logs to store user actions and other messages:
 </p>
 <ul>
 <li class="level1"><div class="li"> Error log: all messages emitted by the program, depending on the configured log level</div>
@@ -55,21 +55,33 @@ To configure the user identifier in access log, go in Manager, <code>General Par
 </p>
 
 </div>
-<!-- SECTION "Apache logging" [21-588] -->
+<!-- SECTION "Apache logging" [21-607] -->
 <h2><a name="syslog" id="syslog">Syslog</a></h2>
 <div class="level2">
 
 <p>
 
-LemonLDAP::NG can also use syslog.
+LemonLDAP::NG can also use syslog (only for user actions).
 </p>
 
 <p>
 In Manager, set syslog facility in <code>General Parameters</code> &gt; <code>Logging</code> &gt; <code>Syslog facility</code>.
 </p>
 
+<p>
+The messages are stored with the facilities :
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>info</strong> for user actions</div>
+</li>
+<li class="level1"><div class="li"> <strong>notice</strong> for good authentications or external exchange (<acronym title="Security Assertion Markup Language">SAML</acronym>, OpenID,…)</div>
+</li>
+<li class="level1"><div class="li"> <strong>warn</strong> for failed authentications</div>
+</li>
+</ul>
+
 </div>
-<!-- SECTION "Syslog" [589-740] -->
+<!-- SECTION "Syslog" [608-980] -->
 <h2><a name="override_logging_functions" id="override_logging_functions">Override logging functions</a></h2>
 <div class="level2">
 
@@ -86,4 +98,4 @@ Example:
 <span class="re1">userNotice</span> <span class="sy0">=</span><span class="re2"> sub <span class="br0">&#123;</span> my <span class="br0">&#40;</span>$self, $message<span class="br0">&#41;</span> <span class="sy0">=</span> @_</span><span class="co0">; ... }</span></pre>
 
 </div>
-<!-- SECTION "Override logging functions" [741-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Override logging functions" [981-] --></div><!-- closes <div class="dokuwiki export">-->
