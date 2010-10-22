@@ -270,7 +270,7 @@ sub struct {
 
                 portalCustomization => {
                     _nodes => [
-                        qw(portalSkin portalDisplayResetPassword portalAutocomplete portalRequireOldPassword portalUserAttr portalOpenLinkInNewWindow)
+                        qw(portalSkin portalDisplayResetPassword portalAutocomplete portalRequireOldPassword portalUserAttr portalOpenLinkInNewWindow portalAntiFrame)
                     ],
 
                     portalSkin => 'text:/portalSkin:portalParams:skinSelect',
@@ -282,6 +282,7 @@ sub struct {
                     portalUserAttr => 'text:/portalUserAttr',
                     portalOpenLinkInNewWindow =>
                       'bool:/portalOpenLinkInNewWindow',
+                    portalAntiFrame => 'bool:/portalAntiFrame',
                 },
             },
 
@@ -1344,6 +1345,7 @@ sub testStruct {
         portalDisplayResetPassword  => $boolean,
         portalForceAuthn            => $boolean,
         portalOpenLinkInNewWindow   => $boolean,
+        portalAntiFrame             => $boolean,
         portalParams                => $testNotDefined,
         portalRequireOldPassword    => $boolean,
         portalSkin                  => {
@@ -1685,6 +1687,7 @@ sub defaultConf {
         portalDisplayChangePassword => '$_auth eq LDAP or $_auth eq DBI',
         portalDisplayLogout         => '1',
         portalDisplayResetPassword  => '1',
+        portalAntiFrame             => '1',
         protection                  => 'none',
         remoteGlobalStorage => 'Lemonldap::NG::Common::Apache::Session::SOAP',
         securedCookie       => '0',

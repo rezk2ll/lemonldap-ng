@@ -37,6 +37,7 @@ sub display {
         %templateParams = (
             PORTAL_URL => $self->{portal},
             LOGOUT_URL => $self->{portal} . "?logout=1",
+            ANTIFRAME  => $self->{portalAntiFrame},
             URL        => $self->{urldc},
             SKIN       => $self->{portalSkin},
             ERROR403   => $error403,
@@ -65,6 +66,7 @@ sub display {
             $skinfile       = 'info.tpl';
             %templateParams = (
                 AUTH_ERROR_TYPE => $self->error_type,
+                ANTIFRAME       => $self->{portalAntiFrame},
                 MSG             => $info,
                 SKIN            => $skin,
                 URL             => $self->{urldc},
@@ -87,6 +89,7 @@ sub display {
             %templateParams = (
                 AUTH_USER       => $auth_user,
                 AUTOCOMPLETE    => $self->{portalAutocomplete},
+                ANTIFRAME       => $self->{portalAntiFrame},
                 SKIN            => $skin,
                 AUTH_ERROR      => $self->error( undef, $self->{menuError} ),
                 AUTH_ERROR_TYPE => $self->error_type( $self->{menuError} ),
@@ -109,6 +112,7 @@ sub display {
         $skinfile       = 'notification.tpl';
         %templateParams = (
             AUTH_ERROR_TYPE => $self->error_type,
+            ANTIFRAME       => $self->{portalAntiFrame},
             NOTIFICATION    => $notif,
             SKIN            => $skin,
             HIDDEN_INPUTS   => $self->buildHiddenForm(),
@@ -124,6 +128,7 @@ sub display {
             AUTH_ERROR      => $self->error,
             AUTH_ERROR_TYPE => $self->error_type,
             AUTH_URL        => $self->get_url,
+            ANTIFRAME       => $self->{portalAntiFrame},
             MSG             => $self->info(),
             SKIN            => $skin,
             HIDDEN_INPUTS   => $self->buildHiddenForm(),
@@ -141,6 +146,7 @@ sub display {
         %templateParams = (
             AUTH_ERROR      => $self->error,
             AUTH_ERROR_TYPE => $self->error_type,
+            ANTIFRAME       => $self->{portalAntiFrame},
             MSG             => $info,
             SKIN            => $skin,
             URL             => $self->{urldc},
@@ -162,6 +168,7 @@ sub display {
         %templateParams = (
             AUTH_ERROR      => $self->error,
             AUTH_ERROR_TYPE => $self->error_type,
+            ANTIFRAME       => $self->{portalAntiFrame},
             SKIN            => $skin,
             PROVIDERURI     => $p,
             ID              => $self->{_openidPortal}
@@ -179,6 +186,7 @@ sub display {
             AUTH_ERROR            => $self->error,
             AUTH_ERROR_TYPE       => $self->error_type,
             AUTH_URL              => $self->get_url,
+            ANTIFRAME             => $self->{portalAntiFrame},
             LOGIN                 => $self->get_user,
             AUTOCOMPLETE          => $self->{portalAutocomplete},
             SKIN                  => $skin,
