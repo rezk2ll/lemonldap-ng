@@ -395,7 +395,7 @@ install_conf_dir:	install_sessions_dir
 	else \
 		chmod 777 $(RFILECONFIGDIR); \
 	fi
-	@cp lemonldap-ng-common/tools/lmConfig.mysql lemonldap-ng-common/tools/apache-session-mysql.sql $(RTOOLSDIR)
+	@cp lemonldap-ng-common/tools/lmConfig.* lemonldap-ng-common/tools/apache-session-mysql.sql $(RTOOLSDIR)
 	@cp lemonldap-ng-common/tools/sso.schema $(RTOOLSDIR)
 	@rm -rf $$(find $(RCONFDIR) $(RFILECONFIGDIR) $(RTOOLSDIR) -type d -name .svn)
 
