@@ -252,6 +252,10 @@ sub display {
             or $self->{error} == PE_SAML_SESSION_ERROR
             or $self->{error} == PE_SAML_LOAD_SP_ERROR
             or $self->{error} == PE_SAML_ATTR_ERROR
+            or $self->{error} == PE_OPENID_EMPTY
+            or $self->{error} == PE_OPENID_BADID
+            or $self->{error} == PE_MISSINGREQATTR
+            or $self->{error} == PE_BADPARTNER
             or $self->{error} == PE_LOGOUT_OK )
         {
             %templateParams = (
