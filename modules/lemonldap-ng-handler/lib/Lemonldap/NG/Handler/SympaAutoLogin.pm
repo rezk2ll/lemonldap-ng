@@ -148,7 +148,7 @@ Clement Oudot,  E<lt>clement@oodo.netE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2009 by Xavier Guimard
+Copyright (C) 2009, 2010 by Xavier Guimard
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.10.0 or,

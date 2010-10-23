@@ -62,7 +62,7 @@ Clément Oudot, E<lt>coudot@linagora.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2009 by Clement Oudot
+Copyright (C) 2009, 2010 by Clement Oudot
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.10.0 or,
