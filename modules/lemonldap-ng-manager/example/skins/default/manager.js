@@ -176,9 +176,24 @@ function setlmdata(id,v){
 	$('#text_'+id).attr('value',escape(v));
 }
 function setlminputdata(id,input){
-	var inputname=$(input).attr('id');
+	//var inputname=$(input).attr('id');
 	var inputvalue=$(input).attr('value');
         setlmdata(id,inputvalue);
+}
+function setlmrule(id,c,r,v){
+	c=$(c).attr('value');
+	r=$(r).attr('value');
+	v=$(v).attr('value');
+	var re=r;
+	var text=r;
+	if(c.length>0){
+		c=c.replace(/\)/g,']').replace(/\(/g,'[');
+		re='(?#'+c+')'+r;
+		text=c;
+	}
+	setlmdata(id,v);
+	$('#text_'+id).attr('name',re);
+	$('#text_'+id).text(text);
 }
 function setlmfile(id,input){
 	var inputname=$(input).attr('id');
@@ -657,12 +672,19 @@ function delvh(id){
 function rules(id){
 	currentId=id;
 	var t=lmtext(id);
-	$('#rulKey').attr('value',lmtext(id));
+	var b=t.match(/^(?:\(\?#(.*?)\))?(.*)/);
+	if(typeof(b[1])=='undefined')b[1]='';
+	$('#rulComment').attr('value',b[1]);
+	$('#rulKey').attr('value',b[2]);
 	$('#rulValue').attr('value',lmdata(id));
 	display('rules',lmtext(lmparent(id)));
-	if(t=='default'){$('#rulKey').attr('readonly','readonly')}
+	if(t=='default'){
+		$('#rulKey').attr('readonly','readonly');
+		$('#rulCommentDiv').css('display','none');
+	}
 	else{
 		$('#rulKey').attr('readonly','');
+		$('#rulCommentDiv').css('display','block');
 		$('#delkb').show();
 	}
 	$('#newrb').show();

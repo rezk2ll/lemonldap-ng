@@ -166,12 +166,15 @@ sub confNode {
                 my $id = "$target/$_";
                 $id =~ s/=*$//;
 
-                # Here, "notranslate" is set to true : hash values must not be
-                # translated
+                # 1. Here, "notranslate" is set to true : hash values must not
+                #    be translated
+                # 2. if a regexp comment exists, it is set as text
+                my $text = ( /^\(\?#(.*)\)/ ? $1 : $_ );
                 $res .= $self->li($id)
                   . $self->span(
                     id   => $id,
-                    text => "$_",
+                    text => $text,
+                    name => $_,
                     data => $h->{$_},
                     js   => $js,
                     help => $help,

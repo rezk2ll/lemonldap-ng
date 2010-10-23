@@ -321,9 +321,20 @@
 
     <!-- Rule -->
     <div id="content_rules" class="hidden">
-     <textarea id="rulKey" cols="30" rows="2"></textarea>&nbsp;<textarea id="rulValue" cols="50" rows="2"></textarea>
+     <table border="0"><tbody><tr><td>
+	 <div id="rulCommentDiv">
+	 	<lang en="Comment" fr="Commentaire" /><br/>
+	         <input type='text' id="rulComment" size="30" />
+	 </div>
+	 <lang en="Expression" fr="Expression" /><br/>
+         <textarea id="rulKey" cols="30" rows="2"></textarea>
+     </td>
+     <td>
+	 <lang en="Rule" fr="Règle" /><br/>
+         <textarea id="rulValue" cols="50" rows="4"></textarea>
+     </td></tr></tbody></table>
      <br />
-     <button onclick="setlminputtext(currentId,rulKey);setlminputdata(currentId,rulValue);return false;" class="ui-state-default ui-corner-all">
+     <button onclick="setlmrule(currentId,rulComment,rulKey,rulValue);return false;" class="ui-state-default ui-corner-all">
      <lang en="Apply" fr="Appliquer" />
      </button>
     </div>
