@@ -105,11 +105,15 @@ sub saveConf {
     # If configuration was modified, return an error
     if ( not $self->{force} ) {
         return CONFIG_WAS_CHANGED if ( $conf->{cfgNum} != $last );
-        return DATABASE_LOCKED if ( $self->isLocked or not $self->lock );
+        return DATABASE_LOCKED if ( $self->isLocked() or not $self->lock() );
     }
     $conf->{cfgNum} = $last + 1 unless ( $self->{cfgNumFixed} );
+    foreach my $k (qw(reVHosts cipher)) {
+        delete( $conf->{$k} );
+    }
     $msg = "Configuration $conf->{cfgNum} stored.";
-    return $self->store($conf);
+    my $tmp = $self->store($conf);
+    return ( $self->unlock() ? $tmp : UNKNOWN_ERROR );
 }
 
 ## @method hashRef getConf(hashRef args)

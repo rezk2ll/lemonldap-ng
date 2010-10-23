@@ -12,17 +12,12 @@ sub store {
     $self->{noQuotes} = 1;
     $fields = $self->serialize($fields);
     my $errors = 0;
-    eval { $self->_dbh->do('BEGIN'); };
     while ( my ( $k, $v ) = each %$fields ) {
-        unless (
-            $self->_dbh->do(
-                    "insert into "
+        my $tmp =
+          $self->_dbh->prepare( "insert into "
                   . $self->{dbiTable}
-                  . " (cfgNum,field,value) values ("
-                  . join( ',', $fields->{cfgNum}, "'$k'", "'$v'" ) . ')'
-            )
-          )
-        {
+              . " (cfgNum,field,value) values (?,?,?)" );
+        unless ( $tmp and $tmp->execute( $fields->{cfgNum}, $k, $v ) ) {
             $self->logError;
             $errors++;
             last;

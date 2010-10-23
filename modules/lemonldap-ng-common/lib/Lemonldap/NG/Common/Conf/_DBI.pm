@@ -80,7 +80,7 @@ sub lock {
 sub isLocked {
     my $self = shift;
     my $sth;
-    if ( $self->{dbiChain} =~ /mysql/i ) {
+    if ( $self->{dbiChain} =~ /^dbi:mysql:/i ) {
         eval {
             $sth =
               $self->_dbh->prepare_cached( q{SELECT IS_FREE_LOCK(?)}, {}, 1 );
@@ -99,7 +99,7 @@ sub isLocked {
 sub unlock {
     my $self = shift;
     my $sth;
-    if ( $self->{dbiChain} =~ /mysql/i ) {
+    if ( $self->{dbiChain} =~ /^dbi:mysql:/i ) {
         eval {
             $sth =
               $self->_dbh->prepare_cached( q{SELECT RELEASE_LOCK(?)}, {}, 1 );
