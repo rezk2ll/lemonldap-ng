@@ -39,6 +39,12 @@
 </head>
 <body>
 
+<!-- Popup -->
+<div id="dragpopup" class="dragpopup">
+<div class="closepopup"><span onclick="$('#dragpopup').fadeOut('slow');">X</span></div>
+<div id="textpopup"></div>
+</div>
+
 <!-- Container -->
 <div id="container" class="ui-widget ui-helper-clearfix">
 

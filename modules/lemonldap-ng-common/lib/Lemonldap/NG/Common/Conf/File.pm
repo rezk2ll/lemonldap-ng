@@ -60,6 +60,7 @@ sub isLocked {
 sub unlock {
     my $self = shift;
     unlink $self->{dirName} . "/lmConf.lock";
+    1;
 }
 
 sub store {

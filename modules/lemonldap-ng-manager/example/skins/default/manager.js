@@ -10,6 +10,8 @@ if (treeautoclose.match('true')){ treeautoclose = true; } else { treeautoclose =
 if (treejquerycss.match('true')){ treejquerycss = true; } else { treejquerycss = false; }
 
 $(document).ready(function(){
+	/* Prepare popup */
+	$('#dragpopup').draggable();
 	/* Display/hide divs */
 	$("#buttons h1").click(function(){
 		$('#buttons h1 img').toggle();
@@ -215,7 +217,7 @@ function setlmfile(id,input){
 		dataType:'json',
 		success:function(data,status){
 			if(typeof(data.errors) != 'undefined' && data.errors != ''){
-				$('#help_content').html('<h3>Request failed</h3> Error code: '+data.errors+', ');
+				popup('<h3>Request failed</h3> Error code: '+data.errors+', ');
 			}else{
 				data.content = data.content.replace(/&lt;/g,'<').replace(/&gt;/g,'>');
 				setlmdata(id,data.content);
@@ -224,7 +226,7 @@ function setlmfile(id,input){
 			}
 		},
 		error:function(xhr, ajaxOptions, thrownError){
-			$('#help_content').html('<h3>Request failed</h3> Error code: '+xhr.status+', '+thrownError);
+			popup('<h3>Request failed</h3> Error code: '+xhr.status+', '+thrownError);
 		}
 	});
 	/* Remove global event on loading image */
@@ -713,7 +715,7 @@ function reloadAuthParams() {
 			simpleTreeToggleJqueryClasses();
 		},
 		error:function(xhr, ajaxOptions, thrownError){
-			$('#help_content').html('<h3>Request failed</h3> Error code: '+xhr.status+', '+thrownError);
+			popup('<h3>Request failed</h3> Error code: '+xhr.status+', '+thrownError);
 		}
 	});
 }
@@ -864,10 +866,10 @@ function uploadConf(f){
 				}
 				c+='</ul>';
 			}
-			$('#help_content').html(c);
+			popup(c);
 		},
 		error:function(xhr, ajaxOptions, thrownError){
-			$('#help_content').html('<h3>Request failed</h3> Error code: '+xhr.status+', '+thrownError);
+			popup('<h3>Request failed</h3> Error code: '+xhr.status+', '+thrownError);
 		}
 	});
 }
@@ -971,7 +973,7 @@ function generateFile(id){
 				filearea(id);
 			},
 			error:function(xhr, ajaxOptions, thrownError){
-				$('#help_content').html('<h3>Request failed</h3> Error code: '+xhr.status+', '+thrownError);
+				popup('<h3>Request failed</h3> Error code: '+xhr.status+', '+thrownError);
 			}
 		});
 		$('#button-loadimg').unbind('ajaxStart');
@@ -1180,4 +1182,7 @@ function delPost(){
 function delPostData(){
 	delKey();
 }
-
+function popup(html){
+ $('#textpopup').html(html)
+ $('#dragpopup').fadeIn('slow');
+}

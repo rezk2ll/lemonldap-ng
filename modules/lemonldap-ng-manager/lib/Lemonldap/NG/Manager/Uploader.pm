@@ -440,7 +440,7 @@ s/^(samlSPMetaDataXML|samlSPMetaDataExportedAttributes|samlSPMetaDataOptions)\/(
                 UPLOAD_DENIED,      'uploadDenied',
                 SYNTAX_ERROR,       'syntaxError',
                 DEPRECATED,         'confModuledeprecated',
-            }->{ $errors->{result}->{cfgNum} };
+            }->{ $errors->{result}->{cfgNum} } || $msg;
 
             # Log failure using Lemonldap::NG::Common::CGI::userError()
             $self->_sub( 'userError',

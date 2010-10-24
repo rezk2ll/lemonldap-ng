@@ -277,3 +277,21 @@ div.category ul {
 	list-style-position:inside;
 	list-style-image:url("bullet_orange.png");
 }
+.dragpopup {
+	position:absolute;
+	top:100px;
+	left:100px;
+	background-color:#fff;
+	border: solid 1px #f00;
+	border-top: solid 20px #f00;
+	padding: 5px 20px;
+	display:none;
+}
+.closepopup{
+	position:absolute;
+	font-style:bold;
+	color:#fff;
+	top:-18px;
+	left:2px;
+	cursor:default;
+}
