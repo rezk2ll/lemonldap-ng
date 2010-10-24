@@ -40,8 +40,10 @@
 <body>
 
 <!-- Popup -->
-<div id="dragpopup" class="dragpopup">
-<div class="closepopup"><span onclick="$('#dragpopup').fadeOut('slow');">X</span></div>
+<div id="dragpopup" class="dragpopup ui-corner-all">
+<div class="closepopup">
+	<span onclick="$('#dragpopup').hide();">X</span>
+</div>
 <div id="textpopup"></div>
 </div>
 

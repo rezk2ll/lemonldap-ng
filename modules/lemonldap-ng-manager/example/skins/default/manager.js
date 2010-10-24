@@ -160,8 +160,8 @@ function setlmtext(id,v,prefixvalue){
 		alert("Null value");
 	}
 	else {
-	$('#text_'+id).attr('name',prefixvalue+v);
-	$('#text_'+id).text(v);
+		$('#text_'+id).attr('name',prefixvalue+v);
+		$('#text_'+id).text(v);
 	}
 }
 function setlminputtext(id,input,prefixvalue){
@@ -172,7 +172,7 @@ function setlminputtext(id,input,prefixvalue){
 		alert('No '+inputname);
 		return false;
 	}
-        setlmtext(id,inputvalue,prefixvalue);
+	setlmtext(id,inputvalue,prefixvalue);
 }
 function setlmdata(id,v){
 	$('#text_'+id).attr('value',escape(v));
@@ -180,7 +180,7 @@ function setlmdata(id,v){
 function setlminputdata(id,input){
 	//var inputname=$(input).attr('id');
 	var inputvalue=$(input).attr('value');
-        setlmdata(id,inputvalue);
+	setlmdata(id,inputvalue);
 }
 function setlmrule(id,c,r,v){
 	c=$(c).attr('value');
@@ -256,30 +256,28 @@ function setlmsamlassertion(id){
 		}else if(i<t.length-1){
 			var currentId=$(t[t.length-1-i]).attr('id').replace('text_','');
 			var d=lmdata(currentId).split(';');
-			if(t.length-1-i>1)
-			{
+			if(t.length-1-i>1){
 				d[0]='0';
 			}else{
 				d[0]='1';
-		}
+			}
 			setlmdata(currentId,d.join(';'));
-			if(currentId==id)
-			{
+			if(currentId==id){
 				def='1';
 			}
 		}
 	}
 	var v=def+';'+ind+';'+bin+';'+loc;
-        setlmdata(id,v);
+	setlmdata(id,v);
 }
 function setlmsamlattribute(id){
 	var name=$('#samlAttributeName').attr('value');
 	var form=$('#samlAttributeFormat').attr('value');
 	var altr=$('#samlAttributeFriendlyName').attr('value');
 	var mand='0';
-        if($('#samlAttributeMandatoryOn').attr('checked')==true){
-                mand='1';
-        }
+	if($('#samlAttributeMandatoryOn').attr('checked')==true){
+		mand='1';
+	}
 	var v=mand+';'+name+';'+form+';'+altr;
 	$('#text_'+id).attr('name',$('#samlAttributeKey').attr('value'));
 	$('#text_'+id).text($('#samlAttributeKey').attr('value'));
@@ -289,8 +287,8 @@ function setlmsamlservice(id){
 	var bin=$('#samlServiceBinding').attr('value');
 	var loc=$('#samlServiceLocation').attr('value');
 	var rep=$('#samlServiceResponseLocation').attr('value');
-        var v=bin+';'+loc+';'+rep;
-        setlmdata(id,v);
+	var v=bin+';'+loc+';'+rep;
+	setlmdata(id,v);
 }
 function setopenididplist(id){
 	var type=0;
@@ -439,70 +437,70 @@ function changeSkinImage(skin) {
 function nameIdFormatParams(id) {
 	currentId=id;
 	formateSelect('select',[
-			'=',
-			'unspecified=Unspecified',
-			'email=Email',
-			'x509=X509 certificate',
-			'windows=Windows',
-			'kerberos=Kerberos',
-			'entity=Entity',
-			'persistent=Persistent',
-			'transient=Transient',
-			'encrypted=Encrypted',
-			],lmdata(id));
+		'=',
+		'unspecified=Unspecified',
+		'email=Email',
+		'x509=X509 certificate',
+		'windows=Windows',
+		'kerberos=Kerberos',
+		'entity=Entity',
+		'persistent=Persistent',
+		'transient=Transient',
+		'encrypted=Encrypted',
+		],lmdata(id));
 	display('select',lmtext(id));
 }
 function bindingParams(id) {
 	currentId=id;
 	formateSelect('select',[
-			'=',
-			'http-post=POST',
-			'http-redirect=REDIRECT',
-			'http-soap=SOAP',
-			'artifact-get=Artifact GET',
-			'artifact-post=Artifact POST',
-			],lmdata(id));
+		'=',
+		'http-post=POST',
+		'http-redirect=REDIRECT',
+		'http-soap=SOAP',
+		'artifact-get=Artifact GET',
+		'artifact-post=Artifact POST',
+		],lmdata(id));
 	display('select',lmtext(id));
 }
 function authnContextParams(id) {
 	currentId=id;
 	formateSelect('select',[
-			'=',
-			'kerberos=Kerberos',
-			'password-protected-transport=Password protected transport',
-			'password=Password',
-			'tls-client=TLS client certificate',
-			],lmdata(id));
+		'=',
+		'kerberos=Kerberos',
+		'password-protected-transport=Password protected transport',
+		'password=Password',
+		'tls-client=TLS client certificate',
+		],lmdata(id));
 	display('select',lmtext(id));
 }
 function encryptionModeParams(id) {
 	currentId=id;
 	formateSelect('select',[
-			'none=None',
-			'nameid=Name ID',
-			'assertion=Assertion',
-			],lmdata(id));
+		'none=None',
+		'nameid=Name ID',
+		'assertion=Assertion',
+		],lmdata(id));
 	display('select',lmtext(id));
 }
 function timeoutActivityParams(id) {
 	currentId=id;
 	formateSelect('select',[
-			'0=None',
-			'900=15 min',
-			'1800=30 min',
-			'2700=45 min',
-			'3600=60 min',
-			],lmdata(id));
+		'0=None',
+		'900=15 min',
+		'1800=30 min',
+		'2700=45 min',
+		'3600=60 min',
+		],lmdata(id));
 	display('select',lmtext(id));
 }
 function zimbraByParams(id) {
 	currentId=id;
 	formateSelect('select',[
-			'=',
-			'name=User name',
-			'id=User id',
-			'foreignPrincipal=Foreign principal',
-			],lmdata(id));
+		'=',
+		'name=User name',
+		'id=User id',
+		'foreignPrincipal=Foreign principal',
+		],lmdata(id));
 	display('select',lmtext(id));
 }
 function btext(id) {
@@ -576,24 +574,24 @@ function samlAssertion(id) {
 	display('samlAssertion',lmtext(id));
 }
 function samlAttribute(id) {
-        currentId=id;
+	currentId=id;
 	var t=lmdata(id).split(';');
 	if(t[0]==1){
 		$('#samlAttributeMandatoryOn').attr('checked',true);
 	}else{
 		$('#samlAttributeMandatoryOff').attr('checked',true);
 	}
-        $('#samlAttributeKey').attr('value',lmtext(id));
+	$('#samlAttributeKey').attr('value',lmtext(id));
 	$('#samlAttributeName').attr('value',t[1]);
 	formateSelect('samlAttributeFormat',[
-			'=',
-			'urn:oasis:names:tc:SAML:2.0:attrname-format:unspecified=Unspecified',
-			'urn:oasis:names:tc:SAML:2.0:attrname-format:uri=URI',
-			'urn:oasis:names:tc:SAML:2.0:attrname-format:basic=Basic'
-			],t[2]);
+		'=',
+		'urn:oasis:names:tc:SAML:2.0:attrname-format:unspecified=Unspecified',
+		'urn:oasis:names:tc:SAML:2.0:attrname-format:uri=URI',
+		'urn:oasis:names:tc:SAML:2.0:attrname-format:basic=Basic'
+		],t[2]);
 	$('#samlAttributeFriendlyName').attr('value',t[3]);
-        display('samlAttribute',lmtext(id));
-        $('#newsamlattributeb,#delsamlattributeb').show();
+	display('samlAttribute',lmtext(id));
+	$('#newsamlattributeb,#delsamlattributeb').show();
 }
 function samlAttributeRoot(){
 	currentId=simpleTreeCollection[0].getSelected().attr('id');
@@ -601,25 +599,25 @@ function samlAttributeRoot(){
 	$('#newsamlattributebr').show();
 }
 function samlIdpMetaData(id){
-        currentId=id;
-        $('#samlIdpMetaData').attr('value',lmtext(id));
-        display('samlIdpMetaData',lmtext(id));
-        if($('#li_'+myB64('/samlIDPMetaDataNode')).find('span').size()==1){
-                $('#delidpsamlmetadatab').hide();
-        }else{
-                $('#delidpsamlmetadatab').show();
-        }
+	currentId=id;
+	$('#samlIdpMetaData').attr('value',lmtext(id));
+	display('samlIdpMetaData',lmtext(id));
+	if($('#li_'+myB64('/samlIDPMetaDataNode')).find('span').size()==1){
+		$('#delidpsamlmetadatab').hide();
+	}else{
+		$('#delidpsamlmetadatab').show();
+	}
 	$('#newidpsamlmetadatab').show();
 }
 function samlSpMetaData(id){
-        currentId=id;
-        $('#samlSpMetaData').attr('value',lmtext(id));
-        display('samlSpMetaData',lmtext(id));
-        if($('#li_'+myB64('/samlSPMetaDataNode')).find('span').size()==1){
-                $('#delspsamlmetadatab').hide();
-        }else{
-                $('#delspsamlmetadatab').show();
-        }
+	currentId=id;
+	$('#samlSpMetaData').attr('value',lmtext(id));
+	display('samlSpMetaData',lmtext(id));
+	if($('#li_'+myB64('/samlSPMetaDataNode')).find('span').size()==1){
+		$('#delspsamlmetadatab').hide();
+	}else{
+		$('#delspsamlmetadatab').show();
+	}
 	$('#newspsamlmetadatab').show();
 }
 function samlService(id) {
@@ -708,11 +706,14 @@ function reloadAuthParams() {
 		data:{node:'generalParameters/authParams',conf:'authentication userDB passwordDB issuerDB',cfgNum:lmdata('li_cm9vdA2'),authentication:lmdata('li_L2F1dGhlbnRpY2F0aW9u0'),userDB:lmdata('li_L3VzZXJEQg2'),passwordDB:lmdata('li_L3Bhc3N3b3JkREI1'),issuerDB:lmdata('li_L2lzc3VlckRC0')},
 		dataType:'html',
 		success:function(data){
-			var node=$('#li_Z2VuZXJhbFBhcmFtZXRlcnMvYXV0aFBhcmFtcw2 >ul');
-			node.html(data);
-			simpleTreeCollection[0].setTreeNodes(node, true);
-			simpleTreeDefaultJqueryClasses();
-			simpleTreeToggleJqueryClasses();
+			if(data==null){networkPb()}
+			else{
+				var node=$('#li_Z2VuZXJhbFBhcmFtZXRlcnMvYXV0aFBhcmFtcw2 >ul');
+				node.html(data);
+				simpleTreeCollection[0].setTreeNodes(node, true);
+				simpleTreeDefaultJqueryClasses();
+				simpleTreeToggleJqueryClasses();
+			}
 		},
 		error:function(xhr, ajaxOptions, thrownError){
 			popup('<h3>Request failed</h3> Error code: '+xhr.status+', '+thrownError);
@@ -799,11 +800,11 @@ function newSamlAttribute(){
 }
 function newSamlAttributeR(){
 	var newIdValue=newId(currentId);
-        simpleTreeCollection[0].addNode(newIdValue,text4newSamlAttribute,function(d,s){
-                $('>span',s).attr('onClick','samlAttribute("'+newIdValue+'")').attr('name',text4newSamlAttribute).attr('value',value4newSamlAttribute).attr('id','text_'+newIdValue);
-                samlAttribute(newIdValue);
-        });
-        return false;
+	simpleTreeCollection[0].addNode(newIdValue,text4newSamlAttribute,function(d,s){
+		$('>span',s).attr('onClick','samlAttribute("'+newIdValue+'")').attr('name',text4newSamlAttribute).attr('value',value4newSamlAttribute).attr('id','text_'+newIdValue);
+		samlAttribute(newIdValue);
+	});
+	return false;
 }
 function newIdpSamlMetaData(){
 	var name = prompt(text4newSamlMetaData,'idp-example');
@@ -832,41 +833,44 @@ function uploadConf(f){
 		data:{data: $('#li_cm9vdA2').html(),force: f},
 		dataType:'json',
 		success:function(data){
-			var c='<h3>'+data.result.msg+'</h3><dl>';
-			if(data.result.cfgNum<=0){
-				if(typeof(data.errors)!='undefined'){
-					c+='<h4>Errors</h4>';
-					for(m in data.errors){
-						c+='<dt>'+m+'</dt><dd>'+data.errors[m]+'</dd>';
+			if(data==null){networkPb()}
+			else{
+				var c='<h3>'+data.result.msg+'</h3><dl>';
+				if(data.result.cfgNum<=0){
+					if(typeof(data.errors)!='undefined'){
+						c+='<h4>Errors</h4>';
+						for(m in data.errors){
+							c+='<dt>'+m+'</dt><dd>'+data.errors[m]+'</dd>';
+						}
 					}
 				}
-			}
-			else{
-				var tmp=lmtext('li_cm9vdA2');
-				tmp=tmp.replace(/\d+/,data.result.cfgNum);
-				setlmtext('li_cm9vdA2',tmp);
-				setlmdata('li_cm9vdA2',data.result.cfgNum);
-				$('#cfgNum').text(data.result.cfgNum);
-				setCfgAttributes(data.cfgDatas);
-				cfgAttrDone++;
-				display('cfgDatas','');
-			}
-			if(typeof(data.warnings)!='undefined'){
-				c+='<h4>Warnings</h4>';
-				for(m in data.warnings){
-					c+='<dt>'+m+'</dt><dd>'+data.warnings[m]+'</dd>';
+				else{
+					var tmp=lmtext('li_cm9vdA2');
+					tmp=tmp.replace(/\d+/,data.result.cfgNum);
+					setlmtext('li_cm9vdA2',tmp);
+					setlmdata('li_cm9vdA2',data.result.cfgNum);
+					$('#cfgNum').text(data.result.cfgNum);
+					setCfgAttributes(data.cfgDatas);
+					cfgAttrDone++;
+					display('cfgDatas','');
 				}
-			}
-			c+='</dl>'+data.result.other;
-			if(typeof(data.applyStatus)!='undefined'){
-				c+='<h4>Application status</h4>';
-				c+='<ul>';
-				for(m in data.applyStatus){
-					c+='<li>'+m+': '+data.applyStatus[m]+'</li>';
+				if(typeof(data.warnings)!='undefined'){
+					c+='<h4>Warnings</h4>';
+					for(m in data.warnings){
+						c+='<dt>'+m+'</dt><dd>'+data.warnings[m]+'</dd>';
+					}
 				}
-				c+='</ul>';
+				c+='</dl>'+data.result.other;
+				if(typeof(data.applyStatus)!='undefined'){
+					c+='<h4>Application status</h4>';
+					c+='<ul>';
+					for(m in data.applyStatus){
+						c+='<li>'+m+': '+data.applyStatus[m]+'</li>';
+					}
+					c+='</ul>';
+				}
+				popup(c);
 			}
-			popup(c);
 		},
 		error:function(xhr, ajaxOptions, thrownError){
 			popup('<h3>Request failed</h3> Error code: '+xhr.status+', '+thrownError);
@@ -881,8 +885,11 @@ function getCfgAttributes() {
 		data:{cfgNum:lmdata('li_cm9vdA2'),cfgAttr:1},
 		dataType:'json',
 		success:function(data){
-			setCfgAttributes(data);
-			cfgAttrDone++;
+			if(data==null){networkPb()}
+			else{
+				setCfgAttributes(data);
+				cfgAttrDone++;
+			}
 		},
 		error:function(xhr, ajaxOptions, thrownError){
 			var msg = 'Error code: '+xhr.status+', '+thrownError; 
@@ -902,34 +909,34 @@ function setCfgAttributes(data){
 }
 /* Warning, it's not a real base64 */
 function myB64(s) {
-        var keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-        var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
-        var i=0;
-        var res="";
+	var keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+	var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
+	var i=0;
+	var res="";
 	var s2="";
-        while (i < s.length) {
-                chr1 = s.charCodeAt(i++);
-                chr2 = s.charCodeAt(i++);
-                chr3 = s.charCodeAt(i++);
-                enc1 = chr1 >> 2;
-                enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
-                enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
-                enc4 = chr3 & 63;
-		res+=keyStr.charAt(enc1)+keyStr.charAt(enc2);
-                if (isNaN(chr2)) {
-			res+='2';
-			break;
-		}
-		res+=keyStr.charAt(enc3);
-		if (isNaN(chr3)) {
-			res+='1';
-			break;
-		}
-		res+=keyStr.charAt(enc4);
-		if(i==s.length) {
-			res+='0';
-		}
-        }
+	while (i < s.length) {
+		chr1 = s.charCodeAt(i++);
+		chr2 = s.charCodeAt(i++);
+		chr3 = s.charCodeAt(i++);
+		enc1 = chr1 >> 2;
+		enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+		enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+		enc4 = chr3 & 63;
+	res+=keyStr.charAt(enc1)+keyStr.charAt(enc2);
+		if (isNaN(chr2)) {
+		res+='2';
+		break;
+	}
+	res+=keyStr.charAt(enc3);
+	if (isNaN(chr3)) {
+		res+='1';
+		break;
+	}
+	res+=keyStr.charAt(enc4);
+	if(i==s.length) {
+		res+='0';
+	}
+	}
 	return res;
 }
 /* Function to download a file */
@@ -946,7 +953,7 @@ function downloadFile(id){
 /* Function to generate a file */
 function generateFile(id){
 	/* If samlServicePrivateKey* elements, then generate keys */
-        if(lmtext(id)=='samlServicePrivateKeySig'||lmtext(id)=='samlServicePrivateKeyEnc'){
+	if(lmtext(id)=='samlServicePrivateKeySig'||lmtext(id)=='samlServicePrivateKeyEnc'){
 		var password = prompt(text4newGeneratedFile,'');
 		$('#button-loadimg')
 		.ajaxStart(function(){
@@ -961,16 +968,19 @@ function generateFile(id){
 			data:{request: 'generateKeys',password: password},
 			dataType:'json',
 			success:function(data){
-				var _public;
-				var _id;
-				setlmdata(id,data.content.private);
-				if(lmtext(id)=='samlServicePrivateKeySig'){_public='samlServicePublicKeySig';}
-				if(lmtext(id)=='samlServicePrivateKeyEnc'){_public='samlServicePublicKeyEnc';}
-				_id=$('#'+lmparent(id)+' span[name='+_public+']').attr('id').replace(/text_/,'');
-				setlmdata(_id,data.content.public);
-					_id=$('#'+lmparent(id)+' span[name='+lmtext(id)+'Pwd]').attr('id').replace(/text_/,'');
-					setlmdata(_id,password);
-				filearea(id);
+				if(data==null){networkPb()}
+				else{
+					var _public;
+					var _id;
+					setlmdata(id,data.content.private);
+					if(lmtext(id)=='samlServicePrivateKeySig'){_public='samlServicePublicKeySig';}
+					if(lmtext(id)=='samlServicePrivateKeyEnc'){_public='samlServicePublicKeyEnc';}
+					_id=$('#'+lmparent(id)+' span[name='+_public+']').attr('id').replace(/text_/,'');
+					setlmdata(_id,data.content.public);
+						_id=$('#'+lmparent(id)+' span[name='+lmtext(id)+'Pwd]').attr('id').replace(/text_/,'');
+						setlmdata(_id,password);
+					filearea(id);
+				}
 			},
 			error:function(xhr, ajaxOptions, thrownError){
 				popup('<h3>Request failed</h3> Error code: '+xhr.status+', '+thrownError);
@@ -1159,20 +1169,20 @@ function newPostDataR(){
 }
 
 function post(id){
-	 currentId=id;
-         $('#postKey').attr('value',lmtext(id));
-         $('#postUrl').attr('value',lmdata(id));
-	 display('post',lmtext(lmparent(id)));
-	 $('#delpost,#newpostdatar').show();
+	currentId=id;
+	$('#postKey').attr('value',lmtext(id));
+	$('#postUrl').attr('value',lmdata(id));
+	display('post',lmtext(lmparent(id)));
+	$('#delpost,#newpostdatar').show();
 }
 
 function postData(id){
-	 currentId=id;
-	 var cleankey = lmtext(id).replace('postdata:','');
-         $('#postDataKey').attr('value',cleankey);
-         $('#postDataValue').attr('value',lmdata(id));
-	 display('postdata',cleankey);
-	 $('#delpostdata').show();
+	currentId=id;
+	var cleankey = lmtext(id).replace('postdata:','');
+	$('#postDataKey').attr('value',cleankey);
+	$('#postDataValue').attr('value',lmdata(id));
+	display('postdata',cleankey);
+	$('#delpostdata').show();
 }
 
 function delPost(){
@@ -1183,6 +1193,19 @@ function delPostData(){
 	delKey();
 }
 function popup(html){
- $('#textpopup').html(html)
- $('#dragpopup').fadeIn('slow');
+	$('#textpopup').html(html);
+	$('#dragpopup').center();
+	$('#dragpopup').fadeIn('fast');
+}
+function networkPb(){
+	popup('<h2>Network problem</h2>');
+}
+jQuery.fn.center = function () {
+	var v=Math.max($(window).height()-this.height(),200)/2+$(window).scrollTop();
+	var h=Math.max($(window).width()-this.width(),200 )/2+$(window).scrollLeft();
+	this.css("top",h+"px");
+	this.css("bottom",h+"px");
+	this.css("left",v+"px");
+	this.css("right",v+"px");
+	return this;
 }
