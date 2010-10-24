@@ -1204,8 +1204,8 @@ jQuery.fn.center = function () {
 	var v=Math.max($(window).height()-this.height(),200)/2+$(window).scrollTop();
 	var h=Math.max($(window).width()-this.width(),200 )/2+$(window).scrollLeft();
 	this.css("top",h+"px");
-	this.css("bottom",h+"px");
+	this.height($(window).height()-2*h-15);
 	this.css("left",v+"px");
-	this.css("right",v+"px");
+	this.width($(window).width()-2*v-15);
 	return this;
 }

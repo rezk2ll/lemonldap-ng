@@ -286,6 +286,7 @@ div.category ul {
 	border-top: solid 20px #f00;
 	padding: 5px 20px;
 	display:none;
+	cursor:move;
 }
 .closepopup{
 	position:absolute;

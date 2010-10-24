@@ -42,7 +42,9 @@
 <!-- Popup -->
 <div id="dragpopup" class="dragpopup ui-corner-all">
 <div class="closepopup">
-	<span onclick="$('#dragpopup').hide();">X</span>
+	<span onclick="$('#dragpopup').hide();">
+		<img src="<TMPL_VAR NAME="DIR">/close_window.png"/>
+	</span>
 </div>
 <div id="textpopup"></div>
 </div>
