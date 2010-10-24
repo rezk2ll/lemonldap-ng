@@ -2598,7 +2598,7 @@ Copyright (C) 2005, 2009, 2010 by Xavier Guimard E<lt>x.guimard@free.frE<gt> and
 Clement Oudot, E<lt>coudot@linagora.comE<gt>
 
 This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself, either Perl version 5.8.4 or,
+it under the same terms as Perl itself, either Perl version 5.10.0 or,
 at your option, any later version of Perl 5 you may have available.
 
 =cut

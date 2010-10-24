@@ -857,11 +857,7 @@ Xavier Guimard, E<lt>x.guimard@free.frE<gt>
 Copyright (C) 2008, 2010 by Xavier Guimard
 
 This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself, either Perl version 5.8.8 or,
+it under the same terms as Perl itself, either Perl version 5.10.0 or,
 at your option, any later version of Perl 5 you may have available.
-
-C<jquery.simple.tree> embedded javascript library is licensed under BSD
-L<http://en.wikipedia.org/wiki/BSD_License> and copyrighted (c) 2008 by Peter
-Panov E<lt>panov@elcat.kgE<gt>, IKEEN Group L<http://www.ikeen.com/>
 
 =cut

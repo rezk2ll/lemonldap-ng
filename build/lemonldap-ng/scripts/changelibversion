@@ -2,5 +2,5 @@
 
 VERSION=0.99
 
-perl  -pe 's/^our \$VERSION.*$/our \$VERSION = '\'$VERSION\'';/' $(find l*/lib/ -name *pm)
+perl -i -pe 's/^our \$VERSION.*$/our \$VERSION = '\'$VERSION\'';/' $(find l*/lib/ -name *pm)
 
