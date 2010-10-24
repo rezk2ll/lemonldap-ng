@@ -812,6 +812,7 @@ sub getApacheSession {
 # @return hashed value
 sub _md5hash {
     my ( $self, $s ) = splice @_;
+    $s ||= '';
     return substr( Digest::MD5::md5_hex($s), 0, 32 );
 }
 
