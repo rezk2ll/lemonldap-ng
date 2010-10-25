@@ -40,10 +40,6 @@ $(document).ready(function(){
 	$("#authMenu").tabs({
 		fx: {opacity: 'toggle'},
 		cookie: {name: 'lemonldapauthchoice'},
-		show:function(event,ui) {
-		$('#authKey').val($('#authMenu li.ui-tabs-selected').attr('title'));
-		return true;
-		},
 	});
 	$("#authMenu").tabs("select",choicetab);
 
