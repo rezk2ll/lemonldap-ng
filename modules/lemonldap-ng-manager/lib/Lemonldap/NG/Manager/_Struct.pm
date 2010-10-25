@@ -516,13 +516,13 @@ sub struct {
 
                     dbiSchema => {
                         _nodes => [
-                            qw(dbiAuthTable dbiUserTable dbiAuthLoginCol dbiAuthPasswordCol dbiAuthMailCol userPivot)
+                            qw(dbiAuthTable dbiUserTable dbiAuthLoginCol dbiAuthPasswordCol dbiPasswordMailCol userPivot)
                         ],
                         dbiAuthTable       => 'text:/dbiAuthTable',
                         dbiUserTable       => 'text:/dbiUserTable',
                         dbiAuthLoginCol    => 'text:/dbiAuthLoginCol',
                         dbiAuthPasswordCol => 'text:/dbiAuthPasswordCol',
-                        dbiAuthMailCol     => 'text:/dbiAuthMailCol',
+                        dbiPasswordMailCol => 'text:/dbiPasswordMailCol',
                         userPivot          => 'text:/userPivot',
                     },
 
@@ -1594,7 +1594,7 @@ sub testStruct {
         dbiUserTable        => $testNotDefined,
         dbiAuthLoginCol     => $testNotDefined,
         dbiAuthPasswordCol  => $testNotDefined,
-        dbiAuthMailCol      => $testNotDefined,
+        dbiPasswordMailCol  => $testNotDefined,
         userPivot           => $testNotDefined,
         dbiAuthPasswordHash => $testNotDefined,
 
