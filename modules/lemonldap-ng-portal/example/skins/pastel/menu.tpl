@@ -166,5 +166,9 @@
 	</div>
 
 	</div>
-
+<!-- Keep session alive -->
+<script type="text/javascript">
+	scriptname='<TMPL_VAR NAME="SCRIPT_NAME">';
+	setTimeout('ping();',60000);
+</script>
 <TMPL_INCLUDE NAME="footer.tpl">

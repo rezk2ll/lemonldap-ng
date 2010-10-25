@@ -94,4 +94,22 @@ function isHiddenFormValueSet(option){
 		return false;
 	}
 }
+function ping() {
+	$.ajax({type:"POST",
+	url:scriptname,
+	data:{ping:1},
+	dataType:'json',
+	success:function(data){
+		if(!data.auth){
+			location.reload(true);
+		}
+		else{
+			setTimeout('ping();',60000);
+		}
+	}/*,
+	error:function(xhr, ajaxOptions, thrownError){
+		alert('Request failed Error code: '+xhr.status+', '+thrownError);
+	}*/
+	});
+}
 

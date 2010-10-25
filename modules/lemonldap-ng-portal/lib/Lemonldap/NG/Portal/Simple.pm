@@ -1523,6 +1523,7 @@ sub controlExistingSession {
                 $self->_subProcess(qw(autoPost)) if ( $self->{postUrl} );
 
                 # Display logout message
+                untie %$h;
                 return PE_LOGOUT_OK;
             }
 
@@ -1533,6 +1534,13 @@ sub controlExistingSession {
                 $self->_sub( 'removeOther', $id );
             }
             untie %$h;
+
+            # Special ajax request "ping" to check if session is available
+            if ( $self->param('ping') ) {
+                print $self->header( -type => 'application/json' )
+                  . '{"auth":true}';
+                $self->quit();
+            }
             $self->{id} = $id;
 
             # A session has been found => call existingSession
@@ -1551,6 +1559,10 @@ sub controlExistingSession {
 
     # Display logout success if logout asked
     # and we do not have valid session
+    if ( $self->param('ping') ) {
+        print $self->header( -type => 'application/json' ) . '{"auth":false}';
+        $self->quit();
+    }
     return PE_LOGOUT_OK if $self->param('logout');
 
     # Else continue authentication process

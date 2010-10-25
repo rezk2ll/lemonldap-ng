@@ -99,6 +99,7 @@ sub display {
                 DISPLAY_MODULES     => $self->{menuDisplayModules},
                 APPSLIST_MENU => $self->{menuAppslistMenu},  # For old templates
                 APPSLIST_DESC => $self->{menuAppslistDesc},  # For old templates
+                SCRIPT_NAME   => $ENV{SCRIPT_NAME},
             );
 
         }
