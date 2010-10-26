@@ -442,7 +442,7 @@ L<mrtg> or directly browsed by your browser.
 =head1 SEE ALSO
 
 L<Lemonldap::NG::Handler>, L<Lemonldap::NG::Portal>, L<Lemonldap::NG::Manager>,
-L<http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Presentation>
+L<http://lemonldap-ng.org/
 
 =head1 AUTHOR
 

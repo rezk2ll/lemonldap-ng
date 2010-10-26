@@ -488,7 +488,7 @@ L<Lemonldap::NG::Portal::Simple>. It's the more used module.
 
 L<Lemonldap::NG::Portal::SharedConf>, L<Lemonldap::NG::Portal::Simple>
 L<Lemonldap::NG::Handler>, L<Lemonldap::NG::Manager>,
-http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Presentation
+L<http://lemonldap-ng.org/>
 
 =head1 AUTHOR
 
@@ -497,7 +497,7 @@ Xavier Guimard, E<lt>x.guimard@free.frE<gt>
 =head1 BUG REPORT
 
 Use OW2 system to report bug or ask for features:
-L<http://forge.objectweb.org/tracker/?group_id=274>
+L<http://jira.ow2.org>
 
 =head1 DOWNLOAD
 

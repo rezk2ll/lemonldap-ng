@@ -92,7 +92,7 @@ Same as L<Lemonldap::NG::Handler::SharedConf>.
 
 L<Lemonldap::NG::Manager>, L<Lemonldap::NG::Handler>,
 L<Lemonldap::NG::Handler::SharedConf>,
-http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Presentation
+L<http://lemonldap-ng.org/>
 
 =head1 AUTHOR
 
@@ -101,7 +101,7 @@ Xavier Guimard, E<lt>x.guimard@free.frE<gt>
 =head1 BUG REPORT
 
 Use OW2 system to report bug or ask for features:
-L<http://forge.objectweb.org/tracker/?group_id=274>
+L<http://jira.ow2.org>
 
 =head1 DOWNLOAD
 

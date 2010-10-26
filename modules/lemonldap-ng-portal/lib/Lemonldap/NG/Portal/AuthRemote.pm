@@ -116,7 +116,7 @@ a remote portal.
 =head1 SEE ALSO
 
 L<http://lemonldap.objectweb.org/>
-L<http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/AuthRemote>
+L<http://lemonldap-ng.org/
 
 =head1 AUTHOR
 

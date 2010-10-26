@@ -92,7 +92,7 @@ accept SOAP requests ("Soap=>1").
 =head1 SEE ALSO
 
 L<http://lemonldap.objectweb.org/>
-L<http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/AuthProxy>
+L<http://lemonldap-ng.org/
 
 =head1 AUTHOR
 

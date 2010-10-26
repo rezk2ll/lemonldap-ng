@@ -535,9 +535,7 @@ Lemonldap::NG::Portal::Menu is used to build menu.
 
 =head1 SEE ALSO
 
-L<Lemonldap::NG::Portal>,
-http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/EnhancedMenu
-http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Presentation
+L<Lemonldap::NG::Portal>, L<http://lemonldap-ng.org/>
 
 =head1 AUTHOR
 
@@ -546,7 +544,7 @@ Clement OUDOT E<lt>clement@oodo.netE<gt> E<lt>coudot@linagora.comE<gt>
 =head1 BUG REPORT
 
 Use OW2 system to report bug or ask for features:
-L<http://forge.objectweb.org/tracker/?group_id=274>
+L<http://jira.ow2.org>
 
 =head1 DOWNLOAD
 

@@ -215,7 +215,7 @@ See L<Lemonldap::NG::Portal::Simple> for usage and other methods.
 =head1 SEE ALSO
 
 L<Lemonldap::NG::Portal>, L<Lemonldap::NG::Portal::Simple>,
-http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Presentation
+L<http://lemonldap-ng.org/>
 
 =head1 AUTHOR
 
@@ -225,7 +225,7 @@ Xavier Guimard, E<lt>x.guimard@free.frE<gt>
 =head1 BUG REPORT
 
 Use OW2 system to report bug or ask for features:
-L<http://forge.objectweb.org/tracker/?group_id=274>
+L<http://jira.ow2.org>
 
 =head1 DOWNLOAD
 
