@@ -91,8 +91,7 @@ accept SOAP requests ("Soap=>1").
 
 =head1 SEE ALSO
 
-L<http://lemonldap.objectweb.org/>
-L<http://lemonldap-ng.org/
+L<http://lemonldap-ng.org/>
 
 =head1 AUTHOR
 

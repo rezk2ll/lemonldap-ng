@@ -353,7 +353,7 @@ download a mod_perl2 backport.
 
 L<Lemonldap::NG::Handler::SharedConf>,
 L<Lemonldap::NG::Portal>, L<Lemonldap::NG::Manager>,
-L<http://lemonldap-ng.org/
+L<http://lemonldap-ng.org/>
 
 =head1 AUTHOR
 

@@ -108,7 +108,7 @@ a L<CGI> object instead of STDIN.
 
 =head1 SEE ALSO
 
-L<http://lemonldap.objectweb.org/>, L<Lemonldap::NG::Common::CGI>
+L<http://lemonldap-ng.org/>, L<Lemonldap::NG::Common::CGI>
 
 =head1 AUTHOR
 

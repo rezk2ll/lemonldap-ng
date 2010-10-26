@@ -1,8 +1,7 @@
 Lemonldap-NG
 ====================
 
-Go to http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Presentation to get
-the up-to-date documentation.
+Go to http://lemonldap-ng.org/ to get the up-to-date documentation.
 
 Lemonldap::NG is a modular Web-SSO based on Apache::Session modules. It
 simplifies the build of a protected area with a few changes in the application.

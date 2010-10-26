@@ -13,7 +13,7 @@ $ua->requests_redirectable( [] );
 my ( $request, @get, @post, @menu, @cookies, @handler );
 
 # Fake request to be sure that all is compiled
-$request = new HTTP::Request( 'GET', 'http://lemonldap/objectweb.org/' );
+$request = new HTTP::Request( 'GET', 'http://lemonldap-ng.org/' );
 $ua->request( $request, \&cb_content );
 
 $request = new HTTP::Request( 'GET', 'http://127.0.0.1/index_simple.pl' );
