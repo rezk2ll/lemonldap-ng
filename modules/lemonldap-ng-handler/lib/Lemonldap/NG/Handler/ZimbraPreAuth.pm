@@ -177,7 +177,7 @@ See L<Lemonldap::NG::Handler>
 
 =head1 SEE ALSO
 
-http://wiki.zimbra.com/wiki/Preauth
+L<http://wiki.zimbra.com/wiki/Preauth>
 L<Lemonldap::NG::Handler>
 
 =head1 AUTHOR
