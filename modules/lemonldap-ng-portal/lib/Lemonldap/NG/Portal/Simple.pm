@@ -218,10 +218,10 @@ sub new {
         "You've to indicate a an Apache::Session storage module !" )
       unless ( $self->{globalStorage} );
     unless ( $self->{globalStorage}->can('populate') ) {
-    eval "require " . $self->{globalStorage};
-    $self->abort( "Configuration error",
-        "Module " . $self->{globalStorage} . " not found in \@INC" )
-      if ($@);
+        eval "require " . $self->{globalStorage};
+        $self->abort( "Configuration error",
+            "Module " . $self->{globalStorage} . " not found in \@INC" )
+          if ($@);
     }
 
     # Use LemonLDAP::NG custom Apache::Session
@@ -235,10 +235,10 @@ sub new {
     foreach my $otherStorage ( $self->{samlStorage}, $self->{casStorage} ) {
         if ( $otherStorage ne $self->{globalStorage} ) {
             eval "require " . $otherStorage;
-        $self->abort( "Configuration error",
+            $self->abort( "Configuration error",
                 "Module " . $otherStorage . " not found in \@INC" )
-          if ($@);
-    }
+              if ($@);
+        }
     }
 
     # 2. Domain
@@ -539,7 +539,7 @@ sub setDefaultValues {
 
     # SAML
     $self->{samlIdPResolveCookie} ||= $self->{cookieName} . "idp";
-    $self->{samlStorage}          ||= $self->{globalStorage};
+    $self->{samlStorage} ||= $self->{globalStorage};
     if ( !$self->{samlStorageOptions} or !%{ $self->{samlStorageOptions} } ) {
         $self->{samlStorageOptions} = $self->{globalStorageOptions};
     }
@@ -555,7 +555,7 @@ sub setDefaultValues {
       unless defined $self->{samlAuthnContextMapKerberos};
 
     # CAS
-    $self->{casStorage}        ||= $self->{globalStorage};
+    $self->{casStorage} ||= $self->{globalStorage};
     if ( !$self->{casStorageOptions} or !%{ $self->{casStorageOptions} } ) {
         $self->{casStorageOptions} = $self->{globalStorageOptions};
     }
@@ -1760,6 +1760,8 @@ sub setPersistentSessionInfo {
 
     # Do not restore infos if session already opened
     unless ( $self->{id} ) {
+        my $key = $self->{sessionInfo}->{ $self->{whatToTrace} };
+        return PE_OK unless ( $key and length($key) );
         my $h =
           $self->getApacheSession(
             $self->_md5hash( $self->{sessionInfo}->{ $self->{whatToTrace} } ),
