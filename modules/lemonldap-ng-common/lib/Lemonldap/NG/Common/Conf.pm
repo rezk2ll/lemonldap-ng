@@ -22,7 +22,7 @@ use Config::IniFiles;
 
 our $VERSION = 0.70;
 our $msg;
-our $configFiles;
+our $iniObj;
 
 ## @cmethod Lemonldap::NG::Common::Conf new(hashRef arg)
 # Constructor.
@@ -187,12 +187,12 @@ sub getLocalConf {
     my $r = {};
 
     $section ||= DEFAULTSECTION;
-    $file    ||= DEFAULTCONFFILE;
+    $file    ||= $self->{confFile} || DEFAULTCONFFILE;
     $loaddefault = 1 unless ( defined $loaddefault );
     my $cfg;
 
     # First, search if this file has been parsed
-    unless ( $cfg = $configFiles->{$file} ) {
+    unless ( $cfg = $iniObj->{$file} ) {
 
         # If default configuration cannot be read
         # - Error if configuration section is requested
@@ -225,8 +225,8 @@ sub getLocalConf {
             $msg = "Configuration section (" . CONFSECTION . ") is missing.";
             return $r;
         }
-        $configFiles->{$file} = $cfg;
     }
+    $self->{_iniObj} = $cfg;
 
     # First load all default section parameters
     if ($loaddefault) {
