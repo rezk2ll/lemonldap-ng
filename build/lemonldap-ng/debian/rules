@@ -76,9 +76,13 @@ install: build
 	find $(CURDIR)/debian/tmp -type f -regex '.*/jquery-[0-9].*\.js' -delete
 	find $(CURDIR)/debian/tmp -type f -name jquery.js -delete
 	rm -f $(CURDIR)/debian/tmp$(LMSHAREDIR)*-skins/*/jquery.js
+	find $(CURDIR)/debian/tmp -type f -regex '.*/jquery-ui-[0-9].*\.js' -delete
+	find $(CURDIR)/debian/tmp -type f -name jquery-ui.js -delete
+	rm -f $(CURDIR)/debian/tmp$(LMSHAREDIR)*-skins/*/jquery-ui.js
 	#test -n "$$LOCALBUILD" || ./scripts/minifierjs $$(find debian/tmp/ -name '*.js')
 	#test -n "$$LOCALBUILD" || ./scripts/minifiercss $$(find debian/tmp/ -name '*.css')
-	perl -i -pe 's#src=(["'"'"']).*?jquery(-\d[\.\w\-]*?)?.js#src=$$1/javascript/jquery/jquery.js#i' \
+	perl -i -pe 's#src=(["'"'"']).*?jquery(-\d[\.\w\-]*?)?.js#src=$$1/javascript/jquery/jquery.min.js#i; \
+		s#src=(["'"'"']).*?jquery-ui(-\d[\.\w\-]*?)?.js#src=$$1/javascript/jquery-ui/jquery-ui.min.js#i;' \
 		$$(find $(CURDIR)/debian/tmp/examples/manager/ -name *.pl -type f) \
 		$$(find	$(CURDIR)/debian/tmp$(LMSHAREDIR)manager-skins/*/ \
 			$(CURDIR)/debian/tmp$(LMSHAREDIR)portal-skins/*/ -type f -name *.tpl)
