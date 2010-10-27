@@ -10,8 +10,6 @@ if (treeautoclose.match('true')){ treeautoclose = true; } else { treeautoclose =
 if (treejquerycss.match('true')){ treejquerycss = true; } else { treejquerycss = false; }
 
 $(document).ready(function(){
-	/* Prepare popup */
-	$('#dragpopup').draggable();
 	/* Display/hide divs */
 	$("#buttons h1").click(function(){
 		$('#buttons h1 img').toggle();
@@ -217,7 +215,7 @@ function setlmfile(id,input){
 		dataType:'json',
 		success:function(data,status){
 			if(typeof(data.errors) != 'undefined' && data.errors != ''){
-				popup('<h3>Request failed</h3> Error code: '+data.errors+', ');
+				popup('<h3>Request failed</h3><ul class="error"><li><strong>Error code:</strong> '+data.errors+'</li></ul>');
 			}else{
 				data.content = data.content.replace(/&lt;/g,'<').replace(/&gt;/g,'>');
 				setlmdata(id,data.content);
@@ -226,7 +224,7 @@ function setlmfile(id,input){
 			}
 		},
 		error:function(xhr, ajaxOptions, thrownError){
-			popup('<h3>Request failed</h3> Error code: '+xhr.status+', '+thrownError);
+			popup('<h3>Request failed</h3><ul class="error"><li><strong>Error code:</strong> '+xhr.status+', '+thrownError+'</li></ul>');
 		}
 	});
 	/* Remove global event on loading image */
@@ -716,7 +714,7 @@ function reloadAuthParams() {
 			}
 		},
 		error:function(xhr, ajaxOptions, thrownError){
-			popup('<h3>Request failed</h3> Error code: '+xhr.status+', '+thrownError);
+			popup('<h3>Request failed</h3><ul class="error"><li><strong>Error code:</strong> '+xhr.status+', '+thrownError+'</li></ul>');
 		}
 	});
 }
@@ -835,13 +833,15 @@ function uploadConf(f){
 		success:function(data){
 			if(data==null){networkPb()}
 			else{
-				var c='<h3>'+data.result.msg+'</h3><dl>';
+				var c='<h3>'+data.result.msg+'</h3>';
 				if(data.result.cfgNum<=0){
 					if(typeof(data.errors)!='undefined'){
 						c+='<h4>Errors</h4>';
+						c+='<ul class="error">';
 						for(m in data.errors){
-							c+='<dt>'+m+'</dt><dd>'+data.errors[m]+'</dd>';
+							c+='<li><strong>'+m+':</strong> '+data.errors[m]+'</li>';
 						}
+						c+='</ul>';
 					}
 				}
 				else{
@@ -856,16 +856,18 @@ function uploadConf(f){
 				}
 				if(typeof(data.warnings)!='undefined'){
 					c+='<h4>Warnings</h4>';
+					c+='<ul class="warning">';
 					for(m in data.warnings){
-						c+='<dt>'+m+'</dt><dd>'+data.warnings[m]+'</dd>';
+						c+='<li><strong>'+m+':</strong> '+data.warnings[m]+'</li>';
 					}
+						c+='</ul>';
 				}
-				c+='</dl>'+data.result.other;
+				c+='<p>'+data.result.other+'</p>';
 				if(typeof(data.applyStatus)!='undefined'){
 					c+='<h4>Application status</h4>';
 					c+='<ul>';
 					for(m in data.applyStatus){
-						c+='<li>'+m+': '+data.applyStatus[m]+'</li>';
+						c+='<li><strong>'+m+':</strong> '+data.applyStatus[m]+'</li>';
 					}
 					c+='</ul>';
 				}
@@ -873,7 +875,7 @@ function uploadConf(f){
 			}
 		},
 		error:function(xhr, ajaxOptions, thrownError){
-			popup('<h3>Request failed</h3> Error code: '+xhr.status+', '+thrownError);
+			popup('<h3>Request failed</h3><ul class="error"><li><strong>Error code:</strong> '+xhr.status+', '+thrownError+'</li></ul>');
 		}
 	});
 }
@@ -983,7 +985,7 @@ function generateFile(id){
 				}
 			},
 			error:function(xhr, ajaxOptions, thrownError){
-				popup('<h3>Request failed</h3> Error code: '+xhr.status+', '+thrownError);
+				popup('<h3>Request failed</h3><ul class="error"><li><strong>Error code:</strong> '+xhr.status+', '+thrownError+'</li></ul>');
 			}
 		});
 		$('#button-loadimg').unbind('ajaxStart');
@@ -1192,20 +1194,22 @@ function delPost(){
 function delPostData(){
 	delKey();
 }
+
+/* Popup */
 function popup(html){
-	$('#textpopup').html(html);
-	$('#dragpopup').center();
-	$('#dragpopup').fadeIn('fast');
+	$('#popup').html(html);
+	$('#popup').dialog({
+		show: 'slide',
+		hide: 'explode',
+		buttons: {
+			Ok: function() {
+			$( this ).dialog( "close" );
+			},
+		},
+	});
 }
+
 function networkPb(){
-	popup('<h2>Network problem</h2>');
+	popup('<h3>Network problem</h3>');
 }
-jQuery.fn.center = function () {
-	var v=Math.max($(window).height()-this.height(),200)/2+$(window).scrollTop();
-	var h=Math.max($(window).width()-this.width(),200 )/2+$(window).scrollLeft();
-	this.css("top",h+"px");
-	this.height($(window).height()-2*h-15);
-	this.css("left",v+"px");
-	this.width($(window).width()-2*v-15);
-	return this;
-}
+

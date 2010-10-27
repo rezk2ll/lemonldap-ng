@@ -172,18 +172,18 @@ option
 
 #css-switch a[alt=tree]
 {
-	background:url("application_side_tree.png") no-repeat;
+	background:url("images/application_side_tree.png") no-repeat;
 }
 
 #css-switch a[alt=accordion]
 {
-	background:url("application_side_list.png") no-repeat;
+	background:url("images/application_side_list.png") no-repeat;
 }
 
 #query-switch a
 {
     /* REPLACE IMAGE */
-    background:url("application_side_tree.png") no-repeat;
+    background:url("images/application_side_tree.png") no-repeat;
 }
 
 /* Help messages */
@@ -199,7 +199,7 @@ option
 #help ul
 {
 	list-style-position:inside;
-	list-style-image:url("bullet_orange.png");
+	list-style-image:url("images/bullet_orange.png");
 }
 
 #help pre
@@ -222,12 +222,12 @@ option
 
 #help .info
 {
-	background:#ddd url("information.png") no-repeat 5px;
+	background:#ddd url("images/information.png") no-repeat 5px;
 }
 
 #help .default
 {
-	background:#ddd url("help.png") no-repeat 5px;
+	background:#ddd url("images/help.png") no-repeat 5px;
 }
 
 #help tt
@@ -275,24 +275,32 @@ div.category h2 {
 div.category ul {
 	text-align: left;
 	list-style-position:inside;
-	list-style-image:url("bullet_orange.png");
+	list-style-image:url("images/bullet_orange.png");
 }
-.dragpopup {
-	position:absolute;
-	top:100px;
-	left:100px;
-	background-color:#fff;
-	border: solid 1px #f00;
-	border-top: solid 20px #f00;
-	padding: 5px 20px;
-	display:none;
-	cursor:move;
+
+/* Popup */
+#popup h3
+{
+	text-align:center;
+	letter-spacing:2px;
+	border-bottom:1px solid #aaa;
+	padding:5px;
+	margin:5px 50px;
 }
-.closepopup{
-	position:absolute;
-	font-style:bold;
-	color:#fff;
-	top:-18px;
-	left:2px;
-	cursor:default;
+
+#popup ul
+{
+	list-style-position:inside;
+	list-style-image:url("images/bullet_green.png");
+	margin:0;
+	padding:0;
 }
+
+#popup ul.warning {
+	list-style-image:url("images/bullet_orange.png");
+}
+
+#popup ul.error {
+	list-style-image:url("images/bullet_red.png");
+}
+
