@@ -6,8 +6,8 @@
 <title>Lemonldap::NG Manager</title>
 <link href="<TMPL_VAR NAME="DIR">/lemonldap-ng.ico" rel="icon" type="image/x-icon" />
 <link href="<TMPL_VAR NAME="DIR">/lemonldap-ng.ico" rel="shortcut icon" />
-<link rel="stylesheet" type="text/css" title="menu" href="<TMPL_VAR NAME="DIR">/<TMPL_VAR NAME="CSS">" />
 <link rel="stylesheet" type="text/css" href="<TMPL_VAR NAME="DIR">/ui-lightness/jquery-ui-1.8.5.custom.css" />
+<link rel="stylesheet" type="text/css" title="menu" href="<TMPL_VAR NAME="DIR">/<TMPL_VAR NAME="CSS">" />
 <script src="<TMPL_VAR NAME="DIR">/jquery-1.4.2.min.js" type="text/JavaScript"></script>
 <script src="<TMPL_VAR NAME="DIR">/jquery-ui-1.8.5.custom.min.js" type="text/JavaScript"></script>
 <script src="<TMPL_VAR NAME="DIR">/jquery.cookie.js" type="text/JavaScript"></script>
