@@ -494,6 +494,12 @@ static_example:
 
 documentation:
 	@cd doc/ && ../scripts/doc.pl
+	@rm -rf doc/pages/documentation/latest
+	@ln -s $$(perl -e '$$h{sprintf("%03d\.%03d\.%03d",split/\./,$$_)}=$$_ foreach(@ARGV); \
+		foreach(sort keys %h){$$last="$$h{$$_}\n"};print $$last;' \
+		$$(find doc/pages/documentation/ -maxdepth 1 -mindepth 1 -type d ! \
+		-name .svn ! -name latest -printf "%f\n") \
+	) doc/pages/documentation/latest
 
 doxygen:	clean
 	$(PERL) -i -pe 's/^(PROJECT_NUMBER\s*=\s*)\d.*$$/$${1}'$(VERSION)'/' Doxyfile
