@@ -37,7 +37,7 @@ LemonLDAP::NG configuration is build around Apache virtual hosts. Each virtual h
 
 <p>
 
-To protect a virtual host in Apache, the LemonLDAP::NG Handler must be activated (see <a href="../../documentation/1.00/configlocation.html#apache" class="wikilink1" title="documentation:1.00:configlocation">Apache global configuration</a>).
+To protect a virtual host in Apache, the LemonLDAP::NG Handler must be activated (see <a href="../../documentation/1.0/configlocation.html#apache" class="wikilink1" title="documentation:1.0:configlocation">Apache global configuration</a>).
 </p>
 
 <p>
@@ -138,14 +138,23 @@ Access rule value is an expression, evaluated for each request, and returning 1 
 </p>
 
 <p>
+<a href="/_detail/documentation/manager_access_rule.png?id=documentation%3A1.0%3Aconfigvhost" class="media" title="documentation:manager_access_rule.png"><img src="../../../media/documentation/manager_access_rule.png" class="mediacenter" alt="" /></a>
+</p>
+
+<p>
 Access rules examples:
 
 </p>
 <pre class="code">
-^/site/.*$ =&gt; $uid eq &quot;admin&quot; or $groups =~ /\bgroup2\b/
-^/(js|css) =&gt; accept
+(?#Admin access)^/site/.*$ =&gt; $uid eq &quot;admin&quot; or $groups =~ /\bgroup2\b/
+(?#Static content)^/(js|css) =&gt; accept
 default =&gt; deny
 </pre>
+
+<p>
+<p><div class="notetip">Rule comments are used in Manager to display the rule. Comments can also be used to sort rules.
+</div></p>
+</p>
 
 <p>
 Access rules accepts special targets:
@@ -172,7 +181,7 @@ Access rules accepts special targets:
 </p>
 
 </div>
-<!-- SECTION "Access rules" [2388-3368] -->
+<!-- SECTION "Access rules" [2388-3565] -->
 <h3><a name="http_headers" id="http_headers">HTTP headers</a></h3>
 <div class="level3">
 
@@ -205,7 +214,7 @@ Session-ID =&gt; $_session_id
 </p>
 
 </div>
-<!-- SECTION "HTTP headers" [3369-3795] -->
+<!-- SECTION "HTTP headers" [3566-3992] -->
 <h3><a name="post_data" id="post_data">POST data</a></h3>
 <div class="level3">
 
@@ -215,7 +224,7 @@ Session-ID =&gt; $_session_id
 </p>
 
 </div>
-<!-- SECTION "POST data" [3796-3852] -->
+<!-- SECTION "POST data" [3993-4049] -->
 <h3><a name="options" id="options">Options</a></h3>
 <div class="level3">
 
@@ -236,4 +245,4 @@ These options are used to build redirection <acronym title="Uniform Resource Loc
 </p>
 
 </div>
-<!-- SECTION "Options" [3853-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Options" [4050-] --></div><!-- closes <div class="dokuwiki export">-->
