@@ -22,6 +22,8 @@ our $page_title = 'Lemonldap::NG statistics';
 # @return Constant hash used to convert error codes into string.
 sub portalTab {
     return {
+        -5 => 'PE_IMG_NOK',
+        -4 => 'PE_IMG_OK',
         -3 => 'PE_INFO',
         -2 => 'PORTAL_REDIRECT',
         -1 => 'PORTAL_ALREADY_AUTHENTICATED',
@@ -63,6 +65,24 @@ sub portalTab {
         45 => 'PORTAL_MAILERROR',
         46 => 'PORTAL_MAILOK',
         47 => 'PORTAL_LOGOUT_OK',
+        48 => 'PE_SAML_ERROR',
+        49 => 'PE_SAML_LOAD_SERVICE_ERROR',
+        50 => 'PE_SAML_LOAD_IDP_ERROR',
+        51 => 'PE_SAML_SSO_ERROR',
+        52 => 'PE_SAML_UNKNOWN_ENTITY',
+        53 => 'PE_SAML_DESTINATION_ERROR',
+        54 => 'PE_SAML_CONDITIONS_ERROR',
+        55 => 'PE_SAML_IDPSSOINITIATED_NOTALLOWED',
+        56 => 'PE_SAML_SLO_ERROR',
+        57 => 'PE_SAML_SIGNATURE_ERROR',
+        58 => 'PE_SAML_ART_ERROR',
+        59 => 'PE_SAML_SESSION_ERROR',
+        60 => 'PE_SAML_LOAD_SP_ERROR',
+        61 => 'PE_SAML_ATTR_ERROR',
+        62 => 'PE_OPENID_EMPTY',
+        63 => 'PE_OPENID_BADID',
+        64 => 'PE_MISSINGREQATTR',
+        65 => 'PE_BADPARTNER',
     };
 }
 
@@ -253,7 +273,7 @@ sub timeUp {
     $d = ( $d - $mn ) / 60;
     my $h = $d % 24;
     $d = ( $d - $h ) / 24;
-    return "$d\d $h\h $mn\mn";
+    return "${d}d ${h}h ${mn}mn";
 }
 
 ## @rfn private void topByCat(string cat,int max)
