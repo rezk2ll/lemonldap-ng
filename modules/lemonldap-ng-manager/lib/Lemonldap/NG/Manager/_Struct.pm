@@ -686,10 +686,9 @@ sub struct {
                 customFunctions => 'text:/customFunctions',
 
                 soap => {
-                    _nodes         => [qw(Soap exportedAttr trustedDomains)],
+                    _nodes       => [qw(Soap exportedAttr)],
                     Soap           => 'bool:/Soap',
                     exportedAttr   => 'text:/exportedAttr',
-                    trustedDomains => 'text:/trustedDomains',
                 },
 
                 notifications => {
@@ -723,11 +722,13 @@ sub struct {
                 },
 
                 security => {
-                    _nodes      => [qw(userControl portalForceAuthn key)],
+                    _nodes =>
+                      [qw(userControl portalForceAuthn key trustedDomains)],
                     userControl => 'text:/userControl:userControl:text',
                     portalForceAuthn =>
                       'bool:/portalForceAuthn:portalForceAuthn:bool',
                     key => 'text:/key:key:text',
+                    trustedDomains => 'text:/trustedDomains',
                 },
 
                 redirection => {
