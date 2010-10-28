@@ -171,7 +171,7 @@ manager:	manager_conf
 	@$(MAKE) -C ${SRCMANAGERDIR}
 	@touch manager
 
-test:		common_test handler_test portal_test manager_test extra_test
+test:		all common_test handler_test portal_test manager_test extra_test
 
 common_test:	common
 	@$(MAKE) -C ${SRCCOMMONDIR} test
@@ -185,7 +185,7 @@ portal_test:	portal handler_test common_test
 manager_test:	manager handler_test common_test
 	@$(MAKE) -C ${SRCMANAGERDIR} test FULLPERL="$(PERL) -I../${SRCCOMMONDIR}/blib/lib/ -I../${SRCHANDLERDIR}/blib/lib/"
 
-extra_test:	common handler portal manager
+extra_test:	all
 	PERL_DL_NONLAZY=1 $(PERL) "-MExtUtils::Command::MM" "-e" "test_harness(0, 'lemonldap-ng-common/blib/lib', 'lemonldap-ng-handler/blib/lib', 'lemonldap-ng-manager/blib/lib', 'lemonldap-ng-portal/blib/lib')" extra-tests/*.t
 
 #
