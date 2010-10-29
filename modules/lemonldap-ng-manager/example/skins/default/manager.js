@@ -24,6 +24,23 @@ $(document).ready(function(){
 		$("#help_content").slideToggle('fast');
 	});
 
+	/* Skin selector dialog */
+	$('#skinImagePicker').dialog({
+		autoOpen: false,
+		minWidth: 500,
+		modal: true
+	});
+	$('#content_skin button.current').click(function(){
+		$('#skinImagePicker').dialog( "open" );
+		return false;
+	});
+	$('#skinImagePicker button').click(function(){
+		var skin = $("img",this).attr('title');
+		changeSkinImage(skin);
+		$('#skinImagePicker').dialog( "close" );
+		return false;
+	});
+
 	/* Load default help */
 	$('#help_content').load(scriptname+'?help=default');
 
@@ -419,18 +436,28 @@ function formateSelectPassword(id,value){
 }
 function skinSelect(id) {
 	currentId=id;
-	formateSelect('skinText',[
-		'pastel=Pastel',
-		'impact=Impact',
-		'dark=Dark',
-		],lmdata(id));
 	changeSkinImage(lmdata(id));
 	display('skin',lmtext(id));
 }
+/* Change current skin */
 function changeSkinImage(skin) {
-	var imgsrc = imagepath + skin + '.png';
-	$('#content_skin>img').attr('src', imgsrc);
-	$('#content_skin>img').attr('alt', skin);
+	// Set field value
+	$('#skinText').val(skin);
+	// Set skin to custom if not a registered skin
+	// Custom field can the be edited
+	if ((skin!='pastel') && (skin!='dark') && (skin!='impact')){
+		skin = 'custom';
+		$('#skinText').attr('readonly','');
+	} else {
+		$('#skinText').attr('readonly','readonly');
+	}
+	// Set image source
+	var imgsrc = imagepath + 'images/portal-skins/' + skin + '.png';
+	$('#content_skin img.current').attr('src', imgsrc);
+	$('#content_skin img.current').attr('alt', skin);
+}
+/* Display skin selector */
+function skinImagePicker() {
 }
 function nameIdFormatParams(id) {
 	currentId=id;

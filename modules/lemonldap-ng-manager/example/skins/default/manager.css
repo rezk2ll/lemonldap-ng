@@ -310,3 +310,15 @@ div.category ul {
 	-webkit-box-shadow:1px 1px 15px #555;
 }
 
+/* Skin selection */
+input#skinText {
+	text-align: center;
+}
+
+#content_skin img, #skinImagePicker img {
+	margin: 5px;
+}
+
+#skinImagePicker {
+	text-align: center;
+}

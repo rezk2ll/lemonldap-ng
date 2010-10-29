@@ -43,6 +43,13 @@
 <div id="popup" title="<lang en="Command result" fr="Résultat de la commande" />">
 </div>
 
+<!-- Skin picker-->
+<div id="skinImagePicker" title="<lang en="Choose a skin" fr="Choisir un thème" />">
+     <button><img src="<TMPL_VAR NAME="DIR">/images/portal-skins/pastel.png" alt="Pastel" title="pastel" /></button>
+     <button><img src="<TMPL_VAR NAME="DIR">/images/portal-skins/impact.png" alt="Impact" title="impact" /></button>
+     <button><img src="<TMPL_VAR NAME="DIR">/images/portal-skins/dark.png" alt="Dark" title="dark" /></button>
+     <button><img src="<TMPL_VAR NAME="DIR">/images/portal-skins/custom.png" alt="Custom" title="custom" /></button>
+</div>
 <!-- Container -->
 <div id="container" class="ui-widget ui-helper-clearfix">
 
@@ -356,9 +363,9 @@
 
     <!-- Skin -->
     <div id="content_skin" class="hidden">
-     <img src="" alt="" />
+     <button class="current"><img src="" alt="" class="current" /></button>
      <br /> 
-     <select id="skinText" onchange="changeSkinImage(this.value);return false;"></select>
+     <input id="skinText" type="text" readonly="readonly" />
      <br />
      <button onclick="setlminputdata(currentId,skinText);return false;" class="ui-state-default ui-corner-all">
      <lang en="Apply" fr="Appliquer" />
