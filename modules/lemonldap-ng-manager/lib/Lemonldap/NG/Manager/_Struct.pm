@@ -2008,6 +2008,30 @@ sub globalTests {
                 return 1;
             }
         },
+	testApacheSession => sub {
+            my ( $id, %h );
+	    eval "use $conf->{globalStorage}";
+            return ( -1, "Unknown package $conf->{globalStorage}" ) if ($@);
+            eval {
+                tie %h, $conf->{globalStorage}, undef,
+                  $conf->{globalStorageOptions};
+            };
+            return ( -1, "Unable to create a session ($@)" )
+              if ( $@ or not tied(%h) );
+	    eval {
+	    	$h{a} = 1;
+                $id = $h{_session_id} or return ( -1, 'No _session_id' );
+		untie(%h);
+                tie %h, $conf->{globalStorage}, $id,
+                  $conf->{globalStorageOptions};
+		};
+            return ( -1, "Unable to insert datas ($@)" ) if ($@);
+            return ( -1, "Unable to recover data stored" )
+              unless ( $h{a} == 1 );
+            eval { tied(%h)->delete; };
+            return ( -1, "Unable to delete session ($@)" ) if ($@);
+	    return 1;
+	},
     };
 }
 

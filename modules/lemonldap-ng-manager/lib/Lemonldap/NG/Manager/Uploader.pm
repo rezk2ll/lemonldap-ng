@@ -364,7 +364,11 @@ s/^(samlSPMetaDataXML|samlSPMetaDataExportedAttributes|samlSPMetaDataOptions)\/(
             my ( $res, $msg );
             eval {
                 ( $res, $msg ) = $sub->();
-                if ($res) {
+                if ( $res == -1 ) {
+                    $errors->{force}->{$name} = $msg
+                      unless ( $self->param('force') );
+                }
+                elsif ($res) {
                     if ($msg) {
                         $errors->{warnings}->{$name} = $msg;
                     }
@@ -376,6 +380,14 @@ s/^(samlSPMetaDataXML|samlSPMetaDataExportedAttributes|samlSPMetaDataOptions)\/(
             $errors->{warnings}->{$name} = "Test $name failed: $@" if ($@);
         }
     }
+    if ( $errors->{force} ) {
+        $errors->{result}->{other} = '*<a href="javascript:uploadConf(1)">'
+          . $self->translate('clickHereToForce') . '</a>';
+        foreach my $k ( keys %{ $errors->{force} } ) {
+            $errors->{errors}->{$k} =
+              delete( $errors->{force}->{$k} ) . '<sup>*</sup>';
+        }
+    }
 
     # 1.6 Author attributes for accounting
     $newConf->{cfgAuthor}   = $ENV{REMOTE_USER} || 'anonymous';
@@ -384,7 +396,7 @@ s/^(samlSPMetaDataXML|samlSPMetaDataExportedAttributes|samlSPMetaDataOptions)\/(
 
     # 2. SAVE CONFIGURATION
 
-    $errors->{result}->{other} = '';
+    $errors->{result}->{other} ||= '';
 
     # 2.1 Don't store configuration if a syntax error was detected
     if ( $errors->{errors} ) {
@@ -440,7 +452,8 @@ s/^(samlSPMetaDataXML|samlSPMetaDataExportedAttributes|samlSPMetaDataOptions)\/(
                 UPLOAD_DENIED,      'uploadDenied',
                 SYNTAX_ERROR,       'syntaxError',
                 DEPRECATED,         'confModuledeprecated',
-            }->{ $errors->{result}->{cfgNum} } || $msg;
+              }->{ $errors->{result}->{cfgNum} }
+              || $msg;
 
             # Log failure using Lemonldap::NG::Common::CGI::userError()
             $self->_sub( 'userError',
