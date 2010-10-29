@@ -101,11 +101,34 @@ Then:
 </li>
 <li class="level1"><div class="li"> All static content (examples, <acronym title="Cascading Style Sheets">CSS</acronym>, images, etc.) is in /usr/share/lemonldap-ng/</div>
 </li>
+<li class="level1"><div class="li"> Apache configuration files are in /etc/lemonldap-ng and linked in /etc/apache2/sites-available</div>
+</li>
 </ul>
 
 </div>
-<!-- SECTION "File location" [910-1265] -->
-<h2><a name="change_default_dns_domain" id="change_default_dns_domain">Change default DNS domain</a></h2>
+<!-- SECTION "File location" [910-1364] -->
+<h2><a name="enable_lemonldapng" id="enable_lemonldapng">Enable Lemonldap::NG</a></h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> Enable Lemonldap::NG sites :</div>
+</li>
+</ul>
+<pre class="code shell"># a2ensite portal-apache2.conf
+# a2ensite manager-apache2.conf
+# /etc/init.d/apache2 restart</pre>
+<ul>
+<li class="level1"><div class="li"> Configure your <acronym title="Domain Name System">DNS</acronym> server or for tests with example.com, lauch the following :</div>
+</li>
+</ul>
+<pre class="code shell"># cat /etc/lemonldap-ng/for_etc_hosts &gt;&gt; /etc/hosts</pre>
+
+<p>
+Follow the <a href="../../documentation/1.0/start.html#configuration" class="wikilink1" title="documentation:1.0:start">next steps</a>
+</p>
+
+</div>
+<!-- SECTION "Enable Lemonldap::NG" [1365-1749] -->
+<h2><a name="tips_to_change_default_dns_domain" id="tips_to_change_default_dns_domain">Tips to change default DNS domain</a></h2>
 <div class="level2">
 
 <p>
@@ -115,4 +138,4 @@ By default, <acronym title="Domain Name System">DNS</acronym> domain is <code>ex
 <pre class="code shell"># sed -i 's/example\.com/ow2.org/g' /etc/lemonldap-ng/* /var/lib/lemonldap-ng/conf/* /var/lib/lemonldap-ng/test/*</pre>
 
 </div>
-<!-- SECTION "Change default DNS domain" [1266-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Tips to change default DNS domain" [1750-] --></div><!-- closes <div class="dokuwiki export">-->

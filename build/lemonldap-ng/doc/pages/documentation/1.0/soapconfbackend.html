@@ -1,0 +1,86 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+
+
+<h1><a name="soap_configuration_backend" id="soap_configuration_backend">SOAP configuration backend</a></h1>
+<div class="level1">
+
+<p>
+
+You can share your configuration over the network using <acronym title="Simple Object Access Protocol">SOAP</acronym> proxy system.
+</p>
+
+<p>
+<p><div class="notetip">Note that <acronym title="Simple Object Access Protocol">SOAP</acronym> is not a real configuration backend, but just a proxy system to access to your configuration over the network
+</div></p>
+</p>
+
+</div>
+<!-- SECTION "SOAP configuration backend" [1-261] -->
+<h2><a name="configuration" id="configuration">Configuration</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Configuration" [262-288] -->
+<h3><a name="first_configure_your_real_backend" id="first_configure_your_real_backend">First, configure your real backend</a></h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> On your main server, configure a <a href="../../documentation/1.0/fileconfbackend.html" class="wikilink1" title="documentation:1.0:fileconfbackend">File</a>, <a href="../../documentation/1.0/sqlconfbackend.html" class="wikilink1" title="documentation:1.0:sqlconfbackend">SQL</a> or <a href="../../documentation/1.0/ldapconfbackend.html" class="wikilink2" title="documentation:1.0:ldapconfbackend" rel="nofollow">LDAP</a> backend</div>
+</li>
+<li class="level1"><div class="li"> Set <acronym title="Simple Object Access Protocol">SOAP</acronym> parameter to true in the configuration using the manager: the portal will become a <acronym title="Simple Object Access Protocol">SOAP</acronym> server</div>
+</li>
+<li class="level1"><div class="li"> Configure Apache to allow remote access: in portalApache2.conf, remote <acronym title="Simple Object Access Protocol">SOAP</acronym> access is disabled by default. Change it:</div>
+</li>
+</ul>
+<pre class="code shell"># SOAP functions for sessions access (disabled by default)
+&lt;Directory /var/lib/lemonldap-ng/portal/index.pl/sessions&gt;
+    Order deny,allow
+    Deny from all
+    Allow from 192.168.2.0/24
+&lt;/Directory&gt;</pre>
+
+</div>
+<!-- SECTION "First, configure your real backend" [289-962] -->
+<h3><a name="next_configure_soap_for_your_remote_servers" id="next_configure_soap_for_your_remote_servers">Next, configure SOAP for your remote servers</a></h3>
+<div class="level3">
+
+<p>
+
+Change configuration in lemonldap-ng.ini :
+
+</p>
+<pre class="code shell">type         = SOAP
+proxy        = https://auth.example.com/index.pl/config</pre>
+
+<p>
+
+You can also add some other parameters
+
+</p>
+<pre class="code shell">User         = lemonldap
+Password     = mypassword
+# LWP::UserAgent parameters
+proxyOptions = { timeout =&gt; 5 }</pre>
+
+</div>
+<!-- SECTION "Next, configure SOAP for your remote servers" [963-] --></div><!-- closes <div class="dokuwiki export">-->

@@ -496,6 +496,7 @@ static_example:
 	@$(MAKE) sub_static_example LMPREFIX=$(EXAMPLEROOT)
 
 documentation:
+	@rm -f doc/pages/documentation/latest
 	@cd doc/ && ../scripts/doc.pl
 	@rm -rf doc/pages/documentation/latest
 	@ln -s $$(perl -e '$$h{sprintf("%03d\.%03d\.%03d",split/\./,$$_)}=$$_ foreach(@ARGV); \

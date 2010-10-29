@@ -36,7 +36,18 @@ LemonLDAP::NG configuration is stored in a backend (File, database, …), that a
 </p>
 
 <p>
-<p><div class="notetip">Detailled configuration backends documentation is available <a href="../../documentation/1.0/start.html#configuration1" class="wikilink1" title="documentation:1.0:start">here</a>.
+<p><div class="noteimportant">Note that all Lemonldap::NG components must have access :
+</p>
+<ul>
+<li class="level1"><div class="li"> to the configuration backend</div>
+</li>
+<li class="level1"><div class="li"> to the sessions storage backend</div>
+</li>
+</ul>
+
+<p>
+
+Detailled configuration backends documentation is available <a href="../../documentation/1.0/start.html#configuration1" class="wikilink1" title="documentation:1.0:start">here</a>.
 </div></p>
 </p>
 
@@ -56,7 +67,7 @@ For example, to configure the <code>File</code> configuration backend:
 <span class="re1">dirName</span> <span class="sy0">=</span><span class="re2"> /usr/local/lemonldap-ng/data/conf</span></pre>
 
 </div>
-<!-- SECTION "Backends" [39-749] -->
+<!-- SECTION "Backends" [39-883] -->
 <h2><a name="manager" id="manager">Manager</a></h2>
 <div class="level2">
 
@@ -76,7 +87,11 @@ By default, Manager is protected to allow only localhost. This can be changed in
     &lt;/<span class="kw3">Directory</span>&gt;</pre>
 
 <p>
-<p><div class="notetip">You can change allowed <acronym title="Internet Protocol">IP</acronym>, or add an Apache authentication module. When LemonLDAP::NG will be fully configured, you can also protect Manager with the Handler, as any other web application.
+<p><div class="notetip">You can change allowed <acronym title="Internet Protocol">IP</acronym>, or add an Apache authentication module. When LemonLDAP::NG will be fully configured.
+</p>
+
+<p>
+You can also protect Manager with Lemonldap::NG itself, as any other web application: set “protection=manager” in lemonldap-ng.ini configuration file (section manager)
 </div></p>
 </p>
 
@@ -108,12 +123,12 @@ When modifying a value, always click on the <code>Apply</code> button if availab
 </p>
 
 <p>
-<p><div class="notewarning">LemonLDAP::NG will do some checks on configuration and display errors if any. Configuration <strong>is not saved</strong> if errors occur.
+<p><div class="notewarning">LemonLDAP::NG will do some checks on configuration and display errors and warnings if any. Configuration <strong>is not saved</strong> if errors occur.
 </div></p>
 </p>
 
 </div>
-<!-- SECTION "Manager" [750-2274] -->
+<!-- SECTION "Manager" [884-2513] -->
 <h2><a name="apache" id="apache">Apache</a></h2>
 <div class="level2">
 
@@ -146,7 +161,7 @@ These files must be included in Apache configuration, either with <code>Include<
 </p>
 
 </div>
-<!-- SECTION "Apache" [2275-3034] -->
+<!-- SECTION "Apache" [2514-3273] -->
 <h3><a name="portal" id="portal">Portal</a></h3>
 <div class="level3">
 
@@ -245,7 +260,7 @@ In Portal virtual host, you will find several configuration parts:
 &lt;/Perl&gt;</pre>
 
 </div>
-<!-- SECTION "Portal" [3035-5628] -->
+<!-- SECTION "Portal" [3274-5867] -->
 <h3><a name="manager1" id="manager1">Manager</a></h3>
 <div class="level3">
 
@@ -276,7 +291,7 @@ Manager virtual host is used to serve configuration interface and local document
     &lt;/<span class="kw3">Directory</span>&gt;</pre>
 
 </div>
-<!-- SECTION "Manager" [5629-6274] -->
+<!-- SECTION "Manager" [5868-6513] -->
 <h3><a name="handler" id="handler">Handler</a></h3>
 <div class="level3">
 <ul>
@@ -330,7 +345,7 @@ Then, to protect a standard virutal host, the only configuration line to add is:
 <pre class="code file apache">PerlHeaderParserHandler My::Package</pre>
 
 </div>
-<!-- SECTION "Handler" [6275-7490] -->
+<!-- SECTION "Handler" [6514-7729] -->
 <h2><a name="configuration_reload" id="configuration_reload">Configuration reload</a></h2>
 <div class="level2">
 
@@ -375,7 +390,7 @@ The <code>reload</code> target is managed in Apache configuration, inside a virt
 </p>
 
 </div>
-<!-- SECTION "Configuration reload" [7491-8767] -->
+<!-- SECTION "Configuration reload" [7730-9006] -->
 <h2><a name="local_file" id="local_file">Local file</a></h2>
 <div class="level2">
 
@@ -415,7 +430,7 @@ For example, to override configured skin for portal:
 </p>
 
 </div>
-<!-- SECTION "Local file" [8768-9625] -->
+<!-- SECTION "Local file" [9007-9864] -->
 <h2><a name="script_files" id="script_files">Script files</a></h2>
 <div class="level2">
 
@@ -430,7 +445,7 @@ LemonLDAP::NG allows to override any configuration parameter directly in script 
 </p>
 
 </div>
-<!-- SECTION "Script files" [9626-10014] -->
+<!-- SECTION "Script files" [9865-10253] -->
 <h3><a name="portal1" id="portal1">Portal</a></h3>
 <div class="level3">
 
@@ -445,7 +460,7 @@ For example, in portal/index.pl:
 <span class="br0">&#41;</span><span class="sy0">;</span></pre>
 
 </div>
-<!-- SECTION "Portal" [10015-10185] -->
+<!-- SECTION "Portal" [10254-10424] -->
 <h3><a name="handler1" id="handler1">Handler</a></h3>
 <div class="level3">
 
@@ -460,4 +475,4 @@ For example, in handler/MyHandler.pm:
 <span class="br0">&#41;</span><span class="sy0">;</span></pre>
 
 </div>
-<!-- SECTION "Handler" [10186-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Handler" [10425-] --></div><!-- closes <div class="dokuwiki export">-->
