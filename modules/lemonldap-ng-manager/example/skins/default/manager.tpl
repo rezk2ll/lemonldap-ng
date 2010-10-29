@@ -60,7 +60,7 @@
      <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/database.png" title="database" /></button>
      <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/demo.png" title="demo" /></button>
      <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/folder.png" title="folder" /></button>
-     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/gear.png" title="gera" /></button>
+     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/gear.png" title="gear" /></button>
      <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/help.png" title="help" /></button>
      <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/mailappt.png" title="mailappt" /></button>
      <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/money.png" title="money" /></button>
