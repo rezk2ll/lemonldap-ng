@@ -2030,8 +2030,9 @@ sub globalTests {
               unless ( $h{a} == 1 );
             eval { tied(%h)->delete; };
             return ( -1, "Unable to delete session ($@)" ) if ($@);
-            #return ( -1, 'All sessions may be lost' )
-            #  if ( $conf->{globalStorage} ne $self->{globalStorage} );
+            my $gc = $Lemonldap::NG::Handler::CGI::globalStorage;
+            return ( -1, 'All sessions may be lost' )
+              if ( $conf->{globalStorage} ne $gc );
             return 1;
 	},
     };

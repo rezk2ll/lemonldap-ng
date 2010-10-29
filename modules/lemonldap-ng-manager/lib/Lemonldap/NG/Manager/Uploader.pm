@@ -380,14 +380,6 @@ s/^(samlSPMetaDataXML|samlSPMetaDataExportedAttributes|samlSPMetaDataOptions)\/(
             $errors->{warnings}->{$name} = "Test $name failed: $@" if ($@);
         }
     }
-    if ( $errors->{force} ) {
-        $errors->{result}->{other} = '*<a href="javascript:uploadConf(1)">'
-          . $self->translate('clickHereToForce') . '</a>';
-        foreach my $k ( keys %{ $errors->{force} } ) {
-            $errors->{errors}->{$k} =
-              delete( $errors->{force}->{$k} ) . '<sup>*</sup>';
-        }
-    }
 
     # 1.6 Author attributes for accounting
     $newConf->{cfgAuthor}   = $ENV{REMOTE_USER} || 'anonymous';
@@ -396,7 +388,7 @@ s/^(samlSPMetaDataXML|samlSPMetaDataExportedAttributes|samlSPMetaDataOptions)\/(
 
     # 2. SAVE CONFIGURATION
 
-    $errors->{result}->{other} ||= '';
+    $errors->{result}->{other} = '';
 
     # 2.1 Don't store configuration if a syntax error was detected
     if ( $errors->{errors} ) {
@@ -404,6 +396,19 @@ s/^(samlSPMetaDataXML|samlSPMetaDataExportedAttributes|samlSPMetaDataOptions)\/(
         $errors->{result}->{msg}    = $self->translate('syntaxError');
         $self->_sub( 'userInfo',
             "Configuration rejected for $newConf->{cfgAuthor}: syntax error" );
+    }
+    elsif ( $errors->{force} ) {
+        $errors->{result}->{cfgNum} = 0;
+        $errors->{result}->{msg}    = $self->translate('warning');
+        $self->_sub( 'userInfo',
+"Configuration rejected for $newConf->{cfgAuthor}: confirmation needed"
+        );
+        $errors->{result}->{other} = '*<a href="javascript:uploadConf(1)">'
+          . $self->translate('clickHereToForce') . '</a>';
+        foreach my $k ( keys %{ $errors->{force} } ) {
+            $errors->{errors}->{$k} =
+              delete( $errors->{force}->{$k} ) . '<sup>*</sup>';
+        }
     }
 
     # 2.2 Try to save configuration
