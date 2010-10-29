@@ -41,6 +41,23 @@ $(document).ready(function(){
 		return false;
 	});
 
+	/* Apps logo selector dialog */
+	$('#appsLogoPicker').dialog({
+		autoOpen: false,
+		minWidth: 300,
+		modal: true
+	});
+	$('#content_applicationListApplication button.current').click(function(){
+		$('#appsLogoPicker').dialog( "open" );
+		return false;
+	});
+	$('#appsLogoPicker button').click(function(){
+		var logo = $("img",this).attr('title');
+		changeAppsLogo(logo+'.png');
+		$('#appsLogoPicker').dialog( "close" );
+		return false;
+	});
+
 	/* Load default help */
 	$('#help_content').load(scriptname+'?help=default');
 
@@ -455,9 +472,6 @@ function changeSkinImage(skin) {
 	var imgsrc = imagepath + 'images/portal-skins/' + skin + '.png';
 	$('#content_skin img.current').attr('src', imgsrc);
 	$('#content_skin img.current').attr('alt', skin);
-}
-/* Display skin selector */
-function skinImagePicker() {
 }
 function nameIdFormatParams(id) {
 	currentId=id;
@@ -1160,7 +1174,7 @@ function applicationListApplication(id){
 	$('#applicationListApplicationName').attr('value',t[0]);
 	$('#applicationListApplicationURL').attr('value',t[1]);
 	$('#applicationListApplicationDescription').attr('value',t[2]);
-	$('#applicationListApplicationLogo').attr('value',t[3]);
+	changeAppsLogo(t[3]);
 	formateSelect('applicationListApplicationDisplay',[
 		'auto=Automatic',
 		'on=On',
@@ -1168,6 +1182,24 @@ function applicationListApplication(id){
 		],t[4]);
 	display('applicationListApplication',lmtext(id));
 	$('#delapplication').show();
+}
+
+/* Change current logo */
+function changeAppsLogo(logo) {
+	// Set field value
+	$('#applicationListApplicationLogo').val(logo);
+	// Set logo to custom if not a registered logo
+	// Custom field can be edited
+	if ((logo!='attach.png') && (logo!='bell.png') && (logo!='bookmark.png') && (logo!='configure.png') && (logo!='database.png') && (logo!='demo.png') && (logo!='docs.png') && (logo!='folder.png') && (logo!='gears.png') && (logo!='help.png') && (logo!='mailappt.png') && (logo!='money.png') && (logo!='network.png') && (logo!='terminal.png') && (logo!='thumbnail.png') && (logo!='tools.png') && (logo!='tux.png') && (logo!='web.png') && (logo!='wheels.png')){
+		logo = 'custom.png';
+		$('#applicationListApplicationLogo').attr('readonly','');
+	} else {
+		$('#applicationListApplicationLogo').attr('readonly','readonly');
+	}
+	// Set image source
+	var imgsrc = imagepath + 'images/apps-logos/' + logo;
+	$('#content_applicationListApplication img.current').attr('src', imgsrc);
+	$('#content_applicationListApplication img.current').attr('alt', logo);
 }
 
 /* Post */

@@ -50,6 +50,27 @@
      <button><img src="<TMPL_VAR NAME="DIR">/images/portal-skins/dark.png" alt="Dark" title="dark" /></button>
      <button><img src="<TMPL_VAR NAME="DIR">/images/portal-skins/custom.png" alt="Custom" title="custom" /></button>
 </div>
+
+<!-- logo picker-->
+<div id="appsLogoPicker" title="<lang en="Choose a logo" fr="Choisir un logo" />">
+     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/attach.png" title="attach" /></button>
+     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/bell.png" title="bell" /></button>
+     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/bookmark.png" title="bookmark" /></button>
+     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/configure.png" title="configure" /></button>
+     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/database.png" title="database" /></button>
+     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/demo.png" title="demo" /></button>
+     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/folder.png" title="folder" /></button>
+     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/gear.png" title="gera" /></button>
+     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/help.png" title="help" /></button>
+     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/mailappt.png" title="mailappt" /></button>
+     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/money.png" title="money" /></button>
+     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/network.png" title="network" /></button>
+     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/terminal.png" title="terminal" /></button>
+     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/thumbnail.png" title="thumbnail" /></button>
+     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/tux.png" title="tux" /></button>
+     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/custom.png" title="custom" /></button>
+</div>
+
 <!-- Container -->
 <div id="container" class="ui-widget ui-helper-clearfix">
 
@@ -547,26 +568,23 @@
       <tr>
        <td><lang en="Key" fr="Nom de la clef"/></td>
        <td><input type="text" id="applicationListApplicationKey" /></td>
-      </tr>
-      <tr>
        <td><lang en="Display name" fr="Nom à afficher"/></td>
        <td><input type="text" id="applicationListApplicationName" /></td>
       </tr>
       <tr>
-       <td><lang en="Adress" fr="Adresse"/></td>
+       <td><lang en="Address" fr="Adresse"/></td>
        <td><input type="text" id="applicationListApplicationURL" /></td>
+       <td><lang en="Display mode" fr="Mode d'affichage"/></td>
+       <td><select id="applicationListApplicationDisplay"></select></td>
       </tr>
       <tr>
        <td><lang en="Description" fr="Description"/></td>
        <td><textarea id="applicationListApplicationDescription" /></textarea></td>
-      </tr>
-      <tr>
-       <td><lang en="Logo (file name)" fr="Logo (nom du fichier)"/></td>
-       <td><input type="text" id="applicationListApplicationLogo" /></td>
-      </tr>
-      <tr>
-       <td><lang en="Display mode" fr="Mode d'affichage"/></td>
-       <td><select id="applicationListApplicationDisplay"></select></td>
+       <td><lang en="Logo" fr="Logo"/></td>
+       <td>
+         <button class="current"><img src="" alt="" class="current" /></button><br />
+         <input type="text" id="applicationListApplicationLogo" readonly="readonly" />
+       </td>
       </tr>
      </table>
      <br />

@@ -315,10 +315,10 @@ input#skinText {
 	text-align: center;
 }
 
-#content_skin img, #skinImagePicker img {
+#content_skin img, #skinImagePicker img, #content_applicationListApplication img, #appsLogoPicker img {
 	margin: 5px;
 }
 
-#skinImagePicker {
+#skinImagePicker, #appsLogoPicker {
 	text-align: center;
 }
