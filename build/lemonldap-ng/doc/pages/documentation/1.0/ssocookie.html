@@ -51,7 +51,7 @@ To edit <acronym title="Single Sign On">SSO</acronym> cookie parameters, go in M
 </li>
 <li class="level2"><div class="li"> <strong>Secured cookie</strong>: the cookie can only be sent over HTTPS</div>
 </li>
-<li class="level2"><div class="li"> <strong>Double cookie</strong>: two cookies are built, one for <acronym title="Hyper Text Transfer Protocol">HTTP</acronym>, the other for HTTPS</div>
+<li class="level2"><div class="li"> <strong>Double cookie</strong>: two cookies are built, one for <acronym title="Hyper Text Transfer Protocol">HTTP</acronym>, the other for HTTPS only</div>
 </li>
 </ul>
 </li>
@@ -75,12 +75,17 @@ To edit <acronym title="Single Sign On">SSO</acronym> cookie parameters, go in M
 
 <p>
 
+<p><div class="notewarning">When you change cookie expiration time, it is written on the user hard disk unlike session cookie
+</div></p>
+</p>
+
+<p>
 <p><div class="noteimportant">Changing the domain value will not update other configuration parameters, like virtual host names, portal <acronym title="Uniform Resource Locator">URL</acronym>, etc. You have to update them by yourself.
 </div></p>
 </p>
 
 </div>
-<!-- SECTION "SSO cookie" [60-1742] -->
+<!-- SECTION "SSO cookie" [60-1867] -->
 <h2><a name="portal_url" id="portal_url">Portal URL</a></h2>
 <div class="level2">
 
@@ -89,7 +94,7 @@ To edit <acronym title="Single Sign On">SSO</acronym> cookie parameters, go in M
 Portal <acronym title="Uniform Resource Locator">URL</acronym> is the address used to redirect users on the authentication portal by:
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>Handler</strong>: user is redirected if he has no <acronym title="Single Sign On">SSO</acronym> cookie (or in <acronym title="Cross Domain Authentication">CDA</acronym> mode)</div>
+<li class="level1"><div class="li"> <strong>Handler</strong>: user is redirected if he has no <acronym title="Single Sign On">SSO</acronym> cookie (or in <a href="../../documentation/1.0/cda.html" class="wikilink2" title="documentation:1.0:cda" rel="nofollow">CDA</a> mode)</div>
 </li>
 <li class="level1"><div class="li"> <strong>Portal</strong>: the portal redirect on itself in many cases (credentials POST, <acronym title="Security Assertion Markup Language">SAML</acronym>, etc.)</div>
 </li>
@@ -102,4 +107,4 @@ Portal <acronym title="Uniform Resource Locator">URL</acronym> is the address us
 </p>
 
 </div>
-<!-- SECTION "Portal URL" [1743-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Portal URL" [1868-] --></div><!-- closes <div class="dokuwiki export">-->

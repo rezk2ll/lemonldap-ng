@@ -1,0 +1,84 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+
+
+<h1><a name="ldap_configuration_backend" id="ldap_configuration_backend">LDAP configuration backend</a></h1>
+<div class="level1">
+
+</div>
+<!-- SECTION "LDAP configuration backend" [1-43] -->
+<h2><a name="presentation" id="presentation">Presentation</a></h2>
+<div class="level2">
+
+<p>
+
+You can choose to store LemonLDAP::NG configuration in an <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> directory.
+</p>
+
+<p>
+Advantages:
+</p>
+<ul>
+<li class="level1"><div class="li"> Easy to share between servers with remote <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> access</div>
+</li>
+<li class="level1"><div class="li"> Easy to duplicate with <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> synchronization services (like SyncRepl in OpenLDAP)</div>
+</li>
+<li class="level1"><div class="li"> Security with <acronym title="Secure Sockets Layer">SSL</acronym>/TLS</div>
+</li>
+<li class="level1"><div class="li"> Access control possible by creating one user for Manager (write) and another for portal and handlers (read)</div>
+</li>
+<li class="level1"><div class="li"> Easy import/export through LDIF files</div>
+</li>
+</ul>
+
+<p>
+
+The configuration will be store under a specific branch, for example <code>ou=conf,ou=applications,dc=example,dc=com</code>.
+</p>
+
+<p>
+Each configuration will be represented as an entry, which structural objectClass is <code>applicationProcess</code>. This objectClass is included in every core schemas.
+</p>
+
+<p>
+The configuration name is the same that files, so lmConf-1, lmConf-2, etc. This name is used in entry <acronym title="Distinguished Name">DN</acronym>, for example <code>cn=lmConf-1,ou=conf,ou=applications,dc=example,dc=com</code>.
+</p>
+
+<p>
+Then each parameter is one value of the attribute <code>description</code>, prefixed by its key. For example <code>{ldapPort}389</code>.
+</p>
+
+<p>
+The LDIF view of such entry can be:
+</p>
+<pre class="code file ldif">dn: cn=lmConf-1,ou=conf,ou=applications,dc=example,dc=com
+objectClass: top
+objectClass: applicationProcess
+cn: lmConf-1
+description: {globalStorage}'Apache::Session::File'
+description: {cookieName}'lemonldap'
+description: {whatToTrace}'$uid'
+...</pre>
+
+</div>
+<!-- SECTION "Presentation" [44-] --></div><!-- closes <div class="dokuwiki export">-->

@@ -51,14 +51,14 @@ It manages both authentication and authorization and provides headers for accoun
 <ul>
 <li class="level1"><div class="li"> <strong>Manager</strong>: used to manage LemonLDAP::NG configuration and to explore sessions. Dedicated to administrators</div>
 </li>
-<li class="level1"><div class="li"> <strong>Portal</strong>: used to authenticate users, and display applications list</div>
+<li class="level1"><div class="li"> <strong><a href="../documentation/1.0/portal.html" class="wikilink1" title="documentation:1.0:portal">Portal</a></strong>: used to authenticate users, display applications list and provides identity provider service (<a href="http://en.wikipedia.org/wiki/SAML" class="urlextern" title="http://en.wikipedia.org/wiki/SAML"  rel="nofollow">SAML</a>, <a href="http://en.wikipedia.org/wiki/OpenID" class="urlextern" title="http://en.wikipedia.org/wiki/OpenID"  rel="nofollow">OpenID</a>, <a href="http://en.wikipedia.org/wiki/Central_Authentication_Service" class="urlextern" title="http://en.wikipedia.org/wiki/Central_Authentication_Service"  rel="nofollow">CAS</a>). Portal provides also many other features (see <a href="../documentation/1.0/portal.html" class="wikilink1" title="documentation:1.0:portal">portal</a> for more)</div>
 </li>
 <li class="level1"><div class="li"> <strong>Handler</strong>: Apache modules used to protect applications</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION "Main components" [445-720] -->
+<!-- SECTION "Main components" [445-1039] -->
 <h3><a name="databases" id="databases">Databases</a></h3>
 <div class="level3">
 
@@ -107,12 +107,12 @@ Main internal databases are:
 </ul>
 
 </div>
-<!-- SECTION "Databases" [721-1522] -->
+<!-- SECTION "Databases" [1040-1841] -->
 <h2><a name="kinematics" id="kinematics">Kinematics</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Kinematics" [1523-1546] -->
+<!-- SECTION "Kinematics" [1842-1865] -->
 <h3><a name="login" id="login">Login</a></h3>
 <div class="level3">
 
@@ -158,7 +158,7 @@ Handler will then check <acronym title="Single Sign On">SSO</acronym> cookie for
 </p>
 
 </div>
-<!-- SECTION "Login" [1547-2411] -->
+<!-- SECTION "Login" [1866-2730] -->
 <h3><a name="logout" id="logout">Logout</a></h3>
 <div class="level3">
 
@@ -199,7 +199,7 @@ After logout process, the user is redirected on portal, or on a configured <acro
 </p>
 
 </div>
-<!-- SECTION "Logout" [2412-3340] -->
+<!-- SECTION "Logout" [2731-3659] -->
 <h3><a name="cross_domain_authentication_cda" id="cross_domain_authentication_cda">Cross Domain Authentication (CDA)</a></h3>
 <div class="level3">
 
@@ -225,12 +225,12 @@ After logout process, the user is redirected on portal, or on a configured <acro
 </ol>
 
 </div>
-<!-- SECTION "Cross Domain Authentication (CDA)" [3341-4122] -->
+<!-- SECTION "Cross Domain Authentication (CDA)" [3660-4441] -->
 <h2><a name="authentication_authorization_and_accounting_aaa_mechanisms" id="authentication_authorization_and_accounting_aaa_mechanisms">Authentication, Authorization and Accounting (AAA) mechanisms</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Authentication, Authorization and Accounting (AAA) mechanisms" [4123-4197] -->
+<!-- SECTION "Authentication, Authorization and Accounting (AAA) mechanisms" [4442-4516] -->
 <h3><a name="authentication" id="authentication">Authentication</a></h3>
 <div class="level3">
 
@@ -275,7 +275,7 @@ LemonLDAP::NG <acronym title="Single Sign On">SSO</acronym> cookies are generate
 </p>
 
 </div>
-<!-- SECTION "Authentication" [4198-5426] -->
+<!-- SECTION "Authentication" [4517-5745] -->
 <h3><a name="authorization" id="authorization">Authorization</a></h3>
 <div class="level3">
 
@@ -342,7 +342,7 @@ Some examples:
 </p>
 
 </div>
-<!-- SECTION "Authorization" [5427-6358] -->
+<!-- SECTION "Authorization" [5746-6677] -->
 <h3><a name="accounting" id="accounting">Accounting</a></h3>
 <div class="level3">
 
@@ -417,4 +417,4 @@ Some examples:
 </ul>
 
 </div>
-<!-- SECTION "Accounting" [6359-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Accounting" [6678-] --></div><!-- closes <div class="dokuwiki export">-->
