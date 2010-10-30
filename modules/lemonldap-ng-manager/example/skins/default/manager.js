@@ -1190,7 +1190,7 @@ function changeAppsLogo(logo) {
 	$('#applicationListApplicationLogo').val(logo);
 	// Set logo to custom if not a registered logo
 	// Custom field can be edited
-	if ((logo!='attach.png') && (logo!='bell.png') && (logo!='bookmark.png') && (logo!='configure.png') && (logo!='database.png') && (logo!='demo.png') && (logo!='docs.png') && (logo!='folder.png') && (logo!='gears.png') && (logo!='help.png') && (logo!='mailappt.png') && (logo!='money.png') && (logo!='network.png') && (logo!='terminal.png') && (logo!='thumbnail.png') && (logo!='tools.png') && (logo!='tux.png') && (logo!='web.png') && (logo!='wheels.png')){
+	if ((logo!='attach.png') && (logo!='bell.png') && (logo!='bookmark.png') && (logo!='configure.png') && (logo!='database.png') && (logo!='demo.png') && (logo!='docs.png') && (logo!='folder.png') && (logo!='gear.png') && (logo!='help.png') && (logo!='mailappt.png') && (logo!='money.png') && (logo!='network.png') && (logo!='terminal.png') && (logo!='thumbnail.png') && (logo!='tools.png') && (logo!='tux.png') && (logo!='web.png') && (logo!='wheels.png')){
 		logo = 'custom.png';
 		$('#applicationListApplicationLogo').attr('readonly','');
 	} else {
