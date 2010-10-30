@@ -224,7 +224,7 @@ install_bin:	install_conf_dir
 		${SRCCOMMONDIR}/scripts/lmMigrateConfFiles2ini \
 		${SRCMANAGERDIR}/example/scripts/lmConfigEditor \
 			$(RBINDIR)
-	chmod +x $(RBINDIR)/*
+	@chmod +x $(RBINDIR)/*
 
 #
 # SITE INSTALL
@@ -317,8 +317,7 @@ install_portal_site:	install_conf_dir
 	@cp -pR --remove-destination ${SRCPORTALDIR}/example/mail.pl ${RPORTALDIR}
 	@cp -pR --remove-destination ${SRCPORTALDIR}/example/metadata.pl ${RPORTALDIR}
 	@cp -pR --remove-destination ${SRCPORTALDIR}/example/cdc.pl ${RPORTALDIR}
-	@tar -cf - -C ${SRCPORTALDIR}/example/skins/ $$(ls ${SRCPORTALDIR}/example/skins/) |tar -xvf - -C $(RPORTALSKINSDIR)
-	#@cp -a --remove-destination ${SRCPORTALDIR}/example/skins/* $(RPORTALSKINSDIR)
+	@tar -cf - -C ${SRCPORTALDIR}/example/skins/ $$(ls ${SRCPORTALDIR}/example/skins/) |tar -xf - -C $(RPORTALSKINSDIR)
 	@if [ "$(PORTALDIR)/skins/" != "$(PORTALSKINSDIR)/" ]; then \
 		for skin in $$(ls lemonldap-ng-portal/example/skins/); do \
 			rm -rf $(RPORTALDIR)/skins/$$skin/; \
