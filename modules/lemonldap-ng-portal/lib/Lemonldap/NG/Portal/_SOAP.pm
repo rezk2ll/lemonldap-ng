@@ -225,8 +225,9 @@ sub get_key_from_all_sessions {
     no strict 'refs';
     return $self->{globalStorage}
       ->get_key_from_all_sessions( $self->{globalStorageOptions}, @_ );
-    return &{"$tmp\::get_key_from_all_sessions"}( $self->{globalStorage},
-        $self->{globalStorageOptions}, @_ );
+
+    #return &{"$tmp\::get_key_from_all_sessions"}( $self->{globalStorage},
+    #    $self->{globalStorageOptions}, @_ );
 }
 
 =begin WSDL

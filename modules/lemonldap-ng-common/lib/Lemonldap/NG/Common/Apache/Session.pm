@@ -17,8 +17,8 @@ our $VERSION = 0.3;
 sub _load {
     my $backend = shift;
     unless ( $backend->can('populate') ) {
-        eval "require $backend"
-          or die $@;
+        eval "require $backend";
+        die $@ if($@);
     }
 }
 

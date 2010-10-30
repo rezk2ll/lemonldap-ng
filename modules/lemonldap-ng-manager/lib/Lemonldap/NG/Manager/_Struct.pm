@@ -2031,10 +2031,22 @@ sub globalTests {
             eval { tied(%h)->delete; };
             return ( -1, "Unable to delete session ($@)" ) if ($@);
             my $gc = $Lemonldap::NG::Handler::CGI::globalStorage;
-            return ( -1, 'All sessions may be lost' )
-              if ( $conf->{globalStorage} ne $gc );
+            return ( -1,
+'All sessions may be lost and you <b>must</b> restart all your Apache servers'
+            ) if ( $conf->{globalStorage} ne $gc );
             return 1;
 	},
+        cookieNameChanged => sub {
+            return (
+                1,
+                (
+                    $Lemonldap::NG::Handler::CGI::cookieName ne
+                      $conf->{cookieName}
+                    ? 'Cookie name has changed, you <b>must</b> restart all your Apache servers'
+                    : ()
+                )
+            );
+        },
     };
 }
 
