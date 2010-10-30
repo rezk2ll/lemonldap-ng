@@ -24,6 +24,13 @@ our $VERSION = 0.70;
 our $msg;
 our $iniObj;
 
+BEGIN {
+    eval {
+        require threads::shared;
+        threads::shared::share($iniObj);
+    };
+}
+
 ## @cmethod Lemonldap::NG::Common::Conf new(hashRef arg)
 # Constructor.
 # Succeed if it has found a way to access to Lemonldap::NG configuration with
@@ -187,7 +194,7 @@ sub getLocalConf {
     my $r = {};
 
     $section ||= DEFAULTSECTION;
-    $file    ||= $self->{confFile} || DEFAULTCONFFILE;
+    $file ||= $self->{confFile} || DEFAULTCONFFILE;
     $loaddefault = 1 unless ( defined $loaddefault );
     my $cfg;
 
