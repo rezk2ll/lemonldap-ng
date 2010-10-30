@@ -191,6 +191,13 @@ our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
 our $safe;
 our $self;    # Safe cannot share a variable declared with my
 
+BEGIN {
+    eval {
+        require threads::shared;
+        threads::shared::share($safe);
+    };
+}
+
 ##@cmethod Lemonldap::NG::Portal::Simple new(hashRef args)
 # Class constructor.
 #@param args hash reference

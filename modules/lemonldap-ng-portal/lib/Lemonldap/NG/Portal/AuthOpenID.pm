@@ -15,6 +15,13 @@ use Cache::FileCache;
 our $VERSION = '0.1';
 our $initDone;
 
+BEGIN {
+    eval {
+        require threads::shared;
+        threads::shared::share($initDone);
+    };
+}
+
 ## @apmethod int authInit()
 # @return Lemonldap::NG::Portal constant
 sub authInit {

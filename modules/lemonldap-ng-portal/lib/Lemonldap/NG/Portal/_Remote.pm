@@ -12,6 +12,13 @@ use MIME::Base64;
 our $VERSION = '0.1';
 our $initDone;
 
+BEGIN {
+    eval {
+        require threads::shared;
+        threads::shared::share($initDone);
+    };
+}
+
 ## @apmethod int init()
 # Checks if remote portal parameters are set.
 # @return Lemonldap::NG::Portal constant

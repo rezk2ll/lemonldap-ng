@@ -12,6 +12,13 @@ use strict;
 our $VERSION = '0.1';
 our $initDone;
 
+BEGIN {
+    eval {
+        require threads::shared;
+        threads::shared::share($initDone);
+    };
+}
+
 ## @apmethod int authInit()
 # Check DBI paramaters
 #@return Lemonldap::NG::Portal constant

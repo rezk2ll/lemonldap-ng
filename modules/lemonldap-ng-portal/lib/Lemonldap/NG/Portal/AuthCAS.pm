@@ -12,6 +12,13 @@ use URI::Escape;
 our $VERSION = '0.20';
 our $initDone;
 
+BEGIN {
+    eval {
+        require threads::shared;
+        threads::shared::share($initDone);
+    };
+}
+
 ## @apmethod int authInit()
 # Try to load AuthCAS perl module
 # @return Lemonldap::NG::Portal constant

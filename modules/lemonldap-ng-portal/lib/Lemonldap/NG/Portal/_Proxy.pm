@@ -13,6 +13,13 @@ use SOAP::Lite;
 our $VERSION = '0.1';
 our $initDone;
 
+BEGIN {
+    eval {
+        require threads::shared;
+        threads::shared::share($initDone);
+    };
+}
+
 ## @apmethod int proxyInit()
 # Checks if remote portal parameters are set.
 # @return Lemonldap::NG::Portal constant

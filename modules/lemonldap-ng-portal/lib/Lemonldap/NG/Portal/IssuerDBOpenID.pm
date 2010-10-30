@@ -16,6 +16,13 @@ use Lemonldap::NG::Common::Regexp;
 our $VERSION = '0.01';
 our $initDone;
 
+BEGIN {
+    eval {
+        require threads::shared;
+        threads::shared::share($initDone);
+    };
+}
+
 ## @method void issuerDBInit()
 # Do nothing
 # @return Lemonldap::NG::Portal error code

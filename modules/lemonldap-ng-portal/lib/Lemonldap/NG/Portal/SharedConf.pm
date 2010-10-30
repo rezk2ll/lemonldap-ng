@@ -18,6 +18,13 @@ our $VERSION = '0.70';
 use base qw(Lemonldap::NG::Portal::Simple);
 our $confCached;
 
+BEGIN {
+    eval {
+        require threads::shared;
+        threads::shared::share($confCached);
+    };
+}
+
 ##################
 # OVERLOADED SUB #
 ##################

@@ -687,8 +687,8 @@ sub struct {
 
                 soap => {
                     _nodes       => [qw(Soap exportedAttr)],
-                    Soap           => 'bool:/Soap',
-                    exportedAttr   => 'text:/exportedAttr',
+                    Soap         => 'bool:/Soap',
+                    exportedAttr => 'text:/exportedAttr',
                 },
 
                 notifications => {
@@ -727,7 +727,7 @@ sub struct {
                     userControl => 'text:/userControl:userControl:text',
                     portalForceAuthn =>
                       'bool:/portalForceAuthn:portalForceAuthn:bool',
-                    key => 'text:/key:key:text',
+                    key            => 'text:/key:key:text',
                     trustedDomains => 'text:/trustedDomains',
                 },
 
@@ -735,8 +735,8 @@ sub struct {
                     _nodes => [
                         qw(https port useRedirectOnForbidden useRedirectOnError)
                     ],
-                    https  => 'bool:/https',
-                    port   => 'int:/port',
+                    https                  => 'bool:/https',
+                    port                   => 'int:/port',
                     useRedirectOnForbidden => 'bool:/useRedirectOnForbidden',
                     useRedirectOnError     => 'bool:/useRedirectOnError',
                 },
@@ -1155,7 +1155,7 @@ sub testStruct {
             msgFail => 'Bad domain',
         },
         exportedHeaders => {
-            keyTest    => Lemonldap::NG::Common::Regexp::HOSTNAME,
+            keyTest    => Lemonldap::NG::Common::Regexp::HOSTNAME(),
             keyMsgFail => 'Bad virtual host name',
             '*'        => {
                 keyTest    => qr/^\w([\w\-]*\w)?$/,
@@ -1274,7 +1274,7 @@ sub testStruct {
         ldapVersion                  => $testNotDefined,
         ldapRaw                      => $testNotDefined,
         locationRules                => {
-            keyTest => Lemonldap::NG::Common::Regexp::HOSTNAME,
+            keyTest => Lemonldap::NG::Common::Regexp::HOSTNAME(),
             msgFail => 'Bad virtual host name',
             '*'     => {
                 keyTest => $pcre,
@@ -1284,7 +1284,7 @@ sub testStruct {
                     if ( $e =~ s/^logout(?:_(?:app_sso|app|sso))?\s*// ) {
                         return (
                             $e eq ''
-                              or $e =~ Lemonldap::NG::Common::Regexp::HTTP_URI
+                              or $e =~ Lemonldap::NG::Common::Regexp::HTTP_URI()
                             ? 1
                             : ( 0, "bad url \"$e\"" )
                         );
@@ -1358,7 +1358,7 @@ sub testStruct {
             msgFail => 'Unvalid session field',
         },
         post => {
-            keyTest    => Lemonldap::NG::Common::Regexp::HOSTNAME,
+            keyTest    => Lemonldap::NG::Common::Regexp::HOSTNAME(),
             keyMsgFail => 'Bad virtual host name',
             '*'        => { keyTest => $pcre, },
         },
@@ -1401,7 +1401,7 @@ sub testStruct {
         useXForwardedForIP     => $boolean,
         variables              => $testNotDefined,
         vhostOptions           => {
-            keyTest    => Lemonldap::NG::Common::Regexp::HOSTNAME,
+            keyTest    => Lemonldap::NG::Common::Regexp::HOSTNAME(),
             keyMsgFail => 'Bad virtual host name',
             '*'        => {
                 keyTest    => qr/^vhost(Port|Https)$/,
@@ -1515,15 +1515,15 @@ sub testStruct {
         samlAuthnContextMapKerberos                   => $integer,
         samlCommonDomainCookieActivation              => $boolean,
         samlCommonDomainCookieDomain                  => {
-            test    => Lemonldap::NG::Common::Regexp::HOSTNAME,
+            test    => Lemonldap::NG::Common::Regexp::HOSTNAME(),
             msgFail => 'Bad domain',
         },
         samlCommonDomainCookieReader => {
-            test    => Lemonldap::NG::Common::Regexp::HTTP_URI,
+            test    => Lemonldap::NG::Common::Regexp::HTTP_URI(),
             msgFail => 'Bad URI',
         },
         samlCommonDomainCookieWriter => {
-            test    => Lemonldap::NG::Common::Regexp::HTTP_URI,
+            test    => Lemonldap::NG::Common::Regexp::HTTP_URI(),
             msgFail => 'Bad URI',
         },
 
@@ -1536,7 +1536,7 @@ sub testStruct {
         # CAS
         CAS_authnLevel => $integer,
         CAS_url        => {
-            test    => Lemonldap::NG::Common::Regexp::HTTP_URI,
+            test    => Lemonldap::NG::Common::Regexp::HTTP_URI(),
             msgFail => 'Bad CAS url',
         },
         CAS_CAFile          => $testNotDefined,
@@ -1872,9 +1872,11 @@ sub subDefaultConf {
 # subroutines to execute.
 #
 # Subroutines can return one of the followings :
-# - (1)         : everything is OK
-# - (1,message) : OK with a warning
-# - (0,message) : NOK
+# -  (1)         : everything is OK
+# -  (1,message) : OK with a warning
+# -  (0,message) : NOK
+# - (-1,message) : OK, but must be confirmed (ignored if confirm parameter is
+# set
 #
 # Those subroutines can also modify configuration.
 #
@@ -1963,6 +1965,61 @@ sub globalTests {
             );
         },
 
+        # Try to use Apache::Session module
+        testApacheSession => sub {
+            my ( $id, %h );
+            eval "use $conf->{globalStorage}";
+            return ( -1, "Unknown package $conf->{globalStorage}" ) if ($@);
+            eval {
+                tie %h, $conf->{globalStorage}, undef,
+                  $conf->{globalStorageOptions};
+            };
+            return ( -1, "Unable to create a session ($@)" )
+              if ( $@ or not tied(%h) );
+            eval {
+                $h{a} = 1;
+                $id = $h{_session_id} or return ( -1, 'No _session_id' );
+                untie(%h);
+                tie %h, $conf->{globalStorage}, $id,
+                  $conf->{globalStorageOptions};
+            };
+            return ( -1, "Unable to insert datas ($@)" ) if ($@);
+            return ( -1, "Unable to recover data stored" )
+              unless ( $h{a} == 1 );
+            eval { tied(%h)->delete; };
+            return ( -1, "Unable to delete session ($@)" ) if ($@);
+            my $gc = $Lemonldap::NG::Handler::CGI::globalStorage;
+            return ( -1,
+'All sessions may be lost and you <b>must</b> restart all your Apache servers'
+            ) if ( $conf->{globalStorage} ne $gc );
+            return 1;
+        },
+
+        # Warn if cookie name has changed
+        cookieNameChanged => sub {
+            return (
+                1,
+                (
+                    $Lemonldap::NG::Handler::CGI::cookieName ne
+                      $conf->{cookieName}
+                    ? 'Cookie name has changed, you <b>must</b> restart all your Apache servers'
+                    : ()
+                )
+            );
+        },
+
+        # Warn if manager seems to be unprotected
+        managerProtection => sub {
+            return (
+                1,
+                (
+                    $conf->{cfgAuthor} eq 'anonymous'
+                    ? 'Your manager seems to be unprotected'
+                    : ''
+                )
+            );
+        },
+
         # 2. MODIFICATIONS
 
         # Remove unused and non-customized parameters
@@ -2007,45 +2064,6 @@ sub globalTests {
                 }
                 return 1;
             }
-        },
-	testApacheSession => sub {
-            my ( $id, %h );
-	    eval "use $conf->{globalStorage}";
-            return ( -1, "Unknown package $conf->{globalStorage}" ) if ($@);
-            eval {
-                tie %h, $conf->{globalStorage}, undef,
-                  $conf->{globalStorageOptions};
-            };
-            return ( -1, "Unable to create a session ($@)" )
-              if ( $@ or not tied(%h) );
-	    eval {
-	    	$h{a} = 1;
-                $id = $h{_session_id} or return ( -1, 'No _session_id' );
-		untie(%h);
-                tie %h, $conf->{globalStorage}, $id,
-                  $conf->{globalStorageOptions};
-		};
-            return ( -1, "Unable to insert datas ($@)" ) if ($@);
-            return ( -1, "Unable to recover data stored" )
-              unless ( $h{a} == 1 );
-            eval { tied(%h)->delete; };
-            return ( -1, "Unable to delete session ($@)" ) if ($@);
-            my $gc = $Lemonldap::NG::Handler::CGI::globalStorage;
-            return ( -1,
-'All sessions may be lost and you <b>must</b> restart all your Apache servers'
-            ) if ( $conf->{globalStorage} ne $gc );
-            return 1;
-	},
-        cookieNameChanged => sub {
-            return (
-                1,
-                (
-                    $Lemonldap::NG::Handler::CGI::cookieName ne
-                      $conf->{cookieName}
-                    ? 'Cookie name has changed, you <b>must</b> restart all your Apache servers'
-                    : ()
-                )
-            );
         },
     };
 }

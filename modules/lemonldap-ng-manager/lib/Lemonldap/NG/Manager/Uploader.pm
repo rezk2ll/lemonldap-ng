@@ -356,7 +356,12 @@ s/^(samlSPMetaDataXML|samlSPMetaDataExportedAttributes|samlSPMetaDataOptions)\/(
         }
     }
 
-    # 1.5 Global tests
+    # 1.5 Author attributes for accounting
+    $newConf->{cfgAuthor}   = $ENV{REMOTE_USER} || 'anonymous';
+    $newConf->{cfgAuthorIP} = $ENV{REMOTE_ADDR};
+    $newConf->{cfgDate}     = time();
+
+    # 1.6 Global tests
     $self->lmLog( "Launch global tests", 'debug' );
     {
         my $tests = $self->globalTests($newConf);
@@ -380,11 +385,6 @@ s/^(samlSPMetaDataXML|samlSPMetaDataExportedAttributes|samlSPMetaDataOptions)\/(
             $errors->{warnings}->{$name} = "Test $name failed: $@" if ($@);
         }
     }
-
-    # 1.6 Author attributes for accounting
-    $newConf->{cfgAuthor}   = $ENV{REMOTE_USER} || 'anonymous';
-    $newConf->{cfgAuthorIP} = $ENV{REMOTE_ADDR};
-    $newConf->{cfgDate}     = time();
 
     # 2. SAVE CONFIGURATION
 

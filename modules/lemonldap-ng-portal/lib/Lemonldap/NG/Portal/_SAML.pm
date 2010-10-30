@@ -24,6 +24,11 @@ our $samlCache;
 our $initGlibDone;
 
 BEGIN {
+    eval {
+        require threads::shared;
+        threads::shared::share($samlCache);
+        threads::shared::share($initGlibDone);
+    };
 
     # Load Glib if available
     eval 'use Glib;';
