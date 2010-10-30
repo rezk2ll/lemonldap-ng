@@ -487,14 +487,6 @@ manager_cpan:	manager_conf
 	@$(MAKE) -C ${SRCMANAGERDIR} dist
 	@mv ${SRCMANAGERDIR}/Lemonldap*.gz .
 
-sub_static_example: install_site
-	mkdir -p ${EXAMPLEROOT}/static
-	cd ${EXAMPLEROOT}/static/;cp -a ../manager/{skins} .;cd -
-	../scripts/make_static_example.pl ${DESTMANAGERDIR}/index.pl ${SCRIPTSDIR}/static/index.html $(EXAMPLELANG)
-
-static_example:
-	@$(MAKE) sub_static_example LMPREFIX=$(EXAMPLEROOT)
-
 documentation:
 	@rm -f doc/pages/documentation/latest
 	@cd doc/ && ../scripts/doc.pl
