@@ -489,7 +489,7 @@ manager_cpan:	manager_conf
 documentation:
 	@rm -f doc/pages/documentation/latest
 	@cd doc/ && ../scripts/doc.pl
-	@rm -rf doc/pages/documentation/latest doc/pages/wiki
+	@rm -rf doc/pages/documentation/latest doc/pages/wiki doc/pages/playground
 	@ln -s $$(perl -e '$$h{sprintf("%03d\.%03d\.%03d",split/\./,$$_)}=$$_ foreach(@ARGV); \
 		foreach(sort keys %h){$$last="$$h{$$_}\n"};print $$last;' \
 		$$(find doc/pages/documentation/ -maxdepth 1 -mindepth 1 -type d ! \
