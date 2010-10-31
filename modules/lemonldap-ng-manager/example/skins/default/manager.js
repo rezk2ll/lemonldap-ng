@@ -1272,9 +1272,11 @@ function networkPb(){
 	popup('<h3>Network problem</h3>');
 }
 
-function loadAndScrollToAnchor(s,a) {
-	$('#help_content').load(s,function(){
-		$('#help_content').attr('scrollTop',$("a[name='"+a+"']").position().top-$('#help_content').position().top);
+function loadAndScrollToAnchor(url) {
+	var t=url.match(/^(.*?)(?:#(.*))$/);
+	$('#help_content').load(t[1],function(){
+		if(typeof(t[2])=='string')
+			$('#help_content').attr('scrollTop',$("a[name='"+t[2]+"']").position().top-$('#help_content').position().top);
 	});
 }
 
