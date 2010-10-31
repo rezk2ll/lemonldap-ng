@@ -1888,8 +1888,6 @@ sub globalTests {
 
         # 1. CHECKS
 
-        # TODO: better parsing using Common::Regexp
-
         # Check if portal is in domain
         portalIsInDomain => sub {
             return (
