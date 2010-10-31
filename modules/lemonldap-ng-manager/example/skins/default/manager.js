@@ -1272,3 +1272,9 @@ function networkPb(){
 	popup('<h3>Network problem</h3>');
 }
 
+function loadAndScrollToAnchor(s,a) {
+	$('#help').load(s,function(){
+		$('#help').scrollTo(0, $("a[name='"+t+"']").position().top);
+	});
+}
+
