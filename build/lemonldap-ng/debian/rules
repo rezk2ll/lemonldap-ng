@@ -11,8 +11,8 @@
 
 export PERL_MM_USE_DEFAULT=1
 
-LMSHAREDIR=/usr/share/lemonldap-ng/
-LMVARDIR=/var/lib/lemonldap-ng/
+LMSHAREDIR=/usr/share/lemonldap-ng
+LMVARDIR=/var/lib/lemonldap-ng
 
 configure: configure-stamp
 configure-stamp:
@@ -57,35 +57,36 @@ install: build
 	$(MAKE) install DESTDIR=$(CURDIR)/debian/tmp \
 			PREFIX=/usr/ \
 			LMPREFIX=/usr/share/lemonldap-ng/ \
-			BINDIR=$(LMSHAREDIR)bin/ \
+			BINDIR=$(LMSHAREDIR)/bin/ \
 			DOCUMENTROOT=$(LMVARDIR) \
 			EXAMPLESDIR=/examples/ \
-			HANDLERDIR=$(LMVARDIR)handler/ \
-			PORTALSKINSDIR=$(LMSHAREDIR)portal-skins/ \
-			MANAGERSKINSDIR=$(LMSHAREDIR)manager-skins/ \
-			SESSIONSEXPLORERDATADIR=$(LMSHAREDIR)sessions-explorer-imgs/ \
+			HANDLERDIR=$(LMVARDIR)/handler/ \
+			PORTALSKINSDIR=$(LMSHAREDIR)/portal-skins/ \
+			MANAGERSKINSDIR=$(LMSHAREDIR)/manager-skins/ \
+			SESSIONSEXPLORERDATADIR=$(LMSHAREDIR)/sessions-explorer-imgs/ \
 			STORAGECONFFILE=/etc/lemonldap-ng/lemonldap-ng.ini \
-			TOOLSDIR=$(LMSHAREDIR)ressources/ \
+			TOOLSDIR=$(LMSHAREDIR)/ressources/ \
 			CONFDIR=/etc/lemonldap-ng/ \
 			CRONDIR=/etc/cron.d/ \
 			DATADIR=$(LMVARDIR) \
 			APACHEUSER=www-data \
-			APACHEGROUP=www-data
+			APACHEGROUP=www-data \
+            DOCDIR=/usr/share/doc/lemonldap-ng-doc
 
 	# Since Lenny, jquery.js is provided by libjs-jquery
 	find $(CURDIR)/debian/tmp -type f -regex '.*/jquery-[0-9].*\.js' -delete
 	find $(CURDIR)/debian/tmp -type f -name jquery.js -delete
-	rm -f $(CURDIR)/debian/tmp$(LMSHAREDIR)*-skins/*/jquery.js
+	rm -f $(CURDIR)/debian/tmp$(LMSHAREDIR)/*-skins/*/jquery.js
 	find $(CURDIR)/debian/tmp -type f -regex '.*/jquery-ui-[0-9].*\.js' -delete
 	find $(CURDIR)/debian/tmp -type f -name jquery-ui.js -delete
-	rm -f $(CURDIR)/debian/tmp$(LMSHAREDIR)*-skins/*/jquery-ui.js
+	rm -f $(CURDIR)/debian/tmp$(LMSHAREDIR)/*-skins/*/jquery-ui.js
 	#test -n "$$LOCALBUILD" || ./scripts/minifierjs $$(find debian/tmp/ -name '*.js')
 	#test -n "$$LOCALBUILD" || ./scripts/minifiercss $$(find debian/tmp/ -name '*.css')
 	perl -i -pe 's#src=(["'"'"']).*?jquery(-\d[\.\w\-]*?)?.js#src=$$1/javascript/jquery/jquery.min.js#i; \
 		s#src=(["'"'"']).*?jquery-ui(-\d[\.\w\-]*?)?.js#src=$$1/javascript/jquery-ui/jquery-ui.min.js#i;' \
 		$$(find $(CURDIR)/debian/tmp/examples/manager/ -name *.pl -type f) \
-		$$(find	$(CURDIR)/debian/tmp$(LMSHAREDIR)manager-skins/*/ \
-			$(CURDIR)/debian/tmp$(LMSHAREDIR)portal-skins/*/ -type f -name *.tpl)
+		$$(find	$(CURDIR)/debian/tmp$(LMSHAREDIR)/manager-skins/*/ \
+			$(CURDIR)/debian/tmp$(LMSHAREDIR)/portal-skins/*/ -type f -name *.tpl)
 	# postinst provides initial portal, manager and sessions-explorer
 	mkdir debian/tmp/usr/share/lemonldap-ng/manager debian/tmp/usr/share/lemonldap-ng/portal
 	mv debian/tmp/var/lib/lemonldap-ng/portal/*.pl debian/tmp/usr/share/lemonldap-ng/portal/
@@ -104,8 +105,8 @@ binary-indep: build install
 		ln -s ../../liblemonldap-ng-handler-perl/examples handler && \
 		ln -s ../../liblemonldap-ng-manager-perl/examples manager && \
 		ln -s ../../liblemonldap-ng-portal-perl/examples portal
-	chmod +x debian/liblemonldap-ng-portal-perl$(LMSHAREDIR)bin/purgeCentralCache
-	chmod +x debian/liblemonldap-ng-handler-perl$(LMSHAREDIR)bin/purgeLocalCache
+	chmod +x debian/liblemonldap-ng-portal-perl$(LMSHAREDIR)/bin/purgeCentralCache
+	chmod +x debian/liblemonldap-ng-handler-perl$(LMSHAREDIR)/bin/purgeLocalCache
 #	dh_installmenu
 	dh_installdebconf	
 #	dh_installlogrotate
