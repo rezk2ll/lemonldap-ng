@@ -1273,8 +1273,8 @@ function networkPb(){
 }
 
 function loadAndScrollToAnchor(s,a) {
-	$('#help').load(s,function(){
-		$('#help').scrollTo(0, $("a[name='"+t+"']").position().top);
+	$('#help_content').load(s,function(){
+		$('#help_content').attr('scrollTop',$("a[name='"+a+"']").position().top-$('#help_content').position().top);
 	});
 }
 
