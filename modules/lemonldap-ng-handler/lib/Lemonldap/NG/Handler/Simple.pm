@@ -77,7 +77,7 @@ BEGIN {
         traces => [qw( $whatToTrace $statusPipe $statusOut)],
         apache => [
             qw( MP OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR
-	    $useRedirectOnForbidden $useRedirectOnError )
+              $useRedirectOnForbidden $useRedirectOnError )
         ],
         post    => [qw($transform)],
         cda     => ['$cda'],
@@ -111,6 +111,8 @@ BEGIN {
         Apache2::RequestIO->import();
         require APR::Table;
         APR::Table->import();
+        require Apache2::URI;
+        Apache2::URI->import();
         require Apache2::Const;
         Apache2::Const->import( '-compile', qw(:common :log) );
         eval '
@@ -792,6 +794,7 @@ sub run ($$) {
         return REDIRECT;
     }
     my $uri = $apacheRequest->uri . ( $args ? "?$args" : "" );
+    Apache2::URI::unescape_url($uri);
 
     # AUTHENTICATION
     # I - recover the cookie
@@ -1099,7 +1102,6 @@ it under the same terms as Perl itself, either Perl version 5.10.0 or,
 at your option, any later version of Perl 5 you may have available.
 
 =cut
-
 ## @rmethod int abort(string mess)
 # Logs message and exit or redirect to the portal if "useRedirectOnError" is
 # set to true.
@@ -1110,22 +1112,22 @@ sub abort {
 
     # If abort is called without a valid request, fall to die
     eval {
-    my $args = $apacheRequest->args;
-    my $uri = $apacheRequest->uri . ( $args ? "?$args" : "" );
+        my $args = $apacheRequest->args;
+        my $uri = $apacheRequest->uri . ( $args ? "?$args" : "" );
 
-    # Set error 500 in logs even if "useRedirectOnError" is set
-    $apacheRequest->push_handlers(
-        PerlLogHandler => sub { $_[0]->status(SERVER_ERROR); DECLINED; } );
-    $class->lmLog( $mess, 'error' );
+        # Set error 500 in logs even if "useRedirectOnError" is set
+        $apacheRequest->push_handlers(
+            PerlLogHandler => sub { $_[0]->status(SERVER_ERROR); DECLINED; } );
+        $class->lmLog( $mess, 'error' );
 
-    # Redirect or die
-    if ($useRedirectOnError) {
-        $class->lmLog( "Use redirect for error", 'debug' );
-        return $class->goToPortal( $uri, 'lmError=500' );
-    }
-    else {
-        return SERVER_ERROR;
-    }
+        # Redirect or die
+        if ($useRedirectOnError) {
+            $class->lmLog( "Use redirect for error", 'debug' );
+            return $class->goToPortal( $uri, 'lmError=500' );
+        }
+        else {
+            return SERVER_ERROR;
+        }
     };
     die $mess if ($@);
 }
@@ -1508,7 +1510,7 @@ sub status($$) {
     my ( $class, $r ) = splice @_;
     $class->lmLog( "$class: request for status", 'debug' );
     return $class->abort("$class: status page can not be displayed")
-    	unless ( $statusPipe and $statusOut );
+      unless ( $statusPipe and $statusOut );
     $r->handler("perl-script");
     print $statusPipe "STATUS" . ( $r->args ? " " . $r->args : '' ) . "\n";
     my $buf;
