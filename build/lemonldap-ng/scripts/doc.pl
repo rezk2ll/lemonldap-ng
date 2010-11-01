@@ -13,17 +13,18 @@ use strict;
 use LWP::Simple;
 use Tie::File;
 
-my $offline_script_url = 'http://lemonldap-ng.org/lib/plugins/offline/create.php';
-my $offline_zip_url    = 'http://lemonldap-ng.org/lib/plugins/offline/offline.zip';
+my $offline_script_url =
+  'http://lemonldap-ng.org/lib/plugins/offline/create.php';
+my $offline_zip_url = 'http://lemonldap-ng.org/lib/plugins/offline/offline.zip';
 my $rc;
 
 # Launch remote offline script
-$rc = getprint( $offline_script_url );
-exit 1 if (is_error($rc));
+$rc = getprint($offline_script_url);
+exit 1 if ( is_error($rc) );
 
 # Get offline archive
-$rc = getstore( $offline_zip_url, 'offline.zip');
-exit 1 if (is_error($rc));
+$rc = getstore( $offline_zip_url, 'offline.zip' );
+exit 1 if ( is_error($rc) );
 
 # Unzip archive
 system("unzip -o offline.zip");
@@ -37,12 +38,12 @@ system("rm -rf offline");
 system('find . -name \*.html -exec sed -i "s#/_media#../media#g" {} \;');
 
 # Rewrite index.html
-tie my @index, 'Tie::File', 'index.html' or die ("Unable to open index.html");
+tie my @index, 'Tie::File', 'index.html' or die("Unable to open index.html");
 
 my @links = (
-	"\t\t<p><a href=\"pages/documentation.html\" class=\"wikilink1\">Documentation</a></p>",
-	"\t\t<p><a href=\"pages/contact.html\" class=\"wikilink1\">Contact</a></p>",
-	"\t\t<p><a href=\"index/alphabetical.html\" class=\"wikilink1\">All pages</a></p>",
+"\t\t<p><a href=\"pages/documentation.html\" class=\"wikilink1\">Documentation</a></p>",
+    "\t\t<p><a href=\"pages/contact.html\" class=\"wikilink1\">Contact</a></p>",
+"\t\t<p><a href=\"index/alphabetical.html\" class=\"wikilink1\">All pages</a></p>",
 );
 
 splice @index, 22, 1, @links;
