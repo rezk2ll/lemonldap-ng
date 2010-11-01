@@ -152,8 +152,9 @@ sub getConf {
             $r   = $self->getDBConf($args);
         }
         else {
-            $r = $self->{refLocalStorage}->get('conf');
-            if ( $r->{cfgNum} == $args->{cfgNum} ) {
+            eval { $r = $self->{refLocalStorage}->get('conf') };
+            $msg = "Warn: $@" if ($@);
+            if ( ref($r) and $r->{cfgNum} == $args->{cfgNum} ) {
                 $msg = "configuration unchanged, get configuration from cache.";
             }
             else {
@@ -275,7 +276,8 @@ sub getLocalConf {
 # @param $conf Lemonldap::NG configuration hashRef
 sub setLocalConf {
     my ( $self, $conf ) = @_;
-    $self->{refLocalStorage}->set( "conf", $conf );
+    eval { $self->{refLocalStorage}->set( "conf", $conf ) };
+    $msg .= "Warn: $@" if ($@);
 }
 
 ## @method hashRef getDBConf(hashRef args)
