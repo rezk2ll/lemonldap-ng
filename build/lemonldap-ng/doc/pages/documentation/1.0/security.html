@@ -1,0 +1,157 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+
+
+<h1><a name="security" id="security">Security</a></h1>
+<div class="level1">
+
+</div>
+<!-- SECTION "Security" [1-24] -->
+<h2><a name="secure_configuration_access" id="secure_configuration_access">Secure configuration access</a></h2>
+<div class="level2">
+
+<p>
+
+Configuration can be stored in several formats (<a href="../../documentation/1.0/sqlconfbackend.html" class="wikilink1" title="documentation:1.0:sqlconfbackend">SQL</a>, <a href="../../documentation/1.0/fileconfbackend.html" class="wikilink1" title="documentation:1.0:fileconfbackend">File</a>, <a href="../../documentation/1.0/ldapconfbackend.html" class="wikilink1" title="documentation:1.0:ldapconfbackend">LDAP</a>) but must be shared over the network if you use more than 1 server. If some of your servers are not in the same (secured) network than the database, it is recommended to use <a href="../../documentation/1.0/soapconfbackend.html" class="wikilink1" title="documentation:1.0:soapconfbackend">SOAP access</a> for those servers.
+</p>
+
+<p>
+<p><div class="notetip">You can use different type of access: <a href="../../documentation/1.0/sqlconfbackend.html" class="wikilink1" title="documentation:1.0:sqlconfbackend">SQL</a>, <a href="../../documentation/1.0/fileconfbackend.html" class="wikilink1" title="documentation:1.0:fileconfbackend">File</a> or <a href="../../documentation/1.0/ldapconfbackend.html" class="wikilink1" title="documentation:1.0:ldapconfbackend">LDAP</a> for servers in secured network and <a href="../../documentation/1.0/soapconfbackend.html" class="wikilink1" title="documentation:1.0:soapconfbackend">SOAP</a> for remote servers.
+</div></p>
+</p>
+
+<p>
+Next, you have to configure the <acronym title="Simple Object Access Protocol">SOAP</acronym> access as described <a href="../../documentation/1.0/soapconfbackend.html#next_configure_soap_for_your_remote_servers" class="wikilink1" title="documentation:1.0:soapconfbackend">here</a> since <acronym title="Simple Object Access Protocol">SOAP</acronym> access is denied by default.
+</p>
+
+</div>
+<!-- SECTION "Secure configuration access" [25-794] -->
+<h2><a name="manager_protection" id="manager_protection">Manager protection</a></h2>
+<div class="level2">
+
+<p>
+
+By default, the manager is restricted to localhost in its Apache configuration file, but no accounting is done. To change this, you can choose one of the following:
+</p>
+<ul>
+<li class="level1"><div class="li"> protect the manager by Apache configuration</div>
+</li>
+<li class="level1"><div class="li"> protect the manager by Lemonldap::NG</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Manager protection" [795-1081] -->
+<h3><a name="protect_the_manager_by_apache" id="protect_the_manager_by_apache">Protect the manager by Apache</a></h3>
+<div class="level3">
+
+<p>
+
+You can use any of the mechanisms proposed by Apache: <acronym title="Secure Sockets Layer">SSL</acronym>, Auth-Basic, Kerberos,… Example
+
+</p>
+<pre class="code apache">&lt;<span class="kw3">VirtualHost</span> *:443&gt;
+    <span class="kw1">ServerName</span> manager.example.com
+    <span class="co1"># SSL parameters</span>
+    ...
+    <span class="co1"># DocumentRoot</span>
+    <span class="kw1">DocumentRoot</span> /var/lib/lemonldap-ng/manager/
+    &lt;<span class="kw3">Location</span> /&gt;
+        <span class="kw1">AuthType</span> Basic
+        <span class="kw1">AuthName</span> <span class="st0">&quot;Lemonldap::NG manager&quot;</span>
+        <span class="kw1">AuthUserFile</span> /usr/local/apache/passwd/passwords
+        <span class="kw1">Require</span> <span class="kw1">user</span> rbowen
+        <span class="kw1">Order</span> <span class="kw1">allow</span>,<span class="kw1">deny</span>
+        <span class="kw1">Deny</span> from <span class="kw2">all</span>
+        <span class="kw1">Allow</span> from 192.168.142.0/24
+        <span class="kw1">Options</span> +ExecCGI
+    &lt;/<span class="kw3">Location</span>&gt;
+&lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
+
+</div>
+<!-- SECTION "Protect the manager by Apache" [1082-1692] -->
+<h3><a name="protect_the_manager_by_lemonldapng" id="protect_the_manager_by_lemonldapng">Protect the manager by Lemonldap::NG</a></h3>
+<div class="level3">
+
+<p>
+
+To protect the manager by Lemonldap::NG, you just have to set this in lemonldap-ng.ini configuration file (section [manager]):
+
+</p>
+<pre class="file">protection = manager</pre>
+
+<p>
+
+<p><div class="noteimportant">Before, you have to create the virtual host manager.your.domain in the manager and set a <a href="../../documentation/1.0/writingrulesand_headers.html#rules" class="wikilink1" title="documentation:1.0:writingrulesand_headers">rule</a>, else access to the manager will be denied.
+</div></p>
+</p>
+
+</div>
+<!-- SECTION "Protect the manager by Lemonldap::NG" [1693-2097] -->
+<h2><a name="write_good_rules" id="write_good_rules">Write good rules</a></h2>
+<div class="level2">
+
+<p>
+
+You can write <a href="../../documentation/1.0/writingrulesand_headers.html#rules" class="wikilink1" title="documentation:1.0:writingrulesand_headers">rules</a> matching any component of <acronym title="Uniform Resource Locator">URL</acronym> to protect including GET parameters, but be careful:
+Bad example:
+</p>
+<pre class="code">
+/^index.php\?.*access=admin -&gt; $groups =~ /\badmin\b/
+default                     -&gt; accept
+</pre>
+
+<p>
+Now, user that try to access to one of the following <em class="u">will be granted</em> !
+</p>
+<ul>
+<li class="level1"><div class="li"> /index.php?access=admin&amp;access=other</div>
+</li>
+<li class="level1"><div class="li"> /index.php?Access=admin</div>
+</li>
+</ul>
+
+<p>
+
+You can use the following instead:
+</p>
+<pre class="code">
+# insert a comment 0_bad for this rule:
+/^(?i)index.php\?.*access.*access -&gt; deny
+# insert a comment 1_admin for this rule
+/^(?i)index.php\?.*access=admin   -&gt; $groups =~ /\badmin\b/
+default                           -&gt; accept
+</pre>
+
+<p>
+Note that <strong>(?i)</strong> means case no sensitive
+</p>
+
+<p>
+<p><div class="notewarning">Remember that rules written on GET parameters must be tested.
+</div></p>
+
+</p>
+
+</div>
+<!-- SECTION "Write good rules" [2098-] --></div><!-- closes <div class="dokuwiki export">-->
