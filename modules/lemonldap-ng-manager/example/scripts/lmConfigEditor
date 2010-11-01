@@ -3,17 +3,32 @@
 use Lemonldap::NG::Common::Conf;
 use Lemonldap::NG::Common::Conf::Constants;
 use Data::Dumper;
+use POSIX;
 use strict;
 
-our $refFile = `mktemp`;
+our $refFile  = `mktemp`;
 our $editFile = `mktemp`;
 
 chomp $refFile;
 chomp $editFile;
 
+eval {
+    POSIX::setgid( ( getgrnam('__APACHEUSER__') )[2] );
+    POSIX::setuid( ( getpwnam('__APACHEGROUP__') )[2] );
+    print STDERR "Running as $>\n";
+};
+
+if ( $> == 0 ) {
+    print STDERR
+      "$0 must not be launched as root since local cache can be corrupted\n"
+      . "Continue (y/N)? ";
+    my $res = <STDIN>;
+    exit 1 unless ( $res =~ /^y/i );
+}
+
 my $conf = Lemonldap::NG::Common::Conf->new();
 
-open F1, ">$refFile" or quit($!);
+open F1, ">$refFile"  or quit($!);
 open F2, ">$editFile" or quit($!);
 my $tmp = $conf->getConf();
 delete $tmp->{reVHosts};
@@ -26,36 +41,36 @@ close F2;
 
 system "editor $editFile";
 
-if(`diff $refFile $editFile`) {
+if (`diff $refFile $editFile`) {
     my $VAR1;
     my $buf;
     open F1, $editFile;
-    while(<F1>) {
+    while (<F1>) {
         $buf .= $_;
     }
     eval $buf;
-    quit($@) if($@);
+    quit($@) if ($@);
     my $res = $conf->saveConf($VAR1);
-    if( $res > 0) {
+    if ( $res > 0 ) {
         print STDERR "Configuration $res saved\n";
     }
     else {
         print STDERR "Configuration was not saved:\n  ";
-	if( $res == CONFIG_WAS_CHANGED ) {
-	    print STDERR "Configuration has changed\n";
-	}
-	elsif( $res == DATABASE_LOCKED ) {
-	    print STDERR "Configuration database is or can nor be locked\n";
-	}
-	elsif( $res == UPLOAD_DENIED ) {
-	    print STDERR "You're not authorized to save this configuration\n";
-	}
-	elsif( $res == SYNTAX_ERROR ) {
-	    print STDERR "Syntax error in your configuration\n";
-	}
-	elsif( $res == UNKNOWN_ERROR ) {
-	    print STDERR "Unknown error\n";
-	}
+        if ( $res == CONFIG_WAS_CHANGED ) {
+            print STDERR "Configuration has changed\n";
+        }
+        elsif ( $res == DATABASE_LOCKED ) {
+            print STDERR "Configuration database is or can nor be locked\n";
+        }
+        elsif ( $res == UPLOAD_DENIED ) {
+            print STDERR "You're not authorized to save this configuration\n";
+        }
+        elsif ( $res == SYNTAX_ERROR ) {
+            print STDERR "Syntax error in your configuration\n";
+        }
+        elsif ( $res == UNKNOWN_ERROR ) {
+            print STDERR "Unknown error\n";
+        }
     }
 }
 else {

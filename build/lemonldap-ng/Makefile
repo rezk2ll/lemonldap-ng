@@ -224,6 +224,16 @@ install_bin:	install_conf_dir
 		${SRCCOMMONDIR}/scripts/lmMigrateConfFiles2ini \
 		${SRCMANAGERDIR}/example/scripts/lmConfigEditor \
 			$(RBINDIR)
+	@if [ ! "$(APACHEUSER)" ]; then \
+		$(PERL) -i -pe 's#__APACHEUSER__#nobody#g;' $(RBINDIR)/lmConfigEditor; \
+	else \
+		$(PERL) -i -pe 's#__APACHEUSER__#$(APACHEUSER)#g;' $(RBINDIR)/lmConfigEditor; \
+	fi
+	@if [ ! "$(APACHEGROUP)" ]; then \
+		$(PERL) -i -pe 's#__APACHEGROUP__#nobody#g;' $(RBINDIR)/lmConfigEditor; \
+	else \
+		$(PERL) -i -pe 's#__APACHEGROUP__#$(APACHEGROUP)#g;' $(RBINDIR)/lmConfigEditor; \
+	fi
 	@chmod +x $(RBINDIR)/*
 
 #
@@ -327,7 +337,7 @@ install_portal_site:	install_conf_dir
 	# Cron files
 	@cp --remove-destination lemonldap-ng-portal/example/scripts/purgeCentralCache.cron.d $(RCRONDIR)/lemonldap-ng-portal
 	@if [ ! "$(APACHEUSER)" ]; then \
-		$(PERL) -i -pe 's#__APACHEUSER__#root#g;' $(RCRONDIR)/lemonldap-ng-portal; \
+		$(PERL) -i -pe 's#__APACHEUSER__#nobody#g;' $(RCRONDIR)/lemonldap-ng-portal; \
 	else \
 		$(PERL) -i -pe 's#__APACHEUSER__#$(APACHEUSER)#g;' $(RCRONDIR)/lemonldap-ng-portal; \
 	fi
@@ -344,7 +354,7 @@ install_handler_site:	install_conf_dir
 	@cp --remove-destination ${SRCHANDLERDIR}/example/MyUpdateCookieHandler.pm ${RHANDLERDIR}
 	@cp --remove-destination lemonldap-ng-handler/example/scripts/purgeLocalCache.cron.d $(RCRONDIR)/lemonldap-ng-handler
 	@if [ ! "$(APACHEUSER)" ]; then \
-		$(PERL) -i -pe 's#__APACHEUSER__#root#g;' $(RCRONDIR)/lemonldap-ng-handler; \
+		$(PERL) -i -pe 's#__APACHEUSER__#nobody#g;' $(RCRONDIR)/lemonldap-ng-handler; \
 	else \
 		$(PERL) -i -pe 's#__APACHEUSER__#$(APACHEUSER)#g;' $(RCRONDIR)/lemonldap-ng-handler; \
 	fi
@@ -576,6 +586,7 @@ debian-diff:
 	@$(DIFF) lemonldap-ng-manager/lib/Lemonldap/NG/Manager.pm $(DIFFPREFIX)/usr/share/perl5/Lemonldap/NG/Manager.pm ||true
 	@$(DIFF) lemonldap-ng-manager/example/index.pl $(DIFFPREFIX)/var/lib/lemonldap-ng/manager/index.pl ||true
 	@$(DIFF) lemonldap-ng-manager/example/sessions.pl $(DIFFPREFIX)/var/lib/lemonldap-ng/manager/sessions.pl ||true
+	@$(DIFF) lemonldap-ng-manager/example/scripts/lmConfigEditor $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/lmConfigEditor ||true
 	@for i in $(MANAGERSKINS); do \
 		$(DIFF) -x 'jquery*' lemonldap-ng-manager/example/skins/$$i $(DIFFPREFIX)/usr/share/lemonldap-ng/manager-skins/$$i; \
 	done ||true
@@ -607,6 +618,7 @@ default-diff:
 	@$(DIFF) lemonldap-ng-manager/example/skins $(LMPREFIX)/htdocs/manager/skins ||true
 	@$(DIFF) lemonldap-ng-manager/example/index.pl $(LMPREFIX)/htdocs/manager/index.pl ||true
 	@$(DIFF) lemonldap-ng-manager/example/sessions.pl $(LMPREFIX)/htdocs/manager/sessions.pl ||true
+	@$(DIFF) lemonldap-ng-manager/example/scripts/lmConfigEditor $(LMPREFIX)/bin/lmConfigEditor ||true
 
 tidy: clean
 	find lemon*/ -type f \( -name '*.pm' -or -name '*.pl' -or -name '*.t' \) -print -exec perltidy -b {} \;
