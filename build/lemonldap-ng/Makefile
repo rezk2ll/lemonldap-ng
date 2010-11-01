@@ -372,7 +372,7 @@ install_examples_site:
 
 install_doc_site:
 	@install -v -d $(RDOCDIR)
-	@cp -R --remove-destination doc/* $(RDOCDIR)
+	@cp -dR --remove-destination doc/* $(RDOCDIR)
 
 install_conf_dir:	install_sessions_dir
 	# Configuration files install
