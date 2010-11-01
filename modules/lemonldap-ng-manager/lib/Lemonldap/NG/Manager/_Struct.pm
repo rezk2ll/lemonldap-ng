@@ -34,15 +34,17 @@ sub cstruct {
                     ],
                     rules => {
                         _nodes => ["hash:/locationRules/$k2:rules:rules"],
-                        _js    => 'rulesRoot'
+                        _js    => 'rulesRoot',
+                        _help  => 'rules',
                     },
                     headers => {
                         _nodes => ["hash:/exportedHeaders/$k2"],
-                        _js    => 'hashRoot'
+                        _js    => 'hashRoot',
+                        _help  => 'headers',
                     },
                     post => {
                         _nodes => ["post:/post/$k2:post:post"],
-                        _js    => 'postRoot'
+                        _js    => 'postRoot',
                     },
                     vhostOptions => {
                         _nodes     => [qw(vhostPort vhostHttps)],

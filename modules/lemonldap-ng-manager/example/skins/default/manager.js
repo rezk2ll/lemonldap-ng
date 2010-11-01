@@ -2,6 +2,13 @@
 * Lemonldap::NG Manager jQuery scripts
 */
 
+/* Help chapters */
+var helpCh={
+	rules:'/pages/documentation/1.0/writingrulesand_headers.html#rules',
+	headers:'/pages/documentation/1.0/writingrulesand_headers.html#headers',
+	default:'/'
+};
+
 /* Init simpleTreeCollection */
 var simpleTreeCollection;
 
@@ -58,9 +65,6 @@ $(document).ready(function(){
 		return false;
 	});
 
-	/* Load default help */
-	$('#help_content').load(scriptname+'?help=default');
-
 	/* Display configuration datas */
 	getCfgAttributes();
 	display('cfgDatas','');
@@ -72,7 +76,7 @@ $(document).ready(function(){
 		drag:false,
 		afterClick:function(node){
 			var span=$('span:first',node);
-			$('#help_content').load(scriptname+'?help='+span.attr('help'));
+			loadHelp(span.attr('help'));
 			simpleTreeDefaultJqueryClasses();
 			simpleTreeToggleJqueryClasses();
 		},
@@ -112,6 +116,10 @@ $(document).ready(function(){
 		simpleTreeSetMenuStyle(style);
 		return false;
 	});
+
+	/* Load default help */
+	loadHelp('default');
+
 });
 function simpleTreeSetMenuStyle(style){
 	if(style=="tree"){
@@ -347,12 +355,13 @@ function display(div,title) {
 	$('#newapplicationr,#delapplication').hide();
 	$('#newpostr,#delpost').hide();
 	$('#newpostdatar,#delpostdata').hide();
-	var height_cur=$('#buttons').height()+$('#edition').height()+$('#help').height();
+	/* TODO: conflict with loadAndScroll */
+	/*var height_cur=$('#buttons').height()+$('#edition').height()+$('#help').height();
 	var height_max=$('#menu').height();
 	if(height_cur > height_max || $('#help_content').is(':visible')==false){
 		$('#help h1 img').toggle();
 		$('#help_content').toggle();
-	}
+	}*/
 }
 function none(id) {
 	currentId=id;
@@ -700,7 +709,7 @@ function vhost(id){
 }
 function cfgDatas(id){
 	var span=$('#'+id+' span');
-	$('#help_content').load(scriptname+'?help='+span.attr('help'));
+	loadHelp(span.attr('help'));
 	display('cfgDatas','');
 	getCfgAttributes();
 }
@@ -1272,11 +1281,39 @@ function networkPb(){
 	popup('<h3>Network problem</h3>');
 }
 
-function loadAndScrollToAnchor(url) {
-	var t=url.match(/^(.*?)(?:#(.*))$/);
+function loadAndScroll(url,prefix){
+	var t=url.match(/^(.*?)(?:#(.*))?$/);
+	var dir=t[1].match(/(.*\/)/);
 	$('#help_content').load(t[1],function(){
+		/* Scroll to anchor if defined */
 		if(typeof(t[2])=='string')
 			$('#help_content').attr('scrollTop',$("a[name='"+t[2]+"']").position().top-$('#help_content').position().top);
+		/* Replace help_content links */
+		$('#help_content a').each(function(i){
+			if(typeof($(this).attr('href'))=='string'){
+				/* Links must be opened in another window */
+				$(this).attr('target','_blank');
+				var href=$(this).attr('href');
+				/* absolute links are prefixed if needed */
+				if(typeof(prefix)=='string' && typeof(dir[0])=='string' && href.match(/^\//)){
+					$(this).attr('href',prefix+href);
+				}
+				/* relative links are replaced by absolute ones */
+				//else if(href.match(/^\.\./)){
+				else if(!href.match(/^https?:\/\//)){
+					$(this).attr('href',dir[0]+href);
+				}
+			}
+		});
 	});
 }
-
+var lasthelp='';
+function loadHelp(ch){
+	var url;
+	if(typeof(helpCh[ch])!='string'){ch='default';}
+	if(ch!=lasthelp){
+		url=helpCh[ch];
+		loadAndScroll('/doc'+url,'/doc');
+		lasthelp=ch;
+	}
+}
