@@ -7,7 +7,6 @@ package Lemonldap::NG::Manager;
 
 use strict;
 use Lemonldap::NG::Handler::CGI qw(:globalStorage :locationRules);    #inherits
-use Lemonldap::NG::Manager::Help;                                     #inherits
 use Lemonldap::NG::Common::Conf;              #link protected conf Configuration
 use Lemonldap::NG::Common::Conf::Constants;   #inherits
 
@@ -51,20 +50,8 @@ sub new {
     $self->{managerTreeJqueryCss} = "true"
       unless defined $self->{managerTreeJqueryCss};
 
-    # Display help if ?help=
-    if ( $self->param('help') ) {
-
-        print $self->header_public( $ENV{SCRIPT_FILENAME},
-            -type => 'text/html; charset=utf8' );
-        &Lemonldap::NG::Manager::Help::import( $self->{language} );
-        my $chap = $self->param('help');
-        $self->lmLog( "Manager request: Help chapter $chap", 'debug' );
-        eval { no strict "refs"; &{"help_$chap"} };
-        $self->quit();
-    }
-
     # Save conf if ?data=
-    elsif ( my $rdata = $self->rparam('data') ) {
+    if ( my $rdata = $self->rparam('data') ) {
 
         $self->lmLog( "Manager request: Save data $rdata", 'debug' );
         require Lemonldap::NG::Manager::Uploader;    #inherits
