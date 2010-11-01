@@ -27,11 +27,16 @@
 
 <p>
 
-Lemonldap::NG manage applications by their hostname (Apache&#039;s virtualHosts). Rules are used to protect applications, headers are <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> headers added to the request to give datas to the application (for logs, profiles,…)
+Lemonldap::NG manage applications by their hostname (Apache&#039;s virtualHosts). Rules are used to protect applications, headers are <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> headers added to the request to give datas to the application (for logs, profiles,…).
+</p>
+
+<p>
+<p><div class="noteimportant">Note that variables designed by $xx correspond to the name of the <a href="../../documentation/1.0/exportedvars.html" class="wikilink2" title="documentation:1.0:exportedvars" rel="nofollow">exported variables</a> or <a href="../../documentation/1.0/performances.html#macros_and_groups" class="wikilink1" title="documentation:1.0:performances">macro names</a>.
+</div></p>
 </p>
 
 </div>
-<!-- SECTION "Writing rules and headers" [1-263] -->
+<!-- SECTION "Writing rules and headers" [1-441] -->
 <h2><a name="rules" id="rules">Rules</a></h2>
 <div class="level2">
 
@@ -92,9 +97,57 @@ Rules can also be used to intercept logout <acronym title="Uniform Resource Loca
 </p>
 
 </div>
-<!-- SECTION "Rules" [264-2183] -->
+<!-- SECTION "Rules" [442-2361] -->
 <h2><a name="headers" id="headers">Headers</a></h2>
 <div class="level2">
 
+<p>
+
+Headers are associations between an header name and a perl expression that returns a string. Headers are used to give user datas to the application. 
+</p>
+
+<p>
+Examples:
+
+</p>
+<table class="inline">
+	<tr class="row0 roweven">
+		<th class="col0 centeralign">  Goal  </th><th class="col1 centeralign">  Header name  </th><th class="col2 centeralign">  Header value  </th>
+	</tr>
+	<tr class="row1 rowodd">
+		<td class="col0 leftalign"> Give the uid (for accounting)  </td><td class="col1 centeralign">  Auth-User  </td><td class="col2 centeralign">  $uid  </td>
+	</tr>
+	<tr class="row2 roweven">
+		<td class="col0 leftalign"> Give a static value  </td><td class="col1 centeralign">  Some-Thing  </td><td class="col2 centeralign">  “static-value”  </td>
+	</tr>
+	<tr class="row3 rowodd">
+		<td class="col0 leftalign"> Give display name  </td><td class="col1 centeralign">  Display-Name  </td><td class="col2 centeralign">  $givenName.” ”.$surName  </td>
+	</tr>
+	<tr class="row4 roweven">
+		<td class="col0 leftalign"> Give a non ascii data  </td><td class="col1 centeralign">  Display-Name  </td><td class="col2 centeralign">  encode_base64($givenName."&nbsp;".$surName)  </td>
+	</tr>
+</table>
+
+<p>
+
+As described in <a href="../../documentation/1.0/performances.html#handler_performance" class="wikilink1" title="documentation:1.0:performances">performances chapter</a>, you can use macros, local macros,…
+</p>
+
+<p>
+<p><div class="noteimportant">
+</p>
+<ul>
+<li class="level1"><div class="li"> Since many <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> servers refuse non ascii headers, it is recommended to use encode_base64() function to transmit those headers</div>
+</li>
+<li class="level1"><div class="li"> Header names must contain only letters and ”-” character</div>
+</li>
+</ul>
+
+<p>
+
+</div></p>
+
+</p>
+
 </div>
-<!-- SECTION "Headers" [2184-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Headers" [2362-] --></div><!-- closes <div class="dokuwiki export">-->
