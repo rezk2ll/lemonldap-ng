@@ -102,15 +102,13 @@ sub forgeHeadersInit {
 
         my $sub;
         foreach ( keys %tmp ) {
-            $sub .=
-              "lmSetHeaderIn(\$apacheRequest,'$_' => join('',split(/[\\r\\n]+/,"
-              . $tmp{$_} . ")));";
+            $sub .= "'$_' => join('',split(/[\\r\\n]+/,$tmp{$_})),";
         }
 
         $forgeHeaders->{$vhost} = (
             SAFEWRAP
             ? $class->safe->wrap_code_ref( $class->safe->reval("sub {$sub}") )
-            : $class->safe->reval("sub {$sub}")
+            : $class->safe->reval("sub {return($sub)}")
         );
         $class->lmLog( "$class: Unable to forge headers: $@: sub {$sub}",
             'error' )
@@ -126,10 +124,7 @@ sub sendHeaders {
     my $vhost;
     $vhost = $apacheRequest->hostname;
     if ( defined( $forgeHeaders->{$vhost} ) ) {
-        &{ $forgeHeaders->{$vhost} };
-    }
-    else {
-        lmSetHeaderIn( $apacheRequest, 'Auth-User' => $datas->{uid} );
+        lmSetHeaderIn( $apacheRequest, &{ $forgeHeaders->{$vhost} } );
     }
 }
 
@@ -271,7 +266,6 @@ it under the same terms as Perl itself, either Perl version 5.10.0 or,
 at your option, any later version of Perl 5 you may have available.
 
 =cut
-
 ## @imethod protected void postUrlInit()
 # Prepare methods to post form attributes
 sub postUrlInit {

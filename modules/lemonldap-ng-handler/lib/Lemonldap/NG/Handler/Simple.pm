@@ -244,12 +244,14 @@ sub regRemoteIp {
 # @param $h Name of the header
 # @param $v Value of the header
 sub lmSetHeaderIn {
-    my ( $r, $h, $v ) = splice @_;
+    my ( $r, %hdr ) = splice @_;
+    while ( my ( $h, $v ) = each %hdr ) {
     if ( MP() == 2 ) {
-        return $r->headers_in->set( $h => $v );
+            $r->headers_in->set( $h => $v );
     }
     elsif ( MP() == 1 ) {
-        return $r->header_in( $h => $v );
+            $r->header_in( $h => $v );
+        }
     }
 }
 
@@ -344,11 +346,10 @@ sub safe {
             }";
         $class->lmLog( $@, 'error' ) if ($@);
     }
-    $safe->share_from( 'main', [ '%ENV', 'APR::Table::set' ] );
+    $safe->share_from( 'main', [ '%ENV' ] );
     $safe->share_from( 'Lemonldap::NG::Common::Safelib',
         $Lemonldap::NG::Common::Safelib::functions );
-    $safe->share( '&encode_base64', '$datas', '&lmSetHeaderIn',
-        '$apacheRequest', '&portal', @t );
+    $safe->share( '&encode_base64', '$datas', '&portal', @t );
 
     return $safe;
 }
@@ -1210,14 +1211,12 @@ sub forgeHeadersInit {
 
     my $sub;
     foreach ( keys %tmp ) {
-        $sub .=
-          "lmSetHeaderIn(\$apacheRequest,'$_' => join('',split(/[\\r\\n]+/,"
-          . $tmp{$_} . ")));";
+        $sub .= "'$_' => join('',split(/[\\r\\n]+/,$tmp{$_})),";
     }
     $forgeHeaders = (
         SAFEWRAP
         ? $class->safe->wrap_code_ref( $class->safe->reval("sub{$sub}") )
-        : $class->safe->reval("sub{$sub}")
+        : $class->safe->reval("sub{return($sub)}")
     );
     $class->lmLog( "$class: Unable to forge headers: $@: sub {$sub}", 'error' )
       if ($@);
@@ -1254,7 +1253,7 @@ qq{<html><body onload="document.getElementById('f').submit()"><form id="f" metho
 ## @rmethod protected void sendHeaders()
 # Launch function compiled by forgeHeadersInit()
 sub sendHeaders {
-    &$forgeHeaders;
+    lmSetHeaderIn( $apacheRequest, &$forgeHeaders );
 }
 
 ## @rmethod protected boolean isProtected()
