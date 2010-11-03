@@ -425,7 +425,7 @@ install_sessions_dir:
 	fi
 
 postconf_hosts:
-	@cat ${SYSTEMCONFDIR}/for_etc_hosts >> /etc/hosts
+	@cat ${CONFDIR}/for_etc_hosts >> /etc/hosts
 	@echo "/etc/hosts was updated"
 
 postconf: postconf_hosts
