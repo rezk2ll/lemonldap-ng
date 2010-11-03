@@ -12,6 +12,11 @@
 	padding:0;
 }
 
+.simpleTree ul
+{
+	text-align:center;
+}
+
 .simpleTree li
 {
 	list-style:none;

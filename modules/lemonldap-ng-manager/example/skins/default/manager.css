@@ -16,6 +16,7 @@ html,body
 	padding:0;
 	height:100%;
 	min-height:100%;
+	overflow:hidden;
 }
 
 body
@@ -39,12 +40,14 @@ a, a:link, a:visited
 	text-decoration:none;
 }
 
-/* Buttons, Inputs*/
-button
+ul
 {
-	cursor:pointer;
+	text-align: left;
+	list-style-position:inside;
+	list-style-image:url("images/bullet_orange.png");
 }
 
+/* Buttons, Inputs*/
 input, select, textarea
 {
 	font-weight:bold;
@@ -79,55 +82,35 @@ option
 }
 
 /* Divs */
-#container
-{
-	height:96%;
-	padding:1%;
+#header {
+	height:40px;
+	padding:5px 5px;
+	margin:5px 10px;
+	text-align: center;
 }
 
-#header img, #header p
+#header img 
 {
 	float:left;
-}
-
-#header p
-{
-	margin:5px 10px;
-	padding:5px;
-}
-
-#page
-{
-	clear:both;
-	margin-top:50px;
-	height:92%;
+	margin:0 10px
 }
 
 #menu
 {
 	float:left;
 	padding:10px;
+	margin:0 10px;
 	width:300px;
-	border-right:4px double #aaa;
-	height:96%;
 	overflow-x:hidden;
 	overflow-y:auto;
 }
 
-#data
-{
-	margin:0 0 0 320px;
-    overflow-y:auto;
-    height:96%;
-}
-
-#buttons, #edition, #help
+#buttons, #edition, #help, #data
 {
 	text-align:center;
-	margin:10px 50px;
-	padding:5px;
-	border:solid #bbb 1px;
+	margin:0 10px 10px 340px;
 }
+
 
 #help h1, #buttons h1, #edition h1
 {
@@ -138,6 +121,14 @@ option
 	cursor:pointer;
 }
 
+#data h1, #data h2
+{
+	text-align:center;
+	font-size:12pt;
+	padding:5px 10px;
+	margin:5px 10px;
+}
+
 #help h1 img, #buttons h1 img, #edition h1 img
 {
 	vertical-align:bottom;
@@ -145,7 +136,7 @@ option
 	margin-right:5px;
 }
 
-#help_content, #buttons_content, #content
+#help_content, #buttons_content, #content, #data
 {
 	padding:5px 10px;
 	margin:5px 10px;
@@ -158,32 +149,22 @@ option
 	max-height:200px;
 }
 
-#css-switch, #query-switch
+#query-switch
 {
-	padding:5px 10px;
-	margin-bottom:10px;
-	border:solid #bbb 1px;
-}
-#css-switch a, #query-switch a
-{
-	padding-left:20px;
-	margin-left:10px;
+	padding:0;
+	margin:10px 0;
 }
 
-#css-switch a[alt=tree]
+#css-switch button[alt=tree]
 {
-	background:url("images/application_side_tree.png") no-repeat;
+	background:url("images/application_side_tree.png") no-repeat 5px center;
+	padding-left:10px;
 }
 
-#css-switch a[alt=accordion]
+#css-switch button[alt=accordion]
 {
-	background:url("images/application_side_list.png") no-repeat;
-}
-
-#query-switch a
-{
-    /* REPLACE IMAGE */
-    background:url("images/application_side_tree.png") no-repeat;
+	background:url("images/application_side_list.png") no-repeat 5px center;
+	padding-left:10px;
 }
 
 /* Help messages */
@@ -196,11 +177,7 @@ option
 	margin:5px 50px;
 }
 
-#help ul
-{
-	list-style-position:inside;
-	list-style-image:url("images/bullet_orange.png");
-}
+
 
 #help pre
 {
@@ -272,12 +249,6 @@ div.category h2 {
 	margin: 5px 50px;
 }
 
-div.category ul {
-	text-align: left;
-	list-style-position:inside;
-	list-style-image:url("images/bullet_orange.png");
-}
-
 /* Popup */
 #popup h3
 {
@@ -319,6 +290,6 @@ input#skinText {
 	margin: 5px;
 }
 
-#skinImagePicker, #appsLogoPicker {
+#skinImagePicker, #appsLogoPicker, #css-switch {
 	text-align: center;
 }

@@ -6,9 +6,12 @@
 <title>Lemonldap::NG Manager</title>
 <link href="<TMPL_VAR NAME="DIR">/lemonldap-ng.ico" rel="icon" type="image/x-icon" />
 <link href="<TMPL_VAR NAME="DIR">/lemonldap-ng.ico" rel="shortcut icon" />
-<link rel="stylesheet" type="text/css" href="<TMPL_VAR NAME="DIR">/ui-lightness/jquery-ui-1.8.5.custom.css" />
-<link rel="stylesheet" type="text/css" title="menu" href="<TMPL_VAR NAME="DIR">/<TMPL_VAR NAME="CSS">" />
+<!-- Offline doc CSS -->
 <link rel="stylesheet" type="text/css" href="/doc/css/screen.css" />
+<!-- jQuery UI CSS -->
+<link rel="stylesheet" type="text/css" href="<TMPL_VAR NAME="DIR">/ui-lightness/jquery-ui-1.8.5.custom.css" />
+<!-- Manager CSS -->
+<link rel="stylesheet" type="text/css" title="menu" href="<TMPL_VAR NAME="DIR">/<TMPL_VAR NAME="CSS">" />
 <script src="<TMPL_VAR NAME="DIR">/jquery-1.4.2.min.js" type="text/JavaScript"></script>
 <script src="<TMPL_VAR NAME="DIR">/jquery-ui-1.8.5.custom.min.js" type="text/JavaScript"></script>
 <script src="<TMPL_VAR NAME="DIR">/jquery.cookie.js" type="text/JavaScript"></script>
@@ -72,36 +75,36 @@
      <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/custom.png" title="custom" /></button>
 </div>
 
+<!-- Tree CSS choice -->
+<div id="css-switch" title="<lang en="Menu style" fr="Style de menu" />">
+   <button alt="tree"><lang en="Tree" fr="Arbre" /></button>
+   <button alt="accordion"><lang en="Accordion" fr="Accordéon" /></button>
+</div>
+
 <!-- Container -->
-<div id="container" class="ui-widget ui-helper-clearfix">
+<!-- <div id="container" class="ui-widget ui-helper-clearfix"> -->
 
 <!-- Header -->
 <div id="header">
-   <img alt="Lemonldap::NG" src="<TMPL_VAR NAME="DIR">/logo_lemonldap-ng.png" class="logo" width="200" height="38" />
-   <p class="ui-state-default ui-corner-all ui-state-active"><a href="index.pl"><lang en="Configuration management" fr="Gestion de la configuration"/></a></p>
-   <p class="ui-state-default ui-corner-all"><a href="sessions.pl"><lang en="Sessions explorer" fr="Explorateur de sessions"/></a></p>
+   <a href="index.pl"><lang en="Configuration management" fr="Gestion de la configuration"/></a>
+   <a href="sessions.pl"><lang en="Sessions explorer" fr="Explorateur de sessions"/></a>
+   <span id="css-switch-link"><lang en="Menu style" fr="Style de menu" /></span>
 <!-- Header -->
 </div>
 
 <!-- Page -->
-<div id="page" class="ui-corner-all ui-helper-clearfix ui-widget-content">
+<!-- <div id="page" class="ui-corner-all ui-helper-clearfix ui-widget-content"> -->
 
 <!-- Menu (tree) -->
-<div id="menu">
-   <!-- Tree CSS choice -->
-   <div id="css-switch" class="ui-corner-all ui-widget-content">
-      <span><lang en="Menu style" fr="Style de menu" /></span>
-      <a href="#" alt="tree"><lang en="Tree" fr="Arbre" /></a>
-      <a href="#" alt="accordion"><lang en="Accordion" fr="Accordéon" /></a>
-   </div>
+<div id="menu" class="ui-corner-all ui-helper-clearfix ui-widget-content">
    <TMPL_VAR NAME="MENU">
 </div>
 
 <!-- Data -->
-<div id="data">
+<!-- <div id="data" class="ui-corner-all ui-helper-clearfix ui-widget-content"> -->
 
    <!-- Buttons -->
-   <div id="buttons" class="ui-corner-all">
+   <div id="buttons">
 
     <h1 class="ui-widget-header ui-corner-all">
      <img src="<TMPL_VAR NAME="DIR">/images/1downarrow_16x16.png" />
@@ -110,107 +113,107 @@
     </h1>
 
     <div id="buttons_content" class="ui-corner-all ui-widget-content">
-    <button id="bsave" onclick="uploadConf()" class="ui-state-default ui-corner-all" >
+    <button id="bsave" onclick="uploadConf()">
      <lang en="Save" fr="Sauver" />
     </button>
 
-    <button id="bnewvh" style="display:none;" onclick="newVh();return false;" class="ui-state-default ui-corner-all">
+    <button id="bnewvh" style="display:none;" onclick="newVh();return false;" >
      <lang en="New virtual host" fr="Nouvel hôte virtuel" />
     </button>
 
-    <button id="bdelvh" style="display:none;" onclick="delvh(currentId);" class="ui-state-default ui-corner-all">
+    <button id="bdelvh" style="display:none;" onclick="delvh(currentId);" >
      <lang en="Delete virtual host" fr="Supprimer l'hôte virtuel" />
     </button>
 
-    <button id="newkbr" style="display:none;" onclick="newKeyR();return false;" class="ui-state-default ui-corner-all">
+    <button id="newkbr" style="display:none;" onclick="newKeyR();return false;" >
      <lang en="New key" fr="Nouvelle clef" />
     </button>
 
-    <button id="newrbr" style="display:none;" onclick="newRuleR();return false;" class="ui-state-default ui-corner-all">
+    <button id="newrbr" style="display:none;" onclick="newRuleR();return false;" >
      <lang en="New rule" fr="Nouvelle règle" />
     </button>
 
-    <button id="newkb" style="display:none;" onclick="newKey();return false;" class="ui-state-default ui-corner-all">
+    <button id="newkb" style="display:none;" onclick="newKey();return false;" >
      <lang en="New key" fr="Nouvelle clef" />
     </button>
 
-    <button id="newrb" style="display:none;" onclick="newRule();return false;" class="ui-state-default ui-corner-all">
+    <button id="newrb" style="display:none;" onclick="newRule();return false;" >
      <lang en="New rule" fr="Nouvelle règle" />
     </button>
 
-    <button id="delkb" style="display:none;" onclick="delKey();return false;" class="ui-state-default ui-corner-all">
+    <button id="delkb" style="display:none;" onclick="delKey();return false;" >
      <lang en="Delete key" fr="Effacer la clef" />
     </button>
 
-    <button id="newidpsamlmetadatab" style="display:none;" onclick="newIdpSamlMetaData();return false;" class="ui-state-default ui-corner-all">
+    <button id="newidpsamlmetadatab" style="display:none;" onclick="newIdpSamlMetaData();return false;" >
      <lang en="New identity provider" fr="Nouveau fournisseur d'identité" />
     </button>
 
-    <button id="delidpsamlmetadatab" style="display:none;" onclick="delIdpSamlMetaData(currentId);" class="ui-state-default ui-corner-all">
+    <button id="delidpsamlmetadatab" style="display:none;" onclick="delIdpSamlMetaData(currentId);" >
      <lang en="Delete identity provider" fr="Supprimer le fournisseur d'identité" />
     </button>
 
-    <button id="newspsamlmetadatab" style="display:none;" onclick="newSpSamlMetaData();return false;" class="ui-state-default ui-corner-all">
+    <button id="newspsamlmetadatab" style="display:none;" onclick="newSpSamlMetaData();return false;" >
      <lang en="New service provider" fr="Nouveau fournisseur de service" />
     </button>
 
-    <button id="delspsamlmetadatab" style="display:none;" onclick="delSpSamlMetaData(currentId);" class="ui-state-default ui-corner-all">
+    <button id="delspsamlmetadatab" style="display:none;" onclick="delSpSamlMetaData(currentId);" >
      <lang en="Delete service provider" fr="Supprimer le fournisseur de service" />
     </button>
 
-    <button id="newsamlattributeb" style="display:none;" onclick="newSamlAttribute();return false;" class="ui-state-default ui-corner-all">
+    <button id="newsamlattributeb" style="display:none;" onclick="newSamlAttribute();return false;" >
      <lang en="New attribute" fr="Nouvel attribut" />
     </button>
 
-    <button id="newsamlattributebr" style="display:none;" onclick="newSamlAttributeR();return false;" class="ui-state-default ui-corner-all">
+    <button id="newsamlattributebr" style="display:none;" onclick="newSamlAttributeR();return false;" >
      <lang en="New attribute" fr="Nouvel attribut" />
     </button>
 
-    <button id="delsamlattributeb" style="display:none;" onclick="delSamlAttribute();return false;" class="ui-state-default ui-corner-all">
+    <button id="delsamlattributeb" style="display:none;" onclick="delSamlAttribute();return false;" >
      <lang en="Delete attribute" fr="Supprimer l'attribut" />
     </button>
 
-    <button id="newchoice" style="display:none;" onclick="newChoice();return false;" class="ui-state-default ui-corner-all">
+    <button id="newchoice" style="display:none;" onclick="newChoice();return false;" >
      <lang en="New choice" fr="Nouveau choix" />
     </button>
 
-    <button id="newchoicer" style="display:none;" onclick="newChoiceR();return false;" class="ui-state-default ui-corner-all">
+    <button id="newchoicer" style="display:none;" onclick="newChoiceR();return false;" >
      <lang en="New choice" fr="Nouveau choix" />
     </button>
 
-    <button id="delchoice" style="display:none;" onclick="delChoice();return false;" class="ui-state-default ui-corner-all">
+    <button id="delchoice" style="display:none;" onclick="delChoice();return false;" >
      <lang en="Delete choice" fr="Supprimer le choix" />
     </button>
 
-    <button id="newcategoryr" style="display:none;" onclick="newCategoryR();return false;" class="ui-state-default ui-corner-all">
+    <button id="newcategoryr" style="display:none;" onclick="newCategoryR();return false;" >
      <lang en="New category" fr="Nouvelle catégorie" />
     </button>
 
-    <button id="delcategory" style="display:none;" onclick="delCategory();return false;" class="ui-state-default ui-corner-all">
+    <button id="delcategory" style="display:none;" onclick="delCategory();return false;" >
      <lang en="Delete category" fr="Supprimer la catégorie" />
     </button>
 
-    <button id="newapplicationr" style="display:none;" onclick="newApplicationR();return false;" class="ui-state-default ui-corner-all">
+    <button id="newapplicationr" style="display:none;" onclick="newApplicationR();return false;" >
      <lang en="New application" fr="Nouvelle application" />
     </button>
 
-    <button id="delapplication" style="display:none;" onclick="delApplication();return false;" class="ui-state-default ui-corner-all">
+    <button id="delapplication" style="display:none;" onclick="delApplication();return false;" >
      <lang en="Delete application" fr="Supprimer l'application" />
     </button>
 
-    <button id="newpostr" style="display:none;" onclick="newPostR();return false;" class="ui-state-default ui-corner-all">
+    <button id="newpostr" style="display:none;" onclick="newPostR();return false;" >
      <lang en="New POST URL" fr="Nouvelle URL POST" />
     </button>
 
-    <button id="delpost" style="display:none;" onclick="delPost();return false;" class="ui-state-default ui-corner-all">
+    <button id="delpost" style="display:none;" onclick="delPost();return false;" >
      <lang en="Delete POST URL" fr="Supprimer l'URL POST" />
     </button>
 
-    <button id="newpostdatar" style="display:none;" onclick="newPostDataR();return false;" class="ui-state-default ui-corner-all">
+    <button id="newpostdatar" style="display:none;" onclick="newPostDataR();return false;" >
      <lang en="New POST data" fr="Nouvelle donnée POST" />
     </button>
 
-    <button id="delpostdata" style="display:none;" onclick="delPostData();return false;" class="ui-state-default ui-corner-all">
+    <button id="delpostdata" style="display:none;" onclick="delPostData();return false;" >
      <lang en="Delete POST data" fr="Supprimer la donnée POST" />
     </button>
 
@@ -242,11 +245,11 @@
 
     <!-- Configuration datas -->
     <div id="content_cfgDatas" class="hidden">
-     <ul style="text-align:left;">
-      <li><lang en="Configuration number" fr="Numéro de configuration"/>&nbsp;: <span id="cfgNum"><TMPL_VAR NAME="CFGNUM"></span></li>
-      <li><lang en="Author" fr="Auteur"/>&nbsp;: <span id="cfgAuthor"></span></li>
-      <li><lang en="IP Address" fr="Adresse IP"/>&nbsp;: <span id="cfgAuthorIP"></span></li>
-      <li><lang en="Date" fr="Date"/>&nbsp;: <span id="cfgDate"></span></li>
+     <ul>
+      <li><strong><lang en="Configuration number" fr="Numéro de configuration "/></strong>: <span id="cfgNum"><TMPL_VAR NAME="CFGNUM"></span></li>
+      <li><strong><lang en="Author" fr="Auteur "/></strong>: <span id="cfgAuthor"></span></li>
+      <li><strong><lang en="IP Address" fr="Adresse IP "/></strong>: <span id="cfgAuthorIP"></span></li>
+      <li><strong><lang en="Date" fr="Date "/></strong>: <span id="cfgDate"></span></li>
      </ul>
     </div>
 
@@ -254,7 +257,7 @@
     <div id="content_text" class="hidden">
      <input type="text" id="text" />
      <br />
-     <button onclick="setlminputdata(currentId,text);return false;" class="ui-state-default ui-corner-all">
+     <button onclick="setlminputdata(currentId,text);return false;" >
      <lang en="Apply" fr="Appliquer" />
      </button>
     </div>
@@ -263,7 +266,7 @@
     <div id="content_textarea" class="hidden">
      <textarea id="textarea" cols="80" rows="10"></textarea>
      <br />
-     <button onclick="setlminputdata(currentId,textarea);return false;" class="ui-state-default ui-corner-all">
+     <button onclick="setlminputdata(currentId,textarea);return false;" >
      <lang en="Apply" fr="Appliquer" />
      </button>
     </div>
@@ -274,15 +277,15 @@
      <table>
       <tr>
        <td>
-      <button id="downloadfile" onclick="downloadFile(currentId);return false;" class="ui-state-default ui-corner-all">
+      <button id="downloadfile" onclick="downloadFile(currentId);return false;" >
        <lang en="Download this file" fr="T&eacute;l&eacute;charger ce fichier" />
       </button>
-      <button id="generatefile" onclick="generateFile(currentId);return false;" class="ui-state-default ui-corner-all">
+      <button id="generatefile" onclick="generateFile(currentId);return false;" >
        <lang en="Generate" fr="G&eacute;n&eacute;rer" />
       </button>
-      <button id="switchreadonly" onclick="switchReadonly('#filearea');return false;" class="ui-state-default ui-corner-all">
+      <button id="switchreadonly" onclick="switchReadonly('#filearea');return false;" >
       </button>
-      <button onclick="setlminputdata(currentId,filearea);return false;" class="ui-state-default ui-corner-all">
+      <button onclick="setlminputdata(currentId,filearea);return false;" >
        <lang en="Apply" fr="Appliquer" />
       </button>
        </td>
@@ -298,7 +301,7 @@
         <input type="file" name="file" id="file" size="30"/>
        </td>
        <td>
-        <button onclick="setlmfile(currentId,file);return false;" class="ui-state-default ui-corner-all"><lang en="Load" fr="Charger" /></button>
+        <button onclick="setlmfile(currentId,file);return false;" ><lang en="Load" fr="Charger" /></button>
         <span class="loadimg"><img class="hidden" id="file-loadimg" src="<TMPL_VAR NAME="DIR">/spinner.gif" /></span>
        </td>
       </tr>
@@ -308,7 +311,7 @@
         <input type="text" name="url" id="url" size="40"/>
        </td>
        <td>
-        <button onclick="setlmfile(currentId,url);return false;" class="ui-state-default ui-corner-all"><lang en="Load" fr="Charger" /></button>
+        <button onclick="setlmfile(currentId,url);return false;" ><lang en="Load" fr="Charger" /></button>
         <span class="loadimg"><img class="hidden" id="url-loadimg" src="<TMPL_VAR NAME="DIR">/spinner.gif" /></span>
        </td>
       </tr>
@@ -322,32 +325,32 @@
 
     <!-- Integer -->
     <div id="content_int" class="hidden">
-     <button onclick="decrease();return false;" class="ui-state-default ui-corner-all"> - </button>
+     <button onclick="decrease();return false;" > - </button>
      <input type="text" id="int" />
-     <button onclick="increase();return false;" class="ui-state-default ui-corner-all"> + </button>
+     <button onclick="increase();return false;" > + </button>
      <br />
-     <button onclick="setlminputdata(currentId,int);return false;" class="ui-state-default ui-corner-all">
+     <button onclick="setlminputdata(currentId,int);return false;" >
      <lang en="Apply" fr="Appliquer" />
      </button>
     </div>
 
     <!-- Boolean -->
     <div id="content_bool" class="hidden">
-     <input id="On" type="radio" name="boolean" value="1" onclick="setlmdata(currentId,1)"/> <lang en="On" fr="Activé"/>
-     <input id="Off" type="radio" name="boolean" value="0" onclick="setlmdata(currentId,0)"/> <lang en="Off" fr="Désactivé"/>
+     <input id="On" type="radio" name="boolean" value="1" onclick="setlmdata(currentId,1)"/><label for="On"><lang en="On" fr="Activé"/></label>
+     <input id="Off" type="radio" name="boolean" value="0" onclick="setlmdata(currentId,0)"/><label for="Off"><lang en="Off" fr="Désactivé"/></label>
     </div>
 
     <!-- Troolean -->
     <div id="content_trool" class="hidden">
-     <input id="TrOn" type="radio" name="troolean" value="1" onclick="setlmdata(currentId,1)"/> <lang en="On" fr="Activé"/>
-     <input id="TrOff" type="radio" name="troolean" value="0" onclick="setlmdata(currentId,0)"/> <lang en="Off" fr="Désactivé"/>
-     <input id="TrDefault" type="radio" name="troolean" value="-1" onclick="setlmdata(currentId,-1)"/> <lang en="Default" fr="Par défaut"/>
+     <input id="TrOn" type="radio" name="troolean" value="1" onclick="setlmdata(currentId,1)"/><label for="TrOn"><lang en="On" fr="Activé"/></label>
+     <input id="TrOff" type="radio" name="troolean" value="0" onclick="setlmdata(currentId,0)"/><label for="TrOff"><lang en="Off" fr="Désactivé"/></label>
+     <input id="TrDefault" type="radio" name="troolean" value="-1" onclick="setlmdata(currentId,-1)"/><label for="TrDefault"><lang en="Default" fr="Par défaut"/></label>
     </div>
 
     <div id="content_btext" class="hidden">
      <input type="text" id="btextKey" /> <input type="text" id="btextValue" />
      <br />
-     <button onclick="setlminputtext(currentId,btextKey);setlminputdata(currentId,btextValue);return false;" class="ui-state-default ui-corner-all">
+     <button onclick="setlminputtext(currentId,btextKey);setlminputdata(currentId,btextValue);return false;" >
      <lang en="Apply" fr="Appliquer" />
      </button>
     </div>
@@ -367,7 +370,7 @@
          <textarea id="rulValue" cols="50" rows="4"></textarea>
      </td></tr></tbody></table>
      <br />
-     <button onclick="setlmrule(currentId,rulComment,rulKey,rulValue);return false;" class="ui-state-default ui-corner-all">
+     <button onclick="setlmrule(currentId,rulComment,rulKey,rulValue);return false;" >
      <lang en="Apply" fr="Appliquer" />
      </button>
     </div>
@@ -378,7 +381,7 @@
      <br/>
      <input type="text" id="authOptions" class="hidden" />
      <br/>
-     <button onclick="reloadAuthParams();return false;" class="ui-state-default ui-corner-all">
+     <button onclick="reloadAuthParams();return false;" >
      <lang en="Apply" fr="Appliquer" />
      </button>
     </div>
@@ -389,7 +392,7 @@
      <br /> 
      <input id="skinText" type="text" readonly="readonly" />
      <br />
-     <button onclick="setlminputdata(currentId,skinText);return false;" class="ui-state-default ui-corner-all">
+     <button onclick="setlminputdata(currentId,skinText);return false;" >
      <lang en="Apply" fr="Appliquer" />
      </button>
     </div>
@@ -398,7 +401,7 @@
     <div id="content_vhost" class="hidden">
      <input type="text" id="vhost" />
      <br />
-     <button onclick="setlminputtext(currentId,vhost);return false;" class="ui-state-default ui-corner-all">
+     <button onclick="setlminputtext(currentId,vhost);return false;" >
      <lang en="Apply" fr="Appliquer" />
      </button>
     </div>
@@ -407,7 +410,7 @@
     <div id="content_samlIdpMetaData" class="hidden">
      <input type="text" id="samlIdpMetaData" />
      <br />
-     <button onclick="setlminputtext(currentId,samlIdpMetaData);return false;" class="ui-state-default ui-corner-all">
+     <button onclick="setlminputtext(currentId,samlIdpMetaData);return false;" >
      <lang en="Apply" fr="Appliquer" />
      </button>
     </div>
@@ -416,7 +419,7 @@
     <div id="content_samlSpMetaData" class="hidden">
      <input type="text" id="samlSpMetaData" />
      <br />
-     <button onclick="setlminputtext(currentId,samlSpMetaData);return false;" class="ui-state-default ui-corner-all">
+     <button onclick="setlminputtext(currentId,samlSpMetaData);return false;" >
      <lang en="Apply" fr="Appliquer" />
      </button>
     </div>
@@ -432,8 +435,8 @@
        <td><lang en="Name" fr="Nom"/></td>
        <td><input type="text" id="samlAttributeName" /></td>
        <td><lang en="Mandatory" fr="Obligatoire"/></td>
-       <td><input id="samlAttributeMandatoryOn" type="radio" name="boolean" value="1" /> <lang en="On" fr="Activé"/>
-           <input id="samlAttributeMandatoryOff" type="radio" name="boolean" value="0" /> <lang en="Off" fr="Désactivé"/>
+       <td><input id="samlAttributeMandatoryOn" type="radio" name="boolean" value="1" /><label for="samlAttributeMandatoryOn"><lang en="On" fr="Activé"/></label>
+           <input id="samlAttributeMandatoryOff" type="radio" name="boolean" value="0" /><label for="samlAttributeMandatoryOff"><lang en="Off" fr="Désactivé"/></label>
        </td>
       </tr>
       <tr>
@@ -444,7 +447,7 @@
       </tr>
      </table>
      <br />
-     <button onclick="setlmsamlattribute(currentId);return false;" class="ui-state-default ui-corner-all">
+     <button onclick="setlmsamlattribute(currentId);return false;" >
      <lang en="Apply" fr="Appliquer" />
      </button>
    </div>
@@ -454,8 +457,8 @@
      <table>
       <tr>
        <td><lang en="Default" fr="Par défaut"/></td>
-       <td><input id="samlAssertionDefaultOn" type="radio" name="boolean" value="1" /> <lang en="On" fr="Activé"/>
-           <input id="samlAssertionDefaultOff" type="radio" name="boolean" value="0" /> <lang en="Off" fr="Désactivé"/>
+       <td><input id="samlAssertionDefaultOn" type="radio" name="boolean" value="1" /><label for="samlAssertionDefaultOn"><lang en="On" fr="Activé"/></label>
+           <input id="samlAssertionDefaultOff" type="radio" name="boolean" value="0" /><label for="samlAssertionDefaultOff"><lang en="Off" fr="Désactivé"/></label>
        </td>
       </tr>
       <tr class="hidden">
@@ -472,7 +475,7 @@
       </tr>
      </table>
      <br />
-     <button onclick="setlmsamlassertion(currentId);return false;" class="ui-state-default ui-corner-all">
+     <button onclick="setlmsamlassertion(currentId);return false;" >
      <lang en="Apply" fr="Appliquer" />
      </button>
     </div>
@@ -494,7 +497,7 @@
       </tr>
      </table>
      <br />
-     <button onclick="setlmsamlservice(currentId);return false;" class="ui-state-default ui-corner-all">
+     <button onclick="setlmsamlservice(currentId);return false;" >
      <lang en="Apply" fr="Appliquer" />
      </button>
     </div>
@@ -504,8 +507,8 @@
      <table>
       <tr>
        <td><lang en="List type" fr="Type de liste"/></td>
-       <td><input id="openid_serverlist_black" type="radio" name="boolean" value="0" /> <lang en="Black list" fr="Liste noire"/>
-           <input id="openid_serverlist_white" type="radio" name="boolean" value="1" /> <lang en="White list" fr="Liste blanche"/>
+       <td><input id="openid_serverlist_black" type="radio" name="boolean" value="0" /><label for="openid_serverlist_black"><lang en="Black list" fr="Liste noire"/></label>
+           <input id="openid_serverlist_white" type="radio" name="boolean" value="1" /><label for="openid_serverlist_white"><lang en="White list" fr="Liste blanche"/></label>
        </td>
       </tr>
       <tr>
@@ -514,7 +517,7 @@
       </tr>
      </table>
      <br />
-     <button onclick="setopenididplist(currentId);return false;" class="ui-state-default ui-corner-all">
+     <button onclick="setopenididplist(currentId);return false;" >
      <lang en="Apply" fr="Appliquer" />
      </button>
     </div>
@@ -540,7 +543,7 @@
       </tr>
      </table>
      <br />
-     <button onclick="setlmauthchoice(currentId);return false;" class="ui-state-default ui-corner-all">
+     <button onclick="setlmauthchoice(currentId);return false;" >
      <lang en="Apply" fr="Appliquer" />
      </button>
    </div>
@@ -558,7 +561,7 @@
       </tr>
      </table>
      <br />
-     <button onclick="setlminputtext(currentId,'#applicationListCategoryKey');setlminputdata(currentId,'#applicationListCategoryName');return false;" class="ui-state-default ui-corner-all">
+     <button onclick="setlminputtext(currentId,'#applicationListCategoryKey');setlminputdata(currentId,'#applicationListCategoryName');return false;" >
      <lang en="Apply" fr="Appliquer" />
      </button>
     </div>
@@ -589,7 +592,7 @@
       </tr>
      </table>
      <br />
-     <button onclick="setlmapplication(currentId);return false;" class="ui-state-default ui-corner-all">
+     <button onclick="setlmapplication(currentId);return false;" >
      <lang en="Apply" fr="Appliquer" />
      </button>
     </div>
@@ -607,7 +610,7 @@
       </tr>
      </table>
      <br />
-     <button onclick="setlminputtext(currentId,postKey);setlminputdata(currentId,postUrl);return false;" class="ui-state-default ui-corner-all">
+     <button onclick="setlminputtext(currentId,postKey);setlminputdata(currentId,postUrl);return false;" >
      <lang en="Apply" fr="Appliquer" />
      </button>
     </div>
@@ -615,7 +618,7 @@
     <div id="content_postdata" class="hidden">
      <input type="text" id="postDataKey" /> <input type="text" id="postDataValue" />
      <br />
-     <button onclick="setlminputtext(currentId,postDataKey,'postdata:');setlminputdata(currentId,postDataValue);return false;" class="ui-state-default ui-corner-all">
+     <button onclick="setlminputtext(currentId,postDataKey,'postdata:');setlminputdata(currentId,postDataValue);return false;" >
      <lang en="Apply" fr="Appliquer" />
      </button>
     </div>
@@ -644,13 +647,13 @@
 </div>
 
 <!-- Data -->
-</div>
+<!-- </div> -->
 
 <!-- Page -->
-</div>
+<!-- </div> -->
 
 <!-- Container -->
-</div>
+<!-- </div> -->
 
 </body>
 </html>

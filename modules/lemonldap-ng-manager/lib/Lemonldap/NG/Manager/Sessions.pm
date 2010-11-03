@@ -428,7 +428,6 @@ sub session {
 
     # General informations
 
-    $res .= '<div id="edition" class="ui-corner-all">';
     $res .= '<h1 class="ui-widget-header ui-corner-all">';
     $res .= $self->translate('sessionTitle');
     $res .= '</h1>';
@@ -591,8 +590,6 @@ sub session {
       . ' class="ui-state-default ui-corner-all"'
       . " value=\""
       . $self->translate('deleteSession') . "\" />";
-    $res .= '</div>';
-
     $res .= '</div>';
 
     return $res;
