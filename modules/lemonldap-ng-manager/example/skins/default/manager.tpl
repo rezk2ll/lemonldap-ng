@@ -11,15 +11,16 @@
 <!-- jQuery UI CSS -->
 <link rel="stylesheet" type="text/css" href="<TMPL_VAR NAME="DIR">/ui-lightness/jquery-ui-1.8.5.custom.css" />
 <!-- Manager CSS -->
-<link rel="stylesheet" type="text/css" title="menu" href="<TMPL_VAR NAME="DIR">/<TMPL_VAR NAME="CSS">" />
-<script src="<TMPL_VAR NAME="DIR">/jquery-1.4.2.min.js" type="text/JavaScript"></script>
-<script src="<TMPL_VAR NAME="DIR">/jquery-ui-1.8.5.custom.min.js" type="text/JavaScript"></script>
-<script src="<TMPL_VAR NAME="DIR">/jquery.cookie.js" type="text/JavaScript"></script>
-<script src="<TMPL_VAR NAME="DIR">/jquery.ajaxfileupload.js" type="text/JavaScript"></script>
-<script src="<TMPL_VAR NAME="DIR">/tree.js" type="text/JavaScript"></script>
+<link rel="stylesheet" type="text/css" title="menu" href="<TMPL_VAR NAME="DIR">/css/<TMPL_VAR NAME="CSS">" />
+<script src="<TMPL_VAR NAME="DIR">/js/jquery-1.4.2.min.js" type="text/JavaScript"></script>
+<script src="<TMPL_VAR NAME="DIR">/js/jquery-ui-1.8.5.custom.min.js" type="text/JavaScript"></script>
+<script src="<TMPL_VAR NAME="DIR">/js/jquery.cookie.js" type="text/JavaScript"></script>
+<script src="<TMPL_VAR NAME="DIR">/js/jquery.ajaxfileupload.js" type="text/JavaScript"></script>
+<script src="<TMPL_VAR NAME="DIR">/js/tree.js" type="text/JavaScript"></script>
 <script type="text/JavaScript">//<![CDATA[
 	var scriptname='<TMPL_VAR NAME="SCRIPT_NAME">';
-	var imagepath='<TMPL_VAR NAME="DIR">/';
+	var imagepath='<TMPL_VAR NAME="DIR">/images/';
+	var csspath='<TMPL_VAR NAME="DIR">/css/';
 	var treeautoclose='<TMPL_VAR NAME="TREE_AUTOCLOSE">';
 	var treejquerycss='<TMPL_VAR NAME="TREE_JQUERYCSS">';
 	var text4newKey='<lang en="Key" fr="Clé" />';
@@ -38,7 +39,7 @@
 	var text4newCategory='<lang en="Category identifier" fr="Identifiant de la catégorie" />';
 	var text4newApplication='<lang en="Application identifier" fr="Identifiant de l\'application" />';
 //]]></script>
-<script src="<TMPL_VAR NAME="DIR">/manager.js" type="text/JavaScript"></script>
+<script src="<TMPL_VAR NAME="DIR">/js/manager.js" type="text/JavaScript"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
 </head>
 <body>
@@ -290,7 +291,7 @@
       </button>
        </td>
        <td>
-        <span class="loadimg"><img class="hidden" id="button-loadimg" src="<TMPL_VAR NAME="DIR">/spinner.gif" /></span>
+        <span class="loadimg"><img class="hidden" id="button-loadimg" src="<TMPL_VAR NAME="DIR">/images/spinner.gif" /></span>
        </td>
       </tr>
      </table>
@@ -302,7 +303,7 @@
        </td>
        <td>
         <button onclick="setlmfile(currentId,file);return false;" ><lang en="Load" fr="Charger" /></button>
-        <span class="loadimg"><img class="hidden" id="file-loadimg" src="<TMPL_VAR NAME="DIR">/spinner.gif" /></span>
+        <span class="loadimg"><img class="hidden" id="file-loadimg" src="<TMPL_VAR NAME="DIR">/images/spinner.gif" /></span>
        </td>
       </tr>
       <tr id="urlinput" class="hidden">
@@ -312,7 +313,7 @@
        </td>
        <td>
         <button onclick="setlmfile(currentId,url);return false;" ><lang en="Load" fr="Charger" /></button>
-        <span class="loadimg"><img class="hidden" id="url-loadimg" src="<TMPL_VAR NAME="DIR">/spinner.gif" /></span>
+        <span class="loadimg"><img class="hidden" id="url-loadimg" src="<TMPL_VAR NAME="DIR">/images/spinner.gif" /></span>
        </td>
       </tr>
      </table>

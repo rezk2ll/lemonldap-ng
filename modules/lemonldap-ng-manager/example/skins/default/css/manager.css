@@ -44,7 +44,7 @@ ul
 {
 	text-align: left;
 	list-style-position:inside;
-	list-style-image:url("images/bullet_orange.png");
+	list-style-image:url("../images/bullet_orange.png");
 }
 
 /* Buttons, Inputs*/
@@ -157,13 +157,13 @@ option
 
 #css-switch button[alt=tree]
 {
-	background:url("images/application_side_tree.png") no-repeat 5px center;
+	background:url("../images/application_side_tree.png") no-repeat 5px center;
 	padding-left:10px;
 }
 
 #css-switch button[alt=accordion]
 {
-	background:url("images/application_side_list.png") no-repeat 5px center;
+	background:url("../images/application_side_list.png") no-repeat 5px center;
 	padding-left:10px;
 }
 
@@ -199,12 +199,12 @@ option
 
 #help .info
 {
-	background:#ddd url("images/information.png") no-repeat 5px;
+	background:#ddd url("../images/information.png") no-repeat 5px;
 }
 
 #help .default
 {
-	background:#ddd url("images/help.png") no-repeat 5px;
+	background:#ddd url("../images/help.png") no-repeat 5px;
 }
 
 #help tt
@@ -262,17 +262,17 @@ div.category h2 {
 #popup ul
 {
 	list-style-position:inside;
-	list-style-image:url("images/bullet_green.png");
+	list-style-image:url("../images/bullet_green.png");
 	margin:0;
 	padding:0;
 }
 
 #popup ul.warning {
-	list-style-image:url("images/bullet_orange.png");
+	list-style-image:url("../images/bullet_orange.png");
 }
 
 #popup ul.error {
-	list-style-image:url("images/bullet_red.png");
+	list-style-image:url("../images/bullet_red.png");
 }
 
 .ui-dialog {

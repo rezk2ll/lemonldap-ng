@@ -150,11 +150,11 @@ $(document).ready(function(){
 });
 function simpleTreeSetMenuStyle(style){
 	if(style=="tree"){
-		$("link[title=menu]").attr("href",imagepath+"tree.css");
+		$("link[title=menu]").attr("href",csspath+"tree.css");
 		treejquerycss=false;
 		simpleTreeCollection[0].option.autoclose=false;
 	}else{
-		$("link[title=menu]").attr("href",imagepath+"accordion.css");
+		$("link[title=menu]").attr("href",csspath+"accordion.css");
 		treejquerycss=true;
 		simpleTreeCollection[0].option.autoclose=true;
 	}
@@ -556,7 +556,7 @@ function changeSkinImage(skin) {
 		$('#skinText').attr('readonly','readonly');
 	}
 	// Set image source
-	var imgsrc = imagepath + 'images/portal-skins/' + skin + '.png';
+	var imgsrc = imagepath + 'portal-skins/' + skin + '.png';
 	$('#content_skin img.current').attr('src', imgsrc);
 	$('#content_skin img.current').attr('alt', skin);
 }
@@ -1284,7 +1284,7 @@ function changeAppsLogo(logo) {
 		$('#applicationListApplicationLogo').attr('readonly','readonly');
 	}
 	// Set image source
-	var imgsrc = imagepath + 'images/apps-logos/' + logo;
+	var imgsrc = imagepath + 'apps-logos/' + logo;
 	$('#content_applicationListApplication img.current').attr('src', imgsrc);
 	$('#content_applicationListApplication img.current').attr('alt', logo);
 }
