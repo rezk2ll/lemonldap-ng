@@ -414,15 +414,40 @@ function samlSpRoot(id){
 	display('default','');
 	$('#newspsamlmetadatab').show();
 }
+/* @function splitModuleAndOptions(string data)
+ * Split module and options from authentication or userDB string
+ * @return module, options
+ */
+function splitModuleAndOptions(data) {
+
+	var module = ''
+	var options = '';
+
+	if(data.match(' ')){
+	       	module = data.substring(0,data.indexOf(' '));
+	       	options = data.substring(data.indexOf(' ')+1);
+	}else{
+		module = data;
+	}
+
+	return Array(module,options);
+}
+
 function authParams(id) {
 	currentId=id;
-	var t=lmdata(id).split(' ');
-	if(t.length>1){
+
+	var t=splitModuleAndOptions(lmdata(id));
+
+	// Update options field
 		$('#authOptions').attr('value',t[1]);
+
+	if(t[1].length>1){
 		$('#authOptions').show();
 	}else{
 		$('#authOptions').hide();
 	}
+
+	// Check Multi
 	$('#authText').unbind('change');
 	$('#authText').change(function(){
 		var isMulti=false;
@@ -435,6 +460,7 @@ function authParams(id) {
 			$('#authOptions').hide();
 		}
 	});
+
 	formateSelectAuth('authText',t[0]);
 	display('authParams',lmtext(id));
 }
@@ -458,8 +484,33 @@ function formateSelectAuth(id,value){
 }
 function userdbParams(id) {
 	currentId=id;
+
+	var t=splitModuleAndOptions(lmdata(id));
+
+	// Update options field
+	$('#authOptions').attr('value',t[1]);
+
+	if(t[1].length>1){
+		$('#authOptions').show();
+	}else{
 	$('#authOptions').hide();
-	formateSelectUser('authText',lmdata(id));
+	}
+
+	// Check Multi
+	$('#authText').unbind('change');
+	$('#authText').change(function(){
+		var isMulti=false;
+		$('#content_authParams option:selected').each(function(){
+			if($(this).attr('value')=='Multi'){isMulti=true;}
+		});
+		if(isMulti){
+			$('#authOptions').show();
+		}else{
+			$('#authOptions').hide();
+		}
+	});
+
+	formateSelectUser('authText',t[0]);
 	display('authParams',lmtext(id));
 }
 function formateSelectUser(id,value){
