@@ -170,7 +170,7 @@ sub setAttributes {
 # @return hashref serialized in SOAP by SOAP::Lite
 sub getConfig {
     my $self = shift;
-    my $conf = $self->_getLmConf() or die("No configuration available");
+    my $conf = $self->{lmConf}->getConf() or die("No configuration available");
     return $conf;
 }
 
