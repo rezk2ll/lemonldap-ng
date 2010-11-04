@@ -356,12 +356,11 @@ sub delete {
     if ($@) {
         if ( $@ =~ /does not exist in the data store/i ) {
             $self->lmLog( "Apache::Session error: $@", 'error' );
-            $res .= '<div id="help" class="ui-corner-all">';
             $res .= '<h1 class="ui-widget-header ui-corner-all">'
               . $self->translate('error') . '</h1>';
             $res .= '<div class="ui-corner-all ui-widget-content">';
             $res .= "Apache::Session error: $@";
-            $res .= '</div></div>';
+            $res .= '</div>';
             return $res;
         }
         else {
@@ -378,12 +377,11 @@ sub delete {
             };
             if ($@) {
                 $self->lmLog( "Apache::Session error: $@", 'error' );
-                $res .= '<div id="help" class="ui-corner-all">';
                 $res .= '<h1 class="ui-widget-header ui-corner-all">'
                   . $self->translate('error') . '</h1>';
                 $res .= '<div class="ui-corner-all ui-widget-content">';
                 $res .= "Apache::Session error: $@";
-                $res .= '</div></div>';
+                $res .= '</div>';
                 return $res;
             }
         }
@@ -393,10 +391,8 @@ sub delete {
         }
         else {
             $self->lmLog( "Session $id deleted", 'info' );
-            $res .= '<div id="help" class="ui-corner-all">';
             $res .= '<h1 class="ui-widget-header ui-corner-all">'
               . $self->translate('sessionDeleted') . '</h1>';
-            $res .= '</div>';
             return $res;
         }
     }
@@ -413,12 +409,11 @@ sub session {
     eval { tie %h, $globalStorage, $id, $globalStorageOptions; };
     if ($@) {
         $self->lmLog( "Apache::Session error: $@", 'error' );
-        $res .= '<div id="help" class="ui-corner-all">';
         $res .= '<h1 class="ui-widget-header ui-corner-all">'
           . $self->translate('error') . '</h1>';
         $res .= '<div class="ui-corner-all ui-widget-content">';
         $res .= "Apache::Session error: $@";
-        $res .= '</div></div>';
+        $res .= '</div>';
         return $res;
     }
 
