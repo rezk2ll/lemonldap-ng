@@ -37,6 +37,7 @@ example/skins/default/images/bullet_orange.png
 example/skins/default/images/bullet_red.png
 example/skins/default/images/help.png
 example/skins/default/images/information.png
+example/skins/default/images/logo_lemonldap-ng.png
 example/skins/default/images/portal-skins/custom.png
 example/skins/default/images/portal-skins/dark.png
 example/skins/default/images/portal-skins/impact.png
@@ -63,7 +64,6 @@ example/skins/default/js/manager.js
 example/skins/default/js/sessions.js
 example/skins/default/js/tree.js
 example/skins/default/lemonldap-ng.ico
-example/skins/default/logo_lemonldap-ng.png
 example/skins/default/manager.tpl
 example/skins/default/sessions.tpl
 example/skins/default/ui-lightness/images/ui-bg_diagonals-thick_18_b81900_40x40.png

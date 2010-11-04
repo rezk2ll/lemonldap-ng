@@ -22,7 +22,7 @@ html,body
 body
 {
 	font:normal 9pt sans-serif;
-	background:#000;
+	background:#000 url('../images/logo_lemonldap-ng.png') no-repeat 10px 10px;
 }
 
 .content
