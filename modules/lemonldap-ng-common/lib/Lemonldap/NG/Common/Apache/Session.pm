@@ -18,7 +18,7 @@ sub _load {
     my $backend = shift;
     unless ( $backend->can('populate') ) {
         eval "require $backend";
-        die $@ if($@);
+        die $@ if ($@);
     }
 }
 
@@ -50,8 +50,7 @@ sub searchOn {
     my $backend = $args->{backend};
     _load($backend);
     if ( $backend->can('searchOn') ) {
-        $backend .= '::searchOn';
-        return $class->$backend( $args, $selectField, $value, @fields );
+        return $backend->searchOn( $args, $selectField, $value, @fields );
     }
     my %res = ();
     $class->get_key_from_all_sessions(
@@ -100,8 +99,7 @@ sub get_key_from_all_sessions {
     my $backend = $_[0]->{backend};
     _load($backend);
     if ( $backend->can('get_key_from_all_sessions') ) {
-        $backend .= '::get_key_from_all_sessions';
-        return $class->$backend(@_);
+        return $backend->get_key_from_all_sessions(@_);
     }
     if ( $backend =~
         /^Apache::Session::(?:MySQL|Postgres|Oracle|Sybase|Informix)$/ )

@@ -586,7 +586,7 @@ debian-diff:
 	@$(DIFF) lemonldap-ng-manager/lib/Lemonldap/NG/Manager.pm $(DIFFPREFIX)/usr/share/perl5/Lemonldap/NG/Manager.pm ||true
 	@$(DIFF) lemonldap-ng-manager/example/index.pl $(DIFFPREFIX)/var/lib/lemonldap-ng/manager/index.pl ||true
 	@$(DIFF) lemonldap-ng-manager/example/sessions.pl $(DIFFPREFIX)/var/lib/lemonldap-ng/manager/sessions.pl ||true
-	@$(DIFF) --ignore-matching-lines=='.*__APACHE.*' lemonldap-ng-manager/example/scripts/lmConfigEditor $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/lmConfigEditor ||true
+	@$(DIFF) --ignore-matching-lines='.*POSIX.*' lemonldap-ng-manager/example/scripts/lmConfigEditor $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/lmConfigEditor ||true
 	@for i in $(MANAGERSKINS); do \
 		$(DIFF) -x 'jquery*' lemonldap-ng-manager/example/skins/$$i $(DIFFPREFIX)/usr/share/lemonldap-ng/manager-skins/$$i; \
 	done ||true
@@ -618,7 +618,7 @@ default-diff:
 	@$(DIFF) lemonldap-ng-manager/example/skins $(LMPREFIX)/htdocs/manager/skins ||true
 	@$(DIFF) lemonldap-ng-manager/example/index.pl $(LMPREFIX)/htdocs/manager/index.pl ||true
 	@$(DIFF) lemonldap-ng-manager/example/sessions.pl $(LMPREFIX)/htdocs/manager/sessions.pl ||true
-	@$(DIFF) --ignore-matching-lines=='.*__APACHE.*' lemonldap-ng-manager/example/scripts/lmConfigEditor $(LMPREFIX)/bin/lmConfigEditor ||true
+	@$(DIFF) --ignore-matching-lines='.*POSIX.*' lemonldap-ng-manager/example/scripts/lmConfigEditor $(LMPREFIX)/bin/lmConfigEditor ||true
 
 tidy: clean
 	find lemon*/ -type f \( -name '*.pm' -or -name '*.pl' -or -name '*.t' \) -print -exec perltidy -b {} \;
