@@ -155,63 +155,10 @@ option
 	margin:10px 0;
 }
 
-#css-switch button[alt=tree]
+#css-switch p
 {
-	background:url("../images/application_side_tree.png") no-repeat 5px center;
-	padding-left:10px;
-}
-
-#css-switch button[alt=accordion]
-{
-	background:url("../images/application_side_list.png") no-repeat 5px center;
-	padding-left:10px;
-}
-
-/* Help messages */
-#help h3
-{
-	text-align:center;
-	letter-spacing:2px;
-	border-bottom:1px solid #aaa;
-	padding:5px;
-	margin:5px 50px;
-}
-
-
-
-#help pre
-{
-	word-wrap:break-word;
-	white-space:pre-wrap;
-	font-family:monospace;
-	background:#ccc;
-	border-color:#aaa;
-	border-width:1px 1px 1px 5px;
-	border-style:solid;
-	padding:5px;
-}
-
-#help .info, #help .default
-{
-	padding:5px 5px 5px 30px;
-	border:1px solid #aaa;
-}
-
-#help .info
-{
-	background:#ddd url("../images/information.png") no-repeat 5px;
-}
-
-#help .default
-{
-	background:#ddd url("../images/help.png") no-repeat 5px;
-}
-
-#help tt
-{
-	padding:3px;
-	background:#ddd;
-	font-weight:bold;
+	margin:10px 0;
+	padding:10px;
 }
 
 /* Filearea */
@@ -292,4 +239,12 @@ input#skinText {
 
 #skinImagePicker, #appsLogoPicker, #css-switch {
 	text-align: center;
+}
+
+/* Force font color for help pages */
+#help_content .note, #help_content .noteimportant, #help_content .notewarning, #help_content .notetip, #help_content table {
+	color: #000;
+}
+div.dokuwiki h1,div.dokuwiki h2, div.dokuwiki h3, div.dokuwiki h4, div.dokuwiki h5 {
+	color: inherit;
 }

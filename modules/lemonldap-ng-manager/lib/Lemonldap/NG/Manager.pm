@@ -45,6 +45,8 @@ sub new {
     # Default values
     $self->{managerSkin} = "default"       unless defined $self->{managerSkin};
     $self->{managerCss}  = "accordion.css" unless defined $self->{managerCss};
+    $self->{managerCssTheme} = "ui-lightness"
+      unless defined $self->{managerCssTheme};
     $self->{managerTreeAutoClose} = "true"
       unless defined $self->{managerTreeAutoClose};
     $self->{managerTreeJqueryCss} = "true"

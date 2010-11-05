@@ -3,17 +3,17 @@
 	 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
 <head>
-<title>Lemonldap::NG Manager</title>
+<title>LemonLDAP::NG Manager</title>
 <link href="<TMPL_VAR NAME="DIR">/lemonldap-ng.ico" rel="icon" type="image/x-icon" />
 <link href="<TMPL_VAR NAME="DIR">/lemonldap-ng.ico" rel="shortcut icon" />
 <!-- Offline doc CSS -->
 <link rel="stylesheet" type="text/css" href="/doc/css/screen.css" />
 <!-- jQuery UI CSS -->
-<link rel="stylesheet" type="text/css" href="<TMPL_VAR NAME="DIR">/ui-lightness/jquery-ui-1.8.5.custom.css" />
+<link rel="stylesheet" type="text/css" id="csstheme" href="<TMPL_VAR NAME="DIR">/<TMPL_VAR NAME="CSS_THEME">/jquery-ui-1.8.6.custom.css" />
 <!-- Manager CSS -->
-<link rel="stylesheet" type="text/css" title="menu" href="<TMPL_VAR NAME="DIR">/css/<TMPL_VAR NAME="CSS">" />
+<link rel="stylesheet" type="text/css" id="cssmenu" href="<TMPL_VAR NAME="DIR">/css/<TMPL_VAR NAME="CSS">" />
 <script src="<TMPL_VAR NAME="DIR">/js/jquery-1.4.2.min.js" type="text/JavaScript"></script>
-<script src="<TMPL_VAR NAME="DIR">/js/jquery-ui-1.8.5.custom.min.js" type="text/JavaScript"></script>
+<script src="<TMPL_VAR NAME="DIR">/js/jquery-ui-1.8.6.custom.min.js" type="text/JavaScript"></script>
 <script src="<TMPL_VAR NAME="DIR">/js/jquery.cookie.js" type="text/JavaScript"></script>
 <script src="<TMPL_VAR NAME="DIR">/js/jquery.ajaxfileupload.js" type="text/JavaScript"></script>
 <script src="<TMPL_VAR NAME="DIR">/js/tree.js" type="text/JavaScript"></script>
@@ -21,6 +21,10 @@
 	var scriptname='<TMPL_VAR NAME="SCRIPT_NAME">';
 	var imagepath='<TMPL_VAR NAME="DIR">/images/';
 	var csspath='<TMPL_VAR NAME="DIR">/css/';
+	var jqueryuiversion='1.8.6';
+	var css_menu='<TMPL_VAR NAME="CSS">';
+	var css_theme='<TMPL_VAR NAME="CSS_THEME">';
+	var themepath='<TMPL_VAR NAME="DIR">/';
 	var treeautoclose='<TMPL_VAR NAME="TREE_AUTOCLOSE">';
 	var treejquerycss='<TMPL_VAR NAME="TREE_JQUERYCSS">';
 	var text4newKey='<lang en="Key" fr="Clé" />';
@@ -78,8 +82,16 @@
 
 <!-- Tree CSS choice -->
 <div id="css-switch" title="<lang en="Menu style" fr="Style de menu" />">
+   <div id="organization">
+   <p class="ui-widget-header ui-corner-all"><lang en="Organization" fr="Organisation" /></p>
    <button alt="tree"><lang en="Tree" fr="Arbre" /></button>
    <button alt="accordion"><lang en="Accordion" fr="Accordéon" /></button>
+   </div>
+   <div id="theme">
+   <p class="ui-widget-header ui-corner-all"><lang en="Theme" fr="Thème" /></p>
+   <button alt="ui-lightness"><lang en="Lightness" fr="Lumineux" /></button>
+   <button alt="ui-darkness"><lang en="Darkness" fr="Obscur" /></button>
+   </div>
 </div>
 
 <!-- Container -->
