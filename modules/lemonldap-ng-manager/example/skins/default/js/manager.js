@@ -4,9 +4,9 @@
 
 /* Help chapters */
 var helpCh={
-	rules:'/pages/documentation/1.0/writingrulesand_headers.html#rules',
-	headers:'/pages/documentation/1.0/writingrulesand_headers.html#headers',
-	default:'/'
+	'rules':'/pages/documentation/1.0/writingrulesand_headers.html#rules',
+	'headers':'/pages/documentation/1.0/writingrulesand_headers.html#headers',
+	'default':'/'
 };
 
 /* Init simpleTreeCollection */
