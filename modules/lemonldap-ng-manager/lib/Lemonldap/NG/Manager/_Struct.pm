@@ -1249,7 +1249,7 @@ sub testStruct {
                 my @s = split( /[\s,]+/, $l );
                 foreach my $s (@s) {
                     $s =~
-/^(?:ldap(?:s|\+tls|i):\/\/)?\w[\w\-\.]+\w(?::\d{0,5})?\/?$/
+/^(?:ldap(?:s|\+tls|i)?:\/\/)?\w[\w\-\.]+\w(?::\d{0,5})?\/?$/
                       or return ( 0, "Bad ldap uri \"$s\"" );
                 }
                 return 1;
