@@ -34,6 +34,7 @@
 {
     margin-left:-16px;
     background: url(../images/tree/root.gif) no-repeat 16px 0 transparent;
+    /*background-position: -84px -1646px;width:16px*/
 }
 .simpleTree .line
 {
@@ -42,7 +43,8 @@
     line-height: 3px;
     height:3px;
     font-size:3px;
-    background: url(../images/tree/line_bg.gif) 0 0 no-repeat transparent;
+    background: url(../images/tree/tree.png) 0 0 no-repeat transparent;
+    background-position: -84px -1322px;
 }
 .simpleTree .line-last
 {
@@ -52,6 +54,7 @@
     height:3px;
     font-size:3px;
     background: url(../images/tree/spacer.gif) 0 0 no-repeat transparent;
+    background-position: -84px -1712px;
 }
 .simpleTree .line-over
 {
@@ -60,7 +63,8 @@
     line-height: 3px;
     height:3px;
     font-size:3px;
-    background: url(../images/tree/line_bg_over.gif) 0 0 no-repeat transparent;
+    background: url(../images/tree/tree.png) 0 0 no-repeat transparent;
+    background-position: -84px -1392px;
 }
 .simpleTree .line-over-last
 {
@@ -69,27 +73,32 @@
     line-height: 3px;
     height:3px;
     font-size:3px;
-    background: url(../images/tree/line_bg_over_last.gif) 0 0 no-repeat transparent;
+    background: url(../images/tree/tree.png) 0 0 no-repeat transparent;
+    background-position: -84px -1462px;
 }
 .simpleTree .folder-open
 {
     margin-left:-16px;
-    background: url(../images/tree/collapsable.gif) 0 -2px no-repeat transparent;
+    background: url(../images/tree/tree.png) 0 -2px no-repeat transparent;
+    background-position: 0 -72px;width: 34px;
 }
 .simpleTree .folder-open-last
 {
     margin-left:-16px;
-    background: url(../images/tree/collapsable-last.gif) 0 -2px no-repeat transparent;
+    background: url(../images/tree/tree.png) 0 -2px no-repeat transparent;
+    background-position: 0 -72px; width: 34px;
 }
 .simpleTree .folder-close
 {
     margin-left:-16px;
-    background: url(../images/tree/expandable.gif) 0 -2px no-repeat transparent;
+    background: url(../images/tree/tree.png) 0 -2px no-repeat transparent;
+    background-position: 0 -1394px; width: 34px;height:14px;
 }
 .simpleTree .folder-close-last
 {
     margin-left:-16px;
-    background: url(../images/tree/expandable-last.gif) 0 -2px no-repeat transparent;
+    background: url(../images/tree/tree.png) 0 -2px no-repeat transparent;
+    background-position: 0 -1322px; width: 34px;height:16px;
 }
 .simpleTree .folder-hidden, .simpleTree .folder-hidden-last
 {
@@ -98,12 +107,14 @@
 .simpleTree .doc
 {
     margin-left:-16px;
-    background: url(../images/tree/leaf.gif) 0 -1px no-repeat transparent;
+    background: url(../images/tree/tree.png) 0 -1px no-repeat transparent;
+    background-position: -84px -72px; width: 32px;height:16px;
 }
 .simpleTree .doc-last
 {
     margin-left:-16px;
-    background: url(../images/tree/leaf-last.gif) 0 -1px no-repeat transparent;
+    background: url(../images/tree/tree.png) 0 -1px no-repeat transparent;
+    background-position: -84px 0; width: 32px;height:16px;
 }
 .simpleTree .ajax
 {
@@ -164,16 +175,19 @@
 
 #drag_container li.doc, #drag_container li.doc-last
 {
-    background: url(../images/tree/leaf.gif) no-repeat -17px 0 transparent;
+    background: url(../images/tree/tree.png) no-repeat -17px 0 transparent;
+    background-position: -84px -72px;width:32px;
 }
 #drag_container .folder-close, #drag_container .folder-close-last
 {
-    background: url(../images/tree/expandable.gif) no-repeat -17px 0 transparent;
+    background: url(../images/tree/tree.png) no-repeat -17px 0 transparent;
+    background-position: 0 -1394px; width: 34px;
 }
 
 #drag_container .folder-open, #drag_container .folder-open-last
 {
-    background: url(../images/tree/collapsable.gif) no-repeat -17px 0 transparent;
+    background: url(../images/tree/tree.png) no-repeat -17px 0 transparent;
+    background-position: 0 -72px; width: 34px;
 }
 
 .content
