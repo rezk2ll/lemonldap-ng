@@ -54,30 +54,30 @@
 
 <!-- Skin picker-->
 <div id="skinImagePicker" title="<lang en="Choose a skin" fr="Choisir un thème" />">
-     <button><img src="<TMPL_VAR NAME="DIR">/images/portal-skins/pastel.png" alt="Pastel" title="pastel" /></button>
-     <button><img src="<TMPL_VAR NAME="DIR">/images/portal-skins/impact.png" alt="Impact" title="impact" /></button>
-     <button><img src="<TMPL_VAR NAME="DIR">/images/portal-skins/dark.png" alt="Dark" title="dark" /></button>
-     <button><img src="<TMPL_VAR NAME="DIR">/images/portal-skins/custom.png" alt="Custom" title="custom" /></button>
+     <button><img src="<TMPL_VAR NAME="DIR">/images/portal-skins/pastel.png" alt="Pastel" title="pastel" width="200px" height="129px" /></button>
+     <button><img src="<TMPL_VAR NAME="DIR">/images/portal-skins/impact.png" alt="Impact" title="impact" width="200px" height="129px" /></button>
+     <button><img src="<TMPL_VAR NAME="DIR">/images/portal-skins/dark.png" alt="Dark" title="dark" width="200px" height="129px" /></button>
+     <button><img src="<TMPL_VAR NAME="DIR">/images/portal-skins/custom.png" alt="Custom" title="custom" width="200px" height="129px" /></button>
 </div>
 
 <!-- logo picker-->
 <div id="appsLogoPicker" title="<lang en="Choose a logo" fr="Choisir un logo" />">
-     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/attach.png" title="attach" /></button>
-     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/bell.png" title="bell" /></button>
-     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/bookmark.png" title="bookmark" /></button>
-     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/configure.png" title="configure" /></button>
-     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/database.png" title="database" /></button>
-     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/demo.png" title="demo" /></button>
-     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/folder.png" title="folder" /></button>
-     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/gear.png" title="gear" /></button>
-     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/help.png" title="help" /></button>
-     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/mailappt.png" title="mailappt" /></button>
-     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/money.png" title="money" /></button>
-     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/network.png" title="network" /></button>
-     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/terminal.png" title="terminal" /></button>
-     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/thumbnail.png" title="thumbnail" /></button>
-     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/tux.png" title="tux" /></button>
-     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/custom.png" title="custom" /></button>
+     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/attach.png" title="attach" width="32px" height="32px" /></button>
+     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/bell.png" title="bell" width="32px" height="32px" /></button>
+     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/bookmark.png" title="bookmark" width="32px" height="32px" /></button>
+     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/configure.png" title="configure" width="32px" height="32px" /></button>
+     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/database.png" title="database" width="32px" height="32px" /></button>
+     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/demo.png" title="demo" width="32px" height="32px" /></button>
+     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/folder.png" title="folder" width="32px" height="32px" /></button>
+     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/gear.png" title="gear" width="32px" height="32px" /></button>
+     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/help.png" title="help" width="32px" height="32px" /></button>
+     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/mailappt.png" title="mailappt" width="32px" height="32px" /></button>
+     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/money.png" title="money" width="32px" height="32px" /></button>
+     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/network.png" title="network" width="32px" height="32px" /></button>
+     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/terminal.png" title="terminal" width="32px" height="32px" /></button>
+     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/thumbnail.png" title="thumbnail" width="32px" height="32px" /></button>
+     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/tux.png" title="tux" width="32px" height="32px" /></button>
+     <button><img src="<TMPL_VAR NAME="DIR">/images/apps-logos/custom.png" title="custom" width="32px" height="32px" /></button>
 </div>
 
 <!-- Tree CSS choice -->
@@ -120,8 +120,8 @@
    <div id="buttons">
 
     <h1 class="ui-widget-header ui-corner-all">
-     <img src="<TMPL_VAR NAME="DIR">/images/1downarrow_16x16.png" />
-     <img src="<TMPL_VAR NAME="DIR">/images/1rightarrow_16x16.png" class="hidden" />
+     <img src="<TMPL_VAR NAME="DIR">/images/1downarrow_16x16.png" width="16px" height="16px" />
+     <img src="<TMPL_VAR NAME="DIR">/images/1rightarrow_16x16.png" class="hidden" width="16px" height="16px" />
      <lang en="Available actions" fr="Actions disponibles" />
     </h1>
 
@@ -242,8 +242,8 @@
    <form action="#" onsubmit="return false">
 
     <h1 class="ui-widget-header ui-corner-all">
-     <img src="<TMPL_VAR NAME="DIR">/images/1downarrow_16x16.png" />
-     <img src="<TMPL_VAR NAME="DIR">/images/1rightarrow_16x16.png" class="hidden" />
+     <img src="<TMPL_VAR NAME="DIR">/images/1downarrow_16x16.png" width="16px" height="16px" />
+     <img src="<TMPL_VAR NAME="DIR">/images/1rightarrow_16x16.png" class="hidden" width="16px" height="16px" />
      <lang en="Edit key " fr="Édition de la clé " /><span id="content_title">&nbsp;</span>
     </h1>
 
@@ -303,7 +303,7 @@
       </button>
        </td>
        <td>
-        <span class="loadimg"><img class="hidden" id="button-loadimg" src="<TMPL_VAR NAME="DIR">/images/spinner.gif" /></span>
+        <span class="loadimg"><img class="hidden" id="button-loadimg" src="<TMPL_VAR NAME="DIR">/images/spinner.gif" width="16px" height="16px" /></span>
        </td>
       </tr>
      </table>
@@ -315,7 +315,7 @@
        </td>
        <td>
         <button onclick="setlmfile(currentId,file);return false;" ><lang en="Load" fr="Charger" /></button>
-        <span class="loadimg"><img class="hidden" id="file-loadimg" src="<TMPL_VAR NAME="DIR">/images/spinner.gif" /></span>
+        <span class="loadimg"><img class="hidden" id="file-loadimg" src="<TMPL_VAR NAME="DIR">/images/spinner.gif" width="16px" height="16px" /></span>
        </td>
       </tr>
       <tr id="urlinput" class="hidden">
@@ -325,7 +325,7 @@
        </td>
        <td>
         <button onclick="setlmfile(currentId,url);return false;" ><lang en="Load" fr="Charger" /></button>
-        <span class="loadimg"><img class="hidden" id="url-loadimg" src="<TMPL_VAR NAME="DIR">/images/spinner.gif" /></span>
+        <span class="loadimg"><img class="hidden" id="url-loadimg" src="<TMPL_VAR NAME="DIR">/images/spinner.gif" width="16px" height="16px" /></span>
        </td>
       </tr>
      </table>
@@ -646,8 +646,8 @@
 <!-- Help -->
 <div id="help" class="ui-corner-all">
   <h1 class="ui-widget-header ui-corner-all">
-    <img src="<TMPL_VAR NAME="DIR">/images/1downarrow_16x16.png" />
-    <img src="<TMPL_VAR NAME="DIR">/images/1rightarrow_16x16.png" class="hidden" />
+    <img src="<TMPL_VAR NAME="DIR">/images/1downarrow_16x16.png" width="16px" height="16px" />
+    <img src="<TMPL_VAR NAME="DIR">/images/1rightarrow_16x16.png" class="hidden" width="16px" height="16px" />
     <lang en="Help" fr="Aide"/>
   </h1>
 
