@@ -130,18 +130,18 @@ The portal is the biggest component of Lemonldap::NG. It is recommended to use M
 To make the portal start faster when the server is relaunched, add those lines in Apache configuration file (as described in portal-apache2.conf):
 
 </p>
-<pre class="code perl"><span class="re4">&lt;Perl&gt;</span>
-    <a href="http://perldoc.perl.org/functions/require.html"><span class="kw3">require</span></a> Lemonldap<span class="sy0">::</span><span class="me2">NG</span><span class="sy0">::</span><span class="me2">Portal</span><span class="sy0">::</span><span class="me2">SharedConf</span><span class="sy0">;</span>
-    Lemonldap<span class="sy0">::</span><span class="me2">NG</span><span class="sy0">::</span><span class="me2">Portal</span><span class="sy0">::</span><span class="me2">SharedConf</span><span class="sy0">-&gt;</span><span class="me1">compile</span><span class="br0">&#40;</span>
-        <a href="http://perldoc.perl.org/functions/qw.html"><span class="kw3">qw</span></a><span class="br0">&#40;</span><a href="http://perldoc.perl.org/functions/delete.html"><span class="kw3">delete</span></a> header cache read_from_client cookie redirect unescapeHTML<span class="br0">&#41;</span><span class="br0">&#41;</span><span class="sy0">;</span>
+<pre class="code apache">&lt;Perl&gt;
+    <span class="kw1">require</span> Lemonldap::NG::Portal::SharedConf;
+    Lemonldap::NG::Portal::SharedConf-&gt;compile(
+        qw(delete <span class="kw1">header</span> cache read_from_client cookie <span class="kw1">redirect</span> unescapeHTML));
     <span class="co1"># Uncomment this line if you use Lemonldap::NG menu</span>
-    <a href="http://perldoc.perl.org/functions/require.html"><span class="kw3">require</span></a> Lemonldap<span class="sy0">::</span><span class="me2">NG</span><span class="sy0">::</span><span class="me2">Portal</span><span class="sy0">::</span><span class="me2">Menu</span><span class="sy0">;</span>
+    <span class="kw1">require</span> Lemonldap::NG::Portal::Menu;
     <span class="co1"># Uncomment this line if you use portal SOAP capabilities</span>
-    <a href="http://perldoc.perl.org/functions/require.html"><span class="kw3">require</span></a> SOAP<span class="sy0">::</span><span class="me2">Lite</span><span class="sy0">;</span>
-<span class="sy0">&lt;/</span>Perl<span class="sy0">&gt;</span></pre>
+    <span class="kw1">require</span> SOAP::Lite;
+&lt;/Perl&gt;</pre>
 
 </div>
-<!-- SECTION "Starting performances" [2197-2770] -->
+<!-- SECTION "Starting performances" [2197-2772] -->
 <h3><a name="apachesession_performances" id="apachesession_performances">Apache::Session performances</a></h3>
 <div class="level3">
 
@@ -208,7 +208,7 @@ Note that Apache::Session::Browseable::MySQL doesn&#039;t use MySQL locks.
 </p>
 
 </div>
-<!-- SECTION "Apache::Session performances" [2771-4685] -->
+<!-- SECTION "Apache::Session performances" [2773-4687] -->
 <h3><a name="ldap_performances" id="ldap_performances">LDAP performances</a></h3>
 <div class="level3">
 
@@ -223,7 +223,15 @@ memberOf: cn=admin,dmdName=groups,dc=example,dc=com
 memberOf: cn=su,dmdName=groups,dc=example,dc=com</pre>
 
 <p>
-So instead of using <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> groups recovery, you just have to store “memberOf” field in your exported variables.
+So instead of using <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> groups recovery, you just have to store “memberOf” field in your exported variables. With OpenLDAP, you can use the <a href="http://www.openldap.org/doc/admin24/overlays.html#Reverse%20Group%20Membership%20Maintenance" class="urlextern" title="http://www.openldap.org/doc/admin24/overlays.html#Reverse%20Group%20Membership%20Maintenance"  rel="nofollow">memberof overlay</a> to do it automaticaly.
+</p>
+
+<p>
+<p><div class="noteimportant">Don&#039;t forget to create an index on the field used to find users (uid by default)
+</div></p>
+</p>
+
+<p>
 <p><div class="notetip">To avoid having group dn stored in sessions datas, you can use a macro to rewrite memberOf:
 </p>
 <ul>
@@ -250,4 +258,4 @@ ldapgroups -&gt; memberOf
 </p>
 
 </div>
-<!-- SECTION "LDAP performances" [4686-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "LDAP performances" [4688-] --></div><!-- closes <div class="dokuwiki export">-->

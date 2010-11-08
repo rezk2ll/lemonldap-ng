@@ -199,4 +199,51 @@ Available parameters are:
 </ul>
 
 </div>
-<!-- SECTION "Installation" [818-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Installation" [818-2968] -->
+<h2><a name="link_apache_configuration" id="link_apache_configuration">Link Apache configuration</a></h2>
+<div class="level2">
+
+<p>
+
+By default, Apache configuration files will be installed in <code>/usr/local/lemonldap-ng/etc/</code>. You have to include them in Apache main configuration, for example:
+</p>
+<pre class="code file apache"><span class="kw1">include</span> /usr/local/lemonldap-ng/etc/portal-apache2.conf
+<span class="kw1">include</span> /usr/local/lemonldap-ng/etc/handler-apache2.conf
+<span class="kw1">include</span> /usr/local/lemonldap-ng/etc/manager-apache2.conf</pre>
+
+<p>
+<p><div class="notetip">You can also use symbolic links in <code>conf.d</code> Apache directory.
+</div></p>
+</p>
+
+<p>
+<p><div class="notewarning">Mod <acronym title="Practical Extraction and Report Language">Perl</acronym> <strong>must</strong> be loaded before <acronym title="LemonLDAP::NG">LL::NG</acronym> Apache configuration.
+</div></p>
+</p>
+
+</div>
+<!-- SECTION "Link Apache configuration" [2969-3531] -->
+<h2><a name="install_cron_jobs" id="install_cron_jobs">Install cron jobs</a></h2>
+<div class="level2">
+
+<p>
+
+<acronym title="LemonLDAP::NG">LL::NG</acronym> use cron jobs to:
+</p>
+<ul>
+<li class="level1"><div class="li"> purge old sessions</div>
+</li>
+<li class="level1"><div class="li"> clean Handler cache</div>
+</li>
+</ul>
+
+<p>
+
+To install them on system:
+</p>
+<pre class="code">
+$ sudo ln -s /usr/local/lemonldap-ng/etc/cron.d/* /etc/cron.d/
+</pre>
+
+</div>
+<!-- SECTION "Install cron jobs" [3532-] --></div><!-- closes <div class="dokuwiki export">-->

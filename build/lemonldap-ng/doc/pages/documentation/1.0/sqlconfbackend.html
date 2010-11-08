@@ -84,24 +84,28 @@ Example for MySQL :
 
 <h4><a name="rdbi" id="rdbi">RDBI</a></h4>
 <div class="level4">
-<pre class="code sql"><span class="kw1">CREATE</span> <span class="kw1">TABLE</span> lmConfig <span class="br0">&#40;</span>
-    cfgNum int<span class="br0">&#40;</span>11<span class="br0">&#41;</span> <span class="kw1">NOT</span> <span class="kw1">NULL</span><span class="sy0">,</span>
-    <span class="kw1">FIELD</span> varchar<span class="br0">&#40;</span>255<span class="br0">&#41;</span> <span class="kw1">NOT</span> <span class="kw1">NULL</span> <span class="kw1">DEFAULT</span> <span class="st0">''</span><span class="sy0">,</span>
-    value longblob<span class="sy0">,</span>
-    <span class="kw1">PRIMARY</span> <span class="kw1">KEY</span> <span class="br0">&#40;</span>cfgNum<span class="sy0">,</span><span class="kw1">FIELD</span><span class="br0">&#41;</span>
-    <span class="br0">&#41;</span>;</pre>
+<pre class="code">
+CREATE TABLE lmConfig (
+    cfgNum int(11) NOT NULL,
+    field varchar(255) NOT NULL DEFAULT &#039;&#039;,
+    value longblob,
+    PRIMARY KEY (cfgNum,field)
+    );
+</pre>
 
 </div>
 
 <h4><a name="cdbi" id="cdbi">CDBI</a></h4>
 <div class="level4">
-<pre class="code sql"><span class="kw1">CREATE</span> <span class="kw1">TABLE</span> lmConfig <span class="br0">&#40;</span>
-    cfgNum int <span class="kw1">NOT</span> <span class="kw1">NULL</span> <span class="kw1">PRIMARY</span> <span class="kw1">KEY</span><span class="sy0">,</span>
-    <span class="kw1">DATA</span> longblob
-<span class="br0">&#41;</span>;</pre>
+<pre class="code">
+CREATE TABLE lmConfig (
+    cfgNum int not null primary key,
+    data longblob
+);
+</pre>
 
 </div>
-<!-- SECTION "SQL configuration" [1016-1349] -->
+<!-- SECTION "SQL configuration" [1016-1341] -->
 <h3><a name="grant_lemonldapng_access" id="grant_lemonldapng_access">Grant LemonLDAP::NG access</a></h3>
 <div class="level3">
 
@@ -135,4 +139,4 @@ MySQL example (suppose that our servers are in 10.0.0.0/24 network):
   <span class="kw1">TO</span> lemonldap<span class="sy0">-</span>ng<span class="sy0">-</span>user@<span class="st0">'10.0.0.%'</span> <span class="kw1">IDENTIFIED</span> <span class="kw1">BY</span> <span class="st0">'myotherpassword'</span>;</pre>
 
 </div>
-<!-- SECTION "Grant LemonLDAP::NG access" [1350-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Grant LemonLDAP::NG access" [1342-] --></div><!-- closes <div class="dokuwiki export">-->

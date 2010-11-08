@@ -125,96 +125,16 @@ A virtual host contains:
 
 </div>
 <!-- SECTION "LemonLDAP::NG configuration" [1900-2387] -->
-<h3><a name="access_rules" id="access_rules">Access rules</a></h3>
+<h3><a name="access_rules_and_http_headers" id="access_rules_and_http_headers">Access rules and HTTP headers</a></h3>
 <div class="level3">
 
 <p>
 
-There is a <code>default</code> access rule which is used if no other access rule match the current <acronym title="Uniform Resource Locator">URL</acronym>. Else, each access rule refers to an <acronym title="Uniform Resource Locator">URL</acronym> pattern.
-</p>
-
-<p>
-Access rule value is an expression, evaluated for each request, and returning 1 if user is authorized, 0 else.
-</p>
-
-<p>
-<a href="/_detail/documentation/manager_access_rule.png?id=documentation%3A1.0%3Aconfigvhost" class="media" title="documentation:manager_access_rule.png"><img src="../../../media/documentation/manager_access_rule.png" class="mediacenter" alt="" /></a>
-</p>
-
-<p>
-Access rules examples:
-
-</p>
-<pre class="code">
-(?#Admin access)^/site/.*$ =&gt; $uid eq &quot;admin&quot; or $groups =~ /\bgroup2\b/
-(?#Static content)^/(js|css) =&gt; accept
-default =&gt; deny
-</pre>
-
-<p>
-<p><div class="notetip">Rule comments are used in Manager to display the rule. Comments can also be used to sort rules.
-</div></p>
-</p>
-
-<p>
-Access rules accepts special targets:
-</p>
-<ul>
-<li class="level1"><div class="li"> <strong>accept</strong>: all authenticated users can pass</div>
-</li>
-<li class="level1"><div class="li"> <strong>deny</strong>: nobody is welcomed</div>
-</li>
-<li class="level1"><div class="li"> <strong>unprotect</strong>: all is open!</div>
-</li>
-<li class="level1"><div class="li"> <strong>logout_sso</strong>: request is not forwarded to application, <acronym title="Single Sign On">SSO</acronym> session is closed</div>
-</li>
-<li class="level1"><div class="li"> <strong>logout_app</strong>: request is forwarded to application, <acronym title="Single Sign On">SSO</acronym> session remains open</div>
-</li>
-<li class="level1"><div class="li"> <strong>logout_app_sso</strong>: request is forwarded to application, <acronym title="Single Sign On">SSO</acronym> session is closed</div>
-</li>
-</ul>
-
-<p>
-
-<p><div class="notetip">The logout* targets can have an <acronym title="Uniform Resource Locator">URL</acronym> as parameter. By default, user will be redirected on portal if no <acronym title="Uniform Resource Locator">URL</acronym> defined, or on the specified <acronym title="Uniform Resource Locator">URL</acronym> if any.
-</div></p>
+See <strong><a href="../../documentation/1.0/writingrulesand_headers.html" class="wikilink1" title="documentation:1.0:writingrulesand_headers">Writing rules and headers</a></strong> to learn how to configure access control and <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> headers sent to application by Lemonldap::NG.
 </p>
 
 </div>
-<!-- SECTION "Access rules" [2388-3565] -->
-<h3><a name="http_headers" id="http_headers">HTTP headers</a></h3>
-<div class="level3">
-
-<p>
-
-Headers are sent to application, they are not visible to users.
-</p>
-
-<p>
-Headers value can be a single session key or a full <acronym title="Practical Extraction and Report Language">Perl</acronym> expression. For example:
-
-</p>
-<pre class="code">
-Auth-User =&gt; $uid
-Unit =&gt; &#039;Unit-&#039;.$ou
-</pre>
-
-<p>
-<p><div class="notetip">By default, <acronym title="Single Sign On">SSO</acronym> cookie is hidden, so protected applications cannot get <acronym title="Single Sign On">SSO</acronym> session key. But you can forward this key if it is really needed:
-
-</p>
-<pre class="code">
-Session-ID =&gt; $_session_id
-</pre>
-
-<p>
-
-
-</div></p>
-</p>
-
-</div>
-<!-- SECTION "HTTP headers" [3566-3992] -->
+<!-- SECTION "Access rules and HTTP headers" [2388-2587] -->
 <h3><a name="post_data" id="post_data">POST data</a></h3>
 <div class="level3">
 
@@ -224,7 +144,7 @@ Session-ID =&gt; $_session_id
 </p>
 
 </div>
-<!-- SECTION "POST data" [3993-4049] -->
+<!-- SECTION "POST data" [2588-2644] -->
 <h3><a name="options" id="options">Options</a></h3>
 <div class="level3">
 
@@ -245,4 +165,4 @@ These options are used to build redirection <acronym title="Uniform Resource Loc
 </p>
 
 </div>
-<!-- SECTION "Options" [4050-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Options" [2645-] --></div><!-- closes <div class="dokuwiki export">-->

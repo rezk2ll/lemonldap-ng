@@ -124,7 +124,12 @@ LemonLDAP::NG configuration is mainly a key/value structure, so Manager will pre
 </p>
 
 <p>
-When modifying a value, always click on the <code>Apply</code> button if available, to be sure the value is saved. When all modifications are done, click on <code>Save</code> to store configuration.
+<p><div class="noteimportant">When modifying a value, always click on the <code>Apply</code> button if available, to be sure the value is saved.
+</div></p>
+</p>
+
+<p>
+When all modifications are done, click on <code>Save</code> to store configuration.
 </p>
 
 <p>
@@ -132,8 +137,35 @@ When modifying a value, always click on the <code>Apply</code> button if availab
 </div></p>
 </p>
 
+<p>
+You can change the graphical aspect of the Manager, by clicking on the <code>Menu style</code> button. It will open a dialog to choose:
+</p>
+<ul>
+<li class="level1"><div class="li"> Menu organization: tree or accordion</div>
+</li>
+<li class="level1"><div class="li"> Theme (<a href="http://jqueryui.com/themeroller/" class="urlextern" title="http://jqueryui.com/themeroller/"  rel="nofollow">jQuery UI theme</a>).</div>
+</li>
+</ul>
+
+<p>
+
+<p><div class="notetip">
+Menu style preferences are stored in cookies (1 year duration). You can fix default values by editing these values in <code>lemonldap-ng.ini</code>, section <code>manager</code>:
+</p>
+<ul>
+<li class="level1"><div class="li"> managerCss</div>
+</li>
+<li class="level1"><div class="li"> managerCssTheme</div>
+</li>
+</ul>
+
+<p>
+
+</div></p>
+</p>
+
 </div>
-<!-- SECTION "Manager" [993-2622] -->
+<!-- SECTION "Manager" [993-3097] -->
 <h2><a name="apache" id="apache">Apache</a></h2>
 <div class="level2">
 
@@ -166,7 +198,7 @@ These files must be included in Apache configuration, either with <code>Include<
 </p>
 
 </div>
-<!-- SECTION "Apache" [2623-3382] -->
+<!-- SECTION "Apache" [3098-3857] -->
 <h3><a name="portal" id="portal">Portal</a></h3>
 <div class="level3">
 
@@ -204,28 +236,28 @@ In Portal virtual host, you will find several configuration parts:
 </li>
 </ul>
 <pre class="code file apache">    <span class="co1"># SOAP functions for sessions management (disabled by default)</span>
-    &lt;<span class="kw3">Directory</span> /usr/local/lemonldap-ng/htdocs/portal//index.pl/adminSessions&gt;
+    &lt;<span class="kw3">Location</span> /index.pl/adminSessions&gt;
         <span class="kw1">Order</span> <span class="kw1">deny</span>,<span class="kw1">allow</span>
         <span class="kw1">Deny</span> from <span class="kw2">all</span>
-    &lt;/<span class="kw3">Directory</span>&gt;
+    &lt;/<span class="kw3">Location</span>&gt;
 &nbsp;
     <span class="co1"># SOAP functions for sessions access (disabled by default)</span>
-    &lt;<span class="kw3">Directory</span> /usr/local/lemonldap-ng/htdocs/portal//index.pl/sessions&gt;
+    &lt;<span class="kw3">Location</span> /index.pl/sessions&gt;
         <span class="kw1">Order</span> <span class="kw1">deny</span>,<span class="kw1">allow</span>
         <span class="kw1">Deny</span> from <span class="kw2">all</span>
-    &lt;/<span class="kw3">Directory</span>&gt;
+    &lt;/<span class="kw3">Location</span>&gt;
 &nbsp;
     <span class="co1"># SOAP functions for configuration access (disabled by default)</span>
-    &lt;<span class="kw3">Directory</span> /usr/local/lemonldap-ng/htdocs/portal//index.pl/config&gt;
+    &lt;<span class="kw3">Location</span> /index.pl/config&gt;
         <span class="kw1">Order</span> <span class="kw1">deny</span>,<span class="kw1">allow</span>
         <span class="kw1">Deny</span> from <span class="kw2">all</span>
-    &lt;/<span class="kw3">Directory</span>&gt;
+    &lt;/<span class="kw3">Location</span>&gt;
 &nbsp;
     <span class="co1"># SOAP functions for notification insertion (disabled by default)</span>
-    &lt;<span class="kw3">Directory</span> /usr/local/lemonldap-ng/htdocs/portal//index.pl/notification&gt;
+    &lt;<span class="kw3">Location</span> /index.pl/notification&gt;
         <span class="kw1">Order</span> <span class="kw1">deny</span>,<span class="kw1">allow</span>
         <span class="kw1">Deny</span> from <span class="kw2">all</span>
-    &lt;/<span class="kw3">Directory</span>&gt;</pre>
+    &lt;/<span class="kw3">Location</span>&gt;</pre>
 <ul>
 <li class="level1"><div class="li"> Issuer rewrite rules (requires <code>mod_rewrite</code>):</div>
 </li>
@@ -265,7 +297,7 @@ In Portal virtual host, you will find several configuration parts:
 &lt;/Perl&gt;</pre>
 
 </div>
-<!-- SECTION "Portal" [3383-5976] -->
+<!-- SECTION "Portal" [3858-6291] -->
 <h3><a name="manager1" id="manager1">Manager</a></h3>
 <div class="level3">
 
@@ -296,7 +328,7 @@ Manager virtual host is used to serve configuration interface and local document
     &lt;/<span class="kw3">Directory</span>&gt;</pre>
 
 </div>
-<!-- SECTION "Manager" [5977-6622] -->
+<!-- SECTION "Manager" [6292-6937] -->
 <h3><a name="handler" id="handler">Handler</a></h3>
 <div class="level3">
 <ul>
@@ -350,7 +382,7 @@ Then, to protect a standard virutal host, the only configuration line to add is:
 <pre class="code file apache">PerlHeaderParserHandler My::Package</pre>
 
 </div>
-<!-- SECTION "Handler" [6623-7838] -->
+<!-- SECTION "Handler" [6938-8153] -->
 <h2><a name="configuration_reload" id="configuration_reload">Configuration reload</a></h2>
 <div class="level2">
 
@@ -395,7 +427,7 @@ The <code>reload</code> target is managed in Apache configuration, inside a virt
 </p>
 
 </div>
-<!-- SECTION "Configuration reload" [7839-9115] -->
+<!-- SECTION "Configuration reload" [8154-9430] -->
 <h2><a name="local_file" id="local_file">Local file</a></h2>
 <div class="level2">
 
@@ -435,7 +467,7 @@ For example, to override configured skin for portal:
 </p>
 
 </div>
-<!-- SECTION "Local file" [9116-9973] -->
+<!-- SECTION "Local file" [9431-10288] -->
 <h2><a name="script_files" id="script_files">Script files</a></h2>
 <div class="level2">
 
@@ -450,7 +482,7 @@ LemonLDAP::NG allows to override any configuration parameter directly in script 
 </p>
 
 </div>
-<!-- SECTION "Script files" [9974-10362] -->
+<!-- SECTION "Script files" [10289-10677] -->
 <h3><a name="portal1" id="portal1">Portal</a></h3>
 <div class="level3">
 
@@ -465,7 +497,7 @@ For example, in portal/index.pl:
 <span class="br0">&#41;</span><span class="sy0">;</span></pre>
 
 </div>
-<!-- SECTION "Portal" [10363-10533] -->
+<!-- SECTION "Portal" [10678-10848] -->
 <h3><a name="handler1" id="handler1">Handler</a></h3>
 <div class="level3">
 
@@ -480,4 +512,4 @@ For example, in handler/MyHandler.pm:
 <span class="br0">&#41;</span><span class="sy0">;</span></pre>
 
 </div>
-<!-- SECTION "Handler" [10534-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Handler" [10849-] --></div><!-- closes <div class="dokuwiki export">-->

@@ -71,14 +71,68 @@ Then each parameter is one value of the attribute <code>description</code>, pref
 <p>
 The LDIF view of such entry can be:
 </p>
-<pre class="code file ldif">dn: cn=lmConf-1,ou=conf,ou=applications,dc=example,dc=com
+<pre class="file">
+dn: cn=lmConf-1,ou=conf,ou=applications,dc=example,dc=com
 objectClass: top
 objectClass: applicationProcess
 cn: lmConf-1
-description: {globalStorage}'Apache::Session::File'
-description: {cookieName}'lemonldap'
-description: {whatToTrace}'$uid'
-...</pre>
+description: {globalStorage}&#039;Apache::Session::File&#039;
+description: {cookieName}&#039;lemonldap&#039;
+description: {whatToTrace}&#039;$uid&#039;
+...
+</pre>
 
 </div>
-<!-- SECTION "Presentation" [44-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Presentation" [44-1355] -->
+<h2><a name="configuration" id="configuration">Configuration</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Configuration" [1356-1382] -->
+<h3><a name="ldap_server" id="ldap_server">LDAP server</a></h3>
+<div class="level3">
+
+<p>
+
+Configuration objects use standard object class: <code>applicationProcess</code>. This objectClass allow attributes <code>cn</code> and <code>description</code>. If your <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> server do not manage this objectClass, you have to extend your schema.
+</p>
+
+<p>
+We advice to create a specific <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> account with write access on configuration branch.
+</p>
+
+<p>
+Next create the configuration branch where you want. Just remember its <acronym title="Distinguished Name">DN</acronym> for LemonLDAP::NG configuration. 
+</p>
+
+</div>
+<!-- SECTION "LDAP server" [1383-1822] -->
+<h3><a name="lemonldapng" id="lemonldapng">LemonLDAP::NG</a></h3>
+<div class="level3">
+
+<p>
+
+Configure <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> configuration backend in <code>lemonldap-ng.ini</code>, section <code>[configuration]</code>:
+</p>
+<pre class="code file ini"><span class="re1">type</span> <span class="sy0">=</span><span class="re2"> LDAP</span>
+<span class="re1">ldapServer</span> <span class="sy0">=</span><span class="re2"> ldap://localhost</span>
+<span class="re1">ldapConfBase</span> <span class="sy0">=</span><span class="re2"> ou=conf,ou=applications,dc=example,dc=com</span>
+<span class="re1">ldapBindDN</span> <span class="sy0">=</span><span class="re2"> cn=manager,dc=example,dc=com</span>
+<span class="re1">ldapBindPassword</span> <span class="sy0">=</span><span class="re2"> secret</span></pre>
+
+<p>
+Parameters:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>ldapServer</strong>: <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> <acronym title="Uniform Resource Identifier">URI</acronym> of the server</div>
+</li>
+<li class="level1"><div class="li"> <strong>ldapConfBase</strong>: <acronym title="Distinguished Name">DN</acronym> of configuration branch</div>
+</li>
+<li class="level1"><div class="li"> <strong>ldapBindDN</strong>: <acronym title="Distinguished Name">DN</acronym> used to bind <acronym title="Lightweight Directory Access Protocol">LDAP</acronym></div>
+</li>
+<li class="level1"><div class="li"> <strong>ldapBindPassword</strong>: password used to bind <acronym title="Lightweight Directory Access Protocol">LDAP</acronym></div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "LemonLDAP::NG" [1823-] --></div><!-- closes <div class="dokuwiki export">-->

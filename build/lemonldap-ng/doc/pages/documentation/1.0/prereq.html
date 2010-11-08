@@ -131,12 +131,14 @@ different versions of Apache/mod_perl.
 </li>
 <li class="level1"><div class="li"> Crypt::OpenSSL::RSA</div>
 </li>
+<li class="level1"><div class="li"> Crypt::OpenSSL::X509</div>
+</li>
 <li class="level1"><div class="li"> Convert::PEM</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION "SAML2" [1765-1875] -->
+<!-- SECTION "SAML2" [1765-1900] -->
 <h3><a name="cas" id="cas">CAS</a></h3>
 <div class="level3">
 <ul>
@@ -145,7 +147,7 @@ different versions of Apache/mod_perl.
 </ul>
 
 </div>
-<!-- SECTION "CAS" [1876-1949] -->
+<!-- SECTION "CAS" [1901-1974] -->
 <h3><a name="openid" id="openid">OpenID</a></h3>
 <div class="level3">
 <ul>
@@ -156,7 +158,7 @@ different versions of Apache/mod_perl.
 </ul>
 
 </div>
-<!-- SECTION "OpenID" [1950-2032] -->
+<!-- SECTION "OpenID" [1975-2057] -->
 <h3><a name="twitter" id="twitter">Twitter</a></h3>
 <div class="level3">
 <ul>
@@ -165,7 +167,7 @@ different versions of Apache/mod_perl.
 </ul>
 
 </div>
-<!-- SECTION "Twitter" [2033-2069] -->
+<!-- SECTION "Twitter" [2058-2094] -->
 <h3><a name="pod_unit_tests" id="pod_unit_tests">POD unit tests</a></h3>
 <div class="level3">
 <ul>
@@ -174,7 +176,7 @@ different versions of Apache/mod_perl.
 </ul>
 
 </div>
-<!-- SECTION "POD unit tests" [2070-2110] -->
+<!-- SECTION "POD unit tests" [2095-2135] -->
 <h2><a name="other" id="other">Other</a></h2>
 <div class="level2">
 <ul>
@@ -183,12 +185,12 @@ different versions of Apache/mod_perl.
 </ul>
 
 </div>
-<!-- SECTION "Other" [2111-2227] -->
+<!-- SECTION "Other" [2136-2252] -->
 <h2><a name="install_dependencies_on_your_system" id="install_dependencies_on_your_system">Install dependencies on your system</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Install dependencies on your system" [2228-2277] -->
+<!-- SECTION "Install dependencies on your system" [2253-2302] -->
 <h3><a name="apt-get" id="apt-get">APT-GET</a></h3>
 <div class="level3">
 <pre class="code">
@@ -196,13 +198,13 @@ different versions of Apache/mod_perl.
 </pre>
 
 </div>
-<!-- SECTION "APT-GET" [2278-2802] -->
+<!-- SECTION "APT-GET" [2303-2827] -->
 <h3><a name="yum" id="yum">YUM</a></h3>
 <div class="level3">
 
 <p>
 
-Choose a repository which hosted <acronym title="Practical Extraction and Report Language">Perl</acronym> dependencies:
+Choose a repository which hosted <acronym title="Practical Extraction and Report Language">Perl</acronym> dependencies, for example:
 </p>
 <ul>
 <li class="level1"><div class="li"> <a href="http://fedoraproject.org/wiki/EPEL/" class="urlextern" title="http://fedoraproject.org/wiki/EPEL/"  rel="nofollow">EPEL</a> repository, you can activate this repository: <a href="http://fedoraproject.org/wiki/EPEL/FAQ#howtouse" class="urlextern" title="http://fedoraproject.org/wiki/EPEL/FAQ#howtouse"  rel="nofollow">http://fedoraproject.org/wiki/EPEL/FAQ#howtouse</a></div>
@@ -210,9 +212,15 @@ Choose a repository which hosted <acronym title="Practical Extraction and Report
 <li class="level1"><div class="li"> <a href="https://rpmrepo.org/" class="urlextern" title="https://rpmrepo.org/"  rel="nofollow">RPMForge</a> repository, you can activate this repository: <a href="https://rpmrepo.org/RPMforge/Using" class="urlextern" title="https://rpmrepo.org/RPMforge/Using"  rel="nofollow">https://rpmrepo.org/RPMforge/Using</a></div>
 </li>
 </ul>
+
+<p>
+
+<p><div class="notetip">We recommend using EPEL repository.
+</div></p>
+</p>
 <pre class="code">
-# yum install httpd mod_perl perl-Apache-Session perl-LDAP perl-XML-SAX perl-XML-NamespaceSupport perl-HTML-Template perl-Regexp-Assemble perl-Error perl-IPC-ShareLite perl-Cache-Cache perl-FreezeThaw perl-XML-Simple perl-version perl-CGI-Session perl-DBD-Pg perl-XML-LibXML-Common perl-BSD-Resource perl-XML-LibXML perl-Crypt-Rijndael perl-IO-String perl-XML-LibXSLT perl-SOAP-Lite perl-Config-IniFiles perl-JSON perl-Digest-HMAC
+# yum install httpd mod_perl perl-Apache-Session perl-LDAP perl-XML-SAX perl-XML-NamespaceSupport perl-HTML-Template perl-Regexp-Assemble perl-Error perl-IPC-ShareLite perl-Cache-Cache perl-FreezeThaw perl-XML-Simple perl-version perl-CGI-Session perl-DBD-Pg perl-XML-LibXML-Common perl-BSD-Resource perl-XML-LibXML perl-Crypt-Rijndael perl-IO-String perl-XML-LibXSLT perl-SOAP-Lite perl-Config-IniFiles perl-JSON perl-Digest-HMAC perl-String-Random perl-MIME-Lite perl-Email-Date-Format perl-Crypt-OpenSSL-RSA perl-Crypt-OpenSSL-X509
 </pre>
 
 </div>
-<!-- SECTION "YUM" [2803-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "YUM" [2828-] --></div><!-- closes <div class="dokuwiki export">-->

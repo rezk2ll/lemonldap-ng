@@ -42,7 +42,15 @@ Lemonldap::NG manage applications by their hostname (Apache&#039;s virtualHosts)
 
 <p>
 
-A rule associates a <a href="http://en.wikipedia.org/wiki/Perl_Compatible_Regular_Expressions" class="urlextern" title="http://en.wikipedia.org/wiki/Perl_Compatible_Regular_Expressions"  rel="nofollow">regular expression</a> to a <acronym title="Practical Extraction and Report Language">Perl</acronym> boolean expression or a keyword. Examples:
+A rule associates a <a href="http://en.wikipedia.org/wiki/Perl_Compatible_Regular_Expressions" class="urlextern" title="http://en.wikipedia.org/wiki/Perl_Compatible_Regular_Expressions"  rel="nofollow">regular expression</a> to a <acronym title="Practical Extraction and Report Language">Perl</acronym> boolean expression or a keyword.
+</p>
+
+<p>
+<a href="/_detail/documentation/manager_access_rule.png?id=documentation%3A1.0%3Awritingrulesand_headers" class="media" title="documentation:manager_access_rule.png"><img src="../../../media/documentation/manager_access_rule.png" class="mediacenter" alt="" /></a>
+</p>
+
+<p>
+Examples:
 
 </p>
 <table class="inline">
@@ -68,7 +76,22 @@ A rule associates a <a href="http://en.wikipedia.org/wiki/Perl_Compatible_Regula
 
 <p>
 
-See <a href="../../documentation/1.0/performances.html#handler_performance" class="wikilink1" title="documentation:1.0:performances">performances</a> to know how to use macros and groups in rules.
+There is a <code>default</code> access rule which is used if no other access rule match the current <acronym title="Uniform Resource Locator">URL</acronym>.
+</p>
+
+<p>
+<p><div class="notetip">
+</p>
+<ul>
+<li class="level1"><div class="li"> Comments can be used to order your rules: rules are applied in the alphabetical order of comment (or regexp in there is no comment). See <strong><a href="../../documentation/1.0/security.html#write_good_rules" class="wikilink1" title="documentation:1.0:security">security chapter</a></strong> to learn more about writing good rules.</div>
+</li>
+<li class="level1"><div class="li"> See <a href="../../documentation/1.0/performances.html#handler_performance" class="wikilink1" title="documentation:1.0:performances">performances</a> to know how to use macros and groups in rules.</div>
+</li>
+</ul>
+
+<p>
+
+</div></p>
 </p>
 
 <p>
@@ -92,12 +115,17 @@ Rules can also be used to intercept logout <acronym title="Uniform Resource Loca
 
 <p>
 
-<p><div class="noteimportant">Only current application is concerned. Be careful with some applications which doesn&#039;t verify Lemonldap::NG headers after having created their own cookies. If so, you can redirect users to a <acronym title="HyperText Markup Language">HTML</acronym> page that explain that it is safe to close browser after disconnect.
+<p><div class="notetip">By default, user will be redirected on portal if no <acronym title="Uniform Resource Locator">URL</acronym> defined, or on the specified <acronym title="Uniform Resource Locator">URL</acronym> if any.
+</div></p>
+</p>
+
+<p>
+<p><div class="noteimportant">Only current application is concerned by logout_app* targets. Be careful with some applications which doesn&#039;t verify Lemonldap::NG headers after having created their own cookies. If so, you can redirect users to a <acronym title="HyperText Markup Language">HTML</acronym> page that explain that it is safe to close browser after disconnect.
 </div></p>
 </p>
 
 </div>
-<!-- SECTION "Rules" [442-2361] -->
+<!-- SECTION "Rules" [442-2899] -->
 <h2><a name="headers" id="headers">Headers</a></h2>
 <div class="level2">
 
@@ -146,8 +174,22 @@ As described in <a href="../../documentation/1.0/performances.html#handler_perfo
 <p>
 
 </div></p>
+</p>
+
+<p>
+<p><div class="notetip">By default, <acronym title="Single Sign On">SSO</acronym> cookie is hidden, so protected applications cannot get <acronym title="Single Sign On">SSO</acronym> session key. But you can forward this key if it is really needed:
+
+</p>
+<pre class="code">
+Session-ID =&gt; $_session_id
+</pre>
+
+<p>
+
+
+</div></p>
 
 </p>
 
 </div>
-<!-- SECTION "Headers" [2362-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Headers" [2900-] --></div><!-- closes <div class="dokuwiki export">-->

@@ -27,28 +27,28 @@
 
 <p>
 
-The portal is the main component of Lemonldap::NG. It provides many features:
+The portal is the main component of <acronym title="LemonLDAP::NG">LL::NG</acronym>. It provides many features:
 </p>
 <ul>
 <li class="level1"><div class="li"> <strong>Authentication service</strong> of course</div>
 <ul>
 <li class="level2"><div class="li"> Web based for normal users:</div>
 <ul>
-<li class="level3"><div class="li"> using own database (<acronym title="Lightweight Directory Access Protocol">LDAP</acronym>, <acronym title="Structured Query Language">SQL</acronym>,…)</div>
+<li class="level3"><div class="li"> using own database (<acronym title="Lightweight Directory Access Protocol">LDAP</acronym>, <acronym title="Structured Query Language">SQL</acronym>, …)</div>
 </li>
-<li class="level3"><div class="li"> using Apache authentication system (used for <acronym title="Secure Sockets Layer">SSL</acronym>, Kerberos, <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> basic authentication,…)</div>
+<li class="level3"><div class="li"> using Apache authentication system (used for <acronym title="Secure Sockets Layer">SSL</acronym>, Kerberos, <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> basic authentication, …)</div>
 </li>
-<li class="level3"><div class="li"> using external identity provider (<acronym title="Security Assertion Markup Language">SAML</acronym>, OpenID, <acronym title="Central Authentication Service">CAS</acronym>, Twitter, other Lemonldap::NG system,…)</div>
+<li class="level3"><div class="li"> using external identity provider (<acronym title="Security Assertion Markup Language">SAML</acronym>, OpenID, <acronym title="Central Authentication Service">CAS</acronym>, Twitter, other <acronym title="LemonLDAP::NG">LL::NG</acronym> system, …)</div>
 </li>
-<li class="level3"><div class="li"> all together (based on user choice, rules,…)</div>
-</li>
-</ul>
-</li>
-<li class="level2"><div class="li"> <acronym title="Simple Object Access Protocol">SOAP</acronym> based for client-server software, specific development,…</div>
+<li class="level3"><div class="li"> all together (based on user choice, rules, …)</div>
 </li>
 </ul>
 </li>
-<li class="level1"><div class="li"> <strong>Identity provider</strong>: Lemonldap::NG is able to provide identity service using:</div>
+<li class="level2"><div class="li"> <acronym title="Simple Object Access Protocol">SOAP</acronym> based for client-server software, specific development, …</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> <strong>Identity provider</strong>: <acronym title="LemonLDAP::NG">LL::NG</acronym> is able to provide identity service using:</div>
 <ul>
 <li class="level2"><div class="li"> <acronym title="Security Assertion Markup Language">SAML</acronym></div>
 </li>
@@ -58,40 +58,54 @@ The portal is the main component of Lemonldap::NG. It provides many features:
 </li>
 </ul>
 </li>
-<li class="level1"><div class="li"> <strong>Identity provider proxy</strong> : Lemonldap::NG can be used as proxy translator between systems talking <acronym title="Security Assertion Markup Language">SAML</acronym>, OpenID, <acronym title="Central Authentication Service">CAS</acronym>,…</div>
+<li class="level1"><div class="li"> <strong>Identity provider proxy</strong>: <acronym title="LemonLDAP::NG">LL::NG</acronym> can be used as proxy translator between systems talking <acronym title="Security Assertion Markup Language">SAML</acronym>, OpenID, <acronym title="Central Authentication Service">CAS</acronym>, …</div>
 </li>
-<li class="level1"><div class="li"> <strong>Internal <acronym title="Simple Object Access Protocol">SOAP</acronym> server</strong> when <a href="../../documentation/1.0/soapconfbackend.html" class="wikilink1" title="documentation:1.0:soapconfbackend">SOAP configuration backend</a> is used (useable for specific development, see <a href="../../documentation/1.0/soapservices.html" class="wikilink1" title="documentation:1.0:soapservices">SOAP services</a> for more)</div>
+<li class="level1"><div class="li"> <strong>Internal <acronym title="Simple Object Access Protocol">SOAP</acronym> server</strong> when <a href="../../documentation/1.0/soapconfbackend.html" class="wikilink1" title="documentation:1.0:soapconfbackend">SOAP configuration backend</a> is used (usable for specific development, see <a href="../../documentation/1.0/soapservices.html" class="wikilink1" title="documentation:1.0:soapservices">SOAP services</a> for more)</div>
 </li>
-<li class="level1"><div class="li"> Interactive <strong>management of user Passwords</strong></div>
+<li class="level1"><div class="li"> Interactive <strong>management of user passwords</strong>:</div>
+<ul>
+<li class="level2"><div class="li"> Password change form (in menu)</div>
 </li>
-<li class="level1"><div class="li"> <strong>Application displaying</strong> (<a href="../../documentation/1.0/portalmenu.html" class="wikilink1" title="documentation:1.0:portalmenu">menu</a>)</div>
+<li class="level2"><div class="li"> Self service reset (send a mail to the user with a to change the password)</div>
 </li>
-<li class="level1"><div class="li"> <strong><a href="../../documentation/1.0/notifications.html" class="wikilink1" title="documentation:1.0:notifications">Notifications</a></strong>: prompt users with a message if found in the database)</div>
+<li class="level2"><div class="li"> Force password change with <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> password policy password reset flag</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> <strong><a href="../../documentation/1.0/portalmenu.html" class="wikilink1" title="documentation:1.0:portalmenu">Application menu</a></strong>: display authorized applications in categories</div>
+</li>
+<li class="level1"><div class="li"> <strong><a href="../../documentation/1.0/notifications.html" class="wikilink1" title="documentation:1.0:notifications">Notifications</a></strong>: prompt users with a message if found in the database</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION "The portal" [1-1145] -->
+<!-- SECTION "The portal" [1-1361] -->
 <h2><a name="functioning" id="functioning">Functioning</a></h2>
 <div class="level2">
 
 <p>
 
-Lemonldap::NG portal is a modular component. It needs 4 modules to work:
+<acronym title="LemonLDAP::NG">LL::NG</acronym> portal is a modular component. It needs 4 modules to work:
 </p>
 <ul>
-<li class="level1"><div class="li"> <a href="../../documentation/1.0/start.html#authentication_and_users_database" class="wikilink1" title="documentation:1.0:start">Authentication module</a></div>
+<li class="level1"><div class="li"> <a href="../../documentation/1.0/start.html#authentication_users_and_password_databases" class="wikilink1" title="documentation:1.0:start">Authentication</a>: how check user credentials</div>
 </li>
-<li class="level1"><div class="li"> <a href="../../documentation/1.0/start.html#authentication_and_users_database" class="wikilink1" title="documentation:1.0:start">User database module</a> (can be set to “Null”)</div>
+<li class="level1"><div class="li"> <a href="../../documentation/1.0/start.html#authentication_users_and_password_databases" class="wikilink1" title="documentation:1.0:start">User database</a>: where collect user information</div>
 </li>
-<li class="level1"><div class="li"> <a href="../../documentation/1.0/start.html#identity_provider" class="wikilink1" title="documentation:1.0:start">Identity provider module</a> (can be set to “Null”)</div>
+<li class="level1"><div class="li"> <a href="../../documentation/1.0/start.html#authentication_users_and_password_databases" class="wikilink1" title="documentation:1.0:start">Password database</a>: where change password</div>
 </li>
-<li class="level1"><div class="li"> Password database module (can be set to “Null”)</div>
+<li class="level1"><div class="li"> <a href="../../documentation/1.0/start.html#identity_provider" class="wikilink1" title="documentation:1.0:start">Identity provider</a>: how forward user identity</div>
 </li>
 </ul>
 
+<p>
+
+<p><div class="notetip">Each module can be disabled using the <code>Null</code> backend.
+</div></p>
+</p>
+
 </div>
-<!-- SECTION "Functioning" [1146-1538] -->
+<!-- SECTION "Functioning" [1362-1908] -->
 <h2><a name="kinematics" id="kinematics">Kinematics</a></h2>
 <div class="level2">
 <ol>
@@ -99,7 +113,7 @@ Lemonldap::NG portal is a modular component. It needs 4 modules to work:
 </li>
 <li class="level1"><div class="li"> Check if user is already authenticated</div>
 <ul>
-<li class="level2"><div class="li"> Else try to find it (userDB module) and to authenticate it (auth module), create session, calculates macros and store it</div>
+<li class="level2"><div class="li"> If not authenticated (or authentication is forced) try to find it (userDB module) and to authenticate it (auth module), create session, calculate groups and macros and store them</div>
 </li>
 </ul>
 </li>
@@ -113,5 +127,12 @@ Lemonldap::NG portal is a modular component. It needs 4 modules to work:
 </li>
 </ol>
 
+<p>
+
+<p><div class="noteclassic">See also <a href="../../documentation/presentation.html#kinematics" class="wikilink1" title="documentation:presentation">general kinematics presentation</a>.
+</div></p>
+
+</p>
+
 </div>
-<!-- SECTION "Kinematics" [1539-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Kinematics" [1909-] --></div><!-- closes <div class="dokuwiki export">-->
