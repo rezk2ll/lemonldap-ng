@@ -91,7 +91,7 @@ sub loadLasso {
     }
 
     if (BADLASSO) {
-        $self->lmLog( 'Lasso version >= 2.2.91 required', 'error' );
+        $self->lmLog( 'Lasso version >= 2.3.0 required', 'error' );
         return 0;
     }
 
