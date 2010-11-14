@@ -1,1 +1,2 @@
 debian/tmp/examples/handler/*
+debian/tmp/etc/lemonldap-ng/handler-apache2.conf
