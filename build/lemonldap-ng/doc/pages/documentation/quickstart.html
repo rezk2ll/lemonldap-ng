@@ -69,25 +69,25 @@ Get the tarball on <a href="../download.html" class="wikilink1" title="download"
 <h3><a name="extract" id="extract">Extract</a></h3>
 <div class="level3">
 <pre class="code">
-$ tar zxvf lemonldap-ng-*.tar.gz
-$ cd lemonldap-ng-*
+tar zxvf lemonldap-ng-*.tar.gz
+cd lemonldap-ng-*
 </pre>
 
 </div>
-<!-- SECTION "Extract" [793-880] -->
+<!-- SECTION "Extract" [793-876] -->
 <h3><a name="build" id="build">Build</a></h3>
 <div class="level3">
 <pre class="code">
-$ make
-$ make test
+make
+make test
 </pre>
 
 </div>
-<!-- SECTION "Build" [881-932] -->
+<!-- SECTION "Build" [877-924] -->
 <h3><a name="install" id="install">Install</a></h3>
 <div class="level3">
 <pre class="code">
-$ sudo make install
+sudo make install
 </pre>
 
 <p>
@@ -96,7 +96,7 @@ If your <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> su
 
 </p>
 <pre class="code">
-$ sudo make install LDAPSUFFIX=mysuffix
+sudo make install LDAPSUFFIX=mysuffix
 </pre>
 
 <p>
@@ -107,12 +107,12 @@ You can also change the host and port with options LDAPHOST and LDAPPORT.
 </p>
 
 </div>
-<!-- SECTION "Install" [933-1187] -->
+<!-- SECTION "Install" [925-1175] -->
 <h2><a name="configuration" id="configuration">Configuration</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Configuration" [1188-1214] -->
+<!-- SECTION "Configuration" [1176-1202] -->
 <h3><a name="system" id="system">System</a></h3>
 <div class="level3">
 
@@ -122,11 +122,11 @@ Update your /etc/hosts to map <acronym title="Single Sign On">SSO</acronym> URLs
 
 </p>
 <pre class="code">
-$ sudo make postconf
+sudo make postconf
 </pre>
 
 </div>
-<!-- SECTION "System" [1215-1322] -->
+<!-- SECTION "System" [1203-1308] -->
 <h3><a name="apache" id="apache">Apache</a></h3>
 <div class="level3">
 
@@ -143,17 +143,17 @@ Restart Apache:
 
 </p>
 <pre class="code">
-$ sudo apachectl configtest
-$ sudo apachectl restart
+sudo apachectl configtest
+sudo apachectl restart
 </pre>
 
 </div>
-<!-- SECTION "Apache" [1323-1690] -->
+<!-- SECTION "Apache" [1309-1672] -->
 <h2><a name="run" id="run">Run</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Run" [1691-1707] -->
+<!-- SECTION "Run" [1673-1689] -->
 <h3><a name="open_sso_session" id="open_sso_session">Open SSO session</a></h3>
 <div class="level3">
 
@@ -163,7 +163,7 @@ Go on <a href="http://auth.example.com" class="urlextern" title="http://auth.exa
 </p>
 
 </div>
-<!-- SECTION "Open SSO session" [1708-1798] -->
+<!-- SECTION "Open SSO session" [1690-1780] -->
 <h3><a name="access_protected_application" id="access_protected_application">Access protected application</a></h3>
 <div class="level3">
 
@@ -173,7 +173,7 @@ Try <a href="http://test1.example.com" class="urlextern" title="http://test1.exa
 </p>
 
 </div>
-<!-- SECTION "Access protected application" [1799-1896] -->
+<!-- SECTION "Access protected application" [1781-1878] -->
 <h3><a name="edit_configuration" id="edit_configuration">Edit configuration</a></h3>
 <div class="level3">
 
@@ -183,4 +183,4 @@ Go on <a href="http://manager.example.com" class="urlextern" title="http://manag
 </p>
 
 </div>
-<!-- SECTION "Edit configuration" [1897-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Edit configuration" [1879-] --></div><!-- closes <div class="dokuwiki export">-->
