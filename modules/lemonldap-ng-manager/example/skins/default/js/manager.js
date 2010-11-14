@@ -4,8 +4,18 @@
 
 /* Help chapters */
 var helpCh={
-	'rules':'/pages/documentation/1.0/writingrulesand_headers.html#rules',
+	'authParams':'/pages/documentation/1.0/start.html#authentication_and_users_database',
+	'cookies':'/pages/documentation/1.0/ssocookie.html',
 	'headers':'/pages/documentation/1.0/writingrulesand_headers.html#headers',
+	'menu':'/pages/documentation/1.0/portalmenu.html',
+	'issuerdb':'/pages/documentation/1.0/start.html#identity_provider',
+	'notifications':'/pages/documentation/1.0/notifications.html',
+	'portalParams':'/pages/documentation/1.0/portal.html',
+	'redirections':'/pages/documentation/1.0/redirections.html',
+	'rules':'/pages/documentation/1.0/writingrulesand_headers.html#rules',
+	'sessiondb':'/pages/documentation/1.0/start.html#sessions',
+	'logs':'/pages/documentation/1.0/logs.html',
+	'userdbParams':'/pages/documentation/1.0/start.html#authentication_and_users_database',
 	'default':'/'
 };
 
@@ -1385,32 +1395,43 @@ function networkPb(){
 function loadAndScroll(url,prefix){
 	var t=url.match(/^(.*?)(?:#(.*))?$/);
 	var dir=t[1].match(/(.*\/)/);
-	$('#help_content').load(t[1],function(){
-		/* Scroll to anchor if defined */
-		if(typeof(t[2])=='string')
-			$('#help_content').attr('scrollTop',$("a[name='"+t[2]+"']").position().top-$('#help_content').position().top);
-		/* Replace help_content links */
-		$('#help_content a').each(function(i){
-			if(typeof($(this).attr('href'))=='string'){
-				/* Links must be opened in another window */
-				$(this).attr('target','_blank');
-				var href=$(this).attr('href');
-				/* absolute links are prefixed if needed */
-				if(typeof(prefix)=='string' && typeof(dir[0])=='string' && href.match(/^\//)){
-					$(this).attr('href',prefix+href);
+	$.ajax({url:t[1],
+		type:'GET',
+		dataType:'html',
+		complete:function(res,status){
+			if(status=="success"||status=="notmodified"){
+				var tmp=$(res.responseText.replace(/\n/g,''));
+				/* keep just html content element */
+				res='<div class="dokuwiki">';
+				var i;
+				for(i=0;i<tmp.length;i++){
+					if(typeof(tmp[i].innerHTML)=='string')res+=tmp[i].innerHTML;
 				}
-				/* relative links are replaced by absolute ones */
-				//else if(href.match(/^\.\./)){
-				else if(!href.match(/^https?:\/\//)){
-					$(this).attr('href',dir[0]+href);
-				}
+				$('#help_content').html(res);
+				$('#help_content').attr('scrollTop',0);
+				/* Scroll to anchor if defined */
+				if(typeof(t[2])=='string')
+					$('#help_content').attr('scrollTop',$("a[name='"+t[2]+"']").position().top-$('#help_content').position().top);
+				/* Replace help_content links */
+				$('#help_content a,#help_content img').each(function(i){
+					var hn;
+					if(this.tagName=='IMG'){hn='src'}else{hn='href'}
+					if(typeof($(this).attr(hn))=='string'){
+						/* Links must be opened in another window */
+						$(this).attr('target','_blank');
+						var href=$(this).attr(hn);
+						/* absolute links are prefixed if needed */
+						if(typeof(prefix)=='string' && typeof(dir[0])=='string' && href.match(/^\//)){
+							$(this).attr(hn,prefix+href);
+						}
+						/* relative links are replaced by absolute ones */
+						else if(!href.match(/^https?:\/\//)){
+							$(this).attr(hn,dir[0]+href);
+						}
+					}
+				});
 			}
-		});
-
-		/* Remove wiki header tags */
-		$('#help_content link').remove();
-		$('#help_content meta').remove();
-		$('#help_content title').remove();
+		}
 	});
 }
 var lasthelp='';

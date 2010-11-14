@@ -253,6 +253,7 @@ sub struct {
 
                 portalMenu => {
                     _nodes        => [qw(portalModules applicationList)],
+		    _help => 'menu',
                     portalModules => {
                         _nodes => [
                             qw(portalDisplayLogout portalDisplayChangePassword portalDisplayAppslist)
@@ -563,6 +564,7 @@ sub struct {
             # ISSUERDB PARAMETERS
             issuerParams => {
                 _nodes       => [qw(issuerDBSAML issuerDBCAS issuerDBOpenID)],
+		_help => 'issuerdb',
                 issuerDBSAML => {
                     _nodes => [
                         qw(issuerDBSAMLActivation issuerDBSAMLPath issuerDBSAMLRule)
@@ -626,6 +628,7 @@ sub struct {
             # LOGS PARAMETERS
             logParams => {
                 _nodes => [qw(syslog useXForwardedForIP whatToTrace)],
+		_help => 'logs',
                 syslog => 'text:/syslog',
                 useXForwardedForIP => 'bool:/useXForwardedForIP',
                 whatToTrace        => 'text:/whatToTrace:whatToTrace:text',
@@ -659,6 +662,7 @@ sub struct {
 
                 sessionStorage => {
                     _nodes => [qw(globalStorage cn:globalStorageOptions)],
+		    _help => 'sessionsdb',
                     globalStorage        => 'text:/globalStorage',
                     globalStorageOptions => {
                         _nodes => ['hash:/globalStorageOptions:storage:btext'],
@@ -737,6 +741,7 @@ sub struct {
                     _nodes => [
                         qw(https port useRedirectOnForbidden useRedirectOnError)
                     ],
+		    _help => 'redirections',
                     https                  => 'bool:/https',
                     port                   => 'int:/port',
                     useRedirectOnForbidden => 'bool:/useRedirectOnForbidden',
@@ -1678,7 +1683,7 @@ sub defaultConf {
         notification                => '0',
         notificationStorage         => 'File',
         notifyDeleted               => '1',
-        notifyOther                 => '1',
+        notifyOther                 => '0',
         openIdSreg_fullname         => 'cn',
         openIdSreg_nickname         => 'uid',
         openIdSreg_timezone         => '_timezone',
