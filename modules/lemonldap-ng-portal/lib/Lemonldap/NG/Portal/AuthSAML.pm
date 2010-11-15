@@ -1273,7 +1273,7 @@ sub authLogout {
 
     # Get Lasso Server
     unless ( $self->{_lassoServer} ) {
-        $self->_sub('authInit');
+        $self->_sub('Lemonldap::NG::Portal::AuthSAML::authInit');
     }
 
     my $server = $self->{_lassoServer};
