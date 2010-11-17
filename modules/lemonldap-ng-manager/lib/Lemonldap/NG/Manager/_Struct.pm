@@ -253,7 +253,7 @@ sub struct {
 
                 portalMenu => {
                     _nodes        => [qw(portalModules applicationList)],
-		    _help => 'menu',
+                    _help         => 'menu',
                     portalModules => {
                         _nodes => [
                             qw(portalDisplayLogout portalDisplayChangePassword portalDisplayAppslist)
@@ -564,7 +564,7 @@ sub struct {
             # ISSUERDB PARAMETERS
             issuerParams => {
                 _nodes       => [qw(issuerDBSAML issuerDBCAS issuerDBOpenID)],
-		_help => 'issuerdb',
+                _help        => 'issuerdb',
                 issuerDBSAML => {
                     _nodes => [
                         qw(issuerDBSAMLActivation issuerDBSAMLPath issuerDBSAMLRule)
@@ -628,7 +628,7 @@ sub struct {
             # LOGS PARAMETERS
             logParams => {
                 _nodes => [qw(syslog useXForwardedForIP whatToTrace)],
-		_help => 'logs',
+                _help  => 'logs',
                 syslog => 'text:/syslog',
                 useXForwardedForIP => 'bool:/useXForwardedForIP',
                 whatToTrace        => 'text:/whatToTrace:whatToTrace:text',
@@ -662,7 +662,7 @@ sub struct {
 
                 sessionStorage => {
                     _nodes => [qw(globalStorage cn:globalStorageOptions)],
-		    _help => 'sessionsdb',
+                    _help  => 'sessionsdb',
                     globalStorage        => 'text:/globalStorage',
                     globalStorageOptions => {
                         _nodes => ['hash:/globalStorageOptions:storage:btext'],
@@ -741,7 +741,7 @@ sub struct {
                     _nodes => [
                         qw(https port useRedirectOnForbidden useRedirectOnError)
                     ],
-		    _help => 'redirections',
+                    _help                  => 'redirections',
                     https                  => 'bool:/https',
                     port                   => 'int:/port',
                     useRedirectOnForbidden => 'bool:/useRedirectOnForbidden',
@@ -1973,6 +1973,11 @@ sub globalTests {
         # Try to use Apache::Session module
         testApacheSession => sub {
             my ( $id, %h );
+            return 1
+              if ( $Lemonldap::NG::Handler::CGI::globalStorage eq
+                   $conf->{globalStorage}
+                or $conf->{globalStorage} eq
+                'Lemonldap::NG::Common::Apache::Session::SOAP' );
             eval "use $conf->{globalStorage}";
             return ( -1, "Unknown package $conf->{globalStorage}" ) if ($@);
             eval {
