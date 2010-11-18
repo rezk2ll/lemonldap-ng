@@ -360,6 +360,20 @@
      <input id="TrDefault" type="radio" name="troolean" value="-1" onclick="setlmdata(currentId,-1)"/><label for="TrDefault"><lang en="Default" fr="Par défaut"/></label>
     </div>
 
+    <!-- Boolean or Perl Expr -->
+    <div id="content_boolOrPerlExpr" class="hidden">
+     <input id="bopeOn" type="radio" name="bope" value="1" onclick="setlmdata(currentId,1);$('#bopeValue').hide();"/><label for="bopeOn"><lang en="On" fr="Activé"/></label>
+     <input id="bopeOff" type="radio" name="bope" value="0" onclick="setlmdata(currentId,0);$('#bopeValue').hide();"/><label for="bopeOff"><lang en="Off" fr="Désactivé"/></label>
+     <input id="bopeExpr" type="radio" name="bope" value="-1" onclick="$('#bopeValue').show();"/><label for="bopeExpr"><lang en="Specific rule" fr="Règle spécifique"/></label>
+     <br />
+     <textarea id="bopeValue" cols="30" rows="2"></textarea>
+     <br />
+     <button onclick="setlmbope(currentId);return false;" >
+     <lang en="Apply" fr="Appliquer" />
+     </button>
+    </div>
+
+
     <div id="content_btext" class="hidden">
      <input type="text" id="btextKey" /> <input type="text" id="btextValue" />
      <br />

@@ -258,10 +258,12 @@ sub struct {
                         _nodes => [
                             qw(portalDisplayLogout portalDisplayChangePassword portalDisplayAppslist)
                         ],
-                        portalDisplayLogout => 'text:/portalDisplayLogout',
+                        portalDisplayLogout =>
+                          'text:/portalDisplayLogout:menu:boolOrPerlExpr',
                         portalDisplayChangePassword =>
-                          'text:/portalDisplayChangePassword',
-                        portalDisplayAppslist => 'text:/portalDisplayAppslist',
+'text:/portalDisplayChangePassword:menu:boolOrPerlExpr',
+                        portalDisplayAppslist =>
+                          'text:/portalDisplayAppslist:menu:boolOrPerlExpr',
                     },
                     applicationList => {
                         _nodes => [
@@ -571,7 +573,8 @@ sub struct {
                     ],
                     issuerDBSAMLActivation => 'bool:/issuerDBSAMLActivation',
                     issuerDBSAMLPath       => 'text:/issuerDBSAMLPath',
-                    issuerDBSAMLRule       => 'text:/issuerDBSAMLRule',
+                    issuerDBSAMLRule =>
+                      'text:/issuerDBSAMLRule:issuerdb:boolOrPerlExpr',
                 },
                 issuerDBCAS => {
                     _nodes => [
@@ -579,7 +582,8 @@ sub struct {
                     ],
                     issuerDBCASActivation => 'bool:/issuerDBCASActivation',
                     issuerDBCASPath       => 'text:/issuerDBCASPath',
-                    issuerDBCASRule       => 'text:/issuerDBCASRule',
+                    issuerDBCASRule =>
+                      'text:/issuerDBCASRule:issuerdb:boolOrPerlExpr',
                     issuerDBCASOptions    => {
                         _nodes => [qw(casAttr casStorage cn:casStorageOptions)],
                         casAttr           => 'text:casAttr',
@@ -598,7 +602,8 @@ sub struct {
                     issuerDBOpenIDActivation =>
                       'bool:/issuerDBOpenIDActivation',
                     issuerDBOpenIDPath    => 'text:/issuerDBOpenIDPath',
-                    issuerDBOpenIDRule    => 'text:/issuerDBOpenIDRule',
+                    issuerDBOpenIDRule =>
+                      'text:/issuerDBOpenIDRule:issuerdb:boolOrPerlExpr',
                     issuerDBOpenIDOptions => {
                         _nodes => [
                             qw(openIdIssuerSecret openIdAttr openIdSPList n:openIdSreg)

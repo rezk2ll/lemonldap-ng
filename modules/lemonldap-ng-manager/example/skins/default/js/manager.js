@@ -1455,3 +1455,28 @@ function resizeMenu(){
 	$('#menu').css('height',wh-hh-50);
 	$('#data').css('height',wh-hh-40);
 }
+
+/* Boolean or Perl Expression */
+function boolOrPerlExpr(id){
+	currentId=id;
+	$('#bopeValue').val('');
+	$('#bopeValue').hide();
+	if(lmdata(id)==1){
+		$('#bopeOn').attr('checked',true);
+	}else{
+		if(lmdata(id)==0){
+			$('#bopeOff').attr('checked',true);
+		}else{
+			$('#bopeExpr').attr('checked',true);
+			$('#bopeValue').val(lmdata(id));
+			$('#bopeValue').show();
+		}
+	}
+	display('boolOrPerlExpr',lmtext(id));
+}
+
+function setlmbope(id){
+	if($('#bopeExpr:checked').val()=='-1'){
+		setlmdata(id,$('#bopeValue').val());
+	}
+}
