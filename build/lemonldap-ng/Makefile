@@ -300,6 +300,7 @@ install_manager_site:	install_conf_dir
 		install -v -d $(RMANAGERSKINSDIR)/$$skin; \
 	done
 	@cp -pR --remove-destination ${SRCMANAGERDIR}/example/index.pl ${RMANAGERDIR}
+	@cp -pR --remove-destination ${SRCMANAGERDIR}/example/notfound.html ${RMANAGERDIR}
 	@cp -pR --remove-destination ${SRCMANAGERDIR}/example/skins/* $(RMANAGERSKINSDIR)
 	@if [ "$(MANAGERDIR)/skins/" != "$(MANAGERSKINSDIR)/" ]; then \
 		for skin in $$(ls lemonldap-ng-manager/example/skins/); do \

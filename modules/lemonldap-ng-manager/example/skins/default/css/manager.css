@@ -145,8 +145,15 @@ option
 
 #help_content
 {
-	text-align:left;
-	max-height:200px;
+	padding:5px;
+	overflow:hidden;
+	text-align:center;
+}
+
+#help_content iframe
+{
+	width:100%;
+	height:100%;
 }
 
 #query-switch
@@ -241,10 +248,3 @@ input#skinText {
 	text-align: center;
 }
 
-/* Force font color for help pages */
-#help_content .note, #help_content .noteimportant, #help_content .notewarning, #help_content .notetip, #help_content table {
-	color: #000;
-}
-div.dokuwiki h1,div.dokuwiki h2, div.dokuwiki h3, div.dokuwiki h4, div.dokuwiki h5 {
-	color: inherit;
-}

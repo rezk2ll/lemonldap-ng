@@ -4,7 +4,7 @@
 
 /* Help chapters */
 var helpCh={
-	'authParams':'/pages/documentation/1.0/start.html#authentication_and_users_database',
+	'authParams':'/pages/documentation/1.0/start.html#authentication_users_and_password_databases',
 	'cookies':'/pages/documentation/1.0/ssocookie.html',
 	'headers':'/pages/documentation/1.0/writingrulesand_headers.html#headers',
 	'menu':'/pages/documentation/1.0/portalmenu.html',
@@ -29,6 +29,7 @@ if (treejquerycss.match('true')){ treejquerycss = true; } else { treejquerycss =
 $(document).ready(function(){
 
 	/* Menu height */
+	resizeMenu();
 	jQuery.event.add(window, "load", resizeMenu);
 	jQuery.event.add(window, "resize", resizeMenu);
 	
@@ -414,13 +415,12 @@ function display(div,title) {
 	$('#newapplicationr,#delapplication').hide();
 	$('#newpostr,#delpost').hide();
 	$('#newpostdatar,#delpostdata').hide();
-	/* TODO: conflict with loadAndScroll */
-	/*var height_cur=$('#buttons').height()+$('#edition').height()+$('#help').height();
-	var height_max=$('#menu').height();
-	if(height_cur > height_max || $('#help_content').is(':visible')==false){
-		$('#help h1 img').toggle();
-		$('#help_content').toggle();
-	}*/
+	// Resize (or hide) Help window
+	var height_menu=$('#menu').height();
+	var height_buttons_edition=$('#buttons').height()+$('#edition').height();
+	var help_height=height_menu-height_buttons_edition-50;
+	if(help_height<1){$('#help h1 img').toggle();$('#help_content').toggle();}
+	else{$('#help_content').height(help_height);}
 }
 function none(id) {
 	currentId=id;
@@ -1392,55 +1392,14 @@ function networkPb(){
 }
 
 /* Help management */
-function loadAndScroll(url,prefix){
-	var t=url.match(/^(.*?)(?:#(.*))?$/);
-	var dir=t[1].match(/(.*\/)/);
-	$.ajax({url:t[1],
-		type:'GET',
-		dataType:'html',
-		complete:function(res,status){
-			if(status=="success"||status=="notmodified"){
-				var tmp=$(res.responseText.replace(/\n/g,''));
-				/* keep just html content element */
-				res='<div class="dokuwiki">';
-				var i;
-				for(i=0;i<tmp.length;i++){
-					if(typeof(tmp[i].innerHTML)=='string')res+=tmp[i].innerHTML;
-				}
-				$('#help_content').html(res);
-				$('#help_content').attr('scrollTop',0);
-				/* Scroll to anchor if defined */
-				if(typeof(t[2])=='string')
-					$('#help_content').attr('scrollTop',$("a[name='"+t[2]+"']").position().top-$('#help_content').position().top);
-				/* Replace help_content links */
-				$('#help_content a,#help_content img').each(function(i){
-					var hn;
-					if(this.tagName=='IMG'){hn='src'}else{hn='href'}
-					if(typeof($(this).attr(hn))=='string'){
-						/* Links must be opened in another window */
-						$(this).attr('target','_blank');
-						var href=$(this).attr(hn);
-						/* absolute links are prefixed if needed */
-						if(typeof(prefix)=='string' && typeof(dir[0])=='string' && href.match(/^\//)){
-							$(this).attr(hn,prefix+href);
-						}
-						/* relative links are replaced by absolute ones */
-						else if(!href.match(/^https?:\/\//)){
-							$(this).attr(hn,dir[0]+href);
-						}
-					}
-				});
-			}
-		}
-	});
-}
 var lasthelp='';
 function loadHelp(ch){
 	var url;
 	if(typeof(helpCh[ch])!='string'){ch='default';}
 	if(ch!=lasthelp){
-		url=helpCh[ch];
-		loadAndScroll('/doc'+url,'/doc');
+		url='/doc'+helpCh[ch];
+		var html = '<iframe src="'+url+'" frameborder="0" />';
+		$('#help_content').html(html);
 		lasthelp=ch;
 	}
 }

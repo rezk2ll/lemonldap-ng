@@ -2,6 +2,7 @@ Changes
 example/index.pl
 example/mrtg/lmng-mrtg
 example/mrtg/mrtg.cfg.example
+example/notfound.html
 example/scripts/lmConfigEditor
 example/sessions.pl
 example/skins/default/css/accordion.css
