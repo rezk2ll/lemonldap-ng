@@ -65,7 +65,10 @@ sub extractFormInfo {
     }
 
     # Act as a proxy if proxied services configured
-    my $proxy = ref( $self->{CAS_proxiedServices} ) ? 1 : 0;
+    my $proxy =
+      ref( $self->{CAS_proxiedServices} ) eq 'HASH'
+      ? ( %{ $self->{CAS_proxiedServices} } ? 1 : 0 )
+      : 0;
 
     if ($proxy) {
         $self->lmLog( "CAS: Proxy mode activated", 'debug' );
