@@ -1,0 +1,643 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+
+
+<h1><a name="saml_service_configuration" id="saml_service_configuration">SAML service configuration</a></h1>
+<div class="level1">
+
+<p>
+
+<p><div class="noteclassic"><acronym title="Security Assertion Markup Language">SAML</acronym> service configuration is a common step to configure <acronym title="LemonLDAP::NG">LL::NG</acronym> as <a href="../../documentation/1.0/authsaml.html" class="wikilink1" title="documentation:1.0:authsaml">SAML SP</a> or <a href="../../documentation/1.0/idpsaml.html" class="wikilink1" title="documentation:1.0:idpsaml">SAML IDP</a>.
+</div></p>
+</p>
+
+</div>
+<!-- SECTION "SAML service configuration" [1-169] -->
+<h2><a name="presentation" id="presentation">Presentation</a></h2>
+<div class="level2">
+
+<p>
+
+This documentation explains how configure <acronym title="Security Assertion Markup Language">SAML</acronym> service in <acronym title="LemonLDAP::NG">LL::NG</acronym>, in particular:
+</p>
+<ul>
+<li class="level1"><div class="li"> Install prerequisites</div>
+</li>
+<li class="level1"><div class="li"> Import or generate security keys</div>
+</li>
+<li class="level1"><div class="li"> Set <acronym title="Security Assertion Markup Language">SAML</acronym> end points</div>
+</li>
+</ul>
+
+<p>
+
+<p><div class="noteimportant">Service configuration will be used to generate <acronym title="LemonLDAP::NG">LL::NG</acronym> <acronym title="Security Assertion Markup Language">SAML</acronym> metadata, that will be shared with other providers. It means that if you modify some settings here, you will have to share again the metadata with other providers. In other words, take the time to configure this part before sharing metadata.
+</div></p>
+</p>
+
+</div>
+<!-- SECTION "Presentation" [170-689] -->
+<h2><a name="prerequisites" id="prerequisites">Prerequisites</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Prerequisites" [690-716] -->
+<h3><a name="lasso" id="lasso">Lasso</a></h3>
+<div class="level3">
+
+<p>
+
+<a href="/_detail/documentation/lasso.png?id=documentation%3A1.0%3Asamlservice" class="media" title="documentation:lasso.png"><img src="../../../media/documentation/lasso.png" class="mediacenter" alt="" /></a>
+</p>
+
+<p>
+SAML2 implementation is based on <a href="http://lasso.entrouver.org" class="urlextern" title="http://lasso.entrouver.org"  rel="nofollow">Lasso</a>. You will need a very recent version of Lasso (&gt;= 2.3.0).
+</p>
+
+</div>
+
+<h4><a name="debianubuntu" id="debianubuntu">Debian/Ubuntu</a></h4>
+<div class="level4">
+
+<p>
+
+There are packages available here: <a href="http://deb.entrouvert.org/" class="urlextern" title="http://deb.entrouvert.org/"  rel="nofollow">http://deb.entrouvert.org/</a>.
+</p>
+
+<p>
+You will only need to install liblasso3-perl package:
+</p>
+<pre class="code">
+sudo apt-get install liblasso3-perl
+</pre>
+
+</div>
+
+<h4><a name="rhelcentosfedora" id="rhelcentosfedora">RHEL/CentOS/Fedora</a></h4>
+<div class="level4">
+
+<p>
+
+Packages should be available soon.
+</p>
+
+</div>
+
+<h4><a name="other" id="other">Other</a></h4>
+<div class="level4">
+
+<p>
+
+<a href="http://lasso.entrouvert.org/download/" class="urlextern" title="http://lasso.entrouvert.org/download/"  rel="nofollow">Download the Lasso tarball</a> and compile it on your system.
+</p>
+
+</div>
+<!-- SECTION "Lasso" [717-1273] -->
+<h3><a name="apache_rewrite_rules" id="apache_rewrite_rules">Apache rewrite rules</a></h3>
+<div class="level3">
+
+<p>
+
+Be sure that mod_rewrite is installed and that SAML2 rewrite rules are activated in <code>portal-apache2.conf</code>:
+</p>
+<pre class="code file apache">&lt;<span class="kw3">IfModule</span> mod_rewrite.c&gt;
+        <span class="kw1">RewriteEngine</span> <span class="kw2">On</span>
+        <span class="kw1">RewriteRule</span> ^/saml/metadata /metadata.pl
+        <span class="kw1">RewriteRule</span> ^/saml/.* /index.pl
+&lt;/<span class="kw3">IfModule</span>&gt;</pre>
+
+</div>
+<!-- SECTION "Apache rewrite rules" [1274-1589] -->
+<h2><a name="service_configuration" id="service_configuration">Service configuration</a></h2>
+<div class="level2">
+
+<p>
+
+Go in Manager and click on <code><acronym title="Security Assertion Markup Language">SAML</acronym> 2 Service</code> node.
+</p>
+
+<p>
+<p><div class="notetip">You can use #PORTAL# in values to replace the portal <acronym title="Uniform Resource Locator">URL</acronym>.
+</div></p>
+</p>
+
+</div>
+<!-- SECTION "Service configuration" [1590-1753] -->
+<h3><a name="entry_identifier" id="entry_identifier">Entry Identifier</a></h3>
+<div class="level3">
+
+<p>
+
+Your EntityID, often use as metadata <acronym title="Uniform Resource Locator">URL</acronym>, by default #PORTAL#/saml/metadata.
+</p>
+
+<p>
+<p><div class="noteclassic">
+The value will be use in metadata main markup:
+
+</p>
+<pre class="code file xml"><span class="sc3"><span class="re1">&lt;EntityDescriptor</span> <span class="re0">entityID</span>=<span class="st0">&quot;http://auth.example.com/saml/metadata&quot;</span><span class="re2">&gt;</span></span>
+  ...
+<span class="sc3"><span class="re1">&lt;/EntityDescriptor<span class="re2">&gt;</span></span></span></pre>
+
+<p>
+
+
+</div></p>
+</p>
+
+<p>
+<p><div class="notewarning">If you modify <code>/saml/metadata</code> suffix you have to change corresponding Apache rewrite rule.
+</div></p>
+</p>
+
+</div>
+<!-- SECTION "Entry Identifier" [1754-2151] -->
+<h3><a name="security_parameters" id="security_parameters">Security parameters</a></h3>
+<div class="level3">
+
+<p>
+
+You can define keys for <acronym title="Security Assertion Markup Language">SAML</acronym> message signature and encryption. If no encryption keys are defined, signature keys are used for signature and encryption.
+</p>
+
+<p>
+To define keys, you can:
+</p>
+<ul>
+<li class="level1"><div class="li"> import your own private and public keys (<code>Load from a file</code> input)</div>
+</li>
+<li class="level1"><div class="li"> generate new public and private keys (<code>Generate</code> button)</div>
+</li>
+</ul>
+
+<p>
+
+<p><div class="notetip">You can enter a password to protect private key with a password. It will be prompted if you generate keys, else you can set it in the <code>Private key password</code>.
+</div></p>
+</p>
+
+<p>
+<a href="/_detail/documentation/manager-saml-private-key.png?id=documentation%3A1.0%3Asamlservice" class="media" title="documentation:manager-saml-private-key.png"><img src="../../../media/documentation/manager-saml-private-key.png" class="mediacenter" alt="" /></a>
+</p>
+
+<p>
+<p><div class="notetip">You can import a certificate containing the public key instead the raw public key. However, certificate will not be really validated by other <acronym title="Security Assertion Markup Language">SAML</acronym> components (expiration date, common name, etc.), but will just be a public key wrapper.
+</div></p>
+</p>
+
+</div>
+<!-- SECTION "Security parameters" [2152-2980] -->
+<h3><a name="nameid_formats" id="nameid_formats">NameID formats</a></h3>
+<div class="level3">
+
+<p>
+
+<a href="/_detail/documentation/manager-saml-namid-formats.png?id=documentation%3A1.0%3Asamlservice" class="media" title="documentation:manager-saml-namid-formats.png"><img src="../../../media/documentation/manager-saml-namid-formats.png" class="mediacenter" alt="" /></a>
+</p>
+
+<p>
+<acronym title="Security Assertion Markup Language">SAML</acronym> can use different NameID formats. The NameID is the main user identifier, carried in <acronym title="Security Assertion Markup Language">SAML</acronym> messages. You can configure here which field of <acronym title="LemonLDAP::NG">LL::NG</acronym> session will be associated to a NameID format.
+</p>
+
+<p>
+<p><div class="noteclassic">This parameter is used by <a href="../../documentation/1.0/idpsaml.html" class="wikilink1" title="documentation:1.0:idpsaml">SAML IDP</a> to fill the NameID in authentication responses.
+</div></p>
+</p>
+
+<p>
+Customizable NameID formats are:
+</p>
+<ul>
+<li class="level1"><div class="li"> Email</div>
+</li>
+<li class="level1"><div class="li"> X509</div>
+</li>
+<li class="level1"><div class="li"> Windows</div>
+</li>
+<li class="level1"><div class="li"> Kerberos</div>
+</li>
+</ul>
+
+<p>
+
+<p><div class="notetip">For example, if you are using <a href="../../documentation/1.0/authldap.html" class="wikilink1" title="documentation:1.0:authldap">AD as authentication backend</a>, you can use sAMAccountName for the Windows NameID format.
+</div></p>
+</p>
+
+<p>
+Other NameID formats are automatically managed:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Transient</strong>: NameID is generated</div>
+</li>
+<li class="level1"><div class="li"> <strong>Persistent</strong>: NameID is restored from previous sessions</div>
+</li>
+<li class="level1"><div class="li"> <strong>Undefined</strong>: Default NameID format is used</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "NameID formats" [2981-3793] -->
+<h3><a name="authentication_contexts" id="authentication_contexts">Authentication contexts</a></h3>
+<div class="level3">
+
+<p>
+
+<a href="/_detail/documentation/manager-saml-service-authn-contexts.png?id=documentation%3A1.0%3Asamlservice" class="media" title="documentation:manager-saml-service-authn-contexts.png"><img src="../../../media/documentation/manager-saml-service-authn-contexts.png" class="mediacenter" alt="" /></a>
+</p>
+
+<p>
+Each <acronym title="LemonLDAP::NG">LL::NG</acronym> authentication module has an authentication level, which can be associated to an <a href="http://docs.oasis-open.org/security/saml/v2.0/saml-authn-context-2.0-os.pdf" class="urlextern" title="http://docs.oasis-open.org/security/saml/v2.0/saml-authn-context-2.0-os.pdf"  rel="nofollow">SAML authentication context</a>.
+</p>
+
+<p>
+<p><div class="noteclassic">This parameter is used by <a href="../../documentation/1.0/idpsaml.html" class="wikilink1" title="documentation:1.0:idpsaml">SAML IDP</a> to fill the authentication context in authentication responses. It will use the authentication level registered in user session to match the <acronym title="Security Assertion Markup Language">SAML</acronym> authentication context. It is also used by <a href="../../documentation/1.0/authsaml.html" class="wikilink1" title="documentation:1.0:authsaml">SAML SP</a> to fill the authentication level in user session, based on authentication response authentication context.
+</div></p>
+</p>
+
+<p>
+Customizable NameID formats are:
+</p>
+<ul>
+<li class="level1"><div class="li"> Password</div>
+</li>
+<li class="level1"><div class="li"> Password protected transport</div>
+</li>
+<li class="level1"><div class="li"> TLS client</div>
+</li>
+<li class="level1"><div class="li"> Kerberos</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Authentication contexts" [3794-4580] -->
+<h3><a name="organization" id="organization">Organization</a></h3>
+<div class="level3">
+
+<p>
+
+<p><div class="noteclassic">
+This concerns all parameters for the Organization metadata section:
+
+</p>
+<pre class="code file xml"><span class="sc3"><span class="re1">&lt;Organization<span class="re2">&gt;</span></span></span>
+  <span class="sc3"><span class="re1">&lt;OrganizationName</span> <span class="re0">xml:lang</span>=<span class="st0">&quot;en&quot;</span><span class="re2">&gt;</span></span>Example<span class="sc3"><span class="re1">&lt;/OrganizationName<span class="re2">&gt;</span></span></span>
+  <span class="sc3"><span class="re1">&lt;OrganizationDisplayName</span> <span class="re0">xml:lang</span>=<span class="st0">&quot;en&quot;</span><span class="re2">&gt;</span></span>Example<span class="sc3"><span class="re1">&lt;/OrganizationDisplayName<span class="re2">&gt;</span></span></span>
+  <span class="sc3"><span class="re1">&lt;OrganizationURL</span> <span class="re0">xml:lang</span>=<span class="st0">&quot;en&quot;</span><span class="re2">&gt;</span></span>http://www.example.com<span class="sc3"><span class="re1">&lt;/OrganizationURL<span class="re2">&gt;</span></span></span>
+<span class="sc3"><span class="re1">&lt;/Organization<span class="re2">&gt;</span></span></span></pre>
+
+<p>
+
+
+</div></p>
+
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Display Name</strong>: should be displayed on IDP, this is often your society name</div>
+</li>
+<li class="level1"><div class="li"> <strong>Name</strong>: internal name</div>
+</li>
+<li class="level1"><div class="li"> <strong><acronym title="Uniform Resource Locator">URL</acronym></strong>: <acronym title="Uniform Resource Locator">URL</acronym> of your society</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Organization" [4581-5092] -->
+<h3><a name="service_provider" id="service_provider">Service Provider</a></h3>
+<div class="level3">
+
+<p>
+
+<p><div class="noteclassic">
+This concerns all parameters for the Service Provider metadata section: 
+
+</p>
+<pre class="code file xml"><span class="sc3"><span class="re1">&lt;SPSSODescriptor<span class="re2">&gt;</span></span></span>
+  ...
+<span class="sc3"><span class="re1">&lt;/SPSSODescriptor<span class="re2">&gt;</span></span></span></pre>
+
+<p>
+
+
+</div></p>
+</p>
+
+</div>
+
+<h4><a name="general_options" id="general_options">General options</a></h4>
+<div class="level4">
+<ul>
+<li class="level1"><div class="li"> <strong>Signed Authentication Request</strong>: set to On to always sign authentication request.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Want Assertions Signed</strong>: set to On to require that received assertions are signed.</div>
+</li>
+</ul>
+
+<p>
+
+<p><div class="notetip">These options can then be overridden for each Identity Provider.
+</div></p>
+</p>
+
+</div>
+
+<h4><a name="single_logout" id="single_logout">Single Logout</a></h4>
+<div class="level4">
+
+<p>
+
+For each binding you can set:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Location</strong>: Access Point for SLO request.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Response Location</strong>: Access Point for SLO response.</div>
+</li>
+</ul>
+
+<p>
+
+<a href="/_detail/documentation/manager-saml-service-sp-slo.png?id=documentation%3A1.0%3Asamlservice" class="media" title="documentation:manager-saml-service-sp-slo.png"><img src="../../../media/documentation/manager-saml-service-sp-slo.png" class="mediacenter" alt="" /></a>
+</p>
+
+<p>
+Available bindings are:
+</p>
+<ul>
+<li class="level1"><div class="li"> <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> Redirect</div>
+</li>
+<li class="level1"><div class="li"> <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> POST</div>
+</li>
+<li class="level1"><div class="li"> <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> <acronym title="Simple Object Access Protocol">SOAP</acronym></div>
+</li>
+</ul>
+
+</div>
+
+<h4><a name="assertion_consumer" id="assertion_consumer">Assertion Consumer</a></h4>
+<div class="level4">
+
+<p>
+
+For each binding you can set:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Default</strong>: will this binding be used by default for authentication response.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Location</strong>: Access Point for <acronym title="Single Sign On">SSO</acronym> request and response.</div>
+</li>
+</ul>
+
+<p>
+
+<a href="/_detail/documentation/manager-saml-service-sp-ac.png?id=documentation%3A1.0%3Asamlservice" class="media" title="documentation:manager-saml-service-sp-ac.png"><img src="../../../media/documentation/manager-saml-service-sp-ac.png" class="mediacenter" alt="" /></a>
+</p>
+
+<p>
+Available bindings are:
+</p>
+<ul>
+<li class="level1"><div class="li"> <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> Artifact</div>
+</li>
+<li class="level1"><div class="li"> <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> POST</div>
+</li>
+</ul>
+
+</div>
+
+<h4><a name="artifact_resolution" id="artifact_resolution">Artifact Resolution</a></h4>
+<div class="level4">
+
+<p>
+
+The only authorized binding is <acronym title="Simple Object Access Protocol">SOAP</acronym>. This should be set as Default.
+</p>
+
+</div>
+<!-- SECTION "Service Provider" [5093-6256] -->
+<h3><a name="identity_provider" id="identity_provider">Identity Provider</a></h3>
+<div class="level3">
+
+<p>
+
+<p><div class="noteclassic">
+This concerns all parameters for the Service Provider metadata section:
+
+</p>
+<pre class="code file xml"><span class="sc3"><span class="re1">&lt;IDPSSODescriptor<span class="re2">&gt;</span></span></span>
+  ...
+<span class="sc3"><span class="re1">&lt;/IDPSSODescriptor<span class="re2">&gt;</span></span></span></pre>
+
+<p>
+
+
+</div></p>
+</p>
+
+</div>
+
+<h4><a name="general_parameters" id="general_parameters">General parameters</a></h4>
+<div class="level4">
+<ul>
+<li class="level1"><div class="li"> <strong>Want Authentication Request Signed</strong>: set to On to require that received authentication request are signed.</div>
+</li>
+</ul>
+
+<p>
+
+<p><div class="notetip">This option can then be overridden for each Service Provider.
+</div></p>
+</p>
+
+</div>
+
+<h4><a name="single_sign_on" id="single_sign_on">Single Sign On</a></h4>
+<div class="level4">
+
+<p>
+
+For each binding you can set:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Location</strong>: Access Point for <acronym title="Single Sign On">SSO</acronym> request.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Response Location</strong>: Access Point for <acronym title="Single Sign On">SSO</acronym> response.</div>
+</li>
+</ul>
+
+<p>
+
+Available bindings are:
+</p>
+<ul>
+<li class="level1"><div class="li"> <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> Redirect</div>
+</li>
+<li class="level1"><div class="li"> <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> POST</div>
+</li>
+<li class="level1"><div class="li"> <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> Artifact</div>
+</li>
+<li class="level1"><div class="li"> <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> <acronym title="Simple Object Access Protocol">SOAP</acronym></div>
+</li>
+</ul>
+
+</div>
+
+<h4><a name="single_logout1" id="single_logout1">Single Logout</a></h4>
+<div class="level4">
+
+<p>
+
+For each binding you can set:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Location</strong>: Access Point for SLO request.</div>
+</li>
+<li class="level2"><div class="li"> <strong>Response Location</strong>: Access Point for SLO response.</div>
+</li>
+</ul>
+
+<p>
+
+Available bindings are:
+</p>
+<ul>
+<li class="level1"><div class="li"> <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> Redirect</div>
+</li>
+<li class="level1"><div class="li"> <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> POST</div>
+</li>
+<li class="level1"><div class="li"> <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> <acronym title="Simple Object Access Protocol">SOAP</acronym></div>
+</li>
+</ul>
+
+</div>
+
+<h4><a name="artifact_resolution1" id="artifact_resolution1">Artifact Resolution</a></h4>
+<div class="level4">
+
+<p>
+
+The only authorized binding is <acronym title="Simple Object Access Protocol">SOAP</acronym>. This should be set as Default.
+</p>
+
+</div>
+<!-- SECTION "Identity Provider" [6257-7245] -->
+<h3><a name="attribute_authority" id="attribute_authority">Attribute Authority</a></h3>
+<div class="level3">
+
+<p>
+
+<p><div class="noteclassic">
+This concerns all parameters for the Attribute Authority metadata section
+
+</p>
+<pre class="code file xml"><span class="sc3"><span class="re1">&lt;AttributeAuthorityDescriptor<span class="re2">&gt;</span></span></span>
+  ...
+<span class="sc3"><span class="re1">&lt;/AttributeAuthorityDescriptor<span class="re2">&gt;</span></span></span></pre>
+
+<p>
+
+
+</div></p>
+</p>
+
+</div>
+
+<h4><a name="attribute_service" id="attribute_service">Attribute Service</a></h4>
+<div class="level4">
+
+<p>
+
+This is the only service to configure, and it accept only the <acronym title="Simple Object Access Protocol">SOAP</acronym> binding.
+</p>
+
+<p>
+Response Location should be empty, as <acronym title="Simple Object Access Protocol">SOAP</acronym> responses are directly returned (synchronous binding).
+</p>
+
+</div>
+<!-- SECTION "Attribute Authority" [7246-7657] -->
+<h3><a name="advanced" id="advanced">Advanced</a></h3>
+<div class="level3">
+
+<p>
+
+These parameters are not mandatory to run <acronym title="Security Assertion Markup Language">SAML</acronym> service, but can help to customize it:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>IDP resolution cookie name</strong>: by default, it&#039;s the <acronym title="LemonLDAP::NG">LL::NG</acronym> cookie name suffixed by <code>idp</code>, for example: <code>lemonldapidp</code>.</div>
+</li>
+<li class="level1"><div class="li"> <strong>UTF8 metadata conversion</strong>: set to On to force  partner&#039;s metadata conversion.</div>
+</li>
+</ul>
+
+</div>
+
+<h4><a name="saml_sessions_module_name_and_options" id="saml_sessions_module_name_and_options">SAML sessions module name and options</a></h4>
+<div class="level4">
+
+<p>
+
+By default, the main session module is used to store <acronym title="Security Assertion Markup Language">SAML</acronym> temporary data (like relay-states), but <acronym title="Security Assertion Markup Language">SAML</acronym> sessions need to use a session module compatible with the <a href="../../documentation/features.html#session_restrictions" class="wikilink1" title="documentation:features">sessions restrictions feature</a>.
+</p>
+
+<p>
+This is not the case of <a href="../../documentation/1.0/memcachedsessionbackend.html" class="wikilink1" title="documentation:1.0:memcachedsessionbackend">Memcached</a> for example. In this case, you can choose a different module to manage <acronym title="Security Assertion Markup Language">SAML</acronym> sessions.
+</p>
+
+<p>
+<p><div class="notetip">You can also choose a different session module to split <acronym title="Single Sign On">SSO</acronym> sessions and <acronym title="Security Assertion Markup Language">SAML</acronym> sessions.
+</div></p>
+</p>
+
+</div>
+
+<h4><a name="common_domain_cookie" id="common_domain_cookie">Common Domain Cookie</a></h4>
+<div class="level4">
+
+<p>
+
+<p><div class="noteclassic">Common Domain Cookie is also know as <a href="http://www.switch.ch/aai/support/tools/wayf.html" class="urlextern" title="http://www.switch.ch/aai/support/tools/wayf.html"  rel="nofollow">WAYF Service</a>.
+</div></p>
+</p>
+
+<p>
+The common domain is used by <a href="../../documentation/1.0/authsaml.html" class="wikilink1" title="documentation:1.0:authsaml">SAML SP</a> to find an Identity Provider for the user, and by <a href="../../documentation/1.0/idpsaml.html" class="wikilink1" title="documentation:1.0:idpsaml">SAML IDP</a> to register itself in user&#039;s IDP list.
+</p>
+
+<p>
+Configuration parameters are:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Activation</strong>: Set to On to enable Common Domain Cookie support.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Common domain</strong>: Name of the common domain (where common cookie is available).</div>
+</li>
+<li class="level1"><div class="li"> <strong>Reader <acronym title="Uniform Resource Locator">URL</acronym></strong>: <acronym title="Uniform Resource Locator">URL</acronym> used by <acronym title="Security Assertion Markup Language">SAML</acronym> SP to read the cookie. Leave blank to deactivate the feature.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Writer <acronym title="Uniform Resource Locator">URL</acronym></strong>: <acronym title="Uniform Resource Locator">URL</acronym> used by <acronym title="Security Assertion Markup Language">SAML</acronym> IDP to write the cookie. Leave blank to deactivate the feature.</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Advanced" [7658-] --></div><!-- closes <div class="dokuwiki export">-->

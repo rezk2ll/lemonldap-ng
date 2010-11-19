@@ -57,12 +57,45 @@
 </p>
 
 <p>
-
 They can then be forwarded to applications trough <a href="../../documentation/1.0/writingrulesand_headers.html#headers" class="wikilink1" title="documentation:1.0:writingrulesand_headers">HTTP headers</a>.
 </p>
 
 </div>
-<!-- SECTION "Presentation" [71-656] -->
+<!-- SECTION "Presentation" [71-655] -->
+<h2><a name="perl-cas_module_installation" id="perl-cas_module_installation">Perl-CAS module installation</a></h2>
+<div class="level2">
+
+<p>
+
+Download the latest version:
+
+</p>
+<pre class="code">
+wget https://sourcesup.cru.fr/frs/download.php/2476/AuthCAS-1.4.tar.gz
+</pre>
+
+<p>
+Extract and build the module:
+
+</p>
+<pre class="code">
+tar zxvf AuthCAS-1.4.tar.gz 
+cd AuthCAS-1.4/
+perl Makefile.PL
+make
+make test
+</pre>
+
+<p>
+Install the module:
+
+</p>
+<pre class="code">
+sudo make install
+</pre>
+
+</div>
+<!-- SECTION "Perl-CAS module installation" [656-989] -->
 <h2><a name="configuration" id="configuration">Configuration</a></h2>
 <div class="level2">
 
@@ -72,7 +105,6 @@ In Manager, go in <code>General Parameters</code> &gt; <code>Authentication modu
 </p>
 
 <p>
-
 <p><div class="notetip">You can then choose any other module for users and password.
 </div></p>
 </p>
@@ -91,7 +123,7 @@ Then, go in <code><acronym title="Central Authentication Service">CAS</acronym> 
 </li>
 <li class="level1"><div class="li"> <strong>Gateways authentication</strong>: force transparent authentication on <acronym title="Central Authentication Service">CAS</acronym> server</div>
 </li>
-<li class="level1"><div class="li"> <strong><acronym title="Proxy Granting Ticket">PGT</acronym> file</strong>: temporary file where proxy tickets are stored</div>
+<li class="level1"><div class="li"> <strong><acronym title="Proxy Granting Ticket">PGT</acronym> file</strong>: temporary file where proxy tickets are stored (by default, <code>/tmp/pgt.txt</code>)</div>
 </li>
 <li class="level1"><div class="li"> <strong>Proxied services</strong>: list of services for which a proxy ticket is requested:</div>
 <ul>
@@ -103,5 +135,27 @@ Then, go in <code><acronym title="Central Authentication Service">CAS</acronym> 
 </li>
 </ul>
 
+<p>
+
+<p><div class="notetip">If no proxied services defined, <acronym title="Central Authentication Service">CAS</acronym> authentication will not activate the <acronym title="Central Authentication Service">CAS</acronym> proxy mode.
+</div></p>
+</p>
+
+<p>
+<p><div class="noteimportant">
+If you activate proxy mode, you must create the <acronym title="Proxy Granting Ticket">PGT</acronym> file on your system, for example:
+
+</p>
+<pre class="code">
+touch /tmp/pgt.txt
+</pre>
+
+<p>
+
+
+</div></p>
+
+</p>
+
 </div>
-<!-- SECTION "Configuration" [657-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Configuration" [990-] --></div><!-- closes <div class="dokuwiki export">-->

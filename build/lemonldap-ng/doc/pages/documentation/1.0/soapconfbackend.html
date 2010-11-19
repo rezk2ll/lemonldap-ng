@@ -52,7 +52,7 @@ You can share your configuration over the network using <acronym title="Simple O
 <li class="level1"><div class="li"> Configure Apache to allow remote access: in <code>portal-apache2.conf</code>, remote <acronym title="Simple Object Access Protocol">SOAP</acronym> access is disabled by default. Change it:</div>
 </li>
 </ul>
-<pre class="code apache"><span class="co1"># SOAP functions for sessions access (disabled by default)</span>
+<pre class="code apache"><span class="co1"># SOAP functions for configuration access (disabled by default)</span>
 &lt;<span class="kw3">Location</span> /index.pl/config&gt;
     <span class="kw1">Order</span> <span class="kw1">deny</span>,<span class="kw1">allow</span>
     <span class="kw1">Deny</span> from <span class="kw2">all</span>
@@ -60,7 +60,7 @@ You can share your configuration over the network using <acronym title="Simple O
 &lt;/<span class="kw3">Location</span>&gt;</pre>
 
 </div>
-<!-- SECTION "First, configure your real backend" [289-936] -->
+<!-- SECTION "First, configure your real backend" [289-941] -->
 <h3><a name="next_configure_soap_for_your_remote_servers" id="next_configure_soap_for_your_remote_servers">Next, configure SOAP for your remote servers</a></h3>
 <div class="level3">
 
@@ -83,4 +83,4 @@ You can also add some other parameters
 <span class="re1">proxyOptions</span> <span class="sy0">=</span><span class="re2"> <span class="br0">&#123;</span> timeout <span class="sy0">=</span>&gt; <span class="nu0">5</span> <span class="br0">&#125;</span></span></pre>
 
 </div>
-<!-- SECTION "Next, configure SOAP for your remote servers" [937-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Next, configure SOAP for your remote servers" [942-] --></div><!-- closes <div class="dokuwiki export">-->

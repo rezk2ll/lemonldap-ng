@@ -1,0 +1,100 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+
+
+<h1><a name="ldap_session_backend" id="ldap_session_backend">LDAP session backend</a></h1>
+<div class="level1">
+
+<p>
+
+An Apache session module was created by <acronym title="LemonLDAP::NG">LL::NG</acronym> team to store sessions in an <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> directory.
+</p>
+
+<p>
+<p><div class="noteimportant">This module is not part of <acronym title="LemonLDAP::NG">LL::NG</acronym> distibution, and can be found on CPAN: <a href="http://search.cpan.org/dist/Apache-Session-LDAP/" class="urlextern" title="http://search.cpan.org/dist/Apache-Session-LDAP/"  rel="nofollow">Apache::Session::LDAP</a>.
+</div></p>
+</p>
+
+<p>
+<p><div class="notetip">This module is also available in the <code>contribs</code> directory of <acronym title="LemonLDAP::NG">LL::NG</acronym> <a href="http://websvn.ow2.org/listing.php?repname=lemonldap&amp;path=%2Ftrunk%2Fcontribs%2Fapache-session-ldap%2F" class="urlextern" title="http://websvn.ow2.org/listing.php?repname=lemonldap&amp;path=%2Ftrunk%2Fcontribs%2Fapache-session-ldap%2F"  rel="nofollow">subversion repository</a>.
+</div></p>
+</p>
+
+<p>
+Sessions will be stored as <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> entries, like this:
+</p>
+<pre class="file">
+dn: cn=6fb7c4a170a04668771f03b0a4747f46,ou=sessions,dc=example,dc=com
+objectClass: top
+objectClass: applicationProcess
+cn: 6fb7c4a170a04668771f03b0a4747f46
+description: [serialized data]
+</pre>
+
+</div>
+<!-- SECTION "LDAP session backend" [1-775] -->
+<h2><a name="setup" id="setup">Setup</a></h2>
+<div class="level2">
+
+<p>
+
+Go in the Manager and set the <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> session module (<a href="http://search.cpan.org/dist/Apache-Session-LDAP/" class="urlextern" title="http://search.cpan.org/dist/Apache-Session-LDAP/"  rel="nofollow">Apache::Session::LDAP</a>) in <code>General parameters</code> » <code>Sessions</code> » <code>Session storage</code> » <code>Apache::Session module</code> and add the following parameters (case sensitive):
+
+</p>
+<table class="inline">
+	<tr class="row0 roweven">
+		<th class="col0 centeralign" colspan="3">  Required parameters  </th>
+	</tr>
+	<tr class="row1 rowodd">
+		<th class="col0 centeralign">  Name  </th><th class="col1 centeralign">  Comment  </th><th class="col2 centeralign">  Example  </th>
+	</tr>
+	<tr class="row2 roweven">
+		<td class="col0 centeralign">  <strong>ldapServer</strong>  </td><td class="col1"> <acronym title="Uniform Resource Identifier">URI</acronym> of the server </td><td class="col2"> ldap://localhost </td>
+	</tr>
+	<tr class="row3 rowodd">
+		<td class="col0 centeralign">  <strong>ldapConfBase</strong>  </td><td class="col1"> <acronym title="Distinguished Name">DN</acronym> of sessions branch </td><td class="col2"> ou=sessions,dc=example,dc=com </td>
+	</tr>
+	<tr class="row4 roweven">
+		<td class="col0 centeralign">  <strong>ldapBindDN</strong>  </td><td class="col1"> Connection login </td><td class="col2"> cn=admin,dc=example,dc=password </td>
+	</tr>
+	<tr class="row5 rowodd">
+		<td class="col0 centeralign">  <strong>ldapBindPassword</strong>  </td><td class="col1"> Connection password </td><td class="col2"> secret </td>
+	</tr>
+</table>
+
+</div>
+<!-- SECTION "Setup" [776-1407] -->
+<h2><a name="security" id="security">Security</a></h2>
+<div class="level2">
+
+<p>
+
+Restrict network access to the <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> directory, and add specific <acronym title="Access Control List">ACL</acronym> to session branch.
+</p>
+
+<p>
+You can also use different user/password for your servers by overriding parameters <code>globalStorage</code> and <code>globalStorageOptions</code> in lemonldap-ng.ini file.
+</p>
+
+</div>
+<!-- SECTION "Security" [1408-] --></div><!-- closes <div class="dokuwiki export">-->
