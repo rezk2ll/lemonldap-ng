@@ -10,7 +10,7 @@ use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::_CAS;
 use base qw(Lemonldap::NG::Portal::_CAS);
 
-our $VERSION = '0.01';
+our $VERSION = '1.0.0';
 
 ## @method void issuerDBInit()
 # Nothing to do

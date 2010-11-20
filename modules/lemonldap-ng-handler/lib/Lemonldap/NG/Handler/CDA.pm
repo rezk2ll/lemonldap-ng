@@ -9,7 +9,7 @@ use strict;
 
 use Lemonldap::NG::Handler::SharedConf qw(:all);
 
-our $VERSION = '0.2';
+our $VERSION = '1.0.0';
 
 use base qw(Lemonldap::NG::Handler::SharedConf);
 

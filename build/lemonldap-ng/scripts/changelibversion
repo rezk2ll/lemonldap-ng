@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION=0.99
+VERSION=1.0.0
 
 perl -i -pe 's/^our \$VERSION.*$/our \$VERSION = '\'$VERSION\'';/' $(find l*/lib/ -name *pm)
 

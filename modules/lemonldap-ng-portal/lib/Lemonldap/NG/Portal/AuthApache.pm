@@ -8,7 +8,7 @@ package Lemonldap::NG::Portal::AuthApache;
 use strict;
 use Lemonldap::NG::Portal::Simple;
 
-our $VERSION = '0.2';
+our $VERSION = '1.0.0';
 
 ## @apmethod int authInit()
 # @return Lemonldap::NG::Portal constant

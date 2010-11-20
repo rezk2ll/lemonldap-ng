@@ -9,7 +9,7 @@ use strict;
 use Lemonldap::NG::Portal::Simple;
 use MIME::Base64;
 
-our $VERSION = '0.1';
+our $VERSION = '1.0.0';
 our $initDone;
 
 BEGIN {

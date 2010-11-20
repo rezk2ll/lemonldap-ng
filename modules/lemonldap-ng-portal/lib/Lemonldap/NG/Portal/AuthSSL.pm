@@ -11,7 +11,7 @@ use Lemonldap::NG::Portal::AuthLDAP;
 
 use base qw(Lemonldap::NG::Portal::AuthLDAP);
 
-our $VERSION = '0.2';
+our $VERSION = '1.0.0';
 
 ## @apmethod int authInit()
 # Check if SSL environment variables are set.

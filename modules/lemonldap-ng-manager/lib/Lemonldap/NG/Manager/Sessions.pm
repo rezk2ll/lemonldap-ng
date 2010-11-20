@@ -24,7 +24,7 @@ use utf8;
 our $whatToTrace;
 *whatToTrace = \$Lemonldap::NG::Handler::_CGI::whatToTrace;
 
-our $VERSION = '0.11';
+our $VERSION = '1.0.0';
 
 our @ISA = qw(
   Lemonldap::NG::Handler::CGI

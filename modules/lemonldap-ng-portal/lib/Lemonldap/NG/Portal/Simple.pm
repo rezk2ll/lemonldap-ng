@@ -62,7 +62,7 @@ use Digest::MD5;
 #inherits Apache::Session
 #link Lemonldap::NG::Common::Apache::Session::SOAP protected globalStorage
 
-our $VERSION = '0.91';
+our $VERSION = '1.0.0';
 
 use base qw(Lemonldap::NG::Common::CGI Exporter);
 our @ISA;

@@ -3,7 +3,7 @@ package Lemonldap::NG::Common::Conf::SOAP;
 use strict;
 use SOAP::Lite;
 
-our $VERSION = 0.21;
+our $VERSION = '1.0.0';
 
 #parameter proxy Url of SOAP service
 #parameter proxyOptions SOAP::Lite parameters

@@ -9,7 +9,7 @@ use strict;
 use Lemonldap::NG::Portal::Simple;
 use URI::Escape;
 
-our $VERSION = '0.20';
+our $VERSION = '1.0.0';
 our $initDone;
 
 BEGIN {

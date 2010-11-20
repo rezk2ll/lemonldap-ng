@@ -14,7 +14,7 @@ use utf8;
 
 #parameter syslog Indicates syslog facility for logging user actions
 
-our $VERSION = '0.51';
+our $VERSION = '1.0.0';
 
 use base qw(CGI);
 

@@ -20,7 +20,7 @@ use Config::IniFiles;
 #inherits Lemonldap::NG::Common::Conf::SOAP
 #inherits Lemonldap::NG::Common::Conf::LDAP
 
-our $VERSION = 0.70;
+our $VERSION = '1.0.0';
 our $msg;
 our $iniObj;
 

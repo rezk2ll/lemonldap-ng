@@ -13,7 +13,7 @@ use Encode;
 use strict;
 
 our @EXPORT = qw(ldap);
-our $VERSION = '0.3';
+our $VERSION = '1.0.0';
 our $ppLoaded = 0;
 
 BEGIN {

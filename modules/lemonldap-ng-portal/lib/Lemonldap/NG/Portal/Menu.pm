@@ -11,7 +11,7 @@ use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::_LibAccess;
 use base qw(Lemonldap::NG::Portal::_LibAccess);
 
-our $VERSION  = '0.4';
+our $VERSION = '1.0.0';
 our $catlevel = 0;
 
 ## @method void menuInit()

@@ -12,7 +12,7 @@ use AutoLoader 'AUTOLOAD';
 use Apache::Session;
 use base qw(Apache::Session);
 
-our $VERSION = 0.3;
+our $VERSION = '1.0.0';
 
 sub _load {
     my $backend = shift;

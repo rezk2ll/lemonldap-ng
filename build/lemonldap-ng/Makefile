@@ -476,7 +476,7 @@ manifest:   configure
 cpan:	clean configure common_cpan handler_cpan portal_cpan manager_cpan
 	@for i in Common Portal Handler Manager; do \
 		$(UNCOMPRESS) Lemonldap-NG-$$i-*.$(COMPRESSSUFFIX) \
-			$$($(COMPRESS) tzf Lemonldap-NG-$$i-*.$(COMPRESSSUFFIX) |grep META.yml); \
+			$$($(COMPRESS) Lemonldap-NG-$$i-*.$(COMPRESSSUFFIX) |grep META.yml); \
 		mv Lemonldap-NG-$$i-*/META.yml lemonldap-ng-$$($(PERL) -e "print lc('$$i')")/; \
 		rm -rf Lemonldap-NG-$$i*/; \
 		done
