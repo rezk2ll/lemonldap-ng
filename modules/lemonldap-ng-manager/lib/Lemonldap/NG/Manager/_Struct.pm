@@ -361,10 +361,8 @@ sub struct {
                     _nodes => [
                         qw(ldapAuthnLevel n:ldapConnection n:ldapFilters n:ldapGroups n:ldapPassword)
                     ],
-                    _help => 'ldap',
-
+                    _help          => 'authLDAP',
                     ldapAuthnLevel => 'int:/ldapAuthnLevel',
-
                     ldapConnection => {
                         _nodes => [
                             qw(ldapServer ldapPort ldapBase managerDn managerPassword ldapTimeout ldapVersion ldapRaw)
@@ -421,6 +419,7 @@ sub struct {
                 sslParams => {
                     _nodes =>
                       [qw(SSLAuthnLevel SSLVar SSLLDAPField SSLRequire)],
+                    _help         => 'authSSL',
                     SSLAuthnLevel => 'int:/SSLAuthnLevel',
                     SSLVar        => 'text:/SSLVar',
                     SSLLDAPField  => 'text:/SSLLDAPField',
@@ -432,6 +431,7 @@ sub struct {
                     _nodes => [
                         qw(CAS_authnLevel CAS_url CAS_CAFile CAS_renew CAS_gateway CAS_pgtFile cn:CAS_proxiedServices)
                     ],
+                    _help               => 'authCAS',
                     CAS_authnLevel      => 'int:/CAS_authnLevel',
                     CAS_url             => 'text:/CAS_url',
                     CAS_CAFile          => 'text:/CAS_CAFile',
@@ -451,6 +451,7 @@ sub struct {
                     _nodes => [
                         qw(remotePortal remoteCookieName remoteGlobalStorage cn:remoteGlobalStorageOptions)
                     ],
+                    _help                      => 'authRemote',
                     remotePortal               => 'text:/remotePortal',
                     remoteCookieName           => 'text:/remoteCookieName',
                     remoteGlobalStorage        => 'text:/remoteGlobalStorage',
@@ -466,6 +467,7 @@ sub struct {
                 proxyParams => {
                     _nodes =>
                       [qw(soapAuthService remoteCookieName soapSessionService)],
+                    _help              => 'authProxy',
                     soapAuthService    => 'text:/soapAuthService',
                     remoteCookieName   => 'text:/remoteCookieName',
                     soapSessionService => 'text:/soapSessionService',
@@ -474,6 +476,7 @@ sub struct {
                 # OpenID
                 openIdParams => {
                     _nodes => [qw(openIdAuthnLevel openIdSecret openIdIDPList)],
+                    _help  => 'authOpenID',
                     openIdAuthnLevel => 'int:/openIdAuthnLevel',
                     openIdSecret     => 'text:/openIdSecret',
                     openIdIDPList =>
@@ -485,6 +488,7 @@ sub struct {
                     _nodes => [
                         qw(twitterAuthnLevel twitterKey twitterSecret twitterAppName)
                     ],
+                    _help             => 'authTwitter',
                     twitterAuthnLevel => 'int:/twitterAuthnLevel',
                     twitterKey        => 'text:/twitterKey',
                     twitterSecret     => 'text:/twitterSecret',
@@ -496,12 +500,10 @@ sub struct {
                     _nodes => [
                         qw(dbiAuthnLevel n:dbiConnection n:dbiSchema n:dbiPassword)
                     ],
-
+                    _help         => 'authDBI',
                     dbiAuthnLevel => 'int:/dbiAuthnLevel',
-
                     dbiConnection => {
                         _nodes => [qw(n:dbiConnectionAuth n:dbiConnectionUser)],
-
                         dbiConnectionAuth => {
                             _nodes =>
                               [qw(dbiAuthChain dbiAuthUser dbiAuthPassword)],
@@ -509,7 +511,6 @@ sub struct {
                             dbiAuthUser     => 'text:/dbiAuthUser',
                             dbiAuthPassword => 'text:/dbiAuthPassword',
                         },
-
                         dbiConnectionUser => {
                             _nodes =>
                               [qw(dbiUserChain dbiUserUser dbiUserPassword)],
@@ -540,18 +541,21 @@ sub struct {
                 # Apache
                 apacheParams => {
                     _nodes           => [qw(apacheAuthnLevel)],
+                    _help            => 'authApache',
                     apacheAuthnLevel => 'int:/apacheAuthnLevel',
                 },
 
                 # Null
                 nullParams => {
                     _nodes         => [qw(nullAuthnLevel)],
+                    _help          => 'authNull',
                     nullAuthnLevel => 'int:/nullAuthnLevel',
                 },
 
                 # Choice
                 choiceParams => {
                     _nodes => [qw(authChoiceParam n:authChoiceModules)],
+                    _help  => 'authChoice',
                     authChoiceParam   => 'text:/authChoiceParam',
                     authChoiceModules => {
                         _nodes =>
@@ -571,6 +575,7 @@ sub struct {
                     _nodes => [
                         qw(issuerDBSAMLActivation issuerDBSAMLPath issuerDBSAMLRule)
                     ],
+                    _help                  => 'issuerdbSAML',
                     issuerDBSAMLActivation => 'bool:/issuerDBSAMLActivation',
                     issuerDBSAMLPath       => 'text:/issuerDBSAMLPath',
                     issuerDBSAMLRule =>
@@ -580,6 +585,7 @@ sub struct {
                     _nodes => [
                         qw(issuerDBCASActivation issuerDBCASPath issuerDBCASRule issuerDBCASOptions)
                     ],
+                    _help                 => 'issuerdbCAS',
                     issuerDBCASActivation => 'bool:/issuerDBCASActivation',
                     issuerDBCASPath       => 'text:/issuerDBCASPath',
                     issuerDBCASRule =>
@@ -599,6 +605,7 @@ sub struct {
                     _nodes => [
                         qw(issuerDBOpenIDActivation issuerDBOpenIDPath issuerDBOpenIDRule n:issuerDBOpenIDOptions)
                     ],
+                    _help => 'issuerdbOpenID',
                     issuerDBOpenIDActivation =>
                       'bool:/issuerDBOpenIDActivation',
                     issuerDBOpenIDPath    => 'text:/issuerDBOpenIDPath',
@@ -797,21 +804,21 @@ sub struct {
             exportedVars => {
                 _nodes => ['hash:/exportedVars:vars:btext'],
                 _js    => 'hashRoot',
-                _help  => 'vars',
+                _help  => 'exportedVars',
             },
 
             # MACROS
             macros => {
                 _nodes => ['hash:/macros:macros:btext'],
                 _js    => 'hashRoot',
-                _help  => 'macros',
+                _help  => 'macrosandgroups',
             },
 
             # GROUPS
             groups => {
                 _nodes => ['hash:/groups:groups:btext'],
                 _js    => 'hashRoot',
-                _help  => 'groups',
+                _help  => 'macrosandgroups',
             },
         },
 
