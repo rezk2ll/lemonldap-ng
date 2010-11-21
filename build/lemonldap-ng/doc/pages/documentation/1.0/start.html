@@ -168,23 +168,38 @@
 <div style="width:100px;height:100px;float:left;">
 <a href="/_detail/icons/utilities.png?id=documentation%3A1.0%3Astart" class="media" title="icons:utilities.png"><img src="../../../media/icons/utilities.png" class="media" alt="" /></a>
 </div>
+</p>
+
+<p>
+<acronym title="LemonLDAP::NG">LL::NG</acronym> needs a storage system to store its own configuration (managed by the manager). Choose one of the following:
 
 </p>
-<ul>
-<li class="level1"><div class="li"> <a href="../../documentation/1.0/changeconfbackend.html" class="wikilink1" title="documentation:1.0:changeconfbackend">Change configuration backend</a></div>
-</li>
-<li class="level1"><div class="li"> <a href="../../documentation/1.0/fileconfbackend.html" class="wikilink1" title="documentation:1.0:fileconfbackend">File configuration backend</a></div>
-</li>
-<li class="level1"><div class="li"> <a href="../../documentation/1.0/sqlconfbackend.html" class="wikilink1" title="documentation:1.0:sqlconfbackend">SQL configuration backend (called RDBI or CDBI)</a></div>
-</li>
-<li class="level1"><div class="li"> <a href="../../documentation/1.0/ldapconfbackend.html" class="wikilink1" title="documentation:1.0:ldapconfbackend">LDAP configuration backend</a></div>
-</li>
-<li class="level1"><div class="li"> <a href="../../documentation/1.0/soapconfbackend.html" class="wikilink1" title="documentation:1.0:soapconfbackend">SOAP configuration backend</a></div>
-</li>
-</ul>
+<table class="inline">
+	<tr class="row0 roweven">
+		<th class="col0 centeralign">  Backend  </th><th class="col1 centeralign">  Shareable  </th><th class="col2 centeralign">  Comment  </th>
+	</tr>
+	<tr class="row1 rowodd">
+		<td class="col0 centeralign">  <a href="../../documentation/1.0/fileconfbackend.html" class="wikilink1" title="documentation:1.0:fileconfbackend">File configuration backend</a>  </td><td class="col1"> </td><td class="col2 leftalign">Not shareable between servers except if used in conjunction with <a href="../../documentation/1.0/soapconfbackend.html" class="wikilink1" title="documentation:1.0:soapconfbackend">SOAP configuration backend</a> or with a shared file system (NFS,…). Selected by default during installation.  </td>
+	</tr>
+	<tr class="row2 roweven">
+		<td class="col0 centeralign">  <a href="../../documentation/1.0/sqlconfbackend.html" class="wikilink1" title="documentation:1.0:sqlconfbackend">SQL configuration backend (called RDBI or CDBI)</a>  </td><td class="col1 centeralign">  ✔  </td><td class="col2"> </td>
+	</tr>
+	<tr class="row3 rowodd">
+		<td class="col0 centeralign">  <a href="../../documentation/1.0/ldapconfbackend.html" class="wikilink1" title="documentation:1.0:ldapconfbackend">LDAP configuration backend</a>  </td><td class="col1 centeralign">  ✔  </td><td class="col2"> </td>
+	</tr>
+	<tr class="row4 roweven">
+		<td class="col0 centeralign">  <a href="../../documentation/1.0/soapconfbackend.html" class="wikilink1" title="documentation:1.0:soapconfbackend">SOAP configuration backend</a>  </td><td class="col1 centeralign">  ✔  </td><td class="col2 leftalign"> Proxy backend to be used in conjunction with another configuration backend. <br/><strong>Can be used to secure another backend</strong> for remote servers.  </td>
+	</tr>
+</table>
+
+<p>
+
+<p><div class="notetip">You can not start with an empty configuration, so read <a href="../../documentation/1.0/changeconfbackend.html" class="wikilink1" title="documentation:1.0:changeconfbackend">how to change configuration backend</a> to convert your existing configuration into another one.
+</div></p>
+</p>
 
 </div>
-<!-- SECTION "Configuration" [1999-2414] -->
+<!-- SECTION "Configuration" [1999-3096] -->
 <h3><a name="sessions" id="sessions">Sessions</a></h3>
 <div class="level3">
 
@@ -227,7 +242,7 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </table>
 
 </div>
-<!-- SECTION "Sessions" [2415-4228] -->
+<!-- SECTION "Sessions" [3097-4910] -->
 <h3><a name="identity_provider" id="identity_provider">Identity provider</a></h3>
 <div class="level3">
 
@@ -241,14 +256,30 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 <ul>
 <li class="level1"><div class="li"> <a href="../../documentation/1.0/idpsaml.html" class="wikilink1" title="documentation:1.0:idpsaml">SAML / Shibboleth identity provider</a></div>
 </li>
-<li class="level1"><div class="li"> <a href="../../documentation/1.0/idpopenid.html" class="wikilink2" title="documentation:1.0:idpopenid" rel="nofollow">OpenID identity provider</a></div>
+<li class="level1"><div class="li"> <a href="../../documentation/1.0/idpopenid.html" class="wikilink1" title="documentation:1.0:idpopenid">OpenID identity provider</a></div>
 </li>
 <li class="level1"><div class="li"> <a href="../../documentation/1.0/idpcas.html" class="wikilink2" title="documentation:1.0:idpcas" rel="nofollow">CAS identity provider</a></div>
 </li>
 </ul>
 
+<p>
+
+<p><div class="notetip">Note that:
+</p>
+<ul>
+<li class="level1"><div class="li"> All identity provider protocols can be used simultaneously</div>
+</li>
+<li class="level1"><div class="li"> Lemonldap::NG can be used as a proxy between those protocols (authentication configured with one protocol and issuer to another)</div>
+</li>
+</ul>
+
+<p>
+
+</div></p>
+</p>
+
 </div>
-<!-- SECTION "Identity provider" [4229-4499] -->
+<!-- SECTION "Identity provider" [4911-5407] -->
 <h2><a name="applications_protection" id="applications_protection">Applications protection</a></h2>
 <div class="level2">
 
@@ -269,7 +300,7 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </ul>
 
 </div>
-<!-- SECTION "Applications protection" [4500-4815] -->
+<!-- SECTION "Applications protection" [5408-5723] -->
 <h2><a name="advanced_features" id="advanced_features">Advanced features</a></h2>
 <div class="level2">
 
@@ -296,22 +327,24 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 
 </div>
-<!-- SECTION "Advanced features" [4816-5007] -->
+<!-- SECTION "Advanced features" [5724-5915] -->
 <h2><a name="mini_howto" id="mini_howto">Mini howto</a></h2>
 <div class="level2">
 <ul>
-<li class="level1"><div class="li"> <a href="../../documentation/1.0/mysqlminihowto.html" class="wikilink2" title="documentation:1.0:mysqlminihowto" rel="nofollow">Configuration and sessions in MySQL</a></div>
+<li class="level1"><div class="li"> <a href="../../documentation/1.0/mysqlminihowto.html" class="wikilink1" title="documentation:1.0:mysqlminihowto">Configuration and sessions in MySQL</a></div>
 </li>
-<li class="level1"><div class="li"> <a href="../../documentation/1.0/ldapminihowto.html" class="wikilink2" title="documentation:1.0:ldapminihowto" rel="nofollow">Configuration and sessions in LDAP</a></div>
+<li class="level1"><div class="li"> <a href="../../documentation/1.0/ldapminihowto.html" class="wikilink1" title="documentation:1.0:ldapminihowto">Configuration and sessions in LDAP</a></div>
 </li>
-<li class="level1"><div class="li"> <a href="../../documentation/1.0/soapminihowto.html" class="wikilink2" title="documentation:1.0:soapminihowto" rel="nofollow">Configuration and sessions access by SOAP</a></div>
+<li class="level1"><div class="li"> <a href="../../documentation/1.0/soapminihowto.html" class="wikilink1" title="documentation:1.0:soapminihowto">Configuration and sessions access by SOAP</a></div>
 </li>
 <li class="level1"><div class="li"> <a href="../../documentation/1.0/activedirectoryminihowto.html" class="wikilink2" title="documentation:1.0:activedirectoryminihowto" rel="nofollow">Integration in Active Directory (LDAP backend and Kerberos)</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="../../documentation/1.0/federationproxy.html" class="wikilink2" title="documentation:1.0:federationproxy" rel="nofollow">Create a protocol proxy</a> <em>(<acronym title="Security Assertion Markup Language">SAML</acronym> to OpenID, <acronym title="Central Authentication Service">CAS</acronym> to <acronym title="Security Assertion Markup Language">SAML</acronym>,…)</em></div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION "Mini howto" [5008-5305] -->
+<!-- SECTION "Mini howto" [5916-6299] -->
 <h2><a name="exploitation" id="exploitation">Exploitation</a></h2>
 <div class="level2">
 
@@ -338,4 +371,4 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </ul>
 
 </div>
-<!-- SECTION "Exploitation" [5306-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Exploitation" [6300-] --></div><!-- closes <div class="dokuwiki export">-->

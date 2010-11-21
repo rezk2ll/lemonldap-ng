@@ -50,7 +50,7 @@ Handlers check rights and calculate headers for each <acronym title="Hyper Text 
 Macros and groups are calculated during authentication process by the portal:
 </p>
 <ul>
-<li class="level1"><div class="li"> macros are stored as attributes: it can contain boolean results or any string</div>
+<li class="level1"><div class="li"> macros are used to extend (or rewrite) <a href="../../documentation/1.0/exportedvars.html" class="wikilink1" title="documentation:1.0:exportedvars">exported variables</a>. A macro is stored as attributes: it can contain boolean results or any string</div>
 </li>
 <li class="level1"><div class="li"> groups are stored as space-separated strings in the special attribute “groups”: it contains the names of groups whose rules were returned true for the current user</div>
 </li>
@@ -66,9 +66,9 @@ isAdmin <span class="sy0">-&gt;</span> <span class="re0">$uid</span> <span class
 <span class="co1"># other macro </span>
 displayName <span class="sy0">-&gt;</span> <span class="re0">$givenName</span><span class="sy0">.</span><span class="st0">&quot; &quot;</span><span class="sy0">.</span><span class="re0">$surName</span>
 &nbsp;
-<span class="co1"># rule</span>
+<span class="co1"># Use a boolean macro in a rule</span>
 <span class="sy0">^/</span>admin <span class="sy0">-&gt;</span> <span class="re0">$isAdmin</span>
-<span class="co1"># header</span>
+<span class="co1"># Use a string macro in a HTTP header</span>
 Display<span class="sy0">-</span>Name <span class="sy0">-&gt;</span> <span class="re0">$displayName</span></pre>
 
 <p>
@@ -78,11 +78,11 @@ Example for groups:
 <pre class="code perl"><span class="co1"># group</span>
 admin <span class="sy0">-&gt;</span> <span class="re0">$uid</span> <span class="kw1">eq</span> <span class="st_h">'foo'</span> <span class="kw1">or</span> <span class="re0">$uid</span> <span class="kw1">eq</span> <span class="st_h">'bar'</span>
 &nbsp;
-<span class="co1"># rule</span>
+<span class="co1"># Use a group in a rule</span>
 <span class="sy0">^/</span>admin <span class="sy0">-&gt;</span> <span class="re0">$groups</span> <span class="sy0">=~</span> <span class="sy0">/</span><span class="re0">\badmin</span><span class="re0">\b</span><span class="sy0">/</span></pre>
 
 </div>
-<!-- SECTION "Macros and groups" [454-1161] -->
+<!-- SECTION "Macros and groups" [454-1308] -->
 <h3><a name="local_macros" id="local_macros">Local macros</a></h3>
 <div class="level3">
 
@@ -101,12 +101,12 @@ Display<span class="sy0">-</span>Name <span class="sy0">-&gt;</span> <span class
 </p>
 
 </div>
-<!-- SECTION "Local macros" [1162-1819] -->
+<!-- SECTION "Local macros" [1309-1966] -->
 <h2><a name="portal_performances" id="portal_performances">Portal performances</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Portal performances" [1820-1852] -->
+<!-- SECTION "Portal performances" [1967-1999] -->
 <h3><a name="general_performances" id="general_performances">General performances</a></h3>
 <div class="level3">
 
@@ -121,7 +121,7 @@ The portal is the biggest component of Lemonldap::NG. It is recommended to use M
 &lt;/<span class="kw3">Files</span>&gt;</pre>
 
 </div>
-<!-- SECTION "General performances" [1853-2196] -->
+<!-- SECTION "General performances" [2000-2343] -->
 <h3><a name="starting_performances" id="starting_performances">Starting performances</a></h3>
 <div class="level3">
 
@@ -141,7 +141,7 @@ To make the portal start faster when the server is relaunched, add those lines i
 &lt;/Perl&gt;</pre>
 
 </div>
-<!-- SECTION "Starting performances" [2197-2772] -->
+<!-- SECTION "Starting performances" [2344-2919] -->
 <h3><a name="apachesession_performances" id="apachesession_performances">Apache::Session performances</a></h3>
 <div class="level3">
 
@@ -208,7 +208,7 @@ Note that Apache::Session::Browseable::MySQL doesn&#039;t use MySQL locks.
 </p>
 
 </div>
-<!-- SECTION "Apache::Session performances" [2773-4687] -->
+<!-- SECTION "Apache::Session performances" [2920-4834] -->
 <h3><a name="ldap_performances" id="ldap_performances">LDAP performances</a></h3>
 <div class="level3">
 
@@ -258,4 +258,4 @@ ldapgroups -&gt; memberOf
 </p>
 
 </div>
-<!-- SECTION "LDAP performances" [4688-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "LDAP performances" [4835-] --></div><!-- closes <div class="dokuwiki export">-->
