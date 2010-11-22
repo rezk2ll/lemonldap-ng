@@ -27,11 +27,52 @@
 
 </div>
 <!-- SECTION "Main features" [1-29] -->
+<h2><a name="full_access_control" id="full_access_control">Full access control</a></h2>
+<div class="level2">
+
+<p>
+
+<acronym title="LemonLDAP::NG">LL::NG</acronym> is a web single-sign-on system, but unlike some systems it can manage rights on applications based on regular expressions on <acronym title="Uniform Resource Locator">URL</acronym>.
+</p>
+
+</div>
+<!-- SECTION "Full access control" [30-200] -->
+<h2><a name="easy_to_customize" id="easy_to_customize">Easy to customize</a></h2>
+<div class="level2">
+
+<p>
+
+<acronym title="LemonLDAP::NG">LL::NG</acronym> is designed using <a href="http://en.wikipedia.org/wiki/Model%E2%80%93View%E2%80%93Controller" class="urlextern" title="http://en.wikipedia.org/wiki/Model%E2%80%93View%E2%80%93Controller"  rel="nofollow">Model–View–Controller software architecture</a>, so you just have to <a href="../documentation/latest/portalcustom.html" class="wikilink1" title="documentation:latest:portalcustom">change HTML/CSS files</a> to custom portal.
+</p>
+
+</div>
+<!-- SECTION "Easy to customize" [201-475] -->
+<h2><a name="easy_to_integrate" id="easy_to_integrate">Easy to integrate</a></h2>
+<div class="level2">
+
+<p>
+
+<a href="../documentation/1.0/applications.html" class="wikilink1" title="documentation:1.0:applications">Integrating applications</a> in <acronym title="LemonLDAP::NG">LL::NG</acronym> is easy since its dialog with applications is based on <a href="../documentation/latest/writingrulesand_headers.html#headers" class="wikilink1" title="documentation:latest:writingrulesand_headers">customizable HTTP headers</a>.
+</p>
+
+</div>
+<!-- SECTION "Easy to integrate" [476-716] -->
+<h3><a name="unifying_authentications_federation" id="unifying_authentications_federation">Unifying authentications (federation)</a></h3>
+<div class="level3">
+
+<p>
+
+<acronym title="LemonLDAP::NG">LL::NG</acronym> can easy talk to other authentication systems using <acronym title="Security Assertion Markup Language">SAML</acronym>, OpenID, <acronym title="Central Authentication Service">CAS</acronym>. it may be the <em class="u">backbone</em> of a heterogeneous architecture.
+Its <acronym title="Simple Object Access Protocol">SOAP</acronym> <acronym title="Application Programming Interface">API</acronym> can also be used to dialog directly with your custom applications.
+</p>
+
+</div>
+<!-- SECTION "Unifying authentications (federation)" [717-984] -->
 <h2><a name="sessions" id="sessions">Sessions</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Sessions" [30-51] -->
+<!-- SECTION "Sessions" [985-1006] -->
 <h3><a name="session_explorer" id="session_explorer">Session explorer</a></h3>
 <div class="level3">
 
@@ -48,8 +89,12 @@
 </li>
 </ul>
 
+<p>
+It can be used to delete a session
+</p>
+
 </div>
-<!-- SECTION "Session explorer" [52-251] -->
+<!-- SECTION "Session explorer" [1007-1241] -->
 <h3><a name="session_restrictions" id="session_restrictions">Session restrictions</a></h3>
 <div class="level3">
 
@@ -60,9 +105,45 @@ By default, a user can open several sessions. <acronym title="LemonLDAP::NG">LL:
 <ul>
 <li class="level1"><div class="li"> Allow only one session per user</div>
 </li>
-<li class="level1"><div class="li"> Allow only one session per <acronym title="Internet Protocol">IP</acronym></div>
+<li class="level1"><div class="li"> Allow only one <acronym title="Internet Protocol">IP</acronym> address per user</div>
+</li>
+<li class="level1"><div class="li"> Allow only one session per <acronym title="Internet Protocol">IP</acronym> address</div>
 </li>
 </ul>
 
+<p>
+Those capabilities can be used simultaneously or separately.
+</p>
+
 </div>
-<!-- SECTION "Session restrictions" [252-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Session restrictions" [1242-1524] -->
+<h3><a name="double_cookie" id="double_cookie">Double cookie</a></h3>
+<div class="level3">
+
+<p>
+
+<acronym title="LemonLDAP::NG">LL::NG</acronym> can be configured to provides <a href="../documentation/latest/ssocookie.html" class="wikilink1" title="documentation:latest:ssocookie">2 cookies</a>:
+</p>
+<ul>
+<li class="level1"><div class="li"> one secured (<acronym title="Secure Sockets Layer">SSL</acronym> only) for sensitive applications</div>
+</li>
+<li class="level1"><div class="li"> one unsecured for other applications</div>
+</li>
+</ul>
+
+<p>
+So if the http cookie is stolen, sensitive applications stay secured.
+</p>
+
+</div>
+<!-- SECTION "Double cookie" [1525-1798] -->
+<h2><a name="notifications" id="notifications">Notifications</a></h2>
+<div class="level2">
+
+<p>
+
+Lemonldap::NG can be used to prompt users with a message. This can be used to notify right changes,… See <a href="../documentation/latest/notifications.html" class="wikilink1" title="documentation:latest:notifications">notifications</a> for more.
+</p>
+
+</div>
+<!-- SECTION "Notifications" [1799-] --></div><!-- closes <div class="dokuwiki export">-->

@@ -151,7 +151,7 @@
 		<td class="col0"> <a href="../../documentation/1.0/authremote.html" class="wikilink1" title="documentation:1.0:authremote">Remote LL::NG</a> </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td><td class="col3 leftalign">    </td>
 	</tr>
 	<tr class="row12 roweven">
-		<td class="col0"> <a href="../../documentation/1.0/authmulti.html" class="wikilink2" title="documentation:1.0:authmulti" rel="nofollow">Stack multiple backends</a> </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td><td class="col3 leftalign">    </td>
+		<td class="col0"> <a href="../../documentation/1.0/authmulti.html" class="wikilink1" title="documentation:1.0:authmulti">Stack multiple backends</a> </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td><td class="col3 leftalign">    </td>
 	</tr>
 	<tr class="row13 rowodd">
 		<td class="col0"> <a href="../../documentation/1.0/authchoice.html" class="wikilink1" title="documentation:1.0:authchoice">Backend choice by users</a> </td><td class="col1 centeralign">  ✔  </td><td class="col2 centeralign">  ✔  </td><td class="col3 centeralign">  ✔  </td>
@@ -160,7 +160,7 @@
 
 </div>
 <!-- SECTION "Authentication, users and password databases" [1077-1998] -->
-<h3><a name="configuration1" id="configuration1">Configuration</a></h3>
+<h3><a name="configuration_database" id="configuration_database">Configuration database</a></h3>
 <div class="level3">
 
 <p>
@@ -199,8 +199,8 @@
 </p>
 
 </div>
-<!-- SECTION "Configuration" [1999-3096] -->
-<h3><a name="sessions" id="sessions">Sessions</a></h3>
+<!-- SECTION "Configuration database" [1999-3105] -->
+<h3><a name="sessions_database" id="sessions_database">Sessions database</a></h3>
 <div class="level3">
 
 <p>
@@ -242,7 +242,7 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </table>
 
 </div>
-<!-- SECTION "Sessions" [3097-4910] -->
+<!-- SECTION "Sessions database" [3106-4928] -->
 <h3><a name="identity_provider" id="identity_provider">Identity provider</a></h3>
 <div class="level3">
 
@@ -258,18 +258,18 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </li>
 <li class="level1"><div class="li"> <a href="../../documentation/1.0/idpopenid.html" class="wikilink1" title="documentation:1.0:idpopenid">OpenID identity provider</a></div>
 </li>
-<li class="level1"><div class="li"> <a href="../../documentation/1.0/idpcas.html" class="wikilink2" title="documentation:1.0:idpcas" rel="nofollow">CAS identity provider</a></div>
+<li class="level1"><div class="li"> <a href="../../documentation/1.0/idpcas.html" class="wikilink1" title="documentation:1.0:idpcas">CAS identity provider</a></div>
 </li>
 </ul>
 
 <p>
 
-<p><div class="notetip">Note that:
+<p><div class="notetip">
 </p>
 <ul>
 <li class="level1"><div class="li"> All identity provider protocols can be used simultaneously</div>
 </li>
-<li class="level1"><div class="li"> Lemonldap::NG can be used as a proxy between those protocols (authentication configured with one protocol and issuer to another)</div>
+<li class="level1"><div class="li"> <a href="../../documentation/1.0/federationproxy.html" class="wikilink1" title="documentation:1.0:federationproxy">LemonLDAP::NG can be used as a proxy between those protocols</a></div>
 </li>
 </ul>
 
@@ -279,19 +279,21 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </p>
 
 </div>
-<!-- SECTION "Identity provider" [4911-5407] -->
+<!-- SECTION "Identity provider" [4929-5367] -->
 <h2><a name="applications_protection" id="applications_protection">Applications protection</a></h2>
 <div class="level2">
 
 <p>
 
-<div style="width:100px;height:50px;float:left;">
+<div style="width:100px;height:80px;float:left;">
 <a href="/_detail/icons/access.png?id=documentation%3A1.0%3Astart" class="media" title="icons:access.png"><img src="../../../media/icons/access.png" class="media" alt="" /></a>
 </div>
 
 </p>
 <ul>
 <li class="level1"><div class="li"> <a href="../../documentation/1.0/writingrulesand_headers.html" class="wikilink1" title="documentation:1.0:writingrulesand_headers">Writing rules and headers</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="../../documentation/1.0/formreplay.html" class="wikilink1" title="documentation:1.0:formreplay">Form replay</a></div>
 </li>
 <li class="level1"><div class="li"> <a href="../../documentation/1.0/applications.html" class="wikilink1" title="documentation:1.0:applications">Integrate existing applications</a></div>
 </li>
@@ -300,13 +302,13 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </ul>
 
 </div>
-<!-- SECTION "Applications protection" [5408-5723] -->
+<!-- SECTION "Applications protection" [5368-5713] -->
 <h2><a name="advanced_features" id="advanced_features">Advanced features</a></h2>
 <div class="level2">
 
 <p>
 
-<div style="width:100px;height:50px;float:left;">
+<div style="width:100px;height:120px;float:left;">
 <a href="/_detail/icons/neotux.png?id=documentation%3A1.0%3Astart" class="media" title="icons:neotux.png"><img src="../../../media/icons/neotux.png" class="media" alt="" /></a>
 </div>
 
@@ -314,22 +316,30 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 <ul>
 <li class="level1"><div class="li"> <a href="../../documentation/1.0/notifications.html" class="wikilink1" title="documentation:1.0:notifications">Notifications system</a></div>
 </li>
+<li class="level1"><div class="li"> <a href="../../documentation/1.0/passwordstore.html" class="wikilink1" title="documentation:1.0:passwordstore">Store password in session</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="../../documentation/1.0/cda.html" class="wikilink1" title="documentation:1.0:cda">Cross Domain Authentication (CDA)</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="../../documentation/1.0/rbac.html" class="wikilink1" title="documentation:1.0:rbac">Role Based Access Control (RBAC)</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="../../documentation/1.0/customfunctions.html" class="wikilink1" title="documentation:1.0:customfunctions">Use custom functions</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="../../documentation/1.0/resetpassword.html" class="wikilink1" title="documentation:1.0:resetpassword">Reset password by mail (self service)</a></div>
+</li>
 </ul>
+
+</div>
+<!-- SECTION "Advanced features" [5714-6141] -->
+<h2><a name="mini_howtos" id="mini_howtos">Mini howtos</a></h2>
+<div class="level2">
 
 <p>
 
-<br/>
-
-<br/>
-
-<br/>
+<div style="width:100px;height:120px;float:left;">
+<a href="/_detail/icons/jabber_protocol.png?id=documentation%3A1.0%3Astart" class="media" title="icons:jabber_protocol.png"><img src="../../../media/icons/jabber_protocol.png" class="media" alt="" /></a>
+</div>
 
 </p>
-
-</div>
-<!-- SECTION "Advanced features" [5724-5915] -->
-<h2><a name="mini_howto" id="mini_howto">Mini howto</a></h2>
-<div class="level2">
 <ul>
 <li class="level1"><div class="li"> <a href="../../documentation/1.0/mysqlminihowto.html" class="wikilink1" title="documentation:1.0:mysqlminihowto">Configuration and sessions in MySQL</a></div>
 </li>
@@ -337,14 +347,14 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </li>
 <li class="level1"><div class="li"> <a href="../../documentation/1.0/soapminihowto.html" class="wikilink1" title="documentation:1.0:soapminihowto">Configuration and sessions access by SOAP</a></div>
 </li>
-<li class="level1"><div class="li"> <a href="../../documentation/1.0/activedirectoryminihowto.html" class="wikilink2" title="documentation:1.0:activedirectoryminihowto" rel="nofollow">Integration in Active Directory (LDAP backend and Kerberos)</a></div>
+<li class="level1"><div class="li"> <a href="../../documentation/1.0/activedirectoryminihowto.html" class="wikilink1" title="documentation:1.0:activedirectoryminihowto">Integration in Active Directory (LDAP and Kerberos)</a></div>
 </li>
-<li class="level1"><div class="li"> <a href="../../documentation/1.0/federationproxy.html" class="wikilink2" title="documentation:1.0:federationproxy" rel="nofollow">Create a protocol proxy</a> <em>(<acronym title="Security Assertion Markup Language">SAML</acronym> to OpenID, <acronym title="Central Authentication Service">CAS</acronym> to <acronym title="Security Assertion Markup Language">SAML</acronym>,…)</em></div>
+<li class="level1"><div class="li"> <a href="../../documentation/1.0/federationproxy.html" class="wikilink1" title="documentation:1.0:federationproxy">Create a protocol proxy</a> <em>(<acronym title="Security Assertion Markup Language">SAML</acronym> to OpenID, <acronym title="Central Authentication Service">CAS</acronym> to <acronym title="Security Assertion Markup Language">SAML</acronym> ,…)</em></div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION "Mini howto" [5916-6299] -->
+<!-- SECTION "Mini howtos" [6142-6636] -->
 <h2><a name="exploitation" id="exploitation">Exploitation</a></h2>
 <div class="level2">
 
@@ -368,7 +378,9 @@ Sessions are stored using <a href="http://search.cpan.org/perldoc?Apache::Sessio
 </li>
 <li class="level1"><div class="li"> <a href="../../documentation/1.0/error.html" class="wikilink1" title="documentation:1.0:error">Error messages</a></div>
 </li>
+<li class="level1"><div class="li"> <a href="../../documentation/1.0/highavailability.html" class="wikilink1" title="documentation:1.0:highavailability">High Availability</a></div>
+</li>
 </ul>
 
 </div>
-<!-- SECTION "Exploitation" [6300-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Exploitation" [6637-] --></div><!-- closes <div class="dokuwiki export">-->

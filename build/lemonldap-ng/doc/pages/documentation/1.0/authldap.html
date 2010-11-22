@@ -58,8 +58,20 @@
 This works with every <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> v2 or v3 server, including Active Directory.
 </p>
 
+<p>
+<acronym title="LemonLDAP::NG">LL::NG</acronym> is compatible with <a href="https://opends.dev.java.net/public/standards/draft-behera-ldap-password-policy.txt" class="urlextern" title="https://opends.dev.java.net/public/standards/draft-behera-ldap-password-policy.txt"  rel="nofollow">LDAP password policy</a>:
+</p>
+<ul>
+<li class="level1"><div class="li"> <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> server can check password strength, and <acronym title="LemonLDAP::NG">LL::NG</acronym> portal will display correct errors (password too short, password in history, etc.)</div>
+</li>
+<li class="level1"><div class="li"> <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> sever can block brute-force attacks, and <acronym title="LemonLDAP::NG">LL::NG</acronym> will display that account is locked</div>
+</li>
+<li class="level1"><div class="li"> <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> server can force password change on first connection, and <acronym title="LemonLDAP::NG">LL::NG</acronym> portal will display a password change form before opening <acronym title="Single Sign On">SSO</acronym> session</div>
+</li>
+</ul>
+
 </div>
-<!-- SECTION "Presentation" [85-373] -->
+<!-- SECTION "Presentation" [85-885] -->
 <h2><a name="configuration" id="configuration">Configuration</a></h2>
 <div class="level2">
 
@@ -69,7 +81,7 @@ In Manager, go in <code>General Parameters</code> &gt; <code>Authentication modu
 </p>
 
 </div>
-<!-- SECTION "Configuration" [374-538] -->
+<!-- SECTION "Configuration" [886-1050] -->
 <h3><a name="authentication_level" id="authentication_level">Authentication level</a></h3>
 <div class="level3">
 
@@ -95,7 +107,7 @@ As <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> is a lo
 </p>
 
 </div>
-<!-- SECTION "Authentication level" [539-904] -->
+<!-- SECTION "Authentication level" [1051-1416] -->
 <h3><a name="connection" id="connection">Connection</a></h3>
 <div class="level3">
 <ul>
@@ -126,7 +138,7 @@ As <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> is a lo
 </ul>
 
 </div>
-<!-- SECTION "Connection" [905-2096] -->
+<!-- SECTION "Connection" [1417-2608] -->
 <h3><a name="filters" id="filters">Filters</a></h3>
 <div class="level3">
 
@@ -171,7 +183,7 @@ And this as mail filter:
 </p>
 
 </div>
-<!-- SECTION "Filters" [2097-2741] -->
+<!-- SECTION "Filters" [2609-3253] -->
 <h3><a name="groups" id="groups">Groups</a></h3>
 <div class="level3">
 <ul>
@@ -192,7 +204,7 @@ And this as mail filter:
 </ul>
 
 </div>
-<!-- SECTION "Groups" [2742-3576] -->
+<!-- SECTION "Groups" [3254-4088] -->
 <h3><a name="password" id="password">Password</a></h3>
 <div class="level3">
 <ul>
@@ -207,4 +219,4 @@ And this as mail filter:
 </ul>
 
 </div>
-<!-- SECTION "Password" [3577-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Password" [4089-] --></div><!-- closes <div class="dokuwiki export">-->

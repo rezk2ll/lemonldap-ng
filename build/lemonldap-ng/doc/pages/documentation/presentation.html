@@ -82,7 +82,7 @@ We split databases in two categories:
 
 <p>
 
-Main external databases are:
+Main <a href="../documentation/latest/start.html#authentication_users_and_password_databases" class="wikilink1" title="documentation:latest:start">external databases</a> are:
 </p>
 <ul>
 <li class="level1"><div class="li"> <strong>Authentication</strong>: how authenticate users</div>
@@ -98,23 +98,23 @@ Main external databases are:
 Main internal databases are:
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong>Configuration</strong>: where configuration is stored. This does not include Apache configuration which is not managed by LemonLDAP::NG</div>
+<li class="level1"><div class="li"> <strong><a href="../documentation/latest/start.html#configuration_database" class="wikilink1" title="documentation:latest:start">Configuration</a></strong>: where configuration is stored. This does not include Apache configuration which is not managed by LemonLDAP::NG</div>
 </li>
-<li class="level1"><div class="li"> <strong>Sessions</strong>: where sessions are stored.</div>
+<li class="level1"><div class="li"> <strong><a href="../documentation/latest/start.html#sessions_database" class="wikilink1" title="documentation:latest:start">Sessions</a></strong>: where sessions are stored.</div>
 </li>
-<li class="level1"><div class="li"> <strong>Notifications</strong>: messages displayed to connected users</div>
+<li class="level1"><div class="li"> <strong><a href="../documentation/latest/notifications.html" class="wikilink1" title="documentation:latest:notifications">Notifications</a></strong>: messages displayed to connected users</div>
 </li>
 <li class="level1"><div class="li"> <strong>Cache</strong>: cache for configuration and sessions</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION "Databases" [1099-1900] -->
+<!-- SECTION "Databases" [1099-2117] -->
 <h2><a name="kinematics" id="kinematics">Kinematics</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Kinematics" [1901-1924] -->
+<!-- SECTION "Kinematics" [2118-2141] -->
 <h3><a name="login" id="login">Login</a></h3>
 <div class="level3">
 
@@ -126,7 +126,7 @@ Main internal databases are:
 <ol>
 <li class="level1"><div class="li"> User tries to access protected application, his request is catched by Handler</div>
 </li>
-<li class="level1"><div class="li"> <acronym title="Single Sign On">SSO</acronym> cookie is not detected, so Handler redirects user to Portal</div>
+<li class="level1"><div class="li"> <a href="../documentation/latest/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a> is not detected, so Handler redirects user to Portal</div>
 </li>
 <li class="level1"><div class="li"> User authenticates on Portal</div>
 </li>
@@ -138,7 +138,7 @@ Main internal databases are:
 </li>
 <li class="level1"><div class="li"> Portal gets the session key</div>
 </li>
-<li class="level1"><div class="li"> Portal creates <acronym title="Single Sign On">SSO</acronym> cookie with session key as value</div>
+<li class="level1"><div class="li"> Portal creates <a href="../documentation/latest/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a> with session key as value</div>
 </li>
 <li class="level1"><div class="li"> User is redirected on protected application, with his new cookie</div>
 </li>
@@ -156,11 +156,11 @@ Main internal databases are:
 
 <p>
 
-Handler will then check <acronym title="Single Sign On">SSO</acronym> cookie for each <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> request.
+Handler will then check <a href="../documentation/latest/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a> for each <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> request.
 </p>
 
 </div>
-<!-- SECTION "Login" [1925-2789] -->
+<!-- SECTION "Login" [2142-3147] -->
 <h3><a name="logout" id="logout">Logout</a></h3>
 <div class="level3">
 
@@ -171,15 +171,15 @@ Default use case:
 <ol>
 <li class="level1"><div class="li"> User clicks on the logout link in Portal</div>
 </li>
-<li class="level1"><div class="li"> Portal destroys session and redirects user on itself with an empty <acronym title="Single Sign On">SSO</acronym> cookie</div>
+<li class="level1"><div class="li"> Portal destroys session and redirects user on itself with an empty <a href="../documentation/latest/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a></div>
 </li>
-<li class="level1"><div class="li"> User is redirected on portal and his <acronym title="Single Sign On">SSO</acronym> cookie is empty</div>
+<li class="level1"><div class="li"> User is redirected on portal and his <a href="../documentation/latest/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a> is empty</div>
 </li>
 </ol>
 
 <p>
 
-LemonLDAP::NG is also able to catch logout request on protected applications, with different behavior:
+LemonLDAP::NG is also able to <a href="../documentation/latest/writingrulesand_headers.html" class="wikilink1" title="documentation:latest:writingrulesand_headers">catch logout request</a> on protected applications, with different behavior:
 </p>
 <ul>
 <li class="level1"><div class="li"> <strong><acronym title="Single Sign On">SSO</acronym> logout</strong>: the request is not forwarded to application, only the <acronym title="Single Sign On">SSO</acronym> session is closed</div>
@@ -195,13 +195,30 @@ LemonLDAP::NG is also able to catch logout request on protected applications, wi
 After logout process, the user is redirected on portal, or on a configured <acronym title="Uniform Resource Locator">URL</acronym>.
 </p>
 
+</div>
+<!-- SECTION "Logout" [3148-3996] -->
+<h3><a name="session_expiration" id="session_expiration">Session expiration</a></h3>
+<div class="level3">
+
 <p>
-<p><div class="notewarning">Handlers have a session cache, with a default lifetime of 10 minutes. So for Handler on different physical servers than the Portal, a disconnected user can still be authorized still the cache expires.
+
+The session expires after 2 hours by default.
+<p><div class="noteimportant">
+</p>
+<ul>
+<li class="level1"><div class="li"> Handlers have a session cache, with a default lifetime of 10 minutes. So for Handler on different physical servers than the Portal, a user with an expired session can still be authorized still the cache expires.</div>
+</li>
+<li class="level1"><div class="li"> Sessions are deleted by a scheduled task. Don&#039;t forget to install cron files !</div>
+</li>
+</ul>
+
+<p>
+
 </div></p>
 </p>
 
 </div>
-<!-- SECTION "Logout" [2790-3718] -->
+<!-- SECTION "Session expiration" [3997-4397] -->
 <h3><a name="cross_domain_authentication_cda" id="cross_domain_authentication_cda">Cross Domain Authentication (CDA)</a></h3>
 <div class="level3">
 
@@ -212,27 +229,27 @@ After logout process, the user is redirected on portal, or on a configured <acro
 
 </p>
 <ol>
-<li class="level1"><div class="li"> User owns <acronym title="Single Sign On">SSO</acronym> cookie on the main domain (see <span class="curid"><a href="../documentation/presentation.html#login" class="wikilink1" title="documentation:presentation">Login kinematics</a></span>)</div>
+<li class="level1"><div class="li"> User owns <a href="../documentation/latest/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a> on the main domain (see <span class="curid"><a href="../documentation/presentation.html#login" class="wikilink1" title="documentation:presentation">Login kinematics</a></span>)</div>
 </li>
 <li class="level1"><div class="li"> User tries to access a protected application in a different domain</div>
 </li>
-<li class="level1"><div class="li"> Handler does not see <acronym title="Single Sign On">SSO</acronym> cookie (because it is not in main domain) and redirects user on Portal</div>
+<li class="level1"><div class="li"> Handler does not see <a href="../documentation/latest/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a> (because it is not in main domain) and redirects user on Portal</div>
 </li>
-<li class="level1"><div class="li"> Portal recognizes the user with its <acronym title="Single Sign On">SSO</acronym> cookie, and see he is coming from a different domain</div>
+<li class="level1"><div class="li"> Portal recognizes the user with its <a href="../documentation/latest/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a>, and see he is coming from a different domain</div>
 </li>
 <li class="level1"><div class="li"> Portal redirects user on protected application with his session ID as <acronym title="Uniform Resource Locator">URL</acronym> parameter</div>
 </li>
-<li class="level1"><div class="li"> Handler detects <acronym title="Uniform Resource Locator">URL</acronym> parameter and create a <acronym title="Single Sign On">SSO</acronym> cookie on its domain, with session ID as value</div>
+<li class="level1"><div class="li"> Handler detects <acronym title="Uniform Resource Locator">URL</acronym> parameter and create a <a href="../documentation/latest/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a> on its domain, with session ID as value</div>
 </li>
 </ol>
 
 </div>
-<!-- SECTION "Cross Domain Authentication (CDA)" [3719-4500] -->
+<!-- SECTION "Cross Domain Authentication (CDA)" [4398-5367] -->
 <h2><a name="authentication_authorization_and_accounting_aaa_mechanisms" id="authentication_authorization_and_accounting_aaa_mechanisms">Authentication, Authorization and Accounting (AAA) mechanisms</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Authentication, Authorization and Accounting (AAA) mechanisms" [4501-4575] -->
+<!-- SECTION "Authentication, Authorization and Accounting (AAA) mechanisms" [5368-5442] -->
 <h3><a name="authentication" id="authentication">Authentication</a></h3>
 <div class="level3">
 
@@ -265,7 +282,7 @@ Authentication process main steps are:
 </li>
 <li class="level1"><div class="li"> <strong>Store</strong>: store user info in session database</div>
 </li>
-<li class="level1"><div class="li"> <strong>Build cookie</strong>: build <acronym title="Single Sign On">SSO</acronym> cookie with session ID</div>
+<li class="level1"><div class="li"> <strong>Build cookie</strong>: build <a href="../documentation/latest/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a> with session ID</div>
 </li>
 <li class="level1"><div class="li"> <strong>Redirect</strong>: redirect user on protected application or on Portal</div>
 </li>
@@ -273,11 +290,11 @@ Authentication process main steps are:
 
 <p>
 
-LemonLDAP::NG <acronym title="Single Sign On">SSO</acronym> cookies are generated by Apache::Session, they are as secure as a 128-bit random cookie. You may use the securedCookie options to avoid session hijacking.
+LemonLDAP::NG <a href="../documentation/latest/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a> are generated by Apache::Session, they are as secure as a 128-bit random cookie. You may use the <a href="../documentation/latest/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">securedCookie</a> options to avoid session hijacking.
 </p>
 
 </div>
-<!-- SECTION "Authentication" [4576-5804] -->
+<!-- SECTION "Authentication" [5443-6810] -->
 <h3><a name="authorization" id="authorization">Authorization</a></h3>
 <div class="level3">
 
@@ -343,8 +360,12 @@ Some examples:
 </div></p>
 </p>
 
+<p>
+See <a href="../documentation/latest/writingrulesand_headers.html" class="wikilink1" title="documentation:latest:writingrulesand_headers">Writing rules and headers</a> chapter.
+</p>
+
 </div>
-<!-- SECTION "Authorization" [5805-6736] -->
+<!-- SECTION "Authorization" [6811-7831] -->
 <h3><a name="accounting" id="accounting">Accounting</a></h3>
 <div class="level3">
 
@@ -355,7 +376,7 @@ Some examples:
 
 <p>
 
-Portal produce a <code>notice</code> message in Apache logs when a user authenticates (or fails to authenticate) and logs out.
+Portal produce a <code>notice</code> message in <a href="../documentation/latest/logs.html" class="wikilink1" title="documentation:latest:logs">Apache logs or syslog</a> when a user authenticates (or fails to authenticate) and logs out.
 </p>
 
 </div>
@@ -369,11 +390,11 @@ Handler inform Apache of connected user (parameter <code>whatToTrace</code>), so
 </p>
 
 <p>
-The real accounting has to be done by the application itself.
+The real accounting has to be done by the application itself since <acronym title="Single Sign On">SSO</acronym> logs can not understand transactions.
 </p>
 
 <p>
-LemonLDAP::NG can export <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> headers either using a proxy or protecting directly the application.
+LemonLDAP::NG can export <a href="../documentation/latest/writingrulesand_headers.html#headers" class="wikilink1" title="documentation:latest:writingrulesand_headers">HTTP headers</a> either using a proxy or protecting directly the application.
 </p>
 
 <p>
@@ -418,5 +439,11 @@ Some examples:
 </li>
 </ul>
 
+<p>
+
+See <a href="../documentation/latest/writingrulesand_headers.html" class="wikilink1" title="documentation:latest:writingrulesand_headers">Writing rules and headers</a> for more.
+
+</p>
+
 </div>
-<!-- SECTION "Accounting" [6737-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Accounting" [7832-] --></div><!-- closes <div class="dokuwiki export">-->

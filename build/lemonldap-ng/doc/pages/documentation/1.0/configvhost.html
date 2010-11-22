@@ -86,7 +86,7 @@ And a protected virtual host with LemonLDAP::NG as reverse proxy:
 </p>
 
 <p>
-But this magic Apache configuration will let you transform the Auth-User <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> header in <code>REMOTE_USER</code> envronment variable:
+But this magic Apache configuration will let you transform the Auth-User <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> header in <code>REMOTE_USER</code> environment variable:
 </p>
 <pre class="code file apache"><span class="kw1">SetEnvIfNoCase</span> Auth-<span class="kw1">User</span> <span class="st0">&quot;(.*)&quot;</span> REMOTE_USER=$<span class="nu0">1</span></pre>
 
@@ -96,7 +96,7 @@ But this magic Apache configuration will let you transform the Auth-User <acrony
 </p>
 
 </div>
-<!-- SECTION "Apache configuration" [198-1899] -->
+<!-- SECTION "Apache configuration" [198-1900] -->
 <h2><a name="lemonldapng_configuration" id="lemonldapng_configuration">LemonLDAP::NG configuration</a></h2>
 <div class="level2">
 
@@ -124,27 +124,27 @@ A virtual host contains:
 </ul>
 
 </div>
-<!-- SECTION "LemonLDAP::NG configuration" [1900-2387] -->
+<!-- SECTION "LemonLDAP::NG configuration" [1901-2388] -->
 <h3><a name="access_rules_and_http_headers" id="access_rules_and_http_headers">Access rules and HTTP headers</a></h3>
 <div class="level3">
 
 <p>
 
-See <strong><a href="../../documentation/1.0/writingrulesand_headers.html" class="wikilink1" title="documentation:1.0:writingrulesand_headers">Writing rules and headers</a></strong> to learn how to configure access control and <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> headers sent to application by Lemonldap::NG.
+See <strong><a href="../../documentation/1.0/writingrulesand_headers.html" class="wikilink1" title="documentation:1.0:writingrulesand_headers">Writing rules and headers</a></strong> to learn how to configure access control and <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> headers sent to application by <acronym title="LemonLDAP::NG">LL::NG</acronym>.
 </p>
 
 </div>
-<!-- SECTION "Access rules and HTTP headers" [2388-2587] -->
+<!-- SECTION "Access rules and HTTP headers" [2389-2581] -->
 <h3><a name="post_data" id="post_data">POST data</a></h3>
 <div class="level3">
 
 <p>
 
-<img src="/lib/images/smileys/fixme.gif" class="middle" alt="FIXME" /> Add link to form replay page
+See <strong><a href="../../documentation/1.0/formreplay.html" class="wikilink1" title="documentation:1.0:formreplay">Form replay</a></strong> to learn how to configure form replay to POST data on protected applications.
 </p>
 
 </div>
-<!-- SECTION "POST data" [2588-2644] -->
+<!-- SECTION "POST data" [2582-2716] -->
 <h3><a name="options" id="options">Options</a></h3>
 <div class="level3">
 
@@ -165,4 +165,4 @@ These options are used to build redirection <acronym title="Uniform Resource Loc
 </p>
 
 </div>
-<!-- SECTION "Options" [2645-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Options" [2717-] --></div><!-- closes <div class="dokuwiki export">-->

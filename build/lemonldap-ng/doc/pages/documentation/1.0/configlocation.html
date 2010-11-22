@@ -47,7 +47,7 @@ LemonLDAP::NG configuration is stored in a backend (File, database, …), that a
 
 <p>
 
-Detailled configuration backends documentation is available <a href="../../documentation/1.0/start.html#configuration1" class="wikilink1" title="documentation:1.0:start">here</a>.
+Detailled configuration backends documentation is available <a href="../../documentation/1.0/start.html#configuration_database" class="wikilink1" title="documentation:1.0:start">here</a>.
 </div></p>
 </p>
 
@@ -72,7 +72,7 @@ For example, to configure the <code>File</code> configuration backend:
 </p>
 
 </div>
-<!-- SECTION "Backends" [39-992] -->
+<!-- SECTION "Backends" [39-1000] -->
 <h2><a name="manager" id="manager">Manager</a></h2>
 <div class="level2">
 
@@ -165,7 +165,7 @@ Menu style preferences are stored in cookies (1 year duration). You can fix defa
 </p>
 
 </div>
-<!-- SECTION "Manager" [993-3097] -->
+<!-- SECTION "Manager" [1001-3105] -->
 <h2><a name="apache" id="apache">Apache</a></h2>
 <div class="level2">
 
@@ -198,7 +198,7 @@ These files must be included in Apache configuration, either with <code>Include<
 </p>
 
 </div>
-<!-- SECTION "Apache" [3098-3857] -->
+<!-- SECTION "Apache" [3106-3865] -->
 <h3><a name="portal" id="portal">Portal</a></h3>
 <div class="level3">
 
@@ -297,7 +297,7 @@ In Portal virtual host, you will find several configuration parts:
 &lt;/Perl&gt;</pre>
 
 </div>
-<!-- SECTION "Portal" [3858-6291] -->
+<!-- SECTION "Portal" [3866-6299] -->
 <h3><a name="manager1" id="manager1">Manager</a></h3>
 <div class="level3">
 
@@ -328,7 +328,7 @@ Manager virtual host is used to serve configuration interface and local document
     &lt;/<span class="kw3">Directory</span>&gt;</pre>
 
 </div>
-<!-- SECTION "Manager" [6292-6937] -->
+<!-- SECTION "Manager" [6300-6945] -->
 <h3><a name="handler" id="handler">Handler</a></h3>
 <div class="level3">
 <ul>
@@ -382,7 +382,7 @@ Then, to protect a standard virutal host, the only configuration line to add is:
 <pre class="code file apache">PerlHeaderParserHandler My::Package</pre>
 
 </div>
-<!-- SECTION "Handler" [6938-8153] -->
+<!-- SECTION "Handler" [6946-8161] -->
 <h2><a name="configuration_reload" id="configuration_reload">Configuration reload</a></h2>
 <div class="level2">
 
@@ -427,7 +427,7 @@ The <code>reload</code> target is managed in Apache configuration, inside a virt
 </p>
 
 </div>
-<!-- SECTION "Configuration reload" [8154-9430] -->
+<!-- SECTION "Configuration reload" [8162-9438] -->
 <h2><a name="local_file" id="local_file">Local file</a></h2>
 <div class="level2">
 
@@ -467,7 +467,7 @@ For example, to override configured skin for portal:
 </p>
 
 </div>
-<!-- SECTION "Local file" [9431-10288] -->
+<!-- SECTION "Local file" [9439-10296] -->
 <h2><a name="script_files" id="script_files">Script files</a></h2>
 <div class="level2">
 
@@ -482,7 +482,7 @@ LemonLDAP::NG allows to override any configuration parameter directly in script 
 </p>
 
 </div>
-<!-- SECTION "Script files" [10289-10677] -->
+<!-- SECTION "Script files" [10297-10685] -->
 <h3><a name="portal1" id="portal1">Portal</a></h3>
 <div class="level3">
 
@@ -497,7 +497,7 @@ For example, in portal/index.pl:
 <span class="br0">&#41;</span><span class="sy0">;</span></pre>
 
 </div>
-<!-- SECTION "Portal" [10678-10848] -->
+<!-- SECTION "Portal" [10686-10856] -->
 <h3><a name="handler1" id="handler1">Handler</a></h3>
 <div class="level3">
 
@@ -512,4 +512,4 @@ For example, in handler/MyHandler.pm:
 <span class="br0">&#41;</span><span class="sy0">;</span></pre>
 
 </div>
-<!-- SECTION "Handler" [10849-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Handler" [10857-] --></div><!-- closes <div class="dokuwiki export">-->

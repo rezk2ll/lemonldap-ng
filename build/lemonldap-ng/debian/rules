@@ -90,8 +90,8 @@ install: build
 			$(CURDIR)/debian/tmp$(LMSHAREDIR)/portal-skins/*/ -type f -name *.tpl)
 
 	# TODO: uncomment this for official releases
-	#test -n "$$LOCALBUILD" || ./scripts/minifierjs $$(find debian/tmp/ -name '*.js')
-	#test -n "$$LOCALBUILD" || ./scripts/minifiercss $$(find debian/tmp/ -name '*.css')
+	test -n "$$LOCALBUILD" || ./scripts/minifierjs $$(find debian/tmp/ -name '*.js')
+	test -n "$$LOCALBUILD" || ./scripts/minifiercss $$(find debian/tmp/ -name '*.css')
 
 	# Move perl scripts in /usr/share, links are created by *.postinst scripts
 	mkdir debian/tmp/usr/share/lemonldap-ng/manager debian/tmp/usr/share/lemonldap-ng/portal

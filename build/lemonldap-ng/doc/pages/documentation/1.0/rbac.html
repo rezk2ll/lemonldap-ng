@@ -1,0 +1,192 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+
+
+<h1><a name="rbac_model" id="rbac_model">RBAC model</a></h1>
+<div class="level1">
+
+</div>
+<!-- SECTION "RBAC model" [1-26] -->
+<h2><a name="presentation" id="presentation">Presentation</a></h2>
+<div class="level2">
+
+<p>
+
+<a href="http://en.wikipedia.org/wiki/Role-based_access_control" class="urlextern" title="http://en.wikipedia.org/wiki/Role-based_access_control"  rel="nofollow">RBAC</a> stands for Role Based Access Control. It means that you manage authorizations to access applications by checking the role(s) of the user, and provide this role to the application.
+</p>
+
+<p>
+LemonLDAP::NG allows to use this model. You should use an extended <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> schema (or any users database extension), but this can works with standard attributes.
+</p>
+
+</div>
+<!-- SECTION "Presentation" [27-458] -->
+<h2><a name="configuration" id="configuration">Configuration</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Configuration" [459-486] -->
+<h3><a name="roles_as_simple_values_of_a_user_attribute" id="roles_as_simple_values_of_a_user_attribute">Roles as simple values of a user attribute</a></h3>
+<div class="level3">
+
+<p>
+
+Imagine you&#039;ve set your directory schema to store roles as values of ssoRoles, an attribute of the user. This is simple because you can send the role to the application by creating a <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> header (for example Auth-Role) with the concatenated values (&#039;;&#039; is the concatenation string):
+
+</p>
+<pre class="code">
+Auth-Roles =&gt; $ssoRoles
+</pre>
+
+<p>
+If the user has these values inside its entry:
+
+</p>
+<pre class="file">
+ssoRoles: user
+ssoRoles: admin
+</pre>
+
+<p>
+Then you got this value inside the Auth-Roles header:
+
+</p>
+<pre class="code">
+user; admin
+</pre>
+
+</div>
+<!-- SECTION "Roles as simple values of a user attribute" [487-1039] -->
+<h3><a name="roles_as_entries_in_the_directory" id="roles_as_entries_in_the_directory">Roles as entries in the directory</a></h3>
+<div class="level3">
+
+<p>
+
+Now imagine the following DIT:
+</p>
+
+<p>
+<a href="/_detail/documentation/dia_dit_roles.png?id=documentation%3A1.0%3Arbac" class="media" title="documentation:dia_dit_roles.png"><img src="../../../media/documentation/dia_dit_roles.png" class="mediacenter" alt="" /></a>
+</p>
+
+<p>
+Roles are entries, below branches representing applications. Each user has a ssoRoles attributes, which values are the <acronym title="Distinguished Name">DN</acronym> of the corresponding roles. With this organization, you can set roles to user within specific application.
+</p>
+
+<p>
+In the schema above, the user has the following values:
+
+</p>
+<pre class="file">
+ssoRoles: ou=admin,ou=aaa,ou=roles,dc=acme,dc=com
+ssoRoles: ou=user,ou=bbb,ou=roles,dc=acme,dc=com
+</pre>
+
+<p>
+So he is “user” on application “BBB” and “admin” on application “<acronym title="Authentication Authorization Accounting">AAA</acronym>”.
+</p>
+
+<p>
+Now we have to send to right role to the right application trough LemonLDAP::NG.
+</p>
+
+<p>
+First step: create a rule to grant access only if the user has a role in the application:
+</p>
+<ul>
+<li class="level1"><div class="li"> For application <acronym title="Authentication Authorization Accounting">AAA</acronym>:</div>
+</li>
+</ul>
+<pre class="code">
+default =&gt; $ssoRoles =~ /ou=aaa,ou=roles/
+</pre>
+<ul>
+<li class="level1"><div class="li"> For application BBB:</div>
+</li>
+</ul>
+<pre class="code">
+default =&gt; $ssoRoles =~ /ou=bbb,ou=roles/
+</pre>
+
+<p>
+Second step: get the role name for the application. We will use the macros to do that. Create two macros (inside <code>Variablles</code> » <code>Macros</code>):
+</p>
+<ul>
+<li class="level1"><div class="li"> For application <acronym title="Authentication Authorization Accounting">AAA</acronym>:</div>
+</li>
+</ul>
+<pre class="code">
+aaaRole =&gt; ((grep{/ou=aaa/} split(&#039;;&#039;,$ssoRoles))[0] =~ /ou=(.*),ou=aaa/)[0]
+</pre>
+<ul>
+<li class="level1"><div class="li"> For application BBB:</div>
+</li>
+</ul>
+<pre class="code">
+bbbRole =&gt; ((grep{/ou=bbb/} split(&#039;;&#039;,$ssoRoles))[0] =~ /ou=(.*),ou=bbb/)[0]
+</pre>
+
+<p>
+These regular expressions read the &#039;ou&#039; value of the <acronym title="Distinguished Name">DN</acronym> of the role of the concerned application. This works if the user has only one role per application.
+</p>
+
+<p>
+Third step: provide the role to the application. It is done by creating the correct <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> header:
+</p>
+<ul>
+<li class="level1"><div class="li"> For application <acronym title="Authentication Authorization Accounting">AAA</acronym>:</div>
+</li>
+</ul>
+<pre class="code">
+Auth-Roles =&gt; $aaaRoles
+</pre>
+<ul>
+<li class="level1"><div class="li"> For application BBB:</div>
+</li>
+</ul>
+<pre class="code">
+Auth-Roles =&gt; $bbbRoles
+</pre>
+
+<p>
+Now the protected application can read in the header <acronym title="Hyper Text Transfer Protocol">HTTP</acronym>_AUTH_ROLES the role of the user.
+</p>
+
+<p>
+<p><div class="notetip">
+If you have more than one role for an application, you can join those roles with a separator (ex: ||):
+
+</p>
+<pre class="code">
+aaaRole =&gt; join(&#039; || &#039;, (map {/uid=(.*),ou=aaa.*/} (grep{/ou=aaa/} split(&#039;;&#039;,$ssoRoles)))
+</pre>
+
+<p>
+
+
+</div></p>
+
+</p>
+
+</div>
+<!-- SECTION "Roles as entries in the directory" [1040-] --></div><!-- closes <div class="dokuwiki export">-->
