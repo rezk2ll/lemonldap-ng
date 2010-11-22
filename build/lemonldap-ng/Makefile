@@ -7,6 +7,7 @@ PERL=$$(which perl)
 SU=su -c
 COMPRESS=tar czf
 UNCOMPRESS=tar xzf
+LISTCOMPRESSED=tar tzf
 COMPRESSSUFFIX=tar.gz
 # Perl options
 #PERLOPTIONS="INSTALLDIRS=vendor"
@@ -474,9 +475,9 @@ manifest:   configure
 	done
 
 cpan:	clean configure common_cpan handler_cpan portal_cpan manager_cpan
-	@for i in Common Portal Handler Manager; do \
+	for i in Common Portal Handler Manager; do \
 		$(UNCOMPRESS) Lemonldap-NG-$$i-*.$(COMPRESSSUFFIX) \
-			$$($(COMPRESS) Lemonldap-NG-$$i-*.$(COMPRESSSUFFIX) |grep META.yml); \
+			$$($(LISTCOMPRESSED) Lemonldap-NG-$$i-*.$(COMPRESSSUFFIX) |grep META.yml); \
 		mv Lemonldap-NG-$$i-*/META.yml lemonldap-ng-$$($(PERL) -e "print lc('$$i')")/; \
 		rm -rf Lemonldap-NG-$$i*/; \
 		done
