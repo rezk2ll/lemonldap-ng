@@ -34,11 +34,6 @@
 	<TMPL_IF NAME="Appslist">
 		<div id="appslist">
 
-		<!-- Plain HTML (no loops)
-		<TMPL_VAR NAME="APPSLIST_MENU">
-		<TMPL_VAR NAME="APPSLIST_DESC">
-		-->
-
 		<TMPL_LOOP NAME="APPSLIST_LOOP">
 		<!-- Template loops -->
 
