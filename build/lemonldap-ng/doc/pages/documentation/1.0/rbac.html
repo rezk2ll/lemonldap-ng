@@ -36,16 +36,16 @@
 </p>
 
 <p>
-LemonLDAP::NG allows to use this model. You should use an extended <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> schema (or any users database extension), but this can works with standard attributes.
+LemonLDAP::NG allows to use this model. You should use an <a href="../../documentation/1.0/authldap.html#schema_extension" class="wikilink1" title="documentation:1.0:authldap">extended LDAP schema</a> (or any users database extension), but this can works with standard attributes.
 </p>
 
 </div>
-<!-- SECTION "Presentation" [27-458] -->
+<!-- SECTION "Presentation" [27-488] -->
 <h2><a name="configuration" id="configuration">Configuration</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Configuration" [459-486] -->
+<!-- SECTION "Configuration" [489-516] -->
 <h3><a name="roles_as_simple_values_of_a_user_attribute" id="roles_as_simple_values_of_a_user_attribute">Roles as simple values of a user attribute</a></h3>
 <div class="level3">
 
@@ -76,7 +76,7 @@ user; admin
 </pre>
 
 </div>
-<!-- SECTION "Roles as simple values of a user attribute" [487-1039] -->
+<!-- SECTION "Roles as simple values of a user attribute" [517-1069] -->
 <h3><a name="roles_as_entries_in_the_directory" id="roles_as_entries_in_the_directory">Roles as entries in the directory</a></h3>
 <div class="level3">
 
@@ -189,4 +189,4 @@ aaaRole =&gt; join(&#039; || &#039;, (map {/uid=(.*),ou=aaa.*/} (grep{/ou=aaa/} 
 </p>
 
 </div>
-<!-- SECTION "Roles as entries in the directory" [1040-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Roles as entries in the directory" [1070-] --></div><!-- closes <div class="dokuwiki export">-->

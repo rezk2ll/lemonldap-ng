@@ -219,4 +219,87 @@ And this as mail filter:
 </ul>
 
 </div>
-<!-- SECTION "Password" [4089-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Password" [4089-4674] -->
+<h2><a name="schema_extension" id="schema_extension">Schema extension</a></h2>
+<div class="level2">
+
+<p>
+
+Standards attributes, like uid, cn or mail, are often enough to configure access rules and headers.
+</p>
+
+<p>
+But sometimes other data are needed (in particular to use <a href="../../documentation/1.0/extendedfunctions.html" class="wikilink1" title="documentation:1.0:extendedfunctions">extended functions</a>):
+</p>
+<ul>
+<li class="level1"><div class="li"> An application name (to allow access by applications and not by group of users)</div>
+</li>
+<li class="level1"><div class="li"> A start date and an end date (to open or close the service even the entry already exists)</div>
+</li>
+<li class="level1"><div class="li"> A time profile (allowed hours and day of the week)</div>
+</li>
+<li class="level1"><div class="li"> One or more roles (to send to the protected applications)</div>
+</li>
+</ul>
+
+<p>
+
+Of course, standard <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> attributes can be used to store these data, but <acronym title="LemonLDAP::NG">LL::NG</acronym> also provides an <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> schema extension to manage them.
+</p>
+
+</div>
+<!-- SECTION "Schema extension" [4675-5338] -->
+<h3><a name="oid_prefix" id="oid_prefix">OID prefix</a></h3>
+<div class="level3">
+
+<p>
+Extended attributes and object classes use this prefix: 1.3.6.1.4.1.10943.10.2.
+</p>
+
+<p>
+The prefix 1.3.6.1.4.1.10943 is owned by <a href="http://www.linagora.com" class="urlextern" title="http://www.linagora.com"  rel="nofollow">LINAGORA</a> (See <a href="http://www.iana.org/assignments/enterprise-numbers" class="urlextern" title="http://www.iana.org/assignments/enterprise-numbers"  rel="nofollow">http://www.iana.org/assignments/enterprise-numbers</a>).
+</p>
+
+</div>
+<!-- SECTION "OID prefix" [5339-5583] -->
+<h3><a name="openldap_schema" id="openldap_schema">OpenLDAP schema</a></h3>
+<div class="level3">
+
+<p>
+
+Just add this file to OpenLDAP schemas by including it in <code>slapd.conf</code>:
+
+</p>
+<pre class="file">
+include /usr/share/lemonldap-ng/ressources/sso.schema
+</pre>
+
+<p>
+This will provide the auxiliary object class <code>ssoUser</code> with attributes:
+</p>
+<ul>
+<li class="level1"><div class="li"> ssoName</div>
+</li>
+<li class="level1"><div class="li"> ssoRoles</div>
+</li>
+<li class="level1"><div class="li"> ssoLogonHours</div>
+</li>
+<li class="level1"><div class="li"> ssoStartDate</div>
+</li>
+<li class="level1"><div class="li"> ssoEndDate</div>
+</li>
+</ul>
+
+<p>
+
+You can add this object class to any entry of your directory.
+</p>
+
+<p>
+<p><div class="noteimportant">To get attributes values in session, declare them in <a href="../../documentation/1.0/exportedvars.html" class="wikilink1" title="documentation:1.0:exportedvars">exported variables</a>
+</div></p>
+
+</p>
+
+</div>
+<!-- SECTION "OpenLDAP schema" [5584-] --></div><!-- closes <div class="dokuwiki export">-->

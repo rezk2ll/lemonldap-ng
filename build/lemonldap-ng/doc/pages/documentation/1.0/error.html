@@ -79,9 +79,37 @@
 
 </div></p>
 </p>
+<pre class="file">Lemonldap::NG::Handler::SharedConf: No cookie found</pre>
+
+<p>
+
+→ User does not have Lemonldap::NG cookie, handler redirect it to the portal
+</p>
+<pre class="file">The cookie $id isn&#039;t yet available: Object does not exist in the data store</pre>
+
+<p>
+
+→ User session has expired or handler does not have access to the same Apache::Session database than the portal
+</p>
+<pre class="file">Firefox has detected that the server is redirecting the request for this address in a way that will never complete</pre>
+
+<p>
+
+→ Your browser loops between portal and handler, it is probably a cookie problem. Verify that:
+</p>
+<ul>
+<li class="level1"><div class="li"> the portal is in the declared domain</div>
+</li>
+<li class="level1"><div class="li"> <acronym title="Cross Domain Authentication">CDA</acronym> is set if the handler is not in the same domain</div>
+</li>
+<li class="level1"><div class="li"> portal is in a https virtualhost if securedCookie is set</div>
+</li>
+<li class="level1"><div class="li"> you&#039;ve restart all Apache server after having change cookie name or domain</div>
+</li>
+</ul>
 
 </div>
-<!-- SECTION "Lemonldap::NG::Handler" [393-1397] -->
+<!-- SECTION "Lemonldap::NG::Handler" [393-2209] -->
 <h2><a name="lemonldapngmanager" id="lemonldapngmanager">Lemonldap::NG::Manager</a></h2>
 <div class="level2">
 <pre class="file">XXXX was not found in tree</pre>
@@ -92,7 +120,7 @@
 </p>
 
 </div>
-<!-- SECTION "Lemonldap::NG::Manager" [1398-1523] -->
+<!-- SECTION "Lemonldap::NG::Manager" [2210-2335] -->
 <h2><a name="lemonldapngportal" id="lemonldapngportal">Lemonldap::NG::Portal</a></h2>
 <div class="level2">
 <pre class="file">User XXXX was not granted to open session</pre>
@@ -127,4 +155,4 @@
 </p>
 
 </div>
-<!-- SECTION "Lemonldap::NG::Portal" [1524-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Lemonldap::NG::Portal" [2336-] --></div><!-- closes <div class="dokuwiki export">-->

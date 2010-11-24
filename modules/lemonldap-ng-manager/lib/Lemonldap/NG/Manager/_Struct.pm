@@ -277,6 +277,7 @@ sub struct {
                     _nodes => [
                         qw(portalSkin portalDisplayResetPassword portalAutocomplete portalRequireOldPassword portalUserAttr portalOpenLinkInNewWindow portalAntiFrame)
                     ],
+                    _help => 'portalcustom',
 
                     portalSkin => 'text:/portalSkin:portalParams:skinSelect',
                     portalDisplayResetPassword =>
