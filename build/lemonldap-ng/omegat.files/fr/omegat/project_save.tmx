@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tmx SYSTEM "tmx11.dtd">
+<tmx version="1.1">
+  <header
+    creationtool="OmegaT"
+    creationtoolversion="1.8.1_2"
+    segtype="sentence"
+    o-tmf="OmegaT TMX"
+    adminlang="EN-US"
+    srclang="EN-US"
+    datatype="plaintext"
+  >
+  </header>
+  <body>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>DokuWiki offline version</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>DokuWiki version hors-ligne</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Offline</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Hors ligne</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LemonLDAP::NG - Offline Version</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>LemonLDAP::NG - Version hors-ligne</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Start</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Commencer</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>All pages</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Toutes les pages</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>nothing here...</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>rien ici...</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Alphabetical Index</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Index alphabétique</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Back to main index</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Retour à l'index principal</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>References</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Références</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>They use LemonLDAP::NG!</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Ils utilisent LemonLDAP::NG!</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Nb users</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Nb d'utilisateurs</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Nb protected applications</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Nb d'applications protégées</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Authentication portal</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Portails d'authentification</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Protected sites:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Sites protégés:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Screenshots</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Captures d'écran</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>lemonldap-ng-portal-password.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;lemonldap-ng-portal-password.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Presentation</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Présentation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LemonLDAP::NG is an open source Web Single Sign On product (WebSSO) written in &lt;a0&gt;Perl&lt;/a0&gt;, plugged into Apache Web Server.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>LemonLDAP::NG est un logiciel d'authentification unique web (WebSSO) écrit en &lt;a0&gt;Perl&lt;/a0&gt;, intégré dans un serveur Apache.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>GNU General Public License</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Licence publique générale GNU</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LemonLDAP::NG is a free software, released under &lt;a0&gt;GPL&lt;/a0&gt; license.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>LemonLDAP::NG est un logiciel libre distribué sous licence &lt;a0&gt;GPL&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>references</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>références</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LemonLDAP::NG is the first &lt;a0&gt;SSO&lt;/a0&gt; software deployed in French administrations.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>LemonLDAP::NG est le logiciel &lt;a0&gt;SSO&lt;/a0&gt; le plus utilisé dans les administrations françaises.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>It can handle more than 200 000 users.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Il peut gérer plus de 200 000 utilisateurs.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Many private firms use it too.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>De nombreuses sociétés privées l'utilisent également.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a1&gt;Check our references&lt;/a1&gt;!</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a1&gt;Consultez nos références&lt;/a1&gt;!</seg>
+      </tuv>
+    </tu>
+  </body>
+</tmx>
