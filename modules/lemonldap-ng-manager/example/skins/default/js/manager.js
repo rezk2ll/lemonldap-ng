@@ -273,14 +273,26 @@ function simpleTreeTriggerJqueryClasses(){
 	}
 }
 var currentId;
+/* @function string safeSelector(string data)
+ * Escape base64 special chars to be compliant with jquery selectors
+ * @param data input data
+ * @return escaped string
+ */
+function safeSelector(data){
+	var escaped_data = data;
+	escaped_data = escaped_data.replace('/','\\/');
+	escaped_data = escaped_data.replace('+','\\+');
+	escaped_data = escaped_data.replace('=','\\=');
+	return escaped_data;
+}
 function lmtext(id){
-	return $('#text_'+id).attr('name');
+	return $('#text_'+safeSelector(id)).attr('name');
 }
 function lmdata(id){
-	return unescape( $('#text_'+id).attr('value') );
+	return unescape( $('#text_'+safeSelector(id)).attr('value') );
 }
 function lmparent(id){
-	return $('#'+id).parent().parent().attr('id');
+	return $('#'+safeSelector(id)).parent().parent().attr('id');
 }
 function setlmtext(id,v,prefixvalue){
 	if(!prefixvalue){prefixvalue="";}
@@ -288,8 +300,8 @@ function setlmtext(id,v,prefixvalue){
 		alert("Null value");
 	}
 	else {
-		$('#text_'+id).attr('name',prefixvalue+v);
-		$('#text_'+id).text(v);
+		$('#text_'+safeSelector(id)).attr('name',prefixvalue+v);
+		$('#text_'+safeSelector(id)).text(v);
 	}
 }
 function setlminputtext(id,input,prefixvalue){
@@ -303,10 +315,9 @@ function setlminputtext(id,input,prefixvalue){
 	setlmtext(id,inputvalue,prefixvalue);
 }
 function setlmdata(id,v){
-	$('#text_'+id).attr('value',escape(v));
+	$('#text_'+safeSelector(id)).attr('value',escape(v));
 }
 function setlminputdata(id,input){
-	//var inputname=$(input).attr('id');
 	var inputvalue=$(input).attr('value');
 	setlmdata(id,inputvalue);
 }
@@ -322,8 +333,8 @@ function setlmrule(id,c,r,v){
 		text=c;
 	}
 	setlmdata(id,v);
-	$('#text_'+id).attr('name',re);
-	$('#text_'+id).text(text);
+	$('#text_'+safeSelector(id)).attr('name',re);
+	$('#text_'+safeSelector(id)).text(text);
 }
 function setlmfile(id,input){
 	var inputname=$(input).attr('id');
@@ -407,8 +418,7 @@ function setlmsamlattribute(id){
 		mand='1';
 	}
 	var v=mand+';'+name+';'+form+';'+altr;
-	$('#text_'+id).attr('name',$('#samlAttributeKey').attr('value'));
-	$('#text_'+id).text($('#samlAttributeKey').attr('value'));
+	setlmtext(id,$('#samlAttributeKey').attr('value'));
 	setlmdata(id,v);
 }
 function setlmsamlservice(id){
@@ -852,8 +862,8 @@ function cfgDatas(id){
 	getCfgAttributes();
 }
 function delvh(id){
-	var vhname = $('#text_'+id).attr('name');
-	if(confirm('Delete '+vhname+' ?')){$('#'+id).remove();}
+	var vhname = lmtext(id);
+	if(confirm('Delete '+vhname+' ?')){delKey(id);}
 }
 function rules(id){
 	currentId=id;
@@ -945,9 +955,10 @@ function newRule(){
 	});
 	return false;
 }
-function delKey(){
-	$('#'+currentId).prev().remove();
-	$('#'+currentId).remove();
+function delKey(id){
+	if(!id){id=currentId;}
+	$('#'+safeSelector(id)).prev().remove();
+	$('#'+safeSelector(id)).remove();
 }
 function newVh(name){
 	// Prompt for virtual host name
@@ -963,16 +974,16 @@ function delSamlAttribute(){
 	delKey();
 }
 function delIdpSamlMetaData(id){
-	var idpname = $('#text_'+id).attr('name');
+	var idpname = lmtext(id);
 	if(confirm('Delete '+idpname+' ?')){
-		$('#'+id).remove();
+		delKey(id);
 		samlIdpMetaData(id);
 	}
 }
 function delSpSamlMetaData(id){
-	var spname = $('#text_'+id).attr('name');
+	var spname = lmtext(id);
 	if(confirm('Delete '+spname+' ?')){
-		$('#'+id).remove();
+		delKey(id);
 		samlSpMetaData(id);
 	}
 }
@@ -1189,7 +1200,7 @@ function formateSelect(id,values,selectedValue) {
 		if(selectedValue==key){options+=' selected';}
 		options+='>'+val+'</option>';
 	}
-	$('#'+id).empty().append(options);
+	$('#'+safeSelector(id)).empty().append(options);
 }
 /* Function to switch readOnly flag */
 function switchReadonly(selector) {
