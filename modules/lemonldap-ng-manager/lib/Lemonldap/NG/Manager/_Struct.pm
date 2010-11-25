@@ -267,9 +267,10 @@ sub struct {
                     },
                     applicationList => {
                         _nodes => [
-'applicationlist:/applicationList:default:applicationListCategory'
+'applicationlist:/applicationList:menuCatAndApp:applicationListCategory'
                         ],
                         _js => 'applicationListCategoryRoot',
+                        _help => 'menuCatAndApp',
                     },
                 },
 
@@ -279,7 +280,7 @@ sub struct {
                     ],
                     _help => 'portalcustom',
 
-                    portalSkin => 'text:/portalSkin:portalParams:skinSelect',
+                    portalSkin => 'text:/portalSkin:portalcustom:skinSelect',
                     portalDisplayResetPassword =>
                       'bool:/portalDisplayResetPassword',
                     portalAutocomplete => 'bool:/portalAutocomplete',
@@ -363,7 +364,7 @@ sub struct {
                         qw(ldapAuthnLevel n:ldapConnection n:ldapFilters n:ldapGroups n:ldapPassword)
                     ],
                     _help          => 'authLDAP',
-                    ldapAuthnLevel => 'int:/ldapAuthnLevel',
+                    ldapAuthnLevel => 'int:/ldapAuthnLevel:authLDAPLevel:int',
                     ldapConnection => {
                         _nodes => [
                             qw(ldapServer ldapPort ldapBase managerDn managerPassword ldapTimeout ldapVersion ldapRaw)
@@ -376,6 +377,7 @@ sub struct {
                         ldapTimeout     => 'int:/ldapTimeout',
                         ldapVersion     => 'int:/ldapVersion',
                         ldapRaw         => 'text:/ldapRaw',
+                        _help           => 'authLDAPConnection',
                     },
 
                     ldapFilters => {
@@ -384,6 +386,7 @@ sub struct {
                         LDAPFilter     => 'text:/LDAPFilter',
                         AuthLDAPFilter => 'text:/AuthLDAPFilter',
                         mailLDAPFilter => 'text:/mailLDAPFilter',
+                        _help          => 'authLDAPFilters',
                     },
 
                     ldapGroups => {
@@ -401,6 +404,7 @@ sub struct {
                         ldapGroupRecursive => 'bool:/ldapGroupRecursive',
                         ldapGroupAttributeNameGroup =>
                           'text:/ldapGroupAttributeNameGroup',
+                        _help => 'authLDAPGroups',
                     },
 
                     ldapPassword => {
@@ -412,6 +416,7 @@ sub struct {
                         ldapChangePasswordAsUser =>
                           'bool:/ldapChangePasswordAsUser',
                         ldapPwdEnc => 'text:/ldapPwdEnc',
+                        _help      => 'authLDAPPassword',
                     },
 
                 },
@@ -440,9 +445,9 @@ sub struct {
                     CAS_gateway         => 'bool:/CAS_gateway',
                     CAS_pgtFile         => 'text:/CAS_pgtFile',
                     CAS_proxiedServices => {
-                        _nodes => ['hash:/CAS_proxiedServices:default:btext'],
+                        _nodes => ['hash:/CAS_proxiedServices:authCAS:btext'],
                         _js    => 'hashRoot',
-                        _help  => 'default',
+                        _help  => 'authCAS',
                     },
 
                 },
@@ -458,9 +463,9 @@ sub struct {
                     remoteGlobalStorage        => 'text:/remoteGlobalStorage',
                     remoteGlobalStorageOptions => {
                         _nodes =>
-                          ['hash:/remoteGlobalStorageOptions:default:btext'],
+                          ['hash:/remoteGlobalStorageOptions:authRemote:btext'],
                         _js   => 'hashRoot',
-                        _help => 'default',
+                        _help => 'authRemote',
                     },
                 },
 
@@ -481,7 +486,7 @@ sub struct {
                     openIdAuthnLevel => 'int:/openIdAuthnLevel',
                     openIdSecret     => 'text:/openIdSecret',
                     openIdIDPList =>
-                      'text:/openIdIDPList:authopenid:openididplist',
+                      'text:/openIdIDPList:authOpenID:openididplist',
                 },
 
                 # Twitter
@@ -502,7 +507,7 @@ sub struct {
                         qw(dbiAuthnLevel n:dbiConnection n:dbiSchema n:dbiPassword)
                     ],
                     _help         => 'authDBI',
-                    dbiAuthnLevel => 'int:/dbiAuthnLevel',
+                    dbiAuthnLevel => 'int:/dbiAuthnLevel:authDBILevel:int',
                     dbiConnection => {
                         _nodes => [qw(n:dbiConnectionAuth n:dbiConnectionUser)],
                         dbiConnectionAuth => {
@@ -519,6 +524,7 @@ sub struct {
                             dbiUserUser     => 'text:/dbiUserUser',
                             dbiUserPassword => 'text:/dbiUserPassword',
                         },
+                        _help => 'authDBIConnection',
                     },
 
                     dbiSchema => {
@@ -531,11 +537,13 @@ sub struct {
                         dbiAuthPasswordCol => 'text:/dbiAuthPasswordCol',
                         dbiPasswordMailCol => 'text:/dbiPasswordMailCol',
                         userPivot          => 'text:/userPivot',
+                        _help              => 'authDBISchema',
                     },
 
                     dbiPassword => {
                         _nodes              => [qw(dbiAuthPasswordHash)],
                         dbiAuthPasswordHash => 'text:/dbiAuthPasswordHash',
+                        _help               => 'authDBIPassword',
                     },
                 },
 
@@ -560,9 +568,9 @@ sub struct {
                     authChoiceParam   => 'text:/authChoiceParam',
                     authChoiceModules => {
                         _nodes =>
-                          ['hash:/authChoiceModules:default:authChoice'],
+                          ['hash:/authChoiceModules:authChoice:authChoice'],
                         _js   => 'authChoiceRoot',
-                        _help => 'default',
+                        _help => 'authChoice',
                     },
                 },
 

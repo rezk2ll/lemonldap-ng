@@ -43,31 +43,31 @@ Lemonldap::NG provides 2 <acronym title="Simple Object Access Protocol">SOAP</ac
 
 <p>
 
-<acronym title="Simple Object Access Protocol">SOAP</acronym> functions are not accessible by network by default: <acronym title="Simple Object Access Protocol">SOAP</acronym> functions are protected by Apache, you can change this in portal-apache2.conf file.
+<acronym title="Simple Object Access Protocol">SOAP</acronym> functions are not accessible by network by default. <acronym title="Simple Object Access Protocol">SOAP</acronym> functions are protected by Apache, you can change this in <a href="../../documentation/1.0/configlocation.html#portal" class="wikilink1" title="documentation:1.0:configlocation">Apache portal configuration</a>:
 </p>
-<pre class="code apache">    <span class="co1"># SOAP functions for sessions management (disabled by default)</span>
-    &lt;<span class="kw3">Directory</span> /var/lib/lemonldap-ng/portal/index.pl/adminSessions&gt;
+<pre class="code file apache">    <span class="co1"># SOAP functions for sessions management (disabled by default)</span>
+    &lt;<span class="kw3">Location</span> /index.pl/adminSessions&gt;
         <span class="kw1">Order</span> <span class="kw1">deny</span>,<span class="kw1">allow</span>
-        <span class="kw1">Deny</span> from <span class="kw2">all</span>
-    &lt;/<span class="kw3">Directory</span>&gt;
+        <span class="kw1">Allow</span> from <span class="kw2">all</span>
+    &lt;/<span class="kw3">Location</span>&gt;
 &nbsp;
     <span class="co1"># SOAP functions for sessions access (disabled by default)</span>
-    &lt;<span class="kw3">Directory</span> /var/lib/lemonldap-ng/portal/index.pl/sessions&gt;
+    &lt;<span class="kw3">Location</span> /index.pl/sessions&gt;
         <span class="kw1">Order</span> <span class="kw1">deny</span>,<span class="kw1">allow</span>
-        <span class="kw1">Deny</span> from <span class="kw2">all</span>
-    &lt;/<span class="kw3">Directory</span>&gt;
+        <span class="kw1">Allow</span> from <span class="kw2">all</span>
+    &lt;/<span class="kw3">Location</span>&gt;
 &nbsp;
     <span class="co1"># SOAP functions for configuration access (disabled by default)</span>
-    &lt;<span class="kw3">Directory</span> /var/lib/lemonldap-ng/portal/index.pl/config&gt;
+    &lt;<span class="kw3">Location</span> /index.pl/config&gt;
         <span class="kw1">Order</span> <span class="kw1">deny</span>,<span class="kw1">allow</span>
-        <span class="kw1">Deny</span> from <span class="kw2">all</span>
-    &lt;/<span class="kw3">Directory</span>&gt;
+        <span class="kw1">Allow</span> from <span class="kw2">all</span>
+    &lt;/<span class="kw3">Location</span>&gt;
 &nbsp;
     <span class="co1"># SOAP functions for notification insertion (disabled by default)</span>
-    &lt;<span class="kw3">Directory</span> /var/lib/lemonldap-ng/portal/index.pl/notification&gt;
+    &lt;<span class="kw3">Location</span> /index.pl/notification&gt;
         <span class="kw1">Order</span> <span class="kw1">deny</span>,<span class="kw1">allow</span>
-        <span class="kw1">Deny</span> from <span class="kw2">all</span>
-    &lt;/<span class="kw3">Directory</span>&gt;</pre>
+        <span class="kw1">Allow</span> from <span class="kw2">all</span>
+    &lt;/<span class="kw3">Location</span>&gt;</pre>
 
 <p>
 <p><div class="notetip">You can create a <acronym title="Simple Object Access Protocol">SOAP</acronym> only portal by setting “soapOnly = 1” in lemonldap-ng.ini (section PORTAL)
@@ -109,11 +109,20 @@ Lemonldap::NG provides 2 <acronym title="Simple Object Access Protocol">SOAP</ac
 
 <p>
 
-<p><div class="noteimportant">When you use <a href="../../documentation/1.0/soapconfbackend.html" class="wikilink1" title="documentation:1.0:soapconfbackend">SOAP configuration backend</a>, it is recommended to use read-only <acronym title="Uniform Resource Locator">URL</acronym> (<a href="http://portal/index.pl/sessions" class="urlextern" title="http://portal/index.pl/sessions"  rel="nofollow">http://portal/index.pl/sessions</a>). Write session path is needed only if you use a remote session explorer or a remote portal
+<p><div class="noteimportant">When you use <a href="../../documentation/1.0/soapsessionbackend.html" class="wikilink1" title="documentation:1.0:soapsessionbackend">SOAP sessions backend</a>, it is recommended to use read-only <acronym title="Uniform Resource Locator">URL</acronym> (<a href="http://portal/index.pl/sessions" class="urlextern" title="http://portal/index.pl/sessions"  rel="nofollow">http://portal/index.pl/sessions</a>). Write session path is needed only if you use a remote session explorer or a remote portal
 
 </div></p>
-
 </p>
 
 </div>
-<!-- SECTION "Portal SOAP services" [130-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Portal SOAP services" [130-2327] -->
+<h2><a name="wsdl_file" id="wsdl_file">WSDL file</a></h2>
+<div class="level2">
+
+<p>
+
+When portal is installed, a file named portal.wsdl is created. It can be upgraded using buildPortalWSDL script.
+</p>
+
+</div>
+<!-- SECTION "WSDL file" [2328-] --></div><!-- closes <div class="dokuwiki export">-->

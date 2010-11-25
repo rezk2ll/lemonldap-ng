@@ -45,15 +45,15 @@ To configure sessions, go in Manager, <code>General Parameters</code> » <code>S
 </ul>
 
 <p>
-<p><div class="notewarning">Session activity timeout requires Handlers to have a write access to sessions.
+<p><div class="notewarning">Session activity timeout requires Handlers to have a write access to sessions database.
 </div></p>
 </p>
 <ul>
 <li class="level1"><div class="li"> <strong>Sessions Storage</strong>: see <a href="../../documentation/1.0/start.html#sessions_databases" class="wikilink1" title="documentation:1.0:start">session databases configuration</a>.</div>
 </li>
-<li class="level1"><div class="li"> <strong>Multiple sessions</strong>:</div>
+<li class="level1"><div class="li"> <strong>Multiple sessions</strong>, you can restrict the number of open sessions:</div>
 <ul>
-<li class="level2"><div class="li"> <strong>One session only by user</strong>: a user can not open 2 sessions with the same login.</div>
+<li class="level2"><div class="li"> <strong>One session only by user</strong>: a user can not open 2 sessions with the same account.</div>
 </li>
 <li class="level2"><div class="li"> <strong>One <acronym title="Internet Protocol">IP</acronym> only by user</strong>: a user can not open 2 sessions with the same <acronym title="Internet Protocol">IP</acronym>.</div>
 </li>
@@ -66,6 +66,11 @@ To configure sessions, go in Manager, <code>General Parameters</code> » <code>S
 </ul>
 </li>
 </ul>
+
+<p>
+<p><div class="noteimportant">Note that since <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> protocol is not connected, restrictions are not applied to the new session: the oldest are destroyed.
+</div></p>
+</p>
 
 </div>
 </div><!-- closes <div class="dokuwiki export">-->
