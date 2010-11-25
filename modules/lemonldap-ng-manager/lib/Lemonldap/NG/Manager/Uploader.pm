@@ -86,7 +86,7 @@ sub confUpload {
 
         my $NK = 0;
         $id =~
-          s/^text_(NewID_)?li_(\w+)(\d)(?:_\d+)?$/decode_base64($2.'='x $3)/e;
+s/^text_(NewID_)?li_([\w\/\+\=]+)(\d)(?:_\d+)?$/decode_base64($2.'='x $3)/e;
         $NK = 1 if ($1);
         $id =~ s/\r//g;
         $id =~ s/^\///;
