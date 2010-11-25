@@ -4,6 +4,7 @@
 
 /* Help chapters */
 var helpCh={
+	'advanced':'/pages/documentation/latest/start.html#advanced_features',
 	'authApache':'/pages/documentation/latest/authapache.html',
 	'authDBI':'/pages/documentation/latest/authdbi.html',
 	'authDBIConnection':'/pages/documentation/latest/authdbi.html#connection',
@@ -26,6 +27,7 @@ var helpCh={
 	'authSSL':'/pages/documentation/latest/authssl.html',
 	'authTwitter':'/pages/documentation/latest/authtwitter.html',
 	'cookies':'/pages/documentation/latest/ssocookie.html',
+	'customfunctions':'/pages/documentation/latest/customfunctions.html',
 	'default':'/pages/documentation/latest/start.html#configuration',
 	'exportedVars':'/pages/documentation/latest/exportedvars.html',
 	'headers':'/pages/documentation/latest/writingrulesand_headers.html#headers',
@@ -33,18 +35,24 @@ var helpCh={
 	'issuerdbCAS':'/pages/documentation/latest/idpcas.html',
 	'issuerdbOpenID':'/pages/documentation/latest/idpopenid.html',
 	'issuerdbSAML':'/pages/documentation/latest/idpsaml.html',
+	'logoutforward':'/pages/documentation/latest/logoutforward.html',
 	'logs':'/pages/documentation/latest/logs.html',
 	'macrosandgroups':'/pages/documentation/latest/exportedvars.html#extend_variables_using_macros_and_groups',
 	'menu':'/pages/documentation/latest/portalmenu.html',
 	'menuCatAndApp':'/pages/documentation/latest/portalmenu.html#categories_and_applications',
 	'notifications':'/pages/documentation/latest/notifications.html',
+	'password':'/pages/documentation/latest/resetpassword.html',
 	'portal':'/pages/documentation/latest/ssocookie.html#portal_url',
 	'portalcustom':'/pages/documentation/latest/portalcustom.html',
 	'portalParams':'/pages/documentation/latest/portal.html',
 	'redirections':'/pages/documentation/latest/redirections.html',
 	'rules':'/pages/documentation/latest/writingrulesand_headers.html#rules',
-	'sessiondb':'/pages/documentation/latest/start.html#sessions',
+	'security':'/pages/documentation/latest/security.html#configure_security_settings',
+	'sessions':'/pages/documentation/latest/sessions.html',
+	'sessionsdb':'/pages/documentation/latest/start.html#sessions_database',
+	'sympa':'/pages/documentation/latest/applications/sympa.html',
 	'userdbParams':'/pages/documentation/latest/start.html#authentication_and_users_database',
+	'zimbra':'/pages/documentation/latest/applications/zimbra.html',
 };
 
 /* Init simpleTreeCollection */

@@ -588,7 +588,7 @@ sub struct {
                     issuerDBSAMLActivation => 'bool:/issuerDBSAMLActivation',
                     issuerDBSAMLPath       => 'text:/issuerDBSAMLPath',
                     issuerDBSAMLRule =>
-                      'text:/issuerDBSAMLRule:issuerdb:boolOrPerlExpr',
+                      'text:/issuerDBSAMLRule:issuerdbSAML:boolOrPerlExpr',
                 },
                 issuerDBCAS => {
                     _nodes => [
@@ -598,15 +598,16 @@ sub struct {
                     issuerDBCASActivation => 'bool:/issuerDBCASActivation',
                     issuerDBCASPath       => 'text:/issuerDBCASPath',
                     issuerDBCASRule =>
-                      'text:/issuerDBCASRule:issuerdb:boolOrPerlExpr',
+                      'text:/issuerDBCASRule:issuerdbCAS:boolOrPerlExpr',
                     issuerDBCASOptions    => {
                         _nodes => [qw(casAttr casStorage cn:casStorageOptions)],
-                        casAttr           => 'text:casAttr',
+                        casAttr           => 'text:/casAttr',
                         casStorage        => 'text:/casStorage',
                         casStorageOptions => {
-                            _nodes => ['hash:/casStorageOptions:default:btext'],
+                            _nodes =>
+                              ['hash:/casStorageOptions:issuerDBCAS:btext'],
                             _js    => 'hashRoot',
-                            _help  => 'default',
+                            _help => 'issuerdbCAS',
                         },
                     },
                 },
@@ -619,15 +620,15 @@ sub struct {
                       'bool:/issuerDBOpenIDActivation',
                     issuerDBOpenIDPath    => 'text:/issuerDBOpenIDPath',
                     issuerDBOpenIDRule =>
-                      'text:/issuerDBOpenIDRule:issuerdb:boolOrPerlExpr',
+                      'text:/issuerDBOpenIDRule:issuerdbOpenID:boolOrPerlExpr',
                     issuerDBOpenIDOptions => {
                         _nodes => [
                             qw(openIdIssuerSecret openIdAttr openIdSPList n:openIdSreg)
                         ],
                         openIdIssuerSecret => 'text:/openIdIssuerSecret',
-                        openIdAttr         => 'text:openIdAttr',
+                        openIdAttr         => 'text:/openIdAttr',
                         openIdSPList =>
-                          'text:/openIdSPList:issuerdbopenid:openididplist',
+                          'text:/openIdSPList:issuerdbOpenID:openididplist',
                         openIdSreg => {
                             _nodes => [
                                 qw(openIdSreg_fullname openIdSreg_nickname openIdSreg_language openIdSreg_postcode openIdSreg_timezone openIdSreg_country openIdSreg_gender openIdSreg_email openIdSreg_dob)
@@ -652,7 +653,7 @@ sub struct {
                 _help  => 'logs',
                 syslog => 'text:/syslog',
                 useXForwardedForIP => 'bool:/useXForwardedForIP',
-                whatToTrace        => 'text:/whatToTrace:whatToTrace:text',
+                whatToTrace        => 'text:/whatToTrace',
             },
 
             # COOKIE PARAMETERS
@@ -660,11 +661,11 @@ sub struct {
                 _nodes =>
                   [qw(cookieName domain cda securedCookie cookieExpiration)],
                 _help      => 'cookies',
-                cookieName => 'text:/cookieName:cookieName:text',
-                domain     => 'text:/domain:domain:text',
+                cookieName => 'text:/cookieName',
+                domain     => 'text:/domain',
                 cda        => 'bool:/cda',
                 securedCookie =>
-                  'select:/securedCookie:securedCookie:securedCookieValues',
+                  'select:/securedCookie:cookies:securedCookieValues',
                 cookieExpiration => 'text:/cookieExpiration',
             },
 
@@ -673,22 +674,23 @@ sub struct {
                 _nodes => [
                     qw(grantSessionRule storePassword timeout timeoutActivity n:sessionStorage n:multipleSessions)
                 ],
-                _help => 'storage',
+                _help => 'sessions',
 
                 grantSessionRule => 'textarea:/grantSessionRule',
                 storePassword    => 'bool:/storePassword',
-                timeout          => 'int:/timeout:timeout:int',
+                timeout          => 'int:/timeout',
                 timeoutActivity =>
-                  'text:/timeoutActivity:timeoutActivity:timeoutActivityParams',
+                  'text:/timeoutActivity:sessions:timeoutActivityParams',
 
                 sessionStorage => {
                     _nodes => [qw(globalStorage cn:globalStorageOptions)],
                     _help  => 'sessionsdb',
                     globalStorage        => 'text:/globalStorage',
                     globalStorageOptions => {
-                        _nodes => ['hash:/globalStorageOptions:storage:btext'],
+                        _nodes =>
+                          ['hash:/globalStorageOptions:sessionsdb:btext'],
                         _js    => 'hashRoot',
-                        _help  => 'storage',
+                        _help => 'sessionsdb',
                     },
                 },
 
@@ -709,8 +711,9 @@ sub struct {
                 _nodes => [
                     qw(customFunctions n:soap n:notifications n:passwordManagement n:security n:redirection n:specialHandlers cn:logoutServices)
                 ],
+                _help => 'advanced',
 
-                customFunctions => 'text:/customFunctions',
+                customFunctions => 'text:/customFunctions:customfunctions:text',
 
                 soap => {
                     _nodes       => [qw(Soap exportedAttr)],
@@ -738,6 +741,7 @@ sub struct {
                     _nodes => [
                         qw(SMTPServer mailUrl mailFrom mailSubject mailBody mailConfirmSubject mailConfirmBody randomPasswordRegexp)
                     ],
+                    _help                => 'password',
                     SMTPServer           => 'text:/SMTPServer',
                     mailUrl              => 'text:/mailUrl',
                     mailFrom             => 'text:/mailFrom',
@@ -751,10 +755,10 @@ sub struct {
                 security => {
                     _nodes =>
                       [qw(userControl portalForceAuthn key trustedDomains)],
-                    userControl => 'text:/userControl:userControl:text',
-                    portalForceAuthn =>
-                      'bool:/portalForceAuthn:portalForceAuthn:bool',
-                    key            => 'text:/key:key:text',
+                    _help            => 'security',
+                    userControl      => 'text:/userControl',
+                    portalForceAuthn => 'bool:/portalForceAuthn',
+                    key              => 'text:/key',
                     trustedDomains => 'text:/trustedDomains',
                 },
 
@@ -777,6 +781,7 @@ sub struct {
                         _nodes => [
                             qw(zimbraPreAuthKey zimbraAccountKey zimbraBy zimbraUrl zimbraSsoUrl)
                         ],
+                        _help            => 'zimbra',
                         zimbraPreAuthKey => 'text:/zimbraPreAuthKey',
                         zimbraAccountKey => 'text:/zimbraAccountKey',
                         zimbraBy     => 'text:/zimbraBy:default:zimbraByParams',
@@ -787,15 +792,16 @@ sub struct {
                     # Sympa
                     sympaHandler => {
                         _nodes       => [qw(sympaSecret sympaMailKey)],
+                        _help        => 'sympa',
                         sympaSecret  => 'text:/sympaSecret',
                         sympaMailKey => 'text:/sympaMailKey',
                     },
                 },
 
                 logoutServices => {
-                    _nodes => ['hash:/logoutServices:default:btext'],
+                    _nodes => ['hash:/logoutServices:logoutforward:btext'],
                     _js    => 'hashRoot',
-                    _help  => 'default',
+                    _help  => 'logoutforward',
                 },
 
             },
