@@ -45,13 +45,34 @@ var helpCh={
 	'portal':'/pages/documentation/latest/ssocookie.html#portal_url',
 	'portalcustom':'/pages/documentation/latest/portalcustom.html',
 	'portalParams':'/pages/documentation/latest/portal.html',
+	'post':'/pages/documentation/latest/formreplay.html',
 	'redirections':'/pages/documentation/latest/redirections.html',
 	'rules':'/pages/documentation/latest/writingrulesand_headers.html#rules',
+	'samlIDP':'/pages/documentation/latest/authsaml.html#register_partner_identity_provider_on_lemonldapng',
+	'samlIDPExportedAttributes':'/pages/documentation/latest/authsaml.html#exported_attributes',
+	'samlIDPMetaDataXML':'/pages/documentation/latest/authsaml.html#metadata',
+	'samlIDPOptions':'/pages/documentation/latest/authsaml.html#options',
+	'samlService':'/pages/documentation/latest/samlservice.html',
+	'samlServiceAA':'/pages/documentation/latest/samlservice.html#attribute_authority',
+	'samlServiceAdvanced':'/pages/documentation/latest/samlservice.html#advanced',
+	'samlServiceAuthnContexts':'/pages/documentation/latest/samlservice.html#authentication_contexts',
+	'samlServiceEntityID':'/pages/documentation/latest/samlservice.html#entry_identifier',
+	'samlServiceIDP':'/pages/documentation/latest/samlservice.html#identity_provider',
+	'samlServiceNameIDFormats':'/pages/documentation/latest/samlservice.html#nameid_formats',
+	'samlServiceOrganization':'/pages/documentation/latest/samlservice.html#organization',
+	'samlServiceSecurity':'/pages/documentation/latest/samlservice.html#security_parameters',
+	'samlServiceSP':'/pages/documentation/latest/samlservice.html#service_provider',
+	'samlSP':'/pages/documentation/latest/idpsaml.html#register_partner_service_provider_on_lemonldapng',
+	'samlSPExportedAttributes':'/pages/documentation/latest/idpsaml.html#exported_attributes',
+	'samlSPMetaDataXML':'/pages/documentation/latest/idpsaml.html#metadata',
+	'samlSPOptions':'/pages/documentation/latest/idpsaml.html#options',
 	'security':'/pages/documentation/latest/security.html#configure_security_settings',
 	'sessions':'/pages/documentation/latest/sessions.html',
 	'sessionsdb':'/pages/documentation/latest/start.html#sessions_database',
 	'sympa':'/pages/documentation/latest/applications/sympa.html',
 	'userdbParams':'/pages/documentation/latest/start.html#authentication_and_users_database',
+	'vhostOptions':'/pages/documentation/latest/configvhost.html#options',
+	'virtualHosts':'/pages/documentation/latest/configvhost.html',
 	'zimbra':'/pages/documentation/latest/applications/zimbra.html',
 };
 
@@ -1442,7 +1463,11 @@ function networkPb(){
 var lasthelp='';
 function loadHelp(ch){
 	var url;
+	// Keep actual page if no help chapter
+	if(!ch){return;}
+	// Display default help if help chapter not defined
 	if(typeof(helpCh[ch])!='string'){ch='default';}
+	// Display new help only if not the last help
 	if(ch!=lasthelp){
 		url='/doc'+helpCh[ch];
 		var html = '<iframe src="'+url+'" frameborder="0" />';

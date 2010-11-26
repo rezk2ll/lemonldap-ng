@@ -45,11 +45,13 @@ sub cstruct {
                     post => {
                         _nodes => ["post:/post/$k2:post:post"],
                         _js    => 'postRoot',
+                        _help  => 'post',
                     },
                     vhostOptions => {
                         _nodes     => [qw(vhostPort vhostHttps)],
                         vhostPort  => "int:/vhostOptions/$k2/vhostPort",
                         vhostHttps => "trool:/vhostOptions/$k2/vhostHttps",
+                        _help      => 'vhostOptions',
                     },
                 }
             }
@@ -63,19 +65,24 @@ sub cstruct {
                     _nodes => [
                         qw(samlIDPMetaDataXML samlIDPMetaDataExportedAttributes samlIDPMetaDataOptions)
                     ],
+
                     samlIDPMetaDataExportedAttributes => {
                         _nodes => [
                                 "hash:/samlIDPMetaDataExportedAttributes/$k2"
                               . ":samlIDPMetaDataExportedAttributes:samlAttribute"
                         ],
-                        _js => 'samlAttributeRoot'
+                        _js   => 'samlAttributeRoot',
+                        _help => 'samlIDPExportedAttributes',
                     },
+
                     samlIDPMetaDataXML => "samlmetadata:/samlIDPMetaDataXML/$k2"
                       . ":samlIDPMetaDataXML:filearea",
+
                     samlIDPMetaDataOptions => {
                         _nodes => [
                             qw(samlIDPMetaDataOptionsResolutionRule samlIDPMetaDataOptionsAuthnRequest samlIDPMetaDataOptionsSession samlIDPMetaDataOptionsSignature samlIDPMetaDataOptionsBinding samlIDPMetaDataOptionsSecurity)
                         ],
+                        _help => 'samlIDPOptions',
 
                         samlIDPMetaDataOptionsResolutionRule =>
 "textarea:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsResolutionRule",
@@ -87,7 +94,7 @@ sub cstruct {
 
                             samlIDPMetaDataOptionsNameIDFormat =>
 "text:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsNameIDFormat"
-                              . ":default:nameIdFormatParams",
+                              . ":samlIDPOptions:nameIdFormatParams",
                             samlIDPMetaDataOptionsForceAuthn =>
 "bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsForceAuthn",
                             samlIDPMetaDataOptionsIsPassive =>
@@ -98,8 +105,7 @@ sub cstruct {
 "bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsAllowLoginFromIDP",
                             samlIDPMetaDataOptionsRequestedAuthnContext =>
 "text:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsRequestedAuthnContext"
-                              . ":default:authnContextParams",
-
+                              . ":samlIDPOptions:authnContextParams",
                         },
 
                         samlIDPMetaDataOptionsSession => {
@@ -137,10 +143,10 @@ sub cstruct {
 
                             samlIDPMetaDataOptionsSSOBinding =>
 "text:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsSSOBinding"
-                              . ":default:bindingParams",
+                              . ":samlIDPOptions:bindingParams",
                             samlIDPMetaDataOptionsSLOBinding =>
 "text:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsSLOBinding"
-                              . ":default:bindingParams",
+                              . ":samlIDPOptions:bindingParams",
 
                         },
 
@@ -150,7 +156,7 @@ sub cstruct {
                             ],
 
                             samlIDPMetaDataOptionsEncryptionMode =>
-"text:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsEncryptionMode:default:encryptionModeParams",
+"text:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsEncryptionMode:samlIDPOptions:encryptionModeParams",
                             samlIDPMetaDataOptionsCheckConditions =>
 "bool:/samlIDPMetaDataOptions/$k2/samlIDPMetaDataOptionsCheckConditions",
 
@@ -169,19 +175,24 @@ sub cstruct {
                     _nodes => [
                         qw(samlSPMetaDataXML samlSPMetaDataExportedAttributes samlSPMetaDataOptions)
                     ],
+
                     samlSPMetaDataExportedAttributes => {
                         _nodes => [
                                 "hash:/samlSPMetaDataExportedAttributes/$k2"
                               . ":samlSPMetaDataExportedAttributes:samlAttribute"
                         ],
-                        _js => 'samlAttributeRoot'
+                        _js   => 'samlAttributeRoot',
+                        _help => 'samlSPExportedAttributes',
                     },
+
                     samlSPMetaDataXML => "samlmetadata:/samlSPMetaDataXML/$k2"
                       . ":samlSPMetaDataXML:filearea",
+
                     samlSPMetaDataOptions => {
                         _nodes => [
                             qw(samlSPMetaDataOptionsAuthnResponse samlSPMetaDataOptionsSignature samlSPMetaDataOptionsSecurity)
                         ],
+                        _help => 'samlSPOptions',
 
                         samlSPMetaDataOptionsAuthnResponse => {
                             _nodes => [
@@ -190,7 +201,7 @@ sub cstruct {
 
                             samlSPMetaDataOptionsNameIDFormat =>
 "text:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsNameIDFormat"
-                              . ":default:nameIdFormatParams",
+                              . ":samlSPOptions:nameIdFormatParams",
                             samlSPMetaDataOptionsOneTimeUse =>
 "bool:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsOneTimeUse",
                         },
@@ -214,7 +225,7 @@ sub cstruct {
                             _nodes => [qw(samlSPMetaDataOptionsEncryptionMode)],
 
                             samlSPMetaDataOptionsEncryptionMode =>
-"text:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsEncryptionMode:default:encryptionModeParams",
+"text:/samlSPMetaDataOptions/$k2/samlSPMetaDataOptionsEncryptionMode:samlSPOptions:encryptionModeParams",
                         },
                     },
                 }
@@ -856,7 +867,7 @@ sub struct {
 'nhash:/samlIDPMetaDataExportedAttributes:samlIDPMetaDataNode:samlIdpMetaData'
             ],
             _upload => [ '/samlIDPMetaDataXML', '/samlIDPMetaDataOptions' ],
-            _help   => 'default',
+            _help   => 'samlIDP',
             _js     => 'samlIdpRoot',
         },
 
@@ -865,7 +876,7 @@ sub struct {
 'nhash:/samlSPMetaDataExportedAttributes:samlSPMetaDataNode:samlSpMetaData'
             ],
             _upload => [ '/samlSPMetaDataXML', '/samlSPMetaDataOptions' ],
-            _help   => 'default',
+            _help   => 'samlSP',
             _js     => 'samlSpRoot',
         },
 
@@ -881,29 +892,28 @@ sub struct {
                   n:samlAttributeAuthorityDescriptor
                   n:samlAdvanced)
             ],
-            _help => 'default',
+            _help => 'samlService',
 
             # GLOBAL INFORMATIONS
-            samlEntityID => 'text:/samlEntityID',
+            samlEntityID => 'text:/samlEntityID:samlServiceEntityID:text',
 
             # SECURITY NODE
             samlServiceSecurity => {
                 _nodes =>
                   [qw(n:samlServiceSecuritySig n:samlServiceSecurityEnc)],
-                _help                  => 'default',
+                _help                  => 'samlServiceSecurity',
                 samlServiceSecuritySig => {
                     _nodes => [
                         qw(samlServicePrivateKeySig
                           samlServicePrivateKeySigPwd
                           samlServicePublicKeySig)
                     ],
-                    _help => 'default',
                     samlServicePrivateKeySig =>
-'filearea:/samlServicePrivateKeySig:samlServicePrivateKeySig:filearea',
+                      'filearea:/samlServicePrivateKeySig',
                     samlServicePrivateKeySigPwd =>
                       'text:/samlServicePrivateKeySigPwd',
                     samlServicePublicKeySig =>
-'filearea:/samlServicePublicKeySig:samlServicePublicKeySig:filearea',
+                      'filearea:/samlServicePublicKeySig',
                 },
                 samlServiceSecurityEnc => {
                     _nodes => [
@@ -911,13 +921,12 @@ sub struct {
                           samlServicePrivateKeyEncPwd
                           samlServicePublicKeyEnc)
                     ],
-                    _help => 'default',
                     samlServicePrivateKeyEnc =>
-'filearea:/samlServicePrivateKeyEnc:samlServicePrivateKeyEnc:filearea',
+                      'filearea:/samlServicePrivateKeyEnc',
                     samlServicePrivateKeyEncPwd =>
                       'text:/samlServicePrivateKeyEncPwd',
                     samlServicePublicKeyEnc =>
-'filearea:/samlServicePublicKeyEnc:samlServicePublicKeyEnc:filearea',
+                      'filearea:/samlServicePublicKeyEnc',
                 },
             },
 
@@ -926,7 +935,7 @@ sub struct {
                 _nodes => [
                     qw(samlNameIDFormatMapEmail samlNameIDFormatMapX509 samlNameIDFormatMapWindows samlNameIDFormatMapKerberos)
                 ],
-                _help                    => 'default',
+                _help                    => 'samlServiceNameIDFormats',
                 samlNameIDFormatMapEmail => 'text:/samlNameIDFormatMapEmail',
                 samlNameIDFormatMapX509  => 'text:/samlNameIDFormatMapX509',
                 samlNameIDFormatMapWindows =>
@@ -940,7 +949,7 @@ sub struct {
                 _nodes => [
                     qw(samlAuthnContextMapPassword samlAuthnContextMapPasswordProtectedTransport samlAuthnContextMapTLSClient samlAuthnContextMapKerberos)
                 ],
-                _help => 'default',
+                _help => 'samlServiceAuthnContexts',
                 samlAuthnContextMapPassword =>
                   'int:/samlAuthnContextMapPassword',
                 samlAuthnContextMapPasswordProtectedTransport =>
@@ -958,7 +967,7 @@ sub struct {
                       samlOrganizationName
                       samlOrganizationURL)
                 ],
-                _help => 'default',
+                _help => 'samlServiceOrganization',
                 samlOrganizationDisplayName =>
                   'text:/samlOrganizationDisplayName',
                 samlOrganizationURL  => 'text:/samlOrganizationURL',
@@ -975,7 +984,7 @@ sub struct {
                       n:samlSPSSODescriptorArtifactResolutionService
                       )
                 ],
-                _help => 'default',
+                _help => 'samlServiceSP',
 
                 samlSPSSODescriptorAuthnRequestsSigned =>
                   'bool:/samlSPSSODescriptorAuthnRequestsSigned',
@@ -988,7 +997,6 @@ sub struct {
                           samlSPSSODescriptorSingleLogoutServiceHTTPPost
                           samlSPSSODescriptorSingleLogoutServiceSOAP)
                     ],
-                    _help => 'default',
                     samlSPSSODescriptorSingleLogoutServiceHTTPRedirect =>
 'samlService:/samlSPSSODescriptorSingleLogoutServiceHTTPRedirect',
                     samlSPSSODescriptorSingleLogoutServiceHTTPPost =>
@@ -1002,7 +1010,6 @@ sub struct {
                         qw(samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact
                           samlSPSSODescriptorAssertionConsumerServiceHTTPPost)
                     ],
-                    _help => 'default',
                     samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact =>
 'samlAssertion:/samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact',
                     samlSPSSODescriptorAssertionConsumerServiceHTTPPost =>
@@ -1013,7 +1020,6 @@ sub struct {
                     _nodes => [
                         qw(samlSPSSODescriptorArtifactResolutionServiceArtifact)
                     ],
-                    _help => 'default',
                     samlSPSSODescriptorArtifactResolutionServiceArtifact =>
 'samlAssertion:/samlSPSSODescriptorArtifactResolutionServiceArtifact',
                 },
@@ -1027,7 +1033,7 @@ sub struct {
                       n:samlIDPSSODescriptorSingleLogoutService
                       n:samlIDPSSODescriptorArtifactResolutionService)
                 ],
-                _help => 'default',
+                _help => 'samlServiceIDP',
 
                 samlIDPSSODescriptorWantAuthnRequestsSigned =>
                   'bool:/samlIDPSSODescriptorWantAuthnRequestsSigned',
@@ -1039,7 +1045,6 @@ sub struct {
                           samlIDPSSODescriptorSingleSignOnServiceHTTPArtifact
                           samlIDPSSODescriptorSingleSignOnServiceSOAP)
                     ],
-                    _help => 'default',
                     samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect =>
 'samlService:/samlIDPSSODescriptorSingleSignOnServiceHTTPRedirect',
                     samlIDPSSODescriptorSingleSignOnServiceHTTPPost =>
@@ -1056,7 +1061,6 @@ sub struct {
                           samlIDPSSODescriptorSingleLogoutServiceHTTPPost
                           samlIDPSSODescriptorSingleLogoutServiceSOAP)
                     ],
-                    _help => 'default',
                     samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect =>
 'samlService:/samlIDPSSODescriptorSingleLogoutServiceHTTPRedirect',
                     samlIDPSSODescriptorSingleLogoutServiceHTTPPost =>
@@ -1069,7 +1073,6 @@ sub struct {
                     _nodes => [
                         qw(samlIDPSSODescriptorArtifactResolutionServiceArtifact)
                     ],
-                    _help => 'default',
                     samlIDPSSODescriptorArtifactResolutionServiceArtifact =>
 'samlAssertion:/samlIDPSSODescriptorArtifactResolutionServiceArtifact',
                 },
@@ -1080,7 +1083,8 @@ sub struct {
             samlAttributeAuthorityDescriptor => {
                 _nodes =>
                   [qw(n:samlAttributeAuthorityDescriptorAttributeService)],
-                _help                                            => 'default',
+                _help => 'samlServiceAA',
+
                 samlAttributeAuthorityDescriptorAttributeService => {
                     _nodes => [
                         qw(samlAttributeAuthorityDescriptorAttributeServiceSOAP)
@@ -1095,14 +1099,16 @@ sub struct {
                 _nodes => [
                     qw(samlIdPResolveCookie samlMetadataForceUTF8 samlStorage cn:samlStorageOptions n:samlCommonDomainCookie)
                 ],
+                _help => 'samlServiceAdvanced',
 
                 samlIdPResolveCookie  => 'text:/samlIdPResolveCookie',
                 samlMetadataForceUTF8 => 'bool:/samlMetadataForceUTF8',
                 samlStorage           => 'text:/samlStorage',
                 samlStorageOptions    => {
-                    _nodes => ['hash:/samlStorageOptions:default:btext'],
+                    _nodes =>
+                      ['hash:/samlStorageOptions:samlServiceAdvanced:btext'],
                     _js    => 'hashRoot',
-                    _help  => 'default',
+                    _help => 'samlServiceAdvanced',
                 },
                 samlCommonDomainCookie => {
                     _nodes => [

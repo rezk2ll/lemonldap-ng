@@ -118,7 +118,7 @@ To protect the manager by <acronym title="LemonLDAP::NG">LL::NG</acronym>, you j
 
 <p>
 
-Rules are applied in alphabetical order (comment and regular expression). The first rule that matches is applied.
+<a href="../../documentation/1.0/writingrulesand_headers.html#rules" class="wikilink1" title="documentation:1.0:writingrulesand_headers">Rules</a> are applied in alphabetical order (comment and regular expression). The first rule that matches is applied.
 </p>
 
 <p>
@@ -127,27 +127,50 @@ Rules are applied in alphabetical order (comment and regular expression). The fi
 </p>
 
 <p>
-Bad example:
-
+The Manager let you define comments in rules, to order them:
 </p>
-<pre class="code shell"># Rule 1, no comment
-^/pub/admin/ -&gt; $uid eq &quot;root&quot;
-# Rule 2, no comment
-^/pub/       -&gt; accept</pre>
 
 <p>
-The rule 2 will be applied first, so every authenticated user will access to /pub/admin directory
+<a href="/_detail/documentation/manager_access_rule.png?id=documentation%3A1.0%3Asecurity" class="media" title="documentation:manager_access_rule.png"><img src="../../../media/documentation/manager_access_rule.png" class="mediacenter" alt="" /></a>
+</p>
+
+<p>
+For example, if these rules are used without comments:
+</p>
+<table class="inline">
+	<tr class="row0 roweven">
+		<th class="col0 centeralign">  Regular expression  </th><th class="col1 centeralign">  Rule  </th><th class="col2 leftalign"> Comment  </th>
+	</tr>
+	<tr class="row1 rowodd">
+		<td class="col0"> ^/pub/admin/ </td><td class="col1"> $uid eq “root” </td><td class="col2"> </td>
+	</tr>
+	<tr class="row2 roweven">
+		<td class="col0"> ^/pub/ </td><td class="col1"> accept </td><td class="col2"> </td>
+	</tr>
+</table>
+
+<p>
+
+Then the second rule will be applied first, so every authenticated user will access to <code>/pub/admin</code> directory.
 </p>
 
 <p>
 Use comment to correct this:
 </p>
-<pre class="code shell"># Rule 1, comment &quot;1_pub&quot;
-(?#1_pub)^/pub/admin/ -&gt; $uid eq &quot;root&quot;
-# Rule 2, comment &quot;2_admin&quot;
-(?#2_admin)^/pub/       -&gt; accept</pre>
+<table class="inline">
+	<tr class="row0 roweven">
+		<th class="col0 centeralign">  Regular expression  </th><th class="col1 centeralign">  Rule  </th><th class="col2 leftalign"> Comment  </th>
+	</tr>
+	<tr class="row1 rowodd">
+		<td class="col0"> ^/pub/admin/ </td><td class="col1"> $uid eq “root” </td><td class="col2"> 1_pub </td>
+	</tr>
+	<tr class="row2 roweven">
+		<td class="col0"> ^/pub/ </td><td class="col1"> accept </td><td class="col2"> 2_admin </td>
+	</tr>
+</table>
 
 <p>
+
 <p><div class="notetip">
 </p>
 <ul>
@@ -163,22 +186,33 @@ Use comment to correct this:
 </p>
 
 </div>
-<!-- SECTION "Order your rules" [2149-2903] -->
+<!-- SECTION "Order your rules" [2149-3072] -->
 <h3><a name="be_careful_with_url_parameters" id="be_careful_with_url_parameters">Be careful with URL parameters</a></h3>
 <div class="level3">
 
 <p>
 
-You can write <a href="../../documentation/1.0/writingrulesand_headers.html#rules" class="wikilink1" title="documentation:1.0:writingrulesand_headers">rules</a> matching any component of <acronym title="Uniform Resource Locator">URL</acronym> to protect including GET parameters, but be careful:
-Bad example:
+You can write <a href="../../documentation/1.0/writingrulesand_headers.html#rules" class="wikilink1" title="documentation:1.0:writingrulesand_headers">rules</a> matching any component of <acronym title="Uniform Resource Locator">URL</acronym> to protect including GET parameters, but be careful.
 </p>
-<pre class="code">
-/^index.php\?.*access=admin -&gt; $groups =~ /\badmin\b/
-default                     -&gt; accept
-</pre>
 
 <p>
-Now, user that try to access to one of the following <em class="u">will be granted</em> !
+For example with this rule on the <code>access</code> parameter:
+</p>
+<table class="inline">
+	<tr class="row0 roweven">
+		<th class="col0 centeralign">  Regular expression  </th><th class="col1 centeralign">  Rule  </th><th class="col2 leftalign"> Comment  </th>
+	</tr>
+	<tr class="row1 rowodd">
+		<td class="col0"> ^/index.php\?.*access=admin </td><td class="col1"> $groups =~ /\badmin\b/ </td><td class="col2"> </td>
+	</tr>
+	<tr class="row2 roweven">
+		<td class="col0"> default </td><td class="col1"> accept </td><td class="col2"> </td>
+	</tr>
+</table>
+
+<p>
+
+Then a user that try to access to one of the following <em class="u">will be granted</em> !
 </p>
 <ul>
 <li class="level1"><div class="li"> /index.php?access=admin&amp;access=other</div>
@@ -189,17 +223,25 @@ Now, user that try to access to one of the following <em class="u">will be grant
 
 <p>
 
-You can use the following instead:
+You can use the following rules instead:
 </p>
-<pre class="code">
-# insert a comment 0_bad for this rule:
-/^(?i#0_bad)index.php\?.*access.*access -&gt; deny
-# insert a comment 1_admin for this rule
-/^(?i#1_admin)index.php\?.*access=admin   -&gt; $groups =~ /\badmin\b/
-default                           -&gt; accept
-</pre>
+<table class="inline">
+	<tr class="row0 roweven">
+		<th class="col0 centeralign">  Regular expression  </th><th class="col1 centeralign">  Rule  </th><th class="col2 leftalign"> Comment  </th>
+	</tr>
+	<tr class="row1 rowodd">
+		<td class="col0"> ^/(?i)index.php\?.*access.*access </td><td class="col1"> deny </td><td class="col2"> 0_bad </td>
+	</tr>
+	<tr class="row2 roweven">
+		<td class="col0"> ^/(?i)index.php\?.*access=admin </td><td class="col1"> $groups =~ /\badmin\b/ </td><td class="col2"> 1_admin </td>
+	</tr>
+	<tr class="row3 rowodd">
+		<td class="col0"> default </td><td class="col1"> accept </td><td class="col2"> </td>
+	</tr>
+</table>
 
 <p>
+
 <p><div class="notetip"><strong>(?i)</strong> means case no sensitive.
 </div></p>
 </p>
@@ -210,7 +252,7 @@ default                           -&gt; accept
 </p>
 
 </div>
-<!-- SECTION "Be careful with URL parameters" [2904-3778] -->
+<!-- SECTION "Be careful with URL parameters" [3073-3981] -->
 <h3><a name="encoded_characters" id="encoded_characters">Encoded characters</a></h3>
 <div class="level3">
 
@@ -220,7 +262,7 @@ Some characters are encoded in URLs by the browser (such as space,…). To avoid
 </p>
 
 </div>
-<!-- SECTION "Encoded characters" [3779-4032] -->
+<!-- SECTION "Encoded characters" [3982-4235] -->
 <h2><a name="secure_reverse-proxies" id="secure_reverse-proxies">Secure reverse-proxies</a></h2>
 <div class="level2">
 
@@ -268,7 +310,7 @@ It is recommended to secure the channel between reverse-proxies and application 
 </ul>
 
 </div>
-<!-- SECTION "Secure reverse-proxies" [4033-5701] -->
+<!-- SECTION "Secure reverse-proxies" [4236-5904] -->
 <h2><a name="configure_security_settings" id="configure_security_settings">Configure security settings</a></h2>
 <div class="level2">
 
@@ -288,4 +330,4 @@ Go in Manager, <code>General parameters</code> » <code>Advanced parameters</cod
 </ul>
 
 </div>
-<!-- SECTION "Configure security settings" [5702-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Configure security settings" [5905-] --></div><!-- closes <div class="dokuwiki export">-->
