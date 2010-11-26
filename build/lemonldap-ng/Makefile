@@ -259,7 +259,7 @@ install_site:	install_manager_site install_portal_site install_handler_site inst
 			s#__DOCDIR__#$(DOCDIR)/#g;' $(RCONFDIR)/*apache*.conf
 	@$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)/for_etc_hosts
 	# Fix a lost of rights on the main directory
-	@chmod 755 $(LMPREFIX)
+	@chmod 755 $(RBINDIR) $(RDOCUMENTROOT) $(REXAMPLESDIR) $(RHANDLERDIR) $(RPORTALSKINSDIR) $(RMANAGERSKINSDIR) $(RTOOLSDIR) $(RCONFDIR) $(RDATADIR)
 	@echo
 	@echo "LemonLDAP::NG v${VERSION} is installed with these parameters:"
 	@echo "  - System configuration: ${CONFDIR}"
@@ -457,6 +457,7 @@ dist:	clean
 	@rm -rf $$(find lemonldap-ng-$(VERSION) -name .svn -print)
 	@find $$dir -name '*.bak' -delete
 	@rm -rf lemonldap-ng-$(VERSION)/lemonldap-ng-$(VERSION)
+	@cp ../rpm/lemonldap-ng.spec lemonldap-ng-$(VERSION)/
 	@$(COMPRESS) lemonldap-ng-$(VERSION).$(COMPRESSSUFFIX) lemonldap-ng-$(VERSION)
 	@rm -rf lemonldap-ng-$(VERSION)
 
