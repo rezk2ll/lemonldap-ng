@@ -64,20 +64,43 @@ For example, a protected virtual host for a local application:
 And a protected virtual host with LemonLDAP::NG as reverse proxy:
 </p>
 <pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:80&gt;
-        <span class="kw1">ServerName</span> proxysite.example.com
+        <span class="kw1">ServerName</span> application.example.com
 &nbsp;
         PerlHeaderParserHandler My::Package
 &nbsp;
-        <span class="kw1">ProxyPreserveHost</span> <span class="kw2">on</span>
-        <span class="kw1">ProxyPass</span> / http://APPLICATION_IP/
-        <span class="kw1">ProxyPassReverse</span> / http://APPLICATION_IP/
+        <span class="co1"># Reverse-Proxy</span>
+        <span class="kw1">ProxyPass</span> / http://private-name/
+        <span class="co1"># Change &quot;Location&quot; header in redirections</span>
+        <span class="kw1">ProxyPassReverse</span> / http://private-name/
+        <span class="co1"># Change domain cookies</span>
+        <span class="kw1">ProxyPassReverseCookieDomain</span> private-name application.example.com
 &nbsp;
         <span class="kw1">ErrorLog</span> /var/log/apache2/proxysite_error.log
         <span class="kw1">CustomLog</span> /var/log/apache2/proxysite_access.log combined
 &lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
 
 <p>
-<p><div class="noteclassic">The <code>ProxyPreserveHost</code> directive will forward the Host header to the protected application
+
+Same with remote server configured with the same host name:
+</p>
+<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:80&gt;
+        <span class="kw1">ServerName</span> application.example.com
+&nbsp;
+        PerlHeaderParserHandler My::Package
+&nbsp;
+        <span class="co1"># Reverse-Proxy</span>
+        <span class="kw1">ProxyPass</span> / http://APPLICATION_IP/
+&nbsp;
+        <span class="kw1">ProxyPreserveHost</span> <span class="kw2">on</span>
+&nbsp;
+        <span class="kw1">ErrorLog</span> /var/log/apache2/proxysite_error.log
+        <span class="kw1">CustomLog</span> /var/log/apache2/proxysite_access.log combined
+&lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
+
+<p>
+<p><div class="noteclassic">The <code>ProxyPreserveHost</code> directive will forward the Host header to the protected application.<br/>
+To learn more about using Apache as reverse-proxy, see <a href="http://httpd.apache.org/docs/2.2/mod/mod_proxy.html" class="urlextern" title="http://httpd.apache.org/docs/2.2/mod/mod_proxy.html"  rel="nofollow">Apache documentation</a>.
+
 </div></p>
 </p>
 
@@ -87,7 +110,7 @@ And a protected virtual host with LemonLDAP::NG as reverse proxy:
 </p>
 
 </div>
-<!-- SECTION "Apache configuration" [198-1687] -->
+<!-- SECTION "Apache configuration" [198-2415] -->
 <h2><a name="lemonldapng_configuration" id="lemonldapng_configuration">LemonLDAP::NG configuration</a></h2>
 <div class="level2">
 
@@ -115,7 +138,7 @@ A virtual host contains:
 </ul>
 
 </div>
-<!-- SECTION "LemonLDAP::NG configuration" [1688-2175] -->
+<!-- SECTION "LemonLDAP::NG configuration" [2416-2903] -->
 <h3><a name="access_rules_and_http_headers" id="access_rules_and_http_headers">Access rules and HTTP headers</a></h3>
 <div class="level3">
 
@@ -125,7 +148,7 @@ See <strong><a href="../../documentation/1.0/writingrulesand_headers.html" class
 </p>
 
 </div>
-<!-- SECTION "Access rules and HTTP headers" [2176-2368] -->
+<!-- SECTION "Access rules and HTTP headers" [2904-3096] -->
 <h3><a name="post_data" id="post_data">POST data</a></h3>
 <div class="level3">
 
@@ -135,7 +158,7 @@ See <strong><a href="../../documentation/1.0/formreplay.html" class="wikilink1" 
 </p>
 
 </div>
-<!-- SECTION "POST data" [2369-2503] -->
+<!-- SECTION "POST data" [3097-3231] -->
 <h3><a name="options" id="options">Options</a></h3>
 <div class="level3">
 
@@ -156,4 +179,4 @@ These options are used to build redirection <acronym title="Uniform Resource Loc
 </p>
 
 </div>
-<!-- SECTION "Options" [2504-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Options" [3232-] --></div><!-- closes <div class="dokuwiki export">-->
