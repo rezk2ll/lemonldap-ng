@@ -30,6 +30,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Offline 0.1</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Hors-ligne 0.1</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>LemonLDAP::NG - Offline Version</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -74,6 +82,14 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>Retour à l'index principal</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>en</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>fr</seg>
       </tuv>
     </tu>
     <tu>
@@ -177,7 +193,7 @@
         <seg>references</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>références</seg>
+        <seg>Références</seg>
       </tuv>
     </tu>
     <tu>
@@ -210,6 +226,1054 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;a1&gt;Consultez nos références&lt;/a1&gt;!</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Main Features</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Fonctionnalités principales</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Single Sign On for Web Applications</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Système d'authentification unique pour applications web</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Many &lt;a0&gt;SSO&lt;/a0&gt;-ready applications (&lt;a1&gt;OBM&lt;/a1&gt;, &lt;a2&gt;Bugzilla&lt;/a2&gt;, &lt;a3&gt;Dokuwiki&lt;/a3&gt;, etc.)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>De nombreuses applications déjà prêtes pour le &lt;a0&gt;SSO&lt;/a0&gt; (&lt;a1&gt;OBM&lt;/a1&gt;, &lt;a2&gt;Bugzilla&lt;/a2&gt;, &lt;a3&gt;Dokuwiki&lt;/a3&gt;, etc.)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Special Handlers for &lt;a0&gt;Zimbra&lt;/a0&gt;, &lt;a1&gt;Sympa&lt;/a1&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Des agents spéciaux pour &lt;a0&gt;Zimbra&lt;/a0&gt;, &lt;a1&gt;Sympa&lt;/a1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Tomcat &lt;a0&gt;SSO&lt;/a0&gt; Valve</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Une valve &lt;a0&gt;SSO&lt;/a0&gt; Tomcat</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Replace all .htaccess based security</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Remplace les systèmes de sécurité basé sur les .htaccess</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Forward &lt;a0&gt;SSO&lt;/a0&gt; trough &lt;a1&gt;HTTP&lt;/a1&gt; Auth-Basic or form replay</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Possibilité d'étendre le &lt;a0&gt;SSO&lt;/a0&gt; à des applications utilisant une authentification &lt;a1&gt;HTTP&lt;/a1&gt; Auth-Basic ou un formulaire HTML</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>One line code to integrate in Java, &lt;a0&gt;PHP&lt;/a0&gt;, .Net, &lt;a1&gt;Perl&lt;/a1&gt;, Ruby, Python, …</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Un code d'une ligne pour intégrer le SSO dans Java, &lt;a0&gt;PHP&lt;/a0&gt;, .Net, &lt;a1&gt;Perl&lt;/a1&gt;, Ruby, Python, …</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Strong authorization system</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Système strict de contrôle d'accès</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;URL&lt;/a0&gt; matching trough regular expressions (subdirectories, file types, …)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Examen des &lt;a0&gt;URL&lt;/a0&gt; par expressions rationnelles (sous répertoires, types de fichiers, …)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Use of any user session information to build access rule</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>N'importe quelle donnée utilisateur peut être utilisée pour construire la règle</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Authentication modules</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Modules d'authentification</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Database</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Base de données</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Apache built-in modules (Kerberos, NTLM , OTP, …)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Support des modules Apache (Kerberos, NTLM , OTP, …)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Multiple and Choice (modules stacking)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Multiple et Choice (empilement d'autres modules)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LDAP integration</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Intégration LDAP</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; v2 and v3 protocol support</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Support des protocoles &lt;a0&gt;LDAP&lt;/a0&gt; v2 et v3</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Active Directory compliance</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Compatibilité Active Directory</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Password policy</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Politique de mots-de-passe</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Recursive groups</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Groupes récursif</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Identity provider</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Fournisseur d'identité</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>User interfaces</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Interfaces utilisateur</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Dynamic application menu</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Menu dynamique des applications</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Password change form</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Formulaire de changement de mots-de-passe</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Password reset by mail</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Réinitialisation de mots-de-passe par courriel</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Graphical Manager</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Gestionnaire graphique</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Sessions explorer</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Explorateur de sessions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Status page</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Page de status</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Apache logs</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Journalisation par Apache</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Log4Perl compatibility</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Compatibilité Log4Perl</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Security</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Sécurité</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Protected cookies</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Cookies protégés</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;XSS&lt;/a0&gt; and &lt;a1&gt;SQL&lt;/a1&gt;/&lt;a2&gt;LDAP&lt;/a2&gt; injection protection</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Protection contre les injections &lt;a0&gt;XSS&lt;/a0&gt; et &lt;a1&gt;SQL&lt;/a1&gt;/&lt;a2&gt;LDAP&lt;/a2&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Compatibility with Apache mod_security</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Compatibilité avec le module mod_security d'Apache</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>User tracking in Apache logs</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Traçabilité des utilisateurs dans les journaux d'Apache</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Project activity</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Activité du projet</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Ohloh statistics</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Statistiques Ohloh</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>SVN activity</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Activité SVN</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Doc update&lt;/a0&gt; by clement_oudot (2010/11/24 18:04)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;Mise à jour de la documentation&lt;/a0&gt; par clement_oudot (2010/11/24 18:04)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>How it works</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Fonctionnement</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Main features</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Fonctionnalités principales</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Quick start tutorial</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Tutoriel rapide</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Installation and configuration</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Installation et configuration</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Latest stable version</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Dernière version stable</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>All versions:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Toutes les versions:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Version 0.9.4&lt;/a0&gt; (old wiki)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;Version 0.9.4&lt;/a0&gt; (ancien wiki)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Development</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Développement</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>API documentation</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Documentation de l'interface de programmation (API)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Changelog</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Journal des changements</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Roadmap</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Feuille de route</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>SVN access</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Accès au dépôt SVN</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>CPAN test reports:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Rapports de test du CPAN:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LemonLDAP::NG Common</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Fichiers communs LemonLDAP::NG</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LemonLDAP::NG Handler</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Agent LemonLDAP::NG (handler)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LemonLDAP::NG Portal</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Portail LemonLDAP::NG</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LemonLDAP::NG Manager</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Gestionnaire LemonLDAP::NG</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Other</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Autres</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Conferences</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Conférences</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Developers&lt;/s0&gt; : &lt;a1&gt;lemonldap-ng-dev@ow2.org&lt;/a1&gt; (&lt;a2&gt;Archives&lt;/a2&gt;)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Developpeurs&lt;/s0&gt; : &lt;a1&gt;lemonldap-ng-dev@ow2.org&lt;/a1&gt; (&lt;a2&gt;Archives&lt;/a2&gt;)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Changes&lt;/s0&gt;: &lt;a1&gt;lemonldap-ng-changes@ow2.org&lt;/a1&gt; (&lt;a2&gt;Archives&lt;/a2&gt;)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Changements&lt;/s0&gt;: &lt;a1&gt;lemonldap-ng-changes@ow2.org&lt;/a1&gt; (&lt;a2&gt;Archives&lt;/a2&gt;)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Find us on Freenode, channel #lemonldap-ng</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Retrouvez-nous sur Freenode, canal #lemonldap-ng</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>No &lt;a0&gt;IRC&lt;/a0&gt; client?</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Pas de client &lt;a0&gt;IRC&lt;/a0&gt; ?</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a1&gt;Try Freenode Webchat&lt;/a1&gt;!</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a1&gt;Essayez le client web Freenode&lt;/a1&gt; !</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Social Networks and News</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Réseaux sociaux et nouvelles</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Facebook: &lt;a0&gt;Group&lt;/a0&gt; / &lt;a1&gt;Page&lt;/a1&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Facebook: &lt;a0&gt;Groupe&lt;/a0&gt; / &lt;a1&gt;Page&lt;/a1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Reporting a bug</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Rapporter un bogue</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>We use &lt;a0&gt;OW2 JIRA&lt;/a0&gt; to list bugs and features.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Nous utilisons &lt;a0&gt;OW2 JIRA&lt;/a0&gt; pour tous les bogues et fonctionnalités.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can first check on &lt;a1&gt;LemonLDAP::NG JIRA project&lt;/a1&gt; that your bug is not already referenced, and then create it (with a registered account).</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Commencez par vérifier sur &lt;a1&gt;le site JIRA du projet LemonLDAP::NG&lt;/a1&gt; que votre bogue n'est pas déjà référencé, et créez le sinon (avec un compte préalablement  créé).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The team</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>L'équipe</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Core team</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Équipe prinicpale</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Xavier GUIMARD&lt;/s0&gt;: project leader, lead developer</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Xavier GUIMARD&lt;/s0&gt;: chef du projet et développeur</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Clément “KPTN” OUDOT&lt;/s0&gt;: developer, graphics, documentation, community management</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Clément “KPTN” OUDOT&lt;/s0&gt;: développeur, concepteur graphique, concepteur de la documentation, gestionnaire de la communité</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Thomas CHEMINEAU&lt;/s0&gt;: developer, graphics</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Thomas CHEMINEAU&lt;/s0&gt;: développeur, concepteur graphique</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Past and present contributors</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Contributeurs passé et présent</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>By alphabetical order:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Par ordre alphabétique :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Sponsored by</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Sponsorisé par</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Hosted by</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Hébergé par</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Download</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Téléchargement</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Packages and archives</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Paquets et archives</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Stable version</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Version stable</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Current stable version is 0.9.4.1:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>La version stable courante est la 0.9.4.1:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Source</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Sources</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>RHEL5 RPM bundle</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Paquets RPM RHEL5</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Fedora11 RPM bundle</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Paquets RPM Fedora11</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Debian bundle</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Paquets Debian</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>For RPM systems, you have to &lt;a0&gt;install pre-required packages&lt;/a0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Pour les systèmes basés sur RPM, vous devez &lt;a0&gt;installer les paquets pré-requis&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>For Debian/Ubuntu systems: you can use packages provided by Debian (&lt;a0&gt;lemonldap-ng packages&lt;/a0&gt;) or &lt;a1&gt;install pre-required packages&lt;/a1&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Pour les systèmes de type Debian/Ubuntu : vous pouvez utiliser ceux proposés par Debian (&lt;a0&gt;paquets lemonldap-ng&lt;/a0&gt;) ou &lt;a1&gt;installer les paquets pré-requis&lt;/a1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Testing version</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Version en test</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Current testing version is 1.0rc2:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>La version courrant en test est la 1.0rc2:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>SVN nightly builds</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Extraction nocturne du dépôt SVN</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Dokuwiki plugin</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Extension pour Dokuwiki</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Tomcat valve</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Valve Tomcat</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Getting sources from SVN repository</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Obtenir les sources depuis le dépôt SVN</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Anonymous access</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Accès anonyme</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Sources are currently available on OW2.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Les sources sont disponibles sur OW2.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can simply checkout sources with the following command:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Utilisez simplement la commande suivante pour télécharger les sources :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Developer access</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Accès développeurs</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Lemonldap::NG developer must have a account on OW2 plateform, and could authenticate themself via &lt;a0&gt;SSH&lt;/a0&gt; 2 by using the following one:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Les développeurs Lemonldap::NG doivent posséder un compte sur la plateforme OW2 et peuvent l'utiliser via &lt;a0&gt;SSH&lt;/a0&gt; 2 en utilisant la commande suivante :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>svn checkout svn+ssh://developername@svn.forge.objectweb.org/svnroot/lemonldap</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>svn checkout svn+ssh://nomDuDeveloppeur@svn.forge.objectweb.org/svnroot/lemonldap</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>start</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Commencer</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Home</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Accueil</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Full access control</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Contrôle d'accès complet</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; is a web single-sign-on system, but unlike some systems it can manage rights on applications based on regular expressions on &lt;a1&gt;URL&lt;/a1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; est un système d'authentification web unique (WebSSO), mais contrairement à d'autres, il peut gérer les droits d'accès en utilisant des expressions rationnelles sur les &lt;a1&gt;URL&lt;/a1&gt; demandées.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Easy to customize</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Facile à personnaliser</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://en.wikipedia.org/wiki/Model%E2%80%93View%E2%80%93Controller</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://fr.wikipedia.org/wiki/Mod%C3%A8le-Vue-Contr%C3%B4leur</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; is designed using &lt;a1&gt;Model–View–Controller software architecture&lt;/a1&gt;, so you just have to &lt;a2&gt;change HTML/CSS files&lt;/a2&gt; to custom portal.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; a été conçu en utilisant &lt;a1&gt;l'architecture logicielle Modèle–Vue–Controlleur&lt;/a1&gt;, ainsi vous avez juste à &lt;a2&gt;modifier les fichiers HTML/CSS&lt;/a2&gt; pour personnaliser son portail.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Easy to integrate</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Facile à intégrer</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Integrating applications&lt;/a0&gt; in &lt;a1&gt;LL::NG&lt;/a1&gt; is easy since its dialog with applications is based on &lt;a2&gt;customizable HTTP headers&lt;/a2&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;Integrer des applications&lt;/a0&gt; dans &lt;a1&gt;LL::NG&lt;/a1&gt; est facile car leur dialogue est basé sur des &lt;a2&gt;en-têtes HTTP personnalisables&lt;/a2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Unifying authentications (federation)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Unifier les authentifications (fédération)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can easy talk to other authentication systems using &lt;a1&gt;SAML&lt;/a1&gt;, OpenID, &lt;a2&gt;CAS&lt;/a2&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; peut aisément dialoguer avec d'autres systèmes d'authentification en utilisant &lt;a1&gt;SAML&lt;/a1&gt;, OpenID, &lt;a2&gt;CAS&lt;/a2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>it may be the &lt;e3&gt;backbone&lt;/e3&gt; of a heterogeneous architecture.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>il peut être le &lt;e3&gt;pivot&lt;/e3&gt; d'une architecture hétérogène.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Its &lt;a4&gt;SOAP&lt;/a4&gt; &lt;a5&gt;API&lt;/a5&gt; can also be used to dialog directly with your custom applications.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Son &lt;a5&gt;API&lt;/a5&gt; &lt;a4&gt;SOAP&lt;/a4&gt; peut être utilisée pour dialoguer directement avec des applications spécifiques.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Session explorer</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Explorateur de sessions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; Manager has a session explorer module that can be used to browse opened sessions:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Le gestionnaire de &lt;a0&gt;LL::NG&lt;/a0&gt; dispose d'un explorateur de sessions qui peut être utilisé pour parcourir sessions ouvertes :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>by users</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>par utilisateurs</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>by &lt;a0&gt;IP&lt;/a0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>par adresses &lt;a0&gt;IP&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>by double &lt;a0&gt;IP&lt;/a0&gt; (sessions opened from multiple computers)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>par double &lt;a0&gt;IP&lt;/a0&gt; (sessions ouvertes depuis plusieurs ordinateurs)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>It can be used to delete a session</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Il peut être utilisé pour effacer une session</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Session restrictions</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Resctriction d'ouverture de session</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>By default, a user can open several &lt;a0&gt;sessions&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Par défaut, un utilisateur peut ouvrir plusieurs &lt;a0&gt;sessions&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a1&gt;LL::NG&lt;/a1&gt; can restrict this:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a1&gt;LL::NG&lt;/a1&gt; peut restreindre cet usage :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Allow only one session per user</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>N'autoriser qu'une session par utilisateur</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Allow only one &lt;a0&gt;IP&lt;/a0&gt; address per user</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>N'autoriser qu'une adresse &lt;a0&gt;IP&lt;/a0&gt; par utilisateur</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Allow only one session per &lt;a0&gt;IP&lt;/a0&gt; address</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>N'autoriser qu'une session par adresse &lt;a0&gt;IP&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Those capabilities can be used simultaneously or separately.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Ces capacités peuvent être utilisées simultanément ou séparemment.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can be configured to provides &lt;a1&gt;2 cookies&lt;/a1&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; peut être configuré pour fournir &lt;a1&gt;2 cookies&lt;/a1&gt;:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>one secured (&lt;a0&gt;SSL&lt;/a0&gt; only) for sensitive applications</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>un sécurisé (&lt;a0&gt;SSL&lt;/a0&gt; seulement) pour les applications sensibles</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>one unsecured for other applications</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>un non-sécurisé pour les autres applications</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>So if the http cookie is stolen, sensitive applications stay secured.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Ainsi, si le cookie http cookie est volé, les applications sensibles restent protégées.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Lemonldap::NG can be used to prompt users with a message.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Lemonldap::NG peut être utilisé pour notifier des messages aux utilisateurs.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This can be used to notify right changes,… See &lt;a0&gt;notifications&lt;/a0&gt; for more.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Ceci peut être utilisé pour notifier des changements de droits,… Consultez la page &lt;a0&gt;notifications&lt;/a0&gt; pour plus d'information.</seg>
       </tuv>
     </tu>
   </body>
