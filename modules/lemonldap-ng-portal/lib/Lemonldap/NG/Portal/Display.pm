@@ -228,7 +228,10 @@ sub display {
                 REQUIRE_OLDPASSWORD   => 1,
                 DISPLAY_PASSWORD      => 1,
                 DISPLAY_RESETPASSWORD => 0,
-                DISPLAY_FORM          => 0
+                DISPLAY_FORM          => 0,
+                AUTH_LOOP             => [],
+                CHOICE_PARAM        => $self->{authChoiceParam},
+                CHOICE_VALUE        => $self->{_authChoice},
             );
         }
 
@@ -239,6 +242,7 @@ sub display {
                 DISPLAY_RESETPASSWORD => 0,
                 DISPLAY_FORM          => 0,
                 DISPLAY_OPENID_FORM   => 1,
+                AUTH_LOOP             => [],
             );
         }
 
