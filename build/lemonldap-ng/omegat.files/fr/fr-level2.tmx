@@ -1,0 +1,536 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tmx SYSTEM "tmx14.dtd">
+<tmx version="1.4">
+  <header
+    creationtool="OmegaT"
+    creationtoolversion="1.8.1_2"
+    segtype="sentence"
+    o-tmf="OmegaT TMX"
+    adminlang="EN-US"
+    srclang="EN-US"
+    datatype="plaintext"
+  >
+  </header>
+  <body>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>DokuWiki offline version</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>DokuWiki version hors-ligne</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Offline</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Hors ligne</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>LemonLDAP::NG - Offline Version</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>LemonLDAP::NG - Version hors-ligne</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Start</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Commencer</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>All pages</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Toutes les pages</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>nothing here...</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>rien ici...</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Alphabetical Index</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Index alphabétique</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Back to main index</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Retour à l'index principal</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>en</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>fr</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>References</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Références</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>They use LemonLDAP::NG!</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Ils utilisent LemonLDAP::NG!</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Nb users</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Nb d'utilisateurs</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Nb protected applications</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Nb d'applications protégées</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Authentication portal</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Portails d'authentification</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Protected sites:</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Sites protégés:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Screenshots</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Captures d'écran</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>lemonldap-ng-portal-password.png</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>&lt;lemonldap-ng-portal-password.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Presentation</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Présentation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>LemonLDAP::NG is an open source Web Single Sign On product (WebSSO) written in <bpt i='0' x='0'>&lt;a0&gt;</bpt>Perl<ept i='0'>&lt;/a0&gt;</ept>, plugged into Apache Web Server.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>LemonLDAP::NG est un logiciel d'authentification unique web (WebSSO) écrit en <bpt i='0' x='0'>&lt;a0&gt;</bpt>Perl<ept i='0'>&lt;/a0&gt;</ept>, intégré dans un serveur Apache.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>GNU General Public License</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Licence publique générale GNU</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>LemonLDAP::NG is a free software, released under <bpt i='0' x='0'>&lt;a0&gt;</bpt>GPL<ept i='0'>&lt;/a0&gt;</ept> license.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>LemonLDAP::NG est un logiciel libre distribué sous licence <bpt i='0' x='0'>&lt;a0&gt;</bpt>GPL<ept i='0'>&lt;/a0&gt;</ept>.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>references</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>références</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>LemonLDAP::NG is the first <bpt i='0' x='0'>&lt;a0&gt;</bpt>SSO<ept i='0'>&lt;/a0&gt;</ept> software deployed in French administrations.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>LemonLDAP::NG est le logiciel <bpt i='0' x='0'>&lt;a0&gt;</bpt>SSO<ept i='0'>&lt;/a0&gt;</ept> le plus utilisé dans les administrations françaises.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>It can handle more than 200 000 users.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Il peut gérer plus de 200 000 utilisateurs.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Many private firms use it too.</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>De nombreuses sociétés privées l'utilisent également.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg><bpt i='1' x='1'>&lt;a1&gt;</bpt>Check our references<ept i='1'>&lt;/a1&gt;</ept>!</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg><bpt i='1' x='1'>&lt;a1&gt;</bpt>Consultez nos références<ept i='1'>&lt;/a1&gt;</ept>!</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Main Features</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Fonctionnalités principales</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Single Sign On for Web Applications</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Système d'authentification unique pour applications web</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Many <bpt i='0' x='0'>&lt;a0&gt;</bpt>SSO<ept i='0'>&lt;/a0&gt;</ept>-ready applications (<bpt i='1' x='1'>&lt;a1&gt;</bpt>OBM<ept i='1'>&lt;/a1&gt;</ept>, <bpt i='2' x='2'>&lt;a2&gt;</bpt>Bugzilla<ept i='2'>&lt;/a2&gt;</ept>, <bpt i='3' x='3'>&lt;a3&gt;</bpt>Dokuwiki<ept i='3'>&lt;/a3&gt;</ept>, etc.)</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>De nombreuses applications déjà prêtes pour le <bpt i='0' x='0'>&lt;a0&gt;</bpt>SSO<ept i='0'>&lt;/a0&gt;</ept> (<bpt i='1' x='1'>&lt;a1&gt;</bpt>OBM<ept i='1'>&lt;/a1&gt;</ept>, <bpt i='2' x='2'>&lt;a2&gt;</bpt>Bugzilla<ept i='2'>&lt;/a2&gt;</ept>, <bpt i='3' x='3'>&lt;a3&gt;</bpt>Dokuwiki<ept i='3'>&lt;/a3&gt;</ept>, etc.)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Special Handlers for <bpt i='0' x='0'>&lt;a0&gt;</bpt>Zimbra<ept i='0'>&lt;/a0&gt;</ept>, <bpt i='1' x='1'>&lt;a1&gt;</bpt>Sympa<ept i='1'>&lt;/a1&gt;</ept></seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Des agents spéciaux pour <bpt i='0' x='0'>&lt;a0&gt;</bpt>Zimbra<ept i='0'>&lt;/a0&gt;</ept>, <bpt i='1' x='1'>&lt;a1&gt;</bpt>Sympa<ept i='1'>&lt;/a1&gt;</ept></seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Tomcat <bpt i='0' x='0'>&lt;a0&gt;</bpt>SSO<ept i='0'>&lt;/a0&gt;</ept> Valve</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Une valve <bpt i='0' x='0'>&lt;a0&gt;</bpt>SSO<ept i='0'>&lt;/a0&gt;</ept> Tomcat</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Replace all .htaccess based security</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Remplace les systèmes de sécurité basé sur les .htaccess</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Forward <bpt i='0' x='0'>&lt;a0&gt;</bpt>SSO<ept i='0'>&lt;/a0&gt;</ept> trough <bpt i='1' x='1'>&lt;a1&gt;</bpt>HTTP<ept i='1'>&lt;/a1&gt;</ept> Auth-Basic or form replay</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Possibilité d'étendre le <bpt i='0' x='0'>&lt;a0&gt;</bpt>SSO<ept i='0'>&lt;/a0&gt;</ept> à des applications utilisant une authentification <bpt i='1' x='1'>&lt;a1&gt;</bpt>HTTP<ept i='1'>&lt;/a1&gt;</ept> Auth-Basic ou un formulaire HTML</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>One line code to integrate in Java, <bpt i='0' x='0'>&lt;a0&gt;</bpt>PHP<ept i='0'>&lt;/a0&gt;</ept>, .Net, <bpt i='1' x='1'>&lt;a1&gt;</bpt>Perl<ept i='1'>&lt;/a1&gt;</ept>, Ruby, Python, …</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Un code d'une ligne pour intégrer le SSO dans Java, <bpt i='0' x='0'>&lt;a0&gt;</bpt>PHP<ept i='0'>&lt;/a0&gt;</ept>, .Net, <bpt i='1' x='1'>&lt;a1&gt;</bpt>Perl<ept i='1'>&lt;/a1&gt;</ept>, Ruby, Python, …</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Strong authorization system</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Système strict de contrôle d'accès</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg><bpt i='0' x='0'>&lt;a0&gt;</bpt>URL<ept i='0'>&lt;/a0&gt;</ept> matching trough regular expressions (subdirectories, file types, …)</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Examen des <bpt i='0' x='0'>&lt;a0&gt;</bpt>URL<ept i='0'>&lt;/a0&gt;</ept> par expressions rationnelles (sous répertoires, types de fichiers, …)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Use of any user session information to build access rule</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>N'importe quelle donnée utilisateur peut être utilisée pour construire la règle</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Authentication modules</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Modules d'authentification</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Database</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Base de données</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Apache built-in modules (Kerberos, NTLM , OTP, …)</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Support des modules Apache (Kerberos, NTLM , OTP, …)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Multiple and Choice (modules stacking)</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Multiple et Choice (empilement d'autres modules)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>LDAP integration</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Intégration LDAP</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg><bpt i='0' x='0'>&lt;a0&gt;</bpt>LDAP<ept i='0'>&lt;/a0&gt;</ept> v2 and v3 protocol support</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Support des protocoles <bpt i='0' x='0'>&lt;a0&gt;</bpt>LDAP<ept i='0'>&lt;/a0&gt;</ept> v2 et v3</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Active Directory compliance</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Compatibilité Active Directory</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Password policy</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Politique de mots-de-passe</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Recursive groups</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Groupes récursif</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Identity provider</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Fournisseur d'identité</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>User interfaces</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Interfaces utilisateur</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Dynamic application menu</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Menu dynamique des applications</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Password change form</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Formulaire de changement de mots-de-passe</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Password reset by mail</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Réinitialisation de mots-de-passe par courriel</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Graphical Manager</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Gestionnaire graphique</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Sessions explorer</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Explorateur de sessions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Status page</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Page de status</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Apache logs</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Journalisation par Apache</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Log4Perl compatibility</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Compatibilité Log4Perl</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Security</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Sécurité</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Protected cookies</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Cookies protégés</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg><bpt i='0' x='0'>&lt;a0&gt;</bpt>XSS<ept i='0'>&lt;/a0&gt;</ept> and <bpt i='1' x='1'>&lt;a1&gt;</bpt>SQL<ept i='1'>&lt;/a1&gt;</ept>/<bpt i='2' x='2'>&lt;a2&gt;</bpt>LDAP<ept i='2'>&lt;/a2&gt;</ept> injection protection</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Protection contre les injections <bpt i='0' x='0'>&lt;a0&gt;</bpt>XSS<ept i='0'>&lt;/a0&gt;</ept> et <bpt i='1' x='1'>&lt;a1&gt;</bpt>SQL<ept i='1'>&lt;/a1&gt;</ept>/<bpt i='2' x='2'>&lt;a2&gt;</bpt>LDAP<ept i='2'>&lt;/a2&gt;</ept></seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Compatibility with Apache mod_security</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Compatibilité avec le module mod_security d'Apache</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>User tracking in Apache logs</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Traçabilité des utilisateurs dans les journaux d'Apache</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Project activity</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Activité du projet</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>Ohloh statistics</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Statistiques Ohloh</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg>SVN activity</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg>Activité SVN</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv xml:lang="EN-US">
+        <seg><bpt i='0' x='0'>&lt;a0&gt;</bpt>Doc update<ept i='0'>&lt;/a0&gt;</ept> by clement_oudot (2010/11/24 18:04)</seg>
+      </tuv>
+      <tuv xml:lang="FR-FR">
+        <seg><bpt i='0' x='0'>&lt;a0&gt;</bpt>Mise à jour de la documentation<ept i='0'>&lt;/a0&gt;</ept> par clement_oudot (2010/11/24 18:04)</seg>
+      </tuv>
+    </tu>
+  </body>
+</tmx>

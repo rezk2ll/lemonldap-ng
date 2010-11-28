@@ -1,0 +1,536 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tmx SYSTEM "tmx11.dtd">
+<tmx version="1.1">
+  <header
+    creationtool="OmegaT"
+    creationtoolversion="1.8.1_2"
+    segtype="sentence"
+    o-tmf="OmegaT TMX"
+    adminlang="EN-US"
+    srclang="EN-US"
+    datatype="plaintext"
+  >
+  </header>
+  <body>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>DokuWiki offline version</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>DokuWiki version hors-ligne</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Offline</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Hors ligne</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LemonLDAP::NG - Offline Version</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>LemonLDAP::NG - Version hors-ligne</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Start</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Commencer</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>All pages</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Toutes les pages</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>nothing here...</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>rien ici...</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Alphabetical Index</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Index alphabétique</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Back to main index</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Retour à l'index principal</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>en</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>fr</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>References</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Références</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>They use LemonLDAP::NG!</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Ils utilisent LemonLDAP::NG!</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Nb users</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Nb d'utilisateurs</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Nb protected applications</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Nb d'applications protégées</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Authentication portal</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Portails d'authentification</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Protected sites:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Sites protégés:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Screenshots</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Captures d'écran</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>lemonldap-ng-portal-password.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;lemonldap-ng-portal-password.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Presentation</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Présentation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LemonLDAP::NG is an open source Web Single Sign On product (WebSSO) written in &lt;a0&gt;Perl&lt;/a0&gt;, plugged into Apache Web Server.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>LemonLDAP::NG est un logiciel d'authentification unique web (WebSSO) écrit en &lt;a0&gt;Perl&lt;/a0&gt;, intégré dans un serveur Apache.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>GNU General Public License</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Licence publique générale GNU</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LemonLDAP::NG is a free software, released under &lt;a0&gt;GPL&lt;/a0&gt; license.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>LemonLDAP::NG est un logiciel libre distribué sous licence &lt;a0&gt;GPL&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>references</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>références</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LemonLDAP::NG is the first &lt;a0&gt;SSO&lt;/a0&gt; software deployed in French administrations.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>LemonLDAP::NG est le logiciel &lt;a0&gt;SSO&lt;/a0&gt; le plus utilisé dans les administrations françaises.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>It can handle more than 200 000 users.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Il peut gérer plus de 200 000 utilisateurs.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Many private firms use it too.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>De nombreuses sociétés privées l'utilisent également.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a1&gt;Check our references&lt;/a1&gt;!</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a1&gt;Consultez nos références&lt;/a1&gt;!</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Main Features</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Fonctionnalités principales</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Single Sign On for Web Applications</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Système d'authentification unique pour applications web</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Many &lt;a0&gt;SSO&lt;/a0&gt;-ready applications (&lt;a1&gt;OBM&lt;/a1&gt;, &lt;a2&gt;Bugzilla&lt;/a2&gt;, &lt;a3&gt;Dokuwiki&lt;/a3&gt;, etc.)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>De nombreuses applications déjà prêtes pour le &lt;a0&gt;SSO&lt;/a0&gt; (&lt;a1&gt;OBM&lt;/a1&gt;, &lt;a2&gt;Bugzilla&lt;/a2&gt;, &lt;a3&gt;Dokuwiki&lt;/a3&gt;, etc.)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Special Handlers for &lt;a0&gt;Zimbra&lt;/a0&gt;, &lt;a1&gt;Sympa&lt;/a1&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Des agents spéciaux pour &lt;a0&gt;Zimbra&lt;/a0&gt;, &lt;a1&gt;Sympa&lt;/a1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Tomcat &lt;a0&gt;SSO&lt;/a0&gt; Valve</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Une valve &lt;a0&gt;SSO&lt;/a0&gt; Tomcat</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Replace all .htaccess based security</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Remplace les systèmes de sécurité basé sur les .htaccess</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Forward &lt;a0&gt;SSO&lt;/a0&gt; trough &lt;a1&gt;HTTP&lt;/a1&gt; Auth-Basic or form replay</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Possibilité d'étendre le &lt;a0&gt;SSO&lt;/a0&gt; à des applications utilisant une authentification &lt;a1&gt;HTTP&lt;/a1&gt; Auth-Basic ou un formulaire HTML</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>One line code to integrate in Java, &lt;a0&gt;PHP&lt;/a0&gt;, .Net, &lt;a1&gt;Perl&lt;/a1&gt;, Ruby, Python, …</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Un code d'une ligne pour intégrer le SSO dans Java, &lt;a0&gt;PHP&lt;/a0&gt;, .Net, &lt;a1&gt;Perl&lt;/a1&gt;, Ruby, Python, …</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Strong authorization system</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Système strict de contrôle d'accès</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;URL&lt;/a0&gt; matching trough regular expressions (subdirectories, file types, …)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Examen des &lt;a0&gt;URL&lt;/a0&gt; par expressions rationnelles (sous répertoires, types de fichiers, …)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Use of any user session information to build access rule</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>N'importe quelle donnée utilisateur peut être utilisée pour construire la règle</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Authentication modules</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Modules d'authentification</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Database</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Base de données</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Apache built-in modules (Kerberos, NTLM , OTP, …)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Support des modules Apache (Kerberos, NTLM , OTP, …)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Multiple and Choice (modules stacking)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Multiple et Choice (empilement d'autres modules)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LDAP integration</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Intégration LDAP</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; v2 and v3 protocol support</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Support des protocoles &lt;a0&gt;LDAP&lt;/a0&gt; v2 et v3</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Active Directory compliance</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Compatibilité Active Directory</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Password policy</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Politique de mots-de-passe</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Recursive groups</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Groupes récursif</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Identity provider</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Fournisseur d'identité</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>User interfaces</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Interfaces utilisateur</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Dynamic application menu</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Menu dynamique des applications</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Password change form</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Formulaire de changement de mots-de-passe</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Password reset by mail</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Réinitialisation de mots-de-passe par courriel</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Graphical Manager</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Gestionnaire graphique</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Sessions explorer</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Explorateur de sessions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Status page</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Page de status</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Apache logs</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Journalisation par Apache</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Log4Perl compatibility</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Compatibilité Log4Perl</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Security</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Sécurité</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Protected cookies</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Cookies protégés</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;XSS&lt;/a0&gt; and &lt;a1&gt;SQL&lt;/a1&gt;/&lt;a2&gt;LDAP&lt;/a2&gt; injection protection</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Protection contre les injections &lt;a0&gt;XSS&lt;/a0&gt; et &lt;a1&gt;SQL&lt;/a1&gt;/&lt;a2&gt;LDAP&lt;/a2&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Compatibility with Apache mod_security</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Compatibilité avec le module mod_security d'Apache</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>User tracking in Apache logs</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Traçabilité des utilisateurs dans les journaux d'Apache</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Project activity</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Activité du projet</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Ohloh statistics</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Statistiques Ohloh</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>SVN activity</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Activité SVN</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Doc update&lt;/a0&gt; by clement_oudot (2010/11/24 18:04)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;Mise à jour de la documentation&lt;/a0&gt; par clement_oudot (2010/11/24 18:04)</seg>
+      </tuv>
+    </tu>
+  </body>
+</tmx>

@@ -14,6 +14,14 @@
   <body>
     <tu>
       <tuv lang="EN-US">
+        <seg>en</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>fr</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>DokuWiki offline version</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -70,6 +78,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>de</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>fr</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Alphabetical Index</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -86,10 +102,210 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>en</seg>
+        <seg>quickstart</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>fr</seg>
+        <seg>Démarrage rapide</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a4&gt;references&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a4&gt;références&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a2&gt;screenshots&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a2&gt;captures d'écran&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a4&gt;security&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a4&gt;securité&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a6&gt;selfmadeapplication&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a6&gt;applications maison&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Translations</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Traductions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Translators that want to help us are welcome !</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Les traducteurs qui veulent nous aider sont les bienvenus !</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Portal translation</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Traduction du portail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>2 kind of files may be translated:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>2 types de fichiers peuvent être traduits :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;&lt;a1&gt;HTML&lt;/a1&gt; templates&lt;/s0&gt;: in &lt;lang&gt; tags, add your translation, they will be automaticaly used</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Les &lt;s0&gt;modèles &lt;a1&gt;HTML&lt;/a1&gt;&lt;/s0&gt;: dans les balises &lt;lang&gt;, ajoutez vos traductions, elles seront automatiquement utilisées</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Portal messages&lt;/s0&gt;: all messages are grouped in lemonldap-ng/lib/Lemonldap/NG/Portal/_i18n.pm.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Les &lt;s0&gt;messages du portail&lt;/s0&gt;: tous les messages sont regroupés dans lemonldap-ng/lib/Lemonldap/NG/Portal/_i18n.pm.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You just have to create error_zz and msg_zz subroutines &lt;e1&gt;(where zz is your international code, example: “fr” for France)&lt;/e1&gt; by copying error_en and msg_en.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Vous avez simplement à créer les fonctions error_zz et msg_zz &lt;e1&gt;(où zz est votre code international, exemple: “fr” pour le français)&lt;/e1&gt; en copiant error_en et msg_en.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Note that you have to use UTF-8 characters</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Notez que vous devez utiliser des caractères UTF-8</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Manager translation</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Traduction du manager</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Manager interface&lt;/s0&gt;: all messages are grouped in lemonldap-ng-manager/lib/Lemonldap/NG/Manager/_i18n.pm.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>L'&lt;s0&gt;interface du Manager&lt;/s0&gt;: tous les messages sont regroupés dans lemonldap-ng-manager/lib/Lemonldap/NG/Manager/_i18n.pm.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Copy en subroutine to zz &lt;e1&gt;(where zz is your international code, example: “fr” for France)&lt;/e1&gt; then translate messages.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Copiez la fonction en en zz &lt;e1&gt;(où zz est votre code international, exemple: “fr” pour le français)&lt;/e1&gt; et traduisez ensuite les messages.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Documentation&lt;/s0&gt;: use &lt;a1&gt;OmegaT&lt;/a1&gt; to translate offline documentation and configure it:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Documentation&lt;/s0&gt;: utilisez &lt;a1&gt;OmegaT&lt;/a1&gt; pour traduire la dcumentation hors-ligne et configurez le :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Project = &lt;e0&gt;[path/to/trunk/build/lemonldap-ng]&lt;/e0&gt;/omegat.files/zz &lt;e1&gt;(where zz is your international code, example: “fr” for France)&lt;/e1&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Projet = &lt;e0&gt;[chemin/vers/trunk/build/lemonldap-ng]&lt;/e0&gt;/omegat.files/zz &lt;e1&gt;(où zz est votre code international, exemple: “fr” pour le français)&lt;/e1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Source directory = &lt;e0&gt;[path/to/trunk/build/lemonldap-ng]&lt;/e0&gt;/doc/</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Répertoire des sources = &lt;e0&gt;[chemin/vers/trunk/build/lemonldap-ng]&lt;/e0&gt;/doc/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Destination directory = &lt;e0&gt;[path/to/trunk/build/lemonldap-ng]&lt;/e0&gt;/po-doc/zz (where zz is your international code, example: “fr” for France)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Répertoire de destination = &lt;e0&gt;[chemin/vers/trunk/build/lemonldap-ng]&lt;/e0&gt;/po-doc/zz (où zz est votre code international, exemple: “fr” pour le français)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>translation memory directory = &lt;e0&gt;[path/to/trunk/build/lemonldap-ng]&lt;/e0&gt;/omegat.files/zz/tm/</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Répertoire des mémoires de traduction = &lt;e0&gt;[chemin/vers/trunk/build/lemonldap-ng]&lt;/e0&gt;/omegat.files/zz/tm/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Glossary directory = &lt;e0&gt;[path/to/trunk/build/lemonldap-ng]&lt;/e0&gt;/omegat.files/zz/glossary/</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Répertoire des glossaires = &lt;e0&gt;[path/to/trunk/build/lemonldap-ng]&lt;/e0&gt;/omegat.files/zz/glossary/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Update translations</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Télécharger les traductions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>To update translations, ask to &lt;a0&gt;lemonldap-ng-dev@ow2.org&lt;/a0&gt; to update your files.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Pour télécharger les traductions, demandez à &lt;a0&gt;lemonldap-ng-dev@ow2.org&lt;/a0&gt; pour les mettres en ligne.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>If you want to become member of &lt;a1&gt;LL::NG&lt;/a1&gt; team ask to &lt;a2&gt;lemonldap-ng-dev@ow2.org&lt;/a2&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>SI vous souhaitez devenir membre de l'équipe &lt;a1&gt;LL::NG&lt;/a1&gt; demandez-le également à &lt;a2&gt;lemonldap-ng-dev@ow2.org&lt;/a2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>When you commit &lt;a0&gt;OmegaT&lt;/a0&gt; files in svn repository, don't push backup files.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Lorsque vous validez les fichiers &lt;a0&gt;OmegaT&lt;/a0&gt; dans le dépôt svn, n'y poussez pas les fichiers de sauvegarde.</seg>
       </tuv>
     </tu>
     <tu>
@@ -150,6 +366,30 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Portal (dark theme)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Portail (thème dark)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Portal (impact theme)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Portail (thème impact)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Portal (pastel theme)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Portail (thème pastel)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>lemonldap-ng-portal-password.png</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -186,6 +426,14 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>LemonLDAP::NG est un logiciel libre distribué sous licence &lt;a0&gt;GPL&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Single Sign On</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Authentification unique (Single Sign On)</seg>
       </tuv>
     </tu>
     <tu>
@@ -502,10 +750,10 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>User tracking in Apache logs</seg>
+        <seg>User tracking in Apache logs or syslog</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>Traçabilité des utilisateurs dans les journaux d'Apache</seg>
+        <seg>Traçabilité des utilisateurs dans les journaux d'Apache ou via syslog</seg>
       </tuv>
     </tu>
     <tu>
@@ -530,14 +778,6 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>Activité SVN</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;a0&gt;Doc update&lt;/a0&gt; by clement_oudot (2010/11/24 18:04)</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>&lt;a0&gt;Mise à jour de la documentation&lt;/a0&gt; par clement_oudot (2010/11/24 18:04)</seg>
       </tuv>
     </tu>
     <tu>
@@ -570,14 +810,6 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>Installation et configuration</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Latest stable version</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Dernière version stable</seg>
       </tuv>
     </tu>
     <tu>
@@ -694,10 +926,18 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Users&lt;/s0&gt; : &lt;a1&gt;lemonldap-ng-users@ow2.org&lt;/a1&gt; (&lt;a2&gt;Archives&lt;/a2&gt;)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Utilisateurs&lt;/s0&gt; : &lt;a1&gt;lemonldap-ng-users@ow2.org&lt;/a1&gt; (&lt;a2&gt;Archives&lt;/a2&gt;)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Developers&lt;/s0&gt; : &lt;a1&gt;lemonldap-ng-dev@ow2.org&lt;/a1&gt; (&lt;a2&gt;Archives&lt;/a2&gt;)</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>&lt;s0&gt;Developpeurs&lt;/s0&gt; : &lt;a1&gt;lemonldap-ng-dev@ow2.org&lt;/a1&gt; (&lt;a2&gt;Archives&lt;/a2&gt;)</seg>
+        <seg>&lt;s0&gt;Développeurs&lt;/s0&gt; : &lt;a1&gt;lemonldap-ng-dev@ow2.org&lt;/a1&gt; (&lt;a2&gt;Archives&lt;/a2&gt;)</seg>
       </tuv>
     </tu>
     <tu>
@@ -902,14 +1142,6 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Debian bundle</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Paquets Debian</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>For RPM systems, you have to &lt;a0&gt;install pre-required packages&lt;/a0&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -1038,6 +1270,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>download</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Téléchargement</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Full access control</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -1158,14 +1398,6 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>by double &lt;a0&gt;IP&lt;/a0&gt; (sessions opened from multiple computers)</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>par double &lt;a0&gt;IP&lt;/a0&gt; (sessions ouvertes depuis plusieurs ordinateurs)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>It can be used to delete a session</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -1274,6 +1506,1318 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>Ceci peut être utilisé pour notifier des changements de droits,… Consultez la page &lt;a0&gt;notifications&lt;/a0&gt; pour plus d'information.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>OW2 annual conference</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Conférence annuelle OW2</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This tutorial will guide you into a minimal installation and configuration procedure.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Ce tutoriel vous guidera pour réaliser une installation et une configuration minimale.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You need some prerequisites:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Certains pré-requis sont nécessaire :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>A computer with a GNU/Linux or recent UNIX system</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Un serveur équipé d'un GNU/Linux ou d'un système UNIX récent</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>A web browser launched from the computer (to access localhost)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Un navigateur web lançé depuis ce serveur (pour accéder à la boucle locale)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>An &lt;a0&gt;LDAP&lt;/a0&gt; directory with a user account (default suffix: dc=example,dc=com)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Un annuaire &lt;a0&gt;LDAP&lt;/a0&gt; avec un compte (suffixe par défaut : dc=example,dc=com)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>A cup of coffee (or tea, we are open minded)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Une tasse de café (ou de thé, nous sommes ouverts)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can install Lemonldap::NG using &lt;a0&gt;packages&lt;/a0&gt; (rpm or deb) or by hand as described here :</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Vous pouvez installer Lemonldap::NG en utilisant des &lt;a0&gt;paquets&lt;/a0&gt; (rpm or deb) à la main :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LemonLDAP::NG is written in &lt;a0&gt;Perl&lt;/a0&gt; and requires a lot of &lt;a1&gt;Perl&lt;/a1&gt; dependencies.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>LemonLDAP::NG est écrit en &lt;a0&gt;Perl&lt;/a0&gt; et nécessite de nombreuses dépendances &lt;a1&gt;Perl&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a2&gt;You must install them first&lt;/a2&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a2&gt;Vous devez les installer au préalable&lt;/a2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Get the tarball on &lt;a0&gt;Download page&lt;/a0&gt; and follow next steps (or install using packages):</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Récupérez les sources sur la &lt;a0&gt;page de téléchargement&lt;/a0&gt; et suivez les étapes suivantes (ou utilisez les paquets):</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Extract</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Extraction</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Build</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Construction</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Install</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Installation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>If your &lt;a0&gt;LDAP&lt;/a0&gt; suffix is not dc=example,dc=com, use:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Si le suffixe de votre annuaire &lt;a0&gt;LDAP&lt;/a0&gt; n'est pas dc=example,dc=com, utilisez :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can also change the host and port with options LDAPHOST and LDAPPORT.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Vous pouvez aussi changer le nom d'hôte et le port avec les options LDAPHOST et LDAPPORT.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>System</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Système</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Update your /etc/hosts to map &lt;a0&gt;SSO&lt;/a0&gt; URLs to localhost:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Mettez à jour votre /etc/hosts pour faire correspondre les URLs du &lt;a0&gt;SSO&lt;/a0&gt; à votre machine :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Include LemonLDAP::NG configuration in your main Apache configuration:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Incluez la configuration LemonLDAP::NG dans celle d'Apache :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Restart Apache:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Redémarrez Apache:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Run</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Test</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Open SSO session</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Ouvrez une session SSO</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Go on &lt;a0&gt;http://auth.example.com&lt;/a0&gt; and log with &lt;a1&gt;LDAP&lt;/a1&gt; user account.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Allez sur &lt;a0&gt;http://auth.example.com&lt;/a0&gt; et connectez-vous avec le compte &lt;a1&gt;LDAP&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Access protected application</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Accéder aux applications protégées</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Try &lt;a0&gt;http://test1.example.com&lt;/a0&gt; or &lt;a1&gt;http://test2.example.com&lt;/a1&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Essayez &lt;a0&gt;http://test1.example.com&lt;/a0&gt; ou &lt;a1&gt;http://test2.example.com&lt;/a1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Edit configuration</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Editer la configuration</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Go on &lt;a0&gt;http://manager.example.com&lt;/a0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Allez sur &lt;a0&gt;http://manager.example.com&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LemonLDAP::NG is a modular WebSSO (Single Sign On) based on Apache::Session modules.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>LemonLDAP::NG est en WebSSO (Single Sign On) modulaire basé sur les modules Apache::Session.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>It simplifies the build of a protected area with a few changes in the application.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Il simplifie la construction d'une aire protégée avec peu d'impact sur les applications.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Authentication Authorization Accounting</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Authentification Autorisation Traçabilité</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>It manages both authentication and authorization and provides headers for accounting.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Il gère à la fois les authentifications et les autorisations et fournit des en-têtes HTTP pour la traçabilité.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>So you can have a full &lt;a0&gt;AAA&lt;/a0&gt; protection for your web space as described below.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Vous vouvez ainsi avoir une protection &lt;a0&gt;AAA&lt;/a0&gt; complète pour votre espace web tel qu'indiqué ci-dessus.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Main components</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Composants principaux</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Manager&lt;/s0&gt;: used to manage LemonLDAP::NG configuration and to explore sessions.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Manager&lt;/s0&gt;: utilisé pour gérer la configuration LemonLDAP::NG et explorer les sessions.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Dedicated to administrators</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Dédié aux administrateurs</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://en.wikipedia.org/wiki/SAML</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://fr.wikipedia.org/wiki/SAML</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://en.wikipedia.org/wiki/OpenID</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://fr.wikipedia.org/wiki/OpenID</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://en.wikipedia.org/wiki/Central_Authentication_Service</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://fr.wikipedia.org/wiki/Central_Authentication_Service</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;&lt;a1&gt;Portal&lt;/a1&gt;&lt;/s0&gt;: used to authenticate users, display applications list and provides identity provider service (&lt;a2&gt;SAML&lt;/a2&gt;, &lt;a3&gt;OpenID&lt;/a3&gt;, &lt;a4&gt;CAS&lt;/a4&gt;).</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;&lt;a1&gt;Portail&lt;/a1&gt;&lt;/s0&gt;: utilisé pour authentifier les utilisateurs, afficher la liste des applications et fournir le service d'identité (&lt;a2&gt;SAML&lt;/a2&gt;, &lt;a3&gt;OpenID&lt;/a3&gt;, &lt;a4&gt;CAS&lt;/a4&gt;).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Portal provides also many other features (see &lt;a5&gt;portal&lt;/a5&gt; for more)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Le portail fournit également de nombreux autres services (voir &lt;a5&gt;portail&lt;/a5&gt; pour plus d'informations)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Handler&lt;/s0&gt;: Apache modules used to protect applications</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Agent&lt;/s0&gt; (Handler): module Apache utilisé pour protéger les applications</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Databases</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Bases de données</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>We call “database” a backend where we can read or write a data.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Nous appelons “base de données” un dispositif dans lequel nous pouvons lire et écrire des données.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This can be a file, an &lt;a0&gt;LDAP&lt;/a0&gt; directory, …</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Ce peut être un fichier, en annuaire &lt;a0&gt;LDAP&lt;/a0&gt;, …</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>We split databases in two categories:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Nous scindons les bases de données en deux catégories :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;External databases&lt;/s0&gt;: not managed by LemonLDAP::NG, for example user database</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Les &lt;s0&gt;bases de données externes&lt;/s0&gt;: non gérées par LemonLDAP::NG, par exemple la base des utilisateurs</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Internal databases&lt;/s0&gt;: only used by LemonLDAP::NG</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Les &lt;s0&gt;bases de données internes&lt;/s0&gt;: utilisées seulement par LemonLDAP::NG</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Main &lt;a0&gt;external databases&lt;/a0&gt; are:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Les principales &lt;a0&gt;bases de données externes&lt;/a0&gt; sont :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Authentication&lt;/s0&gt;: how authenticate users</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Authentification&lt;/s0&gt;: comment authentifier les utilisateurs</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;User&lt;/s0&gt;: where collect user data</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Utilisateurs&lt;/s0&gt;: où trouver les données utilisateurs</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Password&lt;/s0&gt;: where change the password</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Mots-de-passe&lt;/s0&gt;: où changer les mots-de-passe</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Main internal databases are:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Les principales bases de données internes sont :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;&lt;a1&gt;Configuration&lt;/a1&gt;&lt;/s0&gt;: where configuration is stored.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;&lt;a1&gt;Configuration&lt;/a1&gt;&lt;/s0&gt;: où est stocké la configuration.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This does not include Apache configuration which is not managed by LemonLDAP::NG</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Ceci n'inclue pas la configuration propre d'Apache qui n'est pas gérée par LemonLDAP::NG</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;&lt;a1&gt;Sessions&lt;/a1&gt;&lt;/s0&gt;: where sessions are stored.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;&lt;a1&gt;Sessions&lt;/a1&gt;&lt;/s0&gt;: où sont stockées les sessions.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;&lt;a1&gt;Notifications&lt;/a1&gt;&lt;/s0&gt;: messages displayed to connected users</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;&lt;a1&gt;Notifications&lt;/a1&gt;&lt;/s0&gt;: messages à afficher aux utilisateurs connectés</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Cache&lt;/s0&gt;: cache for configuration and sessions</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Cache&lt;/s0&gt;: cache pour la configuration et les sessions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Kinematics</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Cinématique</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Login</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Connexion</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>User tries to access protected application, his request is catched by Handler</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Lorsqu'un utilisateur tente d'accéder à une application protégée, il est intercepté par l'agent (handler)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;SSO cookies&lt;/a0&gt; is not detected, so Handler redirects user to Portal</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Si le &lt;a0&gt;cookies SSO&lt;/a0&gt; n'est pas détecté, l'agent redirige l'utilisateur vers le portail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>User authenticates on Portal</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>L'utilisateur d'authentifie sur le portail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Portal checks authentication</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Le portail examine les données d'authentification</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>If authentication succeed, Portal collect user data</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Si l'authentication est acceptée, le portail récupère les données de l'utilisateur</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Portal creates a session to store user data</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Le portail crée une session et y stocke les données</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Portal gets the session key</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Le portail récupère la clef de session</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Portal creates &lt;a0&gt;SSO cookies&lt;/a0&gt; with session key as value</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Le portail crée le &lt;a0&gt;cookie SSO&lt;/a0&gt; avec la clef de la session comme valeur</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>User is redirected on protected application, with his new cookie</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>L'utilisateur est redirigé vers l'application demandée avec son nouveau cookie</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Handler gets session get from cookie and gets session</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>L'agent récupère la session en utilisant la valeur du cookie</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Handler stores user data in its cache</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Il stocke ces données dans son cache</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Handler check access rule and send headers to protected applications</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>L'agent vérifie les droits d'accès à l'application et envoie des en-têtes HTTP à l'application protégée</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Protected application sends response to Handler</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>L'application protégée renvoie sa réponse à l'agent</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Handler sends the response to user</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Celui-ci la renvoie à l'utilisateur</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Handler will then check &lt;a0&gt;SSO cookies&lt;/a0&gt; for each &lt;a1&gt;HTTP&lt;/a1&gt; request.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>L'agent examinera le &lt;a0&gt;cookie SSO&lt;/a0&gt; pour chaque requête &lt;a1&gt;HTTP&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Logout</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Déconnexion</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Default use case:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Cas général:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>User clicks on the logout link in Portal</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>L'utilisateur clique sur le bouton déconnexion du portail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Portal destroys session and redirects user on itself with an empty &lt;a0&gt;SSO cookies&lt;/a0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Le portail détruit la session et redirige l'utilisateur sur lui-même avec un &lt;a0&gt;cookie SSO&lt;/a0&gt; vide</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>User is redirected on portal and his &lt;a0&gt;SSO cookies&lt;/a0&gt; is empty</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>L'utilisateur est redirigé vers le portail et son &lt;a0&gt;cookie SSO&lt;/a0&gt; est vide</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LemonLDAP::NG is also able to &lt;a0&gt;catch logout request&lt;/a0&gt; on protected applications, with different behavior:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>LemonLDAP::NG peut également &lt;a0&gt;intercepter les requêtes de déconnexion&lt;/a0&gt; des applications protégées, avec différent comportements :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;&lt;a1&gt;SSO&lt;/a1&gt; logout&lt;/s0&gt;: the request is not forwarded to application, only the &lt;a2&gt;SSO&lt;/a2&gt; session is closed</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Déconnexion &lt;a1&gt;SSO&lt;/a1&gt;&lt;/s0&gt;: la requête n'est pas transmise à l'application, seule la session &lt;a2&gt;SSO&lt;/a2&gt; est fermée</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Application logout&lt;/s0&gt;: the request is forwarded to application but &lt;a1&gt;SSO&lt;/a1&gt; session is not closed</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Déconnexion applicative&lt;/s0&gt;: la requête est transmise à l'application mais la session &lt;a1&gt;SSO&lt;/a1&gt; n'est pas détruite</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;&lt;a1&gt;SSO&lt;/a1&gt; and Application logout&lt;/s0&gt;: the request is forwarded to application and &lt;a2&gt;SSO&lt;/a2&gt; session is closed</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Déconnexion &lt;a1&gt;SSO&lt;/a1&gt; et applicative&lt;/s0&gt;: la requête est transmise à l'application et la session &lt;a2&gt;SSO&lt;/a2&gt; est fermée</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>After logout process, the user is redirected on portal, or on a configured &lt;a0&gt;URL&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Après déconnexion, l'utilisateur est redirigé vers une &lt;a0&gt;URL&lt;/a0&gt; configurée ou vers le portail.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Session expiration</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Expiration des sessions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The session expires after 2 hours by default.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Toute session expire au boût de 2 heures par défaut.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Handlers have a session cache, with a default lifetime of 10 minutes.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Les agents disposent d'un cache de session d'une durée de vie par défaut de 10 minutes.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>So for Handler on different physical servers than the Portal, a user with an expired session can still be authorized still the cache expires.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Ainsi pour les agents installés sur des serveurs physiquement différent de celui hébergeant le portail, un utilisateur dont la session a expiré peut toujours être autorisé jusqu'à expiration du cache.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Sessions are deleted by a scheduled task.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Les sessions sont effacées par des tâches planifiées.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Don't forget to install cron files !</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>N'oubliez pas d'installer les fichiers cron !</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Cross Domain Authentication (CDA)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Authentification inter-domaines (CDA)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>For security reason, a cookie provided for a domain cannot be sent to another domain.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Pour des raisons de sécurité, un cookie fournit par un domaine ne peut être transmit à un autre.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>To extend &lt;a0&gt;SSO&lt;/a0&gt; on several domains, a cross-domain mechanism is implemented in LemonLDAP::NG.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Pour étendre le &lt;a0&gt;SSO&lt;/a0&gt; sur plusieurs domaines, un mécanisme inter-domaines est intégré à LemonLDAP::NG.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>User owns &lt;a0&gt;SSO cookies&lt;/a0&gt; on the main domain (see &lt;s1&gt;&lt;a2&gt;Login kinematics&lt;/a2&gt;&lt;/s1&gt;)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>L'utilisateur dispose d'un &lt;a0&gt;cookie SSO&lt;/a0&gt; dans le domaine principal (voir la &lt;s1&gt;&lt;a2&gt;cinématique de connexion&lt;/a2&gt;&lt;/s1&gt;)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>User tries to access a protected application in a different domain</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>L'utilisateur tente d'accéder à une application protégée d'un autre domaine</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Handler does not see &lt;a0&gt;SSO cookies&lt;/a0&gt; (because it is not in main domain) and redirects user on Portal</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>L'agent n'intercepte pas de &lt;a0&gt;cookie SSO&lt;/a0&gt; (car il n'est pas dans le même domaine) et redirige l'utilisateur vers le portail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Portal recognizes the user with its &lt;a0&gt;SSO cookies&lt;/a0&gt;, and see he is coming from a different domain</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Le portail reconnaît l'utilisateur par son &lt;a0&gt;cookie SSO&lt;/a0&gt; et voit qu'il sollicite une application d'un domaine différent</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Portal redirects user on protected application with his session ID as &lt;a0&gt;URL&lt;/a0&gt; parameter</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Portal redirige l'utilisateur vers l'application demandée avec son identifiant de session en paramètre de l'&lt;a0&gt;URL&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Handler detects &lt;a0&gt;URL&lt;/a0&gt; parameter and create a &lt;a1&gt;SSO cookies&lt;/a1&gt; on its domain, with session ID as value</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>L'agent détecte le paramètre d'&lt;a0&gt;URL&lt;/a0&gt; et crée le &lt;a1&gt;cookie SSO&lt;/a1&gt; dans son domaine, avec la valeur de l'identifiant de session</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Authentication, Authorization and Accounting (AAA) mechanisms</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Mécanismes d'authentification, d'autorisation et de traçabilité (AAA)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Authentication</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Authentification</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>If a user is not authenticated and attempts to connect to an area protected by a LemonLDAP::NG compatible Handler, he is redirected to a portal.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Si un utilisateur n'est pas authentifié et tente de se connecter à une application protégée par un agent compatible LemonLDAP::NG, il est redirigé vers le portail.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Authentication process main steps are:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Les étapes du processus d'authentication sont :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Control &lt;a1&gt;URL&lt;/a1&gt; origin&lt;/s0&gt;: prevent &lt;a2&gt;XSS&lt;/a2&gt; attacks and bad redirections</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Vérification de l'&lt;a1&gt;URL&lt;/a1&gt; demandée&lt;/s0&gt; : prévient les attaques &lt;a2&gt;XSS&lt;/a2&gt; et les mauvaises redirections</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Control existing session&lt;/s0&gt;: detect &lt;a1&gt;SSO&lt;/a1&gt; session, apply configured constraints (1 session per user, 1 session per &lt;a2&gt;IP&lt;/a2&gt;, …)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Recherche d'une session valide&lt;/s0&gt; : détecte les sessions &lt;a1&gt;SSO&lt;/a1&gt;, applique les contraintes configurées (1 session par utilisateur, 1 session par &lt;a2&gt;IP&lt;/a2&gt;, …)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Extract form info&lt;/s0&gt;: get login/password, certificate, environment varibale (depending on authentication module)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Extrait les informations du formulaire&lt;/s0&gt; : récupère compte/mot-de-passe, certificat, variables d'environnement (suivant le module d'authentification)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Get user info&lt;/s0&gt;: contact user database to collect attributes</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Récupère les informations utilisateur&lt;/s0&gt; : contacte la base de données utilisateurs pour les obtenir</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Set macros&lt;/s0&gt;: compute configured macros</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Installe les macros&lt;/s0&gt; : calcule les macros demandées</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Set groups&lt;/s0&gt;: request user database to find groups</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Installe les groupes&lt;/s0&gt; : interroge la base de données utilisateurs pour trouver les groupes</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Set local groups&lt;/s0&gt;: compute configured groups</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Installe les groupes locaux&lt;/s0&gt; : calcule les groupes demandés par la configuration</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Authenticate&lt;/s0&gt;: contact authentication database to check credentials</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Authentifie&lt;/s0&gt; : contacte le dispositif d'authentication pour vérification</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Grant session&lt;/s0&gt;: check rights to open &lt;a1&gt;SSO&lt;/a1&gt; session</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Autorise la session&lt;/s0&gt; : vérifie le droit d'ouvrir une session &lt;a1&gt;SSO&lt;/a1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Store&lt;/s0&gt;: store user info in session database</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Stocke&lt;/s0&gt;: stocke les données utilisateurs dans la base de données des sessions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Build cookie&lt;/s0&gt;: build &lt;a1&gt;SSO cookies&lt;/a1&gt; with session ID</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Construit les cookies&lt;/s0&gt;: construit les &lt;a1&gt;cookies SSO&lt;/a1&gt; avec l'identifiant de session</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Redirect&lt;/s0&gt;: redirect user on protected application or on Portal</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Redirige&lt;/s0&gt;: redirige l'utilisateur vers l'application protégée demandée ou vers le portail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LemonLDAP::NG &lt;a0&gt;SSO cookies&lt;/a0&gt; are generated by Apache::Session, they are as secure as a 128-bit random cookie.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Les &lt;a0&gt;cookies SSO&lt;/a0&gt; de LemonLDAP::NG sont générés par Apache::Session, ils sont aussi sécurisés que tout cookie issu d'un alée de 128 bits.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You may use the &lt;a1&gt;securedCookie&lt;/a1&gt; options to avoid session hijacking.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Il est recommandé d'utilisé les options &lt;a1&gt;securedCookie&lt;/a1&gt; pour éviter le vol de session.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Authorization</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Autorisations</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Authorization is controlled only by Handlers.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Les autorisations sont vérifiées seulement par les agents (handlers).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>An authorization is defined by:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Une autorisation est définie pas :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>An &lt;a0&gt;URL&lt;/a0&gt; pattern (or &lt;c1&gt;default&lt;/c1&gt; to match all URLs)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Une expression rationnelle sur l'&lt;a0&gt;URL&lt;/a0&gt; (ou &lt;c1&gt;default&lt;/c1&gt; qui correspond à toutes les URL)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>An access rule</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Une règle d'accès</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Authorizations are defined inside a virtualhost and takes effect only on it.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Les autorisations sont définies à l'intérieur d'un hôte virtuel (virtualhost) et n'ont d'effet que sur lui.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>There are no &lt;e0&gt;global&lt;/e0&gt; authorizations.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Il n'y a pas d'autorisations &lt;e0&gt;globales&lt;/e0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Access rules values can be:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Les valeurs des règles d'accès peuvent être :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;c0&gt;accept&lt;/c0&gt;: all authenticated users can pass</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;c0&gt;accept&lt;/c0&gt;: tout utilisateur authentifié est autorisé</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;c0&gt;deny&lt;/c0&gt;: nobody is welcomed</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;c0&gt;deny&lt;/c0&gt;: personne n'est autorisé</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;c0&gt;unprotect&lt;/c0&gt;: all is open!</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;c0&gt;unprotect&lt;/c0&gt;: tout est ouvert !</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;c0&gt;logout_sso&lt;/c0&gt;, &lt;c1&gt;logout_app&lt;/c1&gt;, &lt;c2&gt;logout_app_sso&lt;/c2&gt;: catch logout request</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;c0&gt;logout_sso&lt;/c0&gt;, &lt;c1&gt;logout_app&lt;/c1&gt;, &lt;c2&gt;logout_app_sso&lt;/c2&gt;: intercepte les requêtes de déconnexion</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Perl&lt;/a0&gt; expression: perl code snippet that returns 0 or 1</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>des expressions &lt;a0&gt;Perl&lt;/a0&gt; : codes Perl qui renvoient 0 ou 1</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Some examples:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Quelques exemples:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Accept all authenticated users:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Accepte tout utilisateur authentifié :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;URL&lt;/a0&gt; pattern: &lt;c1&gt;default&lt;/c1&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Expression sur l'&lt;a0&gt;URL&lt;/a0&gt; : &lt;c1&gt;default&lt;/c1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Access rule: &lt;c0&gt;accept&lt;/c0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Règle d'accès : &lt;c0&gt;accept&lt;/c0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Restrict /admin to administrators group</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Restreint /admin au groupe des administrateurs</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;URL&lt;/a0&gt; pattern: &lt;c1&gt;^/admin/&lt;/c1&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Expression sur l'&lt;a0&gt;URL&lt;/a0&gt; : &lt;c1&gt;^/admin/&lt;/c1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Access rule: &lt;c0&gt;$groups =~ /\badministrators\b/&lt;/c0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Règle d'accès : &lt;c0&gt;$groups =~ /\badministrators\b/&lt;/c0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;c0&gt;\b&lt;/c0&gt; means start or end of a word in PCRE (&lt;a1&gt;Perl&lt;/a1&gt; Compatible Regular Expressions)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;c0&gt;\b&lt;/c0&gt; signifie début ou fin de mot dans les PCRE (Expressions Rationnelles Compatible &lt;a1&gt;Perl&lt;/a1&gt;)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>See &lt;a0&gt;Writing rules and headers&lt;/a0&gt; chapter.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Voir le chapître &lt;a0&gt;Écrire les règles et en-têtes&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Accounting</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Traçabilité</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Logging portal access</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Trace des authentification</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Portal produce a &lt;c0&gt;notice&lt;/c0&gt; message in &lt;a1&gt;Apache logs or syslog&lt;/a1&gt; when a user authenticates (or fails to authenticate) and logs out.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Le portail génère un message de niveau &lt;c0&gt;notice&lt;/c0&gt; &lt;a1&gt;dans les journaux d'Apache ou dans syslog&lt;/a1&gt; lorsqu'un utilisateur d'authentifie (ou échoue) ou se déconnecte.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Logging application access</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Trace des accès aux applications</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Handler inform Apache of connected user (parameter &lt;c0&gt;whatToTrace&lt;/c0&gt;), so you can see user login in Apache access logs.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>L'agent fournit à Apache l'identifiant de l'utilisateur (paramètre &lt;c0&gt;whatToTrace&lt;/c0&gt;), ainsi vous pouvez voir l'identifiant dans les journaux d'accès d'Apache.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The real accounting has to be done by the application itself since &lt;a0&gt;SSO&lt;/a0&gt; logs can not understand transactions.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>La réelle traçabilité doit être faite par l'application elle-même car les journaux du &lt;a0&gt;SSO&lt;/a0&gt; ne peuvent interprêter les transactions.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LemonLDAP::NG can export &lt;a0&gt;HTTP headers&lt;/a0&gt; either using a proxy or protecting directly the application.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>LemonLDAP::NG peut exporter des &lt;a0&gt;en-têtes HTTP&lt;/a0&gt; qu'on l'utilise sur une reverse-proxy ou directement sur le serveur à protéger</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>An &lt;a0&gt;HTTP&lt;/a0&gt; header is defined by:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Un en-tête &lt;a0&gt;HTTP&lt;/a0&gt; est défini par :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>A name</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Un nom</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>A value</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Une valeur</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Headers are defined inside a virtualhost and takes effect only on it.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Les en-têtes sont définies à l'intérieur d'un hôte virtuel (virtualhost) et n'ont d'effet que sur lui.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>There are no &lt;e0&gt;global&lt;/e0&gt; headers.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Il n'y a pas d'en-tête &lt;e0&gt;global&lt;/e0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The header value is a &lt;a0&gt;Perl&lt;/a0&gt; expression, returning a string.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>La valeur d'un en-tête est une expression &lt;a0&gt;Perl&lt;/a0&gt; qui retourne une chaîne de caractères.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Send login in Auth-User:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Envoi de l'identifiant dans Auth-User:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Name: &lt;c0&gt;Auth-User&lt;/c0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Nom : &lt;c0&gt;Auth-User&lt;/c0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Value: &lt;c0&gt;$uid&lt;/c0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Valeur : &lt;c0&gt;$uid&lt;/c0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Send “Lastname, firstname” in Auth-Name:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Envoi de “Lastname, firstname” dans Auth-Name:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Name: &lt;c0&gt;Auth-Name&lt;/c0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Nom: &lt;c0&gt;Auth-Name&lt;/c0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Value: &lt;c0&gt;$sn + ”, ” + $gn&lt;/c0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Valeur: &lt;c0&gt;$sn + ”, ” + $gn&lt;/c0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>See &lt;a0&gt;Writing rules and headers&lt;/a0&gt; for more.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Voir &lt;a0&gt;Écrire les règles et en-têtes&lt;/a0&gt; pour plus d'informations.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Latest stable version</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Dernière version stable</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>User tracking in Apache logs</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Traçabilité des utilisateurs dans les journaux d'Apache</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Doc update&lt;/a0&gt; by clement_oudot (2010/11/24 18:04)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;Mise à jour de la documentation&lt;/a0&gt; par clement_oudot (2010/11/24 18:04)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Debian bundle</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Paquets Debian</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>by double &lt;a0&gt;IP&lt;/a0&gt; (sessions opened from multiple computers)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>par double &lt;a0&gt;IP&lt;/a0&gt; (sessions ouvertes depuis plusieurs ordinateurs)</seg>
       </tuv>
     </tu>
   </body>
