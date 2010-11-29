@@ -11,11 +11,13 @@ configure_requires:
 build_requires:
     Convert::PEM:         0
     Crypt::OpenSSL::RSA:  0
+    Crypt::OpenSSL::X509:  0
     IO::String:           0
 requires:
     CGI:                  3.08
     Convert::PEM:         0
     Crypt::OpenSSL::RSA:  0
+    Crypt::OpenSSL::X509:  0
     HTML::Template:       0
     IO::String:           0
     JSON:                 0
