@@ -23,8 +23,8 @@
         var css_menu='<TMPL_VAR NAME="CSS">';
         var css_theme='<TMPL_VAR NAME="CSS_THEME">';
         var themepath='<TMPL_VAR NAME="DIR">/';
-	var treeautoclose='<TMPL_VAR NAME="TREE_AUTOCLOSE">';
-    var treejquerycss='false';
+	var treejquerycss='false';
+	var treeautoclose='false';
 //]]></script>
 <script src="<TMPL_VAR NAME="DIR">/js/manager.js" type="text/JavaScript"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf8" />

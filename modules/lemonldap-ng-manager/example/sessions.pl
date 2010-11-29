@@ -29,6 +29,7 @@ my $cgi = Lemonldap::NG::Manager::Sessions->new(
 
 my $skin     = $cgi->{managerSkin} or $cgi->abort('managerSkin is not defined');
 my $css      = 'tree.css';
+my $css_theme = 'ui-lightness';
 my $skin_dir = 'skins';
 my $main_dir = $ENV{DOCUMENT_ROOT};
 
@@ -41,8 +42,8 @@ my $template = HTML::Template->new(
 $template->param( SCRIPT_NAME    => $ENV{SCRIPT_NAME} );
 $template->param( TREE           => $cgi->tree() );
 $template->param( DIR            => "$skin_dir/$skin" );
-$template->param( TREE_AUTOCLOSE => $cgi->{managerTreeAutoClose} );
 $template->param( CSS            => $css );
+$template->param( CSS_THEME   => $css_theme );
 print $cgi->header('text/html; charset=utf-8');
 print $template->output;
 
