@@ -302,8 +302,15 @@ find $RPM_BUILD_ROOT -name perllocal.pod -exec rm -f {} \;
 find $RPM_BUILD_ROOT -name *.bak -exec rm -f {} \;
 
 # Set apache user in some files (see Makefile)
+# Note: we do not use the APACHEUSER and APACHEGROUP in make install
+# because it launches a 'chown', which is not permitted if RPM is not
+# built as root
 sed -i 's/nobody/%{lm_apacheuser}/' %{buildroot}%{_sysconfdir}/cron.d/*
 sed -i 's/nobody/%{lm_apacheuser}/' %{buildroot}%{lm_sharedir}/bin/lmConfigEditor
+
+# Minify Javascript and CSS
+./scripts/minifierjs `find %{buildroot} -name '*.js'`
+./scripts/minifiercss `find %{buildroot} -name '*.css'`
 
 # Set UNIX rights
 mkdir -p %{buildroot}%{lm_vardir}/sessions/lock
@@ -313,7 +320,7 @@ chmod 640 %{buildroot}%{lm_storagefile}
 chmod 770 %{buildroot}%{lm_vardir}/sessions
 chmod 770 %{buildroot}%{lm_vardir}/sessions/lock
 
-#Touch for ghost
+# Touch for ghost
 mkdir -p $RPM_BUILD_ROOT%{apache_confdir}
 touch $RPM_BUILD_ROOT%{apache_confdir}/z-lemonldap-ng-handler.conf
 touch $RPM_BUILD_ROOT%{apache_confdir}/z-lemonldap-ng-manager.conf
@@ -323,29 +330,43 @@ touch $RPM_BUILD_ROOT%{apache_confdir}/z-lemonldap-ng-portal.conf
 # Post Installation
 #==============================================================================
 %post -n lemonldap-ng-conf
-if [ $1 -eq 1 ] ; then
-	# Create symlink in Apache configuration
-	# We use "z-lemonldap-ng" so that Apache read the file after "perl.conf"
-  if [ ! -e %{apache_confdir}/z-lemonldap-ng-handler.conf ] ; then
-	ln -s %{lm_confdir}/handler-apache2.conf %{apache_confdir}/z-lemonldap-ng-handler.conf
-  fi
-  if [ ! -e %{apache_confdir}/z-lemonldap-ng-manager.conf ] ; then
-	ln -s %{lm_confdir}/manager-apache2.conf %{apache_confdir}/z-lemonldap-ng-manager.conf
-  fi
-  if [ ! -e %{apache_confdir}/z-lemonldap-ng-portal.conf ] ; then
-	ln -s %{lm_confdir}/portal-apache2.conf %{apache_confdir}/z-lemonldap-ng-portal.conf
-  fi
+# Create symlink in Apache configuration
+# We use "z-lemonldap-ng-*" so that Apache read the files after "perl.conf"
+if [ ! -e %{apache_confdir}/z-lemonldap-ng-handler.conf ] ; then
+	ln -s %{lm_confdir}/handler-apache2.conf %{apache_confdir}/z-lemonldap-ng-handler.conf || :
+fi
+if [ ! -e %{apache_confdir}/z-lemonldap-ng-manager.conf ] ; then
+	ln -s %{lm_confdir}/manager-apache2.conf %{apache_confdir}/z-lemonldap-ng-manager.conf || :
+fi
+if [ ! -e %{apache_confdir}/z-lemonldap-ng-portal.conf ] ; then
+	ln -s %{lm_confdir}/portal-apache2.conf %{apache_confdir}/z-lemonldap-ng-portal.conf || :
+fi
+# Upgrade from previous version
+# See http://lemonldap-ng.org/documentation/1.0/upgrade
+if [ $1 -gt 1 ] ; then
+	if [ -e %{lm_confdir}/storage.conf -o -e %{lm_confdir}/apply.conf -o -e %{lm_confdir}/apps-list.xml ] ; then
+		# Run migration script
+		%{lm_sharedir}/bin/lmMigrateConfFiles2ini 2>&1 > /dev/null || :
+		# Fix ownership
+		chgrp %{lm_apachegroup} %{lm_storagefile} || :
+	fi
 fi
 
 #==============================================================================
 # Pre uninstallation
 #==============================================================================
 %preun -n lemonldap-ng-conf
+# Package removal
 if [ $1 -eq 0 ] ; then
 	# Remove symlink in Apache configuration
-	rm -f %{apache_confdir}/z-lemonldap-ng-handler.conf
-	rm -f %{apache_confdir}/z-lemonldap-ng-manager.conf
-	rm -f %{apache_confdir}/z-lemonldap-ng-portal.conf
+	rm -f %{apache_confdir}/z-lemonldap-ng-handler.conf 2>&1 > /dev/null || :
+	rm -f %{apache_confdir}/z-lemonldap-ng-manager.conf 2>&1 > /dev/null || :
+	rm -f %{apache_confdir}/z-lemonldap-ng-portal.conf 2>&1 > /dev/null  || :
+fi
+# Upgrade from previous version
+if [ $1 -eq 1 ] ; then
+	# Remove old symlink in Apache configuration
+	rm -f %{apache_confdir}/z-lemonldap-ng.conf 2&>1 >/dev/null || :
 fi
 
 %clean
