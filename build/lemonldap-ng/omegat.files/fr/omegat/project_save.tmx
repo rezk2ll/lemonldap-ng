@@ -22,6 +22,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>text/html; charset=utf-8</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>text/html; charset=utf-8</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>DokuWiki offline version</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -46,10 +54,42 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>css/all.css</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>css/all.css</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>css/screen.css</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>css/screen.css</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>css/print.css</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>css/print.css</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>LemonLDAP::NG - Offline Version</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>LemonLDAP::NG - Version hors-ligne</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>pages/start.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>pages/start.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -62,10 +102,66 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>pages/documentation.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>pages/documentation.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Documentation</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Documentation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>pages/contact.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>pages/contact.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Contact</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Contact</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>index/alphabetical.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>index/alphabetical.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>All pages</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Toutes les pages</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>0; URL=../../</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>0; URL=../../</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>noindex</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>noindex</seg>
       </tuv>
     </tu>
     <tu>
@@ -78,10 +174,218 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../css/all.css</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../css/all.css</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../css/screen.css</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../css/screen.css</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../css/print.css</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../css/print.css</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Alphabetical Index</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Index alphabétique</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>#a</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>#a</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>#b</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>#b</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>#c</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>#c</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>#d</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>#d</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>#e</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>#e</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>#f</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>#f</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>#g</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>#g</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>#h</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>#h</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>#i</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>#i</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>#l</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>#l</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>#m</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>#m</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>#n</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>#n</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>#o</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>#o</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>#p</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>#p</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>#q</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>#q</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>#r</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>#r</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>#s</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>#s</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>#t</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>#t</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>#u</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>#u</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>#w</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>#w</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>#z</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>#z</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;A&lt;/a0&gt; &lt;a1&gt;B&lt;/a1&gt; &lt;a2&gt;C&lt;/a2&gt; &lt;a3&gt;D&lt;/a3&gt; &lt;a4&gt;E&lt;/a4&gt; &lt;a5&gt;F&lt;/a5&gt; &lt;a6&gt;G&lt;/a6&gt; &lt;a7&gt;H&lt;/a7&gt; &lt;a8&gt;I&lt;/a8&gt; J K &lt;a9&gt;L&lt;/a9&gt; &lt;a10&gt;M&lt;/a10&gt; &lt;a11&gt;N&lt;/a11&gt; &lt;a12&gt;O&lt;/a12&gt; &lt;a13&gt;P&lt;/a13&gt; &lt;a14&gt;Q&lt;/a14&gt; &lt;a15&gt;R&lt;/a15&gt; &lt;a16&gt;S&lt;/a16&gt; &lt;a17&gt;T&lt;/a17&gt; &lt;a18&gt;U&lt;/a18&gt; V &lt;a19&gt;W&lt;/a19&gt; X Y &lt;a20&gt;Z&lt;/a20&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;A&lt;/a0&gt; &lt;a1&gt;B&lt;/a1&gt; &lt;a2&gt;C&lt;/a2&gt; &lt;a3&gt;D&lt;/a3&gt; &lt;a4&gt;E&lt;/a4&gt; &lt;a5&gt;F&lt;/a5&gt; &lt;a6&gt;G&lt;/a6&gt; &lt;a7&gt;H&lt;/a7&gt; &lt;a8&gt;I&lt;/a8&gt; J K &lt;a9&gt;L&lt;/a9&gt; &lt;a10&gt;M&lt;/a10&gt; &lt;a11&gt;N&lt;/a11&gt; &lt;a12&gt;O&lt;/a12&gt; &lt;a13&gt;P&lt;/a13&gt; &lt;a14&gt;Q&lt;/a14&gt; &lt;a15&gt;R&lt;/a15&gt; &lt;a16&gt;S&lt;/a16&gt; &lt;a17&gt;T&lt;/a17&gt; &lt;a18&gt;U&lt;/a18&gt; V &lt;a19&gt;W&lt;/a19&gt; X Y &lt;a20&gt;Z&lt;/a20&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../index.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../index.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -94,6 +398,1270 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>A</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>A</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/activedirectoryminihowto.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/activedirectoryminihowto.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/applications.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/applications.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/authapache.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/authapache.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/applications/authbasic.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/applications/authbasic.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/authcas.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/authcas.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/authchoice.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/authchoice.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/authdbi.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/authdbi.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/authldap.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/authldap.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/authmulti.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/authmulti.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/authnull.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/authnull.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/authopenid.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/authopenid.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/authproxy.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/authproxy.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/authremote.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/authremote.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/authsaml.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/authsaml.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/authssl.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/authssl.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/authtwitter.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/authtwitter.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;activedirectoryminihowto&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;activedirectoryminihowto&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a2&gt;applications&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a2&gt;applications&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a4&gt;authapache&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a4&gt;authapache&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a6&gt;authbasic&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a6&gt;authbasic&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a8&gt;authcas&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a8&gt;authcas&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a10&gt;authchoice&lt;/a10&gt;&lt;br11/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a10&gt;authchoice&lt;/a10&gt;&lt;br11/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a12&gt;authdbi&lt;/a12&gt;&lt;br13/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a12&gt;authdbi&lt;/a12&gt;&lt;br13/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a14&gt;authldap&lt;/a14&gt;&lt;br15/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a14&gt;authldap&lt;/a14&gt;&lt;br15/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a16&gt;authmulti&lt;/a16&gt;&lt;br17/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a16&gt;authmulti&lt;/a16&gt;&lt;br17/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a18&gt;authnull&lt;/a18&gt;&lt;br19/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a18&gt;authnull&lt;/a18&gt;&lt;br19/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a20&gt;authopenid&lt;/a20&gt;&lt;br21/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a20&gt;authopenid&lt;/a20&gt;&lt;br21/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a22&gt;authproxy&lt;/a22&gt;&lt;br23/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a22&gt;authproxy&lt;/a22&gt;&lt;br23/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a24&gt;authremote&lt;/a24&gt;&lt;br25/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a24&gt;authremote&lt;/a24&gt;&lt;br25/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a26&gt;authsaml&lt;/a26&gt;&lt;br27/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a26&gt;authsaml&lt;/a26&gt;&lt;br27/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a28&gt;authssl&lt;/a28&gt;&lt;br29/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a28&gt;authssl&lt;/a28&gt;&lt;br29/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a30&gt;authtwitter&lt;/a30&gt;&lt;br31/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a30&gt;authtwitter&lt;/a30&gt;&lt;br31/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>B</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>B</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/browseablesessionbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/browseablesessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/applications/bugzilla.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/applications/bugzilla.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;browseablesessionbackend&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;browseablesessionbackend&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a2&gt;bugzilla&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a2&gt;bugzilla&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>C</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>C</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/cda.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/cda.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/changeconfbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/changeconfbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/conferences.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/conferences.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/configlocation.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/configlocation.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/configvhost.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/configvhost.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/contact.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/contact.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/customfunctions.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/customfunctions.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;cda&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;cda&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a2&gt;changeconfbackend&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a2&gt;changeconfbackend&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a4&gt;conferences&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a4&gt;conferences&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a6&gt;configlocation&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a6&gt;configlocation&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a8&gt;configvhost&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a8&gt;configvhost&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a10&gt;contact&lt;/a10&gt;&lt;br11/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a10&gt;contact&lt;/a10&gt;&lt;br11/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a12&gt;customfunctions&lt;/a12&gt;&lt;br13/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a12&gt;customfunctions&lt;/a12&gt;&lt;br13/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>D</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>D</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/default_sidebar.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/default_sidebar.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/wiki/dokuwiki.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/wiki/dokuwiki.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/download.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/download.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/applications/drupal.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/applications/drupal.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;default_sidebar&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;default_sidebar&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a2&gt;documentation&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a2&gt;documentation&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a4&gt;dokuwiki&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a4&gt;dokuwiki&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a6&gt;download&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a6&gt;download&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a8&gt;drupal&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a8&gt;drupal&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>E</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>E</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/error.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/error.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/exportedvars.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/exportedvars.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/extendedfunctions.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/extendedfunctions.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;error&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;error&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a2&gt;exportedvars&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a2&gt;exportedvars&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a4&gt;extendedfunctions&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a4&gt;extendedfunctions&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>F</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>F</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/features.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/features.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/federationproxy.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/federationproxy.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/fileconfbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/fileconfbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/filesessionbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/filesessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/formreplay.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/formreplay.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;features&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;features&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a2&gt;federationproxy&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a2&gt;federationproxy&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a4&gt;fileconfbackend&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a4&gt;fileconfbackend&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a6&gt;filesessionbackend&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a6&gt;filesessionbackend&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a8&gt;formreplay&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a8&gt;formreplay&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>G</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>G</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/applications/googleapps.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/applications/googleapps.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>googleapps</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>googleapps</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>H</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>H</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/header_remote_user_conversion.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/header_remote_user_conversion.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/highavailability.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/highavailability.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;header_remote_user_conversion&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;header_remote_user_conversion&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a2&gt;highavailability&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a2&gt;highavailability&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>I</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>I</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/idpcas.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/idpcas.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/idpopenid.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/idpopenid.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/idpsaml.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/idpsaml.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/installdeb.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/installdeb.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/installrpm.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/installrpm.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/installtarball.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/installtarball.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;idpcas&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;idpcas&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a2&gt;idpopenid&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a2&gt;idpopenid&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a4&gt;idpsaml&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a4&gt;idpsaml&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a6&gt;installdeb&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a6&gt;installdeb&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a8&gt;installrpm&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a8&gt;installrpm&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a10&gt;installtarball&lt;/a10&gt;&lt;br11/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a10&gt;installtarball&lt;/a10&gt;&lt;br11/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>L</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>L</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/ldapconfbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/ldapconfbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/ldapminihowto.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/ldapminihowto.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/ldapsessionbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/ldapsessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/applications/liferay.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/applications/liferay.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/logoutforward.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/logoutforward.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/logs.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/logs.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;ldapconfbackend&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;ldapconfbackend&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a2&gt;ldapminihowto&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a2&gt;ldapminihowto&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a4&gt;ldapsessionbackend&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a4&gt;ldapsessionbackend&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a6&gt;liferay&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a6&gt;liferay&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a8&gt;logoutforward&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a8&gt;logoutforward&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a10&gt;logs&lt;/a10&gt;&lt;br11/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a10&gt;logs&lt;/a10&gt;&lt;br11/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>M</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>M</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/applications/mediawiki.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/applications/mediawiki.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/memcachedsessionbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/memcachedsessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/menu1.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/menu1.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/mrtg.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/mrtg.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/mysqlminihowto.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/mysqlminihowto.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;mediawiki&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;mediawiki&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a2&gt;memcachedsessionbackend&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a2&gt;memcachedsessionbackend&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a4&gt;menu1&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a4&gt;menu1&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a6&gt;mrtg&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a6&gt;mrtg&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a8&gt;mysqlminihowto&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a8&gt;mysqlminihowto&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>N</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>N</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/nosqlsessionbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/nosqlsessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/notifications.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/notifications.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;nosqlsessionbackend&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;nosqlsessionbackend&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a2&gt;notifications&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a2&gt;notifications&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>O</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>O</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/applications/obm.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/applications/obm.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>obm</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>obm</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>P</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>P</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/parameterlist.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/parameterlist.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/passwordstore.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/passwordstore.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/performances.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/performances.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/applications/phpldapadmin.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/applications/phpldapadmin.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/playground/playground.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/playground/playground.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/portal.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/portal.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/portalcustom.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/portalcustom.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/portalmenu.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/portalmenu.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/prereq.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/prereq.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/presentation.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/presentation.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;parameterlist&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;parameterlist&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a2&gt;passwordstore&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a2&gt;passwordstore&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a4&gt;performances&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a4&gt;performances&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a6&gt;phpldapadmin&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a6&gt;phpldapadmin&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a8&gt;playground&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a8&gt;playground&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a10&gt;portal&lt;/a10&gt;&lt;br11/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a10&gt;portal&lt;/a10&gt;&lt;br11/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a12&gt;portalcustom&lt;/a12&gt;&lt;br13/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a12&gt;portalcustom&lt;/a12&gt;&lt;br13/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a14&gt;portalmenu&lt;/a14&gt;&lt;br15/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a14&gt;portalmenu&lt;/a14&gt;&lt;br15/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a16&gt;prereq&lt;/a16&gt;&lt;br17/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a16&gt;prereq&lt;/a16&gt;&lt;br17/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a18&gt;presentation&lt;/a18&gt;&lt;br19/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a18&gt;presentation&lt;/a18&gt;&lt;br19/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Q</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Q</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/quickstart.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/quickstart.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>quickstart</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -102,10 +1670,226 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>R</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>R</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/rbac.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/rbac.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/redirections.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/redirections.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/references.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/references.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/resetpassword.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/resetpassword.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;rbac&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;rbac&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a2&gt;redirections&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a2&gt;redirections&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a4&gt;references&lt;/a4&gt;&lt;br5/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;a4&gt;références&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a6&gt;resetpassword&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a6&gt;resetpassword&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>S</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>S</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/samlservice.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/samlservice.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/screenshots.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/screenshots.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/security.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/security.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/selfmadeapplication.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/selfmadeapplication.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/sessions.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/sessions.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/soapconfbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/soapconfbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/soapminihowto.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/soapminihowto.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/soapservices.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/soapservices.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/soapsessionbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/soapsessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/applications/spring.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/applications/spring.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/sqlconfbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/sqlconfbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/sqlsessionbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/sqlsessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/ssocookie.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/ssocookie.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/start.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/start.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/status.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/status.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/applications/sympa.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/applications/sympa.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/wiki/syntax.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/wiki/syntax.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;samlservice&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;samlservice&lt;/a0&gt;&lt;br1/&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -130,6 +1914,222 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;a6&gt;applications maison&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a8&gt;sessions&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a8&gt;sessions&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a10&gt;soapconfbackend&lt;/a10&gt;&lt;br11/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a10&gt;soapconfbackend&lt;/a10&gt;&lt;br11/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a12&gt;soapminihowto&lt;/a12&gt;&lt;br13/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a12&gt;soapminihowto&lt;/a12&gt;&lt;br13/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a14&gt;soapservices&lt;/a14&gt;&lt;br15/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a14&gt;soapservices&lt;/a14&gt;&lt;br15/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a16&gt;soapsessionbackend&lt;/a16&gt;&lt;br17/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a16&gt;soapsessionbackend&lt;/a16&gt;&lt;br17/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a18&gt;spring&lt;/a18&gt;&lt;br19/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a18&gt;spring&lt;/a18&gt;&lt;br19/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a20&gt;sqlconfbackend&lt;/a20&gt;&lt;br21/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a20&gt;sqlconfbackend&lt;/a20&gt;&lt;br21/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a22&gt;sqlsessionbackend&lt;/a22&gt;&lt;br23/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a22&gt;sqlsessionbackend&lt;/a22&gt;&lt;br23/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a24&gt;ssocookie&lt;/a24&gt;&lt;br25/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a24&gt;ssocookie&lt;/a24&gt;&lt;br25/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a26&gt;start&lt;/a26&gt;&lt;br27/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a26&gt;start&lt;/a26&gt;&lt;br27/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a28&gt;status&lt;/a28&gt;&lt;br29/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a28&gt;status&lt;/a28&gt;&lt;br29/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a30&gt;sympa&lt;/a30&gt;&lt;br31/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a30&gt;sympa&lt;/a30&gt;&lt;br31/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a32&gt;syntax&lt;/a32&gt;&lt;br33/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a32&gt;syntax&lt;/a32&gt;&lt;br33/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>T</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>T</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/applications/tomcat.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/applications/tomcat.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/translations.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/translations.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;tomcat&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;tomcat&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a2&gt;translations&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a2&gt;traductions&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>U</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>U</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/upgrade.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/upgrade.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>upgrade</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>upgrade</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>W</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>W</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/writingrulesand_headers.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/writingrulesand_headers.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>writingrulesand_headers</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>writingrulesand_headers</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Z</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Z</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/applications/zimbra.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/applications/zimbra.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>zimbra</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>zimbra</seg>
       </tuv>
     </tu>
     <tu>
@@ -170,6 +2170,14 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>2 types de fichiers peuvent être traduits :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>HyperText Markup Language</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>HyperText Markup Language</seg>
       </tuv>
     </tu>
     <tu>
@@ -230,6 +2238,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://www.omegat.org/</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://www.omegat.org/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Documentation&lt;/s0&gt;: use &lt;a1&gt;OmegaT&lt;/a1&gt; to translate offline documentation and configure it:</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -286,6 +2302,30 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>mailto:&amp;#x6c;&amp;#x65;&amp;#x6d;&amp;#x6f;&amp;#x6e;&amp;#x6c;&amp;#x64;&amp;#x61;&amp;#x70;&amp;#x2d;&amp;#x6e;&amp;#x67;&amp;#x2d;&amp;#x64;&amp;#x65;&amp;#x76;&amp;#x40;&amp;#x6f;&amp;#x77;&amp;#x32;&amp;#x2e;&amp;#x6f;&amp;#x72;&amp;#x67;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>mailto:&amp;#x6c;&amp;#x65;&amp;#x6d;&amp;#x6f;&amp;#x6e;&amp;#x6c;&amp;#x64;&amp;#x61;&amp;#x70;&amp;#x2d;&amp;#x6e;&amp;#x67;&amp;#x2d;&amp;#x64;&amp;#x65;&amp;#x76;&amp;#x40;&amp;#x6f;&amp;#x77;&amp;#x32;&amp;#x2e;&amp;#x6f;&amp;#x72;&amp;#x67;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&amp;#x6c;&amp;#x65;&amp;#x6d;&amp;#x6f;&amp;#x6e;&amp;#x6c;&amp;#x64;&amp;#x61;&amp;#x70;&amp;#x2d;&amp;#x6e;&amp;#x67;&amp;#x2d;&amp;#x64;&amp;#x65;&amp;#x76;&amp;#x40;&amp;#x6f;&amp;#x77;&amp;#x32;&amp;#x2e;&amp;#x6f;&amp;#x72;&amp;#x67;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&amp;#x6c;&amp;#x65;&amp;#x6d;&amp;#x6f;&amp;#x6e;&amp;#x6c;&amp;#x64;&amp;#x61;&amp;#x70;&amp;#x2d;&amp;#x6e;&amp;#x67;&amp;#x2d;&amp;#x64;&amp;#x65;&amp;#x76;&amp;#x40;&amp;#x6f;&amp;#x77;&amp;#x32;&amp;#x2e;&amp;#x6f;&amp;#x72;&amp;#x67;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LemonLDAP::NG</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>LemonLDAP::NG</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>To update translations, ask to &lt;a0&gt;lemonldap-ng-dev@ow2.org&lt;/a0&gt; to update your files.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -326,10 +2366,50 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Région Basse-Normandie</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Région Basse-Normandie</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/logos/logo_rbn.png?id=references</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/logos/logo_rbn.png?id=references</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>logos:logo_rbn.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>logos:logo_rbn.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/logos/logo_rbn.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/logos/logo_rbn.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Nb users</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Nb d'utilisateurs</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>~1800</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>~1800</seg>
       </tuv>
     </tu>
     <tu>
@@ -342,10 +2422,322 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>~10</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>~10</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Authentication portal</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Portails d'authentification</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>https://www.portail.crbn.fr</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>https://www.portail.crbn.fr</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Applications</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Applications</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Outlook Web Access, …</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Outlook Web Access, …</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/screenshots/rbn/rbn-portal.png?id=references</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/screenshots/rbn/rbn-portal.png?id=references</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>screenshots:rbn:rbn-portal.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>screenshots:rbn:rbn-portal.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/rbn/rbn-portal.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/rbn/rbn-portal.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/screenshots/rbn/rbn-applis.png?id=references</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/screenshots/rbn/rbn-applis.png?id=references</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>screenshots:rbn:rbn-applis.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>screenshots:rbn:rbn-applis.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/rbn/rbn-applis.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/rbn/rbn-applis.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Gendarmerie Nationale</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Gendarmerie Nationale</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/logos/logo_gn.png?id=references</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/logos/logo_gn.png?id=references</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>logos:logo_gn.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>logos:logo_gn.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/logos/logo_gn.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/logos/logo_gn.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>105.000</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>105.000</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>~100</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>~100</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>OBM, RoundCube, Sympa, MediaWiki,…</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>OBM, RoundCube, Sympa, MediaWiki,…</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Bibliothèque Publique d'Information</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Bibliothèque Publique d'Information</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/logos/logo_bpi.png?id=references</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/logos/logo_bpi.png?id=references</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>logos:logo_bpi.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>logos:logo_bpi.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/logos/logo_bpi.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/logos/logo_bpi.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>~500</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>~500</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>https://websso.dmz.bpi.fr/</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>https://websso.dmz.bpi.fr/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LINAGORA</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>LINAGORA</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/logos/logo_linagora.png?id=references</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/logos/logo_linagora.png?id=references</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>logos:logo_linagora.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>logos:logo_linagora.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/logos/logo_linagora.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/logos/logo_linagora.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>~150</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>~150</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>~5</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>~5</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>https://auth.linagora.com/</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>https://auth.linagora.com/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Wordpress, GLPI, OBM, Dokuwiki, …</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Wordpress, GLPI, OBM, Dokuwiki, …</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>SGS</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>SGS</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/logos/sgs_white_small.jpg?id=references</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/logos/sgs_white_small.jpg?id=references</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>logos:sgs_white_small.jpg</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>logos:sgs_white_small.jpg</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/logos/sgs_white_small.jpg</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/logos/sgs_white_small.jpg</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>~50</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>~50</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>South Bay Community Network</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>South Bay Community Network</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>https://auth.sso.sbay.org/</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>https://auth.sso.sbay.org/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>TikiWiki, …</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>TikiWiki, …</seg>
       </tuv>
     </tu>
     <tu>
@@ -358,10 +2750,42 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://wiki.sbay.org/</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://wiki.sbay.org/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.linuxpicnic.org/</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://www.linuxpicnic.org/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.svwux.org/</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://www.svwux.org/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Screenshots</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Captures d'écran</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>1.0</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>1.0</seg>
       </tuv>
     </tu>
     <tu>
@@ -374,10 +2798,178 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/dark/menu.png?w=800&amp;amp;h=515</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/1.0/dark/menu.png?w=800&amp;amp;h=515</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>menu.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>menu.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/dark/menu.png?w=200&amp;amp;h=128</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/1.0/dark/menu.png?w=200&amp;amp;h=128</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/screenshots/1.0/dark/menu.png?id=screenshots</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/screenshots/1.0/dark/menu.png?id=screenshots</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/dark/password.png?w=800&amp;amp;h=515</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/1.0/dark/password.png?w=800&amp;amp;h=515</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>password.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>password.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/dark/password.png?w=200&amp;amp;h=128</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/1.0/dark/password.png?w=200&amp;amp;h=128</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/screenshots/1.0/dark/password.png?id=screenshots</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/screenshots/1.0/dark/password.png?id=screenshots</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/dark/portal.png?w=800&amp;amp;h=515</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/1.0/dark/portal.png?w=800&amp;amp;h=515</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>portal.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>portal.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/dark/portal.png?w=200&amp;amp;h=128</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/1.0/dark/portal.png?w=200&amp;amp;h=128</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/screenshots/1.0/dark/portal.png?id=screenshots</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/screenshots/1.0/dark/portal.png?id=screenshots</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Portal (impact theme)</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Portail (thème impact)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/impact/menu.png?w=800&amp;amp;h=523</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/1.0/impact/menu.png?w=800&amp;amp;h=523</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/impact/menu.png?w=200&amp;amp;h=130</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/1.0/impact/menu.png?w=200&amp;amp;h=130</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/screenshots/1.0/impact/menu.png?id=screenshots</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/screenshots/1.0/impact/menu.png?id=screenshots</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/impact/password.png?w=800&amp;amp;h=515</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/1.0/impact/password.png?w=800&amp;amp;h=515</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/impact/password.png?w=200&amp;amp;h=128</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/1.0/impact/password.png?w=200&amp;amp;h=128</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/screenshots/1.0/impact/password.png?id=screenshots</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/screenshots/1.0/impact/password.png?id=screenshots</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/impact/portal.png?w=800&amp;amp;h=515</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/1.0/impact/portal.png?w=800&amp;amp;h=515</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/impact/portal.png?w=200&amp;amp;h=128</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/1.0/impact/portal.png?w=200&amp;amp;h=128</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/screenshots/1.0/impact/portal.png?id=screenshots</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/screenshots/1.0/impact/portal.png?id=screenshots</seg>
       </tuv>
     </tu>
     <tu>
@@ -390,6 +2982,326 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/pastel/menu.png?w=800&amp;amp;h=515</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/1.0/pastel/menu.png?w=800&amp;amp;h=515</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/pastel/menu.png?w=200&amp;amp;h=128</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/1.0/pastel/menu.png?w=200&amp;amp;h=128</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/screenshots/1.0/pastel/menu.png?id=screenshots</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/screenshots/1.0/pastel/menu.png?id=screenshots</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/pastel/password.png?w=800&amp;amp;h=515</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/1.0/pastel/password.png?w=800&amp;amp;h=515</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/pastel/password.png?w=200&amp;amp;h=128</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/1.0/pastel/password.png?w=200&amp;amp;h=128</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/screenshots/1.0/pastel/password.png?id=screenshots</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/screenshots/1.0/pastel/password.png?id=screenshots</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/pastel/portal.png?w=800&amp;amp;h=515</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/1.0/pastel/portal.png?w=800&amp;amp;h=515</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/pastel/portal.png?w=200&amp;amp;h=128</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/1.0/pastel/portal.png?w=200&amp;amp;h=128</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/screenshots/1.0/pastel/portal.png?id=screenshots</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/screenshots/1.0/pastel/portal.png?id=screenshots</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>0.9.4</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>0.9.4</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/0.9.4/0.9.4_application_menu.png?w=800&amp;amp;h=534</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/0.9.4/0.9.4_application_menu.png?w=800&amp;amp;h=534</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>0.9.4_application_menu.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>0.9.4_application_menu.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/0.9.4/0.9.4_application_menu.png?w=200&amp;amp;h=133</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/0.9.4/0.9.4_application_menu.png?w=200&amp;amp;h=133</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/screenshots/0.9.4/0.9.4_application_menu.png?id=screenshots</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/screenshots/0.9.4/0.9.4_application_menu.png?id=screenshots</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/0.9.4/0.9.4_authentication_portal.png?w=800&amp;amp;h=534</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/0.9.4/0.9.4_authentication_portal.png?w=800&amp;amp;h=534</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>0.9.4_authentication_portal.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>0.9.4_authentication_portal.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/0.9.4/0.9.4_authentication_portal.png?w=200&amp;amp;h=133</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/0.9.4/0.9.4_authentication_portal.png?w=200&amp;amp;h=133</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/screenshots/0.9.4/0.9.4_authentication_portal.png?id=screenshots</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/screenshots/0.9.4/0.9.4_authentication_portal.png?id=screenshots</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/0.9.4/0.9.4_logout_menu.png?w=800&amp;amp;h=534</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/0.9.4/0.9.4_logout_menu.png?w=800&amp;amp;h=534</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>0.9.4_logout_menu.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>0.9.4_logout_menu.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/0.9.4/0.9.4_logout_menu.png?w=200&amp;amp;h=133</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/0.9.4/0.9.4_logout_menu.png?w=200&amp;amp;h=133</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/screenshots/0.9.4/0.9.4_logout_menu.png?id=screenshots</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/screenshots/0.9.4/0.9.4_logout_menu.png?id=screenshots</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/0.9.4/0.9.4_password_menu.png?w=800&amp;amp;h=534</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/0.9.4/0.9.4_password_menu.png?w=800&amp;amp;h=534</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>0.9.4_password_menu.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>0.9.4_password_menu.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/0.9.4/0.9.4_password_menu.png?w=200&amp;amp;h=133</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/0.9.4/0.9.4_password_menu.png?w=200&amp;amp;h=133</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/screenshots/0.9.4/0.9.4_password_menu.png?id=screenshots</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/screenshots/0.9.4/0.9.4_password_menu.png?id=screenshots</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/0.9.4/0.9.4_password_reset.png?w=800&amp;amp;h=534</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/0.9.4/0.9.4_password_reset.png?w=800&amp;amp;h=534</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>0.9.4_password_reset.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>0.9.4_password_reset.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/0.9.4/0.9.4_password_reset.png?w=200&amp;amp;h=133</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/0.9.4/0.9.4_password_reset.png?w=200&amp;amp;h=133</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/screenshots/0.9.4/0.9.4_password_reset.png?id=screenshots</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/screenshots/0.9.4/0.9.4_password_reset.png?id=screenshots</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>0.9.3</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>0.9.3</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/0.9.3/lemonldap-ng-portal-appslist.png?w=800&amp;amp;h=622</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/0.9.3/lemonldap-ng-portal-appslist.png?w=800&amp;amp;h=622</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>lemonldap-ng-portal-appslist.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>lemonldap-ng-portal-appslist.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/0.9.3/lemonldap-ng-portal-appslist.png?w=200&amp;amp;h=155</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/0.9.3/lemonldap-ng-portal-appslist.png?w=200&amp;amp;h=155</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/screenshots/0.9.3/lemonldap-ng-portal-appslist.png?id=screenshots</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/screenshots/0.9.3/lemonldap-ng-portal-appslist.png?id=screenshots</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/0.9.3/lemonldap-ng-portal-auth.png?w=800&amp;amp;h=622</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/0.9.3/lemonldap-ng-portal-auth.png?w=800&amp;amp;h=622</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>lemonldap-ng-portal-auth.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>lemonldap-ng-portal-auth.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/0.9.3/lemonldap-ng-portal-auth.png?w=200&amp;amp;h=155</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/0.9.3/lemonldap-ng-portal-auth.png?w=200&amp;amp;h=155</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/screenshots/0.9.3/lemonldap-ng-portal-auth.png?id=screenshots</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/screenshots/0.9.3/lemonldap-ng-portal-auth.png?id=screenshots</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/0.9.3/lemonldap-ng-portal-password.png?w=800&amp;amp;h=622</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/0.9.3/lemonldap-ng-portal-password.png?w=800&amp;amp;h=622</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>lemonldap-ng-portal-password.png</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -398,10 +3310,90 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../media/screenshots/0.9.3/lemonldap-ng-portal-password.png?w=200&amp;amp;h=155</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/0.9.3/lemonldap-ng-portal-password.png?w=200&amp;amp;h=155</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/screenshots/0.9.3/lemonldap-ng-portal-password.png?id=screenshots</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/screenshots/0.9.3/lemonldap-ng-portal-password.png?id=screenshots</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/0.9.3/lemonldap-ng-testpage.png?w=800&amp;amp;h=622</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/0.9.3/lemonldap-ng-testpage.png?w=800&amp;amp;h=622</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>lemonldap-ng-testpage.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>lemonldap-ng-testpage.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/0.9.3/lemonldap-ng-testpage.png?w=200&amp;amp;h=155</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/0.9.3/lemonldap-ng-testpage.png?w=200&amp;amp;h=155</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/screenshots/0.9.3/lemonldap-ng-testpage.png?id=screenshots</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/screenshots/0.9.3/lemonldap-ng-testpage.png?id=screenshots</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Presentation</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Présentation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/icons/softwared.png?id=start</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/icons/softwared.png?id=start</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>icons:softwared.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>icons:softwared.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/icons/softwared.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/icons/softwared.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Practical Extraction and Report Language</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Practical Extraction and Report Language</seg>
       </tuv>
     </tu>
     <tu>
@@ -434,6 +3426,14 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>Authentification unique (Single Sign On)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>references.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>references.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -494,10 +3494,114 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/icons/agt_web.png?id=start</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/icons/agt_web.png?id=start</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>icons:agt_web.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>icons:agt_web.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/icons/agt_web.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/icons/agt_web.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation/latest/applications/obm.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation/latest/applications/obm.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:latest:applications:obm</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:latest:applications:obm</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation/latest/applications/bugzilla.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation/latest/applications/bugzilla.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:latest:applications:bugzilla</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:latest:applications:bugzilla</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation/latest/applications/dokuwiki.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation/latest/applications/dokuwiki.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:latest:applications:dokuwiki</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:latest:applications:dokuwiki</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Many &lt;a0&gt;SSO&lt;/a0&gt;-ready applications (&lt;a1&gt;OBM&lt;/a1&gt;, &lt;a2&gt;Bugzilla&lt;/a2&gt;, &lt;a3&gt;Dokuwiki&lt;/a3&gt;, etc.)</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>De nombreuses applications déjà prêtes pour le &lt;a0&gt;SSO&lt;/a0&gt; (&lt;a1&gt;OBM&lt;/a1&gt;, &lt;a2&gt;Bugzilla&lt;/a2&gt;, &lt;a3&gt;Dokuwiki&lt;/a3&gt;, etc.)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation/latest/applications/zimbra.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation/latest/applications/zimbra.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:latest:applications:zimbra</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:latest:applications:zimbra</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation/latest/applications/sympa.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation/latest/applications/sympa.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:latest:applications:sympa</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:latest:applications:sympa</seg>
       </tuv>
     </tu>
     <tu>
@@ -526,10 +3630,26 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Hyper Text Transfer Protocol</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Hyper Text Transfer Protocol</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Forward &lt;a0&gt;SSO&lt;/a0&gt; trough &lt;a1&gt;HTTP&lt;/a1&gt; Auth-Basic or form replay</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Possibilité d'étendre le &lt;a0&gt;SSO&lt;/a0&gt; à des applications utilisant une authentification &lt;a1&gt;HTTP&lt;/a1&gt; Auth-Basic ou un formulaire HTML</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Hypertext Preprocessor</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Hypertext Preprocessor</seg>
       </tuv>
     </tu>
     <tu>
@@ -546,6 +3666,38 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>Système strict de contrôle d'accès</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/icons/access.png?id=start</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/icons/access.png?id=start</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>icons:access.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>icons:access.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/icons/access.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/icons/access.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Uniform Resource Locator</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Uniform Resource Locator</seg>
       </tuv>
     </tu>
     <tu>
@@ -574,6 +3726,46 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/icons/gpg.png?id=start</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/icons/gpg.png?id=start</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>icons:gpg.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>icons:gpg.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/icons/gpg.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/icons/gpg.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Lightweight Directory Access Protocol</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Lightweight Directory Access Protocol</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LDAP</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>LDAP</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Database</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -582,10 +3774,74 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Secure Sockets Layer</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Secure Sockets Layer</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;SSL&lt;/a0&gt; X509</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;SSL&lt;/a0&gt; X509</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Apache built-in modules (Kerberos, NTLM , OTP, …)</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Support des modules Apache (Kerberos, NTLM , OTP, …)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Security Assertion Markup Language</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Security Assertion Markup Language</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;SAML&lt;/a0&gt; 2.0 / Shibboleth</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;SAML&lt;/a0&gt; 2.0 / Shibboleth</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>OpenID</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>OpenID</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Twitter</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Twitter</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Central Authentication Service</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Central Authentication Service</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>CAS</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>CAS</seg>
       </tuv>
     </tu>
     <tu>
@@ -606,10 +3862,42 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/icons/database.png?id=start</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/icons/database.png?id=start</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>icons:database.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>icons:database.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/icons/database.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/icons/database.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;LDAP&lt;/a0&gt; v2 and v3 protocol support</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Support des protocoles &lt;a0&gt;LDAP&lt;/a0&gt; v2 et v3</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;SSL&lt;/a0&gt; / TLS</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;SSL&lt;/a0&gt; / TLS</seg>
       </tuv>
     </tu>
     <tu>
@@ -646,10 +3934,58 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/icons/personal.png?id=start</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/icons/personal.png?id=start</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>icons:personal.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>icons:personal.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/icons/personal.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/icons/personal.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>User interfaces</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Interfaces utilisateur</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/icons/kmenuedit.png?id=start</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/icons/kmenuedit.png?id=start</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>icons:kmenuedit.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>icons:kmenuedit.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/icons/kmenuedit.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/icons/kmenuedit.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -674,6 +4010,38 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>Réinitialisation de mots-de-passe par courriel</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Administration</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Administration</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/icons/utilities.png?id=start</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/icons/utilities.png?id=start</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>icons:utilities.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>icons:utilities.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/icons/utilities.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/icons/utilities.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -710,6 +4078,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Syslog</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Syslog</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Log4Perl compatibility</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -726,10 +4102,50 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/icons/neotux.png?id=start</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/icons/neotux.png?id=start</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>icons:neotux.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>icons:neotux.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/icons/neotux.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/icons/neotux.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Protected cookies</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Cookies protégés</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Cross Site Scripting</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Cross Site Scripting</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Structured Query Language</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Structured Query Language</seg>
       </tuv>
     </tu>
     <tu>
@@ -782,6 +4198,150 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/icons/clock.png?id=start</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/icons/clock.png?id=start</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>icons:clock.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>icons:clock.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/icons/clock.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/icons/clock.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1857</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1857</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Cpan test error&lt;/a0&gt; by guimard (2010/11/26 20:03)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;Cpan test error&lt;/a0&gt; by guimard (2010/11/26 20:03)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1856</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1856</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Work on RPM for 1.0 (#LEMONLDAP-206)&lt;/a0&gt; by clement_oudot (2010/11/26 17:00)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;Work on RPM for 1.0 (#LEMONLDAP-206)&lt;/a0&gt; by clement_oudot (2010/11/26 17:00)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1855</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1855</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Doc update&lt;/a0&gt; by clement_oudot (2010/11/26 10:11)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;Doc update&lt;/a0&gt; by clement_oudot (2010/11/26 10:11)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1854</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1854</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Doc update&lt;/a0&gt; by guimard (2010/11/25 18:45)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;Doc update&lt;/a0&gt; by guimard (2010/11/25 18:45)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1853</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1853</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Doc update&lt;/a0&gt; by clement_oudot (2010/11/25 17:28)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;Doc update&lt;/a0&gt; by clement_oudot (2010/11/25 17:28)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/icons/tutorials.png?id=documentation</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/icons/tutorials.png?id=documentation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>icons:tutorials.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>icons:tutorials.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/icons/tutorials.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/icons/tutorials.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation/presentation.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation/presentation.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:presentation</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:presentation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>How it works</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -790,10 +4350,42 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation/features.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation/features.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:features</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:features</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Main features</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Fonctionnalités principales</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation/quickstart.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation/quickstart.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:quickstart</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:quickstart</seg>
       </tuv>
     </tu>
     <tu>
@@ -814,10 +4406,90 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation/latest/start.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation/latest/start.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:latest:start</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:latest:start</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Documentation for latest stable version</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Documentation for latest stable version</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/icons/windowlist.png?id=documentation</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/icons/windowlist.png?id=documentation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>icons:windowlist.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>icons:windowlist.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/icons/windowlist.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/icons/windowlist.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>All versions:</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Toutes les versions:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation/1.0/start.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation/1.0/start.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.0:start</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:1.0:start</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Version 1.0</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Version 1.0</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/Documentation</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/Documentation</seg>
       </tuv>
     </tu>
     <tu>
@@ -838,10 +4510,50 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/icons/terminal.png?id=documentation</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/icons/terminal.png?id=documentation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>icons:terminal.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>icons:terminal.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/icons/terminal.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/icons/terminal.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://lemonldap.ow2.org/NG/devel-doc/</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://lemonldap.ow2.org/NG/devel-doc/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>API documentation</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Documentation de l'interface de programmation (API)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://jira.ow2.org/browse/LEMONLDAP?selectedTab=com.atlassian.jira.plugin.system.project%3Achangelog-panel</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://jira.ow2.org/browse/LEMONLDAP?selectedTab=com.atlassian.jira.plugin.system.project%3Achangelog-panel</seg>
       </tuv>
     </tu>
     <tu>
@@ -854,10 +4566,26 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://jira.ow2.org/browse/LEMONLDAP?selectedTab=com.atlassian.jira.plugin.system.project%3Aroadmap-panel</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://jira.ow2.org/browse/LEMONLDAP?selectedTab=com.atlassian.jira.plugin.system.project%3Aroadmap-panel</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Roadmap</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Feuille de route</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://svn.forge.objectweb.org/cgi-bin/viewcvs.cgi/lemonldap/</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://svn.forge.objectweb.org/cgi-bin/viewcvs.cgi/lemonldap/</seg>
       </tuv>
     </tu>
     <tu>
@@ -878,10 +4606,26 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://www.cpantesters.org/distro/L/Lemonldap-NG-Common.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://www.cpantesters.org/distro/L/Lemonldap-NG-Common.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>LemonLDAP::NG Common</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Fichiers communs LemonLDAP::NG</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.cpantesters.org/distro/L/Lemonldap-NG-Handler.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://www.cpantesters.org/distro/L/Lemonldap-NG-Handler.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -894,10 +4638,26 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://www.cpantesters.org/distro/L/Lemonldap-NG-Portal.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://www.cpantesters.org/distro/L/Lemonldap-NG-Portal.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>LemonLDAP::NG Portal</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Portail LemonLDAP::NG</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.cpantesters.org/distro/L/Lemonldap-NG-Manager.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://www.cpantesters.org/distro/L/Lemonldap-NG-Manager.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -910,10 +4670,82 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Translators</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Translators</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>translations.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>translations.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>translations</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>traductions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>See &lt;a0&gt;translations&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Voir &lt;a0&gt;traductions&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Other</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Autres</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/icons/wizard.png?id=documentation</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/icons/wizard.png?id=documentation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>icons:wizard.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>icons:wizard.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/icons/wizard.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/icons/wizard.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation/conferences.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation/conferences.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:conferences</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:conferences</seg>
       </tuv>
     </tu>
     <tu>
@@ -926,10 +4758,74 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Mailing lists</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Mailing lists</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/icons/xfmail.png?id=contact</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/icons/xfmail.png?id=contact</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>icons:xfmail.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>icons:xfmail.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/icons/xfmail.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/icons/xfmail.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>mailto:&amp;#x6c;&amp;#x65;&amp;#x6d;&amp;#x6f;&amp;#x6e;&amp;#x6c;&amp;#x64;&amp;#x61;&amp;#x70;&amp;#x2d;&amp;#x6e;&amp;#x67;&amp;#x2d;&amp;#x75;&amp;#x73;&amp;#x65;&amp;#x72;&amp;#x73;&amp;#x40;&amp;#x6f;&amp;#x77;&amp;#x32;&amp;#x2e;&amp;#x6f;&amp;#x72;&amp;#x67;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>mailto:&amp;#x6c;&amp;#x65;&amp;#x6d;&amp;#x6f;&amp;#x6e;&amp;#x6c;&amp;#x64;&amp;#x61;&amp;#x70;&amp;#x2d;&amp;#x6e;&amp;#x67;&amp;#x2d;&amp;#x75;&amp;#x73;&amp;#x65;&amp;#x72;&amp;#x73;&amp;#x40;&amp;#x6f;&amp;#x77;&amp;#x32;&amp;#x2e;&amp;#x6f;&amp;#x72;&amp;#x67;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&amp;#x6c;&amp;#x65;&amp;#x6d;&amp;#x6f;&amp;#x6e;&amp;#x6c;&amp;#x64;&amp;#x61;&amp;#x70;&amp;#x2d;&amp;#x6e;&amp;#x67;&amp;#x2d;&amp;#x75;&amp;#x73;&amp;#x65;&amp;#x72;&amp;#x73;&amp;#x40;&amp;#x6f;&amp;#x77;&amp;#x32;&amp;#x2e;&amp;#x6f;&amp;#x72;&amp;#x67;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&amp;#x6c;&amp;#x65;&amp;#x6d;&amp;#x6f;&amp;#x6e;&amp;#x6c;&amp;#x64;&amp;#x61;&amp;#x70;&amp;#x2d;&amp;#x6e;&amp;#x67;&amp;#x2d;&amp;#x75;&amp;#x73;&amp;#x65;&amp;#x72;&amp;#x73;&amp;#x40;&amp;#x6f;&amp;#x77;&amp;#x32;&amp;#x2e;&amp;#x6f;&amp;#x72;&amp;#x67;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://mail.ow2.org/wws/arc/lemonldap-ng-users</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://mail.ow2.org/wws/arc/lemonldap-ng-users</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Users&lt;/s0&gt; : &lt;a1&gt;lemonldap-ng-users@ow2.org&lt;/a1&gt; (&lt;a2&gt;Archives&lt;/a2&gt;)</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;s0&gt;Utilisateurs&lt;/s0&gt; : &lt;a1&gt;lemonldap-ng-users@ow2.org&lt;/a1&gt; (&lt;a2&gt;Archives&lt;/a2&gt;)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://mail.ow2.org/wws/arc/lemonldap-ng-dev</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://mail.ow2.org/wws/arc/lemonldap-ng-dev</seg>
       </tuv>
     </tu>
     <tu>
@@ -942,6 +4838,30 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>mailto:&amp;#x6c;&amp;#x65;&amp;#x6d;&amp;#x6f;&amp;#x6e;&amp;#x6c;&amp;#x64;&amp;#x61;&amp;#x70;&amp;#x2d;&amp;#x6e;&amp;#x67;&amp;#x2d;&amp;#x63;&amp;#x68;&amp;#x61;&amp;#x6e;&amp;#x67;&amp;#x65;&amp;#x73;&amp;#x40;&amp;#x6f;&amp;#x77;&amp;#x32;&amp;#x2e;&amp;#x6f;&amp;#x72;&amp;#x67;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>mailto:&amp;#x6c;&amp;#x65;&amp;#x6d;&amp;#x6f;&amp;#x6e;&amp;#x6c;&amp;#x64;&amp;#x61;&amp;#x70;&amp;#x2d;&amp;#x6e;&amp;#x67;&amp;#x2d;&amp;#x63;&amp;#x68;&amp;#x61;&amp;#x6e;&amp;#x67;&amp;#x65;&amp;#x73;&amp;#x40;&amp;#x6f;&amp;#x77;&amp;#x32;&amp;#x2e;&amp;#x6f;&amp;#x72;&amp;#x67;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&amp;#x6c;&amp;#x65;&amp;#x6d;&amp;#x6f;&amp;#x6e;&amp;#x6c;&amp;#x64;&amp;#x61;&amp;#x70;&amp;#x2d;&amp;#x6e;&amp;#x67;&amp;#x2d;&amp;#x63;&amp;#x68;&amp;#x61;&amp;#x6e;&amp;#x67;&amp;#x65;&amp;#x73;&amp;#x40;&amp;#x6f;&amp;#x77;&amp;#x32;&amp;#x2e;&amp;#x6f;&amp;#x72;&amp;#x67;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&amp;#x6c;&amp;#x65;&amp;#x6d;&amp;#x6f;&amp;#x6e;&amp;#x6c;&amp;#x64;&amp;#x61;&amp;#x70;&amp;#x2d;&amp;#x6e;&amp;#x67;&amp;#x2d;&amp;#x63;&amp;#x68;&amp;#x61;&amp;#x6e;&amp;#x67;&amp;#x65;&amp;#x73;&amp;#x40;&amp;#x6f;&amp;#x77;&amp;#x32;&amp;#x2e;&amp;#x6f;&amp;#x72;&amp;#x67;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://mail.ow2.org/wws/arc/lemonldap-ng-changes</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://mail.ow2.org/wws/arc/lemonldap-ng-changes</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Changes&lt;/s0&gt;: &lt;a1&gt;lemonldap-ng-changes@ow2.org&lt;/a1&gt; (&lt;a2&gt;Archives&lt;/a2&gt;)</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -950,10 +4870,58 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>IRC</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>IRC</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/icons/chat.png?id=contact</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/icons/chat.png?id=contact</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>icons:chat.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>icons:chat.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/icons/chat.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/icons/chat.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Find us on Freenode, channel #lemonldap-ng</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Retrouvez-nous sur Freenode, canal #lemonldap-ng</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Internet Relay Chat</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Internet Relay Chat</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://webchat.freenode.net</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://webchat.freenode.net</seg>
       </tuv>
     </tu>
     <tu>
@@ -982,6 +4950,54 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/icons/knewsticker.png?id=contact</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/icons/knewsticker.png?id=contact</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>icons:knewsticker.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>icons:knewsticker.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/icons/knewsticker.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/icons/knewsticker.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://twitter.com/lemonldapng</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://twitter.com/lemonldapng</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.facebook.com/home.php?#!/group.php?gid=205544862557</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://www.facebook.com/home.php?#!/group.php?gid=205544862557</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.facebook.com/home.php?#!/pages/LemonldapNG/328254254936</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://www.facebook.com/home.php?#!/pages/LemonldapNG/328254254936</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Facebook: &lt;a0&gt;Group&lt;/a0&gt; / &lt;a1&gt;Page&lt;/a1&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -990,10 +5006,82 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://freshmeat.net/projects/lemonldapng</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://freshmeat.net/projects/lemonldapng</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Freshmeat</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Freshmeat</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.ohloh.net/p/lemonldap-ng</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://www.ohloh.net/p/lemonldap-ng</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Ohloh</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Ohloh</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Reporting a bug</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Rapporter un bogue</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/icons/bug.png?id=contact</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/icons/bug.png?id=contact</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>icons:bug.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>icons:bug.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/icons/bug.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/icons/bug.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://jira.ow2.org</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://jira.ow2.org</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://jira.ow2.org/browse/LEMONLDAP</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://jira.ow2.org/browse/LEMONLDAP</seg>
       </tuv>
     </tu>
     <tu>
@@ -1026,6 +5114,30 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>Équipe prinicpale</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/icons/tux.png?id=contact</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/icons/tux.png?id=contact</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>icons:tux.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>icons:tux.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/icons/tux.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/icons/tux.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -1070,6 +5182,118 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/icons/personal.png?id=contact</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/icons/personal.png?id=contact</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Hamza AISSAT</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Hamza AISSAT</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Casimir ANTUNES</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Casimir ANTUNES</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Sébastien BAHLOUL</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Sébastien BAHLOUL</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Oliver BOIREAU</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Oliver BOIREAU</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Jean-Thomas CHECCO</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Jean-Thomas CHECCO</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Sebastien DIAZ</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Sebastien DIAZ</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Hubert GAULTIER</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Hubert GAULTIER</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Eric GERMAN</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Eric GERMAN</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Mounir GZADY</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Mounir GZADY</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Erwan LEGALL</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Erwan LEGALL</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Pascal PEJAC</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Pascal PEJAC</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Daniel RIVIERE</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Daniel RIVIERE</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Habib ZITOUNI</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Habib ZITOUNI</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Sponsored by</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -1078,10 +5302,42 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://www.gendarmerie.interieur.gouv.fr/</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://www.gendarmerie.interieur.gouv.fr/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.linagora.com</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://www.linagora.com</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Hosted by</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Hébergé par</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.ow2.org</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://www.ow2.org</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/logos/ow2.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/logos/ow2.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -1118,10 +5374,26 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;amp;file_id=13688</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;amp;file_id=13688</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Source</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Sources</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;amp;file_id=13690</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;amp;file_id=13690</seg>
       </tuv>
     </tu>
     <tu>
@@ -1134,6 +5406,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;amp;file_id=13956</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;amp;file_id=13956</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Fedora11 RPM bundle</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -1142,10 +5422,58 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;amp;file_id=13689</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;amp;file_id=13689</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Debian/Ubuntu bundle</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Debian/Ubuntu bundle</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation/latest/prereq.html#yum</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation/latest/prereq.html#yum</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:latest:prereq</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:latest:prereq</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>For RPM systems, you have to &lt;a0&gt;install pre-required packages&lt;/a0&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Pour les systèmes basés sur RPM, vous devez &lt;a0&gt;installer les paquets pré-requis&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://packages.debian.org/search?keywords=lemonldap-ng&amp;amp;searchon=names&amp;amp;suite=all&amp;amp;section=all</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://packages.debian.org/search?keywords=lemonldap-ng&amp;amp;searchon=names&amp;amp;suite=all&amp;amp;section=all</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation/latest/prereq.html#apt-get</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation/latest/prereq.html#apt-get</seg>
       </tuv>
     </tu>
     <tu>
@@ -1174,6 +5502,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;amp;file_id=15298</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;amp;file_id=15298</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>SVN nightly builds</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -1182,10 +5518,42 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/svnsnapshots/lemonldap-svn-latest.tar.gz</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://forge.ow2.org/svnsnapshots/lemonldap-svn-latest.tar.gz</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Contributions</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Contributions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;amp;file_id=11045</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;amp;file_id=11045</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Dokuwiki plugin</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Extension pour Dokuwiki</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;amp;file_id=13166</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;amp;file_id=13166</seg>
       </tuv>
     </tu>
     <tu>
@@ -1230,10 +5598,26 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>svn checkout svn://svn.forge.objectweb.org/svnroot/lemonldap</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>svn checkout svn://svn.forge.objectweb.org/svnroot/lemonldap</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Developer access</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Accès développeurs</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Secure Shell</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Shell sécurisé (SSH)</seg>
       </tuv>
     </tu>
     <tu>
@@ -1254,6 +5638,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>start.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>start.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>start</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -1270,10 +5662,90 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>download.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>download.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>download</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Téléchargement</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>screenshots.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>screenshots.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>screenshots</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>captures d'écran</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>contact.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>contact.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>contact</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>contact</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../css/all.css</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../../css/all.css</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../css/screen.css</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../../css/screen.css</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../css/print.css</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../../css/print.css</seg>
       </tuv>
     </tu>
     <tu>
@@ -1310,6 +5782,22 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../documentation/latest/portalcustom.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../documentation/latest/portalcustom.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:latest:portalcustom</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:latest:portalcustom</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; is designed using &lt;a1&gt;Model–View–Controller software architecture&lt;/a1&gt;, so you just have to &lt;a2&gt;change HTML/CSS files&lt;/a2&gt; to custom portal.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -1326,6 +5814,38 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../documentation/1.0/applications.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../documentation/1.0/applications.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.0:applications</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:1.0:applications</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../documentation/latest/writingrulesand_headers.html#headers</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../documentation/latest/writingrulesand_headers.html#headers</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:latest:writingrulesand_headers</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:latest:writingrulesand_headers</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;Integrating applications&lt;/a0&gt; in &lt;a1&gt;LL::NG&lt;/a1&gt; is easy since its dialog with applications is based on &lt;a2&gt;customizable HTTP headers&lt;/a2&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -1338,6 +5858,22 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>Unifier les authentifications (fédération)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Simple Object Access Protocol</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Simple Object Access Protocol</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Application Programming Interface</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Interface de programmation</seg>
       </tuv>
     </tu>
     <tu>
@@ -1366,6 +5902,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Sessions</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Sessions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Session explorer</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -1390,10 +5934,26 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Internet Protocol</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Internet Protocol</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>by &lt;a0&gt;IP&lt;/a0&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>par adresses &lt;a0&gt;IP&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>by double &lt;a0&gt;IP&lt;/a0&gt; (sessions opened by the same user from multiple computers)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>par double &lt;a0&gt;IP&lt;/a0&gt; (sessions ouvertes par le même utilisateur sur plusieurs machines)</seg>
       </tuv>
     </tu>
     <tu>
@@ -1410,6 +5970,22 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>Resctriction d'ouverture de session</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../documentation/latest/sessions.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../documentation/latest/sessions.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:latest:sessions</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:latest:sessions</seg>
       </tuv>
     </tu>
     <tu>
@@ -1462,6 +6038,30 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Double cookie</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Double cookie</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../documentation/latest/ssocookie.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../documentation/latest/ssocookie.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:latest:ssocookie</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:latest:ssocookie</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can be configured to provides &lt;a1&gt;2 cookies&lt;/a1&gt;:</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -1494,6 +6094,30 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Notifications</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Notifications</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../documentation/latest/notifications.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../documentation/latest/notifications.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:latest:notifications</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:latest:notifications</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Lemonldap::NG can be used to prompt users with a message.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -1506,6 +6130,70 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>Ceci peut être utilisé pour notifier des changements de droits,… Consultez la page &lt;a0&gt;notifications&lt;/a0&gt; pour plus d'information.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>JDLL 2010</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>JDLL 2010</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>RMLL/LSM 2010</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>RMLL/LSM 2010</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Solution Linux 2010</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Solution Linux 2010</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>RMLL/LSM 2009</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>RMLL/LSM 2009</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://marcelhaise.com/rmll2009/#LemonLDAP</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://marcelhaise.com/rmll2009/#LemonLDAP</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can see the video here: &lt;a0&gt;http://marcelhaise.com/rmll2009/#LemonLDAP&lt;/a0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>You can see the video here: &lt;a0&gt;http://marcelhaise.com/rmll2009/#LemonLDAP&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Linux Tag 2009</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Linux Tag 2009</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Solution Linux 2009</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Solution Linux 2009</seg>
       </tuv>
     </tu>
     <tu>
@@ -1566,10 +6254,34 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Installation</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Installation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../download.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../download.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You can install Lemonldap::NG using &lt;a0&gt;packages&lt;/a0&gt; (rpm or deb) or by hand as described here :</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Vous pouvez installer Lemonldap::NG en utilisant des &lt;a0&gt;paquets&lt;/a0&gt; (rpm or deb) à la main :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../documentation/latest/prereq.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../documentation/latest/prereq.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -1606,10 +6318,30 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>tar zxvf lemonldap-ng-*.tar.gz
+cd lemonldap-ng-*</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>tar zxvf lemonldap-ng-*.tar.gz
+cd lemonldap-ng-*</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Build</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Construction</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>make
+make test</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>make
+make test</seg>
       </tuv>
     </tu>
     <tu>
@@ -1622,6 +6354,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>sudo make install</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>sudo make install</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If your &lt;a0&gt;LDAP&lt;/a0&gt; suffix is not dc=example,dc=com, use:</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -1630,10 +6370,26 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>sudo make install LDAPSUFFIX=mysuffix</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>sudo make install LDAPSUFFIX=mysuffix</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You can also change the host and port with options LDAPHOST and LDAPPORT.</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Vous pouvez aussi changer le nom d'hôte et le port avec les options LDAPHOST et LDAPPORT.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Configuration</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Configuration</seg>
       </tuv>
     </tu>
     <tu>
@@ -1654,6 +6410,22 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>sudo make postconf</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>sudo make postconf</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Apache</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Apache</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Include LemonLDAP::NG configuration in your main Apache configuration:</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -1662,10 +6434,32 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;include&lt;/s0&gt; /usr/local/lemonldap-ng/etc/portal-apache2.conf
+&lt;s1&gt;include&lt;/s1&gt; /usr/local/lemonldap-ng/etc/handler-apache2.conf
+&lt;s2&gt;include&lt;/s2&gt; /usr/local/lemonldap-ng/etc/manager-apache2.conf</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;include&lt;/s0&gt; /usr/local/lemonldap-ng/etc/portal-apache2.conf
+&lt;s1&gt;include&lt;/s1&gt; /usr/local/lemonldap-ng/etc/handler-apache2.conf
+&lt;s2&gt;include&lt;/s2&gt; /usr/local/lemonldap-ng/etc/manager-apache2.conf</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Restart Apache:</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Redémarrez Apache:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>sudo apachectl configtest
+sudo apachectl restart</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>sudo apachectl configtest
+sudo apachectl restart</seg>
       </tuv>
     </tu>
     <tu>
@@ -1686,6 +6480,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://auth.example.com</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://auth.example.com</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Go on &lt;a0&gt;http://auth.example.com&lt;/a0&gt; and log with &lt;a1&gt;LDAP&lt;/a1&gt; user account.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -1702,6 +6504,22 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://test1.example.com</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://test1.example.com</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://test2.example.com</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://test2.example.com</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Try &lt;a0&gt;http://test1.example.com&lt;/a0&gt; or &lt;a1&gt;http://test2.example.com&lt;/a1&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -1714,6 +6532,14 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>Editer la configuration</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://manager.example.com</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://manager.example.com</seg>
       </tuv>
     </tu>
     <tu>
@@ -1766,6 +6592,38 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Architecture</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Architecture</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/documentation/lemonldap-ng-architecture.png?id=documentation%3Apresentation</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/documentation/lemonldap-ng-architecture.png?id=documentation%3Apresentation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:lemonldap-ng-architecture.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:lemonldap-ng-architecture.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../media/documentation/lemonldap-ng-architecture.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../../media/documentation/lemonldap-ng-architecture.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Main components</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -1786,6 +6644,22 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>Dédié aux administrateurs</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../documentation/1.0/portal.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../documentation/1.0/portal.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.0:portal</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:1.0:portal</seg>
       </tuv>
     </tu>
     <tu>
@@ -1886,6 +6760,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../documentation/latest/start.html#authentication_users_and_password_databases</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../documentation/latest/start.html#authentication_users_and_password_databases</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Main &lt;a0&gt;external databases&lt;/a0&gt; are:</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -1926,6 +6808,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../documentation/latest/start.html#configuration_database</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../documentation/latest/start.html#configuration_database</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;&lt;a1&gt;Configuration&lt;/a1&gt;&lt;/s0&gt;: where configuration is stored.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -1938,6 +6828,14 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>Ceci n'inclue pas la configuration propre d'Apache qui n'est pas gérée par LemonLDAP::NG</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../documentation/latest/start.html#sessions_database</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../documentation/latest/start.html#sessions_database</seg>
       </tuv>
     </tu>
     <tu>
@@ -1982,10 +6880,42 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/documentation/lemonldapng-sso.png?id=documentation%3Apresentation</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/documentation/lemonldapng-sso.png?id=documentation%3Apresentation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:lemonldapng-sso.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:lemonldapng-sso.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../media/documentation/lemonldapng-sso.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../../media/documentation/lemonldapng-sso.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>User tries to access protected application, his request is catched by Handler</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Lorsqu'un utilisateur tente d'accéder à une application protégée, il est intercepté par l'agent (handler)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../documentation/latest/ssocookie.html#sso_cookie</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../documentation/latest/ssocookie.html#sso_cookie</seg>
       </tuv>
     </tu>
     <tu>
@@ -2142,6 +7072,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../documentation/latest/writingrulesand_headers.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../documentation/latest/writingrulesand_headers.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>LemonLDAP::NG is also able to &lt;a0&gt;catch logout request&lt;/a0&gt; on protected applications, with different behavior:</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -2254,6 +7192,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../documentation/presentation.html#login</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../documentation/presentation.html#login</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>User owns &lt;a0&gt;SSO cookies&lt;/a0&gt; on the main domain (see &lt;s1&gt;&lt;a2&gt;Login kinematics&lt;/a2&gt;&lt;/s1&gt;)</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -2334,10 +7280,26 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Control asked &lt;a1&gt;URL&lt;/a1&gt;&lt;/s0&gt;: prevent &lt;a2&gt;XSS&lt;/a2&gt; attacks and bad redirections</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Control asked &lt;a1&gt;URL&lt;/a1&gt;&lt;/s0&gt;: prevent &lt;a2&gt;XSS&lt;/a2&gt; attacks and bad redirections</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Control existing session&lt;/s0&gt;: detect &lt;a1&gt;SSO&lt;/a1&gt; session, apply configured constraints (1 session per user, 1 session per &lt;a2&gt;IP&lt;/a2&gt;, …)</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;s0&gt;Recherche d'une session valide&lt;/s0&gt; : détecte les sessions &lt;a1&gt;SSO&lt;/a1&gt;, applique les contraintes configurées (1 session par utilisateur, 1 session par &lt;a2&gt;IP&lt;/a2&gt;, …)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Extract form info&lt;/s0&gt;: get login/password, certificate, environment variable (depending on authentication module)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Extrait les informations du formulaire&lt;/s0&gt;: récupère le couple compte/mot-de-passe, le certificat, une variable d'environnement (suivant le module d'authentification)</seg>
       </tuv>
     </tu>
     <tu>
@@ -2402,6 +7364,30 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;s0&gt;Construit les cookies&lt;/s0&gt;: construit les &lt;a1&gt;cookies SSO&lt;/a1&gt; avec l'identifiant de session</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Redirect&lt;/s0&gt;: redirect user on protected application or on Portal (applications menu)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Redirect&lt;/s0&gt;: redirect user on protected application or on Portal (applications menu)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://search.cpan.org/perldoc?Apache::Session</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://search.cpan.org/perldoc?Apache::Session</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LemonLDAP::NG &lt;a0&gt;SSO cookies&lt;/a0&gt; are generated by &lt;a1&gt;Apache::Session&lt;/a1&gt;, they are as secure as a 128-bit random cookie.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Les &lt;a0&gt;cookies SSO&lt;/a0&gt; de LemonLDAP::NG sont générés par &lt;a1&gt;Apache::Session&lt;/a1&gt;, ils sont aussi sûrs que tout cookie basé sur un aléa de 128 bits.</seg>
       </tuv>
     </tu>
     <tu>

@@ -60,6 +60,7 @@ LemonLDAP::NG provides many RPMs :
 </ul>
 
 <p>
+
 This schema shows the dependencies between modules:
 </p>
 
@@ -68,17 +69,168 @@ This schema shows the dependencies between modules:
 </p>
 
 </div>
-<!-- SECTION "RPMs organization" [46-945] -->
+<!-- SECTION "RPMs organization" [46-944] -->
 <h2><a name="get_the_packages" id="get_the_packages">Get the packages</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Get the packages" [945-974] -->
+<h3><a name="yum_repository" id="yum_repository">YUM repository</a></h3>
+<div class="level3">
+
+<p>
+
+You can add this YUM repository to get recent packages:
+
+</p>
+<pre class="code">
+vi /etc/yum.repos.d/lemonldap-ng.repo
+</pre>
+<pre class="file">
+[lemonldap-ng]
+name=LemonLDAP::NG packages
+baseurl=http://lemonldap-ng.org/rpm/
+enabled=1
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OW2
+</pre>
+
+<p>
+You must also install a repository for non-core dependencies. Example with EPEL:
+
+</p>
+<pre class="file">
+rpm -Uvh http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-4.noarch.rpm
+</pre>
+
+<p>
+See <a href="../../documentation/1.0/prereq.html#yum" class="wikilink1" title="documentation:1.0:prereq">Prerequisites and dependencies</a> chapter for more.
+</p>
+
+</div>
+<!-- SECTION "YUM repository" [975-1527] -->
+<h3><a name="manual_download" id="manual_download">Manual download</a></h3>
+<div class="level3">
+
+<p>
+
+RPMs are available on the <a href="../../download.html" class="wikilink1" title="download">Download page</a>.
+</p>
+
+</div>
+<!-- SECTION "Manual download" [1528-1610] -->
+<h2><a name="package_gpg_signature" id="package_gpg_signature">Package GPG signature</a></h2>
 <div class="level2">
 
 <p>
 
-For now, RPMS are only available on the <a href="../../download.html" class="wikilink1" title="download">Download page</a>.
+The GPG key can be downloaded here: <a href="../media/rpm-gpg-key-ow2" class="media mediafile mf_" title="rpm-gpg-key-ow2">rpm-gpg-key-ow2</a>
+</p>
+
+<p>
+Install it to trust RPMs:
+</p>
+<pre class="code">
+rpm --import rpm-gpg-key-ow2
+</pre>
+
+</div>
+<!-- SECTION "Package GPG signature" [1611-1776] -->
+<h2><a name="install_packages_with_yum" id="install_packages_with_yum">Install packages with yum</a></h2>
+<div class="level2">
+
+<p>
+
+If the packages are stored in a yum repository:
+
+</p>
+<pre class="code shell"># yum install lemonldap-ng
+...
+Transaction Summary
+===================================================
+Install      82 Package(s)
+Upgrade       0 Package(s)
+&nbsp;
+Total download size: 18 M
+Is this ok [y/N]: y</pre>
+
+<p>
+You can also use yum on local RPMs file:
+
+</p>
+<pre class="code">
+# yum localinstall lemonldap-ng-* perl-Lemonldap-NG-*
+</pre>
+
+<p>
+<p><div class="noteimportant">In any cases, you will need to add a repository hosting <acronym title="Practical Extraction and Report Language">Perl</acronym> modules dependencies, like EPEL, see <a href="../../documentation/1.0/prereq.html" class="wikilink1" title="documentation:1.0:prereq">dependencies</a>.
+</div></p>
 </p>
 
 </div>
-<!-- SECTION "Get the packages" [946-1045] -->
+<!-- SECTION "Install packages with yum" [1777-2347] -->
+<h2><a name="install_packages_with_rpm" id="install_packages_with_rpm">Install packages with rpm</a></h2>
+<div class="level2">
+
+<p>
+
+Before installing the packages, install <a href="../../documentation/1.0/prereq.html" class="wikilink1" title="documentation:1.0:prereq">dependencies</a>.
+</p>
+
+<p>
+You have then to install all the downloaded packages:
+
+</p>
+<pre class="code">
+rpm -Uvh lemonldap-ng-* perl-Lemonldap-NG-*
+</pre>
+
+</div>
+<!-- SECTION "Install packages with rpm" [2348-2566] -->
+<h2><a name="install_just_one_component" id="install_just_one_component">Install just one component</a></h2>
+<div class="level2">
+
+<p>
+
+You can choose to install only one component by choosing the package <code>lemonldap-ng-portal</code>, <code>lemonldap-ng-handler</code> or <code>lemonldap-ng-manager</code>.
+</p>
+
+<p>
+Install the package <code>lemonldap-ng-conf</code> only on the server which stores configuration.
+</p>
+
+</div>
+<!-- SECTION "Install just one component" [2567-2845] -->
+<h2><a name="file_location" id="file_location">File location</a></h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> Configuration is in /etc/lemonldap-ng</div>
+</li>
+<li class="level1"><div class="li"> LemonLDAP::NG configuration (edited by the Manager) is in /var/lib/lemonldap-ng/conf/</div>
+</li>
+<li class="level1"><div class="li"> All <acronym title="Practical Extraction and Report Language">Perl</acronym> modules are in the VENDOR perl directory </div>
+</li>
+<li class="level1"><div class="li"> All <acronym title="Practical Extraction and Report Language">Perl</acronym> scripts/pages are in /var/lib/lemonldap-ng/</div>
+</li>
+<li class="level1"><div class="li"> All static content (examples, <acronym title="Cascading Style Sheets">CSS</acronym>, images, etc.) is in /usr/share/lemonldap-ng/</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "File location" [2846-3201] -->
+<h2><a name="change_default_dns_domain" id="change_default_dns_domain">Change default DNS domain</a></h2>
+<div class="level2">
+
+<p>
+
+By default, <acronym title="Domain Name System">DNS</acronym> domain is <code>example.com</code>. You can change it quick with a sed command. For example, we change it to <code>ow2.org</code>:
+</p>
+<pre class="code">
+sed -i &#039;s/example\.com/ow2.org/g&#039; /etc/lemonldap-ng/* /var/lib/lemonldap-ng/conf/lmConf-1 /var/lib/lemonldap-ng/test/index.pl
+</pre>
+
+</div>
+<!-- SECTION "Change default DNS domain" [3202-3512] -->
 <h2><a name="build_your_packages" id="build_your_packages">Build your packages</a></h2>
 <div class="level2">
 
@@ -112,101 +264,4 @@ rpmbuild -ta SOURCES/lemonldap-ng-VERSION.tar.gz
 </pre>
 
 </div>
-<!-- SECTION "Build your packages" [1046-1500] -->
-<h2><a name="package_gpg_signature" id="package_gpg_signature">Package GPG signature</a></h2>
-<div class="level2">
-
-<p>
-
-The GPG key can be downloaded here: <a href="../media/rpm-gpg-key-ow2" class="media mediafile mf_" title="rpm-gpg-key-ow2">rpm-gpg-key-ow2</a>
-</p>
-
-<p>
-Install it to trust RPMs:
-</p>
-<pre class="code">
-rpm --import rpm-gpg-key-ow2
-</pre>
-
-</div>
-<!-- SECTION "Package GPG signature" [1501-1666] -->
-<h2><a name="install_packages_with_yum" id="install_packages_with_yum">Install packages with yum</a></h2>
-<div class="level2">
-
-<p>
-
-If the packages are stored in a yum repository:
-
-</p>
-<pre class="code">
-yum install lemonldap-ng
-</pre>
-
-<p>
-You can also use yum on local RPMs file, to manage dependencies:
-
-</p>
-<pre class="code">
-yum install lemonldap-ng-* perl-Lemonldap-NG-*
-</pre>
-
-</div>
-<!-- SECTION "Install packages with yum" [1667-1922] -->
-<h2><a name="install_packages_with_rpm" id="install_packages_with_rpm">Install packages with rpm</a></h2>
-<div class="level2">
-
-<p>
-
-Before installing the packages, install <a href="../../documentation/1.0/prereq.html" class="wikilink1" title="documentation:1.0:prereq">dependencies</a>.
-</p>
-
-<p>
-You have then to install all the downloaded packages:
-
-</p>
-<pre class="code">
-rpm -Uvh lemonldap-ng-* perl-Lemonldap-NG-*
-</pre>
-
-</div>
-<!-- SECTION "Install packages with rpm" [1923-2141] -->
-<h2><a name="install_just_one_component" id="install_just_one_component">Install just one component</a></h2>
-<div class="level2">
-
-<p>
-
-You can choose to install only one component by choosing the package lemonldap-ng-portal, lemonldap-ng-handler or lemonldap-ng-manager. Install the package lemonldap-ng-conf only on the server which stores configuration.
-</p>
-
-</div>
-<!-- SECTION "Install just one component" [2142-2403] -->
-<h2><a name="file_location" id="file_location">File location</a></h2>
-<div class="level2">
-<ul>
-<li class="level1"><div class="li"> Configuration is in /etc/lemonldap-ng</div>
-</li>
-<li class="level1"><div class="li"> LemonLDAP::NG configuration (edited by the Manager) is in /var/lib/lemonldap-ng/conf/</div>
-</li>
-<li class="level1"><div class="li"> All <acronym title="Practical Extraction and Report Language">Perl</acronym> modules are in the VENDOR perl directory </div>
-</li>
-<li class="level1"><div class="li"> All <acronym title="Practical Extraction and Report Language">Perl</acronym> scripts/pages are in /var/lib/lemonldap-ng/</div>
-</li>
-<li class="level1"><div class="li"> All static content (examples, <acronym title="Cascading Style Sheets">CSS</acronym>, images, etc.) is in /usr/share/lemonldap-ng/</div>
-</li>
-</ul>
-
-</div>
-<!-- SECTION "File location" [2404-2759] -->
-<h2><a name="change_default_dns_domain" id="change_default_dns_domain">Change default DNS domain</a></h2>
-<div class="level2">
-
-<p>
-
-By default, <acronym title="Domain Name System">DNS</acronym> domain is <code>example.com</code>. You can change it quick with a sed command. For example, we change it to <code>ow2.org</code>:
-</p>
-<pre class="code">
-sed -i &#039;s/example\.com/ow2.org/g&#039; /etc/lemonldap-ng/* /var/lib/lemonldap-ng/conf/lmConf-1 /var/lib/lemonldap-ng/test/index.pl
-</pre>
-
-</div>
-<!-- SECTION "Change default DNS domain" [2760-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Build your packages" [3513-] --></div><!-- closes <div class="dokuwiki export">-->
