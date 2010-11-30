@@ -1,11 +1,10 @@
-How to build RPM LemonLDAP::NG 
+== How to build RPM LemonLDAP::NG ==
 
 %_topdir: where you build RPMs (by default, /usr/src/redhat)
 
 - Install rpm-build package
 - Install all build dependencies (see BuildRequires in lemonldap-ng.spec)
-- Put lemonldap-ng.spec in %_topdir/SPECS
-- Put LemonLDAP::NG tarball in %_topdir/SOURCES
+- Put LemonLDAP::NG tarball in %_topdir/SOURCES (built with 'make dist')
 - Edit ~/.rpmmacros and set your build parameters (example for RHEL5):
 -----
 %_topdir /home/user/build
@@ -13,7 +12,20 @@ How to build RPM LemonLDAP::NG
 %rhel 5
 -----
 - Go to %_topdir
-- Do rpmbuild -ba SPECS/lemonldap-ng.spec
+- Do rpmbuild -ta SOURCES/lemonldap-ng-VERSION.tar.gz
 
-This RPM can be build for several distribution like RedHat, CentOS, Fedora, OpenSuSE...
+This RPM can be built for several distribution like RedHat, CentOS, Fedora, OpenSuSE...
 
+== Update YUM repository ==
+
+The YUM repository is hosted on http://lemonldap-ng.org/rpm
+
+First copy RPM files (they must be signed!) and source RPM:
+$ scp *.noarch.rpm lemonldapng@lemonldap-ng.org:rpm/noarch/
+$ scp *.src.rpm lemonldapng@lemonldap-ng.org:rpm/SRPMS/
+
+Then connect on server and launch repodata:
+$ ssh lemonldapng@lemonldap-ng.org
+lemonldapng@lemonldap-ng.org$ repodata rpm/
+
+That's all!

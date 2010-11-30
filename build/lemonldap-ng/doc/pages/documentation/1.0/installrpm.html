@@ -96,19 +96,20 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OW2
 </pre>
 
 <p>
+<p><div class="notewarning">
 You must also install a repository for non-core dependencies. Example with EPEL:
 
 </p>
-<pre class="file">
-rpm -Uvh http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-4.noarch.rpm
-</pre>
+<pre class="code shell">rpm -Uvh http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-4.noarch.rpm</pre>
 
 <p>
-See <a href="../../documentation/1.0/prereq.html#yum" class="wikilink1" title="documentation:1.0:prereq">Prerequisites and dependencies</a> chapter for more.
+See <a href="../../documentation/1.0/prereq.html#yum" class="wikilink1" title="documentation:1.0:prereq">prerequisites and dependencies</a> chapter for more.
+
+</div></p>
 </p>
 
 </div>
-<!-- SECTION "YUM repository" [975-1527] -->
+<!-- SECTION "YUM repository" [975-1556] -->
 <h3><a name="manual_download" id="manual_download">Manual download</a></h3>
 <div class="level3">
 
@@ -118,7 +119,7 @@ RPMs are available on the <a href="../../download.html" class="wikilink1" title=
 </p>
 
 </div>
-<!-- SECTION "Manual download" [1528-1610] -->
+<!-- SECTION "Manual download" [1557-1639] -->
 <h2><a name="package_gpg_signature" id="package_gpg_signature">Package GPG signature</a></h2>
 <div class="level2">
 
@@ -135,18 +136,22 @@ rpm --import rpm-gpg-key-ow2
 </pre>
 
 </div>
-<!-- SECTION "Package GPG signature" [1611-1776] -->
-<h2><a name="install_packages_with_yum" id="install_packages_with_yum">Install packages with yum</a></h2>
+<!-- SECTION "Package GPG signature" [1640-1805] -->
+<h2><a name="install_packages" id="install_packages">Install packages</a></h2>
 <div class="level2">
+
+</div>
+<!-- SECTION "Install packages" [1806-1835] -->
+<h3><a name="with_yum" id="with_yum">With YUM</a></h3>
+<div class="level3">
 
 <p>
 
 If the packages are stored in a yum repository:
 
 </p>
-<pre class="code shell"># yum install lemonldap-ng
-...
-Transaction Summary
+<pre class="code shell">yum install lemonldap-ng</pre>
+<pre class="code shell">Transaction Summary
 ===================================================
 Install      82 Package(s)
 Upgrade       0 Package(s)
@@ -159,22 +164,17 @@ You can also use yum on local RPMs file:
 
 </p>
 <pre class="code">
-# yum localinstall lemonldap-ng-* perl-Lemonldap-NG-*
+yum localinstall lemonldap-ng-* perl-Lemonldap-NG-*
 </pre>
 
-<p>
-<p><div class="noteimportant">In any cases, you will need to add a repository hosting <acronym title="Practical Extraction and Report Language">Perl</acronym> modules dependencies, like EPEL, see <a href="../../documentation/1.0/prereq.html" class="wikilink1" title="documentation:1.0:prereq">dependencies</a>.
-</div></p>
-</p>
-
 </div>
-<!-- SECTION "Install packages with yum" [1777-2347] -->
-<h2><a name="install_packages_with_rpm" id="install_packages_with_rpm">Install packages with rpm</a></h2>
-<div class="level2">
+<!-- SECTION "With YUM" [1836-2253] -->
+<h3><a name="with_rpm" id="with_rpm">With RPM</a></h3>
+<div class="level3">
 
 <p>
 
-Before installing the packages, install <a href="../../documentation/1.0/prereq.html" class="wikilink1" title="documentation:1.0:prereq">dependencies</a>.
+Before installing the packages, install all <a href="../../documentation/1.0/prereq.html" class="wikilink1" title="documentation:1.0:prereq">dependencies</a>.
 </p>
 
 <p>
@@ -185,22 +185,92 @@ You have then to install all the downloaded packages:
 rpm -Uvh lemonldap-ng-* perl-Lemonldap-NG-*
 </pre>
 
-</div>
-<!-- SECTION "Install packages with rpm" [2348-2566] -->
-<h2><a name="install_just_one_component" id="install_just_one_component">Install just one component</a></h2>
-<div class="level2">
-
 <p>
 
+<p><div class="notetip">
 You can choose to install only one component by choosing the package <code>lemonldap-ng-portal</code>, <code>lemonldap-ng-handler</code> or <code>lemonldap-ng-manager</code>.
 </p>
 
 <p>
 Install the package <code>lemonldap-ng-conf</code> only on the server which stores configuration.
+
+</div></p>
 </p>
 
 </div>
-<!-- SECTION "Install just one component" [2567-2845] -->
+<!-- SECTION "With RPM" [2254-2716] -->
+<h2><a name="first_configuration_steps" id="first_configuration_steps">First configuration steps</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "First configuration steps" [2717-2755] -->
+<h3><a name="change_default_dns_domain" id="change_default_dns_domain">Change default DNS domain</a></h3>
+<div class="level3">
+
+<p>
+
+By default, <acronym title="Domain Name System">DNS</acronym> domain is <code>example.com</code>. You can change it quick with a sed command. For example, we change it to <code>ow2.org</code>:
+</p>
+<pre class="code shell">sed -i 's/example\.com/ow2.org/g' /etc/lemonldap-ng/* /var/lib/lemonldap-ng/conf/lmConf-1 /var/lib/lemonldap-ng/test/index.pl</pre>
+
+</div>
+<!-- SECTION "Change default DNS domain" [2756-3070] -->
+<h3><a name="apache_virtual_host" id="apache_virtual_host">Apache virtual host</a></h3>
+<div class="level3">
+
+<p>
+
+If <acronym title="LemonLDAP::NG">LL::NG</acronym> is the only software installed in Apache, the virtual host feature may not have already been activated.
+</p>
+
+<p>
+To do it, uncomment the <code>NameVirtualHost</code> line in <code>/etc/httpd/conf.d/z-lemonldap-ng-handler.conf</code>:
+</p>
+<pre class="code file apache"><span class="kw1">NameVirtualHost</span> *:<span class="nu0">80</span></pre>
+
+<p>
+Check Apache configuration and restart:
+
+</p>
+<pre class="code shell">apachectl configtest
+apachectl restart</pre>
+
+</div>
+<!-- SECTION "Apache virtual host" [3071-3465] -->
+<h3><a name="upgrade" id="upgrade">Upgrade</a></h3>
+<div class="level3">
+
+<p>
+
+If you upgraded <acronym title="LemonLDAP::NG">LL::NG</acronym>, check all <a href="../../documentation/1.0/upgrade.html" class="wikilink1" title="documentation:1.0:upgrade">upgrade notes</a>.
+</p>
+
+<p>
+For apache configuration, you may have to remove the old symbolic link, if not done by the RPM:
+
+</p>
+<pre class="code shell">rm -f /etc/httpd/conf.d/z-lemonldap-ng.conf</pre>
+
+<p>
+Your old Apache configuration should have been saved, you need to port your specificities in new Apache configuration files:
+
+</p>
+<pre class="code shell">vi /etc/lemonldap-ng/apache2.conf.rpmsave</pre>
+
+<p>
+The upgrade process will also have migrate old configuration files into <code>/etc/lemonldap-ng/lemonldap-ng.ini</code>. This includes the application list which is now set in the <code>applicationList</code> parameter from <code>[portal]</code> section, for example:
+
+</p>
+<pre class="code file ini"><span class="re0"><span class="br0">&#91;</span>portal<span class="br0">&#93;</span></span>
+<span class="re1">applicationList</span><span class="sy0">=</span><span class="re2"><span class="br0">&#123;</span> 'Menu' <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> type <span class="sy0">=</span>&gt; 'category', 'Example' <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> type <span class="sy0">=</span>&gt; 'category', 'test1' <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> type <span class="sy0">=</span>&gt; 'application', options <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> name <span class="sy0">=</span>&gt; 'Application Test <span class="nu0">1</span>', uri <span class="sy0">=</span>&gt; 'http://test1.example.com/', description <span class="sy0">=</span>&gt; 'A simple application displaying authenticated user', logo <span class="sy0">=</span>&gt; 'wheels.png', display <span class="sy0">=</span>&gt; 'auto',  <span class="br0">&#125;</span>, <span class="br0">&#125;</span>,'test2' <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> type <span class="sy0">=</span>&gt; 'application', options <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> name <span class="sy0">=</span>&gt; 'Application Test <span class="nu0">2</span>', uri <span class="sy0">=</span>&gt; 'http://test2.example.com/', description <span class="sy0">=</span>&gt; 'The same simple application displaying authenticated user', logo <span class="sy0">=</span>&gt; 'wheels.png', display <span class="sy0">=</span>&gt; 'auto',  <span class="br0">&#125;</span>, <span class="br0">&#125;</span>, <span class="br0">&#125;</span>,'Administration' <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> type <span class="sy0">=</span>&gt; 'category', 'manager' <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> type <span class="sy0">=</span>&gt; 'application', options <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> name <span class="sy0">=</span>&gt; 'WebSSO Manager', uri <span class="sy0">=</span>&gt; 'http://manager.example.com/', description <span class="sy0">=</span>&gt; 'Configure LemonLDAP::NG WebSSO', logo <span class="sy0">=</span>&gt; 'tools.png', display <span class="sy0">=</span>&gt; 'on',  <span class="br0">&#125;</span>, <span class="br0">&#125;</span>,'sessions' <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> type <span class="sy0">=</span>&gt; 'application', options <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> name <span class="sy0">=</span>&gt; 'Sessions explorer', uri <span class="sy0">=</span>&gt; 'http://manager.example.com/sessions.pl', description <span class="sy0">=</span>&gt; 'Explore WebSSO sessions', logo <span class="sy0">=</span>&gt; 'tools.png', display <span class="sy0">=</span>&gt; 'on',  <span class="br0">&#125;</span>, <span class="br0">&#125;</span>, <span class="br0">&#125;</span>,'Documentation' <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> type <span class="sy0">=</span>&gt; 'category', 'localdoc' <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> type <span class="sy0">=</span>&gt; 'application', options <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> name <span class="sy0">=</span>&gt; 'Local documentation', uri <span class="sy0">=</span>&gt; 'http://manager.example.com/doc/', description <span class="sy0">=</span>&gt; 'Documentation supplied with LemonLDAP::NG', logo <span class="sy0">=</span>&gt; 'docs.png', display <span class="sy0">=</span>&gt; 'on',  <span class="br0">&#125;</span>, <span class="br0">&#125;</span>,'officialwebsite' <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> type <span class="sy0">=</span>&gt; 'application', options <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> name <span class="sy0">=</span>&gt; 'Offical Website', uri <span class="sy0">=</span>&gt; 'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Presentation', description <span class="sy0">=</span>&gt; 'Official LemonLDAP::NG Website', logo <span class="sy0">=</span>&gt; 'web.png', display <span class="sy0">=</span>&gt; 'on',  <span class="br0">&#125;</span>, <span class="br0">&#125;</span>, <span class="br0">&#125;</span>, <span class="br0">&#125;</span>, <span class="br0">&#125;</span></span></pre>
+
+<p>
+<p><div class="noteimportant">You should now use the Manager to configure all <a href="../../documentation/1.0/portalmenu.html#categories_and_applications" class="wikilink1" title="documentation:1.0:portalmenu">applications and categories</a>, and then comment or remove the <code>applicationList</code> parameter from <code>/etc/lemonldap-ng/lemonldap-ng.ini</code>.
+</div></p>
+</p>
+
+</div>
+<!-- SECTION "Upgrade" [3466-5975] -->
 <h2><a name="file_location" id="file_location">File location</a></h2>
 <div class="level2">
 <ul>
@@ -217,20 +287,7 @@ Install the package <code>lemonldap-ng-conf</code> only on the server which stor
 </ul>
 
 </div>
-<!-- SECTION "File location" [2846-3201] -->
-<h2><a name="change_default_dns_domain" id="change_default_dns_domain">Change default DNS domain</a></h2>
-<div class="level2">
-
-<p>
-
-By default, <acronym title="Domain Name System">DNS</acronym> domain is <code>example.com</code>. You can change it quick with a sed command. For example, we change it to <code>ow2.org</code>:
-</p>
-<pre class="code">
-sed -i &#039;s/example\.com/ow2.org/g&#039; /etc/lemonldap-ng/* /var/lib/lemonldap-ng/conf/lmConf-1 /var/lib/lemonldap-ng/test/index.pl
-</pre>
-
-</div>
-<!-- SECTION "Change default DNS domain" [3202-3512] -->
+<!-- SECTION "File location" [5976-6332] -->
 <h2><a name="build_your_packages" id="build_your_packages">Build your packages</a></h2>
 <div class="level2">
 
@@ -264,4 +321,4 @@ rpmbuild -ta SOURCES/lemonldap-ng-VERSION.tar.gz
 </pre>
 
 </div>
-<!-- SECTION "Build your packages" [3513-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Build your packages" [6333-] --></div><!-- closes <div class="dokuwiki export">-->

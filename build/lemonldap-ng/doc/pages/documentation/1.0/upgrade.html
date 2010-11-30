@@ -123,13 +123,13 @@ Remove the <code>-p</code> options if you want to delete old files.
 
 <p>
 <p><div class="noteimportant">
+The migration of application list in ini file will work, but it will then be hard to update. You should use the Manager and reconfigure all <a href="../../documentation/1.0/portalmenu.html#categories_and_applications" class="wikilink1" title="documentation:1.0:portalmenu">categories and applications</a> trough it, and then comment <code>applicationList</code> in ini file.
+
+</div></p>
+<p><div class="notewarning">
+Be sure that <code>lemonldap-ng.ini</code> is readable by your Apache server and not for other:
+
 </p>
-<ul>
-<li class="level1"><div class="li"> The migration of application list in ini file will work, but it will then be hard to update. You should use the Manager and reconfigure all categories and applications trough it, and then comment application list in ini file.</div>
-</li>
-<li class="level1"><div class="li"> Be sure that lemonldap-ng.ini is readable by your Apache server and not for other:</div>
-</li>
-</ul>
 <pre class="code shell">chmod 640 /etc/lemonldap-ng/lemonldap-ng.ini
 chown root:www-data /etc/lemonldap-ng/lemonldap-ng.ini</pre>
 
@@ -140,7 +140,25 @@ chown root:www-data /etc/lemonldap-ng/lemonldap-ng.ini</pre>
 </p>
 
 </div>
-<!-- SECTION "LemonLDAP::NG configuration files" [777-2569] -->
+<!-- SECTION "LemonLDAP::NG configuration files" [777-2634] -->
+<h2><a name="custom_skin" id="custom_skin">Custom skin</a></h2>
+<div class="level2">
+
+<p>
+
+If you have built a custom skin for <acronym title="LemonLDAP::NG">LL::NG</acronym> portal, you will need to adapt it to the new version. 
+</p>
+
+<p>
+If you just modified the <acronym title="Cascading Style Sheets">CSS</acronym> file, you can follow the <a href="../../documentation/1.0/portalcustom.html#skin_customization" class="wikilink1" title="documentation:1.0:portalcustom">skin customization documentation</a> and copy you <acronym title="Cascading Style Sheets">CSS</acronym> in the new skin.
+</p>
+
+<p>
+If you modified also the templates, you have to import all templates changes into your skin. The easiest way is maybe to start by copying new skin and then import your changes into it.
+</p>
+
+</div>
+<!-- SECTION "Custom skin" [2635-3102] -->
 <h2><a name="customized_scripts_parameters" id="customized_scripts_parameters">Customized scripts parameters</a></h2>
 <div class="level2">
 
@@ -177,7 +195,7 @@ This will prevent your local modifications to be dropped when you will update yo
 </p>
 
 </div>
-<!-- SECTION "Customized scripts parameters" [2570-3507] -->
+<!-- SECTION "Customized scripts parameters" [3103-4040] -->
 <h2><a name="liberty_alliance_portal" id="liberty_alliance_portal">Liberty Alliance portal</a></h2>
 <div class="level2">
 
@@ -191,7 +209,7 @@ To replace it, LemonLDAP::NG has now SAML2 authentication backend.
 </p>
 
 </div>
-<!-- SECTION "Liberty Alliance portal" [3508-3697] -->
+<!-- SECTION "Liberty Alliance portal" [4041-4230] -->
 <h2><a name="dbi_configuration_backend" id="dbi_configuration_backend">DBI configuration backend</a></h2>
 <div class="level2">
 
@@ -214,4 +232,4 @@ To replace it, LemonLDAP::NG has now SAML2 authentication backend.
 </p>
 
 </div>
-<!-- SECTION "DBI configuration backend" [3698-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "DBI configuration backend" [4231-] --></div><!-- closes <div class="dokuwiki export">-->
