@@ -27,12 +27,12 @@
 
 </div>
 <!-- SECTION "Installation on RedHat/CentOS" [1-45] -->
-<h2><a name="rpms_organization" id="rpms_organization">RPMs organization</a></h2>
+<h2><a name="organization" id="organization">Organization</a></h2>
 <div class="level2">
 
 <p>
 
-LemonLDAP::NG provides many RPMs :
+LemonLDAP::NG provides these packages:
 </p>
 <ul>
 <li class="level1"><div class="li"> lemonldap-ng: meta-package, contains no file but dependencies on other packages</div>
@@ -69,12 +69,12 @@ This schema shows the dependencies between modules:
 </p>
 
 </div>
-<!-- SECTION "RPMs organization" [46-944] -->
+<!-- SECTION "Organization" [46-943] -->
 <h2><a name="get_the_packages" id="get_the_packages">Get the packages</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Get the packages" [945-974] -->
+<!-- SECTION "Get the packages" [944-973] -->
 <h3><a name="yum_repository" id="yum_repository">YUM repository</a></h3>
 <div class="level3">
 
@@ -96,6 +96,14 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OW2
 </pre>
 
 <p>
+Run this to update packages cache:
+
+</p>
+<pre class="code">
+yum update
+</pre>
+
+<p>
 <p><div class="notewarning">
 You must also install a repository for non-core dependencies. Example with EPEL:
 
@@ -109,7 +117,7 @@ See <a href="../../documentation/1.0/prereq.html#yum" class="wikilink1" title="d
 </p>
 
 </div>
-<!-- SECTION "YUM repository" [975-1556] -->
+<!-- SECTION "YUM repository" [974-1617] -->
 <h3><a name="manual_download" id="manual_download">Manual download</a></h3>
 <div class="level3">
 
@@ -119,7 +127,7 @@ RPMs are available on the <a href="../../download.html" class="wikilink1" title=
 </p>
 
 </div>
-<!-- SECTION "Manual download" [1557-1639] -->
+<!-- SECTION "Manual download" [1618-1700] -->
 <h2><a name="package_gpg_signature" id="package_gpg_signature">Package GPG signature</a></h2>
 <div class="level2">
 
@@ -136,12 +144,12 @@ rpm --import rpm-gpg-key-ow2
 </pre>
 
 </div>
-<!-- SECTION "Package GPG signature" [1640-1805] -->
+<!-- SECTION "Package GPG signature" [1701-1866] -->
 <h2><a name="install_packages" id="install_packages">Install packages</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Install packages" [1806-1835] -->
+<!-- SECTION "Install packages" [1867-1896] -->
 <h3><a name="with_yum" id="with_yum">With YUM</a></h3>
 <div class="level3">
 
@@ -168,7 +176,7 @@ yum localinstall lemonldap-ng-* perl-Lemonldap-NG-*
 </pre>
 
 </div>
-<!-- SECTION "With YUM" [1836-2253] -->
+<!-- SECTION "With YUM" [1897-2314] -->
 <h3><a name="with_rpm" id="with_rpm">With RPM</a></h3>
 <div class="level3">
 
@@ -198,12 +206,12 @@ Install the package <code>lemonldap-ng-conf</code> only on the server which stor
 </p>
 
 </div>
-<!-- SECTION "With RPM" [2254-2716] -->
+<!-- SECTION "With RPM" [2315-2777] -->
 <h2><a name="first_configuration_steps" id="first_configuration_steps">First configuration steps</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "First configuration steps" [2717-2755] -->
+<!-- SECTION "First configuration steps" [2778-2816] -->
 <h3><a name="change_default_dns_domain" id="change_default_dns_domain">Change default DNS domain</a></h3>
 <div class="level3">
 
@@ -214,7 +222,7 @@ By default, <acronym title="Domain Name System">DNS</acronym> domain is <code>ex
 <pre class="code shell">sed -i 's/example\.com/ow2.org/g' /etc/lemonldap-ng/* /var/lib/lemonldap-ng/conf/lmConf-1 /var/lib/lemonldap-ng/test/index.pl</pre>
 
 </div>
-<!-- SECTION "Change default DNS domain" [2756-3070] -->
+<!-- SECTION "Change default DNS domain" [2817-3131] -->
 <h3><a name="apache_virtual_host" id="apache_virtual_host">Apache virtual host</a></h3>
 <div class="level3">
 
@@ -236,7 +244,7 @@ Check Apache configuration and restart:
 apachectl restart</pre>
 
 </div>
-<!-- SECTION "Apache virtual host" [3071-3465] -->
+<!-- SECTION "Apache virtual host" [3132-3526] -->
 <h3><a name="upgrade" id="upgrade">Upgrade</a></h3>
 <div class="level3">
 
@@ -270,7 +278,34 @@ The upgrade process will also have migrate old configuration files into <code>/e
 </p>
 
 </div>
-<!-- SECTION "Upgrade" [3466-5975] -->
+<!-- SECTION "Upgrade" [3527-6036] -->
+<h3><a name="dns" id="dns">DNS</a></h3>
+<div class="level3">
+
+<p>
+
+Configure your <acronym title="Domain Name System">DNS</acronym> server to resolve names with your server <acronym title="Internet Protocol">IP</acronym>.
+</p>
+
+<p>
+<p><div class="notetip">
+For tests with <code>example.com</code>, launch the following :
+
+</p>
+<pre class="code shell">cat /etc/lemonldap-ng/for_etc_hosts &gt;&gt; /etc/hosts</pre>
+
+<p>
+
+
+</div></p>
+</p>
+
+<p>
+Follow the <a href="../../documentation/1.0/start.html#configuration" class="wikilink1" title="documentation:1.0:start">next steps</a>
+</p>
+
+</div>
+<!-- SECTION "DNS" [6037-6309] -->
 <h2><a name="file_location" id="file_location">File location</a></h2>
 <div class="level2">
 <ul>
@@ -287,7 +322,7 @@ The upgrade process will also have migrate old configuration files into <code>/e
 </ul>
 
 </div>
-<!-- SECTION "File location" [5976-6332] -->
+<!-- SECTION "File location" [6310-6666] -->
 <h2><a name="build_your_packages" id="build_your_packages">Build your packages</a></h2>
 <div class="level2">
 
@@ -321,4 +356,4 @@ rpmbuild -ta SOURCES/lemonldap-ng-VERSION.tar.gz
 </pre>
 
 </div>
-<!-- SECTION "Build your packages" [6333-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Build your packages" [6667-] --></div><!-- closes <div class="dokuwiki export">-->

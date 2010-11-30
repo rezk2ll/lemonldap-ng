@@ -55,7 +55,7 @@ Then go to build directory:
 
 </p>
 <pre class="code">
-$ cd trunk/build/lemonldap-ng
+cd trunk/build/lemonldap-ng
 </pre>
 
 <p>
@@ -63,7 +63,7 @@ And run the “dist” target:
 
 </p>
 <pre class="code">
-$ make dist
+make dist
 </pre>
 
 <p>
@@ -71,7 +71,7 @@ The generated tarball is in the current directory.
 </p>
 
 </div>
-<!-- SECTION "Build the tarball from SVN" [389-718] -->
+<!-- SECTION "Build the tarball from SVN" [389-714] -->
 <h2><a name="extraction" id="extraction">Extraction</a></h2>
 <div class="level2">
 
@@ -81,11 +81,11 @@ Just run the tar command:
 
 </p>
 <pre class="code">
-$ tar zxvf lemonldap-ng-*.tar.gz
+tar zxvf lemonldap-ng-*.tar.gz
 </pre>
 
 </div>
-<!-- SECTION "Extraction" [719-817] -->
+<!-- SECTION "Extraction" [715-811] -->
 <h2><a name="installation" id="installation">Installation</a></h2>
 <div class="level2">
 
@@ -98,11 +98,11 @@ First check and install the <a href="../../documentation/1.0/prereq.html" class=
 For full install:
 </p>
 <pre class="code">
-$ cd lemonldap-ng-*
-$ make
-$ make configure
-$ make test
-$ sudo make install
+cd lemonldap-ng-*
+make
+make configure
+make test
+sudo make install
 </pre>
 
 <p>
@@ -110,7 +110,7 @@ You can modify location of default storage configuration file in configure targe
 
 </p>
 <pre class="code">
-$ sudo make configure STORAGECONFFILE=/etc/lemonldap-ng/lemonldap-ng.ini
+sudo make configure STORAGECONFFILE=/etc/lemonldap-ng/lemonldap-ng.ini
 </pre>
 
 <p>
@@ -163,7 +163,7 @@ You can also pass parameters to the make install command, with this syntax:
 
 </p>
 <pre class="code">
-$ sudo make install PARAM=VALUE PARAM=VALUE ...
+sudo make install PARAM=VALUE PARAM=VALUE ...
 </pre>
 
 <p>
@@ -194,18 +194,38 @@ Available parameters are:
 </li>
 <li class="level1"><div class="li"> <strong>APACHEVERSION</strong>: Apache major version (default: 2)</div>
 </li>
-<li class="level1"><div class="li"> <strong>VHOSTLISTEN</strong>: how listen parameter is configured for virtual hosts in Apache (default: \*:80)</div>
+<li class="level1"><div class="li"> <strong>VHOSTLISTEN</strong>: how listen parameter is configured for virtual hosts in Apache (default: *:80)</div>
 </li>
 </ul>
 
 <p>
 
-<p><div class="notetip">You can use “make debian-install” or “make ubuntu-install” for Debian/Ubuntu. To just build Debian/Ubuntu packages, use “make debian-packages”, they will be build in /tmp/
+<p><div class="notetip">
+For Debian/Ubuntu, you can use:
+
+</p>
+<pre class="code">
+make debian-install
+</pre>
+
+<p>
+
+or:
+
+</p>
+<pre class="code">
+make ubuntu-install
+</pre>
+
+<p>
+
+See also <a href="../../documentation/1.0/installdeb.html" class="wikilink1" title="documentation:1.0:installdeb">Debian/Ubuntu installation documentation</a>.
+
 </div></p>
 </p>
 
 </div>
-<!-- SECTION "Installation" [818-3158] -->
+<!-- SECTION "Installation" [812-3139] -->
 <h2><a name="link_apache_configuration" id="link_apache_configuration">Link Apache configuration</a></h2>
 <div class="level2">
 
@@ -223,11 +243,16 @@ By default, Apache configuration files will be installed in <code>/usr/local/lem
 <ul>
 <li class="level1"><div class="li"> You can also use symbolic links in <code>conf.d</code> Apache directory.</div>
 </li>
-<li class="level1"><div class="li"> If you&#039;ve install Debian packages, just use “a2ensite manager-apache2.conf” and “a2ensite portal-apache2.conf”.</div>
+<li class="level1"><div class="li"> If you have run the Debian/Ubuntu install command, just use:</div>
 </li>
 </ul>
+<pre class="code">
+a2ensite manager-apache2.conf
+a2ensite portal-apache2.conf
+</pre>
 
 <p>
+
 
 </div></p>
 </p>
@@ -238,7 +263,7 @@ By default, Apache configuration files will be installed in <code>/usr/local/lem
 </p>
 
 </div>
-<!-- SECTION "Link Apache configuration" [3159-3843] -->
+<!-- SECTION "Link Apache configuration" [3140-3847] -->
 <h2><a name="install_cron_jobs" id="install_cron_jobs">Install cron jobs</a></h2>
 <div class="level2">
 
@@ -258,8 +283,36 @@ By default, Apache configuration files will be installed in <code>/usr/local/lem
 To install them on system:
 </p>
 <pre class="code">
-$ sudo ln -s /usr/local/lemonldap-ng/etc/cron.d/* /etc/cron.d/
+sudo ln -s /usr/local/lemonldap-ng/etc/cron.d/* /etc/cron.d/
 </pre>
 
 </div>
-<!-- SECTION "Install cron jobs" [3844-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Install cron jobs" [3848-4057] -->
+<h2><a name="dns" id="dns">DNS</a></h2>
+<div class="level2">
+
+<p>
+
+Configure your <acronym title="Domain Name System">DNS</acronym> server to resolve names with your server <acronym title="Internet Protocol">IP</acronym>.
+</p>
+
+<p>
+<p><div class="notetip">
+For tests with the configured domain, launch the following :
+
+</p>
+<pre class="code shell">cat /usr/local/lemonldap-ng/etc/lemonldap-ng/for_etc_hosts &gt;&gt; /etc/hosts</pre>
+
+<p>
+
+
+</div></p>
+</p>
+
+<p>
+Follow the <a href="../../documentation/1.0/start.html#configuration" class="wikilink1" title="documentation:1.0:start">next steps</a>.
+
+</p>
+
+</div>
+<!-- SECTION "DNS" [4058-] --></div><!-- closes <div class="dokuwiki export">-->
