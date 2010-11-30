@@ -15,7 +15,7 @@ described below.
      2.2 - Authorization
      2.3 - Accounting
  3 - Session storage system
- 4 - Author
+ 4 - Authors
  5 - Copyright and licence
 
 1 - INSTALLATION
@@ -183,14 +183,11 @@ user each 10 minutes.
 Lemonldap::NG is very fast, but you can increase performance using a 
 Cache::Cache module that does not use disk access.
 
-4 - AUTHOR
+4 - AUTHORS
 
-Xavier Guimard, x.guimard@free.fr
+See AUTHORS
 
 5 - COPYRIGHT AND LICENSE
 
-Copyright (C) 2005-2007 by Xavier Guimard x.guimard@free.fr
+See COPYING
 
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself, either Perl version 5.8.4 or,
-at your option, any later version of Perl 5 you may have available.

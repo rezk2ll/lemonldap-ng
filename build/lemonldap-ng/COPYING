@@ -2,15 +2,27 @@ Files: tree.js
 Copyright: 2008, Peter Panov <panov@elcat.kg>, IKEEN Group http://www.ikeen.com
 Licence: BSD
 
-Files: xlib.js
-Copyright: 2002-2007, Michael Foster (Cross-Browser.com)
-Licence: LGPL
+Files: jquery.cookie.js
+Copyright: 2006 Klaus Hartl (stilbuero.de)
+Licence: GPL-2
+
+Files: jquery.base64.js
+Copyright: Muhammad Hussein Fattahizadeh < muhammad [AT] semnanweb [DOT] com >
+Licence: GPL-2
+
+Files: jquery*.js
+Copyright: 2010, The jQuery project and the jQuery UI team
+Licence: GPL-2
 
 Files: *.js
 Licence: GPL-2
 
+Files: lemonldap-ng-portal/examples/skins/common/apps/*.png
+Copyright: 2006-2007 Everaldo Coelho, Crystal Project
+Licence: GPL-2
+
 Files: *
-Copyright: 2004, 2005, 2006, 2007, 2008, 2009, Xavier Guimard <x.guimard@free.fr>
+Copyright: 2004, 2005, 2006, 2007, 2008, 2009, 2010, Xavier Guimard <x.guimard@free.fr>, Clement Oudot <clem.oudot@gmail.com>, Thomas Chemineau <thomas.chemineau@gmail.com>
 License: Artistic | GPL-2
 
 			 The "Artistic License"
