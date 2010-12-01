@@ -20,10 +20,13 @@ then
 		db_get liblemonldap-ng-conf-perl/$i || true
 		perl -000 -i -pe "s#^$i(\\n\\s+)('?)[^\\n]*?('?)\$#$i\${1}\${2}$RET\${3}#m" $FIRSTCONFFILE
 	done
-	if perl -e 'exit 1 if(qq('$2')!~/^0\.9/)' ; then
+	if [ `echo $2|sed -e 's/^0\.9.*$/X/'` = "X" ]; then
 		if [ -e $CONFDIR/storage.conf -o -e $CONFDIR/apply.conf -o -e $CONFDIR/apps-list.xml ] ; then
-			# Run migration script
-			/usr/share/lemonldap-ng/bin/lmMigrateConfFiles2ini 2>&1 > /dev/null || :
+			db_get liblemonldap-ng-conf-perl/migrate
+			if [ "$RET" ]; then
+				# Run migration script
+				/usr/share/lemonldap-ng/bin/lmMigrateConfFiles2ini 2>&1 > /dev/null || :
+			fi
 		fi
 	fi
 fi

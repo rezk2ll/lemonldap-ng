@@ -47,3 +47,7 @@ _Description: LDAP password:
  Set here the password for the Lemonldap::NG LDAP account.
  You can modify this value later using the Lemonldap::NG manager.
 
+Template: liblemonldap-ng-conf-perl/migrate
+Type: boolean
+_Description: Lemonldap::NG configuration files have change, try to migrate your files?
+

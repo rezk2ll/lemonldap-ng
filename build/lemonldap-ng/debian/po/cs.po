@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: lemonldap-ng 0.9.1-1\n"
-"Report-Msgid-Bugs-To: x.guimard@free.fr\n"
-"POT-Creation-Date: 2007-09-22 13:08+0200\n"
+"Report-Msgid-Bugs-To: lemonldap-ng@packages.debian.org\n"
+"POT-Creation-Date: 2010-12-01 06:25+0100\n"
 "PO-Revision-Date: 2008-05-27 18:03+0200\n"
 "Last-Translator: Daniel Kavan <kuan@maradan.org>\n"
 "Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
@@ -127,3 +127,15 @@ msgid ""
 msgstr ""
 "Vložte heslo pro Lemonldap::NG LDAP účet. Hodnotu můžete později změnit "
 "pomocí Lemonldap::NG manažeru."
+
+#. Type: boolean
+#. Description
+#: ../liblemonldap-ng-conf-perl.templates:8001
+msgid ""
+"Lemonldap::NG configuration files have change, try to migrate your files?"
+msgstr ""
+
+#, fuzzy
+#~| msgid "Lemonldap::NG DNS domain:"
+#~ msgid "Lemonldap::NG migration:"
+#~ msgstr "Lemonldap::NG DNS doména:"

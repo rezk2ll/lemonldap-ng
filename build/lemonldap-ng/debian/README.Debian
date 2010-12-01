@@ -45,14 +45,10 @@ You can also copy /usr/share/doc/lemonldap-ng/examples/test.pl into
 PHP application.
 
 
-IV - LEMONLDAP::NG CONFIGURATION STORAGE
+IV - LEMONLDAP::NG CONFIGURATION FILES
 ---------------------------------------
 Package: liblemonldap-ng-conf-perl
 
-Lemonldap::NG configuration is stored by default in /var/lib/lemonldap-ng/conf.
-Modify /etc/lemonldap-ng/lemonldap-ng.ini to change configuration storage.
-
-1.1 - Migrating from 'File' to 'DBI'
-
-Use the script /usr/share/lemonldap-ng/bin/convertConfig
+Note that configuration files are now grouped in
+/etc/lemonldap-ng/lemonldap-ng.ini
 

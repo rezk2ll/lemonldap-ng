@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: lemonldap-ng 0.8.3.1-1\n"
-"Report-Msgid-Bugs-To: x.guimard@free.fr\n"
-"POT-Creation-Date: 2007-09-22 13:08+0200\n"
+"Report-Msgid-Bugs-To: lemonldap-ng@packages.debian.org\n"
+"POT-Creation-Date: 2010-12-01 06:25+0100\n"
 "PO-Revision-Date: 2007-11-18 18:35+0000\n"
 "Last-Translator: Américo Monteiro <a_monteiro@netcabo.pt>\n"
 "Language-Team: Portuguese <traduz@debianpt.org>\n"
@@ -133,3 +133,15 @@ msgid ""
 msgstr ""
 "Indique aqui a password para a conta do Lemonldap::NG. Você pode modificar "
 "este valor posteriormente usando o gestor Lemonldap::NG."
+
+#. Type: boolean
+#. Description
+#: ../liblemonldap-ng-conf-perl.templates:8001
+msgid ""
+"Lemonldap::NG configuration files have change, try to migrate your files?"
+msgstr ""
+
+#, fuzzy
+#~| msgid "Lemonldap::NG DNS domain:"
+#~ msgid "Lemonldap::NG migration:"
+#~ msgstr "Domínio DNS do Lemonldap::NG:"
