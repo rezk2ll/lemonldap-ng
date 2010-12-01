@@ -26,6 +26,6 @@ $ scp *.src.rpm lemonldapng@lemonldap-ng.org:rpm/SRPMS/
 
 Then connect on server and launch repodata:
 $ ssh lemonldapng@lemonldap-ng.org
-lemonldapng@lemonldap-ng.org$ repodata rpm/
+lemonldapng@lemonldap-ng.org$ createrepo rpm/
 
 That's all!
