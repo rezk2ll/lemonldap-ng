@@ -120,11 +120,11 @@ Packages are available on the <a href="../../download.html" class="wikilink1" ti
 <h3><a name="with_apt-get" id="with_apt-get">With apt-get</a></h3>
 <div class="level3">
 <pre class="code">
-apt-get install apache2 lemonldap-ng
+apt-get install lemonldap-ng
 </pre>
 
 </div>
-<!-- SECTION "With apt-get" [1332-1408] -->
+<!-- SECTION "With apt-get" [1332-1400] -->
 <h3><a name="with_dpkg" id="with_dpkg">With dpkg</a></h3>
 <div class="level3">
 
@@ -142,12 +142,12 @@ dpkg -i liblemonldap-ng-* lemonldap-ng*
 </pre>
 
 </div>
-<!-- SECTION "With dpkg" [1409-1557] -->
+<!-- SECTION "With dpkg" [1401-1549] -->
 <h2><a name="first_configuration_steps" id="first_configuration_steps">First configuration steps</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "First configuration steps" [1558-1596] -->
+<!-- SECTION "First configuration steps" [1550-1588] -->
 <h3><a name="change_default_dns_domain" id="change_default_dns_domain">Change default DNS domain</a></h3>
 <div class="level3">
 
@@ -158,7 +158,7 @@ By default, <acronym title="Domain Name System">DNS</acronym> domain is <code>ex
 <pre class="code shell">sed -i 's/example\.com/ow2.org/g' /etc/lemonldap-ng/* /var/lib/lemonldap-ng/conf/lmConf-1 /var/lib/lemonldap-ng/test/index.pl</pre>
 
 </div>
-<!-- SECTION "Change default DNS domain" [1597-1911] -->
+<!-- SECTION "Change default DNS domain" [1589-1903] -->
 <h3><a name="enable_llng_sites" id="enable_llng_sites">Enable LL::NG sites</a></h3>
 <div class="level3">
 
@@ -168,15 +168,18 @@ Enable <acronym title="LemonLDAP::NG">LL::NG</acronym> sites in Apache:
 
 </p>
 <pre class="code shell">a2ensite portal-apache2.conf
-a2ensite manager-apache2.conf
-&nbsp;
+a2ensite manager-apache2.conf</pre>
+
+<p>
+
 Restart Apache:
-&lt;code shell&gt;
-apache2ctl configtest
+
+</p>
+<pre class="code shell">apache2ctl configtest
 apache2ctl restart</pre>
 
 </div>
-<!-- SECTION "Enable LL::NG sites" [1912-2125] -->
+<!-- SECTION "Enable LL::NG sites" [1904-2124] -->
 <h3><a name="upgrade" id="upgrade">Upgrade</a></h3>
 <div class="level3">
 
@@ -198,7 +201,7 @@ The upgrade process will also have migrate old configuration files into <code>/e
 </p>
 
 </div>
-<!-- SECTION "Upgrade" [2126-4284] -->
+<!-- SECTION "Upgrade" [2125-4283] -->
 <h3><a name="dns" id="dns">DNS</a></h3>
 <div class="level3">
 
@@ -225,7 +228,7 @@ Follow the <a href="../../documentation/1.0/start.html#configuration" class="wik
 </p>
 
 </div>
-<!-- SECTION "DNS" [4285-4557] -->
+<!-- SECTION "DNS" [4284-4556] -->
 <h2><a name="file_location" id="file_location">File location</a></h2>
 <div class="level2">
 <ul>
@@ -233,9 +236,11 @@ Follow the <a href="../../documentation/1.0/start.html#configuration" class="wik
 </li>
 <li class="level1"><div class="li"> LemonLDAP::NG configuration (edited by the Manager) is in /var/lib/lemonldap-ng/conf/</div>
 </li>
-<li class="level1"><div class="li"> All <acronym title="Practical Extraction and Report Language">Perl</acronym> modules are in the VENDOR perl directory </div>
+<li class="level1"><div class="li"> All <acronym title="Practical Extraction and Report Language">Perl</acronym> modules are in the VENDOR perl directory (/usr/share/perl5/)</div>
 </li>
 <li class="level1"><div class="li"> All <acronym title="Practical Extraction and Report Language">Perl</acronym> scripts/pages are in /var/lib/lemonldap-ng/</div>
+</li>
+<li class="level1"><div class="li"> All lemonldap-ng tools are in /usr/share/lemonldap-ng/bin/</div>
 </li>
 <li class="level1"><div class="li"> All static content (examples, <acronym title="Cascading Style Sheets">CSS</acronym>, images, etc.) is in /usr/share/lemonldap-ng/</div>
 </li>
@@ -244,7 +249,7 @@ Follow the <a href="../../documentation/1.0/start.html#configuration" class="wik
 </ul>
 
 </div>
-<!-- SECTION "File location" [4558-5012] -->
+<!-- SECTION "File location" [4557-5093] -->
 <h2><a name="build_your_packages" id="build_your_packages">Build your packages</a></h2>
 <div class="level2">
 
@@ -260,4 +265,4 @@ make debian-packages
 </pre>
 
 </div>
-<!-- SECTION "Build your packages" [5013-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Build your packages" [5094-] --></div><!-- closes <div class="dokuwiki export">-->
