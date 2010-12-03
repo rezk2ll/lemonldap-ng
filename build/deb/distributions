@@ -1,11 +1,6 @@
 Label: LemonLDAP::NG
 Suite: unstable
-Codename: sid
-Architectures: i386 source
+Codename: squeeze
+Architectures: i386 amd64 powerpc sparc source
 Components: main
 
-Label: LemonLDAP::NG
-Suite: unstable
-Codename: squeeze
-Architectures: i386 source
-Components: main
