@@ -1,11 +1,10 @@
-# Copyright (C) Helge Kreutzmann &lt;debian@helgefjell.de&gt;, 2008.<br>
+# Copyright (C) Helge Kreutzmann <debian@helgefjell.de>, 2008, 2010.
 # This file is distributed under the same license as the lemonldap-ng package.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: lemonldap-ng 0.8.3.1-1\n"
+"Project-Id-Version: lemonldap-ng 1.0-1\n"
 "Report-Msgid-Bugs-To: lemonldap-ng@packages.debian.org\n"
-"POT-Creation-Date: 2010-12-01 06:25+0100\n"
 "PO-Revision-Date: 2008-01-23 23:12+0100\n"
 "Last-Translator: Helge Kreutzmann &lt;debian@helgefjell.de&gt;\n"
 "Language-Team: de &lt;debian-l10n-german@lists.debian.org&gt;\n"
@@ -13,6 +12,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 
 #. Type: string
 #. Description
@@ -36,7 +36,7 @@ msgstr ""
 #. Description
 #: ../liblemonldap-ng-conf-perl.templates:2001
 msgid "Lemonldap::NG DNS domain:"
-msgstr "Lemonldap::NG DNS-Domäne:"
+msgstr "Lemonldap::NG DNS-Domain:"
 
 #. Type: string
 #. Description
@@ -45,7 +45,7 @@ msgid ""
 "Set here the main domain protected by Lemonldap::NG. You can modify this "
 "value later using the Lemonldap::NG manager."
 msgstr ""
-"Setzen Sie hier die Hauptdomäne, die von Lemonldap::NG geschützt wird. Sie "
+"Setzen Sie hier die Haupt-Domain, die von Lemonldap::NG geschützt wird. Sie "
 "können diesen Wert später mit dem Lemonldap::NG-Manager verändern."
 
 #. Type: string
@@ -110,10 +110,10 @@ msgid ""
 "Leaving it blank causes Lemonldap::NG to use anonymous connections. You can "
 "modify this value later using the Lemonldap::NG manager."
 msgstr ""
-"Setzen Sie hier das Konto, das Lemonldap::NG für seine LDAP-Suchbasis für "
-"LDAP-Anfragen verwenden muss. Bleibt dieses Feld leer, verwendet Lemonldap::"
-"NG anonyme Verbindungen. Sie können diesen Wert später mit dem Lemonldap::NG-"
-"Manager verändern."
+"Setzen Sie hier das Konto, das Lemonldap::NG für seine LDAP-Anfragen "
+"verwenden muss. Bleibt dieses Feld leer, verwendet Lemonldap::NG anonyme "
+"Verbindungen. Sie können diesen Wert später mit dem Lemonldap::NG-Manager "
+"verändern."
 
 #. Type: string
 #. Description
@@ -135,10 +135,10 @@ msgstr ""
 #. Description
 #: ../liblemonldap-ng-conf-perl.templates:8001
 msgid ""
-"Lemonldap::NG configuration files have change, try to migrate your files?"
+"Lemonldap::NG configuration files have changed, try to migrate your files?"
 msgstr ""
+"Lemonldap::NG-Konfigurationsdateien wurden geändert, soll versucht werden, "
+"die Dateien zu migrieren?"
 
-#, fuzzy
-#~| msgid "Lemonldap::NG DNS domain:"
 #~ msgid "Lemonldap::NG migration:"
-#~ msgstr "Lemonldap::NG DNS-Domäne:"
+#~ msgstr "Lemonldap::NG-Migration:"

@@ -49,5 +49,5 @@ _Description: LDAP password:
 
 Template: liblemonldap-ng-conf-perl/migrate
 Type: boolean
-_Description: Lemonldap::NG configuration files have change, try to migrate your files?
+_Description: Lemonldap::NG configuration files have changed, try to migrate your files?
 
