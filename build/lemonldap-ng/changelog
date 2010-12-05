@@ -1,3 +1,7 @@
+lemonldap-ng (1.0.1) stable; urgency=low
+
+    *
+
 lemonldap-ng (1.0) stable; urgency=low
 
     * [LEMONLDAP-1] - ldapGroupAttributeNameSearch not well Serialized by

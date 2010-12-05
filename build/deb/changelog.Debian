@@ -1,4 +1,13 @@
-lemonldap-ng (1.0.0-1) unstable; urgency=low
+lemonldap-ng (1.0-2) unstable; urgency=low
+
+  * Debian po update:
+    * pt translation (Closes: #605917)
+    * de translation (Closes: #605936)
+    * Minor language improvement (Closes: #605937)
+
+ -- Xavier Guimard <x.guimard@free.fr>  Sun, 05 Dec 2010 08:16:08 +0100
+
+lemonldap-ng (1.0-1) unstable; urgency=low
 
   * New upstream release
 
