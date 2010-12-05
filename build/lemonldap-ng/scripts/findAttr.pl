@@ -1,14 +1,14 @@
 #!/usr/bin/perl
-foreach my $k ( sort keys %$unmanagedAttr ) {
-
-}
-
 use strict;
+
 my $IGNORE = join(
     '|', qw(
       csr urldc cfgNum p (?:s|rS)essionInfo dn user mustRedirect password dbi\w+
       reVHosts stack timezone vident _\w+ lmConf table (?:st|db)h res id
-      refLocalStorage
+      refLocalStorage User Password args conf generate mdone obj error
+      authChoiceModules deleted entry macros modules notifObject menuModules
+      mailSessionKey mail logoutServices ns service modified force menuError
+      cookie SOAPMessage
       )
 );
 
@@ -36,9 +36,9 @@ foreach my $module (qw(common handler manager portal)) {
         while (<F>) {
             $autoload = 1 if (/use\s+AutoLoader/);
             last if ( /^__END__$/ and not $autoload );
-            if (/\$self->\{\s*(\w+)\s*\}/) {
+            if (/\$(?:self|args)->\{\s*(\w+)\s*\}/) {
                 my $k = $1;
-                unless ( $k =~ /^$IGNORE$/ ) {
+                unless ( $k =~ /^$IGNORE$/o ) {
                     $attr->{$module}->{$1}++;
                     $attrFile->{$module}->{$1}->{$file}++;
                 }
@@ -51,15 +51,26 @@ foreach my $module (qw(common handler manager portal)) {
     #print Dumper($attr);
 }
 
+open F, 'doc/pages/documentation/latest/parameterlist.html';
+my $documentedAttr;
+while (<F>) {
+    next unless (/<td class="col1.*?">\s*(\w+)\s*<\/td>/);
+    $documentedAttr->{$1}++;
+}
+close F;
+
 open F, 'lemonldap-ng-manager/lib/Lemonldap/NG/Manager/_Struct.pm';
 my $managedAttr;
 my $buf;
 while (<F>) {
-    $buf = '' if($buf =~ /,$/);
-    $buf.=$_;
-    $managedAttr->{$1}++ if ($buf =~ /=>\s*'\w+:\/(\w+)/s);
+    $buf = '' if ( $buf =~ /,$/ );
+    $buf .= $_;
+    $managedAttr->{$1}++ if ( $buf =~ /=>\s*'\w+:\/(\w+)/s );
 }
-my $unmanagedAttr;
+
+
+close F;
+my ( $unmanagedAttr, $undocumentedAttr );
 foreach my $module (qw(common handler manager portal)) {
     foreach my $k ( keys %{ $attr->{$module} } ) {
 
@@ -68,10 +79,19 @@ foreach my $module (qw(common handler manager portal)) {
         unless ( defined( $managedAttr->{$k} ) ) {
             $unmanagedAttr->{$module}->{$k}++;
         }
+        unless ( defined( $documentedAttr->{$k} ) ) {
+            $undocumentedAttr->{$module}->{$k}++;
+        }
 
         # TODO: scan doc/4.1-Configuration-parameter-list.html
     }
+    print "\n##### ".uc($module)." #####\n\n### Unmanaged ###\n";
     foreach my $k ( sort keys %{ $unmanagedAttr->{$module} } ) {
+        print "$k => "
+          . join( ', ', keys( %{ $attrFile->{$module}->{$k} } ) ) . "\n";
+    }
+    print "\n### Undocumented ###\n";
+    foreach my $k ( sort keys %{ $undocumentedAttr->{$module} } ) {
         print "$k => "
           . join( ', ', keys( %{ $attrFile->{$module}->{$k} } ) ) . "\n";
     }

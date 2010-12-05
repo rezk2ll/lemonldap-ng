@@ -33,7 +33,7 @@ sub new {
     }
     unless ( eval { Lemonldap::NG::Handler::_CGI->testConf() } == OK ) {
         if ( $_[0]->{noAbort} ) {
-            $self->{noConf} = $@;
+            $self->{_noConf} = $@;
         }
         else {
             $class->abort( "Unable to get configuration", $@ );
@@ -91,8 +91,8 @@ sub authenticate {
     my $self = shift;
     $self->abort(
         "Can't authenticate because configuration has not been loaded",
-        $self->{noConf} )
-      if ( $self->{noConf} );
+        $self->{_noConf} )
+      if ( $self->{_noConf} );
     my %cookies = fetch CGI::Cookie;
     my $id;
     unless ( $cookies{$cookieName} and $id = $cookies{$cookieName}->value ) {
@@ -137,8 +137,8 @@ sub authorize {
 sub testUri {
     my $self = shift;
     $self->abort( "Can't test URI because configuration has not been loaded",
-        $self->{noConf} )
-      if ( $self->{noConf} );
+        $self->{_noConf} )
+      if ( $self->{_noConf} );
     my $uri = shift;
     my $host =
       ( $uri =~ s#^(?:https?://)?([^/]*)/#/# ) ? $1 : $ENV{SERVER_NAME};
