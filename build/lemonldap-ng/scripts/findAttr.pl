@@ -8,7 +8,8 @@ my $IGNORE = join(
       refLocalStorage User Password args conf generate mdone obj error
       authChoiceModules deleted entry macros modules notifObject menuModules
       mailSessionKey mail logoutServices ns service modified force menuError
-      cookie SOAPMessage
+      cookie SOAPMessage clean func local noQuotes categories noCache
+
       )
 );
 
@@ -33,8 +34,13 @@ foreach my $module (qw(common handler manager portal)) {
         open F, $file;
         $file =~ s#.*/NG/##;
         my $autoload = 0;
+        my $pod = 0;
         while (<F>) {
             $autoload = 1 if (/use\s+AutoLoader/);
+            if(/^=/) {
+                if(/^=cut/){$pod=0;}else{$pod=1};
+            }
+            next if($pod);
             last if ( /^__END__$/ and not $autoload );
             if (/\$(?:self|args)->\{\s*(\w+)\s*\}/) {
                 my $k = $1;

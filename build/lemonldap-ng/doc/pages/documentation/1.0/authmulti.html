@@ -89,7 +89,7 @@ The “Multi” system can :
 <ul>
 <li class="level1"><div class="li"> stack several times the same module with a different name</div>
 </li>
-<li class="level1"><div class="li"> overload any <acronym title="LemonLDAP::NG">LL::NG</acronym> parameter when a specific backend is used</div>
+<li class="level1"><div class="li"> overload any <acronym title="LemonLDAP::NG">LL::NG</acronym> <a href="../../documentation/1.0/parameterlist.html" class="wikilink1" title="documentation:1.0:parameterlist">parameter</a> when a specific backend is used</div>
 </li>
 </ul>
 
@@ -108,7 +108,7 @@ Multi LDAP#Openldap; LDAP#ActiveDirectory
 </pre>
 
 <p>
-Then you can have different parameters for each stored in a <acronym title="Practical Extraction and Report Language">Perl</acronym> hash entry named multi:
+Then you can have different <a href="../../documentation/1.0/parameterlist.html" class="wikilink1" title="documentation:1.0:parameterlist">parameters</a> for each stored in a <acronym title="Practical Extraction and Report Language">Perl</acronym> hash entry named multi:
 
 </p>
 <pre class="code perl">multi <span class="sy0">=&gt;</span> <span class="br0">&#123;</span>
@@ -149,12 +149,12 @@ multi <span class="sy0">=&gt;</span> <span class="br0">&#123;</span>
 <span class="re1">multi</span> <span class="sy0">=</span><span class="re2"> <span class="br0">&#123;</span>'LDAP#Openldap'<span class="sy0">=</span>&gt;<span class="br0">&#123;</span>ldapServer<span class="sy0">=</span>&gt;'ldap1.example.com',LDAPFilter<span class="sy0">=</span>&gt;'<span class="br0">&#40;</span>uid<span class="sy0">=</span>$user<span class="br0">&#41;</span>'<span class="br0">&#125;</span>,'LDAP#ActiveDirectory'<span class="sy0">=</span>&gt;<span class="br0">&#123;</span>ldapServer<span class="sy0">=</span>&gt;'ldaps://ad.example.com',LDAPFilter<span class="sy0">=</span>&gt;'<span class="br0">&#40;</span>&amp;<span class="br0">&#40;</span>sAMAccountName<span class="sy0">=</span>$user<span class="br0">&#41;</span><span class="br0">&#40;</span>objectClass<span class="sy0">=</span>person<span class="br0">&#41;</span><span class="br0">&#41;</span>'<span class="br0">&#125;</span><span class="br0">&#125;</span></span></pre>
 
 </div>
-<!-- SECTION "Advanced configuration" [850-2416] -->
+<!-- SECTION "Advanced configuration" [850-2452] -->
 <h2><a name="known_problems" id="known_problems">Known problems</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Known problems" [2417-2444] -->
+<!-- SECTION "Known problems" [2453-2480] -->
 <h3><a name="authapache_authentication" id="authapache_authentication">AuthApache authentication</a></h3>
 <div class="level3">
 
@@ -164,7 +164,7 @@ When using this module, <acronym title="LemonLDAP::NG">LL::NG</acronym> portal w
 </p>
 
 </div>
-<!-- SECTION "AuthApache authentication" [2445-2726] -->
+<!-- SECTION "AuthApache authentication" [2481-2762] -->
 <h3><a name="ssl_authentication" id="ssl_authentication">SSL authentication</a></h3>
 <div class="level3">
 
@@ -175,4 +175,4 @@ To chain <acronym title="Secure Sockets Layer">SSL</acronym>, you have to set �
 </p>
 
 </div>
-<!-- SECTION "SSL authentication" [2727-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "SSL authentication" [2763-] --></div><!-- closes <div class="dokuwiki export">-->

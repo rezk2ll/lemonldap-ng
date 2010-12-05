@@ -228,8 +228,27 @@ To replace it, LemonLDAP::NG has now SAML2 authentication backend.
 
 <p><div class="notetip">Click <a href="../../documentation/1.0/sqlconfbackend.html" class="wikilink1" title="documentation:1.0:sqlconfbackend">here</a> to learn how reconfigure <acronym title="Database Interface">DBI</acronym> configuration backend.
 </div></p>
-
 </p>
 
 </div>
-<!-- SECTION "DBI configuration backend" [4231-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "DBI configuration backend" [4231-4487] -->
+<h2><a name="debian_upgrade_from_09x" id="debian_upgrade_from_09x">Debian upgrade from 0.9.x</a></h2>
+<div class="level2">
+
+<p>
+
+If you upgrade a Debian packaged install and if you&#039;ve customize <acronym title="Practical Extraction and Report Language">Perl</acronym> index.pl files, you must upgrade them. If you want to use default files, you can use the following :
+</p>
+<pre class="code shell">cd /var/lib/lemonldap-ng/portal
+rm -f *.pl
+for i in /usr/share/lemonldap-ng/portal/*.pl; do
+    ln -s $i
+done
+cd /var/lib/lemonldap-ng/manager
+rm -f *.pl
+for i in /usr/share/lemonldap-ng/manager/*.pl; do
+    ln -s $i
+done</pre>
+
+</div>
+<!-- SECTION "Debian upgrade from 0.9.x" [4488-] --></div><!-- closes <div class="dokuwiki export">-->
