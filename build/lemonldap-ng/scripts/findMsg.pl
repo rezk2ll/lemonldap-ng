@@ -14,12 +14,12 @@ foreach my $module (qw(common handler manager portal)) {
     }
     close CMD;
 
- #    my @files = qw(lemonldap-ng-portal/lib/Lemonldap/NG/Portal/AuthChoice.pm);
+    #my @files = qw(lemonldap-ng-portal/lib/Lemonldap/NG/Portal/AuthChoice.pm);
     foreach my $file (@files) {
         open F, $file;
         $file =~ s#.*/NG/##;
         $_ = <F>;
-        unless(/^##\s*\@file/){
+        unless (/^##\s*\@file/) {
             push @{ $errorMsg->{$module}->{undocumented} }, $file;
             next;
         }
@@ -42,10 +42,10 @@ foreach my $module (qw(common handler manager portal)) {
                   or next;
                 ( $msg, $level ) = ( $1, $3 );
             }
-	    elsif (/abort/) {
-	    	/abort\s*\(\s*(.+?)\s*(?:,\s*(.+?)\s*)?\)/s or next;
-		( $msg, $level ) = ( "$1 ($2)", 'abort' );
-	    }
+            elsif (/abort/) {
+                /abort\s*\(\s*(.+?)\s*(?:,\s*(.+?)\s*)?\)/s or next;
+                ( $msg, $level ) = ( "$1 ($2)", 'abort' );
+            }
             else {
                 $level = 'error';
                 /STDERR\s+(.*)(?:\s+if\s*\()?;$/ or next;
@@ -57,11 +57,14 @@ foreach my $module (qw(common handler manager portal)) {
     }
     print "\n###### " . uc($module) . " ######\n";
     foreach ( @{ $errorMsg->{$module}->{undocumented} } ) {
-        print "## Undocumented ## $_\n";
+        print "## No Doxygen ## $_\n";
     }
     foreach my $level (qw(abort error warn notice info)) {
-        foreach ( @{ $errorMsg->{$module}->{$level} } ) {
-            print "[$level] $_\n";
+        my $last = '';
+        next unless ( ref( $errorMsg->{$module}->{$level} ) );
+        foreach ( sort ( @{ $errorMsg->{$module}->{$level} } ) ) {
+            print "[$level] $_\n" unless ( $_ eq $last );
+            $last = $_;
         }
     }
 }
