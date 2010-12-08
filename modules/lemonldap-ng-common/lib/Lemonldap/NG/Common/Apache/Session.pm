@@ -244,7 +244,6 @@ sub _LDAPGKFAS {
     my $msg = $ldap->search(
         base   => $args->{ldapConfBase},
         filter => '(objectClass=applicationProcess)',
-        scope  => 'base',
         attrs  => [ 'cn', 'description' ],
     );
     Apache::Session::Store::LDAP->logError($msg) if ( $msg->code );
