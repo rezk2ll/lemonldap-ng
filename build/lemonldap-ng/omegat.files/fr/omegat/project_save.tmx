@@ -6374,6 +6374,22 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can be used to prompt users with a message.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; peut être utilisé pour présenter des messages aux utilisateurs.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This can be used to notify right changes,… See &lt;a1&gt;notifications&lt;/a1&gt; for more.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Ceci peut être utilisé pour notifier des changements de droits,... Consultez la page &lt;a1&gt;notifications&lt;/a1&gt; pour plus d'information.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>JDLL 2010</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -6417,7 +6433,7 @@
         <seg>You can see the video here: &lt;a0&gt;http://marcelhaise.com/rmll2009/#LemonLDAP&lt;/a0&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>You can see the video here: &lt;a0&gt;http://marcelhaise.com/rmll2009/#LemonLDAP&lt;/a0&gt;</seg>
+        <seg>Vous pouvez consulter la vidéo ici : &lt;a0&gt;http://marcelhaise.com/rmll2009/#LemonLDAP&lt;/a0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -6510,6 +6526,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can install Lemonldap::NG using &lt;a0&gt;packages&lt;/a0&gt; (rpm or deb) or by hand as described below.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Vous pouvez installer Lemonldap::NG en utilisant des &lt;a0&gt;packets&lt;/a0&gt; (rpm ou deb) ou à la main comme décrit ci-après.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../documentation/latest/prereq.html</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -6530,6 +6554,30 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;a2&gt;Vous devez les installer au préalable&lt;/a2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../documentation/latest/installrpm.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../documentation/latest/installrpm.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../documentation/latest/installdeb.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../documentation/latest/installdeb.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Get the tarball on &lt;a0&gt;download page&lt;/a0&gt; and follow next steps (or install using &lt;a1&gt;RPM&lt;/a1&gt; or &lt;a2&gt;Debian&lt;/a2&gt; packages):</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Récupérez l'archive sur la &lt;a0&gt;page de téléchargement&lt;/a0&gt; et suivez les étapes suivantes (ou installez les paquets &lt;a1&gt;RPM&lt;/a1&gt; ou &lt;a2&gt;Debian&lt;/a2&gt;):</seg>
       </tuv>
     </tu>
     <tu>
@@ -7616,6 +7664,14 @@ sudo apachectl restart</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You may use the &lt;a2&gt;securedCookie&lt;/a2&gt; options to avoid session hijacking.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Vous devriez utilisez les options &lt;a2&gt;securedCookie&lt;/a2&gt; pour éviter le vol de session.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Authorization</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -7640,6 +7696,14 @@ sudo apachectl restart</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>An &lt;a0&gt;URL&lt;/a0&gt; pattern (or &lt;c1&gt;default&lt;/c1&gt; to match other URLs)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Une expression sur l'&lt;a0&gt;URL&lt;/a0&gt; (ou &lt;c1&gt;default&lt;/c1&gt; pour les URLs ne correspondant pas aux règles)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>An access rule</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -7652,6 +7716,14 @@ sudo apachectl restart</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Les autorisations sont définies à l'intérieur d'un hôte virtuel (virtualhost) et n'ont d'effet que sur lui.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>There are no &lt;e0&gt;global&lt;/e0&gt; authorizations except the right to open a session in the portal.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Il n'y a pas d'autorisation &lt;e0&gt;globale&lt;/e0&gt;, à l'exception de la règle accordant l'ouverture de session dans le portail.</seg>
       </tuv>
     </tu>
     <tu>
@@ -7788,6 +7860,22 @@ sudo apachectl restart</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Trace des authentification</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../documentation/latest/logs.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../documentation/latest/logs.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:latest:logs</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:latest:logs</seg>
       </tuv>
     </tu>
     <tu>
@@ -7936,10 +8024,50 @@ sudo apachectl restart</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../../css/all.css</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../../../css/all.css</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../css/screen.css</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../../../css/screen.css</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../css/print.css</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../../../css/print.css</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Parameter list</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Liste des paramètres</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.0/configlocation.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../../documentation/1.0/configlocation.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.0:configlocation</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:1.0:configlocation</seg>
       </tuv>
     </tu>
     <tu>
@@ -7956,6 +8084,14 @@ sudo apachectl restart</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Le nom de la clef d'un attribut peut être utilisé directement dans le fichier &lt;c0&gt;lemonldap-ng.ini&lt;/c0&gt; ou dans les scripts &lt;a1&gt;Perl&lt;/a1&gt; pour surcharger les paramètres de configuration (voir &lt;a2&gt;emplacement de la configuration&lt;/a2&gt;).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Main parameters</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Paramètres principaux</seg>
       </tuv>
     </tu>
     <tu>
@@ -7988,6 +8124,86 @@ sudo apachectl restart</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Agent (Handler)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Manager</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Manager</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Activate auto accept timer</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Activer le compte-à-rebours d'acceptation automatique</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>activeTimer</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>activeTimer</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>✔</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>✔</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Apache authentication level</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Niveau d'authentification d'Apache</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>apacheAuthnLevel</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>apacheAuthnLevel</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Choice modules</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Modules de &quot;Choice&quot;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>authChoiceModules</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>authChoiceModules</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Choice &lt;a0&gt;URL&lt;/a0&gt; parameter</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Paramètre d'&lt;a0&gt;URL&lt;/a0&gt; pour &quot;Choice&quot;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>authChoiceParam</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>authChoiceParam</seg>
       </tuv>
     </tu>
     <tu>
@@ -8608,6 +8824,14 @@ sudo apachectl restart</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>https://twitter.com</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>https://twitter.com</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://en.wikipedia.org/wiki/OAuth</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -8632,10 +8856,26 @@ sudo apachectl restart</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://search.cpan.org/~mmims/Net-Twitter/</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://search.cpan.org/~mmims/Net-Twitter/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You need &lt;a0&gt;Net::Twitter&lt;/a0&gt; package, with a very recent version (&gt;3).</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Vous devez installer une version récente (&gt;3) du paquet &lt;a0&gt;Net::Twitter&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://dev.twitter.com/pages/api_faq</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://dev.twitter.com/pages/api_faq</seg>
       </tuv>
     </tu>
     <tu>
@@ -8720,6 +8960,14 @@ sudo apachectl restart</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://search.cpan.org/perldoc?Apache::Session::Redis</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://search.cpan.org/perldoc?Apache::Session::Redis</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;Apache::Session::Redis&lt;/a0&gt; is the faster shareable session backend</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -8732,6 +8980,14 @@ sudo apachectl restart</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Mise en marche</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://code.google.com/p/redis/</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://code.google.com/p/redis/</seg>
       </tuv>
     </tu>
     <tu>
@@ -8792,10 +9048,42 @@ sudo apachectl restart</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>server</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>server</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Redis server</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Serveur Redis</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>127.0.0.1:6379</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>127.0.0.1:6379</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.0/soapsessionbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../../documentation/1.0/soapsessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.0:soapsessionbackend</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:1.0:soapsessionbackend</seg>
       </tuv>
     </tu>
     <tu>
@@ -8812,6 +9100,206 @@ sudo apachectl restart</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Pour les serveurs distants, vous pouvez utiliser le &lt;a0&gt;module SOAP d'accès aux sessions&lt;/a0&gt; en complément pour augmenter la sécurité de ces serveurs qui accèdent aux sessions au travers d'un réseau non sûr</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Performances</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Performances</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://httpd.apache.org/docs/2.2/misc/perf-tuning.html#compiletime</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://httpd.apache.org/docs/2.2/misc/perf-tuning.html#compiletime</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Lemonldap::NG is designed to be very performant.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Lemonldap::NG a été conçu pour être très performant.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>In particular, it use Apache2 threads capabilities so to optimize performances, prefer using &lt;a0&gt;mpm-worker&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>En particulier, il utilise les capacités multi-threads d'Apache-2, donc pour optimiser les performances, utilisez de préférence &lt;a0&gt;mpm-worker&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Handler performance</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Performance des agents (handlers)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Handlers check rights and calculate headers for each &lt;a0&gt;HTTP&lt;/a0&gt; hit.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Les agents vérifient les droits et calculent les en-têtes pour chaque requête &lt;a0&gt;HTTP&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>So to improve performances, avoid too complex rules by using the macro or the groups or local macros.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Donc pour augmenter les performances, évitez les règles trop complexes en utilisant les macros, groupes ou macros locales.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Macros and groups</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Macros et groupes</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Macros and groups are calculated during authentication process by the portal:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Les macros et les groupes sont calculées pendant le processus d'authentification par le portail :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.0/exportedvars.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../../documentation/1.0/exportedvars.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.0:exportedvars</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:1.0:exportedvars</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>macros are used to extend (or rewrite) &lt;a0&gt;exported variables&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>les macros sont utilisées pour étendre (ou réécrire) les &lt;a0&gt;variables exportées&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>A macro is stored as attributes: it can contain boolean results or any string</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Une macro est stockée comme un attribut : elle peut contenir le résultat d'un calcul booléen ou n'importe quelle chaîne de caractères</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>groups are stored as space-separated strings in the special attribute “groups”: it contains the names of groups whose rules were returned true for the current user</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>les groupes sont stockées en chaîne de caractères séparées par des espaces dans l'attribut spécial “groups” : il contient les noms des groupes dont la règle à retournée une valeur non nulle pour l'utilisateur courant</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Example for macros:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Exemples de macros:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;# boolean macro&lt;/s0&gt;
+isAdmin &lt;s1&gt;-&gt;&lt;/s1&gt; &lt;s2&gt;$uid&lt;/s2&gt; &lt;s3&gt;eq&lt;/s3&gt; &lt;s4&gt;'foo'&lt;/s4&gt; &lt;s5&gt;or&lt;/s5&gt; &lt;s6&gt;$uid&lt;/s6&gt; &lt;s7&gt;eq&lt;/s7&gt; &lt;s8&gt;'bar'&lt;/s8&gt;
+&lt;s9&gt;# other macro &lt;/s9&gt;
+displayName &lt;s10&gt;-&gt;&lt;/s10&gt; &lt;s11&gt;$givenName&lt;/s11&gt;&lt;s12&gt;.&lt;/s12&gt;&lt;s13&gt;&quot; &quot;&lt;/s13&gt;&lt;s14&gt;.&lt;/s14&gt;&lt;s15&gt;$surName&lt;/s15&gt;
+ 
+&lt;s16&gt;# Use a boolean macro in a rule&lt;/s16&gt;
+&lt;s17&gt;^/&lt;/s17&gt;admin &lt;s18&gt;-&gt;&lt;/s18&gt; &lt;s19&gt;$isAdmin&lt;/s19&gt;
+&lt;s20&gt;# Use a string macro in a HTTP header&lt;/s20&gt;
+Display&lt;s21&gt;-&lt;/s21&gt;Name &lt;s22&gt;-&gt;&lt;/s22&gt; &lt;s23&gt;$displayName&lt;/s23&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;# macro booléenne&lt;/s0&gt;
+isAdmin &lt;s1&gt;-&gt;&lt;/s1&gt; &lt;s2&gt;$uid&lt;/s2&gt; &lt;s3&gt;eq&lt;/s3&gt; &lt;s4&gt;'foo'&lt;/s4&gt; &lt;s5&gt;or&lt;/s5&gt; &lt;s6&gt;$uid&lt;/s6&gt; &lt;s7&gt;eq&lt;/s7&gt; &lt;s8&gt;'bar'&lt;/s8&gt;
+&lt;s9&gt;# autre macro &lt;/s9&gt;
+displayName &lt;s10&gt;-&gt;&lt;/s10&gt; &lt;s11&gt;$givenName&lt;/s11&gt;&lt;s12&gt;.&lt;/s12&gt;&lt;s13&gt;&quot; &quot;&lt;/s13&gt;&lt;s14&gt;.&lt;/s14&gt;&lt;s15&gt;$surName&lt;/s15&gt;
+ 
+&lt;s16&gt;# Utiliser une macro booléenne dans une règle&lt;/s16&gt;
+&lt;s17&gt;^/&lt;/s17&gt;admin &lt;s18&gt;-&gt;&lt;/s18&gt; &lt;s19&gt;$isAdmin&lt;/s19&gt;
+&lt;s20&gt;# Utiliser une macro chaîne dans un en-tête HTTP&lt;/s20&gt;
+Display&lt;s21&gt;-&lt;/s21&gt;Name &lt;s22&gt;-&gt;&lt;/s22&gt; &lt;s23&gt;$displayName&lt;/s23&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Example for groups:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Exemples de groupes:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;# group&lt;/s0&gt;
+admin &lt;s1&gt;-&gt;&lt;/s1&gt; &lt;s2&gt;$uid&lt;/s2&gt; &lt;s3&gt;eq&lt;/s3&gt; &lt;s4&gt;'foo'&lt;/s4&gt; &lt;s5&gt;or&lt;/s5&gt; &lt;s6&gt;$uid&lt;/s6&gt; &lt;s7&gt;eq&lt;/s7&gt; &lt;s8&gt;'bar'&lt;/s8&gt;
+ 
+&lt;s9&gt;# Use a group in a rule&lt;/s9&gt;
+&lt;s10&gt;^/&lt;/s10&gt;admin &lt;s11&gt;-&gt;&lt;/s11&gt; &lt;s12&gt;$groups&lt;/s12&gt; &lt;s13&gt;=~&lt;/s13&gt; &lt;s14&gt;/&lt;/s14&gt;&lt;s15&gt;\badmin&lt;/s15&gt;&lt;s16&gt;\b&lt;/s16&gt;&lt;s17&gt;/&lt;/s17&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;# groupe&lt;/s0&gt;
+admin &lt;s1&gt;-&gt;&lt;/s1&gt; &lt;s2&gt;$uid&lt;/s2&gt; &lt;s3&gt;eq&lt;/s3&gt; &lt;s4&gt;'foo'&lt;/s4&gt; &lt;s5&gt;or&lt;/s5&gt; &lt;s6&gt;$uid&lt;/s6&gt; &lt;s7&gt;eq&lt;/s7&gt; &lt;s8&gt;'bar'&lt;/s8&gt;
+ 
+&lt;s9&gt;# Utiliser un groupe dans une règle&lt;/s9&gt;
+&lt;s10&gt;^/&lt;/s10&gt;admin &lt;s11&gt;-&gt;&lt;/s11&gt; &lt;s12&gt;$groups&lt;/s12&gt; &lt;s13&gt;=~&lt;/s13&gt; &lt;s14&gt;/&lt;/s14&gt;&lt;s15&gt;\badmin&lt;/s15&gt;&lt;s16&gt;\b&lt;/s16&gt;&lt;s17&gt;/&lt;/s17&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Local macros</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Macros locales</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Macros and groups are stored in session database.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Les macros et les groupes sont stockées dans la base de données des sessions.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Local macros is a special feature of handler that permit to have macros useable localy only.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Les macros locales sont une fonctionnalité spéciale des agents qui permettent d'avoir des macros utilisables localement seulement.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Those macros are calculated only at the first usage and stored in the local session cache (only for this server) and only if the user access to the related applications.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Ces macros sont calculées seulement à leur premier usage et stockées dans le cache local des sessions (uniquement pour ce serveur) et seulement si l'utilisateur accède à l'application relative.</seg>
       </tuv>
     </tu>
     <tu>
