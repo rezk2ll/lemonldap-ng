@@ -24,6 +24,7 @@ var helpCh={
 	'authParams':'/pages/documentation/latest/start.html#authentication_users_and_password_databases',
 	'authProxy':'/pages/documentation/latest/authproxy.html',
 	'authRemote':'/pages/documentation/latest/authremote.html',
+	'authSlave':'/pages/documentation/latest/authslave.html',
 	'authSSL':'/pages/documentation/latest/authssl.html',
 	'authTwitter':'/pages/documentation/latest/authtwitter.html',
 	'cookies':'/pages/documentation/latest/ssocookie.html',

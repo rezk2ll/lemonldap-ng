@@ -341,6 +341,7 @@ sub struct {
                             dbi     => ['dbiParams'],
                             apache  => ['apacheParams'],
                             null    => ['nullParams'],
+                            slave   => ['slaveParams'],
                             choice  => [
                                 qw(ldapParams sslParams casParams remoteParams proxyParams openIdParams twitterParams dbiParams apacheParams nullParams choiceParams)
                             ],
@@ -570,6 +571,13 @@ sub struct {
                     _nodes         => [qw(nullAuthnLevel)],
                     _help          => 'authNull',
                     nullAuthnLevel => 'int:/nullAuthnLevel',
+                },
+
+                # Slave
+                slaveParams => {
+                    _nodes         => [qw(slaveAuthnLevel)],
+                    _help          => 'authSlave',
+                    slaveAuthnLevel => 'int:/slaveAuthnLevel',
                 },
 
                 # Choice
@@ -1645,6 +1653,9 @@ sub testStruct {
         # Null
         nullAuthnLevel => $integer,
 
+        # Slave
+        slaveAuthnLevel => $integer,
+
         # Choice
         authChoiceParams  => $testNotDefined,
         authChoiceModules => {
@@ -1878,6 +1889,7 @@ sub defaultConf {
         twitterAuthnLevel => 1,
         apacheAuthnLevel  => 4,
         nullAuthnLevel    => 0,
+        slaveAuthnLevel   => 2,
 
     };
 }
