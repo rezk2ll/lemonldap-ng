@@ -119,7 +119,6 @@ example/skins/pastel/openid.tpl
 example/skins/pastel/openidform.tpl
 example/skins/pastel/password.tpl
 example/skins/pastel/standardform.tpl
-example/slavePortal.pl
 example/soapconfigtest.pl
 example/soaptest.pl
 lib/Lemonldap/NG/Portal.pm
