@@ -280,7 +280,7 @@ sub struct {
                         _nodes => [
 'applicationlist:/applicationList:menuCatAndApp:applicationListCategory'
                         ],
-                        _js => 'applicationListCategoryRoot',
+                        _js   => 'applicationListCategoryRoot',
                         _help => 'menuCatAndApp',
                     },
                 },
@@ -575,9 +575,10 @@ sub struct {
 
                 # Slave
                 slaveParams => {
-                    _nodes         => [qw(slaveAuthnLevel)],
-                    _help          => 'authSlave',
+                    _nodes          => [qw(slaveAuthnLevel slaveUserAttr)],
+                    _help           => 'authSlave',
                     slaveAuthnLevel => 'int:/slaveAuthnLevel',
+                    slaveUserAttr   => 'int:/slaveUserAttr',
                 },
 
                 # Choice
@@ -618,14 +619,14 @@ sub struct {
                     issuerDBCASPath       => 'text:/issuerDBCASPath',
                     issuerDBCASRule =>
                       'text:/issuerDBCASRule:issuerdbCAS:boolOrPerlExpr',
-                    issuerDBCASOptions    => {
+                    issuerDBCASOptions => {
                         _nodes => [qw(casAttr casStorage cn:casStorageOptions)],
                         casAttr           => 'text:/casAttr',
                         casStorage        => 'text:/casStorage',
                         casStorageOptions => {
                             _nodes =>
                               ['hash:/casStorageOptions:issuerDBCAS:btext'],
-                            _js    => 'hashRoot',
+                            _js   => 'hashRoot',
                             _help => 'issuerdbCAS',
                         },
                     },
@@ -637,7 +638,7 @@ sub struct {
                     _help => 'issuerdbOpenID',
                     issuerDBOpenIDActivation =>
                       'bool:/issuerDBOpenIDActivation',
-                    issuerDBOpenIDPath    => 'text:/issuerDBOpenIDPath',
+                    issuerDBOpenIDPath => 'text:/issuerDBOpenIDPath',
                     issuerDBOpenIDRule =>
                       'text:/issuerDBOpenIDRule:issuerdbOpenID:boolOrPerlExpr',
                     issuerDBOpenIDOptions => {
@@ -708,7 +709,7 @@ sub struct {
                     globalStorageOptions => {
                         _nodes =>
                           ['hash:/globalStorageOptions:sessionsdb:btext'],
-                        _js    => 'hashRoot',
+                        _js   => 'hashRoot',
                         _help => 'sessionsdb',
                     },
                 },
@@ -778,7 +779,7 @@ sub struct {
                     userControl      => 'text:/userControl',
                     portalForceAuthn => 'bool:/portalForceAuthn',
                     key              => 'text:/key',
-                    trustedDomains => 'text:/trustedDomains',
+                    trustedDomains   => 'text:/trustedDomains',
                 },
 
                 redirection => {
@@ -1115,7 +1116,7 @@ sub struct {
                 samlStorageOptions    => {
                     _nodes =>
                       ['hash:/samlStorageOptions:samlServiceAdvanced:btext'],
-                    _js    => 'hashRoot',
+                    _js   => 'hashRoot',
                     _help => 'samlServiceAdvanced',
                 },
                 samlCommonDomainCookie => {
@@ -1655,6 +1656,10 @@ sub testStruct {
 
         # Slave
         slaveAuthnLevel => $integer,
+        slaveUserAttr   => {
+            test    => qr/^[_a-zA-Z]\w*$/,
+            msgFail => 'Bad attribute name',
+        },
 
         # Choice
         authChoiceParams  => $testNotDefined,

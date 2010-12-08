@@ -18,7 +18,6 @@ our @ISA     = qw(Lemonldap::NG::Portal::AuthNull);
 sub setAuthSessionInfo {
     my $self = shift;
 
-    $self->{sessionInfo}->{'_user'} = 'anonymous';
     $self->{sessionInfo}->{authenticationLevel} = $self->{slaveAuthnLevel};
 
     PE_OK;
