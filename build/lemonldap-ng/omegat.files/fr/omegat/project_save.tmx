@@ -3054,6 +3054,198 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Manager (configuration management)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Manager (gestion de la configuration)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/manager/accordeon_dark.png?w=800&amp;amp;h=515</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/1.0/manager/accordeon_dark.png?w=800&amp;amp;h=515</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>accordeon_dark.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>accordeon_dark.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/manager/accordeon_dark.png?w=200&amp;amp;h=128</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/1.0/manager/accordeon_dark.png?w=200&amp;amp;h=128</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/screenshots/1.0/manager/accordeon_dark.png?id=screenshots</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/screenshots/1.0/manager/accordeon_dark.png?id=screenshots</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/manager/accordeon_light.png?w=800&amp;amp;h=515</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/1.0/manager/accordeon_light.png?w=800&amp;amp;h=515</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>accordeon_light.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>accordeon_light.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/manager/accordeon_light.png?w=200&amp;amp;h=128</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/1.0/manager/accordeon_light.png?w=200&amp;amp;h=128</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/screenshots/1.0/manager/accordeon_light.png?id=screenshots</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/screenshots/1.0/manager/accordeon_light.png?id=screenshots</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/manager/tree_dark.png?w=800&amp;amp;h=515</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/1.0/manager/tree_dark.png?w=800&amp;amp;h=515</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>tree_dark.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>tree_dark.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/manager/tree_dark.png?w=200&amp;amp;h=128</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/1.0/manager/tree_dark.png?w=200&amp;amp;h=128</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/screenshots/1.0/manager/tree_dark.png?id=screenshots</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/screenshots/1.0/manager/tree_dark.png?id=screenshots</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/manager/tree_light.png?w=800&amp;amp;h=515</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/1.0/manager/tree_light.png?w=800&amp;amp;h=515</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>tree_light.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>tree_light.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/manager/tree_light.png?w=200&amp;amp;h=128</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/1.0/manager/tree_light.png?w=200&amp;amp;h=128</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/screenshots/1.0/manager/tree_light.png?id=screenshots</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/screenshots/1.0/manager/tree_light.png?id=screenshots</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Manager (sessions explorer)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Manager (explorateur de sessions)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/sessionsexplorer/accordeon_dark.png?w=800&amp;amp;h=514</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/1.0/sessionsexplorer/accordeon_dark.png?w=800&amp;amp;h=514</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/sessionsexplorer/accordeon_dark.png?w=200&amp;amp;h=128</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/1.0/sessionsexplorer/accordeon_dark.png?w=200&amp;amp;h=128</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/screenshots/1.0/sessionsexplorer/accordeon_dark.png?id=screenshots</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/screenshots/1.0/sessionsexplorer/accordeon_dark.png?id=screenshots</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/sessionsexplorer/tree_light.png?w=800&amp;amp;h=514</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/1.0/sessionsexplorer/tree_light.png?w=800&amp;amp;h=514</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/screenshots/1.0/sessionsexplorer/tree_light.png?w=200&amp;amp;h=128</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../media/screenshots/1.0/sessionsexplorer/tree_light.png?w=200&amp;amp;h=128</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/screenshots/1.0/sessionsexplorer/tree_light.png?id=screenshots</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/screenshots/1.0/sessionsexplorer/tree_light.png?id=screenshots</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>0.9.4</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -4222,82 +4414,82 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1857</seg>
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1890</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1857</seg>
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1890</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;a0&gt;Cpan test error&lt;/a0&gt; by guimard (2010/11/26 20:03)</seg>
+        <seg>&lt;a0&gt;findAttr.pl now scans undocumented parameters&lt;/a0&gt; by guimard (2010/12/05 14:41)</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>&lt;a0&gt;Cpan test error&lt;/a0&gt; by guimard (2010/11/26 20:03)</seg>
+        <seg>&lt;a0&gt;findAttr.pl now scans undocumented parameters&lt;/a0&gt; by guimard (2010/12/05 14:41)</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1856</seg>
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1889</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1856</seg>
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1889</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;a0&gt;Work on RPM for 1.0 (#LEMONLDAP-206)&lt;/a0&gt; by clement_oudot (2010/11/26 17:00)</seg>
+        <seg>&lt;a0&gt;Lasso dependency version&lt;/a0&gt; by guimard (2010/12/05 09:22)</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>&lt;a0&gt;Work on RPM for 1.0 (#LEMONLDAP-206)&lt;/a0&gt; by clement_oudot (2010/11/26 17:00)</seg>
+        <seg>&lt;a0&gt;Lasso dependency version&lt;/a0&gt; by guimard (2010/12/05 09:22)</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1855</seg>
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1888</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1855</seg>
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1888</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;a0&gt;Doc update&lt;/a0&gt; by clement_oudot (2010/11/26 10:11)</seg>
+        <seg>&lt;a0&gt;Debian fr.po is now maintained by debian-l10n-french team&lt;/a0&gt; by guimard (2010/12/05 08:50)</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>&lt;a0&gt;Doc update&lt;/a0&gt; by clement_oudot (2010/11/26 10:11)</seg>
+        <seg>&lt;a0&gt;Debian fr.po is now maintained by debian-l10n-french team&lt;/a0&gt; by guimard (2010/12/05 08:50)</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1854</seg>
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1887</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1854</seg>
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1887</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;a0&gt;Doc update&lt;/a0&gt; by guimard (2010/11/25 18:45)</seg>
+        <seg>&lt;a0&gt;Debian po update&lt;/a0&gt; by guimard (2010/12/05 08:45)</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>&lt;a0&gt;Doc update&lt;/a0&gt; by guimard (2010/11/25 18:45)</seg>
+        <seg>&lt;a0&gt;Debian po update&lt;/a0&gt; by guimard (2010/12/05 08:45)</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1853</seg>
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1886</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1853</seg>
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1886</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;a0&gt;Doc update&lt;/a0&gt; by clement_oudot (2010/11/25 17:28)</seg>
+        <seg>&lt;a0&gt;README.Debian update&lt;/a0&gt; by guimard (2010/12/05 08:19)</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>&lt;a0&gt;Doc update&lt;/a0&gt; by clement_oudot (2010/11/25 17:28)</seg>
+        <seg>&lt;a0&gt;README.Debian update&lt;/a0&gt; by guimard (2010/12/05 08:19)</seg>
       </tuv>
     </tu>
     <tu>
@@ -5142,18 +5334,18 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s0&gt;Xavier GUIMARD&lt;/s0&gt;: project leader, lead developer</seg>
+        <seg>&lt;s0&gt;Clément “KPTN” OUDOT&lt;/s0&gt;: project leader, lead developer, graphics, documentation, community management</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>&lt;s0&gt;Xavier GUIMARD&lt;/s0&gt;: chef du projet et développeur</seg>
+        <seg>&lt;s0&gt;Clément “KPTN” OUDOT&lt;/s0&gt;: Leader du projet, développeur principal, graphisme, documentation, gestion de la communauté</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;s0&gt;Clément “KPTN” OUDOT&lt;/s0&gt;: developer, graphics, documentation, community management</seg>
+        <seg>&lt;s0&gt;Xavier GUIMARD&lt;/s0&gt;: historic project leader, developer, administrator of big Lemonldap::NG instances</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>&lt;s0&gt;Clément “KPTN” OUDOT&lt;/s0&gt;: développeur, concepteur graphique, concepteur de la documentation, gestionnaire de la communité</seg>
+        <seg>&lt;s0&gt;Xavier GUIMARD&lt;/s0&gt;: Leader historique du projet, developpeur, administrateur de grosses installations de Lemonldap::NG</seg>
       </tuv>
     </tu>
     <tu>
@@ -5358,82 +5550,98 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Stable version</seg>
+        <seg>Stable version (1.0)</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>Version stable</seg>
+        <seg>Version stable (1.0)</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Current stable version is 0.9.4.1:</seg>
+        <seg>Tarball</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>La version stable courante est la 0.9.4.1:</seg>
+        <seg>Archive</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;amp;file_id=13688</seg>
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;amp;file_id=15918</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;amp;file_id=13688</seg>
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;amp;file_id=15918</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Source</seg>
+        <seg>RPM</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>Sources</seg>
+        <seg>RPM</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;amp;file_id=13690</seg>
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;amp;file_id=15920</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;amp;file_id=13690</seg>
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;amp;file_id=15920</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>RHEL5 RPM bundle</seg>
+        <seg>RPM bundle</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>Paquets RPM RHEL5</seg>
+        <seg>Paquets RPM</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;amp;file_id=13956</seg>
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;amp;file_id=15919</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;amp;file_id=13956</seg>
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;amp;file_id=15919</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Fedora11 RPM bundle</seg>
+        <seg>Source RPM</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>Paquets RPM Fedora11</seg>
+        <seg>RPM sources</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;amp;file_id=13689</seg>
+        <seg>You can:</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;amp;file_id=13689</seg>
+        <seg>Vous pouvez :</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Debian/Ubuntu bundle</seg>
+        <seg>documentation/latest/installrpm.html#yum_repository</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>Debian/Ubuntu bundle</seg>
+        <seg>documentation/latest/installrpm.html#yum_repository</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:latest:installrpm</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:latest:installrpm</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Use &lt;a0&gt;our own YUM repository&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Utiliser &lt;a0&gt;votre propre dépôt YUM&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -5454,18 +5662,74 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>For RPM systems, you have to &lt;a0&gt;install pre-required packages&lt;/a0&gt;</seg>
+        <seg>Download them here and &lt;a0&gt;install pre-required packages&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>Pour les systèmes basés sur RPM, vous devez &lt;a0&gt;installer les paquets pré-requis&lt;/a0&gt;</seg>
+        <seg>Les télécharger ici et &lt;a0&gt;installer les paquets pre-requis&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>http://packages.debian.org/search?keywords=lemonldap-ng&amp;amp;searchon=names&amp;amp;suite=all&amp;amp;section=all</seg>
+        <seg>Debian</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>http://packages.debian.org/search?keywords=lemonldap-ng&amp;amp;searchon=names&amp;amp;suite=all&amp;amp;section=all</seg>
+        <seg>Debian</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;amp;file_id=15927</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;amp;file_id=15927</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>DEB bundle</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Paquets DEB</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation/latest/installdeb.html#official_repository</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation/latest/installdeb.html#official_repository</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:latest:installdeb</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:latest:installdeb</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Use &lt;a0&gt;packages provided by Debian&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Utiliser les &lt;a0&gt;packets fournis par Debian&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation/latest/installdeb.html#llng_repository</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation/latest/installdeb.html#llng_repository</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Use &lt;a0&gt;our own Debian repository&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Utiliser &lt;a0&gt;votre propre dépôt Debian&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -5478,34 +5742,26 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>For Debian/Ubuntu systems: you can use packages provided by Debian (&lt;a0&gt;lemonldap-ng packages&lt;/a0&gt;) or &lt;a1&gt;install pre-required packages&lt;/a1&gt;</seg>
+        <seg>Older versions</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>Pour les systèmes de type Debian/Ubuntu : vous pouvez utiliser ceux proposés par Debian (&lt;a0&gt;paquets lemonldap-ng&lt;/a0&gt;) ou &lt;a1&gt;installer les paquets pré-requis&lt;/a1&gt;</seg>
+        <seg>Versions précédentes</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Testing version</seg>
+        <seg>http://forge.ow2.org/project/showfiles.php?group_id=274</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>Version en test</seg>
+        <seg>http://forge.ow2.org/project/showfiles.php?group_id=274</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Current testing version is 1.0rc2:</seg>
+        <seg>You can find all versions on &lt;a0&gt;OW2 forge download page&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>La version courrant en test est la 1.0rc2:</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;amp;file_id=15298</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;amp;file_id=15298</seg>
+        <seg>Vous pouvez trouver toutes les versions sur &lt;a0&gt;la page de téléchargement de la forge OW2&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -5622,10 +5878,10 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Lemonldap::NG developer must have a account on OW2 plateform, and could authenticate themself via &lt;a0&gt;SSH&lt;/a0&gt; 2 by using the following one:</seg>
+        <seg>LemonLDAP::NG developer must have a account on OW2 platform, and could authenticate themselves via &lt;a0&gt;SSH&lt;/a0&gt; 2 by using the following one:</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>Les développeurs Lemonldap::NG doivent posséder un compte sur la plateforme OW2 et peuvent l'utiliser via &lt;a0&gt;SSH&lt;/a0&gt; 2 en utilisant la commande suivante :</seg>
+        <seg>Les développeurs LemonLDAP::NG doivent posséder un compte sur la plateforme OW2, et peuvent s'authentifier via &lt;a0&gt;SSH&lt;/a0&gt; 2 en utilisant :</seg>
       </tuv>
     </tu>
     <tu>
@@ -6118,22 +6374,6 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Lemonldap::NG can be used to prompt users with a message.</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Lemonldap::NG peut être utilisé pour notifier des messages aux utilisateurs.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>This can be used to notify right changes,… See &lt;a0&gt;notifications&lt;/a0&gt; for more.</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Ceci peut être utilisé pour notifier des changements de droits,… Consultez la page &lt;a0&gt;notifications&lt;/a0&gt; pour plus d'information.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>JDLL 2010</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -6270,14 +6510,6 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>You can install Lemonldap::NG using &lt;a0&gt;packages&lt;/a0&gt; (rpm or deb) or by hand as described here :</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Vous pouvez installer Lemonldap::NG en utilisant des &lt;a0&gt;paquets&lt;/a0&gt; (rpm or deb) à la main :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>../documentation/latest/prereq.html</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -6298,14 +6530,6 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;a2&gt;Vous devez les installer au préalable&lt;/a2&gt;.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Get the tarball on &lt;a0&gt;Download page&lt;/a0&gt; and follow next steps (or install using packages):</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Récupérez les sources sur la &lt;a0&gt;page de téléchargement&lt;/a0&gt; et suivez les étapes suivantes (ou utilisez les paquets):</seg>
       </tuv>
     </tu>
     <tu>
@@ -7784,50 +8008,10 @@ sudo apachectl restart</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>User backend</seg>
+        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; authentication search filter</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>Module utilisateurs</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Password backend</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Module de gestion de mots-de-passe</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Session backend</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Module de stockage des sessions</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Session backend options</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Options du module de stockage des sessions</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;a0&gt;SAML&lt;/a0&gt; Session backend</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Module de stockage &lt;a0&gt;SAML&lt;/a0&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;a0&gt;SAML&lt;/a0&gt; Session backend options</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Options du module de stockage &lt;a0&gt;SAML&lt;/a0&gt;</seg>
+        <seg>Filtre de recherche &lt;a0&gt;LDAP&lt;/a0&gt; pour l'authentification</seg>
       </tuv>
     </tu>
     <tu>
@@ -7848,110 +8032,6 @@ sudo apachectl restart</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Configuration backend</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Stockage de la configuration</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Cache backend</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Module du cache local</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Cache backend options</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Options du module du cache local</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Notification backend</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Module de stockage des notifications</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Notification backend options</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Options du module de stockage des notifications</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Remote user</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Utilisateur pour Apache</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Custom functions</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Fonctions personnalisées</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Headers sent</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>En-têtes envoyés</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Access rules</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Règles d'accès</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Portal &lt;a0&gt;URL&lt;/a0&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>&lt;a0&gt;URL&lt;/a0&gt; du portail</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>portal</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>portail</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Name of the cookie</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Nom du cookie</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Main &lt;a0&gt;DNS&lt;/a0&gt; domain</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Domaine &lt;a0&gt;DNS&lt;/a0&gt; principal</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;a0&gt;CDA&lt;/a0&gt; activation</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -7960,10 +8040,10 @@ sudo apachectl restart</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Cookie security</seg>
+        <seg>Configuration backend</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>Sécurité du cookie</seg>
+        <seg>Stockage de la configuration</seg>
       </tuv>
     </tu>
     <tu>
@@ -7976,42 +8056,26 @@ sudo apachectl restart</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Attributes from user backend</seg>
+        <seg>Name of the cookie</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>Attributs récupérés du module utilisateur</seg>
+        <seg>Nom du cookie</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Local groups</seg>
+        <seg>Custom functions</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>Groupes locaux</seg>
+        <seg>Fonctions personnalisées</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Session lifetime for cronjob</seg>
+        <seg>Main &lt;a0&gt;DNS&lt;/a0&gt; domain</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>Durée de vie des sessions pour la tâche planifiée</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Syslog facility</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Facilité syslog</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;a0&gt;SOAP&lt;/a0&gt; activation</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Activation &lt;a0&gt;SOAP&lt;/a0&gt;</seg>
+        <seg>Domaine &lt;a0&gt;DNS&lt;/a0&gt; principal</seg>
       </tuv>
     </tu>
     <tu>
@@ -8024,26 +8088,34 @@ sudo apachectl restart</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Store password in session</seg>
+        <seg>Headers sent</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>Stockage du mot-de-passe en session</seg>
+        <seg>En-têtes envoyés</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Notification activation</seg>
+        <seg>Attributes from user backend</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>Activation des notifications</seg>
+        <seg>Attributs récupérés du module utilisateur</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Trusted domains</seg>
+        <seg>Session backend</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>Domaines agréés</seg>
+        <seg>Module de stockage des sessions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Session backend options</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Options du module de stockage des sessions</seg>
       </tuv>
     </tu>
     <tu>
@@ -8056,10 +8128,10 @@ sudo apachectl restart</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Status module</seg>
+        <seg>Local groups</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>Module de statut</seg>
+        <seg>Groupes locaux</seg>
       </tuv>
     </tu>
     <tu>
@@ -8072,258 +8144,10 @@ sudo apachectl restart</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>Force port in redirection</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Force le port dans les redirections</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Protection scheme</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Schéma de protection</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Use XForwardedFor for &lt;a0&gt;IP&lt;/a0&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Utiliser XForwardedFor comme &lt;a0&gt;IP&lt;/a0&gt; cliente</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Multi values separator</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Séparateur des multiples valeurs</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;a0&gt;SMTP&lt;/a0&gt; server</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Serveur &lt;a0&gt;SMTP&lt;/a0&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Mail From address</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Adresse source des messages</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Regular expression for random password</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Expression rationnelle pour la génération aléatoire des mots-de-passe</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Subject for password mail</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Sujet du message de changement de mot de passe</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Body for password mail</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Corps du message de changement de mot-de-passe</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Subject for confirmation mail</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Sujet du message de confirmation</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Body for confirmation mail</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Corps du message de confirmation</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;a0&gt;URL&lt;/a0&gt; for mail reset</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>&lt;a0&gt;URL&lt;/a0&gt; pour la réinitialisation par courriel</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Skin name</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Nom du thème</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Display logout module</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Affiche le module de déconnexion</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Display reset password form</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Affiche le module de réinitialisation de mot-de-passe</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Display change password module</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Affiche le module de changement de mot-de-passe</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Display applications list</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Affiche la liste des applications</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Allow form autocompletion</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Autorise l'autocompletion du formulaire</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Require old password (change)</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Impose la présentation de l'ancien mot-de-passe dans les changements</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>User name session field</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Champ de session stockant le nom d'utilisateur</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Open links in new window</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Ouvre les liens dans une nouvelle fenêtre</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Anti frame protection</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Protection anti-frame</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Delete other session</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Efface les autres sessions (session unique par utilisateur)</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Delete other session if &lt;a0&gt;IP&lt;/a0&gt; differs</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Efface les autres sessions de l'utilisateur si les adresses &lt;a0&gt;IP&lt;/a0&gt; diffèrent</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Do not allow several users for 1 &lt;a0&gt;IP&lt;/a0&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Ne pas autoriser plusieurs utilisateurs venant de la même adresse &lt;a0&gt;IP&lt;/a0&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Display other sessions</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Affiche les autres sessions</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Display deleted sessions</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Affiche les sessions effacées</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; server or Net::&lt;a1&gt;LDAP&lt;/a1&gt; connexion string</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Serveur &lt;a0&gt;LDAP&lt;/a0&gt; ou chaîne de connexion Net::&lt;a1&gt;LDAP&lt;/a1&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; Port</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Port &lt;a0&gt;LDAP&lt;/a0&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;a0&gt;LDAP&lt;/a0&gt; search base</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Base de recherche &lt;a0&gt;LDAP&lt;/a0&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; Bind &lt;a1&gt;DN&lt;/a1&gt;</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>&lt;a1&gt;DN&lt;/a1&gt; de connexion &lt;a0&gt;LDAP&lt;/a0&gt;</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; Bind Password</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Mot-de-passe de connexion &lt;a0&gt;LDAP&lt;/a0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -8336,26 +8160,10 @@ sudo apachectl restart</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; authentication search filter</seg>
+        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; groups member attribute</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>Filtre de recherche &lt;a0&gt;LDAP&lt;/a0&gt; pour l'authentification</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; mail search filter</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Filtre de recherche &lt;a0&gt;LDAP&lt;/a0&gt; pour le courriel</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; password policy control</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Activation du contrôle de conformité à la politique &lt;a0&gt;LDAP&lt;/a0&gt;</seg>
+        <seg>Attribut de membre d'un groupe &lt;a0&gt;LDAP&lt;/a0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -8376,10 +8184,410 @@ sudo apachectl restart</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; groups member attribute</seg>
+        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; Port</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>Attribut de membre d'un groupe &lt;a0&gt;LDAP&lt;/a0&gt;</seg>
+        <seg>Port &lt;a0&gt;LDAP&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; password policy control</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Activation du contrôle de conformité à la politique &lt;a0&gt;LDAP&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; server or Net::&lt;a1&gt;LDAP&lt;/a1&gt; connexion string</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Serveur &lt;a0&gt;LDAP&lt;/a0&gt; ou chaîne de connexion Net::&lt;a1&gt;LDAP&lt;/a1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Cache backend</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Module du cache local</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Cache backend options</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Options du module du cache local</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Access rules</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Règles d'accès</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Body for password mail</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Corps du message de changement de mot-de-passe</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Body for confirmation mail</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Corps du message de confirmation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Subject for confirmation mail</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Sujet du message de confirmation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Mail From address</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Adresse source des messages</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; mail search filter</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Filtre de recherche &lt;a0&gt;LDAP&lt;/a0&gt; pour le courriel</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Subject for password mail</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Sujet du message de changement de mot de passe</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;URL&lt;/a0&gt; for mail reset</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;URL&lt;/a0&gt; pour la réinitialisation par courriel</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; Bind &lt;a1&gt;DN&lt;/a1&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a1&gt;DN&lt;/a1&gt; de connexion &lt;a0&gt;LDAP&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; Bind Password</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Mot-de-passe de connexion &lt;a0&gt;LDAP&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Multi values separator</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Séparateur des multiples valeurs</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Notification activation</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Activation des notifications</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Notification backend</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Module de stockage des notifications</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Notification backend options</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Options du module de stockage des notifications</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Display deleted sessions</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Affiche les sessions effacées</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Display other sessions</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Affiche les autres sessions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Password backend</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Module de gestion de mots-de-passe</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Force port in redirection</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Force le port dans les redirections</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Portal &lt;a0&gt;URL&lt;/a0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;URL&lt;/a0&gt; du portail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>portal</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>portail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Anti frame protection</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Protection anti-frame</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Allow form autocompletion</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Autorise l'autocompletion du formulaire</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Display applications list</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Affiche la liste des applications</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Display change password module</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Affiche le module de changement de mot-de-passe</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Display logout module</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Affiche le module de déconnexion</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Display reset password form</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Affiche le module de réinitialisation de mot-de-passe</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Open links in new window</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Ouvre les liens dans une nouvelle fenêtre</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Require old password (change)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Impose la présentation de l'ancien mot-de-passe dans les changements</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Skin name</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Nom du thème</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>User name session field</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Champ de session stockant le nom d'utilisateur</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Protection scheme</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Schéma de protection</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Regular expression for random password</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Expression rationnelle pour la génération aléatoire des mots-de-passe</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;SAML&lt;/a0&gt; Session backend</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Module de stockage &lt;a0&gt;SAML&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;SAML&lt;/a0&gt; Session backend options</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Options du module de stockage &lt;a0&gt;SAML&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Cookie security</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Sécurité du cookie</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Delete other session if &lt;a0&gt;IP&lt;/a0&gt; differs</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Efface les autres sessions de l'utilisateur si les adresses &lt;a0&gt;IP&lt;/a0&gt; diffèrent</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Delete other session</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Efface les autres sessions (session unique par utilisateur)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Do not allow several users for 1 &lt;a0&gt;IP&lt;/a0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Ne pas autoriser plusieurs utilisateurs venant de la même adresse &lt;a0&gt;IP&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;SMTP&lt;/a0&gt; server</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Serveur &lt;a0&gt;SMTP&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;SOAP&lt;/a0&gt; activation</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Activation &lt;a0&gt;SOAP&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Store password in session</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Stockage du mot-de-passe en session</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Syslog facility</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Facilité syslog</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Session lifetime for cronjob</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Durée de vie des sessions pour la tâche planifiée</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Trusted domains</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Domaines agréés</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>User backend</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Module utilisateurs</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Use XForwardedFor for &lt;a0&gt;IP&lt;/a0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Utiliser XForwardedFor comme &lt;a0&gt;IP&lt;/a0&gt; cliente</seg>
       </tuv>
     </tu>
     <tu>
@@ -8604,6 +8812,286 @@ sudo apachectl restart</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Pour les serveurs distants, vous pouvez utiliser le &lt;a0&gt;module SOAP d'accès aux sessions&lt;/a0&gt; en complément pour augmenter la sécurité de ces serveurs qui accèdent aux sessions au travers d'un réseau non sûr</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1857</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1857</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Cpan test error&lt;/a0&gt; by guimard (2010/11/26 20:03)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;Cpan test error&lt;/a0&gt; by guimard (2010/11/26 20:03)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1856</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1856</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Work on RPM for 1.0 (#LEMONLDAP-206)&lt;/a0&gt; by clement_oudot (2010/11/26 17:00)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;Work on RPM for 1.0 (#LEMONLDAP-206)&lt;/a0&gt; by clement_oudot (2010/11/26 17:00)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1855</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1855</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Doc update&lt;/a0&gt; by clement_oudot (2010/11/26 10:11)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;Doc update&lt;/a0&gt; by clement_oudot (2010/11/26 10:11)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1854</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1854</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Doc update&lt;/a0&gt; by guimard (2010/11/25 18:45)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;Doc update&lt;/a0&gt; by guimard (2010/11/25 18:45)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1853</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1853</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Doc update&lt;/a0&gt; by clement_oudot (2010/11/25 17:28)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;Doc update&lt;/a0&gt; by clement_oudot (2010/11/25 17:28)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Xavier GUIMARD&lt;/s0&gt;: project leader, lead developer</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Xavier GUIMARD&lt;/s0&gt;: chef du projet et développeur</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Clément “KPTN” OUDOT&lt;/s0&gt;: developer, graphics, documentation, community management</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Clément “KPTN” OUDOT&lt;/s0&gt;: développeur, concepteur graphique, concepteur de la documentation, gestionnaire de la communité</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Stable version</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Version stable</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Current stable version is 0.9.4.1:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>La version stable courante est la 0.9.4.1:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;amp;file_id=13688</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;amp;file_id=13688</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Source</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Sources</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;amp;file_id=13690</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;amp;file_id=13690</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>RHEL5 RPM bundle</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Paquets RPM RHEL5</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;amp;file_id=13956</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;amp;file_id=13956</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Fedora11 RPM bundle</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Paquets RPM Fedora11</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;amp;file_id=13689</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;amp;file_id=13689</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Debian/Ubuntu bundle</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Debian/Ubuntu bundle</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>For RPM systems, you have to &lt;a0&gt;install pre-required packages&lt;/a0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Pour les systèmes basés sur RPM, vous devez &lt;a0&gt;installer les paquets pré-requis&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://packages.debian.org/search?keywords=lemonldap-ng&amp;amp;searchon=names&amp;amp;suite=all&amp;amp;section=all</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://packages.debian.org/search?keywords=lemonldap-ng&amp;amp;searchon=names&amp;amp;suite=all&amp;amp;section=all</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>For Debian/Ubuntu systems: you can use packages provided by Debian (&lt;a0&gt;lemonldap-ng packages&lt;/a0&gt;) or &lt;a1&gt;install pre-required packages&lt;/a1&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Pour les systèmes de type Debian/Ubuntu : vous pouvez utiliser ceux proposés par Debian (&lt;a0&gt;paquets lemonldap-ng&lt;/a0&gt;) ou &lt;a1&gt;installer les paquets pré-requis&lt;/a1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Testing version</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Version en test</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Current testing version is 1.0rc2:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>La version courrant en test est la 1.0rc2:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;amp;file_id=15298</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;amp;file_id=15298</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Lemonldap::NG developer must have a account on OW2 plateform, and could authenticate themself via &lt;a0&gt;SSH&lt;/a0&gt; 2 by using the following one:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Les développeurs Lemonldap::NG doivent posséder un compte sur la plateforme OW2 et peuvent l'utiliser via &lt;a0&gt;SSH&lt;/a0&gt; 2 en utilisant la commande suivante :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Lemonldap::NG can be used to prompt users with a message.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Lemonldap::NG peut être utilisé pour notifier des messages aux utilisateurs.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This can be used to notify right changes,… See &lt;a0&gt;notifications&lt;/a0&gt; for more.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Ceci peut être utilisé pour notifier des changements de droits,… Consultez la page &lt;a0&gt;notifications&lt;/a0&gt; pour plus d'information.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can install Lemonldap::NG using &lt;a0&gt;packages&lt;/a0&gt; (rpm or deb) or by hand as described here :</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Vous pouvez installer Lemonldap::NG en utilisant des &lt;a0&gt;paquets&lt;/a0&gt; (rpm or deb) à la main :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Get the tarball on &lt;a0&gt;Download page&lt;/a0&gt; and follow next steps (or install using packages):</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Récupérez les sources sur la &lt;a0&gt;page de téléchargement&lt;/a0&gt; et suivez les étapes suivantes (ou utilisez les paquets):</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Remote user</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Utilisateur pour Apache</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Status module</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Module de statut</seg>
       </tuv>
     </tu>
     <tu>

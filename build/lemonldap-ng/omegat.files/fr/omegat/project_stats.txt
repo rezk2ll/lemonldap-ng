@@ -1,25 +1,25 @@
 Données du projet
 
 Total :
-	Segments	14604
-	Mots	72968
-	Nombre de caractères (sans espaces)	574069
-	Nombre de caractères (avec espaces)	622873
+	Segments	15163
+	Mots	76027
+	Nombre de caractères (sans espaces)	603013
+	Nombre de caractères (avec espaces)	653958
 Restants :
-	Segments	10455
-	Mots	60208
-	Nombre de caractères (sans espaces)	479475
-	Nombre de caractères (avec espaces)	522280
+	Segments	10909
+	Mots	62958
+	Nombre de caractères (sans espaces)	505692
+	Nombre de caractères (avec espaces)	550589
 Segments uniques :
-	Segments	4741
-	Mots	30967
-	Nombre de caractères (sans espaces)	235770
-	Nombre de caractères (avec espaces)	258561
+	Segments	4896
+	Mots	32015
+	Nombre de caractères (sans espaces)	244876
+	Nombre de caractères (avec espaces)	268353
 Segments uniques restants :
-	Segments	3668
-	Mots	25968
-	Nombre de caractères (sans espaces)	196980
-	Nombre de caractères (avec espaces)	217424
+	Segments	3797
+	Mots	26885
+	Nombre de caractères (sans espaces)	204859
+	Nombre de caractères (avec espaces)	226025
 
 Statistiques par fichiers :
 
@@ -27,11 +27,11 @@ Nom du fichier	Nombre total de mots	Mots restants	Nombre total de caractères (s
 index.html	37	0	251	0	259	0
 index/alphabetical.html	580	0	7214	0	7255	0
 lib/images/index.html	5	0	33	0	35	0
-pages/contact.html	467	0	3391	0	3485	0
+pages/contact.html	476	0	3454	0	3556	0
 pages/default_sidebar.html	39	0	331	0	334	0
 pages/documentation.html	245	0	2419	0	2445	0
 pages/documentation/1.0/activedirectoryminihowto.html	132	115	1070	947	1169	1036
-pages/documentation/1.0/applications.html	345	328	3496	3394	3554	3448
+pages/documentation/1.0/applications.html	389	372	3954	3852	4012	3906
 pages/documentation/1.0/applications/authbasic.html	392	353	2664	2417	2967	2698
 pages/documentation/1.0/applications/bugzilla.html	189	166	1778	1632	1879	1720
 pages/documentation/1.0/applications/dokuwiki.html	284	270	2384	2284	2566	2465
@@ -50,7 +50,7 @@ pages/documentation/1.0/authcas.html	384	291	2901	2181	3164	2391
 pages/documentation/1.0/authchoice.html	200	184	1415	1293	1556	1431
 pages/documentation/1.0/authdbi.html	450	420	3150	2934	3437	3212
 pages/documentation/1.0/authldap.html	999	873	6953	5932	7699	6604
-pages/documentation/1.0/authmulti.html	391	347	3660	3325	3950	3592
+pages/documentation/1.0/authmulti.html	403	359	3824	3489	4114	3756
 pages/documentation/1.0/authnull.html	106	85	724	560	803	631
 pages/documentation/1.0/authopenid.html	247	219	1727	1521	1899	1686
 pages/documentation/1.0/authproxy.html	196	152	1418	1124	1557	1242
@@ -60,25 +60,25 @@ pages/documentation/1.0/authssl.html	476	408	3487	3048	3816	3339
 pages/documentation/1.0/authtwitter.html	192	26	1425	260	1555	260
 pages/documentation/1.0/browseablesessionbackend.html	246	229	2149	2027	2285	2161
 pages/documentation/1.0/cda.html	200	65	1462	649	1603	686
-pages/documentation/1.0/changeconfbackend.html	146	130	1180	1096	1260	1171
+pages/documentation/1.0/changeconfbackend.html	146	130	1179	1095	1258	1169
 pages/documentation/1.0/configlocation.html	1386	1305	11441	10845	12456	11814
 pages/documentation/1.0/configvhost.html	454	433	3581	3453	3903	3764
 pages/documentation/1.0/customfunctions.html	207	191	1829	1731	1959	1855
-pages/documentation/1.0/error.html	457	449	2520	2477	2913	2867
-pages/documentation/1.0/exportedvars.html	273	261	2235	2157	2439	2357
+pages/documentation/1.0/error.html	488	480	2761	2718	3173	3127
+pages/documentation/1.0/exportedvars.html	276	261	2278	2175	2482	2375
 pages/documentation/1.0/extendedfunctions.html	610	584	4161	3982	4594	4399
 pages/documentation/1.0/federationproxy.html	152	128	1284	1116	1354	1179
 pages/documentation/1.0/fileconfbackend.html	87	81	674	640	733	698
 pages/documentation/1.0/filesessionbackend.html	156	144	994	924	1084	1012
 pages/documentation/1.0/formreplay.html	487	442	3337	3025	3679	3350
-pages/documentation/1.0/header_remote_user_conversion.html	178	163	1489	1404	1615	1526
+pages/documentation/1.0/header_remote_user_conversion.html	234	211	2005	1836	2168	1991
 pages/documentation/1.0/highavailability.html	132	123	1008	962	1084	1034
 pages/documentation/1.0/idpcas.html	281	239	2166	1816	2363	1994
 pages/documentation/1.0/idpopenid.html	517	492	3773	3611	4097	3931
-pages/documentation/1.0/idpsaml.html	563	493	4053	3576	4445	3928
-pages/documentation/1.0/installdeb.html	296	276	2028	1896	2220	2079
-pages/documentation/1.0/installrpm.html	417	398	3001	2877	3292	3157
-pages/documentation/1.0/installtarball.html	535	476	3725	3255	4104	3609
+pages/documentation/1.0/idpsaml.html	585	515	4281	3804	4673	4156
+pages/documentation/1.0/installdeb.html	641	610	5975	5764	6505	6281
+pages/documentation/1.0/installrpm.html	874	846	7675	7486	8386	8185
+pages/documentation/1.0/installtarball.html	581	517	4085	3576	4469	3934
 pages/documentation/1.0/ldapconfbackend.html	386	338	2948	2565	3204	2791
 pages/documentation/1.0/ldapminihowto.html	85	78	649	615	691	656
 pages/documentation/1.0/ldapsessionbackend.html	258	224	1995	1750	2137	1878
@@ -89,11 +89,11 @@ pages/documentation/1.0/mrtg.html	161	156	1414	1393	1509	1487
 pages/documentation/1.0/mysqlminihowto.html	126	119	1049	1015	1110	1075
 pages/documentation/1.0/nosqlsessionbackend.html	155	59	1208	548	1281	548
 pages/documentation/1.0/notifications.html	554	535	4884	4756	5312	5174
-pages/documentation/1.0/parameterlist.html	921	418	8052	4327	8579	4503
-pages/documentation/1.0/passwordstore.html	140	127	880	787	987	890
+pages/documentation/1.0/parameterlist.html	1114	577	9732	5746	10350	5989
+pages/documentation/1.0/passwordstore.html	170	157	1055	962	1188	1091
 pages/documentation/1.0/performances.html	887	862	6353	6171	7021	6823
 pages/documentation/1.0/portal.html	481	428	4118	3732	4375	3973
-pages/documentation/1.0/portalcustom.html	365	346	2284	2158	2580	2443
+pages/documentation/1.0/portalcustom.html	365	346	2278	2152	2568	2431
 pages/documentation/1.0/portalmenu.html	326	314	2529	2452	2765	2682
 pages/documentation/1.0/prereq.html	515	482	3932	3708	4262	4020
 pages/documentation/1.0/rbac.html	499	468	3045	2776	3419	3132
@@ -112,12 +112,12 @@ pages/documentation/1.0/sqlsessionbackend.html	428	409	3149	3025	3383	3253
 pages/documentation/1.0/ssocookie.html	397	346	2510	2196	2830	2486
 pages/documentation/1.0/start.html	1101	1005	10220	9413	10576	9750
 pages/documentation/1.0/status.html	290	278	2027	1946	2200	2117
-pages/documentation/1.0/upgrade.html	561	546	3840	3747	4285	4183
+pages/documentation/1.0/upgrade.html	743	721	4878	4736	5453	5298
 pages/documentation/1.0/writingrulesand_headers.html	564	517	3819	3509	4224	3883
 pages/documentation/conferences.html	50	0	342	0	360	0
-pages/documentation/features.html	365	0	2519	0	2751	0
+pages/documentation/features.html	367	23	2534	118	2766	138
 pages/documentation/latest/activedirectoryminihowto.html	132	115	1070	947	1169	1036
-pages/documentation/latest/applications.html	345	328	3496	3394	3554	3448
+pages/documentation/latest/applications.html	389	372	3954	3852	4012	3906
 pages/documentation/latest/applications/authbasic.html	392	353	2664	2417	2967	2698
 pages/documentation/latest/applications/bugzilla.html	189	166	1778	1632	1879	1720
 pages/documentation/latest/applications/dokuwiki.html	284	270	2384	2284	2566	2465
@@ -136,7 +136,7 @@ pages/documentation/latest/authcas.html	384	291	2901	2181	3164	2391
 pages/documentation/latest/authchoice.html	200	184	1415	1293	1556	1431
 pages/documentation/latest/authdbi.html	450	420	3150	2934	3437	3212
 pages/documentation/latest/authldap.html	999	873	6953	5932	7699	6604
-pages/documentation/latest/authmulti.html	391	347	3660	3325	3950	3592
+pages/documentation/latest/authmulti.html	403	359	3824	3489	4114	3756
 pages/documentation/latest/authnull.html	106	85	724	560	803	631
 pages/documentation/latest/authopenid.html	247	219	1727	1521	1899	1686
 pages/documentation/latest/authproxy.html	196	152	1418	1124	1557	1242
@@ -146,25 +146,25 @@ pages/documentation/latest/authssl.html	476	408	3487	3048	3816	3339
 pages/documentation/latest/authtwitter.html	192	26	1425	260	1555	260
 pages/documentation/latest/browseablesessionbackend.html	246	229	2149	2027	2285	2161
 pages/documentation/latest/cda.html	200	65	1462	649	1603	686
-pages/documentation/latest/changeconfbackend.html	146	130	1180	1096	1260	1171
+pages/documentation/latest/changeconfbackend.html	146	130	1179	1095	1258	1169
 pages/documentation/latest/configlocation.html	1386	1305	11441	10845	12456	11814
 pages/documentation/latest/configvhost.html	454	433	3581	3453	3903	3764
 pages/documentation/latest/customfunctions.html	207	191	1829	1731	1959	1855
-pages/documentation/latest/error.html	457	449	2520	2477	2913	2867
-pages/documentation/latest/exportedvars.html	273	261	2235	2157	2439	2357
+pages/documentation/latest/error.html	488	480	2761	2718	3173	3127
+pages/documentation/latest/exportedvars.html	276	261	2278	2175	2482	2375
 pages/documentation/latest/extendedfunctions.html	610	584	4161	3982	4594	4399
 pages/documentation/latest/federationproxy.html	152	128	1284	1116	1354	1179
 pages/documentation/latest/fileconfbackend.html	87	81	674	640	733	698
 pages/documentation/latest/filesessionbackend.html	156	144	994	924	1084	1012
 pages/documentation/latest/formreplay.html	487	442	3337	3025	3679	3350
-pages/documentation/latest/header_remote_user_conversion.html	178	163	1489	1404	1615	1526
+pages/documentation/latest/header_remote_user_conversion.html	234	211	2005	1836	2168	1991
 pages/documentation/latest/highavailability.html	132	123	1008	962	1084	1034
 pages/documentation/latest/idpcas.html	281	239	2166	1816	2363	1994
 pages/documentation/latest/idpopenid.html	517	492	3773	3611	4097	3931
-pages/documentation/latest/idpsaml.html	563	493	4053	3576	4445	3928
-pages/documentation/latest/installdeb.html	296	276	2028	1896	2220	2079
-pages/documentation/latest/installrpm.html	417	398	3001	2877	3292	3157
-pages/documentation/latest/installtarball.html	535	476	3725	3255	4104	3609
+pages/documentation/latest/idpsaml.html	585	515	4281	3804	4673	4156
+pages/documentation/latest/installdeb.html	641	610	5975	5764	6505	6281
+pages/documentation/latest/installrpm.html	874	846	7675	7486	8386	8185
+pages/documentation/latest/installtarball.html	581	517	4085	3576	4469	3934
 pages/documentation/latest/ldapconfbackend.html	386	338	2948	2565	3204	2791
 pages/documentation/latest/ldapminihowto.html	85	78	649	615	691	656
 pages/documentation/latest/ldapsessionbackend.html	258	224	1995	1750	2137	1878
@@ -175,11 +175,11 @@ pages/documentation/latest/mrtg.html	161	156	1414	1393	1509	1487
 pages/documentation/latest/mysqlminihowto.html	126	119	1049	1015	1110	1075
 pages/documentation/latest/nosqlsessionbackend.html	155	59	1208	548	1281	548
 pages/documentation/latest/notifications.html	554	535	4884	4756	5312	5174
-pages/documentation/latest/parameterlist.html	921	418	8052	4327	8579	4503
-pages/documentation/latest/passwordstore.html	140	127	880	787	987	890
+pages/documentation/latest/parameterlist.html	1114	577	9732	5746	10350	5989
+pages/documentation/latest/passwordstore.html	170	157	1055	962	1188	1091
 pages/documentation/latest/performances.html	887	862	6353	6171	7021	6823
 pages/documentation/latest/portal.html	481	428	4118	3732	4375	3973
-pages/documentation/latest/portalcustom.html	365	346	2284	2158	2580	2443
+pages/documentation/latest/portalcustom.html	365	346	2278	2152	2568	2431
 pages/documentation/latest/portalmenu.html	326	314	2529	2452	2765	2682
 pages/documentation/latest/prereq.html	515	482	3932	3708	4262	4020
 pages/documentation/latest/rbac.html	499	468	3045	2776	3419	3132
@@ -198,13 +198,13 @@ pages/documentation/latest/sqlsessionbackend.html	428	409	3149	3025	3383	3253
 pages/documentation/latest/ssocookie.html	397	346	2510	2196	2830	2486
 pages/documentation/latest/start.html	1101	1005	10220	9413	10576	9750
 pages/documentation/latest/status.html	290	278	2027	1946	2200	2117
-pages/documentation/latest/upgrade.html	561	546	3840	3747	4285	4183
+pages/documentation/latest/upgrade.html	743	721	4878	4736	5453	5298
 pages/documentation/latest/writingrulesand_headers.html	564	517	3819	3509	4224	3883
 pages/documentation/presentation.html	1374	40	9916	259	10902	290
-pages/documentation/quickstart.html	306	0	2060	0	2245	0
-pages/download.html	323	0	2368	0	2457	0
+pages/documentation/quickstart.html	321	39	2230	269	2417	299
+pages/download.html	323	0	2410	0	2502	0
 pages/menu1.html	26	0	224	0	225	0
 pages/references.html	208	0	1856	0	1897	0
-pages/screenshots.html	567	0	4560	0	4567	0
-pages/start.html	605	0	4413	0	4667	0
+pages/screenshots.html	753	0	6123	0	6134	0
+pages/start.html	610	0	4470	0	4730	0
 pages/translations.html	365	0	2356	0	2537	0
