@@ -28,7 +28,7 @@ use constant SAFEWRAP => ( Safe->can("wrap_code_ref") ? 1 : 0 );
 #inherits Apache::Session
 #link Lemonldap::NG::Common::Apache::Session::SOAP protected globalStorage
 
-our $VERSION = '1.0.0';
+our $VERSION = '1.0.1';
 
 our %EXPORT_TAGS;
 
@@ -349,7 +349,7 @@ sub safe {
     $safe->share_from( 'main', [ '%ENV' ] );
     $safe->share_from( 'Lemonldap::NG::Common::Safelib',
         $Lemonldap::NG::Common::Safelib::functions );
-    $safe->share( '&encode_base64', '$datas', '&portal', @t );
+    $safe->share( '&encode_base64', '$datas', '&portal', '$apacheRequest', @t );
 
     return $safe;
 }
@@ -586,7 +586,7 @@ sub portalInit {
     my ( $class, $args ) = splice @_;
     die("portal parameter required") unless ( $args->{portal} );
     if ( $args->{portal} =~ /[\$\(&\|"']/ ) {
-        my $portal = $class->conditionSub( $args->{portal} );
+        my ($portal) = $class->conditionSub( $args->{portal} );
         eval "sub portal {return &\$portal}";
     }
     else {
