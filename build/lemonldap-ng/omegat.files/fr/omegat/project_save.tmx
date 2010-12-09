@@ -8232,6 +8232,14 @@ sudo apachectl restart</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>AuthLDAPFilter</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>AuthLDAPFilter</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;CAS&lt;/a0&gt; Session backend</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -9300,6 +9308,498 @@ admin &lt;s1&gt;-&gt;&lt;/s1&gt; &lt;s2&gt;$uid&lt;/s2&gt; &lt;s3&gt;eq&lt;/s3&g
       </tuv>
       <tuv lang="FR-FR">
         <seg>Ces macros sont calculées seulement à leur premier usage et stockées dans le cache local des sessions (uniquement pour ce serveur) et seulement si l'utilisateur accède à l'application relative.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This avoid to have to many datas stored.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Ce dispositif évite de stocker trop de données.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;# rule&lt;/s0&gt;
+admin &lt;s1&gt;-&gt;&lt;/s1&gt; &lt;s2&gt;$admin&lt;/s2&gt; &lt;s3&gt;||=&lt;/s3&gt; &lt;s4&gt;(&lt;/s4&gt;&lt;s5&gt;$uid&lt;/s5&gt; &lt;s6&gt;eq&lt;/s6&gt; &lt;s7&gt;'foo'&lt;/s7&gt; &lt;s8&gt;or&lt;/s8&gt; &lt;s9&gt;$uid&lt;/s9&gt; &lt;s10&gt;eq&lt;/s10&gt; &lt;s11&gt;'bar'&lt;/s11&gt;&lt;s12&gt;)&lt;/s12&gt;
+&lt;s13&gt;# header&lt;/s13&gt;
+Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$displayName&lt;/s16&gt; &lt;s17&gt;||=&lt;/s17&gt; &lt;s18&gt;$givenName&lt;/s18&gt;&lt;s19&gt;.&lt;/s19&gt;&lt;s20&gt;&quot; &quot;&lt;/s20&gt;&lt;s21&gt;.&lt;/s21&gt;&lt;s22&gt;$surName&lt;/s22&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;# règle&lt;/s0&gt;
+admin &lt;s1&gt;-&gt;&lt;/s1&gt; &lt;s2&gt;$admin&lt;/s2&gt; &lt;s3&gt;||=&lt;/s3&gt; &lt;s4&gt;(&lt;/s4&gt;&lt;s5&gt;$uid&lt;/s5&gt; &lt;s6&gt;eq&lt;/s6&gt; &lt;s7&gt;'foo'&lt;/s7&gt; &lt;s8&gt;or&lt;/s8&gt; &lt;s9&gt;$uid&lt;/s9&gt; &lt;s10&gt;eq&lt;/s10&gt; &lt;s11&gt;'bar'&lt;/s11&gt;&lt;s12&gt;)&lt;/s12&gt;
+&lt;s13&gt;# en-tête&lt;/s13&gt;
+Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$displayName&lt;/s16&gt; &lt;s17&gt;||=&lt;/s17&gt; &lt;s18&gt;$givenName&lt;/s18&gt;&lt;s19&gt;.&lt;/s19&gt;&lt;s20&gt;&quot; &quot;&lt;/s20&gt;&lt;s21&gt;.&lt;/s21&gt;&lt;s22&gt;$surName&lt;/s22&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Note that this feature is interesting only for the Lemonldap::NG systems protecting a high number of applications</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Notez que cette fonctionnalité n'est intéressante que pour les systèmes Lemonldap::NG protégeant un grand nombre d'applications</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Portal performances</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Performances du portail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>General performances</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Performances générales</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The portal is the biggest component of Lemonldap::NG.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Le portail est le composant le plus gros de Lemonldap::NG.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>It is recommended to use ModPerl::Registry instead of using cgi-script as described in Apache configuration file example (portal-apache2.conf):</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Il est recommendé d'utiliser ModPerl::Registry au lieu d'utiliser le dispositif &quot;cgi-script&quot; tel qu'indiqué dans les fichiers de configuration d'Apache proposés en exemple (portal-apache2.conf):</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;&lt;s0&gt;Files&lt;/s0&gt; *.pl&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;&lt;s0&gt;Files&lt;/s0&gt; *.pl&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s1&gt;SetHandler&lt;/s1&gt; perl-&lt;s2&gt;script&lt;/s2&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s1&gt;SetHandler&lt;/s1&gt; perl-&lt;s2&gt;script&lt;/s2&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>PerlResponseHandler ModPerl::Registry
+&lt;/&lt;s3&gt;Files&lt;/s3&gt;&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>PerlResponseHandler ModPerl::Registry
+&lt;/&lt;s3&gt;Files&lt;/s3&gt;&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Starting performances</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Performances au démarrage</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>To make the portal start faster when the server is relaunched, add those lines in Apache configuration file (as described in portal-apache2.conf):</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Pour accélérer le démarrage du portail lorsque le serveur est relancé, ajoutez les lignes suivantes dans les fichiers de configuration d'Apache (tel que proposé dans portal-apache2.conf):</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;Perl&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;Perl&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;require&lt;/s0&gt; Lemonldap::NG::Portal::SharedConf;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;require&lt;/s0&gt; Lemonldap::NG::Portal::SharedConf;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Lemonldap::NG::Portal::SharedConf-&gt;compile(</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Lemonldap::NG::Portal::SharedConf-&gt;compile(</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>qw(delete &lt;s1&gt;header&lt;/s1&gt; cache read_from_client cookie &lt;s2&gt;redirect&lt;/s2&gt; unescapeHTML));</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>qw(delete &lt;s1&gt;header&lt;/s1&gt; cache read_from_client cookie &lt;s2&gt;redirect&lt;/s2&gt; unescapeHTML));</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s3&gt;# Uncomment this line if you use Lemonldap::NG menu&lt;/s3&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s3&gt;# Décommentez cette ligne si vous utilisez le menu Lemonldap::NG&lt;/s3&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s4&gt;require&lt;/s4&gt; Lemonldap::NG::Portal::Menu;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s4&gt;require&lt;/s4&gt; Lemonldap::NG::Portal::Menu;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s5&gt;# Uncomment this line if you use portal SOAP capabilities&lt;/s5&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s5&gt;# Décommentez cette ligne si vous utilisez les capacités SOAP du portail&lt;/s5&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s6&gt;require&lt;/s6&gt; SOAP::Lite;
+&lt;/Perl&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s6&gt;require&lt;/s6&gt; SOAP::Lite;
+&lt;/Perl&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Apache::Session performances</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Performances d'Apache::Session</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Lemonldap::NG handlers use a local cache to store sessions (for 10 minutes).</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Les agents (handlers) Lemonldap::NG utilisent un cache local pour stocker les sessions (pour 10 minutes).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>So Apache::Session module is not a problem for handlers.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Ainsi, les modules Apache::Session ne posent pas de problèmes aux agents.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>It can be a brake for the portal:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>En revanche, ce peut-être un frein pour le portail :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://search.cpan.org/perldoc?Apache::Session::Browseable</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://search.cpan.org/perldoc?Apache::Session::Browseable</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>When you use the multiple sessions restriction parameters, sessions are parsed for each authentication unless you use an &lt;a0&gt;Apache::Session::Browseable&lt;/a0&gt; module.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Lorsque sont activées les paramètres de restriction d'ouverture de session, celles-ci sont toutes examinées à chaque nouvelle authentification sauf lorsqu'un module de la famille &lt;a0&gt;Apache::Session::Browseable&lt;/a0&gt; est utilisé.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Since MySQL does not have always transaction feature, Apache::Session::MySQL has been designed to use MySQL locks.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Comme MySQL ne dispose pas toujours de dispositif de transaction, Apache::Session::MySQL a été conçu en utilisant les verrous MySQL.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Since MySQL performances are very bad using this, if you want to store sessions in a MySQL database, prefer one of the following</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Ceci dégrade fortement les performances de MySQL, si vous voulez stocker les sessions dans une base de données MySQL, utilisez l'une des solutions suivantes</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Replace MySQL by Apache::Session::Flex</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Remplacer MySQL par Apache::Session::Flex</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://search.cpan.org/perldoc?Apache::Session::Flex</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://search.cpan.org/perldoc?Apache::Session::Flex</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>In “Apache::Session module” field, set ”&lt;a0&gt;Apache::Session::Flex&lt;/a0&gt;” and use the following parameters:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Dans le champ “Module Apache::Session”, indiquez ”&lt;a0&gt;Apache::Session::Flex&lt;/a0&gt;” et utilisez les paramètres suivants :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Store      -&gt; MySQL
+Lock       -&gt; Null
+Generate   -&gt; MD5
+Serialize  -&gt; Storable
+DataSource -&gt; dbi:mysql:sessions;host=...</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Store      -&gt; MySQL
+Lock       -&gt; Null
+Generate   -&gt; MD5
+Serialize  -&gt; Storable
+DataSource -&gt; dbi:mysql:sessions;host=...</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>UserName   -&gt; ...</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>UserName   -&gt; ...</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Password   -&gt; ...</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Password   -&gt; ...</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Use Apache::Session::Browseable</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Utiliser Apache::Session::Browseable</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Apache::Session::Browseable&lt;/a0&gt; is a wrapper for other Apache::Session modules that add the capability to manage indexes.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;Apache::Session::Browseable&lt;/a0&gt; est une surcouche d'autres modules Apache::Session qui ajoute des capacités d'indexation.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>To use it (with MySQL for example), choose for example “Apache::Session::Browseable::MySQL” as “Apache::Session module” and use the following parameters:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Pour l'utiliser (avec MySQL par exemple), choisissez “Apache::Session::Browseable::MySQL” comme “Module Apache::Session” et utilisez les paramètres suivants :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>DataSource -&gt; dbi:mysql:sessions;host=...</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>DataSource -&gt; dbi:mysql:sessions;host=...</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>UserName   -&gt; user
+Password   -&gt; password
+Index      -&gt; ipAddr uid</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>UserName   -&gt; user
+Password   -&gt; password
+Index      -&gt; ipAddr uid</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Note that Apache::Session::Browseable::MySQL doesn't use MySQL locks.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Notez que Apache::Session::Browseable::MySQL n'utilise pas les verrous MySQL.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>A Apache::Session::Browseable::Redis module is in preparation, it will be the faster</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Un module Apache::Session::Browseable::Redis est en préparation, il sera le plus rapide</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Some Apache::Session module are not useable by Lemonldap::NG such as Apache::Session::Memcached since this module does not offer capability to browse sessions</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Certains modules Apache::Session ne sont pas utilisables par Lemonldap::NG tel Apache::Session::Memcached, car ce module n'offre pas de dispositif de parcours des sessions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LDAP performances</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Performances LDAP</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; server can be a brake when you use &lt;a1&gt;LDAP&lt;/a1&gt; groups recovery.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Le serveur &lt;a0&gt;LDAP&lt;/a0&gt; peut être un frein lorsque vous utilisez la récupération des groupes &lt;a1&gt;LDAP&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can avoid this by setting “memberOf” fields in your &lt;a2&gt;LDAP&lt;/a2&gt; scheme:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Vous pouvez contourner cette dificulté en utilisant les champs “memberOf” dans votre schéma &lt;a2&gt;LDAP&lt;/a2&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>dn: uid=foo,dmdName=people,dc=example,dc=com
+...
+memberOf: cn=admin,dmdName=groups,dc=example,dc=com
+memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>dn: uid=foo,dmdName=people,dc=example,dc=com
+...
+memberOf: cn=admin,dmdName=groups,dc=example,dc=com
+memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.openldap.org/doc/admin24/overlays.html#Reverse%20Group%20Membership%20Maintenance</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://www.openldap.org/doc/admin24/overlays.html#Reverse%20Group%20Membership%20Maintenance</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>So instead of using &lt;a0&gt;LDAP&lt;/a0&gt; groups recovery, you just have to store “memberOf” field in your exported variables.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Ainsi au lieu d'utiliser la récupération des groupes &lt;a0&gt;LDAP&lt;/a0&gt;, vous avez juste à stocker le champ “memberOf” dans vos variables exportées.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>With OpenLDAP, you can use the &lt;a1&gt;memberof overlay&lt;/a1&gt; to do it automaticaly.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Avec OpenLDAP, vous pouvez utiliser &lt;a1&gt;memberof overlay&lt;/a1&gt; qui le fera automatiquement.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Don't forget to create an index on the field used to find users (uid by default)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>N'oubliez pas de créer un index sur le champ utilisé pour trouver les utilisateurs (uid par défaut)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>To avoid having group dn stored in sessions datas, you can use a macro to rewrite memberOf:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Pour éviter de stocker les dn dans votre base de sessions, vous pouvez utiliser une macro pour réécrire memberOf :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Exported variables</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Variables exportées</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>ldapgroups -&gt; memberOf</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>ldapgroups -&gt; memberOf</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>For now, ldapgroups contains “cn=admin,dmdName=groups,dc=example,dc=com cn=su,dmdName=groups,dc=example,dc=com”</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Pour l'instant, ldapgroups contient “cn=admin,dmdName=groups,dc=example,dc=com cn=su,dmdName=groups,dc=example,dc=com”</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>A little macro:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Une petite macro :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://perldoc.perl.org/functions/join.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://perldoc.perl.org/functions/join.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>ldapgroups &lt;s0&gt;-&gt;&lt;/s0&gt; &lt;a1&gt;&lt;s2&gt;join&lt;/s2&gt;&lt;/a1&gt;&lt;s3&gt;(&lt;/s3&gt;&lt;s4&gt;&quot; &quot;&lt;/s4&gt;&lt;s5&gt;,&lt;/s5&gt;&lt;s6&gt;(&lt;/s6&gt;&lt;s7&gt;$ldapgroups&lt;/s7&gt; &lt;s8&gt;=~&lt;/s8&gt; &lt;s9&gt;/cn=(.*?),/g&lt;/s9&gt;&lt;s10&gt;)&lt;/s10&gt;&lt;s11&gt;)&lt;/s11&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>ldapgroups &lt;s0&gt;-&gt;&lt;/s0&gt; &lt;a1&gt;&lt;s2&gt;join&lt;/s2&gt;&lt;/a1&gt;&lt;s3&gt;(&lt;/s3&gt;&lt;s4&gt;&quot; &quot;&lt;/s4&gt;&lt;s5&gt;,&lt;/s5&gt;&lt;s6&gt;(&lt;/s6&gt;&lt;s7&gt;$ldapgroups&lt;/s7&gt; &lt;s8&gt;=~&lt;/s8&gt; &lt;s9&gt;/cn=(.*?),/g&lt;/s9&gt;&lt;s10&gt;)&lt;/s10&gt;&lt;s11&gt;)&lt;/s11&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Now ldapgroups contains “admin su”</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Maintenant, ldapgroups contient “admin su”</seg>
       </tuv>
     </tu>
     <tu>

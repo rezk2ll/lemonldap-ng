@@ -6,20 +6,20 @@ Total :
 	Nombre de caractères (sans espaces)	603013
 	Nombre de caractères (avec espaces)	653958
 Restants :
-	Segments	9758
-	Mots	60838
-	Nombre de caractères (sans espaces)	484790
-	Nombre de caractères (avec espaces)	528940
+	Segments	9622
+	Mots	59590
+	Nombre de caractères (sans espaces)	475944
+	Nombre de caractères (avec espaces)	519220
 Segments uniques :
 	Segments	4896
 	Mots	32015
 	Nombre de caractères (sans espaces)	244876
 	Nombre de caractères (avec espaces)	268353
 Segments uniques restants :
-	Segments	3739
-	Mots	26478
-	Nombre de caractères (sans espaces)	201813
-	Nombre de caractères (avec espaces)	222673
+	Segments	3680
+	Mots	25906
+	Nombre de caractères (sans espaces)	197884
+	Nombre de caractères (avec espaces)	218308
 
 Statistiques par fichiers :
 
@@ -58,14 +58,14 @@ pages/documentation/1.0/authremote.html	583	517	3993	3391	4429	3813
 pages/documentation/1.0/authsaml.html	875	794	5965	5403	6625	6024
 pages/documentation/1.0/authssl.html	476	402	3487	2982	3816	3273
 pages/documentation/1.0/authtwitter.html	192	0	1425	0	1555	0
-pages/documentation/1.0/browseablesessionbackend.html	246	222	2149	1955	2285	2089
+pages/documentation/1.0/browseablesessionbackend.html	246	210	2149	1839	2285	1973
 pages/documentation/1.0/cda.html	200	59	1462	584	1603	621
 pages/documentation/1.0/changeconfbackend.html	146	124	1179	1030	1258	1104
-pages/documentation/1.0/configlocation.html	1386	1297	11441	10766	12456	11735
+pages/documentation/1.0/configlocation.html	1386	1292	11441	10723	12456	11692
 pages/documentation/1.0/configvhost.html	454	424	3581	3356	3903	3667
 pages/documentation/1.0/customfunctions.html	207	185	1829	1666	1959	1790
 pages/documentation/1.0/error.html	488	474	2761	2653	3173	3062
-pages/documentation/1.0/exportedvars.html	276	138	2278	1031	2482	1123
+pages/documentation/1.0/exportedvars.html	276	136	2278	1014	2482	1105
 pages/documentation/1.0/extendedfunctions.html	610	578	4161	3917	4594	4334
 pages/documentation/1.0/federationproxy.html	152	122	1284	1051	1354	1114
 pages/documentation/1.0/fileconfbackend.html	87	75	674	575	733	633
@@ -89,9 +89,9 @@ pages/documentation/1.0/mrtg.html	161	150	1414	1328	1509	1422
 pages/documentation/1.0/mysqlminihowto.html	126	113	1049	950	1110	1010
 pages/documentation/1.0/nosqlsessionbackend.html	155	0	1208	0	1281	0
 pages/documentation/1.0/notifications.html	554	529	4884	4691	5312	5109
-pages/documentation/1.0/parameterlist.html	1114	546	9732	5264	10350	5498
+pages/documentation/1.0/parameterlist.html	1114	545	9732	5250	10350	5484
 pages/documentation/1.0/passwordstore.html	170	151	1055	897	1188	1026
-pages/documentation/1.0/performances.html	887	604	6353	4233	7021	4669
+pages/documentation/1.0/performances.html	887	0	6353	0	7021	0
 pages/documentation/1.0/portal.html	481	422	4118	3667	4375	3908
 pages/documentation/1.0/portalcustom.html	365	340	2278	2087	2568	2366
 pages/documentation/1.0/portalmenu.html	326	308	2529	2387	2765	2617
@@ -144,14 +144,14 @@ pages/documentation/latest/authremote.html	583	517	3993	3391	4429	3813
 pages/documentation/latest/authsaml.html	875	794	5965	5403	6625	6024
 pages/documentation/latest/authssl.html	476	402	3487	2982	3816	3273
 pages/documentation/latest/authtwitter.html	192	0	1425	0	1555	0
-pages/documentation/latest/browseablesessionbackend.html	246	222	2149	1955	2285	2089
+pages/documentation/latest/browseablesessionbackend.html	246	210	2149	1839	2285	1973
 pages/documentation/latest/cda.html	200	59	1462	584	1603	621
 pages/documentation/latest/changeconfbackend.html	146	124	1179	1030	1258	1104
-pages/documentation/latest/configlocation.html	1386	1297	11441	10766	12456	11735
+pages/documentation/latest/configlocation.html	1386	1292	11441	10723	12456	11692
 pages/documentation/latest/configvhost.html	454	424	3581	3356	3903	3667
 pages/documentation/latest/customfunctions.html	207	185	1829	1666	1959	1790
 pages/documentation/latest/error.html	488	474	2761	2653	3173	3062
-pages/documentation/latest/exportedvars.html	276	138	2278	1031	2482	1123
+pages/documentation/latest/exportedvars.html	276	136	2278	1014	2482	1105
 pages/documentation/latest/extendedfunctions.html	610	578	4161	3917	4594	4334
 pages/documentation/latest/federationproxy.html	152	122	1284	1051	1354	1114
 pages/documentation/latest/fileconfbackend.html	87	75	674	575	733	633
@@ -175,9 +175,9 @@ pages/documentation/latest/mrtg.html	161	150	1414	1328	1509	1422
 pages/documentation/latest/mysqlminihowto.html	126	113	1049	950	1110	1010
 pages/documentation/latest/nosqlsessionbackend.html	155	0	1208	0	1281	0
 pages/documentation/latest/notifications.html	554	529	4884	4691	5312	5109
-pages/documentation/latest/parameterlist.html	1114	546	9732	5264	10350	5498
+pages/documentation/latest/parameterlist.html	1114	545	9732	5250	10350	5484
 pages/documentation/latest/passwordstore.html	170	151	1055	897	1188	1026
-pages/documentation/latest/performances.html	887	604	6353	4233	7021	4669
+pages/documentation/latest/performances.html	887	0	6353	0	7021	0
 pages/documentation/latest/portal.html	481	422	4118	3667	4375	3908
 pages/documentation/latest/portalcustom.html	365	340	2278	2087	2568	2366
 pages/documentation/latest/portalmenu.html	326	308	2529	2387	2765	2617
