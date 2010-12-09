@@ -5713,7 +5713,7 @@
         <seg>Use &lt;a0&gt;packages provided by Debian&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>Utiliser les &lt;a0&gt;packets fournis par Debian&lt;/a0&gt;.</seg>
+        <seg>Utiliser les &lt;a0&gt;paquets fournis par Debian&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -6529,7 +6529,7 @@
         <seg>You can install Lemonldap::NG using &lt;a0&gt;packages&lt;/a0&gt; (rpm or deb) or by hand as described below.</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>Vous pouvez installer Lemonldap::NG en utilisant des &lt;a0&gt;packets&lt;/a0&gt; (rpm ou deb) ou à la main comme décrit ci-après.</seg>
+        <seg>Vous pouvez installer Lemonldap::NG en utilisant des &lt;a0&gt;paquets&lt;/a0&gt; (rpm ou deb) ou à la main comme décrit ci-après.</seg>
       </tuv>
     </tu>
     <tu>
@@ -9800,6 +9800,634 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Maintenant, ldapgroups contient “admin su”</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>SAML service configuration</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Configuration du service SAML</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.0/authsaml.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../../documentation/1.0/authsaml.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.0:authsaml</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:1.0:authsaml</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.0/idpsaml.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../../documentation/1.0/idpsaml.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.0:idpsaml</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:1.0:idpsaml</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;SAML&lt;/a0&gt; service configuration is a common step to configure &lt;a1&gt;LL::NG&lt;/a1&gt; as &lt;a2&gt;SAML SP&lt;/a2&gt; or &lt;a3&gt;SAML IDP&lt;/a3&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>La configuration du service &lt;a0&gt;SAML&lt;/a0&gt; est une étape commune pour configurer &lt;a1&gt;LL::NG&lt;/a1&gt; comme &lt;a2&gt;fournisseur de service SAML (SP)&lt;/a2&gt; ou &lt;a3&gt;fournisseur d'identité SAML (IDP)&lt;/a3&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This documentation explains how configure &lt;a0&gt;SAML&lt;/a0&gt; service in &lt;a1&gt;LL::NG&lt;/a1&gt;, in particular:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Cette documentation explique comment configurer le service &lt;a0&gt;SAML&lt;/a0&gt; dans &lt;a1&gt;LL::NG&lt;/a1&gt;, en particulier :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Install prerequisites</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Installer les pré-requis</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Import or generate security keys</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Importer ou generer les clefs de securité</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Set &lt;a0&gt;SAML&lt;/a0&gt; end points</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Indiquer les points d'entrées &lt;a0&gt;SAML&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Service configuration will be used to generate &lt;a0&gt;LL::NG&lt;/a0&gt; &lt;a1&gt;SAML&lt;/a1&gt; metadata, that will be shared with other providers.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>La configuration du service est utilisée pour générer les métadatas &lt;a1&gt;SAML&lt;/a1&gt; de &lt;a0&gt;LL::NG&lt;/a0&gt;, qui sont partagées avec les autres fournisseurs.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>It means that if you modify some settings here, you will have to share again the metadata with other providers.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Ceci signifie que si vous modifiez quelque chose ici, vous devez ré-exporter les metadatas aux autres fournisseurs.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>In other words, take the time to configure this part before sharing metadata.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>En d'autres mots, prenez le temps de bien configurer cette partie avant de partager les metadatas.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Prerequisites</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Pré-requis</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Lasso</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Lasso</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/documentation/lasso.png?id=documentation%3A1.0%3Asamlservice</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/documentation/lasso.png?id=documentation%3A1.0%3Asamlservice</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:lasso.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:lasso.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../media/documentation/lasso.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../../../media/documentation/lasso.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://lasso.entrouver.org</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://lasso.entrouver.org</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>SAML2 implementation is based on &lt;a0&gt;Lasso&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>L'implementation SAML est basée sur &lt;a0&gt;Lasso&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You will need a very recent version of Lasso (&gt;= 2.3.0).</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Vous devez utiliser une version récente de Lasso (&gt;= 2.3.0).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Debian/Ubuntu</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Debian/Ubuntu</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://deb.entrouvert.org/</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://deb.entrouvert.org/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>There are packages available here: &lt;a0&gt;http://deb.entrouvert.org/&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Les paquets sont disponibles ici : &lt;a0&gt;http://deb.entrouvert.org/&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You will only need to install liblasso3-perl package:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Seul le paquet liblasso3-perl est nécessaire :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>sudo apt-get install liblasso3-perl</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>sudo apt-get install liblasso3-perl</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>RHEL/CentOS/Fedora</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>RHEL/CentOS/Fedora</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Packages should be available soon.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Les paquets seront disponible d'ici peu.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://lasso.entrouvert.org/download/</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://lasso.entrouvert.org/download/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Download the Lasso tarball&lt;/a0&gt; and compile it on your system.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;Téléchargez l'archive Lasso&lt;/a0&gt; et compilez là sur votre système.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Apache rewrite rules</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Régles de réécriture d'Apache</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.0/configlocation.html#portal</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../../documentation/1.0/configlocation.html#portal</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Be sure that mod_rewrite is installed and that SAML2 rewrite rules are activated in &lt;a0&gt;Apache portal configuration&lt;/a0&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Assurez-vous que mod_rewrite est installé et que les règles de réécriture SAML2 sont activées dans la &lt;a0&gt;configuration Apache du portail&lt;/a0&gt;:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;&lt;s0&gt;IfModule&lt;/s0&gt; mod_rewrite.c&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;&lt;s0&gt;IfModule&lt;/s0&gt; mod_rewrite.c&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s1&gt;RewriteEngine&lt;/s1&gt; &lt;s2&gt;On&lt;/s2&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s1&gt;RewriteEngine&lt;/s1&gt; &lt;s2&gt;On&lt;/s2&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s3&gt;RewriteRule&lt;/s3&gt; ^/saml/metadata /metadata.pl</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s3&gt;RewriteRule&lt;/s3&gt; ^/saml/metadata /metadata.pl</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s4&gt;RewriteRule&lt;/s4&gt; ^/saml/.* /index.pl
+&lt;/&lt;s5&gt;IfModule&lt;/s5&gt;&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s4&gt;RewriteRule&lt;/s4&gt; ^/saml/.* /index.pl
+&lt;/&lt;s5&gt;IfModule&lt;/s5&gt;&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Service configuration</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Configuration du service</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Go in Manager and click on &lt;c0&gt;&lt;a1&gt;SAML&lt;/a1&gt; 2 Service&lt;/c0&gt; node.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Allez dans le Manager et cliquez sur le nœud &lt;c0&gt;Service &lt;a1&gt;SAML&lt;/a1&gt; 2&lt;/c0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can use #PORTAL# in values to replace the portal &lt;a0&gt;URL&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Vous pouvez utiliser le mot clef #PORTAL# dans les valeurs pour remplacer l'&lt;a0&gt;URL&lt;/a0&gt; du portail.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Entry Identifier</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Identifiant d'entrée</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Your EntityID, often use as metadata &lt;a0&gt;URL&lt;/a0&gt;, by default #PORTAL#/saml/metadata.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Votre EntityID, souvent utilisé comme &lt;a0&gt;URL&lt;/a0&gt; des métadatas, par défaut #PORTAL#/saml/metadata.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The value will be use in metadata main markup:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Cette valeur est utilisé dans les metadatas :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;&lt;s1&gt;&lt;EntityDescriptor&lt;/s1&gt; &lt;s2&gt;entityID&lt;/s2&gt;=&lt;s3&gt;&quot;http://auth.example.com/saml/metadata&quot;&lt;/s3&gt;&lt;s4&gt;&gt;&lt;/s4&gt;&lt;/s0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;&lt;s1&gt;&lt;EntityDescriptor&lt;/s1&gt; &lt;s2&gt;entityID&lt;/s2&gt;=&lt;s3&gt;&quot;http://auth.example.com/saml/metadata&quot;&lt;/s3&gt;&lt;s4&gt;&gt;&lt;/s4&gt;&lt;/s0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>...
+&lt;s5&gt;&lt;s6&gt;&lt;/EntityDescriptor&lt;s7&gt;&gt;&lt;/s7&gt;&lt;/s6&gt;&lt;/s5&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>...
+&lt;s5&gt;&lt;s6&gt;&lt;/EntityDescriptor&lt;s7&gt;&gt;&lt;/s7&gt;&lt;/s6&gt;&lt;/s5&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>If you modify &lt;c0&gt;/saml/metadata&lt;/c0&gt; suffix you have to change corresponding Apache rewrite rule.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Si vous modifiez le suffixe &lt;c0&gt;/saml/metadata&lt;/c0&gt;, vous devez changer la règle de réécriture d'Apache.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Security parameters</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Paramètres de sécurité</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can define keys for &lt;a0&gt;SAML&lt;/a0&gt; message signature and encryption.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Vous pouver définir des clefs pour la signature et le chiffrement des messages &lt;a0&gt;SAML&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>If no encryption keys are defined, signature keys are used for signature and encryption.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Si aucune clef de chiffrement n'est définie, la clef de signature est aussi utilisée pour le chiffrement.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>To define keys, you can:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Pour définir les clefs, vous pouvez :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>import your own private and public keys (&lt;c0&gt;Load from a file&lt;/c0&gt; input)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>importer vos propres clefs privées et publiques (entrée &lt;c0&gt;Charger depuis un fichier&lt;/c0&gt;)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>generate new public and private keys (&lt;c0&gt;Generate&lt;/c0&gt; button)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>générer de nouvelles clefs publiques et privées (bouton &lt;c0&gt;Générer&lt;/c0&gt;)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can enter a password to protect private key with a password.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Vous pouvez entrer un mot de passe de protection de la clef privée.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>It will be prompted if you generate keys, else you can set it in the &lt;c0&gt;Private key password&lt;/c0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Il vous sera demandé à la génération de la clef ou vous pouvez l'entrer dans le champ &lt;c0&gt;Mot-de-passe de la clef privée&lt;/c0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/documentation/manager-saml-private-key.png?id=documentation%3A1.0%3Asamlservice</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/documentation/manager-saml-private-key.png?id=documentation%3A1.0%3Asamlservice</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:manager-saml-private-key.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:manager-saml-private-key.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../media/documentation/manager-saml-private-key.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../../../media/documentation/manager-saml-private-key.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can import a certificate containing the public key instead the raw public key.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Vous pouver importer un certificat contenant la clef publique au lieu d'une simple clef.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>However, certificate will not be really validated by other &lt;a0&gt;SAML&lt;/a0&gt; components (expiration date, common name, etc.), but will just be a public key wrapper.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Toutefois, le certificat ne sera pas réellement validé par les autres composants &lt;a0&gt;SAML&lt;/a0&gt; (date d'expiration, nom commun, etc.), mais simplement vu comme un conteneur de clef publique.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>NameID formats</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Formats de NameID</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/documentation/manager-saml-namid-formats.png?id=documentation%3A1.0%3Asamlservice</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/documentation/manager-saml-namid-formats.png?id=documentation%3A1.0%3Asamlservice</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:manager-saml-namid-formats.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:manager-saml-namid-formats.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../media/documentation/manager-saml-namid-formats.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../../../media/documentation/manager-saml-namid-formats.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;SAML&lt;/a0&gt; can use different NameID formats.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;SAML&lt;/a0&gt; peut utiliser plusieurs formats de NameID.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The NameID is the main user identifier, carried in &lt;a1&gt;SAML&lt;/a1&gt; messages.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>NameID est l'identifiant principal de l'utilisateur transmis dans les messages &lt;a1&gt;SAML&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can configure here which field of &lt;a2&gt;LL::NG&lt;/a2&gt; session will be associated to a NameID format.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Vous pouvez indiquer ici l'attribut de session de &lt;a2&gt;LL::NG&lt;/a2&gt; qui sera associé au format du NameID.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This parameter is used by &lt;a0&gt;SAML IDP&lt;/a0&gt; to fill the NameID in authentication responses.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Ce paramètre est utilisé par l'&lt;a0&gt;IdP SAML&lt;/a0&gt; pour construire le NameID dans les réponses d'authentification.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Customizable NameID formats are:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Les formats de NameID personnalisables sont :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Email</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Email</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>X509</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>X509</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Windows</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Windows</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Kerberos</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Kerberos</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.0/authldap.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../../documentation/1.0/authldap.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.0:authldap</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:1.0:authldap</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>For example, if you are using &lt;a0&gt;AD as authentication backend&lt;/a0&gt;, you can use sAMAccountName for the Windows NameID format.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Par exemple, si vous utilisez &lt;a0&gt;Active-Directory comme système d'authentification&lt;/a0&gt;, vous pouvez utiliser sAMAccountName come format de NameID Windows.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Other NameID formats are automatically managed:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Les autres formats de NameID sont automatiquement gérés :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Transient&lt;/s0&gt;: NameID is generated</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Transient&lt;/s0&gt;: le NameID est généré</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Persistent&lt;/s0&gt;: NameID is restored from previous sessions</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Persistent&lt;/s0&gt;: le NameID est restoré depuis la session précédente</seg>
       </tuv>
     </tu>
     <tu>
