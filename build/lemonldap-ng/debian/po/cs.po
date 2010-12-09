@@ -5,13 +5,13 @@ msgstr ""
 "Project-Id-Version: lemonldap-ng 0.9.1-1\n"
 "Report-Msgid-Bugs-To: lemonldap-ng@packages.debian.org\n"
 "POT-Creation-Date: 2010-12-04 23:10+0100\n"
-"PO-Revision-Date: 2008-05-27 18:03+0200\n"
+"PO-Revision-Date: 2010-12-08 20:03+0100\n"
 "Last-Translator: Daniel Kavan <kuan@maradan.org>\n"
 "Language-Team: Czech <debian-l10n-czech@lists.debian.org>\n"
-"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: cs\n"
 
 #. Type: string
 #. Description
@@ -134,6 +134,7 @@ msgstr ""
 msgid ""
 "Lemonldap::NG configuration files have changed, try to migrate your files?"
 msgstr ""
+"Konfigurační soubory Lemonldap::NG byly změněny, zkusíte své soubory převést?"
 
 #, fuzzy
 #~| msgid "Lemonldap::NG DNS domain:"
