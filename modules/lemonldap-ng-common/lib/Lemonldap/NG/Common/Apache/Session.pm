@@ -264,16 +264,18 @@ sub _LDAPGKFAS {
     foreach my $entry ( $msg->entries ) {
         my ( $k, $v ) =
           ( $entry->get_value('cn'), $entry->get_value('description') );
+        eval { $v = decodeThaw64($v); };
+        next if($@);
         if ( ref($data) eq 'CODE' ) {
-            $res{$k} = &$data( decodeThaw64($v), $k );
+            $res{$k} = &$data( $v, $k );
         }
         elsif ($data) {
             $data = [$data] unless ( ref($data) );
-            my $tmp = decodeThaw64($v);
+            my $tmp = $v;
             $res{$k}->{$_} = $tmp->{$_} foreach (@$data);
         }
         else {
-            $res{$k} = decodeThaw64($v);
+            $res{$k} = $v;
         }
     }
     return \%res;
