@@ -2,7 +2,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: lemonldap-ng 0.9.1-1\n"
+"Project-Id-Version: lemonldap-ng 1.0-2\n"
 "Report-Msgid-Bugs-To: lemonldap-ng@packages.debian.org\n"
 "POT-Creation-Date: 2010-12-04 23:10+0100\n"
 "PO-Revision-Date: 2010-12-08 20:03+0100\n"
