@@ -1,0 +1,70 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+
+
+<h1><a name="using_lemonldapng_with_active-directory" id="using_lemonldapng_with_active-directory">Using Lemonldap::NG with Active-Directory</a></h1>
+<div class="level1">
+
+</div>
+<!-- SECTION "Using Lemonldap::NG with Active-Directory" [1-57] -->
+<h2><a name="using_active-directory_as_authentication_backend" id="using_active-directory_as_authentication_backend">Using Active-Directory as authentication backend</a></h2>
+<div class="level2">
+
+<p>
+
+To use Active-Directory as <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> backend, you must change few things in the manager :
+</p>
+<ul>
+<li class="level1"><div class="li"> Use “<acronym title="Lightweight Directory Access Protocol">LDAP</acronym>” as authentication and userDB backends,</div>
+</li>
+<li class="level1"><div class="li"> Configure authentication filter <em>(“General Parameters » Authentication modules » <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> parameters » Filters”)</em> with:</div>
+</li>
+</ul>
+<pre class="code">
+(&amp;(sAMAccountName=$user)(objectClass=person))
+</pre>
+<ul>
+<li class="level1"><div class="li"> Export sAMAccountName in a variable declared in <a href="../../documentation/1.1/exportedvars.html" class="wikilink1" title="documentation:1.1:exportedvars">exported variables</a></div>
+</li>
+<li class="level1"><div class="li"> Change the user attribute to store in Apache logs <em>(“General Parameters » Logs » REMOTE_USER”)</em>: use the variable declared above</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Using Active-Directory as authentication backend" [58-670] -->
+<h2><a name="using_kerberos" id="using_kerberos">Using Kerberos</a></h2>
+<div class="level2">
+
+<p>
+
+Two steps here:
+</p>
+<ul>
+<li class="level1"><div class="li"> Choose “Apache” as authentication module <em>(“General Parameters » Authentication modules » Authentication module”)</em></div>
+</li>
+<li class="level1"><div class="li"> <a href="../../documentation/1.1/authapache.html" class="wikilink1" title="documentation:1.1:authapache">Configure the Apache server</a> that host the portal</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Using Kerberos" [671-] --></div><!-- closes <div class="dokuwiki export">-->

@@ -1,0 +1,159 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+
+
+<h1><a name="drupal" id="drupal">Drupal</a></h1>
+<div class="level1">
+
+<p>
+
+<a href="/_detail/applications/drupal_logo.png?id=documentation%3A1.1%3Aapplications%3Adrupal" class="media" title="applications:drupal_logo.png"><img src="../../../../media/applications/drupal_logo.png" class="mediacenter" alt="" /></a>
+</p>
+
+</div>
+<!-- SECTION "Drupal" [1-60] -->
+<h2><a name="presentation" id="presentation">Presentation</a></h2>
+<div class="level2">
+
+<p>
+
+<a href="http://drupal.org" class="urlextern" title="http://drupal.org"  rel="nofollow">Drupal</a> is a <acronym title="Content Management System">CMS</acronym> written in <acronym title="Hypertext Preprocessor">PHP</acronym>. It can works with external modules to extends its functionalities. One of this module can be used to delegate authentication server to the web server: <a href="http://drupal.org/project/Webserver_auth" class="urlextern" title="http://drupal.org/project/Webserver_auth"  rel="nofollow">Webserver Auth</a>.
+</p>
+
+</div>
+<!-- SECTION "Presentation" [61-353] -->
+<h2><a name="installation" id="installation">Installation</a></h2>
+<div class="level2">
+
+<p>
+
+Install <a href="http://drupal.org/project/Webserver_auth" class="urlextern" title="http://drupal.org/project/Webserver_auth"  rel="nofollow">Webserver Auth</a> module, by downloading it, and unarchive it in the drupal modules/ directory.
+</p>
+
+</div>
+<!-- SECTION "Installation" [354-526] -->
+<h2><a name="configuration" id="configuration">Configuration</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Configuration" [527-553] -->
+<h3><a name="drupal_module_activation" id="drupal_module_activation">Drupal module activation</a></h3>
+<div class="level3">
+
+<p>
+
+Go on Drupal administration interface and enable the Webserver Auth module.
+</p>
+
+</div>
+<!-- SECTION "Drupal module activation" [554-666] -->
+<h3><a name="drupal_virtual_host_in_apache" id="drupal_virtual_host_in_apache">Drupal virtual host in Apache</a></h3>
+<div class="level3">
+
+<p>
+
+Configure Drupal virtual host like other <a href="../../../documentation/1.1/configvhost.html" class="wikilink1" title="documentation:1.1:configvhost">protected virtual host</a>.
+</p>
+<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:80&gt;
+       <span class="kw1">ServerName</span> drupal.example.com
+&nbsp;
+       PerlHeaderParserHandler My::Package
+&nbsp;
+       ...
+&nbsp;
+&lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
+
+<p>
+<p><div class="noteimportant">If you are protecting Drupal with <acronym title="LemonLDAP::NG">LL::NG</acronym> as reverse proxy, <a href="../../../documentation/1.1/header_remote_user_conversion.html" class="wikilink1" title="documentation:1.1:header_remote_user_conversion">convert header into REMOTE_USER environment variable</a>.
+</div></p>
+</p>
+
+</div>
+<!-- SECTION "Drupal virtual host in Apache" [667-1122] -->
+<h3><a name="drupal_virtual_host_in_manager" id="drupal_virtual_host_in_manager">Drupal virtual host in Manager</a></h3>
+<div class="level3">
+
+<p>
+
+Go to the Manager and <a href="../../../documentation/1.1/configvhost.html#lemonldapng_configuration" class="wikilink1" title="documentation:1.1:configvhost">create a new virtual host</a> for Drupal.
+</p>
+
+<p>
+Just configure the <a href="../../../documentation/1.1/writingrulesand_headers.html#rules" class="wikilink1" title="documentation:1.1:writingrulesand_headers">access rules</a>.
+</p>
+
+<p>
+If using <acronym title="LemonLDAP::NG">LL::NG</acronym> as reverse proxy, configure the <code>Auth-User</code> <a href="../../../documentation/1.1/writingrulesand_headers.html#headers" class="wikilink1" title="documentation:1.1:writingrulesand_headers">header</a>, else no headers are needed.
+</p>
+
+</div>
+<!-- SECTION "Drupal virtual host in Manager" [1123-1476] -->
+<h3><a name="protect_only_the_administration_pages" id="protect_only_the_administration_pages">Protect only the administration pages</a></h3>
+<div class="level3">
+
+<p>
+
+With the above solution, all the Drupal site will be protected, so no anonymous access will be allowed.
+</p>
+
+<p>
+<p><div class="noteimportant">You cannot use the <code>unprotect</code> rule because Drupal navigation is based on query strings (?q=admin, ?q=user, etc.), and unprotect rule only works on <acronym title="Uniform Resource Locator">URL</acronym> patterns.
+</div></p>
+</p>
+
+<p>
+You can create a special virtual host and use <a href="http://httpd.apache.org/docs/current/mod/mod_rewrite.html" class="urlextern" title="http://httpd.apache.org/docs/current/mod/mod_rewrite.html"  rel="nofollow">Apache rewrite module</a> to switch between open and protected hosts:
+</p>
+<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:80&gt;
+    <span class="kw1">ServerName</span> drupal.example.com
+&nbsp;
+    <span class="co1"># DocumentRoot</span>
+    <span class="kw1">DocumentRoot</span> /var/www/html/drupal/
+    <span class="kw1">DirectoryIndex</span> index.php
+&nbsp;
+    <span class="co1"># Redirect admin pages</span>
+    <span class="kw1">RewriteEngine</span> <span class="kw2">On</span>
+    <span class="kw1">RewriteCond</span>  %{QUERY_STRING} q=(admin|user)
+    <span class="kw1">RewriteRule</span> ^/(.*)$ http://admindrupal.example.com/$1 [R]
+&nbsp;
+    <span class="kw1">LogLevel</span> warn
+    <span class="kw1">ErrorLog</span> /var/log/httpd/drupal-error.log
+    <span class="kw1">CustomLog</span> /var/log/httpd/drupal-access.log combined
+&lt;/<span class="kw3">VirtualHost</span>&gt;
+&lt;<span class="kw3">VirtualHost</span> *:80&gt;
+    <span class="kw1">ServerName</span> admindrupal.example.com
+&nbsp;
+    <span class="co1"># SSO protection</span>
+    PerlHeaderParserHandler My::Package
+&nbsp;
+    <span class="co1"># DocumentRoot</span>
+    <span class="kw1">DocumentRoot</span> /var/www/html/drupal/
+    <span class="kw1">DirectoryIndex</span> index.php
+&nbsp;
+    <span class="kw1">LogLevel</span> warn
+    <span class="kw1">ErrorLog</span> /var/log/httpd/admindrupal-error.log
+    <span class="kw1">CustomLog</span> /var/log/httpd/admindrupal-access.log combined
+&lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
+
+</div>
+<!-- SECTION "Protect only the administration pages" [1477-] --></div><!-- closes <div class="dokuwiki export">-->

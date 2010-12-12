@@ -1,0 +1,268 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+
+
+<h1><a name="installation_on_debianubuntu_with_packages" id="installation_on_debianubuntu_with_packages">Installation on Debian/Ubuntu with packages</a></h1>
+<div class="level1">
+
+</div>
+<!-- SECTION "Installation on Debian/Ubuntu with packages" [1-59] -->
+<h2><a name="organization" id="organization">Organization</a></h2>
+<div class="level2">
+
+<p>
+
+LemonLDAP::NG provides these packages:
+</p>
+<ul>
+<li class="level1"><div class="li"> lemonldap-ng: meta-package, contains no file but dependencies on other packages</div>
+</li>
+<li class="level1"><div class="li"> lemonldap-ng-doc: contains <acronym title="HyperText Markup Language">HTML</acronym> documentation and project docs (README, etc.)</div>
+</li>
+<li class="level1"><div class="li"> liblemonldap-ng-conf-perl: configuration and common files</div>
+</li>
+<li class="level1"><div class="li"> liblemonldap-ng-handler-perl: Handler files</div>
+</li>
+<li class="level1"><div class="li"> liblemonldap-ng-manager-perl: Manager files</div>
+</li>
+<li class="level1"><div class="li"> liblemonldap-ng-portal-perl: Portal files</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Organization" [60-495] -->
+<h2><a name="get_the_packages" id="get_the_packages">Get the packages</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Get the packages" [496-525] -->
+<h3><a name="official_repository" id="official_repository">Official repository</a></h3>
+<div class="level3">
+
+<p>
+
+If you run Debian testing or unstable, the packages are directly installable:
+
+</p>
+<pre class="code">
+apt-cache search lemonldap-ng
+</pre>
+
+<p>
+<p><div class="noteimportant">Packages from <a href="http://packages.debian.org/search?keywords=lemonldap-ng" class="urlextern" title="http://packages.debian.org/search?keywords=lemonldap-ng"  rel="nofollow">Debian repository</a> may not be up to date. Prefer then the other solutions (see below).
+</div></p>
+</p>
+
+</div>
+<!-- SECTION "Official repository" [526-864] -->
+<h3><a name="llng_repository" id="llng_repository">LL::NG repository</a></h3>
+<div class="level3">
+
+<p>
+
+You can add this repository to have recent packages:
+
+</p>
+<pre class="code">
+vi /etc/apt/sources.list.d/lemonldap-ng.list
+</pre>
+<pre class="file">
+# LemonLDAP::NG repository
+deb     http://lemonldap-ng.org/deb squeeze main
+deb-src http://lemonldap-ng.org/deb squeeze main
+</pre>
+
+<p>
+Run this to update packages cache:
+
+</p>
+<pre class="code">
+apt-get update
+</pre>
+
+</div>
+<!-- SECTION "LL::NG repository" [865-1214] -->
+<h3><a name="manual_download" id="manual_download">Manual download</a></h3>
+<div class="level3">
+
+<p>
+
+Packages are available on the <a href="../../download.html" class="wikilink1" title="download">Download page</a>.
+</p>
+
+</div>
+<!-- SECTION "Manual download" [1215-1301] -->
+<h2><a name="install_packages" id="install_packages">Install packages</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Install packages" [1302-1331] -->
+<h3><a name="with_apt-get" id="with_apt-get">With apt-get</a></h3>
+<div class="level3">
+<pre class="code">
+apt-get install lemonldap-ng
+</pre>
+
+</div>
+<!-- SECTION "With apt-get" [1332-1400] -->
+<h3><a name="with_dpkg" id="with_dpkg">With dpkg</a></h3>
+<div class="level3">
+
+<p>
+
+Before installing the packages, install <a href="../../documentation/1.1/prereq.html" class="wikilink1" title="documentation:1.1:prereq">dependencies</a>.
+</p>
+
+<p>
+Then:
+
+</p>
+<pre class="code">
+dpkg -i liblemonldap-ng-* lemonldap-ng*
+</pre>
+
+</div>
+<!-- SECTION "With dpkg" [1401-1549] -->
+<h2><a name="first_configuration_steps" id="first_configuration_steps">First configuration steps</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "First configuration steps" [1550-1588] -->
+<h3><a name="change_default_dns_domain" id="change_default_dns_domain">Change default DNS domain</a></h3>
+<div class="level3">
+
+<p>
+
+By default, <acronym title="Domain Name System">DNS</acronym> domain is <code>example.com</code>. You can change it quick with a sed command. For example, we change it to <code>ow2.org</code>:
+</p>
+<pre class="code shell">sed -i 's/example\.com/ow2.org/g' /etc/lemonldap-ng/* /var/lib/lemonldap-ng/conf/lmConf-1 /var/lib/lemonldap-ng/test/index.pl</pre>
+
+</div>
+<!-- SECTION "Change default DNS domain" [1589-1903] -->
+<h3><a name="enable_llng_sites" id="enable_llng_sites">Enable LL::NG sites</a></h3>
+<div class="level3">
+
+<p>
+
+Enable <acronym title="LemonLDAP::NG">LL::NG</acronym> sites in Apache:
+
+</p>
+<pre class="code shell">a2ensite portal-apache2.conf
+a2ensite manager-apache2.conf</pre>
+
+<p>
+
+Restart Apache:
+
+</p>
+<pre class="code shell">apache2ctl configtest
+apache2ctl restart</pre>
+
+</div>
+<!-- SECTION "Enable LL::NG sites" [1904-2124] -->
+<h3><a name="upgrade" id="upgrade">Upgrade</a></h3>
+<div class="level3">
+
+<p>
+
+If you upgraded <acronym title="LemonLDAP::NG">LL::NG</acronym>, check all <a href="../../documentation/1.1/upgrade.html" class="wikilink1" title="documentation:1.1:upgrade">upgrade notes</a>.
+</p>
+
+<p>
+The upgrade process will also have migrate old configuration files into <code>/etc/lemonldap-ng/lemonldap-ng.ini</code>. This includes the application list which is now set in the <code>applicationList</code> parameter from <code>[portal]</code> section, for example:
+
+</p>
+<pre class="code file ini"><span class="re0"><span class="br0">&#91;</span>portal<span class="br0">&#93;</span></span>
+<span class="re1">applicationList</span><span class="sy0">=</span><span class="re2"><span class="br0">&#123;</span> 'Menu' <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> type <span class="sy0">=</span>&gt; 'category', 'Example' <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> type <span class="sy0">=</span>&gt; 'category', 'test1' <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> type <span class="sy0">=</span>&gt; 'application', options <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> name <span class="sy0">=</span>&gt; 'Application Test <span class="nu0">1</span>', uri <span class="sy0">=</span>&gt; 'http://test1.example.com/', description <span class="sy0">=</span>&gt; 'A simple application displaying authenticated user', logo <span class="sy0">=</span>&gt; 'wheels.png', display <span class="sy0">=</span>&gt; 'auto',  <span class="br0">&#125;</span>, <span class="br0">&#125;</span>,'test2' <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> type <span class="sy0">=</span>&gt; 'application', options <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> name <span class="sy0">=</span>&gt; 'Application Test <span class="nu0">2</span>', uri <span class="sy0">=</span>&gt; 'http://test2.example.com/', description <span class="sy0">=</span>&gt; 'The same simple application displaying authenticated user', logo <span class="sy0">=</span>&gt; 'wheels.png', display <span class="sy0">=</span>&gt; 'auto',  <span class="br0">&#125;</span>, <span class="br0">&#125;</span>, <span class="br0">&#125;</span>,'Administration' <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> type <span class="sy0">=</span>&gt; 'category', 'manager' <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> type <span class="sy0">=</span>&gt; 'application', options <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> name <span class="sy0">=</span>&gt; 'WebSSO Manager', uri <span class="sy0">=</span>&gt; 'http://manager.example.com/', description <span class="sy0">=</span>&gt; 'Configure LemonLDAP::NG WebSSO', logo <span class="sy0">=</span>&gt; 'tools.png', display <span class="sy0">=</span>&gt; 'on',  <span class="br0">&#125;</span>, <span class="br0">&#125;</span>,'sessions' <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> type <span class="sy0">=</span>&gt; 'application', options <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> name <span class="sy0">=</span>&gt; 'Sessions explorer', uri <span class="sy0">=</span>&gt; 'http://manager.example.com/sessions.pl', description <span class="sy0">=</span>&gt; 'Explore WebSSO sessions', logo <span class="sy0">=</span>&gt; 'tools.png', display <span class="sy0">=</span>&gt; 'on',  <span class="br0">&#125;</span>, <span class="br0">&#125;</span>, <span class="br0">&#125;</span>,'Documentation' <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> type <span class="sy0">=</span>&gt; 'category', 'localdoc' <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> type <span class="sy0">=</span>&gt; 'application', options <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> name <span class="sy0">=</span>&gt; 'Local documentation', uri <span class="sy0">=</span>&gt; 'http://manager.example.com/doc/', description <span class="sy0">=</span>&gt; 'Documentation supplied with LemonLDAP::NG', logo <span class="sy0">=</span>&gt; 'docs.png', display <span class="sy0">=</span>&gt; 'on',  <span class="br0">&#125;</span>, <span class="br0">&#125;</span>,'officialwebsite' <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> type <span class="sy0">=</span>&gt; 'application', options <span class="sy0">=</span>&gt; <span class="br0">&#123;</span> name <span class="sy0">=</span>&gt; 'Offical Website', uri <span class="sy0">=</span>&gt; 'http://wiki.lemonldap.objectweb.org/xwiki/bin/view/NG/Presentation', description <span class="sy0">=</span>&gt; 'Official LemonLDAP::NG Website', logo <span class="sy0">=</span>&gt; 'web.png', display <span class="sy0">=</span>&gt; 'on',  <span class="br0">&#125;</span>, <span class="br0">&#125;</span>, <span class="br0">&#125;</span>, <span class="br0">&#125;</span>, <span class="br0">&#125;</span></span></pre>
+
+<p>
+<p><div class="noteimportant">You should now use the Manager to configure all <a href="../../documentation/1.1/portalmenu.html#categories_and_applications" class="wikilink1" title="documentation:1.1:portalmenu">applications and categories</a>, and then comment or remove the <code>applicationList</code> parameter from <code>/etc/lemonldap-ng/lemonldap-ng.ini</code>.
+</div></p>
+</p>
+
+</div>
+<!-- SECTION "Upgrade" [2125-4283] -->
+<h3><a name="dns" id="dns">DNS</a></h3>
+<div class="level3">
+
+<p>
+
+Configure your <acronym title="Domain Name System">DNS</acronym> server to resolve names with your server <acronym title="Internet Protocol">IP</acronym>.
+</p>
+
+<p>
+<p><div class="notetip">
+For tests with <code>example.com</code>, launch the following :
+
+</p>
+<pre class="code shell">cat /etc/lemonldap-ng/for_etc_hosts &gt;&gt; /etc/hosts</pre>
+
+<p>
+
+
+</div></p>
+</p>
+
+<p>
+Follow the <a href="../../documentation/1.1/start.html#configuration" class="wikilink1" title="documentation:1.1:start">next steps</a>
+</p>
+
+</div>
+<!-- SECTION "DNS" [4284-4556] -->
+<h2><a name="file_location" id="file_location">File location</a></h2>
+<div class="level2">
+<ul>
+<li class="level1"><div class="li"> Configuration is in /etc/lemonldap-ng</div>
+</li>
+<li class="level1"><div class="li"> LemonLDAP::NG configuration (edited by the Manager) is in /var/lib/lemonldap-ng/conf/</div>
+</li>
+<li class="level1"><div class="li"> All <acronym title="Practical Extraction and Report Language">Perl</acronym> modules are in the VENDOR perl directory (/usr/share/perl5/)</div>
+</li>
+<li class="level1"><div class="li"> All <acronym title="Practical Extraction and Report Language">Perl</acronym> scripts/pages are in /var/lib/lemonldap-ng/</div>
+</li>
+<li class="level1"><div class="li"> All lemonldap-ng tools are in /usr/share/lemonldap-ng/bin/</div>
+</li>
+<li class="level1"><div class="li"> All static content (examples, <acronym title="Cascading Style Sheets">CSS</acronym>, images, etc.) is in /usr/share/lemonldap-ng/</div>
+</li>
+<li class="level1"><div class="li"> Apache configuration files are in /etc/lemonldap-ng and linked in /etc/apache2/sites-available</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "File location" [4557-5093] -->
+<h2><a name="build_your_packages" id="build_your_packages">Build your packages</a></h2>
+<div class="level2">
+
+<p>
+
+You can also get the <a href="../../download.html" class="wikilink1" title="download">LemonLDAP::NG archive</a> and make the package yourself:
+
+</p>
+<pre class="code">
+tar xzf lemonldap-ng-*.tar.gz
+cd lemonldap-ng-*
+make debian-packages
+</pre>
+
+</div>
+<!-- SECTION "Build your packages" [5094-] --></div><!-- closes <div class="dokuwiki export">-->

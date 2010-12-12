@@ -1,0 +1,233 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+
+
+<h1><a name="google_apps" id="google_apps">Google Apps</a></h1>
+<div class="level1">
+
+<p>
+
+<a href="/_detail/applications/googleapps_logo.png?id=documentation%3A1.1%3Aapplications%3Agoogleapps" class="media" title="applications:googleapps_logo.png"><img src="../../../../media/applications/googleapps_logo.png" class="mediacenter" alt="" /></a>
+</p>
+
+</div>
+<!-- SECTION "Google Apps" [1-69] -->
+<h2><a name="presentation" id="presentation">Presentation</a></h2>
+<div class="level2">
+
+<p>
+
+<a href="http://www.google.com/apps/" class="urlextern" title="http://www.google.com/apps/"  rel="nofollow">Google Apps</a> can use <acronym title="Security Assertion Markup Language">SAML</acronym> to authenticate users, behaving as an <acronym title="Security Assertion Markup Language">SAML</acronym> service provider, as explained <a href="http://code.google.com/googleapps/domain/sso/saml_reference_implementation.html" class="urlextern" title="http://code.google.com/googleapps/domain/sso/saml_reference_implementation.html"  rel="nofollow">here</a>.
+</p>
+
+<p>
+To work with <acronym title="LemonLDAP::NG">LL::NG</acronym> it requires:
+</p>
+<ul>
+<li class="level1"><div class="li"> An <a href="http://www.google.com/apps/intl/en/business/index.html" class="urlextern" title="http://www.google.com/apps/intl/en/business/index.html"  rel="nofollow">enterprise Google Apps account</a></div>
+</li>
+<li class="level1"><div class="li"> <acronym title="LemonLDAP::NG">LL::NG</acronym> configured as <a href="../../../documentation/1.1/idpsaml.html" class="wikilink1" title="documentation:1.1:idpsaml">SAML Identity Provider</a></div>
+</li>
+<li class="level1"><div class="li"> Registered users on Google Apps with the same email than those used by <acronym title="LemonLDAP::NG">LL::NG</acronym> (email will be the NameID exchanged between Google Apps and <acronym title="LemonLDAP::NG">LL::NG</acronym>)</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Presentation" [70-660] -->
+<h2><a name="configuration" id="configuration">Configuration</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Configuration" [661-687] -->
+<h3><a name="google_apps_control_panel" id="google_apps_control_panel">Google Apps control panel</a></h3>
+<div class="level3">
+
+<p>
+
+<p><div class="noteclassic">This part is based on <a href="http://simplesamlphp.org/docs/1.6/simplesamlphp-googleapps" class="urlextern" title="http://simplesamlphp.org/docs/1.6/simplesamlphp-googleapps"  rel="nofollow">SimpleSAMLPHP documentation</a>.
+</div></p>
+</p>
+
+<p>
+As administrator, go in Google Apps control panel and click on Advanced tools:
+</p>
+
+<p>
+<a href="/_detail/documentation/googleapps-menu.png?id=documentation%3A1.1%3Aapplications%3Agoogleapps" class="media" title="documentation:googleapps-menu.png"><img src="../../../../media/documentation/googleapps-menu.png" class="mediacenter" alt="" /></a>
+</p>
+
+<p>
+Then select <code>Set up single sign-on (<acronym title="Single Sign On">SSO</acronym>)</code>:
+</p>
+
+<p>
+<a href="/_detail/documentation/googleapps-sso.png?id=documentation%3A1.1%3Aapplications%3Agoogleapps" class="media" title="documentation:googleapps-sso.png"><img src="../../../../media/documentation/googleapps-sso.png" class="mediacenter" alt="" /></a>
+</p>
+
+<p>
+Now configure all <acronym title="Security Assertion Markup Language">SAML</acronym> parameters:
+</p>
+
+<p>
+<a href="/_detail/documentation/googleapps-ssoconfig.png?id=documentation%3A1.1%3Aapplications%3Agoogleapps" class="media" title="documentation:googleapps-ssoconfig.png"><img src="../../../../media/documentation/googleapps-ssoconfig.png" class="mediacenter" alt="" /></a>
+
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Enable Single Sign-On</strong>: check the box. Uncheck it to disable <acronym title="Security Assertion Markup Language">SAML</acronym> authentication (for example, if your Identity Provider is down).</div>
+</li>
+<li class="level1"><div class="li"> <strong>Sign-in page <acronym title="Uniform Resource Locator">URL</acronym></strong>: <acronym title="Single Sign On">SSO</acronym> access point (<acronym title="Hyper Text Transfer Protocol">HTTP</acronym>-Redirect binding). Example: <a href="http://auth.example.com/saml/singleSignOn" class="urlextern" title="http://auth.example.com/saml/singleSignOn"  rel="nofollow">http://auth.example.com/saml/singleSignOn</a></div>
+</li>
+<li class="level1"><div class="li"> <strong>Sign-out page <acronym title="Uniform Resource Locator">URL</acronym></strong>: this in not the SLO access point (Google Apps does not support SLO), but the main logout page. Example: <a href="http://auth.example.com/?logout=1" class="urlextern" title="http://auth.example.com/?logout=1"  rel="nofollow">http://auth.example.com/?logout=1</a></div>
+</li>
+<li class="level1"><div class="li"> <strong>Change password <acronym title="Uniform Resource Locator">URL</acronym></strong>: where users can change their password. Example: <a href="http://auth.example.com" class="urlextern" title="http://auth.example.com"  rel="nofollow">http://auth.example.com</a></div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "Google Apps control panel" [688-1671] -->
+<h3><a name="certificate" id="certificate">Certificate</a></h3>
+<div class="level3">
+
+<p>
+
+For the certificate, you can build it from the signing private key registered in Manager. Select the key, and export it (button <code>Download this file</code>):
+</p>
+
+<p>
+<a href="/_detail/documentation/googleapps-export-priv-key.png?id=documentation%3A1.1%3Aapplications%3Agoogleapps" class="media" title="documentation:googleapps-export-priv-key.png"><img src="../../../../media/documentation/googleapps-export-priv-key.png" class="mediacenter" alt="" /></a>
+</p>
+
+<p>
+After choosing the file name (for example lemonldapn-ng-priv.key), download the key on your disk.
+</p>
+
+<p>
+Then use openssl to generate an auto-signed certificate:
+
+</p>
+<pre class="code">
+openssl req -new -key lemonldap-ng-priv.key -out cert.csr
+openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out cert.pem
+</pre>
+
+<p>
+You can now the upload the certificate (<code>cert.pem</code>) on Google Apps.
+</p>
+
+</div>
+<!-- SECTION "Certificate" [1672-2290] -->
+<h3><a name="new_service_provider" id="new_service_provider">New Service Provider</a></h3>
+<div class="level3">
+
+<p>
+
+You should have configured <acronym title="LemonLDAP::NG">LL::NG</acronym> as an <a href="../../../documentation/1.1/idpsaml.html" class="wikilink1" title="documentation:1.1:idpsaml">SAML Identity Provider</a>,
+</p>
+
+<p>
+Now we will add Google Apps as a new <acronym title="Security Assertion Markup Language">SAML</acronym> Service Provider:
+</p>
+<ol>
+<li class="level1"><div class="li"> In Manager, click on <acronym title="Security Assertion Markup Language">SAML</acronym> service providers and the button <code>New service provider</code>.</div>
+</li>
+<li class="level1"><div class="li"> Set GoogleApps as Service Provider name.</div>
+</li>
+<li class="level1"><div class="li"> Set <code>Email</code> in <code>Options</code> » <code>Authentication Response</code> » <code>Default NameID format</code></div>
+</li>
+<li class="level1"><div class="li"> Disable all signature flags in <code>Options</code> » <code>Signature</code>, except <code>Sign <acronym title="Single Sign On">SSO</acronym> message</code> which should be to <code>On</code></div>
+</li>
+<li class="level1"><div class="li"> Select <code>Metadata</code>, and unprotect the field to paste the following value:</div>
+</li>
+</ol>
+<pre class="code file xml"><span class="sc3"><span class="re1">&lt;md:EntityDescriptor</span> <span class="re0">entityID</span>=<span class="st0">&quot;google.com&quot;</span> <span class="re0">xmlns</span>=<span class="st0">&quot;urn:oasis:names:tc:SAML:2.0:metadata&quot;</span> <span class="re0">xmlns:ds</span>=<span class="st0">&quot;http://www.w3.org/2000/09/xmldsig#&quot;</span> <span class="re0">xmlns:md</span>=<span class="st0">&quot;urn:oasis:names:tc:SAML:2.0:metadata&quot;</span><span class="re2">&gt;</span></span>
+  <span class="sc3"><span class="re1">&lt;SPSSODescriptor</span> <span class="re0">protocolSupportEnumeration</span>=<span class="st0">&quot;urn:oasis:names:tc:SAML:2.0:protocol&quot;</span><span class="re2">&gt;</span></span>
+    <span class="sc3"><span class="re1">&lt;AssertionConsumerService</span> <span class="re0">Binding</span>=<span class="st0">&quot;urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST&quot;</span> <span class="re0">Location</span>=<span class="st0">&quot;https://www.google.com/a/mydomain.org/acs&quot;</span> <span class="re0">index</span>=<span class="st0">&quot;1&quot;</span> <span class="re2">/&gt;</span></span>
+    <span class="sc3"><span class="re1">&lt;NameIDFormat<span class="re2">&gt;</span></span></span>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress<span class="sc3"><span class="re1">&lt;/NameIDFormat<span class="re2">&gt;</span></span></span>
+  <span class="sc3"><span class="re1">&lt;/SPSSODescriptor<span class="re2">&gt;</span></span></span>
+<span class="sc3"><span class="re1">&lt;/md:EntityDescriptor<span class="re2">&gt;</span></span></span></pre>
+
+<p>
+<p><div class="noteimportant">Change <strong>mydomain.org</strong> (in <code>AssertionConsumerService</code> markup, parameter <code>Location</code>) into your Google Apps domain.
+</div></p>
+</p>
+
+</div>
+<!-- SECTION "New Service Provider" [2291-3603] -->
+<h3><a name="application_menu" id="application_menu">Application menu</a></h3>
+<div class="level3">
+
+<p>
+
+You can add a link in <a href="../../../documentation/1.1/portalmenu.html#categories_and_applications" class="wikilink1" title="documentation:1.1:portalmenu">application menu</a> to display Google Apps to users.
+</p>
+
+<p>
+<a href="/_detail/documentation/googleapps-manager-application.png?id=documentation%3A1.1%3Aapplications%3Agoogleapps" class="media" title="documentation:googleapps-manager-application.png"><img src="../../../../media/documentation/googleapps-manager-application.png" class="mediacenter" alt="" /></a>
+</p>
+
+<p>
+You need to adapt some parameters:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Address</strong>: set one of Google Apps <acronym title="Uniform Resource Locator">URL</acronym> (all Google Apps product a distinct <acronym title="Uniform Resource Locator">URL</acronym>), for example <a href="http://www.google.com/calendar/hosted/mydomain.org/render" class="urlextern" title="http://www.google.com/calendar/hosted/mydomain.org/render"  rel="nofollow">http://www.google.com/calendar/hosted/mydomain.org/render</a></div>
+</li>
+<li class="level1"><div class="li"> <strong>Display</strong>: As Google Apps is not a protected application, set to <code>On</code> to always display it</div>
+</li>
+</ul>
+
+<p>
+
+<p><div class="noteimportant">Change <strong>mydomain.org</strong> into your Google Apps domain
+</div></p>
+</p>
+
+</div>
+<!-- SECTION "Application menu" [3604-4175] -->
+<h3><a name="logout" id="logout">Logout</a></h3>
+<div class="level3">
+
+<p>
+
+Google Apps does not support Single Logout (SLO).
+</p>
+
+<p>
+Google Apps has a configuration parameter to redirect user on a specific <acronym title="Uniform Resource Locator">URL</acronym> after Google Apps logout (see <a href="#google_apps_control_panel" title="documentation:1.1:applications:googleapps &crarr;" class="wikilink1">Google Apps control panel</a>).
+</p>
+
+<p>
+To manage the other way (<acronym title="LemonLDAP::NG">LL::NG</acronym> → Google Apps), you can add a dedicated <a href="../../../documentation/1.1/logoutforward.html" class="wikilink1" title="documentation:1.1:logoutforward">logout forward rule</a>:
+
+</p>
+<pre class="code">
+GoogleApps =&gt; http://www.google.com/calendar/hosted/mydomain.org/logout
+</pre>
+
+<p>
+<p><div class="noteimportant">Change <strong>mydomain.org</strong> into your Google Apps domain
+</div></p>
+
+</p>
+
+</div>
+<!-- SECTION "Logout" [4176-] --></div><!-- closes <div class="dokuwiki export">-->

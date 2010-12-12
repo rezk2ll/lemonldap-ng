@@ -1,0 +1,80 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+
+
+<h1><a name="memcached_session_backend" id="memcached_session_backend">Memcached session backend</a></h1>
+<div class="level1">
+
+<p>
+
+<p><div class="noteimportant"><a href="http://memcached.org/" class="urlextern" title="http://memcached.org/"  rel="nofollow">Memcached</a> can be used with <acronym title="LemonLDAP::NG">LL::NG</acronym>, but some features will not work since Memcached doesn&#039;t provide any parsing system:
+</p>
+<ul>
+<li class="level1"><div class="li"> Session expiration: sessions will never expire (server side)</div>
+</li>
+<li class="level1"><div class="li"> <a href="../../documentation/features.html#session_explorer" class="wikilink1" title="documentation:features">Session explorer</a> will not work</div>
+</li>
+<li class="level1"><div class="li"> <a href="../../documentation/features.html#session_restrictions" class="wikilink1" title="documentation:features">Session restrictions</a> will not work</div>
+</li>
+</ul>
+
+<p>
+
+To keep Memcached performance level and <acronym title="LemonLDAP::NG">LL::NG</acronym> features, you can replace <a href="http://memcached.org/" class="urlextern" title="http://memcached.org/"  rel="nofollow">Memcached</a> by <a href="http://code.google.com/p/redis/" class="urlextern" title="http://code.google.com/p/redis/"  rel="nofollow">Redis</a> using <a href="../../documentation/1.1/nosqlsessionbackend.html" class="wikilink1" title="documentation:1.1:nosqlsessionbackend">NoSQL session backend</a>.
+
+</div></p>
+</p>
+
+</div>
+<!-- SECTION "Memcached session backend" [1-652] -->
+<h2><a name="setup" id="setup">Setup</a></h2>
+<div class="level2">
+
+<p>
+
+Install and launch a <a href="http://memcached.org/" class="urlextern" title="http://memcached.org/"  rel="nofollow">Memcached server</a>.
+</p>
+
+<p>
+In the manager: set <a href="http://search.cpan.org/perldoc?Apache::Session::Memcached" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session::Memcached"  rel="nofollow">Apache::Session::Memcached</a> in <code>General parameters</code> » <code>Sessions</code> » <code>Session storage</code> » <code>Apache::Session module</code> and add the following parameters (case sensitive):
+
+</p>
+<table class="inline">
+	<tr class="row0 roweven">
+		<th class="col0 centeralign" colspan="3">  Required parameters  </th>
+	</tr>
+	<tr class="row1 rowodd">
+		<th class="col0 centeralign">  Name  </th><th class="col1 centeralign">  Comment  </th><th class="col2 centeralign">  Example  </th>
+	</tr>
+	<tr class="row2 roweven">
+		<td class="col0 centeralign">  <strong>Servers</strong>  </td><td class="col1"> Memcached servers </td><td class="col2"> 10.0.0.1:20000 10.0.0.2:20000 </td>
+	</tr>
+</table>
+
+<p>
+
+See <a href="http://search.cpan.org/perldoc?Apache::Session::Memcached" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session::Memcached"  rel="nofollow">Apache::Session::Memcached</a> for optional parameters.
+</p>
+
+</div>
+<!-- SECTION "Setup" [653-] --></div><!-- closes <div class="dokuwiki export">-->

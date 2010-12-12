@@ -1,0 +1,57 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+
+
+<h1><a name="high_availability" id="high_availability">High availability</a></h1>
+<div class="level1">
+
+<p>
+
+LemonLDAP::NG is highly scalable, so easy to insert behind a load-balancer:
+</p>
+<ul>
+<li class="level1"><div class="li"> Portal does not store any data outside the session database, so you can have many portal servers using the same <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> host name</div>
+</li>
+<li class="level1"><div class="li"> All handlers download the whole configuration, so many servers can serve the same virtual hosts</div>
+</li>
+</ul>
+
+<p>
+
+You can for example set up a fail-over cluster with <a href="http://www.linux-ha.org/wiki/Heartbeat" class="urlextern" title="http://www.linux-ha.org/wiki/Heartbeat"  rel="nofollow">Heartbeat</a> and <a href="http://haproxy.1wt.eu/" class="urlextern" title="http://haproxy.1wt.eu/"  rel="nofollow">HAproxy</a>, like this:
+</p>
+
+<p>
+<a href="/_detail/documentation/ha-apache.png?id=documentation%3A1.1%3Ahighavailability" class="media" title="documentation:ha-apache.png"><img src="../../../media/documentation/ha-apache.png" class="mediacenter" alt="" /></a>
+</p>
+
+<p>
+You just have to share configuration and sessions databases between those servers:
+</p>
+
+<p>
+<a href="/_detail/documentation/ha-sessions-configuration.png?id=documentation%3A1.1%3Ahighavailability" class="media" title="documentation:ha-sessions-configuration.png"><img src="../../../media/documentation/ha-sessions-configuration.png" class="mediacenter" alt="" /></a>
+</p>
+
+</div>
+</div><!-- closes <div class="dokuwiki export">-->
