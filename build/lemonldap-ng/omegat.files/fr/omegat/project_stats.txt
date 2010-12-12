@@ -6,20 +6,20 @@ Total :
 	Nombre de caractères (sans espaces)	603013
 	Nombre de caractères (avec espaces)	653958
 Restants :
-	Segments	9322
-	Mots	58118
-	Nombre de caractères (sans espaces)	464044
-	Nombre de caractères (avec espaces)	506530
+	Segments	9074
+	Mots	56628
+	Nombre de caractères (sans espaces)	451432
+	Nombre de caractères (avec espaces)	492862
 Segments uniques :
 	Segments	4896
 	Mots	32015
 	Nombre de caractères (sans espaces)	244876
 	Nombre de caractères (avec espaces)	268353
 Segments uniques restants :
-	Segments	3602
-	Mots	25376
-	Nombre de caractères (sans espaces)	194104
-	Nombre de caractères (avec espaces)	214140
+	Segments	3513
+	Mots	24762
+	Nombre de caractères (sans espaces)	188962
+	Nombre de caractères (avec espaces)	208537
 
 Statistiques par fichiers :
 
@@ -55,10 +55,10 @@ pages/documentation/1.0/authnull.html	106	79	724	492	803	563
 pages/documentation/1.0/authopenid.html	247	213	1727	1454	1899	1619
 pages/documentation/1.0/authproxy.html	196	140	1418	974	1557	1092
 pages/documentation/1.0/authremote.html	583	511	3993	3330	4429	3752
-pages/documentation/1.0/authsaml.html	875	788	5965	5342	6625	5963
+pages/documentation/1.0/authsaml.html	875	786	5965	5328	6625	5948
 pages/documentation/1.0/authssl.html	476	396	3487	2919	3816	3210
 pages/documentation/1.0/authtwitter.html	192	0	1425	0	1555	0
-pages/documentation/1.0/browseablesessionbackend.html	246	210	2149	1839	2285	1973
+pages/documentation/1.0/browseablesessionbackend.html	246	207	2149	1785	2285	1919
 pages/documentation/1.0/cda.html	200	59	1462	584	1603	621
 pages/documentation/1.0/changeconfbackend.html	146	124	1179	1030	1258	1104
 pages/documentation/1.0/configlocation.html	1386	1292	11441	10723	12456	11692
@@ -76,15 +76,15 @@ pages/documentation/1.0/highavailability.html	132	117	1008	897	1084	969
 pages/documentation/1.0/idpcas.html	281	215	2166	1522	2363	1698
 pages/documentation/1.0/idpopenid.html	517	455	3773	3190	4097	3508
 pages/documentation/1.0/idpsaml.html	585	497	4281	3615	4673	3967
-pages/documentation/1.0/installdeb.html	641	604	5975	5699	6505	6216
-pages/documentation/1.0/installrpm.html	874	840	7675	7421	8386	8120
+pages/documentation/1.0/installdeb.html	641	603	5975	5687	6505	6204
+pages/documentation/1.0/installrpm.html	874	839	7675	7409	8386	8108
 pages/documentation/1.0/installtarball.html	581	511	4085	3511	4469	3869
 pages/documentation/1.0/ldapconfbackend.html	386	332	2948	2500	3204	2726
 pages/documentation/1.0/ldapminihowto.html	85	72	649	550	691	591
 pages/documentation/1.0/ldapsessionbackend.html	258	218	1995	1685	2137	1813
 pages/documentation/1.0/logoutforward.html	165	133	1074	827	1202	944
 pages/documentation/1.0/logs.html	189	173	1484	1361	1635	1508
-pages/documentation/1.0/memcachedsessionbackend.html	184	151	1558	1299	1645	1384
+pages/documentation/1.0/memcachedsessionbackend.html	184	148	1558	1245	1645	1330
 pages/documentation/1.0/mrtg.html	161	150	1414	1328	1509	1422
 pages/documentation/1.0/mysqlminihowto.html	126	113	1049	950	1110	1010
 pages/documentation/1.0/nosqlsessionbackend.html	155	0	1208	0	1281	0
@@ -96,10 +96,10 @@ pages/documentation/1.0/portal.html	481	404	4118	3480	4375	3721
 pages/documentation/1.0/portalcustom.html	365	340	2278	2087	2568	2366
 pages/documentation/1.0/portalmenu.html	326	308	2529	2387	2765	2617
 pages/documentation/1.0/prereq.html	515	475	3932	3638	4262	3950
-pages/documentation/1.0/rbac.html	499	459	3045	2685	3419	3041
+pages/documentation/1.0/rbac.html	499	449	3045	2568	3419	2923
 pages/documentation/1.0/redirections.html	256	230	1740	1544	1953	1746
 pages/documentation/1.0/resetpassword.html	337	294	2172	1819	2430	2064
-pages/documentation/1.0/samlservice.html	1496	710	11491	5788	12543	6314
+pages/documentation/1.0/samlservice.html	1496	0	11491	0	12543	0
 pages/documentation/1.0/security.html	959	910	7060	6722	7688	7335
 pages/documentation/1.0/selfmadeapplication.html	330	303	3134	2932	3343	3131
 pages/documentation/1.0/sessions.html	252	220	1721	1479	1914	1664
@@ -110,7 +110,7 @@ pages/documentation/1.0/soapsessionbackend.html	397	327	3137	2661	3446	2932
 pages/documentation/1.0/sqlconfbackend.html	284	267	2353	2221	2566	2429
 pages/documentation/1.0/sqlsessionbackend.html	428	402	3149	2953	3383	3181
 pages/documentation/1.0/ssocookie.html	397	340	2510	2131	2830	2421
-pages/documentation/1.0/start.html	1101	956	10220	8784	10576	9121
+pages/documentation/1.0/start.html	1101	941	10220	8529	10576	8866
 pages/documentation/1.0/status.html	290	272	2027	1881	2200	2052
 pages/documentation/1.0/upgrade.html	743	715	4878	4671	5453	5233
 pages/documentation/1.0/writingrulesand_headers.html	564	505	3819	3373	4224	3747
@@ -141,10 +141,10 @@ pages/documentation/latest/authnull.html	106	79	724	492	803	563
 pages/documentation/latest/authopenid.html	247	213	1727	1454	1899	1619
 pages/documentation/latest/authproxy.html	196	140	1418	974	1557	1092
 pages/documentation/latest/authremote.html	583	511	3993	3330	4429	3752
-pages/documentation/latest/authsaml.html	875	788	5965	5342	6625	5963
+pages/documentation/latest/authsaml.html	875	786	5965	5328	6625	5948
 pages/documentation/latest/authssl.html	476	396	3487	2919	3816	3210
 pages/documentation/latest/authtwitter.html	192	0	1425	0	1555	0
-pages/documentation/latest/browseablesessionbackend.html	246	210	2149	1839	2285	1973
+pages/documentation/latest/browseablesessionbackend.html	246	207	2149	1785	2285	1919
 pages/documentation/latest/cda.html	200	59	1462	584	1603	621
 pages/documentation/latest/changeconfbackend.html	146	124	1179	1030	1258	1104
 pages/documentation/latest/configlocation.html	1386	1292	11441	10723	12456	11692
@@ -162,15 +162,15 @@ pages/documentation/latest/highavailability.html	132	117	1008	897	1084	969
 pages/documentation/latest/idpcas.html	281	215	2166	1522	2363	1698
 pages/documentation/latest/idpopenid.html	517	455	3773	3190	4097	3508
 pages/documentation/latest/idpsaml.html	585	497	4281	3615	4673	3967
-pages/documentation/latest/installdeb.html	641	604	5975	5699	6505	6216
-pages/documentation/latest/installrpm.html	874	840	7675	7421	8386	8120
+pages/documentation/latest/installdeb.html	641	603	5975	5687	6505	6204
+pages/documentation/latest/installrpm.html	874	839	7675	7409	8386	8108
 pages/documentation/latest/installtarball.html	581	511	4085	3511	4469	3869
 pages/documentation/latest/ldapconfbackend.html	386	332	2948	2500	3204	2726
 pages/documentation/latest/ldapminihowto.html	85	72	649	550	691	591
 pages/documentation/latest/ldapsessionbackend.html	258	218	1995	1685	2137	1813
 pages/documentation/latest/logoutforward.html	165	133	1074	827	1202	944
 pages/documentation/latest/logs.html	189	173	1484	1361	1635	1508
-pages/documentation/latest/memcachedsessionbackend.html	184	151	1558	1299	1645	1384
+pages/documentation/latest/memcachedsessionbackend.html	184	148	1558	1245	1645	1330
 pages/documentation/latest/mrtg.html	161	150	1414	1328	1509	1422
 pages/documentation/latest/mysqlminihowto.html	126	113	1049	950	1110	1010
 pages/documentation/latest/nosqlsessionbackend.html	155	0	1208	0	1281	0
@@ -182,10 +182,10 @@ pages/documentation/latest/portal.html	481	404	4118	3480	4375	3721
 pages/documentation/latest/portalcustom.html	365	340	2278	2087	2568	2366
 pages/documentation/latest/portalmenu.html	326	308	2529	2387	2765	2617
 pages/documentation/latest/prereq.html	515	475	3932	3638	4262	3950
-pages/documentation/latest/rbac.html	499	459	3045	2685	3419	3041
+pages/documentation/latest/rbac.html	499	449	3045	2568	3419	2923
 pages/documentation/latest/redirections.html	256	230	1740	1544	1953	1746
 pages/documentation/latest/resetpassword.html	337	294	2172	1819	2430	2064
-pages/documentation/latest/samlservice.html	1496	710	11491	5788	12543	6314
+pages/documentation/latest/samlservice.html	1496	0	11491	0	12543	0
 pages/documentation/latest/security.html	959	910	7060	6722	7688	7335
 pages/documentation/latest/selfmadeapplication.html	330	303	3134	2932	3343	3131
 pages/documentation/latest/sessions.html	252	220	1721	1479	1914	1664
@@ -196,7 +196,7 @@ pages/documentation/latest/soapsessionbackend.html	397	327	3137	2661	3446	2932
 pages/documentation/latest/sqlconfbackend.html	284	267	2353	2221	2566	2429
 pages/documentation/latest/sqlsessionbackend.html	428	402	3149	2953	3383	3181
 pages/documentation/latest/ssocookie.html	397	340	2510	2131	2830	2421
-pages/documentation/latest/start.html	1101	956	10220	8784	10576	9121
+pages/documentation/latest/start.html	1101	941	10220	8529	10576	8866
 pages/documentation/latest/status.html	290	272	2027	1881	2200	2052
 pages/documentation/latest/upgrade.html	743	715	4878	4671	5453	5233
 pages/documentation/latest/writingrulesand_headers.html	564	505	3819	3373	4224	3747

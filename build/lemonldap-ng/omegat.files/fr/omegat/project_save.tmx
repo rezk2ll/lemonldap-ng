@@ -10432,6 +10432,726 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Undefined&lt;/s0&gt;: Default NameID format is used</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Undefined&lt;/s0&gt;: le format de NameID par défaut est utilisé</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Authentication contexts</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Contextes d'authentification</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/documentation/manager-saml-service-authn-contexts.png?id=documentation%3A1.0%3Asamlservice</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/documentation/manager-saml-service-authn-contexts.png?id=documentation%3A1.0%3Asamlservice</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:manager-saml-service-authn-contexts.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:manager-saml-service-authn-contexts.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../media/documentation/manager-saml-service-authn-contexts.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../../../media/documentation/manager-saml-service-authn-contexts.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://docs.oasis-open.org/security/saml/v2.0/saml-authn-context-2.0-os.pdf</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://docs.oasis-open.org/security/saml/v2.0/saml-authn-context-2.0-os.pdf</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Each &lt;a0&gt;LL::NG&lt;/a0&gt; authentication module has an authentication level, which can be associated to an &lt;a1&gt;SAML authentication context&lt;/a1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Chaque module d'authentification de &lt;a0&gt;LL::NG&lt;/a0&gt; dispose d'un niveau d'authentification qui peut être associé à un &lt;a1&gt;contexte d'authentification SAML&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This parameter is used by &lt;a0&gt;SAML IDP&lt;/a0&gt; to fill the authentication context in authentication responses.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Ce paramètre est utilisé par l'&lt;a0&gt;IdP SAML&lt;/a0&gt; pour renseigner le contexte d'authentification dans les réponses.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>It will use the authentication level registered in user session to match the &lt;a1&gt;SAML&lt;/a1&gt; authentication context.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Il utilise le niveau d'authentification enregistré dans la session de l'utilisateur pour établir le contexte d'authentification &lt;a1&gt;SAML&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>It is also used by &lt;a2&gt;SAML SP&lt;/a2&gt; to fill the authentication level in user session, based on authentication response authentication context.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Il est également utilisé par le &lt;a2&gt;SP SAML&lt;/a2&gt; pour définir le niveau d'authentification dans la session de l'utilisateur en se basant sur la réponse d'authentification.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Password protected transport</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Transport protégé du mot-de-passe</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>TLS client</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Client TLS</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Organization</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Organisation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This concerns all parameters for the Organization metadata section:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Ceci concerne tous les paramètres de la section &quot;organization&quot; des métadatas :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;&lt;s1&gt;&lt;Organization&lt;s2&gt;&gt;&lt;/s2&gt;&lt;/s1&gt;&lt;/s0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;&lt;s1&gt;&lt;Organization&lt;s2&gt;&gt;&lt;/s2&gt;&lt;/s1&gt;&lt;/s0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s3&gt;&lt;s4&gt;&lt;OrganizationName&lt;/s4&gt; &lt;s5&gt;xml:lang&lt;/s5&gt;=&lt;s6&gt;&quot;en&quot;&lt;/s6&gt;&lt;s7&gt;&gt;&lt;/s7&gt;&lt;/s3&gt;Example&lt;s8&gt;&lt;s9&gt;&lt;/OrganizationName&lt;s10&gt;&gt;&lt;/s10&gt;&lt;/s9&gt;&lt;/s8&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s3&gt;&lt;s4&gt;&lt;OrganizationName&lt;/s4&gt; &lt;s5&gt;xml:lang&lt;/s5&gt;=&lt;s6&gt;&quot;en&quot;&lt;/s6&gt;&lt;s7&gt;&gt;&lt;/s7&gt;&lt;/s3&gt;Exemple&lt;s8&gt;&lt;s9&gt;&lt;/OrganizationName&lt;s10&gt;&gt;&lt;/s10&gt;&lt;/s9&gt;&lt;/s8&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s11&gt;&lt;s12&gt;&lt;OrganizationDisplayName&lt;/s12&gt; &lt;s13&gt;xml:lang&lt;/s13&gt;=&lt;s14&gt;&quot;en&quot;&lt;/s14&gt;&lt;s15&gt;&gt;&lt;/s15&gt;&lt;/s11&gt;Example&lt;s16&gt;&lt;s17&gt;&lt;/OrganizationDisplayName&lt;s18&gt;&gt;&lt;/s18&gt;&lt;/s17&gt;&lt;/s16&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s11&gt;&lt;s12&gt;&lt;OrganizationDisplayName&lt;/s12&gt; &lt;s13&gt;xml:lang&lt;/s13&gt;=&lt;s14&gt;&quot;en&quot;&lt;/s14&gt;&lt;s15&gt;&gt;&lt;/s15&gt;&lt;/s11&gt;Exemple&lt;s16&gt;&lt;s17&gt;&lt;/OrganizationDisplayName&lt;s18&gt;&gt;&lt;/s18&gt;&lt;/s17&gt;&lt;/s16&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s19&gt;&lt;s20&gt;&lt;OrganizationURL&lt;/s20&gt; &lt;s21&gt;xml:lang&lt;/s21&gt;=&lt;s22&gt;&quot;en&quot;&lt;/s22&gt;&lt;s23&gt;&gt;&lt;/s23&gt;&lt;/s19&gt;http://www.example.com&lt;s24&gt;&lt;s25&gt;&lt;/OrganizationURL&lt;s26&gt;&gt;&lt;/s26&gt;&lt;/s25&gt;&lt;/s24&gt;
+&lt;s27&gt;&lt;s28&gt;&lt;/Organization&lt;s29&gt;&gt;&lt;/s29&gt;&lt;/s28&gt;&lt;/s27&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s19&gt;&lt;s20&gt;&lt;OrganizationURL&lt;/s20&gt; &lt;s21&gt;xml:lang&lt;/s21&gt;=&lt;s22&gt;&quot;en&quot;&lt;/s22&gt;&lt;s23&gt;&gt;&lt;/s23&gt;&lt;/s19&gt;http://www.example.com&lt;s24&gt;&lt;s25&gt;&lt;/OrganizationURL&lt;s26&gt;&gt;&lt;/s26&gt;&lt;/s25&gt;&lt;/s24&gt;
+&lt;s27&gt;&lt;s28&gt;&lt;/Organization&lt;s29&gt;&gt;&lt;/s29&gt;&lt;/s28&gt;&lt;/s27&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Display Name&lt;/s0&gt;: should be displayed on IDP, this is often your society name</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Nom affiché (display name)&lt;/s0&gt; : peut être affiché par le fournisseur d'identité (IDP), this is often your society name</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Name&lt;/s0&gt;: internal name</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Name&lt;/s0&gt;: nom interne</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;&lt;a1&gt;URL&lt;/a1&gt;&lt;/s0&gt;: &lt;a2&gt;URL&lt;/a2&gt; of your society</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;&lt;a1&gt;URL&lt;/a1&gt;&lt;/s0&gt;: &lt;a2&gt;URL&lt;/a2&gt; de votre organisation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Service Provider</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Fournisseur de service</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This concerns all parameters for the Service Provider metadata section:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Ceci concerne tous les paramètres de la section « fournisseur de service » des metadatas :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;&lt;s1&gt;&lt;SPSSODescriptor&lt;s2&gt;&gt;&lt;/s2&gt;&lt;/s1&gt;&lt;/s0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;&lt;s1&gt;&lt;SPSSODescriptor&lt;s2&gt;&gt;&lt;/s2&gt;&lt;/s1&gt;&lt;/s0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>...
+&lt;s3&gt;&lt;s4&gt;&lt;/SPSSODescriptor&lt;s5&gt;&gt;&lt;/s5&gt;&lt;/s4&gt;&lt;/s3&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>...
+&lt;s3&gt;&lt;s4&gt;&lt;/SPSSODescriptor&lt;s5&gt;&gt;&lt;/s5&gt;&lt;/s4&gt;&lt;/s3&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>General options</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Options générales</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Signed Authentication Request&lt;/s0&gt;: set to On to always sign authentication request.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Requête d'authentification signée&lt;/s0&gt; : mettre à « activé » pour toujours signer les requêtes d'authentifications.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Want Assertions Signed&lt;/s0&gt;: set to On to require that received assertions are signed.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Exiger des assertions signées&lt;/s0&gt; : mettre à « activé » pour exiger de recevoir des assertions signées.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>These options can then be overridden for each Identity Provider.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Ces options peuvent être surchargées pour chaque fournisseur d'identité.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Single Logout</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Single Logout (SLO)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>For each binding you can set:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Pour chaque déclaration, vous pouvez indiquer :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Location&lt;/s0&gt;: Access Point for SLO request.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Location&lt;/s0&gt;: Point d'accès pour les requêtes de SLO.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Response Location&lt;/s0&gt;: Access Point for SLO response.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Response Location&lt;/s0&gt;: Point d'accès pour les réponses SLO.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/documentation/manager-saml-service-sp-slo.png?id=documentation%3A1.0%3Asamlservice</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/documentation/manager-saml-service-sp-slo.png?id=documentation%3A1.0%3Asamlservice</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:manager-saml-service-sp-slo.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:manager-saml-service-sp-slo.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../media/documentation/manager-saml-service-sp-slo.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../../../media/documentation/manager-saml-service-sp-slo.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Available bindings are:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Les déclarations disponibles sont :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;HTTP&lt;/a0&gt; Redirect</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Redirection &lt;a0&gt;HTTP&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;HTTP&lt;/a0&gt; POST</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;HTTP&lt;/a0&gt; POST</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;HTTP&lt;/a0&gt; &lt;a1&gt;SOAP&lt;/a1&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;HTTP&lt;/a0&gt; &lt;a1&gt;SOAP&lt;/a1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Assertion Consumer</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Consommateur d'assertions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Default&lt;/s0&gt;: will this binding be used by default for authentication response.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Défaut&lt;/s0&gt; : déclaration utilisée par défaut pour les réponses d'authentification.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Location&lt;/s0&gt;: Access Point for &lt;a1&gt;SSO&lt;/a1&gt; request and response.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Location&lt;/s0&gt;: Point d'accès des requêtes et réponses &lt;a1&gt;SSO&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/documentation/manager-saml-service-sp-ac.png?id=documentation%3A1.0%3Asamlservice</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/documentation/manager-saml-service-sp-ac.png?id=documentation%3A1.0%3Asamlservice</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:manager-saml-service-sp-ac.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:manager-saml-service-sp-ac.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../media/documentation/manager-saml-service-sp-ac.png</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../../../media/documentation/manager-saml-service-sp-ac.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;HTTP&lt;/a0&gt; Artifact</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Artifact &lt;a0&gt;HTTP&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Artifact Resolution</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Résolution des artifacts</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The only authorized binding is &lt;a0&gt;SOAP&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>La seule déclaration possible est &lt;a0&gt;SOAP&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This should be set as Default.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Peut être défini par défaut.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Identity Provider</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Fournisseur d'identité</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;&lt;s1&gt;&lt;IDPSSODescriptor&lt;s2&gt;&gt;&lt;/s2&gt;&lt;/s1&gt;&lt;/s0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;&lt;s1&gt;&lt;IDPSSODescriptor&lt;s2&gt;&gt;&lt;/s2&gt;&lt;/s1&gt;&lt;/s0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>...
+&lt;s3&gt;&lt;s4&gt;&lt;/IDPSSODescriptor&lt;s5&gt;&gt;&lt;/s5&gt;&lt;/s4&gt;&lt;/s3&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>...
+&lt;s3&gt;&lt;s4&gt;&lt;/IDPSSODescriptor&lt;s5&gt;&gt;&lt;/s5&gt;&lt;/s4&gt;&lt;/s3&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>General parameters</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Paramètres généraux</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Want Authentication Request Signed&lt;/s0&gt;: set to On to require that received authentication request are signed.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Exiger des requêtes d'authentification signées&lt;/s0&gt; : mettre à « activer » pour exiger de recevoir des requêtes d'authentification signées.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This option can then be overridden for each Service Provider.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Cette option peut être surchargée pour chaque fournisseur de service.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Location&lt;/s0&gt;: Access Point for &lt;a1&gt;SSO&lt;/a1&gt; request.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Location&lt;/s0&gt;: Point d'accès pour les requêtes &lt;a1&gt;SSO&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Response Location&lt;/s0&gt;: Access Point for &lt;a1&gt;SSO&lt;/a1&gt; response.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Response Location&lt;/s0&gt; : Point d'accès pour les réponses &lt;a1&gt;SSO&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Attribute Authority</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Autorité d'attributs</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This concerns all parameters for the Attribute Authority metadata section</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Ceci concerne tous les paramètres de la section « autorité d'attributs » des métadatas</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;&lt;s1&gt;&lt;AttributeAuthorityDescriptor&lt;s2&gt;&gt;&lt;/s2&gt;&lt;/s1&gt;&lt;/s0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;&lt;s1&gt;&lt;AttributeAuthorityDescriptor&lt;s2&gt;&gt;&lt;/s2&gt;&lt;/s1&gt;&lt;/s0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>...
+&lt;s3&gt;&lt;s4&gt;&lt;/AttributeAuthorityDescriptor&lt;s5&gt;&gt;&lt;/s5&gt;&lt;/s4&gt;&lt;/s3&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>...
+&lt;s3&gt;&lt;s4&gt;&lt;/AttributeAuthorityDescriptor&lt;s5&gt;&gt;&lt;/s5&gt;&lt;/s4&gt;&lt;/s3&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Attribute Service</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Service d'attribut</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This is the only service to configure, and it accept only the &lt;a0&gt;SOAP&lt;/a0&gt; binding.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>C'est le seul service à configurer et il n'accepte que les connexions &lt;a0&gt;SOAP&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Response Location should be empty, as &lt;a0&gt;SOAP&lt;/a0&gt; responses are directly returned (synchronous binding).</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Le point d'accès des réponses peut être vide car les réponses &lt;a0&gt;SOAP&lt;/a0&gt; sont directement retournées (connexions synchrones).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Advanced</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Avancé</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>These parameters are not mandatory to run &lt;a0&gt;SAML&lt;/a0&gt; service, but can help to customize it:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Ces paramètres ne sont pas obligatoires pour faire fonctionner le service &lt;a0&gt;SAML&lt;/a0&gt;, mais peuvent aider à leur personnalisation :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;IDP resolution cookie name&lt;/s0&gt;: by default, it's the &lt;a1&gt;LL::NG&lt;/a1&gt; cookie name suffixed by &lt;c2&gt;idp&lt;/c2&gt;, for example: &lt;c3&gt;lemonldapidp&lt;/c3&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Nom du cookie de résolution de l'IDP&lt;/s0&gt;: par défaut, c'est le nom du cookie &lt;a1&gt;LL::NG&lt;/a1&gt; auquel est adjoint &lt;c2&gt;idp&lt;/c2&gt;, par exemple: &lt;c3&gt;lemonldapidp&lt;/c3&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;UTF8 metadata conversion&lt;/s0&gt;: set to On to force partner's metadata conversion.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Conversion des métadatas un UTF8&lt;/s0&gt; : mettre à « activé » pour forcer la conversion des métadata des partenaires.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>SAML sessions module name and options</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Options et nom du module de sessions SAML</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/features.html#session_restrictions</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../../documentation/features.html#session_restrictions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>By default, the main session module is used to store &lt;a0&gt;SAML&lt;/a0&gt; temporary data (like relay-states), but &lt;a1&gt;SAML&lt;/a1&gt; sessions need to use a session module compatible with the &lt;a2&gt;sessions restrictions feature&lt;/a2&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Par défautBy, le module de session principal est utilisé pour stocker les données temporaires &lt;a0&gt;SAML&lt;/a0&gt; (tel les états de relais), mais les sessions &lt;a1&gt;SAML&lt;/a1&gt; doivent disposer d'un module compatible avec les &lt;a2&gt;fonctionnalités de restrictions des sessions&lt;/a2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.0/memcachedsessionbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../../documentation/1.0/memcachedsessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.0:memcachedsessionbackend</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:1.0:memcachedsessionbackend</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This is not the case of &lt;a0&gt;Memcached&lt;/a0&gt; for example.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>C'est par exemple le cas de &lt;a0&gt;Memcached&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>In this case, you can choose a different module to manage &lt;a1&gt;SAML&lt;/a1&gt; sessions.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Dans ce cas, vous devez utiliser un module différent pour gérer les sessions &lt;a1&gt;SAML&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can also choose a different session module to split &lt;a0&gt;SSO&lt;/a0&gt; sessions and &lt;a1&gt;SAML&lt;/a1&gt; sessions.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Vous pouvez également utiliser un module différent pour répartir les sessions &lt;a0&gt;SSO&lt;/a0&gt; et &lt;a1&gt;SAML&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Common Domain Cookie</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Domaine commun de cookie</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.switch.ch/aai/support/tools/wayf.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://www.switch.ch/aai/support/tools/wayf.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Common Domain Cookie is also know as &lt;a0&gt;WAYF Service&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Le domaine commun de cookie est également connu comme &lt;a0&gt;service WAYF&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The common domain is used by &lt;a0&gt;SAML SP&lt;/a0&gt; to find an Identity Provider for the user, and by &lt;a1&gt;SAML IDP&lt;/a1&gt; to register itself in user's IDP list.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Le domaine commun est utilisé par le &lt;a0&gt;SP SAML&lt;/a0&gt; pour trouver le fournisseur d'identité de l'utilisateur et par l'&lt;a1&gt;IdP SAML&lt;/a1&gt; pour s'enregistrer dans la liste des IDP.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Configuration parameters are:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Les paramètres de configuration sont :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Activation&lt;/s0&gt;: Set to On to enable Common Domain Cookie support.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Activation&lt;/s0&gt; : mettre à « activé » pour activer le support du domaine commun de cookie.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Common domain&lt;/s0&gt;: Name of the common domain (where common cookie is available).</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;Domaine commun&lt;/s0&gt; : Nom du domaine commun (où le cookie commun est disponible).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Reader &lt;a1&gt;URL&lt;/a1&gt;&lt;/s0&gt;: &lt;a2&gt;URL&lt;/a2&gt; used by &lt;a3&gt;SAML&lt;/a3&gt; SP to read the cookie.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;&lt;a1&gt;URL&lt;/a1&gt; de lecture&lt;/s0&gt; : &lt;a2&gt;URL&lt;/a2&gt; utilisée par le SP &lt;a3&gt;SAML&lt;/a3&gt; pour lire le cookie.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Leave blank to deactivate the feature.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Laissez vide pour désactiver cette fonctionnalité.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Writer &lt;a1&gt;URL&lt;/a1&gt;&lt;/s0&gt;: &lt;a2&gt;URL&lt;/a2&gt; used by &lt;a3&gt;SAML&lt;/a3&gt; IDP to write the cookie.</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;s0&gt;&lt;a1&gt;URL&lt;/a1&gt; d'écriture&lt;/s0&gt; : &lt;a2&gt;URL&lt;/a2&gt; utilisée par l'IdP &lt;a3&gt;SAML&lt;/a3&gt; pour écrire le cookie.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>RBAC model</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Modèle RBAC</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://en.wikipedia.org/wiki/Role-based_access_control</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://en.wikipedia.org/wiki/Role-based_access_control</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1857</seg>
       </tuv>
       <tuv lang="FR-FR">
