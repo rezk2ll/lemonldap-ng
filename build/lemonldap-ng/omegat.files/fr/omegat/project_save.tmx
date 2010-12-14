@@ -406,130 +406,138 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/activedirectoryminihowto.html</seg>
+        <seg>../pages/documentation/1.1/activedirectoryminihowto.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/activedirectoryminihowto.html</seg>
+        <seg>../pages/documentation/1.1/activedirectoryminihowto.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/applications.html</seg>
+        <seg>../pages/documentation/1.1/applications.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/applications.html</seg>
+        <seg>../pages/documentation/1.1/applications.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/authapache.html</seg>
+        <seg>../pages/documentation/1.1/authapache.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/authapache.html</seg>
+        <seg>../pages/documentation/1.1/authapache.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/applications/authbasic.html</seg>
+        <seg>../pages/documentation/1.1/applications/authbasic.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/applications/authbasic.html</seg>
+        <seg>../pages/documentation/1.1/applications/authbasic.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/authcas.html</seg>
+        <seg>../pages/documentation/1.1/authcas.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/authcas.html</seg>
+        <seg>../pages/documentation/1.1/authcas.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/authchoice.html</seg>
+        <seg>../pages/documentation/1.1/authchoice.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/authchoice.html</seg>
+        <seg>../pages/documentation/1.1/authchoice.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/authdbi.html</seg>
+        <seg>../pages/documentation/1.1/authdbi.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/authdbi.html</seg>
+        <seg>../pages/documentation/1.1/authdbi.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/authldap.html</seg>
+        <seg>../pages/documentation/1.1/authldap.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/authldap.html</seg>
+        <seg>../pages/documentation/1.1/authldap.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/authmulti.html</seg>
+        <seg>../pages/documentation/1.1/authmulti.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/authmulti.html</seg>
+        <seg>../pages/documentation/1.1/authmulti.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/authnull.html</seg>
+        <seg>../pages/documentation/1.1/authnull.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/authnull.html</seg>
+        <seg>../pages/documentation/1.1/authnull.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/authopenid.html</seg>
+        <seg>../pages/documentation/1.1/authopenid.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/authopenid.html</seg>
+        <seg>../pages/documentation/1.1/authopenid.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/authproxy.html</seg>
+        <seg>../pages/documentation/1.1/authproxy.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/authproxy.html</seg>
+        <seg>../pages/documentation/1.1/authproxy.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/authremote.html</seg>
+        <seg>../pages/documentation/1.1/authremote.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/authremote.html</seg>
+        <seg>../pages/documentation/1.1/authremote.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/authsaml.html</seg>
+        <seg>../pages/documentation/1.1/authsaml.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/authsaml.html</seg>
+        <seg>../pages/documentation/1.1/authsaml.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/authssl.html</seg>
+        <seg>../pages/documentation/1.1/authslave.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/authssl.html</seg>
+        <seg>../pages/documentation/1.1/authslave.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/authtwitter.html</seg>
+        <seg>../pages/documentation/1.1/authssl.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/authtwitter.html</seg>
+        <seg>../pages/documentation/1.1/authssl.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/authtwitter.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.1/authtwitter.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -646,18 +654,26 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;a28&gt;authssl&lt;/a28&gt;&lt;br29/&gt;</seg>
+        <seg>&lt;a28&gt;authslave&lt;/a28&gt;&lt;br29/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>&lt;a28&gt;authssl&lt;/a28&gt;&lt;br29/&gt;</seg>
+        <seg>&lt;a28&gt;authslave&lt;/a28&gt;&lt;br29/&gt;</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;a30&gt;authtwitter&lt;/a30&gt;&lt;br31/&gt;</seg>
+        <seg>&lt;a30&gt;authssl&lt;/a30&gt;&lt;br31/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>&lt;a30&gt;authtwitter&lt;/a30&gt;&lt;br31/&gt;</seg>
+        <seg>&lt;a30&gt;authssl&lt;/a30&gt;&lt;br31/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a32&gt;authtwitter&lt;/a32&gt;&lt;br33/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a32&gt;authtwitter&lt;/a32&gt;&lt;br33/&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -670,18 +686,18 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/browseablesessionbackend.html</seg>
+        <seg>../pages/documentation/1.1/browseablesessionbackend.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/browseablesessionbackend.html</seg>
+        <seg>../pages/documentation/1.1/browseablesessionbackend.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/applications/bugzilla.html</seg>
+        <seg>../pages/documentation/1.1/applications/bugzilla.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/applications/bugzilla.html</seg>
+        <seg>../pages/documentation/1.1/applications/bugzilla.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -710,18 +726,18 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/cda.html</seg>
+        <seg>../pages/documentation/1.1/cda.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/cda.html</seg>
+        <seg>../pages/documentation/1.1/cda.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/changeconfbackend.html</seg>
+        <seg>../pages/documentation/1.1/changeconfbackend.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/changeconfbackend.html</seg>
+        <seg>../pages/documentation/1.1/changeconfbackend.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -734,18 +750,18 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/configlocation.html</seg>
+        <seg>../pages/documentation/1.1/configlocation.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/configlocation.html</seg>
+        <seg>../pages/documentation/1.1/configlocation.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/configvhost.html</seg>
+        <seg>../pages/documentation/1.1/configvhost.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/configvhost.html</seg>
+        <seg>../pages/documentation/1.1/configvhost.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -758,10 +774,10 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/customfunctions.html</seg>
+        <seg>../pages/documentation/1.1/customfunctions.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/customfunctions.html</seg>
+        <seg>../pages/documentation/1.1/customfunctions.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -862,10 +878,10 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/applications/drupal.html</seg>
+        <seg>../pages/documentation/1.1/applications/drupal.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/applications/drupal.html</seg>
+        <seg>../pages/documentation/1.1/applications/drupal.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -918,26 +934,26 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/error.html</seg>
+        <seg>../pages/documentation/1.1/error.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/error.html</seg>
+        <seg>../pages/documentation/1.1/error.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/exportedvars.html</seg>
+        <seg>../pages/documentation/1.1/exportedvars.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/exportedvars.html</seg>
+        <seg>../pages/documentation/1.1/exportedvars.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/extendedfunctions.html</seg>
+        <seg>../pages/documentation/1.1/extendedfunctions.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/extendedfunctions.html</seg>
+        <seg>../pages/documentation/1.1/extendedfunctions.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -982,34 +998,34 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/federationproxy.html</seg>
+        <seg>../pages/documentation/1.1/federationproxy.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/federationproxy.html</seg>
+        <seg>../pages/documentation/1.1/federationproxy.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/fileconfbackend.html</seg>
+        <seg>../pages/documentation/1.1/fileconfbackend.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/fileconfbackend.html</seg>
+        <seg>../pages/documentation/1.1/fileconfbackend.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/filesessionbackend.html</seg>
+        <seg>../pages/documentation/1.1/filesessionbackend.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/filesessionbackend.html</seg>
+        <seg>../pages/documentation/1.1/filesessionbackend.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/formreplay.html</seg>
+        <seg>../pages/documentation/1.1/formreplay.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/formreplay.html</seg>
+        <seg>../pages/documentation/1.1/formreplay.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -1062,10 +1078,10 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/applications/googleapps.html</seg>
+        <seg>../pages/documentation/1.1/applications/googleapps.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/applications/googleapps.html</seg>
+        <seg>../pages/documentation/1.1/applications/googleapps.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -1086,18 +1102,18 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/header_remote_user_conversion.html</seg>
+        <seg>../pages/documentation/1.1/header_remote_user_conversion.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/header_remote_user_conversion.html</seg>
+        <seg>../pages/documentation/1.1/header_remote_user_conversion.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/highavailability.html</seg>
+        <seg>../pages/documentation/1.1/highavailability.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/highavailability.html</seg>
+        <seg>../pages/documentation/1.1/highavailability.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -1126,50 +1142,50 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/idpcas.html</seg>
+        <seg>../pages/documentation/1.1/idpcas.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/idpcas.html</seg>
+        <seg>../pages/documentation/1.1/idpcas.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/idpopenid.html</seg>
+        <seg>../pages/documentation/1.1/idpopenid.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/idpopenid.html</seg>
+        <seg>../pages/documentation/1.1/idpopenid.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/idpsaml.html</seg>
+        <seg>../pages/documentation/1.1/idpsaml.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/idpsaml.html</seg>
+        <seg>../pages/documentation/1.1/idpsaml.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/installdeb.html</seg>
+        <seg>../pages/documentation/1.1/installdeb.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/installdeb.html</seg>
+        <seg>../pages/documentation/1.1/installdeb.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/installrpm.html</seg>
+        <seg>../pages/documentation/1.1/installrpm.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/installrpm.html</seg>
+        <seg>../pages/documentation/1.1/installrpm.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/installtarball.html</seg>
+        <seg>../pages/documentation/1.1/installtarball.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/installtarball.html</seg>
+        <seg>../pages/documentation/1.1/installtarball.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -1230,50 +1246,50 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/ldapconfbackend.html</seg>
+        <seg>../pages/documentation/1.1/ldapconfbackend.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/ldapconfbackend.html</seg>
+        <seg>../pages/documentation/1.1/ldapconfbackend.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/ldapminihowto.html</seg>
+        <seg>../pages/documentation/1.1/ldapminihowto.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/ldapminihowto.html</seg>
+        <seg>../pages/documentation/1.1/ldapminihowto.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/ldapsessionbackend.html</seg>
+        <seg>../pages/documentation/1.1/ldapsessionbackend.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/ldapsessionbackend.html</seg>
+        <seg>../pages/documentation/1.1/ldapsessionbackend.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/applications/liferay.html</seg>
+        <seg>../pages/documentation/1.1/applications/liferay.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/applications/liferay.html</seg>
+        <seg>../pages/documentation/1.1/applications/liferay.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/logoutforward.html</seg>
+        <seg>../pages/documentation/1.1/logoutforward.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/logoutforward.html</seg>
+        <seg>../pages/documentation/1.1/logoutforward.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/logs.html</seg>
+        <seg>../pages/documentation/1.1/logs.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/logs.html</seg>
+        <seg>../pages/documentation/1.1/logs.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -1334,18 +1350,26 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/applications/mediawiki.html</seg>
+        <seg>../pages/documentation/1.1/managerprotection.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/applications/mediawiki.html</seg>
+        <seg>../pages/documentation/1.1/managerprotection.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/memcachedsessionbackend.html</seg>
+        <seg>../pages/documentation/1.1/applications/mediawiki.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/memcachedsessionbackend.html</seg>
+        <seg>../pages/documentation/1.1/applications/mediawiki.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/memcachedsessionbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.1/memcachedsessionbackend.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -1358,58 +1382,66 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/mrtg.html</seg>
+        <seg>../pages/documentation/1.1/mrtg.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/mrtg.html</seg>
+        <seg>../pages/documentation/1.1/mrtg.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/mysqlminihowto.html</seg>
+        <seg>../pages/documentation/1.1/mysqlminihowto.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/mysqlminihowto.html</seg>
+        <seg>../pages/documentation/1.1/mysqlminihowto.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;a0&gt;mediawiki&lt;/a0&gt;&lt;br1/&gt;</seg>
+        <seg>&lt;a0&gt;managerprotection&lt;/a0&gt;&lt;br1/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>&lt;a0&gt;mediawiki&lt;/a0&gt;&lt;br1/&gt;</seg>
+        <seg>&lt;a0&gt;managerprotection&lt;/a0&gt;&lt;br1/&gt;</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;a2&gt;memcachedsessionbackend&lt;/a2&gt;&lt;br3/&gt;</seg>
+        <seg>&lt;a2&gt;mediawiki&lt;/a2&gt;&lt;br3/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>&lt;a2&gt;memcachedsessionbackend&lt;/a2&gt;&lt;br3/&gt;</seg>
+        <seg>&lt;a2&gt;mediawiki&lt;/a2&gt;&lt;br3/&gt;</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;a4&gt;menu1&lt;/a4&gt;&lt;br5/&gt;</seg>
+        <seg>&lt;a4&gt;memcachedsessionbackend&lt;/a4&gt;&lt;br5/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>&lt;a4&gt;menu1&lt;/a4&gt;&lt;br5/&gt;</seg>
+        <seg>&lt;a4&gt;memcachedsessionbackend&lt;/a4&gt;&lt;br5/&gt;</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;a6&gt;mrtg&lt;/a6&gt;&lt;br7/&gt;</seg>
+        <seg>&lt;a6&gt;menu1&lt;/a6&gt;&lt;br7/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>&lt;a6&gt;mrtg&lt;/a6&gt;&lt;br7/&gt;</seg>
+        <seg>&lt;a6&gt;menu1&lt;/a6&gt;&lt;br7/&gt;</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;a8&gt;mysqlminihowto&lt;/a8&gt;&lt;br9/&gt;</seg>
+        <seg>&lt;a8&gt;mrtg&lt;/a8&gt;&lt;br9/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>&lt;a8&gt;mysqlminihowto&lt;/a8&gt;&lt;br9/&gt;</seg>
+        <seg>&lt;a8&gt;mrtg&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a10&gt;mysqlminihowto&lt;/a10&gt;&lt;br11/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a10&gt;mysqlminihowto&lt;/a10&gt;&lt;br11/&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -1422,18 +1454,18 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/nosqlsessionbackend.html</seg>
+        <seg>../pages/documentation/1.1/nosqlsessionbackend.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/nosqlsessionbackend.html</seg>
+        <seg>../pages/documentation/1.1/nosqlsessionbackend.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/notifications.html</seg>
+        <seg>../pages/documentation/1.1/notifications.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/notifications.html</seg>
+        <seg>../pages/documentation/1.1/notifications.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -1462,10 +1494,10 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/applications/obm.html</seg>
+        <seg>../pages/documentation/1.1/applications/obm.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/applications/obm.html</seg>
+        <seg>../pages/documentation/1.1/applications/obm.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -1486,34 +1518,34 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/parameterlist.html</seg>
+        <seg>../pages/documentation/1.1/parameterlist.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/parameterlist.html</seg>
+        <seg>../pages/documentation/1.1/parameterlist.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/passwordstore.html</seg>
+        <seg>../pages/documentation/1.1/passwordstore.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/passwordstore.html</seg>
+        <seg>../pages/documentation/1.1/passwordstore.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/performances.html</seg>
+        <seg>../pages/documentation/1.1/performances.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/performances.html</seg>
+        <seg>../pages/documentation/1.1/performances.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/applications/phpldapadmin.html</seg>
+        <seg>../pages/documentation/1.1/applications/phpldapadmin.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/applications/phpldapadmin.html</seg>
+        <seg>../pages/documentation/1.1/applications/phpldapadmin.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -1526,34 +1558,34 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/portal.html</seg>
+        <seg>../pages/documentation/1.1/portal.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/portal.html</seg>
+        <seg>../pages/documentation/1.1/portal.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/portalcustom.html</seg>
+        <seg>../pages/documentation/1.1/portalcustom.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/portalcustom.html</seg>
+        <seg>../pages/documentation/1.1/portalcustom.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/portalmenu.html</seg>
+        <seg>../pages/documentation/1.1/portalmenu.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/portalmenu.html</seg>
+        <seg>../pages/documentation/1.1/portalmenu.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/prereq.html</seg>
+        <seg>../pages/documentation/1.1/prereq.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/prereq.html</seg>
+        <seg>../pages/documentation/1.1/prereq.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -1678,18 +1710,18 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/rbac.html</seg>
+        <seg>../pages/documentation/1.1/rbac.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/rbac.html</seg>
+        <seg>../pages/documentation/1.1/rbac.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/redirections.html</seg>
+        <seg>../pages/documentation/1.1/redirections.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/redirections.html</seg>
+        <seg>../pages/documentation/1.1/redirections.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -1702,10 +1734,10 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/resetpassword.html</seg>
+        <seg>../pages/documentation/1.1/resetpassword.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/resetpassword.html</seg>
+        <seg>../pages/documentation/1.1/resetpassword.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -1750,10 +1782,10 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/samlservice.html</seg>
+        <seg>../pages/documentation/1.1/samlservice.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/samlservice.html</seg>
+        <seg>../pages/documentation/1.1/samlservice.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -1766,90 +1798,90 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/security.html</seg>
+        <seg>../pages/documentation/1.1/security.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/security.html</seg>
+        <seg>../pages/documentation/1.1/security.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/selfmadeapplication.html</seg>
+        <seg>../pages/documentation/1.1/selfmadeapplication.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/selfmadeapplication.html</seg>
+        <seg>../pages/documentation/1.1/selfmadeapplication.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/sessions.html</seg>
+        <seg>../pages/documentation/1.1/sessions.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/sessions.html</seg>
+        <seg>../pages/documentation/1.1/sessions.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/soapconfbackend.html</seg>
+        <seg>../pages/documentation/1.1/soapconfbackend.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/soapconfbackend.html</seg>
+        <seg>../pages/documentation/1.1/soapconfbackend.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/soapminihowto.html</seg>
+        <seg>../pages/documentation/1.1/soapminihowto.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/soapminihowto.html</seg>
+        <seg>../pages/documentation/1.1/soapminihowto.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/soapservices.html</seg>
+        <seg>../pages/documentation/1.1/soapservices.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/soapservices.html</seg>
+        <seg>../pages/documentation/1.1/soapservices.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/soapsessionbackend.html</seg>
+        <seg>../pages/documentation/1.1/soapsessionbackend.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/soapsessionbackend.html</seg>
+        <seg>../pages/documentation/1.1/soapsessionbackend.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/applications/spring.html</seg>
+        <seg>../pages/documentation/1.1/applications/spring.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/applications/spring.html</seg>
+        <seg>../pages/documentation/1.1/applications/spring.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/sqlconfbackend.html</seg>
+        <seg>../pages/documentation/1.1/sqlconfbackend.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/sqlconfbackend.html</seg>
+        <seg>../pages/documentation/1.1/sqlconfbackend.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/sqlsessionbackend.html</seg>
+        <seg>../pages/documentation/1.1/sqlsessionbackend.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/sqlsessionbackend.html</seg>
+        <seg>../pages/documentation/1.1/sqlsessionbackend.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/ssocookie.html</seg>
+        <seg>../pages/documentation/1.1/ssocookie.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/ssocookie.html</seg>
+        <seg>../pages/documentation/1.1/ssocookie.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -1862,18 +1894,18 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/status.html</seg>
+        <seg>../pages/documentation/1.1/status.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/status.html</seg>
+        <seg>../pages/documentation/1.1/status.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/applications/sympa.html</seg>
+        <seg>../pages/documentation/1.1/applications/sympa.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/applications/sympa.html</seg>
+        <seg>../pages/documentation/1.1/applications/sympa.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -2030,10 +2062,10 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/applications/tomcat.html</seg>
+        <seg>../pages/documentation/1.1/applications/tomcat.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/applications/tomcat.html</seg>
+        <seg>../pages/documentation/1.1/applications/tomcat.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -2070,10 +2102,10 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/upgrade.html</seg>
+        <seg>../pages/documentation/1.1/upgrade.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/upgrade.html</seg>
+        <seg>../pages/documentation/1.1/upgrade.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -2094,10 +2126,10 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/writingrulesand_headers.html</seg>
+        <seg>../pages/documentation/1.1/writingrulesand_headers.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/writingrulesand_headers.html</seg>
+        <seg>../pages/documentation/1.1/writingrulesand_headers.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -2118,10 +2150,10 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/applications/zimbra.html</seg>
+        <seg>../pages/documentation/1.1/applications/zimbra.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/applications/zimbra.html</seg>
+        <seg>../pages/documentation/1.1/applications/zimbra.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -4414,82 +4446,82 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1890</seg>
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1919</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1890</seg>
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1919</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;a0&gt;findAttr.pl now scans undocumented parameters&lt;/a0&gt; by guimard (2010/12/05 14:41)</seg>
+        <seg>&lt;a0&gt;Fr translation in progress&lt;/a0&gt; by guimard (2010/12/12 06:43)</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>&lt;a0&gt;findAttr.pl now scans undocumented parameters&lt;/a0&gt; by guimard (2010/12/05 14:41)</seg>
+        <seg>&lt;a0&gt;Fr translation in progress&lt;/a0&gt; by guimard (2010/12/12 06:43)</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1889</seg>
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1918</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1889</seg>
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1918</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;a0&gt;Lasso dependency version&lt;/a0&gt; by guimard (2010/12/05 09:22)</seg>
+        <seg>&lt;a0&gt;Add &quot;eval&quot; to avoid problems when other datas are stored ...&lt;/a0&gt; by guimard (2010/12/09 21:18)</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>&lt;a0&gt;Lasso dependency version&lt;/a0&gt; by guimard (2010/12/05 09:22)</seg>
+        <seg>&lt;a0&gt;Add &quot;eval&quot; to avoid problems when other datas are stored ...&lt;/a0&gt; by guimard (2010/12/09 21:18)</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1888</seg>
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1917</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1888</seg>
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1917</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;a0&gt;Debian fr.po is now maintained by debian-l10n-french team&lt;/a0&gt; by guimard (2010/12/05 08:50)</seg>
+        <seg>&lt;a0&gt;May close #263&lt;/a0&gt; by guimard (2010/12/09 17:16)</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>&lt;a0&gt;Debian fr.po is now maintained by debian-l10n-french team&lt;/a0&gt; by guimard (2010/12/05 08:50)</seg>
+        <seg>&lt;a0&gt;May close #263&lt;/a0&gt; by guimard (2010/12/09 17:16)</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1887</seg>
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1916</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1887</seg>
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1916</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;a0&gt;Debian po update&lt;/a0&gt; by guimard (2010/12/05 08:45)</seg>
+        <seg>&lt;a0&gt;Debian translation update&lt;/a0&gt; by guimard (2010/12/09 14:22)</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>&lt;a0&gt;Debian po update&lt;/a0&gt; by guimard (2010/12/05 08:45)</seg>
+        <seg>&lt;a0&gt;Debian translation update&lt;/a0&gt; by guimard (2010/12/09 14:22)</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1886</seg>
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1915</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1886</seg>
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1915</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>&lt;a0&gt;README.Debian update&lt;/a0&gt; by guimard (2010/12/05 08:19)</seg>
+        <seg>&lt;a0&gt;Fr translation in progress&lt;/a0&gt; by guimard (2010/12/09 05:46)</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>&lt;a0&gt;README.Debian update&lt;/a0&gt; by guimard (2010/12/05 08:19)</seg>
+        <seg>&lt;a0&gt;Fr translation in progress&lt;/a0&gt; by guimard (2010/12/09 05:46)</seg>
       </tuv>
     </tu>
     <tu>
@@ -4650,6 +4682,30 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>Toutes les versions:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation/1.1/start.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation/1.1/start.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.1:start</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:1.1:start</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Version 1.1&lt;/a0&gt; (development version)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;Version 1.1&lt;/a0&gt; (version en développement)</seg>
       </tuv>
     </tu>
     <tu>
@@ -8056,18 +8112,18 @@ sudo apachectl restart</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../../documentation/1.0/configlocation.html</seg>
+        <seg>../../documentation/1.1/configlocation.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../../documentation/1.0/configlocation.html</seg>
+        <seg>../../documentation/1.1/configlocation.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>documentation:1.0:configlocation</seg>
+        <seg>documentation:1.1:configlocation</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>documentation:1.0:configlocation</seg>
+        <seg>documentation:1.1:configlocation</seg>
       </tuv>
     </tu>
     <tu>
@@ -8236,6 +8292,22 @@ sudo apachectl restart</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>AuthLDAPFilter</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;CAS&lt;/a0&gt; authentication level</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Niveau d'authentification &lt;a0&gt;CAS&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;CAS&lt;/a0&gt;_authnLevel</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;CAS&lt;/a0&gt;_authnLevel</seg>
       </tuv>
     </tu>
     <tu>
@@ -9080,22 +9152,6 @@ sudo apachectl restart</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../../documentation/1.0/soapsessionbackend.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../../documentation/1.0/soapsessionbackend.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>documentation:1.0:soapsessionbackend</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>documentation:1.0:soapsessionbackend</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>Restrict network access to the redis server.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -9180,22 +9236,6 @@ sudo apachectl restart</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Les macros et les groupes sont calculées pendant le processus d'authentification par le portail :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/exportedvars.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../../documentation/1.0/exportedvars.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>documentation:1.0:exportedvars</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>documentation:1.0:exportedvars</seg>
       </tuv>
     </tu>
     <tu>
@@ -9618,14 +9658,6 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>To use it (with MySQL for example), choose for example “Apache::Session::Browseable::MySQL” as “Apache::Session module” and use the following parameters:</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Pour l'utiliser (avec MySQL par exemple), choisissez “Apache::Session::Browseable::MySQL” comme “Module Apache::Session” et utilisez les paramètres suivants :</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -9650,14 +9682,6 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Notez que Apache::Session::Browseable::MySQL n'utilise pas les verrous MySQL.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>A Apache::Session::Browseable::Redis module is in preparation, it will be the faster</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Un module Apache::Session::Browseable::Redis est en préparation, il sera le plus rapide</seg>
       </tuv>
     </tu>
     <tu>
@@ -9812,38 +9836,6 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../../documentation/1.0/authsaml.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../../documentation/1.0/authsaml.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>documentation:1.0:authsaml</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>documentation:1.0:authsaml</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/idpsaml.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../../documentation/1.0/idpsaml.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>documentation:1.0:idpsaml</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>documentation:1.0:idpsaml</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>&lt;a0&gt;SAML&lt;/a0&gt; service configuration is a common step to configure &lt;a1&gt;LL::NG&lt;/a1&gt; as &lt;a2&gt;SAML SP&lt;/a2&gt; or &lt;a3&gt;SAML IDP&lt;/a3&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -9920,14 +9912,6 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Lasso</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>/_detail/documentation/lasso.png?id=documentation%3A1.0%3Asamlservice</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>/_detail/documentation/lasso.png?id=documentation%3A1.0%3Asamlservice</seg>
       </tuv>
     </tu>
     <tu>
@@ -10048,14 +10032,6 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Régles de réécriture d'Apache</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/configlocation.html#portal</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../../documentation/1.0/configlocation.html#portal</seg>
       </tuv>
     </tu>
     <tu>
@@ -10240,14 +10216,6 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>/_detail/documentation/manager-saml-private-key.png?id=documentation%3A1.0%3Asamlservice</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>/_detail/documentation/manager-saml-private-key.png?id=documentation%3A1.0%3Asamlservice</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>documentation:manager-saml-private-key.png</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -10284,14 +10252,6 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Formats de NameID</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>/_detail/documentation/manager-saml-namid-formats.png?id=documentation%3A1.0%3Asamlservice</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>/_detail/documentation/manager-saml-namid-formats.png?id=documentation%3A1.0%3Asamlservice</seg>
       </tuv>
     </tu>
     <tu>
@@ -10384,22 +10344,6 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../../documentation/1.0/authldap.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../../documentation/1.0/authldap.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>documentation:1.0:authldap</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>documentation:1.0:authldap</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>For example, if you are using &lt;a0&gt;AD as authentication backend&lt;/a0&gt;, you can use sAMAccountName for the Windows NameID format.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -10444,14 +10388,6 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Contextes d'authentification</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>/_detail/documentation/manager-saml-service-authn-contexts.png?id=documentation%3A1.0%3Asamlservice</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>/_detail/documentation/manager-saml-service-authn-contexts.png?id=documentation%3A1.0%3Asamlservice</seg>
       </tuv>
     </tu>
     <tu>
@@ -10700,14 +10636,6 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>/_detail/documentation/manager-saml-service-sp-slo.png?id=documentation%3A1.0%3Asamlservice</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>/_detail/documentation/manager-saml-service-sp-slo.png?id=documentation%3A1.0%3Asamlservice</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>documentation:manager-saml-service-sp-slo.png</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -10776,14 +10704,6 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;s0&gt;Location&lt;/s0&gt;: Point d'accès des requêtes et réponses &lt;a1&gt;SSO&lt;/a1&gt;.</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>/_detail/documentation/manager-saml-service-sp-ac.png?id=documentation%3A1.0%3Asamlservice</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>/_detail/documentation/manager-saml-service-sp-ac.png?id=documentation%3A1.0%3Asamlservice</seg>
       </tuv>
     </tu>
     <tu>
@@ -11016,22 +10936,6 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../../documentation/1.0/memcachedsessionbackend.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../../documentation/1.0/memcachedsessionbackend.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>documentation:1.0:memcachedsessionbackend</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>documentation:1.0:memcachedsessionbackend</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>This is not the case of &lt;a0&gt;Memcached&lt;/a0&gt; for example.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -11148,6 +11052,982 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>http://en.wikipedia.org/wiki/Role-based_access_control</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/activedirectoryminihowto.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/activedirectoryminihowto.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/applications.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/applications.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/authapache.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/authapache.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/applications/authbasic.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/applications/authbasic.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/authcas.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/authcas.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/authchoice.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/authchoice.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/authdbi.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/authdbi.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/authldap.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/authldap.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/authmulti.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/authmulti.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/authnull.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/authnull.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/authopenid.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/authopenid.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/authproxy.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/authproxy.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/authremote.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/authremote.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/authsaml.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/authsaml.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/authssl.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/authssl.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/authtwitter.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/authtwitter.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a28&gt;authssl&lt;/a28&gt;&lt;br29/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a28&gt;authssl&lt;/a28&gt;&lt;br29/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a30&gt;authtwitter&lt;/a30&gt;&lt;br31/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a30&gt;authtwitter&lt;/a30&gt;&lt;br31/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/browseablesessionbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/browseablesessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/applications/bugzilla.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/applications/bugzilla.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/cda.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/cda.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/changeconfbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/changeconfbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/configlocation.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/configlocation.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/configvhost.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/configvhost.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/customfunctions.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/customfunctions.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/applications/drupal.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/applications/drupal.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/error.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/error.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/exportedvars.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/exportedvars.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/extendedfunctions.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/extendedfunctions.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/federationproxy.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/federationproxy.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/fileconfbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/fileconfbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/filesessionbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/filesessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/formreplay.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/formreplay.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/applications/googleapps.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/applications/googleapps.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/header_remote_user_conversion.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/header_remote_user_conversion.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/highavailability.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/highavailability.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/idpcas.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/idpcas.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/idpopenid.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/idpopenid.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/idpsaml.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/idpsaml.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/installdeb.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/installdeb.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/installrpm.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/installrpm.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/installtarball.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/installtarball.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/ldapconfbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/ldapconfbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/ldapminihowto.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/ldapminihowto.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/ldapsessionbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/ldapsessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/applications/liferay.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/applications/liferay.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/logoutforward.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/logoutforward.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/logs.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/logs.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/applications/mediawiki.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/applications/mediawiki.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/memcachedsessionbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/memcachedsessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/mrtg.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/mrtg.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/mysqlminihowto.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/mysqlminihowto.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;mediawiki&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;mediawiki&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a2&gt;memcachedsessionbackend&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a2&gt;memcachedsessionbackend&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a4&gt;menu1&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a4&gt;menu1&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a6&gt;mrtg&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a6&gt;mrtg&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a8&gt;mysqlminihowto&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a8&gt;mysqlminihowto&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/nosqlsessionbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/nosqlsessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/notifications.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/notifications.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/applications/obm.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/applications/obm.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/parameterlist.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/parameterlist.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/passwordstore.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/passwordstore.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/performances.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/performances.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/applications/phpldapadmin.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/applications/phpldapadmin.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/portal.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/portal.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/portalcustom.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/portalcustom.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/portalmenu.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/portalmenu.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/prereq.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/prereq.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/rbac.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/rbac.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/redirections.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/redirections.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/resetpassword.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/resetpassword.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/samlservice.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/samlservice.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/security.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/security.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/selfmadeapplication.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/selfmadeapplication.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/sessions.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/sessions.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/soapconfbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/soapconfbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/soapminihowto.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/soapminihowto.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/soapservices.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/soapservices.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/soapsessionbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/soapsessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/applications/spring.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/applications/spring.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/sqlconfbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/sqlconfbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/sqlsessionbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/sqlsessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/ssocookie.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/ssocookie.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/status.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/status.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/applications/sympa.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/applications/sympa.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/applications/tomcat.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/applications/tomcat.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/upgrade.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/upgrade.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/writingrulesand_headers.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/writingrulesand_headers.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.0/applications/zimbra.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.0/applications/zimbra.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1890</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1890</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;findAttr.pl now scans undocumented parameters&lt;/a0&gt; by guimard (2010/12/05 14:41)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;findAttr.pl now scans undocumented parameters&lt;/a0&gt; by guimard (2010/12/05 14:41)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1889</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1889</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Lasso dependency version&lt;/a0&gt; by guimard (2010/12/05 09:22)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;Lasso dependency version&lt;/a0&gt; by guimard (2010/12/05 09:22)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1888</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1888</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Debian fr.po is now maintained by debian-l10n-french team&lt;/a0&gt; by guimard (2010/12/05 08:50)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;Debian fr.po is now maintained by debian-l10n-french team&lt;/a0&gt; by guimard (2010/12/05 08:50)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1887</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1887</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Debian po update&lt;/a0&gt; by guimard (2010/12/05 08:45)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;Debian po update&lt;/a0&gt; by guimard (2010/12/05 08:45)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1886</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;amp;path=%2F&amp;amp;rev=1886</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;README.Debian update&lt;/a0&gt; by guimard (2010/12/05 08:19)</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>&lt;a0&gt;README.Debian update&lt;/a0&gt; by guimard (2010/12/05 08:19)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.0/configlocation.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../../documentation/1.0/configlocation.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.0:configlocation</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:1.0:configlocation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.0/soapsessionbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../../documentation/1.0/soapsessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.0:soapsessionbackend</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:1.0:soapsessionbackend</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.0/exportedvars.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../../documentation/1.0/exportedvars.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.0:exportedvars</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:1.0:exportedvars</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>To use it (with MySQL for example), choose for example “Apache::Session::Browseable::MySQL” as “Apache::Session module” and use the following parameters:</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Pour l'utiliser (avec MySQL par exemple), choisissez “Apache::Session::Browseable::MySQL” comme “Module Apache::Session” et utilisez les paramètres suivants :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>A Apache::Session::Browseable::Redis module is in preparation, it will be the faster</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>Un module Apache::Session::Browseable::Redis est en préparation, il sera le plus rapide</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.0/authsaml.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../../documentation/1.0/authsaml.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.0:authsaml</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:1.0:authsaml</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.0/idpsaml.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../../documentation/1.0/idpsaml.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.0:idpsaml</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:1.0:idpsaml</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/documentation/lasso.png?id=documentation%3A1.0%3Asamlservice</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/documentation/lasso.png?id=documentation%3A1.0%3Asamlservice</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.0/configlocation.html#portal</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../../documentation/1.0/configlocation.html#portal</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/documentation/manager-saml-private-key.png?id=documentation%3A1.0%3Asamlservice</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/documentation/manager-saml-private-key.png?id=documentation%3A1.0%3Asamlservice</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/documentation/manager-saml-namid-formats.png?id=documentation%3A1.0%3Asamlservice</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/documentation/manager-saml-namid-formats.png?id=documentation%3A1.0%3Asamlservice</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.0/authldap.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../../documentation/1.0/authldap.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.0:authldap</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:1.0:authldap</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/documentation/manager-saml-service-authn-contexts.png?id=documentation%3A1.0%3Asamlservice</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/documentation/manager-saml-service-authn-contexts.png?id=documentation%3A1.0%3Asamlservice</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/documentation/manager-saml-service-sp-slo.png?id=documentation%3A1.0%3Asamlservice</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/documentation/manager-saml-service-sp-slo.png?id=documentation%3A1.0%3Asamlservice</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/documentation/manager-saml-service-sp-ac.png?id=documentation%3A1.0%3Asamlservice</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>/_detail/documentation/manager-saml-service-sp-ac.png?id=documentation%3A1.0%3Asamlservice</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.0/memcachedsessionbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../../documentation/1.0/memcachedsessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.0:memcachedsessionbackend</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>documentation:1.0:memcachedsessionbackend</seg>
       </tuv>
     </tu>
     <tu>
