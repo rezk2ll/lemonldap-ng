@@ -17,7 +17,7 @@ use Lemonldap::NG::Handler::SharedConf qw(:all);
 
 #link Lemonldap::NG::Handler::_CGI protected _handler
 
-our $VERSION = '1.0.0';
+our $VERSION = '1.0.1';
 
 ## @cmethod Lemonldap::NG::Handler::CGI new(hashRef args)
 # Constructor.
