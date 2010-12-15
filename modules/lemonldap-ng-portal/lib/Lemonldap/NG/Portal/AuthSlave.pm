@@ -9,7 +9,7 @@ use strict;
 use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::AuthNull;
 
-our $VERSION = '1.0.0';
+our $VERSION = '1.1.0';
 our @ISA     = qw(Lemonldap::NG::Portal::AuthNull);
 
 ## @apmethod int setAuthSessionInfo()
