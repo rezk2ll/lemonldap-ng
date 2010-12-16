@@ -457,7 +457,8 @@ dist:	clean
 	@rm -rf $$(find lemonldap-ng-$(VERSION) -name .svn -print)
 	@find $$dir -name '*.bak' -delete
 	@rm -rf lemonldap-ng-$(VERSION)/lemonldap-ng-$(VERSION)
-	@cp ../rpm/lemonldap-ng.spec lemonldap-ng-$(VERSION)/
+	@if [ -f ../rpm/lemonldap-ng.spec ]; then cp ../rpm/lemonldap-ng.spec lemonldap-ng-$(VERSION)/; fi
+	@if [ -f lemonldap-ng.spec ]; then cp lemonldap-ng.spec lemonldap-ng-$(VERSION)/; fi
 	@$(COMPRESS) lemonldap-ng-$(VERSION).$(COMPRESSSUFFIX) lemonldap-ng-$(VERSION)
 	@rm -rf lemonldap-ng-$(VERSION)
 
