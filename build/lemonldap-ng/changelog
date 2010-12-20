@@ -1,6 +1,12 @@
 lemonldap-ng (1.0.1) stable; urgency=low
 
-    *
+    * [LEMONLDAP-258] - Portal with $vhost in Handler does not work
+    * [LEMONLDAP-261] - Session explorer does not work with LDAP backend
+    * [LEMONLDAP-262] - Sessions not purged with Apache::Session::File
+    * [LEMONLDAP-263] - Common::Apache::Session uses wrong serialization
+      algorithm with Postgres
+    * [LEMONLDAP-257] - Integrate manager access directly in portal
+    * [LEMONLDAP-240] - Translation framework for doc
 
 lemonldap-ng (1.0) stable; urgency=low
 
