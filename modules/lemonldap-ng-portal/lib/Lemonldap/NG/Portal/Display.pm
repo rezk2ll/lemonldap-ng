@@ -9,7 +9,7 @@ use strict;
 use Lemonldap::NG::Portal::Simple;
 use utf8;
 
-our $VERSION = '1.0.0';
+our $VERSION = '1.0.2';
 
 ## @method array display()
 # Call portal process and set template parameters
@@ -89,6 +89,7 @@ sub display {
             %templateParams = (
                 AUTH_USER       => $auth_user,
                 AUTOCOMPLETE    => $self->{portalAutocomplete},
+                NEWWINDOW       => $self->{portalOpenLinkInNewWindow},
                 ANTIFRAME       => $self->{portalAntiFrame},
                 SKIN            => $skin,
                 AUTH_ERROR      => $self->error( undef, $self->{menuError} ),
