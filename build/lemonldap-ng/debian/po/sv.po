@@ -1,21 +1,23 @@
 # translation of lemonldap-ng_0.9.1-1_templates.po to swedish
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Martin Bagge <martin.bagge@bthstudent.se>, 2008.
 msgid ""
 msgstr ""
 "Project-Id-Version: lemonldap-ng_0.9.1-1_templates\n"
 "Report-Msgid-Bugs-To: lemonldap-ng@packages.debian.org\n"
 "POT-Creation-Date: 2010-12-04 23:10+0100\n"
-"PO-Revision-Date: 2008-06-23 21:14+0200\n"
-"Last-Translator: Martin Bagge <martin.bagge@bthstudent.se>\n"
+"PO-Revision-Date: 2011-01-03 14:00+0100\n"
+"Last-Translator: Martin Bagge / brother <brother@bsnet.se>\n"
 "Language-Team: swedish <debian-l10n-swedish@lists.debian.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
+"X-Poedit-Language: Swedish\n"
+"X-Poedit-Country: Sweden\n"
 
 #. Type: string
 #. Description
@@ -138,8 +140,5 @@ msgstr ""
 msgid ""
 "Lemonldap::NG configuration files have changed, try to migrate your files?"
 msgstr ""
-
-#, fuzzy
-#~| msgid "Lemonldap::NG DNS domain:"
-#~ msgid "Lemonldap::NG migration:"
-#~ msgstr "Lemonldap::NG DNS domän:"
+"Inställningsfilerna för Lemonldap::NG har ändrat format, vill försöka "
+"migrera filerna till nya formatet?"
