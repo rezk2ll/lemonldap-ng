@@ -10,7 +10,7 @@ use Lemonldap::NG::Handler::CGI qw(:globalStorage :locationRules);    #inherits
 use Lemonldap::NG::Common::Conf;              #link protected conf Configuration
 use Lemonldap::NG::Common::Conf::Constants;   #inherits
 
-our $VERSION = '1.0.0';
+our $VERSION = '1.1.0';
 our @ISA     = qw(
   Lemonldap::NG::Handler::CGI
   Lemonldap::NG::Manager::Downloader
