@@ -4,7 +4,7 @@ use strict;
 use Exporter 'import';
 
 use base qw(Exporter);
-our $VERSION = '1.0.0';
+our $VERSION = '1.0.2';
 
 # CONSTANTS
 
@@ -20,6 +20,7 @@ use constant CONFSECTION     => "configuration";
 use constant PORTALSECTION   => "portal";
 use constant HANDLERSECTION  => "handler";
 use constant MANAGERSECTION  => "manager";
+use constant SESSIONSEXPLORERSECTION => "sessionsExplorer";
 use constant APPLYSECTION    => "apply";
 
 our %EXPORT_TAGS = (
@@ -37,6 +38,7 @@ our %EXPORT_TAGS = (
           PORTALSECTION
           HANDLERSECTION
           MANAGERSECTION
+          SESSIONSEXPLORERSECTION
           APPLYSECTION
           )
     ]

@@ -24,7 +24,7 @@ use utf8;
 our $whatToTrace;
 *whatToTrace = \$Lemonldap::NG::Handler::_CGI::whatToTrace;
 
-our $VERSION = '1.0.0';
+our $VERSION = '1.0.2';
 
 our @ISA = qw(
   Lemonldap::NG::Handler::CGI
@@ -37,28 +37,31 @@ our @ISA = qw(
 # @return New Lemonldap::NG::Manager::Sessions object
 sub new {
     my ( $class, $args ) = @_;
-    my $self = $class->SUPER::new($args)
-      or $class->abort( 'Unable to start ' . __PACKAGE__,
-        'See Apache logs for more' );
 
     # Output UTF-8
     binmode( STDOUT, ':utf8' );
 
     # Try to get configuration values from global configuration
-    my $config = Lemonldap::NG::Common::Conf->new( $self->{configStorage} );
-    unless ($config) {
-        $self->abort( "Unable to start",
-            "Configuration not loaded\n" . $Lemonldap::NG::Common::Conf::msg );
+    my $conf = Lemonldap::NG::Common::Conf->new( $args->{configStorage} )
+      or Lemonldap::NG::Handler::CGI->abort( 'Unable to get configuration',
+        $Lemonldap::NG::Common::Conf::msg );
+
+    # Configuration from MANAGER section
+    if ( my $localconf = $conf->getLocalConf(MANAGERSECTION) ) {
+        $args->{$_} ||= $localconf->{$_} foreach ( keys %$localconf );
     }
 
-    # Load parameters from lemonldap-ng.ini.
-    my $localconf = $config->getLocalConf(MANAGERSECTION);
+    # Configuration from SESSIONSEXPLORER section
+    if ( my $localconfse = $conf->getLocalConf(SESSIONSEXPLORERSECTION) ) {
+        $args->{$_} ||= $localconfse->{$_} foreach ( keys %$localconfse );
+    }
+
+    my $self = $class->SUPER::new($args)
+      or $class->abort( 'Unable to start ' . __PACKAGE__,
+        'See Apache logs for more' );
 
     # Local args prepends global args
-    if ($localconf) {
-        $self->{$_} = $args->{$_} || $localconf->{$_}
-          foreach ( keys %$localconf );
-    }
+    $self->{$_} = $args->{$_} foreach ( keys %$args );
 
     # Load default skin if no other specified
     $self->{managerSkin} ||= 'default';
