@@ -231,8 +231,8 @@ sub display {
                 DISPLAY_RESETPASSWORD => 0,
                 DISPLAY_FORM          => 0,
                 AUTH_LOOP             => [],
-                CHOICE_PARAM        => $self->{authChoiceParam},
-                CHOICE_VALUE        => $self->{_authChoice},
+                CHOICE_PARAM          => $self->{authChoiceParam},
+                CHOICE_VALUE          => $self->{_authChoice},
             );
         }
 

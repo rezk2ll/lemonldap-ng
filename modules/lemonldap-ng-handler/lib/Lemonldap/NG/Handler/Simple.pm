@@ -246,10 +246,10 @@ sub regRemoteIp {
 sub lmSetHeaderIn {
     my ( $r, %hdr ) = splice @_;
     while ( my ( $h, $v ) = each %hdr ) {
-    if ( MP() == 2 ) {
+        if ( MP() == 2 ) {
             $r->headers_in->set( $h => $v );
-    }
-    elsif ( MP() == 1 ) {
+        }
+        elsif ( MP() == 1 ) {
             $r->header_in( $h => $v );
         }
     }
@@ -495,43 +495,43 @@ sub conditionSub {
         return ( sub { 1 }, 1 );
     }
 
-        # logout_app
-        if ( $cond =~ /^logout_app(?:\s+(.*))?$/i ) {
-            my $u = $1 || $class->portal();
-            eval 'use Apache2::Filter' unless ( $INC{"Apache2/Filter.pm"} );
-            return (
-                sub {
-                    $apacheRequest->add_output_filter(
-                        sub {
-                            return $class->redirectFilter( $u, @_ );
-                        }
-                    );
-                    1;
-                },
-                1
-            );
-        }
-        elsif ( $cond =~ /^logout_app_sso(?:\s+(.*))?$/i ) {
-            eval 'use Apache2::Filter' unless ( $INC{"Apache2/Filter.pm"} );
-            my $u = $1 || $class->portal();
-            return (
-                sub {
-                    $class->localUnlog;
-                    $apacheRequest->add_output_filter(
-                        sub {
-                            return $class->redirectFilter(
-                                $class->portal() . "?url="
-                                  . $class->encodeUrl($u)
-                                  . "&logout=1",
-                                @_
-                            );
-                        }
-                    );
-                    1;
-                },
-                1
-            );
-        }
+    # logout_app
+    if ( $cond =~ /^logout_app(?:\s+(.*))?$/i ) {
+        my $u = $1 || $class->portal();
+        eval 'use Apache2::Filter' unless ( $INC{"Apache2/Filter.pm"} );
+        return (
+            sub {
+                $apacheRequest->add_output_filter(
+                    sub {
+                        return $class->redirectFilter( $u, @_ );
+                    }
+                );
+                1;
+            },
+            1
+        );
+    }
+    elsif ( $cond =~ /^logout_app_sso(?:\s+(.*))?$/i ) {
+        eval 'use Apache2::Filter' unless ( $INC{"Apache2/Filter.pm"} );
+        my $u = $1 || $class->portal();
+        return (
+            sub {
+                $class->localUnlog;
+                $apacheRequest->add_output_filter(
+                    sub {
+                        return $class->redirectFilter(
+                            $class->portal() . "?url="
+                              . $class->encodeUrl($u)
+                              . "&logout=1",
+                            @_
+                        );
+                    }
+                );
+                1;
+            },
+            1
+        );
+    }
 
     # Replace some strings in condition
     $cond =~ s/\$date/&POSIX::strftime("%Y%m%d%H%M%S",localtime())/e;

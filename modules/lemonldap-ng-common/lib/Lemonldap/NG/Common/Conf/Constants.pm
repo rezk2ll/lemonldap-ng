@@ -21,7 +21,7 @@ use constant PORTALSECTION   => "portal";
 use constant HANDLERSECTION  => "handler";
 use constant MANAGERSECTION  => "manager";
 use constant SESSIONSEXPLORERSECTION => "sessionsExplorer";
-use constant APPLYSECTION    => "apply";
+use constant APPLYSECTION            => "apply";
 
 our %EXPORT_TAGS = (
     'all' => [

@@ -5,11 +5,11 @@
 
 # change 'tests => 1' to 'tests => last_test_to_print';
 no warnings;
-use Test::More; #qw(no_plan)
+use Test::More;    #qw(no_plan)
 
 eval { require Test::MockObject }
-    or plan skip_all => 'Test::MockObject required to test portal subroutine';
-plan tests => 2;
+  or plan skip_all => 'Test::MockObject required to test portal subroutine';
+plan tests         => 2;
 
 #########################
 
@@ -24,9 +24,10 @@ $h = bless {}, 'Lemonldap::NG::Handler::Simple';
 
 # Create a fake Apache2::RequestRec
 my $mock = Test::MockObject->new();
-$mock->fake_module('Apache2::RequestRec' =>
-	new => sub { return bless {}, 'Apache2::RequestRec' },
-	hostname        => sub { 'test.example.com' },
+$mock->fake_module(
+    'Apache2::RequestRec' => new =>
+      sub { return bless {}, 'Apache2::RequestRec' },
+    hostname => sub { 'test.example.com' },
 );
 our $apacheRequest = Apache2::RequestRec->new();
 

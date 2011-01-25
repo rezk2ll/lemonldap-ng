@@ -265,7 +265,7 @@ sub _LDAPGKFAS {
         my ( $k, $v ) =
           ( $entry->get_value('cn'), $entry->get_value('description') );
         eval { $v = decodeThaw64($v); };
-        next if($@);
+        next if ($@);
         if ( ref($data) eq 'CODE' ) {
             $res{$k} = &$data( $v, $k );
         }

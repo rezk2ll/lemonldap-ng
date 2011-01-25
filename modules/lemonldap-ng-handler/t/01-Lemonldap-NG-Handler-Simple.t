@@ -48,6 +48,7 @@ ok(
 );
 
 ok( $h->defaultValuesInit(), 'defaultValuesInit' );
+
 # Test simple portal subroutine
 # See t/02-* for complex portal subroutine
 ok( ( $h->portalInit( { portal => 'http://auth.example.com' } ) or 1 ),
