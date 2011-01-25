@@ -8,7 +8,7 @@ package Lemonldap::NG::Portal::MailReset;
 use strict;
 use warnings;
 
-our $VERSION = '1.0.0';
+our $VERSION = '1.0.2';
 
 use Lemonldap::NG::Portal::Simple qw(:all);
 use base qw(Lemonldap::NG::Portal::SharedConf Exporter);
@@ -152,6 +152,8 @@ sub sendConfirmationMail {
 
     # Build confirmation url
     my $url = $self->{mailUrl} . "?mail_token=" . $self->{id};
+    $url .= '&' . $self->{authChoiceParam} . '=' . $self->{_authChoice}
+      if ( $self->{_authChoice} );
 
     # Build mail content
     my $subject = $self->{mailConfirmSubject};
