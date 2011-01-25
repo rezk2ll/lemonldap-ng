@@ -28,7 +28,7 @@ use constant SAFEWRAP => ( Safe->can("wrap_code_ref") ? 1 : 0 );
 #inherits Apache::Session
 #link Lemonldap::NG::Common::Apache::Session::SOAP protected globalStorage
 
-our $VERSION = '1.0.1';
+our $VERSION = '1.0.2';
 
 our %EXPORT_TAGS;
 
@@ -346,7 +346,7 @@ sub safe {
             }";
         $class->lmLog( $@, 'error' ) if ($@);
     }
-    $safe->share_from( 'main', [ '%ENV' ] );
+    $safe->share_from( 'main', ['%ENV'] );
     $safe->share_from( 'Lemonldap::NG::Common::Safelib',
         $Lemonldap::NG::Common::Safelib::functions );
     $safe->share( '&encode_base64', '$datas', '&portal', '$apacheRequest', @t );
@@ -488,7 +488,12 @@ sub conditionSub {
 
     # Since filter exists only with Apache>=2, logout_app and logout_app_sso
     # targets are available only for it.
-    if ( MP() == 2 ) {
+    # This error can also appear with Manager configured as CGI script
+    if ( $cond =~ /^logout_app/i and MP() < 2 ) {
+        $class->lmLog( "Rules logout_app and logout_app_sso require Apache>=2",
+            'warn' );
+        return ( sub { 1 }, 1 );
+    }
 
         # logout_app
         if ( $cond =~ /^logout_app(?:\s+(.*))?$/i ) {
@@ -527,7 +532,6 @@ sub conditionSub {
                 1
             );
         }
-    }
 
     # Replace some strings in condition
     $cond =~ s/\$date/&POSIX::strftime("%Y%m%d%H%M%S",localtime())/e;
