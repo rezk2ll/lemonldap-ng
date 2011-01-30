@@ -123,7 +123,7 @@ sub decodeThaw64 {
     require Storable;
     require MIME::Base64;
     my $s = shift;
-    return Storable::thaw( MIME::Base64::decode_64($s) );
+    return Storable::thaw( MIME::Base64::decode_base64($s) );
 }
 
 sub _dbiGKFAS {
