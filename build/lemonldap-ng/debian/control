@@ -64,7 +64,7 @@ Architecture: all
 Depends: ${misc:Depends},
  liblemonldap-ng-conf-perl (= ${binary:Version}),
  liblemonldap-ng-handler-perl (= ${binary:Version}),
- libjs-jquery, libjs-jquery-ui, libhtml-template-perl,
+ libjs-jquery (>=1.4.2), libjs-jquery-ui, libhtml-template-perl,
  libxml-libxml-perl, libxml-libxslt-perl,
  libcrypt-openssl-rsa-perl, libcrypt-openssl-x509-perl, libxml-simple-perl,
  libjson-perl
@@ -81,7 +81,7 @@ Package: liblemonldap-ng-portal-perl
 Architecture: all
 Depends: ${misc:Depends},
  liblemonldap-ng-conf-perl (= ${binary:Version}),
- libjs-jquery, libjs-jquery-ui, libhtml-template-perl,
+ libjs-jquery (>=1.4.2), libjs-jquery-ui, libhtml-template-perl,
  libapache-session-perl, libnet-ldap-perl (>=1:0.38),
  libxml-libxml-perl, libxml-libxslt-perl, libstring-random-perl,
  libsoap-lite-perl, libcrypt-openssl-x509-perl
