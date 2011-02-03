@@ -1475,7 +1475,7 @@ sub unlog ($$) {
 # Used by logout_app and logout_app_sso targets
 # @param $url URL to redirect the user
 # @param $f Current Apache2::Filter object
-# @return Apache2::Const::REDIRECT
+# @return Apache2::Const::OK
 sub redirectFilter {
     my $class = shift;
     my $url   = shift;
@@ -1501,7 +1501,7 @@ sub redirectFilter {
         'filter',
         'REDIRECT'
     );
-    return REDIRECT;
+    return OK;
 }
 
 ## @rmethod int status(Apache2::RequestRec $r)
