@@ -17,7 +17,7 @@ use Lemonldap::NG::Handler::SharedConf qw(:all);
 
 #link Lemonldap::NG::Handler::_CGI protected _handler
 
-our $VERSION = '1.0.1';
+our $VERSION = '1.0.2';
 
 ## @cmethod Lemonldap::NG::Handler::CGI new(hashRef args)
 # Constructor.
@@ -174,11 +174,23 @@ sub goToPortal {
 # Builds current URL including "http://" and server name.
 # @return URL_string
 sub _uri {
-    return
-        'http'
-      . ( $https ? 's' : '' ) . '://'
-      . $ENV{SERVER_NAME}
+    my $vhost = $ENV{SERVER_NAME};
+    my $portString =
+         $port->{$vhost}
+      || $port->{_}
+      || $ENV{SERVER_PORT};
+    my $_https =
+      ( defined( $https->{$vhost} ) ? $https->{$vhost} : $https->{_} );
+    $portString =
+        ( $_https  && $portString == 443 ) ? ''
+      : ( !$_https && $portString == 80 )  ? ''
+      :                                      ':' . $portString;
+    my $url = "http"
+      . ( $_https ? "s" : "" ) . "://"
+      . $vhost
+      . $portString
       . $ENV{REQUEST_URI};
+    return $url;
 }
 
 ## @class
