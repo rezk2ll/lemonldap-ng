@@ -15,6 +15,7 @@ WriteMakefile(
     },
     PREREQ_PM    => {
         'CGI'                    => 3.08,
+        'File::Basename'         => 0,
         'HTML::Template'         => 0,
         'JSON'                   => 0,
         'Lemonldap::NG::Common'  => 0.96,
