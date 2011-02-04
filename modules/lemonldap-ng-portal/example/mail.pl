@@ -8,7 +8,7 @@ use strict;
 my $portal = Lemonldap::NG::Portal::MailReset->new();
 
 my $skin       = $portal->{portalSkin};
-my $skin_dir   = $ENV{DOCUMENT_ROOT} . "/skins";
+my $skin_dir   = $portal->getApacheHtdocsPath() . "/skins";
 my $portal_url = $portal->{portal};
 
 # Process

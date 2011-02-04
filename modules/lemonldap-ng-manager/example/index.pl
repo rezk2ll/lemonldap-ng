@@ -27,7 +27,7 @@ my $manager = new Lemonldap::NG::Manager(
 
 our $skin     = $manager->{managerSkin};
 our $skin_dir = 'skins';
-our $main_dir = $ENV{DOCUMENT_ROOT};
+our $main_dir = $manager->{managerHtdocsPath};
 
 my $template = HTML::Template->new(
     filename          => "$main_dir/$skin_dir/$skin/manager.tpl",

@@ -168,7 +168,7 @@ sub sendConfirmationMail {
 
         # Use HTML template
         my $template = HTML::Template->new(
-            filename => $ENV{DOCUMENT_ROOT} . "skins/common/mail_confirm.tpl",
+            filename => $self->getApacheHtdocsPath() . "skins/common/mail_confirm.tpl",
             filter   => sub { $self->translate_template(@_) }
         );
         $body = $template->output();
@@ -205,7 +205,7 @@ sub sendPasswordMail {
 
         # Use HTML template
         my $template = HTML::Template->new(
-            filename => $ENV{DOCUMENT_ROOT} . "skins/common/mail_password.tpl",
+            filename => $self->getApacheHtdocsPath() . "skins/common/mail_password.tpl",
             filter   => sub { $self->translate_template(@_) }
         );
         $body = $template->output();

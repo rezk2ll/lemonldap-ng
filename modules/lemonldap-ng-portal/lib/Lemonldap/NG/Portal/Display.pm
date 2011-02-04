@@ -18,7 +18,7 @@ sub display {
     my $self = shift;
 
     my $skin     = $self->{portalSkin};
-    my $skin_dir = $ENV{DOCUMENT_ROOT} . "/skins";
+    my $skin_dir = $self->getApacheHtdocsPath() . "/skins";
     my ( $skinfile, %templateParams );
     my $http_error = $self->param('lmError');
 
