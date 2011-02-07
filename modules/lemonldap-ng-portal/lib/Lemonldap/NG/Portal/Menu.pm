@@ -11,7 +11,7 @@ use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::_LibAccess;
 use base qw(Lemonldap::NG::Portal::_LibAccess);
 
-our $VERSION  = '1.0.0';
+our $VERSION  = '1.0.2';
 our $catlevel = 0;
 
 ## @method void menuInit()
@@ -84,7 +84,6 @@ sub displayModules {
     foreach my $module (@modules) {
         my $cond = $self->{ 'portalDisplay' . $module };
         $cond = 1 unless defined $cond;
-        $cond =~ s/\$(\w+)/$self->{sessionInfo}->{$1}/g;
 
         $self->lmLog( "Evaluate condition $cond for module $module", 'debug' );
 
