@@ -48,7 +48,7 @@ our (
     $customFunctions,    $transform,           $cda,
     $childInitDone,      $httpOnly,            $cookieExpiration,
     $timeoutActivity,    $datasUpdate,         $useRedirectOnForbidden,
-    $useRedirectOnError,
+    $useRedirectOnError, $useSafeJail,
 );
 
 ##########################################
@@ -65,6 +65,7 @@ BEGIN {
               $locationCondition $defaultCondition $locationCount
               $locationProtection $defaultProtection $datasUpdate
               $locationRegexp $apacheRequest $datas safe $customFunctions
+              $useSafeJail
               )
         ],
         import  => [qw( import @EXPORT_OK @EXPORT %EXPORT_TAGS )],
@@ -146,6 +147,7 @@ BEGIN {
             threads::shared::share($timeoutActivity);
             threads::shared::share($useRedirectOnForbidden);
             threads::shared::share($useRedirectOnError);
+            threads::shared::share($useSafeJail);
         };
     }
     elsif ( MP() == 1 ) {
@@ -327,7 +329,8 @@ sub safe {
 
     return $safe if ($safe);
 
-    $safe = new Safe;
+    $useSafeJail = 1 unless defined $useSafeJail;
+
     my @t = $customFunctions ? split( /\s+/, $customFunctions ) : ();
     foreach (@t) {
         $class->lmLog( "Custom function : $_", 'debug' );
@@ -346,12 +349,34 @@ sub safe {
             }";
         $class->lmLog( $@, 'error' ) if ($@);
     }
-    $safe->share_from( 'main', ['%ENV'] );
-    $safe->share_from( 'Lemonldap::NG::Common::Safelib',
-        $Lemonldap::NG::Common::Safelib::functions );
-    $safe->share( '&encode_base64', '$datas', '&portal', '$apacheRequest', @t );
+
+    if ($useSafeJail) {
+        $safe = new Safe;
+        $safe->share_from( 'main', ['%ENV'] );
+        $safe->share_from( 'Lemonldap::NG::Common::Safelib',
+            $Lemonldap::NG::Common::Safelib::functions );
+        $safe->share( '&encode_base64', '$datas', '&portal', '$apacheRequest',
+            @t );
+    }
+    else {
+        $safe = $class;
+    }
 
     return $safe;
+}
+
+## @method reval
+# Fake reval method if useSafeJail desactivated
+sub reval {
+    my ( $class, $e ) = splice @_;
+    return eval $e;
+}
+
+## @method wrap_code_ref
+# Fake wrap_code_ref method if useSafeJail desactivated
+sub wrap_code_ref {
+    my ( $class, $e ) = splice @_;
+    return $e;
 }
 
 ## @imethod void localInit(hashRef args)
@@ -580,6 +605,10 @@ sub defaultValuesInit {
       defined($useRedirectOnForbidden)
       ? $useRedirectOnForbidden
       : $args->{useRedirectOnForbidden};
+    $useSafeJail =
+      defined($useSafeJail)
+      ? $useSafeJail
+      : $args->{useSafeJail};
     1;
 }
 
