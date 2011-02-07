@@ -773,13 +773,15 @@ sub struct {
                 },
 
                 security => {
-                    _nodes =>
-                      [qw(userControl portalForceAuthn key trustedDomains)],
+                    _nodes => [
+                        qw(userControl portalForceAuthn key trustedDomains useSafeJail)
+                    ],
                     _help            => 'security',
                     userControl      => 'text:/userControl',
                     portalForceAuthn => 'bool:/portalForceAuthn',
                     key              => 'text:/key',
                     trustedDomains   => 'text:/trustedDomains',
+                    useSafeJail      => 'bool:/useSafeJail',
                 },
 
                 redirection => {
@@ -1447,6 +1449,7 @@ sub testStruct {
         },
         useRedirectOnError     => $boolean,
         useRedirectOnForbidden => $boolean,
+        useSafeJail            => $boolean,
         useXForwardedForIP     => $boolean,
         variables              => $testNotDefined,
         vhostOptions           => {
@@ -1762,6 +1765,7 @@ sub defaultConf {
         passwordDB          => 'LDAP',
         useRedirectOnError  => '1',
         useRedirectOnForbidden => '0',
+        useSafeJail            => '1',
         useXForwardedForIP     => '0',
         vhostPort              => '-1',
         vhostHttps             => '-1',
