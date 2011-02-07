@@ -19,7 +19,7 @@ use Encode;            # Encode attribute values
 # Special comments for doxygen
 #inherits Lemonldap::NG::Common::Conf::SAML::Metadata protected service_metadata
 
-our $VERSION = '1.0.0';
+our $VERSION = '1.0.2';
 our $samlCache;
 our $initGlibDone;
 
