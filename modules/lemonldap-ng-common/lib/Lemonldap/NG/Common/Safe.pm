@@ -11,7 +11,7 @@ use constant SAFEWRAP => ( Safe->can("wrap_code_ref") ? 1 : 0 );
 
 our $VERSION = 1.0.2;
 
-our $self; # Safe cannot share a variable declared with my
+our $self;    # Safe cannot share a variable declared with my
 
 ## @constructor Lemonldap::NG::Common::Safe new(Lemonldap::NG::Portal::Simple portal)
 # Build a new Safe object
@@ -23,13 +23,13 @@ sub new {
 
     unless ( $portal->{useSafeJail} ) {
 
-	    # Fake jail
+        # Fake jail
         $portal->lmLog( "Creating a fake Safe jail", 'debug' );
         bless $self, $class;
     }
     else {
 
-	    # Safe jail
+        # Safe jail
         $self = $class->SUPER::new();
         $portal->lmLog( "Creating a real Safe jail", 'debug' );
     }
@@ -63,14 +63,14 @@ sub reval {
 
         # Test SAFEWRAP and run reval
         $result = (
-            SAFEWRAP
+            ( SAFEWRAP and ref($e) eq 'CODE' )
             ? $self->SUPER::wrap_code_ref( $self->SUPER::reval($e) )
             : $self->SUPER::reval($e)
         );
     }
     else {
 
-	    # Use a standard eval
+        # Use a standard eval
         $result = eval $e;
     }
 
