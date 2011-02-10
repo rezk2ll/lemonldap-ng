@@ -483,9 +483,11 @@ sub _isCategoryEmpty {
 
         # Temporary store 'options'
         my $tmp_options = $apphash->{options};
+        my $tmp_catname = $apphash->{catname};
 
         delete $apphash->{type};
         delete $apphash->{options};
+        delete $apphash->{catname};
 
         if ( scalar( keys %$apphash ) ) {
 
@@ -493,6 +495,7 @@ sub _isCategoryEmpty {
             # Restore type and options
             $apphash->{type}    = "category";
             $apphash->{options} = $tmp_options;
+            $apphash->{catname} = $tmp_catname;
 
             # Return false
             return 0;
