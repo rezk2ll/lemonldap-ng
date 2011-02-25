@@ -82,7 +82,7 @@ Architecture: all
 Depends: ${misc:Depends},
  liblemonldap-ng-conf-perl (= ${binary:Version}),
  libjs-jquery (>=1.4.2), libjs-jquery-ui, libhtml-template-perl,
- libapache-session-perl, libnet-ldap-perl (>=1:0.38),
+ libapache-session-perl, libnet-ldap-perl,
  libxml-libxml-perl, libxml-libxslt-perl, libstring-random-perl,
  libsoap-lite-perl, libcrypt-openssl-x509-perl
 Pre-Depends: debconf
@@ -91,7 +91,7 @@ Recommends: libmime-lite-perl, libemail-date-format-perl, libconvert-pem-perl,
  liblasso3-perl (>=2.3.0) | libnet-twitter-perl
 Suggests: slapd, libnet-twitter-perl, libnet-openid-consumer-perl,
  libnet-openid-server-perl, liblasso3-perl (>=2.3.0),
- liblemonldap-ng-handler-perl (= ${binary:Version}),
+ liblemonldap-ng-handler-perl (= ${binary:Version}), libnet-ldap-perl (>=1:0.38)
 Description: Lemonldap::NG authentication portal part
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application Apache servers.
