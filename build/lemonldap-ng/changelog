@@ -1,3 +1,29 @@
+lemonldap-ng (1.0.2) stable; urgency=low
+
+    * [LEMONLDAP-263] - Common::Apache::Session uses wrong serialization
+      algorithm with Postgres
+    * [LEMONLDAP-264] - sessions explorer is not protected by LemonLDAP
+    * [LEMONLDAP-265] - authenticationLevel not honored
+    * [LEMONLDAP-266] - logout_app in rules break the manager
+    * [LEMONLDAP-267] - portalOpenLinkInNewWindow has no effect
+    * [LEMONLDAP-268] - logout_app and logout_app_sso does not work with
+      Lemonldap::NG::Handler::Proxy
+    * [LEMONLDAP-269] - Reset password feature does not work with AuthChoice
+    * [LEMONLDAP-270] - Safe.pm 2.27 restrict the usage of custom functions
+    * [LEMONLDAP-271] - Portal configuration cache not reset after
+      configuration change in Manager
+    * [LEMONLDAP-272] - DBI authentication level not honored
+    * [LEMONLDAP-274] - Redirection URL is not good in Handler::CGI::_uri
+      function
+    * [LEMONLDAP-277] - Debian packaging requires libnet-ldap-perl >=1:0.38
+    * [LEMONLDAP-278] - Pb in Debian package liblemonldap-ng-conf-perl
+    * [LEMONLDAP-279] - handler-apache2.conf not shipped with Debian
+    * [LEMONLDAP-280] - Empty menu categories are not hidden
+    * [LEMONLDAP-281] - [Debian bug #612719] Package description outdated
+    * [LEMONLDAP-273] - Require jQuery 1.4+ in Debian packaging
+    * [LEMONLDAP-275] - use $ENV{SCRIPT_FILENAME} instead of
+      $ENV{DOCUMENT_ROOT} to referer to different htdocs directories
+
 lemonldap-ng (1.0.1) stable; urgency=low
 
     * [LEMONLDAP-258] - Portal with $vhost in Handler does not work
