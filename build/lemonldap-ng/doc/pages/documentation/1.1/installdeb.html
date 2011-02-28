@@ -167,7 +167,8 @@ By default, <acronym title="Domain Name System">DNS</acronym> domain is <code>ex
 Enable <acronym title="LemonLDAP::NG">LL::NG</acronym> sites in Apache:
 
 </p>
-<pre class="code shell">a2ensite portal-apache2.conf
+<pre class="code shell">a2ensite handler-apache2.conf
+a2ensite portal-apache2.conf
 a2ensite manager-apache2.conf</pre>
 
 <p>
@@ -179,7 +180,7 @@ Restart Apache:
 apache2ctl restart</pre>
 
 </div>
-<!-- SECTION "Enable LL::NG sites" [1904-2124] -->
+<!-- SECTION "Enable LL::NG sites" [1904-2154] -->
 <h3><a name="upgrade" id="upgrade">Upgrade</a></h3>
 <div class="level3">
 
@@ -201,7 +202,7 @@ The upgrade process will also have migrate old configuration files into <code>/e
 </p>
 
 </div>
-<!-- SECTION "Upgrade" [2125-4283] -->
+<!-- SECTION "Upgrade" [2155-4313] -->
 <h3><a name="dns" id="dns">DNS</a></h3>
 <div class="level3">
 
@@ -228,7 +229,7 @@ Follow the <a href="../../documentation/1.1/start.html#configuration" class="wik
 </p>
 
 </div>
-<!-- SECTION "DNS" [4284-4556] -->
+<!-- SECTION "DNS" [4314-4586] -->
 <h2><a name="file_location" id="file_location">File location</a></h2>
 <div class="level2">
 <ul>
@@ -249,7 +250,7 @@ Follow the <a href="../../documentation/1.1/start.html#configuration" class="wik
 </ul>
 
 </div>
-<!-- SECTION "File location" [4557-5093] -->
+<!-- SECTION "File location" [4587-5123] -->
 <h2><a name="build_your_packages" id="build_your_packages">Build your packages</a></h2>
 <div class="level2">
 
@@ -265,4 +266,4 @@ make debian-packages
 </pre>
 
 </div>
-<!-- SECTION "Build your packages" [5094-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Build your packages" [5124-] --></div><!-- closes <div class="dokuwiki export">-->
