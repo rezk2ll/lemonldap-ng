@@ -3,3 +3,4 @@
 /usr/share/man/man3/Lemonldap::NG::Handler*
 /var/lib/lemonldap-ng/test
 /usr/share/lemonldap-ng/bin/purgeLocalCache
+/etc/lemonldap-ng/handler-apache2.conf
