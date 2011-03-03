@@ -10,7 +10,7 @@ Packages are in /tmp
 The DEB repository is hosted on http://lemonldap-ng.org/deb
 
 Copy all generated files (*.deb, *.dsc, *.changes, ...):
-$ scp *.deb *.dsc *.changes lemonldapng@lemonldap-ng.org:incoming/
+$ scp *.deb *.dsc *.changes *.debian.tar.gz *.orig.tar.gz lemonldapng@lemonldap-ng.org:incoming/
 
 Then connect on the server and launch reprepro:
 $ ssh lemonldapng@lemonldap-ng.org
