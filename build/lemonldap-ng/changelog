@@ -1,3 +1,10 @@
+lemonldap-ng (1.0.3) stable; urgency=low
+
+    * [LEMONLDAP-282] - Class::Inspector is needed to build RPM
+    * [LEMONLDAP-283] - CPAN Testers report
+    * [LEMONLDAP-284] - Applications with 'display auto' are always hidden in
+      Menu
+
 lemonldap-ng (1.0.2) stable; urgency=low
 
     * [LEMONLDAP-263] - Common::Apache::Session uses wrong serialization
