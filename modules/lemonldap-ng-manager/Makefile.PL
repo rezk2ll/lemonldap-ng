@@ -4,22 +4,22 @@ use ExtUtils::MakeMaker;
 # See lib/ExtUtils/MakeMaker.pm for details of how to influence
 # the contents of the Makefile that is written.
 WriteMakefile(
-    NAME         => 'Lemonldap::NG::Manager',
-    VERSION_FROM => 'lib/Lemonldap/NG/Manager.pm',    # finds $VERSION
-    LICENSE      => 'perl',
+    NAME           => 'Lemonldap::NG::Manager',
+    VERSION_FROM   => 'lib/Lemonldap/NG/Manager.pm',    # finds $VERSION
+    LICENSE        => 'perl',
     BUILD_REQUIRES => {
         'Convert::PEM'         => 0,
         'Crypt::OpenSSL::RSA'  => 0,
         'Crypt::OpenSSL::X509' => 0,
         'IO::String'           => 0,
     },
-    PREREQ_PM    => {
+    PREREQ_PM => {
         'CGI'                    => 3.08,
         'File::Basename'         => 0,
         'HTML::Template'         => 0,
         'JSON'                   => 0,
-        'Lemonldap::NG::Common'  => 0.96,
-        'Lemonldap::NG::Handler' => 0.93,
+        'Lemonldap::NG::Common'  => 1.0.3,
+        'Lemonldap::NG::Handler' => 1.0.3,
         'LWP::UserAgent'         => 0,
         'XML::LibXML'            => 0,
         'XML::LibXSLT'           => 0,
