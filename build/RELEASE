@@ -1,0 +1,57 @@
+How to build a release for LemonLDAP::NG
+========================================
+
+The version
+-----------
+
+- The release version should be updated in the following location:
+* changelog (add a changelog for the target version)
+* Main modules (Common.pm/Handler.pm/Portal.pm/Manager.pm)
+* Makefile.PL for cross-dependencies
+
+- Then update packages information with:
+# make clean && make cpan
+
+- Version must also be updated in RPM and Debian build files
+(see related README)
+
+Before release
+--------------
+
+- Update documentation:
+# Make documentation
+
+The distribution
+----------------
+
+- CPAN packages:
+#  make clean && make cpan
+
+Upload created archives in the CPAN directory
+
+- Tarball:
+# make clean && make dist
+
+Upload dist on OW2 forge
+
+- RedHat/Debian packaging: see related README
+
+Upload bundle on OW2 Forge, and on LL::NG repository
+
+Site
+----
+
+- Update links on the download page
+- Close the version on JIRA and create a new one
+
+Spread the word
+---------------
+
+- News on OW2 forge
+- Twitter account
+- Freshmeat
+- IRC channel subject
+- User mailing list
+- Optional: blogs and news sites (LinuxFR, etc.)
+
+
