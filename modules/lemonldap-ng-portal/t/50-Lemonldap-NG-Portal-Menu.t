@@ -41,10 +41,7 @@ $p->menuInit();
 ok( ref $p->{menuDisplayModules} eq 'ARRAY', 'Modules displayed' );
 
 # Test that application loop is an array
-my $appLoop;
-foreach ( @{ $p->{menuDisplayModules} } ) {
-    $appLoop = $_->{'APPSLIST_LOOP'} if $_->{'Appslist'};
-}
+my $appLoop = $p->appslist();
 
 ok( ref $appLoop eq 'ARRAY', 'Application loop' );
 
@@ -101,11 +98,7 @@ $p->{applicationList} = {
 };
 
 # Reload application list
-$p->menuInit();
-
-foreach ( @{ $p->{menuDisplayModules} } ) {
-    $appLoop = $_->{'APPSLIST_LOOP'} if $_->{'Appslist'};
-}
+$appLoop = $p->appslist();
 
 # Check empty category
 # Check display off and on
