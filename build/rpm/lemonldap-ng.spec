@@ -14,11 +14,11 @@
 %define perl_vendorarch %(eval "`%{__perl} -V:installvendorarch`"; echo $installvendorarch)
 
 %define real_name lemonldap-ng
-%define real_version 1.0
-%define cpan_common_version  1.0.0
-%define cpan_handler_version 1.0.0
-%define cpan_manager_version 1.0.0
-%define cpan_portal_version  1.0.0
+%define real_version 1.0.3
+%define cpan_common_version  1.0.3
+%define cpan_handler_version 1.0.3
+%define cpan_manager_version 1.0.3
+%define cpan_portal_version  1.0.3
 
 %define lm_prefix /usr
 %define lm_sharedir %{_datadir}/lemonldap-ng
@@ -84,9 +84,11 @@ BuildRequires:  perl(JSON)
 BuildRequires:  perl(Config::IniFiles)
 BuildRequires:  perl(Crypt::OpenSSL::RSA)
 BuildRequires:  perl(Crypt::OpenSSL::X509)
+BuildRequires:  perl(Class::Inspector)
+BuildRequires:  perl(Test::MockObject)
 %else
 # SuSE Linux needs rpm packages for perl scripts                                                                                           
-BuildRequires:  perl, perl-Regexp-Assemble, perl-Cache-Cache, perl-Apache-Session, perl-Apache-AuthNetLDAP, perl-XML-Simple, perl-XML-LibXML, perl-Crypt-Rijndael, perl-IO-String, perl-HTML-Template, perl-JSON, perl-Config-IniFiles, perl-Crypt-OpenSSL-RSA, perl-Crypt-OpenSSL-X509
+BuildRequires:  perl, perl-Regexp-Assemble, perl-Cache-Cache, perl-Apache-Session, perl-Apache-AuthNetLDAP, perl-XML-Simple, perl-XML-LibXML, perl-Crypt-Rijndael, perl-IO-String, perl-HTML-Template, perl-JSON, perl-Config-IniFiles, perl-Crypt-OpenSSL-RSA, perl-Crypt-OpenSSL-X509, perl-Class-Inspector, perl-Test-MockObject
 %endif
 
 %if 0%{?rhl}%{?rhel}%{?fedora}
@@ -468,6 +470,12 @@ rm -rf %{buildroot}
 # Changelog
 #==============================================================================
 %changelog
+* Mon Mar 07 2011 Clement Oudot <clem.oudot@gmail.com> - 1.0.3-1
+- Update to 1.0.3
+* Mon Feb 28 2011 Clement Oudot <clem.oudot@gmail.com> - 1.0.2-1
+- Update to 1.0.2
+* Thu Dec 16 2010 Clement Oudot <clem.oudot@gmail.com> - 1.0.1-1
+- Update to 1.0.1
 * Fri Nov 26 2010 Clement Oudot <clem.oudot@gmail.com> - 1.0-1
 - Update to 1.0
 * Wed Jul 21 2010 Nicolas Chauvet <kwizart@gmail.com> - 0.9.4.1-3
