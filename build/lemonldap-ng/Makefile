@@ -353,6 +353,7 @@ install_handler_site:	install_conf_dir
 	@cp --remove-destination ${SRCHANDLERDIR}/example/MyHandler.pm ${RHANDLERDIR}
 	@cp --remove-destination ${SRCHANDLERDIR}/example/MyHandlerZimbra.pm ${RHANDLERDIR}
 	@cp --remove-destination ${SRCHANDLERDIR}/example/MyHandlerSympa.pm ${RHANDLERDIR}
+	@cp --remove-destination ${SRCHANDLERDIR}/example/MyHandlerSecureToken.pm ${RHANDLERDIR}
 	@cp --remove-destination ${SRCHANDLERDIR}/example/MyUpdateCookieHandler.pm ${RHANDLERDIR}
 	@cp --remove-destination lemonldap-ng-handler/example/scripts/purgeLocalCache.cron.d $(RCRONDIR)/lemonldap-ng-handler
 	@if [ ! "$(APACHEUSER)" ]; then \
@@ -610,6 +611,8 @@ default-diff:
 	@$(DIFF) lemonldap-ng-handler/example/MyHandler.pm $(LMPREFIX)/handler/MyHandler.pm ||true
 	@$(DIFF) lemonldap-ng-handler/example/MyHandlerZimbra.pm $(LMPREFIX)/handler/MyHandlerZimbra.pm ||true
 	@$(DIFF) lemonldap-ng-handler/example/MyHandlerSympa.pm $(LMPREFIX)/handler/MyHandlerSympa.pm ||true
+	@$(DIFF) lemonldap-ng-handler/example/MyHandlerSecureToken.pm $(LMPREFIX)/handler/MyHandlerSecureToken.pm ||true
+	@$(DIFF) lemonldap-ng-handler/example/MyUpdateCookieHandler.pm $(LMPREFIX)/handler/MyUpdateCookieHandler.pm ||true
 	@$(DIFF) lemonldap-ng-handler/example/scripts/purgeLocalCache $(LMPREFIX)/bin/purgeLocalCache ||true
 	@# Common
 	@$(DIFF) lemonldap-ng-common/lib/Lemonldap/NG/Common /usr/local/share/perl/5.10.0/Lemonldap/NG/Common ||true
