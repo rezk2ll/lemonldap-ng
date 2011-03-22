@@ -1,3 +1,9 @@
+lemonldap-ng (1.0.4-0.1) unstable; urgency=low
+
+  * Local build
+
+ -- Xavier Guimard <x.guimard@free.fr>  Tue, 22 Mar 2011 11:00:00 +0100
+
 lemonldap-ng (1.0.3-0.1) unstable; urgency=low
 
   * Local build

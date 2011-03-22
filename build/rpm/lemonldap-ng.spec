@@ -14,11 +14,11 @@
 %define perl_vendorarch %(eval "`%{__perl} -V:installvendorarch`"; echo $installvendorarch)
 
 %define real_name lemonldap-ng
-%define real_version 1.0.3
-%define cpan_common_version  1.0.3
-%define cpan_handler_version 1.0.3
-%define cpan_manager_version 1.0.3
-%define cpan_portal_version  1.0.3
+%define real_version 1.0.4
+%define cpan_common_version  1.0.4
+%define cpan_handler_version 1.0.4
+%define cpan_manager_version 1.0.4
+%define cpan_portal_version  1.0.4
 
 %define lm_prefix /usr
 %define lm_sharedir %{_datadir}/lemonldap-ng
@@ -470,6 +470,8 @@ rm -rf %{buildroot}
 # Changelog
 #==============================================================================
 %changelog
+* Tue Mar 22 2011 Clement Oudot <clem.oudot@gmail.com> - 1.0.4-1
+- Update to 1.0.4
 * Mon Mar 07 2011 Clement Oudot <clem.oudot@gmail.com> - 1.0.3-1
 - Update to 1.0.3
 * Mon Feb 28 2011 Clement Oudot <clem.oudot@gmail.com> - 1.0.2-1
