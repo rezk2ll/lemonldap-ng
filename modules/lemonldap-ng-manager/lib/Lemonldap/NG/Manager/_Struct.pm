@@ -1744,7 +1744,7 @@ sub defaultConf {
         portalSkin                  => 'pastel',
         portalUserAttr              => '_user',
         portalDisplayAppslist       => '1',
-        portalDisplayChangePassword => '$_auth eq LDAP or $_auth eq DBI',
+        portalDisplayChangePassword => '$_auth eq "LDAP" or $_auth eq "DBI"',
         portalDisplayLogout         => '1',
         portalDisplayResetPassword  => '1',
         portalAntiFrame             => '1',
@@ -1914,7 +1914,7 @@ sub subDefaultConf {
         locationRules => { default => 'deny' },
         macros        => {
             '_whatToTrace' =>
-'$_auth eq \'LDAP\' ? $uid : ($_auth eq \'SAML\' ? "$_user\\@$_idpConfKey" : "$_user\\@$_auth" )'
+              '$_auth eq "SAML" ? "$_user\\@$_idpConfKey" : "$_user"'
         },
         notificationStorageOptions =>
           { dirName => '/var/lib/lemonldap-ng/notifications', },
