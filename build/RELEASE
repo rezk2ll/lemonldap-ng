@@ -19,13 +19,15 @@ Before release
 --------------
 
 - Update documentation:
-# Make documentation
+# make documentation
+
+- Tag the version on SVN
 
 The distribution
 ----------------
 
 - CPAN packages:
-#  make clean && make cpan
+# make clean && make cpan
 
 Upload created archives in the CPAN directory
 
