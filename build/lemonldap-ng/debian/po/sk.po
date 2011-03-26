@@ -1,0 +1,143 @@
+# Slovak translations for lemonldap-ng package
+# Slovenské preklady pre balík lemonldap-ng.
+# Copyright (C) 2011 THE lemonldap-ng'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the lemonldap-ng package.
+# Automatically generated, 2011.
+# Slavko <linux@slavino.sk>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: lemonldap-ng 1.0.1-1\n"
+"Report-Msgid-Bugs-To: lemonldap-ng@packages.debian.org\n"
+"POT-Creation-Date: 2010-12-04 23:10+0100\n"
+"PO-Revision-Date: 2011-03-22 16:49+0100\n"
+"Last-Translator: Slavko <linux@slavino.sk>\n"
+"Language-Team: Slovak <nomail>\n"
+"Language: sk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#. Type: string
+#. Description
+#: ../liblemonldap-ng-conf-perl.templates:1001
+msgid "LDAP server:"
+msgstr "LDAP server:"
+
+#. Type: string
+#. Description
+#: ../liblemonldap-ng-conf-perl.templates:1001
+msgid ""
+"Set here name or IP address of the LDAP server that has to be used by "
+"Lemonldap::NG. You can modify this value later using the Lemonldap::NG "
+"manager."
+msgstr ""
+"Zadajte meno alebo IP adresu servera LDAP, ktorý má byť použitý Lemonldap::"
+"NG. Túto hodnotu môžete neskôr zmeniť pomocou manažéra Lemonldap::NG."
+
+#. Type: string
+#. Description
+#: ../liblemonldap-ng-conf-perl.templates:2001
+msgid "Lemonldap::NG DNS domain:"
+msgstr "Lemonldap::NG DNS doména:"
+
+#. Type: string
+#. Description
+#: ../liblemonldap-ng-conf-perl.templates:2001
+msgid ""
+"Set here the main domain protected by Lemonldap::NG. You can modify this "
+"value later using the Lemonldap::NG manager."
+msgstr ""
+"Zadajte doménu, ktorú bude chrániť Lemonldap::NG. Túto hodnotu môžete neskôr "
+"zmeniť pomocou manažéra Lemonldap::NG."
+
+#. Type: string
+#. Description
+#: ../liblemonldap-ng-conf-perl.templates:3001
+msgid "Lemonldap::NG portal:"
+msgstr "Lemonldap::NG portál:"
+
+#. Type: string
+#. Description
+#: ../liblemonldap-ng-conf-perl.templates:3001
+msgid ""
+"Set here the Lemonldap::NG portal URL. You can modify this value later using "
+"the Lemonldap::NG manager."
+msgstr ""
+"Zadajte URL portálu Lemonldap::NG portal. Túto hodnotu môžete neskôr zmeniť "
+"pomocou manažéra Lemonldap::NG."
+
+#. Type: string
+#. Description
+#: ../liblemonldap-ng-conf-perl.templates:4001
+msgid "LDAP server port:"
+msgstr "Port LDAP servera:"
+
+#. Type: string
+#. Description
+#: ../liblemonldap-ng-conf-perl.templates:4001
+msgid ""
+"Set here the port used by the LDAP server. You can modify this value later "
+"using the Lemonldap::NG manager."
+msgstr ""
+"Zadajte port používaný serverom LDAP. Túto hodnotu môžete neskôr zmeniť "
+"pomocou manažéra Lemonldap::NG."
+
+#. Type: string
+#. Description
+#: ../liblemonldap-ng-conf-perl.templates:5001
+msgid "LDAP search base:"
+msgstr "Koreň LDAP vyhľadávania:"
+
+#. Type: string
+#. Description
+#: ../liblemonldap-ng-conf-perl.templates:5001
+msgid ""
+"Set here the search base to use in LDAP queries. You can modify this value "
+"later using the Lemonldap::NG manager."
+msgstr ""
+"Zadajte koreň stromu LDAP, používaný vo vyhľadávacích dopytoch. Túto hodnotu "
+"môžete neskôr zmeniť pomocou manažéra Lemonldap::NG."
+
+#. Type: string
+#. Description
+#: ../liblemonldap-ng-conf-perl.templates:6001
+msgid "LDAP account:"
+msgstr "LDAP účet:"
+
+#. Type: string
+#. Description
+#: ../liblemonldap-ng-conf-perl.templates:6001
+msgid ""
+"Set here the account that Lemonldap::NG has to use for its LDAP requests. "
+"Leaving it blank causes Lemonldap::NG to use anonymous connections. You can "
+"modify this value later using the Lemonldap::NG manager."
+msgstr ""
+"Zdajte účet, ktorý má Lemonldap::NG používať na dopyty LDAP. Ak pole necháte "
+"prázdne, Lemonldap::NG bude používať anonymné spojenie. Túto hodnotu môžete "
+"neskôr zmeniť pomocou manažéra Lemonldap::NG."
+
+#. Type: string
+#. Description
+#: ../liblemonldap-ng-conf-perl.templates:7001
+msgid "LDAP password:"
+msgstr "LDAP heslo:"
+
+#. Type: string
+#. Description
+#: ../liblemonldap-ng-conf-perl.templates:7001
+msgid ""
+"Set here the password for the Lemonldap::NG LDAP account. You can modify "
+"this value later using the Lemonldap::NG manager."
+msgstr ""
+"Zadajte heslo LDAP účtu Lemonldap::NG. Túto hodnotu môžete neskôr zmeniť "
+"pomocou manažéra Lemonldap::NG."
+
+#. Type: boolean
+#. Description
+#: ../liblemonldap-ng-conf-perl.templates:8001
+msgid ""
+"Lemonldap::NG configuration files have changed, try to migrate your files?"
+msgstr ""
+"Konfiguračné súbory Lemonldap::NG boli zmenené, skúsiť previesť vaše súbory?"
