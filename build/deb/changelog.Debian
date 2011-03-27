@@ -1,3 +1,22 @@
+lemonldap-ng (1.0.4-2) unstable; urgency=low
+
+  * Debian po update:
+    * fi translation (Closes: #619752)
+
+ -- Xavier Guimard <x.guimard@free.fr>  Sun, 27 Mar 2011 10:16:56 +0200
+
+lemonldap-ng (1.0.4-1) unstable; urgency=low
+
+  * New upstream release
+  * Debian po update:
+    * es translation update (Closes: #607735)
+    * sv translation update (Closes: #608785)
+    * sk translation update (Closes: #619264)
+  * Missing build dependencies (libhtml-template-perl and libxml-simple-perl)
+    (Closes: #608878)
+
+ -- Xavier Guimard <x.guimard@free.fr>  Sat, 26 Mar 2011 09:56:35 +0100
+
 lemonldap-ng (1.0.1-1) unstable; urgency=low
 
   * New upstream release
