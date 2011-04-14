@@ -35,6 +35,7 @@ WriteMakefile(
         'String::Random'         => 0,
         'XML::LibXML'            => 0,
         'XML::LibXSLT'           => 0,
+        'Clone'                  => 0,
     },
     (
         $] >= 5.005
