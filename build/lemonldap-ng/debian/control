@@ -84,7 +84,7 @@ Depends: ${misc:Depends},
  libjs-jquery (>=1.4.2), libjs-jquery-ui, libhtml-template-perl,
  libapache-session-perl, libnet-ldap-perl,
  libxml-libxml-perl, libxml-libxslt-perl, libstring-random-perl,
- libsoap-lite-perl, libcrypt-openssl-x509-perl
+ libsoap-lite-perl, libcrypt-openssl-x509-perl, libclone-perl,
 Pre-Depends: debconf
 Recommends: libmime-lite-perl, libemail-date-format-perl, libconvert-pem-perl,
  libnet-openid-consumer-perl | libnet-openid-server-perl |
