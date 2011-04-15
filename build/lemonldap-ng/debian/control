@@ -91,7 +91,8 @@ Recommends: libmime-lite-perl, libemail-date-format-perl, libconvert-pem-perl,
  liblasso3-perl (>=2.3.0) | libnet-twitter-perl
 Suggests: slapd, libnet-twitter-perl, libnet-openid-consumer-perl,
  libnet-openid-server-perl, liblasso3-perl (>=2.3.0),
- liblemonldap-ng-handler-perl (= ${binary:Version}), libnet-ldap-perl (>=1:0.38)
+ liblemonldap-ng-handler-perl (= ${binary:Version}), libnet-ldap-perl (>=1:0.38),
+ libauthen-sasl-perl,
 Description: Lemonldap::NG authentication portal part
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application Apache servers.
