@@ -759,10 +759,12 @@ sub struct {
 
                 passwordManagement => {
                     _nodes => [
-                        qw(SMTPServer mailUrl mailFrom mailSubject mailBody mailConfirmSubject mailConfirmBody randomPasswordRegexp)
+                        qw(SMTPServer SMTPAuthUser SMTPAuthPass mailUrl mailFrom mailSubject mailBody mailConfirmSubject mailConfirmBody randomPasswordRegexp)
                     ],
                     _help                => 'password',
                     SMTPServer           => 'text:/SMTPServer',
+                    SMTPAuthUser         => 'text:/SMTPAuthUser',
+                    SMTPAuthPass         => 'text:/SMTPAuthPass',
                     mailUrl              => 'text:/mailUrl',
                     mailFrom             => 'text:/mailFrom',
                     mailSubject          => 'text:/mailSubject',
@@ -1186,6 +1188,8 @@ sub testStruct {
         passwordDB           => $testNotDefined,
         mailBody             => $testNotDefined,
         SMTPServer           => $testNotDefined,
+        SMTPAuthUser         => $testNotDefined,
+        SMTPAuthPass         => $testNotDefined,
         cookieExpiration     => $testNotDefined,
         notificationStorage  => $testNotDefined,
         mailUrl              => $testNotDefined,
@@ -2082,6 +2086,35 @@ sub globalTests {
                     : ''
                 )
             );
+        },
+
+        # Test SMTP connection and authentication
+        smtpConnectionAuthentication => sub {
+
+            # Skip test if no SMTP configuration
+            return 1 unless ( $conf->{SMTPServer} );
+
+            # Use SMTP
+            eval "use Net::SMTP";
+            return ( 0, "Net::SMTP module is required to use SMTP server" )
+              if ($@);
+
+            # Create SMTP object
+            my $smtp = Net::SMTP->new( $conf->{SMTPServer} );
+            return ( 0,
+                "SMTP connection to " . $conf->{SMTPServer} . " failed" )
+              unless ($smtp);
+
+            # Skip other tests if no authentication
+            return 1 unless ( $conf->{SMTPAuthUser} and $conf->{SMTPAuthPass} );
+
+            # Try authentication
+            return ( 0, "SMTP authentication failed" )
+              unless $smtp->auth( $conf->{SMTPAuthUser},
+                      $conf->{SMTPAuthPass} );
+
+            # Return
+            return 1;
         },
 
         # 2. MODIFICATIONS
