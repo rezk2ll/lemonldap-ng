@@ -1,6 +1,6 @@
         <p>
           <input name="openid_identifier" type="text" value="" tabindex="1" /><br/>
-          <span class="text-help">(<lang en="for example: http://myopenid.org/toto" fr="par exemple: http://myopenid.org/toto"/>)</span>
+          <span class="text-help">(<lang en="for example: http://myopenid.org/toto" fr="par exemple : http://myopenid.org/toto"/>)</span>
         </p>
         <hr class="solid" />
         <div class="panel-buttons">

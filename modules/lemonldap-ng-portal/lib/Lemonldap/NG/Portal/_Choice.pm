@@ -184,10 +184,12 @@ sub _buildAuthLoop {
         # What do display
         # -> login/password form (LDAP, DBI, ...)
         # -> OpenID form
+        # -> Yubikey form
         # -> logo with link (ex: CAS, SSL, etc.)
         my $displayType = {
             'standardform' => [qw(LDAP DBI Proxy)],
             'openidform'   => [qw(OpenID)],
+            'yubikeyform'  => [qw(Yubikey)],
             'logo'         => [qw(CAS Twitter SAML SSL Apache Remote)],
         };
 

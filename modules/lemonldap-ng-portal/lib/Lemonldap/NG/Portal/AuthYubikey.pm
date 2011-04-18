@@ -51,7 +51,7 @@ sub extractFormInfo {
     $self->{yubikeyPublicIDSize} ||= 12;
 
     # Get OTP
-    my $otp = $self->param("otp");
+    my $otp = $self->param("yubikeyOTP");
     return PE_FORMEMPTY unless $otp;
 
     $self->lmLog( "Received Yubikey OTP $otp", 'debug' );

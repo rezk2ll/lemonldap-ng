@@ -203,11 +203,12 @@ sub display {
         if ( $self->{authLoop} ) {
             %templateParams = (
                 %templateParams,
-                AUTH_LOOP           => $self->{authLoop},
-                CHOICE_PARAM        => $self->{authChoiceParam},
-                CHOICE_VALUE        => $self->{_authChoice},
-                DISPLAY_FORM        => 0,
-                DISPLAY_OPENID_FORM => 0,
+                AUTH_LOOP            => $self->{authLoop},
+                CHOICE_PARAM         => $self->{authChoiceParam},
+                CHOICE_VALUE         => $self->{_authChoice},
+                DISPLAY_FORM         => 0,
+                DISPLAY_OPENID_FORM  => 0,
+                DISPLAY_YUBIKEY_FORM => 0,
             );
         }
 
@@ -243,6 +244,19 @@ sub display {
                 DISPLAY_RESETPASSWORD => 0,
                 DISPLAY_FORM          => 0,
                 DISPLAY_OPENID_FORM   => 1,
+                DISPLAY_YUBIKEY_FORM  => 0,
+                AUTH_LOOP             => [],
+            );
+        }
+
+        # Adapt template for Yubikey
+        if ( $self->get_module("auth") =~ /yubikey/i and !$self->{authLoop} ) {
+            %templateParams = (
+                %templateParams,
+                DISPLAY_RESETPASSWORD => 0,
+                DISPLAY_FORM          => 0,
+                DISPLAY_OPENID_FORM   => 0,
+                DISPLAY_YUBIKEY_FORM  => 1,
                 AUTH_LOOP             => [],
             );
         }
@@ -277,6 +291,7 @@ sub display {
                 DISPLAY_RESETPASSWORD => 0,
                 DISPLAY_FORM          => 0,
                 DISPLAY_OPENID_FORM   => 0,
+                DISPLAY_YUBIKEY_FORM  => 0,
                 AUTH_LOOP             => [],
                 PORTAL_URL            => $self->{portal},
                 MSG                   => $self->info(),
