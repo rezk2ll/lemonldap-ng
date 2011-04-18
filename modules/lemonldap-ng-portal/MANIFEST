@@ -65,6 +65,7 @@ example/skins/common/vcard_edit.png
 example/skins/common/vcss-blue.gif
 example/skins/common/warning.png
 example/skins/common/warning_triangle.png
+example/skins/common/yubico-icon-small.gif
 example/skins/dark/confirm.tpl
 example/skins/dark/css/styles.css
 example/skins/dark/error.tpl
@@ -80,6 +81,7 @@ example/skins/dark/openid.tpl
 example/skins/dark/openidform.tpl
 example/skins/dark/password.tpl
 example/skins/dark/standardform.tpl
+example/skins/dark/yubikeyform.tpl
 example/skins/impact/authmessage.tpl
 example/skins/impact/confirm.tpl
 example/skins/impact/css/styles.css
@@ -103,6 +105,7 @@ example/skins/impact/openidform.tpl
 example/skins/impact/password.tpl
 example/skins/impact/README
 example/skins/impact/standardform.tpl
+example/skins/impact/yubikeyform.tpl
 example/skins/pastel/confirm.tpl
 example/skins/pastel/css/styles.css
 example/skins/pastel/error.tpl
@@ -119,6 +122,7 @@ example/skins/pastel/openid.tpl
 example/skins/pastel/openidform.tpl
 example/skins/pastel/password.tpl
 example/skins/pastel/standardform.tpl
+example/skins/pastel/yubikeyform.tpl
 example/soapconfigtest.pl
 example/soaptest.pl
 lib/Lemonldap/NG/Portal.pm
