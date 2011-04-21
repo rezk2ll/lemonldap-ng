@@ -105,22 +105,18 @@ different versions of Apache/mod_perl.
 </li>
 <li class="level1"><div class="li"> Digest::HMAC</div>
 </li>
-<li class="level1"><div class="li"> String::Random</div>
-</li>
-<li class="level1"><div class="li"> <acronym title="Multipurpose Internet Mail Extension">MIME</acronym>::Lite</div>
-</li>
-<li class="level1"><div class="li"> Email::Date::Format</div>
-</li>
 <li class="level1"><div class="li"> Crypt::OpenSSL::RSA</div>
 </li>
 <li class="level1"><div class="li"> Crypt::OpenSSL::X509</div>
 </li>
 <li class="level1"><div class="li"> Convert::PEM</div>
 </li>
+<li class="level1"><div class="li"> Clone</div>
+</li>
 </ul>
 
 </div>
-<!-- SECTION "Core" [1349-1795] -->
+<!-- SECTION "Core" [1349-1747] -->
 <h3><a name="saml2" id="saml2">SAML2</a></h3>
 <div class="level3">
 <ul>
@@ -131,7 +127,7 @@ different versions of Apache/mod_perl.
 </ul>
 
 </div>
-<!-- SECTION "SAML2" [1796-1865] -->
+<!-- SECTION "SAML2" [1748-1817] -->
 <h3><a name="cas_authentication_module" id="cas_authentication_module">CAS (authentication module)</a></h3>
 <div class="level3">
 <ul>
@@ -140,7 +136,7 @@ different versions of Apache/mod_perl.
 </ul>
 
 </div>
-<!-- SECTION "CAS (authentication module)" [1866-1963] -->
+<!-- SECTION "CAS (authentication module)" [1818-1915] -->
 <h3><a name="openid" id="openid">OpenID</a></h3>
 <div class="level3">
 <ul>
@@ -151,7 +147,7 @@ different versions of Apache/mod_perl.
 </ul>
 
 </div>
-<!-- SECTION "OpenID" [1964-2046] -->
+<!-- SECTION "OpenID" [1916-1998] -->
 <h3><a name="twitter" id="twitter">Twitter</a></h3>
 <div class="level3">
 <ul>
@@ -160,7 +156,7 @@ different versions of Apache/mod_perl.
 </ul>
 
 </div>
-<!-- SECTION "Twitter" [2047-2083] -->
+<!-- SECTION "Twitter" [1999-2035] -->
 <h3><a name="pod_unit_tests" id="pod_unit_tests">POD unit tests</a></h3>
 <div class="level3">
 <ul>
@@ -169,7 +165,26 @@ different versions of Apache/mod_perl.
 </ul>
 
 </div>
-<!-- SECTION "POD unit tests" [2084-2124] -->
+<!-- SECTION "POD unit tests" [2036-2076] -->
+<h3><a name="smtp_reset_password_by_mail" id="smtp_reset_password_by_mail">SMTP / Reset password by mail</a></h3>
+<div class="level3">
+<ul>
+<li class="level1"><div class="li"> <acronym title="Multipurpose Internet Mail Extension">MIME</acronym>::Lite</div>
+</li>
+<li class="level1"><div class="li"> Email::Date::Format</div>
+</li>
+<li class="level1"><div class="li"> String::Random</div>
+</li>
+<li class="level1"><div class="li"> Net::<acronym title="Simple Mail Transfer Protocol">SMTP</acronym></div>
+</li>
+<li class="level1"><div class="li"> <acronym title="Multipurpose Internet Mail Extension">MIME</acronym>::Base64</div>
+</li>
+<li class="level1"><div class="li"> Authen::SASL</div>
+</li>
+</ul>
+
+</div>
+<!-- SECTION "SMTP / Reset password by mail" [2077-2224] -->
 <h2><a name="other" id="other">Other</a></h2>
 <div class="level2">
 <ul>
@@ -178,20 +193,20 @@ different versions of Apache/mod_perl.
 </ul>
 
 </div>
-<!-- SECTION "Other" [2125-2241] -->
+<!-- SECTION "Other" [2225-2341] -->
 <h2><a name="install_dependencies_on_your_system" id="install_dependencies_on_your_system">Install dependencies on your system</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Install dependencies on your system" [2242-2291] -->
+<!-- SECTION "Install dependencies on your system" [2342-2391] -->
 <h3><a name="apt-get" id="apt-get">APT-GET</a></h3>
 <div class="level3">
 <pre class="code">
-apt-get install apache2 libapache2-mod-perl2 libapache-session-perl libnet-ldap-perl libcache-cache-perl libdbi-perl perl-modules libwww-perl libcache-cache-perl libxml-simple-perl  libsoap-lite-perl libhtml-template-perl libregexp-assemble-perl libjs-jquery libxml-libxml-perl libcrypt-rijndael-perl libio-string-perl libxml-libxslt-perl libconfig-inifiles-perl libjson-perl libstring-random-perl libemail-date-format-perl libmime-lite-perl libcrypt-openssl-rsa-perl libdigest-hmac-perl
+apt-get install apache2 libapache2-mod-perl2 libapache-session-perl libnet-ldap-perl libcache-cache-perl libdbi-perl perl-modules libwww-perl libcache-cache-perl libxml-simple-perl  libsoap-lite-perl libhtml-template-perl libregexp-assemble-perl libjs-jquery libxml-libxml-perl libcrypt-rijndael-perl libio-string-perl libxml-libxslt-perl libconfig-inifiles-perl libjson-perl libstring-random-perl libemail-date-format-perl libmime-lite-perl libcrypt-openssl-rsa-perl libdigest-hmac-perl libclone-perl libauthen-sasl-perl
 </pre>
 
 </div>
-<!-- SECTION "APT-GET" [2292-2814] -->
+<!-- SECTION "APT-GET" [2392-2948] -->
 <h3><a name="yum" id="yum">YUM</a></h3>
 <div class="level3">
 
@@ -212,8 +227,8 @@ Choose a repository which hosted <acronym title="Practical Extraction and Report
 </div></p>
 </p>
 <pre class="code">
-yum install httpd mod_perl perl-Apache-Session perl-LDAP perl-XML-SAX perl-XML-NamespaceSupport perl-HTML-Template perl-Regexp-Assemble perl-Error perl-IPC-ShareLite perl-Cache-Cache perl-FreezeThaw perl-XML-Simple perl-version perl-CGI-Session perl-DBD-Pg perl-XML-LibXML-Common perl-BSD-Resource perl-XML-LibXML perl-Crypt-Rijndael perl-IO-String perl-XML-LibXSLT perl-SOAP-Lite perl-Config-IniFiles perl-JSON perl-Digest-HMAC perl-String-Random perl-MIME-Lite perl-Email-Date-Format perl-Crypt-OpenSSL-RSA perl-Crypt-OpenSSL-X509
+yum install httpd mod_perl perl-Apache-Session perl-LDAP perl-XML-SAX perl-XML-NamespaceSupport perl-HTML-Template perl-Regexp-Assemble perl-Error perl-IPC-ShareLite perl-Cache-Cache perl-FreezeThaw perl-XML-Simple perl-version perl-CGI-Session perl-DBD-Pg perl-XML-LibXML-Common perl-BSD-Resource perl-XML-LibXML perl-Crypt-Rijndael perl-IO-String perl-XML-LibXSLT perl-SOAP-Lite perl-Config-IniFiles perl-JSON perl-Digest-HMAC perl-String-Random perl-MIME-Lite perl-Email-Date-Format perl-Crypt-OpenSSL-RSA perl-Crypt-OpenSSL-X509 perl-Clone perl-Authen-SASL
 </pre>
 
 </div>
-<!-- SECTION "YUM" [2815-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "YUM" [2949-] --></div><!-- closes <div class="dokuwiki export">-->
