@@ -27,6 +27,7 @@ var helpCh={
 	'authSlave':'/pages/documentation/latest/authslave.html',
 	'authSSL':'/pages/documentation/latest/authssl.html',
 	'authTwitter':'/pages/documentation/latest/authtwitter.html',
+	'authYubikey':'/pages/documentation/latest/authyubikey.html',
 	'cookies':'/pages/documentation/latest/ssocookie.html',
 	'customfunctions':'/pages/documentation/latest/customfunctions.html',
 	'default':'/pages/documentation/latest/start.html#configuration',
@@ -579,6 +580,7 @@ function formateSelectAuth(id,value){
 		'SAML=SAML v2',
 		'SSL=SSL',
 		'Twitter=Twitter',
+		'Yubikey=Yubikey',
 		'Choice=Authentication choice'
 		],value);
 }
