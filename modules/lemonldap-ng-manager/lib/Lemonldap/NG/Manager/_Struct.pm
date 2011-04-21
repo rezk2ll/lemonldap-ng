@@ -343,11 +343,12 @@ sub struct {
                             null    => ['nullParams'],
                             slave   => ['slaveParams'],
                             choice  => [
-                                qw(ldapParams sslParams casParams remoteParams proxyParams openIdParams twitterParams dbiParams apacheParams nullParams choiceParams)
+                                qw(ldapParams sslParams casParams remoteParams proxyParams openIdParams twitterParams dbiParams apacheParams nullParams choiceParams yubikeyParams)
                             ],
                             multi => [
-                                qw(ldapParams sslParams casParams remoteParams proxyParams openIdParams twitterParams dbiParams apacheParams nullParams choiceParams)
+                                qw(ldapParams sslParams casParams remoteParams proxyParams openIdParams twitterParams dbiParams apacheParams nullParams choiceParams yubikeyParams)
                             ],
+                            yubikey => ['yubikeyParams'],
                         }->{$mod};
                         if ($tmp) {
                             $res{$_}++ foreach (@$tmp);
@@ -592,6 +593,18 @@ sub struct {
                         _js   => 'authChoiceRoot',
                         _help => 'authChoice',
                     },
+                },
+
+                # Yubikey
+                yubikeyParams => {
+                    _nodes => [
+                        qw(yubikeyAuthnLevel yubikeyClientID yubikeySecretKey yubikeyPublicIDSize)
+                    ],
+                    _help               => 'authYubikey',
+                    yubikeyAuthnLevel   => 'int:/yubikeyAuthnLevel',
+                    yubikeyClientID     => 'text:/yubikeyClientID',
+                    yubikeySecretKey    => 'text:/yubikeySecretKey',
+                    yubikeyPublicIDSize => 'int:/yubikeyPublicIDSize',
                 },
 
             },
@@ -1699,6 +1712,11 @@ sub testStruct {
         openIdSreg_email    => $lmAttrOrMacro,
         openIdSreg_dob      => $lmAttrOrMacro,
 
+        # Yubikey
+        yubikeyAuthnLevel   => $integer,
+        yubikeyClientID     => $testNotDefined,
+        yubikeySecretKey    => $testNotDefined,
+        yubikeyPublicIDSize => $integer,
     };
 }
 
@@ -1774,6 +1792,7 @@ sub defaultConf {
         vhostPort              => '-1',
         vhostHttps             => '-1',
         whatToTrace            => '$_whatToTrace',
+        yubikeyPublicIDSize    => '12',
         ########
         # SAML #
         ########
@@ -1903,6 +1922,7 @@ sub defaultConf {
         apacheAuthnLevel  => 4,
         nullAuthnLevel    => 0,
         slaveAuthnLevel   => 2,
+        yubikeyAuthnLevel => 3,
 
     };
 }
@@ -2111,7 +2131,7 @@ sub globalTests {
             # Try authentication
             return ( 0, "SMTP authentication failed" )
               unless $smtp->auth( $conf->{SMTPAuthUser},
-                      $conf->{SMTPAuthPass} );
+                $conf->{SMTPAuthPass} );
 
             # Return
             return 1;
