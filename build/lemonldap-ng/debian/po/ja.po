@@ -1,14 +1,14 @@
-# Copyright (C) 2009 Xavier Guimard <x.guimard@free.fr>
+# Copyright (C) 2009-2011 Xavier Guimard <x.guimard@free.fr>
 # This file is distributed under the same license as lemonldap-ng package.
-# Hideki Yamane (Debian-JP) <henrich@debian.or.jp>, 2009.
+# Hideki Yamane (Debian-JP) <henrich@debian.or.jp>, 2009-2011.
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: lemonldap-ng 0.9.4.1-2\n"
+"Project-Id-Version: lemonldap-ng 1.0.4-1\n"
 "Report-Msgid-Bugs-To: lemonldap-ng@packages.debian.org\n"
 "POT-Creation-Date: 2010-12-04 23:10+0100\n"
-"PO-Revision-Date: 2009-11-24 14:26+0900\n"
-"Last-Translator: Hideki Yamane (Debian-JP) <henrich@debian.or.jp>\n"
+"PO-Revision-Date: 2011-05-02 06:26+0900\n"
+"Last-Translator: Hideki Yamane <henrich@debian.org>\n"
 "Language-Team: Japanese <debian-japanese@lists.debian.org>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
@@ -137,8 +137,5 @@ msgstr ""
 msgid ""
 "Lemonldap::NG configuration files have changed, try to migrate your files?"
 msgstr ""
+"Lemonldap::NG の設定ファイルが変更されました。設定の移行を試してますか?"
 
-#, fuzzy
-#~| msgid "Lemonldap::NG DNS domain:"
-#~ msgid "Lemonldap::NG migration:"
-#~ msgstr "Lemonldap::NG DNS ドメイン名:"
