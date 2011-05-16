@@ -1209,7 +1209,15 @@ sub testStruct {
         mailConfirmSubject   => $testNotDefined,
         mailConfirmBody      => $testNotDefined,
         authentication       => {
-            test    => qr/^[a-zA-Z]+(?:\s[\w\s:;]+)?$/,
+            test => sub {
+                my $e = shift;
+
+                # Do not check syntax for Multi
+                return 1 if ( $e =~ /^multi/i );
+
+                # Else, check the authentication module is valid
+                return ( $e =~ qr/^[a-zA-Z]+$/ );
+            },
             msgFail => 'Bad module name',
         },
         cda        => $boolean,
