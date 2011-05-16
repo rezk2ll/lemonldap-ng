@@ -12,7 +12,7 @@ package Lemonldap::NG::Portal::_Multi;
 
 use Lemonldap::NG::Portal::Simple;
 
-our $VERSION = '1.0.0';
+our $VERSION = '1.0.6';
 
 ## @cmethod Lemonldap::NG::Portal::_Multi new(Lemonldap::NG::Portal::Simple portal)
 # Constructor
@@ -25,6 +25,7 @@ sub new {
     for ( my $i = 0 ; $i < 2 ; $i++ ) {
         $stack[$i] =~ s/^Multi\s*//;
         foreach my $l ( split /;/, $stack[$i] ) {
+            $l =~ s/^\s+//;                  # Remove first space
             $l =~ /^([\w#]+)(?:\s+(.*))?$/
               or $portal->abort( 'Bad configuration', "Unable to read $l" );
             my ( $mod, $cond ) = ( $1, $2 );
