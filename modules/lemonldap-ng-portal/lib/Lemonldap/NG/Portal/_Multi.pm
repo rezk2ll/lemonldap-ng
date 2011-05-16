@@ -21,6 +21,8 @@ our $VERSION = '1.0.6';
 sub new {
     my ( $class, $portal ) = splice @_;
     my $self = bless { p => $portal, res => PE_NOSCHEME }, $class;
+
+    # Browse authentication and userDB configuration
     my @stack = ( $portal->{authentication}, $portal->{userDB} );
     for ( my $i = 0 ; $i < 2 ; $i++ ) {
         $stack[$i] =~ s/^Multi\s*//;
@@ -40,7 +42,16 @@ sub new {
             push @{ $self->{stack}->[$i] },
               { m => $mod, c => $cond, n => $name };
         }
+
+        # Override portal settings
+        %{ $self->{p} } = (
+            %{ $self->{p} },
+            %{ $self->{p}->{multi}->{ $self->{stack}->[$i]->[0]->{n} } }
+        ) if ( $self->{p}->{multi}->{ $self->{stack}->[$i]->[0]->{n} } );
+
     }
+
+    # Return _Multi object
     return $self;
 }
 
