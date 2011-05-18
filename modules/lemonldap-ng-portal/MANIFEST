@@ -68,6 +68,9 @@ example/skins/common/warning_triangle.png
 example/skins/common/yubico-icon-small.gif
 example/skins/dark/confirm.tpl
 example/skins/dark/css/styles.css
+example/skins/dark/customfooter.tpl
+example/skins/dark/customhead.tpl
+example/skins/dark/customheader.tpl
 example/skins/dark/error.tpl
 example/skins/dark/footer.tpl
 example/skins/dark/header.tpl
@@ -85,6 +88,9 @@ example/skins/dark/yubikeyform.tpl
 example/skins/impact/authmessage.tpl
 example/skins/impact/confirm.tpl
 example/skins/impact/css/styles.css
+example/skins/impact/customfooter.tpl
+example/skins/impact/customhead.tpl
+example/skins/impact/customheader.tpl
 example/skins/impact/error.tpl
 example/skins/impact/footer.tpl
 example/skins/impact/header.tpl
@@ -108,6 +114,9 @@ example/skins/impact/standardform.tpl
 example/skins/impact/yubikeyform.tpl
 example/skins/pastel/confirm.tpl
 example/skins/pastel/css/styles.css
+example/skins/pastel/customfooter.tpl
+example/skins/pastel/customhead.tpl
+example/skins/pastel/customheader.tpl
 example/skins/pastel/error.tpl
 example/skins/pastel/footer.tpl
 example/skins/pastel/header.tpl
