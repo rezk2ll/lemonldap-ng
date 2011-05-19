@@ -8,7 +8,7 @@ package Lemonldap::NG::Portal::MailReset;
 use strict;
 use warnings;
 
-our $VERSION = '1.0.2';
+our $VERSION = '1.1.0';
 
 use Lemonldap::NG::Portal::Simple qw(:all);
 use base qw(Lemonldap::NG::Portal::SharedConf Exporter);
@@ -133,7 +133,7 @@ sub storeMailSession {
     $h->{_utime} = time();
 
     # Store mail
-    $h->{ $self->{mailSessionKey} } = $self->{mail};
+    $h->{ $self->{mailSessionKey} } = $self->{sessionInfo}->{mailSessionKey};
 
     # Untie session
     untie %$h;
@@ -168,8 +168,9 @@ sub sendConfirmationMail {
 
         # Use HTML template
         my $template = HTML::Template->new(
-            filename => $self->getApacheHtdocsPath() . "skins/common/mail_confirm.tpl",
-            filter   => sub { $self->translate_template(@_) }
+            filename => $self->getApacheHtdocsPath()
+              . "skins/common/mail_confirm.tpl",
+            filter => sub { $self->translate_template(@_) }
         );
         $body = $template->output();
         $html = 1;
@@ -205,8 +206,9 @@ sub sendPasswordMail {
 
         # Use HTML template
         my $template = HTML::Template->new(
-            filename => $self->getApacheHtdocsPath() . "skins/common/mail_password.tpl",
-            filter   => sub { $self->translate_template(@_) }
+            filename => $self->getApacheHtdocsPath()
+              . "skins/common/mail_password.tpl",
+            filter => sub { $self->translate_template(@_) }
         );
         $body = $template->output();
         $html = 1;
