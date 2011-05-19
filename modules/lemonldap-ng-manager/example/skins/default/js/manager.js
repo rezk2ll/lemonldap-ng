@@ -311,9 +311,9 @@ var currentId;
  */
 function safeSelector(data){
 	var escaped_data = data;
-	escaped_data = escaped_data.replace('/','\\/');
-	escaped_data = escaped_data.replace('+','\\+');
-	escaped_data = escaped_data.replace('=','\\=');
+	escaped_data = escaped_data.replace(/\//g,'\\/');
+	escaped_data = escaped_data.replace(/\+/g,'\\+');
+	escaped_data = escaped_data.replace(/=/g,'\\=');
 	return escaped_data;
 }
 function lmtext(id){
