@@ -287,7 +287,7 @@ sub struct {
 
                 portalCustomization => {
                     _nodes => [
-                        qw(portalSkin portalDisplayResetPassword portalAutocomplete portalRequireOldPassword portalUserAttr portalOpenLinkInNewWindow portalAntiFrame)
+                        qw(portalSkin portalDisplayResetPassword portalAutocomplete portalRequireOldPassword hideOldPassword portalUserAttr portalOpenLinkInNewWindow portalAntiFrame)
                     ],
                     _help => 'portalcustom',
 
@@ -297,7 +297,8 @@ sub struct {
                     portalAutocomplete => 'bool:/portalAutocomplete',
                     portalRequireOldPassword =>
                       'bool:/portalRequireOldPassword',
-                    portalUserAttr => 'text:/portalUserAttr',
+                    hideOldPassword => 'bool:/hideOldPassword',
+                    portalUserAttr  => 'text:/portalUserAttr',
                     portalOpenLinkInNewWindow =>
                       'bool:/portalOpenLinkInNewWindow',
                     portalAntiFrame => 'bool:/portalAntiFrame',
@@ -1425,6 +1426,7 @@ sub testStruct {
         portalAntiFrame             => $boolean,
         portalParams                => $testNotDefined,
         portalRequireOldPassword    => $boolean,
+        hideOldPassword             => $boolean,
         portalSkin                  => {
             test    => qr/\w+$/,
             msgFail => 'Bad skin name',
@@ -1743,6 +1745,7 @@ sub defaultConf {
         cookieName               => 'lemonldap',
         domain                   => 'example.com',
         globalStorage            => 'Apache::Session::File',
+        hideOldPassword          => '0',
         https                    => '0',
         issuerDBSAMLActivation   => '0',
         issuerDBSAMLPath         => '^/saml/',
