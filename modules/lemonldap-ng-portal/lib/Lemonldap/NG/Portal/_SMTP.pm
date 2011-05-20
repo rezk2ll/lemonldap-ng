@@ -9,7 +9,7 @@ use strict;
 use String::Random;
 use MIME::Lite;
 
-our $VERSION = '1.0.5';
+our $VERSION = '1.1.0';
 
 ## @method string gen_password(string regexp)
 # Generate a complex password based on a regular expression
@@ -65,6 +65,28 @@ sub send_mail {
     }
 
     return 1;
+}
+
+## @method string getMailSession(string user)
+# Check if a mail session exists
+# @param user the value of the user key in session
+# @return the first session id found or nothing if no session
+sub getMailSession {
+    my ( $self, $user ) = splice @_;
+
+    # Search on mail sessions
+    my $sessions =
+      $self->{globalStorage}
+      ->searchOn( $self->{globalStorageOptions}, "user", $user );
+
+    # Browse found sessions to check if it's a mail session
+    foreach my $id ( keys %$sessions ) {
+        my $h = $self->getApacheSession( $id, 1 ) or next;
+        return $id if ( $h->{_type} =~ /^mail$/ );
+    }
+
+    # No mail session found, return empty string
+    return "";
 }
 
 1;

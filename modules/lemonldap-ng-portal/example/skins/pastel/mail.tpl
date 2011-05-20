@@ -16,13 +16,38 @@
 
                 <table>
                 <tr><th><lang en="Mail" fr="Adresse mail"/></th>
-                <td><input name="mail" type="text"/></td>
+                <td><input name="mail" type="text" value="<TMPL_VAR NAME="MAIL">"/></td>
                 </tr>
                 <tr><td colspan="2">
                 <div class="buttons">
                 <button type="submit" class="positive">
                         <img src="/skins/common/accept.png" alt="" />
                         <lang en="Send me a new password" fr="Envoyez-moi un nouveau mot de passe" />
+                </button>
+                </div></td></tr>
+                </table>
+
+        </form>
+        </TMPL_IF>
+
+        <TMPL_IF NAME="DISPLAY_RESEND_FORM">
+
+        <form action="#" method="post" class="login">
+
+        <input type="hidden" id="authKey" name="<TMPL_VAR NAME="CHOICE_PARAM">" value="<TMPL_VAR NAME="CHOICE_VALUE">" />
+        <input type="hidden" value="<TMPL_VAR NAME="MAIL">" name="mail">
+
+        <h3><lang en="Resend confirmation mail?" fr="Renvoyer le mail de confirmation ?"/></h3>
+
+                <table>
+                <tr><th><input id="resendconfirmation" type="checkbox" name="resendconfirmation"></th>
+                <td><lang en="Yes, resend the mail" fr="Oui, renvoyer le mail"/></td>
+                </tr>
+                <tr><td colspan="2">
+                <div class="buttons">
+                <button type="submit" class="positive">
+                        <img src="/skins/common/accept.png" alt="" />
+                        <lang en="Submit" fr="Valider" />
                 </button>
                 </div></td></tr>
                 </table>

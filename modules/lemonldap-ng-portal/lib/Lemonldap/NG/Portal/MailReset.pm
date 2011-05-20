@@ -125,7 +125,8 @@ sub storeMailSession {
     my ($self) = splice @_;
 
     # Skip this step if confirmation was already sent
-    return PE_OK if $self->{mail_token};
+    return PE_OK
+      if ( $self->{mail_token} or $self->getMailSession( $self->{mail} ) );
 
     # Create a new session
     my $h = $self->getApacheSession();
@@ -140,6 +141,9 @@ sub storeMailSession {
     # Store user
     $h->{user} = $self->{mail};
 
+    # Store type
+    $h->{_type} = "mail";
+
     # Untie session
     untie %$h;
 
@@ -152,8 +156,20 @@ sub storeMailSession {
 sub sendConfirmationMail {
     my ($self) = splice @_;
 
-    # Skip this step if confirmation was already sent
+    # Skip this step if user clicked on the confirmation link
     return PE_OK if $self->{mail_token};
+
+    # Check if confirmation mail has already been sent
+    my $mail_session = $self->getMailSession( $self->{mail} );
+    my $mail_already_sent = ( $mail_session and !$self->{id} ) ? 1 : 0;
+
+    # Ask if user want another confirmation email
+    if ( $mail_already_sent and !$self->param('resendconfirmation') ) {
+        return PE_MAILCONFIRMATION_ALREADY_SENT;
+    }
+    else {
+        $self->{id} = $mail_session unless $self->{id};
+    }
 
     # Get mail address
     unless ( $self->{mailAddress} ) {
