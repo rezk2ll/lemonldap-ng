@@ -195,10 +195,19 @@ sub sendConfirmationMail {
     else {
 
         # Use HTML template
+        my $tplfile =
+          (     -e $self->getApacheHtdocsPath() 
+              . "skins/"
+              . $self->{portalSkin}
+              . "/mail_confirm.tpl" )
+          ? $self->getApacheHtdocsPath()
+          . "skins/"
+          . $self->{portalSkin}
+          . "/mail_confirm.tpl"
+          : $self->getApacheHtdocsPath() . "skins/common/mail_confirm.tpl";
         my $template = HTML::Template->new(
-            filename => $self->getApacheHtdocsPath()
-              . "skins/common/mail_confirm.tpl",
-            filter => sub { $self->translate_template(@_) }
+            filename => $tplfile,
+            filter   => sub { $self->translate_template(@_) }
         );
         $body = $template->output();
         $html = 1;
@@ -240,10 +249,19 @@ sub sendPasswordMail {
     else {
 
         # Use HTML template
+        my $tplfile =
+          (     -e $self->getApacheHtdocsPath() 
+              . "skins/"
+              . $self->{portalSkin}
+              . "/mail_password.tpl" )
+          ? $self->getApacheHtdocsPath()
+          . "skins/"
+          . $self->{portalSkin}
+          . "/mail_password.tpl"
+          : $self->getApacheHtdocsPath() . "skins/common/mail_password.tpl";
         my $template = HTML::Template->new(
-            filename => $self->getApacheHtdocsPath()
-              . "skins/common/mail_password.tpl",
-            filter => sub { $self->translate_template(@_) }
+            filename => $tplfile,
+            filter   => sub { $self->translate_template(@_) }
         );
         $body = $template->output();
         $html = 1;
