@@ -8,8 +8,12 @@
         <td><input name="user" type="text" value="<TMPL_VAR NAME=LOGIN>" tabindex="1" /></td></tr>
         </TMPL_IF>
         <TMPL_IF NAME="REQUIRE_OLDPASSWORD">
+        <TMPL_IF NAME="HIDE_OLDPASSWORD">
+        <input name="oldpassword" type="hidden" value="<TMPL_VAR NAME=OLDPASSWORD>">
+        <TMPL_ELSE>
         <tr><th><lang en="Current password" fr="Mot de passe actuel" /></th>
-        <td><input name="oldpassword" type="password" tabindex="2" /></td></tr>
+        <td><input name="oldpassword" type="password" tabindex="2" value="<TMPL_VAR NAME=OLDPASSWORD>"/></td></tr>
+        </TMPL_IF>
         </TMPL_IF>
         <tr><th><lang en="New password" fr="Nouveau mot de passe" /></th>
         <td><input name="newpassword" type="password" tabindex="3" /></td></tr>

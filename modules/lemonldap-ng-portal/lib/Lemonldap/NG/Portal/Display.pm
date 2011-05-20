@@ -9,7 +9,7 @@ use strict;
 use Lemonldap::NG::Portal::Simple;
 use utf8;
 
-our $VERSION = '1.0.2';
+our $VERSION = '1.1.0';
 
 ## @method array display()
 # Call portal process and set template parameters
@@ -97,7 +97,9 @@ sub display {
                 DISPLAY_TAB     => $self->{menuDisplayTab},
                 LOGOUT_URL      => "$ENV{SCRIPT_NAME}?logout=1",
                 REQUIRE_OLDPASSWORD => $self->{portalRequireOldPassword},
-                DISPLAY_MODULES     => $self->{menuDisplayModules},
+                HIDE_OLDPASSWORD =>
+                  0,    # Do not hide old password if it is required
+                DISPLAY_MODULES => $self->{menuDisplayModules},
                 APPSLIST_MENU => $self->{menuAppslistMenu},  # For old templates
                 APPSLIST_DESC => $self->{menuAppslistDesc},  # For old templates
                 SCRIPT_NAME   => $ENV{SCRIPT_NAME},
@@ -227,13 +229,19 @@ sub display {
         {
             %templateParams = (
                 %templateParams,
-                REQUIRE_OLDPASSWORD   => 1,
+                REQUIRE_OLDPASSWORD =>
+                  1,    # Old password is required to check user credentials
                 DISPLAY_PASSWORD      => 1,
                 DISPLAY_RESETPASSWORD => 0,
                 DISPLAY_FORM          => 0,
                 AUTH_LOOP             => [],
                 CHOICE_PARAM          => $self->{authChoiceParam},
                 CHOICE_VALUE          => $self->{_authChoice},
+                OLDPASSWORD =>
+                  $self->checkXSSAttack( 'oldpassword', $self->{oldpassword} )
+                ? ""
+                : $self->{oldpassword},
+                HIDE_OLDPASSWORD => $self->{hideOldPassword},
             );
         }
 
