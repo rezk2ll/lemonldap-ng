@@ -98,8 +98,9 @@ sub extractMailInfo {
         my $h = $self->getApacheSession( $self->{mail_token} );
 
         if ( ref $h ) {
-            $self->{mail} = $h->{ $self->{mailSessionKey} };
-            $self->lmLog( "Mail associated to token: " . $self->{mail},
+            $self->{mail}        = $h->{user};
+            $self->{mailAddress} = $h->{ $self->{mailSessionKey} };
+            $self->lmLog( "User associated to token: " . $self->{mail},
                 'debug' );
         }
 
@@ -133,7 +134,11 @@ sub storeMailSession {
     $h->{_utime} = time();
 
     # Store mail
-    $h->{ $self->{mailSessionKey} } = $self->{sessionInfo}->{mailSessionKey};
+    $h->{ $self->{mailSessionKey} } =
+      $self->getFirstValue( $self->{sessionInfo}->{ $self->{mailSessionKey} } );
+
+    # Store user
+    $h->{user} = $self->{mail};
 
     # Untie session
     untie %$h;
@@ -149,6 +154,13 @@ sub sendConfirmationMail {
 
     # Skip this step if confirmation was already sent
     return PE_OK if $self->{mail_token};
+
+    # Get mail address
+    unless ( $self->{mailAddress} ) {
+        $self->{mailAddress} =
+          $self->getFirstValue(
+            $self->{sessionInfo}->{ $self->{mailSessionKey} } );
+    }
 
     # Build confirmation url
     my $url = $self->{mailUrl} . "?mail_token=" . $self->{id};
@@ -182,7 +194,7 @@ sub sendConfirmationMail {
 
     # Send mail
     return PE_MAILERROR
-      unless $self->send_mail( $self->{mail}, $subject, $body, $html );
+      unless $self->send_mail( $self->{mailAddress}, $subject, $body, $html );
 
     PE_MAILOK;
 }
@@ -192,6 +204,13 @@ sub sendConfirmationMail {
 # @return Lemonldap::NG::Portal constant
 sub sendPasswordMail {
     my ($self) = splice @_;
+
+    # Get mail address
+    unless ( $self->{mailAddress} ) {
+        $self->{mailAddress} =
+          $self->getFirstValue(
+            $self->{sessionInfo}->{ $self->{mailSessionKey} } );
+    }
 
     # Build mail content
     my $subject = $self->{mailSubject};
@@ -221,7 +240,7 @@ sub sendPasswordMail {
 
     # Send mail
     return PE_MAILERROR
-      unless $self->send_mail( $self->{mail}, $subject, $body, $html );
+      unless $self->send_mail( $self->{mailAddress}, $subject, $body, $html );
 
     PE_MAILOK;
 }
