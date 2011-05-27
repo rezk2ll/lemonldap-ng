@@ -56,8 +56,15 @@ sub send_mail {
     # Encode the subject
     $subject = encode( "MIME-Header", decode( "utf8", $subject ) );
 
-    # Send the mail
+    # Detect included images (cid)
+    my %cid = ( $body =~ m/"cid:([^:]+):([^"]+)"/g );
+
+    # Replace cid in body
+    $body =~ s/"cid:([^:]+):([^"]+)"/"cid:$1"/g;
+
     eval {
+
+        # Create message
         my $message = MIME::Lite->new(
             From       => $self->{mailFrom},
             To         => $mail,
@@ -66,8 +73,21 @@ sub send_mail {
             Type       => "TEXT",
             Data       => $body,
         );
+
+        # Manage content type and charset
         $message->attr( "content-type" => "text/html" ) if $html;
         $message->attr( "content-type.charset" => $charset );
+
+        # Attach included images
+        foreach ( keys %cid ) {
+            $message->attach(
+                Type => "image/" . ( $cid{$_} =~ m/\.(\w+)/ )[0],
+                Id => $_,
+                Path => $self->getApacheHtdocsPath() . "/" . $cid{$_},
+            );
+        }
+
+        # Send the mail
         $self->{SMTPServer}
           ? $message->send(
             "smtp", $self->{SMTPServer},
