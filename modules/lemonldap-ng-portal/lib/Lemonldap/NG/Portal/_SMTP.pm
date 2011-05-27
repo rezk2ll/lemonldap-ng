@@ -42,13 +42,17 @@ sub send_mail {
     $self->lmLog( "SMTP Subject " . $subject,       'debug' );
     $self->lmLog( "SMTP Body " . $body,             'debug' );
     $self->lmLog( "SMTP HTML flag " . ( $html ? "on" : "off" ), 'debug' );
+    $self->lmLog( "SMTP Reply-To " . $self->{mailReplyTo}, 'debug' )
+      if $self->{mailReplyTo};
+
     eval {
         my $message = MIME::Lite->new(
-            From    => $self->{mailFrom},
-            To      => $mail,
-            Subject => $subject,
-            Type    => "TEXT",
-            Data    => $body,
+            From       => $self->{mailFrom},
+            To         => $mail,
+            "Reply-To" => $self->{mailReplyTo},
+            Subject    => $subject,
+            Type       => "TEXT",
+            Data       => $body,
         );
         $message->attr( "content-type" => "text/html; charset=utf-8" ) if $html;
         $self->{SMTPServer}

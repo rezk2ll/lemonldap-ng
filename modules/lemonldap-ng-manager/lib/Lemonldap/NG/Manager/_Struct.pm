@@ -773,7 +773,7 @@ sub struct {
 
                 passwordManagement => {
                     _nodes => [
-                        qw(SMTPServer SMTPAuthUser SMTPAuthPass mailUrl mailFrom mailSubject mailBody mailConfirmSubject mailConfirmBody randomPasswordRegexp)
+                        qw(SMTPServer SMTPAuthUser SMTPAuthPass mailUrl mailFrom mailReplyTo mailSubject mailBody mailConfirmSubject mailConfirmBody randomPasswordRegexp)
                     ],
                     _help                => 'password',
                     SMTPServer           => 'text:/SMTPServer',
@@ -781,6 +781,7 @@ sub struct {
                     SMTPAuthPass         => 'text:/SMTPAuthPass',
                     mailUrl              => 'text:/mailUrl',
                     mailFrom             => 'text:/mailFrom',
+                    mailReplyTo          => 'text:/mailReplyTo',
                     mailSubject          => 'text:/mailSubject',
                     mailBody             => 'textarea:/mailBody',
                     mailConfirmSubject   => 'text:/mailConfirmSubject',
@@ -1195,6 +1196,7 @@ sub testStruct {
             keyMsgFail => 'Bad category ID',
         },
         mailFrom             => $testNotDefined,
+        mailReplyTo          => $testNotDefined,
         trustedDomains       => $testNotDefined,
         exportedAttr         => $testNotDefined,
         mailSubject          => $testNotDefined,
