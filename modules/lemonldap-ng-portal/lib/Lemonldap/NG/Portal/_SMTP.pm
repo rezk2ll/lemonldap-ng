@@ -8,6 +8,7 @@ package Lemonldap::NG::Portal::_SMTP;
 use strict;
 use String::Random;
 use MIME::Lite;
+use Encode;
 
 our $VERSION = '1.1.0';
 
@@ -37,6 +38,13 @@ sub send_mail {
     my $body    = shift;
     my $html    = shift;
 
+    # Set charset
+    my $charset = $self->{mailCharset} ? $self->{mailCharset} : "utf-8";
+
+    # Encode the body with the given charset
+    $body = encode( $charset, $body );
+
+    # Debug messages
     $self->lmLog( "SMTP From " . $self->{mailFrom}, 'debug' );
     $self->lmLog( "SMTP To " . $mail,               'debug' );
     $self->lmLog( "SMTP Subject " . $subject,       'debug' );
@@ -45,6 +53,7 @@ sub send_mail {
     $self->lmLog( "SMTP Reply-To " . $self->{mailReplyTo}, 'debug' )
       if $self->{mailReplyTo};
 
+    # Send the mail
     eval {
         my $message = MIME::Lite->new(
             From       => $self->{mailFrom},
@@ -54,7 +63,8 @@ sub send_mail {
             Type       => "TEXT",
             Data       => $body,
         );
-        $message->attr( "content-type" => "text/html; charset=utf-8" ) if $html;
+        $message->attr( "content-type" => "text/html" ) if $html;
+        $message->attr( "content-type.charset" => $charset );
         $self->{SMTPServer}
           ? $message->send(
             "smtp", $self->{SMTPServer},

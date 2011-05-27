@@ -13,6 +13,7 @@ our $VERSION = '1.1.0';
 use Lemonldap::NG::Portal::Simple qw(:all);
 use base qw(Lemonldap::NG::Portal::SharedConf Exporter);
 use HTML::Template;
+use Encode;
 
 #inherits Lemonldap::NG::Portal::_SMTP
 
@@ -215,7 +216,7 @@ sub sendConfirmationMail {
 
     # Replace variables in body
     $body =~ s/\$url/$url/g;
-    $body =~ s/\$(\w+)/$self->{sessionInfo}->{$1}/g;
+    $body =~ s/\$(\w+)/decode("utf8",$self->{sessionInfo}->{$1})/ge;
 
     # Send mail
     return PE_MAILERROR
@@ -270,7 +271,7 @@ sub sendPasswordMail {
     # Replace variables in body
     my $password = $self->{reset_password};
     $body =~ s/\$password/$password/g;
-    $body =~ s/\$(\w+)/$self->{sessionInfo}->{$1}/g;
+    $body =~ s/\$(\w+)/decode("utf8",$self->{sessionInfo}->{$1})/ge;
 
     # Send mail
     return PE_MAILERROR

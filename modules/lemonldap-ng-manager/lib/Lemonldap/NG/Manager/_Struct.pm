@@ -773,7 +773,7 @@ sub struct {
 
                 passwordManagement => {
                     _nodes => [
-                        qw(SMTPServer SMTPAuthUser SMTPAuthPass mailUrl mailFrom mailReplyTo mailSubject mailBody mailConfirmSubject mailConfirmBody randomPasswordRegexp)
+                        qw(SMTPServer SMTPAuthUser SMTPAuthPass mailUrl mailFrom mailReplyTo mailCharset mailSubject mailBody mailConfirmSubject mailConfirmBody randomPasswordRegexp)
                     ],
                     _help                => 'password',
                     SMTPServer           => 'text:/SMTPServer',
@@ -782,6 +782,7 @@ sub struct {
                     mailUrl              => 'text:/mailUrl',
                     mailFrom             => 'text:/mailFrom',
                     mailReplyTo          => 'text:/mailReplyTo',
+                    mailCharset          => 'text:/mailCharset',
                     mailSubject          => 'text:/mailSubject',
                     mailBody             => 'textarea:/mailBody',
                     mailConfirmSubject   => 'text:/mailConfirmSubject',
@@ -1195,6 +1196,7 @@ sub testStruct {
             keyTest    => qr/^(\d*)?\w+$/,
             keyMsgFail => 'Bad category ID',
         },
+        mailCharset          => $testNotDefined,
         mailFrom             => $testNotDefined,
         mailReplyTo          => $testNotDefined,
         trustedDomains       => $testNotDefined,
@@ -1765,6 +1767,7 @@ sub defaultConf {
         ldapServer                  => 'localhost',
         ldapTimeout                 => '120',
         ldapVersion                 => '3',
+        mailCharset                 => 'utf-8',
         managerDn                   => '',
         managerPassword             => '',
         notification                => '0',
