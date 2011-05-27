@@ -53,6 +53,9 @@ sub send_mail {
     $self->lmLog( "SMTP Reply-To " . $self->{mailReplyTo}, 'debug' )
       if $self->{mailReplyTo};
 
+    # Encode the subject
+    $subject = encode( "MIME-Header", decode( "utf8", $subject ) );
+
     # Send the mail
     eval {
         my $message = MIME::Lite->new(
