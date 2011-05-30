@@ -28,6 +28,7 @@ use Encode;
 #   - extractMailInfo
 #   - storeMailSession
 #   - sendConfirmationMail
+#   - changePassword
 #   - sendPasswordMail
 # - portal core module:
 #   - setMacros
@@ -39,7 +40,6 @@ use Encode;
 #   - setSessionInfo
 # - passwordDB module:
 #   - passwordDBInit
-#   - resetPassword
 # @return 1 if all is OK
 sub process {
     my ($self) = splice @_;
@@ -50,7 +50,7 @@ sub process {
     $self->{error} = $self->_subProcess(
         qw(smtpInit userDBInit passwordDBInit extractMailInfo
           getUser setSessionInfo setMacros setLocalGroups setGroups setPersistentSessionInfo
-          storeMailSession sendConfirmationMail resetPassword sendPasswordMail)
+          storeMailSession sendConfirmationMail changePassword sendPasswordMail)
     );
 
     return (
@@ -87,7 +87,9 @@ sub extractMailInfo {
     return PE_MAILFORMEMPTY
       unless ( $self->param('mail') || $self->param('mail_token') );
 
-    $self->{mail_token} = $self->param('mail_token');
+    $self->{mail_token}      = $self->param('mail_token');
+    $self->{newpassword}     = $self->param('newpassword');
+    $self->{confirmpassword} = $self->param('confirmpassword');
 
     # If a mail token is present, find the corresponding mail
     if ( $self->{mail_token} ) {
@@ -105,8 +107,8 @@ sub extractMailInfo {
                 'debug' );
         }
 
-        # Mail token can be used only one time, delete the session
-        tied(%$h)->delete() if ref $h;
+        # Close session, it will be deleted after password change success
+        untie %$h;
 
         return PE_BADMAILTOKEN unless ( $self->{mail} );
     }
@@ -225,6 +227,53 @@ sub sendConfirmationMail {
     PE_MAILOK;
 }
 
+## @method int changePassword
+# Change the password or generate a new password
+# @return Lemonldap::NG::Portal constant
+sub changePassword {
+    my ($self) = splice @_;
+
+    # Check if user wants to generate the new password
+    if ( $self->param('reset') ) {
+
+        $self->lmLog(
+            "Reset password request for " . $self->{sessionInfo}->{_user},
+            'debug' );
+
+        # Generate a complex password
+        my $password = $self->gen_password( $self->{randomPasswordRegexp} );
+
+        $self->lmLog( "Generated password: " . $password, 'debug' );
+
+        $self->{newpassword}     = $password;
+        $self->{confirmpassword} = $password;
+    }
+
+    # Else a password is required
+    else {
+        return PE_FORMEMPTY
+          unless ( $self->{newpassword} && $self->{confirmpassword} );
+    }
+
+    # Modify the password
+    my $result = $self->modifyPassword( $self->param('reset') );
+
+    # Mail token can be used only one time, delete the session if all is ok
+    if ( $result == PE_PASSWORD_OK ) {
+
+        # Get the corresponding session
+        my $h = $self->getApacheSession( $self->{mail_token} );
+
+        # Delete it
+        tied(%$h)->delete() if ref $h;
+
+        # Force result to PE_OK to continue the process
+        $result = PE_OK;
+    }
+
+    return $result;
+}
+
 ## @method int sendPasswordMail
 # Send mail containing the new password
 # @return Lemonldap::NG::Portal constant
@@ -269,7 +318,7 @@ sub sendPasswordMail {
     }
 
     # Replace variables in body
-    my $password = $self->{reset_password};
+    my $password = $self->{newpassword};
     $body =~ s/\$password/$password/g;
     $body =~ s/\$(\w+)/decode("utf8",$self->{sessionInfo}->{$1})/ge;
 

@@ -33,20 +33,40 @@ $template->param(
     ? ""
     : $portal->{mail}
 );
+$template->param(
+    MAIL_TOKEN => $portal->checkXSSAttack( 'mail_token', $portal->{mail_token} )
+    ? ""
+    : $portal->{mail_token}
+);
 
 # Display form the first time
-if ( $portal->{error} == PE_MAILFORMEMPTY
-    or ( $portal->{error} == PE_BADCREDENTIALS and !$portal->{mail_token} ) )
+if (
+    (
+           $portal->{error} == PE_MAILFORMEMPTY
+        or $portal->{error} == PE_BADCREDENTIALS
+    )
+    and !$portal->{mail_token}
+  )
 {
 
-    $template->param( DISPLAY_FORM        => 1 );
-    $template->param( DISPLAY_RESEND_FORM => 0 );
+    $template->param( DISPLAY_FORM          => 1 );
+    $template->param( DISPLAY_RESEND_FORM   => 0 );
+    $template->param( DISPLAY_PASSWORD_FORM => 0 );
 }
 
 # Display mail confirmation resent form
 if ( $portal->{error} == PE_MAILCONFIRMATION_ALREADY_SENT ) {
-    $template->param( DISPLAY_FORM        => 0 );
-    $template->param( DISPLAY_RESEND_FORM => 1 );
+    $template->param( DISPLAY_FORM          => 0 );
+    $template->param( DISPLAY_RESEND_FORM   => 1 );
+    $template->param( DISPLAY_PASSWORD_FORM => 0 );
+}
+
+if ( $portal->{mail_token}
+    and ( $portal->{error} != PE_MAILERROR and $portal->{error} != PE_MAILOK ) )
+{
+    $template->param( DISPLAY_FORM          => 0 );
+    $template->param( DISPLAY_RESEND_FORM   => 0 );
+    $template->param( DISPLAY_PASSWORD_FORM => 1 );
 }
 
 print $portal->header('text/html; charset=utf8');
