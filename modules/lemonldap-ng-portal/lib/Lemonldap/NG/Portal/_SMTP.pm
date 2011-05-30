@@ -65,26 +65,49 @@ sub send_mail {
     eval {
 
         # Create message
-        my $message = MIME::Lite->new(
-            From       => $self->{mailFrom},
-            To         => $mail,
-            "Reply-To" => $self->{mailReplyTo},
-            Subject    => $subject,
-            Type       => "TEXT",
-            Data       => $body,
-        );
+        my $message;
 
-        # Manage content type and charset
-        $message->attr( "content-type" => "text/html" ) if $html;
-        $message->attr( "content-type.charset" => $charset );
-
-        # Attach included images
-        foreach ( keys %cid ) {
-            $message->attach(
-                Type => "image/" . ( $cid{$_} =~ m/\.(\w+)/ )[0],
-                Id => $_,
-                Path => $self->getApacheHtdocsPath() . "/" . $cid{$_},
+        # HTML case
+        if ($html) {
+            $message = MIME::Lite->new(
+                From       => $self->{mailFrom},
+                To         => $mail,
+                "Reply-To" => $self->{mailReplyTo},
+                Subject    => $subject,
+                Type       => 'multipart/related',
             );
+
+            # Attach HTML message
+            $message->attach(
+                Type => "text/html; charset=$charset",
+                Data => qq{$body},
+            );
+
+            # Attach included images
+            foreach ( keys %cid ) {
+                $message->attach(
+                    Type => "image/" . ( $cid{$_} =~ m/\.(\w+)/ )[0],
+                    Id => $_,
+                    Path => $self->getApacheHtdocsPath() . "/" . $cid{$_},
+                );
+            }
+        }
+
+        # Plain text case
+        else {
+            $message = MIME::Lite->new(
+                From       => $self->{mailFrom},
+                To         => $mail,
+                "Reply-To" => $self->{mailReplyTo},
+                Subject    => $subject,
+                Type       => 'TEXT',
+                Data       => $body,
+            );
+
+            # Manage content type and charset
+            $message->attr( "content-type"         => "text/plain" );
+            $message->attr( "content-type.charset" => $charset );
+
         }
 
         # Send the mail
