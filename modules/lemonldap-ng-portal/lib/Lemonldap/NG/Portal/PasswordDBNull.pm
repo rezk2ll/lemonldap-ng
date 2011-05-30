@@ -24,11 +24,4 @@ sub modifyPassword {
     PE_OK;
 }
 
-## @apmethod int resetPassword()
-# Does nothing
-# @return Lemonldap::NG::Portal constant
-sub resetPassword {
-    PE_OK;
-}
-
 1;

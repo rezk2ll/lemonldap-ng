@@ -80,33 +80,4 @@ sub modifyPassword {
     PE_PASSWORD_OK;
 }
 
-## @apmethod int resetPassword()
-# Reset the password
-# @return Lemonldap::NG::Portal constant
-sub resetPassword {
-    my $self = shift;
-
-    # Exit method if no mail and mail_token
-    return PE_OK unless ( $self->{mail} && $self->{mail_token} );
-
-    $self->lmLog( "Reset password request for " . $self->{mail}, 'debug' );
-
-    # Generate a complex password
-    my $password = $self->gen_password( $self->{randomPasswordRegexp} );
-
-    $self->lmLog( "Generated password: " . $password, 'debug' );
-
-    # Modify password
-    my $result =
-      $self->modify_password( $self->{mail}, $password,
-        $self->{dbiPasswordMailCol} );
-
-    return PE_ERROR unless $result;
-
-    # Store password to forward it to the user
-    $self->{reset_password} = $password;
-
-    PE_OK;
-}
-
 1;

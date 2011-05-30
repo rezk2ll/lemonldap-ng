@@ -27,12 +27,4 @@ sub modifyPassword {
     return $self->_choice->try( 'modifyPassword', 2 );
 }
 
-## @apmethod int resetPassword()
-# Does nothing
-# @return Lemonldap::NG::Portal constant
-sub resetPassword {
-    my $self = shift;
-    return $self->_choice->try( 'resetPassword', 2 );
-}
-
 1;
