@@ -751,6 +751,7 @@ sub error_type {
                 PE_PP_GRACE,     PE_PP_EXP_WARNING,
                 PE_NOTIFICATION, PE_BADURL,
                 PE_CONFIRM,      PE_MAILFORMEMPTY,
+                PE_MAILCONFIRMATION_ALREADY_SENT,
             )
         )
       );
