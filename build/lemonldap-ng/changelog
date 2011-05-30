@@ -1,3 +1,14 @@
+lemonldap-ng (1.0.6) stable; urgency=low
+   
+    * [LEMONLDAP-297] - LDAP attributes are not explicitely requested
+    * [LEMONLDAP-298] - Multi option with # not accepted in Manager
+    * [LEMONLDAP-304] - Cannot use spaces between values of Multi
+      authentication
+      parameter
+    * [LEMONLDAP-305] - Parameters are not overriden in the first Multi module
+    * [LEMONLDAP-307] - Base64 encoded IDs can contain more than one "/", but 
+      only the first is escaped
+
 lemonldap-ng (1.0.5) stable; urgency=low
 
     * [LEMONLDAP-292] - Application menu is not well displayed with multiple
