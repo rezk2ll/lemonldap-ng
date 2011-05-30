@@ -247,6 +247,7 @@ sub changePassword {
 
         $self->{newpassword}     = $password;
         $self->{confirmpassword} = $password;
+        $self->{forceReset}      = 1;
     }
 
     # Else a password is required
@@ -256,7 +257,7 @@ sub changePassword {
     }
 
     # Modify the password
-    my $result = $self->modifyPassword( $self->param('reset') );
+    my $result = $self->modifyPassword();
 
     # Mail token can be used only one time, delete the session if all is ok
     if ( $result == PE_PASSWORD_OK ) {

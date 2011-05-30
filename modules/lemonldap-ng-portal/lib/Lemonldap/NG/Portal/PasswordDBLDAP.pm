@@ -30,12 +30,11 @@ sub passwordDBInit {
     PE_OK;
 }
 
-## @apmethod int modifyPassword(boolean reset)
+## @apmethod int modifyPassword()
 # Modify the password by LDAP mechanism.
-# @param reset Force pwdReset flag to TRUE
 # @return Lemonldap::NG::Portal constant
 sub modifyPassword {
-    my ($self,$reset) = splice @_;
+    my $self = shift;
 
     # Exit method if no password change requested
     return PE_OK unless ( $self->{newpassword} );
@@ -66,8 +65,8 @@ sub modifyPassword {
 
     return $code unless ( $code == PE_PASSWORD_OK );
 
-    # If Password Policy and reset asked, set the PwdReset flag
-    if ( $self->{ldapPpolicyControl} and $reset) {
+    # If password policy and force reset, set pwdReset flag
+    if ( $self->{ldapPpolicyControl} and $self->{forceReset} ) {
         my $result =
           $self->ldap->modify( $self->{dn},
             replace => { 'pwdReset' => 'TRUE' } );
