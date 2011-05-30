@@ -686,6 +686,10 @@ sub buildHiddenForm {
 sub checkXSSAttack {
     my ( $self, $name, $value ) = splice @_;
 
+    # Empty values are not bad
+    return 0 unless $value;
+
+    # Test value
     if ( $value =~ m/(?:\0|<|'|"|`|\%(?:00|25|3C|22|27|2C))/ ) {
         $self->lmLog( "XSS attack detected (param: $name | value: $value)",
             "warn" );
