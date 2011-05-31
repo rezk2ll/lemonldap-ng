@@ -20,7 +20,7 @@ use Lemonldap::NG::Manager::_Struct;       #link protected struct _Struct object
 use Lemonldap::NG::Manager::_i18n;
 use Lemonldap::NG::Common::Conf::Constants;    #inherits
 
-our $VERSION = '1.0.0';
+our $VERSION = '1.1.0';
 our ( $stylesheet, $parser );
 
 ## @method void confUpload(ref rdata)
@@ -721,7 +721,7 @@ sub setKeyToH {
                 unless ( ref( $tmp->{$key} ) ) {
                     $self->lmLog(
 "setKeyToH: k2 $k2 set, but $key is not a reference, create it",
-                        'error'
+                        'debug'
                     );
                     $tmp->{$key} = {};
                 }
