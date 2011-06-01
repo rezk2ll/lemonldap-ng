@@ -12,7 +12,7 @@ use Lemonldap::NG::Portal::_LibAccess;
 use base qw(Lemonldap::NG::Portal::_LibAccess);
 use Clone qw(clone);
 
-our $VERSION  = '1.0.5';
+our $VERSION  = '1.1.0';
 our $catlevel = 0;
 
 ## @method void menuInit()
@@ -62,9 +62,10 @@ sub menuInit {
       );
 
     # Application list for old templates
-    # TODO create an option to activate them, off by default
-    $self->{menuAppslistMenu} = $self->appslistMenu();
-    $self->{menuAppslistDesc} = $self->appslistDescription();
+    if ( $self->{useOldMenuItems} ) {
+        $self->{menuAppslistMenu} = $self->appslistMenu();
+        $self->{menuAppslistDesc} = $self->appslistDescription();
+    }
 
     return;
 }
