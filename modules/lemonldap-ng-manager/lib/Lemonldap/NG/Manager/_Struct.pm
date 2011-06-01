@@ -772,22 +772,36 @@ sub struct {
                 },
 
                 passwordManagement => {
-                    _nodes => [
-                        qw(SMTPServer SMTPAuthUser SMTPAuthPass mailUrl mailFrom mailReplyTo mailCharset mailSubject mailBody mailConfirmSubject mailConfirmBody randomPasswordRegexp)
-                    ],
-                    _help                => 'password',
-                    SMTPServer           => 'text:/SMTPServer',
-                    SMTPAuthUser         => 'text:/SMTPAuthUser',
-                    SMTPAuthPass         => 'text:/SMTPAuthPass',
-                    mailUrl              => 'text:/mailUrl',
-                    mailFrom             => 'text:/mailFrom',
-                    mailReplyTo          => 'text:/mailReplyTo',
-                    mailCharset          => 'text:/mailCharset',
-                    mailSubject          => 'text:/mailSubject',
-                    mailBody             => 'textarea:/mailBody',
-                    mailConfirmSubject   => 'text:/mailConfirmSubject',
-                    mailConfirmBody      => 'textarea:/mailConfirmBody',
-                    randomPasswordRegexp => 'text:/randomPasswordRegexp',
+                    _nodes => [qw(SMTP mailHeaders mailContent mailOther)],
+                    _help  => 'password',
+                    SMTP   => {
+                        _nodes => [qw(SMTPServer SMTPAuthUser SMTPAuthPass)],
+                        SMTPServer   => 'text:/SMTPServer',
+                        SMTPAuthUser => 'text:/SMTPAuthUser',
+                        SMTPAuthPass => 'text:/SMTPAuthPass',
+                    },
+                    mailHeaders => {
+                        _nodes      => [qw(mailFrom mailReplyTo mailCharset)],
+                        mailFrom    => 'text:/mailFrom',
+                        mailReplyTo => 'text:/mailReplyTo',
+                        mailCharset => 'text:/mailCharset',
+                    },
+                    mailContent => {
+                        _nodes => [
+                            qw(mailSubject mailBody mailConfirmSubject mailConfirmBody)
+                        ],
+                        mailSubject        => 'text:/mailSubject',
+                        mailBody           => 'textarea:/mailBody',
+                        mailConfirmSubject => 'text:/mailConfirmSubject',
+                        mailConfirmBody    => 'textarea:/mailConfirmBody',
+                    },
+                    mailOther => {
+                        _nodes =>
+                          [qw(mailUrl randomPasswordRegexp mailTimeout)],
+                        mailUrl              => 'text:/mailUrl',
+                        randomPasswordRegexp => 'text:/randomPasswordRegexp',
+                        mailTimeout          => 'int:/mailTimeout',
+                    },
                 },
 
                 security => {
@@ -1211,6 +1225,7 @@ sub testStruct {
         cookieExpiration     => $testNotDefined,
         notificationStorage  => $testNotDefined,
         mailUrl              => $testNotDefined,
+        mailTimeout          => $integer,
         mailConfirmSubject   => $testNotDefined,
         mailConfirmBody      => $testNotDefined,
         authentication       => {
@@ -1768,6 +1783,7 @@ sub defaultConf {
         ldapTimeout                 => '120',
         ldapVersion                 => '3',
         mailCharset                 => 'utf-8',
+        mailTimeout                 => '0',
         managerDn                   => '',
         managerPassword             => '',
         notification                => '0',
