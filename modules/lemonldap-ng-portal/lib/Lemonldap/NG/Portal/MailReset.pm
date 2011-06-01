@@ -14,6 +14,7 @@ use Lemonldap::NG::Portal::Simple qw(:all);
 use base qw(Lemonldap::NG::Portal::SharedConf Exporter);
 use HTML::Template;
 use Encode;
+use POSIX;
 
 #inherits Lemonldap::NG::Portal::_SMTP
 
@@ -135,7 +136,16 @@ sub storeMailSession {
     my $h = $self->getApacheSession();
 
     # Set _utime for session autoremove
-    $h->{_utime} = time();
+    # Use default session timeout and mail session timeout to compute it
+    my $time        = time();
+    my $timeout     = $self->{timeout};
+    my $mailTimeout = $self->{mailTimeout} || $timeout;
+
+    $h->{_utime} = $time + ( $mailTimeout - $timeout );
+
+    # Store expiration timestamp for further use
+    $h->{mailSessionTimeoutTimestamp}    = $time + $mailTimeout;
+    $self->{mailSessionTimeoutTimestamp} = $time + $mailTimeout;
 
     # Store mail
     $h->{ $self->{mailSessionKey} } =
@@ -172,6 +182,11 @@ sub sendConfirmationMail {
     }
     else {
         $self->{id} = $mail_session unless $self->{id};
+
+        my $h = $self->getApacheSession( $mail_session, 1 );
+        $self->{mailSessionTimeoutTimestamp} =
+          $h->{mailSessionTimeoutTimestamp};
+        untie %$h;
     }
 
     # Get mail address
@@ -216,7 +231,17 @@ sub sendConfirmationMail {
         $html = 1;
     }
 
+    # Mail date expiration
+    my $expTimestamp = $self->{mailSessionTimeoutTimestamp};
+
+    $self->lmLog( "Mail expiration timestamp: $expTimestamp", 'debug' );
+
+    my $expMailDate = &POSIX::strftime( "%d/%m/%Y", localtime $expTimestamp );
+    my $expMailTime = &POSIX::strftime( "%H:%M",    localtime $expTimestamp );
+
     # Replace variables in body
+    $body =~ s/\$expMailDate/$expMailDate/g;
+    $body =~ s/\$expMailTime/$expMailTime/g;
     $body =~ s/\$url/$url/g;
     $body =~ s/\$(\w+)/decode("utf8",$self->{sessionInfo}->{$1})/ge;
 
