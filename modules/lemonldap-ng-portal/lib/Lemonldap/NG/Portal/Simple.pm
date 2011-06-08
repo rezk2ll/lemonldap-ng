@@ -401,7 +401,7 @@ sub new {
     if ( $self->{Soap} or $self->{soap} ) {
         require Lemonldap::NG::Portal::_SOAP;
         push @ISA, 'Lemonldap::NG::Portal::_SOAP';
-        if ( $self->{notification} ) {
+        if ( $self->{notification} and $ENV{PATH_INFO} ) {
             $self->soapTest(
                 { '/notification' => 'newNotification' }->{ $ENV{PATH_INFO} },
                 $self->{notifObject} );
