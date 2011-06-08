@@ -377,20 +377,34 @@ sub new {
     if ( $self->{notification} ) {
         require Lemonldap::NG::Portal::Notification;
         my $tmp;
+
+        # Use configuration options
         if ( $self->{notificationStorage} ) {
             $tmp->{type} = $self->{notificationStorage};
             foreach ( keys %{ $self->{notificationStorageOptions} } ) {
                 $tmp->{$_} = $self->{notificationStorageOptions}->{$_};
             }
         }
+
+        # Else use the configuration backend
         else {
             (%$tmp) = ( %{ $self->{lmConf} } );
             $self->abort( "notificationStorage not defined",
                 "This parameter is required to use notification system" )
               unless ( ref($tmp) );
+
+            # Get the type
             $tmp->{type} =~ s/.*:://;
+            $tmp->{type} =~ s/(CBDI|RDBI)/DBI/;    # CDBI/RDBI are DBI
+
+            # If type not File or DBI, abort
+            $self->abort("Only File or DBI supported for Notifications")
+              unless $tmp->{type} =~ /^(File|DBI)$/;
+
+            # Force table name
             $tmp->{table} = 'notifications';
         }
+
         $tmp->{p}            = $self;
         $self->{notifObject} = Lemonldap::NG::Portal::Notification->new($tmp);
         $self->abort($Lemonldap::NG::Portal::Notification::msg)
