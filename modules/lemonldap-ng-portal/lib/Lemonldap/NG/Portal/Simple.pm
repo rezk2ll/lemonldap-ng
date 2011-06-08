@@ -378,7 +378,10 @@ sub new {
         require Lemonldap::NG::Portal::Notification;
         my $tmp;
         if ( $self->{notificationStorage} ) {
-            $tmp = $self->{notificationStorage};
+            $tmp->{type} = $self->{notificationStorage};
+            foreach ( keys %{ $self->{notificationStorageOptions} } ) {
+                $tmp->{$_} = $self->{notificationStorageOptions}->{$_};
+            }
         }
         else {
             (%$tmp) = ( %{ $self->{lmConf} } );
