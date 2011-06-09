@@ -15,7 +15,7 @@ use CGI::Cookie;
 #inherits Lemonldap::NG::Portal::Notification::DBI
 #inherits Lemonldap::NG::Portal::Notification::File
 
-our $VERSION = '1.0.0';
+our $VERSION = '1.1.0';
 our ( $msg, $stylesheet, $parser );
 
 BEGIN {
@@ -98,7 +98,7 @@ sub lmLog {
 # @return HTML fragment containing form content
 sub getNotification {
     my ( $self, $portal ) = splice @_;
-    my ( @notifs, $form );
+    my ( @files, $form );
 
     # Get user datas,
     my $uid = $portal->{notificationField} || $portal->{whatToTrace} || 'uid';
@@ -106,18 +106,60 @@ sub getNotification {
     $uid = $portal->{sessionInfo}->{$uid};
 
     # Check if some notifications have to be done
-    my $n = $self->_get($uid);
+    # 1. For the user
+    my $user = $self->_get($uid);
 
-    # Return 0 if no notifications were found
+    # 2. For all users
+    my $all = $self->_get( $portal->{notificationWildcard} );
+
+    # 3. Join results
+    my $n = {};
+    if ( $user and $all ) { $n = { %$user, %$all }; }
+    else                  { $n = $user ? $user : $all; }
+
+    # Return 0 if no files were found
     return 0 unless ($n);
 
     # Prepare HTML code
-    @notifs = map { $n->{$_} } sort keys %$n;
-    my $i = 0;    # Notification count
-    foreach my $notif (@notifs) {
-        $i++;
+    @files = map { $n->{$_} } sort keys %$n;
+    my $i = 0;    # Files count
+    foreach my $file (@files) {
         eval {
-            my $xml = $parser->parse_string($notif);
+            my $xml = $parser->parse_string($file);
+            my $j   = 0;                              # Notifications count
+
+            # Browse notifications in file
+            foreach my $notif (
+                $xml->documentElement->getElementsByTagName('notification') )
+            {
+
+                # Get the reference, and check it in session
+                my $reference = $notif->getAttribute('reference');
+
+                $self->lmLog( "Get reference $reference", 'debug' );
+
+                if (
+                    exists $portal->{sessionInfo}
+                    ->{ "notification_" . $reference } )
+                {
+
+                    # The notification was already accepted
+                    $self->lmLog(
+                        "Notification $reference was already accepted",
+                        'debug' );
+
+                    # Remove it from XML
+                    $notif->unbindNode();
+                    next;
+                }
+                $j++;
+            }
+
+            # Go to next file if no notification found
+            next unless $j;
+            $i++;
+
+            # Transform XML into HTML
             my $results = $stylesheet->transform( $xml, start => $i );
             $form .= $stylesheet->output_string($results);
         };
@@ -128,6 +170,9 @@ sub getNotification {
             return 0;
         }
     }
+
+    # Stop here if nothing to display
+    return 0 unless $i;
 
     # Now a notification has to be done. Replace cookies by hidden fields
     $i = 0;
@@ -206,13 +251,26 @@ sub checkNotification {
           || 'uid';
         $uid =~ s/\$//g;
         $uid = $portal->{sessionInfo}->{$uid};
-        my $files = $self->_get( $uid, $refs->{$ref} );
+
+        # Get notifications by references
+        # 1. For the user
+        my $user = $self->_get( $uid, $refs->{$ref} );
+
+        # 2. For all users
+        my $all = $self->_get( $portal->{notificationWildcard}, $refs->{$ref} );
+
+        # 3. Join results
+        my $files = {};
+        if ( $user and $all ) { $files = { %$user, %$all }; }
+        else                  { $files = $user ? $user : $all; }
 
         unless ($files) {
-            $self->lmLog( "Can find notification $refs->{$ref} for $uid",
+            $self->lmLog( "Can't find notification $refs->{$ref} for $uid",
                 'error' );
             next;
         }
+
+        # Browse found files
         foreach my $file ( keys %$files ) {
             my $xml;
             eval { $xml = $parser->parse_string( $files->{$file} ) };
@@ -220,6 +278,8 @@ sub checkNotification {
                 $self->lmLog( "Bad XML notification for $uid", 'error' );
                 next;
             }
+
+            # Browse notifications in file
             foreach my $notif (
                 $xml->documentElement->getElementsByTagName('notification') )
             {
@@ -231,16 +291,42 @@ sub checkNotification {
                     ( $checks->{$ref} and $checkCount == @{ $checks->{$ref} } )
                   )
                 {
-                    if ( $self->_delete($file) ) {
-                        $self->lmLog(
-                            "$uid has accepted notification $refs->{$ref}",
-                            'notice' );
-                    }
-                    else {
-                        $self->lmLog(
+
+                    # Notification is accepted
+
+                    $self->lmLog(
+                        "$uid has accepted notification $refs->{$ref}",
+                        'notice' );
+
+                    # 1. Register acceptation in persistent session
+                    my $time     = time();
+                    my $notifkey = "notification_" . $refs->{$ref};
+                    $portal->updatePersistentSession(
+                        { $notifkey => $time },
+
+                    );
+
+                    $self->lmLog(
+                        "Notification "
+                          . $refs->{$ref}
+                          . " registered in persistent session",
+                        'debug'
+                    );
+
+                    # 2. Delete it if not a wildcard notification
+                    if ( exists $user->{$file} ) {
+
+                        if ( $self->_delete($file) ) {
+                            $self->lmLog(
+                                "Notification " . $refs->{$ref} . " deleted",
+                                'debug' );
+                        }
+                        else {
+                            $self->lmLog(
 "Unable to delete notification $refs->{$ref} for $uid",
-                            'error'
-                        );
+                                'error'
+                            );
+                        }
                     }
                 }
                 else {

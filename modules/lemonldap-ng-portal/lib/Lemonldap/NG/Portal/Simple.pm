@@ -602,6 +602,8 @@ sub setDefaultValues {
     $self->{logoutServices} ||= {};
     $self->{useSafeJail} = 1 unless defined $self->{useSafeJail};
 
+    # Notification
+    $self->{notificationWildcard} ||= "allusers";
 }
 
 ## @method protected void setHiddenFormValue(string fieldname, string value, string prefix, boolean base64)
@@ -825,7 +827,8 @@ sub getApacheSession {
         # Session not available (expired ?)
         if ($id) {
             $self->lmLog( "Session $id isn't yet available ($ENV{REMOTE_ADDR})",
-                'info' );
+                'info' )
+              unless $noInfo;
         }
         else {
             $self->lmLog( "Unable to create new session: $@", 'error' );
@@ -872,15 +875,16 @@ sub updatePersistentSession {
     return () unless ( ref $infos eq 'HASH' and %$infos );
 
     # Update current session
-    $self->updateSession( $self, $infos, $id );
+    $self->updateSession( $infos, $id );
 
     $uid ||= $self->{sessionInfo}->{ $self->{whatToTrace} };
     return () unless ($uid);
 
     my $h = $self->getApacheSession( $self->_md5hash($uid), 1 );
     unless ($h) {
+        $h = {};    # reset $h
         my %opts = %{ $self->{globalStorageOptions} };
-        $opts{setId} = $uid;
+        $opts{setId} = $self->_md5hash($uid);
         eval { tie %$h, $self->{globalStorage}, undef, \%opts; };
         if ($@) {
             $self->lmLog( "Unable to create persistent session: $@", 'warn' );
@@ -917,15 +921,6 @@ sub updateSession {
     # Return if no infos to update
     return () unless ( ref $infos eq 'HASH' and %$infos );
 
-    # Update sessionInfo datas
-    if ($id) {
-        foreach ( keys %$infos ) {
-            $self->lmLog( "Update sessionInfo $_ with " . $infos->{$_},
-                'debug' );
-            $self->{sessionInfo}->{$_} = $infos->{$_};
-        }
-    }
-
     # Recover session ID unless given
     $id ||= $self->{id};
     unless ($id) {
@@ -934,6 +929,16 @@ sub updateSession {
           if ( defined $cookies{ $self->{cookieName} } );
     }
 
+    # Update sessionInfo data
+    if ($id) {
+        foreach ( keys %$infos ) {
+            $self->lmLog( "Update sessionInfo $_ with " . $infos->{$_},
+                'debug' );
+            $self->{sessionInfo}->{$_} = $infos->{$_};
+        }
+    }
+
+    # Update session in the backend
     if ($id) {
         my $h = $self->getApacheSession( $id, 1 ) or return ();
 
@@ -1818,13 +1823,17 @@ sub setPersistentSessionInfo {
     # Do not restore infos if session already opened
     unless ( $self->{id} ) {
         my $key = $self->{sessionInfo}->{ $self->{whatToTrace} };
+
         return PE_OK unless ( $key and length($key) );
-        my $h =
-          $self->getApacheSession(
-            $self->_md5hash( $self->{sessionInfo}->{ $self->{whatToTrace} } ),
-            1 );
+
+        my $h = $self->getApacheSession( $self->_md5hash($key), 1 );
         if ($h) {
+            $self->lmLog( "Persistent session found for $key", 'debug' );
             foreach my $k ( keys %$h ) {
+
+                # Do not restore _session_id
+                next if $k =~ /^_session_id$/;
+                $self->lmLog( "Restore persistent parameter $k", 'debug' );
                 $self->{sessionInfo}->{$k} = $h->{$k};
             }
             untie %$h;
