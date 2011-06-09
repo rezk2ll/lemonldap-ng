@@ -121,6 +121,8 @@ sub display {
             SKIN            => $skin,
             HIDDEN_INPUTS   => $self->buildHiddenForm(),
             AUTH_URL        => $self->get_url,
+            CHOICE_PARAM    => $self->{authChoiceParam},
+            CHOICE_VALUE    => $self->{_authChoice},
         );
     }
 
