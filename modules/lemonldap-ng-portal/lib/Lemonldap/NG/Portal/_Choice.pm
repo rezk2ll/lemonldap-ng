@@ -8,7 +8,7 @@ package Lemonldap::NG::Portal::_Choice;
 
 use Lemonldap::NG::Portal::Simple;
 
-our $VERSION = '1.0.2';
+our $VERSION = '1.1.0';
 
 ## @cmethod Lemonldap::NG::Portal::_Choice new(Lemonldap::NG::Portal::Simple portal)
 # Constructor
@@ -176,6 +176,9 @@ sub _buildAuthLoop {
         # for sorting purpose
         # Remove it in displayed name
         $name =~ s/^(\d*)?(\s*)?//;
+
+        # Replace also _ by space for a nice display
+        $name =~ s/\_/ /g;
 
         # Find modules associated to authChoice
         my ( $auth, $userDB, $passwordDB ) =
