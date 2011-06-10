@@ -706,7 +706,7 @@ sub struct {
             # SESSIONS PARAMETERS
             sessionParams => {
                 _nodes => [
-                    qw(grantSessionRule storePassword timeout timeoutActivity n:sessionStorage n:multipleSessions)
+                    qw(grantSessionRule storePassword timeout timeoutActivity n:sessionStorage n:multipleSessions n:persistentSessions)
                 ],
                 _help => 'sessions',
 
@@ -738,6 +738,20 @@ sub struct {
                     notifyDeleted  => 'bool:/notifyDeleted',
                     notifyOther    => 'bool:/notifyOther',
                 },
+
+                persistentSessions => {
+                    _nodes => [qw(persistentStorage cn:persistentStorageOptions)],
+                    _help  => 'sessionsdb',
+                    persistentStorage        => 'text:/persistentStorage',
+                    persistentStorageOptions => {
+                        _nodes =>
+                          ['hash:/persistentStorageOptions:sessionsdb:btext'],
+                        _js   => 'hashRoot',
+                        _help => 'sessionsdb',
+                    },
+                },
+
+
             },
 
             # OTHER PARAMETERS
@@ -1427,6 +1441,10 @@ sub testStruct {
         },
         notifyDeleted => $boolean,
         notifyOther   => $boolean,
+        persistentStorageOptions => {
+            keyTest    => qr/^\w+$/,
+            keyMsgFail => 'Bad parameter',
+        },
         port          => {
             test    => qr/^\d*$/,
             msgFail => 'Bad port number'
