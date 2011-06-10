@@ -236,6 +236,17 @@ sub new {
     $self->{globalStorageOptions}->{backend} = $self->{globalStorage};
     $self->{globalStorage} = 'Lemonldap::NG::Common::Apache::Session';
 
+    # Check specific persistent session configuration
+    if ( $self->{persistentStorage} ) {
+        $self->{persistentStorageOptions}->{backend} =
+          $self->{persistentStorage};
+        $self->{persistentStorage} = 'Lemonldap::NG::Common::Apache::Session';
+    }
+    else {
+        $self->{persistentStorage}        = $self->{globalStorage};
+        $self->{persistentStorageOptions} = $self->{globalStorageOptions};
+    }
+
     # Default values
     $self->setDefaultValues();
 
@@ -842,6 +853,35 @@ sub getApacheSession {
     return \%h;
 }
 
+## @method protected hashref getPersistentSession(string id)
+# Try to recover the persitent session corresponding to id and return session datas.
+# If $id is set to undef, return a new session.
+# @param id session reference
+# return session hashref
+sub getPersistentSession {
+    my ( $self, $id ) = splice @_;
+    my %h;
+
+    # Trying to recover session from persistent session storage
+    eval {
+        tie %h, $self->{persistentStorage}, $id,
+          $self->{persistentStorageOptions};
+    };
+    if ( $@ or not tied(%h) ) {
+
+        # Session not available
+        if ($id) {
+            $self->lmLog( "Persistent session $id not available", 'debug' );
+        }
+        else {
+            $self->lmLog( "Unable to create new persitent session: $@",
+                'error' );
+        }
+        return 0;
+    }
+    return \%h;
+}
+
 ##@method string getApacheHtdocsPath()
 # Return the absolute path to the htdocs directory where is portal script.
 # @return path string
@@ -880,15 +920,21 @@ sub updatePersistentSession {
     $uid ||= $self->{sessionInfo}->{ $self->{whatToTrace} };
     return () unless ($uid);
 
-    my $h = $self->getApacheSession( $self->_md5hash($uid), 1 );
+    my $h = $self->getPersistentSession( $self->_md5hash($uid) );
     unless ($h) {
         $h = {};    # reset $h
-        my %opts = %{ $self->{globalStorageOptions} };
+        my %opts = %{ $self->{persistentStorageOptions} };
         $opts{setId} = $self->_md5hash($uid);
-        eval { tie %$h, $self->{globalStorage}, undef, \%opts; };
+        eval { tie %$h, $self->{persistentStorage}, undef, \%opts; };
         if ($@) {
             $self->lmLog( "Unable to create persistent session: $@", 'warn' );
             return ();
+        }
+        else {
+            $self->lmLog(
+                "Persistent session " . $h->{_session_id} . " created for $uid",
+                'debug'
+            );
         }
     }
     foreach ( keys %$infos ) {
@@ -1826,7 +1872,7 @@ sub setPersistentSessionInfo {
 
         return PE_OK unless ( $key and length($key) );
 
-        my $h = $self->getApacheSession( $self->_md5hash($key), 1 );
+        my $h = $self->getPersistentSession( $self->_md5hash($key) );
         if ($h) {
             $self->lmLog( "Persistent session found for $key", 'debug' );
             foreach my $k ( keys %$h ) {
