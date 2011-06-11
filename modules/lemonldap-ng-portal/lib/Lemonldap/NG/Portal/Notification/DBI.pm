@@ -8,8 +8,9 @@ package Lemonldap::NG::Portal::Notification::DBI;
 use strict;
 use Time::Local;
 use DBI;
+use utf8;
 
-our $VERSION = '1.0.0';
+our $VERSION = '1.1.0';
 
 ## @method boolean prereq()
 # Check if DBI parameters are set.
@@ -45,7 +46,16 @@ sub get {
       or return ();
     my $result;
     while ( my $h = $self->{sth}->fetchrow_hashref() ) {
-        $result->{"$h->{date}#$h->{uid}#$h->{ref}"} = $h->{xml};
+
+        # Get XML message
+        my $xml = $h->{xml};
+
+        # Decode it twice to get the correct uncoded string
+        utf8::decode($xml);
+        utf8::decode($xml);
+
+        # Store message in result
+        $result->{"$h->{date}#$h->{uid}#$h->{ref}"} = $xml;
     }
     $self->lmLog( $self->{sth}->err(), 'warn' ) if ( $self->{sth}->err() );
     return $result;
