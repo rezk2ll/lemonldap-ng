@@ -150,7 +150,7 @@ sub getDone {
     my $result;
     while ( my $h = $self->{sth}->fetchrow_hashref() ) {
         my @t = split( /\D+/, $h->{date} );
-        my $done = timelocal( $t[6], $t[5], $t[4], $t[3], $t[2], $t[1], $t[0] );
+        my $done = timelocal( $t[5], $t[4], $t[3], $t[2], $t[1], $t[0] );
         $result->{"$h->{date}#$h->{uid}#$h->{ref}"} =
           { notified => $done, uid => $h->{uid}, ref => $h->{ref}, };
     }
