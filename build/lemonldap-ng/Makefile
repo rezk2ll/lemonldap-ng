@@ -310,8 +310,9 @@ install_manager_site:	install_conf_dir
 		done; \
 	fi
 	@$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g' $(RCONFDIR)/$(CONFFILENAME)
-	# Sessions explorer install
+	# Sessions explorer and notifications explorer install
 	@cp -pR --remove-destination ${SRCMANAGERDIR}/example/sessions.pl $(RSESSIONSEXPLORERDIR)
+	@cp -pR --remove-destination ${SRCMANAGERDIR}/example/notifications.pl $(RSESSIONSEXPLORERDIR)
 	@rm -rf $$(find ${RMANAGERDIR} ${RMANAGERSKINSDIR} \
 		${RSESSIONSEXPLORERDIR} \
 		$(RCONFDIR) -type d -name .svn)
@@ -591,6 +592,7 @@ debian-diff:
 	@$(DIFF) lemonldap-ng-manager/lib/Lemonldap/NG/Manager.pm $(DIFFPREFIX)/usr/share/perl5/Lemonldap/NG/Manager.pm ||true
 	@$(DIFF) lemonldap-ng-manager/example/index.pl $(DIFFPREFIX)/var/lib/lemonldap-ng/manager/index.pl ||true
 	@$(DIFF) lemonldap-ng-manager/example/sessions.pl $(DIFFPREFIX)/var/lib/lemonldap-ng/manager/sessions.pl ||true
+	@$(DIFF) lemonldap-ng-manager/example/notifications.pl $(DIFFPREFIX)/var/lib/lemonldap-ng/manager/notifications.pl ||true
 	@$(DIFF) --ignore-matching-lines='.*POSIX.*' lemonldap-ng-manager/example/scripts/lmConfigEditor $(DIFFPREFIX)/usr/share/lemonldap-ng/bin/lmConfigEditor ||true
 	@for i in $(MANAGERSKINS); do \
 		$(DIFF) -x 'jquery*' lemonldap-ng-manager/example/skins/$$i $(DIFFPREFIX)/usr/share/lemonldap-ng/manager-skins/$$i; \
@@ -625,6 +627,7 @@ default-diff:
 	@$(DIFF) lemonldap-ng-manager/example/skins $(LMPREFIX)/htdocs/manager/skins ||true
 	@$(DIFF) lemonldap-ng-manager/example/index.pl $(LMPREFIX)/htdocs/manager/index.pl ||true
 	@$(DIFF) lemonldap-ng-manager/example/sessions.pl $(LMPREFIX)/htdocs/manager/sessions.pl ||true
+	@$(DIFF) lemonldap-ng-manager/example/notifications.pl $(LMPREFIX)/htdocs/manager/notifications.pl ||true
 	@$(DIFF) --ignore-matching-lines='.*POSIX.*' lemonldap-ng-manager/example/scripts/lmConfigEditor $(LMPREFIX)/bin/lmConfigEditor ||true
 
 tidy: clean

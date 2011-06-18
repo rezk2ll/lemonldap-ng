@@ -3,6 +3,7 @@ example/index.pl
 example/mrtg/lmng-mrtg
 example/mrtg/mrtg.cfg.example
 example/notfound.html
+example/notifications.pl
 example/scripts/lmConfigEditor
 example/sessions.pl
 example/skins/default/css/accordion.css
@@ -48,10 +49,12 @@ example/skins/default/js/jquery-ui-1.8.6.custom.min.js
 example/skins/default/js/jquery.ajaxfileupload.js
 example/skins/default/js/jquery.cookie.js
 example/skins/default/js/manager.js
+example/skins/default/js/notifications.js
 example/skins/default/js/sessions.js
 example/skins/default/js/tree.js
 example/skins/default/lemonldap-ng.ico
 example/skins/default/manager.tpl
+example/skins/default/notifications.tpl
 example/skins/default/sessions.tpl
 example/skins/default/ui-darkness/images/ui-bg_flat_30_cccccc_40x100.png
 example/skins/default/ui-darkness/images/ui-bg_flat_50_5c5c5c_40x100.png
@@ -87,6 +90,7 @@ lib/Lemonldap/NG/Manager.pm
 lib/Lemonldap/NG/Manager/_i18n.pm
 lib/Lemonldap/NG/Manager/_Struct.pm
 lib/Lemonldap/NG/Manager/Downloader.pm
+lib/Lemonldap/NG/Manager/Notifications.pm
 lib/Lemonldap/NG/Manager/Request.pm
 lib/Lemonldap/NG/Manager/Sessions.pm
 lib/Lemonldap/NG/Manager/Uploader.pm
