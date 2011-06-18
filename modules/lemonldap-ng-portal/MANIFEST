@@ -208,6 +208,7 @@ t/21-Lemonldap-NG-Portal-AuthSSL.t
 t/22-Lemonldap-NG-Portal-AuthCAS.t
 t/24-Lemonldap-NG-Portal-AuthRemote.t
 t/25-Lemonldap-NG-Portal-Multi.t
+t/26-Lemonldap-NG-Portal-AuthChoice.t
 t/26-Lemonldap-NG-Portal-AuthProxy.t
 t/27-Lemonldap-NG-Portal-AuthOpenID.t
 t/27-Lemonldap-NG-Portal-IssuerDBOpenID.t
