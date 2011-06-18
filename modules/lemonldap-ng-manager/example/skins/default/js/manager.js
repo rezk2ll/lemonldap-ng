@@ -107,6 +107,8 @@ $(document).ready(function(){
 	$('#query-switch a[alt=user]').button({icons:{primary:"ui-icon-person"}});
 	$('#query-switch a[alt=ip]').button({icons:{primary:"ui-icon-gear"}});
 	$('#query-switch a[alt=2ip]').button({icons:{primary:"ui-icon-alert"}});
+	$('#query-switch a[alt=list]').button({icons:{primary:"ui-icon-mail-closed"}});
+	$('#query-switch a[alt=listDone]').button({icons:{primary:"ui-icon-mail-open"}});
 
 	/* Display/hide divs */
 	$("#buttons h1").click(function(){

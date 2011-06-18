@@ -115,7 +115,9 @@ sub new {
     foreach my $k ( $self->param() ) {
 
         # Case ajax request : execute corresponding sub and quit
-        if ( grep { $_ eq $k } qw(delete notification id uidByIp uid letter p) )
+        if ( grep { $_ eq $k }
+            qw(delete purge notification notificationDone uid uidDone letter letterDone)
+          )
         {
             print $self->header( -type => 'text/html;charset=utf-8' );
             print $self->$k( $self->param($k) );
@@ -123,7 +125,7 @@ sub new {
         }
 
         # Case else : store tree type choosen to use it later in tree()
-        elsif ( grep { $_ eq $k } qw(doubleIp fullip fulluid ipclasses) ) {
+        elsif ( grep { $_ eq $k } qw(listDone) ) {
             $self->{_tree} = $k;
             last;
         }
@@ -136,10 +138,7 @@ sub new {
 
 ## @method string tree()
 # Launch required tree builder. It can be one of :
-#  * doubleIp()
-#  * fullip()
-#  * fulluid()
-#  * ipclasses()
+#  * listDone()
 #  * list() (default)
 # @return string XML tree
 sub tree {
@@ -204,168 +203,52 @@ sub list {
     );
 }
 
-## @method protected string doubleIp()
-# Build tree with users connected from more than 1 IP
+## @method protected string listDone()
+# Build tree of done notifications (by letter)
 # @return string XML tree
-sub doubleIp {
+sub listDone {
     my $self = shift;
-    my ( $byUid, $byIp, $res, $count );
+    my ( $byUid, $count, $res );
+    $count = 0;
 
-    # Parse all sessions
-    Lemonldap::NG::Common::Apache::Session->get_key_from_all_sessions(
-        $self->{globalStorageOptions},
-        sub {
-            my $entry = shift;
-            my $id    = shift;
-            next if ( $entry->{_httpSessionType} );
-            push @{ $byUid->{ $entry->{$whatToTrace} }
-                  ->{ $entry->{ $self->{ipField} } } },
-              { id => $id, startTime => $entry->{startTime} };
-            undef;
-        }
-    );
+    # Parse all notifications to store first letter
+    my $n = $self->{notifObject}->getDone();
 
-    # Build tree sorted by uid (or other field chosen in whatToTrace parameter)
-    foreach my $uid (
-        sort { ( keys %{ $byUid->{$b} } ) <=> ( keys %{ $byUid->{$a} } ) }
-        keys %$byUid
-      )
-    {
-
-        # Parse only uid that are connected from more than 1 IP
-        last if ( ( keys %{ $byUid->{$uid} } ) == 1 );
+    foreach ( keys %$n ) {
+        $n->{$_}->{uid} =~ /^(\w)/ or next;
+        $byUid->{$1}++;
         $count++;
-
-        # Build UID node with IP as sub node
-        $res .= "<li id=\"di$uid\" class=\"closed\"><span>$uid</span><ul>";
-        foreach my $ip ( sort keys %{ $byUid->{$uid} } ) {
-            $res .= "<li class=\"open\" id=\"di$ip\"><span>$ip</span><ul>";
-
-            # For each IP node, store sessions sorted by start time
-            foreach my $session ( sort { $a->{startTime} <=> $b->{startTime} }
-                @{ $byUid->{$uid}->{$ip} } )
-            {
-                $res .=
-"<li id=\"di$session->{id}\"><span onclick=\"displaySession('$session->{id}');\">"
-                  . $self->_stToStr( $session->{startTime} )
-                  . "</span></li>";
-            }
-            $res .= "</ul></li>";
-        }
-        $res .= "</ul></li>";
     }
 
+    # Build tree sorted by first letter
+    foreach my $letter ( sort keys %$byUid ) {
+        $res .= $self->ajaxNode(
+
+            # ID
+            "li_$letter",
+
+            # Legend
+            "$letter <i><small>($byUid->{$letter} "
+              . (
+                $byUid->{$letter} == 1
+                ? "notification"
+                : "notifications"
+              )
+              . ")</small></i>",
+
+            # Next request
+            "letterDone=$letter"
+        );
+    }
     return (
         $res,
         "$count "
           . (
               $count == 1
-            ? $self->translate('user')
-            : $self->translate('users')
+            ? $self->translate('notificationDone')
+            : $self->translate('notificationsDone')
           )
     );
-}
-
-## @method protected string fullip(string req)
-# Build single IP tree
-# @param $req Optional IP request (127* for example)
-# @return string XML tree
-sub fullip {
-    my ( $self, $req ) = splice @_;
-    my ( $byUid, $res );
-
-    # Build regexp based on IP request
-    my $reip = quotemeta($req);
-    $reip =~ s/\\\*/\.\*/g;
-
-    # Parse all sessions and store only if IP match regexp
-    Lemonldap::NG::Common::Apache::Session->get_key_from_all_sessions(
-        $self->{globalStorageOptions},
-        sub {
-            my $entry = shift;
-            my $id    = shift;
-            next if ( $entry->{_httpSessionType} );
-            if ( $entry->{ $self->{ipField} } =~ /$reip/ ) {
-                push @{ $byUid->{ $entry->{ $self->{ipField} } }
-                      ->{ $entry->{$whatToTrace} } },
-                  { id => $id, startTime => $entry->{startTime} };
-            }
-            undef;
-        }
-    );
-
-    # Build tree sorted by IP
-    foreach my $ip ( sort keys %$byUid ) {
-        $res .= "<li id=\"fi$ip\"><span>$ip</span><ul>";
-        foreach my $uid ( sort keys %{ $byUid->{$ip} } ) {
-            $res .= $self->ajaxNode(
-                $uid,
-                $uid
-                  . (
-                    @{ $byUid->{$ip}->{$uid} } > 1
-                    ? " <i><u><small>("
-                      . @{ $byUid->{$ip}->{$uid} }
-                      . " sessions)</small></u></i>"
-                    : ''
-                  ),
-                "uid=$uid"
-            );
-        }
-        $res .= "</ul></li>";
-    }
-    return $res;
-}
-
-## @method protected string fulluid(string req)
-# Build single uid tree
-# @param $req request (examples: foo*, foo.bar)
-# @return string XML tree
-sub fulluid {
-    my ( $self, $req ) = splice @_;
-    my ( $byUid, $res );
-
-    # Build regexp based on request
-    my $reuser = quotemeta($req);
-    $reuser =~ s/\\\*/\.\*/g;
-
-    # Parse all sessions to find user that match regexp
-    Lemonldap::NG::Common::Apache::Session->get_key_from_all_sessions(
-        $self->{globalStorageOptions},
-        sub {
-            my $entry = shift;
-            my $id    = shift;
-            next if ( $entry->{_httpSessionType} );
-            if ( $entry->{$whatToTrace} =~ /^$reuser$/ ) {
-                push @{ $byUid->{ $entry->{$whatToTrace} } },
-                  { id => $id, startTime => $entry->{startTime} };
-            }
-            undef;
-        }
-    );
-
-    # Build tree sorted by uid
-    foreach my $uid ( sort keys %$byUid ) {
-        $res .= $self->ajaxNode(
-            $uid,
-            $uid
-              . (
-                @{ $byUid->{$uid} } > 1
-                ? " <i><u><small>("
-                  . @{ $byUid->{$uid} }
-                  . " sessions)</small></u></i>"
-                : ''
-              ),
-            "uid=$uid"
-        );
-    }
-}
-
-## @method protected string ipclasses()
-# Build IP classes tree (call _ipclasses())
-# @return string XML tree
-sub ipclasses {
-    my $self = shift;
-    return $self->_ipclasses();
 }
 
 ##################
@@ -375,7 +258,7 @@ sub ipclasses {
 ## @method protected string delete(string id)
 # Delete a session
 # @param id Session identifier
-# @return string XML tree
+# @return HTML data
 sub delete {
     my ( $self, $id ) = splice @_;
     my ( $uid, $ref ) = ( $id =~ /([^_]+?)_(.+)/ );
@@ -416,6 +299,38 @@ sub delete {
         $self->lmLog( "Notification $ref deleted for user $uid", 'info' );
         $res .= '<h1 class="ui-widget-header ui-corner-all">'
           . $self->translate('notificationDeleted') . '</h1>';
+        return $res;
+    }
+
+}
+
+## @method protected string purge(string id)
+# Purge a deleted session
+# @param id Session identifier
+# @return HTML data
+sub purge {
+    my ( $self, $id ) = splice @_;
+    my $res;
+
+    # Purge notification
+    my $status = $self->{notifObject}->purge($id);
+
+    unless ($status) {
+
+        $self->lmLog( "Notification $id not purged", 'error' );
+        $res .= '<h1 class="ui-widget-header ui-corner-all">'
+          . $self->translate('error') . '</h1>';
+        $res .= '<div class="ui-corner-all ui-widget-content">';
+        $res .= "Notification $id not purged";
+        $res .= '</div>';
+        return $res;
+
+    }
+
+    else {
+        $self->lmLog( "Notification $id purged", 'info' );
+        $res .= '<h1 class="ui-widget-header ui-corner-all">'
+          . $self->translate('notificationPurged') . '</h1>';
         return $res;
     }
 
@@ -477,37 +392,28 @@ sub notification {
     return $res;
 }
 
-## @method protected string uidByIp()
-# Build single IP tree
+## @method protected string notificationDone()
+# Build notification dump.
 # @return string XML tree
-sub uidByIp {
-    my ( $self, $ip ) = splice @_;
-    my ( $byUser, $res );
-    Lemonldap::NG::Common::Apache::Session->get_key_from_all_sessions(
-        $self->{globalStorageOptions},
-        sub {
-            my $entry = shift;
-            my $id    = shift;
-            next if ( $entry->{_httpSessionType} );
-            if ( $entry->{ $self->{ipField} } eq $ip ) {
-                push @{ $byUser->{ $entry->{$whatToTrace} } },
-                  { id => $id, startTime => $entry->{startTime} };
-            }
-            undef;
-        }
-    );
-    foreach my $user ( sort keys %$byUser ) {
-        $res .= "<li id=\"ip$user\"><span>$user</span><ul>";
-        foreach my $session ( sort { $a->{startTime} <=> $b->{startTime} }
-            @{ $byUser->{$user} } )
-        {
-            $res .=
-"<li id=\"ip$session->{id}\"><span onclick=\"displaySession('$session->{id}');\">"
-              . $self->_stToStr( $session->{startTime} )
-              . "</span></li>";
-        }
-        $res .= "</ul></li>";
-    }
+sub notificationDone {
+    my ( $self, $id ) = splice @_;
+    my ( $n, $res );
+
+    # Print content
+    $res .= '<h1 class="ui-widget-header ui-corner-all">';
+    $res .= "Notification " . $self->translate('done');
+    $res .= '</h1>';
+    $res .= '<p>' . $self->translate('internalReference') . ': ' . $id . '</p>';
+
+    # Purge button
+    $res .= '<div style="text-align:center">';
+    $res .=
+        "<input type=\"button\" onclick=\"purge('$id');\""
+      . ' class="ui-state-default ui-corner-all"'
+      . " value=\""
+      . $self->translate('purgeNotification') . "\" />";
+    $res .= '</div>';
+
     return $res;
 }
 
@@ -531,6 +437,27 @@ sub uid {
         $res .=
 "<li class=\"open\" id=\"uid$ref\"><span onclick=\"displayNotification('${uid}_$ref');\">$ref</span></li>";
     }
+    return $res;
+}
+
+## @method protected string uidDone()
+# Build single UID tree part
+# @return string XML tree
+sub uidDone {
+    my ( $self, $uid ) = splice @_;
+    my ( $byRef, $res );
+
+    # Parse all notifications
+    my $n = $self->{notifObject}->getDone();
+
+    foreach ( keys %$n ) {
+        if ( $n->{$_}->{uid} eq $uid ) {
+            my $ref = $n->{$_}->{ref};
+            $res .=
+"<li class=\"open\" id=\"uid$ref\"><span onclick=\"displayNotificationDone('$_');\">$ref</span></li>";
+        }
+    }
+
     return $res;
 }
 
@@ -572,62 +499,42 @@ sub letter {
     return $res;
 }
 
-## @method protected string p()
-# Build IP classes sub tree (call _ipclasses())
+# Ajax request to list users starting by a letter
+## @method protected string letterDone()
+# Build letter XML part
 # @return string XML tree
-sub p {
-    my $self = shift;
-    my @t    = $self->_ipclasses(@_);
-    return $t[0];
-}
+sub letterDone {
+    my $self   = shift;
+    my $letter = $self->param('letterDone');
+    my ( $byUid, $res );
 
-## @method private string _ipclasses()
-# Build IP classes (sub) tree
-# @return string XML tree
-sub _ipclasses {
-    my ( $self, $p ) = splice @_;
-    my $partial = $p ? "$p." : '';
-    my $repartial = quotemeta($partial);
-    my ( $byIp, $count, $res );
-    Lemonldap::NG::Common::Apache::Session->get_key_from_all_sessions(
-        $self->{globalStorageOptions},
-        sub {
-            my $entry = shift;
-            next if ( $entry->{_httpSessionType} );
-            $entry->{ $self->{ipField} } =~ /^$repartial(\d+)/
-              or return undef;
-            $byIp->{$1}++;
-            $count++;
-            undef;
-        }
-    );
+    # Parse all notifications
+    my $n = $self->{notifObject}->getDone();
 
-    foreach my $ip ( sort { $a <=> $b } keys %$byIp ) {
+    foreach ( keys %$n ) {
+        $n->{$_}->{uid} =~ /^$letter/ or next;
+        $byUid->{ $n->{$_}->{uid} }++;
+    }
+
+    foreach my $uid ( sort keys %$byUid ) {
         $res .= $self->ajaxNode(
-            "$partial$ip",
-            "$partial$ip <i><small>($byIp->{$ip} "
+            $uid,
+            $uid
               . (
-                  $byIp->{$ip} == 1 ? $self->translate('session')
-                : $self->translate('sessions')
-              )
-              . ")</small></i>",
-            (
-                $partial !~ /^\d+\.\d+\.\d+/ ? "ipclasses=1&p=$partial$ip"
-                : "uidByIp=$partial$ip"
-            )
+                $byUid->{$uid} > 1
+                ? " <i><u><small>($byUid->{$uid} "
+                  . (
+                    $byUid->{$uid} == 1
+                    ? "notification"
+                    : "notifications"
+                  )
+                  . ")</small></u></i>"
+                : ''
+              ),
+            "uidDone=$uid"
         );
     }
-    return (
-        $res,
-        "$count "
-          . (
-              $count == 1
-            ? $self->translate('session')
-            : $self->translate('sessions')
-          )
-    );
-
-    #return $res;
+    return $res;
 }
 
 ## @fn protected string htmlquote(string s)

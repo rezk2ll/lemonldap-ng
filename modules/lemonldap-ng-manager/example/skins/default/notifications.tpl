@@ -31,32 +31,19 @@
 </head>
 <body>
 
-<!-- Tree CSS choice -->
-<div id="css-switch" title="<lang en="Menu style" fr="Style de menu" />">
-   <div id="organization">
-   <p class="ui-widget-header ui-corner-all"><lang en="Organization" fr="Organisation" /></p>
-   <button alt="tree"><lang en="Tree" fr="Arbre" /></button>
-   <button alt="accordion"><lang en="Accordion" fr="Accordéon" /></button>
-   </div>
-   <div id="theme">
-   <p class="ui-widget-header ui-corner-all"><lang en="Theme" fr="Thème" /></p>
-   <button alt="ui-lightness"><lang en="Lightness" fr="Lumineux" /></button>
-   <button alt="ui-darkness"><lang en="Darkness" fr="Obscur" /></button>
-   </div>
-</div>
-
-<!-- Header -->
-<div id="header">
-   <a href="index.pl"><lang en="Configuration management" fr="Gestion de la configuration"/></a>
-   <a href="sessions.pl"><lang en="Sessions explorer" fr="Explorateur de sessions"/></a>
-   <span id="css-switch-link"><lang en="Menu style" fr="Style de menu" /></span>
-<!-- Header -->
-</div>
+<TMPL_INCLUDE NAME="top.tpl">
 
 <!-- Menu (tree) -->
 <div id="menu" class="ui-corner-all ui-helper-clearfix ui-widget-content">
 
    <!-- Query choice -->
+   <div class="ui-corner-all ui-widget-header" style="text-align:center;">
+      <span><lang en="Query" fr="Requête" /></span>
+   </div>
+   <div id="query-switch">
+      <a href="<TMPL_VAR NAME="SCRIPT_NAME">" alt="list"><lang en="Active" fr="Actives" /></a>
+      <a href="<TMPL_VAR NAME="SCRIPT_NAME">?listDone=1" alt="listDone"><lang en="Done" fr="Validées" /></a>
+   </div>
 
    <TMPL_VAR NAME="TREE">
 </div>

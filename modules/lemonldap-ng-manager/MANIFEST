@@ -56,6 +56,7 @@ example/skins/default/lemonldap-ng.ico
 example/skins/default/manager.tpl
 example/skins/default/notifications.tpl
 example/skins/default/sessions.tpl
+example/skins/default/top.tpl
 example/skins/default/ui-darkness/images/ui-bg_flat_30_cccccc_40x100.png
 example/skins/default/ui-darkness/images/ui-bg_flat_50_5c5c5c_40x100.png
 example/skins/default/ui-darkness/images/ui-bg_glass_20_555555_1x400.png
