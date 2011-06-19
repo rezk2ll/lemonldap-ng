@@ -109,6 +109,8 @@ $(document).ready(function(){
 	$('#query-switch a[alt=2ip]').button({icons:{primary:"ui-icon-alert"}});
 	$('#query-switch a[alt=list]').button({icons:{primary:"ui-icon-mail-closed"}});
 	$('#query-switch a[alt=listDone]').button({icons:{primary:"ui-icon-mail-open"}});
+	$('#query-switch a[alt=newNotif]').button({icons:{primary:"ui-icon-circle-plus"}});
+	$('#sendNewNotif').button({icons:{primary:"ui-icon-circle-plus"}});
 
 	/* Display/hide divs */
 	$("#buttons h1").click(function(){

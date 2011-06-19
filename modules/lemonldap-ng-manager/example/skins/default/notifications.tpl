@@ -43,6 +43,7 @@
    <div id="query-switch">
       <a href="<TMPL_VAR NAME="SCRIPT_NAME">" alt="list"><lang en="Active" fr="Actives" /></a>
       <a href="<TMPL_VAR NAME="SCRIPT_NAME">?listDone=1" alt="listDone"><lang en="Done" fr="Validées" /></a>
+      <a alt="newNotif" onclick="newNotif()"><lang en="Create" fr="Créer" /></a>
    </div>
 
    <TMPL_VAR NAME="TREE">
@@ -53,5 +54,38 @@
 <!-- Container -->
 </div>
 
+<!-- Form to create a new notification -->
+<div id="newNotif" style="display: none">
+<h1 class="ui-widget-header ui-corner-all"><lang en="New notification" fr="Nouvelle notification" /></h1>
+<table style="width:70%;margin: 10px auto;">
+  <tr>
+    <th style="text-align:right;"><label for="uid"><lang en="User login:" fr="Identifiant de l'utilisateur :" /></label></th>
+    <td><input id="uid" type="text" /></td>
+  </tr>
+  <tr>
+    <th style="text-align:right;"><label for="date"><lang en="Date:" fr="Date :" /></label></th>
+    <td><input id="date" type="text" /></td>
+  </tr>
+  <tr>
+    <th style="text-align:right;"><label for="ref"><lang en="Reference:" fr="Référence :" /></label></th>
+    <td><input id="ref" type="text" /></td>
+  </tr>
+  <tr><td colspan="2">
+<div id="newNotifHelp" class="ui-widget-content ui-corner-all" style="text-align:left;padding: 5px;">
+<lang en="Set XML content here. You can use the following markups:" fr="Insérer le contenu XML ici. Vous pouvez utiliser les balises suivantes :" />
+<ul>
+<li><tt>&lt;title&gt;</tt><lang en="a title" fr="un titre" /><tt>&lt;/title&gt;</li>
+<li><tt>&lt;subtitle&gt;</tt><lang en="a subtitle" fr="un sous-titre" /><tt>&lt;/subtitle&gt;</li>
+<li><tt>&lt;text&gt;</tt><lang en="some text" fr="du texte" /><tt>&lt;/text&gt;</li>
+<li><tt>&lt;check&gt;</tt><lang en="a checkbox" fr="une case à cocher" /><tt>&lt;/check&gt;</li>
+</ul>
+</div>
+  </td></tr>
+  <tr><td colspan="2">
+    <textarea rows="10" cols="80" id="xml"></textarea><br />
+  </td></tr>
+  </table>
+<a id="sendNewNotif" onclick=sendNewNotif()><lang en="Create" fr="Créer" /></a>
+</div>
 </body>
 </html>

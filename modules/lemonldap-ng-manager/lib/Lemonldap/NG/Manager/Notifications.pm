@@ -114,7 +114,7 @@ sub new {
     # Now we're ready to display sessions. Choose display type
     foreach my $k ( $self->param() ) {
 
-        # Case ajax request : execute corresponding sub and quit
+        # Case ajax request: execute corresponding sub and quit
         if ( grep { $_ eq $k }
             qw(delete purge notification notificationDone uid uidDone letter letterDone)
           )
@@ -124,7 +124,14 @@ sub new {
             $self->quit();
         }
 
-        # Case else : store tree type choosen to use it later in tree()
+        # Case ajax request with complex date type (JSON)
+        if ( $k =~ /^(\w+)\[\w+\]$/ ) {
+            print $self->header( -type => 'text/html;charset=utf-8' );
+            print $self->$1();
+            $self->quit();
+        }
+
+        # Case else: store tree type choosen to use it later in tree()
         elsif ( grep { $_ eq $k } qw(listDone) ) {
             $self->{_tree} = $k;
             last;
@@ -272,7 +279,7 @@ sub delete {
         $res .= '<h1 class="ui-widget-header ui-corner-all">'
           . $self->translate('error') . '</h1>';
         $res .= '<div class="ui-corner-all ui-widget-content">';
-        $res .= "Notification $ref not found for user $uid";
+        $res .= $self->translate('notificationNotFound');
         $res .= '</div>';
         return $res;
     }
@@ -289,7 +296,7 @@ sub delete {
         $res .= '<h1 class="ui-widget-header ui-corner-all">'
           . $self->translate('error') . '</h1>';
         $res .= '<div class="ui-corner-all ui-widget-content">';
-        $res .= "Notification $ref for user $uid not deleted";
+        $res .= $self->translate('notificationNotDeleted');
         $res .= '</div>';
         return $res;
 
@@ -321,7 +328,7 @@ sub purge {
         $res .= '<h1 class="ui-widget-header ui-corner-all">'
           . $self->translate('error') . '</h1>';
         $res .= '<div class="ui-corner-all ui-widget-content">';
-        $res .= "Notification $id not purged";
+        $res .= $self->translate('notificationNotPurged');
         $res .= '</div>';
         return $res;
 
@@ -352,7 +359,7 @@ sub notification {
         $res .= '<h1 class="ui-widget-header ui-corner-all">'
           . $self->translate('error') . '</h1>';
         $res .= '<div class="ui-corner-all ui-widget-content">';
-        $res .= "Notification $ref not found for user $uid";
+        $res .= $self->translate('notificationNotFound');
         $res .= '</div>';
         return $res;
     }
@@ -535,6 +542,50 @@ sub letterDone {
         );
     }
     return $res;
+}
+
+# Ajax request to create a new notification
+## @method protected string newNotif()
+# Create new notification
+# @return string HTML
+sub newNotif {
+    my $self = shift;
+    my $uid  = $self->param('newNotif[uid]');
+    my $date = $self->param('newNotif[date]');
+    my $ref  = $self->param('newNotif[ref]');
+    my $xml  = $self->param('newNotif[xml]');
+    my $res;
+
+    # Create complete XML
+    my $notif = "<?xml version='1.0' encoding='UTF-8' standalone='no'?>\n";
+    $notif .= "<root>\n";
+    $notif .= "<notification uid='$uid' date='$date' reference='$ref'>\n";
+    $notif .= $xml;
+    $notif .= "</notification>\n";
+    $notif .= "</root>\n";
+
+    # Add the notification
+    my $status = $self->{notifObject}->newNotification($notif);
+
+    unless ($status) {
+
+        $self->lmLog( "Notification not created", 'error' );
+        $res .= '<h1 class="ui-widget-header ui-corner-all">'
+          . $self->translate('error') . '</h1>';
+        $res .= '<div class="ui-corner-all ui-widget-content">';
+        $res .= $self->translated('notificationNotCreated');
+        $res .= '</div>';
+        return $res;
+
+    }
+
+    else {
+        $self->lmLog( "Notification created", 'info' );
+        $res .= '<h1 class="ui-widget-header ui-corner-all">'
+          . $self->translate('notificationCreated') . '</h1>';
+        return $res;
+    }
+
 }
 
 ## @fn protected string htmlquote(string s)
