@@ -740,8 +740,9 @@ sub struct {
                 },
 
                 persistentSessions => {
-                    _nodes => [qw(persistentStorage cn:persistentStorageOptions)],
-                    _help  => 'sessionsdb',
+                    _nodes =>
+                      [qw(persistentStorage cn:persistentStorageOptions)],
+                    _help                    => 'sessionsdb',
                     persistentStorage        => 'text:/persistentStorage',
                     persistentStorageOptions => {
                         _nodes =>
@@ -750,7 +751,6 @@ sub struct {
                         _help => 'sessionsdb',
                     },
                 },
-
 
             },
 
@@ -1423,7 +1423,7 @@ sub testStruct {
             },
         },
         managerDn => {
-            test    => qr/^(?:\w+=.*,\w+=.*)?$/,
+            test    => qr/^(?:\w+=.*)?$/,
             msgFail => 'Bad LDAP dn',
         },
         managerPassword => {
@@ -1439,13 +1439,13 @@ sub testStruct {
             keyTest    => qr/^\w+$/,
             keyMsgFail => 'Bad parameter',
         },
-        notifyDeleted => $boolean,
-        notifyOther   => $boolean,
+        notifyDeleted            => $boolean,
+        notifyOther              => $boolean,
         persistentStorageOptions => {
             keyTest    => qr/^\w+$/,
             keyMsgFail => 'Bad parameter',
         },
-        port          => {
+        port => {
             test    => qr/^\d*$/,
             msgFail => 'Bad port number'
         },
