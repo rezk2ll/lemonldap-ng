@@ -8,7 +8,7 @@ package Lemonldap::NG::Portal::Notification::File;
 use strict;
 use MIME::Base64;
 
-our $VERSION = '1.0.0';
+our $VERSION = '1.1.0';
 
 ## @method boolean prereq()
 # Check if parameters are set and if storage directory exists.
@@ -74,7 +74,7 @@ sub getAll {
     @notif = grep /^\S*\.xml$/, readdir(D);
     my %h = map {
         /^(\d{8})_([^\s_]+)_([^\s_]+)\.xml$/
-          ? ( $_ => { date => $1, uid => $2, ref => $3 } )
+          ? ( $_ => { date => $1, uid => $2, ref => decode_base64($3) } )
           : ()
     } @notif;
     return \%h;
