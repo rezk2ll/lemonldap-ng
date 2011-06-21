@@ -674,7 +674,7 @@ L<Lemonldap::NG::Handler::CGI>, L<Lemonldap::NG::Manager>
 =head1 AUTHOR
 
 Xavier Guimard, E<lt>x.guimard@free.frE<gt>
-Clement Oudot, E<ltclem.oudot@gmail.com>E<gt>
+Clement Oudot, E<lt>clem.oudot@gmail.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
