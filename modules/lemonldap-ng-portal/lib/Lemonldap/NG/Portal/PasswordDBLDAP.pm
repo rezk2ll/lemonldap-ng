@@ -65,19 +65,36 @@ sub modifyPassword {
 
     return $code unless ( $code == PE_PASSWORD_OK );
 
-    # If password policy and force reset, set pwdReset flag
-    if ( $self->{ldapPpolicyControl} and $self->{forceReset} ) {
-        my $result =
-          $self->ldap->modify( $self->{dn},
-            replace => { 'pwdReset' => 'TRUE' } );
+    # If password policy and force reset, set reset flag
+    if (    $self->{ldapPpolicyControl}
+        and $self->{forceReset}
+        and $self->{ldapUsePasswordResetAttribute} )
+    {
+        my $result = $self->ldap->modify(
+            $self->{dn},
+            replace => {
+                $self->{ldapPasswordResetAttribute} =>
+                  $self->{ldapPasswordResetAttributeValue}
+            }
+        );
 
         unless ( $result->code == 0 ) {
-            $self->lmLog( "LDAP modify pwdReset error: " . $result->code,
-                'error' );
+            $self->lmLog(
+                "LDAP modify "
+                  . $self->{ldapPasswordResetAttribute}
+                  . " error: "
+                  . $result->code,
+                'error'
+            );
             $code = PE_LDAPERROR;
         }
 
-        $self->lmLog( "pwdReset set to TRUE", 'debug' );
+        $self->lmLog(
+            $self->{ldapPasswordResetAttribute}
+              . " set to "
+              . $self->{ldapPasswordResetAttributeValue},
+            'debug'
+        );
     }
 
     return $code;

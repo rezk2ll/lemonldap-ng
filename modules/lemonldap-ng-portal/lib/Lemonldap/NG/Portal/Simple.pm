@@ -612,6 +612,10 @@ sub setDefaultValues {
     # Other
     $self->{logoutServices} ||= {};
     $self->{useSafeJail} = 1 unless defined $self->{useSafeJail};
+    $self->{ldapUsePasswordResetAttribute} = 1
+      unless ( defined( $self->{ldapUsePasswordResetAttribute} ) );
+    $self->{ldapPasswordResetAttribute}      ||= "pwdReset";
+    $self->{ldapPasswordResetAttributeValue} ||= "TRUE";
 
     # Notification
     $self->{notificationWildcard} ||= "allusers";
