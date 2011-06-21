@@ -8,6 +8,7 @@ package Lemonldap::NG::Portal::_SMTP;
 use strict;
 use String::Random;
 use MIME::Lite;
+use MIME::Base64;
 use Encode;
 
 our $VERSION = '1.1.0';
@@ -54,7 +55,7 @@ sub send_mail {
       if $self->{mailReplyTo};
 
     # Encode the subject
-    $subject = encode( "MIME-Header", decode( "utf8", $subject ) );
+    $subject = "=?$charset?B?" . encode_base64($subject) . "?=";
 
     # Detect included images (cid)
     my %cid = ( $body =~ m/"cid:([^:]+):([^"]+)"/g );
