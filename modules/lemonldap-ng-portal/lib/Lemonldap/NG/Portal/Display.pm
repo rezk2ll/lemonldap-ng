@@ -218,15 +218,15 @@ sub display {
 
         # Adapt template if password policy error
         if (
-            $self->{portalDisplayChangePassword}
-            and (  $self->{error} == PE_PP_CHANGE_AFTER_RESET
-                or $self->{error} == PE_PP_MUST_SUPPLY_OLD_PASSWORD
-                or $self->{error} == PE_PP_INSUFFICIENT_PASSWORD_QUALITY
-                or $self->{error} == PE_PP_PASSWORD_TOO_SHORT
-                or $self->{error} == PE_PP_PASSWORD_TOO_YOUNG
-                or $self->{error} == PE_PP_PASSWORD_IN_HISTORY
-                or $self->{error} == PE_PASSWORD_MISMATCH
-                or $self->{error} == PE_BADOLDPASSWORD )
+
+               $self->{error} == PE_PP_CHANGE_AFTER_RESET
+            or $self->{error} == PE_PP_MUST_SUPPLY_OLD_PASSWORD
+            or $self->{error} == PE_PP_INSUFFICIENT_PASSWORD_QUALITY
+            or $self->{error} == PE_PP_PASSWORD_TOO_SHORT
+            or $self->{error} == PE_PP_PASSWORD_TOO_YOUNG
+            or $self->{error} == PE_PP_PASSWORD_IN_HISTORY
+            or $self->{error} == PE_PASSWORD_MISMATCH
+            or $self->{error} == PE_BADOLDPASSWORD
           )
         {
             %templateParams = (
