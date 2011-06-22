@@ -55,7 +55,9 @@ sub send_mail {
       if $self->{mailReplyTo};
 
     # Encode the subject
-    $subject = "=?$charset?B?" . encode_base64($subject) . "?=";
+    $subject = encode_base64($subject);
+    $subject =~ s/\s//g;
+    $subject = "=?$charset?B?" . $subject . "?=";
 
     # Detect included images (cid)
     my %cid = ( $body =~ m/"cid:([^:]+):([^"]+)"/g );
