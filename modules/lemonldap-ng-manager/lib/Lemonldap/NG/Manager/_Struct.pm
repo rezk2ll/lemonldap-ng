@@ -810,11 +810,13 @@ sub struct {
                         mailConfirmBody    => 'textarea:/mailConfirmBody',
                     },
                     mailOther => {
-                        _nodes =>
-                          [qw(mailUrl randomPasswordRegexp mailTimeout)],
+                        _nodes => [
+                            qw(mailUrl randomPasswordRegexp mailTimeout mailSessionKey)
+                        ],
                         mailUrl              => 'text:/mailUrl',
                         randomPasswordRegexp => 'text:/randomPasswordRegexp',
                         mailTimeout          => 'int:/mailTimeout',
+                        mailSessionKey       => 'text:/mailSessionKey',
                     },
                 },
 
@@ -1240,6 +1242,7 @@ sub testStruct {
         notificationStorage  => $testNotDefined,
         mailUrl              => $testNotDefined,
         mailTimeout          => $integer,
+        mailSessionKey       => $testNotDefined,
         mailConfirmSubject   => $testNotDefined,
         mailConfirmBody      => $testNotDefined,
         authentication       => {
@@ -1802,6 +1805,7 @@ sub defaultConf {
         ldapVersion                 => '3',
         mailCharset                 => 'utf-8',
         mailTimeout                 => '0',
+        mailSessionKey              => 'mail',
         managerDn                   => '',
         managerPassword             => '',
         notification                => '0',
