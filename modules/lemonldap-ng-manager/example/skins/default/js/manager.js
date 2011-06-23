@@ -164,42 +164,8 @@ $(document).ready(function(){
 	getCfgAttributes();
 	display('cfgDatas','');
 
-	/* Simple Tree */
-	simpleTreeCollection = $(".simpleTree").simpleTree({
-		autoclose:treeautoclose,
-		useClickToToggle:true,
-		drag:false,
-		afterClick:function(node){
-			var span=$('span:first',node);
-			loadHelp(span.attr('help'));
-			simpleTreeDefaultJqueryClasses();
-			simpleTreeToggleJqueryClasses();
-		},
-		afterCloseNearby:function(node){
-			simpleTreeDefaultJqueryClasses();
-			simpleTreeToggleJqueryClasses();
-		},
-		afterNewNode:function(node){
-			simpleTreeDefaultJqueryClasses();
-			simpleTreeToggleJqueryClasses();
-		},
-		afterDblClick:function(node){
-			simpleTreeDefaultJqueryClasses();
-			simpleTreeToggleJqueryClasses();
-		},
-		afterSetTrigger:function(node){
-			simpleTreeTriggerJqueryClasses();
-		},
-		afterMove:function(destination, source, pos){
-		},
-		afterAjax:function() {
-			simpleTreeDefaultJqueryClasses();
-			simpleTreeToggleJqueryClasses();
-		},
-		animate:true,
-		docToFolderConvert:true
-	});
-	if(treejquerycss){simpleTreeDefaultJqueryClasses();}
+	/* Load Simple Tree */
+	loadSimpleTree();
 
 	/* Menu CSS switch */
 	$('#css-switch').dialog({
@@ -244,6 +210,47 @@ $(document).ready(function(){
 	loadHelp('default');
 
 });
+function loadSimpleTree(){
+
+	/* Simple Tree */
+	simpleTreeCollection = $(".simpleTree").simpleTree({
+		autoclose:treeautoclose,
+		useClickToToggle:true,
+		drag:false,
+		afterClick:function(node){
+			var span=$('span:first',node);
+			loadHelp(span.attr('help'));
+			simpleTreeDefaultJqueryClasses();
+			simpleTreeToggleJqueryClasses();
+		},
+		afterCloseNearby:function(node){
+			simpleTreeDefaultJqueryClasses();
+			simpleTreeToggleJqueryClasses();
+		},
+		afterNewNode:function(node){
+			simpleTreeDefaultJqueryClasses();
+			simpleTreeToggleJqueryClasses();
+		},
+		afterDblClick:function(node){
+			simpleTreeDefaultJqueryClasses();
+			simpleTreeToggleJqueryClasses();
+		},
+		afterSetTrigger:function(node){
+			simpleTreeTriggerJqueryClasses();
+		},
+		afterMove:function(destination, source, pos){
+		},
+		afterAjax:function() {
+			simpleTreeDefaultJqueryClasses();
+			simpleTreeToggleJqueryClasses();
+		},
+		animate:true,
+		docToFolderConvert:true
+	});
+	if(treejquerycss){simpleTreeDefaultJqueryClasses();}
+
+
+}
 function simpleTreeSetMenuStyle(style){
 	if(style=="tree"){
 		$("link#cssmenu").attr("href",csspath+"tree.css");
@@ -1080,14 +1087,29 @@ function uploadConf(f){
 					}
 				}
 				else{
-					var tmp=lmtext('li_cm9vdA2');
-					tmp=tmp.replace(/\d+/,data.result.cfgNum);
-					setlmtext('li_cm9vdA2',tmp);
-					setlmdata('li_cm9vdA2',data.result.cfgNum);
-					$('#cfgNum').text(data.result.cfgNum);
+					// Update configuration attributes
+					var cfgNum = data.result.cfgNum;
+					$('#cfgNum').text(cfgNum);
 					setCfgAttributes(data.cfgDatas);
 					cfgAttrDone++;
-					display('cfgDatas','');
+
+					// Reload menu
+					$.ajax({
+						type:"POST",
+						url:scriptname,
+						data:{menu:cfgNum},
+						dataType:'html',
+						success:function(data){
+							if(data==null){networkPb()}
+							else{
+								$("div#menu").html(data);
+								loadSimpleTree();
+								display('cfgDatas','');
+							}
+						}
+					});
+
+
 				}
 				if(typeof(data.warnings)!='undefined'){
 					c+='<h4>Warnings</h4>';

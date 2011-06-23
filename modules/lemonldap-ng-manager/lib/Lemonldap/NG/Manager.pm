@@ -88,17 +88,27 @@ sub new {
         $self->quit();
     }
 
+    # Reload menu
+    elsif ( my $menu = $self->param('menu') ) {
+
+        $self->lmLog( "Manager request: Menu reload for num $menu", 'debug' );
+        $self->{cfgNum} = $menu;
+        print $self->header( -type => 'text/html;charset=utf-8' );
+        print $self->menu();
+        $self->quit();
+    }
+
     # Ask requests
     elsif ( my $rreq = $self->rparam('request') ) {
 
         $self->lmLog( "Manager request: $rreq", 'debug' );
-        require Lemonldap::NG::Manager::Request;     #inherits
+        require Lemonldap::NG::Manager::Request;    #inherits
         $self->request($rreq);
         $self->quit();
     }
 
     # Else load conf
-    require Lemonldap::NG::Manager::Downloader;      #inherits
+    require Lemonldap::NG::Manager::Downloader;     #inherits
     $self->{cfgNum} =
          $self->param('cfgNum')
       || $self->confObj->lastCfg()
