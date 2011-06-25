@@ -25,7 +25,7 @@ use utf8;
 our $whatToTrace;
 *whatToTrace = \$Lemonldap::NG::Handler::_CGI::whatToTrace;
 
-our $VERSION = '1.0.2';
+our $VERSION = '1.1.0';
 
 our @ISA = qw(
   Lemonldap::NG::Handler::CGI
@@ -550,6 +550,34 @@ sub session {
             next if $_ !~ /^_openid/;
             $res .=
               '<li><strong>' . $_ . '</strong>: ' . $session{$_} . '</li>';
+
+            # Delete attribute, to hide it
+            delete $session{$_};
+        }
+
+        $res .= '</ul>';
+        $res .= '</div>';
+    }
+
+    # Notifications
+    my $notifempty = 1;
+    foreach ( keys %session ) {
+        $notifempty = 0 if $_ =~ /^notification_/;
+    }
+    unless ($notifempty) {
+        $res .= '<div class="ui-corner-all ui-widget-content category">';
+        $res .= '<h2 class="ui-corner-all ui-widget-header">'
+          . ucfirst $self->translate('notificationsDone') . '</h2>';
+        $res .= '<ul>';
+
+        foreach ( keys %session ) {
+            next if $_ !~ /^notification_(.+)/;
+            $res .=
+                '<li><strong>' 
+              . $1
+              . '</strong>: '
+              . $session{$_} . " ("
+              . localtime( $session{$_} ) . ")";
 
             # Delete attribute, to hide it
             delete $session{$_};
