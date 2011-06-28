@@ -27,6 +27,10 @@ configure-stamp:
 
 build: build-stamp
 
+build-indep: build-stamp
+
+build-arch:
+
 build-stamp: configure-stamp 
 	dh_testdir
 
