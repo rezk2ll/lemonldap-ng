@@ -97,6 +97,7 @@ function sendNewNotif() {
 	var uid = $("input#uid").val();
 	var date = $("input#date").val();
 	var ref = $("input#ref").val();
+	var condition = $("input#condition").val();
 	var xml = $("textarea#xml").val();
 
 	// Reset CSS
@@ -115,7 +116,7 @@ function sendNewNotif() {
 	$.ajax({
 		type:"POST",
 		url:scriptname,
-		data:{'newNotif':{'uid':uid,'date':date,'ref':ref,'xml':xml}},
+		data:{'newNotif':{'uid':uid,'date':date,'ref':ref,'condition':condition,'xml':xml}},
 		dataType:'html',
 		success:function(data){
 			$('#data').html(data);

@@ -70,6 +70,10 @@
     <th style="text-align:right;"><label for="ref"><lang en="Reference:" fr="Référence :" /></label></th>
     <td><input id="ref" type="text" /></td>
   </tr>
+  <tr>
+    <th style="text-align:right;"><label for="condition">Condition <lang en="(optional):" fr="(optionnelle) :" /></label></th>
+    <td><input id="condition" type="text" /></td>
+  </tr>
   <tr><td colspan="2">
 <div id="newNotifHelp" class="ui-widget-content ui-corner-all" style="text-align:left;padding: 5px;">
 <lang en="Set XML content here. You can use the following markups:" fr="Insérer le contenu XML ici. Vous pouvez utiliser les balises suivantes :" />

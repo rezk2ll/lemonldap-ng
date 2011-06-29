@@ -549,17 +549,19 @@ sub letterDone {
 # Create new notification
 # @return string HTML
 sub newNotif {
-    my $self = shift;
-    my $uid  = $self->param('newNotif[uid]');
-    my $date = $self->param('newNotif[date]');
-    my $ref  = $self->param('newNotif[ref]');
-    my $xml  = $self->param('newNotif[xml]');
+    my $self      = shift;
+    my $uid       = $self->param('newNotif[uid]');
+    my $date      = $self->param('newNotif[date]');
+    my $ref       = $self->param('newNotif[ref]');
+    my $condition = $self->param('newNotif[condition]');
+    my $xml       = $self->param('newNotif[xml]');
     my $res;
 
     # Create complete XML
     my $notif = "<?xml version='1.0' encoding='UTF-8' standalone='no'?>\n";
     $notif .= "<root>\n";
-    $notif .= "<notification uid='$uid' date='$date' reference='$ref'>\n";
+    $notif .=
+"<notification uid='$uid' date='$date' reference='$ref' condition='$condition'>\n";
     $notif .= $xml;
     $notif .= "</notification>\n";
     $notif .= "</root>\n";

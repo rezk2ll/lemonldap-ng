@@ -145,11 +145,12 @@ sub getNotification {
                 $xml->documentElement->getElementsByTagName('notification') )
             {
 
-                # Get the reference, and check it in session
+                # Get the reference
                 my $reference = $notif->getAttribute('reference');
 
                 $self->lmLog( "Get reference $reference", 'debug' );
 
+                # Check it in session
                 if (
                     exists $portal->{sessionInfo}
                     ->{ "notification_" . $reference } )
@@ -164,6 +165,25 @@ sub getNotification {
                     $notif->unbindNode();
                     next;
                 }
+
+                # Check condition if any
+                my $condition = $notif->getAttribute('condition');
+
+                if ($condition) {
+
+                    $self->lmLog( "Get condition $condition", 'debug' );
+
+                    unless ( $portal->safe->reval($condition) ) {
+                        $self->lmLog( "Notification condition not accepted",
+                            'debug' );
+
+                        # Remove it from XML
+                        $notif->unbindNode();
+                        next;
+
+                    }
+                }
+
                 $j++;
             }
 
@@ -367,6 +387,8 @@ sub newNotification {
       my $notif ( $xml->documentElement->getElementsByTagName('notification') )
     {
         my @datas = ();
+
+        # Mandatory information
         foreach (qw(date uid reference)) {
             my $tmp;
             unless ( $tmp = $notif->getAttribute($_) ) {
@@ -375,6 +397,16 @@ sub newNotification {
             }
             push @datas, $tmp;
         }
+
+        # Other information
+        foreach (qw(condition)) {
+            my $tmp;
+            if ( $tmp = $notif->getAttribute($_) ) {
+                push @datas, $tmp;
+            }
+            else { push @datas, ""; }
+        }
+
         my $result = XML::LibXML::Document->new( $version, $encoding );
         my $root = XML::LibXML::Element->new('root');
         $root->appendChild($notif);
