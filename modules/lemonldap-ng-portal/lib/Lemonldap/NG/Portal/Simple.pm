@@ -1786,7 +1786,26 @@ sub passwordDBInit {
     return $self->SUPER::passwordDBInit();
 }
 
-# modifyPassword(): must be implemented in PasswordDB* module
+## @apmethod int modifyPassword()
+# Call modifyPassword from PasswordDB* module
+# Continue auth process if password change is ok
+# @return Lemonldap::NG::Portal constant
+sub modifyPassword {
+    my $self = shift;
+
+    my $res = $self->SUPER::modifyPassword();
+
+    #  Continue process if password change is ok
+    if ( $res == PE_PASSWORD_OK ) {
+
+        # Set a flag to ignore password change in Menu
+        $self->{ignorePasswordChange} = 1;
+
+        return PE_OK;
+    }
+
+    return $res;
+}
 
 ##@apmethod int setSessionInfo()
 # Set ipAddr, xForwardedForAddr, startTime, updateTime, _utime and _userDB

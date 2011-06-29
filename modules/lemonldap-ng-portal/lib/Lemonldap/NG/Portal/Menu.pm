@@ -34,7 +34,8 @@ sub menuInit {
     $self->{user}            = $self->{sessionInfo}->{_user};
 
     # Try to change password
-    $self->{menuError} = $self->_subProcess(qw(passwordDBInit modifyPassword));
+    $self->{menuError} = $self->_subProcess(qw(passwordDBInit modifyPassword))
+      unless $self->{ignorePasswordChange};
 
     # Default menu error code
     $self->{menuError} ||= $self->{error};
