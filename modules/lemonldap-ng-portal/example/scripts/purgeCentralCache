@@ -104,6 +104,7 @@ for my $backend (@backends) {
             # Session expired
             if ( $time - $entry->{_utime} > $conf->{timeout} ) {
                 push @t, $id;
+                print "Session $id expired\n" if $debug;
             }
 
             # User has no activity, so considere the session has expired
@@ -112,6 +113,7 @@ for my $backend (@backends) {
                 and $time - $entry->{_lastSeen} > $conf->{timeoutActivity} )
             {
                 push @t, $id;
+                print "Session $id inactive\n" if $debug;
             }
             undef;
         }
@@ -122,9 +124,14 @@ for my $backend (@backends) {
         my %h;
         eval { tie %h, $storage, $id, $options };
         if ($@) {
+            print "Error while opening session $id: $@\n" if $debug;
             next;
         }
-        tied(%h)->delete;
+        eval { tied(%h)->delete; };
+        if ($@) {
+            print "Error while deleting session $id: $@\n" if $debug;
+            next;
+        }
         print "Session $id has been purged\n" if $debug;
         $nb_purged++;
     }
