@@ -487,7 +487,7 @@ sub session {
     # Map attributes to categories
     my $categories = {
         'dateTitle'       => [qw(_utime startTime updateTime _lastAuthnUTime)],
-        'connectionTitle' => [qw(ipAddr xForwardedForAddr _timezone)],
+        'connectionTitle' => [qw(ipAddr xForwardedForAddr _timezone _url)],
         'authenticationTitle' =>
           [qw(_session_id _user _password authenticationLevel)],
         'modulesTitle' => [qw(_auth _userDB _passwordDB _issuerDB _authChoice)],

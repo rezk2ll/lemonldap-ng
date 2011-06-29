@@ -1827,6 +1827,9 @@ sub setSessionInfo {
         }
     }
 
+    # Store URL origin in session
+    $self->{sessionInfo}->{_url} = $self->{urldc};
+
     # Call UserDB setSessionInfo
     if ( my $res = $self->SUPER::setSessionInfo() ) {
         return $res;
