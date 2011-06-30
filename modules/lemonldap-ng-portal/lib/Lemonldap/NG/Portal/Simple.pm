@@ -1539,6 +1539,32 @@ sub controlExistingSession {
                     $self->lmLog( "Unable to delete session $id", 'error' );
                     return PE_ERROR;
                 }
+                else {
+                    $self->lmLog( "Session $id deleted from global storage",
+                        'debug' );
+                }
+
+                # Delete session in local storage
+                if ( defined $self->{localStorage} ) {
+                    $self->loadModule( $self->{localStorage} );
+                    my $cache;
+                    eval '$cache = new '
+                      . $self->{localStorage}
+                      . '($self->{localStorageOptions})';
+                    if ( defined $cache ) {
+                        if ( $cache->remove($id) ) {
+                            $self->lmLog(
+"Unable to remove session $id from local storage",
+                                'warn'
+                            );
+                        }
+                        else {
+                            $self->lmLog(
+                                "Session $id removed from local storage",
+                                'debug' );
+                        }
+                    }
+                }
 
                 # Call issuerDB logout on each used issuerDBmodule
                 my $issuerDBList = $self->{sessionInfo}->{_issuerDB};
