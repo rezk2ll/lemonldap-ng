@@ -51,6 +51,7 @@ example/skins/common/mail_confirm.tpl
 example/skins/common/mail_footer.tpl
 example/skins/common/mail_header.tpl
 example/skins/common/mail_password.tpl
+example/skins/common/notification.xsl
 example/skins/common/ok.png
 example/skins/common/openid-16x16.gif
 example/skins/common/portal.js
