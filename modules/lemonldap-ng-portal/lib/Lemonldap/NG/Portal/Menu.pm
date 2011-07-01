@@ -41,7 +41,14 @@ sub menuInit {
     $self->{menuError} ||= $self->{error};
 
     # Tab to display
-    $self->{menuDisplayTab} = "appslist";
+    # Get the tab URL parameter
+    $self->{menuDisplayTab} = $self->param("tab") || "none";
+
+    # Default to appslist if invalid tab URL parameter
+    $self->{menuDisplayTab} = "appslist"
+      unless ( $self->{menuDisplayTab} =~ /^(password|logout)$/ );
+
+    # Force password tab in case of password error
     $self->{menuDisplayTab} = "password"
       if (
         (
