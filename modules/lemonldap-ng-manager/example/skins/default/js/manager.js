@@ -592,6 +592,7 @@ function formateSelectAuth(id,value){
 		'SSL=SSL',
 		'Twitter=Twitter',
 		'Yubikey=Yubikey',
+		'Slave=Slave',
 		'Choice=Authentication choice'
 		],value);
 }
@@ -635,6 +636,7 @@ function formateSelectUser(id,value){
 		'OpenID=OpenID',
 		'Proxy=Proxy',
 		'Remote=Remote',
+		'Slave=Slave',
 		'SAML=SAML v2'
 		],value);
 }

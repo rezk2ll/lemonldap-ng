@@ -344,10 +344,10 @@ sub struct {
                             null    => ['nullParams'],
                             slave   => ['slaveParams'],
                             choice  => [
-                                qw(ldapParams sslParams casParams remoteParams proxyParams openIdParams twitterParams dbiParams apacheParams nullParams choiceParams yubikeyParams)
+                                qw(ldapParams sslParams casParams remoteParams proxyParams openIdParams twitterParams dbiParams apacheParams nullParams choiceParams slaveParams yubikeyParams)
                             ],
                             multi => [
-                                qw(ldapParams sslParams casParams remoteParams proxyParams openIdParams twitterParams dbiParams apacheParams nullParams choiceParams yubikeyParams)
+                                qw(ldapParams sslParams casParams remoteParams proxyParams openIdParams twitterParams dbiParams apacheParams nullParams choiceParams slaveParams yubikeyParams)
                             ],
                             yubikey => ['yubikeyParams'],
                         }->{$mod};
@@ -583,10 +583,10 @@ sub struct {
 
                 # Slave
                 slaveParams => {
-                    _nodes          => [qw(slaveAuthnLevel slaveUserAttr)],
+                    _nodes          => [qw(slaveAuthnLevel slaveUserHeader)],
                     _help           => 'authSlave',
                     slaveAuthnLevel => 'int:/slaveAuthnLevel',
-                    slaveUserAttr   => 'int:/slaveUserAttr',
+                    slaveUserHeader => 'text:/slaveUserHeader',
                 },
 
                 # Choice
@@ -1735,10 +1735,7 @@ sub testStruct {
 
         # Slave
         slaveAuthnLevel => $integer,
-        slaveUserAttr   => {
-            test    => qr/^[_a-zA-Z]\w*$/,
-            msgFail => 'Bad attribute name',
-        },
+        slaveUserHeader => $testNotDefined,
 
         # Choice
         authChoiceParams  => $testNotDefined,
