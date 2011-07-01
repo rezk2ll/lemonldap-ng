@@ -193,7 +193,7 @@ sub _buildAuthLoop {
             'standardform' => [qw(LDAP DBI Proxy)],
             'openidform'   => [qw(OpenID)],
             'yubikeyform'  => [qw(Yubikey)],
-            'logo'         => [qw(CAS Twitter SAML SSL Apache Remote)],
+            'logo'         => [qw(CAS Twitter SAML SSL Apache Remote Slave)],
         };
 
         if ( $auth and $userDB and $passwordDB ) {
