@@ -12,11 +12,33 @@ use Lemonldap::NG::Portal::AuthNull;
 our $VERSION = '1.1.0';
 our @ISA     = qw(Lemonldap::NG::Portal::AuthNull);
 
+## @apmethod int extractFormInfo()
+# Read username in a specific header.
+# @return Lemonldap::NG::Portal constant
+sub extractFormInfo {
+    my $self = shift;
+
+    my $user_header = $self->{slaveUserHeader};
+    $user_header = 'HTTP_' . uc($user_header);
+    $user_header =~ s/\-/_/g;
+
+    unless ( $self->{user} = $ENV{$user_header} ) {
+        $self->lmLog( "No header " . $self->{slaveUserHeader} . " found",
+            'error' );
+        return PE_USERNOTFOUND;
+    }
+
+    PE_OK;
+}
+
 ## @apmethod int setAuthSessionInfo()
 # Set _user value to 'anonymous' and authenticationLevel to 0
 # @return Lemonldap::NG::Portal constant
 sub setAuthSessionInfo {
     my $self = shift;
+
+    # Store user submitted login for basic rules
+    $self->{sessionInfo}->{'_user'} = $self->{'user'};
 
     $self->{sessionInfo}->{authenticationLevel} = $self->{slaveAuthnLevel};
 

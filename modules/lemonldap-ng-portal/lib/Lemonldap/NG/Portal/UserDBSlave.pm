@@ -17,15 +17,14 @@ our @ISA     = qw(Lemonldap::NG::Portal::UserDBNull);
 # @return Lemonldap::NG::Portal constant
 sub setSessionInfo {
     my $self = shift;
-    my $c    = 0;
+
     while ( my ( $k, $v ) = each %{ $self->{exportedVars} } ) {
         $v = 'HTTP_' . uc($v);
         $v =~ s/\-/_/g;
-        $self->{sessionInfo}->{$k} = $ENV{$v} and $c++;
+        $self->{sessionInfo}->{$k} = $ENV{$v};
     }
-    $self->{sessionInfo}->{'_user'} ||=
-      $self->{sessionInfo}->{ $self->{slaveUserAttr} };
-    return ( $c ? PE_OK : PE_USERNOTFOUND );
+
+    return PE_OK;
 }
 
 1;
