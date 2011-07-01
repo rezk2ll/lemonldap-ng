@@ -754,11 +754,26 @@ sub error {
     my $self = shift;
     my $lang = shift || $ENV{HTTP_ACCEPT_LANGUAGE};
     my $code = shift || $self->{error};
-    my $tmp  = &Lemonldap::NG::Portal::_i18n::error( $code, $lang );
+    my $msg;
+
+    # Check for customized message
+    $msg = $self->{ "error_" . $lang . "_" . $code }
+      || $self->{ "error_" . $code };
+
+    # Use customized message or built-in message
+    if ($msg) {
+        $self->lmLog( "Use customized message for error $code", 'debug' );
+    }
+    else {
+        $msg = &Lemonldap::NG::Portal::_i18n::error( $code, $lang );
+    }
+
+    # Return message
+    # Manage SOAP
     return (
         $ENV{HTTP_SOAPACTION}
-        ? SOAP::Data->name( result => $tmp )->type('string')
-        : $tmp
+        ? SOAP::Data->name( result => $msg )->type('string')
+        : $msg
     );
 }
 
