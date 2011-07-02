@@ -17,7 +17,7 @@ sub prereq {
     my $self = shift;
     unless ( $self->{dirName} ) {
         $Lemonldap::NG::Portal::Notification::msg =
-          '"dirName" is required in "File" configuration type !';
+          '"dirName" is required in "File" notification type !';
         return 0;
     }
     if ( $self->{table} ) {
