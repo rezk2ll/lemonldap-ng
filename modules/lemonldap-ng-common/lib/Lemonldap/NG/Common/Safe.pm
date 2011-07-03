@@ -80,7 +80,13 @@ sub reval {
         $result = eval $e;
     }
 
-    $self->{p}->lmLog( "Evaluation result: $result", 'debug' ) if $result;
+    # Catch errors
+    if ($@) {
+        $self->{p}->lmLog( "Error while evaluating the expression: $@", 'warn' );
+        return;
+    }
+
+    $self->{p}->lmLog( "Evaluation result: $result", 'debug' );
 
     return $result;
 }
