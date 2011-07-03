@@ -28,7 +28,7 @@ use constant SAFEWRAP => ( Safe->can("wrap_code_ref") ? 1 : 0 );
 #inherits Apache::Session
 #link Lemonldap::NG::Common::Apache::Session::SOAP protected globalStorage
 
-our $VERSION = '1.0.2';
+our $VERSION = '1.1.0';
 
 our %EXPORT_TAGS;
 
@@ -80,7 +80,7 @@ BEGIN {
             qw( MP OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR
               $useRedirectOnForbidden $useRedirectOnError )
         ],
-        post    => [qw($transform)],
+        post    => [qw($transform postFilter)],
         cda     => ['$cda'],
         cookie  => [qw($cookieName $https $httpOnly $cookieExpiration)],
         session => ['$timeoutActivity'],
@@ -1360,38 +1360,45 @@ sub postUrlInit {
             $tmp .= "'$_'=>$postdata{$_},";
         }
 
-        # Build subroutine
-        my $sub = "sub{
-            my \$f = shift;
-            my \$l;
-            unless(\$f->ctx){
-            \$f->ctx(1);
-            my \$u=URI->new('http:');
-            \$u->query_form({$tmp});
-            my \$s=\$u->query();
-            \$l = \$f->r->headers_in->{'Content-Length'};
-            \$f->r->headers_in->set( 'Content-Length' => length(\$s) );
-            \$f->r->headers_in->set( 'Content-Type' => 'application/x-www-form-urlencoded' );
-            \$f->print(\$s);
-            while ( \$f->read( my \$b, \$l ) ) {}
-            \$f->seen_eos(1);
-            }
-            return OK;
-        }"
-          ;
-        $sub = (
-            SAFEWRAP
-            ? $class->safe->wrap_code_ref( $class->safe->reval($sub) )
-            : $class->safe->reval($sub)
-        );
         $class->lmLog( "Compiling POST request for $url", 'debug' );
         $transform->{$url} = sub {
             return $class->buildPostForm($url)
               if ( $apacheRequest->method ne 'POST' );
-            $apacheRequest->add_input_filter($sub);
+            $apacheRequest->add_input_filter(
+                sub {
+                    $class->postFilter( $tmp, @_ );
+                }
+            );
             OK;
           }
     }
+}
+
+## @rmethod protected int postFilter(hashref data, Apache2::Filter f)
+# POST data
+# @param $data Data to POST
+# @param $f Current Apache2::Filter object
+# @return Apache2::Const::OK
+sub postFilter {
+    my $class = shift;
+    my $data  = shift;
+    my $f     = shift;
+    my $l;
+
+    unless ( $f->ctx ) {
+        $f->ctx(1);
+        my $u = URI->new('http:');
+        $u->query_form( { $class->safe->reval($data) } );
+        my $s = $u->query();
+        $l = $f->r->headers_in->{'Content-Length'};
+        $f->r->headers_in->set( 'Content-Length' => length($s) );
+        $f->r->headers_in->set(
+            'Content-Type' => 'application/x-www-form-urlencoded' );
+        $f->print($s);
+        while ( $f->read( my $b, $l ) ) { }
+        $f->seen_eos(1);
+    }
+    return OK;
 }
 
 ## @rmethod protected transformUri(string uri)
