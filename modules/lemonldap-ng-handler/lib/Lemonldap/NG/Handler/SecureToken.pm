@@ -55,6 +55,17 @@ sub defaultValuesInit {
       || $secureTokenHeader
       || 'Auth-Token';
 
+    # Force some parameters to be array references
+    foreach (qw/secureTokenMemcachedServers secureTokenUrls/) {
+        no strict 'refs';
+        unless ( ref ${$_} eq "ARRAY" ) {
+            $class->lmLog( "Transform $_ value into an array reference",
+                'debug' );
+            my @array = split( /\s+/, ${$_} );
+            ${$_} = \@array;
+        }
+    }
+
     # Display found values in debug mode
     $class->lmLog( "secureTokenMemcachedServers: @$secureTokenMemcachedServers",
         'debug' );
