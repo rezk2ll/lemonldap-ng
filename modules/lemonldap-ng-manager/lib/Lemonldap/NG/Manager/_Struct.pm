@@ -850,7 +850,8 @@ sub struct {
                 },
 
                 specialHandlers => {
-                    _nodes => [qw(zimbraHandler sympaHandler)],
+                    _nodes =>
+                      [qw(zimbraHandler sympaHandler secureTokenHandler)],
 
                     # Zimbra
                     zimbraHandler => {
@@ -871,6 +872,20 @@ sub struct {
                         _help        => 'sympa',
                         sympaSecret  => 'text:/sympaSecret',
                         sympaMailKey => 'text:/sympaMailKey',
+                    },
+
+                    # Secure Token
+                    secureTokenHandler => {
+                        _nodes => [
+                            qw(secureTokenMemcachedServers secureTokenExpiration secureTokenAttribute secureTokenUrls secureTokenHeader)
+                        ],
+                        _help => 'securetoken',
+                        secureTokenMemcachedServers =>
+                          'text:/secureTokenMemcachedServers',
+                        secureTokenExpiration => 'int:/secureTokenExpiration',
+                        secureTokenAttribute  => 'text:secureTokenAttribute',
+                        secureTokenUrls       => 'text:/secureTokenUrls',
+                        secureTokenHeader     => 'text:/secureTokenHeader',
                     },
                 },
 
@@ -1773,6 +1788,13 @@ sub testStruct {
         yubikeyClientID     => $testNotDefined,
         yubikeySecretKey    => $testNotDefined,
         yubikeyPublicIDSize => $integer,
+
+        # Secure Token
+        secureTokenMemcachedServers => $testNotDefined,
+        secureTokenExpiration       => $integer,
+        secureTokenAttribute        => $testNotDefined,
+        secureTokenUrls             => $testNotDefined,
+        secureTokenHeader           => $testNotDefined,
     };
 }
 
@@ -1836,26 +1858,31 @@ sub defaultConf {
         protection                  => 'none',
         remoteGlobalStorage => 'Lemonldap::NG::Common::Apache::Session::SOAP',
         securedCookie       => '0',
-        singleSession       => '0',
-        singleIP            => '0',
-        singleUserByIP      => '0',
-        Soap                => '1',
-        SSLRequired         => '0',
-        storePassword       => '0',
-        syslog              => '',
-        timeout             => '72000',
-        timeoutActivity     => '0',
-        userControl         => '^[\w\.\-@]+$',
-        userDB              => 'LDAP',
-        passwordDB          => 'LDAP',
-        useRedirectOnError  => '1',
-        useRedirectOnForbidden => '0',
-        useSafeJail            => '1',
-        useXForwardedForIP     => '0',
-        vhostPort              => '-1',
-        vhostHttps             => '-1',
-        whatToTrace            => '$_whatToTrace',
-        yubikeyPublicIDSize    => '12',
+        secureTokenMemcachedServers => '127.0.0.1:11211',
+        secureTokenExpiration       => '60',
+        secureTokenAttribute        => 'uid',
+        secureTokenUrls             => '.*',
+        secureTokenHeader           => 'Auth-Token',
+        singleSession               => '0',
+        singleIP                    => '0',
+        singleUserByIP              => '0',
+        Soap                        => '1',
+        SSLRequired                 => '0',
+        storePassword               => '0',
+        syslog                      => '',
+        timeout                     => '72000',
+        timeoutActivity             => '0',
+        userControl                 => '^[\w\.\-@]+$',
+        userDB                      => 'LDAP',
+        passwordDB                  => 'LDAP',
+        useRedirectOnError          => '1',
+        useRedirectOnForbidden      => '0',
+        useSafeJail                 => '1',
+        useXForwardedForIP          => '0',
+        vhostPort                   => '-1',
+        vhostHttps                  => '-1',
+        whatToTrace                 => '$_whatToTrace',
+        yubikeyPublicIDSize         => '12',
         ########
         # SAML #
         ########

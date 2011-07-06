@@ -68,6 +68,7 @@ var helpCh={
 	'samlSPExportedAttributes':'/pages/documentation/latest/idpsaml.html#exported_attributes',
 	'samlSPMetaDataXML':'/pages/documentation/latest/idpsaml.html#metadata',
 	'samlSPOptions':'/pages/documentation/latest/idpsaml.html#options',
+	'securetoken':'/pages/documentation/latest/securetoken.html',
 	'security':'/pages/documentation/latest/security.html#configure_security_settings',
 	'sessions':'/pages/documentation/latest/sessions.html',
 	'sessionsdb':'/pages/documentation/latest/start.html#sessions_database',
