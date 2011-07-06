@@ -216,10 +216,16 @@ And this as mail filter:
 </li>
 <li class="level1"><div class="li"> <strong><acronym title="Lightweight Directory Access Protocol">LDAP</acronym> password encoding</strong>: can allow to manage old <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> servers using specific encoding for passwords (default: utf-8).</div>
 </li>
+<li class="level1"><div class="li"> <strong>Use reset attribute</strong>: enable to use the password reset attribute. This attribute is set by LemonLDAP::NG when <a href="../../documentation/1.1/resetpassword.html" class="wikilink1" title="documentation:1.1:resetpassword">password was reset by mail</a> and the user choose to generate the password (default: enabled).</div>
+</li>
+<li class="level1"><div class="li"> <strong>Reset attribute</strong>: name of password reset attribute (default: pwdReset).</div>
+</li>
+<li class="level1"><div class="li"> <strong>Reset value</strong>: value to set in reset attribute to activate password reset (default: TRUE).</div>
+</li>
 </ul>
 
 </div>
-<!-- SECTION "Password" [4089-4674] -->
+<!-- SECTION "Password" [4089-5077] -->
 <h2><a name="schema_extension" id="schema_extension">Schema extension</a></h2>
 <div class="level2">
 
@@ -248,7 +254,7 @@ Of course, standard <acronym title="Lightweight Directory Access Protocol">LDAP<
 </p>
 
 </div>
-<!-- SECTION "Schema extension" [4675-5338] -->
+<!-- SECTION "Schema extension" [5078-5741] -->
 <h3><a name="oid_prefix" id="oid_prefix">OID prefix</a></h3>
 <div class="level3">
 
@@ -261,7 +267,7 @@ The prefix 1.3.6.1.4.1.10943 is owned by <a href="http://www.linagora.com" class
 </p>
 
 </div>
-<!-- SECTION "OID prefix" [5339-5583] -->
+<!-- SECTION "OID prefix" [5742-5986] -->
 <h3><a name="openldap_schema" id="openldap_schema">OpenLDAP schema</a></h3>
 <div class="level3">
 
@@ -302,4 +308,4 @@ You can add this object class to any entry of your directory.
 </p>
 
 </div>
-<!-- SECTION "OpenLDAP schema" [5584-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "OpenLDAP schema" [5987-] --></div><!-- closes <div class="dokuwiki export">-->

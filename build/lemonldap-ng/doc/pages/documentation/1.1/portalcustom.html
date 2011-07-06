@@ -115,7 +115,29 @@ ln -s ../pastel/*.tpl .
 </pre>
 
 <p>
-Then you <em>only</em> have to write <code>myskin/css/styles.css</code> and add your media to <code>myskin/images</code>.
+We include some template files that can be customized:
+</p>
+<ul>
+<li class="level1"><div class="li"> customhead.tpl : <acronym title="HyperText Markup Language">HTML</acronym> header markups (like <acronym title="Cascading Style Sheets">CSS</acronym>, js cinlusion)</div>
+</li>
+<li class="level1"><div class="li"> customheader.tpl : <acronym title="HyperText Markup Language">HTML</acronym> code int the header div</div>
+</li>
+<li class="level1"><div class="li"> customfooter.tpm : <acronym title="HyperText Markup Language">HTML</acronym> code in the footer div</div>
+</li>
+</ul>
+
+<p>
+
+To use custom files, delete links and copy them into your skin folder:
+
+</p>
+<pre class="code">
+rm custom*
+cp ../pastel/custom* .
+</pre>
+
+<p>
+Then you <em>only</em> have to write <code>myskin/css/styles.css</code> and add your media to <code>myskin/images</code>. Put all custom <acronym title="HyperText Markup Language">HTML</acronym> code in the custom template files.
 </p>
 
 <p>
@@ -123,7 +145,7 @@ To configure your new skin in Manager, select the custom skin, and enter your sk
 </p>
 
 </div>
-<!-- SECTION "Skin customization" [718-1411] -->
+<!-- SECTION "Skin customization" [718-1812] -->
 <h2><a name="other_parameters" id="other_parameters">Other parameters</a></h2>
 <div class="level2">
 <ul>
@@ -132,6 +154,8 @@ To configure your new skin in Manager, select the custom skin, and enter your sk
 <li class="level1"><div class="li"> <strong>Auto complete</strong>: allow the browser to remember the password (for password based authentication backends)</div>
 </li>
 <li class="level1"><div class="li"> <strong>Require old password</strong>: used only in the password changing module of the menu, will check the old password before updating it</div>
+</li>
+<li class="level1"><div class="li"> <strong>Hide old password</strong>: used only if the password need to be reset by the user (<acronym title="Lightweight Directory Access Protocol">LDAP</acronym> password policy), will hide the old password input</div>
 </li>
 <li class="level1"><div class="li"> <strong>User attribute</strong>: which session attribute will be used to display <code>Connected as</code> in the menu</div>
 </li>
@@ -149,4 +173,4 @@ To configure your new skin in Manager, select the custom skin, and enter your sk
 </p>
 
 </div>
-<!-- SECTION "Other parameters" [1412-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Other parameters" [1813-] --></div><!-- closes <div class="dokuwiki export">-->

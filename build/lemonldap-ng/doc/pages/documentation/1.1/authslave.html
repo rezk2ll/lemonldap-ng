@@ -43,20 +43,20 @@
 <acronym title="LemonLDAP::NG">LL::NG</acronym> Slave backend is a transparent backend to used when <acronym title="LemonLDAP::NG">LL::NG</acronym> portal is protected by another <acronym title="Single Sign On">SSO</acronym>:
 </p>
 <ul>
-<li class="level1"><div class="li"> Authentication: will create session without prompting any credentials (but will register client <acronym title="Internet Protocol">IP</acronym> and creation date)</div>
+<li class="level1"><div class="li"> Authentication: will check user login in an header and create session without prompting any credentials (but will register client <acronym title="Internet Protocol">IP</acronym> and creation date)</div>
 </li>
 <li class="level1"><div class="li"> Users: collect datas transfered by <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> headers by the main <acronym title="Single Sign On">SSO</acronym> system</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION "Presentation" [80-405] -->
+<!-- SECTION "Presentation" [80-439] -->
 <h2><a name="configuration" id="configuration">Configuration</a></h2>
 <div class="level2">
 
 <p>
 
-In Manager, go in <code>General Parameters</code> &gt; <code>Authentication modules</code> and choose Null for authentication, users or password module.
+In Manager, go in <code>General Parameters</code> &gt; <code>Authentication modules</code> and choose Slave for authentication or users module.
 </p>
 
 <p>
@@ -65,7 +65,7 @@ Then, go in <code>Slave parameters</code>:
 <ul>
 <li class="level1"><div class="li"> <strong>Authentication level</strong>: authentication level for this module.</div>
 </li>
-<li class="level1"><div class="li"> <strong>User attribute</strong>: <acronym title="LemonLDAP::NG">LL::NG</acronym> key to use as $_user (see bellow)</div>
+<li class="level1"><div class="li"> <strong>Header for user login</strong>: header that contains the user main login</div>
 </li>
 </ul>
 
@@ -87,4 +87,4 @@ You have then to declare <acronym title="Hyper Text Transfer Protocol">HTTP</acr
 </table>
 
 </div>
-<!-- SECTION "Configuration" [406-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Configuration" [440-] --></div><!-- closes <div class="dokuwiki export">-->

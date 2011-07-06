@@ -34,8 +34,63 @@
 <p>
 <p><div class="noteimportant">If you upgrade from older versions, please follow first <a href="../../documentation/1.0/upgrade.html" class="wikilink1" title="documentation:1.0:upgrade">upgrade documentation from previous release</a>.
 </div></p>
-
 </p>
 
 </div>
-</div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Upgrade from 1.0 to 1.1" [1-332] -->
+<h2><a name="custom_skins" id="custom_skins">Custom skins</a></h2>
+<div class="level2">
+
+<p>
+
+You may have develop a custom skin following the <a href="../../documentation/1.0/portalcustom.html#skin_customization" class="wikilink1" title="documentation:1.0:portalcustom">skin customization documentation</a>. In this case, you may face errors when displaying the portal, because some new template files are required with LemonLDAP::NG 1.1:
+</p>
+<ul>
+<li class="level1"><div class="li"> Custom template files:</div>
+<ul>
+<li class="level2"><div class="li"> customhead.tpl</div>
+</li>
+<li class="level2"><div class="li"> customheader.tpl</div>
+</li>
+<li class="level2"><div class="li"> customfooter.tpl</div>
+</li>
+</ul>
+</li>
+<li class="level1"><div class="li"> Yubikey form:</div>
+<ul>
+<li class="level2"><div class="li"> yubikeyform.tpl</div>
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+
+The Yubikey form should be linked like the standard template files:
+
+</p>
+<pre class="code">
+ln -s ../pastel/yubikeyform.tpl .
+</pre>
+
+<p>
+Custom templates must be copied, you will then be able to add your custom content into it:
+
+</p>
+<pre class="code">
+cp ../pastel/custom* .
+</pre>
+
+</div>
+<!-- SECTION "Custom skins" [333-1011] -->
+<h2><a name="dbi_notifications_backend" id="dbi_notifications_backend">DBI notifications backend</a></h2>
+<div class="level2">
+
+<p>
+
+We added the possibility to define conditions in <a href="../../documentation/1.1/notifications.html" class="wikilink1" title="documentation:1.1:notifications">notifications</a>. This implies no change for File backend, but a little update of table structure for <acronym title="Database Interface">DBI</acronym> backend:
+</p>
+<pre class="code sql"><span class="kw1">ALTER</span> <span class="kw1">TABLE</span> <span class="st0">`notifications`</span> <span class="kw1">ADD</span> <span class="st0">`cond`</span> VARCHAR<span class="br0">&#40;</span> 255 <span class="br0">&#41;</span> <span class="kw1">NULL</span> AFTER <span class="st0">`ref`</span></pre>
+
+</div>
+<!-- SECTION "DBI notifications backend" [1012-] --></div><!-- closes <div class="dokuwiki export">-->
