@@ -18,7 +18,7 @@ requires:
     CGI:                  3.08
     Digest::SHA1:         0
     IO::Pipe:             0
-    Lemonldap::NG::Common:  1.0.4
+    Lemonldap::NG::Common:  1.1.0
     LWP::UserAgent:       0
     Test::MockObject:     0
     URI:                  0

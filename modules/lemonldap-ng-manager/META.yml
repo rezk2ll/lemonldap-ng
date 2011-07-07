@@ -22,8 +22,9 @@ requires:
     HTML::Template:       0
     IO::String:           0
     JSON:                 0
-    Lemonldap::NG::Common:  1.0.4
-    Lemonldap::NG::Handler:  1.0.4
+    Lemonldap::NG::Common:  1.1.0
+    Lemonldap::NG::Handler:  1.1.0
+    Lemonldap::NG::Portal:  1.1.0
     LWP::UserAgent:       0
     XML::LibXML:          0
     XML::LibXSLT:         0

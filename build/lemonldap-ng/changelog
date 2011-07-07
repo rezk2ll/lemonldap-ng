@@ -1,3 +1,82 @@
+lemonldap-ng (1.1.0) stable; urgency=low
+
+    * [LEMONLDAP-303] - Form replay filter is not compatible with recent Safe
+      module version
+    * [LEMONLDAP-314] - [Password Reset] Manage special characters in mail
+      subject
+    * [LEMONLDAP-315] - No error is displayed if configuration is not stored
+    * [LEMONLDAP-317] - Errors "setKeyToH... is not a reference" are not errors
+      but debug information
+    * [LEMONLDAP-318] - Do not toggle opacity between tabs
+    * [LEMONLDAP-319] - Custom functions and SafeLib ignored if Safe jail is
+      disabled
+    * [LEMONLDAP-322] - notificationStorageOptions parameter is ignored
+    * [LEMONLDAP-323] - Undefined subroutine
+      Lemonldap::NG::Portal::SharedConf::newNotification
+    * [LEMONLDAP-324] - SAML IDP does no with Google Apps and Lasso 2.3.5
+    * [LEMONLDAP-325] - Persistent sessions are deleted by portal cron job
+    * [LEMONLDAP-327] - Notifications retrieved from DBI backend are reencoded
+      in UTF8
+    * [LEMONLDAP-329] - Error " Day '00' out of range 1..31" with DBI
+      notifications getDone subroutine
+    * [LEMONLDAP-330] - Syntax check on managerDn is too restrictive
+    * [LEMONLDAP-331] - Reference is not decoded in File notification backend,
+      in function getAll
+    * [LEMONLDAP-333] - Password policy reset password is not possible if
+      password tab is not allowed
+    * [LEMONLDAP-334] - Some LDAP directories do not return password policy
+      control when bind failed
+    * [LEMONLDAP-335] - MIME subject encoding does not work with every mailer
+    * [LEMONLDAP-337] - Target URL is lost in password policy reset workflow
+    * [LEMONLDAP-338] - Handler::Proxy raise error with POST request without
+      content-length
+    * [LEMONLDAP-344] - purgeCentralCache abort if session cannot be deleted
+    * [LEMONLDAP-15] - Reload configuration tree after configuration save in
+      Manager
+    * [LEMONLDAP-203] - Persistent Storage configuration
+    * [LEMONLDAP-222] - Replace old slavePortal.pl example by
+      AuthSlave+UserDBSlave
+    * [LEMONLDAP-238] - Comment in AuthChoice keys
+    * [LEMONLDAP-295] - Add an option to support old application list objects in
+      Menu
+    * [LEMONLDAP-332] - Configure mailSessionKey in Manager
+    * [LEMONLDAP-336] - Create an option to touch the pwdReset attribute if the
+      password was generated on reset form
+    * [LEMONLDAP-339] - Create a category in Sessions explorer for notifications
+      done
+    * [LEMONLDAP-340] - Store URL origin in session
+    * [LEMONLDAP-349] - Specific error message when password form is empty in
+      mail reset workflow
+    * [LEMONLDAP-288] - Secure Token Handler
+    * [LEMONLDAP-296] - Yubikey authentication module
+    * [LEMONLDAP-299] - Default notification for all users
+    * [LEMONLDAP-300] - [Password Reset] Allow other fields than email
+    * [LEMONLDAP-301] - [Password Reset] Allow to resend a confirmation mail
+    * [LEMONLDAP-302] - [Password Reset] Allow to change the password on the
+      portal
+    * [LEMONLDAP-306] - Add a customheader.tpl and customfooter.tpl in skins
+    * [LEMONLDAP-308] - Remeber user password when password reset is required by
+      LDAP server
+    * [LEMONLDAP-309] - [Password Reset] Option to set password reset request
+      timeout
+    * [LEMONLDAP-310] - Test if mail templates are defined in the skin before
+      using the common ones
+    * [LEMONLDAP-311] - [Password Reset] Option to set HTML mail charset
+    * [LEMONLDAP-312] - [Password Reset] Option to set reply to field
+    * [LEMONLDAP-313] - [Password Reset] Include images and CSS in MIME mail
+    * [LEMONLDAP-326] - Allow to set titles and subtitles in notification
+      messages
+    * [LEMONLDAP-328] - Notification explorer
+    * [LEMONLDAP-341] - Notifications with conditions
+    * [LEMONLDAP-343] - Delete session in local Handler cache in portal logout
+      process
+    * [LEMONLDAP-345] - Open SSO session after successful password reset from
+      ppolicy
+    * [LEMONLDAP-346] - Possibility to configure XSLT used to display
+      notifications
+    * [LEMONLDAP-347] - Possibility to customize messages from the portal
+    * [LEMONLDAP-348] - Possibility to access menu tab with an URL
+
 lemonldap-ng (1.0.6) stable; urgency=low
    
     * [LEMONLDAP-297] - LDAP attributes are not explicitely requested

@@ -20,8 +20,8 @@ requires:
     File::Basename:       0
     HTML::Template:       0
     IO::String:           0
-    Lemonldap::NG::Common:  1.0.4
-    Lemonldap::NG::Handler:  1.0.4
+    Lemonldap::NG::Common:  1.1.0
+    Lemonldap::NG::Handler:  1.1.0
     MIME::Lite:           0
     Net::LDAP:            0
     SOAP::Lite:           0
