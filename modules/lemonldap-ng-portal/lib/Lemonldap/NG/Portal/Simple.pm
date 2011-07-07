@@ -136,6 +136,7 @@ use constant {
     PE_MISSINGREQATTR                   => 64,
     PE_BADPARTNER                       => 65,
     PE_MAILCONFIRMATION_ALREADY_SENT    => 66,
+    PE_PASSWORDFORMEMPTY                => 67,
 
     # Portal messages
     PM_USER                  => 0,
@@ -179,6 +180,7 @@ our @EXPORT = qw( PE_IMG_NOK PE_IMG_OK PE_INFO PE_REDIRECT PE_DONE PE_OK
   PE_SAML_SIGNATURE_ERROR PE_SAML_ART_ERROR PE_SAML_SESSION_ERROR
   PE_SAML_LOAD_SP_ERROR PE_SAML_ATTR_ERROR PE_OPENID_EMPTY PE_OPENID_BADID
   PE_MISSINGREQATTR PE_BADPARTNER PE_MAILCONFIRMATION_ALREADY_SENT
+  PE_PASSWORDFORMEMPTY
   PM_USER PM_DATE PM_IP PM_SESSIONS_DELETED PM_OTHER_SESSIONS
   PM_REMOVE_OTHER_SESSIONS PM_PP_GRACE PM_PP_EXP_WARNING
   PM_SAML_IDPSELECT PM_SAML_IDPCHOOSEN PM_REMEMBERCHOICE PM_SAML_SPLOGOUT
@@ -801,12 +803,12 @@ sub error_type {
       if (
         scalar(
             grep { /^$code$/ } (
-                PE_INFO,         PE_SESSIONEXPIRED,
-                PE_FORMEMPTY,    PE_FIRSTACCESS,
-                PE_PP_GRACE,     PE_PP_EXP_WARNING,
-                PE_NOTIFICATION, PE_BADURL,
-                PE_CONFIRM,      PE_MAILFORMEMPTY,
-                PE_MAILCONFIRMATION_ALREADY_SENT,
+                PE_INFO,                          PE_SESSIONEXPIRED,
+                PE_FORMEMPTY,                     PE_FIRSTACCESS,
+                PE_PP_GRACE,                      PE_PP_EXP_WARNING,
+                PE_NOTIFICATION,                  PE_BADURL,
+                PE_CONFIRM,                       PE_MAILFORMEMPTY,
+                PE_MAILCONFIRMATION_ALREADY_SENT, PE_PASSWORDFORMEMPTY,
             )
         )
       );

@@ -84,6 +84,7 @@ sub portalTab {
         64 => 'PORTAL_MISSINGREQATTR',
         65 => 'PORTAL_BADPARTNER',
         66 => 'PORTAL_MAILCONFIRMATION_ALREADY_SENT',
+        67 => 'PORTAL_PASSWORDFORMEMPTY',
     };
 }
 

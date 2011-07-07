@@ -277,7 +277,7 @@ sub changePassword {
 
     # Else a password is required
     else {
-        return PE_FORMEMPTY
+        return PE_PASSWORDFORMEMPTY
           unless ( $self->{newpassword} && $self->{confirmpassword} );
     }
 
