@@ -46,10 +46,13 @@ sub getConf {
     my $num = $self->__lmConf->lastCfg;
 
     unless ( $confCached and $confCached->{cfgNum} == $num ) {
-        %$confCached = (
-            %{ $self->__lmConf->getConf( { cfgNum => $num } ) },
-            %{ $self->__lmConf->getLocalConf(PORTALSECTION) },
-        );
+        my $gConf = $self->__lmConf->getConf( { cfgNum => $num } );
+        my $lConf = $self->__lmConf->getLocalConf(PORTALSECTION);
+        unless ( ref($gConf) and ref($lConf) ) {
+            $self->abort( "Cannot get configuration",
+                $Lemonldap::NG::Common::Conf::msg );
+        }
+        %$confCached = ( %$gConf, %$lConf );
     }
 
     %$self = ( %$self, %$confCached, %args, );
