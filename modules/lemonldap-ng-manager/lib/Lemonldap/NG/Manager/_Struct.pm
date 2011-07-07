@@ -777,7 +777,7 @@ sub struct {
 
                 notifications => {
                     _nodes => [
-                        qw(notification notificationStorage cn:notificationStorageOptions)
+                        qw(notification notificationStorage cn:notificationStorageOptions notificationWildcard notificationXSLTfile)
                     ],
                     _help                      => 'notifications',
                     notification               => 'bool:/notification',
@@ -789,6 +789,8 @@ sub struct {
                         _js   => 'hashRoot',
                         _help => 'notifications',
                     },
+                    notificationWildcard => 'text:/notificationWildcard',
+                    notificationXSLTfile => 'text:/notificationXSLTfile',
                 },
 
                 passwordManagement => {
@@ -1261,6 +1263,8 @@ sub testStruct {
         SMTPAuthPass         => $testNotDefined,
         cookieExpiration     => $testNotDefined,
         notificationStorage  => $testNotDefined,
+        notificationWildcard => $testNotDefined,
+        notificationXSLTfile => $testNotDefined,
         mailUrl              => $testNotDefined,
         mailTimeout          => $integer,
         mailSessionKey       => $testNotDefined,
@@ -1841,6 +1845,7 @@ sub defaultConf {
         managerPassword                 => '',
         notification                    => '0',
         notificationStorage             => 'File',
+        notificationWildcard            => 'allusers',
         notifyDeleted                   => '1',
         notifyOther                     => '0',
         openIdSreg_fullname             => 'cn',
