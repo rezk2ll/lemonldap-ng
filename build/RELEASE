@@ -22,7 +22,24 @@ Before release
 - Update documentation:
 # make documentation
 
-- Tag the version on SVN
+
+For minor release
+-----------------
+
+- Tag the version on SVN from the branch
+
+For major release
+-----------------
+
+- You need to create a branch, but not directly from the trunk
+
+- First get the tarball:
+# make dist
+
+- Then unpack it somewhere anc copy content in a new branch on SVN
+# cp lemonldap-ng-VERSION svn/lemonldap-ng/branches/lemonldap-ng_version_VERSION-bugfixes
+
+- You can then tag the version from the new branch
 
 The distribution
 ----------------
