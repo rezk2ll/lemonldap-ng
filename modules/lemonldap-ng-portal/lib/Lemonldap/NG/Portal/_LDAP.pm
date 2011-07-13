@@ -13,7 +13,7 @@ use Encode;
 use strict;
 
 our @EXPORT   = qw(ldap);
-our $VERSION  = '1.1.0';
+our $VERSION  = '1.1.1';
 our $ppLoaded = 0;
 
 BEGIN {
@@ -424,6 +424,10 @@ sub searchGroups {
         $searchFilter .= "(" . $key . "=" . $_ . ")";
     }
     $searchFilter .= "))";
+
+    # Escape some special chars in DN
+    # Special char: /
+    $searchFilter =~ s/\\/\\\\/;
 
     $portal->lmLog( "Group search filter: $searchFilter", 'debug' );
 
