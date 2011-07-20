@@ -63,7 +63,7 @@ use Digest::MD5;
 #inherits Apache::Session
 #link Lemonldap::NG::Common::Apache::Session::SOAP protected globalStorage
 
-our $VERSION = '1.1.0';
+our $VERSION = '1.1.1';
 
 use base qw(Lemonldap::NG::Common::CGI Exporter);
 our @ISA;
@@ -426,12 +426,11 @@ sub new {
 
     # SOAP
     if ( $self->{Soap} or $self->{soap} ) {
-        require Lemonldap::NG::Portal::_SOAP;
-        push @ISA, 'Lemonldap::NG::Portal::_SOAP';
+        $self->loadModule('Lemonldap::NG::Portal::_SOAP');
         if ( $self->{notification} and $ENV{PATH_INFO} ) {
-            $self->soapTest(
-                { '/notification' => 'newNotification' }->{ $ENV{PATH_INFO} },
-                $self->{notifObject} );
+            $self->{CustomSOAPServices} ||= {};
+            $self->{CustomSOAPServices}->{'/notification'} =
+              { f => 'newNotification', o => $self->{notifObject} };
         }
         $self->startSoapServices();
     }
