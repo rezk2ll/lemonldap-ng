@@ -1506,15 +1506,23 @@ sub controlUrlOrigin {
 sub checkNotifBack {
     my $self = shift;
     if ( $self->{notification} and grep( /^reference/, $self->param() ) ) {
+        $self->lmLog( "User was on a notification step", 'debug' );
         unless ( $self->{notifObject}->checkNotification($self) ) {
+            $self->lmLog(
+                "All notifications have not been accepted, display them again",
+                'debug'
+            );
             $self->{_notification} =
               $self->{notifObject}->getNotification($self);
             return PE_NOTIFICATION;
         }
         else {
-            $self->{error} = $self->_subProcess(
-                qw(checkNotification issuerDBInit authInit issuerForAuthUser autoRedirect)
+            $self->lmLog(
+"All notifications have been accepted, follow the authentication process",
+                'debug'
             );
+            $self->{error} = $self->_subProcess(
+                qw(issuerDBInit authInit issuerForAuthUser autoRedirect) );
             return $self->{error} || PE_DONE;
         }
     }
