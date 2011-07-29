@@ -37,21 +37,24 @@ To use Active-Directory as <acronym title="Lightweight Directory Access Protocol
 <ul>
 <li class="level1"><div class="li"> Use “<acronym title="Lightweight Directory Access Protocol">LDAP</acronym>” as authentication and userDB backends,</div>
 </li>
-<li class="level1"><div class="li"> Configure authentication filter <em>(“General Parameters » Authentication modules » <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> parameters » Filters”)</em> with:</div>
+<li class="level1"><div class="li"> Configure authentication filter and mail filter <em>(“General Parameters » Authentication modules » <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> parameters » Filters”)</em> with:</div>
 </li>
 </ul>
 <pre class="code">
 (&amp;(sAMAccountName=$user)(objectClass=person))
+(&amp;(mail=$mail)(objectClass=person))
 </pre>
 <ul>
 <li class="level1"><div class="li"> Export sAMAccountName in a variable declared in <a href="../../documentation/1.1/exportedvars.html" class="wikilink1" title="documentation:1.1:exportedvars">exported variables</a></div>
 </li>
 <li class="level1"><div class="li"> Change the user attribute to store in Apache logs <em>(“General Parameters » Logs » REMOTE_USER”)</em>: use the variable declared above</div>
 </li>
+<li class="level1"><div class="li"> Enable password modify extended operation if you want to change password in AD</div>
+</li>
 </ul>
 
 </div>
-<!-- SECTION "Using Active-Directory as authentication backend" [58-670] -->
+<!-- SECTION "Using Active-Directory as authentication backend" [58-805] -->
 <h2><a name="using_kerberos" id="using_kerberos">Using Kerberos</a></h2>
 <div class="level2">
 
@@ -67,4 +70,4 @@ Two steps here:
 </ul>
 
 </div>
-<!-- SECTION "Using Kerberos" [671-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Using Kerberos" [806-] --></div><!-- closes <div class="dokuwiki export">-->

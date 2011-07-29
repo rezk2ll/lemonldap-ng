@@ -98,6 +98,21 @@ chown www-data /usr/local/lemonldap-ng/notifications/
 </div></p>
 </p>
 
+<p>
+<p><div class="notetip">The file name default separator is <code>_</code>, this can be a problem if you register notifications for users having <code>_</code> in their login. You can change the separator with the <code>fileNameSeparator</code> option, and set another value, for example <code>@</code>.
+</div></p>
+</p>
+
+<p>
+To summary available options:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>dirName</strong>: directory where notifications are stored.</div>
+</li>
+<li class="level1"><div class="li"> <strong>fileNameSeparator</strong>: file name separator.</div>
+</li>
+</ul>
+
 </div>
 
 <h4><a name="dbi" id="dbi">DBI</a></h4>
@@ -128,8 +143,22 @@ Parameters for <acronym title="Database Interface">DBI</acronym> backend are the
 </div></p>
 </p>
 
+<p>
+To summary available options:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>dbiChain</strong>: <acronym title="Database Interface">DBI</acronym> connection.</div>
+</li>
+<li class="level1"><div class="li"> <strong>dbiUser</strong>: <acronym title="Database Interface">DBI</acronym> user.</div>
+</li>
+<li class="level1"><div class="li"> <strong>dbiPassword</strong>: <acronym title="Database Interface">DBI</acronym> password.</div>
+</li>
+<li class="level1"><div class="li"> <strong>table</strong>: Notifications table name.</div>
+</li>
+</ul>
+
 </div>
-<!-- SECTION "Storage" [832-2251] -->
+<!-- SECTION "Storage" [832-2818] -->
 <h3><a name="wildcard" id="wildcard">Wildcard</a></h3>
 <div class="level3">
 
@@ -147,7 +176,7 @@ Then creating a notification for <code>alluserscustom</code> will display the no
 </p>
 
 </div>
-<!-- SECTION "Wildcard" [2252-2721] -->
+<!-- SECTION "Wildcard" [2819-3288] -->
 <h3><a name="custom_xslt_file" id="custom_xslt_file">Custom XSLT file</a></h3>
 <div class="level3">
 
@@ -157,12 +186,12 @@ The transformation between notification <acronym title="Extensible Markup Langua
 </p>
 
 </div>
-<!-- SECTION "Custom XSLT file" [2722-3194] -->
+<!-- SECTION "Custom XSLT file" [3289-3761] -->
 <h2><a name="using_notification_system" id="using_notification_system">Using notification system</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Using notification system" [3195-3233] -->
+<!-- SECTION "Using notification system" [3762-3800] -->
 <h3><a name="notification_format" id="notification_format">Notification format</a></h3>
 <div class="level3">
 
@@ -240,7 +269,7 @@ Example :
 <span class="sc3"><span class="re1">&lt;/root<span class="re2">&gt;</span></span></span></pre>
 
 </div>
-<!-- SECTION "Notification format" [3234-5332] -->
+<!-- SECTION "Notification format" [3801-5899] -->
 <h3><a name="create_new_notifications_with_notifications_explorer" id="create_new_notifications_with_notifications_explorer">Create new notifications with notifications explorer</a></h3>
 <div class="level3">
 
@@ -262,7 +291,7 @@ When all is ok, click on <code>Create</code>.
 </p>
 
 </div>
-<!-- SECTION "Create new notifications with notifications explorer" [5333-5678] -->
+<!-- SECTION "Create new notifications with notifications explorer" [5900-6245] -->
 <h3><a name="create_new_notifications_trough_soap" id="create_new_notifications_trough_soap">Create new notifications trough SOAP</a></h3>
 <div class="level3">
 
@@ -318,7 +347,7 @@ New notifications can be insert using <acronym title="Simple Object Access Proto
 <span class="br0">&#125;</span></pre>
 
 </div>
-<!-- SECTION "Create new notifications trough SOAP" [5679-7037] -->
+<!-- SECTION "Create new notifications trough SOAP" [6246-7604] -->
 <h3><a name="test_notification" id="test_notification">Test notification</a></h3>
 <div class="level3">
 
@@ -336,4 +365,4 @@ Try also to create a global notification (to the uid “allusers”), and connec
 </p>
 
 </div>
-<!-- SECTION "Test notification" [7038-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Test notification" [7605-] --></div><!-- closes <div class="dokuwiki export">-->

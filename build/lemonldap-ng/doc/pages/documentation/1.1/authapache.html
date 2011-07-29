@@ -139,11 +139,16 @@ Edit <code>/etc/krb5.conf</code>:
 
 </div>
 <!-- SECTION "Kerberos client for Linux" [1519-1796] -->
-<h3><a name="connection_between_linux_and_active_directory" id="connection_between_linux_and_active_directory">Connection between Linux and Active Directory</a></h3>
+<h3><a name="connection_between_linux_and_active_directory_-_method_1" id="connection_between_linux_and_active_directory_-_method_1">Connection between Linux and Active Directory  - method 1</a></h3>
 <div class="level3">
 
 <p>
 
+<p><div class="notetip">This method requires to execute a command on the Active Directory server, and then transfer the keytab on Linux server.
+</div></p>
+</p>
+
+<p>
 You have to run this command on Active Directory:
 </p>
 <pre class="code">
@@ -163,7 +168,67 @@ klist -e
 kinit -k -t /etc/lemonldap-ng/auth.keytab HTTP/auth.example.com</pre>
 
 </div>
-<!-- SECTION "Connection between Linux and Active Directory" [1797-2427] -->
+<!-- SECTION "Connection between Linux and Active Directory  - method 1" [1797-2577] -->
+<h3><a name="connection_between_linux_and_active_directory_-_method_2" id="connection_between_linux_and_active_directory_-_method_2">Connection between Linux and Active Directory  - method 2</a></h3>
+<div class="level3">
+
+<p>
+
+<p><div class="notetip">This method requires the <code>msktutil</code> program on Linux server. You should be able to find a package for your distribution with a little search on the web.
+</div></p>
+</p>
+
+<p>
+Initiate the Kerberos connection:
+
+</p>
+<pre class="code">
+kinit ssokerberos@EXAMPLE.COM
+</pre>
+
+<p>
+Then create the keytab.
+</p>
+<ul>
+<li class="level1"><div class="li"> Windows 2003 server:</div>
+</li>
+</ul>
+<pre class="code">
+rm -f /etc/lemonldap-ng/auth.keytab
+msktutil -c -b &quot;cn=COMPUTERS&quot; -s HTTP/auth.example.com -h auth.example.com -k /etc/lemonldap-ng/auth.keytab --computer-name portalsso --upn HTTP/auth.example.com --server ad.example.com --verbose
+</pre>
+<ul>
+<li class="level1"><div class="li"> Windows 2008 server:</div>
+</li>
+</ul>
+<pre class="code">
+rm -f /etc/lemonldap-ng/auth.keytab
+msktutil -c -b &quot;cn=COMPUTERS&quot; -s HTTP/auth.example.com -h auth.example.com -k /etc/lemonldap-ng/auth.keytab --computer-name portalsso --upn HTTP/auth.example.com --server ad.example.com --verbose --enctypes 28
+</pre>
+
+<p>
+<p><div class="noteimportant">Option <code>–enctypes</code> requires msktutil &gt; 0.4
+</div></p>
+</p>
+
+<p>
+Close kerberos connection:
+
+</p>
+<pre class="code">
+kdestroy
+</pre>
+
+<p>
+Change rights on keytab file:
+
+</p>
+<pre class="code">
+chown apache /etc/lemonldap-ng/auth.keytab
+</pre>
+
+</div>
+<!-- SECTION "Connection between Linux and Active Directory  - method 2" [2578-3693] -->
 <h3><a name="configuration_of_lemonldapng" id="configuration_of_lemonldapng">Configuration of LemonLDAP::NG</a></h3>
 <div class="level3">
 
@@ -182,7 +247,7 @@ You can also configure the authentication level for this module.
 </p>
 
 </div>
-<!-- SECTION "Configuration of LemonLDAP::NG" [2428-2723] -->
+<!-- SECTION "Configuration of LemonLDAP::NG" [3694-3989] -->
 <h3><a name="configuration_of_apache_virtual_host" id="configuration_of_apache_virtual_host">Configuration of Apache virtual host</a></h3>
 <div class="level3">
 
@@ -215,8 +280,13 @@ Modify the portal virtual host:
 &nbsp;
 &lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
 
+<p>
+<p><div class="notetip">Do no set <code>require valid-user</code> if you want to be able to fail back to another authentication backend for users without Kerberos ticket.
+</div></p>
+</p>
+
 </div>
-<!-- SECTION "Configuration of Apache virtual host" [2724-3351] -->
+<!-- SECTION "Configuration of Apache virtual host" [3990-4773] -->
 <h3><a name="time_to_test" id="time_to_test">Time to test</a></h3>
 <div class="level3">
 
@@ -227,4 +297,4 @@ Configure <acronym title="Internet Explorer">IE</acronym> or Firefox to trust <c
 </p>
 
 </div>
-<!-- SECTION "Time to test" [3352-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Time to test" [4774-] --></div><!-- closes <div class="dokuwiki export">-->
