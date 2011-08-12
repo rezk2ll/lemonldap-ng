@@ -39,7 +39,6 @@ Architecture: all
 Depends: ${misc:Depends}, libapache-session-perl, libwww-perl,
  liblemonldap-ng-conf-perl (= ${binary:Version}),
  libapache2-mod-perl2, liburi-perl
-Recommends: libdbi-perl
 Suggests: liblemonldap-ng-portal-perl, libsoap-lite-perl
 Description: Lemonldap::NG Apache module part
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
@@ -67,7 +66,7 @@ Depends: ${misc:Depends},
  libjs-jquery (>=1.4.2), libjs-jquery-ui, libhtml-template-perl,
  libxml-libxml-perl, libxml-libxslt-perl,
  libcrypt-openssl-rsa-perl, libcrypt-openssl-x509-perl, libxml-simple-perl,
- libjson-perl
+ libjson-perl, javascript-common
 Pre-Depends: debconf
 Recommends: libapache-session-perl, libsoap-lite-perl,
  lemonldap-ng-doc (= ${binary:Version})
@@ -85,6 +84,7 @@ Depends: ${misc:Depends},
  libapache-session-perl, libnet-ldap-perl,
  libxml-libxml-perl, libxml-libxslt-perl, libstring-random-perl,
  libsoap-lite-perl, libcrypt-openssl-x509-perl, libclone-perl,
+ javascript-common
 Pre-Depends: debconf
 Recommends: libmime-lite-perl, libemail-date-format-perl, libconvert-pem-perl,
  libnet-openid-consumer-perl | libnet-openid-server-perl |
@@ -92,7 +92,7 @@ Recommends: libmime-lite-perl, libemail-date-format-perl, libconvert-pem-perl,
 Suggests: slapd, libnet-twitter-perl, libnet-openid-consumer-perl,
  libnet-openid-server-perl, liblasso3-perl (>=2.3.0),
  liblemonldap-ng-handler-perl (= ${binary:Version}), libnet-ldap-perl (>=1:0.38),
- libauthen-sasl-perl,
+ libauthen-sasl-perl
 Description: Lemonldap::NG authentication portal part
  Lemonldap::NG is a complete Web-SSO system that can run with reverse-proxies
  or directly on application Apache servers.
