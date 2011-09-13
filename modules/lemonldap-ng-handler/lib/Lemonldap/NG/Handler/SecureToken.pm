@@ -17,10 +17,10 @@ our $VERSION = '1.1.2';
 
 # Shared variables
 our (
-    $secureTokenMemcachedServers, $secureTokenExpiration,
-    $secureTokenAttribute,        $secureTokenUrls,
-    $secureTokenHeader,           $datas,
-    $secureTokenMemcachedConnection
+    $secureTokenMemcachedServers,    $secureTokenExpiration,
+    $secureTokenAttribute,           $secureTokenUrls,
+    $secureTokenHeader,              $datas,
+    $secureTokenMemcachedConnection, $secureTokenAllowOnError,
 );
 
 BEGIN {
@@ -54,6 +54,12 @@ sub defaultValuesInit {
          $args->{'secureTokenHeader'}
       || $secureTokenHeader
       || 'Auth-Token';
+    $args->{'secureTokenAllowOnError'} = 1
+      unless defined $args->{'secureTokenAllowOnError'};
+    $secureTokenAllowOnError =
+      defined $secureTokenAllowOnError
+      ? $secureTokenAllowOnError
+      : $args->{'secureTokenAllowOnError'};
 
     # Force some parameters to be array references
     foreach (qw/secureTokenMemcachedServers secureTokenUrls/) {
@@ -73,6 +79,8 @@ sub defaultValuesInit {
     $class->lmLog( "secureTokenAttribute: $secureTokenAttribute",   'debug' );
     $class->lmLog( "secureTokenUrls: @$secureTokenUrls",            'debug' );
     $class->lmLog( "secureTokenHeader: $secureTokenHeader",         'debug' );
+    $class->lmLog( "secureTokenAllowOnError: $secureTokenAllowOnError",
+        'debug' );
 
     # Delete Secure Token parameters
     delete $args->{'secureTokenMemcachedServers'};
@@ -80,6 +88,7 @@ sub defaultValuesInit {
     delete $args->{'secureTokenAttribute'};
     delete $args->{'secureTokenUrls'};
     delete $args->{'secureTokenHeader'};
+    delete $args->{'secureTokenAllowOnError'};
 
     # Call main subroutine
     return $class->SUPER::defaultValuesInit($args);
@@ -119,13 +128,14 @@ sub run {
     }
 
     # Exit if no connection
-    return OK unless $class->_isAlive();
+    return $class->_returnError() unless $class->_isAlive();
 
     # Value to store
     my $value = $datas->{$secureTokenAttribute};
 
     # Set token
     my $key = $class->_setToken($value);
+    return $class->_returnError() unless $key;
 
     # Header location
     lmSetHeaderIn( $r, $secureTokenHeader => $key );
@@ -161,6 +171,8 @@ sub _createMemcachedConnection {
         'servers' => $secureTokenMemcachedServers,
         'debug'   => 0,
     };
+
+    $class->lmLog( "Memcached connection created", 'debug' );
 
     return $memd;
 }
@@ -233,6 +245,29 @@ sub _isAlive {
     $class->lmLog( "Memcached connection is not alive", 'error' );
 
     return 0;
+}
+
+## @method private int _returnError()
+# Give hand back to Apache
+# @return Apache2::Const value
+sub _returnError {
+    my ($class) = splice @_;
+
+    if ($secureTokenAllowOnError) {
+        $class->lmLog( "Allow request without secure token", 'debug' );
+        return OK;
+    }
+
+    # Redirect or Forbidden?
+    if ($useRedirectOnError) {
+        $class->lmLog( "Use redirect for error", 'debug' );
+        return $class->goToPortal( '/', 'lmError=500' );
+    }
+
+    else {
+        $class->lmLog( "Return error", 'debug' );
+        return SERVER_ERROR;
+    }
 }
 
 1;
