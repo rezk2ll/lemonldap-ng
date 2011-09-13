@@ -13,7 +13,7 @@ use base qw(Lemonldap::NG::Handler::SharedConf);
 use Cache::Memcached;
 use Apache::Session::Generate::MD5;
 
-our $VERSION = '1.1.0';
+our $VERSION = '1.1.2';
 
 # Shared variables
 our (
@@ -113,10 +113,13 @@ sub run {
     }
     return OK unless ($checkurl);
 
-    # Memcached connection
-    unless ($secureTokenMemcachedConnection) {
+    # Test Memcached connection
+    unless ( $class->_isAlive() ) {
         $secureTokenMemcachedConnection = $class->_createMemcachedConnection();
     }
+
+    # Exit if no connection
+    return OK unless $class->_isAlive();
 
     # Value to store
     my $value = $datas->{$secureTokenAttribute};
@@ -202,6 +205,34 @@ sub _deleteToken {
     }
 
     return $res;
+}
+
+## @method private boolean _isAlive()
+# Run a STATS command to see if Memcached connection is alive
+# @param connection Cache::Memcached object
+# @return result
+sub _isAlive {
+    my ($class) = splice @_;
+
+    return 0 unless defined $secureTokenMemcachedConnection;
+
+    my $stats = $secureTokenMemcachedConnection->stats();
+
+    if ( $stats and defined $stats->{'total'} ) {
+        my $total_c = $stats->{'total'}->{'connection_structures'};
+        my $total_i = $stats->{'total'}->{'total_items'};
+
+        $class->lmLog(
+"Memcached connection is alive ($total_c connections / $total_i items)",
+            'debug'
+        );
+
+        return 1;
+    }
+
+    $class->lmLog( "Memcached connection is not alive", 'error' );
+
+    return 0;
 }
 
 1;
