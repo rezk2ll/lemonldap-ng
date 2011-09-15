@@ -745,6 +745,15 @@ function zimbraByParams(id) {
 		],lmdata(id));
 	display('select',lmtext(id));
 }
+function casAccessControlPolicyParams(id) {
+	currentId=id;
+	formateSelect('select',[
+		'none=None',
+		'error=Display error on portal',
+		'faketicket=Send a fake service ticket',
+		],lmdata(id));
+	display('select',lmtext(id));
+}
 function btext(id) {
 	currentId=id;
 	$('#btextKey').attr('value',lmtext(id));
