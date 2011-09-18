@@ -88,9 +88,9 @@ Depends: ${misc:Depends},
 Pre-Depends: debconf
 Recommends: libmime-lite-perl, libemail-date-format-perl, libconvert-pem-perl,
  libnet-openid-consumer-perl | libnet-openid-server-perl |
- liblasso3-perl (>=2.3.0) | libnet-twitter-perl
+ liblasso3-perl (>=2.3.0) | liblasso-perl (>=2.3.0) | libnet-twitter-perl
 Suggests: slapd, libnet-twitter-perl, libnet-openid-consumer-perl,
- libnet-openid-server-perl, liblasso3-perl (>=2.3.0),
+ libnet-openid-server-perl, liblasso3-perl (>=2.3.0) | liblasso-perl (>=2.3.0),
  liblemonldap-ng-handler-perl (= ${binary:Version}), libnet-ldap-perl (>=1:0.38),
  libauthen-sasl-perl
 Description: Lemonldap::NG authentication portal part
