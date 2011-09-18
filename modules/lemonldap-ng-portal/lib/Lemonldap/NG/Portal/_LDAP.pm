@@ -422,7 +422,7 @@ sub searchGroups {
     my $searchFilter =
       "(&(objectClass=" . $portal->{ldapGroupObjectClass} . ")(|";
     foreach ( split( $portal->{multiValuesSeparator}, $value ) ) {
-        $searchFilter .= "(" . $key . "=" .  escape_filter_value($_) . ")";
+        $searchFilter .= "(" . $key . "=" . escape_filter_value($_) . ")";
     }
     $searchFilter .= "))";
 

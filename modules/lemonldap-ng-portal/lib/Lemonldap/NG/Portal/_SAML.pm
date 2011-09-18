@@ -154,7 +154,8 @@ sub loadService {
     # Create Lasso server with service metadata
     my $server = $self->createServer(
         $service_metadata->serviceToXML(
-            $self->getApacheHtdocsPath() . "/skins/common/saml2-metadata.tpl", $self
+            $self->getApacheHtdocsPath() . "/skins/common/saml2-metadata.tpl",
+            $self
         ),
         $privateKeySig,
         $privateKeySigPwd,

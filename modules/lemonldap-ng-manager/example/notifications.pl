@@ -25,7 +25,9 @@ my $cgi = Lemonldap::NG::Manager::Notifications->new(
         #      directory => '/usr/local/lemonlda-ng/conf/'
         #},
     }
-) or Lemonldap::NG::Common::CGI->abort('Unable to start notifications explorer');
+  )
+  or
+  Lemonldap::NG::Common::CGI->abort('Unable to start notifications explorer');
 
 my $skin = $cgi->{managerSkin} or $cgi->abort('managerSkin is not defined');
 my $css = 'tree.css';
