@@ -883,7 +883,7 @@ sub struct {
                     # Secure Token
                     secureTokenHandler => {
                         _nodes => [
-                            qw(secureTokenMemcachedServers secureTokenExpiration secureTokenAttribute secureTokenUrls secureTokenHeader)
+                            qw(secureTokenMemcachedServers secureTokenExpiration secureTokenAttribute secureTokenUrls secureTokenHeader secureTokenAllowOnError)
                         ],
                         _help => 'securetoken',
                         secureTokenMemcachedServers =>
@@ -892,6 +892,8 @@ sub struct {
                         secureTokenAttribute  => 'text:secureTokenAttribute',
                         secureTokenUrls       => 'text:/secureTokenUrls',
                         secureTokenHeader     => 'text:/secureTokenHeader',
+                        secureTokenAllowOnError =>
+                          'bool:/secureTokenAllowOnError',
                     },
                 },
 
@@ -1804,6 +1806,7 @@ sub testStruct {
         secureTokenAttribute        => $testNotDefined,
         secureTokenUrls             => $testNotDefined,
         secureTokenHeader           => $testNotDefined,
+        secureTokenAllowOnError     => $boolean,
     };
 }
 
@@ -1874,6 +1877,7 @@ sub defaultConf {
         secureTokenAttribute        => 'uid',
         secureTokenUrls             => '.*',
         secureTokenHeader           => 'Auth-Token',
+        secureTokenAllowOnError     => '1',
         singleSession               => '0',
         singleIP                    => '0',
         singleUserByIP              => '0',
