@@ -702,14 +702,16 @@ sub struct {
 
             # COOKIE PARAMETERS
             cookieParams => {
-                _nodes =>
-                  [qw(cookieName domain cda securedCookie cookieExpiration)],
+                _nodes => [
+                    qw(cookieName domain cda securedCookie httpOnly cookieExpiration)
+                ],
                 _help      => 'cookies',
                 cookieName => 'text:/cookieName',
                 domain     => 'text:/domain',
                 cda        => 'bool:/cda',
                 securedCookie =>
                   'select:/securedCookie:cookies:securedCookieValues',
+                httpOnly         => 'bool:/httpOnly',
                 cookieExpiration => 'text:/cookieExpiration',
             },
 
@@ -1344,6 +1346,7 @@ sub testStruct {
                 1;
             },
         },
+        httpOnly               => $boolean,
         https                  => $boolean,
         issuerDBSAMLActivation => $boolean,
         issuerDBSAMLPath       => $testNotDefined,
@@ -1827,6 +1830,7 @@ sub defaultConf {
         domain                   => 'example.com',
         globalStorage            => 'Apache::Session::File',
         hideOldPassword          => '0',
+        httpOnly                 => '1',
         https                    => '0',
         issuerDBSAMLActivation   => '0',
         issuerDBSAMLPath         => '^/saml/',
