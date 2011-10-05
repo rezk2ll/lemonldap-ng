@@ -138,7 +138,7 @@ sub run {
     return $class->_returnError() unless $key;
 
     # Header location
-    lmSetHeaderIn( $r, $secureTokenHeader => $key );
+    $class->lmSetHeaderIn( $r, $secureTokenHeader => $key );
 
     # Remove token
     eval 'use Apache2::Filter' unless ( $INC{"Apache2/Filter.pm"} );

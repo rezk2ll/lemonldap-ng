@@ -240,13 +240,13 @@ sub regRemoteIp {
     return $str;
 }
 
-## @rfn void lmSetHeaderIn(Apache2::RequestRec r, string h, string v)
+## @rmethod void lmSetHeaderIn(Apache2::RequestRec r, string h, string v)
 # Set an HTTP header in the HTTP request.
 # @param $r Current request
 # @param $h Name of the header
 # @param $v Value of the header
 sub lmSetHeaderIn {
-    my ( $r, %hdr ) = splice @_;
+    my ( $class, $r, %hdr ) = splice @_;
     while ( my ( $h, $v ) = each %hdr ) {
         if ( MP() == 2 ) {
             $r->headers_in->set( $h => $v );
@@ -254,6 +254,7 @@ sub lmSetHeaderIn {
         elsif ( MP() == 1 ) {
             $r->header_in( $h => $v );
         }
+        $class->lmLog( "Send header $h with value $v", 'debug' );
     }
 }
 
@@ -776,7 +777,7 @@ sub hideCookie {
     $class->lmLog( "$class: removing cookie", 'debug' );
     my $tmp = lmHeaderIn( $apacheRequest, 'Cookie' );
     $tmp =~ s/$cookieName(?:http)?[^,;]*[,;]?//og;
-    lmSetHeaderIn( $apacheRequest, 'Cookie' => $tmp );
+    $class->lmSetHeaderIn( $apacheRequest, 'Cookie' => $tmp );
 }
 
 ## @rmethod protected string encodeUrl(string url)
@@ -1320,7 +1321,8 @@ qq{<html><body onload="document.getElementById('f').submit()"><form id="f" metho
 ## @rmethod protected void sendHeaders()
 # Launch function compiled by forgeHeadersInit()
 sub sendHeaders {
-    lmSetHeaderIn( $apacheRequest, &$forgeHeaders );
+    my ($class) = splice @_;
+    $class->lmSetHeaderIn( $apacheRequest, &$forgeHeaders );
 }
 
 ## @rmethod protected boolean isProtected()
