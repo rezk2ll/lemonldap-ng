@@ -1,3 +1,32 @@
+lemonldap-ng (1.2.0) stable; urgency=low
+
+lemonldap-ng (1.1.2) stable; urgency=low
+
+    * [LEMONLDAP-355] - The "basic($uid,$_password)" extended function makes an
+      error 500 in Apache
+    * [LEMONLDAP-356] - Wrong language when user has already a session and gets
+      redirected
+    * [LEMONLDAP-357] - CPAN tester report: missing dependency for SecureToken
+      Handler
+    * [LEMONLDAP-358] - [SecureToken] Check if cached connection is alive before
+      using it
+    * [LEMONLDAP-359] - [SecureToken] Add an option to raise error if token
+      could not be generated
+    * [LEMONLDAP-360] - Fix Debian dependencies
+    * [LEMONLDAP-361] - [CAS Issuer] check authorization on CAS service
+    * [LEMONLDAP-362] - Portal grant function returns -1 on undefined vhost. It
+      should return 0.
+    * [LEMONLDAP-363] - Lasso Debian dependency need to be updated
+    * [LEMONLDAP-364] - Configure httpOnly option in Manager
+    * [LEMONLDAP-365] - Log sent headers in debug mode
+
+lemonldap-ng (1.1.1) stable; urgency=low
+
+    * [LEMONLDAP-350] - remote SOAP handlers errors on reload
+    * [LEMONLDAP-351] - Cannot get LDAP groups for DN with '\' into it
+    * [LEMONLDAP-352] - Notifications needs to be accepted twice
+    * [LEMONLDAP-353] - Configure notification filename value separator
+
 lemonldap-ng (1.1.0) stable; urgency=low
 
     * [LEMONLDAP-303] - Form replay filter is not compatible with recent Safe
