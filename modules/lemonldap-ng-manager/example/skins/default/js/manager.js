@@ -256,11 +256,13 @@ function simpleTreeSetMenuStyle(style){
 	if(style=="tree"){
 		$("link#cssmenu").attr("href",csspath+"tree.css");
 		treejquerycss=false;
-		simpleTreeCollection[0].option.autoclose=false;
+		treeautoclose=false;
+		simpleTreeCollection[0].option.autoclose=treeautoclose;
 	}else{
 		$("link#cssmenu").attr("href",csspath+"accordion.css");
 		treejquerycss=true;
-		simpleTreeCollection[0].option.autoclose=true;
+		treeautoclose=true;
+		simpleTreeCollection[0].option.autoclose=treeautoclose;
 	}
 	simpleTreeDefaultJqueryClasses();
 	simpleTreeToggleJqueryClasses();
