@@ -28,7 +28,7 @@ use constant SAFEWRAP => ( Safe->can("wrap_code_ref") ? 1 : 0 );
 #inherits Apache::Session
 #link Lemonldap::NG::Common::Apache::Session::SOAP protected globalStorage
 
-our $VERSION = '1.1.2';
+our $VERSION = '1.2.0';
 
 our %EXPORT_TAGS;
 
@@ -148,6 +148,7 @@ BEGIN {
             threads::shared::share($useRedirectOnForbidden);
             threads::shared::share($useRedirectOnError);
             threads::shared::share($useSafeJail);
+            threads::shared::share($customFunctions);
         };
     }
     elsif ( MP() == 1 ) {
@@ -500,17 +501,18 @@ sub purgeCache {
 
 ## @imethod void globalInit(hashRef args)
 # Global initialization process. Launch :
-# - locationRulesInit()
 # - defaultValuesInit()
 # - portalInit()
+# - locationRulesInit()
 # - globalStorageInit()
 # - forgeHeadersInit()
+# - postUrlInit()
 # @param $args reference to the configuration hash
 sub globalInit {
     my $class = shift;
+    $class->defaultValuesInit(@_);
     $class->portalInit(@_);
     $class->locationRulesInit(@_);
-    $class->defaultValuesInit(@_);
     $class->globalStorageInit(@_);
     $class->forgeHeadersInit(@_);
     $class->postUrlInit(@_);
