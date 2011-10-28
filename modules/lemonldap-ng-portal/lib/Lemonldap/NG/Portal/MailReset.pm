@@ -27,6 +27,7 @@ use POSIX;
 # - itself:
 #   - smtpInit
 #   - extractMailInfo
+#   - getMailUser
 #   - storeMailSession
 #   - sendConfirmationMail
 #   - changePassword
@@ -37,7 +38,6 @@ use POSIX;
 #   - setGroups
 # - userDB module:
 #   - userDBInit
-#   - getUser
 #   - setSessionInfo
 # - passwordDB module:
 #   - passwordDBInit
@@ -50,7 +50,7 @@ sub process {
 
     $self->{error} = $self->_subProcess(
         qw(smtpInit userDBInit passwordDBInit extractMailInfo
-          getUser setSessionInfo setMacros setLocalGroups setGroups setPersistentSessionInfo
+          getMailUser setSessionInfo setMacros setLocalGroups setGroups setPersistentSessionInfo
           storeMailSession sendConfirmationMail changePassword sendPasswordMail)
     );
 
@@ -122,6 +122,21 @@ sub extractMailInfo {
     }
 
     PE_OK;
+}
+
+## @method int getMailUser
+# Search for user using UserDB module
+# @return Lemonldap::NG::Portal constant
+sub getMailUser {
+    my ($self) = splice @_;
+
+    my $error = $self->getUser();
+
+    if ( $error == PE_USERNOTFOUND or $error == PE_BADCREDENTIALS ) {
+        return PE_MAILNOTFOUND;
+    }
+
+    return $error;
 }
 
 ## @method int storeMailSession

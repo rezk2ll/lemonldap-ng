@@ -87,6 +87,7 @@ sub portalTab {
         67 => 'PORTAL_PASSWORDFORMEMPTY',
         68 => 'PORTAL_CAS_SERVICE_NOT_ALLOWED',
         69 => 'PORTAL_MAILFIRSTACCESS',
+        70 => 'PORTAL_MAILNOTFOUND',
     };
 }
 

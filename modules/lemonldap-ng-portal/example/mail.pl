@@ -44,7 +44,7 @@ if (
     (
            $portal->{error} == PE_MAILFORMEMPTY
         or $portal->{error} == PE_MAILFIRSTACCESS
-        or $portal->{error} == PE_BADCREDENTIALS
+        or $portal->{error} == PE_MAILNOTFOUND
     )
     and !$portal->{mail_token}
   )

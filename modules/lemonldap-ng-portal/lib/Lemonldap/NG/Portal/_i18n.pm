@@ -129,6 +129,7 @@ __END__
 # * PE_PASSWORDFORMEMPTY                 67
 # * PE_CAS_SERVICE_NOT_ALLOWED           68
 # * PE_MAILFIRSTACCESS                   69
+# * PE_MAILNOTFOUND                      70
 
 # Not used in errors:
 # * PE_DONE                -1
@@ -210,6 +211,7 @@ sub error_fr {
         'Mot de passe non renseigné',
         'Accès non autorisé au service CAS',
         'Merci de saisir votre adresse mail',
+        'Pas d\'utilisateur correspondant',
     ];
 }
 
@@ -288,6 +290,7 @@ sub error_en {
         'Password field must be filled',
         'Access non granted on CAS service',
         'Please provide your mail address',
+        'No matching user',
     ];
 }
 
@@ -367,6 +370,7 @@ sub error_ro {
         'Password field must be filled',
         'Access non granted on CAS service',
         'Vă rugăm să introduceţi adresa dvs. de e-mail',
+        'No matching user',
     ];
 }
 
