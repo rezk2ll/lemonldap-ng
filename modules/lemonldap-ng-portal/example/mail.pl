@@ -43,6 +43,7 @@ $template->param(
 if (
     (
            $portal->{error} == PE_MAILFORMEMPTY
+        or $portal->{error} == PE_MAILFIRSTACCESS
         or $portal->{error} == PE_BADCREDENTIALS
     )
     and !$portal->{mail_token}

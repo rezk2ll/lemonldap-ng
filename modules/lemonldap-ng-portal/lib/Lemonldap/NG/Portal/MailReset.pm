@@ -8,7 +8,7 @@ package Lemonldap::NG::Portal::MailReset;
 use strict;
 use warnings;
 
-our $VERSION = '1.1.0';
+our $VERSION = '1.2.0';
 
 use Lemonldap::NG::Portal::Simple qw(:all);
 use base qw(Lemonldap::NG::Portal::SharedConf Exporter);
@@ -85,8 +85,10 @@ sub smtpInit {
 sub extractMailInfo {
     my ($self) = splice @_;
 
-    return PE_MAILFORMEMPTY
-      unless ( $self->param('mail') || $self->param('mail_token') );
+    unless ( $self->param('mail') || $self->param('mail_token') ) {
+        return PE_MAILFIRSTACCESS if ( $self->request_method =~ /GET/ );
+        return PE_MAILFORMEMPTY;
+    }
 
     $self->{mail_token}      = $self->param('mail_token');
     $self->{newpassword}     = $self->param('newpassword');

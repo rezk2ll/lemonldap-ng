@@ -8,7 +8,7 @@ package Lemonldap::NG::Portal::_i18n;
 # Developpers warning : this file must stay UTF-8 encoded
 
 use AutoLoader qw(AUTOLOAD);
-our $VERSION = '1.1.2';
+our $VERSION = '1.2.0';
 
 ## @fn string error(int error,string lang)
 # @param $error Number of error to resolve
@@ -128,6 +128,7 @@ __END__
 # * PE_MAILCONFIRMATION_ALREADY_SENT     66
 # * PE_PASSWORDFORMEMPTY                 67
 # * PE_CAS_SERVICE_NOT_ALLOWED           68
+# * PE_MAILFIRSTACCESS                   69
 
 # Not used in errors:
 # * PE_DONE                -1
@@ -182,7 +183,7 @@ sub error_fr {
         'Nom d\'utilisateur incorrect',
         'Ouverture de session non autorisée',
         'Confirmation demandée',
-        'Veuillez saisir votre adresse mail',
+        'L\'adresse mail est obligatoire ',
         'La clé de confirmation est invalide ou trop ancienne',
         'L\'envoi du mail a échoué',
         'Un mail vous a été envoyé',
@@ -208,6 +209,7 @@ sub error_fr {
         'Le mail de confirmation a déjà été envoyé',
         'Mot de passe non renseigné',
         'Accès non autorisé au service CAS',
+        'Merci de saisir votre adresse mail',
     ];
 }
 
@@ -259,7 +261,7 @@ sub error_en {
         'Bad username',
         'Session opening not allowed',
         'Confirmation required',
-        'Please provide your mail address',
+        'Your mail address is mandatory',
         'Confirmation key is invalid or too old',
         'An error occurs when sending mail',
         'A mail has been sent',
@@ -285,6 +287,7 @@ sub error_en {
         'The confirmation mail was already sent',
         'Password field must be filled',
         'Access non granted on CAS service',
+        'Please provide your mail address',
     ];
 }
 
@@ -363,6 +366,7 @@ sub error_ro {
         'The confirmation mail was already sent',
         'Password field must be filled',
         'Access non granted on CAS service',
+        'Vă rugăm să introduceţi adresa dvs. de e-mail',
     ];
 }
 
