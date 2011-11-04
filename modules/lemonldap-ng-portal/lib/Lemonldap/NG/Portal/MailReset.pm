@@ -322,13 +322,22 @@ sub changePassword {
     my $result = $self->modifyPassword();
 
     # Mail token can be used only one time, delete the session if all is ok
-    if ( $result == PE_PASSWORD_OK ) {
+    if ( $result == PE_PASSWORD_OK or $result == PE_OK ) {
 
         # Get the corresponding session
         my $h = $self->getApacheSession( $self->{mail_token} );
 
-        # Delete it
-        tied(%$h)->delete() if ref $h;
+        if ( ref $h ) {
+
+            $self->lmLog( "Delete mail session " . $self->{mail_token},
+                'debug' );
+
+            # Delete it
+            tied(%$h)->delete();
+        }
+        else {
+            $self->lmLog( "Mail session not found", 'warn' );
+        }
 
         # Force result to PE_OK to continue the process
         $result = PE_OK;
