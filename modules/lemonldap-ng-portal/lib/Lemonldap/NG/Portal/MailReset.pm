@@ -311,8 +311,10 @@ sub changePassword {
 
     # Else a password is required
     else {
-        return PE_PASSWORDFORMEMPTY
-          unless ( $self->{newpassword} && $self->{confirmpassword} );
+        unless ( $self->{newpassword} && $self->{confirmpassword} ) {
+            return PE_PASSWORDFIRSTACCESS if ( $self->request_method =~ /GET/ );
+            return PE_PASSWORDFORMEMPTY;
+        }
     }
 
     # Modify the password
