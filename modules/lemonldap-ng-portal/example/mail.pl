@@ -19,7 +19,10 @@ my $template = HTML::Template->new(
     filename          => "$skin_dir/$skin/mail.tpl",
     die_on_bad_params => 0,
     cache             => 0,
-    filter            => sub { $portal->translate_template(@_) }
+    filter            => [
+        sub { $portal->translate_template(@_) },
+        sub { $portal->session_template(@_) }
+    ],
 );
 
 $template->param( PORTAL_URL      => "$portal_url" );

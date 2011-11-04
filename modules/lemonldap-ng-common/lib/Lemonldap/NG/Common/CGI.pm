@@ -11,10 +11,11 @@ use MIME::Base64;
 use Time::Local;
 use CGI;
 use utf8;
+use Encode;
 
 #parameter syslog Indicates syslog facility for logging user actions
 
-our $VERSION = '1.0.0';
+our $VERSION = '1.2.0';
 
 use base qw(CGI);
 
@@ -354,6 +355,19 @@ sub translate_template {
     else {
         $$text_ref =~ s/<lang\s+\w+=\"(.*?)\".*?\/>/$1/gx;
     }
+}
+
+##@method void session_template(string text_ref)
+# session_template is used as an HTML::Template filter to replace session info
+# by their value
+#@param text_ref reference to the string to translate
+#@return
+sub session_template {
+    my $self     = shift;
+    my $text_ref = shift;
+
+    # Replace session information
+    $$text_ref =~ s/\$(\w+)/decode("utf8",$self->{sessionInfo}->{$1})/ge;
 }
 
 ## @method private void quit()
