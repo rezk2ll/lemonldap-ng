@@ -58,6 +58,7 @@ sub process {
         (
                  $self->{error} <= 0
               or $self->{error} == PE_PASSWORD_OK
+              or $self->{error} == PE_MAILCONFIRMOK
               or $self->{error} == PE_MAILOK
         ) ? 0 : 1
     );
@@ -283,7 +284,7 @@ sub sendConfirmationMail {
     return PE_MAILERROR
       unless $self->send_mail( $self->{mailAddress}, $subject, $body, $html );
 
-    PE_MAILOK;
+    PE_MAILCONFIRMOK;
 }
 
 ## @method int changePassword

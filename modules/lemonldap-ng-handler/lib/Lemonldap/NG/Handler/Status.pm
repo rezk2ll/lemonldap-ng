@@ -89,6 +89,7 @@ sub portalTab {
         69 => 'PORTAL_MAILFIRSTACCESS',
         70 => 'PORTAL_MAILNOTFOUND',
         71 => 'PORTAL_PASSWORDFIRSTACCESS',
+        72 => 'PORTAL_MAILCONFIRMOK',
     };
 }
 

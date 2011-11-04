@@ -131,6 +131,7 @@ __END__
 # * PE_MAILFIRSTACCESS                   69
 # * PE_MAILNOTFOUND                      70
 # * PE_PASSWORDFIRSTACCESS               71
+# * PE_MAILCONFIRMOK                     72
 
 # Not used in errors:
 # * PE_DONE                -1
@@ -214,6 +215,7 @@ sub error_fr {
         'Merci de saisir votre adresse mail',
         'Pas d\'utilisateur correspondant',
         'Merci de saisir votre nouveau mot de passe',
+        'Un mail de confirmation vous a été envoyé',
     ];
 }
 
@@ -294,6 +296,7 @@ sub error_en {
         'Please provide your mail address',
         'No matching user',
         'Please provide your new password',
+        'A confirmation mail has been sent',
     ];
 }
 
@@ -375,6 +378,7 @@ sub error_ro {
         'Vă rugăm să introduceţi adresa dvs. de e-mail',
         'No matching user',
         'Please provide your new password',
+        'Un e-mail a fost trimis',
     ];
 }
 
