@@ -37,7 +37,14 @@
         <input type="hidden" id="authKey" name="<TMPL_VAR NAME="CHOICE_PARAM">" value="<TMPL_VAR NAME="CHOICE_VALUE">" />
         <input type="hidden" value="<TMPL_VAR NAME="MAIL">" name="mail">
 
-        <h3><lang en="Resend confirmation mail?" fr="Renvoyer le mail de confirmation ?"/></h3>
+	<h3><lang en="Resend confirmation mail?" fr="Renvoyer le mail de confirmation ?"/></h3>
+
+	<p>
+	<lang en="A password reset request was already issued on " fr="Une demande de réinitialisation de mot de passe a déjà été faite le " />
+	<TMPL_VAR NAME="STARTMAILDATE">. 
+	<lang en="Do you want the confirmation mail to be resent?" fr="Voulez-vous que le message de confirmation soit renvoyé ?" />
+	</p>
+
 
                 <table>
                 <tr><th><input id="resendconfirmation" type="checkbox" name="resendconfirmation"></th>
