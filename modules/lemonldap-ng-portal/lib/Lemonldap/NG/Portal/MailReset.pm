@@ -164,6 +164,10 @@ sub storeMailSession {
     $h->{mailSessionTimeoutTimestamp}    = $time + $mailTimeout;
     $self->{mailSessionTimeoutTimestamp} = $time + $mailTimeout;
 
+    # Store start timestamp for further use
+    $h->{mailSessionStartTimestamp}    = $time;
+    $self->{mailSessionStartTimestamp} = $time;
+
     # Store mail
     $h->{ $self->{mailSessionKey} } =
       $self->getFirstValue( $self->{sessionInfo}->{ $self->{mailSessionKey} } );
@@ -193,17 +197,38 @@ sub sendConfirmationMail {
     my $mail_session = $self->getMailSession( $self->{mail} );
     $self->{mail_already_sent} = ( $mail_session and !$self->{id} ) ? 1 : 0;
 
+    # Read mail session to get creation and expiration dates
+    $self->{id} = $mail_session unless $self->{id};
+
+    $self->lmLog( "Mail session found: $mail_session", 'debug' );
+
+    my $h = $self->getApacheSession( $mail_session, 1 );
+    $self->{mailSessionTimeoutTimestamp} = $h->{mailSessionTimeoutTimestamp};
+    $self->{mailSessionStartTimestamp}   = $h->{mailSessionStartTimestamp};
+    untie %$h;
+
+    # Mail session expiration date
+    my $expTimestamp = $self->{mailSessionTimeoutTimestamp};
+
+    $self->lmLog( "Mail expiration timestamp: $expTimestamp", 'debug' );
+
+    $self->{expMailDate} =
+      &POSIX::strftime( "%d/%m/%Y", localtime $expTimestamp );
+    $self->{expMailTime} = &POSIX::strftime( "%H:%M", localtime $expTimestamp );
+
+    # Mail session start date
+    my $startTimestamp = $self->{mailSessionStartTimestamp};
+
+    $self->lmLog( "Mail start timestamp: $startTimestamp", 'debug' );
+
+    $self->{startMailDate} =
+      &POSIX::strftime( "%d/%m/%Y", localtime $startTimestamp );
+    $self->{startMailTime} =
+      &POSIX::strftime( "%H:%M", localtime $startTimestamp );
+
     # Ask if user want another confirmation email
     if ( $self->{mail_already_sent} and !$self->param('resendconfirmation') ) {
         return PE_MAILCONFIRMATION_ALREADY_SENT;
-    }
-    else {
-        $self->{id} = $mail_session unless $self->{id};
-
-        my $h = $self->getApacheSession( $mail_session, 1 );
-        $self->{mailSessionTimeoutTimestamp} =
-          $h->{mailSessionTimeoutTimestamp};
-        untie %$h;
     }
 
     # Get mail address
@@ -247,15 +272,6 @@ sub sendConfirmationMail {
         $body = $template->output();
         $html = 1;
     }
-
-    # Mail date expiration
-    my $expTimestamp = $self->{mailSessionTimeoutTimestamp};
-
-    $self->lmLog( "Mail expiration timestamp: $expTimestamp", 'debug' );
-
-    $self->{expMailDate} =
-      &POSIX::strftime( "%d/%m/%Y", localtime $expTimestamp );
-    $self->{expMailTime} = &POSIX::strftime( "%H:%M", localtime $expTimestamp );
 
     # Replace variables in body
     $body =~ s/\$expMailDate/$self->{expMailDate}/g;

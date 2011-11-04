@@ -30,6 +30,8 @@ $template->param( CHOICE_PARAM    => $portal->{authChoiceParam} );
 $template->param( CHOICE_VALUE    => $portal->{_authChoice} );
 $template->param( EXPMAILDATE     => $portal->{expMailDate} );
 $template->param( EXPMAILTIME     => $portal->{expMailTime} );
+$template->param( STARTMAILDATE   => $portal->{startMailDate} );
+$template->param( STARTMAILTIME   => $portal->{startMailTime} );
 $template->param( MAILALREADYSENT => $portal->{mail_already_sent} );
 $template->param(
     MAIL => $portal->checkXSSAttack( 'mail', $portal->{mail} )
