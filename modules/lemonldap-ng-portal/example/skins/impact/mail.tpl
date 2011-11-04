@@ -84,6 +84,14 @@
       </form>
       </TMPL_IF>
 
+      <TMPL_IF NAME="DISPLAY_MAILSENT">
+      <div id="content-all-info">
+      <lang en="A message has been sent to your mail address." fr="Un message a été envoyé à votre adresse mail." />
+      <lang en="This message contains a link to reset your password, this link is valid until " fr="Ce message contient un lien pour réinitialiser votre mot de passe, ce lien est valide jusqu'au " />
+      <TMPL_VAR NAME="EXPMAILDATE">.
+      </div>
+      </TMPL_IF>
+
       <div class="panel-buttons">
         <button type="button" class="positive" tabindex="1" onclick="location.href='<TMPL_VAR NAME="PORTAL_URL">';return false;">
           <lang en="Go to portal" fr="Aller au portail" />

@@ -253,12 +253,13 @@ sub sendConfirmationMail {
 
     $self->lmLog( "Mail expiration timestamp: $expTimestamp", 'debug' );
 
-    my $expMailDate = &POSIX::strftime( "%d/%m/%Y", localtime $expTimestamp );
-    my $expMailTime = &POSIX::strftime( "%H:%M",    localtime $expTimestamp );
+    $self->{expMailDate} =
+      &POSIX::strftime( "%d/%m/%Y", localtime $expTimestamp );
+    $self->{expMailTime} = &POSIX::strftime( "%H:%M", localtime $expTimestamp );
 
     # Replace variables in body
-    $body =~ s/\$expMailDate/$expMailDate/g;
-    $body =~ s/\$expMailTime/$expMailTime/g;
+    $body =~ s/\$expMailDate/$self->{expMailDate}/g;
+    $body =~ s/\$expMailTime/$self->{expMailTime}/g;
     $body =~ s/\$url/$url/g;
     $body =~ s/\$(\w+)/decode("utf8",$self->{sessionInfo}->{$1})/ge;
 

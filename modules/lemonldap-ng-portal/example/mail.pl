@@ -28,6 +28,8 @@ $template->param( AUTH_ERROR      => $portal->error );
 $template->param( AUTH_ERROR_TYPE => $portal->error_type );
 $template->param( CHOICE_PARAM    => $portal->{authChoiceParam} );
 $template->param( CHOICE_VALUE    => $portal->{_authChoice} );
+$template->param( EXPMAILDATE     => $portal->{expMailDate} );
+$template->param( EXPMAILTIME     => $portal->{expMailTime} );
 $template->param(
     MAIL => $portal->checkXSSAttack( 'mail', $portal->{mail} )
     ? ""
@@ -52,6 +54,7 @@ if (
 
     $template->param( DISPLAY_FORM          => 1 );
     $template->param( DISPLAY_RESEND_FORM   => 0 );
+    $template->param( DISPLAY_MAILSENT      => 0 );
     $template->param( DISPLAY_PASSWORD_FORM => 0 );
 }
 
@@ -59,14 +62,25 @@ if (
 if ( $portal->{error} == PE_MAILCONFIRMATION_ALREADY_SENT ) {
     $template->param( DISPLAY_FORM          => 0 );
     $template->param( DISPLAY_RESEND_FORM   => 1 );
+    $template->param( DISPLAY_MAILSENT      => 0 );
     $template->param( DISPLAY_PASSWORD_FORM => 0 );
 }
 
+# Display mail sent
+if ( $portal->{error} == PE_MAILOK ) {
+    $template->param( DISPLAY_FORM          => 0 );
+    $template->param( DISPLAY_RESEND_FORM   => 0 );
+    $template->param( DISPLAY_MAILSENT      => 1 );
+    $template->param( DISPLAY_PASSWORD_FORM => 0 );
+}
+
+# Display password change form
 if ( $portal->{mail_token}
     and ( $portal->{error} != PE_MAILERROR and $portal->{error} != PE_MAILOK ) )
 {
     $template->param( DISPLAY_FORM          => 0 );
     $template->param( DISPLAY_RESEND_FORM   => 0 );
+    $template->param( DISPLAY_MAILSENT      => 0 );
     $template->param( DISPLAY_PASSWORD_FORM => 1 );
 }
 
