@@ -191,10 +191,10 @@ sub sendConfirmationMail {
 
     # Check if confirmation mail has already been sent
     my $mail_session = $self->getMailSession( $self->{mail} );
-    my $mail_already_sent = ( $mail_session and !$self->{id} ) ? 1 : 0;
+    $self->{mail_already_sent} = ( $mail_session and !$self->{id} ) ? 1 : 0;
 
     # Ask if user want another confirmation email
-    if ( $mail_already_sent and !$self->param('resendconfirmation') ) {
+    if ( $self->{mail_already_sent} and !$self->param('resendconfirmation') ) {
         return PE_MAILCONFIRMATION_ALREADY_SENT;
     }
     else {
