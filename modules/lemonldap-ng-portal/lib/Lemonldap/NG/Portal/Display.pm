@@ -9,7 +9,7 @@ use strict;
 use Lemonldap::NG::Portal::Simple;
 use utf8;
 
-our $VERSION = '1.1.2';
+our $VERSION = '1.2.0';
 
 ## @method array display()
 # Call portal process and set template parameters
@@ -227,6 +227,7 @@ sub display {
             or $self->{error} == PE_PP_PASSWORD_IN_HISTORY
             or $self->{error} == PE_PASSWORD_MISMATCH
             or $self->{error} == PE_BADOLDPASSWORD
+            or $self->{error} == PE_PASSWORDFORMEMPTY
           )
         {
             %templateParams = (
