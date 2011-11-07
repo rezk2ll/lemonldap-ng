@@ -1855,12 +1855,20 @@ sub modifyPassword {
 
     my $res = $self->SUPER::modifyPassword();
 
-    #  Continue process if password change is ok
     if ( $res == PE_PASSWORD_OK ) {
+
+        # Update password in session if needed
+        $self->lmLog( "Update password in session for " . $self->{user},
+            'debug' );
+
+        my $infos;
+        $infos->{_password} = $self->{newpassword};
+        $self->updateSession($infos) if ( $self->{storePassword} );
 
         # Set a flag to ignore password change in Menu
         $self->{ignorePasswordChange} = 1;
 
+        #  Continue process if password change is ok
         return PE_OK;
     }
 
