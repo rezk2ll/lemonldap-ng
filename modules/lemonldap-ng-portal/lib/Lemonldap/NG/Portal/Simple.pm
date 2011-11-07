@@ -1329,7 +1329,9 @@ sub _deleteSessionFromLocalStorage {
           . $self->{localStorage}
           . '($self->{localStorageOptions})';
         if ( defined $cache ) {
-            unless ( $cache->remove($id) ) {
+            my $nb = 0;
+            eval { $nb = $cache->remove($id); };
+            unless ($nb) {
                 $self->lmLog( "Unable to remove session $id from local storage",
                     'warn' );
                 $result = 0;
