@@ -624,6 +624,7 @@ sub setDefaultValues {
       unless ( defined( $self->{ldapUsePasswordResetAttribute} ) );
     $self->{ldapPasswordResetAttribute}      ||= "pwdReset";
     $self->{ldapPasswordResetAttributeValue} ||= "TRUE";
+    $self->{mailOnPasswordChange}            ||= 0;
 
     # Notification
     $self->{notificationWildcard} ||= "allusers";
@@ -1451,6 +1452,8 @@ sub stamp {
 #    - issuerDBInit
 #    - issuerForUnAuthUser
 #    - issuerForAuthUser
+#  - MailReset:
+#    - sendPasswordMail
 #
 #@return 1 if all is OK, 0 if session isn't created or a notification has to be done
 sub process {
@@ -1460,9 +1463,9 @@ sub process {
         qw(controlUrlOrigin checkNotifBack controlExistingSession issuerDBInit
           authInit issuerForUnAuthUser extractFormInfo userDBInit getUser
           setAuthSessionInfo passwordDBInit modifyPassword setSessionInfo
-          setMacros setLocalGroups setGroups setPersistentSessionInfo authenticate
-          removeOther grantSession store authFinish buildCookie checkNotification
-          issuerForAuthUser autoRedirect)
+          setMacros setLocalGroups setGroups setPersistentSessionInfo sendPasswordMail
+          authenticate removeOther grantSession store authFinish buildCookie
+          checkNotification issuerForAuthUser autoRedirect)
     );
     $self->updateStatus;
     return ( ( $self->{error} > 0 ) ? 0 : 1 );
@@ -1888,6 +1891,9 @@ sub modifyPassword {
         # Set a flag to ignore password change in Menu
         $self->{ignorePasswordChange} = 1;
 
+        # Set a flag to allow sending a mail
+        $self->{passwordWasChanged} = 1;
+
         #  Continue process if password change is ok
         return PE_OK;
     }
@@ -2001,6 +2007,25 @@ sub setPersistentSessionInfo {
     }
 
     PE_OK;
+}
+
+## @apmethod sendPasswordMail
+# Call sendPasswordMail from MailReset if option is configured
+# @return Lemonldap::NG::Portal constant
+sub sendPasswordMail {
+    my $self = shift;
+
+    if ( $self->{mailOnPasswordChange} && $self->{passwordWasChanged} ) {
+
+        $self->lmLog( "Send password by mail requested", 'debug' );
+
+        eval "require Lemonldap::NG::Portal::MailReset";
+        &Lemonldap::NG::Portal::MailReset::smtpInit($self);
+        &Lemonldap::NG::Portal::MailReset::sendPasswordMail($self);
+    }
+
+    # Never stop the process here
+    return PE_OK;
 }
 
 ##@apmethod int authenticate()
