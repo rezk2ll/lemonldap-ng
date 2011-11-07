@@ -990,8 +990,6 @@ sub updatePersistentSession {
 # @param id Session ID
 # @return nothing
 sub updateSession {
-
-    # TODO: update all caches
     my ( $self, $infos, $id ) = splice @_;
 
     # Return if no infos to update
@@ -1013,6 +1011,9 @@ sub updateSession {
             $self->{sessionInfo}->{$_} = $infos->{$_};
         }
     }
+
+    # Delete session in local storage
+    $self->_deleteSessionFromLocalStorage($id);
 
     # Update session in the backend
     if ($id) {
@@ -1313,6 +1314,42 @@ sub _deleteSession {
     return $result;
 }
 
+##@method boolean _deleteSessionFromLocalStorage(string id)
+# Find session in local storage (cache) and remove it
+# @param id Session identifier
+# @return result
+sub _deleteSessionFromLocalStorage {
+    my ( $self, $id ) = splice @_;
+    my $result;
+
+    if ( defined $self->{localStorage} ) {
+        $self->loadModule( $self->{localStorage} );
+        my $cache;
+        eval '$cache = new '
+          . $self->{localStorage}
+          . '($self->{localStorageOptions})';
+        if ( defined $cache ) {
+            unless ( $cache->remove($id) ) {
+                $self->lmLog( "Unable to remove session $id from local storage",
+                    'warn' );
+                $result = 0;
+            }
+            else {
+                $self->lmLog( "Session $id removed from local storage",
+                    'debug' );
+                $result = 1;
+            }
+        }
+    }
+    else {
+
+        # If no local storage, this is OK
+        $result = 1;
+    }
+
+    return $result;
+}
+
 ##@method private void _dump(void* variable)
 # Dump variable in debug mode
 # @param $variable
@@ -1579,26 +1616,7 @@ sub controlExistingSession {
                 }
 
                 # Delete session in local storage
-                if ( defined $self->{localStorage} ) {
-                    $self->loadModule( $self->{localStorage} );
-                    my $cache;
-                    eval '$cache = new '
-                      . $self->{localStorage}
-                      . '($self->{localStorageOptions})';
-                    if ( defined $cache ) {
-                        if ( $cache->remove($id) ) {
-                            $self->lmLog(
-"Unable to remove session $id from local storage",
-                                'warn'
-                            );
-                        }
-                        else {
-                            $self->lmLog(
-                                "Session $id removed from local storage",
-                                'debug' );
-                        }
-                    }
-                }
+                $self->_deleteSessionFromLocalStorage($id);
 
                 # Call issuerDB logout on each used issuerDBmodule
                 my $issuerDBList = $self->{sessionInfo}->{_issuerDB};
