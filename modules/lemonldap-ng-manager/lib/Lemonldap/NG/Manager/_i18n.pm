@@ -9,7 +9,7 @@ package Lemonldap::NG::Manager::_i18n;
 
 use strict;
 use AutoLoader qw(AUTOLOAD);
-our $VERSION = '1.1.2';
+our $VERSION = '1.2.0';
 
 ## @method string translate(string text,string lang)
 # Returns $text translated in $lang.
@@ -197,8 +197,9 @@ sub en {
         mailFrom                        => 'Mail sender',
         mailHeaders                     => 'Mail headers',
         mailLDAPFilter                  => 'Mail filter',
-        mailOther                       => 'Other',
-        mailReplyTo                     => 'Reply address',
+        mailOnPasswordChange   => 'Send a mail when password is changed',
+        mailOther              => 'Other',
+        mailReplyTo            => 'Reply address',
         mailSessionKey         => 'Session key containing mail address',
         mailSubject            => 'Success mail subject',
         mailTimeout            => 'Validity time of a password reset request',
@@ -631,10 +632,12 @@ sub fr {
         mailFrom           => 'Expéditeur du message',
         mailHeaders        => 'En-têtes du mail',
         mailLDAPFilter     => 'Filtre mail',
-        mailOther          => 'Autres',
-        mailReplyTo        => 'Adresse de réponse',
-        mailSessionKey     => 'Clé de session contenant l\'adresse email',
-        mailSubject        => 'Sujet du message de succès',
+        mailOnPasswordChange =>
+          "Envoi d'un mail quand le mot de passe est changé",
+        mailOther      => 'Autres',
+        mailReplyTo    => 'Adresse de réponse',
+        mailSessionKey => 'Clé de session contenant l\'adresse email',
+        mailSubject    => 'Sujet du message de succès',
         mailTimeout => "Durée de validité d'une demande de réinitialisation",
         mailUrl     => 'URL de la page',
         managerDn   => 'Compte de connexion LDAP',

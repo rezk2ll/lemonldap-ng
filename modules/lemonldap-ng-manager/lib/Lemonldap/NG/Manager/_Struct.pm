@@ -9,7 +9,7 @@ use strict;
 use Lemonldap::NG::Common::Conf::SAML::Metadata;
 use Lemonldap::NG::Common::Regexp;
 
-our $VERSION = '1.1.2';
+our $VERSION = '1.2.0';
 
 ## @method protected hashref cstruct(hashref h,string k)
 # Merge $h with the structure produced with $k and return it.
@@ -287,21 +287,29 @@ sub struct {
 
                 portalCustomization => {
                     _nodes => [
-                        qw(portalSkin portalDisplayResetPassword portalAutocomplete portalRequireOldPassword hideOldPassword portalUserAttr portalOpenLinkInNewWindow portalAntiFrame)
+                        qw(portalSkin portalAutocomplete portalUserAttr portalOpenLinkInNewWindow portalAntiFrame passwordManagement)
                     ],
                     _help => 'portalcustom',
 
                     portalSkin => 'text:/portalSkin:portalcustom:skinSelect',
-                    portalDisplayResetPassword =>
-                      'bool:/portalDisplayResetPassword',
                     portalAutocomplete => 'bool:/portalAutocomplete',
-                    portalRequireOldPassword =>
-                      'bool:/portalRequireOldPassword',
-                    hideOldPassword => 'bool:/hideOldPassword',
-                    portalUserAttr  => 'text:/portalUserAttr',
+                    portalUserAttr     => 'text:/portalUserAttr',
                     portalOpenLinkInNewWindow =>
                       'bool:/portalOpenLinkInNewWindow',
                     portalAntiFrame => 'bool:/portalAntiFrame',
+
+                    passwordManagement => {
+                        _nodes => [
+                            qw(portalDisplayResetPassword portalRequireOldPassword hideOldPassword mailOnPasswordChange)
+                        ],
+
+                        portalDisplayResetPassword =>
+                          'bool:/portalDisplayResetPassword',
+                        portalRequireOldPassword =>
+                          'bool:/portalRequireOldPassword',
+                        hideOldPassword      => 'bool:/hideOldPassword',
+                        mailOnPasswordChange => 'bool:/mailOnPasswordChange',
+                    },
                 },
             },
 
@@ -1462,7 +1470,8 @@ sub testStruct {
                 1;
             },
         },
-        managerDn => {
+        mailOnPasswordChange => $boolean,
+        managerDn            => {
             test    => qr/^(?:\w+=.*)?$/,
             msgFail => 'Bad LDAP dn',
         },
@@ -1852,6 +1861,7 @@ sub defaultConf {
         ldapTimeout                     => '120',
         ldapVersion                     => '3',
         mailCharset                     => 'utf-8',
+        mailOnPasswordChange            => '0',
         mailTimeout                     => '0',
         mailSessionKey                  => 'mail',
         managerDn                       => '',
