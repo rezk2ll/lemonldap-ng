@@ -811,6 +811,12 @@ function filearea(id) {
 function samlAssertion(id) {
 	currentId=id;
 	var t=lmdata(id).split(';');
+
+	// Reset text fields
+	$('#samlAssertionIndex').attr('value','');
+	$('#samlAssertionLocation').attr('value','');
+
+	// Fill fields
 	if(t[0]==1){
 		$('#samlAssertionDefaultOn').attr('checked',true);
 	}else{
@@ -829,6 +835,13 @@ function samlAssertion(id) {
 function samlAttribute(id) {
 	currentId=id;
 	var t=lmdata(id).split(';');
+
+	// Reset text fields
+	$('#samlAttributeKey').attr('value','');
+	$('#samlAttributeName').attr('value','');
+	$('#samlAttributeFriendlyName').attr('value','');
+
+	// Fill fields
 	if(t[0]==1){
 		$('#samlAttributeMandatoryOn').attr('checked',true);
 	}else{
