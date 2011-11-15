@@ -8,7 +8,7 @@ package Lemonldap::NG::Portal::_Choice;
 
 use Lemonldap::NG::Portal::Simple;
 
-our $VERSION = '1.1.0';
+our $VERSION = '1.2.0';
 
 ## @cmethod Lemonldap::NG::Portal::_Choice new(Lemonldap::NG::Portal::Simple portal)
 # Constructor
@@ -109,7 +109,7 @@ sub try {
 
     # Default behavior in no choice
     unless ( defined $self->{modules} ) {
-        return PE_FORMEMPTY if ( $sub eq 'extractFormInfo' );
+        return PE_FIRSTACCESS if ( $sub eq 'extractFormInfo' );
         return PE_OK;
     }
 
