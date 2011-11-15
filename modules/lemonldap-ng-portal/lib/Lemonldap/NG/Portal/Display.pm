@@ -277,6 +277,7 @@ sub display {
         if (   $self->{error} == PE_BADCERTIFICATE
             or $self->{error} == PE_CERTIFICATEREQUIRED
             or $self->{error} == PE_ERROR
+            or $self->{error} == PE_BADURL
             or $self->{error} == PE_SAML_ERROR
             or $self->{error} == PE_SAML_LOAD_SERVICE_ERROR
             or $self->{error} == PE_SAML_LOAD_IDP_ERROR
