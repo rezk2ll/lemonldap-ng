@@ -132,6 +132,7 @@ __END__
 # * PE_MAILNOTFOUND                      70
 # * PE_PASSWORDFIRSTACCESS               71
 # * PE_MAILCONFIRMOK                     72
+# * PE_RADIUSCONNECTFAILED		 73
 
 # Not used in errors:
 # * PE_DONE                -1
@@ -216,6 +217,7 @@ sub error_fr {
         'Pas d\'utilisateur correspondant',
         'Merci de saisir votre nouveau mot de passe',
         'Un mail de confirmation vous a été envoyé',
+        'La connexion au serveur Radius a échoué',
     ];
 }
 
@@ -297,6 +299,7 @@ sub error_en {
         'No matching user',
         'Please provide your new password',
         'A confirmation mail has been sent',
+        'Radius connection has failed',
     ];
 }
 
@@ -379,6 +382,7 @@ sub error_ro {
         'No matching user',
         'Please provide your new password',
         'Un e-mail a fost trimis',
+        'Radius connection has failed',
     ];
 }
 

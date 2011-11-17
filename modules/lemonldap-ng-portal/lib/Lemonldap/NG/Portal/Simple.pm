@@ -34,6 +34,7 @@ use Digest::MD5;
 #inherits Lemonldap::NG::Portal::AuthNull;
 #inherits Lemonldap::NG::Portal::AuthOpenID;
 #inherits Lemonldap::NG::Portal::AuthProxy;
+#inherits Lemonldap::NG::Portal::AuthRadius;
 #inherits Lemonldap::NG::Portal::AuthRemote;
 #inherits Lemonldap::NG::Portal::AuthSAML;
 #inherits Lemonldap::NG::Portal::AuthSSL;
@@ -142,6 +143,7 @@ use constant {
     PE_MAILNOTFOUND                     => 70,
     PE_PASSWORDFIRSTACCESS              => 71,
     PE_MAILCONFIRMOK                    => 72,
+    PE_RADIUSCONNECTFAILED              => 73,
 
     # Portal messages
     PM_USER                  => 0,

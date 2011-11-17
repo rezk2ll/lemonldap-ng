@@ -343,6 +343,7 @@ sub struct {
                             ldap    => ['ldapParams'],
                             ssl     => [qw(ldapParams sslParams)],
                             cas     => ['casParams'],
+                            radius  => ['radiusParams'],
                             remote  => ['remoteParams'],
                             proxy   => ['proxyParams'],
                             openid  => ['openIdParams'],
@@ -352,10 +353,10 @@ sub struct {
                             null    => ['nullParams'],
                             slave   => ['slaveParams'],
                             choice  => [
-                                qw(ldapParams sslParams casParams remoteParams proxyParams openIdParams twitterParams dbiParams apacheParams nullParams choiceParams slaveParams yubikeyParams)
+                                qw(ldapParams sslParams casParams radiusParams remoteParams proxyParams openIdParams twitterParams dbiParams apacheParams nullParams choiceParams slaveParams yubikeyParams)
                             ],
                             multi => [
-                                qw(ldapParams sslParams casParams remoteParams proxyParams openIdParams twitterParams dbiParams apacheParams nullParams choiceParams slaveParams yubikeyParams)
+                                qw(ldapParams sslParams casParams radiusParams remoteParams proxyParams openIdParams twitterParams dbiParams apacheParams nullParams choiceParams slaveParams yubikeyParams)
                             ],
                             yubikey => ['yubikeyParams'],
                         }->{$mod};
@@ -478,6 +479,14 @@ sub struct {
                         _help  => 'authCAS',
                     },
 
+                },
+
+                # Radius
+                radiusParams => {
+                    _nodes       => [ qw(radiusSecret radiusServer) ],
+                    _help        => 'authRadius',
+                    radiusSecret => 'text:/radiusSecret',
+                    radiusServer => 'text:/radiusServer',
                 },
 
                 # Remote
@@ -1722,6 +1731,10 @@ sub testStruct {
             keyTest    => qr/^\w+$/,
             keyMsgFail => 'Bad parameter',
         },
+
+        # Radius
+        radiusSecret => $testNotDefined,
+        radiusServer => $testNotDefined,
 
         # Remote
         remotePortal        => $testNotDefined,

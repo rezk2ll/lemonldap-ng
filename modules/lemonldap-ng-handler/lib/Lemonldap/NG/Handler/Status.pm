@@ -90,6 +90,7 @@ sub portalTab {
         70 => 'PORTAL_MAILNOTFOUND',
         71 => 'PORTAL_PASSWORDFIRSTACCESS',
         72 => 'PORTAL_MAILCONFIRMOK',
+        73 => 'PORTAL_RADIUSCONNECTFAILED',
     };
 }
 
