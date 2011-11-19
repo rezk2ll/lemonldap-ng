@@ -374,14 +374,6 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../../documentation/1.0/exportedvars.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../../documentation/1.0/exportedvars.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>../../documentation/1.0/idpsaml.html</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -2870,6 +2862,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Configure the Apache server&lt;/a0&gt; that host the portal</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T095940Z" changeid="xavier">
+        <seg>&lt;a0&gt;Configurer le serveur Apache&lt;/a0&gt; qui héberge le portail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;Cpan test error&lt;/a0&gt; by guimard (2010/11/26 20:03)</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -5070,6 +5070,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Change the user attribute to store in Apache logs &lt;e0&gt;(“General Parameters » Logs » REMOTE_USER”)&lt;/e0&gt;: use the variable declared above</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T095745Z" changeid="xavier">
+        <seg>Changer l'attribut utilisateur à stocker dans les journaux d'Apache &lt;e0&gt;(“Paramètres généraux » Journaux » REMOTE_USER”)&lt;/e0&gt; : utiliser la variable ci-dessus</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Changelog</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -5090,6 +5098,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Modules de &quot;Choice&quot;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Choose “Apache” as authentication module &lt;e0&gt;(“General Parameters » Authentication modules » Authentication module”)&lt;/e0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T095902Z" changeid="xavier">
+        <seg>Choisir “Apache” comme module d'authentification &lt;e0&gt;(“Paramètres généraux » Modules d'authentification » Module d'authentification”)&lt;/e0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -5622,6 +5638,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Export sAMAccountName in a variable declared in &lt;a0&gt;exported variables&lt;/a0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T095640Z" changeid="xavier">
+        <seg>Exporter sAMAccountName dans la liste des &lt;a0&gt;variables exportées&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Exported variables</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -5634,6 +5658,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Extraction</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Extract from the &lt;a0&gt;Wikipedia article&lt;/a0&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T100043Z" changeid="xavier">
+        <seg>Extrait de &lt;a0&gt;l'article Wikipedia&lt;/a0&gt;:</seg>
       </tuv>
     </tu>
     <tu>
@@ -5870,6 +5902,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>HTTP Basic Authentication</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T100013Z" changeid="xavier">
+        <seg>Authentification basique HTTP</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Habib ZITOUNI</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -6034,14 +6074,6 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Hubert GAULTIER</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>Hyper Text Transfer Protocol</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>Hyper Text Transfer Protocol</seg>
       </tuv>
     </tu>
     <tu>
@@ -8704,6 +8736,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Two steps here:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T095759Z" changeid="xavier">
+        <seg>Deux étapes ici :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>U</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -8928,6 +8968,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T094832Z" changeid="xavier">
         <seg>Utiliser Active-Directory comme système d'authentication</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Using Kerberos</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T095751Z" changeid="xavier">
+        <seg>Utiliser Kerberos</seg>
       </tuv>
     </tu>
     <tu>
@@ -9582,14 +9630,6 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>documentation:1.0:configlocation</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>documentation:1.0:exportedvars</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>documentation:1.0:exportedvars</seg>
       </tuv>
     </tu>
     <tu>
