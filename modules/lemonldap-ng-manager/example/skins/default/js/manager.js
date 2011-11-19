@@ -596,6 +596,7 @@ function formateSelectAuth(id,value){
 		'Twitter=Twitter',
 		'Yubikey=Yubikey',
 		'Slave=Slave',
+		'Radius=Radius',
 		'Choice=Authentication choice'
 		],value);
 }
