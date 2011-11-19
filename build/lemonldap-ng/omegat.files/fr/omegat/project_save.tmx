@@ -206,6 +206,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>(&amp;(sAMAccountName=$user)(objectClass=person))</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T101135Z" changeid="xavier">
+        <seg>(&amp;(sAMAccountName=$user)(objectClass=person))</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>...
 &lt;s3&gt;&lt;s4&gt;&lt;/AttributeAuthorityDescriptor&lt;s5&gt;&gt;&lt;/s5&gt;&lt;/s4&gt;&lt;/s3&gt;</seg>
       </tuv>
@@ -246,6 +254,58 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>...
+ 
+&lt;/&lt;s2&gt;VirtualHost&lt;/s2&gt;&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T114012Z" changeid="xavier">
+        <seg>...
+ 
+&lt;/&lt;s2&gt;VirtualHost&lt;/s2&gt;&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../../css/all.css</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T101148Z" changeid="xavier">
+        <seg>../../../../css/all.css</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../../css/print.css</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T101149Z" changeid="xavier">
+        <seg>../../../../css/print.css</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../../css/screen.css</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T101148Z" changeid="xavier">
+        <seg>../../../../css/screen.css</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../../media/applications/bugzilla_logo.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T113604Z" changeid="xavier">
+        <seg>../../../../media/applications/bugzilla_logo.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../../media/applications/http_logo.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T101157Z" changeid="xavier">
+        <seg>../../../../media/applications/http_logo.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../../css/all.css</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -266,6 +326,54 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>../../../css/screen.css</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../documentation/1.0/configvhost.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T113926Z" changeid="xavier">
+        <seg>../../../documentation/1.0/configvhost.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../documentation/1.0/configvhost.html#lemonldapng_configuration</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T114043Z" changeid="xavier">
+        <seg>../../../documentation/1.0/configvhost.html#lemonldapng_configuration</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../documentation/1.0/extendedfunctions.html#basic</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T113302Z" changeid="xavier">
+        <seg>../../../documentation/1.0/extendedfunctions.html#basic</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../documentation/1.0/passwordstore.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T112718Z" changeid="xavier">
+        <seg>../../../documentation/1.0/passwordstore.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../documentation/1.0/writingrulesand_headers.html#headers</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T114135Z" changeid="xavier">
+        <seg>../../../documentation/1.0/writingrulesand_headers.html#headers</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../documentation/1.0/writingrulesand_headers.html#rules</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T114112Z" changeid="xavier">
+        <seg>../../../documentation/1.0/writingrulesand_headers.html#rules</seg>
       </tuv>
     </tu>
     <tu>
@@ -342,6 +450,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.0/authapache.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T101142Z" changeid="xavier">
+        <seg>../../documentation/1.0/authapache.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.0/authldap.html</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -370,6 +486,14 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>../../documentation/1.0/configlocation.html#portal</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.0/exportedvars.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T101137Z" changeid="xavier">
+        <seg>../../documentation/1.0/exportedvars.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -1206,6 +1330,30 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../pages/contact.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111500Z" changeid="xavier">
+        <seg>../pages/contact.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/default_sidebar.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111508Z" changeid="xavier">
+        <seg>../pages/default_sidebar.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111509Z" changeid="xavier">
+        <seg>../pages/documentation.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../pages/documentation/1.0/activedirectoryminihowto.html</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -1886,6 +2034,62 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/applications/bugzilla.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111454Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/applications/bugzilla.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/applications/drupal.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111510Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/applications/drupal.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/applications/googleapps.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111525Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/applications/googleapps.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/applications/liferay.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111539Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/applications/liferay.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/applications/mediawiki.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111546Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/applications/mediawiki.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/applications/obm.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111558Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/applications/obm.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/applications/phpldapadmin.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111601Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/applications/phpldapadmin.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../pages/documentation/1.1/applications/spring.html</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -2030,6 +2234,334 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/authyubikey.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111437Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/authyubikey.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/browseablesessionbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111453Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/browseablesessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/cda.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111458Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/cda.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/changeconfbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111458Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/changeconfbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/configlocation.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111459Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/configlocation.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/configvhost.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111459Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/configvhost.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/customfunctions.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111501Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/customfunctions.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/error.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111514Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/error.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/exportedvars.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111514Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/exportedvars.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/extendedfunctions.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111515Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/extendedfunctions.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/federationproxy.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111520Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/federationproxy.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/fileconfbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111520Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/fileconfbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/filesessionbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111520Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/filesessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/formreplay.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111521Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/formreplay.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/header_remote_user_conversion.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111527Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/header_remote_user_conversion.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/highavailability.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111528Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/highavailability.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/idpcas.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111531Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/idpcas.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/idpopenid.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111531Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/idpopenid.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/idpsaml.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111532Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/idpsaml.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/installdeb.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111532Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/installdeb.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/installrpm.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111533Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/installrpm.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/installtarball.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111534Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/installtarball.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/ldapconfbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111538Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/ldapconfbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/ldapminihowto.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111538Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/ldapminihowto.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/ldapsessionbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111539Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/ldapsessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/logoutforward.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111539Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/logoutforward.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/logs.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111540Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/logs.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/managerprotection.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111545Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/managerprotection.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/memcachedsessionbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111546Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/memcachedsessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/mrtg.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111547Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/mrtg.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/mysqlminihowto.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111547Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/mysqlminihowto.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/nosqlsessionbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111554Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/nosqlsessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/notifications.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111555Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/notifications.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/parameterlist.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111600Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/parameterlist.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/passwordstore.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111600Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/passwordstore.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/performances.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111601Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/performances.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/portal.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111602Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/portal.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/portalcustom.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111602Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/portalcustom.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/portalmenu.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111602Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/portalmenu.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/prereq.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111603Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/prereq.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/rbac.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111612Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/rbac.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../pages/documentation/1.1/redirections.html</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -2050,6 +2582,14 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>../pages/documentation/1.1/samlservice.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/securetoken.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111612Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/securetoken.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -2158,6 +2698,70 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../pages/documentation/conferences.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111459Z" changeid="xavier">
+        <seg>../pages/documentation/conferences.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/features.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111519Z" changeid="xavier">
+        <seg>../pages/documentation/features.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/presentation.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111603Z" changeid="xavier">
+        <seg>../pages/documentation/presentation.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/quickstart.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111610Z" changeid="xavier">
+        <seg>../pages/documentation/quickstart.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/download.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111509Z" changeid="xavier">
+        <seg>../pages/download.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/menu1.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111547Z" changeid="xavier">
+        <seg>../pages/menu1.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/playground/playground.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111601Z" changeid="xavier">
+        <seg>../pages/playground/playground.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/press.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111604Z" changeid="xavier">
+        <seg>../pages/press.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../pages/references.html</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -2190,10 +2794,34 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../pages/wiki/dokuwiki.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111509Z" changeid="xavier">
+        <seg>../pages/wiki/dokuwiki.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../pages/wiki/syntax.html</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>../pages/wiki/syntax.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/applications/bugzilla_logo.png?id=documentation%3A1.0%3Aapplications%3Abugzilla</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T113602Z" changeid="xavier">
+        <seg>/_detail/applications/bugzilla_logo.png?id=documentation%3A1.0%3Aapplications%3Abugzilla</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/applications/http_logo.png?id=documentation%3A1.0%3Aapplications%3Aauthbasic</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T101154Z" changeid="xavier">
+        <seg>/_detail/applications/http_logo.png?id=documentation%3A1.0%3Aapplications%3Aauthbasic</seg>
       </tuv>
     </tu>
     <tu>
@@ -2782,6 +3410,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;&lt;s0&gt;VirtualHost&lt;/s0&gt; *:80&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T114008Z" changeid="xavier">
+        <seg>&lt;&lt;s0&gt;VirtualHost&lt;/s0&gt; *:80&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;Perl&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -2818,6 +3454,14 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;a0&gt;Apache::Session::Redis&lt;/a0&gt; est le module de stockage des sessions en réseau le plus rapide</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Bugzilla&lt;/a0&gt; is server software designed to help you manage software development.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T113651Z" changeid="xavier">
+        <seg>&lt;a0&gt;Bugzilla&lt;/a0&gt; est un logiciel serveur conçu pour assister la gestion de développement logiciel.</seg>
       </tuv>
     </tu>
     <tu>
@@ -3158,6 +3802,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; provides a special function named &lt;a1&gt;basic&lt;/a1&gt; to build this header.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T113403Z" changeid="xavier">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; fournit une fonction spéciale nommée &lt;a1&gt;basic&lt;/a1&gt; pour construire cet en-tête.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;Lasso dependency version&lt;/a0&gt; by guimard (2010/12/05 09:22)</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -3342,6 +3994,54 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;activedirectoryminihowto&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111438Z" changeid="xavier">
+        <seg>&lt;a0&gt;activedirectoryminihowto&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;browseablesessionbackend&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111454Z" changeid="xavier">
+        <seg>&lt;a0&gt;browseablesessionbackend&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;cda&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111504Z" changeid="xavier">
+        <seg>&lt;a0&gt;cda&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;default_sidebar&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111512Z" changeid="xavier">
+        <seg>&lt;a0&gt;default_sidebar&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;error&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111517Z" changeid="xavier">
+        <seg>&lt;a0&gt;error&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;features&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111521Z" changeid="xavier">
+        <seg>&lt;a0&gt;features&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;findAttr.pl now scans undocumented parameters&lt;/a0&gt; by guimard (2010/12/05 14:41)</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -3350,10 +4050,58 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;header_remote_user_conversion&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111529Z" changeid="xavier">
+        <seg>&lt;a0&gt;header_remote_user_conversion&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;idpcas&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111534Z" changeid="xavier">
+        <seg>&lt;a0&gt;idpcas&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;ldapconfbackend&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111541Z" changeid="xavier">
+        <seg>&lt;a0&gt;ldapconfbackend&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;managerprotection&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111549Z" changeid="xavier">
+        <seg>&lt;a0&gt;managerprotection&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;mediawiki&lt;/a0&gt;&lt;br1/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;a0&gt;mediawiki&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;nosqlsessionbackend&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111555Z" changeid="xavier">
+        <seg>&lt;a0&gt;nosqlsessionbackend&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;parameterlist&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111605Z" changeid="xavier">
+        <seg>&lt;a0&gt;parameterlist&lt;/a0&gt;&lt;br1/&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -3382,10 +4130,98 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a10&gt;authchoice&lt;/a10&gt;&lt;br11/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111443Z" changeid="xavier">
+        <seg>&lt;a10&gt;authchoice&lt;/a10&gt;&lt;br11/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a10&gt;contact&lt;/a10&gt;&lt;br11/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111506Z" changeid="xavier">
+        <seg>&lt;a10&gt;contact&lt;/a10&gt;&lt;br11/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a10&gt;installtarball&lt;/a10&gt;&lt;br11/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111537Z" changeid="xavier">
+        <seg>&lt;a10&gt;installtarball&lt;/a10&gt;&lt;br11/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a10&gt;logs&lt;/a10&gt;&lt;br11/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111544Z" changeid="xavier">
+        <seg>&lt;a10&gt;logs&lt;/a10&gt;&lt;br11/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a10&gt;mysqlminihowto&lt;/a10&gt;&lt;br11/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111553Z" changeid="xavier">
+        <seg>&lt;a10&gt;mysqlminihowto&lt;/a10&gt;&lt;br11/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a10&gt;portal&lt;/a10&gt;&lt;br11/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111606Z" changeid="xavier">
+        <seg>&lt;a10&gt;portal&lt;/a10&gt;&lt;br11/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a10&gt;sessions&lt;/a10&gt;&lt;br11/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111616Z" changeid="xavier">
+        <seg>&lt;a10&gt;sessions&lt;/a10&gt;&lt;br11/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a10&gt;soapconfbackend&lt;/a10&gt;&lt;br11/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;a10&gt;soapconfbackend&lt;/a10&gt;&lt;br11/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a12&gt;authdbi&lt;/a12&gt;&lt;br13/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111445Z" changeid="xavier">
+        <seg>&lt;a12&gt;authdbi&lt;/a12&gt;&lt;br13/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a12&gt;customfunctions&lt;/a12&gt;&lt;br13/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111507Z" changeid="xavier">
+        <seg>&lt;a12&gt;customfunctions&lt;/a12&gt;&lt;br13/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a12&gt;portalcustom&lt;/a12&gt;&lt;br13/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111607Z" changeid="xavier">
+        <seg>&lt;a12&gt;portalcustom&lt;/a12&gt;&lt;br13/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a12&gt;soapconfbackend&lt;/a12&gt;&lt;br13/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111617Z" changeid="xavier">
+        <seg>&lt;a12&gt;soapconfbackend&lt;/a12&gt;&lt;br13/&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -3398,6 +4234,30 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a14&gt;authldap&lt;/a14&gt;&lt;br15/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111446Z" changeid="xavier">
+        <seg>&lt;a14&gt;authldap&lt;/a14&gt;&lt;br15/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a14&gt;portalmenu&lt;/a14&gt;&lt;br15/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111607Z" changeid="xavier">
+        <seg>&lt;a14&gt;portalmenu&lt;/a14&gt;&lt;br15/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a14&gt;soapminihowto&lt;/a14&gt;&lt;br15/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111617Z" changeid="xavier">
+        <seg>&lt;a14&gt;soapminihowto&lt;/a14&gt;&lt;br15/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a14&gt;soapservices&lt;/a14&gt;&lt;br15/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -3406,10 +4266,58 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a16&gt;authmulti&lt;/a16&gt;&lt;br17/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111446Z" changeid="xavier">
+        <seg>&lt;a16&gt;authmulti&lt;/a16&gt;&lt;br17/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a16&gt;prereq&lt;/a16&gt;&lt;br17/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111608Z" changeid="xavier">
+        <seg>&lt;a16&gt;prereq&lt;/a16&gt;&lt;br17/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a16&gt;soapservices&lt;/a16&gt;&lt;br17/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111618Z" changeid="xavier">
+        <seg>&lt;a16&gt;soapservices&lt;/a16&gt;&lt;br17/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a16&gt;soapsessionbackend&lt;/a16&gt;&lt;br17/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;a16&gt;soapsessionbackend&lt;/a16&gt;&lt;br17/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a18&gt;authnull&lt;/a18&gt;&lt;br19/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111447Z" changeid="xavier">
+        <seg>&lt;a18&gt;authnull&lt;/a18&gt;&lt;br19/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a18&gt;presentation&lt;/a18&gt;&lt;br19/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111608Z" changeid="xavier">
+        <seg>&lt;a18&gt;presentation&lt;/a18&gt;&lt;br19/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a18&gt;soapsessionbackend&lt;/a18&gt;&lt;br19/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111618Z" changeid="xavier">
+        <seg>&lt;a18&gt;soapsessionbackend&lt;/a18&gt;&lt;br19/&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -3446,10 +4354,50 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a20&gt;authopenid&lt;/a20&gt;&lt;br21/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111447Z" changeid="xavier">
+        <seg>&lt;a20&gt;authopenid&lt;/a20&gt;&lt;br21/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a20&gt;press&lt;/a20&gt;&lt;br21/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111608Z" changeid="xavier">
+        <seg>&lt;a20&gt;press&lt;/a20&gt;&lt;br21/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a20&gt;spring&lt;/a20&gt;&lt;br21/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111619Z" changeid="xavier">
+        <seg>&lt;a20&gt;spring&lt;/a20&gt;&lt;br21/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a20&gt;sqlconfbackend&lt;/a20&gt;&lt;br21/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;a20&gt;sqlconfbackend&lt;/a20&gt;&lt;br21/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a22&gt;authproxy&lt;/a22&gt;&lt;br23/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111447Z" changeid="xavier">
+        <seg>&lt;a22&gt;authproxy&lt;/a22&gt;&lt;br23/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a22&gt;sqlconfbackend&lt;/a22&gt;&lt;br23/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111620Z" changeid="xavier">
+        <seg>&lt;a22&gt;sqlconfbackend&lt;/a22&gt;&lt;br23/&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -3462,10 +4410,42 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a24&gt;authremote&lt;/a24&gt;&lt;br25/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111448Z" changeid="xavier">
+        <seg>&lt;a24&gt;authremote&lt;/a24&gt;&lt;br25/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a24&gt;sqlsessionbackend&lt;/a24&gt;&lt;br25/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111620Z" changeid="xavier">
+        <seg>&lt;a24&gt;sqlsessionbackend&lt;/a24&gt;&lt;br25/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a24&gt;ssocookie&lt;/a24&gt;&lt;br25/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;a24&gt;ssocookie&lt;/a24&gt;&lt;br25/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a26&gt;authsaml&lt;/a26&gt;&lt;br27/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111448Z" changeid="xavier">
+        <seg>&lt;a26&gt;authsaml&lt;/a26&gt;&lt;br27/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a26&gt;ssocookie&lt;/a26&gt;&lt;br27/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111621Z" changeid="xavier">
+        <seg>&lt;a26&gt;ssocookie&lt;/a26&gt;&lt;br27/&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -3478,10 +4458,26 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a28&gt;authslave&lt;/a28&gt;&lt;br29/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111449Z" changeid="xavier">
+        <seg>&lt;a28&gt;authslave&lt;/a28&gt;&lt;br29/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a28&gt;authssl&lt;/a28&gt;&lt;br29/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;a28&gt;authssl&lt;/a28&gt;&lt;br29/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a28&gt;start&lt;/a28&gt;&lt;br29/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111621Z" changeid="xavier">
+        <seg>&lt;a28&gt;start&lt;/a28&gt;&lt;br29/&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -3502,10 +4498,106 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a2&gt;applications&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111439Z" changeid="xavier">
+        <seg>&lt;a2&gt;applications&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a2&gt;bugzilla&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111455Z" changeid="xavier">
+        <seg>&lt;a2&gt;bugzilla&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a2&gt;changeconfbackend&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111504Z" changeid="xavier">
+        <seg>&lt;a2&gt;changeconfbackend&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a2&gt;documentation&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111512Z" changeid="xavier">
+        <seg>&lt;a2&gt;documentation&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a2&gt;exportedvars&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111517Z" changeid="xavier">
+        <seg>&lt;a2&gt;exportedvars&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a2&gt;federationproxy&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111522Z" changeid="xavier">
+        <seg>&lt;a2&gt;federationproxy&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a2&gt;highavailability&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111530Z" changeid="xavier">
+        <seg>&lt;a2&gt;highavailability&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a2&gt;idpopenid&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111535Z" changeid="xavier">
+        <seg>&lt;a2&gt;idpopenid&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a2&gt;ldapminihowto&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111541Z" changeid="xavier">
+        <seg>&lt;a2&gt;ldapminihowto&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a2&gt;mediawiki&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111551Z" changeid="xavier">
+        <seg>&lt;a2&gt;mediawiki&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a2&gt;memcachedsessionbackend&lt;/a2&gt;&lt;br3/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;a2&gt;memcachedsessionbackend&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a2&gt;notifications&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111556Z" changeid="xavier">
+        <seg>&lt;a2&gt;notifications&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a2&gt;passwordstore&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111605Z" changeid="xavier">
+        <seg>&lt;a2&gt;passwordstore&lt;/a2&gt;&lt;br3/&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -3534,10 +4626,26 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a30&gt;authssl&lt;/a30&gt;&lt;br31/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111449Z" changeid="xavier">
+        <seg>&lt;a30&gt;authssl&lt;/a30&gt;&lt;br31/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a30&gt;authtwitter&lt;/a30&gt;&lt;br31/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;a30&gt;authtwitter&lt;/a30&gt;&lt;br31/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a30&gt;status&lt;/a30&gt;&lt;br31/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111622Z" changeid="xavier">
+        <seg>&lt;a30&gt;status&lt;/a30&gt;&lt;br31/&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -3550,6 +4658,22 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a32&gt;authtwitter&lt;/a32&gt;&lt;br33/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111450Z" changeid="xavier">
+        <seg>&lt;a32&gt;authtwitter&lt;/a32&gt;&lt;br33/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a32&gt;sympa&lt;/a32&gt;&lt;br33/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111622Z" changeid="xavier">
+        <seg>&lt;a32&gt;sympa&lt;/a32&gt;&lt;br33/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a32&gt;syntax&lt;/a32&gt;&lt;br33/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -3558,10 +4682,98 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a34&gt;authyubikey&lt;/a34&gt;&lt;br35/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111451Z" changeid="xavier">
+        <seg>&lt;a34&gt;authyubikey&lt;/a34&gt;&lt;br35/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a34&gt;syntax&lt;/a34&gt;&lt;br35/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111623Z" changeid="xavier">
+        <seg>&lt;a34&gt;syntax&lt;/a34&gt;&lt;br35/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a4&gt;authapache&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111440Z" changeid="xavier">
+        <seg>&lt;a4&gt;authapache&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a4&gt;conferences&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111505Z" changeid="xavier">
+        <seg>&lt;a4&gt;conferences&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a4&gt;dokuwiki&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111512Z" changeid="xavier">
+        <seg>&lt;a4&gt;dokuwiki&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a4&gt;extendedfunctions&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111518Z" changeid="xavier">
+        <seg>&lt;a4&gt;extendedfunctions&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a4&gt;fileconfbackend&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111522Z" changeid="xavier">
+        <seg>&lt;a4&gt;fileconfbackend&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a4&gt;idpsaml&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111535Z" changeid="xavier">
+        <seg>&lt;a4&gt;idpsaml&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a4&gt;ldapsessionbackend&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111542Z" changeid="xavier">
+        <seg>&lt;a4&gt;ldapsessionbackend&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a4&gt;memcachedsessionbackend&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111552Z" changeid="xavier">
+        <seg>&lt;a4&gt;memcachedsessionbackend&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a4&gt;menu1&lt;/a4&gt;&lt;br5/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;a4&gt;menu1&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a4&gt;performances&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111605Z" changeid="xavier">
+        <seg>&lt;a4&gt;performances&lt;/a4&gt;&lt;br5/&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -3574,6 +4786,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a4&gt;securetoken&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111614Z" changeid="xavier">
+        <seg>&lt;a4&gt;securetoken&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a4&gt;security&lt;/a4&gt;&lt;br5/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -3582,6 +4802,62 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a6&gt;authbasic&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111440Z" changeid="xavier">
+        <seg>&lt;a6&gt;authbasic&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a6&gt;configlocation&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111505Z" changeid="xavier">
+        <seg>&lt;a6&gt;configlocation&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a6&gt;download&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111513Z" changeid="xavier">
+        <seg>&lt;a6&gt;download&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a6&gt;filesessionbackend&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111523Z" changeid="xavier">
+        <seg>&lt;a6&gt;filesessionbackend&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a6&gt;installdeb&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111536Z" changeid="xavier">
+        <seg>&lt;a6&gt;installdeb&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a6&gt;liferay&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111542Z" changeid="xavier">
+        <seg>&lt;a6&gt;liferay&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a6&gt;menu1&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111552Z" changeid="xavier">
+        <seg>&lt;a6&gt;menu1&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a6&gt;mrtg&lt;/a6&gt;&lt;br7/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -3590,10 +4866,26 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a6&gt;phpldapadmin&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111606Z" changeid="xavier">
+        <seg>&lt;a6&gt;phpldapadmin&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a6&gt;resetpassword&lt;/a6&gt;&lt;br7/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;a6&gt;resetpassword&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a6&gt;security&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111615Z" changeid="xavier">
+        <seg>&lt;a6&gt;security&lt;/a6&gt;&lt;br7/&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -3606,10 +4898,82 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a8&gt;authcas&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111441Z" changeid="xavier">
+        <seg>&lt;a8&gt;authcas&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a8&gt;configvhost&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111506Z" changeid="xavier">
+        <seg>&lt;a8&gt;configvhost&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a8&gt;drupal&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111513Z" changeid="xavier">
+        <seg>&lt;a8&gt;drupal&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a8&gt;formreplay&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111523Z" changeid="xavier">
+        <seg>&lt;a8&gt;formreplay&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a8&gt;installrpm&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111536Z" changeid="xavier">
+        <seg>&lt;a8&gt;installrpm&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a8&gt;logoutforward&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111543Z" changeid="xavier">
+        <seg>&lt;a8&gt;logoutforward&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a8&gt;mrtg&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111552Z" changeid="xavier">
+        <seg>&lt;a8&gt;mrtg&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a8&gt;mysqlminihowto&lt;/a8&gt;&lt;br9/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;a8&gt;mysqlminihowto&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a8&gt;playground&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111606Z" changeid="xavier">
+        <seg>&lt;a8&gt;playground&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a8&gt;selfmadeapplication&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111616Z" changeid="xavier">
+        <seg>&lt;a8&gt;selfmadeapplication&lt;/a8&gt;&lt;br9/&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -3856,6 +5220,30 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;s0&gt;Nom d'application&lt;/s0&gt; (optionel) : nom de l'application (visible dans Twitter)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Auth-Cn&lt;/s0&gt;: $cn</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T114202Z" changeid="xavier">
+        <seg>&lt;s0&gt;Auth-Cn&lt;/s0&gt;: $cn</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Auth-Mail&lt;/s0&gt;: $mail</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T114202Z" changeid="xavier">
+        <seg>&lt;s0&gt;Auth-Mail&lt;/s0&gt;: $mail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Auth-User&lt;/s0&gt;: $uid</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T114201Z" changeid="xavier">
+        <seg>&lt;s0&gt;Auth-User&lt;/s0&gt;: $uid</seg>
       </tuv>
     </tu>
     <tu>
@@ -4316,6 +5704,30 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;auth_env_email&lt;/s0&gt;: &lt;a1&gt;HTTP&lt;/a1&gt;_AUTH_MAIL</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T113842Z" changeid="xavier">
+        <seg>&lt;s0&gt;auth_env_email&lt;/s0&gt;: &lt;a1&gt;HTTP&lt;/a1&gt;_AUTH_MAIL</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;auth_env_id&lt;/s0&gt;: &lt;a1&gt;HTTP&lt;/a1&gt;_AUTH_USER</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T113840Z" changeid="xavier">
+        <seg>&lt;s0&gt;auth_env_id&lt;/s0&gt;: &lt;a1&gt;HTTP&lt;/a1&gt;_AUTH_USER</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;auth_env_realname&lt;/s0&gt;: &lt;a1&gt;HTTP&lt;/a1&gt;_AUTH_CN</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T113846Z" changeid="xavier">
+        <seg>&lt;s0&gt;auth_env_realname&lt;/s0&gt;: &lt;a1&gt;HTTP&lt;/a1&gt;_AUTH_CN</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;include&lt;/s0&gt; /usr/local/lemonldap-ng/etc/portal-apache2.conf
 &lt;s1&gt;include&lt;/s1&gt; /usr/local/lemonldap-ng/etc/handler-apache2.conf
 &lt;s2&gt;include&lt;/s2&gt; /usr/local/lemonldap-ng/etc/manager-apache2.conf</seg>
@@ -4332,6 +5744,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;s0&gt;require&lt;/s0&gt; Lemonldap::NG::Portal::SharedConf;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;user_info_class&lt;/s0&gt;: Env or Env,&lt;a1&gt;CGI&lt;/a1&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T113856Z" changeid="xavier">
+        <seg>&lt;s0&gt;user_info_class&lt;/s0&gt;: Env or Env,&lt;a1&gt;CGI&lt;/a1&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -4358,6 +5778,16 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;s1&gt;RewriteEngine&lt;/s1&gt; &lt;s2&gt;On&lt;/s2&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s1&gt;ServerName&lt;/s1&gt; bugzilla.example.com
+ </seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T114010Z" changeid="xavier">
+        <seg>&lt;s1&gt;ServerName&lt;/s1&gt; bugzilla.example.com
+ </seg>
       </tuv>
     </tu>
     <tu>
@@ -4662,6 +6092,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>American Standard Code for Information Interchange</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111758Z" changeid="xavier">
+        <seg>American Standard Code for Information Interchange</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>An &lt;a0&gt;HTTP&lt;/a0&gt; header is defined by:</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -4926,6 +6364,22 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Authorization =&gt; &quot;Basic &quot;.encode_base64(&quot;$uid:$_password&quot;)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T113300Z" changeid="xavier">
+        <seg>Authorization =&gt; &quot;Basic &quot;.encode_base64(&quot;$uid:$_password&quot;)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Authorization =&gt; basic($uid,$_password)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T113430Z" changeid="xavier">
+        <seg>Authorization =&gt; basic($uid,$_password)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Authorization is controlled only by Handlers.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -4950,6 +6404,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>B</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111452Z" changeid="xavier">
+        <seg>B</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Back to main index</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -4962,6 +6424,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Assurez-vous que mod_rewrite est installé et que les règles de réécriture SAML2 sont activées dans la &lt;a0&gt;configuration Apache du portail&lt;/a0&gt;:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Before transmission, the username and password are encoded as a sequence of base-64 characters.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T101537Z" changeid="xavier">
+        <seg>Avant la transmission, le nom et le mot de passe sont encodés en base-64.</seg>
       </tuv>
     </tu>
     <tu>
@@ -4986,6 +6456,46 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Corps du message de changement de mot-de-passe</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Bugzilla</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T113601Z" changeid="xavier">
+        <seg>Bugzilla</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Bugzilla administration</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T113804Z" changeid="xavier">
+        <seg>Administration de Bugzilla</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Bugzilla can authenticate a user with &lt;a0&gt;HTTP&lt;/a0&gt; headers, and auto-create its account with a few information:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T113753Z" changeid="xavier">
+        <seg>Bugzilla peut authentifier un utilisateur par en-tête &lt;a0&gt;HTTP&lt;/a0&gt; et créer automatiquement un compte avec peu d'informations :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Bugzilla virtual host in Apache</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T113925Z" changeid="xavier">
+        <seg>Hôte virtuel Apache hébergeant Bugzilla</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Bugzilla virtual host in Manager</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T114041Z" changeid="xavier">
+        <seg>Hôte virtuel Bugzilla dans le manager</seg>
       </tuv>
     </tu>
     <tu>
@@ -5018,6 +6528,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Par défautBy, le module de session principal est utilisé pour stocker les données temporaires &lt;a0&gt;SAML&lt;/a0&gt; (tel les états de relais), mais les sessions &lt;a1&gt;SAML&lt;/a1&gt; doivent disposer d'un module compatible avec les &lt;a2&gt;fonctionnalités de restrictions des sessions&lt;/a2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>C</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111456Z" changeid="xavier">
+        <seg>C</seg>
       </tuv>
     </tu>
     <tu>
@@ -5142,6 +6660,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Common Gateway Interface</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T113851Z" changeid="xavier">
+        <seg>Common Gateway Interface</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Compatibility with Apache mod_security</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -5182,10 +6708,34 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Configure Bugzilla virtual host like other &lt;a0&gt;protected virtual host&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T114006Z" changeid="xavier">
+        <seg>Configurer l'hôte virtuel Bugzilla comme n'importe quel autre &lt;a0&gt;hôte virtuel protégé&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Configure authentication filter &lt;e0&gt;(“General Parameters » Authentication modules » &lt;a1&gt;LDAP&lt;/a1&gt; parameters » Filters”)&lt;/e0&gt; with:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T095129Z" changeid="xavier">
         <seg>Configurer le filtre d'authentification &lt;e0&gt;(“Paramètres généraux » Module d'authentification » Paramètres &lt;a1&gt;LDAP&lt;/a1&gt; » Filtres”)&lt;/e0&gt; avec :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Configure the &lt;a0&gt;access rules&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T114134Z" changeid="xavier">
+        <seg>Configurer les &lt;a0&gt;règles d'accès&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Configure the following &lt;a0&gt;headers&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T114200Z" changeid="xavier">
+        <seg>Configurer les &lt;a0&gt;en-têtes&lt;/a0&gt; suivants.</seg>
       </tuv>
     </tu>
     <tu>
@@ -5286,6 +6836,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>D</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111508Z" changeid="xavier">
+        <seg>D</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>DEB bundle</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -5298,6 +6856,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Daniel RIVIERE</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Data should not contains accents or special characters, as &lt;a0&gt;HTTP&lt;/a0&gt; protocol only allow &lt;a1&gt;ASCII&lt;/a1&gt; values in header (but depending on the &lt;a2&gt;HTTP&lt;/a2&gt; server, you can use &lt;a3&gt;ISO&lt;/a3&gt; encoded values)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T112715Z" changeid="xavier">
+        <seg>Les données ne doivent pas contenir de caractères spéciaux, car le protocole &lt;a0&gt;HTTP&lt;/a0&gt; n'autorise que les caractères &lt;a1&gt;ASCII&lt;/a1&gt; dans les en-têtes (mais suivant le serveur &lt;a2&gt;HTTP&lt;/a2&gt;, vous pouvez utiliser des valeurs encodées &lt;a3&gt;ISO&lt;/a3&gt;)</seg>
       </tuv>
     </tu>
     <tu>
@@ -5494,6 +7060,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Dokuwiki</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T114213Z" changeid="xavier">
+        <seg>Dokuwiki</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Dokuwiki plugin</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -5546,6 +7120,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Menu dynamique des applications</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>E</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111514Z" changeid="xavier">
+        <seg>E</seg>
       </tuv>
     </tu>
     <tu>
@@ -5670,6 +7252,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>F</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111518Z" changeid="xavier">
+        <seg>F</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Facebook: &lt;a0&gt;Group&lt;/a0&gt; / &lt;a1&gt;Page&lt;/a1&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -5722,6 +7312,22 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Par exemple, si vous utilisez &lt;a0&gt;Active-Directory comme système d'authentification&lt;/a0&gt;, vous pouvez utiliser sAMAccountName come format de NameID Windows.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>For example, the user name Aladdin and password open sesame would be combined as Aladdin:open sesame – which is equivalent to QWxhZGRpbjpvcGVuIHNlc2FtZQ== when encoded in Base64.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T101721Z" changeid="xavier">
+        <seg>Par exemple, le nom Aladdin et le mot-de-passe &quot;open sesame&quot; vont être assemblés en &quot;Aladdin:open sesame&quot; – dont l'équivalent est QWxhZGRpbjpvcGVuIHNlc2FtZQ== en Base64.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>For example, to forward login (&lt;c0&gt;$uid&lt;/c0&gt;) and password (&lt;c1&gt;$_password&lt;/c1&gt; if &lt;a2&gt;password is stored in session&lt;/a2&gt;):</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T113257Z" changeid="xavier">
+        <seg>Par exemple, pour exporter l'identifiant (&lt;c0&gt;$uid&lt;/c0&gt;) et le mot-de-passe (&lt;c1&gt;$_password&lt;/c1&gt; si &lt;a2&gt;le mot-de-passe est stocké dans la session&lt;/a2&gt;):</seg>
       </tuv>
     </tu>
     <tu>
@@ -5794,6 +7400,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Nom complet</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>G</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111524Z" changeid="xavier">
+        <seg>G</seg>
       </tuv>
     </tu>
     <tu>
@@ -5894,10 +7508,26 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Go to the Manager and &lt;a0&gt;create a new virtual host&lt;/a0&gt; for Bugzilla.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T114111Z" changeid="xavier">
+        <seg>Aller dans le manager et &lt;a0&gt;créer un nouvel hôte virtuel&lt;/a0&gt; pour Bugzilla.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Graphical Manager</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Gestionnaire graphique</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>H</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111526Z" changeid="xavier">
+        <seg>H</seg>
       </tuv>
     </tu>
     <tu>
@@ -6078,6 +7708,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Hyper Text Transfer Protocol</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T101236Z" changeid="xavier">
+        <seg>Hyper Text Transfer Protocol</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>HyperText Markup Language</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -6090,6 +7728,22 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Hypertext Preprocessor</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>I</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111530Z" changeid="xavier">
+        <seg>I</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>IRC</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111634Z" changeid="xavier">
+        <seg>IRC</seg>
       </tuv>
     </tu>
     <tu>
@@ -6166,6 +7820,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>In Bugzilla administration interface, go in &lt;c0&gt;Parameters&lt;/c0&gt; » &lt;c1&gt;User authentication&lt;/c1&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T113827Z" changeid="xavier">
+        <seg>Dans l'interface d'administration, allez dans &lt;c0&gt;Parameters&lt;/c0&gt; » &lt;c1&gt;User authentication&lt;/c1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>In Manager, go in &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Authentication modules&lt;/c1&gt; and choose Twitter for authentication module.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -6186,6 +7848,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>En particulier, il utilise les capacités multi-threads d'Apache-2, donc pour optimiser les performances, utilisez de préférence &lt;a0&gt;mpm-worker&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>In the context of an &lt;a0&gt;HTTP&lt;/a0&gt; transaction, the basic access authentication is a method designed to allow a web browser, or other client program, to provide credentials – in the form of a user name and password – when making a request.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T101504Z" changeid="xavier">
+        <seg>Dans le contexte d'une transaction &lt;a0&gt;HTTP&lt;/a0&gt;, l'authentification basique est une méthode qui permet au navigateur ou un autre programme client de fournir des éléments d'authentification – sous la forme d'un nom et d'un mot de passe – à chaque requête.</seg>
       </tuv>
     </tu>
     <tu>
@@ -6266,6 +7936,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Installation et configuration</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>International Organization for Standardization</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111800Z" changeid="xavier">
+        <seg>International Organization for Standardization</seg>
       </tuv>
     </tu>
     <tu>
@@ -6410,6 +8088,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Cinématique</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>L</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111537Z" changeid="xavier">
+        <seg>L</seg>
       </tuv>
     </tu>
     <tu>
@@ -6638,10 +8324,26 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Lightweight Directory Access Protocol</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T101130Z" changeid="xavier">
+        <seg>Lightweight Directory Access Protocol</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Linux Tag 2009</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Linux Tag 2009</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Little effort is required to translate the encoded string back into the user name and password, and many popular security tools will decode the strings “on the fly”.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T101838Z" changeid="xavier">
+        <seg>Un petit effort est requis pour décoder ces chaînes et de nombreux outils de sécurité les décodent à la volée.</seg>
       </tuv>
     </tu>
     <tu>
@@ -6706,6 +8408,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Déconnexion</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>M</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111545Z" changeid="xavier">
+        <seg>M</seg>
       </tuv>
     </tu>
     <tu>
@@ -6878,6 +8588,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>N</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111554Z" changeid="xavier">
+        <seg>N</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Name</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -7002,6 +8720,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Maintenant, ldapgroups contient “admin su”</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>O</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111556Z" changeid="xavier">
+        <seg>O</seg>
       </tuv>
     </tu>
     <tu>
@@ -7134,6 +8860,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>P</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111600Z" changeid="xavier">
+        <seg>P</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Packages and archives</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -7234,6 +8968,16 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Performances</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>PerlHeaderParserHandler My::Package
+ </seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T114011Z" changeid="xavier">
+        <seg>PerlHeaderParserHandler My::Package
+ </seg>
       </tuv>
     </tu>
     <tu>
@@ -7448,10 +9192,26 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Q</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111609Z" changeid="xavier">
+        <seg>Q</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Quick start tutorial</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Tutoriel rapide</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>R</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111611Z" changeid="xavier">
+        <seg>R</seg>
       </tuv>
     </tu>
     <tu>
@@ -7508,6 +9268,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Paquets RPM</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Real name</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T113754Z" changeid="xavier">
+        <seg>Real name</seg>
       </tuv>
     </tu>
     <tu>
@@ -8000,6 +9768,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>So &lt;a0&gt;HTTP&lt;/a0&gt; Basic Autentication is managed trough an &lt;a1&gt;HTTP&lt;/a1&gt; header (&lt;c2&gt;Authorization&lt;/c2&gt;), that can be forged by &lt;a3&gt;LL::NG&lt;/a3&gt;, with this precautions:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111750Z" changeid="xavier">
+        <seg>Ainsi l'authentification basique &lt;a0&gt;HTTP&lt;/a0&gt; est gérée par des en-têtes &lt;a1&gt;HTTP&lt;/a1&gt; (&lt;c2&gt;Autorisation&lt;/c2&gt;), qui peut être générée par &lt;a3&gt;LL::NG&lt;/a3&gt;, avec les précautions suivantes :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>So Apache::Session module is not a problem for handlers.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -8032,6 +9808,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>So the above example can also be written like this:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T113428Z" changeid="xavier">
+        <seg>Ainsi l'exemple ci-dessous peut être écrit simplement :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>So to improve performances, avoid too complex rules by using the macro or the groups or local macros.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -8044,6 +9828,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Vous vouvez ainsi avoir une protection &lt;a0&gt;AAA&lt;/a0&gt; complète pour votre espace web tel qu'indiqué ci-dessus.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>So you have just to declare this header for the virtual host in Manager.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T113203Z" changeid="xavier">
+        <seg>Il suffit donc de déclarer cet en-tête pour l'hôte virtuel dans le manager.</seg>
       </tuv>
     </tu>
     <tu>
@@ -8312,6 +10104,22 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The &lt;c0&gt;basic&lt;/c0&gt; function will also force conversion from UTF-8 to &lt;a1&gt;ISO&lt;/a1&gt;-8859-1, which should be accepted by most of &lt;a2&gt;HTTP&lt;/a2&gt; servers.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T113531Z" changeid="xavier">
+        <seg>La fonction &lt;c0&gt;basic&lt;/c0&gt; force la conversion des caractères UTF-8 en &lt;a1&gt;ISO&lt;/a1&gt;-8859-1, qui peut être accepté par la plupart des serveurs &lt;a2&gt;HTTP&lt;/a2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The Basic Authentication relies on a specific &lt;a0&gt;HTTP&lt;/a0&gt; header, as described above.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T113125Z" changeid="xavier">
+        <seg>L'authentification basique est portée par un en-tête &lt;a0&gt;HTTP&lt;/a0&gt; spécifique, tel que décrit ci-dessous.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The NameID is the main user identifier, carried in &lt;a1&gt;SAML&lt;/a1&gt; messages.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -8388,6 +10196,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Cette valeur est utilisé dans les metadatas :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Then set:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T113833Z" changeid="xavier">
+        <seg>et indiquez :</seg>
       </tuv>
     </tu>
     <tu>
@@ -8840,6 +10656,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>User ID</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T113754Z" changeid="xavier">
+        <seg>User ID</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>User authenticates on Portal</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -9260,6 +11084,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You need to forward the password, which can be the user main password (if &lt;a0&gt;password is stored in session&lt;/a0&gt;, or any user attribute (if you keep secondary passwords in users database).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T113027Z" changeid="xavier">
+        <seg>Il est nécessaire d'exporter le mot-de-passe, qui peut être le mot-de-passe principal de l'utilisateur (si &lt;a0&gt;le mot-de-passe est stocké dans la session&lt;/a0&gt;, ou n'importe quel attribut utilisateur (si d'autres mots-de-passe sont stockés dans la base de données des utilisateurs).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You need to register a new application on Twitter to get &lt;a0&gt;API&lt;/a0&gt; key and &lt;a1&gt;API&lt;/a1&gt; secret.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -9328,6 +11160,22 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>apacheAuthnLevel</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>applications:bugzilla_logo.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T113603Z" changeid="xavier">
+        <seg>applications:bugzilla_logo.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>applications:http_logo.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T101156Z" changeid="xavier">
+        <seg>applications:http_logo.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -9610,6 +11458,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.0:authapache</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T101144Z" changeid="xavier">
+        <seg>documentation:1.0:authapache</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.0:authldap</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -9634,6 +11490,30 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.0:configvhost</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T113929Z" changeid="xavier">
+        <seg>documentation:1.0:configvhost</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.0:exportedvars</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T101138Z" changeid="xavier">
+        <seg>documentation:1.0:exportedvars</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.0:extendedfunctions</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T113303Z" changeid="xavier">
+        <seg>documentation:1.0:extendedfunctions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.0:idpsaml</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -9646,6 +11526,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>documentation:1.0:memcachedsessionbackend</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.0:passwordstore</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T112720Z" changeid="xavier">
+        <seg>documentation:1.0:passwordstore</seg>
       </tuv>
     </tu>
     <tu>
@@ -9670,6 +11558,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>documentation:1.0:start</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.0:writingrulesand_headers</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T114113Z" changeid="xavier">
+        <seg>documentation:1.0:writingrulesand_headers</seg>
       </tuv>
     </tu>
     <tu>
@@ -9938,6 +11834,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>googleapps</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111526Z" changeid="xavier">
+        <seg>googleapps</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>groups are stored as space-separated strings in the special attribute “groups”: it contains the names of groups whose rules were returned true for the current user</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -9982,6 +11886,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>http://docs.oasis-open.org/security/saml/v2.0/saml-authn-context-2.0-os.pdf</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://en.wikipedia.org/wiki/Basic_access_authentication</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T101227Z" changeid="xavier">
+        <seg>http://fr.wikipedia.org/wiki/HTTP_Authentification</seg>
       </tuv>
     </tu>
     <tu>
@@ -10234,6 +12146,30 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://mail.ow2.org/wws/subscribe/lemonldap-ng-changes</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111632Z" changeid="xavier">
+        <seg>http://mail.ow2.org/wws/subscribe/lemonldap-ng-changes</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://mail.ow2.org/wws/subscribe/lemonldap-ng-dev</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111629Z" changeid="xavier">
+        <seg>http://mail.ow2.org/wws/subscribe/lemonldap-ng-dev</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://mail.ow2.org/wws/subscribe/lemonldap-ng-users</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111627Z" changeid="xavier">
+        <seg>http://mail.ow2.org/wws/subscribe/lemonldap-ng-users</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://manager.example.com</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -10478,6 +12414,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>http://wiki.sbay.org/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.bugzilla.org</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T113605Z" changeid="xavier">
+        <seg>http://www.bugzilla.org</seg>
       </tuv>
     </tu>
     <tu>
@@ -10834,6 +12778,22 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>lemonldap-ng-changes@ow2.org</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111631Z" changeid="xavier">
+        <seg>lemonldap-ng-changes@ow2.org</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>lemonldap-ng-dev@ow2.org</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111628Z" changeid="xavier">
+        <seg>lemonldap-ng-dev@ow2.org</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>lemonldap-ng-portal-appslist.png</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -10862,6 +12822,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>lemonldap-ng-testpage.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>lemonldap-ng-users@ow2.org</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111626Z" changeid="xavier">
+        <seg>lemonldap-ng-users@ow2.org</seg>
       </tuv>
     </tu>
     <tu>
@@ -10938,6 +12906,30 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>mailto:lemonldap-ng-changes@ow2.org</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111630Z" changeid="xavier">
+        <seg>mailto:lemonldap-ng-changes@ow2.org</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>mailto:lemonldap-ng-dev@ow2.org</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111628Z" changeid="xavier">
+        <seg>mailto:lemonldap-ng-dev@ow2.org</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>mailto:lemonldap-ng-users@ow2.org</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111625Z" changeid="xavier">
+        <seg>mailto:lemonldap-ng-users@ow2.org</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>make
 make test</seg>
       </tuv>
@@ -10968,6 +12960,14 @@ make test</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>rien ici...</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>obm</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111559Z" changeid="xavier">
+        <seg>obm</seg>
       </tuv>
     </tu>
     <tu>
