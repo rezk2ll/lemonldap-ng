@@ -580,6 +580,10 @@ function authParams(id) {
 	display('authParams',lmtext(id));
 }
 function formateSelectAuth(id,value){
+	// Handle "ldap" case for old versions
+	if(value && value.toLowerCase()=="ldap"){
+		value="LDAP";
+	}
 	formateSelect(id,[
 		'Apache=Apache',
 		'CAS=Central Authentication Service (CAS)',
@@ -632,6 +636,10 @@ function userdbParams(id) {
 	display('authParams',lmtext(id));
 }
 function formateSelectUser(id,value){
+	// Handle "ldap" case for old versions
+	if(value && value.toLowerCase()=="ldap"){
+		value="LDAP";
+	}
 	formateSelect(id,[
 		'DBI=Database (DBI)',
 		'LDAP=LDAP',
@@ -651,6 +659,10 @@ function passworddbParams(id) {
 	display('authParams',lmtext(id));
 }
 function formateSelectPassword(id,value){
+	// Handle "ldap" case for old versions
+	if(value && value.toLowerCase()=="ldap"){
+		value="LDAP";
+	}
 	formateSelect(id,[
 		'DBI=Database (DBI)',
 		'LDAP=LDAP',
