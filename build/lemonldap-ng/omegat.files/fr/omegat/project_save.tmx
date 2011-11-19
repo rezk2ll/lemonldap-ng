@@ -298,6 +298,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../../../media/applications/dokuwiki_logo.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T114554Z" changeid="xavier">
+        <seg>../../../../media/applications/dokuwiki_logo.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../../../media/applications/http_logo.png</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T101157Z" changeid="xavier">
@@ -354,6 +362,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../../documentation/1.0/header_remote_user_conversion.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T115432Z" changeid="xavier">
+        <seg>../../../documentation/1.0/header_remote_user_conversion.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../../documentation/1.0/passwordstore.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T112718Z" changeid="xavier">
@@ -374,6 +390,14 @@
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T114112Z" changeid="xavier">
         <seg>../../../documentation/1.0/writingrulesand_headers.html#rules</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../download.html#contributions</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T115008Z" changeid="xavier">
+        <seg>../../../download.html#contributions</seg>
       </tuv>
     </tu>
     <tu>
@@ -2818,6 +2842,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/applications/dokuwiki_logo.png?id=documentation%3A1.0%3Aapplications%3Adokuwiki</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T114552Z" changeid="xavier">
+        <seg>/_detail/applications/dokuwiki_logo.png?id=documentation%3A1.0%3Aapplications%3Adokuwiki</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>/_detail/applications/http_logo.png?id=documentation%3A1.0%3Aapplications%3Aauthbasic</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T101154Z" changeid="xavier">
@@ -3578,10 +3610,26 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;DokuWiki&lt;/a0&gt; is a standards compliant, simple to use Wiki, mainly aimed at creating documentation of any kind.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T114712Z" changeid="xavier">
+        <seg>&lt;a0&gt;DokuWiki&lt;/a0&gt; est un wiki simple et standard principalement destiné à la création de documents de toute nature.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;Download the Lasso tarball&lt;/a0&gt; and compile it on your system.</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;a0&gt;Téléchargez l'archive Lasso&lt;/a0&gt; et compilez là sur votre système.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Download&lt;/a0&gt; the plugin and copy the files in dokuwiki &lt;c1&gt;inc/auth/&lt;/c1&gt; directory:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T115225Z" changeid="xavier">
+        <seg>&lt;a0&gt;Télécharger&lt;/a0&gt; le plugin et le copier dans le répertoire dokuwiki &lt;c1&gt;inc/auth/&lt;/c1&gt; :</seg>
       </tuv>
     </tu>
     <tu>
@@ -5080,6 +5128,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;$conf&lt;/s0&gt;&lt;s1&gt;[&lt;/s1&gt;authtype&lt;s2&gt;]&lt;/s2&gt; &lt;s3&gt;=&lt;/s3&gt; lemonldap&lt;s4&gt;;&lt;/s4&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T115320Z" changeid="xavier">
+        <seg>&lt;s0&gt;$conf&lt;/s0&gt;&lt;s1&gt;[&lt;/s1&gt;authtype&lt;s2&gt;]&lt;/s2&gt; &lt;s3&gt;=&lt;/s3&gt; lemonldap&lt;s4&gt;;&lt;/s4&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;&lt;a1&gt;API&lt;/a1&gt; key&lt;/s0&gt;: &lt;a2&gt;API&lt;/a2&gt; key from Twitter</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -5792,6 +5848,16 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s1&gt;ServerName&lt;/s1&gt; dokuwiki.example.com
+ </seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T115430Z" changeid="xavier">
+        <seg>&lt;s1&gt;ServerName&lt;/s1&gt; dokuwiki.example.com
+ </seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s1&gt;SetHandler&lt;/s1&gt; perl-&lt;s2&gt;script&lt;/s2&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -6032,6 +6098,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Après déconnexion, l'utilisateur est redirigé vers une &lt;a0&gt;URL&lt;/a0&gt; configurée ou vers le portail.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>All data is stored in plain text files – no database is required.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T114949Z" changeid="xavier">
+        <seg>Toutes les données sont stockées dans des fichiers texte, aucune base de données n'est nécessaire.</seg>
       </tuv>
     </tu>
     <tu>
@@ -6716,6 +6790,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Configure Dokuwiki virtual host like other &lt;a0&gt;protected virtual host&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T115418Z" changeid="xavier">
+        <seg>Configurer l'hôte virtuel Dokuwiki comme n'importe quel autre &lt;a0&gt;hôte virtuel protégé&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Configure authentication filter &lt;e0&gt;(“General Parameters » Authentication modules » &lt;a1&gt;LDAP&lt;/a1&gt; parameters » Filters”)&lt;/e0&gt; with:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T095129Z" changeid="xavier">
@@ -7068,10 +7150,34 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Dokuwiki local configuration</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T115239Z" changeid="xavier">
+        <seg>Configuration locale Dokuwiki</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Dokuwiki plugin</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Extension pour Dokuwiki</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Dokuwiki virtual host in Apache</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T115343Z" changeid="xavier">
+        <seg>Hôte virtuel Dokuwiki dans le manager</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Dokuwiki virtual host in Manager</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T115559Z" changeid="xavier">
+        <seg>Hôte virtuel Dokuwiki dans le manager</seg>
       </tuv>
     </tu>
     <tu>
@@ -7152,6 +7258,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Facile à intégrer</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Edit Dokuwiki local configuration (&lt;c0&gt;conf/local.php&lt;/c0&gt;) and set &lt;c1&gt;lemonldap&lt;/c1&gt; as authentication type:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T115315Z" changeid="xavier">
+        <seg>Éditer la configuration locale Dokuwiki (&lt;c0&gt;conf/local.php&lt;/c0&gt;) et indiquer &lt;c1&gt;lemonldap&lt;/c1&gt; comme type d'authentification :</seg>
       </tuv>
     </tu>
     <tu>
@@ -7516,6 +7630,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Go to the Manager and &lt;a0&gt;create a new virtual host&lt;/a0&gt; for Dokuwiki.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T115615Z" changeid="xavier">
+        <seg>Aller dans le manager et &lt;a0&gt;créer un nouvel hôte virtuel&lt;/a0&gt; pour Dokuwiki.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Graphical Manager</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -7788,6 +7910,22 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If using &lt;a0&gt;LL::NG&lt;/a0&gt; as reverse proxy, configure the &lt;c1&gt;Auth-User&lt;/c1&gt; &lt;a2&gt;header&lt;/a2&gt;, else no headers are needed.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T115758Z" changeid="xavier">
+        <seg>Si &lt;a0&gt;LL::NG&lt;/a0&gt; est utilisé par reverse-proxy, configurer l'&lt;a2&gt;en-tête&lt;/a2&gt; &lt;c1&gt;Auth-User&lt;/c1&gt;, aucun autre en-tête n'est utile.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>If you are protecting Dokuwiki with &lt;a0&gt;LL::NG&lt;/a0&gt; as reverse proxy, &lt;a1&gt;convert header into REMOTE_USER environment variable&lt;/a1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T115535Z" changeid="xavier">
+        <seg>Si Dokuwiki est protégé par un reverse-proxy &lt;a0&gt;LL::NG&lt;/a0&gt;, &lt;a1&gt;convertir l'en-tête en variable d'environnement REMOTE_USER&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If you modify &lt;c0&gt;/saml/metadata&lt;/c0&gt; suffix you have to change corresponding Apache rewrite rule.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -7988,6 +8126,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>It has a simple but powerful syntax which makes sure the data files remain readable outside the Wiki and eases the creation of structured texts.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T114910Z" changeid="xavier">
+        <seg>Il dispose d'une syntaxe simple mais puissante qui fait que les fichiers de données restent lisibles en dehors du Wiki, et facilite la création de textes structurés.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>It is also used by &lt;a2&gt;SAML SP&lt;/a2&gt; to fill the authentication level in user session, based on authentication response authentication context.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -8000,6 +8146,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Il est recommendé d'utiliser ModPerl::Registry au lieu d'utiliser le dispositif &quot;cgi-script&quot; tel qu'indiqué dans les fichiers de configuration d'Apache proposés en exemple (portal-apache2.conf):</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>It is targeted at developer teams, workgroups and small companies.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T114803Z" changeid="xavier">
+        <seg>Il est destiné aux équipes de développeurs, groupes de travail ou petites entreprises.</seg>
       </tuv>
     </tu>
     <tu>
@@ -8064,6 +8218,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Jean-Thomas CHECCO</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Just configure the &lt;a0&gt;access rules&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T115640Z" changeid="xavier">
+        <seg>Configurer simplement la &lt;a0&gt;règle d'accès&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -8280,6 +8442,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>LemonLDAP::NG est écrit en &lt;a0&gt;Perl&lt;/a0&gt; et nécessite de nombreuses dépendances &lt;a1&gt;Perl&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LemonLDAP::NG wiki uses Dokuwiki!</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T115006Z" changeid="xavier">
+        <seg>Le wiki LemonLDAP::NG est un Dokuwiki !</seg>
       </tuv>
     </tu>
     <tu>
@@ -10160,6 +10330,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The plugin will check the &lt;c1&gt;REMOTE_USER&lt;/c1&gt; environment variable to get the connected user.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T115132Z" changeid="xavier">
+        <seg>Ce plugin utilise la variable d'environnement &lt;c1&gt;REMOTE_USER&lt;/c1&gt; pour récupérer le nom d'utilisateur connecté.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The portal is the biggest component of Lemonldap::NG.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -11108,6 +11286,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You will need to install a Dokuwiki plugin, available on &lt;a0&gt;download page&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T115056Z" changeid="xavier">
+        <seg>Il faut installer le plugin Dokuwiki disponible sur la &lt;a0&gt;page de téléchargement&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You will only need to install liblasso3-perl package:</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -11168,6 +11354,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T113603Z" changeid="xavier">
         <seg>applications:bugzilla_logo.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>applications:dokuwiki_logo.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T114553Z" changeid="xavier">
+        <seg>applications:dokuwiki_logo.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -11248,6 +11442,16 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>contact.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>cp lemonldap.class.php inc/auth/
+cp lemonldapuserdatabackend.class.php inc/auth/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T115227Z" changeid="xavier">
+        <seg>cp lemonldap.class.php inc/auth/
+cp lemonldapuserdatabackend.class.php inc/auth/</seg>
       </tuv>
     </tu>
     <tu>
@@ -11510,6 +11714,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T113303Z" changeid="xavier">
         <seg>documentation:1.0:extendedfunctions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.0:header_remote_user_conversion</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T115433Z" changeid="xavier">
+        <seg>documentation:1.0:header_remote_user_conversion</seg>
       </tuv>
     </tu>
     <tu>
@@ -12454,6 +12666,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>http://www.cpantesters.org/distro/L/Lemonldap-NG-Portal.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.dokuwiki.org/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T114555Z" changeid="xavier">
+        <seg>http://www.dokuwiki.org/</seg>
       </tuv>
     </tu>
     <tu>
