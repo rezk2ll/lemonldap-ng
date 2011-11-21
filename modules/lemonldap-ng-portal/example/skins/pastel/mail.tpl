@@ -10,7 +10,9 @@
 
         <form action="#" method="post" class="login">
 
+	<TMPL_IF NAME="CHOICE_VALUE">
         <input type="hidden" id="authKey" name="<TMPL_VAR NAME="CHOICE_PARAM">" value="<TMPL_VAR NAME="CHOICE_VALUE">" />
+	</TMPL_IF>
 
         <h3><lang en="Forgot your password?" fr="Mot de passe oubli&eacute; ?"/></h3>
 
@@ -34,8 +36,12 @@
 
         <form action="#" method="post" class="login">
 
+	<TMPL_IF NAME="CHOICE_VALUE">
         <input type="hidden" id="authKey" name="<TMPL_VAR NAME="CHOICE_PARAM">" value="<TMPL_VAR NAME="CHOICE_VALUE">" />
+        </TMPL_IF>
+	<TMPL_IF NAME="MAIL">
         <input type="hidden" value="<TMPL_VAR NAME="MAIL">" name="mail">
+        </TMPL_IF>
 
 	<h3><lang en="Resend confirmation mail?" fr="Renvoyer le mail de confirmation ?"/></h3>
 
@@ -65,8 +71,12 @@
 	<TMPL_IF NAME="DISPLAY_PASSWORD_FORM">
         <div id="password">
         <form action="#" method="post" class="password">
+	<TMPL_IF NAME="CHOICE_VALUE">
         <input type="hidden" id="authKey" name="<TMPL_VAR NAME="CHOICE_PARAM">" value="<TMPL_VAR NAME="CHOICE_VALUE">" />
+        </TMPL_IF>
+	<TMPL_IF NAME="MAIL_TOKEN">
         <input type="hidden" id="mail_token" name="mail_token" value="<TMPL_VAR NAME="MAIL_TOKEN">" />
+        </TMPL_IF>
         <h3><lang en="Change your password" fr="Changez votre mot de passe" /></h3>
         <table>
         <tr><th><lang en="New password" fr="Nouveau mot de passe" /></th>

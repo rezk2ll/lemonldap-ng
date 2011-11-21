@@ -8,9 +8,15 @@
 
 	<form id="form" action="#" method="<TMPL_VAR NAME="FORM_METHOD">" class="login">
 		<TMPL_VAR NAME="HIDDEN_INPUTS">
+		<TMPL_IF NAME="AUTH_URL">
 		<input type="hidden" name="url" value="<TMPL_VAR NAME="AUTH_URL">" />
+		</TMPL_IF>
+		<TMPL_IF NAME="CHOICE_VALUE">
 	        <input type="hidden" id="authKey" name="<TMPL_VAR NAME="CHOICE_PARAM">" value="<TMPL_VAR NAME="CHOICE_VALUE">" />
+		</TMPL_IF>
+		<TMPL_IF NAME="CONFIRMKEY">
 		<input type="hidden" id="confirm" name="confirm" value="<TMPL_VAR NAME="CONFIRMKEY">" />
+		</TMPL_IF>
 		<TMPL_VAR NAME="MSG">
 		<p id="timer"><lang en="Automaticaly accept in 5 seconds" fr="Acceptation automatique dans 5 secondes"/></p>
 		<table><tbody><tr><td>
