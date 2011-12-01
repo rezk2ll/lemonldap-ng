@@ -306,6 +306,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../../../media/applications/drupal_logo.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111129T061401Z" changeid="xavier">
+        <seg>../../../../media/applications/drupal_logo.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../../../media/applications/http_logo.png</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T101157Z" changeid="xavier">
@@ -2850,6 +2858,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/applications/drupal_logo.png?id=documentation%3A1.0%3Aapplications%3Adrupal</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111129T061358Z" changeid="xavier">
+        <seg>/_detail/applications/drupal_logo.png?id=documentation%3A1.0%3Aapplications%3Adrupal</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>/_detail/applications/http_logo.png?id=documentation%3A1.0%3Aapplications%3Aauthbasic</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T101154Z" changeid="xavier">
@@ -3630,6 +3646,14 @@
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T115225Z" changeid="xavier">
         <seg>&lt;a0&gt;Télécharger&lt;/a0&gt; le plugin et le copier dans le répertoire dokuwiki &lt;c1&gt;inc/auth/&lt;/c1&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Drupal&lt;/a0&gt; is a &lt;a1&gt;CMS&lt;/a1&gt; written in &lt;a2&gt;PHP&lt;/a2&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111129T061457Z" changeid="xavier">
+        <seg>&lt;a0&gt;Drupal&lt;/a0&gt; est un &lt;a1&gt;CMS&lt;/a1&gt; écrit en &lt;a2&gt;PHP&lt;/a2&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -5858,6 +5882,16 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s1&gt;ServerName&lt;/s1&gt; drupal.example.com
+ </seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111201T124905Z" changeid="xavier">
+        <seg>&lt;s1&gt;ServerName&lt;/s1&gt; drupal.example.com
+ </seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s1&gt;SetHandler&lt;/s1&gt; perl-&lt;s2&gt;script&lt;/s2&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -6798,6 +6832,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Configure Drupal virtual host like other &lt;a0&gt;protected virtual host&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111201T124858Z" changeid="xavier">
+        <seg>Configurer l'hôte virtuel Drupal comme n'importe quel autre &lt;a0&gt;hôte virtuel protégé&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Configure authentication filter &lt;e0&gt;(“General Parameters » Authentication modules » &lt;a1&gt;LDAP&lt;/a1&gt; parameters » Filters”)&lt;/e0&gt; with:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T095129Z" changeid="xavier">
@@ -6826,6 +6868,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Contact</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Content Management System</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111129T061422Z" changeid="xavier">
+        <seg>Système de gestion de contenu</seg>
       </tuv>
     </tu>
     <tu>
@@ -7218,6 +7268,38 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Les télécharger ici et &lt;a0&gt;installer les paquets pre-requis&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Drupal</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111129T061356Z" changeid="xavier">
+        <seg>Drupal</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Drupal module activation</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111201T124740Z" changeid="xavier">
+        <seg>Activation du module Drupal</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Drupal virtual host in Apache</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111201T124833Z" changeid="xavier">
+        <seg>Hôte virtuel Apache hébergeant Drupal</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Drupal virtual host in Manager</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111201T125006Z" changeid="xavier">
+        <seg>Hôte virtuel Drupal dans le manager</seg>
       </tuv>
     </tu>
     <tu>
@@ -7622,6 +7704,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Go on Drupal administration interface and enable the Webserver Auth module.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111201T124816Z" changeid="xavier">
+        <seg>Aller dans l'interface administration et activer le module Webserver Auth.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Go to the Manager and &lt;a0&gt;create a new virtual host&lt;/a0&gt; for Bugzilla.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T114111Z" changeid="xavier">
@@ -7634,6 +7724,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T115615Z" changeid="xavier">
         <seg>Aller dans le manager et &lt;a0&gt;créer un nouvel hôte virtuel&lt;/a0&gt; pour Dokuwiki.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Go to the Manager and &lt;a0&gt;create a new virtual host&lt;/a0&gt; for Drupal.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111201T125025Z" changeid="xavier">
+        <seg>Aller dans le manager et &lt;a0&gt;créer un nouvel hôte virtuel&lt;/a0&gt; pour Drupal.</seg>
       </tuv>
     </tu>
     <tu>
@@ -7848,8 +7946,8 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       <tuv lang="EN-US">
         <seg>Hypertext Preprocessor</seg>
       </tuv>
-      <tuv lang="FR-FR">
-        <seg>Hypertext Preprocessor</seg>
+      <tuv lang="FR-FR" changedate="20111129T061436Z" changeid="xavier">
+        <seg>Pré-processeur hypertext</seg>
       </tuv>
     </tu>
     <tu>
@@ -7922,6 +8020,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T115535Z" changeid="xavier">
         <seg>Si Dokuwiki est protégé par un reverse-proxy &lt;a0&gt;LL::NG&lt;/a0&gt;, &lt;a1&gt;convertir l'en-tête en variable d'environnement REMOTE_USER&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>If you are protecting Drupal with &lt;a0&gt;LL::NG&lt;/a0&gt; as reverse proxy, &lt;a1&gt;convert header into REMOTE_USER environment variable&lt;/a1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111201T124955Z" changeid="xavier">
+        <seg>Si Drupal est protégé par un reverse-proxy &lt;a0&gt;LL::NG&lt;/a0&gt;, &lt;a1&gt;convertir l'en-tête en variable d'environnement REMOTE_USER&lt;/a1&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -8038,6 +8144,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Install &lt;a0&gt;Webserver Auth&lt;/a0&gt; module, by downloading it, and unarchive it in the drupal modules/ directory.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111201T124728Z" changeid="xavier">
+        <seg>Télécharger et installer le module &lt;a0&gt;Webserver Auth&lt;/a0&gt;, en le décompressant dans le répertoire modules/.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Install &lt;a1&gt;Apache::Session::Redis&lt;/a1&gt; &lt;a2&gt;Perl&lt;/a2&gt; module.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -8122,6 +8236,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Il peut gérer plus de 200 000 utilisateurs.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>It can works with external modules to extends its functionalities.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111129T061532Z" changeid="xavier">
+        <seg>Il peut utiliser des modules externes pour étendre ses fonctionnalités.</seg>
       </tuv>
     </tu>
     <tu>
@@ -8970,6 +9092,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Un code d'une ligne pour intégrer le SSO dans Java, &lt;a0&gt;PHP&lt;/a0&gt;, .Net, &lt;a1&gt;Perl&lt;/a1&gt;, Ruby, Python, …</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>One of this module can be used to delegate authentication server to the web server: &lt;a3&gt;Webserver Auth&lt;/a3&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111129T061611Z" changeid="xavier">
+        <seg>Un de ces modules peut être utilisé pour déléguer l'authentification à un serveur web : &lt;a3&gt;Webserver Auth&lt;/a3&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -11366,6 +11496,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>applications:drupal_logo.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111129T061400Z" changeid="xavier">
+        <seg>applications:drupal_logo.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>applications:http_logo.png</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T101156Z" changeid="xavier">
@@ -12098,6 +12236,22 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>http://docs.oasis-open.org/security/saml/v2.0/saml-authn-context-2.0-os.pdf</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://drupal.org</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111129T061403Z" changeid="xavier">
+        <seg>http://drupal.org</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://drupal.org/project/Webserver_auth</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111129T061441Z" changeid="xavier">
+        <seg>http://drupal.org/project/Webserver_auth</seg>
       </tuv>
     </tu>
     <tu>
