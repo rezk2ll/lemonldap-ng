@@ -11,7 +11,7 @@ use Lemonldap::NG::Portal::_LibAccess;
 require SOAP::Lite;
 use base qw(Lemonldap::NG::Portal::_LibAccess);
 
-our $VERSION = '1.1.1';
+our $VERSION = '1.2.0';
 
 ## @method void startSoapServices()
 # Check the URI requested (PATH_INFO environment variable) and launch the
@@ -296,7 +296,15 @@ sub getMenuApplications {
     }
 
     $self->{sessionInfo} = $h;
-    return _buildSoapHash( { menu => $self->appslist() } );
+
+    # Build application list
+    my $appslist = $self->appslist();
+
+    # Close session
+    untie %$h;
+
+    # Return result
+    return _buildSoapHash( { menu => $appslist } );
 
 }
 
