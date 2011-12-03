@@ -56,7 +56,7 @@ Configure the virtual host like other <a href="../../documentation/1.1/configvho
 <pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:80&gt;
        <span class="kw1">ServerName</span> secure.example.com
 &nbsp;
-       <span class="co1"># Load Sympa Handler</span>
+       <span class="co1"># Load SecureToken Handler</span>
        PerlRequire __HANDLERDIR__/MyHandlerSecureToken.pm
        PerlHeaderParserHandler My::SecureToken
 &nbsp;
@@ -65,7 +65,7 @@ Configure the virtual host like other <a href="../../documentation/1.1/configvho
 &lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
 
 </div>
-<!-- SECTION "Virtual host in Apache" [516-932] -->
+<!-- SECTION "Virtual host in Apache" [516-938] -->
 <h3><a name="handler_parameters" id="handler_parameters">Handler parameters</a></h3>
 <div class="level3">
 
@@ -84,7 +84,9 @@ Go in Manager, <code>Default parameters</code> » <code>Advanced parameters</cod
 </li>
 <li class="level1"><div class="li"> <strong>Header name</strong>: name of the <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> header carrying the secure token.</div>
 </li>
+<li class="level1"><div class="li"> <strong>Allow requests in error</strong>: allow a request that has generated an error in token generation to be forwarded to the protected application without secure token (default: yes)</div>
+</li>
 </ul>
 
 </div>
-<!-- SECTION "Handler parameters" [933-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Handler parameters" [939-] --></div><!-- closes <div class="dokuwiki export">-->

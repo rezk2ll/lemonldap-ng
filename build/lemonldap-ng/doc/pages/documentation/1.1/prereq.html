@@ -33,11 +33,11 @@
 <p>
 
 To use LemonLDAP::NG, you have to run an Apache
-server compiled with mod-perl (version 1.3 or 2.x).
+server compiled with mod-perl
 </p>
 
 <p>
-<p><div class="notewarning">In most of cases, the version of Apache proposed with your Linux distribution match, but some distributions used an experimental version of mod_perl with Apache2 (mod_perl-1.99) which does not work with LemonLDAP::NG. With such distributions (like Debian-3.1), you have to use Apache-1.3 or to use a mod_perl backport (<a href="http://www.backports.org" class="urlextern" title="http://www.backports.org"  rel="nofollow">www.backports.org</a> package for Debian works fine).
+<p><div class="noteimportant">You need to use Apache 2 with mod_perl 2, even if some simple configuration can run under Apache 1.3
 </div></p>
 </p>
 
@@ -46,13 +46,11 @@ For Apache2, you can use both mpm-worker and mpm-prefork. Mpm-worker works faste
 </p>
 
 <p>
-You can use LemonLDAP::NG in an heterogeneous world: the authentication portal and the manager can work in any version of Apache 1.3 or more even if mod_perl is not compiled, with ModPerl::Registry or not… Only the handler
-need mod_perl. The different handlers can run on different servers with
-different versions of Apache/mod_perl.
+You can use LemonLDAP::NG in an heterogeneous world: the authentication portal and the manager can work in any version of Apache even if mod_perl is not compiled, with ModPerl::Registry or not… Only the handler need mod_perl 2.
 </p>
 
 </div>
-<!-- SECTION "Apache" [48-1134] -->
+<!-- SECTION "Apache" [48-740] -->
 <h2><a name="perl" id="perl">Perl</a></h2>
 <div class="level2">
 
@@ -63,7 +61,7 @@ different versions of Apache/mod_perl.
 </p>
 
 </div>
-<!-- SECTION "Perl" [1135-1348] -->
+<!-- SECTION "Perl" [741-954] -->
 <h3><a name="core" id="core">Core</a></h3>
 <div class="level3">
 <ul>
@@ -116,7 +114,7 @@ different versions of Apache/mod_perl.
 </ul>
 
 </div>
-<!-- SECTION "Core" [1349-1747] -->
+<!-- SECTION "Core" [955-1353] -->
 <h3><a name="saml2" id="saml2">SAML2</a></h3>
 <div class="level3">
 <ul>
@@ -127,7 +125,7 @@ different versions of Apache/mod_perl.
 </ul>
 
 </div>
-<!-- SECTION "SAML2" [1748-1817] -->
+<!-- SECTION "SAML2" [1354-1423] -->
 <h3><a name="cas_authentication_module" id="cas_authentication_module">CAS (authentication module)</a></h3>
 <div class="level3">
 <ul>
@@ -136,7 +134,7 @@ different versions of Apache/mod_perl.
 </ul>
 
 </div>
-<!-- SECTION "CAS (authentication module)" [1818-1915] -->
+<!-- SECTION "CAS (authentication module)" [1424-1521] -->
 <h3><a name="openid" id="openid">OpenID</a></h3>
 <div class="level3">
 <ul>
@@ -147,7 +145,7 @@ different versions of Apache/mod_perl.
 </ul>
 
 </div>
-<!-- SECTION "OpenID" [1916-1998] -->
+<!-- SECTION "OpenID" [1522-1604] -->
 <h3><a name="twitter" id="twitter">Twitter</a></h3>
 <div class="level3">
 <ul>
@@ -156,7 +154,7 @@ different versions of Apache/mod_perl.
 </ul>
 
 </div>
-<!-- SECTION "Twitter" [1999-2035] -->
+<!-- SECTION "Twitter" [1605-1641] -->
 <h3><a name="pod_unit_tests" id="pod_unit_tests">POD unit tests</a></h3>
 <div class="level3">
 <ul>
@@ -165,7 +163,7 @@ different versions of Apache/mod_perl.
 </ul>
 
 </div>
-<!-- SECTION "POD unit tests" [2036-2076] -->
+<!-- SECTION "POD unit tests" [1642-1682] -->
 <h3><a name="smtp_reset_password_by_mail" id="smtp_reset_password_by_mail">SMTP / Reset password by mail</a></h3>
 <div class="level3">
 <ul>
@@ -184,7 +182,7 @@ different versions of Apache/mod_perl.
 </ul>
 
 </div>
-<!-- SECTION "SMTP / Reset password by mail" [2077-2224] -->
+<!-- SECTION "SMTP / Reset password by mail" [1683-1830] -->
 <h2><a name="other" id="other">Other</a></h2>
 <div class="level2">
 <ul>
@@ -193,12 +191,12 @@ different versions of Apache/mod_perl.
 </ul>
 
 </div>
-<!-- SECTION "Other" [2225-2341] -->
+<!-- SECTION "Other" [1831-1947] -->
 <h2><a name="install_dependencies_on_your_system" id="install_dependencies_on_your_system">Install dependencies on your system</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Install dependencies on your system" [2342-2391] -->
+<!-- SECTION "Install dependencies on your system" [1948-1997] -->
 <h3><a name="apt-get" id="apt-get">APT-GET</a></h3>
 <div class="level3">
 <pre class="code">
@@ -206,7 +204,7 @@ apt-get install apache2 libapache2-mod-perl2 libapache-session-perl libnet-ldap-
 </pre>
 
 </div>
-<!-- SECTION "APT-GET" [2392-2948] -->
+<!-- SECTION "APT-GET" [1998-2554] -->
 <h3><a name="yum" id="yum">YUM</a></h3>
 <div class="level3">
 
@@ -231,4 +229,4 @@ yum install httpd mod_perl perl-Apache-Session perl-LDAP perl-XML-SAX perl-XML-N
 </pre>
 
 </div>
-<!-- SECTION "YUM" [2949-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "YUM" [2555-] --></div><!-- closes <div class="dokuwiki export">-->

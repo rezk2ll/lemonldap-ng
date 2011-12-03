@@ -332,4 +332,61 @@ Go in Manager, <code>General parameters</code> » <code>Advanced parameters</cod
 </ul>
 
 </div>
-<!-- SECTION "Configure security settings" [5905-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Configure security settings" [5905-6607] -->
+<h2><a name="fail2ban" id="fail2ban">Fail2ban</a></h2>
+<div class="level2">
+
+<p>
+For block brute force attack with fail2ban
+</p>
+
+<p>
+Edit /etc/fail2ban/jail.conf
+
+</p>
+<pre class="code">[lemonldap-ng]
+enabled = true
+port    = http,https
+filter  = lemonldap
+action   = iptables-multiport[name=lemonldap, port=&quot;http,https&quot;]
+logpath = /var/log/apache*/error*.log
+maxretry = 3
+</pre>
+
+<p>
+and edit /etc/fail2ban/filter.d/lemonldap.conf
+</p>
+<pre class="code">
+# Fail2Ban configuration file
+#
+# Author: Adrien Beudin
+#
+# $Revision: 2 $
+#
+
+[Definition]
+
+# Option:  failregex
+# Notes.:  regex to match the password failure messages in the logfile. The
+#          host must be matched by a group named &quot;host&quot;. The tag &quot;&lt;HOST&gt;&quot; can
+#          be used for standard IP/hostname matching and is only an alias for
+#          (?:::f{4,6}:)?(?P&lt;host&gt;[\w\-.^_]+)
+# Values:  TEXT
+#
+failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;\)
+            Lemonldap\:\:NG \: Bad password for .* \(&lt;HOST&gt;\)
+
+# Option:  ignoreregex
+# Notes.:  regex to ignore. If this regex matches, the line is ignored.
+# Values:  TEXT
+#
+ignoreregex =
+</pre>
+
+<p>
+Restart fail2ban
+
+</p>
+
+</div>
+<!-- SECTION "Fail2ban" [6608-] --></div><!-- closes <div class="dokuwiki export">-->
