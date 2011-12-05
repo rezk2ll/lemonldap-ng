@@ -586,22 +586,21 @@ function formateSelectAuth(id,value){
 	}
 	formateSelect(id,[
 		'Apache=Apache',
+		'Choice=Authentication choice',
 		'CAS=Central Authentication Service (CAS)',
 		'DBI=Database (DBI)',
-		'LA=Liberty Alliance',
 		'LDAP=LDAP',
 		'Multi=Multiple',
 		'Null=None',
 		'OpenID=OpenID',
 		'Proxy=Proxy',
+		'Radius=Radius',
 		'Remote=Remote',
 		'SAML=SAML v2',
+		'Slave=Slave',
 		'SSL=SSL',
 		'Twitter=Twitter',
-		'Yubikey=Yubikey',
-		'Slave=Slave',
-		'Radius=Radius',
-		'Choice=Authentication choice'
+		'Yubikey=Yubikey'
 		],value);
 }
 function userdbParams(id) {
@@ -648,8 +647,8 @@ function formateSelectUser(id,value){
 		'OpenID=OpenID',
 		'Proxy=Proxy',
 		'Remote=Remote',
-		'Slave=Slave',
-		'SAML=SAML v2'
+		'SAML=SAML v2',
+		'Slave=Slave'
 		],value);
 }
 function passworddbParams(id) {
