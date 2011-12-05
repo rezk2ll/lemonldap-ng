@@ -19,7 +19,7 @@ use Encode;            # Encode attribute values
 # Special comments for doxygen
 #inherits Lemonldap::NG::Common::Conf::SAML::Metadata protected service_metadata
 
-our $VERSION = '1.0.2';
+our $VERSION = '1.2.0';
 our $samlCache;
 our $initGlibDone;
 
@@ -71,6 +71,20 @@ BEGIN {
 # @return boolean result
 sub loadLasso {
     my $self = shift;
+
+    # Reload SAML cache if configuration number has changed
+    unless ( $samlCache->{cfgNum} == $self->{cfgNum} ) {
+        $self->lmLog( "Reset SAML configuration cache", 'debug' );
+        delete $samlCache->{_lassoServerDump};
+        delete $samlCache->{_spList};
+        delete $samlCache->{_idpList};
+
+        $samlCache->{cfgNum} = $self->{cfgNum};
+    }
+
+    $self->lmLog( "SAML cache configuration: " . $samlCache->{cfgNum},
+        'debug' );
+
     return 1 if ($initGlibDone);
 
     # Catch GLib Lasso messages (require Glib)
@@ -86,7 +100,7 @@ sub loadLasso {
     }
 
     unless (LASSO) {
-        $self->lmLog( "Module Lasso not loaded (see bellow)", 'error' );
+        $self->lmLog( "Module Lasso not loaded (see below)", 'error' );
         return 0;
     }
 
@@ -96,6 +110,7 @@ sub loadLasso {
     }
 
     $initGlibDone = 1;
+
     return 1;
 }
 
