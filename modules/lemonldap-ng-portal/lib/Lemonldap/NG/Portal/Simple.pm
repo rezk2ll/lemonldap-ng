@@ -617,7 +617,8 @@ sub setDefaultValues {
     $self->{twitterAuthnLevel} = 1
       unless defined $self->{twitterAuthnLevel};
     $self->{apacheAuthnLevel} = 4 unless defined $self->{apacheAuthnLevel};
-    $self->{nullAuthnLevel}   = 2 unless defined $self->{nullAuthnLevel};
+    $self->{nullAuthnLevel}   = 0 unless defined $self->{nullAuthnLevel};
+    $self->{radiusAuthnLevel} = 3 unless defined $self->{radiusAuthnLevel};
 
     # Other
     $self->{logoutServices} ||= {};

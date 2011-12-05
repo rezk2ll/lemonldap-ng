@@ -483,10 +483,11 @@ sub struct {
 
                 # Radius
                 radiusParams => {
-                    _nodes       => [ qw(radiusSecret radiusServer) ],
-                    _help        => 'authRadius',
-                    radiusSecret => 'text:/radiusSecret',
-                    radiusServer => 'text:/radiusServer',
+                    _nodes => [qw(radiusAuthnLevel radiusSecret radiusServer)],
+                    _help  => 'authRadius',
+                    radiusAuthnLevel => 'int:/radiusAuthnLevel',
+                    radiusSecret     => 'text:/radiusSecret',
+                    radiusServer     => 'text:/radiusServer',
                 },
 
                 # Remote
@@ -1733,8 +1734,9 @@ sub testStruct {
         },
 
         # Radius
-        radiusSecret => $testNotDefined,
-        radiusServer => $testNotDefined,
+        radiusAuthnLevel => $integer,
+        radiusSecret     => $testNotDefined,
+        radiusServer     => $testNotDefined,
 
         # Remote
         remotePortal        => $testNotDefined,
@@ -1897,6 +1899,7 @@ sub defaultConf {
         portalDisplayResetPassword  => '1',
         portalAntiFrame             => '1',
         protection                  => 'none',
+        radiusAuthnLevel            => '3',
         remoteGlobalStorage => 'Lemonldap::NG::Common::Apache::Session::SOAP',
         securedCookie       => '0',
         secureTokenMemcachedServers => '127.0.0.1:11211',
