@@ -10,7 +10,7 @@ use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::_CAS;
 use base qw(Lemonldap::NG::Portal::_CAS Lemonldap::NG::Portal::_LibAccess);
 
-our $VERSION = '1.1.2';
+our $VERSION = '1.2.0';
 
 ## @method void issuerDBInit()
 # Nothing to do
@@ -27,19 +27,16 @@ sub issuerDBInit {
 sub issuerForUnAuthUser {
     my $self = shift;
 
-    my $portal = $self->{portal};
-    $portal =~ s/\/$//;
-
     # CAS URLs
-    my $cas_login_url           = $portal . '/cas/login';
-    my $cas_logout_url          = $portal . '/cas/logout';
-    my $cas_validate_url        = $portal . '/cas/validate';
-    my $cas_serviceValidate_url = $portal . '/cas/serviceValidate';
-    my $cas_proxyValidate_url   = $portal . '/cas/proxyValidate';
-    my $cas_proxy_url           = $portal . '/cas/proxy';
+    my $cas_login_url           = '/cas/login';
+    my $cas_logout_url          = '/cas/logout';
+    my $cas_validate_url        = '/cas/validate';
+    my $cas_serviceValidate_url = '/cas/serviceValidate';
+    my $cas_proxyValidate_url   = '/cas/proxyValidate';
+    my $cas_proxy_url           = '/cas/proxy';
 
     # Called URL
-    my $url = $self->url();
+    my $url = $self->url( -absolute => 1 );
 
     # 1. LOGIN
     if ( $url =~ /\Q$cas_login_url\E/io ) {
@@ -489,19 +486,16 @@ sub issuerForUnAuthUser {
 sub issuerForAuthUser {
     my $self = shift;
 
-    my $portal = $self->{portal};
-    $portal =~ s/\/$//;
-
     # CAS URLs
-    my $cas_login_url           = $portal . '/cas/login';
-    my $cas_logout_url          = $portal . '/cas/logout';
-    my $cas_validate_url        = $portal . '/cas/validate';
-    my $cas_serviceValidate_url = $portal . '/cas/serviceValidate';
-    my $cas_proxyValidate_url   = $portal . '/cas/proxyValidate';
-    my $cas_proxy_url           = $portal . '/cas/proxy';
+    my $cas_login_url           = '/cas/login';
+    my $cas_logout_url          = '/cas/logout';
+    my $cas_validate_url        = '/cas/validate';
+    my $cas_serviceValidate_url = '/cas/serviceValidate';
+    my $cas_proxyValidate_url   = '/cas/proxyValidate';
+    my $cas_proxy_url           = '/cas/proxy';
 
     # Called URL
-    my $url = $self->url();
+    my $url = $self->url( -absolute => 1 );
 
     # Session ID
     my $session_id = $self->{sessionInfo}->{_session_id} || $self->{id};
