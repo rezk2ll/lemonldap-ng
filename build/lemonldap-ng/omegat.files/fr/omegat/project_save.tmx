@@ -70,6 +70,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>#google_apps_control_panel</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111207T052113Z" changeid="xavier">
+        <seg>#google_apps_control_panel</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>#h</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -338,6 +346,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../../../media/documentation/googleapps-manager-application.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111207T051652Z" changeid="xavier">
+        <seg>../../../../media/documentation/googleapps-manager-application.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../../../media/documentation/googleapps-menu.png</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T182814Z" changeid="xavier">
@@ -426,10 +442,26 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../../documentation/1.0/logoutforward.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111207T052224Z" changeid="xavier">
+        <seg>../../../documentation/1.0/logoutforward.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../../documentation/1.0/passwordstore.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T112718Z" changeid="xavier">
         <seg>../../../documentation/1.0/passwordstore.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../documentation/1.0/portalmenu.html#categories_and_applications</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111207T051545Z" changeid="xavier">
+        <seg>../../../documentation/1.0/portalmenu.html#categories_and_applications</seg>
       </tuv>
     </tu>
     <tu>
@@ -2950,6 +2982,14 @@
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T183349Z" changeid="xavier">
         <seg>/_detail/documentation/googleapps-export-priv-key.png?id=documentation%3A1.0%3Aapplications%3Agoogleapps</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/documentation/googleapps-manager-application.png?id=documentation%3A1.0%3Aapplications%3Agoogleapps</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111207T051647Z" changeid="xavier">
+        <seg>/_detail/documentation/googleapps-manager-application.png?id=documentation%3A1.0%3Aapplications%3Agoogleapps</seg>
       </tuv>
     </tu>
     <tu>
@@ -5624,6 +5664,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Address&lt;/s0&gt;: set one of Google Apps &lt;a1&gt;URL&lt;/a1&gt; (all Google Apps product a distinct &lt;a2&gt;URL&lt;/a2&gt;), for example &lt;a3&gt;http://www.google.com/calendar/hosted/mydomain.org/render&lt;/a3&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111207T051936Z" changeid="xavier">
+        <seg>&lt;s0&gt;Address&lt;/s0&gt; : indiquer une des &lt;a1&gt;URL&lt;/a1&gt; de Google Apps (chaque application Google Apps produit une &lt;a2&gt;URL&lt;/a2&gt; distincte), par exemple &lt;a3&gt;http://www.google.com/calendar/hosted/mydomain.org/render&lt;/a3&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Application logout&lt;/s0&gt;: the request is forwarded to application but &lt;a1&gt;SSO&lt;/a1&gt; session is not closed</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -5804,6 +5852,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;s0&gt;Nom affiché (display name)&lt;/s0&gt; : peut être affiché par le fournisseur d'identité (IDP), this is often your society name</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Display&lt;/s0&gt;: As Google Apps is not a protected application, set to &lt;c1&gt;On&lt;/c1&gt; to always display it</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111207T052021Z" changeid="xavier">
+        <seg>&lt;s0&gt;Display&lt;/s0&gt; : comme Google Apps n'est pas une application protégée, indiquer &lt;c1&gt;On&lt;/c1&gt; pour toujours l'afficher</seg>
       </tuv>
     </tu>
     <tu>
@@ -6904,6 +6960,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Application menu</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111207T051543Z" changeid="xavier">
+        <seg>Menu application</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Applications</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -7292,6 +7356,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T194935Z" changeid="xavier">
         <seg>Changer &lt;s0&gt;mydomain.org&lt;/s0&gt; (dans &lt;c1&gt;AssertionConsumerService&lt;/c1&gt; markup, parameter &lt;c2&gt;Location&lt;/c2&gt;) en votre domaine Google Apps.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Change &lt;s0&gt;mydomain.org&lt;/s0&gt; into your Google Apps domain</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111207T052055Z" changeid="xavier">
+        <seg>Mettre &lt;s0&gt;mydomain.org&lt;/s0&gt; dans le domaine Google Apps</seg>
       </tuv>
     </tu>
     <tu>
@@ -8392,10 +8464,34 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Google Apps does not support Single Logout (SLO).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111207T052110Z" changeid="xavier">
+        <seg>Google Apps ne supporte pas le Single Logout (SLO).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Google Apps has a configuration parameter to redirect user on a specific &lt;a0&gt;URL&lt;/a0&gt; after Google Apps logout (see &lt;a1&gt;Google Apps control panel&lt;/a1&gt;).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111207T052221Z" changeid="xavier">
+        <seg>Google Apps ne dispose pas de paramètre de configuration pour rediriger les utilisateurs vers une &lt;a0&gt;URL&lt;/a0&gt; spécifique après la déconnexion Google Apps (voir &lt;a1&gt;Google Apps control panel&lt;/a1&gt;).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Google+</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T173224Z" changeid="xavier">
         <seg>Google+</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>GoogleApps =&gt; http://www.google.com/calendar/hosted/mydomain.org/logout</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111207T052404Z" changeid="xavier">
+        <seg>GoogleApps =&gt; http://www.google.com/calendar/hosted/mydomain.org/logout</seg>
       </tuv>
     </tu>
     <tu>
@@ -11532,6 +11628,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>To manage the other way (&lt;a0&gt;LL::NG&lt;/a0&gt; → Google Apps), you can add a dedicated &lt;a1&gt;logout forward rule&lt;/a1&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111207T052401Z" changeid="xavier">
+        <seg>Pour gérer l'autre voie (&lt;a0&gt;LL::NG&lt;/a0&gt; → Google Apps), ajouter une &lt;a1&gt;règle de redirection après déconnexion&lt;/a1&gt;:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>To update translations, ask to &lt;a0&gt;lemonldap-ng-dev@ow2.org&lt;/a0&gt; to update your files.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -12016,6 +12120,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can add a link in &lt;a0&gt;application menu&lt;/a0&gt; to display Google Apps to users.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111207T051719Z" changeid="xavier">
+        <seg>Il est possible d'ajouter un lien dans le &lt;a0&gt;menu application&lt;/a0&gt; pour afficher Google Apps.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You can also change the host and port with options LDAPHOST and LDAPPORT.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -12204,6 +12316,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Certains pré-requis sont nécessaire :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You need to adapt some parameters:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111207T051745Z" changeid="xavier">
+        <seg>Certains paramètres doivent être adaptés :</seg>
       </tuv>
     </tu>
     <tu>
@@ -12632,6 +12752,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.0:applications:googleapps ↵</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111207T052119Z" changeid="xavier">
+        <seg>documentation:1.0:applications:googleapps ↵</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.0:authapache</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T101144Z" changeid="xavier">
@@ -12704,6 +12832,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.0:logoutforward</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111207T052227Z" changeid="xavier">
+        <seg>documentation:1.0:logoutforward</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.0:memcachedsessionbackend</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -12724,6 +12860,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>documentation:1.0:portal</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.0:portalmenu</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111207T051546Z" changeid="xavier">
+        <seg>documentation:1.0:portalmenu</seg>
       </tuv>
     </tu>
     <tu>
@@ -12788,6 +12932,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T183350Z" changeid="xavier">
         <seg>documentation:googleapps-export-priv-key.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:googleapps-manager-application.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111207T051648Z" changeid="xavier">
+        <seg>documentation:googleapps-manager-application.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -13772,6 +13924,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T182427Z" changeid="xavier">
         <seg>http://www.google.com/apps/intl/en/business/index.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.google.com/calendar/hosted/mydomain.org/render</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111207T051747Z" changeid="xavier">
+        <seg>http://www.google.com/calendar/hosted/mydomain.org/render</seg>
       </tuv>
     </tu>
     <tu>
