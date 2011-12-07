@@ -15,6 +15,7 @@ use HTTP::Request;     # SOAP call
 use POSIX;             # Convert SAML2 date into timestamp
 use Time::Local;       # Convert SAML2 date into timestamp
 use Encode;            # Encode attribute values
+use URI;               # Get metadata URL path
 
 # Special comments for doxygen
 #inherits Lemonldap::NG::Common::Conf::SAML::Metadata protected service_metadata
@@ -1472,10 +1473,12 @@ sub setIdentityFromDump {
 # Replace #PORTAL# macro
 # @param key Metadata configuration key
 # @param index field index containing URL
+# @param full Return full URL instead of path
 # @return url
 sub getMetaDataURL {
-    my ( $self, $key, $index ) = splice @_;
+    my ( $self, $key, $index, $full ) = splice @_;
     $index = 3 unless defined $index;
+    $full  = 0 unless defined $full;
 
     return unless defined $self->{$key};
 
@@ -1488,8 +1491,12 @@ sub getMetaDataURL {
     # Replace #PORTAL# macro
     $url =~ s/#PORTAL#/$portal/g;
 
-    # Return URL
-    return $url;
+    # Return Full URL
+    return $url if $full;
+
+    # Return only path
+    my $uri = URI->new($url);
+    return $uri->path();
 }
 
 ## @method boolean processLogoutResponseMsg(Lasso::Logout logout, string response)

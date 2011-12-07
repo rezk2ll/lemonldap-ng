@@ -36,6 +36,7 @@ WriteMakefile(
         'XML::LibXML'            => 0,
         'XML::LibXSLT'           => 0,
         'Clone'                  => 0,
+        'URI'                    => 0,
     },
     (
         $] >= 5.005

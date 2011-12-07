@@ -11,7 +11,7 @@ use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::_SAML;
 our @ISA = qw(Lemonldap::NG::Portal::_SAML);
 
-our $VERSION = '1.1.0';
+our $VERSION = '1.2.0';
 
 ## @method void issuerDBInit()
 # Load and check SAML configuration
@@ -86,7 +86,7 @@ sub issuerForUnAuthUser {
 
     # Get HTTP request informations to know
     # if we are receving SAML request or response
-    my $url            = $self->url();
+    my $url            = $self->url( -absolute => 1 );
     my $request_method = $self->request_method();
     my $content_type   = $self->content_type();
 
@@ -1109,7 +1109,7 @@ sub issuerForAuthUser {
 
     # Get HTTP request informations to know
     # if we are receving SAML request or response
-    my $url            = $self->url();
+    my $url            = $self->url( -absolute => 1 );
     my $request_method = $self->request_method();
     my $content_type   = $self->content_type();
 
@@ -1401,7 +1401,7 @@ sub issuerForAuthUser {
 
             # Manage Entity NameID format
             if ( $nameIDFormat eq $self->getNameIDFormat("entity") ) {
-                $nameIDContent = $self->getMetaDataURL( "samlEntityID", 0 );
+                $nameIDContent = $self->getMetaDataURL( "samlEntityID", 0, 1 );
             }
 
             if ( $login->nameIdentifier ) {
@@ -1692,7 +1692,7 @@ sub issuerForAuthUser {
             if (    $self->{samlCommonDomainCookieActivation}
                 and $self->{samlCommonDomainCookieWriter} )
             {
-                my $cdc_idp = $self->getMetaDataURL( "samlEntityID", 0 );
+                my $cdc_idp = $self->getMetaDataURL( "samlEntityID", 0, 1 );
 
                 $self->lmLog(
                     "Will register IDP $cdc_idp in Common Domain Cookie",

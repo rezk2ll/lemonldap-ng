@@ -11,7 +11,7 @@ use Lemonldap::NG::Portal::Simple;
 use Lemonldap::NG::Portal::_SAML;    #inherits
 use Lemonldap::NG::Common::Conf::SAML::Metadata;
 
-our $VERSION = '1.0.0';
+our $VERSION = '1.2.0';
 our @ISA     = qw(Lemonldap::NG::Portal::_SAML);
 
 ## @apmethod int authInit()
@@ -38,7 +38,7 @@ sub extractFormInfo {
 
     # 1. Get HTTP request informations to know
     # if we are receving SAML request or response
-    my $url            = $self->url();
+    my $url            = $self->url( -absolute => 1 );
     my $request_method = $self->request_method();
     my $content_type   = $self->content_type();
 
@@ -190,7 +190,7 @@ sub extractFormInfo {
             if (
                 $checkConditions
                 and !$self->validateConditions(
-                    $assertion, $self->getMetaDataURL( "samlEntityID", 0 )
+                    $assertion, $self->getMetaDataURL( "samlEntityID", 0, 1 )
                 )
               )
             {
@@ -1410,7 +1410,7 @@ sub authLogout {
 sub authForce {
     my $self = shift;
 
-    my $url = $self->url();
+    my $url = $self->url( -asbolute => 1 );
 
     my $saml_acs_art_url = $self->getMetaDataURL(
         "samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact");
