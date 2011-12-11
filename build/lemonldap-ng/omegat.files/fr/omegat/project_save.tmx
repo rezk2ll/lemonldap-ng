@@ -134,6 +134,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>#presentation</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074144Z" changeid="xavier">
+        <seg>#presentation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>#q</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -338,6 +346,22 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../../../media/applications/liferay_logo.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111210T073652Z" changeid="xavier">
+        <seg>../../../../media/applications/liferay_logo.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../../media/applications/mediawiki_logo.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074439Z" changeid="xavier">
+        <seg>../../../../media/applications/mediawiki_logo.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../../../media/documentation/googleapps-export-priv-key.png</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T183351Z" changeid="xavier">
@@ -374,6 +398,62 @@
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T182858Z" changeid="xavier">
         <seg>../../../../media/documentation/googleapps-ssoconfig.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../../media/documentation/liferay_1.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T073634Z" changeid="xavier">
+        <seg>../../../../media/documentation/liferay_1.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../../media/documentation/liferay_2.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T073654Z" changeid="xavier">
+        <seg>../../../../media/documentation/liferay_2.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../../media/documentation/liferay_3.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T073710Z" changeid="xavier">
+        <seg>../../../../media/documentation/liferay_3.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../../media/documentation/liferay_4.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T073745Z" changeid="xavier">
+        <seg>../../../../media/documentation/liferay_4.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../../media/documentation/liferay_5.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T073755Z" changeid="xavier">
+        <seg>../../../../media/documentation/liferay_5.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../../media/documentation/liferay_6.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074023Z" changeid="xavier">
+        <seg>../../../../media/documentation/liferay_6.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../../media/documentation/liferay_7.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074207Z" changeid="xavier">
+        <seg>../../../../media/documentation/liferay_7.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -2978,6 +3058,22 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/applications/liferay_logo.png?id=documentation%3A1.0%3Aapplications%3Aliferay</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111210T073650Z" changeid="xavier">
+        <seg>/_detail/applications/liferay_logo.png?id=documentation%3A1.0%3Aapplications%3Aliferay</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/applications/mediawiki_logo.png?id=documentation%3A1.0%3Aapplications%3Amediawiki</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074439Z" changeid="xavier">
+        <seg>/_detail/applications/mediawiki_logo.png?id=documentation%3A1.0%3Aapplications%3Amediawiki</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>/_detail/documentation/googleapps-export-priv-key.png?id=documentation%3A1.0%3Aapplications%3Agoogleapps</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T183349Z" changeid="xavier">
@@ -3038,6 +3134,62 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>/_detail/documentation/lemonldapng-sso.png?id=documentation%3Apresentation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/documentation/liferay_1.png?id=documentation%3A1.0%3Aapplications%3Aliferay</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T073632Z" changeid="xavier">
+        <seg>/_detail/documentation/liferay_1.png?id=documentation%3A1.0%3Aapplications%3Aliferay</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/documentation/liferay_2.png?id=documentation%3A1.0%3Aapplications%3Aliferay</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T073652Z" changeid="xavier">
+        <seg>/_detail/documentation/liferay_2.png?id=documentation%3A1.0%3Aapplications%3Aliferay</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/documentation/liferay_3.png?id=documentation%3A1.0%3Aapplications%3Aliferay</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T073708Z" changeid="xavier">
+        <seg>/_detail/documentation/liferay_3.png?id=documentation%3A1.0%3Aapplications%3Aliferay</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/documentation/liferay_4.png?id=documentation%3A1.0%3Aapplications%3Aliferay</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T073743Z" changeid="xavier">
+        <seg>/_detail/documentation/liferay_4.png?id=documentation%3A1.0%3Aapplications%3Aliferay</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/documentation/liferay_5.png?id=documentation%3A1.0%3Aapplications%3Aliferay</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T073753Z" changeid="xavier">
+        <seg>/_detail/documentation/liferay_5.png?id=documentation%3A1.0%3Aapplications%3Aliferay</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/documentation/liferay_6.png?id=documentation%3A1.0%3Aapplications%3Aliferay</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074021Z" changeid="xavier">
+        <seg>/_detail/documentation/liferay_6.png?id=documentation%3A1.0%3Aapplications%3Aliferay</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/documentation/liferay_7.png?id=documentation%3A1.0%3Aapplications%3Aliferay</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074205Z" changeid="xavier">
+        <seg>/_detail/documentation/liferay_7.png?id=documentation%3A1.0%3Aapplications%3Aliferay</seg>
       </tuv>
     </tu>
     <tu>
@@ -3618,6 +3770,22 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;&lt;s1&gt;session_start&lt;/s1&gt;&lt;/a0&gt;&lt;s2&gt;(&lt;/s2&gt;&lt;s3&gt;)&lt;/s3&gt;&lt;s4&gt;;&lt;/s4&gt;
+ 
+&lt;s5&gt;$_SERVER&lt;/s5&gt;&lt;s6&gt;[&lt;/s6&gt;&lt;s7&gt;'PHP_AUTH_USER'&lt;/s7&gt;&lt;s8&gt;]&lt;/s8&gt; &lt;s9&gt;=&lt;/s9&gt; &lt;s10&gt;$_SERVER&lt;/s10&gt;&lt;s11&gt;[&lt;/s11&gt;&lt;s12&gt;'REMOTE_USER'&lt;/s12&gt;&lt;s13&gt;]&lt;/s13&gt;&lt;s14&gt;;&lt;/s14&gt;
+ 
+&lt;s15&gt;if&lt;/s15&gt; &lt;s16&gt;(&lt;/s16&gt;&lt;s17&gt;(&lt;/s17&gt;&lt;s18&gt;!&lt;/s18&gt;&lt;a19&gt;&lt;s20&gt;empty&lt;/s20&gt;&lt;/a19&gt;&lt;s21&gt;(&lt;/s21&gt;&lt;s22&gt;$_SERVER&lt;/s22&gt;&lt;s23&gt;[&lt;/s23&gt;&lt;s24&gt;'PHP_AUTH_USER'&lt;/s24&gt;&lt;s25&gt;]&lt;/s25&gt;&lt;s26&gt;)&lt;/s26&gt; &lt;s27&gt;&amp;&amp;&lt;/s27&gt; &lt;s28&gt;!&lt;/s28&gt;&lt;a29&gt;&lt;s30&gt;empty&lt;/s30&gt;&lt;/a29&gt;&lt;s31&gt;(&lt;/s31&gt;&lt;s32&gt;$_SERVER&lt;/s32&gt;&lt;s33&gt;[&lt;/s33&gt;&lt;s34&gt;'REMOTE_USER'&lt;/s34&gt;&lt;s35&gt;]&lt;/s35&gt;&lt;s36&gt;)&lt;/s36&gt;&lt;s37&gt;)&lt;/s37&gt; &lt;s38&gt;||&lt;/s38&gt; &lt;s39&gt;$_COOKIE&lt;/s39&gt;&lt;s40&gt;[&lt;/s40&gt;&lt;s41&gt;$wgDBserver&lt;/s41&gt; &lt;s42&gt;.&lt;/s42&gt; &lt;s43&gt;'UserID'&lt;/s43&gt;&lt;s44&gt;]&lt;/s44&gt;&lt;s45&gt;)&lt;/s45&gt; &lt;s46&gt;{&lt;/s46&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074919Z" changeid="xavier">
+        <seg>&lt;a0&gt;&lt;s1&gt;session_start&lt;/s1&gt;&lt;/a0&gt;&lt;s2&gt;(&lt;/s2&gt;&lt;s3&gt;)&lt;/s3&gt;&lt;s4&gt;;&lt;/s4&gt;
+ 
+&lt;s5&gt;$_SERVER&lt;/s5&gt;&lt;s6&gt;[&lt;/s6&gt;&lt;s7&gt;'PHP_AUTH_USER'&lt;/s7&gt;&lt;s8&gt;]&lt;/s8&gt; &lt;s9&gt;=&lt;/s9&gt; &lt;s10&gt;$_SERVER&lt;/s10&gt;&lt;s11&gt;[&lt;/s11&gt;&lt;s12&gt;'REMOTE_USER'&lt;/s12&gt;&lt;s13&gt;]&lt;/s13&gt;&lt;s14&gt;;&lt;/s14&gt;
+ 
+&lt;s15&gt;if&lt;/s15&gt; &lt;s16&gt;(&lt;/s16&gt;&lt;s17&gt;(&lt;/s17&gt;&lt;s18&gt;!&lt;/s18&gt;&lt;a19&gt;&lt;s20&gt;empty&lt;/s20&gt;&lt;/a19&gt;&lt;s21&gt;(&lt;/s21&gt;&lt;s22&gt;$_SERVER&lt;/s22&gt;&lt;s23&gt;[&lt;/s23&gt;&lt;s24&gt;'PHP_AUTH_USER'&lt;/s24&gt;&lt;s25&gt;]&lt;/s25&gt;&lt;s26&gt;)&lt;/s26&gt; &lt;s27&gt;&amp;&amp;&lt;/s27&gt; &lt;s28&gt;!&lt;/s28&gt;&lt;a29&gt;&lt;s30&gt;empty&lt;/s30&gt;&lt;/a29&gt;&lt;s31&gt;(&lt;/s31&gt;&lt;s32&gt;$_SERVER&lt;/s32&gt;&lt;s33&gt;[&lt;/s33&gt;&lt;s34&gt;'REMOTE_USER'&lt;/s34&gt;&lt;s35&gt;]&lt;/s35&gt;&lt;s36&gt;)&lt;/s36&gt;&lt;s37&gt;)&lt;/s37&gt; &lt;s38&gt;||&lt;/s38&gt; &lt;s39&gt;$_COOKIE&lt;/s39&gt;&lt;s40&gt;[&lt;/s40&gt;&lt;s41&gt;$wgDBserver&lt;/s41&gt; &lt;s42&gt;.&lt;/s42&gt; &lt;s43&gt;'UserID'&lt;/s43&gt;&lt;s44&gt;]&lt;/s44&gt;&lt;s45&gt;)&lt;/s45&gt; &lt;s46&gt;{&lt;/s46&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;A&lt;/a0&gt; &lt;a1&gt;B&lt;/a1&gt; &lt;a2&gt;C&lt;/a2&gt; &lt;a3&gt;D&lt;/a3&gt; &lt;a4&gt;E&lt;/a4&gt; &lt;a5&gt;F&lt;/a5&gt; &lt;a6&gt;G&lt;/a6&gt; &lt;a7&gt;H&lt;/a7&gt; &lt;a8&gt;I&lt;/a8&gt; J K &lt;a9&gt;L&lt;/a9&gt; &lt;a10&gt;M&lt;/a10&gt; &lt;a11&gt;N&lt;/a11&gt; &lt;a12&gt;O&lt;/a12&gt; &lt;a13&gt;P&lt;/a13&gt; &lt;a14&gt;Q&lt;/a14&gt; &lt;a15&gt;R&lt;/a15&gt; &lt;a16&gt;S&lt;/a16&gt; &lt;a17&gt;T&lt;/a17&gt; &lt;a18&gt;U&lt;/a18&gt; V &lt;a19&gt;W&lt;/a19&gt; X Y &lt;a20&gt;Z&lt;/a20&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -4050,10 +4218,26 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Liferay&lt;/a0&gt; is an enterprise portal.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111210T073711Z" changeid="xavier">
+        <seg>&lt;a0&gt;Liferay&lt;/a0&gt; est un portail d'entreprise.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;May close #263&lt;/a0&gt; by guimard (2010/12/09 17:16)</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;a0&gt;May close #263&lt;/a0&gt; by guimard (2010/12/09 17:16)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;MediaWiki&lt;/a0&gt; is a wiki software, used by the well known &lt;a1&gt;Wikipedia&lt;/a1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074506Z" changeid="xavier">
+        <seg>&lt;a0&gt;MediaWiki&lt;/a0&gt; est un logiciel wiki utilisé par le très connu &lt;a1&gt;Wikipedia&lt;/a1&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -5880,6 +6064,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Enabled&lt;/s0&gt;: Yes</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074141Z" changeid="xavier">
+        <seg>&lt;s0&gt;Enabled&lt;/s0&gt;: Yes</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;External databases&lt;/s0&gt;: not managed by LemonLDAP::NG, for example user database</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -5928,10 +6120,26 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;How do users authenticate?&lt;/s0&gt;: by login</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T073901Z" changeid="xavier">
+        <seg>&lt;s0&gt;How do users authenticate?&lt;/s0&gt;: by login</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;IDP resolution cookie name&lt;/s0&gt;: by default, it's the &lt;a1&gt;LL::NG&lt;/a1&gt; cookie name suffixed by &lt;c2&gt;idp&lt;/c2&gt;, for example: &lt;c3&gt;lemonldapidp&lt;/c3&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;s0&gt;Nom du cookie de résolution de l'IDP&lt;/s0&gt;: par défaut, c'est le nom du cookie &lt;a1&gt;LL::NG&lt;/a1&gt; auquel est adjoint &lt;c2&gt;idp&lt;/c2&gt;, par exemple: &lt;c3&gt;lemonldapidp&lt;/c3&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Import from &lt;a1&gt;LDAP&lt;/a1&gt;&lt;/s0&gt;: Yes (see &lt;a2&gt;presentation&lt;/a2&gt;)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074202Z" changeid="xavier">
+        <seg>&lt;s0&gt;Import from &lt;a1&gt;LDAP&lt;/a1&gt;&lt;/s0&gt;: Yes (voir &lt;a2&gt;présentation&lt;/a2&gt;)</seg>
       </tuv>
     </tu>
     <tu>
@@ -6140,6 +6348,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;s0&gt;Undefined&lt;/s0&gt;: le format de NameID par défaut est utilisé</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;User Header&lt;/s0&gt;: Auth-User (case sensitive)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074204Z" changeid="xavier">
+        <seg>&lt;s0&gt;User Header&lt;/s0&gt;: Auth-User (case sensitive)</seg>
       </tuv>
     </tu>
     <tu>
@@ -6404,6 +6620,26 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s1&gt;ServerName&lt;/s1&gt; liferay.example.com
+ </seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074251Z" changeid="xavier">
+        <seg>&lt;s1&gt;ServerName&lt;/s1&gt; liferay.example.com
+ </seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s1&gt;ServerName&lt;/s1&gt; mediawiki.example.com
+ </seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074952Z" changeid="xavier">
+        <seg>&lt;s1&gt;ServerName&lt;/s1&gt; mediawiki.example.com
+ </seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s1&gt;SetHandler&lt;/s1&gt; perl-&lt;s2&gt;script&lt;/s2&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -6496,6 +6732,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s47&gt;require_once&lt;/s47&gt;&lt;s48&gt;(&lt;/s48&gt;&lt;s49&gt;&quot;&lt;s50&gt;$IP&lt;/s50&gt;/extensions/HttpAuthPlugin.php&quot;&lt;/s49&gt;&lt;s51&gt;)&lt;/s51&gt;&lt;s52&gt;;&lt;/s52&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074922Z" changeid="xavier">
+        <seg>&lt;s47&gt;require_once&lt;/s47&gt;&lt;s48&gt;(&lt;/s48&gt;&lt;s49&gt;&quot;&lt;s50&gt;$IP&lt;/s50&gt;/extensions/HttpAuthPlugin.php&quot;&lt;/s49&gt;&lt;s51&gt;)&lt;/s51&gt;&lt;s52&gt;;&lt;/s52&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s4&gt;DirectoryIndex&lt;/s4&gt; index.php
  </seg>
       </tuv>
@@ -6520,6 +6764,24 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;s4&gt;require&lt;/s4&gt; Lemonldap::NG::Portal::Menu;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s53&gt;$wgAuth&lt;/s53&gt; &lt;s54&gt;=&lt;/s54&gt; &lt;s55&gt;new&lt;/s55&gt; HttpAuthPlugin&lt;s56&gt;(&lt;/s56&gt;&lt;s57&gt;)&lt;/s57&gt;&lt;s58&gt;;&lt;/s58&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074922Z" changeid="xavier">
+        <seg>&lt;s53&gt;$wgAuth&lt;/s53&gt; &lt;s54&gt;=&lt;/s54&gt; &lt;s55&gt;new&lt;/s55&gt; HttpAuthPlugin&lt;s56&gt;(&lt;/s56&gt;&lt;s57&gt;)&lt;/s57&gt;&lt;s58&gt;;&lt;/s58&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s59&gt;# For MediaWiki &lt; 1.13
+&lt;/s59&gt;        &lt;s60&gt;$wgHooks&lt;/s60&gt;&lt;s61&gt;[&lt;/s61&gt;&lt;s62&gt;'AutoAuthenticate'&lt;/s62&gt;&lt;s63&gt;]&lt;/s63&gt;&lt;s64&gt;[&lt;/s64&gt;&lt;s65&gt;]&lt;/s65&gt; &lt;s66&gt;=&lt;/s66&gt; &lt;a67&gt;&lt;s68&gt;array&lt;/s68&gt;&lt;/a67&gt;&lt;s69&gt;(&lt;/s69&gt;&lt;s70&gt;$wgAuth&lt;/s70&gt;&lt;s71&gt;,&lt;/s71&gt;&lt;s72&gt;'autoAuthenticate'&lt;/s72&gt;&lt;s73&gt;)&lt;/s73&gt;&lt;s74&gt;;&lt;/s74&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074925Z" changeid="xavier">
+        <seg>&lt;s59&gt;# For MediaWiki &lt; 1.13
+&lt;/s59&gt;        &lt;s60&gt;$wgHooks&lt;/s60&gt;&lt;s61&gt;[&lt;/s61&gt;&lt;s62&gt;'AutoAuthenticate'&lt;/s62&gt;&lt;s63&gt;]&lt;/s63&gt;&lt;s64&gt;[&lt;/s64&gt;&lt;s65&gt;]&lt;/s65&gt; &lt;s66&gt;=&lt;/s66&gt; &lt;a67&gt;&lt;s68&gt;array&lt;/s68&gt;&lt;/a67&gt;&lt;s69&gt;(&lt;/s69&gt;&lt;s70&gt;$wgAuth&lt;/s70&gt;&lt;s71&gt;,&lt;/s71&gt;&lt;s72&gt;'autoAuthenticate'&lt;/s72&gt;&lt;s73&gt;)&lt;/s73&gt;&lt;s74&gt;;&lt;/s74&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -6554,6 +6816,18 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       <tuv lang="FR-FR">
         <seg>&lt;s6&gt;require&lt;/s6&gt; SOAP::Lite;
 &lt;/Perl&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s75&gt;# For MediaWiki &gt;= 1.13
+&lt;/s75&gt;        &lt;s76&gt;#$wgHooks['UserLoadFromSession'][] = array($wgAuth,'autoAuthenticate');
+&lt;/s76&gt;&lt;s77&gt;}&lt;/s77&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074926Z" changeid="xavier">
+        <seg>&lt;s75&gt;# For MediaWiki &gt;= 1.13
+&lt;/s75&gt;        &lt;s76&gt;#$wgHooks['UserLoadFromSession'][] = array($wgAuth,'autoAuthenticate');
+&lt;/s76&gt;&lt;s77&gt;}&lt;/s77&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -6700,6 +6974,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Les valeurs des règles d'accès peuvent être :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Access to Liferay (first time):</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T073631Z" changeid="xavier">
+        <seg>Accès à Liferay (première connexion):</seg>
       </tuv>
     </tu>
     <tu>
@@ -7152,6 +7434,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Automatic REMOTE_USER</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074626Z" changeid="xavier">
+        <seg>Automatic REMOTE_USER</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Available bindings are:</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -7284,6 +7574,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Par défautBy, le module de session principal est utilisé pour stocker les données temporaires &lt;a0&gt;SAML&lt;/a0&gt; (tel les états de relais), mais les sessions &lt;a1&gt;SAML&lt;/a1&gt; doivent disposer d'un module compatible avec les &lt;a2&gt;fonctionnalités de restrictions des sessions&lt;/a2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>By hand in Liferay administration screens</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111210T073859Z" changeid="xavier">
+        <seg>À la main dans les écrans d'administration de Liferay</seg>
       </tuv>
     </tu>
     <tu>
@@ -7512,6 +7810,22 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Configure Liferay virtual host like other &lt;a0&gt;protected virtual host&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074248Z" changeid="xavier">
+        <seg>Configurer l'hôte virtuel Liferay comme n'importe quel autre &lt;a0&gt;hôte virtuel protégé&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Configure MediaWiki virtual host like other &lt;a0&gt;protected virtual host&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074949Z" changeid="xavier">
+        <seg>Configurer l'hôte virtuel Mediawiki comme n'importe quel autre &lt;a0&gt;hôte virtuel protégé&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Configure authentication filter &lt;e0&gt;(“General Parameters » Authentication modules » &lt;a1&gt;LDAP&lt;/a1&gt; parameters » Filters”)&lt;/e0&gt; with:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T095129Z" changeid="xavier">
@@ -7524,6 +7838,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T114134Z" changeid="xavier">
         <seg>Configurer les &lt;a0&gt;règles d'accès&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Configure the &lt;c0&gt;Auth-User&lt;/c0&gt; &lt;a1&gt;header&lt;/a1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074411Z" changeid="xavier">
+        <seg>Configurer l'&lt;a1&gt;en-tête&lt;/a1&gt; &lt;c0&gt;Auth-User&lt;/c0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -7844,6 +8166,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Ne pas autoriser plusieurs utilisateurs venant de la même adresse &lt;a0&gt;IP&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Do not forget to save your changes!</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074226Z" changeid="xavier">
+        <seg>Ne pas oublier de sauvegarder les changements !</seg>
       </tuv>
     </tu>
     <tu>
@@ -8424,6 +8754,30 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Go to &lt;c0&gt;Configuration&lt;/c0&gt; » &lt;c1&gt;Authentication&lt;/c1&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T073753Z" changeid="xavier">
+        <seg>Aller dans &lt;c0&gt;Configuration&lt;/c0&gt; » &lt;c1&gt;Authentication&lt;/c1&gt;:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Go to &lt;c0&gt;My Account&lt;/c0&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T073736Z" changeid="xavier">
+        <seg>Aller dans &lt;c0&gt;My account&lt;/c0&gt;:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Go to &lt;c0&gt;Portal&lt;/c0&gt; » &lt;c1&gt;Settings&lt;/c1&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T073729Z" changeid="xavier">
+        <seg>Aller dans &lt;c0&gt;Portal&lt;/c0&gt; » &lt;c1&gt;Settings&lt;/c1&gt;:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Go to the Manager and &lt;a0&gt;create a new virtual host&lt;/a0&gt; for Bugzilla.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T114111Z" changeid="xavier">
@@ -8444,6 +8798,22 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20111201T125025Z" changeid="xavier">
         <seg>Aller dans le manager et &lt;a0&gt;créer un nouvel hôte virtuel&lt;/a0&gt; pour Drupal.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Go to the Manager and &lt;a0&gt;create a new virtual host&lt;/a0&gt; for Liferay.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074313Z" changeid="xavier">
+        <seg>Aller dans le manager et &lt;a0&gt;créer un nouvel hôte virtuel&lt;/a0&gt; pour Liferay.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Go to the Manager and &lt;a0&gt;create a new virtual host&lt;/a0&gt; for MediaWiki.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T075026Z" changeid="xavier">
+        <seg>Aller dans le manager et &lt;a0&gt;créer un nouvel hôte virtuel&lt;/a0&gt; pour Mediawiki.</seg>
       </tuv>
     </tu>
     <tu>
@@ -8508,6 +8878,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111526Z" changeid="xavier">
         <seg>H</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>HTTP Auth</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074629Z" changeid="xavier">
+        <seg>HTTP Auth</seg>
       </tuv>
     </tu>
     <tu>
@@ -8768,6 +9146,22 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If one is missing, the user is not created.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T073458Z" changeid="xavier">
+        <seg>Si l'un est manquant, le compte ne sera pas créé.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>If the user is not created, or can not be created via &lt;a0&gt;LDAP&lt;/a0&gt; import, the connection to Liferay will be refused.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T073401Z" changeid="xavier">
+        <seg>Si le compte n'est pas créé ou ne peut être créé par un import &lt;a0&gt;LDAP&lt;/a0&gt;, la connexion à Liferay sera refusée.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If using &lt;a0&gt;LL::NG&lt;/a0&gt; as reverse proxy, configure the &lt;c1&gt;Auth-User&lt;/c1&gt; &lt;a2&gt;header&lt;/a2&gt;, else no headers are needed.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T115758Z" changeid="xavier">
@@ -8788,6 +9182,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20111201T124955Z" changeid="xavier">
         <seg>Si Drupal est protégé par un reverse-proxy &lt;a0&gt;LL::NG&lt;/a0&gt;, &lt;a1&gt;convertir l'en-tête en variable d'environnement REMOTE_USER&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>If you are protecting MediaWiki with &lt;a0&gt;LL::NG&lt;/a0&gt; as reverse proxy, &lt;a1&gt;convert header into REMOTE_USER environment variable&lt;/a1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T075007Z" changeid="xavier">
+        <seg>Si Mediawiki est protégé par un reverse-proxy &lt;a0&gt;LL::NG&lt;/a0&gt;, &lt;a1&gt;convertir l'en-tête en variable d'environnement REMOTE_USER&lt;/a1&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -8820,6 +9222,22 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Importer ou generer les clefs de securité</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Imported from an &lt;a0&gt;LDAP&lt;/a0&gt; directory</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111210T073926Z" changeid="xavier">
+        <seg>Importés d'un serveur &lt;a0&gt;LDAP&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>In &lt;c0&gt;General&lt;/c0&gt;, fill at least the following information:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T073845Z" changeid="xavier">
+        <seg>Dans &lt;c0&gt;General&lt;/c0&gt;, remplir au moins les informations suivantes :</seg>
       </tuv>
     </tu>
     <tu>
@@ -9384,6 +9802,46 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Liferay</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111210T073647Z" changeid="xavier">
+        <seg>Liferay</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Liferay administration</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T073609Z" changeid="xavier">
+        <seg>Administration Liferay</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Liferay can use &lt;a0&gt;LL::NG&lt;/a0&gt; as an &lt;a1&gt;SSO&lt;/a1&gt; provider but you have to manage how users are created:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111210T073832Z" changeid="xavier">
+        <seg>Liferay peut utiliser &lt;a0&gt;LL::NG&lt;/a0&gt; comme fournisseur &lt;a1&gt;SSO&lt;/a1&gt; mais il faut gérer la création des comptes utilisateurs :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Liferay virtual host in Apache</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074236Z" changeid="xavier">
+        <seg>Hôte virtuel Liferay dans le manager</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Liferay virtual host in Manager</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074303Z" changeid="xavier">
+        <seg>Hôte virtuel Liferay dans le manager</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Lightweight Directory Access Protocol</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T101130Z" changeid="xavier">
@@ -9460,6 +9918,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Connexion</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Login as administrator:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T073651Z" changeid="xavier">
+        <seg>Se connecter comme administrateur:</seg>
       </tuv>
     </tu>
     <tu>
@@ -9620,6 +10086,38 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>De nombreuses sociétés privées l'utilisent également.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>MediWiki local configuration</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074843Z" changeid="xavier">
+        <seg>Configuration locale MediaWiki</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>MediaWiki</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074419Z" changeid="xavier">
+        <seg>MediaWiki</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>MediaWiki virtual host in Apache</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074936Z" changeid="xavier">
+        <seg>Hôte virtuel Mediawiki dans le manager</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>MediaWiki virtual host in Manager</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T075017Z" changeid="xavier">
+        <seg>Hôte virtuel Mediawiki dans le manager</seg>
       </tuv>
     </tu>
     <tu>
@@ -9816,6 +10314,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>OBM</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T075047Z" changeid="xavier">
+        <seg>OBM</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>OBM, RoundCube, Sympa, MediaWiki,…</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -9828,6 +10334,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Conférence annuelle OW2</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Of course, integration will be full if you use the &lt;a0&gt;LDAP&lt;/a0&gt; directory as users backend for &lt;a1&gt;LL::NG&lt;/a1&gt; and Liferay.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111210T074154Z" changeid="xavier">
+        <seg>Bien sûr, l'integration est complète si le serveur &lt;a0&gt;LDAP&lt;/a0&gt; est utilisé comme base de données des utilisateurs dans &lt;a1&gt;LL::NG&lt;/a1&gt; et Liferay.</seg>
       </tuv>
     </tu>
     <tu>
@@ -10080,6 +10594,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       <tuv lang="FR-FR">
         <seg>PerlResponseHandler ModPerl::Registry
 &lt;/&lt;s3&gt;Files&lt;/s3&gt;&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Please refer to Liferay documentation to enable &lt;a1&gt;LDAP&lt;/a1&gt; provisionning.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T073600Z" changeid="xavier">
+        <seg>Se reporter à la documentation Liferay pour activer l'alimentation &lt;a1&gt;LDAP&lt;/a1&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -10852,6 +11374,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Several extensions allows to configure &lt;a0&gt;SSO&lt;/a0&gt; on MediaWiki:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074534Z" changeid="xavier">
+        <seg>Plusieurs extensions permettent de configurer le &lt;a0&gt;SSO&lt;/a0&gt; dans MediaWiki :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Simple Object Access Protocol</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -10896,6 +11426,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Système d'authentification unique pour applications web</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Siteminder Authentication</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074628Z" changeid="xavier">
+        <seg>Siteminder Authentication</seg>
       </tuv>
     </tu>
     <tu>
@@ -11244,6 +11782,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The &lt;a0&gt;HTTP&lt;/a0&gt; Auth extension is presented here: &lt;a1&gt;http://www.mediawiki.org/wiki/Extension:HttpAuth&lt;/a1&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074727Z" changeid="xavier">
+        <seg>L'extension &lt;a0&gt;HTTP&lt;/a0&gt; Auth est presentée ici : &lt;a1&gt;http://www.mediawiki.org/wiki/Extension:HttpAuth&lt;/a1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The &lt;c0&gt;basic&lt;/c0&gt; function will also force conversion from UTF-8 to &lt;a1&gt;ISO&lt;/a1&gt;-8859-1, which should be accepted by most of &lt;a2&gt;HTTP&lt;/a2&gt; servers.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T113531Z" changeid="xavier">
@@ -11348,6 +11894,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Then edit MediaWiki local settings</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074908Z" changeid="xavier">
+        <seg>Éditer ensuite les paramètres locaux MediaWiki</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Then select &lt;c0&gt;Set up single sign-on (&lt;a1&gt;SSO&lt;/a1&gt;)&lt;/c0&gt;:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T182829Z" changeid="xavier">
@@ -11368,6 +11922,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T192532Z" changeid="xavier">
         <seg>Ensuite, utiliser openssl pour générer un certificat auto-signé :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Then use the &lt;c0&gt;SiteMinder&lt;/c0&gt; tab to configure &lt;a1&gt;SSO&lt;/a1&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074140Z" changeid="xavier">
+        <seg>Utiliser ensuite le paragraphe &lt;c0&gt;SiteMinder&lt;/c0&gt; pour configurer le &lt;a1&gt;SSO&lt;/a1&gt; :</seg>
       </tuv>
     </tu>
     <tu>
@@ -11496,6 +12058,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Cette documentation explique comment configurer le service &lt;a0&gt;SAML&lt;/a0&gt; dans &lt;a1&gt;LL::NG&lt;/a1&gt;, en particulier :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This documentation just explains how to set up the &lt;a0&gt;SSO&lt;/a0&gt; part.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T073527Z" changeid="xavier">
+        <seg>Cette documentation explique seulement comment activer la partie &lt;a0&gt;SSO&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -11976,6 +12546,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Userlogout =&gt; logout_sso</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T075042Z" changeid="xavier">
+        <seg>Userlogout =&gt; logout_sso</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Users</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -12040,6 +12618,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>We advice to deactivate other options, cause users will use &lt;a0&gt;LL::NG&lt;/a0&gt; portal to modify or reset their password.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074020Z" changeid="xavier">
+        <seg>Il est conseillé de désactiver les autres options, car les utilisateurs utiliseront le portail &lt;a0&gt;LL::NG&lt;/a0&gt; pour modifier ou réinitialiser leur mot-de-passe.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>We call “database” a backend where we can read or write a data.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -12064,6 +12650,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>We will explain how to use the latest: &lt;a0&gt;HTTP Auth&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074701Z" changeid="xavier">
+        <seg>Nous expliquons ici comment utiliser le dernier : &lt;a0&gt;HTTP Auth&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>When you commit &lt;a0&gt;OmegaT&lt;/a0&gt; files in svn repository, don't push backup files.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -12084,6 +12678,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Windows</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>With &lt;a1&gt;LDAP&lt;/a1&gt;, login, mail, first name and last name are required attributes.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T073439Z" changeid="xavier">
+        <seg>Avec &lt;a1&gt;LDAP&lt;/a1&gt;, login, mail, nom et prénom dont des attributs exigés.</seg>
       </tuv>
     </tu>
     <tu>
@@ -12124,6 +12726,22 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111207T051719Z" changeid="xavier">
         <seg>Il est possible d'ajouter un lien dans le &lt;a0&gt;menu application&lt;/a0&gt; pour afficher Google Apps.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can add a rule for logout:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074339Z" changeid="xavier">
+        <seg>Il est possible d'ajouter une règle pour la déconnexion :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can also add a rule for logout:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T075041Z" changeid="xavier">
+        <seg>Il est possible d'ajouter une règle pour la déconnexion :</seg>
       </tuv>
     </tu>
     <tu>
@@ -12172,6 +12790,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Vous pouver définir des clefs pour la signature et le chiffrement des messages &lt;a0&gt;SAML&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can download the code here: &lt;a0&gt;http://github.com/oremj/mediawiki-http-auth/downloads&lt;/a0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074747Z" changeid="xavier">
+        <seg>Il est possible de télécharger le code ici : &lt;a0&gt;http://github.com/oremj/mediawiki-http-auth/downloads&lt;/a0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -12276,6 +12902,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T182004Z" changeid="xavier">
         <seg>Vous ne pouvez pas utiliser la règle &lt;c0&gt;unprotect&lt;/c0&gt; car la navigation Drupal est basée sur des requêtes basées sur des attributs (?q=admin, ?q=user, etc.), et la règle unprotect ne fonctionne que sur des correspondances d'&lt;a1&gt;URL&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You have to install &lt;c0&gt;HttpAuthPlugin.php&lt;/c0&gt; in the &lt;c1&gt;extensions/&lt;/c1&gt; directory of your MediaWiki installation:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074824Z" changeid="xavier">
+        <seg>Il faut installer &lt;c0&gt;HttpAuthPlugin.php&lt;/c0&gt; dans le répertoire &lt;c1&gt;extensions/&lt;/c1&gt; de MediaWiki :</seg>
       </tuv>
     </tu>
     <tu>
@@ -12392,6 +13026,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>^/c/portal/logout =&gt; logout_sso</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074341Z" changeid="xavier">
+        <seg>^/c/portal/logout =&gt; logout_sso</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>accordeon_dark.png</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -12464,6 +13106,22 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>applications:liferay_logo.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111210T073651Z" changeid="xavier">
+        <seg>applications:liferay_logo.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>applications:mediawiki_logo.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074439Z" changeid="xavier">
+        <seg>applications:mediawiki_logo.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>authChoiceModules</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -12532,6 +13190,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>contact.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>cp HttpAuthPlugin.php extenstions/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074825Z" changeid="xavier">
+        <seg>cp HttpAuthPlugin.php extenstions/</seg>
       </tuv>
     </tu>
     <tu>
@@ -12756,6 +13422,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111207T052119Z" changeid="xavier">
         <seg>documentation:1.0:applications:googleapps ↵</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.0:applications:liferay ↵</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074146Z" changeid="xavier">
+        <seg>documentation:1.0:applications:liferay ↵</seg>
       </tuv>
     </tu>
     <tu>
@@ -13112,6 +13786,62 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:liferay_1.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T073633Z" changeid="xavier">
+        <seg>documentation:liferay_1.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:liferay_2.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T073652Z" changeid="xavier">
+        <seg>documentation:liferay_2.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:liferay_3.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T073709Z" changeid="xavier">
+        <seg>documentation:liferay_3.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:liferay_4.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T073743Z" changeid="xavier">
+        <seg>documentation:liferay_4.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:liferay_5.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T073754Z" changeid="xavier">
+        <seg>documentation:liferay_5.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:liferay_6.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074022Z" changeid="xavier">
+        <seg>documentation:liferay_6.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:liferay_7.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074206Z" changeid="xavier">
+        <seg>documentation:liferay_7.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:manager-saml-namid-formats.png</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -13460,6 +14190,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>http://freshmeat.net/projects/lemonldapng</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://github.com/oremj/mediawiki-http-auth/downloads</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074728Z" changeid="xavier">
+        <seg>http://github.com/oremj/mediawiki-http-auth/downloads</seg>
       </tuv>
     </tu>
     <tu>
@@ -13936,6 +14674,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://www.liferay.com/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111210T073653Z" changeid="xavier">
+        <seg>http://www.liferay.com/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://www.linagora.com</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -13948,6 +14694,38 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>http://www.linuxpicnic.org/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.mediawiki.org</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074440Z" changeid="xavier">
+        <seg>http://www.mediawiki.org</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.mediawiki.org/wiki/Extension:AutomaticREMOTE_USER</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074535Z" changeid="xavier">
+        <seg>http://www.mediawiki.org/wiki/Extension:AutomaticREMOTE_USER</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.mediawiki.org/wiki/Extension:HttpAuth</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074629Z" changeid="xavier">
+        <seg>http://www.mediawiki.org/wiki/Extension:HttpAuth</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.mediawiki.org/wiki/Extension:Siteminder_Authentication</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074627Z" changeid="xavier">
+        <seg>http://www.mediawiki.org/wiki/Extension:Siteminder_Authentication</seg>
       </tuv>
     </tu>
     <tu>
@@ -13984,6 +14762,30 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://www.php.net/array</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074916Z" changeid="xavier">
+        <seg>http://www.php.net/array</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.php.net/empty</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074914Z" changeid="xavier">
+        <seg>http://www.php.net/empty</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.php.net/session_start</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074909Z" changeid="xavier">
+        <seg>http://www.php.net/session_start</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://www.svwux.org/</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -13996,6 +14798,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>http://www.switch.ch/aai/support/tools/wayf.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.wikipedia.org</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074442Z" changeid="xavier">
+        <seg>http://www.wikipedia.org</seg>
       </tuv>
     </tu>
     <tu>
@@ -14716,6 +15526,14 @@ cd lemonldap-ng-*</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>upgrade</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>vi LocalSettings.php</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111211T074909Z" changeid="xavier">
+        <seg>vi LocalSettings.php</seg>
       </tuv>
     </tu>
     <tu>
