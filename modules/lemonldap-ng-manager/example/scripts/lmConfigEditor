@@ -6,17 +6,17 @@ use Data::Dumper;
 use POSIX;
 use strict;
 
+eval {
+    POSIX::setuid( ( getpwnam('__APACHEUSER__') )[2] );
+    POSIX::setgid( ( getgrnam('__APACHEGROUP__') )[2] );
+    print STDERR "Running as $>\n";
+};
+
 our $refFile  = `mktemp`;
 our $editFile = `mktemp`;
 
 chomp $refFile;
 chomp $editFile;
-
-eval {
-    POSIX::setgid( ( getgrnam('__APACHEUSER__') )[2] );
-    POSIX::setuid( ( getpwnam('__APACHEGROUP__') )[2] );
-    print STDERR "Running as $>\n";
-};
 
 if ( $> == 0 ) {
     print STDERR
