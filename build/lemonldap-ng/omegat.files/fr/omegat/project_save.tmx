@@ -364,6 +364,18 @@
       <tuv lang="EN-US">
         <seg>...
  
+&lt;/&lt;s3&gt;VirtualHost&lt;/s3&gt;&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T080958Z" changeid="xavier">
+        <seg>...
+ 
+&lt;/&lt;s3&gt;VirtualHost&lt;/s3&gt;&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>...
+ 
 &lt;/&lt;s4&gt;VirtualHost&lt;/s4&gt;&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112603Z" changeid="xavier">
@@ -474,6 +486,14 @@
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T174302Z" changeid="xavier">
         <seg>../../../../media/applications/spring_logo.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../../media/applications/sympa_logo.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T080317Z" changeid="xavier">
+        <seg>../../../../media/applications/sympa_logo.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -3222,6 +3242,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/applications/sympa_logo.png?id=documentation%3A1.0%3Aapplications%3Asympa</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T080315Z" changeid="xavier">
+        <seg>/_detail/applications/sympa_logo.png?id=documentation%3A1.0%3Aapplications%3Asympa</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>/_detail/documentation/googleapps-export-priv-key.png?id=documentation%3A1.0%3Aapplications%3Agoogleapps</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T183349Z" changeid="xavier">
@@ -3886,6 +3914,16 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;/&lt;s3&gt;Location&lt;/s3&gt;&gt;
+ </seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T081621Z" changeid="xavier">
+        <seg>&lt;/&lt;s3&gt;Location&lt;/s3&gt;&gt;
+ </seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;&lt;s0&gt;Files&lt;/s0&gt; *.pl&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -3906,6 +3944,14 @@
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T114008Z" changeid="xavier">
         <seg>&lt;&lt;s0&gt;VirtualHost&lt;/s0&gt; *:80&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;&lt;s2&gt;Location&lt;/s2&gt; /wws/sso_login/lemonldapng&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T081512Z" changeid="xavier">
+        <seg>&lt;&lt;s2&gt;Location&lt;/s2&gt; /wws/sso_login/lemonldapng&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -4506,6 +4552,14 @@
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T174326Z" changeid="xavier">
         <seg>&lt;a0&gt;Spring Security&lt;/a0&gt; est le nouveau nom d'ACEGI.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Sympa&lt;/a0&gt; is a mailing list manager.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T080356Z" changeid="xavier">
+        <seg>&lt;a0&gt;Sympa&lt;/a0&gt; est un gestionnaire de listes de diffusion.</seg>
       </tuv>
     </tu>
     <tu>
@@ -6134,6 +6188,22 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Auto login&lt;/s0&gt; is very secure, as Sympa cookie is only exchanged between &lt;a1&gt;LL::NG&lt;/a1&gt; Handler and Sympa (user cannot see it)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T080818Z" changeid="xavier">
+        <seg>&lt;s0&gt;Auto login&lt;/s0&gt; est très sécurisé car le cookie Sympa est seulement échangé entre le handler &lt;a1&gt;LL::NG&lt;/a1&gt; et Sympa (les utilisateurs ne le voient pas)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Auto login&lt;/s0&gt;: a special &lt;a1&gt;LL::NG&lt;/a1&gt; Handler will generate Sympa cookie</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T080534Z" changeid="xavier">
+        <seg>&lt;s0&gt;Auto login&lt;/s0&gt;: handler spécial de &lt;a1&gt;LL::NG&lt;/a1&gt; qui génère le cookie Sympa</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Build cookie&lt;/s0&gt;: build &lt;a1&gt;SSO cookies&lt;/a1&gt; with session ID</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -6414,6 +6484,30 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Magic authentication&lt;/s0&gt; allows to mix standard Sympa authentication and &lt;a1&gt;SSO&lt;/a1&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T080859Z" changeid="xavier">
+        <seg>&lt;s0&gt;Magic authentication&lt;/s0&gt; autorise l'utilisation de l'authentification Sympa et &lt;a1&gt;SSO&lt;/a1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Magic authentication&lt;/s0&gt;: a special &lt;a1&gt;SSO&lt;/a1&gt; &lt;a2&gt;URL&lt;/a2&gt; is protected by &lt;a3&gt;LL::NG&lt;/a3&gt;, Sympa will display a button for users who wants to use this feature.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T080654Z" changeid="xavier">
+        <seg>&lt;s0&gt;Magic authentication&lt;/s0&gt;: une &lt;a2&gt;URL&lt;/a2&gt; &lt;a1&gt;SSO&lt;/a1&gt; spéciale est protégée pas &lt;a3&gt;LL::NG&lt;/a3&gt;, Sympa affiche un bouton pour les utilisateurs souhaitant bénéficier de cette fonction.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Mail session key&lt;/s0&gt;: session field where to find user mail (by default: mail)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T081328Z" changeid="xavier">
+        <seg>&lt;s0&gt;Clef de session mail&lt;/s0&gt; : champ de session pour trouver l'adresse mail des utilisateurs (par défaut : mail)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Manager interface&lt;/s0&gt;: all messages are grouped in lemonldap-ng-manager/lib/Lemonldap/NG/Manager/_i18n.pm.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -6522,6 +6616,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;s0&gt;Installe les macros&lt;/s0&gt; : calcule les macros demandées</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Shared key&lt;/s0&gt;: correspond to the cookie parameter of sympa.conf</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T081210Z" changeid="xavier">
+        <seg>&lt;s0&gt;Clef prépartagée&lt;/s0&gt; : correspond au paramètre du cookie dans sympa.conf</seg>
       </tuv>
     </tu>
     <tu>
@@ -7266,6 +7368,16 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s1&gt;ServerName&lt;/s1&gt; sympa.example.com
+ </seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T080950Z" changeid="xavier">
+        <seg>&lt;s1&gt;ServerName&lt;/s1&gt; sympa.example.com
+ </seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s1&gt;SetHandler&lt;/s1&gt; perl-&lt;s2&gt;script&lt;/s2&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -7350,6 +7462,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T182126Z" changeid="xavier">
         <seg>&lt;s2&gt;# DocumentRoot&lt;/s2&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s2&gt;# Load Sympa Handler&lt;/s2&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T080955Z" changeid="xavier">
+        <seg>&lt;s2&gt;# Load Sympa Handler&lt;/s2&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -8144,6 +8264,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>And fill it:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T081453Z" changeid="xavier">
+        <seg>et le remplir :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Anonymous access</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -8164,6 +8292,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Apache</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Apache Tomcat</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T081842Z" changeid="xavier">
+        <seg>Apache Tomcat</seg>
       </tuv>
     </tu>
     <tu>
@@ -8304,6 +8440,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Auth-User</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T081836Z" changeid="xavier">
+        <seg>Auth-User</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>AuthLDAPFilter</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -8412,6 +8556,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Les autorisations sont définies à l'intérieur d'un hôte virtuel (virtualhost) et n'ont d'effet que sur lui.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Auto login</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T080921Z" changeid="xavier">
+        <seg>Auto login</seg>
       </tuv>
     </tu>
     <tu>
@@ -8680,6 +8832,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Choose one of the following method:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T080918Z" changeid="xavier">
+        <seg>Choisir l'une des méthodes suivantes :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Choose “Apache” as authentication module &lt;e0&gt;(“General Parameters » Authentication modules » Authentication module”)&lt;/e0&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T095902Z" changeid="xavier">
@@ -8808,6 +8968,22 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Configure Sympa virtual host like other &lt;a0&gt;protected virtual host&lt;/a0&gt; but protect only magic authentication &lt;a1&gt;URL&lt;/a1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T081614Z" changeid="xavier">
+        <seg>Configurer l'hôte virtuel Sympa comme n'importe quel autre &lt;a0&gt;hôte virtuel protégé&lt;/a0&gt; mais ne protéger que l'authentification magique.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Configure Sympa virtual host like other &lt;a0&gt;protected virtual host&lt;/a0&gt; but use Sympa Handler instead of default Handler.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T080945Z" changeid="xavier">
+        <seg>Configurer l'hôte virtuel Sympa comme n'importe quel autre &lt;a0&gt;hôte virtuel protégé&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Configure authentication filter &lt;e0&gt;(“General Parameters » Authentication modules » &lt;a1&gt;LDAP&lt;/a1&gt; parameters » Filters”)&lt;/e0&gt; with:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T095129Z" changeid="xavier">
@@ -8820,6 +8996,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T173752Z" changeid="xavier">
         <seg>Configurer l'hôte virtuel phpLDAPadmin comme n'importe quel autre &lt;a0&gt;hôte virtuel protégé&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Configure the &lt;a0&gt;access rules&lt;/a0&gt; and define the following &lt;a1&gt;headers&lt;/a1&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T081835Z" changeid="xavier">
+        <seg>Configurer les &lt;a0&gt;règles d'accès&lt;/a0&gt; et definir les &lt;a1&gt;en-têtes&lt;/a1&gt; suivants :</seg>
       </tuv>
     </tu>
     <tu>
@@ -9408,6 +9592,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Edit the file “auth.conf”, for example:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T081430Z" changeid="xavier">
+        <seg>Éditer le fichier “auth.conf” de Sympa, par exemple :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Email</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -9776,6 +9968,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Go in Manager, &lt;c0&gt;Default parameters&lt;/c0&gt; » &lt;c1&gt;Advanced parameters&lt;/c1&gt; » &lt;c2&gt;Special handlers&lt;/c2&gt; » &lt;c3&gt;Sympa&lt;/c3&gt;, and edit the different keys:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T081138Z" changeid="xavier">
+        <seg>Aller dans le manager, &lt;c0&gt;Paramètres par défaut&lt;/c0&gt; » &lt;c1&gt;Paramètres avancés&lt;/c1&gt; » &lt;c2&gt;Handlers spéciaux&lt;/c2&gt; » &lt;c3&gt;Sympa&lt;/c3&gt;, et editer les clefs suivantes :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Go on &lt;a0&gt;http://auth.example.com&lt;/a0&gt; and log with &lt;a1&gt;LDAP&lt;/a1&gt; user account.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -9860,6 +10060,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T075026Z" changeid="xavier">
         <seg>Aller dans le manager et &lt;a0&gt;créer un nouvel hôte virtuel&lt;/a0&gt; pour Mediawiki.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Go to the Manager and &lt;a0&gt;create a new virtual host&lt;/a0&gt; for Sympa.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T081020Z" changeid="xavier">
+        <seg>Aller dans le manager et &lt;a0&gt;créer un nouvel hôte virtuel&lt;/a0&gt; pour Sympa.</seg>
       </tuv>
     </tu>
     <tu>
@@ -10088,6 +10296,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Here are some advices:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T080721Z" changeid="xavier">
+        <seg>Il y a deux avis :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Home</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -10108,6 +10324,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Fonctionnement</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>How to choose?</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T080702Z" changeid="xavier">
+        <seg>Comment choisir ?</seg>
       </tuv>
     </tu>
     <tu>
@@ -11064,6 +11288,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Magic authentication</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T081350Z" changeid="xavier">
+        <seg>Authentification magique</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Mail</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112933Z" changeid="xavier">
@@ -11760,12 +11992,38 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>PerlHeaderParserHandler My::Package</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T081620Z" changeid="xavier">
+        <seg>PerlHeaderParserHandler My::Package</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>PerlHeaderParserHandler My::Package
  </seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T114011Z" changeid="xavier">
         <seg>PerlHeaderParserHandler My::Package
  </seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>PerlHeaderParserHandler My::Sympa
+ </seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T080956Z" changeid="xavier">
+        <seg>PerlHeaderParserHandler My::Sympa
+ </seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>PerlRequire __HANDLERDIR__/MyHandlerSympa.pm</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T080955Z" changeid="xavier">
+        <seg>PerlRequire __HANDLERDIR__/MyHandlerSympa.pm</seg>
       </tuv>
     </tu>
     <tu>
@@ -12948,6 +13206,38 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Sympa Handler parameters</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T081041Z" changeid="xavier">
+        <seg>Paramètres du handler Sympa</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Sympa configuration</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T081401Z" changeid="xavier">
+        <seg>Configuration Sympa</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Sympa virtual host in Apache</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T080936Z" changeid="xavier">
+        <seg>Hôte virtuel Sympa dans le manager</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Sympa virtual host in Manager</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T081011Z" changeid="xavier">
+        <seg>Hôte virtuel Sympa dans le manager</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Syslog</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -13072,6 +13362,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>La valeur d'un en-tête est une expression &lt;a0&gt;Perl&lt;/a0&gt; qui retourne une chaîne de caractères.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The location &lt;a0&gt;URL&lt;/a0&gt; is based on the &lt;c1&gt;service_id&lt;/c1&gt; defined in Sympa apache configuration.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T081745Z" changeid="xavier">
+        <seg>L'&lt;a0&gt;URL&lt;/a0&gt; est construite à partir du &lt;c1&gt;service_id&lt;/c1&gt; defini dans la configuration Apache de Sympa.</seg>
       </tuv>
     </tu>
     <tu>
@@ -13216,6 +13514,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Les paquets sont disponibles ici : &lt;a0&gt;http://deb.entrouvert.org/&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>There are two ways to configure &lt;a0&gt;SSO&lt;/a0&gt; with Sympa:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T080457Z" changeid="xavier">
+        <seg>Il y a deux façons de configurer le &lt;a0&gt;SSO&lt;/a0&gt; avec Sympa :</seg>
       </tuv>
     </tu>
     <tu>
@@ -14512,6 +14818,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>applications:sympa_logo.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T080317Z" changeid="xavier">
+        <seg>applications:sympa_logo.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>authChoiceModules</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -15312,6 +15626,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>email_http_header            HTTP_MAIL</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T081456Z" changeid="xavier">
+        <seg>email_http_header            HTTP_MAIL</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>en</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -15332,6 +15654,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>générer de nouvelles clefs publiques et privées (bouton &lt;c0&gt;Générer&lt;/c0&gt;)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>generic_sso</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T081454Z" changeid="xavier">
+        <seg>generic_sso</seg>
       </tuv>
     </tu>
     <tu>
@@ -16240,6 +16570,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://www.sympa.org</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T080321Z" changeid="xavier">
+        <seg>http://www.sympa.org</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://www.wikipedia.org</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074442Z" changeid="xavier">
@@ -16464,6 +16802,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>internal_email_by_netid    1</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T081457Z" changeid="xavier">
+        <seg>internal_email_by_netid    1</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>it may be the &lt;e3&gt;backbone&lt;/e3&gt; of a heterogeneous architecture.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -16592,6 +16938,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>logout_url                          http://sympa.example.com/wws/logout</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T081459Z" changeid="xavier">
+        <seg>logout_url                          http://sympa.example.com/wws/logout</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>macros are used to extend (or rewrite) &lt;a0&gt;exported variables&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -16670,6 +17024,14 @@ make test</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>menu.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>netid_http_header             HTTP_AUTH_USER</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T081457Z" changeid="xavier">
+        <seg>netid_http_header             HTTP_AUTH_USER</seg>
       </tuv>
     </tu>
     <tu>
@@ -16892,6 +17254,22 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>service_id                          lemonldapng</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T081456Z" changeid="xavier">
+        <seg>service_id                          lemonldapng</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>service_name                   LemonLDAP::NG</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T081455Z" changeid="xavier">
+        <seg>service_name                   LemonLDAP::NG</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>start</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -17060,6 +17438,14 @@ cd lemonldap-ng-*</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T171553Z" changeid="xavier">
         <seg>valeur</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>vi /etc/sympa/auth.conf</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111217T081431Z" changeid="xavier">
+        <seg>vi /etc/sympa/auth.conf</seg>
       </tuv>
     </tu>
     <tu>
