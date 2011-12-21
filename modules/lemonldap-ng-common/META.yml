@@ -11,17 +11,20 @@ configure_requires:
 build_requires:
     IO::String:  0
 requires:
-    Cache::Cache:      0
-    CGI:               3.08
-    Config::IniFiles:  0
-    Crypt::Rijndael:   0
-    DBI:               0
-    HTTP::Headers:     0
-    IO::String:        0
-    Regexp::Assemble:  0
-    SOAP::Lite:        0
-    Storable:          0
-    XML::Simple:       0
+    Cache::Cache:         0
+    CGI:                  3.08
+    Config::IniFiles:     0
+    Crypt::OpenSSL::Bignum:  0
+    Crypt::OpenSSL::RSA:  0
+    Crypt::OpenSSL::X509:  0
+    Crypt::Rijndael:      0
+    DBI:                  0
+    HTTP::Headers:        0
+    IO::String:           0
+    Regexp::Assemble:     0
+    SOAP::Lite:           0
+    Storable:             0
+    XML::Simple:          0
 no_index:
     directory:
         - t
