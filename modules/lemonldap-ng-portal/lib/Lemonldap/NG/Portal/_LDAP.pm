@@ -14,7 +14,7 @@ use Encode;
 use strict;
 
 our @EXPORT   = qw(ldap);
-our $VERSION  = '1.1.1';
+our $VERSION  = '1.2.0';
 our $ppLoaded = 0;
 
 BEGIN {
@@ -237,7 +237,8 @@ sub userModifyPassword {
         if ( $self->{portal}->{ldapSetPassword} ) {
 
             # Bind as user if oldpassword and ldapChangePasswordAsUser
-            if ( $oldpassword and $self->{ldapChangePasswordAsUser} ) {
+            if ( $oldpassword and $self->{portal}->{ldapChangePasswordAsUser} )
+            {
 
                 $mesg = $self->bind( $dn, password => $oldpassword );
                 return PE_BADOLDPASSWORD if ( $mesg->code != 0 );
@@ -248,13 +249,13 @@ sub userModifyPassword {
             $mesg =
               ($oldpassword)
               ? $self->set_password(
-                user        => $dn,
-                oldpasswd   => $oldpassword,
-                newpassword => $newpassword
+                user      => $dn,
+                oldpasswd => $oldpassword,
+                newpasswd => $newpassword
               )
               : $self->set_password(
-                user        => $dn,
-                newpassword => $newpassword
+                user      => $dn,
+                newpasswd => $newpassword
               );
 
             # Catch the "Unwilling to perform" error
@@ -292,7 +293,8 @@ sub userModifyPassword {
         if ( $self->{portal}->{ldapSetPassword} ) {
 
             # Bind as user if oldpassword and ldapChangePasswordAsUser
-            if ( $oldpassword and $self->{ldapChangePasswordAsUser} ) {
+            if ( $oldpassword and $self->{portal}->{ldapChangePasswordAsUser} )
+            {
 
                 $mesg = $self->bind( $dn, password => $oldpassword );
                 return PE_BADOLDPASSWORD if ( $mesg->code != 0 );
@@ -305,15 +307,15 @@ sub userModifyPassword {
             $mesg =
               ($oldpassword)
               ? $self->set_password(
-                user        => $dn,
-                oldpasswd   => $oldpassword,
-                newpassword => $newpassword,
-                control     => [$pp]
+                user      => $dn,
+                oldpasswd => $oldpassword,
+                newpasswd => $newpassword,
+                control   => [$pp]
               )
               : $self->set_password(
-                user        => $dn,
-                newpassword => $newpassword,
-                control     => [$pp]
+                user      => $dn,
+                newpasswd => $newpassword,
+                control   => [$pp]
               );
 
             # Catch the "Unwilling to perform" error
