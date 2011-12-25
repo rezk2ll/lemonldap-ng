@@ -1098,10 +1098,26 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.0/idpcas.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T155607Z" changeid="xavier">
+        <seg>../../documentation/1.0/idpcas.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.0/idpsaml.html</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>../../documentation/1.0/idpsaml.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.0/logoutforward.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T155904Z" changeid="xavier">
+        <seg>../../documentation/1.0/logoutforward.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -1118,6 +1134,14 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>../../documentation/1.0/soapsessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.0/writingrulesand_headers.html#headers</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T155834Z" changeid="xavier">
+        <seg>../../documentation/1.0/writingrulesand_headers.html#headers</seg>
       </tuv>
     </tu>
     <tu>
@@ -4394,6 +4418,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;CAS&lt;/a0&gt; authentication will automatically add a &lt;a1&gt;logout forward rule&lt;/a1&gt; on &lt;a2&gt;CAS&lt;/a2&gt; server logout &lt;a3&gt;URL&lt;/a3&gt; in order to close &lt;a4&gt;CAS&lt;/a4&gt; session on &lt;a5&gt;LL::NG&lt;/a5&gt; logout.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T160040Z" changeid="xavier">
+        <seg>L'authentification &lt;a0&gt;CAS&lt;/a0&gt; ajoute automatiquement une &lt;a1&gt;règle de renvoi après déconnexion&lt;/a1&gt; sur l'&lt;a3&gt;URL&lt;/a3&gt; de déconnexion du serveur &lt;a2&gt;CAS&lt;/a2&gt; afin de clore la session &lt;a4&gt;CAS&lt;/a4&gt; lors de la déconnexion &lt;a5&gt;LL::NG&lt;/a5&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;CAS&lt;/a0&gt;_authnLevel</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -4702,6 +4734,22 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>Le gestionnaire de &lt;a0&gt;LL::NG&lt;/a0&gt; dispose d'un explorateur de sessions qui peut être utilisé pour parcourir sessions ouvertes :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can also act as &lt;a1&gt;CAS server&lt;/a1&gt;, that allows to interconnect two &lt;a2&gt;LL::NG&lt;/a2&gt; systems.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T155656Z" changeid="xavier">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; peut également agir en &lt;a1&gt;serveur CAS&lt;/a1&gt;, ce qui peut servir à connecter deux systèmes &lt;a2&gt;LL::NG&lt;/a2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can also request proxy tickets for its protected services.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T155742Z" changeid="xavier">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; peut également requérir des tickets de proxy pour les services qu'il protège.</seg>
       </tuv>
     </tu>
     <tu>
@@ -6306,6 +6354,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;c0&gt;_casPT&lt;/c0&gt;&lt;s1&gt;serviceID&lt;/s1&gt; = &lt;s2&gt;Proxy ticket value&lt;/s2&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T155833Z" changeid="xavier">
+        <seg>&lt;c0&gt;_casPT&lt;/c0&gt;&lt;s1&gt;serviceID&lt;/s1&gt; = &lt;s2&gt;Proxy ticket value&lt;/s2&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;c0&gt;accept&lt;/c0&gt;: all authenticated users can pass</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -6476,6 +6532,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;s0&gt;&lt;a1&gt;Notifications&lt;/a1&gt;&lt;/s0&gt;: messages à afficher aux utilisateurs connectés</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;&lt;a1&gt;PGT&lt;/a1&gt; file&lt;/s0&gt;: temporary file where proxy tickets are stored (by default, &lt;c2&gt;/tmp/pgt.txt&lt;/c2&gt;)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T160611Z" changeid="xavier">
+        <seg>&lt;s0&gt;Fichier &lt;a1&gt;PGT&lt;/a1&gt;&lt;/s0&gt; : fichier temporaire où les tickets de proxy sont stockés (par défaut, &lt;c2&gt;/tmp/pgt.txt&lt;/c2&gt;)</seg>
       </tuv>
     </tu>
     <tu>
@@ -6708,6 +6772,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;CA file&lt;/s0&gt;: CA certificate used to validate &lt;a1&gt;CAS&lt;/a1&gt; server certificate</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T160412Z" changeid="xavier">
+        <seg>&lt;s0&gt;Fichier CA&lt;/s0&gt; : certificat de la CA utilisée pour valider le certificat du serveur &lt;a1&gt;CAS&lt;/a1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Cache&lt;/s0&gt;: cache for configuration and sessions</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -6900,6 +6972,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Gateways authentication&lt;/s0&gt;: force transparent authentication on &lt;a1&gt;CAS&lt;/a1&gt; server</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T160523Z" changeid="xavier">
+        <seg>&lt;s0&gt;Authentification des passerelles&lt;/s0&gt; : force l'authentification transparente sur le serveur &lt;a1&gt;CAS&lt;/a1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Get user info&lt;/s0&gt;: contact user database to collect attributes</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -6952,6 +7032,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Les &lt;s0&gt;bases de données internes&lt;/s0&gt;: utilisées seulement par LemonLDAP::NG</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Key&lt;/s0&gt;: Service ID</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T160655Z" changeid="xavier">
+        <seg>&lt;s0&gt;Clef&lt;/s0&gt; : Service ID</seg>
       </tuv>
     </tu>
     <tu>
@@ -7084,6 +7172,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Proxied services&lt;/s0&gt;: list of services for which a proxy ticket is requested:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T160647Z" changeid="xavier">
+        <seg>&lt;s0&gt;Services Proxifiés&lt;/s0&gt; : liste des services pour lesquels un ticket de proxy est requis :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Reader &lt;a1&gt;URL&lt;/a1&gt;&lt;/s0&gt;: &lt;a2&gt;URL&lt;/a2&gt; used by &lt;a3&gt;SAML&lt;/a3&gt; SP to read the cookie.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -7108,6 +7204,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Renew authentication&lt;/s0&gt;: force authentication renewal on &lt;a1&gt;CAS&lt;/a1&gt; server</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T160449Z" changeid="xavier">
+        <seg>&lt;s0&gt;Renouveler l'authentification&lt;/s0&gt; : force le renouvellement de l'authentification sur le serveur &lt;a1&gt;CAS&lt;/a1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Response Location&lt;/s0&gt;: Access Point for &lt;a1&gt;SSO&lt;/a1&gt; response.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -7120,6 +7224,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;s0&gt;Response Location&lt;/s0&gt;: Point d'accès pour les réponses SLO.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Server &lt;a1&gt;URL&lt;/a1&gt;&lt;/s0&gt;: &lt;a2&gt;CAS&lt;/a2&gt; server &lt;a3&gt;URL&lt;/a3&gt; (must use https://)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T160330Z" changeid="xavier">
+        <seg>&lt;s0&gt;&lt;a1&gt;URL&lt;/a1&gt; du serveur&lt;/s0&gt; : &lt;a3&gt;URL&lt;/a3&gt; du serveur &lt;a2&gt;CAS&lt;/a2&gt; (doit utiliser https://)</seg>
       </tuv>
     </tu>
     <tu>
@@ -7248,6 +7360,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;s0&gt;Utilisateurs&lt;/s0&gt; : &lt;a1&gt;lemonldap-ng-users@ow2.org&lt;/a1&gt; (&lt;a2&gt;Archives&lt;/a2&gt;)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Value&lt;/s0&gt; Service &lt;a1&gt;URL&lt;/a1&gt; (&lt;a2&gt;CAS&lt;/a2&gt; service identifier)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T160804Z" changeid="xavier">
+        <seg>&lt;s0&gt;Value&lt;/s0&gt; Service &lt;a1&gt;URL&lt;/a1&gt; (identifiant de service &lt;a2&gt;CAS&lt;/a2&gt;)</seg>
       </tuv>
     </tu>
     <tu>
@@ -9386,6 +9506,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Backend choice by users</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T160946Z" changeid="xavier">
+        <seg>Backend choisit par l'utilisateur</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Be careful for Windows user, path must contains ”/”.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111220T110943Z" changeid="xavier">
@@ -10394,6 +10522,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Download the latest version:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T160104Z" changeid="xavier">
+        <seg>Télécharger la dernière version :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Download them here and &lt;a0&gt;install pre-required packages&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -10630,6 +10766,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Extraction</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Extract and build the module:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T160124Z" changeid="xavier">
+        <seg>Extraire et compiler le module:</seg>
       </tuv>
     </tu>
     <tu>
@@ -11442,6 +11586,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If no proxied services defined, &lt;a0&gt;CAS&lt;/a0&gt; authentication will not activate the &lt;a1&gt;CAS&lt;/a1&gt; proxy mode.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T160843Z" changeid="xavier">
+        <seg>Si aucun service proxifié n'est défini, l'authentification &lt;a0&gt;CAS&lt;/a0&gt; n'activera pas le mode proxy &lt;a1&gt;CAS&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If one is missing, the user is not created.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T073458Z" changeid="xavier">
@@ -11470,6 +11622,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T115758Z" changeid="xavier">
         <seg>Si &lt;a0&gt;LL::NG&lt;/a0&gt; est utilisé par reverse-proxy, configurer l'&lt;a2&gt;en-tête&lt;/a2&gt; &lt;c1&gt;Auth-User&lt;/c1&gt;, aucun autre en-tête n'est utile.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>If you activate proxy mode, you must create the &lt;a0&gt;PGT&lt;/a0&gt; file on your system, for example:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T160923Z" changeid="xavier">
+        <seg>Si le mode proxy est activé, il faut créer le fichier &lt;a0&gt;PGT&lt;/a0&gt; sur le système, par exemple :</seg>
       </tuv>
     </tu>
     <tu>
@@ -11566,6 +11726,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T192829Z" changeid="xavier">
         <seg>Dans le manager, cliquer sur fournisseurs de service &lt;a0&gt;SAML&lt;/a0&gt; puis sur le bouton &lt;c1&gt;Nouveau fournisseur de service&lt;/c1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>In Manager, go in &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Authentication modules&lt;/c1&gt; and choose &lt;a2&gt;CAS&lt;/a2&gt; for authentication.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T160214Z" changeid="xavier">
+        <seg>Dans le manager, aller dans &lt;c0&gt;Paramètres généraux&lt;/c0&gt; &gt; &lt;c1&gt;Modules d'authentification&lt;/c1&gt; et choisir &lt;a2&gt;CAS&lt;/a2&gt; pour l'authentification.</seg>
       </tuv>
     </tu>
     <tu>
@@ -11678,6 +11846,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Installer les pré-requis</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Install the module:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T160133Z" changeid="xavier">
+        <seg>Installer le module :</seg>
       </tuv>
     </tu>
     <tu>
@@ -13170,6 +13346,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Perl-CAS module installation</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T160052Z" changeid="xavier">
+        <seg>Installation du module Perl-CAS</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>PerlHeaderParserHandler My::Package</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111217T081620Z" changeid="xavier">
@@ -13454,6 +13638,22 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Schéma de protection</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Proxy Granting Ticket</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T160528Z" changeid="xavier">
+        <seg>Proxy Granting Ticket</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Proxy tickets will be collected at authentication phase and stored in user session under the form:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T155832Z" changeid="xavier">
+        <seg>Les tickets de proxy seront collectés lors de la phase d'authentification et stockés dans la session utilisateur sous la forme :</seg>
       </tuv>
     </tu>
     <tu>
@@ -14826,6 +15026,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Then, go in &lt;c0&gt;&lt;a1&gt;CAS&lt;/a1&gt; parameters&lt;/c0&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T160247Z" changeid="xavier">
+        <seg>Aller ensuite dans &lt;c0&gt;Paramètres &lt;a1&gt;CAS&lt;/a1&gt;&lt;/c0&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Then, go in &lt;c0&gt;Twitter parameters&lt;/c0&gt;:</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -14886,6 +15094,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Ces paramètres ne sont pas obligatoires pour faire fonctionner le service &lt;a0&gt;SAML&lt;/a0&gt;, mais peuvent aider à leur personnalisation :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>They can then be forwarded to applications trough &lt;a0&gt;HTTP headers&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T155903Z" changeid="xavier">
+        <seg>Ils peuvent être transférés aux applications via les &lt;a0&gt;en-têtes HTTP&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -15046,6 +15262,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111220T155201Z" changeid="xavier">
         <seg>Ce protocole est implementé dans un handler spécifique de &lt;a2&gt;LL::NG&lt;/a2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This requires &lt;a2&gt;Perl CAS module&lt;/a2&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T155606Z" changeid="xavier">
+        <seg>Ceci nécessite un &lt;a2&gt;module Perl CAS&lt;/a2&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -16926,6 +17150,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T115433Z" changeid="xavier">
         <seg>documentation:1.0:header_remote_user_conversion</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.0:idpcas</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T155608Z" changeid="xavier">
+        <seg>documentation:1.0:idpcas</seg>
       </tuv>
     </tu>
     <tu>
@@ -19294,6 +19526,22 @@ sudo apachectl restart</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>tar zxvf AuthCAS-1.4.tar.gz 
+cd AuthCAS-1.4/
+perl Makefile.PL
+make
+make test</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T160126Z" changeid="xavier">
+        <seg>tar zxvf AuthCAS-1.4.tar.gz 
+cd AuthCAS-1.4/
+perl Makefile.PL
+make
+make test</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>tar zxvf lemonldap-ng-*.tar.gz
 cd lemonldap-ng-*</seg>
       </tuv>
@@ -19316,6 +19564,14 @@ cd lemonldap-ng-*</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T191509Z" changeid="xavier">
         <seg>tomcat &gt;= 5.5</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>touch /tmp/pgt.txt</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T160925Z" changeid="xavier">
+        <seg>touch /tmp/pgt.txt</seg>
       </tuv>
     </tu>
     <tu>
@@ -19412,6 +19668,14 @@ cd lemonldap-ng-*</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074909Z" changeid="xavier">
         <seg>vi LocalSettings.php</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>wget https://sourcesup.cru.fr/frs/download.php/2476/AuthCAS-1.4.tar.gz</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T160105Z" changeid="xavier">
+        <seg>wget https://sourcesup.cru.fr/frs/download.php/2476/AuthCAS-1.4.tar.gz</seg>
       </tuv>
     </tu>
     <tu>
