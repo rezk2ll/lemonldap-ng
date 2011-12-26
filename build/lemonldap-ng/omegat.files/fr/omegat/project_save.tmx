@@ -1178,6 +1178,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.0/portalcustom.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T200202Z" changeid="xavier">
+        <seg>../../documentation/1.0/portalcustom.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.0/soapsessionbackend.html</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -4194,6 +4202,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>0</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T195414Z" changeid="xavier">
+        <seg>0</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>0.9.3</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -4258,6 +4274,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>1</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T195415Z" changeid="xavier">
+        <seg>1</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>1.0</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -4278,6 +4302,22 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>127.0.0.1:6379</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>1f777a6581e478499f4284e54fe2d4a4e513dfff</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T195415Z" changeid="xavier">
+        <seg>1f777a6581e478499f4284e54fe2d4a4e513dfff</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>2</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T195417Z" changeid="xavier">
+        <seg>2</seg>
       </tuv>
     </tu>
     <tu>
@@ -4850,6 +4890,22 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can use a lot of databases as authentication, users and password backend:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T194912Z" changeid="xavier">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; peut utiliser de nombreuses bases de données comme backend d'authentification, d'utilisateurs et de mots de passe :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can use two tables:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T195011Z" changeid="xavier">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; peut utiliser deux tables :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; configured as &lt;a1&gt;SAML Identity Provider&lt;/a1&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T182515Z" changeid="xavier">
@@ -4886,6 +4942,14 @@
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T190332Z" changeid="xavier">
         <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; fournit une valve, disponible sur &lt;a1&gt;page de téléchargement&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; will operate some &lt;a1&gt;SQL&lt;/a1&gt; queries:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T195525Z" changeid="xavier">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; exécutera quelques requêtes &lt;a1&gt;SQL&lt;/a1&gt; :</seg>
       </tuv>
     </tu>
     <tu>
@@ -6812,6 +6876,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Authentication table&lt;/s0&gt;: authentication table name</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T200820Z" changeid="xavier">
+        <seg>&lt;s0&gt;Table d'authentification&lt;/s0&gt; : nom de la table d'authentification</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Authentication&lt;/s0&gt;: how authenticate users</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -6856,6 +6928,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;s0&gt;Cache&lt;/s0&gt;: cache pour la configuration et les sessions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Chain&lt;/s0&gt;: &lt;a1&gt;DBI&lt;/a1&gt; chain, including database driver name and database name (for example: dbi:mysql:database=lemonldapng;host=localhost).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T200714Z" changeid="xavier">
+        <seg>&lt;s0&gt;Chaîne&lt;/s0&gt; : chaîne &lt;a1&gt;DBI&lt;/a1&gt;, contenant le nom de driver et le nom de la base de données (par exemple : dbi:mysql:database=lemonldapng;host=localhost).</seg>
       </tuv>
     </tu>
     <tu>
@@ -7076,6 +7156,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Hash schema&lt;/s0&gt;: &lt;a1&gt;SQL&lt;/a1&gt; method for hashing password.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T201207Z" changeid="xavier">
+        <seg>&lt;s0&gt;Schéma de hachage&lt;/s0&gt; : méthode &lt;a1&gt;SQL&lt;/a1&gt; pour hacher les mots-de-passe.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;How do users authenticate?&lt;/s0&gt;: by login</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T073901Z" changeid="xavier">
@@ -7156,6 +7244,22 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Login field name in user table&lt;/s0&gt;: name of user table column hosting login</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T201139Z" changeid="xavier">
+        <seg>&lt;s0&gt;Nom du champ login dans la table utilisateur&lt;/s0&gt; : nom de la colonne de la table utilisateur contenant le login</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Login field name&lt;/s0&gt;: name of authentication table column hosting login</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T200920Z" changeid="xavier">
+        <seg>&lt;s0&gt;Nom du champ de compte&lt;/s0&gt; : nom de la colonne de la table d'authentification contenant le login</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Logout rule&lt;/s0&gt;: catch OBM logout</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T171917Z" changeid="xavier">
@@ -7176,6 +7280,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20111217T080654Z" changeid="xavier">
         <seg>&lt;s0&gt;Magic authentication&lt;/s0&gt;: une &lt;a2&gt;URL&lt;/a2&gt; &lt;a1&gt;SSO&lt;/a1&gt; spéciale est protégée pas &lt;a3&gt;LL::NG&lt;/a3&gt;, Sympa affiche un bouton pour les utilisateurs souhaitant bénéficier de cette fonction.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Mail field name&lt;/s0&gt;: name of authentication table column hosting mail (for password reset)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T201045Z" changeid="xavier">
+        <seg>&lt;s0&gt;Nom du chmap mail&lt;/s0&gt; : nom de la colonne de la table d'authentification contenant le mail (pour la réinitialisation du mot-de-passe)</seg>
       </tuv>
     </tu>
     <tu>
@@ -7208,6 +7320,22 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;s0&gt;Name&lt;/s0&gt;: nom interne</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Password field name&lt;/s0&gt;: name of authentication table column hosting password</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T201022Z" changeid="xavier">
+        <seg>&lt;s0&gt;Nom du champ mot-de-passe&lt;/s0&gt; : nom de la colonne de la table d'authentification contenant le mot-de-passe</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Password&lt;/s0&gt;: Connection password</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T200754Z" changeid="xavier">
+        <seg>&lt;s0&gt;Mot-de-passe&lt;/s0&gt; : mot-de-passe du compte de connexion</seg>
       </tuv>
     </tu>
     <tu>
@@ -7416,6 +7544,22 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074204Z" changeid="xavier">
         <seg>&lt;s0&gt;User Header&lt;/s0&gt;: Auth-User (case sensitive)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;User table&lt;/s0&gt;: user table name</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T200837Z" changeid="xavier">
+        <seg>&lt;s0&gt;Table utilisateurs&lt;/s0&gt; : nom de la table utilisateurs</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;User&lt;/s0&gt;: Connection user</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T200738Z" changeid="xavier">
+        <seg>&lt;s0&gt;Utilisateur&lt;/s0&gt; : compte de connexion</seg>
       </tuv>
     </tu>
     <tu>
@@ -9362,6 +9506,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>As &lt;a0&gt;DBI&lt;/a0&gt; is a login/password based module, the authentication level can be:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T200158Z" changeid="xavier">
+        <seg>Comme &lt;a0&gt;DBI&lt;/a0&gt; est un module de type login/mot-de-passe, le niveau d'authentification peut être :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>As &lt;a1&gt;LL::NG&lt;/a1&gt; works like classic WebSSO (like Siteminder™), many other applications are easy to integrate.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T153422Z" changeid="xavier">
@@ -9490,6 +9642,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Authentication level</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T200007Z" changeid="xavier">
+        <seg>Niveau d'authentification</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Authentication module</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T194613Z" changeid="xavier">
@@ -9522,10 +9682,42 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Authentication table</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T195412Z" changeid="xavier">
+        <seg>Table d'authentification</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Authentication table and user table can be the same.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T195139Z" changeid="xavier">
+        <seg>Les tables d'authentification et utilisateurs peuvent être confondues.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Authentication table: where login and password are stored</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T195045Z" changeid="xavier">
+        <seg>La table d'authentification : où les logins and et mots-de-passe sont stockés</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Authentication, Authorization and Accounting (AAA) mechanisms</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Mécanismes d'authentification, d'autorisation et de traçabilité (AAA)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Authentication: select row in authentication table matching user and password</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T195644Z" changeid="xavier">
+        <seg>Authentification : selectionne la ligne de la table d'authentification contenant l'utilisateur et le mot-de-passe</seg>
       </tuv>
     </tu>
     <tu>
@@ -9746,6 +9938,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>By default, if user process connection settings are empty, authentication process connection settings will be used.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T200622Z" changeid="xavier">
+        <seg>Par défaut, si les paramètres de processus de connexion utilisateur sont vides , ceux d'authentification seront utilisés.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>By default, only the configured authentication backend is available for users.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T184529Z" changeid="xavier">
@@ -9818,6 +10018,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Can be left blank for plain text passwords.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T201239Z" changeid="xavier">
+        <seg>Peut être vide pour le stockage des mots-de-passe en clair.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Casimir ANTUNES</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -9854,6 +10062,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20111207T052055Z" changeid="xavier">
         <seg>Mettre &lt;s0&gt;mydomain.org&lt;/s0&gt; dans le domaine Google Apps</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Change password: update password column in authentication table matching user</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T195806Z" changeid="xavier">
+        <seg>Changement de mot-de-passe : met à jour le champ mot-de-passe de la table d'authentification correspondant à l'utilisateur</seg>
       </tuv>
     </tu>
     <tu>
@@ -9918,6 +10134,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Cliquez sur un en-tête de colonne pour trier le tableau.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Clément OUDOT</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T195437Z" changeid="xavier">
+        <seg>Clément OUDOT</seg>
       </tuv>
     </tu>
     <tu>
@@ -10146,10 +10370,26 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Connection</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T200322Z" changeid="xavier">
+        <seg>Connexion</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Connection between Linux and Active Directory</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T154535Z" changeid="xavier">
         <seg>Connexion entre Linux et Active Directory</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Connection settings can be configured differently for authentication process and user process.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T200419Z" changeid="xavier">
+        <seg>Les paramètres de connexion peuvent être configurés différemment pour les processus d'authentification et de recherche d'utilisateur.</seg>
       </tuv>
     </tu>
     <tu>
@@ -10334,6 +10574,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Base de données</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Database Interface</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T200100Z" changeid="xavier">
+        <seg>Database Interface</seg>
       </tuv>
     </tu>
     <tu>
@@ -10830,6 +11078,22 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Exemple</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Example 1: two tables</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T195352Z" changeid="xavier">
+        <seg>Exemple 1 : deux tables</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Example 2: single table</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T195446Z" changeid="xavier">
+        <seg>Example 2: single table</seg>
       </tuv>
     </tu>
     <tu>
@@ -11890,6 +12154,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>In Manager, go in &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Authentication modules&lt;/c1&gt; and choose Database (&lt;a2&gt;DBI&lt;/a2&gt;) for authentication, users and/or password modules.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T195957Z" changeid="xavier">
+        <seg>Dans le manager, aller dans &lt;c0&gt;Paramètres géénraux&lt;/c0&gt; &gt; &lt;c1&gt;Modules d'authentification&lt;/c1&gt; et choisir &quot;base de données&quot; (&lt;a2&gt;DBI&lt;/a2&gt;) pour les modules authentification, utilisateurs et/ou mots-de-passe.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>In Manager, go in &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Authentication modules&lt;/c1&gt; and choose Twitter for authentication module.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -11950,6 +12222,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Incluez la configuration LemonLDAP::NG dans celle d'Apache :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Indeed, any &lt;a0&gt;Perl DBD driver&lt;/a0&gt; can be used.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T194952Z" changeid="xavier">
+        <seg>Ainsi, tout &lt;a0&gt;driver Perl DBD&lt;/a0&gt; peut être utilisé.</seg>
       </tuv>
     </tu>
     <tu>
@@ -12698,6 +12978,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>MD5</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T195344Z" changeid="xavier">
+        <seg>MD5</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Macros and groups</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -12934,6 +13222,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Multiple et Choice (empilement d'autres modules)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>MySQL</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T194913Z" changeid="xavier">
+        <seg>MySQL</seg>
       </tuv>
     </tu>
     <tu>
@@ -13338,6 +13634,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Oracle</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T194915Z" changeid="xavier">
+        <seg>Oracle</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Organization</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -13710,6 +14014,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Traduction du portail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>PostGreSQL</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T194913Z" changeid="xavier">
+        <seg>PostGreSQL</seg>
       </tuv>
     </tu>
     <tu>
@@ -14138,6 +14450,30 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>SHA</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T195341Z" changeid="xavier">
+        <seg>SHA</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>SHA1</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T195342Z" changeid="xavier">
+        <seg>SHA1</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>SQL</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T195453Z" changeid="xavier">
+        <seg>SQL</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>SVN access</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -14162,10 +14498,26 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Schema</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T194956Z" changeid="xavier">
+        <seg>Schéma</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Screenshots</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Captures d'écran</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Search user: select row in user table matching user</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T195710Z" changeid="xavier">
+        <seg>Recherche de l'utilisateur : selectionne la ligne de la table utilisateurs correspondant à l'utilisateur</seg>
       </tuv>
     </tu>
     <tu>
@@ -14986,6 +15338,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The authentication level given to users authenticated with this module.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T200042Z" changeid="xavier">
+        <seg>Le niveau d'authentification accordé aux utilisateurs authentifiés par ce module.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The choice will concern three backends:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T185001Z" changeid="xavier">
@@ -15078,6 +15438,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>La seule déclaration possible est &lt;a0&gt;SOAP&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The password can be in plain text, or encoded with a standard &lt;a0&gt;SQL&lt;/a0&gt; method:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T195341Z" changeid="xavier">
+        <seg>Le mot-de-passe peut être stocké en clair ou encodé avec une méthode &lt;a0&gt;SQL&lt;/a0&gt; standard :</seg>
       </tuv>
     </tu>
     <tu>
@@ -15298,6 +15666,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>This allows to use different databases for these process.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T200452Z" changeid="xavier">
+        <seg>Ceci autorise à utiliser deux bases de données différentes pour ces deux processus.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>This avoid to have to many datas stored.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -15486,6 +15862,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T190444Z" changeid="xavier">
         <seg>Cette valve examine les en-têtes &lt;a2&gt;HTTP&lt;/a2&gt; pour désigner l'utilisateur authentifié au conteneur J2EE.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Thomas CHEMINEAU</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T195440Z" changeid="xavier">
+        <seg>Thomas CHEMINEAU</seg>
       </tuv>
     </tu>
     <tu>
@@ -15898,6 +16282,22 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>User table</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T195434Z" changeid="xavier">
+        <seg>Table utilisateurs</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>User table: where user data are stored (mail, name, etc.)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T195113Z" changeid="xavier">
+        <seg>La table utilisateurs : où les données utilisateurs sont stockées (mail, nom, etc.)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>User tracking in Apache logs</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -16154,6 +16554,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>X509</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Xavier GUIMARD</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T195442Z" changeid="xavier">
+        <seg>Xavier GUIMARD</seg>
       </tuv>
     </tu>
     <tu>
@@ -16670,6 +17078,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>a15a18c8bb17e6f67886a9af1898c018b9f5a072</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T195416Z" changeid="xavier">
+        <seg>a15a18c8bb17e6f67886a9af1898c018b9f5a072</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>accept (or whatever you want)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T172020Z" changeid="xavier">
@@ -16918,6 +17334,22 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>coudot</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T195414Z" changeid="xavier">
+        <seg>coudot</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>coudot@example.com</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T195439Z" changeid="xavier">
+        <seg>coudot@example.com</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>cp HttpAuthPlugin.php extenstions/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074825Z" changeid="xavier">
@@ -16972,6 +17404,14 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>fr</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>decreased (-1) if the portal autocompletion is allowed (see &lt;a0&gt;portal customization&lt;/a0&gt;)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T200316Z" changeid="xavier">
+        <seg>diminué (-1) si l'autocompletion est autorisée sur le portail (voir &lt;a0&gt;Personnalisation du portail&lt;/a0&gt;)</seg>
       </tuv>
     </tu>
     <tu>
@@ -17414,6 +17854,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>documentation:1.0:portal</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.0:portalcustom</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T200238Z" changeid="xavier">
+        <seg>documentation:1.0:portalcustom</seg>
       </tuv>
     </tu>
     <tu>
@@ -18402,6 +18850,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://search.cpan.org/search?query=DBD%3A%3A&amp;mode=module</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T194916Z" changeid="xavier">
+        <seg>http://search.cpan.org/search?query=DBD%3A%3A&amp;mode=module</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://search.cpan.org/~mmims/Net-Twitter/</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -19154,10 +19610,26 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>id</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T195413Z" changeid="xavier">
+        <seg>id</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>import your own private and public keys (&lt;c0&gt;Load from a file&lt;/c0&gt; input)</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>importer vos propres clefs privées et publiques (entrée &lt;c0&gt;Charger depuis un fichier&lt;/c0&gt;)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>increased (+1) if portal is protected by &lt;a0&gt;SSL&lt;/a0&gt; (HTTPS)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T200236Z" changeid="xavier">
+        <seg>augmenté (+1) si le portail est protégé par &lt;a0&gt;SSL&lt;/a0&gt; (HTTPS)</seg>
       </tuv>
     </tu>
     <tu>
@@ -19296,6 +19768,14 @@ kinit -k -t /etc/lemonldap-ng/auth.keytab HTTP/auth.example.com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>login</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T195413Z" changeid="xavier">
+        <seg>login</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>logos:logo_bpi.png</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -19356,6 +19836,14 @@ kinit -k -t /etc/lemonldap-ng/auth.keytab HTTP/auth.example.com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>les macros sont utilisées pour étendre (ou réécrire) les &lt;a0&gt;variables exportées&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>mail</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T195436Z" changeid="xavier">
+        <seg>mail</seg>
       </tuv>
     </tu>
     <tu>
@@ -19430,6 +19918,14 @@ make test</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>menu.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>name</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T195436Z" changeid="xavier">
+        <seg>name</seg>
       </tuv>
     </tu>
     <tu>
@@ -19512,6 +20008,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR">
         <seg>pages/start.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>password</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T195413Z" changeid="xavier">
+        <seg>password</seg>
       </tuv>
     </tu>
     <tu>
@@ -19776,6 +20280,22 @@ cd lemonldap-ng-*</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>tchemineau</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T195417Z" changeid="xavier">
+        <seg>tchemineau</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>tchemineau@example.com</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T195441Z" changeid="xavier">
+        <seg>tchemineau@example.com</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>text/html; charset=utf-8</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -19864,6 +20384,14 @@ cd lemonldap-ng-*</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>user</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T195427Z" changeid="xavier">
+        <seg>user</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>valeur</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T172055Z" changeid="xavier">
@@ -19908,6 +20436,22 @@ cd lemonldap-ng-*</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>writingrulesand_headers</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>xguimard</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T195416Z" changeid="xavier">
+        <seg>xguimard</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>xguimard@example.com</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T195444Z" changeid="xavier">
+        <seg>xguimard@example.com</seg>
       </tuv>
     </tu>
     <tu>
