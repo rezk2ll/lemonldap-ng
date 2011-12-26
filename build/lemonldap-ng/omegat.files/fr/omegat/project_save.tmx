@@ -230,10 +230,42 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>$_auth</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T185025Z" changeid="xavier">
+        <seg>$_auth</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>$_authChoice</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T185103Z" changeid="xavier">
+        <seg>$_authChoice</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>$_password</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T172106Z" changeid="xavier">
         <seg>$_password</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>$_passwordDB</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T185027Z" changeid="xavier">
+        <seg>$_passwordDB</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>$_userDB</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T185025Z" changeid="xavier">
+        <seg>$_userDB</seg>
       </tuv>
     </tu>
     <tu>
@@ -882,6 +914,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../../media/documentation/manager-authchoice.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T194527Z" changeid="xavier">
+        <seg>../../../media/documentation/manager-authchoice.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../../media/documentation/manager-saml-namid-formats.png</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -1062,6 +1102,14 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>../../documentation/1.0/authldap.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.0/authmulti.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T184531Z" changeid="xavier">
+        <seg>../../documentation/1.0/authmulti.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -3686,6 +3734,14 @@
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074205Z" changeid="xavier">
         <seg>/_detail/documentation/liferay_7.png?id=documentation%3A1.0%3Aapplications%3Aliferay</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/documentation/manager-authchoice.png?id=documentation%3A1.0%3Aauthchoice</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T194524Z" changeid="xavier">
+        <seg>/_detail/documentation/manager-authchoice.png?id=documentation%3A1.0%3Aauthchoice</seg>
       </tuv>
     </tu>
     <tu>
@@ -6576,6 +6632,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;&lt;a1&gt;URL&lt;/a1&gt; parameter&lt;/s0&gt;: parameter name used to set choice value (default: &lt;c2&gt;lmAuth&lt;/c2&gt;)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T194444Z" changeid="xavier">
+        <seg>Paramètres d'&lt;s0&gt;&lt;a1&gt;URL&lt;/a1&gt;&lt;/s0&gt; : nom du paramètre utilisé pour stocker la valeur du choix (défaut: &lt;c2&gt;lmAuth&lt;/c2&gt;)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;&lt;a1&gt;URL&lt;/a1&gt;&lt;/s0&gt;: &lt;a2&gt;URL&lt;/a2&gt; of your society</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -6680,6 +6744,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20111207T051936Z" changeid="xavier">
         <seg>&lt;s0&gt;Address&lt;/s0&gt; : indiquer une des &lt;a1&gt;URL&lt;/a1&gt; de Google Apps (chaque application Google Apps produit une &lt;a2&gt;URL&lt;/a2&gt; distincte), par exemple &lt;a3&gt;http://www.google.com/calendar/hosted/mydomain.org/render&lt;/a3&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Allowed modules&lt;/s0&gt;: click on &lt;c1&gt;New choice&lt;/c1&gt; to add a choice.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T194523Z" changeid="xavier">
+        <seg>&lt;s0&gt;Modules autorisés&lt;/s0&gt; : cliquer sur &lt;c1&gt;Nouveau choix&lt;/c1&gt; pour ajouter un choix.</seg>
       </tuv>
     </tu>
     <tu>
@@ -7032,6 +7104,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Les &lt;s0&gt;bases de données internes&lt;/s0&gt;: utilisées seulement par LemonLDAP::NG</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Key name&lt;/s0&gt;: Text displayed on choice tab.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T194602Z" changeid="xavier">
+        <seg>&lt;s0&gt;Nom de clef&lt;/s0&gt; : Texte à afficher sur l'onglet.</seg>
       </tuv>
     </tu>
     <tu>
@@ -9066,6 +9146,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Also, all backends parameters are displayed.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T194333Z" changeid="xavier">
+        <seg>Ainsi tous les paramètres des backends sont affichés.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>American Standard Code for Information Interchange</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111758Z" changeid="xavier">
@@ -9386,10 +9474,26 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Authentication choice will also be registered in session:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T185101Z" changeid="xavier">
+        <seg>Le choix d'authentication est également enregistré dans la session :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Authentication contexts</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Contextes d'authentification</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Authentication module</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T194613Z" changeid="xavier">
+        <seg>Module d'authentication</seg>
       </tuv>
     </tu>
     <tu>
@@ -9638,6 +9742,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Par défaut, un utilisateur peut ouvrir plusieurs &lt;a0&gt;sessions&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>By default, only the configured authentication backend is available for users.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T184529Z" changeid="xavier">
+        <seg>Par défaut, seul le backend configuré est accessible aux utilisateurs.</seg>
       </tuv>
     </tu>
     <tu>
@@ -10066,6 +10178,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Contrary to &lt;a0&gt;multiple backend stacking&lt;/a0&gt;, backend choice will present all available authentication methods to users, who will choose the one they want.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T184946Z" changeid="xavier">
+        <seg>Contrairement au &lt;a0&gt;dispositif de multiples backends&lt;/a0&gt;, le dispositif de choix de backend présente à l'utilisateur toutes les méthodes d'authentification disponibles pour qu'il puisse choisir.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Contributions</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -10286,6 +10406,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T172054Z" changeid="xavier">
         <seg>Definir les en-têtes utilisés pour les correspondances OBM, par exemple :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Define here:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T194537Z" changeid="xavier">
+        <seg>Definir ici :</seg>
       </tuv>
     </tu>
     <tu>
@@ -10534,6 +10662,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Les télécharger ici et &lt;a0&gt;installer les paquets pre-requis&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Drivers</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T194743Z" changeid="xavier">
+        <seg>Drivers</seg>
       </tuv>
     </tu>
     <tu>
@@ -11742,6 +11878,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T154749Z" changeid="xavier">
         <seg>Dans le manager, aller dans &lt;c0&gt;Paramètres généraux&lt;/c0&gt; &gt; &lt;c1&gt;Modules d'authentification&lt;/c1&gt; et choisir Apache pour l'authentification.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>In Manager, go in &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Authentication modules&lt;/c1&gt; and choose Choice for authentication.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T185122Z" changeid="xavier">
+        <seg>Dans le manager, aller dans &lt;c0&gt;Paramètres généraux&lt;/c0&gt; &gt; &lt;c1&gt;Modules d'authentification&lt;/c1&gt; et choisir Choice pour l'authentification.</seg>
       </tuv>
     </tu>
     <tu>
@@ -13306,6 +13450,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Password module</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T194631Z" changeid="xavier">
+        <seg>Module mots-de-passe</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Password policy</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -14834,10 +14986,34 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The choice will concern three backends:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T185001Z" changeid="xavier">
+        <seg>Ce choix concerne 3 backends:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The choosen backends will be registered in session:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T185024Z" changeid="xavier">
+        <seg>Les backends choisits enregistrent dans la session :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The common domain is used by &lt;a0&gt;SAML SP&lt;/a0&gt; to find an Identity Provider for the user, and by &lt;a1&gt;SAML IDP&lt;/a1&gt; to register itself in user's IDP list.</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Le domaine commun est utilisé par le &lt;a0&gt;SP SAML&lt;/a0&gt; pour trouver le fournisseur d'identité de l'utilisateur et par l'&lt;a1&gt;IdP SAML&lt;/a1&gt; pour s'enregistrer dans la liste des IDP.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The digit will not be shown on portal page.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T194738Z" changeid="xavier">
+        <seg>Le chiffre ne sera pas affiché sur la page portail.</seg>
       </tuv>
     </tu>
     <tu>
@@ -15030,6 +15206,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T160247Z" changeid="xavier">
         <seg>Aller ensuite dans &lt;c0&gt;Paramètres &lt;a1&gt;CAS&lt;/a1&gt;&lt;/c0&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Then, go in &lt;c0&gt;Choice Parameters&lt;/c0&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T194354Z" changeid="xavier">
+        <seg>Ensuite, aller dans les &lt;c0&gt;paramètres Choice&lt;/c0&gt;:</seg>
       </tuv>
     </tu>
     <tu>
@@ -15682,6 +15866,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>User module</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T194637Z" changeid="xavier">
+        <seg>Module utilisateurs</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>User name session field</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -15874,6 +16066,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074701Z" changeid="xavier">
         <seg>Nous expliquons ici comment utiliser le dernier : &lt;a0&gt;HTTP Auth&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>When &lt;c0&gt;Choice&lt;/c0&gt; is selected for authentication, values for Users and Password modules are not used anymore.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T194309Z" changeid="xavier">
+        <seg>Lorsque &lt;c0&gt;Choice&lt;/c0&gt; est selectionné pour l'authentification, les valeurs pour les modules utilisateur et mots-de-passe ne sont plus utilisées.</seg>
       </tuv>
     </tu>
     <tu>
@@ -16106,6 +16306,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T192556Z" changeid="xavier">
         <seg>Télécharger ensuite le certificat (&lt;c0&gt;cert.pem&lt;/c0&gt;) dans Google Apps.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can prefix the key name with a digit to order them.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T194715Z" changeid="xavier">
+        <seg>Il est possible d'ordonner les noms de clefs en utilisant un préfixe numérique.</seg>
       </tuv>
     </tu>
     <tu>
@@ -17106,6 +17314,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.0:authmulti</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111225T184532Z" changeid="xavier">
+        <seg>documentation:1.0:authmulti</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.0:authsaml</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -17502,6 +17718,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074206Z" changeid="xavier">
         <seg>documentation:liferay_7.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:manager-authchoice.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T194526Z" changeid="xavier">
+        <seg>documentation:manager-authchoice.png</seg>
       </tuv>
     </tu>
     <tu>
