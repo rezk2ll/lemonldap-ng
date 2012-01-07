@@ -334,6 +334,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>(&amp;(mail=$mail)(objectClass=person))</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T114426Z" changeid="xavier">
+        <seg>(&amp;(mail=$mail)(objectClass=person))</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>(&amp;(sAMAccountName=$user)(objectClass=person))</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T101135Z" changeid="xavier">
@@ -4810,10 +4818,34 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; server can check password strength, and &lt;a1&gt;LL::NG&lt;/a1&gt; portal will display correct errors (password too short, password in history, etc.)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120101T184030Z" changeid="xavier">
+        <seg>Le serveur &lt;a0&gt;LDAP&lt;/a0&gt; peut mesurer la solidité du mot-de-passe et le portail &lt;a1&gt;LL::NG&lt;/a1&gt; affichera les erreurs à corriger (mot-de-passe trop court, déjà dans l'historique, etc...)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; server can force password change on first connection, and &lt;a1&gt;LL::NG&lt;/a1&gt; portal will display a password change form before opening &lt;a2&gt;SSO&lt;/a2&gt; session</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120101T184223Z" changeid="xavier">
+        <seg>Le serveur &lt;a0&gt;LDAP&lt;/a0&gt; peut imposer le changement de mot-de-passe à la première connexion et le portail &lt;a1&gt;LL::NG&lt;/a1&gt; affichera le formulaire de changement de mot-de-passe avant d'ouvrir la session &lt;a2&gt;SSO&lt;/a2&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;LDAP&lt;/a0&gt; server or Net::&lt;a1&gt;LDAP&lt;/a1&gt; connexion string</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Serveur &lt;a0&gt;LDAP&lt;/a0&gt; ou chaîne de connexion Net::&lt;a1&gt;LDAP&lt;/a1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; sever can block brute-force attacks, and &lt;a1&gt;LL::NG&lt;/a1&gt; will display that account is locked</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120101T184119Z" changeid="xavier">
+        <seg>Le serveur &lt;a0&gt;LDAP&lt;/a0&gt; peut bloquer les attaques par force brute et &lt;a1&gt;LL::NG&lt;/a1&gt; affichera que le compte est bloqué</seg>
       </tuv>
     </tu>
     <tu>
@@ -4898,6 +4930,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can use an &lt;a1&gt;LDAP&lt;/a1&gt; directory to:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T201357Z" changeid="xavier">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; peut utiliser un annuaire &lt;a1&gt;LDAP&lt;/a1&gt; pour :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can use two tables:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T195011Z" changeid="xavier">
@@ -4918,6 +4958,14 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; est un système d'authentification web unique (WebSSO), mais contrairement à d'autres, il peut gérer les droits d'accès en utilisant des expressions rationnelles sur les &lt;a1&gt;URL&lt;/a1&gt; demandées.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; is compatible with &lt;a1&gt;LDAP password policy&lt;/a1&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T201621Z" changeid="xavier">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; est compatible avec &lt;a1&gt;la politique de mots-de-passe LDAP&lt;/a1&gt; :</seg>
       </tuv>
     </tu>
     <tu>
@@ -6796,6 +6844,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Account&lt;/s0&gt;: &lt;a1&gt;DN&lt;/a1&gt; used to connect to &lt;a2&gt;LDAP&lt;/a2&gt; server.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120101T184925Z" changeid="xavier">
+        <seg>&lt;s0&gt;Compte&lt;/s0&gt; : &lt;a1&gt;DN&lt;/a1&gt; à utiliser pour se connecter au serveur &lt;a2&gt;LDAP&lt;/a2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Activation&lt;/s0&gt;: Set to On to enable Common Domain Cookie support.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -6868,6 +6924,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Authentication filter&lt;/s0&gt;: Filter to find user from its login (default: &lt;c1&gt;(&amp;(uid=$user)(objectClass=inetOrgPerson))&lt;/c1&gt;)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T114320Z" changeid="xavier">
+        <seg>&lt;s0&gt;Filtre d'authentication&lt;/s0&gt; : filtre pour trouver l'utilisateur à partir de son login (défaut : &lt;c1&gt;(&amp;(uid=$user)(objectClass=inetOrgPerson))&lt;/c1&gt;)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Authentication level&lt;/s0&gt;: authentication level for this module.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -6904,6 +6968,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20111217T080534Z" changeid="xavier">
         <seg>&lt;s0&gt;Auto login&lt;/s0&gt;: handler spécial de &lt;a1&gt;LL::NG&lt;/a1&gt; qui génère le cookie Sympa</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Binary attributes&lt;/s0&gt;: regular expression matching binary attributes (see &lt;a1&gt;Net::LDAP&lt;/a1&gt; documentation).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T114114Z" changeid="xavier">
+        <seg>&lt;s0&gt;Attributs binaires&lt;/s0&gt; : expression régulière correspondant aux attributs binaires (voir la documentation &lt;a1&gt;Net::LDAP&lt;/a1&gt;).</seg>
       </tuv>
     </tu>
     <tu>
@@ -7008,6 +7080,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;s0&gt;Recherche d'une session valide&lt;/s0&gt; : détecte les sessions &lt;a1&gt;SSO&lt;/a1&gt;, applique les contraintes configurées (1 session par utilisateur, 1 session par &lt;a2&gt;IP&lt;/a2&gt;, …)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Default filter&lt;/s0&gt;: default &lt;a1&gt;LDAP&lt;/a1&gt; fitler for searches, should not be modified.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T114243Z" changeid="xavier">
+        <seg>&lt;s0&gt;Filtre par défaut&lt;/s0&gt; : filtre &lt;a1&gt;LDAP&lt;/a1&gt; par défaut pour les recherches, ne devrait pas être modifié.</seg>
       </tuv>
     </tu>
     <tu>
@@ -7292,6 +7372,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Mail filter&lt;/s0&gt;: Filter to find user from its mail (default: &lt;c1&gt;(&amp;(mail=$mail)(objectClass=inetOrgPerson))&lt;/c1&gt;)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T114352Z" changeid="xavier">
+        <seg>&lt;s0&gt;Filtre mail&lt;/s0&gt; : filtre pour trouver l'utilisateur à partir de son mail (défaut: &lt;c1&gt;(&amp;(mail=$mail)(objectClass=inetOrgPerson))&lt;/c1&gt;)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Mail session key&lt;/s0&gt;: session field where to find user mail (by default: mail)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111217T081328Z" changeid="xavier">
@@ -7324,6 +7412,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Object class&lt;/s0&gt;: objectClass of the groups (default: groupOfNames).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T114552Z" changeid="xavier">
+        <seg>&lt;s0&gt;Classe d'object&lt;/s0&gt;: objectClass du groupe (défaut: groupOfNames).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Password field name&lt;/s0&gt;: name of authentication table column hosting password</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T201022Z" changeid="xavier">
@@ -7336,6 +7432,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T200754Z" changeid="xavier">
         <seg>&lt;s0&gt;Mot-de-passe&lt;/s0&gt; : mot-de-passe du compte de connexion</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Password&lt;/s0&gt;: password to used to connect to &lt;a1&gt;LDAP&lt;/a1&gt; server.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T113948Z" changeid="xavier">
+        <seg>&lt;s0&gt;Mot-de-passe&lt;/s0&gt; : mot-de-passe à utiliser pour se connecter au serveur &lt;a1&gt;LDAP&lt;/a1&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -7396,6 +7500,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Recursive&lt;/s0&gt;: activate recursive group functionality (default: 0).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T114903Z" changeid="xavier">
+        <seg>&lt;s0&gt;Récursivité&lt;/s0&gt; : active la fonctionnalité récursive (défaut: 0).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Redirect&lt;/s0&gt;: redirect user on protected application or on Portal</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -7436,10 +7548,42 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Search base&lt;/s0&gt;: &lt;a1&gt;DN&lt;/a1&gt; of groups branch.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T114456Z" changeid="xavier">
+        <seg>&lt;s0&gt;Base de recherche&lt;/s0&gt; : &lt;a1&gt;DN&lt;/a1&gt; de la branche des groupes.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Searched attributes&lt;/s0&gt;: name(s) of the attribute storing the name of the group, spaces separated (default: cn).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T114828Z" changeid="xavier">
+        <seg>&lt;s0&gt;Attributs recherchés&lt;/s0&gt; : nom(s) de l'attribut stocké dans le nom du groupe, séparés par des virgules (défaut: cn).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Server &lt;a1&gt;URL&lt;/a1&gt;&lt;/s0&gt;: &lt;a2&gt;CAS&lt;/a2&gt; server &lt;a3&gt;URL&lt;/a3&gt; (must use https://)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T160330Z" changeid="xavier">
         <seg>&lt;s0&gt;&lt;a1&gt;URL&lt;/a1&gt; du serveur&lt;/s0&gt; : &lt;a3&gt;URL&lt;/a3&gt; du serveur &lt;a2&gt;CAS&lt;/a2&gt; (doit utiliser https://)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Server host&lt;/s0&gt;: &lt;a1&gt;LDAP&lt;/a1&gt; server hostname or &lt;a2&gt;URI&lt;/a2&gt; (by default: localhost).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120101T184344Z" changeid="xavier">
+        <seg>&lt;s0&gt;Serveur&lt;/s0&gt; : nom du serveur &lt;a1&gt;LDAP&lt;/a1&gt; ou &lt;a2&gt;URI&lt;/a2&gt; (par défaut : localhost).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Server port&lt;/s0&gt;: TCP port used by &lt;a1&gt;LDAP&lt;/a1&gt; server.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120101T184755Z" changeid="xavier">
+        <seg>&lt;s0&gt;Port du serveur&lt;/s0&gt; : port TCP du serveur &lt;a1&gt;LDAP&lt;/a1&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -7508,10 +7652,26 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Target attribute&lt;/s0&gt;: name of the attribute in the groups storing the link to the user (default: member).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T114642Z" changeid="xavier">
+        <seg>&lt;s0&gt;Attribut cible&lt;/s0&gt; : nom de l'attribut du groupe stockant le lien vers l'utilisateur (défaut: member).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Thomas CHEMINEAU&lt;/s0&gt;: developer, graphics</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;s0&gt;Thomas CHEMINEAU&lt;/s0&gt;: développeur, concepteur graphique</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Timeout&lt;/s0&gt;: server idle timeout.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T114007Z" changeid="xavier">
+        <seg>&lt;s0&gt;Timeout&lt;/s0&gt; : délai maximum de connexion.</seg>
       </tuv>
     </tu>
     <tu>
@@ -7548,6 +7708,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;User source attribute&lt;/s0&gt;: name of the attribute in users entries used in the link (default: dn).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T114724Z" changeid="xavier">
+        <seg>&lt;s0&gt;Attribut source utilisateur&lt;/s0&gt; : nom de l'attribut utilisateur utilisé dans le lien (défaut: dn).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;User table&lt;/s0&gt;: user table name</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T200837Z" changeid="xavier">
@@ -7572,6 +7740,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Users search base&lt;/s0&gt;: Base of search in the &lt;a1&gt;LDAP&lt;/a1&gt; directory.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120101T184903Z" changeid="xavier">
+        <seg>&lt;s0&gt;Base de recherche des utilisateurs&lt;/s0&gt; : base de recherche de l'annuaire &lt;a1&gt;LDAP&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Users&lt;/s0&gt; : &lt;a1&gt;lemonldap-ng-users@ow2.org&lt;/a1&gt; ( &lt;a2&gt;Subscribe&lt;/a2&gt; | &lt;a3&gt;Archives&lt;/a3&gt; )</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T094716Z" changeid="xavier">
@@ -7592,6 +7768,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T160804Z" changeid="xavier">
         <seg>&lt;s0&gt;Value&lt;/s0&gt; Service &lt;a1&gt;URL&lt;/a1&gt; (identifiant de service &lt;a2&gt;CAS&lt;/a2&gt;)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Version&lt;/s0&gt;: &lt;a1&gt;LDAP&lt;/a1&gt; protocol version.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T114022Z" changeid="xavier">
+        <seg>&lt;s0&gt;Version&lt;/s0&gt; :  version du protocole &lt;a1&gt;LDAP&lt;/a1&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -9114,6 +9298,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Accept some specificities:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120101T184409Z" changeid="xavier">
+        <seg>Autres possibilités :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Access protected application</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -9370,6 +9562,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>And this as mail filter:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T114424Z" changeid="xavier">
+        <seg>Et ce filtre de mail :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Anonymous access</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -9510,6 +9710,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T200158Z" changeid="xavier">
         <seg>Comme &lt;a0&gt;DBI&lt;/a0&gt; est un module de type login/mot-de-passe, le niveau d'authentification peut être :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>As &lt;a0&gt;LDAP&lt;/a0&gt; is a login/password based module, the authentication level can be:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120101T184313Z" changeid="xavier">
+        <seg>Comme &lt;a0&gt;LDAP&lt;/a0&gt; est un module de type login/mot-de-passe, le niveau d'authentification peut être :</seg>
       </tuv>
     </tu>
     <tu>
@@ -9938,6 +10146,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>By default, anonymous bind is used.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120101T184948Z" changeid="xavier">
+        <seg>Par défaut, une connexion anonyme est utilisée.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>By default, if user process connection settings are empty, authentication process connection settings will be used.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T200622Z" changeid="xavier">
@@ -10022,6 +10238,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T201239Z" changeid="xavier">
         <seg>Peut être vide pour le stockage des mots-de-passe en clair.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Can be overridden by an &lt;a2&gt;LDAP&lt;/a2&gt; &lt;a3&gt;URI&lt;/a3&gt; in server host.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120101T184836Z" changeid="xavier">
+        <seg>Peut être surchargé par une &lt;a3&gt;URI&lt;/a3&gt; dans le nom du serveur &lt;a2&gt;LDAP&lt;/a2&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -11210,6 +11434,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Filters</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T114121Z" changeid="xavier">
+        <seg>Filters</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Find other documentation on &lt;a0&gt;Firewall Services site&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T153521Z" changeid="xavier">
@@ -11230,6 +11462,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112902Z" changeid="xavier">
         <seg>Prénom</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>For Active Directory, use this as authentication filter:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T114412Z" changeid="xavier">
+        <seg>Pour Active Directory, utiliser ce filtre d'authentification :</seg>
       </tuv>
     </tu>
     <tu>
@@ -11666,6 +11906,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Groups</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T114430Z" changeid="xavier">
+        <seg>Groupes</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>H</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111526Z" changeid="xavier">
@@ -11970,6 +12218,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If enabled, if the user group is a member of another group (group of groups), all parents groups will be stored as user's groups.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T115014Z" changeid="xavier">
+        <seg>Si activé et si le groupe de l'utilisateur est membre d'un autre groupe (groupes de groupes), tous les groupes parents seront considérés comme groupes de l'utilisateur.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If needed, you can &lt;a0&gt;recompile the valve from the sources&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T190519Z" changeid="xavier">
@@ -11990,6 +12246,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T160843Z" changeid="xavier">
         <seg>Si aucun service proxifié n'est défini, l'authentification &lt;a0&gt;CAS&lt;/a0&gt; n'activera pas le mode proxy &lt;a1&gt;CAS&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>If no value, disable group searching.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T114524Z" changeid="xavier">
+        <seg>La recherche des groupes est désactivé si cette valeur est vide.</seg>
       </tuv>
     </tu>
     <tu>
@@ -12074,6 +12338,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If you use TLS, you can set any of the &lt;a0&gt;Net::LDAP&lt;/a0&gt; start_tls() sub like &lt;c1&gt;ldap+tls://server/verify=none&amp;capath=/etc/ssl&lt;/c1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120101T184710Z" changeid="xavier">
+        <seg>En utilisant TLS, il est possible d'utiliser toutes les options de la fonction start_tls() &lt;a0&gt;Net::LDAP&lt;/a0&gt; telle &lt;c1&gt;ldap+tls://server/verify=none&amp;capath=/etc/ssl&lt;/c1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If you want to become member of &lt;a1&gt;LL::NG&lt;/a1&gt; team ask to &lt;a2&gt;lemonldap-ng-dev@ow2.org&lt;/a2&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -12106,6 +12378,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>In &lt;a0&gt;LDAP&lt;/a0&gt; filters, $user is replaced by user login, and $mail by user email.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T114157Z" changeid="xavier">
+        <seg>Dans les filtres &lt;a0&gt;LDAP&lt;/a0&gt;, $user est remplacé par le nom du compte et $mail par l'adresse email.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>In &lt;c0&gt;General&lt;/c0&gt;, fill at least the following information:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T073845Z" changeid="xavier">
@@ -12134,6 +12414,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T160214Z" changeid="xavier">
         <seg>Dans le manager, aller dans &lt;c0&gt;Paramètres généraux&lt;/c0&gt; &gt; &lt;c1&gt;Modules d'authentification&lt;/c1&gt; et choisir &lt;a2&gt;CAS&lt;/a2&gt; pour l'authentification.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>In Manager, go in &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Authentication modules&lt;/c1&gt; and choose &lt;a2&gt;LDAP&lt;/a2&gt; for authentication, users and/or password modules.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120101T184302Z" changeid="xavier">
+        <seg>Dans le manager, aller dans &lt;c0&gt;Paramètres géénraux&lt;/c0&gt; &gt; &lt;c1&gt;Modules d'authentification&lt;/c1&gt; et choisir &lt;a2&gt;LDAP&lt;/a2&gt;) pour les modules authentification, utilisateurs et/ou mots-de-passe.</seg>
       </tuv>
     </tu>
     <tu>
@@ -13198,6 +13486,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T155329Z" changeid="xavier">
         <seg>Modifier l'hôte virtuel du portail :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>More than one server can be set here separated by spaces or commas.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120101T184441Z" changeid="xavier">
+        <seg>Plusieurs serveurs peuvent être renseignés séparés par des virgules ou espaces.</seg>
       </tuv>
     </tu>
     <tu>
@@ -15666,6 +15962,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>They will be tested in the specified order.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120101T184457Z" changeid="xavier">
+        <seg>Ils seront testés dans l'ordre indiqué.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>This allows to use different databases for these process.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T200452Z" changeid="xavier">
@@ -15866,6 +16170,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>This works with every &lt;a0&gt;LDAP&lt;/a0&gt; v2 or v3 server, including Active Directory.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T201549Z" changeid="xavier">
+        <seg>Ceci fonctionne avec tout serveur &lt;a0&gt;LDAP&lt;/a0&gt; v2 ou v3, dont Active Directory.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Thomas CHEMINEAU</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T195440Z" changeid="xavier">
@@ -15986,6 +16298,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>To use TLS, set &lt;c0&gt;ldap+tls://server&lt;/c0&gt; and to use LDAPS, set &lt;c1&gt;ldaps://server&lt;/c1&gt; instead of server name.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120101T184532Z" changeid="xavier">
+        <seg>Pour utiliser TLS, utiliser &lt;c0&gt;ldap+tls://server&lt;/c0&gt; et pour utiliser LDAPS, indiquer &lt;c1&gt;ldaps://server&lt;/c1&gt; au lieu du nom de serveur.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>To use it (with MySQL for example), choose for example “Apache::Session::Browseable::MySQL” as “Apache::Session module” and use the following parameters:</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -16102,6 +16422,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T183018Z" changeid="xavier">
         <seg>Le désélectionner désactive l'authentification &lt;a1&gt;SAML&lt;/a1&gt; (à utiliser, si votre fournisseur d'identité est hors service).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Uniform Resource Identifier</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120101T184316Z" changeid="xavier">
+        <seg>Uniform Resource Identifier</seg>
       </tuv>
     </tu>
     <tu>
@@ -16610,6 +16938,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T155246Z" changeid="xavier">
         <seg>il est également possible de configurer le niveau d'authentification pour ce module.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can also use caFile and caPath parameters.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120101T184733Z" changeid="xavier">
+        <seg>On peut également utiliser les paramètres caFile et caPath.</seg>
       </tuv>
     </tu>
     <tu>
@@ -17270,6 +17606,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>authenticate user</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T201407Z" changeid="xavier">
+        <seg>authentifier les utilisateurs</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>authentication</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -17314,6 +17658,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111220T110949Z" changeid="xavier">
         <seg>c:/my hardisk/tomcat/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>change password (with server side password policy management)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T201520Z" changeid="xavier">
+        <seg>changer les mots-de-passe (avec la gestion de la politique de mot-de-passe côté serveur)</seg>
       </tuv>
     </tu>
     <tu>
@@ -18298,6 +18650,22 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>get groups where user is registered</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T201441Z" changeid="xavier">
+        <seg>obtenir les groupes dont l'utilisateur est membre</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>get user attributes</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T201420Z" changeid="xavier">
+        <seg>obtenir les attributs utilisateurs</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>googleapps</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111526Z" changeid="xavier">
@@ -18858,6 +19226,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://search.cpan.org/~gbarr/perl-ldap/lib/Net/LDAP.pod</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120101T184536Z" changeid="xavier">
+        <seg>http://search.cpan.org/~gbarr/perl-ldap/lib/Net/LDAP.pod</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://search.cpan.org/~mmims/Net-Twitter/</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -19414,6 +19790,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T153617Z" changeid="xavier">
         <seg>https://forge.indepnet.net/projects/glpi/wiki/GLPI-SSO</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>https://opends.dev.java.net/public/standards/draft-behera-ldap-password-policy.txt</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111226T201551Z" changeid="xavier">
+        <seg>https://opends.dev.java.net/public/standards/draft-behera-ldap-password-policy.txt</seg>
       </tuv>
     </tu>
     <tu>
