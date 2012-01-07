@@ -1154,6 +1154,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.0/extendedfunctions.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T143607Z" changeid="xavier">
+        <seg>../../documentation/1.0/extendedfunctions.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.0/idpcas.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T155607Z" changeid="xavier">
@@ -6696,6 +6704,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;&lt;a1&gt;LDAP&lt;/a1&gt; password encoding&lt;/s0&gt;: can allow to manage old &lt;a2&gt;LDAP&lt;/a2&gt; servers using specific encoding for passwords (default: utf-8).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T143505Z" changeid="xavier">
+        <seg>&lt;s0&gt;Encodage de mot-de-passe &lt;a1&gt;LDAP&lt;/a1&gt;&lt;/s0&gt; : peut servir à gérer les vieux serveurs &lt;a2&gt;LDAP&lt;/a2&gt; en utilisant un encodage spécifique des mots-de-passe (défaut : utf-8).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;&lt;a1&gt;Notifications&lt;/a1&gt;&lt;/s0&gt;: messages displayed to connected users</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -7012,6 +7028,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Change as user&lt;/s0&gt;: enable to perform password modification with credentials of connected user.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T143300Z" changeid="xavier">
+        <seg>&lt;s0&gt;Change comme utilisateur&lt;/s0&gt; : active la modification du mot-de-passe avec les éléments d'authentification de l'utilisateur connecté.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Change password &lt;a1&gt;URL&lt;/a1&gt;&lt;/s0&gt;: where users can change their password.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T183221Z" changeid="xavier">
@@ -7204,6 +7228,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;François-Xavier DELTOMBE&lt;/s0&gt;: developer, tester</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T142727Z" changeid="xavier">
+        <seg>&lt;s0&gt;François-Xavier DELTOMBE&lt;/s0&gt;: developeur, testeur</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Gateways authentication&lt;/s0&gt;: force transparent authentication on &lt;a1&gt;CAS&lt;/a1&gt; server</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T160523Z" changeid="xavier">
@@ -7224,6 +7256,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;s0&gt;Autorise la session&lt;/s0&gt; : vérifie le droit d'ouvrir une session &lt;a1&gt;SSO&lt;/a1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Group source attribute&lt;/s0&gt;: name of the attribute in groups entries used in the link, for recursive group search (default: dn).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T142847Z" changeid="xavier">
+        <seg>&lt;s0&gt;Attribut source du groupe&lt;/s0&gt; : nom de l'attribut dans l'entrée groupe utilisé dans le lien pour la recherche récursive de groupe (défaut : dn).</seg>
       </tuv>
     </tu>
     <tu>
@@ -7424,6 +7464,22 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T201022Z" changeid="xavier">
         <seg>&lt;s0&gt;Nom du champ mot-de-passe&lt;/s0&gt; : nom de la colonne de la table d'authentification contenant le mot-de-passe</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Password modify extended operation&lt;/s0&gt;: enable to use the &lt;a1&gt;LDAP&lt;/a1&gt; extended operation &lt;c2&gt;password modify&lt;/c2&gt; instead of standard modify operation.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T143214Z" changeid="xavier">
+        <seg>&lt;s0&gt;Opération étendue de modification de mot-de-passe&lt;/s0&gt; : active l'utilisation de l'opération étendue de &lt;c2&gt;modification de mot-de-passe&lt;/c2&gt; &lt;a1&gt;LDAP&lt;/a1&gt; au lieu de l'opération standard.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Password policy control&lt;/s0&gt;: enable to use &lt;a1&gt;LDAP&lt;/a1&gt; password policy.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T143009Z" changeid="xavier">
+        <seg>&lt;s0&gt;Contrôle de politique de mot-de-passe&lt;/s0&gt; : active l'utilisation de la politique de mots-de-passe &lt;a1&gt;LDAP&lt;/a1&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -9266,6 +9322,22 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>A start date and an end date (to open or close the service even the entry already exists)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T143847Z" changeid="xavier">
+        <seg>Des dates de début et de fin (pour restreindre l'accès aux services même si l'entrée existe)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>A time profile (allowed hours and day of the week)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T143915Z" changeid="xavier">
+        <seg>Un profil de temps (heures et jours de la semaine autorisés)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>A value</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -9542,6 +9614,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Une règle d'accès</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>An application name (to allow access by applications and not by group of users)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T143740Z" changeid="xavier">
+        <seg>Un nom d'application (pour autoriser l'accès aux applications sans utiliser les groupes)</seg>
       </tuv>
     </tu>
     <tu>
@@ -10118,6 +10198,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Construction</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>But sometimes other data are needed (in particular to use &lt;a0&gt;extended functions&lt;/a0&gt;):</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T143648Z" changeid="xavier">
+        <seg>Parfois d'autres données sont nécessaire (en particulier pour utiliser les &lt;a0&gt;fonctions étendues&lt;/a0&gt;):</seg>
       </tuv>
     </tu>
     <tu>
@@ -11382,6 +11470,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Variables exportées</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Extended attributes and object classes use this prefix: 1.3.6.1.4.1.10943.10.2.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T144114Z" changeid="xavier">
+        <seg>Les attributs étendus et classes d'objet utilisent ce préfixe : 1.3.6.1.4.1.10943.10.2.</seg>
       </tuv>
     </tu>
     <tu>
@@ -12746,6 +12842,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Just add this file to OpenLDAP schemas by including it in &lt;c0&gt;slapd.conf&lt;/c0&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T144212Z" changeid="xavier">
+        <seg>Ajouter simplement ce fichier aux schémas OpenLDAP en l'incluant dans &lt;c0&gt;slapd.conf&lt;/c0&gt;:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Just configure the &lt;a0&gt;access rules&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T115640Z" changeid="xavier">
@@ -13802,6 +13906,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>OID prefix</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T144049Z" changeid="xavier">
+        <seg>Préfixe OID</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>OW2 annual conference</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -13814,6 +13926,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20111210T074154Z" changeid="xavier">
         <seg>Bien sûr, l'integration est complète si le serveur &lt;a0&gt;LDAP&lt;/a0&gt; est utilisé comme base de données des utilisateurs dans &lt;a1&gt;LL::NG&lt;/a1&gt; et Liferay.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Of course, standard &lt;a0&gt;LDAP&lt;/a0&gt; attributes can be used to store these data, but &lt;a1&gt;LL::NG&lt;/a1&gt; also provides an &lt;a2&gt;LDAP&lt;/a2&gt; schema extension to manage them.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T144040Z" changeid="xavier">
+        <seg>Bien sûr, les attributs &lt;a0&gt;LDAP&lt;/a0&gt; standard peuvent être utilisés pour stocker ces données, mais &lt;a1&gt;LL::NG&lt;/a1&gt; fournit aussi une extension de schéma &lt;a2&gt;LDAP&lt;/a2&gt; pour les gérer.</seg>
       </tuv>
     </tu>
     <tu>
@@ -13898,6 +14018,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>One or more roles (to send to the protected applications)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T143938Z" changeid="xavier">
+        <seg>Un ou plusieurs rôles (à envoyer aux applications protégées)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Open SSO session</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -13918,6 +14046,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>OpenID</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>OpenLDAP schema</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T144143Z" changeid="xavier">
+        <seg>Schéma OpenLDAP</seg>
       </tuv>
     </tu>
     <tu>
@@ -14802,6 +14938,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Schema extension</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T143519Z" changeid="xavier">
+        <seg>Extension de schéma</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Screenshots</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -15378,6 +15522,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Standards attributes, like uid, cn or mail, are often enough to configure access rules and headers.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T143606Z" changeid="xavier">
+        <seg>Les attributs standards, tels uid, cn ou mail, sont souvent suffisant pour configurer les règles d'accès et en-têtes.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Start</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -15762,6 +15914,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The prefix 1.3.6.1.4.1.10943 is owned by &lt;a0&gt;LINAGORA&lt;/a0&gt; (See &lt;a1&gt;http://www.iana.org/assignments/enterprise-numbers&lt;/a1&gt;).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T144136Z" changeid="xavier">
+        <seg>Le préfixe 1.3.6.1.4.1.10943 est propriété de &lt;a0&gt;LINAGORA&lt;/a0&gt; (Voir &lt;a1&gt;http://www.iana.org/assignments/enterprise-numbers&lt;/a1&gt;).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The real accounting has to be done by the application itself since &lt;a0&gt;SSO&lt;/a0&gt; logs can not understand transactions.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -16138,10 +16298,26 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>This requires at least Net::&lt;a2&gt;LDAP&lt;/a2&gt; 0.38.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T143036Z" changeid="xavier">
+        <seg>Nécessite une version de Net::&lt;a2&gt;LDAP&lt;/a2&gt; égale ou supérieure à 0.38.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>This requires to configure &lt;a0&gt;LL::NG&lt;/a0&gt; as an &lt;a1&gt;SAML Identity Provider&lt;/a1&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T153808Z" changeid="xavier">
         <seg>Ceci nécessite de configurer &lt;a0&gt;LL::NG&lt;/a0&gt; comme &lt;a1&gt;fournisseur d'identité SAML&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This requires to request user old password (see &lt;a1&gt;portal customization&lt;/a1&gt;).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T143351Z" changeid="xavier">
+        <seg>Nécessite de requérir l'ancien mot-de-passe (voir &lt;a1&gt;personnalisation du portail&lt;/a1&gt;).</seg>
       </tuv>
     </tu>
     <tu>
@@ -16166,6 +16342,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T190444Z" changeid="xavier">
         <seg>Cette valve examine les en-têtes &lt;a2&gt;HTTP&lt;/a2&gt; pour désigner l'utilisateur authentifié au conteneur J2EE.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This will provide the auxiliary object class &lt;c0&gt;ssoUser&lt;/c0&gt; with attributes:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T144241Z" changeid="xavier">
+        <seg>Il fournit les classes auxiliaires &lt;c0&gt;ssoUser&lt;/c0&gt; avec les attributs :</seg>
       </tuv>
     </tu>
     <tu>
@@ -16254,6 +16438,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Pour étendre le &lt;a0&gt;SSO&lt;/a0&gt; sur plusieurs domaines, un mécanisme inter-domaines est intégré à LemonLDAP::NG.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>To get attributes values in session, declare them in &lt;a0&gt;exported variables&lt;/a0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T144417Z" changeid="xavier">
+        <seg>Pour utiliser ces valeurs dans les sessions, il faut les déclarer dans les &lt;a0&gt;variables exportées&lt;/a0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -16906,6 +17098,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074339Z" changeid="xavier">
         <seg>Il est possible d'ajouter une règle pour la déconnexion :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can add this object class to any entry of your directory.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T144335Z" changeid="xavier">
+        <seg>Cette classe d'objets peut être ajoutée à toute entrée de l'annuaire.</seg>
       </tuv>
     </tu>
     <tu>
@@ -19586,6 +19786,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://www.iana.org/assignments/enterprise-numbers</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T144117Z" changeid="xavier">
+        <seg>http://www.iana.org/assignments/enterprise-numbers</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://www.lambdaprobe.org</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T153722Z" changeid="xavier">
@@ -20006,6 +20214,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>importer vos propres clefs privées et publiques (entrée &lt;c0&gt;Charger depuis un fichier&lt;/c0&gt;)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>include /usr/share/lemonldap-ng/ressources/sso.schema</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T144214Z" changeid="xavier">
+        <seg>include /usr/share/lemonldap-ng/ressources/sso.schema</seg>
       </tuv>
     </tu>
     <tu>
@@ -20560,6 +20776,46 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR" changedate="20111217T081455Z" changeid="xavier">
         <seg>service_name                   LemonLDAP::NG</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>ssoEndDate</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T144244Z" changeid="xavier">
+        <seg>ssoEndDate</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>ssoLogonHours</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T144243Z" changeid="xavier">
+        <seg>ssoLogonHours</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>ssoName</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T144242Z" changeid="xavier">
+        <seg>ssoName</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>ssoRoles</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T144242Z" changeid="xavier">
+        <seg>ssoRoles</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>ssoStartDate</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T144243Z" changeid="xavier">
+        <seg>ssoStartDate</seg>
       </tuv>
     </tu>
     <tu>
