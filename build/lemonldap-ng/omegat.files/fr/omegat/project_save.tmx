@@ -1194,6 +1194,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.0/parameterlist.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T145630Z" changeid="xavier">
+        <seg>../../documentation/1.0/parameterlist.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.0/portalcustom.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T200202Z" changeid="xavier">
@@ -6844,6 +6852,16 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;&lt;s1&gt;[&lt;/s1&gt;portal&lt;s2&gt;]&lt;/s2&gt;&lt;/s0&gt;
+&lt;s3&gt;multi&lt;/s3&gt; &lt;s4&gt;=&lt;/s4&gt;&lt;s5&gt; &lt;s6&gt;{&lt;/s6&gt;'LDAP#Openldap'&lt;s7&gt;=&lt;/s7&gt;&gt;&lt;s8&gt;{&lt;/s8&gt;ldapServer&lt;s9&gt;=&lt;/s9&gt;&gt;'ldap1.example.com',LDAPFilter&lt;s10&gt;=&lt;/s10&gt;&gt;'&lt;s11&gt;(&lt;/s11&gt;uid&lt;s12&gt;=&lt;/s12&gt;$user&lt;s13&gt;)&lt;/s13&gt;'&lt;s14&gt;}&lt;/s14&gt;,'LDAP#ActiveDirectory'&lt;s15&gt;=&lt;/s15&gt;&gt;&lt;s16&gt;{&lt;/s16&gt;ldapServer&lt;s17&gt;=&lt;/s17&gt;&gt;'ldaps://ad.example.com',LDAPFilter&lt;s18&gt;=&lt;/s18&gt;&gt;'&lt;s19&gt;(&lt;/s19&gt;&amp;&lt;s20&gt;(&lt;/s20&gt;sAMAccountName&lt;s21&gt;=&lt;/s21&gt;$user&lt;s22&gt;)&lt;/s22&gt;&lt;s23&gt;(&lt;/s23&gt;objectClass&lt;s24&gt;=&lt;/s24&gt;person&lt;s25&gt;)&lt;/s25&gt;&lt;s26&gt;)&lt;/s26&gt;'&lt;s27&gt;}&lt;/s27&gt;&lt;s28&gt;}&lt;/s28&gt;&lt;/s5&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T150205Z" changeid="xavier">
+        <seg>&lt;s0&gt;&lt;s1&gt;[&lt;/s1&gt;portal&lt;s2&gt;]&lt;/s2&gt;&lt;/s0&gt;
+&lt;s3&gt;multi&lt;/s3&gt; &lt;s4&gt;=&lt;/s4&gt;&lt;s5&gt; &lt;s6&gt;{&lt;/s6&gt;'LDAP#Openldap'&lt;s7&gt;=&lt;/s7&gt;&gt;&lt;s8&gt;{&lt;/s8&gt;ldapServer&lt;s9&gt;=&lt;/s9&gt;&gt;'ldap1.example.com',LDAPFilter&lt;s10&gt;=&lt;/s10&gt;&gt;'&lt;s11&gt;(&lt;/s11&gt;uid&lt;s12&gt;=&lt;/s12&gt;$user&lt;s13&gt;)&lt;/s13&gt;'&lt;s14&gt;}&lt;/s14&gt;,'LDAP#ActiveDirectory'&lt;s15&gt;=&lt;/s15&gt;&gt;&lt;s16&gt;{&lt;/s16&gt;ldapServer&lt;s17&gt;=&lt;/s17&gt;&gt;'ldaps://ad.example.com',LDAPFilter&lt;s18&gt;=&lt;/s18&gt;&gt;'&lt;s19&gt;(&lt;/s19&gt;&amp;&lt;s20&gt;(&lt;/s20&gt;sAMAccountName&lt;s21&gt;=&lt;/s21&gt;$user&lt;s22&gt;)&lt;/s22&gt;&lt;s23&gt;(&lt;/s23&gt;objectClass&lt;s24&gt;=&lt;/s24&gt;person&lt;s25&gt;)&lt;/s25&gt;&lt;s26&gt;)&lt;/s26&gt;'&lt;s27&gt;}&lt;/s27&gt;&lt;s28&gt;}&lt;/s28&gt;&lt;/s5&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Account session key&lt;/s0&gt;: session field used as Zimbra user account (by default: uid)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111222T181340Z" changeid="xavier">
@@ -7960,6 +7978,16 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;my&lt;/s0&gt; &lt;s1&gt;$portal&lt;/s1&gt; &lt;s2&gt;=&lt;/s2&gt; Lemonldap&lt;s3&gt;::&lt;/s3&gt;&lt;s4&gt;NG&lt;/s4&gt;&lt;s5&gt;::&lt;/s5&gt;&lt;s6&gt;Portal&lt;/s6&gt;&lt;s7&gt;::&lt;/s7&gt;&lt;s8&gt;SharedConf&lt;/s8&gt;&lt;s9&gt;-&gt;&lt;/s9&gt;&lt;s10&gt;new&lt;/s10&gt;&lt;s11&gt;(&lt;/s11&gt;&lt;s12&gt;{&lt;/s12&gt;
+multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T150119Z" changeid="xavier">
+        <seg>&lt;s0&gt;my&lt;/s0&gt; &lt;s1&gt;$portal&lt;/s1&gt; &lt;s2&gt;=&lt;/s2&gt; Lemonldap&lt;s3&gt;::&lt;/s3&gt;&lt;s4&gt;NG&lt;/s4&gt;&lt;s5&gt;::&lt;/s5&gt;&lt;s6&gt;Portal&lt;/s6&gt;&lt;s7&gt;::&lt;/s7&gt;&lt;s8&gt;SharedConf&lt;/s8&gt;&lt;s9&gt;-&gt;&lt;/s9&gt;&lt;s10&gt;new&lt;/s10&gt;&lt;s11&gt;(&lt;/s11&gt;&lt;s12&gt;{&lt;/s12&gt;
+multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;passThrough&lt;/s0&gt; (optional): Allow anonymous access or not.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T191206Z" changeid="xavier">
@@ -8128,6 +8156,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s11&gt;}&lt;/s11&gt;&lt;s12&gt;,&lt;/s12&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T150006Z" changeid="xavier">
+        <seg>&lt;s11&gt;}&lt;/s11&gt;&lt;s12&gt;,&lt;/s12&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s123&gt;&quot;userobm_zipcode&quot;&lt;/s123&gt;               &lt;s124&gt;=&gt;&lt;/s124&gt; &lt;s125&gt;&quot;HTTP_OBM_POSTALCODE&quot;&lt;/s125&gt;&lt;s126&gt;,&lt;/s126&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112317Z" changeid="xavier">
@@ -8232,6 +8268,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112253Z" changeid="xavier">
         <seg>&lt;s13&gt;&quot;auto_update_force_user&quot;&lt;/s13&gt; &lt;s14&gt;=&gt;&lt;/s14&gt; &lt;s15&gt;true&lt;/s15&gt;&lt;s16&gt;,&lt;/s16&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s13&gt;'LDAP#ActiveDirectory'&lt;/s13&gt; &lt;s14&gt;=&gt;&lt;/s14&gt; &lt;s15&gt;{&lt;/s15&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T150007Z" changeid="xavier">
+        <seg>&lt;s13&gt;'LDAP#ActiveDirectory'&lt;/s13&gt; &lt;s14&gt;=&gt;&lt;/s14&gt; &lt;s15&gt;{&lt;/s15&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -8360,6 +8404,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112332Z" changeid="xavier">
         <seg>&lt;s157&gt;&quot;userobm_ext_id&quot;&lt;/s157&gt;                &lt;s158&gt;=&gt;&lt;/s158&gt; &lt;s159&gt;&quot;HTTP_OBM_SERIALNUMBER&quot;&lt;/s159&gt;&lt;s160&gt;,&lt;/s160&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s15&gt;'LDAP#Openldap'&lt;/s15&gt; &lt;s16&gt;=&gt;&lt;/s16&gt; &lt;s17&gt;{&lt;/s17&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T150120Z" changeid="xavier">
+        <seg>&lt;s15&gt;'LDAP#Openldap'&lt;/s15&gt; &lt;s16&gt;=&gt;&lt;/s16&gt; &lt;s17&gt;{&lt;/s17&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -8678,6 +8730,24 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s22&gt;}&lt;/s22&gt;
+&lt;s23&gt;}&lt;/s23&gt;&lt;s24&gt;,&lt;/s24&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T150012Z" changeid="xavier">
+        <seg>&lt;s22&gt;}&lt;/s22&gt;
+&lt;s23&gt;}&lt;/s23&gt;&lt;s24&gt;,&lt;/s24&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s24&gt;}&lt;/s24&gt;&lt;s25&gt;,&lt;/s25&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T150122Z" changeid="xavier">
+        <seg>&lt;s24&gt;}&lt;/s24&gt;&lt;s25&gt;,&lt;/s25&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s25&gt;&quot;server_ip_address&quot;&lt;/s25&gt;     &lt;s26&gt;=&gt;&lt;/s26&gt; &lt;s27&gt;&quot;localhost&quot;&lt;/s27&gt;&lt;s28&gt;,&lt;/s28&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112255Z" changeid="xavier">
@@ -8690,6 +8760,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T194856Z" changeid="xavier">
         <seg>&lt;s25&gt;&lt;s26&gt;&lt;NameIDFormat&lt;s27&gt;&gt;&lt;/s27&gt;&lt;/s26&gt;&lt;/s25&gt;urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress&lt;s28&gt;&lt;s29&gt;&lt;/NameIDFormat&lt;s30&gt;&gt;&lt;/s30&gt;&lt;/s29&gt;&lt;/s28&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s26&gt;'LDAP#ActiveDirectory'&lt;/s26&gt; &lt;s27&gt;=&gt;&lt;/s27&gt; &lt;s28&gt;{&lt;/s28&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T150123Z" changeid="xavier">
+        <seg>&lt;s26&gt;'LDAP#ActiveDirectory'&lt;/s26&gt; &lt;s27&gt;=&gt;&lt;/s27&gt; &lt;s28&gt;{&lt;/s28&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -8742,6 +8820,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s2&gt;'LDAP#Openldap'&lt;/s2&gt; &lt;s3&gt;=&gt;&lt;/s3&gt; &lt;s4&gt;{&lt;/s4&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T150000Z" changeid="xavier">
+        <seg>&lt;s2&gt;'LDAP#Openldap'&lt;/s2&gt; &lt;s3&gt;=&gt;&lt;/s3&gt; &lt;s4&gt;{&lt;/s4&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s2&gt;DocumentRoot&lt;/s2&gt; /var/lib/lemonldap-ng/portal/
  </seg>
       </tuv>
@@ -8770,6 +8856,18 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
         <seg>&lt;s33&gt;&quot;debug_level&quot;&lt;/s33&gt;           &lt;s34&gt;=&gt;&lt;/s34&gt; &lt;s35&gt;&quot;NONE&quot;&lt;/s35&gt;&lt;s36&gt;,&lt;/s36&gt;
 &lt;s37&gt;//                &quot;debug_header_name&quot;     =&gt; &quot;HTTP_OBM_UID&quot;,&lt;/s37&gt;
 &lt;s38&gt;//                &quot;group_header_name&quot;     =&gt; &quot;HTTP_OBM_GROUPS&quot;,&lt;/s38&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s35&gt;}&lt;/s35&gt;
+&lt;s36&gt;}&lt;/s36&gt;&lt;s37&gt;,&lt;/s37&gt;
+&lt;s38&gt;}&lt;/s38&gt;&lt;s39&gt;)&lt;/s39&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T150128Z" changeid="xavier">
+        <seg>&lt;s35&gt;}&lt;/s35&gt;
+&lt;s36&gt;}&lt;/s36&gt;&lt;s37&gt;,&lt;/s37&gt;
+&lt;s38&gt;}&lt;/s38&gt;&lt;s39&gt;)&lt;/s39&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -9474,6 +9572,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Advanced configuration</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T145545Z" changeid="xavier">
+        <seg>Configuration avancée</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>After choosing the file name (for example lemonldapn-ng-priv.key), download the key on your disk.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T192500Z" changeid="xavier">
@@ -9878,6 +9984,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20111217T081836Z" changeid="xavier">
         <seg>Auth-User</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>AuthApache authentication</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T150224Z" changeid="xavier">
+        <seg>Authentification AuthApache</seg>
       </tuv>
     </tu>
     <tu>
@@ -11426,6 +11540,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Example, if you have “&lt;a0&gt;DBI&lt;/a0&gt;;&lt;a1&gt;LDAP&lt;/a1&gt;” and &lt;a2&gt;DBI&lt;/a2&gt; failed for authentication, Multi will try first to call &lt;a3&gt;LDAP&lt;/a3&gt; as user database.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T145538Z" changeid="xavier">
+        <seg>Exemple, en utilisant “&lt;a0&gt;DBI&lt;/a0&gt;;&lt;a1&gt;LDAP&lt;/a1&gt;”, si &lt;a2&gt;DBI&lt;/a2&gt; échoue pour l'authentification, Multi essaie d'utiliser &lt;a3&gt;LDAP&lt;/a3&gt; comme base d'utilisateurs.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Example:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111220T110948Z" changeid="xavier">
@@ -11622,6 +11744,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T113257Z" changeid="xavier">
         <seg>Par exemple, pour exporter l'identifiant (&lt;c0&gt;$uid&lt;/c0&gt;) et le mot-de-passe (&lt;c1&gt;$_password&lt;/c1&gt; si &lt;a2&gt;le mot-de-passe est stocké dans la session&lt;/a2&gt;):</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>For example:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T145310Z" changeid="xavier">
+        <seg>Par exemple :</seg>
       </tuv>
     </tu>
     <tu>
@@ -12290,10 +12420,26 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If &lt;a0&gt;CAS&lt;/a0&gt; failed, &lt;a1&gt;LDAP&lt;/a1&gt; will be used.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T145328Z" changeid="xavier">
+        <seg>Si &lt;a0&gt;CAS&lt;/a0&gt; échoue, &lt;a1&gt;LDAP&lt;/a1&gt; est utilisé.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If &lt;a2&gt;LL::NG&lt;/a2&gt; send some roles split by some commas, configure &lt;s3&gt;roleSeparator&lt;/s3&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T190855Z" changeid="xavier">
         <seg>Si &lt;a2&gt;LL::NG&lt;/a2&gt; envoie les rôles séparés par des caractères (virgule,...), configurer &lt;s3&gt;roleSeparator&lt;/s3&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>If Multi is used for authentication and user database, it will try to use the same module.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T145435Z" changeid="xavier">
+        <seg>Si Multi est utilisé pour l'authentification et la base utilisateurs, il essaiera d'utiliser le même module.</seg>
       </tuv>
     </tu>
     <tu>
@@ -12906,6 +13052,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Known problems</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T150214Z" changeid="xavier">
+        <seg>Problèmes connus</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Known supported applications</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111222T181739Z" changeid="xavier">
@@ -12990,6 +13144,38 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Performances LDAP</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LDAPFilter &lt;s19&gt;=&gt;&lt;/s19&gt; &lt;s20&gt;'(&amp;(sAMAccountName=$user)(objectClass=person))'&lt;/s20&gt;&lt;s21&gt;,&lt;/s21&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T150009Z" changeid="xavier">
+        <seg>LDAPFilter &lt;s19&gt;=&gt;&lt;/s19&gt; &lt;s20&gt;'(&amp;(sAMAccountName=$user)(objectClass=person))'&lt;/s20&gt;&lt;s21&gt;,&lt;/s21&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LDAPFilter &lt;s21&gt;=&gt;&lt;/s21&gt; &lt;s22&gt;'(uid=$user)'&lt;/s22&gt;&lt;s23&gt;,&lt;/s23&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T150122Z" changeid="xavier">
+        <seg>LDAPFilter &lt;s21&gt;=&gt;&lt;/s21&gt; &lt;s22&gt;'(uid=$user)'&lt;/s22&gt;&lt;s23&gt;,&lt;/s23&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LDAPFilter &lt;s32&gt;=&gt;&lt;/s32&gt; &lt;s33&gt;'(&amp;(sAMAccountName=$user)(objectClass=person))'&lt;/s33&gt;&lt;s34&gt;,&lt;/s34&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T150126Z" changeid="xavier">
+        <seg>LDAPFilter &lt;s32&gt;=&gt;&lt;/s32&gt; &lt;s33&gt;'(&amp;(sAMAccountName=$user)(objectClass=person))'&lt;/s33&gt;&lt;s34&gt;,&lt;/s34&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LDAPFilter &lt;s8&gt;=&gt;&lt;/s8&gt; &lt;s9&gt;'(uid=$user)'&lt;/s9&gt;&lt;s10&gt;,&lt;/s10&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T150004Z" changeid="xavier">
+        <seg>LDAPFilter &lt;s8&gt;=&gt;&lt;/s8&gt; &lt;s9&gt;'(uid=$user)'&lt;/s9&gt;&lt;s10&gt;,&lt;/s10&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -13610,6 +13796,30 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Multi CAS;LDAP</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T145313Z" changeid="xavier">
+        <seg>Multi CAS;LDAP</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Multi LDAP#Openldap; LDAP#ActiveDirectory</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T145836Z" changeid="xavier">
+        <seg>Multi LDAP#Openldap; LDAP#ActiveDirectory</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Multi Remote $ENV{REMOTE_ADDR}=~/^192/;LDAP $ENV{REMOTE_ADDR}!~/^192/'</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T145349Z" changeid="xavier">
+        <seg>Multi Remote $ENV{REMOTE_ADDR}=~/^192/;LDAP $ENV{REMOTE_ADDR}!~/^192/'</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Multi values separator</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -14102,6 +14312,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>Outlook Web Access, …</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Overloading is not available trough the manager</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T145739Z" changeid="xavier">
+        <seg>La surcharge n'est pas paramètrable dans le manager</seg>
       </tuv>
     </tu>
     <tu>
@@ -14906,6 +15124,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>SSL authentication</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T150452Z" changeid="xavier">
+        <seg>Authentification SSL</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>SVN access</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -15522,6 +15748,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Stack multiple backends (AuthMulti)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T144535Z" changeid="xavier">
+        <seg>Empiler de multiples backends (AuthMulti)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Standards attributes, like uid, cn or mail, are often enough to configure access rules and headers.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T143606Z" changeid="xavier">
@@ -15962,6 +16196,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The “Multi” system can :</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T145557Z" changeid="xavier">
+        <seg>Le système “Multi” peut :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Then Zimbra do the &lt;a0&gt;SSO&lt;/a0&gt; by setting a cookie in user's browser</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111220T155549Z" changeid="xavier">
@@ -16022,6 +16264,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074140Z" changeid="xavier">
         <seg>Utiliser ensuite le paragraphe &lt;c0&gt;SiteMinder&lt;/c0&gt; pour configurer le &lt;a1&gt;SSO&lt;/a1&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Then you can have different &lt;a0&gt;parameters&lt;/a0&gt; for each stored in a &lt;a1&gt;Perl&lt;/a1&gt; hash entry named multi:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T145957Z" changeid="xavier">
+        <seg>Ensuite on peut avoir différents &lt;a0&gt;paramètres&lt;/a0&gt; pour chacun stockés dans une table de hachage &lt;a1&gt;Perl&lt;/a1&gt; nommée multi:</seg>
       </tuv>
     </tu>
     <tu>
@@ -16146,6 +16396,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>This backend allows to chain authentication method, for example to failback to &lt;a0&gt;LDAP&lt;/a0&gt; authentication if Remote authentication failed…</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T145142Z" changeid="xavier">
+        <seg>Ce backend permet de chaîner des méthodes d'authentification, par exemple pour basculer sur une authentification &lt;a0&gt;LDAP&lt;/a0&gt; si l'authentification amont a échouée…</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>This can be a file, an &lt;a0&gt;LDAP&lt;/a0&gt; directory, …</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -16250,6 +16508,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>This key must be stored directly in portal index.pl file or in lemonldap-ng.ini:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T150052Z" changeid="xavier">
+        <seg>Cette clef doit être stockée directement dans le fichier index.pl du portail ou dans lemonldap-ng.ini :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>This option can then be overridden for each Service Provider.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -16318,6 +16584,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T143351Z" changeid="xavier">
         <seg>Nécessite de requérir l'ancien mot-de-passe (voir &lt;a1&gt;personnalisation du portail&lt;/a1&gt;).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This scheme expect a parameter, which is the authentication chain.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T145302Z" changeid="xavier">
+        <seg>Ce dispositif nécessite un paramètre : la chaîne d'authentification.</seg>
       </tuv>
     </tu>
     <tu>
@@ -16418,6 +16692,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>To chain &lt;a0&gt;SSL&lt;/a0&gt;, you have to set “SSLRequire optional” in Apache configuration, else users will be authenticated by &lt;a1&gt;SSL&lt;/a1&gt; only.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T150654Z" changeid="xavier">
+        <seg>Pour chaîner &lt;a0&gt;SSL&lt;/a0&gt;, il est nécessaire de mettre “SSLRequire optional” dans le fichier de configuration Apache, sinon les utilisateurs ne seront authentifiés que par &lt;a1&gt;SSL&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>To define keys, you can:</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -16462,6 +16744,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111207T052401Z" changeid="xavier">
         <seg>Pour gérer l'autre voie (&lt;a0&gt;LL::NG&lt;/a0&gt; → Google Apps), ajouter une &lt;a1&gt;règle de redirection après déconnexion&lt;/a1&gt;:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>To stack several times the same module, use ”#name” with different names.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T145832Z" changeid="xavier">
+        <seg>Pour empiler plusieurs fois le même module, utiliser ”#nom” avec différents noms.</seg>
       </tuv>
     </tu>
     <tu>
@@ -16990,6 +17280,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>We're studying a future solution for this…</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T150440Z" changeid="xavier">
+        <seg>Une solution est à l'étude pour ça…</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>When &lt;c0&gt;Choice&lt;/c0&gt; is selected for authentication, values for Users and Password modules are not used anymore.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T194309Z" changeid="xavier">
@@ -17002,6 +17300,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T191247Z" changeid="xavier">
         <seg>Lorsqu'il est à “false”, les en-têtes &lt;a1&gt;HTTP&lt;/a1&gt; doivent être renseignés par &lt;a2&gt;LL::NG&lt;/a2&gt; pour valider l'authentification.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>When using this module, &lt;a0&gt;LL::NG&lt;/a0&gt; portal will be called only if Apache does not return “401 Authentication required”, but this is not the Apache behaviour: if the auth module fails, Apache returns 401.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T150416Z" changeid="xavier">
+        <seg>En utilisant ce module, le portail &lt;a0&gt;LL::NG&lt;/a0&gt; est appelé uniquement si Apache ne retourne pas “401 Authentication required”, aucune bascule n'est donc possible.</seg>
       </tuv>
     </tu>
     <tu>
@@ -17106,6 +17412,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T144335Z" changeid="xavier">
         <seg>Cette classe d'objets peut être ajoutée à toute entrée de l'annuaire.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can also add a condition.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T145342Z" changeid="xavier">
+        <seg>Il est possibe d'ajouter une condition.</seg>
       </tuv>
     </tu>
     <tu>
@@ -17322,6 +17636,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T154553Z" changeid="xavier">
         <seg>Il faut lancer cette commande dans Active Directory:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You have to use “Multi” as authentication module.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T145224Z" changeid="xavier">
+        <seg>Il est possible d'utiliser le module d'authentification “Multi”.</seg>
       </tuv>
     </tu>
     <tu>
@@ -18394,6 +18716,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.0:parameterlist</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T145630Z" changeid="xavier">
+        <seg>documentation:1.0:parameterlist</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.0:passwordstore</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T112720Z" changeid="xavier">
@@ -18830,6 +19160,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T171543Z" changeid="xavier">
         <seg>champ</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>for index.pl, set it in new():</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T150113Z" changeid="xavier">
+        <seg>pour index.pl, le mettre dans new() :</seg>
       </tuv>
     </tu>
     <tu>
@@ -20296,6 +20634,38 @@ kinit -k -t /etc/lemonldap-ng/auth.keytab HTTP/auth.example.com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>ldapServer &lt;s16&gt;=&gt;&lt;/s16&gt; &lt;s17&gt;'ldaps://ad.example.com'&lt;/s17&gt;&lt;s18&gt;,&lt;/s18&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T150008Z" changeid="xavier">
+        <seg>ldapServer &lt;s16&gt;=&gt;&lt;/s16&gt; &lt;s17&gt;'ldaps://ad.example.com'&lt;/s17&gt;&lt;s18&gt;,&lt;/s18&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>ldapServer &lt;s18&gt;=&gt;&lt;/s18&gt; &lt;s19&gt;'ldap1.example.com'&lt;/s19&gt;&lt;s20&gt;,&lt;/s20&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T150121Z" changeid="xavier">
+        <seg>ldapServer &lt;s18&gt;=&gt;&lt;/s18&gt; &lt;s19&gt;'ldap1.example.com'&lt;/s19&gt;&lt;s20&gt;,&lt;/s20&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>ldapServer &lt;s29&gt;=&gt;&lt;/s29&gt; &lt;s30&gt;'ldaps://ad.example.com'&lt;/s30&gt;&lt;s31&gt;,&lt;/s31&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T150124Z" changeid="xavier">
+        <seg>ldapServer &lt;s29&gt;=&gt;&lt;/s29&gt; &lt;s30&gt;'ldaps://ad.example.com'&lt;/s30&gt;&lt;s31&gt;,&lt;/s31&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>ldapServer &lt;s5&gt;=&gt;&lt;/s5&gt; &lt;s6&gt;'ldap1.example.com'&lt;/s6&gt;&lt;s7&gt;,&lt;/s7&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T150002Z" changeid="xavier">
+        <seg>ldapServer &lt;s5&gt;=&gt;&lt;/s5&gt; &lt;s6&gt;'ldap1.example.com'&lt;/s6&gt;&lt;s7&gt;,&lt;/s7&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>ldapgroups -&gt; memberOf</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -20522,6 +20892,14 @@ make test</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>multi &lt;s0&gt;=&gt;&lt;/s0&gt; &lt;s1&gt;{&lt;/s1&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T145959Z" changeid="xavier">
+        <seg>multi &lt;s0&gt;=&gt;&lt;/s0&gt; &lt;s1&gt;{&lt;/s1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>name</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T195436Z" changeid="xavier">
@@ -20584,6 +20962,22 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       <tuv lang="FR-FR" changedate="20111203T192534Z" changeid="xavier">
         <seg>openssl req -new -key lemonldap-ng-priv.key -out cert.csr
 openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out cert.pem</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>or to use lemonldap-ng.ini, install it (one line only) in [portal] section:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T150204Z" changeid="xavier">
+        <seg>ou pour utiliser lemonldap-ng.ini, écrire (sur une seule ligne) dans la section [portal] :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>overload any &lt;a0&gt;LL::NG&lt;/a0&gt; &lt;a1&gt;parameter&lt;/a1&gt; when a specific backend is used</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T145720Z" changeid="xavier">
+        <seg>surcharger n'importe quel &lt;a1&gt;paramètre&lt;/a1&gt; &lt;a0&gt;LL::NG&lt;/a0&gt; en fonction du backend utilisé</seg>
       </tuv>
     </tu>
     <tu>
@@ -20816,6 +21210,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T144243Z" changeid="xavier">
         <seg>ssoStartDate</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>stack several times the same module with a different name</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T145628Z" changeid="xavier">
+        <seg>empiler plusieurs fois le même module avec un nom différent</seg>
       </tuv>
     </tu>
     <tu>
