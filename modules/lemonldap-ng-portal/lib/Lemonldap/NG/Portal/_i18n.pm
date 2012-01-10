@@ -408,6 +408,7 @@ sub error_ro {
 # * PM_OPENID_RPNS             18
 # * PM_OPENID_PA               19
 # * PM_OPENID_AP               20
+# * PM_ERROR_MSG               21
 
 sub msg_en {
     use utf8;
@@ -433,6 +434,7 @@ sub msg_en {
         'Parameter %s requested for federation isn\'t available',
         'Data usage policy is available at',
         'Do you agree to provide the following parameters?',
+        'Error Message',
     ];
 }
 
@@ -460,6 +462,7 @@ sub msg_fr {
         'Le paramètre %s exigé pour la fédération n\'est pas disponible',
         'La politique d\'utilisation des données est disponible ici',
         'Consentez-vous à communiquer les paramètres suivants&nbsp;?',
+        'Message d\'erreur',
     ];
 }
 

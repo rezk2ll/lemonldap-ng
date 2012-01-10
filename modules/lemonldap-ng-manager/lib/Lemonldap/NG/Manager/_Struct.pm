@@ -267,7 +267,7 @@ sub struct {
                     _help         => 'menu',
                     portalModules => {
                         _nodes => [
-                            qw(portalDisplayLogout portalDisplayChangePassword portalDisplayAppslist)
+                            qw(portalDisplayLogout portalDisplayChangePassword portalDisplayAppslist portalDisplayLoginHistory)
                         ],
                         portalDisplayLogout =>
                           'text:/portalDisplayLogout:menu:boolOrPerlExpr',
@@ -275,6 +275,8 @@ sub struct {
 'text:/portalDisplayChangePassword:menu:boolOrPerlExpr',
                         portalDisplayAppslist =>
                           'text:/portalDisplayAppslist:menu:boolOrPerlExpr',
+                        portalDisplayLoginHistory =>
+                          'text:/portalDisplayLoginHistory:menu:boolOrPerlExpr',
                     },
                     applicationList => {
                         _nodes => [
@@ -287,7 +289,7 @@ sub struct {
 
                 portalCustomization => {
                     _nodes => [
-                        qw(portalSkin portalAutocomplete portalUserAttr portalOpenLinkInNewWindow portalAntiFrame passwordManagement)
+                        qw(portalSkin portalAutocomplete portalUserAttr portalOpenLinkInNewWindow portalAntiFrame passwordManagement loginDisplay)
                     ],
                     _help => 'portalcustom',
 
@@ -309,6 +311,17 @@ sub struct {
                           'bool:/portalRequireOldPassword',
                         hideOldPassword      => 'bool:/hideOldPassword',
                         mailOnPasswordChange => 'bool:/mailOnPasswordChange',
+                    },
+
+                    loginDisplay => {
+                        _nodes => [qw(successLoginNumber failedLoginNumber cn:sessionDataToDisplay)],
+                        _help => 'loginDisplay',
+                        successLoginNumber => 'int:/successLoginNumber',
+                        failedLoginNumber => 'int:/failedLoginNumber',
+                        sessionDataToDisplay => {
+                            _nodes => ['hash:/sessionDataToDisplay:loginDisplay:btext'],
+                            _js    => 'hashRoot',
+                        },
                     },
                 },
             },
@@ -1338,6 +1351,7 @@ sub testStruct {
             test       => qr/^[a-zA-Z][\w-]*$/,
             msgFail    => 'Bad attribute name',
         },
+        failedLoginNumber => $integer,
         globalStorage => {
             test    => qr/^[\w:]+$/,
             msgFail => 'Bad module name',
@@ -1513,6 +1527,7 @@ sub testStruct {
             msgFail => 'Bad portal value',
         },
         portalAutocomplete          => $boolean,
+        portalDisplayLoginHistory   => { test => $perlExpr, },
         portalDisplayAppslist       => { test => $perlExpr, },
         portalDisplayChangePassword => { test => $perlExpr, },
         portalDisplayLogout         => { test => $perlExpr, },
@@ -1544,11 +1559,16 @@ sub testStruct {
             test    => qr/^(?:0|1|2)$/,
             msgFail => 'securedCookie must be 0, 1 or 2',
         },
+        sessionDataToDisplay => {
+            keyTest       => qr/^[\w-]+$/,
+            keyMsgFail    => 'Invalid session data',
+        },
         singleSession  => $boolean,
         singleIP       => $boolean,
         singleUserByIP => $boolean,
         Soap           => $boolean,
         storePassword  => $boolean,
+        successLoginNumber => $integer,
         syslog         => {
             test => qw/^(?:auth|authpriv|daemon|local\d|user)?$/,
             msgFail =>
@@ -1852,6 +1872,7 @@ sub defaultConf {
         cda                      => '0',
         cookieName               => 'lemonldap',
         domain                   => 'example.com',
+        failedLoginNumber        => '5',
         globalStorage            => 'Apache::Session::File',
         hideOldPassword          => '0',
         httpOnly                 => '1',
@@ -1893,6 +1914,7 @@ sub defaultConf {
         portal                          => 'http://auth.example.com',
         portalSkin                      => 'pastel',
         portalUserAttr                  => '_user',
+        portalDisplayLoginHistory       => '1',
         portalDisplayAppslist           => '1',
         portalDisplayChangePassword => '$_auth eq "LDAP" or $_auth eq "DBI"',
         portalDisplayLogout         => '1',
@@ -1914,6 +1936,7 @@ sub defaultConf {
         Soap                        => '1',
         SSLRequired                 => '0',
         storePassword               => '0',
+        successLoginNumber          => '5',
         syslog                      => '',
         timeout                     => '72000',
         timeoutActivity             => '0',

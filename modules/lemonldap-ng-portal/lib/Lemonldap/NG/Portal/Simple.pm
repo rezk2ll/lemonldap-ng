@@ -2032,12 +2032,15 @@ sub sendPasswordMail {
 }
 
 ##@apmethod int authenticate()
-# Call authenticate() in Auth* module and call userNotice().
+# Call authenticate() in Auth* module, and registerLogin()
+# if authentication failed, userNotice() if it succeeded.
 #@return Lemonldap::NG::Portal constant
 sub authenticate {
     my $self = shift;
-    my $tmp;
-    return $tmp if ( $tmp = $self->SUPER::authenticate() );
+    if ( my $errorCode = $self->SUPER::authenticate() ) {
+        $self->registerLogin( $errorCode ) ;
+        return $errorCode ;
+    }
 
     # Log good authentication
     my $user = $self->{sessionInfo}->{ $self->{whatToTrace} };
@@ -2047,6 +2050,37 @@ sub authenticate {
     $self->{sessionInfo}->{_lastAuthnUTime} = time();
 
     PE_OK;
+}
+
+##@apmethod registerLogin
+# Store current login in login history
+# @param $errorCode Code returned by authenticate()
+sub registerLogin {
+    my ( $self, $errorCode ) = @_;
+
+    if ($self->{portalDisplayLoginHistory}) {
+        my $history = $self->{sessionInfo}->{loginHistory} ||= {};
+
+        my $type = ( $errorCode ? "failed" : "success")."Login";
+        $history->{$type} ||= [];
+        $self->lmLog("Current login saved into $type", "debug");
+
+        # Gather current login's parameters
+        my $login = $self->_sumUpSession( $self->{sessionInfo}, 1 );
+        $login->{error} = $self->error(undef, $errorCode)
+            if ($errorCode);
+
+        # Add current login into history
+        unshift @{$history->{$type}}, $login;
+
+        # Forget oldest logins
+        splice @{$history->{$type}}, $self->{$type."Number"};
+
+        # Save into persistent session
+        $self->updatePersistentSession({
+            loginHistory => $history,
+        });
+    }
 }
 
 ##@apmethod int removeOther()
@@ -2073,21 +2107,11 @@ sub removeOther {
                     and $self->{sessionInfo}->{ipAddr} ne $h->{ipAddr} )
               )
             {
-                push @{ $self->{deleted} },
-                  {
-                    time => $h->{_utime},
-                    ip   => $h->{ipAddr},
-                    user => $h->{ $self->{whatToTrace} },
-                  };
+                push @{ $self->{deleted} }, $self->_sumUpSession($h);
                 $self->_deleteSession( $h, 1 );
             }
             else {
-                push @{ $self->{otherSessions} },
-                  {
-                    time => $h->{_utime},
-                    ip   => $h->{ipAddr},
-                    user => $h->{ $self->{whatToTrace} },
-                  };
+                push @{ $self->{otherSessions} }, $self->_sumUpSession($h);
             }
         }
     }
@@ -2101,48 +2125,76 @@ sub removeOther {
             unless ( $self->{sessionInfo}->{ $self->{whatToTrace} } eq
                 $h->{ $self->{whatToTrace} } )
             {
-                push @{ $self->{deleted} },
-                  {
-                    time => $h->{_utime},
-                    ip   => $h->{ipAddr},
-                    user => $h->{ $self->{whatToTrace} },
-                  };
+                push @{ $self->{deleted} }, $self->_sumUpSession($h);
                 $self->_deleteSession( $h, 1 );
             }
         }
     }
     $self->info(
-        $self->_mkDateIpArray(
+        $self->mkSessionArray(
+            $self->{deleted},
             &Lemonldap::NG::Portal::_i18n::msg(PM_SESSIONS_DELETED),
-            @{ $self->{deleted} }
+            1
         )
     ) if ( $self->{notifyDeleted} and @{ $self->{deleted} } );
     $self->info(
-        $self->_mkDateIpArray(
+        $self->mkSessionArray(
+            $self->{otherSessions},
             &Lemonldap::NG::Portal::_i18n::msg(PM_OTHER_SESSIONS),
-            @{ $self->{otherSessions} } )
-          . $self->_mkRemoveOtherLink()
+            1
+        ) . $self->_mkRemoveOtherLink()
     ) if ( $self->{notifyOther} and @{ $self->{otherSessions} } );
     PE_OK;
 }
 
-##@method private string _mkDateIpArray(string title,array datas)
-# Build the HTML array to display sessions deleted or found by removeOther()
+##@method private hashref _sumUpSession(hashref session)
+# put main session data into a hash ref
+# @param hashref $session The session to sum up
+# @return hashref
+sub _sumUpSession {
+    my ($self, $session, $withoutUser) = @_ ;
+    my $res = $withoutUser ? {} :
+        { user => $session->{ $self->{whatToTrace} } };
+    $res->{$_} = $session->{$_}
+        foreach ("_utime", "ipAddr", keys %{ $self->{sessionDataToDisplay} });
+    return $res;
+}
+
+##@method private string mkSessionArray(string title,array datas)
+# Build an HTML array to display sessions
+# @param $sessions Array ref of hash ref containing sessions datas
 # @param $title Title of the array
-# @param @datas Array of hash ref containing sessions datas
+# @param $displayUser To display "User" column
+# @param $displaError To display "Error" column
 # @return HTML string
-sub _mkDateIpArray {
-    my ( $self, $title, @datas ) = @_;
-    my $tmp = "<h3>$title</h3>";
-    $tmp .= "<table class=\"info\"><tbody><tr>";
-    $tmp .= '<th>' . &Lemonldap::NG::Portal::_i18n::msg($_) . '</th>'
-      foreach ( PM_USER, PM_DATE, PM_IP );
+sub mkSessionArray {
+    my ( $self, $sessions, $title, $displayUser, $displayError ) = @_;
+
+    return "" unless (@$sessions);
+
+    my $tmp = $title ? "<h3>$title</h3>" : "" ;
+    $tmp .= "<table class=\"info\"><tbody>";
+
+    $tmp .= "<tr>";
+    $tmp .= "<th>" . &Lemonldap::NG::Portal::_i18n::msg(PM_USER) . "</th>"
+        if ($displayUser);
+    $tmp .= "<th>" . &Lemonldap::NG::Portal::_i18n::msg(PM_DATE) . "</th>";
+    $tmp .= "<th>" . &Lemonldap::NG::Portal::_i18n::msg(PM_IP)   . "</th>";
+    $tmp .= "<th>" . $self->{sessionDataToDisplay}->{$_}         . "</th>"
+        foreach ( keys %{ $self->{sessionDataToDisplay} } );
+    $tmp .= '<th>' . &Lemonldap::NG::Portal::_i18n::msg(PM_ERROR) . '</th>'
+        if ($displayError);
     $tmp .= '</tr>';
-    foreach (@datas) {
-        $tmp .=
-            "<tr><td>$_->{user}</td><td>"
-          . "<script>var _date=new Date($_->{time}*1000);document.write(_date.toLocaleString());</script>"
-          . "</td><td>$_->{ip}</td></tr>";
+
+    foreach my $session (@$sessions) {
+        $tmp .= "<tr>";
+        $tmp .= "<td>$session->{user}</td>" if ($displayUser);
+        $tmp .= "<td><script>var _date=new Date($session->{_utime}*1000);document.write(_date.toLocaleString());</script></td>";
+        $tmp .= "<td>$session->{ipAddr}</td>";
+        $tmp .= "<td>$session->{$_}</td>"
+            foreach ( keys %{ $self->{sessionDataToDisplay} } );
+        $tmp .= "<td>$session->{error}</td>" if ($displayError);
+        $tmp .= "</tr>";
     }
     $tmp .= '</tbody></table>';
     return $tmp;
@@ -2169,22 +2221,24 @@ sub _mkRemoveOtherLink {
 sub grantSession {
     my ($self) = @_;
 
-    # Return PE_OK if no grantSessionRule
-    return PE_OK unless defined $self->{grantSessionRule};
-
-    # Eval grantSessionRule
-    my $grantSessionRule = $self->{grantSessionRule};
-
-    unless ( $self->safe->reval($grantSessionRule) ) {
-        $self->lmLog(
-            "User " . $self->{user} . " was not granted to open session",
-            'error' );
-        return PE_SESSIONNOTGRANTED;
+    my $errorCode = PE_OK;
+    if (defined $self->{grantSessionRule}) {
+        # Eval grantSessionRule
+        my $grantSessionRule = $self->{grantSessionRule};
+    
+        unless ( $self->safe->reval($grantSessionRule) ) {
+            $self->lmLog(
+                "User " . $self->{user} . " was not granted to open session",
+                'error' );
+            $self->registerLogin(  );
+            $errorCode = PE_SESSIONNOTGRANTED;
+        } else {
+            $self->lmLog( "Session granted for " . $self->{user}, 'notice' );
+        }
     }
 
-    $self->lmLog( "Session granted for " . $self->{user}, 'notice' );
-
-    PE_OK;
+    $self->registerLogin( $errorCode );
+    return $errorCode;
 }
 
 ##@apmethod int store()

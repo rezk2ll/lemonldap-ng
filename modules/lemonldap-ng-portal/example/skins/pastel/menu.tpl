@@ -19,10 +19,12 @@
                 <TMPL_IF NAME="ChangePassword">
 		<li><a href="#password"><span><img src="/skins/common/vcard_edit.png" width="16" height="16" alt="password" /> <lang en="Password" fr="Mot de passe" /></span></a></li>
 		</TMPL_IF>
-                <TMPL_IF NAME="Logout">
+		<TMPL_IF NAME="LoginHistory">
+		<li><a href="#loginHistory"><span><img src="/skins/common/calendar.png" width="16" height="16" alt="login history" /> <lang en="Login history" fr="Historique des connexions" /></span></a></li>
+		</TMPL_IF>
+		<TMPL_IF NAME="Logout">
 		<li><a href="#logout"><span><img src="/skins/common/door_out.png" width="16" height="16" alt="logout" /> <lang en="Logout" fr="D&eacute;connexion" /></span></a></li>
 		</TMPL_IF>
-
 		</TMPL_LOOP>
 		</ul>
 	</TMPL_IF>
@@ -145,6 +147,21 @@
 		<TMPL_INCLUDE NAME="password.tpl">
 	</TMPL_IF>
 		
+	<TMPL_IF NAME="LoginHistory">
+		<div id="loginHistory">
+                <div class="form">
+                <TMPL_IF NAME="SUCCESS_LOGIN">
+                <h3><lang en="Last logins" fr="Derni&egrave;res connexions" /></h3>
+		<TMPL_VAR NAME="SUCCESS_LOGIN">
+                </TMPL_IF>
+		<TMPL_IF NAME="FAILED_LOGIN">
+		<h3><lang en="Last failed logins" fr="Derni&egrave;res connexions refusées" /></h3>
+		<TMPL_VAR NAME="FAILED_LOGIN">
+		</TMPL_IF>
+                </div>
+		</div>
+	</TMPL_IF>
+
 	<TMPL_IF NAME="Logout">
 		<div id="logout">
 		<h3><lang en="Are you sure ?" fr="&Ecirc;tes vous s&ucirc;r ?" /></h3>
@@ -154,7 +171,7 @@
 			</a>
 		</div>
 		</div>
-		</TMPL_IF>
+	</TMPL_IF>
 
 	</TMPL_LOOP>
 
