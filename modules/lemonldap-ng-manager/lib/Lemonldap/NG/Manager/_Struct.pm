@@ -251,7 +251,7 @@ sub struct {
         ######################
         generalParameters => {
             _nodes => [
-                qw(n:portalParams n:authParams n:issuerParams n:logParams n:cookieParams n:sessionParams n:advancedParams)
+                qw(n:portalParams n:authParams n:issuerParams n:logParams n:cookieParams n:sessionParams cn:reloadUrls n:advancedParams)
             ],
             _help => 'default',
 
@@ -326,7 +326,7 @@ sub struct {
                 },
             },
 
-            # AUTHENTICATION / USERDB / PASWWORDDB PARAMETERS
+            # AUTHENTICATION / USERDB / PASSWORDDB PARAMETERS
             authParams => {
 
                # Displayed nodes depend on authentication/userDB modules choosed
@@ -795,6 +795,13 @@ sub struct {
                     },
                 },
 
+            },
+
+            # RELOAD URLS
+            reloadUrls => {
+                _nodes => ['hash:/reloadUrls:reloadUrls:btext'],
+                _js   => 'hashRoot',
+                _help => 'reloadUrls',
             },
 
             # OTHER PARAMETERS
@@ -1278,6 +1285,11 @@ sub testStruct {
         eval { $q = qr/$r/ };
         return ( $@ ? ( 0, $@ ) : 1 );
     };
+    my $domainNameOrIp = sub {
+        my $n = shift;
+        return $n =~ /^(\d{1,3}\.){3}\d{1,3}$/ 
+            || $n =~ Lemonldap::NG::Common::Regexp::HOSTNAME();
+    };
     my $testNotDefined = { test => sub { 1 }, msgFail => 'Ok' };
     my $lmAttrOrMacro = {
         test    => qr/^\$?[a-zA-Z_]\w*$/,
@@ -1554,6 +1566,12 @@ sub testStruct {
         protection => {
             keyTest => qr/^(?:none|authentificate|manager|)$/,
             msgFail => 'must be one of none authentificate manager',
+        },
+        reloadUrls => {
+            keyTest    => $domainNameOrIp,
+            keyMsgFail => 'Bad server name or IP',
+            test       => Lemonldap::NG::Common::Regexp::HTTP_URI(),
+            msgFail    => 'Bad url'
         },
         securedCookie => {
             test    => qr/^(?:0|1|2)$/,

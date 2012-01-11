@@ -116,6 +116,7 @@ sub unserialize {
 	|notificationStorageOptions
 	|persistentStorageOptions
 	|post
+        |reloadUrls
 	|remoteGlobalStorageOptions
 	|samlIDPMetaDataExportedAttributes
 	|samlIDPMetaDataOptions

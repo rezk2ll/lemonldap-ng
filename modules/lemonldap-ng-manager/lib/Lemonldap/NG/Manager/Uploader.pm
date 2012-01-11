@@ -800,15 +800,17 @@ sub applyConf {
     my $status;
 
     # Get apply section values
-    my $localConf = $self->confObj->getLocalConf( APPLYSECTION, undef, 0 );
+    my %reloadUrls =
+           %{ $self->confObj->getLocalConf( APPLYSECTION, undef, 0 ) }
+        || %{ $self->confObj->getConf->{reloadUrls} };
 
     # Create user agent
     my $ua = new LWP::UserAgent( requests_redirectable => [] );
     $ua->timeout(10);
 
     # Parse apply values
-    foreach ( keys %$localConf ) {
-        my ( $host, $request ) = ( $_, $localConf->{$_} );
+    foreach ( keys %reloadUrls ) {
+        my ( $host, $request ) = ( $_, $reloadUrls{$_} );
         my ( $method, $vhost, $uri ) =
           ( $request =~ /^(https?):\/\/([^\/]+)(.*)$/ );
         unless ($vhost) {
