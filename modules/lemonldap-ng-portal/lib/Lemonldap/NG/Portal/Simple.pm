@@ -908,7 +908,7 @@ sub getPersistentSession {
             $self->lmLog( "Persistent session $id not available", 'debug' );
         }
         else {
-            $self->lmLog( "Unable to create new persitent session: $@",
+            $self->lmLog( "Unable to create new persistent session: $@",
                 'error' );
         }
         return 0;
@@ -2038,8 +2038,8 @@ sub sendPasswordMail {
 sub authenticate {
     my $self = shift;
     if ( my $errorCode = $self->SUPER::authenticate() ) {
-        $self->registerLogin( $errorCode ) ;
-        return $errorCode ;
+        $self->registerLogin($errorCode);
+        return $errorCode;
     }
 
     # Log good authentication
@@ -2052,34 +2052,32 @@ sub authenticate {
     PE_OK;
 }
 
-##@apmethod registerLogin
+##@method registerLogin
 # Store current login in login history
 # @param $errorCode Code returned by authenticate()
 sub registerLogin {
     my ( $self, $errorCode ) = @_;
 
-    if ($self->{portalDisplayLoginHistory}) {
+    if ( $self->{portalDisplayLoginHistory} ) {
         my $history = $self->{sessionInfo}->{loginHistory} ||= {};
 
-        my $type = ( $errorCode ? "failed" : "success")."Login";
+        my $type = ( $errorCode ? "failed" : "success" ) . "Login";
         $history->{$type} ||= [];
-        $self->lmLog("Current login saved into $type", "debug");
+        $self->lmLog( "Current login saved into $type", "debug" );
 
         # Gather current login's parameters
         my $login = $self->_sumUpSession( $self->{sessionInfo}, 1 );
-        $login->{error} = $self->error(undef, $errorCode)
-            if ($errorCode);
+        $login->{error} = $self->error( undef, $errorCode )
+          if ($errorCode);
 
         # Add current login into history
-        unshift @{$history->{$type}}, $login;
+        unshift @{ $history->{$type} }, $login;
 
         # Forget oldest logins
-        splice @{$history->{$type}}, $self->{$type."Number"};
+        splice @{ $history->{$type} }, $self->{ $type . "Number" };
 
         # Save into persistent session
-        $self->updatePersistentSession({
-            loginHistory => $history,
-        });
+        $self->updatePersistentSession( { loginHistory => $history, } );
     }
 }
 
@@ -2133,16 +2131,13 @@ sub removeOther {
     $self->info(
         $self->mkSessionArray(
             $self->{deleted},
-            &Lemonldap::NG::Portal::_i18n::msg(PM_SESSIONS_DELETED),
-            1
+            &Lemonldap::NG::Portal::_i18n::msg(PM_SESSIONS_DELETED), 1
         )
     ) if ( $self->{notifyDeleted} and @{ $self->{deleted} } );
     $self->info(
-        $self->mkSessionArray(
-            $self->{otherSessions},
-            &Lemonldap::NG::Portal::_i18n::msg(PM_OTHER_SESSIONS),
-            1
-        ) . $self->_mkRemoveOtherLink()
+        $self->mkSessionArray( $self->{otherSessions},
+            &Lemonldap::NG::Portal::_i18n::msg(PM_OTHER_SESSIONS), 1 )
+          . $self->_mkRemoveOtherLink()
     ) if ( $self->{notifyOther} and @{ $self->{otherSessions} } );
     PE_OK;
 }
@@ -2152,11 +2147,13 @@ sub removeOther {
 # @param hashref $session The session to sum up
 # @return hashref
 sub _sumUpSession {
-    my ($self, $session, $withoutUser) = @_ ;
-    my $res = $withoutUser ? {} :
-        { user => $session->{ $self->{whatToTrace} } };
+    my ( $self, $session, $withoutUser ) = @_;
+    my $res =
+      $withoutUser
+      ? {}
+      : { user => $session->{ $self->{whatToTrace} } };
     $res->{$_} = $session->{$_}
-        foreach ("_utime", "ipAddr", keys %{ $self->{sessionDataToDisplay} });
+      foreach ( "_utime", "ipAddr", keys %{ $self->{sessionDataToDisplay} } );
     return $res;
 }
 
@@ -2172,27 +2169,28 @@ sub mkSessionArray {
 
     return "" unless (@$sessions);
 
-    my $tmp = $title ? "<h3>$title</h3>" : "" ;
+    my $tmp = $title ? "<h3>$title</h3>" : "";
     $tmp .= "<table class=\"info\"><tbody>";
 
     $tmp .= "<tr>";
     $tmp .= "<th>" . &Lemonldap::NG::Portal::_i18n::msg(PM_USER) . "</th>"
-        if ($displayUser);
+      if ($displayUser);
     $tmp .= "<th>" . &Lemonldap::NG::Portal::_i18n::msg(PM_DATE) . "</th>";
-    $tmp .= "<th>" . &Lemonldap::NG::Portal::_i18n::msg(PM_IP)   . "</th>";
-    $tmp .= "<th>" . $self->{sessionDataToDisplay}->{$_}         . "</th>"
-        foreach ( keys %{ $self->{sessionDataToDisplay} } );
+    $tmp .= "<th>" . &Lemonldap::NG::Portal::_i18n::msg(PM_IP) . "</th>";
+    $tmp .= "<th>" . $self->{sessionDataToDisplay}->{$_} . "</th>"
+      foreach ( keys %{ $self->{sessionDataToDisplay} } );
     $tmp .= '<th>' . &Lemonldap::NG::Portal::_i18n::msg(PM_ERROR) . '</th>'
-        if ($displayError);
+      if ($displayError);
     $tmp .= '</tr>';
 
     foreach my $session (@$sessions) {
         $tmp .= "<tr>";
         $tmp .= "<td>$session->{user}</td>" if ($displayUser);
-        $tmp .= "<td><script>var _date=new Date($session->{_utime}*1000);document.write(_date.toLocaleString());</script></td>";
+        $tmp .=
+"<td><script>var _date=new Date($session->{_utime}*1000);document.write(_date.toLocaleString());</script></td>";
         $tmp .= "<td>$session->{ipAddr}</td>";
         $tmp .= "<td>$session->{$_}</td>"
-            foreach ( keys %{ $self->{sessionDataToDisplay} } );
+          foreach ( keys %{ $self->{sessionDataToDisplay} } );
         $tmp .= "<td>$session->{error}</td>" if ($displayError);
         $tmp .= "</tr>";
     }
@@ -2221,24 +2219,44 @@ sub _mkRemoveOtherLink {
 sub grantSession {
     my ($self) = @_;
 
-    my $errorCode = PE_OK;
-    if (defined $self->{grantSessionRule}) {
+    if ( defined $self->{grantSessionRule} ) {
+
         # Eval grantSessionRule
+        # Kept for backward compatibility with LL::NG 1.1.2 and previous
         my $grantSessionRule = $self->{grantSessionRule};
-    
+
         unless ( $self->safe->reval($grantSessionRule) ) {
             $self->lmLog(
                 "User " . $self->{user} . " was not granted to open session",
                 'error' );
-            $self->registerLogin(  );
-            $errorCode = PE_SESSIONNOTGRANTED;
-        } else {
-            $self->lmLog( "Session granted for " . $self->{user}, 'notice' );
+            $self->registerLogin(PE_SESSIONNOTGRANTED);
+            return PE_SESSIONNOTGRANTED;
         }
     }
 
-    $self->registerLogin( $errorCode );
-    return $errorCode;
+    # Eval grantSessionRules sorted by comments
+    sub sortByComment {
+        my $A = ( $a =~ /^.*?##(.*)$/ )[0];
+        my $B = ( $b =~ /^.*?##(.*)$/ )[0];
+        return !$A ? 1 : !$B ? -1 : $A cmp $B;
+    }
+    foreach ( sort sortByComment keys %{ $self->{grantSessionRules} } ) {
+        $self->lmLog( "Grant session condition \"$_\" checked", "warn" );
+        unless ( $self->safe->reval($_) ) {
+            $self->lmLog(
+                "User " . $self->{user} . " was not granted to open session",
+                'error' );
+            my $msg = $self->safe->reval( $self->{grantSessionRules}->{$_} );
+            $msg = $self->{grantSessionRules}->{$_} if ($@);
+            $self->{ "error_" . PE_SESSIONNOTGRANTED } = $msg if ($msg);
+            $self->registerLogin(PE_SESSIONNOTGRANTED);
+            return PE_SESSIONNOTGRANTED;
+        }
+    }
+
+    $self->lmLog( "Session granted for " . $self->{user}, 'notice' );
+    $self->registerLogin(PE_OK);
+    return PE_OK;
 }
 
 ##@apmethod int store()

@@ -42,6 +42,7 @@
 	var text4protect='<lang en="Protect" fr="Protéger" />';
 	var text4newCategory='<lang en="Category identifier" fr="Identifiant de la catégorie" />';
 	var text4newApplication='<lang en="Application identifier" fr="Identifiant de l\'application" />';
+        var text4newCondition='<lang en="New Condition" fr="nouvelle Condition" />';
 //]]></script>
 <script src="<TMPL_VAR NAME="DIR">/js/manager.js" type="text/JavaScript"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
@@ -123,12 +124,20 @@
      <lang en="New rule" fr="Nouvelle règle" />
     </button>
 
+    <button id="newgsrbr" style="display:none;" onclick="newGrantSessionRuleR();return false;" >
+     <lang en="New condition" fr="Nouvelle condition" />
+    </button>
+
     <button id="newkb" style="display:none;" onclick="newKey();return false;" >
      <lang en="New key" fr="Nouvelle clef" />
     </button>
 
     <button id="newrb" style="display:none;" onclick="newRule();return false;" >
      <lang en="New rule" fr="Nouvelle règle" />
+    </button>
+
+    <button id="newgsrb" style="display:none;" onclick="newGrantSessionRule();return false;" >
+     <lang en="New condition" fr="Nouvelle condition" />
     </button>
 
     <button id="delkb" style="display:none;" onclick="delKey();return false;" >
@@ -375,6 +384,26 @@
      </td></tr></tbody></table>
      <br />
      <button onclick="setlmrule(currentId,rulComment,rulKey,rulValue);return false;" >
+     <lang en="Apply" fr="Appliquer" />
+     </button>
+    </div>
+
+    <!-- Grant session rule -->
+    <div id="content_grantSessionRules" class="hidden">
+     <table border="0"><tbody><tr><td>
+         <div id="grantSessionRulCommentDiv">
+                <lang en="Comment" fr="Commentaire" /><br/>
+                 <input type='text' id="grantSessionRulComment" size="30" />
+         </div>
+         <lang en="Condition" fr="Condition" /><br/>
+         <textarea id="grantSessionRulKey" cols="30" rows="2"></textarea>
+     </td>
+     <td>
+         <lang en="Message" fr="Message" /><br/>
+         <textarea id="grantSessionRulValue" cols="50" rows="4"></textarea>
+     </td></tr></tbody></table>
+     <br />
+     <button onclick="setlmgrantsessionrule(currentId,grantSessionRulComment,grantSessionRulKey,grantSessionRulValue);return false;" >
      <lang en="Apply" fr="Appliquer" />
      </button>
     </div>

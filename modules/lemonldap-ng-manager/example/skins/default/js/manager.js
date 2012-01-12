@@ -381,6 +381,20 @@ function setlmrule(id,c,r,v){
 	$('#text_'+safeSelector(id)).attr('name',re);
 	$('#text_'+safeSelector(id)).text(text);
 }
+function setlmgrantsessionrule(id,c,r,v){
+        c=$(c).attr('value');
+        r=$(r).attr('value');
+        v=$(v).attr('value') || '#';
+        var re=r;
+        var text=r;
+        if(c.length>0){
+                re=r+'##'+c;
+                text=c;
+        }
+        setlmdata(id,v);
+        $('#text_'+safeSelector(id)).attr('name',re);
+        $('#text_'+safeSelector(id)).text(text);
+}
 function setlmfile(id,input){
 	var inputname=$(input).attr('id');
 	if($(input).attr('value').length==0){
@@ -488,7 +502,7 @@ function display(div,title) {
 	$('#content_'+div).removeClass('hidden');
 	$('#content_'+div).addClass('content');
 	$('#content_title').html(title);
-	$('#newkb,#newrb,#delkb,#newkbr,#newrbr,#bdelvh,#bnewvh').hide();
+	$('#newkb,#newrb,#delkb,#newkbr,#newrbr,#newgsrb,#newgsrbr,#bdelvh,#bnewvh').hide();
 	$('#newidpsamlmetadatab,#delidpsamlmetadatab').hide();
 	$('#newspsamlmetadatab,#delspsamlmetadatab').hide();
 	$('#newsamlattributeb,#delsamlattributeb').hide();
@@ -972,6 +986,25 @@ function rulesRoot(id){
 	display('default','');
 	$('#newrbr').show();
 }
+function grantSessionRules(id){
+        currentId=id;
+        var t=lmtext(id);
+        var b=t.match(/^(.*?)(?:|##(.*))$/);
+        if(typeof(b[2])=='undefined')b[2]='';
+        var v=lmdata(id);
+        if(v=='#')v=''
+        $('#grantSessionRulKey').attr('value',b[1]);
+        $('#grantSessionRulComment').attr('value',b[2]);
+        $('#grantSessionRulValue').attr('value',v);
+        display('grantSessionRules',lmtext(lmparent(id)));
+        $('#delkb').show();
+        $('#newgsrb').show();
+}
+function grantSessionRulesRoot(id){
+        currentId=id;
+        display('default','');
+        $('#newgsrbr').show();
+}
 function reloadAuthParams() {
 	var value=$('#authText').attr('value');
 	if($('#authOptions').is(':visible')==true){
@@ -1036,6 +1069,22 @@ function newRule(){
 		rules(newIdValue);
 	});
 	return false;
+}
+function newGrantSessionRuleR(){
+        var newIdValue=newId(currentId);
+        simpleTreeCollection[0].addNode(newIdValue,text4newCondition,function(d,s){
+                $('>span',s).attr('onClick','grantSessionRules("'+newIdValue+'")').attr('name','##'+text4newCondition).attr('value','').attr('id','text_'+newIdValue);
+                grantSessionRules(newIdValue);
+        });
+        return false;
+}
+function newGrantSessionRule(){
+        var newIdValue=newId(currentId);
+        simpleTreeCollection[0].newNodeAfter(newIdValue,text4newCondition,function(d,s){
+                $('>span',s).attr('onClick','grantSessionRules("'+newIdValue+'")').attr('name','##'+text4newCondition).attr('value','').attr('id','text_'+newIdValue);
+                grantSessionRules(newIdValue);
+        });
+        return false;
 }
 function delKey(id){
 	if(!id){id=currentId;}

@@ -273,7 +273,7 @@ sub display {
         }
 
         # Adapt template if external authentication error
-        # or logout is OK
+        # or session not granted, or logout is OK
         if (   $self->{error} == PE_BADCERTIFICATE
             or $self->{error} == PE_CERTIFICATEREQUIRED
             or $self->{error} == PE_ERROR
@@ -297,6 +297,7 @@ sub display {
             or $self->{error} == PE_MISSINGREQATTR
             or $self->{error} == PE_BADPARTNER
             or $self->{error} == PE_CAS_SERVICE_NOT_ALLOWED
+            or $self->{error} == PE_SESSIONNOTGRANTED
             or $self->{error} == PE_LOGOUT_OK )
         {
             %templateParams = (

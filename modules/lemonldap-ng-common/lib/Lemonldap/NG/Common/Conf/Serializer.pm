@@ -109,6 +109,7 @@ sub unserialize {
 	|exportedHeaders
 	|exportedVars
 	|globalStorageOptions
+        |grantSessionRules
 	|groups
 	|locationRules
 	|logoutServices

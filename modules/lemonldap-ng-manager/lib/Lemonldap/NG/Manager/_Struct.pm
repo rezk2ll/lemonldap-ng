@@ -749,15 +749,20 @@ sub struct {
             # SESSIONS PARAMETERS
             sessionParams => {
                 _nodes => [
-                    qw(grantSessionRule storePassword timeout timeoutActivity n:sessionStorage n:multipleSessions n:persistentSessions)
+                    qw(storePassword timeout timeoutActivity cn:grantSessionRules n:sessionStorage n:multipleSessions n:persistentSessions)
                 ],
                 _help => 'sessions',
 
-                grantSessionRule => 'textarea:/grantSessionRule',
                 storePassword    => 'bool:/storePassword',
                 timeout          => 'int:/timeout',
                 timeoutActivity =>
                   'text:/timeoutActivity:sessions:timeoutActivityParams',
+
+                grantSessionRules => {
+                    _nodes => ['hash:/grantSessionRules:grantSessionRules:grantSessionRules'],
+                    _js   => 'grantSessionRulesRoot',
+                    _help => 'grantSessionRules',
+                },
 
                 sessionStorage => {
                     _nodes => [qw(globalStorage cn:globalStorageOptions)],
@@ -1263,8 +1268,6 @@ sub struct {
 # @return hashref
 sub testStruct {
     my $safe       = Safe->new();
-    my $assignTest = qr/(?<=[^=<!>\|\?])=(?![=~])/;
-    my $assignMsg  = 'containsAnAssignment';
     my $perlExpr   = sub {
         my $e = shift;
         $safe->reval( $e, 1 );
@@ -1275,6 +1278,11 @@ sub testStruct {
             "Function \"<b>$1</b>\" must be declared in customFunctions" )
           if ( $@ =~ /Bareword "(.*?)" not allowed while "strict subs"/ );
         return ( 0, $@ );
+    };
+    my $noAssign = sub {
+        my $e = shift;
+        my $assignTest = qr/(?<=[^=<!>\|\?])=(?![=~])/;
+        return $e =~ $assignTest ? ( 0, "contains an assignment" ) : 1 ;
     };
     my $boolean = { test => qr/^(?:0|1)?$/, msgFail => 'Value must be 0 or 1' };
     my $integer =
@@ -1288,7 +1296,8 @@ sub testStruct {
     my $domainNameOrIp = sub {
         my $n = shift;
         return $n =~ /^(\d{1,3}\.){3}\d{1,3}$/ 
-            || $n =~ Lemonldap::NG::Common::Regexp::HOSTNAME();
+            || $n =~ Lemonldap::NG::Common::Regexp::HOSTNAME()
+            || (0, 'Bad server name or IP');
     };
     my $testNotDefined = { test => sub { 1 }, msgFail => 'Ok' };
     my $lmAttrOrMacro = {
@@ -1350,11 +1359,7 @@ sub testStruct {
                 keyTest    => qr/^\w([\w\-]*\w)?$/,
                 keyMsgFail => 'Bad header name',
                 test       => $perlExpr,
-                warnTest   => sub {
-                    my $e = shift;
-                    return ( 0, $assignMsg ) if ( $e =~ $assignTest );
-                    1;
-                },
+                warnTest   => $noAssign,
             },
         },
         exportedVars => {
@@ -1372,23 +1377,15 @@ sub testStruct {
             keyTest    => qr/^\w+$/,
             keyMsgFail => 'Bad parameter',
         },
-        grantSessionRule => {
-            test     => $perlExpr,
-            warnTest => sub {
-                my $e = shift;
-                return ( 0, $assignMsg ) if ( $e =~ $assignTest );
-                1;
-            },
+        grantSessionRules => {
+            keyTest     => $perlExpr,
+            warnKeyTest => $noAssign,
         },
         groups => {
             keyTest    => qr/^\w[\w-]*$/,
             keyMsgFail => 'Bad group name',
             test       => $perlExpr,
-            warnTest   => sub {
-                my $e = shift;
-                return ( 0, $assignMsg ) if ( $e =~ $assignTest );
-                1;
-            },
+            warnTest   => $noAssign,
         },
         httpOnly               => $boolean,
         https                  => $boolean,
@@ -1396,31 +1393,19 @@ sub testStruct {
         issuerDBSAMLPath       => $testNotDefined,
         issuerDBSAMLRule       => {
             test     => $perlExpr,
-            warnTest => sub {
-                my $e = shift;
-                return ( 0, $assignMsg ) if ( $e =~ $assignTest );
-                1;
-            },
+            warnTest => $noAssign,
         },
         issuerDBCASActivation => $boolean,
         issuerDBCASPath       => $testNotDefined,
         issuerDBCASRule       => {
             test     => $perlExpr,
-            warnTest => sub {
-                my $e = shift;
-                return ( 0, $assignMsg ) if ( $e =~ $assignTest );
-                1;
-            },
+            warnTest => $noAssign,
         },
         issuerDBOpenIDActivation => $boolean,
         issuerDBOpenIDPath       => $testNotDefined,
         issuerDBOpenIDRule       => {
             test     => $perlExpr,
-            warnTest => sub {
-                my $e = shift;
-                return ( 0, $assignMsg ) if ( $e =~ $assignTest );
-                1;
-            },
+            warnTest => $noAssign,
         },
         key            => $testNotDefined,
         ldapAuthnLevel => $integer,
@@ -1485,11 +1470,7 @@ sub testStruct {
                     }
                     return &$perlExpr($e);
                 },
-                warnTest => sub {
-                    my $e = shift;
-                    return ( 0, $assignMsg ) if ( $e =~ $assignTest );
-                    1;
-                },
+                warnTest => $noAssign,
             },
         },
         logoutServices => {
@@ -1500,11 +1481,7 @@ sub testStruct {
             keyTest    => qr/^[_a-zA-Z]\w*$/,
             keyMsgFail => 'Bad macro name',
             test       => $perlExpr,
-            warnTest   => sub {
-                my $e = shift;
-                return ( 0, $assignMsg ) if ( $e =~ $assignTest );
-                1;
-            },
+            warnTest   => $noAssign,
         },
         mailOnPasswordChange => $boolean,
         managerDn            => {
@@ -1569,7 +1546,6 @@ sub testStruct {
         },
         reloadUrls => {
             keyTest    => $domainNameOrIp,
-            keyMsgFail => 'Bad server name or IP',
             test       => Lemonldap::NG::Common::Regexp::HTTP_URI(),
             msgFail    => 'Bad url'
         },
