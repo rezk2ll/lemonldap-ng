@@ -90,6 +90,7 @@ my ( $test, $testU );
                 portal         => 'http://abc',
                 sessionInfo    => { uid => 't', },
                 userNotice     => sub { },
+                user           => 'jdoe',
             }
         ),
         'Portal object'
@@ -110,6 +111,7 @@ my ( $test, $testU );
                 portal         => 'http://abc',
                 sessionInfo    => { uid => 't', },
                 userNotice     => sub { },
+                user           => 'jdoe',
             }
         ),
         'Portal object'
@@ -131,6 +133,7 @@ my ( $test, $testU );
                 portal         => 'http://abc',
                 sessionInfo    => { uid => 't', },
                 userNotice     => sub { },
+                user           => 'jdoe',
             }
         ),
         'Portal object'
@@ -152,6 +155,7 @@ my ( $test, $testU );
                 portal         => 'http://abc',
                 sessionInfo    => { uid => 't', },
                 userNotice     => sub { },
+                user           => 'jdoe',
             }
         ),
         'Portal object'
@@ -170,6 +174,7 @@ my ( $test, $testU );
                 portal         => 'http://abc',
                 sessionInfo    => { uid => 't', },
                 userNotice     => sub { },
+                user           => 'jdoe',
             }
         ),
         'Portal object'
@@ -188,6 +193,7 @@ my ( $test, $testU );
                 portal         => 'http://abc',
                 sessionInfo    => { uid => 't', },
                 userNotice     => sub { },
+                user           => 'jdoe',
             }
         ),
         'Portal object'

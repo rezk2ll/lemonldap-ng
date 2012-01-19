@@ -167,6 +167,7 @@ use constant {
     PM_OPENID_RPNS           => 18,    # OpenID "requested parameter is not set"
     PM_OPENID_PA             => 19,    # "OpenID policy available at"
     PM_OPENID_AP             => 20,    # OpenID "Asked parameter"
+    PM_ERROR_MSG             => 21,
 };
 
 # EXPORTER PARAMETERS
@@ -193,7 +194,7 @@ our @EXPORT = qw( PE_IMG_NOK PE_IMG_OK PE_INFO PE_REDIRECT PE_DONE PE_OK
   PM_REMOVE_OTHER_SESSIONS PM_PP_GRACE PM_PP_EXP_WARNING
   PM_SAML_IDPSELECT PM_SAML_IDPCHOOSEN PM_REMEMBERCHOICE PM_SAML_SPLOGOUT
   PM_REDIRECTION PM_BACKTOSP PM_BACKTOCASURL PM_LOGOUT PM_OPENID_EXCHANGE
-  PM_CDC_WRITER PM_OPENID_RPNS PM_OPENID_PA PM_OPENID_AP
+  PM_CDC_WRITER PM_OPENID_RPNS PM_OPENID_PA PM_OPENID_AP PM_ERROR_MSG
 );
 our %EXPORT_TAGS = ( 'all' => [ @EXPORT, 'import' ], );
 
@@ -2167,7 +2168,7 @@ sub _sumUpSession {
 sub mkSessionArray {
     my ( $self, $sessions, $title, $displayUser, $displayError ) = @_;
 
-    return "" unless (@$sessions);
+    return "" unless ( ref $sessions eq "ARRAY" and @$sessions );
 
     my $tmp = $title ? "<h3>$title</h3>" : "";
     $tmp .= "<table class=\"info\"><tbody>";
@@ -2179,7 +2180,7 @@ sub mkSessionArray {
     $tmp .= "<th>" . &Lemonldap::NG::Portal::_i18n::msg(PM_IP) . "</th>";
     $tmp .= "<th>" . $self->{sessionDataToDisplay}->{$_} . "</th>"
       foreach ( keys %{ $self->{sessionDataToDisplay} } );
-    $tmp .= '<th>' . &Lemonldap::NG::Portal::_i18n::msg(PM_ERROR) . '</th>'
+    $tmp .= '<th>' . &Lemonldap::NG::Portal::_i18n::msg(PM_ERROR_MSG) . '</th>'
       if ($displayError);
     $tmp .= '</tr>';
 
@@ -2254,7 +2255,7 @@ sub grantSession {
         }
     }
 
-    $self->lmLog( "Session granted for " . $self->{user}, 'notice' );
+    $self->_sub( 'userNotice', "Session granted for " . $self->{user} );
     $self->registerLogin(PE_OK);
     return PE_OK;
 }
