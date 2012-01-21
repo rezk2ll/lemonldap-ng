@@ -4882,6 +4882,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; Null backend is a transparent backend:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120121T080302Z" changeid="xavier">
+        <seg>Le backend Null de &lt;a0&gt;LL::NG&lt;/a0&gt; est un backend transparent :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can also act as &lt;a1&gt;CAS server&lt;/a1&gt;, that allows to interconnect two &lt;a2&gt;LL::NG&lt;/a2&gt; systems.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T155656Z" changeid="xavier">
@@ -10124,6 +10132,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Authentication: will create session without prompting any credentials (but will register client &lt;a0&gt;IP&lt;/a0&gt; and creation date)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120121T080402Z" changeid="xavier">
+        <seg>Authentification : créé une session sans demander quoi que ce soit (mais enregistre l'adresse &lt;a0&gt;IP&lt;/a0&gt; cliente et la date de création)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Authorization</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -12692,6 +12708,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>In Manager, go in &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Authentication modules&lt;/c1&gt; and choose Null for authentication, users or password module.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120121T080719Z" changeid="xavier">
+        <seg>Dans le manager, aller dans &lt;c0&gt;Paramètres généraux&lt;/c0&gt; &gt; &lt;c1&gt;Modules d'authentification&lt;/c1&gt; et choisir &lt;a2&gt;Null&lt;/a2&gt;) pour les modules authentification, utilisateurs et/ou mots-de-passe.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>In Manager, go in &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Authentication modules&lt;/c1&gt; and choose Twitter for authentication module.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -14028,6 +14052,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Null</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120121T080232Z" changeid="xavier">
+        <seg>Null</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>O</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111556Z" changeid="xavier">
@@ -14432,6 +14464,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Réinitialisation de mots-de-passe par courriel</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Password: will not change any password</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120121T080528Z" changeid="xavier">
+        <seg>Mots-de-passe : ne change aucun mot-de-passe</seg>
       </tuv>
     </tu>
     <tu>
@@ -16292,6 +16332,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Then, go in &lt;c0&gt;Null parameters&lt;/c0&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120121T080745Z" changeid="xavier">
+        <seg>Aller ensuite dans les &lt;c0&gt;paramètres Null&lt;/c0&gt;:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Then, go in &lt;c0&gt;Twitter parameters&lt;/c0&gt;:</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -17176,6 +17224,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Users: will not collect any data (but you can still register environment variables in session)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120121T080500Z" changeid="xavier">
+        <seg>Utilisateurs : ne collecte aucune donnée (mais il est possible d'enregistrer des variables d'environement dans la session)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Using Active-Directory as authentication backend</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T094832Z" changeid="xavier">
@@ -17604,6 +17660,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Vous pouvez utiliser le mot clef #PORTAL# dans les valeurs pour remplacer l'&lt;a0&gt;URL&lt;/a0&gt; du portail.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can use Null backend to bypass some authentication process steps.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120121T080620Z" changeid="xavier">
+        <seg>Le backend Null peut être utilisé pour sauter des étapes du processus d'authentication.</seg>
       </tuv>
     </tu>
     <tu>
