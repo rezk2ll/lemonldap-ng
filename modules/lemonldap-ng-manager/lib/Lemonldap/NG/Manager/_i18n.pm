@@ -279,7 +279,7 @@ sub en {
         radiusServer                => 'Server hostname',
         randomPasswordRegexp        => 'Regexp for password generation',
         redirection                 => 'Handler redirections',
-        reloadUrls                  => 'reload configuration URLs',
+        reloadUrls                  => 'Configuration reload',
         remoteCookieName            => 'Cookie name',
         remoteGlobalStorage         => 'Sessions module',
         remoteGlobalStorageOptions  => 'Sessions module options',
@@ -729,7 +729,7 @@ sub fr {
         randomPasswordRegexp =>
           'Expression regulière pour la génération des mots de passe',
         redirection       => 'Redirections du Handler',
-        reloadUrls        => 'URLs de rechargement de la configuration',
+        reloadUrls        => 'Mise à jour de la configuration',
         remoteCookieName            => 'Nom du cookie',
         remoteGlobalStorage         => 'Module des sessions',
         remoteGlobalStorageOptions  => 'Options du module des sessions',
