@@ -2242,7 +2242,7 @@ sub grantSession {
         return !$A ? 1 : !$B ? -1 : $A cmp $B;
     }
     foreach ( sort sortByComment keys %{ $self->{grantSessionRules} } ) {
-        $self->lmLog( "Grant session condition \"$_\" checked", "warn" );
+        $self->lmLog( "Grant session condition \"$_\" checked", "debug" );
         unless ( $self->safe->reval($_) ) {
             $self->lmLog(
                 "User " . $self->{user} . " was not granted to open session",
@@ -2330,11 +2330,15 @@ sub buildCookie {
         -expires  => $self->{cookieExpiration},
         @_,
       );
-    if ( $self->{securedCookie} == 2 ) {
+    if ( $self->{securedCookie} =~ /^(2|3)$/ ) {
         push @{ $self->{cookie} },
           $self->cookie(
             -name     => $self->{cookieName} . "http",
-            -value    => $self->{sessionInfo}->{_httpSession},
+            -value    => (
+                $self->{securedCookie} == 2
+                ? $self->{sessionInfo}->{_httpSession}
+                : $self->{cipher}->encryptHex( $self->{id}, "http" )
+            ),
             -domain   => $self->{domain},
             -path     => "/",
             -secure   => 0,

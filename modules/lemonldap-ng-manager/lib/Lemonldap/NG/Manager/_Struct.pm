@@ -761,7 +761,6 @@ sub struct {
                 grantSessionRules => {
                     _nodes => ['hash:/grantSessionRules:grantSessionRules:grantSessionRules'],
                     _js   => 'grantSessionRulesRoot',
-                    _help => 'grantSessionRules',
                 },
 
                 sessionStorage => {
@@ -1550,8 +1549,8 @@ sub testStruct {
             msgFail    => 'Bad url'
         },
         securedCookie => {
-            test    => qr/^(?:0|1|2)$/,
-            msgFail => 'securedCookie must be 0, 1 or 2',
+            test    => qr/^(?:0|1|2|3)$/,
+            msgFail => 'securedCookie must be 0, 1, 2 or 3',
         },
         sessionDataToDisplay => {
             keyTest       => qr/^[\w-]+$/,

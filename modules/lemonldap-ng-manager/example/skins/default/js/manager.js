@@ -941,7 +941,8 @@ function securedCookieValues(id){
 	formateSelect('select',[
 		'0='+text4securedCookie0,
 		'1='+text4securedCookie1,
-		'2='+text4securedCookie2
+		'2='+text4securedCookie2,
+		'3='+text4securedCookie3
 		],lmdata(id));
 	display('select',lmtext(id));
 }

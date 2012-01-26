@@ -171,8 +171,7 @@ sub getConf {
               unless ( $r->{key} );
             eval {
                 $r->{cipher} = Lemonldap::NG::Common::Crypto->new(
-                    $r->{key} || 'lemonldap-ng-key',
-                    Crypt::Rijndael::MODE_CBC()
+                    $r->{key} || 'lemonldap-ng-key'
                 );
             };
             if ($@) {

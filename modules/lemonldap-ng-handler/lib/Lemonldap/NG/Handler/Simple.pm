@@ -20,6 +20,7 @@ use Exporter 'import';
 use AutoLoader 'AUTOLOAD';
 use Safe;
 use Lemonldap::NG::Common::Safelib;    #link protected safe Safe object
+use Lemonldap::NG::Common::Crypto;
 require POSIX;
 use CGI::Util 'expires';
 use constant SAFEWRAP => ( Safe->can("wrap_code_ref") ? 1 : 0 );
@@ -48,7 +49,8 @@ our (
     $customFunctions,    $transform,           $cda,
     $childInitDone,      $httpOnly,            $cookieExpiration,
     $timeoutActivity,    $datasUpdate,         $useRedirectOnForbidden,
-    $useRedirectOnError, $useSafeJail,
+    $useRedirectOnError, $useSafeJail,         $securedCookie,
+    $key,                $cipher,
 );
 
 ##########################################
@@ -73,6 +75,7 @@ BEGIN {
             qw(
               $forgeHeaders lmHeaderIn lmSetHeaderIn lmHeaderOut
               lmSetHeaderOut lmSetErrHeaderOut $cookieName $https $port
+              $securedCookie $key $cipher
               )
         ],
         traces => [qw( $whatToTrace $statusPipe $statusOut)],
@@ -82,7 +85,12 @@ BEGIN {
         ],
         post    => [qw($transform postFilter)],
         cda     => ['$cda'],
-        cookie  => [qw($cookieName $https $httpOnly $cookieExpiration)],
+        cookie  => [
+            qw(
+              $cookieName $https $httpOnly $cookieExpiration
+              $securedCookie $key $cipher
+              )
+        ],
         session => ['$timeoutActivity'],
     );
     push( @EXPORT_OK, @{ $EXPORT_TAGS{$_} } ) foreach ( keys %EXPORT_TAGS );
@@ -149,7 +157,10 @@ BEGIN {
             threads::shared::share($useRedirectOnError);
             threads::shared::share($useSafeJail);
             threads::shared::share($customFunctions);
+            threads::shared::share($securedCookie);
+            threads::shared::share($key);
         };
+print "eval error: $@" if($@);
     }
     elsif ( MP() == 1 ) {
         require Apache;
@@ -623,11 +634,12 @@ sub defaultValuesInit {
     # and lemonldap-ng.ini
     # These values should be erased by global configuration!
     $cookieName  = $args->{cookieName}  || $cookieName  || 'lemonldap';
+    $securedCookie = 
+        defined( $args->{securedCookie} ) ? $args->{securedCookie} :
+        defined($securedCookie)           ? $securedCookie         : 1;
     $whatToTrace = $args->{whatToTrace} || $whatToTrace || 'uid';
     $whatToTrace =~ s/\$//g;
     $https = defined($https) ? $https : $args->{https};
-    $args->{securedCookie} = 1 unless defined( $args->{securedCookie} );
-    $cookieName .= 'http' if ( $args->{securedCookie} == 2 and $https == 0 );
     $port ||= $args->{port};
     $customFunctions  = $args->{customFunctions};
     $cda              = defined($cda) ? $cda : $args->{cda};
@@ -646,6 +658,12 @@ sub defaultValuesInit {
       defined($useSafeJail)
       ? $useSafeJail
       : $args->{useSafeJail};
+    $key    ||= 'lemonldap-ng-key';
+    $cipher ||= Lemonldap::NG::Common::Crypto->new($key);
+    if ($args->{key} && ($args->{key} ne $key) ) {
+        $key = $args->{key};
+        $cipher = Lemonldap::NG::Common::Crypto->new($key);
+    }
     1;
 }
 
@@ -810,14 +828,6 @@ sub goToPortal {
           . "?url=$urlc_init"
           . ( $arg ? "&$arg" : "" ) );
     return REDIRECT;
-}
-
-## @rmethod protected $ fetchId()
-# Get user cookies and search for Lemonldap::NG cookie.
-# @return Value of the cookie if found, 0 else
-sub fetchId {
-    my $t = lmHeaderIn( $apacheRequest, 'Cookie' );
-    return ( $t =~ /$cookieName=([^,; ]+)/o ) ? $1 : 0;
 }
 
 # MAIN SUBROUTINE called by Apache (using PerlHeaderParserHandler option)
