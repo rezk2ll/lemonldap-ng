@@ -632,6 +632,10 @@ sub setDefaultValues {
 
     # Notification
     $self->{notificationWildcard} ||= "allusers";
+
+    # Login History
+    $self->{successLoginNumber} = 5 unless defined $self->{successLoginNumber};
+    $self->{failedLoginNumber}  = 5 unless defined $self->{failedLoginNumber};
 }
 
 ## @method protected void setHiddenFormValue(string fieldname, string value, string prefix, boolean base64)
@@ -2333,9 +2337,9 @@ sub buildCookie {
     if ( $self->{securedCookie} =~ /^(2|3)$/ ) {
         push @{ $self->{cookie} },
           $self->cookie(
-            -name     => $self->{cookieName} . "http",
-            -value    => (
-                $self->{securedCookie} == 2
+            -name  => $self->{cookieName} . "http",
+            -value => (
+                  $self->{securedCookie} == 2
                 ? $self->{sessionInfo}->{_httpSession}
                 : $self->{cipher}->encryptHex( $self->{id}, "http" )
             ),
