@@ -78,11 +78,6 @@ APACHEVERSION=2
 # DNS Domain for cookie and virtual hosts
 DNSDOMAIN=example.com
 
-# LDAP parameters
-LDAPHOST=localhost
-LDAPPORT=389
-LDAPSUFFIX=dc=example,dc=com
-
 # Virtual Host Listen IP and Port (*, *:80, ...)
 VHOSTLISTEN=*:80
 
@@ -264,10 +259,6 @@ install_site:	install_manager_site install_portal_site install_handler_site inst
 	@echo "LemonLDAP::NG v${VERSION} is installed with these parameters:"
 	@echo "  - System configuration: ${CONFDIR}"
 	@echo "  - DNS domain (for cookies and virtual hosts): ${DNSDOMAIN}"
-	@echo "  - LDAP parameters:"
-	@echo "    - Host: ${LDAPHOST}"
-	@echo "    - Port: ${LDAPPORT}"
-	@echo "    - Suffix: ${LDAPSUFFIX}"
 	@echo
 	@echo "To finish configuration:"
 	@echo
@@ -398,9 +389,6 @@ install_conf_dir:	install_sessions_dir
 	@cp _example/conf/lmConf-1 $(RFILECONFIGDIR)
 	@$(PERL) -000 -i -pe "s#^(globalStorageOptions\\n\\s+)'[^\\n]*?'\$$#\$${1}\'\\\$$data1 = {&39;Directory&39; => &39;$(APACHESESSIONFILEDIR)&39;,&39;LockDirectory&39; => &39;$(APACHESESSIONFILELOCKDIR)&39;};'#m" $(RFILECONFIGDIR)/lmConf-1
 	@$(PERL) -i -pe 's/__DNSDOMAIN__/$(DNSDOMAIN)/g;\
-		s/__LDAPPORT__/$(LDAPPORT)/g;\
-		s/__LDAPHOST__/$(LDAPHOST)/g;\
-		s/__LDAPSUFFIX__/$(LDAPSUFFIX)/g;\
 		s#__SESSIONDIR__#$(APACHESESSIONFILEDIR)#g;' $(RFILECONFIGDIR)/lmConf-1
 	@if [ "$(APACHEUSER)" != "" ]; then \
 		chown $(APACHEUSER) $(RFILECONFIGDIR) || exit 1; \
