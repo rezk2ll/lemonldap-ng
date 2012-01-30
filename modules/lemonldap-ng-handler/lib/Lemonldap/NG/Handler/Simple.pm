@@ -830,6 +830,22 @@ sub goToPortal {
     return REDIRECT;
 }
 
+## @rmethod protected $ fetchId()
+# Get user cookies and search for Lemonldap::NG cookie.
+# @return Value of the cookie if found, 0 else
+sub fetchId {
+    my $t = lmHeaderIn( $apacheRequest, 'Cookie' );
+    my $lookForHttpCookie =
+        $securedCookie =~ /^(2|3)$/ && $https->{_} == 0 ;
+    my $value = $lookForHttpCookie ?
+        ( $t =~ /${cookieName}http=([^,; ]+)/o ? $1 : 0 ) :
+        ( $t =~       /$cookieName=([^,; ]+)/o ? $1 : 0 ) ;
+
+    $value = $cipher->decryptHex($value, "http")
+        if ( $value && $lookForHttpCookie && $securedCookie == 3 );
+    return $value;
+}
+
 # MAIN SUBROUTINE called by Apache (using PerlHeaderParserHandler option)
 
 ## @rmethod int run(Apache2::RequestRec apacheRequest)

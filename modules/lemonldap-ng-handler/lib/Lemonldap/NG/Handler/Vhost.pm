@@ -177,7 +177,7 @@ sub fetchId {
         ( $t =~       /$cookieName=([^,; ]+)/o ? $1 : 0 ) ;
 
     $value = $cipher->decryptHex($value, "http")
-        if ( $lookForHttpCookie && $securedCookie == 3 );
+        if ( $value && $lookForHttpCookie && $securedCookie == 3 );
     return $value;
 }
 
