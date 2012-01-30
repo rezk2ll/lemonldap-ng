@@ -89,7 +89,7 @@ BuildRequires:  perl(Test::MockObject)
 BuildRequires:  perl(Clone)
 %else
 # SuSE Linux needs rpm packages for perl scripts                                                                                           
-BuildRequires:  perl, perl-Regexp-Assemble, perl-Cache-Cache, perl-Apache-Session, perl-Apache-AuthNetLDAP, perl-XML-Simple, perl-XML-LibXML, perl-Crypt-Rijndael, perl-IO-String, perl-HTML-Template, perl-JSON, perl-Config-IniFiles, perl-Crypt-OpenSSL-RSA, perl-Crypt-OpenSSL-X509, perl-Class-Inspector, perl-Test-MockObject, perl-Clone
+BuildRequires:  perl, perl-Regexp-Assemble, perl-Cache-Cache, perl-Apache-Session, perl-XML-Simple, perl-XML-LibXML, perl-Crypt-Rijndael, perl-IO-String, perl-HTML-Template, perl-JSON, perl-Config-IniFiles, perl-Crypt-OpenSSL-RSA, perl-Crypt-OpenSSL-X509, perl-Class-Inspector, perl-Test-MockObject, perl-Clone
 %endif
 
 %if 0%{?rhl}%{?rhel}%{?fedora}
@@ -100,7 +100,7 @@ Requires: mod_perl
 %else
 Requires: cron, apache2, apache2-mod_perl
 Requires: perl >= %(eval "`%{__perl} -V:version`"; echo $version)
-Requires: perl-Regexp-Assemble, perl-Cache-Cache, perl-Apache-Session, perl-Apache-AuthNetLDAP, perl-XML-Simple, perl-XML-LibXML, perl-Crypt-Rijndael, perl-IO-String
+Requires: perl-Regexp-Assemble, perl-Cache-Cache, perl-Apache-Session, perl-XML-Simple, perl-XML-LibXML, perl-Crypt-Rijndael, perl-IO-String
 Requires: perl-ldap, perl-MIME-Base64, perl-CGI, perl-CGI-Session, perl-DBI, perl-HTML-Template, perl-SOAP-Lite, perl-IPC-ShareLite, perl-Convert-ASN1, perl-Error
 %endif
 Requires: lemonldap-ng-conf >= %{real_version}
