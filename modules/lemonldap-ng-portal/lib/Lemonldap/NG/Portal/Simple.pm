@@ -521,6 +521,8 @@ sub setDefaultValues {
       unless ( defined( $self->{portalDisplayChangePassword} ) );
     $self->{portalDisplayAppslist} = 1
       unless ( defined( $self->{portalDisplayAppslist} ) );
+    $self->{jsRedirect} = 0
+      unless ( defined( $self->{jsRedirect} ) );
     $self->{portalAutocomplete} ||= 0;
     $self->{portalRequireOldPassword} = 1
       unless ( defined( $self->{portalRequireOldPassword} ) );
@@ -2434,7 +2436,7 @@ sub autoRedirect {
         my ($query_string) = ( $self->{urldc} =~ /.+?\?(.+)/ );
         if ($query_string) {
             $self->lmLog(
-                "Transfrom query string $query_string into hidden form values",
+                "Transform query string $query_string into hidden form values",
                 'debug'
             );
             my $query      = CGI->new($query_string);
@@ -2466,29 +2468,20 @@ sub autoRedirect {
                 : $self->{sessionInfo}->{_httpSession}
               );
         }
-        $self->updateStatus;
-        print $self->SUPER::redirect(
-            -uri    => $self->{urldc},
-            -cookie => $self->{cookie},
-            -status => '303 See Other'
-        );
 
-        # Remove this lines if your browsers does not support redirections
-        #        print << "EOF";
-        #<html>
-        #<head>
-        #<script language="Javascript">
-        #function redirect() {
-        #        document.location.href='$u';
-        #}
-        #</script>
-        #</head>
-        #<body onload="redirect();">
-        #        <h2>The document has moved <a href="$u">HERE</a></h2>
-        #</body>
-        #</html>
-        #EOF
-        $self->quit();
+        $self->updateStatus;
+
+        if ( $self->safe->reval( $self->{jsRedirect} ) ) {
+            print $self->header();
+            $self->_jsRedirect( $self->{urldc} );
+        }
+        else {
+            print $self->header(
+                -status   => '303 See Other',
+                -location => $self->{urldc},
+            );
+            $self->quit();
+        }
     }
     PE_OK;
 }
@@ -2532,8 +2525,13 @@ sub autoPost {
         return PE_INFO;
     }
 
-    # Quit if no URL
-    $self->quit() unless $self->{postUrl};
+    print $self->header();
+    $self->_jsRedirect( $url, $formFields );
+}
+
+sub _jsRedirect {
+    my ( $self, $url, $formFields ) = @_;
+    $self->quit() unless ($url);
 
     # Simple CSS
     my $css = "
@@ -2555,38 +2553,37 @@ sub autoPost {
     my $message = &Lemonldap::NG::Portal::_i18n::msg(PM_REDIRECTION);
 
     # Print page
-    print $self->header();
     print $self->start_html(
-        -title => $message,
-        -style => { -code => $css }
+        -title  => $message,
+        -style  => { -code => $css },
+        -onLoad => $formFields
+        ? "document.forms[0].submit()"
+        : "document.location.href='$url'"
     );
-
     print $self->h1($message);
 
-    print $self->start_form( -action => $url );
+    if ($formFields) {
+        print $self->start_form( -action => $url );
+        $self->lmLog( "POST form action: $url", 'debug' );
 
-    $self->lmLog( "POST form action: $url", 'debug' );
+        # Create fields
+        foreach ( keys %$formFields ) {
+            print $self->textfield(
+                -name  => $_,
+                -value => $formFields->{$_}
+            );
+            $self->lmLog( "POST field $_: " . $formFields->{$_}, 'debug' );
+        }
 
-    # Create fields
-    foreach ( keys %$formFields ) {
-        print $self->textfield( -name => $_, -value => $formFields->{$_} );
-        $self->lmLog( "POST field $_: " . $formFields->{$_}, 'debug' );
+        print $self->submit();
+        print $self->end_form();
     }
-
-    print $self->submit();
-    print $self->end_form();
-
-    # Auto submit javascript
-    print "<script language=\"JavaScript\" type=\"text/javascript\">\n";
-    print "document.forms[0].submit();\n";
-    print "</script>\n";
 
     # End page
     print $self->end_html();
 
     # Exit
     $self->quit();
-
 }
 
 1;

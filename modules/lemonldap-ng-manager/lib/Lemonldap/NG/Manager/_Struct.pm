@@ -811,7 +811,7 @@ sub struct {
             # OTHER PARAMETERS
             advancedParams => {
                 _nodes => [
-                    qw(customFunctions n:soap n:notifications n:passwordManagement n:security n:redirection n:specialHandlers cn:logoutServices)
+                    qw(customFunctions n:soap n:notifications n:passwordManagement n:security n:redirection n:portalRedirection n:specialHandlers cn:logoutServices)
                 ],
                 _help => 'advanced',
 
@@ -897,6 +897,12 @@ sub struct {
                     port                   => 'int:/port',
                     useRedirectOnForbidden => 'bool:/useRedirectOnForbidden',
                     useRedirectOnError     => 'bool:/useRedirectOnError',
+                },
+
+                portalRedirection => {
+                    _nodes => [ qw(jsRedirect) ],
+                    _help      => 'redirections',
+                    jsRedirect => 'text:/jsRedirect:portalRedirection:boolOrPerlExpr',
                 },
 
                 specialHandlers => {
@@ -1406,6 +1412,7 @@ sub testStruct {
             test     => $perlExpr,
             warnTest => $noAssign,
         },
+        jsRedirect     => { test => $perlExpr, },
         key            => $testNotDefined,
         ldapAuthnLevel => $integer,
         ldapBase       => {
@@ -1879,6 +1886,7 @@ sub defaultConf {
         issuerDBOpenIDActivation => '0',
         issuerDBOpenIDPath       => '^/openidserver/',
         issuerDBOpenIDRule       => '1',
+        jsRedirect               => '0',
         key      => join( '', map { chr( int( rand(94) ) + 33 ) } ( 1 .. 16 ) ),
         ldapBase => 'dc=example,dc=com',
         ldapPort => '389',
