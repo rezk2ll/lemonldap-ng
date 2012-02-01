@@ -2081,7 +2081,8 @@ sub registerLogin {
         unshift @{ $history->{$type} }, $login;
 
         # Forget oldest logins
-        splice @{ $history->{$type} }, $self->{ $type . "Number" };
+        splice @{ $history->{$type} }, $self->{ $type . "Number" }
+          if ( scalar @{ $history->{$type} } > $self->{ $type . "Number" } );
 
         # Save into persistent session
         $self->updatePersistentSession( { loginHistory => $history, } );
