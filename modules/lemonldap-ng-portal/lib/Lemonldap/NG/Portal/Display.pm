@@ -76,7 +76,16 @@ sub display {
             );
         }
 
-        # 1.3 Case : display menu
+        # 1.3 Redirection
+        if ( $self->{error} == PE_REDIRECT ) {
+            $skinfile       = "../common/redirect.tpl";
+            %templateParams = (
+                URL             => $self->{urldc},
+                HIDDEN_INPUTS   => $self->buildHiddenForm(),
+            );
+        }
+
+        # 1.4 Case : display menu
         else {
 
             # Initialize menu elements

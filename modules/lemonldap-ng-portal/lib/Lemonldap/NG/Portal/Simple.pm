@@ -2473,8 +2473,7 @@ sub autoRedirect {
         $self->updateStatus;
 
         if ( $self->safe->reval( $self->{jsRedirect} ) ) {
-            print $self->header();
-            $self->_jsRedirect( $self->{urldc} );
+            return PE_REDIRECT;
         }
         else {
             print $self->header(
@@ -2512,79 +2511,21 @@ sub autoPost {
     my $self = shift;
 
     # Get URL and Form fields
-    my $url        = $self->{postUrl};
+    $self->{urldc} = $self->{postUrl};
     my $formFields = $self->{postFields};
+
+    $self->clearHiddenFormValue();
+    foreach ( keys %$formFields ) {
+        $self->setHiddenFormValue( $_, $formFields->{$_}, "", 0 );
+    }
 
     # Display info before redirecting
     if ( $self->info() ) {
         $self->{infoFormMethod} = $self->param('method') || "post";
-        $self->clearHiddenFormValue();
-        $self->{urldc} = $url;
-        foreach ( keys %$formFields ) {
-            $self->setHiddenFormValue( $_, $formFields->{$_}, "", 0 );
-        }
         return PE_INFO;
     }
 
-    print $self->header();
-    $self->_jsRedirect( $url, $formFields );
-}
-
-sub _jsRedirect {
-    my ( $self, $url, $formFields ) = @_;
-    $self->quit() unless ($url);
-
-    # Simple CSS
-    my $css = "
-    body {
-    background: #ddd;
-    color: #fff;
-    }
-    h1 {
-    size: 10pt;
-    text-align: center;
-    letter-spacing: 5px;
-    margin-top: 100px;
-    }
-    form {
-    display: none;
-    }
-    ";
-
-    my $message = &Lemonldap::NG::Portal::_i18n::msg(PM_REDIRECTION);
-
-    # Print page
-    print $self->start_html(
-        -title  => $message,
-        -style  => { -code => $css },
-        -onLoad => $formFields
-        ? "document.forms[0].submit()"
-        : "document.location.href='$url'"
-    );
-    print $self->h1($message);
-
-    if ($formFields) {
-        print $self->start_form( -action => $url );
-        $self->lmLog( "POST form action: $url", 'debug' );
-
-        # Create fields
-        foreach ( keys %$formFields ) {
-            print $self->textfield(
-                -name  => $_,
-                -value => $formFields->{$_}
-            );
-            $self->lmLog( "POST field $_: " . $formFields->{$_}, 'debug' );
-        }
-
-        print $self->submit();
-        print $self->end_form();
-    }
-
-    # End page
-    print $self->end_html();
-
-    # Exit
-    $self->quit();
+    return PE_REDIRECT;
 }
 
 1;
