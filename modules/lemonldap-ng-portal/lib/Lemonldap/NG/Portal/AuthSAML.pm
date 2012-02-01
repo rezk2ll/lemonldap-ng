@@ -1410,7 +1410,7 @@ sub authLogout {
 sub authForce {
     my $self = shift;
 
-    my $url = $self->url( -asbolute => 1 );
+    my $url = $self->url( -absolute => 1 );
 
     my $saml_acs_art_url = $self->getMetaDataURL(
         "samlSPSSODescriptorAssertionConsumerServiceHTTPArtifact");
