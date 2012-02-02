@@ -102,7 +102,7 @@ sub _compileRules {
 sub _conditionSub {
     my ( $self, $cond ) = splice @_;
     return sub { 1 }
-      if ( $cond =~ /^(?:accept|unprotect)$/i );
+      if ( $cond =~ /^(?:accept|unprotect|skip)$/i );
     return sub { 0 }
       if ( $cond =~ /^(?:deny$|logout)/i );
     my $sub = "sub {my \$self = shift; return ( $cond )}";

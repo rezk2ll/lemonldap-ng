@@ -1465,7 +1465,7 @@ sub testStruct {
                 keyTest => $pcre,
                 test    => sub {
                     my $e = shift;
-                    return 1 if ( $e =~ /^(?:accept|deny|unprotect)$/i );
+                    return 1 if ( $e =~ /^(?:accept|deny|unprotect|skip)$/i );
                     if ( $e =~ s/^logout(?:_(?:app_sso|app|sso))?\s*// ) {
                         return (
                             $e eq ''
