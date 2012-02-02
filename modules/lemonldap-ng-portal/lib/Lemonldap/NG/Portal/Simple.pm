@@ -521,6 +521,8 @@ sub setDefaultValues {
       unless ( defined( $self->{portalDisplayChangePassword} ) );
     $self->{portalDisplayAppslist} = 1
       unless ( defined( $self->{portalDisplayAppslist} ) );
+    $self->{portalDisplayLoginHistory} = 1
+      unless ( defined( $self->{portalDisplayLoginHistory} ) );
     $self->{jsRedirect} = 0
       unless ( defined( $self->{jsRedirect} ) );
     $self->{portalAutocomplete} ||= 0;
