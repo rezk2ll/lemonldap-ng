@@ -117,20 +117,45 @@ sub forgeHeadersInit {
     1;
 }
 
+## @imethod void headerListInit(hashRef args)
+# Lists the exported HTTP headers into $headerList
+# @param $args reference to the configuration hash
+sub headerListInit {
+    my ( $class, $args ) = splice @_;
+
+    foreach my $vhost ( keys %{ $args->{exportedHeaders} } ) {
+        my @tmp = keys %{ $args->{exportedHeaders}->{$vhost} };
+        $headerList->{$vhost} = \@tmp;
+    }
+    1;
+}
+
 ## @rmethod void sendHeaders()
 # Launch function compiled by forgeHeadersInit() for the current virtual host
 sub sendHeaders {
     my $class = shift;
-    my $vhost;
-    $vhost = $apacheRequest->hostname;
+    my $vhost = $apacheRequest->hostname;
     if ( defined( $forgeHeaders->{$vhost} ) ) {
         $class->lmSetHeaderIn( $apacheRequest, &{ $forgeHeaders->{$vhost} } );
     }
 }
 
-## @rmethod protected boolean isProtected()
-# @return True if URI isn't protected (rule "unprotect")
-sub isProtected {
+## @rmethod void cleanHeaders()
+# Unset HTTP headers for the current virtual host, when sendHeaders is skipped
+sub cleanHeaders {
+    my $class = shift;
+    my $vhost = $apacheRequest->hostname;
+    if ( defined( $forgeHeaders->{$vhost} ) ) {
+        $class->lmUnsetHeaderIn( $apacheRequest, @{ $headerList->{$vhost} } );
+    }
+}
+
+
+## @rmethod protected int isUnprotected()
+# @return 0 if URI is protected,
+# UNPROTECT if it is unprotected by "unprotect",
+# SKIP if is is unprotected by "skip"
+sub isUnprotected {
     my ( $class, $uri ) = splice @_;
     my $vhost = $apacheRequest->hostname;
     for ( my $i = 0 ; $i < $locationCount->{$vhost} ; $i++ ) {
