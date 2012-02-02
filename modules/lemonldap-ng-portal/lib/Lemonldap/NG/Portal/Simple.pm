@@ -1335,6 +1335,9 @@ sub _deleteSessionFromLocalStorage {
     my ( $self, $id ) = splice @_;
     my $result;
 
+    # Exit directly if no id given
+    return 1 unless defined $id;
+
     if ( defined $self->{localStorage} ) {
         $self->loadModule( $self->{localStorage} );
         my $cache;
