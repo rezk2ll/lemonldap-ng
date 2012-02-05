@@ -17,7 +17,7 @@ userDB
 	'Demo'
 
 passwordDB
-	'Null'
+	'Demo'
 
 locationRules
 	'$data1 = {&#39;test2.__DNSDOMAIN__&#39; => {&#39;default&#39; => &#39;accept&#39;,&#39;^/logout&#39; => &#39;logout_sso http://auth.__DNSDOMAIN__&#39;},&#39;test1.__DNSDOMAIN__&#39; => {&#39;default&#39; => &#39;accept&#39;,&#39;^/logout&#39; => &#39;logout_sso http://auth.__DNSDOMAIN__&#39;},&#39;manager.__DNSDOMAIN__&#39; => {&#39;default&#39; => &#39;$uid eq "dwho"&#39;}};'
