@@ -587,6 +587,45 @@ sub session {
         $res .= '</div>';
     }
 
+    # Login history
+    if ( defined $session{loginHistory} ) {
+        $res .= '<div class="ui-corner-all ui-widget-content category">';
+        $res .= '<h2 class="ui-corner-all ui-widget-header">'
+          . ucfirst $self->translate('loginHistory') . '</h2>';
+        $res .= '<ul>';
+
+        # Get all login records
+        my $loginRecords = {};
+
+        if ( defined $session{loginHistory}->{successLogin} ) {
+            foreach ( @{ $session{loginHistory}->{successLogin} } ) {
+                $loginRecords->{ $_->{_utime} } =
+                  "Success (IP " . $_->{ipAddr} . ")";
+            }
+        }
+
+        if ( defined $session{loginHistory}->{failedLogin} ) {
+            foreach ( @{ $session{loginHistory}->{failedLogin} } ) {
+                $loginRecords->{ $_->{_utime} } =
+                  $_->{error} . " (IP " . $_->{ipAddr} . ")";
+            }
+        }
+
+        # Display records sorted by date
+        foreach my $utime ( sort keys %{$loginRecords} ) {
+
+            $res .=
+                "<li><strong>"
+              . localtime($utime)
+              . "</strong>: "
+              . $loginRecords->{$utime} . "</li>";
+        }
+
+        delete $session{loginHistory};
+        $res .= '</ul>';
+        $res .= '</div>';
+    }
+
     # Other attributes
     $res .= '<div class="ui-corner-all ui-widget-content category">';
     $res .= '<h2 class="ui-corner-all ui-widget-header">'
