@@ -272,10 +272,13 @@ install_site:	install_manager_site install_portal_site install_handler_site inst
 	@echo
 	@echo "3 - Run 'make postconf' as root to update /etc/hosts if your DNS service does not known auth.$(DNSDOMAIN) and manager.$(DNSDOMAIN)"
 	@echo
-	@echo "4 - Use the manager from localhost at http://manager.${DNSDOMAIN}/ (after Apache restart) to modify LemonLDAP::NG configuration."
-	@echo "      Warning: If you access http://manager.${DNSDOMAIN}/ from other host, modify first Apache Manager configuration to allow access from non local address."
+	@echo "4 - Try to connect to http://test1.${DNSDOMAIN}/ or http://test2.${DNSDOMAIN}/ with demonstration accounts:"
+	@echo "    - rtyler/rtyler"
+	@echo "    - msmith/msmith"
+	@echo "    - dwho/dwho"
 	@echo
-	@echo "5 - Try to connect to http://test1.${DNSDOMAIN}/ or http://test2.${DNSDOMAIN}/"
+	@echo "5 - Connect to Manager at http://manager.${DNSDOMAIN}/ to edit configuration"
+	@echo
 	@if [ ! "$(APACHEUSER)" ]; then \
 		echo;echo "    Warning, since APACHEUSER was not set, $(APACHESESSIONFILEDIR) and $(CONFDIR) have permissive permissions."; \
 		echo "    Fix them by yourself to restrict their view to apache process only"; \
