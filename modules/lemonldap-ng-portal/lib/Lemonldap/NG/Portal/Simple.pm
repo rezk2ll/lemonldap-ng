@@ -2484,7 +2484,7 @@ sub autoRedirect {
             return PE_REDIRECT;
         }
         else {
-            print $self->header(
+            print $self->redirect(
                 -status   => '303 See Other',
                 -location => $self->{urldc},
             );
