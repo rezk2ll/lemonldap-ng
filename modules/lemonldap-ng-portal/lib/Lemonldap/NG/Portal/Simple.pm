@@ -1272,28 +1272,31 @@ sub _deleteSession {
         return 0;
     }
 
-    # Try to find a linked http session (securedCookie=>2)
-    if ( my $id2 = $h->{_httpSession} ) {
-        if ( my $h2 = $self->getApacheSession( $id2, 1 ) ) {
+    # Invalidate http cookie and session, if set
+    if ( $self->{securedCookie} >= 2 ) {
 
-            # Try to purge local cache
-            # (if an handler is running on the same server)
-            eval { $self->{lmConf}->{refLocalStorage}->remove($id2); };
-            eval { tied(%$h2)->delete() };
-            $self->lmLog( $@, 'error' ) if ($@);
-
-            # Create an obsolete cookie to remove it
-            push @{ $self->{cookie} },
-              $self->cookie(
-                -name    => $self->{cookieName} . 'http',
-                -value   => 0,
-                -domain  => $self->{domain},
-                -path    => "/",
-                -secure  => 0,
-                -expires => '-1d',
-                @_,
-              );
+        # Try to find a linked http session (securedCookie == 2)
+        if ( my $id2 = $h->{_httpSession} ) {
+            if ( my $h2 = $self->getApacheSession( $id2, 1 ) ) {
+                # Try to purge local cache
+                # (if an handler is running on the same server)
+                eval { $self->{lmConf}->{refLocalStorage}->remove($id2); };
+                eval { tied(%$h2)->delete() };
+                $self->lmLog( $@, 'error' ) if ($@);
+            }
         }
+
+        # Create an obsolete cookie to remove it
+        push @{ $self->{cookie} },
+          $self->cookie(
+            -name    => $self->{cookieName} . 'http',
+            -value   => 0,
+            -domain  => $self->{domain},
+            -path    => "/",
+            -secure  => 0,
+            -expires => '-1d',
+            @_,
+          );
     }
 
     my $logged_user = $h->{ $self->{whatToTrace} } || 'unknown';
@@ -2342,7 +2345,7 @@ sub buildCookie {
         -expires  => $self->{cookieExpiration},
         @_,
       );
-    if ( $self->{securedCookie} =~ /^(2|3)$/ ) {
+    if ( $self->{securedCookie} >= 2 ) {
         push @{ $self->{cookie} },
           $self->cookie(
             -name  => $self->{cookieName} . "http",
@@ -2469,7 +2472,7 @@ sub autoRedirect {
                 ( $self->{urldc} =~ /\?/ ? '&' : '?' ) 
               . $self->{cookieName} . "="
               . (
-                ( $self->{securedCookie} != 2 or $ssl )
+                ( $self->{securedCookie} < 2 or $ssl )
                 ? $self->{id}
                 : $self->{sessionInfo}->{_httpSession}
               );
