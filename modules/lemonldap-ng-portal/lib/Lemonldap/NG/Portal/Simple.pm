@@ -999,6 +999,8 @@ sub updatePersistentSession {
 # Update session stored.
 # If no id is given, try to get it from cookie.
 # If the session is available, update datas with $info.
+# Note that outdated session data may remain some time on
+# server local cache, if there are several LL::NG servers.
 # @param infos hash reference of information to update
 # @param id Session ID
 # @return nothing
@@ -1016,39 +1018,39 @@ sub updateSession {
           if ( defined $cookies{ $self->{cookieName} } );
     }
 
-    # Update sessionInfo data
     if ($id) {
+        # Update sessionInfo data
+        ## sessionInfo updated if $id defined : quite strange !!
+        ## See http://jira.ow2.org/browse/LEMONLDAP-430
         foreach ( keys %$infos ) {
             $self->lmLog( "Update sessionInfo $_ with " . $infos->{$_},
                 'debug' );
             $self->{sessionInfo}->{$_} = $infos->{$_};
         }
-    }
 
-    # Delete session in local storage
-    $self->_deleteSessionFromLocalStorage($id);
+        # Delete session from local storage
+        eval { $self->{lmConf}->{refLocalStorage}->remove($id); };
 
-    # Update session in the backend
-    if ($id) {
-        my $h = $self->getApacheSession( $id, 1 ) or return ();
-
-        # Store/update session values
-        foreach ( keys %$infos ) {
-            if ( defined( $infos->{$_} ) ) {
-                $self->lmLog( "Update session key $_ with " . $infos->{$_},
-                    'debug' );
-                $h->{$_} = $infos->{$_};
+        # Update session in global storage
+        if ( my $h = $self->getApacheSession( $id, 1 ) ) {
+            # Store/update session values
+            foreach ( keys %$infos ) {
+                if ( defined( $infos->{$_} ) ) {
+                    $self->lmLog( "Update session key $_ with " . $infos->{$_},
+                        'debug' );
+                    $h->{$_} = $infos->{$_};
+                }
+                else {
+                    $self->lmLog( "Delete session key $_", 'debug' );
+                    delete $h->{$_};
+                }
             }
-            else {
-                $self->lmLog( "Delete session key $_", 'debug' );
-                delete $h->{$_};
-            }
+
+            # Store updateTime
+            $h->{updateTime} = &POSIX::strftime( "%Y%m%d%H%M%S", localtime() );
+
+            untie %$h;
         }
-
-        # Store updateTime
-        $h->{updateTime} = &POSIX::strftime( "%Y%m%d%H%M%S", localtime() );
-
-        untie %$h;
     }
 }
 
@@ -1330,47 +1332,6 @@ sub _deleteSession {
     return $result;
 }
 
-##@method boolean _deleteSessionFromLocalStorage(string id)
-# Find session in local storage (cache) and remove it
-# @param id Session identifier
-# @return result
-sub _deleteSessionFromLocalStorage {
-    my ( $self, $id ) = splice @_;
-    my $result;
-
-    # Exit directly if no id given
-    return 1 unless defined $id;
-
-    if ( defined $self->{localStorage} ) {
-        $self->loadModule( $self->{localStorage} );
-        my $cache;
-        eval '$cache = new '
-          . $self->{localStorage}
-          . '($self->{localStorageOptions})';
-        if ( defined $cache ) {
-            my $nb = 0;
-            eval { $nb = $cache->remove($id); };
-            unless ($nb) {
-                $self->lmLog( "Unable to remove session $id from local storage",
-                    'warn' );
-                $result = 0;
-            }
-            else {
-                $self->lmLog( "Session $id removed from local storage",
-                    'debug' );
-                $result = 1;
-            }
-        }
-    }
-    else {
-
-        # If no local storage, this is OK
-        $result = 1;
-    }
-
-    return $result;
-}
-
 ##@method private void _dump(void* variable)
 # Dump variable in debug mode
 # @param $variable
@@ -1628,7 +1589,7 @@ sub controlExistingSession {
             # Logout if required
             if ( $self->param('logout') ) {
 
-                # Delete session in global storage
+                # Delete session
                 unless ( $self->_deleteSession($h) ) {
                     $self->lmLog( "Unable to delete session $id", 'error' );
                     return PE_ERROR;
@@ -1637,9 +1598,6 @@ sub controlExistingSession {
                     $self->lmLog( "Session $id deleted from global storage",
                         'debug' );
                 }
-
-                # Delete session in local storage
-                $self->_deleteSessionFromLocalStorage($id);
 
                 # Call issuerDB logout on each used issuerDBmodule
                 my $issuerDBList = $self->{sessionInfo}->{_issuerDB};
