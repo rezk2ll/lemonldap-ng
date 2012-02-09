@@ -2032,7 +2032,7 @@ sub authenticate {
 sub registerLogin {
     my ( $self, $errorCode ) = @_;
 
-    if ( $self->{portalDisplayLoginHistory} ) {
+    if ( $self->{loginHistoryEnabled} ) {
         my $history = $self->{sessionInfo}->{loginHistory} ||= {};
 
         my $type = ( $errorCode ? "failed" : "success" ) . "Login";
@@ -2128,7 +2128,7 @@ sub _sumUpSession {
       ? {}
       : { user => $session->{ $self->{whatToTrace} } };
     $res->{$_} = $session->{$_}
-      foreach ( "_utime", "ipAddr", keys %{ $self->{sessionDataToDisplay} } );
+      foreach ( "_utime", "ipAddr", keys %{ $self->{sessionDataToRemember} } );
     return $res;
 }
 
@@ -2152,8 +2152,8 @@ sub mkSessionArray {
       if ($displayUser);
     $tmp .= "<th>" . &Lemonldap::NG::Portal::_i18n::msg(PM_DATE) . "</th>";
     $tmp .= "<th>" . &Lemonldap::NG::Portal::_i18n::msg(PM_IP) . "</th>";
-    $tmp .= "<th>" . $self->{sessionDataToDisplay}->{$_} . "</th>"
-      foreach ( keys %{ $self->{sessionDataToDisplay} } );
+    $tmp .= "<th>" . $self->{sessionDataToRemember}->{$_} . "</th>"
+      foreach ( keys %{ $self->{sessionDataToRemember} } );
     $tmp .= '<th>' . &Lemonldap::NG::Portal::_i18n::msg(PM_ERROR_MSG) . '</th>'
       if ($displayError);
     $tmp .= '</tr>';
@@ -2164,8 +2164,8 @@ sub mkSessionArray {
         $tmp .=
 "<td><script>var _date=new Date($session->{_utime}*1000);document.write(_date.toLocaleString());</script></td>";
         $tmp .= "<td>$session->{ipAddr}</td>";
-        $tmp .= "<td>$session->{$_}</td>"
-          foreach ( keys %{ $self->{sessionDataToDisplay} } );
+        $tmp .= "<td>" . ( $session->{$_} || "") . "</td>"
+          foreach ( keys %{ $self->{sessionDataToRemember} } );
         $tmp .= "<td>$session->{error}</td>" if ($displayError);
         $tmp .= "</tr>";
     }

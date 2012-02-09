@@ -289,7 +289,7 @@ sub struct {
 
                 portalCustomization => {
                     _nodes => [
-                        qw(portalSkin portalAutocomplete portalUserAttr portalOpenLinkInNewWindow portalAntiFrame passwordManagement loginDisplay)
+                        qw(portalSkin portalAutocomplete portalUserAttr portalOpenLinkInNewWindow portalAntiFrame passwordManagement)
                     ],
                     _help => 'portalcustom',
 
@@ -311,17 +311,6 @@ sub struct {
                           'bool:/portalRequireOldPassword',
                         hideOldPassword      => 'bool:/hideOldPassword',
                         mailOnPasswordChange => 'bool:/mailOnPasswordChange',
-                    },
-
-                    loginDisplay => {
-                        _nodes => [qw(successLoginNumber failedLoginNumber cn:sessionDataToDisplay)],
-                        _help => 'loginDisplay',
-                        successLoginNumber => 'int:/successLoginNumber',
-                        failedLoginNumber => 'int:/failedLoginNumber',
-                        sessionDataToDisplay => {
-                            _nodes => ['hash:/sessionDataToDisplay:loginDisplay:btext'],
-                            _js    => 'hashRoot',
-                        },
                     },
                 },
             },
@@ -811,7 +800,7 @@ sub struct {
             # OTHER PARAMETERS
             advancedParams => {
                 _nodes => [
-                    qw(customFunctions n:soap n:notifications n:passwordManagement n:security n:redirection n:portalRedirection n:specialHandlers cn:logoutServices)
+                    qw(customFunctions n:soap n:loginHistory n:notifications n:passwordManagement n:security n:redirection n:portalRedirection n:specialHandlers cn:logoutServices)
                 ],
                 _help => 'advanced',
 
@@ -821,6 +810,18 @@ sub struct {
                     _nodes       => [qw(Soap exportedAttr)],
                     Soap         => 'bool:/Soap',
                     exportedAttr => 'text:/exportedAttr',
+                },
+
+                loginHistory => {
+                    _nodes => [qw(loginHistoryEnabled successLoginNumber failedLoginNumber cn:sessionDataToRemember)],
+                    _help => 'loginHistory',
+                    loginHistoryEnabled => 'bool:/loginHistoryEnabled',
+                    successLoginNumber => 'int:/successLoginNumber',
+                    failedLoginNumber => 'int:/failedLoginNumber',
+                    sessionDataToRemember => {
+                        _nodes => ['hash:/sessionDataToRemember:loginHistory:btext'],
+                        _js    => 'hashRoot',
+                    },
                 },
 
                 notifications => {
@@ -1479,6 +1480,7 @@ sub testStruct {
                 warnTest => $noAssign,
             },
         },
+        loginHistoryEnabled => $boolean,
         logoutServices => {
             keyTest    => qr/^\w+$/,
             keyMsgFail => 'Bad name',
@@ -1559,7 +1561,7 @@ sub testStruct {
             test    => qr/^(?:0|1|2|3)$/,
             msgFail => 'securedCookie must be 0, 1, 2 or 3',
         },
-        sessionDataToDisplay => {
+        sessionDataToRemember => {
             keyTest       => qr/^[\w-]+$/,
             keyMsgFail    => 'Invalid session data',
         },
