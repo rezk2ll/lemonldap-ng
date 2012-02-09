@@ -902,7 +902,7 @@ sub struct {
                 portalRedirection => {
                     _nodes => [ qw(jsRedirect) ],
                     _help      => 'redirections',
-                    jsRedirect => 'text:/jsRedirect:portalRedirection:boolOrPerlExpr',
+                    jsRedirect => 'text:/jsRedirect:redirections:boolOrPerlExpr',
                 },
 
                 specialHandlers => {
