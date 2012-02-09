@@ -133,6 +133,7 @@ __END__
 # * PE_PASSWORDFIRSTACCESS               71
 # * PE_MAILCONFIRMOK                     72
 # * PE_RADIUSCONNECTFAILED		 73
+# * PE_MUST_SUPPLY_OLD_PASSWORD          74
 
 # Not used in errors:
 # * PE_DONE                -1
@@ -218,6 +219,7 @@ sub error_fr {
         'Merci de saisir votre nouveau mot de passe',
         'Un mail de confirmation vous a été envoyé',
         'La connexion au serveur Radius a échoué',
+        "L'ancien mot de passe est obligatoire",
     ];
 }
 
@@ -300,6 +302,7 @@ sub error_en {
         'Please provide your new password',
         'A confirmation mail has been sent',
         'Radius connection has failed',
+        'Old password is required',
     ];
 }
 
@@ -383,6 +386,7 @@ sub error_ro {
         'Please provide your new password',
         'Un e-mail a fost trimis',
         'Radius connection has failed',
+        'Old password is required',
     ];
 }
 

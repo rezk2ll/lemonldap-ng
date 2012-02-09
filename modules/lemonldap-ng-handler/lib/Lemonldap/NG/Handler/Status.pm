@@ -91,6 +91,7 @@ sub portalTab {
         71 => 'PORTAL_PASSWORDFIRSTACCESS',
         72 => 'PORTAL_MAILCONFIRMOK',
         73 => 'PORTAL_RADIUSCONNECTFAILED',
+        74 => 'PORTAL_MUST_SUPPLY_OLD_PASSWORD',
     };
 }
 

@@ -65,6 +65,7 @@ sub menuInit {
                     33,    #PE_PP_EXP_WARNING
                     34,    #PE_PASSWORD_MISMATCH
                     39,    #PE_BADOLDPASSWORD
+                    74,    #PE_MUST_SUPPLY_OLD_PASSWORD
                 )
             )
         )
@@ -102,16 +103,14 @@ sub displayModules {
             $moduleHash->{'APPSLIST_LOOP'} = $self->appslist()
               if ( $module eq 'Appslist' );
             if ( $module eq 'LoginHistory' ) {
-                $moduleHash->{'SUCCESS_LOGIN'}
-                   = $self->mkSessionArray(
-                       $self->{sessionInfo}->{loginHistory}->{successLogin},
-                       "", 0, 0
-                     );
-                $moduleHash->{'FAILED_LOGIN'} 
-                   = $self->mkSessionArray(
-                       $self->{sessionInfo}->{loginHistory}->{failedLogin},
-                       "", 0, 1
-                     );
+                $moduleHash->{'SUCCESS_LOGIN'} =
+                  $self->mkSessionArray(
+                    $self->{sessionInfo}->{loginHistory}->{successLogin},
+                    "", 0, 0 );
+                $moduleHash->{'FAILED_LOGIN'} =
+                  $self->mkSessionArray(
+                    $self->{sessionInfo}->{loginHistory}->{failedLogin},
+                    "", 0, 1 );
             }
             push @$displayModules, $moduleHash;
         }

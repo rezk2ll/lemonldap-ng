@@ -144,6 +144,7 @@ use constant {
     PE_PASSWORDFIRSTACCESS              => 71,
     PE_MAILCONFIRMOK                    => 72,
     PE_RADIUSCONNECTFAILED              => 73,
+    PE_MUST_SUPPLY_OLD_PASSWORD         => 74,
 
     # Portal messages
     PM_USER                  => 0,
@@ -190,6 +191,7 @@ our @EXPORT = qw( PE_IMG_NOK PE_IMG_OK PE_INFO PE_REDIRECT PE_DONE PE_OK
   PE_MISSINGREQATTR PE_BADPARTNER PE_MAILCONFIRMATION_ALREADY_SENT
   PE_PASSWORDFORMEMPTY PE_CAS_SERVICE_NOT_ALLOWED PE_MAILFIRSTACCESS
   PE_MAILNOTFOUND PE_PASSWORDFIRSTACCESS PE_MAILCONFIRMOK
+  PE_MUST_SUPPLY_OLD_PASSWORD
   PM_USER PM_DATE PM_IP PM_SESSIONS_DELETED PM_OTHER_SESSIONS
   PM_REMOVE_OTHER_SESSIONS PM_PP_GRACE PM_PP_EXP_WARNING
   PM_SAML_IDPSELECT PM_SAML_IDPCHOOSEN PM_REMEMBERCHOICE PM_SAML_SPLOGOUT
@@ -638,7 +640,8 @@ sub setDefaultValues {
     $self->{notificationWildcard} ||= "allusers";
 
     # Login History
-    $self->{loginHistoryEnabled} = 1 unless defined $self->{loginHistoryEnabled};
+    $self->{loginHistoryEnabled} = 1
+      unless defined $self->{loginHistoryEnabled};
     $self->{successLoginNumber} = 5 unless defined $self->{successLoginNumber};
     $self->{failedLoginNumber}  = 5 unless defined $self->{failedLoginNumber};
 }
@@ -1020,6 +1023,7 @@ sub updateSession {
     }
 
     if ($id) {
+
         # Update sessionInfo data
         ## sessionInfo updated if $id defined : quite strange !!
         ## See http://jira.ow2.org/browse/LEMONLDAP-430
@@ -1034,6 +1038,7 @@ sub updateSession {
 
         # Update session in global storage
         if ( my $h = $self->getApacheSession( $id, 1 ) ) {
+
             # Store/update session values
             foreach ( keys %$infos ) {
                 if ( defined( $infos->{$_} ) ) {
@@ -1281,6 +1286,7 @@ sub _deleteSession {
         # Try to find a linked http session (securedCookie == 2)
         if ( my $id2 = $h->{_httpSession} ) {
             if ( my $h2 = $self->getApacheSession( $id2, 1 ) ) {
+
                 # Try to purge local cache
                 # (if an handler is running on the same server)
                 eval { $self->{lmConf}->{refLocalStorage}->remove($id2); };
@@ -2165,7 +2171,7 @@ sub mkSessionArray {
         $tmp .=
 "<td><script>var _date=new Date($session->{_utime}*1000);document.write(_date.toLocaleString());</script></td>";
         $tmp .= "<td>$session->{ipAddr}</td>";
-        $tmp .= "<td>" . ( $session->{$_} || "") . "</td>"
+        $tmp .= "<td>" . ( $session->{$_} || "" ) . "</td>"
           foreach ( keys %{ $self->{sessionDataToRemember} } );
         $tmp .= "<td>$session->{error}</td>" if ($displayError);
         $tmp .= "</tr>";

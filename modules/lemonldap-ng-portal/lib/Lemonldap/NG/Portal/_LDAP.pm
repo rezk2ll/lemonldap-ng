@@ -262,7 +262,9 @@ sub userModifyPassword {
             return PE_BADOLDPASSWORD if ( $mesg->code == 53 );
         }
         else {
-            if ($oldpassword) {
+            if ( $self->{portal}->{portalRequireOldPassword} ) {
+
+                return PE_MUST_SUPPLY_OLD_PASSWORD if ( !$oldpassword );
 
                 # Check old password with a bind
                 $mesg = $self->bind( $dn, password => $oldpassword );
