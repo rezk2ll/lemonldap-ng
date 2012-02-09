@@ -24,12 +24,12 @@
 
 	<div class="buttons">
 		<a href="<TMPL_VAR NAME="PORTAL_URL">" class="positive">
-			<img src="/skins/common/accept.png" alt="" />
+			<img src="<TMPL_VAR NAME="SKIN_PATH">/common/accept.png" alt="" />
 			<lang en="Go to portal" fr="Aller au portail" />
 		</a>
         <TMPL_IF NAME="LOGOUT_URL">
 		<a href="<TMPL_VAR NAME="LOGOUT_URL">" class="negative">
-			<img src="/skins/common/cancel.png" alt="" />
+			<img src="<TMPL_VAR NAME="SKIN_PATH">/common/cancel.png" alt="" />
 			<lang en="Logout" fr="Se d&eacute;connecter" />
 		</a>
         </TMPL_IF>

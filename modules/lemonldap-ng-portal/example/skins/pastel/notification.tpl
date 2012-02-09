@@ -22,7 +22,7 @@
 		<TMPL_VAR NAME="NOTIFICATION">
 		<div class="buttons">
 			<button type="submit" class="positive">
-				<img src="/skins/common/accept.png" alt="" />
+				<img src="<TMPL_VAR NAME="SKIN_PATH">/common/accept.png" alt="" />
 				<lang en="Accept" fr="Accepter" />
 			</button>
 		</div>

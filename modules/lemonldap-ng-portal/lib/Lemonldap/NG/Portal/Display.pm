@@ -37,9 +37,7 @@ sub display {
         %templateParams = (
             PORTAL_URL => $self->{portal},
             LOGOUT_URL => $self->{portal} . "?logout=1",
-            ANTIFRAME  => $self->{portalAntiFrame},
             URL        => $self->{urldc},
-            SKIN       => $self->{portalSkin},
             ERROR403   => $error403,
             ERROR500   => $error500,
         );
@@ -66,9 +64,7 @@ sub display {
             $skinfile       = 'info.tpl';
             %templateParams = (
                 AUTH_ERROR_TYPE => $self->error_type,
-                ANTIFRAME       => $self->{portalAntiFrame},
                 MSG             => $info,
-                SKIN            => $skin,
                 URL             => $self->{urldc},
                 HIDDEN_INPUTS   => $self->buildHiddenForm(),
                 ACTIVE_TIMER    => $self->{activeTimer},
@@ -99,8 +95,6 @@ sub display {
                 AUTH_USER       => $auth_user,
                 AUTOCOMPLETE    => $self->{portalAutocomplete},
                 NEWWINDOW       => $self->{portalOpenLinkInNewWindow},
-                ANTIFRAME       => $self->{portalAntiFrame},
-                SKIN            => $skin,
                 AUTH_ERROR      => $self->error( undef, $self->{menuError} ),
                 AUTH_ERROR_TYPE => $self->error_type( $self->{menuError} ),
                 DISPLAY_TAB     => $self->{menuDisplayTab},
@@ -125,9 +119,7 @@ sub display {
         $skinfile       = 'notification.tpl';
         %templateParams = (
             AUTH_ERROR_TYPE => $self->error_type,
-            ANTIFRAME       => $self->{portalAntiFrame},
             NOTIFICATION    => $notif,
-            SKIN            => $skin,
             HIDDEN_INPUTS   => $self->buildHiddenForm(),
             AUTH_URL        => $self->get_url,
             CHOICE_PARAM    => $self->{authChoiceParam},
@@ -143,9 +135,7 @@ sub display {
             AUTH_ERROR      => $self->error,
             AUTH_ERROR_TYPE => $self->error_type,
             AUTH_URL        => $self->get_url,
-            ANTIFRAME       => $self->{portalAntiFrame},
             MSG             => $self->info(),
-            SKIN            => $skin,
             HIDDEN_INPUTS   => $self->buildHiddenForm(),
             ACTIVE_TIMER    => $self->{activeTimer},
             FORM_METHOD     => $self->{confirmFormMethod},
@@ -161,9 +151,7 @@ sub display {
         %templateParams = (
             AUTH_ERROR      => $self->error,
             AUTH_ERROR_TYPE => $self->error_type,
-            ANTIFRAME       => $self->{portalAntiFrame},
             MSG             => $info,
-            SKIN            => $skin,
             URL             => $self->{urldc},
             HIDDEN_INPUTS   => $self->buildHiddenForm(),
             ACTIVE_TIMER    => $self->{activeTimer},
@@ -183,8 +171,6 @@ sub display {
         %templateParams = (
             AUTH_ERROR      => $self->error,
             AUTH_ERROR_TYPE => $self->error_type,
-            ANTIFRAME       => $self->{portalAntiFrame},
-            SKIN            => $skin,
             PROVIDERURI     => $p,
             ID              => $self->{_openidPortal}
               . $self->{sessionInfo}
@@ -201,10 +187,8 @@ sub display {
             AUTH_ERROR            => $self->error,
             AUTH_ERROR_TYPE       => $self->error_type,
             AUTH_URL              => $self->get_url,
-            ANTIFRAME             => $self->{portalAntiFrame},
             LOGIN                 => $self->get_user,
             AUTOCOMPLETE          => $self->{portalAutocomplete},
-            SKIN                  => $skin,
             DISPLAY_RESETPASSWORD => $self->{portalDisplayResetPassword},
             DISPLAY_FORM          => 1,
             MAIL_URL              => $self->{mailUrl},
@@ -321,6 +305,17 @@ sub display {
             );
         }
     }
+
+    ## Common template params
+    my $portalPath = $self->{portal};
+    $portalPath =~ s#^https?://[^/]+/?#/#;
+    $portalPath =~ s#[^/]+\.pl$##;
+    %templateParams = (
+        %templateParams,
+        SKIN_PATH => $portalPath . "skins",
+        SKIN      => $skin,
+        ANTIFRAME => $self->{portalAntiFrame},
+    );
 
     return ( "$skin_dir/$skin/$skinfile", %templateParams );
 

@@ -3,7 +3,7 @@
   <div id="content">
     <div id="content-all">
       <div class="title">
-        <img src="/skins/<TMPL_VAR NAME="SKIN">/images/logo-ok.png" />
+        <img src="<TMPL_VAR NAME="SKIN_PATH">/<TMPL_VAR NAME="SKIN">/images/logo-ok.png" />
         <lang en="You have some new messages" fr="Vous avez de nouveaux messages"/>
       </div>
       <hr class="solid" />

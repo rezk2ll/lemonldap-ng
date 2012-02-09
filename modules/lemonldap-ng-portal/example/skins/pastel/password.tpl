@@ -28,11 +28,11 @@
 	<tr><td colspan="2">
         <div class="buttons">
         <button type="reset" class="negative" tabindex="6">
-                <img src="/skins/common/cancel.png" alt="" />
+                <img src="<TMPL_VAR NAME="SKIN_PATH">/common/cancel.png" alt="" />
                 <lang en="Cancel" fr="Annuler" />
         </button>
         <button type="submit" class="positive" tabindex="5">
-                <img src="/skins/common/accept.png" alt="" />
+                <img src="<TMPL_VAR NAME="SKIN_PATH">/common/accept.png" alt="" />
                 <lang en="Submit" fr="Soumettre" />
         </button>
 	</div>

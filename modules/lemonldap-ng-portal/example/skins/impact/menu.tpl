@@ -4,7 +4,7 @@
     <div id="content-all">
 
       <div class="title">
-        <img src="/skins/<TMPL_VAR NAME="SKIN">/images/logo-ok.png" />
+        <img src="<TMPL_VAR NAME="SKIN_PATH">/<TMPL_VAR NAME="SKIN">/images/logo-ok.png" />
         <TMPL_VAR NAME="AUTH_ERROR">
       </div>
       <hr class="solid" />
@@ -18,16 +18,16 @@
         <ul>
         <TMPL_LOOP NAME="DISPLAY_MODULES">
           <TMPL_IF NAME="Appslist">
-          <li><a href="#appslist"><span><img src="/skins/common/application_cascade.png" width="16" height="16" alt="appslist" /> <lang en="Your applications" fr="Vos applications" /></span></a></li>
+          <li><a href="#appslist"><span><img src="<TMPL_VAR NAME="SKIN_PATH">/common/application_cascade.png" width="16" height="16" alt="appslist" /> <lang en="Your applications" fr="Vos applications" /></span></a></li>
           </TMPL_IF>
           <TMPL_IF NAME="ChangePassword">
-          <li><a href="#password"><span><img src="/skins/common/vcard_edit.png" width="16" height="16" alt="password" /> <lang en="Password" fr="Mot de passe" /></span></a></li>
+          <li><a href="#password"><span><img src="<TMPL_VAR NAME="SKIN_PATH">/common/vcard_edit.png" width="16" height="16" alt="password" /> <lang en="Password" fr="Mot de passe" /></span></a></li>
           </TMPL_IF>
           <TMPL_IF NAME="LoginHistory">
-          <li><a href="#loginHistory"><span><img src="/skins/common/calendar.png" width="16" height="16" alt="login history" /> <lang en="Login history" fr="Historique des connexions" /></span></a></li>
+          <li><a href="#loginHistory"><span><img src="<TMPL_VAR NAME="SKIN_PATH">/common/calendar.png" width="16" height="16" alt="login history" /> <lang en="Login history" fr="Historique des connexions" /></span></a></li>
           </TMPL_IF>
           <TMPL_IF NAME="Logout">
-          <li><a href="#logout"><span><img src="/skins/common/door_out.png" width="16" height="16" alt="logout" /> <lang en="Logout" fr="Se d&eacute;connecter" /></span></a></li>
+          <li><a href="#logout"><span><img src="<TMPL_VAR NAME="SKIN_PATH">/common/door_out.png" width="16" height="16" alt="logout" /> <lang en="Logout" fr="Se d&eacute;connecter" /></span></a></li>
           </TMPL_IF>
         </TMPL_LOOP>
         </ul>
@@ -66,7 +66,7 @@
 
                 <!-- Logo (optional) -->
                 <TMPL_IF NAME="applogo">
-                <img    src="/skins/common/apps/<TMPL_VAR NAME="applogo">"
+                <img    src="<TMPL_VAR NAME="SKIN_PATH">/common/apps/<TMPL_VAR NAME="applogo">"
                         class="applogo <TMPL_VAR NAME="appid">"
                         alt="<TMPL_VAR NAME="appname">" />
                 </TMPL_IF>
@@ -110,7 +110,7 @@
 
                 <!-- Logo (optional) -->
                 <TMPL_IF NAME="applogo">
-                <img    src="/skins/common/apps/<TMPL_VAR NAME="applogo">"
+                <img    src="<TMPL_VAR NAME="SKIN_PATH">/common/apps/<TMPL_VAR NAME="applogo">"
                         class="applogo <TMPL_VAR NAME="appid">"
                         alt="<TMPL_VAR NAME="appname">" />
                 </TMPL_IF>
