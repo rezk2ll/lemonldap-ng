@@ -68,6 +68,9 @@ RAPACHESESSIONFILEDIR=$(DESTDIR)/$(APACHESESSIONFILEDIR)
 APACHESESSIONFILELOCKDIR=$(APACHESESSIONFILEDIR)/lock
 RAPACHESESSIONFILELOCKDIR=$(DESTDIR)/$(APACHESESSIONFILELOCKDIR)
 
+# Lemonldap-ng notifications storage dir
+RFILENOTIFDIR=$(DESTDIR)/$(DATADIR)/notifications
+
 # Apache user/group
 APACHEUSER=
 APACHEGROUP=
@@ -382,7 +385,7 @@ install_doc_site:
 	@install -v -d $(RDOCDIR)
 	@cp -dR --remove-destination doc/* $(RDOCDIR)
 
-install_conf_dir:	install_sessions_dir
+install_conf_dir:	install_sessions_dir install_notif_dir
 	# Configuration files install
 	@install -v -d $(RCONFDIR) $(RFILECONFIGDIR) $(RTOOLSDIR)
 	@if [ "$(ERASECONFIG)" -eq "1" ]; then \
@@ -417,6 +420,19 @@ install_sessions_dir:
 		chmod 770 $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR); \
 	else \
 		chmod 777 $(RAPACHESESSIONFILEDIR) $(RAPACHESESSIONFILELOCKDIR); \
+	fi
+
+install_notif_dir:
+	@install -m 777 -v -d $(RFILENOTIFDIR)
+	# Fix notifications directory permissions
+	@if [ "$(APACHEUSER)" != "" ]; then \
+		chown $(APACHEUSER) $(RFILENOTIFDIR) || exit 1; \
+		if [ "$(APACHEGROUP)" != "" ]; then \
+			chgrp $(APACHEGROUP) $(RFILENOTIFDIR) || exit 1; \
+		fi; \
+		chmod 770 $(RFILENOTIFDIR); \
+	else \
+		chmod 777 $(RFILENOTIFDIR); \
 	fi
 
 postconf_hosts:

@@ -322,6 +322,7 @@ chmod 640 %{buildroot}%{lm_vardir}/conf/*
 chmod 640 %{buildroot}%{lm_storagefile}
 chmod 770 %{buildroot}%{lm_vardir}/sessions
 chmod 770 %{buildroot}%{lm_vardir}/sessions/lock
+chmod 770 %{buildroot}%{lm_vardir}/notifications
 
 # Touch for ghost
 mkdir -p $RPM_BUILD_ROOT%{apache_confdir}
@@ -404,6 +405,7 @@ rm -rf %{buildroot}
 %dir %{lm_vardir}/conf
 %dir %{lm_vardir}/sessions
 %dir %{lm_vardir}/sessions/lock
+%dir %{lm_vardir}/notifications
 %defattr(640,%{lm_apacheuser},%{lm_apachegroup},-)
 %config(noreplace) %{lm_vardir}/conf/lmConf-1
 
