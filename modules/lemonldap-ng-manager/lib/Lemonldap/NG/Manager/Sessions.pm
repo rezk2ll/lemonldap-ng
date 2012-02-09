@@ -878,7 +878,7 @@ sessions
   our $cgi ||= Lemonldap::NG::Manager::Sessions->new({
         localStorage        => "Cache::FileCache",
         localStorageOptions => {
-            'namespace'          => 'MyNamespace',
+            'namespace'          => 'lemonldap-ng',
             'default_expires_in' => 600,
             'directory_umask'    => '007',
             'cache_root'         => '/tmp',

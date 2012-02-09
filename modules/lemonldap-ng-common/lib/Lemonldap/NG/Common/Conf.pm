@@ -402,7 +402,7 @@ Web-SSO configuration.
                   # To use local cache, set :
                   localStorage => "Cache::FileCache",
                   localStorageOptions = {
-                      'namespace' => 'MyNamespace',
+                      'namespace' => 'lemonldap-ng',
                       'default_expires_in' => 600,
                       'directory_umask' => '007',
                       'cache_root' => '/tmp',

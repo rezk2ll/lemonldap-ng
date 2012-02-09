@@ -750,7 +750,7 @@ sub updateStatus {
 }
 
 ## @rmethod protected int forbidden(string uri)
-# Used to reject non authorizated requests.
+# Used to reject non authorized requests.
 # Inform the status processus and call logForbidden().
 # @param uri URI requested
 # @return Apache2::Const::REDIRECT or Apache2::Const::FORBIDDEN
