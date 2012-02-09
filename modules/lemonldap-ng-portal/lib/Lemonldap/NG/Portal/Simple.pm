@@ -638,6 +638,7 @@ sub setDefaultValues {
     $self->{notificationWildcard} ||= "allusers";
 
     # Login History
+    $self->{loginHistoryEnabled} = 1 unless defined $self->{loginHistoryEnabled};
     $self->{successLoginNumber} = 5 unless defined $self->{successLoginNumber};
     $self->{failedLoginNumber}  = 5 unless defined $self->{failedLoginNumber};
 }

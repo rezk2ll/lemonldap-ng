@@ -55,5 +55,8 @@ macros
 whatToTrace
         '$_whatToTrace'
 
+loginHistoryEnabled
+	1
+
 reloadUrls
         '$data1 = {&#39;reload.__DNSDOMAIN__&#39; => &#39;http://reload.__DNSDOMAIN__/reload&#39;};'
