@@ -50,8 +50,9 @@ sub process {
 
     $self->{error} = $self->_subProcess(
         qw(smtpInit userDBInit passwordDBInit extractMailInfo
-          getMailUser setSessionInfo setMacros setLocalGroups setGroups setPersistentSessionInfo
-          storeMailSession sendConfirmationMail changePassword sendPasswordMail)
+          getMailUser setSessionInfo setMacros setGroups
+          setPersistentSessionInfo setLocalGroups storeMailSession
+          sendConfirmationMail changePassword sendPasswordMail)
     );
 
     return (

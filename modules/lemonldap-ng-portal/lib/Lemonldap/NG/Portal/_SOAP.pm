@@ -86,9 +86,10 @@ sub getCookies {
     }
     else {
         $self->{error} = $self->_subProcess(
-            qw(authInit userDBInit getUser setAuthSessionInfo setSessionInfo
-              setMacros setLocalGroups setGroups setPersistentSessionInfo authenticate
-              removeOther grantSession store authFinish buildCookie)
+            qw(authInit userDBInit getUser setAuthSessionInfo
+              setSessionInfo setMacros setGroups setPersistentSessionInfo
+              setLocalGroups authenticate grantSession removeOther
+              store authFinish buildCookie)
         );
         $self->updateSession();
     }

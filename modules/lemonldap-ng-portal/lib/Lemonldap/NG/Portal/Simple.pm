@@ -1439,12 +1439,13 @@ sub process {
     my ($self) = @_;
     $self->{error} = PE_OK;
     $self->{error} = $self->_subProcess(
-        qw(controlUrlOrigin checkNotifBack controlExistingSession issuerDBInit
-          authInit issuerForUnAuthUser extractFormInfo userDBInit getUser
-          setAuthSessionInfo passwordDBInit modifyPassword setSessionInfo
-          setMacros setLocalGroups setGroups setPersistentSessionInfo sendPasswordMail
-          authenticate removeOther grantSession store authFinish buildCookie
-          checkNotification issuerForAuthUser autoRedirect)
+        qw(controlUrlOrigin checkNotifBack controlExistingSession
+          issuerDBInit authInit issuerForUnAuthUser extractFormInfo
+          userDBInit getUser setAuthSessionInfo passwordDBInit
+          modifyPassword setSessionInfo setMacros setGroups
+          setPersistentSessionInfo setLocalGroups sendPasswordMail
+          authenticate grantSession removeOther store authFinish
+          buildCookie checkNotification issuerForAuthUser autoRedirect)
     );
     $self->updateStatus;
     return ( ( $self->{error} > 0 ) ? 0 : 1 );
@@ -1792,8 +1793,8 @@ sub existingSession {
             $self->{error} = $self->_subProcess(
                 qw(issuerDBInit authInit issuerForUnAuthUser extractFormInfo
                   userDBInit getUser setAuthSessionInfo setSessionInfo
-                  setMacros setLocalGroups setGroups setPersistentSessionInfo
-                  authenticate store authFinish)
+                  setMacros setGroups setPersistentSessionInfo
+                  setLocalGroups authenticate store authFinish)
             );
             return $self->{error} || PE_DONE;
         }
