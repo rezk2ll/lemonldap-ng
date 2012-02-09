@@ -195,8 +195,7 @@ sub fetchId {
     my $vhost = $apacheRequest->hostname;
     my $lookForHttpCookie =
         $securedCookie =~ /^(2|3)$/
-        && ( $https->{$vhost} == 0
-        || ( !defined($https->{$vhost}) && $https->{_} == 0 ) ) ;
+         && !( defined( $https->{$vhost} ) ? $https->{$vhost} : $https->{_} );
     my $value = $lookForHttpCookie ?
         ( $t =~ /${cookieName}http=([^,; ]+)/o ? $1 : 0 ) :
         ( $t =~       /$cookieName=([^,; ]+)/o ? $1 : 0 ) ;
