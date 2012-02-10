@@ -1,7 +1,6 @@
         <p>
-          <span class="text-label"><lang en="Login" fr="Identifiant de compte"/></span><br/>
+          <span class="text-label"><lang en="Login" fr="Identifiant"/></span><br/>
           <input name="user" type="text" value="<TMPL_VAR NAME="LOGIN">" tabindex="1" /><br/>
-          <span class="text-help">(<lang en="for example: jdoe" fr="par exemple: toto"/>)</span>
         </p>
         <p>
           <span class="text-label"><lang en="Password" fr="Mot de passe"/></span><br/>
