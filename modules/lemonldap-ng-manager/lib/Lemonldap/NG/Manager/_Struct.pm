@@ -603,10 +603,11 @@ sub struct {
 
                 # Slave
                 slaveParams => {
-                    _nodes          => [qw(slaveAuthnLevel slaveUserHeader)],
+                    _nodes          => [qw(slaveAuthnLevel slaveUserHeader slaveMasterIP)],
                     _help           => 'authSlave',
                     slaveAuthnLevel => 'int:/slaveAuthnLevel',
                     slaveUserHeader => 'text:/slaveUserHeader',
+                    slaveMasterIP   => 'text:/slaveMasterIP',
                 },
 
                 # Choice
@@ -1568,6 +1569,10 @@ sub testStruct {
         singleSession  => $boolean,
         singleIP       => $boolean,
         singleUserByIP => $boolean,
+        slaveMasterIP  => {
+            test    => qr/^\s*((\d{1,3}\.){3}\d{1,3}\s+)*(\d{1,3}\.){3}\d{1,3}\s*$/,
+            msgFail => 'Bad parameter "master\'s IP" in Slave',
+        },
         Soap           => $boolean,
         storePassword  => $boolean,
         successLoginNumber => $integer,

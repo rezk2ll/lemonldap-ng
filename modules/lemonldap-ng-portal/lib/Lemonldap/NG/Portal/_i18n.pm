@@ -134,6 +134,7 @@ __END__
 # * PE_MAILCONFIRMOK                     72
 # * PE_RADIUSCONNECTFAILED		 73
 # * PE_MUST_SUPPLY_OLD_PASSWORD          74
+# * PE_FORBIDDENIP                       75
 
 # Not used in errors:
 # * PE_DONE                -1
@@ -220,6 +221,7 @@ sub error_fr {
         'Un mail de confirmation vous a été envoyé',
         'La connexion au serveur Radius a échoué',
         "L'ancien mot de passe est obligatoire",
+        'Vous venez d\'une adresse IP qui n\'est pas accréditée',
     ];
 }
 
@@ -303,6 +305,7 @@ sub error_en {
         'A confirmation mail has been sent',
         'Radius connection has failed',
         'Old password is required',
+        'You came from an unaccredited IP address',
     ];
 }
 
@@ -387,6 +390,7 @@ sub error_ro {
         'Un e-mail a fost trimis',
         'Radius connection has failed',
         'Old password is required',
+        'You came from an unaccredited IP address',
     ];
 }
 
