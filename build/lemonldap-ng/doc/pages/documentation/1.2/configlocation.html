@@ -378,24 +378,23 @@ Then, to protect a standard virutal host, the only configuration line to add is:
 <pre class="code file apache">PerlHeaderParserHandler My::Package</pre>
 
 </div>
-<!-- SECTION "Handler" [6846-8061] -->
+<!-- SECTION "Handler" [6846-8060] -->
 <h2><a name="configuration_reload" id="configuration_reload">Configuration reload</a></h2>
 <div class="level2">
 
 <p>
 
-<p><div class="noteclassic">As Handlers keep configuration in cache, when configuration change, it should be updated in Handlers. An Apache restart will work, but LemonLDAP::NG offers the mean to reload them trough an <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> request. Configuration reload will then be effective in less than 10 minutes.
+<p><div class="noteclassic">As Handlers keep configuration in cache, when configuration change, it should be updated in Handlers. An Apache restart will work, but LemonLDAP::NG offers the mean to reload them through an <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> request. Configuration reload will then be effective in less than 10 minutes.
 </div></p>
 </p>
 
 <p>
-After configuration is saved by Manager, LemonLDAP::NG will try to reload configuration on distant Handlers. This can be configured in LemonLDAP::NG ini file, in the section <code>apply</code>:
+After configuration is saved by Manager, LemonLDAP::NG will try to reload configuration on distant Handlers by sending an <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> request to the servers. The servers and URLs can be configured in Manager, <code>General Parameters</code> &gt; <code>reload configuration URLs</code>: keys are server names or <acronym title="Internet Protocol">IP</acronym> the requests will be sent to, and values are the requested URLs.
 </p>
-<pre class="code file ini"><span class="re0"><span class="br0">&#91;</span>apply<span class="br0">&#93;</span></span>
-&nbsp;
-# URL used to reload configuration
-reload.example.com<span class="sy0">=</span><span class="re2">http://reload.example.com/reload</span>
-<span class="co0">;reloaddist.example.com=http://reloaddist.example.com/reload</span></pre>
+
+<p>
+These parameters can be overwritten in LemonLDAP::NG ini file, in the section <code>apply</code>.
+</p>
 
 <p>
 <p><div class="notetip">You only need a reload <acronym title="Uniform Resource Locator">URL</acronym> per physical servers, as Handlers share the same configuration cache on each physical server.
@@ -423,7 +422,7 @@ The <code>reload</code> target is managed in Apache configuration, inside a virt
 </p>
 
 </div>
-<!-- SECTION "Configuration reload" [8062-9338] -->
+<!-- SECTION "Configuration reload" [8061-9417] -->
 <h2><a name="local_file" id="local_file">Local file</a></h2>
 <div class="level2">
 
@@ -463,7 +462,7 @@ For example, to override configured skin for portal:
 </p>
 
 </div>
-<!-- SECTION "Local file" [9339-10196] -->
+<!-- SECTION "Local file" [9418-10275] -->
 <h2><a name="script_files" id="script_files">Script files</a></h2>
 <div class="level2">
 
@@ -478,7 +477,7 @@ LemonLDAP::NG allows to override any configuration parameter directly in script 
 </p>
 
 </div>
-<!-- SECTION "Script files" [10197-10585] -->
+<!-- SECTION "Script files" [10276-10664] -->
 <h3><a name="portal1" id="portal1">Portal</a></h3>
 <div class="level3">
 
@@ -493,7 +492,7 @@ For example, in portal/index.pl:
 <span class="br0">&#41;</span><span class="sy0">;</span></pre>
 
 </div>
-<!-- SECTION "Portal" [10586-10756] -->
+<!-- SECTION "Portal" [10665-10835] -->
 <h3><a name="handler1" id="handler1">Handler</a></h3>
 <div class="level3">
 
@@ -508,4 +507,4 @@ For example, in handler/MyHandler.pm:
 <span class="br0">&#41;</span><span class="sy0">;</span></pre>
 
 </div>
-<!-- SECTION "Handler" [10757-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Handler" [10836-] --></div><!-- closes <div class="dokuwiki export">-->

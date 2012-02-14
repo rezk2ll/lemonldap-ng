@@ -26,7 +26,7 @@
 <div class="level1">
 
 </div>
-<!-- SECTION "Single Sign On cookie, domain and portal URL" [1-59] -->
+<!-- SECTION "Single Sign On cookie, domain and portal URL" [1-58] -->
 <h2><a name="sso_cookie" id="sso_cookie">SSO cookie</a></h2>
 <div class="level2">
 
@@ -45,13 +45,15 @@ To edit <acronym title="Single Sign On">SSO</acronym> cookie parameters, go in M
 </li>
 <li class="level1"><div class="li"> <strong>Multiple domains</strong>: enable <a href="../../documentation/1.2/cda.html" class="wikilink1" title="documentation:1.2:cda">cross domain mechanism</a> (without this, you cannot extend <acronym title="Single Sign On">SSO</acronym> to other domains)</div>
 </li>
-<li class="level1"><div class="li"> <strong>Secured cookie</strong>: 3 options:</div>
+<li class="level1"><div class="li"> <strong>Secured cookie</strong>: 4 options:</div>
 <ul>
 <li class="level2"><div class="li"> <strong>Non secured cookie</strong>: the cookie can be sent over <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> and HTTPS connections</div>
 </li>
 <li class="level2"><div class="li"> <strong>Secured cookie</strong>: the cookie can only be sent over HTTPS</div>
 </li>
-<li class="level2"><div class="li"> <strong>Double cookie</strong>: two cookies are built, one for <acronym title="Hyper Text Transfer Protocol">HTTP</acronym>, the other for HTTPS only</div>
+<li class="level2"><div class="li"> <strong>Double cookie</strong>: two cookies are delivered, one for <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> and HTTPS connections, the other for HTTPS only</div>
+</li>
+<li class="level2"><div class="li"> <strong>Double cookie for single session</strong>: as same, two cookies are delivered, but only one session is written in session database</div>
 </li>
 </ul>
 </li>
@@ -87,7 +89,7 @@ To edit <acronym title="Single Sign On">SSO</acronym> cookie parameters, go in M
 </p>
 
 </div>
-<!-- SECTION "SSO cookie" [60-1972] -->
+<!-- SECTION "SSO cookie" [59-2129] -->
 <h2><a name="portal_url" id="portal_url">Portal URL</a></h2>
 <div class="level2">
 
@@ -106,7 +108,8 @@ Portal <acronym title="Uniform Resource Locator">URL</acronym> is the address us
 
 <p><div class="notewarning">The portal <acronym title="Uniform Resource Locator">URL</acronym> <strong>must</strong> be inside <acronym title="Single Sign On">SSO</acronym> domain. If secured cookie is enabled, the portal <acronym title="Uniform Resource Locator">URL</acronym> <strong>must</strong> be HTTPS.
 </div></p>
+
 </p>
 
 </div>
-<!-- SECTION "Portal URL" [1973-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Portal URL" [2130-] --></div><!-- closes <div class="dokuwiki export">-->

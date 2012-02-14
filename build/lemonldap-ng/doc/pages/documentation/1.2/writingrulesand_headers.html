@@ -33,10 +33,11 @@ Lemonldap::NG manage applications by their hostname (Apache&#039;s virtualHosts)
 <p>
 <p><div class="noteimportant">Note that variables designed by $xx correspond to the name of the <a href="../../documentation/1.2/exportedvars.html" class="wikilink1" title="documentation:1.2:exportedvars">exported variables</a> or <a href="../../documentation/1.2/performances.html#macros_and_groups" class="wikilink1" title="documentation:1.2:performances">macro names</a>.
 </div></p>
+
 </p>
 
 </div>
-<!-- SECTION "Writing rules and headers" [1-441] -->
+<!-- SECTION "Writing rules and headers" [1-440] -->
 <h2><a name="rules" id="rules">Rules</a></h2>
 <div class="level2">
 
@@ -67,9 +68,12 @@ Examples:
 		<td class="col0 leftalign"> Deny access to /config/ directory  </td><td class="col1 centeralign">  ^/config/  </td><td class="col2 centeralign">  deny  </td>
 	</tr>
 	<tr class="row4 roweven">
-		<td class="col0 leftalign"> Authorize non authenticated users to access to /pub/ directory  </td><td class="col1 centeralign">  ^/pub/  </td><td class="col2 centeralign">  unprotect  </td>
+		<td class="col0 leftalign"> Do not restrict /public/  </td><td class="col1 centeralign">  ^/public/  </td><td class="col2 centeralign">  skip  </td>
 	</tr>
 	<tr class="row5 rowodd">
+		<td class="col0 leftalign"> Makes authentication optional, but authenticated users are seen as such (that is, user data are sent to the app through <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> headers)  </td><td class="col1 centeralign">  ^/forum/  </td><td class="col2 centeralign">  unprotect  </td>
+	</tr>
+	<tr class="row6 roweven">
 		<td class="col0 leftalign"> Restrict access to the whole site to users that have the <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> description field set to “<acronym title="Lightweight Directory Access Protocol">LDAP</acronym> administrator” (must be set in exported variables)  </td><td class="col1 centeralign">  default  </td><td class="col2 centeralign">  $description&nbsp;eq&nbsp;"LDAP&nbsp;administrator"  </td>
 	</tr>
 </table>
@@ -125,7 +129,7 @@ Rules can also be used to intercept logout <acronym title="Uniform Resource Loca
 </p>
 
 </div>
-<!-- SECTION "Rules" [442-2898] -->
+<!-- SECTION "Rules" [441-3040] -->
 <h2><a name="headers" id="headers">Headers</a></h2>
 <div class="level2">
 
@@ -192,4 +196,4 @@ Session-ID =&gt; $_session_id
 </p>
 
 </div>
-<!-- SECTION "Headers" [2899-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Headers" [3041-] --></div><!-- closes <div class="dokuwiki export">-->

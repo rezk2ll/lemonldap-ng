@@ -22,7 +22,7 @@
 
 
 
-<h1><a name="redirections" id="redirections">Redirections</a></h1>
+<h1><a name="handler_redirections" id="handler_redirections">Handler Redirections</a></h1>
 <div class="level1">
 
 <p>
@@ -32,7 +32,7 @@
 </p>
 
 </div>
-<!-- SECTION "Redirections" [1-215] -->
+<!-- SECTION "Handler Redirections" [1-223] -->
 <h2><a name="protocol_and_port" id="protocol_and_port">Protocol and port</a></h2>
 <div class="level2">
 
@@ -58,7 +58,7 @@ These parameters can be configured in Manager, in <code>General Parameters</code
 </p>
 
 </div>
-<!-- SECTION "Protocol and port" [216-715] -->
+<!-- SECTION "Protocol and port" [224-723] -->
 <h2><a name="forbidden_and_server_error" id="forbidden_and_server_error">Forbidden and Server error</a></h2>
 <div class="level2">
 
@@ -100,4 +100,24 @@ These parameters can be configured in Manager, in <code>General Parameters</code
 </ul>
 
 </div>
-<!-- SECTION "Forbidden and Server error" [716-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Forbidden and Server error" [724-1685] -->
+<h1><a name="portal_redirections" id="portal_redirections">Portal Redirections</a></h1>
+<div class="level1">
+
+<p>
+
+<p><div class="noteclassic">If a user is redirected from handler to portal for authentication and once he is authenticated, portal redirects him to the redirection <acronym title="Uniform Resource Locator">URL</acronym>.
+</div></p>
+</p>
+
+<p>
+The redirection from portal can be done either with code 303 (See Other), or with a JavaScript redirection.
+</p>
+
+<p>
+Often the redirection takes some time because it is user&#039;s first access to the protected app, so a new app session has to be created : JavaScript redirection improves user experience by informing that authentication is performed, and by preventing from clicking again on the button because it is too slow.
+
+</p>
+
+</div>
+<!-- SECTION "Portal Redirections" [1686-] --></div><!-- closes <div class="dokuwiki export">-->

@@ -34,23 +34,29 @@
 </table>
 
 </div>
-<!-- SECTION "Slave" [1-79] -->
+<!-- SECTION "Slave" [1-78] -->
 <h2><a name="presentation" id="presentation">Presentation</a></h2>
 <div class="level2">
 
 <p>
 
-<acronym title="LemonLDAP::NG">LL::NG</acronym> Slave backend is a transparent backend to used when <acronym title="LemonLDAP::NG">LL::NG</acronym> portal is protected by another <acronym title="Single Sign On">SSO</acronym>:
+<acronym title="LemonLDAP::NG">LL::NG</acronym> Slave backend relies on <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> headers to retrieve user login and/or attributes.
+
 </p>
 <ul>
-<li class="level1"><div class="li"> Authentication: will check user login in an header and create session without prompting any credentials (but will register client <acronym title="Internet Protocol">IP</acronym> and creation date)</div>
+<li class="level1"><div class="li"> Authentication: will check user login in a header and create session without prompting any credentials (but will register client <acronym title="Internet Protocol">IP</acronym> and creation date)</div>
 </li>
-<li class="level1"><div class="li"> Users: collect datas transfered by <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> headers by the main <acronym title="Single Sign On">SSO</acronym> system</div>
+<li class="level1"><div class="li"> Users: collect data transfered in <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> headers by the “master”.</div>
 </li>
 </ul>
 
+<p>
+
+It allows to put <acronym title="LemonLDAP::NG">LL::NG</acronym>::portal behind another web <acronym title="Single Sign On">SSO</acronym>, or behind a <acronym title="Secure Sockets Layer">SSL</acronym> hardware to delegate <acronym title="Secure Sockets Layer">SSL</acronym> authentication to that hardware.
+</p>
+
 </div>
-<!-- SECTION "Presentation" [80-439] -->
+<!-- SECTION "Presentation" [79-546] -->
 <h2><a name="configuration" id="configuration">Configuration</a></h2>
 <div class="level2">
 
@@ -66,6 +72,8 @@ Then, go in <code>Slave parameters</code>:
 <li class="level1"><div class="li"> <strong>Authentication level</strong>: authentication level for this module.</div>
 </li>
 <li class="level1"><div class="li"> <strong>Header for user login</strong>: header that contains the user main login</div>
+</li>
+<li class="level1"><div class="li"> <strong>Master&#039;s <acronym title="Internet Protocol">IP</acronym> address</strong>: the <acronym title="Internet Protocol">IP</acronym> addresses of servers which are accredited to authenticate user. This is a security point, to prevent someone to create a session by sending custom headers. You can set one or several <acronym title="Internet Protocol">IP</acronym> addresses, separated by spaces, or let this parameter empty to disable the checking.</div>
 </li>
 </ul>
 
@@ -87,4 +95,4 @@ You have then to declare <acronym title="Hyper Text Transfer Protocol">HTTP</acr
 </table>
 
 </div>
-<!-- SECTION "Configuration" [440-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Configuration" [547-] --></div><!-- closes <div class="dokuwiki export">-->

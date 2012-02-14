@@ -134,6 +134,21 @@ In <code>General</code>, fill at least the following information:
 </p>
 
 <p>
+<p><div class="noteimportant">
+You need to activate <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> authentication, else <acronym title="Single Sign On">SSO</acronym> authentication will not work. Do this in the control panel or in the configuration file:
+
+</p>
+<pre class="file">
+ldap.auth.enabled=true
+</pre>
+
+<p>
+
+
+</div></p>
+</p>
+
+<p>
 Then use the <code>SiteMinder</code> tab to configure <acronym title="Single Sign On">SSO</acronym>:
 </p>
 <ul>
@@ -156,7 +171,7 @@ Then use the <code>SiteMinder</code> tab to configure <acronym title="Single Sig
 </p>
 
 </div>
-<!-- SECTION "Liferay administration" [839-1800] -->
+<!-- SECTION "Liferay administration" [839-2004] -->
 <h3><a name="liferay_virtual_host_in_apache" id="liferay_virtual_host_in_apache">Liferay virtual host in Apache</a></h3>
 <div class="level3">
 
@@ -174,7 +189,7 @@ Configure Liferay virtual host like other <a href="../../../documentation/1.1/co
 &lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
 
 </div>
-<!-- SECTION "Liferay virtual host in Apache" [1801-2086] -->
+<!-- SECTION "Liferay virtual host in Apache" [2005-2290] -->
 <h3><a name="liferay_virtual_host_in_manager" id="liferay_virtual_host_in_manager">Liferay virtual host in Manager</a></h3>
 <div class="level3">
 
@@ -196,4 +211,4 @@ Configure the <code>Auth-User</code> <a href="../../../documentation/1.1/writing
 </p>
 
 </div>
-<!-- SECTION "Liferay virtual host in Manager" [2087-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Liferay virtual host in Manager" [2291-] --></div><!-- closes <div class="dokuwiki export">-->
