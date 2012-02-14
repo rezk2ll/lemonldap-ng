@@ -1106,6 +1106,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.0/authchoice.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120214T045619Z" changeid="xavier">
+        <seg>../../documentation/1.0/authchoice.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.0/authldap.html</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -1166,6 +1174,14 @@
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T155607Z" changeid="xavier">
         <seg>../../documentation/1.0/idpcas.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.0/idpopenid.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120214T045351Z" changeid="xavier">
+        <seg>../../documentation/1.0/idpopenid.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -4898,6 +4914,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can also act as &lt;a1&gt;OpenID server&lt;/a1&gt;, that allows to interconnect two &lt;a2&gt;LL::NG&lt;/a2&gt; systems.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120214T045456Z" changeid="xavier">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; peut également agir en &lt;a1&gt;serveur OpenID&lt;/a1&gt;, ce qui permet également d'interconnecter deux systèmes &lt;a2&gt;LL::NG&lt;/a2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can also request proxy tickets for its protected services.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T155742Z" changeid="xavier">
@@ -4938,6 +4962,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can delegate authentication to an OpenID server.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120214T045221Z" changeid="xavier">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; peut deleguer l'authentification à un serveur OpenID.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can easy talk to other authentication systems using &lt;a1&gt;SAML&lt;/a1&gt;, OpenID, &lt;a2&gt;CAS&lt;/a2&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -4950,6 +4982,14 @@
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T194912Z" changeid="xavier">
         <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; peut utiliser de nombreuses bases de données comme backend d'authentification, d'utilisateurs et de mots de passe :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can use a white list or a black list to filter allowed OpenID domains.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120214T045821Z" changeid="xavier">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; peut utiliser une liste blanche ou noire pour filtrer les domaines OpenID autorisés.</seg>
       </tuv>
     </tu>
     <tu>
@@ -5022,6 +5062,14 @@
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T195525Z" changeid="xavier">
         <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; exécutera quelques requêtes &lt;a1&gt;SQL&lt;/a1&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; will then display a form with an OpenID input, wher users will type their OpenID login.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120214T045618Z" changeid="xavier">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; affiche alors un formulaire dans lequel les utilisateurs peuvent entrer leur identifiant OpenID.</seg>
       </tuv>
     </tu>
     <tu>
@@ -6998,6 +7046,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Authorizated domain&lt;/s0&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120214T050124Z" changeid="xavier">
+        <seg>&lt;s0&gt;Domaines autorisés&lt;/s0&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Auto login&lt;/s0&gt; is very secure, as Sympa cookie is only exchanged between &lt;a1&gt;LL::NG&lt;/a1&gt; Handler and Sympa (user cannot see it)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111217T080818Z" changeid="xavier">
@@ -7358,6 +7414,30 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Key&lt;/s0&gt;: internal session key, can be prefixed by &lt;c1&gt;!&lt;/c1&gt; to make the attribute required</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120214T050429Z" changeid="xavier">
+        <seg>&lt;s0&gt;Clef&lt;/s0&gt; : clef de session interne, peut être prefixé par &lt;c1&gt;!&lt;/c1&gt; pour exiger ces attributs</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;List type&lt;/s0&gt;: choose white list to define allowed domains or black list to define forbidden domains</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120214T050224Z" changeid="xavier">
+        <seg>&lt;s0&gt;Type de liste&lt;/s0&gt; : choisir liste blanche pour définir la liste exhaustive des domaines autorisés ou liste noire pour lister les domaines interdits</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;List&lt;/s0&gt;: domains list (comma separated values)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120214T050250Z" changeid="xavier">
+        <seg>&lt;s0&gt;Liste&lt;/s0&gt; : liste des domaines (séparés par des virgules)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Local &lt;a1&gt;SSO&lt;/a1&gt; &lt;a2&gt;URL&lt;/a2&gt; pattern&lt;/s0&gt;: regular expression to match the &lt;a3&gt;SSO&lt;/a3&gt; &lt;a4&gt;URL&lt;/a4&gt; (by default: ^/zimbrasso$)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111222T181723Z" changeid="xavier">
@@ -7646,6 +7726,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Secret token&lt;/s0&gt;: used to check integrity of OpenID response.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120214T050055Z" changeid="xavier">
+        <seg>&lt;s0&gt;Secret token&lt;/s0&gt; : utilisé pour vérifier l'integrité des réponses OpenID.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Server &lt;a1&gt;URL&lt;/a1&gt;&lt;/s0&gt;: &lt;a2&gt;CAS&lt;/a2&gt; server &lt;a3&gt;URL&lt;/a3&gt; (must use https://)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T160330Z" changeid="xavier">
@@ -7850,6 +7938,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T160804Z" changeid="xavier">
         <seg>&lt;s0&gt;Value&lt;/s0&gt; Service &lt;a1&gt;URL&lt;/a1&gt; (identifiant de service &lt;a2&gt;CAS&lt;/a2&gt;)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Value&lt;/s0&gt;: SREG attribute name:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120214T050447Z" changeid="xavier">
+        <seg>&lt;s0&gt;Valeur&lt;/s0&gt; : noms d'attributs SREG :</seg>
       </tuv>
     </tu>
     <tu>
@@ -12460,6 +12556,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If OpenID is used as users database, attributes will be requested to the server with SREG extention.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120214T045921Z" changeid="xavier">
+        <seg>Si OpenID est utilisé comme base d'utilisateurs, les attributs sont demandés en utilisant l'extension SREG d'OpenID.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If a user is not authenticated and attempts to connect to an area protected by a LemonLDAP::NG compatible Handler, he is redirected to a portal.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -12712,6 +12816,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120121T080719Z" changeid="xavier">
         <seg>Dans le manager, aller dans &lt;c0&gt;Paramètres généraux&lt;/c0&gt; &gt; &lt;c1&gt;Modules d'authentification&lt;/c1&gt; et choisir &lt;a2&gt;Null&lt;/a2&gt;) pour les modules authentification, utilisateurs et/ou mots-de-passe.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>In Manager, go in &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Authentication modules&lt;/c1&gt; and choose OpenID for authentication and/or users.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120214T050004Z" changeid="xavier">
+        <seg>Dans le manager, aller dans &lt;c0&gt;Paramètres généraux&lt;/c0&gt; &gt; &lt;c1&gt;Modules d'authentification&lt;/c1&gt; et choisir &lt;a2&gt;OpenID&lt;/a2&gt; pour les modules authentification, utilisateurs et/ou mots-de-passe.</seg>
       </tuv>
     </tu>
     <tu>
@@ -14292,6 +14404,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>OpenID authentication can proposed as an alternate authentication scheme using the &lt;a0&gt;authentication choice&lt;/a0&gt; method.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120214T045742Z" changeid="xavier">
+        <seg>L'authentification OpenID peut être proposée en choix alternatif en utilisant la méthode d'authentification &lt;a0&gt;choice&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>OpenLDAP schema</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T144143Z" changeid="xavier">
@@ -14792,6 +14912,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Schéma de protection</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Proxy</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120214T050457Z" changeid="xavier">
+        <seg>Proxy</seg>
       </tuv>
     </tu>
     <tu>
@@ -16340,6 +16468,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Then, go in &lt;c0&gt;OpenID parameters&lt;/c0&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120214T050018Z" changeid="xavier">
+        <seg>Ensuite, aller dans les &lt;c0&gt;paramètres OpenID&lt;/c0&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Then, go in &lt;c0&gt;Twitter parameters&lt;/c0&gt;:</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -16604,6 +16740,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>This requires &lt;a1&gt;Perl OpenID consumer module&lt;/a1&gt; with at least version 1.0.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120214T045349Z" changeid="xavier">
+        <seg>Ceci requiert le &lt;a1&gt;module client OpenID pour Perl&lt;/a1&gt;, version au moins supérieure ou égale à 1.0.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>This requires &lt;a2&gt;Perl CAS module&lt;/a2&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T155606Z" changeid="xavier">
@@ -16744,6 +16888,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T150654Z" changeid="xavier">
         <seg>Pour chaîner &lt;a0&gt;SSL&lt;/a0&gt;, il est nécessaire de mettre “SSLRequire optional” dans le fichier de configuration Apache, sinon les utilisateurs ne seront authentifiés que par &lt;a1&gt;SSL&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>To configure requested attributes, go in &lt;c0&gt;Variables&lt;/c0&gt; &gt; &lt;c1&gt;Exported variables&lt;/c1&gt; and define attributes:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120214T050344Z" changeid="xavier">
+        <seg>Pour configurer les attributs à récupérer, aller dans &lt;c0&gt;Variables&lt;/c0&gt; &gt; &lt;c1&gt;Variables exportées&lt;/c1&gt; et definir les attributs:</seg>
       </tuv>
     </tu>
     <tu>
@@ -18288,6 +18440,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>country</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120214T050451Z" changeid="xavier">
+        <seg>country</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>cp HttpAuthPlugin.php extenstions/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074825Z" changeid="xavier">
@@ -18384,6 +18544,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
 ...
 memberOf: cn=admin,dmdName=groups,dc=example,dc=com
 memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>dob</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120214T050453Z" changeid="xavier">
+        <seg>dob</seg>
       </tuv>
     </tu>
     <tu>
@@ -18684,6 +18852,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.0:authchoice</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120214T045621Z" changeid="xavier">
+        <seg>documentation:1.0:authchoice</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.0:authldap</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -18752,6 +18928,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T155608Z" changeid="xavier">
         <seg>documentation:1.0:idpcas</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.0:idpopenid</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120214T045353Z" changeid="xavier">
+        <seg>documentation:1.0:idpopenid</seg>
       </tuv>
     </tu>
     <tu>
@@ -19196,6 +19380,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>email</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120214T050452Z" changeid="xavier">
+        <seg>email</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>email_http_header            HTTP_MAIL</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111217T081456Z" changeid="xavier">
@@ -19232,6 +19424,22 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T150113Z" changeid="xavier">
         <seg>pour index.pl, le mettre dans new() :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>fullname</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120214T050449Z" changeid="xavier">
+        <seg>fullname</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>gender</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120214T050452Z" changeid="xavier">
+        <seg>gender</seg>
       </tuv>
     </tu>
     <tu>
@@ -19832,6 +20040,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120101T184536Z" changeid="xavier">
         <seg>http://search.cpan.org/~gbarr/perl-ldap/lib/Net/LDAP.pod</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://search.cpan.org/~mart/Net-OpenID-Consumer/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120214T045156Z" changeid="xavier">
+        <seg>http://search.cpan.org/~mart/Net-OpenID-Consumer/</seg>
       </tuv>
     </tu>
     <tu>
@@ -20698,6 +20914,14 @@ kinit -k -t /etc/lemonldap-ng/auth.keytab HTTP/auth.example.com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>language</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120214T050450Z" changeid="xavier">
+        <seg>language</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>ldapServer &lt;s16&gt;=&gt;&lt;/s16&gt; &lt;s17&gt;'ldaps://ad.example.com'&lt;/s17&gt;&lt;s18&gt;,&lt;/s18&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T150008Z" changeid="xavier">
@@ -20980,6 +21204,14 @@ make test</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>nickname</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120214T050449Z" changeid="xavier">
+        <seg>nickname</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>noindex</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -21146,6 +21378,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR">
         <seg>portal.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>postcode</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120214T050450Z" changeid="xavier">
+        <seg>postcode</seg>
       </tuv>
     </tu>
     <tu>
@@ -21406,6 +21646,14 @@ cd lemonldap-ng-*</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>text/html; charset=utf-8</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>timezone</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120214T050451Z" changeid="xavier">
+        <seg>timezone</seg>
       </tuv>
     </tu>
     <tu>
