@@ -1130,6 +1130,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.0/authremote.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120215T045315Z" changeid="xavier">
+        <seg>../../documentation/1.0/authremote.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.0/authsaml.html</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -3442,6 +3450,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/loginhistory.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120215T045147Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/loginhistory.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../pages/documentation/conferences.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111459Z" changeid="xavier">
@@ -5026,6 +5042,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; is able to transfer (trough &lt;a1&gt;SOAP&lt;/a1&gt;) authentication credentials to another &lt;a2&gt;LL::NG&lt;/a2&gt; portal, like a proxy.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120215T045313Z" changeid="xavier">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; peut transferer (en utilisant &lt;a1&gt;SOAP&lt;/a1&gt;) les éléments d'authentification à un autre portail &lt;a2&gt;LL::NG&lt;/a2&gt;, comme un proxy.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; is compatible with &lt;a1&gt;LDAP password policy&lt;/a1&gt;:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T201621Z" changeid="xavier">
@@ -5506,6 +5530,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a10&gt;loginhistory&lt;/a10&gt;&lt;br11/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120215T045149Z" changeid="xavier">
+        <seg>&lt;a10&gt;loginhistory&lt;/a10&gt;&lt;br11/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a10&gt;logoutforward&lt;/a10&gt;&lt;br11/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T153302Z" changeid="xavier">
@@ -5578,6 +5610,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a12&gt;logoutforward&lt;/a12&gt;&lt;br13/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120215T045150Z" changeid="xavier">
+        <seg>&lt;a12&gt;logoutforward&lt;/a12&gt;&lt;br13/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a12&gt;logs&lt;/a12&gt;&lt;br13/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T153305Z" changeid="xavier">
@@ -5622,6 +5662,14 @@
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111446Z" changeid="xavier">
         <seg>&lt;a14&gt;authldap&lt;/a14&gt;&lt;br15/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a14&gt;logs&lt;/a14&gt;&lt;br15/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120215T045151Z" changeid="xavier">
+        <seg>&lt;a14&gt;logs&lt;/a14&gt;&lt;br15/&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -6800,6 +6848,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;&lt;a1&gt;SOAP&lt;/a1&gt; sessions end point&lt;/s0&gt; (optional): &lt;a2&gt;SOAP&lt;/a2&gt; end point, if not based on internal portal &lt;a3&gt;URL&lt;/a3&gt; with &lt;c4&gt;index.pl/sessions&lt;/c4&gt; suffix</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120215T050039Z" changeid="xavier">
+        <seg>&lt;s0&gt;Point terminal des sessions &lt;a1&gt;SOAP&lt;/a1&gt;&lt;/s0&gt; (optionnel): &lt;a3&gt;URL&lt;/a3&gt; du service &lt;a2&gt;SOAP&lt;/a2&gt; si elle n'est pas basée sur celle du portail interne avec le suffixe &lt;c4&gt;index.pl/sessions&lt;/c4&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;&lt;a1&gt;SSO&lt;/a1&gt; and Application logout&lt;/s0&gt;: the request is forwarded to application and &lt;a2&gt;SSO&lt;/a2&gt; session is closed</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -7186,6 +7242,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;s0&gt;Recherche d'une session valide&lt;/s0&gt; : détecte les sessions &lt;a1&gt;SSO&lt;/a1&gt;, applique les contraintes configurées (1 session par utilisateur, 1 session par &lt;a2&gt;IP&lt;/a2&gt;, …)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Cookie name&lt;/s0&gt; (optional): name of the cookie of internal portal, if different from external portal</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120215T045836Z" changeid="xavier">
+        <seg>&lt;s0&gt;Nom du cookie&lt;/s0&gt; (optionnel) : nom du cookie du portail interne s'il est différent de celui du portail externe</seg>
       </tuv>
     </tu>
     <tu>
@@ -7618,6 +7682,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;s0&gt;Persistent&lt;/s0&gt;: le NameID est restoré depuis la session précédente</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Portal &lt;a1&gt;URL&lt;/a1&gt;&lt;/s0&gt;: &lt;a2&gt;URL&lt;/a2&gt; of internal portal</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120215T045719Z" changeid="xavier">
+        <seg>&lt;s0&gt;&lt;a1&gt;URL&lt;/a1&gt; du portail&lt;/s0&gt; : &lt;a2&gt;URL&lt;/a2&gt; du portail interne</seg>
       </tuv>
     </tu>
     <tu>
@@ -11716,6 +11788,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>External portal</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120215T045522Z" changeid="xavier">
+        <seg>Portail externe</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Extract</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -12828,6 +12908,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>In Manager, go in &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Authentication modules&lt;/c1&gt; and choose Proxy for authentication and users.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120215T045629Z" changeid="xavier">
+        <seg>Dans le manager, aller dans &lt;c0&gt;Paramètres généraux&lt;/c0&gt; &gt; &lt;c1&gt;Modules d'authentification&lt;/c1&gt; et choisir Proxy pour les modules authentification et utilisateurs.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>In Manager, go in &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Authentication modules&lt;/c1&gt; and choose Twitter for authentication module.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -12960,6 +13048,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Installation et configuration</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Internal portal</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120215T050049Z" changeid="xavier">
+        <seg>Portail interne</seg>
       </tuv>
     </tu>
     <tu>
@@ -15444,6 +15540,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>See &lt;a1&gt;SOAP session backend&lt;/a1&gt; documentation.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120215T050157Z" changeid="xavier">
+        <seg>Voir la documentation du &lt;a1&gt;backend SOAP&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>See &lt;a2&gt;Twitter FAQ&lt;/a2&gt; on how to do that:.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -16220,6 +16324,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The difference with &lt;a0&gt;remote authentication&lt;/a0&gt; is that the client will never be redirect to the main &lt;a1&gt;LL::NG&lt;/a1&gt; portal.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120215T045418Z" changeid="xavier">
+        <seg>La différence avec &lt;a0&gt;l'authentification &quot;Remote&quot;&lt;/a0&gt; est que le client n'est jamais redirigé vers le portail &lt;a1&gt;LL::NG&lt;/a1&gt; principal.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The digit will not be shown on portal page.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T194738Z" changeid="xavier">
@@ -16312,6 +16424,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Le portail est le composant le plus gros de Lemonldap::NG.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The portal must be configured to accept &lt;a0&gt;SOAP&lt;/a0&gt; authentication requests.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120215T050126Z" changeid="xavier">
+        <seg>Ce portail doit être configuré pour accepter les requêtes d'authentification &lt;a0&gt;SOAP&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -16476,6 +16596,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Then, go in &lt;c0&gt;Proxy parameters&lt;/c0&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120215T045646Z" changeid="xavier">
+        <seg>Ensuite, aller dans les &lt;c0&gt;paramètres Proxy&lt;/c0&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Then, go in &lt;c0&gt;Twitter parameters&lt;/c0&gt;:</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -16632,6 +16760,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Ceci concerne tous les paramètres de la section « fournisseur de service » des metadatas :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This configuration is usable if you want to expose your internal &lt;a2&gt;SSO&lt;/a2&gt; portal to another network (DMZ).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120215T045510Z" changeid="xavier">
+        <seg>Cette configuration est utilisable l'on soujaite exposer un portail &lt;a2&gt;SSO&lt;/a2&gt; interne à une autre réseau (DMZ).</seg>
       </tuv>
     </tu>
     <tu>
@@ -18872,6 +19008,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T184532Z" changeid="xavier">
         <seg>documentation:1.0:authmulti</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.0:authremote</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120215T045317Z" changeid="xavier">
+        <seg>documentation:1.0:authremote</seg>
       </tuv>
     </tu>
     <tu>
