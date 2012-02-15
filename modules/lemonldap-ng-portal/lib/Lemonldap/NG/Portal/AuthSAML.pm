@@ -773,14 +773,6 @@ sub extractFormInfo {
     # Get confirmation flag
     my $confirm_flag = $self->param("confirm");
 
-    # If confirmation is -1 from IDP list,
-    # return error to get next authentication method
-    # with AuthMulti
-    if ( $confirm_flag == -1 and $self->param("idplist") ) {
-        $self->lmLog( "SAML authentication refused by user", 'error' );
-        return PE_ERROR;
-    }
-
     # If confirmation is -1 from resolved IDP screen,
     # or IDP was not resolve, let the user choose its IDP
     if ( $confirm_flag == -1 or !$idp ) {
@@ -791,36 +783,14 @@ sub extractFormInfo {
         return $urlcheck unless ( $urlcheck == PE_OK );
 
         # IDP list
-        my $html = "<h3>" . $self->msg(PM_SAML_IDPSELECT) . "</h3>\n<table>\n";
-
+        my @list = ();
         foreach ( keys %{ $self->{_idpList} } ) {
-            $html .=
-                '<tr><td><input type="radio" name="idp" value="' 
-              . $_
-              . '" /></td><td>'
-              . $self->{_idpList}->{$_}->{name}
-              . '</td></tr>';
+            push @list, {
+                val  => $_,
+                name => $self->{_idpList}->{$_}->{name}
+            };
         }
-
-        $html .=
-'<tr><td><input type="checkbox" name="cookie_type" value="1"></td><td>'
-          . $self->msg(PM_REMEMBERCHOICE)
-          . "</td></tr></table>\n"
-
-          # URL
-          . '<input type="hidden" name="url" value="'
-          . $self->param("url") . '" />'
-
-          # IDP list flag
-          . '<input type="hidden" name="idplist" value="1" />'
-
-          # Script to autoselect first choice
-          . '<script>$("[type=radio]:first").attr("checked","checked");</script>';
-
-        $self->info($html);
-
-        # Timer not active on IDP list
-        $self->{activeTimer} = 0;
+        $self->{list} = \@list; 
 
         # Delete existing IDP resolution cookie
         push @{ $self->{cookie} },

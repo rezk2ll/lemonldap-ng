@@ -142,6 +142,7 @@ sub display {
             CHOICE_PARAM    => $self->{authChoiceParam},
             CHOICE_VALUE    => $self->{_authChoice},
             CONFIRMKEY      => $self->stamp(),
+            LIST            => $self->{list} || [],
         );
     }
 
