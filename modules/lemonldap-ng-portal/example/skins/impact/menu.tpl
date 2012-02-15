@@ -44,7 +44,7 @@
         <TMPL_IF NAME="Appslist">
         <div id="appslist">
           <p class="text-label">
-            <lang en="Choose an application your are allowed to access to" fr="Choisissez une application &agrave; laquelle vous &ecirc;tes autoris&eacute;es &agrave; acc&eacute;der" /> :
+            <lang en="Choose an application your are allowed to access to" fr="Choisissez une application &agrave; laquelle vous &ecirc;tes autoris&eacute; &agrave; acc&eacute;der" /> :
           </p>
                 <TMPL_LOOP NAME="APPSLIST_LOOP">
                 <!-- Template loops -->

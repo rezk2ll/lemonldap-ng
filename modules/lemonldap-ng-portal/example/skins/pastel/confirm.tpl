@@ -18,7 +18,7 @@
 		<input type="hidden" id="confirm" name="confirm" value="<TMPL_VAR NAME="CONFIRMKEY">" />
 		</TMPL_IF>
 		<TMPL_VAR NAME="MSG">
-		<p id="timer"><lang en="Automaticaly accept in 5 seconds" fr="Acceptation automatique dans 5 secondes"/></p>
+		<p id="timer"><lang en="Automatically accept in 5 seconds" fr="Acceptation automatique dans 5 secondes"/></p>
 		<table><tbody><tr><td>
 		<div class="buttons">
 			<button type="submit" class="positive">
