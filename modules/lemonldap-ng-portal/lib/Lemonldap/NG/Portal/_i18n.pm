@@ -10,49 +10,33 @@ package Lemonldap::NG::Portal::_i18n;
 use AutoLoader qw(AUTOLOAD);
 our $VERSION = '1.2.0';
 
-## @fn string error(int error,string lang)
-# @param $error Number of error to resolve
-# @param $lang Language or Accepted-Language HTTP header string
-# @return Error string for the $code in the $lang language
-sub error {
-    my ( $error, $lang ) = splice @_;
-    $lang = lc($lang);
-    $lang =~ s/-/_/g;
-    $error = 0 if ( $error < 0 );
-    foreach ( split( /[,;]/, $lang ) ) {
-        next if /=/;
-        if ( __PACKAGE__->can("error_$_") ) {
-            return &{"error_$_"}->[$error];
-        }
-        s/^(..).*$/$1/;
-        if ( __PACKAGE__->can("error_$_") ) {
-            return &{"error_$_"}->[$error];
-        }
-    }
-    return &error_en->[$error];
-}
-
-## @fn string msg(int msg,string lang)
+## @fn string msg(int msg, array ref lang)
 # @param $msg Number of msg to resolve
-# @param $lang Language or Accepted-Language HTTP header string
-# @return Error string for the $code in the $lang language
+# @param $lang Array ref for 2-letters languages (e.g. ['es', 'fr'])
+# @return Message string in the first matching language
 sub msg {
     my ( $msg, $lang ) = splice @_;
-    $lang ||= $ENV{HTTP_ACCEPT_LANGUAGE};
-    $lang = lc($lang);
-    $lang =~ s/-/_/g;
-    $msg = 0 if ( $msg < 0 );
-    foreach ( split( /[,;]/, $lang ) ) {
-        next if /=/;
-        if ( __PACKAGE__->can("msg_$_") ) {
-            return &{"msg_$_"}->[$msg];
-        }
-        s/^(..).*$/$1/;
+    foreach ( @{ $lang } ) {
         if ( __PACKAGE__->can("msg_$_") ) {
             return &{"msg_$_"}->[$msg];
         }
     }
     return &msg_en->[$msg];
+}
+
+## @fn string error(int error, array ref lang)
+# @param $error Number of error to resolve
+# @param $lang Array ref for 2-letters languages (e.g. ['es', 'fr'])
+# @return Error string in the first matching language
+sub error {
+    my ( $error, $lang ) = splice @_;
+    $error = 0 if ( $error < 0 );
+    foreach ( @{ $lang } ) {
+        if ( __PACKAGE__->can("error_$_") ) {
+            return &{"error_$_"}->[$error];
+        }
+    }
+    return &error_en->[$error];
 }
 
 1;

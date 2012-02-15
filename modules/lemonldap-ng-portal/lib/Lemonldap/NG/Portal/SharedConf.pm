@@ -166,7 +166,7 @@ SOAP mode authentication (client) :
   
       # If authentication failed, display error
       if ( $res->{error} ) {
-          print STDERR "Error: " . $soap->error( 'fr', $res->{error} )->result();
+          print STDERR "Error: " . $soap->error( $res->{error} )->result();
       }
   
       # print session-ID

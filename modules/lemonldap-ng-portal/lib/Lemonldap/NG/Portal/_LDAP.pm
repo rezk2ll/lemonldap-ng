@@ -171,8 +171,7 @@ sub userBind {
             $self->{portal}->info(
                     "<h3>" 
                   . $resp->grace_authentications_remaining . " "
-                  . &Lemonldap::NG::Portal::_i18n::msg( PM_PP_GRACE,
-                    $ENV{HTTP_ACCEPT_LANGUAGE} )
+                  . $self->msg(PM_PP_GRACE)
                   . "</h3>"
             );
         }
@@ -180,8 +179,7 @@ sub userBind {
             $self->{portal}->info(
                     "<h3>" 
                   . $resp->time_before_expiration . " "
-                  . &Lemonldap::NG::Portal::_i18n::msg( PM_PP_EXP_WARNING,
-                    $ENV{HTTP_ACCEPT_LANGUAGE} )
+                  . $self->msg(PM_PP_EXP_WARNING)
                   . "</h3>"
             );
         }

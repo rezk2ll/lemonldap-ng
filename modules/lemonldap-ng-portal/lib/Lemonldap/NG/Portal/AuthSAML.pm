@@ -791,10 +791,7 @@ sub extractFormInfo {
         return $urlcheck unless ( $urlcheck == PE_OK );
 
         # IDP list
-        my $html = "<h3>"
-          . &Lemonldap::NG::Portal::_i18n::msg( PM_SAML_IDPSELECT,
-            $ENV{HTTP_ACCEPT_LANGUAGE} )
-          . "</h3>\n<table>\n";
+        my $html = "<h3>" . $self->msg(PM_SAML_IDPSELECT) . "</h3>\n<table>\n";
 
         foreach ( keys %{ $self->{_idpList} } ) {
             $html .=
@@ -807,8 +804,7 @@ sub extractFormInfo {
 
         $html .=
 '<tr><td><input type="checkbox" name="cookie_type" value="1"></td><td>'
-          . &Lemonldap::NG::Portal::_i18n::msg( PM_REMEMBERCHOICE,
-            $ENV{HTTP_ACCEPT_LANGUAGE} )
+          . $self->msg(PM_REMEMBERCHOICE)
           . "</td></tr></table>\n"
 
           # URL
@@ -850,8 +846,7 @@ sub extractFormInfo {
 
         # Choosen IDP
         my $html = '<h3>'
-          . &Lemonldap::NG::Portal::_i18n::msg( PM_SAML_IDPCHOOSEN,
-            $ENV{HTTP_ACCEPT_LANGUAGE} )
+          . $self->msg(PM_SAML_IDPCHOOSEN)
           . "</h3>\n" . "<h4>"
           . $self->{_idpList}->{$idp}->{name}
           . "</h4>\n"

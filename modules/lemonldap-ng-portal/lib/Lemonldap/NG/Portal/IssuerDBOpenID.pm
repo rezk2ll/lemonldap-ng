@@ -238,7 +238,7 @@ sub _openIDResponse {
             $self->info(
                 '<h3>'
                   . sprintf(
-                    &Lemonldap::NG::Portal::_i18n::msg(PM_OPENID_EXCHANGE),
+                    $self->msg(PM_OPENID_EXCHANGE),
                     $data->{trust_root}
                   )
                   . "</h3>"

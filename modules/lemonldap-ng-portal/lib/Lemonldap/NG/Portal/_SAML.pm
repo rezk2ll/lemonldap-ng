@@ -2649,9 +2649,7 @@ sub sendLogoutRequestToProviders {
 
     # Header of the block which will be displayed to the user, if needed.
     $info .= '<h3>'
-      . &Lemonldap::NG::Portal::_i18n::msg
-      ( Lemonldap::NG::Portal::Simple::PM_SAML_SPLOGOUT,
-        $ENV{HTTP_ACCEPT_LANGUAGE} )
+      . $self->msg (Lemonldap::NG::Portal::Simple::PM_SAML_SPLOGOUT)
       . '</h3>'
       . '<table class="sloState">';
 
@@ -2683,7 +2681,6 @@ sub sendLogoutRequestToProviders {
     $self->info($info) if $providersCount;
 
     return $providersCount;
-
 }
 
 ## @method boolean checkSignatureStatus(Lasso::Profile profile)

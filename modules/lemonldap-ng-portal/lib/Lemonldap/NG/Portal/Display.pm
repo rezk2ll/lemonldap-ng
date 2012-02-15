@@ -95,7 +95,7 @@ sub display {
                 AUTH_USER       => $auth_user,
                 AUTOCOMPLETE    => $self->{portalAutocomplete},
                 NEWWINDOW       => $self->{portalOpenLinkInNewWindow},
-                AUTH_ERROR      => $self->error( undef, $self->{menuError} ),
+                AUTH_ERROR      => $self->error( $self->{menuError} ),
                 AUTH_ERROR_TYPE => $self->error_type( $self->{menuError} ),
                 DISPLAY_TAB     => $self->{menuDisplayTab},
                 LOGOUT_URL      => "$ENV{SCRIPT_NAME}?logout=1",

@@ -193,11 +193,10 @@ sub issuerForUnAuthUser {
             $self->{_proxiedArtifact}    = $artifact;
 
             # Create a back link on SP displayed on login page
-            my $html = "<a href=\"" . $self->referer() . "\">";
-            $html .=
-              &Lemonldap::NG::Portal::_i18n::msg( PM_BACKTOSP,
-                $ENV{HTTP_ACCEPT_LANGUAGE} );
-            $html .= "</a>";
+            my $html =
+                "<a href=\"" . $self->referer() . "\">"
+                . $self->msg(PM_BACKTOSP)
+                . "</a>";
             $self->loginInfo($html);
 
             return PE_OK;
@@ -1715,9 +1714,7 @@ sub issuerForAuthUser {
 
                 $self->info(
                     "<h3>"
-                      . &Lemonldap::NG::Portal::_i18n::msg
-                      ( Lemonldap::NG::Portal::Simple::PM_CDC_WRITER,
-                        $ENV{HTTP_ACCEPT_LANGUAGE} )
+                      . $self->msg(PM_CDC_WRITER)
                       . "</h3>"
                 );
 

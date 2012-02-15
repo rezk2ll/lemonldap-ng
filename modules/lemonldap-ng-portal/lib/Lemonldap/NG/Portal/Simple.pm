@@ -771,27 +771,40 @@ _RETURN $string Error string
 
 =cut
 
-##@method string error(string lang, int code)
-# error calls Portal/_i18n.pm to display error in the wanted language.
-#@param $lang optional (browser language is used instead)
+##@method string msg(int code)
+# calls Portal/_i18n.pm to display message in the client's language.
+#@param $code message code
+#@return message
+sub msg {
+    my $self = shift;
+    my $code = shift;
+    return &Lemonldap::NG::Portal::_i18n::msg($code, $self->{lang});
+}
+
+##@method string error(int code)
+# calls Portal/_i18n.pm to display error in the client's language.
 #@param $code optional error code
 #@return error message
 sub error {
     my $self = shift;
-    my $lang = shift || $ENV{HTTP_ACCEPT_LANGUAGE};
     my $code = shift || $self->{error};
     my $msg;
 
     # Check for customized message
-    $msg = $self->{ "error_" . $lang . "_" . $code }
-      || $self->{ "error_" . $code };
+    foreach (@{ $self->{lang} }) {
+        if ( $self->{ "error_" . $_ . "_" . $code } ) {
+            $msg = $self->{ "error_" . $_ . "_" . $code };
+            last;
+        }
+    }
+    $msg ||= $self->{ "error_" . $code };
 
     # Use customized message or built-in message
     if ($msg) {
         $self->lmLog( "Use customized message for error $code", 'debug' );
     }
     else {
-        $msg = &Lemonldap::NG::Portal::_i18n::error( $code, $lang );
+        $msg = &Lemonldap::NG::Portal::_i18n::error($code, $self->{lang});
     }
 
     # Return message
@@ -1668,11 +1681,7 @@ sub controlExistingSession {
                         "Create iFrames to forward logout to services",
                         'debug' );
 
-                    $self->info(
-                        "<h3>"
-                          . &Lemonldap::NG::Portal::_i18n::msg
-                          (Lemonldap::NG::Portal::Simple::PM_LOGOUT) . "</h3>"
-                    );
+                    $self->info( "<h3>" . $self->msg(PM_LOGOUT) . "</h3>" );
 
                     foreach ( keys %{ $self->{logoutServices} } ) {
                         my $logoutServiceName = $_;
@@ -2049,7 +2058,7 @@ sub registerLogin {
 
         # Gather current login's parameters
         my $login = $self->_sumUpSession( $self->{sessionInfo}, 1 );
-        $login->{error} = $self->error( undef, $errorCode )
+        $login->{error} = $self->error($errorCode)
           if ($errorCode);
 
         # Add current login into history
@@ -2113,13 +2122,11 @@ sub removeOther {
     }
     $self->info(
         $self->mkSessionArray(
-            $self->{deleted},
-            &Lemonldap::NG::Portal::_i18n::msg(PM_SESSIONS_DELETED), 1
-        )
+            $self->{deleted}, $self->msg(PM_SESSIONS_DELETED), 1 )
     ) if ( $self->{notifyDeleted} and @{ $self->{deleted} } );
     $self->info(
-        $self->mkSessionArray( $self->{otherSessions},
-            &Lemonldap::NG::Portal::_i18n::msg(PM_OTHER_SESSIONS), 1 )
+        $self->mkSessionArray(
+            $self->{otherSessions}, $self->msg(PM_OTHER_SESSIONS), 1 )
           . $self->_mkRemoveOtherLink()
     ) if ( $self->{notifyOther} and @{ $self->{otherSessions} } );
     PE_OK;
@@ -2156,13 +2163,13 @@ sub mkSessionArray {
     $tmp .= "<table class=\"info\"><tbody>";
 
     $tmp .= "<tr>";
-    $tmp .= "<th>" . &Lemonldap::NG::Portal::_i18n::msg(PM_USER) . "</th>"
+    $tmp .= "<th>" . $self->msg(PM_USER) . "</th>"
       if ($displayUser);
-    $tmp .= "<th>" . &Lemonldap::NG::Portal::_i18n::msg(PM_DATE) . "</th>";
-    $tmp .= "<th>" . &Lemonldap::NG::Portal::_i18n::msg(PM_IP) . "</th>";
+    $tmp .= "<th>" . $self->msg(PM_DATE) . "</th>";
+    $tmp .= "<th>" . $self->msg(PM_IP) . "</th>";
     $tmp .= "<th>" . $self->{sessionDataToRemember}->{$_} . "</th>"
       foreach ( keys %{ $self->{sessionDataToRemember} } );
-    $tmp .= '<th>' . &Lemonldap::NG::Portal::_i18n::msg(PM_ERROR_MSG) . '</th>'
+    $tmp .= '<th>' . $self->msg(PM_ERROR_MSG) . '</th>'
       if ($displayError);
     $tmp .= '</tr>';
 
@@ -2192,7 +2199,7 @@ sub _mkRemoveOtherLink {
 
     return
         "<p class=\"removeOther\"><a href=\"$link\" onclick=\"_go=0\">"
-      . &Lemonldap::NG::Portal::_i18n::msg(PM_REMOVE_OTHER_SESSIONS)
+      . $self->msg(PM_REMOVE_OTHER_SESSIONS)
       . "</a></p>";
 }
 
@@ -2586,7 +2593,7 @@ SOAP mode authentication (client) :
   
       # If authentication failed, display error
       if ( $res->{error} ) {
-          print STDERR "Error: " . $soap->error( 'fr', $res->{error} )->result();
+          print STDERR "Error: " . $soap->error( $res->{error} )->result();
       }
   
       # print session-ID

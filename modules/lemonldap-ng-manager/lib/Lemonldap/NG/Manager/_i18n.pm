@@ -310,7 +310,7 @@ sub en {
         singleSession               => 'One session only by user',
         singleUserByIP              => 'One user by IP address',
         slaveAuthnLevel             => 'Authentication level',
-        slaveMasterIP               => 'master\'s IP address',
+        slaveMasterIP               => 'Master\'s IP address',
         slaveParams                 => 'Slave parameters',
         slaveUserHeader             => "Header for user login",
         SMTPAuthPass                => 'SMTP password',

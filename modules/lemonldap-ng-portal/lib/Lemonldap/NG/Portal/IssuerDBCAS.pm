@@ -90,12 +90,7 @@ sub issuerForUnAuthUser {
             # Display a link to the provided URL
             $self->lmLog( "Logout URL $logout_url will be displayed", 'debug' );
 
-            $self->info(
-                "<h3>"
-                  . &Lemonldap::NG::Portal::_i18n::msg( PM_BACKTOCASURL,
-                    $ENV{HTTP_ACCEPT_LANGUAGE} )
-                  . "</h3>"
-            );
+            $self->info( "<h3>" . $self->msg(PM_BACKTOCASURL) . "</h3>" );
             $self->info("<p><a href=\"$logout_url\">$logout_url</a></p>");
             $self->{activeTimer} = 0;
 
@@ -665,12 +660,7 @@ sub issuerForAuthUser {
             # Display a link to the provided URL
             $self->lmLog( "Logout URL $logout_url will be displayed", 'debug' );
 
-            $self->info(
-                "<h3>"
-                  . &Lemonldap::NG::Portal::_i18n::msg( PM_BACKTOCASURL,
-                    $ENV{HTTP_ACCEPT_LANGUAGE} )
-                  . "</h3>"
-            );
+            $self->info( "<h3>" . $self->msg(PM_BACKTOCASURL) . "</h3>" );
             $self->info("<p><a href=\"$logout_url\">$logout_url</a></p>");
             $self->{activeTimer} = 0;
 
