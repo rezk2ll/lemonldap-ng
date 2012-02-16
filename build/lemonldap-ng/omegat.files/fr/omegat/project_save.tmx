@@ -970,6 +970,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../../media/documentation/remote-principle.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120216T050030Z" changeid="xavier">
+        <seg>../../../media/documentation/remote-principle.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../css/all.css</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -3846,6 +3854,14 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>/_detail/documentation/manager-saml-service-sp-slo.png?id=documentation%3A1.0%3Asamlservice</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/documentation/remote-principle.png?id=documentation%3A1.0%3Aauthremote</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120216T050027Z" changeid="xavier">
+        <seg>/_detail/documentation/remote-principle.png?id=documentation%3A1.0%3Aauthremote</seg>
       </tuv>
     </tu>
     <tu>
@@ -9588,6 +9604,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>A request to the main session database is done (trough &lt;a1&gt;SOAP session backend&lt;/a1&gt;) to be sure that the session exists.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120216T045902Z" changeid="xavier">
+        <seg>Une requête à la base de données des sessions principale est effectuée (via le  &lt;a1&gt;backend de session SOAP&lt;/a1&gt;) pour être sûr que la session existe.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>A special &lt;a0&gt;URL&lt;/a0&gt; is declared in application menu (like &lt;a1&gt;http://zimbra.example.com/zimbrasso&lt;/a1&gt;)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111220T155338Z" changeid="xavier">
@@ -10972,6 +10996,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Configure the portal to use the remote &lt;a0&gt;LL::NG&lt;/a0&gt; structure.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120216T052222Z" changeid="xavier">
+        <seg>Configurer le portail pour qu'il utilise le système &lt;a0&gt;LL::NG&lt;/a0&gt; distant.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Configure your tomcat home in &lt;c0&gt;build.properties&lt;/c0&gt; files.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T191532Z" changeid="xavier">
@@ -11088,6 +11120,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T171726Z" changeid="xavier">
         <seg>Créer l'hôte virtuel OBM (par exemple obm.example.com) dans la configuration &lt;a0&gt;LL::NG&lt;/a0&gt; : &lt;c1&gt;Hôtes virtuels&lt;/c1&gt; » &lt;c2&gt;Nouvel hôte virtuel&lt;/c2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Cross Domain Authentication</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120216T045510Z" changeid="xavier">
+        <seg>Authentification inter-domaines</seg>
       </tuv>
     </tu>
     <tu>
@@ -11652,6 +11692,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Else, all data are copied in the session database.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120216T050025Z" changeid="xavier">
+        <seg>Sinon, toutes les données sont copiées.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Email</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -12156,6 +12204,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Go in Manager, and:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120216T052000Z" changeid="xavier">
+        <seg>Aller dans le manager et :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Go on &lt;a0&gt;http://auth.example.com&lt;/a0&gt; and log with &lt;a1&gt;LDAP&lt;/a1&gt; user account.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -12628,6 +12684,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If &lt;c0&gt;exportedAttr&lt;/c0&gt; is set, only those attributes are copied in the session database of the secondary &lt;a1&gt;LL::NG&lt;/a1&gt; structure.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120216T050010Z" changeid="xavier">
+        <seg>Si &lt;c0&gt;exportedAttr&lt;/c0&gt; est défini, seuls ces attributs sont copiés dans la base des sessions du système &lt;a1&gt;LL::NG&lt;/a1&gt; secondaire.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If Multi is used for authentication and user database, it will try to use the same module.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T145435Z" changeid="xavier">
@@ -12924,6 +12988,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>In Manager, go in &lt;c0&gt;General Parameters&lt;/c0&gt; » &lt;c1&gt;Authentication modules&lt;/c1&gt; and choose Proxy for authentication and users.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120216T052338Z" changeid="xavier">
+        <seg>Dans le manager, aller dans &lt;c0&gt;Paramètres généraux&lt;/c0&gt; &gt; &lt;c1&gt;Modules d'authentification&lt;/c1&gt; et choisir Remote pour les modules authentification et utilisateurs.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>In other words, take the time to configure this part before sharing metadata.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -13096,6 +13168,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>En revanche, ce peut-être un frein pour le portail :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>It can be done via direct access to the session database or using &lt;a0&gt;SOAP&lt;/a0&gt; access.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120216T050456Z" changeid="xavier">
+        <seg>Ce peut être fait par accès direct à la base des sessions principale ou en utilisant une requête &lt;a0&gt;SOAP&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -13884,6 +13964,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Main LL::NG structure</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120216T051945Z" changeid="xavier">
+        <seg>Système LL::NG principal</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Main components</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -14184,6 +14272,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Notez que Apache::Session::Browseable::MySQL n'utilise pas les verrous MySQL.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Note that if the user is already authenticated on the first portal, all redirections are transparent.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120216T050633Z" changeid="xavier">
+        <seg>Noter que si l'utilisateur est déjà authentifié sur le premier portail, toutes les redirections sont transparentes.</seg>
       </tuv>
     </tu>
     <tu>
@@ -15140,6 +15236,22 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Redirection to the portal of the main area and normal authentication (if not done before)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120216T050315Z" changeid="xavier">
+        <seg>Redirection vers le portail principal et authentification normale (sauf si déjà faite)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Redirection to the portal of the secondary area (transparent)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120216T050236Z" changeid="xavier">
+        <seg>Redirection vers le portail secondaire (transparent)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Redis server</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -15176,6 +15288,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Expression rationnelle pour la génération aléatoire des mots-de-passe</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Remote</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120216T045311Z" changeid="xavier">
+        <seg>Remote</seg>
       </tuv>
     </tu>
     <tu>
@@ -15456,6 +15576,22 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Sebastien DIAZ</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Secondary LL::NG structure</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120216T052148Z" changeid="xavier">
+        <seg>Systèe LL::NG secondaire</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Secondary portal check if remote session is available.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120216T050354Z" changeid="xavier">
+        <seg>Le portail secondaire vérifie que la session distante est valable.</seg>
       </tuv>
     </tu>
     <tu>
@@ -16380,6 +16516,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The main portal is configured to use &lt;a0&gt;CDA&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120216T045547Z" changeid="xavier">
+        <seg>Le portail principal est configuré pour utiliser le &lt;a0&gt;CDA&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The module can be found &lt;a0&gt;here&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T154425Z" changeid="xavier">
@@ -16436,6 +16580,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The portal of the secondary &lt;a0&gt;LL::NG&lt;/a0&gt; structure is configured to delegate authentication to a remote portal.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120216T045745Z" changeid="xavier">
+        <seg>Le portail du système &lt;a0&gt;LL::NG&lt;/a0&gt; secondaire est configuré pour déléguer l'authentification à un portail distant.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The prefix 1.3.6.1.4.1.10943 is owned by &lt;a0&gt;LINAGORA&lt;/a0&gt; (See &lt;a1&gt;http://www.iana.org/assignments/enterprise-numbers&lt;/a1&gt;).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T144136Z" changeid="xavier">
@@ -16448,6 +16600,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>La réelle traçabilité doit être faite par l'application elle-même car les journaux du &lt;a0&gt;SSO&lt;/a0&gt; ne peuvent interprêter les transactions.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The secondary portal is declared in the Manager of the main &lt;a1&gt;LL::NG&lt;/a1&gt; structure (else user will be rejected).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120216T045650Z" changeid="xavier">
+        <seg>Le portail secondaire est declaré dans le Manager du système &lt;a1&gt;LL::NG&lt;/a1&gt; principal comme une application (sinon les utilisateurs seront rejetés).</seg>
       </tuv>
     </tu>
     <tu>
@@ -16512,6 +16672,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T171747Z" changeid="xavier">
         <seg>Éditer ensuite les règles et en-têtes.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Then it creates the session (with attribute filter)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120216T050525Z" changeid="xavier">
+        <seg>Il crée la sessions (avec le filtre d'attributs)</seg>
       </tuv>
     </tu>
     <tu>
@@ -16832,6 +17000,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T150052Z" changeid="xavier">
         <seg>Cette clef doit être stockée directement dans le fichier index.pl du portail ou dans lemonldap-ng.ini :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This module is a &lt;a0&gt;LL::NG&lt;/a0&gt; specific identity federation protocol.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120216T045402Z" changeid="xavier">
+        <seg>Ce module fournit un protocole de fédération d'identité spécifique à &lt;a0&gt;LL::NG&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -17364,6 +17540,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>User can now access to the protected application</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120216T050550Z" changeid="xavier">
+        <seg>L'utilisateur peut maintenant accéder aux applications</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>User clicks on the logout link in Portal</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -17472,6 +17656,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Lorsqu'un utilisateur tente d'accéder à une application protégée, il est intercepté par l'agent (handler)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>User tries to access to an application in the secondary &lt;a0&gt;LL::NG&lt;/a0&gt; structure without having a session in this area</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120216T050218Z" changeid="xavier">
+        <seg>Un utilisateur essaie d'accéder à une application du système &lt;a0&gt;LL::NG&lt;/a0&gt; secondaire sans avoir de session dans cette aire</seg>
       </tuv>
     </tu>
     <tu>
@@ -18016,6 +18208,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You may rather use standards protocols like &lt;a1&gt;SAML&lt;/a1&gt;, &lt;a2&gt;OpenID&lt;/a2&gt; or &lt;a3&gt;CAS&lt;/a3&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120216T045443Z" changeid="xavier">
+        <seg>Il est préférable d'utiliser des protocoles standards tels &lt;a1&gt;SAML&lt;/a1&gt;, &lt;a2&gt;OpenID&lt;/a2&gt; ou &lt;a3&gt;CAS&lt;/a3&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You may use the &lt;a1&gt;securedCookie&lt;/a1&gt; options to avoid session hijacking.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -18316,6 +18516,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>accordeon_light.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>activate &lt;a0&gt;CDA&lt;/a0&gt; in &lt;c1&gt;General Parameters&lt;/c1&gt; » &lt;c2&gt;Cookies&lt;/c2&gt; » &lt;c3&gt;Multiple domains&lt;/c3&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120216T052034Z" changeid="xavier">
+        <seg>activer le &lt;a0&gt;CDA&lt;/a0&gt; dans &lt;c1&gt;Paramètres généraux&lt;/c1&gt; » &lt;c2&gt;Cookies&lt;/c2&gt; » &lt;c3&gt;Domaines multiples&lt;/c3&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -18638,6 +18846,14 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>fr</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>declare secondary portal in &lt;c0&gt;General Parameters&lt;/c0&gt; » &lt;c1&gt;Advanced Parameters&lt;/c1&gt; » &lt;c2&gt;Security&lt;/c2&gt; » &lt;c3&gt;Trusted domains&lt;/c3&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120216T052132Z" changeid="xavier">
+        <seg>declarer le second portail dans &lt;c0&gt;Paramètres généraux&lt;/c0&gt; » &lt;c1&gt;Paramètres avancés&lt;/c1&gt; » &lt;c2&gt;Sécurité&lt;/c2&gt; » &lt;c3&gt;Domaines approuvés&lt;/c3&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -19504,6 +19720,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>documentation:quickstart</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:remote-principle.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120216T050028Z" changeid="xavier">
+        <seg>documentation:remote-principle.png</seg>
       </tuv>
     </tu>
     <tu>
