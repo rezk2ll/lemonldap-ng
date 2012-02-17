@@ -683,12 +683,7 @@ sub extractFormInfo {
                 $self->{postFields}->{'RelayState'} = $relaystate
                   if ($relaystate);
 
-                $self->_subProcess(qw(autoPost));
-
-                # If we are here, there was a problem with POST response
-                $self->lmLog( "Logout response was not sent trough POST",
-                    'error' );
-                return PE_SAML_SLO_ERROR;
+                return $self->_subProcess(qw(autoPost));
             }
 
             # HTTP-SOAP
@@ -1010,11 +1005,7 @@ sub extractFormInfo {
         $self->{postFields}->{'RelayState'} = $login->msg_relayState
           if ( $login->msg_relayState );
 
-        $self->_subProcess(qw(autoPost));
-
-        # If we are here, there was a problem with POST request
-        $self->lmLog( "SSO request was not sent trough POST", 'error' );
-        return PE_SAML_SSO_ERROR;
+        return $self->_subProcess(qw(autoPost));
     }
 
     # No SOAP transport for SSO request
@@ -1186,7 +1177,6 @@ sub getIDP {
             and $self->{samlCommonDomainCookieActivation}
             and $self->{samlCommonDomainCookieReader} )
         {
-
             $self->lmLog(
                 "Will try to use Common Domain Cookie for IDP resolution",
                 'debug' );
@@ -1206,8 +1196,7 @@ sub getIDP {
 
             $self->{urldc} = $cdc_reader_url;
 
-            return $self->_sub('autoRedirect');
-
+            return $self->_subProcess('autoRedirect');
         }
 
         $self->lmLog( 'No IDP found', 'debug' ) unless ($idp);

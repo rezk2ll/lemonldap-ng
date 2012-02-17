@@ -623,11 +623,7 @@ sub issuerForUnAuthUser {
         # Delete relay session
         eval { tied(%$relayInfos)->delete(); };
 
-        $self->_subProcess(qw(autoPost));
-
-        # If we are here, there was a problem with POST response
-        $self->lmLog( "Logout response was not sent trough POST", 'error' );
-        return PE_IMG_NOK;
+        return $self->_subProcess(qw(autoPost));
     }
 
     # 1.3.3 Termination
@@ -1733,11 +1729,7 @@ sub issuerForAuthUser {
 
                 $self->{urldc} = $sso_url;
 
-                $self->_subProcess(qw(autoRedirect));
-
-                # If we are here, there was a problem with GET request
-                $self->lmLog( "SSO response was not sent trough GET", 'error' );
-                return PE_SAML_SSO_ERROR;
+                return $self->_subProcess(qw(autoRedirect));
             }
 
             # HTTP-POST
@@ -1764,12 +1756,7 @@ sub issuerForAuthUser {
                 $self->{postFields}->{'RelayState'} = $login->msg_relayState
                   if ( $login->msg_relayState );
 
-                $self->_subProcess(qw(autoPost));
-
-                # If we are here, there was a problem with POST request
-                $self->lmLog( "SSO response was not sent trough POST",
-                    'error' );
-                return PE_SAML_SSO_ERROR;
+                return $self->_subProcess(qw(autoPost));
             }
 
         }

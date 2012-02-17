@@ -1709,14 +1709,17 @@ sub controlExistingSession {
                     }
                 }
 
+                untie %$h;
+
                 # Redirect or Post if asked by authLogout
-                $self->_subProcess(qw(autoRedirect))
+                return $self->_subProcess(qw(autoRedirect))
                   if (  $self->{urldc}
                     and $self->{urldc} ne $self->{portal} );
-                $self->_subProcess(qw(autoPost)) if ( $self->{postUrl} );
+
+                return $self->_subProcess(qw(autoPost))
+                  if ( $self->{postUrl} );
 
                 # Display logout message
-                untie %$h;
                 return PE_LOGOUT_OK;
             }
 

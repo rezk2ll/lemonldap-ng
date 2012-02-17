@@ -2323,13 +2323,7 @@ sub sendLogoutResponseToServiceProvider {
 
         $self->lmLog( "Redirect user to $slo_url", 'debug' );
 
-        $self->_subProcess(qw(autoRedirect));
-
-        # If we are here, there was a problem with HTTP-REDIRECT response
-        $self->lmLog( "Logout response was not sent trough GET", 'error' );
-
-        return 0;
-
+        return $self->_subProcess(qw(autoRedirect));
     }
 
     # HTTP-POST
@@ -2347,13 +2341,7 @@ sub sendLogoutResponseToServiceProvider {
         $self->{postFields}->{'RelayState'} = $relaystate
           if ($relaystate);
 
-        $self->_subProcess(qw(autoPost));
-
-        # If we are here, there was a problem with POST response
-        $self->lmLog( "Logout response was not sent trough POST", 'error' );
-
-        return 0;
-
+        return $self->_subProcess(qw(autoPost));
     }
 
     # HTTP-SOAP
