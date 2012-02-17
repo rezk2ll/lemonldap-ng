@@ -2744,15 +2744,19 @@ sub checkDestination {
 
     $self->lmLog( "Destination $destination found in SAML message", 'debug' );
 
+    # Retrieve full URL
+    my $portal = $self->{portal};
+    $portal =~ s#^(https?://[^/]+)/.*#$1#; # remove path of portal URL
+    $url = $portal . $url;
+
     # Compare Destination and URL
-    if ( $destination =~ /^$url$/ ) {
+    if ( $destination eq $url ) {
         $self->lmLog( "Destination match URL $url", 'debug' );
         return 1;
     }
-    else {
-        $self->lmLog( "Destination does not match URL $url", 'error' );
-        return 0;
-    }
+
+    $self->lmLog( "Destination does not match URL $url", 'error' );
+    return 0;
 }
 
 ## @method hashref getSamlSession(string id)
