@@ -970,6 +970,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../../media/documentation/remote-interoperability.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120217T045232Z" changeid="xavier">
+        <seg>../../../media/documentation/remote-interoperability.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../../media/documentation/remote-principle.png</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T050030Z" changeid="xavier">
@@ -3854,6 +3862,14 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>/_detail/documentation/manager-saml-service-sp-slo.png?id=documentation%3A1.0%3Asamlservice</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/documentation/remote-interoperability.png?id=documentation%3A1.0%3Aauthremote</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120217T045229Z" changeid="xavier">
+        <seg>/_detail/documentation/remote-interoperability.png?id=documentation%3A1.0%3Aauthremote</seg>
       </tuv>
     </tu>
     <tu>
@@ -7270,6 +7286,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Cookie name&lt;/s0&gt; (optional): name of the cookie of primary portal, if different from secondary portal</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120216T200020Z" changeid="xavier">
+        <seg>&lt;s0&gt;Nom du cookie&lt;/s0&gt; (optionnel) : nom du cookie du portail primaire, s'il est différent de celui du portail secondaire</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Default filter&lt;/s0&gt;: default &lt;a1&gt;LDAP&lt;/a1&gt; fitler for searches, should not be modified.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T114243Z" changeid="xavier">
@@ -7710,6 +7734,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Portal &lt;a1&gt;URL&lt;/a1&gt;&lt;/s0&gt;: remote portal &lt;a2&gt;URL&lt;/a2&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120216T195922Z" changeid="xavier">
+        <seg>&lt;s0&gt;Portail &lt;a1&gt;URL&lt;/a1&gt;&lt;/s0&gt;: &lt;a2&gt;URL&lt;/a2&gt; du portail distant</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Portal messages&lt;/s0&gt;: all messages are grouped in lemonldap-ng/lib/Lemonldap/NG/Portal/_i18n.pm.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -7842,6 +7874,22 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20120101T184755Z" changeid="xavier">
         <seg>&lt;s0&gt;Port du serveur&lt;/s0&gt; : port TCP du serveur &lt;a1&gt;LDAP&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Sessions module options&lt;/s0&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120216T200120Z" changeid="xavier">
+        <seg>&lt;s0&gt;Options du module de sessions&lt;/s0&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Sessions module&lt;/s0&gt;: set &lt;c1&gt;Lemonldap::NG::Common::Apache::Session::&lt;a2&gt;SOAP&lt;/a2&gt;&lt;/c1&gt; for &lt;a3&gt;SOAP session backend&lt;/a3&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120216T200104Z" changeid="xavier">
+        <seg>&lt;s0&gt;Module de sessions&lt;/s0&gt; : mettre &lt;c1&gt;Lemonldap::NG::Common::Apache::Session::&lt;a2&gt;SOAP&lt;/a2&gt;&lt;/c1&gt; pour le &lt;a3&gt;backend de session SOAP&lt;/a3&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -8184,6 +8232,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T191206Z" changeid="xavier">
         <seg>&lt;s0&gt;passThrough&lt;/s0&gt; (optionnel) : Autorise ou non l'accès anonyme.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;proxy&lt;/s0&gt;: &lt;a1&gt;SOAP&lt;/a1&gt; sessions end point (see &lt;a2&gt;SOAP session backend&lt;/a2&gt; documentation)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120216T200203Z" changeid="xavier">
+        <seg>&lt;s0&gt;proxy&lt;/s0&gt;: point d'accès &lt;a1&gt;SOAP&lt;/a1&gt; (voir la documentation du &lt;a2&gt;backend de session SOAP&lt;/a2&gt;)</seg>
       </tuv>
     </tu>
     <tu>
@@ -9792,6 +9848,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Après déconnexion, l'utilisateur est redirigé vers une &lt;a0&gt;URL&lt;/a0&gt; configurée ou vers le portail.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>After redirection, normal authentication in the remote portal</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120217T045501Z" changeid="xavier">
+        <seg>Après redirection, authentification normale sur le portail distant (celui de son organisation)</seg>
       </tuv>
     </tu>
     <tu>
@@ -11812,6 +11876,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Example: interoperability between 2 organizations</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120216T200218Z" changeid="xavier">
+        <seg>Exemple : interoperabilité entre 2 organisations</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Export sAMAccountName in a variable declared in &lt;a0&gt;exported variables&lt;/a0&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T095640Z" changeid="xavier">
@@ -11840,6 +11912,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120215T045522Z" changeid="xavier">
         <seg>Portail externe</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>External user clicks to be redirected to the remote type portal</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120217T045421Z" changeid="xavier">
+        <seg>L'utilisateur externe clique pour être redirigé vers le second portail</seg>
       </tuv>
     </tu>
     <tu>
@@ -12927,7 +13007,7 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
         <seg>In Manager, go in &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Authentication modules&lt;/c1&gt; and choose &lt;a2&gt;LDAP&lt;/a2&gt; for authentication, users and/or password modules.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120101T184302Z" changeid="xavier">
-        <seg>Dans le manager, aller dans &lt;c0&gt;Paramètres géénraux&lt;/c0&gt; &gt; &lt;c1&gt;Modules d'authentification&lt;/c1&gt; et choisir &lt;a2&gt;LDAP&lt;/a2&gt;) pour les modules authentification, utilisateurs et/ou mots-de-passe.</seg>
+        <seg>Dans le manager, aller dans &lt;c0&gt;Paramètres généraux&lt;/c0&gt; &gt; &lt;c1&gt;Modules d'authentification&lt;/c1&gt; et choisir &lt;a2&gt;LDAP&lt;/a2&gt;) pour les modules authentification, utilisateurs et/ou mots-de-passe.</seg>
       </tuv>
     </tu>
     <tu>
@@ -12951,7 +13031,7 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
         <seg>In Manager, go in &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Authentication modules&lt;/c1&gt; and choose Database (&lt;a2&gt;DBI&lt;/a2&gt;) for authentication, users and/or password modules.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T195957Z" changeid="xavier">
-        <seg>Dans le manager, aller dans &lt;c0&gt;Paramètres géénraux&lt;/c0&gt; &gt; &lt;c1&gt;Modules d'authentification&lt;/c1&gt; et choisir &quot;base de données&quot; (&lt;a2&gt;DBI&lt;/a2&gt;) pour les modules authentification, utilisateurs et/ou mots-de-passe.</seg>
+        <seg>Dans le manager, aller dans &lt;c0&gt;Paramètres généraux&lt;/c0&gt; &gt; &lt;c1&gt;Modules d'authentification&lt;/c1&gt; et choisir &quot;base de données&quot; (&lt;a2&gt;DBI&lt;/a2&gt;) pour les modules authentification, utilisateurs et/ou mots-de-passe.</seg>
       </tuv>
     </tu>
     <tu>
@@ -14572,6 +14652,30 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>One remote portal that delegates authentication to the second organization (just an other file on the same server)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120216T201045Z" changeid="xavier">
+        <seg>Un portail distant qui délègue l'authentification à la seconde organisation (juste un autre fichier sur le même serveur)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>One standard portal</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120216T200342Z" changeid="xavier">
+        <seg>Un portail standard</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>One user tries to access to the portal</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120217T045318Z" changeid="xavier">
+        <seg>Un utilisateur tente d'accéder au portail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Open SSO session</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -15248,6 +15352,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T050236Z" changeid="xavier">
         <seg>Redirection vers le portail secondaire (transparent)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Redirection to the remote type portal</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120217T045517Z" changeid="xavier">
+        <seg>Redirection vers le portail de type remote</seg>
       </tuv>
     </tu>
     <tu>
@@ -15972,6 +16084,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>So on each main portal, internal users can access normally, and users issued from the other organization have just to click on the link:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120217T045226Z" changeid="xavier">
+        <seg>Ainsi sur chacun des portails principaux, les utilisateurs internes peuvent accéder normalement et les utilisateurs de l'autre organisation n'ont qu'à cliquer sur le lien :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>So the above example can also be written like this:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T113428Z" changeid="xavier">
@@ -16540,6 +16660,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The normal portal has a link included in the authentication form pointing to the remote portal for the users of the other organization</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120217T045054Z" changeid="xavier">
+        <seg>Le portail normal dispose d'un lien dans le formulaire d'authentification pointant vers le portail destiné aux utilisateurs de l'autre organisation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The only authorized binding is &lt;a0&gt;SOAP&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -16768,6 +16896,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120215T045646Z" changeid="xavier">
         <seg>Ensuite, aller dans les &lt;c0&gt;paramètres Proxy&lt;/c0&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Then, go in &lt;c0&gt;Remote parameters&lt;/c0&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120216T195859Z" changeid="xavier">
+        <seg>Ensuite, aller dans les &lt;c0&gt;paramètres Remote&lt;/c0&gt; :</seg>
       </tuv>
     </tu>
     <tu>
@@ -17732,6 +17868,22 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T094814Z" changeid="xavier">
         <seg>Utiliser Lemonldap::NG avec Active-Directory</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Using this, we can do a very simple interoperability system between 2 organizations using two &lt;a0&gt;LL::NG&lt;/a0&gt; structures:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120216T200318Z" changeid="xavier">
+        <seg>En utilisant ce système, on peut avoir une simple interopérabilité entre 2 organisations utilisant chacune leur système &lt;a0&gt;LL::NG&lt;/a0&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Validation of the session: external user has now a local session</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120217T045550Z" changeid="xavier">
+        <seg>Validation de la session : l'utilisateur externe dispose ainsi d'un session locale</seg>
       </tuv>
     </tu>
     <tu>
@@ -19724,6 +19876,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:remote-interoperability.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120217T045230Z" changeid="xavier">
+        <seg>documentation:remote-interoperability.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:remote-principle.png</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T050028Z" changeid="xavier">
@@ -19744,6 +19904,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>download.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>each area has 2 portals:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120216T200333Z" changeid="xavier">
+        <seg>chacune a 2 portails:</seg>
       </tuv>
     </tu>
     <tu>
