@@ -930,6 +930,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../../media/documentation/manager-saml-idp-new.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120218T221243Z" changeid="xavier">
+        <seg>../../../media/documentation/manager-saml-idp-new.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../../media/documentation/manager-saml-namid-formats.png</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -1246,6 +1254,22 @@
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T200202Z" changeid="xavier">
         <seg>../../documentation/1.0/portalcustom.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.0/portalmenu.html#menu_modules</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120218T220724Z" changeid="xavier">
+        <seg>../../documentation/1.0/portalmenu.html#menu_modules</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.0/samlservice.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120218T220532Z" changeid="xavier">
+        <seg>../../documentation/1.0/samlservice.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -3826,6 +3850,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/documentation/manager-saml-idp-new.png?id=documentation%3A1.0%3Aauthsaml</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120218T221238Z" changeid="xavier">
+        <seg>/_detail/documentation/manager-saml-idp-new.png?id=documentation%3A1.0%3Aauthsaml</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>/_detail/documentation/manager-saml-namid-formats.png?id=documentation%3A1.0%3Asamlservice</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -4970,6 +5002,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can also act as &lt;a1&gt;SAML IDP&lt;/a1&gt;, that allows to interconnect two &lt;a2&gt;LL::NG&lt;/a2&gt; systems.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120218T220519Z" changeid="xavier">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; peut également agir comme un &lt;a1&gt;IDP SAML&lt;/a1&gt;, ce qui permet d'interconnecter deux systèmes &lt;a2&gt;LL::NG&lt;/a2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can also request proxy tickets for its protected services.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T155742Z" changeid="xavier">
@@ -5022,6 +5062,14 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; peut aisément dialoguer avec d'autres systèmes d'authentification en utilisant &lt;a1&gt;SAML&lt;/a1&gt;, OpenID, &lt;a2&gt;CAS&lt;/a2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can use SAML2 to get user identity and grab some attributes defined in user profile on its Identity Provider (IDP).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120218T220110Z" changeid="xavier">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; peut utiliser SAML2 pour obtenir l'identité et d'autres attributs definis dans le profil utilisateur défini chez son fournisseur d'identité (IDP).</seg>
       </tuv>
     </tu>
     <tu>
@@ -9844,6 +9892,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>After configuring &lt;a0&gt;SAML&lt;/a0&gt; Service, you can export metadata to your partner Identity Provider.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120218T221010Z" changeid="xavier">
+        <seg>Après avoir configuré le service &lt;a0&gt;SAML&lt;/a0&gt; Service, exporter les metadatas vers le fournisseur d'identité partenaire.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>After logout process, the user is redirected on portal, or on a configured &lt;a0&gt;URL&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -10196,6 +10252,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>As passwords will not be managed by &lt;a0&gt;LL::NG&lt;/a0&gt;, you can disable &lt;a1&gt;menu password module&lt;/a1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120218T220837Z" changeid="xavier">
+        <seg>Comme les mots-de-passe ne sernt pas gérés par &lt;a0&gt;LL::NG&lt;/a0&gt;, il est possile de désactiver le &lt;a1&gt;module mots-de-passe du menu&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Assertion Consumer</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -10284,6 +10348,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Authentication and UserDB</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120218T220617Z" changeid="xavier">
+        <seg>Authentification et base d'utilisateurs</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Authentication backend</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -10320,6 +10392,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T194613Z" changeid="xavier">
         <seg>Module d'authentication</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Authentication module: &lt;a0&gt;SAML&lt;/a0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120218T220712Z" changeid="xavier">
+        <seg>Module d'authentification : &lt;a0&gt;SAML&lt;/a0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -12036,6 +12116,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>For each IDP, you can configure attributes that are collected.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120218T220333Z" changeid="xavier">
+        <seg>Pour chaque IDP, il faut configurer les attributs à collecter.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>For each binding you can set:</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -12972,6 +13060,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>In &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Authentication modules&lt;/c1&gt;, set:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120218T220659Z" changeid="xavier">
+        <seg>Dans &lt;c0&gt;Paramètres généraux&lt;/c0&gt; &gt; &lt;c1&gt;Modules d'authentification&lt;/c1&gt;, choisir :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>In &lt;c0&gt;General&lt;/c0&gt;, fill at least the following information:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T073845Z" changeid="xavier">
@@ -13092,6 +13188,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>In the Manager, select node &lt;c0&gt;&lt;a1&gt;SAML&lt;/a1&gt; identity providers&lt;/c0&gt; and click on &lt;c2&gt;New identity provider&lt;/c2&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120218T221236Z" changeid="xavier">
+        <seg>Dans le Manager, selectionner le noeud &lt;c0&gt;Fournisseurs d'identité &lt;a1&gt;SAML&lt;/a1&gt;&lt;/c0&gt; et cliquer sur &lt;c2&gt;Nouveau fournisseur d'identité&lt;/c2&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>In the context of an &lt;a0&gt;HTTP&lt;/a0&gt; transaction, the basic access authentication is a method designed to allow a web browser, or other client program, to provide credentials – in the form of a user name and password – when making a request.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T101504Z" changeid="xavier">
@@ -13104,6 +13208,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Dans le manager : indiquez &lt;a0&gt;Apache::Session::Redis&lt;/a0&gt; dans &lt;c1&gt;Paramètres généraux&lt;/c1&gt; » &lt;c2&gt;Sessions&lt;/c2&gt; » &lt;c3&gt;Stockage des sessions&lt;/c3&gt; » &lt;c4&gt;Module Apache::Session&lt;/c4&gt; et ajoutez les paramètres suivant (sensibles à la casse):</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>In this case, &lt;a1&gt;LL::NG&lt;/a1&gt; acts like an SAML2 Service Provider (SP).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120218T220146Z" changeid="xavier">
+        <seg>Dans ce cas, &lt;a1&gt;LL::NG&lt;/a1&gt; agit comme un fournisseur de service SAML2 (SP).</seg>
       </tuv>
     </tu>
     <tu>
@@ -15388,6 +15500,22 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Register LemonLDAP::NG on partner Identity Provider</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120218T220915Z" changeid="xavier">
+        <seg>Enregistrer LemonLDAP::NG dans le fournisseur d'identité partenaire</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Register partner Identity Provider on LemonLDAP::NG</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120218T221134Z" changeid="xavier">
+        <seg>Enregistrer le fournisseur d'identité partenaire dans LemonLDAP::NG</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Registered users on Google Apps with the same email than those used by &lt;a0&gt;LL::NG&lt;/a0&gt; (email will be the NameID exchanged between Google Apps and &lt;a1&gt;LL::NG&lt;/a1&gt;)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T182640Z" changeid="xavier">
@@ -15544,6 +15672,22 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>S</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>SAML</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120218T215943Z" changeid="xavier">
+        <seg>SAML</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>SAML Service</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120218T220531Z" changeid="xavier">
+        <seg>Service SAML</seg>
       </tuv>
     </tu>
     <tu>
@@ -15744,6 +15888,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Paramètres de sécurité</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>See &lt;a0&gt;SAML service&lt;/a0&gt; configuration chapter.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120218T220601Z" changeid="xavier">
+        <seg>Voir le chapître de configuration du &lt;a0&gt;service SAML&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -15964,6 +16116,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Several IDPs are allowed, in this case the user will choose the IDP he wants.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120218T220242Z" changeid="xavier">
+        <seg>Plusieurs IDPs peuvent être autorisés, dans ce cas l'utilisateur peut choisir l'IDP qu'il souhaite.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Several extensions allows to configure &lt;a0&gt;SSO&lt;/a0&gt; on MediaWiki:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074534Z" changeid="xavier">
@@ -16168,6 +16328,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T153717Z" changeid="xavier">
         <seg>Quelques applications l'utilisant</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Some can be mandatory, so if they are not returned by IDP, the session will not open.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120218T220423Z" changeid="xavier">
+        <seg>Certains peuvent être obligatoires, et s'ils ne sont pas retournés par l'IDP, la session n'est pas ouverte.</seg>
       </tuv>
     </tu>
     <tu>
@@ -16504,6 +16672,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T113125Z" changeid="xavier">
         <seg>L'authentification basique est portée par un en-tête &lt;a0&gt;HTTP&lt;/a0&gt; spécifique, tel que décrit ci-dessous.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The IDP name is asked, enter it and click OK.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120218T221317Z" changeid="xavier">
+        <seg>Le nom d'IDP est demandé, entrer-le et cliquer sur OK.</seg>
       </tuv>
     </tu>
     <tu>
@@ -16968,6 +17144,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Ces paramètres ne sont pas obligatoires pour faire fonctionner le service &lt;a0&gt;SAML&lt;/a0&gt;, mais peuvent aider à leur personnalisation :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>They are available at the EntityID &lt;a0&gt;URL&lt;/a0&gt;, by default: &lt;a1&gt;http://auth.example.com/saml/metadata&lt;/a1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120218T221056Z" changeid="xavier">
+        <seg>Elles sont disponibles à l'&lt;a0&gt;URL&lt;/a0&gt; EntityID, par défaut : &lt;a1&gt;http://auth.example.com/saml/metadata&lt;/a1&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -17840,6 +18024,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Users module: &lt;a0&gt;SAML&lt;/a0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120218T220722Z" changeid="xavier">
+        <seg>Module utilisateurs : &lt;a0&gt;SAML&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Users: will not collect any data (but you can still register environment variables in session)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120121T080500Z" changeid="xavier">
@@ -18260,6 +18452,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T194715Z" changeid="xavier">
         <seg>Il est possible d'ordonner les noms de clefs en utilisant un préfixe numérique.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can preselect IDP with an IDP resolution rule.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120218T220309Z" changeid="xavier">
+        <seg>Il est possible de pré-selectionner l'IDP par une règle de résolution.</seg>
       </tuv>
     </tu>
     <tu>
@@ -19516,6 +19716,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.0:samlservice</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120218T220535Z" changeid="xavier">
+        <seg>documentation:1.0:samlservice</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.0:soapsessionbackend</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -19820,6 +20028,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:manager-saml-idp-new.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120218T221239Z" changeid="xavier">
+        <seg>documentation:manager-saml-idp-new.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:manager-saml-namid-formats.png</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -20040,6 +20256,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T183045Z" changeid="xavier">
         <seg>http://auth.example.com/?logout=1</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://auth.example.com/saml/metadata</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120218T221013Z" changeid="xavier">
+        <seg>http://auth.example.com/saml/metadata</seg>
       </tuv>
     </tu>
     <tu>
