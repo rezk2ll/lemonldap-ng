@@ -73,7 +73,7 @@ sub display {
         }
 
         # 1.3 Redirection
-        if ( $self->{error} == PE_REDIRECT ) {
+        elsif ( $self->{error} == PE_REDIRECT ) {
             $skinfile       = "../common/redirect.tpl";
             %templateParams = (
                 URL             => $self->{urldc},
