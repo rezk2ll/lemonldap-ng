@@ -12,15 +12,6 @@ SESSIONSDIR=/var/lib/lemonldap-ng/sessions
 if [ "$1" == "configure" ]
 then
     [ -e $HANDLERFILE ] || cp $EXAMPLEHANDLERFILE $HANDLERFILE
-    chmod 770 $SESSIONSDIR
-    chmod 770 $SESSIONSDIR/lock
-    chown -R www-data:www-data $SESSIONSDIR
-
-    [ -d /etc/apache2/sites-available/ ] && \
-	    [ ! -e /etc/apache2/sites-available/handler-apache2.conf ] && \
-	    ln -s /etc/lemonldap-ng/handler-apache2.conf /etc/apache2/sites-available/handler-apache2.conf \
-	    || true
-
 fi
 
 

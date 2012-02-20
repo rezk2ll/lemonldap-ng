@@ -7,9 +7,13 @@ set -e
 
 FIRSTCONFFILE=/var/lib/lemonldap-ng/conf/lmConf-1
 CONFDIR=/etc/lemonldap-ng
+SESSIONSDIR=/var/lib/lemonldap-ng/sessions
 
 if [ "$1" == "configure" ]
 then
+	chmod 770 $SESSIONSDIR
+	chmod 770 $SESSIONSDIR/lock
+	chown -R www-data:www-data $SESSIONSDIR
 	chown -R www-data:www-data /var/lib/lemonldap-ng/conf
 	chmod 750 /var/lib/lemonldap-ng/conf
 	chmod 640 /var/lib/lemonldap-ng/conf/*

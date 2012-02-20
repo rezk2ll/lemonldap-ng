@@ -15,17 +15,6 @@ WSDLFILE=/var/lib/lemonldap-ng/portal/portal.wsdl
 
 if [ "$1" == "configure" ]
 then
-	for file in $FILES; do
-		[ -e "$RUNDIR$file" ] || ln -s $REFDIR$file $RUNDIR$file
-	done
-	chmod 770 $SESSIONSDIR
-	chmod 770 $SESSIONSDIR/lock
-	chown -R www-data:www-data $SESSIONSDIR
 	$BUILDPORTALWSDL > $WSDLFILE || true
-
-	[ -d /etc/apache2/sites-available/ ] && \
-		[ ! -e /etc/apache2/sites-available/portal-apache2.conf ] && \
-		ln -s /etc/lemonldap-ng/portal-apache2.conf /etc/apache2/sites-available/portal-apache2.conf \
-		|| true
 fi
 

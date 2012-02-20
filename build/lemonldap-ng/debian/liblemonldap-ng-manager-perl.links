@@ -1,0 +1,5 @@
+/etc/lemonldap-ng/manager-apache2.conf /etc/apache2/sites-available/manager-apache2.conf
+/usr/share/lemonldap-ng/manager/index.pl /var/lib/lemonldap-ng/manager/index.pl
+/usr/share/lemonldap-ng/manager/notifications.pl /var/lib/lemonldap-ng/manager/notifications.pl
+/usr/share/lemonldap-ng/manager/sessions.pl /var/lib/lemonldap-ng/manager/sessions.pl
+

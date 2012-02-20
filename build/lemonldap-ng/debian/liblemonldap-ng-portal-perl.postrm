@@ -10,3 +10,7 @@ then
 	db_purge
 fi
 
+if [ "$1" == "purge" ]
+then
+	rm -f /var/lib/lemonldap-ng/portal/portal.wsdl
+fi
