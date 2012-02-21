@@ -4930,6 +4930,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; attribute used in filter is not required if you do not use &lt;a1&gt;LDAP users database&lt;/a1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T071317Z" changeid="xavier">
+        <seg>L'attribut &lt;a0&gt;LDAP&lt;/a0&gt; pour le filtre n'est pas nécessaire si la &lt;a1&gt;base de données utilisateur LDAP&lt;/a1&gt; n'est pas utilisée.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;LDAP&lt;/a0&gt; authentication search filter</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -5230,6 +5238,14 @@
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T190332Z" changeid="xavier">
         <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; fournit une valve, disponible sur &lt;a1&gt;page de téléchargement&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; uses &lt;a1&gt;Apache SSL module&lt;/a1&gt;, like any other &lt;a2&gt;Apache authentication module&lt;/a2&gt;, with extra features:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T064012Z" changeid="xavier">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; utilise le &lt;a1&gt;module SSL d'Apache&lt;/a1&gt;, comme n'importe quel &lt;a2&gt;module d'authentification d'Apache&lt;/a2&gt; avec quelques fonctionnalités supplémentaires :</seg>
       </tuv>
     </tu>
     <tu>
@@ -6968,6 +6984,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;&lt;a1&gt;LDAP&lt;/a1&gt; attribute used in filter&lt;/s0&gt;: attribute in &lt;a2&gt;LDAP&lt;/a2&gt; directory to use in mapping</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T071018Z" changeid="xavier">
+        <seg>&lt;s0&gt;Attribut &lt;a1&gt;LDAP&lt;/a1&gt; pour le filtre&lt;/s0&gt; : attribut de l'annuaire &lt;a2&gt;LDAP&lt;/a2&gt; à utiliser dans les correspondances</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;&lt;a1&gt;LDAP&lt;/a1&gt; password encoding&lt;/s0&gt;: can allow to manage old &lt;a2&gt;LDAP&lt;/a2&gt; servers using specific encoding for passwords (default: utf-8).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T143505Z" changeid="xavier">
@@ -7004,6 +7028,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20120215T050039Z" changeid="xavier">
         <seg>&lt;s0&gt;Point terminal des sessions &lt;a1&gt;SOAP&lt;/a1&gt;&lt;/s0&gt; (optionnel): &lt;a3&gt;URL&lt;/a3&gt; du service &lt;a2&gt;SOAP&lt;/a2&gt; si elle n'est pas basée sur celle du portail interne avec le suffixe &lt;c4&gt;index.pl/sessions&lt;/c4&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;&lt;a1&gt;SSL&lt;/a1&gt; Required&lt;/s0&gt;: if true, do not allow other authentication method if &lt;a2&gt;SSL&lt;/a2&gt; certificate authentication fails (false by default).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T071145Z" changeid="xavier">
+        <seg>&lt;s0&gt;&lt;a1&gt;SSL&lt;/a1&gt; Requis&lt;/s0&gt; : si activé, n'autorise pas d'autre méthode d'authentification si la vérification du certificat d'authentification &lt;a2&gt;SSL&lt;/a2&gt; échoue (désactivé par défaut).</seg>
       </tuv>
     </tu>
     <tu>
@@ -7258,6 +7290,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T114320Z" changeid="xavier">
         <seg>&lt;s0&gt;Filtre d'authentication&lt;/s0&gt; : filtre pour trouver l'utilisateur à partir de son login (défaut : &lt;c1&gt;(&amp;(uid=$user)(objectClass=inetOrgPerson))&lt;/c1&gt;)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Authentication level&lt;/s0&gt;: authentication level for this module</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T070756Z" changeid="xavier">
+        <seg>&lt;s0&gt;Niveau d'authentification&lt;/s0&gt; : niveau d'authentification pour ce module</seg>
       </tuv>
     </tu>
     <tu>
@@ -7598,6 +7638,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Extracted certificate field&lt;/s0&gt;: field of the certificate affected to $user internal variable</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T070912Z" changeid="xavier">
+        <seg>&lt;s0&gt;Champ extrait du certificat&lt;/s0&gt; : champ du certificat affecté à la variable interne $user</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Force UTF-8&lt;/s0&gt;: this will force UTF-8 conversion of attributes values collected from IDP.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T062836Z" changeid="xavier">
@@ -7910,6 +7958,16 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;NameVirtualHost&lt;/s0&gt; *:80
+&lt;s1&gt;NameVirtualHost&lt;/s1&gt; *:&lt;s2&gt;443&lt;/s2&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T070146Z" changeid="xavier">
+        <seg>&lt;s0&gt;NameVirtualHost&lt;/s0&gt; *:80
+&lt;s1&gt;NameVirtualHost&lt;/s1&gt; *:&lt;s2&gt;443&lt;/s2&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Object class&lt;/s0&gt;: objectClass of the groups (default: groupOfNames).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T114552Z" changeid="xavier">
@@ -8106,6 +8164,86 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T063453Z" changeid="xavier">
         <seg>&lt;s0&gt;Méthode SLO&lt;/s0&gt; : force la méthode à utiliser pour le SLO (http-redirect, http-post, etc.)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;SSLCACertificateFile&lt;/s0&gt;: CA certificate to validate client certificates</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T070037Z" changeid="xavier">
+        <seg>&lt;s0&gt;SSLCACertificateFile&lt;/s0&gt; : certificat d'autorité pour valider les certificats clients</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;SSLCertificateFile&lt;/s0&gt;: Server certificate</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T065936Z" changeid="xavier">
+        <seg>&lt;s0&gt;SSLCertificateFile&lt;/s0&gt; : certificat serveur</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;SSLCertificateKeyFile&lt;/s0&gt;: Server private key</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T070000Z" changeid="xavier">
+        <seg>&lt;s0&gt;SSLCertificateKeyFile&lt;/s0&gt; : clef privée du serveur</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;SSLEngine&lt;/s0&gt; &lt;s1&gt;On&lt;/s1&gt;
+&lt;s2&gt;SSLVerifyClient&lt;/s2&gt; optional
+&lt;s3&gt;SSLVerifyDepth&lt;/s3&gt; 10
+&lt;s4&gt;SSLOptions&lt;/s4&gt; +StdEnvVars
+&lt;s5&gt;SSLUserName&lt;/s5&gt; SSL_CLIENT_S_DN_CN</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T070305Z" changeid="xavier">
+        <seg>&lt;s0&gt;SSLEngine&lt;/s0&gt; &lt;s1&gt;On&lt;/s1&gt;
+&lt;s2&gt;SSLVerifyClient&lt;/s2&gt; optional
+&lt;s3&gt;SSLVerifyDepth&lt;/s3&gt; 10
+&lt;s4&gt;SSLOptions&lt;/s4&gt; +StdEnvVars
+&lt;s5&gt;SSLUserName&lt;/s5&gt; SSL_CLIENT_S_DN_CN</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;SSLOptions&lt;/s0&gt;: set to &lt;c1&gt;+StdEnvVars&lt;/c1&gt; to get certificate fields in environment variables</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T070551Z" changeid="xavier">
+        <seg>&lt;s0&gt;SSLOptions&lt;/s0&gt; : mettre à &lt;c1&gt;+StdEnvVars&lt;/c1&gt; pour obtenir les champs du certificat dans les variables d'environnement</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;SSLProtocol&lt;/s0&gt; &lt;s1&gt;all&lt;/s1&gt; -SSLv2
+&lt;s2&gt;SSLCipherSuite&lt;/s2&gt; HIGH:MEDIUM
+&lt;s3&gt;SSLCertificateFile&lt;/s3&gt; /etc/httpd/certs/ow2.cert
+&lt;s4&gt;SSLCertificateKeyFile&lt;/s4&gt; /etc/httpd/certs/ow2.key
+&lt;s5&gt;SSLCACertificateFile&lt;/s5&gt; /etc/httpd/certs/ow2-ca.cert</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T065846Z" changeid="xavier">
+        <seg>&lt;s0&gt;SSLProtocol&lt;/s0&gt; &lt;s1&gt;all&lt;/s1&gt; -SSLv2
+&lt;s2&gt;SSLCipherSuite&lt;/s2&gt; HIGH:MEDIUM
+&lt;s3&gt;SSLCertificateFile&lt;/s3&gt; /etc/httpd/certs/ow2.cert
+&lt;s4&gt;SSLCertificateKeyFile&lt;/s4&gt; /etc/httpd/certs/ow2.key
+&lt;s5&gt;SSLCACertificateFile&lt;/s5&gt; /etc/httpd/certs/ow2-ca.cert</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;SSLUserName&lt;/s0&gt; (optional): certificate field that will be used to identify user in &lt;a1&gt;LL::NG&lt;/a1&gt; portal virtual host</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T070700Z" changeid="xavier">
+        <seg>&lt;s0&gt;SSLUserName&lt;/s0&gt; (optionnel) : champ du certificat à utiliser pour identifier pour identifier un utilisateur dans l'hôte virtuel du portail &lt;a1&gt;LL::NG&lt;/a1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;SSLVerifyClient&lt;/s0&gt;: set to &lt;c1&gt;optional&lt;/c1&gt; to allow user with a bad certificate to access to &lt;a2&gt;LL::NG&lt;/a2&gt; portal page (to display error or use another authentication method)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T070516Z" changeid="xavier">
+        <seg>&lt;s0&gt;SSLVerifyClient&lt;/s0&gt; : mettre à &lt;c1&gt;optional&lt;/c1&gt; pour autoriser les utilisateurs ne disposant pas d'un certificat valide à accéder à la page du portail &lt;a2&gt;LL::NG&lt;/a2&gt; (pour afficher les erreurs ou choisir une autre méthode d'authentification)</seg>
       </tuv>
     </tu>
     <tu>
@@ -10164,6 +10302,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>All &lt;a0&gt;SSL&lt;/a0&gt; options are documented in &lt;a1&gt;Apache mod_ssl page&lt;/a1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T070337Z" changeid="xavier">
+        <seg>Toutes les options &lt;a0&gt;SSL&lt;/a0&gt; sont documentées dans la &lt;a1&gt;page mod_ssl d'Apache&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>All data is stored in plain text files – no database is required.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T114949Z" changeid="xavier">
@@ -10192,6 +10338,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Autorise l'autocompletion du formulaire</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Allow no certificate to chain with other authentication methods</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T065530Z" changeid="xavier">
+        <seg>Autoriser les clients sans certificat dans le chaînage avec d'autres méthodes d'authentification</seg>
       </tuv>
     </tu>
     <tu>
@@ -10356,6 +10510,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Apache SSL global configuration</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T065755Z" changeid="xavier">
+        <seg>Configuration globale de ssl dans Apache</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Apache Tomcat</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111217T081842Z" changeid="xavier">
@@ -10392,6 +10554,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Journalisation par Apache</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Apache portal SSL configuration</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T070217Z" changeid="xavier">
+        <seg>Configuration SSL du portail dans Apache</seg>
       </tuv>
     </tu>
     <tu>
@@ -11144,6 +11314,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Modules de &quot;Choice&quot;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Choice of any certificate attribute as user main login</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T065309Z" changeid="xavier">
+        <seg>Choix de n'importe quel attribut du certificat comme nom d'utilisateur principal</seg>
       </tuv>
     </tu>
     <tu>
@@ -12100,6 +12278,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Edit the portal virtual host to enable &lt;a0&gt;SSL&lt;/a0&gt; double authentication:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T070303Z" changeid="xavier">
+        <seg>Éditer l'hôte virtuel du portail pour activer la double authentification &lt;a0&gt;SSL&lt;/a0&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Else, all data are copied in the session database.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T050025Z" changeid="xavier">
@@ -12112,6 +12298,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Email</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Enable SSL in Apache</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T065544Z" changeid="xavier">
+        <seg>Activer SSL dans Apache</seg>
       </tuv>
     </tu>
     <tu>
@@ -12360,6 +12554,22 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T114412Z" changeid="xavier">
         <seg>Pour Active Directory, utiliser ce filtre d'authentification :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>For CentOS/RHEL, We advice to disable the default &lt;a0&gt;SSL&lt;/a0&gt; virtual host configured in /etc/httpd/conf.d/ssl.conf.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T065737Z" changeid="xavier">
+        <seg>Pour CentOS/RHEL, il est recommandé de désactiver l'hôte virtuel &lt;a0&gt;SSL&lt;/a0&gt; par défaut configuré dans /etc/httpd/conf.d/ssl.conf.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>For CentOS/RHEL:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T065604Z" changeid="xavier">
+        <seg>Pour CentOS/RHEL :</seg>
       </tuv>
     </tu>
     <tu>
@@ -13020,6 +13230,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Here are the main options used by &lt;a0&gt;LL::NG&lt;/a0&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T070359Z" changeid="xavier">
+        <seg>Ci-dessous les principales options utilisées par &lt;a0&gt;LL::NG&lt;/a0&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Home</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -13324,6 +13542,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If you specify port in virtual host, then declare &lt;a0&gt;SSL&lt;/a0&gt; port:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T070145Z" changeid="xavier">
+        <seg>SI le port est spécifié, déclarer le port &lt;a0&gt;SSL&lt;/a0&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If you use TLS, you can set any of the &lt;a0&gt;Net::LDAP&lt;/a0&gt; start_tls() sub like &lt;c1&gt;ldap+tls://server/verify=none&amp;capath=/etc/ssl&lt;/c1&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120101T184710Z" changeid="xavier">
@@ -13396,6 +13622,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>In Debian/Ubuntu mod_ssl is already shipped in &lt;c0&gt;apache2.2-common&lt;/c0&gt; package.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T065635Z" changeid="xavier">
+        <seg>Dans Debian/Ubuntu mod_ssl est installé avec le paquet &lt;c0&gt;apache2.2-common&lt;/c0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>In Manager, click on &lt;a0&gt;SAML&lt;/a0&gt; service providers and the button &lt;c1&gt;New service provider&lt;/c1&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T192829Z" changeid="xavier">
@@ -13416,6 +13650,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120101T184302Z" changeid="xavier">
         <seg>Dans le manager, aller dans &lt;c0&gt;Paramètres généraux&lt;/c0&gt; &gt; &lt;c1&gt;Modules d'authentification&lt;/c1&gt; et choisir &lt;a2&gt;LDAP&lt;/a2&gt;) pour les modules authentification, utilisateurs et/ou mots-de-passe.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>In Manager, go in &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Authentication modules&lt;/c1&gt; and choose &lt;a2&gt;SSL&lt;/a2&gt; for authentication.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T070716Z" changeid="xavier">
+        <seg>Dans le manager, aller dans &lt;c0&gt;Paramètres généraux&lt;/c0&gt; &gt; &lt;c1&gt;Modules d'authentification&lt;/c1&gt; et choisir &lt;a2&gt;SSL&lt;/a2&gt; pour l'authentification.</seg>
       </tuv>
     </tu>
     <tu>
@@ -13536,6 +13778,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T061756Z" changeid="xavier">
         <seg>Dans ce cas, l'authentification n'est pas une réponse à une requête d'authentification ce qui diminue les capacités de contrôle.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>In this case, the extracted certificate field value will be used to match the user.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T071412Z" changeid="xavier">
+        <seg>Dans ce cas, la valeur du champ de certificat extraite sera utilisée pour identifier l'utilisateur.</seg>
       </tuv>
     </tu>
     <tu>
@@ -15700,6 +15950,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Put your own files instead of &lt;c0&gt;ow2.cert&lt;/c0&gt;, &lt;c1&gt;ow2.key&lt;/c1&gt;, &lt;c2&gt;ow2-ca.cert&lt;/c2&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T065919Z" changeid="xavier">
+        <seg>Placer vos propres fichiers au lieu de &lt;c0&gt;ow2.cert&lt;/c0&gt;, &lt;c1&gt;ow2.key&lt;/c1&gt;, &lt;c2&gt;ow2-ca.cert&lt;/c2&gt;:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Q</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111609Z" changeid="xavier">
@@ -16112,6 +16370,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T195453Z" changeid="xavier">
         <seg>SQL</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>SSL</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T063905Z" changeid="xavier">
+        <seg>SSL</seg>
       </tuv>
     </tu>
     <tu>
@@ -17408,6 +17674,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T160247Z" changeid="xavier">
         <seg>Aller ensuite dans &lt;c0&gt;Paramètres &lt;a1&gt;CAS&lt;/a1&gt;&lt;/c0&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Then, go in &lt;c0&gt;&lt;a1&gt;SSL&lt;/a1&gt; parameters&lt;/c0&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T070729Z" changeid="xavier">
+        <seg>Aller ensuite dans &lt;c0&gt;Paramètres &lt;a1&gt;SSL&lt;/a1&gt;&lt;/c0&gt; :</seg>
       </tuv>
     </tu>
     <tu>
@@ -18904,6 +19178,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can then use this default &lt;a0&gt;SSL&lt;/a0&gt; configuration, for example in the head of /etc/lemonldap-ng/portal-apache2.conf:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T065843Z" changeid="xavier">
+        <seg>Il est possible d'utiliser cette configuration &lt;a0&gt;SSL&lt;/a0&gt; par défaut, par exemple en tête de /etc/lemonldap-ng/portal-apache2.conf :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You can use #PORTAL# in values to replace the portal &lt;a0&gt;URL&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -18948,6 +19230,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074824Z" changeid="xavier">
         <seg>Il faut installer &lt;c0&gt;HttpAuthPlugin.php&lt;/c0&gt; dans le répertoire &lt;c1&gt;extensions/&lt;/c1&gt; de MediaWiki :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You have to install mod_ssl for Apache.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T065557Z" changeid="xavier">
+        <seg>Installer mod_ssl pour Apache.</seg>
       </tuv>
     </tu>
     <tu>
@@ -21052,6 +21342,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://httpd.apache.org/docs/current/mod/mod_ssl.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T063907Z" changeid="xavier">
+        <seg>http://httpd.apache.org/docs/current/mod/mod_ssl.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://jira.ow2.org</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -23030,6 +23328,14 @@ cd lemonldap-ng-*</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T154436Z" changeid="xavier">
         <seg>yum install mod_auth_kerb</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>yum install mod_ssl</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T065605Z" changeid="xavier">
+        <seg>yum install mod_ssl</seg>
       </tuv>
     </tu>
     <tu>
