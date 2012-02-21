@@ -230,6 +230,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>$ENV{REMOTE_ADDR} =~ /^192\.168/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T060310Z" changeid="xavier">
+        <seg>$ENV{REMOTE_ADDR} =~ /^192\.168/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>$_auth</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T185025Z" changeid="xavier">
@@ -930,6 +938,30 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../../media/documentation/manager-saml-idp-attribute.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T060012Z" changeid="xavier">
+        <seg>../../../media/documentation/manager-saml-idp-attribute.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../media/documentation/manager-saml-idp-list.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120220T203402Z" changeid="xavier">
+        <seg>../../../media/documentation/manager-saml-idp-list.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../media/documentation/manager-saml-idp-metadata.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120220T203728Z" changeid="xavier">
+        <seg>../../../media/documentation/manager-saml-idp-metadata.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../../media/documentation/manager-saml-idp-new.png</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120218T221243Z" changeid="xavier">
@@ -1270,6 +1302,22 @@
       </tuv>
       <tuv lang="FR-FR" changedate="20120218T220532Z" changeid="xavier">
         <seg>../../documentation/1.0/samlservice.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.0/samlservice.html#authentication_contexts</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T061802Z" changeid="xavier">
+        <seg>../../documentation/1.0/samlservice.html#authentication_contexts</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.0/samlservice.html#general_options</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T062840Z" changeid="xavier">
+        <seg>../../documentation/1.0/samlservice.html#general_options</seg>
       </tuv>
     </tu>
     <tu>
@@ -3846,6 +3894,30 @@
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T194524Z" changeid="xavier">
         <seg>/_detail/documentation/manager-authchoice.png?id=documentation%3A1.0%3Aauthchoice</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/documentation/manager-saml-idp-attribute.png?id=documentation%3A1.0%3Aauthsaml</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T060007Z" changeid="xavier">
+        <seg>/_detail/documentation/manager-saml-idp-attribute.png?id=documentation%3A1.0%3Aauthsaml</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/documentation/manager-saml-idp-list.png?id=documentation%3A1.0%3Aauthsaml</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120220T203358Z" changeid="xavier">
+        <seg>/_detail/documentation/manager-saml-idp-list.png?id=documentation%3A1.0%3Aauthsaml</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/documentation/manager-saml-idp-metadata.png?id=documentation%3A1.0%3Aauthsaml</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120220T203724Z" changeid="xavier">
+        <seg>/_detail/documentation/manager-saml-idp-metadata.png?id=documentation%3A1.0%3Aauthsaml</seg>
       </tuv>
     </tu>
     <tu>
@@ -6944,6 +7016,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;&lt;a1&gt;SSO&lt;/a1&gt; binding&lt;/s0&gt;: force binding to use for &lt;a2&gt;SSO&lt;/a2&gt; (http-redirect, http-post, etc.)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T063428Z" changeid="xavier">
+        <seg>&lt;s0&gt;Méthode &lt;a1&gt;SSO&lt;/a1&gt;&lt;/s0&gt; : force la méthode à utiliser pour le &lt;a2&gt;SSO&lt;/a2&gt; (http-redirect, http-post, etc.)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;&lt;a1&gt;SSO&lt;/a1&gt; logout&lt;/s0&gt;: the request is not forwarded to application, only the &lt;a2&gt;SSO&lt;/a2&gt; session is closed</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -7086,10 +7166,34 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Adapt session lifetime&lt;/s0&gt;: session lifetime will be adapted from &lt;c1&gt;SessionNotOnOrAfter&lt;/c1&gt; value found in authentication response.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T062529Z" changeid="xavier">
+        <seg>&lt;s0&gt;Adaptation de la durée de vie de la session&lt;/s0&gt; : la durée de vie de la session sera adaptée sur la base de la valeur de &lt;c1&gt;SessionNotOnOrAfter&lt;/c1&gt; dans les réponses d'authentification.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Address&lt;/s0&gt;: set one of Google Apps &lt;a1&gt;URL&lt;/a1&gt; (all Google Apps product a distinct &lt;a2&gt;URL&lt;/a2&gt;), for example &lt;a3&gt;http://www.google.com/calendar/hosted/mydomain.org/render&lt;/a3&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111207T051936Z" changeid="xavier">
         <seg>&lt;s0&gt;Address&lt;/s0&gt; : indiquer une des &lt;a1&gt;URL&lt;/a1&gt; de Google Apps (chaque application Google Apps produit une &lt;a2&gt;URL&lt;/a2&gt; distincte), par exemple &lt;a3&gt;http://www.google.com/calendar/hosted/mydomain.org/render&lt;/a3&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Allow login from IDP&lt;/s0&gt;: allow a user to connect directly from an IDP link.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T061618Z" changeid="xavier">
+        <seg>&lt;s0&gt;Authentification depuis le fournisseur autorisée&lt;/s0&gt; : autorise l'utilisateur à se connecter directement depuis un lien de l'IDP.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Allow proxied authentication&lt;/s0&gt;: allow an authentication response to be issued from another IDP that the one we register (proxy IDP).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T060934Z" changeid="xavier">
+        <seg>&lt;s0&gt;Authentification proxy autorisée&lt;/s0&gt; : autorise qu'une réponse d'authentification soit issue d'un autre IDP que celui enregistré (proxy IDP).</seg>
       </tuv>
     </tu>
     <tu>
@@ -7278,6 +7382,30 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Check &lt;a1&gt;SSO&lt;/a1&gt; message signature&lt;/s0&gt;: check &lt;a2&gt;SSO&lt;/a2&gt; message signature</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T063156Z" changeid="xavier">
+        <seg>&lt;s0&gt;Vérification de la signature des messages &lt;a1&gt;SSO&lt;/a1&gt;&lt;/s0&gt; : vérifie la signature des messages &lt;a2&gt;SSO&lt;/a2&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Check SLO message signature&lt;/s0&gt;: check SLO message signature</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T063313Z" changeid="xavier">
+        <seg>&lt;s0&gt;Vérifie la signature des messages SLO&lt;/s0&gt; : vérifie la signature des messages SLO</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Check conditions&lt;/s0&gt;: set to Off to disable conditions checking on authentication responses.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T063752Z" changeid="xavier">
+        <seg>&lt;s0&gt;Vérifier les conditions&lt;/s0&gt; : active ou désactive, l'examen des conditions dans les réponses d'authentification.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Clément “KPTN” OUDOT&lt;/s0&gt;: developer, graphics, documentation, community management</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -7430,6 +7558,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Encryption mode&lt;/s0&gt;: set the encryption mode for this IDP (None, NameID or Assertion).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T063639Z" changeid="xavier">
+        <seg>&lt;s0&gt;Mode de chiffrement&lt;/s0&gt; : fixe le mode de chiffrement pour cet IDP (None, NameID ou Assertion).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Exceptions&lt;/s0&gt;: allow anonymous access for specific URLs (connectors, etc.)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T171955Z" changeid="xavier">
@@ -7462,10 +7598,42 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Force UTF-8&lt;/s0&gt;: this will force UTF-8 conversion of attributes values collected from IDP.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T062836Z" changeid="xavier">
+        <seg>&lt;s0&gt;Forcer l'UTF-8&lt;/s0&gt; : force la conversion UTF-8 des valeurs d'attributs collectées depuis l'IDP.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Force authentication&lt;/s0&gt;: set ForceAuthn flag in authentication request</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T060603Z" changeid="xavier">
+        <seg>&lt;s0&gt;Authentification forcée&lt;/s0&gt; : positionne le drapeau ForceAuthn dans la requête d'authentification</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Format&lt;/s0&gt; (optional): &lt;a1&gt;SAML&lt;/a1&gt; attribute format.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T060005Z" changeid="xavier">
+        <seg>&lt;s0&gt;Format&lt;/s0&gt; (optionnel) : format de l'attribut &lt;a1&gt;SAML&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;François-Xavier DELTOMBE&lt;/s0&gt;: developer, tester</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T142727Z" changeid="xavier">
         <seg>&lt;s0&gt;François-Xavier DELTOMBE&lt;/s0&gt;: developeur, testeur</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Friendly Name&lt;/s0&gt;: optional, &lt;a1&gt;SAML&lt;/a1&gt; attribute friendly name.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T055942Z" changeid="xavier">
+        <seg>&lt;s0&gt;Nom alternatif&lt;/s0&gt;: optionnel, nom alternatif de l'attribut &lt;a1&gt;SAML&lt;/a1&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -7554,6 +7722,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T194602Z" changeid="xavier">
         <seg>&lt;s0&gt;Nom de clef&lt;/s0&gt; : Texte à afficher sur l'onglet.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Key name&lt;/s0&gt;: name of the key in LemonLDAP::NG session (for example “uid” will then be used as $uid in access rules)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120220T204104Z" changeid="xavier">
+        <seg>&lt;s0&gt;Nom de clef&lt;/s0&gt; : nom de la clef dans la session LemonLDAP::NG (par exemple “uid” équivaut à $uid dans les règles d'accès)</seg>
       </tuv>
     </tu>
     <tu>
@@ -7702,6 +7878,22 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Mandatory&lt;/s0&gt;: if set to On, then session will not open if this attribute is not given by IDP.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T055829Z" changeid="xavier">
+        <seg>&lt;s0&gt;Obligatoire&lt;/s0&gt; : si activé, les sessions ne seront ouvertes que si l'attribut est fourni par l'IDP.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Name&lt;/s0&gt;: &lt;a1&gt;SAML&lt;/a1&gt; attribute name.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T055859Z" changeid="xavier">
+        <seg>&lt;s0&gt;Nom&lt;/s0&gt;: Nom de l'attribut &lt;a1&gt;SAML&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Name&lt;/s0&gt;: internal name</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -7710,10 +7902,26 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;NameID format&lt;/s0&gt;: force NameID format here (email, persistent, transient, etc.).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T060426Z" changeid="xavier">
+        <seg>&lt;s0&gt;Format du NameID&lt;/s0&gt; : force le format du NameID (email, persistent, transient, etc.).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Object class&lt;/s0&gt;: objectClass of the groups (default: groupOfNames).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T114552Z" changeid="xavier">
         <seg>&lt;s0&gt;Classe d'object&lt;/s0&gt;: objectClass du groupe (défaut: groupOfNames).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Passive authentication&lt;/s0&gt;: set IsPassive flag in authentication request</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T060657Z" changeid="xavier">
+        <seg>&lt;s0&gt;Authentification passive&lt;/s0&gt; : positionne le drapeau IsPassive dans la requête d'authentification</seg>
       </tuv>
     </tu>
     <tu>
@@ -7862,6 +8070,22 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Requested authentication context&lt;/s0&gt;: this context is declared in authentication request.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T061850Z" changeid="xavier">
+        <seg>&lt;s0&gt;Contexte d'authentification demandé&lt;/s0&gt; : ce contexte est déclaré dans la requête d'authentification.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Resolution Rule&lt;/s0&gt;: rule that will be applied to preselect an IDP for a user.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T060133Z" changeid="xavier">
+        <seg>&lt;s0&gt;Règle de résolution&lt;/s0&gt; : règle à appliquer pour pré-sélectionner cet IDP.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Response Location&lt;/s0&gt;: Access Point for &lt;a1&gt;SSO&lt;/a1&gt; response.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -7874,6 +8098,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;s0&gt;Response Location&lt;/s0&gt;: Point d'accès pour les réponses SLO.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;SLO binding&lt;/s0&gt;: force binding to use for SLO (http-redirect, http-post, etc.)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T063453Z" changeid="xavier">
+        <seg>&lt;s0&gt;Méthode SLO&lt;/s0&gt; : force la méthode à utiliser pour le SLO (http-redirect, http-post, etc.)</seg>
       </tuv>
     </tu>
     <tu>
@@ -7970,6 +8202,22 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20111217T081210Z" changeid="xavier">
         <seg>&lt;s0&gt;Clef prépartagée&lt;/s0&gt; : correspond au paramètre du cookie dans sympa.conf</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Sign &lt;a1&gt;SSO&lt;/a1&gt; message&lt;/s0&gt;: sign &lt;a2&gt;SSO&lt;/a2&gt; message</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T063107Z" changeid="xavier">
+        <seg>&lt;s0&gt;Signature des messages &lt;a1&gt;SSO&lt;/a1&gt;&lt;/s0&gt; : signe les messages &lt;a2&gt;SSO&lt;/a2&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Sign SLO message&lt;/s0&gt;: sign SLO message</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T063237Z" changeid="xavier">
+        <seg>&lt;s0&gt;Signature des messages SLO&lt;/s0&gt; : signe les messages de déconnexion SLO (single logout)</seg>
       </tuv>
     </tu>
     <tu>
@@ -10428,6 +10676,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Authentication request</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T060323Z" changeid="xavier">
+        <seg>Requête d'authentification</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Authentication table</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T195412Z" changeid="xavier">
@@ -10592,6 +10848,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Bibliothèque Publique d'Information</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Binding</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T063330Z" changeid="xavier">
+        <seg>Méthode</seg>
       </tuv>
     </tu>
     <tu>
@@ -11972,6 +12236,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Exported attributes</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120220T203935Z" changeid="xavier">
+        <seg>Attributs exportés</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Exported variables</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -12124,6 +12396,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>For each attribute, you can set:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120220T203952Z" changeid="xavier">
+        <seg>Pour chaque attribut, on peut indiquer :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>For each binding you can set:</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -12152,6 +12432,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T113257Z" changeid="xavier">
         <seg>Par exemple, pour exporter l'identifiant (&lt;c0&gt;$uid&lt;/c0&gt;) et le mot-de-passe (&lt;c1&gt;$_password&lt;/c1&gt; si &lt;a2&gt;le mot-de-passe est stocké dans la session&lt;/a2&gt;):</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>For example, to preselect this IDP for users coming from 129.168.0.0/16 network:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T060308Z" changeid="xavier">
+        <seg>Par exemple, pour pré-sélectionner cet IDP pour les utilisateurs provenant dui réseau 129.168.0.0/16 :</seg>
       </tuv>
     </tu>
     <tu>
@@ -12908,6 +13196,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If no binding defined, the default binding in IDP metadata will be used.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T063553Z" changeid="xavier">
+        <seg>Si aucune méthode n'est définie, la méthode par défaut des métadatas de l'IDP sera utilisée.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If no encryption keys are defined, signature keys are used for signature and encryption.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -12928,6 +13224,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T114524Z" changeid="xavier">
         <seg>La recherche des groupes est désactivé si cette valeur est vide.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>If no value, will use first NameID Format activated in metadata.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T060518Z" changeid="xavier">
+        <seg>Si aucune valeur n'est indiquée, le premier format de NameID activé dans les métadatas sera utilisé.</seg>
       </tuv>
     </tu>
     <tu>
@@ -12992,6 +13296,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T075007Z" changeid="xavier">
         <seg>Si Mediawiki est protégé par un reverse-proxy &lt;a0&gt;LL::NG&lt;/a0&gt;, &lt;a1&gt;convertir l'en-tête en variable d'environnement REMOTE_USER&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>If you disallow this, you should also disallow direct login form IDP, because proxy restriction is set in authentication requests.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T061136Z" changeid="xavier">
+        <seg>En interdisant ceci, on risque d'interdire aussi les authentification directe des IDP car la restriction est indiquée dans la requête d'authentification.</seg>
       </tuv>
     </tu>
     <tu>
@@ -13220,6 +13532,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>In this case, authentication is not a response to an issued authentication request, and we have less control on conditions.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T061756Z" changeid="xavier">
+        <seg>Dans ce cas, l'authentification n'est pas une réponse à une requête d'authentification ce qui diminue les capacités de contrôle.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>In this case, you can choose a different module to manage &lt;a1&gt;SAML&lt;/a1&gt; sessions.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -13432,6 +13752,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Il gère à la fois les authentifications et les autorisations et fournit des en-têtes HTTP pour la traçabilité.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>It means that if the IDP propose to close session earlier than the default LemonLDAP::NG timeout, the session _utime will be modified so that session is erased at the date indicated by the IDP.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T062750Z" changeid="xavier">
+        <seg>Celà signifie que si l'IDP propose de clore la session au-delà de la durée de vie par défaut dans LemonLDAP::NG, la valeur de _utime sera modifiée afin que la session ne soit effacée qu'au moment indiqué par l'IDP.</seg>
       </tuv>
     </tu>
     <tu>
@@ -14284,6 +14612,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Metadata</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120220T203408Z" changeid="xavier">
+        <seg>Métadata</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Modify the portal virtual host:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T155329Z" changeid="xavier">
@@ -14544,6 +14880,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T192734Z" changeid="xavier">
         <seg>Ajouter ensuite Google Apps comme nouveau fournisseur de service &lt;a0&gt;SAML&lt;/a0&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Now you have access to the IDP parameters list:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120220T203355Z" changeid="xavier">
+        <seg>Il est ensuite possible d'accéder à la liste des paramètre de l'IDP :</seg>
       </tuv>
     </tu>
     <tu>
@@ -14832,6 +15176,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111220T112702Z" changeid="xavier">
         <seg>Système d'exploitation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Options</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T060014Z" changeid="xavier">
+        <seg>Options</seg>
       </tuv>
     </tu>
     <tu>
@@ -16012,6 +16364,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Session</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T062321Z" changeid="xavier">
+        <seg>Session</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Session backend</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -16128,6 +16488,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074534Z" changeid="xavier">
         <seg>Plusieurs extensions permettent de configurer le &lt;a0&gt;SSO&lt;/a0&gt; dans MediaWiki :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Signature</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T062838Z" changeid="xavier">
+        <seg>Signature</seg>
       </tuv>
     </tu>
     <tu>
@@ -17140,6 +17508,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>These options override service signature options (see &lt;a0&gt;SAML service configuration&lt;/a0&gt;).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T063024Z" changeid="xavier">
+        <seg>Ces options surchargent les options de signature du service (voir la &lt;a0&gt;configuration du service SAML&lt;/a0&gt;).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>These parameters are not mandatory to run &lt;a0&gt;SAML&lt;/a0&gt; service, but can help to customize it:</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -17828,6 +18204,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Use with caution.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T063813Z" changeid="xavier">
+        <seg>À utiliser avec précaution.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Use “&lt;a0&gt;LDAP&lt;/a0&gt;” as authentication and userDB backends,</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T095002Z" changeid="xavier">
@@ -18184,6 +18568,22 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>When receiving the request, the real authentication context will be mapped ton an internal authentication level (see &lt;a1&gt;how configure the mapping&lt;/a1&gt;), that you can check to allow or deny session creation.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T062318Z" changeid="xavier">
+        <seg>À la réception de la requête, le contexte d'authentification réel est traduit en un niveau d'authentification interne (voir &lt;a1&gt;comment configurer la translation&lt;/a1&gt;), utilisable pour accorder ou non la création de session.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>When the text is pasted, click on the Apply button to keep the value.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120220T203922Z" changeid="xavier">
+        <seg>Lorsque le texte est collé, cliquer sur le bouton appliquer pour sauver la valeur.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>When using this module, &lt;a0&gt;LL::NG&lt;/a0&gt; portal will be called only if Apache does not return “401 Authentication required”, but this is not the Apache behaviour: if the auth module fails, Apache returns 401.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T150416Z" changeid="xavier">
@@ -18336,6 +18736,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can also copy/paste the metadata: just click on the Edit button.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120220T203826Z" changeid="xavier">
+        <seg>Il est également possible de copier-coller les métadatas : cliquer simplement sur le bouton éditer.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You can also use caFile and caPath parameters.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120101T184733Z" changeid="xavier">
@@ -18372,6 +18780,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Vous pouver définir des clefs pour la signature et le chiffrement des messages &lt;a0&gt;SAML&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can do it either by uploading the file, or get it from IDP metadata &lt;a0&gt;URL&lt;/a0&gt; (this require a network link between your server and the IDP):</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120220T203722Z" changeid="xavier">
+        <seg>Ceci peut être fait soit en téléchargeant le fichier, soit en l'obtenant par l'&lt;a0&gt;URL&lt;/a0&gt; de métadatas de l'IDP (à condition d'avoir un lien réseau entre le serveur et l'IDP):</seg>
       </tuv>
     </tu>
     <tu>
@@ -18520,6 +18936,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You have access to all environment variable, like user &lt;a1&gt;IP&lt;/a1&gt; address.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T060222Z" changeid="xavier">
+        <seg>Toutes les variables d'environnement sont disponibles, telle l'adresse &lt;a1&gt;IP&lt;/a1&gt; de l'utilisateur.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You have to install &lt;c0&gt;HttpAuthPlugin.php&lt;/c0&gt; in the &lt;c1&gt;extensions/&lt;/c1&gt; directory of your MediaWiki installation:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074824Z" changeid="xavier">
@@ -18580,6 +19004,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Vous devriez utilisez les options &lt;a2&gt;securedCookie&lt;/a2&gt; pour éviter le vol de session.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You must register IDP metadata here.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120220T203438Z" changeid="xavier">
+        <seg>Il faut enregistrer les métadatas de l'IDP ici.</seg>
       </tuv>
     </tu>
     <tu>
@@ -20024,6 +20456,30 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T194526Z" changeid="xavier">
         <seg>documentation:manager-authchoice.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:manager-saml-idp-attribute.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T060008Z" changeid="xavier">
+        <seg>documentation:manager-saml-idp-attribute.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:manager-saml-idp-list.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120220T203400Z" changeid="xavier">
+        <seg>documentation:manager-saml-idp-list.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:manager-saml-idp-metadata.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120220T203725Z" changeid="xavier">
+        <seg>documentation:manager-saml-idp-metadata.png</seg>
       </tuv>
     </tu>
     <tu>
