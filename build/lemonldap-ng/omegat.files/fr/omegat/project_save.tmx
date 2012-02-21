@@ -1330,6 +1330,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.0/sqlsessionbackend.html#prepare_the_database</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T071835Z" changeid="xavier">
+        <seg>../../documentation/1.0/sqlsessionbackend.html#prepare_the_database</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.0/writingrulesand_headers.html#headers</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T155834Z" changeid="xavier">
@@ -1342,6 +1350,14 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>../../documentation/1.1/configlocation.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/features.html#session_explorer</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T071615Z" changeid="xavier">
+        <seg>../../documentation/features.html#session_explorer</seg>
       </tuv>
     </tu>
     <tu>
@@ -7374,6 +7390,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;CREATE&lt;/s0&gt; &lt;s1&gt;TABLE&lt;/s1&gt; sessions &lt;s2&gt;(&lt;/s2&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T072036Z" changeid="xavier">
+        <seg>&lt;s0&gt;CREATE&lt;/s0&gt; &lt;s1&gt;TABLE&lt;/s1&gt; sessions &lt;s2&gt;(&lt;/s2&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Cache&lt;/s0&gt;: cache for configuration and sessions</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -9212,6 +9236,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s17&gt;KEY&lt;/s17&gt; uid &lt;s18&gt;(&lt;/s18&gt;uid&lt;s19&gt;)&lt;/s19&gt;&lt;s20&gt;,&lt;/s20&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T072040Z" changeid="xavier">
+        <seg>&lt;s17&gt;KEY&lt;/s17&gt; uid &lt;s18&gt;(&lt;/s18&gt;uid&lt;s19&gt;)&lt;/s19&gt;&lt;s20&gt;,&lt;/s20&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s18&gt;DocumentRoot&lt;/s18&gt; /var/www/html/drupal/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T182221Z" changeid="xavier">
@@ -9402,6 +9434,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s21&gt;KEY&lt;/s21&gt; ipAddr &lt;s22&gt;(&lt;/s22&gt;ipAddr&lt;s23&gt;)&lt;/s23&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T072041Z" changeid="xavier">
+        <seg>&lt;s21&gt;KEY&lt;/s21&gt; ipAddr &lt;s22&gt;(&lt;/s22&gt;ipAddr&lt;s23&gt;)&lt;/s23&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s22&gt;CustomLog&lt;/s22&gt; /var/log/httpd/admindrupal-access.log combined
 &lt;/&lt;s23&gt;VirtualHost&lt;/s23&gt;&gt;</seg>
       </tuv>
@@ -9418,6 +9458,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       <tuv lang="FR-FR" changedate="20120107T150012Z" changeid="xavier">
         <seg>&lt;s22&gt;}&lt;/s22&gt;
 &lt;s23&gt;}&lt;/s23&gt;&lt;s24&gt;,&lt;/s24&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s24&gt;)&lt;/s24&gt;;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T072042Z" changeid="xavier">
+        <seg>&lt;s24&gt;)&lt;/s24&gt;;</seg>
       </tuv>
     </tu>
     <tu>
@@ -10582,6 +10630,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Apache::Session::Browseable::MySQL doesn't use locks so performances are keeped.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T072442Z" changeid="xavier">
+        <seg>Apache::Session::Browseable::MySQL n'utilise pas les locks pour conserver les performances.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Application Programming Interface</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -11042,6 +11098,22 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Corps du message de changement de mot-de-passe</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Browseable session backend</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T071614Z" changeid="xavier">
+        <seg>Backend de session explorable</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Browseable session backend (&lt;a0&gt;Apache::Session::Browseable&lt;/a0&gt;) works exactly like Apache::Session::* corresponding module but add indexes that increase &lt;a1&gt;session explorer&lt;/a1&gt; and &lt;a2&gt;session restrictions&lt;/a2&gt; performances.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T071814Z" changeid="xavier">
+        <seg>Le backend de session explorable (&lt;a0&gt;Apache::Session::Browseable&lt;/a0&gt;) fonctionne exactement comme le module Apache::Session::* correspondant mais ajoute des index qui améliore les performances de l'&lt;a1&gt;explorateur de session&lt;/a1&gt; et les &lt;a2&gt;restrictions de sessions&lt;/a2&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -11798,6 +11870,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>DataSource</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T072232Z" changeid="xavier">
+        <seg>DataSource</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -11818,6 +11898,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T200100Z" changeid="xavier">
         <seg>Database Interface</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Database must be prepared exactly like in &lt;a0&gt;SQL session backend&lt;/a0&gt; except that a field must be added for each data to index.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T072006Z" changeid="xavier">
+        <seg>La base de donnée doit être préparée exactement comme celle du &lt;a0&gt;backend de session SQL&lt;/a0&gt; si ce n'est qu'un champ doit être ajouté pour chaque donnée à indexer.</seg>
       </tuv>
     </tu>
     <tu>
@@ -12374,6 +12462,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Example with MySQL and index set to uid+ipAddr (recommended)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T072035Z" changeid="xavier">
+        <seg>Exemple avec MySQL et l'index mis à uid+ipAddr (recommandé)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Example, if you have “&lt;a0&gt;DBI&lt;/a0&gt;;&lt;a1&gt;LDAP&lt;/a1&gt;” and &lt;a2&gt;DBI&lt;/a2&gt; failed for authentication, Multi will try first to call &lt;a3&gt;LDAP&lt;/a3&gt; as user database.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T145538Z" changeid="xavier">
@@ -12874,6 +12970,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T052000Z" changeid="xavier">
         <seg>Aller dans le manager et :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Go in the Manager and set the session module (for example &lt;a0&gt;Apache::Session::Browseable::MySQL&lt;/a0&gt; for MySQL) in &lt;c1&gt;General parameters&lt;/c1&gt; » &lt;c2&gt;Sessions&lt;/c2&gt; » &lt;c3&gt;Session storage&lt;/c3&gt; » &lt;c4&gt;Apache::Session module&lt;/c4&gt; and add the following parameters (case sensitive):</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T072228Z" changeid="xavier">
+        <seg>Aller dans le Manager et choisir le module de session (par exemple &lt;a0&gt;Apache::Session::Browseable::MySQL&lt;/a0&gt; pour MySQL) dans &lt;c1&gt;Paramètres généraux&lt;/c1&gt; » &lt;c2&gt;Sessions&lt;/c2&gt; » &lt;c3&gt;Stockage des sessions&lt;/c3&gt; » &lt;c4&gt;Module Apache::Session&lt;/c4&gt; et ajouter les paramètres suivants (sensible à la casse):</seg>
       </tuv>
     </tu>
     <tu>
@@ -13818,6 +13922,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T194952Z" changeid="xavier">
         <seg>Ainsi, tout &lt;a0&gt;driver Perl DBD&lt;/a0&gt; peut être utilisé.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Index</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T072415Z" changeid="xavier">
+        <seg>Index</seg>
       </tuv>
     </tu>
     <tu>
@@ -15536,8 +15648,8 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       <tuv lang="EN-US">
         <seg>Password</seg>
       </tuv>
-      <tuv lang="FR-FR">
-        <seg>Mots-de-passe</seg>
+      <tuv lang="FR-FR" changedate="20120221T072408Z" changeid="xavier">
+        <seg>Password</seg>
       </tuv>
     </tu>
     <tu>
@@ -15850,6 +15962,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Practical Extraction and Report Language</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Prepare database</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T071833Z" changeid="xavier">
+        <seg>Preparer la base de données</seg>
       </tuv>
     </tu>
     <tu>
@@ -16226,6 +16346,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Restreint /admin au groupe des administrateurs</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Restrict network access to the database.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T072504Z" changeid="xavier">
+        <seg>Restreindre l'accès réseau à la base de données.</seg>
       </tuv>
     </tu>
     <tu>
@@ -17286,6 +17414,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The &lt;a0&gt;DBI&lt;/a0&gt; string</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T072311Z" changeid="xavier">
+        <seg>La chaîne &lt;a0&gt;DBI&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The &lt;a0&gt;HTTP&lt;/a0&gt; Auth extension is presented here: &lt;a1&gt;http://www.mediawiki.org/wiki/Extension:HttpAuth&lt;/a1&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074727Z" changeid="xavier">
@@ -17386,6 +17522,22 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Le domaine commun est utilisé par le &lt;a0&gt;SP SAML&lt;/a0&gt; pour trouver le fournisseur d'identité de l'utilisateur et par l'&lt;a1&gt;IdP SAML&lt;/a1&gt; pour s'enregistrer dans la liste des IDP.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The database password</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T072400Z" changeid="xavier">
+        <seg>Le mot de passe de la base de données</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The database username</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T072337Z" changeid="xavier">
+        <seg>Le login de la base de données</seg>
       </tuv>
     </tu>
     <tu>
@@ -18646,6 +18798,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>UserName</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T072314Z" changeid="xavier">
+        <seg>UserName</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>UserName   -&gt; ...</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -19022,6 +19182,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120101T184733Z" changeid="xavier">
         <seg>On peut également utiliser les paramètres caFile et caPath.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can also use different user/password for your servers by overriding parameters &lt;c0&gt;globalStorage&lt;/c0&gt; and &lt;c1&gt;globalStorageOptions&lt;/c1&gt; in lemonldap-ng.ini file.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T072613Z" changeid="xavier">
+        <seg>On peut utiliser différent login/mot-de-passe pour les serveurs en surchargeant les paramètres &lt;c0&gt;globalStorage&lt;/c0&gt; et &lt;c1&gt;globalStorageOptions&lt;/c1&gt; dans le fichier lemonldap-ng.ini.</seg>
       </tuv>
     </tu>
     <tu>
@@ -19570,6 +19738,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>a_session blob&lt;s10&gt;,&lt;/s10&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T072038Z" changeid="xavier">
+        <seg>a_session blob&lt;s10&gt;,&lt;/s10&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>accept (or whatever you want)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T172020Z" changeid="xavier">
@@ -19912,6 +20088,14 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>css/screen.css</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>dbi:mysql:dbname=sessions</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T072312Z" changeid="xavier">
+        <seg>dbi:mysql:dbname=sessions</seg>
       </tuv>
     </tu>
     <tu>
@@ -20450,6 +20634,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>documentation:1.0:soapsessionbackend</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.0:sqlsessionbackend</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T071836Z" changeid="xavier">
+        <seg>documentation:1.0:sqlsessionbackend</seg>
       </tuv>
     </tu>
     <tu>
@@ -21526,6 +21718,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://search.cpan.org/perldoc?Apache::Session::Browseable::MySQL</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T072044Z" changeid="xavier">
+        <seg>http://search.cpan.org/perldoc?Apache::Session::Browseable::MySQL</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://search.cpan.org/perldoc?Apache::Session::Flex</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -21538,6 +21738,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>http://search.cpan.org/perldoc?Apache::Session::Redis</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://search.cpan.org/perldoc?DBI</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T072236Z" changeid="xavier">
+        <seg>http://search.cpan.org/perldoc?DBI</seg>
       </tuv>
     </tu>
     <tu>
@@ -22342,6 +22550,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>id char&lt;s3&gt;(&lt;/s3&gt;32&lt;s4&gt;)&lt;/s4&gt; &lt;s5&gt;NOT&lt;/s5&gt; &lt;s6&gt;NULL&lt;/s6&gt; &lt;s7&gt;PRIMARY&lt;/s7&gt; &lt;s8&gt;KEY&lt;/s8&gt;&lt;s9&gt;,&lt;/s9&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T072037Z" changeid="xavier">
+        <seg>id char&lt;s3&gt;(&lt;/s3&gt;32&lt;s4&gt;)&lt;/s4&gt; &lt;s5&gt;NOT&lt;/s5&gt; &lt;s6&gt;NULL&lt;/s6&gt; &lt;s7&gt;PRIMARY&lt;/s7&gt; &lt;s8&gt;KEY&lt;/s8&gt;&lt;s9&gt;,&lt;/s9&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>import your own private and public keys (&lt;c0&gt;Load from a file&lt;/c0&gt; input)</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -22378,6 +22594,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111217T081457Z" changeid="xavier">
         <seg>internal_email_by_netid    1</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>ipAddr varchar&lt;s14&gt;(&lt;/s14&gt;15&lt;s15&gt;)&lt;/s15&gt;&lt;s16&gt;,&lt;/s16&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T072039Z" changeid="xavier">
+        <seg>ipAddr varchar&lt;s14&gt;(&lt;/s14&gt;15&lt;s15&gt;)&lt;/s15&gt;&lt;s16&gt;,&lt;/s16&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -22540,6 +22764,14 @@ kinit -k -t /etc/lemonldap-ng/auth.keytab HTTP/auth.example.com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>lemonldapng</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T072340Z" changeid="xavier">
+        <seg>lemonldapng</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>login</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T195413Z" changeid="xavier">
@@ -22698,6 +22930,14 @@ make test</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T145959Z" changeid="xavier">
         <seg>multi &lt;s0&gt;=&gt;&lt;/s0&gt; &lt;s1&gt;{&lt;/s1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>mysuperpassword</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T072414Z" changeid="xavier">
+        <seg>mysuperpassword</seg>
       </tuv>
     </tu>
     <tu>
@@ -23224,6 +23464,22 @@ cd lemonldap-ng-*</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>tree_light.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>uid ipAddr</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T072418Z" changeid="xavier">
+        <seg>uid ipAddr</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>uid varchar&lt;s11&gt;(&lt;/s11&gt;255&lt;s12&gt;)&lt;/s12&gt;&lt;s13&gt;,&lt;/s13&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T072039Z" changeid="xavier">
+        <seg>uid varchar&lt;s11&gt;(&lt;/s11&gt;255&lt;s12&gt;)&lt;/s12&gt;&lt;s13&gt;,&lt;/s13&gt;</seg>
       </tuv>
     </tu>
     <tu>
