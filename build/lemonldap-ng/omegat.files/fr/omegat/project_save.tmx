@@ -1370,6 +1370,22 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/latest/ssocookie.html#sso_cookie</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120222T125711Z" changeid="xavier">
+        <seg>../../documentation/latest/ssocookie.html#sso_cookie</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/presentation.html#login</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120222T125713Z" changeid="xavier">
+        <seg>../../documentation/presentation.html#login</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../media/documentation/lemonldap-ng-architecture.png</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -7172,6 +7188,16 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;&lt;s1&gt;[&lt;/s1&gt;all&lt;s2&gt;]&lt;/s2&gt;&lt;/s0&gt;
+&lt;s3&gt;cda&lt;/s3&gt; &lt;s4&gt;=&lt;/s4&gt;&lt;s5&gt; 1&lt;/s5&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120222T130105Z" changeid="xavier">
+        <seg>&lt;s0&gt;&lt;s1&gt;[&lt;/s1&gt;all&lt;s2&gt;]&lt;/s2&gt;&lt;/s0&gt;
+&lt;s3&gt;cda&lt;/s3&gt; &lt;s4&gt;=&lt;/s4&gt;&lt;s5&gt; 1&lt;/s5&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;&lt;s1&gt;[&lt;/s1&gt;portal&lt;s2&gt;]&lt;/s2&gt;&lt;/s0&gt;
 &lt;s3&gt;multi&lt;/s3&gt; &lt;s4&gt;=&lt;/s4&gt;&lt;s5&gt; &lt;s6&gt;{&lt;/s6&gt;'LDAP#Openldap'&lt;s7&gt;=&lt;/s7&gt;&gt;&lt;s8&gt;{&lt;/s8&gt;ldapServer&lt;s9&gt;=&lt;/s9&gt;&gt;'ldap1.example.com',LDAPFilter&lt;s10&gt;=&lt;/s10&gt;&gt;'&lt;s11&gt;(&lt;/s11&gt;uid&lt;s12&gt;=&lt;/s12&gt;$user&lt;s13&gt;)&lt;/s13&gt;'&lt;s14&gt;}&lt;/s14&gt;,'LDAP#ActiveDirectory'&lt;s15&gt;=&lt;/s15&gt;&gt;&lt;s16&gt;{&lt;/s16&gt;ldapServer&lt;s17&gt;=&lt;/s17&gt;&gt;'ldaps://ad.example.com',LDAPFilter&lt;s18&gt;=&lt;/s18&gt;&gt;'&lt;s19&gt;(&lt;/s19&gt;&amp;&lt;s20&gt;(&lt;/s20&gt;sAMAccountName&lt;s21&gt;=&lt;/s21&gt;$user&lt;s22&gt;)&lt;/s22&gt;&lt;s23&gt;(&lt;/s23&gt;objectClass&lt;s24&gt;=&lt;/s24&gt;person&lt;s25&gt;)&lt;/s25&gt;&lt;s26&gt;)&lt;/s26&gt;'&lt;s27&gt;}&lt;/s27&gt;&lt;s28&gt;}&lt;/s28&gt;&lt;/s5&gt;</seg>
       </tuv>
@@ -12966,6 +12992,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Go in Manager, &lt;c0&gt;General Parameters&lt;/c0&gt; » &lt;c1&gt;Cookies&lt;/c1&gt; » &lt;c2&gt;Multiple domains&lt;/c2&gt; and set to &lt;c3&gt;On&lt;/c3&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120222T125912Z" changeid="xavier">
+        <seg>Aller dans le manager, &lt;c1&gt;Paramètres généraux&lt;/c1&gt; » &lt;c2&gt;Cookies&lt;/c2&gt; » &lt;c3&gt;Domaines multiples&lt;/c3&gt; et sélectioonner &quot;activer&quot;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Go in Manager, and:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T052000Z" changeid="xavier">
@@ -18430,6 +18464,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>To use this feature only locally, edit &lt;c0&gt;lemonldap-ng.ini&lt;/c0&gt; in section [all]:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120222T125946Z" changeid="xavier">
+        <seg>Pour utiliser cette fonctionnalité seulement localement, éditer &lt;c0&gt;lemonldap-ng.ini&lt;/c0&gt; dans la section [all]:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>To work with &lt;a0&gt;LL::NG&lt;/a0&gt; it requires:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T182425Z" changeid="xavier">
@@ -18722,6 +18764,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Champ de session stockant le nom d'utilisateur</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>User owns &lt;a0&gt;SSO cookies&lt;/a0&gt; on the main domain (see &lt;a1&gt;Login kinematics&lt;/a1&gt;)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120222T125811Z" changeid="xavier">
+        <seg>Les utilisateurs possèdent des &lt;a0&gt;cookies SSO&lt;/a0&gt; dans le domaine principal (voir la &lt;a1&gt;cinématique de connexion&lt;/a1&gt;)</seg>
       </tuv>
     </tu>
     <tu>
