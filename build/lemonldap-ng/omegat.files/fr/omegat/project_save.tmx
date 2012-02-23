@@ -358,6 +358,16 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>(&amp;(sAMAccountName=$user)(objectClass=person))
+(&amp;(mail=$mail)(objectClass=person))</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120223T074816Z" changeid="guimard">
+        <seg>(&amp;(sAMAccountName=$user)(objectClass=person))
+(&amp;(mail=$mail)(objectClass=person))</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>----&lt;/s156&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112332Z" changeid="xavier">
@@ -1350,6 +1360,14 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>../../documentation/1.1/configlocation.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.1/exportedvars.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120223T074818Z" changeid="guimard">
+        <seg>../../documentation/1.1/exportedvars.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -11640,6 +11658,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Configure authentication filter and mail filter &lt;e0&gt;(“General Parameters » Authentication modules » &lt;a1&gt;LDAP&lt;/a1&gt; parameters » Filters”)&lt;/e0&gt; with:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120223T074814Z" changeid="guimard">
+        <seg>Configurer le filtre d'authentification et le filtre mail &lt;e0&gt;(“Paramètres généraux » Modules d'authentication » Paramètres &lt;a1&gt;LDAP&lt;/a1&gt; » Filtres”)&lt;/e0&gt; avec :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Configure phpLDAPadmin virtual host like other &lt;a0&gt;protected virtual host&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T173752Z" changeid="xavier">
@@ -20716,6 +20742,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>documentation:1.1:configlocation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.1:exportedvars</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120223T074826Z" changeid="guimard">
+        <seg>documentation:1.1:exportedvars</seg>
       </tuv>
     </tu>
     <tu>
