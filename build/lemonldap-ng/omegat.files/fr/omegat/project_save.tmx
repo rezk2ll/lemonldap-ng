@@ -1244,6 +1244,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.0/fileconfbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120223T125359Z" changeid="xavier">
+        <seg>../../documentation/1.0/fileconfbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.0/idpcas.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T155607Z" changeid="xavier">
@@ -1264,6 +1272,14 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>../../documentation/1.0/idpsaml.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.0/ldapconfbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120223T125401Z" changeid="xavier">
+        <seg>../../documentation/1.0/ldapconfbackend.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -1332,10 +1348,26 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.0/soapconfbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120223T125403Z" changeid="xavier">
+        <seg>../../documentation/1.0/soapconfbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.0/soapsessionbackend.html</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>../../documentation/1.0/soapsessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.0/sqlconfbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120223T125358Z" changeid="xavier">
+        <seg>../../documentation/1.0/sqlconfbackend.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -7578,6 +7610,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Current&lt;/s0&gt;: to extract all configuration history</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120223T123805Z" changeid="xavier">
+        <seg>&lt;s0&gt;Current&lt;/s0&gt; : pour extraire tout l'historique de la configuration</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Default filter&lt;/s0&gt;: default &lt;a1&gt;LDAP&lt;/a1&gt; fitler for searches, should not be modified.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T114243Z" changeid="xavier">
@@ -8032,6 +8072,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       <tuv lang="FR-FR" changedate="20120221T070146Z" changeid="xavier">
         <seg>&lt;s0&gt;NameVirtualHost&lt;/s0&gt; *:80
 &lt;s1&gt;NameVirtualHost&lt;/s1&gt; *:&lt;s2&gt;443&lt;/s2&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;New&lt;/s0&gt;: to write all configuration history</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120223T123827Z" changeid="xavier">
+        <seg>&lt;s0&gt;New&lt;/s0&gt; : pour écrire l'historique de la configuration</seg>
       </tuv>
     </tu>
     <tu>
@@ -11714,6 +11762,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Configure your new backend (create &lt;a0&gt;SQL&lt;/a0&gt; database,…)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120223T124608Z" changeid="xavier">
+        <seg>Configurer le nouveau backend (creer la base de données &lt;a0&gt;SQL&lt;/a0&gt;,…)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Configure your tomcat home in &lt;c0&gt;build.properties&lt;/c0&gt; files.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T191532Z" changeid="xavier">
@@ -12182,6 +12238,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Documentation for latest stable version</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Documentation is available for configuration backends :</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120223T125356Z" changeid="xavier">
+        <seg>Cette documentation est valable pour les backends de configuration :</seg>
       </tuv>
     </tu>
     <tu>
@@ -12662,6 +12726,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Paquets RPM Fedora11</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>File</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120223T125400Z" changeid="xavier">
+        <seg>File</seg>
       </tuv>
     </tu>
     <tu>
@@ -13426,6 +13498,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>How to change configuration backend</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120222T130207Z" changeid="xavier">
+        <seg>Comment changer le backend de configuration</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>How to choose?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111217T080702Z" changeid="xavier">
@@ -14042,6 +14122,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Install the new lemonldap-ng.ini file in all &lt;a0&gt;LL::NG&lt;/a0&gt; components</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120223T125257Z" changeid="xavier">
+        <seg>Installer le nouveau fichier lemonldap-ng.ini dans tous les serveurs &lt;a0&gt;LL::NG&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Installation</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -14158,6 +14246,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Il est recommendé d'utiliser ModPerl::Registry au lieu d'utiliser le dispositif &quot;cgi-script&quot; tel qu'indiqué dans les fichiers de configuration d'Apache proposés en exemple (portal-apache2.conf):</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>It is set in LemonLDAP::NG utilities directory (&lt;c0&gt;convertConfig&lt;/c0&gt;).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120223T123617Z" changeid="xavier">
+        <seg>Il se traouve dans le répertoire des utilitaires LemonLDAP::NG (&lt;c0&gt;convertConfig&lt;/c0&gt;).</seg>
       </tuv>
     </tu>
     <tu>
@@ -14474,6 +14570,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Launch that:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120223T124806Z" changeid="xavier">
+        <seg>Lancer ceci :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Leave blank to deactivate the feature.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -14610,6 +14714,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>LemonLDAP::NG provides a script to change configuration backend easily keeping history.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120223T123538Z" changeid="xavier">
+        <seg>LemonLDAP::NG fournit un script pour changer aisément de backend de configuration en conservant l'historique.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>LemonLDAP::NG wiki uses Dokuwiki!</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T115006Z" changeid="xavier">
@@ -14654,6 +14766,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Lemonldap::NG::Portal::SharedConf-&gt;compile(</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Let's go</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120223T123835Z" changeid="xavier">
+        <seg>On y va</seg>
       </tuv>
     </tu>
     <tu>
@@ -16034,6 +16154,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Prepare your new lemonldap-ng.ini file</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120223T124544Z" changeid="xavier">
+        <seg>Preparer le nouveau lemonldap-ng.ini file</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Prerequisites</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -16402,6 +16530,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Restart all your Apache servers</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120223T125316Z" changeid="xavier">
+        <seg>Redémarrer tous vos serveurs Apache</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Restrict /admin to administrators group</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -16550,6 +16686,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T195342Z" changeid="xavier">
         <seg>SHA1</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>SOAP proxy mechanism</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120223T125407Z" changeid="xavier">
+        <seg>SOAP proxy mechanism</seg>
       </tuv>
     </tu>
     <tu>
@@ -16758,6 +16902,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Reportez-vous à la &lt;a2&gt;FAQ Twitter&lt;/a2&gt; pour en savoir plus.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>See also</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120223T125321Z" changeid="xavier">
+        <seg>Voir aussi</seg>
       </tuv>
     </tu>
     <tu>
@@ -17494,6 +17646,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T113531Z" changeid="xavier">
         <seg>La fonction &lt;c0&gt;basic&lt;/c0&gt; force la conversion des caractères UTF-8 en &lt;a1&gt;ISO&lt;/a1&gt;-8859-1, qui peut être accepté par la plupart des serveurs &lt;a2&gt;HTTP&lt;/a2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The &lt;c0&gt;convertConfig&lt;/c0&gt; utility reads 2 &lt;a1&gt;LL::NG&lt;/a1&gt; configuration files (&lt;c2&gt;lemonldap-ng.ini&lt;/c2&gt;):</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120223T123653Z" changeid="xavier">
+        <seg>L'utilitaire &lt;c0&gt;convertConfig&lt;/c0&gt; lit 2 fichiers de configuration &lt;a1&gt;LL::NG&lt;/a1&gt; (&lt;c2&gt;lemonldap-ng.ini&lt;/c2&gt;) :</seg>
       </tuv>
     </tu>
     <tu>
@@ -20094,6 +20254,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>convertConfig --current=/etc/lemonldap-ng/lemonldap-ng.ini --new=/new/lemonldap-ng.ini</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120223T124808Z" changeid="xavier">
+        <seg>convertConfig --current=/etc/lemonldap-ng/lemonldap-ng.ini --new=/new/lemonldap-ng.ini</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>coudot</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T195414Z" changeid="xavier">
@@ -20610,6 +20778,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.0:fileconfbackend</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120223T125400Z" changeid="xavier">
+        <seg>documentation:1.0:fileconfbackend</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.0:header_remote_user_conversion</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T115433Z" changeid="xavier">
@@ -20638,6 +20814,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>documentation:1.0:idpsaml</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.0:ldapconfbackend</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120223T125402Z" changeid="xavier">
+        <seg>documentation:1.0:ldapconfbackend</seg>
       </tuv>
     </tu>
     <tu>
@@ -20706,10 +20890,26 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.0:soapconfbackend</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120223T125404Z" changeid="xavier">
+        <seg>documentation:1.0:soapconfbackend</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.0:soapsessionbackend</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>documentation:1.0:soapsessionbackend</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.0:sqlconfbackend</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120223T125359Z" changeid="xavier">
+        <seg>documentation:1.0:sqlconfbackend</seg>
       </tuv>
     </tu>
     <tu>
