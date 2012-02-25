@@ -16,6 +16,7 @@ use Tie::File;
 my $offline_script_url =
   'http://lemonldap-ng.org/lib/plugins/offline/create.php';
 my $offline_zip_url = 'http://lemonldap-ng.org/lib/plugins/offline/offline.zip';
+my $version = "1.2";
 my $rc;
 
 # Launch remote offline script
@@ -33,6 +34,11 @@ system("rm -f offline.zip");
 # Move offline contents in current directory
 system("cp -rf offline/* .");
 system("rm -rf offline");
+
+# Keep only the latest
+system("rm -rf pages/documentation/latest pages/wiki pages/playground");
+system("mv pages/documentation/$version pages/documentation/latest");
+system("rm -rf pages/documentation/1*");
 
 # Correct some bad media links
 system('find . -name \*.html -exec sed -i "s#/_media#../media#g" {} \;');
