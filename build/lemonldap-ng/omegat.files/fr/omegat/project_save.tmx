@@ -94,6 +94,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>#functions_list</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T121405Z" changeid="xavier">
+        <seg>#functions_list</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>#g</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -1204,6 +1212,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.0/authldap.html#schema_extension</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T122030Z" changeid="xavier">
+        <seg>../../documentation/1.0/authldap.html#schema_extension</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.0/authmulti.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T184531Z" changeid="xavier">
@@ -1256,6 +1272,14 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>../../documentation/1.0/configlocation.html#portal</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.0/customfunctions.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T121250Z" changeid="xavier">
+        <seg>../../documentation/1.0/customfunctions.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -4660,6 +4684,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T122028Z" changeid="xavier">
+        <seg>000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>0; URL=../../</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -4720,6 +4752,14 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>2 types de fichiers peuvent être traduits :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>20090301000000Z</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T182720Z" changeid="xavier">
+        <seg>20090301000000Z</seg>
       </tuv>
     </tu>
     <tu>
@@ -9486,6 +9526,30 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;default_access&lt;/s0&gt; (optional): what result to return if &lt;s1&gt;logon_hours&lt;/s1&gt; is empty</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T181615Z" changeid="xavier">
+        <seg>&lt;s0&gt;default_access&lt;/s0&gt; (optionnel) : resultat à retourner si &lt;s1&gt;logon_hours&lt;/s1&gt; est vide</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;default_access&lt;/s0&gt; (optional): what result to return if &lt;s1&gt;start&lt;/s1&gt; and &lt;s2&gt;end&lt;/s2&gt; are empty</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T182814Z" changeid="xavier">
+        <seg>&lt;s0&gt;default_access&lt;/s0&gt; (optionnel) : resultat à retourner si &lt;s1&gt;start&lt;/s1&gt; et &lt;s2&gt;end&lt;/s2&gt; sont vides</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;end&lt;/s0&gt;: End date (GMT)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T182738Z" changeid="xavier">
+        <seg>&lt;s0&gt;end&lt;/s0&gt;: date de fin (GMT)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;handler-apache2.conf&lt;/s0&gt; : Handler declaration, reload and sample virtual hosts</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T144438Z" changeid="xavier">
@@ -9518,6 +9582,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
         <seg>&lt;s0&gt;include&lt;/s0&gt; /usr/local/lemonldap-ng/etc/portal-apache2.conf
 &lt;s1&gt;include&lt;/s1&gt; /usr/local/lemonldap-ng/etc/handler-apache2.conf
 &lt;s2&gt;include&lt;/s2&gt; /usr/local/lemonldap-ng/etc/manager-apache2.conf</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;logon_hours&lt;/s0&gt;: string representing allowed logon hours (GMT)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T181507Z" changeid="xavier">
+        <seg>&lt;s0&gt;logon_hours&lt;/s0&gt; : chaîne représentant les heures autorisées (GMT)</seg>
       </tuv>
     </tu>
     <tu>
@@ -9608,6 +9680,30 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T190923Z" changeid="xavier">
         <seg>&lt;s0&gt;roleSeparator&lt;/s0&gt; (optionnel) : séparateur des valeurs de rôle.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;start&lt;/s0&gt;: Start date (GMT)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T182732Z" changeid="xavier">
+        <seg>&lt;s0&gt;start&lt;/s0&gt; : date de début (GMT)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;syntax&lt;/s0&gt; (optional): &lt;c1&gt;hexadecimal&lt;/c1&gt; (default) or &lt;c2&gt;octetstring&lt;/c2&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T181528Z" changeid="xavier">
+        <seg>&lt;s0&gt;syntax&lt;/s0&gt; (optionnel) : &lt;c1&gt;hexadecimal&lt;/c1&gt; (défaut) ou &lt;c2&gt;octetstring&lt;/c2&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;time_correction&lt;/s0&gt; (optional): hours to add or to subtract</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T181549Z" changeid="xavier">
+        <seg>&lt;s0&gt;time_correction&lt;/s0&gt; (optionnel) : heures à ajouter ou soustraire</seg>
       </tuv>
     </tu>
     <tu>
@@ -11688,6 +11784,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>A day has 24 hours, and a week 7 days, so the value contains 168 bits, converted into 42 hexadecimal characters.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T121953Z" changeid="xavier">
+        <seg>Un jour a 24 heures et une semaine 7 jours, donc la valeur contient 168 bits, convertie en 42 caractères hexadécimaux.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>A little macro:</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -11972,6 +12076,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T114949Z" changeid="xavier">
         <seg>Toutes les données sont stockées dans des fichiers texte, aucune base de données n'est nécessaire.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>All environment variables (trough %ENV)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T121404Z" changeid="xavier">
+        <seg>Toutes les variables d'environnement (via %ENV)</seg>
       </tuv>
     </tu>
     <tu>
@@ -12920,6 +13032,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>By default, the allowed days and hours is an hexadecimal value, representing each hour of the week.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T121854Z" changeid="xavier">
+        <seg>Par défaut, les jours et heures autorisés days and hours sont une valeur hexadécimale, représentant chaque heure de la semaine.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>By default, the main session module is used to store &lt;a0&gt;SAML&lt;/a0&gt; temporary data (like relay-states), but &lt;a1&gt;SAML&lt;/a1&gt; sessions need to use a session module compatible with the &lt;a2&gt;sessions restrictions feature&lt;/a2&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -13548,6 +13668,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Copiez la fonction en en zz &lt;e1&gt;(où zz est votre code international, exemple: “fr” pour le français)&lt;/e1&gt; et traduisez ensuite les messages.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Core &lt;a0&gt;Perl&lt;/a0&gt; subroutines (split, pop, map, etc.)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T121318Z" changeid="xavier">
+        <seg>Fonctions standards de &lt;a0&gt;Perl&lt;/a0&gt; (split, pop, map, etc...)</seg>
       </tuv>
     </tu>
     <tu>
@@ -14656,6 +14784,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>For example, for a full access, excepted week-end:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T122027Z" changeid="xavier">
+        <seg>Par exemple, pour un accès total excepté le week-end:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>For example, if you are using &lt;a0&gt;AD as authentication backend&lt;/a0&gt;, you can use sAMAccountName for the Windows NameID format.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -14776,6 +14912,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Form replay data</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T121052Z" changeid="xavier">
+        <seg>les données à rejouer dans les formulaires</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Forward &lt;a0&gt;SSO&lt;/a0&gt; trough &lt;a1&gt;HTTP&lt;/a1&gt; Auth-Basic or form replay</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -14804,6 +14948,22 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Nom complet</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Functions list</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T121556Z" changeid="xavier">
+        <seg>Liste des fonctions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Functions parameters:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T181441Z" changeid="xavier">
+        <seg>Paramètres de la fonction :</seg>
       </tuv>
     </tu>
     <tu>
@@ -15640,6 +15800,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If you manage different timezones, you have to take the jetlag into account in ssoLogonHours values, or use the $_timezone parameter.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T181905Z" changeid="xavier">
+        <seg>Si plusieurs fuseaux sont utilisés, le jetlag doit être introduit dans le compte dans la valeur ssoLogonHours, ou utiliser le paramètre $_timezone.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If you modify &lt;c0&gt;/saml/metadata&lt;/c0&gt; suffix you have to change corresponding Apache rewrite rule.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -15668,6 +15836,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120101T184710Z" changeid="xavier">
         <seg>En utilisant TLS, il est possible d'utiliser toutes les options de la fonction start_tls() &lt;a0&gt;Net::LDAP&lt;/a0&gt; telle &lt;c1&gt;ldap+tls://server/verify=none&amp;capath=/etc/ssl&lt;/c1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>If you use the binary value (Active Directory), use this:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T181711Z" changeid="xavier">
+        <seg>Si une valeur binaire est utilisée (Active Directory) :</seg>
       </tuv>
     </tu>
     <tu>
@@ -15968,10 +16144,26 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Indeed, by default, users without logon hours values are rejected.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T182319Z" changeid="xavier">
+        <seg>Sinon, par défaut, les utilisateurs sans créneau horaire de connexion sont rejetés.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Index</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T072415Z" changeid="xavier">
         <seg>Index</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Inside this jail, you can access to:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T121308Z" changeid="xavier">
+        <seg>Dans cette cage, on peut accéder aux éléments suivants :</seg>
       </tuv>
     </tu>
     <tu>
@@ -16088,6 +16280,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Issuer databases use rules</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T121145Z" changeid="xavier">
+        <seg>les règles d'utilisation des bases de données des fournisseur d'identité</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Issuer rewrite rules (requires &lt;c0&gt;mod_rewrite&lt;/c0&gt;):</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T064327Z" changeid="xavier">
@@ -16200,6 +16400,22 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>It returns 1 if this match, 0 else.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T121730Z" changeid="xavier">
+        <seg>Elle retourne 1 si c'est bon, 0 sinon.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>It should works on every browser:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T182015Z" changeid="xavier">
+        <seg>Ça doit marcher avec tous les navigateurs :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>It simplifies the build of a protected area with a few changes in the application.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -16212,6 +16428,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Il vous sera demandé à la génération de la clef ou vous pouvez l'entrer dans le champ &lt;c0&gt;Mot-de-passe de la clef privée&lt;/c0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>It will force conversion from UTF-8 to &lt;a3&gt;ISO&lt;/a3&gt;-8859-1 of user and password data.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T183006Z" changeid="xavier">
+        <seg>Elle force la conversion de UTF-8 en &lt;a3&gt;ISO&lt;/a3&gt;-8859-1 du nom de compte et du mot-de-passe.</seg>
       </tuv>
     </tu>
     <tu>
@@ -16992,6 +17216,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Macros</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T121053Z" changeid="xavier">
+        <seg>Macros</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Macros and groups</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -17220,6 +17452,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T153535Z" changeid="xavier">
         <seg>Mediawiki</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Menu modules activation rules</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T121034Z" changeid="xavier">
+        <seg>les règles d'activation des modules du menu</seg>
       </tuv>
     </tu>
     <tu>
@@ -19378,6 +19618,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Simple usage example:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T181626Z" changeid="xavier">
+        <seg>Exemple d'usage simple :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Since MySQL does not have always transaction feature, Apache::Session::MySQL has been designed to use MySQL locks.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -19818,6 +20066,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Sunday is the first day.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T122004Z" changeid="xavier">
+        <seg>Dimanche est le premier jour.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Sympa</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111217T080247Z" changeid="xavier">
@@ -19942,6 +20198,30 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074727Z" changeid="xavier">
         <seg>L'extension &lt;a0&gt;HTTP&lt;/a0&gt; Auth est presentée ici : &lt;a1&gt;http://www.mediawiki.org/wiki/Extension:HttpAuth&lt;/a1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The &lt;a0&gt;LDAP schema extension&lt;/a0&gt; can be used to store these values</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T182509Z" changeid="xavier">
+        <seg>L'&lt;a0&gt;extension de schéma LDAP&lt;/a0&gt; peut être utilisée pour stocker ces valeurs.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The &lt;a0&gt;LDAP schema extension&lt;/a0&gt; can be used to store this value.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T122156Z" changeid="xavier">
+        <seg>L'&lt;a0&gt;extension de schéma LDAP&lt;/a0&gt; peut être utilisée pour stocker cette valeur.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The &lt;a0&gt;encode_base64&lt;/a0&gt; subroutine</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T121332Z" changeid="xavier">
+        <seg>Fonction &lt;a0&gt;encode_base64&lt;/a0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -20102,6 +20382,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T072337Z" changeid="xavier">
         <seg>Le login de la base de données</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The date format is the &lt;a0&gt;LDAP&lt;/a0&gt; date syntax, for example for the 1st March 2009:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T182717Z" changeid="xavier">
+        <seg>Le format de date est celui de la syntaxe des dates &lt;a0&gt;LDAP&lt;/a0&gt;, par exemple pour le 1er Mars 2009 :</seg>
       </tuv>
     </tu>
     <tu>
@@ -20754,10 +21042,58 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>This function builds the &lt;c0&gt;Authorization&lt;/c0&gt; &lt;a1&gt;HTTP&lt;/a1&gt; header used in &lt;a2&gt;HTTP Basic authentication scheme&lt;/a2&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T182929Z" changeid="xavier">
+        <seg>Cette fonction contruit l'en-tête &lt;a1&gt;HTTP&lt;/a1&gt; &lt;c0&gt;Authorization&lt;/c0&gt; utiisée dans le &lt;a2&gt;schéma d'authentification basique HTTP&lt;/a2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This function convert a string from &lt;a0&gt;ISO&lt;/a0&gt;-8859-1 to UTF-8.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T183125Z" changeid="xavier">
+        <seg>Cette fonction convertit une chaîne &lt;a0&gt;ISO&lt;/a0&gt;-8859-1 en UTF-8.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This function convert a string from UTF-8 to &lt;a0&gt;ISO&lt;/a0&gt;-8859-1.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T183032Z" changeid="xavier">
+        <seg>Cette fonction convertit une chaine UTF-8 en &lt;a0&gt;ISO&lt;/a0&gt;-8859-1.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This function will check the date of current request, and compare it to a start date and an end date.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T182442Z" changeid="xavier">
+        <seg>Cette fonction examine la date de la requête en cours et la compare avec une date de début et de fin.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This function will check the day and the hour of current request, and compare it to allowed days and hours.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T121710Z" changeid="xavier">
+        <seg>Cette fonction examine le jour et l'heure de la requête courante et la compare aux jours et heures autorisés.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>This is a well known security framework for J2EE applications.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T174353Z" changeid="xavier">
         <seg>C'est le très connu framework de sécurité des applications J2EE.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This is also true for:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T121010Z" changeid="xavier">
+        <seg>C'est disponible pour :</seg>
       </tuv>
     </tu>
     <tu>
@@ -20814,6 +21150,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T112441Z" changeid="xavier">
         <seg>Cette page ne référence pas tous les messages d'erreur, mais simplement les plus fréquents</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This parameter is set by the portal and use javascript to get the connected user timezone.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T181956Z" changeid="xavier">
+        <seg>Ce paramètre est géré par le portail et utilise javascript pour obtenir le fuseau de l'utilisateur connecté.</seg>
       </tuv>
     </tu>
     <tu>
@@ -21062,6 +21406,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T144417Z" changeid="xavier">
         <seg>Pour utiliser ces valeurs dans les sessions, il faut les déclarer dans les &lt;a0&gt;variables exportées&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>To know more about the jail, check &lt;a0&gt;Safe module documentation&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T121440Z" changeid="xavier">
+        <seg>Pour en savoir plus sur la cage, consulter la &lt;a0&gt;documentation du module Safe&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -21790,6 +22142,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>When &lt;a0&gt;writing rules and headers&lt;/a0&gt;, you can use &lt;a1&gt;Perl&lt;/a1&gt; expressions that will be evaluated in a jail, to prevent bad code execution.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T120940Z" changeid="xavier">
+        <seg>En &lt;a0&gt;écrivant des règles et en-têtes&lt;/a0&gt;, on peut utiliser des expressions &lt;a1&gt;Perl&lt;/a1&gt; qui seront évaluées dans une cage pour prévenir les codes malveillants.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>When &lt;c0&gt;Choice&lt;/c0&gt; is selected for authentication, values for Users and Password modules are not used anymore.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T194309Z" changeid="xavier">
@@ -22006,6 +22366,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can allow these users instead of reject them:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T182347Z" changeid="xavier">
+        <seg>On peut autoriser ces utilisateurs au lieu de les rejeter :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You can also add a condition.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T145342Z" changeid="xavier">
@@ -22038,6 +22406,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can also configure jetlag (if all of your users use the same timezone):</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T181758Z" changeid="xavier">
+        <seg>On peut aussi configurer jetlag (si tous les utilisateurs utilisent le même fuseau):</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You can also configure the authentication level for this module.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T155246Z" changeid="xavier">
@@ -22066,6 +22442,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T072613Z" changeid="xavier">
         <seg>On peut utiliser différent login/mot-de-passe pour les serveurs en surchargeant les paramètres &lt;c0&gt;globalStorage&lt;/c0&gt; et &lt;c1&gt;globalStorageOptions&lt;/c1&gt; dans le fichier lemonldap-ng.ini.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can also use the binary value from the logonHours attribute of Active Directory</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T152213Z" changeid="xavier">
+        <seg>La valeur binaire de l'attribut logonHours d'Active Directory peut également être utilisée</seg>
       </tuv>
     </tu>
     <tu>
@@ -22186,6 +22570,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Vous pouvez installer Lemonldap::NG en utilisant des &lt;a0&gt;paquets&lt;/a0&gt; (rpm or deb) à la main :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can modify the default behavior for people without value in ssoLogonHours.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T182231Z" changeid="xavier">
+        <seg>Il est possible de modifier le comportement par défaut pour les utilisateurs ne disposant pas d'une valeur ssoLogonHours.</seg>
       </tuv>
     </tu>
     <tu>
@@ -22918,6 +23310,22 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>basic</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T182822Z" changeid="xavier">
+        <seg>basic</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>basic($uid,$_password)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T183009Z" changeid="xavier">
+        <seg>basic($uid,$_password)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>by &lt;a0&gt;IP&lt;/a0&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -22962,6 +23370,70 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T201520Z" changeid="xavier">
         <seg>changer les mots-de-passe (avec la gestion de la politique de mot-de-passe côté serveur)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>checkDate</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T182351Z" changeid="xavier">
+        <seg>checkDate</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>checkDate($ssoStartDate, $ssoEndDate)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T182815Z" changeid="xavier">
+        <seg>checkDate($ssoStartDate, $ssoEndDate)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>checkLogonHours</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T121554Z" changeid="xavier">
+        <seg>checkLogonHours</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>checkLogonHours($ssoLogonHours)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T181636Z" changeid="xavier">
+        <seg>checkLogonHours($ssoLogonHours)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>checkLogonHours($ssoLogonHours, '', $_timezone)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T182144Z" changeid="xavier">
+        <seg>checkLogonHours($ssoLogonHours, '', $_timezone)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>checkLogonHours($ssoLogonHours, '', '', '1')</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T182348Z" changeid="xavier">
+        <seg>checkLogonHours($ssoLogonHours, '', '', '1')</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>checkLogonHours($ssoLogonHours, '', '+2')</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T181801Z" changeid="xavier">
+        <seg>checkLogonHours($ssoLogonHours, '', '+2')</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>checkLogonHours($ssoLogonHours, 'octetstring')</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T181712Z" changeid="xavier">
+        <seg>checkLogonHours($ssoLogonHours, 'octetstring')</seg>
       </tuv>
     </tu>
     <tu>
@@ -23506,6 +23978,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.0:customfunctions</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T121253Z" changeid="xavier">
+        <seg>documentation:1.0:customfunctions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.0:exportedvars</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T101138Z" changeid="xavier">
@@ -23518,6 +23998,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T113303Z" changeid="xavier">
         <seg>documentation:1.0:extendedfunctions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.0:extendedfunctions ↵</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T121407Z" changeid="xavier">
+        <seg>documentation:1.0:extendedfunctions ↵</seg>
       </tuv>
     </tu>
     <tu>
@@ -24170,6 +24658,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>etc.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T121150Z" changeid="xavier">
+        <seg>etc...</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>example.com = EXAMPLE.COM</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T154525Z" changeid="xavier">
@@ -24782,6 +25278,22 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>http://packages.debian.org/search?keywords=lemonldap-ng&amp;amp;searchon=names&amp;amp;suite=all&amp;amp;section=all</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://perldoc.perl.org/MIME/Base64.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T121300Z" changeid="xavier">
+        <seg>http://perldoc.perl.org/MIME/Base64.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://perldoc.perl.org/Safe.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T121409Z" changeid="xavier">
+        <seg>http://perldoc.perl.org/Safe.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -25730,6 +26242,22 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>iso2unicode</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T183106Z" changeid="xavier">
+        <seg>iso2unicode</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>iso2unicode($name)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T183129Z" changeid="xavier">
+        <seg>iso2unicode($name)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>it may be the &lt;e3&gt;backbone&lt;/e3&gt; of a heterogeneous architecture.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -26492,6 +27020,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>string</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T183050Z" changeid="xavier">
+        <seg>chaîne</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>sudo apachectl configtest
 sudo apachectl restart</seg>
       </tuv>
@@ -26716,6 +27252,22 @@ cd lemonldap-ng-*</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T171553Z" changeid="xavier">
         <seg>uidR</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>unicode2iso</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T183012Z" changeid="xavier">
+        <seg>unicode2iso</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>unicode2iso($name)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T183104Z" changeid="xavier">
+        <seg>unicode2iso($nom)</seg>
       </tuv>
     </tu>
     <tu>
