@@ -940,6 +940,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../../media/documentation/exportedvars.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T120549Z" changeid="xavier">
+        <seg>../../../media/documentation/exportedvars.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../../media/documentation/lasso.png</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -1424,6 +1432,14 @@
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T071835Z" changeid="xavier">
         <seg>../../documentation/1.0/sqlsessionbackend.html#prepare_the_database</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.0/start.html#authentication_users_and_password_databases</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T115000Z" changeid="xavier">
+        <seg>../../documentation/1.0/start.html#authentication_users_and_password_databases</seg>
       </tuv>
     </tu>
     <tu>
@@ -3700,6 +3716,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/authdemo.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T120002Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/authdemo.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../pages/documentation/1.2/authradius.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T173153Z" changeid="xavier">
@@ -3936,6 +3960,14 @@
       </tuv>
       <tuv lang="FR-FR" changedate="20111220T112606Z" changeid="xavier">
         <seg>/_detail/applications/zimbra_logo.png?id=documentation%3A1.0%3Aapplications%3Azimbra</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/documentation/exportedvars.png?id=documentation%3A1.0%3Aexportedvars</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T120509Z" changeid="xavier">
+        <seg>/_detail/documentation/exportedvars.png?id=documentation%3A1.0%3Aexportedvars</seg>
       </tuv>
     </tu>
     <tu>
@@ -5388,6 +5420,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; attribute</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T120425Z" changeid="xavier">
+        <seg>Attribut &lt;a0&gt;LDAP&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;LDAP&lt;/a0&gt; attribute used in filter is not required if you do not use &lt;a1&gt;LDAP users database&lt;/a1&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T071317Z" changeid="xavier">
@@ -6300,6 +6340,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a14&gt;authdemo&lt;/a14&gt;&lt;br15/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T120004Z" changeid="xavier">
+        <seg>&lt;a14&gt;authdemo&lt;/a14&gt;&lt;br15/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a14&gt;authldap&lt;/a14&gt;&lt;br15/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111446Z" changeid="xavier">
@@ -6344,6 +6392,14 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;a14&gt;soapservices&lt;/a14&gt;&lt;br15/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a16&gt;authldap&lt;/a16&gt;&lt;br17/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T120005Z" changeid="xavier">
+        <seg>&lt;a16&gt;authldap&lt;/a16&gt;&lt;br17/&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -6398,6 +6454,14 @@
 &lt;s21&gt;}&lt;/s21&gt;
  
 &lt;s22&gt;1&lt;/s22&gt;&lt;s23&gt;;&lt;/s23&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a18&gt;authmulti&lt;/a18&gt;&lt;br19/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T120006Z" changeid="xavier">
+        <seg>&lt;a18&gt;authmulti&lt;/a18&gt;&lt;br19/&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -6466,6 +6530,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a20&gt;authnull&lt;/a20&gt;&lt;br21/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T120006Z" changeid="xavier">
+        <seg>&lt;a20&gt;authnull&lt;/a20&gt;&lt;br21/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a20&gt;authopenid&lt;/a20&gt;&lt;br21/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111447Z" changeid="xavier">
@@ -6506,6 +6578,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a22&gt;authopenid&lt;/a22&gt;&lt;br23/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T120007Z" changeid="xavier">
+        <seg>&lt;a22&gt;authopenid&lt;/a22&gt;&lt;br23/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a22&gt;authproxy&lt;/a22&gt;&lt;br23/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111447Z" changeid="xavier">
@@ -6534,6 +6614,14 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;a22&gt;sqlsessionbackend&lt;/a22&gt;&lt;br23/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a24&gt;authproxy&lt;/a24&gt;&lt;br25/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T120008Z" changeid="xavier">
+        <seg>&lt;a24&gt;authproxy&lt;/a24&gt;&lt;br25/&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -6578,6 +6666,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a26&gt;authradius&lt;/a26&gt;&lt;br27/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T120009Z" changeid="xavier">
+        <seg>&lt;a26&gt;authradius&lt;/a26&gt;&lt;br27/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a26&gt;authremote&lt;/a26&gt;&lt;br27/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T173156Z" changeid="xavier">
@@ -6614,6 +6710,14 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;a26&gt;start&lt;/a26&gt;&lt;br27/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a28&gt;authremote&lt;/a28&gt;&lt;br29/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T120009Z" changeid="xavier">
+        <seg>&lt;a28&gt;authremote&lt;/a28&gt;&lt;br29/&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -6826,6 +6930,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a30&gt;authsaml&lt;/a30&gt;&lt;br31/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T120010Z" changeid="xavier">
+        <seg>&lt;a30&gt;authsaml&lt;/a30&gt;&lt;br31/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a30&gt;authslave&lt;/a30&gt;&lt;br31/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T173157Z" changeid="xavier">
@@ -6874,6 +6986,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a32&gt;authslave&lt;/a32&gt;&lt;br33/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T120011Z" changeid="xavier">
+        <seg>&lt;a32&gt;authslave&lt;/a32&gt;&lt;br33/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a32&gt;authssl&lt;/a32&gt;&lt;br33/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T173159Z" changeid="xavier">
@@ -6914,6 +7034,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a34&gt;authssl&lt;/a34&gt;&lt;br35/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T120013Z" changeid="xavier">
+        <seg>&lt;a34&gt;authssl&lt;/a34&gt;&lt;br35/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a34&gt;authtwitter&lt;/a34&gt;&lt;br35/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T173159Z" changeid="xavier">
@@ -6946,6 +7074,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a36&gt;authtwitter&lt;/a36&gt;&lt;br37/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T120014Z" changeid="xavier">
+        <seg>&lt;a36&gt;authtwitter&lt;/a36&gt;&lt;br37/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a36&gt;authyubikey&lt;/a36&gt;&lt;br37/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T173200Z" changeid="xavier">
@@ -6958,6 +7094,14 @@
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T173219Z" changeid="xavier">
         <seg>&lt;a36&gt;syntax&lt;/a36&gt;&lt;br37/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a38&gt;authyubikey&lt;/a38&gt;&lt;br39/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T120015Z" changeid="xavier">
+        <seg>&lt;a38&gt;authyubikey&lt;/a38&gt;&lt;br39/&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -14232,6 +14376,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Examples for &lt;a0&gt;LDAP&lt;/a0&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T120353Z" changeid="xavier">
+        <seg>Exemples pour &lt;a0&gt;LDAP&lt;/a0&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Export sAMAccountName in a variable declared in &lt;a0&gt;exported variables&lt;/a0&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T095640Z" changeid="xavier">
@@ -14256,10 +14408,42 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Exported variables are the variables available to &lt;a0&gt;write rules and headers&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T120054Z" changeid="xavier">
+        <seg>Les variables exportées sont des variables disponibles pour &lt;a0&gt;écrire des règles d'accès et des en-têtes&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Exported variables in the Manager</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T120547Z" changeid="xavier">
+        <seg>Variables exportées dans le manager</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Extend variables using macros and groups</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T120620Z" changeid="xavier">
+        <seg>Étendre les variables en utilisant les macros et groups</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Extended attributes and object classes use this prefix: 1.3.6.1.4.1.10943.10.2.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T144114Z" changeid="xavier">
         <seg>Les attributs étendus et classes d'objet utilisent ce préfixe : 1.3.6.1.4.1.10943.10.2.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Extended functions</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T120735Z" changeid="xavier">
+        <seg>Fonctions étendues</seg>
       </tuv>
     </tu>
     <tu>
@@ -14452,6 +14636,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Pour chaque déclaration, vous pouvez indiquer :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>For each variable, The first field is the name which will be used in rules, macros or headers and the second field is the name of the user database field.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T120344Z" changeid="xavier">
+        <seg>Pour chaque variable, le premier champ est le nom qui servira dans les règles, macros ou en-têtes et le second est le nom du champ dans la base de données utilisateurs.</seg>
       </tuv>
     </tu>
     <tu>
@@ -20386,6 +20578,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>They are extracted from the users database by the &lt;a1&gt;users module&lt;/a1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T120132Z" changeid="xavier">
+        <seg>Elles sont extraites de la base de données des utilisateurs par le &lt;a1&gt;module utilisateurs&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>They can then be forwarded to applications trough &lt;a0&gt;HTTP headers&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T155903Z" changeid="xavier">
@@ -20814,6 +21014,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120214T050344Z" changeid="xavier">
         <seg>Pour configurer les attributs à récupérer, aller dans &lt;c0&gt;Variables&lt;/c0&gt; &gt; &lt;c1&gt;Variables exportées&lt;/c1&gt; et definir les attributs:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>To create a variable, you've just to map a user attributes in &lt;a0&gt;LL::NG&lt;/a0&gt; using &lt;c1&gt;Variables&lt;/c1&gt; » &lt;c2&gt;Exported variables&lt;/c2&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T120231Z" changeid="xavier">
+        <seg>Pour créer une variable, il faut simplement associer des attributs utilisateurs dans &lt;a0&gt;LL::NG&lt;/a0&gt; en utilisant &lt;c1&gt;Variables&lt;/c1&gt; » &lt;c2&gt;Variables exportées&lt;/c2&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -21482,6 +21690,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Valeur : &lt;c0&gt;$uid&lt;/c0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Variable name</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T120414Z" changeid="xavier">
+        <seg>Nom de Variable</seg>
       </tuv>
     </tu>
     <tu>
@@ -23522,6 +23738,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:exportedvars.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T120510Z" changeid="xavier">
+        <seg>documentation:exportedvars.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:features</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -23926,6 +24150,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111217T081456Z" changeid="xavier">
         <seg>email_http_header            HTTP_MAIL</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>employeeNumber</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T120434Z" changeid="xavier">
+        <seg>employeeNumber</seg>
       </tuv>
     </tu>
     <tu>
@@ -25736,6 +25968,14 @@ kinit -k -t /etc/lemonldap-ng/auth.keytab HTTP/auth.example.com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>macros are used to extend (or rewrite) &lt;s0&gt;&lt;a1&gt;exported variables&lt;/a1&gt;&lt;/s0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T120700Z" changeid="xavier">
+        <seg>Les macros sont utilisées pour étendre (ou réécrire) les &lt;s0&gt;&lt;a1&gt;variables exportées&lt;/a1&gt;&lt;/s0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>mail</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T195436Z" changeid="xavier">
@@ -25860,8 +26100,8 @@ make test</seg>
       <tuv lang="EN-US">
         <seg>name</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20111226T195436Z" changeid="xavier">
-        <seg>name</seg>
+      <tuv lang="FR-FR" changedate="20120225T120501Z" changeid="xavier">
+        <seg>nom</seg>
       </tuv>
     </tu>
     <tu>
@@ -25894,6 +26134,14 @@ make test</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>rien ici...</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>number</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T120507Z" changeid="xavier">
+        <seg>numero</seg>
       </tuv>
     </tu>
     <tu>
@@ -26172,6 +26420,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>sn</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T120456Z" changeid="xavier">
+        <seg>sn</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>ssoEndDate</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T144244Z" changeid="xavier">
@@ -26428,6 +26684,14 @@ cd lemonldap-ng-*</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>tree_light.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>uid</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T120426Z" changeid="xavier">
+        <seg>uid</seg>
       </tuv>
     </tu>
     <tu>
