@@ -972,6 +972,22 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../../media/documentation/manager-formreplay-newdata.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T193645Z" changeid="xavier">
+        <seg>../../../media/documentation/manager-formreplay-newdata.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../media/documentation/manager-formreplay-newurl.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T193409Z" changeid="xavier">
+        <seg>../../../media/documentation/manager-formreplay-newurl.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../../media/documentation/manager-saml-idp-attribute.png</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T060012Z" changeid="xavier">
@@ -1080,6 +1096,14 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>../../css/screen.css</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.0/applications.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T192353Z" changeid="xavier">
+        <seg>../../documentation/1.0/applications.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -1404,6 +1428,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.0/passwordstore.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T192728Z" changeid="xavier">
+        <seg>../../documentation/1.0/passwordstore.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.0/portalcustom.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T200202Z" changeid="xavier">
@@ -1440,6 +1472,14 @@
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T062840Z" changeid="xavier">
         <seg>../../documentation/1.0/samlservice.html#general_options</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.0/selfmadeapplication.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T192355Z" changeid="xavier">
+        <seg>../../documentation/1.0/selfmadeapplication.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -4148,6 +4188,22 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/documentation/manager-formreplay-newdata.png?id=documentation%3A1.0%3Aformreplay</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T193643Z" changeid="xavier">
+        <seg>/_detail/documentation/manager-formreplay-newdata.png?id=documentation%3A1.0%3Aformreplay</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/documentation/manager-formreplay-newurl.png?id=documentation%3A1.0%3Aformreplay</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T193407Z" changeid="xavier">
+        <seg>/_detail/documentation/manager-formreplay-newurl.png?id=documentation%3A1.0%3Aformreplay</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>/_detail/documentation/manager-saml-idp-attribute.png?id=documentation%3A1.0%3Aauthsaml</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T060007Z" changeid="xavier">
@@ -5016,6 +5072,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;&lt;s0&gt;VirtualHost&lt;/s0&gt;&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T194034Z" changeid="xavier">
+        <seg>&lt;&lt;s0&gt;VirtualHost&lt;/s0&gt;&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;&lt;s10&gt;IfModule&lt;/s10&gt; auth_kerb_module&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T155339Z" changeid="xavier">
@@ -5692,6 +5756,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can catch a GET request and transform it internally in a POST request.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T192924Z" changeid="xavier">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; peut intercepter uen requête GET et la transformer en interne en requête POST.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can delegate authentication to Apache, so it is possible to use any &lt;a1&gt;Apache authentication module&lt;/a1&gt;, for example:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T153912Z" changeid="xavier">
@@ -6040,6 +6112,22 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;a0&gt;Twitter&lt;/a0&gt; est un service célèbre de messages cours.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;URI&lt;/a0&gt; of the page which contains the form</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T193033Z" changeid="xavier">
+        <seg>L'&lt;a0&gt;URI&lt;/a0&gt; de la page qui contient le formulaire</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;URI&lt;/a0&gt; of the page which receive POST data (optional if it is the same as the page holding the form)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T193112Z" changeid="xavier">
+        <seg>L'&lt;a0&gt;URI&lt;/a0&gt; de la page qui reçoit les données POST (optionnel s'il s'agit de la même que celle qui héberge le formulaire)</seg>
       </tuv>
     </tu>
     <tu>
@@ -8880,6 +8968,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;POST &lt;a1&gt;URL&lt;/a1&gt;&lt;/s0&gt;: /login.php</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T193444Z" changeid="xavier">
+        <seg>&lt;s0&gt;&lt;a1&gt;URL&lt;/a1&gt; POST&lt;/s0&gt;: /login.php</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Passive authentication&lt;/s0&gt;: set IsPassive flag in authentication request</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T060657Z" changeid="xavier">
@@ -9302,6 +9398,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;s0&gt;Stocke&lt;/s0&gt;: stocke les données utilisateurs dans la base de données des sessions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Target &lt;a1&gt;URL&lt;/a1&gt;&lt;/s0&gt;: /process.php</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T193456Z" changeid="xavier">
+        <seg>&lt;s0&gt;&lt;a1&gt;URL&lt;/a1&gt; cible&lt;/s0&gt; : /process.php</seg>
       </tuv>
     </tu>
     <tu>
@@ -10660,6 +10764,16 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s1&gt;ServerName&lt;/s1&gt; test2.example.com
+ </seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T194034Z" changeid="xavier">
+        <seg>&lt;s1&gt;ServerName&lt;/s1&gt; test2.example.com
+ </seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s1&gt;ServerName&lt;/s1&gt; zimbra.example.com
  </seg>
       </tuv>
@@ -10936,6 +11050,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T064350Z" changeid="xavier">
         <seg>&lt;s2&gt;RewriteEngine&lt;/s2&gt; &lt;s3&gt;On&lt;/s3&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s2&gt;SetHandler&lt;/s2&gt; perl-&lt;s3&gt;script&lt;/s3&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T194036Z" changeid="xavier">
+        <seg>&lt;s2&gt;SetHandler&lt;/s2&gt; perl-&lt;s3&gt;script&lt;/s3&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -12156,10 +12278,26 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>All fields name and values</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T193130Z" changeid="xavier">
+        <seg>Tous les noms de champs et leurs valeurs</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>All pages</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Toutes les pages</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>All this work is transparent for the user, he cannot see what data are posted by &lt;a1&gt;LL::NG&lt;/a1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T193004Z" changeid="xavier">
+        <seg>Tout ce travail est transparent pour l'utilisateur et il ne peut voir ce qui est envoyé par &lt;a1&gt;LL::NG&lt;/a1&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -12592,6 +12730,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Consommateur d'assertions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>At least, check if it is not a &lt;a1&gt;known application&lt;/a1&gt;, or &lt;a2&gt;try to adapt its source code&lt;/a2&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T192527Z" changeid="xavier">
+        <seg>Ainsi, vérifier si l'&lt;a1&gt;application est connue&lt;/a1&gt; ou &lt;a2&gt;essayer d'adapter le code source&lt;/a2&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -14356,6 +14502,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Due to a conflict between &lt;a0&gt;LL::NG&lt;/a0&gt; form replay and Apache mod_proxy (see &lt;a1&gt;issue&lt;/a1&gt;), you cannot use form replay on proxied applications, unless you use &lt;a2&gt;LL::NG&lt;/a2&gt; internal proxy (based on &lt;a3&gt;Perl&lt;/a3&gt; LWP):</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T194027Z" changeid="xavier">
+        <seg>Suite à un conflit entre le rejeu de formulaires &lt;a0&gt;LL::NG&lt;/a0&gt; et mod_proxy (voir le &lt;a1&gt;ticket&lt;/a1&gt;), on ne peut utiliser le rejeu de formulaires sur les applications proxifiées, sauf en utilisant le proxy interne de &lt;a2&gt;LL::NG&lt;/a2&gt; (basé sur LWP de &lt;a3&gt;Perl&lt;/a3&gt;):</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Dynamic application menu</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -14384,6 +14538,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Chaque module d'authentification de &lt;a0&gt;LL::NG&lt;/a0&gt; dispose d'un niveau d'authentification qui peut être associé à un &lt;a1&gt;contexte d'authentification SAML&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Each field can be filled with static values or data from user's session.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T192727Z" changeid="xavier">
+        <seg>Chaque champ peut être construit avec des valeurs statiques ou des données issues de la session utilisateur.</seg>
       </tuv>
     </tu>
     <tu>
@@ -14756,6 +14918,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Fields:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T193159Z" changeid="xavier">
+        <seg>Champs :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>File</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T125400Z" changeid="xavier">
@@ -14784,6 +14954,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T185411Z" changeid="xavier">
         <seg>Le backend de sessions File est la plus simple des bases de données.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Fill values here:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T193421Z" changeid="xavier">
+        <seg>Renseigner les valeurs ici :</seg>
       </tuv>
     </tu>
     <tu>
@@ -15052,10 +15230,42 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Form page &lt;a0&gt;URI&lt;/a0&gt;: /login.php</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T193142Z" changeid="xavier">
+        <seg>&lt;a0&gt;URI&lt;/a0&gt; de la page de formulaire : /login.php</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Form replay</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T193806Z" changeid="xavier">
+        <seg>Rejeu de formulaires</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Form replay allows you to open a session on a protected application by replaying the form POST without asking anything to the user.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T192257Z" changeid="xavier">
+        <seg>Le rejeu de formulaire permet d'ouvrir une session dans une application protégée par un formulaire POST sans rien demander à l'utilisateur.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Form replay data</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T121052Z" changeid="xavier">
         <seg>les données à rejouer dans les formulaires</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Form replay with Apache mod_proxy</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T193841Z" changeid="xavier">
+        <seg>Rejeu de formulaires avec le mod_proxy d'Apache</seg>
       </tuv>
     </tu>
     <tu>
@@ -15932,6 +16142,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If you configure form replay with &lt;a0&gt;LL::NG&lt;/a0&gt;, the Handler will catch configured POST &lt;a1&gt;URL&lt;/a1&gt; and send a POST query to the target page (which can be different of the caught page).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T192644Z" changeid="xavier">
+        <seg>En configurant le rejeu de formulaire avec &lt;a0&gt;LL::NG&lt;/a0&gt;, l'agent intercepte les &lt;a1&gt;URL&lt;/a1&gt; configurées et envoie une requête POST à la page cible (qui peut être différente de la première).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If you disallow this, you should also disallow direct login form IDP, because proxy restriction is set in authentication requests.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T061136Z" changeid="xavier">
@@ -16224,6 +16442,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T191946Z" changeid="xavier">
         <seg>Dans le manager : indiquez &lt;a0&gt;Apache::Session::File&lt;/a0&gt; dans &lt;c1&gt;Paramètres généraux&lt;/c1&gt; » &lt;c2&gt;Sessions&lt;/c2&gt; » &lt;c3&gt;Stockage des sessions&lt;/c3&gt; » &lt;c4&gt;Module Apache::Session&lt;/c4&gt; et ajoutez les paramètres suivant (sensibles à la casse):</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>In this case you will be able to use &lt;c1&gt;$_password&lt;/c1&gt; to fill any password POST field.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T192846Z" changeid="xavier">
+        <seg>Dans ce cas, la variable &lt;c1&gt;$_password&lt;/c1&gt; peut être utilisée dans tous les champs à envoyer.</seg>
       </tuv>
     </tu>
     <tu>
@@ -18340,6 +18566,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>POST data &lt;a0&gt;URI&lt;/a0&gt;: /process.php</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T193154Z" changeid="xavier">
+        <seg>&lt;a0&gt;URI&lt;/a0&gt; où envoyer les données : /process.php</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>POST data: use form replay</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T073709Z" changeid="xavier">
@@ -18484,6 +18718,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>PerlHandler Lemonldap::NG::Handler::Proxy</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T194036Z" changeid="xavier">
+        <seg>PerlHandler Lemonldap::NG::Handler::Proxy</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>PerlHeaderParserHandler My::Package</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111217T081620Z" changeid="xavier">
@@ -18526,6 +18768,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       <tuv lang="FR-FR" changedate="20111222T180820Z" changeid="xavier">
         <seg>PerlHeaderParserHandler My::Zimbra
  </seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>PerlModule Lemonldap::NG::Handler::Proxy</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T194035Z" changeid="xavier">
+        <seg>PerlModule Lemonldap::NG::Handler::Proxy</seg>
       </tuv>
     </tu>
     <tu>
@@ -18574,10 +18824,36 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>PerlSetVar LmLocationToReplace http://APPLICATION/,http://test2.example.com
+&lt;/&lt;s4&gt;VirtualHost&lt;/s4&gt;&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T194039Z" changeid="xavier">
+        <seg>PerlSetVar LmLocationToReplace http://APPLICATION/,http://test2.example.com
+&lt;/&lt;s4&gt;VirtualHost&lt;/s4&gt;&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>PerlSetVar LmProxyPass http://APPLICATION/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T194037Z" changeid="xavier">
+        <seg>PerlSetVar LmProxyPass http://APPLICATION/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Personal Digital Assistant</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T111734Z" changeid="xavier">
         <seg>Assistant personnel numérique</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Please always try to find another solution to protect your application with &lt;a0&gt;LL::NG&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T192429Z" changeid="xavier">
+        <seg>Il est en général préférable de trouver une autre solution pour protéger les applications avec &lt;a0&gt;LL::NG&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -20854,6 +21130,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Then click on &lt;c0&gt;New POST data&lt;/c0&gt; and add all data with their values, for example:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T193642Z" changeid="xavier">
+        <seg>Cliquer ensuite sur &lt;c0&gt;Nouvelle donnée POST&lt;/c0&gt; et ajouter chaque donnée avec sa valeur, par exemple :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Then edit MediaWiki local settings</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074908Z" changeid="xavier">
@@ -20866,6 +21150,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T171747Z" changeid="xavier">
         <seg>Éditer ensuite les règles et en-têtes.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Then go in Manager, &lt;c0&gt;Virtual Hosts&lt;/c0&gt; » &lt;e1&gt;virtualhost&lt;/e1&gt; » &lt;c2&gt;Form replay&lt;/c2&gt; and click on &lt;c3&gt;Add POST &lt;a4&gt;URL&lt;/a4&gt;&lt;/c3&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T193405Z" changeid="xavier">
+        <seg>Aller ensuite dans le manager, &lt;c0&gt;Hôtes virtuels&lt;/c0&gt; » &lt;e1&gt;hôte virtuel&lt;/e1&gt; » &lt;c2&gt;Rejeu de formulaires&lt;/c2&gt; et cliquer sur &lt;c3&gt;Nouvelle &lt;a4&gt;URL&lt;/a4&gt; POST&lt;/c3&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -21374,6 +21666,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>This kind of &lt;a0&gt;SSO&lt;/a0&gt; mechanism is not clean, and can lead to problems, like local password blocking, local session not well closed, etc.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T192351Z" changeid="xavier">
+        <seg>Ce type de mécanisme &lt;a0&gt;SSO&lt;/a0&gt; n'est pas parfait et peut générer des problèmes tels des blocages de mots-de-passe, sessions locales mal closes, etc...</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>This message is displayed only when you upgrade from a version older than 1.0</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T112615Z" changeid="xavier">
@@ -21690,6 +21990,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111207T052401Z" changeid="xavier">
         <seg>Pour gérer l'autre voie (&lt;a0&gt;LL::NG&lt;/a0&gt; → Google Apps), ajouter une &lt;a1&gt;règle de redirection après déconnexion&lt;/a1&gt;:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>To post user's password, you must enable &lt;a0&gt;password storing&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T192802Z" changeid="xavier">
+        <seg>Pour envoyer le mot-de-passe utilisateur, il faut activer le &lt;a0&gt;stockage du mot-de-passe&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -22746,6 +23054,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can define more than one form replay &lt;a0&gt;URL&lt;/a0&gt; per virtual host.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T193801Z" changeid="xavier">
+        <seg>Il est possible de définir plusieurs &lt;a0&gt;URL&lt;/a0&gt; de rejeu de formulaires par hôte virtuel.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You can do it either by uploading the file, or get it from IDP metadata &lt;a0&gt;URL&lt;/a0&gt; (this require a network link between your server and the IDP):</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120220T203722Z" changeid="xavier">
@@ -23118,6 +23434,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T070857Z" changeid="xavier">
         <seg>Une &lt;a0&gt;URL&lt;/a0&gt; par serveur physique est nécessaire, car les agents partagent le même cache de configuration pour chaque serveur physique.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You should grab some informations:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T193015Z" changeid="xavier">
+        <seg>Il faut récolter quelques informations:</seg>
       </tuv>
     </tu>
     <tu>
@@ -24440,6 +24764,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.0:selfmadeapplication</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T192357Z" changeid="xavier">
+        <seg>documentation:1.0:selfmadeapplication</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.0:soapconfbackend</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T125404Z" changeid="xavier">
@@ -24788,6 +25120,22 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T194526Z" changeid="xavier">
         <seg>documentation:manager-authchoice.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:manager-formreplay-newdata.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T193644Z" changeid="xavier">
+        <seg>documentation:manager-formreplay-newdata.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:manager-formreplay-newurl.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T193408Z" changeid="xavier">
+        <seg>documentation:manager-formreplay-newurl.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -25444,6 +25792,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>http://jira.ow2.org/browse/LEMONLDAP</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://jira.ow2.org/browse/LEMONLDAP-176</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T193842Z" changeid="xavier">
+        <seg>http://jira.ow2.org/browse/LEMONLDAP-176</seg>
       </tuv>
     </tu>
     <tu>
@@ -26742,6 +27098,14 @@ kinit -k -t /etc/lemonldap-ng/auth.keytab HTTP/auth.example.com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>login: $uid (uid of the user)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T193208Z" changeid="xavier">
+        <seg>login: $uid (uid de l'utilisateur)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>logos:logo_bpi.png</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -27074,6 +27438,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>password: $_password (password of the user)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T193219Z" changeid="xavier">
+        <seg>password: $_password (mot-de-passe de l'utilisateur)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>phpLDAPadmin</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T173116Z" changeid="xavier">
@@ -27210,6 +27582,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>remember: '1' (checked box)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T193242Z" changeid="xavier">
+        <seg>remember: '1' (une case à cocher)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>screenshots</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -27334,6 +27714,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR">
         <seg>start.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>static: 'StaticValue' (a static value)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T193234Z" changeid="xavier">
+        <seg>static: 'StaticValue' (une valeur statique)</seg>
       </tuv>
     </tu>
     <tu>
