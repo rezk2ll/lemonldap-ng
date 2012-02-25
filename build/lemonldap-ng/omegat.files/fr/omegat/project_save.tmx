@@ -1236,6 +1236,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.0/configlocation.html#apache</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T072326Z" changeid="xavier">
+        <seg>../../documentation/1.0/configlocation.html#apache</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.0/configlocation.html#portal</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -1264,6 +1272,22 @@
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T125359Z" changeid="xavier">
         <seg>../../documentation/1.0/fileconfbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.0/formreplay.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T073913Z" changeid="xavier">
+        <seg>../../documentation/1.0/formreplay.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.0/header_remote_user_conversion.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T073119Z" changeid="xavier">
+        <seg>../../documentation/1.0/header_remote_user_conversion.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -1408,6 +1432,14 @@
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T141847Z" changeid="xavier">
         <seg>../../documentation/1.0/start.html#configuration_database</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.0/writingrulesand_headers.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T073744Z" changeid="xavier">
+        <seg>../../documentation/1.0/writingrulesand_headers.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -5276,6 +5308,14 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>Redirection &lt;a0&gt;HTTP&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;HTTP&lt;/a0&gt; headers: forge information sent to protected applications</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T073633Z" changeid="xavier">
+        <seg>Des en-têtes &lt;a0&gt;HTTP&lt;/a0&gt; : construit l'information à envoyer aux applications protégées</seg>
       </tuv>
     </tu>
     <tu>
@@ -10108,6 +10148,16 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s1&gt;ServerName&lt;/s1&gt; application.example.com
+ </seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T072641Z" changeid="xavier">
+        <seg>&lt;s1&gt;ServerName&lt;/s1&gt; application.example.com
+ </seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s1&gt;ServerName&lt;/s1&gt; auth.example.com
  </seg>
       </tuv>
@@ -10153,6 +10203,16 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074251Z" changeid="xavier">
         <seg>&lt;s1&gt;ServerName&lt;/s1&gt; liferay.example.com
+ </seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s1&gt;ServerName&lt;/s1&gt; localsite.example.com
+ </seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T072557Z" changeid="xavier">
+        <seg>&lt;s1&gt;ServerName&lt;/s1&gt; localsite.example.com
  </seg>
       </tuv>
     </tu>
@@ -10420,6 +10480,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s2&gt;# Reverse-Proxy&lt;/s2&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T072648Z" changeid="xavier">
+        <seg>&lt;s2&gt;# Reverse-Proxy&lt;/s2&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s2&gt;# SSO protection&lt;/s2&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112600Z" changeid="xavier">
@@ -10449,6 +10517,16 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T155332Z" changeid="xavier">
         <seg>&lt;s2&gt;DocumentRoot&lt;/s2&gt; /var/lib/lemonldap-ng/portal/
+ </seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s2&gt;DocumentRoot&lt;/s2&gt; /var/www/localsite
+ </seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T072559Z" changeid="xavier">
+        <seg>&lt;s2&gt;DocumentRoot&lt;/s2&gt; /var/www/localsite
  </seg>
       </tuv>
     </tu>
@@ -10580,10 +10658,36 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s3&gt;ErrorLog&lt;/s3&gt; /var/log/apache2/localsite_error.log</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T072600Z" changeid="xavier">
+        <seg>&lt;s3&gt;ErrorLog&lt;/s3&gt; /var/log/apache2/localsite_error.log</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s3&gt;Order&lt;/s3&gt; &lt;s4&gt;deny&lt;/s4&gt;,&lt;s5&gt;allow&lt;/s5&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T071015Z" changeid="xavier">
         <seg>&lt;s3&gt;Order&lt;/s3&gt; &lt;s4&gt;deny&lt;/s4&gt;,&lt;s5&gt;allow&lt;/s5&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s3&gt;ProxyPass&lt;/s3&gt; / http://APPLICATION_IP/
+ </seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T072819Z" changeid="xavier">
+        <seg>&lt;s3&gt;ProxyPass&lt;/s3&gt; / http://APPLICATION_IP/
+ </seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s3&gt;ProxyPass&lt;/s3&gt; / http://private-name/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T072651Z" changeid="xavier">
+        <seg>&lt;s3&gt;ProxyPass&lt;/s3&gt; / http://private-name/</seg>
       </tuv>
     </tu>
     <tu>
@@ -10652,10 +10756,30 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s4&gt;# Change &quot;Location&quot; header in redirections&lt;/s4&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T072711Z" changeid="xavier">
+        <seg>&lt;s4&gt;# Changer les en-têtes &quot;Location&quot; dans les redirections&lt;/s4&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s4&gt;# configuration change&lt;/s4&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T065302Z" changeid="xavier">
         <seg>&lt;s4&gt;# la configuration est changée&lt;/s4&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s4&gt;CustomLog&lt;/s4&gt; /var/log/apache2/localsite_access.log combined
+ 
+&lt;/&lt;s5&gt;VirtualHost&lt;/s5&gt;&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T072601Z" changeid="xavier">
+        <seg>&lt;s4&gt;CustomLog&lt;/s4&gt; /var/log/apache2/localsite_access.log combined
+ 
+&lt;/&lt;s5&gt;VirtualHost&lt;/s5&gt;&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -10682,6 +10806,16 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T155335Z" changeid="xavier">
         <seg>&lt;s4&gt;Order&lt;/s4&gt; &lt;s5&gt;allow&lt;/s5&gt;,&lt;s6&gt;deny&lt;/s6&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s4&gt;ProxyPreserveHost&lt;/s4&gt; &lt;s5&gt;on&lt;/s5&gt;
+ </seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T072820Z" changeid="xavier">
+        <seg>&lt;s4&gt;ProxyPreserveHost&lt;/s4&gt; &lt;s5&gt;on&lt;/s5&gt;
+ </seg>
       </tuv>
     </tu>
     <tu>
@@ -10818,6 +10952,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s5&gt;ProxyPassReverse&lt;/s5&gt; / http://private-name/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T072713Z" changeid="xavier">
+        <seg>&lt;s5&gt;ProxyPassReverse&lt;/s5&gt; / http://private-name/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s5&gt;RewriteRule&lt;/s5&gt; ^/saml/.* /index.pl</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T064351Z" changeid="xavier">
@@ -10866,6 +11008,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s6&gt;# Change domain cookies&lt;/s6&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T072727Z" changeid="xavier">
+        <seg>&lt;s6&gt;# Changer le domaine des cookies&lt;/s6&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s6&gt;Allow&lt;/s6&gt; from 127.0.0.0/8</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T142940Z" changeid="xavier">
@@ -10878,6 +11028,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T071016Z" changeid="xavier">
         <seg>&lt;s6&gt;Deny&lt;/s6&gt; from &lt;s7&gt;all&lt;/s7&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s6&gt;ErrorLog&lt;/s6&gt; /var/log/apache2/proxysite_error.log</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T072821Z" changeid="xavier">
+        <seg>&lt;s6&gt;ErrorLog&lt;/s6&gt; /var/log/apache2/proxysite_error.log</seg>
       </tuv>
     </tu>
     <tu>
@@ -10992,10 +11150,30 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s7&gt;CustomLog&lt;/s7&gt; /var/log/apache2/proxysite_access.log combined
+&lt;/&lt;s8&gt;VirtualHost&lt;/s8&gt;&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T072823Z" changeid="xavier">
+        <seg>&lt;s7&gt;CustomLog&lt;/s7&gt; /var/log/apache2/proxysite_access.log combined
+&lt;/&lt;s8&gt;VirtualHost&lt;/s8&gt;&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s7&gt;Options&lt;/s7&gt; +ExecCGI</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T142941Z" changeid="xavier">
         <seg>&lt;s7&gt;Options&lt;/s7&gt; +ExecCGI</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s7&gt;ProxyPassReverseCookieDomain&lt;/s7&gt; private-name application.example.com
+ </seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T072729Z" changeid="xavier">
+        <seg>&lt;s7&gt;ProxyPassReverseCookieDomain&lt;/s7&gt; private-name application.example.com
+ </seg>
       </tuv>
     </tu>
     <tu>
@@ -11090,6 +11268,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s8&gt;ErrorLog&lt;/s8&gt; /var/log/apache2/proxysite_error.log</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T072731Z" changeid="xavier">
+        <seg>&lt;s8&gt;ErrorLog&lt;/s8&gt; /var/log/apache2/proxysite_error.log</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s8&gt;Options&lt;/s8&gt; +ExecCGI</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T064833Z" changeid="xavier">
@@ -11152,6 +11338,16 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112253Z" changeid="xavier">
         <seg>&lt;s9&gt;&quot;auto_update&quot;&lt;/s9&gt;           &lt;s10&gt;=&gt;&lt;/s10&gt; &lt;s11&gt;true&lt;/s11&gt;&lt;s12&gt;,&lt;/s12&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s9&gt;CustomLog&lt;/s9&gt; /var/log/apache2/proxysite_access.log combined
+&lt;/&lt;s10&gt;VirtualHost&lt;/s10&gt;&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T072732Z" changeid="xavier">
+        <seg>&lt;s9&gt;CustomLog&lt;/s9&gt; /var/log/apache2/proxysite_access.log combined
+&lt;/&lt;s10&gt;VirtualHost&lt;/s10&gt;&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -11312,6 +11508,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>A virtual host contains:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T073522Z" changeid="xavier">
+        <seg>Un hôte vituel contient :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>A web browser launched from the computer (to access localhost)</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -11376,10 +11580,26 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Access rules and HTTP headers</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T073742Z" changeid="xavier">
+        <seg>Règles d'accès et en-têtes HTTP</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Access rules values can be:</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Les valeurs des règles d'accès peuvent être :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Access rules: check user's right on &lt;a0&gt;URL&lt;/a0&gt; patterns</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T073559Z" changeid="xavier">
+        <seg>Des règles d'accès : examine les droits de l'utilisateur via des expressions sur les &lt;a0&gt;URL&lt;/a0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -11640,6 +11860,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>An apache virtual host protected by LemonLDAP::NG Handler must be registered in LemonLDAP::NG configuration.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T073356Z" changeid="xavier">
+        <seg>Un hôte virtuel apache protégé par un agent LemonLDAP::NG doit être enregistré dans la configuration LemonLDAP::NG.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>An application name (to allow access by applications and not by group of users)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T143740Z" changeid="xavier">
@@ -11652,6 +11880,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Une autorisation est définie pas :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>And a protected virtual host with LemonLDAP::NG as reverse proxy:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T072639Z" changeid="xavier">
+        <seg>Et un reverse-proxy protégé par LemonLDAP::NG :</seg>
       </tuv>
     </tu>
     <tu>
@@ -11740,6 +11976,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Support des modules Apache (Kerberos, NTLM , OTP, …)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Apache configuration</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T072325Z" changeid="xavier">
+        <seg>Configuration d'Apache</seg>
       </tuv>
     </tu>
     <tu>
@@ -12388,6 +12632,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T142007Z" changeid="xavier">
         <seg>Par défaut, la configuration est stockée dans des &lt;a0&gt;fichiers&lt;/a0&gt;, donc l'accès par le réseau n'est en général pas possible.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>By default, default values are used.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T074157Z" changeid="xavier">
+        <seg>Sauf modification, les valeurs par défaut sont utilisées.</seg>
       </tuv>
     </tu>
     <tu>
@@ -13576,6 +13828,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Each virtual host is a protected resource, with access rules, headers, POST data and options.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T072305Z" changeid="xavier">
+        <seg>Chaque hôte virtuel est une ressource protégée, avec règles d'accès, en-têtes, options et données POST.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Easy to customize</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -13988,6 +14248,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Pour chaque déclaration, vous pouvez indiquer :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>For example, a protected virtual host for a local application:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T072556Z" changeid="xavier">
+        <seg>Par exemple, un hôte virtuel protégé pour une application locale :</seg>
       </tuv>
     </tu>
     <tu>
@@ -14492,6 +14760,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T100013Z" changeid="xavier">
         <seg>Authentification basique HTTP</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>HTTPS</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T074025Z" changeid="xavier">
+        <seg>HTTPS</seg>
       </tuv>
     </tu>
     <tu>
@@ -15224,6 +15500,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>In this case, see &lt;a1&gt;how convert header into environment variable&lt;/a1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T073256Z" changeid="xavier">
+        <seg>Dans ce cas, voir &lt;a1&gt;comment convertir les en-têtes en variable d'environnement&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>In this case, the extracted certificate field value will be used to match the user.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T071412Z" changeid="xavier">
@@ -15880,10 +16164,26 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>LemonLDAP::NG configuration</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T073311Z" changeid="xavier">
+        <seg>Configuration de LemonLDAP::NG</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>LemonLDAP::NG configuration can be managed in a local file with &lt;a0&gt;INI format&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T071236Z" changeid="xavier">
         <seg>La configuration LemonLDAP::NG peut être gérée par un fichier local au &lt;a0&gt;format INI&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LemonLDAP::NG configuration is build around Apache virtual hosts.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T072212Z" changeid="xavier">
+        <seg>La configuration de LemonLDAP::NG est construite autour des hôtes virtuels Apache.</seg>
       </tuv>
     </tu>
     <tu>
@@ -16356,6 +16656,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Paramètres principaux</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Manage virtual hosts</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T072130Z" changeid="xavier">
+        <seg>Gérer les hôtes virtuels</seg>
       </tuv>
     </tu>
     <tu>
@@ -17072,6 +17380,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Options: redirection port and protocol</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T073726Z" changeid="xavier">
+        <seg>Des options : port de redirection et protocole</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Oracle</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T194915Z" changeid="xavier">
@@ -17124,6 +17440,22 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111600Z" changeid="xavier">
         <seg>P</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>POST data</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T073912Z" changeid="xavier">
+        <seg>Données POST</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>POST data: use form replay</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T073709Z" changeid="xavier">
+        <seg>Des données POST : à utiliser pour répondre aux formulaires</seg>
       </tuv>
     </tu>
     <tu>
@@ -17366,6 +17698,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T073600Z" changeid="xavier">
         <seg>Se reporter à la documentation Liferay pour activer l'alimentation &lt;a1&gt;LDAP&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Port</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T074024Z" changeid="xavier">
+        <seg>Port</seg>
       </tuv>
     </tu>
     <tu>
@@ -18122,6 +18462,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Same with remote server configured with the same host name:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T072816Z" changeid="xavier">
+        <seg>La même chose avec le serveur distant configuré avec le même nom d'hôte :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Schema</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T194956Z" changeid="xavier">
@@ -18302,6 +18650,22 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Reportez-vous à la &lt;a2&gt;FAQ Twitter&lt;/a2&gt; pour en savoir plus.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>See &lt;s0&gt;&lt;a1&gt;Form replay&lt;/a1&gt;&lt;/s0&gt; to learn how to configure form replay to POST data on protected applications.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T074010Z" changeid="xavier">
+        <seg>Voir &lt;s0&gt;&lt;a1&gt;Rejeu des formulaires&lt;/a1&gt;&lt;/s0&gt; pour savoir comment configurer le rejeu des formulaires pour poster des données à une applications protégée.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>See &lt;s0&gt;&lt;a1&gt;Writing rules and headers&lt;/a1&gt;&lt;/s0&gt; to learn how to configure access control and &lt;a2&gt;HTTP&lt;/a2&gt; headers sent to application by &lt;a3&gt;LL::NG&lt;/a3&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T073902Z" changeid="xavier">
+        <seg>Voir &lt;s0&gt;&lt;a1&gt;Écrire des règles et des en-têtes&lt;/a1&gt;&lt;/s0&gt; pour savoir comment configurer le contrôle d'accès et les en-têtes &lt;a2&gt;HTTP&lt;/a2&gt; transmis à l'application par &lt;a3&gt;LL::NG&lt;/a3&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -18706,6 +19070,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Some applications need the &lt;c0&gt;REMOTE_USER&lt;/c0&gt; environment variable to get the connected user, which is not set in reverse-proxy mode.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T073220Z" changeid="xavier">
+        <seg>Certaines applications ont besoin de la variable d'environnement &lt;c0&gt;REMOTE_USER&lt;/c0&gt; pour connaître le nom d'utilisateur connecté, qui n'est pas renseignée en mode reverse-proxy.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Some applications using it</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T153717Z" changeid="xavier">
@@ -19054,6 +19426,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074727Z" changeid="xavier">
         <seg>L'extension &lt;a0&gt;HTTP&lt;/a0&gt; Auth est presentée ici : &lt;a1&gt;http://www.mediawiki.org/wiki/Extension:HttpAuth&lt;/a1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The &lt;c0&gt;ProxyPreserveHost&lt;/c0&gt; directive will forward the Host header to the protected application.&lt;br1/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T073044Z" changeid="xavier">
+        <seg>La directive &lt;c0&gt;ProxyPreserveHost&lt;/c0&gt; transfère l'en-tête Host à l'application protégée.&lt;br1/&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -19490,6 +19870,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Then you can take any virtual host, and simply add this line to protect it:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T072511Z" changeid="xavier">
+        <seg>Ainsi n'importe quel hôte virtuel peut être protégé en ajoutant cette ligne :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Then, go in &lt;c0&gt;&lt;a1&gt;CAS&lt;/a1&gt; parameters&lt;/c0&gt;:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T160247Z" changeid="xavier">
@@ -19606,6 +19994,22 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T144644Z" changeid="xavier">
         <seg>Ces fichiers doivent être inclus dans la configuration d'Apache, soit par des directives &lt;c0&gt;Include&lt;/c0&gt; dans le fichier &lt;c1&gt;httpd.conf&lt;/c1&gt; (voir &lt;a2&gt;démarrage rapide&lt;/a2&gt;), ou via un lien symbolique dans de répertoire de configuration d'Apache (type &lt;c3&gt;/etc/httpd/conf.d&lt;/c3&gt;).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>These options are only here to override default values.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T074233Z" changeid="xavier">
+        <seg>Ces options ne sont à utiliser que pour surcharger les valeurs par défaut.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>These options are used to build redirection &lt;a0&gt;URL&lt;/a0&gt; (when user is not logged, or for &lt;a1&gt;CDA&lt;/a1&gt; requests).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T074119Z" changeid="xavier">
+        <seg>Ces options sont utilisées dans la construction des &lt;a0&gt;URL&lt;/a0&gt; de redirection (lorsque l'utilisateur n'est pas connecté ou pour les requêtes &lt;a1&gt;CDA&lt;/a1&gt;).</seg>
       </tuv>
     </tu>
     <tu>
@@ -20058,6 +20462,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>To do this, use the Manager, and go in &lt;c0&gt;Virtual Hosts&lt;/c0&gt; branch.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T073423Z" changeid="xavier">
+        <seg>Pour ce faire, utiliser le manager, et aller dans la branche &lt;c0&gt;Virtual Hosts&lt;/c0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>To enable &lt;a0&gt;LL::NG&lt;/a0&gt; authentication plugin, go in &lt;c1&gt;/etc/obm/obm_conf.inc&lt;/c1&gt;:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112248Z" changeid="xavier">
@@ -20082,6 +20494,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>To learn more about using Apache as reverse-proxy, see &lt;a2&gt;Apache documentation&lt;/a2&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T073118Z" changeid="xavier">
+        <seg>Pour en savoir plus sur l'utilisation d' Apache en reverse-proxy, consultez la &lt;a2&gt;documentation d'Apache&lt;/a2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>To make the portal start faster when the server is relaunched, add those lines in Apache configuration file (as described in portal-apache2.conf):</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -20094,6 +20514,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111207T052401Z" changeid="xavier">
         <seg>Pour gérer l'autre voie (&lt;a0&gt;LL::NG&lt;/a0&gt; → Google Apps), ajouter une &lt;a1&gt;règle de redirection après déconnexion&lt;/a1&gt;:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>To protect a virtual host in Apache, the LemonLDAP::NG Handler must be activated (see &lt;a0&gt;Apache global configuration&lt;/a0&gt;).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T072419Z" changeid="xavier">
+        <seg>Pour protéger un hôte virtuel dans Apache, l'agent LemonLDAP::NG doit être activé (voir &lt;a0&gt;configuration globale d'Apache&lt;/a0&gt;).</seg>
       </tuv>
     </tu>
     <tu>
@@ -20238,6 +20666,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Twitter utilise le protocole &lt;a1&gt;OAuth&lt;/a1&gt; pour autoriser les applications à réutiliser son propre processus d'authentification (ce qui signifie que si vous êtes connecté à Twitter, d'autres applications peuvent agréer Twitter et vous laisser entrer).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Two options are available:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T074021Z" changeid="xavier">
+        <seg>Deux options sont disponibles :</seg>
       </tuv>
     </tu>
     <tu>
@@ -20890,6 +21326,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T144335Z" changeid="xavier">
         <seg>Cette classe d'objets peut être ajoutée à toute entrée de l'annuaire.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can add, delete or modify a virtual host here.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T073504Z" changeid="xavier">
+        <seg>Il est possible d'ajouter, effacer ou modifier un hôte virtuel ici.</seg>
       </tuv>
     </tu>
     <tu>
@@ -22386,6 +22830,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.0:formreplay</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T073914Z" changeid="xavier">
+        <seg>documentation:1.0:formreplay</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.0:header_remote_user_conversion</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T115433Z" changeid="xavier">
@@ -23430,6 +23882,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T153819Z" changeid="xavier">
         <seg>http://httpd.apache.org/docs/current/howto/auth.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://httpd.apache.org/docs/current/mod/mod_proxy.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T072825Z" changeid="xavier">
+        <seg>http://httpd.apache.org/docs/current/mod/mod_proxy.html</seg>
       </tuv>
     </tu>
     <tu>
