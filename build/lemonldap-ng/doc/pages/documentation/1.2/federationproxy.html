@@ -1,0 +1,69 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+
+
+<h1><a name="llng_as_federation_protocol_proxy" id="llng_as_federation_protocol_proxy">LL::NG as federation protocol proxy</a></h1>
+<div class="level1">
+
+<p>
+<acronym title="LemonLDAP::NG">LL::NG</acronym> can use federation protocols (<acronym title="Security Assertion Markup Language">SAML</acronym>, <acronym title="Central Authentication Service">CAS</acronym>, OpenID) independently to:
+</p>
+<ul>
+<li class="level1"><div class="li"> authenticate users</div>
+</li>
+<li class="level1"><div class="li"> provide identities to other systems</div>
+</li>
+</ul>
+
+<p>
+
+So you can configure it to authenticate users using a federation protocol and simultaneously to provide identities using other(s) federation protocols.
+</p>
+
+<p>
+For example, a <acronym title="LemonLDAP::NG">LL::NG</acronym> server can be:
+</p>
+<ul>
+<li class="level1"><div class="li"> A <a href="../../documentation/1.2/idpcas.html" class="wikilink1" title="documentation:1.2:idpcas">CAS server</a> with <a href="../../documentation/1.2/authsaml.html" class="wikilink1" title="documentation:1.2:authsaml">SAML authentication</a></div>
+</li>
+<li class="level1"><div class="li"> An <a href="../../documentation/1.2/idpopenid.html" class="wikilink1" title="documentation:1.2:idpopenid">OpenID server</a> with <a href="../../documentation/1.2/authcas.html" class="wikilink1" title="documentation:1.2:authcas">CAS authentication</a></div>
+</li>
+<li class="level1"><div class="li"> An <a href="../../documentation/1.2/idpsaml.html" class="wikilink1" title="documentation:1.2:idpsaml">SAML server</a> with <a href="../../documentation/1.2/authopenid.html" class="wikilink1" title="documentation:1.2:authopenid">OpenID authentication</a></div>
+</li>
+<li class="level1"><div class="li"> …</div>
+</li>
+</ul>
+
+<p>
+
+See the following chapters:
+</p>
+<ul>
+<li class="level1"><div class="li"> <a href="../../documentation/1.2/start.html#authentication_users_and_password_databases" class="wikilink1" title="documentation:1.2:start">Authentication protocols</a></div>
+</li>
+<li class="level1"><div class="li"> <a href="../../documentation/1.2/start.html#identity_provider" class="wikilink1" title="documentation:1.2:start">Identity provider</a></div>
+</li>
+</ul>
+
+</div>
+</div><!-- closes <div class="dokuwiki export">-->

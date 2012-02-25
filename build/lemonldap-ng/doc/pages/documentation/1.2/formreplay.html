@@ -1,0 +1,159 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+
+
+<h1><a name="form_replay" id="form_replay">Form replay</a></h1>
+<div class="level1">
+
+</div>
+<!-- SECTION "Form replay" [1-27] -->
+<h2><a name="presentation" id="presentation">Presentation</a></h2>
+<div class="level2">
+
+<p>
+
+Form replay allows you to open a session on a protected application by replaying the form POST without asking anything to the user.
+</p>
+
+<p>
+<p><div class="notewarning">
+This kind of <acronym title="Single Sign On">SSO</acronym> mechanism is not clean, and can lead to problems, like local password blocking, local session not well closed, etc.
+</p>
+
+<p>
+Please always try to find another solution to protect your application with <acronym title="LemonLDAP::NG">LL::NG</acronym>. At least, check if it is not a <a href="../../documentation/1.2/applications.html" class="wikilink1" title="documentation:1.2:applications">known application</a>, or <a href="../../documentation/1.2/selfmadeapplication.html" class="wikilink1" title="documentation:1.2:selfmadeapplication">try to adapt its source code</a>.
+
+</div></p>
+</p>
+
+<p>
+If you configure form replay with <acronym title="LemonLDAP::NG">LL::NG</acronym>, the Handler will catch configured POST <acronym title="Uniform Resource Locator">URL</acronym> and send a POST query to the target page (which can be different of the caught page). Each field can be filled with static values or data from user&#039;s session.
+</p>
+
+<p>
+<p><div class="notetip">
+To post user&#039;s password, you must enable <a href="../../documentation/1.2/passwordstore.html" class="wikilink1" title="documentation:1.2:passwordstore">password storing</a>. In this case you will be able to use <code>$_password</code> to fill any password POST field.
+</div></p>
+</p>
+
+<p>
+<acronym title="LemonLDAP::NG">LL::NG</acronym> can catch a GET request and transform it internally in a POST request. All this work is transparent for the user, he cannot see what data are posted by <acronym title="LemonLDAP::NG">LL::NG</acronym>.
+</p>
+
+</div>
+<!-- SECTION "Presentation" [28-1147] -->
+<h2><a name="configuration" id="configuration">Configuration</a></h2>
+<div class="level2">
+
+<p>
+
+You should grab some informations:
+</p>
+<ul>
+<li class="level1"><div class="li"> <acronym title="Uniform Resource Identifier">URI</acronym> of the page which contains the form</div>
+</li>
+<li class="level1"><div class="li"> <acronym title="Uniform Resource Identifier">URI</acronym> of the page which receive POST data (optional if it is the same as the page holding the form)</div>
+</li>
+<li class="level1"><div class="li"> All fields name and values</div>
+</li>
+</ul>
+
+<p>
+
+For example:
+</p>
+<ul>
+<li class="level1"><div class="li"> Form page <acronym title="Uniform Resource Identifier">URI</acronym>: /login.php</div>
+</li>
+<li class="level1"><div class="li"> POST data <acronym title="Uniform Resource Identifier">URI</acronym>: /process.php</div>
+</li>
+<li class="level1"><div class="li"> Fields:</div>
+<ul>
+<li class="level2"><div class="li"> login: $uid (uid of the user)</div>
+</li>
+<li class="level2"><div class="li"> password: $_password (password of the user)</div>
+</li>
+<li class="level2"><div class="li"> static: &#039;StaticValue&#039; (a static value)</div>
+</li>
+<li class="level2"><div class="li"> remember: &#039;1&#039; (checked box)</div>
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+
+Then go in Manager, <code>Virtual Hosts</code> » <em>virtualhost</em> » <code>Form replay</code> and click on <code>Add POST <acronym title="Uniform Resource Locator">URL</acronym></code>.
+</p>
+
+<p>
+<a href="/_detail/documentation/manager-formreplay-newurl.png?id=documentation%3A1.2%3Aformreplay" class="media" title="documentation:manager-formreplay-newurl.png"><img src="../../../media/documentation/manager-formreplay-newurl.png" class="mediacenter" alt="" /></a>
+</p>
+
+<p>
+Fill values here:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>POST <acronym title="Uniform Resource Locator">URL</acronym></strong>: /login.php</div>
+</li>
+<li class="level1"><div class="li"> <strong>Target <acronym title="Uniform Resource Locator">URL</acronym></strong>: /process.php</div>
+</li>
+</ul>
+
+<p>
+
+Then click on <code>New POST data</code> and add all data with their values, for example:
+</p>
+
+<p>
+<a href="/_detail/documentation/manager-formreplay-newdata.png?id=documentation%3A1.2%3Aformreplay" class="media" title="documentation:manager-formreplay-newdata.png"><img src="../../../media/documentation/manager-formreplay-newdata.png" class="mediacenter" alt="" /></a>
+</p>
+
+<p>
+<p><div class="notetip">You can define more than one form replay <acronym title="Uniform Resource Locator">URL</acronym> per virtual host.
+</div></p>
+</p>
+
+</div>
+<!-- SECTION "Configuration" [1148-2099] -->
+<h2><a name="form_replay_with_apache_mod_proxy" id="form_replay_with_apache_mod_proxy">Form replay with Apache mod_proxy</a></h2>
+<div class="level2">
+
+<p>
+
+Due to a conflict between <acronym title="LemonLDAP::NG">LL::NG</acronym> form replay and Apache mod_proxy (see <a href="http://jira.ow2.org/browse/LEMONLDAP-176" class="urlextern" title="http://jira.ow2.org/browse/LEMONLDAP-176"  rel="nofollow">issue</a>), you cannot use form replay on proxied applications, unless you use <acronym title="LemonLDAP::NG">LL::NG</acronym> internal proxy (based on <acronym title="Practical Extraction and Report Language">Perl</acronym> LWP):
+</p>
+<pre class="code file apache">&lt;<span class="kw3">VirtualHost</span>&gt;
+  <span class="kw1">ServerName</span> test2.example.com
+&nbsp;
+  PerlHeaderParserHandler My::Package
+&nbsp;
+  PerlModule Lemonldap::NG::Handler::Proxy
+  <span class="kw1">SetHandler</span> perl-<span class="kw1">script</span>
+  PerlHandler Lemonldap::NG::Handler::Proxy
+  PerlSetVar LmProxyPass http://APPLICATION/
+  PerlSetVar LmLocationToReplace http://APPLICATION/,http://test2.example.com
+&lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
+
+</div>
+<!-- SECTION "Form replay with Apache mod_proxy" [2100-] --></div><!-- closes <div class="dokuwiki export">-->

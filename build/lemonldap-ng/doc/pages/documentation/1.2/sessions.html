@@ -1,0 +1,76 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+
+
+<h1><a name="sessions" id="sessions">Sessions</a></h1>
+<div class="level1">
+
+<p>
+
+<acronym title="LemonLDAP::NG">LL::NG</acronym> rely on a session mechanism with the session ID as a shared secret between the user (in <a href="../../documentation/1.2/ssocookie.html" class="wikilink1" title="documentation:1.2:ssocookie">SSO cookie</a>) and the <a href="../../documentation/1.2/start.html#sessions_databases" class="wikilink1" title="documentation:1.2:start">session database</a>.
+</p>
+
+<p>
+To configure sessions, go in Manager, <code>General Parameters</code> » <code>Sessions</code>:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Store user password in session data</strong>: see <a href="../../documentation/1.2/passwordstore.html" class="wikilink1" title="documentation:1.2:passwordstore">password store documentation</a>.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Sessions timeout</strong>: Maximum lifetime of a session. Old sessions are deleted by a cron script.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Sessions activity timeout</strong>: Maximum inactivity duration.</div>
+</li>
+</ul>
+
+<p>
+<p><div class="notewarning">Session activity timeout requires Handlers to have a write access to sessions database.
+</div></p>
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>Opening conditions</strong>: rules which are evaluated before granting session. If a user does not comply with any condition, he is prompted a customized message. That message can contain session data as user attributes or macros. The conditions are checked in alphabetical order of comments.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Sessions Storage</strong>: see <a href="../../documentation/1.2/start.html#sessions_database" class="wikilink1" title="documentation:1.2:start">sessions database configuration</a>.</div>
+</li>
+<li class="level1"><div class="li"> <strong>Multiple sessions</strong>, you can restrict the number of open sessions:</div>
+<ul>
+<li class="level2"><div class="li"> <strong>One session only by user</strong>: a user can not open 2 sessions with the same account.</div>
+</li>
+<li class="level2"><div class="li"> <strong>One <acronym title="Internet Protocol">IP</acronym> only by user</strong>: a user can not open 2 sessions with the same <acronym title="Internet Protocol">IP</acronym>.</div>
+</li>
+<li class="level2"><div class="li"> <strong>One user by <acronym title="Internet Protocol">IP</acronym> address</strong>: 2 users can not open a session with the same <acronym title="Internet Protocol">IP</acronym>.</div>
+</li>
+<li class="level2"><div class="li"> <strong>Display deleted sessions</strong>: display deleted sessions on authentication phase.</div>
+</li>
+<li class="level2"><div class="li"> <strong>Display other sessions </strong>: display other sessions on authentication phase, with a link to delete them.</div>
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+<p><div class="noteimportant">Note that since <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> protocol is not connected, restrictions are not applied to the new session: the oldest are destroyed.
+</div></p>
+</p>
+
+</div>
+</div><!-- closes <div class="dokuwiki export">-->

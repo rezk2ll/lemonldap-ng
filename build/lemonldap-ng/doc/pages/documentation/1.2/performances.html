@@ -1,0 +1,261 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+ lang="en" dir="ltr">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!-- metadata -->
+<meta name="generator" content="Offline" />
+<meta name="version" content="Offline 0.1" />
+<!-- style sheet links -->
+<link rel="stylesheet" media="all" type="text/css" href="../../../css/all.css" />
+<link rel="stylesheet" media="screen" type="text/css" href="../../../css/screen.css" />
+<link rel="stylesheet" media="print" type="text/css" href="../../../css/print.css" />
+
+</head>
+<body>
+<div class="dokuwiki export">
+
+
+
+
+<h1><a name="performances" id="performances">Performances</a></h1>
+<div class="level1">
+
+<p>
+
+Lemonldap::NG is designed to be very performant. In particular, it use Apache2 threads capabilities so to optimize performances, prefer using <a href="http://httpd.apache.org/docs/2.2/misc/perf-tuning.html#compiletime" class="urlextern" title="http://httpd.apache.org/docs/2.2/misc/perf-tuning.html#compiletime"  rel="nofollow">mpm-worker</a>.
+</p>
+
+</div>
+<!-- SECTION "Performances" [1-254] -->
+<h2><a name="handler_performance" id="handler_performance">Handler performance</a></h2>
+<div class="level2">
+
+<p>
+
+Handlers check rights and calculate headers for each <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> hit. So to improve performances, avoid too complex rules by using the macro or the groups or local macros.
+</p>
+
+</div>
+<!-- SECTION "Handler performance" [255-453] -->
+<h3><a name="macros_and_groups" id="macros_and_groups">Macros and groups</a></h3>
+<div class="level3">
+
+<p>
+
+Macros and groups are calculated during authentication process by the portal:
+</p>
+<ul>
+<li class="level1"><div class="li"> macros are used to extend (or rewrite) <a href="../../documentation/1.2/exportedvars.html" class="wikilink1" title="documentation:1.2:exportedvars">exported variables</a>. A macro is stored as attributes: it can contain boolean results or any string</div>
+</li>
+<li class="level1"><div class="li"> groups are stored as space-separated strings in the special attribute “groups”: it contains the names of groups whose rules were returned true for the current user</div>
+</li>
+</ul>
+
+<p>
+
+Example for macros:
+
+</p>
+<pre class="code perl"><span class="co1"># boolean macro</span>
+isAdmin <span class="sy0">-&gt;</span> <span class="re0">$uid</span> <span class="kw1">eq</span> <span class="st_h">'foo'</span> <span class="kw1">or</span> <span class="re0">$uid</span> <span class="kw1">eq</span> <span class="st_h">'bar'</span>
+<span class="co1"># other macro </span>
+displayName <span class="sy0">-&gt;</span> <span class="re0">$givenName</span><span class="sy0">.</span><span class="st0">&quot; &quot;</span><span class="sy0">.</span><span class="re0">$surName</span>
+&nbsp;
+<span class="co1"># Use a boolean macro in a rule</span>
+<span class="sy0">^/</span>admin <span class="sy0">-&gt;</span> <span class="re0">$isAdmin</span>
+<span class="co1"># Use a string macro in a HTTP header</span>
+Display<span class="sy0">-</span>Name <span class="sy0">-&gt;</span> <span class="re0">$displayName</span></pre>
+
+<p>
+Example for groups:
+
+</p>
+<pre class="code perl"><span class="co1"># group</span>
+admin <span class="sy0">-&gt;</span> <span class="re0">$uid</span> <span class="kw1">eq</span> <span class="st_h">'foo'</span> <span class="kw1">or</span> <span class="re0">$uid</span> <span class="kw1">eq</span> <span class="st_h">'bar'</span>
+&nbsp;
+<span class="co1"># Use a group in a rule</span>
+<span class="sy0">^/</span>admin <span class="sy0">-&gt;</span> <span class="re0">$groups</span> <span class="sy0">=~</span> <span class="sy0">/</span><span class="re0">\badmin</span><span class="re0">\b</span><span class="sy0">/</span></pre>
+
+</div>
+<!-- SECTION "Macros and groups" [454-1308] -->
+<h3><a name="local_macros" id="local_macros">Local macros</a></h3>
+<div class="level3">
+
+<p>
+
+Macros and groups are stored in session database. Local macros is a special feature of handler that permit to have macros useable localy only. Those macros are calculated only at the first usage and stored in the local session cache (only for this server) and only if the user access to the related applications. This avoid to have to many datas stored.
+</p>
+<pre class="code perl"><span class="co1"># rule</span>
+admin <span class="sy0">-&gt;</span> <span class="re0">$admin</span> <span class="sy0">||=</span> <span class="br0">&#40;</span><span class="re0">$uid</span> <span class="kw1">eq</span> <span class="st_h">'foo'</span> <span class="kw1">or</span> <span class="re0">$uid</span> <span class="kw1">eq</span> <span class="st_h">'bar'</span><span class="br0">&#41;</span>
+<span class="co1"># header</span>
+Display<span class="sy0">-</span>Name <span class="sy0">-&gt;</span> <span class="re0">$displayName</span> <span class="sy0">||=</span> <span class="re0">$givenName</span><span class="sy0">.</span><span class="st0">&quot; &quot;</span><span class="sy0">.</span><span class="re0">$surName</span></pre>
+
+<p>
+<p><div class="notetip">Note that this feature is interesting only for the Lemonldap::NG systems protecting a high number of applications
+</div></p>
+</p>
+
+</div>
+<!-- SECTION "Local macros" [1309-1966] -->
+<h2><a name="portal_performances" id="portal_performances">Portal performances</a></h2>
+<div class="level2">
+
+</div>
+<!-- SECTION "Portal performances" [1967-1999] -->
+<h3><a name="general_performances" id="general_performances">General performances</a></h3>
+<div class="level3">
+
+<p>
+
+The portal is the biggest component of Lemonldap::NG. It is recommended to use ModPerl::Registry instead of using cgi-script as described in Apache configuration file example (portal-apache2.conf):
+
+</p>
+<pre class="code apache">&lt;<span class="kw3">Files</span> *.pl&gt;
+    <span class="kw1">SetHandler</span> perl-<span class="kw1">script</span>
+    PerlResponseHandler ModPerl::Registry
+&lt;/<span class="kw3">Files</span>&gt;</pre>
+
+</div>
+<!-- SECTION "General performances" [2000-2343] -->
+<h3><a name="starting_performances" id="starting_performances">Starting performances</a></h3>
+<div class="level3">
+
+<p>
+
+To make the portal start faster when the server is relaunched, add those lines in Apache configuration file (as described in portal-apache2.conf):
+
+</p>
+<pre class="code apache">&lt;Perl&gt;
+    <span class="kw1">require</span> Lemonldap::NG::Portal::SharedConf;
+    Lemonldap::NG::Portal::SharedConf-&gt;compile(
+        qw(delete <span class="kw1">header</span> cache read_from_client cookie <span class="kw1">redirect</span> unescapeHTML));
+    <span class="co1"># Uncomment this line if you use Lemonldap::NG menu</span>
+    <span class="kw1">require</span> Lemonldap::NG::Portal::Menu;
+    <span class="co1"># Uncomment this line if you use portal SOAP capabilities</span>
+    <span class="kw1">require</span> SOAP::Lite;
+&lt;/Perl&gt;</pre>
+
+</div>
+<!-- SECTION "Starting performances" [2344-2919] -->
+<h3><a name="apachesession_performances" id="apachesession_performances">Apache::Session performances</a></h3>
+<div class="level3">
+
+<p>
+
+Lemonldap::NG handlers use a local cache to store sessions (for 10 minutes). So Apache::Session module is not a problem for handlers. It can be a brake for the portal:
+</p>
+<ol>
+<li class="level1"><div class="li"> When you use the multiple sessions restriction parameters, sessions are parsed for each authentication unless you use an <a href="http://search.cpan.org/perldoc?Apache::Session::Browseable" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session::Browseable"  rel="nofollow">Apache::Session::Browseable</a> module.</div>
+</li>
+<li class="level1"><div class="li"> Since MySQL does not have always transaction feature, Apache::Session::MySQL has been designed to use MySQL locks. Since MySQL performances are very bad using this, if you want to store sessions in a MySQL database, prefer one of the following</div>
+</li>
+</ol>
+
+</div>
+
+<h4><a name="replace_mysql_by_apachesessionflex" id="replace_mysql_by_apachesessionflex">Replace MySQL by Apache::Session::Flex</a></h4>
+<div class="level4">
+
+<p>
+
+In “Apache::Session module” field, set ”<a href="http://search.cpan.org/perldoc?Apache::Session::Flex" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session::Flex"  rel="nofollow">Apache::Session::Flex</a>” and use the following parameters:
+
+</p>
+<pre class="code">
+Store      -&gt; MySQL
+Lock       -&gt; Null
+Generate   -&gt; MD5
+Serialize  -&gt; Storable
+DataSource -&gt; dbi:mysql:sessions;host=...
+UserName   -&gt; ...
+Password   -&gt; ...
+</pre>
+
+</div>
+
+<h4><a name="use_apachesessionbrowseable" id="use_apachesessionbrowseable">Use Apache::Session::Browseable</a></h4>
+<div class="level4">
+
+<p>
+
+<a href="http://search.cpan.org/perldoc?Apache::Session::Browseable" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session::Browseable"  rel="nofollow">Apache::Session::Browseable</a> is a wrapper for other Apache::Session modules that add the capability to manage indexes. To use it (with MySQL for example), choose “Apache::Session::Browseable::MySQL” as “Apache::Session module” and use the following parameters:
+
+</p>
+<pre class="code">
+DataSource -&gt; dbi:mysql:sessions;host=...
+UserName   -&gt; user
+Password   -&gt; password
+Index      -&gt; ipAddr uid
+</pre>
+
+<p>
+Note that Apache::Session::Browseable::MySQL doesn&#039;t use MySQL locks.
+</p>
+
+<p>
+<p><div class="notetip">A <a href="http://search.cpan.org/perldoc?Apache::Session::Browseable::Redis" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session::Browseable::Redis"  rel="nofollow">Apache::Session::Browseable::Redis</a> has been created, it is the faster
+</div></p>
+</p>
+
+<p>
+<p><div class="noteimportant">Some Apache::Session module are not useable by Lemonldap::NG such as Apache::Session::Memcached since this module does not offer capability to browse sessions
+</div></p>
+</p>
+
+</div>
+<!-- SECTION "Apache::Session performances" [2920-4879] -->
+<h3><a name="ldap_performances" id="ldap_performances">LDAP performances</a></h3>
+<div class="level3">
+
+<p>
+
+<acronym title="Lightweight Directory Access Protocol">LDAP</acronym> server can be a brake when you use <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> groups recovery. You can avoid this by setting “memberOf” fields in your <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> scheme:
+
+</p>
+<pre class="code ldif">dn: uid=foo,dmdName=people,dc=example,dc=com
+...
+memberOf: cn=admin,dmdName=groups,dc=example,dc=com
+memberOf: cn=su,dmdName=groups,dc=example,dc=com</pre>
+
+<p>
+So instead of using <acronym title="Lightweight Directory Access Protocol">LDAP</acronym> groups recovery, you just have to store “memberOf” field in your exported variables. With OpenLDAP, you can use the <a href="http://www.openldap.org/doc/admin24/overlays.html#Reverse%20Group%20Membership%20Maintenance" class="urlextern" title="http://www.openldap.org/doc/admin24/overlays.html#Reverse%20Group%20Membership%20Maintenance"  rel="nofollow">memberof overlay</a> to do it automaticaly.
+</p>
+
+<p>
+<p><div class="noteimportant">Don&#039;t forget to create an index on the field used to find users (uid by default)
+</div></p>
+</p>
+
+<p>
+<p><div class="notetip">To avoid having group dn stored in sessions datas, you can use a macro to rewrite memberOf:
+</p>
+<ul>
+<li class="level1"><div class="li"> Exported variables</div>
+</li>
+</ul>
+<pre class="code">
+ldapgroups -&gt; memberOf
+</pre>
+<blockquote><div class="no">
+ For now, ldapgroups contains “cn=admin,dmdName=groups,dc=example,dc=com cn=su,dmdName=groups,dc=example,dc=com”</div></blockquote>
+<ul>
+<li class="level1"><div class="li"> A little macro:</div>
+</li>
+</ul>
+<pre class="code perl">ldapgroups <span class="sy0">-&gt;</span> <a href="http://perldoc.perl.org/functions/join.html"><span class="kw3">join</span></a><span class="br0">&#40;</span><span class="st0">&quot; &quot;</span><span class="sy0">,</span><span class="br0">&#40;</span><span class="re0">$ldapgroups</span> <span class="sy0">=~</span> <span class="co2">/cn=(.*?),/g</span><span class="br0">&#41;</span><span class="br0">&#41;</span></pre>
+<blockquote><div class="no">
+ Now ldapgroups contains “admin su”</div></blockquote>
+
+<p>
+
+</div></p>
+
+</p>
+
+</div>
+<!-- SECTION "LDAP performances" [4880-] --></div><!-- closes <div class="dokuwiki export">-->
