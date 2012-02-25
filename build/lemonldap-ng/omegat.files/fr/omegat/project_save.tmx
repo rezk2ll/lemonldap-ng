@@ -1436,6 +1436,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.0/upgrade.html#debian_lenny_upgrade</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T112619Z" changeid="xavier">
+        <seg>../../documentation/1.0/upgrade.html#debian_lenny_upgrade</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.0/writingrulesand_headers.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T073744Z" changeid="xavier">
@@ -5164,6 +5172,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;CDA&lt;/a0&gt; is set if the handler is not in the same domain</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T114015Z" changeid="xavier">
+        <seg>Le &lt;a0&gt;CDA&lt;/a0&gt; ne fonctionne que si l'agent n'est pas dans le même domaine</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;Configure the Apache server&lt;/a0&gt; that host the portal</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T095940Z" changeid="xavier">
@@ -5952,6 +5968,14 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;a0&gt;Work on RPM for 1.0 (#LEMONLDAP-206)&lt;/a0&gt; by clement_oudot (2010/11/26 17:00)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;XML&lt;/a0&gt; file is no more accepted.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T114505Z" changeid="xavier">
+        <seg>Les fichiers &lt;a0&gt;XML&lt;/a0&gt; ne sont plus acceptés.</seg>
       </tuv>
     </tu>
     <tu>
@@ -11712,6 +11736,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Add it to trustedDomains (or set &lt;c0&gt;*&lt;/c0&gt; in trustedDomains to accept all).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T114718Z" changeid="xavier">
+        <seg>L'ajouter à trustedDomains (ou mettre &lt;c0&gt;*&lt;/c0&gt; dans trustedDomains pour tout accepter).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Add on your &lt;c0&gt;server.xml&lt;/c0&gt; file a new valve entry like this (in host section):</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T190600Z" changeid="xavier">
@@ -12060,6 +12092,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T072325Z" changeid="xavier">
         <seg>Configuration d'Apache</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Apache is not configured to authenticate users !</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T114446Z" changeid="xavier">
+        <seg>Apache is not configured to authenticate users !</seg>
       </tuv>
     </tu>
     <tu>
@@ -12816,6 +12856,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Can't locate /usr/share/lemonldap-ng/configStorage.pl</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T112617Z" changeid="xavier">
+        <seg>Can't locate /usr/share/lemonldap-ng/configStorage.pl</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Casimir ANTUNES</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -12884,6 +12932,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Journal des changements</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Check configStorage and configStorageOptionsor file permissions.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T113027Z" changeid="xavier">
+        <seg>Vérifier les options configStorage and configStorageOptions ou les droits associés à ces fichiers.</seg>
       </tuv>
     </tu>
     <tu>
@@ -13180,6 +13236,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T074814Z" changeid="guimard">
         <seg>Configurer le filtre d'authentification et le filtre mail &lt;e0&gt;(“Paramètres généraux » Modules d'authentication » Paramètres &lt;a1&gt;LDAP&lt;/a1&gt; » Filtres”)&lt;/e0&gt; avec :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Configure local cache first.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T112917Z" changeid="xavier">
+        <seg>Configurer d'abord le cache local.</seg>
       </tuv>
     </tu>
     <tu>
@@ -14056,6 +14120,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Error messages</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T112410Z" changeid="xavier">
+        <seg>Messages d'erreur</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Erwan LEGALL</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -14192,6 +14264,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Extensible Markup Language</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T114340Z" changeid="xavier">
+        <seg>Extensible Markup Language</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>External portal</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120215T045522Z" changeid="xavier">
@@ -14284,6 +14364,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Retrouvez-nous sur Freenode, canal #lemonldap-ng</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Firefox has detected that the server is redirecting the request for this address in a way that will never complete</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T113642Z" changeid="xavier">
+        <seg>Firefox has detected that the server is redirecting the request for this address in a way that will never complete</seg>
       </tuv>
     </tu>
     <tu>
@@ -16472,6 +16560,46 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Lemonldap::NG::Common</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T112442Z" changeid="xavier">
+        <seg>Lemonldap::NG::Common</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Lemonldap::NG::Handler</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T112725Z" changeid="xavier">
+        <seg>Lemonldap::NG::Handler</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Lemonldap::NG::Handler::SharedConf: No cookie found</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T113409Z" changeid="xavier">
+        <seg>Lemonldap::NG::Handler::SharedConf: No cookie found</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Lemonldap::NG::Manager</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T114203Z" changeid="xavier">
+        <seg>Lemonldap::NG::Manager</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Lemonldap::NG::Portal</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T114242Z" changeid="xavier">
+        <seg>Lemonldap::NG::Portal</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Lemonldap::NG::Portal::SharedConf-&gt;compile(</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -17116,6 +17244,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T173831Z" changeid="xavier">
         <seg>Aucun &lt;a0&gt;en-tête&lt;/a0&gt; n'est nécessaire.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>No configuration found</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T112919Z" changeid="xavier">
+        <seg>No configuration found</seg>
       </tuv>
     </tu>
     <tu>
@@ -17842,6 +17978,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Please use lmMigrateConfFiles2ini to migrate your menu configuration</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T114402Z" changeid="xavier">
+        <seg>Please use lmMigrateConfFiles2ini to migrate your menu configuration</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Port</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T074024Z" changeid="xavier">
@@ -18378,6 +18522,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Restart Apache to purge it.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T113216Z" changeid="xavier">
+        <seg>Redémarrer Apache pour le purger.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Restart Apache:</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -18718,6 +18870,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Paramètres de sécurité</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>See &lt;a0&gt;Debian Lenny upgrade&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T112723Z" changeid="xavier">
+        <seg>Voir la &lt;a0&gt;mise à jour de Debian Lenny&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -19394,6 +19554,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Status module can not be loaded without localStorage parameter</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T112845Z" changeid="xavier">
+        <seg>Status module can not be loaded without localStorage parameter</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Status page</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -19562,6 +19730,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>That is why it is important to set APACHEUSER variable when you launch “make install”</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T113402Z" changeid="xavier">
+        <seg>C'est pourquoi il est important de renseigner la variable APACHEUSER lorsqu'on lance “make install”</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The &lt;a0&gt;DBI&lt;/a0&gt; string</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T072311Z" changeid="xavier">
@@ -19710,6 +19886,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Le domaine commun est utilisé par le &lt;a0&gt;SP SAML&lt;/a0&gt; pour trouver le fournisseur d'identité de l'utilisateur et par l'&lt;a1&gt;IdP SAML&lt;/a1&gt; pour s'enregistrer dans la liste des IDP.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The cookie $id isn't yet available: Object does not exist in the data store</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T113505Z" changeid="xavier">
+        <seg>The cookie $id isn't yet available: Object does not exist in the data store</seg>
       </tuv>
     </tu>
     <tu>
@@ -20290,6 +20474,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>This can happend when you use lmConfigEditor or launch &lt;s0&gt;cron files&lt;/s0&gt; with a different user than Apache process.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T113322Z" changeid="xavier">
+        <seg>Ceci peut arriver lorsqu'on utilise lmConfigEditor ou lorsqu'on lance les &lt;s0&gt;fichiers cron&lt;/s0&gt; avec un utilisateur différent de celui du processus Apache.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>This concerns all parameters for the Attribute Authority metadata section</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -20394,6 +20586,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>This message is displayed only when you upgrade from a version older than 1.0</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T112615Z" changeid="xavier">
+        <seg>Ce message n'est affiché que lors d'une mise à jour depuis une version inférieure à la 1.0</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>This module is a &lt;a0&gt;LL::NG&lt;/a0&gt; specific identity federation protocol.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T045402Z" changeid="xavier">
@@ -20406,6 +20606,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Cette option peut être surchargée pour chaque fournisseur de service.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This page do not reference all error messages, but only the frequentest</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T112441Z" changeid="xavier">
+        <seg>Cette page ne référence pas tous les messages d'erreur, mais simplement les plus fréquents</seg>
       </tuv>
     </tu>
     <tu>
@@ -20850,6 +21058,22 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>URL contains a non protected host</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T114627Z" changeid="xavier">
+        <seg>URL contains a non protected host</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Unable to clear local cache</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T112726Z" changeid="xavier">
+        <seg>Unable to clear local cache</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Uncheck it to disable &lt;a1&gt;SAML&lt;/a1&gt; authentication (for example, if your Identity Provider is down).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T183018Z" changeid="xavier">
@@ -20978,6 +21202,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>User XXXX was not granted to open session</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T114244Z" changeid="xavier">
+        <seg>User XXXX was not granted to open session</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>User authenticates on Portal</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -21070,6 +21302,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112220Z" changeid="xavier">
         <seg>Importation des comptes utilisateurs (auto-création à la première connexion)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>User rejected because VirtualHost XXXX has no configuration</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T113030Z" changeid="xavier">
+        <seg>User rejected because VirtualHost XXXX has no configuration</seg>
       </tuv>
     </tu>
     <tu>
@@ -21246,6 +21486,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Verify that:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T113914Z" changeid="xavier">
+        <seg>Verifier que :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Version 1.0</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -21266,6 +21514,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>W</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Warning: key is not defined, set it in the manager !</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T112446Z" changeid="xavier">
+        <seg>Warning: key is not defined, set it in the manager !</seg>
       </tuv>
     </tu>
     <tu>
@@ -21458,6 +21714,30 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>X509</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>XML menu configuration is deprecated.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T114305Z" changeid="xavier">
+        <seg>XML menu configuration is deprecated.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>XSS attack detected</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T114720Z" changeid="xavier">
+        <seg>XSS attack detected</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>XXXX was not found in tree</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T114205Z" changeid="xavier">
+        <seg>XXXX was not found in tree</seg>
       </tuv>
     </tu>
     <tu>
@@ -21834,6 +22114,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T154553Z" changeid="xavier">
         <seg>Il faut lancer cette commande dans Active Directory:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You have to set its value in Manager.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T112536Z" changeid="xavier">
+        <seg>Il faut en indiquer une dans le manager.</seg>
       </tuv>
     </tu>
     <tu>
@@ -23182,6 +23470,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>documentation:1.0:start</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.0:upgrade</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T112620Z" changeid="xavier">
+        <seg>documentation:1.0:upgrade</seg>
       </tuv>
     </tu>
     <tu>
@@ -25538,6 +25834,14 @@ make test</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>mkdir /tmp/MyNamespace/2: Permission denied ...</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T113135Z" changeid="xavier">
+        <seg>mkdir /tmp/MyNamespace/2: Permission denied ...</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>multi &lt;s0&gt;=&gt;&lt;/s0&gt; &lt;s1&gt;{&lt;/s1&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T145959Z" changeid="xavier">
@@ -25736,6 +26040,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR">
         <seg>portail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>portal is in a https virtualhost if securedCookie is set</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T114110Z" changeid="xavier">
+        <seg>le portail est dans un hôte virtuel https si securedCookie est activé</seg>
       </tuv>
     </tu>
     <tu>
@@ -26032,6 +26344,14 @@ cd lemonldap-ng-*</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>the portal is in the declared domain</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T113934Z" changeid="xavier">
+        <seg>le portail est dans le domaine déclaré</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>timezone</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120214T050451Z" changeid="xavier">
@@ -26232,6 +26552,14 @@ cd lemonldap-ng-*</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>you've restart all Apache server after having change cookie name or domain</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T114155Z" changeid="xavier">
+        <seg>tous les serveurs Apache ont été rechargés après un changement du nom de cookie ou du domaine</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>yum install mod_auth_kerb</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T154436Z" changeid="xavier">
@@ -26328,6 +26656,134 @@ cd lemonldap-ng-*</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112935Z" changeid="xavier">
         <seg>…</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>→ Check grantSessionRule parameter.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T114301Z" changeid="xavier">
+        <seg>→ Vérifier le paramètre grantSessionRule.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>→ LemonLDAP::NG uses a key to crypt/decrypt some datas.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T112517Z" changeid="xavier">
+        <seg>→ LemonLDAP::NG utilise une clef pour chiffrer/déchiffrer certaines données.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>→ Local cache cannot be cleard, check the localStorage and localStorageOptions or file permissions</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T112836Z" changeid="xavier">
+        <seg>→ Le cache local ne peut être effacé, regarder les options localStorage and localStorageOptions ou les droits associés à ces fichiers</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>→ Some &lt;a0&gt;URL&lt;/a0&gt; parameters contain forbidden characters.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T114751Z" changeid="xavier">
+        <seg>→ Certains paramètres de l'&lt;a0&gt;URL&lt;/a0&gt; contiennent des caractères interdits.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>→ The cache has been created by another user than Apache's user.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T113203Z" changeid="xavier">
+        <seg>→ Le cache a été créé par un autre utilisateur que celui d'Apache.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>→ The configuration cannot be loaded.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T112931Z" changeid="xavier">
+        <seg>→ La configuration ne peut être chargée.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>→ The host is not known by LemonLDAP::NG.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T114647Z" changeid="xavier">
+        <seg>→ L'hôte n'est pas connu de LemonLDAP::NG.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>→ The specified node is not the uploaded tree.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T114241Z" changeid="xavier">
+        <seg>→ Le nœud spécifié n'est pas dans l'arbre chargé.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>→ The specified virtual host was not configured in Manager.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T113055Z" changeid="xavier">
+        <seg>→ L'hôte virtuel utilisé n'est pas configuré dans le manager.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>→ User does not have Lemonldap::NG cookie, handler redirect it to the portal</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T113451Z" changeid="xavier">
+        <seg>→ L'utilisateur ne dispose pas d'un cookie Lemonldap::NG, l'agent le redirige vers le portail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>→ User session has expired or handler does not have access to the same Apache::Session database than the portal</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T113558Z" changeid="xavier">
+        <seg>→ La session de l'utilisateur a expiré ou l'agent n'a pas accès à la même base de données Apache::Session que le portail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>→ When you upgrade from Debian Lenny with customized index.pl files, you must upgrade them.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T112709Z" changeid="xavier">
+        <seg>→ Lors d'une mise à jour d'une Debian Lenny avec un fichier index.pl personnalisé, il faut le mettre à jour.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>→ You do not use the new configuration syntax for application list.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T114440Z" changeid="xavier">
+        <seg>→ La nouvelle syntaxe de configuration de la liste des applications n'est pas utilisée.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>→ You tried to activate Status module without localStorage.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T112905Z" changeid="xavier">
+        <seg>→ Le module Status est activé sans localStorage.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>→ You use the Apache authentication backend, but Apache is not or bad configured (no REMOTE_USER send to LemonLDAP::NG).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T114622Z" changeid="xavier">
+        <seg>→ Le backend d'authentification Apache est utilisé, mais Apache n'est pas ou mal configuré (la variable d'environnement REMOTE_USER n'est pas envoyée à LemonLDAP::NG).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>→ Your browser loops between portal and handler, it is probably a cookie problem.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T113908Z" changeid="xavier">
+        <seg>→ le navigateur boucle entre le portail et l'agent, il s'agit probablement d'un problème.</seg>
       </tuv>
     </tu>
     <tu>
