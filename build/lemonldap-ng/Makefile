@@ -382,6 +382,8 @@ install_examples_site:
 	@$(PERL) -i -pe 's#__SESSIONDIR__#$(APACHESESSIONFILEDIR)/#g;' $(REXAMPLESDIR)/portal/*.pl
 
 install_doc_site:
+	# Offline documentation install
+	@rm -rf $(RDOCDIR)
 	@install -v -d $(RDOCDIR)
 	@cp -dR --remove-destination doc/* $(RDOCDIR)
 
