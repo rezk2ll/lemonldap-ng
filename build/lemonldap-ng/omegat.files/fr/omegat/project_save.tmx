@@ -9346,6 +9346,24 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;SetEnvIfNoCase&lt;/s0&gt; Auth-&lt;s1&gt;User&lt;/s1&gt; &lt;s2&gt;&quot;(.*)&quot;&lt;/s2&gt; PHP_AUTH_USER=$1
+&lt;s3&gt;SetEnvIfNoCase&lt;/s3&gt; Auth-Password &lt;s4&gt;&quot;(.*)&quot;&lt;/s4&gt; PHP_AUTH_PW=$&lt;s5&gt;1&lt;/s5&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T195407Z" changeid="xavier">
+        <seg>&lt;s0&gt;SetEnvIfNoCase&lt;/s0&gt; Auth-&lt;s1&gt;User&lt;/s1&gt; &lt;s2&gt;&quot;(.*)&quot;&lt;/s2&gt; PHP_AUTH_USER=$1
+&lt;s3&gt;SetEnvIfNoCase&lt;/s3&gt; Auth-Password &lt;s4&gt;&quot;(.*)&quot;&lt;/s4&gt; PHP_AUTH_PW=$&lt;s5&gt;1&lt;/s5&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;SetEnvIfNoCase&lt;/s0&gt; Auth-&lt;s1&gt;User&lt;/s1&gt; &lt;s2&gt;&quot;(.*)&quot;&lt;/s2&gt; REMOTE_USER=$&lt;s3&gt;1&lt;/s3&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T195027Z" changeid="xavier">
+        <seg>&lt;s0&gt;SetEnvIfNoCase&lt;/s0&gt; Auth-&lt;s1&gt;User&lt;/s1&gt; &lt;s2&gt;&quot;(.*)&quot;&lt;/s2&gt; REMOTE_USER=$&lt;s3&gt;1&lt;/s3&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Shared key&lt;/s0&gt;: correspond to the cookie parameter of sympa.conf</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111217T081210Z" changeid="xavier">
@@ -11046,10 +11064,28 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s2&gt;ProxyPreserveHost&lt;/s2&gt; &lt;s3&gt;on&lt;/s3&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T195232Z" changeid="xavier">
+        <seg>&lt;s2&gt;ProxyPreserveHost&lt;/s2&gt; &lt;s3&gt;on&lt;/s3&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s2&gt;RewriteEngine&lt;/s2&gt; &lt;s3&gt;On&lt;/s3&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T064350Z" changeid="xavier">
         <seg>&lt;s2&gt;RewriteEngine&lt;/s2&gt; &lt;s3&gt;On&lt;/s3&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s2&gt;SetEnvIfNoCase&lt;/s2&gt; Auth-&lt;s3&gt;User&lt;/s3&gt; &lt;s4&gt;&quot;(.*)&quot;&lt;/s4&gt; REMOTE_USER=$1
+ </seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T195304Z" changeid="xavier">
+        <seg>&lt;s2&gt;SetEnvIfNoCase&lt;/s2&gt; Auth-&lt;s3&gt;User&lt;/s3&gt; &lt;s4&gt;&quot;(.*)&quot;&lt;/s4&gt; REMOTE_USER=$1
+ </seg>
       </tuv>
     </tu>
     <tu>
@@ -11324,6 +11360,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s4&gt;ProxyPass&lt;/s4&gt; / http://APPLICATION_IP/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T195232Z" changeid="xavier">
+        <seg>&lt;s4&gt;ProxyPass&lt;/s4&gt; / http://APPLICATION_IP/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s4&gt;ProxyPreserveHost&lt;/s4&gt; &lt;s5&gt;on&lt;/s5&gt;
  </seg>
       </tuv>
@@ -11462,6 +11506,30 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T064058Z" changeid="xavier">
         <seg>&lt;s5&gt;Deny&lt;/s5&gt; from &lt;s6&gt;all&lt;/s6&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s5&gt;DocumentRoot&lt;/s5&gt; /var/www/application
+ 
+&lt;/&lt;s6&gt;VirtualHost&lt;/s6&gt;&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T195305Z" changeid="xavier">
+        <seg>&lt;s5&gt;DocumentRoot&lt;/s5&gt; /var/www/application
+ 
+&lt;/&lt;s6&gt;VirtualHost&lt;/s6&gt;&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s5&gt;ProxyPassReverse&lt;/s5&gt; / http://APPLICATION_IP/
+ 
+&lt;/&lt;s6&gt;VirtualHost&lt;/s6&gt;&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T195233Z" changeid="xavier">
+        <seg>&lt;s5&gt;ProxyPassReverse&lt;/s5&gt; / http://APPLICATION_IP/
+ 
+&lt;/&lt;s6&gt;VirtualHost&lt;/s6&gt;&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -12518,6 +12586,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Apache &lt;a0&gt;SetEnvIf module&lt;/a0&gt; will let you transform the Auth-User &lt;a1&gt;HTTP&lt;/a1&gt; header in &lt;c2&gt;REMOTE_USER&lt;/c2&gt; environment variable:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T195024Z" changeid="xavier">
+        <seg>Le &lt;a0&gt;module SetEnvIf&lt;/a0&gt; d'Apache peut transformer l'en-tête &lt;a1&gt;HTTP&lt;/a1&gt; Auth-User en variable d'environnement &lt;c2&gt;REMOTE_USER&lt;/c2&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Apache Kerberos module</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T154410Z" changeid="xavier">
@@ -12570,6 +12646,22 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T072325Z" changeid="xavier">
         <seg>Configuration d'Apache</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Apache configuration file on &lt;a0&gt;LL::NG&lt;/a0&gt; reverse proxy (hosting &lt;a1&gt;LL::NG&lt;/a1&gt; Handler):</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T195230Z" changeid="xavier">
+        <seg>le fichier de configuration d'Apache sur le reverse-proxy &lt;a0&gt;LL::NG&lt;/a0&gt; (celui qui héberge l'agent &lt;a1&gt;LL::NG&lt;/a1&gt;):</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Apache configuration file on application server (hosting the application):</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T195303Z" changeid="xavier">
+        <seg>le fichier de configuration d'Apache sur le serveur d'application (celui qui héberge l'application):</seg>
       </tuv>
     </tu>
     <tu>
@@ -13874,6 +13966,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Contributions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Convert HTTP header into environment variable</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T194737Z" changeid="xavier">
+        <seg>Convertir les en-têtes HTTP en variables d'environnement</seg>
       </tuv>
     </tu>
     <tu>
@@ -16454,6 +16554,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>In this case you will have two Apache configuration files:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T195141Z" changeid="xavier">
+        <seg>Dans ce cas 2 fichiers de configuration Apache doivent être renseignés :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>In this case, &lt;a1&gt;LL::NG&lt;/a1&gt; acts like an SAML2 Service Provider (SP).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120218T220146Z" changeid="xavier">
@@ -16522,6 +16630,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T182319Z" changeid="xavier">
         <seg>Sinon, par défaut, les utilisateurs sans créneau horaire de connexion sont rejetés.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Indeed, this variable is set by the Handler on the physical server hosting the Handler, and not on other servers where the Handler is not installed.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T194928Z" changeid="xavier">
+        <seg>Toutefois, cette variable est renseignée par l'agent dans le serveur physique l'hébergeant mais pas dans les autres serveurs sans agents.</seg>
       </tuv>
     </tu>
     <tu>
@@ -18322,6 +18438,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T144040Z" changeid="xavier">
         <seg>Bien sûr, les attributs &lt;a0&gt;LDAP&lt;/a0&gt; standard peuvent être utilisés pour stocker ces données, mais &lt;a1&gt;LL::NG&lt;/a1&gt; fournit aussi une extension de schéma &lt;a2&gt;LDAP&lt;/a2&gt; pour les gérer.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Of course, you need to &lt;a0&gt;store password in session&lt;/a0&gt; to fill &lt;a1&gt;PHP&lt;/a1&gt;_AUTH_PW.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T195441Z" changeid="xavier">
+        <seg>Bien sûr, il faut &lt;a0&gt;stocker le mot-de-passe dans la session&lt;/a0&gt; pour renseigner &lt;a1&gt;PHP&lt;/a1&gt;_AUTH_PW.</seg>
       </tuv>
     </tu>
     <tu>
@@ -20346,6 +20470,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Sometimes, &lt;a0&gt;PHP&lt;/a0&gt; applications also check the &lt;a1&gt;PHP&lt;/a1&gt;_AUTH_USER and &lt;a2&gt;PHP&lt;/a2&gt;_AUHT_PW environment variables.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T195349Z" changeid="xavier">
+        <seg>Parfois, des applications &lt;a0&gt;PHP&lt;/a0&gt; examinent également les variables d'environnement &lt;a1&gt;PHP&lt;/a1&gt;_AUTH_USER et &lt;a2&gt;PHP&lt;/a2&gt;_AUHT_PW.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Source</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -21490,6 +21622,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>This can be used to protect applications relying on &lt;c0&gt;REMOTE_USER&lt;/c0&gt; environment variable in reverse proxy mode.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T195111Z" changeid="xavier">
+        <seg>Ceci permet de protéger des applications nécessitant la variable d'environnement &lt;c0&gt;REMOTE_USER&lt;/c0&gt; en mode reverse-proxy.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>This can happend when you use lmConfigEditor or launch &lt;s0&gt;cron files&lt;/s0&gt; with a different user than Apache process.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T113322Z" changeid="xavier">
@@ -22550,6 +22690,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Using &lt;a0&gt;LL::NG&lt;/a0&gt; in reverse proxy mode, you will not have the &lt;c1&gt;REMOTE_USER&lt;/c1&gt; environment variable set.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T194816Z" changeid="xavier">
+        <seg>Lorsque &lt;a0&gt;LL::NG&lt;/a0&gt; est utilisé en mode reverse-proxy, la variable d'environnement &lt;c1&gt;REMOTE_USER&lt;/c1&gt; n'est pas renseignée.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Using Active-Directory as authentication backend</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T094832Z" changeid="xavier">
@@ -23202,6 +23350,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Vous pouvez consulter la vidéo ici : &lt;a0&gt;http://marcelhaise.com/rmll2009/#LemonLDAP&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can set them the same way:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T195406Z" changeid="xavier">
+        <seg>On peut les renseigner par la même voie :</seg>
       </tuv>
     </tu>
     <tu>
@@ -25768,6 +25924,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T182005Z" changeid="xavier">
         <seg>http://httpd.apache.org/docs/current/mod/mod_rewrite.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://httpd.apache.org/docs/current/mod/mod_setenvif.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T194929Z" changeid="xavier">
+        <seg>http://httpd.apache.org/docs/current/mod/mod_setenvif.html</seg>
       </tuv>
     </tu>
     <tu>
