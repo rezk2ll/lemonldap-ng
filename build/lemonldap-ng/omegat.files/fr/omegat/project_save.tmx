@@ -4644,6 +4644,22 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/var/lib/lemonldap-ng/sessions</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T192005Z" changeid="xavier">
+        <seg>/var/lib/lemonldap-ng/sessions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/var/lib/lemonldap-ng/sessions/lock</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T192020Z" changeid="xavier">
+        <seg>/var/lib/lemonldap-ng/sessions/lock</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>0</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T195414Z" changeid="xavier">
@@ -14076,6 +14092,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Directory</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T191951Z" changeid="xavier">
+        <seg>Directory</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Disable all signature flags in &lt;c0&gt;Options&lt;/c0&gt; » &lt;c1&gt;Signature&lt;/c1&gt;, except &lt;c2&gt;Sign &lt;a3&gt;SSO&lt;/a3&gt; message&lt;/c2&gt; which should be to &lt;c4&gt;On&lt;/c4&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T194801Z" changeid="xavier">
@@ -14744,6 +14768,22 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T183726Z" changeid="xavier">
         <seg>Backend de configuration File</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>File session backend</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T185340Z" changeid="xavier">
+        <seg>Backend de sessions File</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>File session backend is the more simple session database.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T185411Z" changeid="xavier">
+        <seg>Le backend de sessions File est la plus simple des bases de données.</seg>
       </tuv>
     </tu>
     <tu>
@@ -16180,6 +16220,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>In the manager: set ”&lt;a0&gt;Apache::Session::File&lt;/a0&gt;” in “General parameters » Sessions » Session storage » Apache::Session module” and add the following parameters (case sensitive):</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T191946Z" changeid="xavier">
+        <seg>Dans le manager : indiquez &lt;a0&gt;Apache::Session::File&lt;/a0&gt; dans &lt;c1&gt;Paramètres généraux&lt;/c1&gt; » &lt;c2&gt;Sessions&lt;/c2&gt; » &lt;c3&gt;Stockage des sessions&lt;/c3&gt; » &lt;c4&gt;Module Apache::Session&lt;/c4&gt; et ajoutez les paramètres suivant (sensibles à la casse):</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>In this case, &lt;a1&gt;LL::NG&lt;/a1&gt; acts like an SAML2 Service Provider (SP).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120218T220146Z" changeid="xavier">
@@ -16424,6 +16472,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Il peut gérer plus de 200 000 utilisateurs.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>It can not be used to share sessions between different servers except if you share directories (with NFS,…).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T191914Z" changeid="xavier">
+        <seg>Il ne peut être utilisé pour partager les sessions entre serveurs sauf si les répertoires sont partagés (avec NFS,…).</seg>
       </tuv>
     </tu>
     <tu>
@@ -17256,6 +17312,22 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Les macros locales sont une fonctionnalité spéciale des agents qui permettent d'avoir des macros utilisables localement seulement.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Lock files are stored in another directory.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T185504Z" changeid="xavier">
+        <seg>Les fichiers verrous sont stockés dans un autre répertoire.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LockDirectory</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T192006Z" changeid="xavier">
+        <seg>LockDirectory</seg>
       </tuv>
     </tu>
     <tu>
@@ -19094,6 +19166,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Restrict access to the directories only to the Apache server.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T192048Z" changeid="xavier">
+        <seg>Restreindre l'accès à ces répertoires au seul utilisateur Apache.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Restrict network access to the database.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T072504Z" changeid="xavier">
@@ -19666,6 +19746,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Les sessions sont effacées par des tâches planifiées.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Sessions are stored as files in a single directory.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T185435Z" changeid="xavier">
+        <seg>Les sessions sont stockées dans des fichiers dans un unique répertoire.</seg>
       </tuv>
     </tu>
     <tu>
@@ -20634,6 +20722,22 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T195341Z" changeid="xavier">
         <seg>Le mot-de-passe peut être stocké en clair ou encodé avec une méthode &lt;a0&gt;SQL&lt;/a0&gt; standard :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The path to the lock directory</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T192019Z" changeid="xavier">
+        <seg>Le chemin du répertoire des verrous</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The path to the main directory</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T192004Z" changeid="xavier">
+        <seg>Le chemin du répertoire principal</seg>
       </tuv>
     </tu>
     <tu>
@@ -23610,6 +23714,16 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>chmod 750 /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/sessions/lock
+chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/sessions/lock</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T192057Z" changeid="xavier">
+        <seg>chmod 750 /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/sessions/lock
+chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/sessions/lock</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>contact</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -25546,6 +25660,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T072044Z" changeid="xavier">
         <seg>http://search.cpan.org/perldoc?Apache::Session::Browseable::MySQL</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://search.cpan.org/perldoc?Apache::Session::File</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T191916Z" changeid="xavier">
+        <seg>http://search.cpan.org/perldoc?Apache::Session::File</seg>
       </tuv>
     </tu>
     <tu>
