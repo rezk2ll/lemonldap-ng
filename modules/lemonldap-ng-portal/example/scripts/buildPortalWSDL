@@ -189,7 +189,7 @@ print Lemonldap::NG::Common::BuildWSDL->new->buildWSDL(<<EOT);
         <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/CGI/SOAPService" use="encoded" />
       </wsdl:output>
     </wsdl:operation>
-    <wdsl:operation name="isAuthorizedURI">
+    <wsdl:operation name="isAuthorizedURI">
       <wsdlsoap:operation soapAction="" />
       <wsdl:input name="isAuthorizedURIRequest">
         <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/CGI/SOAPService" use="encoded" />
@@ -197,8 +197,8 @@ print Lemonldap::NG::Common::BuildWSDL->new->buildWSDL(<<EOT);
       <wsdl:output name="isAuthorizedURIResponse">
         <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/CGI/SOAPService" use="encoded" />
       </wsdl:output>
-    </wdsl:operation>
-    <wdsl:operation name="getMenuApplications">
+    </wsdl:operation>
+    <wsdl:operation name="getMenuApplications">
       <wsdlsoap:operation soapAction="" />
       <wsdl:input name="getMenuApplicationsRequest">
         <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/CGI/SOAPService" use="encoded" />
@@ -206,7 +206,7 @@ print Lemonldap::NG::Common::BuildWSDL->new->buildWSDL(<<EOT);
       <wsdl:output name="getMenuApplicationsResponse">
         <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:Lemonldap/NG/Common/CGI/SOAPService" use="encoded" />
       </wsdl:output>
-    </wdsl:operation>
+    </wsdl:operation>
 
   </wsdl:binding>
 
