@@ -1452,6 +1452,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.0/writingrulesand_headers.html#rules</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T111458Z" changeid="xavier">
+        <seg>../../documentation/1.0/writingrulesand_headers.html#rules</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.1/configlocation.html</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -5032,6 +5040,18 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;&lt;s1&gt;package&lt;/s1&gt;&lt;/a0&gt; SSOExtensions&lt;s2&gt;;&lt;/s2&gt;
+ 
+&lt;s3&gt;sub&lt;/s3&gt; function1 &lt;s4&gt;{&lt;/s4&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T111859Z" changeid="xavier">
+        <seg>&lt;a0&gt;&lt;s1&gt;package&lt;/s1&gt;&lt;/a0&gt; SSOExtensions&lt;s2&gt;;&lt;/s2&gt;
+ 
+&lt;s3&gt;sub&lt;/s3&gt; function1 &lt;s4&gt;{&lt;/s4&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;&lt;s1&gt;session_start&lt;/s1&gt;&lt;/a0&gt;&lt;s2&gt;(&lt;/s2&gt;&lt;s3&gt;)&lt;/s3&gt;&lt;s4&gt;;&lt;/s4&gt;
  
 &lt;s5&gt;$_SERVER&lt;/s5&gt;&lt;s6&gt;[&lt;/s6&gt;&lt;s7&gt;'PHP_AUTH_USER'&lt;/s7&gt;&lt;s8&gt;]&lt;/s8&gt; &lt;s9&gt;=&lt;/s9&gt; &lt;s10&gt;$_SERVER&lt;/s10&gt;&lt;s11&gt;[&lt;/s11&gt;&lt;s12&gt;'REMOTE_USER'&lt;/s12&gt;&lt;s13&gt;]&lt;/s13&gt;&lt;s14&gt;;&lt;/s14&gt;
@@ -6344,6 +6364,20 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a18&gt;&lt;s19&gt;return&lt;/s19&gt;&lt;/a18&gt; &lt;s20&gt;$param&lt;/s20&gt;
+&lt;s21&gt;}&lt;/s21&gt;
+ 
+&lt;s22&gt;1&lt;/s22&gt;&lt;s23&gt;;&lt;/s23&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T111924Z" changeid="xavier">
+        <seg>&lt;a18&gt;&lt;s19&gt;return&lt;/s19&gt;&lt;/a18&gt; &lt;s20&gt;$param&lt;/s20&gt;
+&lt;s21&gt;}&lt;/s21&gt;
+ 
+&lt;s22&gt;1&lt;/s22&gt;&lt;s23&gt;;&lt;/s23&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a18&gt;authnull&lt;/a18&gt;&lt;br19/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111447Z" changeid="xavier">
@@ -7288,6 +7322,20 @@
         <seg>&lt;s0&gt;# Meilleures performances sous ModPerl::Registry&lt;/s0&gt;
 &lt;s1&gt;# A décommenter pour augmenter les performances du portail&lt;/s1&gt;
 &lt;Perl&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;# Perl environment&lt;/s0&gt;
+PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
+PerlRequire /root/SSOExtensions.pm
+PerlOptions +GlobalRequest</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T112115Z" changeid="xavier">
+        <seg>&lt;s0&gt;# Perl environment&lt;/s0&gt;
+PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
+PerlRequire /root/SSOExtensions.pm
+PerlOptions +GlobalRequest</seg>
       </tuv>
     </tu>
     <tu>
@@ -9564,6 +9612,16 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s11&gt;my&lt;/s11&gt; &lt;s12&gt;$param&lt;/s12&gt; &lt;s13&gt;=&lt;/s13&gt; &lt;a14&gt;&lt;s15&gt;shift&lt;/s15&gt;&lt;/a14&gt;&lt;s16&gt;;&lt;/s16&gt;
+ </seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T111905Z" changeid="xavier">
+        <seg>&lt;s11&gt;my&lt;/s11&gt; &lt;s12&gt;$param&lt;/s12&gt; &lt;s13&gt;=&lt;/s13&gt; &lt;a14&gt;&lt;s15&gt;shift&lt;/s15&gt;&lt;/a14&gt;&lt;s16&gt;;&lt;/s16&gt;
+ </seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s11&gt;}&lt;/s11&gt;&lt;s12&gt;,&lt;/s12&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T150006Z" changeid="xavier">
@@ -10040,6 +10098,16 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T182219Z" changeid="xavier">
         <seg>&lt;s17&gt;# DocumentRoot&lt;/s17&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s17&gt;# Your nice code here&lt;/s17&gt;
+ </seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T111922Z" changeid="xavier">
+        <seg>&lt;s17&gt;# Le joli code ici :&lt;/s17&gt;
+ </seg>
       </tuv>
     </tu>
     <tu>
@@ -10964,6 +11032,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T064351Z" changeid="xavier">
         <seg>&lt;s5&gt;RewriteRule&lt;/s5&gt; ^/saml/.* /index.pl</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s5&gt;my&lt;/s5&gt; &lt;s6&gt;$portal&lt;/s6&gt; &lt;s7&gt;=&lt;/s7&gt; &lt;a8&gt;&lt;s9&gt;shift&lt;/s9&gt;&lt;/a8&gt;&lt;s10&gt;;&lt;/s10&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T111903Z" changeid="xavier">
+        <seg>&lt;s5&gt;my&lt;/s5&gt; &lt;s6&gt;$portal&lt;/s6&gt; &lt;s7&gt;=&lt;/s7&gt; &lt;a8&gt;&lt;s9&gt;shift&lt;/s9&gt;&lt;/a8&gt;&lt;s10&gt;;&lt;/s10&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -13284,6 +13360,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Create your &lt;a0&gt;Perl&lt;/a0&gt; module with custom functions.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T111813Z" changeid="xavier">
+        <seg>Créer un module &lt;a0&gt;Perl&lt;/a0&gt; avec des fonctions personnalisées.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Cross Domain Authentication</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T045510Z" changeid="xavier">
@@ -13328,6 +13412,22 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Fonctions personnalisées</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Custom functions allow to extend &lt;a0&gt;LL::NG&lt;/a0&gt;, they can be used in &lt;a1&gt;headers&lt;/a1&gt;, &lt;a2&gt;rules&lt;/a2&gt; or &lt;a3&gt;form replay data&lt;/a3&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T111626Z" changeid="xavier">
+        <seg>Les fonctions personnalisées permettent d'étendre &lt;a0&gt;LL::NG&lt;/a0&gt;, elles peuvent être utilisées dans les &lt;a2&gt;règles&lt;/a2&gt;, les &lt;a1&gt;en-têtes&lt;/a1&gt; et les &lt;a3&gt;données à rejouer dans les formulaires&lt;/a3&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Custom-Header =&gt; function1($uid)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T112334Z" changeid="xavier">
+        <seg>Custom-Header =&gt; function1($uid)</seg>
       </tuv>
     </tu>
     <tu>
@@ -13448,6 +13548,22 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Debian/Ubuntu bundle</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Declare custom functions</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T112127Z" changeid="xavier">
+        <seg>Declarer les fonctions personnalisées</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Declare module in Apache configuration</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T112041Z" changeid="xavier">
+        <seg>Declarer le module dans la configuration d'Apache</seg>
       </tuv>
     </tu>
     <tu>
@@ -14540,6 +14656,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Go in Manager, &lt;c0&gt;General Parameters&lt;/c0&gt; » &lt;c1&gt;Advanced Parameters&lt;/c1&gt; » &lt;c2&gt;Custom functions&lt;/c2&gt; and set:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T112212Z" changeid="xavier">
+        <seg>Aller dans le manager, &lt;c0&gt;Paramètres généraux&lt;/c0&gt; » &lt;c1&gt;Paramètres avancés&lt;/c1&gt; » &lt;c2&gt;Fonctions personnalisées&lt;/c2&gt; et indiquer :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Go in Manager, &lt;c0&gt;General Parameters&lt;/c0&gt; » &lt;c1&gt;Cookies&lt;/c1&gt; » &lt;c2&gt;Multiple domains&lt;/c2&gt; and set to &lt;c3&gt;On&lt;/c3&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120222T125912Z" changeid="xavier">
@@ -15284,6 +15408,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Import custom functions in LemonLDAP::NG</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T112024Z" changeid="xavier">
+        <seg>Importer les fonctions personnalisées dans LemonLDAP::NG</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Import or generate security keys</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -15431,6 +15563,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
         <seg>In Manager, go in &lt;c0&gt;General Parameters&lt;/c0&gt; » &lt;c1&gt;Authentication modules&lt;/c1&gt; and choose Proxy for authentication and users.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T052338Z" changeid="xavier">
+        <seg>Dans le manager, aller dans &lt;c0&gt;Paramètres généraux&lt;/c0&gt; &gt; &lt;c1&gt;Modules d'authentification&lt;/c1&gt; et choisir Remote pour les modules authentification et utilisateurs.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>In Manager, go in &lt;c0&gt;General Parameters&lt;/c0&gt; » &lt;c1&gt;Authentication modules&lt;/c1&gt; and choose Remote for authentication and users.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T111450Z" changeid="xavier">
         <seg>Dans le manager, aller dans &lt;c0&gt;Paramètres généraux&lt;/c0&gt; &gt; &lt;c1&gt;Modules d'authentification&lt;/c1&gt; et choisir Remote pour les modules authentification et utilisateurs.</seg>
       </tuv>
     </tu>
@@ -18438,6 +18578,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>SSOExtensions::function1</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T112219Z" changeid="xavier">
+        <seg>SSOExtensions::function1</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>SVN access</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -19602,6 +19750,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T154644Z" changeid="xavier">
         <seg>Le fichier &lt;c0&gt;auth.keytab&lt;/c0&gt; doit ensuite être copié (par un média sûr) sur le serveur Linux (par exemple dans &lt;c1&gt;/etc/lemonldap-ng&lt;/c1&gt;).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The first parameter passed to the custom function is the &lt;a0&gt;LL::NG&lt;/a0&gt; portal object.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T112004Z" changeid="xavier">
+        <seg>Le premier paramètre passé à la fonction personnalisée est l'objet portail de &lt;a0&gt;LL::NG&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -20782,6 +20938,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Use it</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T112230Z" changeid="xavier">
+        <seg>Les utiliser</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Use of any user session information to build access rule</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -21282,6 +21446,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Write custom functions library</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T111737Z" changeid="xavier">
+        <seg>Écrire une librairie de fonctions personnalisées</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>X509</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -21522,10 +21694,26 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can name your module as you want, for example &lt;c1&gt;SSOExtensions.pm&lt;/c1&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T111851Z" changeid="xavier">
+        <seg>Le module peut être appelé à la diligence du rédacteur, par exemple &lt;c1&gt;SSOExtensions.pm&lt;/c1&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You can now the upload the certificate (&lt;c0&gt;cert.pem&lt;/c0&gt;) on Google Apps.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T192556Z" changeid="xavier">
         <seg>Télécharger ensuite le certificat (&lt;c0&gt;cert.pem&lt;/c0&gt;) dans Google Apps.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can now use your function in a macro, an header or an access rule, for example:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T112330Z" changeid="xavier">
+        <seg>Les fonctions peuvent être utilisées dans une macro, un en-tête ou une règle d'accès, par exemple:</seg>
       </tuv>
     </tu>
     <tu>
@@ -21830,6 +22018,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Votre EntityID, souvent utilisé comme &lt;a0&gt;URL&lt;/a0&gt; des métadatas, par défaut #PORTAL#/saml/metadata.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Your module has to be loaded by Apache (for example after Handler load):</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T112112Z" changeid="xavier">
+        <seg>Le module doit être chargé par Apache (par exemple après le chargement de l'agent) :</seg>
       </tuv>
     </tu>
     <tu>
@@ -24070,6 +24266,30 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://perldoc.perl.org/functions/package.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T111854Z" changeid="xavier">
+        <seg>http://perldoc.perl.org/functions/package.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://perldoc.perl.org/functions/return.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T111857Z" changeid="xavier">
+        <seg>http://perldoc.perl.org/functions/return.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://perldoc.perl.org/functions/shift.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T111855Z" changeid="xavier">
+        <seg>http://perldoc.perl.org/functions/shift.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://phpldapadmin.sourceforge.net</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T173120Z" changeid="xavier">
@@ -25960,6 +26180,14 @@ cd lemonldap-ng-*</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111217T081431Z" changeid="xavier">
         <seg>vi /etc/sympa/auth.conf</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>vi /root/SSOExtensions.pm</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T111852Z" changeid="xavier">
+        <seg>vi /root/SSOExtensions.pm</seg>
       </tuv>
     </tu>
     <tu>
