@@ -1196,6 +1196,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.0/authcas.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T183555Z" changeid="xavier">
+        <seg>../../documentation/1.0/authcas.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.0/authchoice.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120214T045619Z" changeid="xavier">
@@ -1224,6 +1232,14 @@
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T184531Z" changeid="xavier">
         <seg>../../documentation/1.0/authmulti.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.0/authopenid.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T183620Z" changeid="xavier">
+        <seg>../../documentation/1.0/authopenid.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -1472,6 +1488,14 @@
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T141847Z" changeid="xavier">
         <seg>../../documentation/1.0/start.html#configuration_database</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.0/start.html#identity_provider</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T183705Z" changeid="xavier">
+        <seg>../../documentation/1.0/start.html#identity_provider</seg>
       </tuv>
     </tu>
     <tu>
@@ -5716,6 +5740,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can use federation protocols (&lt;a1&gt;SAML&lt;/a1&gt;, &lt;a2&gt;CAS&lt;/a2&gt;, OpenID) independently to:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T183307Z" changeid="xavier">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; peut utiliser des protocoles de fédération (&lt;a1&gt;SAML&lt;/a1&gt;, &lt;a2&gt;CAS&lt;/a2&gt;, OpenID) indépendamment pour :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can use two tables:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T195011Z" changeid="xavier">
@@ -7916,6 +7948,18 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
 # URL à utiliser pour recharger la configuration
 reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/reload&lt;/s4&gt;
 &lt;s5&gt;;reloaddist.example.com=http://reloaddist.example.com/reload&lt;/s5&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;&lt;s1&gt;[&lt;/s1&gt;configuration&lt;s2&gt;]&lt;/s2&gt;&lt;/s0&gt;
+&lt;s3&gt;type&lt;/s3&gt;  &lt;s4&gt;=&lt;/s4&gt;&lt;s5&gt; File&lt;/s5&gt;
+&lt;s6&gt;dirName&lt;/s6&gt; &lt;s7&gt;=&lt;/s7&gt;&lt;s8&gt; /var/lib/lemonldap-ng/conf&lt;/s8&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T185149Z" changeid="xavier">
+        <seg>&lt;s0&gt;&lt;s1&gt;[&lt;/s1&gt;configuration&lt;s2&gt;]&lt;/s2&gt;&lt;/s0&gt;
+&lt;s3&gt;type&lt;/s3&gt;  &lt;s4&gt;=&lt;/s4&gt;&lt;s5&gt; File&lt;/s5&gt;
+&lt;s6&gt;dirName&lt;/s6&gt; &lt;s7&gt;=&lt;/s7&gt;&lt;s8&gt; /var/lib/lemonldap-ng/conf&lt;/s8&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -11744,6 +11788,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>A &lt;a0&gt;CAS server&lt;/a0&gt; with &lt;a1&gt;SAML authentication&lt;/a1&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T183551Z" changeid="xavier">
+        <seg>Un &lt;a0&gt; serveur CAS&lt;/a0&gt; avec une &lt;a1&gt;authentification SAML&lt;/a1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>A Apache::Session::Browseable::Redis module is in preparation, it will be the faster</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -12180,6 +12232,22 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Un annuaire &lt;a0&gt;LDAP&lt;/a0&gt; avec un compte (suffixe par défaut : dc=example,dc=com)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>An &lt;a0&gt;OpenID server&lt;/a0&gt; with &lt;a1&gt;CAS authentication&lt;/a1&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T183618Z" changeid="xavier">
+        <seg>Un &lt;a0&gt;serveur OpenID&lt;/a0&gt; avec une &lt;a1&gt;authentification CAS&lt;/a1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>An &lt;a0&gt;SAML server&lt;/a0&gt; with &lt;a1&gt;OpenID authentication&lt;/a1&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T183642Z" changeid="xavier">
+        <seg>Un &lt;a0&gt;serveur SAML&lt;/a0&gt; avec une &lt;a1&gt;authentification OpenID&lt;/a1&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -12668,6 +12736,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Les étapes du processus d'authentication sont :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Authentication protocols</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T183703Z" changeid="xavier">
+        <seg>Authentication protocols</seg>
       </tuv>
     </tu>
     <tu>
@@ -13856,6 +13932,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Datas are stored as key/values (no-strings values are serialized).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T184853Z" changeid="xavier">
+        <seg>Les données sont stockées en clef/valeur (les valeurs autres que chaînes sont sérialisés).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Debian</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -14656,6 +14740,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>File configuration backend</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T183726Z" changeid="xavier">
+        <seg>Backend de configuration File</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Filters</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T114121Z" changeid="xavier">
@@ -14772,6 +14864,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T120344Z" changeid="xavier">
         <seg>Pour chaque variable, le premier champ est le nom qui servira dans les règles, macros ou en-têtes et le second est le nom du champ dans la base de données utilisateurs.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>For example, a &lt;a0&gt;LL::NG&lt;/a0&gt; server can be:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T183527Z" changeid="xavier">
+        <seg>Par exemple, un serveur &lt;a0&gt;LL::NG&lt;/a0&gt; peut être :</seg>
       </tuv>
     </tu>
     <tu>
@@ -16684,6 +16784,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112735Z" changeid="xavier">
         <seg>LL::NG</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LL::NG as federation protocol proxy</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T183226Z" changeid="xavier">
+        <seg>LL::NG en proxy de fédération de protocoles</seg>
       </tuv>
     </tu>
     <tu>
@@ -19130,6 +19238,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>SOAP configuration backend proxy</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T185034Z" changeid="xavier">
+        <seg>le proxy de backend de configuration SOAP</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>SOAP proxy mechanism</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T125407Z" changeid="xavier">
@@ -19414,6 +19530,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T125321Z" changeid="xavier">
         <seg>Voir aussi</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>See the following chapters:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T183701Z" changeid="xavier">
+        <seg>Voir les chapîtres suivants :</seg>
       </tuv>
     </tu>
     <tu>
@@ -19750,6 +19874,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Donc pour augmenter les performances, évitez les règles trop complexes en utilisant les macros, groupes ou macros locales.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>So you can configure it to authenticate users using a federation protocol and simultaneously to provide identities using other(s) federation protocols.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T183459Z" changeid="xavier">
+        <seg>Ainsi on peut le configurer pour authentifier les utilisateurs en utilisant un protocole de fédération et simultanément pour fournir les identités en en utilisant en autre.</seg>
       </tuv>
     </tu>
     <tu>
@@ -21002,6 +21134,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>This configuration storage can be shared between different hosts using:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T184955Z" changeid="xavier">
+        <seg>Ce type de stockage de configuration peut être partagé entre différents serveurs en utilisant :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>This documentation explains how configure &lt;a0&gt;SAML&lt;/a0&gt; service in &lt;a1&gt;LL::NG&lt;/a1&gt;, in particular:</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -21102,6 +21242,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>C'est par exemple le cas de &lt;a0&gt;Memcached&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This is the default configuration backend.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T183749Z" changeid="xavier">
+        <seg>C'est le backend de configuration par défaut.</seg>
       </tuv>
     </tu>
     <tu>
@@ -22742,6 +22890,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You just have to configure a directory writable by Apache user and set it in [configuration] section in your lemonldap-ng.ini file:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T185148Z" changeid="xavier">
+        <seg>Il suffit de configurer un répertoire accessible en écriture à l'utilisateur Apache et l'indiquer dans la section [configuration] du fichier lemonldap-ng.ini :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You just have to create error_zz and msg_zz subroutines &lt;e1&gt;(where zz is your international code, example: “fr” for France)&lt;/e1&gt; by copying error_en and msg_en.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -23158,6 +23314,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>any files sharing system (NFS, NAS, SAN,…)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T185052Z" changeid="xavier">
+        <seg>tout système de partage de fichiers (NFS, NAS, SAN,…)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>apacheAuthnLevel</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -23297,6 +23461,14 @@ Index      -&gt; ipAddr uid</seg>
         <seg>authenticate user</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T201407Z" changeid="xavier">
+        <seg>authentifier les utilisateurs</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>authenticate users</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T183318Z" changeid="xavier">
         <seg>authentifier les utilisateurs</seg>
       </tuv>
     </tu>
@@ -23906,6 +24078,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.0:authcas</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T183557Z" changeid="xavier">
+        <seg>documentation:1.0:authcas</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.0:authchoice</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120214T045621Z" changeid="xavier">
@@ -23926,6 +24106,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T184532Z" changeid="xavier">
         <seg>documentation:1.0:authmulti</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.0:authopenid</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T183622Z" changeid="xavier">
+        <seg>documentation:1.0:authopenid</seg>
       </tuv>
     </tu>
     <tu>
@@ -26848,6 +27036,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR" changedate="20120214T050450Z" changeid="xavier">
         <seg>postcode</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>provide identities to other systems</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T183339Z" changeid="xavier">
+        <seg>fournir une identité à d'autres systèmes</seg>
       </tuv>
     </tu>
     <tu>
