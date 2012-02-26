@@ -82,7 +82,7 @@ We split databases in two categories:
 
 <p>
 
-Main <a href="../documentation/latest/start.html#authentication_users_and_password_databases" class="wikilink1" title="documentation:latest:start">external databases</a> are:
+Main <a href="../documentation/current/start.html#authentication_users_and_password_databases" class="wikilink1" title="documentation:latest:start">external databases</a> are:
 </p>
 <ul>
 <li class="level1"><div class="li"> <strong>Authentication</strong>: how authenticate users</div>
@@ -98,11 +98,11 @@ Main <a href="../documentation/latest/start.html#authentication_users_and_passwo
 Main internal databases are:
 </p>
 <ul>
-<li class="level1"><div class="li"> <strong><a href="../documentation/latest/start.html#configuration_database" class="wikilink1" title="documentation:latest:start">Configuration</a></strong>: where configuration is stored. This does not include Apache configuration which is not managed by LemonLDAP::NG</div>
+<li class="level1"><div class="li"> <strong><a href="../documentation/current/start.html#configuration_database" class="wikilink1" title="documentation:latest:start">Configuration</a></strong>: where configuration is stored. This does not include Apache configuration which is not managed by LemonLDAP::NG</div>
 </li>
-<li class="level1"><div class="li"> <strong><a href="../documentation/latest/start.html#sessions_database" class="wikilink1" title="documentation:latest:start">Sessions</a></strong>: where sessions are stored.</div>
+<li class="level1"><div class="li"> <strong><a href="../documentation/current/start.html#sessions_database" class="wikilink1" title="documentation:latest:start">Sessions</a></strong>: where sessions are stored.</div>
 </li>
-<li class="level1"><div class="li"> <strong><a href="../documentation/latest/notifications.html" class="wikilink1" title="documentation:latest:notifications">Notifications</a></strong>: messages displayed to connected users</div>
+<li class="level1"><div class="li"> <strong><a href="../documentation/current/notifications.html" class="wikilink1" title="documentation:latest:notifications">Notifications</a></strong>: messages displayed to connected users</div>
 </li>
 <li class="level1"><div class="li"> <strong>Cache</strong>: cache for configuration and sessions</div>
 </li>
@@ -126,7 +126,7 @@ Main internal databases are:
 <ol>
 <li class="level1"><div class="li"> User tries to access protected application, his request is catched by Handler</div>
 </li>
-<li class="level1"><div class="li"> <a href="../documentation/latest/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a> is not detected, so Handler redirects user to Portal</div>
+<li class="level1"><div class="li"> <a href="../documentation/current/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a> is not detected, so Handler redirects user to Portal</div>
 </li>
 <li class="level1"><div class="li"> User authenticates on Portal</div>
 </li>
@@ -138,7 +138,7 @@ Main internal databases are:
 </li>
 <li class="level1"><div class="li"> Portal gets the session key</div>
 </li>
-<li class="level1"><div class="li"> Portal creates <a href="../documentation/latest/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a> with session key as value</div>
+<li class="level1"><div class="li"> Portal creates <a href="../documentation/current/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a> with session key as value</div>
 </li>
 <li class="level1"><div class="li"> User is redirected on protected application, with his new cookie</div>
 </li>
@@ -156,7 +156,7 @@ Main internal databases are:
 
 <p>
 
-Handler will then check <a href="../documentation/latest/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a> for each <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> request.
+Handler will then check <a href="../documentation/current/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a> for each <acronym title="Hyper Text Transfer Protocol">HTTP</acronym> request.
 </p>
 
 </div>
@@ -171,15 +171,15 @@ Default use case:
 <ol>
 <li class="level1"><div class="li"> User clicks on the logout link in Portal</div>
 </li>
-<li class="level1"><div class="li"> Portal destroys session and redirects user on itself with an empty <a href="../documentation/latest/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a></div>
+<li class="level1"><div class="li"> Portal destroys session and redirects user on itself with an empty <a href="../documentation/current/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a></div>
 </li>
-<li class="level1"><div class="li"> User is redirected on portal and his <a href="../documentation/latest/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a> is empty</div>
+<li class="level1"><div class="li"> User is redirected on portal and his <a href="../documentation/current/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a> is empty</div>
 </li>
 </ol>
 
 <p>
 
-LemonLDAP::NG is also able to <a href="../documentation/latest/writingrulesand_headers.html" class="wikilink1" title="documentation:latest:writingrulesand_headers">catch logout request</a> on protected applications, with different behavior:
+LemonLDAP::NG is also able to <a href="../documentation/current/writingrulesand_headers.html" class="wikilink1" title="documentation:latest:writingrulesand_headers">catch logout request</a> on protected applications, with different behavior:
 </p>
 <ul>
 <li class="level1"><div class="li"> <strong><acronym title="Single Sign On">SSO</acronym> logout</strong>: the request is not forwarded to application, only the <acronym title="Single Sign On">SSO</acronym> session is closed</div>
@@ -229,17 +229,17 @@ The session expires after 2 hours by default.
 
 </p>
 <ol>
-<li class="level1"><div class="li"> User owns <a href="../documentation/latest/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a> on the main domain (see <span class="curid"><a href="../documentation/presentation.html#login" class="wikilink1" title="documentation:presentation">Login kinematics</a></span>)</div>
+<li class="level1"><div class="li"> User owns <a href="../documentation/current/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a> on the main domain (see <span class="curid"><a href="../documentation/presentation.html#login" class="wikilink1" title="documentation:presentation">Login kinematics</a></span>)</div>
 </li>
 <li class="level1"><div class="li"> User tries to access a protected application in a different domain</div>
 </li>
-<li class="level1"><div class="li"> Handler does not see <a href="../documentation/latest/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a> (because it is not in main domain) and redirects user on Portal</div>
+<li class="level1"><div class="li"> Handler does not see <a href="../documentation/current/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a> (because it is not in main domain) and redirects user on Portal</div>
 </li>
-<li class="level1"><div class="li"> Portal recognizes the user with its <a href="../documentation/latest/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a>, and see he is coming from a different domain</div>
+<li class="level1"><div class="li"> Portal recognizes the user with its <a href="../documentation/current/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a>, and see he is coming from a different domain</div>
 </li>
 <li class="level1"><div class="li"> Portal redirects user on protected application with his session ID as <acronym title="Uniform Resource Locator">URL</acronym> parameter</div>
 </li>
-<li class="level1"><div class="li"> Handler detects <acronym title="Uniform Resource Locator">URL</acronym> parameter and create a <a href="../documentation/latest/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a> on its domain, with session ID as value</div>
+<li class="level1"><div class="li"> Handler detects <acronym title="Uniform Resource Locator">URL</acronym> parameter and create a <a href="../documentation/current/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a> on its domain, with session ID as value</div>
 </li>
 </ol>
 
@@ -282,7 +282,7 @@ Authentication process main steps are:
 </li>
 <li class="level1"><div class="li"> <strong>Store</strong>: store user info in session database</div>
 </li>
-<li class="level1"><div class="li"> <strong>Build cookie</strong>: build <a href="../documentation/latest/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a> with session ID</div>
+<li class="level1"><div class="li"> <strong>Build cookie</strong>: build <a href="../documentation/current/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a> with session ID</div>
 </li>
 <li class="level1"><div class="li"> <strong>Redirect</strong>: redirect user on protected application or on Portal (applications menu)</div>
 </li>
@@ -290,7 +290,7 @@ Authentication process main steps are:
 
 <p>
 
-LemonLDAP::NG <a href="../documentation/latest/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a> are generated by <a href="http://search.cpan.org/perldoc?Apache::Session" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session"  rel="nofollow">Apache::Session</a>, they are as secure as a 128-bit random cookie. You may use the <a href="../documentation/latest/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">securedCookie</a> options to avoid session hijacking.
+LemonLDAP::NG <a href="../documentation/current/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">SSO cookies</a> are generated by <a href="http://search.cpan.org/perldoc?Apache::Session" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session"  rel="nofollow">Apache::Session</a>, they are as secure as a 128-bit random cookie. You may use the <a href="../documentation/current/ssocookie.html#sso_cookie" class="wikilink1" title="documentation:latest:ssocookie">securedCookie</a> options to avoid session hijacking.
 
 </p>
 
@@ -364,7 +364,7 @@ Some examples:
 </p>
 
 <p>
-See <a href="../documentation/latest/writingrulesand_headers.html" class="wikilink1" title="documentation:latest:writingrulesand_headers">Writing rules and headers</a> chapter.
+See <a href="../documentation/current/writingrulesand_headers.html" class="wikilink1" title="documentation:latest:writingrulesand_headers">Writing rules and headers</a> chapter.
 </p>
 
 </div>
@@ -379,7 +379,7 @@ See <a href="../documentation/latest/writingrulesand_headers.html" class="wikili
 
 <p>
 
-Portal produce a <code>notice</code> message in <a href="../documentation/latest/logs.html" class="wikilink1" title="documentation:latest:logs">Apache logs or syslog</a> when a user authenticates (or fails to authenticate) and logs out.
+Portal produce a <code>notice</code> message in <a href="../documentation/current/logs.html" class="wikilink1" title="documentation:latest:logs">Apache logs or syslog</a> when a user authenticates (or fails to authenticate) and logs out.
 </p>
 
 </div>
@@ -397,7 +397,7 @@ The real accounting has to be done by the application itself since <acronym titl
 </p>
 
 <p>
-LemonLDAP::NG can export <a href="../documentation/latest/writingrulesand_headers.html#headers" class="wikilink1" title="documentation:latest:writingrulesand_headers">HTTP headers</a> either using a proxy or protecting directly the application.
+LemonLDAP::NG can export <a href="../documentation/current/writingrulesand_headers.html#headers" class="wikilink1" title="documentation:latest:writingrulesand_headers">HTTP headers</a> either using a proxy or protecting directly the application.
 </p>
 
 <p>
@@ -444,7 +444,7 @@ Some examples:
 
 <p>
 
-See <a href="../documentation/latest/writingrulesand_headers.html" class="wikilink1" title="documentation:latest:writingrulesand_headers">Writing rules and headers</a> for more.
+See <a href="../documentation/current/writingrulesand_headers.html" class="wikilink1" title="documentation:latest:writingrulesand_headers">Writing rules and headers</a> for more.
 
 </p>
 
