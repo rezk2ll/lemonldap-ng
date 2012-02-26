@@ -38,6 +38,30 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg># You can protect it :
+# * by Apache itself,
+# * by the parameter 'protection' which can take one of the following
+# values :
+#   * authenticate : all authenticated users can access
+#   * manager      : manager is protected like other virtual hosts: you
+#                    have to set rules in the corresponding virtual host
+#   * rule: &lt;rule&gt; : you can set here directly the rule to apply
+#   * none         : no protection</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T174521Z" changeid="xavier">
+        <seg># You can protect it :
+# * by Apache itself,
+# * by the parameter 'protection' which can take one of the following
+# values :
+#   * authenticate : all authenticated users can access
+#   * manager      : manager is protected like other virtual hosts: you
+#                    have to set rules in the corresponding virtual host
+#   * rule: &lt;rule&gt; : you can set here directly the rule to apply
+#   * none         : no protection</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>#a</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -1492,6 +1516,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.2/safejail.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T174958Z" changeid="xavier">
+        <seg>../../documentation/1.2/safejail.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.2/samlservice.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120218T220532Z" changeid="xavier">
@@ -1608,6 +1640,14 @@
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T111458Z" changeid="xavier">
         <seg>../../documentation/1.2/writingrulesand_headers.html#rules</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/current/ssocookie.html#sso_cookie</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T163116Z" changeid="xavier">
+        <seg>../../documentation/current/ssocookie.html#sso_cookie</seg>
       </tuv>
     </tu>
     <tu>
@@ -8492,6 +8532,18 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;&lt;s1&gt;[&lt;/s1&gt;manager&lt;s2&gt;]&lt;/s2&gt;&lt;/s0&gt;
+ 
+# Manager protection: by default, the manager is protected by a demo account.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T174515Z" changeid="xavier">
+        <seg>&lt;s0&gt;&lt;s1&gt;[&lt;/s1&gt;manager&lt;s2&gt;]&lt;/s2&gt;&lt;/s0&gt;
+ 
+# Manager protection: by default, the manager is protected by a demo account.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;&lt;s1&gt;[&lt;/s1&gt;portal&lt;s2&gt;]&lt;/s2&gt;&lt;/s0&gt;
 &lt;s3&gt;multi&lt;/s3&gt; &lt;s4&gt;=&lt;/s4&gt;&lt;s5&gt; &lt;s6&gt;{&lt;/s6&gt;'LDAP#Openldap'&lt;s7&gt;=&lt;/s7&gt;&gt;&lt;s8&gt;{&lt;/s8&gt;ldapServer&lt;s9&gt;=&lt;/s9&gt;&gt;'ldap1.example.com',LDAPFilter&lt;s10&gt;=&lt;/s10&gt;&gt;'&lt;s11&gt;(&lt;/s11&gt;uid&lt;s12&gt;=&lt;/s12&gt;$user&lt;s13&gt;)&lt;/s13&gt;'&lt;s14&gt;}&lt;/s14&gt;,'LDAP#ActiveDirectory'&lt;s15&gt;=&lt;/s15&gt;&gt;&lt;s16&gt;{&lt;/s16&gt;ldapServer&lt;s17&gt;=&lt;/s17&gt;&gt;'ldaps://ad.example.com',LDAPFilter&lt;s18&gt;=&lt;/s18&gt;&gt;'&lt;s19&gt;(&lt;/s19&gt;&amp;&lt;s20&gt;(&lt;/s20&gt;sAMAccountName&lt;s21&gt;=&lt;/s21&gt;$user&lt;s22&gt;)&lt;/s22&gt;&lt;s23&gt;(&lt;/s23&gt;objectClass&lt;s24&gt;=&lt;/s24&gt;person&lt;s25&gt;)&lt;/s25&gt;&lt;s26&gt;)&lt;/s26&gt;'&lt;s27&gt;}&lt;/s27&gt;&lt;s28&gt;}&lt;/s28&gt;&lt;/s5&gt;</seg>
       </tuv>
@@ -12944,6 +12996,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>After configuration is saved by Manager, LemonLDAP::NG will try to reload configuration on distant Handlers by sending an &lt;a0&gt;HTTP&lt;/a0&gt; request to the servers.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T174727Z" changeid="xavier">
+        <seg>Lorsque la configuration est sauvegardée par le manager, LemonLDAP::NG tente de recharger la configuration des agents distants en envoyant une requête &lt;a0&gt;HTTP&lt;/a0&gt; aux serveurs.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>After configuration is saved by Manager, LemonLDAP::NG will try to reload configuration on distant Handlers.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T065939Z" changeid="xavier">
@@ -13164,6 +13224,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T182452Z" changeid="xavier">
         <seg>Un &lt;a0&gt;compte applicatif Google entreprise&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>An Apache restart will work, but LemonLDAP::NG offers the mean to reload them through an &lt;a0&gt;HTTP&lt;/a0&gt; request.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T174641Z" changeid="xavier">
+        <seg>Un redémarrage d'Apache marchera, mais LemonLDAP::NG offre le moyen de les recharger via une requête &lt;a0&gt;HTTP&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -14024,6 +14092,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>By default, Manager is protected to allow only the demonstration user “dwho”.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T163249Z" changeid="xavier">
+        <seg>Par défaut, le manager est protégé et n'autorise que l'utilisateur de démonstration “dwho”.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>By default, Tomcat provides a file called &lt;c0&gt;users.xml&lt;/c0&gt; to manage authentication:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T190300Z" changeid="xavier">
@@ -14420,6 +14496,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T142609Z" changeid="xavier">
         <seg>Le backend de configuration peut être indiqué dans le &lt;a0&gt;fichier local de configuration&lt;/a0&gt;, dans la section &lt;c1&gt;configuration&lt;/c1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Configuration interface access is not protected by Apache but by LemonLDAP::NG itself (see &lt;c0&gt;lemonldap-ng.ini&lt;/c0&gt;):</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T174609Z" changeid="xavier">
+        <seg>L'accès à l'interface de configuration n'est pas protégée par Apache mais par LemonLDAP::NG lui-même (voir &lt;c0&gt;lemonldap-ng.ini&lt;/c0&gt;) :</seg>
       </tuv>
     </tu>
     <tu>
@@ -15620,6 +15704,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T195446Z" changeid="xavier">
         <seg>Example 2: single table</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Example :</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T174509Z" changeid="xavier">
+        <seg>Exemple :</seg>
       </tuv>
     </tu>
     <tu>
@@ -17104,6 +17196,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If you can not access the Manager anymore, you can unprotect it by editing &lt;c0&gt;lemonldap-ng.in&lt;/c0&gt; and changing the &lt;c1&gt;protection&lt;/c1&gt; parameter:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T163521Z" changeid="xavier">
+        <seg>SI l'accès au manager est perdu, on peut le déprotéger en éditant &lt;c0&gt;lemonldap-ng.in&lt;/c0&gt; et en changeant le paramètre &lt;c1&gt;protection&lt;/c1&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If you configure form replay with &lt;a0&gt;LL::NG&lt;/a0&gt;, the Handler will catch configured POST &lt;a1&gt;URL&lt;/a1&gt; and send a POST query to the target page (which can be different of the caught page).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T192644Z" changeid="xavier">
@@ -17612,6 +17712,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T160133Z" changeid="xavier">
         <seg>Installer le module :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Install the new lemonldap-ng.ini file at the place of the old file in all &lt;a0&gt;LL::NG&lt;/a0&gt; servers</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T163151Z" changeid="xavier">
+        <seg>Installer le nouveau fichier lemonldap-ng.ini à la place de l'ancien dans tous les serveurs &lt;a0&gt;LL::NG&lt;/a0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -20452,6 +20560,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Remember to change the access rule in Manager virtual host to allow new administrators.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T163415Z" changeid="xavier">
+        <seg>Ne pas oublier de changer la règle d'accès à l'hôte virtuel du manager pour autoriser les nouveaux administrateurs.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Remote</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T045311Z" changeid="xavier">
@@ -22268,6 +22384,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The servers and URLs can be configured in Manager, &lt;c1&gt;General Parameters&lt;/c1&gt; &gt; &lt;c2&gt;reload configuration URLs&lt;/c2&gt;: keys are server names or &lt;a3&gt;IP&lt;/a3&gt; the requests will be sent to, and values are the requested URLs.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T174914Z" changeid="xavier">
+        <seg>Les serveurs et URL peuvent être configurées dans le manager, &lt;c1&gt;Paramètres généraux&lt;/c1&gt; &gt; &lt;c2&gt;URL de rechargement de la configuration&lt;/c2&gt; : les clefs sont les noms de serveurs ou les adresses &lt;a3&gt;IP&lt;/a3&gt; à qui les requêtes seront envoyées, et les valeurs sont les URL à requêter.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The session expires after 2 hours by default.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -22616,6 +22740,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Ces paramètres ne sont pas obligatoires pour faire fonctionner le service &lt;a0&gt;SAML&lt;/a0&gt;, mais peuvent aider à leur personnalisation :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>These parameters can be overwritten in LemonLDAP::NG ini file, in the section &lt;c0&gt;apply&lt;/c0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T174951Z" changeid="xavier">
+        <seg>Ces paramètres peuvent être surchargés dans le fichier ini de LemonLDAP::NG ini file, à la section &lt;c0&gt;apply&lt;/c0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -23096,6 +23228,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Ce tutoriel vous guidera pour réaliser une installation et une configuration minimale.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This user will not be available anymore if you configure a new authentication backend!</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T163322Z" changeid="xavier">
+        <seg>Cet utilisateur n'est plus disponible si on change de backend d'authentification !</seg>
       </tuv>
     </tu>
     <tu>
@@ -24676,6 +24816,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T060222Z" changeid="xavier">
         <seg>Toutes les variables d'environnement sont disponibles, telle l'adresse &lt;a1&gt;IP&lt;/a1&gt; de l'utilisateur.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You have then to declare &lt;a0&gt;HTTP&lt;/a0&gt; headers exported by the main &lt;a1&gt;SSO&lt;/a1&gt; (in “Variables » Exported Variables”).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T174458Z" changeid="xavier">
+        <seg>Déclarer ensuite les en-têtes &lt;a0&gt;HTTP&lt;/a0&gt; exportés par le &lt;a1&gt;SSO&lt;/a1&gt; principal dans “Variables » Variables exportées”.</seg>
       </tuv>
     </tu>
     <tu>
@@ -26550,10 +26698,26 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.2:changeconfbackend</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T163159Z" changeid="xavier">
+        <seg>documentation:1.2:changeconfbackend</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.2:configlocation</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T103112Z" changeid="xavier">
         <seg>documentation:1.2:configlocation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:configlocation ↵</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T163157Z" changeid="xavier">
+        <seg>documentation:1.2:configlocation ↵</seg>
       </tuv>
     </tu>
     <tu>
@@ -26578,6 +26742,22 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T101234Z" changeid="xavier">
         <seg>documentation:1.2:extendedfunctions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:fileconfbackend</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T163153Z" changeid="xavier">
+        <seg>documentation:1.2:fileconfbackend</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:formreplay</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T174956Z" changeid="xavier">
+        <seg>documentation:1.2:formreplay</seg>
       </tuv>
     </tu>
     <tu>
@@ -26614,10 +26794,26 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.2:ldapconfbackend</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T163154Z" changeid="xavier">
+        <seg>documentation:1.2:ldapconfbackend</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.2:logoutforward</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T101302Z" changeid="xavier">
         <seg>documentation:1.2:logoutforward</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:managerprotection</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T174523Z" changeid="xavier">
+        <seg>documentation:1.2:managerprotection</seg>
       </tuv>
     </tu>
     <tu>
@@ -26670,6 +26866,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.2:safejail</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T175003Z" changeid="xavier">
+        <seg>documentation:1.2:safejail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.2:samlservice</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T160122Z" changeid="xavier">
@@ -26678,10 +26882,42 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.2:soapconfbackend</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T163155Z" changeid="xavier">
+        <seg>documentation:1.2:soapconfbackend</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.2:soapsessionbackend</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T120152Z" changeid="xavier">
         <seg>documentation:1.2:soapsessionbackend</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:sqlconfbackend</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T163152Z" changeid="xavier">
+        <seg>documentation:1.2:sqlconfbackend</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:sqlsessionbackend</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T163115Z" changeid="xavier">
+        <seg>documentation:1.2:sqlsessionbackend</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:start</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T163156Z" changeid="xavier">
+        <seg>documentation:1.2:start</seg>
       </tuv>
     </tu>
     <tu>
