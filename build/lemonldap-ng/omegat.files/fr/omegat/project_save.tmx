@@ -4500,10 +4500,26 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/documentation/manager-saml-idp-attribute.png?id=documentation%3A1.2%3Aauthsaml</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T160126Z" changeid="xavier">
+        <seg>/_detail/documentation/manager-saml-idp-attribute.png?id=documentation%3A1.2%3Aauthsaml</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>/_detail/documentation/manager-saml-idp-list.png?id=documentation%3A1.0%3Aauthsaml</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120220T203358Z" changeid="xavier">
         <seg>/_detail/documentation/manager-saml-idp-list.png?id=documentation%3A1.0%3Aauthsaml</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/documentation/manager-saml-idp-list.png?id=documentation%3A1.2%3Aauthsaml</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T160123Z" changeid="xavier">
+        <seg>/_detail/documentation/manager-saml-idp-list.png?id=documentation%3A1.2%3Aauthsaml</seg>
       </tuv>
     </tu>
     <tu>
@@ -4516,10 +4532,26 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/documentation/manager-saml-idp-metadata.png?id=documentation%3A1.2%3Aauthsaml</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T160125Z" changeid="xavier">
+        <seg>/_detail/documentation/manager-saml-idp-metadata.png?id=documentation%3A1.2%3Aauthsaml</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>/_detail/documentation/manager-saml-idp-new.png?id=documentation%3A1.0%3Aauthsaml</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120218T221238Z" changeid="xavier">
         <seg>/_detail/documentation/manager-saml-idp-new.png?id=documentation%3A1.0%3Aauthsaml</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/documentation/manager-saml-idp-new.png?id=documentation%3A1.2%3Aauthsaml</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T160123Z" changeid="xavier">
+        <seg>/_detail/documentation/manager-saml-idp-new.png?id=documentation%3A1.2%3Aauthsaml</seg>
       </tuv>
     </tu>
     <tu>
@@ -4572,10 +4604,26 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/documentation/remote-interoperability.png?id=documentation%3A1.2%3Aauthremote</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T160120Z" changeid="xavier">
+        <seg>/_detail/documentation/remote-interoperability.png?id=documentation%3A1.2%3Aauthremote</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>/_detail/documentation/remote-principle.png?id=documentation%3A1.0%3Aauthremote</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T050027Z" changeid="xavier">
         <seg>/_detail/documentation/remote-principle.png?id=documentation%3A1.0%3Aauthremote</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/documentation/remote-principle.png?id=documentation%3A1.2%3Aauthremote</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T160119Z" changeid="xavier">
+        <seg>/_detail/documentation/remote-principle.png?id=documentation%3A1.2%3Aauthremote</seg>
       </tuv>
     </tu>
     <tu>
@@ -6008,6 +6056,14 @@
       </tuv>
       <tuv lang="FR-FR" changedate="20120121T080302Z" changeid="xavier">
         <seg>Le backend Null de &lt;a0&gt;LL::NG&lt;/a0&gt; est un backend transparent :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; Slave backend relies on &lt;a1&gt;HTTP&lt;/a1&gt; headers to retrieve user login and/or attributes.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T160349Z" changeid="xavier">
+        <seg>Le backend Slave de &lt;a0&gt;LL::NG&lt;/a0&gt; utilise les en-têtes &lt;a1&gt;HTTP&lt;/a1&gt; pour récupérer le nom d'utilisateur et/ou les attributs.</seg>
       </tuv>
     </tu>
     <tu>
@@ -9066,6 +9122,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Header for user login&lt;/s0&gt;: header that contains the user main login</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T161024Z" changeid="xavier">
+        <seg>&lt;s0&gt;En-tête identifiant l'utilisateur&lt;/s0&gt; : en-tête contenant le nom de connexion</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;How do users authenticate?&lt;/s0&gt;: by login</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T073901Z" changeid="xavier">
@@ -9262,6 +9326,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T055829Z" changeid="xavier">
         <seg>&lt;s0&gt;Obligatoire&lt;/s0&gt; : si activé, les sessions ne seront ouvertes que si l'attribut est fourni par l'IDP.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Master's &lt;a1&gt;IP&lt;/a1&gt; address&lt;/s0&gt;: the &lt;a2&gt;IP&lt;/a2&gt; addresses of servers which are accredited to authenticate user.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T161311Z" changeid="xavier">
+        <seg>&lt;s0&gt;Adresse &lt;a1&gt;IP&lt;/a1&gt; du maître&lt;/s0&gt; : les adresses &lt;a2&gt;IP&lt;/a2&gt; des serveurs autorisés à authentifier les utilisateurs.</seg>
       </tuv>
     </tu>
     <tu>
@@ -13664,6 +13736,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Authentication: will check user login in a header and create session without prompting any credentials (but will register client &lt;a0&gt;IP&lt;/a0&gt; and creation date)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T160621Z" changeid="xavier">
+        <seg>Authentification : recherche le nom d'utilisateur dans un en-tête et crée la session sans exiger de mot-de-passe (mais enregistre l'adresse &lt;a0&gt;IP&lt;/a0&gt; cliente et la date)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Authentication: will create session without prompting any credentials (but will register client &lt;a0&gt;IP&lt;/a0&gt; and creation date)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120121T080402Z" changeid="xavier">
@@ -17232,6 +17312,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>In Manager, go in &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Authentication modules&lt;/c1&gt; and choose Slave for authentication or users module.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T160845Z" changeid="xavier">
+        <seg>Dans le manager, aller dans &lt;c0&gt;Paramètres généraux&lt;/c0&gt; &gt; &lt;c1&gt;Modules d'authentification&lt;/c1&gt; et choisir &lt;a2&gt;Slave&lt;/a2&gt;) pour les modules authentification ou utilisateurs.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>In Manager, go in &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Authentication modules&lt;/c1&gt; and choose Twitter for authentication module.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -17568,6 +17656,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>It allows to put &lt;a0&gt;LL::NG&lt;/a0&gt;::portal behind another web &lt;a1&gt;SSO&lt;/a1&gt;, or behind a &lt;a2&gt;SSL&lt;/a2&gt; hardware to delegate &lt;a3&gt;SSL&lt;/a3&gt; authentication to that hardware.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T160808Z" changeid="xavier">
+        <seg>Ceci permet de metre un portail &lt;a0&gt;LL::NG&lt;/a0&gt; derrière un autre web &lt;a1&gt;SSO&lt;/a1&gt;, ou derrière un matériel &lt;a2&gt;SSL&lt;/a2&gt; pour déléguer à ce matériel l'authentification.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>It can be a brake for the portal:</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -17804,6 +17900,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T154513Z" changeid="xavier">
         <seg>Client Kerberos pour Linux</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Key (&lt;a0&gt;LL::NG&lt;/a0&gt; name)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T161957Z" changeid="xavier">
+        <seg>Clef (nom &lt;a0&gt;LL::NG&lt;/a0&gt;)</seg>
       </tuv>
     </tu>
     <tu>
@@ -21148,6 +21252,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Slave</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T160133Z" changeid="xavier">
+        <seg>Slave</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>So &lt;a0&gt;HTTP&lt;/a0&gt; Basic Autentication is managed trough an &lt;a1&gt;HTTP&lt;/a1&gt; header (&lt;c2&gt;Authorization&lt;/c2&gt;), that can be forged by &lt;a3&gt;LL::NG&lt;/a3&gt;, with this precautions:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111750Z" changeid="xavier">
@@ -22316,6 +22428,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Then, go in &lt;c0&gt;Slave parameters&lt;/c0&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T160858Z" changeid="xavier">
+        <seg>Ensuite, aller dans les &lt;c0&gt;paramètres Slave&lt;/c0&gt;:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Then, go in &lt;c0&gt;Twitter parameters&lt;/c0&gt;:</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -22672,6 +22792,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T121710Z" changeid="xavier">
         <seg>Cette fonction examine le jour et l'heure de la requête courante et la compare aux jours et heures autorisés.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This is a security point, to prevent someone to create a session by sending custom headers.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T161416Z" changeid="xavier">
+        <seg>Il s'agit d'un élément de sécurité pour éviter à quelqu'un de créer une session en envoyant des en-têtes personnalisés.</seg>
       </tuv>
     </tu>
     <tu>
@@ -23056,6 +23184,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T101723Z" changeid="xavier">
         <seg>Pour avoir une plus forte integration, LimeSurvey doit être configuré pour créer automatiquement les utilisateurs inconnus et utiliser les en-têtes &lt;a0&gt;HTTP&lt;/a0&gt; pour remplir le nom, le mail et les rôles.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>To have a stronger integration, we will configure LimeSurvey to autocreate unknown users and use &lt;a0&gt;HTTP&lt;/a0&gt; headers to fill name, mail and roles.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T160118Z" changeid="xavier">
+        <seg>Pour une meilleure integration, LimeSurvey doit être configuré pour créer automatiquement les utilisateurs inconnus et utiliser les en-têtes &lt;a0&gt;HTTP&lt;/a0&gt; pour remplir le nom, le mail et les rôles.</seg>
       </tuv>
     </tu>
     <tu>
@@ -23588,6 +23724,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>User-Email</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T162016Z" changeid="xavier">
+        <seg>User-Email</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>User: can answer to surveys</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T101758Z" changeid="xavier">
@@ -23648,6 +23792,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Users: collect data transfered in &lt;a0&gt;HTTP&lt;/a0&gt; headers by the “master”.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T160657Z" changeid="xavier">
+        <seg>Utilisateurs : collecte les données transférées par en-tête &lt;a0&gt;HTTP&lt;/a0&gt; par le “maître”.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Users: will not collect any data (but you can still register environment variables in session)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120121T080500Z" changeid="xavier">
@@ -23700,6 +23852,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120217T045550Z" changeid="xavier">
         <seg>Validation de la session : l'utilisateur externe dispose ainsi d'un session locale</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Value (&lt;a0&gt;HTTP&lt;/a0&gt; header name)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T162010Z" changeid="xavier">
+        <seg>Valeur (nom d'en-tête &lt;a0&gt;HTTP&lt;/a0&gt;)</seg>
       </tuv>
     </tu>
     <tu>
@@ -24360,6 +24520,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can set one or several &lt;a3&gt;IP&lt;/a3&gt; addresses, separated by spaces, or let this parameter empty to disable the checking.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T161512Z" changeid="xavier">
+        <seg>Plusieurs adresses &lt;a3&gt;IP&lt;/a3&gt; separées par des espaces peuvent être entrées, ou ce paramètre peut rester vide pour désactiver ce contrôle.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You can set the default access to:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T102928Z" changeid="xavier">
@@ -24436,6 +24604,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T060222Z" changeid="xavier">
         <seg>Toutes les variables d'environnement sont disponibles, telle l'adresse &lt;a1&gt;IP&lt;/a1&gt; de l'utilisateur.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You have then to declare &lt;a0&gt;HTTP&lt;/a0&gt; headers exported by the main &lt;a1&gt;SSO&lt;/a1&gt; in “Variable » Exported Variables”.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T161811Z" changeid="xavier">
+        <seg>Déclarer ensuite les en-têtes &lt;a0&gt;HTTP&lt;/a0&gt; exportés par le &lt;a1&gt;SSO&lt;/a1&gt; principal dans “Variables » Variables exportées”.</seg>
       </tuv>
     </tu>
     <tu>
@@ -26246,6 +26422,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.2:authldap</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T162018Z" changeid="xavier">
+        <seg>documentation:1.2:authldap</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.2:authmulti</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T114755Z" changeid="xavier">
@@ -26378,6 +26562,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T115735Z" changeid="xavier">
         <seg>documentation:1.2:resetpassword</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:samlservice</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T160122Z" changeid="xavier">
+        <seg>documentation:1.2:samlservice</seg>
       </tuv>
     </tu>
     <tu>
