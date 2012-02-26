@@ -724,94 +724,6 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../../../documentation/1.0/configlocation.html#apache</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111211T112604Z" changeid="xavier">
-        <seg>../../../documentation/1.0/configlocation.html#apache</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../../documentation/1.0/configvhost.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T113926Z" changeid="xavier">
-        <seg>../../../documentation/1.0/configvhost.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../../documentation/1.0/configvhost.html#lemonldapng_configuration</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T114043Z" changeid="xavier">
-        <seg>../../../documentation/1.0/configvhost.html#lemonldapng_configuration</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../../documentation/1.0/extendedfunctions.html#basic</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T113302Z" changeid="xavier">
-        <seg>../../../documentation/1.0/extendedfunctions.html#basic</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../../documentation/1.0/header_remote_user_conversion.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T115432Z" changeid="xavier">
-        <seg>../../../documentation/1.0/header_remote_user_conversion.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../../documentation/1.0/idpsaml.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111203T182454Z" changeid="xavier">
-        <seg>../../../documentation/1.0/idpsaml.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../../documentation/1.0/logoutforward.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111207T052224Z" changeid="xavier">
-        <seg>../../../documentation/1.0/logoutforward.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../../documentation/1.0/passwordstore.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T112718Z" changeid="xavier">
-        <seg>../../../documentation/1.0/passwordstore.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../../documentation/1.0/portalmenu.html#categories_and_applications</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111207T051545Z" changeid="xavier">
-        <seg>../../../documentation/1.0/portalmenu.html#categories_and_applications</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../../documentation/1.0/writingrulesand_headers.html#headers</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T114135Z" changeid="xavier">
-        <seg>../../../documentation/1.0/writingrulesand_headers.html#headers</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../../documentation/1.0/writingrulesand_headers.html#rules</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T114112Z" changeid="xavier">
-        <seg>../../../documentation/1.0/writingrulesand_headers.html#rules</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>../../../documentation/1.2/configlocation.html#apache</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T103111Z" changeid="xavier">
@@ -1212,490 +1124,10 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../../documentation/1.0/applications.html</seg>
+        <seg>../../documentation/1.2/applications.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T192353Z" changeid="xavier">
-        <seg>../../documentation/1.0/applications.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/applications/authbasic.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153649Z" changeid="xavier">
-        <seg>../../documentation/1.0/applications/authbasic.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/applications/bugzilla.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153615Z" changeid="xavier">
-        <seg>../../documentation/1.0/applications/bugzilla.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/applications/dokuwiki.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153537Z" changeid="xavier">
-        <seg>../../documentation/1.0/applications/dokuwiki.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/applications/drupal.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153548Z" changeid="xavier">
-        <seg>../../documentation/1.0/applications/drupal.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/applications/googleapps.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153810Z" changeid="xavier">
-        <seg>../../documentation/1.0/applications/googleapps.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/applications/liferay.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153551Z" changeid="xavier">
-        <seg>../../documentation/1.0/applications/liferay.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/applications/mediawiki.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153538Z" changeid="xavier">
-        <seg>../../documentation/1.0/applications/mediawiki.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/applications/obm.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153526Z" changeid="xavier">
-        <seg>../../documentation/1.0/applications/obm.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/applications/phpldapadmin.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153627Z" changeid="xavier">
-        <seg>../../documentation/1.0/applications/phpldapadmin.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/applications/spring.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153651Z" changeid="xavier">
-        <seg>../../documentation/1.0/applications/spring.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/applications/sympa.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153529Z" changeid="xavier">
-        <seg>../../documentation/1.0/applications/sympa.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/applications/tomcat.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153653Z" changeid="xavier">
-        <seg>../../documentation/1.0/applications/tomcat.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/applications/zimbra.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T153531Z" changeid="xavier">
-        <seg>../../documentation/1.0/applications/zimbra.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/authapache.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T101142Z" changeid="xavier">
-        <seg>../../documentation/1.0/authapache.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/authcas.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T183555Z" changeid="xavier">
-        <seg>../../documentation/1.0/authcas.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/authchoice.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120214T045619Z" changeid="xavier">
-        <seg>../../documentation/1.0/authchoice.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/authldap.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../../documentation/1.0/authldap.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/authldap.html#schema_extension</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T122030Z" changeid="xavier">
-        <seg>../../documentation/1.0/authldap.html#schema_extension</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/authmulti.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T184531Z" changeid="xavier">
-        <seg>../../documentation/1.0/authmulti.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/authopenid.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T183620Z" changeid="xavier">
-        <seg>../../documentation/1.0/authopenid.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/authremote.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120215T045315Z" changeid="xavier">
-        <seg>../../documentation/1.0/authremote.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/authsaml.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../../documentation/1.0/authsaml.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/changeconfbackend.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120223T142639Z" changeid="xavier">
-        <seg>../../documentation/1.0/changeconfbackend.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/configlocation.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../../documentation/1.0/configlocation.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/configlocation.html#apache</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T072326Z" changeid="xavier">
-        <seg>../../documentation/1.0/configlocation.html#apache</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/configlocation.html#portal</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../../documentation/1.0/configlocation.html#portal</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/customfunctions.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T121250Z" changeid="xavier">
-        <seg>../../documentation/1.0/customfunctions.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/exportedvars.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T101137Z" changeid="xavier">
-        <seg>../../documentation/1.0/exportedvars.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/extendedfunctions.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120107T143607Z" changeid="xavier">
-        <seg>../../documentation/1.0/extendedfunctions.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/fileconfbackend.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120223T125359Z" changeid="xavier">
-        <seg>../../documentation/1.0/fileconfbackend.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/formreplay.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T073913Z" changeid="xavier">
-        <seg>../../documentation/1.0/formreplay.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/header_remote_user_conversion.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T073119Z" changeid="xavier">
-        <seg>../../documentation/1.0/header_remote_user_conversion.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/idpcas.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T155607Z" changeid="xavier">
-        <seg>../../documentation/1.0/idpcas.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/idpopenid.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120214T045351Z" changeid="xavier">
-        <seg>../../documentation/1.0/idpopenid.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/idpsaml.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../../documentation/1.0/idpsaml.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/ldapconfbackend.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120223T125401Z" changeid="xavier">
-        <seg>../../documentation/1.0/ldapconfbackend.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/logoutforward.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T155904Z" changeid="xavier">
-        <seg>../../documentation/1.0/logoutforward.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/managerprotection.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120223T142943Z" changeid="xavier">
-        <seg>../../documentation/1.0/managerprotection.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/memcachedsessionbackend.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../../documentation/1.0/memcachedsessionbackend.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/parameterlist.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120107T145630Z" changeid="xavier">
-        <seg>../../documentation/1.0/parameterlist.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/passwordstore.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T192728Z" changeid="xavier">
-        <seg>../../documentation/1.0/passwordstore.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/portalcustom.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111226T200202Z" changeid="xavier">
-        <seg>../../documentation/1.0/portalcustom.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/portalmenu.html#menu_modules</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120218T220724Z" changeid="xavier">
-        <seg>../../documentation/1.0/portalmenu.html#menu_modules</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/samlservice.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120218T220532Z" changeid="xavier">
-        <seg>../../documentation/1.0/samlservice.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/samlservice.html#authentication_contexts</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120221T061802Z" changeid="xavier">
-        <seg>../../documentation/1.0/samlservice.html#authentication_contexts</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/samlservice.html#general_options</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120221T062840Z" changeid="xavier">
-        <seg>../../documentation/1.0/samlservice.html#general_options</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/selfmadeapplication.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T192355Z" changeid="xavier">
-        <seg>../../documentation/1.0/selfmadeapplication.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/soapconfbackend.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120223T125403Z" changeid="xavier">
-        <seg>../../documentation/1.0/soapconfbackend.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/soapsessionbackend.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../../documentation/1.0/soapsessionbackend.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/sqlconfbackend.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120223T125358Z" changeid="xavier">
-        <seg>../../documentation/1.0/sqlconfbackend.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/sqlsessionbackend.html#prepare_the_database</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120221T071835Z" changeid="xavier">
-        <seg>../../documentation/1.0/sqlsessionbackend.html#prepare_the_database</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/start.html#authentication_users_and_password_databases</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T115000Z" changeid="xavier">
-        <seg>../../documentation/1.0/start.html#authentication_users_and_password_databases</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/start.html#configuration_database</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120223T141847Z" changeid="xavier">
-        <seg>../../documentation/1.0/start.html#configuration_database</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/start.html#identity_provider</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T183705Z" changeid="xavier">
-        <seg>../../documentation/1.0/start.html#identity_provider</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/upgrade.html#debian_lenny_upgrade</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T112619Z" changeid="xavier">
-        <seg>../../documentation/1.0/upgrade.html#debian_lenny_upgrade</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/writingrulesand_headers.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T073744Z" changeid="xavier">
-        <seg>../../documentation/1.0/writingrulesand_headers.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/writingrulesand_headers.html#headers</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111225T155834Z" changeid="xavier">
-        <seg>../../documentation/1.0/writingrulesand_headers.html#headers</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.0/writingrulesand_headers.html#rules</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120225T111458Z" changeid="xavier">
-        <seg>../../documentation/1.0/writingrulesand_headers.html#rules</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.1/configlocation.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../../documentation/1.1/configlocation.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../../documentation/1.1/exportedvars.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20120223T074818Z" changeid="guimard">
-        <seg>../../documentation/1.1/exportedvars.html</seg>
+        <seg>../../documentation/1.2/applications.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -1820,10 +1252,146 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.2/authcas.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T183555Z" changeid="xavier">
+        <seg>../../documentation/1.2/authcas.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/authchoice.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120214T045619Z" changeid="xavier">
+        <seg>../../documentation/1.2/authchoice.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/authldap.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../../documentation/1.2/authldap.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/authldap.html#schema_extension</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T122030Z" changeid="xavier">
+        <seg>../../documentation/1.2/authldap.html#schema_extension</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/authmulti.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T114755Z" changeid="xavier">
+        <seg>../../documentation/1.2/authmulti.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/authopenid.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T183620Z" changeid="xavier">
+        <seg>../../documentation/1.2/authopenid.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/authremote.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120215T045315Z" changeid="xavier">
+        <seg>../../documentation/1.2/authremote.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/authsaml.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../../documentation/1.2/authsaml.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/changeconfbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120223T142639Z" changeid="xavier">
+        <seg>../../documentation/1.2/changeconfbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/configlocation.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../../documentation/1.2/configlocation.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/configlocation.html#apache</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T072326Z" changeid="xavier">
+        <seg>../../documentation/1.2/configlocation.html#apache</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/configlocation.html#portal</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../../documentation/1.2/configlocation.html#portal</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/customfunctions.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T121250Z" changeid="xavier">
+        <seg>../../documentation/1.2/customfunctions.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.2/exportedvars.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T101033Z" changeid="xavier">
         <seg>../../documentation/1.2/exportedvars.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/extendedfunctions.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T143607Z" changeid="xavier">
+        <seg>../../documentation/1.2/extendedfunctions.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/fileconfbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120223T125359Z" changeid="xavier">
+        <seg>../../documentation/1.2/fileconfbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/formreplay.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T073913Z" changeid="xavier">
+        <seg>../../documentation/1.2/formreplay.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/header_remote_user_conversion.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T073119Z" changeid="xavier">
+        <seg>../../documentation/1.2/header_remote_user_conversion.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -1836,10 +1404,202 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.2/idpopenid.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120214T045351Z" changeid="xavier">
+        <seg>../../documentation/1.2/idpopenid.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.2/idpsaml.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T103142Z" changeid="xavier">
         <seg>../../documentation/1.2/idpsaml.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/ldapconfbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120223T125401Z" changeid="xavier">
+        <seg>../../documentation/1.2/ldapconfbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/logoutforward.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T114754Z" changeid="xavier">
+        <seg>../../documentation/1.2/logoutforward.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/managerprotection.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120223T142943Z" changeid="xavier">
+        <seg>../../documentation/1.2/managerprotection.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/memcachedsessionbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../../documentation/1.2/memcachedsessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/parameterlist.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120107T145630Z" changeid="xavier">
+        <seg>../../documentation/1.2/parameterlist.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/passwordstore.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T192728Z" changeid="xavier">
+        <seg>../../documentation/1.2/passwordstore.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/portalcustom.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T114758Z" changeid="xavier">
+        <seg>../../documentation/1.2/portalcustom.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/portalmenu.html#menu_modules</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120218T220724Z" changeid="xavier">
+        <seg>../../documentation/1.2/portalmenu.html#menu_modules</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/samlservice.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120218T220532Z" changeid="xavier">
+        <seg>../../documentation/1.2/samlservice.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/samlservice.html#authentication_contexts</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T061802Z" changeid="xavier">
+        <seg>../../documentation/1.2/samlservice.html#authentication_contexts</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/samlservice.html#general_options</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T062840Z" changeid="xavier">
+        <seg>../../documentation/1.2/samlservice.html#general_options</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/selfmadeapplication.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T192355Z" changeid="xavier">
+        <seg>../../documentation/1.2/selfmadeapplication.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/soapconfbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120223T125403Z" changeid="xavier">
+        <seg>../../documentation/1.2/soapconfbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/soapsessionbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../../documentation/1.2/soapsessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/sqlconfbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120223T125358Z" changeid="xavier">
+        <seg>../../documentation/1.2/sqlconfbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/sqlsessionbackend.html#prepare_the_database</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120221T071835Z" changeid="xavier">
+        <seg>../../documentation/1.2/sqlsessionbackend.html#prepare_the_database</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/start.html#authentication_users_and_password_databases</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T115000Z" changeid="xavier">
+        <seg>../../documentation/1.2/start.html#authentication_users_and_password_databases</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/start.html#configuration_database</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120223T141847Z" changeid="xavier">
+        <seg>../../documentation/1.2/start.html#configuration_database</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/start.html#identity_provider</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T183705Z" changeid="xavier">
+        <seg>../../documentation/1.2/start.html#identity_provider</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/upgrade.html#debian_lenny_upgrade</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T112619Z" changeid="xavier">
+        <seg>../../documentation/1.2/upgrade.html#debian_lenny_upgrade</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/writingrulesand_headers.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T073744Z" changeid="xavier">
+        <seg>../../documentation/1.2/writingrulesand_headers.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/writingrulesand_headers.html#headers</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T114753Z" changeid="xavier">
+        <seg>../../documentation/1.2/writingrulesand_headers.html#headers</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/writingrulesand_headers.html#rules</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120225T111458Z" changeid="xavier">
+        <seg>../../documentation/1.2/writingrulesand_headers.html#rules</seg>
       </tuv>
     </tu>
     <tu>
@@ -1924,18 +1684,18 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../documentation/1.0/applications.html</seg>
+        <seg>../documentation/1.2/applications.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../documentation/1.0/applications.html</seg>
+        <seg>../documentation/1.2/applications.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../documentation/1.0/portal.html</seg>
+        <seg>../documentation/1.2/portal.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../documentation/1.0/portal.html</seg>
+        <seg>../documentation/1.2/portal.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -2700,665 +2460,9 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/activedirectoryminihowto.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/activedirectoryminihowto.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/applications.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/applications.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/applications/authbasic.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/applications/authbasic.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/applications/bugzilla.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/applications/bugzilla.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/applications/drupal.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/applications/drupal.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/applications/googleapps.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/applications/googleapps.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/applications/liferay.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/applications/liferay.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/applications/mediawiki.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/applications/mediawiki.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/applications/obm.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/applications/obm.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/applications/phpldapadmin.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/applications/phpldapadmin.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/applications/spring.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/applications/spring.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/applications/sympa.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/applications/sympa.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/applications/tomcat.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/applications/tomcat.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/applications/zimbra.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/applications/zimbra.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/authapache.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/authapache.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/authcas.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/authcas.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/authchoice.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/authchoice.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/authdbi.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/authdbi.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/authldap.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/authldap.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/authmulti.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/authmulti.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/authnull.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/authnull.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/authopenid.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/authopenid.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/authproxy.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/authproxy.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/authremote.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/authremote.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/authsaml.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/authsaml.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/authssl.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/authssl.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/authtwitter.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/authtwitter.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/browseablesessionbackend.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/browseablesessionbackend.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/cda.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/cda.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/changeconfbackend.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/changeconfbackend.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/configlocation.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/configlocation.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/configvhost.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/configvhost.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/customfunctions.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/customfunctions.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/error.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/error.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/exportedvars.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/exportedvars.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/extendedfunctions.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/extendedfunctions.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/federationproxy.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/federationproxy.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/fileconfbackend.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/fileconfbackend.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/filesessionbackend.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/filesessionbackend.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/formreplay.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/formreplay.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/header_remote_user_conversion.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/header_remote_user_conversion.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/highavailability.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/highavailability.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/idpcas.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/idpcas.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/idpopenid.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/idpopenid.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/idpsaml.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/idpsaml.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/installdeb.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/installdeb.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/installrpm.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/installrpm.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/installtarball.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/installtarball.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/ldapconfbackend.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/ldapconfbackend.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/ldapminihowto.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/ldapminihowto.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/ldapsessionbackend.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/ldapsessionbackend.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/logoutforward.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/logoutforward.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/logs.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/logs.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/memcachedsessionbackend.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/memcachedsessionbackend.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/mrtg.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/mrtg.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/mysqlminihowto.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/mysqlminihowto.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/nosqlsessionbackend.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/nosqlsessionbackend.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/notifications.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/notifications.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/parameterlist.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/parameterlist.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/passwordstore.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/passwordstore.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/performances.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/performances.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/portal.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/portal.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/portalcustom.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/portalcustom.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/portalmenu.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/portalmenu.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/prereq.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/prereq.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/rbac.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/rbac.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/redirections.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/redirections.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/resetpassword.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/resetpassword.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/samlservice.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/samlservice.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/security.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/security.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/selfmadeapplication.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/selfmadeapplication.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/sessions.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/sessions.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/soapconfbackend.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/soapconfbackend.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/soapminihowto.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/soapminihowto.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/soapservices.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/soapservices.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/soapsessionbackend.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/soapsessionbackend.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/sqlconfbackend.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/sqlconfbackend.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/sqlsessionbackend.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/sqlsessionbackend.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/ssocookie.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/ssocookie.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/status.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/status.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/upgrade.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/upgrade.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.0/writingrulesand_headers.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.0/writingrulesand_headers.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
         <seg>../pages/documentation/1.1/activedirectoryminihowto.html</seg>
       </tuv>
-      <tuv lang="FR-FR">
+      <tuv lang="FR-FR" changedate="20120226T115000Z" changeid="xavier">
         <seg>../pages/documentation/1.1/activedirectoryminihowto.html</seg>
       </tuv>
     </tu>
@@ -3366,7 +2470,7 @@
       <tuv lang="EN-US">
         <seg>../pages/documentation/1.1/applications.html</seg>
       </tuv>
-      <tuv lang="FR-FR">
+      <tuv lang="FR-FR" changedate="20120226T115000Z" changeid="xavier">
         <seg>../pages/documentation/1.1/applications.html</seg>
       </tuv>
     </tu>
@@ -3374,688 +2478,840 @@
       <tuv lang="EN-US">
         <seg>../pages/documentation/1.1/applications/authbasic.html</seg>
       </tuv>
-      <tuv lang="FR-FR">
+      <tuv lang="FR-FR" changedate="20120226T115001Z" changeid="xavier">
         <seg>../pages/documentation/1.1/applications/authbasic.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
         <seg>../pages/documentation/1.1/applications/bugzilla.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115009Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/applications/bugzilla.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/applications/drupal.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115012Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/applications/drupal.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/applications/googleapps.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115016Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/applications/googleapps.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/applications/liferay.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115021Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/applications/liferay.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/applications/limesurvey.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115022Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/applications/limesurvey.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/applications/mediawiki.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115024Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/applications/mediawiki.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/applications/obm.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115026Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/applications/obm.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/applications/phpldapadmin.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115029Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/applications/phpldapadmin.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/applications/spring.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115037Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/applications/spring.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/applications/sympa.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115039Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/applications/sympa.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/applications/tomcat.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115040Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/applications/tomcat.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/applications/zimbra.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115042Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/applications/zimbra.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/authapache.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115001Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/authapache.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/authcas.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115001Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/authcas.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/authchoice.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115002Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/authchoice.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/authdbi.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115003Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/authdbi.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/authldap.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115003Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/authldap.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/authmulti.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115004Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/authmulti.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/authnull.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115004Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/authnull.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/authopenid.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115004Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/authopenid.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/authproxy.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115004Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/authproxy.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/authremote.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115005Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/authremote.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/authsaml.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115005Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/authsaml.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/authslave.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115006Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/authslave.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/authssl.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115007Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/authssl.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/authtwitter.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115007Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/authtwitter.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/authyubikey.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115008Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/authyubikey.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/browseablesessionbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115009Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/browseablesessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/cda.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115010Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/cda.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/changeconfbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115010Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/changeconfbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/configlocation.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115011Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/configlocation.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/configvhost.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115011Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/configvhost.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/customfunctions.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115011Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/customfunctions.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/error.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115012Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/error.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/exportedvars.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115013Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/exportedvars.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/extendedfunctions.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115013Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/extendedfunctions.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/federationproxy.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115013Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/federationproxy.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/fileconfbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115014Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/fileconfbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/filesessionbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115014Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/filesessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/formreplay.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115015Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/formreplay.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/header_remote_user_conversion.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115016Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/header_remote_user_conversion.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/highavailability.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115017Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/highavailability.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/idpcas.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115017Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/idpcas.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/idpopenid.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115018Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/idpopenid.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/idpsaml.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115018Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/idpsaml.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/installdeb.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115019Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/installdeb.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/installrpm.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115019Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/installrpm.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/installtarball.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115020Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/installtarball.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/ldapconfbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115020Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/ldapconfbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/ldapminihowto.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115020Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/ldapminihowto.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/ldapsessionbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115021Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/ldapsessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/logoutforward.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115022Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/logoutforward.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/logs.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115023Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/logs.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/managerprotection.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115023Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/managerprotection.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/memcachedsessionbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115024Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/memcachedsessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/mrtg.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115025Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/mrtg.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/mysqlminihowto.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115025Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/mysqlminihowto.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/nosqlsessionbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115026Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/nosqlsessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/notifications.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115026Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/notifications.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/parameterlist.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115027Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/parameterlist.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/passwordstore.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115027Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/passwordstore.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/performances.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115028Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/performances.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/portal.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115029Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/portal.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/portalcustom.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115029Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/portalcustom.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/portalmenu.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115030Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/portalmenu.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/prereq.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115030Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/prereq.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/rbac.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115031Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/rbac.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/redirections.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115032Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/redirections.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/resetpassword.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115032Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/resetpassword.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/safejail.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115033Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/safejail.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/samlservice.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115033Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/samlservice.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/securetoken.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115034Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/securetoken.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/security.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115034Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/security.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/selfmadeapplication.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115034Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/selfmadeapplication.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/sessions.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115035Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/sessions.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/soapconfbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115035Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/soapconfbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/soapminihowto.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115036Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/soapminihowto.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/soapservices.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115036Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/soapservices.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/soapsessionbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115037Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/soapsessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/sqlconfbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115037Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/sqlconfbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/sqlsessionbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115038Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/sqlsessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/ssocookie.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115038Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/ssocookie.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/status.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115039Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/status.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/upgrade.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115041Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/upgrade.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.1/writingrulesand_headers.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115041Z" changeid="xavier">
+        <seg>../pages/documentation/1.1/writingrulesand_headers.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/activedirectoryminihowto.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.2/activedirectoryminihowto.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/applications.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.2/applications.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/applications/authbasic.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.2/applications/authbasic.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/applications/bugzilla.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111454Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/applications/bugzilla.html</seg>
+        <seg>../pages/documentation/1.2/applications/bugzilla.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/applications/drupal.html</seg>
+        <seg>../pages/documentation/1.2/applications/drupal.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111510Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/applications/drupal.html</seg>
+        <seg>../pages/documentation/1.2/applications/drupal.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/applications/googleapps.html</seg>
+        <seg>../pages/documentation/1.2/applications/googleapps.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111525Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/applications/googleapps.html</seg>
+        <seg>../pages/documentation/1.2/applications/googleapps.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/applications/liferay.html</seg>
+        <seg>../pages/documentation/1.2/applications/liferay.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111539Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/applications/liferay.html</seg>
+        <seg>../pages/documentation/1.2/applications/liferay.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/applications/limesurvey.html</seg>
+        <seg>../pages/documentation/1.2/applications/limesurvey.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T153259Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/applications/limesurvey.html</seg>
+        <seg>../pages/documentation/1.2/applications/limesurvey.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/applications/mediawiki.html</seg>
+        <seg>../pages/documentation/1.2/applications/mediawiki.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111546Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/applications/mediawiki.html</seg>
+        <seg>../pages/documentation/1.2/applications/mediawiki.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/applications/obm.html</seg>
+        <seg>../pages/documentation/1.2/applications/obm.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111558Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/applications/obm.html</seg>
+        <seg>../pages/documentation/1.2/applications/obm.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/applications/phpldapadmin.html</seg>
+        <seg>../pages/documentation/1.2/applications/phpldapadmin.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111601Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/applications/phpldapadmin.html</seg>
+        <seg>../pages/documentation/1.2/applications/phpldapadmin.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/applications/spring.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.1/applications/spring.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/applications/sympa.html</seg>
+        <seg>../pages/documentation/1.2/applications/spring.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.1/applications/sympa.html</seg>
+        <seg>../pages/documentation/1.2/applications/spring.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/applications/tomcat.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.1/applications/tomcat.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/applications/zimbra.html</seg>
+        <seg>../pages/documentation/1.2/applications/sympa.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.1/applications/zimbra.html</seg>
+        <seg>../pages/documentation/1.2/applications/sympa.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/authapache.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.1/authapache.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/authcas.html</seg>
+        <seg>../pages/documentation/1.2/applications/tomcat.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.1/authcas.html</seg>
+        <seg>../pages/documentation/1.2/applications/tomcat.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/authchoice.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.1/authchoice.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/authdbi.html</seg>
+        <seg>../pages/documentation/1.2/applications/zimbra.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.1/authdbi.html</seg>
+        <seg>../pages/documentation/1.2/applications/zimbra.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/authldap.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.1/authldap.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/authmulti.html</seg>
+        <seg>../pages/documentation/1.2/authapache.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.1/authmulti.html</seg>
+        <seg>../pages/documentation/1.2/authapache.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/authnull.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.1/authnull.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/authopenid.html</seg>
+        <seg>../pages/documentation/1.2/authcas.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.1/authopenid.html</seg>
+        <seg>../pages/documentation/1.2/authcas.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/authproxy.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.1/authproxy.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/authremote.html</seg>
+        <seg>../pages/documentation/1.2/authchoice.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.1/authremote.html</seg>
+        <seg>../pages/documentation/1.2/authchoice.html</seg>
       </tuv>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/authsaml.html</seg>
+        <seg>../pages/documentation/1.2/authdbi.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.1/authsaml.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/authslave.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.1/authslave.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/authssl.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.1/authssl.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/authtwitter.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.1/authtwitter.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/authyubikey.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T111437Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/authyubikey.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/browseablesessionbackend.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T111453Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/browseablesessionbackend.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/cda.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T111458Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/cda.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/changeconfbackend.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T111458Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/changeconfbackend.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/configlocation.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T111459Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/configlocation.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/configvhost.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T111459Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/configvhost.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/customfunctions.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T111501Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/customfunctions.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/error.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T111514Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/error.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/exportedvars.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T111514Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/exportedvars.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/extendedfunctions.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T111515Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/extendedfunctions.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/federationproxy.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T111520Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/federationproxy.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/fileconfbackend.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T111520Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/fileconfbackend.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/filesessionbackend.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T111520Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/filesessionbackend.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/formreplay.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T111521Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/formreplay.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/header_remote_user_conversion.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T111527Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/header_remote_user_conversion.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/highavailability.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T111528Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/highavailability.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/idpcas.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T111531Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/idpcas.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/idpopenid.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T111531Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/idpopenid.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/idpsaml.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T111532Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/idpsaml.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/installdeb.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T111532Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/installdeb.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/installrpm.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T111533Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/installrpm.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/installtarball.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T111534Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/installtarball.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/ldapconfbackend.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T111538Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/ldapconfbackend.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/ldapminihowto.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T111538Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/ldapminihowto.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/ldapsessionbackend.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T111539Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/ldapsessionbackend.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/logoutforward.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T111539Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/logoutforward.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/logs.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T111540Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/logs.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/managerprotection.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T111545Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/managerprotection.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/memcachedsessionbackend.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T111546Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/memcachedsessionbackend.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/mrtg.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T111547Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/mrtg.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/mysqlminihowto.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T111547Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/mysqlminihowto.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/nosqlsessionbackend.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T111554Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/nosqlsessionbackend.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/notifications.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T111555Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/notifications.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/parameterlist.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T111600Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/parameterlist.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/passwordstore.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T111600Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/passwordstore.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/performances.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T111601Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/performances.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/portal.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T111602Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/portal.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/portalcustom.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T111602Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/portalcustom.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/portalmenu.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T111602Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/portalmenu.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/prereq.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T111603Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/prereq.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/rbac.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T111612Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/rbac.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/redirections.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.1/redirections.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/resetpassword.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.1/resetpassword.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/safejail.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111203T173201Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/safejail.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/samlservice.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.1/samlservice.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/securetoken.html</seg>
-      </tuv>
-      <tuv lang="FR-FR" changedate="20111119T111612Z" changeid="xavier">
-        <seg>../pages/documentation/1.1/securetoken.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/security.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.1/security.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/selfmadeapplication.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.1/selfmadeapplication.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/sessions.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.1/sessions.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/soapconfbackend.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.1/soapconfbackend.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/soapminihowto.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.1/soapminihowto.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/soapservices.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.1/soapservices.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/soapsessionbackend.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.1/soapsessionbackend.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/sqlconfbackend.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.1/sqlconfbackend.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/sqlsessionbackend.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.1/sqlsessionbackend.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/ssocookie.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.1/ssocookie.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/status.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.1/status.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/upgrade.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.1/upgrade.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>../pages/documentation/1.1/writingrulesand_headers.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>../pages/documentation/1.1/writingrulesand_headers.html</seg>
+        <seg>../pages/documentation/1.2/authdbi.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -4068,6 +3324,46 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/authldap.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.2/authldap.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/authmulti.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.2/authmulti.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/authnull.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.2/authnull.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/authopenid.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.2/authopenid.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/authproxy.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.2/authproxy.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../pages/documentation/1.2/authradius.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T173153Z" changeid="xavier">
@@ -4076,10 +3372,522 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/authremote.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.2/authremote.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/authsaml.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.2/authsaml.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/authslave.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.2/authslave.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/authssl.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.2/authssl.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/authtwitter.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.2/authtwitter.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/authyubikey.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111437Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/authyubikey.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/browseablesessionbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111453Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/browseablesessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/cda.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111458Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/cda.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/changeconfbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111458Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/changeconfbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/configlocation.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111459Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/configlocation.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/configvhost.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111459Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/configvhost.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/customfunctions.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111501Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/customfunctions.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/error.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111514Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/error.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/exportedvars.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111514Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/exportedvars.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/extendedfunctions.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111515Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/extendedfunctions.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/federationproxy.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111520Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/federationproxy.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/fileconfbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111520Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/fileconfbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/filesessionbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111520Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/filesessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/formreplay.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111521Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/formreplay.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/header_remote_user_conversion.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111527Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/header_remote_user_conversion.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/highavailability.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111528Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/highavailability.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/idpcas.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111531Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/idpcas.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/idpopenid.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111531Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/idpopenid.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/idpsaml.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111532Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/idpsaml.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/installdeb.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111532Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/installdeb.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/installrpm.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111533Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/installrpm.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/installtarball.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111534Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/installtarball.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/ldapconfbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111538Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/ldapconfbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/ldapminihowto.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111538Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/ldapminihowto.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/ldapsessionbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111539Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/ldapsessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../pages/documentation/1.2/loginhistory.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120215T045147Z" changeid="xavier">
         <seg>../pages/documentation/1.2/loginhistory.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/logoutforward.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111539Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/logoutforward.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/logs.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111540Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/logs.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/managerprotection.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111545Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/managerprotection.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/memcachedsessionbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111546Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/memcachedsessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/mrtg.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111547Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/mrtg.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/mysqlminihowto.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111547Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/mysqlminihowto.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/nosqlsessionbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111554Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/nosqlsessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/notifications.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111555Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/notifications.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/parameterlist.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111600Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/parameterlist.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/passwordstore.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111600Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/passwordstore.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/performances.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111601Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/performances.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/portal.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111602Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/portal.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/portalcustom.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111602Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/portalcustom.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/portalmenu.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111602Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/portalmenu.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/prereq.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111603Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/prereq.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/rbac.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111612Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/rbac.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/redirections.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.2/redirections.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/resetpassword.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.2/resetpassword.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/safejail.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111203T173201Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/safejail.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/samlservice.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.2/samlservice.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/securetoken.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20111119T111612Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/securetoken.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/security.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.2/security.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/selfmadeapplication.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.2/selfmadeapplication.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/sessions.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.2/sessions.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/soapconfbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.2/soapconfbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/soapminihowto.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.2/soapminihowto.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/soapservices.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.2/soapservices.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/soapsessionbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.2/soapsessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/sqlconfbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.2/sqlconfbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/sqlsessionbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.2/sqlsessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/ssocookie.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.2/ssocookie.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/status.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.2/status.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/upgrade.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.2/upgrade.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/writingrulesand_headers.html</seg>
+      </tuv>
+      <tuv lang="FR-FR">
+        <seg>../pages/documentation/1.2/writingrulesand_headers.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -4648,6 +4456,14 @@
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T194524Z" changeid="xavier">
         <seg>/_detail/documentation/manager-authchoice.png?id=documentation%3A1.0%3Aauthchoice</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/documentation/manager-authchoice.png?id=documentation%3A1.2%3Aauthchoice</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T114757Z" changeid="xavier">
+        <seg>/_detail/documentation/manager-authchoice.png?id=documentation%3A1.2%3Aauthchoice</seg>
       </tuv>
     </tu>
     <tu>
@@ -13512,6 +13328,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>As you may have guessed, these accounts are famous characters from the TV show &lt;a0&gt;Doctor Who&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115325Z" changeid="xavier">
+        <seg>Comme on peut le voir, ces comptes sont les fameux caractères du show TV &lt;a0&gt;Doctor Who&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Assertion Consumer</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -15076,6 +14900,22 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Efface les autres sessions de l'utilisateur si les adresses &lt;a0&gt;IP&lt;/a0&gt; diffèrent</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Demonstration</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T114809Z" changeid="xavier">
+        <seg>Démonstration</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Demonstration backend has hard coded user accounts:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115206Z" changeid="xavier">
+        <seg>Le backend de démonstration dispose de compte codés en dur :</seg>
       </tuv>
     </tu>
     <tu>
@@ -19650,8 +19490,8 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       <tuv lang="EN-US">
         <seg>Password</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120221T072408Z" changeid="xavier">
-        <seg>Password</seg>
+      <tuv lang="FR-FR" changedate="20120226T115222Z" changeid="xavier">
+        <seg>Mot-de-passe</seg>
       </tuv>
     </tu>
     <tu>
@@ -20496,6 +20336,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Feuille de route</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Role</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115217Z" changeid="xavier">
+        <seg>Rôle</seg>
       </tuv>
     </tu>
     <tu>
@@ -21804,6 +21652,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The AuthDemo and UserDBDemo will allow you to log in and get the standard attributes (uid, cn and mail).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115404Z" changeid="xavier">
+        <seg>AuthDemo et UserDBDemo permettent de se connecter et d'avoir les attributs standards (uid, cn et mail).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The Basic Authentication relies on a specific &lt;a0&gt;HTTP&lt;/a0&gt; header, as described above.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T113125Z" changeid="xavier">
@@ -21840,6 +21696,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>NameID est l'identifiant principal de l'utilisateur transmis dans les messages &lt;a1&gt;SAML&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The PasswordDBDemo will allow you to change the password with some basic checks, but as the data are hard coded, the password will never be really changed.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115507Z" changeid="xavier">
+        <seg>PasswordDBDemo permet de changer de mot-de-passe avec quelques tests de base, mais comme les données sont codées en dur, le mot-de-passe ne sera jamais réellement changé.</seg>
       </tuv>
     </tu>
     <tu>
@@ -22404,6 +22268,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>There is nothing more to do that select the backend in the Manager.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115527Z" changeid="xavier">
+        <seg>Rien de plus à faire que de sélectionner ce backend dans le manager.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>These files must be included in Apache configuration, either with &lt;c0&gt;Include&lt;/c0&gt; directives in &lt;c1&gt;httpd.conf&lt;/c1&gt; (see &lt;a2&gt;quick start example&lt;/a2&gt;), or with symbolic links in Apache configuration directory (like &lt;c3&gt;/etc/httpd/conf.d&lt;/c3&gt;).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T144644Z" changeid="xavier">
@@ -22768,6 +22640,22 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T114322Z" changeid="xavier">
         <seg>Cette méthode nécessite d'exécuter une commande sur le serveur Active Directory et ensuite de transférer le fichier keytab sur le serveur Linux.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This mode allow to test LemonLDAP::NG without any third-party software.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115115Z" changeid="xavier">
+        <seg>Ce mode permet de tester LemonLDAP::NG sans aucun autre programme tiers.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This mode must not be used for other purpose than test and demonstration!</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115144Z" changeid="xavier">
+        <seg>Ces mode ne doit pas être utilisé pour autre chose que des tests et démonstrations !</seg>
       </tuv>
     </tu>
     <tu>
@@ -24944,6 +24832,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>administrator</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115246Z" changeid="xavier">
+        <seg>administrator</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>ant</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T191507Z" changeid="xavier">
@@ -25462,18 +25358,10 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
-        <seg>documentation/1.0/start.html</seg>
+        <seg>documentation/1.2/start.html</seg>
       </tuv>
       <tuv lang="FR-FR">
-        <seg>documentation/1.0/start.html</seg>
-      </tuv>
-    </tu>
-    <tu>
-      <tuv lang="EN-US">
-        <seg>documentation/1.1/start.html</seg>
-      </tuv>
-      <tuv lang="FR-FR">
-        <seg>documentation/1.1/start.html</seg>
+        <seg>documentation/1.2/start.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -26222,6 +26110,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.2:authmulti</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T114755Z" changeid="xavier">
+        <seg>documentation:1.2:authmulti</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.2:configlocation</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T103112Z" changeid="xavier">
@@ -26262,6 +26158,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.2:idpcas</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T114752Z" changeid="xavier">
+        <seg>documentation:1.2:idpcas</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.2:idpsaml</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T101251Z" changeid="xavier">
@@ -26282,6 +26186,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T101232Z" changeid="xavier">
         <seg>documentation:1.2:passwordstore</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:portalcustom</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T114800Z" changeid="xavier">
+        <seg>documentation:1.2:portalcustom</seg>
       </tuv>
     </tu>
     <tu>
@@ -26726,6 +26638,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>dwho</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115226Z" changeid="xavier">
+        <seg>dwho</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>each area has 2 portals:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T200333Z" changeid="xavier">
@@ -26970,6 +26890,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>http://fr.wikipedia.org/wiki/Central_Authentication_Service</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://en.wikipedia.org/wiki/Doctor_Who</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115250Z" changeid="xavier">
+        <seg>http://en.wikipedia.org/wiki/Doctor_Who</seg>
       </tuv>
     </tu>
     <tu>
@@ -28782,6 +28710,14 @@ make test</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>msmith</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115225Z" changeid="xavier">
+        <seg>msmith</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>multi &lt;s0&gt;=&gt;&lt;/s0&gt; &lt;s1&gt;{&lt;/s1&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T145959Z" changeid="xavier">
@@ -29104,6 +29040,14 @@ msktutil -c -b &quot;cn=COMPUTERS&quot; -s HTTP/auth.example.com -h auth.example
       <tuv lang="FR-FR" changedate="20120226T114526Z" changeid="xavier">
         <seg>rm -f /etc/lemonldap-ng/auth.keytab
 msktutil -c -b &quot;cn=COMPUTERS&quot; -s HTTP/auth.example.com -h auth.example.com -k /etc/lemonldap-ng/auth.keytab --computer-name portalsso --upn HTTP/auth.example.com --server ad.example.com --verbose --enctypes 28</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>rtyler</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115224Z" changeid="xavier">
+        <seg>rtyler</seg>
       </tuv>
     </tu>
     <tu>
