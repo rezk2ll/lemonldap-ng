@@ -8190,10 +8190,26 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;&lt;a1&gt;API&lt;/a1&gt; client ID&lt;/s0&gt;: &lt;a2&gt;API&lt;/a2&gt; client ID from Yubico</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T162521Z" changeid="xavier">
+        <seg>&lt;s0&gt;Identifiant client de l'&lt;a1&gt;API&lt;/a1&gt;&lt;/s0&gt; : identifiant client de l'&lt;a2&gt;API&lt;/a2&gt; obtenu auprès de Yubico</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;&lt;a1&gt;API&lt;/a1&gt; key&lt;/s0&gt;: &lt;a2&gt;API&lt;/a2&gt; key from Twitter</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;s0&gt;Clef d'&lt;a1&gt;API&lt;/a1&gt;&lt;/s0&gt;: clef d'&lt;a2&gt;API&lt;/a2&gt; donnée par Twitter</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;&lt;a1&gt;API&lt;/a1&gt; secret key&lt;/s0&gt;: &lt;a2&gt;API&lt;/a2&gt; secret key from Yubico</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T162610Z" changeid="xavier">
+        <seg>&lt;s0&gt;Clef secrète de l'&lt;a1&gt;API&lt;/a1&gt;&lt;/s0&gt; : clef secrète de l'&lt;a2&gt;API&lt;/a2&gt; obtenue auprès de Yubico</seg>
       </tuv>
     </tu>
     <tu>
@@ -9376,6 +9392,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T123827Z" changeid="xavier">
         <seg>&lt;s0&gt;New&lt;/s0&gt; : pour écrire l'historique de la configuration</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;OTP public ID part size&lt;/s0&gt;: Part of Yubikey OTP that will be used as the media identifier (default: 12)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T162843Z" changeid="xavier">
+        <seg>&lt;s0&gt;Taille de la partie publique de l'OTP&lt;/s0&gt; : Partie du mot-de-passe unique Yubikey utilisée pour identifier les matériels (défaut: 12)</seg>
       </tuv>
     </tu>
     <tu>
@@ -15992,6 +16016,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>For example it can be stored as a second value of the uid attribute in the &lt;a2&gt;LDAP&lt;/a2&gt; directory:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T163045Z" changeid="xavier">
+        <seg>Par exemple il peut être stocké comme seconde valeur de l'attibut uid dans un annuaire &lt;a2&gt;LDAP&lt;/a2&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>For example, a &lt;a0&gt;LL::NG&lt;/a0&gt; server can be:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T183527Z" changeid="xavier">
@@ -17328,6 +17360,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>In Manager, go in &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Authentication modules&lt;/c1&gt; and choose Yubikey for authentication module.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T162359Z" changeid="xavier">
+        <seg>Dans le manager, allez dans &lt;c0&gt;Paramètres generaux&lt;/c0&gt; &gt; &lt;c1&gt;Modules d'authentification&lt;/c1&gt; et choisissez Yubikey comme module d'authentication.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>In Manager, go in &lt;c0&gt;General Parameters&lt;/c0&gt; » &lt;c1&gt;Authentication modules&lt;/c1&gt; and choose Proxy for authentication and users.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T052338Z" changeid="xavier">
@@ -17780,6 +17820,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T121730Z" changeid="xavier">
         <seg>Elle retourne 1 si c'est bon, 0 sinon.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>It sends an OTP, which is validated against Yubico server.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T162226Z" changeid="xavier">
+        <seg>Il envoie un mot-de-passe à valeur unique (OTP) qui est validé par un serveur Yubico.</seg>
       </tuv>
     </tu>
     <tu>
@@ -20908,6 +20956,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>See &lt;a0&gt;Yubico API&lt;/a0&gt; page.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T162341Z" changeid="xavier">
+        <seg>Voir la page &lt;a0&gt;Yubico API&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>See &lt;a0&gt;how configure logging in Tomcat&lt;/a0&gt; .</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T191428Z" changeid="xavier">
@@ -21820,6 +21876,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The &lt;a0&gt;Yubikey&lt;/a0&gt; is a small material token shipped by &lt;a1&gt;Yubico&lt;/a1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T162139Z" changeid="xavier">
+        <seg>&lt;a0&gt;Yubikey&lt;/a0&gt; est un petit matériel d'authentification vendu par &lt;a1&gt;Yubico&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The &lt;a0&gt;encode_base64&lt;/a0&gt; subroutine</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T121332Z" changeid="xavier">
@@ -22440,6 +22504,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Allez ensuite dans &lt;c0&gt;Paramètres Twitter&lt;/c0&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Then, go in &lt;c0&gt;Yubikey parameters&lt;/c0&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T162410Z" changeid="xavier">
+        <seg>Ensuite, aller dans les &lt;c0&gt;paramètres Yubikey&lt;/c0&gt;:</seg>
       </tuv>
     </tu>
     <tu>
@@ -24640,6 +24712,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You have to register the media identifer in your user backend (&lt;a0&gt;LDAP&lt;/a0&gt; or &lt;a1&gt;SQL&lt;/a1&gt;) to match the yubikey with a real user.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T163002Z" changeid="xavier">
+        <seg>Il faut enregistrer le matériel dans le backend utilisateurs (&lt;a0&gt;LDAP&lt;/a0&gt; ou &lt;a1&gt;SQL&lt;/a1&gt;) pour le faire correspondre à un utilisateur.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You have to run this command on Active Directory:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T154553Z" changeid="xavier">
@@ -24728,6 +24808,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You need &lt;a0&gt;Auth::Yubikey_WebClient&lt;/a0&gt; package.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T162240Z" changeid="xavier">
+        <seg>Le paquet &lt;a0&gt;Auth::Yubikey_WebClient&lt;/a0&gt; est nécessaire.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You need &lt;a0&gt;Net::Twitter&lt;/a0&gt; package, with a very recent version (&gt;3).</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -24772,6 +24860,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111222T173631Z" changeid="xavier">
         <seg>Il est nécessaire de récupérer une clef de pré-authentification auprès du serveur Zimbra.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You need to get an client ID and a secret key from Yubico.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T162329Z" changeid="xavier">
+        <seg>Un identifiant client et une clef secrète doivent être obtenues auprès de Yubico.</seg>
       </tuv>
     </tu>
     <tu>
@@ -24884,6 +24980,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T112112Z" changeid="xavier">
         <seg>Le module doit être chargé par Apache (par exemple après le chargement de l'agent) :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Yubikey</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T162058Z" changeid="xavier">
+        <seg>Yubikey</seg>
       </tuv>
     </tu>
     <tu>
@@ -27846,6 +27950,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://search.cpan.org/~massyn/Auth-Yubikey_WebClient/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T162227Z" changeid="xavier">
+        <seg>http://search.cpan.org/~massyn/Auth-Yubikey_WebClient/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://search.cpan.org/~mmims/Net-Twitter/</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -28374,6 +28486,22 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://www.yubico.com</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T162100Z" changeid="xavier">
+        <seg>http://www.yubico.com</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.yubico.com/yubikey</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T162059Z" changeid="xavier">
+        <seg>http://www.yubico.com/yubikey</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://www.zimbra.com/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111220T112611Z" changeid="xavier">
@@ -28442,6 +28570,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>https://twitter.com</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>https://upgrade.yubico.com/getapikey/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T162241Z" changeid="xavier">
+        <seg>https://upgrade.yubico.com/getapikey/</seg>
       </tuv>
     </tu>
     <tu>
@@ -29788,6 +29924,22 @@ cd lemonldap-ng-*</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T072039Z" changeid="xavier">
         <seg>uid varchar&lt;s11&gt;(&lt;/s11&gt;255&lt;s12&gt;)&lt;/s12&gt;&lt;s13&gt;,&lt;/s13&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>uid: 123456789012</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T163048Z" changeid="xavier">
+        <seg>uid: 123456789012</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>uid: coudot</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T163046Z" changeid="xavier">
+        <seg>uid: coudot</seg>
       </tuv>
     </tu>
     <tu>
