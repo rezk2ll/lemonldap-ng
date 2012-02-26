@@ -1484,6 +1484,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.2/resetpassword.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115734Z" changeid="xavier">
+        <seg>../../documentation/1.2/resetpassword.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.2/samlservice.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120218T220532Z" changeid="xavier">
@@ -6204,6 +6212,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; uses &lt;a1&gt;Perl Authen::Radius &lt;/a1&gt; as a simple authentication backend.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T120241Z" changeid="xavier">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; utilise &lt;a1&gt;Authen::Radius de Perl&lt;/a1&gt; comme simple backend d'authentification.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; will operate some &lt;a1&gt;SQL&lt;/a1&gt; queries:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T195525Z" changeid="xavier">
@@ -8560,6 +8576,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Authentication level&lt;/s0&gt;: authentication level for Radius module</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T120545Z" changeid="xavier">
+        <seg>&lt;s0&gt;Niveau d'authentification&lt;/s0&gt; : niveau d'authentification pour Radius</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Authentication level&lt;/s0&gt;: authentication level for this module</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T070756Z" changeid="xavier">
@@ -9460,6 +9484,22 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Reset attribute&lt;/s0&gt;: name of password reset attribute (default: pwdReset).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T120047Z" changeid="xavier">
+        <seg>&lt;s0&gt;Attribut reset&lt;/s0&gt; : nom de l'attribut reset du mot-de-passe (défaut : pwdReset).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Reset value&lt;/s0&gt;: value to set in reset attribute to activate password reset (default: TRUE).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T120134Z" changeid="xavier">
+        <seg>&lt;s0&gt;Valeur de reset&lt;/s0&gt; : valeur à mettre dans l'attribut reset pour activer la réinitialisation du mot-de-passe (défaut : TRUE).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Resolution Rule&lt;/s0&gt;: rule that will be applied to preselect an IDP for a user.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T060133Z" changeid="xavier">
@@ -9612,6 +9652,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Server hostname&lt;/s0&gt;: this is the hostname or &lt;a1&gt;IP&lt;/a1&gt; address of the Radius server</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T123302Z" changeid="xavier">
+        <seg>&lt;s0&gt;Nom d'hôte du serveur&lt;/s0&gt; : le nom d'hôte ou l'adresse &lt;a1&gt;IP&lt;/a1&gt; du serveur Radius</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Server port&lt;/s0&gt;: TCP port used by &lt;a1&gt;LDAP&lt;/a1&gt; server.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120101T184755Z" changeid="xavier">
@@ -9692,6 +9740,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20111217T081210Z" changeid="xavier">
         <seg>&lt;s0&gt;Clef prépartagée&lt;/s0&gt; : correspond au paramètre du cookie dans sympa.conf</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Shared secret&lt;/s0&gt;: this is the passphrase to use to connect to the Radius server</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T120639Z" changeid="xavier">
+        <seg>&lt;s0&gt;Secret partagé&lt;/s0&gt; : la phrase de passe à utiliser pour se connecter au serveur Radius</seg>
       </tuv>
     </tu>
     <tu>
@@ -9796,6 +9852,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;s0&gt;Undefined&lt;/s0&gt;: le format de NameID par défaut est utilisé</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Use reset attribute&lt;/s0&gt;: enable to use the password reset attribute.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115849Z" changeid="xavier">
+        <seg>&lt;s0&gt;Utiliser l'attribut reset&lt;/s0&gt; : activé pour utiliser l'attribut reset du mot-de-passe.</seg>
       </tuv>
     </tu>
     <tu>
@@ -14672,6 +14736,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Currently, the module is simply handling a Radius Authentication request and has been tested only against a FreeRadius server.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T120421Z" changeid="xavier">
+        <seg>Actuellement, ce module traite simplement une requête d'authentification Radius et n'a été testé que sur un serveur FreeRadius.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Custom functions</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -17064,6 +17136,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>In Debian/Ubuntu, install the library through apt-get command</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T120507Z" changeid="xavier">
+        <seg>Pour Debian/Ubuntu, installer la librairie via la commande apt-get</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>In Manager, click on &lt;a0&gt;SAML&lt;/a0&gt; service providers and the button &lt;c1&gt;New service provider&lt;/c1&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T192829Z" changeid="xavier">
@@ -17140,6 +17220,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120215T045629Z" changeid="xavier">
         <seg>Dans le manager, aller dans &lt;c0&gt;Paramètres généraux&lt;/c0&gt; &gt; &lt;c1&gt;Modules d'authentification&lt;/c1&gt; et choisir Proxy pour les modules authentification et utilisateurs.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>In Manager, go in &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Authentication modules&lt;/c1&gt; and choose Radius for authentication.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T120522Z" changeid="xavier">
+        <seg>Dans le manager, aller dans &lt;c0&gt;Paramètres généraux&lt;/c0&gt; &gt; &lt;c1&gt;Modules d'authentification&lt;/c1&gt; et choisir Radius pour l'authentification.</seg>
       </tuv>
     </tu>
     <tu>
@@ -17364,6 +17452,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Installez le module &lt;a2&gt;Perl&lt;/a2&gt; &lt;a1&gt;Apache::Session::Redis&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Install Authen::Radius</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T120425Z" changeid="xavier">
+        <seg>Installer Authen::Radius</seg>
       </tuv>
     </tu>
     <tu>
@@ -22204,6 +22300,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Then, go in &lt;c0&gt;Radius parameters&lt;/c0&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T120533Z" changeid="xavier">
+        <seg>Ensuite, aller dans les &lt;c0&gt;paramètres Radius&lt;/c0&gt;:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Then, go in &lt;c0&gt;Remote parameters&lt;/c0&gt;:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T195859Z" changeid="xavier">
@@ -22368,6 +22472,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T200452Z" changeid="xavier">
         <seg>Ceci autorise à utiliser deux bases de données différentes pour ces deux processus.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This attribute is set by LemonLDAP::NG when &lt;a1&gt;password was reset by mail&lt;/a1&gt; and the user choose to generate the password (default: enabled).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T120007Z" changeid="xavier">
+        <seg>Cet attribut est activé par LemonLDAP::NG lorsque &lt;a1&gt;le mot-de-passe a été réinitialisé par mail&lt;/a1&gt; et que l'utilisateur a choisi de générer le mot-de-passe (défaut : activé).</seg>
       </tuv>
     </tu>
     <tu>
@@ -24344,6 +24456,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You have to install the corresponding &lt;a0&gt;Perl&lt;/a0&gt; module.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T120446Z" changeid="xavier">
+        <seg>Il faut installer le module &lt;a0&gt;Perl&lt;/a0&gt; correspondant.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You have to run this command on Active Directory:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T154553Z" changeid="xavier">
@@ -24980,6 +25100,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T154442Z" changeid="xavier">
         <seg>apt-get install libapache2-mod-auth-kerb</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>apt-get install libauthen-radius-perl</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T120508Z" changeid="xavier">
+        <seg>apt-get install libauthen-radius-perl</seg>
       </tuv>
     </tu>
     <tu>
@@ -26110,10 +26238,26 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.2:authchoice</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T120149Z" changeid="xavier">
+        <seg>documentation:1.2:authchoice</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.2:authmulti</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T114755Z" changeid="xavier">
         <seg>documentation:1.2:authmulti</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:authremote</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T120150Z" changeid="xavier">
+        <seg>documentation:1.2:authremote</seg>
       </tuv>
     </tu>
     <tu>
@@ -26166,6 +26310,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.2:idpopenid</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T120148Z" changeid="xavier">
+        <seg>documentation:1.2:idpopenid</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.2:idpsaml</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T101251Z" changeid="xavier">
@@ -26178,6 +26330,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T101302Z" changeid="xavier">
         <seg>documentation:1.2:logoutforward</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:parameterlist</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T120141Z" changeid="xavier">
+        <seg>documentation:1.2:parameterlist</seg>
       </tuv>
     </tu>
     <tu>
@@ -26210,6 +26370,22 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T102259Z" changeid="xavier">
         <seg>documentation:1.2:rbac</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:resetpassword</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T115735Z" changeid="xavier">
+        <seg>documentation:1.2:resetpassword</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:soapsessionbackend</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T120152Z" changeid="xavier">
+        <seg>documentation:1.2:soapsessionbackend</seg>
       </tuv>
     </tu>
     <tu>
@@ -27458,6 +27634,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120101T184536Z" changeid="xavier">
         <seg>http://search.cpan.org/~gbarr/perl-ldap/lib/Net/LDAP.pod</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://search.cpan.org/~manowar/RadiusPerl-0.12/Radius.pm</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T120154Z" changeid="xavier">
+        <seg>http://search.cpan.org/~manowar/RadiusPerl-0.12/Radius.pm</seg>
       </tuv>
     </tu>
     <tu>
@@ -29588,6 +29772,14 @@ cd lemonldap-ng-*</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T065605Z" changeid="xavier">
         <seg>yum install mod_ssl</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>yum install perl-Authen-Radius</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T120447Z" changeid="xavier">
+        <seg>yum install perl-Authen-Radius</seg>
       </tuv>
     </tu>
     <tu>
