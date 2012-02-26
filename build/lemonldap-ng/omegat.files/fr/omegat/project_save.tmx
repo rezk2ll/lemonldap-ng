@@ -4284,6 +4284,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/documentation/exportedvars.png?id=documentation%3A1.2%3Aexportedvars</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T175243Z" changeid="xavier">
+        <seg>/_detail/documentation/exportedvars.png?id=documentation%3A1.2%3Aexportedvars</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>/_detail/documentation/googleapps-export-priv-key.png?id=documentation%3A1.0%3Aapplications%3Agoogleapps</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T183349Z" changeid="xavier">
@@ -16348,6 +16356,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Functions list available</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T175506Z" changeid="xavier">
+        <seg>Liste de fonctions disponibles</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Functions parameters:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T181441Z" changeid="xavier">
@@ -17284,6 +17300,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If your function is not compliant with &lt;a0&gt;Safe jail&lt;/a0&gt;, you will need to disable the jail.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T175239Z" changeid="xavier">
+        <seg>Si la fonction n'est pas compatible avec la &lt;a0&gt;cage saine&lt;/a0&gt;, il faut désactiver la mise en cage.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Import custom functions in LemonLDAP::NG</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T112024Z" changeid="xavier">
@@ -17840,6 +17864,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Il peut gérer plus de 200 000 utilisateurs.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>It can not be used to share sessions between different servers except if you share directories (with NFS,…) or if you use &lt;a0&gt;SOAP proxy&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T175618Z" changeid="xavier">
+        <seg>Il ne peut être utilisé pour partager les sessions entre serveurs sauf si les répertoires sont partagés (avec NFS,…) ou en utilisant le &lt;a0&gt;proxy SOAP&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -22984,6 +23016,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>This function is not compliant with &lt;a0&gt;Safe jail&lt;/a0&gt;, you will need to disable the jail to use it.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T175537Z" changeid="xavier">
+        <seg>Cette fonction n'est pas compatible avec la &lt;a0&gt;cage saine&lt;/a0&gt;, il faut désactiver la mise en cage.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>This function will check the date of current request, and compare it to a start date and an end date.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T182442Z" changeid="xavier">
@@ -26666,6 +26706,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.2:authcas</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T175542Z" changeid="xavier">
+        <seg>documentation:1.2:authcas</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.2:authchoice</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T120149Z" changeid="xavier">
@@ -26690,10 +26738,26 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.2:authopenid</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T175542Z" changeid="xavier">
+        <seg>documentation:1.2:authopenid</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.2:authremote</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T120150Z" changeid="xavier">
         <seg>documentation:1.2:authremote</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:authsaml</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T175541Z" changeid="xavier">
+        <seg>documentation:1.2:authsaml</seg>
       </tuv>
     </tu>
     <tu>
@@ -26730,6 +26794,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.2:customfunctions</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T175244Z" changeid="xavier">
+        <seg>documentation:1.2:customfunctions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.2:exportedvars</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T101034Z" changeid="xavier">
@@ -26742,6 +26814,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T101234Z" changeid="xavier">
         <seg>documentation:1.2:extendedfunctions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:extendedfunctions ↵</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T175245Z" changeid="xavier">
+        <seg>documentation:1.2:extendedfunctions ↵</seg>
       </tuv>
     </tu>
     <tu>
@@ -26918,6 +26998,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T163156Z" changeid="xavier">
         <seg>documentation:1.2:start</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:upgrade</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T175242Z" changeid="xavier">
+        <seg>documentation:1.2:upgrade</seg>
       </tuv>
     </tu>
     <tu>
