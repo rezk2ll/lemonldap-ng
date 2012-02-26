@@ -20,7 +20,7 @@ use Lemonldap::NG::Manager::_Struct;       #link protected struct _Struct object
 use Lemonldap::NG::Manager::_i18n;
 use Lemonldap::NG::Common::Conf::Constants;    #inherits
 
-our $VERSION = '1.1.0';
+our $VERSION = '1.2.0';
 our ( $stylesheet, $parser );
 
 ## @method void confUpload(ref rdata)
@@ -458,11 +458,12 @@ s/^(samlSPMetaDataXML|samlSPMetaDataExportedAttributes|samlSPMetaDataOptions)\/(
                 SYNTAX_ERROR,       'syntaxError',
                 DEPRECATED,         'confModuledeprecated',
               }->{ $errors->{result}->{cfgNum} }
-              || $msg;
+              || 'unknownError';
 
             # Log failure using Lemonldap::NG::Common::CGI::userError()
             $self->_sub( 'userError',
-                "Configuration rejected for $newConf->{cfgAuthor}: $msg" );
+                "Configuration rejected for $newConf->{cfgAuthor}: "
+                  . $Lemonldap::NG::Common::Conf::msg );
         }
 
         # Translate msg returned
