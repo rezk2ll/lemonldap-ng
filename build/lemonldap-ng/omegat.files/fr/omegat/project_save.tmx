@@ -812,6 +812,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../../documentation/1.2/configlocation.html#apache</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T103111Z" changeid="xavier">
+        <seg>../../../documentation/1.2/configlocation.html#apache</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../../documentation/1.2/configvhost.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T101237Z" changeid="xavier">
@@ -968,6 +976,14 @@
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T153554Z" changeid="xavier">
         <seg>../../../media/applications/liferay_logo.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../media/applications/limesurvey_logo.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T103137Z" changeid="xavier">
+        <seg>../../../media/applications/limesurvey_logo.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -1684,6 +1700,118 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.2/applications/authbasic.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T103138Z" changeid="xavier">
+        <seg>../../documentation/1.2/applications/authbasic.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/applications/bugzilla.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T103132Z" changeid="xavier">
+        <seg>../../documentation/1.2/applications/bugzilla.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/applications/dokuwiki.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T103126Z" changeid="xavier">
+        <seg>../../documentation/1.2/applications/dokuwiki.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/applications/drupal.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T103129Z" changeid="xavier">
+        <seg>../../documentation/1.2/applications/drupal.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/applications/googleapps.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T103143Z" changeid="xavier">
+        <seg>../../documentation/1.2/applications/googleapps.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/applications/liferay.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T103131Z" changeid="xavier">
+        <seg>../../documentation/1.2/applications/liferay.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/applications/limesurvey.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T103136Z" changeid="xavier">
+        <seg>../../documentation/1.2/applications/limesurvey.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/applications/mediawiki.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T103128Z" changeid="xavier">
+        <seg>../../documentation/1.2/applications/mediawiki.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/applications/obm.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T103120Z" changeid="xavier">
+        <seg>../../documentation/1.2/applications/obm.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/applications/phpldapadmin.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T103134Z" changeid="xavier">
+        <seg>../../documentation/1.2/applications/phpldapadmin.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/applications/spring.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T103139Z" changeid="xavier">
+        <seg>../../documentation/1.2/applications/spring.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/applications/sympa.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T103123Z" changeid="xavier">
+        <seg>../../documentation/1.2/applications/sympa.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/applications/tomcat.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T103140Z" changeid="xavier">
+        <seg>../../documentation/1.2/applications/tomcat.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/applications/zimbra.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T103125Z" changeid="xavier">
+        <seg>../../documentation/1.2/applications/zimbra.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.2/authapache.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T101223Z" changeid="xavier">
@@ -1696,6 +1824,22 @@
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T101033Z" changeid="xavier">
         <seg>../../documentation/1.2/exportedvars.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/idpcas.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T114705Z" changeid="xavier">
+        <seg>../../documentation/1.2/idpcas.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/idpsaml.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T103142Z" changeid="xavier">
+        <seg>../../documentation/1.2/idpsaml.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -4172,10 +4316,26 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/applications/mediawiki_logo.png?id=documentation%3A1.2%3Aapplications%3Amediawiki</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T103108Z" changeid="xavier">
+        <seg>/_detail/applications/mediawiki_logo.png?id=documentation%3A1.2%3Aapplications%3Amediawiki</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>/_detail/applications/obm_logo.png?id=documentation%3A1.0%3Aapplications%3Aobm</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T111713Z" changeid="xavier">
         <seg>/_detail/applications/obm_logo.png?id=documentation%3A1.0%3Aapplications%3Aobm</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/applications/obm_logo.png?id=documentation%3A1.2%3Aapplications%3Aobm</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T103109Z" changeid="xavier">
+        <seg>/_detail/applications/obm_logo.png?id=documentation%3A1.2%3Aapplications%3Aobm</seg>
       </tuv>
     </tu>
     <tu>
@@ -4188,10 +4348,26 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/applications/phpldapadmin_logo.png?id=documentation%3A1.2%3Aapplications%3Aphpldapadmin</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T103113Z" changeid="xavier">
+        <seg>/_detail/applications/phpldapadmin_logo.png?id=documentation%3A1.2%3Aapplications%3Aphpldapadmin</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>/_detail/applications/spring_logo.png?id=documentation%3A1.0%3Aapplications%3Aspring</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T174259Z" changeid="xavier">
         <seg>/_detail/applications/spring_logo.png?id=documentation%3A1.0%3Aapplications%3Aspring</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/applications/spring_logo.png?id=documentation%3A1.2%3Aapplications%3Aspring</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T103114Z" changeid="xavier">
+        <seg>/_detail/applications/spring_logo.png?id=documentation%3A1.2%3Aapplications%3Aspring</seg>
       </tuv>
     </tu>
     <tu>
@@ -4204,6 +4380,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/applications/sympa_logo.png?id=documentation%3A1.2%3Aapplications%3Asympa</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T103114Z" changeid="xavier">
+        <seg>/_detail/applications/sympa_logo.png?id=documentation%3A1.2%3Aapplications%3Asympa</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>/_detail/applications/tomcat_logo.png?id=documentation%3A1.0%3Aapplications%3Atomcat</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T185909Z" changeid="xavier">
@@ -4212,10 +4396,26 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/applications/tomcat_logo.png?id=documentation%3A1.2%3Aapplications%3Atomcat</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T103115Z" changeid="xavier">
+        <seg>/_detail/applications/tomcat_logo.png?id=documentation%3A1.2%3Aapplications%3Atomcat</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>/_detail/applications/zimbra_logo.png?id=documentation%3A1.0%3Aapplications%3Azimbra</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111220T112606Z" changeid="xavier">
         <seg>/_detail/applications/zimbra_logo.png?id=documentation%3A1.0%3Aapplications%3Azimbra</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/applications/zimbra_logo.png?id=documentation%3A1.2%3Aapplications%3Azimbra</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T103118Z" changeid="xavier">
+        <seg>/_detail/applications/zimbra_logo.png?id=documentation%3A1.2%3Aapplications%3Azimbra</seg>
       </tuv>
     </tu>
     <tu>
@@ -14040,6 +14240,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Change rights on keytab file:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T114610Z" changeid="xavier">
+        <seg>Changer les droits sur le fichier keytab :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Change the user attribute to store in Apache logs &lt;e0&gt;(“General Parameters » Logs » REMOTE_USER”)&lt;/e0&gt;: use the variable declared above</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T095745Z" changeid="xavier">
@@ -14116,6 +14324,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Cliquez sur un en-tête de colonne pour trier le tableau.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Close kerberos connection:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T114552Z" changeid="xavier">
+        <seg>Fermer la connexion kerberos :</seg>
       </tuv>
     </tu>
     <tu>
@@ -14452,6 +14668,22 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T154535Z" changeid="xavier">
         <seg>Connexion entre Linux et Active Directory</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Connection between Linux and Active Directory - method 1</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T103202Z" changeid="xavier">
+        <seg>Connexion entre Linux et Active Directory - méthode 1</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Connection between Linux and Active Directory - method 2</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T114338Z" changeid="xavier">
+        <seg>Connexion entre Linux et Active Directory - méthode 2</seg>
       </tuv>
     </tu>
     <tu>
@@ -14956,6 +15188,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T173146Z" changeid="xavier">
         <seg>Distinguished Name</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Do no set &lt;c0&gt;require valid-user&lt;/c0&gt; if you want to be able to fail back to another authentication backend for users without Kerberos ticket.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T114700Z" changeid="xavier">
+        <seg>Ne pas mettre &lt;c0&gt;require valid-user&lt;/c0&gt; pour pouvoir utiliser un autre backend d'authentification pour les utilisateurs sans ticket Kerberos.</seg>
       </tuv>
     </tu>
     <tu>
@@ -17248,6 +17488,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Initiate the Kerberos connection:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T114459Z" changeid="xavier">
+        <seg>Initialiser la connexion Kerberos :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Inside this jail, you can access to:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T121308Z" changeid="xavier">
@@ -19252,6 +19500,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111220T112702Z" changeid="xavier">
         <seg>Système d'exploitation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Option &lt;c0&gt;–enctypes&lt;/c0&gt; requires msktutil &gt; 0.4</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T114540Z" changeid="xavier">
+        <seg>L'option &lt;c0&gt;–enctypes&lt;/c0&gt; requiert msktutil &gt; 0.4</seg>
       </tuv>
     </tu>
     <tu>
@@ -21940,6 +22196,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Then create the keytab.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T114512Z" changeid="xavier">
+        <seg>Créer ensuite le fichier keytab.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Then edit MediaWiki local settings</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074908Z" changeid="xavier">
@@ -22488,6 +22752,22 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T112615Z" changeid="xavier">
         <seg>Ce message n'est affiché que lors d'une mise à jour depuis une version inférieure à la 1.0</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This method requires the &lt;c0&gt;msktutil&lt;/c0&gt; program on Linux server.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T114403Z" changeid="xavier">
+        <seg>Cette méthode nécessite le programme &lt;c0&gt;msktutil&lt;/c0&gt; sur le serveur Linux.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This method requires to execute a command on the Active Directory server, and then transfer the keytab on Linux server.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T114322Z" changeid="xavier">
+        <seg>Cette méthode nécessite d'exécuter une commande sur le serveur Active Directory et ensuite de transférer le fichier keytab sur le serveur Linux.</seg>
       </tuv>
     </tu>
     <tu>
@@ -23656,6 +23936,22 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Windows 2003 server:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T114519Z" changeid="xavier">
+        <seg>Windows 2003 server :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Windows 2008 server:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T114525Z" changeid="xavier">
+        <seg>Windows 2008 server :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>With &lt;a1&gt;LDAP&lt;/a1&gt;, login, mail, first name and last name are required attributes.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T073439Z" changeid="xavier">
@@ -24328,6 +24624,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You should be able to find a package for your distribution with a little search on the web.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T114446Z" changeid="xavier">
+        <seg>Il est possible de trouver un paquet pour beaucoup de distributions avec une petite recherche sur le web.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You should grab some informations:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T193015Z" changeid="xavier">
@@ -24958,6 +25262,14 @@ chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/ses
       <tuv lang="FR-FR" changedate="20120225T192057Z" changeid="xavier">
         <seg>chmod 750 /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/sessions/lock
 chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/sessions/lock</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>chown apache /etc/lemonldap-ng/auth.keytab</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T114613Z" changeid="xavier">
+        <seg>chown apache /etc/lemonldap-ng/auth.keytab</seg>
       </tuv>
     </tu>
     <tu>
@@ -25766,10 +26078,58 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.2:applications:authbasic</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T103138Z" changeid="xavier">
+        <seg>documentation:1.2:applications:authbasic</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:applications:bugzilla</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T103133Z" changeid="xavier">
+        <seg>documentation:1.2:applications:bugzilla</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:applications:dokuwiki</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T103127Z" changeid="xavier">
+        <seg>documentation:1.2:applications:dokuwiki</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:applications:drupal</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T103130Z" changeid="xavier">
+        <seg>documentation:1.2:applications:drupal</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:applications:googleapps</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T103144Z" changeid="xavier">
+        <seg>documentation:1.2:applications:googleapps</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.2:applications:googleapps ↵</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T101300Z" changeid="xavier">
         <seg>documentation:1.2:applications:googleapps ↵</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:applications:liferay</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T103132Z" changeid="xavier">
+        <seg>documentation:1.2:applications:liferay</seg>
       </tuv>
     </tu>
     <tu>
@@ -25782,10 +26142,90 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.2:applications:limesurvey</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T103136Z" changeid="xavier">
+        <seg>documentation:1.2:applications:limesurvey</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:applications:mediawiki</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T103129Z" changeid="xavier">
+        <seg>documentation:1.2:applications:mediawiki</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:applications:obm</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T103121Z" changeid="xavier">
+        <seg>documentation:1.2:applications:obm</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:applications:phpldapadmin</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T103134Z" changeid="xavier">
+        <seg>documentation:1.2:applications:phpldapadmin</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:applications:spring</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T103140Z" changeid="xavier">
+        <seg>documentation:1.2:applications:spring</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:applications:sympa</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T103124Z" changeid="xavier">
+        <seg>documentation:1.2:applications:sympa</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:applications:tomcat</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T103141Z" changeid="xavier">
+        <seg>documentation:1.2:applications:tomcat</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:applications:tomcat ↵</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T103117Z" changeid="xavier">
+        <seg>documentation:1.2:applications:tomcat ↵</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:applications:zimbra</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T103126Z" changeid="xavier">
+        <seg>documentation:1.2:applications:zimbra</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.2:authapache</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T101225Z" changeid="xavier">
         <seg>documentation:1.2:authapache</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:configlocation</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T103112Z" changeid="xavier">
+        <seg>documentation:1.2:configlocation</seg>
       </tuv>
     </tu>
     <tu>
@@ -27982,6 +28422,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>kdestroy</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T114553Z" changeid="xavier">
+        <seg>kdestroy</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>kinit HTTP/auth.example.com
 kvno HTTP/auth.example.com@EXAMPLE.COM
 klist -e
@@ -27992,6 +28440,14 @@ kinit -k -t /etc/lemonldap-ng/auth.keytab HTTP/auth.example.com</seg>
 kvno HTTP/auth.example.com@EXAMPLE.COM
 klist -e
 kinit -k -t /etc/lemonldap-ng/auth.keytab HTTP/auth.example.com</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>kinit ssokerberos@EXAMPLE.COM</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T114501Z" changeid="xavier">
+        <seg>kinit ssokerberos@EXAMPLE.COM</seg>
       </tuv>
     </tu>
     <tu>
@@ -28628,6 +29084,26 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T193242Z" changeid="xavier">
         <seg>remember: '1' (une case à cocher)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>rm -f /etc/lemonldap-ng/auth.keytab
+msktutil -c -b &quot;cn=COMPUTERS&quot; -s HTTP/auth.example.com -h auth.example.com -k /etc/lemonldap-ng/auth.keytab --computer-name portalsso --upn HTTP/auth.example.com --server ad.example.com --verbose</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T114521Z" changeid="xavier">
+        <seg>rm -f /etc/lemonldap-ng/auth.keytab
+msktutil -c -b &quot;cn=COMPUTERS&quot; -s HTTP/auth.example.com -h auth.example.com -k /etc/lemonldap-ng/auth.keytab --computer-name portalsso --upn HTTP/auth.example.com --server ad.example.com --verbose</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>rm -f /etc/lemonldap-ng/auth.keytab
+msktutil -c -b &quot;cn=COMPUTERS&quot; -s HTTP/auth.example.com -h auth.example.com -k /etc/lemonldap-ng/auth.keytab --computer-name portalsso --upn HTTP/auth.example.com --server ad.example.com --verbose --enctypes 28</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120226T114526Z" changeid="xavier">
+        <seg>rm -f /etc/lemonldap-ng/auth.keytab
+msktutil -c -b &quot;cn=COMPUTERS&quot; -s HTTP/auth.example.com -h auth.example.com -k /etc/lemonldap-ng/auth.keytab --computer-name portalsso --upn HTTP/auth.example.com --server ad.example.com --verbose --enctypes 28</seg>
       </tuv>
     </tu>
     <tu>
