@@ -647,6 +647,8 @@ sub setDefaultValues {
       unless defined $self->{loginHistoryEnabled};
     $self->{successLoginNumber} = 5 unless defined $self->{successLoginNumber};
     $self->{failedLoginNumber}  = 5 unless defined $self->{failedLoginNumber};
+    $self->{portalCheckLogins}  = 1
+      unless defined $self->{portalCheckLogins};
 
     # XSS
     $self->{checkXSS} = 1 unless defined $self->{checkXSS};
