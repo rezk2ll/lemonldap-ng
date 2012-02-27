@@ -647,6 +647,9 @@ sub setDefaultValues {
       unless defined $self->{loginHistoryEnabled};
     $self->{successLoginNumber} = 5 unless defined $self->{successLoginNumber};
     $self->{failedLoginNumber}  = 5 unless defined $self->{failedLoginNumber};
+
+    # XSS
+    $self->{checkXSS} = 1 unless defined $self->{checkXSS};
 }
 
 ## @method protected void setHiddenFormValue(string fieldname, string value, string prefix, boolean base64)
@@ -757,7 +760,7 @@ sub checkXSSAttack {
     if ( $value =~ m/(?:\0|<|'|"|`|\%(?:00|25|3C|22|27|2C))/ ) {
         $self->lmLog( "XSS attack detected (param: $name | value: $value)",
             "warn" );
-        return 1;
+        return $self->{checkXSS};
     }
 
     return 0;
@@ -780,7 +783,7 @@ _RETURN $string Error string
 sub msg {
     my $self = shift;
     my $code = shift;
-    return &Lemonldap::NG::Portal::_i18n::msg($code, $self->{lang});
+    return &Lemonldap::NG::Portal::_i18n::msg( $code, $self->{lang} );
 }
 
 ##@method string error(int code)
@@ -793,7 +796,7 @@ sub error {
     my $msg;
 
     # Check for customized message
-    foreach (@{ $self->{lang} }) {
+    foreach ( @{ $self->{lang} } ) {
         if ( $self->{ "error_" . $_ . "_" . $code } ) {
             $msg = $self->{ "error_" . $_ . "_" . $code };
             last;
@@ -806,7 +809,7 @@ sub error {
         $self->lmLog( "Use customized message for error $code", 'debug' );
     }
     else {
-        $msg = &Lemonldap::NG::Portal::_i18n::error($code, $self->{lang});
+        $msg = &Lemonldap::NG::Portal::_i18n::error( $code, $self->{lang} );
     }
 
     # Return message
@@ -2127,11 +2130,12 @@ sub removeOther {
     }
     $self->info(
         $self->mkSessionArray(
-            $self->{deleted}, $self->msg(PM_SESSIONS_DELETED), 1 )
+            $self->{deleted}, $self->msg(PM_SESSIONS_DELETED), 1
+        )
     ) if ( $self->{notifyDeleted} and @{ $self->{deleted} } );
     $self->info(
-        $self->mkSessionArray(
-            $self->{otherSessions}, $self->msg(PM_OTHER_SESSIONS), 1 )
+        $self->mkSessionArray( $self->{otherSessions},
+            $self->msg(PM_OTHER_SESSIONS), 1 )
           . $self->_mkRemoveOtherLink()
     ) if ( $self->{notifyOther} and @{ $self->{otherSessions} } );
 
@@ -2139,17 +2143,22 @@ sub removeOther {
         (
             $self->{sessionInfo}->{loginHistory}->{successLogin}
             ? $self->mkSessionArray(
-                 $self->{sessionInfo}->{loginHistory}->{successLogin},
-                 $self->msg(PM_LAST_LOGINS), 0, 0 )
-            : ""
-        ) . (
-            $self->{sessionInfo}->{loginHistory}->{failedLogin}
-            ? $self->mkSessionArray(
-                 $self->{sessionInfo}->{loginHistory}->{failedLogin},
-                 $self->msg(PM_LAST_FAILED_LOGINS), 0, 1 )
+                $self->{sessionInfo}->{loginHistory}->{successLogin},
+                $self->msg(PM_LAST_LOGINS),
+                0, 0
+              )
             : ""
         )
-    ) if ($self->param("checkLogins"));
+        . (
+            $self->{sessionInfo}->{loginHistory}->{failedLogin}
+            ? $self->mkSessionArray(
+                $self->{sessionInfo}->{loginHistory}->{failedLogin},
+                $self->msg(PM_LAST_FAILED_LOGINS),
+                0, 1
+              )
+            : ""
+        )
+    ) if ( $self->param("checkLogins") );
 
     PE_OK;
 }

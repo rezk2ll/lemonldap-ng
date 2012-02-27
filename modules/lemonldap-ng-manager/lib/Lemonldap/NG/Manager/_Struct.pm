@@ -604,7 +604,8 @@ sub struct {
 
                 # Slave
                 slaveParams => {
-                    _nodes          => [qw(slaveAuthnLevel slaveUserHeader slaveMasterIP)],
+                    _nodes =>
+                      [qw(slaveAuthnLevel slaveUserHeader slaveMasterIP)],
                     _help           => 'authSlave',
                     slaveAuthnLevel => 'int:/slaveAuthnLevel',
                     slaveUserHeader => 'text:/slaveUserHeader',
@@ -744,14 +745,16 @@ sub struct {
                 ],
                 _help => 'sessions',
 
-                storePassword    => 'bool:/storePassword',
-                timeout          => 'int:/timeout',
+                storePassword => 'bool:/storePassword',
+                timeout       => 'int:/timeout',
                 timeoutActivity =>
                   'text:/timeoutActivity:sessions:timeoutActivityParams',
 
                 grantSessionRules => {
-                    _nodes => ['hash:/grantSessionRules:grantSessionRules:grantSessionRules'],
-                    _js   => 'grantSessionRulesRoot',
+                    _nodes => [
+'hash:/grantSessionRules:grantSessionRules:grantSessionRules'
+                    ],
+                    _js => 'grantSessionRulesRoot',
                 },
 
                 sessionStorage => {
@@ -795,8 +798,8 @@ sub struct {
             # RELOAD URLS
             reloadUrls => {
                 _nodes => ['hash:/reloadUrls:reloadUrls:btext'],
-                _js   => 'hashRoot',
-                _help => 'reloadUrls',
+                _js    => 'hashRoot',
+                _help  => 'reloadUrls',
             },
 
             # OTHER PARAMETERS
@@ -815,14 +818,17 @@ sub struct {
                 },
 
                 loginHistory => {
-                    _nodes => [qw(loginHistoryEnabled successLoginNumber failedLoginNumber cn:sessionDataToRemember)],
-                    _help => 'loginHistory',
-                    loginHistoryEnabled => 'bool:/loginHistoryEnabled',
-                    successLoginNumber => 'int:/successLoginNumber',
-                    failedLoginNumber => 'int:/failedLoginNumber',
+                    _nodes => [
+                        qw(loginHistoryEnabled successLoginNumber failedLoginNumber cn:sessionDataToRemember)
+                    ],
+                    _help                 => 'loginHistory',
+                    loginHistoryEnabled   => 'bool:/loginHistoryEnabled',
+                    successLoginNumber    => 'int:/successLoginNumber',
+                    failedLoginNumber     => 'int:/failedLoginNumber',
                     sessionDataToRemember => {
-                        _nodes => ['hash:/sessionDataToRemember:loginHistory:btext'],
-                        _js    => 'hashRoot',
+                        _nodes =>
+                          ['hash:/sessionDataToRemember:loginHistory:btext'],
+                        _js => 'hashRoot',
                     },
                 },
 
@@ -881,7 +887,7 @@ sub struct {
 
                 security => {
                     _nodes => [
-                        qw(userControl portalForceAuthn key trustedDomains useSafeJail)
+                        qw(userControl portalForceAuthn key trustedDomains useSafeJail checkXSS)
                     ],
                     _help            => 'security',
                     userControl      => 'text:/userControl',
@@ -889,6 +895,7 @@ sub struct {
                     key              => 'text:/key',
                     trustedDomains   => 'text:/trustedDomains',
                     useSafeJail      => 'bool:/useSafeJail',
+                    checkXSS         => 'bool:/checkXSS',
                 },
 
                 redirection => {
@@ -903,9 +910,10 @@ sub struct {
                 },
 
                 portalRedirection => {
-                    _nodes => [ qw(jsRedirect) ],
-                    _help      => 'portalRedirections',
-                    jsRedirect => 'text:/jsRedirect:portalRedirections:boolOrPerlExpr',
+                    _nodes => [qw(jsRedirect)],
+                    _help  => 'portalRedirections',
+                    jsRedirect =>
+                      'text:/jsRedirect:portalRedirections:boolOrPerlExpr',
                 },
 
                 specialHandlers => {
@@ -1275,8 +1283,8 @@ sub struct {
 # Returns the tests to do with the datas uploaded.
 # @return hashref
 sub testStruct {
-    my $safe       = Safe->new();
-    my $perlExpr   = sub {
+    my $safe     = Safe->new();
+    my $perlExpr = sub {
         my $e = shift;
         $safe->reval( $e, 1 );
         return 1 unless ($@);
@@ -1288,9 +1296,9 @@ sub testStruct {
         return ( 0, $@ );
     };
     my $noAssign = sub {
-        my $e = shift;
+        my $e          = shift;
         my $assignTest = qr/(?<=[^=<!>\|\?])=(?![=~])/;
-        return $e =~ $assignTest ? ( 0, "contains an assignment" ) : 1 ;
+        return $e =~ $assignTest ? ( 0, "contains an assignment" ) : 1;
     };
     my $boolean = { test => qr/^(?:0|1)?$/, msgFail => 'Value must be 0 or 1' };
     my $integer =
@@ -1303,9 +1311,10 @@ sub testStruct {
     };
     my $domainNameOrIp = sub {
         my $n = shift;
-        return $n =~ /^(\d{1,3}\.){3}\d{1,3}$/ 
-            || $n =~ Lemonldap::NG::Common::Regexp::HOSTNAME()
-            || (0, 'Bad server name or IP');
+        return
+             $n =~ /^(\d{1,3}\.){3}\d{1,3}$/
+          || $n =~ Lemonldap::NG::Common::Regexp::HOSTNAME()
+          || ( 0, 'Bad server name or IP' );
     };
     my $testNotDefined = { test => sub { 1 }, msgFail => 'Ok' };
     my $lmAttrOrMacro = {
@@ -1351,6 +1360,7 @@ sub testStruct {
             msgFail => 'Bad module name',
         },
         cda        => $boolean,
+        checkXSS   => $boolean,
         cookieName => {
             test    => qr/^[a-zA-Z]\w*$/,
             msgFail => 'Bad cookie name',
@@ -1377,7 +1387,7 @@ sub testStruct {
             msgFail    => 'Bad attribute name',
         },
         failedLoginNumber => $integer,
-        globalStorage => {
+        globalStorage     => {
             test    => qr/^[\w:]+$/,
             msgFail => 'Bad module name',
         },
@@ -1483,7 +1493,7 @@ sub testStruct {
             },
         },
         loginHistoryEnabled => $boolean,
-        logoutServices => {
+        logoutServices      => {
             keyTest    => qr/^\w+$/,
             keyMsgFail => 'Bad name',
         },
@@ -1556,29 +1566,30 @@ sub testStruct {
             msgFail => 'must be one of none authentificate manager',
         },
         reloadUrls => {
-            keyTest    => $domainNameOrIp,
-            test       => Lemonldap::NG::Common::Regexp::HTTP_URI(),
-            msgFail    => 'Bad url'
+            keyTest => $domainNameOrIp,
+            test    => Lemonldap::NG::Common::Regexp::HTTP_URI(),
+            msgFail => 'Bad url'
         },
         securedCookie => {
             test    => qr/^(?:0|1|2|3)$/,
             msgFail => 'securedCookie must be 0, 1, 2 or 3',
         },
         sessionDataToRemember => {
-            keyTest       => qr/^[\w-]+$/,
-            keyMsgFail    => 'Invalid session data',
+            keyTest    => qr/^[\w-]+$/,
+            keyMsgFail => 'Invalid session data',
         },
         singleSession  => $boolean,
         singleIP       => $boolean,
         singleUserByIP => $boolean,
         slaveMasterIP  => {
-            test    => qr/^(\s*((\d{1,3}\.){3}\d{1,3}\s+)*(\d{1,3}\.){3}\d{1,3})?\s*$/,
+            test =>
+              qr/^(\s*((\d{1,3}\.){3}\d{1,3}\s+)*(\d{1,3}\.){3}\d{1,3})?\s*$/,
             msgFail => 'Bad parameter "master\'s IP" in Slave',
         },
-        Soap           => $boolean,
-        storePassword  => $boolean,
+        Soap               => $boolean,
+        storePassword      => $boolean,
         successLoginNumber => $integer,
-        syslog         => {
+        syslog             => {
             test => qw/^(?:auth|authpriv|daemon|local\d|user)?$/,
             msgFail =>
               'Only auth|authpriv|daemon|local0-7|user is allowed here',
@@ -1879,6 +1890,7 @@ sub defaultConf {
         CAS_pgtFile              => '/tmp/pgt.txt',
         casAccessControlPolicy   => 'none',
         cda                      => '0',
+        checkXSS                 => '1',
         cookieName               => 'lemonldap',
         domain                   => 'example.com',
         failedLoginNumber        => '5',
