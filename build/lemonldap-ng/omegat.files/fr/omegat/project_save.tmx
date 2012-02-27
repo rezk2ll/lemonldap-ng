@@ -1004,6 +1004,22 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../../media/documentation/ha-apache.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120227T192923Z" changeid="xavier">
+        <seg>../../../media/documentation/ha-apache.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../media/documentation/ha-sessions-configuration.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120227T193002Z" changeid="xavier">
+        <seg>../../../media/documentation/ha-sessions-configuration.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../../media/documentation/lasso.png</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -4372,6 +4388,22 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/documentation/ha-apache.png?id=documentation%3A1.2%3Ahighavailability</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120227T192920Z" changeid="xavier">
+        <seg>/_detail/documentation/ha-apache.png?id=documentation%3A1.2%3Ahighavailability</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/documentation/ha-sessions-configuration.png?id=documentation%3A1.2%3Ahighavailability</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120227T192957Z" changeid="xavier">
+        <seg>/_detail/documentation/ha-sessions-configuration.png?id=documentation%3A1.2%3Ahighavailability</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>/_detail/documentation/lasso.png?id=documentation%3A1.0%3Asamlservice</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -4532,10 +4564,26 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/documentation/manager-formreplay-newdata.png?id=documentation%3A1.2%3Aformreplay</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120227T192515Z" changeid="xavier">
+        <seg>/_detail/documentation/manager-formreplay-newdata.png?id=documentation%3A1.2%3Aformreplay</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>/_detail/documentation/manager-formreplay-newurl.png?id=documentation%3A1.0%3Aformreplay</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T193407Z" changeid="xavier">
         <seg>/_detail/documentation/manager-formreplay-newurl.png?id=documentation%3A1.0%3Aformreplay</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/documentation/manager-formreplay-newurl.png?id=documentation%3A1.2%3Aformreplay</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120227T192514Z" changeid="xavier">
+        <seg>/_detail/documentation/manager-formreplay-newurl.png?id=documentation%3A1.2%3Aformreplay</seg>
       </tuv>
     </tu>
     <tu>
@@ -13076,6 +13124,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>All handlers download the whole configuration, so many servers can serve the same virtual hosts</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120227T192838Z" changeid="xavier">
+        <seg>Tous les agents téléchargent intégralement la configuration, donc plusieurs serveurs peuvent servir le même hôte virtuel</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>All pages</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -16916,6 +16972,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>High availability</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120227T192530Z" changeid="xavier">
+        <seg>Haute disponibilité</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Home</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -18472,6 +18536,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>LemonLDAP::NG est un logiciel d'authentification unique web (WebSSO) écrit en &lt;a0&gt;Perl&lt;/a0&gt;, intégré dans un serveur Apache.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LemonLDAP::NG is highly scalable, so easy to insert behind a load-balancer:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120227T192654Z" changeid="xavier">
+        <seg>LemonLDAP::NG est hautement scalable, donc facile à insérer derière un répartisseur de charge :</seg>
       </tuv>
     </tu>
     <tu>
@@ -20204,6 +20276,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Le portail détruit la session et redirige l'utilisateur sur lui-même avec un &lt;a0&gt;cookie SSO&lt;/a0&gt; vide</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Portal does not store any data outside the session database, so you can have many portal servers using the same &lt;a0&gt;HTTP&lt;/a0&gt; host name</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120227T192754Z" changeid="xavier">
+        <seg>Le portail ne stocke aucune donnée en dehors de la base de données des sessions, ainsi on peut avoir plusieurs serveurs utilisant le même nom d'hôte &lt;a0&gt;HTTP&lt;/a0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -24676,6 +24756,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can for example set up a fail-over cluster with &lt;a0&gt;Heartbeat&lt;/a0&gt; and &lt;a1&gt;HAproxy&lt;/a1&gt;, like this:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120227T192919Z" changeid="xavier">
+        <seg>Par exemple on peut créer un cluster avec &lt;a0&gt;Heartbeat&lt;/a0&gt; et &lt;a1&gt;HAproxy&lt;/a1&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You can import a certificate containing the public key instead the raw public key.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -24944,6 +25032,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Vous avez simplement à créer les fonctions error_zz et msg_zz &lt;e1&gt;(où zz est votre code international, exemple: “fr” pour le français)&lt;/e1&gt; en copiant error_en et msg_en.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You just have to share configuration and sessions databases between those servers:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120227T192956Z" changeid="xavier">
+        <seg>Il faut juste partager les bases de données de configuration et des sessions entre ces serveurs :</seg>
       </tuv>
     </tu>
     <tu>
@@ -26562,6 +26658,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.2:applications</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120227T192510Z" changeid="xavier">
+        <seg>documentation:1.2:applications</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.2:applications:authbasic</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T103138Z" changeid="xavier">
@@ -26962,6 +27066,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.2:selfmadeapplication</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120227T192511Z" changeid="xavier">
+        <seg>documentation:1.2:selfmadeapplication</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.2:soapconfbackend</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T163155Z" changeid="xavier">
@@ -27078,6 +27190,22 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T182857Z" changeid="xavier">
         <seg>documentation:googleapps-ssoconfig.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:ha-apache.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120227T192921Z" changeid="xavier">
+        <seg>documentation:ha-apache.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:ha-sessions-configuration.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120227T193000Z" changeid="xavier">
+        <seg>documentation:ha-sessions-configuration.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -27906,6 +28034,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://haproxy.1wt.eu/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120227T192840Z" changeid="xavier">
+        <seg>http://haproxy.1wt.eu/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://help.sap.com/saphelp_nw04/helpdata/en/94/695b3ebd564644e10000000a114084/content.htm</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T153813Z" changeid="xavier">
@@ -28678,6 +28814,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T153630Z" changeid="xavier">
         <seg>http://www.linpki.org/projects/linshare/wiki/HttpHeaderSSOEN</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.linux-ha.org/wiki/Heartbeat</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120227T192839Z" changeid="xavier">
+        <seg>http://www.linux-ha.org/wiki/Heartbeat</seg>
       </tuv>
     </tu>
     <tu>
