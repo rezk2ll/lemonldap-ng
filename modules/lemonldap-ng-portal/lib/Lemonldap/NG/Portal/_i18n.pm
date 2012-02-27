@@ -401,6 +401,8 @@ sub error_ro {
 # * PM_OPENID_PA               19
 # * PM_OPENID_AP               20
 # * PM_ERROR_MSG               21
+# * PM_LAST_LOGINS             22
+# * PM_LAST_FAILED_LOGINS      23
 
 sub msg_en {
     use utf8;
@@ -409,8 +411,8 @@ sub msg_en {
         'Date',
         'IP address',
         'The following sessions have been deleted',
-        'Other sessions',
-        'Remove other sessions',
+        'Other running sessions',
+        'Remove other running sessions',
         'authentications remaining, change your password!',
         'seconds before password expiration, change it!',
         'Select your Identity Provider',
@@ -427,6 +429,8 @@ sub msg_en {
         'Data usage policy is available at',
         'Do you agree to provide the following parameters?',
         'Error Message',
+        'Your last logins',
+        'Your last failed logins',
     ];
 }
 
@@ -437,8 +441,8 @@ sub msg_fr {
         'Date',
         'Adresse IP',
         'Les sessions suivantes ont été effacées',
-        'Autres sessions',
-        'Supprimer les autres sessions',
+        'Autres sessions en cours',
+        'Supprimer les autres sessions en cours',
         'authentifications restantes, changez votre mot de passe !',
 'secondes avant expiration de votre mot de passe, pensez à le changer !',
         'Choisissez votre fournisseur d\'identité',
@@ -455,6 +459,8 @@ sub msg_fr {
         'La politique d\'utilisation des données est disponible ici',
         'Consentez-vous à communiquer les paramètres suivants&nbsp;?',
         'Message d\'erreur',
+        'Vos dernières connexions',
+        'Vos dernières connexions refusées',
     ];
 }
 

@@ -190,6 +190,8 @@ sub display {
             AUTH_URL              => $self->get_url,
             LOGIN                 => $self->get_user,
             AUTOCOMPLETE          => $self->{portalAutocomplete},
+            CHECK_LOGINS          => $self->{portalCheckLogins},
+            ASK_LOGINS            => $self->param("checkLogins"),
             DISPLAY_RESETPASSWORD => $self->{portalDisplayResetPassword},
             DISPLAY_FORM          => 1,
             MAIL_URL              => $self->{mailUrl},
@@ -301,6 +303,7 @@ sub display {
                 DISPLAY_OPENID_FORM   => 0,
                 DISPLAY_YUBIKEY_FORM  => 0,
                 AUTH_LOOP             => [],
+                CHECK_LOGINS          => 0,
                 PORTAL_URL            => $self->{portal},
                 MSG                   => $self->info(),
             );

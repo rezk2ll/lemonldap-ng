@@ -289,12 +289,13 @@ sub struct {
 
                 portalCustomization => {
                     _nodes => [
-                        qw(portalSkin portalAutocomplete portalUserAttr portalOpenLinkInNewWindow portalAntiFrame passwordManagement)
+                        qw(portalSkin portalAutocomplete portalCheckLogins portalUserAttr portalOpenLinkInNewWindow portalAntiFrame passwordManagement)
                     ],
                     _help => 'portalcustom',
 
                     portalSkin => 'text:/portalSkin:portalcustom:skinSelect',
                     portalAutocomplete => 'bool:/portalAutocomplete',
+                    portalCheckLogins  => 'bool:/portalCheckLogins',
                     portalUserAttr     => 'text:/portalUserAttr',
                     portalOpenLinkInNewWindow =>
                       'bool:/portalOpenLinkInNewWindow',
@@ -1525,6 +1526,7 @@ sub testStruct {
             msgFail => 'Bad portal value',
         },
         portalAutocomplete          => $boolean,
+        portalCheckLogins           => $boolean,
         portalDisplayLoginHistory   => { test => $perlExpr, },
         portalDisplayAppslist       => { test => $perlExpr, },
         portalDisplayChangePassword => { test => $perlExpr, },
@@ -1922,6 +1924,7 @@ sub defaultConf {
         portal                          => 'http://auth.example.com',
         portalSkin                      => 'pastel',
         portalUserAttr                  => '_user',
+        portalCheckLogins               => '1',
         portalDisplayLoginHistory       => '1',
         portalDisplayAppslist           => '1',
         portalDisplayChangePassword => '$_auth eq "LDAP" or $_auth eq "DBI"',

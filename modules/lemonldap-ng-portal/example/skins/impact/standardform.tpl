@@ -6,6 +6,16 @@
           <span class="text-label"><lang en="Password" fr="Mot de passe"/></span><br/>
           <input name="password" type="password" tabindex="2" /><br/>
         </p>
+
+        <TMPL_IF NAME="CHECK_LOGINS">
+        <p>
+        <label for="checkLogins">
+            <input type="checkbox" id="checkLogins" name="checkLogins" <TMPL_IF NAME="ASK_LOGINS">checked</TMPL_IF>/>
+            <lang en="Check my last logins" fr="Voir mes dernières connexions"/>
+        </label>
+        </p>
+        </TMPL_IF>
+
         <hr class="solid" />
         <div class="panel-buttons">
           <button type="reset" class="negative" tabindex="4">

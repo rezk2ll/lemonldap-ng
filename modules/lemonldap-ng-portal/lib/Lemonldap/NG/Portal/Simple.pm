@@ -170,6 +170,8 @@ use constant {
     PM_OPENID_PA             => 19,    # "OpenID policy available at"
     PM_OPENID_AP             => 20,    # OpenID "Asked parameter"
     PM_ERROR_MSG             => 21,
+    PM_LAST_LOGINS           => 22,
+    PM_LAST_FAILED_LOGINS    => 23,
 };
 
 # EXPORTER PARAMETERS
@@ -2132,6 +2134,23 @@ sub removeOther {
             $self->{otherSessions}, $self->msg(PM_OTHER_SESSIONS), 1 )
           . $self->_mkRemoveOtherLink()
     ) if ( $self->{notifyOther} and @{ $self->{otherSessions} } );
+
+    $self->info(
+        (
+            $self->{sessionInfo}->{loginHistory}->{successLogin}
+            ? $self->mkSessionArray(
+                 $self->{sessionInfo}->{loginHistory}->{successLogin},
+                 $self->msg(PM_LAST_LOGINS), 0, 0 )
+            : ""
+        ) . (
+            $self->{sessionInfo}->{loginHistory}->{failedLogin}
+            ? $self->mkSessionArray(
+                 $self->{sessionInfo}->{loginHistory}->{failedLogin},
+                 $self->msg(PM_LAST_FAILED_LOGINS), 0, 1 )
+            : ""
+        )
+    ) if ($self->param("checkLogins"));
+
     PE_OK;
 }
 
