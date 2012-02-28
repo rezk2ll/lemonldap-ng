@@ -35,9 +35,7 @@
 
 		</TMPL_LOOP>
 			<tr>
-				<td><input type="checkbox" id="remember" name="cookie_type" value="1"><label for="remember"><lang en="Remember my choice" fr="Se souvenir de mon choix"/></label></td>
-			</tr>
-		</table>
+				<td><input type="checkbox" id="remember" name="cookie_type" value="1"><label for="remember"><lang en="Remember my choice" fr="Se souvenir de mon choix"/></label>
 
 		<TMPL_ELSE>
 
@@ -62,7 +60,7 @@
 		  </script>
 		</TMPL_IF>
 
-		<table><tbody><tr><td>
+		<table><tr><td>
 		<div class="buttons">
 			<button type="submit" class="positive">
 				<img src="<TMPL_VAR NAME="SKIN_PATH">/common/accept.png" alt="" />
@@ -73,9 +71,19 @@
 				<lang en="Refuse" fr="Refuser" />
 			</button>
 		</div>
-		</td></tr></tbody></table>
 
 		</TMPL_IF>
+
+                <TMPL_IF NAME="CHECK_LOGINS">
+                <div class="buttons">
+                    <input type="checkbox" id="checkLogins" name="checkLogins" <TMPL_IF NAME="ASK_LOGINS">checked</TMPL_IF>/>
+                    <label for="checkLogins">
+                        <lang en="Check my last logins" fr="Voir mes dernières connexions"/>
+                    </label>
+                </div>
+                </TMPL_IF>
+
+                </td></tr></table>
 	</form>
 
 	</div>

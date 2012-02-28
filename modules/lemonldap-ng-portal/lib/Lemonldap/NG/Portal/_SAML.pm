@@ -793,7 +793,7 @@ sub createAuthnRequest {
 
     # Set RelayState
     my $infos;
-    foreach (qw /urldc/) {
+    foreach (qw /urldc checkLogins/) {
         $infos->{$_} = $self->{$_} if $self->{$_};
     }
     my $relaystate = $self->storeRelayState($infos);
@@ -1360,7 +1360,7 @@ sub createLogoutRequest {
 
     # Set RelayState
     my $infos;
-    foreach (qw /urldc/) {
+    foreach (qw /urldc checkLogins/) {
         $infos->{$_} = $self->{$_} if $self->{$_};
     }
     my $relaystate = $self->storeRelayState($infos);

@@ -798,6 +798,7 @@ sub extractFormInfo {
             -expires => '-1d',
           );
 
+        $self->{login} = 1;
         return PE_CONFIRM;
     }
 
@@ -824,6 +825,7 @@ sub extractFormInfo {
 
         $self->info($html);
 
+        $self->{login} = 1;
         return PE_CONFIRM;
     }
 

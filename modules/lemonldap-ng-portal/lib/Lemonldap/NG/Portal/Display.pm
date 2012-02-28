@@ -141,6 +141,8 @@ sub display {
             FORM_METHOD     => $self->{confirmFormMethod},
             CHOICE_PARAM    => $self->{authChoiceParam},
             CHOICE_VALUE    => $self->{_authChoice},
+            CHECK_LOGINS    => $self->{portalCheckLogins} && $self->{login},
+            ASK_LOGINS      => $self->{checkLogins},
             CONFIRMKEY      => $self->stamp(),
             LIST            => $self->{list} || [],
         );
@@ -191,7 +193,7 @@ sub display {
             LOGIN                 => $self->get_user,
             AUTOCOMPLETE          => $self->{portalAutocomplete},
             CHECK_LOGINS          => $self->{portalCheckLogins},
-            ASK_LOGINS            => $self->param("checkLogins"),
+            ASK_LOGINS            => $self->{checkLogins},
             DISPLAY_RESETPASSWORD => $self->{portalDisplayResetPassword},
             DISPLAY_FORM          => 1,
             MAIL_URL              => $self->{mailUrl},

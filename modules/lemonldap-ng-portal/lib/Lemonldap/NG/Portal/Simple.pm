@@ -1841,9 +1841,17 @@ sub existingSession {
 
 # issuerForUnAuthUser(): must be implemented in IssuerDB* module
 
-# extractFormInfo(): must be implemented in Auth* module
-# * set $self->{user}
-# * authenticate user if possible (or do it in authenticate())
+##@apmethod int extractFormInfo()
+# Extract data common to all authentication modules,
+# and call extractFormInfo() in Auth* module
+# Auth*::extractFormInfo set $self->{user} and in some cases
+# authenticate user (done in authenticate() else)
+#@return Lemonldap::NG::Portal constant
+sub extractFormInfo {
+    my $self = shift;
+    $self->{checkLogins} = $self->param('checkLogins');
+    return $self->SUPER::extractFormInfo;
+}
 
 # getUser(): must be implemented in UserDB* module
 
@@ -2160,7 +2168,7 @@ sub removeOther {
               )
             : ""
         )
-    ) if ( $self->param("checkLogins") );
+    ) if ( $self->{checkLogins} );
 
     PE_OK;
 }

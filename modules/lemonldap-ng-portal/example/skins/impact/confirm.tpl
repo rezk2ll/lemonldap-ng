@@ -60,23 +60,36 @@
           </div></td></tr>
     
         </TMPL_LOOP>
-          <tr>
-            <td><input type="checkbox" id="remember" name="cookie_type" value="1"><label for="remember"><lang en="Remember my choice" fr="Se souvenir de mon choix"/></label></td>
-          </tr>
-        </table>
-    
+
+          <tr><td>
+            <input type="checkbox" id="remember" name="cookie_type" value="1">
+            <label for="remember"><lang en="Remember my choice" fr="Se souvenir de mon choix"/></label>
+          </td></tr>
+
         <TMPL_ELSE>
 
-        <div class="panel-buttons">
+        <table style="margin: 0px auto">
+          <tr><td><div class="panel-buttons">
           <button type="submit" class="negative" tabindex="4" onclick="$('#confirm').attr('value','-<TMPL_VAR NAME="CONFIRMKEY">');">
             <lang en="Refuse" fr="Refuser" />
           </button>
           <button type="submit" class="positive" tabindex="3">
             <lang en="Accept" fr="Accepter" />
           </button>
-        </div>
+          </div></td></tr>
 
         </TMPL_IF>
+
+        <TMPL_IF NAME="CHECK_LOGINS">
+        <tr><td>
+          <input type="checkbox" id="checkLogins" name="checkLogins" <TMPL_IF NAME="ASK_LOGINS">checked</TMPL_IF>/>
+          <label for="checkLogins">
+            <lang en="Check my last logins" fr="Voir mes dernières connexions"/>
+          </label>
+        </td></tr>
+        </TMPL_IF>
+
+        </table>
       </form>
     </div>
   </div>
