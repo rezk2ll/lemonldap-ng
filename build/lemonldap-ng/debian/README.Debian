@@ -6,7 +6,8 @@ Topics:
  2 - Portal installation
  3 - Area protection
  4 - Configuration storage
-
+ 5 - Build packages
+ 6 - Update the repository
 
 I - LEMONLDAP::NG MANAGER INSTALLATION
 ----------------------------------------
@@ -51,4 +52,27 @@ Package: liblemonldap-ng-conf-perl
 
 Note that configuration files are now grouped in
 /etc/lemonldap-ng/lemonldap-ng.ini
+
+V - Build DEB packages
+-----------------------
+
+Untar the archive and launch:
+$ make debian-packages
+
+Packages are in /tmp
+
+VI - Update DEB repository
+--------------------------
+
+The DEB repository is hosted on http://lemonldap-ng.org/deb
+
+Copy all generated files (*.deb, *.dsc, *.changes, ...):
+$ scp *.deb *.dsc *.changes *.debian.tar.gz *.orig.tar.gz lemonldapng@lemonldap-ng.org:incoming/
+
+Then connect on the server and launch reprepro:
+$ ssh lemonldapng@lemonldap-ng.org
+lemonldapng@lemonldap-ng.org$ cd deb/
+lemonldapng@lemonldap-ng.org$ reprepro -Vb . include squeeze ../incoming/lemonldap-ng_VERSION_i386.changes
+
+See also reprepro configuration file: 'distributions'
 
