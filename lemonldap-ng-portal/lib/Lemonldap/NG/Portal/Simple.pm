@@ -1333,8 +1333,6 @@ sub _deleteSession {
           );
     }
 
-    my $logged_user = $h->{ $self->{whatToTrace} } || 'unknown';
-
     # Try to purge local cache
     # (if an handler is running on the same server)
     eval { $self->{lmConf}->{refLocalStorage}->remove( $h->{_session_id} ); };
@@ -1357,8 +1355,9 @@ sub _deleteSession {
       ) unless ($preserveCookie);
 
     # Log
-    $self->_sub( 'userNotice', "User $logged_user has been disconnected" )
-      if $logged_user;
+    my $user = $h->{ $self->{whatToTrace} };
+    $self->_sub( 'userNotice', "User $user has been disconnected" )
+      if $user;
 
     # Return the result of tied(%$h)->delete()
     return $result;
@@ -2289,7 +2288,8 @@ sub grantSession {
         }
     }
 
-    $self->_sub( 'userNotice', "Session granted for " . $self->{user} );
+    my $user = $self->{sessionInfo}->{ $self->{whatToTrace} };
+    $self->_sub( 'userNotice', "Session granted for $user" ) if ($user);
     $self->registerLogin(PE_OK);
     return PE_OK;
 }
@@ -2407,8 +2407,7 @@ sub issuerForAuthUser {
     my $self = shift;
 
     # User information
-    my $logged_user = $self->{sessionInfo}->{ $self->{whatToTrace} }
-      || 'unknown';
+    my $user = $self->{sessionInfo}->{ $self->{whatToTrace} } || 'unknown';
 
     # Get active module
     my $issuerDBtype = $self->get_module('issuer');
@@ -2422,8 +2421,7 @@ sub issuerForAuthUser {
 
         unless ( $self->safe->reval($rule) ) {
             $self->lmLog(
-                "User $logged_user"
-                  . " was not allowed to use IssuerDB $issuerDBtype",
+                "User $user was not allowed to use IssuerDB $issuerDBtype",
                 'warn'
             );
 
@@ -2436,7 +2434,7 @@ sub issuerForAuthUser {
     }
 
     $self->lmLog(
-        "User $logged_user" . " allowed to use IssuerDB $issuerDBtype",
+        "User $user allowed to use IssuerDB $issuerDBtype",
         'debug' );
 
     # Register IssuerDB module in session
