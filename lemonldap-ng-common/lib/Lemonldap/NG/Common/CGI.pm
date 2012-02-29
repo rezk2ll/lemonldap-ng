@@ -331,14 +331,15 @@ sub _sub {
 ##@method string extract_lang
 #@return array of user's preferred languages (two letters)
 sub extract_lang {
-    my $self = shift;
+    my $self  = shift;
     my @langs = split /,\s*/, ( $ENV{HTTP_ACCEPT_LANGUAGE} || "" );
-    my @res = ();
+    my @res   = ();
     foreach (@langs) {
-    # languages are supposed to be sorted by preference
-    # only 2-letters lang tags are considered
-        my $lang = (split /;/)[0];
-        push @res, $lang if (length($lang) == 2);
+
+        # languages are supposed to be sorted by preference
+        # only 2-letters lang tags are considered
+        my $lang = ( split /;/ )[0];
+        push @res, $lang if ( length($lang) == 2 );
     }
     return \@res;
 }
@@ -359,7 +360,7 @@ sub translate_template {
     # Test if a translation is available for the selected language
     # If not available, return the first translated string
     # <lang en="Please enter your credentials" fr="Merci de vous autentifier"/>
-    foreach (@{ $self->{lang} }) {
+    foreach ( @{ $self->{lang} } ) {
         if ( $$text_ref =~ m/$_=\"(.*?)\"/ ) {
             $$text_ref =~ s/<lang.*$_=\"(.*?)\".*?\/>/$1/gx;
             return;

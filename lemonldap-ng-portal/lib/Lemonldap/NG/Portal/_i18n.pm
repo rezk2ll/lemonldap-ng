@@ -16,7 +16,7 @@ our $VERSION = '1.2.0';
 # @return Message string in the first matching language
 sub msg {
     my ( $msg, $lang ) = splice @_;
-    foreach ( @{ $lang } ) {
+    foreach ( @{$lang} ) {
         if ( __PACKAGE__->can("msg_$_") ) {
             return &{"msg_$_"}->[$msg];
         }
@@ -31,7 +31,7 @@ sub msg {
 sub error {
     my ( $error, $lang ) = splice @_;
     $error = 0 if ( $error < 0 );
-    foreach ( @{ $lang } ) {
+    foreach ( @{$lang} ) {
         if ( __PACKAGE__->can("error_$_") ) {
             return &{"error_$_"}->[$error];
         }

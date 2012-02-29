@@ -25,7 +25,7 @@ require POSIX;
 use CGI::Util 'expires';
 use constant SAFEWRAP => ( Safe->can("wrap_code_ref") ? 1 : 0 );
 use constant UNPROTECT => 1;
-use constant SKIP => 2;
+use constant SKIP      => 2;
 
 #inherits Cache::Cache
 #inherits Apache::Session
@@ -85,9 +85,9 @@ BEGIN {
             qw( MP OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR
               $useRedirectOnForbidden $useRedirectOnError )
         ],
-        post    => [qw($transform postFilter)],
-        cda     => ['$cda'],
-        cookie  => [
+        post   => [qw($transform postFilter)],
+        cda    => ['$cda'],
+        cookie => [
             qw(
               $cookieName $https $httpOnly $cookieExpiration
               $securedCookie $key $cipher
@@ -163,7 +163,7 @@ BEGIN {
             threads::shared::share($key);
             threads::shared::share($headerList);
         };
-print "eval error: $@" if($@);
+        print "eval error: $@" if ($@);
     }
     elsif ( MP() == 1 ) {
         require Apache;
@@ -280,11 +280,11 @@ sub lmUnsetHeaderIn {
     my ( $class, $r, @headers ) = splice @_;
     foreach my $h (@headers) {
         if ( MP() == 2 ) {
-            $r->headers_in->unset( $h );
+            $r->headers_in->unset($h);
         }
         elsif ( MP() == 1 ) {
             $r->header_in( $h => "" )
-                if ( $r->header_in($h) );
+              if ( $r->header_in($h) );
         }
         $class->lmLog( "Unset header $h", 'debug' );
     }
@@ -656,10 +656,11 @@ sub defaultValuesInit {
     # Warning: first start of handler load values from MyHanlder.pm
     # and lemonldap-ng.ini
     # These values should be erased by global configuration!
-    $cookieName  = $args->{cookieName}  || $cookieName  || 'lemonldap';
-    $securedCookie = 
-        defined( $args->{securedCookie} ) ? $args->{securedCookie} :
-        defined($securedCookie)           ? $securedCookie         : 1;
+    $cookieName = $args->{cookieName} || $cookieName || 'lemonldap';
+    $securedCookie =
+        defined( $args->{securedCookie} ) ? $args->{securedCookie}
+      : defined($securedCookie)           ? $securedCookie
+      :                                     1;
     $whatToTrace = $args->{whatToTrace} || $whatToTrace || 'uid';
     $whatToTrace =~ s/\$//g;
     $https = defined($https) ? $https : $args->{https};
@@ -681,10 +682,11 @@ sub defaultValuesInit {
       defined($useSafeJail)
       ? $useSafeJail
       : $args->{useSafeJail};
-    $key    ||= 'lemonldap-ng-key';
+    $key ||= 'lemonldap-ng-key';
     $cipher ||= Lemonldap::NG::Common::Crypto->new($key);
-    if ($args->{key} && ($args->{key} ne $key) ) {
-        $key = $args->{key};
+
+    if ( $args->{key} && ( $args->{key} ne $key ) ) {
+        $key    = $args->{key};
         $cipher = Lemonldap::NG::Common::Crypto->new($key);
     }
     1;
@@ -858,14 +860,14 @@ sub goToPortal {
 # @return Value of the cookie if found, 0 else
 sub fetchId {
     my $t = lmHeaderIn( $apacheRequest, 'Cookie' );
-    my $lookForHttpCookie =
-        $securedCookie =~ /^(2|3)$/ && $https->{_} == 0 ;
-    my $value = $lookForHttpCookie ?
-        ( $t =~ /${cookieName}http=([^,; ]+)/o ? $1 : 0 ) :
-        ( $t =~       /$cookieName=([^,; ]+)/o ? $1 : 0 ) ;
+    my $lookForHttpCookie = $securedCookie =~ /^(2|3)$/ && $https->{_} == 0;
+    my $value =
+      $lookForHttpCookie
+      ? ( $t =~ /${cookieName}http=([^,; ]+)/o ? $1 : 0 )
+      : ( $t =~ /$cookieName=([^,; ]+)/o ? $1 : 0 );
 
-    $value = $cipher->decryptHex($value, "http")
-        if ( $value && $lookForHttpCookie && $securedCookie == 3 );
+    $value = $cipher->decryptHex( $value, "http" )
+      if ( $value && $lookForHttpCookie && $securedCookie == 3 );
     return $value;
 }
 
@@ -882,7 +884,7 @@ sub retrieveSession {
 
     # 2. search in the local cache if exists
     return 1
-        if ( $refLocalStorage and $datas = $refLocalStorage->get($id) );
+      if ( $refLocalStorage and $datas = $refLocalStorage->get($id) );
 
     # 3. search in the central cache
     my %h;
@@ -900,7 +902,7 @@ sub retrieveSession {
 
     # Store the session in local storage
     $refLocalStorage->set( $id, $datas, "10 minutes" )
-        if ($refLocalStorage);
+      if ($refLocalStorage);
 
     untie %h;
     $datasUpdate = time();
@@ -967,19 +969,22 @@ sub run ($$) {
     }
 
     my $id;
+
     # Try to recover cookie and user session
     if ( $id = $class->fetchId and $class->retrieveSession($id) ) {
+
         # AUTHENTICATION done
 
-        my $kc = keys %$datas; # in order to detect new local macro
+        my $kc = keys %$datas;    # in order to detect new local macro
 
         # ACCOUNTING (1. Inform Apache)
         $class->lmSetApacheUser( $apacheRequest, $datas->{$whatToTrace} );
 
         # AUTHORIZATION
         return $class->forbidden($uri)
-            unless ( $class->grant($uri) );
-        $class->updateStatus( $datas->{$whatToTrace}, $apacheRequest->uri, 'OK' );
+          unless ( $class->grant($uri) );
+        $class->updateStatus( $datas->{$whatToTrace},
+            $apacheRequest->uri, 'OK' );
 
         # ACCOUNTING (2. Inform remote application)
         $class->sendHeaders;
@@ -994,9 +999,8 @@ sub run ($$) {
         $class->hideCookie;
 
         # Log
-        $apacheRequest->push_handlers(
-            PerlLogHandler => sub { $class->logGranted( $uri, $datas ); DECLINED },
-        );
+        $apacheRequest->push_handlers( PerlLogHandler =>
+              sub { $class->logGranted( $uri, $datas ); DECLINED }, );
 
         #  Catch POST rules
         $class->transformUri($uri);
@@ -1005,6 +1009,7 @@ sub run ($$) {
     }
 
     elsif ( $protection == UNPROTECT ) {
+
         # Ignore unprotected URIs
         $class->lmLog( "No valid session but unprotected access", "debug" );
         $class->updateStatus( $apacheRequest->connection->remote_ip,
@@ -1015,9 +1020,11 @@ sub run ($$) {
     }
 
     else {
+
         # Redirect user to the portal
-        $class->lmLog( "$class: No cookie found" , 'info' )
-            unless ($id);
+        $class->lmLog( "$class: No cookie found", 'info' )
+          unless ($id);
+
         # if the cookie was fetched, a log is sent by retrieveSession()
         $class->updateStatus( $apacheRequest->connection->remote_ip,
             $apacheRequest->uri, $id ? 'EXPIRED' : 'REDIRECT' );
@@ -1406,7 +1413,7 @@ sub sendHeaders {
 # that would not be caught if access rule is unprotect or skip
 sub cleanHeaders {
     my ($class) = splice @_;
-    $class->lmUnsetHeaderIn( $apacheRequest, @{ $headerList } );
+    $class->lmUnsetHeaderIn( $apacheRequest, @{$headerList} );
 }
 
 ## @rmethod protected int isUnprotected()

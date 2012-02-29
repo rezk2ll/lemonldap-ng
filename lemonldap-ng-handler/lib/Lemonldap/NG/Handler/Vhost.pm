@@ -150,7 +150,6 @@ sub cleanHeaders {
     }
 }
 
-
 ## @rmethod protected int isUnprotected()
 # @return 0 if URI is protected,
 # UNPROTECT if it is unprotected by "unprotect",
@@ -191,17 +190,17 @@ sub grant {
 # Get user cookies and search for Lemonldap::NG cookie.
 # @return Value of the cookie if found, 0 else
 sub fetchId {
-    my $t = lmHeaderIn( $apacheRequest, 'Cookie' );
-    my $vhost = $apacheRequest->hostname;
-    my $lookForHttpCookie =
-        $securedCookie =~ /^(2|3)$/
-         && !( defined( $https->{$vhost} ) ? $https->{$vhost} : $https->{_} );
-    my $value = $lookForHttpCookie ?
-        ( $t =~ /${cookieName}http=([^,; ]+)/o ? $1 : 0 ) :
-        ( $t =~       /$cookieName=([^,; ]+)/o ? $1 : 0 ) ;
+    my $t                 = lmHeaderIn( $apacheRequest, 'Cookie' );
+    my $vhost             = $apacheRequest->hostname;
+    my $lookForHttpCookie = $securedCookie =~ /^(2|3)$/
+      && !( defined( $https->{$vhost} ) ? $https->{$vhost} : $https->{_} );
+    my $value =
+      $lookForHttpCookie
+      ? ( $t =~ /${cookieName}http=([^,; ]+)/o ? $1 : 0 )
+      : ( $t =~ /$cookieName=([^,; ]+)/o ? $1 : 0 );
 
-    $value = $cipher->decryptHex($value, "http")
-        if ( $value && $lookForHttpCookie && $securedCookie == 3 );
+    $value = $cipher->decryptHex( $value, "http" )
+      if ( $value && $lookForHttpCookie && $securedCookie == 3 );
     return $value;
 }
 

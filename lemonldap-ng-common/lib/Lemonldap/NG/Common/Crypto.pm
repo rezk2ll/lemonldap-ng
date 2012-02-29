@@ -23,11 +23,11 @@ our $msg;
 # @param mode Crypt::Rijndael constant
 # @return Lemonldap::NG::Common::Crypto object
 sub new {
-    my ($class, $key, $mode) = @_;
+    my ( $class, $key, $mode ) = @_;
     $mode ||= Crypt::Rijndael::MODE_CBC();
     my $self = {
-        key  => $key,
-        mode => $mode,
+        key     => $key,
+        mode    => $mode,
         ciphers => {}
     };
     return bless $self, $class;
@@ -40,10 +40,10 @@ sub new {
 # @param key that secondary key
 # @return Crypt::Rijndael object
 sub _getCipher {
-    my ($self, $key) = @_;
+    my ( $self, $key ) = @_;
     $key ||= "";
     $self->{ciphers}->{$key} ||=
-        Crypt::Rijndael->new(($self->{key})^$key, $self->{mode});
+      Crypt::Rijndael->new( ( $self->{key} ) ^ $key, $self->{mode} );
     return $self->{ciphers}->{$key};
 }
 
@@ -56,11 +56,9 @@ sub encrypt {
 
     # pad $data so that its length be multiple of 16 bytes
     my $l = bytes::length($data) % 16;
-    $data .= "\0" x ( 16 - $l ) unless ($l == 0);
+    $data .= "\0" x ( 16 - $l ) unless ( $l == 0 );
 
-    eval {
-        $data = encode_base64( $self->_getCipher->encrypt( $data ) );
-    };
+    eval { $data = encode_base64( $self->_getCipher->encrypt($data) ); };
     if ($@) {
         $msg = "Crypt::Rijndael error : $@";
         return undef;
@@ -77,7 +75,7 @@ sub encrypt {
 # @param data datas to decrypt in Base64 format
 # @return decrypted datas
 sub decrypt {
-    my ($self, $data) = @_;
+    my ( $self, $data ) = @_;
     $data =~ s/%2B/\+/ig;
     $data =~ s/%2F/\//ig;
     $data =~ s/%3D/=/ig;
@@ -104,8 +102,8 @@ sub decrypt {
 # @param key optional secondary key
 # @return encrypted datas in hexadecimal data
 sub encryptHex {
-    my ($self, $data, $key) = @_;
-    return _cryptHex($self, $data, $key, "encrypt")
+    my ( $self, $data, $key ) = @_;
+    return _cryptHex( $self, $data, $key, "encrypt" );
 }
 
 ## @method string decryptHex(string data, string key)
@@ -116,8 +114,8 @@ sub encryptHex {
 # @param key optional secondary key
 # @return decrypted datas in hexadecimal data
 sub decryptHex {
-    my ($self, $data, $key) = @_;
-    return _cryptHex($self, $data, $key, "decrypt")
+    my ( $self, $data, $key ) = @_;
+    return _cryptHex( $self, $data, $key, "decrypt" );
 }
 
 ## @method private string _cryptHex (string data, string key, string sub)
@@ -125,18 +123,21 @@ sub decryptHex {
 # @param data datas to decrypt
 # @param key secondary key
 # @param sub may be "encrypt" or "decrypt"
-# @return decrypted datas in hexadecimal data 
+# @return decrypted datas in hexadecimal data
 sub _cryptHex {
-    my ($self, $data, $key, $sub) = @_;
-    unless ($data =~ /^([0-9a-fA-F]{2})*$/) {
-        $msg = "Lemonldap::NG::Common::Crypto::${sub}Hex error : data is not hexadecimal";
+    my ( $self, $data, $key, $sub ) = @_;
+    unless ( $data =~ /^([0-9a-fA-F]{2})*$/ ) {
+        $msg =
+"Lemonldap::NG::Common::Crypto::${sub}Hex error : data is not hexadecimal";
         return undef;
     }
+
     # $data's length must be multiple of 32,
     # since Rijndael requires data length multiple of 16
-    unless (bytes::length($data) % 32 == 0) {
-        $msg = "Lemonldap::NG::Common::Crypto::${sub}Hex error : data length must be multiple of 32";
-        return undef; 
+    unless ( bytes::length($data) % 32 == 0 ) {
+        $msg =
+"Lemonldap::NG::Common::Crypto::${sub}Hex error : data length must be multiple of 32";
+        return undef;
     }
     $data = pack "H*", $data;
     eval { $data = $self->_getCipher($key)->$sub($data); };

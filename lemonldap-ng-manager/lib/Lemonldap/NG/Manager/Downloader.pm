@@ -170,8 +170,10 @@ sub confNode {
                 #    be translated
                 # 2. if a regexp comment or perl expression
                 #    comment exists, it is set as text
-                my $text = /^\(\?#(.*?)\)/ ? $1 :
-                           /^(.*?)##(.+)$/ ? $2 : $_ ;
+                my $text =
+                    /^\(\?#(.*?)\)/ ? $1
+                  : /^(.*?)##(.+)$/ ? $2
+                  :                   $_;
 
                 $res .= $self->li($id)
                   . $self->span(

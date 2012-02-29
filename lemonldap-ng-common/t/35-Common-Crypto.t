@@ -33,11 +33,9 @@ foreach my $i ( 1 .. 17 ) {
         "Test of base64 encrypting with $i characters string" );
 }
 
-my $data = md5_hex(rand);
+my $data      = md5_hex(rand);
 my $secondKey = md5(rand);
 ok(
-    $c->decryptHex(
-        $c->encryptHex( $data, $secondKey ),
-    $secondKey ) eq $data,
+    $c->decryptHex( $c->encryptHex( $data, $secondKey ), $secondKey ) eq $data,
     "Test of hexadecimal encrypting"
 );

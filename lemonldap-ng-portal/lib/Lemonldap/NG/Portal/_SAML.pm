@@ -2637,8 +2637,7 @@ sub sendLogoutRequestToProviders {
 
     # Header of the block which will be displayed to the user, if needed.
     $info .= '<h3>'
-      . $self->msg (Lemonldap::NG::Portal::Simple::PM_SAML_SPLOGOUT)
-      . '</h3>'
+      . $self->msg(Lemonldap::NG::Portal::Simple::PM_SAML_SPLOGOUT) . '</h3>'
       . '<table class="sloState">';
 
     # Foreach SP found in session, get it from configuration, and send the
@@ -2746,7 +2745,7 @@ sub checkDestination {
 
     # Retrieve full URL
     my $portal = $self->{portal};
-    $portal =~ s#^(https?://[^/]+)/.*#$1#; # remove path of portal URL
+    $portal =~ s#^(https?://[^/]+)/.*#$1#;    # remove path of portal URL
     $url = $portal . $url;
 
     # Compare Destination and URL

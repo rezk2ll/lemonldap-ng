@@ -89,11 +89,11 @@ SKIP: {
     ok( scalar(@$lang) == 0, 'extract_lang 1 with void "Accept-language"' );
 
     my $cgi2;
-    $ENV{SCRIPT_NAME}     = '/test.pl';
-    $ENV{SCRIPT_FILENAME} = 't/20-Common-CGI.t';
-    $ENV{REQUEST_METHOD}  = 'GET';
-    $ENV{REQUEST_URI}     = '/';
-    $ENV{QUERY_STRING}    = '';
+    $ENV{SCRIPT_NAME}          = '/test.pl';
+    $ENV{SCRIPT_FILENAME}      = 't/20-Common-CGI.t';
+    $ENV{REQUEST_METHOD}       = 'GET';
+    $ENV{REQUEST_URI}          = '/';
+    $ENV{QUERY_STRING}         = '';
     $ENV{HTTP_ACCEPT_LANGUAGE} = 'fr,fr-fr;q=0.8,en-us;q=0.5,en;q=0.3';
     ok( ( $cgi2 = Lemonldap::NG::Common::CGI->new() ), 'New CGI' );
     ok( $lang = $cgi2->extract_lang(), 'extract_lang' );

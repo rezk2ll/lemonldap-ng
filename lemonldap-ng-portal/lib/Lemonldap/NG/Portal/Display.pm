@@ -76,8 +76,8 @@ sub display {
         elsif ( $self->{error} == PE_REDIRECT ) {
             $skinfile       = "redirect.tpl";
             %templateParams = (
-                URL             => $self->{urldc},
-                HIDDEN_INPUTS   => $self->buildHiddenForm(),
+                URL           => $self->{urldc},
+                HIDDEN_INPUTS => $self->buildHiddenForm(),
             );
         }
 
@@ -92,13 +92,13 @@ sub display {
             utf8::decode($auth_user);
 
             %templateParams = (
-                AUTH_USER       => $auth_user,
-                AUTOCOMPLETE    => $self->{portalAutocomplete},
-                NEWWINDOW       => $self->{portalOpenLinkInNewWindow},
-                AUTH_ERROR      => $self->error( $self->{menuError} ),
-                AUTH_ERROR_TYPE => $self->error_type( $self->{menuError} ),
-                DISPLAY_TAB     => $self->{menuDisplayTab},
-                LOGOUT_URL      => "$ENV{SCRIPT_NAME}?logout=1",
+                AUTH_USER           => $auth_user,
+                AUTOCOMPLETE        => $self->{portalAutocomplete},
+                NEWWINDOW           => $self->{portalOpenLinkInNewWindow},
+                AUTH_ERROR          => $self->error( $self->{menuError} ),
+                AUTH_ERROR_TYPE     => $self->error_type( $self->{menuError} ),
+                DISPLAY_TAB         => $self->{menuDisplayTab},
+                LOGOUT_URL          => "$ENV{SCRIPT_NAME}?logout=1",
                 REQUIRE_OLDPASSWORD => $self->{portalRequireOldPassword},
                 HIDE_OLDPASSWORD =>
                   0,    # Do not hide old password if it is required

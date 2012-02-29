@@ -168,20 +168,16 @@ sub userBind {
 
         # Get expiration warning and graces
         if ( $resp->grace_authentications_remaining ) {
-            $self->{portal}->info(
-                    "<h3>" 
+            $self->{portal}->info( "<h3>"
                   . $resp->grace_authentications_remaining . " "
                   . $self->msg(PM_PP_GRACE)
-                  . "</h3>"
-            );
+                  . "</h3>" );
         }
         if ( $resp->time_before_expiration ) {
-            $self->{portal}->info(
-                    "<h3>" 
+            $self->{portal}->info( "<h3>"
                   . $resp->time_before_expiration . " "
                   . $self->msg(PM_PP_EXP_WARNING)
-                  . "</h3>"
-            );
+                  . "</h3>" );
         }
 
         my $pp_error = $resp->pp_error;

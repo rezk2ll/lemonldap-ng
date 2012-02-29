@@ -194,9 +194,9 @@ sub issuerForUnAuthUser {
 
             # Create a back link on SP displayed on login page
             my $html =
-                "<a href=\"" . $self->referer() . "\">"
-                . $self->msg(PM_BACKTOSP)
-                . "</a>";
+                "<a href=\""
+              . $self->referer() . "\">"
+              . $self->msg(PM_BACKTOSP) . "</a>";
             $self->loginInfo($html);
 
             return PE_OK;
@@ -1708,11 +1708,7 @@ sub issuerForAuthUser {
                   . " width=\"0\" height=\"0\" frameborder=\"0\">"
                   . "</iframe>";
 
-                $self->info(
-                    "<h3>"
-                      . $self->msg(PM_CDC_WRITER)
-                      . "</h3>"
-                );
+                $self->info( "<h3>" . $self->msg(PM_CDC_WRITER) . "</h3>" );
 
                 $self->info($cdc_iframe);
             }

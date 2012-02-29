@@ -91,8 +91,7 @@ sub sregHook {
             );
 
             $self->info(
-                '<h3>' . sprintf( $self->msg(PM_OPENID_RPNS), $k ) . '</h3>'
-            );
+                '<h3>' . sprintf( $self->msg(PM_OPENID_RPNS), $k ) . '</h3>' );
             return ( 0, {} );
         }
     }

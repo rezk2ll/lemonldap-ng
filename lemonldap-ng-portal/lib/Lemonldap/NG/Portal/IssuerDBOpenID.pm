@@ -238,8 +238,7 @@ sub _openIDResponse {
             $self->info(
                 '<h3>'
                   . sprintf(
-                    $self->msg(PM_OPENID_EXCHANGE),
-                    $data->{trust_root}
+                    $self->msg(PM_OPENID_EXCHANGE), $data->{trust_root}
                   )
                   . "</h3>"
             );

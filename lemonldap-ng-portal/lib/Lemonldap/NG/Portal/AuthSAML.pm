@@ -780,12 +780,13 @@ sub extractFormInfo {
         # IDP list
         my @list = ();
         foreach ( keys %{ $self->{_idpList} } ) {
-            push @list, {
+            push @list,
+              {
                 val  => $_,
                 name => $self->{_idpList}->{$_}->{name}
-            };
+              };
         }
-        $self->{list} = \@list; 
+        $self->{list} = \@list;
 
         # Delete existing IDP resolution cookie
         push @{ $self->{cookie} },
