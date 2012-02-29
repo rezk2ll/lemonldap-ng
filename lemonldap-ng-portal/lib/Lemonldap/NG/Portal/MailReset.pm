@@ -110,10 +110,11 @@ sub extractMailInfo {
             $self->{mailAddress} = $h->{ $self->{mailSessionKey} };
             $self->lmLog( "User associated to token: " . $self->{mail},
                 'debug' );
-        }
 
-        # Close session, it will be deleted after password change success
-        untie %$h;
+            # Close session, it will be deleted after password change success
+            untie %$h;
+
+        }
 
         return PE_BADMAILTOKEN unless ( $self->{mail} );
     }
@@ -257,13 +258,10 @@ sub sendConfirmationMail {
     else {
 
         # Use HTML template
-        my $tplfile =
-            $self->getApacheHtdocsPath
-            . "skins/$self->{portalSkin}/mail_confirm.tpl";
-        $tplfile =
-            $self->getApacheHtdocsPath
-            . "skins/common/mail_confirm.tpl"
-            unless (-e $tplfile);
+        my $tplfile = $self->getApacheHtdocsPath
+          . "skins/$self->{portalSkin}/mail_confirm.tpl";
+        $tplfile = $self->getApacheHtdocsPath . "skins/common/mail_confirm.tpl"
+          unless ( -e $tplfile );
         my $template = HTML::Template->new(
             filename => $tplfile,
             filter   => sub { $self->translate_template(@_) }
@@ -369,13 +367,10 @@ sub sendPasswordMail {
     else {
 
         # Use HTML template
-        my $tplfile =
-            $self->getApacheHtdocsPath
-            . "skins/$self->{portalSkin}/mail_password.tpl";
-        $tplfile =
-            $self->getApacheHtdocsPath
-            . "skins/common/mail_password.tpl"
-            unless (-e $tplfile);
+        my $tplfile = $self->getApacheHtdocsPath
+          . "skins/$self->{portalSkin}/mail_password.tpl";
+        $tplfile = $self->getApacheHtdocsPath . "skins/common/mail_password.tpl"
+          unless ( -e $tplfile );
         my $template = HTML::Template->new(
             filename => $tplfile,
             filter   => sub { $self->translate_template(@_) }

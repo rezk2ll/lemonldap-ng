@@ -103,6 +103,7 @@ if ( $portal->{error} == PE_MAILOK ) {
 # Display password change form
 if (    $portal->{mail_token}
     and $portal->{error} != PE_MAILERROR
+    and $portal->{error} != PE_BADMAILTOKEN
     and $portal->{error} != PE_MAILOK )
 {
     $template->param(
