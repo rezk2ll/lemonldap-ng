@@ -74,7 +74,7 @@ sub display {
 
         # 1.3 Redirection
         elsif ( $self->{error} == PE_REDIRECT ) {
-            $skinfile       = "../common/redirect.tpl";
+            $skinfile       = "redirect.tpl";
             %templateParams = (
                 URL             => $self->{urldc},
                 HIDDEN_INPUTS   => $self->buildHiddenForm(),
