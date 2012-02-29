@@ -20,7 +20,7 @@ our $VERSION = '1.1.2';
 # @param $args reference to the configuration hash
 sub defaultValuesInit {
     my ( $class, $args ) = splice @_;
-    foreach my $t (qw(https port)) {
+    foreach my $t (qw(https port maintenance)) {
 
         # Skip Handler initialization (values not defined)
         next unless defined $args->{$t};

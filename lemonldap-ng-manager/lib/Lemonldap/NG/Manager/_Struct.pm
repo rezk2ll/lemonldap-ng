@@ -48,10 +48,12 @@ sub cstruct {
                         _help  => 'post',
                     },
                     vhostOptions => {
-                        _nodes     => [qw(vhostPort vhostHttps)],
+                        _nodes => [qw(vhostPort vhostHttps vhostMaintenance)],
                         vhostPort  => "int:/vhostOptions/$k2/vhostPort",
                         vhostHttps => "trool:/vhostOptions/$k2/vhostHttps",
-                        _help      => 'vhostOptions',
+                        vhostMaintenance =>
+                          "bool:/vhostOptions/$k2/vhostMaintenance",
+                        _help => 'vhostOptions',
                     },
                 }
             }
@@ -900,13 +902,14 @@ sub struct {
 
                 redirection => {
                     _nodes => [
-                        qw(https port useRedirectOnForbidden useRedirectOnError)
+                        qw(https port useRedirectOnForbidden useRedirectOnError maintenance)
                     ],
                     _help                  => 'redirections',
                     https                  => 'bool:/https',
                     port                   => 'int:/port',
                     useRedirectOnForbidden => 'bool:/useRedirectOnForbidden',
                     useRedirectOnError     => 'bool:/useRedirectOnError',
+                    maintenance            => 'bool:/maintenance',
                 },
 
                 portalRedirection => {
@@ -1504,6 +1507,7 @@ sub testStruct {
             warnTest   => $noAssign,
         },
         mailOnPasswordChange => $boolean,
+        maintenance          => $boolean,
         managerDn            => {
             test    => qr/^(?:\w+=.*)?$/,
             msgFail => 'Bad LDAP dn',
@@ -1619,7 +1623,7 @@ sub testStruct {
             keyTest    => Lemonldap::NG::Common::Regexp::HOSTNAME(),
             keyMsgFail => 'Bad virtual host name',
             '*'        => {
-                keyTest    => qr/^vhost(Port|Https)$/,
+                keyTest    => qr/^vhost(Port|Https|Maintenance)$/,
                 keyMsgFail => 'Bad option name',
             },
         },
@@ -1920,6 +1924,7 @@ sub defaultConf {
         ldapVersion                     => '3',
         mailCharset                     => 'utf-8',
         mailOnPasswordChange            => '0',
+        maintenance                     => '0',
         mailTimeout                     => '0',
         mailSessionKey                  => 'mail',
         managerDn                       => '',
@@ -1972,6 +1977,7 @@ sub defaultConf {
         useXForwardedForIP          => '0',
         vhostPort                   => '-1',
         vhostHttps                  => '-1',
+        vhostMaintenance            => '0',
         whatToTrace                 => '$_whatToTrace',
         yubikeyPublicIDSize         => '12',
         ########

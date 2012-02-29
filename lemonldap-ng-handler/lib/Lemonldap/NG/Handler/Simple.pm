@@ -53,6 +53,7 @@ our (
     $timeoutActivity,    $datasUpdate,         $useRedirectOnForbidden,
     $useRedirectOnError, $useSafeJail,         $securedCookie,
     $key,                $cipher,              $headerList,
+    $maintenance,
 );
 
 ##########################################
@@ -83,7 +84,7 @@ BEGIN {
         traces => [qw( $whatToTrace $statusPipe $statusOut)],
         apache => [
             qw( MP OK REDIRECT FORBIDDEN DONE DECLINED SERVER_ERROR
-              $useRedirectOnForbidden $useRedirectOnError )
+              $useRedirectOnForbidden $useRedirectOnError $maintenance )
         ],
         post   => [qw($transform postFilter)],
         cda    => ['$cda'],
@@ -162,6 +163,7 @@ BEGIN {
             threads::shared::share($securedCookie);
             threads::shared::share($key);
             threads::shared::share($headerList);
+            threads::shared::share($maintenance);
         };
         print "eval error: $@" if ($@);
     }
@@ -689,6 +691,9 @@ sub defaultValuesInit {
         $key    = $args->{key};
         $cipher = Lemonldap::NG::Common::Crypto->new($key);
     }
+
+    $maintenance = defined($maintenance) ? $maintenance : $args->{maintenance};
+
     1;
 }
 
