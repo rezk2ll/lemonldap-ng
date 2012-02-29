@@ -808,7 +808,11 @@ sub error {
 
     # Use customized message or built-in message
     if ($msg) {
-        $self->lmLog( "Use customized message for error $code", 'debug' );
+
+        # Manage UTF-8
+        utf8::decode($msg);
+
+        $self->lmLog( "Use customized message $msg for error $code", 'debug' );
     }
     else {
         $msg = &Lemonldap::NG::Portal::_i18n::error( $code, $self->{lang} );
