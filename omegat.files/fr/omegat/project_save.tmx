@@ -318,6 +318,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>$authenticationLevel &gt; 2</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120301T054120Z" changeid="xavier">
+        <seg>$authenticationLevel &gt; 2</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>$givenName</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T172101Z" changeid="xavier">
@@ -5424,6 +5432,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;/&lt;s4&gt;IfModule&lt;/s4&gt;&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120301T054216Z" changeid="xavier">
+        <seg>&lt;/&lt;s4&gt;IfModule&lt;/s4&gt;&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;/&lt;s6&gt;IfModule&lt;/s6&gt;&gt;
  </seg>
       </tuv>
@@ -6164,6 +6180,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can act as an &lt;a1&gt;CAS&lt;/a1&gt; server, that can allow to federate &lt;a2&gt;LL::NG&lt;/a2&gt; with:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120301T053613Z" changeid="xavier">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; peut agir en serveur &lt;a1&gt;CAS&lt;/a1&gt;, ce qui permet de fédérer &lt;a2&gt;LL::NG&lt;/a2&gt; avec :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can also act as &lt;a1&gt;CAS server&lt;/a1&gt;, that allows to interconnect two &lt;a2&gt;LL::NG&lt;/a2&gt; systems.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T155656Z" changeid="xavier">
@@ -6328,6 +6352,14 @@
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T201621Z" changeid="xavier">
         <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; est compatible avec &lt;a1&gt;la politique de mots-de-passe LDAP&lt;/a1&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; is compatible with the &lt;a1&gt;CAS&lt;/a1&gt; protocol &lt;a2&gt;versions 1.0 and 2.0&lt;/a2&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120301T053720Z" changeid="xavier">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; est compatible avec le protocole &lt;a1&gt;CAS&lt;/a1&gt; &lt;a2&gt;versions 1.0 et 2.0&lt;/a2&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -8318,6 +8350,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;&lt;a1&gt;CAS&lt;/a1&gt; login&lt;/s0&gt;: the session key used to fill user login (value will be transmitted to &lt;a2&gt;CAS&lt;/a2&gt; clients).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120301T054353Z" changeid="xavier">
+        <seg>&lt;s0&gt;Identifiant &lt;a1&gt;CAS&lt;/a1&gt;&lt;/s0&gt; : la clef de session à utiliser pour compléter le login (valeur transmise au clients &lt;a2&gt;CAS&lt;/a2&gt;).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;&lt;a1&gt;Configuration&lt;/a1&gt;&lt;/s0&gt;: where configuration is stored.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -8620,6 +8660,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Access control policy&lt;/s0&gt;: define if access control should be done on &lt;a1&gt;CAS&lt;/a1&gt; service.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120301T054504Z" changeid="xavier">
+        <seg>&lt;s0&gt;Politique de contrôle d'accès&lt;/s0&gt; : definit si le contrôle d'accès doit être fait sur le service &lt;a1&gt;CAS&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Account session key&lt;/s0&gt;: session field used as Zimbra user account (by default: uid)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111222T181340Z" changeid="xavier">
@@ -8648,6 +8696,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;s0&gt;Activation&lt;/s0&gt; : mettre à « activé » pour activer le support du domaine commun de cookie.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Activation&lt;/s0&gt;: set to &lt;c1&gt;On&lt;/c1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120301T053918Z" changeid="xavier">
+        <seg>&lt;s0&gt;Activation&lt;/s0&gt; : mettre à &lt;c1&gt;Activé&lt;/c1&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -9584,6 +9640,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Path&lt;/s0&gt;: keep &lt;c1&gt;^/cas/&lt;/c1&gt; unless you have change &lt;a2&gt;Apache portal configuration&lt;/a2&gt; file.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120301T054007Z" changeid="xavier">
+        <seg>&lt;s0&gt;Chemin&lt;/s0&gt; : laisser &lt;c1&gt;^/cas/&lt;/c1&gt; sauf si le fichier de &lt;a2&gt;configuration Apache du portail&lt;/a2&gt; a été modifiée.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Persistent&lt;/s0&gt;: NameID is restored from previous sessions</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -10064,6 +10128,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T115849Z" changeid="xavier">
         <seg>&lt;s0&gt;Utiliser l'attribut reset&lt;/s0&gt; : activé pour utiliser l'attribut reset du mot-de-passe.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Use rule&lt;/s0&gt;: a rule to allow user to use this module, set to 1 to always allow.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120301T054048Z" changeid="xavier">
+        <seg>&lt;s0&gt;Règle d'utilisation&lt;/s0&gt; : une règle pour autoriser l'usage de ce module, mettre 1 pour toujours l'autoriser.</seg>
       </tuv>
     </tu>
     <tu>
@@ -11910,6 +11982,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s3&gt;RewriteRule&lt;/s3&gt; ^/cas/.* /index.pl</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120301T054211Z" changeid="xavier">
+        <seg>&lt;s3&gt;RewriteRule&lt;/s3&gt; ^/cas/.* /index.pl</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s3&gt;RewriteRule&lt;/s3&gt; ^/saml/metadata /metadata.pl</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -13372,10 +13452,26 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Another &lt;a0&gt;LL::NG&lt;/a0&gt; system configured with &lt;a1&gt;CAS authentication&lt;/a1&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120301T053643Z" changeid="xavier">
+        <seg>Un autre système &lt;a0&gt;LL::NG&lt;/a0&gt; configuré avec &lt;a1&gt;authentification CAS&lt;/a1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Anti frame protection</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Protection anti-frame</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Any &lt;a0&gt;CAS&lt;/a0&gt; consumer</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120301T053658Z" changeid="xavier">
+        <seg>N'importe quel client &lt;a0&gt;CAS&lt;/a0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -13496,6 +13592,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Régles de réécriture d'Apache</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Apache rewrite rules must have been activated in &lt;a0&gt;Apache portal configuration&lt;/a0&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120301T054209Z" changeid="xavier">
+        <seg>Le module Rewrite d'Apache doit être activé dans la &lt;a0&gt;configuration Apache du portail&lt;/a0&gt;:</seg>
       </tuv>
     </tu>
     <tu>
@@ -14256,6 +14360,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>CAS</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>CAS server</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120301T053540Z" changeid="xavier">
+        <seg>Serveur CAS</seg>
       </tuv>
     </tu>
     <tu>
@@ -16236,6 +16348,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>For example, to allow only users with a strong authentication level:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120301T054119Z" changeid="xavier">
+        <seg>Par exemple, pour n'autoriser que les utilisateurs authentifiés fortement :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>For example, to configure the &lt;c0&gt;File&lt;/c0&gt; configuration backend:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T142635Z" changeid="xavier">
@@ -17592,6 +17712,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>En particulier, il utilise les capacités multi-threads d'Apache-2, donc pour optimiser les performances, utilisez de préférence &lt;a0&gt;mpm-worker&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>In the Manager, go in &lt;c0&gt;General Parameters&lt;/c0&gt; » &lt;c1&gt;Issuer modules&lt;/c1&gt; » &lt;c2&gt;&lt;a3&gt;CAS&lt;/a3&gt;&lt;/c2&gt; and configure:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120301T053854Z" changeid="xavier">
+        <seg>Dans le manager, aller dans &lt;c0&gt;Paramètres généraux&lt;/c0&gt; &gt; &lt;c1&gt;Modules fournisseurs&lt;/c1&gt; et configurer :</seg>
       </tuv>
     </tu>
     <tu>
@@ -22592,6 +22720,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Then go in &lt;c0&gt;Options&lt;/c0&gt; to define:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120301T054249Z" changeid="xavier">
+        <seg>Aller ensuite dans &lt;c0&gt;Options&lt;/c0&gt; pour définir :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Then go in Manager, &lt;c0&gt;Virtual Hosts&lt;/c0&gt; » &lt;e1&gt;virtualhost&lt;/e1&gt; » &lt;c2&gt;Form replay&lt;/c2&gt; and click on &lt;c3&gt;Add POST &lt;a4&gt;URL&lt;/a4&gt;&lt;/c3&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T193405Z" changeid="xavier">
@@ -23276,6 +23412,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T182726Z" changeid="xavier">
         <seg>Cette section est basée sur la &lt;a0&gt;documentation SimpleSAMLPHP&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This protocol does not define any attributes exchange mechanism, so only authentication is managed.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120301T053804Z" changeid="xavier">
+        <seg>Ce protocole ne définit aucun mécanisme d'échange d'attribut, donc seule l'authentification est gérée.</seg>
       </tuv>
     </tu>
     <tu>
@@ -28774,6 +28918,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T144117Z" changeid="xavier">
         <seg>http://www.iana.org/assignments/enterprise-numbers</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.jasig.org/cas/protocol</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120301T053659Z" changeid="xavier">
+        <seg>http://www.jasig.org/cas/protocol</seg>
       </tuv>
     </tu>
     <tu>

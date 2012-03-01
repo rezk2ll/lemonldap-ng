@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <omegat>
   <project version="1.0">
-    <source_dir>/home/xavier/lemonldap/trunk/build/lemonldap-ng/doc/</source_dir>
-    <target_dir>/home/xavier/lemonldap/trunk/build/lemonldap-ng/po-doc/fr/</target_dir>
+    <source_dir>/home/xavier/lemonldap/trunk/doc/</source_dir>
+    <target_dir>/home/xavier/lemonldap/trunk/po-doc/fr/</target_dir>
     <tm_dir>__DEFAULT__</tm_dir>
     <glossary_dir>__DEFAULT__</glossary_dir>
     <dictionary_dir>__DEFAULT__</dictionary_dir>
