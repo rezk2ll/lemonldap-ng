@@ -71,6 +71,8 @@ Handler use the default Apache error code for the following cases:
 </li>
 <li class="level1"><div class="li"> An error occurs on server side: SERVER_ERROR (500)</div>
 </li>
+<li class="level1"><div class="li"> The application is in maintenance: <acronym title="Hyper Text Transfer Protocol">HTTP</acronym>_SERVICE_UNAVAILABLE (503)</div>
+</li>
 </ul>
 
 <p>
@@ -79,10 +81,11 @@ These errors can be catch trough Apache <code>ErrorDocument</code> directive, to
 </p>
 <pre class="code file apache"><span class="co1"># Common error page and security parameters</span>
 <span class="kw1">ErrorDocument</span> 403 http://auth.example.com/?lmError=403
-<span class="kw1">ErrorDocument</span> <span class="nu0">500</span> http://auth.example.com/?lmError=<span class="nu0">500</span></pre>
+<span class="kw1">ErrorDocument</span> 500 http://auth.example.com/?lmError=500
+<span class="kw1">ErrorDocument</span> <span class="nu0">503</span> http://auth.example.com/?lmError=<span class="nu0">503</span></pre>
 
 <p>
-It is also possible to redirect the user without using <code>ErrorDocument</code>: the Handler will not return 403 or 500 code, but code 302 (REDIRECT). 
+It is also possible to redirect the user without using <code>ErrorDocument</code>: the Handler will not return 403, 500, 503 code, but code 302 (REDIRECT). 
 </p>
 
 <p>
@@ -95,12 +98,12 @@ These parameters can be configured in Manager, in <code>General Parameters</code
 <ul>
 <li class="level1"><div class="li"> <strong>Redirect on forbidden</strong>: use 302 instead 403</div>
 </li>
-<li class="level1"><div class="li"> <strong>Redirect on error</strong>: use 302 instead 500</div>
+<li class="level1"><div class="li"> <strong>Redirect on error</strong>: use 302 instead 500 or 503</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION "Forbidden and Server error" [724-1685] -->
+<!-- SECTION "Forbidden and Server error" [724-1820] -->
 <h1><a name="portal_redirections" id="portal_redirections">Portal Redirections</a></h1>
 <div class="level1">
 
@@ -120,4 +123,4 @@ Often the redirection takes some time because it is user&#039;s first access to 
 </p>
 
 </div>
-<!-- SECTION "Portal Redirections" [1686-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Portal Redirections" [1821-] --></div><!-- closes <div class="dokuwiki export">-->
