@@ -14,6 +14,9 @@
         <TMPL_IF ERROR500>
           <h3><lang en="Error occurs on the server" fr="Une erreur est survenue sur le serveur" /></h3>
         </TMPL_IF>
+        <TMPL_IF ERROR503>
+          <h3><lang en="This application is in maintenance, please try to connect later" fr="Cette application est en maintenance, merci de réessayer plus tard" /></h3>
+        </TMPL_IF>
         <TMPL_IF URL>
           <h3>
             <lang en="You were redirect from " fr="Vous avez été redirigé depuis " />

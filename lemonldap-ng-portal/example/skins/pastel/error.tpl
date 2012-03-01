@@ -10,6 +10,10 @@
         	<div class="message negative"><ul><li><lang en="Error occurs on the server" fr="Une erreur est survenue sur le serveur" /></li></ul></div>
 	</TMPL_IF>
 
+	<TMPL_IF ERROR503>
+        	<div class="message warning"><ul><li><lang en="This application is in maintenance, please try to connect later" fr="Cette application est en maintenance, merci de réessayer plus tard" /></li></ul></div>
+	</TMPL_IF>
+
 	<div class="loginlogo"></div>
 
         <div id="error">

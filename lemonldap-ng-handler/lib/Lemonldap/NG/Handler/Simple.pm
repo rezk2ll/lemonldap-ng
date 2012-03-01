@@ -24,8 +24,9 @@ use Lemonldap::NG::Common::Crypto;
 require POSIX;
 use CGI::Util 'expires';
 use constant SAFEWRAP => ( Safe->can("wrap_code_ref") ? 1 : 0 );
-use constant UNPROTECT => 1;
-use constant SKIP      => 2;
+use constant UNPROTECT        => 1;
+use constant SKIP             => 2;
+use constant MAINTENANCE_CODE => 503;
 
 #inherits Cache::Cache
 #inherits Apache::Session
@@ -935,6 +936,20 @@ sub run ($$) {
     return DECLINED unless ( $apacheRequest->is_initial_req );
     my $args = $apacheRequest->args;
 
+    # Direct return if maintenance mode is active
+    if ( $class->checkMaintenanceMode() ) {
+
+        if ($useRedirectOnError) {
+            $class->lmLog( "Got to portal with maintenance error code",
+                'debug' );
+            return $class->goToPortal( '/', 'lmError=' . MAINTENANCE_CODE );
+        }
+        else {
+            $class->lmLog( "Return maintenance error code", 'debug' );
+            return MAINTENANCE_CODE;
+        }
+    }
+
     # Cross domain authentication
     if ( $cda and $args =~ s/[\?&]?($cookieName=\w+)$//oi ) {
         my $str = $1;
@@ -1035,6 +1050,20 @@ sub run ($$) {
             $apacheRequest->uri, $id ? 'EXPIRED' : 'REDIRECT' );
         return $class->goToPortal($uri);
     }
+}
+
+## @rmethod protected boolean checkMaintenanceMode
+# Check if we are in maintenance mode
+# @return true if maintenance mode
+sub checkMaintenanceMode {
+    my ($class) = splice @_;
+
+    if ($maintenance) {
+        $class->lmLog( "Maintenance mode activated", 'debug' );
+        return 1;
+    }
+
+    return 0;
 }
 
 1;

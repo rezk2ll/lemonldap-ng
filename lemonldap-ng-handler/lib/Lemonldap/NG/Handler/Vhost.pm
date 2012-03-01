@@ -314,6 +314,25 @@ sub transformUri {
     OK;
 }
 
+## @rmethod protected boolean checkMaintenanceMode
+# Check if we are in maintenance mode
+# @return true if maintenance mode
+sub checkMaintenanceMode {
+    my ($class) = splice @_;
+    my $vhost = $apacheRequest->hostname;
+    my $_maintenance =
+      ( defined $maintenance->{$vhost} )
+      ? $maintenance->{$vhost}
+      : $maintenance->{_};
+
+    if ($_maintenance) {
+        $class->lmLog( "Maintenance mode activated", 'debug' );
+        return 1;
+    }
+
+    return 0;
+}
+
 1;
 
 __END__

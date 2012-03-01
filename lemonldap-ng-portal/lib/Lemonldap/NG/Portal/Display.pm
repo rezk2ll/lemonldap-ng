@@ -30,6 +30,7 @@ sub display {
         # Error code
         my $error500 = 1 if ( $http_error eq "500" );
         my $error403 = 1 if ( $http_error eq "403" );
+        my $error503 = 1 if ( $http_error eq "503" );
 
         # Check URL
         $self->_sub('controlUrlOrigin');
@@ -40,6 +41,7 @@ sub display {
             URL        => $self->{urldc},
             ERROR403   => $error403,
             ERROR500   => $error500,
+            ERROR503   => $error503,
         );
 
     }
