@@ -86,6 +86,7 @@ example/skins/dark/notification.tpl
 example/skins/dark/openid.tpl
 example/skins/dark/openidform.tpl
 example/skins/dark/password.tpl
+example/skins/dark/redirect.tpl
 example/skins/dark/standardform.tpl
 example/skins/dark/yubikeyform.tpl
 example/skins/impact/authmessage.tpl
@@ -113,6 +114,7 @@ example/skins/impact/openid.tpl
 example/skins/impact/openidform.tpl
 example/skins/impact/password.tpl
 example/skins/impact/README
+example/skins/impact/redirect.tpl
 example/skins/impact/standardform.tpl
 example/skins/impact/yubikeyform.tpl
 example/skins/pastel/confirm.tpl
@@ -133,6 +135,7 @@ example/skins/pastel/notification.tpl
 example/skins/pastel/openid.tpl
 example/skins/pastel/openidform.tpl
 example/skins/pastel/password.tpl
+example/skins/pastel/redirect.tpl
 example/skins/pastel/standardform.tpl
 example/skins/pastel/yubikeyform.tpl
 example/soapconfigtest.pl
@@ -148,6 +151,7 @@ lib/Lemonldap/NG/Portal/_Multi.pm
 lib/Lemonldap/NG/Portal/_Proxy.pm
 lib/Lemonldap/NG/Portal/_Remote.pm
 lib/Lemonldap/NG/Portal/_SAML.pm
+lib/Lemonldap/NG/Portal/_Slave.pm
 lib/Lemonldap/NG/Portal/_SMTP.pm
 lib/Lemonldap/NG/Portal/_SOAP.pm
 lib/Lemonldap/NG/Portal/_WebForm.pm
