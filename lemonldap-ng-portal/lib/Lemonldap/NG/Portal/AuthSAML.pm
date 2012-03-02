@@ -162,8 +162,7 @@ sub extractFormInfo {
                     );
                     delete $self->{urldc};
                     $self->{mustRedirect} = 1;
-                    $self->{error} = $self->_subProcess(qw(autoRedirect));
-                    return $self->{error};
+                    return $self->_subProcess(qw(autoRedirect));
                 }
             }
             else {
@@ -344,8 +343,7 @@ sub extractFormInfo {
 
             # Redirect user
             $self->{mustRedirect} = 1;
-            $self->{error}        = $self->_subProcess(qw(autoRedirect));
-            return $self->{error};
+            return $self->_subProcess(qw(autoRedirect));
         }
 
     }
@@ -437,7 +435,7 @@ sub extractFormInfo {
                     'debug' );
             }
 
-            $self->_subProcess(qw(autoRedirect))
+            return $self->_subProcess(qw(autoRedirect))
               if (  $self->{urldc}
                 and $self->{portal} !~ /\Q$self->{urldc}\E\/?/ );
 
@@ -661,12 +659,7 @@ sub extractFormInfo {
 
                 $self->{urldc} = $slo_url;
 
-                $self->_subProcess(qw(autoRedirect));
-
-                # If we are here, there was a problem with GET request
-                $self->lmLog( "Logout response was not sent trough GET",
-                    'error' );
-                return PE_SAML_SLO_ERROR;
+                return $self->_subProcess(qw(autoRedirect));
             }
 
             # HTTP-POST
@@ -711,8 +704,7 @@ sub extractFormInfo {
 
             # Redirect user
             $self->{mustRedirect} = 1;
-            $self->{error}        = $self->_subProcess(qw(autoRedirect));
-            return $self->{error};
+            return $self->_subProcess(qw(autoRedirect));
         }
     }
 
@@ -979,11 +971,7 @@ sub extractFormInfo {
 
         $self->{urldc} = $sso_url;
 
-        $self->_subProcess(qw(autoRedirect));
-
-        # If we are here, there was a problem with GET request
-        $self->lmLog( "SSO request was not sent trough GET", 'error' );
-        return PE_SAML_SSO_ERROR;
+        return $self->_subProcess(qw(autoRedirect));
     }
 
     # HTTP-POST
