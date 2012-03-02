@@ -4,6 +4,7 @@
 DESTDIR=
 
 PERL=$$(which perl)
+PERLVERSION=`perl -e '$$version = $$^V; $$version =~ s/v//; print $$version'`
 SU=su -c
 COMPRESS=tar czf
 UNCOMPRESS=tar xzf
@@ -601,7 +602,7 @@ debian-diff:
 
 default-diff:
 	@# Portal
-	@$(DIFF) lemonldap-ng-portal/lib/Lemonldap/NG/Portal /usr/local/share/perl/5.10.0/Lemonldap/NG/Portal ||true
+	@$(DIFF) lemonldap-ng-portal/lib/Lemonldap/NG/Portal /usr/local/share/perl/$(PERLVERSION)/Lemonldap/NG/Portal ||true
 	@$(DIFF) lemonldap-ng-portal/example/scripts/purgeCentralCache $(LMPREFIX)/bin/purgeCentralCache ||true
 	@$(DIFF) lemonldap-ng-portal/example/scripts/buildPortalWSDL $(LMPREFIX)/bin/buildPortalWSDL ||true
 	@$(DIFF) lemonldap-ng-portal/example/skins $(LMPREFIX)/htdocs/portal/skins ||true
@@ -610,7 +611,7 @@ default-diff:
 	@$(DIFF) lemonldap-ng-portal/example/metadata.pl $(LMPREFIX)/htdocs/portal/metadata.pl ||true
 	@$(DIFF) lemonldap-ng-portal/example/cdc.pl $(LMPREFIX)/htdocs/portal/cdc.pl ||true
 	@# Handler
-	@$(DIFF) lemonldap-ng-handler/lib/Lemonldap/NG/Handler /usr/local/share/perl/5.10.0/Lemonldap/NG/Handler ||true
+	@$(DIFF) lemonldap-ng-handler/lib/Lemonldap/NG/Handler /usr/local/share/perl/$(PERLVERSION)/Lemonldap/NG/Handler ||true
 	@$(DIFF) lemonldap-ng-handler/example/MyHandler.pm $(LMPREFIX)/handler/MyHandler.pm ||true
 	@$(DIFF) lemonldap-ng-handler/example/MyHandlerZimbra.pm $(LMPREFIX)/handler/MyHandlerZimbra.pm ||true
 	@$(DIFF) lemonldap-ng-handler/example/MyHandlerSympa.pm $(LMPREFIX)/handler/MyHandlerSympa.pm ||true
@@ -618,13 +619,13 @@ default-diff:
 	@$(DIFF) lemonldap-ng-handler/example/MyUpdateCookieHandler.pm $(LMPREFIX)/handler/MyUpdateCookieHandler.pm ||true
 	@$(DIFF) lemonldap-ng-handler/example/scripts/purgeLocalCache $(LMPREFIX)/bin/purgeLocalCache ||true
 	@# Common
-	@$(DIFF) lemonldap-ng-common/lib/Lemonldap/NG/Common /usr/local/share/perl/5.10.0/Lemonldap/NG/Common ||true
-	@$(DIFF) lemonldap-ng-common/lib/Lemonldap/NG/Common.pm /usr/local/share/perl/5.10.0/Lemonldap/NG/Common.pm ||true
+	@$(DIFF) lemonldap-ng-common/lib/Lemonldap/NG/Common /usr/local/share/perl/$(PERLVERSION)/Lemonldap/NG/Common ||true
+	@$(DIFF) lemonldap-ng-common/lib/Lemonldap/NG/Common.pm /usr/local/share/perl/$(PERLVERSION)/Lemonldap/NG/Common.pm ||true
 	@$(DIFF) lemonldap-ng-common/scripts/lmMigrateConfFiles2ini $(LMPREFIX)/bin/lmMigrateConfFiles2ini ||true
 	@$(DIFF) lemonldap-ng-common/scripts/convertConfig $(LMPREFIX)/bin/convertConfig ||true
 	@# Manager
-	@$(DIFF) lemonldap-ng-manager/lib/Lemonldap/NG/Manager /usr/local/share/perl/5.10.0/Lemonldap/NG/Manager ||true
-	@$(DIFF) lemonldap-ng-manager/lib/Lemonldap/NG/Manager.pm /usr/local/share/perl/5.10.0/Lemonldap/NG/Manager.pm ||true
+	@$(DIFF) lemonldap-ng-manager/lib/Lemonldap/NG/Manager /usr/local/share/perl/$(PERLVERSION)/Lemonldap/NG/Manager ||true
+	@$(DIFF) lemonldap-ng-manager/lib/Lemonldap/NG/Manager.pm /usr/local/share/perl/$(PERLVERSION)/Lemonldap/NG/Manager.pm ||true
 	@$(DIFF) lemonldap-ng-manager/example/skins $(LMPREFIX)/htdocs/manager/skins ||true
 	@$(DIFF) lemonldap-ng-manager/example/index.pl $(LMPREFIX)/htdocs/manager/index.pl ||true
 	@$(DIFF) lemonldap-ng-manager/example/sessions.pl $(LMPREFIX)/htdocs/manager/sessions.pl ||true
