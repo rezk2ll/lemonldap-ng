@@ -2191,6 +2191,21 @@ sub globalTests {
             );
         },
 
+        # Check if virtual host do not contain a port
+        vhostWithPort => sub {
+            my @pb;
+            foreach my $vh ( keys %{ $conf->{locationRules} } ) {
+                push @pb, $vh if ( $vh =~ /:/ );
+            }
+            if (@pb) {
+                return ( 0,
+                        'Virtual hosts '
+                      . join( ', ', @pb )
+                      . " contain a port, this is not allowed" );
+            }
+            else { return 1; }
+        },
+
         # Check if "userDB" and "authentication" are consistent
         authAndUserDBConsistency => sub {
             foreach my $type (qw(OpenID SAML)) {
@@ -2313,7 +2328,8 @@ sub globalTests {
               unless ($smtp);
 
             # Skip other tests if no authentication
-            return 1 unless ( $conf->{SMTPAuthUser} and $conf->{SMTPAuthPass} );
+            return 1
+              unless ( $conf->{SMTPAuthUser} and $conf->{SMTPAuthPass} );
 
             # Try authentication
             return ( 0, "SMTP authentication failed" )
