@@ -370,6 +370,18 @@ deb-src http://lemonldap-ng.org/deb squeeze main</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>%_topdir /home/user/build
+%dist .el5
+%rhel 5</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T100942Z" changeid="xavier">
+        <seg>%_topdir /home/user/build
+%dist .el5
+%rhel 5</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&amp;#x6c;&amp;#x65;&amp;#x6d;&amp;#x6f;&amp;#x6e;&amp;#x6c;&amp;#x64;&amp;#x61;&amp;#x70;&amp;#x2d;&amp;#x6e;&amp;#x67;&amp;#x2d;&amp;#x63;&amp;#x68;&amp;#x61;&amp;#x6e;&amp;#x67;&amp;#x65;&amp;#x73;&amp;#x40;&amp;#x6f;&amp;#x77;&amp;#x32;&amp;#x2e;&amp;#x6f;&amp;#x72;&amp;#x67;</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -1048,6 +1060,14 @@ deb-src http://lemonldap-ng.org/deb squeeze main</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../../media/documentation/lemonldap-ng-packages.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T095510Z" changeid="xavier">
+        <seg>../../../media/documentation/lemonldap-ng-packages.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../../media/documentation/manager-authchoice.png</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T194527Z" changeid="xavier">
@@ -1588,6 +1608,14 @@ deb-src http://lemonldap-ng.org/deb squeeze main</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T093712Z" changeid="xavier">
         <seg>../../documentation/1.2/prereq.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/prereq.html#yum</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T095645Z" changeid="xavier">
+        <seg>../../documentation/1.2/prereq.html#yum</seg>
       </tuv>
     </tu>
     <tu>
@@ -2196,6 +2224,14 @@ deb-src http://lemonldap-ng.org/deb squeeze main</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>../media/logos/sgs_white_small.jpg</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../media/rpm-gpg-key-ow2</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T095749Z" changeid="xavier">
+        <seg>../media/rpm-gpg-key-ow2</seg>
       </tuv>
     </tu>
     <tu>
@@ -4516,6 +4552,14 @@ deb-src http://lemonldap-ng.org/deb squeeze main</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>/_detail/documentation/lemonldap-ng-architecture.png?id=documentation%3Apresentation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/documentation/lemonldap-ng-packages.png?id=documentation%3A1.2%3Ainstallrpm</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T095508Z" changeid="xavier">
+        <seg>/_detail/documentation/lemonldap-ng-packages.png?id=documentation%3A1.2%3Ainstallrpm</seg>
       </tuv>
     </tu>
     <tu>
@@ -9758,6 +9802,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;NameVirtualHost&lt;/s0&gt; *:&lt;s1&gt;80&lt;/s1&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T100417Z" changeid="xavier">
+        <seg>&lt;s0&gt;NameVirtualHost&lt;/s0&gt; *:&lt;s1&gt;80&lt;/s1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;New&lt;/s0&gt;: to write all configuration history</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T123827Z" changeid="xavier">
@@ -13482,6 +13534,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>All &lt;a0&gt;Perl&lt;/a0&gt; modules are in the VENDOR perl directory</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T100709Z" changeid="xavier">
+        <seg>Tous les modules &lt;a0&gt;Perl&lt;/a0&gt; se trouvent dans le répertoire VENDOR de Perl</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>All &lt;a0&gt;Perl&lt;/a0&gt; modules are in the VENDOR perl directory (/usr/share/perl5/)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T094654Z" changeid="xavier">
@@ -13982,6 +14042,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120301T054209Z" changeid="xavier">
         <seg>Le module Rewrite d'Apache doit être activé dans la &lt;a0&gt;configuration Apache du portail&lt;/a0&gt;:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Apache virtual host</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T100258Z" changeid="xavier">
+        <seg>Hôte virtuel Apache :</seg>
       </tuv>
     </tu>
     <tu>
@@ -14522,6 +14590,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Before installing the packages, install all &lt;a0&gt;dependencies&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T095952Z" changeid="xavier">
+        <seg>Avant d'installer les paquets, installer toutes les &lt;a0&gt;dépendances&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Before transmission, the username and password are encoded as a sequence of base-64 characters.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T101537Z" changeid="xavier">
@@ -14638,6 +14714,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T095018Z" changeid="xavier">
         <seg>Construire les paquets</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Build:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T100950Z" changeid="xavier">
+        <seg>Build:</seg>
       </tuv>
     </tu>
     <tu>
@@ -14934,6 +15018,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Journal des changements</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Check Apache configuration and restart:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T100432Z" changeid="xavier">
+        <seg>Vérifier la configuration d'Apache et redémarrer :</seg>
       </tuv>
     </tu>
     <tu>
@@ -16274,6 +16366,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Edit ~/.rpmmacros and set your build parameters (example for RHEL5):</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T100940Z" changeid="xavier">
+        <seg>Editer ~/.rpmmacros et mettre les paramètres de construction (exemple pour RHEL5):</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Else it just will be sent trough an attribute response, if explicitly requested in an attribute request.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T092357Z" changeid="xavier">
@@ -16406,6 +16506,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Exemples de macros:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Example with EPEL:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T095643Z" changeid="xavier">
+        <seg>Exemple avec EPEL:</seg>
       </tuv>
     </tu>
     <tu>
@@ -16766,6 +16874,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Pour les systèmes basés sur RPM, vous devez &lt;a0&gt;installer les paquets pré-requis&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>For apache configuration, you may have to remove the old symbolic link, if not done by the RPM:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T100538Z" changeid="xavier">
+        <seg>Pour la configuration apache, il faut peut-être supprimer l'ancien lien symbolique si ce n'est pas fait par le RPM:</seg>
       </tuv>
     </tu>
     <tu>
@@ -17298,6 +17414,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Go to %_topdir</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T100949Z" changeid="xavier">
+        <seg>Aller dans %_topdir</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Go to &lt;c0&gt;Configuration&lt;/c0&gt; » &lt;c1&gt;Authentication&lt;/c1&gt;:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T073753Z" changeid="xavier">
@@ -17794,6 +17918,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If &lt;a0&gt;LL::NG&lt;/a0&gt; is the only software installed in Apache, the virtual host feature may not have already been activated.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T100342Z" changeid="xavier">
+        <seg>Si &lt;a0&gt;LL::NG&lt;/a0&gt; est le seul logiciel installé sur Apache, la fonctionnalité d'hôte virtuel peut ne pas avoir été activée.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If &lt;a2&gt;LL::NG&lt;/a2&gt; send some roles split by some commas, configure &lt;s3&gt;roleSeparator&lt;/s3&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T190855Z" changeid="xavier">
@@ -17946,6 +18078,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If the packages are stored in a yum repository:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T095853Z" changeid="xavier">
+        <seg>Si les paquets sont stockés dans un dépôt yum :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If the user is not created, or can not be created via &lt;a0&gt;LDAP&lt;/a0&gt; import, the connection to Liferay will be refused.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T073401Z" changeid="xavier">
@@ -18038,6 +18178,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Si vous modifiez le suffixe &lt;c0&gt;/saml/metadata&lt;/c0&gt;, vous devez changer la règle de réécriture d'Apache.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>If you need it, you can rebuild RPMs:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T100729Z" changeid="xavier">
+        <seg>Si besoin, on peut reconstruire les RPMs :</seg>
       </tuv>
     </tu>
     <tu>
@@ -18546,10 +18694,26 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Install all build dependencies (see BuildRequires in lemonldap-ng.&lt;a0&gt;spec&lt;/a0&gt;)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T100804Z" changeid="xavier">
+        <seg>Installer toutes les dépendances de construction (voir BuildRequires dans lemonldap-ng.&lt;a0&gt;spec&lt;/a0&gt;)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Install and launch a &lt;a0&gt;Redis server&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Installez et lancer un &lt;a0&gt;serveur Redis&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Install it to trust RPMs:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T095823Z" changeid="xavier">
+        <seg>L'installer pour certifier les RPMs:</seg>
       </tuv>
     </tu>
     <tu>
@@ -18566,6 +18730,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Installer les pré-requis</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Install rpm-build package</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T100730Z" changeid="xavier">
+        <seg>Install rpm-build package</seg>
       </tuv>
     </tu>
     <tu>
@@ -18590,6 +18762,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T125257Z" changeid="xavier">
         <seg>Installer le nouveau fichier lemonldap-ng.ini dans tous les serveurs &lt;a0&gt;LL::NG&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Install the package &lt;c0&gt;lemonldap-ng-conf&lt;/c0&gt; only on the server which stores configuration.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T100245Z" changeid="xavier">
+        <seg>Installer le paquet &lt;c0&gt;lemonldap-ng-conf&lt;/c0&gt; seulement sur le serveur qui stocke la configuration.</seg>
       </tuv>
     </tu>
     <tu>
@@ -20802,6 +20982,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Package GPG signature</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T095748Z" changeid="xavier">
+        <seg>Signature GPG des paquets</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Packages and archives</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -21398,6 +21586,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Put LemonLDAP::NG tarball in %_topdir/SOURCES</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T100819Z" changeid="xavier">
+        <seg>Mettre l'archive LemonLDAP::NG dans %_topdir/SOURCES</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Put your own files instead of &lt;c0&gt;ow2.cert&lt;/c0&gt;, &lt;c1&gt;ow2.key&lt;/c1&gt;, &lt;c2&gt;ow2-ca.cert&lt;/c2&gt;:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T065919Z" changeid="xavier">
@@ -21482,6 +21678,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Paquets RPM</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>RPMs are available on the &lt;a0&gt;Download page&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T095734Z" changeid="xavier">
+        <seg>Les paquets RPM sont disponibles sur la &lt;a0&gt;page de téléchargement&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -22162,6 +22366,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111222T173657Z" changeid="xavier">
         <seg>Voir &lt;a0&gt;comment le faire&lt;/a0&gt; sur le wiki Zimbra.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>See &lt;a0&gt;prerequisites and dependencies&lt;/a0&gt; chapter for more.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T095720Z" changeid="xavier">
+        <seg>Voir le chapître &lt;a0&gt;pré-requis et dépendances&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -23138,6 +23350,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T113125Z" changeid="xavier">
         <seg>L'authentification basique est portée par un en-tête &lt;a0&gt;HTTP&lt;/a0&gt; spécifique, tel que décrit ci-dessous.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The GPG key can be downloaded here: &lt;a0&gt;rpm-gpg-key-ow2&lt;/a0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T095807Z" changeid="xavier">
+        <seg>La clef GPG peut être téléchargée ici : &lt;a0&gt;rpm-gpg-key-ow2&lt;/a0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -24366,6 +24586,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>This schema shows the dependencies between modules:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T095507Z" changeid="xavier">
+        <seg>Ce schéma montre les dépendancesentre ces modules :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>This scheme expect a parameter, which is the authentication chain.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T145302Z" changeid="xavier">
@@ -24530,6 +24758,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Pour définir les clefs, vous pouvez :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>To do it, uncomment the &lt;c0&gt;NameVirtualHost&lt;/c0&gt; line in &lt;c1&gt;/etc/httpd/conf.d/z-lemonldap-ng-handler.conf&lt;/c1&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T100410Z" changeid="xavier">
+        <seg>Pour ce faire, décommenter la ligne &lt;c0&gt;NameVirtualHost&lt;/c0&gt; dans &lt;c1&gt;/etc/httpd/conf.d/z-lemonldap-ng-handler.conf&lt;/c1&gt; :</seg>
       </tuv>
     </tu>
     <tu>
@@ -24714,6 +24950,26 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Valve Tomcat</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Transaction Summary
+===================================================
+Install      82 Package(s)
+Upgrade       0 Package(s)
+ 
+Total download size: 18 M
+Is this ok [y/N]: y</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T095859Z" changeid="xavier">
+        <seg>Transaction Summary
+===================================================
+Install      82 Package(s)
+Upgrade       0 Package(s)
+ 
+Total download size: 18 M
+Is this ok [y/N]: y</seg>
       </tuv>
     </tu>
     <tu>
@@ -25530,6 +25786,22 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>With RPM</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T095924Z" changeid="xavier">
+        <seg>Avec RPM</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>With YUM</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T095831Z" changeid="xavier">
+        <seg>Avec YUM</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>With apt-get</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T093704Z" changeid="xavier">
@@ -25610,6 +25882,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>YUM repository</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T095518Z" changeid="xavier">
+        <seg>Dépôt YUM</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You also need to know the technical name of configuration parameter to do this.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T071940Z" changeid="xavier">
@@ -25630,6 +25910,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074339Z" changeid="xavier">
         <seg>Il est possible d'ajouter une règle pour la déconnexion :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can add this YUM repository to get recent packages:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T095546Z" changeid="xavier">
+        <seg>Ajouter ces dépôts YUM pour obtenir les paquets récents :</seg>
       </tuv>
     </tu>
     <tu>
@@ -25754,6 +26042,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can also use yum on local RPMs file:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T095919Z" changeid="xavier">
+        <seg>On peut aussi utiliser yum sur des fichiers RPMs locaux :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You can avoid this by setting “memberOf” fields in your &lt;a2&gt;LDAP&lt;/a2&gt; scheme:</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -25774,6 +26070,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T143928Z" changeid="xavier">
         <seg>L'aspect graphique du manager peut être modifié en cliquant sur le bouton &lt;c0&gt;style de menu&lt;/c0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can choose to install only one component by choosing the package &lt;c0&gt;lemonldap-ng-portal&lt;/c0&gt;, &lt;c1&gt;lemonldap-ng-handler&lt;/c1&gt; or &lt;c2&gt;lemonldap-ng-manager&lt;/c2&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T100056Z" changeid="xavier">
+        <seg>On peut n'installer qu'un seul composant en choisissant le paquet &lt;c0&gt;lemonldap-ng-portal&lt;/c0&gt;, &lt;c1&gt;lemonldap-ng-handler&lt;/c1&gt; ou &lt;c2&gt;lemonldap-ng-manager&lt;/c2&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -26082,6 +26386,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You have then to install all the downloaded packages:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T100015Z" changeid="xavier">
+        <seg>Il faut ensuite installer tous les paquets téléchargés :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You have to install &lt;c0&gt;HttpAuthPlugin.php&lt;/c0&gt; in the &lt;c1&gt;extensions/&lt;/c1&gt; directory of your MediaWiki installation:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074824Z" changeid="xavier">
@@ -26198,6 +26510,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T071100Z" changeid="xavier">
         <seg>Il faut autoriser l'accès à l'adresse &lt;a0&gt;IP&lt;/a0&gt; du manager.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You must also install a repository for non-core dependencies.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T095637Z" changeid="xavier">
+        <seg>Il faut également installer un dépôt pour les dépendances ne faisant pas partie du core.</seg>
       </tuv>
     </tu>
     <tu>
@@ -26402,6 +26722,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Your old Apache configuration should have been saved, you need to port your specificities in new Apache configuration files:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T100649Z" changeid="xavier">
+        <seg>L'ancienne configuration Apache devrait avoir été sauvée, il faut réporter les changements locaux dans le nouveau fichier de configuration Apache :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Yubikey</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T162058Z" changeid="xavier">
@@ -26510,6 +26838,24 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T082334Z" changeid="xavier">
         <seg>[PORTAIL] est l'&lt;a0&gt;URL&lt;/a0&gt; du portail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>[lemonldap-ng]
+name=LemonLDAP::NG packages
+baseurl=http://lemonldap-ng.org/rpm/
+enabled=1
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OW2</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T095555Z" changeid="xavier">
+        <seg>[lemonldap-ng]
+name=LemonLDAP::NG packages
+baseurl=http://lemonldap-ng.org/rpm/
+enabled=1
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OW2</seg>
       </tuv>
     </tu>
     <tu>
@@ -26716,6 +27062,16 @@ apache2ctl restart</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>apacheAuthnLevel</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>apachectl configtest
+apachectl restart</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T100433Z" changeid="xavier">
+        <seg>apachectl configtest
+apachectl restart</seg>
       </tuv>
     </tu>
     <tu>
@@ -28554,6 +28910,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>documentation:lemonldap-ng-architecture.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:lemonldap-ng-packages.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T095509Z" changeid="xavier">
+        <seg>documentation:lemonldap-ng-packages.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -30716,6 +31080,14 @@ kinit -k -t /etc/lemonldap-ng/auth.keytab HTTP/auth.example.com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>lemonldap-ng-conf: contains default configuration (&lt;a0&gt;DNS&lt;/a0&gt; domain: example.com)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T095230Z" changeid="xavier">
+        <seg>lemonldap-ng-conf : contient la configuration par défaut (domaine &lt;a0&gt;DNS&lt;/a0&gt; : example.com)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>lemonldap-ng-dev@ow2.org</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111628Z" changeid="xavier">
@@ -30728,6 +31100,22 @@ kinit -k -t /etc/lemonldap-ng/auth.keytab HTTP/auth.example.com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T092958Z" changeid="xavier">
         <seg>lemonldap-ng-doc : contient la documentation &lt;a0&gt;HTML&lt;/a0&gt; et celle du projet (README, etc...)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>lemonldap-ng-handler: contains Apache Handler implementation (agent)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T095320Z" changeid="xavier">
+        <seg>lemonldap-ng-handler : contient l'implémentation de l'agent pour Apache (handler)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>lemonldap-ng-manager: contains administration interface and session explorer</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T095341Z" changeid="xavier">
+        <seg>lemonldap-ng-manager : contient l'interface d'administration et l'explorateur de session</seg>
       </tuv>
     </tu>
     <tu>
@@ -30752,6 +31140,22 @@ kinit -k -t /etc/lemonldap-ng/auth.keytab HTTP/auth.example.com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;lemonldap-ng-portal-password.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>lemonldap-ng-portal: contains authentication portal and menu</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T095356Z" changeid="xavier">
+        <seg>lemonldap-ng-portal : contient le portail d'authentification et le menu</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>lemonldap-ng-test: contains sample &lt;a0&gt;CGI&lt;/a0&gt; test page</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T095251Z" changeid="xavier">
+        <seg>lemonldap-ng-test : contient une simple page &lt;a0&gt;CGI&lt;/a0&gt; de test</seg>
       </tuv>
     </tu>
     <tu>
@@ -31184,6 +31588,38 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>perl-Lemonldap-NG-Common: CPAN - Shared modules</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T095425Z" changeid="xavier">
+        <seg>perl-Lemonldap-NG-Common : CPAN - modules partagés</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>perl-Lemonldap-NG-Handler: CPAN - Handler modules</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T095434Z" changeid="xavier">
+        <seg>perl-Lemonldap-NG-Handler : CPAN - modules agent</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>perl-Lemonldap-NG-Manager: CPAN - Manager modules</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T095442Z" changeid="xavier">
+        <seg>perl-Lemonldap-NG-Manager : CPAN - modules manager</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>perl-Lemonldap-NG-Portal: CPAN - Portal modules</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T095450Z" changeid="xavier">
+        <seg>perl-Lemonldap-NG-Portal : CPAN - modules portail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>phpLDAPadmin</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T173116Z" changeid="xavier">
@@ -31328,6 +31764,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>rm -f /etc/httpd/conf.d/z-lemonldap-ng.conf</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T100553Z" changeid="xavier">
+        <seg>rm -f /etc/httpd/conf.d/z-lemonldap-ng.conf</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>rm -f /etc/lemonldap-ng/auth.keytab
 msktutil -c -b &quot;cn=COMPUTERS&quot; -s HTTP/auth.example.com -h auth.example.com -k /etc/lemonldap-ng/auth.keytab --computer-name portalsso --upn HTTP/auth.example.com --server ad.example.com --verbose</seg>
       </tuv>
@@ -31344,6 +31788,46 @@ msktutil -c -b &quot;cn=COMPUTERS&quot; -s HTTP/auth.example.com -h auth.example
       <tuv lang="FR-FR" changedate="20120226T114526Z" changeid="xavier">
         <seg>rm -f /etc/lemonldap-ng/auth.keytab
 msktutil -c -b &quot;cn=COMPUTERS&quot; -s HTTP/auth.example.com -h auth.example.com -k /etc/lemonldap-ng/auth.keytab --computer-name portalsso --upn HTTP/auth.example.com --server ad.example.com --verbose --enctypes 28</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>rpm --import rpm-gpg-key-ow2</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T095824Z" changeid="xavier">
+        <seg>rpm --import rpm-gpg-key-ow2</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>rpm -Uvh http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-4.noarch.rpm</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T095644Z" changeid="xavier">
+        <seg>rpm -Uvh http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-4.noarch.rpm</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>rpm -Uvh lemonldap-ng-* perl-Lemonldap-NG-*</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T100016Z" changeid="xavier">
+        <seg>rpm -Uvh lemonldap-ng-* perl-Lemonldap-NG-*</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>rpm-gpg-key-ow2</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T095751Z" changeid="xavier">
+        <seg>rpm-gpg-key-ow2</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>rpmbuild -ta SOURCES/lemonldap-ng-VERSION.tar.gz</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T100951Z" changeid="xavier">
+        <seg>rpmbuild -ta SOURCES/lemonldap-ng-VERSION.tar.gz</seg>
       </tuv>
     </tu>
     <tu>
@@ -31424,6 +31908,14 @@ msktutil -c -b &quot;cn=COMPUTERS&quot; -s HTTP/auth.example.com -h auth.example
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T120456Z" changeid="xavier">
         <seg>sn</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>specification</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T100735Z" changeid="xavier">
+        <seg>spécification</seg>
       </tuv>
     </tu>
     <tu>
@@ -31852,10 +32344,26 @@ cd lemonldap-ng-*</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>vi /etc/lemonldap-ng/apache2.conf.rpmsave</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T100652Z" changeid="xavier">
+        <seg>vi /etc/lemonldap-ng/apache2.conf.rpmsave</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>vi /etc/sympa/auth.conf</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111217T081431Z" changeid="xavier">
         <seg>vi /etc/sympa/auth.conf</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>vi /etc/yum.repos.d/lemonldap-ng.repo</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T095550Z" changeid="xavier">
+        <seg>vi /etc/yum.repos.d/lemonldap-ng.repo</seg>
       </tuv>
     </tu>
     <tu>
@@ -31924,6 +32432,14 @@ cd lemonldap-ng-*</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>yum install lemonldap-ng</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T095856Z" changeid="xavier">
+        <seg>yum install lemonldap-ng</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>yum install mod_auth_kerb</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T154436Z" changeid="xavier">
@@ -31944,6 +32460,22 @@ cd lemonldap-ng-*</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T120447Z" changeid="xavier">
         <seg>yum install perl-Authen-Radius</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>yum localinstall lemonldap-ng-* perl-Lemonldap-NG-*</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T095920Z" changeid="xavier">
+        <seg>yum localinstall lemonldap-ng-* perl-Lemonldap-NG-*</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>yum update</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T095557Z" changeid="xavier">
+        <seg>yum update</seg>
       </tuv>
     </tu>
     <tu>
