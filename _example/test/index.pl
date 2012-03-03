@@ -15,7 +15,6 @@ my $color = $cgi->param("color") || "#ddd";
 
 # Local parameters
 my $manager_url = "http://manager.__DNSDOMAIN__";
-my $portal_url = "http://auth.__DNSDOMAIN__";
 
 # CSS
 my $css = <<EOT;
@@ -23,12 +22,13 @@ body{
 background:$color;
 font-family:sans-serif;
 font-size:11pt;
-padding:0 5%;
+padding:0;
 margin:0;
 }
 #content{
 background:#fff;
 padding:10px;
+margin:0 5%;
 }
 #menu{
 text-align:center;
@@ -98,8 +98,6 @@ print $cgi->start_html( -title => "$name",
 print "<div id=\"content\">\n";
 
 print "<h1>$name</h1>\n";
-
-print "<div id=\"menu\"><a href=\"$portal_url\">Portal</a> - <a href=\"/logout\">Logout</a></div>\n";
 
 print "<h2>Main informations</h2>\n";
 print "<ul>\n";
