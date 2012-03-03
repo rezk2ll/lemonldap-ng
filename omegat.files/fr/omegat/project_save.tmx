@@ -1572,6 +1572,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.2/samlservice.html#saml_sessions_module_name_and_options</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T081406Z" changeid="xavier">
+        <seg>../../documentation/1.2/samlservice.html#saml_sessions_module_name_and_options</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.2/selfmadeapplication.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T192355Z" changeid="xavier">
@@ -8358,6 +8366,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;&lt;a1&gt;CAS&lt;/a1&gt; session module name and options&lt;/s0&gt;: choose a specific module if you do not want to mix &lt;a2&gt;CAS&lt;/a2&gt; sessions and normal sessions (see &lt;a3&gt;why&lt;/a3&gt;).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T081703Z" changeid="xavier">
+        <seg>&lt;s0&gt;Nom et options du module session &lt;a1&gt;CAS&lt;/a1&gt;&lt;/s0&gt; : choisir un module spécifique pour ne pas mêler les sessions &lt;a2&gt;CAS&lt;/a2&gt; et les sessions normales (voir &lt;a3&gt;pourquoi&lt;/a3&gt;).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;&lt;a1&gt;Configuration&lt;/a1&gt;&lt;/s0&gt;: where configuration is stored.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -10404,6 +10420,22 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;error&lt;/s0&gt;: if user has no access, an error is shown on the portal, the user is not redirected to &lt;a1&gt;CAS&lt;/a1&gt; service</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T081229Z" changeid="xavier">
+        <seg>&lt;s0&gt;error&lt;/s0&gt; : si l'utilisateur n'a pas accès, une erreur est affichée sur le portail, l'utilisateur n'est pas redirigé vers le service &lt;a1&gt;CAS&lt;/a1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;faketicket&lt;/s0&gt;: if the user has no access, a fake ticket is built, and the user is redirected to &lt;a1&gt;CAS&lt;/a1&gt; service.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T081310Z" changeid="xavier">
+        <seg>&lt;s0&gt;faketicket&lt;/s0&gt; : si l'utilisateur n'a pas accès, un faux ticket est construit, et l'utilisateur est redirigé vers le service &lt;a1&gt;CAS&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;handler-apache2.conf&lt;/s0&gt; : Handler declaration, reload and sample virtual hosts</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T144438Z" changeid="xavier">
@@ -10478,6 +10510,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       <tuv lang="FR-FR" changedate="20120107T150119Z" changeid="xavier">
         <seg>&lt;s0&gt;my&lt;/s0&gt; &lt;s1&gt;$portal&lt;/s1&gt; &lt;s2&gt;=&lt;/s2&gt; Lemonldap&lt;s3&gt;::&lt;/s3&gt;&lt;s4&gt;NG&lt;/s4&gt;&lt;s5&gt;::&lt;/s5&gt;&lt;s6&gt;Portal&lt;/s6&gt;&lt;s7&gt;::&lt;/s7&gt;&lt;s8&gt;SharedConf&lt;/s8&gt;&lt;s9&gt;-&gt;&lt;/s9&gt;&lt;s10&gt;new&lt;/s10&gt;&lt;s11&gt;(&lt;/s11&gt;&lt;s12&gt;{&lt;/s12&gt;
 multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;none&lt;/s0&gt;: no access control, the server will answer without checking if the user is authorized for the service (this is the default)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T081135Z" changeid="xavier">
+        <seg>&lt;s0&gt;none&lt;/s0&gt; : pas de contrôle d'accès, le serveur répond sans contrôler si l'utilisateur est autorisé à accéder au service (c'est la valeur par défaut)</seg>
       </tuv>
     </tu>
     <tu>
@@ -17236,6 +17276,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If &lt;c0&gt;&lt;a1&gt;CAS&lt;/a1&gt; login&lt;/c0&gt; is not set, it uses &lt;c2&gt;General Parameters&lt;/c2&gt; » &lt;c3&gt;Logs&lt;/c3&gt; » &lt;c4&gt;REMOTE_USER&lt;/c4&gt; data, which is set to &lt;c5&gt;uid&lt;/c5&gt; by default</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T081837Z" changeid="xavier">
+        <seg>Si le &lt;c0&gt;login &lt;a1&gt;CAS&lt;/a1&gt;&lt;/c0&gt; n'est pas défini, la donnée &lt;c2&gt;Paramètres généraux&lt;/c2&gt; » &lt;c3&gt;Journalisation&lt;/c3&gt; » &lt;c4&gt;REMOTE_USER&lt;/c4&gt; est utilisée, mise à &lt;c5&gt;uid&lt;/c5&gt; par défaut</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If &lt;c0&gt;exportedAttr&lt;/c0&gt; is set, only those attributes are copied in the session database of the secondary &lt;a1&gt;LL::NG&lt;/a1&gt; structure.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T050010Z" changeid="xavier">
@@ -19192,6 +19240,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Paramètres principaux</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Maintenance mode</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T081022Z" changeid="xavier">
+        <seg>Mode maintenance</seg>
       </tuv>
     </tu>
     <tu>
@@ -21848,6 +21904,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Some options are available:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T081012Z" changeid="xavier">
+        <seg>Quelques options sont disponibles :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Sometimes, &lt;a0&gt;PHP&lt;/a0&gt; applications also check the &lt;a1&gt;PHP&lt;/a1&gt;_AUTH_USER and &lt;a2&gt;PHP&lt;/a2&gt;_AUHT_PW environment variables.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T195349Z" changeid="xavier">
@@ -22676,6 +22740,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T144031Z" changeid="xavier">
         <seg>Thème (&lt;a0&gt;thème jQuery-UI&lt;/a0&gt;).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Then &lt;a2&gt;CAS&lt;/a2&gt; service has to show a correct error when service ticket validation will fail.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T081403Z" changeid="xavier">
+        <seg>Ainsi le service &lt;a2&gt;CAS&lt;/a2&gt; doit afficher une erreur lorsque la validation du ticket échoue.</seg>
       </tuv>
     </tu>
     <tu>
@@ -23548,6 +23620,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Ces macros sont calculées seulement à leur premier usage et stockées dans le cache local des sessions (uniquement pour ce serveur) et seulement si l'utilisateur accède à l'application relative.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Three options:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T081033Z" changeid="xavier">
+        <seg>Trois options :</seg>
       </tuv>
     </tu>
     <tu>
