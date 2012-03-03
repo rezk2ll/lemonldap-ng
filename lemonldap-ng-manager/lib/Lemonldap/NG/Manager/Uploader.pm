@@ -804,7 +804,7 @@ sub applyConf {
     my %reloadUrls =
       %{ $self->confObj->getLocalConf( APPLYSECTION, undef, 0 ) };
     %reloadUrls = %{ $self->confObj->getConf->{reloadUrls} }
-      unless ( defined %reloadUrls );
+      unless (%reloadUrls);
 
     # Create user agent
     my $ua = new LWP::UserAgent( requests_redirectable => [] );
