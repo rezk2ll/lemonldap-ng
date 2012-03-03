@@ -1460,6 +1460,30 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.2/idpopenid.html#configuration</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T082335Z" changeid="xavier">
+        <seg>../../documentation/1.2/idpopenid.html#configuration</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/idpopenid.html#security</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T082529Z" changeid="xavier">
+        <seg>../../documentation/1.2/idpopenid.html#security</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/idpopenid.html#shared_attributes_sreg</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T082818Z" changeid="xavier">
+        <seg>../../documentation/1.2/idpopenid.html#shared_attributes_sreg</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.2/idpsaml.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T103142Z" changeid="xavier">
@@ -6196,6 +6220,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can act as an OpenID 2.0 Server, that can allow to federate &lt;a1&gt;LL::NG&lt;/a1&gt; with:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T081938Z" changeid="xavier">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; peut agir comme un serveur OpenID 2.0, ce qui permet de fédérer &lt;a1&gt;LL::NG&lt;/a1&gt; avec :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can also act as &lt;a1&gt;CAS server&lt;/a1&gt;, that allows to interconnect two &lt;a2&gt;LL::NG&lt;/a2&gt; systems.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T155656Z" changeid="xavier">
@@ -6232,6 +6264,14 @@
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; peut être configuré pour fournir &lt;a1&gt;2 cookies&lt;/a1&gt;:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can be configured to restrict OpenID exchange using a white or a black list of domains.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T083353Z" changeid="xavier">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; peut être configuré pour restreindre les échanges OpenID en utilisant les listes blanches ou noires de domaines.</seg>
       </tuv>
     </tu>
     <tu>
@@ -6368,6 +6408,14 @@
       </tuv>
       <tuv lang="FR-FR" changedate="20120301T053720Z" changeid="xavier">
         <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; est compatible avec le protocole &lt;a1&gt;CAS&lt;/a1&gt; &lt;a2&gt;versions 1.0 et 2.0&lt;/a2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; is compatible with the OpenID Authentication protocol &lt;a1&gt;version 2.0&lt;/a1&gt; and &lt;a2&gt;version 1.0&lt;/a2&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T082048Z" changeid="xavier">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; est compatible avec le protocole d'authentification OpenID &lt;a1&gt;version 2.0&lt;/a1&gt; et &lt;a2&gt;version 1.0&lt;/a2&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -6568,6 +6616,14 @@
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T064000Z" changeid="xavier">
         <seg>Points d'accès &lt;a0&gt;SOAP&lt;/a0&gt; (désactivés par défaut) :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;SREG&lt;/a0&gt; permit the share of 8 attributes:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T083040Z" changeid="xavier">
+        <seg>&lt;a0&gt;SREG&lt;/a0&gt; permet le partage de 8 attributs :</seg>
       </tuv>
     </tu>
     <tu>
@@ -8716,6 +8772,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Activation&lt;/s0&gt;: set to &lt;c1&gt;On&lt;/c1&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T082459Z" changeid="xavier">
+        <seg>&lt;s0&gt;Activation&lt;/s0&gt; : mettre à &lt;c1&gt;Activé&lt;/c1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Activation&lt;/s0&gt;: set to &lt;c1&gt;On&lt;/c1&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120301T053918Z" changeid="xavier">
@@ -8872,6 +8936,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20120214T050124Z" changeid="xavier">
         <seg>&lt;s0&gt;Domaines autorisés&lt;/s0&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Authorized domains&lt;/s0&gt;: white list or black list of OpenID client domains (&lt;s1&gt;&lt;a2&gt;see below&lt;/a2&gt;&lt;/s1&gt;).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T082817Z" changeid="xavier">
+        <seg>&lt;s0&gt;Domaines autorisés&lt;/s0&gt; : liste blanche ou noire des domaines clients OpenID (&lt;s1&gt;&lt;a2&gt;voir ci-dessous&lt;/a2&gt;&lt;/s1&gt;).</seg>
       </tuv>
     </tu>
     <tu>
@@ -9592,6 +9664,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;OpenID login&lt;/s0&gt;: the session key used to match OpenID login.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T082734Z" changeid="xavier">
+        <seg>&lt;s0&gt;Identificant OpenID&lt;/s0&gt; : la clef de session utilisée pour correspondre au login OpenID.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;POST &lt;a1&gt;URL&lt;/a1&gt;&lt;/s0&gt;: /login.php</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T193444Z" changeid="xavier">
@@ -9660,6 +9740,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20120301T054007Z" changeid="xavier">
         <seg>&lt;s0&gt;Chemin&lt;/s0&gt; : laisser &lt;c1&gt;^/cas/&lt;/c1&gt; sauf si le fichier de &lt;a2&gt;configuration Apache du portail&lt;/a2&gt; a été modifiée.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Path&lt;/s0&gt;: keep &lt;c1&gt;^/openidserver/&lt;/c1&gt; unless you have change &lt;a2&gt;Apache portal configuration&lt;/a2&gt; file.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T082522Z" changeid="xavier">
+        <seg>&lt;s0&gt;Chemin&lt;/s0&gt; : laisser &lt;c1&gt;^/openidserver/&lt;/c1&gt; sauf si le fichier de &lt;a2&gt;configuration Apache du portail&lt;/a2&gt; a été modifiée.</seg>
       </tuv>
     </tu>
     <tu>
@@ -9816,6 +9904,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;SREG mapping&lt;/s0&gt;: link between SREG attributes and session keys (&lt;s1&gt;&lt;a2&gt;see below&lt;/a2&gt;&lt;/s1&gt;).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T082859Z" changeid="xavier">
+        <seg>&lt;s0&gt;Associations SREG&lt;/s0&gt; : liens entre les attributs SREG et les clefs de session (&lt;s1&gt;&lt;a2&gt;voir ci-dessous&lt;/a2&gt;&lt;/s1&gt;).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;SSLCACertificateFile&lt;/s0&gt;: CA certificate to validate client certificates</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T070037Z" changeid="xavier">
@@ -9908,6 +10004,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T114828Z" changeid="xavier">
         <seg>&lt;s0&gt;Attributs recherchés&lt;/s0&gt; : nom(s) de l'attribut stocké dans le nom du groupe, séparés par des virgules (défaut: cn).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Secret token&lt;/s0&gt;: a secret token used to secure transmissions between OpenID client and server (&lt;s1&gt;&lt;a2&gt;see below&lt;/a2&gt;&lt;/s1&gt;).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T082650Z" changeid="xavier">
+        <seg>&lt;s0&gt;Jeton secret&lt;/s0&gt; : le jeton secret utilisé pour sécuriser les transmissions entre le client et le server OpenID (&lt;s1&gt;&lt;a2&gt;voir ci-dessous&lt;/a2&gt;&lt;/s1&gt;).</seg>
       </tuv>
     </tu>
     <tu>
@@ -12030,6 +12134,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s3&gt;RewriteRule&lt;/s3&gt; ^/openidserver/.* /index.pl</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T082528Z" changeid="xavier">
+        <seg>&lt;s3&gt;RewriteRule&lt;/s3&gt; ^/openidserver/.* /index.pl</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s3&gt;RewriteRule&lt;/s3&gt; ^/saml/metadata /metadata.pl</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -12948,6 +13060,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>A session key can be associated to more than one SREG attribute.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T083210Z" changeid="xavier">
+        <seg>Une clef de session peut être associée à un ou plusieurs attributs SREG.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>A special &lt;a0&gt;URL&lt;/a0&gt; is declared in application menu (like &lt;a1&gt;http://zimbra.example.com/zimbrasso&lt;/a1&gt;)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111220T155338Z" changeid="xavier">
@@ -13500,6 +13620,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Another &lt;a0&gt;LL::NG&lt;/a0&gt; system configured with &lt;a1&gt;OpenID authentication&lt;/a1&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T081957Z" changeid="xavier">
+        <seg>Un autre système &lt;a0&gt;LL::NG&lt;/a0&gt; configuré avec &lt;a1&gt;authentification OpenID&lt;/a1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Anti frame protection</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -13512,6 +13640,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120301T053658Z" changeid="xavier">
         <seg>N'importe quel client &lt;a0&gt;CAS&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Any OpenID consumer</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T082010Z" changeid="xavier">
+        <seg>N'importe quel client OpenID</seg>
       </tuv>
     </tu>
     <tu>
@@ -15084,6 +15220,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Country</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T083113Z" changeid="xavier">
+        <seg>Country</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Create OBM virtual host (for example obm.example.com) in &lt;a0&gt;LL::NG&lt;/a0&gt; configuration: &lt;c1&gt;Virtual Hosts&lt;/c1&gt; » &lt;c2&gt;New virtual host&lt;/c2&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T171726Z" changeid="xavier">
@@ -15264,6 +15408,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T184853Z" changeid="xavier">
         <seg>Les données sont stockées en clef/valeur (les valeurs autres que chaînes sont sérialisés).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Date of birth</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T083112Z" changeid="xavier">
+        <seg>Date of birth</seg>
       </tuv>
     </tu>
     <tu>
@@ -15752,6 +15904,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Chaque module d'authentification de &lt;a0&gt;LL::NG&lt;/a0&gt; dispose d'un niveau d'authentification qui peut être associé à un &lt;a1&gt;contexte d'authentification SAML&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Each SREG attribute will be associated to a user session key.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T083138Z" changeid="xavier">
+        <seg>Chaque attribut SREG est associé à une clef de session utilisateur.</seg>
       </tuv>
     </tu>
     <tu>
@@ -16636,6 +16796,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Gender</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T083112Z" changeid="xavier">
+        <seg>Gender</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>General options</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -17284,6 +17452,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If &lt;c0&gt;OpenID login&lt;/c0&gt; is not set, it uses &lt;c1&gt;General Parameters&lt;/c1&gt; » &lt;c2&gt;Logs&lt;/c2&gt; » &lt;c3&gt;REMOTE_USER&lt;/c3&gt; data, which is set to &lt;c4&gt;uid&lt;/c4&gt; by default</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T083014Z" changeid="xavier">
+        <seg>Si l'&lt;c0&gt;identifiant OpenID&lt;/c0&gt; n'est pas renseigné, la donnée &lt;c1&gt;Paramètres généraux&lt;/c1&gt; » &lt;c2&gt;Journalisation&lt;/c2&gt; » &lt;c3&gt;REMOTE_USER&lt;/c3&gt; est  utilisée, mise à &lt;c4&gt;uid&lt;/c4&gt; par défaut</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If &lt;c0&gt;exportedAttr&lt;/c0&gt; is set, only those attributes are copied in the session database of the secondary &lt;a1&gt;LL::NG&lt;/a1&gt; structure.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T050010Z" changeid="xavier">
@@ -17380,10 +17556,26 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If not set, the secret token is calculated using the general encryption key.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T083441Z" changeid="xavier">
+        <seg>S'il n'est pas renseigné, le jeton secret est calculé en utilisant la clef de chiffrement générale.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If one is missing, the user is not created.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T073458Z" changeid="xavier">
         <seg>Si l'un est manquant, le compte ne sera pas créé.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>If the OpenID consumer ask for data, users will be prompted to accept or not the data sharing.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T083255Z" changeid="xavier">
+        <seg>Si le client OpenID demande des données utilisateurs, ceux-ci sont questionnés pour accepter ou non le partage.</seg>
       </tuv>
     </tu>
     <tu>
@@ -17772,6 +17964,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>In the Manager, go in &lt;c0&gt;General Parameters&lt;/c0&gt; » &lt;c1&gt;Issuer modules&lt;/c1&gt; » &lt;c2&gt;OpenID&lt;/c2&gt; and configure:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T082434Z" changeid="xavier">
+        <seg>Dans le manager, aller dans &lt;c0&gt;Paramètres généraux&lt;/c0&gt; &gt; &lt;c1&gt;Modules fournisseurs&lt;/c1&gt; » &lt;c2&gt;OpenID&lt;/c2&gt; et configurer :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>In the Manager, select node &lt;c0&gt;&lt;a1&gt;SAML&lt;/a1&gt; identity providers&lt;/c0&gt; and click on &lt;c2&gt;New identity provider&lt;/c2&gt;:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120218T221236Z" changeid="xavier">
@@ -18088,6 +18288,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T050456Z" changeid="xavier">
         <seg>Ce peut être fait par accès direct à la base des sessions principale ou en utilisant une requête &lt;a0&gt;SOAP&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>It can be used just to share authentication or to share user's attributes following the &lt;a3&gt;OpenID Simple Registration Extension 1.0 (SREG)&lt;/a3&gt; specification.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T082219Z" changeid="xavier">
+        <seg>Ce peut être utilisé pour partager l'authentification et pour partager les attributs utilisateurs en suivant les spécifications &lt;a3&gt;OpenID Simple Registration Extension 1.0 (SREG)&lt;/a3&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -18504,6 +18712,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T183226Z" changeid="xavier">
         <seg>LL::NG en proxy de fédération de protocoles</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Language</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T083114Z" changeid="xavier">
+        <seg>Language</seg>
       </tuv>
     </tu>
     <tu>
@@ -19564,6 +19780,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Nick name</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T083111Z" changeid="xavier">
+        <seg>Nick name</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>No &lt;a0&gt;IRC&lt;/a0&gt; client?</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -19584,6 +19808,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T112919Z" changeid="xavier">
         <seg>No configuration found</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Note that &lt;a0&gt;SAML&lt;/a0&gt; protocol is more secured than OpenID, so when your partners are known, prefer &lt;a1&gt;SAML&lt;/a1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T083526Z" changeid="xavier">
+        <seg>Noter que le protocole &lt;a0&gt;SAML&lt;/a0&gt; est plus securisé que OpenID, ainsi si les partenaires sont connus, preférer &lt;a1&gt;SAML&lt;/a1&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -19968,6 +20200,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120214T045742Z" changeid="xavier">
         <seg>L'authentification OpenID peut être proposée en choix alternatif en utilisant la méthode d'authentification &lt;a0&gt;choice&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>OpenID server</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T081910Z" changeid="xavier">
+        <seg>Serveur OpenID</seg>
       </tuv>
     </tu>
     <tu>
@@ -20532,6 +20772,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T194913Z" changeid="xavier">
         <seg>PostGreSQL</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Postal code</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T083113Z" changeid="xavier">
+        <seg>Postal code</seg>
       </tuv>
     </tu>
     <tu>
@@ -21636,6 +21884,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074534Z" changeid="xavier">
         <seg>Plusieurs extensions permettent de configurer le &lt;a0&gt;SSO&lt;/a0&gt; dans MediaWiki :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Shared attributes (SREG)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T083028Z" changeid="xavier">
+        <seg>Attributs partagés (SREG)</seg>
       </tuv>
     </tu>
     <tu>
@@ -23648,6 +23904,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Timezone</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T083115Z" changeid="xavier">
+        <seg>Timezone</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>To add these attributes, go in Manager, &lt;c0&gt;Variables&lt;/c0&gt; » &lt;c1&gt;Exported Variables&lt;/c1&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T113006Z" changeid="xavier">
@@ -24544,6 +24808,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T150440Z" changeid="xavier">
         <seg>Une solution est à l'étude pour ça…</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>When &lt;a0&gt;LL::NG&lt;/a0&gt; is configured as OpenID identity provider, users can share their authentication using [PORTAL]/openidserver/[login] where:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T082321Z" changeid="xavier">
+        <seg>Lorsque &lt;a0&gt;LL::NG&lt;/a0&gt; est configuré en fournisseur d'identité OpenID, les utilisateurs peuvent partager leur authentification en utilisant [PORTAIL]/openidserver/[login] où :</seg>
       </tuv>
     </tu>
     <tu>
@@ -25596,10 +25868,26 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>[PORTAL] is the portal &lt;a0&gt;URL&lt;/a0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T082334Z" changeid="xavier">
+        <seg>[PORTAIL] est l'&lt;a0&gt;URL&lt;/a0&gt; du portail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>[libdefaults]</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T154519Z" changeid="xavier">
         <seg>[libdefaults]</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>[login] is the user login (or any other session information, &lt;s0&gt;&lt;a1&gt;see below&lt;/a1&gt;&lt;/s0&gt;)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T082406Z" changeid="xavier">
+        <seg>[login] est le nom de connexion (ou tout autre information de session, &lt;s0&gt;&lt;a1&gt;voir ci-dessous&lt;/a1&gt;&lt;/s0&gt;)</seg>
       </tuv>
     </tu>
     <tu>
@@ -27946,6 +28234,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://auth.example.com/openidserver/foo.bar</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T082408Z" changeid="xavier">
+        <seg>http://auth.example.com/openidserver/foo.bar</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://auth.example.com/saml/metadata</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120218T221013Z" changeid="xavier">
@@ -28478,6 +28774,30 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T111715Z" changeid="xavier">
         <seg>http://obm.org</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://openid.net/specs/openid-authentication-1_1.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T082012Z" changeid="xavier">
+        <seg>http://openid.net/specs/openid-authentication-1_1.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://openid.net/specs/openid-authentication-2_0.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T082011Z" changeid="xavier">
+        <seg>http://openid.net/specs/openid-authentication-2_0.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://openid.net/specs/openid-simple-registration-extension-1_0.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T082015Z" changeid="xavier">
+        <seg>http://openid.net/specs/openid-simple-registration-extension-1_0.html</seg>
       </tuv>
     </tu>
     <tu>
