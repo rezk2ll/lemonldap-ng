@@ -1132,6 +1132,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../../media/documentation/manager-saml-sp-new.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T092029Z" changeid="xavier">
+        <seg>../../../media/documentation/manager-saml-sp-new.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../../media/documentation/remote-interoperability.png</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120217T045232Z" changeid="xavier">
@@ -4732,6 +4740,14 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/documentation/manager-saml-sp-new.png?id=documentation%3A1.2%3Aidpsaml</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T092027Z" changeid="xavier">
+        <seg>/_detail/documentation/manager-saml-sp-new.png?id=documentation%3A1.2%3Aidpsaml</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>/_detail/documentation/remote-interoperability.png?id=documentation%3A1.0%3Aauthremote</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120217T045229Z" changeid="xavier">
@@ -6216,6 +6232,14 @@
       </tuv>
       <tuv lang="FR-FR" changedate="20120301T053613Z" changeid="xavier">
         <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; peut agir en serveur &lt;a1&gt;CAS&lt;/a1&gt;, ce qui permet de fédérer &lt;a2&gt;LL::NG&lt;/a2&gt; avec :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can act as an &lt;a1&gt;SAML&lt;/a1&gt; 2.0 Identity Provider, that can allow to federate &lt;a2&gt;LL::NG&lt;/a2&gt; with:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T091407Z" changeid="xavier">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; peut agir en fournisseur d'identité &lt;a1&gt;SAML&lt;/a1&gt; 2.0, ce qui permet de fédérer &lt;a2&gt;LL::NG&lt;/a2&gt; avec :</seg>
       </tuv>
     </tu>
     <tu>
@@ -9140,6 +9164,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Default NameID format&lt;/s0&gt;: if no NameID format is requested, or the NameID format undefined, this NameID format will be used.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T092555Z" changeid="xavier">
+        <seg>&lt;s0&gt;Format de NameID par défaut&lt;/s0&gt; : si aucun fiormat de NameID n'est demandé, ou si le format n'est pas défini, ce format de NameID sera utilisé.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Default filter&lt;/s0&gt;: default &lt;a1&gt;LDAP&lt;/a1&gt; fitler for searches, should not be modified.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T114243Z" changeid="xavier">
@@ -9318,6 +9350,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Format&lt;/s0&gt;: optional, &lt;a1&gt;SAML&lt;/a1&gt; attribute format.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T092441Z" changeid="xavier">
+        <seg>&lt;s0&gt;Format&lt;/s0&gt; (optionnel) : format de l'attribut &lt;a1&gt;SAML&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;François-Xavier DELTOMBE&lt;/s0&gt;: developer, tester</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T142727Z" changeid="xavier">
@@ -9434,6 +9474,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T194602Z" changeid="xavier">
         <seg>&lt;s0&gt;Nom de clef&lt;/s0&gt; : Texte à afficher sur l'onglet.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Key name&lt;/s0&gt;: name of the key in LemonLDAP::NG session</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T092155Z" changeid="xavier">
+        <seg>&lt;s0&gt;Nom de clef&lt;/s0&gt; : nom de la clef dans la session LemonLDAP::NG</seg>
       </tuv>
     </tu>
     <tu>
@@ -9598,6 +9646,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Mandatory&lt;/s0&gt;: if set to “On”, then this attribute will be sent in authentication response.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T092237Z" changeid="xavier">
+        <seg>&lt;s0&gt;Obligatoire&lt;/s0&gt; : si activé, cet attribut sera envoyé dans les réponses d'authentification.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Master's &lt;a1&gt;IP&lt;/a1&gt; address&lt;/s0&gt;: the &lt;a2&gt;IP&lt;/a2&gt; addresses of servers which are accredited to authenticate user.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T161311Z" changeid="xavier">
@@ -9660,6 +9716,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T114552Z" changeid="xavier">
         <seg>&lt;s0&gt;Classe d'object&lt;/s0&gt;: objectClass du groupe (défaut: groupOfNames).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;One Time Use&lt;/s0&gt;: set the OneTimeUse flag in authentication response.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T092702Z" changeid="xavier">
+        <seg>&lt;s0&gt;Usage unique&lt;/s0&gt; : active le drapeau OneTimeUse dans les réponses d'authentification.</seg>
       </tuv>
     </tu>
     <tu>
@@ -9748,6 +9812,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T082522Z" changeid="xavier">
         <seg>&lt;s0&gt;Chemin&lt;/s0&gt; : laisser &lt;c1&gt;^/openidserver/&lt;/c1&gt; sauf si le fichier de &lt;a2&gt;configuration Apache du portail&lt;/a2&gt; a été modifiée.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Path&lt;/s0&gt;: keep &lt;c1&gt;^/saml/&lt;/c1&gt; unless you have change &lt;a2&gt;SAML&lt;/a2&gt; end points suffix in &lt;a3&gt;SAML service configuration&lt;/a3&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T091739Z" changeid="xavier">
+        <seg>&lt;s0&gt;Chemin&lt;/s0&gt; : laisser &lt;c1&gt;^/saml/&lt;/c1&gt; sauf si les suffixes des points d'accès &lt;a2&gt;SAML&lt;/a2&gt; ont été modifiés sans la &lt;a3&gt;configuration du service SAML&lt;/a3&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -10255,6 +10327,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
         <seg>&lt;s0&gt;Use rule&lt;/s0&gt;: a rule to allow user to use this module, set to 1 to always allow.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120301T054048Z" changeid="xavier">
+        <seg>&lt;s0&gt;Règle d'utilisation&lt;/s0&gt; : une règle pour autoriser l'usage de ce module, mettre 1 pour toujours l'autoriser.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Use rule&lt;/s0&gt;: a rule to allow user to use this module, set to &lt;c1&gt;1&lt;/c1&gt; to always allow.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T091758Z" changeid="xavier">
         <seg>&lt;s0&gt;Règle d'utilisation&lt;/s0&gt; : une règle pour autoriser l'usage de ce module, mettre 1 pour toujours l'autoriser.</seg>
       </tuv>
     </tu>
@@ -13316,6 +13396,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>After configuring &lt;a0&gt;SAML&lt;/a0&gt; Service, you can export metadata to your partner Service Provider.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T091908Z" changeid="xavier">
+        <seg>Après avoir configuré le service &lt;a0&gt;SAML&lt;/a0&gt;, exporter les métadonnéesvers le fournisseur de service partenaire.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>After logout process, the user is redirected on portal, or on a configured &lt;a0&gt;URL&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -13628,6 +13716,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Another &lt;a0&gt;LL::NG&lt;/a0&gt; system configured with &lt;a1&gt;SAML authentication&lt;/a1&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T091420Z" changeid="xavier">
+        <seg>Un autre système &lt;a0&gt;LL::NG&lt;/a0&gt; configuré avec &lt;a1&gt;authentification SAML&lt;/a1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Anti frame protection</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -13640,6 +13736,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120301T053658Z" changeid="xavier">
         <seg>N'importe quel client &lt;a0&gt;CAS&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Any &lt;a0&gt;SAML&lt;/a0&gt; Service Provider, for example:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T091443Z" changeid="xavier">
+        <seg>Tout fournisseur de service &lt;a0&gt;SAML&lt;/a0&gt;, par exemple:</seg>
       </tuv>
     </tu>
     <tu>
@@ -14128,6 +14232,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T060323Z" changeid="xavier">
         <seg>Requête d'authentification</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Authentication response</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T092454Z" changeid="xavier">
+        <seg>Réponse d'authentification</seg>
       </tuv>
     </tu>
     <tu>
@@ -15996,6 +16108,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Else it just will be sent trough an attribute response, if explicitly requested in an attribute request.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T092357Z" changeid="xavier">
+        <seg>Sinon, il ne sera envoyé dans les réponses que s'il est explicitement demandé dans les requêtes d'attributs.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Else, all data are copied in the session database.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T050025Z" changeid="xavier">
@@ -16860,6 +16980,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Go in &lt;c0&gt;General Parameters&lt;/c0&gt; » &lt;c1&gt;Issuer modules&lt;/c1&gt; » &lt;c2&gt;&lt;a3&gt;SAML&lt;/a3&gt;&lt;/c2&gt; and configure:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T091559Z" changeid="xavier">
+        <seg>Dans le manager, aller dans &lt;c0&gt;Paramètres généraux&lt;/c0&gt; &gt; &lt;c1&gt;Modules fournisseurs&lt;/c1&gt; » &lt;c2&gt;&lt;a3&gt;SAML&lt;/a3&gt; et configurer :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Go in Manager and click on &lt;c0&gt;&lt;a1&gt;SAML&lt;/a1&gt; 2 Service&lt;/c0&gt; node.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -17548,6 +17676,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If no value, the default NameID format is Email.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T092619Z" changeid="xavier">
+        <seg>Si aucune valeur n'est indiquée, le format de NameID par défaut est Email.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If no value, will use first NameID Format activated in metadata.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T060518Z" changeid="xavier">
@@ -17972,6 +18108,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>In the Manager, select node &lt;a0&gt;SAML&lt;/a0&gt; service providers and click on New service provider:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T092026Z" changeid="xavier">
+        <seg>Dans le manager, selectionner le noeud fournisseurs de service &lt;a0&gt;SAML&lt;/a0&gt; et cliquer sur Nouveau fournisseur de service :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>In the Manager, select node &lt;c0&gt;&lt;a1&gt;SAML&lt;/a1&gt; identity providers&lt;/c0&gt; and click on &lt;c2&gt;New identity provider&lt;/c2&gt;:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120218T221236Z" changeid="xavier">
@@ -18212,6 +18356,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Installation on Debian/Ubuntu with packages</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T092719Z" changeid="xavier">
+        <seg>Installation sur Debian/Ubuntu avec les paquets</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Internal portal</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120215T050049Z" changeid="xavier">
@@ -18264,6 +18416,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T064327Z" changeid="xavier">
         <seg>Règles de réécriture pour la fourniture d'identité (requiert &lt;c0&gt;mod_rewrite&lt;/c0&gt;):</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>IssuerDB</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T091526Z" changeid="xavier">
+        <seg>IssuerDB</seg>
       </tuv>
     </tu>
     <tu>
@@ -19924,6 +20084,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Now you have access to the SP parameters list.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T092100Z" changeid="xavier">
+        <seg>Il est ensuite possible d'accéder à la liste des paramètre du SP :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Null</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120121T080232Z" changeid="xavier">
@@ -21072,10 +21240,26 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Register LemonLDAP::NG on partner Service Provider</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T091821Z" changeid="xavier">
+        <seg>Enregistrer LemonLDAP::NG sur le fournisseur de service partenaire</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Register partner Identity Provider on LemonLDAP::NG</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120218T221134Z" changeid="xavier">
         <seg>Enregistrer le fournisseur d'identité partenaire dans LemonLDAP::NG</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Register partner Service Provider on LemonLDAP::NG</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T091930Z" changeid="xavier">
+        <seg>Enregistrer le fournisseur de service dans LemonLDAP::NG</seg>
       </tuv>
     </tu>
     <tu>
@@ -21308,6 +21492,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120218T215943Z" changeid="xavier">
         <seg>SAML</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>SAML Identity Provider</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T091324Z" changeid="xavier">
+        <seg>Fournisseur d'identité SAML</seg>
       </tuv>
     </tu>
     <tu>
@@ -22656,6 +22848,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The SP name is asked, enter it and click OK.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T092050Z" changeid="xavier">
+        <seg>Le nom de SP est demandé, entrer-le et cliquer sur OK.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The Tomcat Valve is only available for tomcat 5.5 or greater.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T185945Z" changeid="xavier">
@@ -23788,6 +23988,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T153808Z" changeid="xavier">
         <seg>Ceci nécessite de configurer &lt;a0&gt;LL::NG&lt;/a0&gt; comme &lt;a1&gt;fournisseur d'identité SAML&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This requires to configure &lt;a0&gt;LL::NG&lt;/a0&gt; as an &lt;s1&gt;&lt;a2&gt;SAML Identity Provider&lt;/a2&gt;&lt;/s1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T091521Z" changeid="xavier">
+        <seg>Ceci nécessite de configurer &lt;a0&gt;LL::NG&lt;/a0&gt; comme &lt;s1&gt;&lt;a2&gt;fournisseur d'identité SAML&lt;/a2&gt;&lt;/s1&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -25204,6 +25412,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can do it either by uploading the file, or get it from SP metadata &lt;a0&gt;URL&lt;/a0&gt; (this require a network link between your server and the SP).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T092138Z" changeid="xavier">
+        <seg>Ceci peut être fait soit en téléchargeant le fichier, soit en l'obtenant par l'&lt;a0&gt;URL&lt;/a0&gt; de métadatas du SP (à condition d'avoir un lien réseau entre le serveur et le SP):</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You can download the code here: &lt;a0&gt;http://github.com/oremj/mediawiki-http-auth/downloads&lt;/a0&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074747Z" changeid="xavier">
@@ -25584,6 +25800,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120220T203438Z" changeid="xavier">
         <seg>Il faut enregistrer les métadatas de l'IDP ici.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You must register SP metadata here.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T092116Z" changeid="xavier">
+        <seg>Il faut enregistrer les métadatas du SP ici.</seg>
       </tuv>
     </tu>
     <tu>
@@ -28014,6 +28238,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>documentation:manager-saml-service-sp-slo.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:manager-saml-sp-new.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T092028Z" changeid="xavier">
+        <seg>documentation:manager-saml-sp-new.png</seg>
       </tuv>
     </tu>
     <tu>
