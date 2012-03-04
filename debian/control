@@ -64,8 +64,8 @@ Architecture: all
 Depends: ${misc:Depends},
  liblemonldap-ng-conf-perl (= ${binary:Version}),
  liblemonldap-ng-handler-perl (= ${binary:Version}),
- libjs-jquery (>=1.4.2), libjs-jquery-ui, libhtml-template-perl,
- libxml-libxml-perl, libxml-libxslt-perl,
+ libjs-jquery (>=1.4.2), libjs-jquery-ui, libjs-jquery-cookie,
+ libxml-libxml-perl, libxml-libxslt-perl, libhtml-template-perl,
  libcrypt-openssl-rsa-perl, libcrypt-openssl-x509-perl, libxml-simple-perl,
  libjson-perl, javascript-common
 Pre-Depends: debconf
@@ -81,11 +81,11 @@ Package: liblemonldap-ng-portal-perl
 Architecture: all
 Depends: ${misc:Depends},
  liblemonldap-ng-conf-perl (= ${binary:Version}),
- libjs-jquery (>=1.4.2), libjs-jquery-ui, libhtml-template-perl,
+ libjs-jquery (>=1.4.2), libjs-jquery-ui, libjs-jquery-cookie,
  libapache-session-perl, libnet-ldap-perl, libmime-lite-perl,
  libxml-libxml-perl, libxml-libxslt-perl, libstring-random-perl,
  libsoap-lite-perl, libcrypt-openssl-x509-perl, libclone-perl,
- javascript-common
+ libhtml-template-perl, javascript-common
 Pre-Depends: debconf
 Recommends: libemail-date-format-perl, libconvert-pem-perl,
  libnet-openid-consumer-perl | libnet-openid-server-perl |

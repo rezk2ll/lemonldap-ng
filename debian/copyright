@@ -8,16 +8,8 @@ Files: tree.js
 Copyright: 2008, Peter Panov <panov@elcat.kg>, IKEEN Group http://www.ikeen.com
 Licence: BSD
 
-Files: jquery.cookie.js
-Copyright: 2006 Klaus Hartl (stilbuero.de)
-Licence: GPL-2
-
 Files: jquery.base64.js
 Copyright: Muhammad Hussein Fattahizadeh < muhammad [AT] semnanweb [DOT] com >
-Licence: GPL-2
-
-Files: jquery*.js
-Copyright: 2010, The jQuery project and the jQuery UI team
 Licence: GPL-2
 
 Files: *.js
