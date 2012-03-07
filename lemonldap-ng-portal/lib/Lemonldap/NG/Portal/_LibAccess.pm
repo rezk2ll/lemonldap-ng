@@ -7,7 +7,7 @@ package Lemonldap::NG::Portal::_LibAccess;
 
 use strict;
 
-our $VERSION = '1.1.2';
+our $VERSION = '1.2.0';
 
 # Global variables
 our ( $defaultCondition, $locationCondition, $locationRegexp, $cfgNum ) =
@@ -35,6 +35,13 @@ sub _grant {
     ( $protocol, $vhost, $port, $path ) = ( $1, $2, $3, $4 );
     $path ||= '/';
     $self->lmLog( "Evaluation for vhost $vhost and path $path", 'debug' );
+
+    # Check global maintenance mode
+    return 0 if $self->{maintenance};
+
+    # Check vhost maintenance mode
+    return 0 if $self->{vhostOptions}->{$vhost}->{vhostMaintenance};
+
     $self->_compileRules()
       if ( $cfgNum != $self->{cfgNum} );
 
