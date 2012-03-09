@@ -115,6 +115,13 @@ if (    $portal->{mail_token}
     );
 }
 
+# Custom template parameters
+if ( my $customParams = $portal->getCustomTemplateParameters() ) {
+    foreach ( keys %$customParams ) {
+        $template->param( $_, $customParams->{$_} );
+    }
+}
+
 print $portal->header('text/html; charset=utf8');
 print $template->output;
 

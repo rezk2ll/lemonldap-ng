@@ -2422,8 +2422,7 @@ sub issuerForAuthUser {
         unless ( $self->safe->reval($rule) ) {
             $self->lmLog(
                 "User $user was not allowed to use IssuerDB $issuerDBtype",
-                'warn'
-            );
+                'warn' );
 
             return PE_OK;
         }
@@ -2433,9 +2432,7 @@ sub issuerForAuthUser {
         $self->lmLog( "No rule found for IssuerDB $issuerDBtype", 'debug' );
     }
 
-    $self->lmLog(
-        "User $user allowed to use IssuerDB $issuerDBtype",
-        'debug' );
+    $self->lmLog( "User $user allowed to use IssuerDB $issuerDBtype", 'debug' );
 
     # Register IssuerDB module in session
     $self->addSessionValue( '_issuerDB', $issuerDBtype, $self->{id} );
@@ -2551,6 +2548,27 @@ sub autoPost {
     }
 
     return PE_REDIRECT;
+}
+
+## @method HASHREF getCustomTemplateParameters()
+# Find custom templates parameters
+# @return Custom parameters
+sub getCustomTemplateParameters {
+
+    my $self            = shift;
+    my $customTplParams = {};
+
+    foreach ( keys %$self ) {
+        next unless ( $_ =~ /^tpl_(.+)$/ );
+        my $tplParam = $1;
+        my $tplValue = $self->{ "tpl_" . $tplParam };
+        $self->lmLog( "Set custom template parameter $tplParam with $tplValue",
+            'debug' );
+
+        $customTplParams->{$tplParam} = $tplValue;
+    }
+
+    return $customTplParams;
 }
 
 1;

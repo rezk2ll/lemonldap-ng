@@ -325,6 +325,11 @@ sub display {
         ANTIFRAME => $self->{portalAntiFrame},
     );
 
+    ## Custom template params
+    if ( my $customParams = $self->getCustomTemplateParameters() ) {
+	    %templateParams = ( %templateParams, %$customParams );
+    }
+
     return ( "$skin_dir/$skin/$skinfile", %templateParams );
 
 }
