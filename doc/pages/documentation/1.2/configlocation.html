@@ -358,7 +358,8 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</pre>
 </li>
 </ul>
 <pre class="code file apache"><span class="kw1">ErrorDocument</span> 403 http://auth.example.com/?lmError=403
-<span class="kw1">ErrorDocument</span> <span class="nu0">500</span> http://auth.example.com/?lmError=<span class="nu0">500</span></pre>
+<span class="kw1">ErrorDocument</span> 500 http://auth.example.com/?lmError=500
+<span class="kw1">ErrorDocument</span> <span class="nu0">503</span> http://auth.example.com/?lmError=<span class="nu0">503</span></pre>
 <ul>
 <li class="level1"><div class="li"> Reload virtual host:</div>
 </li>
@@ -392,7 +393,7 @@ Then, to protect a standard virutal host, the only configuration line to add is:
 <pre class="code file apache">PerlHeaderParserHandler My::Package</pre>
 
 </div>
-<!-- SECTION "Handler" [7527-8741] -->
+<!-- SECTION "Handler" [7527-8797] -->
 <h2><a name="configuration_reload" id="configuration_reload">Configuration reload</a></h2>
 <div class="level2">
 
@@ -436,7 +437,7 @@ The <code>reload</code> target is managed in Apache configuration, inside a virt
 </p>
 
 </div>
-<!-- SECTION "Configuration reload" [8742-10098] -->
+<!-- SECTION "Configuration reload" [8798-10154] -->
 <h2><a name="local_file" id="local_file">Local file</a></h2>
 <div class="level2">
 
@@ -476,7 +477,7 @@ For example, to override configured skin for portal:
 </p>
 
 </div>
-<!-- SECTION "Local file" [10099-10956] -->
+<!-- SECTION "Local file" [10155-11012] -->
 <h2><a name="script_files" id="script_files">Script files</a></h2>
 <div class="level2">
 
@@ -491,7 +492,7 @@ LemonLDAP::NG allows to override any configuration parameter directly in script 
 </p>
 
 </div>
-<!-- SECTION "Script files" [10957-11345] -->
+<!-- SECTION "Script files" [11013-11401] -->
 <h3><a name="portal1" id="portal1">Portal</a></h3>
 <div class="level3">
 
@@ -506,7 +507,7 @@ For example, in portal/index.pl:
 <span class="br0">&#41;</span><span class="sy0">;</span></pre>
 
 </div>
-<!-- SECTION "Portal" [11346-11516] -->
+<!-- SECTION "Portal" [11402-11572] -->
 <h3><a name="handler1" id="handler1">Handler</a></h3>
 <div class="level3">
 
@@ -521,4 +522,4 @@ For example, in handler/MyHandler.pm:
 <span class="br0">&#41;</span><span class="sy0">;</span></pre>
 
 </div>
-<!-- SECTION "Handler" [11517-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Handler" [11573-] --></div><!-- closes <div class="dokuwiki export">-->

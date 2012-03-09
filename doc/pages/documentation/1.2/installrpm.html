@@ -200,18 +200,18 @@ You can choose to install only one component by choosing the package <code>lemon
 </p>
 
 <p>
-Install the package <code>lemonldap-ng-conf</code> only on the server which stores configuration.
+Install the package <code>lemonldap-ng-conf</code> on all server which contains one of those packages.
 
 </div></p>
 </p>
 
 </div>
-<!-- SECTION "With RPM" [2315-2777] -->
+<!-- SECTION "With RPM" [2315-2782] -->
 <h2><a name="first_configuration_steps" id="first_configuration_steps">First configuration steps</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "First configuration steps" [2778-2816] -->
+<!-- SECTION "First configuration steps" [2783-2821] -->
 <h3><a name="change_default_dns_domain" id="change_default_dns_domain">Change default DNS domain</a></h3>
 <div class="level3">
 
@@ -222,7 +222,7 @@ By default, <acronym title="Domain Name System">DNS</acronym> domain is <code>ex
 <pre class="code shell">sed -i 's/example\.com/ow2.org/g' /etc/lemonldap-ng/* /var/lib/lemonldap-ng/conf/lmConf-1 /var/lib/lemonldap-ng/test/index.pl</pre>
 
 </div>
-<!-- SECTION "Change default DNS domain" [2817-3131] -->
+<!-- SECTION "Change default DNS domain" [2822-3136] -->
 <h3><a name="apache_virtual_host" id="apache_virtual_host">Apache virtual host</a></h3>
 <div class="level3">
 
@@ -244,7 +244,7 @@ Check Apache configuration and restart:
 apachectl restart</pre>
 
 </div>
-<!-- SECTION "Apache virtual host" [3132-3526] -->
+<!-- SECTION "Apache virtual host" [3137-3531] -->
 <h3><a name="upgrade" id="upgrade">Upgrade</a></h3>
 <div class="level3">
 
@@ -278,7 +278,7 @@ The upgrade process will also have migrate old configuration files into <code>/e
 </p>
 
 </div>
-<!-- SECTION "Upgrade" [3527-6036] -->
+<!-- SECTION "Upgrade" [3532-6041] -->
 <h3><a name="dns" id="dns">DNS</a></h3>
 <div class="level3">
 
@@ -305,7 +305,7 @@ Follow the <a href="../../documentation/1.2/start.html#configuration" class="wik
 </p>
 
 </div>
-<!-- SECTION "DNS" [6037-6309] -->
+<!-- SECTION "DNS" [6042-6314] -->
 <h2><a name="file_location" id="file_location">File location</a></h2>
 <div class="level2">
 <ul>
@@ -322,7 +322,7 @@ Follow the <a href="../../documentation/1.2/start.html#configuration" class="wik
 </ul>
 
 </div>
-<!-- SECTION "File location" [6310-6666] -->
+<!-- SECTION "File location" [6315-6671] -->
 <h2><a name="build_your_packages" id="build_your_packages">Build your packages</a></h2>
 <div class="level2">
 
@@ -356,4 +356,4 @@ rpmbuild -ta SOURCES/lemonldap-ng-VERSION.tar.gz
 </pre>
 
 </div>
-<!-- SECTION "Build your packages" [6667-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Build your packages" [6672-] --></div><!-- closes <div class="dokuwiki export">-->

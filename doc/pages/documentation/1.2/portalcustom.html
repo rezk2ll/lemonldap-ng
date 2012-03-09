@@ -142,11 +142,44 @@ Then you <em>only</em> have to write <code>myskin/css/styles.css</code> and add 
 
 <p>
 To configure your new skin in Manager, select the custom skin, and enter your skin name in the configuration field.
-
 </p>
 
 </div>
-<!-- SECTION "Skin customization" [718-1811] -->
+<!-- SECTION "Skin customization" [718-1812] -->
+<h3><a name="error_messages" id="error_messages">Error messages</a></h3>
+<div class="level3">
+
+<p>
+
+Error messages are defined in source code. If they really do not please you, override them! You just need to know the ID of the error (look at Portal/Simple.pm) and then add to <code>lemonldap-ng.ini</code>:
+</p>
+<pre class="code file ini"><span class="re0"><span class="br0">&#91;</span>portal<span class="br0">&#93;</span></span>
+&nbsp;
+# Custom error messages
+<span class="re1">error_0</span> <span class="sy0">=</span><span class="re2"> Big brother is watching you, authenticated user</span></pre>
+
+</div>
+<!-- SECTION "Error messages" [1813-2150] -->
+<h3><a name="template_parameters" id="template_parameters">Template parameters</a></h3>
+<div class="level3">
+
+<p>
+
+Template parameters are defined in source code. If you need to add a template parameter for your customization, then add to <code>lemonldap-ng.ini</code>:
+</p>
+<pre class="code file ini"><span class="re0"><span class="br0">&#91;</span>portal<span class="br0">&#93;</span></span>
+&nbsp;
+# Custom template parameters
+<span class="re1">tpl_myparam</span> <span class="sy0">=</span><span class="re2"> world</span></pre>
+
+<p>
+Then you will be able to use it in your template like this:
+
+</p>
+<pre class="code file html4strict">Hello <span class="sc2">&lt;TMPL_VAR <span class="kw3">NAME</span><span class="sy0">=</span><span class="st0">&quot;myparam&quot;</span>&gt;</span>!</pre>
+
+</div>
+<!-- SECTION "Template parameters" [2151-2521] -->
 <h2><a name="other_parameters" id="other_parameters">Other parameters</a></h2>
 <div class="level2">
 <ul>
@@ -182,4 +215,4 @@ To configure your new skin in Manager, select the custom skin, and enter your sk
 </p>
 
 </div>
-<!-- SECTION "Other parameters" [1812-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Other parameters" [2522-] --></div><!-- closes <div class="dokuwiki export">-->
