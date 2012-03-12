@@ -45,8 +45,14 @@ Then you can take any virtual host, and simply add this line to protect it:
 </p>
 <pre class="code file apache">PerlHeaderParserHandler My::Package</pre>
 
+</div>
+<!-- SECTION "Apache configuration" [198-510] -->
+<h3><a name="hosted_application" id="hosted_application">Hosted application</a></h3>
+<div class="level3">
+
 <p>
-For example, a protected virtual host for a local application:
+
+Example of a protected virtual host for a local application:
 </p>
 <pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:80&gt;
         <span class="kw1">ServerName</span> localsite.example.com
@@ -60,8 +66,14 @@ For example, a protected virtual host for a local application:
 &nbsp;
 &lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
 
+</div>
+<!-- SECTION "Hosted application" [511-907] -->
+<h3><a name="reverse_proxy" id="reverse_proxy">Reverse proxy</a></h3>
+<div class="level3">
+
 <p>
-And a protected virtual host with LemonLDAP::NG as reverse proxy:
+
+Example of a protected virtual host with LemonLDAP::NG as reverse proxy:
 </p>
 <pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:80&gt;
         <span class="kw1">ServerName</span> application.example.com
@@ -80,7 +92,6 @@ And a protected virtual host with LemonLDAP::NG as reverse proxy:
 &lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
 
 <p>
-
 Same with remote server configured with the same host name:
 </p>
 <pre class="code file apache">&lt;<span class="kw3">VirtualHost</span> *:80&gt;
@@ -110,7 +121,27 @@ To learn more about using Apache as reverse-proxy, see <a href="http://httpd.apa
 </p>
 
 </div>
-<!-- SECTION "Apache configuration" [198-2419] -->
+<!-- SECTION "Reverse proxy" [908-2479] -->
+<h3><a name="add_a_floating_menu" id="add_a_floating_menu">Add a floating menu</a></h3>
+<div class="level3">
+
+<p>
+
+A little floating menu can be added to application with this simple Apache configuration:
+
+</p>
+<pre class="code file apache">PerlOutputFilterHandler Lemonldap::NG::Handler::Menu</pre>
+
+<p>
+Pages where this menu is displayed can be restricted, for example:
+
+</p>
+<pre class="code file apache">&lt;<span class="kw3">Location</span> /var/www/html/index.php&gt;
+PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
+&lt;/<span class="kw3">Location</span>&gt;</pre>
+
+</div>
+<!-- SECTION "Add a floating menu" [2480-2866] -->
 <h2><a name="lemonldapng_configuration" id="lemonldapng_configuration">LemonLDAP::NG configuration</a></h2>
 <div class="level2">
 
@@ -138,7 +169,7 @@ A virtual host contains:
 </ul>
 
 </div>
-<!-- SECTION "LemonLDAP::NG configuration" [2420-2907] -->
+<!-- SECTION "LemonLDAP::NG configuration" [2867-3354] -->
 <h3><a name="access_rules_and_http_headers" id="access_rules_and_http_headers">Access rules and HTTP headers</a></h3>
 <div class="level3">
 
@@ -148,7 +179,7 @@ See <strong><a href="../../documentation/1.2/writingrulesand_headers.html" class
 </p>
 
 </div>
-<!-- SECTION "Access rules and HTTP headers" [2908-3100] -->
+<!-- SECTION "Access rules and HTTP headers" [3355-3547] -->
 <h3><a name="post_data" id="post_data">POST data</a></h3>
 <div class="level3">
 
@@ -158,7 +189,7 @@ See <strong><a href="../../documentation/1.2/formreplay.html" class="wikilink1" 
 </p>
 
 </div>
-<!-- SECTION "POST data" [3101-3235] -->
+<!-- SECTION "POST data" [3548-3682] -->
 <h3><a name="options" id="options">Options</a></h3>
 <div class="level3">
 
@@ -181,4 +212,4 @@ These options are used to build redirection <acronym title="Uniform Resource Loc
 </p>
 
 </div>
-<!-- SECTION "Options" [3236-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Options" [3683-] --></div><!-- closes <div class="dokuwiki export">-->
