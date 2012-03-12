@@ -2460,6 +2460,11 @@ sub sendLogoutRequestToProvider {
 
     }
 
+    unless ( $logout->request() ) {
+        $self->lmLog( "Unable to create SAML request", 'error' );
+        return ( 0, $method, undef );
+    }
+
     # Keep message ID in memory to prevent replay
     my $samlID = $logout->request()->ID;
     unless ( $self->storeReplayProtection($samlID) ) {
