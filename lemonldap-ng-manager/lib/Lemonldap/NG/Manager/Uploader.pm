@@ -9,7 +9,6 @@ use strict;
 use XML::LibXML;
 use XML::LibXSLT;
 use MIME::Base64;
-use JSON;
 use LWP::Simple;
 use LWP::UserAgent;
 
@@ -18,6 +17,7 @@ use Lemonldap::NG::Common::Safelib;        #link protected safe Safe object
 use Lemonldap::NG::Manager::Downloader;    #inherits
 use Lemonldap::NG::Manager::_Struct;       #link protected struct _Struct object
 use Lemonldap::NG::Manager::_i18n;
+use Lemonldap::NG::Manager::Request;
 use Lemonldap::NG::Common::Conf::Constants;    #inherits
 
 our $VERSION = '1.2.0';
@@ -403,7 +403,7 @@ s/^(samlSPMetaDataXML|samlSPMetaDataExportedAttributes|samlSPMetaDataOptions)\/(
         $self->_sub( 'userInfo',
 "Configuration rejected for $newConf->{cfgAuthor}: confirmation needed"
         );
-        $errors->{result}->{other} = '*<a href="javascript:uploadConf(1)">'
+        $errors->{result}->{other} = '* <a href=\'javascript:uploadConf(1)\'>'
           . $self->translate('clickHereToForce') . '</a>';
         foreach my $k ( keys %{ $errors->{force} } ) {
             $errors->{errors}->{$k} =
@@ -471,7 +471,7 @@ s/^(samlSPMetaDataXML|samlSPMetaDataExportedAttributes|samlSPMetaDataOptions)\/(
         if (   $errors->{result}->{cfgNum} == CONFIG_WAS_CHANGED
             or $errors->{result}->{cfgNum} == DATABASE_LOCKED )
         {
-            $errors->{result}->{other} = '<a href="javascript:uploadConf(1)">'
+            $errors->{result}->{other} = '<a href=\'javascript:uploadConf(1)\'>'
               . $self->translate('clickHereToForce') . '</a>';
         }
         elsif ( $errors->{result}->{cfgNum} == DEPRECATED ) {
@@ -480,33 +480,11 @@ s/^(samlSPMetaDataXML|samlSPMetaDataExportedAttributes|samlSPMetaDataOptions)\/(
     }
 
     # 3. PREPARE JSON RESPONSE
-    my $buf = '{';
-    my $i   = 0;
-    while ( my ( $type, $h ) = each %$errors ) {
-        $buf .= ',' if ($i);
-        $buf .= "\"$type\":{";
-        $buf .= join(
-            ',',
-            map {
-                $h->{$_} =~ s/"/\\"/g;
-                $h->{$_} =~ s/\n/ /g;
-                "\"$_\":\"$h->{$_}\""
-              } keys %$h
-        );
-        $buf .= '}';
-        $i++;
-    }
-    $buf .= '}';
+    binmode( STDOUT, ':bytes' );
 
     # 4. SEND JSON RESPONSE
-    binmode( STDOUT, ':bytes' );    # Else JSON is invalid
-    use utf8;
-    utf8::encode($buf);             # Reencode message
-    print $self->header(
-        -type           => 'application/json; charset=utf-8',
-        -Content_Length => length($buf)
-    );
-    print $buf;
+    $self->sendJSONResponse($errors);
+
     $self->quit();
 }
 
@@ -541,26 +519,7 @@ sub fileUpload {
         $content =~ s!<!&lt;!g;
         $content =~ s!>!&gt;!g;
 
-        # Red Hat / Debian compatibilities
-        my $json         = new JSON();
-        my $json_content = '';
-        if ( $JSON::VERSION lt 2 ) {
-            local $JSON::UTF8 = 1;
-            $json_content = $json->objToJson( [$content] );
-            $json_content =~ s/^\[//;
-            $json_content =~ s/\]$//;
-        }
-        else {
-            $json = $json->allow_nonref( ['1'] );
-            $json = $json->utf8(         ['1'] );
-            $json_content = $json->encode($content);
-        }
-
-        my $content = '{"status":"OK", "content":' . $json_content . '}';
-        print $self->header(
-            -type           => 'text/html; charset=utf-8',
-            -Content_Length => length $content
-        ) . $content;
+        $self->sendJSONResponse($content);
     }
 
     $self->quit();
@@ -585,27 +544,9 @@ sub urlUpload {
     $content =~ s!<!&lt;!g;
     $content =~ s!>!&gt;!g;
 
-    # Build JSON reponse
-    # Require Red Hat and Debian compatibilites
-    my $json         = new JSON();
-    my $json_content = '';
-    if ( $JSON::VERSION lt 2 ) {
-        local $JSON::UTF8 = 1;
-        $json_content = $json->objToJson( [$content] );
-        $json_content =~ s/^\[//;
-        $json_content =~ s/\]$//;
-    }
-    else {
-        $json = $json->allow_nonref( ['1'] );
-        $json = $json->utf8(         ['1'] );
-        $json_content = $json->encode($content);
-    }
+    $self->sendJSONResponse($content);
 
-    $content = '{"status":"OK", "content":' . $json_content . '}';
-    print $self->header(
-        -type           => 'text/html; charset=utf-8',
-        -Content_Length => length $content
-    ) . $content;
+    $self->quit();
 }
 
 ## @method protected array applyTest(void* test,string value)

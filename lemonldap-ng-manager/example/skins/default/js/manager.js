@@ -417,8 +417,8 @@ function setlmfile(id,input){
 		fileElementId:inputname,
 		dataType:'json',
 		success:function(data,status){
-			if(typeof(data.errors) != 'undefined' && data.errors != ''){
-				popup('<h3>Request failed</h3><ul class="error"><li><strong>Error code:</strong> '+data.errors+'</li></ul>');
+			if(typeof(data.content.errors) != 'undefined' && data.content.errors != ''){
+				popup('<h3>Request failed</h3><ul class="error"><li><strong>Error code:</strong> '+data.content.errors+'</li></ul>');
 			}else{
 				data.content = data.content.replace(/&lt;/g,'<').replace(/&gt;/g,'>');
 				setlmdata(id,data.content);
@@ -1170,22 +1170,22 @@ function uploadConf(f){
 		success:function(data){
 			if(data==null){networkPb()}
 			else{
-				var c='<h3>'+data.result.msg+'</h3>';
-				if(data.result.cfgNum<=0){
-					if(typeof(data.errors)!='undefined'){
+				var c='<h3>'+data.content.result.msg+'</h3>';
+				if(data.content.result.cfgNum<=0){
+					if(typeof(data.content.errors)!='undefined'){
 						c+='<h4>Errors</h4>';
 						c+='<ul class="error">';
-						for(m in data.errors){
-							c+='<li><strong>'+m+':</strong> '+data.errors[m]+'</li>';
+						for(m in data.content.errors){
+							c+='<li><strong>'+m+':</strong> '+data.content.errors[m]+'</li>';
 						}
 						c+='</ul>';
 					}
 				}
 				else{
 					// Update configuration attributes
-					var cfgNum = data.result.cfgNum;
+					var cfgNum = data.content.result.cfgNum;
 					$('#cfgNum').text(cfgNum);
-					setCfgAttributes(data.cfgDatas);
+					setCfgAttributes(data.content.cfgDatas);
 					cfgAttrDone++;
 
 					// Reload menu
@@ -1206,20 +1206,20 @@ function uploadConf(f){
 
 
 				}
-				if(typeof(data.warnings)!='undefined'){
+				if(typeof(data.content.warnings)!='undefined'){
 					c+='<h4>Warnings</h4>';
 					c+='<ul class="warning">';
-					for(m in data.warnings){
-						c+='<li><strong>'+m+':</strong> '+data.warnings[m]+'</li>';
+					for(m in data.content.warnings){
+						c+='<li><strong>'+m+':</strong> '+data.content.warnings[m]+'</li>';
 					}
 						c+='</ul>';
 				}
-				c+='<p>'+data.result.other+'</p>';
-				if(typeof(data.applyStatus)!='undefined'){
+				c+='<p>'+data.content.result.other+'</p>';
+				if(typeof(data.content.applyStatus)!='undefined'){
 					c+='<h4>Application status</h4>';
 					c+='<ul>';
-					for(m in data.applyStatus){
-						c+='<li><strong>'+m+':</strong> '+data.applyStatus[m]+'</li>';
+					for(m in data.content.applyStatus){
+						c+='<li><strong>'+m+':</strong> '+data.content.applyStatus[m]+'</li>';
 					}
 					c+='</ul>';
 				}
@@ -1241,7 +1241,7 @@ function getCfgAttributes() {
 		success:function(data){
 			if(data==null){networkPb()}
 			else{
-				setCfgAttributes(data);
+				setCfgAttributes(data.content);
 				cfgAttrDone++;
 			}
 		},
@@ -1253,10 +1253,15 @@ function getCfgAttributes() {
 }
 function setCfgAttributes(data){
 	var t = new Array('cfgAuthor','cfgAuthorIP','cfgDate');
-	if(data.cfgDate.match(/^\d+$/)){
-		var d=new Date(data.cfgDate*1000);
+
+	// Convert date to locale string
+	var date = data.cfgDate.toString();
+	if(date.match(/^\d+$/)){
+		var d=new Date(date*1000);
 		data.cfgDate=d.toLocaleString();
 	}
+
+	// Set configuration data
 	for(i in t){
 		$('#'+t[i]).text(data[t[i]]);
 	}

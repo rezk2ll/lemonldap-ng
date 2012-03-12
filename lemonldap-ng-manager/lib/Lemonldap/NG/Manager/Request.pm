@@ -12,6 +12,8 @@ use JSON;
 use MIME::Base64;
 use URI::Escape;
 
+our $VERSION = '1.2.0';
+
 ##@method public string request(string request)
 # Return the response corresponding to the request
 # @param $request A request

@@ -12,6 +12,9 @@ use URI::Escape;
 
 require Lemonldap::NG::Manager::_Struct;    #inherits
 require Lemonldap::NG::Manager::_i18n;      #inherits
+require Lemonldap::NG::Manager::Request;    #inherits
+
+our $VERSION = '1.2.0';
 
 ## @method string node(string node)
 # Build the part of the tree that does not depends of the the configuration.
@@ -545,17 +548,14 @@ sub corresp {
 # Send Author, IP, and date from a Lemonldap::NG::Conf
 sub sendCfgParams {
     my ( $self, $h ) = @_;
-    my @buf;
+    my $cfgDatas = {};
+
     foreach (qw(cfgAuthor cfgAuthorIP cfgDate)) {
-        my $tmp = $h->{$_} || 'anonymous';
-        $tmp =~ s/'/\\'/g;
-        push @buf, "\"$_\":\"$tmp\"";
+        $cfgDatas->{$_} = $h->{$_} || 'anonymous';
     }
-    $_ = '{' . join( ',', @buf ) . '}';
-    print $self->header(
-        -type           => 'application/json',
-        -Content_Length => length($_)
-    ) . $_;
+
+    $self->sendJSONResponse($cfgDatas);
+
     $self->quit();
 }
 
