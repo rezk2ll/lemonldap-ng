@@ -80,6 +80,7 @@ sub display {
             %templateParams = (
                 URL           => $self->{urldc},
                 HIDDEN_INPUTS => $self->buildHiddenForm(),
+                FORM_METHOD   => $self->{redirectFormMethod},
             );
         }
 

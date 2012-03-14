@@ -556,9 +556,10 @@ sub setDefaultValues {
     $self->{mailUrl}              ||= $self->{portal} . "/mail.pl";
     $self->{multiValuesSeparator} ||= '; ';
     $self->{activeTimer} = 1 unless ( defined( $self->{activeTimer} ) );
-    $self->{infoFormMethod}    ||= "get";
-    $self->{confirmFormMethod} ||= "post";
-    $self->{authChoiceParam}   ||= "lmAuth";
+    $self->{infoFormMethod}     ||= "get";
+    $self->{confirmFormMethod}  ||= "post";
+    $self->{redirectFormMethod} ||= "get";
+    $self->{authChoiceParam}    ||= "lmAuth";
 
     # Set default userDB and passwordDB to DBI if authentication is DBI
     if ( $self->{authentication} =~ /DBI/i ) {
@@ -2495,6 +2496,7 @@ sub autoRedirect {
         $self->updateStatus;
 
         if ( $self->safe->reval( $self->{jsRedirect} ) ) {
+            $self->{redirectFormMethod} = "get";
             return PE_REDIRECT;
         }
         else {
@@ -2547,6 +2549,7 @@ sub autoPost {
         return PE_INFO;
     }
 
+    $self->{redirectFormMethod} = "post";
     return PE_REDIRECT;
 }
 
