@@ -454,13 +454,8 @@ SSL authentication options :
 
 =over
 
-=item * SSLRequire : if set to 0, both SSL and LDAP authentication are used.
-If set to 1, client certificate are required.
-
 =item * SSLVar : the name of the SSL variable to read. Default to
 SSL_CLIENT_S_DN_Email.
-
-=item * SSLLDAPField : the LDAP attribute that correspond to SSLVar.
 
 =back
 

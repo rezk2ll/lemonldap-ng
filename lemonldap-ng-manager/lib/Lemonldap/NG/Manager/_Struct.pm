@@ -458,12 +458,10 @@ sub struct {
                 # SSL
                 sslParams => {
                     _nodes =>
-                      [qw(SSLAuthnLevel SSLVar SSLLDAPField SSLRequire)],
+                      [qw(SSLAuthnLevel SSLVar)],
                     _help         => 'authSSL',
                     SSLAuthnLevel => 'int:/SSLAuthnLevel',
                     SSLVar        => 'text:/SSLVar',
-                    SSLLDAPField  => 'text:/SSLLDAPField',
-                    SSLRequire    => 'bool:/SSLRequire',
                 },
 
                 # CAS
@@ -1749,8 +1747,6 @@ sub testStruct {
         # SSL
         SSLAuthnLevel => $integer,
         SSLVar        => $testNotDefined,
-        SSLLDAPField  => $testNotDefined,
-        SSLRequire    => $boolean,
 
         # CAS
         CAS_authnLevel => $integer,
@@ -1962,7 +1958,6 @@ sub defaultConf {
         singleIP                    => '0',
         singleUserByIP              => '0',
         Soap                        => '1',
-        SSLRequired                 => '0',
         storePassword               => '0',
         successLoginNumber          => '5',
         syslog                      => '',
