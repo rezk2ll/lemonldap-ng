@@ -2057,7 +2057,9 @@ sub authenticate {
 
     # Log good authentication
     my $user = $self->{sessionInfo}->{ $self->{whatToTrace} };
-    $self->_sub( 'userNotice', "Good authentication for $user" ) if $user;
+    $self->_sub( 'userNotice',
+        "Good authentication for $user by $self->{sessionInfo}->{_auth}" )
+      if $user;
 
     # Set _lastAuthnUTime
     $self->{sessionInfo}->{_lastAuthnUTime} = time();
