@@ -4,7 +4,7 @@ Priority: extra
 Maintainer: Xavier Guimard <x.guimard@free.fr>
 DM-Upload-Allowed: yes
 Build-Depends: debhelper (>= 7), po-debconf
-Build-Depends-Indep:libapache-session-perl, libnet-ldap-perl (>=1:0.38),
+Build-Depends-Indep: libapache-session-perl, libnet-ldap-perl (>=1:0.38),
  libdbi-perl, libwww-perl, libcache-cache-perl, libcrypt-rijndael-perl,
  libxml-libxslt-perl, libio-string-perl, libregexp-assemble-perl, liburi-perl,
  libstring-random-perl, libmime-lite-perl, libsoap-lite-perl,
