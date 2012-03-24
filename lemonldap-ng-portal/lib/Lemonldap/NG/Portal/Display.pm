@@ -198,7 +198,6 @@ sub display {
             CHECK_LOGINS          => $self->{portalCheckLogins},
             ASK_LOGINS            => $self->{checkLogins},
             DISPLAY_RESETPASSWORD => $self->{portalDisplayResetPassword},
-            DISPLAY_FORM          => 1,
             MAIL_URL              => $self->{mailUrl},
             HIDDEN_INPUTS         => $self->buildHiddenForm(),
             LOGIN_INFO            => $self->loginInfo(),
@@ -217,7 +216,7 @@ sub display {
             );
         }
 
-        # Adapt template if password policy error
+        # Show password form if password policy error
         if (
 
                $self->{error} == PE_PP_CHANGE_AFTER_RESET
@@ -237,7 +236,6 @@ sub display {
                   1,    # Old password is required to check user credentials
                 DISPLAY_PASSWORD      => 1,
                 DISPLAY_RESETPASSWORD => 0,
-                DISPLAY_FORM          => 0,
                 AUTH_LOOP             => [],
                 CHOICE_PARAM          => $self->{authChoiceParam},
                 CHOICE_VALUE          => $self->{_authChoice},
@@ -249,58 +247,27 @@ sub display {
             );
         }
 
-        # Adapt template for OpenID
-        if ( $self->get_module("auth") =~ /openid/i and !$self->{authLoop} ) {
+        # Choose what form to display if not in a loop
+        if ( !$self->{authLoop} ) {
+
+            my $displayType = $self->getDisplayType();
+
+            $self->lmLog( "Display type $displayType ", 'debug' );
+
             %templateParams = (
                 %templateParams,
-                DISPLAY_RESETPASSWORD => 0,
-                DISPLAY_FORM          => 0,
-                DISPLAY_OPENID_FORM   => 1,
-                DISPLAY_YUBIKEY_FORM  => 0,
-                AUTH_LOOP             => [],
+                DISPLAY_FORM         => $displayType eq "standardform" ? 1 : 0,
+                DISPLAY_OPENID_FORM  => $displayType eq "openidform"   ? 1 : 0,
+                DISPLAY_YUBIKEY_FORM => $displayType eq "yubikeyform"  ? 1 : 0,
+                AUTH_LOOP            => [],
+                PORTAL_URL => $displayType eq "logo" ? $self->{portal} : 0,
+                MSG => $self->info(),
             );
+
         }
 
-        # Adapt template for Yubikey
-        if ( $self->get_module("auth") =~ /yubikey/i and !$self->{authLoop} ) {
-            %templateParams = (
-                %templateParams,
-                DISPLAY_RESETPASSWORD => 0,
-                DISPLAY_FORM          => 0,
-                DISPLAY_OPENID_FORM   => 0,
-                DISPLAY_YUBIKEY_FORM  => 1,
-                AUTH_LOOP             => [],
-            );
-        }
-
-        # Adapt template if external authentication error
-        # or session not granted, or logout is OK
-        if (   $self->{error} == PE_BADCERTIFICATE
-            or $self->{error} == PE_CERTIFICATEREQUIRED
-            or $self->{error} == PE_ERROR
-            or $self->{error} == PE_BADURL
-            or $self->{error} == PE_SAML_ERROR
-            or $self->{error} == PE_SAML_LOAD_SERVICE_ERROR
-            or $self->{error} == PE_SAML_LOAD_IDP_ERROR
-            or $self->{error} == PE_SAML_SSO_ERROR
-            or $self->{error} == PE_SAML_UNKNOWN_ENTITY
-            or $self->{error} == PE_SAML_DESTINATION_ERROR
-            or $self->{error} == PE_SAML_CONDITIONS_ERROR
-            or $self->{error} == PE_SAML_IDPSSOINITIATED_NOTALLOWED
-            or $self->{error} == PE_SAML_SLO_ERROR
-            or $self->{error} == PE_SAML_SIGNATURE_ERROR
-            or $self->{error} == PE_SAML_ART_ERROR
-            or $self->{error} == PE_SAML_SESSION_ERROR
-            or $self->{error} == PE_SAML_LOAD_SP_ERROR
-            or $self->{error} == PE_SAML_ATTR_ERROR
-            or $self->{error} == PE_OPENID_EMPTY
-            or $self->{error} == PE_OPENID_BADID
-            or $self->{error} == PE_MISSINGREQATTR
-            or $self->{error} == PE_BADPARTNER
-            or $self->{error} == PE_CAS_SERVICE_NOT_ALLOWED
-            or $self->{error} == PE_SESSIONNOTGRANTED
-            or $self->{error} == PE_LOGOUT_OK )
-        {
+        # Disable all forms on logout message
+        if ( $self->{error} == PE_LOGOUT_OK ) {
             %templateParams = (
                 %templateParams,
                 DISPLAY_RESETPASSWORD => 0,
@@ -308,11 +275,12 @@ sub display {
                 DISPLAY_OPENID_FORM   => 0,
                 DISPLAY_YUBIKEY_FORM  => 0,
                 AUTH_LOOP             => [],
-                CHECK_LOGINS          => 0,
                 PORTAL_URL            => $self->{portal},
                 MSG                   => $self->info(),
             );
+
         }
+
     }
 
     ## Common template params
@@ -328,7 +296,7 @@ sub display {
 
     ## Custom template params
     if ( my $customParams = $self->getCustomTemplateParameters() ) {
-	    %templateParams = ( %templateParams, %$customParams );
+        %templateParams = ( %templateParams, %$customParams );
     }
 
     return ( "$skin_dir/$skin/$skinfile", %templateParams );

@@ -1750,7 +1750,7 @@ sub issuerForAuthUser {
 
                 # RelayState
                 $self->{postFields}->{'RelayState'} = $relaystate
-                    if ($relaystate);
+                  if ($relaystate);
 
                 return $self->_subProcess(qw(autoPost));
             }

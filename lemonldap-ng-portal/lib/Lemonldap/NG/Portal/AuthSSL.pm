@@ -17,7 +17,7 @@ our @ISA     = qw(Lemonldap::NG::Portal::AuthNull);
 # @return Lemonldap::NG::Portal constant
 sub authInit {
     my $self = shift;
-    $self->{SSLVar}       ||= 'SSL_CLIENT_S_DN_Email';
+    $self->{SSLVar} ||= 'SSL_CLIENT_S_DN_Email';
     PE_OK;
 }
 
@@ -49,6 +49,12 @@ sub setAuthSessionInfo {
 
     $self->{sessionInfo}->{authenticationLevel} = $self->{SSLAuthnLevel};
     PE_OK;
+}
+
+## @method string getDisplayType
+# @return display type
+sub getDisplayType {
+    return "logo";
 }
 
 1;

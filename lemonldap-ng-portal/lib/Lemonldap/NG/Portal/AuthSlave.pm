@@ -49,6 +49,12 @@ sub setAuthSessionInfo {
     PE_OK;
 }
 
+## @method string getDisplayType
+# @return display type
+sub getDisplayType {
+    return "logo";
+}
+
 1;
 __END__
 

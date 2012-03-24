@@ -8,7 +8,7 @@ package Lemonldap::NG::Portal::AuthApache;
 use strict;
 use Lemonldap::NG::Portal::Simple;
 
-our $VERSION = '1.0.1';
+our $VERSION = '1.2.0';
 
 ## @apmethod int authInit()
 # @return Lemonldap::NG::Portal constant
@@ -24,7 +24,7 @@ sub authInit {
 sub extractFormInfo {
     my $self = shift;
     unless ( $self->{user} = $ENV{REMOTE_USER} ) {
-        $self->lmLog( 'Apache is not configured to authenticate users !',
+        $self->lmLog( 'Apache is not configured to authenticate users!',
             'error' );
         return PE_ERROR;
     }
@@ -74,6 +74,12 @@ sub authLogout {
 # @return result
 sub authForce {
     return 0;
+}
+
+## @method string getDisplayType
+# @return display type
+sub getDisplayType {
+    return "logo";
 }
 
 1;

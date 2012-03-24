@@ -78,6 +78,12 @@ sub authForce {
     return 0;
 }
 
+## @method string getDisplayType
+# @return display type
+sub getDisplayType {
+    return "standardform";
+}
+
 1;
 __END__
 

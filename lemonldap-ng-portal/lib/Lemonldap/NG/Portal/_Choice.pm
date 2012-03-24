@@ -184,36 +184,20 @@ sub _buildAuthLoop {
         my ( $auth, $userDB, $passwordDB ) =
           split( /\|/, $self->{authChoiceModules}->{$_} );
 
-        # What do display
-        # -> login/password form (LDAP, DBI, ...)
-        # -> OpenID form
-        # -> Yubikey form
-        # -> logo with link (ex: CAS, SSL, etc.)
-        my $displayType = {
-            'standardform' => [qw(LDAP DBI Proxy)],
-            'openidform'   => [qw(OpenID)],
-            'yubikeyform'  => [qw(Yubikey)],
-            'logo'         => [qw(CAS Twitter SAML SSL Apache Remote Slave)],
-        };
-
         if ( $auth and $userDB and $passwordDB ) {
 
             # Options to store in the loop
             my $optionsLoop = { name => $name, key => $_, module => $auth };
 
             # Get displayType for this module
+            my $modulePrefix = 'Lemonldap::NG::Portal::';
+            my $authModule   = $modulePrefix . 'Auth' . $auth;
+            $self->loadModule($authModule);
+            my $displayType = &{ $authModule . '::getDisplayType' };
 
-            foreach my $type ( keys %$displayType ) {
-                foreach my $backend ( @{ $displayType->{$type} } ) {
-                    if ( $auth eq $backend ) {
-                        $self->lmLog( "Display type $type for module $auth",
-                            'debug' );
-
-                        $optionsLoop->{$type} = 1;
-                        last;
-                    }
-                }
-            }
+            $self->lmLog( "Display type $displayType for module $auth",
+                'debug' );
+            $optionsLoop->{$displayType} = 1;
 
             # Register item in loop
             push @authLoop, $optionsLoop;
