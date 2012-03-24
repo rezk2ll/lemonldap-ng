@@ -1532,6 +1532,14 @@ deb-src http://lemonldap-ng.org/deb squeeze main</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.2/installdeb.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T161845Z" changeid="xavier">
+        <seg>../../documentation/1.2/installdeb.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.2/ldapconfbackend.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T125401Z" changeid="xavier">
@@ -5664,6 +5672,18 @@ deb-src http://lemonldap-ng.org/deb squeeze main</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;&lt;s0&gt;Location&lt;/s0&gt; /var/www/html/index.php&gt;
+PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
+&lt;/&lt;s1&gt;Location&lt;/s1&gt;&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T155903Z" changeid="xavier">
+        <seg>&lt;&lt;s0&gt;Location&lt;/s0&gt; /var/www/html/index.php&gt;
+PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
+&lt;/&lt;s1&gt;Location&lt;/s1&gt;&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;&lt;s0&gt;VirtualHost&lt;/s0&gt; *:80&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T114008Z" changeid="xavier">
@@ -6564,6 +6584,14 @@ deb-src http://lemonldap-ng.org/deb squeeze main</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; use cron jobs to:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T162317Z" changeid="xavier">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; utilise des tâches planifiées pour :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; uses &lt;a1&gt;Apache SSL module&lt;/a1&gt;, like any other &lt;a2&gt;Apache authentication module&lt;/a2&gt;, with extra features:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T064012Z" changeid="xavier">
@@ -6656,6 +6684,14 @@ deb-src http://lemonldap-ng.org/deb squeeze main</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>des expressions &lt;a0&gt;Perl&lt;/a0&gt; : codes Perl qui renvoient 0 ou 1</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Perl&lt;/a0&gt; libraries install :</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T160806Z" changeid="xavier">
+        <seg>Installer les librairies &lt;a0&gt;Perl&lt;/a0&gt; :</seg>
       </tuv>
     </tu>
     <tu>
@@ -8862,6 +8898,30 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;APACHEGROUP&lt;/s0&gt;: group running Apache</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T161544Z" changeid="xavier">
+        <seg>&lt;s0&gt;APACHEGROUP&lt;/s0&gt;: groupe  de fonctionnement d'Apache</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;APACHEUSER&lt;/s0&gt;: user running Apache</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T161537Z" changeid="xavier">
+        <seg>&lt;s0&gt;APACHEUSER&lt;/s0&gt; : utilisateur de fonctionnement d'Apache</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;APACHEVERSION&lt;/s0&gt;: Apache major version (default: 2)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T161722Z" changeid="xavier">
+        <seg>&lt;s0&gt;APACHEVERSION&lt;/s0&gt; : version majeure d'Apache (défaut : 2)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Access control policy&lt;/s0&gt;: define if access control should be done on &lt;a1&gt;CAS&lt;/a1&gt; service.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120301T054504Z" changeid="xavier">
@@ -9126,6 +9186,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;CRONDIR&lt;/s0&gt;: Cronfile directory (default: $PREFIX/etc/lemonldap-ng/cron.d)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T161512Z" changeid="xavier">
+        <seg>&lt;s0&gt;CRONDIR&lt;/s0&gt; : répertoire des fichiers cron (défaut: $PREFIX/etc/lemonldap-ng/cron.d)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Cache&lt;/s0&gt;: cache for configuration and sessions</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -9270,6 +9338,22 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;DESTDIR&lt;/s0&gt;: only for packaging, install the product in a jailroot (default: ””)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T161234Z" changeid="xavier">
+        <seg>&lt;s0&gt;DESTDIR&lt;/s0&gt; : seulement pour la mise en paquet, installer le produit dans une cage (défaut : ””)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;DNSDOMAIN&lt;/s0&gt;: Main &lt;a1&gt;DNS&lt;/a1&gt; domain (default: example.com)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T161626Z" changeid="xavier">
+        <seg>&lt;s0&gt;DNSDOMAIN&lt;/s0&gt; : domaine &lt;a1&gt;DNS&lt;/a1&gt; proncipal (défaut : example.com)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Default NameID format&lt;/s0&gt;: if no NameID format is requested, or the NameID format undefined, this NameID format will be used.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T092555Z" changeid="xavier">
@@ -9350,6 +9434,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;ERASECONFIG&lt;/s0&gt;: set to 0 if you want to keep your configuration files (default: 1)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T161046Z" changeid="xavier">
+        <seg>&lt;s0&gt;ERASECONFIG&lt;/s0&gt; : mettre à 0 pour conserver les fichiers de configuration (défaut : 1)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;EXAMPLE.COM&lt;/s0&gt;: Kerberos realm</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T154236Z" changeid="xavier">
@@ -9378,6 +9470,18 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T063639Z" changeid="xavier">
         <seg>&lt;s0&gt;Mode de chiffrement&lt;/s0&gt; : fixe le mode de chiffrement pour cet IDP (None, NameID ou Assertion).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;ErrorDocument&lt;/s0&gt; 403 http://auth.example.com/?lmError=403
+&lt;s1&gt;ErrorDocument&lt;/s1&gt; 500 http://auth.example.com/?lmError=500
+&lt;s2&gt;ErrorDocument&lt;/s2&gt; &lt;s3&gt;503&lt;/s3&gt; http://auth.example.com/?lmError=&lt;s4&gt;503&lt;/s4&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T155524Z" changeid="xavier">
+        <seg>&lt;s0&gt;ErrorDocument&lt;/s0&gt; 403 http://auth.example.com/?lmError=403
+&lt;s1&gt;ErrorDocument&lt;/s1&gt; 500 http://auth.example.com/?lmError=500
+&lt;s2&gt;ErrorDocument&lt;/s2&gt; &lt;s3&gt;503&lt;/s3&gt; http://auth.example.com/?lmError=&lt;s4&gt;503&lt;/s4&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -9612,6 +9716,30 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20120214T050429Z" changeid="xavier">
         <seg>&lt;s0&gt;Clef&lt;/s0&gt; : clef de session interne, peut être prefixé par &lt;c1&gt;!&lt;/c1&gt; pour exiger ces attributs</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;LDAPHOST&lt;/s0&gt;: &lt;a1&gt;LDAP&lt;/a1&gt; server (default: localhost)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T161623Z" changeid="xavier">
+        <seg>&lt;s0&gt;LDAPHOST&lt;/s0&gt; : serveur &lt;a1&gt;LDAP&lt;/a1&gt; (défaut : localhost)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;LDAPPORT&lt;/s0&gt;: &lt;a1&gt;LDAP&lt;/a1&gt; port (default: 389)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T161639Z" changeid="xavier">
+        <seg>&lt;s0&gt;LDAPPORT&lt;/s0&gt; : port &lt;a1&gt;LDAP&lt;/a1&gt; port (défaut : 389)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;LDAPSUFFIX&lt;/s0&gt;: &lt;a1&gt;LDAP&lt;/a1&gt; suffix (default: dc=example,dc=com)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T161703Z" changeid="xavier">
+        <seg>&lt;s0&gt;LDAPSUFFIX&lt;/s0&gt;: suffixe &lt;a1&gt;LDAP&lt;/a1&gt; (défaut : dc=example,dc=com)</seg>
       </tuv>
     </tu>
     <tu>
@@ -9854,6 +9982,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T193444Z" changeid="xavier">
         <seg>&lt;s0&gt;&lt;a1&gt;URL&lt;/a1&gt; POST&lt;/s0&gt;: /login.php</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;PREFIX&lt;/s0&gt;: installation directory (default: /usr/local)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T161254Z" changeid="xavier">
+        <seg>&lt;s0&gt;PREFIX&lt;/s0&gt; : répertoire d'installation (défaut : /usr/local)</seg>
       </tuv>
     </tu>
     <tu>
@@ -10174,6 +10310,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T070516Z" changeid="xavier">
         <seg>&lt;s0&gt;SSLVerifyClient&lt;/s0&gt; : mettre à &lt;c1&gt;optional&lt;/c1&gt; pour autoriser les utilisateurs ne disposant pas d'un certificat valide à accéder à la page du portail &lt;a2&gt;LL::NG&lt;/a2&gt; (pour afficher les erreurs ou choisir une autre méthode d'authentification)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;STORAGECONFFILE&lt;/s0&gt;: location of default storage configuration file (default: /usr/local/lemonldap-ng/etc/lemonldap-ng.ini)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T161419Z" changeid="xavier">
+        <seg>&lt;s0&gt;STORAGECONFFILE&lt;/s0&gt; : emplacement du du fichier de configuration du stockage par défaut (défaut : /usr/local/lemonldap-ng/etc/lemonldap-ng.ini)</seg>
       </tuv>
     </tu>
     <tu>
@@ -10514,6 +10658,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;s0&gt;Utilisateurs&lt;/s0&gt; : &lt;a1&gt;lemonldap-ng-users@ow2.org&lt;/a1&gt; (&lt;a2&gt;Archives&lt;/a2&gt;)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;VHOSTLISTEN&lt;/s0&gt;: how listen parameter is configured for virtual hosts in Apache (default: *:80)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T161819Z" changeid="xavier">
+        <seg>&lt;s0&gt;VHOSTLISTEN&lt;/s0&gt; : comment est configuré le paramètre d'écoute des hôtes virtuels dans Apache (défaut : *:80)</seg>
       </tuv>
     </tu>
     <tu>
@@ -13222,6 +13374,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>A little floating menu can be added to application with this simple Apache configuration:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T155823Z" changeid="xavier">
+        <seg>Un petit menu flottant peut être ajouté aux applications par une seimple configuration Apache :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>A little macro:</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -13418,6 +13578,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Compatibilité Active Directory</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Add a floating menu</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T155743Z" changeid="xavier">
+        <seg>Ajouter un menu flottant</seg>
       </tuv>
     </tu>
     <tu>
@@ -13834,6 +14002,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111217T081453Z" changeid="xavier">
         <seg>et le remplir :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>And run the “dist” target:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T160457Z" changeid="xavier">
+        <seg>Lancer la cible “dist” :</seg>
       </tuv>
     </tu>
     <tu>
@@ -14534,6 +14710,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Available parameters are:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T161009Z" changeid="xavier">
+        <seg>Paramètres disponibles :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>B</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111452Z" changeid="xavier">
@@ -14610,6 +14794,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Bibliothèque Publique d'Information</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Binaries install :</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T160845Z" changeid="xavier">
+        <seg>Installer les exécutables :</seg>
       </tuv>
     </tu>
     <tu>
@@ -14710,6 +14902,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Build the tarball from SVN</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T160327Z" changeid="xavier">
+        <seg>Construire l'archive depuis SVN</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Build your packages</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T095018Z" changeid="xavier">
@@ -14746,6 +14946,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T093819Z" changeid="xavier">
         <seg>Par défaut, le domaine &lt;a0&gt;DNS&lt;/a0&gt; est &lt;c1&gt;example.com&lt;/c1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>By default, Apache configuration files will be installed in &lt;c0&gt;/usr/local/lemonldap-ng/etc/&lt;/c0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T161952Z" changeid="xavier">
+        <seg>Par défaut les fichiers de configuration d'Apache seront installés dans &lt;c0&gt;/usr/local/lemonldap-ng/etc/&lt;/c0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -16086,6 +16294,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Documentation install :</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T160910Z" changeid="xavier">
+        <seg>Installer la documentation :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Documentation is available for configuration backends :</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T125356Z" changeid="xavier">
@@ -16374,6 +16590,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Either checkout or export the SVN repository, or extract the SVN tarball to get the SVN files on your disk.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T160429Z" changeid="xavier">
+        <seg>Au choix, importer le dépôt SVN ou extraire l'archive SVN pour importer les fichiers.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Else it just will be sent trough an attribute response, if explicitly requested in an attribute request.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T092357Z" changeid="xavier">
@@ -16506,6 +16730,22 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Exemples de macros:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Example of a protected virtual host for a local application:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T155617Z" changeid="xavier">
+        <seg>Exemple d'hôte virtuel protégé pour une application locale :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Example of a protected virtual host with LemonLDAP::NG as reverse proxy:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T155730Z" changeid="xavier">
+        <seg>Exemple d'hôte virtuel protégé avec Lemonldap::NG en proxy-inverse :</seg>
       </tuv>
     </tu>
     <tu>
@@ -16702,6 +16942,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Extraction</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T160518Z" changeid="xavier">
+        <seg>Extraction</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>F</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111518Z" changeid="xavier">
@@ -16814,6 +17062,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>First check and install the &lt;a0&gt;prerequisites&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T160614Z" changeid="xavier">
+        <seg>D'abord vérifier et installer les &lt;a0&gt;pré-requis&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>First configuration steps</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T093750Z" changeid="xavier">
@@ -16834,6 +17090,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T094413Z" changeid="xavier">
         <seg>Suivre les &lt;a0&gt;étapes suivantes&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Follow the &lt;a0&gt;next steps&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T162440Z" changeid="xavier">
+        <seg>Suivre les &lt;a0&gt;étapes suivantes&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -16866,6 +17130,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Pour les systèmes de type Debian/Ubuntu : vous pouvez utiliser ceux proposés par Debian (&lt;a0&gt;paquets lemonldap-ng&lt;/a0&gt;) ou &lt;a1&gt;installer les paquets pré-requis&lt;/a1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>For Debian/Ubuntu, you can use:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T161834Z" changeid="xavier">
+        <seg>Pour Debian/Ubuntu, utiliser :</seg>
       </tuv>
     </tu>
     <tu>
@@ -17054,6 +17326,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>For full install:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T160625Z" changeid="xavier">
+        <seg>Pour une installation complète :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>For now, ldapgroups contains “cn=admin,dmdName=groups,dc=example,dc=com cn=su,dmdName=groups,dc=example,dc=com”</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -17082,6 +17362,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T094359Z" changeid="xavier">
         <seg>Pour les tests avec &lt;c0&gt;example.com&lt;/c0&gt;, lancer ce qui suit :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>For tests with the configured domain, launch the following :</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T162423Z" changeid="xavier">
+        <seg>Pour les tests avec le domaine configuré, lancer :</seg>
       </tuv>
     </tu>
     <tu>
@@ -17290,6 +17578,22 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T093159Z" changeid="xavier">
         <seg>Obtenir ces paquets</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Get the tarball</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120307T122150Z" changeid="xavier">
+        <seg>Récupérer l'archive</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Get the tarball from &lt;a0&gt;download page&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120307T122213Z" changeid="xavier">
+        <seg>Récupérer l'archive depuis la &lt;a0&gt;page de téléchargement&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -17798,6 +18102,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Hosted application</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T155539Z" changeid="xavier">
+        <seg>Application hébergée</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Hosted by</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -18162,6 +18474,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T061136Z" changeid="xavier">
         <seg>En interdisant ceci, on risque d'interdire aussi les authentification directe des IDP car la restriction est indiquée dans la requête d'authentification.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>If you have run the Debian/Ubuntu install command, just use:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T162137Z" changeid="xavier">
+        <seg>Pour la commande d'installation Debian/Ubuntu, utiliser simplement :</seg>
       </tuv>
     </tu>
     <tu>
@@ -18710,6 +19030,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Install cron jobs</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T162257Z" changeid="xavier">
+        <seg>Installer les tâches planifiées (cron)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Install it to trust RPMs:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T095823Z" changeid="xavier">
@@ -18766,6 +19094,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Install the package &lt;c0&gt;lemonldap-ng-conf&lt;/c0&gt; on all server which contains one of those packages.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T160021Z" changeid="xavier">
+        <seg>Installer le paquet &lt;c0&gt;lemonldap-ng-conf&lt;/c0&gt; sur tous les serveurs qui contiennent un de ces paquets.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Install the package &lt;c0&gt;lemonldap-ng-conf&lt;/c0&gt; only on the server which stores configuration.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T100245Z" changeid="xavier">
@@ -18786,6 +19122,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Installation et configuration</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Installation from the tarball</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120303T101356Z" changeid="xavier">
+        <seg>Installation depuis l'archive</seg>
       </tuv>
     </tu>
     <tu>
@@ -19106,6 +19450,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T115640Z" changeid="xavier">
         <seg>Configurer simplement la &lt;a0&gt;règle d'accès&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Just run the tar command:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T160533Z" changeid="xavier">
+        <seg>Lancer implement la commande tar :</seg>
       </tuv>
     </tu>
     <tu>
@@ -19798,6 +20150,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Link Apache configuration</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T161925Z" changeid="xavier">
+        <seg>Lier la configuration d'Apache</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Linux Tag 2009</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -20234,6 +20594,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120220T203408Z" changeid="xavier">
         <seg>Métadata</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Mod &lt;a0&gt;Perl&lt;/a0&gt; &lt;s1&gt;must&lt;/s1&gt; be loaded before &lt;a2&gt;LL::NG&lt;/a2&gt; Apache configuration.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T162215Z" changeid="xavier">
+        <seg>Mod &lt;a0&gt;Perl&lt;/a0&gt; &lt;s1&gt;doit&lt;/s1&gt; être chargé avant la configuration Apache de &lt;a2&gt;LL::NG&lt;/a2&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -21022,6 +21390,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Pages where this menu is displayed can be restricted, for example:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T155901Z" changeid="xavier">
+        <seg>Les pages où ce menu est affiché peuvent être restreintes, par exemple :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Parameter list</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -21214,6 +21590,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>PerlOutputFilterHandler Lemonldap::NG::Handler::Menu</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T155825Z" changeid="xavier">
+        <seg>PerlOutputFilterHandler Lemonldap::NG::Handler::Menu</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>PerlRequire __HANDLERDIR__/MyHandlerSympa.pm</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111217T080955Z" changeid="xavier">
@@ -21286,6 +21670,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T073600Z" changeid="xavier">
         <seg>Se reporter à la documentation Liferay pour activer l'alimentation &lt;a1&gt;LDAP&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Please see the next chapter to learn how build an official tarball from SVN files.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T160255Z" changeid="xavier">
+        <seg>Voir le chapître suivant pour savoir comment construire une archive officielle depuis les fichiers SVN.</seg>
       </tuv>
     </tu>
     <tu>
@@ -21954,6 +22346,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Reverse proxy</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T155628Z" changeid="xavier">
+        <seg>Proxy inverse</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Roadmap</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -22422,6 +22822,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T125321Z" changeid="xavier">
         <seg>Voir aussi</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>See also &lt;a0&gt;Debian/Ubuntu installation documentation&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T161912Z" changeid="xavier">
+        <seg>Voir aussi la &lt;a0&gt;documentation d'installation Debian/Ubuntu&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -23482,6 +23890,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The content of the SVN tarball is not the same as the official tarball.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T160155Z" changeid="xavier">
+        <seg>Le contenu de l'archive SVN n'est pas le même que l'officielle.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The cookie $id isn't yet available: Object does not exist in the data store</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T113505Z" changeid="xavier">
@@ -23550,6 +23966,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T154226Z" changeid="xavier">
         <seg>Les paramètres suivants sont utilisés pour l'exemple :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The generated tarball is in the current directory.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T160515Z" changeid="xavier">
+        <seg>L'archive générée est dans le répertoire courant.</seg>
       </tuv>
     </tu>
     <tu>
@@ -23822,6 +24246,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T193405Z" changeid="xavier">
         <seg>Aller ensuite dans le manager, &lt;c0&gt;Hôtes virtuels&lt;/c0&gt; » &lt;e1&gt;hôte virtuel&lt;/e1&gt; » &lt;c2&gt;Rejeu de formulaires&lt;/c2&gt; et cliquer sur &lt;c3&gt;Nouvelle &lt;a4&gt;URL&lt;/a4&gt; POST&lt;/c3&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Then go to trunk directory:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T160442Z" changeid="xavier">
+        <seg>Aller ensuite dans le répertoire trunk :</seg>
       </tuv>
     </tu>
     <tu>
@@ -24818,6 +25250,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>To install them on system:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T162354Z" changeid="xavier">
+        <seg>Pour les installer sur le système :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>To know more about the jail, check &lt;a0&gt;Safe module documentation&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T121440Z" changeid="xavier">
@@ -25642,6 +26082,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Web sites install :</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T160857Z" changeid="xavier">
+        <seg>Installer les sites web :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>When &lt;a0&gt;LL::NG&lt;/a0&gt; is configured as OpenID identity provider, users can share their authentication using [PORTAL]/openidserver/[login] where:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T082321Z" changeid="xavier">
@@ -25806,6 +26254,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T093704Z" changeid="xavier">
         <seg>Avec apt-get</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>With aptitude</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T155908Z" changeid="xavier">
+        <seg>Avec aptitude</seg>
       </tuv>
     </tu>
     <tu>
@@ -26010,10 +26466,26 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can also find on this page the SVN tarball if you want to test latest features.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T160118Z" changeid="xavier">
+        <seg>On peut aussi trouver sur cette page l'archive SVN pour tester les dernières évolutions.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You can also get the &lt;a0&gt;LemonLDAP::NG archive&lt;/a0&gt; and make the package yourself:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T095051Z" changeid="xavier">
         <seg>On peut également construire les paquets à partir de l'&lt;a0&gt;archive LemonLDAP::NG&lt;/a0&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can also pass parameters to the make install command, with this syntax:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T160957Z" changeid="xavier">
+        <seg>On peut aussi passer des paramètres à la commande make install, avec cette syntaxe :</seg>
       </tuv>
     </tu>
     <tu>
@@ -26030,6 +26502,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T072613Z" changeid="xavier">
         <seg>On peut utiliser différent login/mot-de-passe pour les serveurs en surchargeant les paramètres &lt;c0&gt;globalStorage&lt;/c0&gt; et &lt;c1&gt;globalStorageOptions&lt;/c1&gt; dans le fichier lemonldap-ng.ini.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can also use symbolic links in &lt;c0&gt;conf.d&lt;/c0&gt; Apache directory.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T162100Z" changeid="xavier">
+        <seg>On peut aussi utiliser des liens symboliques dans le répertiore &lt;c0&gt;conf.d&lt;/c0&gt; d'Apache.</seg>
       </tuv>
     </tu>
     <tu>
@@ -26070,6 +26550,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T143928Z" changeid="xavier">
         <seg>L'aspect graphique du manager peut être modifié en cliquant sur le bouton &lt;c0&gt;style de menu&lt;/c0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can choose other Makefile targets:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T160751Z" changeid="xavier">
+        <seg>On peut choisir d'autres cibles du Makefile :</seg>
       </tuv>
     </tu>
     <tu>
@@ -26214,6 +26702,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T102339Z" changeid="xavier">
         <seg>On peut gérer les rôles avec le &lt;a0&gt;modèle RBAC&lt;/a0&gt; ou en utilisant les groupes.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can modify location of default storage configuration file in configure target:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T161443Z" changeid="xavier">
+        <seg>On peut modifier l'emplacement du fichier de configuration du stockage par défaut dans la cible configure :</seg>
       </tuv>
     </tu>
     <tu>
@@ -26390,6 +26886,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T100015Z" changeid="xavier">
         <seg>Il faut ensuite installer tous les paquets téléchargés :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You have to include them in Apache main configuration, for example:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T162023Z" changeid="xavier">
+        <seg>Il faut les inclure dans la configuration d'Apache, par exemple :</seg>
       </tuv>
     </tu>
     <tu>
@@ -26960,6 +27464,16 @@ a2ensite manager-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>a2ensite manager-apache2.conf
+a2ensite portal-apache2.conf</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T162138Z" changeid="xavier">
+        <seg>a2ensite manager-apache2.conf
+a2ensite portal-apache2.conf</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>a_session blob&lt;s10&gt;,&lt;/s10&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T072038Z" changeid="xavier">
@@ -27228,6 +27742,14 @@ apachectl restart</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>aptitude install lemonldap-ng</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T155910Z" changeid="xavier">
+        <seg>aptitude install lemonldap-ng</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>authChoiceModules</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -27332,6 +27854,38 @@ apachectl restart</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>cat /usr/local/lemonldap-ng/etc/lemonldap-ng/for_etc_hosts &gt;&gt; /etc/hosts</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T162425Z" changeid="xavier">
+        <seg>cat /usr/local/lemonldap-ng/etc/lemonldap-ng/for_etc_hosts &gt;&gt; /etc/hosts</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>cd lemonldap-ng-*
+make
+make configure
+make test
+sudo make install</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T160627Z" changeid="xavier">
+        <seg>cd lemonldap-ng-*
+make
+make configure
+make test
+sudo make install</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>cd trunk</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T160443Z" changeid="xavier">
+        <seg>cd trunk</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>change password (with server side password policy management)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T201520Z" changeid="xavier">
@@ -27418,6 +27972,14 @@ chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/ses
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T114613Z" changeid="xavier">
         <seg>chown apache /etc/lemonldap-ng/auth.keytab</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>clean Handler cache</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T162337Z" changeid="xavier">
+        <seg>nettoyer le cache des agents</seg>
       </tuv>
     </tu>
     <tu>
@@ -28534,6 +29096,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T101251Z" changeid="xavier">
         <seg>documentation:1.2:idpsaml</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:installdeb</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T161846Z" changeid="xavier">
+        <seg>documentation:1.2:installdeb</seg>
       </tuv>
     </tu>
     <tu>
@@ -30914,6 +31484,94 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>install_bin (/usr/local/lemonldap-ng/bin)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T160848Z" changeid="xavier">
+        <seg>install_bin (/usr/local/lemonldap-ng/bin)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>install_doc_site (/usr/local/lemonldap-ng/htdocs/doc)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T160912Z" changeid="xavier">
+        <seg>install_doc_site (/usr/local/lemonldap-ng/htdocs/doc)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>install_examples_site (/usr/local/lemonldap-ng/examples)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T160913Z" changeid="xavier">
+        <seg>install_examples_site (/usr/local/lemonldap-ng/examples)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>install_handler_libs</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T160832Z" changeid="xavier">
+        <seg>install_handler_libs</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>install_handler_site (/usr/local/lemonldap-ng/handler)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T160902Z" changeid="xavier">
+        <seg>install_handler_site (/usr/local/lemonldap-ng/handler)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>install_libs (all &lt;a0&gt;Perl&lt;/a0&gt; libraries)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T160829Z" changeid="xavier">
+        <seg>install_libs (toutes les librairies &lt;a0&gt;Perl&lt;/a0&gt;)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>install_manager_libs</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T160831Z" changeid="xavier">
+        <seg>install_manager_libs</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>install_manager_site (/usr/local/lemonldap-ng/htdocs/manager)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T160859Z" changeid="xavier">
+        <seg>install_manager_site (/usr/local/lemonldap-ng/htdocs/manager)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>install_portal_libs</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T160831Z" changeid="xavier">
+        <seg>install_portal_libs</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>install_portal_site (/usr/local/lemonldap-ng/htdocs/portal)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T160858Z" changeid="xavier">
+        <seg>install_portal_site (/usr/local/lemonldap-ng/htdocs/portal)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>install_site (all sites including install_doc_site)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T160858Z" changeid="xavier">
+        <seg>install_site (all sites including install_doc_site)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>internal_email_by_netid    1</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111217T081457Z" changeid="xavier">
@@ -31386,6 +32044,30 @@ make test</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>make debian-install</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T161837Z" changeid="xavier">
+        <seg>make debian-install</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>make dist</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T160457Z" changeid="xavier">
+        <seg>make dist</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>make ubuntu-install</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T161843Z" changeid="xavier">
+        <seg>make ubuntu-install</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>managerCss</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T144154Z" changeid="xavier">
@@ -31528,6 +32210,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T150204Z" changeid="xavier">
         <seg>ou pour utiliser lemonldap-ng.ini, écrire (sur une seule ligne) dans la section [portal] :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>or:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T161840Z" changeid="xavier">
+        <seg>ou :</seg>
       </tuv>
     </tu>
     <tu>
@@ -31712,6 +32402,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T183339Z" changeid="xavier">
         <seg>fournir une identité à d'autres systèmes</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>purge old sessions</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T162326Z" changeid="xavier">
+        <seg>purger les anciennes sessions</seg>
       </tuv>
     </tu>
     <tu>
@@ -32018,6 +32716,22 @@ sudo apachectl restart</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>sudo ln -s /usr/local/lemonldap-ng/etc/cron.d/* /etc/cron.d/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T162355Z" changeid="xavier">
+        <seg>sudo ln -s /usr/local/lemonldap-ng/etc/cron.d/* /etc/cron.d/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>sudo make configure STORAGECONFFILE=/etc/lemonldap-ng/lemonldap-ng.ini</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T160718Z" changeid="xavier">
+        <seg>sudo make configure STORAGECONFFILE=/etc/lemonldap-ng/lemonldap-ng.ini</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>sudo make install</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -32030,6 +32744,14 @@ sudo apachectl restart</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>sudo make install LDAPSUFFIX=mysuffix</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>sudo make install PARAM=VALUE PARAM=VALUE ...</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T160959Z" changeid="xavier">
+        <seg>sudo make install PARAM=VALUE PARAM=VALUE ...</seg>
       </tuv>
     </tu>
     <tu>
@@ -32082,6 +32804,14 @@ cd AuthCAS-1.4/
 perl Makefile.PL
 make
 make test</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>tar zxvf lemonldap-ng-*.tar.gz</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T160534Z" changeid="xavier">
+        <seg>tar zxvf lemonldap-ng-*.tar.gz</seg>
       </tuv>
     </tu>
     <tu>
