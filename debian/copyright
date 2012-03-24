@@ -1,5 +1,5 @@
 Format-Specification:
-    http://wiki.debian.org/Proposals/CopyrightFormat?action=recall&rev=196
+    http://http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Maintainer: Xavier Guimard <x.guimard@free.fr>
 Upstream-Source: http://forge.objectweb.org/project/showfiles.php?group_id=274
 Upstream-Name: lemonldap-ng
