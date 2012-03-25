@@ -266,8 +266,12 @@ sub display {
 
         }
 
-        # Disable all forms on logout message
-        if ( $self->{error} == PE_LOGOUT_OK ) {
+        # Disable all forms on:
+        # * Logout message
+        # * Bad URL error
+        if (   $self->{error} == PE_LOGOUT_OK
+            or $self->{error} == PE_BADURL )
+        {
             %templateParams = (
                 %templateParams,
                 DISPLAY_RESETPASSWORD => 0,
