@@ -37,7 +37,7 @@ var helpCh={
 	'issuerdbCAS':'/pages/documentation/current/idpcas.html',
 	'issuerdbOpenID':'/pages/documentation/current/idpopenid.html',
 	'issuerdbSAML':'/pages/documentation/current/idpsaml.html',
-	'loginHistory':'/pages/documentation/current/loginHistory.html',
+	'loginHistory':'/pages/documentation/current/loginhistory.html',
 	'logoutforward':'/pages/documentation/current/logoutforward.html',
 	'logs':'/pages/documentation/current/logs.html',
 	'macrosandgroups':'/pages/documentation/current/exportedvars.html#extend_variables_using_macros_and_groups',
