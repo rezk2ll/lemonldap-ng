@@ -10,7 +10,7 @@ use Time::Local;
 use DBI;
 use utf8;
 
-our $VERSION = '1.1.0';
+our $VERSION = '1.2.0';
 
 ## @method boolean prereq()
 # Check if DBI parameters are set.
@@ -50,9 +50,12 @@ sub get {
         # Get XML message
         my $xml = $h->{xml};
 
-        # Decode it twice to get the correct uncoded string
+        # Decode it to get the correct uncoded string
         utf8::decode($xml);
-        utf8::decode($xml);
+
+        # TODO on some systems, a second decoding is mandatory
+        # need to find out why
+        #utf8::decode($xml);
 
         # Store message in result
         $result->{"$h->{date}#$h->{uid}#$h->{ref}"} = $xml;
