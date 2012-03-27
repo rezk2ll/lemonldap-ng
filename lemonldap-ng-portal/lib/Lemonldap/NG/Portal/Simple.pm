@@ -808,7 +808,7 @@ sub error {
     $msg ||= $self->{ "error_" . $code };
 
     # Use customized message or built-in message
-    if ($msg) {
+    if (defined $msg) {
 
         # Manage UTF-8
         utf8::decode($msg);
