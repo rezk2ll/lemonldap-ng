@@ -557,7 +557,7 @@ debian-packages: debian-dist
 	rm -rf lemonldap-ng-$$version && \
 	$(UNCOMPRESS) lemonldap-ng_$$version.orig.$(COMPRESSSUFFIX) && \
 	cd lemonldap-ng-$$version && \
-	export LOCALBUILD=1; debuild -us -uc
+	export LOCALBUILD=1; debuild -us -uc -b
 
 debian-install: debian-packages
 	cd /tmp/lemonldap-ng-$(VERSION) && \

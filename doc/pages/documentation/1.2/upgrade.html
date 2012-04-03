@@ -65,8 +65,58 @@ If you upgrade from older versions, please follow first:
 <p>
 
 <img src="/lib/images/smileys/fixme.gif" class="middle" alt="FIXME" /> We now configure multiple condition with specific messages, not just one opening condition
-
 </p>
 
 </div>
-<!-- SECTION "Opening conditions" [460-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Opening conditions" [460-589] -->
+<h2><a name="login_history" id="login_history">Login history</a></h2>
+<div class="level2">
+
+<p>
+
+The <a href="../../documentation/1.2/loginhistory.html" class="wikilink1" title="documentation:1.2:loginhistory">login history</a> is a new feature enabled by default. To turn it off, go in Manager and set 0 in Advanced Parameters &gt; Login History &gt; Activation.
+</p>
+
+</div>
+<!-- SECTION "Login history" [590-782] -->
+<h2><a name="unprotect_rule" id="unprotect_rule">Unprotect rule</a></h2>
+<div class="level2">
+
+<p>
+
+The <code>unprotect</code> rule in Manager now deletes headers forged by an unauthenticated user, but still send headers for authenticated ones. To skip headers for both kind of users, use the <code>skip</code> rule.
+</p>
+
+</div>
+<!-- SECTION "Unprotect rule" [783-1010] -->
+<h2><a name="custom_authentication_module" id="custom_authentication_module">Custom authentication module</a></h2>
+<div class="level2">
+
+<p>
+
+If you wrote custom authentication module, you have to add a new method called <code>getDisplayType</code>. This method should return one of these values:
+</p>
+<ul>
+<li class="level1"><div class="li"> <strong>standardform</strong>: login/password form</div>
+</li>
+<li class="level1"><div class="li"> <strong>openidform</strong>: OpenID login form</div>
+</li>
+<li class="level1"><div class="li"> <strong>yubikeyform</strong>: Yubikey login form</div>
+</li>
+<li class="level1"><div class="li"> <strong>logo</strong>: no form (used for external authentication methods)</div>
+</li>
+</ul>
+
+<p>
+
+For example:
+
+</p>
+<pre class="code file perl"><span class="co1">## @method string getDisplayType</span>
+<span class="co1"># @return display type</span>
+<span class="kw2">sub</span> getDisplayType <span class="br0">&#123;</span>
+    <a href="http://perldoc.perl.org/functions/return.html"><span class="kw3">return</span></a> <span class="st0">&quot;logo&quot;</span><span class="sy0">;</span>
+<span class="br0">&#125;</span></pre>
+
+</div>
+<!-- SECTION "Custom authentication module" [1011-] --></div><!-- closes <div class="dokuwiki export">-->
