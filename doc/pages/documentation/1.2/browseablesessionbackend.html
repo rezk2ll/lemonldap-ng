@@ -42,6 +42,14 @@ Browseable session backend (<a href="http://search.cpan.org/perldoc?Apache::Sess
 
 <p>
 
+Using Redis, you just have to prepare Redis database. See <a href="../../documentation/1.2/nosqlsessionbackend.html" class="wikilink1" title="documentation:1.2:nosqlsessionbackend">Redis session backend</a>.
+</p>
+
+<p>
+<em class="u">Exemple with MySQL</em>:
+</p>
+
+<p>
 Database must be prepared exactly like in <a href="../../documentation/1.2/sqlsessionbackend.html#prepare_the_database" class="wikilink1" title="documentation:1.2:sqlsessionbackend">SQL session backend</a> except that a field must be added for each data to index. Example with MySQL and index set to uid+ipAddr (recommended)
 </p>
 <pre class="code file sql"><span class="kw1">CREATE</span> <span class="kw1">TABLE</span> sessions <span class="br0">&#40;</span>
@@ -54,13 +62,37 @@ Database must be prepared exactly like in <a href="../../documentation/1.2/sqlse
     <span class="br0">&#41;</span>;</pre>
 
 </div>
-<!-- SECTION "Prepare database" [420-870] -->
+<!-- SECTION "Prepare database" [420-1001] -->
 <h3><a name="manager" id="manager">Manager</a></h3>
 <div class="level3">
 
 <p>
 
-Go in the Manager and set the session module (for example <a href="http://search.cpan.org/perldoc?Apache::Session::Browseable::MySQL" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session::Browseable::MySQL"  rel="nofollow">Apache::Session::Browseable::MySQL</a> for MySQL) in <code>General parameters</code> » <code>Sessions</code> » <code>Session storage</code> » <code>Apache::Session module</code> and add the following parameters (case sensitive):
+Using Redis, you just have to add the “Index” parameter  in <code>General parameters</code> » <code>Sessions</code> » <code>Session storage</code> » <code>Apache::Session module</code> :
+
+</p>
+<table class="inline">
+	<tr class="row0 roweven">
+		<th class="col0 centeralign" colspan="3">  Required parameters  </th>
+	</tr>
+	<tr class="row1 rowodd">
+		<th class="col0 centeralign">  Name  </th><th class="col1 centeralign">  Comment  </th><th class="col2 centeralign">  Example  </th>
+	</tr>
+	<tr class="row2 roweven">
+		<td class="col0 centeralign">  <strong>server</strong>  </td><td class="col1"> Redis server </td><td class="col2"> 127.0.0.1:6379 </td>
+	</tr>
+	<tr class="row3 rowodd">
+		<td class="col0 centeralign">  <strong>Index</strong>  </td><td class="col1"> Index </td><td class="col2"> uid ipAddr </td>
+	</tr>
+</table>
+
+<p>
+
+<em class="u">Exemple with MySQL</em>:
+</p>
+
+<p>
+Go in the Manager and set the session module (<a href="http://search.cpan.org/perldoc?Apache::Session::Browseable::MySQL" class="urlextern" title="http://search.cpan.org/perldoc?Apache::Session::Browseable::MySQL"  rel="nofollow">Apache::Session::Browseable::MySQL</a> for MySQL) in <code>General parameters</code> » <code>Sessions</code> » <code>Session storage</code> » <code>Apache::Session module</code> and add the following parameters (case sensitive):
 
 </p>
 <table class="inline">
@@ -91,7 +123,7 @@ Go in the Manager and set the session module (for example <a href="http://search
 </p>
 
 </div>
-<!-- SECTION "Manager" [871-1633] -->
+<!-- SECTION "Manager" [1002-2082] -->
 <h2><a name="security" id="security">Security</a></h2>
 <div class="level2">
 
@@ -105,4 +137,4 @@ You can also use different user/password for your servers by overriding paramete
 </p>
 
 </div>
-<!-- SECTION "Security" [1634-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Security" [2083-] --></div><!-- closes <div class="dokuwiki export">-->

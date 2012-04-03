@@ -177,6 +177,50 @@ Menu style preferences are stored in cookies (1 year duration). You can fix defa
 
 </div>
 <!-- SECTION "Manager" [1050-3647] -->
+<h2><a name="command_line_configuration_editor" id="command_line_configuration_editor">Command line configuration editor</a></h2>
+<div class="level2">
+
+<p>
+
+LemonLDAP::NG provide a script that allows to edit configuration without graphical interface, this script is called <code>lmConfigEditor</code> and is stored in the bin/ LemonLDAP::NG directory, for example /usr/share/lemonldap-ng/bin:
+</p>
+<pre class="code">
+/usr/share/lemonldap-ng/bin/lmConfigEditor
+</pre>
+
+<p>
+<p><div class="notetip">This script must be run as root, it will then use the Apache user and group to access configuration.
+</div></p>
+</p>
+
+<p>
+The script uses the system <code>editor</code> command, that links to your favorite editor. To change it:
+
+</p>
+<pre class="code">
+update-alternatives --config editor
+</pre>
+
+<p>
+The configuration is then displayed as a big <acronym title="Practical Extraction and Report Language">Perl</acronym> Hash, that you can edit:
+</p>
+<pre class="code file perl"><span class="re0">$VAR1</span> <span class="sy0">=</span> <span class="br0">&#123;</span>
+          <span class="st_h">'ldapAuthnLevel'</span> <span class="sy0">=&gt;</span> <span class="st_h">'2'</span><span class="sy0">,</span>
+          <span class="st_h">'notificationWildcard'</span> <span class="sy0">=&gt;</span> <span class="st_h">'allusers'</span><span class="sy0">,</span>
+          <span class="st_h">'loginHistoryEnabled'</span> <span class="sy0">=&gt;</span> <span class="st_h">'1'</span><span class="sy0">,</span>
+          <span class="st_h">'key'</span> <span class="sy0">=&gt;</span> <span class="st_h">'q`e)kJE%&lt;&amp;wm&gt;uaA'</span><span class="sy0">,</span>
+          <span class="st_h">'samlIDPSSODescriptorSingleSignOnServiceHTTPPost'</span> <span class="sy0">=&gt;</span> <span class="st_h">'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST;#PORTAL#/saml/singleSignOn;'</span><span class="sy0">,</span>
+          <span class="st_h">'portalSkin'</span> <span class="sy0">=&gt;</span> <span class="st_h">'pastel'</span><span class="sy0">,</span>
+          <span class="st_h">'failedLoginNumber'</span> <span class="sy0">=&gt;</span> <span class="st_h">'5'</span><span class="sy0">,</span>
+          <span class="sy0">...</span>
+          <span class="br0">&#125;</span><span class="sy0">;</span></pre>
+
+<p>
+If a modification is done, the configuration is saved with a new configuration number. Else, current configuration is kept.
+</p>
+
+</div>
+<!-- SECTION "Command line configuration editor" [3648-4885] -->
 <h2><a name="apache" id="apache">Apache</a></h2>
 <div class="level2">
 
@@ -209,7 +253,7 @@ These files must be included in Apache configuration, either with <code>Include<
 </p>
 
 </div>
-<!-- SECTION "Apache" [3648-4407] -->
+<!-- SECTION "Apache" [4886-5645] -->
 <h3><a name="portal" id="portal">Portal</a></h3>
 <div class="level3">
 
@@ -308,7 +352,7 @@ In Portal virtual host, you will find several configuration parts:
 &lt;/Perl&gt;</pre>
 
 </div>
-<!-- SECTION "Portal" [4408-6841] -->
+<!-- SECTION "Portal" [5646-8079] -->
 <h3><a name="manager1" id="manager1">Manager</a></h3>
 <div class="level3">
 
@@ -338,7 +382,7 @@ Manager virtual host is used to serve configuration interface and local document
     &lt;/<span class="kw3">Directory</span>&gt;</pre>
 
 </div>
-<!-- SECTION "Manager" [6842-7526] -->
+<!-- SECTION "Manager" [8080-8764] -->
 <h3><a name="handler" id="handler">Handler</a></h3>
 <div class="level3">
 <ul>
@@ -393,7 +437,7 @@ Then, to protect a standard virutal host, the only configuration line to add is:
 <pre class="code file apache">PerlHeaderParserHandler My::Package</pre>
 
 </div>
-<!-- SECTION "Handler" [7527-8797] -->
+<!-- SECTION "Handler" [8765-10035] -->
 <h2><a name="configuration_reload" id="configuration_reload">Configuration reload</a></h2>
 <div class="level2">
 
@@ -437,7 +481,7 @@ The <code>reload</code> target is managed in Apache configuration, inside a virt
 </p>
 
 </div>
-<!-- SECTION "Configuration reload" [8798-10154] -->
+<!-- SECTION "Configuration reload" [10036-11392] -->
 <h2><a name="local_file" id="local_file">Local file</a></h2>
 <div class="level2">
 
@@ -477,7 +521,7 @@ For example, to override configured skin for portal:
 </p>
 
 </div>
-<!-- SECTION "Local file" [10155-11012] -->
+<!-- SECTION "Local file" [11393-12250] -->
 <h2><a name="script_files" id="script_files">Script files</a></h2>
 <div class="level2">
 
@@ -492,7 +536,7 @@ LemonLDAP::NG allows to override any configuration parameter directly in script 
 </p>
 
 </div>
-<!-- SECTION "Script files" [11013-11401] -->
+<!-- SECTION "Script files" [12251-12639] -->
 <h3><a name="portal1" id="portal1">Portal</a></h3>
 <div class="level3">
 
@@ -507,7 +551,7 @@ For example, in portal/index.pl:
 <span class="br0">&#41;</span><span class="sy0">;</span></pre>
 
 </div>
-<!-- SECTION "Portal" [11402-11572] -->
+<!-- SECTION "Portal" [12640-12810] -->
 <h3><a name="handler1" id="handler1">Handler</a></h3>
 <div class="level3">
 
@@ -522,4 +566,4 @@ For example, in handler/MyHandler.pm:
 <span class="br0">&#41;</span><span class="sy0">;</span></pre>
 
 </div>
-<!-- SECTION "Handler" [11573-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Handler" [12811-] --></div><!-- closes <div class="dokuwiki export">-->
