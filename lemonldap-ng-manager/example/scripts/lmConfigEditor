@@ -33,6 +33,9 @@ open F2, ">$editFile" or quit($!);
 my $tmp = $conf->getConf();
 delete $tmp->{reVHosts};
 delete $tmp->{cipher};
+delete $tmp->{cfgAuthor};
+delete $tmp->{cfgAuthorIP};
+delete $tmp->{cfgDate};
 $tmp = Dumper($tmp);
 print F1 $tmp;
 print F2 $tmp;
@@ -44,12 +47,21 @@ system "editor $editFile";
 if (`diff $refFile $editFile`) {
     my $VAR1;
     my $buf;
+
+    # Check if the new configuration hash is valid
     open F1, $editFile;
     while (<F1>) {
         $buf .= $_;
     }
     eval $buf;
     quit($@) if ($@);
+
+    # Update author and date
+    $VAR1->{cfgAuthor}   = "lmConfigEditor";
+    $VAR1->{cfgAuthorIP} = "localhost";
+    $VAR1->{cfgDate}     = time();
+
+    # Store new configuration
     my $res = $conf->saveConf($VAR1);
     if ( $res > 0 ) {
         print STDERR "Configuration $res saved\n";
