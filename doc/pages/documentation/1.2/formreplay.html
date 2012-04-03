@@ -141,7 +141,7 @@ Then click on <code>New POST data</code> and add all data with their values, for
 
 <p>
 
-Due to a conflict between <acronym title="LemonLDAP::NG">LL::NG</acronym> form replay and Apache mod_proxy (see <a href="http://jira.ow2.org/browse/LEMONLDAP-176" class="urlextern" title="http://jira.ow2.org/browse/LEMONLDAP-176"  rel="nofollow">issue</a>), you cannot use form replay on proxied applications, unless you use <acronym title="LemonLDAP::NG">LL::NG</acronym> internal proxy (based on <acronym title="Practical Extraction and Report Language">Perl</acronym> LWP):
+Due to a conflict between <acronym title="LemonLDAP::NG">LL::NG</acronym> form replay and Apache mod_proxy (see <a href="http://jira.ow2.org/browse/LEMONLDAP-176" class="urlextern" title="http://jira.ow2.org/browse/LEMONLDAP-176"  rel="nofollow">issue</a>), you cannot use form replay on proxied applications, unless you use <acronym title="LemonLDAP::NG">LL::NG</acronym> <a href="../../documentation/1.2/internalproxy.html" class="wikilink1" title="documentation:1.2:internalproxy">internal proxy</a>:
 </p>
 <pre class="code file apache">&lt;<span class="kw3">VirtualHost</span>&gt;
   <span class="kw1">ServerName</span> test2.example.com
