@@ -1572,6 +1572,14 @@ deb-src http://lemonldap-ng.org/deb squeeze main</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.2/nosqlsessionbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120410T041239Z" changeid="xavier">
+        <seg>../../documentation/1.2/nosqlsessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.2/parameterlist.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T145630Z" changeid="xavier">
@@ -3792,6 +3800,14 @@ deb-src http://lemonldap-ng.org/deb squeeze main</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111534Z" changeid="xavier">
         <seg>../pages/documentation/1.2/installtarball.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/internalproxy.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120410T041234Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/internalproxy.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -7192,6 +7208,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a12&gt;internalproxy&lt;/a12&gt;&lt;br13/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120410T041235Z" changeid="xavier">
+        <seg>&lt;a12&gt;internalproxy&lt;/a12&gt;&lt;br13/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a12&gt;logoutforward&lt;/a12&gt;&lt;br13/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120215T045150Z" changeid="xavier">
@@ -8378,6 +8402,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;c0&gt;unprotect&lt;/c0&gt;: tout est ouvert !</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;e0&gt;Exemple with MySQL&lt;/e0&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120410T041437Z" changeid="xavier">
+        <seg>&lt;e0&gt;Exemple avec MySQL&lt;/e0&gt; :</seg>
       </tuv>
     </tu>
     <tu>
@@ -15318,6 +15350,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Command line configuration editor</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120410T041751Z" changeid="xavier">
+        <seg>Editeur de configuration en ligne de commande</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Comment</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -17686,6 +17726,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Go in the Manager and set the session module (&lt;a0&gt;Apache::Session::Browseable::MySQL&lt;/a0&gt; for MySQL) in &lt;c1&gt;General parameters&lt;/c1&gt; » &lt;c2&gt;Sessions&lt;/c2&gt; » &lt;c3&gt;Session storage&lt;/c3&gt; » &lt;c4&gt;Apache::Session module&lt;/c4&gt; and add the following parameters (case sensitive):</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120410T041725Z" changeid="xavier">
+        <seg>Aller dans le manager et mettre le module de session (&lt;a0&gt;Apache::Session::Browseable::MySQL&lt;/a0&gt; pour MySQL) dans &lt;c1&gt;Paramètres généraux&lt;/c1&gt; » &lt;c2&gt;Sessions&lt;/c2&gt; » &lt;c3&gt;Stockage des sessions&lt;/c3&gt; » &lt;c4&gt;Module Apache::Session&lt;/c4&gt; et ajouter le paramètre suivant (sensible à la casse) :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Go in the Manager and set the session module (for example &lt;a0&gt;Apache::Session::Browseable::MySQL&lt;/a0&gt; for MySQL) in &lt;c1&gt;General parameters&lt;/c1&gt; » &lt;c2&gt;Sessions&lt;/c2&gt; » &lt;c3&gt;Session storage&lt;/c3&gt; » &lt;c4&gt;Apache::Session module&lt;/c4&gt; and add the following parameters (case sensitive):</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T072228Z" changeid="xavier">
@@ -19594,6 +19642,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>LDAP</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LDAP configuration backend</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120324T162538Z" changeid="xavier">
+        <seg>Backend de configuration LDAP</seg>
       </tuv>
     </tu>
     <tu>
@@ -22718,6 +22774,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T143046Z" changeid="xavier">
         <seg>Voir la &lt;a0&gt;documentation de protection du manager&lt;/a0&gt; pour savoir comment utiliser les modules d'Apache ou &lt;a1&gt;LL::NG&lt;/a1&gt; pour gérer l'accès au manager.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>See &lt;a0&gt;Redis session backend&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120410T041343Z" changeid="xavier">
+        <seg>Voir &lt;a0&gt;backend de session Redis&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -25930,6 +25994,22 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Using Redis, you just have to add the “Index” parameter in &lt;c0&gt;General parameters&lt;/c0&gt; » &lt;c1&gt;Sessions&lt;/c1&gt; » &lt;c2&gt;Session storage&lt;/c2&gt; » &lt;c3&gt;Apache::Session module&lt;/c3&gt; :</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120410T041540Z" changeid="xavier">
+        <seg>Pour utiliser Redis, il faut ajouter le paramètre “Index” dans &lt;c0&gt;Paramètres généraux&lt;/c0&gt; » &lt;c1&gt;Sessions&lt;/c1&gt; » &lt;c2&gt;Stockage des sessions&lt;/c2&gt; » &lt;c3&gt;Module Apache::Session&lt;/c3&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Using Redis, you just have to prepare Redis database.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120410T041319Z" changeid="xavier">
+        <seg>Pour utiliser Redis, il faut preparer la base de données.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Using this, we can do a very simple interoperability system between 2 organizations using two &lt;a0&gt;LL::NG&lt;/a0&gt; structures:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T200318Z" changeid="xavier">
@@ -29128,6 +29208,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T174523Z" changeid="xavier">
         <seg>documentation:1.2:managerprotection</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:nosqlsessionbackend</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120410T041240Z" changeid="xavier">
+        <seg>documentation:1.2:nosqlsessionbackend</seg>
       </tuv>
     </tu>
     <tu>
