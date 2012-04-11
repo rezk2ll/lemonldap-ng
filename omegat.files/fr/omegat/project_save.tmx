@@ -1028,6 +1028,14 @@ deb-src http://lemonldap-ng.org/deb squeeze main</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../../media/documentation/configuration-ldap.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120411T041234Z" changeid="xavier">
+        <seg>../../../media/documentation/configuration-ldap.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../../media/documentation/exportedvars.png</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T120549Z" changeid="xavier">
@@ -4456,6 +4464,14 @@ deb-src http://lemonldap-ng.org/deb squeeze main</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T103118Z" changeid="xavier">
         <seg>/_detail/applications/zimbra_logo.png?id=documentation%3A1.2%3Aapplications%3Azimbra</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/documentation/configuration-ldap.png?id=documentation%3A1.2%3Aldapconfbackend</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120411T041232Z" changeid="xavier">
+        <seg>/_detail/documentation/configuration-ldap.png?id=documentation%3A1.2%3Aldapconfbackend</seg>
       </tuv>
     </tu>
     <tu>
@@ -10978,6 +10994,38 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;ldapBindDN&lt;/s0&gt;: &lt;a1&gt;DN&lt;/a1&gt; used to bind &lt;a2&gt;LDAP&lt;/a2&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120411T042707Z" changeid="xavier">
+        <seg>&lt;s0&gt;ldapBindDN&lt;/s0&gt; : &lt;a1&gt;DN&lt;/a1&gt; utilisé pour se connecter au serveur &lt;a2&gt;LDAP&lt;/a2&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;ldapBindPassword&lt;/s0&gt;: password used to bind &lt;a1&gt;LDAP&lt;/a1&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120411T042734Z" changeid="xavier">
+        <seg>&lt;s0&gt;ldapBindPassword&lt;/s0&gt; : mot-de-passe à utiliser pour se connecter au serveur &lt;a1&gt;LDAP&lt;/a1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;ldapConfBase&lt;/s0&gt;: &lt;a1&gt;DN&lt;/a1&gt; of configuration branch</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120411T042635Z" changeid="xavier">
+        <seg>&lt;s0&gt;ldapConfBase&lt;/s0&gt; : &lt;a1&gt;DN&lt;/a1&gt; de la branche des configurations</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;ldapServer&lt;/s0&gt;: &lt;a1&gt;LDAP&lt;/a1&gt; &lt;a2&gt;URI&lt;/a2&gt; of the server</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120411T042621Z" changeid="xavier">
+        <seg>&lt;s0&gt;ldapServer&lt;/s0&gt;: &lt;a2&gt;URI&lt;/a2&gt; &lt;a1&gt;LDAP&lt;/a1&gt;  du serveur</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;logon_hours&lt;/s0&gt;: string representing allowed logon hours (GMT)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T181507Z" changeid="xavier">
@@ -11104,6 +11152,22 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T181549Z" changeid="xavier">
         <seg>&lt;s0&gt;time_correction&lt;/s0&gt; (optionnel) : heures à ajouter ou soustraire</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;type&lt;/s0&gt; &lt;s1&gt;=&lt;/s1&gt;&lt;s2&gt; LDAP&lt;/s2&gt;
+&lt;s3&gt;ldapServer&lt;/s3&gt; &lt;s4&gt;=&lt;/s4&gt;&lt;s5&gt; ldap://localhost&lt;/s5&gt;
+&lt;s6&gt;ldapConfBase&lt;/s6&gt; &lt;s7&gt;=&lt;/s7&gt;&lt;s8&gt; ou=conf,ou=applications,dc=example,dc=com&lt;/s8&gt;
+&lt;s9&gt;ldapBindDN&lt;/s9&gt; &lt;s10&gt;=&lt;/s10&gt;&lt;s11&gt; cn=manager,dc=example,dc=com&lt;/s11&gt;
+&lt;s12&gt;ldapBindPassword&lt;/s12&gt; &lt;s13&gt;=&lt;/s13&gt;&lt;s14&gt; secret&lt;/s14&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120411T042556Z" changeid="xavier">
+        <seg>&lt;s0&gt;type&lt;/s0&gt; &lt;s1&gt;=&lt;/s1&gt;&lt;s2&gt; LDAP&lt;/s2&gt;
+&lt;s3&gt;ldapServer&lt;/s3&gt; &lt;s4&gt;=&lt;/s4&gt;&lt;s5&gt; ldap://localhost&lt;/s5&gt;
+&lt;s6&gt;ldapConfBase&lt;/s6&gt; &lt;s7&gt;=&lt;/s7&gt;&lt;s8&gt; ou=conf,ou=applications,dc=example,dc=com&lt;/s8&gt;
+&lt;s9&gt;ldapBindDN&lt;/s9&gt; &lt;s10&gt;=&lt;/s10&gt;&lt;s11&gt; cn=manager,dc=example,dc=com&lt;/s11&gt;
+&lt;s12&gt;ldapBindPassword&lt;/s12&gt; &lt;s13&gt;=&lt;/s13&gt;&lt;s14&gt; secret&lt;/s14&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -13622,6 +13686,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Access control possible by creating one user for Manager (write) and another for portal and handlers (read)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120411T041549Z" changeid="xavier">
+        <seg>Contrôle d'accès possible en créant un compte pour le manager (écriture) et un autre pour le portail et les agents (lecture)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Access protected application</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -13770,6 +13842,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T145545Z" changeid="xavier">
         <seg>Configuration avancée</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Advantages:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120411T041238Z" changeid="xavier">
+        <seg>Avantages :</seg>
       </tuv>
     </tu>
     <tu>
@@ -15566,6 +15646,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Configuration objects use standard object class: &lt;c0&gt;applicationProcess&lt;/c0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120411T042152Z" changeid="xavier">
+        <seg>Les objets de configuration utilisent une classe d'objet standard : &lt;c0&gt;applicationProcess&lt;/c0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Configuration of Apache virtual host</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T155305Z" changeid="xavier">
@@ -15618,6 +15706,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T155437Z" changeid="xavier">
         <seg>Configurer &lt;a0&gt;IE&lt;/a0&gt; ou Firefox pour agréer &lt;c1&gt;&lt;a2&gt;http://auth.example.com&lt;/a2&gt;&lt;/c1&gt; et ça doit marcher !</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Configure &lt;a0&gt;LDAP&lt;/a0&gt; configuration backend in &lt;c1&gt;lemonldap-ng.ini&lt;/c1&gt;, section &lt;c2&gt;[configuration]&lt;/c2&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120411T042555Z" changeid="xavier">
+        <seg>Configurer la backend de configuration &lt;a0&gt;LDAP&lt;/a0&gt; dans &lt;c1&gt;lemonldap-ng.ini&lt;/c1&gt;, section &lt;c2&gt;[configuration]&lt;/c2&gt; :</seg>
       </tuv>
     </tu>
     <tu>
@@ -16590,6 +16686,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Due to a conflict between &lt;a0&gt;LL::NG&lt;/a0&gt; form replay and Apache mod_proxy (see &lt;a1&gt;issue&lt;/a1&gt;), you cannot use form replay on proxied applications, unless you use &lt;a2&gt;LL::NG&lt;/a2&gt; &lt;a3&gt;internal proxy&lt;/a3&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120411T041123Z" changeid="xavier">
+        <seg>Suite à un conflit entre le rejeu de formulaires &lt;a0&gt;LL::NG&lt;/a0&gt; et mod_proxy d'Apache (voir les &lt;a1&gt;problèmes&lt;/a1&gt;), on ne peut utiliser le rejeu de formulaires sur des applications derrière un proxy sauf si on utilise le &lt;a3&gt;proxy interne&lt;/a3&gt; de &lt;a2&gt;LL::NG&lt;/a2&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Due to a conflict between &lt;a0&gt;LL::NG&lt;/a0&gt; form replay and Apache mod_proxy (see &lt;a1&gt;issue&lt;/a1&gt;), you cannot use form replay on proxied applications, unless you use &lt;a2&gt;LL::NG&lt;/a2&gt; internal proxy (based on &lt;a3&gt;Perl&lt;/a3&gt; LWP):</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T194027Z" changeid="xavier">
@@ -16638,6 +16742,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Each configuration will be represented as an entry, which structural objectClass is &lt;c0&gt;applicationProcess&lt;/c0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120411T041750Z" changeid="xavier">
+        <seg>Chaque configuration est représentée par une entrée, dont l'objectClass structurel est &lt;c0&gt;applicationProcess&lt;/c0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Each field can be filled with static values or data from user's session.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T192727Z" changeid="xavier">
@@ -16654,6 +16766,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Easy import/export through LDIF files</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120411T041631Z" changeid="xavier">
+        <seg>Import/export facilité via les fichiers LDIF</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Easy to customize</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -16662,10 +16782,26 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Easy to duplicate with &lt;a0&gt;LDAP&lt;/a0&gt; synchronization services (like SyncRepl in OpenLDAP)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120411T041407Z" changeid="xavier">
+        <seg>Facilité de duplication avec les services de synchronisation &lt;a0&gt;LDAP&lt;/a0&gt; (tel SyncRepl de OpenLDAP)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Easy to integrate</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Facile à intégrer</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Easy to share between servers with remote &lt;a0&gt;LDAP&lt;/a0&gt; access</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120411T041323Z" changeid="xavier">
+        <seg>Facilité de partage entre serveurs avec un accès &lt;a0&gt;LDAP&lt;/a0&gt; distant</seg>
       </tuv>
     </tu>
     <tu>
@@ -17338,6 +17474,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T120344Z" changeid="xavier">
         <seg>Pour chaque variable, le premier champ est le nom qui servira dans les règles, macros ou en-têtes et le second est le nom du champ dans la base de données utilisateurs.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>For example &lt;c1&gt;{ldapPort}389&lt;/c1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120411T042027Z" changeid="xavier">
+        <seg>Par exemple &lt;c1&gt;{ldapPort}389&lt;/c1&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -18734,6 +18878,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If your &lt;a3&gt;LDAP&lt;/a3&gt; server do not manage this objectClass, you have to extend your schema.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120411T042316Z" changeid="xavier">
+        <seg>Si le serveur &lt;a3&gt;LDAP&lt;/a3&gt; ne gère pas cette classe d'objet, il faut étendre le schéma.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If your function is not compliant with &lt;a0&gt;Safe jail&lt;/a0&gt;, you will need to disable the jail.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T175239Z" changeid="xavier">
@@ -19614,6 +19766,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Just remember its &lt;a0&gt;DN&lt;/a0&gt; for LemonLDAP::NG configuration.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120411T042526Z" changeid="xavier">
+        <seg>Il faut juste retenir le &lt;a0&gt;DN&lt;/a0&gt; pour la configuration de LemonLDAP::NG.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Just run the tar command:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T160533Z" changeid="xavier">
@@ -19778,6 +19938,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Performances LDAP</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LDAP server</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120411T042102Z" changeid="xavier">
+        <seg>Serveur LDAP</seg>
       </tuv>
     </tu>
     <tu>
@@ -20946,6 +21114,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T192613Z" changeid="xavier">
         <seg>Nouveau fournisseur de service</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Next create the configuration branch where you want.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120411T042442Z" changeid="xavier">
+        <seg>Créer ensuite la branche des configurations n'importe où.</seg>
       </tuv>
     </tu>
     <tu>
@@ -22874,6 +23050,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Security with &lt;a0&gt;SSL&lt;/a0&gt;/TLS</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120411T041418Z" changeid="xavier">
+        <seg>Securité avec &lt;a0&gt;SSL&lt;/a0&gt;/TLS</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>See &lt;a0&gt;Debian Lenny upgrade&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T112723Z" changeid="xavier">
@@ -23970,6 +24154,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The LDIF view of such entry can be:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120411T042052Z" changeid="xavier">
+        <seg>La vue LDIF d'une telle entrée ressemble à :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The Manager displays main branches:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T143105Z" changeid="xavier">
@@ -24078,6 +24270,22 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120410T042608Z" changeid="xavier">
         <seg>La configuration est affichée en une grande table de hachage &lt;a0&gt;Perl&lt;/a0&gt;, qu'on peut éditer :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The configuration name is the same that files, so lmConf-1, lmConf-2, etc.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120411T041907Z" changeid="xavier">
+        <seg>Le nom de la configuration est le même que pour File : lmConf-1, lmConf-2, etc...</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The configuration will be store under a specific branch, for example &lt;c0&gt;ou=conf,ou=applications,dc=example,dc=com&lt;/c0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120411T041702Z" changeid="xavier">
+        <seg>La configuration est stockée dans une branche spécifique, par exemple &lt;c0&gt;ou=conf,ou=applications,dc=example,dc=com&lt;/c0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -24414,6 +24622,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T114512Z" changeid="xavier">
         <seg>Créer ensuite le fichier keytab.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Then each parameter is one value of the attribute &lt;c0&gt;description&lt;/c0&gt;, prefixed by its key.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120411T042015Z" changeid="xavier">
+        <seg>Ensuite, chaque paramètre est une valeur de l'attribut &lt;c0&gt;description&lt;/c0&gt;, prefixé par sa clef.</seg>
       </tuv>
     </tu>
     <tu>
@@ -25102,6 +25318,30 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T045402Z" changeid="xavier">
         <seg>Ce module fournit un protocole de fédération d'identité spécifique à &lt;a0&gt;LL::NG&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This name is used in entry &lt;a0&gt;DN&lt;/a0&gt;, for example &lt;c1&gt;cn=lmConf-1,ou=conf,ou=applications,dc=example,dc=com&lt;/c1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120411T041935Z" changeid="xavier">
+        <seg>Ce nom est utilisé dans l'entrée &lt;a0&gt;DN&lt;/a0&gt;, par exemple &lt;c1&gt;cn=lmConf-1,ou=conf,ou=applications,dc=example,dc=com&lt;/c1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This objectClass allow attributes &lt;c1&gt;cn&lt;/c1&gt; and &lt;c2&gt;description&lt;/c2&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120411T042232Z" changeid="xavier">
+        <seg>Cet classe d'objet autorise les attributs &lt;c1&gt;cn&lt;/c1&gt; et &lt;c2&gt;description&lt;/c2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This objectClass is included in every core schemas.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120411T041817Z" changeid="xavier">
+        <seg>Cet objectClass est inclus dans tous les schémas de base.</seg>
       </tuv>
     </tu>
     <tu>
@@ -26250,6 +26490,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>We advice to create a specific &lt;a0&gt;LDAP&lt;/a0&gt; account with write access on configuration branch.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120411T042404Z" changeid="xavier">
+        <seg>Il est recommandé de créer un compte &lt;a0&gt;LDAP&lt;/a0&gt; spécifique qui peut écrire dans la branche de configuration.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>We advice to deactivate other options, cause users will use &lt;a0&gt;LL::NG&lt;/a0&gt; portal to modify or reset their password.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074020Z" changeid="xavier">
@@ -26746,6 +26994,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can also use the &lt;a0&gt;internal proxy&lt;/a0&gt; to replace Apache mod_proxy configuration.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120411T040853Z" changeid="xavier">
+        <seg>On peut aussi utiliser le &lt;a0&gt;proxy interne&lt;/a0&gt; pour remplacer mod_proxy d'Apache.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You can also use the binary value from the logonHours attribute of Active Directory</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T152213Z" changeid="xavier">
@@ -26798,6 +27054,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T100056Z" changeid="xavier">
         <seg>On peut n'installer qu'un seul composant en choisissant le paquet &lt;c0&gt;lemonldap-ng-portal&lt;/c0&gt;, &lt;c1&gt;lemonldap-ng-handler&lt;/c1&gt; ou &lt;c2&gt;lemonldap-ng-manager&lt;/c2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can choose to store LemonLDAP::NG configuration in an &lt;a0&gt;LDAP&lt;/a0&gt; directory.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120411T041230Z" changeid="xavier">
+        <seg>On peut choisir de stocker la configuration de LemonLDAP::NG dans un annuaire &lt;a0&gt;LDAP&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -28366,6 +28630,28 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>dn: cn=lmConf-1,ou=conf,ou=applications,dc=example,dc=com
+objectClass: top
+objectClass: applicationProcess
+cn: lmConf-1
+description: {globalStorage}'Apache::Session::File'
+description: {cookieName}'lemonldap'
+description: {whatToTrace}'$uid'
+...</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120411T042054Z" changeid="xavier">
+        <seg>dn: cn=lmConf-1,ou=conf,ou=applications,dc=example,dc=com
+objectClass: top
+objectClass: applicationProcess
+cn: lmConf-1
+description: {globalStorage}'Apache::Session::File'
+description: {cookieName}'lemonldap'
+description: {whatToTrace}'$uid'
+...</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>dn: uid=foo,dmdName=people,dc=example,dc=com
 ...
 memberOf: cn=admin,dmdName=groups,dc=example,dc=com
@@ -29340,6 +29626,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.2:internalproxy</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120411T040802Z" changeid="xavier">
+        <seg>documentation:1.2:internalproxy</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.2:ldapconfbackend</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T163154Z" changeid="xavier">
@@ -29512,6 +29806,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>documentation:conferences</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:configuration-ldap.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120411T041233Z" changeid="xavier">
+        <seg>documentation:configuration-ldap.png</seg>
       </tuv>
     </tu>
     <tu>
