@@ -54,11 +54,20 @@ If you upgrade from older versions, please follow first:
 
 <p>
 
-<img src="/lib/images/smileys/fixme.gif" class="middle" alt="FIXME" /> Not failing back to <acronym title="Lightweight Directory Access Protocol">LDAP</acronym>, need to use Multi <acronym title="Secure Sockets Layer">SSL</acronym>;<acronym title="Lightweight Directory Access Protocol">LDAP</acronym>
+The <a href="../../documentation/1.2/authssl.html" class="wikilink1" title="documentation:1.2:authssl">SSL authentication backend</a> behavior has changed:
 </p>
+<ul>
+<li class="level1"><div class="li"> Before, when <acronym title="Secure Sockets Layer">SSL</acronym> authentication failed, an option could be set to fail back to <a href="../../documentation/1.2/authldap.html" class="wikilink1" title="documentation:1.2:authldap">LDAP authentication backend</a>.</div>
+</li>
+<li class="level1"><div class="li"> Now, to keep this behavior, you have to use <a href="../../documentation/1.2/authssl.html" class="wikilink1" title="documentation:1.2:authssl">SSL</a> and <a href="../../documentation/1.2/authldap.html" class="wikilink1" title="documentation:1.2:authldap">LDAP</a> chaining in a <a href="../../documentation/1.2/authmulti.html" class="wikilink1" title="documentation:1.2:authmulti">Multi</a> configuration:</div>
+</li>
+</ul>
+<pre class="code">
+Multi SSL;LDAP
+</pre>
 
 </div>
-<!-- SECTION "SSL authentication backend" [360-459] -->
+<!-- SECTION "SSL authentication backend" [360-755] -->
 <h2><a name="opening_conditions" id="opening_conditions">Opening conditions</a></h2>
 <div class="level2">
 
@@ -68,7 +77,7 @@ If you upgrade from older versions, please follow first:
 </p>
 
 </div>
-<!-- SECTION "Opening conditions" [460-589] -->
+<!-- SECTION "Opening conditions" [756-885] -->
 <h2><a name="login_history" id="login_history">Login history</a></h2>
 <div class="level2">
 
@@ -78,7 +87,7 @@ The <a href="../../documentation/1.2/loginhistory.html" class="wikilink1" title=
 </p>
 
 </div>
-<!-- SECTION "Login history" [590-782] -->
+<!-- SECTION "Login history" [886-1078] -->
 <h2><a name="unprotect_rule" id="unprotect_rule">Unprotect rule</a></h2>
 <div class="level2">
 
@@ -88,7 +97,7 @@ The <code>unprotect</code> rule in Manager now deletes headers forged by an unau
 </p>
 
 </div>
-<!-- SECTION "Unprotect rule" [783-1010] -->
+<!-- SECTION "Unprotect rule" [1079-1306] -->
 <h2><a name="custom_authentication_module" id="custom_authentication_module">Custom authentication module</a></h2>
 <div class="level2">
 
@@ -119,4 +128,4 @@ For example:
 <span class="br0">&#125;</span></pre>
 
 </div>
-<!-- SECTION "Custom authentication module" [1011-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Custom authentication module" [1307-] --></div><!-- closes <div class="dokuwiki export">-->
