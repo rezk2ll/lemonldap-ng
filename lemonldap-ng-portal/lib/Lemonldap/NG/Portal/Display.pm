@@ -203,19 +203,6 @@ sub display {
             LOGIN_INFO            => $self->loginInfo(),
         );
 
-        # Authentication loop
-        if ( $self->{authLoop} ) {
-            %templateParams = (
-                %templateParams,
-                AUTH_LOOP            => $self->{authLoop},
-                CHOICE_PARAM         => $self->{authChoiceParam},
-                CHOICE_VALUE         => $self->{_authChoice},
-                DISPLAY_FORM         => 0,
-                DISPLAY_OPENID_FORM  => 0,
-                DISPLAY_YUBIKEY_FORM => 0,
-            );
-        }
-
         # Show password form if password policy error
         if (
 
@@ -234,6 +221,9 @@ sub display {
                 %templateParams,
                 REQUIRE_OLDPASSWORD =>
                   1,    # Old password is required to check user credentials
+                DISPLAY_FORM          => 0,
+                DISPLAY_OPENID_FORM   => 0,
+                DISPLAY_YUBIKEY_FORM  => 0,
                 DISPLAY_PASSWORD      => 1,
                 DISPLAY_RESETPASSWORD => 0,
                 AUTH_LOOP             => [],
@@ -247,29 +237,10 @@ sub display {
             );
         }
 
-        # Choose what form to display if not in a loop
-        if ( !$self->{authLoop} ) {
-
-            my $displayType = $self->getDisplayType();
-
-            $self->lmLog( "Display type $displayType ", 'debug' );
-
-            %templateParams = (
-                %templateParams,
-                DISPLAY_FORM         => $displayType eq "standardform" ? 1 : 0,
-                DISPLAY_OPENID_FORM  => $displayType eq "openidform"   ? 1 : 0,
-                DISPLAY_YUBIKEY_FORM => $displayType eq "yubikeyform"  ? 1 : 0,
-                AUTH_LOOP            => [],
-                PORTAL_URL => $displayType eq "logo" ? $self->{portal} : 0,
-                MSG => $self->info(),
-            );
-
-        }
-
         # Disable all forms on:
         # * Logout message
         # * Bad URL error
-        if (   $self->{error} == PE_LOGOUT_OK
+        elsif ($self->{error} == PE_LOGOUT_OK
             or $self->{error} == PE_BADURL )
         {
             %templateParams = (
@@ -282,6 +253,45 @@ sub display {
                 PORTAL_URL            => $self->{portal},
                 MSG                   => $self->info(),
             );
+
+        }
+
+        # Display authentifcation form
+        else {
+
+            # Authentication loop
+            if ( $self->{authLoop} ) {
+                %templateParams = (
+                    %templateParams,
+                    AUTH_LOOP            => $self->{authLoop},
+                    CHOICE_PARAM         => $self->{authChoiceParam},
+                    CHOICE_VALUE         => $self->{_authChoice},
+                    DISPLAY_FORM         => 0,
+                    DISPLAY_OPENID_FORM  => 0,
+                    DISPLAY_YUBIKEY_FORM => 0,
+                );
+            }
+
+            # Choose what form to display if not in a loop
+            else {
+
+                my $displayType = $self->getDisplayType();
+
+                $self->lmLog( "Display type $displayType ", 'debug' );
+
+                %templateParams = (
+                    %templateParams,
+                    DISPLAY_FORM => $displayType eq "standardform" ? 1 : 0,
+                    DISPLAY_OPENID_FORM => $displayType eq "openidform" ? 1 : 0,
+                    DISPLAY_YUBIKEY_FORM => $displayType eq "yubikeyform"
+                    ? 1
+                    : 0,
+                    AUTH_LOOP  => [],
+                    PORTAL_URL => $displayType eq "logo" ? $self->{portal} : 0,
+                    MSG        => $self->info(),
+                );
+
+            }
 
         }
 
