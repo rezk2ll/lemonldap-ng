@@ -6056,6 +6056,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;DN&lt;/a0&gt; of sessions branch</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T171842Z" changeid="xavier">
+        <seg>&lt;a0&gt;DN&lt;/a0&gt; de la branche des sessions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;Debian fr.po is now maintained by debian-l10n-french team&lt;/a0&gt; by guimard (2010/12/05 08:50)</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -6916,6 +6924,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T193112Z" changeid="xavier">
         <seg>L'&lt;a0&gt;URI&lt;/a0&gt; de la page qui reçoit les données POST (optionnel s'il s'agit de la même que celle qui héberge le formulaire)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;URI&lt;/a0&gt; of the server</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T171807Z" changeid="xavier">
+        <seg>&lt;a0&gt;URI&lt;/a0&gt; du serveur</seg>
       </tuv>
     </tu>
     <tu>
@@ -13744,6 +13760,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Access Control List</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T171926Z" changeid="xavier">
+        <seg>Liste de contrôle d'accès</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Access control possible by creating one user for Manager (write) and another for portal and handlers (read)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120411T041549Z" changeid="xavier">
@@ -14220,6 +14244,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T065652Z" changeid="xavier">
         <seg>Un redémarrage d'Apache suffit, mais LemonLDAP::NG offre le moyen de les recharger via une requête &lt;a0&gt;HTTP&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>An Apache session module was created by &lt;a0&gt;LL::NG&lt;/a0&gt; team to store sessions in an &lt;a1&gt;LDAP&lt;/a1&gt; directory.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T113954Z" changeid="xavier">
+        <seg>Un module Apache::Session a été créé par l'équipe de développement de &lt;a0&gt;LL::NG&lt;/a0&gt; pour stocker les sessions dans un annuaire &lt;a1&gt;LDAP&lt;/a1&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -15980,6 +16012,22 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T114338Z" changeid="xavier">
         <seg>Connexion entre Linux et Active Directory - méthode 2</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Connection login</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T171856Z" changeid="xavier">
+        <seg>Login de connexion</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Connection password</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T171911Z" changeid="xavier">
+        <seg>Mot-de-passe de connexion</seg>
       </tuv>
     </tu>
     <tu>
@@ -18064,6 +18112,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Go in the Manager and set the &lt;a0&gt;LDAP&lt;/a0&gt; session module (&lt;a1&gt;Apache::Session::LDAP&lt;/a1&gt;) in &lt;c2&gt;General parameters&lt;/c2&gt; » &lt;c3&gt;Sessions&lt;/c3&gt; » &lt;c4&gt;Session storage&lt;/c4&gt; » &lt;c5&gt;Apache::Session module&lt;/c5&gt; and add the following parameters (case sensitive):</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T171757Z" changeid="xavier">
+        <seg>Aller dans le manager et mettre le module de session (&lt;a0&gt;Apache::Session::LDAP&lt;/a0&gt;) dans &lt;c1&gt;Paramètres généraux&lt;/c1&gt; » &lt;c2&gt;Sessions&lt;/c2&gt; » &lt;c3&gt;Stockage des sessions&lt;/c3&gt; » &lt;c4&gt;Module Apache::Session&lt;/c4&gt; et ajouter les paramètres suivant (sensible à la casse) :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Go in the Manager and set the session module (&lt;a0&gt;Apache::Session::Browseable::MySQL&lt;/a0&gt; for MySQL) in &lt;c1&gt;General parameters&lt;/c1&gt; » &lt;c2&gt;Sessions&lt;/c2&gt; » &lt;c3&gt;Session storage&lt;/c3&gt; » &lt;c4&gt;Apache::Session module&lt;/c4&gt; and add the following parameters (case sensitive):</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120410T041725Z" changeid="xavier">
@@ -20064,6 +20120,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>LDAP session backend</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T113908Z" changeid="xavier">
+        <seg>Backend de sessions LDAP</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>LDAPFilter &lt;s19&gt;=&gt;&lt;/s19&gt; &lt;s20&gt;'(&amp;(sAMAccountName=$user)(objectClass=person))'&lt;/s20&gt;&lt;s21&gt;,&lt;/s21&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T150009Z" changeid="xavier">
@@ -20740,6 +20804,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112932Z" changeid="xavier">
         <seg>login</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Login History</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T172058Z" changeid="xavier">
+        <seg>Historique de connexion</seg>
       </tuv>
     </tu>
     <tu>
@@ -22864,6 +22936,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Restrict network access to the &lt;a0&gt;LDAP&lt;/a0&gt; directory, and add specific &lt;a1&gt;ACL&lt;/a1&gt; to session branch.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T172044Z" changeid="xavier">
+        <seg>Restreindre l'accès réseau à l'annuaire &lt;a0&gt;LDAP&lt;/a0&gt; et ajouter une &lt;a1&gt;ACL&lt;/a1&gt; spécifique à la branche des sessions.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Restrict network access to the database.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T072504Z" changeid="xavier">
@@ -23532,6 +23612,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Explorateur de sessions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Sessions will be stored as &lt;a0&gt;LDAP&lt;/a0&gt; entries, like this:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T171711Z" changeid="xavier">
+        <seg>Les sessions sont stockées dans des entrées &lt;a0&gt;LDAP&lt;/a0&gt; comme suit :</seg>
       </tuv>
     </tu>
     <tu>
@@ -25540,6 +25628,22 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T045402Z" changeid="xavier">
         <seg>Ce module fournit un protocole de fédération d'identité spécifique à &lt;a0&gt;LL::NG&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This module is also available in the &lt;c0&gt;contribs&lt;/c0&gt; directory of &lt;a1&gt;LL::NG&lt;/a1&gt; &lt;a2&gt;subversion repository&lt;/a2&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T114128Z" changeid="xavier">
+        <seg>Ce module est également disponible dans le répertoire &lt;c0&gt;contribs&lt;/c0&gt; du &lt;a2&gt;dépôt subversion&lt;/a2&gt; de &lt;a1&gt;LL::NG&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This module is not part of &lt;a0&gt;LL::NG&lt;/a0&gt; distibution, and can be found on CPAN: &lt;a1&gt;Apache::Session::LDAP&lt;/a1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T114029Z" changeid="xavier">
+        <seg>Ce module ne fait pas partie de la distribution &lt;a0&gt;LL::NG&lt;/a0&gt;, et se trouve sur le CPAN : &lt;a1&gt;Apache::Session::LDAP&lt;/a1&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -28726,6 +28830,14 @@ chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/ses
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>cn=admin,dc=example,dc=password</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T171856Z" changeid="xavier">
+        <seg>cn=admin,dc=example,dc=password</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>contact</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -28872,6 +28984,22 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
         <seg>default_realm = EXAMPLE.COM
 
 [realms]</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>dn: cn=6fb7c4a170a04668771f03b0a4747f46,ou=sessions,dc=example,dc=com
+objectClass: top
+objectClass: applicationProcess
+cn: 6fb7c4a170a04668771f03b0a4747f46
+description: [serialized data]</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T171715Z" changeid="xavier">
+        <seg>dn: cn=6fb7c4a170a04668771f03b0a4747f46,ou=sessions,dc=example,dc=com
+objectClass: top
+objectClass: applicationProcess
+cn: 6fb7c4a170a04668771f03b0a4747f46
+description: [serialized data]</seg>
       </tuv>
     </tu>
     <tu>
@@ -31320,6 +31448,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://search.cpan.org/dist/Apache-Session-LDAP/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T113955Z" changeid="xavier">
+        <seg>http://search.cpan.org/dist/Apache-Session-LDAP/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://search.cpan.org/perldoc?Apache::Session</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -31516,6 +31652,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>http://webchat.freenode.net</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/listing.php?repname=lemonldap&amp;path=%2Ftrunk%2Fcontribs%2Fapache-session-ldap%2F</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T114030Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/listing.php?repname=lemonldap&amp;path=%2Ftrunk%2Fcontribs%2Fapache-session-ldap%2F</seg>
       </tuv>
     </tu>
     <tu>
@@ -32494,6 +32638,46 @@ kinit -k -t /etc/lemonldap-ng/auth.keytab HTTP/auth.example.com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>ldap://localhost</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T171808Z" changeid="xavier">
+        <seg>ldap://localhost</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>ldapBindDN</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T171845Z" changeid="xavier">
+        <seg>ldapBindDN</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>ldapBindPassword</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T171858Z" changeid="xavier">
+        <seg>ldapBindPassword</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>ldapConfBase</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T171810Z" changeid="xavier">
+        <seg>ldapConfBase</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>ldapServer</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T171759Z" changeid="xavier">
+        <seg>ldapServer</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>ldapServer &lt;s16&gt;=&gt;&lt;/s16&gt; &lt;s17&gt;'ldaps://ad.example.com'&lt;/s17&gt;&lt;s18&gt;,&lt;/s18&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T150008Z" changeid="xavier">
@@ -33034,6 +33218,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>ou=sessions,dc=example,dc=com</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T171843Z" changeid="xavier">
+        <seg>ou=sessions,dc=example,dc=com</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>overload any &lt;a0&gt;LL::NG&lt;/a0&gt; &lt;a1&gt;parameter&lt;/a1&gt; when a specific backend is used</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T145720Z" changeid="xavier">
@@ -33378,6 +33570,14 @@ msktutil -c -b &quot;cn=COMPUTERS&quot; -s HTTP/auth.example.com -h auth.example
       </tuv>
       <tuv lang="FR-FR">
         <seg>screenshots:rbn:rbn-portal.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>secret</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T171913Z" changeid="xavier">
+        <seg>secret</seg>
       </tuv>
     </tu>
     <tu>
