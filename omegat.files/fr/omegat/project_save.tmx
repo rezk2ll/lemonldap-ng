@@ -1628,6 +1628,14 @@ deb-src http://lemonldap-ng.org/deb squeeze main</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.2/portalcustom.html#other_parameters</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T173246Z" changeid="xavier">
+        <seg>../../documentation/1.2/portalcustom.html#other_parameters</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.2/portalmenu.html#categories_and_applications</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T094130Z" changeid="xavier">
@@ -13656,6 +13664,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>A login is considered as successful if user get authenticated and is granted a session; as failed, if he fails to authenticate or if he is not allowed to open a session.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T172640Z" changeid="xavier">
+        <seg>Une connexion est considérée comme réussie si l'utilisateur est authentifié et autorisé à ouvrir une session ; comme échouée, sinon.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>A macro is stored as attributes: it can contain boolean results or any string</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -15316,6 +15332,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T200622Z" changeid="xavier">
         <seg>Par défaut, si les paramètres de processus de connexion utilisateur sont vides , ceux d'authentification seront utilisés.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>By default, login time and &lt;a0&gt;IP&lt;/a0&gt; address are stored in history, and the error message prompted to the user for failed logins.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T172856Z" changeid="xavier">
+        <seg>Par défaut, le tampon de date et l'adresse &lt;a0&gt;IP&lt;/a0&gt; sont stockés dans l'historique et le message d'erreur affiché à l'utilisateur en cas d'échec.</seg>
       </tuv>
     </tu>
     <tu>
@@ -17624,6 +17648,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>For example to store authentication mode, you can set in &lt;c1&gt;Session data to store&lt;/c1&gt; a new key &lt;c2&gt;$_auth&lt;/c2&gt; with value &lt;c3&gt;Authentication mode&lt;/c3&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T173048Z" changeid="xavier">
+        <seg>Par exemple pour stocker le mode d'authentification, on peut créer une nouvelle clef dans &lt;c1&gt;données de session à stocker&lt;/c1&gt; nommée &lt;c2&gt;$_auth&lt;/c2&gt; avec comme valeur &lt;c3&gt;mode d'authentification&lt;/c3&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>For example, a &lt;a0&gt;LL::NG&lt;/a0&gt; server can be:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T183527Z" changeid="xavier">
@@ -19248,6 +19280,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>In other cases which result on impossibility to authenticate user, to retrieve data or to create a session, nothing is stored.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T172744Z" changeid="xavier">
+        <seg>Dans les autres cas résultant de l'impossibilité d'authentifier l'utilisateur ou de récupérer les données pour créer la session, rien n'est stocké.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>In other words, take the time to configure this part before sharing metadata.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -19784,6 +19824,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>It is possible to store any additional session data.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T172918Z" changeid="xavier">
+        <seg>Il est possible de stocker d'autres données de session.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>It is recommended to use ModPerl::Registry instead of using cgi-script as described in Apache configuration file example (portal-apache2.conf):</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -20308,6 +20356,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T071746Z" changeid="xavier">
         <seg>LemonLDAP::NG autorise la surcharge de tout paramètre de configuration directement dans les fichiers de script.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LemonLDAP::NG allows to store user logins and login attempts in their persistent session.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T172243Z" changeid="xavier">
+        <seg>LemonLDAP::NG permet de stocker les connexions et tentatives dans les sessions persistantes.</seg>
       </tuv>
     </tu>
     <tu>
@@ -23568,6 +23624,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Session history is always visible in session explorer for administrators.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T172408Z" changeid="xavier">
+        <seg>L'historique des sessions est toujours visible dans l'explorateur de sessions pour les administrateurs.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Session lifetime for cronjob</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -24880,6 +24944,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The value will be used to display the data.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T173110Z" changeid="xavier">
+        <seg>Cette valeur sera utilisée pour afficher les données.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The whole Location value is replaced, including the scheme (http or https), which can help to manage redirections below &lt;a0&gt;SSL&lt;/a0&gt; hardware equipments</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T113057Z" changeid="xavier">
@@ -25456,6 +25528,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>This feature can be enabled and configured in Manager, in &lt;c0&gt;General Parameters&lt;/c0&gt; » &lt;c1&gt;Advanced Parameters&lt;/c1&gt; » &lt;c2&gt;Login History&lt;/c2&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T172505Z" changeid="xavier">
+        <seg>Cette fonctionnalité peut être activée et configurée dans le manager dans &lt;c0&gt;Paramètres généraux&lt;/c0&gt; » &lt;c1&gt;Paramètres avancés&lt;/c1&gt; » &lt;c2&gt;Historique de connexion&lt;/c2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>This file is called &lt;c1&gt;lemonldap-ng.ini&lt;/c1&gt; and has the following sections:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T071301Z" changeid="xavier">
@@ -25924,6 +26004,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T113006Z" changeid="xavier">
         <seg>Pour ajouter ces attributs, aller dans le manager, &lt;c0&gt;Variables&lt;/c0&gt; » &lt;c1&gt;Variables exportées&lt;/c1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>To allow the Login History tab in Menu, configure it in &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Portal&lt;/c1&gt; &gt; &lt;c2&gt;Menu&lt;/c2&gt; &gt; &lt;c3&gt;Modules&lt;/c3&gt; (see &lt;a4&gt;portal menu configuration&lt;/a4&gt;).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T173244Z" changeid="xavier">
+        <seg>Pour activer l'onglet de l'historique de connexion dans le menu, le configurer dans &lt;c0&gt;Paramètres généraux&lt;/c0&gt; &gt; &lt;c1&gt;Portail&lt;/c1&gt; &gt; &lt;c2&gt;Menu&lt;/c2&gt; &gt; &lt;c3&gt;Modules&lt;/c3&gt; (voir la &lt;a4&gt;configuration du menu du portail&lt;/a4&gt;).</seg>
       </tuv>
     </tu>
     <tu>
@@ -26680,6 +26768,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Users can see their own history in menu, if menu module &lt;c0&gt;Login history&lt;/c0&gt; is enabled.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T172335Z" changeid="xavier">
+        <seg>Les utilisateurs peuvent voir leur historique dans le menu, si le module &lt;c0&gt;historique de connexion&lt;/c0&gt; est activé.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Users module: &lt;a0&gt;SAML&lt;/a0&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120218T220722Z" changeid="xavier">
@@ -27296,6 +27392,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can also display a check box on the authentication form, to allow user to see their login history before beeing redirected to the protected application (see &lt;a0&gt;portal customization&lt;/a0&gt;).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T173411Z" changeid="xavier">
+        <seg>on peut aussi afficher une case à cocher dans le formulaire d'authentification pour autoriser l'utilisateur à voir son historique de connexion avant d'être redirigé vers l'application protégée (voir la &lt;a0&gt;personnalisation du portail&lt;/a0&gt;).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You can also find on this page the SVN tarball if you want to test latest features.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T160118Z" changeid="xavier">
@@ -27428,6 +27532,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T182123Z" changeid="xavier">
         <seg>Vous pouvez créer un hôte virtuel particulier et utiliser &lt;a0&gt;le module rewrite d'Apache&lt;/a0&gt; pour choisir entre le site ouvert et le protégé :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can define how many logins and failed logins will be stored.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T172541Z" changeid="xavier">
+        <seg>On peut définir le nombre de connexions et d'échecs à stocker.</seg>
       </tuv>
     </tu>
     <tu>
