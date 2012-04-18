@@ -8438,6 +8438,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;e0&gt;Example with MySQL&lt;/e0&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T111052Z" changeid="xavier">
+        <seg>&lt;e0&gt;Exemple avec MySQL&lt;/e0&gt;:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;e0&gt;Exemple with MySQL&lt;/e0&gt;:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120410T041437Z" changeid="xavier">
@@ -9828,6 +9836,30 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20120214T050250Z" changeid="xavier">
         <seg>&lt;s0&gt;Liste&lt;/s0&gt; : liste des domaines (séparés par des virgules)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;LmCookieDomainToReplace&lt;/s0&gt;: string to replace in &lt;c1&gt;Set-Cookie&lt;/c1&gt; header</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T113403Z" changeid="xavier">
+        <seg>&lt;s0&gt;LmCookieDomainToReplace&lt;/s0&gt; : chaîne à remplacer dans l'en-tête &lt;c1&gt;Set-Cookie&lt;/c1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;LmLocationToReplace&lt;/s0&gt;: string to replace in &lt;c1&gt;Location&lt;/c1&gt; header</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T113342Z" changeid="xavier">
+        <seg>&lt;s0&gt;LmLocationToReplace&lt;/s0&gt; : chaîne à remplacer dans l'en-tête &lt;c1&gt;Location&lt;/c1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;LmProxyPass&lt;/s0&gt;: &lt;a1&gt;URL&lt;/a1&gt; to relay &lt;a2&gt;HTTP&lt;/a2&gt; requests</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T113315Z" changeid="xavier">
+        <seg>&lt;s0&gt;LmProxyPass&lt;/s0&gt; : &lt;a1&gt;URL&lt;/a1&gt; pour relayer les requêtes &lt;a2&gt;HTTP&lt;/a2&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -12119,6 +12151,16 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T194034Z" changeid="xavier">
         <seg>&lt;s1&gt;ServerName&lt;/s1&gt; test2.example.com
+ </seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s1&gt;ServerName&lt;/s1&gt; www.public.com
+ </seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T113215Z" changeid="xavier">
+        <seg>&lt;s1&gt;ServerName&lt;/s1&gt; www.public.com
  </seg>
       </tuv>
     </tu>
@@ -17590,6 +17632,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>For example, to proxy &lt;a0&gt;https://www.public.com&lt;/a0&gt; to &lt;a1&gt;http://www.private.com&lt;/a1&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T113214Z" changeid="xavier">
+        <seg>Par exemple, pour relayer &lt;a0&gt;https://www.public.com&lt;/a0&gt; en &lt;a1&gt;http://www.private.com&lt;/a1&gt;:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>For example, we change it to &lt;c2&gt;ow2.org&lt;/c2&gt;:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T093855Z" changeid="xavier">
@@ -19462,6 +19512,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Internal Proxy</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T111236Z" changeid="xavier">
+        <seg>Proxy interne</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Internal portal</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120215T050049Z" changeid="xavier">
@@ -19574,6 +19632,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>It can inspect &lt;a2&gt;HTTP&lt;/a2&gt; headers to replace on the fly the Location and Set-Cookie headers.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T112926Z" changeid="xavier">
+        <seg>Il peut inspecter les en-têtes &lt;a2&gt;HTTP&lt;/a2&gt; pour remplacer à la volée les en-têtes Location et Set-Cookie.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>It can not be used to share sessions between different servers except if you share directories (with NFS,…) or if you use &lt;a0&gt;SOAP proxy&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T175618Z" changeid="xavier">
@@ -19610,6 +19676,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Il est également utilisé par le &lt;a2&gt;SP SAML&lt;/a2&gt; pour définir le niveau d'authentification dans la session de l'utilisateur en se basant sur la réponse d'authentification.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>It is compliant with the &lt;a0&gt;form replay&lt;/a0&gt; feature</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T113124Z" changeid="xavier">
+        <seg>Il est compatible avec le &lt;a0&gt;rejeu de formulaire&lt;/a0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -20262,10 +20336,26 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>LemonLDAP::NG provide a script that allows to edit configuration without graphical interface, this script is called &lt;c0&gt;lmConfigEditor&lt;/c0&gt; and is stored in the LemonLDAP::NG bin/ directory, for example /usr/share/lemonldap-ng/bin:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T111120Z" changeid="xavier">
+        <seg>LemonLDAP::NG fournit un script qui permet d'éditer la configuration sans interface graphique, ce script se nomme &lt;c0&gt;lmConfigEditor&lt;/c0&gt; et se trouvedans le répertoire bin/ de LemonLDAP::NG, par exemple /usr/share/lemonldap-ng/bin :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>LemonLDAP::NG provide a script that allows to edit configuration without graphical interface, this script is called &lt;c0&gt;lmConfigEditor&lt;/c0&gt; and is stored in the bin/ LemonLDAP::NG directory, for example /usr/share/lemonldap-ng/bin:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120410T042100Z" changeid="xavier">
         <seg>LemonLDAP::NG fournit un script qui permet d'éditer la configuration sans interface graphique, ce script se nomme &lt;c0&gt;lmConfigEditor&lt;/c0&gt; et se trouvedans le répertoire bin/ de LemonLDAP::NG, par exemple /usr/share/lemonldap-ng/bin :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LemonLDAP::NG provides a proxy that can replace the use of Apache mod_proxy.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T111311Z" changeid="xavier">
+        <seg>LemonLDAP::NG fournit un proxy qui peut remplacer l'utilisation de mod_proxy d'Apache.</seg>
       </tuv>
     </tu>
     <tu>
@@ -20762,6 +20852,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Composants principaux</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Main differences with mod_proxy:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T112941Z" changeid="xavier">
+        <seg>Principales différences avec mod_proxy :</seg>
       </tuv>
     </tu>
     <tu>
@@ -21878,6 +21976,16 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>PerlHandler Lemonldap::NG::Handler::Proxy
+ </seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T113216Z" changeid="xavier">
+        <seg>PerlHandler Lemonldap::NG::Handler::Proxy
+ </seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>PerlHeaderParserHandler My::Package</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111217T081620Z" changeid="xavier">
@@ -21984,6 +22092,16 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>PerlSetVar LmCookieDomainToReplace private.com,public.com
+&lt;/&lt;s4&gt;VirtualHost&lt;/s4&gt;&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T113224Z" changeid="xavier">
+        <seg>PerlSetVar LmCookieDomainToReplace private.com,public.com
+&lt;/&lt;s4&gt;VirtualHost&lt;/s4&gt;&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>PerlSetVar LmLocationToReplace http://APPLICATION/,http://test2.example.com
 &lt;/&lt;s4&gt;VirtualHost&lt;/s4&gt;&gt;</seg>
       </tuv>
@@ -21994,10 +22112,26 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>PerlSetVar LmLocationToReplace http://www.private.com/,https://www.public.com</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T113219Z" changeid="xavier">
+        <seg>PerlSetVar LmLocationToReplace http://www.private.com/,https://www.public.com</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>PerlSetVar LmProxyPass http://APPLICATION/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T194037Z" changeid="xavier">
         <seg>PerlSetVar LmProxyPass http://APPLICATION/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>PerlSetVar LmProxyPass http://www.private.com/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T113217Z" changeid="xavier">
+        <seg>PerlSetVar LmProxyPass http://www.private.com/</seg>
       </tuv>
     </tu>
     <tu>
@@ -24258,6 +24392,22 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The configuration is displayed as a big &lt;a0&gt;Perl&lt;/a0&gt; Hash, that you can edit:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T111225Z" changeid="xavier">
+        <seg>La configuration est affichée en une grande table de hachage &lt;a0&gt;Perl&lt;/a0&gt;, qu'on peut éditer :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The configuration is done in Apache, in a virtual host.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T113154Z" changeid="xavier">
+        <seg>La configuration est effectuée dans Apache, dans les hôtes virtuels.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The configuration is done in config.php:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T101911Z" changeid="xavier">
@@ -24514,6 +24664,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The script uses the &lt;c0&gt;editor&lt;/c0&gt; system command, that links to your favorite editor.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T111205Z" changeid="xavier">
+        <seg>Ce script utilise la commande système &lt;c0&gt;editor&lt;/c0&gt;, qui est liée à l'éditeur favori.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The script uses the system &lt;c0&gt;editor&lt;/c0&gt; command, that links to your favorite editor.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120410T042335Z" changeid="xavier">
@@ -24574,6 +24732,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Cette valeur est utilisé dans les metadatas :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The whole Location value is replaced, including the scheme (http or https), which can help to manage redirections below &lt;a0&gt;SSL&lt;/a0&gt; hardware equipments</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T113057Z" changeid="xavier">
+        <seg>La valeur complète de Location est remplacée, y compris le schéma (http or https), ce qui peut aider à gérer les redirections derrière des équipements &lt;a0&gt;SSL&lt;/a0&gt; matériels</seg>
       </tuv>
     </tu>
     <tu>
@@ -25406,6 +25572,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111220T155201Z" changeid="xavier">
         <seg>Ce protocole est implementé dans un handler spécifique de &lt;a2&gt;LL::NG&lt;/a2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This proxy use LWP &lt;a0&gt;Perl&lt;/a0&gt; module to relay &lt;a1&gt;HTTP&lt;/a1&gt; request.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T112845Z" changeid="xavier">
+        <seg>Ce proxy utilise le modue LWP de &lt;a0&gt;Perl&lt;/a0&gt; pour relayer les requêtes &lt;a1&gt;HTTP&lt;/a1&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -31674,6 +31848,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://www.private.com</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T113157Z" changeid="xavier">
+        <seg>http://www.private.com</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://www.svwux.org/</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -31822,6 +32004,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>https://www.portail.crbn.fr</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>https://www.public.com</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T113156Z" changeid="xavier">
+        <seg>https://www.public.com</seg>
       </tuv>
     </tu>
     <tu>
