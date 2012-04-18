@@ -9026,6 +9026,18 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;&lt;s1&gt;[&lt;/s1&gt;portal&lt;s2&gt;]&lt;/s2&gt;&lt;/s0&gt;
+&lt;s3&gt;userError&lt;/s3&gt; &lt;s4&gt;=&lt;/s4&gt;&lt;s5&gt; sub &lt;s6&gt;{&lt;/s6&gt; my &lt;s7&gt;(&lt;/s7&gt;$self, $message&lt;s8&gt;)&lt;/s8&gt; &lt;s9&gt;=&lt;/s9&gt; @_&lt;/s5&gt;&lt;s10&gt;; ... }&lt;/s10&gt;
+&lt;s11&gt;userNotice&lt;/s11&gt; &lt;s12&gt;=&lt;/s12&gt;&lt;s13&gt; sub &lt;s14&gt;{&lt;/s14&gt; my &lt;s15&gt;(&lt;/s15&gt;$self, $message&lt;s16&gt;)&lt;/s16&gt; &lt;s17&gt;=&lt;/s17&gt; @_&lt;/s13&gt;&lt;s18&gt;; ... }&lt;/s18&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T201731Z" changeid="guimard">
+        <seg>&lt;s0&gt;&lt;s1&gt;[&lt;/s1&gt;portal&lt;s2&gt;]&lt;/s2&gt;&lt;/s0&gt;
+&lt;s3&gt;userError&lt;/s3&gt; &lt;s4&gt;=&lt;/s4&gt;&lt;s5&gt; sub &lt;s6&gt;{&lt;/s6&gt; my &lt;s7&gt;(&lt;/s7&gt;$self, $message&lt;s8&gt;)&lt;/s8&gt; &lt;s9&gt;=&lt;/s9&gt; @_&lt;/s5&gt;&lt;s10&gt;; ... }&lt;/s10&gt;
+&lt;s11&gt;userNotice&lt;/s11&gt; &lt;s12&gt;=&lt;/s12&gt;&lt;s13&gt; sub &lt;s14&gt;{&lt;/s14&gt; my &lt;s15&gt;(&lt;/s15&gt;$self, $message&lt;s16&gt;)&lt;/s16&gt; &lt;s17&gt;=&lt;/s17&gt; @_&lt;/s13&gt;&lt;s18&gt;; ... }&lt;/s18&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;APACHEGROUP&lt;/s0&gt;: group running Apache</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T161544Z" changeid="xavier">
@@ -9836,6 +9848,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T160655Z" changeid="xavier">
         <seg>&lt;s0&gt;Clef&lt;/s0&gt; : Service ID</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Key&lt;/s0&gt;: application name</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T200356Z" changeid="guimard">
+        <seg>&lt;s0&gt;Key&lt;/s0&gt; : nom d'application</seg>
       </tuv>
     </tu>
     <tu>
@@ -10838,6 +10858,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Value&lt;/s0&gt;: application logout &lt;a1&gt;URL&lt;/a1&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T200414Z" changeid="guimard">
+        <seg>&lt;s0&gt;Valeur&lt;/s0&gt; : &lt;a1&gt;URL&lt;/a1&gt; de déconnexion de l'application</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Variables&lt;/s0&gt;: user information, macros and groups used to fill &lt;a1&gt;SSO&lt;/a1&gt; session</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T143226Z" changeid="xavier">
@@ -11074,6 +11102,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;info&lt;/s0&gt; for user actions</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T201540Z" changeid="guimard">
+        <seg>&lt;s0&gt;info&lt;/s0&gt; pour les actions utilisateurs</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;ldapBindDN&lt;/s0&gt;: &lt;a1&gt;DN&lt;/a1&gt; used to bind &lt;a2&gt;LDAP&lt;/a2&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120411T042707Z" changeid="xavier">
@@ -11152,6 +11188,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T081135Z" changeid="xavier">
         <seg>&lt;s0&gt;none&lt;/s0&gt; : pas de contrôle d'accès, le serveur répond sans contrôler si l'utilisateur est autorisé à accéder au service (c'est la valeur par défaut)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;notice&lt;/s0&gt; for good authentications or external exchange (&lt;a1&gt;SAML&lt;/a1&gt;, OpenID,…)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T201607Z" changeid="guimard">
+        <seg>&lt;s0&gt;notice&lt;/s0&gt; pour les authentifications réussies et les échanges externes (&lt;a1&gt;SAML&lt;/a1&gt;, OpenID,…)</seg>
       </tuv>
     </tu>
     <tu>
@@ -11280,6 +11324,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T113856Z" changeid="xavier">
         <seg>&lt;s0&gt;user_info_class&lt;/s0&gt;: Env or Env,&lt;a1&gt;CGI&lt;/a1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;warn&lt;/s0&gt; for failed authentications</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T201621Z" changeid="guimard">
+        <seg>&lt;s0&gt;warn&lt;/s0&gt; pour les échecs d'authentifications</seg>
       </tuv>
     </tu>
     <tu>
@@ -13800,6 +13852,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Access log: the issuer of each request is identified</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T201021Z" changeid="guimard">
+        <seg>Journaux d'accès (AccessLog) : l'utilisateur de chaque requête est identifié</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Access protected application</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -14508,6 +14568,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T114446Z" changeid="xavier">
         <seg>Apache is not configured to authenticate users !</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Apache logging</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T200707Z" changeid="guimard">
+        <seg>Journaux d'Apache</seg>
       </tuv>
     </tu>
     <tu>
@@ -15276,6 +15344,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T161952Z" changeid="xavier">
         <seg>Par défaut les fichiers de configuration d'Apache seront installés dans &lt;c0&gt;/usr/local/lemonldap-ng/etc/&lt;/c0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>By default, LemonLDAP::NG uses Apache logs to store user actions and other messages:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T200807Z" changeid="guimard">
+        <seg>Par défaut, LemonLDAP::NG utilise les journaux d'Apache pour journaliser les actions des utilisateurs et autre messages :</seg>
       </tuv>
     </tu>
     <tu>
@@ -17104,6 +17180,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Error log: all messages emitted by the program, depending on the configured log level</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T200945Z" changeid="guimard">
+        <seg>Journaux d'erreur (ErrorLog) : tous les messages emis par le programme, suivant le niveau de journalisation configuré (LogLevel)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Error messages</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T112410Z" changeid="xavier">
@@ -18148,6 +18232,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120222T125912Z" changeid="xavier">
         <seg>Aller dans le manager, &lt;c1&gt;Paramètres généraux&lt;/c1&gt; » &lt;c2&gt;Cookies&lt;/c2&gt; » &lt;c3&gt;Domaines multiples&lt;/c3&gt; et sélectioonner &quot;activer&quot;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Go in Manager, &lt;c0&gt;General parameters&lt;/c0&gt; » &lt;c1&gt;Advanced parameters&lt;/c1&gt; » &lt;c2&gt;Logout forward&lt;/c2&gt; and click on &lt;c3&gt;Add a key&lt;/c3&gt;, then fill:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T200346Z" changeid="guimard">
+        <seg>Aller dans le manager, &lt;c0&gt;Paramètres généraux&lt;/c0&gt; » &lt;c1&gt;Paramètres avancés&lt;/c1&gt; » &lt;c2&gt;Transfert de la déconnexion&lt;/c2&gt; et cliquer sur &lt;c3&gt;Ajouter une clef&lt;/c3&gt;, renseigner ensuite :</seg>
       </tuv>
     </tu>
     <tu>
@@ -19288,6 +19380,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>In Manager, set syslog facility in &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Logging&lt;/c1&gt; &gt; &lt;c2&gt;Syslog facility&lt;/c2&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T201341Z" changeid="guimard">
+        <seg>Dans le manager, choisir la facilité syslog dans &lt;c0&gt;Paramètres généraux&lt;/c0&gt; &gt; &lt;c1&gt;Journalisation&lt;/c1&gt; &gt; &lt;c2&gt;Facilité syslog&lt;/c2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>In Portal virtual host, you will find several configuration parts:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T063618Z" changeid="xavier">
@@ -19748,6 +19848,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>En revanche, ce peut-être un frein pour le portail :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>It can be configured globally, or inside a virtual host.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T201124Z" changeid="guimard">
+        <seg>Il peut être configuré globalement, ou dans chaque hôte virtuel.</seg>
       </tuv>
     </tu>
     <tu>
@@ -20384,6 +20492,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>LemonLDAP::NG can also use syslog (only for user actions).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T201303Z" changeid="guimard">
+        <seg>LemonLDAP::NG peut également utiliser syslog (seulement pour les actions utilisateurs).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>LemonLDAP::NG can export &lt;a0&gt;HTTP headers&lt;/a0&gt; either using a proxy or protecting directly the application.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -20916,6 +21032,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T102404Z" changeid="xavier">
         <seg>Règle de déconnexion (par exemple logout_app_sso)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Logs</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T200656Z" changeid="guimard">
+        <seg>Journaux</seg>
       </tuv>
     </tu>
     <tu>
@@ -21956,6 +22080,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T145739Z" changeid="xavier">
         <seg>La surcharge n'est pas paramètrable dans le manager</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Override logging functions</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T201641Z" changeid="guimard">
+        <seg>Surcharger les fonctions de journalisation</seg>
       </tuv>
     </tu>
     <tu>
@@ -23480,6 +23612,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>See &lt;a0&gt;http://httpd.apache.org/docs/2.2/mod/core.html#loglevel&lt;/a0&gt; for more information.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T201137Z" changeid="guimard">
+        <seg>Voir &lt;a0&gt;http://httpd.apache.org/docs/2.2/mod/core.html#loglevel&lt;/a0&gt; pour plus d'information.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>See &lt;a0&gt;prerequisites and dependencies&lt;/a0&gt; chapter for more.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T095720Z" changeid="xavier">
@@ -24784,10 +24924,34 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The log level can be set with Apache &lt;c0&gt;LogLevel&lt;/c0&gt; parameter.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T201054Z" changeid="guimard">
+        <seg>Le niveau de journalisation peut être configuré via le paramètre &lt;c0&gt;LogLevel&lt;/c0&gt; d'Apache.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The logout request will be sent even if the user did not use the application.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T200206Z" changeid="guimard">
+        <seg>La requête de déconnexion est envoyée même si l'utilisateur ne s'est pas connecté à l'application.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The main portal is configured to use &lt;a0&gt;CDA&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T045547Z" changeid="xavier">
         <seg>Le portail principal est configuré pour utiliser le &lt;a0&gt;CDA&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The messages are stored with the facilities :</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T201523Z" changeid="guimard">
+        <seg>Les messages sont stockés avec les niveaux :</seg>
       </tuv>
     </tu>
     <tu>
@@ -24892,6 +25056,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>La réelle traçabilité doit être faite par l'application elle-même car les journaux du &lt;a0&gt;SSO&lt;/a0&gt; ne peuvent interprêter les transactions.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The request on logout &lt;a0&gt;URL&lt;/a0&gt; will be sent after user is disconnected, so you should unprotect this &lt;a1&gt;URL&lt;/a1&gt; if it is protected by an &lt;a2&gt;LL::NG&lt;/a2&gt; Handler.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T200645Z" changeid="guimard">
+        <seg>Cette requête vers l'&lt;a0&gt;URL&lt;/a0&gt; de déconnexion est envoyée après la déconnexion de l'utilisateur, il faut donc  déprotéger cette &lt;a1&gt;URL&lt;/a1&gt; si elle est protégée par un agent &lt;a2&gt;LL::NG&lt;/a2&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -26076,6 +26248,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120214T050344Z" changeid="xavier">
         <seg>Pour configurer les attributs à récupérer, aller dans &lt;c0&gt;Variables&lt;/c0&gt; &gt; &lt;c1&gt;Variables exportées&lt;/c1&gt; et definir les attributs:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>To configure the user identifier in access log, go in Manager, &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Logging&lt;/c1&gt; &gt; &lt;c2&gt;REMOTE_USER&lt;/c2&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T201237Z" changeid="guimard">
+        <seg>Pour configurer l'identifiant utilisateur dans les journaux d'accès, aller dans le manager, &lt;c0&gt;Paramètres généraux&lt;/c0&gt; &gt; &lt;c1&gt;Journalisation&lt;/c1&gt; &gt; &lt;c2&gt;REMOTE_USER&lt;/c2&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -27556,6 +27736,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T182123Z" changeid="xavier">
         <seg>Vous pouvez créer un hôte virtuel particulier et utiliser &lt;a0&gt;le module rewrite d'Apache&lt;/a0&gt; pour choisir entre le site ouvert et le protégé :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can customize logs by redefining userNotice() and userError() methods, directly in &lt;c0&gt;lemonldap-ng.ini&lt;/c0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T201727Z" changeid="guimard">
+        <seg>On peut personnaliser les fonctions de journalisation en redéfinissant les méthodes userNotice() et userError(), directement dans &lt;c0&gt;lemonldap-ng.ini&lt;/c0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -31292,6 +31480,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>http://httpd.apache.org/docs/2.2/misc/perf-tuning.html#compiletime</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://httpd.apache.org/docs/2.2/mod/core.html#loglevel</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T201125Z" changeid="guimard">
+        <seg>http://httpd.apache.org/docs/2.2/mod/core.html#loglevel</seg>
       </tuv>
     </tu>
     <tu>
