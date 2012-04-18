@@ -1444,6 +1444,14 @@ deb-src http://lemonldap-ng.org/deb squeeze main</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.2/configvhost.html#lemonldapng_configuration</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T202948Z" changeid="guimard">
+        <seg>../../documentation/1.2/configvhost.html#lemonldapng_configuration</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.2/customfunctions.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T121250Z" changeid="xavier">
@@ -5562,6 +5570,14 @@ deb-src http://lemonldap-ng.org/deb squeeze main</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;/&lt;s15&gt;Directory&lt;/s15&gt;&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T202556Z" changeid="guimard">
+        <seg>&lt;/&lt;s15&gt;Directory&lt;/s15&gt;&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;/&lt;s15&gt;Files&lt;/s15&gt;&gt;
  </seg>
       </tuv>
@@ -8638,6 +8654,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;$uid&lt;/s0&gt; &lt;s1&gt;eq&lt;/s1&gt; &lt;s2&gt;&quot;dwho&quot;&lt;/s2&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T203202Z" changeid="guimard">
+        <seg>&lt;s0&gt;$uid&lt;/s0&gt; &lt;s1&gt;eq&lt;/s1&gt; &lt;s2&gt;&quot;dwho&quot;&lt;/s2&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;//==================================&lt;/s0&gt;
 &lt;s1&gt;// WebSSO&lt;/s1&gt;
 &lt;s2&gt;//==================================&lt;/s2&gt;
@@ -8980,6 +9004,26 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
         <seg>&lt;s0&gt;&lt;s1&gt;[&lt;/s1&gt;configuration&lt;s2&gt;]&lt;/s2&gt;&lt;/s0&gt;
 &lt;s3&gt;type&lt;/s3&gt;&lt;s4&gt;=&lt;/s4&gt;&lt;s5&gt;File&lt;/s5&gt;
 &lt;s6&gt;dirName&lt;/s6&gt; &lt;s7&gt;=&lt;/s7&gt;&lt;s8&gt; /usr/local/lemonldap-ng/data/conf&lt;/s8&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;&lt;s1&gt;[&lt;/s1&gt;manager&lt;s2&gt;]&lt;/s2&gt;&lt;/s0&gt;
+&lt;s3&gt;;protection = manager&lt;/s3&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T202723Z" changeid="guimard">
+        <seg>&lt;s0&gt;&lt;s1&gt;[&lt;/s1&gt;manager&lt;s2&gt;]&lt;/s2&gt;&lt;/s0&gt;
+&lt;s3&gt;;protection = manager&lt;/s3&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;&lt;s1&gt;[&lt;/s1&gt;manager&lt;s2&gt;]&lt;/s2&gt;&lt;/s0&gt;
+&lt;s3&gt;protection&lt;/s3&gt; &lt;s4&gt;=&lt;/s4&gt;&lt;s5&gt; manager&lt;/s5&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T203450Z" changeid="guimard">
+        <seg>&lt;s0&gt;&lt;s1&gt;[&lt;/s1&gt;manager&lt;s2&gt;]&lt;/s2&gt;&lt;/s0&gt;
+&lt;s3&gt;protection&lt;/s3&gt; &lt;s4&gt;=&lt;/s4&gt;&lt;s5&gt; manager&lt;/s5&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -11464,6 +11508,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s11&gt;AuthLDAPURL&lt;/s11&gt; ldap://localhost:389/ou=users,dc=example,dc=com???(objectClass=inetOrgPerson) TLS</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T202553Z" changeid="guimard">
+        <seg>&lt;s11&gt;AuthLDAPURL&lt;/s11&gt; ldap://localhost:389/ou=users,dc=example,dc=com???(objectClass=inetOrgPerson) TLS</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s11&gt;AuthType&lt;/s11&gt; Kerberos</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T155340Z" changeid="xavier">
@@ -11530,6 +11582,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
         <seg>&lt;s12&gt;CustomLog&lt;/s12&gt; /var/log/httpd/drupal-access.log combined
 &lt;/&lt;s13&gt;VirtualHost&lt;/s13&gt;&gt;
 &lt;&lt;s14&gt;VirtualHost&lt;/s14&gt; *:80&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s12&gt;Require&lt;/s12&gt; ldap-&lt;s13&gt;user&lt;/s13&gt; coudot xguimard tchemineau</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T202554Z" changeid="guimard">
+        <seg>&lt;s12&gt;Require&lt;/s12&gt; ldap-&lt;s13&gt;user&lt;/s13&gt; coudot xguimard tchemineau</seg>
       </tuv>
     </tu>
     <tu>
@@ -11730,6 +11790,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T065312Z" changeid="xavier">
         <seg>&lt;s14&gt;#&lt;Location /status&gt;&lt;/s14&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s14&gt;Options&lt;/s14&gt; +ExecCGI</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T202555Z" changeid="guimard">
+        <seg>&lt;s14&gt;Options&lt;/s14&gt; +ExecCGI</seg>
       </tuv>
     </tu>
     <tu>
@@ -12096,6 +12164,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T063909Z" changeid="xavier">
         <seg>&lt;s1&gt;# DocumentRoot&lt;/s1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s1&gt;AuthzLDAPAuthoritative&lt;/s1&gt; &lt;s2&gt;On&lt;/s2&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T202545Z" changeid="guimard">
+        <seg>&lt;s1&gt;AuthzLDAPAuthoritative&lt;/s1&gt; &lt;s2&gt;On&lt;/s2&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -12746,6 +12822,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s3&gt;AuthName&lt;/s3&gt; &lt;s4&gt;&quot;LL::NG Manager&quot;&lt;/s4&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T202546Z" changeid="guimard">
+        <seg>&lt;s3&gt;AuthName&lt;/s3&gt; &lt;s4&gt;&quot;LL::NG Manager&quot;&lt;/s4&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s3&gt;DocumentRoot&lt;/s3&gt; /usr/share/obm/php
  </seg>
       </tuv>
@@ -12898,6 +12982,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T065302Z" changeid="xavier">
         <seg>&lt;s4&gt;# la configuration est changée&lt;/s4&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s4&gt;Allow&lt;/s4&gt; from &lt;s5&gt;all&lt;/s5&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T203600Z" changeid="guimard">
+        <seg>&lt;s4&gt;Allow&lt;/s4&gt; from &lt;s5&gt;all&lt;/s5&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -13098,6 +13190,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s5&gt;AuthType&lt;/s5&gt; Basic</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T202547Z" changeid="guimard">
+        <seg>&lt;s5&gt;AuthType&lt;/s5&gt; Basic</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s5&gt;Deny&lt;/s5&gt; from &lt;s6&gt;all&lt;/s6&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T064058Z" changeid="xavier">
@@ -13226,6 +13326,22 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s6&gt;Allow&lt;/s6&gt; from 127.0.0.0/8 192.168.100.0/32</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T202429Z" changeid="guimard">
+        <seg>&lt;s6&gt;Allow&lt;/s6&gt; from 127.0.0.0/8 192.168.100.0/32</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s6&gt;AuthBasicProvider&lt;/s6&gt; ldap</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T202549Z" changeid="guimard">
+        <seg>&lt;s6&gt;AuthBasicProvider&lt;/s6&gt; ldap</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s6&gt;Deny&lt;/s6&gt; from &lt;s7&gt;all&lt;/s7&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T071016Z" changeid="xavier">
@@ -13250,6 +13366,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T072821Z" changeid="xavier">
         <seg>&lt;s6&gt;ErrorLog&lt;/s6&gt; /var/log/apache2/proxysite_error.log</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s6&gt;Options&lt;/s6&gt; +ExecCGI</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T203601Z" changeid="guimard">
+        <seg>&lt;s6&gt;Options&lt;/s6&gt; +ExecCGI</seg>
       </tuv>
     </tu>
     <tu>
@@ -13376,6 +13500,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T155336Z" changeid="xavier">
         <seg>&lt;s7&gt;Allow&lt;/s7&gt; from &lt;s8&gt;all&lt;/s8&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s7&gt;AuthLDAPBindDN&lt;/s7&gt; &lt;s8&gt;&quot;ou=websso,ou=applications,dc=example,dc=com&quot;&lt;/s8&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T202550Z" changeid="guimard">
+        <seg>&lt;s7&gt;AuthLDAPBindDN&lt;/s7&gt; &lt;s8&gt;&quot;ou=websso,ou=applications,dc=example,dc=com&quot;&lt;/s8&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -13586,6 +13718,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112253Z" changeid="xavier">
         <seg>&lt;s9&gt;&quot;auto_update&quot;&lt;/s9&gt;           &lt;s10&gt;=&gt;&lt;/s10&gt; &lt;s11&gt;true&lt;/s11&gt;&lt;s12&gt;,&lt;/s12&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s9&gt;AuthLDAPBindPassword&lt;/s9&gt; &lt;s10&gt;&quot;secret&quot;&lt;/s10&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T202550Z" changeid="guimard">
+        <seg>&lt;s9&gt;AuthLDAPBindPassword&lt;/s9&gt; &lt;s10&gt;&quot;secret&quot;&lt;/s10&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -14524,6 +14664,22 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Apache based protection</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T202030Z" changeid="guimard">
+        <seg>Protection basée sur Apache</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Apache based protection allow to be be independent from WebSSO, so Manager will always be reachable even if WebSSO configuration is corrupted.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T202219Z" changeid="guimard">
+        <seg>Une protection basée sur Apache permet d'être indépendant du WebSSO, ainsi le manager est toujours accessible même si la configuration du WebSSO est corrompue.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Apache built-in modules (Kerberos, NTLM , OTP, …)</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -15156,6 +15312,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Before enabling Manager protection by &lt;a0&gt;LL::NG&lt;/a0&gt;, you must have configured how users authenticate on Portal, and test that you can log in without difficulties.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T202857Z" changeid="guimard">
+        <seg>Avant d'activer la protection du manager par &lt;a0&gt;LL::NG&lt;/a0&gt;, il faut avoir configuré la méthode d'authentification sur le portail et véifier qu'on peut s'y connecter sans difficultés.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Before installing the packages, install &lt;a0&gt;dependencies&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T093737Z" changeid="xavier">
@@ -15324,6 +15488,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>But you will rather prefer to use an Apache authentication module, like for example &lt;a0&gt;LDAP authentication module&lt;/a0&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T202544Z" changeid="guimard">
+        <seg>Il est souvent souhaitable d'utiliser un module d'authentification Apache, tel par exemple le &lt;a0&gt;module d'authentification LDAP&lt;/a0&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>By alphabetical order:</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -15448,6 +15620,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Par défautBy, le module de session principal est utilisé pour stocker les données temporaires &lt;a0&gt;SAML&lt;/a0&gt; (tel les états de relais), mais les sessions &lt;a1&gt;SAML&lt;/a1&gt; doivent disposer d'un module compatible avec les &lt;a2&gt;fonctionnalités de restrictions des sessions&lt;/a2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>By default, you will have a manager virtual host define in configuration.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T203037Z" changeid="guimard">
+        <seg>Par défaut, il existe un hôte virtuel défini dans la configuration.</seg>
       </tuv>
     </tu>
     <tu>
@@ -17124,6 +17304,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Else, you will lock access to Manager and will never access it anymore.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T202946Z" changeid="guimard">
+        <seg>Sinon, on risque de verrouiller l'accès au manager et ne plus pouvoir y accéder.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Email</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -17160,6 +17348,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T101221Z" changeid="xavier">
         <seg>Activer les opérations étendues de changement de mot de passe si vous voulez changer le mot de passe dans AD</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Enable protection on Manager, by editing &lt;c0&gt;lemonldap-ng.ini&lt;/c0&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T203448Z" changeid="guimard">
+        <seg>Activer la protection du manager, en éditant &lt;c0&gt;lemonldap-ng.ini&lt;/c0&gt;:</seg>
       </tuv>
     </tu>
     <tu>
@@ -18900,6 +19096,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If for an obscure reason, the WebSSO is not working and you want to access the Manager, remove the protection in &lt;c0&gt;lemonldap-ng.ini&lt;/c0&gt; and reconfigure Apache access control.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T203935Z" changeid="guimard">
+        <seg>Si pour une quelconque raison le WebSSO ne fonctionne pas, pour accéder au manager, supprimer la protection dans &lt;c0&gt;lemonldap-ng.ini&lt;/c0&gt; et reconfigurer le contrôle d'accès d'Apache.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If needed, you can &lt;a0&gt;recompile the valve from the sources&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T190519Z" changeid="xavier">
@@ -18952,6 +19156,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T060518Z" changeid="xavier">
         <seg>Si aucune valeur n'est indiquée, le premier format de NameID activé dans les métadatas sera utilisé.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>If not Go on Manager, and declare Manager as a new &lt;a0&gt;virtual host&lt;/a0&gt;, for example &lt;c1&gt;manager.example.com&lt;/c1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T203120Z" changeid="guimard">
+        <seg>Si non, aller dans le manager et déclarer le manager comme un nouvel &lt;a0&gt;hôte virtuel&lt;/a0&gt;, par exemple &lt;c1&gt;manager.example.com&lt;/c1&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -20356,6 +20568,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>LL::NG based protection</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T202735Z" changeid="guimard">
+        <seg>Protection basée sur LL::NG</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>LL::NG repository</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T093528Z" changeid="xavier">
@@ -21244,6 +21464,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Manager protection</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T201809Z" changeid="guimard">
+        <seg>Protection du manager</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Manager translation</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -21576,6 +21804,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T112919Z" changeid="xavier">
         <seg>No configuration found</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>No headers are needed.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T203151Z" changeid="guimard">
+        <seg>Aucun en-tête n'est nécessaire.</seg>
       </tuv>
     </tu>
     <tu>
@@ -23052,6 +23288,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Remove Apache access control:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T203508Z" changeid="guimard">
+        <seg>Supprimer le contrôle d'accès Apache :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Replace MySQL by Apache::Session::Flex</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -23104,6 +23348,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Le point d'accès des réponses peut être vide car les réponses &lt;a0&gt;SOAP&lt;/a0&gt; sont directement retournées (connexions synchrones).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Restart Apache and try to log on Manager.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T203622Z" changeid="guimard">
+        <seg>Redémarrer Apache et tenter de se connecter au manager.</seg>
       </tuv>
     </tu>
     <tu>
@@ -23416,6 +23668,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T072816Z" changeid="xavier">
         <seg>La même chose avec le serveur distant configuré avec le même nom d'hôte :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Save the configuration and exit the Manager.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T203342Z" changeid="guimard">
+        <seg>Sauver la configuration et quitter le manager.</seg>
       </tuv>
     </tu>
     <tu>
@@ -24764,6 +25024,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The configuration can be changed in &lt;c0&gt;etc/manager-apache2.conf&lt;/c0&gt;, for example te restrict the &lt;a1&gt;IP&lt;/a1&gt; allowed to access the Manager:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T202426Z" changeid="guimard">
+        <seg>Cette configuration peut être changée dans &lt;c0&gt;etc/manager-apache2.conf&lt;/c0&gt;, par exemple pour restreindre les adresses &lt;a1&gt;IP&lt;/a1&gt; autorisées à accéder au manager :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The configuration is displayed as a big &lt;a0&gt;Perl&lt;/a0&gt; Hash, that you can edit:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T111225Z" changeid="xavier">
@@ -24848,6 +25116,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T182717Z" changeid="xavier">
         <seg>Le format de date est celui de la syntaxe des dates &lt;a0&gt;LDAP&lt;/a0&gt;, par exemple pour le 1er Mars 2009 :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The default rule is:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T203201Z" changeid="guimard">
+        <seg>La règle par défaut est :</seg>
       </tuv>
     </tu>
     <tu>
@@ -24968,6 +25244,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T154504Z" changeid="xavier">
         <seg>Ce module doit être chargé par Apache (directive LoadModule).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The next time you will access Manager, it will be trough &lt;a0&gt;LL::NG&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T203428Z" changeid="guimard">
+        <seg>En retournant vers le manager, ce sera via &lt;a0&gt;LL::NG&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -27252,6 +27536,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>When installing &lt;a0&gt;LL::NG&lt;/a0&gt;, the Manager can only be accessed with the demo account &lt;c1&gt;dwho&lt;/c1&gt; This How To explains how change this default behavior to protect Manager with other rules.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T202019Z" changeid="guimard">
+        <seg>Lorsqu'on install &lt;a0&gt;LL::NG&lt;/a0&gt;, le manager n'est accessible que via le compte de démonstration &lt;c1&gt;dwho&lt;/c1&gt;. Ce document explique comment changer ce comportement par défaut pour protéger le manager avec d'autres règles.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>When it takes “false”, &lt;a1&gt;HTTP&lt;/a1&gt; headers have to be sent by &lt;a2&gt;LL::NG&lt;/a2&gt; to make authentication.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T191247Z" changeid="xavier">
@@ -27980,10 +28272,26 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can then add the Manager as &lt;a0&gt;an application in the menu&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T203728Z" changeid="guimard">
+        <seg>On peut aussi ajouter le manager dans les &lt;a0&gt;applications du menu&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You can then choose any other module for users and password.</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Vous pouvez ensuite choisir vos modules d'utilisateurs et de mots-de-passe.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can then set the access rule.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T203138Z" changeid="guimard">
+        <seg>Définir ensuite les règles d'accès.</seg>
       </tuv>
     </tu>
     <tu>
@@ -28056,6 +28364,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T100015Z" changeid="xavier">
         <seg>Il faut ensuite installer tous les paquets téléchargés :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You have to change it to match your admin user (or use other conditions like group membership, or any other rule based on a session variable).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T203325Z" changeid="guimard">
+        <seg>Il faut la changer pour correspondre au nouvel administrateur (ou utiliser une autre conditions telle l'appartenance aux groupes ou tout autre règle basée sur des variables de session).</seg>
       </tuv>
     </tu>
     <tu>
@@ -28252,6 +28568,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You need to disable default Manager protection to rely only on Apache:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T202631Z" changeid="guimard">
+        <seg>Il faut alors désactiver la protection du manager pour la confier à Apache :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You need to forward the password, which can be the user main password (if &lt;a0&gt;password is stored in session&lt;/a0&gt;, or any user attribute (if you keep secondary passwords in users database).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T113027Z" changeid="xavier">
@@ -28312,6 +28636,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T114446Z" changeid="xavier">
         <seg>Il est possible de trouver un paquet pour beaucoup de distributions avec une petite recherche sur le web.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You should be redirected to &lt;a0&gt;LL::NG&lt;/a0&gt; Portal.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T203647Z" changeid="guimard">
+        <seg>On doit être redirigé vers le portail &lt;a0&gt;LL::NG&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -31496,6 +31828,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T153819Z" changeid="xavier">
         <seg>http://httpd.apache.org/docs/current/howto/auth.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://httpd.apache.org/docs/current/mod/mod_authnz_ldap.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T202432Z" changeid="guimard">
+        <seg>http://httpd.apache.org/docs/current/mod/mod_authnz_ldap.html</seg>
       </tuv>
     </tu>
     <tu>
