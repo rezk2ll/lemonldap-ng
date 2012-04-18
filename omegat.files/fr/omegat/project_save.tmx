@@ -6592,6 +6592,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; has a logout forward mechanism, that will add a step in logout process, to send logout requests (indeed, GET requests on application logout &lt;a1&gt;URL&lt;/a1&gt;) inside hidden iframes.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T195805Z" changeid="guimard">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; dispose d'un dispositif de propagation de déconnexion qui ajoute une étape à ce processus pour envoyer des requêtes de déconnexion (en pratique, des requêtes GET vers des &lt;a1&gt;URL&lt;/a1&gt; de déconnexion) dans des iframes cachées.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; is a web single-sign-on system, but unlike some systems it can manage rights on applications based on regular expressions on &lt;a1&gt;URL&lt;/a1&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -17112,6 +17120,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Even if LL:NG can catch logout &lt;a0&gt;URL&lt;/a0&gt; trough &lt;a1&gt;virtual host rules&lt;/a1&gt;, you can have the need to forward a logout to other applications, to close their local sessions.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T195614Z" changeid="guimard">
+        <seg>Même si LL:NG peut intercepter les &lt;a0&gt;URL&lt;/a0&gt; de déconnexion via les &lt;a1&gt;règles de d'hôte virtuel&lt;/a1&gt;, on peut avoir besoin de propager la déconnexion à d'autres applications, pour clore leurs sessions locales.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Example</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -20884,6 +20900,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Déconnexion</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Logout forward</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T195432Z" changeid="guimard">
+        <seg>Propagation de déconnexion</seg>
       </tuv>
     </tu>
     <tu>
