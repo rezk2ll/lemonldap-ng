@@ -1564,6 +1564,14 @@ deb-src http://lemonldap-ng.org/deb squeeze main</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.2/ldapsessionbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T113734Z" changeid="xavier">
+        <seg>../../documentation/1.2/ldapsessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.2/logoutforward.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T114754Z" changeid="xavier">
@@ -6628,6 +6636,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T190332Z" changeid="xavier">
         <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; fournit une valve, disponible sur &lt;a1&gt;page de téléchargement&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; use 2 internal databases to store its configuration and sessions.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T113618Z" changeid="xavier">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; utilise 2 bases de données interne pour stocker ses configuration et sessions.</seg>
       </tuv>
     </tu>
     <tu>
@@ -15784,6 +15800,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Configure LemonLDAP::NG to use LDAP as main database</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T113549Z" changeid="xavier">
+        <seg>Configurer LemonLDAP::NG pour utiliser LDAP comme base de données principale</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Configure Liferay virtual host like other &lt;a0&gt;protected virtual host&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074248Z" changeid="xavier">
@@ -16012,6 +16036,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T194737Z" changeid="xavier">
         <seg>Convertir les en-têtes HTTP en variables d'environnement</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Convert existing configuration</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T113722Z" changeid="xavier">
+        <seg>Convertir la configuration existante</seg>
       </tuv>
     </tu>
     <tu>
@@ -17404,6 +17436,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112902Z" changeid="xavier">
         <seg>Prénom</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Follow &lt;a0&gt;LDAP session backend&lt;/a0&gt; doc</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T113805Z" changeid="xavier">
+        <seg>Suivre la documentation &lt;a0&gt;backend de sessions LDAP&lt;/a0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -22360,6 +22400,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Prepare the LDAP server and the LL::NG configuration file</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T113706Z" changeid="xavier">
+        <seg>Préparer le serveur LDAP et le fichier de configuration LL::NG</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Prepare your new lemonldap-ng.ini file</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T124544Z" changeid="xavier">
@@ -23980,6 +24028,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Page de status</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Steps:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T113640Z" changeid="xavier">
+        <seg>Étapes :</seg>
       </tuv>
     </tu>
     <tu>
@@ -26224,6 +26280,22 @@ Is this ok [y/N]: y</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Utiliser Apache::Session::Browseable</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Use LDAP for configuration</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T113633Z" changeid="xavier">
+        <seg>Utiliser LDAP pour la configuration</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Use LDAP for sessions</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T113733Z" changeid="xavier">
+        <seg>Utiliser LDAP pour les sessions</seg>
       </tuv>
     </tu>
     <tu>
@@ -29812,6 +29884,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T163154Z" changeid="xavier">
         <seg>documentation:1.2:ldapconfbackend</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:ldapsessionbackend</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120418T113735Z" changeid="xavier">
+        <seg>documentation:1.2:ldapsessionbackend</seg>
       </tuv>
     </tu>
     <tu>
