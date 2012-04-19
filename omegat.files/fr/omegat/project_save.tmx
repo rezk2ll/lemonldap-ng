@@ -6144,6 +6144,22 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;CAS&lt;/a0&gt; &lt;a1&gt;PGT&lt;/a1&gt; temporary file</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061027Z" changeid="guimard">
+        <seg>Fichier temporaire &lt;a1&gt;PGT&lt;/a1&gt; de &lt;a0&gt;CAS&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;CAS&lt;/a0&gt; CA file</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T060845Z" changeid="guimard">
+        <seg>Fichier d'AC de &lt;a0&gt;CAS&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;CAS&lt;/a0&gt; Session backend</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -6156,6 +6172,22 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv lang="FR-FR">
         <seg>Options du module de stockage &lt;a0&gt;CAS&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;CAS&lt;/a0&gt; access control policy</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061215Z" changeid="guimard">
+        <seg>Politique de contrôle d'accès &lt;a0&gt;CAS&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;CAS&lt;/a0&gt; attribute for login</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061157Z" changeid="guimard">
+        <seg>Attribut &lt;a0&gt;CAS&lt;/a0&gt; pour le nom de connexion</seg>
       </tuv>
     </tu>
     <tu>
@@ -6176,10 +6208,90 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;CAS&lt;/a0&gt; force authentication renewal</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061120Z" changeid="guimard">
+        <seg>Forcer le renouvellement d'authentification &lt;a0&gt;CAS&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;CAS&lt;/a0&gt; force gateway authentication</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T060958Z" changeid="guimard">
+        <seg>Forcer l'authentification de passerelle &lt;a0&gt;CAS&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;CAS&lt;/a0&gt; proxied services</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061053Z" changeid="guimard">
+        <seg>Services mandatés de &lt;a0&gt;CAS&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;CAS&lt;/a0&gt; server &lt;a1&gt;URL&lt;/a1&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061139Z" changeid="guimard">
+        <seg>&lt;a1&gt;URL&lt;/a1&gt; du serveur &lt;a0&gt;CAS&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;CAS&lt;/a0&gt;_CAFile</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T060848Z" changeid="guimard">
+        <seg>&lt;a0&gt;CAS&lt;/a0&gt;_CAFile</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;CAS&lt;/a0&gt;_authnLevel</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;a0&gt;CAS&lt;/a0&gt;_authnLevel</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;CAS&lt;/a0&gt;_gateway</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061000Z" changeid="guimard">
+        <seg>&lt;a0&gt;CAS&lt;/a0&gt;_gateway</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;CAS&lt;/a0&gt;_pgtFile</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061032Z" changeid="guimard">
+        <seg>&lt;a0&gt;CAS&lt;/a0&gt;_pgtFile</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;CAS&lt;/a0&gt;_proxiedServices</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061055Z" changeid="guimard">
+        <seg>&lt;a0&gt;CAS&lt;/a0&gt;_proxiedServices</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;CAS&lt;/a0&gt;_renew</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061122Z" changeid="guimard">
+        <seg>&lt;a0&gt;CAS&lt;/a0&gt;_renew</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;CAS&lt;/a0&gt;_url</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061141Z" changeid="guimard">
+        <seg>&lt;a0&gt;CAS&lt;/a0&gt;_url</seg>
       </tuv>
     </tu>
     <tu>
@@ -6212,6 +6324,150 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;a0&gt;Cpan test error&lt;/a0&gt; by guimard (2010/11/26 20:03)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;DBI&lt;/a0&gt; Authentication table</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061429Z" changeid="guimard">
+        <seg>Table d'authentification &lt;a0&gt;DBI&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;DBI&lt;/a0&gt; Connection chain</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061254Z" changeid="guimard">
+        <seg>Chaîne de connexion &lt;a0&gt;DBI&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;DBI&lt;/a0&gt; Connection password</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061343Z" changeid="guimard">
+        <seg>Mot-de-passe de connexion &lt;a0&gt;DBI&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;DBI&lt;/a0&gt; Connection user</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061446Z" changeid="guimard">
+        <seg>Nom de connexion &lt;a0&gt;DBI&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;DBI&lt;/a0&gt; Login column</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061316Z" changeid="guimard">
+        <seg>Colonne de nom de connexion &lt;a0&gt;DBI&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;DBI&lt;/a0&gt; Mail column</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061457Z" changeid="guimard">
+        <seg>Colonne mail &lt;a0&gt;DBI&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;DBI&lt;/a0&gt; Password column</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061356Z" changeid="guimard">
+        <seg>Colonne du mot-de-passe &lt;a0&gt;DBI&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;DBI&lt;/a0&gt; Password hash</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061416Z" changeid="guimard">
+        <seg>Hachage de mot-de-passe &lt;a0&gt;DBI&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;DBI&lt;/a0&gt; Pivot from user table</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064628Z" changeid="guimard">
+        <seg>Pivot &lt;a0&gt;DBI&lt;/a0&gt; pour la table utilisateur</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;DBI&lt;/a0&gt; UserDB connection chain</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061512Z" changeid="guimard">
+        <seg>Chaîne de connexion UserDB &lt;a0&gt;DBI&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;DBI&lt;/a0&gt; UserDB connection password</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061530Z" changeid="guimard">
+        <seg>Mot-de-passe de connexion UserDB &lt;a0&gt;DBI&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;DBI&lt;/a0&gt; UserDB connection user</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061606Z" changeid="guimard">
+        <seg>Compte de connexion UserDB &lt;a0&gt;DBI&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;DBI&lt;/a0&gt; UserDB table</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061542Z" changeid="guimard">
+        <seg>Table UserDB &lt;a0&gt;DBI&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;DBI&lt;/a0&gt; authentication level</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061329Z" changeid="guimard">
+        <seg>Niveau d'authentification &lt;a0&gt;DBI&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;DBI&lt;/a0&gt; connection string</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T070031Z" changeid="guimard">
+        <seg>Chaîne de connexion &lt;a0&gt;DBI&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;DBI&lt;/a0&gt; password</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T070048Z" changeid="guimard">
+        <seg>Mot-de-passe &lt;a0&gt;DBI&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;DBI&lt;/a0&gt; table name</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T070056Z" changeid="guimard">
+        <seg>Nom de table &lt;a0&gt;DBI&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;DBI&lt;/a0&gt; user</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T070041Z" changeid="guimard">
+        <seg>Utilisateur &lt;a0&gt;DBI&lt;/a0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -6416,6 +6672,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; activate recursive groups</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T062246Z" changeid="guimard">
+        <seg>Activer les groupes récursifs &lt;a0&gt;LDAP&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;LDAP&lt;/a0&gt; attribute</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T120425Z" changeid="xavier">
@@ -6432,10 +6696,74 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; authentication level</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061634Z" changeid="guimard">
+        <seg>Niveau d'authentification &lt;a0&gt;LDAP&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;LDAP&lt;/a0&gt; authentication search filter</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Filtre de recherche &lt;a0&gt;LDAP&lt;/a0&gt; pour l'authentification</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; base</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T070131Z" changeid="guimard">
+        <seg>Base &lt;a0&gt;LDAP&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; binary attributes</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T062320Z" changeid="guimard">
+        <seg>Attributs binaires &lt;a0&gt;LDAP&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; bind dn</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T070140Z" changeid="guimard">
+        <seg>Dn de connexion &lt;a0&gt;LDAP&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; bind password</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T070150Z" changeid="guimard">
+        <seg>Mot-de-passe de connexion &lt;a0&gt;LDAP&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; change password as user</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061709Z" changeid="guimard">
+        <seg>Changement de mot-de-passe &lt;a0&gt;LDAP&lt;/a0&gt; en tant qu'utilisateur</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; extended SetPassword modify</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063058Z" changeid="guimard">
+        <seg>Active la modification étendue de mot-de-passe &lt;a0&gt;LDAP&lt;/a0&gt; (SetPassword)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; group link attribute name</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061942Z" changeid="guimard">
+        <seg>Nom d'attribut de lien de groupe &lt;a0&gt;LDAP&lt;/a0&gt; (récursivité)</seg>
       </tuv>
     </tu>
     <tu>
@@ -6452,6 +6780,22 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv lang="FR-FR">
         <seg>Attribut de membre d'un groupe &lt;a0&gt;LDAP&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; groups member link value</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T062221Z" changeid="guimard">
+        <seg>Valeur de lien de membre de groupe &lt;a0&gt;LDAP&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; groups name attribute</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T062002Z" changeid="guimard">
+        <seg>Attribut de nom de groupes &lt;a0&gt;LDAP&lt;/a0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -6480,6 +6824,22 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; modify password reset attribute</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063207Z" changeid="guimard">
+        <seg>Utiliser l'attribut de réinitialisation de mot-de-passe &lt;a0&gt;LDAP&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; password encoding</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T062309Z" changeid="guimard">
+        <seg>Encodage de mots-de-passe &lt;a0&gt;LDAP&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;LDAP&lt;/a0&gt; password policy control</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -6488,10 +6848,42 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; password reset attribute name</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063229Z" changeid="guimard">
+        <seg>Nom de l'attribut de réinitialisation de mot-de-passe &lt;a0&gt;LDAP&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; password reset attribute true value</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063304Z" changeid="guimard">
+        <seg>Valeur positive de l'attribut de réinitialisation de mot-de-passe &lt;a0&gt;LDAP&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; port</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T070126Z" changeid="guimard">
+        <seg>Port &lt;a0&gt;LDAP&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;LDAP&lt;/a0&gt; search base</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Base de recherche &lt;a0&gt;LDAP&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; server</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T070120Z" changeid="guimard">
+        <seg>Serveur &lt;a0&gt;LDAP&lt;/a0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -6536,10 +6928,26 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; timeout</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063119Z" changeid="guimard">
+        <seg>Délai de connexion maximal &lt;a0&gt;LDAP&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;LDAP&lt;/a0&gt; v2 and v3 protocol support</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Support des protocoles &lt;a0&gt;LDAP&lt;/a0&gt; v2 et v3</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; version</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063127Z" changeid="guimard">
+        <seg>Version &lt;a0&gt;LDAP&lt;/a0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -6864,6 +7272,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LWP::UserAgent&lt;/a0&gt; parameters</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T070302Z" changeid="guimard">
+        <seg>Paramètre &lt;a0&gt;LWP::UserAgent&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;Lasso dependency version&lt;/a0&gt; by guimard (2010/12/05 09:22)</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -7000,10 +7416,26 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;SMTP&lt;/a0&gt; password</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064106Z" changeid="guimard">
+        <seg>Mot-de-passe &lt;a0&gt;SMTP&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;SMTP&lt;/a0&gt; server</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Serveur &lt;a0&gt;SMTP&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;SMTP&lt;/a0&gt; user</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064057Z" changeid="guimard">
+        <seg>Utilisateur &lt;a0&gt;SMTP&lt;/a0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -7020,6 +7452,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T064000Z" changeid="xavier">
         <seg>Points d'accès &lt;a0&gt;SOAP&lt;/a0&gt; (désactivés par défaut) :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;SOAP&lt;/a0&gt; server location (&lt;a1&gt;URL&lt;/a1&gt;)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T070251Z" changeid="guimard">
+        <seg>Emplacement du serveur &lt;a0&gt;SOAP&lt;/a0&gt; (&lt;a1&gt;URL&lt;/a1&gt;)</seg>
       </tuv>
     </tu>
     <tu>
@@ -7044,6 +7484,38 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;a0&gt;SSL&lt;/a0&gt; X509</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;SSL&lt;/a0&gt; authentication level</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064213Z" changeid="guimard">
+        <seg>Niveau d'authentification &lt;a0&gt;SSL&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;SSL&lt;/a0&gt; force &lt;a1&gt;SSL&lt;/a1&gt; authentication</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064339Z" changeid="guimard">
+        <seg>Exiger l'authentification &lt;a1&gt;SSL&lt;/a1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;SSL&lt;/a0&gt; map with &lt;a1&gt;LDAP&lt;/a1&gt; attribute</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064306Z" changeid="guimard">
+        <seg>Attribut &lt;a1&gt;LDAP&lt;/a1&gt; à relier à &lt;a0&gt;SSL&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;SSL&lt;/a0&gt; user field in certificate</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064355Z" changeid="guimard">
+        <seg>Champ utilisateur dans le certificat &lt;a0&gt;SSL&lt;/a0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -16160,6 +16632,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>CDBI / RDBI</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T070035Z" changeid="guimard">
+        <seg>CDBI / RDBI</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>CMS, Portal</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T153547Z" changeid="xavier">
@@ -16256,6 +16736,22 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Certificate authorities directory</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T070230Z" changeid="guimard">
+        <seg>Répertoire des autorités de certification</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Certificate authorities file</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T070217Z" changeid="guimard">
+        <seg>Fichiers des autorités de certification</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Change &lt;s0&gt;mydomain.org&lt;/s0&gt; (in &lt;c1&gt;AssertionConsumerService&lt;/c1&gt; markup, parameter &lt;c2&gt;Location&lt;/c2&gt;) into your Google Apps domain.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T194935Z" changeid="xavier">
@@ -16308,6 +16804,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Journal des changements</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Check &lt;a0&gt;XSS&lt;/a0&gt; Attacks</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T065933Z" changeid="guimard">
+        <seg>Recherche les attaques &lt;a0&gt;XSS&lt;/a0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -16500,6 +17004,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T142609Z" changeid="xavier">
         <seg>Le backend de configuration peut être indiqué dans le &lt;a0&gt;fichier local de configuration&lt;/a0&gt;, dans la section &lt;c1&gt;configuration&lt;/c1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Configuration backend parameters</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T070021Z" changeid="guimard">
+        <seg>Paramètres des backends de configuration</seg>
       </tuv>
     </tu>
     <tu>
@@ -16896,6 +17408,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Cookie Javascript protection</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T065822Z" changeid="guimard">
+        <seg>Protection Javascript du cookie</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Cookie expiration</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -17032,6 +17552,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Custom &lt;a0&gt;SOAP&lt;/a0&gt; Services</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061245Z" changeid="guimard">
+        <seg>Services &lt;a0&gt;SOAP&lt;/a0&gt; personnalisés</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Custom XSLT file</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T053759Z" changeid="guimard">
@@ -17060,6 +17588,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T112334Z" changeid="xavier">
         <seg>Custom-Header =&gt; function1($uid)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>CustomSOAPServices</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061246Z" changeid="guimard">
+        <seg>CustomSOAPServices</seg>
       </tuv>
     </tu>
     <tu>
@@ -17116,6 +17652,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T112715Z" changeid="xavier">
         <seg>Les données ne doivent pas contenir de caractères spéciaux, car le protocole &lt;a0&gt;HTTP&lt;/a0&gt; n'autorise que les caractères &lt;a1&gt;ASCII&lt;/a1&gt; dans les en-têtes (mais suivant le serveur &lt;a2&gt;HTTP&lt;/a2&gt;, vous pouvez utiliser des valeurs encodées &lt;a3&gt;ISO&lt;/a3&gt;)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Data to store as REMOTE_USER (used also in Apache logs)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064711Z" changeid="guimard">
+        <seg>Donnée à utiliser comme REMOTE_USER (également utilisée dans les journaux d'Apache)</seg>
       </tuv>
     </tu>
     <tu>
@@ -17276,6 +17820,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T194537Z" changeid="xavier">
         <seg>Definir ici :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Delay between check of local configuration</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063915Z" changeid="guimard">
+        <seg>Delai entre 2 examens de la configuration locale</seg>
       </tuv>
     </tu>
     <tu>
@@ -19432,6 +19984,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Hide old password in reset form</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T065005Z" changeid="guimard">
+        <seg>Masquer l'ancien mot-de-passe dans le formulaire de réinitialisation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>High availability</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120227T192530Z" changeid="xavier">
@@ -21128,6 +21688,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>LDAPFilter</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061710Z" changeid="guimard">
+        <seg>LDAPFilter</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>LDAPFilter &lt;s19&gt;=&gt;&lt;/s19&gt; &lt;s20&gt;'(&amp;(sAMAccountName=$user)(objectClass=person))'&lt;/s20&gt;&lt;s21&gt;,&lt;/s21&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T150009Z" changeid="xavier">
@@ -21744,6 +22312,22 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Local cache</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063314Z" changeid="guimard">
+        <seg>Cache local</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Local cache parameters</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063326Z" changeid="guimard">
+        <seg>Paramètres du cache local</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Local documentation is open to all:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T064852Z" changeid="xavier">
@@ -21968,6 +22552,22 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Mail charset</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063357Z" changeid="guimard">
+        <seg>Table de caractères des mails</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Mail reset request timeout</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063440Z" changeid="guimard">
+        <seg>Délai maximal des requêtes de réinitialisation des mails</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Mail, Agenda, Groupware</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T153525Z" changeid="xavier">
@@ -22096,6 +22696,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Manager menu organization</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063532Z" changeid="guimard">
+        <seg>Organisation du menu du manager</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Manager protection</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T201809Z" changeid="guimard">
@@ -22104,10 +22712,42 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Manager skin</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063551Z" changeid="guimard">
+        <seg>Thème du manager</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Manager theme</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063540Z" changeid="guimard">
+        <seg>Thème du manager</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Manager translation</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Traduction du manager</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Manager tree JQuery &lt;a0&gt;CSS&lt;/a0&gt; file</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063641Z" changeid="guimard">
+        <seg>Fichier &lt;a0&gt;CSS&lt;/a0&gt; de l'arbre JQuery du manager</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Manager tree autoClose</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063614Z" changeid="guimard">
+        <seg>Auto-fermeture de l'arbre du manager</seg>
       </tuv>
     </tu>
     <tu>
@@ -22300,6 +22940,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T145349Z" changeid="xavier">
         <seg>Multi Remote $ENV{REMOTE_ADDR}=~/^192/;LDAP $ENV{REMOTE_ADDR}!~/^192/'</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Multi overridden parameters</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063701Z" changeid="guimard">
+        <seg>Paramètres surchargés pour &quot;Multi&quot;</seg>
       </tuv>
     </tu>
     <tu>
@@ -22552,6 +23200,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Notification uid for all users</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063737Z" changeid="guimard">
+        <seg>Nom de compte de notification pour tous les utilisateurs</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Notifications</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -22620,6 +23276,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120121T080232Z" changeid="xavier">
         <seg>Null</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Null authentication level</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063751Z" changeid="guimard">
+        <seg>Niveau d'authentification de Null</seg>
       </tuv>
     </tu>
     <tu>
@@ -22912,10 +23576,34 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>OpenID allowed domains</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063818Z" changeid="guimard">
+        <seg>Domaines autorisés pour OpenID</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>OpenID authentication can proposed as an alternate authentication scheme using the &lt;a0&gt;authentication choice&lt;/a0&gt; method.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120214T045742Z" changeid="xavier">
         <seg>L'authentification OpenID peut être proposée en choix alternatif en utilisant la méthode d'authentification &lt;a0&gt;choice&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>OpenID authentication level</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063802Z" changeid="guimard">
+        <seg>Niveau d'authentification d'OpenID</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>OpenID secret token</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063833Z" changeid="guimard">
+        <seg>Secret OpenID</seg>
       </tuv>
     </tu>
     <tu>
@@ -23752,6 +24440,30 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Proxy cookie name</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063948Z" changeid="guimard">
+        <seg>Nom du cookie du proxy</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Proxy portal &lt;a0&gt;URL&lt;/a0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064123Z" changeid="guimard">
+        <seg>&lt;a0&gt;URL&lt;/a0&gt; du portail mandataire</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Proxy session &lt;a0&gt;SOAP&lt;/a0&gt; end point</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064201Z" changeid="guimard">
+        <seg>Point mandataire &lt;a0&gt;SOAP&lt;/a0&gt; de sessions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Proxy tickets will be collected at authentication phase and stored in user session under the form:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T155832Z" changeid="xavier">
@@ -23868,6 +24580,30 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T153918Z" changeid="xavier">
         <seg>Radius</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Radius authentication level</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T065902Z" changeid="guimard">
+        <seg>Niveau d'authentification de Radius</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Radius secret</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T065916Z" changeid="guimard">
+        <seg>Secret Radius</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Radius server</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T065910Z" changeid="guimard">
+        <seg>Serveur Radius</seg>
       </tuv>
     </tu>
     <tu>
@@ -24008,6 +24744,38 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Remote Session backend</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064029Z" changeid="guimard">
+        <seg>Backend de sessions distant</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Remote Session backend options</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064022Z" changeid="guimard">
+        <seg>Options du backend de sessions distant</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Remote cookie name</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063929Z" changeid="guimard">
+        <seg>Nom du cookie distant</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Remote portal</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064037Z" changeid="guimard">
+        <seg>Portail distant</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Remote user</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -24036,6 +24804,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Remplace les systèmes de sécurité basé sur les .htaccess</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Reply address</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063340Z" changeid="guimard">
+        <seg>Adresse de réponse</seg>
       </tuv>
     </tu>
     <tu>
@@ -24328,6 +25104,38 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>SMTPAuthPass</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064107Z" changeid="guimard">
+        <seg>SMTPAuthPass</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>SMTPAuthUser</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064058Z" changeid="guimard">
+        <seg>SMTPAuthUser</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>SMTPServer</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064048Z" changeid="guimard">
+        <seg>SMTPServer</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>SOAP</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T070253Z" changeid="guimard">
+        <seg>SOAP</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>SOAP configuration backend proxy</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T185034Z" changeid="xavier">
@@ -24364,6 +25172,38 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T150452Z" changeid="xavier">
         <seg>Authentification SSL</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>SSLAuthnLevel</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064215Z" changeid="guimard">
+        <seg>SSLAuthnLevel</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>SSLLDAPField</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064307Z" changeid="guimard">
+        <seg>SSLLDAPField</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>SSLRequire</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064340Z" changeid="guimard">
+        <seg>SSLRequire</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>SSLVar</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064357Z" changeid="guimard">
+        <seg>SSLVar</seg>
       </tuv>
     </tu>
     <tu>
@@ -24492,6 +25332,54 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Secure Sockets Layer</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Secure Token Memcached servers</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T065744Z" changeid="guimard">
+        <seg>Serveurs Memcached pour le composant sécurisé</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Secure Token allow requests in error</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T065402Z" changeid="guimard">
+        <seg>Le composant sécurisé autorise les requêtes en cas d'erreur</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Secure Token attribute</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T065417Z" changeid="guimard">
+        <seg>Attribut du composant sécurisé</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Secure Token expiration</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T065433Z" changeid="guimard">
+        <seg>Expiration du composant sécurisé</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Secure Token header</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T065444Z" changeid="guimard">
+        <seg>En-tête du composant sécurisé</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Secure Token protected URLs</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T065808Z" changeid="guimard">
+        <seg>URL protégées du composant sécurisé</seg>
       </tuv>
     </tu>
     <tu>
@@ -24720,6 +25608,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Send mail on password change</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T065852Z" changeid="guimard">
+        <seg>Envoyer des courriels lors des changements de mots-de-passe</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Send “Lastname, firstname” in Auth-Name:</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -24812,6 +25708,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T172408Z" changeid="xavier">
         <seg>L'historique des sessions est toujours visible dans l'explorateur de sessions pour les administrateurs.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Session key containing email address</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063511Z" changeid="guimard">
+        <seg>La clef de session contient l'adresse mail</seg>
       </tuv>
     </tu>
     <tu>
@@ -24932,6 +25836,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T062838Z" changeid="xavier">
         <seg>Signature</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Simple Mail Transfer Protocol</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064047Z" changeid="guimard">
+        <seg>Simple Mail Transfer Protocol</seg>
       </tuv>
     </tu>
     <tu>
@@ -25132,6 +26044,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T191331Z" changeid="xavier">
         <seg>Donc, si l'utilisateur n'est pas reconnu ou si l'en-tête &lt;a3&gt;HTTP&lt;/a3&gt; n'est pas présent, une erreur 403 est retournée.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Soap</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064108Z" changeid="guimard">
+        <seg>Soap</seg>
       </tuv>
     </tu>
     <tu>
@@ -25368,6 +26288,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Status module activation</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064415Z" changeid="guimard">
+        <seg>Activation du module de statut</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Status module can not be loaded without localStorage parameter</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T112845Z" changeid="xavier">
@@ -25396,6 +26324,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T052300Z" changeid="guimard">
         <seg>Stockage</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Storage directory</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T070107Z" changeid="guimard">
+        <seg>Répertoire de stockage</seg>
       </tuv>
     </tu>
     <tu>
@@ -25500,6 +26436,22 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111217T081401Z" changeid="xavier">
         <seg>Configuration Sympa</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Sympa mail session key</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064434Z" changeid="guimard">
+        <seg>Clef de session mail pour Sympa</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Sympa shared secret</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064445Z" changeid="guimard">
+        <seg>Secret partagé de Sympa</seg>
       </tuv>
     </tu>
     <tu>
@@ -27764,6 +28716,38 @@ Is this ok [y/N]: y</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Twitter application key</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064521Z" changeid="guimard">
+        <seg>Clef d'application de Twitter</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Twitter application name</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064459Z" changeid="guimard">
+        <seg>Nom d'application Twitter</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Twitter application secret</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064530Z" changeid="guimard">
+        <seg>Secret d'application Twitter</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Twitter authentication level</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064512Z" changeid="guimard">
+        <seg>Niveau d'authentification de Twitter</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Twitter use &lt;a1&gt;OAuth&lt;/a1&gt; protocol to allow applications to reuse its own authentication process (it means, if your are connected to Twitter, other applications can trust Twitter and let you in).</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -27932,6 +28916,14 @@ Is this ok [y/N]: y</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Use Safe Jail</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064605Z" changeid="guimard">
+        <seg>Utiliser la cage sécurisée</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Use XForwardedFor for &lt;a0&gt;IP&lt;/a0&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -27952,6 +28944,14 @@ Is this ok [y/N]: y</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>N'importe quelle donnée utilisateur peut être utilisée pour construire la règle</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Use redirect on error</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064552Z" changeid="guimard">
+        <seg>Utiliser les redirections en cas d'erreur</seg>
       </tuv>
     </tu>
     <tu>
@@ -29816,6 +30816,38 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Yubikey authentication level</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064937Z" changeid="guimard">
+        <seg>Niveau d'authentification de Yubikey</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Yubikey client ID</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064857Z" changeid="guimard">
+        <seg>ID client Yubikey</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Yubikey public ID size</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064924Z" changeid="guimard">
+        <seg>Taille de l'ID public Yubikey</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Yubikey secret key</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064908Z" changeid="guimard">
+        <seg>Clef secrète Yubikey</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Z</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -29836,6 +30868,22 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111222T180851Z" changeid="xavier">
         <seg>Paramètres du handler Zimbra</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Zimbra account session key</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064723Z" changeid="guimard">
+        <seg>Clef de session de compte Zimbra</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Zimbra account type</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064733Z" changeid="guimard">
+        <seg>Type de compte Zimbra</seg>
       </tuv>
     </tu>
     <tu>
@@ -29872,9 +30920,33 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Zimbra local &lt;a0&gt;SSO&lt;/a0&gt; &lt;a1&gt;URL&lt;/a1&gt; pattern</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064834Z" changeid="guimard">
+        <seg>Expression d'&lt;a1&gt;URL&lt;/a1&gt; &lt;a0&gt;SSO&lt;/a0&gt; locale pour Zimbra</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Zimbra preauth key</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111220T162939Z" changeid="xavier">
+        <seg>Clef de pré-authentification Zimbra</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Zimbra preauthentication &lt;a0&gt;URL&lt;/a0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064847Z" changeid="guimard">
+        <seg>&lt;a0&gt;URL&lt;/a0&gt; de pré-authentification Zimbra</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Zimbra preauthentication key</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064744Z" changeid="guimard">
         <seg>Clef de pré-authentification Zimbra</seg>
       </tuv>
     </tu>
@@ -30420,6 +31492,54 @@ apachectl restart</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>caFile</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T070218Z" changeid="guimard">
+        <seg>caFile</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>caPath</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T070231Z" changeid="guimard">
+        <seg>caPath</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>casAccessControlPolicy</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061217Z" changeid="guimard">
+        <seg>casAccessControlPolicy</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>casAttr</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061158Z" changeid="guimard">
+        <seg>casAttr</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>casStorage</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061219Z" changeid="guimard">
+        <seg>casStorage</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>casStorageOptions</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061221Z" changeid="guimard">
+        <seg>casStorageOptions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>cat /etc/lemonldap-ng/for_etc_hosts &gt;&gt; /etc/hosts</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T094400Z" changeid="xavier">
@@ -30456,6 +31576,14 @@ sudo make install</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T160443Z" changeid="xavier">
         <seg>cd trunk</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>cda</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061225Z" changeid="guimard">
+        <seg>cda</seg>
       </tuv>
     </tu>
     <tu>
@@ -30532,6 +31660,14 @@ sudo make install</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>checkXSS</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T065934Z" changeid="guimard">
+        <seg>checkXSS</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>chmod 750 /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/sessions/lock
 chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/sessions/lock</seg>
       </tuv>
@@ -30582,6 +31718,14 @@ chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/ses
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>configStorage</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061226Z" changeid="guimard">
+        <seg>configStorage</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>contact</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -30602,6 +31746,22 @@ chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/ses
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T124808Z" changeid="xavier">
         <seg>convertConfig --current=/etc/lemonldap-ng/lemonldap-ng.ini --new=/new/lemonldap-ng.ini</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>cookieExpiration</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061227Z" changeid="guimard">
+        <seg>cookieExpiration</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>cookieName</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061227Z" changeid="guimard">
+        <seg>cookieName</seg>
       </tuv>
     </tu>
     <tu>
@@ -30680,6 +31840,14 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>customFunctions</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061229Z" changeid="guimard">
+        <seg>customFunctions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>date datetime &lt;s3&gt;NOT&lt;/s3&gt; &lt;s4&gt;NULL&lt;/s4&gt;&lt;s5&gt;,&lt;/s5&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T053326Z" changeid="guimard">
@@ -30700,6 +31868,142 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T072312Z" changeid="xavier">
         <seg>dbi:mysql:dbname=sessions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>dbiAuthChain</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061256Z" changeid="guimard">
+        <seg>dbiAuthChain</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>dbiAuthLoginCol</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061317Z" changeid="guimard">
+        <seg>dbiAuthLoginCol</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>dbiAuthPassword</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061343Z" changeid="guimard">
+        <seg>dbiAuthPassword</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>dbiAuthPasswordCol</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061356Z" changeid="guimard">
+        <seg>dbiAuthPasswordCol</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>dbiAuthPasswordHash</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061416Z" changeid="guimard">
+        <seg>dbiAuthPasswordHash</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>dbiAuthTable</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061430Z" changeid="guimard">
+        <seg>dbiAuthTable</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>dbiAuthUser</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061447Z" changeid="guimard">
+        <seg>dbiAuthUser</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>dbiAuthnLevel</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061329Z" changeid="guimard">
+        <seg>dbiAuthnLevel</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>dbiChain</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T070033Z" changeid="guimard">
+        <seg>dbiChain</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>dbiPassword</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T070049Z" changeid="guimard">
+        <seg>dbiPassword</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>dbiPasswordMailCol</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061458Z" changeid="guimard">
+        <seg>dbiPasswordMailCol</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>dbiTable</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T070056Z" changeid="guimard">
+        <seg>dbiTable</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>dbiUser</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T070042Z" changeid="guimard">
+        <seg>dbiUser</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>dbiUserChain</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061512Z" changeid="guimard">
+        <seg>dbiUserChain</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>dbiUserPassword</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061530Z" changeid="guimard">
+        <seg>dbiUserPassword</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>dbiUserTable</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061542Z" changeid="guimard">
+        <seg>dbiUserTable</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>dbiUserUser</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061606Z" changeid="guimard">
+        <seg>dbiUserUser</seg>
       </tuv>
     </tu>
     <tu>
@@ -30744,6 +32048,14 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
         <seg>default_realm = EXAMPLE.COM
 
 [realms]</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>dirName</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T070112Z" changeid="guimard">
+        <seg>dirName</seg>
       </tuv>
     </tu>
     <tu>
@@ -32400,6 +33712,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>domain</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061615Z" changeid="guimard">
+        <seg>domain</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>domain &lt;s4&gt;=&gt;&lt;/s4&gt; &lt;s5&gt;'acme.com'&lt;/s5&gt;&lt;s6&gt;,&lt;/s6&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T072027Z" changeid="xavier">
@@ -32504,6 +33824,30 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>exportedAttr</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061617Z" changeid="guimard">
+        <seg>exportedAttr</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>exportedHeaders</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061618Z" changeid="guimard">
+        <seg>exportedHeaders</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>exportedVars</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061619Z" changeid="guimard">
+        <seg>exportedVars</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>field</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T171543Z" changeid="xavier">
@@ -32568,6 +33912,22 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>globalStorage</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061620Z" changeid="guimard">
+        <seg>globalStorage</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>globalStorageOptions</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061620Z" changeid="guimard">
+        <seg>globalStorageOptions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>googleapps</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111526Z" changeid="xavier">
@@ -32576,10 +33936,34 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>grantSessionRule</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061621Z" changeid="guimard">
+        <seg>grantSessionRule</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>groups</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061622Z" changeid="guimard">
+        <seg>groups</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>groups are stored as space-separated strings in the special attribute “groups”: it contains the names of groups whose rules were returned true for the current user</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>les groupes sont stockées en chaîne de caractères séparées par des espaces dans l'attribut spécial “groups” : il contient les noms des groupes dont la règle à retournée une valeur non nulle pour l'utilisateur courant</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>hideOldPassword</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T065006Z" changeid="guimard">
+        <seg>hideOldPassword</seg>
       </tuv>
     </tu>
     <tu>
@@ -33352,6 +34736,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://search.cpan.org/perldoc?LWP::UserAgent</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T070254Z" changeid="guimard">
+        <seg>http://search.cpan.org/perldoc?LWP::UserAgent</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://search.cpan.org/search?query=DBD%3A%3A&amp;mode=module</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T194916Z" changeid="xavier">
@@ -33992,6 +35384,22 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>httpOnly</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T065824Z" changeid="guimard">
+        <seg>httpOnly</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>https</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061624Z" changeid="guimard">
+        <seg>https</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>https://auth.linagora.com/</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -34502,6 +35910,22 @@ kinit -k -t /etc/lemonldap-ng/auth.keytab HTTP/auth.example.com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>ldapAuthnLevel</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061635Z" changeid="guimard">
+        <seg>ldapAuthnLevel</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>ldapBase</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061636Z" changeid="guimard">
+        <seg>ldapBase</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>ldapBindDN</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T171845Z" changeid="xavier">
@@ -34518,10 +35942,122 @@ kinit -k -t /etc/lemonldap-ng/auth.keytab HTTP/auth.example.com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>ldapChangePasswordAsUser</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061709Z" changeid="guimard">
+        <seg>ldapChangePasswordAsUser</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>ldapConfBase</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T171810Z" changeid="xavier">
         <seg>ldapConfBase</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>ldapGroupAttributeName</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061711Z" changeid="guimard">
+        <seg>ldapGroupAttributeName</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>ldapGroupAttributeNameGroup</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T061943Z" changeid="guimard">
+        <seg>ldapGroupAttributeNameGroup</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>ldapGroupAttributeNameSearch</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T062005Z" changeid="guimard">
+        <seg>ldapGroupAttributeNameSearch</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>ldapGroupAttributeNameUser</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T062222Z" changeid="guimard">
+        <seg>ldapGroupAttributeNameUser</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>ldapGroupBase</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T062223Z" changeid="guimard">
+        <seg>ldapGroupBase</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>ldapGroupObjectClass</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T062224Z" changeid="guimard">
+        <seg>ldapGroupObjectClass</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>ldapGroupRecursive</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T062246Z" changeid="guimard">
+        <seg>ldapGroupRecursive</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>ldapPasswordResetAttribute</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063230Z" changeid="guimard">
+        <seg>ldapPasswordResetAttribute</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>ldapPasswordResetAttributeValue</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063305Z" changeid="guimard">
+        <seg>ldapPasswordResetAttributeValue</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>ldapPort</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T062254Z" changeid="guimard">
+        <seg>ldapPort</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>ldapPpolicyControl</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T062255Z" changeid="guimard">
+        <seg>ldapPpolicyControl</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>ldapPwdEnc</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T062310Z" changeid="guimard">
+        <seg>ldapPwdEnc</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>ldapRaw</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T062322Z" changeid="guimard">
+        <seg>ldapRaw</seg>
       </tuv>
     </tu>
     <tu>
@@ -34562,6 +36098,38 @@ kinit -k -t /etc/lemonldap-ng/auth.keytab HTTP/auth.example.com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T150002Z" changeid="xavier">
         <seg>ldapServer &lt;s5&gt;=&gt;&lt;/s5&gt; &lt;s6&gt;'ldap1.example.com'&lt;/s6&gt;&lt;s7&gt;,&lt;/s7&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>ldapSetPassword</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063059Z" changeid="guimard">
+        <seg>ldapSetPassword</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>ldapTimeout</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063120Z" changeid="guimard">
+        <seg>ldapTimeout</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>ldapUsePasswordResetAttribute</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063208Z" changeid="guimard">
+        <seg>ldapUsePasswordResetAttribute</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>ldapVersion</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063128Z" changeid="guimard">
+        <seg>ldapVersion</seg>
       </tuv>
     </tu>
     <tu>
@@ -34734,6 +36302,30 @@ kinit -k -t /etc/lemonldap-ng/auth.keytab HTTP/auth.example.com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>localStorage</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063307Z" changeid="guimard">
+        <seg>localStorage</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>localStorageOptions</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063315Z" changeid="guimard">
+        <seg>localStorageOptions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>locationRules</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063327Z" changeid="guimard">
+        <seg>locationRules</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>login</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T195413Z" changeid="xavier">
@@ -34806,6 +36398,14 @@ kinit -k -t /etc/lemonldap-ng/auth.keytab HTTP/auth.example.com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>macros</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063328Z" changeid="guimard">
+        <seg>macros</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>macros are used to extend (or rewrite) &lt;a0&gt;exported variables&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -34830,10 +36430,106 @@ kinit -k -t /etc/lemonldap-ng/auth.keytab HTTP/auth.example.com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>mailBody</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063330Z" changeid="guimard">
+        <seg>mailBody</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>mailCharset</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063358Z" changeid="guimard">
+        <seg>mailCharset</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>mailConfirmBody</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063331Z" changeid="guimard">
+        <seg>mailConfirmBody</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>mailConfirmSubject</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063331Z" changeid="guimard">
+        <seg>mailConfirmSubject</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>mailFrom</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063332Z" changeid="guimard">
+        <seg>mailFrom</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>mailLDAPFilter</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063359Z" changeid="guimard">
+        <seg>mailLDAPFilter</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>mailOnPasswordChange</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T065853Z" changeid="guimard">
+        <seg>mailOnPasswordChange</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>mailR</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T171555Z" changeid="xavier">
         <seg>mailR</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>mailReplyTo</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063340Z" changeid="guimard">
+        <seg>mailReplyTo</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>mailSessionKey</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063513Z" changeid="guimard">
+        <seg>mailSessionKey</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>mailSubject</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063359Z" changeid="guimard">
+        <seg>mailSubject</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>mailTimeout</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063441Z" changeid="guimard">
+        <seg>mailTimeout</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>mailUrl</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063444Z" changeid="guimard">
+        <seg>mailUrl</seg>
       </tuv>
     </tu>
     <tu>
@@ -34882,6 +36578,14 @@ kinit -k -t /etc/lemonldap-ng/auth.keytab HTTP/auth.example.com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111625Z" changeid="xavier">
         <seg>mailto:lemonldap-ng-users@ow2.org</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>maintenance</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T065937Z" changeid="guimard">
+        <seg>maintenance</seg>
       </tuv>
     </tu>
     <tu>
@@ -34936,6 +36640,46 @@ make test</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>managerDn</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063541Z" changeid="guimard">
+        <seg>managerDn</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>managerPassword</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063543Z" changeid="guimard">
+        <seg>managerPassword</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>managerSkin</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063552Z" changeid="guimard">
+        <seg>managerSkin</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>managerTreeAutoClose</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063615Z" changeid="guimard">
+        <seg>managerTreeAutoClose</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>managerTreeJqueryCss</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063643Z" changeid="guimard">
+        <seg>managerTreeJqueryCss</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>menu.png</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -34970,10 +36714,26 @@ chown www-data /usr/local/lemonldap-ng/notifications/</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>multi</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063701Z" changeid="guimard">
+        <seg>multi</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>multi &lt;s0&gt;=&gt;&lt;/s0&gt; &lt;s1&gt;{&lt;/s1&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T145959Z" changeid="xavier">
         <seg>multi &lt;s0&gt;=&gt;&lt;/s0&gt; &lt;s1&gt;{&lt;/s1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>multiValuesSeparator</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063702Z" changeid="guimard">
+        <seg>multiValuesSeparator</seg>
       </tuv>
     </tu>
     <tu>
@@ -35026,6 +36786,62 @@ chown www-data /usr/local/lemonldap-ng/notifications/</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>notification</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063704Z" changeid="guimard">
+        <seg>notification</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>notificationStorage</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063705Z" changeid="guimard">
+        <seg>notificationStorage</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>notificationStorageOptions</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063706Z" changeid="guimard">
+        <seg>notificationStorageOptions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>notificationWildcard</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063738Z" changeid="guimard">
+        <seg>notificationWildcard</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>notifyDeleted</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063740Z" changeid="guimard">
+        <seg>notifyDeleted</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>notifyOther</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063741Z" changeid="guimard">
+        <seg>notifyOther</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>nullAuthnLevel</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063752Z" changeid="guimard">
+        <seg>nullAuthnLevel</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>number</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T120507Z" changeid="xavier">
@@ -35054,6 +36870,30 @@ chown www-data /usr/local/lemonldap-ng/notifications/</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>un non-sécurisé pour les autres applications</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>openIdAuthnLevel</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063803Z" changeid="guimard">
+        <seg>openIdAuthnLevel</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>openIdIDPList</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063819Z" changeid="guimard">
+        <seg>openIdIDPList</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>openIdSecret</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063833Z" changeid="guimard">
+        <seg>openIdSecret</seg>
       </tuv>
     </tu>
     <tu>
@@ -35148,6 +36988,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>passwordDB</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063835Z" changeid="guimard">
+        <seg>passwordDB</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>perl-Lemonldap-NG-Common: CPAN - Shared modules</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T095425Z" changeid="xavier">
@@ -35228,6 +37076,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>port</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063836Z" changeid="guimard">
+        <seg>port</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>portal</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -35252,10 +37108,90 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>portalAntiFrame</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063836Z" changeid="guimard">
+        <seg>portalAntiFrame</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>portalAutocomplete</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063837Z" changeid="guimard">
+        <seg>portalAutocomplete</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>portalDisplayAppslist</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063838Z" changeid="guimard">
+        <seg>portalDisplayAppslist</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>portalDisplayChangePassword</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063839Z" changeid="guimard">
+        <seg>portalDisplayChangePassword</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>portalDisplayLogout</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063839Z" changeid="guimard">
+        <seg>portalDisplayLogout</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>portalDisplayResetPassword</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063840Z" changeid="guimard">
+        <seg>portalDisplayResetPassword</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>portalOpenLinkInNewWindow</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063841Z" changeid="guimard">
+        <seg>portalOpenLinkInNewWindow</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>portalRequireOldPassword</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063842Z" changeid="guimard">
+        <seg>portalRequireOldPassword</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>portalSkin</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063843Z" changeid="guimard">
+        <seg>portalSkin</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>portalSkin &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;'dark'&lt;/s14&gt;&lt;s15&gt;,&lt;/s15&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T071957Z" changeid="xavier">
         <seg>portalSkin &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;'dark'&lt;/s14&gt;&lt;s15&gt;,&lt;/s15&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>portalUserAttr</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063844Z" changeid="guimard">
+        <seg>portalUserAttr</seg>
       </tuv>
     </tu>
     <tu>
@@ -35268,10 +37204,34 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>protection</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063845Z" changeid="guimard">
+        <seg>protection</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>provide identities to other systems</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T183339Z" changeid="xavier">
         <seg>fournir une identité à d'autres systèmes</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>proxy</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T070252Z" changeid="guimard">
+        <seg>proxy</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>proxyOptions</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T070305Z" changeid="guimard">
+        <seg>proxyOptions</seg>
       </tuv>
     </tu>
     <tu>
@@ -35308,6 +37268,38 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>radiusAuthnLevel</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T065903Z" changeid="guimard">
+        <seg>radiusAuthnLevel</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>radiusSecret</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T065918Z" changeid="guimard">
+        <seg>radiusSecret</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>radiusServer</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T065911Z" changeid="guimard">
+        <seg>radiusServer</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>randomPasswordRegexp</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063849Z" changeid="guimard">
+        <seg>randomPasswordRegexp</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>ref varchar&lt;s11&gt;(&lt;/s11&gt;255&lt;s12&gt;)&lt;/s12&gt; &lt;s13&gt;NOT&lt;/s13&gt; &lt;s14&gt;NULL&lt;/s14&gt;&lt;s15&gt;,&lt;/s15&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T053327Z" changeid="guimard">
@@ -35340,10 +37332,50 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>reloadTime</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063917Z" changeid="guimard">
+        <seg>reloadTime</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>remember: '1' (checked box)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T193242Z" changeid="xavier">
         <seg>remember: '1' (une case à cocher)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>remoteCookieName</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T063931Z" changeid="guimard">
+        <seg>remoteCookieName</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>remoteGlobalStorage</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064002Z" changeid="guimard">
+        <seg>remoteGlobalStorage</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>remoteGlobalStorageOptions</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064030Z" changeid="guimard">
+        <seg>remoteGlobalStorageOptions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>remotePortal</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064038Z" changeid="guimard">
+        <seg>remotePortal</seg>
       </tuv>
     </tu>
     <tu>
@@ -35424,6 +37456,22 @@ msktutil -c -b &quot;cn=COMPUTERS&quot; -s HTTP/auth.example.com -h auth.example
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>samlStorage</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064040Z" changeid="guimard">
+        <seg>samlStorage</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>samlStorageOptions</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064040Z" changeid="guimard">
+        <seg>samlStorageOptions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>screenshots</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -35480,6 +37528,62 @@ msktutil -c -b &quot;cn=COMPUTERS&quot; -s HTTP/auth.example.com -h auth.example
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>secureTokenAllowOnError</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T065403Z" changeid="guimard">
+        <seg>secureTokenAllowOnError</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>secureTokenAttribute</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T065419Z" changeid="guimard">
+        <seg>secureTokenAttribute</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>secureTokenExpiration</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T065434Z" changeid="guimard">
+        <seg>secureTokenExpiration</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>secureTokenHeader</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T065446Z" changeid="guimard">
+        <seg>secureTokenHeader</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>secureTokenMemcachedServers</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T065746Z" changeid="guimard">
+        <seg>secureTokenMemcachedServers</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>secureTokenUrls</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T065809Z" changeid="guimard">
+        <seg>secureTokenUrls</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>securedCookie</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064042Z" changeid="guimard">
+        <seg>securedCookie</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>sed -i 's/example\.com/ow2.org/g' /etc/lemonldap-ng/* /var/lib/lemonldap-ng/conf/lmConf-1 /var/lib/lemonldap-ng/test/index.pl</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T093857Z" changeid="xavier">
@@ -35512,10 +37616,50 @@ msktutil -c -b &quot;cn=COMPUTERS&quot; -s HTTP/auth.example.com -h auth.example
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>singleIP</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064043Z" changeid="guimard">
+        <seg>singleIP</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>singleSession</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064044Z" changeid="guimard">
+        <seg>singleSession</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>singleUserByIP</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064045Z" changeid="guimard">
+        <seg>singleUserByIP</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>sn</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T120456Z" changeid="xavier">
         <seg>sn</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>soapAuthService</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064124Z" changeid="guimard">
+        <seg>soapAuthService</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>soapSessionService</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064202Z" changeid="guimard">
+        <seg>soapSessionService</seg>
       </tuv>
     </tu>
     <tu>
@@ -35596,6 +37740,22 @@ msktutil -c -b &quot;cn=COMPUTERS&quot; -s HTTP/auth.example.com -h auth.example
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T193234Z" changeid="xavier">
         <seg>static: 'StaticValue' (une valeur statique)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>status</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064416Z" changeid="guimard">
+        <seg>status</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>storePassword</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064417Z" changeid="guimard">
+        <seg>storePassword</seg>
       </tuv>
     </tu>
     <tu>
@@ -35690,6 +37850,30 @@ sudo apachectl restart</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>sympaMailKey</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064435Z" changeid="guimard">
+        <seg>sympaMailKey</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>sympaSecret</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064446Z" changeid="guimard">
+        <seg>sympaSecret</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>syslog</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064448Z" changeid="guimard">
+        <seg>syslog</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>tar xzf lemonldap-ng-*.tar.gz
 cd lemonldap-ng-*
 make debian-packages</seg>
@@ -35764,6 +37948,14 @@ cd lemonldap-ng-*</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T113934Z" changeid="xavier">
         <seg>le portail est dans le domaine déclaré</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>timeout</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064450Z" changeid="guimard">
+        <seg>timeout</seg>
       </tuv>
     </tu>
     <tu>
@@ -35844,6 +38036,46 @@ cd lemonldap-ng-*</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>tree_light.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>trustedDomains</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064451Z" changeid="guimard">
+        <seg>trustedDomains</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>twitterAppName</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064500Z" changeid="guimard">
+        <seg>twitterAppName</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>twitterAuthnLevel</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064512Z" changeid="guimard">
+        <seg>twitterAuthnLevel</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>twitterKey</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064522Z" changeid="guimard">
+        <seg>twitterKey</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>twitterSecret</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064531Z" changeid="guimard">
+        <seg>twitterSecret</seg>
       </tuv>
     </tu>
     <tu>
@@ -35952,6 +38184,30 @@ cd lemonldap-ng-*</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>useRedirectOnError</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064553Z" changeid="guimard">
+        <seg>useRedirectOnError</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>useSafeJail</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064606Z" changeid="guimard">
+        <seg>useSafeJail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>useXForwardedForIP</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064630Z" changeid="guimard">
+        <seg>useXForwardedForIP</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>user</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T195427Z" changeid="xavier">
@@ -35980,6 +38236,22 @@ cd lemonldap-ng-*</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T102209Z" changeid="xavier">
         <seg>nom de connexion</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>userDB</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064532Z" changeid="guimard">
+        <seg>userDB</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>userPivot</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064628Z" changeid="guimard">
+        <seg>userPivot</seg>
       </tuv>
     </tu>
     <tu>
@@ -36064,6 +38336,14 @@ cd lemonldap-ng-*</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>whatToTrace</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064712Z" changeid="guimard">
+        <seg>whatToTrace</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>writingrulesand_headers</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -36100,6 +38380,38 @@ cd lemonldap-ng-*</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T114155Z" changeid="xavier">
         <seg>tous les serveurs Apache ont été rechargés après un changement du nom de cookie ou du domaine</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>yubikeyAuthnLevel</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064938Z" changeid="guimard">
+        <seg>yubikeyAuthnLevel</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>yubikeyClientID</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064859Z" changeid="guimard">
+        <seg>yubikeyClientID</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>yubikeyPublicIDSize</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064925Z" changeid="guimard">
+        <seg>yubikeyPublicIDSize</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>yubikeySecretKey</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064908Z" changeid="guimard">
+        <seg>yubikeySecretKey</seg>
       </tuv>
     </tu>
     <tu>
@@ -36156,6 +38468,46 @@ cd lemonldap-ng-*</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>zimbra</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>zimbraAccountKey</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064724Z" changeid="guimard">
+        <seg>zimbraAccountKey</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>zimbraBy</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064734Z" changeid="guimard">
+        <seg>zimbraBy</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>zimbraPreAuthKey</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064744Z" changeid="guimard">
+        <seg>zimbraPreAuthKey</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>zimbraSsoUrl</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064835Z" changeid="guimard">
+        <seg>zimbraSsoUrl</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>zimbraUrl</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T064848Z" changeid="guimard">
+        <seg>zimbraUrl</seg>
       </tuv>
     </tu>
     <tu>
