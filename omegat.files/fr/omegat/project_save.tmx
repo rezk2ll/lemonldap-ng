@@ -9512,6 +9512,20 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;# Common error page and security parameters&lt;/s0&gt;
+&lt;s1&gt;ErrorDocument&lt;/s1&gt; 403 http://auth.example.com/?lmError=403
+&lt;s2&gt;ErrorDocument&lt;/s2&gt; 500 http://auth.example.com/?lmError=500
+&lt;s3&gt;ErrorDocument&lt;/s3&gt; &lt;s4&gt;503&lt;/s4&gt; http://auth.example.com/?lmError=&lt;s5&gt;503&lt;/s5&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T144228Z" changeid="guimard">
+        <seg>&lt;s0&gt;# Common error page and security parameters&lt;/s0&gt;
+&lt;s1&gt;ErrorDocument&lt;/s1&gt; 403 http://auth.example.com/?lmError=403
+&lt;s2&gt;ErrorDocument&lt;/s2&gt; 500 http://auth.example.com/?lmError=500
+&lt;s3&gt;ErrorDocument&lt;/s3&gt; &lt;s4&gt;503&lt;/s4&gt; http://auth.example.com/?lmError=&lt;s5&gt;503&lt;/s5&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;# Perl environment&lt;/s0&gt;
 PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
 PerlRequire /root/SSOExtensions.pm
@@ -11018,6 +11032,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;HTTPS&lt;/s0&gt;: use https as protocol</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T143754Z" changeid="guimard">
+        <seg>&lt;s0&gt;HTTPS&lt;/s0&gt; : utilise https comme protocole</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Handler&lt;/s0&gt;: Apache modules used to protect applications</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -11604,6 +11626,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Port&lt;/s0&gt;: port of the application (by default, 80 for http, 443 for https)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T143817Z" changeid="guimard">
+        <seg>&lt;s0&gt;Port&lt;/s0&gt; : port de l'application (par défaut, 80 pour http, 443 pour https)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Portal &lt;a1&gt;URL&lt;/a1&gt;&lt;/s0&gt;: &lt;a2&gt;URL&lt;/a2&gt; of internal portal</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120215T045719Z" changeid="xavier">
@@ -11664,6 +11694,22 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T114903Z" changeid="xavier">
         <seg>&lt;s0&gt;Récursivité&lt;/s0&gt; : active la fonctionnalité récursive (défaut: 0).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Redirect on error&lt;/s0&gt;: use 302 instead 500 or 503</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T144655Z" changeid="guimard">
+        <seg>&lt;s0&gt;Redirection pour les erreurs&lt;/s0&gt; : utilise 302 au lieu de 500 ou 503</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Redirect on forbidden&lt;/s0&gt;: use 302 instead 403</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T144619Z" changeid="guimard">
+        <seg>&lt;s0&gt;Redirections pour les accès interdits&lt;/s0&gt; : utilise 302 au lieu de 403</seg>
       </tuv>
     </tu>
     <tu>
@@ -16076,6 +16122,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>An error occurs on server side: SERVER_ERROR (500)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T144101Z" changeid="guimard">
+        <seg>Une erreur est survenue côté serveur : SERVER_ERROR (500)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>And a protected virtual host with LemonLDAP::NG as reverse proxy:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T072639Z" changeid="xavier">
@@ -20204,6 +20258,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Forbidden and Server error</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T143956Z" changeid="guimard">
+        <seg>Accès interdits et erreurs du serveur</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Force HTTPS in redirection</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -20820,6 +20882,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Handler Redirections</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T143403Z" changeid="guimard">
+        <seg>Redirections des agents</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Handler build the preauth request and redirect user on Zimbra preauth &lt;a0&gt;URL&lt;/a0&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111220T155438Z" changeid="xavier">
@@ -20888,6 +20958,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Il stocke ces données dans son cache</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Handler use the default Apache error code for the following cases:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T144024Z" changeid="guimard">
+        <seg>Les agents utilisent le code d'erreur d'Apache dans les cas suivants :</seg>
       </tuv>
     </tu>
     <tu>
@@ -21208,6 +21286,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Si un utilisateur n'est pas authentifié et tente de se connecter à une application protégée par un agent compatible LemonLDAP::NG, il est redirigé vers le portail.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>If a user is redirected from handler to portal for authentication and once he is authenticated, portal redirects him to the redirection &lt;a0&gt;URL&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T144828Z" changeid="guimard">
+        <seg>Si un utilisateur est redirigé depuis un agent vers le portail pour s'authentifier et s'il est déjà authentifié, le portail le redirige vers l'&lt;a0&gt;URL&lt;/a0&gt; de redirection.</seg>
       </tuv>
     </tu>
     <tu>
@@ -22440,6 +22526,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T114910Z" changeid="xavier">
         <seg>Il dispose d'une syntaxe simple mais puissante qui fait que les fichiers de données restent lisibles en dehors du Wiki, et facilite la création de textes structurés.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>It is also possible to redirect the user without using &lt;c0&gt;ErrorDocument&lt;/c0&gt;: the Handler will not return 403, 500, 503 code, but code 302 (REDIRECT).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T144320Z" changeid="guimard">
+        <seg>Il est également possible de rediriger les utilisateurs sans utiliser &lt;c0&gt;ErrorDocument&lt;/c0&gt; : l'agent ne retournera pas les codes 403, 500, 503 mais le code 302 (REDIRECT).</seg>
       </tuv>
     </tu>
     <tu>
@@ -24740,6 +24834,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Often the redirection takes some time because it is user's first access to the protected app, so a new app session has to be created : JavaScript redirection improves user experience by informing that authentication is performed, and by preventing from clicking again on the button because it is too slow.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T145217Z" changeid="guimard">
+        <seg>Souvent la redirection prend du temps car c'est le premier accès de l'utilisateur à l'application protégée et il faut créer la session applicative ; la redirection JavaScript améliore le ressenti utilisateur en l'informant que l'authentification est réussie et en évitant qu'il clique de nouveau sur le bouton.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Ohloh</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -25540,6 +25642,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Portal Redirections</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T144704Z" changeid="guimard">
+        <seg>Redirections du portail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Portal checks authentication</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -25792,6 +25902,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Schéma de protection</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Protocol and port</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T143535Z" changeid="guimard">
+        <seg>Protocole et port</seg>
       </tuv>
     </tu>
     <tu>
@@ -28284,6 +28402,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The application is in maintenance: &lt;a0&gt;HTTP&lt;/a0&gt;_SERVICE_UNAVAILABLE (503)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T144123Z" changeid="guimard">
+        <seg>L'application est en maintenance : HTTP_SERVICE_UNAVAILABLE (503)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The attribute key name can be used directly in &lt;c0&gt;lemonldap-ng.ini&lt;/c0&gt; or in &lt;a1&gt;Perl&lt;/a1&gt; scripts to override configuration parameters (see &lt;a2&gt;configuration location&lt;/a2&gt;).</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -28732,6 +28858,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The redirection from portal can be done either with code 303 (See Other), or with a JavaScript redirection.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T144922Z" changeid="guimard">
+        <seg>Cette redirection du portail peut être effectuée via le code 303 (See Other) ou par une redirection JavaScript.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The request on logout &lt;a0&gt;URL&lt;/a0&gt; will be sent after user is disconnected, so you should unprotect this &lt;a1&gt;URL&lt;/a1&gt; if it is protected by an &lt;a2&gt;LL::NG&lt;/a2&gt; Handler.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T200645Z" changeid="guimard">
@@ -28808,6 +28942,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T094037Z" changeid="xavier">
         <seg>Le processus de mise-à-jour va également migrer les anciens fichiers de configuration dans &lt;c0&gt;/etc/lemonldap-ng/lemonldap-ng.ini&lt;/c0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The user will be redirected on portal &lt;a0&gt;URL&lt;/a0&gt; with error in the &lt;c1&gt;lmError&lt;/c1&gt; &lt;a2&gt;URL&lt;/a2&gt; parameter.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T144406Z" changeid="guimard">
+        <seg>L'utilisateur sera redirigé vers l'&lt;a0&gt;URL&lt;/a0&gt; du portail avec une erreur dans le paramètre &lt;c1&gt;lmError&lt;/c1&gt; de l'&lt;a2&gt;URL&lt;/a2&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -29204,6 +29346,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>These errors can be catch trough Apache &lt;c0&gt;ErrorDocument&lt;/c0&gt; directive, to redirect user on a specific page:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T144209Z" changeid="guimard">
+        <seg>Ces erreurs peuvent être interceptées via la directive &lt;c0&gt;ErrorDocument&lt;/c0&gt; d'Apache pour rediriger les utilisateurs vers une page spécifique :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>These files must be included in Apache configuration, either with &lt;c0&gt;Include&lt;/c0&gt; directives in &lt;c1&gt;httpd.conf&lt;/c1&gt; (see &lt;a2&gt;quick start example&lt;/a2&gt;), or with symbolic links in Apache configuration directory (like &lt;c3&gt;/etc/httpd/conf.d&lt;/c3&gt;).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T144644Z" changeid="xavier">
@@ -29252,6 +29402,22 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>These parameters can be configured in Manager, in &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Advanced parameters&lt;/c1&gt; &gt; &lt;c2&gt;Handler redirections&lt;/c2&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T143903Z" changeid="guimard">
+        <seg>Cesparamètres peuvent être configurés dans le manager, dans &lt;c0&gt;Paramètres généraux&lt;/c0&gt; &gt; &lt;c1&gt;Paramètres avancés&lt;/c1&gt; &gt; &lt;c2&gt;Redirections des agents&lt;/c2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>These parameters can be configured in Manager, in &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Advanced parameters&lt;/c1&gt; &gt; &lt;c2&gt;Handler redirections&lt;/c2&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T144444Z" changeid="guimard">
+        <seg>Ces paramètres peuvent être configurés dans le manager, dans &lt;c0&gt;Paramètres généraux&lt;/c0&gt; &gt; &lt;c1&gt;Paramètres avancés&lt;/c1&gt; &gt; &lt;c2&gt;Redirections des agents&lt;/c2&gt;:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>These parameters can be overwritten in LemonLDAP::NG ini file, in the section &lt;c0&gt;apply&lt;/c0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T174951Z" changeid="xavier">
@@ -29272,6 +29438,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T134659Z" changeid="guimard">
         <seg>Ces règles peuvent être modifiées via le manager : &lt;c0&gt;Paramètres généraux&lt;/c0&gt; &gt; &lt;c1&gt;Portail&lt;/c1&gt; &gt; &lt;c2&gt;Menu&lt;/c2&gt; &gt; &lt;c3&gt;Activation des modules&lt;/c3&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>These settings can be overriden per virtual host, see &lt;a0&gt;virtual host management&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T143942Z" changeid="guimard">
+        <seg>Ces paramètres peuvent être surchargés dans chaque hôte virtuel, voir la &lt;a0&gt;gestion des hôtes virtuels&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -30140,6 +30314,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>To encode the redirection &lt;a0&gt;URL&lt;/a0&gt;, the will use some Apache environment variables and also configuration settings:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T143743Z" changeid="guimard">
+        <seg>Pour encoder l'&lt;a0&gt;URL&lt;/a0&gt; de redirection, l'agent utilise des variables d'environnement Apache et des paramètres de configuration :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>To extend &lt;a0&gt;SSO&lt;/a0&gt; on several domains, a cross-domain mechanism is implemented in LemonLDAP::NG.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -30744,6 +30926,14 @@ Is this ok [y/N]: y</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>User has no access authorization: FORBIDDEN (403)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T144042Z" changeid="guimard">
+        <seg>L'utilisateur ne dispose pas de droits d'accès : FORBIDDEN (403)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>User interfaces</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -31248,6 +31438,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T194309Z" changeid="xavier">
         <seg>Lorsque &lt;c0&gt;Choice&lt;/c0&gt; est selectionné pour l'authentification, les valeurs pour les modules utilisateur et mots-de-passe ne sont plus utilisées.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>When a user access a Handler without a cookie, he is redirected on portal, and the target &lt;a0&gt;URL&lt;/a0&gt; is encoded in redirection &lt;a1&gt;URL&lt;/a1&gt; (to redirect user after authentication process).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T143528Z" changeid="guimard">
+        <seg>Lorsqu'un utilisateur accède à un agent sans cookie, il est redirigé vers le portail, et l'&lt;a0&gt;URL&lt;/a0&gt; cible est encodée dans l'&lt;a1&gt;URL&lt;/a1&gt; de redirection (pour rediriger l'utilisateur après authentification).</seg>
       </tuv>
     </tu>
     <tu>
