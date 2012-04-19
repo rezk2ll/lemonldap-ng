@@ -15850,6 +15850,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Access rule</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T203749Z" changeid="xavier">
+        <seg>Règle d'accès</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Access rule: &lt;c0&gt;$groups =~ /\badministrators\b/&lt;/c0&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -18058,6 +18066,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Conditions:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T203818Z" changeid="xavier">
+        <seg>Conditions :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Conferences</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -19086,6 +19102,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T194801Z" changeid="xavier">
         <seg>Désactiver toutes les cases dans &lt;c0&gt;Options&lt;/c0&gt; » &lt;c1&gt;Signature&lt;/c1&gt;, excepté &lt;c2&gt;Signer les messages &lt;a3&gt;SSO&lt;/a3&gt;&lt;/c2&gt; qui doit être activée</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Disabling Safe jail</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T203937Z" changeid="xavier">
+        <seg>Désactiver la cage sécurisée</seg>
       </tuv>
     </tu>
     <tu>
@@ -20602,6 +20626,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Form replay parameters</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T203814Z" changeid="xavier">
+        <seg>Paramètres de rejeu de formulaires</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Form replay with Apache mod_proxy</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T193841Z" changeid="xavier">
@@ -21270,6 +21302,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Les agents disposent d'un cache de session d'une durée de vie par défaut de 10 minutes.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Header</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T203756Z" changeid="xavier">
+        <seg>En-tête</seg>
       </tuv>
     </tu>
     <tu>
@@ -22402,6 +22442,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>In this case, you might want to disabling it.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T204110Z" changeid="xavier">
+        <seg>Dans ces cas, on peut vouloir le désactiver.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>In “Apache::Session module” field, set ”&lt;a0&gt;Apache::Session::Flex&lt;/a0&gt;” and use the following parameters:</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -22750,6 +22798,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T091526Z" changeid="xavier">
         <seg>IssuerDB</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>IssuerDB use</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T203859Z" changeid="xavier">
+        <seg>Utilisation de IssuerDB</seg>
       </tuv>
     </tu>
     <tu>
@@ -23706,6 +23762,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>LemonLDAP::NG uses Safe jail to evaluate all expressions:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T203737Z" changeid="xavier">
+        <seg>LemonLDAP::NG utilise une cage sécurisée pour évaluer toutes les expressions :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>LemonLDAP::NG wiki uses Dokuwiki!</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T115006Z" changeid="xavier">
@@ -24482,6 +24546,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Menu modules display</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T203835Z" changeid="xavier">
+        <seg>Affichage des modules du menu</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Menu organization: tree or accordion</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T144016Z" changeid="xavier">
@@ -24538,6 +24610,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>More information about Safe on &lt;a0&gt;CPAN&lt;/a0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T203926Z" changeid="xavier">
+        <seg>Plus d'information sur Safe sur le &lt;a0&gt;CPAN&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>More than one server can be set here separated by spaces or commas.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120101T184441Z" changeid="xavier">
@@ -24590,6 +24670,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T145349Z" changeid="xavier">
         <seg>Multi Remote $ENV{REMOTE_ADDR}=~/^192/;LDAP $ENV{REMOTE_ADDR}!~/^192/'</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Multi modules display</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T203849Z" changeid="xavier">
+        <seg>Affichage des modules de Multi</seg>
       </tuv>
     </tu>
     <tu>
@@ -27138,6 +27226,22 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Safe can be very annoying when we use &lt;a0&gt;extended functions&lt;/a0&gt; or &lt;a1&gt;custom functions&lt;/a1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T204048Z" changeid="xavier">
+        <seg>Safe peut être très gênant lorsqu'on utilise les &lt;a0&gt;fonctions étendues&lt;/a0&gt; ou les &lt;a1&gt;fonctions personnalisées&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Safe jail</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T203706Z" changeid="xavier">
+        <seg>Cage sécurisée</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Same with remote server configured with the same host name:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T072816Z" changeid="xavier">
@@ -27646,6 +27750,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Durée de vie des sessions pour la tâche planifiée</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Session opening</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T203908Z" changeid="xavier">
+        <seg>Ouverture de session</seg>
       </tuv>
     </tu>
     <tu>
@@ -30702,6 +30814,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T052658Z" changeid="guimard">
         <seg>pour ce faire dans le manager, aller dans Paramètres généraux &gt; Paramètres avancés &gt; Notifications.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>To do this, go in Manager &gt; General Parameters &gt; Advanced Parameters &gt; Security &gt; Use Safe Jail and disable it.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T204210Z" changeid="xavier">
+        <seg>Pour ce faire, aller dans le manager &gt; Paramètres généraux &gt; Paramètres avancés &gt; Sécurité &gt; Utiliser la cage sécurisée et la désactiver.</seg>
       </tuv>
     </tu>
     <tu>
@@ -37438,6 +37558,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T194916Z" changeid="xavier">
         <seg>http://search.cpan.org/search?query=DBD%3A%3A&amp;mode=module</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://search.cpan.org/search?query=Safe&amp;mode=module</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T203909Z" changeid="xavier">
+        <seg>http://search.cpan.org/search?query=Safe&amp;mode=module</seg>
       </tuv>
     </tu>
     <tu>
