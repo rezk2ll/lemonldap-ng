@@ -1476,6 +1476,14 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.2/browseablesessionbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T051505Z" changeid="guimard">
+        <seg>../../documentation/1.2/browseablesessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.2/changeconfbackend.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T142639Z" changeid="xavier">
@@ -1692,6 +1700,14 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.2/performances.html#apachesession_performances</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T051534Z" changeid="guimard">
+        <seg>../../documentation/1.2/performances.html#apachesession_performances</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.2/portalcustom.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T114758Z" changeid="xavier">
@@ -1816,6 +1832,14 @@ WithPeak[test.example.com]: wmy</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T125358Z" changeid="xavier">
         <seg>../../documentation/1.2/sqlconfbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/sqlsessionbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T051533Z" changeid="guimard">
+        <seg>../../documentation/1.2/sqlsessionbackend.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -7108,6 +7132,22 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv lang="FR-FR">
         <seg>Expression sur l'&lt;a0&gt;URL&lt;/a0&gt; : &lt;c1&gt;default&lt;/c1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Using Apache::Session::Browseable::MySQL&lt;/a0&gt; (recommended for best performances)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T051532Z" changeid="guimard">
+        <seg>&lt;a0&gt;Utiliser Apache::Session::Browseable::MySQL&lt;/a0&gt; (recommandé pour de meilleures performances)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Using Apache::Session::MySQL&lt;/a0&gt; &lt;e1&gt;(if you choose this option, then read &lt;a2&gt;how to increase MySQL performances&lt;/a2&gt;)&lt;/e1&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T051630Z" changeid="guimard">
+        <seg>&lt;a0&gt;Utiliser Apache::Session::MySQL&lt;/a0&gt; &lt;e1&gt;(il est alors conseillé de lire &lt;a2&gt;comment améliorer les performances de MySQL&lt;/a2&gt;)&lt;/e1&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -16000,6 +16040,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Choose one of the following:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T051505Z" changeid="guimard">
+        <seg>Choisir l'une des options suivantes :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Choose “Apache” as authentication module &lt;e0&gt;(“General Parameters » Authentication modules » Authentication module”)&lt;/e0&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T095902Z" changeid="xavier">
@@ -16252,6 +16300,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T113549Z" changeid="xavier">
         <seg>Configurer LemonLDAP::NG pour utiliser LDAP comme base de données principale</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Configure LemonLDAP::NG to use MySQL as main database</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T051325Z" changeid="guimard">
+        <seg>Configurer LemonLDAP::NG pour utiliser MySQL comme base de données principale</seg>
       </tuv>
     </tu>
     <tu>
@@ -22080,6 +22136,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Notifications system</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T051649Z" changeid="guimard">
+        <seg>Systèmes de notification</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Now configure all &lt;a0&gt;SAML&lt;/a0&gt; parameters:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T182855Z" changeid="xavier">
@@ -23108,6 +23172,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T113706Z" changeid="xavier">
         <seg>Préparer le serveur LDAP et le fichier de configuration LL::NG</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Prepare the database and the LL::NG configuration file</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T051407Z" changeid="guimard">
+        <seg>Preparer la base de donnée et le fichier de configuration LL::NG</seg>
       </tuv>
     </tu>
     <tu>
@@ -27220,6 +27292,22 @@ Is this ok [y/N]: y</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Use MySQL for Lemonldap::NG configuration</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T051343Z" changeid="guimard">
+        <seg>Utiliser MySQL pour la configuration de Lemonldap::NG</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Use MySQL for Lemonldap::NG sessions</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T051425Z" changeid="guimard">
+        <seg>Utiliser MySQL pour les sessions de Lemonldap::NG</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Use XForwardedFor for &lt;a0&gt;IP&lt;/a0&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -30800,6 +30888,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.2:browseablesessionbackend</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T051506Z" changeid="guimard">
+        <seg>documentation:1.2:browseablesessionbackend</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.2:changeconfbackend</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T163159Z" changeid="xavier">
@@ -30980,6 +31076,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T101232Z" changeid="xavier">
         <seg>documentation:1.2:passwordstore</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:performances</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T051535Z" changeid="guimard">
+        <seg>documentation:1.2:performances</seg>
       </tuv>
     </tu>
     <tu>
