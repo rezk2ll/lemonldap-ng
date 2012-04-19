@@ -1164,6 +1164,14 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../../media/documentation/manager-portalskin.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T074138Z" changeid="guimard">
+        <seg>../../../media/documentation/manager-portalskin.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../../media/documentation/manager-saml-idp-attribute.png</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T060012Z" changeid="xavier">
@@ -4984,6 +4992,14 @@ WithPeak[test.example.com]: wmy</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120227T192514Z" changeid="xavier">
         <seg>/_detail/documentation/manager-formreplay-newurl.png?id=documentation%3A1.2%3Aformreplay</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/documentation/manager-portalskin.png?id=documentation%3A1.2%3Aportalcustom</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T074137Z" changeid="guimard">
+        <seg>/_detail/documentation/manager-portalskin.png?id=documentation%3A1.2%3Aportalcustom</seg>
       </tuv>
     </tu>
     <tu>
@@ -9504,6 +9520,30 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;.css&lt;/s0&gt;: &lt;a1&gt;CSS&lt;/a1&gt; (styles)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T074252Z" changeid="guimard">
+        <seg>&lt;s0&gt;.css&lt;/s0&gt;: &lt;a1&gt;CSS&lt;/a1&gt; (styles)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;.js&lt;/s0&gt;: Javascript</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T074254Z" changeid="guimard">
+        <seg>&lt;s0&gt;.js&lt;/s0&gt;: Javascript</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;.tpl&lt;/s0&gt;: &lt;a1&gt;Perl&lt;/a1&gt; &lt;a2&gt;HTML&lt;/a2&gt;::Template files, for &lt;a3&gt;HTML&lt;/a3&gt; content</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T074246Z" changeid="guimard">
+        <seg>&lt;s0&gt;.tpl&lt;/s0&gt; : fichiers &lt;a2&gt;HTML&lt;/a2&gt;::Template &lt;a1&gt;Perl&lt;/a1&gt;, pour le contenu &lt;a3&gt;HTML&lt;/a3&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;//==================================&lt;/s0&gt;
 &lt;s1&gt;// WebSSO&lt;/s1&gt;
 &lt;s2&gt;//==================================&lt;/s2&gt;
@@ -10000,6 +10040,34 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;&lt;s1&gt;[&lt;/s1&gt;portal&lt;s2&gt;]&lt;/s2&gt;&lt;/s0&gt;
+ 
+# Custom error messages
+&lt;s3&gt;error_0&lt;/s3&gt; &lt;s4&gt;=&lt;/s4&gt;&lt;s5&gt; Big brother is watching you, authenticated user&lt;/s5&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T075356Z" changeid="guimard">
+        <seg>&lt;s0&gt;&lt;s1&gt;[&lt;/s1&gt;portal&lt;s2&gt;]&lt;/s2&gt;&lt;/s0&gt;
+ 
+# Custom error messages
+&lt;s3&gt;error_0&lt;/s3&gt; &lt;s4&gt;=&lt;/s4&gt;&lt;s5&gt; Big brother is watching you, authenticated user&lt;/s5&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;&lt;s1&gt;[&lt;/s1&gt;portal&lt;s2&gt;]&lt;/s2&gt;&lt;/s0&gt;
+ 
+# Custom template parameters
+&lt;s3&gt;tpl_myparam&lt;/s3&gt; &lt;s4&gt;=&lt;/s4&gt;&lt;s5&gt; world&lt;/s5&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T075525Z" changeid="guimard">
+        <seg>&lt;s0&gt;&lt;s1&gt;[&lt;/s1&gt;portal&lt;s2&gt;]&lt;/s2&gt;&lt;/s0&gt;
+ 
+# Custom template parameters
+&lt;s3&gt;tpl_myparam&lt;/s3&gt; &lt;s4&gt;=&lt;/s4&gt;&lt;s5&gt; world&lt;/s5&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;APACHEGROUP&lt;/s0&gt;: group running Apache</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T161544Z" changeid="xavier">
@@ -10128,6 +10196,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Anti iframe protection&lt;/s0&gt;: will kill parent frames to avoid some well known attacks</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T080031Z" changeid="guimard">
+        <seg>&lt;s0&gt;Protection anti-iframe&lt;/s0&gt; : ferme la frame parente pour éviter des attaques bien connues</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Application logout&lt;/s0&gt;: the request is forwarded to application but &lt;a1&gt;SSO&lt;/a1&gt; session is not closed</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -10244,6 +10320,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T082817Z" changeid="xavier">
         <seg>&lt;s0&gt;Domaines autorisés&lt;/s0&gt; : liste blanche ou noire des domaines clients OpenID (&lt;s1&gt;&lt;a2&gt;voir ci-dessous&lt;/a2&gt;&lt;/s1&gt;).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Auto complete&lt;/s0&gt;: allow the browser to remember the password (for password based authentication backends)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T075642Z" changeid="guimard">
+        <seg>&lt;s0&gt;Auto complétion&lt;/s0&gt; : autorise le navigateur à retenir le mot-de-passe (pour les backends d'authentification basés sur des mots-de-passe)</seg>
       </tuv>
     </tu>
     <tu>
@@ -10380,6 +10464,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T063752Z" changeid="xavier">
         <seg>&lt;s0&gt;Vérifier les conditions&lt;/s0&gt; : active ou désactive, l'examen des conditions dans les réponses d'authentification.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Check last logins&lt;/s0&gt;: displays a checkbox on login form, allowing user to check his login history right after opening session</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T075825Z" changeid="guimard">
+        <seg>&lt;s0&gt;Vérifier l'historique&lt;/s0&gt; : affiche une case à cocher sur le formulaire d'authentification permettant à l'utilisateur d'examiner son historique de connexion après l'ouverture de la session</seg>
       </tuv>
     </tu>
     <tu>
@@ -10766,6 +10858,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Hide old password&lt;/s0&gt;: used only if the password need to be reset by the user (&lt;a1&gt;LDAP&lt;/a1&gt; password policy), will hide the old password input</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T080355Z" changeid="guimard">
+        <seg>&lt;s0&gt;Masque l'ancien mot-de-passe&lt;/s0&gt; : utilisé seulement si le mot-de-passe doit être réinitialisé par l'utilisateur (politique de mots-de-passe &lt;a1&gt;LDAP&lt;/a1&gt;), masque l'ancien mot-de-passe dans le formulaire</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;How do users authenticate?&lt;/s0&gt;: by login</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T073901Z" changeid="xavier">
@@ -11104,6 +11204,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;New window&lt;/s0&gt;: open menu links in new window</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T075934Z" changeid="guimard">
+        <seg>&lt;s0&gt;Nouvelle fenêtre&lt;/s0&gt; : ouvre les liens du menu dans de nouvelles fenêtres</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;New&lt;/s0&gt;: to write all configuration history</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T123827Z" changeid="xavier">
@@ -11164,6 +11272,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T060657Z" changeid="xavier">
         <seg>&lt;s0&gt;Authentification passive&lt;/s0&gt; : positionne le drapeau IsPassive dans la requête d'authentification</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Password Management&lt;/s0&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T080047Z" changeid="guimard">
+        <seg>&lt;s0&gt;Gestion des mots-de-passe&lt;/s0&gt; :</seg>
       </tuv>
     </tu>
     <tu>
@@ -11344,10 +11460,26 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Require old password&lt;/s0&gt;: used only in the password changing module of the menu, will check the old password before updating it</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T080243Z" changeid="guimard">
+        <seg>&lt;s0&gt;Exige l'ancien mot-de-passe&lt;/s0&gt; : utilisé seulement dans le module de changement du mot-de-passe du menu, vérifie l'ancien mot-de-passse avant de le changer</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Reset attribute&lt;/s0&gt;: name of password reset attribute (default: pwdReset).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T120047Z" changeid="xavier">
         <seg>&lt;s0&gt;Attribut reset&lt;/s0&gt; : nom de l'attribut reset du mot-de-passe (défaut : pwdReset).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Reset password&lt;/s0&gt;: display a link to &lt;a1&gt;reset a password&lt;/a1&gt; (for password based authentication backends)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T080143Z" changeid="guimard">
+        <seg>&lt;s0&gt;Réinitialisation de mot-de-passe&lt;/s0&gt; : affiche un lien pour &lt;a1&gt;réinitialiser un mot-de-passe&lt;/a1&gt; (pour les backends d'authentification basés sur des mots-de-passe)</seg>
       </tuv>
     </tu>
     <tu>
@@ -11516,6 +11648,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20120214T050055Z" changeid="xavier">
         <seg>&lt;s0&gt;Secret token&lt;/s0&gt; : utilisé pour vérifier l'integrité des réponses OpenID.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Send mail on password change&lt;/s0&gt;: send a mail if the password is changed from the Menu, or from forced password reset (&lt;a1&gt;LDAP&lt;/a1&gt; password policy)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T080522Z" changeid="guimard">
+        <seg>&lt;s0&gt;Envoie un courriel lors des changements de mots-de-passe&lt;/s0&gt; : envoie un courriel si le mot-de-passe est changé depuis le menu ou suite à une réinitialisation forcée (politique de mots-de-passe &lt;a1&gt;LDAP&lt;/a1&gt;)</seg>
       </tuv>
     </tu>
     <tu>
@@ -11768,6 +11908,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074204Z" changeid="xavier">
         <seg>&lt;s0&gt;User Header&lt;/s0&gt;: Auth-User (case sensitive)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;User attribute&lt;/s0&gt;: which session attribute will be used to display &lt;c1&gt;Connected as&lt;/c1&gt; in the menu</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T075908Z" changeid="guimard">
+        <seg>&lt;s0&gt;Attribut utilisateur&lt;/s0&gt; : attribut de session à utiliser pour afficher &lt;c1&gt;Connecté en tant que&lt;/c1&gt; dans le menu</seg>
       </tuv>
     </tu>
     <tu>
@@ -15004,6 +15152,22 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T083210Z" changeid="xavier">
         <seg>Une clef de session peut être associée à un ou plusieurs attributs SREG.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>A skin is composed of different files:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T074207Z" changeid="guimard">
+        <seg>Un thème est composé de différents fichiers :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>A skin will often refer to the &lt;c0&gt;common&lt;/c0&gt; skin, which is not a real skin, but shared skin objects (like scripts, images and &lt;a1&gt;CSS&lt;/a1&gt;).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T074401Z" changeid="guimard">
+        <seg>Un thème se réfère souvent au thème &lt;c0&gt;common&lt;/c0&gt;, qui n'est pas un thème réel mais contient des objects partagés (tels les scripts, images et &lt;a1&gt;CSS&lt;/a1&gt;).</seg>
       </tuv>
     </tu>
     <tu>
@@ -18728,6 +18892,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Error messages are defined in source code.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T075228Z" changeid="guimard">
+        <seg>Les messages d'erreur sont définis dans le code source.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Erwan LEGALL</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -20232,6 +20404,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Hello &lt;s0&gt;&lt;TMPL_VAR &lt;s1&gt;NAME&lt;/s1&gt;&lt;s2&gt;=&lt;/s2&gt;&lt;s3&gt;&quot;myparam&quot;&lt;/s3&gt;&gt;&lt;/s0&gt;!</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T075551Z" changeid="guimard">
+        <seg>Hello &lt;s0&gt;&lt;TMPL_VAR &lt;s1&gt;NAME&lt;/s1&gt;&lt;s2&gt;=&lt;/s2&gt;&lt;s3&gt;&quot;myparam&quot;&lt;/s3&gt;&gt;&lt;/s0&gt;!</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Here are some advices:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111217T080721Z" changeid="xavier">
@@ -20624,6 +20804,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If they really do not please you, override them!</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T075245Z" changeid="guimard">
+        <seg>S'ils ne conviennent pas, il peuvent être surchargés.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If this attribute is missed all hosts are allowed.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T191145Z" changeid="xavier">
@@ -20696,6 +20884,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If you enable auto completion, authentication level will be decreased (-1) as you do not ask the user to type its password (it could be in browser passwords wallet).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T080632Z" changeid="guimard">
+        <seg>En activant l'auto-complétion, le niveau d'authentification est décru (-1) car on ne demande plus à l'utilisateur de taper son mot-de-passe (il peut être protégé dans le navigateur).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If you have run the Debian/Ubuntu install command, just use:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T162137Z" changeid="xavier">
@@ -20720,10 +20916,26 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If you modify directly the skin files, your modifications will certainly be erased on the next upgrade.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T074457Z" changeid="guimard">
+        <seg>Les modifications apportées directement sur les fichiers thèmes risquent d'être perdus à la prochaine mise-à-jour.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If you need it, you can rebuild RPMs:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T100729Z" changeid="xavier">
         <seg>Si besoin, on peut reconstruire les RPMs :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>If you need to add a template parameter for your customization, then add to &lt;c0&gt;lemonldap-ng.ini&lt;/c0&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T075523Z" changeid="guimard">
+        <seg>Pour ajouter un paramètre de modèle, l'ajouter dans &lt;c0&gt;lemonldap-ng.ini&lt;/c0&gt;:</seg>
       </tuv>
     </tu>
     <tu>
@@ -22316,6 +22528,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120227T192654Z" changeid="xavier">
         <seg>LemonLDAP::NG est hautement scalable, donc facile à insérer derière un répartisseur de charge :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LemonLDAP::NG is shipped with 3 skins:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T074059Z" changeid="guimard">
+        <seg>LemonLDAP::NG est fournit avec 3 thèmes :</seg>
       </tuv>
     </tu>
     <tu>
@@ -24008,6 +24228,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Other parameters</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T075557Z" changeid="guimard">
+        <seg>Autres paramètres</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Outlook Web Access, …</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -24544,6 +24772,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Portal customization</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T074000Z" changeid="guimard">
+        <seg>Personnalisation du portail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Portal destroys session and redirects user on itself with an empty &lt;a0&gt;SSO cookies&lt;/a0&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -24812,6 +25048,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T100819Z" changeid="xavier">
         <seg>Mettre l'archive LemonLDAP::NG dans %_topdir/SOURCES</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Put all custom &lt;a3&gt;HTML&lt;/a3&gt; code in the custom template files.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T075050Z" changeid="guimard">
+        <seg>Mettre tous les codes &lt;a3&gt;HTML&lt;/a3&gt; personnalisés dans les fichiers modèles personnalisés.</seg>
       </tuv>
     </tu>
     <tu>
@@ -26288,6 +26532,30 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Skin</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T074043Z" changeid="guimard">
+        <seg>thème</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Skin customization</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T074409Z" changeid="guimard">
+        <seg>Personnalisation du thème</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Skin files</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T074147Z" changeid="guimard">
+        <seg>Fichiers thèmes</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Skin name</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -26904,6 +27172,22 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Template parameters</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T075409Z" changeid="guimard">
+        <seg>Paramètres des modèles</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Template parameters are defined in source code.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T075426Z" changeid="guimard">
+        <seg>Des paramètres modèles sont définis dans le code source.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Test notification</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T060439Z" changeid="guimard">
@@ -27504,6 +27788,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The portal is the visible part of LemonLDAP::NG, all user interactions are displayed on it.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T074038Z" changeid="guimard">
+        <seg>Le portail est la partie visible de LemonLDAP::NG, toutes les interactions utilisateurs y sont affichées.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The portal must be configured to accept &lt;a0&gt;SOAP&lt;/a0&gt; authentication requests.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120215T050126Z" changeid="xavier">
@@ -27680,6 +27972,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Then create symbolic links on template files, as you might not want to rewrite all &lt;a0&gt;HTML&lt;/a0&gt; code (else, do as you want).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T074625Z" changeid="guimard">
+        <seg>Créer ensuite des liens symboliques pour éviter de réécrire tous les fichiers &lt;a0&gt;HTML&lt;/a0&gt; (sauf si c'est souhaité).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Then create the keytab.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T114512Z" changeid="xavier">
@@ -27808,6 +28108,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Then you &lt;e0&gt;only&lt;/e0&gt; have to write &lt;c1&gt;myskin/css/styles.css&lt;/c1&gt; and add your media to &lt;c2&gt;myskin/images&lt;/c2&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T075016Z" changeid="guimard">
+        <seg>Il suffit ensuite d'écrire &lt;c1&gt;myskin/css/styles.css&lt;/c1&gt; et d'ajouter les médias dans &lt;c2&gt;myskin/images&lt;/c2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Then you can have different &lt;a0&gt;parameters&lt;/a0&gt; for each stored in a &lt;a1&gt;Perl&lt;/a1&gt; hash entry named multi:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T145957Z" changeid="xavier">
@@ -27820,6 +28128,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T072511Z" changeid="xavier">
         <seg>Ainsi n'importe quel hôte virtuel peut être protégé en ajoutant cette ligne :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Then you will be able to use it in your template like this:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T075545Z" changeid="guimard">
+        <seg>On peut ensuite l'utiliser dans le modèle comme suit :</seg>
       </tuv>
     </tu>
     <tu>
@@ -28808,10 +29124,26 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>To configure your new skin in Manager, select the custom skin, and enter your skin name in the configuration field.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T075155Z" changeid="guimard">
+        <seg>Pour configurer le nouveau thème dans le manager, selectionner le thème personnalisé et entrer le nom du nouveau thème dans le champ.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>To create a variable, you've just to map a user attributes in &lt;a0&gt;LL::NG&lt;/a0&gt; using &lt;c1&gt;Variables&lt;/c1&gt; » &lt;c2&gt;Exported variables&lt;/c2&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T120231Z" changeid="xavier">
         <seg>Pour créer une variable, il faut simplement associer des attributs utilisateurs dans &lt;a0&gt;LL::NG&lt;/a0&gt; en utilisant &lt;c1&gt;Variables&lt;/c1&gt; » &lt;c2&gt;Variables exportées&lt;/c2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>To customize a skin, the simplest way is to create a new skin folder:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T074525Z" changeid="guimard">
+        <seg>Pour personnaliser un thème, la meilleure façon est de créer un nouveau répertoire :</seg>
       </tuv>
     </tu>
     <tu>
@@ -28996,6 +29328,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120101T184532Z" changeid="xavier">
         <seg>Pour utiliser TLS, utiliser &lt;c0&gt;ldap+tls://server&lt;/c0&gt; et pour utiliser LDAPS, indiquer &lt;c1&gt;ldaps://server&lt;/c1&gt; au lieu du nom de serveur.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>To use custom files, delete links and copy them into your skin folder:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T074933Z" changeid="guimard">
+        <seg>Pour utiliser des fichiers personnalisés, effacer les liens et copier les fichiers dans le répertoire du thème :</seg>
       </tuv>
     </tu>
     <tu>
@@ -29848,6 +30188,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>We include some template files that can be customized:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T074653Z" changeid="guimard">
+        <seg>Nous incluons des fichiers modèles qui peuvent être personnalisés :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>We split databases in two categories:</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -30448,6 +30796,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can change the skin in Manager: &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Portal&lt;/c1&gt; &gt; &lt;c2&gt;Customization&lt;/c2&gt; &gt; &lt;c3&gt;Skin&lt;/c3&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T074136Z" changeid="guimard">
+        <seg>On peut changer le thème dans le manager : &lt;c0&gt;paramètres généraux&lt;/c0&gt; &gt; &lt;c1&gt;Portail&lt;/c1&gt; &gt; &lt;c2&gt;Personnalisation&lt;/c2&gt; &gt; &lt;c3&gt;Skin&lt;/c3&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You can choose other Makefile targets:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T160751Z" changeid="xavier">
@@ -30940,6 +31296,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120227T192956Z" changeid="xavier">
         <seg>Il faut juste partager les bases de données de configuration et des sessions entre ces serveurs :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You just need to know the ID of the error (look at Portal/Simple.pm) and then add to &lt;c0&gt;lemonldap-ng.ini&lt;/c0&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T075322Z" changeid="guimard">
+        <seg>Il suffit de connaître l'ID de l'erreur (voir Portal/Simple.pm) et de l'ajouter dans &lt;c0&gt;lemonldap-ng.ini&lt;/c0&gt; :</seg>
       </tuv>
     </tu>
     <tu>
@@ -32020,6 +32384,30 @@ sudo make install</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>cd myskin
+ln -s ../pastel/*.tpl .</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T074626Z" changeid="guimard">
+        <seg>cd myskin
+ln -s ../pastel/*.tpl .</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>cd portal/skins
+mkdir myskin
+mkdir myskin/css
+mkdir myskin/images</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T074528Z" changeid="guimard">
+        <seg>cd portal/skins
+mkdir myskin
+mkdir myskin/css
+mkdir myskin/images</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>cd trunk</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T160443Z" changeid="xavier">
@@ -32292,6 +32680,38 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T061229Z" changeid="guimard">
         <seg>customFunctions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>customfooter.tpm : &lt;a0&gt;HTML&lt;/a0&gt; code in the footer div</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T074850Z" changeid="guimard">
+        <seg>customfooter.tpm : code &lt;a0&gt;HTML&lt;/a0&gt; inséré dans le div de pied-de-page</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>customhead.tpl : &lt;a0&gt;HTML&lt;/a0&gt; header markups (like &lt;a1&gt;CSS&lt;/a1&gt;, js cinlusion)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T074807Z" changeid="guimard">
+        <seg>customhead.tpl : marques d'en-têtes &lt;a0&gt;HTML&lt;/a0&gt; (tels les inclusions &lt;a1&gt;CSS&lt;/a1&gt;, js)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>customheader.tpl : &lt;a0&gt;HTML&lt;/a0&gt; code int the header div</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T074834Z" changeid="guimard">
+        <seg>customheader.tpl : code &lt;a0&gt;HTML&lt;/a0&gt; inséré dans le div d'en-tête</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>dark</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T074100Z" changeid="guimard">
+        <seg>dark</seg>
       </tuv>
     </tu>
     <tu>
@@ -34100,6 +34520,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T193408Z" changeid="xavier">
         <seg>documentation:manager-formreplay-newurl.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:manager-portalskin.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T074138Z" changeid="guimard">
+        <seg>documentation:manager-portalskin.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -36184,6 +36612,22 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>images and other media files</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T074308Z" changeid="guimard">
+        <seg>images et autres médias</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>impact</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T074100Z" changeid="guimard">
+        <seg>impact</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>import your own private and public keys (&lt;c0&gt;Load from a file&lt;/c0&gt; input)</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -37508,6 +37952,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>pastel</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T074059Z" changeid="guimard">
+        <seg>pastel</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>perl-Lemonldap-NG-Common: CPAN - Shared modules</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T095425Z" changeid="xavier">
@@ -37916,6 +38368,16 @@ msktutil -c -b &quot;cn=COMPUTERS&quot; -s HTTP/auth.example.com -h auth.example
       <tuv lang="FR-FR" changedate="20120226T114526Z" changeid="xavier">
         <seg>rm -f /etc/lemonldap-ng/auth.keytab
 msktutil -c -b &quot;cn=COMPUTERS&quot; -s HTTP/auth.example.com -h auth.example.com -k /etc/lemonldap-ng/auth.keytab --computer-name portalsso --upn HTTP/auth.example.com --server ad.example.com --verbose --enctypes 28</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>rm custom*
+cp ../pastel/custom* .</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T074937Z" changeid="guimard">
+        <seg>rm custom*
+cp ../pastel/custom* .</seg>
       </tuv>
     </tu>
     <tu>
