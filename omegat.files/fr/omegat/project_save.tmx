@@ -74,6 +74,70 @@ deb-src http://lemonldap-ng.org/deb squeeze main</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>######################################################################
+# Multi Router Traffic Grapher -- Sample Configuration File
+######################################################################
+# This file is for use with mrtg-2.5.4c
+ 
+# Global configuration
+WorkDir: /var/www/mrtg
+WriteExpires: Yes
+ 
+Title[^]: Traffic Analysis for
+ 
+# 128K leased line
+# ----------------
+#Title[leased]: a 128K leased line
+#PageTop[leased]: &lt;H1&gt;Our 128K link to the outside world&lt;/H1&gt;
+#Target[leased]: 1:public@router.localnet
+#MaxBytes[leased]: 16000
+Target[test.example.com]: `/etc/mrtg/lmng-mrtg 172.16.1.2 https://test.example.com/status OK OK`
+Options[test.example.com]: nopercent, growright, nobanner, perminute
+PageTop[test.example.com]: &lt;h1&gt;Requests OK from test.example.com&lt;/h1&gt;
+MaxBytes[test.example.com]: 1000000
+YLegend[test.example.com]: hits/minute
+ShortLegend[test.example.com]: &amp;nbsp; hits/mn
+LegendO[test.example.com]: Hits:
+LegendI[test.example.com]: Hits:
+Legend2[test.example.com]: Hits per minute
+Legend4[test.example.com]: Hits max per minute
+Title[test.example.com]: Hits per minute
+WithPeak[test.example.com]: wmy</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T051220Z" changeid="guimard">
+        <seg>######################################################################
+# Multi Router Traffic Grapher -- Sample Configuration File
+######################################################################
+# This file is for use with mrtg-2.5.4c
+ 
+# Global configuration
+WorkDir: /var/www/mrtg
+WriteExpires: Yes
+ 
+Title[^]: Traffic Analysis for
+ 
+# 128K leased line
+# ----------------
+#Title[leased]: a 128K leased line
+#PageTop[leased]: &lt;H1&gt;Our 128K link to the outside world&lt;/H1&gt;
+#Target[leased]: 1:public@router.localnet
+#MaxBytes[leased]: 16000
+Target[test.example.com]: `/etc/mrtg/lmng-mrtg 172.16.1.2 https://test.example.com/status OK OK`
+Options[test.example.com]: nopercent, growright, nobanner, perminute
+PageTop[test.example.com]: &lt;h1&gt;Requests OK from test.example.com&lt;/h1&gt;
+MaxBytes[test.example.com]: 1000000
+YLegend[test.example.com]: hits/minute
+ShortLegend[test.example.com]: &amp;nbsp; hits/mn
+LegendO[test.example.com]: Hits:
+LegendI[test.example.com]: Hits:
+Legend2[test.example.com]: Hits per minute
+Legend4[test.example.com]: Hits max per minute
+Title[test.example.com]: Hits per minute
+WithPeak[test.example.com]: wmy</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>#a</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -1792,6 +1856,14 @@ deb-src http://lemonldap-ng.org/deb squeeze main</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T183705Z" changeid="xavier">
         <seg>../../documentation/1.2/start.html#identity_provider</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/status.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T051038Z" changeid="guimard">
+        <seg>../../documentation/1.2/status.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -6964,6 +7036,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv lang="FR-FR" changedate="20111217T080356Z" changeid="xavier">
         <seg>&lt;a0&gt;Sympa&lt;/a0&gt; est un gestionnaire de listes de diffusion.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;The status page&lt;/a0&gt; can be read by &lt;a1&gt;MRTG&lt;/a1&gt; using the script &lt;s2&gt;lmng-mrtg&lt;/s2&gt; that can be found in manager example directory.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T051151Z" changeid="guimard">
+        <seg>&lt;a0&gt;La page de statut&lt;/a0&gt; peut être lue par &lt;a1&gt;MRTG&lt;/a1&gt; en utilisant le script &lt;s2&gt;lmng-mrtg&lt;/s2&gt; qui peut être trouvé dans le répertoire &quot;example&quot; du manager.</seg>
       </tuv>
     </tu>
     <tu>
@@ -21352,6 +21432,22 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>MRTG configuration example:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T051207Z" changeid="guimard">
+        <seg>Exemple de configuration MRTG :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>MRTG monitoring</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T051038Z" changeid="guimard">
+        <seg>Supervision MRTG</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Macros</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T121053Z" changeid="xavier">
@@ -30992,6 +31088,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.2:status</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T051039Z" changeid="guimard">
+        <seg>documentation:1.2:status</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.2:upgrade</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T175242Z" changeid="xavier">
@@ -32220,6 +32324,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T082015Z" changeid="xavier">
         <seg>http://openid.net/specs/openid-simple-registration-extension-1_0.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://oss.oetiker.ch/mrtg/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T051040Z" changeid="guimard">
+        <seg>http://oss.oetiker.ch/mrtg/</seg>
       </tuv>
     </tu>
     <tu>
