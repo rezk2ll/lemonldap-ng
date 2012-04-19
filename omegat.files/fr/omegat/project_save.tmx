@@ -5492,6 +5492,14 @@ deb-src http://lemonldap-ng.org/deb squeeze main</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>10.0.0.1:20000 10.0.0.2:20000</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T050742Z" changeid="guimard">
+        <seg>10.0.0.1:20000 10.0.0.2:20000</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>105.000</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -6768,6 +6776,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Memcached&lt;/a0&gt; can be used with &lt;a1&gt;LL::NG&lt;/a1&gt;, but some features will not work since Memcached doesn't provide any parsing system:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T050410Z" changeid="guimard">
+        <seg>&lt;a0&gt;Memcached&lt;/a0&gt; peut être utilisé avec &lt;a1&gt;LL::NG&lt;/a1&gt;, mais quelques fonctionnalités ne marcheront pas car Memcached ne fournit pas de dispositif de parcours des données :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;OBM&lt;/a0&gt; is enterprise-class messaging and collaboration platform for workgroup or enterprises with many thousands users.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T111848Z" changeid="xavier">
@@ -6916,6 +6932,22 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112134Z" changeid="xavier">
         <seg>&lt;a0&gt;SSO&lt;/a0&gt; sur l'interface web d'OBM</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Session explorer&lt;/a0&gt; will not work</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T050500Z" changeid="guimard">
+        <seg>L'&lt;a0&gt;explorateur de session&lt;/a0&gt; ne fonctionne pas</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Session restrictions&lt;/a0&gt; will not work</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T050519Z" changeid="guimard">
+        <seg>Les &lt;a0&gt;restrictions de session&lt;/a0&gt; ne fonctionnent pas</seg>
       </tuv>
     </tu>
     <tu>
@@ -14096,6 +14128,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Add an Apache access control to avoid other access.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T050248Z" changeid="guimard">
+        <seg>Ajouter un contrôle d'accès Apache pour éviter les autres accès.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Add it to trustedDomains (or set &lt;c0&gt;*&lt;/c0&gt; in trustedDomains to accept all).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T114718Z" changeid="xavier">
@@ -14675,6 +14715,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
         <seg>Apache based protection allow to be be independent from WebSSO, so Manager will always be reachable even if WebSSO configuration is corrupted.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T202219Z" changeid="guimard">
+        <seg>Une protection basée sur Apache permet d'être indépendant du WebSSO, ainsi le manager est toujours accessible même si la configuration du WebSSO est corrompue.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Apache based protection allow to be independent from WebSSO, so Manager will always be reachable even if WebSSO configuration is corrupted.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T050017Z" changeid="guimard">
         <seg>Une protection basée sur Apache permet d'être indépendant du WebSSO, ainsi le manager est toujours accessible même si la configuration du WebSSO est corrompue.</seg>
       </tuv>
     </tu>
@@ -19104,6 +19152,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If for an obscure reason, the WebSSO is not working and you want to access the Manager, remove the protection in &lt;c0&gt;lemonldap-ng.ini&lt;/c0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T050216Z" changeid="guimard">
+        <seg>Si pour une quelconque raison le WebSSO ne fonctionne pas, pour accéder au manager, supprimer la protection dans &lt;c0&gt;lemonldap-ng.ini&lt;/c0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If needed, you can &lt;a0&gt;recompile the valve from the sources&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T190519Z" changeid="xavier">
@@ -19672,6 +19728,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>In the manager: set &lt;a0&gt;Apache::Session::Memcached&lt;/a0&gt; in &lt;c1&gt;General parameters&lt;/c1&gt; » &lt;c2&gt;Sessions&lt;/c2&gt; » &lt;c3&gt;Session storage&lt;/c3&gt; » &lt;c4&gt;Apache::Session module&lt;/c4&gt; and add the following parameters (case sensitive):</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T050722Z" changeid="guimard">
+        <seg>Dans le manager : indiquez &lt;a0&gt;Apache::Session::Memcached&lt;/a0&gt; dans &lt;c1&gt;Paramètres généraux&lt;/c1&gt; » &lt;c2&gt;Sessions&lt;/c2&gt; » &lt;c3&gt;Stockage des sessions&lt;/c3&gt; » &lt;c4&gt;Module Apache::Session&lt;/c4&gt; et ajoutez les paramètres suivant (sensibles à la casse) :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>In the manager: set &lt;a0&gt;Apache::Session::Redis&lt;/a0&gt; in &lt;c1&gt;General parameters&lt;/c1&gt; » &lt;c2&gt;Sessions&lt;/c2&gt; » &lt;c3&gt;Session storage&lt;/c3&gt; » &lt;c4&gt;Apache::Session module&lt;/c4&gt; and add the following parameters (case sensitive):</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -19844,6 +19908,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T100804Z" changeid="xavier">
         <seg>Installer toutes les dépendances de construction (voir BuildRequires dans lemonldap-ng.&lt;a0&gt;spec&lt;/a0&gt;)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Install and launch a &lt;a0&gt;Memcached server&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T050653Z" changeid="guimard">
+        <seg>Installer et lancer un &lt;a0&gt;serveur Memcached&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -21548,6 +21620,22 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T153535Z" changeid="xavier">
         <seg>Mediawiki</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Memcached servers</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T050738Z" changeid="guimard">
+        <seg>Serveurs memcached</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Memcached session backend</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T050301Z" changeid="guimard">
+        <seg>Backend de session Memcached</seg>
       </tuv>
     </tu>
     <tu>
@@ -23792,6 +23880,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>See &lt;a0&gt;Apache::Session::Memcached&lt;/a0&gt; for optional parameters.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T050801Z" changeid="guimard">
+        <seg>Voir &lt;a0&gt;Apache::Session::Memcached&lt;/a0&gt; pour les paramètres optionnels.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>See &lt;a0&gt;Debian Lenny upgrade&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T112723Z" changeid="xavier">
@@ -23984,6 +24080,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Servers</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T050727Z" changeid="guimard">
+        <seg>Servers</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Service Provider</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -24036,6 +24140,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Expiration des sessions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Session expiration: sessions will never expire (server side)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T050441Z" changeid="guimard">
+        <seg>Expiration des sessions : les sessions n'expirent jamais (du côté serveur)</seg>
       </tuv>
     </tu>
     <tu>
@@ -25032,6 +25144,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The configuration can be changed in &lt;c0&gt;etc/manager-apache2.conf&lt;/c0&gt;, for example to restrict the &lt;a1&gt;IP&lt;/a1&gt; allowed to access the Manager:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T050045Z" changeid="guimard">
+        <seg>Cette configuration peut être changée dans &lt;c0&gt;etc/manager-apache2.conf&lt;/c0&gt;, par exemple pour restreindre les adresses &lt;a1&gt;IP&lt;/a1&gt; autorisées à accéder au manager :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The configuration is displayed as a big &lt;a0&gt;Perl&lt;/a0&gt; Hash, that you can edit:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T111225Z" changeid="xavier">
@@ -25227,6 +25347,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
         <seg>The messages are stored with the facilities :</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T201523Z" changeid="guimard">
+        <seg>Les messages sont stockés avec les niveaux :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The messages are stored with the levels :</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T045912Z" changeid="guimard">
         <seg>Les messages sont stockés avec les niveaux :</seg>
       </tuv>
     </tu>
@@ -25844,6 +25972,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120101T184457Z" changeid="xavier">
         <seg>Ils seront testés dans l'ordre indiqué.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This How To explains how change this default behavior to protect Manager with other rules.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T045954Z" changeid="guimard">
+        <seg>Ce document explique comment changer ce comportement par défaut pour protéger le manager avec d'autres règles.</seg>
       </tuv>
     </tu>
     <tu>
@@ -26620,6 +26756,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T162354Z" changeid="xavier">
         <seg>Pour les installer sur le système :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>To keep Memcached performance level and &lt;a0&gt;LL::NG&lt;/a0&gt; features, you can replace &lt;a1&gt;Memcached&lt;/a1&gt; by &lt;a2&gt;Redis&lt;/a2&gt; using &lt;a3&gt;NoSQL session backend&lt;/a3&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T050635Z" changeid="guimard">
+        <seg>Pour maintenir un niveau de performance tel celui de Memcached et préserver les fonctionnalités de &lt;a0&gt;LL::NG&lt;/a0&gt;, on peut remplacer &lt;a1&gt;Memcached&lt;/a1&gt; par &lt;a2&gt;Redis&lt;/a2&gt; en utilisant le &lt;a3&gt;backend de sessions NoSQL&lt;/a3&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -27544,6 +27688,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>When installing &lt;a0&gt;LL::NG&lt;/a0&gt;, the Manager can only be accessed with the demo account &lt;c1&gt;dwho&lt;/c1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T045943Z" changeid="guimard">
+        <seg>Lorsqu'on installe &lt;a0&gt;LL::NG&lt;/a0&gt;, le manager n'est accessible que via le compte de démonstration &lt;c1&gt;dwho&lt;/c1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>When it takes “false”, &lt;a1&gt;HTTP&lt;/a1&gt; headers have to be sent by &lt;a2&gt;LL::NG&lt;/a2&gt; to make authentication.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T191247Z" changeid="xavier">
@@ -27828,6 +27980,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T182347Z" changeid="xavier">
         <seg>On peut autoriser ces utilisateurs au lieu de les rejeter :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can also adapt Apache access control:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T050155Z" changeid="guimard">
+        <seg>On peut également adapter le contrôle d'accès d'Apache :</seg>
       </tuv>
     </tu>
     <tu>
@@ -28564,6 +28724,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111207T051745Z" changeid="xavier">
         <seg>Certains paramètres doivent être adaptés :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You need to disable default Manager protection in lemonldap-ng.ini to rely only on Apache:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T050122Z" changeid="guimard">
+        <seg>Il faut alors désactiver la protection du manager dans lemonldap-ng.ini pour la confier à Apache :</seg>
       </tuv>
     </tu>
     <tu>
@@ -32008,6 +32176,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://memcached.org/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T050301Z" changeid="guimard">
+        <seg>http://memcached.org/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://modauthkerb.sourceforge.net/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T153913Z" changeid="xavier">
@@ -32164,6 +32340,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>http://search.cpan.org/perldoc?Apache::Session::Flex</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://search.cpan.org/perldoc?Apache::Session::Memcached</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T050654Z" changeid="guimard">
+        <seg>http://search.cpan.org/perldoc?Apache::Session::Memcached</seg>
       </tuv>
     </tu>
     <tu>
