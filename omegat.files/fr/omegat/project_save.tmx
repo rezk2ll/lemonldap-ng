@@ -1292,6 +1292,46 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../../media/screenshots/1.1/mailreset/mailreset_step1.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T145521Z" changeid="guimard">
+        <seg>../../../media/screenshots/1.1/mailreset/mailreset_step1.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../media/screenshots/1.1/mailreset/mailreset_step2.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T145625Z" changeid="guimard">
+        <seg>../../../media/screenshots/1.1/mailreset/mailreset_step2.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../media/screenshots/1.1/mailreset/mailreset_step3.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T145717Z" changeid="guimard">
+        <seg>../../../media/screenshots/1.1/mailreset/mailreset_step3.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../media/screenshots/1.1/mailreset/mailreset_step4.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T145744Z" changeid="guimard">
+        <seg>../../../media/screenshots/1.1/mailreset/mailreset_step4.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../media/screenshots/1.1/mailreset/mailreset_step5.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T145911Z" changeid="guimard">
+        <seg>../../../media/screenshots/1.1/mailreset/mailreset_step5.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../../media/screenshots/1.1/manager/notifications_explorer_create.png</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T055450Z" changeid="guimard">
@@ -5596,6 +5636,46 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/screenshots/1.1/mailreset/mailreset_step1.png?id=documentation%3A1.2%3Aresetpassword</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T145519Z" changeid="guimard">
+        <seg>/_detail/screenshots/1.1/mailreset/mailreset_step1.png?id=documentation%3A1.2%3Aresetpassword</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/screenshots/1.1/mailreset/mailreset_step2.png?id=documentation%3A1.2%3Aresetpassword</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T145621Z" changeid="guimard">
+        <seg>/_detail/screenshots/1.1/mailreset/mailreset_step2.png?id=documentation%3A1.2%3Aresetpassword</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/screenshots/1.1/mailreset/mailreset_step3.png?id=documentation%3A1.2%3Aresetpassword</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T145715Z" changeid="guimard">
+        <seg>/_detail/screenshots/1.1/mailreset/mailreset_step3.png?id=documentation%3A1.2%3Aresetpassword</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/screenshots/1.1/mailreset/mailreset_step4.png?id=documentation%3A1.2%3Aresetpassword</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T145742Z" changeid="guimard">
+        <seg>/_detail/screenshots/1.1/mailreset/mailreset_step4.png?id=documentation%3A1.2%3Aresetpassword</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/screenshots/1.1/mailreset/mailreset_step5.png?id=documentation%3A1.2%3Aresetpassword</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T145847Z" changeid="guimard">
+        <seg>/_detail/screenshots/1.1/mailreset/mailreset_step5.png?id=documentation%3A1.2%3Aresetpassword</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>/_detail/screenshots/1.1/manager/notifications_explorer_create.png?id=documentation%3A1.2%3Anotifications</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T055443Z" changeid="guimard">
@@ -7288,6 +7368,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can propose a password reset form, for users who loose their password (this kind of application is also called a self service password interface).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T145439Z" changeid="guimard">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; peut proposer un formulaire de réinitialisation de mot-de-passe pour les utilisateurs qui ont perdu leur mot-de-passe (ce type d'application est également appelée interface de mot-de-passe self-service).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can use SAML2 to get user identity and grab some attributes defined in user profile on its Identity Provider (IDP).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120218T220110Z" changeid="xavier">
@@ -7424,6 +7512,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; try to find the user in users database with the given information</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T145620Z" changeid="guimard">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; tente de trouver l'utilisateur dans la base de données avec l'information donnée</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; use 2 internal databases to store its configuration and sessions.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T113618Z" changeid="xavier">
@@ -7452,6 +7548,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T120241Z" changeid="xavier">
         <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; utilise &lt;a1&gt;Authen::Radius de Perl&lt;/a1&gt; comme simple backend d'authentification.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; validate the token and propose a password change form</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T145810Z" changeid="guimard">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; valide la valeur et propose un formulaire de changement de mot-de-passe</seg>
       </tuv>
     </tu>
     <tu>
@@ -9906,6 +10010,38 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;&lt;a1&gt;SMTP&lt;/a1&gt; Password&lt;/s0&gt;: &lt;a2&gt;SMTP&lt;/a2&gt; password if authentication is required</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T150538Z" changeid="guimard">
+        <seg>&lt;s0&gt;Mot-de-passe &lt;a1&gt;SMTP&lt;/a1&gt;&lt;/s0&gt; : mot-de-passe &lt;a2&gt;SMTP&lt;/a2&gt; si une authentification est requise</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;&lt;a1&gt;SMTP&lt;/a1&gt; Server&lt;/s0&gt;: &lt;a2&gt;IP&lt;/a2&gt; or hostname of the &lt;a3&gt;SMTP&lt;/a3&gt; server</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T150446Z" changeid="guimard">
+        <seg>&lt;s0&gt;Serveur &lt;a1&gt;SMTP&lt;/a1&gt;&lt;/s0&gt; : &lt;a2&gt;IP&lt;/a2&gt; ou nom d'hôte du serveur &lt;a3&gt;SMTP&lt;/a3&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;&lt;a1&gt;SMTP&lt;/a1&gt; User&lt;/s0&gt;: &lt;a2&gt;SMTP&lt;/a2&gt; user if authentication is required</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T150511Z" changeid="guimard">
+        <seg>&lt;s0&gt;utilisateur &lt;a1&gt;SMTP&lt;/a1&gt;&lt;/s0&gt; : utilisateur &lt;a2&gt;SMTP&lt;/a2&gt; si une authentification est requise</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;&lt;a1&gt;SMTP&lt;/a1&gt;&lt;/s0&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T150415Z" changeid="guimard">
+        <seg>&lt;s0&gt;&lt;a1&gt;SMTP&lt;/a1&gt;&lt;/s0&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;&lt;a1&gt;SOAP&lt;/a1&gt; sessions end point&lt;/s0&gt; (optional): &lt;a2&gt;SOAP&lt;/a2&gt; end point, if not based on internal portal &lt;a3&gt;URL&lt;/a3&gt; with &lt;c4&gt;index.pl/sessions&lt;/c4&gt; suffix</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120215T050039Z" changeid="xavier">
@@ -10690,6 +10826,22 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Confirmation mail content&lt;/s0&gt; (optional): Content of mail sent when password change is asked</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T151312Z" changeid="guimard">
+        <seg>&lt;s0&gt;Contenu du message de confirmation&lt;/s0&gt; (optionnel) : contenu du courriel envoyé lorsque le changement de mot-de-passe est demandé</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Confirmation mail subject&lt;/s0&gt;: Subject of mail sent when password change is asked (default: [LemonLDAP::NG] Password reset confirmation)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T151227Z" changeid="guimard">
+        <seg>&lt;s0&gt;Sujet du message de confirmation&lt;/s0&gt; : sujet du courriel envoyé lorsque le changement de mot-de-passe est demandé (défaut: [LemonLDAP::NG] Password reset confirmation)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Control &lt;a1&gt;URL&lt;/a1&gt; origin&lt;/s0&gt;: prevent &lt;a2&gt;XSS&lt;/a2&gt; attacks and bad redirections</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -11344,6 +11496,22 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Mail charset&lt;/s0&gt;: Charset used for the body of the mail (default: utf-8)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T150939Z" changeid="guimard">
+        <seg>&lt;s0&gt;Jeu de caractères du courriel&lt;/s0&gt; : jeu de caractère utilisé pour le corps du message (défaut : utf-8)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Mail content&lt;/s0&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T150948Z" changeid="guimard">
+        <seg>&lt;s0&gt;Contenu du courriel&lt;/s0&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Mail field name&lt;/s0&gt;: name of authentication table column hosting mail (for password reset)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T201045Z" changeid="xavier">
@@ -11356,6 +11524,22 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T114352Z" changeid="xavier">
         <seg>&lt;s0&gt;Filtre mail&lt;/s0&gt; : filtre pour trouver l'utilisateur à partir de son mail (défaut: &lt;c1&gt;(&amp;(mail=$mail)(objectClass=inetOrgPerson))&lt;/c1&gt;)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Mail headers&lt;/s0&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T150749Z" changeid="guimard">
+        <seg>&lt;s0&gt;En-têtes de courriel&lt;/s0&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Mail sender&lt;/s0&gt;: address seen in the “From” field (default: noreply@[DOMAIN])</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T150822Z" changeid="guimard">
+        <seg>&lt;s0&gt;Expéditeur&lt;/s0&gt; : adresse vue dans le champ “From” (défaut : noreply@[DOMAINE])</seg>
       </tuv>
     </tu>
     <tu>
@@ -11506,6 +11690,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Other&lt;/s0&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T151426Z" changeid="guimard">
+        <seg>&lt;s0&gt;Autres&lt;/s0&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;POST &lt;a1&gt;URL&lt;/a1&gt;&lt;/s0&gt;: /login.php</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T193444Z" changeid="xavier">
@@ -11518,6 +11710,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T161254Z" changeid="xavier">
         <seg>&lt;s0&gt;PREFIX&lt;/s0&gt; : répertoire d'installation (défaut : /usr/local)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Page &lt;a1&gt;URL&lt;/a1&gt;&lt;/s0&gt;: &lt;a2&gt;URL&lt;/a2&gt; of password reset page (default: [PORTAL]/mail.pl)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T151501Z" changeid="guimard">
+        <seg>&lt;s0&gt;&lt;a1&gt;URL&lt;/a1&gt; de la page&lt;/s0&gt; : &lt;a2&gt;URL&lt;/a2&gt; de la page de réinitialisation de mot-de-passe (défaut : [PORTAL]/mail.pl)</seg>
       </tuv>
     </tu>
     <tu>
@@ -11730,10 +11930,26 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Regexp for password generation&lt;/s0&gt;: Regular expression used to generate the password (default: [A-Z]{3}[a-z]{5}.\d{2})</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T151553Z" changeid="guimard">
+        <seg>&lt;s0&gt;Regexp pour la génération de mot-de-passe&lt;/s0&gt; : expression régulière utilisée pour générer le mot-de-passe (défaut : [A-Z]{3}[a-z]{5}.\d{2})</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Renew authentication&lt;/s0&gt;: force authentication renewal on &lt;a1&gt;CAS&lt;/a1&gt; server</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T160449Z" changeid="xavier">
         <seg>&lt;s0&gt;Renouveler l'authentification&lt;/s0&gt; : force le renouvellement de l'authentification sur le serveur &lt;a1&gt;CAS&lt;/a1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Reply address&lt;/s0&gt;: address seen in the “Reply-To” field</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T150851Z" changeid="guimard">
+        <seg>&lt;s0&gt;Adresse pour la réponse&lt;/s0&gt; : adresse vue dans le champ “Reply-To”</seg>
       </tuv>
     </tu>
     <tu>
@@ -11988,6 +12204,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Session key containing mail address&lt;/s0&gt;: name of the session key containing email address.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T151828Z" changeid="guimard">
+        <seg>&lt;s0&gt;Clef de session contenant l'adresse mail&lt;/s0&gt; : nom de la clef de session contenant l'adresse de courriel.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Sessions module options&lt;/s0&gt;:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T200120Z" changeid="xavier">
@@ -12106,6 +12330,22 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;s0&gt;Stocke&lt;/s0&gt;: stocke les données utilisateurs dans la base de données des sessions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Success mail content&lt;/s0&gt; (optional): Content of mail sent when password is changed</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T151142Z" changeid="guimard">
+        <seg>&lt;s0&gt;Contenu du message&lt;/s0&gt; (optionnel) : contenu du courriel envoyé lorsque le mot-de-passe est changé</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Success mail subject&lt;/s0&gt;: Subject of mail sent when password is changed (default: [LemonLDAP::NG] Your new password)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T151054Z" changeid="guimard">
+        <seg>&lt;s0&gt;Sujet du message de succès&lt;/s0&gt; : sujet du courriel lorsque le mot-de-passe est changé (défaut : [LemonLDAP::NG] Your new password)</seg>
       </tuv>
     </tu>
     <tu>
@@ -12266,6 +12506,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T161819Z" changeid="xavier">
         <seg>&lt;s0&gt;VHOSTLISTEN&lt;/s0&gt; : comment est configuré le paramètre d'écoute des hôtes virtuels dans Apache (défaut : *:80)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Validity time of a password reset request&lt;/s0&gt;: number of seconds for password reset request validity.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T151701Z" changeid="guimard">
+        <seg>&lt;s0&gt;Durée de validité de la requête de réinitialisation de mot-de-passe&lt;/s0&gt; : nombre de secondes pour la validité de la requête de réinitialisation.</seg>
       </tuv>
     </tu>
     <tu>
@@ -15442,6 +15690,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>A mail with a token is sent to user</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T145714Z" changeid="guimard">
+        <seg>Un courriel avec une valeur est envoyé à l'utilisateur</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>A name</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -17306,6 +17562,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>By default, mail content are empty in order to use &lt;a0&gt;HTML&lt;/a0&gt; templates:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T151348Z" changeid="guimard">
+        <seg>Par défaut, les messages sont vides afin d'utiliser les modèles &lt;a0&gt;HTML&lt;/a0&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>By default, notifications will be stored in the same database as configuration:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T052336Z" changeid="guimard">
@@ -19114,6 +19378,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>During this period, user can ask the confirmation mail to be resent (default: session timeout value)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T151748Z" changeid="guimard">
+        <seg>Durant cette période, l'utilisateur peut demander que le courriel soit ré-émis (défaut : durée de vie de la session)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Dynamic application menu</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -19310,6 +19582,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T092357Z" changeid="xavier">
         <seg>Sinon, il ne sera envoyé dans les réponses que s'il est explicitement demandé dans les requêtes d'attributs.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Else, Net::&lt;a1&gt;SMTP&lt;/a1&gt; module is required to use the &lt;a2&gt;SMTP&lt;/a2&gt; server</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T150644Z" changeid="guimard">
+        <seg>Sinon, le module Net::SMTP est nécessaire pour utiliser le serveur &lt;a2&gt;SMTP&lt;/a2&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -21218,6 +21498,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If &lt;a0&gt;LDAP backend&lt;/a0&gt; is used, and &lt;a1&gt;LDAP&lt;/a1&gt; password policy is enabled, the 'password reset flag is set to true when password is generated, so that the user is forced to change his password on next connection.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T150050Z" changeid="guimard">
+        <seg>Si le &lt;a0&gt;backend LDAP&lt;/a0&gt; est utilisé et que la politique de mot-de-passe &lt;a1&gt;LDAP&lt;/a1&gt; est activée, le drapeau de réinitialisation de mot-de-passe est activé lorsque le mot-de-passe est généré, ce qui force l'utilisateur à le changer à la prochaine connexions.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If &lt;a0&gt;LL::NG&lt;/a0&gt; is the only software installed in Apache, the virtual host feature may not have already been activated.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T100342Z" changeid="xavier">
@@ -21298,6 +21586,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If authentication is configured, Authen::SASL and &lt;a0&gt;MIME&lt;/a0&gt;::Base64 modules are required</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T150740Z" changeid="guimard">
+        <seg>Si l'authentification est configurée, les modules Authen::SASL and MIME::Base64 sont requis</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If authentication succeed, Portal collect user data</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -21334,6 +21630,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T190519Z" changeid="xavier">
         <seg>Si besoin, &lt;a0&gt;recompiler la valve depuis les sources&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>If no &lt;a0&gt;SMTP&lt;/a0&gt; server is configured, the mail will be sent via the local sendmail program.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T150613Z" changeid="guimard">
+        <seg>Si aucun serveur &lt;a0&gt;SMTP&lt;/a0&gt; n'est configuré, le courriel est envoyé via la commande locale sendmail.</seg>
       </tuv>
     </tu>
     <tu>
@@ -21442,6 +21746,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If the user do a new password reset request but there is already a request pending, the user can ask the confirmation mail to be resent.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T150225Z" changeid="guimard">
+        <seg>Si l'utilisateur effectue une nouvelle demande de réinitialisation mais qu'une requête est déjà en attente, il peut demander une ré-expédition du courriel.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If the user has these values inside its entry:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T142019Z" changeid="guimard">
@@ -21526,6 +21838,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T192644Z" changeid="xavier">
         <seg>En configurant le rejeu de formulaire avec &lt;a0&gt;LL::NG&lt;/a0&gt;, l'agent intercepte les &lt;a1&gt;URL&lt;/a1&gt; configurées et envoie une requête POST à la page cible (qui peut être différente de la première).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>If you define mail contents in Manager, &lt;a0&gt;HTML&lt;/a0&gt; templates will not be used.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T151420Z" changeid="guimard">
+        <seg>Si les contenus sont définis dans le manager, les modèles &lt;a0&gt;HTML&lt;/a0&gt; ne sont pas utilisés.</seg>
       </tuv>
     </tu>
     <tu>
@@ -22830,6 +23150,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Cinématique</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Kinematics:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T145450Z" changeid="guimard">
+        <seg>Cinématique :</seg>
       </tuv>
     </tu>
     <tu>
@@ -26378,6 +26706,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Reset password by mail</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T145300Z" changeid="guimard">
+        <seg>Réinitialisation des mots-de-passe par courriel</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Response Location should be empty, as &lt;a0&gt;SOAP&lt;/a0&gt; responses are directly returned (synchronous binding).</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -28250,6 +28586,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The &lt;a0&gt;SMTP&lt;/a0&gt; server value can hold the port, for example: &lt;c1&gt;mail.example.com:25&lt;/c1&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T150709Z" changeid="guimard">
+        <seg>La valeur du serveur &lt;a0&gt;SMTP&lt;/a0&gt; peut contenir le port, par exemple : &lt;c1&gt;mail.example.com:25&lt;/c1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The &lt;a0&gt;Yubikey&lt;/a0&gt; is a small material token shipped by &lt;a1&gt;Yubico&lt;/a1&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T162139Z" changeid="xavier">
@@ -28730,6 +29074,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The new password is sent to user</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T145904Z" changeid="guimard">
+        <seg>Le nouveau mot-de-passe est envoyé à l'utilisateur</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The next time you will access Manager, it will be trough &lt;a0&gt;LL::NG&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T203428Z" changeid="guimard">
@@ -28874,6 +29226,22 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The request validity time is a configuration parameter.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T150249Z" changeid="guimard">
+        <seg>La durée de validité de la requête est un paramètre de configuration.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The reset password link must be activated, see &lt;a0&gt;portal customization&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T150331Z" changeid="guimard">
+        <seg>Le lien de réinitialisation de mot-de-passe doit être activé, voir &lt;a0&gt;la personnalisation du portail&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The script uses the &lt;c0&gt;editor&lt;/c0&gt; system command, that links to your favorite editor.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T111205Z" changeid="xavier">
@@ -28942,6 +29310,22 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T094037Z" changeid="xavier">
         <seg>Le processus de mise-à-jour va également migrer les anciens fichiers de configuration dans &lt;c0&gt;/etc/lemonldap-ng/lemonldap-ng.ini&lt;/c0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The user can choose a new password or ask to generate one</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T145841Z" changeid="guimard">
+        <seg>L'utilisateur peut choisir un nouveau mot de passe ou demander sa génération</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The user click on the link in the mail</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T145741Z" changeid="guimard">
+        <seg>L'utilisateur clique sur le lien dans le courriel</seg>
       </tuv>
     </tu>
     <tu>
@@ -29078,6 +29462,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120301T054249Z" changeid="xavier">
         <seg>Aller ensuite dans &lt;c0&gt;Options&lt;/c0&gt; pour définir :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Then go in Manager, &lt;c0&gt;General Parameters&lt;/c0&gt; » &lt;c1&gt;Advanced Parameters&lt;/c1&gt; » &lt;c2&gt;Password management&lt;/c2&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T150408Z" changeid="guimard">
+        <seg>Aller dans le manager, &lt;c0&gt;Paramètres généraux&lt;/c0&gt; » &lt;c1&gt;Paramètres avancés&lt;/c1&gt; » &lt;c2&gt;Gestion des mots-de-passe&lt;/c2&gt; :</seg>
       </tuv>
     </tu>
     <tu>
@@ -29666,6 +30058,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>This feature can be disabled in &lt;a2&gt;LDAP configuration&lt;/a2&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T150112Z" changeid="guimard">
+        <seg>Cette fonctionnalité peut être désactivée dans la &lt;a2&gt;configuration LDAP&lt;/a2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>This feature can be enabled and configured in Manager, in &lt;c0&gt;General Parameters&lt;/c0&gt; » &lt;c1&gt;Advanced Parameters&lt;/c1&gt; » &lt;c2&gt;Login History&lt;/c2&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T172505Z" changeid="xavier">
@@ -30070,6 +30470,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T163322Z" changeid="xavier">
         <seg>Cet utilisateur n'est plus disponible si on change de backend d'authentification !</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This value will be used to know to which recipient the has to be sent (default: mail).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T151936Z" changeid="guimard">
+        <seg>Cette valeur peut être utilisée pour savoir à quel destinataire doit être envoyé le courriel (défaut : mail).</seg>
       </tuv>
     </tu>
     <tu>
@@ -30918,10 +31326,26 @@ Is this ok [y/N]: y</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>User clicks on the link &lt;c0&gt;Reset my password&lt;/c0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T145518Z" changeid="guimard">
+        <seg>L'utilisateur clique sur le lien &lt;c0&gt;Réinitialiser mon mot-de-passe&lt;/c0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>User clicks on the logout link in Portal</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>L'utilisateur clique sur le bouton déconnexion du portail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>User enters his email (or another information) in the password reset form</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T145638Z" changeid="guimard">
+        <seg>L'utilisateur entre son adresse de courriel (ou une autre information) dans le formulaire de réinitialisation</seg>
       </tuv>
     </tu>
     <tu>
@@ -39430,6 +39854,22 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>portal/skins/common/mail_confirm.tpl</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T151349Z" changeid="guimard">
+        <seg>portal/skins/common/mail_confirm.tpl</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>portal/skins/common/mail_password.tpl</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T151350Z" changeid="guimard">
+        <seg>portal/skins/common/mail_password.tpl</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>portalAntiFrame</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T063836Z" changeid="guimard">
@@ -39816,6 +40256,46 @@ cp ../pastel/custom* .</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>screenshots.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>screenshots:1.1:mailreset:mailreset_step1.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T145520Z" changeid="guimard">
+        <seg>screenshots:1.1:mailreset:mailreset_step1.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>screenshots:1.1:mailreset:mailreset_step2.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T145623Z" changeid="guimard">
+        <seg>screenshots:1.1:mailreset:mailreset_step2.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>screenshots:1.1:mailreset:mailreset_step3.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T145716Z" changeid="guimard">
+        <seg>screenshots:1.1:mailreset:mailreset_step3.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>screenshots:1.1:mailreset:mailreset_step4.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T145743Z" changeid="guimard">
+        <seg>screenshots:1.1:mailreset:mailreset_step4.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>screenshots:1.1:mailreset:mailreset_step5.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T145906Z" changeid="guimard">
+        <seg>screenshots:1.1:mailreset:mailreset_step5.png</seg>
       </tuv>
     </tu>
     <tu>
