@@ -1100,6 +1100,14 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../../media/documentation/dia_dit_roles.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T142139Z" changeid="guimard">
+        <seg>../../../media/documentation/dia_dit_roles.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../../media/documentation/exportedvars.png</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T120549Z" changeid="xavier">
@@ -4716,6 +4724,14 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/documentation/dia_dit_roles.png?id=documentation%3A1.2%3Arbac</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T142136Z" changeid="guimard">
+        <seg>/_detail/documentation/dia_dit_roles.png?id=documentation%3A1.2%3Arbac</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>/_detail/documentation/exportedvars.png?id=documentation%3A1.0%3Aexportedvars</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T120509Z" changeid="xavier">
@@ -6448,6 +6464,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;CGI&lt;/a0&gt;::Session</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140836Z" changeid="guimard">
+        <seg>&lt;a0&gt;CGI&lt;/a0&gt;::Session</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;Configure the Apache server&lt;/a0&gt; that host the portal</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T095940Z" changeid="xavier">
@@ -6712,6 +6736,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;EPEL&lt;/a0&gt; repository, you can activate this repository: &lt;a1&gt;http://fedoraproject.org/wiki/EPEL/FAQ#howtouse&lt;/a1&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T141249Z" changeid="guimard">
+        <seg>le dépôt &lt;a0&gt;EPEL&lt;/a0&gt;, pour activer ce dépôt : &lt;a1&gt;http://fedoraproject.org/wiki/EPEL/FAQ#howtouse&lt;/a1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;Fr translation in progress&lt;/a0&gt; by guimard (2010/12/09 05:46)</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -6732,6 +6764,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T182402Z" changeid="xavier">
         <seg>&lt;a0&gt;Les applications Google&lt;/a0&gt; peuvent utiliser &lt;a1&gt;SAML&lt;/a1&gt; pour authentifier les utilisateurs, en se comportant comme des fournisseurs de service &lt;a2&gt;SAML&lt;/a2&gt;, tel qu'expliqué &lt;a3&gt;ici&lt;/a3&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;HTML&lt;/a0&gt;::Template</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140845Z" changeid="guimard">
+        <seg>&lt;a0&gt;HTML&lt;/a0&gt;::Template</seg>
       </tuv>
     </tu>
     <tu>
@@ -7464,6 +7504,22 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;MIME&lt;/a0&gt;::Base64</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140826Z" changeid="guimard">
+        <seg>&lt;a0&gt;MIME&lt;/a0&gt;::Base64</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;MIME&lt;/a0&gt;::Lite</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140959Z" changeid="guimard">
+        <seg>&lt;a0&gt;MIME&lt;/a0&gt;::Lite</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;May close #263&lt;/a0&gt; by guimard (2010/12/09 17:16)</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -7536,10 +7592,26 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;RBAC&lt;/a0&gt; stands for Role Based Access Control.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T141417Z" changeid="guimard">
+        <seg>&lt;a0&gt;RBAC&lt;/a0&gt; signifie contrôle d'accès basé sur les rôles (Role Based Access Control).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;README.Debian update&lt;/a0&gt; by guimard (2010/12/05 08:19)</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;a0&gt;README.Debian update&lt;/a0&gt; by guimard (2010/12/05 08:19)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;RPMForge&lt;/a0&gt; repository, you can activate this repository: &lt;a1&gt;https://rpmrepo.org/RPMforge/Using&lt;/a1&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T141309Z" changeid="guimard">
+        <seg>le dépôt &lt;a0&gt;RPMForge&lt;/a0&gt;, pour activer ce dépôt : &lt;a1&gt;https://rpmrepo.org/RPMforge/Using&lt;/a1&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -7636,6 +7708,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T070251Z" changeid="guimard">
         <seg>Emplacement du serveur &lt;a0&gt;SOAP&lt;/a0&gt; (&lt;a1&gt;URL&lt;/a1&gt;)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;SOAP&lt;/a0&gt;::Lite</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140846Z" changeid="guimard">
+        <seg>&lt;a0&gt;SOAP&lt;/a0&gt;::Lite</seg>
       </tuv>
     </tu>
     <tu>
@@ -7868,6 +7948,30 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T114505Z" changeid="xavier">
         <seg>Les fichiers &lt;a0&gt;XML&lt;/a0&gt; ne sont plus acceptés.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;XML&lt;/a0&gt;::LibXML</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140838Z" changeid="guimard">
+        <seg>&lt;a0&gt;XML&lt;/a0&gt;::LibXML</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;XML&lt;/a0&gt;::LibXSLT</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140844Z" changeid="guimard">
+        <seg>&lt;a0&gt;XML&lt;/a0&gt;::LibXSLT</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;XML&lt;/a0&gt;::Simple</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140835Z" changeid="guimard">
+        <seg>&lt;a0&gt;XML&lt;/a0&gt;::Simple</seg>
       </tuv>
     </tu>
     <tu>
@@ -15388,6 +15492,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>APT-GET</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T141136Z" changeid="guimard">
+        <seg>APT-GET</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Accept all authenticated users:</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -16236,6 +16348,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Apache::Session</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140817Z" changeid="guimard">
+        <seg>Apache::Session</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Apache::Session performances</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -16468,6 +16588,30 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Auth-Roles =&gt; $aaaRoles</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T143105Z" changeid="guimard">
+        <seg>Auth-Roles =&gt; $aaaRoles</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Auth-Roles =&gt; $bbbRoles</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T143107Z" changeid="guimard">
+        <seg>Auth-Roles =&gt; $bbbRoles</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Auth-Roles =&gt; $ssoRoles</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T141957Z" changeid="guimard">
+        <seg>Auth-Roles =&gt; $ssoRoles</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Auth-SuperAdmin</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T102247Z" changeid="xavier">
@@ -16492,10 +16636,26 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>AuthCAS</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140916Z" changeid="guimard">
+        <seg>AuthCAS</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>AuthLDAPFilter</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>AuthLDAPFilter</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Authen::SASL</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T141004Z" changeid="guimard">
+        <seg>Authen::SASL</seg>
       </tuv>
     </tu>
     <tu>
@@ -17156,6 +17316,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>CAS (authentication module)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140913Z" changeid="guimard">
+        <seg>CAS (module d'authentification)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>CAS server</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120301T053540Z" changeid="xavier">
@@ -17168,6 +17336,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T070035Z" changeid="guimard">
         <seg>CDBI / RDBI</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>CGI</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140828Z" changeid="guimard">
+        <seg>CGI</seg>
       </tuv>
     </tu>
     <tu>
@@ -17200,6 +17376,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Options du module du cache local</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Cache::Cache</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140830Z" changeid="guimard">
+        <seg>Cache::Cache</seg>
       </tuv>
     </tu>
     <tu>
@@ -17428,6 +17612,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Choose a repository which hosted &lt;a0&gt;Perl&lt;/a0&gt; dependencies, for example:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T141208Z" changeid="guimard">
+        <seg>Choisir un dépôt qui héberge les dépendances &lt;a0&gt;Perl&lt;/a0&gt;, par exemple :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Choose for example &lt;a0&gt;http://zimbra.example.com/zimbrasso&lt;/a0&gt; as &lt;a1&gt;SSO&lt;/a1&gt; &lt;a2&gt;URL&lt;/a2&gt; and &lt;a3&gt;set it in application menu&lt;/a3&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111222T174032Z" changeid="xavier">
@@ -17464,6 +17656,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Cliquez sur un en-tête de colonne pour trier le tableau.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Clone</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140851Z" changeid="guimard">
+        <seg>Clone</seg>
       </tuv>
     </tu>
     <tu>
@@ -17544,6 +17744,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Conférences</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Config::IniFiles</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140847Z" changeid="guimard">
+        <seg>Config::IniFiles</seg>
       </tuv>
     </tu>
     <tu>
@@ -17980,6 +18188,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Convert::PEM</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140850Z" changeid="guimard">
+        <seg>Convert::PEM</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Cookie Javascript protection</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T065822Z" changeid="guimard">
@@ -18020,10 +18236,26 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Core</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140746Z" changeid="guimard">
+        <seg>Core</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Core &lt;a0&gt;Perl&lt;/a0&gt; subroutines (split, pop, map, etc.)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T121318Z" changeid="xavier">
         <seg>Fonctions standards de &lt;a0&gt;Perl&lt;/a0&gt; (split, pop, map, etc...)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Core modules must be installed on the system.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140655Z" changeid="guimard">
+        <seg>Les modules &quot;core&quot; doivent être installés sur le système.</seg>
       </tuv>
     </tu>
     <tu>
@@ -18068,6 +18300,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Create two macros (inside &lt;c0&gt;Variablles&lt;/c0&gt; » &lt;c1&gt;Macros&lt;/c1&gt;):</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T142834Z" changeid="guimard">
+        <seg>Créer deux macros (dans &lt;c0&gt;Variables&lt;/c0&gt; » &lt;c1&gt;Macros&lt;/c1&gt;):</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Create your &lt;a0&gt;Perl&lt;/a0&gt; module with custom functions.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T111813Z" changeid="xavier">
@@ -18096,6 +18336,38 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Cross Site Scripting</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Crypt::OpenSSL::Bignum</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140850Z" changeid="guimard">
+        <seg>Crypt::OpenSSL::Bignum</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Crypt::OpenSSL::RSA</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140849Z" changeid="guimard">
+        <seg>Crypt::OpenSSL::RSA</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Crypt::OpenSSL::X509</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140849Z" changeid="guimard">
+        <seg>Crypt::OpenSSL::X509</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Crypt::Rijndael</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140839Z" changeid="guimard">
+        <seg>Crypt::Rijndael</seg>
       </tuv>
     </tu>
     <tu>
@@ -18476,6 +18748,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Digest::HMAC</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140848Z" changeid="guimard">
+        <seg>Digest::HMAC</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Directory</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T191951Z" changeid="xavier">
@@ -18852,6 +19132,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Each user has a ssoRoles attributes, which values are the &lt;a0&gt;DN&lt;/a0&gt; of the corresponding roles.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T142311Z" changeid="guimard">
+        <seg>Chaque utilisateur a des attributs ssoRoles, dont les valeurs sont les &lt;a0&gt;DN&lt;/a0&gt; des rôles correspondants.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Each virtual host is a protected resource, with access rules, headers, POST data and options.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T072305Z" changeid="xavier">
@@ -19000,6 +19288,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Email</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Email::Date::Format</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140959Z" changeid="guimard">
+        <seg>Email::Date::Format</seg>
       </tuv>
     </tu>
     <tu>
@@ -19524,6 +19820,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>First step: create a rule to grant access only if the user has a role in the application:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T142645Z" changeid="guimard">
+        <seg>Première étape : créer une règle pour autoriser l'accès seulement si l'utilisateur dispose d'un rôle dans l'application:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Follow &lt;a0&gt;LDAP session backend&lt;/a0&gt; doc</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T113805Z" changeid="xavier">
@@ -19552,6 +19856,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T114412Z" changeid="xavier">
         <seg>Pour Active Directory, utiliser ce filtre d'authentification :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>For Apache2, you can use both mpm-worker and mpm-prefork.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140108Z" changeid="guimard">
+        <seg>Pour Apache2, on peut utiliser mpm-worker ou mpm-prefork.</seg>
       </tuv>
     </tu>
     <tu>
@@ -19600,6 +19912,22 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T100538Z" changeid="xavier">
         <seg>Pour la configuration apache, il faut peut-être supprimer l'ancien lien symbolique si ce n'est pas fait par le RPM:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>For application &lt;a0&gt;AAA&lt;/a0&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T142701Z" changeid="guimard">
+        <seg>Pour l'application AAA :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>For application BBB:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T142710Z" changeid="guimard">
+        <seg>Pour l'application BBB :</seg>
       </tuv>
     </tu>
     <tu>
@@ -20016,6 +20344,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T153613Z" changeid="xavier">
         <seg>GLPI</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>GLib</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140859Z" changeid="guimard">
+        <seg>GLib</seg>
       </tuv>
     </tu>
     <tu>
@@ -20636,6 +20972,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Here is the list of &lt;a0&gt;Perl&lt;/a0&gt; modules used in LemonLDAP::NG.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140628Z" changeid="guimard">
+        <seg>Ci-dessous la liste des modules &lt;a0&gt;Perl&lt;/a0&gt; utilisés dans LemonLDAP::NG.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Hide old password in reset form</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T065005Z" changeid="guimard">
@@ -20752,6 +21096,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111530Z" changeid="xavier">
         <seg>I</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>IO::String</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140840Z" changeid="guimard">
+        <seg>IO::String</seg>
       </tuv>
     </tu>
     <tu>
@@ -21004,6 +21356,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If the user has these values inside its entry:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T142019Z" changeid="guimard">
+        <seg>Si l'utilisateur dispose de ces valeurs dans son entrée :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If the user is not created, or can not be created via &lt;a0&gt;LDAP&lt;/a0&gt; import, the connection to Liferay will be refused.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T073401Z" changeid="xavier">
@@ -21100,10 +21460,26 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If you have more than one role for an application, you can join those roles with a separator (ex: ||):</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T143304Z" changeid="guimard">
+        <seg>Si plusieurs rôles peuvent être donnés dans la même application, on peut joindre ces rôles avec un séparateur (ex : ||):</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If you have run the Debian/Ubuntu install command, just use:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T162137Z" changeid="xavier">
         <seg>Pour la commande d'installation Debian/Ubuntu, utiliser simplement :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>If you have to use mpm-prefork (for example if you use &lt;a0&gt;PHP&lt;/a0&gt;), LemonLDAP::NG will work anyway.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140207Z" changeid="guimard">
+        <seg>S'il faut utiliser mpm-prefork (par exemple si on utilise &lt;a0&gt;PHP&lt;/a0&gt;), LemonLDAP::NG fonctionnera tout de même.</seg>
       </tuv>
     </tu>
     <tu>
@@ -21224,6 +21600,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T175239Z" changeid="xavier">
         <seg>Si la fonction n'est pas compatible avec la &lt;a0&gt;cage saine&lt;/a0&gt;, il faut désactiver la mise en cage.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Imagine you've set your directory schema to store roles as values of ssoRoles, an attribute of the user.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T141844Z" changeid="guimard">
+        <seg>On suppose que le schéma d'annuaire a été prévu pour stocker les rôles comme valeur de ssoRoles, un attribut utilisateur.</seg>
       </tuv>
     </tu>
     <tu>
@@ -21548,6 +21932,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>In the schema above, the user has the following values:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T142437Z" changeid="guimard">
+        <seg>Dans le schéma ci-dessus, l'utilisateur dispose des entrées suivantes :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>In this case you will be able to use &lt;c1&gt;$_password&lt;/c1&gt; to fill any password POST field.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T192846Z" changeid="xavier">
@@ -21752,6 +22144,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T162257Z" changeid="xavier">
         <seg>Installer les tâches planifiées (cron)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Install dependencies on your system</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T141135Z" changeid="guimard">
+        <seg>Installer les dépendances sur le système</seg>
       </tuv>
     </tu>
     <tu>
@@ -22060,6 +22460,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>It is done by creating the correct &lt;a0&gt;HTTP&lt;/a0&gt; header:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T143059Z" changeid="guimard">
+        <seg>C'est fait en créant l'en-tête &lt;a0&gt;HTTP&lt;/a0&gt; correct :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>It is possible to store any additional session data.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T172918Z" changeid="xavier">
@@ -22112,6 +22520,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Ceci signifie que si vous modifiez quelque chose ici, vous devez ré-exporter les metadatas aux autres fournisseurs.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>It means that you manage authorizations to access applications by checking the role(s) of the user, and provide this role to the application.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T141539Z" changeid="guimard">
+        <seg>Celà signifie qu'on gère les autorisations d'accès aux applications en examinant le(s) rôle(s) de l'utilisateur et en fournissant ce(s) rôle(s) à l'application.</seg>
       </tuv>
     </tu>
     <tu>
@@ -22212,10 +22628,26 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>JSON</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140848Z" changeid="guimard">
+        <seg>JSON</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Jean-Thomas CHECCO</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Jean-Thomas CHECCO</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Jquery (javascript framework) is included in tarball and RPMs, but is a dependency on Debian</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T141118Z" changeid="guimard">
+        <seg>Jquery (framework javascript framework) est inclus dans l'archive et les RPM mais est une dépendance sur Debian</seg>
       </tuv>
     </tu>
     <tu>
@@ -22508,6 +22940,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>LWP::UserAgent</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140829Z" changeid="guimard">
+        <seg>LWP::UserAgent</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Language</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T083114Z" changeid="xavier">
@@ -22632,6 +23072,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T172243Z" changeid="xavier">
         <seg>LemonLDAP::NG permet de stocker les connexions et tentatives dans les sessions persistantes.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LemonLDAP::NG allows to use this model.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T141551Z" changeid="guimard">
+        <seg>LemonLDAP::NG permet d'utiliser ce modèle.</seg>
       </tuv>
     </tu>
     <tu>
@@ -23692,6 +24140,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Mpm-worker works faster and LemonLDAP::NG use the thread system for best performance.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140135Z" changeid="guimard">
+        <seg>Mpm-worker est plus rapide et LemonLDAP::NG utilise le système de threads pour de meilleures performances.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Multi CAS;LDAP</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T145313Z" changeid="xavier">
@@ -23736,6 +24192,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Multiple et Choice (empilement d'autres modules)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Multipurpose Internet Mail Extension</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140824Z" changeid="guimard">
+        <seg>Multipurpose Internet Mail Extension</seg>
       </tuv>
     </tu>
     <tu>
@@ -23816,6 +24280,46 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Nb d'utilisateurs</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Net::&lt;a0&gt;LDAP&lt;/a0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140819Z" changeid="guimard">
+        <seg>Net::&lt;a0&gt;LDAP&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Net::&lt;a0&gt;SMTP&lt;/a0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T141002Z" changeid="guimard">
+        <seg>Net::&lt;a0&gt;SMTP&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Net::OpenID::Consumer &gt; 1.00</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140919Z" changeid="guimard">
+        <seg>Net::OpenID::Consumer &gt; 1.00</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Net::OpenID::Server &gt; 1.00</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140920Z" changeid="guimard">
+        <seg>Net::OpenID::Server &gt; 1.00</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Net::Twitter</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140922Z" changeid="guimard">
+        <seg>Net::Twitter</seg>
       </tuv>
     </tu>
     <tu>
@@ -24012,10 +24516,34 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Now imagine the following DIT:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T142135Z" changeid="guimard">
+        <seg>On suppose le schéma suivant :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Now ldapgroups contains “admin su”</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Maintenant, ldapgroups contient “admin su”</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Now the protected application can read in the header &lt;a0&gt;HTTP&lt;/a0&gt;_AUTH_ROLES the role of the user.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T143206Z" changeid="guimard">
+        <seg>Maintenant, l'application protégée peut lire le rôle de l'utilisateur dans l'en-tête HTTP_AUTH_ROLES.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Now we have to send to right role to the right application trough LemonLDAP::NG.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T142603Z" changeid="guimard">
+        <seg>Il faut maintenant envoyer le bon rôle à la bonne application via LemonLDAP::NG.</seg>
       </tuv>
     </tu>
     <tu>
@@ -24468,6 +24996,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Other modules must be installed only if you planned to use the related feature.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140742Z" changeid="guimard">
+        <seg>Les autres modules ne doivent être installés que s'il est prévu d'utiliser les fonctionnalités associées.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Other parameters</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T075557Z" changeid="guimard">
@@ -24504,6 +25040,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111600Z" changeid="xavier">
         <seg>P</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>POD unit tests</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140936Z" changeid="guimard">
+        <seg>Tests unitaires POD</seg>
       </tuv>
     </tu>
     <tu>
@@ -24720,6 +25264,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Performances</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Perl</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140608Z" changeid="guimard">
+        <seg>Perl</seg>
       </tuv>
     </tu>
     <tu>
@@ -25516,6 +26068,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Regexp::Assemble</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140837Z" changeid="guimard">
+        <seg>Regexp::Assemble</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Register LemonLDAP::NG on partner Identity Provider</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120218T220915Z" changeid="xavier">
@@ -25804,6 +26364,30 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Roles are entries, below branches representing applications.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T142234Z" changeid="guimard">
+        <seg>Les rôles sont des entrées, les branches subordonnées représentant les applications.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Roles as entries in the directory</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T142056Z" changeid="guimard">
+        <seg>Rôles comme entrée d'annuaire</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Roles as simple values of a user attribute</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T141734Z" changeid="guimard">
+        <seg>Rôles comme simple valeur d'attribut utilisateur</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Rule for session granting</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -25908,6 +26492,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>SAML2</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140852Z" changeid="guimard">
+        <seg>SAML2</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>SAML2 implementation is based on &lt;a0&gt;Lasso&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -25944,6 +26536,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T195342Z" changeid="xavier">
         <seg>SHA1</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>SMTP / Reset password by mail</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140957Z" changeid="guimard">
+        <seg>SMTP / réinitialisation de mot-de-passe par courriel</seg>
       </tuv>
     </tu>
     <tu>
@@ -26144,6 +26744,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Sebastien DIAZ</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Second step: get the role name for the application.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T142742Z" changeid="guimard">
+        <seg>Seconde étape : obtenir le rôle dans cette application.</seg>
       </tuv>
     </tu>
     <tu>
@@ -26860,6 +27468,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>So he is “user” on application “BBB” and “admin” on application “&lt;a0&gt;AAA&lt;/a0&gt;”.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T142500Z" changeid="guimard">
+        <seg>Ainsi, il est “user” sur l'application “BBB” et “admin” sur l'application “&lt;a0&gt;AAA&lt;/a0&gt;”.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>So if the http cookie is stolen, sensitive applications stay secured.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -27260,6 +27876,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>String::Random</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T141001Z" changeid="guimard">
+        <seg>String::Random</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Strong authorization system</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -27448,6 +28072,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T060439Z" changeid="guimard">
         <seg>Tester les notifications</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Test::POD</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140938Z" changeid="guimard">
+        <seg>Test::POD</seg>
       </tuv>
     </tu>
     <tu>
@@ -28404,6 +29036,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Then you got this value inside the Auth-Roles header:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T142042Z" changeid="guimard">
+        <seg>On les obtient dans l'en-tête Auth-Roles :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Then you will be able to use it in your template like this:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T075545Z" changeid="guimard">
@@ -28620,6 +29260,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>These regular expressions read the 'ou' value of the &lt;a0&gt;DN&lt;/a0&gt; of the role of the concerned application.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T142947Z" changeid="guimard">
+        <seg>Ces expressions régulières lisent la valeur 'ou' du &lt;a0&gt;DN&lt;/a0&gt; du rôle de l'application concernée.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>These rules can be set trough Manager: &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Portal&lt;/c1&gt; &gt; &lt;c2&gt;Menu&lt;/c2&gt; &gt; &lt;c3&gt;Modules activation&lt;/c3&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T134659Z" changeid="guimard">
@@ -28664,6 +29312,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120101T184457Z" changeid="xavier">
         <seg>Ils seront testés dans l'ordre indiqué.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Third step: provide the role to the application.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T143037Z" changeid="guimard">
+        <seg>Troisième étape : fournir le rôle à l'application.</seg>
       </tuv>
     </tu>
     <tu>
@@ -28936,6 +29592,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>C'est par exemple le cas de &lt;a0&gt;Memcached&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This is simple because you can send the role to the application by creating a &lt;a0&gt;HTTP&lt;/a0&gt; header (for example Auth-Role) with the concatenated values (';' is the concatenation string):</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T141951Z" changeid="guimard">
+        <seg>C'est simple car on peut envoyer le rôle à l'application en créant un en-tête &lt;a0&gt;HTTP&lt;/a0&gt; (par exemple Auth-Role) en concaténat les valeurs (avec ';' en séparateur) :</seg>
       </tuv>
     </tu>
     <tu>
@@ -29248,6 +29912,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T144241Z" changeid="xavier">
         <seg>Il fournit les classes auxiliaires &lt;c0&gt;ssoUser&lt;/c0&gt; avec les attributs :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This works if the user has only one role per application.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T143019Z" changeid="guimard">
+        <seg>Ceci fonctionne si l'utilisateur a seulement un rôle par application.</seg>
       </tuv>
     </tu>
     <tu>
@@ -29600,6 +30272,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T094919Z" changeid="xavier">
         <seg>Pour utiliser Active-Directory comme serveur &lt;a0&gt;LDAP&lt;/a0&gt;, vous devez effectuer quelques modifications dans le manager :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>To use LemonLDAP::NG, you have to run an Apache server compiled with mod-perl</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140011Z" changeid="guimard">
+        <seg>Pour utiliser LemonLDAP::NG, il faut disposer d'un serveur compilé avec mod-perl</seg>
       </tuv>
     </tu>
     <tu>
@@ -30476,6 +31156,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>We recommend using EPEL repository.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T141326Z" changeid="guimard">
+        <seg>Nous recommandons l'emploi du dépôt EPEL.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>We split databases in two categories:</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -30504,6 +31192,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074701Z" changeid="xavier">
         <seg>Nous expliquons ici comment utiliser le dernier : &lt;a0&gt;HTTP Auth&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>We will use the macros to do that.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T142757Z" changeid="guimard">
+        <seg>On utilise les macros pour ça.</seg>
       </tuv>
     </tu>
     <tu>
@@ -30764,6 +31460,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>With this organization, you can set roles to user within specific application.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T142415Z" changeid="guimard">
+        <seg>Avec cette organisation, on peut définir les rôles de l'utilisateur au sein de chaque application.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Wordpress, GLPI, OBM, Dokuwiki, …</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -30816,6 +31520,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T195442Z" changeid="xavier">
         <seg>Xavier GUIMARD</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>YUM</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T141140Z" changeid="guimard">
+        <seg>YUM</seg>
       </tuv>
     </tu>
     <tu>
@@ -31428,6 +32140,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can use LemonLDAP::NG in an heterogeneous world: the authentication portal and the manager can work in any version of Apache even if mod_perl is not compiled, with ModPerl::Registry or not… Only the handler need mod_perl 2.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140404Z" changeid="guimard">
+        <seg>On peut utiliser LemonLDAP::NG dans un monde hétérogène : le portail d'authentification et le manager peut fonctionner avec n'importe quelle version d'Apache même si mod_perl n'est pas compilé, avec ModPerl::Registry ou non,… Seul les agents ont besoin de mod_perl 2.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You can use Null backend to bypass some authentication process steps.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120121T080620Z" changeid="xavier">
@@ -31780,6 +32500,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You need to use Apache 2 with mod_perl 2, even if some simple configuration can run under Apache 1.3</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140050Z" changeid="guimard">
+        <seg>Il est nécessaire d'utiliser Apache 2 avec mod_perl 2, même si une configuration simple peut fonctionner avec Apache 1.3</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You only need a reload &lt;a0&gt;URL&lt;/a0&gt; per physical servers, as Handlers share the same configuration cache on each physical server.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T070857Z" changeid="xavier">
@@ -31824,6 +32552,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T094257Z" changeid="xavier">
         <seg>Il est désormais possible d'utiliser le manager pour configurer toutes les &lt;a0&gt;applications et catégories&lt;/a0&gt;, ensuite commenter ou supprimer le paramètre &lt;c1&gt;applicationList&lt;/c1&gt; de &lt;c2&gt;/etc/lemonldap-ng/lemonldap-ng.ini&lt;/c2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You should use an &lt;a0&gt;extended LDAP schema&lt;/a0&gt; (or any users database extension), but this can works with standard attributes.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T141712Z" changeid="guimard">
+        <seg>Il est préférable d'utiliser un &lt;a0&gt;schéma LDAP étendu&lt;/a0&gt; (ou toute extension de base de données utilisateur), mais ça peut fonctionner avec les attributs standard.</seg>
       </tuv>
     </tu>
     <tu>
@@ -32228,6 +32964,22 @@ a2ensite portal-apache2.conf</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>aaaRole =&gt; ((grep{/ou=aaa/} split(';',$ssoRoles))[0] =~ /ou=(.*),ou=aaa/)[0]</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T142837Z" changeid="guimard">
+        <seg>aaaRole =&gt; ((grep{/ou=aaa/} split(';',$ssoRoles))[0] =~ /ou=(.*),ou=aaa/)[0]</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>aaaRole =&gt; join(' || ', (map {/uid=(.*),ou=aaa.*/} (grep{/ou=aaa/} split(';',$ssoRoles)))</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T143306Z" changeid="guimard">
+        <seg>aaaRole =&gt; join(' || ', (map {/uid=(.*),ou=aaa.*/} (grep{/ou=aaa/} split(';',$ssoRoles)))</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>accept (or whatever you want)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T172020Z" changeid="xavier">
@@ -32464,6 +33216,14 @@ apachectl restart</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>apt-get install apache2 libapache2-mod-perl2 libapache-session-perl libnet-ldap-perl libcache-cache-perl libdbi-perl perl-modules libwww-perl libcache-cache-perl libxml-simple-perl  libsoap-lite-perl libhtml-template-perl libregexp-assemble-perl libjs-jquery libxml-libxml-perl libcrypt-rijndael-perl libio-string-perl libxml-libxslt-perl libconfig-inifiles-perl libjson-perl libstring-random-perl libemail-date-format-perl libmime-lite-perl libcrypt-openssl-rsa-perl libdigest-hmac-perl libclone-perl libauthen-sasl-perl</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T141137Z" changeid="guimard">
+        <seg>apt-get install apache2 libapache2-mod-perl2 libapache-session-perl libnet-ldap-perl libcache-cache-perl libdbi-perl perl-modules libwww-perl libcache-cache-perl libxml-simple-perl  libsoap-lite-perl libhtml-template-perl libregexp-assemble-perl libjs-jquery libxml-libxml-perl libcrypt-rijndael-perl libio-string-perl libxml-libxslt-perl libconfig-inifiles-perl libjson-perl libstring-random-perl libemail-date-format-perl libmime-lite-perl libcrypt-openssl-rsa-perl libdigest-hmac-perl libclone-perl libauthen-sasl-perl</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>apt-get install lemonldap-ng</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T093707Z" changeid="xavier">
@@ -32556,6 +33316,14 @@ apachectl restart</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T183009Z" changeid="xavier">
         <seg>basic($uid,$_password)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>bbbRole =&gt; ((grep{/ou=bbb/} split(';',$ssoRoles))[0] =~ /ou=(.*),ou=bbb/)[0]</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T142838Z" changeid="guimard">
+        <seg>bbbRole =&gt; ((grep{/ou=bbb/} split(';',$ssoRoles))[0] =~ /ou=(.*),ou=bbb/)[0]</seg>
       </tuv>
     </tu>
     <tu>
@@ -33200,6 +33968,22 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T172009Z" changeid="xavier">
         <seg>default</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>default =&gt; $ssoRoles =~ /ou=aaa,ou=roles/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T142704Z" changeid="guimard">
+        <seg>default =&gt; $ssoRoles =~ /ou=aaa,ou=roles/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>default =&gt; $ssoRoles =~ /ou=bbb,ou=roles/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T142712Z" changeid="guimard">
+        <seg>default =&gt; $ssoRoles =~ /ou=bbb,ou=roles/</seg>
       </tuv>
     </tu>
     <tu>
@@ -34516,6 +35300,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:dia_dit_roles.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T142138Z" changeid="guimard">
+        <seg>documentation:dia_dit_roles.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:exportedvars.png</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T120510Z" changeid="xavier">
@@ -35404,6 +36196,22 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://fedoraproject.org/wiki/EPEL/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T141208Z" changeid="guimard">
+        <seg>http://fedoraproject.org/wiki/EPEL/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://fedoraproject.org/wiki/EPEL/FAQ#howtouse</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T141210Z" changeid="guimard">
+        <seg>http://fedoraproject.org/wiki/EPEL/FAQ#howtouse</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://forge.ow2.org/project/download.php?group_id=274&amp;amp;file_id=11045</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -35688,6 +36496,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>http://lasso.entrouver.org</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://lasso.entrouvert.org/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T140853Z" changeid="guimard">
+        <seg>http://lasso.entrouvert.org/</seg>
       </tuv>
     </tu>
     <tu>
@@ -36704,6 +37520,22 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T173221Z" changeid="xavier">
         <seg>https://plus.google.com/u/0/101819048603406959766/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>https://rpmrepo.org/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T141249Z" changeid="guimard">
+        <seg>https://rpmrepo.org/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>https://rpmrepo.org/RPMforge/Using</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T141251Z" changeid="guimard">
+        <seg>https://rpmrepo.org/RPMforge/Using</seg>
       </tuv>
     </tu>
     <tu>
@@ -39006,6 +39838,26 @@ cp ../pastel/custom* .</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>ssoRoles: ou=admin,ou=aaa,ou=roles,dc=acme,dc=com
+ssoRoles: ou=user,ou=bbb,ou=roles,dc=acme,dc=com</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T142438Z" changeid="guimard">
+        <seg>ssoRoles: ou=admin,ou=aaa,ou=roles,dc=acme,dc=com
+ssoRoles: ou=user,ou=bbb,ou=roles,dc=acme,dc=com</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>ssoRoles: user
+ssoRoles: admin</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T142020Z" changeid="guimard">
+        <seg>ssoRoles: user
+ssoRoles: admin</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>ssoStartDate</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T144243Z" changeid="xavier">
@@ -39542,6 +40394,14 @@ cd lemonldap-ng-*</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>user; admin</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T142043Z" changeid="guimard">
+        <seg>user; admin</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>userDB</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T064532Z" changeid="guimard">
@@ -39738,6 +40598,14 @@ cd lemonldap-ng-*</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T064908Z" changeid="guimard">
         <seg>yubikeySecretKey</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>yum install httpd mod_perl perl-Apache-Session perl-LDAP perl-XML-SAX perl-XML-NamespaceSupport perl-HTML-Template perl-Regexp-Assemble perl-Error perl-IPC-ShareLite perl-Cache-Cache perl-FreezeThaw perl-XML-Simple perl-version perl-CGI-Session perl-DBD-Pg perl-XML-LibXML-Common perl-BSD-Resource perl-XML-LibXML perl-Crypt-Rijndael perl-IO-String perl-XML-LibXSLT perl-SOAP-Lite perl-Config-IniFiles perl-JSON perl-Digest-HMAC perl-String-Random perl-MIME-Lite perl-Email-Date-Format perl-Crypt-OpenSSL-RSA perl-Crypt-OpenSSL-X509 perl-Clone perl-Authen-SASL</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T141327Z" changeid="guimard">
+        <seg>yum install httpd mod_perl perl-Apache-Session perl-LDAP perl-XML-SAX perl-XML-NamespaceSupport perl-HTML-Template perl-Regexp-Assemble perl-Error perl-IPC-ShareLite perl-Cache-Cache perl-FreezeThaw perl-XML-Simple perl-version perl-CGI-Session perl-DBD-Pg perl-XML-LibXML-Common perl-BSD-Resource perl-XML-LibXML perl-Crypt-Rijndael perl-IO-String perl-XML-LibXSLT perl-SOAP-Lite perl-Config-IniFiles perl-JSON perl-Digest-HMAC perl-String-Random perl-MIME-Lite perl-Email-Date-Format perl-Crypt-OpenSSL-RSA perl-Crypt-OpenSSL-X509 perl-Clone perl-Authen-SASL</seg>
       </tuv>
     </tu>
     <tu>
