@@ -1164,6 +1164,22 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../../media/documentation/manager-menu-application-logo.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T135405Z" changeid="guimard">
+        <seg>../../../media/documentation/manager-menu-application-logo.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../media/documentation/manager-menu-application.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T135118Z" changeid="guimard">
+        <seg>../../../media/documentation/manager-menu-application.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../../media/documentation/manager-portalskin.png</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T074138Z" changeid="guimard">
@@ -1560,6 +1576,14 @@ WithPeak[test.example.com]: wmy</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>../../documentation/1.2/configlocation.html#portal</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/configvhost.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T134831Z" changeid="guimard">
+        <seg>../../documentation/1.2/configvhost.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -4996,6 +5020,22 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/documentation/manager-menu-application-logo.png?id=documentation%3A1.2%3Aportalmenu</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T135403Z" changeid="guimard">
+        <seg>/_detail/documentation/manager-menu-application-logo.png?id=documentation%3A1.2%3Aportalmenu</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/documentation/manager-menu-application.png?id=documentation%3A1.2%3Aportalmenu</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T135116Z" changeid="guimard">
+        <seg>/_detail/documentation/manager-menu-application.png?id=documentation%3A1.2%3Aportalmenu</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>/_detail/documentation/manager-portalskin.png?id=documentation%3A1.2%3Aportalcustom</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T074137Z" changeid="guimard">
@@ -6412,6 +6452,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T095940Z" changeid="xavier">
         <seg>&lt;a0&gt;Configurer le serveur Apache&lt;/a0&gt; qui héberge le portail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Configuring the virtual hosts&lt;/a0&gt; is not sufficient to display an application in the menu.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T134908Z" changeid="guimard">
+        <seg>&lt;a0&gt;Configurer les hôtes virtuels&lt;/a0&gt; n'est pas suffisant pour afficher une application dans le menu.</seg>
       </tuv>
     </tu>
     <tu>
@@ -9480,6 +9528,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;$_auth&lt;/s0&gt; &lt;s1&gt;eq&lt;/s1&gt; LDAP &lt;s2&gt;or&lt;/s2&gt; &lt;s3&gt;$_auth&lt;/s3&gt; &lt;s4&gt;eq&lt;/s4&gt; DBI</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T134825Z" changeid="guimard">
+        <seg>&lt;s0&gt;$_auth&lt;/s0&gt; &lt;s1&gt;eq&lt;/s1&gt; LDAP &lt;s2&gt;or&lt;/s2&gt; &lt;s3&gt;$_auth&lt;/s3&gt; &lt;s4&gt;eq&lt;/s4&gt; DBI</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;$auth_kind&lt;/s0&gt; &lt;s1&gt;=&lt;/s1&gt; &lt;s2&gt;'LemonLDAP'&lt;/s2&gt;&lt;s3&gt;;&lt;/s3&gt;
  
 &lt;s4&gt;$lemonldap_config&lt;/s4&gt; &lt;s5&gt;=&lt;/s5&gt; &lt;a6&gt;&lt;s7&gt;Array&lt;/s7&gt;&lt;/a6&gt;&lt;s8&gt;(&lt;/s8&gt;</seg>
@@ -10156,6 +10212,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Address&lt;/s0&gt;: &lt;a1&gt;URL&lt;/a1&gt; of application</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T135140Z" changeid="guimard">
+        <seg>&lt;s0&gt;Adresse&lt;/s0&gt; : &lt;a1&gt;URL&lt;/a1&gt; de l'application</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Address&lt;/s0&gt;: set one of Google Apps &lt;a1&gt;URL&lt;/a1&gt; (all Google Apps product a distinct &lt;a2&gt;URL&lt;/a2&gt;), for example &lt;a3&gt;http://www.google.com/calendar/hosted/mydomain.org/render&lt;/a3&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111207T051936Z" changeid="xavier">
@@ -10200,6 +10264,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T080031Z" changeid="guimard">
         <seg>&lt;s0&gt;Protection anti-iframe&lt;/s0&gt; : ferme la frame parente pour éviter des attaques bien connues</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Application list&lt;/s0&gt;: display categories and applications allowed for the user</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T134433Z" changeid="guimard">
+        <seg>&lt;s0&gt;Liste des applications&lt;/s0&gt; : affiche les catégories et applications autorisée pour l'utilisateur</seg>
       </tuv>
     </tu>
     <tu>
@@ -10620,6 +10692,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Display&lt;/s0&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T135202Z" changeid="guimard">
+        <seg>&lt;s0&gt;Affichage&lt;/s0&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Display&lt;/s0&gt;: As Google Apps is not a protected application, set to &lt;c1&gt;On&lt;/c1&gt; to always display it</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111207T052021Z" changeid="xavier">
@@ -10946,10 +11026,26 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Key&lt;/s0&gt;: application identifier</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T135130Z" changeid="guimard">
+        <seg>&lt;s0&gt;Clef&lt;/s0&gt; : identifiant d'application</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Key&lt;/s0&gt;: application name</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T200356Z" changeid="guimard">
         <seg>&lt;s0&gt;Key&lt;/s0&gt; : nom d'application</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Key&lt;/s0&gt;: category identifier</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T135051Z" changeid="guimard">
+        <seg>&lt;s0&gt;Clef&lt;/s0&gt; : identifiant de catégorie</seg>
       </tuv>
     </tu>
     <tu>
@@ -11074,10 +11170,34 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Login history&lt;/s0&gt;: display user's last logins and last failed logins</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T134531Z" changeid="guimard">
+        <seg>&lt;s0&gt;Historique de connexion&lt;/s0&gt; : affiche les derniers succès et échecs de connexion</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Logo&lt;/s0&gt;: file name to use as logo</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T135155Z" changeid="guimard">
+        <seg>&lt;s0&gt;Logo&lt;/s0&gt; : nom de fichier à utiliser comme logo</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Logout rule&lt;/s0&gt;: catch OBM logout</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T171917Z" changeid="xavier">
         <seg>&lt;s0&gt;Règle logout&lt;/s0&gt; : intercepter la déconnexion OBM</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Logout&lt;/s0&gt;: logout button</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T134544Z" changeid="guimard">
+        <seg>&lt;s0&gt;Déconnexion&lt;/s0&gt; : bouton de déconnexion</seg>
       </tuv>
     </tu>
     <tu>
@@ -11166,6 +11286,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T055859Z" changeid="xavier">
         <seg>&lt;s0&gt;Nom&lt;/s0&gt;: Nom de l'attribut &lt;a1&gt;SAML&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Name&lt;/s0&gt;: display text</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T135103Z" changeid="guimard">
+        <seg>&lt;s0&gt;Nom&lt;/s0&gt; : texte à afficher</seg>
       </tuv>
     </tu>
     <tu>
@@ -11280,6 +11408,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T080047Z" changeid="guimard">
         <seg>&lt;s0&gt;Gestion des mots-de-passe&lt;/s0&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Password change&lt;/s0&gt;: form to change the password</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T134456Z" changeid="guimard">
+        <seg>&lt;s0&gt;Changement de mot-de-passe&lt;/s0&gt; : formulaire de changement de mot-de-passe</seg>
       </tuv>
     </tu>
     <tu>
@@ -12144,6 +12280,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;auto&lt;/s0&gt;: display only if the user can access it</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T135225Z" changeid="guimard">
+        <seg>&lt;s0&gt;auto&lt;/s0&gt; : n'afficher que si l'utilisateur peut y accéder</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;cn=ssokerberos,cn=users,dc=example,dc=com&lt;/s0&gt;: &lt;a1&gt;DN&lt;/a1&gt; of AD technical account</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T154341Z" changeid="xavier">
@@ -12378,6 +12522,22 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T201607Z" changeid="guimard">
         <seg>&lt;s0&gt;notice&lt;/s0&gt; pour les authentifications réussies et les échanges externes (&lt;a1&gt;SAML&lt;/a1&gt;, OpenID,…)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;off&lt;/s0&gt;: never display</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T135248Z" changeid="guimard">
+        <seg>&lt;s0&gt;off&lt;/s0&gt; : ne jamais afficher</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;on&lt;/s0&gt;: always display</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T135236Z" changeid="guimard">
+        <seg>&lt;s0&gt;on&lt;/s0&gt; : toujours afficher</seg>
       </tuv>
     </tu>
     <tu>
@@ -16108,6 +16268,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Application parameters:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T135114Z" changeid="guimard">
+        <seg>Paramètres des applications :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Applications</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -17080,6 +17248,30 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T065025Z" changeid="xavier">
         <seg>Capture des pages d'erreur :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Categories and applications</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T134831Z" changeid="guimard">
+        <seg>Catégories et applications</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Category and application key can have a digit as first character, which will allow to display categories in the right order (categories and applications are displayed in alphabetical order).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T135402Z" changeid="guimard">
+        <seg>Les clefs des categories et des applications peuvent commencer par un chiffre ce qui permet de les afficher dans le bon ordre (catégories et applications sont affichées dans l'ordre alphabétique).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Category parameters:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T135035Z" changeid="guimard">
+        <seg>Paramètres des catégories :</seg>
       </tuv>
     </tu>
     <tu>
@@ -18644,6 +18836,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Each module can be activated trough a rule, using user session information.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T134618Z" changeid="guimard">
+        <seg>Chaque module peut être activé via une règle en utilisant les informations de session de l'utilisateur.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Each module can be disabled using the &lt;c0&gt;Null&lt;/c0&gt; backend.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T073413Z" changeid="guimard">
@@ -19536,6 +19736,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T142635Z" changeid="xavier">
         <seg>Par exemple, pour configurer le backend de configuration &lt;c0&gt;File&lt;/c0&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>For example, to display the password change form only for user authenticated trough &lt;a2&gt;LDAP&lt;/a2&gt; or &lt;a3&gt;DBI&lt;/a3&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T134822Z" changeid="guimard">
+        <seg>Par exemple, pour afficher le formulaire de changement de mot-de-passe seulement pour les utilisateurs authentifiés via &lt;a2&gt;LDAP&lt;/a2&gt; ou &lt;a3&gt;DBI&lt;/a3&gt; :</seg>
       </tuv>
     </tu>
     <tu>
@@ -21236,6 +21444,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>In Manager, you can configure categories and applications in &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Portal&lt;/c1&gt; &gt; &lt;c2&gt;Menu&lt;/c2&gt; &gt; &lt;c3&gt;Categories and applications&lt;/c3&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T135020Z" changeid="guimard">
+        <seg>Dans le manager, on peut configurer les catégories et applications dans &lt;c0&gt;Paramètres généraux&lt;/c0&gt; &gt; &lt;c1&gt;Portail&lt;/c1&gt; &gt; &lt;c2&gt;Menu&lt;/c2&gt; &gt; &lt;c3&gt;Catégories et applications&lt;/c3&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>In Portal virtual host, you will find several configuration parts:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T063618Z" changeid="xavier">
@@ -21400,6 +21616,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Incluez la configuration LemonLDAP::NG dans celle d'Apache :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Indeed, a virtual host can contain several applications (&lt;a1&gt;http://vhost.example.com/appli1&lt;/a1&gt;, &lt;a2&gt;http://vhost.example.com/appli2&lt;/a2&gt;).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T134935Z" changeid="guimard">
+        <seg>En effet, un hôte virtuel peut contenir plusieurs applications (&lt;a1&gt;http://vhost.example.com/appli1&lt;/a1&gt;, &lt;a2&gt;http://vhost.example.com/appli2&lt;/a2&gt;).</seg>
       </tuv>
     </tu>
     <tu>
@@ -22556,6 +22780,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>LemonLDAP::NG portal menu has 4 modules:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T134355Z" changeid="guimard">
+        <seg>Le menu du portail LemonLDAP::NG est composé de 4 modules :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>LemonLDAP::NG provide a script that allows to edit configuration without graphical interface, this script is called &lt;c0&gt;lmConfigEditor&lt;/c0&gt; and is stored in the LemonLDAP::NG bin/ directory, for example /usr/share/lemonldap-ng/bin:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T111120Z" changeid="xavier">
@@ -23360,6 +23592,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T050301Z" changeid="guimard">
         <seg>Backend de session Memcached</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Menu modules</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T134333Z" changeid="guimard">
+        <seg>Modules du menu</seg>
       </tuv>
     </tu>
     <tu>
@@ -24804,6 +25044,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Portal menu</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T080724Z" changeid="guimard">
+        <seg>Menu du portail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Portal performances</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -24920,6 +25168,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Pré-requis</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Prerequisites and dependencies</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T135625Z" changeid="guimard">
+        <seg>Pré-requis et dépendances</seg>
       </tuv>
     </tu>
     <tu>
@@ -27428,6 +27684,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The chosen logo file must be in portal applications logos directory (&lt;c0&gt;portal/skins/common/apps/&lt;/c0&gt;).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T135443Z" changeid="guimard">
+        <seg>Le logo choisi doit se trouver dans le répertoire des logos des applications (&lt;c0&gt;portal/skins/common/apps/&lt;/c0&gt;).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The common domain is used by &lt;a0&gt;SAML SP&lt;/a0&gt; to find an Identity Provider for the user, and by &lt;a1&gt;SAML IDP&lt;/a1&gt; to register itself in user's IDP list.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -27664,6 +27928,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T045547Z" changeid="xavier">
         <seg>Le portail principal est configuré pour utiliser le &lt;a0&gt;CDA&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The menu is displayed if authentication is successful.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T134326Z" changeid="guimard">
+        <seg>Le menu est affiché si l'authentification est réussie.</seg>
       </tuv>
     </tu>
     <tu>
@@ -28344,6 +28616,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T174951Z" changeid="xavier">
         <seg>Ces paramètres peuvent être surchargés dans le fichier ini de LemonLDAP::NG ini file, à la section &lt;c0&gt;apply&lt;/c0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>These rules can be set trough Manager: &lt;c0&gt;General Parameters&lt;/c0&gt; &gt; &lt;c1&gt;Portal&lt;/c1&gt; &gt; &lt;c2&gt;Menu&lt;/c2&gt; &gt; &lt;c3&gt;Modules activation&lt;/c3&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T134659Z" changeid="guimard">
+        <seg>Ces règles peuvent être modifiées via le manager : &lt;c0&gt;Paramètres généraux&lt;/c0&gt; &gt; &lt;c1&gt;Portail&lt;/c1&gt; &gt; &lt;c2&gt;Menu&lt;/c2&gt; &gt; &lt;c3&gt;Activation des modules&lt;/c3&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -31060,6 +31340,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can set a custom logo by choosing &lt;c1&gt;My logo&lt;/c1&gt;, set the logo file name, and copy the logo file in portal applications logos directory</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T135606Z" changeid="guimard">
+        <seg>On peut sélectionner un logo personnalisé en choisissant &lt;c1&gt;Mon logo&lt;/c1&gt;, en indiquant le nom du fichier et en le copiant dans le répertoire des logos des applications</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You can set one or several &lt;a3&gt;IP&lt;/a3&gt; addresses, separated by spaces, or let this parameter empty to disable the checking.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T161512Z" changeid="xavier">
@@ -31128,6 +31416,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Vous pouvez utiliser le mot clef #PORTAL# dans les valeurs pour remplacer l'&lt;a0&gt;URL&lt;/a0&gt; du portail.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can use &lt;c0&gt;0&lt;/c0&gt; or &lt;c1&gt;1&lt;/c1&gt; to disable/enable the module, or use a more complex rule.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T134736Z" changeid="guimard">
+        <seg>On peut utiliser &lt;c0&gt;0&lt;/c0&gt; ou &lt;c1&gt;1&lt;/c1&gt; pour activer/désactiver chaque module ou utiliser une règle plus complexe.</seg>
       </tuv>
     </tu>
     <tu>
@@ -34524,6 +34820,22 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:manager-menu-application-logo.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T135404Z" changeid="guimard">
+        <seg>documentation:manager-menu-application-logo.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:manager-menu-application.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T135117Z" changeid="guimard">
+        <seg>documentation:manager-menu-application.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:manager-portalskin.png</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T074138Z" changeid="guimard">
@@ -35816,6 +36128,22 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>http://twitter.com/lemonldapng</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://vhost.example.com/appli1</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T134833Z" changeid="guimard">
+        <seg>http://vhost.example.com/appli1</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://vhost.example.com/appli2</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T134835Z" changeid="guimard">
+        <seg>http://vhost.example.com/appli2</seg>
       </tuv>
     </tu>
     <tu>
