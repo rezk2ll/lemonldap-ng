@@ -4892,6 +4892,14 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/documentation/lasso.png?id=documentation%3A1.2%3Asamlservice</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T204256Z" changeid="xavier">
+        <seg>/_detail/documentation/lasso.png?id=documentation%3A1.2%3Asamlservice</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>/_detail/documentation/lemonldap-ng-architecture.png?id=documentation%3Apresentation</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -5172,10 +5180,26 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/documentation/manager-saml-namid-formats.png?id=documentation%3A1.2%3Asamlservice</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T204439Z" changeid="xavier">
+        <seg>/_detail/documentation/manager-saml-namid-formats.png?id=documentation%3A1.2%3Asamlservice</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>/_detail/documentation/manager-saml-private-key.png?id=documentation%3A1.0%3Asamlservice</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>/_detail/documentation/manager-saml-private-key.png?id=documentation%3A1.0%3Asamlservice</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/documentation/manager-saml-private-key.png?id=documentation%3A1.2%3Asamlservice</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T204438Z" changeid="xavier">
+        <seg>/_detail/documentation/manager-saml-private-key.png?id=documentation%3A1.2%3Asamlservice</seg>
       </tuv>
     </tu>
     <tu>
@@ -5188,6 +5212,14 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/documentation/manager-saml-service-authn-contexts.png?id=documentation%3A1.2%3Asamlservice</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T204440Z" changeid="xavier">
+        <seg>/_detail/documentation/manager-saml-service-authn-contexts.png?id=documentation%3A1.2%3Asamlservice</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>/_detail/documentation/manager-saml-service-sp-ac.png?id=documentation%3A1.0%3Asamlservice</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -5196,10 +5228,26 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/documentation/manager-saml-service-sp-ac.png?id=documentation%3A1.2%3Asamlservice</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T204442Z" changeid="xavier">
+        <seg>/_detail/documentation/manager-saml-service-sp-ac.png?id=documentation%3A1.2%3Asamlservice</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>/_detail/documentation/manager-saml-service-sp-slo.png?id=documentation%3A1.0%3Asamlservice</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>/_detail/documentation/manager-saml-service-sp-slo.png?id=documentation%3A1.0%3Asamlservice</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/documentation/manager-saml-service-sp-slo.png?id=documentation%3A1.2%3Asamlservice</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T204441Z" changeid="xavier">
+        <seg>/_detail/documentation/manager-saml-service-sp-slo.png?id=documentation%3A1.2%3Asamlservice</seg>
       </tuv>
     </tu>
     <tu>
@@ -10506,6 +10554,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Allow requests in error&lt;/s0&gt;: allow a request that has generated an error in token generation to be forwarded to the protected application without secure token (default: yes)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T205727Z" changeid="xavier">
+        <seg>&lt;s0&gt;Autorise les requêtes en cas d'erreur&lt;/s0&gt; : autorise la requête qui a généré une erreur dans la génération du jeton à être transféré à l'application protégé sans jeton sécurisé (défaut : oui)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Allowed modules&lt;/s0&gt;: click on &lt;c1&gt;New choice&lt;/c1&gt; to add a choice.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T194523Z" changeid="xavier">
@@ -10542,6 +10598,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;s0&gt;Nom d'application&lt;/s0&gt; (optionel) : nom de l'application (visible dans Twitter)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Attribute to store&lt;/s0&gt;: the session key that will be stored in Memcached.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T205432Z" changeid="xavier">
+        <seg>&lt;s0&gt;Attribut à stocker&lt;/s0&gt; : la clef de session qui doit être stockée dans Memcached.</seg>
       </tuv>
     </tu>
     <tu>
@@ -11216,6 +11280,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Header name&lt;/s0&gt;: name of the &lt;a1&gt;HTTP&lt;/a1&gt; header carrying the secure token.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T205615Z" changeid="xavier">
+        <seg>&lt;s0&gt;Nom d'en-tête&lt;/s0&gt; : nom de l'en-tête &lt;a1&gt;HTTP&lt;/a1&gt; véhiculant le jeton sécurisé.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Hide old password&lt;/s0&gt;: used only if the password need to be reset by the user (&lt;a1&gt;LDAP&lt;/a1&gt; password policy), will hide the old password input</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T080355Z" changeid="guimard">
@@ -11592,6 +11664,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Memcached servers&lt;/s0&gt;: addresses of Memcached servers, separated with spaces.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T205321Z" changeid="xavier">
+        <seg>&lt;s0&gt;Serveurs Memcached&lt;/s0&gt; : adresses des serveurs Memcached, separés par des espaces.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Name&lt;/s0&gt;: &lt;a1&gt;SAML&lt;/a1&gt; attribute name.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T055859Z" changeid="xavier">
@@ -11870,6 +11950,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20111222T181027Z" changeid="xavier">
         <seg>&lt;s0&gt;Clef de pré-authentification key&lt;/s0&gt; : celle récupérée de la commande zmprov</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Protected URLs&lt;/s0&gt;: Regexp of URLs for which the secure token will be sent, separated by spaces</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T205545Z" changeid="xavier">
+        <seg>&lt;s0&gt;URLs protégées&lt;/s0&gt; : expressions régulières correspondant aux URLs pour lesquels un jeton sécurisé doit être envoyé, separées par des espaces</seg>
       </tuv>
     </tu>
     <tu>
@@ -12378,6 +12466,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T114007Z" changeid="xavier">
         <seg>&lt;s0&gt;Timeout&lt;/s0&gt; : délai maximum de connexion.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Token expiration&lt;/s0&gt;: time in seconds for token expiration (remove from Memcached server).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T205407Z" changeid="xavier">
+        <seg>&lt;s0&gt;Expiration du jeton&lt;/s0&gt; : délai en secondes pour l'expiration du jeton (effacement du serveur Memcached).</seg>
       </tuv>
     </tu>
     <tu>
@@ -14062,6 +14158,16 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s1&gt;ServerName&lt;/s1&gt; secure.example.com
+ </seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T205153Z" changeid="xavier">
+        <seg>&lt;s1&gt;ServerName&lt;/s1&gt; secure.example.com
+ </seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s1&gt;ServerName&lt;/s1&gt; sympa.example.com
  </seg>
       </tuv>
@@ -14318,6 +14424,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T182126Z" changeid="xavier">
         <seg>&lt;s2&gt;# DocumentRoot&lt;/s2&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s2&gt;# Load SecureToken Handler&lt;/s2&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T205210Z" changeid="xavier">
+        <seg>&lt;s2&gt;# Charge l'agent SecureToken&lt;/s2&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -18386,6 +18500,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Configure the virtual host like other &lt;a0&gt;protected virtual host&lt;/a0&gt; but use Secure Token Handler instead of default Handler.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T205151Z" changeid="xavier">
+        <seg>Configurer l'hôte virtuel Sympa comme n'importe quel autre &lt;a0&gt;hôte virtuel protégé&lt;/a0&gt; mais utiliser l'agent jeton sécurisé au lieu de l'agent par défaut.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Configure your &lt;a0&gt;DNS&lt;/a0&gt; server to resolve names with your server &lt;a1&gt;IP&lt;/a1&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T094337Z" changeid="xavier">
@@ -20114,6 +20236,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Fill $releasever and $basearch with the correct values to get packages for your environment, for example &lt;a0&gt;http://repo.cyrus-project.org/centos5-i386/RPMS.cyrus-extras/&lt;/a0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T204410Z" changeid="xavier">
+        <seg>Adapter $releasever et $basearch avec la valeur correcte pour obtenir les paquets correspondant à votre environnement, par exemple &lt;a0&gt;http://repo.cyrus-project.org/centos5-i386/RPMS.cyrus-extras/&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Fill values here:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T193421Z" changeid="xavier">
@@ -20866,10 +20996,18 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Go in Manager, &lt;c0&gt;Default parameters&lt;/c0&gt; » &lt;c1&gt;Advanced parameters&lt;/c1&gt; » &lt;c2&gt;Special handlers&lt;/c2&gt; » &lt;c3&gt;Secure Token&lt;/c3&gt;, and edit the different keys:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T205253Z" changeid="xavier">
+        <seg>Aller dans le manager, &lt;c0&gt;Paramètres par défaut&lt;/c0&gt; » &lt;c1&gt;Paramètres avancés&lt;/c1&gt; » &lt;c2&gt;Handlers spéciaux&lt;/c2&gt; » &lt;c3&gt;Jeton sécurisé&lt;/c3&gt;, et éditer les clefs suivantes :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Go in Manager, &lt;c0&gt;Default parameters&lt;/c0&gt; » &lt;c1&gt;Advanced parameters&lt;/c1&gt; » &lt;c2&gt;Special handlers&lt;/c2&gt; » &lt;c3&gt;Sympa&lt;/c3&gt;, and edit the different keys:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111217T081138Z" changeid="xavier">
-        <seg>Aller dans le manager, &lt;c0&gt;Paramètres par défaut&lt;/c0&gt; » &lt;c1&gt;Paramètres avancés&lt;/c1&gt; » &lt;c2&gt;Handlers spéciaux&lt;/c2&gt; » &lt;c3&gt;Sympa&lt;/c3&gt;, et editer les clefs suivantes :</seg>
+        <seg>Aller dans le manager, &lt;c0&gt;Paramètres par défaut&lt;/c0&gt; » &lt;c1&gt;Paramètres avancés&lt;/c1&gt; » &lt;c2&gt;Handlers spéciaux&lt;/c2&gt; » &lt;c3&gt;Sympa&lt;/c3&gt;, et éditer les clefs suivantes :</seg>
       </tuv>
     </tu>
     <tu>
@@ -20877,7 +21015,7 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
         <seg>Go in Manager, &lt;c0&gt;Default parameters&lt;/c0&gt; » &lt;c1&gt;Advanced parameters&lt;/c1&gt; » &lt;c2&gt;Special handlers&lt;/c2&gt; » &lt;c3&gt;Zimbra&lt;/c3&gt;, and edit the different keys:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111222T180932Z" changeid="xavier">
-        <seg>Aller dans le manager, &lt;c0&gt;Paramètres par défaut&lt;/c0&gt; » &lt;c1&gt;Paramètres avancés&lt;/c1&gt; » &lt;c2&gt;Handlers spéciaux&lt;/c2&gt; » &lt;c3&gt;Zimbra&lt;/c3&gt;, et editer les clefs suivantes :</seg>
+        <seg>Aller dans le manager, &lt;c0&gt;Paramètres par défaut&lt;/c0&gt; » &lt;c1&gt;Paramètres avancés&lt;/c1&gt; » &lt;c2&gt;Handlers spéciaux&lt;/c2&gt; » &lt;c3&gt;Zimbra&lt;/c3&gt;, et éditer les clefs suivantes :</seg>
       </tuv>
     </tu>
     <tu>
@@ -21246,6 +21384,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>L'agent fournit à Apache l'identifiant de l'utilisateur (paramètre &lt;c0&gt;whatToTrace&lt;/c0&gt;), ainsi vous pouvez voir l'identifiant dans les journaux d'accès d'Apache.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Handler parameters</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T205223Z" changeid="xavier">
+        <seg>Paramètres de l'agent</seg>
       </tuv>
     </tu>
     <tu>
@@ -25846,6 +25992,16 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>PerlHeaderParserHandler My::SecureToken
+ </seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T205213Z" changeid="xavier">
+        <seg>PerlHeaderParserHandler My::SecureToken
+ </seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>PerlHeaderParserHandler My::Sympa
  </seg>
       </tuv>
@@ -25888,6 +26044,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T155825Z" changeid="xavier">
         <seg>PerlOutputFilterHandler Lemonldap::NG::Handler::Menu</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>PerlRequire __HANDLERDIR__/MyHandlerSecureToken.pm</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T205212Z" changeid="xavier">
+        <seg>PerlRequire __HANDLERDIR__/MyHandlerSecureToken.pm</seg>
       </tuv>
     </tu>
     <tu>
@@ -26486,6 +26650,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Paquets RPM</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>RPMs are available at &lt;a0&gt;http://repo.cyrus-project.org/centos$releasever-$basearch/RPMS.cyrus-extras/&lt;/a0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T204314Z" changeid="xavier">
+        <seg>Les RPMs sont disponibles sur &lt;a0&gt;http://repo.cyrus-project.org/centos$releasever-$basearch/RPMS.cyrus-extras/&lt;/a0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -27346,10 +27518,18 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Secure Token Handler</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T204550Z" changeid="xavier">
+        <seg>Agent jeton sécurisé</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Secure Token Memcached servers</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T065744Z" changeid="guimard">
-        <seg>Serveurs Memcached pour le composant sécurisé</seg>
+        <seg>Serveurs Memcached pour le jeton sécurisé</seg>
       </tuv>
     </tu>
     <tu>
@@ -27357,7 +27537,7 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
         <seg>Secure Token allow requests in error</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T065402Z" changeid="guimard">
-        <seg>Le composant sécurisé autorise les requêtes en cas d'erreur</seg>
+        <seg>Le jeton sécurisé autorise les requêtes en cas d'erreur</seg>
       </tuv>
     </tu>
     <tu>
@@ -27365,7 +27545,7 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
         <seg>Secure Token attribute</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T065417Z" changeid="guimard">
-        <seg>Attribut du composant sécurisé</seg>
+        <seg>Attribut du jeton sécurisé</seg>
       </tuv>
     </tu>
     <tu>
@@ -27373,7 +27553,7 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
         <seg>Secure Token expiration</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T065433Z" changeid="guimard">
-        <seg>Expiration du composant sécurisé</seg>
+        <seg>Expiration du jeton sécurisé</seg>
       </tuv>
     </tu>
     <tu>
@@ -27381,7 +27561,7 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
         <seg>Secure Token header</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T065444Z" changeid="guimard">
-        <seg>En-tête du composant sécurisé</seg>
+        <seg>En-tête du jeton sécurisé</seg>
       </tuv>
     </tu>
     <tu>
@@ -27389,7 +27569,7 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
         <seg>Secure Token protected URLs</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T065808Z" changeid="guimard">
-        <seg>URL protégées du composant sécurisé</seg>
+        <seg>URL protégées du jeton sécurisé</seg>
       </tuv>
     </tu>
     <tu>
@@ -28834,6 +29014,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The Secure Token Handler is a special Handler that create a token for each request and send it to the protected application.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T204800Z" changeid="xavier">
+        <seg>L'agent jeton sécurisé est un agent particulier qui crée un jeton pour chaque requête et l'envoie à l'application protégée.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The Tomcat Valve is only available for tomcat 5.5 or greater.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T185945Z" changeid="xavier">
@@ -29322,6 +29510,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The real user identifier is stored in a Memcached server and the protected application can the request the Memcached server to get user identifier.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T204934Z" changeid="xavier">
+        <seg>L'identifiant utilisateur réel est stockédans un serveur Memcached et l'application protégée peut requérir le serveur Memcached pour obtenir l'identifiant utilisateur.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The redirection from portal can be done either with code 303 (See Other), or with a JavaScript redirection.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T144922Z" changeid="guimard">
@@ -29598,6 +29794,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T160442Z" changeid="xavier">
         <seg>Aller ensuite dans le répertoire trunk :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Then install lasso and lasso-perl packages.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T204436Z" changeid="xavier">
+        <seg>Installer ensuite les paquets lasso et lasso-perl.</seg>
       </tuv>
     </tu>
     <tu>
@@ -30318,6 +30522,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T192351Z" changeid="xavier">
         <seg>Ce type de mécanisme &lt;a0&gt;SSO&lt;/a0&gt; n'est pas parfait et peut générer des problèmes tels des blocages de mots-de-passe, sessions locales mal closes, etc...</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This mechanism allow to do &lt;a0&gt;SSO&lt;/a0&gt; on application with an unsafe link between Handler and the application, but with a safe link with the Memcached server.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T205046Z" changeid="xavier">
+        <seg>Ce mécanisme permet de faire du &lt;a0&gt;SSO&lt;/a0&gt; sur une application sans lien sécurisé entre l'agent et l'application, mais avec un lien sûr avec le serveur Memcached.</seg>
       </tuv>
     </tu>
     <tu>
@@ -31830,6 +32042,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T171611Z" changeid="xavier">
         <seg>Hôte virtuel</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Virtual host in Apache</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T205106Z" changeid="xavier">
+        <seg>Hôte virtuel dans Apache</seg>
       </tuv>
     </tu>
     <tu>
@@ -35842,6 +36062,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.2:memcachedsessionbackend</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T204443Z" changeid="xavier">
+        <seg>documentation:1.2:memcachedsessionbackend</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.2:nosqlsessionbackend</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120410T041240Z" changeid="xavier">
@@ -37462,6 +37690,22 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T173120Z" changeid="xavier">
         <seg>http://phpldapadmin.sourceforge.net</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://repo.cyrus-project.org/centos$releasever-$basearch/RPMS.cyrus-extras/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T204258Z" changeid="xavier">
+        <seg>http://repo.cyrus-project.org/centos$releasever-$basearch/RPMS.cyrus-extras/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://repo.cyrus-project.org/centos5-i386/RPMS.cyrus-extras/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T204315Z" changeid="xavier">
+        <seg>http://repo.cyrus-project.org/centos5-i386/RPMS.cyrus-extras/</seg>
       </tuv>
     </tu>
     <tu>
