@@ -1260,6 +1260,22 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../../media/screenshots/1.1/manager/notifications_explorer_create.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T055450Z" changeid="guimard">
+        <seg>../../../media/screenshots/1.1/manager/notifications_explorer_create.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../media/screenshots/1.1/notifications/sample_notification.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T060529Z" changeid="guimard">
+        <seg>../../../media/screenshots/1.1/notifications/sample_notification.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../css/all.css</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -5436,6 +5452,22 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/screenshots/1.1/manager/notifications_explorer_create.png?id=documentation%3A1.2%3Anotifications</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T055443Z" changeid="guimard">
+        <seg>/_detail/screenshots/1.1/manager/notifications_explorer_create.png?id=documentation%3A1.2%3Anotifications</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/screenshots/1.1/notifications/sample_notification.png?id=documentation%3A1.2%3Anotifications</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T060527Z" changeid="guimard">
+        <seg>/_detail/screenshots/1.1/notifications/sample_notification.png?id=documentation%3A1.2%3Anotifications</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>/_detail/screenshots/rbn/rbn-applis.png?id=references</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -8278,6 +8310,18 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a39&gt;&lt;s40&gt;print&lt;/s40&gt;&lt;/a39&gt; &lt;s41&gt;STDERR&lt;/s41&gt; &lt;s42&gt;&quot;SOAP Error: &quot;&lt;/s42&gt; &lt;s43&gt;.&lt;/s43&gt; &lt;s44&gt;$r&lt;/s44&gt;&lt;s45&gt;-&gt;&lt;/s45&gt;&lt;s46&gt;fault&lt;/s46&gt;&lt;s47&gt;-&gt;&lt;/s47&gt;&lt;s48&gt;{&lt;/s48&gt;faultstring&lt;s49&gt;}&lt;/s49&gt;&lt;s50&gt;;&lt;/s50&gt;
+&lt;s51&gt;}&lt;/s51&gt;
+&lt;s52&gt;else&lt;/s52&gt; &lt;s53&gt;{&lt;/s53&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T060423Z" changeid="guimard">
+        <seg>&lt;a39&gt;&lt;s40&gt;print&lt;/s40&gt;&lt;/a39&gt; &lt;s41&gt;STDERR&lt;/s41&gt; &lt;s42&gt;&quot;SOAP Error: &quot;&lt;/s42&gt; &lt;s43&gt;.&lt;/s43&gt; &lt;s44&gt;$r&lt;/s44&gt;&lt;s45&gt;-&gt;&lt;/s45&gt;&lt;s46&gt;fault&lt;/s46&gt;&lt;s47&gt;-&gt;&lt;/s47&gt;&lt;s48&gt;{&lt;/s48&gt;faultstring&lt;s49&gt;}&lt;/s49&gt;&lt;s50&gt;;&lt;/s50&gt;
+&lt;s51&gt;}&lt;/s51&gt;
+&lt;s52&gt;else&lt;/s52&gt; &lt;s53&gt;{&lt;/s53&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a4&gt;authapache&lt;/a4&gt;&lt;br5/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111440Z" changeid="xavier">
@@ -8386,6 +8430,16 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;a4&gt;securité&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a63&gt;&lt;s64&gt;print&lt;/s64&gt;&lt;/a63&gt; &lt;s65&gt;&quot;$res notification(s) have been inserted&lt;s66&gt;\n&lt;/s66&gt;&quot;&lt;/s65&gt;&lt;s67&gt;;&lt;/s67&gt;
+&lt;s68&gt;}&lt;/s68&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T060432Z" changeid="guimard">
+        <seg>&lt;a63&gt;&lt;s64&gt;print&lt;/s64&gt;&lt;/a63&gt; &lt;s65&gt;&quot;$res notification(s) have been inserted&lt;s66&gt;\n&lt;/s66&gt;&quot;&lt;/s65&gt;&lt;s67&gt;;&lt;/s67&gt;
+&lt;s68&gt;}&lt;/s68&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -8654,6 +8708,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;check&gt;: paragraph to display with a checkbox: will be inserted in &lt;a0&gt;HTML&lt;/a0&gt; page enclosed in &lt;p class=“notifCheck”&gt;&lt;input type=“checkbox” /&gt;…&lt;/p&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T054856Z" changeid="guimard">
+        <seg>&lt;check&gt; : paragraphe à afficher avec une case à cocher : sera inséré dans la page &lt;a0&gt;HTML&lt;/a0&gt; encadré dans &lt;p class=“notifCheck”&gt;&lt;input type=“checkbox” /&gt;…&lt;/p&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;e0&gt;Example with MySQL&lt;/e0&gt;:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T111052Z" changeid="xavier">
@@ -8666,6 +8728,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv lang="FR-FR" changedate="20120410T041437Z" changeid="xavier">
         <seg>&lt;e0&gt;Exemple avec MySQL&lt;/e0&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;notification&gt; element(s) :</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T054208Z" changeid="guimard">
+        <seg>élément(s) &lt;notification&gt; :</seg>
       </tuv>
     </tu>
     <tu>
@@ -8700,6 +8770,16 @@ PerlOptions +GlobalRequest</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T064349Z" changeid="xavier">
         <seg>&lt;s0&gt;# Fournisseur d'identité SAML2&lt;/s0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;# SOAP functions for notification insertion (disabled by default)&lt;/s0&gt;
+&lt;&lt;s1&gt;Location&lt;/s1&gt; /index.pl/notification&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T060342Z" changeid="guimard">
+        <seg>&lt;s0&gt;# SOAP functions for notification insertion (disabled by default)&lt;/s0&gt;
+&lt;&lt;s1&gt;Location&lt;/s1&gt; /index.pl/notification&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -8762,6 +8842,24 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
 admin &lt;s1&gt;-&gt;&lt;/s1&gt; &lt;s2&gt;$admin&lt;/s2&gt; &lt;s3&gt;||=&lt;/s3&gt; &lt;s4&gt;(&lt;/s4&gt;&lt;s5&gt;$uid&lt;/s5&gt; &lt;s6&gt;eq&lt;/s6&gt; &lt;s7&gt;'foo'&lt;/s7&gt; &lt;s8&gt;or&lt;/s8&gt; &lt;s9&gt;$uid&lt;/s9&gt; &lt;s10&gt;eq&lt;/s10&gt; &lt;s11&gt;'bar'&lt;/s11&gt;&lt;s12&gt;)&lt;/s12&gt;
 &lt;s13&gt;# en-tête&lt;/s13&gt;
 Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$displayName&lt;/s16&gt; &lt;s17&gt;||=&lt;/s17&gt; &lt;s18&gt;$givenName&lt;/s18&gt;&lt;s19&gt;.&lt;/s19&gt;&lt;s20&gt;&quot; &quot;&lt;/s20&gt;&lt;s21&gt;.&lt;/s21&gt;&lt;s22&gt;$surName&lt;/s22&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;#!/usr/bin/perl&lt;/s0&gt;
+ 
+&lt;s1&gt;use&lt;/s1&gt; SOAP&lt;s2&gt;::&lt;/s2&gt;&lt;s3&gt;Lite&lt;/s3&gt;&lt;s4&gt;;&lt;/s4&gt;
+&lt;s5&gt;use&lt;/s5&gt; utf8&lt;s6&gt;;&lt;/s6&gt;
+ 
+&lt;s7&gt;my&lt;/s7&gt; &lt;s8&gt;$lite&lt;/s8&gt; &lt;s9&gt;=&lt;/s9&gt; SOAP&lt;s10&gt;::&lt;/s10&gt;&lt;s11&gt;Lite&lt;/s11&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T060410Z" changeid="guimard">
+        <seg>&lt;s0&gt;#!/usr/bin/perl&lt;/s0&gt;
+ 
+&lt;s1&gt;use&lt;/s1&gt; SOAP&lt;s2&gt;::&lt;/s2&gt;&lt;s3&gt;Lite&lt;/s3&gt;&lt;s4&gt;;&lt;/s4&gt;
+&lt;s5&gt;use&lt;/s5&gt; utf8&lt;s6&gt;;&lt;/s6&gt;
+ 
+&lt;s7&gt;my&lt;/s7&gt; &lt;s8&gt;$lite&lt;/s8&gt; &lt;s9&gt;=&lt;/s9&gt; SOAP&lt;s10&gt;::&lt;/s10&gt;&lt;s11&gt;Lite&lt;/s11&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -9042,6 +9140,48 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;&lt;s1&gt;&lt;?xml&lt;/s1&gt; &lt;s2&gt;version&lt;/s2&gt;=&lt;s3&gt;&quot;1.0&quot;&lt;/s3&gt; &lt;s4&gt;encoding&lt;/s4&gt;=&lt;s5&gt;&quot;UTF-8&quot;&lt;/s5&gt; &lt;s6&gt;standalone&lt;/s6&gt;=&lt;s7&gt;&quot;no&quot;&lt;/s7&gt;&lt;s8&gt;?&gt;&lt;/s8&gt;&lt;/s0&gt;
+&lt;s9&gt;&lt;s10&gt;&lt;root&lt;s11&gt;&gt;&lt;/s11&gt;&lt;/s10&gt;&lt;/s9&gt;
+&lt;s12&gt;&lt;s13&gt;&lt;notification&lt;/s13&gt; &lt;s14&gt;uid&lt;/s14&gt;=&lt;s15&gt;&quot;foo.bar&quot;&lt;/s15&gt; &lt;s16&gt;date&lt;/s16&gt;=&lt;s17&gt;&quot;2009-01-27&quot;&lt;/s17&gt; &lt;s18&gt;reference&lt;/s18&gt;=&lt;s19&gt;&quot;ABC&quot;&lt;/s19&gt;&lt;s20&gt;&gt;&lt;/s20&gt;&lt;/s12&gt;
+&lt;s21&gt;&lt;s22&gt;&lt;title&lt;s23&gt;&gt;&lt;/s23&gt;&lt;/s22&gt;&lt;/s21&gt;You have new authorizations&lt;s24&gt;&lt;s25&gt;&lt;/title&lt;s26&gt;&gt;&lt;/s26&gt;&lt;/s25&gt;&lt;/s24&gt;
+&lt;s27&gt;&lt;s28&gt;&lt;subtitle&lt;s29&gt;&gt;&lt;/s29&gt;&lt;/s28&gt;&lt;/s27&gt;Application 1&lt;s30&gt;&lt;s31&gt;&lt;/subtitle&lt;s32&gt;&gt;&lt;/s32&gt;&lt;/s31&gt;&lt;/s30&gt;
+&lt;s33&gt;&lt;s34&gt;&lt;text&lt;s35&gt;&gt;&lt;/s35&gt;&lt;/s34&gt;&lt;/s33&gt;You have been granted to access to appli-1&lt;s36&gt;&lt;s37&gt;&lt;/text&lt;s38&gt;&gt;&lt;/s38&gt;&lt;/s37&gt;&lt;/s36&gt;
+&lt;s39&gt;&lt;s40&gt;&lt;subtitle&lt;s41&gt;&gt;&lt;/s41&gt;&lt;/s40&gt;&lt;/s39&gt;Application 2&lt;s42&gt;&lt;s43&gt;&lt;/subtitle&lt;s44&gt;&gt;&lt;/s44&gt;&lt;/s43&gt;&lt;/s42&gt;
+&lt;s45&gt;&lt;s46&gt;&lt;text&lt;s47&gt;&gt;&lt;/s47&gt;&lt;/s46&gt;&lt;/s45&gt;You have been granted to access to appli-2&lt;s48&gt;&lt;s49&gt;&lt;/text&lt;s50&gt;&gt;&lt;/s50&gt;&lt;/s49&gt;&lt;/s48&gt;
+&lt;s51&gt;&lt;s52&gt;&lt;subtitle&lt;s53&gt;&gt;&lt;/s53&gt;&lt;/s52&gt;&lt;/s51&gt;Acceptation&lt;s54&gt;&lt;s55&gt;&lt;/subtitle&lt;s56&gt;&gt;&lt;/s56&gt;&lt;/s55&gt;&lt;/s54&gt;
+&lt;s57&gt;&lt;s58&gt;&lt;check&lt;s59&gt;&gt;&lt;/s59&gt;&lt;/s58&gt;&lt;/s57&gt;I know that I can access to appli-1 &lt;s60&gt;&lt;s61&gt;&lt;/check&lt;s62&gt;&gt;&lt;/s62&gt;&lt;/s61&gt;&lt;/s60&gt;
+&lt;s63&gt;&lt;s64&gt;&lt;check&lt;s65&gt;&gt;&lt;/s65&gt;&lt;/s64&gt;&lt;/s63&gt;I know that I can access to appli-2 &lt;s66&gt;&lt;s67&gt;&lt;/check&lt;s68&gt;&gt;&lt;/s68&gt;&lt;/s67&gt;&lt;/s66&gt;
+&lt;s69&gt;&lt;s70&gt;&lt;/notification&lt;s71&gt;&gt;&lt;/s71&gt;&lt;/s70&gt;&lt;/s69&gt;
+&lt;s72&gt;&lt;s73&gt;&lt;notification&lt;/s73&gt; &lt;s74&gt;uid&lt;/s74&gt;=&lt;s75&gt;&quot;allusers&quot;&lt;/s75&gt; &lt;s76&gt;date&lt;/s76&gt;=&lt;s77&gt;&quot;2009-01-27&quot;&lt;/s77&gt; &lt;s78&gt;reference&lt;/s78&gt;=&lt;s79&gt;&quot;disclaimer&quot;&lt;/s79&gt; &lt;s80&gt;condition&lt;/s80&gt;=&lt;s81&gt;&quot;$ipAddr =~ /^192/&quot;&lt;/s81&gt;&lt;s82&gt;&gt;&lt;/s82&gt;&lt;/s72&gt;
+&lt;s83&gt;&lt;s84&gt;&lt;title&lt;s85&gt;&gt;&lt;/s85&gt;&lt;/s84&gt;&lt;/s83&gt;This is your first access on this system&lt;s86&gt;&lt;s87&gt;&lt;/title&lt;s88&gt;&gt;&lt;/s88&gt;&lt;/s87&gt;&lt;/s86&gt;
+&lt;s89&gt;&lt;s90&gt;&lt;text&lt;s91&gt;&gt;&lt;/s91&gt;&lt;/s90&gt;&lt;/s89&gt;Be a nice user and do not break it please.&lt;s92&gt;&lt;s93&gt;&lt;/text&lt;s94&gt;&gt;&lt;/s94&gt;&lt;/s93&gt;&lt;/s92&gt;
+&lt;s95&gt;&lt;s96&gt;&lt;check&lt;s97&gt;&gt;&lt;/s97&gt;&lt;/s96&gt;&lt;/s95&gt;Of course I am not evil!&lt;s98&gt;&lt;s99&gt;&lt;/check&lt;s100&gt;&gt;&lt;/s100&gt;&lt;/s99&gt;&lt;/s98&gt;
+&lt;s101&gt;&lt;s102&gt;&lt;/notification&lt;s103&gt;&gt;&lt;/s103&gt;&lt;/s102&gt;&lt;/s101&gt;
+&lt;s104&gt;&lt;s105&gt;&lt;/root&lt;s106&gt;&gt;&lt;/s106&gt;&lt;/s105&gt;&lt;/s104&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T055317Z" changeid="guimard">
+        <seg>&lt;s0&gt;&lt;s1&gt;&lt;?xml&lt;/s1&gt; &lt;s2&gt;version&lt;/s2&gt;=&lt;s3&gt;&quot;1.0&quot;&lt;/s3&gt; &lt;s4&gt;encoding&lt;/s4&gt;=&lt;s5&gt;&quot;UTF-8&quot;&lt;/s5&gt; &lt;s6&gt;standalone&lt;/s6&gt;=&lt;s7&gt;&quot;no&quot;&lt;/s7&gt;&lt;s8&gt;?&gt;&lt;/s8&gt;&lt;/s0&gt;
+&lt;s9&gt;&lt;s10&gt;&lt;root&lt;s11&gt;&gt;&lt;/s11&gt;&lt;/s10&gt;&lt;/s9&gt;
+&lt;s12&gt;&lt;s13&gt;&lt;notification&lt;/s13&gt; &lt;s14&gt;uid&lt;/s14&gt;=&lt;s15&gt;&quot;foo.bar&quot;&lt;/s15&gt; &lt;s16&gt;date&lt;/s16&gt;=&lt;s17&gt;&quot;2009-01-27&quot;&lt;/s17&gt; &lt;s18&gt;reference&lt;/s18&gt;=&lt;s19&gt;&quot;ABC&quot;&lt;/s19&gt;&lt;s20&gt;&gt;&lt;/s20&gt;&lt;/s12&gt;
+&lt;s21&gt;&lt;s22&gt;&lt;title&lt;s23&gt;&gt;&lt;/s23&gt;&lt;/s22&gt;&lt;/s21&gt;Vous avez de nouvelles autorisations&lt;s24&gt;&lt;s25&gt;&lt;/title&lt;s26&gt;&gt;&lt;/s26&gt;&lt;/s25&gt;&lt;/s24&gt;
+&lt;s27&gt;&lt;s28&gt;&lt;subtitle&lt;s29&gt;&gt;&lt;/s29&gt;&lt;/s28&gt;&lt;/s27&gt;Application 1&lt;s30&gt;&lt;s31&gt;&lt;/subtitle&lt;s32&gt;&gt;&lt;/s32&gt;&lt;/s31&gt;&lt;/s30&gt;
+&lt;s33&gt;&lt;s34&gt;&lt;text&lt;s35&gt;&gt;&lt;/s35&gt;&lt;/s34&gt;&lt;/s33&gt;Vous êtes autorisé à accéder à appli-1&lt;s36&gt;&lt;s37&gt;&lt;/text&lt;s38&gt;&gt;&lt;/s38&gt;&lt;/s37&gt;&lt;/s36&gt;
+&lt;s39&gt;&lt;s40&gt;&lt;subtitle&lt;s41&gt;&gt;&lt;/s41&gt;&lt;/s40&gt;&lt;/s39&gt;Application 2&lt;s42&gt;&lt;s43&gt;&lt;/subtitle&lt;s44&gt;&gt;&lt;/s44&gt;&lt;/s43&gt;&lt;/s42&gt;
+&lt;s45&gt;&lt;s46&gt;&lt;text&lt;s47&gt;&gt;&lt;/s47&gt;&lt;/s46&gt;&lt;/s45&gt;Vous êtes autorisé à accéder à appli-2&lt;s48&gt;&lt;s49&gt;&lt;/text&lt;s50&gt;&gt;&lt;/s50&gt;&lt;/s49&gt;&lt;/s48&gt;
+&lt;s51&gt;&lt;s52&gt;&lt;subtitle&lt;s53&gt;&gt;&lt;/s53&gt;&lt;/s52&gt;&lt;/s51&gt;Acceptation&lt;s54&gt;&lt;s55&gt;&lt;/subtitle&lt;s56&gt;&gt;&lt;/s56&gt;&lt;/s55&gt;&lt;/s54&gt;
+&lt;s57&gt;&lt;s58&gt;&lt;check&lt;s59&gt;&gt;&lt;/s59&gt;&lt;/s58&gt;&lt;/s57&gt;Je reconnais savoir que je peux accéder à appli-1 &lt;s60&gt;&lt;s61&gt;&lt;/check&lt;s62&gt;&gt;&lt;/s62&gt;&lt;/s61&gt;&lt;/s60&gt;
+&lt;s63&gt;&lt;s64&gt;&lt;check&lt;s65&gt;&gt;&lt;/s65&gt;&lt;/s64&gt;&lt;/s63&gt;Je reconnais savoir que je peux accéder à appli-2 &lt;s66&gt;&lt;s67&gt;&lt;/check&lt;s68&gt;&gt;&lt;/s68&gt;&lt;/s67&gt;&lt;/s66&gt;
+&lt;s69&gt;&lt;s70&gt;&lt;/notification&lt;s71&gt;&gt;&lt;/s71&gt;&lt;/s70&gt;&lt;/s69&gt;
+&lt;s72&gt;&lt;s73&gt;&lt;notification&lt;/s73&gt; &lt;s74&gt;uid&lt;/s74&gt;=&lt;s75&gt;&quot;allusers&quot;&lt;/s75&gt; &lt;s76&gt;date&lt;/s76&gt;=&lt;s77&gt;&quot;2009-01-27&quot;&lt;/s77&gt; &lt;s78&gt;reference&lt;/s78&gt;=&lt;s79&gt;&quot;disclaimer&quot;&lt;/s79&gt; &lt;s80&gt;condition&lt;/s80&gt;=&lt;s81&gt;&quot;$ipAddr =~ /^192/&quot;&lt;/s81&gt;&lt;s82&gt;&gt;&lt;/s82&gt;&lt;/s72&gt;
+&lt;s83&gt;&lt;s84&gt;&lt;title&lt;s85&gt;&gt;&lt;/s85&gt;&lt;/s84&gt;&lt;/s83&gt;Ceci est votre premier accès à ce système&lt;s86&gt;&lt;s87&gt;&lt;/title&lt;s88&gt;&gt;&lt;/s88&gt;&lt;/s87&gt;&lt;/s86&gt;
+&lt;s89&gt;&lt;s90&gt;&lt;text&lt;s91&gt;&gt;&lt;/s91&gt;&lt;/s90&gt;&lt;/s89&gt;Soyez sage et ne le cassez pas.&lt;s92&gt;&lt;s93&gt;&lt;/text&lt;s94&gt;&gt;&lt;/s94&gt;&lt;/s93&gt;&lt;/s92&gt;
+&lt;s95&gt;&lt;s96&gt;&lt;check&lt;s97&gt;&gt;&lt;/s97&gt;&lt;/s96&gt;&lt;/s95&gt;Bien sûr, je ne suis pas méchant !&lt;s98&gt;&lt;s99&gt;&lt;/check&lt;s100&gt;&gt;&lt;/s100&gt;&lt;/s99&gt;&lt;/s98&gt;
+&lt;s101&gt;&lt;s102&gt;&lt;/notification&lt;s103&gt;&gt;&lt;/s103&gt;&lt;/s102&gt;&lt;/s101&gt;
+&lt;s104&gt;&lt;s105&gt;&lt;/root&lt;s106&gt;&gt;&lt;/s106&gt;&lt;/s105&gt;&lt;/s104&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;&lt;s1&gt;&lt;?xml&lt;/s1&gt; &lt;s2&gt;version&lt;/s2&gt;=&lt;s3&gt;'1.0'&lt;/s3&gt; &lt;s4&gt;encoding&lt;/s4&gt;=&lt;s5&gt;'utf-8'&lt;/s5&gt;&lt;s6&gt;?&gt;&lt;/s6&gt;&lt;/s0&gt;
 &lt;s7&gt;&lt;s8&gt;&lt;tomcat-users&lt;s9&gt;&gt;&lt;/s9&gt;&lt;/s8&gt;&lt;/s7&gt;</seg>
       </tuv>
@@ -9208,6 +9348,16 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       <tuv lang="FR-FR" changedate="20120107T150205Z" changeid="xavier">
         <seg>&lt;s0&gt;&lt;s1&gt;[&lt;/s1&gt;portal&lt;s2&gt;]&lt;/s2&gt;&lt;/s0&gt;
 &lt;s3&gt;multi&lt;/s3&gt; &lt;s4&gt;=&lt;/s4&gt;&lt;s5&gt; &lt;s6&gt;{&lt;/s6&gt;'LDAP#Openldap'&lt;s7&gt;=&lt;/s7&gt;&gt;&lt;s8&gt;{&lt;/s8&gt;ldapServer&lt;s9&gt;=&lt;/s9&gt;&gt;'ldap1.example.com',LDAPFilter&lt;s10&gt;=&lt;/s10&gt;&gt;'&lt;s11&gt;(&lt;/s11&gt;uid&lt;s12&gt;=&lt;/s12&gt;$user&lt;s13&gt;)&lt;/s13&gt;'&lt;s14&gt;}&lt;/s14&gt;,'LDAP#ActiveDirectory'&lt;s15&gt;=&lt;/s15&gt;&gt;&lt;s16&gt;{&lt;/s16&gt;ldapServer&lt;s17&gt;=&lt;/s17&gt;&gt;'ldaps://ad.example.com',LDAPFilter&lt;s18&gt;=&lt;/s18&gt;&gt;'&lt;s19&gt;(&lt;/s19&gt;&amp;&lt;s20&gt;(&lt;/s20&gt;sAMAccountName&lt;s21&gt;=&lt;/s21&gt;$user&lt;s22&gt;)&lt;/s22&gt;&lt;s23&gt;(&lt;/s23&gt;objectClass&lt;s24&gt;=&lt;/s24&gt;person&lt;s25&gt;)&lt;/s25&gt;&lt;s26&gt;)&lt;/s26&gt;'&lt;s27&gt;}&lt;/s27&gt;&lt;s28&gt;}&lt;/s28&gt;&lt;/s5&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;&lt;s1&gt;[&lt;/s1&gt;portal&lt;s2&gt;]&lt;/s2&gt;&lt;/s0&gt;
+&lt;s3&gt;notification&lt;/s3&gt; &lt;s4&gt;=&lt;/s4&gt;&lt;s5&gt; 1&lt;/s5&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T052254Z" changeid="guimard">
+        <seg>&lt;s0&gt;&lt;s1&gt;[&lt;/s1&gt;portal&lt;s2&gt;]&lt;/s2&gt;&lt;/s0&gt;
+&lt;s3&gt;notification&lt;/s3&gt; &lt;s4&gt;=&lt;/s4&gt;&lt;s5&gt; 1&lt;/s5&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -9510,6 +9660,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T160412Z" changeid="xavier">
         <seg>&lt;s0&gt;Fichier CA&lt;/s0&gt; : certificat de la CA utilisée pour valider le certificat du serveur &lt;a1&gt;CAS&lt;/a1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;CREATE&lt;/s0&gt; &lt;s1&gt;TABLE&lt;/s1&gt; notifications &lt;s2&gt;(&lt;/s2&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T053325Z" changeid="guimard">
+        <seg>&lt;s0&gt;CREATE&lt;/s0&gt; &lt;s1&gt;TABLE&lt;/s1&gt; notifications &lt;s2&gt;(&lt;/s2&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -11222,6 +11380,30 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;dbiChain&lt;/s0&gt;: &lt;a1&gt;DBI&lt;/a1&gt; connection.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T053344Z" changeid="guimard">
+        <seg>&lt;s0&gt;dbiChain&lt;/s0&gt; : chaîne de connexion &lt;a1&gt;DBI&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;dbiPassword&lt;/s0&gt;: &lt;a1&gt;DBI&lt;/a1&gt; password.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T053404Z" changeid="guimard">
+        <seg>&lt;s0&gt;dbiPassword&lt;/s0&gt; : mot-de-passe &lt;a1&gt;DBI&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;dbiUser&lt;/s0&gt;: &lt;a1&gt;DBI&lt;/a1&gt; user.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T053354Z" changeid="guimard">
+        <seg>&lt;s0&gt;dbiUser&lt;/s0&gt; : utilisateur &lt;a1&gt;DBI&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;default_access&lt;/s0&gt; (optional): what result to return if &lt;s1&gt;logon_hours&lt;/s1&gt; is empty</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T181615Z" changeid="xavier">
@@ -11234,6 +11416,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T182814Z" changeid="xavier">
         <seg>&lt;s0&gt;default_access&lt;/s0&gt; (optionnel) : resultat à retourner si &lt;s1&gt;start&lt;/s1&gt; et &lt;s2&gt;end&lt;/s2&gt; sont vides</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;dirName&lt;/s0&gt;: directory where notifications are stored.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T053143Z" changeid="guimard">
+        <seg>&lt;s0&gt;dirName&lt;/s0&gt; : répertoire dans lequel sont stockées les notifications.</seg>
       </tuv>
     </tu>
     <tu>
@@ -11258,6 +11448,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T081310Z" changeid="xavier">
         <seg>&lt;s0&gt;faketicket&lt;/s0&gt; : si l'utilisateur n'a pas accès, un faux ticket est construit, et l'utilisateur est redirigé vers le service &lt;a1&gt;CAS&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;fileNameSeparator&lt;/s0&gt;: file name separator.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T053157Z" changeid="guimard">
+        <seg>&lt;s0&gt;fileNameSeparator&lt;/s0&gt; : séparateur de nom de fichier.</seg>
       </tuv>
     </tu>
     <tu>
@@ -11464,6 +11662,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T181528Z" changeid="xavier">
         <seg>&lt;s0&gt;syntax&lt;/s0&gt; (optionnel) : &lt;c1&gt;hexadecimal&lt;/c1&gt; (défaut) ou &lt;c2&gt;octetstring&lt;/c2&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;table&lt;/s0&gt;: Notifications table name.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T053418Z" changeid="guimard">
+        <seg>&lt;s0&gt;table&lt;/s0&gt; : nom de la table des notifications.</seg>
       </tuv>
     </tu>
     <tu>
@@ -11722,6 +11928,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112317Z" changeid="xavier">
         <seg>&lt;s127&gt;&quot;userobm_town&quot;&lt;/s127&gt;                  &lt;s128&gt;=&gt;&lt;/s128&gt; &lt;s129&gt;&quot;HTTP_OBM_L&quot;&lt;/s129&gt;&lt;s130&gt;,&lt;/s130&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s12&gt;-&gt;&lt;/s12&gt;&lt;s13&gt;uri&lt;/s13&gt;&lt;s14&gt;(&lt;/s14&gt;&lt;s15&gt;'urn:Lemonldap::NG::Common::CGI::SOAPService'&lt;/s15&gt;&lt;s16&gt;)&lt;/s16&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T060412Z" changeid="guimard">
+        <seg>&lt;s12&gt;-&gt;&lt;/s12&gt;&lt;s13&gt;uri&lt;/s13&gt;&lt;s14&gt;(&lt;/s14&gt;&lt;s15&gt;'urn:Lemonldap::NG::Common::CGI::SOAPService'&lt;/s15&gt;&lt;s16&gt;)&lt;/s16&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -12224,6 +12438,44 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s17&gt;-&gt;&lt;/s17&gt;&lt;s18&gt;proxy&lt;/s18&gt;&lt;s19&gt;(&lt;/s19&gt;&lt;s20&gt;'http://auth.example.com/index.pl/notification'&lt;/s20&gt;&lt;s21&gt;)&lt;/s21&gt;&lt;s22&gt;;&lt;/s22&gt;
+ 
+ 
+&lt;s23&gt;$r&lt;/s23&gt; &lt;s24&gt;=&lt;/s24&gt; &lt;s25&gt;$lite&lt;/s25&gt;&lt;s26&gt;-&gt;&lt;/s26&gt;&lt;s27&gt;newNotification&lt;/s27&gt;&lt;s28&gt;(&lt;/s28&gt;
+&lt;s29&gt;'&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;
+&lt;root&gt;
+&lt;notification uid=&quot;foo.bar&quot; date=&quot;2009-01-27&quot; reference=&quot;ABC&quot;&gt;
+&lt;text&gt; You have been granted to access to appli-1 &lt;/text&gt;
+&lt;text&gt; You have been granted to access to appli-2 &lt;/text&gt;
+&lt;check&gt; I know that I can acces to appli-1 &lt;/check&gt;
+&lt;check&gt; I know that I can acces to appli-2 &lt;/check&gt;
+&lt;/notification&gt;
+&lt;/root&gt;
+'&lt;/s29&gt;&lt;s30&gt;)&lt;/s30&gt;&lt;s31&gt;;&lt;/s31&gt;
+ 
+&lt;s32&gt;if&lt;/s32&gt; &lt;s33&gt;(&lt;/s33&gt; &lt;s34&gt;$r&lt;/s34&gt;&lt;s35&gt;-&gt;&lt;/s35&gt;&lt;s36&gt;fault&lt;/s36&gt; &lt;s37&gt;)&lt;/s37&gt; &lt;s38&gt;{&lt;/s38&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T060420Z" changeid="guimard">
+        <seg>&lt;s17&gt;-&gt;&lt;/s17&gt;&lt;s18&gt;proxy&lt;/s18&gt;&lt;s19&gt;(&lt;/s19&gt;&lt;s20&gt;'http://auth.example.com/index.pl/notification'&lt;/s20&gt;&lt;s21&gt;)&lt;/s21&gt;&lt;s22&gt;;&lt;/s22&gt;
+ 
+ 
+&lt;s23&gt;$r&lt;/s23&gt; &lt;s24&gt;=&lt;/s24&gt; &lt;s25&gt;$lite&lt;/s25&gt;&lt;s26&gt;-&gt;&lt;/s26&gt;&lt;s27&gt;newNotification&lt;/s27&gt;&lt;s28&gt;(&lt;/s28&gt;
+&lt;s29&gt;'&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;
+&lt;root&gt;
+&lt;notification uid=&quot;foo.bar&quot; date=&quot;2009-01-27&quot; reference=&quot;ABC&quot;&gt;
+&lt;text&gt; You have been granted to access to appli-1 &lt;/text&gt;
+&lt;text&gt; You have been granted to access to appli-2 &lt;/text&gt;
+&lt;check&gt; I know that I can acces to appli-1 &lt;/check&gt;
+&lt;check&gt; I know that I can acces to appli-2 &lt;/check&gt;
+&lt;/notification&gt;
+&lt;/root&gt;
+'&lt;/s29&gt;&lt;s30&gt;)&lt;/s30&gt;&lt;s31&gt;;&lt;/s31&gt;
+ 
+&lt;s32&gt;if&lt;/s32&gt; &lt;s33&gt;(&lt;/s33&gt; &lt;s34&gt;$r&lt;/s34&gt;&lt;s35&gt;-&gt;&lt;/s35&gt;&lt;s36&gt;fault&lt;/s36&gt; &lt;s37&gt;)&lt;/s37&gt; &lt;s38&gt;{&lt;/s38&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s17&gt;KEY&lt;/s17&gt; uid &lt;s18&gt;(&lt;/s18&gt;uid&lt;s19&gt;)&lt;/s19&gt;&lt;s20&gt;,&lt;/s20&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T072040Z" changeid="xavier">
@@ -12670,6 +12922,16 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120410T042619Z" changeid="xavier">
         <seg>&lt;s27&gt;'failedLoginNumber'&lt;/s27&gt; &lt;s28&gt;=&gt;&lt;/s28&gt; &lt;s29&gt;'5'&lt;/s29&gt;&lt;s30&gt;,&lt;/s30&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s27&gt;PRIMARY&lt;/s27&gt; &lt;s28&gt;KEY&lt;/s28&gt; &lt;s29&gt;(&lt;/s29&gt;date&lt;s30&gt;,&lt;/s30&gt; uid&lt;s31&gt;,&lt;/s31&gt;ref&lt;s32&gt;)&lt;/s32&gt;
+&lt;s33&gt;)&lt;/s33&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T053332Z" changeid="guimard">
+        <seg>&lt;s27&gt;PRIMARY&lt;/s27&gt; &lt;s28&gt;KEY&lt;/s28&gt; &lt;s29&gt;(&lt;/s29&gt;date&lt;s30&gt;,&lt;/s30&gt; uid&lt;s31&gt;,&lt;/s31&gt;ref&lt;s32&gt;)&lt;/s32&gt;
+&lt;s33&gt;)&lt;/s33&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -13268,6 +13530,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s54&gt;my&lt;/s54&gt; &lt;s55&gt;$res&lt;/s55&gt; &lt;s56&gt;=&lt;/s56&gt; &lt;s57&gt;$r&lt;/s57&gt;&lt;s58&gt;-&gt;&lt;/s58&gt;&lt;s59&gt;result&lt;/s59&gt;&lt;s60&gt;(&lt;/s60&gt;&lt;s61&gt;)&lt;/s61&gt;&lt;s62&gt;;&lt;/s62&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T060427Z" changeid="guimard">
+        <seg>&lt;s54&gt;my&lt;/s54&gt; &lt;s55&gt;$res&lt;/s55&gt; &lt;s56&gt;=&lt;/s56&gt; &lt;s57&gt;$r&lt;/s57&gt;&lt;s58&gt;-&gt;&lt;/s58&gt;&lt;s59&gt;result&lt;/s59&gt;&lt;s60&gt;(&lt;/s60&gt;&lt;s61&gt;)&lt;/s61&gt;&lt;s62&gt;;&lt;/s62&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s55&gt;&quot;userobm_perms&quot;&lt;/s55&gt;                 &lt;s56&gt;=&gt;&lt;/s56&gt; &lt;s57&gt;&quot;HTTP_OBM_PERMS&quot;&lt;/s57&gt;&lt;s58&gt;,&lt;/s58&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112302Z" changeid="xavier">
@@ -13648,6 +13918,16 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s7&gt;Allow&lt;/s7&gt; from 192.168.2.0/24
+&lt;/&lt;s8&gt;Location&lt;/s8&gt;&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T060347Z" changeid="guimard">
+        <seg>&lt;s7&gt;Allow&lt;/s7&gt; from 192.168.2.0/24
+&lt;/&lt;s8&gt;Location&lt;/s8&gt;&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s7&gt;Allow&lt;/s7&gt; from &lt;s8&gt;all&lt;/s8&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T155336Z" changeid="xavier">
@@ -13932,6 +14212,30 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       <tuv lang="FR-FR" changedate="20111203T182138Z" changeid="xavier">
         <seg>&lt;s9&gt;RewriteRule&lt;/s9&gt; ^/(.*)$ http://admindrupal.example.com/$1 [R]
  </seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;subtitle&gt;: subtitle to display: will be inserted in &lt;a0&gt;HTML&lt;/a0&gt; page enclosed in &lt;h2 class=“notifText”&gt;…&lt;/h2&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T054739Z" changeid="guimard">
+        <seg>&lt;subtitle&gt; : sous-titre : sera inséré dans la page &lt;a0&gt;HTML&lt;/a0&gt; encadré dans &lt;h2 class=“notifText”&gt;…&lt;/h2&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;text&gt;: paragraph to display: will be inserted in &lt;a0&gt;HTML&lt;/a0&gt; page enclosed in &lt;p class=“notifText”&gt;…&lt;/p&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T054813Z" changeid="guimard">
+        <seg>&lt;text&gt; : paragraphe à afficher : sera inséré dans la page &lt;a0&gt;HTML&lt;/a0&gt; encadré dans &lt;p class=“notifText”&gt;…&lt;/p&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;title&gt;: title to display: will be inserted in &lt;a0&gt;HTML&lt;/a0&gt; page enclosed in &lt;h2 class=“notifText”&gt;…&lt;/h2&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T054742Z" changeid="guimard">
+        <seg>&lt;title&gt; : titre à afficher : sera inséré dans la page &lt;a0&gt;HTML&lt;/a0&gt; encadré dans &lt;h2 class=“notifText”&gt;…&lt;/h2&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -14232,6 +14536,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Activation</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T052151Z" changeid="guimard">
+        <seg>Activation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Active Directory compliance</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -14444,6 +14756,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T094811Z" changeid="xavier">
         <seg>Tous les outils lemonldap-ng se trouvent dans /usr/share/lemonldap-ng/bin/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>All other elements will be removed including &lt;a0&gt;HTML&lt;/a0&gt; elements like &lt;b&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T054934Z" changeid="guimard">
+        <seg>Tous les autres éléments seront supprimés y compris les balises &lt;a0&gt;HTML&lt;/a0&gt; telles &lt;b&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -15768,6 +16088,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>By default, notifications will be stored in the same database as configuration:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T052336Z" changeid="guimard">
+        <seg>Par défaut, les notifications sont stockées dans la même base de données que la configuration :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>By default, only the configured authentication backend is available for users.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T184529Z" changeid="xavier">
@@ -16632,6 +16960,22 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Create new notifications trough SOAP</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T060119Z" changeid="guimard">
+        <seg>Créer de nouvelles notifications via SOAP</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Create new notifications with notifications explorer</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T055344Z" changeid="guimard">
+        <seg>Créer de nouvelles notifications avec l'explorateur des notifications</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Create your &lt;a0&gt;Perl&lt;/a0&gt; module with custom functions.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T111813Z" changeid="xavier">
@@ -16688,6 +17032,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Custom XSLT file</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T053759Z" changeid="guimard">
+        <seg>Fichier XSLT personnalisé</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Custom functions</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -16724,6 +17076,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111508Z" changeid="xavier">
         <seg>D</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>DBI</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T053200Z" changeid="guimard">
+        <seg>DBI</seg>
       </tuv>
     </tu>
     <tu>
@@ -17512,10 +17872,26 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Enable &lt;a0&gt;SOAP&lt;/a0&gt; in General parameters » Advanced parameters » &lt;a1&gt;SOAP&lt;/a1&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T060257Z" changeid="guimard">
+        <seg>Activer &lt;a0&gt;SOAP&lt;/a0&gt; dans Paramètres généraux » Paramètres avancés » &lt;a1&gt;SOAP&lt;/a1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Enable LL::NG sites</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T093908Z" changeid="xavier">
         <seg>Activer les sites LL::NG</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Enable Notifications &lt;a0&gt;SOAP&lt;/a0&gt; service in Apache configuration:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T060334Z" changeid="guimard">
+        <seg>Activer le service &lt;a0&gt;SOAP&lt;/a0&gt; de notifications dans la configuration Apache :</seg>
       </tuv>
     </tu>
     <tu>
@@ -17804,6 +18180,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T114340Z" changeid="xavier">
         <seg>Extensible Markup Language</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Extensible Stylesheet Language Transformations</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T053803Z" changeid="guimard">
+        <seg>Extensible Stylesheet Language Transformations</seg>
       </tuv>
     </tu>
     <tu>
@@ -19384,6 +19768,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If the message contains check boxes, the user has to check all of them else he can not access to the portal and get his session cookie.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T051949Z" changeid="guimard">
+        <seg>Si le message contient des cases à cocher, l'utilisateur doit toutes les cocher, sinon il ne peut obtenir de cookie de session.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If the packages are stored in a yum repository:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T095853Z" changeid="xavier">
@@ -19660,6 +20052,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T192829Z" changeid="xavier">
         <seg>Dans le manager, cliquer sur fournisseurs de service &lt;a0&gt;SAML&lt;/a0&gt; puis sur le bouton &lt;c1&gt;Nouveau fournisseur de service&lt;/c1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>In Manager, click on &lt;c0&gt;notifications explorer&lt;/c0&gt; and then on the &lt;c1&gt;Create&lt;/c1&gt; button.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T055441Z" changeid="guimard">
+        <seg>Dans le manager, cliquer sur l'&lt;c0&gt;explorateur des notifications&lt;/c0&gt; et ensuite sur le bouton &lt;c1&gt;Créer&lt;/c1&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -19996,6 +20396,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T114459Z" changeid="xavier">
         <seg>Initialiser la connexion Kerberos :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Insertion example in Perl</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T060405Z" changeid="guimard">
+        <seg>Exemple d'insertion en Perl</seg>
       </tuv>
     </tu>
     <tu>
@@ -22000,6 +22408,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>New notifications can be insert using &lt;a0&gt;SOAP&lt;/a0&gt; request (described in the WSDL file generated by buildPortalWSDL tool).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T060220Z" changeid="guimard">
+        <seg>Les nouvelles notifications peuvent être insérées en utilisant des requêtes &lt;a0&gt;SOAP&lt;/a0&gt; (décrites dans le fichier WSDL généré par l'utilitaire buildPortalWSDL).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Next create the configuration branch where you want.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120411T042442Z" changeid="xavier">
@@ -22128,10 +22544,26 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Notification format</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T054126Z" changeid="guimard">
+        <seg>Format des notifications</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Notifications</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Notifications</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Notifications are &lt;a0&gt;XML&lt;/a0&gt; files containing:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T054149Z" changeid="guimard">
+        <seg>Les notifications sont des fichiers &lt;a0&gt;XML&lt;/a0&gt; contenant :</seg>
       </tuv>
     </tu>
     <tu>
@@ -22400,6 +22832,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>One notification &lt;a0&gt;XML&lt;/a0&gt; document can contain several notifications messages.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T055028Z" changeid="guimard">
+        <seg>Un document &lt;a0&gt;XML&lt;/a0&gt; de notification peut contenir plusieurs messages de notification.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>One of this module can be used to delegate authentication server to the web server: &lt;a3&gt;Webserver Auth&lt;/a3&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111129T061611Z" changeid="xavier">
@@ -22436,6 +22876,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120217T045318Z" changeid="xavier">
         <seg>Un utilisateur tente d'accéder au portail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Only the condition is not mandatory.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T055536Z" changeid="guimard">
+        <seg>Seule la condition n'est pas exigée.</seg>
       </tuv>
     </tu>
     <tu>
@@ -22500,6 +22948,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T114540Z" changeid="xavier">
         <seg>L'option &lt;c0&gt;–enctypes&lt;/c0&gt; requiert msktutil &gt; 0.4</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Optional attributes:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T054517Z" changeid="guimard">
+        <seg>Attributs optionnels :</seg>
       </tuv>
     </tu>
     <tu>
@@ -22660,6 +23116,22 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Liste des paramètres</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Parameters for &lt;a0&gt;DBI&lt;/a0&gt; backend are the same as &lt;a1&gt;DBI configuration backend&lt;/a1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T053302Z" changeid="guimard">
+        <seg>Les paramètres pour le backend &lt;a0&gt;DBI&lt;/a0&gt; sont les mêmes que ceux du &lt;a1&gt;backend de configuration DBI&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Parameters for File backend are the same as &lt;a0&gt;File configuration backend&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T052751Z" changeid="guimard">
+        <seg>Les paramètres pour le backend File sont les mêmes que ceux du &lt;a0&gt;backend de configuration File&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -23592,6 +24064,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Required attributes:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T054218Z" changeid="guimard">
+        <seg>Attibuts requis :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Required parameters</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -24472,6 +24952,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Since 1.1.0, a notification explorer is available in Manager, and notifications can be done for all users, with the possibility to display conditions.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T052100Z" changeid="guimard">
+        <seg>Depuis la version 1.1.0, un explorateur de notifications est disponible dans le manager, et les notifications peuvent être faites pour tous les utilisateurs, avec possibilité d'affichage conditionnel.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Since MySQL does not have always transaction feature, Apache::Session::MySQL has been designed to use MySQL locks.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -24484,6 +24972,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Ceci dégrade fortement les performances de MySQL, si vous voulez stocker les sessions dans une base de données MySQL, utilisez l'une des solutions suivantes</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Since version 0.9.4, LemonLDAP::NG can be used to notify some messages to users: if a user has a message, the message will be displayed when he will access to the portal.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T051837Z" changeid="guimard">
+        <seg>Depuis la version 0.9.4, LemonLDAP::NG peut être utilisé pour notifier des messages aux utilisateurs : si un utilisateur a un message, celui-ci est affiché lorsqu'il accède au portail.</seg>
       </tuv>
     </tu>
     <tu>
@@ -24896,6 +25392,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Storage</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T052300Z" changeid="guimard">
+        <seg>Stockage</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Store      -&gt; MySQL
 Lock       -&gt; Null
 Generate   -&gt; MD5
@@ -24932,6 +25436,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Structured Query Language</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Sub elements:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T054604Z" changeid="guimard">
+        <seg>Éléments subordonnés :</seg>
       </tuv>
     </tu>
     <tu>
@@ -25060,6 +25572,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Archive</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Test notification</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T060439Z" changeid="guimard">
+        <seg>Tester les notifications</seg>
       </tuv>
     </tu>
     <tu>
@@ -25408,10 +25928,26 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The default &lt;a3&gt;XSLT&lt;/a3&gt; file is in portal/skins/common/notification.xsl.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T053914Z" changeid="guimard">
+        <seg>Le fichier &lt;a3&gt;XSLT&lt;/a3&gt; par défaut est portal/skins/common/notification.xsl.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The default rule is:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T203201Z" changeid="guimard">
         <seg>La règle par défaut est :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The default value of this wilcard is &lt;c0&gt;allusers&lt;/c0&gt;, but you can change it if &lt;c1&gt;allusers&lt;/c1&gt; is a known identifier in your system.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T053559Z" changeid="guimard">
+        <seg>La valeur par défaut de cette carte blanche est &lt;c0&gt;allusers&lt;/c0&gt;, mais on peut la changer si &lt;c1&gt;allusers&lt;/c1&gt; est un nom d'utilisateur.</seg>
       </tuv>
     </tu>
     <tu>
@@ -25436,6 +25972,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T154644Z" changeid="xavier">
         <seg>Le fichier &lt;c0&gt;auth.keytab&lt;/c0&gt; doit ensuite être copié (par un média sûr) sur le serveur Linux (par exemple dans &lt;c1&gt;/etc/lemonldap-ng&lt;/c1&gt;).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The file name default separator is &lt;c0&gt;_&lt;/c0&gt;, this can be a problem if you register notifications for users having &lt;c1&gt;_&lt;/c1&gt; in their login.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T053019Z" changeid="guimard">
+        <seg>Le séparateur par défaut des noms de fichiers est &lt;c0&gt;_&lt;/c0&gt;, ce qui peut poser problème si on enregistre des notifications pour des utilsateur ayant un caractère &lt;c1&gt;_&lt;/c1&gt; dans leur nom de connexion.</seg>
       </tuv>
     </tu>
     <tu>
@@ -25556,6 +26100,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120217T045054Z" changeid="xavier">
         <seg>Le portail normal dispose d'un lien dans le formulaire d'authentification pointant vers le portail destiné aux utilisateurs de l'autre organisation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The notifications module uses a wildcard to manage notifications for all users.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T053518Z" changeid="guimard">
+        <seg>Le module de notifications utilise une carte blanche pour gérer les notifications destinées à tous les utilisateurs.</seg>
       </tuv>
     </tu>
     <tu>
@@ -25704,6 +26256,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The transformation between notification &lt;a0&gt;XML&lt;/a0&gt; content and &lt;a1&gt;HTML&lt;/a1&gt; display is done with &lt;a2&gt;XSLT&lt;/a2&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T053852Z" changeid="guimard">
+        <seg>La transformation entre le texte &lt;a0&gt;XML&lt;/a0&gt; d'une notification et l'affichage &lt;a1&gt;HTML&lt;/a1&gt; est faite par &lt;a2&gt;XSLT&lt;/a2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The upgrade process will also have migrate old configuration files into &lt;c0&gt;/etc/lemonldap-ng/lemonldap-ng.ini&lt;/c0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T094037Z" changeid="xavier">
@@ -25784,6 +26344,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Then creating a notification for &lt;c0&gt;alluserscustom&lt;/c0&gt; will display the notification for all users.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T053747Z" changeid="guimard">
+        <seg>Ainsi, créer une notification pour &lt;c0&gt;alluserscustom&lt;/c0&gt; affichera la notification à tous les utilisateurs.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Then each parameter is one value of the attribute &lt;c0&gt;description&lt;/c0&gt;, prefixed by its key.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120411T042015Z" changeid="xavier">
@@ -25804,6 +26372,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T171747Z" changeid="xavier">
         <seg>Éditer ensuite les règles et en-têtes.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Then fill all inputs to create the notification.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T055520Z" changeid="guimard">
+        <seg>Remplir ensuite tous les champs pour créer la notification.</seg>
       </tuv>
     </tu>
     <tu>
@@ -25836,6 +26412,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T050525Z" changeid="xavier">
         <seg>Il crée la sessions (avec le filtre d'attributs)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Then just configure the new &lt;a5&gt;XSLT&lt;/a5&gt; file path in Manager, go in General Parameters &gt; Advanced Parameters &gt; Notifications &gt; Custom &lt;a6&gt;XSLT&lt;/a6&gt; file and set for example &lt;c7&gt;/etc/lemonldap-ng/notification.xsl&lt;/c7&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T054103Z" changeid="guimard">
+        <seg>Configure ensuite le nouveau fichier &lt;a5&gt;XSLT&lt;/a5&gt; dans le manager, aller dans Paramètres généraux &gt; Paramètres avancés &gt; Notifications &gt; Fichier &lt;a6&gt;XSLT&lt;/a6&gt; personnalisé et mettre par exemple &lt;c7&gt;/etc/lemonldap-ng/notification.xsl&lt;/c7&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -26784,6 +27368,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>To activate &lt;a1&gt;SOAP&lt;/a1&gt; on the portal:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T060234Z" changeid="guimard">
+        <seg>Pour activer &lt;a1&gt;SOAP&lt;/a1&gt; sur le portal :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>To add these attributes, go in Manager, &lt;c0&gt;Variables&lt;/c0&gt; » &lt;c1&gt;Exported Variables&lt;/c1&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T113006Z" changeid="xavier">
@@ -26820,6 +27412,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T150654Z" changeid="xavier">
         <seg>Pour chaîner &lt;a0&gt;SSL&lt;/a0&gt;, il est nécessaire de mettre “SSLRequire optional” dans le fichier de configuration Apache, sinon les utilisateurs ne seront authentifiés que par &lt;a1&gt;SSL&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>To change it, go in General Parameters &gt; Advanced Parameters &gt; Notifications &gt; Wildcard for all users, and set for example &lt;c0&gt;alluserscustom&lt;/c0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T053700Z" changeid="guimard">
+        <seg>Pour le changer, aller dans Paramètres généraux &gt; Paramètres avancés &gt; Notifications &gt; Carte blanche pour tous les utilisateurs, et mettre par exemple &lt;c0&gt;alluserscustom&lt;/c0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -26868,6 +27468,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T100410Z" changeid="xavier">
         <seg>Pour ce faire, décommenter la ligne &lt;c0&gt;NameVirtualHost&lt;/c0&gt; dans &lt;c1&gt;/etc/httpd/conf.d/z-lemonldap-ng-handler.conf&lt;/c1&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>To do this in Manager, go in General Parameters &gt; Advanced Parameters &gt; Notifications.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T052658Z" changeid="guimard">
+        <seg>pour ce faire dans le manager, aller dans Paramètres généraux &gt; Paramètres avancés &gt; Notifications.</seg>
       </tuv>
     </tu>
     <tu>
@@ -27000,6 +27608,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>To summary available options:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T053122Z" changeid="guimard">
+        <seg>Pour résumer les options disponibles :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>To update translations, ask to &lt;a0&gt;lemonldap-ng-dev@ow2.org&lt;/a0&gt; to update your files.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -27128,6 +27744,14 @@ Is this ok [y/N]: y</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Essayez &lt;a0&gt;http://test1.example.com&lt;/a0&gt; ou &lt;a1&gt;http://test2.example.com&lt;/a1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Try also to create a global notification (to the uid “allusers”), and connect with any user, the message will be prompted.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T060628Z" changeid="guimard">
+        <seg>Essayer alors de créer une notification globale (à l'utilisateur “allusers”), et se connecter avec n'importe quel compte, le message sera affiché.</seg>
       </tuv>
     </tu>
     <tu>
@@ -27664,6 +28288,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Using notification system</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T054116Z" changeid="guimard">
+        <seg>Utiliser le système de notification</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Using this, we can do a very simple interoperability system between 2 organizations using two &lt;a0&gt;LL::NG&lt;/a0&gt; structures:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T200318Z" changeid="xavier">
@@ -27856,6 +28488,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>When all is ok, click on &lt;c0&gt;Create&lt;/c0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T055558Z" changeid="guimard">
+        <seg>Lorsque tout est bon, cliquer sur &lt;c0&gt;Créer&lt;/c0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>When all modifications are done, click on &lt;c0&gt;Save&lt;/c0&gt; to store configuration.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T143737Z" changeid="xavier">
@@ -27912,6 +28552,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>When the user accept the notification, the reference is stored in his persistent session.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T052150Z" changeid="guimard">
+        <seg>Lorsque l'utilisateur accepte la notification, la référence est stockée dans ses données de session persistentes.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>When using this module, &lt;a0&gt;LL::NG&lt;/a0&gt; portal will be called only if Apache does not return “401 Authentication required”, but this is not the Apache behaviour: if the auth module fails, Apache returns 401.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T150416Z" changeid="xavier">
@@ -27948,6 +28596,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T153533Z" changeid="xavier">
         <seg>Wiki</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Wildcard</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T053438Z" changeid="guimard">
+        <seg>Carte blanche</seg>
       </tuv>
     </tu>
     <tu>
@@ -28320,6 +28976,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can change default parameters using the “notificationStorage” and “notificationStorageOptions” parameters with the same syntax as configuration storage parameters.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T052619Z" changeid="guimard">
+        <seg>On peut changer les paramètres par défaut en utilisant les paramètres “notificationStorage” et “notificationStorageOptions” avec la même syntaxe que les paramètres de stockage de la configuration.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You can change it quick with a sed command.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T093842Z" changeid="xavier">
@@ -28332,6 +28996,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T143928Z" changeid="xavier">
         <seg>L'aspect graphique du manager peut être modifié en cliquant sur le bouton &lt;c0&gt;style de menu&lt;/c0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can change the separator with the &lt;c2&gt;fileNameSeparator&lt;/c2&gt; option, and set another value, for example &lt;c3&gt;@&lt;/c3&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T053109Z" changeid="guimard">
+        <seg>On peut changer ce séparateur en changeant la valeur de l'option &lt;c2&gt;fileNameSeparator&lt;/c2&gt; par exemple &lt;c3&gt;@&lt;/c3&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -28372,6 +29044,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T182123Z" changeid="xavier">
         <seg>Vous pouvez créer un hôte virtuel particulier et utiliser &lt;a0&gt;le module rewrite d'Apache&lt;/a0&gt; pour choisir entre le site ouvert et le protégé :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can create your own &lt;a4&gt;XSLT&lt;/a4&gt; file and store in another place, for example /etc/lemonldap-ng.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T053950Z" changeid="guimard">
+        <seg>On peut créer son propre fichier &lt;a4&gt;XSLT&lt;/a4&gt; et le stocker à un autre endroit, par exemple /etc/lemonldap-ng.</seg>
       </tuv>
     </tu>
     <tu>
@@ -28720,6 +29400,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You have to create the table by yourself:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T053324Z" changeid="guimard">
+        <seg>Il faut créer soi-même la table :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You have to include them in Apache main configuration, for example:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T162023Z" changeid="xavier">
@@ -28780,6 +29468,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T145224Z" changeid="xavier">
         <seg>Il est possible d'utiliser le module d'authentification “Multi”.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You just have to activate Notifications in the Manager (General Parameters &gt; Advanced Parameters &gt; Notifications &gt; Activation) or in lemonldap-ng.ini:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T052251Z" changeid="guimard">
+        <seg>Il suffit d'activer les notifications dans le manager (Paramètres généraux &gt; Paramètres avancés &gt; Notifications &gt; Activation) ou dans lemonldap-ng.ini :</seg>
       </tuv>
     </tu>
     <tu>
@@ -28912,6 +29608,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You need to create yourself the directory and set write access to Apache user.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T052836Z" changeid="guimard">
+        <seg>Il faut créer soi-même le répertoire et y donner un accès en écriture pour l'utilisateur Apache.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You need to disable default Manager protection in lemonldap-ng.ini to rely only on Apache:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T050122Z" changeid="guimard">
@@ -29024,6 +29728,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You will be prompted.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T060525Z" changeid="guimard">
+        <seg>Le message sera affiché.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You will configure Zimbra virtual host like other &lt;a0&gt;protected virtual host&lt;/a0&gt; but you will use Zimbra Handler instead of default Handler.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111222T180805Z" changeid="xavier">
@@ -29060,6 +29772,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Seul le paquet liblasso3-perl est nécessaire :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You've simply to insert a notification and connect to the portal using the same UID.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T060511Z" changeid="guimard">
+        <seg>Il suffit d'insérer une notification et de se connecter au portail en utilisant le même UID.</seg>
       </tuv>
     </tu>
     <tu>
@@ -29846,6 +30566,22 @@ chown www-data:www-data /var/lib/lemonldap-ng/sessions /var/lib/lemonldap-ng/ses
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>cond varchar&lt;s16&gt;(&lt;/s16&gt;255&lt;s17&gt;)&lt;/s17&gt; &lt;s18&gt;DEFAULT&lt;/s18&gt; &lt;s19&gt;NULL&lt;/s19&gt;&lt;s20&gt;,&lt;/s20&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T053328Z" changeid="guimard">
+        <seg>cond varchar&lt;s16&gt;(&lt;/s16&gt;255&lt;s17&gt;)&lt;/s17&gt; &lt;s18&gt;DEFAULT&lt;/s18&gt; &lt;s19&gt;NULL&lt;/s19&gt;&lt;s20&gt;,&lt;/s20&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>condition: condition to display the notification, can use all session variables.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T054550Z" changeid="guimard">
+        <seg>condition : condition pour afficher la notification, peut utiliser toutes les variables de session.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>contact</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -29940,6 +30676,22 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>css/screen.css</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>date datetime &lt;s3&gt;NOT&lt;/s3&gt; &lt;s4&gt;NULL&lt;/s4&gt;&lt;s5&gt;,&lt;/s5&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T053326Z" changeid="guimard">
+        <seg>date datetime &lt;s3&gt;NOT&lt;/s3&gt; &lt;s4&gt;NULL&lt;/s4&gt;&lt;s5&gt;,&lt;/s5&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>date: creation date (format YYYY-MM-DD)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T054249Z" changeid="guimard">
+        <seg>date : date de création (format AAAA-MM-JJ)</seg>
       </tuv>
     </tu>
     <tu>
@@ -31656,6 +32408,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>done datetime &lt;s24&gt;DEFAULT&lt;/s24&gt; &lt;s25&gt;NULL&lt;/s25&gt;&lt;s26&gt;,&lt;/s26&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T053330Z" changeid="guimard">
+        <seg>done datetime &lt;s24&gt;DEFAULT&lt;/s24&gt; &lt;s25&gt;NULL&lt;/s25&gt;&lt;s26&gt;,&lt;/s26&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>download</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -32484,6 +33244,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T111854Z" changeid="xavier">
         <seg>http://perldoc.perl.org/functions/package.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://perldoc.perl.org/functions/print.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T060407Z" changeid="guimard">
+        <seg>http://perldoc.perl.org/functions/print.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -33480,6 +34248,22 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>if you use “&lt;a0&gt;DBI&lt;/a0&gt;” system, the notifications will be stored in the same database as configuration and in a table called “notifications”.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T052510Z" changeid="guimard">
+        <seg>si “&lt;a0&gt;DBI&lt;/a0&gt;” est utilisé, les notifications sont stockées dans la même base de données que la configuration et la table est nommée “notifications”.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>if you use “File” system and your “dirName” is set to /usr/local/lemonldap-ng/conf/, the notifications will be stored in /usr/local/lemonldap-ng/notifications/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T052421Z" changeid="guimard">
+        <seg>si “File” est utilisé et que “dirName” vaut /usr/local/lemonldap-ng/conf/, les notifications seront stockées dans /usr/local/lemonldap-ng/notifications/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>import your own private and public keys (&lt;c0&gt;Load from a file&lt;/c0&gt; input)</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -34168,6 +34952,16 @@ make test</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>mkdir /usr/local/lemonldap-ng/notifications/
+chown www-data /usr/local/lemonldap-ng/notifications/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T052839Z" changeid="guimard">
+        <seg>mkdir /usr/local/lemonldap-ng/notifications/
+chown www-data /usr/local/lemonldap-ng/notifications/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>msmith</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T115225Z" changeid="xavier">
@@ -34514,6 +35308,22 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>ref varchar&lt;s11&gt;(&lt;/s11&gt;255&lt;s12&gt;)&lt;/s12&gt; &lt;s13&gt;NOT&lt;/s13&gt; &lt;s14&gt;NULL&lt;/s14&gt;&lt;s15&gt;,&lt;/s15&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T053327Z" changeid="guimard">
+        <seg>ref varchar&lt;s11&gt;(&lt;/s11&gt;255&lt;s12&gt;)&lt;/s12&gt; &lt;s13&gt;NOT&lt;/s13&gt; &lt;s14&gt;NULL&lt;/s14&gt;&lt;s15&gt;,&lt;/s15&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>ref: a reference that can be used later to know what has been notified and when</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T054342Z" changeid="guimard">
+        <seg>ref : une référence qui peut être utilisée plus tard pour connaître ce qui a été notifié et quand</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>references</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -34626,6 +35436,22 @@ msktutil -c -b &quot;cn=COMPUTERS&quot; -s HTTP/auth.example.com -h auth.example
       </tuv>
       <tuv lang="FR-FR">
         <seg>screenshots.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>screenshots:1.1:manager:notifications_explorer_create.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T055447Z" changeid="guimard">
+        <seg>screenshots:1.1:manager:notifications_explorer_create.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>screenshots:1.1:notifications:sample_notification.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T060528Z" changeid="guimard">
+        <seg>screenshots:1.1:notifications:sample_notification.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -35046,6 +35872,14 @@ cd lemonldap-ng-*</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>uid varchar&lt;s6&gt;(&lt;/s6&gt;255&lt;s7&gt;)&lt;/s7&gt; &lt;s8&gt;NOT&lt;/s8&gt; &lt;s9&gt;NULL&lt;/s9&gt;&lt;s10&gt;,&lt;/s10&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T053327Z" changeid="guimard">
+        <seg>uid varchar&lt;s6&gt;(&lt;/s6&gt;255&lt;s7&gt;)&lt;/s7&gt; &lt;s8&gt;NOT&lt;/s8&gt; &lt;s9&gt;NULL&lt;/s9&gt;&lt;s10&gt;,&lt;/s10&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>uid: 123456789012</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T163048Z" changeid="xavier">
@@ -35058,6 +35892,14 @@ cd lemonldap-ng-*</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T163046Z" changeid="xavier">
         <seg>uid: coudot</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>uid: the user login (it must correspond to the attribute set in whatToTrace parameter, uid by default), or the wildcard string (by default: &lt;c0&gt;allusers&lt;/c0&gt;) if the notification should be displayed for every user.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T054508Z" changeid="guimard">
+        <seg>uid : le nom de connexion de l'utilisateur (il doit correspondre à l'attribut utilisé dans le paramètre whatToTrace, uid par défaut), ou la carte blanche (par défaut : &lt;c0&gt;allusers&lt;/c0&gt;) si la notification doit être affichée à tous les utilisateurs.</seg>
       </tuv>
     </tu>
     <tu>
@@ -35242,6 +36084,14 @@ cd lemonldap-ng-*</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T195444Z" changeid="xavier">
         <seg>xguimard@example.com</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>xml longblob &lt;s21&gt;NOT&lt;/s21&gt; &lt;s22&gt;NULL&lt;/s22&gt;&lt;s23&gt;,&lt;/s23&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120419T053329Z" changeid="guimard">
+        <seg>xml longblob &lt;s21&gt;NOT&lt;/s21&gt; &lt;s22&gt;NULL&lt;/s22&gt;&lt;s23&gt;,&lt;/s23&gt;</seg>
       </tuv>
     </tu>
     <tu>
