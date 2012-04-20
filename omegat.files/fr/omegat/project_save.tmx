@@ -322,6 +322,14 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>#perl_auto-protected_cgi</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T140606Z" changeid="xavier">
+        <seg>#perl_auto-protected_cgi</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>#presentation</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074144Z" changeid="xavier">
@@ -564,6 +572,14 @@ WithPeak[test.example.com]: wmy</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112332Z" changeid="xavier">
         <seg>----&lt;/s156&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>-1 if this &lt;a0&gt;URL&lt;/a0&gt; is not known by &lt;a1&gt;LL::NG&lt;/a1&gt; configuration</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T141655Z" changeid="xavier">
+        <seg>-1 si cette &lt;a0&gt;URL&lt;/a0&gt; n'est pas connue de la configuration de &lt;a1&gt;LL::NG&lt;/a1&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -5900,6 +5916,14 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>0 if not</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T141630Z" changeid="xavier">
+        <seg>0 sinon</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>0.9.3</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -5992,6 +6016,14 @@ WithPeak[test.example.com]: wmy</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T102245Z" changeid="xavier">
         <seg>1 si l'utilisateur est administrateur</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>1 if user is authorizated to access to it</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T141617Z" changeid="xavier">
+        <seg>1 si l'utilisateur est autorisé à y accéder</seg>
       </tuv>
     </tu>
     <tu>
@@ -6510,6 +6542,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
         <seg>&lt;a0&gt;&lt;s1&gt;package&lt;/s1&gt;&lt;/a0&gt; SSOExtensions&lt;s2&gt;;&lt;/s2&gt;
  
 &lt;s3&gt;sub&lt;/s3&gt; function1 &lt;s4&gt;{&lt;/s4&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;&lt;s1&gt;print&lt;/s1&gt;&lt;/a0&gt; &lt;s2&gt;&quot;Connected user: &quot;&lt;/s2&gt;&lt;s3&gt;.&lt;/s3&gt;&lt;s4&gt;$ENV&lt;/s4&gt;&lt;s5&gt;{&lt;/s5&gt;HTTP_AUTH_USER&lt;s6&gt;}&lt;/s6&gt;&lt;s7&gt;;&lt;/s7&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T140811Z" changeid="xavier">
+        <seg>&lt;a0&gt;&lt;s1&gt;print&lt;/s1&gt;&lt;/a0&gt; &lt;s2&gt;&quot;Connected user: &quot;&lt;/s2&gt;&lt;s3&gt;.&lt;/s3&gt;&lt;s4&gt;$ENV&lt;/s4&gt;&lt;s5&gt;{&lt;/s5&gt;HTTP_AUTH_USER&lt;s6&gt;}&lt;/s6&gt;&lt;s7&gt;;&lt;/s7&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -7102,6 +7142,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv lang="FR-FR">
         <seg>Redirection &lt;a0&gt;HTTP&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;HTTP&lt;/a0&gt; header (in all cases)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T140514Z" changeid="xavier">
+        <seg>un en-tête &lt;a0&gt;HTTP&lt;/a0&gt; (dans tous les cas)</seg>
       </tuv>
     </tu>
     <tu>
@@ -9758,6 +9806,16 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a9&gt;&lt;s10&gt;print&lt;/s10&gt;&lt;/a9&gt; &lt;s11&gt;'&lt;a href=&quot;http://test3.example.com/&quot;&gt;click here&lt;/a&gt;'&lt;/s11&gt;&lt;s12&gt;;&lt;/s12&gt;
+&lt;s13&gt;}&lt;/s13&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T141708Z" changeid="xavier">
+        <seg>&lt;a9&gt;&lt;s10&gt;print&lt;/s10&gt;&lt;/a9&gt; &lt;s11&gt;'&lt;a href=&quot;http://test3.example.com/&quot;&gt;click here&lt;/a&gt;'&lt;/s11&gt;&lt;s12&gt;;&lt;/s12&gt;
+&lt;s13&gt;}&lt;/s13&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;c0&gt;ValveLemonLDAPNG.jar&lt;/c0&gt; is created under &lt;c1&gt;/dist&lt;/c1&gt; directory.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111220T111143Z" changeid="xavier">
@@ -9868,6 +9926,22 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
 &lt;s1&gt;ErrorDocument&lt;/s1&gt; 403 http://auth.example.com/?lmError=403
 &lt;s2&gt;ErrorDocument&lt;/s2&gt; 500 http://auth.example.com/?lmError=500
 &lt;s3&gt;ErrorDocument&lt;/s3&gt; &lt;s4&gt;503&lt;/s4&gt; http://auth.example.com/?lmError=&lt;s5&gt;503&lt;/s5&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;# Get attributes (or macros)&lt;/s0&gt;
+&lt;s1&gt;my&lt;/s1&gt; &lt;s2&gt;$cn&lt;/s2&gt; &lt;s3&gt;=&lt;/s3&gt; &lt;s4&gt;$cgi&lt;/s4&gt;&lt;s5&gt;-&gt;&lt;/s5&gt;&lt;s6&gt;user&lt;/s6&gt;&lt;s7&gt;-&gt;&lt;/s7&gt;&lt;s8&gt;{&lt;/s8&gt;cn&lt;s9&gt;}&lt;/s9&gt;
+ 
+&lt;s10&gt;# Test if user is member of a Lemonldap::NG group (or LDAP mapped group)&lt;/s10&gt;
+&lt;s11&gt;if&lt;/s11&gt;&lt;s12&gt;(&lt;/s12&gt; &lt;s13&gt;$cgi&lt;/s13&gt;&lt;s14&gt;-&gt;&lt;/s14&gt;&lt;s15&gt;group&lt;/s15&gt;&lt;s16&gt;(&lt;/s16&gt;&lt;s17&gt;'admin'&lt;/s17&gt;&lt;s18&gt;)&lt;/s18&gt; &lt;s19&gt;)&lt;/s19&gt; &lt;s20&gt;{&lt;/s20&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T141252Z" changeid="xavier">
+        <seg>&lt;s0&gt;# Obtenir des attributs (ou macros)&lt;/s0&gt;
+&lt;s1&gt;my&lt;/s1&gt; &lt;s2&gt;$cn&lt;/s2&gt; &lt;s3&gt;=&lt;/s3&gt; &lt;s4&gt;$cgi&lt;/s4&gt;&lt;s5&gt;-&gt;&lt;/s5&gt;&lt;s6&gt;user&lt;/s6&gt;&lt;s7&gt;-&gt;&lt;/s7&gt;&lt;s8&gt;{&lt;/s8&gt;cn&lt;s9&gt;}&lt;/s9&gt;
+ 
+&lt;s10&gt;# Tester si l'utilisateur est membre d'un groupe Lemonldap::NG (ou d'un groupe LDAP translaté)&lt;/s10&gt;
+&lt;s11&gt;if&lt;/s11&gt;&lt;s12&gt;(&lt;/s12&gt; &lt;s13&gt;$cgi&lt;/s13&gt;&lt;s14&gt;-&gt;&lt;/s14&gt;&lt;s15&gt;group&lt;/s15&gt;&lt;s16&gt;(&lt;/s16&gt;&lt;s17&gt;'admin'&lt;/s17&gt;&lt;s18&gt;)&lt;/s18&gt; &lt;s19&gt;)&lt;/s19&gt; &lt;s20&gt;{&lt;/s20&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -13160,6 +13234,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;if&lt;/s0&gt;&lt;s1&gt;(&lt;/s1&gt;&lt;s2&gt;$cgi&lt;/s2&gt;&lt;s3&gt;-&gt;&lt;/s3&gt;&lt;s4&gt;testUri&lt;/s4&gt;&lt;s5&gt;(&lt;/s5&gt;&lt;s6&gt;'http://test3.example.com/'&lt;/s6&gt;&lt;s7&gt;)&lt;/s7&gt; &lt;s8&gt;{&lt;/s8&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T141706Z" changeid="xavier">
+        <seg>&lt;s0&gt;if&lt;/s0&gt;&lt;s1&gt;(&lt;/s1&gt;&lt;s2&gt;$cgi&lt;/s2&gt;&lt;s3&gt;-&gt;&lt;/s3&gt;&lt;s4&gt;testUri&lt;/s4&gt;&lt;s5&gt;(&lt;/s5&gt;&lt;s6&gt;'http://test3.example.com/'&lt;/s6&gt;&lt;s7&gt;)&lt;/s7&gt; &lt;s8&gt;{&lt;/s8&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;include&lt;/s0&gt; /usr/local/lemonldap-ng/etc/portal-apache2.conf
 &lt;s1&gt;include&lt;/s1&gt; /usr/local/lemonldap-ng/etc/handler-apache2.conf
 &lt;s2&gt;include&lt;/s2&gt; /usr/local/lemonldap-ng/etc/manager-apache2.conf</seg>
@@ -13236,6 +13318,30 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;my&lt;/s0&gt; &lt;s1&gt;$cgi&lt;/s1&gt; &lt;s2&gt;=&lt;/s2&gt; &lt;s3&gt;new&lt;/s3&gt; CGI&lt;s4&gt;;&lt;/s4&gt;
+&lt;s5&gt;...&lt;/s5&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T141111Z" changeid="xavier">
+        <seg>&lt;s0&gt;my&lt;/s0&gt; &lt;s1&gt;$cgi&lt;/s1&gt; &lt;s2&gt;=&lt;/s2&gt; &lt;s3&gt;new&lt;/s3&gt; CGI&lt;s4&gt;;&lt;/s4&gt;
+&lt;s5&gt;...&lt;/s5&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;my&lt;/s0&gt; &lt;s1&gt;$cgi&lt;/s1&gt; &lt;s2&gt;=&lt;/s2&gt; Lemonldap&lt;s3&gt;::&lt;/s3&gt;&lt;s4&gt;NG&lt;/s4&gt;&lt;s5&gt;::&lt;/s5&gt;&lt;s6&gt;Handler&lt;/s6&gt;&lt;s7&gt;::&lt;/s7&gt;&lt;s8&gt;CGI&lt;/s8&gt;&lt;s9&gt;-&gt;&lt;/s9&gt;&lt;s10&gt;new&lt;/s10&gt; &lt;s11&gt;(&lt;/s11&gt;&lt;s12&gt;{&lt;/s12&gt;&lt;s13&gt;}&lt;/s13&gt;&lt;s14&gt;)&lt;/s14&gt;&lt;s15&gt;;&lt;/s15&gt;
+&lt;s16&gt;$cgi&lt;/s16&gt;&lt;s17&gt;-&gt;&lt;/s17&gt;&lt;s18&gt;authenticate&lt;/s18&gt;&lt;s19&gt;(&lt;/s19&gt;&lt;s20&gt;)&lt;/s20&gt;&lt;s21&gt;;&lt;/s21&gt;
+&lt;s22&gt;$cgi&lt;/s22&gt;&lt;s23&gt;-&gt;&lt;/s23&gt;&lt;s24&gt;authorize&lt;/s24&gt;&lt;s25&gt;(&lt;/s25&gt;&lt;s26&gt;)&lt;/s26&gt;&lt;s27&gt;;&lt;/s27&gt;
+&lt;s28&gt;...&lt;/s28&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T141119Z" changeid="xavier">
+        <seg>&lt;s0&gt;my&lt;/s0&gt; &lt;s1&gt;$cgi&lt;/s1&gt; &lt;s2&gt;=&lt;/s2&gt; Lemonldap&lt;s3&gt;::&lt;/s3&gt;&lt;s4&gt;NG&lt;/s4&gt;&lt;s5&gt;::&lt;/s5&gt;&lt;s6&gt;Handler&lt;/s6&gt;&lt;s7&gt;::&lt;/s7&gt;&lt;s8&gt;CGI&lt;/s8&gt;&lt;s9&gt;-&gt;&lt;/s9&gt;&lt;s10&gt;new&lt;/s10&gt; &lt;s11&gt;(&lt;/s11&gt;&lt;s12&gt;{&lt;/s12&gt;&lt;s13&gt;}&lt;/s13&gt;&lt;s14&gt;)&lt;/s14&gt;&lt;s15&gt;;&lt;/s15&gt;
+&lt;s16&gt;$cgi&lt;/s16&gt;&lt;s17&gt;-&gt;&lt;/s17&gt;&lt;s18&gt;authenticate&lt;/s18&gt;&lt;s19&gt;(&lt;/s19&gt;&lt;s20&gt;)&lt;/s20&gt;&lt;s21&gt;;&lt;/s21&gt;
+&lt;s22&gt;$cgi&lt;/s22&gt;&lt;s23&gt;-&gt;&lt;/s23&gt;&lt;s24&gt;authorize&lt;/s24&gt;&lt;s25&gt;(&lt;/s25&gt;&lt;s26&gt;)&lt;/s26&gt;&lt;s27&gt;;&lt;/s27&gt;
+&lt;s28&gt;...&lt;/s28&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;my&lt;/s0&gt; &lt;s1&gt;$portal&lt;/s1&gt; &lt;s2&gt;=&lt;/s2&gt; Lemonldap&lt;s3&gt;::&lt;/s3&gt;&lt;s4&gt;NG&lt;/s4&gt;&lt;s5&gt;::&lt;/s5&gt;&lt;s6&gt;Portal&lt;/s6&gt;&lt;s7&gt;::&lt;/s7&gt;&lt;s8&gt;SharedConf&lt;/s8&gt;&lt;s9&gt;-&gt;&lt;/s9&gt;&lt;s10&gt;new&lt;/s10&gt;&lt;s11&gt;(&lt;/s11&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T071954Z" changeid="xavier">
@@ -13306,6 +13412,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T071412Z" changeid="xavier">
         <seg>&lt;s0&gt;portal&lt;/s0&gt; : paramètres réservés au portail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;print&lt;/s0&gt; &lt;s1&gt;&quot;Connected user: &quot;&lt;/s1&gt;&lt;s2&gt;.&lt;/s2&gt;&lt;s3&gt;$_SERVER&lt;/s3&gt;&lt;s4&gt;{&lt;/s4&gt;HTTP_AUTH_USER&lt;s5&gt;}&lt;/s5&gt;&lt;s6&gt;;&lt;/s6&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T140815Z" changeid="xavier">
+        <seg>&lt;s0&gt;print&lt;/s0&gt; &lt;s1&gt;&quot;Connected user: &quot;&lt;/s1&gt;&lt;s2&gt;.&lt;/s2&gt;&lt;s3&gt;$_SERVER&lt;/s3&gt;&lt;s4&gt;{&lt;/s4&gt;HTTP_AUTH_USER&lt;s5&gt;}&lt;/s5&gt;&lt;s6&gt;;&lt;/s6&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -14560,6 +14674,18 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s21&gt;# special html code for admins&lt;/s21&gt;
+&lt;s22&gt;}&lt;/s22&gt;
+&lt;s23&gt;else&lt;/s23&gt; &lt;s24&gt;{&lt;/s24&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T141320Z" changeid="xavier">
+        <seg>&lt;s21&gt;# code html spécial pour les administrateurs&lt;/s21&gt;
+&lt;s22&gt;}&lt;/s22&gt;
+&lt;s23&gt;else&lt;/s23&gt; &lt;s24&gt;{&lt;/s24&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s21&gt;Deny&lt;/s21&gt; from &lt;s22&gt;all&lt;/s22&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T064211Z" changeid="xavier">
@@ -14648,6 +14774,16 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112255Z" changeid="xavier">
         <seg>&lt;s25&gt;&quot;server_ip_address&quot;&lt;/s25&gt;     &lt;s26&gt;=&gt;&lt;/s26&gt; &lt;s27&gt;&quot;localhost&quot;&lt;/s27&gt;&lt;s28&gt;,&lt;/s28&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s25&gt;# another HTML code&lt;/s25&gt;
+&lt;s26&gt;}&lt;/s26&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T141343Z" changeid="xavier">
+        <seg>&lt;s25&gt;# autre code HTML&lt;/s25&gt;
+&lt;s26&gt;}&lt;/s26&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -18536,6 +18672,22 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Code snippet</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T140705Z" changeid="xavier">
+        <seg>Exemple de code</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Code to replace:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T141110Z" changeid="xavier">
+        <seg>Code à remplacer :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Command line configuration editor</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120410T041751Z" changeid="xavier">
@@ -20476,6 +20628,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T120353Z" changeid="xavier">
         <seg>Exemples pour &lt;a0&gt;LDAP&lt;/a0&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Examples with a &lt;a0&gt;configured header&lt;/a0&gt; named 'Auth-User':</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T140807Z" changeid="xavier">
+        <seg>Exemples avec un &lt;a0&gt;en-tête configuré&lt;/a0&gt; nommé 'Auth-User':</seg>
       </tuv>
     </tu>
     <tu>
@@ -22696,6 +22856,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If your application is based on &lt;a0&gt;Perl CGI package&lt;/a0&gt;, you can simply replace &lt;a1&gt;CGI&lt;/a1&gt; by &lt;a2&gt;Lemonldap::NG::Handler::CGI&lt;/a2&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T140649Z" changeid="xavier">
+        <seg>Si l'application est basée sir le &lt;a0&gt;paquet CGI de Perl&lt;/a0&gt;, il suffit de remplacer &lt;a1&gt;CGI&lt;/a1&gt; par &lt;a2&gt;Lemonldap::NG::Handler::CGI&lt;/a2&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If your function is not compliant with &lt;a0&gt;Safe jail&lt;/a0&gt;, you will need to disable the jail.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T175239Z" changeid="xavier">
@@ -23688,6 +23856,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>It returns:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T141602Z" changeid="xavier">
+        <seg>Elle retourne :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>It sends an OTP, which is validated against Yubico server.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T162226Z" changeid="xavier">
@@ -24492,6 +24668,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T112725Z" changeid="xavier">
         <seg>Lemonldap::NG::Handler</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Lemonldap::NG::Handler::&lt;a0&gt;CGI&lt;/a0&gt; adds some functions to &lt;a1&gt;CGI&lt;/a1&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T140954Z" changeid="xavier">
+        <seg>Lemonldap::NG::Handler::CGI ajoute quelques fonctions à &lt;a1&gt;CGI&lt;/a1&gt;:</seg>
       </tuv>
     </tu>
     <tu>
@@ -25518,6 +25702,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>New code:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T141116Z" changeid="xavier">
+        <seg>Nouveau code:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>New notifications can be insert using &lt;a0&gt;SOAP&lt;/a0&gt; request (described in the WSDL file generated by buildPortalWSDL tool).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T060220Z" changeid="guimard">
@@ -26254,6 +26446,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>PHP</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T140813Z" changeid="xavier">
+        <seg>PHP</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>POD unit tests</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T140936Z" changeid="guimard">
@@ -26482,6 +26682,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T140608Z" changeid="guimard">
         <seg>Perl</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Perl auto-protected CGI</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T140827Z" changeid="xavier">
+        <seg>CGI aito-protégée Perl</seg>
       </tuv>
     </tu>
     <tu>
@@ -27044,6 +27252,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Protect your application</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T140318Z" changeid="xavier">
+        <seg>Protéger une application</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Protected application sends response to Handler</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -27192,6 +27408,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="FR-FR">
         <seg>Modèle RBAC</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>REMOTE_USER environment variable (with local Handler or SetEnvIf trick)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T140457Z" changeid="xavier">
+        <seg>la variable d'environnement REMOTE_USER (avec un agent local ou une conversion SetEnvIf)</seg>
       </tuv>
     </tu>
     <tu>
@@ -30640,6 +30864,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Then you can access to user datas</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T141135Z" changeid="xavier">
+        <seg>On peut ensuite accéder aux données de l'utilisateur</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Then you can have different &lt;a0&gt;parameters&lt;/a0&gt; for each stored in a &lt;a1&gt;Perl&lt;/a1&gt; hash entry named multi:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T145957Z" changeid="xavier">
@@ -31864,6 +32096,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>To get more information on user (name, mail, etc.), you have to read &lt;a0&gt;HTTP headers&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T140558Z" changeid="xavier">
+        <seg>Pour obtenir plus d'information sur l'utilisateur (nom, adresse de courriel, etc...), il faut lire les &lt;a0&gt;en-têtes HTTP&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>To have a stronger integration, we will configure LiemSurvey to autocreate unknown users and use &lt;a0&gt;HTTP&lt;/a0&gt; headers to fill name, mail and roles.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T101723Z" changeid="xavier">
@@ -32780,6 +33020,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T054116Z" changeid="guimard">
         <seg>Utiliser le système de notification</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Using this feature, you don't have to use virtual host protection: protection is embedded in Lemonldap::NG::Handler::&lt;a0&gt;CGI&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T140930Z" changeid="xavier">
+        <seg>En utilisant cette fonctionnalité, il n'est pas nécessaire d'utiliser la protection de l'hôte virtuel : la protection est embarquée dans Lemonldap::NG::Handler::CGI.</seg>
       </tuv>
     </tu>
     <tu>
@@ -33872,6 +34120,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can test any &lt;a0&gt;URL&lt;/a0&gt; to see if it's protected using testUri().</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T141553Z" changeid="xavier">
+        <seg>On peut tester toute &lt;a0&gt;URL&lt;/a0&gt; pour voir si elle est protégée en utilisant testUri().</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You can then add the Manager as &lt;a0&gt;an application in the menu&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T203728Z" changeid="guimard">
@@ -34444,6 +34700,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Votre EntityID, souvent utilisé comme &lt;a0&gt;URL&lt;/a0&gt; des métadatas, par défaut #PORTAL#/saml/metadata.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Your application can know the connected user using:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T140427Z" changeid="xavier">
+        <seg>Une application peut connaître l'utilisateur connecté en utilisant :</seg>
       </tuv>
     </tu>
     <tu>
@@ -35192,10 +35456,26 @@ apachectl restart</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>authenticate: check if user is authenticated; if not, redirect it to the portal</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T141033Z" changeid="xavier">
+        <seg>authenticate : vérifie que l'utilisateur est authentifié ; sinon, il est redirigé vers le portail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>authentication</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>authentification</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>authorize: check if user is authorizated to access to this &lt;a0&gt;URL&lt;/a0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T141102Z" changeid="xavier">
+        <seg>authorize : vérifie si l'utilisateur est autorisé à accèder à cette &lt;a0&gt;URL&lt;/a0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -37116,6 +37396,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.2:selfmadeapplication ↵</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T140609Z" changeid="xavier">
+        <seg>documentation:1.2:selfmadeapplication ↵</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.2:soapconfbackend</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T163155Z" changeid="xavier">
@@ -38768,6 +39056,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>http://search.cpan.org/perldoc?Apache::Session::Redis</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://search.cpan.org/perldoc?CGI</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T140600Z" changeid="xavier">
+        <seg>http://search.cpan.org/perldoc?CGI</seg>
       </tuv>
     </tu>
     <tu>
