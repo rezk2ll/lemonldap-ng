@@ -1468,6 +1468,30 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.0/fileconfbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T170412Z" changeid="xavier">
+        <seg>../../documentation/1.0/fileconfbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.0/ldapconfbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T170415Z" changeid="xavier">
+        <seg>../../documentation/1.0/ldapconfbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.0/sqlconfbackend.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T170413Z" changeid="xavier">
+        <seg>../../documentation/1.0/sqlconfbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.2/applications.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T192353Z" changeid="xavier">
@@ -9992,6 +10016,16 @@ PerlOptions +GlobalRequest</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;# SOAP functions for configuration access (disabled by default)&lt;/s0&gt;
+&lt;&lt;s1&gt;Location&lt;/s1&gt; /index.pl/config&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T170633Z" changeid="xavier">
+        <seg>&lt;s0&gt;# SOAP functions for configuration access (disabled by default)&lt;/s0&gt;
+&lt;&lt;s1&gt;Location&lt;/s1&gt; /index.pl/config&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;# SOAP functions for notification insertion (disabled by default)&lt;/s0&gt;
 &lt;&lt;s1&gt;Location&lt;/s1&gt; /index.pl/notification&gt;</seg>
       </tuv>
@@ -12986,6 +13020,20 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;User&lt;/s0&gt;         &lt;s1&gt;=&lt;/s1&gt;&lt;s2&gt; lemonldap&lt;/s2&gt;
+&lt;s3&gt;Password&lt;/s3&gt;     &lt;s4&gt;=&lt;/s4&gt;&lt;s5&gt; mypassword&lt;/s5&gt;
+# LWP::UserAgent parameters
+&lt;s6&gt;proxyOptions&lt;/s6&gt; &lt;s7&gt;=&lt;/s7&gt;&lt;s8&gt; &lt;s9&gt;{&lt;/s9&gt; timeout &lt;s10&gt;=&lt;/s10&gt;&gt; &lt;s11&gt;5&lt;/s11&gt; &lt;s12&gt;}&lt;/s12&gt;&lt;/s8&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T170734Z" changeid="xavier">
+        <seg>&lt;s0&gt;User&lt;/s0&gt;         &lt;s1&gt;=&lt;/s1&gt;&lt;s2&gt; lemonldap&lt;/s2&gt;
+&lt;s3&gt;Password&lt;/s3&gt;     &lt;s4&gt;=&lt;/s4&gt;&lt;s5&gt; mypassword&lt;/s5&gt;
+# Paramètres LWP::UserAgent
+&lt;s6&gt;proxyOptions&lt;/s6&gt; &lt;s7&gt;=&lt;/s7&gt;&lt;s8&gt; &lt;s9&gt;{&lt;/s9&gt; timeout &lt;s10&gt;=&lt;/s10&gt;&gt; &lt;s11&gt;5&lt;/s11&gt; &lt;s12&gt;}&lt;/s12&gt;&lt;/s8&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;User&lt;/s0&gt;: Connection user</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T200738Z" changeid="xavier">
@@ -13596,6 +13644,16 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T181549Z" changeid="xavier">
         <seg>&lt;s0&gt;time_correction&lt;/s0&gt; (optionnel) : heures à ajouter ou soustraire</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;type&lt;/s0&gt;         &lt;s1&gt;=&lt;/s1&gt;&lt;s2&gt; SOAP&lt;/s2&gt;
+&lt;s3&gt;proxy&lt;/s3&gt;        &lt;s4&gt;=&lt;/s4&gt;&lt;s5&gt; https://auth.example.com/index.pl/config&lt;/s5&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T170704Z" changeid="xavier">
+        <seg>&lt;s0&gt;type&lt;/s0&gt;         &lt;s1&gt;=&lt;/s1&gt;&lt;s2&gt; SOAP&lt;/s2&gt;
+&lt;s3&gt;proxy&lt;/s3&gt;        &lt;s4&gt;=&lt;/s4&gt;&lt;s5&gt; https://auth.example.com/index.pl/config&lt;/s5&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -18608,10 +18666,26 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Change configuration in lemonldap-ng.ini :</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T170703Z" changeid="xavier">
+        <seg>Changer la configuration dans lemonldap-ng.ini :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Change default DNS domain</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T093805Z" changeid="xavier">
         <seg>Changer le domaine DNS par défaut</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Change it:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T170632Z" changeid="xavier">
+        <seg>Le Changer :</seg>
       </tuv>
     </tu>
     <tu>
@@ -18716,6 +18790,22 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T141208Z" changeid="guimard">
         <seg>Choisir un dépôt qui héberge les dépendances &lt;a0&gt;Perl&lt;/a0&gt;, par exemple :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Choose and configure your main configuration storage system</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T171045Z" changeid="xavier">
+        <seg>Choisir et configurer le système principal de stockage de la configuration</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Choose and configure your main sessions storage system</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T171216Z" changeid="xavier">
+        <seg>Choisir et configurer le système principal de stockage des sessions</seg>
       </tuv>
     </tu>
     <tu>
@@ -19024,6 +19114,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Configure Apache to allow remote access: in &lt;c0&gt;portal-apache2.conf&lt;/c0&gt;, remote &lt;a1&gt;SOAP&lt;/a1&gt; access is disabled by default.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T170608Z" changeid="xavier">
+        <seg>Configurer Apache pour autoriser l'accès distant : dans &lt;c0&gt;portal-apache2.conf&lt;/c0&gt;, l'accès distant à &lt;a1&gt;SOAP&lt;/a1&gt; est désactivé par défaut.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Configure Bugzilla virtual host like other &lt;a0&gt;protected virtual host&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T114006Z" changeid="xavier">
@@ -19060,6 +19158,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T051325Z" changeid="guimard">
         <seg>Configurer LemonLDAP::NG pour utiliser MySQL comme base de données principale</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Configure LemonLDAP::NG to use SOAP proxy mechanism</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T170807Z" changeid="xavier">
+        <seg>Configurer LemonLDAP::NG pour utiliser le mécanisme mandataire SOAP</seg>
       </tuv>
     </tu>
     <tu>
@@ -21048,10 +21154,34 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>First, configure your real backend</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T170411Z" changeid="xavier">
+        <seg>Premièrement, configurer le backend réel</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Follow &lt;a0&gt;LDAP session backend&lt;/a0&gt; doc</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T113805Z" changeid="xavier">
         <seg>Suivre la documentation &lt;a0&gt;backend de sessions LDAP&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Follow &lt;a0&gt;SOAP configuration backend&lt;/a0&gt; page</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T171119Z" changeid="xavier">
+        <seg>Suivre la documentation &lt;a0&gt;backend de configuration SOAP&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Follow &lt;a0&gt;SOAP sessions backend&lt;/a0&gt; page</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T171234Z" changeid="xavier">
+        <seg>Suivre la documentation &lt;a0&gt;backend de sessions SOAP&lt;/a0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -23776,6 +23906,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>It can be configured to use &lt;a1&gt;SOAP&lt;/a1&gt; instead of direct access to those databases (for remote servers).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T170844Z" changeid="xavier">
+        <seg>Il peut être configuré pour utiliser &lt;a1&gt;SOAP&lt;/a1&gt; au lieu d'un accès direct à ces bases de données (pour les serveurs distants).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>It can be done via direct access to the session database or using &lt;a0&gt;SOAP&lt;/a0&gt; access.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T050456Z" changeid="xavier">
@@ -25854,6 +25992,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Next, configure SOAP for your remote servers</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T170653Z" changeid="xavier">
+        <seg>Ensuite, configurer SOAP pour les serveurs distants</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Next, you have to configure the &lt;a0&gt;SOAP&lt;/a0&gt; access as described &lt;a1&gt;here&lt;/a1&gt; since &lt;a2&gt;SOAP&lt;/a2&gt; access is denied by default.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T085721Z" changeid="xavier">
@@ -25906,6 +26052,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T083526Z" changeid="xavier">
         <seg>Noter que le protocole &lt;a0&gt;SAML&lt;/a0&gt; est plus securisé que OpenID, ainsi si les partenaires sont connus, preférer &lt;a1&gt;SAML&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Note that &lt;a0&gt;SOAP&lt;/a0&gt; is not a real configuration backend, but just a proxy system to access to your configuration over the network</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T170354Z" changeid="xavier">
+        <seg>NB : &lt;a0&gt;SOAP&lt;/a0&gt; n'est pas réellement un backend de configuration, mais simplement un système mandataire pour accéder à la configuration au travers du réseau</seg>
       </tuv>
     </tu>
     <tu>
@@ -26314,6 +26468,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T154440Z" changeid="xavier">
         <seg>Sur Debian/Ubuntu :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>On your main server, configure a &lt;a0&gt;File&lt;/a0&gt;, &lt;a1&gt;SQL&lt;/a1&gt; or &lt;a2&gt;LDAP&lt;/a2&gt; backend</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T170436Z" changeid="xavier">
+        <seg>Sur le serveur principal, configurer un backend &lt;a0&gt;File&lt;/a0&gt;, &lt;a1&gt;SQL&lt;/a1&gt; or &lt;a2&gt;LDAP&lt;/a2&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -27988,6 +28150,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Restart all your remote Apache servers</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T171135Z" changeid="xavier">
+        <seg>Redémarrer tous les serveurs Apache distants</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Restart fail2ban</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T140226Z" changeid="xavier">
@@ -28280,6 +28450,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T070253Z" changeid="guimard">
         <seg>SOAP</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>SOAP configuration backend</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T170231Z" changeid="xavier">
+        <seg>Backend de configuration SOAP</seg>
       </tuv>
     </tu>
     <tu>
@@ -29040,6 +29218,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="FR-FR">
         <seg>Indiquer les points d'entrées &lt;a0&gt;SAML&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Set &lt;a0&gt;SOAP&lt;/a0&gt; parameter to true in the configuration using the manager: the portal will become a &lt;a1&gt;SOAP&lt;/a1&gt; server</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T170522Z" changeid="xavier">
+        <seg>Mettre le paramètre &lt;a0&gt;SOAP&lt;/a0&gt; à &quot;activé&quot; dans la configuration en utilisant le manager : le portail devient un serveur &lt;a1&gt;SOAP&lt;/a1&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -31696,6 +31882,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>This mechanism can be used to secure access for remote servers that cross an unsecured network to access to &lt;a0&gt;LL::NG&lt;/a0&gt; databases.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T170951Z" changeid="xavier">
+        <seg>Ce mécanisme peut être utilisé pour sécuriser l'accès des serveurs distants qui traversent des réseaux non sécurisés pour accéder aux bases de données de &lt;a0&gt;LL::NG&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>This mechanism can only work with authentication backends using a login/password form (&lt;a0&gt;LDAP&lt;/a0&gt;, &lt;a1&gt;DBI&lt;/a1&gt;, …)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T070921Z" changeid="guimard">
@@ -32764,6 +32958,22 @@ Is this ok [y/N]: y</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Use SOAP for Lemonldap::NG configuration</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T171007Z" changeid="xavier">
+        <seg>Utiliser SOAP pour la configuration Lemonldap::NG</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Use SOAP for Lemonldap::NG sessions</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T171154Z" changeid="xavier">
+        <seg>Utiliser SOAP pour les sessions Lemonldap::NG</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Use Safe Jail</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T064605Z" changeid="guimard">
@@ -33824,6 +34034,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can also add some other parameters</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T170721Z" changeid="xavier">
+        <seg>On peut également ajouter quelques autres paramètres</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You can also change the host and port with options LDAPHOST and LDAPPORT.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -34276,6 +34494,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T195406Z" changeid="xavier">
         <seg>On peut les renseigner par la même voie :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can share your configuration over the network using &lt;a0&gt;SOAP&lt;/a0&gt; proxy system.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T170302Z" changeid="xavier">
+        <seg>On peut partager la configuration à travers le réseau en utilisant le système mandataire &lt;a0&gt;SOAP&lt;/a0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
