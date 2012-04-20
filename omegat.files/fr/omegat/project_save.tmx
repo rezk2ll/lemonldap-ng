@@ -2148,6 +2148,22 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.2/start.html#sessions_database</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T162444Z" changeid="xavier">
+        <seg>../../documentation/1.2/start.html#sessions_database</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/start.html#sessions_databases</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T161734Z" changeid="xavier">
+        <seg>../../documentation/1.2/start.html#sessions_databases</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.2/status.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T051038Z" changeid="guimard">
@@ -7778,6 +7794,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; rely on a session mechanism with the session ID as a shared secret between the user (in &lt;a1&gt;SSO cookie&lt;/a1&gt;) and the &lt;a2&gt;session database&lt;/a2&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T161838Z" changeid="xavier">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; utilise un mécanisme de session basé sur un identifiant de session secret partagé entre l'utilisateur (dans un &lt;a1&gt;cookie SSO&lt;/a1&gt;) et la &lt;a2&gt;base des sessions&lt;/a2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; try to find the user in users database with the given information</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T145620Z" changeid="guimard">
@@ -11310,6 +11334,22 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Display deleted sessions&lt;/s0&gt;: display deleted sessions on authentication phase.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T162946Z" changeid="xavier">
+        <seg>&lt;s0&gt;Afficher les sessions effacées&lt;/s0&gt; : affiche les sessions effacées lors de la phase d'authentification.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Display other sessions &lt;/s0&gt;: display other sessions on authentication phase, with a link to delete them.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T163031Z" changeid="xavier">
+        <seg>&lt;s0&gt;Afficher les autres sessions&lt;/s0&gt; : affiche les autres sessions ouvertes lors de la phase d'authentification avec un lien pour les effacer.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Display&lt;/s0&gt;:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T135202Z" changeid="guimard">
@@ -11972,6 +12012,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Multiple sessions&lt;/s0&gt;, you can restrict the number of open sessions:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T162549Z" changeid="xavier">
+        <seg>&lt;s0&gt;Sessions multiples&lt;/s0&gt;, on peut retreindre le nombre de sessions ouvertes :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Name&lt;/s0&gt;: &lt;a1&gt;SAML&lt;/a1&gt; attribute name.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T055859Z" changeid="xavier">
@@ -12054,6 +12102,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;One &lt;a1&gt;IP&lt;/a1&gt; only by user&lt;/s0&gt;: a user can not open 2 sessions with the same &lt;a2&gt;IP&lt;/a2&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T162828Z" changeid="xavier">
+        <seg>&lt;s0&gt;Une &lt;a1&gt;IP&lt;/a1&gt; par utilisateur&lt;/s0&gt; : un utilisateur ne peut ouvrir 2 sessions la même adresse &lt;a2&gt;IP&lt;/a2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;One Time Use&lt;/s0&gt;: set the OneTimeUse flag in authentication response.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T092702Z" changeid="xavier">
@@ -12062,10 +12118,34 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;One session only by user&lt;/s0&gt;: a user can not open 2 sessions with the same account.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T162621Z" changeid="xavier">
+        <seg>&lt;s0&gt;Une session seulement par utilisateur&lt;/s0&gt; : on ne peut ouvrir 2 sessions avec le même compte.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;One user by &lt;a1&gt;IP&lt;/a1&gt; address&lt;/s0&gt;: 2 users can not open a session with the same &lt;a2&gt;IP&lt;/a2&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T162912Z" changeid="xavier">
+        <seg>&lt;s0&gt;Un utilisateur par adresse &lt;a1&gt;IP&lt;/a1&gt;&lt;/s0&gt; : 2 utilisateurs ne peuvent ouvrir de sessions avec la même adresse &lt;a2&gt;IP&lt;/a2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;OpenID login&lt;/s0&gt;: the session key used to match OpenID login.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T082734Z" changeid="xavier">
         <seg>&lt;s0&gt;Identificant OpenID&lt;/s0&gt; : la clef de session utilisée pour correspondre au login OpenID.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Opening conditions&lt;/s0&gt;: rules which are evaluated before granting session.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T162303Z" changeid="xavier">
+        <seg>&lt;s0&gt;Conditions d'ouverture&lt;/s0&gt; : règles à évaluer avant d'autoriser l'ouverture de session.</seg>
       </tuv>
     </tu>
     <tu>
@@ -12600,6 +12680,22 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Sessions Storage&lt;/s0&gt;: see &lt;a1&gt;sessions database configuration&lt;/a1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T162517Z" changeid="xavier">
+        <seg>&lt;s0&gt;Stockage des sessions&lt;/s0&gt; : voir la &lt;a1&gt;configuration de la base de données des sessions&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Sessions activity timeout&lt;/s0&gt;: Maximum inactivity duration.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T162147Z" changeid="xavier">
+        <seg>&lt;s0&gt;Délai d'expiration des sessions&lt;/s0&gt; : durée maximale d'inactivité.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Sessions module options&lt;/s0&gt;:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T200120Z" changeid="xavier">
@@ -12612,6 +12708,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T200104Z" changeid="xavier">
         <seg>&lt;s0&gt;Module de sessions&lt;/s0&gt; : mettre &lt;c1&gt;Lemonldap::NG::Common::Apache::Session::&lt;a2&gt;SOAP&lt;/a2&gt;&lt;/c1&gt; pour le &lt;a3&gt;backend de session SOAP&lt;/a3&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Sessions timeout&lt;/s0&gt;: Maximum lifetime of a session.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T162048Z" changeid="xavier">
+        <seg>&lt;s0&gt;Durée de vie maximale des sessions&lt;/s0&gt; : durée de vie maximale des sessions.</seg>
       </tuv>
     </tu>
     <tu>
@@ -12710,6 +12814,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;s0&gt;Requête d'authentification signée&lt;/s0&gt; : mettre à « activé » pour toujours signer les requêtes d'authentifications.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Store user password in session data&lt;/s0&gt;: see &lt;a1&gt;password store documentation&lt;/a1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T161948Z" changeid="xavier">
+        <seg>&lt;s0&gt;Stocker le mot-de-passe de l'utilisateur dans les données de session&lt;/s0&gt; : voir la &lt;a1&gt;documentation sur le stockage du mot-de-passe&lt;/a1&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -22408,6 +22520,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If a user does not comply with any condition, he is prompted a customized message.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T162346Z" changeid="xavier">
+        <seg>Si un utilisateur ne remplit pas une condition, il est averti par un message personnalisé.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If a user is not authenticated and attempts to connect to an area protected by a LemonLDAP::NG compatible Handler, he is redirected to a portal.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -25814,6 +25934,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Note that since &lt;a0&gt;HTTP&lt;/a0&gt; protocol is not connected, restrictions are not applied to the new session: the oldest are destroyed.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T163139Z" changeid="xavier">
+        <seg>NB : comme le protocole &lt;a0&gt;HTTP&lt;/a0&gt; n'est pas connecté, les restrictions ne sont pas appliquées à la nouvelle session : les anciennes sont détruites.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Note that this feature is interesting only for the Lemonldap::NG systems protecting a high number of applications</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -26146,6 +26274,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Statistiques Ohloh</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Old sessions are deleted by a cron script.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T162111Z" changeid="xavier">
+        <seg>Les anciennes sessions sont effacées par un script cron.</seg>
       </tuv>
     </tu>
     <tu>
@@ -28764,6 +28900,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Session activity timeout requires Handlers to have a write access to sessions database.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T162229Z" changeid="xavier">
+        <seg>Le délai d'expiration des sessions nécessite que les agents aient un accès en écriture à la base des sessions.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Session backend</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -29772,6 +29916,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>That message can contain session data as user attributes or macros.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T162422Z" changeid="xavier">
+        <seg>Ce message peut contenir des données de session tels les attributs ou les macros.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The
 #          host must be matched by a group named &quot;host&quot;.</seg>
       </tuv>
@@ -30042,6 +30194,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Le domaine commun est utilisé par le &lt;a0&gt;SP SAML&lt;/a0&gt; pour trouver le fournisseur d'identité de l'utilisateur et par l'&lt;a1&gt;IdP SAML&lt;/a1&gt; pour s'enregistrer dans la liste des IDP.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The conditions are checked in alphabetical order of comments.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T162443Z" changeid="xavier">
+        <seg>Les conditions sont examinées dans l'ordre alphabétique des commentaires.</seg>
       </tuv>
     </tu>
     <tu>
@@ -31988,6 +32148,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv lang="FR-FR" changedate="20120214T050344Z" changeid="xavier">
         <seg>Pour configurer les attributs à récupérer, aller dans &lt;c0&gt;Variables&lt;/c0&gt; &gt; &lt;c1&gt;Variables exportées&lt;/c1&gt; et definir les attributs:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>To configure sessions, go in Manager, &lt;c0&gt;General Parameters&lt;/c0&gt; » &lt;c1&gt;Sessions&lt;/c1&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T161904Z" changeid="xavier">
+        <seg>Pour configurer les sessions, aller dans le manager, &lt;c0&gt;Paramètres généraux&lt;/c0&gt; » &lt;c1&gt;Sessions&lt;/c1&gt; :</seg>
       </tuv>
     </tu>
     <tu>
