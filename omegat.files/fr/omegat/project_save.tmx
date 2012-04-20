@@ -38,6 +38,34 @@
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg># Fail2Ban configuration file
+#
+# Author: Adrien Beudin
+#
+# $Revision: 2 $
+#
+
+[Definition]
+
+# Option:  failregex
+# Notes.:  regex to match the password failure messages in the logfile.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T140140Z" changeid="xavier">
+        <seg># Fail2Ban configuration file
+#
+# Author: Adrien Beudin
+#
+# $Revision: 2 $
+#
+
+[Definition]
+
+# Option:  failregex
+# Notes.:  regex to match the password failure messages in the logfile.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg># LemonLDAP::NG repository
 deb     http://lemonldap-ng.org/deb squeeze main
 deb-src http://lemonldap-ng.org/deb squeeze main</seg>
@@ -46,6 +74,18 @@ deb-src http://lemonldap-ng.org/deb squeeze main</seg>
         <seg># LemonLDAP::NG repository
 deb     http://lemonldap-ng.org/deb squeeze main
 deb-src http://lemonldap-ng.org/deb squeeze main</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg># Values:  TEXT
+#
+ignoreregex =</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T140219Z" changeid="xavier">
+        <seg># Values:  TEXT
+#
+ignoreregex =</seg>
       </tuv>
     </tu>
     <tu>
@@ -418,10 +458,26 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>$groups =~ /\badmin\b/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T100352Z" changeid="xavier">
+        <seg>$groups =~ /\badmin\b/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>$mailR</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T172105Z" changeid="xavier">
         <seg>$mailR</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>$uid eq “root”</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T095718Z" changeid="xavier">
+        <seg>$uid eq “root”</seg>
       </tuv>
     </tu>
     <tu>
@@ -512,6 +568,14 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>...</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T094951Z" changeid="xavier">
+        <seg>...</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>...
 &lt;s3&gt;&lt;s4&gt;&lt;/AttributeAuthorityDescriptor&lt;s5&gt;&gt;&lt;/s5&gt;&lt;/s4&gt;&lt;/s3&gt;</seg>
       </tuv>
@@ -584,6 +648,14 @@ WithPeak[test.example.com]: wmy</seg>
         <seg>...
  
 &lt;/&lt;s4&gt;VirtualHost&lt;/s4&gt;&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>... other SSL parameters ...</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T134552Z" changeid="xavier">
+        <seg>... autres paramètres SSL ...</seg>
       </tuv>
     </tu>
     <tu>
@@ -1276,6 +1348,14 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../../media/documentation/manager_access_rule.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T095642Z" changeid="xavier">
+        <seg>../../../media/documentation/manager_access_rule.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../../media/documentation/remote-interoperability.png</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120217T045232Z" changeid="xavier">
@@ -1960,6 +2040,14 @@ WithPeak[test.example.com]: wmy</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T125403Z" changeid="xavier">
         <seg>../../documentation/1.2/soapconfbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/soapconfbackend.html#next_configure_soap_for_your_remote_servers</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T085630Z" changeid="xavier">
+        <seg>../../documentation/1.2/soapconfbackend.html#next_configure_soap_for_your_remote_servers</seg>
       </tuv>
     </tu>
     <tu>
@@ -5260,6 +5348,14 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/documentation/manager_access_rule.png?id=documentation%3A1.2%3Asecurity</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T095638Z" changeid="xavier">
+        <seg>/_detail/documentation/manager_access_rule.png?id=documentation%3A1.2%3Asecurity</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>/_detail/documentation/remote-interoperability.png?id=documentation%3A1.0%3Aauthremote</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120217T045229Z" changeid="xavier">
@@ -5756,6 +5852,22 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/index.php?Access=admin</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T134128Z" changeid="xavier">
+        <seg>/index.php?Access=admin</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/index.php?access=admin&amp;access=other</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T134127Z" changeid="xavier">
+        <seg>/index.php?access=admin&amp;access=other</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>/usr/share/lemonldap-ng/bin/lmConfigEditor</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120410T042120Z" changeid="xavier">
@@ -5860,6 +5972,14 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>0_bad</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T134157Z" changeid="xavier">
+        <seg>0_bad</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>1</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T195415Z" changeid="xavier">
@@ -5916,6 +6036,14 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>1_admin</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T095851Z" changeid="xavier">
+        <seg>1_admin</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>1f777a6581e478499f4284e54fe2d4a4e513dfff</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T195415Z" changeid="xavier">
@@ -5944,6 +6072,14 @@ WithPeak[test.example.com]: wmy</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T182720Z" changeid="xavier">
         <seg>20090301000000Z</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>2_pub</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T095853Z" changeid="xavier">
+        <seg>2_pub</seg>
       </tuv>
     </tu>
     <tu>
@@ -6040,6 +6176,16 @@ WithPeak[test.example.com]: wmy</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T063926Z" changeid="xavier">
         <seg>&lt;/&lt;s19&gt;IfModule&lt;/s19&gt;&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;/&lt;s19&gt;Location&lt;/s19&gt;&gt;
+&lt;/&lt;s20&gt;VirtualHost&lt;/s20&gt;&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T095003Z" changeid="xavier">
+        <seg>&lt;/&lt;s19&gt;Location&lt;/s19&gt;&gt;
+&lt;/&lt;s20&gt;VirtualHost&lt;/s20&gt;&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -6168,6 +6314,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
         <seg>&lt;&lt;s0&gt;Location&lt;/s0&gt; /var/www/html/index.php&gt;
 PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
 &lt;/&lt;s1&gt;Location&lt;/s1&gt;&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;&lt;s0&gt;VirtualHost&lt;/s0&gt; *:443&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T094947Z" changeid="xavier">
+        <seg>&lt;&lt;s0&gt;VirtualHost&lt;/s0&gt; *:443&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -6304,6 +6458,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T155334Z" changeid="xavier">
         <seg>&lt;&lt;s3&gt;Directory&lt;/s3&gt; /var/lib/lemonldap-ng/portal/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;&lt;s5&gt;Location&lt;/s5&gt; /&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T094955Z" changeid="xavier">
+        <seg>&lt;&lt;s5&gt;Location&lt;/s5&gt; /&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -7424,6 +7586,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can protect any Apache hosted application including Apache reverse-proxy mechanism.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T134534Z" changeid="xavier">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; peut protéger toute application hébergée par Apache y compris le mécanisme de proxy inverse d'Apache.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; can use SAML2 to get user identity and grab some attributes defined in user profile on its Identity Provider (IDP).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120218T220110Z" changeid="xavier">
@@ -7768,6 +7938,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rules&lt;/a0&gt; are applied in alphabetical order (comment and regular expression).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T095523Z" changeid="xavier">
+        <seg>Les &lt;a0&gt;règles&lt;/a0&gt; sont appliquées dans l'ordre alphabétique (commentaires et expressions régulières).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;SAML&lt;/a0&gt; 2.0 / Shibboleth</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -7900,6 +8078,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T064213Z" changeid="guimard">
         <seg>Niveau d'authentification &lt;a0&gt;SSL&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;SSL&lt;/a0&gt; client certificate for the reverse-proxy (see SSLProxy* parameters in &lt;a1&gt;mod_ssl documentation&lt;/a1&gt;)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T135327Z" changeid="xavier">
+        <seg>un certificat client &lt;a0&gt;SSL&lt;/a0&gt; pour le proxy inverse (voir les paramètres SSLProxy* de la &lt;a1&gt;documentation de mod_ssl&lt;/a1&gt;)</seg>
       </tuv>
     </tu>
     <tu>
@@ -9234,6 +9420,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a3&gt;XSS&lt;/a3&gt; checks will still be done with warning in logs, but this will not prevent the process to continue.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T140057Z" changeid="xavier">
+        <seg>Le contrôle &lt;a3&gt;XSS&lt;/a3&gt; continuera à être effectué mais avec seulement des avertissements dans les journaux sans empêcher le processus de continuer.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a4&gt;authapache&lt;/a4&gt;&lt;br5/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111440Z" changeid="xavier">
@@ -9842,6 +10036,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T203202Z" changeid="guimard">
         <seg>&lt;s0&gt;$uid&lt;/s0&gt; &lt;s1&gt;eq&lt;/s1&gt; &lt;s2&gt;&quot;dwho&quot;&lt;/s2&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;(?i)&lt;/s0&gt; means case no sensitive.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T134215Z" changeid="xavier">
+        <seg>&lt;s0&gt;(?i)&lt;/s0&gt; signifie insensible à la casse.</seg>
       </tuv>
     </tu>
     <tu>
@@ -10842,6 +11044,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Check &lt;a1&gt;XSS&lt;/a1&gt; Attacks&lt;/s0&gt;: Set to 'Off' to disable &lt;a2&gt;XSS&lt;/a2&gt; checks.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T135937Z" changeid="xavier">
+        <seg>&lt;s0&gt;Contrôler les attaques &lt;a1&gt;XSS&lt;/a1&gt;&lt;/s0&gt; : mettre à 'désactivé' pour désactiver la détection des attaques &lt;a2&gt;XSS&lt;/a2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Check SLO message signature&lt;/s0&gt;: check SLO message signature</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T063313Z" changeid="xavier">
@@ -11090,6 +11300,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Encryption key&lt;/s0&gt;: key used to crypt some data, should not be known by other applications</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T135601Z" changeid="xavier">
+        <seg>&lt;s0&gt;Clef de chiffrement&lt;/s0&gt; : clef utilisée pour chiffrer certaines données, ne doit être connue d'aucune autre application</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Encryption mode&lt;/s0&gt;: set the encryption mode for this IDP (None, NameID or Assertion).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T063639Z" changeid="xavier">
@@ -11172,6 +11390,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T060603Z" changeid="xavier">
         <seg>&lt;s0&gt;Authentification forcée&lt;/s0&gt; : positionne le drapeau ForceAuthn dans la requête d'authentification</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Force authentication&lt;/s0&gt;: set to 'On' to force authentication when user connects to portal, even if he has a valid session</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T135524Z" changeid="xavier">
+        <seg>&lt;s0&gt;Forcer l'authentification&lt;/s0&gt; : mettre à 'Activé' pour forcer l'authentification lorsque l'utilisateur accède au portail même s'il dispose d'une session valide</seg>
       </tuv>
     </tu>
     <tu>
@@ -12486,6 +12712,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Trusted domains&lt;/s0&gt;: domains on which the user can be redirected after login on portal.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T135648Z" changeid="xavier">
+        <seg>&lt;s0&gt;Domaines approuvés&lt;/s0&gt; : domaines vers lesquels l'utilisateur peut être redirigé après authentification sur le portail.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;UTF8 metadata conversion&lt;/s0&gt;: set to On to force partner's metadata conversion.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -12498,6 +12732,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;s0&gt;Undefined&lt;/s0&gt;: le format de NameID par défaut est utilisé</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Use Safe jail&lt;/s0&gt;: set to 'Off' to disable Safe jail.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T135738Z" changeid="xavier">
+        <seg>&lt;s0&gt;Utiliser la cage sécurisée&lt;/s0&gt; : mettre à 'Désctivé' pour désactiver la cage sécurisée (Safe).</seg>
       </tuv>
     </tu>
     <tu>
@@ -12570,6 +12812,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;s0&gt;Utilisateurs&lt;/s0&gt;: où trouver les données utilisateurs</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Username control&lt;/s0&gt;: Regular expression used to check user login syntax.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T135434Z" changeid="xavier">
+        <seg>&lt;s0&gt;Contrôle du nom d'utilisateur&lt;/s0&gt; : expression régulière utilisée pour vérifier la syntaxe du nom d'utilisateur.</seg>
       </tuv>
     </tu>
     <tu>
@@ -13236,6 +13486,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s10&gt;Require&lt;/s10&gt; &lt;s11&gt;user&lt;/s11&gt; rbowen</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T094958Z" changeid="xavier">
+        <seg>&lt;s10&gt;Require&lt;/s10&gt; &lt;s11&gt;user&lt;/s11&gt; rbowen</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s113&gt;//&quot;userobm_address2&quot;            =&gt; ,&lt;/s113&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112315Z" changeid="xavier">
@@ -13390,6 +13648,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
         <seg>&lt;s12&gt;CustomLog&lt;/s12&gt; /var/log/httpd/drupal-access.log combined
 &lt;/&lt;s13&gt;VirtualHost&lt;/s13&gt;&gt;
 &lt;&lt;s14&gt;VirtualHost&lt;/s14&gt; *:80&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s12&gt;Order&lt;/s12&gt; &lt;s13&gt;allow&lt;/s13&gt;,&lt;s14&gt;deny&lt;/s14&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T094959Z" changeid="xavier">
+        <seg>&lt;s12&gt;Order&lt;/s12&gt; &lt;s13&gt;allow&lt;/s13&gt;,&lt;s14&gt;deny&lt;/s14&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -13706,6 +13972,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s15&gt;Deny&lt;/s15&gt; from &lt;s16&gt;all&lt;/s16&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T094959Z" changeid="xavier">
+        <seg>&lt;s15&gt;Deny&lt;/s15&gt; from &lt;s16&gt;all&lt;/s16&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s15&gt;RewriteEngine&lt;/s15&gt; &lt;s16&gt;On&lt;/s16&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T064416Z" changeid="xavier">
@@ -13918,6 +14192,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s17&gt;Allow&lt;/s17&gt; from 192.168.142.0/24</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T095000Z" changeid="xavier">
+        <seg>&lt;s17&gt;Allow&lt;/s17&gt; from 192.168.142.0/24</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s17&gt;KEY&lt;/s17&gt; uid &lt;s18&gt;(&lt;/s18&gt;uid&lt;s19&gt;)&lt;/s19&gt;&lt;s20&gt;,&lt;/s20&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T072040Z" changeid="xavier">
@@ -13954,6 +14236,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T182221Z" changeid="xavier">
         <seg>&lt;s18&gt;DocumentRoot&lt;/s18&gt; /var/www/html/drupal/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s18&gt;Options&lt;/s18&gt; +ExecCGI</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T095001Z" changeid="xavier">
+        <seg>&lt;s18&gt;Options&lt;/s18&gt; +ExecCGI</seg>
       </tuv>
     </tu>
     <tu>
@@ -14038,6 +14328,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s1&gt;SSLEngine&lt;/s1&gt; &lt;s2&gt;On&lt;/s2&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T134539Z" changeid="xavier">
+        <seg>&lt;s1&gt;SSLEngine&lt;/s1&gt; &lt;s2&gt;On&lt;/s2&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s1&gt;ServerName&lt;/s1&gt; application.example.com
  </seg>
       </tuv>
@@ -14114,6 +14412,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       <tuv lang="FR-FR" changedate="20120225T072557Z" changeid="xavier">
         <seg>&lt;s1&gt;ServerName&lt;/s1&gt; localsite.example.com
  </seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s1&gt;ServerName&lt;/s1&gt; manager.example.com</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T094949Z" changeid="xavier">
+        <seg>&lt;s1&gt;ServerName&lt;/s1&gt; manager.example.com</seg>
       </tuv>
     </tu>
     <tu>
@@ -14460,6 +14766,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s2&gt;# SSL parameters&lt;/s2&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T094949Z" changeid="xavier">
+        <seg>&lt;s2&gt;# SSL parameters&lt;/s2&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s2&gt;# SSO protection&lt;/s2&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112600Z" changeid="xavier">
@@ -14664,6 +14978,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s3&gt;# DocumentRoot&lt;/s3&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T094952Z" changeid="xavier">
+        <seg>&lt;s3&gt;# DocumentRoot&lt;/s3&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s3&gt;# Uncomment this line if you use Lemonldap::NG menu&lt;/s3&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -14776,6 +15098,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;s3&gt;RewriteRule&lt;/s3&gt; ^/saml/metadata /metadata.pl</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s3&gt;ServerName&lt;/s3&gt; appl1.example.com</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T134554Z" changeid="xavier">
+        <seg>&lt;s3&gt;ServerName&lt;/s3&gt; appl1.example.com</seg>
       </tuv>
     </tu>
     <tu>
@@ -14898,6 +15228,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s4&gt;DocumentRoot&lt;/s4&gt; /var/lib/lemonldap-ng/manager/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T094954Z" changeid="xavier">
+        <seg>&lt;s4&gt;DocumentRoot&lt;/s4&gt; /var/lib/lemonldap-ng/manager/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s4&gt;Order&lt;/s4&gt; &lt;s5&gt;allow&lt;/s5&gt;,&lt;s6&gt;deny&lt;/s6&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T155335Z" changeid="xavier">
@@ -14910,6 +15248,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T195232Z" changeid="xavier">
         <seg>&lt;s4&gt;ProxyPass&lt;/s4&gt; / http://APPLICATION_IP/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s4&gt;ProxyPass&lt;/s4&gt; / http://hiddenappl1.example.com/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T134555Z" changeid="xavier">
+        <seg>&lt;s4&gt;ProxyPass&lt;/s4&gt; / http://hiddenappl1.example.com/</seg>
       </tuv>
     </tu>
     <tu>
@@ -15112,6 +15458,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s5&gt;ProxyPassReverse&lt;/s5&gt; / http://hiddenappl1.example.com/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T134556Z" changeid="xavier">
+        <seg>&lt;s5&gt;ProxyPassReverse&lt;/s5&gt; / http://hiddenappl1.example.com/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s5&gt;ProxyPassReverse&lt;/s5&gt; / http://private-name/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T072713Z" changeid="xavier">
@@ -15224,6 +15578,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s6&gt;AuthType&lt;/s6&gt; Basic</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T094955Z" changeid="xavier">
+        <seg>&lt;s6&gt;AuthType&lt;/s6&gt; Basic</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s6&gt;Deny&lt;/s6&gt; from &lt;s7&gt;all&lt;/s7&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T071016Z" changeid="xavier">
@@ -15264,6 +15626,16 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T065306Z" changeid="xavier">
         <seg>&lt;s6&gt;Order&lt;/s6&gt; &lt;s7&gt;deny&lt;/s7&gt;,&lt;s8&gt;allow&lt;/s8&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s6&gt;ProxyPassReverseCookieDomain&lt;/s6&gt; / http://hiddenappl1.example.com/
+&lt;/&lt;s7&gt;VirtualHost&lt;/s7&gt;&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T134557Z" changeid="xavier">
+        <seg>&lt;s6&gt;ProxyPassReverseCookieDomain&lt;/s6&gt; / http://hiddenappl1.example.com/
+&lt;/&lt;s7&gt;VirtualHost&lt;/s7&gt;&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -15400,6 +15772,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T202550Z" changeid="guimard">
         <seg>&lt;s7&gt;AuthLDAPBindDN&lt;/s7&gt; &lt;s8&gt;&quot;ou=websso,ou=applications,dc=example,dc=com&quot;&lt;/s8&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s7&gt;AuthName&lt;/s7&gt; &lt;s8&gt;&quot;Lemonldap::NG manager&quot;&lt;/s8&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T094956Z" changeid="xavier">
+        <seg>&lt;s7&gt;AuthName&lt;/s7&gt; &lt;s8&gt;&quot;Lemonldap::NG manager&quot;&lt;/s8&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -15618,6 +15998,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T202550Z" changeid="guimard">
         <seg>&lt;s9&gt;AuthLDAPBindPassword&lt;/s9&gt; &lt;s10&gt;&quot;secret&quot;&lt;/s10&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s9&gt;AuthUserFile&lt;/s9&gt; /usr/local/apache/passwd/passwords</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T094958Z" changeid="xavier">
+        <seg>&lt;s9&gt;AuthUserFile&lt;/s9&gt; /usr/local/apache/passwd/passwords</seg>
       </tuv>
     </tu>
     <tu>
@@ -17380,6 +17768,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Be careful with URL parameters</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T100039Z" changeid="xavier">
+        <seg>Attention aux paramètres des URL</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Be sure that mod_rewrite is installed and that SAML2 rewrite rules are activated in &lt;a0&gt;Apache portal configuration&lt;/a0&gt;:</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -17416,6 +17812,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T101537Z" changeid="xavier">
         <seg>Avant la transmission, le nom et le mot de passe sont encodés en base-64.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Before, you have to create the virtual host &lt;c0&gt;manager.your.domain&lt;/c0&gt; in the manager and set a &lt;a1&gt;rules&lt;/a1&gt;, else access to the manager will be denied.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T095356Z" changeid="xavier">
+        <seg>Avant, il faut créer l'hôte virtuel &lt;c0&gt;manager.your.domain&lt;/c0&gt; dans le manager et mettre une &lt;a1&gt;règle&lt;/a1&gt;, sinon l'accès au manager sera interdit.</seg>
       </tuv>
     </tu>
     <tu>
@@ -17720,6 +18124,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Par défautBy, le module de session principal est utilisé pour stocker les données temporaires &lt;a0&gt;SAML&lt;/a0&gt; (tel les états de relais), mais les sessions &lt;a1&gt;SAML&lt;/a1&gt; doivent disposer d'un module compatible avec les &lt;a2&gt;fonctionnalités de restrictions des sessions&lt;/a2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>By default, the manager is restricted to localhost in its Apache configuration file, but no accounting is done.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T090247Z" changeid="xavier">
+        <seg>Par défaut, l'accès au manager est restreint à l'hôte local dans le fichier de configuration d'Apache, mais aucune traçabilité n'est faite.</seg>
       </tuv>
     </tu>
     <tu>
@@ -18244,6 +18656,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Configuration can be stored in several formats (&lt;a0&gt;SQL&lt;/a0&gt;, &lt;a1&gt;File&lt;/a1&gt;, &lt;a2&gt;LDAP&lt;/a2&gt;) but must be shared over the network if you use more than 1 server.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T085411Z" changeid="xavier">
+        <seg>La configuration peut être stockée sous plusieurs formats (&lt;a0&gt;SQL&lt;/a0&gt;, &lt;a1&gt;File&lt;/a1&gt;, &lt;a2&gt;LDAP&lt;/a2&gt;) mais doit être partégée via le réseau si on utilise plus d'un serveur.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Configuration interface access is not protected by Apache but by LemonLDAP::NG itself (see &lt;c0&gt;lemonldap-ng.ini&lt;/c0&gt;):</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T174609Z" changeid="xavier">
@@ -18456,6 +18876,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T173752Z" changeid="xavier">
         <seg>Configurer l'hôte virtuel phpLDAPadmin comme n'importe quel autre &lt;a0&gt;hôte virtuel protégé&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Configure security settings</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T135339Z" changeid="xavier">
+        <seg>Configurer les paramètres de sécurité</seg>
       </tuv>
     </tu>
     <tu>
@@ -19236,6 +19664,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Disabling it can lead to security issues.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T135832Z" changeid="xavier">
+        <seg>La désactiver peut engendrer des trous de sécurité.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Display applications list</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -19660,6 +20096,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Edit /etc/fail2ban/jail.conf</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T140126Z" changeid="xavier">
+        <seg>Editer /etc/fail2ban/jail.conf</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Edit &lt;c0&gt;/etc/krb5.conf&lt;/c0&gt;:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T154517Z" changeid="xavier">
@@ -19832,6 +20276,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T203448Z" changeid="guimard">
         <seg>Activer la protection du manager, en éditant &lt;c0&gt;lemonldap-ng.ini&lt;/c0&gt;:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Encoded characters</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T134302Z" changeid="xavier">
+        <seg>Caractères encodés</seg>
       </tuv>
     </tu>
     <tu>
@@ -20180,6 +20632,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Fail2ban</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T140058Z" changeid="xavier">
+        <seg>Fail2ban</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Fedora11 RPM bundle</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -20420,6 +20880,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>For block brute force attack with fail2ban</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T140120Z" changeid="xavier">
+        <seg>pour bloquer les attaques en force brute avec fail2ban</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>For debugging, this valve can print some helpful information in debug level.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T191416Z" changeid="xavier">
@@ -20484,6 +20952,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>For example with this rule on the &lt;c0&gt;access&lt;/c0&gt; parameter:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T100348Z" changeid="xavier">
+        <seg>Par exemple avec cette règle sur le paramètre &lt;c0&gt;access&lt;/c0&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>For example, a &lt;a0&gt;LL::NG&lt;/a0&gt; server can be:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T183527Z" changeid="xavier">
@@ -20504,6 +20980,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T122027Z" changeid="xavier">
         <seg>Par exemple, pour un accès total excepté le week-end:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>For example, if these rules are used without comments:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T095703Z" changeid="xavier">
+        <seg>Par exemple, si ces règles sont utilisées sans commentaires :</seg>
       </tuv>
     </tu>
     <tu>
@@ -21048,6 +21532,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T200346Z" changeid="guimard">
         <seg>Aller dans le manager, &lt;c0&gt;Paramètres généraux&lt;/c0&gt; » &lt;c1&gt;Paramètres avancés&lt;/c1&gt; » &lt;c2&gt;Transfert de la déconnexion&lt;/c2&gt; et cliquer sur &lt;c3&gt;Ajouter une clef&lt;/c3&gt;, renseigner ensuite :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Go in Manager, &lt;c0&gt;General parameters&lt;/c0&gt; » &lt;c1&gt;Advanced parameters&lt;/c1&gt; » &lt;c2&gt;Security&lt;/c2&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T135355Z" changeid="xavier">
+        <seg>Aller dans le manager, &lt;c0&gt;Paramètres généraux&lt;/c0&gt; » &lt;c1&gt;Paramètres avancés&lt;/c1&gt; » &lt;c2&gt;Sécurité&lt;/c2&gt; :</seg>
       </tuv>
     </tu>
     <tu>
@@ -21908,6 +22400,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If some of your servers are not in the same (secured) network than the database, it is recommended to use &lt;a3&gt;SOAP access&lt;/a3&gt; for those servers.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T085527Z" changeid="xavier">
+        <seg>Si certains des serveurs ne se trouvent pas sur le même réseau (securisé) que la même base de données, il est recommandé d'utiliser &lt;a3&gt;l'accès SOAP&lt;/a3&gt; pour ces serveurs.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If the OpenID consumer ask for data, users will be prompted to accept or not the data sharing.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T083255Z" changeid="xavier">
@@ -21968,6 +22468,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T191145Z" changeid="xavier">
         <seg>Si cet attribut est manquant, toutes les adresses seront autorisées.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>If this regex matches, the line is ignored.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T140217Z" changeid="xavier">
+        <seg>Si cette expression régulière correspond, la ligne est ignorée.</seg>
       </tuv>
     </tu>
     <tu>
@@ -23092,6 +23600,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>It is recommended to secure the channel between reverse-proxies and application to be sure that only request coming from the &lt;a0&gt;LL::NG&lt;/a0&gt; protected reverse-proxies are allowed.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T135055Z" changeid="xavier">
+        <seg>Il est donc recommandé de sécurisé le canal entre le proxy inverse et l'application pour être sûr que seules les requêtes issues des proxies inverses protégés par &lt;a0&gt;LL::NG&lt;/a0&gt; sont autorisées.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>It is recommended to use ModPerl::Registry instead of using cgi-script as described in Apache configuration file example (portal-apache2.conf):</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -24008,6 +24524,20 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Lemonldap::NG::Portal::SharedConf-&gt;compile(</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Lemonldap\:\:NG \: Bad password for .* \(&lt;HOST&gt;\)
+
+# Option:  ignoreregex
+# Notes.:  regex to ignore.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T140146Z" changeid="xavier">
+        <seg>Lemonldap\:\:NG \: Bad password for .* \(&lt;HOST&gt;\)
+
+# Option:  ignoreregex
+# Notes.:  regex to ignore.</seg>
       </tuv>
     </tu>
     <tu>
@@ -25012,6 +25542,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Next, you have to configure the &lt;a0&gt;SOAP&lt;/a0&gt; access as described &lt;a1&gt;here&lt;/a1&gt; since &lt;a2&gt;SOAP&lt;/a2&gt; access is denied by default.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T085721Z" changeid="xavier">
+        <seg>Ensuite, il faut configure l'accès &lt;a0&gt;SOAP&lt;/a0&gt; tel que décrit &lt;a1&gt;ici&lt;/a1&gt; car l'accès &lt;a2&gt;SOAP&lt;/a2&gt; est refusé par défaut.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Nick name</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T083111Z" changeid="xavier">
@@ -25636,6 +26174,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Order your rules</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T095445Z" changeid="xavier">
+        <seg>Ordonner les règles</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Organization</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -26022,6 +26568,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>PerlInitHandler My::Handler</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T134553Z" changeid="xavier">
+        <seg>PerlInitHandler My::Handler</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>PerlModule Lemonldap::NG::Handler::Proxy</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T194035Z" changeid="xavier">
@@ -26036,6 +26590,18 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
       <tuv lang="FR-FR" changedate="20120225T064936Z" changeid="xavier">
         <seg>PerlOptions +GlobalRequest
 PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>PerlOptions +GlobalRequest
+PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
+&lt;&lt;s0&gt;VirtualHost&lt;/s0&gt; *:443&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T134537Z" changeid="xavier">
+        <seg>PerlOptions +GlobalRequest
+PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
+&lt;&lt;s0&gt;VirtualHost&lt;/s0&gt; *:443&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -26454,6 +27020,30 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Protect the Manager</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T085728Z" changeid="xavier">
+        <seg>Protéger le manager</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Protect the Manager by Apache</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T094912Z" changeid="xavier">
+        <seg>Protéger le Manager par Apache</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Protect the Manager by LL::NG</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T095020Z" changeid="xavier">
+        <seg>Protéger le manager par LL::NG</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Protected application sends response to Handler</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -26822,6 +27412,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Regular expression</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T095711Z" changeid="xavier">
+        <seg>Expression régulière</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Regular expression for random password</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -26830,10 +27428,26 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Reload the Manager to see the order that will be used</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T095920Z" changeid="xavier">
+        <seg>Recharger le manager pour voir l'ordre dans lequel elles seront appliquées</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Reload virtual host:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T065103Z" changeid="xavier">
         <seg>Hôte virtuel pour le rechargement :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Remember that rules written on GET parameters must be tested.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T134252Z" changeid="xavier">
+        <seg>Rappel : les règles poratnt sur des paramètres GET doivent être testées.</seg>
       </tuv>
     </tu>
     <tu>
@@ -27014,6 +27628,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Restart fail2ban</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T140226Z" changeid="xavier">
+        <seg>Redémarrer fail2ban</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Restrict /admin to administrators group</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -27098,6 +27720,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T141734Z" changeid="guimard">
         <seg>Rôles comme simple valeur d'attribut utilisateur</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Rule</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T095716Z" changeid="xavier">
+        <seg>Règle</seg>
       </tuv>
     </tu>
     <tu>
@@ -27414,6 +28044,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Safe module is used to eval expressions in headers, rules, etc.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T135807Z" changeid="xavier">
+        <seg>Le module Safe est utilisé pour évaluer les expressions dans les en-têtes, règles, etc...</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Same with remote server configured with the same host name:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T072816Z" changeid="xavier">
@@ -27574,6 +28212,22 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Secure configuration access</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T085317Z" changeid="xavier">
+        <seg>Securiser l'accès à la configuration</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Secure reverse-proxies</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T134448Z" changeid="xavier">
+        <seg>Securiser les proxies inverses</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Security</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -27594,6 +28248,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Paramètres de sécurité</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Security recommendation</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T085240Z" changeid="xavier">
+        <seg>Recommendation de sécurité</seg>
       </tuv>
     </tu>
     <tu>
@@ -27698,6 +28360,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T201137Z" changeid="guimard">
         <seg>Voir &lt;a0&gt;http://httpd.apache.org/docs/2.2/mod/core.html#loglevel&lt;/a0&gt; pour plus d'information.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>See &lt;a0&gt;mod_proxy&lt;/a0&gt; and &lt;a1&gt;mod_rewrite&lt;/a1&gt; documentation for more about configuring Apache reverse-proxies.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T134648Z" changeid="xavier">
+        <seg>Voir les documentation de &lt;a0&gt;mod_proxy&lt;/a0&gt; et &lt;a1&gt;mod_rewrite&lt;/a1&gt; pour plus d'information sur la configuration du proxy inverse d'Apache.</seg>
       </tuv>
     </tu>
     <tu>
@@ -27990,6 +28660,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Set '*' to accept all.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T135659Z" changeid="xavier">
+        <seg>Mettre '*' pour tout accepter.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Set &lt;a0&gt;SAML&lt;/a0&gt; end points</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -28262,6 +28940,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>So write your rules using normal characters.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T134435Z" changeid="xavier">
+        <seg>Il faut donc écrire les règles en utilisant les caractères normaux.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>So you can configure it to authenticate users using a federation protocol and simultaneously to provide identities using other(s) federation protocols.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T183459Z" changeid="xavier">
@@ -28370,6 +29056,14 @@ PerlRequire /usr/local/lemonldap-ng/handler/MyHandler.pm</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120218T220423Z" changeid="xavier">
         <seg>Certains peuvent être obligatoires, et s'ils ne sont pas retournés par l'IDP, la session n'est pas ouverte.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Some characters are encoded in URLs by the browser (such as space,…).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T134348Z" changeid="xavier">
+        <seg>Certains caractères sont encodés dans les URLs par le navigateur (tels les espaces,…).</seg>
       </tuv>
     </tu>
     <tu>
@@ -28670,6 +29364,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Such configuration can have some security problems:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T134709Z" changeid="xavier">
+        <seg>Une telle configuration peut engendrer des problèmes de sécurité :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Sunday is the first day.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T122004Z" changeid="xavier">
@@ -28846,6 +29548,16 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The
+#          host must be matched by a group named &quot;host&quot;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T140143Z" changeid="xavier">
+        <seg>The
+#          host must be matched by a group named &quot;host&quot;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The &lt;a0&gt;DBI&lt;/a0&gt; string</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T072311Z" changeid="xavier">
@@ -28986,6 +29698,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T143105Z" changeid="xavier">
         <seg>Le manager affiche des branches principales :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The Manager let you define comments in rules, to order them:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T095637Z" changeid="xavier">
+        <seg>Le manager permet de définir des commentaires de règles, ce qui permet de les ordonner :</seg>
       </tuv>
     </tu>
     <tu>
@@ -29266,6 +29986,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T112004Z" changeid="xavier">
         <seg>Le premier paramètre passé à la fonction personnalisée est l'objet portail de &lt;a0&gt;LL::NG&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The first rule that matches is applied.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T095538Z" changeid="xavier">
+        <seg>La première règle qui correspond est appliquée.</seg>
       </tuv>
     </tu>
     <tu>
@@ -29598,6 +30326,24 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The tag &quot;&lt;HOST&gt;&quot; can
+#          be used for standard IP/hostname matching and is only an alias for
+#          (?:::f{4,6}:)?(?P&lt;host&gt;[\w\-.^_]+)
+# Values:  TEXT
+#
+failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;\)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T140144Z" changeid="xavier">
+        <seg>The tag &quot;&lt;HOST&gt;&quot; can
+#          be used for standard IP/hostname matching and is only an alias for
+#          (?:::f{4,6}:)?(?P&lt;host&gt;[\w\-.^_]+)
+# Values:  TEXT
+#
+failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;\)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The team</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -29678,6 +30424,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The “default” rule is only applied if no other rule match</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T095601Z" changeid="xavier">
+        <seg>La règle “default” n'est appliquée que si aucune autre règle ne correspond</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Theme (&lt;a0&gt;jQuery UI theme&lt;/a0&gt;).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T144031Z" changeid="xavier">
@@ -29698,6 +30452,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111220T155549Z" changeid="xavier">
         <seg>Ensuite Zimbra génère son cookie &lt;a0&gt;SSO&lt;/a0&gt; dans le navigateur de l'utilisateur</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Then a user that try to access to one of the following &lt;e0&gt;will be granted&lt;/e0&gt; !</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T100440Z" changeid="xavier">
+        <seg>Alors l'utilisateur qui tente d'accéder à l'une des URL suivantes &lt;e0&gt;sera autorisé&lt;/e0&gt; !</seg>
       </tuv>
     </tu>
     <tu>
@@ -29842,6 +30604,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T113833Z" changeid="xavier">
         <seg>et indiquez :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Then the second rule will be applied first, so every authenticated user will access to &lt;c0&gt;/pub/admin&lt;/c0&gt; directory.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T095824Z" changeid="xavier">
+        <seg>Alors la seconde règle est appliquée en premier, donc tous les utilisateurs authentifiés pourront accéder au répertoire &lt;c0&gt;/pub/admin&lt;/c0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -30934,6 +31704,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>To avoid problems, &lt;a0&gt;LL::NG&lt;/a0&gt; decode them using &lt;a1&gt;http://search.cpan.org/perldoc?Apache2::URI#unescape_url&lt;/a1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T134414Z" changeid="xavier">
+        <seg>Pour éviter les problèmes, &lt;a0&gt;LL::NG&lt;/a0&gt; les décode en utilisant &lt;a1&gt;http://search.cpan.org/perldoc?Apache2::URI#unescape_url&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>To bypass this, &lt;a0&gt;LL::NG&lt;/a0&gt; can remember what password was given by user on authentication phase.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T070751Z" changeid="guimard">
@@ -30962,6 +31740,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120410T042433Z" changeid="xavier">
         <seg>Pour le changer :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>To change this, you can choose one of the following:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T090315Z" changeid="xavier">
+        <seg>Pour changer ce comportement, on peut choisir l'une des options suivantes :</seg>
       </tuv>
     </tu>
     <tu>
@@ -31154,6 +31940,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T072419Z" changeid="xavier">
         <seg>Pour protéger un hôte virtuel dans Apache, l'agent LemonLDAP::NG doit être activé (voir &lt;a0&gt;configuration globale d'Apache&lt;/a0&gt;).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>To protect the manager by &lt;a0&gt;LL::NG&lt;/a0&gt;, you just have to set this in &lt;c1&gt;lemonldap-ng.ini&lt;/c1&gt; configuration file (section [manager]):</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T095237Z" changeid="xavier">
+        <seg>Pour protéger le manager par &lt;a0&gt;LL::NG&lt;/a0&gt;, il suffit de mettre ceci dans le fichier de configuration &lt;c1&gt;lemonldap-ng.ini&lt;/c1&gt; (section [manager]) :</seg>
       </tuv>
     </tu>
     <tu>
@@ -31578,6 +32372,14 @@ Is this ok [y/N]: y</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Use comment to correct this:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T095850Z" changeid="xavier">
+        <seg>Utiliser des commentaires pour corriger ça :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Use it</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T112230Z" changeid="xavier">
@@ -31598,6 +32400,14 @@ Is this ok [y/N]: y</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T064552Z" changeid="guimard">
         <seg>Utiliser les redirections en cas d'erreur</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Use rule comments to order your rules</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T100019Z" changeid="xavier">
+        <seg>Utiliser les commentaires pour ordonner les règles</seg>
       </tuv>
     </tu>
     <tu>
@@ -32446,6 +33256,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Write good rules</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T095434Z" changeid="xavier">
+        <seg>Écrire de bonnes règles</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>X509</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -33114,6 +33932,46 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120121T080620Z" changeid="xavier">
         <seg>Le backend Null peut être utilisé pour sauter des étapes du processus d'authentication.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can use any of the mechanisms proposed by Apache: &lt;a0&gt;SSL&lt;/a0&gt;, Auth-Basic, Kerberos,… Example</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T094946Z" changeid="xavier">
+        <seg>On peut utiliser tous les mécanismes proposés par Apache : &lt;a0&gt;SSL&lt;/a0&gt;, Auth-Basic, Kerberos,… Exemple</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can use different type of access: &lt;a0&gt;SQL&lt;/a0&gt;, &lt;a1&gt;File&lt;/a1&gt; or &lt;a2&gt;LDAP&lt;/a2&gt; for servers in secured network and &lt;a3&gt;SOAP&lt;/a3&gt; for remote servers.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T085627Z" changeid="xavier">
+        <seg>On peut utiliser différent typed d'accès : &lt;a0&gt;SQL&lt;/a0&gt;, &lt;a1&gt;File&lt;/a1&gt; or &lt;a2&gt;LDAP&lt;/a2&gt; pour les serveurs se trouvant sur le réseau sécurisé et &lt;a3&gt;SOAP&lt;/a3&gt; pour les autres.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can use one or a combination of:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T135123Z" changeid="xavier">
+        <seg>On peut utiliser un ou plusieurs solution :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can use the following rules instead:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T134148Z" changeid="xavier">
+        <seg>On peut utiliser les règles suivantes à la place :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can write &lt;a0&gt;rules&lt;/a0&gt; matching any component of &lt;a1&gt;URL&lt;/a1&gt; to protect including GET parameters, but be careful.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T100236Z" changeid="xavier">
+        <seg>On peut écrire des &lt;a0&gt;règles&lt;/a0&gt; qui examine n'importe quel composant de l'&lt;a1&gt;URL&lt;/a1&gt; à protéger y compris les paramètres GET, mais il faut faire attention.</seg>
       </tuv>
     </tu>
     <tu>
@@ -33791,6 +34649,26 @@ Index      -&gt; ipAddr uid</seg>
     <tu>
       <tuv lang="EN-US">
         <seg>[lemonldap-ng]
+enabled = true
+port    = http,https
+filter  = lemonldap
+action   = iptables-multiport[name=lemonldap, port=&quot;http,https&quot;]
+logpath = /var/log/apache*/error*.log
+maxretry = 3</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T140130Z" changeid="xavier">
+        <seg>[lemonldap-ng]
+enabled = true
+port    = http,https
+filter  = lemonldap
+action   = iptables-multiport[name=lemonldap, port=&quot;http,https&quot;]
+logpath = /var/log/apache*/error*.log
+maxretry = 3</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>[lemonldap-ng]
 name=LemonLDAP::NG packages
 baseurl=http://lemonldap-ng.org/rpm/
 enabled=1
@@ -33824,6 +34702,22 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OW2</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>^/(?i)index.php\?.*access.*access</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T134154Z" changeid="xavier">
+        <seg>^/(?i)index.php\?.*access.*access</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>^/(?i)index.php\?.*access=admin</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T134158Z" changeid="xavier">
+        <seg>^/(?i)index.php\?.*access=admin</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>^/Microsoft-Server-ActiveSync</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T172004Z" changeid="xavier">
@@ -33844,6 +34738,14 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OW2</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T172006Z" changeid="xavier">
         <seg>^/caldav</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>^/index.php\?.*access=admin</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T100350Z" changeid="xavier">
+        <seg>^/index.php\?.*access=admin</seg>
       </tuv>
     </tu>
     <tu>
@@ -33876,6 +34778,22 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OW2</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T171958Z" changeid="xavier">
         <seg>^/obm-sync</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>^/pub/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T095719Z" changeid="xavier">
+        <seg>^/pub/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>^/pub/admin/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T095717Z" changeid="xavier">
+        <seg>^/pub/admin/</seg>
       </tuv>
     </tu>
     <tu>
@@ -33938,6 +34856,14 @@ a2ensite portal-apache2.conf</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T143306Z" changeid="guimard">
         <seg>aaaRole =&gt; join(' || ', (map {/uid=(.*),ou=aaa.*/} (grep{/ou=aaa/} split(';',$ssoRoles)))</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>accept</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T095720Z" changeid="xavier">
+        <seg>accept</seg>
       </tuv>
     </tu>
     <tu>
@@ -34010,6 +34936,14 @@ a2ensite portal-apache2.conf</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T072133Z" changeid="guimard">
         <seg>tous en même temps (basé sur le &lt;a0&gt;choix&lt;/a0&gt; utilisateur, les &lt;a1&gt;règles&lt;/a1&gt;, …)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>and edit /etc/fail2ban/filter.d/lemonldap.conf</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T140136Z" changeid="xavier">
+        <seg>et editer /etc/fail2ban/filter.d/lemonldap.conf</seg>
       </tuv>
     </tu>
     <tu>
@@ -34958,6 +35892,14 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
         <seg>default_realm = EXAMPLE.COM
 
 [realms]</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>deny</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T134155Z" changeid="xavier">
+        <seg>deny</seg>
       </tuv>
     </tu>
     <tu>
@@ -36686,6 +37628,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:manager_access_rule.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T095640Z" changeid="xavier">
+        <seg>documentation:manager_access_rule.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:presentation</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -36858,6 +37808,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T171543Z" changeid="xavier">
         <seg>champ</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>firewalls (but be careful if more than 1 server is behind the firewall)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T135204Z" changeid="xavier">
+        <seg>pare-feux (attention toutefois si plus d'une application se trouve derrière le pare-feu)</seg>
       </tuv>
     </tu>
     <tu>
@@ -37366,6 +38324,30 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://httpd.apache.org/docs/2.2/mod/mod_proxy.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T134558Z" changeid="xavier">
+        <seg>http://httpd.apache.org/docs/2.2/mod/mod_proxy.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://httpd.apache.org/docs/2.2/mod/mod_rewrite.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T134559Z" changeid="xavier">
+        <seg>http://httpd.apache.org/docs/2.2/mod/mod_rewrite.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://httpd.apache.org/docs/2.2/mod/mod_ssl.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T135233Z" changeid="xavier">
+        <seg>http://httpd.apache.org/docs/2.2/mod/mod_ssl.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://httpd.apache.org/docs/current/howto/auth.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T153819Z" changeid="xavier">
@@ -37714,6 +38696,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T113955Z" changeid="xavier">
         <seg>http://search.cpan.org/dist/Apache-Session-LDAP/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://search.cpan.org/perldoc?Apache2::URI#unescape_url</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T134307Z" changeid="xavier">
+        <seg>http://search.cpan.org/perldoc?Apache2::URI#unescape_url</seg>
       </tuv>
     </tu>
     <tu>
@@ -38746,6 +39736,22 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T072037Z" changeid="xavier">
         <seg>id char&lt;s3&gt;(&lt;/s3&gt;32&lt;s4&gt;)&lt;/s4&gt; &lt;s5&gt;NOT&lt;/s5&gt; &lt;s6&gt;NULL&lt;/s6&gt; &lt;s7&gt;PRIMARY&lt;/s7&gt; &lt;s8&gt;KEY&lt;/s8&gt;&lt;s9&gt;,&lt;/s9&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>if a user can access directly to the hidden application, it can bypass &lt;a0&gt;LL::NG&lt;/a0&gt; protection</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T134808Z" changeid="xavier">
+        <seg>Si un utilisateur peut accéder directement à l'application cachée, peut contourner la protection de &lt;a0&gt;LL::NG&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>if many hidden applications are on the same private network, if one is corrupted (by &lt;a0&gt;SQL&lt;/a0&gt; injection, or another attack), the hacker will be able to access to other applications without using reverse-proxies so it can bypass &lt;a1&gt;LL::NG&lt;/a1&gt; protection</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T134945Z" changeid="xavier">
+        <seg>Si de nombreuses applications se situent sur le même réseau privé et que l'un est corrompue (par &lt;a0&gt;SQL&lt;/a0&gt; injection, ou toute autre attaque), le pirate peut accéder aux autres applications sans passer par les proxies inverses et donc contourner la protection &lt;a1&gt;LL::NG&lt;/a1&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -40338,6 +41344,22 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>protect the manager by &lt;a0&gt;LL::NG&lt;/a0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T094901Z" changeid="xavier">
+        <seg>protéger le manager par &lt;a0&gt;LL::NG&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>protect the manager by Apache configuration</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T094842Z" changeid="xavier">
+        <seg>protéger le manager par configuration d'Apache</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>protection</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T063845Z" changeid="guimard">
@@ -40780,6 +41802,14 @@ cp ../pastel/custom* .</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>server</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>server based restriction (like Apache “allow/deny” mechanism)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120420T135232Z" changeid="xavier">
+        <seg>restrictions basées sur le serveur (tel le mécanisme “allow/deny” d'Apache)</seg>
       </tuv>
     </tu>
     <tu>
