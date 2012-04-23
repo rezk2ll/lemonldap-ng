@@ -568,6 +568,42 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>(o/n) n</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T204900Z" changeid="xavier">
+        <seg>(o/n) n</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>(o/n) n
+Le nouveau rôle doit-il être autorisé à créer de nouveaux rôles ?</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T204858Z" changeid="xavier">
+        <seg>(o/n) n
+Le nouveau rôle doit-il être autorisé à créer de nouveaux rôles ?</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>(o/n) n
+Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T204857Z" changeid="xavier">
+        <seg>(o/n) n
+Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>);</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120422T100120Z" changeid="xavier">
+        <seg>);</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>----&lt;/s156&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112332Z" changeid="xavier">
@@ -8178,6 +8214,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;SQL&lt;/a0&gt; session backend can be used with many &lt;a1&gt;SQL&lt;/a1&gt; databases such as:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T204635Z" changeid="xavier">
+        <seg>Le backend de sessions &lt;a0&gt;SQL&lt;/a0&gt; peut être utilisé avec de nombreuses bases de données &lt;a1&gt;SQL&lt;/a1&gt; tels :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;SREG&lt;/a0&gt; permit the share of 8 attributes:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T083040Z" changeid="xavier">
@@ -10354,6 +10398,14 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;&lt;a1&gt;DBI&lt;/a1&gt;&lt;/s0&gt; which has been deprecated: it is a read-only backend that exists just for compatibility with older versions of LemonLDAP::NG.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120421T174605Z" changeid="xavier">
+        <seg>&lt;s0&gt;&lt;a1&gt;DBI&lt;/a1&gt;&lt;/s0&gt; devenu obsolète : il reste un backend en lecture seule qui n'existe que pour la compatibilité avec les anciennes versions de LemonLDAP::NG.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;&lt;a1&gt;HTML&lt;/a1&gt; templates&lt;/s0&gt;: in &lt;lang&gt; tags, add your translation, they will be automaticaly used</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -10690,6 +10742,26 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
         <seg>&lt;s0&gt;&lt;s1&gt;[&lt;/s1&gt;configuration&lt;s2&gt;]&lt;/s2&gt;&lt;/s0&gt;
 &lt;s3&gt;type&lt;/s3&gt;  &lt;s4&gt;=&lt;/s4&gt;&lt;s5&gt; File&lt;/s5&gt;
 &lt;s6&gt;dirName&lt;/s6&gt; &lt;s7&gt;=&lt;/s7&gt;&lt;s8&gt; /var/lib/lemonldap-ng/conf&lt;/s8&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;&lt;s1&gt;[&lt;/s1&gt;configuration&lt;s2&gt;]&lt;/s2&gt;&lt;/s0&gt;
+&lt;s3&gt;type&lt;/s3&gt; &lt;s4&gt;=&lt;/s4&gt;&lt;s5&gt; RDBI&lt;/s5&gt;
+&lt;s6&gt;dbiChain&lt;/s6&gt;    &lt;s7&gt;=&lt;/s7&gt;&lt;s8&gt; DBI:mysql:database=lemonldap-ng&lt;/s8&gt;&lt;s9&gt;;host=1.2.3.4&lt;/s9&gt;
+&lt;s10&gt;dbiUser&lt;/s10&gt;     &lt;s11&gt;=&lt;/s11&gt;&lt;s12&gt; lemonldap&lt;/s12&gt;
+&lt;s13&gt;dbiPassword&lt;/s13&gt; &lt;s14&gt;=&lt;/s14&gt;&lt;s15&gt; password&lt;/s15&gt;
+&lt;s16&gt;; optional&lt;/s16&gt;
+&lt;s17&gt;dbiTable&lt;/s17&gt;    &lt;s18&gt;=&lt;/s18&gt;&lt;s19&gt; mytablename&lt;/s19&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120422T100056Z" changeid="xavier">
+        <seg>&lt;s0&gt;&lt;s1&gt;[&lt;/s1&gt;configuration&lt;s2&gt;]&lt;/s2&gt;&lt;/s0&gt;
+&lt;s3&gt;type&lt;/s3&gt; &lt;s4&gt;=&lt;/s4&gt;&lt;s5&gt; RDBI&lt;/s5&gt;
+&lt;s6&gt;dbiChain&lt;/s6&gt;    &lt;s7&gt;=&lt;/s7&gt;&lt;s8&gt; DBI:mysql:database=lemonldap-ng&lt;/s8&gt;&lt;s9&gt;;host=1.2.3.4&lt;/s9&gt;
+&lt;s10&gt;dbiUser&lt;/s10&gt;     &lt;s11&gt;=&lt;/s11&gt;&lt;s12&gt; lemonldap&lt;/s12&gt;
+&lt;s13&gt;dbiPassword&lt;/s13&gt; &lt;s14&gt;=&lt;/s14&gt;&lt;s15&gt; password&lt;/s15&gt;
+&lt;s16&gt;; optional&lt;/s16&gt;
+&lt;s17&gt;dbiTable&lt;/s17&gt;    &lt;s18&gt;=&lt;/s18&gt;&lt;s19&gt; mytablename&lt;/s19&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -11162,6 +11234,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T160412Z" changeid="xavier">
         <seg>&lt;s0&gt;Fichier CA&lt;/s0&gt; : certificat de la CA utilisée pour valider le certificat du serveur &lt;a1&gt;CAS&lt;/a1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;CDBI&lt;/s0&gt; : very simple storage</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120421T174446Z" changeid="xavier">
+        <seg>&lt;s0&gt;CDBI&lt;/s0&gt; : stockage très simple</seg>
       </tuv>
     </tu>
     <tu>
@@ -11648,6 +11728,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T055942Z" changeid="xavier">
         <seg>&lt;s0&gt;Nom alternatif&lt;/s0&gt;: optionnel, nom alternatif de l'attribut &lt;a1&gt;SAML&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;GRANT&lt;/s0&gt; &lt;s1&gt;SELECT&lt;/s1&gt;&lt;s2&gt;,&lt;/s2&gt;&lt;s3&gt;INSERT&lt;/s3&gt;&lt;s4&gt;,&lt;/s4&gt;&lt;s5&gt;UPDATE&lt;/s5&gt;&lt;s6&gt;,&lt;/s6&gt;&lt;s7&gt;LOCK&lt;/s7&gt; &lt;s8&gt;TABLES&lt;/s8&gt; &lt;s9&gt;ON&lt;/s9&gt; lmConfig&lt;s10&gt;.*&lt;/s10&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T204526Z" changeid="xavier">
+        <seg>&lt;s0&gt;GRANT&lt;/s0&gt; &lt;s1&gt;SELECT&lt;/s1&gt;&lt;s2&gt;,&lt;/s2&gt;&lt;s3&gt;INSERT&lt;/s3&gt;&lt;s4&gt;,&lt;/s4&gt;&lt;s5&gt;UPDATE&lt;/s5&gt;&lt;s6&gt;,&lt;/s6&gt;&lt;s7&gt;LOCK&lt;/s7&gt; &lt;s8&gt;TABLES&lt;/s8&gt; &lt;s9&gt;ON&lt;/s9&gt; lmConfig&lt;s10&gt;.*&lt;/s10&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -12450,6 +12538,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T160647Z" changeid="xavier">
         <seg>&lt;s0&gt;Services Proxifiés&lt;/s0&gt; : liste des services pour lesquels un ticket de proxy est requis :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;RDBI&lt;/s0&gt; : triple store storage</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120421T174513Z" changeid="xavier">
+        <seg>&lt;s0&gt;RDBI&lt;/s0&gt; : stockage en triplets</seg>
       </tuv>
     </tu>
     <tu>
@@ -13904,6 +14000,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s10&gt;)&lt;/s10&gt;;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T204829Z" changeid="xavier">
+        <seg>&lt;s10&gt;)&lt;/s10&gt;;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s10&gt;&lt;s11&gt;&lt;role&lt;/s11&gt; &lt;s12&gt;rolename&lt;/s12&gt;=&lt;s13&gt;&quot;tomcat&quot;&lt;/s13&gt;&lt;s14&gt;/&gt;&lt;/s14&gt;&lt;/s10&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T190303Z" changeid="xavier">
@@ -14044,6 +14148,16 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T064404Z" changeid="xavier">
         <seg>&lt;s11&gt;RewriteRule&lt;/s11&gt; ^/cas/.* /index.pl</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s11&gt;TO&lt;/s11&gt; lemonldap&lt;s12&gt;-&lt;/s12&gt;ng@manager&lt;s13&gt;.&lt;/s13&gt;host &lt;s14&gt;IDENTIFIED&lt;/s14&gt; &lt;s15&gt;BY&lt;/s15&gt; &lt;s16&gt;'mypassword'&lt;/s16&gt;;
+&lt;s17&gt;GRANT&lt;/s17&gt; &lt;s18&gt;SELECT&lt;/s18&gt; &lt;s19&gt;ON&lt;/s19&gt; lmConfig&lt;s20&gt;.*&lt;/s20&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T204529Z" changeid="xavier">
+        <seg>&lt;s11&gt;TO&lt;/s11&gt; lemonldap&lt;s12&gt;-&lt;/s12&gt;ng@manager&lt;s13&gt;.&lt;/s13&gt;host &lt;s14&gt;IDENTIFIED&lt;/s14&gt; &lt;s15&gt;BY&lt;/s15&gt; &lt;s16&gt;'mypassword'&lt;/s16&gt;;
+&lt;s17&gt;GRANT&lt;/s17&gt; &lt;s18&gt;SELECT&lt;/s18&gt; &lt;s19&gt;ON&lt;/s19&gt; lmConfig&lt;s20&gt;.*&lt;/s20&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -15076,6 +15190,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T072041Z" changeid="xavier">
         <seg>&lt;s21&gt;KEY&lt;/s21&gt; ipAddr &lt;s22&gt;(&lt;/s22&gt;ipAddr&lt;s23&gt;)&lt;/s23&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s21&gt;TO&lt;/s21&gt; lemonldap&lt;s22&gt;-&lt;/s22&gt;ng&lt;s23&gt;-&lt;/s23&gt;user@&lt;s24&gt;'10.0.0.%'&lt;/s24&gt; &lt;s25&gt;IDENTIFIED&lt;/s25&gt; &lt;s26&gt;BY&lt;/s26&gt; &lt;s27&gt;'myotherpassword'&lt;/s27&gt;;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T204534Z" changeid="xavier">
+        <seg>&lt;s21&gt;TO&lt;/s21&gt; lemonldap&lt;s22&gt;-&lt;/s22&gt;ng&lt;s23&gt;-&lt;/s23&gt;user@&lt;s24&gt;'10.0.0.%'&lt;/s24&gt; &lt;s25&gt;IDENTIFIED&lt;/s25&gt; &lt;s26&gt;BY&lt;/s26&gt; &lt;s27&gt;'myotherpassword'&lt;/s27&gt;;</seg>
       </tuv>
     </tu>
     <tu>
@@ -18714,6 +18836,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>CDBI</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120422T100121Z" changeid="xavier">
+        <seg>CDBI</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>CDBI / RDBI</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T070035Z" changeid="guimard">
@@ -18742,6 +18872,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Rapports de test du CPAN:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>CREATE TABLE lmConfig (</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120422T100116Z" changeid="xavier">
+        <seg>CREATE TABLE lmConfig (</seg>
       </tuv>
     </tu>
     <tu>
@@ -19010,6 +19148,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Choose &lt;a0&gt;DBI&lt;/a0&gt; type (RDBI, CDBI or &lt;a1&gt;DBI&lt;/a1&gt;)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120422T095938Z" changeid="xavier">
+        <seg>Choisir le type &lt;a0&gt;DBI&lt;/a0&gt; (RDBI, CDBI or &lt;a1&gt;DBI&lt;/a1&gt;)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Choose a repository which hosted &lt;a0&gt;Perl&lt;/a0&gt; dependencies, for example:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T141208Z" changeid="guimard">
@@ -19126,6 +19272,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Commentaire</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Commit</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T205018Z" changeid="xavier">
+        <seg>Commit</seg>
       </tuv>
     </tu>
     <tu>
@@ -19506,6 +19660,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Configure the connection string (see &lt;a0&gt;DBI manual page&lt;/a0&gt;)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120422T100001Z" changeid="xavier">
+        <seg>Configurer la chaîne de connexion (voir la &lt;a0&gt;page de manuel DBI&lt;/a0&gt;)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Configure the following &lt;a0&gt;headers&lt;/a0&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T114200Z" changeid="xavier">
@@ -19530,10 +19692,26 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Configure user and password</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120422T100018Z" changeid="xavier">
+        <seg>Configurer le nom de compte et le mot-de-passe</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Configure your &lt;a0&gt;DNS&lt;/a0&gt; server to resolve names with your server &lt;a1&gt;IP&lt;/a1&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T094337Z" changeid="xavier">
         <seg>Configurer le serveur &lt;a0&gt;DNS&lt;/a0&gt; pour résoudre les noms avec l'adresse &lt;a1&gt;IP&lt;/a1&gt; de votre serveur.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Configure your SQL database</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120422T100107Z" changeid="xavier">
+        <seg>Configurer la base de données SQL</seg>
       </tuv>
     </tu>
     <tu>
@@ -19762,6 +19940,22 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Create a database if necessary:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T204812Z" changeid="xavier">
+        <seg>Créer une base de données si nécessaire :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Create database:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T204910Z" changeid="xavier">
+        <seg>Créer la base de données :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Create new notifications trough SOAP</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T060119Z" changeid="guimard">
@@ -19778,10 +19972,34 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Create sessions table:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T204824Z" changeid="xavier">
+        <seg>Créer la table des sessions :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Create table:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T204917Z" changeid="xavier">
+        <seg>Créer la table:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Create two macros (inside &lt;c0&gt;Variablles&lt;/c0&gt; » &lt;c1&gt;Macros&lt;/c1&gt;):</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T142834Z" changeid="guimard">
         <seg>Créer deux macros (dans &lt;c0&gt;Variables&lt;/c0&gt; » &lt;c1&gt;Macros&lt;/c1&gt;):</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Create user and role:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T204846Z" changeid="xavier">
+        <seg>Créer un utilisateur et un rôle :</seg>
       </tuv>
     </tu>
     <tu>
@@ -20882,6 +21100,18 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Entrez le mot de passe pour le nouveau rôle : &lt;PASSWORD&gt;
+Entrez-le de nouveau : &lt;PASSWORD&gt;
+Le nouveau rôle est-il un super-utilisateur ?</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T204856Z" changeid="xavier">
+        <seg>Entrez le mot de passe pour le nouveau rôle : &lt;PASSWORD&gt;
+Entrez-le de nouveau : &lt;PASSWORD&gt;
+Le nouveau rôle est-il un super-utilisateur ?</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Entry Identifier</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -20966,6 +21196,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T174509Z" changeid="xavier">
         <seg>Exemple :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Example for MySQL :</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120422T100050Z" changeid="xavier">
+        <seg>Exemple pour MySQL :</seg>
       </tuv>
     </tu>
     <tu>
@@ -21478,6 +21716,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T161834Z" changeid="xavier">
         <seg>Pour Debian/Ubuntu, utiliser :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>For MySQL, you need to set additional parameters:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T205156Z" changeid="xavier">
+        <seg>Pour MySQL, il faut ajouter quelques paramètres :</seg>
       </tuv>
     </tu>
     <tu>
@@ -22218,6 +22464,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Go in the Manager and set the session module (for example &lt;a0&gt;Apache::Session::Postgres&lt;/a0&gt; for PostgreSQL) in &lt;c1&gt;General parameters&lt;/c1&gt; » &lt;c2&gt;Sessions&lt;/c2&gt; » &lt;c3&gt;Session storage&lt;/c3&gt; » &lt;c4&gt;Apache::Session module&lt;/c4&gt; and add the following parameters (case sensitive):</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T205013Z" changeid="xavier">
+        <seg>Aller dans le Manager et choisir le module de session (par exemple &lt;a0&gt;Apache::Session::Browseable::Postgres&lt;/a0&gt; pour PostgreSQL) dans &lt;c1&gt;Paramètres généraux&lt;/c1&gt; » &lt;c2&gt;Sessions&lt;/c2&gt; » &lt;c3&gt;Stockage des sessions&lt;/c3&gt; » &lt;c4&gt;Module Apache::Session&lt;/c4&gt; et ajouter les paramètres suivants (sensible à la casse):</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Go on &lt;a0&gt;http://auth.example.com&lt;/a0&gt; and log with &lt;a1&gt;LDAP&lt;/a1&gt; user account.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -22390,6 +22644,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111207T052404Z" changeid="xavier">
         <seg>GoogleApps =&gt; http://www.google.com/calendar/hosted/mydomain.org/logout</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Grant LemonLDAP::NG access</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120422T100135Z" changeid="xavier">
+        <seg>Autoriser l'accès pour LemonLDAP::NG</seg>
       </tuv>
     </tu>
     <tu>
@@ -22638,6 +22900,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111217T080721Z" changeid="xavier">
         <seg>Il y a deux avis :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Here are some examples for main databases servers.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T204756Z" changeid="xavier">
+        <seg>Quelques exemples pour les serveurs principaux.</seg>
       </tuv>
     </tu>
     <tu>
@@ -23178,6 +23448,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If you choose to use MySQL, read &lt;a0&gt;how to increase MySQL performances&lt;/a0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T205228Z" changeid="xavier">
+        <seg>Si MySQL est choisi, lire &lt;a0&gt;comment augmenter les performances de MySQL&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If you configure form replay with &lt;a0&gt;LL::NG&lt;/a0&gt;, the Handler will catch configured POST &lt;a1&gt;URL&lt;/a1&gt; and send a POST query to the target page (which can be different of the caught page).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T192644Z" changeid="xavier">
@@ -23366,6 +23644,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T201716Z" changeid="xavier">
         <seg>Si l'explorateur de sessions est sur le même serveur que le portail, utiliser soit la terminaison &lt;s0&gt;adminSessions&lt;/s0&gt; dans la configuration eu manager, ou surcharger les paramètres &lt;c1&gt;globalStorage&lt;/c1&gt; et &lt;c2&gt;globalStorageOptions&lt;/c2&gt; dans la section all (et pas portal) de &lt;c3&gt;lemonldap-ng.ini&lt;/c3&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>If your table is not named lmConfig, set it's name in &lt;c0&gt;dbiTable&lt;/c0&gt; parameter.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120422T100042Z" changeid="xavier">
+        <seg>Si la table ne se nomme pas lmConfig, mettre son nom dans le paramètre &lt;c0&gt;dbiTable&lt;/c0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -23830,6 +24116,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T072415Z" changeid="xavier">
         <seg>Index</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Informix</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T204647Z" changeid="xavier">
+        <seg>Informix</seg>
       </tuv>
     </tu>
     <tu>
@@ -25138,6 +25432,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Lemonldap-ng.ini parameters</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120422T095900Z" changeid="xavier">
+        <seg>Paramètres lemonldap-ng.ini</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Lemonldap::NG can be used to prompt users with a message.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -25448,10 +25750,34 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>LockDataSource</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T205157Z" changeid="xavier">
+        <seg>LockDataSource</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>LockDirectory</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T192006Z" changeid="xavier">
         <seg>LockDirectory</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LockPassword</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T205158Z" changeid="xavier">
+        <seg>LockPassword</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>LockUserName</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T205157Z" changeid="xavier">
+        <seg>LockUserName</seg>
       </tuv>
     </tu>
     <tu>
@@ -26024,6 +26350,20 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Mot de passe pour l'utilisateur lemonldap-ng :
+[...]
+lemonldap-ng=&gt; create table sessions ( id char(32) not null primary key, a_session text );
+lemonldap-ng=&gt; q</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T204926Z" changeid="xavier">
+        <seg>Mot de passe pour l'utilisateur lemonldap-ng :
+[...]
+lemonldap-ng=&gt; create table sessions ( id char(32) not null primary key, a_session text );
+lemonldap-ng=&gt; q</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Mounir GZADY</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -26108,6 +26448,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T194913Z" changeid="xavier">
         <seg>MySQL</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>MySQL example (suppose that our servers are in 10.0.0.0/24 network):</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T204507Z" changeid="xavier">
+        <seg>Exemple MySQL (on suppose que les serveurs sont sur le réseau 10.0.0.0/24):</seg>
       </tuv>
     </tu>
     <tu>
@@ -26976,6 +27324,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Other components needs just a read access.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120422T100222Z" changeid="xavier">
+        <seg>Les autres composants n'ont besoin que d'un accès en lecture.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Other modules must be installed only if you planned to use the related feature.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T140742Z" changeid="guimard">
@@ -27060,6 +27416,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T073709Z" changeid="xavier">
         <seg>Des données POST : à utiliser pour répondre aux formulaires</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>PRIMARY KEY (cfgNum,field)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120422T100119Z" changeid="xavier">
+        <seg>PRIMARY KEY (cfgNum,field)</seg>
       </tuv>
     </tu>
     <tu>
@@ -27718,6 +28082,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>PostgreSQL</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T204641Z" changeid="xavier">
+        <seg>PostgreSQL</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Practical Extraction and Report Language</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -27746,6 +28118,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T113706Z" changeid="xavier">
         <seg>Préparer le serveur LDAP et le fichier de configuration LL::NG</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Prepare the database</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T204705Z" changeid="xavier">
+        <seg>Preparer la base de données</seg>
       </tuv>
     </tu>
     <tu>
@@ -27994,6 +28374,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="FR-FR">
         <seg>Modèle RBAC</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>RDBI</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120422T100116Z" changeid="xavier">
+        <seg>RDBI</seg>
       </tuv>
     </tu>
     <tu>
@@ -28414,6 +28802,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Required for PostgreSQL</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T205026Z" changeid="xavier">
+        <seg>Requis pour PostgreSQL</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Required parameters</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -28826,6 +29222,30 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T195453Z" changeid="xavier">
         <seg>SQL</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>SQL configuration</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120422T100113Z" changeid="xavier">
+        <seg>Configuration SQL</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>SQL configuration backends</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120421T174411Z" changeid="xavier">
+        <seg>Backends de configuration SQL</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>SQL session backend</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T204558Z" changeid="xavier">
+        <seg>Backend de sessions SQL</seg>
       </tuv>
     </tu>
     <tu>
@@ -29282,6 +29702,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="FR-FR">
         <seg>Reportez-vous à la &lt;a2&gt;FAQ Twitter&lt;/a2&gt; pour en savoir plus.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>See &lt;a2&gt;how to change configuration backend&lt;/a2&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120422T095849Z" changeid="xavier">
+        <seg>Voir &lt;a2&gt;comment changer de backend de configuration&lt;/a2&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -30290,6 +30718,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T101826Z" changeid="xavier">
         <seg>Superadmin : personne ne peut l'arrêter !</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Sybase</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T204650Z" changeid="xavier">
+        <seg>Sybase</seg>
       </tuv>
     </tu>
     <tu>
@@ -31754,6 +32190,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>There is 3 types of &lt;a0&gt;SQL&lt;/a0&gt; configuration backends for LemonLDAP::NG :</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120421T174434Z" changeid="xavier">
+        <seg>Il y a 3 types de backends de configuration &lt;a0&gt;SQL&lt;/a0&gt; pour LemonLDAP::NG :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>There is nothing more to do that select the backend in the Manager.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T115527Z" changeid="xavier">
@@ -32982,6 +33426,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv lang="FR-FR" changedate="20120101T184532Z" changeid="xavier">
         <seg>Pour utiliser TLS, utiliser &lt;c0&gt;ldap+tls://server&lt;/c0&gt; et pour utiliser LDAPS, indiquer &lt;c1&gt;ldaps://server&lt;/c1&gt; au lieu du nom de serveur.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>To use a &lt;a0&gt;SQL&lt;/a0&gt; backend, configure your &lt;c1&gt;lemonldap-ng.ini&lt;/c1&gt; file (section configuration) :</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120422T095922Z" changeid="xavier">
+        <seg>Pour utiliser un backend &lt;a0&gt;SQL&lt;/a0&gt;, configurer le fichier &lt;c1&gt;lemonldap-ng.ini&lt;/c1&gt; (section configuration) :</seg>
       </tuv>
     </tu>
     <tu>
@@ -34562,6 +35014,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can also use the same user for all.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120422T100307Z" changeid="xavier">
+        <seg>On peut également utiliser le même compte pour tous.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You can also use yum on local RPMs file:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T095919Z" changeid="xavier">
@@ -35010,6 +35470,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can use different dbiUser strings :</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T204341Z" changeid="xavier">
+        <seg>Plusieurs chaînes dbiUser sont utilisables :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You can use different type of access: &lt;a0&gt;SQL&lt;/a0&gt;, &lt;a1&gt;File&lt;/a1&gt; or &lt;a2&gt;LDAP&lt;/a2&gt; for servers in secured network and &lt;a3&gt;SOAP&lt;/a3&gt; for remote servers.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T085627Z" changeid="xavier">
@@ -35102,6 +35570,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T053324Z" changeid="guimard">
         <seg>Il faut créer soi-même la table :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You have to grant read/write access for the manager component.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120422T100202Z" changeid="xavier">
+        <seg>Il faut autoriser l'accès en lecture et écriture pour le manager.</seg>
       </tuv>
     </tu>
     <tu>
@@ -35254,6 +35730,22 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T095637Z" changeid="xavier">
         <seg>Il faut également installer un dépôt pour les dépendances ne faisant pas partie du core.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You must also install the database connector (&lt;a1&gt;DBD::Oracle&lt;/a1&gt;, &lt;a2&gt;DBD::Pg&lt;/a2&gt;,…)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T205137Z" changeid="xavier">
+        <seg>Il faut également installer le connecteur à la base de données (&lt;a1&gt;DBD::Oracle&lt;/a1&gt;, &lt;a2&gt;DBD::Pg&lt;/a2&gt;,…)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You must read the man page corresponding to your database (&lt;a0&gt;Apache::Session::MySQL&lt;/a0&gt;, …) to learn more about parameters.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T205112Z" changeid="xavier">
+        <seg>Il faut consulter la page de manuel correspondant à la base de données (&lt;a0&gt;Apache::Session::MySQL&lt;/a0&gt;, …) pour connaître les paramètres.</seg>
       </tuv>
     </tu>
     <tu>
@@ -35518,6 +36010,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T140427Z" changeid="xavier">
         <seg>Une application peut connaître l'utilisateur connecté en utilisant :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Your database must have a specific table to host sessions.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T204730Z" changeid="xavier">
+        <seg>Il faut dédier une table pour héberger les sessions.</seg>
       </tuv>
     </tu>
     <tu>
@@ -35906,6 +36406,14 @@ a2ensite portal-apache2.conf</seg>
       <tuv lang="FR-FR" changedate="20120324T162138Z" changeid="xavier">
         <seg>a2ensite manager-apache2.conf
 a2ensite portal-apache2.conf</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>a_session blob</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T204828Z" changeid="xavier">
+        <seg>a_session blob</seg>
       </tuv>
     </tu>
     <tu>
@@ -36474,6 +36982,22 @@ mkdir myskin/images</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>cfgNum int not null primary key,</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120422T100121Z" changeid="xavier">
+        <seg>cfgNum int not null primary key,</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>cfgNum int(11) NOT NULL,</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120422T100117Z" changeid="xavier">
+        <seg>cfgNum int(11) NOT NULL,</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>change password (with server side password policy management)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T201520Z" changeid="xavier">
@@ -36702,6 +37226,14 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>createdb -O lemonldap-ng lemonldap-ng</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T204912Z" changeid="xavier">
+        <seg>createdb -O lemonldap-ng lemonldap-ng</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>css/all.css</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -36766,6 +37298,16 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>data longblob
+);</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120422T100122Z" changeid="xavier">
+        <seg>data longblob
+);</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>date datetime &lt;s3&gt;NOT&lt;/s3&gt; &lt;s4&gt;NULL&lt;/s4&gt;&lt;s5&gt;,&lt;/s5&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T053326Z" changeid="guimard">
@@ -36778,6 +37320,14 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T054249Z" changeid="guimard">
         <seg>date : date de création (format AAAA-MM-JJ)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>dbi:Pg:dbname=sessions;host=10.2.3.1</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T205015Z" changeid="xavier">
+        <seg>dbi:Pg:dbname=sessions;host=10.2.3.1</seg>
       </tuv>
     </tu>
     <tu>
@@ -38926,6 +39476,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>field varchar(255) NOT NULL DEFAULT '',</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120422T100118Z" changeid="xavier">
+        <seg>field varchar(255) NOT NULL DEFAULT '',</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>firewalls (but be careful if more than 1 server is behind the firewall)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T135204Z" changeid="xavier">
@@ -39886,10 +40444,42 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://search.cpan.org/perldoc?Apache::Session::Informix</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T204645Z" changeid="xavier">
+        <seg>http://search.cpan.org/perldoc?Apache::Session::Informix</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://search.cpan.org/perldoc?Apache::Session::Memcached</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T050654Z" changeid="guimard">
         <seg>http://search.cpan.org/perldoc?Apache::Session::Memcached</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://search.cpan.org/perldoc?Apache::Session::MySQL</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T204636Z" changeid="xavier">
+        <seg>http://search.cpan.org/perldoc?Apache::Session::MySQL</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://search.cpan.org/perldoc?Apache::Session::Oracle</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T204642Z" changeid="xavier">
+        <seg>http://search.cpan.org/perldoc?Apache::Session::Oracle</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://search.cpan.org/perldoc?Apache::Session::Postgres</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T204640Z" changeid="xavier">
+        <seg>http://search.cpan.org/perldoc?Apache::Session::Postgres</seg>
       </tuv>
     </tu>
     <tu>
@@ -39902,10 +40492,34 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://search.cpan.org/perldoc?Apache::Session::Sybase</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T204648Z" changeid="xavier">
+        <seg>http://search.cpan.org/perldoc?Apache::Session::Sybase</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://search.cpan.org/perldoc?CGI</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T140600Z" changeid="xavier">
         <seg>http://search.cpan.org/perldoc?CGI</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://search.cpan.org/perldoc?DBD::Oracle</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T205028Z" changeid="xavier">
+        <seg>http://search.cpan.org/perldoc?DBD::Oracle</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://search.cpan.org/perldoc?DBD::Pg</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T205030Z" changeid="xavier">
+        <seg>http://search.cpan.org/perldoc?DBD::Pg</seg>
       </tuv>
     </tu>
     <tu>
@@ -41992,6 +42606,14 @@ chown www-data /usr/local/lemonldap-ng/notifications/</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>mysqladmin create lemonldapng</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T204812Z" changeid="xavier">
+        <seg>mysqladmin create lemonldapng</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>mysuperpassword</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T072414Z" changeid="xavier">
@@ -42124,6 +42746,22 @@ chown www-data /usr/local/lemonldap-ng/notifications/</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>un non-sécurisé pour les autres applications</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>one with just read rights for other servers</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T204439Z" changeid="xavier">
+        <seg>une avec seulement des droits en lecture pour les autres serveurs</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>one with read/write rights for servers hosting the manager</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T204418Z" changeid="xavier">
+        <seg>une avec des droits en lecture/écriture pour les serveurs hébergeant le manager</seg>
       </tuv>
     </tu>
     <tu>
@@ -42526,6 +43164,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T070305Z" changeid="guimard">
         <seg>proxyOptions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>psql -h 127.0.0.1 -U lemonldap-ng -W lemonldap-ng</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T204920Z" changeid="xavier">
+        <seg>psql -h 127.0.0.1 -U lemonldap-ng -W lemonldap-ng</seg>
       </tuv>
     </tu>
     <tu>
@@ -43140,6 +43786,16 @@ ssoRoles: admin</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>su - postgres
+createuser lemonldap-ng -P</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T204850Z" changeid="xavier">
+        <seg>su - postgres
+createuser lemonldap-ng -P</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>sudo apachectl configtest
 sudo apachectl restart</seg>
       </tuv>
@@ -43692,6 +44348,14 @@ cd lemonldap-ng-*</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>value longblob,</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120422T100119Z" changeid="xavier">
+        <seg>value longblob,</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>vi /etc/apt/sources.list.d/lemonldap-ng.list</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T093553Z" changeid="xavier">
@@ -44012,6 +44676,14 @@ cd lemonldap-ng-*</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112935Z" changeid="xavier">
         <seg>…</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>….</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120423T204654Z" changeid="xavier">
+        <seg>….</seg>
       </tuv>
     </tu>
     <tu>
