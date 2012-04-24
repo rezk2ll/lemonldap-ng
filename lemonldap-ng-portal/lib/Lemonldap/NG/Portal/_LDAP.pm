@@ -239,7 +239,7 @@ sub userModifyPassword {
             }
 
             # Use SetPassword extended operation
-            use Net::LDAP::Extension::SetPassword;
+            require Net::LDAP::Extension::SetPassword;
             $mesg =
               ($oldpassword)
               ? $self->set_password(
