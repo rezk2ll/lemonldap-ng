@@ -28,6 +28,11 @@ if ( $> == 0 ) {
 
 my $conf = Lemonldap::NG::Common::Conf->new();
 
+unless ($conf) {
+    print STDERR $Lemonldap::NG::Common::Conf::msg;
+    exit 1;
+}
+
 open F1, ">$refFile"  or quit($!);
 open F2, ">$editFile" or quit($!);
 my $tmp = $conf->getConf();
