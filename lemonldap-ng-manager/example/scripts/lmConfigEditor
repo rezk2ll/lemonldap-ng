@@ -7,9 +7,9 @@ use POSIX;
 use strict;
 
 eval {
-    POSIX::setuid( ( getpwnam('__APACHEUSER__') )[2] );
     POSIX::setgid( ( getgrnam('__APACHEGROUP__') )[2] );
-    print STDERR "Running as $>\n";
+    POSIX::setuid( ( getpwnam('__APACHEUSER__') )[2] );
+    print STDERR "Running as uid $> and gid $)\n";
 };
 
 our $refFile  = `mktemp`;
