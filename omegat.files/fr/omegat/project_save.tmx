@@ -542,6 +542,46 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>'cache_depth' =&gt; 5,?</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083921Z" changeid="xavier">
+        <seg>'cache_depth' =&gt; 5,?</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>'cache_root' =&gt; '/tmp',?</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083922Z" changeid="xavier">
+        <seg>'cache_root' =&gt; '/tmp',?</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>'default_expires_in' =&gt; 600,?</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083924Z" changeid="xavier">
+        <seg>'default_expires_in' =&gt; 600,?</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>'directory_umask' =&gt; '007',?</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083923Z" changeid="xavier">
+        <seg>'directory_umask' =&gt; '007',?</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>'namespace' =&gt; 'MyNamespace'?</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083924Z" changeid="xavier">
+        <seg>'namespace' =&gt; 'MyNamespace'?</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>($uid =~ /^admin0/i)[0] ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T171554Z" changeid="xavier">
@@ -624,6 +664,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T141655Z" changeid="xavier">
         <seg>-1 si cette &lt;a0&gt;URL&lt;/a0&gt; n'est pas connue de la configuration de &lt;a1&gt;LL::NG&lt;/a1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>-I/etc/apache2 -e &amp;Lemonldap::NG::Handler::Status::run(Cache::FileCache,{?</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083920Z" changeid="xavier">
+        <seg>-I/etc/apache2 -e &amp;Lemonldap::NG::Handler::Status::run(Cache::FileCache,{?</seg>
       </tuv>
     </tu>
     <tu>
@@ -1428,6 +1476,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T050030Z" changeid="xavier">
         <seg>../../../media/documentation/remote-principle.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../media/documentation/status_standard.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T084030Z" changeid="xavier">
+        <seg>../../../media/documentation/status_standard.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -5792,6 +5848,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/documentation/status_standard.png?id=documentation%3A1.2%3Astatus</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T084028Z" changeid="xavier">
+        <seg>/_detail/documentation/status_standard.png?id=documentation%3A1.2%3Astatus</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>/_detail/icons/access.png?id=documentation%3A1.2%3Astart</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120505T082656Z" changeid="xavier">
@@ -6744,6 +6808,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;/&lt;s6&gt;Location&lt;/s6&gt;&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T084135Z" changeid="xavier">
+        <seg>&lt;/&lt;s6&gt;Location&lt;/s6&gt;&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;/&lt;s7&gt;Directory&lt;/s7&gt;&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T064859Z" changeid="xavier">
@@ -6926,6 +6998,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T064057Z" changeid="xavier">
         <seg>&lt;&lt;s1&gt;Location&lt;/s1&gt; /index.pl/adminSessions&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;&lt;s1&gt;Location&lt;/s1&gt; /status&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T084131Z" changeid="xavier">
+        <seg>&lt;&lt;s1&gt;Location&lt;/s1&gt; /status&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -10562,6 +10642,14 @@ PerlOptions +GlobalRequest</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;# Uncomment this to activate status module&lt;/s0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T084131Z" changeid="xavier">
+        <seg>&lt;s0&gt;# Uncomment this to activate status module&lt;/s0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;# boolean macro&lt;/s0&gt;
 isAdmin &lt;s1&gt;-&gt;&lt;/s1&gt; &lt;s2&gt;$uid&lt;/s2&gt; &lt;s3&gt;eq&lt;/s3&gt; &lt;s4&gt;'foo'&lt;/s4&gt; &lt;s5&gt;or&lt;/s5&gt; &lt;s6&gt;$uid&lt;/s6&gt; &lt;s7&gt;eq&lt;/s7&gt; &lt;s8&gt;'bar'&lt;/s8&gt;
 &lt;s9&gt;# other macro &lt;/s9&gt;
@@ -11230,6 +11318,20 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
         <seg>&lt;s0&gt;&lt;s1&gt;[&lt;/s1&gt;configuration&lt;s2&gt;]&lt;/s2&gt;&lt;/s0&gt;
 &lt;s3&gt;type&lt;/s3&gt;&lt;s4&gt;=&lt;/s4&gt;&lt;s5&gt;File&lt;/s5&gt;
 &lt;s6&gt;dirName&lt;/s6&gt; &lt;s7&gt;=&lt;/s7&gt;&lt;s8&gt; /usr/local/lemonldap-ng/data/conf&lt;/s8&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;&lt;s1&gt;[&lt;/s1&gt;handler&lt;s2&gt;]&lt;/s2&gt;&lt;/s0&gt;
+# Set status to 1 if you want to have the report of activity &lt;s3&gt;(&lt;/s3&gt;used for
+# example to inform MRTG&lt;s4&gt;)&lt;/s4&gt;
+&lt;s5&gt;status&lt;/s5&gt; &lt;s6&gt;=&lt;/s6&gt;&lt;s7&gt; 1&lt;/s7&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T084453Z" changeid="xavier">
+        <seg>&lt;s0&gt;&lt;s1&gt;[&lt;/s1&gt;handler&lt;s2&gt;]&lt;/s2&gt;&lt;/s0&gt;
+# Set status to 1 if you want to have the report of activity &lt;s3&gt;(&lt;/s3&gt;used for
+# example to inform MRTG&lt;s4&gt;)&lt;/s4&gt;
+&lt;s5&gt;status&lt;/s5&gt; &lt;s6&gt;=&lt;/s6&gt;&lt;s7&gt; 1&lt;/s7&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -16622,6 +16724,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s5&gt;Allow&lt;/s5&gt; from 127.0.0.0/8</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T084132Z" changeid="xavier">
+        <seg>&lt;s5&gt;Allow&lt;/s5&gt; from 127.0.0.0/8</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s5&gt;Allow&lt;/s5&gt; from &lt;s6&gt;all&lt;/s6&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T064858Z" changeid="xavier">
@@ -21652,6 +21762,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Edit &lt;c0&gt;lemonldap-ng.ini&lt;/c0&gt;, and activate status in the &lt;c1&gt;handler&lt;/c1&gt; section:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T084431Z" changeid="xavier">
+        <seg>Éditer &lt;c0&gt;lemonldap-ng.ini&lt;/c0&gt;, et activer le statut dans la section &lt;c1&gt;handler&lt;/c1&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Edit Dokuwiki local configuration (&lt;c0&gt;conf/local.php&lt;/c0&gt;) and set &lt;c1&gt;lemonldap&lt;/c1&gt; as authentication type:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T115315Z" changeid="xavier">
@@ -21964,6 +22082,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T155730Z" changeid="xavier">
         <seg>Exemple d'hôte virtuel protégé avec Lemonldap::NG en proxy-inverse :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Example of status page:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T084026Z" changeid="xavier">
+        <seg>Exemple de page de statut :</seg>
       </tuv>
     </tu>
     <tu>
@@ -23484,6 +23610,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T143403Z" changeid="guimard">
         <seg>Redirections des agents</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Handler Status</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083427Z" changeid="xavier">
+        <seg>Page de statut de l'agent</seg>
       </tuv>
     </tu>
     <tu>
@@ -25276,6 +25410,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T050456Z" changeid="xavier">
         <seg>Ce peut être fait par accès direct à la base des sessions principale ou en utilisant une requête &lt;a0&gt;SOAP&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>It can be seen in system processes, for example:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083912Z" changeid="xavier">
+        <seg>Il peut être vu dans les processus du système, par exemple :</seg>
       </tuv>
     </tu>
     <tu>
@@ -28600,6 +28742,14 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>PerlHeaderParserHandler My::Package-&gt;status</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T084133Z" changeid="xavier">
+        <seg>PerlHeaderParserHandler My::Package-&gt;status</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>PerlHeaderParserHandler My::SecureToken
  </seg>
       </tuv>
@@ -31634,6 +31784,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Statistics are displayed when calling the status path on an Handler (for example: &lt;a0&gt;http://test1.example.com/status&lt;/a0&gt;).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T084016Z" changeid="xavier">
+        <seg>Les statistiques sont affichées lors des appels au chemin du statut sur un agent (par exemple : &lt;a0&gt;http://test1.example.com/status&lt;/a0&gt;).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Status module</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -32780,6 +32938,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The statistics are collected trough a daemon launched by the Handler.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083741Z" changeid="xavier">
+        <seg>Ces statistiques sont collectées via un démon lancé par l'agent.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The tag &quot;&lt;HOST&gt;&quot; can
 #          be used for standard IP/hostname matching and is only an alias for
 #          (?:::f{4,6}:)?(?P&lt;host&gt;[\w\-.^_]+)
@@ -33042,6 +33208,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T154656Z" changeid="xavier">
         <seg>Ensuite sur le serveur Linux :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Then restart Apache.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T084145Z" changeid="xavier">
+        <seg>Redémarrer Apache ensuite.</seg>
       </tuv>
     </tu>
     <tu>
@@ -33774,6 +33948,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>This means that if several Handlers are deployed, each will manage its own statistics.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083623Z" changeid="xavier">
+        <seg>Donc si plusieurs agents sont déployés, chacun gère ses propres statistiques.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>This mechanism allow to do &lt;a0&gt;SSO&lt;/a0&gt; on application with an unsafe link between Handler and the application, but with a safe link with the Memcached server.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T205046Z" changeid="xavier">
@@ -33890,6 +34072,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv lang="FR-FR">
         <seg>Cette option peut être surchargée pour chaque fournisseur de service.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>This page can be browsed for example by &lt;a0&gt;MRTG&lt;/a0&gt; using the &lt;a1&gt;MRTG monitoring script&lt;/a1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083710Z" changeid="xavier">
+        <seg>Cette page peut être parcourue par exemple par &lt;a0&gt;MRTG&lt;/a0&gt; en utilisant le &lt;a1&gt;script de surveillance MRTG&lt;/a1&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -34834,6 +35024,14 @@ Is this ok [y/N]: y</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Upgrade from 1.1 to 1.2</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T084508Z" changeid="xavier">
+        <seg>Mettre à jour de 1.1 vers 1.2</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Usage</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T071031Z" changeid="guimard">
@@ -35682,6 +35880,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T062318Z" changeid="xavier">
         <seg>À la réception de la requête, le contexte d'authentification réel est traduit en un niveau d'authentification interne (voir &lt;a1&gt;comment configurer la translation&lt;/a1&gt;), utilisable pour accorder ou non la création de session.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>When status feature is activated, Handlers and portal will collect statistics and save them in their local cache.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083528Z" changeid="xavier">
+        <seg>Lorsque la fonctionnalité &quot;status&quot; est activée, les agents et le portail collectent des statistiques et les sauvegardent dans le cache local</seg>
       </tuv>
     </tu>
     <tu>
@@ -37030,6 +37236,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You need to give access to status path in the Handler Apache configuration:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T084123Z" changeid="xavier">
+        <seg>Il faut autoriser l'accès au chemin du statut dans le configuration Apache de l'agent :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You need to know the technical name of configuration parameter to do this.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T071630Z" changeid="xavier">
@@ -37082,6 +37296,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T203647Z" changeid="guimard">
         <seg>On doit être redirigé vers le portail &lt;a0&gt;LL::NG&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You should change the &lt;c0&gt;Allow&lt;/c0&gt; directive to match administration &lt;a1&gt;IP&lt;/a1&gt;, or use another Apache protection mean.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T084400Z" changeid="xavier">
+        <seg>On peut changer la directive &lt;c0&gt;Allow&lt;/c0&gt; pour réserver l'adresse &lt;a1&gt;IP&lt;/a1&gt; d'administration, ou utiliser une autre protection.</seg>
       </tuv>
     </tu>
     <tu>
@@ -40692,6 +40914,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:status_standard.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T084029Z" changeid="xavier">
+        <seg>documentation:status_standard.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>domain</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T061615Z" changeid="guimard">
@@ -42008,6 +42238,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>http://test1.example.com</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://test1.example.com/status</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083926Z" changeid="xavier">
+        <seg>http://test1.example.com/status</seg>
       </tuv>
     </tu>
     <tu>
@@ -44304,6 +44542,14 @@ openssl x509 -req -days 3650 -in cert.csr -signkey lemonldap-ng-priv.key -out ce
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>perl -MLemonldap::NG::Handler::Status -I/etc/perl -I/usr/local/lib/perl/5.10.1 -I/usr/local/share/perl/5.10.1 -I/usr/lib/perl5 -I/usr/share/perl5 -I/usr/lib/perl/5.10 -I/usr/share/perl/5.10 -I/usr/local/lib/site_perl -I.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083913Z" changeid="xavier">
+        <seg>perl -MLemonldap::NG::Handler::Status -I/etc/perl -I/usr/local/lib/perl/5.10.1 -I/usr/local/share/perl/5.10.1 -I/usr/lib/perl5 -I/usr/share/perl5 -I/usr/lib/perl/5.10 -I/usr/share/perl/5.10 -I/usr/local/lib/site_perl -I.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>perl-Lemonldap-NG-Common: CPAN - Shared modules</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T095425Z" changeid="xavier">
@@ -46020,6 +46266,14 @@ cd lemonldap-ng-*</seg>
         <seg>}
 
 [domain_realm]</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>}?);</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083926Z" changeid="xavier">
+        <seg>}?);</seg>
       </tuv>
     </tu>
     <tu>
