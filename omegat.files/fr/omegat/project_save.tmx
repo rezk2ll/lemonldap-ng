@@ -1752,6 +1752,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.2/cda.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120424T040620Z" changeid="xavier">
+        <seg>../../documentation/1.2/cda.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.2/changeconfbackend.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T142639Z" changeid="xavier">
@@ -2316,6 +2324,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120222T125711Z" changeid="xavier">
         <seg>../../documentation/latest/ssocookie.html#sso_cookie</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/presentation.html#cross_domain_authentication_cda</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120424T040235Z" changeid="xavier">
+        <seg>../../documentation/presentation.html#cross_domain_authentication_cda</seg>
       </tuv>
     </tu>
     <tu>
@@ -10282,6 +10298,46 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;+10m&lt;/s0&gt;: ten minutes from session creation</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120502T041842Z" changeid="xavier">
+        <seg>&lt;s0&gt;+10m&lt;/s0&gt; : dix minutes après la création de la session</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;+10y&lt;/s0&gt;: ten years from session creation</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120502T041924Z" changeid="xavier">
+        <seg>&lt;s0&gt;+10y&lt;/s0&gt; : dix ans après la création de la session</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;+1h&lt;/s0&gt;: one hour from session creation</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120502T041855Z" changeid="xavier">
+        <seg>&lt;s0&gt;+1h&lt;/s0&gt; : une heure après la création de la session</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;+30s&lt;/s0&gt;: 30 seconds from session creation</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120502T041821Z" changeid="xavier">
+        <seg>&lt;s0&gt;+30s&lt;/s0&gt; : 30 secondes après la création de la session</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;+3M&lt;/s0&gt;: three months from session creation</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120502T041912Z" changeid="xavier">
+        <seg>&lt;s0&gt;+3M&lt;/s0&gt; : trois mois après la création de la session</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;.css&lt;/s0&gt;: &lt;a1&gt;CSS&lt;/a1&gt; (styles)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T074252Z" changeid="guimard">
@@ -11422,6 +11478,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Cookie expiration time&lt;/s0&gt;: by default, &lt;a1&gt;SSO&lt;/a1&gt; cookie is a session cookie, which mean it will be destroyed when the browser is closed.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120502T041722Z" changeid="xavier">
+        <seg>&lt;s0&gt;Durée de vie du cookie&lt;/s0&gt; : par défaut, le cookie &lt;a1&gt;SSO&lt;/a1&gt; est un cookie de session, ce qui signifie qu'il n'est pas conservé lorsque le navigateur est clos.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Cookie name&lt;/s0&gt; (optional): name of the cookie of internal portal, if different from external portal</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120215T045836Z" changeid="xavier">
@@ -11434,6 +11498,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20120216T200020Z" changeid="xavier">
         <seg>&lt;s0&gt;Nom du cookie&lt;/s0&gt; (optionnel) : nom du cookie du portail primaire, s'il est différent de celui du portail secondaire</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Cookie name&lt;/s0&gt;: name of the cookie, can be changed to avoid conflicts with other LemonLDAP::NG installations</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120424T040541Z" changeid="xavier">
+        <seg>&lt;s0&gt;Nom de cookie&lt;/s0&gt; : nom du cookie, peut être changé pour éviter les conflits avec d'autres installations LemonLDAP::NG</seg>
       </tuv>
     </tu>
     <tu>
@@ -11562,6 +11634,30 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;s0&gt;Documentation&lt;/s0&gt;: utilisez &lt;a1&gt;OmegaT&lt;/a1&gt; pour traduire la dcumentation hors-ligne et configurez le :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Domain&lt;/s0&gt;: validity domain for the cookie (the cookie will not be sent on other domains)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120424T040619Z" changeid="xavier">
+        <seg>&lt;s0&gt;Domaine&lt;/s0&gt; : domaine de valaidité du cookie (le cookie n'est pas envoyé vers d'autres domaines)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Double cookie for single session&lt;/s0&gt;: as same, two cookies are delivered, but only one session is written in session database</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120502T041549Z" changeid="xavier">
+        <seg>&lt;s0&gt;Double cookie pour session unique&lt;/s0&gt; : de même, deux cookies sont délivrés, mais une seule session n'est écrite dans la base de données</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Double cookie&lt;/s0&gt;: two cookies are delivered, one for &lt;a1&gt;HTTP&lt;/a1&gt; and HTTPS connections, the other for HTTPS only</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120424T040939Z" changeid="xavier">
+        <seg>&lt;s0&gt;Double cookie&lt;/s0&gt; : deux cookies sont délivrés, un pour les connexions &lt;a1&gt;HTTP&lt;/a1&gt; et HTTPS, l'autre seulement pour HTTPS</seg>
       </tuv>
     </tu>
     <tu>
@@ -11796,6 +11892,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Handler&lt;/s0&gt;: user is redirected if he has no &lt;a1&gt;SSO&lt;/a1&gt; cookie (or in &lt;a2&gt;CDA&lt;/a2&gt; mode)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T080543Z" changeid="xavier">
+        <seg>les &lt;s0&gt;agents (handlers)&lt;/s0&gt; : l'utilisateur y est redirigé s'il n'a pas de cookie &lt;a1&gt;SSO&lt;/a1&gt; (ou en mode &lt;a2&gt;CDA&lt;/a2&gt;)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Hash schema&lt;/s0&gt;: &lt;a1&gt;SQL&lt;/a1&gt; method for hashing password.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T201207Z" changeid="xavier">
@@ -11872,6 +11976,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR">
         <seg>Les &lt;s0&gt;bases de données internes&lt;/s0&gt;: utilisées seulement par LemonLDAP::NG</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Javascript protection&lt;/s0&gt;: set httpOnly flag, to avoid cookie been caught by javascript code</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120502T041623Z" changeid="xavier">
+        <seg>&lt;s0&gt;Protection Javascript&lt;/s0&gt; : active le drapeau httpOnly pour éviter que le cookie ne soit accessible par code javascript</seg>
       </tuv>
     </tu>
     <tu>
@@ -12204,6 +12316,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Multiple domains&lt;/s0&gt;: enable &lt;a1&gt;cross domain mechanism&lt;/a1&gt; (without this, you cannot extend &lt;a2&gt;SSO&lt;/a2&gt; to other domains)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120424T040726Z" changeid="xavier">
+        <seg>&lt;s0&gt;Domaines multiples&lt;/s0&gt; : active le &lt;a1&gt;mécanisme inter-domaines&lt;/a1&gt; (sans ceci, on ne peut pas étendre le &lt;a2&gt;SSO&lt;/a2&gt; aux autres domaines)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Multiple sessions&lt;/s0&gt;, you can restrict the number of open sessions:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T162549Z" changeid="xavier">
@@ -12274,6 +12394,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T123827Z" changeid="xavier">
         <seg>&lt;s0&gt;New&lt;/s0&gt; : pour écrire l'historique de la configuration</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Non secured cookie&lt;/s0&gt;: the cookie can be sent over &lt;a1&gt;HTTP&lt;/a1&gt; and HTTPS connections</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120424T040817Z" changeid="xavier">
+        <seg>&lt;s0&gt;Cookie non sécurisé&lt;/s0&gt; : le cookie peut être envoyé via des connexions &lt;a1&gt;HTTP&lt;/a1&gt; et HTTPS</seg>
       </tuv>
     </tu>
     <tu>
@@ -12506,6 +12634,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR">
         <seg>Les &lt;s0&gt;messages du portail&lt;/s0&gt;: tous les messages sont regroupés dans lemonldap-ng/lib/Lemonldap/NG/Portal/_i18n.pm.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Portal&lt;/s0&gt;: the portal redirect on itself in many cases (credentials POST, &lt;a1&gt;SAML&lt;/a1&gt;, etc.)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T080641Z" changeid="xavier">
+        <seg>le &lt;s0&gt;portail&lt;/s0&gt; : le portail redirige vers lui-même dans plusieurs cas (POST d'authentification, &lt;a1&gt;SAML&lt;/a1&gt;, etc...)</seg>
       </tuv>
     </tu>
     <tu>
@@ -12822,6 +12958,22 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Secured cookie&lt;/s0&gt;: 4 options:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120424T040738Z" changeid="xavier">
+        <seg>&lt;s0&gt;Cookie sécurisé&lt;/s0&gt; : 4 options :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Secured cookie&lt;/s0&gt;: the cookie can only be sent over HTTPS</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120424T040846Z" changeid="xavier">
+        <seg>&lt;s0&gt;Cookie sécurisé&lt;/s0&gt; : le cookie peut être envoyé via HTTPS</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;Send mail on password change&lt;/s0&gt;: send a mail if the password is changed from the Menu, or from forced password reset (&lt;a1&gt;LDAP&lt;/a1&gt; password policy)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T080522Z" changeid="guimard">
@@ -13070,6 +13222,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;s0&gt;Thomas CHEMINEAU&lt;/s0&gt;: développeur, concepteur graphique</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Thursday, 25-Apr-1999 00:40:33 GMT&lt;/s0&gt;: at the indicated time and date (but this is probably a bad idea)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120502T041956Z" changeid="xavier">
+        <seg>&lt;s0&gt;Thursday, 25-Apr-1999 00:40:33 GMT&lt;/s0&gt; : jusqu'à la date indiquée (généralement une mauvaise idée)</seg>
       </tuv>
     </tu>
     <tu>
@@ -19084,6 +19244,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Changing the domain value will not update other configuration parameters, like virtual host names, portal &lt;a0&gt;URL&lt;/a0&gt;, etc.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T080324Z" changeid="xavier">
+        <seg>Changer la valeur du domaine ne met pas à jour les autres paramètres tels les noms d'hôtes virtuels, l'&lt;a0&gt;URL&lt;/a0&gt; du portail, etc...</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Check &lt;a0&gt;XSS&lt;/a0&gt; Attacks</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T065933Z" changeid="guimard">
@@ -23316,6 +23484,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T073458Z" changeid="xavier">
         <seg>Si l'un est manquant, le compte ne sera pas créé.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>If secured cookie is enabled, the portal &lt;a3&gt;URL&lt;/a3&gt; &lt;s4&gt;must&lt;/s4&gt; be HTTPS.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T080753Z" changeid="xavier">
+        <seg>Si le cookie sécurisé est activé, l'&lt;a3&gt;URL&lt;/a3&gt; du portail &lt;s4&gt;doit&lt;/s4&gt; être en HTTPS.</seg>
       </tuv>
     </tu>
     <tu>
@@ -27938,6 +28114,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Portal &lt;a0&gt;URL&lt;/a0&gt; is the address used to redirect users on the authentication portal by:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T080447Z" changeid="xavier">
+        <seg>L'&lt;a0&gt;URL&lt;/a0&gt; du portail est l'adresse utilisée pour rediriger les utilisateurs bers le portail d'authentification par :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Portal Redirections</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T144704Z" changeid="guimard">
@@ -27950,6 +28134,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T171524Z" changeid="xavier">
         <seg>Services SOAP du portail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Portal URL</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T080351Z" changeid="xavier">
+        <seg>URL du portail</seg>
       </tuv>
     </tu>
     <tu>
@@ -29298,6 +29490,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>SSO cookie</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120424T040233Z" changeid="xavier">
+        <seg>Cookie SSO</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>SSOExtensions::function1</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T112219Z" changeid="xavier">
@@ -30138,6 +30338,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Single Sign On cookie, domain and portal URL</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120424T040225Z" changeid="xavier">
+        <seg>Cookie SSO, URL du portail et domaine</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Single Sign On for Web Applications</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -30948,6 +31156,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The &lt;a0&gt;SSO&lt;/a0&gt; cookie is build by the portal (as described in the &lt;a1&gt;login kinematic&lt;/a1&gt;), or by the Handler for cross domain authentication (see &lt;a2&gt;CDA kinematic&lt;/a2&gt;).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120424T040421Z" changeid="xavier">
+        <seg>Le cookie &lt;a0&gt;SSO&lt;/a0&gt; est construit par le portail (tel que décrit dans la &lt;a1&gt;cinématique de connexion&lt;/a1&gt;) ou par l'agent (handler) lors des authentification inter-domaines (voir &lt;a2&gt;la cinématique de l'authentification inter-domaine&lt;/a2&gt;).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The &lt;a0&gt;Yubikey&lt;/a0&gt; is a small material token shipped by &lt;a1&gt;Yubico&lt;/a1&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T162139Z" changeid="xavier">
@@ -31536,6 +31752,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T071646Z" changeid="guimard">
         <seg>Le portail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The portal &lt;a0&gt;URL&lt;/a0&gt; &lt;s1&gt;must&lt;/s1&gt; be inside &lt;a2&gt;SSO&lt;/a2&gt; domain.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T080708Z" changeid="xavier">
+        <seg>L'&lt;a0&gt;URL&lt;/a0&gt; du portail &lt;s1&gt;doit&lt;/s1&gt; être dans le domaine &lt;a2&gt;SSO&lt;/a2&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -33246,6 +33470,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>To edit &lt;a0&gt;SSO&lt;/a0&gt; cookie parameters, go in Manager, &lt;c1&gt;General Parameters&lt;/c1&gt; &gt; &lt;c2&gt;Cookies&lt;/c2&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120424T040459Z" changeid="xavier">
+        <seg>Pour modifier les paramètres du cookie &lt;a0&gt;SSO&lt;/a0&gt;, aller dans le manager, &lt;c1&gt;Paramètres généraux&lt;/c1&gt; &gt; &lt;c2&gt;Cookies&lt;/c2&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>To enable &lt;a0&gt;LL::NG&lt;/a0&gt; authentication plugin, go in &lt;c1&gt;/etc/obm/obm_conf.inc&lt;/c1&gt;:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T112248Z" changeid="xavier">
@@ -34574,6 +34806,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>When you change cookie expiration time, it is written on the user hard disk unlike session cookie</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120502T042051Z" changeid="xavier">
+        <seg>Lorsqu'on change la durée de vie du cookie, il est écrit sur le disque dur de l'utilisateur contrairement à un cookie de session</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>When you commit &lt;a0&gt;OmegaT&lt;/a0&gt; files in svn repository, don't push backup files.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -35074,6 +35314,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T074136Z" changeid="guimard">
         <seg>On peut changer le thème dans le manager : &lt;c0&gt;paramètres généraux&lt;/c0&gt; &gt; &lt;c1&gt;Portail&lt;/c1&gt; &gt; &lt;c2&gt;Personnalisation&lt;/c2&gt; &gt; &lt;c3&gt;Skin&lt;/c3&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can change this behavior and set a cookie duration, for example:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120502T041801Z" changeid="xavier">
+        <seg>On peut changer ce comportement et mettre une durée de vie, par exemple :</seg>
       </tuv>
     </tu>
     <tu>
@@ -35634,6 +35882,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T112536Z" changeid="xavier">
         <seg>Il faut en indiquer une dans le manager.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You have to update them by yourself.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T080342Z" changeid="xavier">
+        <seg>Il faut les mettre à jour soi-même.</seg>
       </tuv>
     </tu>
     <tu>
@@ -38472,6 +38728,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T051506Z" changeid="guimard">
         <seg>documentation:1.2:browseablesessionbackend</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:cda</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120424T040621Z" changeid="xavier">
+        <seg>documentation:1.2:cda</seg>
       </tuv>
     </tu>
     <tu>
