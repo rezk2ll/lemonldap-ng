@@ -298,6 +298,14 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>#mini_howtos</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081301Z" changeid="xavier">
+        <seg>#mini_howtos</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>#n</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -1424,6 +1432,94 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../../media/icons/access.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T082657Z" changeid="xavier">
+        <seg>../../../media/icons/access.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../media/icons/colors.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081157Z" changeid="xavier">
+        <seg>../../../media/icons/colors.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../media/icons/gpg.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081239Z" changeid="xavier">
+        <seg>../../../media/icons/gpg.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../media/icons/jabber_protocol.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083021Z" changeid="xavier">
+        <seg>../../../media/icons/jabber_protocol.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../media/icons/kmultiple.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081946Z" changeid="xavier">
+        <seg>../../../media/icons/kmultiple.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../media/icons/lists.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T080920Z" changeid="xavier">
+        <seg>../../../media/icons/lists.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../media/icons/neotux.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T082754Z" changeid="xavier">
+        <seg>../../../media/icons/neotux.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../media/icons/personal.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T082500Z" changeid="xavier">
+        <seg>../../../media/icons/personal.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../media/icons/utilities.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081402Z" changeid="xavier">
+        <seg>../../../media/icons/utilities.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../media/icons/warehause.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T080838Z" changeid="xavier">
+        <seg>../../../media/icons/warehause.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../../media/icons/xeyes.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083158Z" changeid="xavier">
+        <seg>../../../media/icons/xeyes.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../../media/screenshots/1.1/mailreset/mailreset_step1.png</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T145521Z" changeid="guimard">
@@ -1524,6 +1620,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T170413Z" changeid="xavier">
         <seg>../../documentation/1.0/sqlconfbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/activedirectoryminihowto.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083114Z" changeid="xavier">
+        <seg>../../documentation/1.2/activedirectoryminihowto.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -1680,6 +1784,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.2/authdemo.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081258Z" changeid="xavier">
+        <seg>../../documentation/1.2/authdemo.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.2/authldap.html</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -1704,10 +1816,34 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.2/authnull.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081313Z" changeid="xavier">
+        <seg>../../documentation/1.2/authnull.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.2/authopenid.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T183620Z" changeid="xavier">
         <seg>../../documentation/1.2/authopenid.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/authproxy.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081315Z" changeid="xavier">
+        <seg>../../documentation/1.2/authproxy.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/authradius.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081319Z" changeid="xavier">
+        <seg>../../documentation/1.2/authradius.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -1728,6 +1864,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.2/authslave.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081330Z" changeid="xavier">
+        <seg>../../documentation/1.2/authslave.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.2/authssl.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T071904Z" changeid="guimard">
@@ -1740,6 +1884,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T072017Z" changeid="guimard">
         <seg>../../documentation/1.2/authtwitter.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/authyubikey.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081343Z" changeid="xavier">
+        <seg>../../documentation/1.2/authyubikey.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -1816,6 +1968,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.2/error.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083242Z" changeid="xavier">
+        <seg>../../documentation/1.2/error.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.2/exportedvars.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T101033Z" changeid="xavier">
@@ -1868,6 +2028,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T073119Z" changeid="xavier">
         <seg>../../documentation/1.2/header_remote_user_conversion.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/highavailability.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083247Z" changeid="xavier">
+        <seg>../../documentation/1.2/highavailability.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -1928,6 +2096,22 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.2/installrpm.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T080842Z" changeid="xavier">
+        <seg>../../documentation/1.2/installrpm.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/installtarball.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T080839Z" changeid="xavier">
+        <seg>../../documentation/1.2/installtarball.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.2/internalproxy.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120410T042734Z" changeid="xavier">
@@ -1944,6 +2128,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.2/ldapminihowto.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083046Z" changeid="xavier">
+        <seg>../../documentation/1.2/ldapminihowto.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.2/ldapsessionbackend.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T113734Z" changeid="xavier">
@@ -1952,10 +2144,26 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.2/loginhistory.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T082930Z" changeid="xavier">
+        <seg>../../documentation/1.2/loginhistory.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.2/logoutforward.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T114754Z" changeid="xavier">
         <seg>../../documentation/1.2/logoutforward.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/logs.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083216Z" changeid="xavier">
+        <seg>../../documentation/1.2/logs.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -1972,6 +2180,22 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>../../documentation/1.2/memcachedsessionbackend.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/mrtg.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083214Z" changeid="xavier">
+        <seg>../../documentation/1.2/mrtg.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/mysqlminihowto.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083033Z" changeid="xavier">
+        <seg>../../documentation/1.2/mysqlminihowto.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -2004,6 +2228,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T192728Z" changeid="xavier">
         <seg>../../documentation/1.2/passwordstore.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/performances.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083159Z" changeid="xavier">
+        <seg>../../documentation/1.2/performances.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -2080,6 +2312,22 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.2/rbac.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T082756Z" changeid="xavier">
+        <seg>../../documentation/1.2/rbac.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/redirections.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081003Z" changeid="xavier">
+        <seg>../../documentation/1.2/redirections.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.2/resetpassword.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T115734Z" changeid="xavier">
@@ -2128,10 +2376,34 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.2/securetoken.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T082926Z" changeid="xavier">
+        <seg>../../documentation/1.2/securetoken.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/security.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083200Z" changeid="xavier">
+        <seg>../../documentation/1.2/security.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.2/selfmadeapplication.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T192355Z" changeid="xavier">
         <seg>../../documentation/1.2/selfmadeapplication.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/sessions.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081131Z" changeid="xavier">
+        <seg>../../documentation/1.2/sessions.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -2148,6 +2420,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T085630Z" changeid="xavier">
         <seg>../../documentation/1.2/soapconfbackend.html#next_configure_soap_for_your_remote_servers</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/soapminihowto.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083055Z" changeid="xavier">
+        <seg>../../documentation/1.2/soapminihowto.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -5512,6 +5792,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/icons/access.png?id=documentation%3A1.2%3Astart</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T082656Z" changeid="xavier">
+        <seg>/_detail/icons/access.png?id=documentation%3A1.2%3Astart</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>/_detail/icons/access.png?id=start</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -5552,10 +5840,26 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/icons/colors.png?id=documentation%3A1.2%3Astart</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081156Z" changeid="xavier">
+        <seg>/_detail/icons/colors.png?id=documentation%3A1.2%3Astart</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>/_detail/icons/database.png?id=start</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>/_detail/icons/database.png?id=start</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/icons/gpg.png?id=documentation%3A1.2%3Astart</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081238Z" changeid="xavier">
+        <seg>/_detail/icons/gpg.png?id=documentation%3A1.2%3Astart</seg>
       </tuv>
     </tu>
     <tu>
@@ -5568,6 +5872,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/icons/jabber_protocol.png?id=documentation%3A1.2%3Astart</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083019Z" changeid="xavier">
+        <seg>/_detail/icons/jabber_protocol.png?id=documentation%3A1.2%3Astart</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>/_detail/icons/kmenuedit.png?id=start</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -5576,10 +5888,34 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/icons/kmultiple.png?id=documentation%3A1.2%3Astart</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081944Z" changeid="xavier">
+        <seg>/_detail/icons/kmultiple.png?id=documentation%3A1.2%3Astart</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>/_detail/icons/knewsticker.png?id=contact</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>/_detail/icons/knewsticker.png?id=contact</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/icons/lists.png?id=documentation%3A1.2%3Astart</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T080919Z" changeid="xavier">
+        <seg>/_detail/icons/lists.png?id=documentation%3A1.2%3Astart</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/icons/neotux.png?id=documentation%3A1.2%3Astart</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T082753Z" changeid="xavier">
+        <seg>/_detail/icons/neotux.png?id=documentation%3A1.2%3Astart</seg>
       </tuv>
     </tu>
     <tu>
@@ -5596,6 +5932,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>/_detail/icons/personal.png?id=contact</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/icons/personal.png?id=documentation%3A1.2%3Astart</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T082458Z" changeid="xavier">
+        <seg>/_detail/icons/personal.png?id=documentation%3A1.2%3Astart</seg>
       </tuv>
     </tu>
     <tu>
@@ -5640,10 +5984,26 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/icons/utilities.png?id=documentation%3A1.2%3Astart</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081401Z" changeid="xavier">
+        <seg>/_detail/icons/utilities.png?id=documentation%3A1.2%3Astart</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>/_detail/icons/utilities.png?id=start</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>/_detail/icons/utilities.png?id=start</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/icons/warehause.png?id=documentation%3A1.2%3Astart</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T080836Z" changeid="xavier">
+        <seg>/_detail/icons/warehause.png?id=documentation%3A1.2%3Astart</seg>
       </tuv>
     </tu>
     <tu>
@@ -5660,6 +6020,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>/_detail/icons/wizard.png?id=documentation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/icons/xeyes.png?id=documentation%3A1.2%3Astart</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083157Z" changeid="xavier">
+        <seg>/_detail/icons/xeyes.png?id=documentation%3A1.2%3Astart</seg>
       </tuv>
     </tu>
     <tu>
@@ -6934,6 +7302,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Create a protocol proxy&lt;/a0&gt; &lt;e1&gt;(&lt;a2&gt;SAML&lt;/a2&gt; to OpenID, &lt;a3&gt;CAS&lt;/a3&gt; to &lt;a4&gt;SAML&lt;/a4&gt; ,…)&lt;/e1&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083152Z" changeid="xavier">
+        <seg>&lt;a0&gt;Créer un proxy de protocoles &lt;/a0&gt; &lt;e1&gt;(&lt;a2&gt;SAML&lt;/a2&gt; vers OpenID, &lt;a3&gt;CAS&lt;/a3&gt; vers &lt;a4&gt;SAML&lt;/a4&gt; ,…)&lt;/e1&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;DBI&lt;/a0&gt; Authentication table</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T061429Z" changeid="guimard">
@@ -7282,6 +7658,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;a0&gt;Integrer des applications&lt;/a0&gt; dans &lt;a1&gt;LL::NG&lt;/a1&gt; est facile car leur dialogue est basé sur des &lt;a2&gt;en-têtes HTTP personnalisables&lt;/a2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; (including &lt;a1&gt;Active Directory)&lt;/a1&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081312Z" changeid="xavier">
+        <seg>&lt;a0&gt;LDAP&lt;/a0&gt; (y compris &lt;a1&gt;Active Directory)&lt;/a1&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -7858,6 +8242,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; a été conçu en utilisant &lt;a1&gt;l'architecture logicielle Modèle–Vue–Controlleur&lt;/a1&gt;, ainsi vous avez juste à &lt;a2&gt;modifier les fichiers HTML/CSS&lt;/a2&gt; pour personnaliser son portail.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; needs a storage system to store its own configuration (managed by the manager).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081439Z" changeid="xavier">
+        <seg>&lt;a0&gt;LL::NG&lt;/a0&gt; a besoin d'un dispositif de stockage de sa propre configuration (gérée par le manager).</seg>
       </tuv>
     </tu>
     <tu>
@@ -9968,6 +10360,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       <tuv lang="FR-FR" changedate="20120420T141708Z" changeid="xavier">
         <seg>&lt;a9&gt;&lt;s10&gt;print&lt;/s10&gt;&lt;/a9&gt; &lt;s11&gt;'&lt;a href=&quot;http://test3.example.com/&quot;&gt;click here&lt;/a&gt;'&lt;/s11&gt;&lt;s12&gt;;&lt;/s12&gt;
 &lt;s13&gt;}&lt;/s13&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;br0/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081753Z" changeid="xavier">
+        <seg>&lt;br0/&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -12466,6 +12866,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T162303Z" changeid="xavier">
         <seg>&lt;s0&gt;Conditions d'ouverture&lt;/s0&gt; : règles à évaluer avant d'autoriser l'ouverture de session.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;Optimized&lt;/s0&gt; for &lt;a1&gt;session explorer&lt;/a1&gt; and &lt;a2&gt;single session&lt;/a2&gt; features.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T082351Z" changeid="xavier">
+        <seg>&lt;s0&gt;Optimisé&lt;/s0&gt; pour l'&lt;a1&gt;explorateur de sessions&lt;/a1&gt; et les fonctionnalités de &lt;a2&gt;session unique&lt;/a2&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -15062,6 +15470,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s1&gt;Can be used to secure another backend&lt;/s1&gt; for remote servers.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081836Z" changeid="xavier">
+        <seg>&lt;s1&gt;Peut être utilisé pour sécuriser un autre backend&lt;/s1&gt; pour des serveurs distants.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s1&gt;Order&lt;/s1&gt; &lt;s2&gt;deny&lt;/s2&gt;,&lt;s3&gt;allow&lt;/s3&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T142939Z" changeid="xavier">
@@ -17228,6 +17644,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Access to configuration</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T080930Z" changeid="xavier">
+        <seg>Accès à la configuration</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Accounting</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -17332,6 +17756,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Advanced features</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T082752Z" changeid="xavier">
+        <seg>Fonctionnalités avancées</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Advantages:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120411T041238Z" changeid="xavier">
@@ -17428,6 +17860,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>All &lt;a1&gt;Apache::Session&lt;/a1&gt; style modules are useable except for some features.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T082051Z" changeid="xavier">
+        <seg>Tous les modules de type &lt;a1&gt;Apache::Session&lt;/a1&gt; sont utilisables excepté pour quelques fonctionnalités.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>All data is stored in plain text files – no database is required.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T114949Z" changeid="xavier">
@@ -17456,6 +17896,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120227T192838Z" changeid="xavier">
         <seg>Tous les agents téléchargent intégralement la configuration, donc plusieurs serveurs peuvent servir le même hôte virtuel</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>All identity provider protocols can be used simultaneously</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T082620Z" changeid="xavier">
+        <seg>Tous les protocoles de fournisseur d'identité peuvent être utilisés simultanément</seg>
       </tuv>
     </tu>
     <tu>
@@ -17812,6 +18260,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Apache (Kerberos, NTLM, OTP, ...)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081247Z" changeid="xavier">
+        <seg>Apache (Kerberos, NTLM, OTP, ...)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Apache &lt;a0&gt;SetEnvIf module&lt;/a0&gt; will let you transform the Auth-User &lt;a1&gt;HTTP&lt;/a1&gt; header in &lt;c2&gt;REMOTE_USER&lt;/c2&gt; environment variable:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T195024Z" changeid="xavier">
@@ -18040,6 +18496,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T153340Z" changeid="xavier">
         <seg>Les applications listées ci-dessous sont connues pour être faciles à intégrer à &lt;a0&gt;LL::NG&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Applications protection</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T082655Z" changeid="xavier">
+        <seg>Protection des applications</seg>
       </tuv>
     </tu>
     <tu>
@@ -18444,6 +18908,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Authentication, users and password databases</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081237Z" changeid="xavier">
+        <seg>Bases de données d'authentification, des utilisateurs et des mots-de-passe</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Authentication: select row in authentication table matching user and password</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T195644Z" changeid="xavier">
@@ -18552,6 +19024,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Retour à l'index principal</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Backend</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081243Z" changeid="xavier">
+        <seg>Backend</seg>
       </tuv>
     </tu>
     <tu>
@@ -18672,6 +19152,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Corps du message de changement de mot-de-passe</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Browseable (SQL, Redis or LDAP)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T082258Z" changeid="xavier">
+        <seg>Browseable (SQL, Redis ou LDAP)</seg>
       </tuv>
     </tu>
     <tu>
@@ -18984,6 +19472,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T140913Z" changeid="guimard">
         <seg>CAS (module d'authentification)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>CAS identity provider</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T082535Z" changeid="xavier">
+        <seg>Fournisseur d'identité CAS</seg>
       </tuv>
     </tu>
     <tu>
@@ -19532,6 +20028,30 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Configuration and sessions access by SOAP</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083113Z" changeid="xavier">
+        <seg>Accès à la configuration et aux sessions par SOAP</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Configuration and sessions in LDAP</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083054Z" changeid="xavier">
+        <seg>Configuration et sessions dans LDAP</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Configuration and sessions in MySQL</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083045Z" changeid="xavier">
+        <seg>Configuration et sessions dans MySQL</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Configuration backend</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -19560,6 +20080,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T085411Z" changeid="xavier">
         <seg>La configuration peut être stockée sous plusieurs formats (&lt;a0&gt;SQL&lt;/a0&gt;, &lt;a1&gt;File&lt;/a1&gt;, &lt;a2&gt;LDAP&lt;/a2&gt;) mais doit être partégée via le réseau si on utilise plus d'un serveur.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Configuration database</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081400Z" changeid="xavier">
+        <seg>Base de données de la configuration</seg>
       </tuv>
     </tu>
     <tu>
@@ -19740,6 +20268,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Configure Single Sign On cookie and portal URL</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081002Z" changeid="xavier">
+        <seg>Configurer le cookie SSO (Single Sign On) et l'URL du portail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Configure Sympa virtual host like other &lt;a0&gt;protected virtual host&lt;/a0&gt; but protect only magic authentication &lt;a1&gt;URL&lt;/a1&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111217T081614Z" changeid="xavier">
@@ -19800,6 +20336,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T135339Z" changeid="xavier">
         <seg>Configurer les paramètres de sécurité</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Configure sessions specificities</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081151Z" changeid="xavier">
+        <seg>Configurer les spécificités des sessions</seg>
       </tuv>
     </tu>
     <tu>
@@ -20420,6 +20964,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Databases (DBI)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081257Z" changeid="xavier">
+        <seg>Bases de données (DBI)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Datas are stored as key/values (no-strings values are serialized).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T184853Z" changeid="xavier">
@@ -20752,6 +21304,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Documentation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Documentation for LemonLDAP::NG 1.2</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T080836Z" changeid="xavier">
+        <seg>Documentation de LemonLDAP::NG 1.2</seg>
       </tuv>
     </tu>
     <tu>
@@ -21488,6 +22048,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Exploitation</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083156Z" changeid="xavier">
+        <seg>Exploitation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Export sAMAccountName in a variable declared in &lt;a0&gt;exported variables&lt;/a0&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T095640Z" changeid="xavier">
@@ -21780,6 +22348,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T142645Z" changeid="guimard">
         <seg>Première étape : créer une règle pour autoriser l'accès seulement si l'utilisateur dispose d'un rôle dans l'application:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>First steps</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T080917Z" changeid="xavier">
+        <seg>Premiers pas</seg>
       </tuv>
     </tu>
     <tu>
@@ -22316,6 +22892,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Possibilité d'étendre le &lt;a0&gt;SSO&lt;/a0&gt; à des applications utilisant une authentification &lt;a1&gt;HTTP&lt;/a1&gt; Auth-Basic ou un formulaire HTML</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Forward logout to applications</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T082924Z" changeid="xavier">
+        <seg>Propager les déconnexions aux applications</seg>
       </tuv>
     </tu>
     <tu>
@@ -22976,6 +23560,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Handler status page</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083212Z" changeid="xavier">
+        <seg>Page de statut de l'agent</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Handler stores user data in its cache</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -23100,6 +23692,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T065005Z" changeid="guimard">
         <seg>Masquer l'ancien mot-de-passe dans le formulaire de réinitialisation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>High Availability</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083304Z" changeid="xavier">
+        <seg>Haute disponibilité</seg>
       </tuv>
     </tu>
     <tu>
@@ -24504,10 +25104,42 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Installation on RHEL/CentOS with packages</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T080859Z" changeid="xavier">
+        <seg>Installation sur RHEL/CentOS avec les paquets</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Installation on RedHat/CentOS</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T095102Z" changeid="xavier">
         <seg>Installation sur RedHat/CentOS</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Integrate existing applications</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T082727Z" changeid="xavier">
+        <seg>Integrer des applications existantes</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Integrate your own application</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T082743Z" changeid="xavier">
+        <seg>Integrer ses propres applications</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Integration in Active Directory (LDAP and Kerberos)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083125Z" changeid="xavier">
+        <seg>Integration dans Active Directory (LDAP et Kerberos)</seg>
       </tuv>
     </tu>
     <tu>
@@ -24524,6 +25156,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T111236Z" changeid="xavier">
         <seg>Proxy interne</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Internal Proxy (lmProxy)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T082952Z" changeid="xavier">
+        <seg>Proxy interne (lmProxy)</seg>
       </tuv>
     </tu>
     <tu>
@@ -25392,6 +26032,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>LemonLDAP::NG can be used as a proxy between those protocols</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T082644Z" changeid="xavier">
+        <seg>LemonLDAP::NG peut être utilisé comme proxy entre ces protocoles</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>LemonLDAP::NG can export &lt;a0&gt;HTTP headers&lt;/a0&gt; either using a proxy or protecting directly the application.</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -26006,6 +26654,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Login history</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T082942Z" changeid="xavier">
+        <seg>Historique de connexion</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Logout</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -26034,6 +26690,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T200656Z" changeid="guimard">
         <seg>Journaux</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Logs settings</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083239Z" changeid="xavier">
+        <seg>Journalisation</seg>
       </tuv>
     </tu>
     <tu>
@@ -26398,6 +27062,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Memcached</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T082209Z" changeid="xavier">
+        <seg>Memcached</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Memcached servers</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T050738Z" changeid="guimard">
@@ -26462,6 +27134,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Mini howtos</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083018Z" changeid="xavier">
+        <seg>Mini howtos</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Mod &lt;a0&gt;Perl&lt;/a0&gt; &lt;s1&gt;must&lt;/s1&gt; be loaded before &lt;a2&gt;LL::NG&lt;/a2&gt; Apache configuration.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120324T162215Z" changeid="xavier">
@@ -26474,6 +27154,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T144805Z" changeid="xavier">
         <seg>Mod &lt;a0&gt;Perl&lt;/a0&gt; doit être chargé avant LemonLDAP::NG, donc les inclusions aprèsla directive &lt;c1&gt;LoadModule&lt;/c1&gt; de mod_perl.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Modify Manager protection</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083033Z" changeid="xavier">
+        <seg>Modifier la protection du manager</seg>
       </tuv>
     </tu>
     <tu>
@@ -26616,6 +27304,14 @@ lemonldap-ng=&gt; q</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T140824Z" changeid="guimard">
         <seg>Multipurpose Internet Mail Extension</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Must be secured by network access control.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T082230Z" changeid="xavier">
+        <seg>Doit être securisé par un contrôle d'accès réseau.</seg>
       </tuv>
     </tu>
     <tu>
@@ -26840,6 +27536,30 @@ lemonldap-ng=&gt; q</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T203151Z" changeid="guimard">
         <seg>Aucun en-tête n'est nécessaire.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>NoSQL (Redis)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T082233Z" changeid="xavier">
+        <seg>NoSQL (Redis)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Not shareable between servers except if used in conjunction with &lt;a0&gt;SOAP configuration backend&lt;/a0&gt; or with a shared file system (NFS,…).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081624Z" changeid="xavier">
+        <seg>Pas partageable entre serveurs sauf si utilisé avec le &lt;a0&gt;backend de configuration SOAP&lt;/a0&gt; ou un système de partage de fichiers (NFS,…).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Not shareable between servers except if used in conjunction with &lt;a0&gt;SOAP session backend&lt;/a0&gt; or with a shared file system (NFS,…).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T082126Z" changeid="xavier">
+        <seg>Pas partageable entre serveurs sauf si utilisé avec le &lt;a0&gt;backend de configuration SOAP&lt;/a0&gt; ou un système de partage de fichiers (NFS,…).</seg>
       </tuv>
     </tu>
     <tu>
@@ -27396,6 +28116,14 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>OpenID identity provider</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T082527Z" changeid="xavier">
+        <seg>Fournisseur d'identité OpenID</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>OpenID secret token</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T063833Z" changeid="guimard">
@@ -27656,6 +28384,14 @@ lemonldap-ng=&gt; q</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Liste des paramètres</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Parameter redirections</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081115Z" changeid="xavier">
+        <seg>Paramètrer les redirections</seg>
       </tuv>
     </tu>
     <tu>
@@ -28482,6 +29218,30 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Proxy LL::NG</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081318Z" changeid="xavier">
+        <seg>Proxy LL::NG</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Proxy backend to be used in conjunction with another configuration backend.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T082452Z" changeid="xavier">
+        <seg>Backend proxy à utiliser avec un autre backend de configuration.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Proxy backend to be used in conjunction with another session backend.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T082443Z" changeid="xavier">
+        <seg>Backend proxy à utiliser avec un autre backend de sessions.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Proxy cookie name</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T063948Z" changeid="guimard">
@@ -28890,6 +29650,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Remote LL::NG</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081327Z" changeid="xavier">
+        <seg>LL::NG distant</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Remote Session backend</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T064029Z" changeid="guimard">
@@ -29014,6 +29782,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T145300Z" changeid="guimard">
         <seg>Réinitialisation des mots-de-passe par courriel</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Reset password by mail (self service)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T082911Z" changeid="xavier">
+        <seg>Réinitialiser les mots-de-passe par mail (self-service)</seg>
       </tuv>
     </tu>
     <tu>
@@ -29146,6 +29922,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Role Based Access Control (RBAC)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T082814Z" changeid="xavier">
+        <seg>Contrôle d'accès basé sur les rôles (RBAC)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Roles are entries, below branches representing applications.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T142234Z" changeid="guimard">
@@ -29238,6 +30022,22 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="FR-FR" changedate="20120218T215943Z" changeid="xavier">
         <seg>SAML</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>SAML / Shibboleth identity provider</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T082514Z" changeid="xavier">
+        <seg>Fournisseur d'identité SAML / Shibboleth</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>SAML 2.0 / Shibboleth</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081329Z" changeid="xavier">
+        <seg>SAML 2.0 / Shibboleth</seg>
       </tuv>
     </tu>
     <tu>
@@ -29422,6 +30222,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="FR-FR" changedate="20120422T100113Z" changeid="xavier">
         <seg>Configuration SQL</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>SQL configuration backend (called RDBI or CDBI)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081706Z" changeid="xavier">
+        <seg>Backend de configuration SQL (appelé RDBI ou CDBI)</seg>
       </tuv>
     </tu>
     <tu>
@@ -29954,6 +30762,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>See full parameters list</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083009Z" changeid="xavier">
+        <seg>Voir la liste complète des paramètres</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>See the following chapters:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T183701Z" changeid="xavier">
@@ -29974,6 +30790,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="FR-FR" changedate="20111203T183346Z" changeid="xavier">
         <seg>Selectionner la clef, et l'exporter (bouton &lt;c0&gt;Download this file&lt;/c0&gt;):</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Selected by default during installation.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081641Z" changeid="xavier">
+        <seg>Sélectionné par défaut lors de l'installation.</seg>
       </tuv>
     </tu>
     <tu>
@@ -30170,6 +30994,22 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Sessions are stored using &lt;a0&gt;Apache::Session&lt;/a0&gt; modules family.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T082014Z" changeid="xavier">
+        <seg>Les sessions sont stockées en utilisant les modules de la famille &lt;a0&gt;Apache::Session&lt;/a0&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Sessions database</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081943Z" changeid="xavier">
+        <seg>Base de données des sessions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Sessions explorer</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -30226,6 +31066,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Set exported variables</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081130Z" changeid="xavier">
+        <seg>Définir les variables exportées</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Setup</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -30246,6 +31094,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074534Z" changeid="xavier">
         <seg>Plusieurs extensions permettent de configurer le &lt;a0&gt;SSO&lt;/a0&gt; dans MediaWiki :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Shareable</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081454Z" changeid="xavier">
+        <seg>Partageable</seg>
       </tuv>
     </tu>
     <tu>
@@ -30726,6 +31582,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="FR-FR">
         <seg>Version stable (1.0)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Stack multiple backends</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081342Z" changeid="xavier">
+        <seg>Empiler de multiples backends</seg>
       </tuv>
     </tu>
     <tu>
@@ -31536,6 +32400,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T194738Z" changeid="xavier">
         <seg>Le chiffre ne sera pas affiché sur la page portail.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The faster.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T082241Z" changeid="xavier">
+        <seg>Le plus rapide.</seg>
       </tuv>
     </tu>
     <tu>
@@ -33922,6 +34794,14 @@ Is this ok [y/N]: y</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Unoptimized for &lt;a0&gt;session explorer&lt;/a0&gt; and &lt;a1&gt;single session&lt;/a1&gt; features.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T082204Z" changeid="xavier">
+        <seg>Pas optimisé pour l'&lt;a0&gt;exlorateur de sessions&lt;/a0&gt; et les fonctionnalités de &lt;a1&gt;session unique&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Update translations</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -33942,6 +34822,14 @@ Is this ok [y/N]: y</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T093930Z" changeid="xavier">
         <seg>Mise à jour</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Upgrade from 1.1</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T080910Z" changeid="xavier">
+        <seg>Mise à jour depuis la version 1.1</seg>
       </tuv>
     </tu>
     <tu>
@@ -34054,6 +34942,22 @@ Is this ok [y/N]: y</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T095850Z" changeid="xavier">
         <seg>Utiliser des commentaires pour corriger ça :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Use custom functions</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T082833Z" changeid="xavier">
+        <seg>Utiliser les fonctions personnalisées</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Use extended functions</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T082845Z" changeid="xavier">
+        <seg>Utiliser les fonctions étendues</seg>
       </tuv>
     </tu>
     <tu>
@@ -34990,6 +35894,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Writing rules and headers</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T082714Z" changeid="xavier">
+        <seg>Écrire les règles et en-têtes</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>X509</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -35538,6 +36450,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T111851Z" changeid="xavier">
         <seg>Le module peut être appelé à la diligence du rédacteur, par exemple &lt;c1&gt;SSOExtensions.pm&lt;/c1&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>You can not start with an empty configuration, so read &lt;a0&gt;how to change configuration backend&lt;/a0&gt; to convert your existing configuration into another one.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081934Z" changeid="xavier">
+        <seg>On ne peut démarrer avec une configuration vide, il faut donc lire &lt;a0&gt;comment changer de backend de configuration&lt;/a0&gt; pour convertir une configuration existante en une autre.</seg>
       </tuv>
     </tu>
     <tu>
@@ -38492,6 +39412,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.2:activedirectoryminihowto</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083115Z" changeid="xavier">
+        <seg>documentation:1.2:activedirectoryminihowto</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.2:applications</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120227T192510Z" changeid="xavier">
@@ -38668,6 +39596,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.2:authdemo</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081259Z" changeid="xavier">
+        <seg>documentation:1.2:authdemo</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.2:authldap</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T162018Z" changeid="xavier">
@@ -38684,10 +39620,34 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.2:authnull</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081314Z" changeid="xavier">
+        <seg>documentation:1.2:authnull</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.2:authopenid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T175542Z" changeid="xavier">
         <seg>documentation:1.2:authopenid</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:authproxy</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081315Z" changeid="xavier">
+        <seg>documentation:1.2:authproxy</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:authradius</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081320Z" changeid="xavier">
+        <seg>documentation:1.2:authradius</seg>
       </tuv>
     </tu>
     <tu>
@@ -38708,6 +39668,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.2:authslave</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081332Z" changeid="xavier">
+        <seg>documentation:1.2:authslave</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.2:authssl</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T071906Z" changeid="guimard">
@@ -38720,6 +39688,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T072018Z" changeid="guimard">
         <seg>documentation:1.2:authtwitter</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:authyubikey</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081345Z" changeid="xavier">
+        <seg>documentation:1.2:authyubikey</seg>
       </tuv>
     </tu>
     <tu>
@@ -38776,6 +39752,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T175244Z" changeid="xavier">
         <seg>documentation:1.2:customfunctions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:error</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083244Z" changeid="xavier">
+        <seg>documentation:1.2:error</seg>
       </tuv>
     </tu>
     <tu>
@@ -38844,6 +39828,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.2:highavailability</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083249Z" changeid="xavier">
+        <seg>documentation:1.2:highavailability</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.2:idpcas</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T114752Z" changeid="xavier">
@@ -38876,6 +39868,22 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.2:installrpm</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T080843Z" changeid="xavier">
+        <seg>documentation:1.2:installrpm</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:installtarball</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T080840Z" changeid="xavier">
+        <seg>documentation:1.2:installtarball</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.2:internalproxy</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120411T040802Z" changeid="xavier">
@@ -38892,6 +39900,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.2:ldapminihowto</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083047Z" changeid="xavier">
+        <seg>documentation:1.2:ldapminihowto</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.2:ldapsessionbackend</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T113735Z" changeid="xavier">
@@ -38900,10 +39916,26 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.2:loginhistory</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T082931Z" changeid="xavier">
+        <seg>documentation:1.2:loginhistory</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.2:logoutforward</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T101302Z" changeid="xavier">
         <seg>documentation:1.2:logoutforward</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:logs</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083218Z" changeid="xavier">
+        <seg>documentation:1.2:logs</seg>
       </tuv>
     </tu>
     <tu>
@@ -38920,6 +39952,22 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T204443Z" changeid="xavier">
         <seg>documentation:1.2:memcachedsessionbackend</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:mrtg</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083214Z" changeid="xavier">
+        <seg>documentation:1.2:mrtg</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:mysqlminihowto</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083034Z" changeid="xavier">
+        <seg>documentation:1.2:mysqlminihowto</seg>
       </tuv>
     </tu>
     <tu>
@@ -39004,6 +40052,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.2:redirections</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081004Z" changeid="xavier">
+        <seg>documentation:1.2:redirections</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.2:resetpassword</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T115735Z" changeid="xavier">
@@ -39028,6 +40084,22 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.2:securetoken</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T082927Z" changeid="xavier">
+        <seg>documentation:1.2:securetoken</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:security</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083201Z" changeid="xavier">
+        <seg>documentation:1.2:security</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.2:selfmadeapplication</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120227T192511Z" changeid="xavier">
@@ -39044,10 +40116,26 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>documentation:1.2:sessions</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081132Z" changeid="xavier">
+        <seg>documentation:1.2:sessions</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>documentation:1.2:soapconfbackend</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T163155Z" changeid="xavier">
         <seg>documentation:1.2:soapconfbackend</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:soapminihowto</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083056Z" changeid="xavier">
+        <seg>documentation:1.2:soapminihowto</seg>
       </tuv>
     </tu>
     <tu>
@@ -39096,6 +40184,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T163156Z" changeid="xavier">
         <seg>documentation:1.2:start</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:start ↵</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081303Z" changeid="xavier">
+        <seg>documentation:1.2:start ↵</seg>
       </tuv>
     </tu>
     <tu>
@@ -41628,6 +42724,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>icons:colors.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081156Z" changeid="xavier">
+        <seg>icons:colors.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>icons:database.png</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -41644,6 +42748,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>icons:jabber_protocol.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083021Z" changeid="xavier">
+        <seg>icons:jabber_protocol.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>icons:kmenuedit.png</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -41652,10 +42764,26 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>icons:kmultiple.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T081945Z" changeid="xavier">
+        <seg>icons:kmultiple.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>icons:knewsticker.png</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>icons:knewsticker.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>icons:lists.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T080920Z" changeid="xavier">
+        <seg>icons:lists.png</seg>
       </tuv>
     </tu>
     <tu>
@@ -41716,6 +42844,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>icons:warehause.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T080838Z" changeid="xavier">
+        <seg>icons:warehause.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>icons:windowlist.png</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -41728,6 +42864,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>icons:wizard.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>icons:xeyes.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T083158Z" changeid="xavier">
+        <seg>icons:xeyes.png</seg>
       </tuv>
     </tu>
     <tu>
