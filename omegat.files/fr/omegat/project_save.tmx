@@ -458,10 +458,26 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>$description eq &quot;LDAP administrator&quot;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T055846Z" changeid="xavier">
+        <seg>$description eq &quot;LDAP administrator&quot;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>$givenName</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T172101Z" changeid="xavier">
         <seg>$givenName</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>$givenName.” ”.$surName</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T061222Z" changeid="xavier">
+        <seg>$givenName.” ”.$surName</seg>
       </tuv>
     </tu>
     <tu>
@@ -490,6 +506,14 @@ WithPeak[test.example.com]: wmy</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>$uid</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T061133Z" changeid="xavier">
+        <seg>$uid</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>$uid eq “root”</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T095718Z" changeid="xavier">
@@ -502,6 +526,14 @@ WithPeak[test.example.com]: wmy</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T172104Z" changeid="xavier">
         <seg>$uidR</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>$uid eq &quot;bart.simpson&quot;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T055427Z" changeid="xavier">
+        <seg>$uid eq &quot;bart.simpson&quot;</seg>
       </tuv>
     </tu>
     <tu>
@@ -2320,6 +2352,22 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.2/performances.html#handler_performance</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T060131Z" changeid="xavier">
+        <seg>../../documentation/1.2/performances.html#handler_performance</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/performances.html#macros_and_groups</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T054944Z" changeid="xavier">
+        <seg>../../documentation/1.2/performances.html#macros_and_groups</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.2/portal.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T171329Z" changeid="xavier">
@@ -2460,6 +2508,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120505T083200Z" changeid="xavier">
         <seg>../../documentation/1.2/security.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.2/security.html#write_good_rules</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T055928Z" changeid="xavier">
+        <seg>../../documentation/1.2/security.html#write_good_rules</seg>
       </tuv>
     </tu>
     <tu>
@@ -5828,6 +5884,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T095638Z" changeid="xavier">
         <seg>/_detail/documentation/manager_access_rule.png?id=documentation%3A1.2%3Asecurity</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/documentation/manager_access_rule.png?id=documentation%3A1.2%3Awritingrulesand_headers</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T055339Z" changeid="xavier">
+        <seg>/_detail/documentation/manager_access_rule.png?id=documentation%3A1.2%3Awritingrulesand_headers</seg>
       </tuv>
     </tu>
     <tu>
@@ -17632,6 +17696,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>A rule associates a &lt;a0&gt;regular expression&lt;/a0&gt; to a &lt;a1&gt;Perl&lt;/a1&gt; boolean expression or a keyword.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T055338Z" changeid="xavier">
+        <seg>Une règle associe une &lt;a0&gt;expression régulière&lt;/a0&gt; à une expression booléenne &lt;a1&gt;Perl&lt;/a1&gt; ou un mot-clef.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>A session key can be associated to more than one SREG attribute.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T083210Z" changeid="xavier">
@@ -18760,6 +18832,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>As described in &lt;a0&gt;performances chapter&lt;/a0&gt;, you can use macros, local macros,…</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T061326Z" changeid="xavier">
+        <seg>Comme indiqué au &lt;a0&gt;chapître performances&lt;/a0&gt;, on peut utiliser des macros, macros locales,…</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>As passwords will not be managed by &lt;a0&gt;LL::NG&lt;/a0&gt;, you can disable &lt;a1&gt;menu password module&lt;/a1&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120218T220837Z" changeid="xavier">
@@ -19256,6 +19336,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Be careful with some applications which doesn't verify Lemonldap::NG headers after having created their own cookies.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T060819Z" changeid="xavier">
+        <seg>Faire attention avec certaines applications qui ne vérifient pas les en-têtes Lemonldap::NG après avoir créé leurs propres cookies.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Be sure that mod_rewrite is installed and that SAML2 rewrite rules are activated in &lt;a0&gt;Apache portal configuration&lt;/a0&gt;:</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -19472,6 +19560,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>But you can forward this key if it is really needed:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103447Z" changeid="xavier">
+        <seg>Mais on peut le transmettre tout de même si nécessaire :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>But you will rather prefer to use an Apache authentication module, like for example &lt;a0&gt;LDAP authentication module&lt;/a0&gt;:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T202544Z" changeid="guimard">
@@ -19492,6 +19588,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T093819Z" changeid="xavier">
         <seg>Par défaut, le domaine &lt;a0&gt;DNS&lt;/a0&gt; est &lt;c1&gt;example.com&lt;/c1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>By default, &lt;a0&gt;SSO&lt;/a0&gt; cookie is hidden, so protected applications cannot get &lt;a1&gt;SSO&lt;/a1&gt; session key.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103421Z" changeid="xavier">
+        <seg>Par défaut, le cookie &lt;a0&gt;SSO&lt;/a0&gt; est masqué, ainsi les applications protégées ne peuvent accéder à la clef de session &lt;a1&gt;SSO&lt;/a1&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -19628,6 +19732,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T090247Z" changeid="xavier">
         <seg>Par défaut, l'accès au manager est restreint à l'hôte local dans le fichier de configuration d'Apache, mais aucune traçabilité n'est faite.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>By default, user will be redirected on portal if no &lt;a0&gt;URL&lt;/a0&gt; defined, or on the specified &lt;a1&gt;URL&lt;/a1&gt; if any.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T060656Z" changeid="xavier">
+        <seg>Par défaut, l'utilisateur est redirigé vers le portail si aucune &lt;a0&gt;URL&lt;/a0&gt; n'est définie ou vers l'&lt;a1&gt;URL&lt;/a1&gt; indiquée sinon.</seg>
       </tuv>
     </tu>
     <tu>
@@ -20132,6 +20244,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Commentaire</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Comments can be used to order your rules: rules are applied in the alphabetical order of comment (or regexp in there is no comment).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T060055Z" changeid="xavier">
+        <seg>Les commentaires peuvent être utilisés pour ordonner les règles : elles sont appliquées dans l'ordre alphabétique des commentaires (ou des expressions régulières à défaut de commentaire).</seg>
       </tuv>
     </tu>
     <tu>
@@ -21328,6 +21448,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Deny access to /config/ directory</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T055520Z" changeid="xavier">
+        <seg>Interdire l'accès au répertoire /config/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Description</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T102201Z" changeid="xavier">
@@ -21456,6 +21584,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Display-Name</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T061220Z" changeid="xavier">
+        <seg>Display-Name</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Distinguished Name</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T173146Z" changeid="xavier">
@@ -21492,6 +21628,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074226Z" changeid="xavier">
         <seg>Ne pas oublier de sauvegarder les changements !</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Do not restrict /public/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T055530Z" changeid="xavier">
+        <seg>Ne pas restreindre /public/</seg>
       </tuv>
     </tu>
     <tu>
@@ -22264,6 +22408,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T140807Z" changeid="xavier">
         <seg>Exemples avec un &lt;a0&gt;en-tête configuré&lt;/a0&gt; nommé 'Auth-User':</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Examples:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T055345Z" changeid="xavier">
+        <seg>Exemples :</seg>
       </tuv>
     </tu>
     <tu>
@@ -23324,6 +23476,38 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Give a non ascii data</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T061234Z" changeid="xavier">
+        <seg>Done une valeur non-ascii</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Give a static value</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T061153Z" changeid="xavier">
+        <seg>Donne une valeur statique</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Give display name</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T061219Z" changeid="xavier">
+        <seg>Donne le nom à afficher</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Give the uid (for accounting)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T061131Z" changeid="xavier">
+        <seg>Donne l'uid (pour la traçabilité)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Glossary directory = &lt;e0&gt;[path/to/trunk/build/lemonldap-ng]&lt;/e0&gt;/omegat.files/zz/glossary/</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -23576,6 +23760,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T173809Z" changeid="xavier">
         <seg>Aller dans le manager et &lt;a0&gt;créer un nouvel hôte virtuel&lt;/a0&gt; pour phpLDAPadmin.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Goal</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T055355Z" changeid="xavier">
+        <seg>But</seg>
       </tuv>
     </tu>
     <tu>
@@ -23860,6 +24052,22 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Header names must contain only letters and ”-” character</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103343Z" changeid="xavier">
+        <seg>Les noms d'en-têtes ne doivent contenir que des lettres et le caractère ”-”</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Header value</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T061113Z" changeid="xavier">
+        <seg>Valeur d'en-tête</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Headers</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T172026Z" changeid="xavier">
@@ -23868,10 +24076,26 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Headers are associations between an header name and a perl expression that returns a string.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T061002Z" changeid="xavier">
+        <seg>Les en-têtes sont des associations entre un nom d'en-tête et une expression perl qui retourne une chaîne.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Headers are defined inside a virtualhost and takes effect only on it.</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Les en-têtes sont définies à l'intérieur d'un hôte virtuel (virtualhost) et n'ont d'effet que sur lui.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Headers are used to give user datas to the application.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T061104Z" changeid="xavier">
+        <seg>Les en-têtes sont utilisés pour donner aux applications les données utilisateurs.</seg>
       </tuv>
     </tu>
     <tu>
@@ -24328,6 +24552,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120505T080753Z" changeid="xavier">
         <seg>Si le cookie sécurisé est activé, l'&lt;a3&gt;URL&lt;/a3&gt; du portail &lt;s4&gt;doit&lt;/s4&gt; être en HTTPS.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>If so, you can redirect users to a &lt;a0&gt;HTML&lt;/a0&gt; page that explain that it is safe to close browser after disconnect.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T060910Z" changeid="xavier">
+        <seg>Dans ce cas, il faut rediriger les utilisateurs vers une page &lt;a0&gt;HTML&lt;/a0&gt; qui explique qu'il est préférable de clore son navigateur après déconnexion.</seg>
       </tuv>
     </tu>
     <tu>
@@ -26564,6 +26796,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Lemonldap::NG manage applications by their hostname (Apache's virtualHosts).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T054834Z" changeid="xavier">
+        <seg>Lemonldap::NG gère les applications par leurs noms d'hôtes(hôtes virtuels d'Apache).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Lemonldap::NG provides 2 &lt;a0&gt;SOAP&lt;/a0&gt; servers :</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T171328Z" changeid="xavier">
@@ -26954,6 +27194,30 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Logout user from Lemonldap::NG and redirect it to http://intranet/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T060319Z" changeid="xavier">
+        <seg>Déconnecte l'utilisateur de Lemonldap::NG le redirige vers http://intranet/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Logout user from current application and from Lemonldap::NG and redirect it to http://intranet/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T060539Z" changeid="xavier">
+        <seg>Déconnecte l'utilisateur de l'application courante et de Lemonldap::NG le redirige vers http://intranet/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Logout user from current application and redirect it to the menu</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T060501Z" changeid="xavier">
+        <seg>Déconnecte l'utilisateur de l'application courante et le redirige vers le menu</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Logs</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T200656Z" changeid="guimard">
@@ -27166,6 +27430,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T081022Z" changeid="xavier">
         <seg>Mode maintenance</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Makes authentication optional, but authenticated users are seen as such (that is, user data are sent to the app through &lt;a0&gt;HTTP&lt;/a0&gt; headers)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T055710Z" changeid="xavier">
+        <seg>Rendre l'authentification optionnelle, mais les utilisateurs authentifiés sont vus comme tel (ce qui signifie que les données utilisateurs sont envoyées via les en-têtes &lt;a0&gt;HTTP&lt;/a0&gt;)</seg>
       </tuv>
     </tu>
     <tu>
@@ -27896,6 +28168,14 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Note that variables designed by $xx correspond to the name of the &lt;a0&gt;exported variables&lt;/a0&gt; or &lt;a1&gt;macro names&lt;/a1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T055253Z" changeid="xavier">
+        <seg>Noter que les variables designées par $xx correspondent au nom de &lt;a0&gt;variables exportées&lt;/a0&gt; ou de &lt;a1&gt;noms de macro&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Note that you have to use UTF-8 characters</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -28340,6 +28620,14 @@ lemonldap-ng=&gt; q</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120217T045318Z" changeid="xavier">
         <seg>Un utilisateur tente d'accéder au portail</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Only current application is concerned by logout_app* targets.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T060718Z" changeid="xavier">
+        <seg>Seule l'application est concernée par les cibles logout_app*.</seg>
       </tuv>
     </tu>
     <tu>
@@ -30158,10 +30446,34 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Restrict /admin/ directory to user bart.simpson</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T055425Z" changeid="xavier">
+        <seg>Restreindre le répertoire /admin/ à l'utilisateur bart.simpson</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Restrict /js/ and /css/ directory to authenticated users</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T055456Z" changeid="xavier">
+        <seg>Restreindre les répertoires /js/ et /css/ aux utilisateurs authentifiés</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Restrict access to the directories only to the Apache server.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T192048Z" changeid="xavier">
         <seg>Restreindre l'accès à ces répertoires au seul utilisateur Apache.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Restrict access to the whole site to users that have the &lt;a0&gt;LDAP&lt;/a0&gt; description field set to “&lt;a1&gt;LDAP&lt;/a1&gt; administrator” (must be set in exported variables)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T055842Z" changeid="xavier">
+        <seg>Restreindre l'accès à tout le site aux utilisateurs dont le champ description &lt;a0&gt;LDAP&lt;/a0&gt; contient “&lt;a1&gt;LDAP&lt;/a1&gt; administrator” (doit être déclaré dans les variables exportées)</seg>
       </tuv>
     </tu>
     <tu>
@@ -30282,6 +30594,22 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T171753Z" changeid="xavier">
         <seg>Règles</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Rules are used to protect applications, headers are &lt;a0&gt;HTTP&lt;/a0&gt; headers added to the request to give datas to the application (for logs, profiles,…).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T054940Z" changeid="xavier">
+        <seg>Les règles sont utilisées pour protéger les applications, les en-têtes sont des en-têtes &lt;a0&gt;HTTP&lt;/a0&gt; ajoutés pour transmettre des données à l'application (pour les journaux, profils,…).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Rules can also be used to intercept logout &lt;a0&gt;URL&lt;/a0&gt;:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T060241Z" changeid="xavier">
+        <seg>Les règles peuvent également être utilisées pour intercepter les &lt;a0&gt;URL&lt;/a0&gt; de déconnexion :</seg>
       </tuv>
     </tu>
     <tu>
@@ -30990,6 +31318,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>See &lt;a0&gt;performances&lt;/a0&gt; to know how to use macros and groups in rules.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T060206Z" changeid="xavier">
+        <seg>Voir &lt;a0&gt;performances&lt;/a0&gt; pour comprendre l'intérêt des macros et groupes dans les règles.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>See &lt;a0&gt;prerequisites and dependencies&lt;/a0&gt; chapter for more.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T095720Z" changeid="xavier">
@@ -31042,6 +31378,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T073902Z" changeid="xavier">
         <seg>Voir &lt;s0&gt;&lt;a1&gt;Écrire des règles et des en-têtes&lt;/a1&gt;&lt;/s0&gt; pour savoir comment configurer le contrôle d'accès et les en-têtes &lt;a2&gt;HTTP&lt;/a2&gt; transmis à l'application par &lt;a3&gt;LL::NG&lt;/a3&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>See &lt;s0&gt;&lt;a1&gt;security chapter&lt;/a1&gt;&lt;/s0&gt; to learn more about writing good rules.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T060130Z" changeid="xavier">
+        <seg>Voir le &lt;s0&gt;&lt;a1&gt;chapître sécurité&lt;/a1&gt;&lt;/s0&gt; pour apprendre comment écrire de bonnes règles.</seg>
       </tuv>
     </tu>
     <tu>
@@ -31478,6 +31822,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Since many &lt;a0&gt;HTTP&lt;/a0&gt; servers refuse non ascii headers, it is recommended to use encode_base64() function to transmit those headers</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103308Z" changeid="xavier">
+        <seg>Comme la plupart des serveurs &lt;a0&gt;HTTP&lt;/a0&gt; refusent les en-têtes non-ascii, il est recommandé d'utiliser la fonction encode_base64() pour transmettre ces en-têtes</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Since version 0.9.4, LemonLDAP::NG can be used to notify some messages to users: if a user has a message, the message will be displayed when he will access to the portal.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T051837Z" changeid="guimard">
@@ -31786,6 +32138,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T081012Z" changeid="xavier">
         <seg>Quelques options sont disponibles :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Some-Thing</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T061201Z" changeid="xavier">
+        <seg>Some-Thing</seg>
       </tuv>
     </tu>
     <tu>
@@ -33214,6 +33574,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T113057Z" changeid="xavier">
         <seg>La valeur complète de Location est remplacée, y compris le schéma (http or https), ce qui peut aider à gérer les redirections derrière des équipements &lt;a0&gt;SSL&lt;/a0&gt; matériels</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The “&lt;s0&gt;default&lt;/s0&gt;” access rule is used if no other access rule match the current &lt;a1&gt;URL&lt;/a1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T055926Z" changeid="xavier">
+        <seg>La règle d'accès “&lt;s0&gt;default&lt;/s0&gt;” est utilisée si aucune règle ne correspond à l'&lt;a1&gt;URL&lt;/a1&gt; courante.</seg>
       </tuv>
     </tu>
     <tu>
@@ -37928,10 +38296,26 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OW2</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>^/(css|js)/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T055500Z" changeid="xavier">
+        <seg>^/(css|js)/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>^/Microsoft-Server-ActiveSync</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T172004Z" changeid="xavier">
         <seg>^/Microsoft-Server-ActiveSync</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>^/admin/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T055426Z" changeid="xavier">
+        <seg>^/admin/</seg>
       </tuv>
     </tu>
     <tu>
@@ -37952,10 +38336,34 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OW2</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>^/config/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T055520Z" changeid="xavier">
+        <seg>^/config/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>^/forum/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T055714Z" changeid="xavier">
+        <seg>^/forum/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>^/index.php\?.*access=admin</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T100350Z" changeid="xavier">
         <seg>^/index.php\?.*access=admin</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>^/index.php\?logout</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T060321Z" changeid="xavier">
+        <seg>^/index.php\?logout</seg>
       </tuv>
     </tu>
     <tu>
@@ -38004,6 +38412,14 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-OW2</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T095717Z" changeid="xavier">
         <seg>^/pub/admin/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>^/public/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T055531Z" changeid="xavier">
+        <seg>^/public/</seg>
       </tuv>
     </tu>
     <tu>
@@ -41264,6 +41680,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>encode_base64($givenName.&quot; &quot;.$surName)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T061238Z" changeid="xavier">
+        <seg>encode_base64($givenName.&quot; &quot;.$surName)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>etc.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T121150Z" changeid="xavier">
@@ -41620,6 +42044,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T153718Z" changeid="xavier">
         <seg>http://en.wikipedia.org/wiki/Outlook_Web_App</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://en.wikipedia.org/wiki/Perl_Compatible_Regular_Expressions</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T055255Z" changeid="xavier">
+        <seg>http://en.wikipedia.org/wiki/Perl_Compatible_Regular_Expressions</seg>
       </tuv>
     </tu>
     <tu>
@@ -44142,10 +44574,34 @@ kinit -k -t /etc/lemonldap-ng/auth.keytab HTTP/auth.example.com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>logout_app_sso http://intranet/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T060541Z" changeid="xavier">
+        <seg>logout_app_sso http://intranet/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>logout_app https://auth.example.com/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T060505Z" changeid="xavier">
+        <seg>logout_app https://auth.example.com/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>logout_sso</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T171957Z" changeid="xavier">
         <seg>logout_sso</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>logout_sso http://intranet/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T060323Z" changeid="xavier">
+        <seg>logout_sso http://intranet/</seg>
       </tuv>
     </tu>
     <tu>
@@ -45538,6 +45994,14 @@ cp ../pastel/custom* .</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>skip</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T055534Z" changeid="xavier">
+        <seg>skip</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>sn</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T120456Z" changeid="xavier">
@@ -46576,6 +47040,14 @@ cd lemonldap-ng-*</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>~500</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>“static-value”</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T061202Z" changeid="xavier">
+        <seg>“static-value”</seg>
       </tuv>
     </tu>
     <tu>
