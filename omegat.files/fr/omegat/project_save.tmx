@@ -2792,6 +2792,22 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../media/icons/flags/fr.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103610Z" changeid="xavier">
+        <seg>../../media/icons/flags/fr.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../media/icons/flags/us.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103555Z" changeid="xavier">
+        <seg>../../media/icons/flags/us.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../css/all.css</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -2816,6 +2832,22 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../documentation/1.0/applications.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103749Z" changeid="xavier">
+        <seg>../documentation/1.0/applications.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../documentation/1.0/portal.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103755Z" changeid="xavier">
+        <seg>../documentation/1.0/portal.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../documentation/1.2/applications.html</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -2828,6 +2860,102 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>../documentation/1.2/portal.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../documentation/current/logs.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103842Z" changeid="xavier">
+        <seg>../documentation/current/logs.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../documentation/current/notifications.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103753Z" changeid="xavier">
+        <seg>../documentation/current/notifications.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../documentation/current/portalcustom.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103747Z" changeid="xavier">
+        <seg>../documentation/current/portalcustom.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../documentation/current/prereq.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103847Z" changeid="xavier">
+        <seg>../documentation/current/prereq.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../documentation/current/sessions.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103751Z" changeid="xavier">
+        <seg>../documentation/current/sessions.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../documentation/current/ssocookie.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103752Z" changeid="xavier">
+        <seg>../documentation/current/ssocookie.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../documentation/current/ssocookie.html#sso_cookie</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103759Z" changeid="xavier">
+        <seg>../documentation/current/ssocookie.html#sso_cookie</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../documentation/current/start.html#authentication_users_and_password_databases</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103757Z" changeid="xavier">
+        <seg>../documentation/current/start.html#authentication_users_and_password_databases</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../documentation/current/start.html#configuration_database</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103757Z" changeid="xavier">
+        <seg>../documentation/current/start.html#configuration_database</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../documentation/current/start.html#sessions_database</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103758Z" changeid="xavier">
+        <seg>../documentation/current/start.html#sessions_database</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../documentation/current/writingrulesand_headers.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103800Z" changeid="xavier">
+        <seg>../documentation/current/writingrulesand_headers.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../documentation/current/writingrulesand_headers.html#headers</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103750Z" changeid="xavier">
+        <seg>../documentation/current/writingrulesand_headers.html#headers</seg>
       </tuv>
     </tu>
     <tu>
@@ -6000,6 +6128,22 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/_detail/icons/flags/fr.png?id=documentation%3Aconferences</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103609Z" changeid="xavier">
+        <seg>/_detail/icons/flags/fr.png?id=documentation%3Aconferences</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>/_detail/icons/flags/us.png?id=documentation%3Aconferences</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103553Z" changeid="xavier">
+        <seg>/_detail/icons/flags/us.png?id=documentation%3Aconferences</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>/_detail/icons/gpg.png?id=documentation%3A1.2%3Astart</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120505T081238Z" changeid="xavier">
@@ -6728,10 +6872,42 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>2009</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103724Z" changeid="xavier">
+        <seg>2009</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>20090301000000Z</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T182720Z" changeid="xavier">
         <seg>20090301000000Z</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>2010</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103707Z" changeid="xavier">
+        <seg>2010</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>2011</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103559Z" changeid="xavier">
+        <seg>2011</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>2012</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103520Z" changeid="xavier">
+        <seg>2012</seg>
       </tuv>
     </tu>
     <tu>
@@ -8894,6 +9070,22 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;SlideShare&lt;/a0&gt; &lt;br1/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103617Z" changeid="xavier">
+        <seg>&lt;a0&gt;SlideShare&lt;/a0&gt; &lt;br1/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;SlideShare&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103729Z" changeid="xavier">
+        <seg>&lt;a0&gt;SlideShare&lt;/a0&gt;&lt;br1/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;Spring Security&lt;/a0&gt; is the new ACEGI name.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T174326Z" changeid="xavier">
@@ -9844,10 +10036,34 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a2&gt;Lanyrd&lt;/a2&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103626Z" changeid="xavier">
+        <seg>&lt;a2&gt;Lanyrd&lt;/a2&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a2&gt;Lanyrd&lt;/a2&gt; &lt;br3/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103617Z" changeid="xavier">
+        <seg>&lt;a2&gt;Lanyrd&lt;/a2&gt; &lt;br3/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a2&gt;Lutece&lt;/a2&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T153728Z" changeid="xavier">
         <seg>&lt;a2&gt;Lutece&lt;/a2&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a2&gt;Video&lt;/a2&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103735Z" changeid="xavier">
+        <seg>&lt;a2&gt;Vidéo&lt;/a2&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -10198,6 +10414,22 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       <tuv lang="FR-FR" changedate="20120506T054723Z" changeid="xavier">
         <seg>&lt;a4&gt;&lt;s5&gt;return&lt;/s5&gt;&lt;/a4&gt; &lt;s6&gt;&quot;logo&quot;&lt;/s6&gt;&lt;s7&gt;;&lt;/s7&gt;
 &lt;s8&gt;}&lt;/s8&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a4&gt;Joind.in&lt;/a4&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103618Z" changeid="xavier">
+        <seg>&lt;a4&gt;Joind.in&lt;/a4&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a4&gt;YouTube&lt;/a4&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103655Z" changeid="xavier">
+        <seg>&lt;a4&gt;YouTube&lt;/a4&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -10598,10 +10830,26 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;c0&gt;skip&lt;/c0&gt;: all is open!</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103810Z" changeid="xavier">
+        <seg>&lt;c0&gt;skip&lt;/c0&gt; : tout est ouvert !</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;c0&gt;unprotect&lt;/c0&gt;: all is open!</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>&lt;c0&gt;unprotect&lt;/c0&gt;: tout est ouvert !</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;c0&gt;unprotect&lt;/c0&gt;: all is open, but authenticated users are seen as authenticated</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103835Z" changeid="xavier">
+        <seg>&lt;c0&gt;unprotect&lt;/c0&gt; : tout est ouvert, mais les utilisateurs authentifiés sont vus comme tels</seg>
       </tuv>
     </tu>
     <tu>
@@ -17792,6 +18040,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>ASF-WS</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103657Z" changeid="xavier">
+        <seg>ASF-WS</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Accept all authenticated users:</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -19400,6 +19656,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Berlin</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103737Z" changeid="xavier">
+        <seg>Berlin</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Bibliothèque Publique d'Information</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -19440,6 +19704,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Bordeaux</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103713Z" changeid="xavier">
+        <seg>Bordeaux</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Browseable (SQL, Redis or LDAP)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120505T082258Z" changeid="xavier">
@@ -19460,6 +19732,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T071814Z" changeid="xavier">
         <seg>Le backend de session explorable (&lt;a0&gt;Apache::Session::Browseable&lt;/a0&gt;) fonctionne exactement comme le module Apache::Session::* correspondant mais ajoute des index qui améliore les performances de l'&lt;a1&gt;explorateur de session&lt;/a1&gt; et les &lt;a2&gt;restrictions de sessions&lt;/a2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Bruxelles</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103552Z" changeid="xavier">
+        <seg>Bruxelles</seg>
       </tuv>
     </tu>
     <tu>
@@ -20300,6 +20580,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T191431Z" changeid="xavier">
         <seg>Compilation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>ConFoo</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103603Z" changeid="xavier">
+        <seg>ConFoo</seg>
       </tuv>
     </tu>
     <tu>
@@ -22252,6 +22540,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Event</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103527Z" changeid="xavier">
+        <seg>Événement</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Example</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -22576,6 +22872,22 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120505T094115Z" changeid="xavier">
         <seg>FIXME</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>FOSDEM</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103551Z" changeid="xavier">
+        <seg>FOSDEM</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>FPW</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103636Z" changeid="xavier">
+        <seg>FPW</seg>
       </tuv>
     </tu>
     <tu>
@@ -24104,6 +24416,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>En-têtes envoyés</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Heidelberg</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103650Z" changeid="xavier">
+        <seg>Heidelberg</seg>
       </tuv>
     </tu>
     <tu>
@@ -26052,6 +26372,22 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>JCOS</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103621Z" changeid="xavier">
+        <seg>JCOS</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>JDLL</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103702Z" changeid="xavier">
+        <seg>JDLL</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>JDLL 2010</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -26300,6 +26636,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>LDAPCon</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103649Z" changeid="xavier">
+        <seg>LDAPCon</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>LDAPFilter</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T061710Z" changeid="guimard">
@@ -26390,8 +26734,16 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       <tuv lang="EN-US">
         <seg>Language</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120303T083114Z" changeid="xavier">
-        <seg>Language</seg>
+      <tuv lang="FR-FR" changedate="20120506T103548Z" changeid="xavier">
+        <seg>Langue</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Lanyrd</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103558Z" changeid="xavier">
+        <seg>Lanyrd</seg>
       </tuv>
     </tu>
     <tu>
@@ -26994,6 +27346,22 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Links</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103544Z" changeid="xavier">
+        <seg>Links</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Linux Tag</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103736Z" changeid="xavier">
+        <seg>Linux Tag</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Linux Tag 2009</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -27070,6 +27438,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Les macros locales sont une fonctionnalité spéciale des agents qui permettent d'avoir des macros utilisables localement seulement.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Location</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103533Z" changeid="xavier">
+        <seg>Lieu</seg>
       </tuv>
     </tu>
     <tu>
@@ -27230,6 +27606,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120505T083239Z" changeid="xavier">
         <seg>Journalisation</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Lyon</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103622Z" changeid="xavier">
+        <seg>Lyon</seg>
       </tuv>
     </tu>
     <tu>
@@ -27722,6 +28106,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Montreal</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103608Z" changeid="xavier">
+        <seg>Montréal</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>More information about Safe on &lt;a0&gt;CPAN&lt;/a0&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T203926Z" changeid="xavier">
@@ -27932,6 +28324,14 @@ lemonldap-ng=&gt; q</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>Formats de NameID</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Nantes</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103725Z" changeid="xavier">
+        <seg>Nantes</seg>
       </tuv>
     </tu>
     <tu>
@@ -29000,6 +29400,14 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Paris</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103630Z" changeid="xavier">
+        <seg>Paris</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Pascal PEJAC</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -29946,6 +30354,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="FR-FR">
         <seg>Paquets RPM RHEL5</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>RMLL/LSM</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103643Z" changeid="xavier">
+        <seg>RMLL/LSM</seg>
       </tuv>
     </tu>
     <tu>
@@ -31614,6 +32030,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Session-ID =&gt; $_session_id</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103518Z" changeid="xavier">
+        <seg>Session-ID =&gt; $_session_id</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Sessions</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -31918,6 +32342,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>SlideShare</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103711Z" changeid="xavier">
+        <seg>SlideShare</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>So &lt;a0&gt;HTTP&lt;/a0&gt; Basic Autentication is managed trough an &lt;a1&gt;HTTP&lt;/a1&gt; header (&lt;c2&gt;Authorization&lt;/c2&gt;), that can be forged by &lt;a3&gt;LL::NG&lt;/a3&gt;, with this precautions:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111750Z" changeid="xavier">
@@ -32078,6 +32510,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Solutions Linux</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103629Z" changeid="xavier">
+        <seg>Solutions Linux</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Some &lt;a0&gt;Perl&lt;/a0&gt; optimizations:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T064431Z" changeid="xavier">
@@ -32194,6 +32634,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="FR-FR">
         <seg>South Bay Community Network</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Speaker</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103540Z" changeid="xavier">
+        <seg>Conférencier</seg>
       </tuv>
     </tu>
     <tu>
@@ -32394,6 +32842,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T070517Z" changeid="guimard">
         <seg>Stocker le mot-de-passe utilisateur dans la session</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Strasbourg</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103644Z" changeid="xavier">
+        <seg>Strasbourg</seg>
       </tuv>
     </tu>
     <tu>
@@ -36754,6 +37210,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Xavier GUIMARD&lt;br0/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103718Z" changeid="xavier">
+        <seg>Xavier GUIMARD&lt;br0/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>YUM</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T141140Z" changeid="guimard">
@@ -38078,6 +38542,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T064908Z" changeid="guimard">
         <seg>Clef secrète Yubikey</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Yverdon</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103658Z" changeid="xavier">
+        <seg>Yverdon</seg>
       </tuv>
     </tu>
     <tu>
@@ -41864,6 +42336,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://2011.rmll.info/CAS-OpenID-Shibboleth-SAML-un-WebSSO-pour-les-gouverner-tous</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103640Z" changeid="xavier">
+        <seg>http://2011.rmll.info/CAS-OpenID-Shibboleth-SAML-un-WebSSO-pour-les-gouverner-tous</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://auth.example.com</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -41932,6 +42412,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>http://code.google.com/p/redis/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://confoo.ca/en/2011/session/lemonldap-ng-a-free-web-single-sign-on-software</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103601Z" changeid="xavier">
+        <seg>http://confoo.ca/en/2011/session/lemonldap-ng-a-free-web-single-sign-on-software</seg>
       </tuv>
     </tu>
     <tu>
@@ -42072,6 +42560,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://event.appsec-forum.ch/27-oct-appsec-conferences/#c1</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103656Z" changeid="xavier">
+        <seg>http://event.appsec-forum.ch/27-oct-appsec-conferences/#c1</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://fedoraproject.org/wiki/EPEL/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T141208Z" changeid="guimard">
@@ -42188,6 +42684,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>http://forge.ow2.org/svnsnapshots/lemonldap-svn-latest.tar.gz</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://fosdem.org/2012/schedule/event/lemonldapng</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103550Z" changeid="xavier">
+        <seg>http://fosdem.org/2012/schedule/event/lemonldapng</seg>
       </tuv>
     </tu>
     <tu>
@@ -42384,10 +42888,98 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://joind.in/2862</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103615Z" changeid="xavier">
+        <seg>http://joind.in/2862</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://journeesperl.fr/fpw2011/talk/3383</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103633Z" changeid="xavier">
+        <seg>http://journeesperl.fr/fpw2011/talk/3383</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://jqueryui.com/themeroller/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120223T144017Z" changeid="xavier">
         <seg>http://jqueryui.com/themeroller/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://lanyrd.com/2011/appsec-forum-2011/sgyzq/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103700Z" changeid="xavier">
+        <seg>http://lanyrd.com/2011/appsec-forum-2011/sgyzq/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://lanyrd.com/2011/confoo/sddcy/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103613Z" changeid="xavier">
+        <seg>http://lanyrd.com/2011/confoo/sddcy/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://lanyrd.com/2011/fpw2011/sfhcb/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103638Z" changeid="xavier">
+        <seg>http://lanyrd.com/2011/fpw2011/sfhcb/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://lanyrd.com/2011/jcos/sdrbd/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103625Z" changeid="xavier">
+        <seg>http://lanyrd.com/2011/jcos/sdrbd/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://lanyrd.com/2011/jdll/smdct/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103705Z" changeid="xavier">
+        <seg>http://lanyrd.com/2011/jdll/smdct/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://lanyrd.com/2011/ldapcon/sgqdf/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103652Z" changeid="xavier">
+        <seg>http://lanyrd.com/2011/ldapcon/sgqdf/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://lanyrd.com/2011/rmll-2/sffqx/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103645Z" changeid="xavier">
+        <seg>http://lanyrd.com/2011/rmll-2/sffqx/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://lanyrd.com/2011/solutions-linux-open-source/sddcx/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103631Z" changeid="xavier">
+        <seg>http://lanyrd.com/2011/solutions-linux-open-source/sddcx/</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://lanyrd.com/2012/fosdem/spfqq/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103555Z" changeid="xavier">
+        <seg>http://lanyrd.com/2012/fosdem/spfqq/</seg>
       </tuv>
     </tu>
     <tu>
@@ -43184,6 +43776,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://www.daasi.de/ldapcon2011/index.php?site=lemonldap</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103647Z" changeid="xavier">
+        <seg>http://www.daasi.de/ldapcon2011/index.php?site=lemonldap</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://www.dokuwiki.org/</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T114555Z" changeid="xavier">
@@ -43252,6 +43852,30 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120301T053659Z" changeid="xavier">
         <seg>http://www.jasig.org/cas/protocol</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.jcos.fr</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103619Z" changeid="xavier">
+        <seg>http://www.jcos.fr</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.jdll.org/content/lemonldapng-100-en-avant-premi%C3%A8re</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103709Z" changeid="xavier">
+        <seg>http://www.jdll.org/content/lemonldapng-100-en-avant-premi%C3%A8re</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.jdll.org/node/206</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103701Z" changeid="xavier">
+        <seg>http://www.jdll.org/node/206</seg>
       </tuv>
     </tu>
     <tu>
@@ -43408,6 +44032,134 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://www.slideshare.net/ASF-WS/asfws-casopen-idsaml</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103659Z" changeid="xavier">
+        <seg>http://www.slideshare.net/ASF-WS/asfws-casopen-idsaml</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.slideshare.net/coudot/cas-openid-saml-concepts-diffrences-et-exemples-10219360</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103704Z" changeid="xavier">
+        <seg>http://www.slideshare.net/coudot/cas-openid-saml-concepts-diffrences-et-exemples-10219360</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.slideshare.net/coudot/jdll-2010-lemonldapng100preview</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103710Z" changeid="xavier">
+        <seg>http://www.slideshare.net/coudot/jdll-2010-lemonldapng100preview</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.slideshare.net/coudot/ldapcon-2011-the-lemonldapng-project</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103651Z" changeid="xavier">
+        <seg>http://www.slideshare.net/coudot/ldapcon-2011-the-lemonldapng-project</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.slideshare.net/coudot/lemonldapng-et-le-support-saml2</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103723Z" changeid="xavier">
+        <seg>http://www.slideshare.net/coudot/lemonldapng-et-le-support-saml2</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.slideshare.net/coudot/lemonldapng-un-websso-libre</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103624Z" changeid="xavier">
+        <seg>http://www.slideshare.net/coudot/lemonldapng-un-websso-libre</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.slideshare.net/coudot/lemonldapng-un-websso-libre-confoo-2010</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103612Z" changeid="xavier">
+        <seg>http://www.slideshare.net/coudot/lemonldapng-un-websso-libre-confoo-2010</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.slideshare.net/coudot/lemonldapng-un-websso-libre-en-perl</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103637Z" changeid="xavier">
+        <seg>http://www.slideshare.net/coudot/lemonldapng-un-websso-libre-en-perl</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.slideshare.net/coudot/rmll-2009-prsentation-du-websso-lemonldapng</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103727Z" changeid="xavier">
+        <seg>http://www.slideshare.net/coudot/rmll-2009-prsentation-du-websso-lemonldapng</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.slideshare.net/coudot/rmll-2011-websso</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103645Z" changeid="xavier">
+        <seg>http://www.slideshare.net/coudot/rmll-2011-websso</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.slideshare.net/coudot/rmll2010-lemon-ldapngsaml</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103714Z" changeid="xavier">
+        <seg>http://www.slideshare.net/coudot/rmll2010-lemon-ldapngsaml</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.slideshare.net/coudot/sl2009-identity-management-cycle-ldap-synchronization-and-websso2</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103738Z" changeid="xavier">
+        <seg>http://www.slideshare.net/coudot/sl2009-identity-management-cycle-ldap-synchronization-and-websso2</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.slideshare.net/coudot/sl2011-lemon-ldapng</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103631Z" changeid="xavier">
+        <seg>http://www.slideshare.net/coudot/sl2011-lemon-ldapng</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.slideshare.net/coudot/websso-and-access-management-with-lemonldapng</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103737Z" changeid="xavier">
+        <seg>http://www.slideshare.net/coudot/websso-and-access-management-with-lemonldapng</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.slideshare.net/xguimard/lemonldapng-opensource-websso-of-the-french-administrations-1394404</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103739Z" changeid="xavier">
+        <seg>http://www.slideshare.net/xguimard/lemonldapng-opensource-websso-of-the-french-administrations-1394404</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.solutionslinux.fr/animation_51_168_1611_p.html?cid=756</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103627Z" changeid="xavier">
+        <seg>http://www.solutionslinux.fr/animation_51_168_1611_p.html?cid=756</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://www.svwux.org/</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -43436,6 +44188,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T074442Z" changeid="xavier">
         <seg>http://www.wikipedia.org</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://www.youtube.com/watch?v=OJGB6jdN34Q</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103653Z" changeid="xavier">
+        <seg>http://www.youtube.com/watch?v=OJGB6jdN34Q</seg>
       </tuv>
     </tu>
     <tu>
@@ -43652,6 +44412,22 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>icons:database.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>icons:flags:fr.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103610Z" changeid="xavier">
+        <seg>icons:flags:fr.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>icons:flags:us.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T103554Z" changeid="xavier">
+        <seg>icons:flags:us.png</seg>
       </tuv>
     </tu>
     <tu>
