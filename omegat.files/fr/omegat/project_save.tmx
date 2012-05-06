@@ -1680,6 +1680,22 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.0/upgrade.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T093758Z" changeid="xavier">
+        <seg>../../documentation/1.0/upgrade.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../../documentation/1.1/upgrade.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T093810Z" changeid="xavier">
+        <seg>../../documentation/1.1/upgrade.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.2/activedirectoryminihowto.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120505T083114Z" changeid="xavier">
@@ -6424,6 +6440,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>/lib/images/smileys/fixme.gif</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T094116Z" changeid="xavier">
+        <seg>/lib/images/smileys/fixme.gif</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>/usr/share/lemonldap-ng/bin/lmConfigEditor</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120410T042120Z" changeid="xavier">
@@ -10104,6 +10128,16 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a4&gt;&lt;s5&gt;return&lt;/s5&gt;&lt;/a4&gt; &lt;s6&gt;&quot;logo&quot;&lt;/s6&gt;&lt;s7&gt;;&lt;/s7&gt;
+&lt;s8&gt;}&lt;/s8&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T054723Z" changeid="xavier">
+        <seg>&lt;a4&gt;&lt;s5&gt;return&lt;/s5&gt;&lt;/a4&gt; &lt;s6&gt;&quot;logo&quot;&lt;/s6&gt;&lt;s7&gt;;&lt;/s7&gt;
+&lt;s8&gt;}&lt;/s8&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a4&gt;authapache&lt;/a4&gt;&lt;br5/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111440Z" changeid="xavier">
@@ -10718,6 +10752,18 @@ Display&lt;s14&gt;-&lt;/s14&gt;Name &lt;s15&gt;-&gt;&lt;/s15&gt; &lt;s16&gt;$dis
 &lt;s5&gt;use&lt;/s5&gt; utf8&lt;s6&gt;;&lt;/s6&gt;
  
 &lt;s7&gt;my&lt;/s7&gt; &lt;s8&gt;$lite&lt;/s8&gt; &lt;s9&gt;=&lt;/s9&gt; SOAP&lt;s10&gt;::&lt;/s10&gt;&lt;s11&gt;Lite&lt;/s11&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;## @method string getDisplayType&lt;/s0&gt;
+&lt;s1&gt;# @return display type&lt;/s1&gt;
+&lt;s2&gt;sub&lt;/s2&gt; getDisplayType &lt;s3&gt;{&lt;/s3&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T054719Z" changeid="xavier">
+        <seg>&lt;s0&gt;## @method string getDisplayType&lt;/s0&gt;
+&lt;s1&gt;# @return display type&lt;/s1&gt;
+&lt;s2&gt;sub&lt;/s2&gt; getDisplayType &lt;s3&gt;{&lt;/s3&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -14346,6 +14392,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;logo&lt;/s0&gt;: no form (used for external authentication methods)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T054716Z" changeid="xavier">
+        <seg>&lt;s0&gt;logo&lt;/s0&gt; : pas de formulaire de connexion (utilisé pour les méthodes d'authentification externes)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;logon_hours&lt;/s0&gt;: string representing allowed logon hours (GMT)</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T181507Z" changeid="xavier">
@@ -14460,6 +14514,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;s0&gt;openidform&lt;/s0&gt;: OpenID login form</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T054354Z" changeid="xavier">
+        <seg>&lt;s0&gt;openidform&lt;/s0&gt; : formulaire de connexion OpenID</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;s0&gt;passThrough&lt;/s0&gt; (optional): Allow anonymous access or not.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111218T191206Z" changeid="xavier">
@@ -14536,6 +14598,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T172232Z" changeid="xavier">
         <seg>&lt;s0&gt;setAttributes(cookieValue,hashtable)&lt;/s0&gt; : met à jour une session</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;standardform&lt;/s0&gt;: login/password form</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T054318Z" changeid="xavier">
+        <seg>&lt;s0&gt;standardform&lt;/s0&gt; : formulaire compte/mot-de-passe</seg>
       </tuv>
     </tu>
     <tu>
@@ -14634,6 +14704,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120418T201621Z" changeid="guimard">
         <seg>&lt;s0&gt;warn&lt;/s0&gt; pour les échecs d'authentifications</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;yubikeyform&lt;/s0&gt;: Yubikey login form</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T054409Z" changeid="xavier">
+        <seg>&lt;s0&gt;yubikeyform&lt;/s0&gt; : formulaire de connexion Yubikey</seg>
       </tuv>
     </tu>
     <tu>
@@ -19218,6 +19296,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Before, when &lt;a0&gt;SSL&lt;/a0&gt; authentication failed, an option could be set to fail back to &lt;a1&gt;LDAP authentication backend&lt;/a1&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T094004Z" changeid="xavier">
+        <seg>Auparavant, lorsque l'authentification &lt;a0&gt;SSL&lt;/a0&gt; échouait, une option pouvait être activée pour retomber sur le &lt;a1&gt;backend d'authentification LDAP&lt;/a1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Before, you have to create the virtual host &lt;c0&gt;manager.your.domain&lt;/c0&gt; in the manager and set a &lt;a1&gt;rules&lt;/a1&gt;, else access to the manager will be denied.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T095356Z" changeid="xavier">
@@ -20930,6 +21016,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Custom authentication module</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T054136Z" changeid="xavier">
+        <seg>Module d'authentification personnalisé</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Custom functions</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -22322,6 +22416,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111518Z" changeid="xavier">
         <seg>F</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>FIXME</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T094115Z" changeid="xavier">
+        <seg>FIXME</seg>
       </tuv>
     </tu>
     <tu>
@@ -24350,6 +24452,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If you are using packages, they should have done the upgrade process for you, but you can check here that all is in order.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T093728Z" changeid="xavier">
+        <seg>Lorsqu'on utilise les paquets, ils doivent faire d'eux-même la mise à jour, mais on peut vérifier ici que tout est en ordre.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If you can not access the Manager anymore, you can unprotect it by editing &lt;c0&gt;lemonldap-ng.in&lt;/c0&gt; and changing the &lt;c1&gt;protection&lt;/c1&gt; parameter:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T163521Z" changeid="xavier">
@@ -24486,6 +24596,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>If you upgrade from older versions, please follow first:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T093757Z" changeid="xavier">
+        <seg>Pour les mises à jour depuis des versions plus anciennes, suivre d'abord :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>If you upgraded &lt;a0&gt;LL::NG&lt;/a0&gt;, check all &lt;a1&gt;upgrade notes&lt;/a1&gt;.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120303T094000Z" changeid="xavier">
@@ -24514,6 +24632,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>SI vous souhaitez devenir membre de l'équipe &lt;a1&gt;LL::NG&lt;/a1&gt; demandez-le également à &lt;a2&gt;lemonldap-ng-dev@ow2.org&lt;/a2&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>If you wrote custom authentication module, you have to add a new method called &lt;c0&gt;getDisplayType&lt;/c0&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T054236Z" changeid="xavier">
+        <seg>Les modules d'authentification personnalisés doivent désormais contenir une nouvelle méthode nommée &lt;c0&gt;getDisplayType&lt;/c0&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -27410,6 +27536,14 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Multi SSL;LDAP</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T094058Z" changeid="xavier">
+        <seg>Multi SSL;LDAP</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Multi modules display</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T203849Z" changeid="xavier">
@@ -27906,6 +28040,14 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Now, to keep this behavior, you have to use &lt;a0&gt;SSL&lt;/a0&gt; and &lt;a1&gt;LDAP&lt;/a1&gt; chaining in a &lt;a2&gt;Multi&lt;/a2&gt; configuration:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T094047Z" changeid="xavier">
+        <seg>Désormais, pour conserver ce comportement, il faut chaîner &lt;a0&gt;SSL&lt;/a0&gt; et &lt;a1&gt;LDAP&lt;/a1&gt; dans une configuration &lt;a2&gt;Multi&lt;/a2&gt; :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Null</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120121T080232Z" changeid="xavier">
@@ -28286,6 +28428,14 @@ lemonldap-ng=&gt; q</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T144143Z" changeid="xavier">
         <seg>Schéma OpenLDAP</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Opening conditions</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T094108Z" changeid="xavier">
+        <seg>Conditions d'ouverture</seg>
       </tuv>
     </tu>
     <tu>
@@ -30416,6 +30566,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>SSL authentication backend</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T093835Z" changeid="xavier">
+        <seg>Backend d'authentification SSL</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>SSLAuthnLevel</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T064215Z" changeid="guimard">
@@ -32178,6 +32336,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>The &lt;a0&gt;SSL authentication backend&lt;/a0&gt; behavior has changed:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T093906Z" changeid="xavier">
+        <seg>Le comportement du &lt;a0&gt;backend d'authentification SSL&lt;/a0&gt; a changé :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>The &lt;a0&gt;SSO&lt;/a0&gt; cookie is build by the portal (as described in the &lt;a1&gt;login kinematic&lt;/a1&gt;), or by the Handler for cross domain authentication (see &lt;a2&gt;CDA kinematic&lt;/a2&gt;).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120424T040421Z" changeid="xavier">
@@ -32198,6 +32364,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T121332Z" changeid="xavier">
         <seg>Fonction &lt;a0&gt;encode_base64&lt;/a0&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The &lt;a0&gt;login history&lt;/a0&gt; is a new feature enabled by default.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T094241Z" changeid="xavier">
+        <seg>L'&lt;a0&gt;historique de connexion&lt;/a0&gt; est une nouvelle fonctionnalité activée par défaut.</seg>
       </tuv>
     </tu>
     <tu>
@@ -32230,6 +32404,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T071004Z" changeid="xavier">
         <seg>La cible &lt;c0&gt;reload&lt;/c0&gt; est gérée dans la configuration d'Apache, dans un hôte virtuel protégé par LemonLDAP::NG Handler, par exemple:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The &lt;c0&gt;unprotect&lt;/c0&gt; rule in Manager now deletes headers forged by an unauthenticated user, but still send headers for authenticated ones.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T054045Z" changeid="xavier">
+        <seg>La règle &lt;c0&gt;unprotect&lt;/c0&gt; dans le manager efface désormais les en-têtes qui pourraient être fabriqués par un utilisateur non authentifié, mais les conserve pour un utilisateur authentifié.</seg>
       </tuv>
     </tu>
     <tu>
@@ -34004,6 +34186,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>This method should return one of these values:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T054256Z" changeid="xavier">
+        <seg>Cette méthode doit retourner l'une de ces valeurs :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>This mode allow to test LemonLDAP::NG without any third-party software.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T115115Z" changeid="xavier">
@@ -34668,6 +34858,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>To skip headers for both kind of users, use the &lt;c1&gt;skip&lt;/c1&gt; rule.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T054119Z" changeid="xavier">
+        <seg>Pour conserver les en-têtes dans les deux cas, utiliser la règle &lt;c1&gt;skip&lt;/c1&gt;.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>To stack several times the same module, use ”#name” with different names.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T145832Z" changeid="xavier">
@@ -34688,6 +34886,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T053122Z" changeid="guimard">
         <seg>Pour résumer les options disponibles :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>To turn it off, go in Manager and set 0 in Advanced Parameters &gt; Login History &gt; Activation.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T094331Z" changeid="xavier">
+        <seg>Pour l'éteindre, aller dans le manager et la désactiver dans Paramètres avancés &gt; Historique de connexion &gt; Activation.</seg>
       </tuv>
     </tu>
     <tu>
@@ -34992,6 +35198,14 @@ Is this ok [y/N]: y</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Unprotect rule</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120506T053901Z" changeid="xavier">
+        <seg>Règle &quot;unprotect&quot;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Update translations</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -35026,8 +35240,24 @@ Is this ok [y/N]: y</seg>
       <tuv lang="EN-US">
         <seg>Upgrade from 1.1 to 1.2</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120505T084508Z" changeid="xavier">
-        <seg>Mettre à jour de 1.1 vers 1.2</seg>
+      <tuv lang="FR-FR" changedate="20120505T084644Z" changeid="xavier">
+        <seg>Mettre à jour de la version 1.1 vers la version 1.2</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Upgrade to 1.0</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T093809Z" changeid="xavier">
+        <seg>Mise à jour vers la version 1.0</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Upgrade to 1.1</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T093822Z" changeid="xavier">
+        <seg>Mise à jour vers la version 1.1</seg>
       </tuv>
     </tu>
     <tu>
@@ -35712,6 +35942,14 @@ Index      -&gt; ipAddr uid</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T074653Z" changeid="guimard">
         <seg>Nous incluons des fichiers modèles qui peuvent être personnalisés :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>We now configure multiple condition with specific messages, not just one opening condition</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T094211Z" changeid="xavier">
+        <seg>On configure maintenant de multiple conditions avec des messages particuliers, et pas seulement une seule condition d'ouverture</seg>
       </tuv>
     </tu>
     <tu>
@@ -39630,6 +39868,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR">
         <seg>documentation:1.1:start</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.1:upgrade</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120505T093812Z" changeid="xavier">
+        <seg>documentation:1.1:upgrade</seg>
       </tuv>
     </tu>
     <tu>
