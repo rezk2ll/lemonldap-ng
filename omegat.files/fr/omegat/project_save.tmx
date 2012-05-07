@@ -1168,6 +1168,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../../media/applications/django_logo.png</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T182730Z" changeid="xavier">
+        <seg>../../../media/applications/django_logo.png</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../../media/applications/dokuwiki_logo.png</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T153538Z" changeid="xavier">
@@ -1760,6 +1768,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>../../documentation/1.2/applications/django.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T182728Z" changeid="xavier">
+        <seg>../../documentation/1.2/applications/django.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>../../documentation/1.2/applications/dokuwiki.html</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T103126Z" changeid="xavier">
@@ -1986,7 +2002,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../../documentation/1.2/authtwitter.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120419T072017Z" changeid="guimard">
+      <tuv lang="FR-FR" changedate="20120107T145630Z" changeid="guimard">
         <seg>../../documentation/1.2/authtwitter.html</seg>
       </tuv>
     </tu>
@@ -1994,7 +2010,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../../documentation/1.2/authyubikey.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120505T081343Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20121119T112720Z" changeid="xavier">
         <seg>../../documentation/1.2/authyubikey.html</seg>
       </tuv>
     </tu>
@@ -2018,7 +2034,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../../documentation/1.2/changeconfbackend.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120223T142639Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120223T142635Z" changeid="xavier">
         <seg>../../documentation/1.2/changeconfbackend.html</seg>
       </tuv>
     </tu>
@@ -2050,7 +2066,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../../documentation/1.2/configvhost.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120419T134831Z" changeid="guimard">
+      <tuv lang="FR-FR" changedate="20120223T125359Z" changeid="guimard">
         <seg>../../documentation/1.2/configvhost.html</seg>
       </tuv>
     </tu>
@@ -2058,7 +2074,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../../documentation/1.2/configvhost.html#lemonldapng_configuration</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120418T202948Z" changeid="guimard">
+      <tuv lang="FR-FR" changedate="20120221T071836Z" changeid="guimard">
         <seg>../../documentation/1.2/configvhost.html#lemonldapng_configuration</seg>
       </tuv>
     </tu>
@@ -2066,7 +2082,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../../documentation/1.2/customfunctions.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120225T121250Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120225T112620Z" changeid="xavier">
         <seg>../../documentation/1.2/customfunctions.html</seg>
       </tuv>
     </tu>
@@ -2106,7 +2122,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../../documentation/1.2/fileconfbackend.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120223T125359Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120205T093812Z" changeid="xavier">
         <seg>../../documentation/1.2/fileconfbackend.html</seg>
       </tuv>
     </tu>
@@ -2114,7 +2130,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../../documentation/1.2/filesessionbackend.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120420T200320Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120405T083115Z" changeid="xavier">
         <seg>../../documentation/1.2/filesessionbackend.html</seg>
       </tuv>
     </tu>
@@ -2122,7 +2138,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../../documentation/1.2/formreplay.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120225T073913Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120227T192510Z" changeid="xavier">
         <seg>../../documentation/1.2/formreplay.html</seg>
       </tuv>
     </tu>
@@ -2130,7 +2146,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../../documentation/1.2/header_remote_user_conversion.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120225T073119Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120226T103138Z" changeid="xavier">
         <seg>../../documentation/1.2/header_remote_user_conversion.html</seg>
       </tuv>
     </tu>
@@ -2138,7 +2154,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../../documentation/1.2/highavailability.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120505T083247Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120226T103133Z" changeid="xavier">
         <seg>../../documentation/1.2/highavailability.html</seg>
       </tuv>
     </tu>
@@ -2146,7 +2162,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../../documentation/1.2/idpcas.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120226T114705Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120507T182729Z" changeid="xavier">
         <seg>../../documentation/1.2/idpcas.html</seg>
       </tuv>
     </tu>
@@ -2290,7 +2306,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../../documentation/1.2/mrtg.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120505T083214Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120505T083225Z" changeid="xavier">
         <seg>../../documentation/1.2/mrtg.html</seg>
       </tuv>
     </tu>
@@ -2298,7 +2314,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../../documentation/1.2/mysqlminihowto.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120505T083033Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120526T175542Z" changeid="xavier">
         <seg>../../documentation/1.2/mysqlminihowto.html</seg>
       </tuv>
     </tu>
@@ -2306,7 +2322,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../../documentation/1.2/nosqlsessionbackend.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120410T041239Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120410T121239Z" changeid="xavier">
         <seg>../../documentation/1.2/nosqlsessionbackend.html</seg>
       </tuv>
     </tu>
@@ -2322,7 +2338,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../../documentation/1.2/parameterlist.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120107T145630Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120505T081259Z" changeid="xavier">
         <seg>../../documentation/1.2/parameterlist.html</seg>
       </tuv>
     </tu>
@@ -2354,7 +2370,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../../documentation/1.2/performances.html#handler_performance</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120506T060131Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120226T175542Z" changeid="xavier">
         <seg>../../documentation/1.2/performances.html#handler_performance</seg>
       </tuv>
     </tu>
@@ -2362,7 +2378,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../../documentation/1.2/performances.html#macros_and_groups</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120506T054944Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120505T081315Z" changeid="xavier">
         <seg>../../documentation/1.2/performances.html#macros_and_groups</seg>
       </tuv>
     </tu>
@@ -2370,7 +2386,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../../documentation/1.2/portal.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120420T171329Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120505T081320Z" changeid="xavier">
         <seg>../../documentation/1.2/portal.html</seg>
       </tuv>
     </tu>
@@ -2402,7 +2418,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../../documentation/1.2/portalmenu.html#categories_and_applications</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120303T094130Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120419T072018Z" changeid="xavier">
         <seg>../../documentation/1.2/portalmenu.html#categories_and_applications</seg>
       </tuv>
     </tu>
@@ -2410,7 +2426,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../../documentation/1.2/portalmenu.html#menu_modules</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120218T220724Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120505T081345Z" changeid="xavier">
         <seg>../../documentation/1.2/portalmenu.html#menu_modules</seg>
       </tuv>
     </tu>
@@ -2418,7 +2434,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../../documentation/1.2/prereq.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120303T093712Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120419T051506Z" changeid="xavier">
         <seg>../../documentation/1.2/prereq.html</seg>
       </tuv>
     </tu>
@@ -2426,7 +2442,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../../documentation/1.2/prereq.html#yum</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120303T095645Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120424T040621Z" changeid="xavier">
         <seg>../../documentation/1.2/prereq.html#yum</seg>
       </tuv>
     </tu>
@@ -2498,7 +2514,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../../documentation/1.2/securetoken.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120505T082926Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120505T082945Z" changeid="xavier">
         <seg>../../documentation/1.2/securetoken.html</seg>
       </tuv>
     </tu>
@@ -2506,7 +2522,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../../documentation/1.2/security.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120505T083200Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120419T072327Z" changeid="xavier">
         <seg>../../documentation/1.2/security.html</seg>
       </tuv>
     </tu>
@@ -2514,7 +2530,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../../documentation/1.2/security.html#write_good_rules</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120506T055928Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120226T163153Z" changeid="xavier">
         <seg>../../documentation/1.2/security.html#write_good_rules</seg>
       </tuv>
     </tu>
@@ -2522,7 +2538,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../../documentation/1.2/selfmadeapplication.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120225T192355Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120420T200320Z" changeid="xavier">
         <seg>../../documentation/1.2/selfmadeapplication.html</seg>
       </tuv>
     </tu>
@@ -2586,7 +2602,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../../documentation/1.2/sqlsessionbackend.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120419T051533Z" changeid="guimard">
+      <tuv lang="FR-FR" changedate="20120419T061622Z" changeid="guimard">
         <seg>../../documentation/1.2/sqlsessionbackend.html</seg>
       </tuv>
     </tu>
@@ -2906,7 +2922,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../documentation/current/prereq.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120506T103847Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120506T103601Z" changeid="xavier">
         <seg>../documentation/current/prereq.html</seg>
       </tuv>
     </tu>
@@ -2914,7 +2930,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../documentation/current/sessions.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120506T103751Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120507T035430Z" changeid="xavier">
         <seg>../documentation/current/sessions.html</seg>
       </tuv>
     </tu>
@@ -2954,7 +2970,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../documentation/current/start.html#sessions_database</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120506T103758Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120506T103703Z" changeid="xavier">
         <seg>../documentation/current/start.html#sessions_database</seg>
       </tuv>
     </tu>
@@ -2962,7 +2978,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../documentation/current/writingrulesand_headers.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120506T103800Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120506T101441Z" changeid="xavier">
         <seg>../documentation/current/writingrulesand_headers.html</seg>
       </tuv>
     </tu>
@@ -2970,7 +2986,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../documentation/current/writingrulesand_headers.html#headers</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120506T103750Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20121119T101227Z" changeid="xavier">
         <seg>../documentation/current/writingrulesand_headers.html#headers</seg>
       </tuv>
     </tu>
@@ -3162,7 +3178,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../media/icons/flags/de.png</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120507T035400Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120324T160858Z" changeid="xavier">
         <seg>../media/icons/flags/de.png</seg>
       </tuv>
     </tu>
@@ -3170,7 +3186,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../media/icons/flags/fr.png</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120507T035253Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120507T035257Z" changeid="xavier">
         <seg>../media/icons/flags/fr.png</seg>
       </tuv>
     </tu>
@@ -3178,7 +3194,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../media/icons/flags/ua.png</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120507T035324Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120221T072039Z" changeid="xavier">
         <seg>../media/icons/flags/ua.png</seg>
       </tuv>
     </tu>
@@ -3186,7 +3202,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../media/icons/flags/us.png</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120507T035407Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120225T183106Z" changeid="xavier">
         <seg>../media/icons/flags/us.png</seg>
       </tuv>
     </tu>
@@ -3298,7 +3314,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../media/logos/logo_abuledu.png</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120507T035440Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20111225T154658Z" changeid="xavier">
         <seg>../media/logos/logo_abuledu.png</seg>
       </tuv>
     </tu>
@@ -3354,7 +3370,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../media/rpm-gpg-key-ow2</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120303T095749Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120214T050450Z" changeid="xavier">
         <seg>../media/rpm-gpg-key-ow2</seg>
       </tuv>
     </tu>
@@ -3370,7 +3386,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../media/screenshots/0.9.3/lemonldap-ng-portal-appslist.png?w=200&amp;h=155</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120507T035807Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120418T171808Z" changeid="xavier">
         <seg>../media/screenshots/0.9.3/lemonldap-ng-portal-appslist.png?w=200&amp;h=155</seg>
       </tuv>
     </tu>
@@ -3386,7 +3402,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../media/screenshots/0.9.3/lemonldap-ng-portal-appslist.png?w=800&amp;h=622</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120507T035806Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120419T061636Z" changeid="xavier">
         <seg>../media/screenshots/0.9.3/lemonldap-ng-portal-appslist.png?w=800&amp;h=622</seg>
       </tuv>
     </tu>
@@ -3402,7 +3418,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../media/screenshots/0.9.3/lemonldap-ng-portal-auth.png?w=200&amp;h=155</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120507T035809Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120418T171858Z" changeid="xavier">
         <seg>../media/screenshots/0.9.3/lemonldap-ng-portal-auth.png?w=200&amp;h=155</seg>
       </tuv>
     </tu>
@@ -3418,7 +3434,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../media/screenshots/0.9.3/lemonldap-ng-portal-auth.png?w=800&amp;h=622</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120507T035808Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120418T171810Z" changeid="xavier">
         <seg>../media/screenshots/0.9.3/lemonldap-ng-portal-auth.png?w=800&amp;h=622</seg>
       </tuv>
     </tu>
@@ -3466,7 +3482,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../media/screenshots/0.9.3/lemonldap-ng-testpage.png?w=200&amp;h=155</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120507T035815Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120419T062223Z" changeid="xavier">
         <seg>../media/screenshots/0.9.3/lemonldap-ng-testpage.png?w=200&amp;h=155</seg>
       </tuv>
     </tu>
@@ -3482,7 +3498,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../media/screenshots/0.9.3/lemonldap-ng-testpage.png?w=800&amp;h=622</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120507T035811Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120419T062246Z" changeid="xavier">
         <seg>../media/screenshots/0.9.3/lemonldap-ng-testpage.png?w=800&amp;h=622</seg>
       </tuv>
     </tu>
@@ -3498,7 +3514,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../media/screenshots/0.9.4/0.9.4_application_menu.png?w=200&amp;h=133</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120507T035757Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120507T035705Z" changeid="xavier">
         <seg>../media/screenshots/0.9.4/0.9.4_application_menu.png?w=200&amp;h=133</seg>
       </tuv>
     </tu>
@@ -3514,7 +3530,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../media/screenshots/0.9.4/0.9.4_application_menu.png?w=800&amp;h=534</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120507T035756Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120519T062255Z" changeid="xavier">
         <seg>../media/screenshots/0.9.4/0.9.4_application_menu.png?w=800&amp;h=534</seg>
       </tuv>
     </tu>
@@ -3530,7 +3546,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../media/screenshots/0.9.4/0.9.4_authentication_portal.png?w=200&amp;h=133</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120507T035758Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120419T062322Z" changeid="xavier">
         <seg>../media/screenshots/0.9.4/0.9.4_authentication_portal.png?w=200&amp;h=133</seg>
       </tuv>
     </tu>
@@ -3754,7 +3770,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../media/screenshots/1.0/impact/menu.png?w=200&amp;h=130</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120507T035733Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120303T095230Z" changeid="xavier">
         <seg>../media/screenshots/1.0/impact/menu.png?w=200&amp;h=130</seg>
       </tuv>
     </tu>
@@ -3786,7 +3802,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../media/screenshots/1.0/impact/password.png?w=200&amp;h=128</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120507T035735Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120507T095320Z" changeid="xavier">
         <seg>../media/screenshots/1.0/impact/password.png?w=200&amp;h=128</seg>
       </tuv>
     </tu>
@@ -3962,7 +3978,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../media/screenshots/1.0/manager/tree_light.png?w=800&amp;h=515</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120507T035749Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120225T193208Z" changeid="xavier">
         <seg>../media/screenshots/1.0/manager/tree_light.png?w=800&amp;h=515</seg>
       </tuv>
     </tu>
@@ -4042,7 +4058,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../media/screenshots/1.0/pastel/portal.png?w=200&amp;h=128</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120507T035742Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120506T060323Z" changeid="xavier">
         <seg>../media/screenshots/1.0/pastel/portal.png?w=200&amp;h=128</seg>
       </tuv>
     </tu>
@@ -4074,7 +4090,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../media/screenshots/1.0/sessionsexplorer/accordeon_dark.png?w=200&amp;h=128</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120507T035752Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120507T035700Z" changeid="xavier">
         <seg>../media/screenshots/1.0/sessionsexplorer/accordeon_dark.png?w=200&amp;h=128</seg>
       </tuv>
     </tu>
@@ -4090,7 +4106,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../media/screenshots/1.0/sessionsexplorer/accordeon_dark.png?w=800&amp;h=514</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120507T035751Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120419T063330Z" changeid="xavier">
         <seg>../media/screenshots/1.0/sessionsexplorer/accordeon_dark.png?w=800&amp;h=514</seg>
       </tuv>
     </tu>
@@ -4122,7 +4138,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../media/screenshots/1.0/sessionsexplorer/tree_light.png?w=800&amp;h=514</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120507T035753Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120419T063332Z" changeid="xavier">
         <seg>../media/screenshots/1.0/sessionsexplorer/tree_light.png?w=800&amp;h=514</seg>
       </tuv>
     </tu>
@@ -4130,7 +4146,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../media/screenshots/1.1/mailreset/mailreset_step1.png?w=200&amp;h=114</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120507T035649Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120419T063359Z" changeid="xavier">
         <seg>../media/screenshots/1.1/mailreset/mailreset_step1.png?w=200&amp;h=114</seg>
       </tuv>
     </tu>
@@ -4146,7 +4162,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../media/screenshots/1.1/mailreset/mailreset_step2.png?w=200&amp;h=112</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120507T035654Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120519T063340Z" changeid="xavier">
         <seg>../media/screenshots/1.1/mailreset/mailreset_step2.png?w=200&amp;h=112</seg>
       </tuv>
     </tu>
@@ -4170,7 +4186,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../media/screenshots/1.1/mailreset/mailreset_step3.png?w=200&amp;h=91</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120507T035659Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120419T063513Z" changeid="xavier">
         <seg>../media/screenshots/1.1/mailreset/mailreset_step3.png?w=200&amp;h=91</seg>
       </tuv>
     </tu>
@@ -4178,7 +4194,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../media/screenshots/1.1/mailreset/mailreset_step4.png?w=200&amp;h=114</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120507T035704Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120519T063441Z" changeid="xavier">
         <seg>../media/screenshots/1.1/mailreset/mailreset_step4.png?w=200&amp;h=114</seg>
       </tuv>
     </tu>
@@ -4194,7 +4210,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../media/screenshots/1.1/mailreset/mailreset_step5.png</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120507T035706Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120507T035652Z" changeid="xavier">
         <seg>../media/screenshots/1.1/mailreset/mailreset_step5.png</seg>
       </tuv>
     </tu>
@@ -4202,7 +4218,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../media/screenshots/1.1/mailreset/mailreset_step5.png?w=200&amp;h=91</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120507T035708Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120507T035658Z" changeid="xavier">
         <seg>../media/screenshots/1.1/mailreset/mailreset_step5.png?w=200&amp;h=91</seg>
       </tuv>
     </tu>
@@ -4290,7 +4306,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../pages/documentation/1.1/applications.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120226T115000Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120324T115000Z" changeid="xavier">
         <seg>../pages/documentation/1.1/applications.html</seg>
       </tuv>
     </tu>
@@ -4298,7 +4314,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../pages/documentation/1.1/applications/authbasic.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120226T115001Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120224T161843Z" changeid="xavier">
         <seg>../pages/documentation/1.1/applications/authbasic.html</seg>
       </tuv>
     </tu>
@@ -4314,7 +4330,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../pages/documentation/1.1/applications/drupal.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120226T115012Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120419T063541Z" changeid="xavier">
         <seg>../pages/documentation/1.1/applications/drupal.html</seg>
       </tuv>
     </tu>
@@ -4330,7 +4346,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../pages/documentation/1.1/applications/liferay.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120226T115021Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120419T063615Z" changeid="xavier">
         <seg>../pages/documentation/1.1/applications/liferay.html</seg>
       </tuv>
     </tu>
@@ -4338,7 +4354,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../pages/documentation/1.1/applications/limesurvey.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120226T115022Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120419T063643Z" changeid="xavier">
         <seg>../pages/documentation/1.1/applications/limesurvey.html</seg>
       </tuv>
     </tu>
@@ -4346,7 +4362,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../pages/documentation/1.1/applications/mediawiki.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120226T115024Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120225T113135Z" changeid="xavier">
         <seg>../pages/documentation/1.1/applications/mediawiki.html</seg>
       </tuv>
     </tu>
@@ -4378,7 +4394,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../pages/documentation/1.1/applications/sympa.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120226T115039Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120226T115959Z" changeid="xavier">
         <seg>../pages/documentation/1.1/applications/sympa.html</seg>
       </tuv>
     </tu>
@@ -4386,7 +4402,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../pages/documentation/1.1/applications/tomcat.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120226T115040Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120419T063702Z" changeid="xavier">
         <seg>../pages/documentation/1.1/applications/tomcat.html</seg>
       </tuv>
     </tu>
@@ -4394,7 +4410,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../pages/documentation/1.1/applications/zimbra.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120226T115042Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120423T204812Z" changeid="xavier">
         <seg>../pages/documentation/1.1/applications/zimbra.html</seg>
       </tuv>
     </tu>
@@ -4402,7 +4418,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../pages/documentation/1.1/authapache.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120226T115001Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120221T072414Z" changeid="xavier">
         <seg>../pages/documentation/1.1/authapache.html</seg>
       </tuv>
     </tu>
@@ -4410,7 +4426,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../pages/documentation/1.1/authcas.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120226T115001Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120225T120501Z" changeid="xavier">
         <seg>../pages/documentation/1.1/authcas.html</seg>
       </tuv>
     </tu>
@@ -4418,7 +4434,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../pages/documentation/1.1/authchoice.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120226T115002Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20111217T081457Z" changeid="xavier">
         <seg>../pages/documentation/1.1/authchoice.html</seg>
       </tuv>
     </tu>
@@ -4442,7 +4458,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../pages/documentation/1.1/authmulti.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120226T115004Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120226T115049Z" changeid="xavier">
         <seg>../pages/documentation/1.1/authmulti.html</seg>
       </tuv>
     </tu>
@@ -4450,7 +4466,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../pages/documentation/1.1/authnull.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120226T115004Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120226T115049Z" changeid="xavier">
         <seg>../pages/documentation/1.1/authnull.html</seg>
       </tuv>
     </tu>
@@ -4458,7 +4474,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../pages/documentation/1.1/authopenid.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120226T115004Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120226T115049Z" changeid="xavier">
         <seg>../pages/documentation/1.1/authopenid.html</seg>
       </tuv>
     </tu>
@@ -4482,7 +4498,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../pages/documentation/1.1/authsaml.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120226T115005Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120419T063738Z" changeid="xavier">
         <seg>../pages/documentation/1.1/authsaml.html</seg>
       </tuv>
     </tu>
@@ -4490,7 +4506,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../pages/documentation/1.1/authslave.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120226T115006Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120226T063740Z" changeid="xavier">
         <seg>../pages/documentation/1.1/authslave.html</seg>
       </tuv>
     </tu>
@@ -4498,7 +4514,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../pages/documentation/1.1/authssl.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120226T115007Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120419T063741Z" changeid="xavier">
         <seg>../pages/documentation/1.1/authssl.html</seg>
       </tuv>
     </tu>
@@ -4506,7 +4522,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../pages/documentation/1.1/authtwitter.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120226T115007Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120419T063752Z" changeid="xavier">
         <seg>../pages/documentation/1.1/authtwitter.html</seg>
       </tuv>
     </tu>
@@ -4554,7 +4570,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../pages/documentation/1.1/configvhost.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120226T115011Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120423T204418Z" changeid="xavier">
         <seg>../pages/documentation/1.1/configvhost.html</seg>
       </tuv>
     </tu>
@@ -4562,7 +4578,7 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       <tuv lang="EN-US">
         <seg>../pages/documentation/1.1/customfunctions.html</seg>
       </tuv>
-      <tuv lang="FR-FR" changedate="20120226T115011Z" changeid="xavier">
+      <tuv lang="FR-FR" changedate="20120423T204418Z" changeid="xavier">
         <seg>../pages/documentation/1.1/customfunctions.html</seg>
       </tuv>
     </tu>
@@ -5012,6 +5028,14 @@ Le nouveau rôle doit-il être autorisé à créer des bases de données ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111454Z" changeid="xavier">
         <seg>../pages/documentation/1.2/applications/bugzilla.html</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>../pages/documentation/1.2/applications/django.html</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T182509Z" changeid="xavier">
+        <seg>../pages/documentation/1.2/applications/django.html</seg>
       </tuv>
     </tu>
     <tu>
@@ -8526,6 +8550,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Django&lt;/a0&gt; is a high-level Python Web framework that encourages rapid development and clean, pragmatic design.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T182632Z" changeid="xavier">
+        <seg>&lt;a0&gt;Django&lt;/a0&gt; est un framework web de haut niveau écrit en Python qui favorise le développement rapide et propre et un design pragmatique.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;Doc update&lt;/a0&gt; by clement_oudot (2010/11/24 18:04)</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -9582,6 +9614,46 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 2425 -- Fr doc in progress (status)&lt;/a0&gt; by guimard (2012/05/05 10:46)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T183458Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 2425 -- Fr doc in progress (status)&lt;/a0&gt; by guimard (2012/05/05 10:46)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 2426 -- Fr doc in progress (upgrade)&lt;/a0&gt; by guimard (2012/05/06 07:47)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T183455Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 2426 -- Fr doc in progress (upgrade)&lt;/a0&gt; by guimard (2012/05/06 07:47)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 2427 -- Fr doc in progress (rules and headers)&lt;/a0&gt; by guimard (2012/05/06 12:35)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T183453Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 2427 -- Fr doc in progress (rules and headers)&lt;/a0&gt; by guimard (2012/05/06 12:35)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 2428 -- Fr doc in progress (conferences)&lt;/a0&gt; by guimard (2012/05/06 12:39)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T183452Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 2428 -- Fr doc in progress (conferences)&lt;/a0&gt; by guimard (2012/05/06 12:39)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a0&gt;Rev 2429 -- French translation finished !!!&lt;/a0&gt; by guimard (2012/05/07 05:59)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T183450Z" changeid="xavier">
+        <seg>&lt;a0&gt;Rev 2429 -- French translation finished !!!&lt;/a0&gt; by guimard (2012/05/07 05:59)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a0&gt;Rules&lt;/a0&gt; are applied in alphabetical order (comment and regular expression).</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T095523Z" changeid="xavier">
@@ -10178,6 +10250,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111506Z" changeid="xavier">
         <seg>&lt;a10&gt;contact&lt;/a10&gt;&lt;br11/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a10&gt;drupal&lt;/a10&gt;&lt;br11/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T182524Z" changeid="xavier">
+        <seg>&lt;a10&gt;drupal&lt;/a10&gt;&lt;br11/&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -10836,6 +10916,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a2&gt;django&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T182510Z" changeid="xavier">
+        <seg>&lt;a2&gt;django&lt;/a2&gt;&lt;br3/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a2&gt;documentation&lt;/a2&gt;&lt;br3/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111512Z" changeid="xavier">
@@ -11186,6 +11274,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a4&gt;documentation&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T182511Z" changeid="xavier">
+        <seg>&lt;a4&gt;documentation&lt;/a4&gt;&lt;br5/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a4&gt;dokuwiki&lt;/a4&gt;&lt;br5/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111512Z" changeid="xavier">
@@ -11308,6 +11404,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>&lt;a6&gt;dokuwiki&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T182512Z" changeid="xavier">
+        <seg>&lt;a6&gt;dokuwiki&lt;/a6&gt;&lt;br7/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>&lt;a6&gt;download&lt;/a6&gt;&lt;br7/&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111513Z" changeid="xavier">
@@ -11408,6 +11512,14 @@ PerlOutputFilterHandler Lemonldap::NG::Handler::Menu
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T111506Z" changeid="xavier">
         <seg>&lt;a8&gt;configvhost&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;a8&gt;download&lt;/a8&gt;&lt;br9/&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T182522Z" changeid="xavier">
+        <seg>&lt;a8&gt;téléchargement&lt;/a8&gt;&lt;br9/&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -14014,6 +14126,14 @@ reload.example.com&lt;s3&gt;=&lt;/s3&gt;&lt;s4&gt;http://reload.example.com/relo
       </tuv>
       <tuv lang="FR-FR" changedate="20120107T114552Z" changeid="xavier">
         <seg>&lt;s0&gt;Classe d'object&lt;/s0&gt;: objectClass du groupe (défaut: groupOfNames).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>&lt;s0&gt;One &lt;a1&gt;IP&lt;/a1&gt; only by user&lt;/s0&gt;: a user can not open 2 sessions with different &lt;a2&gt;IP&lt;/a2&gt;.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T183446Z" changeid="xavier">
+        <seg>&lt;s0&gt;Une &lt;a1&gt;IP&lt;/a1&gt; par utilisateur&lt;/s0&gt; : un utilisateur ne peut ouvrir 2 sessions avec différentes adresses &lt;a2&gt;IP&lt;/a2&gt;.</seg>
       </tuv>
     </tu>
     <tu>
@@ -20768,6 +20888,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>By default, the manager is restricted to the user 'dwho' (default backend is Demo).</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T183326Z" changeid="xavier">
+        <seg>Par défaut, l'accès au manager est restreint à l'utilisateur &quot;dwho&quot; (le backend par défaut est Demo).</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>By default, user will be redirected on portal if no &lt;a0&gt;URL&lt;/a0&gt; defined, or on the specified &lt;a1&gt;URL&lt;/a1&gt; if any.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120506T060656Z" changeid="xavier">
@@ -21864,6 +21992,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Connector</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T182637Z" changeid="xavier">
+        <seg>Connecteur</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Connectors</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T153639Z" changeid="xavier">
@@ -22060,6 +22196,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120423T204917Z" changeid="xavier">
         <seg>Créer la table:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Create two macros (inside &lt;c0&gt;Variables&lt;/c0&gt; » &lt;c1&gt;Macros&lt;/c1&gt;):</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T183227Z" changeid="xavier">
+        <seg>Créer deux macros (dans &lt;c0&gt;Variables&lt;/c0&gt; » &lt;c1&gt;Macros&lt;/c1&gt;):</seg>
       </tuv>
     </tu>
     <tu>
@@ -22644,6 +22788,14 @@ multi &lt;s13&gt;=&gt;&lt;/s13&gt; &lt;s14&gt;{&lt;/s14&gt;</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111211T173146Z" changeid="xavier">
         <seg>Distinguished Name</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Django</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T182526Z" changeid="xavier">
+        <seg>Django</seg>
       </tuv>
     </tu>
     <tu>
@@ -24352,6 +24504,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120505T082924Z" changeid="xavier">
         <seg>Propager les déconnexions aux applications</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Frameworks</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T182723Z" changeid="xavier">
+        <seg>Frameworks</seg>
       </tuv>
     </tu>
     <tu>
@@ -27180,6 +27340,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Java (Spring)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T182726Z" changeid="xavier">
+        <seg>Java (Spring)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Jean-Thomas CHECCO</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -27192,6 +27360,14 @@ Le nouveau rôle est-il un super-utilisateur ?</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T141118Z" changeid="guimard">
         <seg>Jquery (framework javascript framework) est inclus dans l'archive et les RPM mais est une dépendance sur Debian</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Jquery (javascript framework) is included in tarball and RPMs, but is a dependency on Debian official releases</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T183120Z" changeid="xavier">
+        <seg>Jquery (framework javascript) est inclus dans l'archive et les RPMs, mais est une dépendance des versions officielles Debian</seg>
       </tuv>
     </tu>
     <tu>
@@ -29520,6 +29696,14 @@ lemonldap-ng=&gt; q</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>Now we have to send the right role to the right application trough LemonLDAP::NG.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T183210Z" changeid="xavier">
+        <seg>Il faut maintenant envoyer le bon rôle à la bonne application via LemonLDAP::NG.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>Now we have to send to right role to the right application trough LemonLDAP::NG.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T142603Z" changeid="guimard">
@@ -29868,6 +30052,14 @@ lemonldap-ng=&gt; q</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T055536Z" changeid="guimard">
         <seg>Seule la condition n'est pas exigée.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Only the handler need mod_perl 2.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T183022Z" changeid="xavier">
+        <seg>Seul l'agent nécessite mod_perl 2.</seg>
       </tuv>
     </tu>
     <tu>
@@ -31138,6 +31330,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
       </tuv>
       <tuv lang="FR-FR" changedate="20120221T065919Z" changeid="xavier">
         <seg>Placer vos propres fichiers au lieu de &lt;c0&gt;ow2.cert&lt;/c0&gt;, &lt;c1&gt;ow2.key&lt;/c1&gt;, &lt;c2&gt;ow2-ca.cert&lt;/c2&gt;:</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>Python (Django)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T182727Z" changeid="xavier">
+        <seg>Python (Django)</seg>
       </tuv>
     </tu>
     <tu>
@@ -32686,6 +32886,14 @@ PerlRequire /var/lib/lemonldap-ng/handler/MyHandler.pm
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>See the README to know how install and configure it.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T182719Z" changeid="xavier">
+        <seg>Voir le README pour l'installer et le configurer.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>See the following chapters:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120225T183701Z" changeid="xavier">
@@ -34108,6 +34316,14 @@ DataSource -&gt; dbi:mysql:sessions;host=...</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111119T113125Z" changeid="xavier">
         <seg>L'authentification basique est portée par un en-tête &lt;a0&gt;HTTP&lt;/a0&gt; spécifique, tel que décrit ci-dessous.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>The Django connector is available on GitHub: &lt;a0&gt;https://github.com/9h37/django-lemonldap&lt;/a0&gt;</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T182658Z" changeid="xavier">
+        <seg>Le connecteur Django est disponible sur GitHub : &lt;a0&gt;https://github.com/9h37/django-lemonldap&lt;/a0&gt;</seg>
       </tuv>
     </tu>
     <tu>
@@ -36426,6 +36642,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>To encode the redirection &lt;a0&gt;URL&lt;/a0&gt;, the handler will use some Apache environment variables and also configuration settings:</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T183244Z" changeid="xavier">
+        <seg>Pour encoder l'&lt;a0&gt;URL&lt;/a0&gt; de redirection, l'agent utilise des variables d'environnement Apache et des paramètres de configuration :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>To encode the redirection &lt;a0&gt;URL&lt;/a0&gt;, the will use some Apache environment variables and also configuration settings:</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T143743Z" changeid="guimard">
@@ -36542,6 +36766,14 @@ failregex = Lemonldap\:\:NG \: .* was not found in LDAP directory \(&lt;HOST&gt;
       </tuv>
       <tuv lang="FR-FR" changedate="20120420T095237Z" changeid="xavier">
         <seg>Pour protéger le manager par &lt;a0&gt;LL::NG&lt;/a0&gt;, il suffit de mettre ceci dans le fichier de configuration &lt;c1&gt;lemonldap-ng.ini&lt;/c1&gt; (section [manager]) :</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>To protect the manager, you have to choose one or both of :</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T183400Z" changeid="xavier">
+        <seg>Pour protéger le manager, il faut choisir l'une où les deux solutions :</seg>
       </tuv>
     </tu>
     <tu>
@@ -38762,6 +38994,14 @@ Index      -&gt; ipAddr uid</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>You can use LemonLDAP::NG in an heterogeneous world: the authentication portal and the manager can work in any version of Apache even if mod_perl is not compiled, with ModPerl::Registry or not,… or behind any web server able to launch CGIs.</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T183008Z" changeid="xavier">
+        <seg>On peut utiliser LemonLDAP::NG dans un monde hétérogène : le portail d'authentification et le manager peuvent fonctionner sur n'importe quelle version d'Apache même si mod_perl n'est pas compilé, avec ModPerl::Registry ou non,… ou derrière n'importe quel serveur apte à lancer des CGIs.</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>You can use LemonLDAP::NG in an heterogeneous world: the authentication portal and the manager can work in any version of Apache even if mod_perl is not compiled, with ModPerl::Registry or not… Only the handler need mod_perl 2.</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T140404Z" changeid="guimard">
@@ -40686,6 +40926,14 @@ cp lemonldapuserdatabackend.class.php inc/auth/</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>customhead.tpl : &lt;a0&gt;HTML&lt;/a0&gt; header markups (like &lt;a1&gt;CSS&lt;/a1&gt;, js inclusion)</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T182814Z" changeid="xavier">
+        <seg>customhead.tpl : en-têtes &lt;a0&gt;HTML&lt;/a0&gt; (tels les inclusions &lt;a1&gt;CSS&lt;/a1&gt;, js)</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>customheader.tpl : &lt;a0&gt;HTML&lt;/a0&gt; code int the header div</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120419T074834Z" changeid="guimard">
@@ -41764,6 +42012,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20120226T103133Z" changeid="xavier">
         <seg>documentation:1.2:applications:bugzilla</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>documentation:1.2:applications:django</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T182729Z" changeid="xavier">
+        <seg>documentation:1.2:applications:django</seg>
       </tuv>
     </tu>
     <tu>
@@ -44832,6 +45088,46 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2425</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T183456Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2425</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2426</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T183454Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2426</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2427</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T183453Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2427</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2428</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T183451Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2428</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2429</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T183449Z" changeid="xavier">
+        <seg>http://websvn.ow2.org/revision.php?repname=lemonldap&amp;path=%2F&amp;isdir=1&amp;rev=2429</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>http://wiki.lemonldap.ow2.org/xwiki/bin/view/NG/Documentation</seg>
       </tuv>
       <tuv lang="FR-FR">
@@ -45448,6 +45744,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
     </tu>
     <tu>
       <tuv lang="EN-US">
+        <seg>https://github.com/9h37/django-lemonldap</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T182638Z" changeid="xavier">
+        <seg>https://github.com/9h37/django-lemonldap</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
         <seg>https://opends.dev.java.net/public/standards/draft-behera-ldap-password-policy.txt</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111226T201551Z" changeid="xavier">
@@ -45508,6 +45812,14 @@ memberOf: cn=su,dmdName=groups,dc=example,dc=com</seg>
       </tuv>
       <tuv lang="FR-FR" changedate="20111225T153423Z" changeid="xavier">
         <seg>https://wikit.firewall-services.com/doku.php?id=lemonldap_ng</seg>
+      </tuv>
+    </tu>
+    <tu>
+      <tuv lang="EN-US">
+        <seg>https://www.djangoproject.com/</seg>
+      </tuv>
+      <tuv lang="FR-FR" changedate="20120507T182527Z" changeid="xavier">
+        <seg>https://www.djangoproject.com/</seg>
       </tuv>
     </tu>
     <tu>

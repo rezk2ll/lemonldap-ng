@@ -46,11 +46,11 @@ For Apache2, you can use both mpm-worker and mpm-prefork. Mpm-worker works faste
 </p>
 
 <p>
-You can use LemonLDAP::NG in an heterogeneous world: the authentication portal and the manager can work in any version of Apache even if mod_perl is not compiled, with ModPerl::Registry or not… Only the handler need mod_perl 2.
+You can use LemonLDAP::NG in an heterogeneous world: the authentication portal and the manager can work in any version of Apache even if mod_perl is not compiled, with ModPerl::Registry or not,… or behind any web server able to launch CGIs. Only the handler need mod_perl 2.
 </p>
 
 </div>
-<!-- SECTION "Apache" [48-740] -->
+<!-- SECTION "Apache" [48-787] -->
 <h2><a name="perl" id="perl">Perl</a></h2>
 <div class="level2">
 
@@ -61,7 +61,7 @@ You can use LemonLDAP::NG in an heterogeneous world: the authentication portal a
 </p>
 
 </div>
-<!-- SECTION "Perl" [741-954] -->
+<!-- SECTION "Perl" [788-1001] -->
 <h3><a name="core" id="core">Core</a></h3>
 <div class="level3">
 <ul>
@@ -116,7 +116,7 @@ You can use LemonLDAP::NG in an heterogeneous world: the authentication portal a
 </ul>
 
 </div>
-<!-- SECTION "Core" [955-1380] -->
+<!-- SECTION "Core" [1002-1427] -->
 <h3><a name="saml2" id="saml2">SAML2</a></h3>
 <div class="level3">
 <ul>
@@ -127,7 +127,7 @@ You can use LemonLDAP::NG in an heterogeneous world: the authentication portal a
 </ul>
 
 </div>
-<!-- SECTION "SAML2" [1381-1450] -->
+<!-- SECTION "SAML2" [1428-1497] -->
 <h3><a name="cas_authentication_module" id="cas_authentication_module">CAS (authentication module)</a></h3>
 <div class="level3">
 <ul>
@@ -136,7 +136,7 @@ You can use LemonLDAP::NG in an heterogeneous world: the authentication portal a
 </ul>
 
 </div>
-<!-- SECTION "CAS (authentication module)" [1451-1548] -->
+<!-- SECTION "CAS (authentication module)" [1498-1595] -->
 <h3><a name="openid" id="openid">OpenID</a></h3>
 <div class="level3">
 <ul>
@@ -147,7 +147,7 @@ You can use LemonLDAP::NG in an heterogeneous world: the authentication portal a
 </ul>
 
 </div>
-<!-- SECTION "OpenID" [1549-1631] -->
+<!-- SECTION "OpenID" [1596-1678] -->
 <h3><a name="twitter" id="twitter">Twitter</a></h3>
 <div class="level3">
 <ul>
@@ -156,7 +156,7 @@ You can use LemonLDAP::NG in an heterogeneous world: the authentication portal a
 </ul>
 
 </div>
-<!-- SECTION "Twitter" [1632-1668] -->
+<!-- SECTION "Twitter" [1679-1715] -->
 <h3><a name="pod_unit_tests" id="pod_unit_tests">POD unit tests</a></h3>
 <div class="level3">
 <ul>
@@ -165,7 +165,7 @@ You can use LemonLDAP::NG in an heterogeneous world: the authentication portal a
 </ul>
 
 </div>
-<!-- SECTION "POD unit tests" [1669-1709] -->
+<!-- SECTION "POD unit tests" [1716-1756] -->
 <h3><a name="smtp_reset_password_by_mail" id="smtp_reset_password_by_mail">SMTP / Reset password by mail</a></h3>
 <div class="level3">
 <ul>
@@ -184,21 +184,21 @@ You can use LemonLDAP::NG in an heterogeneous world: the authentication portal a
 </ul>
 
 </div>
-<!-- SECTION "SMTP / Reset password by mail" [1710-1857] -->
+<!-- SECTION "SMTP / Reset password by mail" [1757-1904] -->
 <h2><a name="other" id="other">Other</a></h2>
 <div class="level2">
 <ul>
-<li class="level1"><div class="li"> Jquery (javascript framework) is included in tarball and RPMs, but is a dependency on Debian</div>
+<li class="level1"><div class="li"> Jquery (javascript framework) is included in tarball and RPMs, but is a dependency on Debian official releases</div>
 </li>
 </ul>
 
 </div>
-<!-- SECTION "Other" [1858-1974] -->
+<!-- SECTION "Other" [1905-2039] -->
 <h2><a name="install_dependencies_on_your_system" id="install_dependencies_on_your_system">Install dependencies on your system</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Install dependencies on your system" [1975-2024] -->
+<!-- SECTION "Install dependencies on your system" [2040-2089] -->
 <h3><a name="apt-get" id="apt-get">APT-GET</a></h3>
 <div class="level3">
 <pre class="code">
@@ -206,7 +206,7 @@ apt-get install apache2 libapache2-mod-perl2 libapache-session-perl libnet-ldap-
 </pre>
 
 </div>
-<!-- SECTION "APT-GET" [2025-2581] -->
+<!-- SECTION "APT-GET" [2090-2646] -->
 <h3><a name="yum" id="yum">YUM</a></h3>
 <div class="level3">
 
@@ -231,4 +231,4 @@ yum install httpd mod_perl perl-Apache-Session perl-LDAP perl-XML-SAX perl-XML-N
 </pre>
 
 </div>
-<!-- SECTION "YUM" [2582-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "YUM" [2647-] --></div><!-- closes <div class="dokuwiki export">-->

@@ -51,7 +51,7 @@ Next, you have to configure the <acronym title="Simple Object Access Protocol">S
 
 <p>
 
-By default, the manager is restricted to localhost in its Apache configuration file, but no accounting is done. To change this, you can choose one of the following:
+By default, the manager is restricted to the user &#039;dwho&#039; (default backend is Demo). To protect the manager, you have to choose one or both of :
 </p>
 <ul>
 <li class="level1"><div class="li"> protect the manager by Apache configuration</div>
@@ -61,7 +61,7 @@ By default, the manager is restricted to localhost in its Apache configuration f
 </ul>
 
 </div>
-<!-- SECTION "Protect the Manager" [810-1090] -->
+<!-- SECTION "Protect the Manager" [810-1069] -->
 <h3><a name="protect_the_manager_by_apache" id="protect_the_manager_by_apache">Protect the Manager by Apache</a></h3>
 <div class="level3">
 
@@ -89,7 +89,7 @@ You can use any of the mechanisms proposed by Apache: <acronym title="Secure Soc
 &lt;/<span class="kw3">VirtualHost</span>&gt;</pre>
 
 </div>
-<!-- SECTION "Protect the Manager by Apache" [1091-1701] -->
+<!-- SECTION "Protect the Manager by Apache" [1070-1680] -->
 <h3><a name="protect_the_manager_by_llng" id="protect_the_manager_by_llng">Protect the Manager by LL::NG</a></h3>
 <div class="level3">
 
@@ -107,12 +107,12 @@ To protect the manager by <acronym title="LemonLDAP::NG">LL::NG</acronym>, you j
 </p>
 
 </div>
-<!-- SECTION "Protect the Manager by LL::NG" [1702-2118] -->
+<!-- SECTION "Protect the Manager by LL::NG" [1681-2097] -->
 <h2><a name="write_good_rules" id="write_good_rules">Write good rules</a></h2>
 <div class="level2">
 
 </div>
-<!-- SECTION "Write good rules" [2119-2148] -->
+<!-- SECTION "Write good rules" [2098-2127] -->
 <h3><a name="order_your_rules" id="order_your_rules">Order your rules</a></h3>
 <div class="level3">
 
@@ -186,7 +186,7 @@ Use comment to correct this:
 </p>
 
 </div>
-<!-- SECTION "Order your rules" [2149-3072] -->
+<!-- SECTION "Order your rules" [2128-3051] -->
 <h3><a name="be_careful_with_url_parameters" id="be_careful_with_url_parameters">Be careful with URL parameters</a></h3>
 <div class="level3">
 
@@ -252,7 +252,7 @@ You can use the following rules instead:
 </p>
 
 </div>
-<!-- SECTION "Be careful with URL parameters" [3073-3981] -->
+<!-- SECTION "Be careful with URL parameters" [3052-3960] -->
 <h3><a name="encoded_characters" id="encoded_characters">Encoded characters</a></h3>
 <div class="level3">
 
@@ -262,7 +262,7 @@ Some characters are encoded in URLs by the browser (such as space,…). To avoid
 </p>
 
 </div>
-<!-- SECTION "Encoded characters" [3982-4235] -->
+<!-- SECTION "Encoded characters" [3961-4214] -->
 <h2><a name="secure_reverse-proxies" id="secure_reverse-proxies">Secure reverse-proxies</a></h2>
 <div class="level2">
 
@@ -310,7 +310,7 @@ It is recommended to secure the channel between reverse-proxies and application 
 </ul>
 
 </div>
-<!-- SECTION "Secure reverse-proxies" [4236-5904] -->
+<!-- SECTION "Secure reverse-proxies" [4215-5883] -->
 <h2><a name="configure_security_settings" id="configure_security_settings">Configure security settings</a></h2>
 <div class="level2">
 
@@ -334,7 +334,7 @@ Go in Manager, <code>General parameters</code> » <code>Advanced parameters</cod
 </ul>
 
 </div>
-<!-- SECTION "Configure security settings" [5905-6773] -->
+<!-- SECTION "Configure security settings" [5884-6752] -->
 <h2><a name="fail2ban" id="fail2ban">Fail2ban</a></h2>
 <div class="level2">
 
@@ -391,4 +391,4 @@ Restart fail2ban
 </p>
 
 </div>
-<!-- SECTION "Fail2ban" [6774-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "Fail2ban" [6753-] --></div><!-- closes <div class="dokuwiki export">-->

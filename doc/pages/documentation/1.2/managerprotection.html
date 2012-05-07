@@ -27,22 +27,22 @@
 
 <p>
 
-When installing <acronym title="LemonLDAP::NG">LL::NG</acronym>, the Manager can only be accessed with the demo account <code>dwho</code> This How To explains how change this default behavior to protect Manager with other rules.
+When installing <acronym title="LemonLDAP::NG">LL::NG</acronym>, the Manager can only be accessed with the demo account <code>dwho</code>. This How To explains how change this default behavior to protect Manager with other rules.
 </p>
 
 </div>
-<!-- SECTION "Manager protection" [1-214] -->
+<!-- SECTION "Manager protection" [1-215] -->
 <h2><a name="apache_based_protection" id="apache_based_protection">Apache based protection</a></h2>
 <div class="level2">
 
 <p>
 
-<p><div class="notetip">Apache based protection allow to be be independent from WebSSO, so Manager will always be reachable even if WebSSO configuration is corrupted.
+<p><div class="notetip">Apache based protection allow to be independent from WebSSO, so Manager will always be reachable even if WebSSO configuration is corrupted.
 </div></p>
 </p>
 
 <p>
-The configuration can be changed in <code>etc/manager-apache2.conf</code>, for example te restrict the <acronym title="Internet Protocol">IP</acronym> allowed to access the Manager:
+The configuration can be changed in <code>etc/manager-apache2.conf</code>, for example to restrict the <acronym title="Internet Protocol">IP</acronym> allowed to access the Manager:
 </p>
 <pre class="code file apache">    &lt;<span class="kw3">Directory</span> /usr/local/lemonldap-ng/htdocs/manager/&gt;
         <span class="kw1">Order</span> <span class="kw1">deny</span>,<span class="kw1">allow</span>
@@ -68,7 +68,7 @@ But you will rather prefer to use an Apache authentication module, like for exam
     &lt;/<span class="kw3">Directory</span>&gt;</pre>
 
 <p>
-<p><div class="noteimportant">You need to disable default Manager protection to rely only on Apache:
+<p><div class="noteimportant">You need to disable default Manager protection in lemonldap-ng.ini to rely only on Apache:
 
 </p>
 <pre class="code file ini"><span class="re0"><span class="br0">&#91;</span>manager<span class="br0">&#93;</span></span>
@@ -81,7 +81,7 @@ But you will rather prefer to use an Apache authentication module, like for exam
 </p>
 
 </div>
-<!-- SECTION "Apache based protection" [215-1587] -->
+<!-- SECTION "Apache based protection" [216-1605] -->
 <h2><a name="llng_based_protection" id="llng_based_protection">LL::NG based protection</a></h2>
 <div class="level2">
 
@@ -122,7 +122,7 @@ Enable protection on Manager, by editing <code>lemonldap-ng.ini</code>:
 <span class="re1">protection</span> <span class="sy0">=</span><span class="re2"> manager</span></pre>
 
 <p>
-Remove Apache access control:
+You can also adapt Apache access control:
 
 </p>
 <pre class="code file apache">    &lt;<span class="kw3">Directory</span> /usr/local/lemonldap-ng/htdocs/manager/&gt;
@@ -140,9 +140,9 @@ You can then add the Manager as <a href="../../documentation/1.2/portalmenu.html
 </p>
 
 <p>
-<p><div class="notetip">If for an obscure reason, the WebSSO is not working and you want to access the Manager, remove the protection in <code>lemonldap-ng.ini</code> and reconfigure Apache access control.
+<p><div class="notetip">If for an obscure reason, the WebSSO is not working and you want to access the Manager, remove the protection in <code>lemonldap-ng.ini</code>. Add an Apache access control to avoid other access.
 </div></p>
 </p>
 
 </div>
-<!-- SECTION "LL::NG based protection" [1588-] --></div><!-- closes <div class="dokuwiki export">-->
+<!-- SECTION "LL::NG based protection" [1606-] --></div><!-- closes <div class="dokuwiki export">-->
